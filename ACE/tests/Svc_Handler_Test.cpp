@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/FILE_Connector.h"
@@ -28,17 +27,17 @@ run_test (SVC_HANDLER &svc_handler,
 {
   // Create a whole slew of message blocks and pass them to the
   // <svc_handler>.
-  for (size_t i = 0; i < iterations; i++)
+  for (size_t i = 0; i < iterations; ++i)
     {
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
       ACE_NEW (mb,
                ACE_Message_Block (sizeof (ACE_TEXT("hello "))));
 
-      ACE_Message_Block *cb1 = nullptr;
+      ACE_Message_Block *cb1 {};
       ACE_NEW (cb1,
                ACE_Message_Block (sizeof (ACE_TEXT("there\n"))));
 
-      ACE_Message_Block *cb2 = nullptr;
+      ACE_Message_Block *cb2 {};
       ACE_NEW (cb2,
                ACE_Message_Block (sizeof (ACE_TEXT("there\n"))));
 
@@ -53,9 +52,11 @@ run_test (SVC_HANDLER &svc_handler,
 
       // Note that this is a buffered call!
       if (svc_handler.put (mb) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%p\n"),
-                    ACE_TEXT ("put")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("put")));
+        }
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -63,9 +64,11 @@ run_test (SVC_HANDLER &svc_handler,
 
   // Make sure to flush everything out before we exit.
   if (svc_handler.flush () == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("flush")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("flush")));
+    }
 }
 
 int
@@ -77,9 +80,13 @@ run_main (int argc, ACE_TCHAR *argv[])
     size_t iterations = 10;
 
     if (argc > 1)
+    {
       max_buffer_size = ACE_OS::atoi (argv[1]);
+    }
     if (argc > 2)
+    {
       iterations = ACE_OS::atoi (argv[2]);
+    }
 
     ACE_FILE_Connector connector;
     ACE_FILE_IO file_io;
@@ -87,17 +94,21 @@ run_main (int argc, ACE_TCHAR *argv[])
 
     // Open up a temp file.
     if (connector.connect (file_io, ACE_sap_any_cast (ACE_FILE_Addr &)) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("connect")),
-                        1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("connect")),
+                          1);
+      }
     // Find the name of the temp file
     ACE_FILE_Addr file;
     if (file_io.get_local_addr (file) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("get_local_addr")),
-                        1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("get_local_addr")),
+                          1);
+      }
 
     // Create the service handler and assign it <file_io> as its data
     // sink.
@@ -115,16 +126,19 @@ run_main (int argc, ACE_TCHAR *argv[])
 
     // Open up the temp file.
     if (connector.connect (file_io, file) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("connect failed for %p\n"),
-                         file.get_path_name ()),
-                        1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("connect failed for %p\n"),
+                           file.get_path_name ()),
+                          1);
+      }
     char buf[ACE_MAXLOGMSGLEN + 1];
     ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
 
     ACE_FILE_Info info;
     file_io.get_info (info);
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("file size = %d\n"), info.size_));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("file size = %q\n"),
+                static_cast<ACE_INT64> (info.size_)));
 
     for (ssize_t n_bytes; (n_bytes = file_io.recv (buf, ACE_MAXLOGMSGLEN)) > 0; )
       {
@@ -137,10 +151,12 @@ run_main (int argc, ACE_TCHAR *argv[])
     file_io.close ();
 
     if (file_io.unlink () == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("unlink failed for %p\n"),
-                         file.get_path_name ()),
-                        1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("unlink failed for %p\n"),
+                           file.get_path_name ()),
+                          1);
+      }
   }
 
   ACE_END_TEST;

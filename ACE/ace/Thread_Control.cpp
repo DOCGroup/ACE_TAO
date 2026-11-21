@@ -25,16 +25,19 @@ ACE_Thread_Control::insert (ACE_Thread_Manager *tm, bool insert)
   this->tm_ = tm;
 
   if (insert)
-    return this->tm_->insert_thr (ACE_OS::thr_self (), t_id);
+    {
+      return this->tm_->insert_thr (ACE_OS::thr_self (), t_id);
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 // Initialize the thread controller.
 ACE_Thread_Control::ACE_Thread_Control (ACE_Thread_Manager *t,
                                         int insert)
-  : tm_ (t),
-    status_ (ACE_THR_FUNC_RETURN_NULL)
+  : tm_ (t)
 {
   ACE_OS_TRACE ("ACE_Thread_Control::ACE_Thread_Control");
 
@@ -65,7 +68,9 @@ ACE_Thread_Control::exit (ACE_THR_FUNC_RETURN exit_status, int do_thr_exit)
   ACE_OS_TRACE ("ACE_Thread_Control::exit");
 
   if (this->tm_ != nullptr)
-    return this->tm_->exit (exit_status, do_thr_exit);
+    {
+      return this->tm_->exit (exit_status, do_thr_exit);
+    }
   else
     {
 #if !defined (ACE_HAS_TSS_EMULATION)

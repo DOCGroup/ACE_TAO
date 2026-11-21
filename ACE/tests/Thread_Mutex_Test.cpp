@@ -11,13 +11,11 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Thread_Manager.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
-
 
 #if defined (ACE_HAS_THREADS)
 
@@ -45,7 +43,7 @@ test (void *args)
   ACE_UNUSED_ARG (mutex); // Suppress ghs warning about unused local "mutex".
   u_int seed = (u_int) ACE_OS::time (nullptr);
 
-  for (size_t i = 0; i < ACE_MAX_ITERATIONS / 2; i++)
+  for (size_t i = 0; i < ACE_MAX_ITERATIONS / 2; ++i)
     {
       int result = 0;
 
@@ -54,7 +52,7 @@ test (void *args)
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) = trying timed acquire on ")
-                  ACE_TEXT ("iteration %d\n"),
+                  ACE_TEXT ("iteration %B\n"),
                   i));
 
       ACE_Time_Value delta (1, 0);  // One second timeout
@@ -64,9 +62,11 @@ test (void *args)
       if (mutex->acquire (timeout) != 0)
         {
           if (errno == ETIME)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) = mutex acquisition ")
-                        ACE_TEXT ("timed out\n")));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) = mutex acquisition ")
+                          ACE_TEXT ("timed out\n")));
+            }
           else if (errno == ENOTSUP)
             {
 #if !defined (ACE_HAS_MUTEX_TIMEOUTS)
@@ -100,12 +100,12 @@ test (void *args)
       // Now try the standard mutex.
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) = trying to acquire on iteration %d\n"),
+                  ACE_TEXT ("(%P|%t) = trying to acquire on iteration %B\n"),
                   i));
       result = mutex->acquire ();
       ACE_TEST_ASSERT (result == 0);
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) = acquired on iteration %d\n"),
+                  ACE_TEXT ("(%P|%t) = acquired on iteration %B\n"),
                   i));
 
       // Sleep for a random amount of time between 0 and 2 seconds.
@@ -116,7 +116,7 @@ test (void *args)
       result = mutex->release ();
       ACE_TEST_ASSERT (result == 0);
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) = released on iteration %d\n"),
+                  ACE_TEXT ("(%P|%t) = released on iteration %B\n"),
                   i));
 
       // FUZZ: disable check_for_ACE_Guard
@@ -246,9 +246,11 @@ spawn ()
                                                 ACE_THR_FUNC (test),
                                                 (void *) &mutex,
                                                 THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n%a"),
-                ACE_TEXT ("thread create failed")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n%a"),
+                  ACE_TEXT ("thread create failed")));
+    }
 
   // Wait for the threads to exit.
   ACE_Thread_Manager::instance ()->wait ();

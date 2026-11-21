@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    objref_struct.cpp
  *
@@ -7,10 +5,10 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #include "helper.h"
+
+#include <cstring>
 #include "objref_struct.h"
 
 // ************************************************************************
@@ -18,19 +16,11 @@
 // ************************************************************************
 
 Test_Objref_Struct::Test_Objref_Struct ()
-  : opname_ (CORBA::string_dup ("test_objref_struct")),
+  : opname_ ("test_objref_struct"),
     inout_ (new Param_Test::Objref_Struct),
     out_ (new Param_Test::Objref_Struct),
     ret_ (new Param_Test::Objref_Struct)
 {
-}
-
-Test_Objref_Struct::~Test_Objref_Struct ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
-  // the other data members will be freed as they are "_var"s and objects
-  // (rather than pointers to objects)
 }
 
 const char *
@@ -50,7 +40,7 @@ Test_Objref_Struct::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::Objref_Struct *tmp = 0;
+  Param_Test::Objref_Struct const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Objref_Struct (*tmp);
 
@@ -120,7 +110,7 @@ Test_Objref_Struct::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      Param_Test::Objref_Struct_out out (this->out_.out ());
+      Param_Test::Objref_Struct_out const out (this->out_.out ());
 
       this->ret_ = objref->test_objref_struct (this->in_,
                                                this->inout_.inout (),
@@ -141,8 +131,9 @@ Test_Objref_Struct::check_validity ()
   if (this->in_.x != this->inout_->x
       || this->in_.x != this->out_->x
       || this->in_.x != this->ret_->x)
+  {
     return 0;
-
+  }
 
   try
     {
@@ -162,9 +153,9 @@ Test_Objref_Struct::check_validity ()
 
       Coffee::Desc_var s_ret = this->ret_->y->description ();
 
-      if (ACE_OS::strcmp (s_in->name, s_out->name) != 0
-          || ACE_OS::strcmp (s_in->name, s_inout->name) != 0
-          || ACE_OS::strcmp (s_in->name, s_ret->name) != 0 )
+      if (std::strcmp (s_in->name, s_out->name) != 0
+          || std::strcmp (s_in->name, s_inout->name) != 0
+          || std::strcmp (s_in->name, s_ret->name) != 0 )
         {
           return 0;
         }
@@ -197,7 +188,6 @@ Test_Objref_Struct::print_values ()
               this->inout_->x,
               this->out_->x,
               this->ret_->x ));
-
 
   try
     {

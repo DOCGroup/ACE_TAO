@@ -68,7 +68,7 @@ operator<< (ostream &os, const CORBA::WString_var &wsv)
   CORBA::ULong const len =
     static_cast <CORBA::ULong> (ACE_OS::strlen (wsv.in ()));
 
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       os << wsv[i];
     }
@@ -85,9 +85,9 @@ operator>> (istream &is, CORBA::WString_var &wsv)
   wsv = CORBA::wstring_alloc (len);
   is.seekg (0, ios::beg);
 
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
-      CORBA::WChar wc = 0;
+      CORBA::WChar wc {};
 
       // Unformatted input is used to work around overloaded
       // extraction operator (>>) ambiguities on some platforms.
@@ -107,7 +107,7 @@ operator<< (ostream &os, CORBA::WString_out &wso)
   CORBA::WChar *tmp = wso.ptr ();
   const size_t len = ACE_OS::strlen (tmp);
 
-  for (size_t i = 0; i < len; ++i)
+  for (size_t i {}; i < len; ++i)
     {
       os << tmp[i];
     }
@@ -124,9 +124,9 @@ operator>> (istream &is, CORBA::WString_out &wso)
   wso = CORBA::wstring_alloc (len);
   is.seekg (0, ios::beg);
 
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
-      CORBA::WChar wc = 0;
+      CORBA::WChar wc {};
 
       // Unformatted input is used to work around overloaded
       // extraction operator (>>) ambiguities on some platforms.

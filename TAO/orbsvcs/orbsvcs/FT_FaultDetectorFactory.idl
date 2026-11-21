@@ -1,22 +1,20 @@
-// -*- IDL -*-
+/// -*- IDL -*-
 
-//=============================================================================
 /**
  *  @file    FT_FaultDetectorFactory.idl
  *
  *  @author:  Dale Wilson, OCI <wilson_d@ociweb.com>
  */
-//=============================================================================
 
 #ifndef _FT_DETECTOR_FACTORY_IDL_
 #define _FT_DETECTOR_FACTORY_IDL_
 
-// A TAO specific addition to FT_CORBA.
-// No interface was specified for the FaultDetector
-// in the FT CORBA specification, so we decided to
-// define a GenericFactory to create FaultDetectors and
-// control the FaultDetectors through the GenericFactory
-// interface (with extenstions.)
+/// A TAO specific addition to FT_CORBA.
+/// No interface was specified for the FaultDetector
+/// in the FT CORBA specification, so we decided to
+/// define a GenericFactory to create FaultDetectors and
+/// control the FaultDetectors through the GenericFactory
+/// interface (with extenstions.)
 
 #pragma prefix "omg.org"
 
@@ -27,7 +25,7 @@
 module FT
 {
   ///////////////////////////////////////////////////
-  // names for properties used in Fault Tolerant CORBA
+  /// names for properties used in Fault Tolerant CORBA
   /// TimeBase::TimeT how often to call is_alive();
   const string FT_FAULT_MONITORING_INTERVAL = "MonitoringInterval";
 
@@ -38,7 +36,7 @@ module FT
   const string FT_MONITORABLE = "Monitorable";
 
   ///////////////////////////////////////////
-  // Names specified in the FT CORBA specification
+  /// Names specified in the FT CORBA specification
 
   const string FT_EVENT_TYPE_DOMAIN = "FT_CORBA";
   const string FT_EVENT_TYPE_NAME = "ObjectCrashFault";
@@ -55,12 +53,12 @@ module FT
   /// FT::ObjectGroupId group to report to notifier
   const string FT_GROUP_ID = "GroupId";
 
-  // end of names from FT CORBA specification
+  /// end of names from FT CORBA specification
   ///////////////////////////////////////////
 
   /////////////////////////////
-  // RoleName FaultDetectorFactory uses to register
-  // with Factory Registery
+  /// RoleName FaultDetectorFactory uses to register
+  /// with Factory Registery
   const string FAULT_DETECTOR_ROLE_NAME = "FT_FaultDetector";
 
   /**

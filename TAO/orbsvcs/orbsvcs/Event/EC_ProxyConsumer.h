@@ -58,10 +58,8 @@ public:
   using _var_type = RtecEventChannelAdmin::ProxyPushConsumer_var;
   using _ptr_type = RtecEventChannelAdmin::ProxyPushConsumer_ptr;
 
-  /// constructor...
-  TAO_EC_ProxyPushConsumer (TAO_EC_Event_Channel_Base* event_channel);
+  explicit TAO_EC_ProxyPushConsumer (TAO_EC_Event_Channel_Base* event_channel);
 
-  /// destructor...
   virtual ~TAO_EC_ProxyPushConsumer ();
 
   /// Activate in the POA
@@ -114,7 +112,6 @@ public:
   CORBA::ULong _incr_refcnt ();
   CORBA::ULong _decr_refcnt ();
 
-
 protected:
   /// Set the supplier, used by some implementations to change the
   /// policies used when invoking operations on the supplier.
@@ -122,8 +119,8 @@ protected:
   void supplier_i (RtecEventComm::PushSupplier_ptr supplier);
 
   friend class TAO_EC_ProxyPushConsumer_Guard;
-  // The guard needs access to the following protected methods.
 
+  /// The guard needs access to the following protected methods.
   /// The private version (without locking) of is_connected().
   CORBA::Boolean is_connected_i () const;
 
@@ -181,13 +178,11 @@ private:
 class TAO_RTEvent_Serv_Export TAO_EC_ProxyPushConsumer_Guard
 {
 public:
-  /// Constructor
   TAO_EC_ProxyPushConsumer_Guard (ACE_Lock *lock,
                                   CORBA::ULong &refcount,
                                   TAO_EC_Event_Channel_Base *ec,
                                   TAO_EC_ProxyPushConsumer *proxy);
 
-  /// Destructor
   ~TAO_EC_ProxyPushConsumer_Guard ();
 
   TAO_EC_ProxyPushConsumer_Guard (TAO_EC_ProxyPushConsumer_Guard const &) = delete;

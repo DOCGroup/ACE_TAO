@@ -43,9 +43,8 @@ public:
    * Constraint exception if the constraint given has syntax errors or
    * semantic errors, such as mismatched types.
    */
-  TAO_Log_Constraint_Interpreter (char const * constraints);
+  explicit TAO_Log_Constraint_Interpreter (char const * constraints);
 
-  /// Destructor.
   ~TAO_Log_Constraint_Interpreter () override;
 
   /// Returns true if the constraint is evaluated successfully by

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TLI_STREAM_H
 #define ACE_TLI_STREAM_H
 #include /**/ "ace/pre.h"
@@ -40,10 +39,10 @@ public:
   friend class ACE_TLI_Acceptor;
   friend class ACE_TLI_Connector;
 
-  /// Default constructor.
   ACE_TLI_Stream ();
 
-  // = TLI-specific shutdown operations.
+  /// @name TLI-specific shutdown operations
+  /// @{
   /// Close down and release resources.
   int close ();
 
@@ -56,8 +55,10 @@ public:
 
   /// Return address of remotely connected peer.
   int get_remote_addr (ACE_Addr &) const;
+  /// @}
 
-  // =  timod bindings
+  /// @name timod bindings
+  /// @{
   /// Send an n byte buffer to the connected socket (uses t_snd(3)).
   ssize_t send (const void *buf,
                 size_t n,
@@ -83,8 +84,10 @@ public:
                   int *flags,
                   const ACE_Time_Value *timeout = nullptr,
                   size_t *bytes_transferred = nullptr) const;
+  /// @}
 
-  // = tirdwr bindings
+  /// @name tirdwr bindings
+  /// @{
   /// Send an n byte buffer to the connected socket (uses write(2)).
   ssize_t send (const void *buf,
                 size_t n,
@@ -106,8 +109,9 @@ public:
                   size_t n,
                   const ACE_Time_Value *timeout = nullptr,
                   size_t *bytes_transferred = nullptr) const;
+  /// @}
 
-  // = Meta-type info
+  /// Peer address type.
   using PEER_ADDR = ACE_INET_Addr;
 
   /// Dump the state of an object.
@@ -118,7 +122,7 @@ public:
 
 private:
   /// Indicates whether the tirdwr module should be pushed
-  int rwflag_;
+  int rwflag_ {};
 
   /// Get rwflag
   int get_rwflag () const;

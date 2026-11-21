@@ -9,9 +9,6 @@ TAO::In_Fixed_Size_SArgument_T<S,Insert_Policy>::arg () const
 {
   return this->x_;
 }
-
-// ==========================================================================
-
 template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
@@ -26,9 +23,6 @@ TAO::Inout_Fixed_Size_SArgument_T<S,Insert_Policy>::arg ()
 {
   return this->x_;
 }
-
-// ==========================================================================
-
 template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
@@ -44,9 +38,6 @@ TAO::Out_Fixed_Size_SArgument_T<S,Insert_Policy>::arg ()
 {
   return this->x_;
 }
-
-// ==========================================================================
-
 template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE

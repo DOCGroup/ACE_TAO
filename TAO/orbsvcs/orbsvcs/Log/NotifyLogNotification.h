@@ -44,29 +44,31 @@ class TAO_NotifyLog_Serv_Export TAO_NotifyLogNotification :
   public POA_CosNotifyComm::PushSupplier
 {
 public:
-  /// Constructor.
-  TAO_NotifyLogNotification (CosNotifyChannelAdmin::EventChannel_ptr event_channel);
+  explicit TAO_NotifyLogNotification (CosNotifyChannelAdmin::EventChannel_ptr event_channel);
 
-  /// Destructor.
   ~TAO_NotifyLogNotification () override;
 
 protected:
-  // = Helper methods
-  // = Data members
-
+  /// @name Data members
+  /// @{
   /// The proxy that we are connected to.
   CosNotifyChannelAdmin::ProxyPushConsumer_var proxy_consumer_;
 
   /// This supplier's id.
   CosNotifyChannelAdmin::ProxyID proxy_consumer_id_;
+  /// @}
 
-  // = NotifySubscribe
+  /// @name NotifySubscribe methods
+  /// @{
   void subscription_change (
     CosNotification::EventTypeSeq const & added,
     CosNotification::EventTypeSeq const & removed) override;
+  /// @}
 
-  // = StructuredPushSupplier method
+  /// @name StructuredPushSupplier method
+  /// @{
   void disconnect_push_supplier () override;
+  /// @}
 
   /// Send the event on the event channel.
   void send_notification (CORBA::Any const & any) override;

@@ -11,8 +11,6 @@
  */
 //=============================================================================
 
-
-#include "ace/OS_NS_string.h"
 #include "ace/OS_main.h"
 #include "ace/Service_Config.h"
 #include "ace/Proactor.h"
@@ -31,7 +29,8 @@
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
-
+#include <cstring>
+#include <memory>
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms supporting
@@ -39,9 +38,8 @@
 
 #include "test_proactor.h"
 
-
 // Host that we're connecting to.
-static ACE_TCHAR *host = nullptr;
+static ACE_TCHAR *host {};
 
 // Port that we're receiving connections on.
 static u_short port = ACE_DEFAULT_SERVER_PORT;
@@ -57,7 +55,6 @@ static int done = 0;
 
 // Size of each initial asynchronous <read> operation.
 static int initial_read_size = BUFSIZ;
-
 
 Receiver::Receiver ()
   : dump_file_ (ACE_INVALID_HANDLE),
@@ -136,7 +133,7 @@ Receiver::open (ACE_HANDLE handle,
                                                                      0,
                                                                      0);
 
-      size_t bytes_transferred = message_block.length ();
+      const size_t bytes_transferred = message_block.length ();
 
       // <complete> for Accept would have already moved the <wr_ptr>
       // forward. Update it to the beginning position.
@@ -154,7 +151,9 @@ Receiver::open (ACE_HANDLE handle,
     // Otherwise, make sure we proceed. Initiate reading the socket
     // stream.
     if (this->initiate_read_stream () == -1)
+    {
       return;
+    }
 }
 
 int
@@ -163,7 +162,7 @@ Receiver::initiate_read_stream ()
   // Create a new <Message_Block>.  Note that this message block will
   // be used both to <read> data asynchronously from the socket and to
   // <write> data asynchronously to the file.
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (BUFSIZ + 1),
                   -1);
@@ -171,10 +170,12 @@ Receiver::initiate_read_stream ()
   // Inititiate read
   if (this->rs_.read (*mb,
                       mb->size () - 1) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_Asynch_Read_Stream::read"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Asynch_Read_Stream::read"),
+                        -1);
+    }
   return 0;
 }
 
@@ -188,12 +189,12 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
   result.message_block ().rd_ptr ()[result.bytes_transferred ()] = '\0';
 
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_read", result.bytes_to_read ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", result.handle ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transfered", result.bytes_transferred ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (uintptr_t) result.act ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_read", result.bytes_to_read ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %H\n", "handle", result.handle ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered", result.bytes_transferred ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "act", const_cast<void *> (result.act ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (uintptr_t) result.completion_key ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "completion_key", const_cast<void *> (result.completion_key ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
 #if 0
@@ -220,7 +221,9 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 
       // Initiate new read from the stream.
       if (this->initiate_read_stream () == -1)
+      {
         return;
+      }
     }
   else
     {
@@ -244,21 +247,23 @@ Receiver::handle_write_file (const ACE_Asynch_Write_File::Result &result)
   ACE_DEBUG ((LM_DEBUG, "handle_write_file called\n"));
 
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_write", result.bytes_to_write ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", result.handle ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transfered", result.bytes_transferred ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (uintptr_t) result.act ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_write", result.bytes_to_write ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %H\n", "handle", result.handle ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered", result.bytes_transferred ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "act", const_cast<void *> (result.act ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (uintptr_t) result.completion_key ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "completion_key", const_cast<void *> (result.completion_key ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
 
   result.message_block ().release ();
 
   if (result.success ())
-    // Write successful:  Increment file offset
-    this->file_offset_ +=
-      ACE_Utils::truncate_cast<u_long> (result.bytes_transferred ());
+    {
+      // Write successful:  Increment file offset
+      this->file_offset_ +=
+        ACE_Utils::truncate_cast<u_long> (result.bytes_transferred ());
+    }
 
   // This code is not robust enough to deal with short file writes
   // (which hardly ever happen) ;-)
@@ -345,10 +350,10 @@ Sender::Sender ()
     transmit_file_done_ (0)
 {
   // Moment of inspiration... :-)
-  static const char *data = "Welcome to Irfan World! Irfan RULES here !!\n";
+  static char const *const data = "Welcome to Irfan World! Irfan RULES here !!\n";
   this->welcome_message_.init (data,
-                               ACE_OS::strlen (data));
-  this->welcome_message_.wr_ptr (ACE_OS::strlen (data));
+                               std::strlen (data));
+  this->welcome_message_.wr_ptr (std::strlen (data));
 }
 
 Sender::~Sender ()
@@ -378,9 +383,11 @@ Sender::open (const ACE_TCHAR *host,
   this->input_file_ =
     ACE_OS::open (file, GENERIC_READ | FILE_FLAG_OVERLAPPED);
   if (this->input_file_ == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_OS::open"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_OS::open"), -1);
+    }
 
   // Find file size
   this->file_size_ =
@@ -391,32 +398,42 @@ Sender::open (const ACE_TCHAR *host,
   ACE_SOCK_Connector connector;
   if (connector.connect (this->stream_,
                          address) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_SOCK_Connector::connect"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_SOCK_Connector::connect"),
+                        -1);
+    }
 
   // Open ACE_Asynch_Write_Stream
   if (this->ws_.open (*this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_Asynch_Write_Stream::open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Asynch_Write_Stream::open"),
+                        -1);
+    }
 
   // Open ACE_Asynch_Read_File
   if (this->rf_.open (*this, this->input_file_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_Asynch_Read_File::open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Asynch_Read_File::open"),
+                        -1);
+    }
 
   // Start an asynchronous transmit file
   if (this->transmit_file () == -1)
+  {
     return -1;
+  }
 
   // Start an asynchronous read file
   if (this->initiate_read_file () == -1)
+  {
     return -1;
+  }
 
   return 0;
 }
@@ -428,32 +445,40 @@ Sender::transmit_file ()
   ACE_HANDLE file_handle =
     ACE_OS::open (file, GENERIC_READ | FILE_FLAG_SEQUENTIAL_SCAN);
   if (file_handle == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_OS::open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_OS::open"),
+                        -1);
+    }
 
   // Open ACE_Asynch_Transmit_File
   if (this->tf_.open (*this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_Asynch_Transmit_File::open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Asynch_Transmit_File::open"),
+                        -1);
+    }
 
   // Header and trailer data for the file.
   // @@ What happens if header and trailer are the same?
-  this->header_and_trailer_.header_and_trailer (&this->welcome_message_,
+  this->header_and_trailer_.header_and_trailer (
+                                                std::addressof (this->welcome_message_),
                                                 this->welcome_message_.length (),
-                                                &this->welcome_message_,
+                                                std::addressof (this->welcome_message_),
                                                 this->welcome_message_.length ());
 
   // Send the entire file in one fell swoop!
-  if (this->tf_.transmit_file (file_handle,
-                               &this->header_and_trailer_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_Asynch_Transmit_File::transmit_file"),
-                      -1);
+  if (this->tf_.transmit_file (
+        file_handle,
+        std::addressof (this->header_and_trailer_)) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Asynch_Transmit_File::transmit_file"),
+                        -1);
+    }
 
   return 0;
 }
@@ -465,15 +490,15 @@ Sender::handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result)
               "handle_transmit_file called\n"));
 
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "socket", result.socket ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "file", result.file ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_write", result.bytes_to_write ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_per_send", result.bytes_per_send ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %H\n", "socket", result.socket ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "file", reinterpret_cast<void *> (result.file ())));
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_write", result.bytes_to_write ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_per_send", result.bytes_per_send ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "flags", result.flags ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transfered", result.bytes_transferred ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (uintptr_t) result.act ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered", result.bytes_transferred ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "act", const_cast<void *> (result.act ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (uintptr_t) result.completion_key ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "completion_key", const_cast<void *> (result.completion_key ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
 
@@ -482,7 +507,9 @@ Sender::handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result)
 
   this->transmit_file_done_ = 1;
   if (this->stream_write_done_)
+  {
     done = 1;
+  }
 }
 
 int
@@ -491,7 +518,7 @@ Sender::initiate_read_file ()
   // Create a new <Message_Block>.  Note that this message block will
   // be used both to <read> data asynchronously from the file and to
   // <write> data asynchronously to the socket.
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (BUFSIZ + 1),
                   -1);
@@ -500,10 +527,12 @@ Sender::initiate_read_file ()
   if (this->rf_.read (*mb,
                       mb->size () - 1,
                       this->file_offset_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_Asynch_Read_File::read"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Asynch_Read_File::read"),
+                        -1);
+    }
   return 0;
 }
 
@@ -516,12 +545,12 @@ Sender::handle_read_file (const ACE_Asynch_Read_File::Result &result)
   result.message_block ().rd_ptr ()[result.bytes_transferred ()] = '\0';
 
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_read", result.bytes_to_read ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", result.handle ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transfered", result.bytes_transferred ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (uintptr_t) result.act ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_read", result.bytes_to_read ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %H\n", "handle", result.handle ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered", result.bytes_transferred ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "act", const_cast<void *> (result.act ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (uintptr_t) result.completion_key ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "completion_key", const_cast<void *> (result.completion_key ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
   //ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block", result.message_block ().rd_ptr ()));
@@ -549,7 +578,9 @@ Sender::handle_read_file (const ACE_Asynch_Read_File::Result &result)
         {
           // Start an asynchronous read file.
           if (initiate_read_file () == -1)
+          {
             return;
+          }
         }
     }
 }
@@ -564,12 +595,12 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
   result.message_block ().rd_ptr (result.message_block ().rd_ptr () - result.bytes_transferred ());
 
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_write", result.bytes_to_write ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", result.handle ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transfered", result.bytes_transferred ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (uintptr_t) result.act ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_write", result.bytes_to_write ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %H\n", "handle", result.handle ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered", result.bytes_transferred ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "act", const_cast<void *> (result.act ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (uintptr_t) result.completion_key ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "completion_key", const_cast<void *> (result.completion_key ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
 #if 0
@@ -602,7 +633,9 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
         {
           this->stream_write_done_ = 1;
           if (this->transmit_file_done_)
+          {
             done = 1;
+          }
         }
     }
 
@@ -617,28 +650,30 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != EOF)
-    switch (c)
-      {
-      case 'h':
-        host = get_opt.opt_arg ();
-        break;
-      case 'p':
-        port = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 'f':
-        file = get_opt.opt_arg ();
-        break;
-      case 'd':
-        dump_file = get_opt.opt_arg ();
-        break;
-      default:
-        ACE_ERROR ((LM_ERROR, "%p.\n",
-                    "usage :\n"
-                    "-h <host>\n"
-                    "-p <port>\n"
-                    "-f <file>\n"));
-        return -1;
-      }
+    {
+      switch (c)
+        {
+        case 'h':
+          host = get_opt.opt_arg ();
+          break;
+        case 'p':
+          port = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'f':
+          file = get_opt.opt_arg ();
+          break;
+        case 'd':
+          dump_file = get_opt.opt_arg ();
+          break;
+        default:
+          ACE_ERROR ((LM_ERROR, "%p.\n",
+                      "usage :\n"
+                      "-h <host>\n"
+                      "-p <port>\n"
+                      "-f <file>\n"));
+          return -1;
+        }
+    }
 
   return 0;
 }
@@ -647,7 +682,9 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
 
   Sender sender;
 
@@ -659,18 +696,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
    {
      if (acceptor.open (ACE_INET_Addr (port),
                         initial_read_size,
-                        1) == -1)
+                        true) == -1)
+     {
        return -1;
+     }
    }
   // If active side
   else if (sender.open (host, port) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   int success = 1;
 
   while (success > 0  && !done)
-    // Dispatch events via Proactor singleton.
-    success = ACE_Proactor::instance ()->handle_events ();
+    {
+      // Dispatch events via Proactor singleton.
+      success = ACE_Proactor::instance ()->handle_events ();
+    }
 
   return 0;
 }

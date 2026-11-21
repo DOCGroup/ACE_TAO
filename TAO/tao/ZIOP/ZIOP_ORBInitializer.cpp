@@ -11,7 +11,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ZIOP_ORBInitializer::TAO_ZIOP_ORBInitializer (TAO_ZIOP_Loader* loader) : loader_ (loader)
+TAO_ZIOP_ORBInitializer::TAO_ZIOP_ORBInitializer (TAO_ZIOP_Loader *loader)
+  : loader_ (loader)
 {
 }
 
@@ -25,11 +26,13 @@ TAO_ZIOP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
   if (CORBA::is_nil (tao_info.in ()))
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
-                    "ZIOP (%P|%t) TAO_ZIOP_ORBInitializer::pre_init:\n"
-                    "ZIOP (%P|%t)    Unable to narrow "
-                    "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
-                    "ZIOP (%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+                      "ZIOP (%P|%t) TAO_ZIOP_ORBInitializer::pre_init:\n"
+                      "ZIOP (%P|%t)    Unable to narrow "
+                      "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
+                      "ZIOP (%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
+        }
 
       throw ::CORBA::INTERNAL ();
     }
@@ -41,7 +44,7 @@ TAO_ZIOP_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   // Bind the service context handler for ZIOP
-  TAO_ZIOP_Service_Context_Handler* h = nullptr;
+  TAO_ZIOP_Service_Context_Handler* h {};
   ACE_NEW (h,
            TAO_ZIOP_Service_Context_Handler());
   tao_info->orb_core ()->service_context_registry ().bind (IOP::INVOCATION_POLICIES, h);
@@ -67,7 +70,6 @@ TAO_ZIOP_ORBInitializer::register_policy_factories (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-
 
   PortableInterceptor::PolicyFactory_var policy_factory =
     policy_factory_ptr;
@@ -96,11 +98,6 @@ TAO_ZIOP_ORBInitializer::register_policy_factories (
           // should do no more work in this ORBInitializer.
           return;
         }
-      throw;
-    }
-  catch (...)
-    {
-      // Rethrow any other exceptions...
       throw;
     }
 }

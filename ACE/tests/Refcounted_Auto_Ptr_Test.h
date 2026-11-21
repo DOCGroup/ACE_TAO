@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TESTS_REFCOUNTED_AUTO_PTR_TEST_H
 #define ACE_TESTS_REFCOUNTED_AUTO_PTR_TEST_H
 

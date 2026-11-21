@@ -76,7 +76,6 @@ TAO_OperationDef_i::result_i ()
                                             "result",
                                             result_path);
 
-
   TAO_IDLType_i *impl =
     TAO_IFR_Service_Utils::path_to_idltype (result_path,
                                             this->repo_);
@@ -429,7 +428,9 @@ TAO_OperationDef_i::contexts_i (CORBA::ContextIdSeq const &contexts)
   CORBA::ULong length = contexts.length ();
 
   if (length == 0)
+  {
     return;
+  }
 
   ACE_Configuration_Section_Key contexts_key;
   this->repo_->config ()->open_section (this->section_key_,

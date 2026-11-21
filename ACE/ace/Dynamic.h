@@ -32,10 +32,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Dynamic
 {
 public:
-  /// Constructor.
   ACE_Dynamic ();
 
-  /// Destructor.
   ~ACE_Dynamic () = default;
 
   /**
@@ -61,7 +59,7 @@ private:
    * method is usually called in operator new and then checked and
    * reset in the constructor.
    */
-  bool is_dynamic_;
+  bool is_dynamic_ {false};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

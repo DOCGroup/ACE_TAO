@@ -10,9 +10,7 @@
  */
 //=============================================================================
 
-
-#include "ace/Atomic_Op.h"
-#include "ace/Synch_Traits.h"
+#include <atomic>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,7 +27,12 @@ public:
   TSS_Obj ();
   ~TSS_Obj ();
 
+  TSS_Obj (TSS_Obj const &) = delete;
+  TSS_Obj (TSS_Obj &&) = delete;
+  TSS_Obj &operator= (TSS_Obj const &) = delete;
+  TSS_Obj &operator= (TSS_Obj &&) = delete;
+
 private:
- static ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> count_;
+  static std::atomic<int> count_;
 };
 

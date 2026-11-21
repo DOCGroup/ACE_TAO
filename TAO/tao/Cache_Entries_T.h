@@ -64,16 +64,12 @@ namespace TAO
   public:
     using transport_type = TRANSPORT_TYPE;
 
-    /// Constructor.
     Cache_IntId_T ();
 
-    /// Constructor.
-    Cache_IntId_T (transport_type *transport);
+    explicit Cache_IntId_T (transport_type *transport);
 
-    /// Copy constructor.
     Cache_IntId_T (const Cache_IntId_T & rhs);
 
-    /// Destructor.
     ~Cache_IntId_T ();
 
     /// Assignment operator (does copy memory).
@@ -128,7 +124,6 @@ namespace TAO
     bool is_connected_;
   };
 
-
   /**
    * @class Cache_ExtId_T
    *
@@ -143,19 +138,14 @@ namespace TAO
   public:
     using transport_descriptor_type = TRANSPORT_DESCRIPTOR_TYPE;
 
-    /// Constructor.
     Cache_ExtId_T ();
 
-    /// Constructor.
     explicit Cache_ExtId_T (transport_descriptor_type *prop);
 
-    /// Copy constructor.
     Cache_ExtId_T (const Cache_ExtId_T & rhs);
 
-    /// Destructor.
     ~Cache_ExtId_T ();
 
-    // = Assignment and comparison operators.
     /// Assignment operator (does copy memory).
     Cache_ExtId_T& operator= (const Cache_ExtId_T &rhs);
 
@@ -182,7 +172,6 @@ namespace TAO
     /// Increment the index value
     void incr_index ();
 
-    // = Accessors
     /// Get the underlying the property pointer
     transport_descriptor_type *property () const;
 

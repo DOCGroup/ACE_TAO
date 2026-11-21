@@ -4,6 +4,7 @@
 // Listing 1 code/ch05
 #include "ace/Containers.h"
 #include "DataElement.h"
+#include <memory>
 
 // Create a new type of list that can store only DataElements.
 using MyList = ACE_DLList<DataElement>;
@@ -27,10 +28,11 @@ ListTest::run ()
   // Create a list and insert 100 elements.
   MyList list1;
 
-  for (int i = 0; i < 100; i++)
+  for (int i = 0; i < 100; ++i)
     {
-      DataElement *element;
+      DataElement *element {};
       ACE_NEW_RETURN (element, DataElement (i), -1);
+      // MyList stores raw pointers; this example owns and deletes each element.
       list1.insert_tail (element);
     }
 
@@ -51,7 +53,7 @@ ListTest::run ()
   this->destroyList (list2);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("# of live objects: %d\n"),
-              DataElement::numOfActiveObjects()));
+              DataElement::numOfActiveObjects ()));
 
   // The lists themselves are destroyed here. Note that the
   // list destructor will destroy copies of whatever data the
@@ -72,10 +74,9 @@ ListTest::destroyList (MyList& list)
   // Iterate through and delete all the data elements on the list.
   for (ACE_DLList_Iterator<DataElement> iter (list);
        !iter.done ();
-       iter++)
+       iter.advance ())
     {
-      DataElement *de = iter.next ();
-      delete de;
+      std::unique_ptr<DataElement> element_owner {iter.next ()};
     }
 }
 // Listing 4
@@ -91,7 +92,7 @@ ListTest::displayList (MyList& list)
     {
       ACE_DEBUG
         ((LM_DEBUG, ACE_TEXT ("%d:"), iter.next()->getData()));
-      iter++;
+      iter.advance ();
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 
@@ -101,7 +102,7 @@ ListTest::displayList (MyList& list)
     {
       ACE_DEBUG
         ((LM_DEBUG, ACE_TEXT ("%d:"), riter.next()->getData()));
-      riter++;
+      riter.advance ();
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 }

@@ -190,7 +190,6 @@ public:
   bool operator!= (ACE_Static_Svc_Descriptor &) const;
 };
 
-
 /**
  * @class ACE_Threading_Helper
  *
@@ -289,22 +288,27 @@ class ACE_Export ACE_Service_Config
   ACE_Threading_Helper<ACE_SYNCH_MUTEX> threadkey_;
 
 public:
+  ACE_Service_Config (ACE_Service_Config const &) = delete;
+  ACE_Service_Config &operator= (ACE_Service_Config const &) = delete;
+  ACE_Service_Config (ACE_Service_Config &&) = delete;
+  ACE_Service_Config &operator= (ACE_Service_Config &&) = delete;
+
   /**
    * Initialize the Service Repository. Note that initialising @a
    * signum to a negative number will prevent a signal handler being
    * registered when the repository is opened.
    */
-  ACE_Service_Config (bool ignore_static_svcs = true,
-                      size_t size = ACE_DEFAULT_SERVICE_REPOSITORY_SIZE,
-                      int signum = SIGHUP);
+  explicit ACE_Service_Config (bool ignore_static_svcs = true,
+                               size_t size = ACE_DEFAULT_SERVICE_REPOSITORY_SIZE,
+                               int signum = SIGHUP);
 
   /**
    * Performs an open without parsing command-line arguments.  The
    * @a logger_key indicates where to write the logging output, which
    * is typically either a STREAM pipe or a socket address.
    */
-  ACE_Service_Config (const ACE_TCHAR program_name[],
-                      const ACE_TCHAR *logger_key = ACE_DEFAULT_LOGGER_KEY);
+  explicit ACE_Service_Config (ACE_TCHAR const program_name[],
+                               ACE_TCHAR const *logger_key = ACE_DEFAULT_LOGGER_KEY);
 
   /// Perform user-specified close activities and remove dynamic
   /// memory.
@@ -336,7 +340,8 @@ private:
    */
   virtual int parse_args_i (int argc, ACE_TCHAR *argv[]);
 
-  /// = Static interfaces
+  /// @name Static interfaces
+  /// @{
 
  public:
  /**
@@ -483,19 +488,13 @@ private:
 
   /// Perform the reconfiguration process.
   static void reconfigure ();
+  /// @}
 
-  // = The following methods are static in order to enforce Singleton
-  // semantics for the Reactor, Service_Repository, Thread_Manager,
-  // and Acceptor/Connector Strategy factory.  Other portions of the
-  // system may need to access them at some point or another...
-
-  // = This is not strictly needed, anymore since the service configurator
-  // has been refactored to allow multiple service configuration
-  // instances (called gestalts). The interfaces, however were retained in for
-  // the sake of maintaining source-code compatibility.
-
-
-  // = Accessors and mutators for process-wide Singletons.
+  /// @name Legacy process-wide singleton accessors
+  /// The service configurator now supports multiple gestalts. These
+  /// interfaces remain for source compatibility and access to process-wide
+  /// singleton services.
+  /// @{
 
   /// Returns a pointer to the list of statically linked services.
   ///
@@ -513,8 +512,10 @@ private:
   /// services repository and provide a better way of debugging service
   /// loading and registration problems.
   static int insert (ACE_Static_Svc_Descriptor *svc);
+  /// @}
 
-  // = Utility methods.
+  /// @name Service utility methods
+  /// @{
   /// Dynamically link the shared object file and retrieve a pointer to
   /// the designated shared object in this file.
   static int initialize (const ACE_Service_Type *,
@@ -541,6 +542,7 @@ private:
   /// Totally remove @a svc_name from the daemon by removing it
   /// from the ACE_Reactor, and unlinking it if necessary.
   static int remove (const ACE_TCHAR svc_name[]);
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -625,9 +627,9 @@ private:
   /// Become a daemon.
   static int start_daemon ();
 
-  // @deprecated
-  // Add the default statically-linked services to the
-  // ACE_Service_Repository.
+  /// @deprecated
+  /// Add the default statically-linked services to the
+  /// ACE_Service_Repository.
   static int load_static_svcs ();
 
 protected:
@@ -641,7 +643,7 @@ protected:
 
 private:
   /// Have we called ACE_Service_Config::open() yet?
-  bool is_opened_;
+  bool is_opened_ {};
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   /// Synchronization variable for open, etc.
@@ -651,7 +653,8 @@ private:
   /// True if reconfiguration occurred.
   static sig_atomic_t reconfig_occurred_;
 
-  // = Set by command-line options.
+  /// @name Command-line configuration state
+  /// @{
   /// Shall we become a daemon process?
   static bool be_a_daemon_;
 
@@ -663,6 +666,7 @@ private:
 
   /// Handles the reconfiguration signals.
   static ACE_Sig_Adapter *signal_handler_;
+  /// @}
 
   /// Pointer to the Singleton (ACE_Cleanup) Gestalt instance.
   /// There is thread-specific global instance pointer, which is used to
@@ -704,12 +708,13 @@ private:
 class ACE_Export ACE_Service_Config_Guard
 {
 public:
-  ACE_Service_Config_Guard (ACE_Service_Gestalt* psg);
-  ~ACE_Service_Config_Guard ();
+  ACE_Service_Config_Guard (ACE_Service_Config_Guard const &) = delete;
+  ACE_Service_Config_Guard (ACE_Service_Config_Guard &&) = delete;
+  ACE_Service_Config_Guard &operator= (ACE_Service_Config_Guard const &) = delete;
+  ACE_Service_Config_Guard &operator= (ACE_Service_Config_Guard &&) = delete;
 
-private:
-  ACE_Service_Config_Guard(const ACE_Service_Config_Guard&) = delete;
-  ACE_Service_Config_Guard& operator= (const ACE_Service_Config_Guard&) = delete;
+  explicit ACE_Service_Config_Guard (ACE_Service_Gestalt *psg);
+  ~ACE_Service_Config_Guard ();
 
 private:
   ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> saved_;

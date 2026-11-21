@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "orbsvcs/FT_NamingManagerC.h"
 #include "orbsvcs/PortableGroupC.h"
 #include "tao/PortableServer/PortableServer.h"
@@ -35,7 +34,6 @@ class Basic;
 class LB_server
 {
 public:
-  /// Constructor
   LB_server (int argc, ACE_TCHAR **argv);
 
   /// destroys NamingManager, ORB and POA.

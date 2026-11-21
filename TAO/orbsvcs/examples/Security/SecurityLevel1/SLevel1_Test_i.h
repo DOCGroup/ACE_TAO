@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SLEVEL1_TEST_I_H
 #define TAO_SLEVEL1_TEST_I_H
 
@@ -16,7 +15,6 @@
 class SLevel1_Server_i : public POA_SLevel1_Server
 {
  public:
-  /// Constructor
   SLevel1_Server_i ();
 
   ///

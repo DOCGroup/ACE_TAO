@@ -39,7 +39,6 @@ public:
     TAO_Target_Specification &spec,
     TAO_OutputCDR &msg) override;
 
- private:
   TAO_Codeset_Service_Context_Handler (TAO_Codeset_Service_Context_Handler const &) = delete;
   TAO_Codeset_Service_Context_Handler &operator= (
     TAO_Codeset_Service_Context_Handler const &) = delete;

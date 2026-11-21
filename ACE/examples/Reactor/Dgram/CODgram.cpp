@@ -1,27 +1,27 @@
-// Exercise the ACE_SOCK_CODgram wrapper along with the
-// ACE_Reactor.  This test simply ping-pongs datagrams back and
-// forth between the peer1 and peer2 processes.  This test can
-// be run in two ways:
-//
-// 1. Stand-alone -- e.g.,
-//
-//    % ./codgram
-//
-//    which will spawn a child process and run peer1 and peer2
-//    in different processes on the same machine.
-//
-// 2. Distributed -- e.g.,
-//
-//    # Peer1
-//    % ./codgram 10002 tango.cs.wustl.edu 10003 peer1
-//
-//    # Peer1
-//    % ./codgram 10003 tango.cs.wustl.edu 10002 peer2
-//
-//    which will run peer1 and peer2 in different processes
-//    on the same or different machines.  Note that you MUST
-//    give the name "peer1" as the final argument to one and
-//    only one of the programs so that the test will work properly.
+/// @file CODgram.cpp
+/// Exercise the ACE_SOCK_CODgram wrapper along with the ACE_Reactor.
+/// This test simply ping-pongs datagrams back and forth between the
+/// peer1 and peer2 processes. This test can be run in two ways:
+///
+/// 1. Stand-alone -- e.g.,
+///
+///    % ./codgram
+///
+///    which will spawn a child process and run peer1 and peer2
+///    in different processes on the same machine.
+///
+/// 2. Distributed -- e.g.,
+///
+///    # Peer1
+///    % ./codgram 10002 tango.cs.wustl.edu 10003 peer1
+///
+///    # Peer1
+///    % ./codgram 10003 tango.cs.wustl.edu 10002 peer2
+///
+///    which will run peer1 and peer2 in different processes
+///    on the same or different machines. Note that you MUST
+///    give the name "peer1" as the final argument to one and
+///    only one of the programs so that the test will work properly.
 
 #include "ace/OS_main.h"
 #include "ace/OS_NS_string.h"
@@ -32,37 +32,44 @@
 #include "ace/Process.h"
 #include "ace/Log_Msg.h"
 
+#include <memory>
 
-// Port used to receive for dgrams.
-static u_short port1;
+/// Port used to receive datagrams.
+static u_short port1 {};
 
 class Dgram_Endpoint : public ACE_Event_Handler
 {
 public:
-  Dgram_Endpoint (const ACE_INET_Addr &remote_addr,
-                  const ACE_INET_Addr &local_addr);
+  Dgram_Endpoint (ACE_INET_Addr const &remote_addr,
+                  ACE_INET_Addr const &local_addr);
+  Dgram_Endpoint (Dgram_Endpoint const &) = delete;
+  Dgram_Endpoint (Dgram_Endpoint &&) = delete;
+  Dgram_Endpoint &operator= (Dgram_Endpoint const &) = delete;
+  Dgram_Endpoint &operator= (Dgram_Endpoint &&) = delete;
 
-  // = Hook methods inherited from the <ACE_Event_Handler>.
+  /// @name Hook methods inherited from the <ACE_Event_Handler>
+  /// @{
   ACE_HANDLE get_handle () const override;
   int handle_input (ACE_HANDLE handle) override;
-  int handle_timeout (const ACE_Time_Value & tv,
-                      const void *arg = nullptr) override;
+  int handle_timeout (ACE_Time_Value const &tv,
+                      void const *arg = nullptr) override;
 
   int handle_close (ACE_HANDLE handle,
                     ACE_Reactor_Mask close_mask) override;
+  /// @}
 
   //FUZZ: disable check_for_lack_ACE_OS
-  int send (const char *buf, size_t len);
-  // Send the <buf> to the peer.
+  /// Send the <buf> to the peer.
+  int send (char const *buf, size_t len);
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
+  /// Wrapper for sending and receiving datagrams.
   ACE_SOCK_CODgram endpoint_;
-  // Wrapper for sending/receiving dgrams.
 };
 
 int
-Dgram_Endpoint::send (const char *buf, size_t len)
+Dgram_Endpoint::send (char const *buf, size_t len)
 {
   return this->endpoint_.send (buf, len);
 }
@@ -77,8 +84,8 @@ Dgram_Endpoint::handle_close (ACE_HANDLE handle,
   return 0;
 }
 
-Dgram_Endpoint::Dgram_Endpoint (const ACE_INET_Addr &remote_addr,
-                                const ACE_INET_Addr &local_addr)
+Dgram_Endpoint::Dgram_Endpoint (ACE_INET_Addr const &remote_addr,
+                                ACE_INET_Addr const &local_addr)
   : endpoint_ (remote_addr, local_addr)
 {
 }
@@ -95,19 +102,23 @@ Dgram_Endpoint::handle_input (ACE_HANDLE)
   char buf[BUFSIZ];
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) activity occurred on handle %d!\n",
+              "(%P|%t) activity occurred on handle %H!\n",
               this->endpoint_.get_handle ()));
 
   ssize_t const n = this->endpoint_.recv (buf, sizeof buf);
 
   if (n == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "handle_input"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "handle_input"));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) buf of size %d = %*s\n",
-                n, n, buf));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) buf of size %b = %*s\n",
+                  n, static_cast<int> (n), buf));
+    }
   return 0;
 }
 
@@ -133,22 +144,22 @@ run_test (u_short localport,
 
   // Read data from other side.
   if (ACE_Reactor::instance ()->register_handler
-      (&endpoint,
+      (std::addressof (endpoint),
        ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_Reactor::register_handler"),
-                      -1);
-  char buf[BUFSIZ];
-  ACE_OS::strcpy (buf,
-                  "Data to transmit");
-  size_t const len = ACE_OS::strlen (buf);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ACE_Reactor::register_handler"),
+                        -1);
+    }
+  char const buf[] = "Data to transmit";
+  size_t const len = sizeof (buf) - 1;
 
   // "peer1" is the "initiator."
   if (ACE_OS::strncmp (peer, ACE_TEXT("peer1"), 5) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) sending data\n"));
-      for (size_t i = 0; i < 20; i++)
+      for (size_t i = 0; i < 20; ++i)
         {
           endpoint.send (buf, len);
           ACE_DEBUG ((LM_DEBUG,
@@ -157,16 +168,18 @@ run_test (u_short localport,
         }
     }
 
-  for (int i = 0; i < 40; i++)
+  for (int i = 0; i < 40; ++i)
     {
       // Wait up to 10 seconds for data.
       ACE_Time_Value tv (10, 0);
 
       if (ACE_Reactor::instance ()->handle_events (tv) <= 0)
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "(%P|%t) %p\n",
-                           "handle_events"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "(%P|%t) %p\n",
+                             "handle_events"),
+                            -1);
+        }
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) return from handle events\n"));
 
@@ -177,11 +190,13 @@ run_test (u_short localport,
     }
 
   if (ACE_Reactor::instance ()->remove_handler
-      (&endpoint,
+      (std::addressof (endpoint),
        ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_Reactor::remove_handler"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ACE_Reactor::remove_handler"),
+                        -1);
+    }
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) exiting\n"));
   return 0;
@@ -193,17 +208,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Establish call backs and socket names.
 
   port1 = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
-  const ACE_TCHAR *remotehost = argc > 2 ? argv[2] : ACE_DEFAULT_SERVER_HOST;
-  const u_short port2 = argc > 3 ? ACE_OS::atoi (argv[3]) : port1 + 1;
+  ACE_TCHAR const *remotehost = argc > 2 ? argv[2] : ACE_DEFAULT_SERVER_HOST;
+  u_short const port2 = argc > 3 ? ACE_OS::atoi (argv[3]) : port1 + 1;
 
   // Providing the fourth command line argument indicates we don't
   // want to spawn a new process.  On Win32, we use this to exec the
   // new program.
   if (argc > 4)
-    run_test (port1,
-              remotehost,
-              port2,
-              argv[4]);
+    {
+      run_test (port1,
+                remotehost,
+                port2,
+                argv[4]);
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG,

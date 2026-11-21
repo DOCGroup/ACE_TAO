@@ -27,6 +27,8 @@
 
 #include <openssl/ssl.h>
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_INET_Addr;
@@ -34,12 +36,11 @@ class ACE_INET_Addr;
 class ACE_SSL_Export ACE_SSL_Data_File
 {
 public:
-  /// Default constructor
   ACE_SSL_Data_File ();
 
   /// Constructor from a file name and the file type.
-  ACE_SSL_Data_File (const char *file_name,
-                     int type = SSL_FILETYPE_PEM);
+  explicit ACE_SSL_Data_File (char const *file_name,
+                              int type = SSL_FILETYPE_PEM);
 
   /// The file name
   const char *file_name () const;
@@ -52,10 +53,8 @@ private:
   ACE_CString file_name_;
 
   /// The type, used by the SSL library to parse the file contents.
-  int type_;
+  int type_ {-1};
 };
-
-// ****************************************************************
 
 // NOTE: Some compilers will issue warnings if the
 // the correct type of function pointer (i.e. extern "C" ) is not stored/used
@@ -98,6 +97,11 @@ extern "C" {
 class ACE_SSL_Export ACE_SSL_Context
 {
 public:
+  ACE_SSL_Context (ACE_SSL_Context const &) = delete;
+  ACE_SSL_Context (ACE_SSL_Context &&) = delete;
+  ACE_SSL_Context &operator= (ACE_SSL_Context const &) = delete;
+  ACE_SSL_Context &operator= (ACE_SSL_Context &&) = delete;
+
 #ifdef ACE_HAS_THREADS
   using lock_type = ACE_SYNCH_MUTEX;
 #endif  /* ACE_HAS_THREADS */
@@ -110,10 +114,8 @@ public:
     SSLv23
   };
 
-  /// Constructor
   ACE_SSL_Context ();
 
-  /// Destructor
   ~ACE_SSL_Context ();
 
   /// The Singleton context, the SSL components use the singleton if
@@ -322,7 +324,7 @@ public:
    * pseudo-random number generator.  These methods can be called more
    * than once.
    */
-  //@{
+  /// @{
   /// Seed the underlying random number generator.  This value should
   /// have at least 128 bits of entropy.
   static int random_seed (const char * seed);
@@ -337,7 +339,7 @@ public:
    * read.
    */
   static int seed_file (const char * seed_file, long bytes = -1);
-  //@}
+  /// @}
 
   /// Print SSL error corresponding to the given error code.
   static void report_error (unsigned long error_code);
@@ -354,7 +356,7 @@ public:
    * the code itself.  ACE_SSL supports loaded parameters.
    *
    */
-  //@{
+  /// @{
   /**
    * Load Diffie-Hellman parameters from file_name.  The specified file can be
    * a standalone file containing only DH parameters (e.g., as created
@@ -364,25 +366,29 @@ public:
   int dh_params (const char *file_name, int type = SSL_FILETYPE_PEM);
   const char *dh_params_file_name () const;
   int dh_params_file_type () const;
-  //@}
+  /// @}
 
 private:
   /// Verify if the context has been initialized or not.
   void check_context ();
 
+  struct SSL_CTX_Deleter
+  {
+    void operator() (SSL_CTX *context) const
+    {
+      ::SSL_CTX_free (context);
+    }
+  };
+
   /// @@ More to document
   void ssl_library_init ();
   void ssl_library_fini ();
 
-  ACE_SSL_Context (const ACE_SSL_Context &) = delete;
-  ACE_SSL_Context & operator= (const ACE_SSL_Context &) = delete;
-
-private:
   /// The SSL_CTX structure
-  SSL_CTX *context_;
+  std::unique_ptr<SSL_CTX, SSL_CTX_Deleter> context_ {};
 
   /// Cache the mode so we can answer fast
-  int mode_;
+  int mode_ {-1};
 
   /// The private key, certificate, and Diffie-Hellman parameters files
   ACE_SSL_Data_File private_key_;
@@ -390,19 +396,13 @@ private:
   ACE_SSL_Data_File dh_params_;
 
   /// The default verify mode.
-  int default_verify_mode_;
+  int default_verify_mode_ {SSL_VERIFY_NONE};
 
   /// The default verify callback.
-  extern_C_CallBackVerify_t  default_verify_callback_;
+  extern_C_CallBackVerify_t default_verify_callback_ {};
 
   /// count of successful CA load attempts
-  int have_ca_;
-
-#if defined(ACE_HAS_THREADS) && (OPENSSL_VERSION_NUMBER < 0x10100000L)
-  /// Array of mutexes used internally by OpenSSL when the SSL
-  /// application is multithreaded.
-  static lock_type * locks_;
-#endif /* ACE_HAS_THREADS && OPENSSL_VERSION_NUMBER < 0x10100000L */
+  int have_ca_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    AnyTypeCode_methods.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_ANYTYPECODE_METHODS_H
 #define TAO_ANYTYPECODE_METHODS_H

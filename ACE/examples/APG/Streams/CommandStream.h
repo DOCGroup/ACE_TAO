@@ -23,19 +23,19 @@ class CommandStream : public ACE_Stream<ACE_MT_SYNCH>
 public:
   using inherited = ACE_Stream<ACE_MT_SYNCH>;
 
-  CommandStream (ACE_SOCK_Stream *peer)
+  explicit CommandStream (ACE_SOCK_Stream *peer)
     : inherited (), peer_(peer) { }
 
-  virtual int open (void *arg,
-                    ACE_Module<ACE_MT_SYNCH> *head = 0,
-                    ACE_Module<ACE_MT_SYNCH> *tail = 0);
+  int open (void *arg,
+            ACE_Module<ACE_MT_SYNCH> *head = nullptr,
+            ACE_Module<ACE_MT_SYNCH> *tail = nullptr) override;
 
   Command *execute (Command *command);
 
 private:
   CommandStream () = default;
 
-  ACE_SOCK_Stream *peer_;
+  ACE_SOCK_Stream *peer_ {};
 };
 // Listing 01
 

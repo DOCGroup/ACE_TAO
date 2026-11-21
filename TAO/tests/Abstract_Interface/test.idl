@@ -39,4 +39,3 @@ valuetype TreeController supports base
   public BaseNode root;
 };
 
-

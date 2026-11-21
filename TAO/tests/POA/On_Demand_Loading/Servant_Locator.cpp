@@ -10,10 +10,7 @@
  */
 //=============================================================================
 
-
 #include "Servant_Locator.h"
-
-// Initialization.
 
 ServantLocator_i::ServantLocator_i (CORBA::ORB_ptr orb)
   : servant_manager_ (orb)
@@ -23,23 +20,22 @@ ServantLocator_i::ServantLocator_i (CORBA::ORB_ptr orb)
 // This method associates an servant with the ObjectID.
 
 PortableServer::Servant
-ServantLocator_i::preinvoke (const PortableServer::ObjectId &oid,
+ServantLocator_i::preinvoke (PortableServer::ObjectId const &oid,
                              PortableServer::POA_ptr poa,
-                             const char * /* operation */,
+                             char const * /* operation */,
                              PortableServer::ServantLocator::Cookie &cookie)
 {
   // Convert ObjectID to String.
-
   CORBA::String_var s =
     PortableServer::ObjectId_to_string (oid);
 
   // If ObjectID string has a test substring create and return a
   // test_i.
 
-  PortableServer::Servant servant =
+  PortableServer::Servant const servant =
     this->servant_manager_.obtain_servant (ACE_TEXT_CHAR_TO_TCHAR(s.in ()),
                                            poa);
-  if (servant != 0)
+  if (servant != nullptr)
     {
       // Return the servant as the cookie , used as a check when
       // postinvoke is called on this ServantLocator_i.
@@ -47,8 +43,7 @@ ServantLocator_i::preinvoke (const PortableServer::ObjectId &oid,
       cookie = servant;
       return servant;
     }
-  else
-    throw CORBA::OBJECT_NOT_EXIST ();
+  throw CORBA::OBJECT_NOT_EXIST ();
 }
 
 // Since the servant gets invoked per operation, the servant has to be
@@ -56,15 +51,15 @@ ServantLocator_i::preinvoke (const PortableServer::ObjectId &oid,
 // postinvoke method.
 
 void
-ServantLocator_i::postinvoke (const PortableServer::ObjectId &oid,
+ServantLocator_i::postinvoke (PortableServer::ObjectId const &oid,
                               PortableServer::POA_ptr /* poa */,
-                              const char * /* operation */,
+                              char const * /* operation */,
                               PortableServer::ServantLocator::Cookie cookie,
                               PortableServer::Servant servant)
 {
   // Check the passed servant with the cookie.
 
-  PortableServer::Servant my_servant =
+  PortableServer::Servant const my_servant =
     reinterpret_cast<PortableServer::Servant> (cookie);
 
   ACE_ASSERT (servant == my_servant);
@@ -80,8 +75,8 @@ ServantLocator_i::postinvoke (const PortableServer::ObjectId &oid,
 // ObjectId is libname:factory_function.
 
 PortableServer::ObjectId_var
-ServantLocator_i::create_dll_object_id (const char *dllname,
-                                        const char *factory_function)
+ServantLocator_i::create_dll_object_id (char const *dllname,
+                                        char const *factory_function)
 {
   return this->servant_manager_.create_dll_object_id (dllname,
                                                       factory_function);

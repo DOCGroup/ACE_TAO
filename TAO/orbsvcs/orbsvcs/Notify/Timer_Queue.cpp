@@ -2,13 +2,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Timer_Queue::TAO_Notify_Timer_Queue ()
-{
-}
+TAO_Notify_Timer_Queue::TAO_Notify_Timer_Queue () = default;
 
-TAO_Notify_Timer_Queue::~TAO_Notify_Timer_Queue ()
-{
-}
+TAO_Notify_Timer_Queue::~TAO_Notify_Timer_Queue () = default;
 
 void
 TAO_Notify_Timer_Queue::release ()

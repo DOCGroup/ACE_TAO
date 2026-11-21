@@ -26,12 +26,14 @@ namespace TAO
   {
     template <class POLICYTYPE, typename POLICYVALUE>
     void create_policy (
-        POLICYTYPE *& policy,
-        POLICYVALUE &value,
-        CORBA::Any const &val)
+      POLICYTYPE *&policy,
+      POLICYVALUE &value,
+      CORBA::Any const &val)
     {
       if (!(val >>= value))
-        throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
+        {
+          throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
+        }
 
       ACE_NEW_THROW_EX (policy,
                         POLICYTYPE (value),

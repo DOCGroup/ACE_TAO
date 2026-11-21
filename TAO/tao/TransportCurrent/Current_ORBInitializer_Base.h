@@ -1,13 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Current_ORBInitializer_Base.h
  *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
-//=============================================================================
-
 
 #ifndef CURRENT_ORBINITIALIZER_BASE_H
 #define CURRENT_ORBINITIALIZER_BASE_H
@@ -37,21 +34,23 @@ namespace TAO
       , public virtual ::CORBA::LocalObject
     {
     public:
-      Current_ORBInitializer_Base (const ACE_TCHAR* id);
-      ~Current_ORBInitializer_Base () override;
+      explicit Current_ORBInitializer_Base (ACE_TCHAR const *id);
+
+      Current_ORBInitializer_Base (Current_ORBInitializer_Base const &) = delete;
+      Current_ORBInitializer_Base &operator= (Current_ORBInitializer_Base const &) = delete;
+      Current_ORBInitializer_Base (Current_ORBInitializer_Base &&) = delete;
+      Current_ORBInitializer_Base &operator= (Current_ORBInitializer_Base &&) = delete;
+
+      ~Current_ORBInitializer_Base () override = default;
 
       void pre_init (PortableInterceptor::ORBInitInfo_ptr) override;
 
       void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
     protected:
-        virtual TAO::Transport::Current_ptr
-        make_current_instance (TAO_ORB_Core* core, size_t tss_slot_id) = 0;
-    protected:
+      virtual TAO::Transport::Current_ptr
+      make_current_instance (TAO_ORB_Core *core, size_t tss_slot_id) = 0;
+
       ACE_TString const id_;
-      Current_ORBInitializer_Base (Current_ORBInitializer_Base const &) = delete;
-      Current_ORBInitializer_Base &operator= (Current_ORBInitializer_Base const &) = delete;
-      Current_ORBInitializer_Base (Current_ORBInitializer_Base &&) = delete;
-      Current_ORBInitializer_Base &operator= (Current_ORBInitializer_Base &&) = delete;
     };
   } /* namespace Transport */
 

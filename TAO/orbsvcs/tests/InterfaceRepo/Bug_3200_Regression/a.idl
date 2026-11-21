@@ -6,7 +6,6 @@ interface test {
 // const string SDO_SERVICE_NAME     = "IDL:FMK_ItJobMgr";
  void mytest();
 
-
 };
 
 };

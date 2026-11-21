@@ -12,7 +12,7 @@ namespace ACE
         ACE_CString lenstr;
         if (this->get (CONTENT_LENGTH, lenstr))
           {
-            return ACE_OS::atoi (lenstr.c_str ());
+            return std::atoi (lenstr.c_str ());
           }
         return UNKNOWN_CONTENT_LENGTH;
       }

@@ -1,13 +1,13 @@
 // -*- C++ -*-
 #include "test_i.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 char *
-foo_i::foo_op (const char * inarg)
+foo_i::foo_op (char const *inarg)
 {
   CORBA::String_var retval = CORBA::string_dup ("bad");
 
-  if (ACE_OS::strcmp (inarg, "foo_op") == 0)
+  if (std::strcmp (inarg, "foo_op") == 0)
     {
       retval = CORBA::string_dup ("good");
     }
@@ -20,11 +20,11 @@ foo_i::foo_op (const char * inarg)
 }
 
 char *
-foo_i::base_op (const char * inarg)
+foo_i::base_op (char const *inarg)
 {
   CORBA::String_var retval = CORBA::string_dup ("bad");
 
-  if (ACE_OS::strcmp (inarg, "base_op") == 0)
+  if (std::strcmp (inarg, "base_op") == 0)
     {
       retval = CORBA::string_dup ("good");
     }
@@ -51,16 +51,14 @@ passer_i::shutdown ()
 void
 passer_i::pass_ops (base_out outarg)
 {
-  foo_i *servant = 0;
-  ACE_NEW (servant,
-           foo_i);
+  PortableServer::ServantBase_var servant;
+  ACE_NEW (servant.inout (), foo_i);
 
-  PortableServer::ObjectId_var id =
-    this->poa_->activate_object (servant);
+  PortableServer::ObjectId_var const id =
+    this->poa_->activate_object (servant.in ());
 
-  CORBA::Object_var object = this->poa_->id_to_reference (id.in ());
+  CORBA::Object_var const object = this->poa_->id_to_reference (id.in ());
 
-  PortableServer::ServantBase_var safety (servant);
   outarg = foo::_narrow (object.in ());
 }
 
@@ -68,28 +66,24 @@ void
 passer_i::pass_state (base_out outarg)
 {
   TreeController_var tc;
-  ACE_NEW (tc.inout (),
-           OBV_TreeController);
+  ACE_NEW (tc.inout (), OBV_TreeController);
 
   // Create the root node.
   StringNode_var sn;
-  ACE_NEW (sn.inout (),
-           OBV_StringNode);
-  sn->name ((const char *) "RootNode");
+  ACE_NEW (sn.inout (), OBV_StringNode);
+  sn->name ("RootNode");
   tc->root (sn.in ());
 
   // Create the left leaf.
   StringNode_var l_dummy;
-  ACE_NEW (l_dummy.inout (),
-           OBV_StringNode);
-  l_dummy->name ((const char *) "LeftNode");
+  ACE_NEW (l_dummy.inout (), OBV_StringNode);
+  l_dummy->name ("LeftNode");
   sn->left (l_dummy.in ());
 
   // Create the right leaf.
   StringNode_var r_dummy;
-  ACE_NEW (r_dummy.inout (),
-           OBV_StringNode);
-  r_dummy->name ((const char *) "RightNode");
+  ACE_NEW (r_dummy.inout (), OBV_StringNode);
+  r_dummy->name ("RightNode");
   sn->right (r_dummy.in ());
 
   outarg = tc._retn ();

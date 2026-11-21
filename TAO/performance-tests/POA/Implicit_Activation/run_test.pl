@@ -38,8 +38,8 @@ $CL = $client->CreateProcess ("client", "-k file://$client_iorfile " .
 
 $server_status = $CO->SpawnWaitKill ($server1->ProcessStartWaitInterval() + 100);
 
-if ($client_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($server_status != 0) {
+    print STDERR "ERROR: collocated server returned $server_status\n";
     $status = 1;
 }
 

@@ -4,50 +4,45 @@
 
 #include "orbsvcs/IOR_Multicast.h"
 
+#include <memory>
+
+/// Helper class for the server implementation.
 class Server_i
 {
-  // = TITLE
-  //     Server_i
-  //
-  // = DESCRIPTION
-  //     Helper class for the server implementation.
-
 public:
-  // = Constructor and destructor.
-  Server_i ();
-  ~Server_i ();
+  Server_i () = default;
+  ~Server_i () = default;
 
-  int init (int& argc, ACE_TCHAR** argv);
-  // Initialize the server multicast.
+  Server_i (Server_i const&) = delete;
+  Server_i (Server_i&&) = delete;
+  Server_i& operator= (Server_i const&) = delete;
+  Server_i& operator= (Server_i&&) = delete;
+
+  /// Initializes the server multicast.
+  int init (int &argc, ACE_TCHAR **argv);
 
 private:
-  /// Sets the IOR_Multicast class to listen for multicast requests
-  // for this server.
-  int enable_multicast (char const* ior);
+  /// Sets the IOR_Multicast class to listen for multicast requests for this server.
+  int enable_multicast (char const *ior);
 
   /// Parse the command line arguments.
-  int parse_args (int argc, ACE_TCHAR* argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
 private:
-  int argc_;
-  // # of arguments on the command line.
+  /// Number of command-line arguments.
+  int argc_ {};
 
-  ACE_TCHAR** argv_;
-  // arguments from command line.
+  /// The command-line arguments.
+  ACE_TCHAR **argv_ {};
 
-  CORBA::ORB_var orb_;
-  // ORB
+  /// The ORB.
+  CORBA::ORB_var orb_ {};
 
-  TAO_IOR_Multicast* ior_multicast_;
-  // The ior_multicast event handler.
+  /// The IOR multicast event handler.
+  std::unique_ptr<TAO_IOR_Multicast> ior_multicast_ {};
 
-  CORBA::String_var service_ior_;
-  // The IOR string of the service.
-
-  CORBA::String_var mcast_address_;
-  // Address of the multicast address where to listen for requests for */
-  // the server. */
-
+  /// Multicast address to listen for requests for this server.
+  CORBA::String_var mcast_address_ {};
 };
 
 #endif /* SERVER_I_H */

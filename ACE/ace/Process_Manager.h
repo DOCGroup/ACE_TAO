@@ -22,6 +22,7 @@
 #include "ace/Process.h"
 #include "ace/Event_Handler.h"
 #include "ace/Time_Value.h"
+#include <memory>
 
 #if defined (ACE_HAS_THREADS)
 #  include "ace/Recursive_Thread_Mutex.h"
@@ -103,7 +104,7 @@ public:
   /**
    * @name Initialization and termination methods
    */
-  //@{
+  /// @{
   /**
    * Initialize an ACE_Process_Manager with a table containing up to
    * @a size processes.  This table resizes itself automatically as
@@ -114,6 +115,10 @@ public:
    */
   ACE_Process_Manager (size_t size = ACE_Process_Manager::DEFAULT_SIZE,
                        ACE_Reactor *reactor = nullptr);
+  ACE_Process_Manager (ACE_Process_Manager const &) = delete;
+  ACE_Process_Manager (ACE_Process_Manager &&) = delete;
+  ACE_Process_Manager &operator= (ACE_Process_Manager const &) = delete;
+  ACE_Process_Manager &operator= (ACE_Process_Manager &&) = delete;
 
   /**
    * Initialize an ACE_Process_Manager with a table containing up to
@@ -133,12 +138,12 @@ public:
   /// to exit.
   ~ACE_Process_Manager () override;
 
-  //@}
+  /// @}
 
   /**
    * @name Singleton access and control
    */
-  //@{
+  /// @{
   /// Get pointer to a process-wide ACE_Process_Manager.
   static ACE_Process_Manager *instance ();
 
@@ -153,12 +158,12 @@ public:
   /// singleton.
   static void cleanup (void *instance, void *arg);
 
-  //@}
+  /// @}
 
   /**
    * @name Process creation methods
    */
-  //@{
+  /// @{
   /**
    * Create a new process with specified @a options.
    * Register @a event_handler to be called back when the process exits.
@@ -194,12 +199,12 @@ public:
                ACE_Process_Options &options,
                pid_t *child_pids = nullptr,
                ACE_Event_Handler *event_Handler = nullptr);
-  //@}
+  /// @}
 
   /**
    * @name Process synchronization operations
    */
-  //@{
+  /// @{
   /**
    * Abruptly terminate a single process with id @a pid using the
    * ACE::terminate_process() method which works on both signal-capable
@@ -287,12 +292,12 @@ public:
    */
   pid_t wait (pid_t pid,
               ACE_exitcode *status = nullptr);
-  //@}
+  /// @}
 
   /**
    * @name Utility methods
    */
-  //@{
+  /// @{
   /**
    * Register an event handler to be called back when the specified
    * process exits.  If @a pid == ACE_INVALID_PID this handler is called
@@ -340,31 +345,18 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  //@}
+  /// @}
 
 protected:
-  // = These methods allow a <Process_Manager> to be an Event_Handler.
-
-  // As an Event_Handler, the <Process_Manager> automagically
-  // detects child Processes exiting and calls notify_proc_handler()
-  // and remove().  This means that you don't have to (shouldn't!)
-  // call the wait(...)  methods yourself.
-
-  // On Unix, we can't detect individual process termination very
-  // well; the best method is to catch SIGCHLD and then call the
-  // polling wait() function to collect any available exit statuses.
-  // However, we don't want to do this from within a signal handler
-  // because of the restrictions associated.  Therefore (following the
-  // lead in examples/mumble) we open a bogus handle (to ACE_DEV_NULL)
-  // and register that handle with our Reactor.  Then, when our
-  // SIGCHLD handler gets invoked, we tell the Reactor that the bogus
-  // handle is readable.  That will cause the handle_input() function
-  // to be called once we're out of the interrupt context, and
-  // handle_input() collects exit statuses.
-
-  // On Win32, we simply register ourself with the Reactor to deal
-  // with the Process handle becoming signaled.  No muss, no fuss, no
-  // signal handler, and no dummy handle.
+  /// @name Event-handler integration
+  /// As an event handler, the process manager detects child process exits and
+  /// calls `notify_proc_handler()` and `remove()`, so callers should not call
+  /// the wait methods themselves.
+  ///
+  /// On Unix, it catches `SIGCHLD` and uses the reactor notification pipe to
+  /// collect exit statuses outside the signal handler. On Windows, it
+  /// registers with the reactor to receive process-handle notifications.
+  /// @{
 
 #if !defined(ACE_WIN32)
   /// Collect one (or more, on unix) process exit status.
@@ -386,7 +378,8 @@ protected:
    * On Win32, this routine is called synchronously, and is passed the
    * HANDLE of the Process that exited, so we can do all our work here
    */
-  int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0) override;
+  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
+  /// @}
 
 private:
   /**
@@ -399,15 +392,14 @@ private:
    */
   struct Process_Descriptor
   {
-    /// Default ctor/dtor.
     Process_Descriptor ();
     ~Process_Descriptor ();
 
     /// Describes the process itself.
-    ACE_Process *process_;
+    ACE_Process *process_ {};
 
     /// Function to call when process exits
-    ACE_Event_Handler *exit_notify_;
+    ACE_Event_Handler *exit_notify_ {};
 
     /// Dump the state of an object.
     void dump () const;
@@ -451,19 +443,19 @@ private:
   /// table, or there's a default handler, call it.
   int notify_proc_handler (size_t n, ACE_exitcode status);
 
-  /// Vector that describes process state within the Process_Manager.
-  Process_Descriptor *process_table_;
+  /// Array that describes process state within the Process_Manager.
+  std::unique_ptr<Process_Descriptor[]> process_table_ {};
 
   /// Maximum number of processes we can manage (should be dynamically
   /// allocated).
-  size_t max_process_table_size_;
+  size_t max_process_table_size_ {};
 
   /// Current number of processes we are managing.
-  size_t current_count_;
+  size_t current_count_ {};
 
   /// This event handler is used to notify when a process we control
   /// exits.
-  ACE_Event_Handler *default_exit_handler_;
+  ACE_Event_Handler *default_exit_handler_ {};
 
   /// Singleton pointer.
   static ACE_Process_Manager *instance_;

@@ -21,6 +21,8 @@
 #include "ace/Guard_T.h"
 #include "ace/Object_Manager.h"
 
+#include <memory>
+
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
@@ -46,7 +48,7 @@ ACE_Test_Output::ACE_Test_Output ()
 ACE_Test_Output::~ACE_Test_Output ()
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-  ACE_LOG_MSG->msg_ostream (&cerr);
+  ACE_LOG_MSG->msg_ostream (std::addressof (cerr));
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
@@ -123,7 +125,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   if (this->output_file_->bad ())
     return -1;
 #else /* when ACE_LACKS_IOSTREAM_TOTALLY */
-  ACE_TCHAR *fmode = 0;
+  ACE_TCHAR *fmode {};
   if (append)
     fmode = ACE_TEXT ("a");
   else
@@ -194,7 +196,7 @@ randomize (int array[], size_t size)
 {
   size_t i;
 
-  for (i = 0; i < size; i++)
+  for (i = 0; i < size; ++i)
     array [i] = static_cast<int> (i);
 
   // See with a fixed number so that we can produce "repeatable"
@@ -203,7 +205,7 @@ randomize (int array[], size_t size)
 
   // Generate an array of random numbers from 0 .. size - 1.
 
-  for (i = 0; i < size; i++)
+  for (i = 0; i < size; ++i)
     {
       size_t index = ACE_OS::rand() % size--;
       int temp = array [index];

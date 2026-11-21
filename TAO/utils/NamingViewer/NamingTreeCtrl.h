@@ -14,7 +14,6 @@ class CNamingObject;
 
 class CNamingTreeCtrl : public CTreeCtrl
 {
-// Construction
 public:
   CNamingTreeCtrl();
 

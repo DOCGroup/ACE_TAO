@@ -14,12 +14,16 @@
 class Server_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Server_Task (CORBA::ORB_ptr orb,
                ACE_Thread_Manager *thr_mgr);
 
   /// Thread entry point
-  int svc ();
+  int svc () override;
+
+  Server_Task (Server_Task const &) = delete;
+  Server_Task (Server_Task &&) = delete;
+  Server_Task &operator= (Server_Task const &) = delete;
+  Server_Task &operator= (Server_Task &&) = delete;
 
 private:
   /// Reference to the ORB

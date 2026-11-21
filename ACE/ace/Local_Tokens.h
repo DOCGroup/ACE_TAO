@@ -43,6 +43,8 @@
 
 #include /**/ "ace/config-all.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -111,14 +113,11 @@ public:
   /// Null constructor.
   ACE_TPQ_Entry ();
 
-  /// Constructor.
   ACE_TPQ_Entry (const ACE_Token_Proxy *proxy,
                  const ACE_TCHAR *client_id);
 
-  /// Copy constructor.
   ACE_TPQ_Entry (const ACE_TPQ_Entry &rhs);
 
-  /// Destructor.
   ~ACE_TPQ_Entry ();
 
   /// Copy operator use by the queue.
@@ -160,12 +159,12 @@ public:
   /// Dump the state of the class.
   void dump () const;
 
-  // = Used to block the thread if an acquire fails with EWOULDBLOCK.
+  /// Synchronize threads blocked after an acquire returns EWOULDBLOCK.
   ACE_TOKEN_CONST::COND_VAR cond_var_;
   ACE_TOKEN_CONST::MUTEX lock_;
 
   /// Pointer to next in list.
-  ACE_TPQ_Entry *next_;
+  ACE_TPQ_Entry *next_ {};
 
   /// Get whether this client is blocked waiting for a token.
   int waiting () const;
@@ -175,22 +174,22 @@ public:
 
 private:
   /// This client is waiting for a token.
-  int waiting_;
+  int waiting_ {};
 
   /// Proxy.
-  ACE_Token_Proxy *proxy_;
+  ACE_Token_Proxy *proxy_ {};
 
   /// Nesting level.
-  int nesting_level_;
+  int nesting_level_ {};
 
   /// Arg.
-  void *arg_;
+  void *arg_ {};
 
   /// Client id.
-  ACE_TCHAR client_id_[ACE_MAXCLIENTIDLEN];
+  ACE_TCHAR client_id_[ACE_MAXCLIENTIDLEN] {};
 
   /// Sleep hook.
-  void (*sleep_hook_)(void *);
+  void (*sleep_hook_)(void *) {};
 };
 
 // b..
@@ -210,16 +209,20 @@ using ACE_TPQ_ENTRY = ACE_TSS<ACE_TPQ_Entry>;
 class ACE_Export ACE_TSS_TPQ_Entry : public ACE_TPQ_ENTRY
 {
 public:
+  ACE_TSS_TPQ_Entry (ACE_TSS_TPQ_Entry const &) = delete;
+  ACE_TSS_TPQ_Entry (ACE_TSS_TPQ_Entry &&) = delete;
+  ACE_TSS_TPQ_Entry &operator= (ACE_TSS_TPQ_Entry const &) = delete;
+  ACE_TSS_TPQ_Entry &operator= (ACE_TSS_TPQ_Entry &&) = delete;
+
   /// These are passed to the constructor of ACE_TPQ_Entry in
   /// make_TSS_TYPE
   ACE_TSS_TPQ_Entry (const ACE_Token_Proxy *proxy,
                      const ACE_TCHAR *client_id);
 
-  /// Destructor.
   virtual ~ACE_TSS_TPQ_Entry () = default;
 
   /// Allows us to pass args to the construction of the TSS object.
-  virtual ACE_TPQ_Entry *make_TSS_TYPE () const;
+  ACE_TPQ_Entry *make_TSS_TYPE () const override;
 
   /// Operator overloading and inheritance don't mix.
   operator ACE_TPQ_Entry *();
@@ -235,11 +238,7 @@ public:
 #endif /* ACE_NO_TSS_TOKENS */
 
 private:
-  ACE_TSS_TPQ_Entry (const ACE_TSS_TPQ_Entry &) = delete;
-  void operator= (const ACE_TSS_TPQ_Entry &) = delete;
-
-  // = These are passed to the constructor of ACE_TPQ_Entry in
-  // make_TSS_TYPE
+  /// Arguments passed to the ACE_TPQ_Entry constructor in make_TSS_TYPE.
 
   /// Proxy.
   const ACE_Token_Proxy *proxy_;
@@ -261,10 +260,8 @@ class ACE_Token_Proxy_Queue;
 class ACE_Export ACE_TPQ_Iterator
 {
 public:
-  /// Constructor.
   ACE_TPQ_Iterator (ACE_Token_Proxy_Queue &q);
 
-  /// Destructor.
   ~ACE_TPQ_Iterator () = default;
 
   /// Pass back the @a next_item.
@@ -303,10 +300,8 @@ class ACE_Export ACE_Token_Proxy_Queue
 public:
   friend class ACE_TPQ_Iterator;
 
-  /// Constructor.
   ACE_Token_Proxy_Queue ();
 
-  /// Destructor.
   ~ACE_Token_Proxy_Queue () = default;
 
   /**
@@ -337,13 +332,13 @@ public:
 
 protected:
   /// Head.
-  ACE_TPQ_Entry *head_;
+  ACE_TPQ_Entry *head_ {};
 
   /// Tail.
-  ACE_TPQ_Entry *tail_;
+  ACE_TPQ_Entry *tail_ {};
 
   /// Size.
-  int size_;
+  int size_ {};
 };
 
 // 5..
@@ -371,7 +366,6 @@ public:
   /// Null constructor.
   ACE_Tokens ();
 
-  /// Destructor
   virtual ~ACE_Tokens () = default;
 
   /// No implementation.
@@ -396,8 +390,8 @@ public:
   /// Remove the caller from the waiter list.
   void remove (ACE_TPQ_Entry *caller);
 
-  // = Accessor methods.
-
+  /// @name Token accessors
+  /// @{
   /// Stack of owners.
   using OWNER_STACK = ACE_Unbounded_Stack<ACE_TPQ_Entry *>;
 
@@ -405,11 +399,11 @@ public:
   /// success.  If @a id is non-zero, returns 1 if id is an owner.
   virtual int owners (OWNER_STACK &o, const ACE_TCHAR *id) = 0;
 
-  /// Returns 1 if @a id is waiting for this token.  0 otherwise.
-  virtual int is_waiting_for (const ACE_TCHAR *id) = 0;
+  /// Returns true if @a id is waiting for this token.
+  virtual bool is_waiting_for (const ACE_TCHAR *id) = 0;
 
-  /// Returns 1 if @a id is an owner of this token.  0 otherwise.
-  virtual int is_owner (const ACE_TCHAR *id) = 0;
+  /// Returns true if @a id is an owner of this token.
+  virtual bool is_owner (const ACE_TCHAR *id) = 0;
 
   /// Return the queue of waiters.
   virtual ACE_Token_Proxy_Queue *waiters ();
@@ -423,11 +417,14 @@ public:
 
   /// Token name.
   const ACE_TCHAR* name ();
+  /// @}
 
-  // = Reference counting.  These are only called by the
-  // Token_Manager.
+  /// @name Reference counting
+  /// These methods are only called by ACE_Token_Manager.
+  /// @{
   void inc_reference ();
   int dec_reference ();
+  /// @}
 
   /// Dump the state of the class.
   void dump () const;
@@ -446,24 +443,26 @@ public:
    */
   virtual int type () const = 0;
 
-  // = The following methods allow the deadlock detection algorithm to
-  // check if this token has been visited.
+  /// @name Deadlock detection
+  /// Track whether this token has been visited by the deadlock detector.
+  /// @{
 
   /// Mark or unmark the token as visited.
   void visit (int v);
 
   /// Check if the token has been visited.
   int visited ();
+  /// @}
 
   /// All the data of the current owner.
   ACE_TPQ_Entry *owner ();
 
 protected:
   /// For the deadlock detection algorithm.
-  int visited_;
+  int visited_ {};
 
   /// Reference count.
-  int reference_count_;
+  int reference_count_ {};
 
   /// List of client's owning and waiting the token.
   ACE_Token_Proxy_Queue waiters_;
@@ -493,16 +492,13 @@ class ACE_Local_Mutex;
 class ACE_Export ACE_Mutex_Token : public ACE_Tokens
 {
 public:
-  /// Constructor
   explicit ACE_Mutex_Token (const ACE_TCHAR* name);
 
-  /// Destructor
   virtual ~ACE_Mutex_Token ();
 
-  // = Synchronization operations.
-  // With acquire, renew, and release, the caller must be specified so
-  // that multiple proxies (e.g. ACE_Local_Mutex) can use the same
-  // token.
+  /// @name Synchronization operations
+  /// Callers must be specified so multiple proxies can share this token.
+  /// @{
 
   /**
    * Returns 0 on success, -1 on failure with <ACE_Log_Msg::errnum> as
@@ -511,12 +507,12 @@ public:
    * owner of the token.  If ignore_deadlock is passed as 1 and errnum
    * == EDEADLK, then deadlock was detected via ace_token_manager.
    */
-  virtual int acquire (ACE_TPQ_Entry *caller,
-                       int ignore_deadlock,
-                       int notify);
+  int acquire (ACE_TPQ_Entry *caller,
+               int ignore_deadlock,
+               int notify) override;
 
   /// Same as acquire, but fails if would block
-  virtual int tryacquire (ACE_TPQ_Entry *caller);
+  int tryacquire (ACE_TPQ_Entry *caller) override;
 
   /**
    * An optimized method that efficiently reacquires the token if no
@@ -538,31 +534,32 @@ public:
    * <ACE_Token_Proxy::sleep_hook> has been called on the current
    * owner of the token.
    */
-  virtual int renew (ACE_TPQ_Entry *caller,
-                     int requeue_position);
+  int renew (ACE_TPQ_Entry *caller,
+             int requeue_position) override;
 
   /**
    * Relinquish the token.  If there are any waiters then the next one
    * in line gets it.  If the caller is not the owner, caller is
    * removed from the waiter list.
    */
-  virtual int release (ACE_TPQ_Entry *caller);
+  int release (ACE_TPQ_Entry *caller) override;
+  /// @}
 
   /// Dump the state of the class.
   void dump () const;
 
   /// Returns ACE_Tokens::MUTEX.
-  virtual int type () const;
+  int type () const override;
 
   /// Returns a stack of the current owners.  Returns -1 on error, 0 on
   /// success.  If @a id is non-zero, returns 1 if id is an owner.
-  virtual int owners (OWNER_STACK &o, const ACE_TCHAR *id);
+  int owners (OWNER_STACK &o, const ACE_TCHAR *id) override;
 
-  /// Returns 1 if @a id is waiting for this token.  0 otherwise.
-  virtual int is_waiting_for (const ACE_TCHAR *id);
+  /// Returns true if @a id is waiting for this token.
+  bool is_waiting_for (const ACE_TCHAR *id) override;
 
-  /// Returns 1 if @a id is an owner of this token.  0 otherwise.
-  virtual int is_owner (const ACE_TCHAR *id);
+  /// Returns true if @a id is an owner of this token.
+  bool is_owner (const ACE_TCHAR *id) override;
 
 private:
   /// ACE_Mutex_Token used to lock internal data structures.
@@ -588,16 +585,13 @@ private:
 class ACE_Export ACE_RW_Token : public ACE_Tokens
 {
 public:
-  /// Constructor.
   explicit ACE_RW_Token (const ACE_TCHAR* name);
 
-  /// Destructor.
   virtual ~ACE_RW_Token ();
 
-  // = Synchronization operations.
-  // With acquire, renew, and release, the caller must be specified so
-  // that multiple proxies (e.g. ACE_Local_Mutex) can use the same
-  // token.
+  /// @name Synchronization operations
+  /// Callers must be specified so multiple proxies can share this token.
+  /// @{
 
   /**
    * Returns 0 on success, -1 on failure with <ACE_Log_Msg::errnum> as
@@ -606,12 +600,12 @@ public:
    * owner of the token.  If @a ignore_deadlock is passed as 1 and errnum
    * == EDEADLK, then deadlock was detected via ACE_Token_Manager.
    */
-  virtual int acquire (ACE_TPQ_Entry *caller,
-                       int ignore_deadlock,
-                       int notify);
+  int acquire (ACE_TPQ_Entry *caller,
+               int ignore_deadlock,
+               int notify) override;
 
   /// Same as acquire except fails on would block
-  virtual int tryacquire (ACE_TPQ_Entry *caller);
+  int tryacquire (ACE_TPQ_Entry *caller) override;
 
   /**
    * An optimized method that efficiently reacquires the token if no
@@ -633,15 +627,16 @@ public:
    * <ACE_Token_Proxy::sleep_hook> has been called on the current
    * owner of the token.
    */
-  virtual int renew (ACE_TPQ_Entry *caller,
-                     int requeue_position);
+  int renew (ACE_TPQ_Entry *caller,
+             int requeue_position) override;
 
   /**
    * Relinquish the token.  If there are any waiters then the next one
    * in line gets it.  If the caller is not the owner, caller is
    * removed from the waiter list.
    */
-  virtual int release (ACE_TPQ_Entry *caller);
+  int release (ACE_TPQ_Entry *caller) override;
+  /// @}
 
   /// Dump the state of the class.
   void dump () const;
@@ -650,21 +645,21 @@ public:
   enum PROXY_TYPE { READER, WRITER };
 
   /// Returns READER or WRITER.
-  virtual int type () const;
+  int type () const override;
 
   /// Returns a stack of the current owners.  Returns -1 on error, 0 on
   /// success.  If @a id is non-zero, returns 1 if id is an owner.
-  virtual int owners (OWNER_STACK &o, const ACE_TCHAR *id);
+  int owners (OWNER_STACK &o, const ACE_TCHAR *id) override;
 
-  /// Returns 1 if @a id is waiting for this token.  0 otherwise.
-  virtual int is_waiting_for (const ACE_TCHAR *id);
+  /// Returns true if @a id is waiting for this token.
+  bool is_waiting_for (const ACE_TCHAR *id) override;
 
-  /// Returns 1 if @a id is an owner of this token.  0 otherwise.
-  virtual int is_owner (const ACE_TCHAR *id);
+  /// Returns true if @a id is an owner of this token.
+  bool is_owner (const ACE_TCHAR *id) override;
 
 protected:
   /// The number of waiting writers.
-  int num_writers_;
+  int num_writers_ {};
 
   /// ACE_Mutex_Token used to lock internal data structures.
   ACE_TOKEN_CONST::MUTEX lock_;
@@ -688,13 +683,11 @@ protected:
 class ACE_Export ACE_Token_Name
 {
 public:
-  /// Construction.
   ACE_Token_Name (const ACE_TCHAR *token_name = nullptr);
 
   /// Copy construction.
   ACE_Token_Name (const ACE_Token_Name &rhs);
 
-  /// Destructor.
   virtual ~ACE_Token_Name ();
 
   /// Copy.
@@ -747,13 +740,12 @@ class ACE_Export ACE_Token_Proxy
 {
 public:
   friend class ACE_Token_Manager;
-  friend class ACE_Token_Invariant_Manager; // For testing.
+  /// Grants the invariant test access to private members.
+  friend class ACE_Token_Invariant_Manager;
 
   // Initialization and termination methods.
-  /// Construction.
   ACE_Token_Proxy ();
 
-  /// Destructor.
   virtual ~ACE_Token_Proxy ();
 
   /**
@@ -766,17 +758,15 @@ public:
                     int ignore_deadlock = 0,
                     int debug = 0);
 
-  // = The following methods have implementations which are
-  // independent of the token semantics (mutex, rwlock, etc.)  They
-  // forward operations to the underlying token and perform the
-  // necessary blocking semantics for operations (condition variables
-  // etc.)  This allows reuse of the blocking code as well as having
-  // multiple proxies to the same token.
+  /// @name Token operations
+  /// These methods forward to the underlying token and provide blocking
+  /// behavior shared by mutex and reader/writer proxies.
+  /// @{
 
   /// Calls acquire on the token.  Blocks the calling thread if would
   /// block.
   virtual int acquire (int notify = 0,
-                       void (*sleep_hook)(void *) = 0,
+                       void (*sleep_hook)(void *) = nullptr,
                        ACE_Synch_Options &options =
                        ACE_Synch_Options::defaults);
 
@@ -786,7 +776,7 @@ public:
                      ACE_Synch_Options::defaults);
 
   /// Calls renew on the token.
-  virtual int tryacquire (void (*sleep_hook)(void *) = 0);
+  virtual int tryacquire (void (*sleep_hook)(void *) = nullptr);
 
   /// Calls release on the token.
   virtual int release (ACE_Synch_Options &options =
@@ -799,27 +789,28 @@ public:
   /// Since the locking mechanism doesn't support read locks then this
   /// just calls <acquire>.
   virtual int acquire_read (int notify = 0,
-                            void (*sleep_hook)(void *) = 0,
+                            void (*sleep_hook)(void *) = nullptr,
                             ACE_Synch_Options &options =
                             ACE_Synch_Options::defaults);
 
   /// Since the locking mechanism doesn't support write locks then this
   /// just calls <acquire>.
   virtual int acquire_write (int notify = 0,
-                             void (*sleep_hook)(void *) = 0,
+                             void (*sleep_hook)(void *) = nullptr,
                              ACE_Synch_Options &options =
                              ACE_Synch_Options::defaults);
 
   /// Since the locking mechanism doesn't support read locks then this
   /// just calls <tryacquire>.
-  virtual int tryacquire_read (void (*sleep_hook)(void *) = 0);
+  virtual int tryacquire_read (void (*sleep_hook)(void *) = nullptr);
 
   /// Since the locking mechanism doesn't support write locks then this
   /// just calls <tryacquire>.
-  virtual int tryacquire_write (void (*sleep_hook)(void *) = 0);
+  virtual int tryacquire_write (void (*sleep_hook)(void *) = nullptr);
+  /// @}
 
-  // = Utility methods.
-
+  /// @name Utility methods
+  /// @{
   /// Get the client id of the proxy.  This is implemented as
   /// thread-specific data.
   virtual const ACE_TCHAR *client_id () const;
@@ -868,6 +859,7 @@ public:
    * default implementation returns 0.
    */
   virtual int type () const;
+  /// @}
 
 protected:
   /// Duplication.
@@ -881,7 +873,7 @@ protected:
 
   /// Reference to the actual logical token.  Many ACE_Local_Mutex
   /// proxies can reference the same ACE_Mutex_Token.
-  ACE_Tokens *token_;
+  ACE_Tokens *token_ {};
 
   /// Handles cond_var waits.
   int handle_options (ACE_Synch_Options &options,
@@ -904,42 +896,40 @@ protected:
 class ACE_Export ACE_Null_Token : public ACE_Token_Proxy
 {
 public:
-  /// Construction.
   ACE_Null_Token () = default;
 
-  /// Destructor.
-  ~ACE_Null_Token () = default;
+  ~ACE_Null_Token () override = default;
 
   /// Acquire.
-  virtual int acquire (int /* notify */ = 0,
-                       void (* /* sleep_hook */ )(void *) = 0,
-                       ACE_Synch_Options & /* options */ =
-                       ACE_Synch_Options::defaults) { return 0; }
+  int acquire (int /* notify */ = 0,
+               void (* /* sleep_hook */ )(void *) = nullptr,
+               ACE_Synch_Options & /* options */ =
+               ACE_Synch_Options::defaults) override { return 0; }
 
   /// Renew.
-  virtual int renew (int /* requeue_position */ = -1,
-                     ACE_Synch_Options & /* options */ =
-                     ACE_Synch_Options::defaults) { return 0; }
+  int renew (int /* requeue_position */ = -1,
+             ACE_Synch_Options & /* options */ =
+             ACE_Synch_Options::defaults) override { return 0; }
 
   /// Try acquire.
-  virtual int tryacquire (void (* /* sleep_hook */)(void *) = 0) { return 0; }
+  int tryacquire (void (* /* sleep_hook */)(void *) = nullptr) override { return 0; }
 
   /// Release.
-  virtual int release (ACE_Synch_Options & /* options */ =
-                       ACE_Synch_Options::defaults) { return 0; }
+  int release (ACE_Synch_Options & /* options */ =
+               ACE_Synch_Options::defaults) override { return 0; }
 
   /// Remove.
-  virtual int remove (ACE_Synch_Options & /* options */ =
-                      ACE_Synch_Options::defaults) { return 0; }
+  int remove (ACE_Synch_Options & /* options */ =
+              ACE_Synch_Options::defaults) override { return 0; }
 
   /// Return a dynamically allocated clone of the derived class.
-  virtual ACE_Token_Proxy *clone () const { return new ACE_Null_Token; }
+  ACE_Token_Proxy *clone () const override { return new ACE_Null_Token; }
 
   /// Dump the state of the class.
   void dump () const;
 
   /// Do not allow the Token Manager to create us.
-  virtual ACE_Tokens *create_token (const ACE_TCHAR *) { return 0; }
+  ACE_Tokens *create_token (const ACE_TCHAR *) override { return nullptr; }
 };
 
 // 9..
@@ -974,18 +964,17 @@ public:
                    int ignore_deadlock = 0,
                    int debug = 0);
 
-  /// Destructor
-  ~ACE_Local_Mutex ();
+  ~ACE_Local_Mutex () override;
 
   /// Dump the state of the class.
   void dump () const;
 
   /// Return deep copy.
-  virtual ACE_Token_Proxy *clone () const;
+  ACE_Token_Proxy *clone () const override;
 
 protected:
   /// Return a new ACE_Local_Mutex.
-  virtual ACE_Tokens *create_token (const ACE_TCHAR *name);
+  ACE_Tokens *create_token (const ACE_TCHAR *name) override;
 };
 
 // *.
@@ -1026,21 +1015,20 @@ public:
                    int ignore_deadlock = 0,
                    int debug = 0);
 
-  /// Destructor
-  ~ACE_Local_RLock ();
+  ~ACE_Local_RLock () override;
 
   /// Dump the state of the class.
   void dump () const;
 
   /// Returns ACE_RW_Token::RLOCK.
-  virtual int type () const;
+  int type () const override;
 
   /// Return deep copy.
-  virtual ACE_Token_Proxy *clone () const;
+  ACE_Token_Proxy *clone () const override;
 
 protected:
   /// Return a new ACE_Local_Mutex.
-  virtual ACE_Tokens *create_token (const ACE_TCHAR *name);
+  ACE_Tokens *create_token (const ACE_TCHAR *name) override;
 };
 
 // *.
@@ -1081,21 +1069,20 @@ public:
                    int ignore_deadlock = 0,
                    int debug = 0);
 
-  /// Destructor
-  ~ACE_Local_WLock ();
+  ~ACE_Local_WLock () override;
 
   /// Dump the state of the class.
   void dump () const;
 
   /// Returns ACE_RW_Token::WLOCK.
-  virtual int type () const;
+  int type () const override;
 
   /// Return deep copy.
-  virtual ACE_Token_Proxy *clone () const;
+  ACE_Token_Proxy *clone () const override;
 
 protected:
   /// Return a new ACE_Local_Mutex.
-  ACE_Tokens *create_token (const ACE_TCHAR *name);
+  ACE_Tokens *create_token (const ACE_TCHAR *name) override;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file ImplicitActivationPolicy.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_PORTABLESERVER_IMPLICITACTIVATIONPOLICY_H
 #define TAO_PORTABLESERVER_IMPLICITACTIVATIONPOLICY_H
 #include /**/ "ace/pre.h"
@@ -41,7 +37,7 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      ImplicitActivationPolicy (::PortableServer::ImplicitActivationPolicyValue value);
+      explicit ImplicitActivationPolicy (::PortableServer::ImplicitActivationPolicyValue value);
 
       CORBA::Policy_ptr copy () override;
 

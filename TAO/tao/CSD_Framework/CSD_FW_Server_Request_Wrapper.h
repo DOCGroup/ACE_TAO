@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    CSD_FW_Server_Request_Wrapper.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_CSD_FW_SERVER_REQUEST_WRAPPER_H
 #define TAO_CSD_FW_SERVER_REQUEST_WRAPPER_H
@@ -57,10 +55,8 @@ namespace TAO
     class TAO_CSD_FW_Export FW_Server_Request_Wrapper
     {
     public:
-      /// Constructor.
       explicit FW_Server_Request_Wrapper(TAO_ServerRequest& server_request);
 
-      /// Destructor.
       ~FW_Server_Request_Wrapper();
 
       /// Perform the clone operation.
@@ -74,12 +70,12 @@ namespace TAO
       /// Cancel the request.
       void cancel();
 
-    private:
       FW_Server_Request_Wrapper (FW_Server_Request_Wrapper const &) = delete;
       FW_Server_Request_Wrapper &operator= (FW_Server_Request_Wrapper const &) = delete;
       FW_Server_Request_Wrapper (FW_Server_Request_Wrapper &&) = delete;
       FW_Server_Request_Wrapper &operator= (FW_Server_Request_Wrapper &&) = delete;
 
+    private:
       /// Create a deep copy of the request_ object.
       /// The other clone methods are used to support the TAO_ServerRequest clone.
       TAO_ServerRequest* clone (TAO_ServerRequest*& from);
@@ -93,8 +89,8 @@ namespace TAO
       /// code to determine whether the arguments are in the operation_details_
       /// object or should be demarshalled from the incoming_ stream in the request_
       /// object.
-      bool clone (TAO_Operation_Details const *& from,
-                  TAO_Operation_Details const *& to,
+      bool clone (TAO_Operation_Details *& from,
+                  TAO_Operation_Details *& to,
                   TAO_InputCDR* & cdr);
 
       /// Clone the TAO_Tagged_Profile object.
@@ -102,6 +98,8 @@ namespace TAO
 
       /// Clone the TAO_Service_Context object.
       void clone (TAO_Service_Context& from, TAO_Service_Context& to);
+
+      static void destroy_clone (TAO_ServerRequest *request) noexcept;
 
       /// Create a TAO_OutputCDR stream initialized with a heap allocated
       /// buffer.
@@ -111,7 +109,7 @@ namespace TAO
       /// is already cloned.
       bool is_clone_ {};
 
-      /// Pointer to the underlying TAO_ServerRequest object.
+      /// Borrowed until clone(); then owns the cloned TAO_ServerRequest.
       TAO_ServerRequest* request_ {};
     };
   }

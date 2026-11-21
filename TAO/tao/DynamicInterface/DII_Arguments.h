@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    DII_Arguments.h
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_DII_ARGUMENTS_H
 #define TAO_DII_ARGUMENTS_H

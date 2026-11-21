@@ -32,10 +32,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Shared_Object
 {
 public:
-  /// Constructor
   ACE_Shared_Object ();
 
-  /// Destructor
   virtual ~ACE_Shared_Object ();
 
   /// Initializes object when dynamic linking occurs.

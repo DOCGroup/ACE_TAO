@@ -51,7 +51,9 @@ client (void *arg)
                    (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
     {
       if (errno != EWOULDBLOCK)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("connection failed")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("connection failed")));
+        }
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) starting timed connect\n")));
 
@@ -60,34 +62,50 @@ client (void *arg)
       ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
 
       if (con.complete (cli_stream, &server_addr, &tv) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("connection failed")), 0);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("connection failed")), 0);
+        }
       else
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) connected to %C\n"),
-                    server_addr.get_host_name ()));
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) connected to %C\n"),
+                      server_addr.get_host_name ()));
+        }
     }
 
   if (cli_stream.disable (ACE_NONBLOCK) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("disable")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("disable")));
+    }
 
   // Send data to server (correctly handles "incomplete writes").
 
-  for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
-    if (cli_stream.send_n (c, 1) == -1)
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("send_n")));
+  for (const char *c = ACE_ALPHABET; *c != '\0'; ++c)
+    {
+      if (cli_stream.send_n (c, 1) == -1)
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("send_n")));
+        }
+    }
 
   // Explicitly close the writer-side of the connection.
   if (cli_stream.close_writer () == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("close_writer")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("close_writer")));
+    }
 
   char buf[1];
 
   // Wait for handshake with server.
   if (cli_stream.recv_n (buf, 1) != 1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("recv_n")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("recv_n")));
+    }
 
   // Close the connection completely.
   if (cli_stream.close () == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("close")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("close")));
+    }
 
   return nullptr;
 }
@@ -98,7 +116,9 @@ server (void *arg)
   ACE_SOCK_Acceptor *peer_acceptor = (ACE_SOCK_Acceptor *) arg;
 
   if (peer_acceptor->enable (ACE_NONBLOCK) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("enable")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("enable")));
+    }
 
   // Keep these objects out here to prevent excessive constructor
   // calls...
@@ -128,7 +148,9 @@ server (void *arg)
   ACE_TEST_ASSERT (tv == def_timeout);
 
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("select")), 0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("select")), 0);
+    }
   else if (result == 0)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) select timed out, shutting down\n")));
@@ -145,31 +167,34 @@ server (void *arg)
 
       // Enable non-blocking I/O.
       if (new_stream.enable (ACE_NONBLOCK) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("enable")), 0);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("enable")), 0);
+        }
 
       handle_set.reset ();
       handle_set.set_bit (new_stream.get_handle ());
 
       // Read data from client (terminate on error).
-      int select_width;
       for (ssize_t r_bytes; ;)
         {
 #  if defined (ACE_WIN64)
           // This arg is ignored on Windows and causes pointer truncation
           // warnings on 64-bit compiles.
-          select_width = 0;
+          int const select_width = 0;
 #  else
-          select_width = int (new_stream.get_handle ()) + 1;
+          int const select_width = int (new_stream.get_handle ()) + 1;
 #  endif /* ACE_WIN64 */
           if (ACE_OS::select (select_width,
                               handle_set,
                               nullptr, nullptr, nullptr) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("select")), 0);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("select")), 0);
+            }
 
           while ((r_bytes = new_stream.recv (buf, 1)) > 0)
             {
               ACE_TEST_ASSERT (*t == buf[0]);
-              t++;
+              ++t;
             }
 
           if (r_bytes == 0)
@@ -179,19 +204,27 @@ server (void *arg)
 
               // Handshake back with client.
               if (new_stream.send_n ("", 1) != 1)
-                ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("send_n")));
+                {
+                  ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("send_n")));
+                }
 
               // Close endpoint.
               if (new_stream.close () == -1)
-                ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("close")));
+                {
+                  ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("close")));
+                }
               return nullptr;
             }
           else if (r_bytes == -1)
             {
               if (errno == EAGAIN || errno == EWOULDBLOCK)
-                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) no input available, going back to reading\n")));
+                {
+                  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) no input available, going back to reading\n")));
+                }
               else
-                ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("recv_n")), 0);
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("recv_n")), 0);
+                }
             }
         }
     }
@@ -199,9 +232,13 @@ server (void *arg)
   if (result == -1)
     {
       if (errno == EWOULDBLOCK)
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) no connections available, shutting down\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) no connections available, shutting down\n")));
+        }
       else
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("accept")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("accept")));
+        }
     }
 
   return nullptr;
@@ -219,7 +256,9 @@ spawn ()
   // Bind listener to any port and then find out what the port was.
   if (peer_acceptor.open (ACE_Addr::sap_any, 0, AF_INET6) == -1
       || peer_acceptor.get_local_addr (server_addr) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("open")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("open")));
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) starting server at port %d\n"),

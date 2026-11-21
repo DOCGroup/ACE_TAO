@@ -40,12 +40,15 @@ template<class EVENT_CHANNEL, class PROXY>
 class TAO_ESF_Proxy_RefCount_Guard
 {
 public:
-  /// Constructor
   TAO_ESF_Proxy_RefCount_Guard (CORBA::ULong &refcount,
                                 EVENT_CHANNEL *ec,
                                 PROXY *proxy);
 
-  /// Destructor
+  TAO_ESF_Proxy_RefCount_Guard (TAO_ESF_Proxy_RefCount_Guard const &) = delete;
+  TAO_ESF_Proxy_RefCount_Guard (TAO_ESF_Proxy_RefCount_Guard &&) = delete;
+  TAO_ESF_Proxy_RefCount_Guard &operator= (TAO_ESF_Proxy_RefCount_Guard const &) = delete;
+  TAO_ESF_Proxy_RefCount_Guard &operator= (TAO_ESF_Proxy_RefCount_Guard &&) = delete;
+
   ~TAO_ESF_Proxy_RefCount_Guard ();
 
 protected:

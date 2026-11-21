@@ -9,12 +9,13 @@
  */
 //=============================================================================
 
-
 #ifndef RTEC_BASED_COSEC_H
 #define RTEC_BASED_COSEC_H
 
 #include "CosEvent_Utilities.h"
 #include "orbsvcs/CosNamingC.h"
+
+#include <string>
 
 #if defined (_MSC_VER)
 #pragma warning(push)
@@ -31,11 +32,12 @@
 class RtEC_Based_CosEC : public CosEC_ServantBase
 {
  public:
-  /// Constructor.
-  RtEC_Based_CosEC ();
-
-  /// Destructor.
-  virtual ~RtEC_Based_CosEC ();
+  RtEC_Based_CosEC () = default;
+  ~RtEC_Based_CosEC () override = default;
+  RtEC_Based_CosEC (RtEC_Based_CosEC const &) = delete;
+  RtEC_Based_CosEC (RtEC_Based_CosEC &&) = delete;
+  RtEC_Based_CosEC &operator= (RtEC_Based_CosEC const &) = delete;
+  RtEC_Based_CosEC &operator= (RtEC_Based_CosEC &&) = delete;
 
   /// Parses the command line arguments.
   int parse_args (int argc, ACE_TCHAR *argv []);
@@ -53,16 +55,14 @@ class RtEC_Based_CosEC : public CosEC_ServantBase
   void shutdown ();
 
 protected:
-  // = Methods from CosEC_ServantBase
   /// Create a local rtec.
-  virtual POA_RtecEventChannelAdmin::EventChannel_ptr
-  create_rtec ();
+  POA_RtecEventChannelAdmin::EventChannel_ptr create_rtec () override;
 
   /// Activates the rtec.
-  virtual void activate_rtec ();
+  void activate_rtec () override;
 
   /// Deactivates the rtec.
-  virtual void deactivate_rtec ();
+  void deactivate_rtec () override;
 
   /// initialize the ORB.
   void init_ORB (int& argc, ACE_TCHAR *argv []);
@@ -73,25 +73,24 @@ protected:
   /// Locate a rtec.
   void locate_rtec ();
 
-  // = Data members
   /// The name we use to register with the Naming Service.
-  const ACE_TCHAR *service_name;
+  std::basic_string<ACE_TCHAR> service_name {ACE_TEXT ("CosEventService")};
 
   /// The name of the Real Time Event Service.
-  const ACE_TCHAR *rt_service_name;
+  std::basic_string<ACE_TCHAR> rt_service_name {ACE_TEXT ("EventService")};
 
   /// The ORB that we use.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// Reference to the root poa.
-  PortableServer::POA_var poa_;
+  PortableServer::POA_var poa_ {};
 
   /// A naming context.
-  CosNaming::NamingContext_var naming_;
+  CosNaming::NamingContext_var naming_ {};
 
   /// Flag to indicate if the RtEC is local/remote,
-  /// 0 => local, 1 => remote, default is local.
-  CORBA::Boolean remote_rtec_;
+  /// false => local, true => remote, default is local.
+  bool remote_rtec_ {};
 };
 
 #if defined (_MSC_VER)

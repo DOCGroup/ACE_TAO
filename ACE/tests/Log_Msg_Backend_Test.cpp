@@ -17,6 +17,8 @@
 #include "ace/Log_Msg_Backend.h"
 #include "ace/Log_Record.h"
 
+#include <memory>
+
 class Backend : public ACE_Log_Msg_Backend
 {
 public:
@@ -96,7 +98,7 @@ run_main (int, ACE_TCHAR *[])
   // Set up the backend prior to ACE_START_TEST so the initialization can
   // call the back end's reset().
   Backend b;
-  ACE_Log_Msg_Backend *old_b = ACE_Log_Msg::msg_backend (&b);
+  ACE_Log_Msg_Backend *old_b = ACE_Log_Msg::msg_backend (std::addressof (b));
 
   ACE_START_TEST (ACE_TEXT ("Log_Msg_Backend_Test"));
 
@@ -106,7 +108,7 @@ run_main (int, ACE_TCHAR *[])
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Old backend (%@) not 0 at start\n"),
-                  old_b));
+                  static_cast<void *> (old_b)));
       ++status;
     }
 

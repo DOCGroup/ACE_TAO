@@ -24,12 +24,13 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::dump () const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::dump");
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nthr_mgr_ = %x"), this->thr_mgr_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nthr_mgr_ = %@"), this->thr_mgr_));
   this->msg_queue_->dump ();
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("delete_msg_queue_ = %d\n"), this->delete_msg_queue_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nflags = %x"), this->flags_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nmod_ = %x"), this->mod_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nnext_ = %x"), this->next_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nflags = %Q"),
+                 static_cast<ACE_UINT64> (this->flags_)));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nmod_ = %@"), this->mod_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nnext_ = %@"), this->next_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ngrp_id_ = %d"), this->grp_id_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nthr_count_ = %d"), this->thr_count_));
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
@@ -46,15 +47,11 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::dump () const
 template<ACE_SYNCH_DECL, class TIME_POLICY>
 ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::ACE_Task (ACE_Thread_Manager *thr_man,
                                    ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *mq)
-  : ACE_Task_Base (thr_man),
-    msg_queue_ (0),
-    delete_msg_queue_ (false),
-    mod_ (0),
-    next_ (0)
+  : ACE_Task_Base (thr_man)
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::ACE_Task");
 
-  if (mq == 0)
+  if (mq == nullptr)
     {
       using QUEUE_TYPE = ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>;
       ACE_NEW (mq,
@@ -70,7 +67,9 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::~ACE_Task ()
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::~ACE_Task");
   if (this->delete_msg_queue_)
-    delete this->msg_queue_;
+    {
+      delete this->msg_queue_;
+    }
 
   // These assignments aren't strickly necessary but they help guard
   // against odd race conditions...
@@ -81,20 +80,28 @@ template<ACE_SYNCH_DECL, class TIME_POLICY> ACE_Task<ACE_SYNCH_USE, TIME_POLICY>
 ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::sibling ()
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::sibling");
-  if (this->mod_ == 0)
-    return 0;
+  if (this->mod_ == nullptr)
+    {
+      return nullptr;
+    }
   else
-    return this->mod_->sibling (this);
+    {
+      return this->mod_->sibling (this);
+    }
 }
 
-template<ACE_SYNCH_DECL, class TIME_POLICY> const ACE_TCHAR *
+template<ACE_SYNCH_DECL, class TIME_POLICY> ACE_TCHAR const *
 ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::name () const
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::name");
-  if (this->mod_ == 0)
-    return nullptr;
+  if (this->mod_ == nullptr)
+    {
+      return nullptr;
+    }
   else
-    return this->mod_->name ();
+    {
+      return this->mod_->name ();
+    }
 }
 
 template<ACE_SYNCH_DECL, class TIME_POLICY> ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *

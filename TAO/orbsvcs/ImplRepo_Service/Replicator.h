@@ -33,7 +33,7 @@ class Options;
 class UPN_i : public virtual POA_ImplementationRepository::UpdatePushNotification
 {
 public:
-  UPN_i (Replicator &owner);
+  explicit UPN_i (Replicator &owner);
 
   /// provide the implementation for being notified of a
   /// server or activator update

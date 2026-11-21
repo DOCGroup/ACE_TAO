@@ -1,16 +1,6 @@
 #include "Time_i.h"
 #include "ace/OS_NS_time.h"
 
-// Constructor
-Time_i::Time_i ()
-{
-}
-
-// Destructor
-Time_i::~Time_i ()
-{
-}
-
 // Set the ORB pointer.
 void
 Time_i::orb (CORBA::ORB_ptr o)
@@ -22,7 +12,7 @@ Time_i::orb (CORBA::ORB_ptr o)
 CORBA::Long
 Time_i::current_time ()
 {
-  return CORBA::Long (ACE_OS::time (0));
+  return CORBA::Long (ACE_OS::time (nullptr));
 }
 
 // Shutdown.

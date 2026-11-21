@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file Active_Policy_Strategies.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_PORTABLESERVER_ACTIVE_POLICY_STRATEGIES_H
 #define TAO_PORTABLESERVER_ACTIVE_POLICY_STRATEGIES_H
 
@@ -116,6 +112,8 @@ namespace TAO
       Active_Policy_Strategies *_retn ();
 
     private:
+      /// Non-owning pointer to the POA member whose strategies are cleaned
+      /// up if construction fails; this guard never deletes the POA member.
       Active_Policy_Strategies *ptr_ {};
     };
   }

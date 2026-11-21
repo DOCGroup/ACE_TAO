@@ -15,10 +15,10 @@
 
 #include "ace/Proactor.h"
 #include "ace/Task.h"
-#include "ace/Atomic_Op.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
+#include <atomic>
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms supporting
@@ -41,9 +41,9 @@ public:
                                 const void *arg) override
     {
       // Print out when timeouts occur.
-      ACE_DEBUG ((LM_DEBUG, "(%t) %d timeout occurred for %s @ %d.\n",
+      ACE_DEBUG ((LM_DEBUG, "(%t) %d timeout occurred for %s @ %:.\n",
                   ++count_,
-                  (char *) arg,
+                  static_cast<char const *> (arg),
                   (tv - this->start_time_).sec ()));
 
       // Sleep for a while
@@ -52,7 +52,7 @@ public:
 
 private:
   /// Number of the timer event.
-  ACE_Atomic_Op <ACE_SYNCH_MUTEX, int> count_;
+  std::atomic<int> count_ {0};
 
   /// Starting time of the test.
   ACE_Time_Value start_time_;
@@ -69,7 +69,9 @@ public:
       ACE_DEBUG ((LM_DEBUG, "(%t):Starting svc routine\n"));
 
       if (ACE_Proactor::run_event_loop(run_time) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "(%t):%p.\n", "Worker::svc"), -1);
+      }
 
       ACE_DEBUG ((LM_DEBUG, "(%t) work complete\n"));
 
@@ -88,7 +90,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                                                  (void *) "Foo",
                                                  ACE_Time_Value::zero,
                                                  foo_tv) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
+  }
 
   // Register a 3 second timer.
   ACE_Time_Value bar_tv (3);
@@ -96,12 +100,16 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                                                  (void *) "Bar",
                                                  ACE_Time_Value::zero,
                                                  bar_tv) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
+  }
 
   Worker worker;
 
   if (worker.activate (THR_NEW_LWP, 10) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "main"), -1);
+  }
 
   ACE_Thread_Manager::instance ()->wait ();
 

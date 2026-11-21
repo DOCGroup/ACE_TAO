@@ -55,8 +55,6 @@ namespace ACE_Utils
 # endif  /* __GNUC__ */
   template<> struct Sign_Check<signed long long> { static bool const is_signed = true; };
 
-  // -----------------------------------------------------
-
   /**
    * @struct To_Unsigned
    *
@@ -205,7 +203,9 @@ namespace ACE_Utils
     {
       // Prevent wrap-around when casting to unsigned.
       if (lhs < 0)
-        return false;  // since rhs is always positive
+        {
+          return false;  // since rhs is always positive
+        }
       else
         {
           // Implicit promotion of unsigned LEFT and RIGHT types here.
@@ -222,7 +222,9 @@ namespace ACE_Utils
     {
       // Prevent wrap-around when casting to unsigned.
       if (rhs < 0)
-        return true;  // since lhs is always positive
+        {
+          return true;  // since lhs is always positive
+        }
       else
         {
           // Implicit promotion of unsigned LEFT and RIGHT types here.
@@ -375,8 +377,8 @@ namespace ACE_Utils
     TO operator() (FROM val)
     {
       return
-        (comparator::greater_than (val, ACE_Numeric_Limits<TO>::max ())
-         ? ACE_Numeric_Limits<TO>::max ()
+        (comparator::greater_than (val, (ACE_Numeric_Limits<TO>::max) ())
+         ? (ACE_Numeric_Limits<TO>::max) ()
          : static_cast<TO> (val));
     }
 
@@ -392,7 +394,6 @@ namespace ACE_Utils
       return val;
     }
   };
-
 
   // -----------------------------------------------------
   /**

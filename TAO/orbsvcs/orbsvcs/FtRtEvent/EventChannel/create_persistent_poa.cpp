@@ -16,7 +16,7 @@ PortableServer::POA_var create_persistent_poa(PortableServer::POA_var root_poa,
     root_poa->create_id_assignment_policy(PortableServer::USER_ID);
 
   // create PolicyList.
-  size_t orig_len =  policy_list.length();
+  size_t const orig_len =  policy_list.length();
   policy_list.length(orig_len+2);
   policy_list[orig_len+0]=
     PortableServer::LifespanPolicy::_duplicate(lifespan.in());
@@ -25,7 +25,6 @@ PortableServer::POA_var create_persistent_poa(PortableServer::POA_var root_poa,
 
   // create the child POA
   result = root_poa->create_POA(name, mgr.in(), policy_list);
-
 
   return result;
 }

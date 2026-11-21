@@ -1,12 +1,11 @@
 #include "ace/INet/HeaderBase.h"
-#include "ace/OS_NS_stdlib.h"
+#include <string>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/INet/HeaderBase.inl"
 #endif
 
 #include "ace/INet/INet_Log.h"
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -26,9 +25,7 @@ namespace ACE
       {
       }
 
-    HeaderBase::~HeaderBase()
-      {
-      }
+    HeaderBase::~HeaderBase() = default;
 
     void HeaderBase::set_content_length(int length)
       {
@@ -38,9 +35,8 @@ namespace ACE
           }
         else
           {
-            char buf[32];
-            this->set (CONTENT_LENGTH,
-                       ACE_OS::itoa (length, buf, 10));
+            const std::string length_string = std::to_string (length);
+            this->set (CONTENT_LENGTH, length_string.c_str ());
           }
       }
 
@@ -88,9 +84,13 @@ namespace ACE
             // parse value
             ch = this->read_field (str, value, MAX_VALUE_LENGTH, '\r');
             if (ch == '\r')
-              ch = str.get (); // get lf
+              {
+                ch = str.get (); // get lf
+              }
             if (ch != '\n')
-              return false; // value too long/no crlf found; cannot continue
+              {
+                return false; // value too long/no crlf found; cannot continue
+              }
 
             // followup lines starting with ws are continuations of the value
             // and must be appended
@@ -99,9 +99,13 @@ namespace ACE
             {
               ch = this->read_field (str, value, MAX_VALUE_LENGTH, '\r');
               if (ch == '\r')
-                ch = str.get (); // get lf
+                {
+                  ch = str.get (); // get lf
+                }
               if (ch != '\n')
-                return false; // multiline value too long/no crlf; cannot continue
+                {
+                  return false; // multiline value too long/no crlf; cannot continue
+                }
 
               ch = str.peek ();
             }
@@ -115,7 +119,6 @@ namespace ACE
           }
         return true;
       }
-
 
     void HeaderBase::set (const ACE_CString& name, const ACE_CString& value)
       {
@@ -145,7 +148,6 @@ namespace ACE
           }
       }
 
-
     NVPair::NVPair () {}
 
     NVPair::NVPair (const ACE_CString& first)
@@ -163,7 +165,7 @@ namespace ACE
         *this = pair;
       }
 
-    NVPair::~NVPair () {}
+    NVPair::~NVPair () = default;
 
   }
 }

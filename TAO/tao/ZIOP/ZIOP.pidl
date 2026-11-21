@@ -10,9 +10,8 @@ module ZIOP
     Compression::Buffer data;
    };
 
-    //
-    // ORB Policies for ZIOP
-    //
+    /// @name ORB Policies for ZIOP
+    /// @{
 
     /**
      * Tag Id for CompressionEnablingPolicy
@@ -63,4 +62,5 @@ module ZIOP
     {
         readonly attribute Compression::CompressionRatio ratio;
     };
+    /// @}
 };

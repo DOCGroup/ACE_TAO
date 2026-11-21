@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file RequestProcessingStrategyServantLocator.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_REQUESTPROCESSINGSTRATEGYSERVANTLOCATOR_H
 #define TAO_REQUESTPROCESSINGSTRATEGYSERVANTLOCATOR_H
 #include /**/ "ace/pre.h"

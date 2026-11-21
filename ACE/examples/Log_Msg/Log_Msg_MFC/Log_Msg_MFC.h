@@ -33,7 +33,7 @@ public:
     // ClassWizard generated virtual function overrides
     //{{AFX_VIRTUAL(CLog_Msg_MFCApp)
     public:
-    virtual BOOL InitInstance();
+    BOOL InitInstance () override;
     //}}AFX_VIRTUAL
 
 // Implementation

@@ -31,6 +31,8 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Impl_T.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
@@ -47,7 +49,7 @@ static TAO::TypeCode::Objref<char const *,
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ProtocolProperties =
-    &_tao_tc_RTCORBA_ProtocolProperties;
+    std::addressof (_tao_tc_RTCORBA_ProtocolProperties);
 }
 
 

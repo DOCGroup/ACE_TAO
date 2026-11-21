@@ -1,7 +1,6 @@
 #include "ace/Priority_Reactor.h"
 #include "ace/Malloc_T.h"
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 using QUEUE_ITERATOR = ACE_Unbounded_Queue_Iterator<ACE_Event_Tuple>;
@@ -38,15 +37,15 @@ ACE_Priority_Reactor::init_bucket ()
 
   // This loops "ensures" exception safety.
   for (int i = 0; i < npriorities; ++i)
-    ACE_NEW (this->bucket_[i],
-             QUEUE (this->tuple_allocator_));
+    {
+      ACE_NEW (this->bucket_[i],
+               QUEUE (this->tuple_allocator_));
+    }
 }
 
 ACE_Priority_Reactor::ACE_Priority_Reactor (ACE_Sig_Handler *sh,
                                             ACE_Timer_Queue *tq)
-  : ACE_Select_Reactor(sh, tq),
-    bucket_ (nullptr),
-    tuple_allocator_ (nullptr)
+  : ACE_Select_Reactor(sh, tq)
 {
   ACE_TRACE ("ACE_Priority_Reactor::ACE_Priority_Reactor");
   this->init_bucket ();
@@ -56,9 +55,7 @@ ACE_Priority_Reactor::ACE_Priority_Reactor (size_t size,
                                             bool restart,
                                             ACE_Sig_Handler *sh,
                                             ACE_Timer_Queue *tq)
-  : ACE_Select_Reactor (size, restart, sh, tq),
-    bucket_ (nullptr),
-    tuple_allocator_ (nullptr)
+  : ACE_Select_Reactor (size, restart, sh, tq)
 {
   ACE_TRACE ("ACE_Priority_Reactor::ACE_Priority_Reactor");
   this->init_bucket ();
@@ -69,7 +66,9 @@ ACE_Priority_Reactor::~ACE_Priority_Reactor ()
   ACE_TRACE ("ACE_Priority_Reactor::~ACE_Priority_Reactor");
 
   for (int i = 0; i < npriorities; ++i)
-    delete this->bucket_[i];
+    {
+      delete this->bucket_[i];
+    }
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_Allocator::instance()->free(this->bucket_);
@@ -93,7 +92,9 @@ ACE_Priority_Reactor::build_bucket (ACE_Handle_Set &dispatch_mask,
       ACE_Event_Handler *event_handler =
         this->handler_rep_.find (handle);
       if (event_handler == nullptr)
+      {
         return -1;
+      }
 
       ACE_Event_Tuple et (event_handler,
                           handle);
@@ -102,16 +103,24 @@ ACE_Priority_Reactor::build_bucket (ACE_Handle_Set &dispatch_mask,
       // If the priority is out of range assign the minimum priority.
       if (prio < ACE_Event_Handler::LO_PRIORITY
           || prio > ACE_Event_Handler::HI_PRIORITY)
+      {
         prio = ACE_Event_Handler::LO_PRIORITY;
+      }
 
       if (bucket_[prio]->enqueue_tail (et) == -1)
+      {
         return -1;
+      }
 
       // Update the priority ranges....
       if (min_priority > prio)
+      {
         min_priority = prio;
+      }
       if (max_priority < prio)
+      {
         max_priority = prio;
+      }
     }
 
   return 0;
@@ -128,7 +137,9 @@ ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
   ACE_TRACE ("ACE_Priority_Reactor::dispatch_io_set");
 
   if (number_of_active_handles == 0)
+  {
     return 0;
+  }
 
   // The range for which there exists any Event_Tuple is computed on
   // the ordering loop, minimizing iterations on the dispatching loop.
@@ -140,7 +151,9 @@ ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
   if (this->build_bucket (dispatch_mask,
                           min_priority,
                           max_priority) == -1)
+  {
     return -1;
+  }
 
   for (int i = max_priority; i >= min_priority; --i)
     {
@@ -165,7 +178,9 @@ ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
                                      mask);
 
           if (this->state_changed_)
+          {
             this->state_changed_ = false; // so it will not rebuild it ...
+          }
         }
 
       // Even if we are aborting the loop due to this->state_changed

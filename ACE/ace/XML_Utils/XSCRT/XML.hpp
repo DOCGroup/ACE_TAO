@@ -1,5 +1,5 @@
-// file      : XSCRT/XML.hpp
-// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+/// @file XSCRT/XML.hpp
+/// @author Boris Kolpackov <boris@dre.vanderbilt.edu>
 
 #ifndef XSCRT_XML_HPP
 #define XSCRT_XML_HPP
@@ -28,42 +28,61 @@ namespace XSCRT
 
     class string
     {
+      struct Deleter
+      {
+        bool xerces_allocated{};
+
+        Deleter () noexcept = default;
+        explicit Deleter (bool xerces_allocated) noexcept
+          : xerces_allocated (xerces_allocated)
+        {
+        }
+
+        void operator() (XMLCh *value) const noexcept
+        {
+          if (value == nullptr)
+          {
+            return;
+          }
+
+          if (xerces_allocated)
+          {
+            xercesc::XMLString::release (std::addressof (value));
+          }
+          else
+          {
+            delete[] value;
+          }
+        }
+      };
+
+      using String_Ptr = std::unique_ptr<XMLCh, Deleter>;
+
     public:
       template <typename C>
       explicit string (std::basic_string<C> const &s)
-        : s_ (XSCRT::XML::transcode<C> (s))
-        , xerces_allocated_ (std::is_same<C, char>::value)
+        : s_ (XSCRT::XML::transcode<C> (s), Deleter{std::is_same<C, char>::value})
       {
       }
 
       template <typename C>
       explicit string (C const *s)
-        : s_ (XSCRT::XML::transcode<C> (s))
-        , xerces_allocated_ (std::is_same<C, char>::value)
+        : s_ (XSCRT::XML::transcode<C> (s), Deleter{std::is_same<C, char>::value})
       {
       }
 
       string (string const &s)
-        : s_ (copy (s.s_))
+        : s_ (copy (s.s_.get ()))
       {
       }
 
-      string (string &&s) noexcept
-        : s_ (s.s_)
-        , xerces_allocated_ (s.xerces_allocated_)
-      {
-        s.s_ = nullptr;
-        s.xerces_allocated_ = false;
-      }
+      string (string &&s) noexcept = default;
 
       string &operator= (string const &s)
       {
         if (this != std::addressof (s))
         {
-          XMLCh *const p (copy (s.s_));
-          release ();
-          s_ = p;
-          xerces_allocated_ = false;
+          this->s_ = copy (s.s_.get ());
         }
         return *this;
       }
@@ -72,64 +91,54 @@ namespace XSCRT
       {
         if (this != std::addressof (s))
         {
-          release ();
-          s_ = s.s_;
-          xerces_allocated_ = s.xerces_allocated_;
-          s.s_ = nullptr;
-          s.xerces_allocated_ = false;
+          this->s_ = std::move (s.s_);
         }
         return *this;
       }
 
-      ~string ()
-      {
-        release ();
-      }
+      ~string () = default;
 
       XMLCh const *c_str () const
       {
-        return s_;
+        return this->s_.get ();
       }
 
     private:
-      static XMLCh *copy (XMLCh const *s)
+      static String_Ptr copy (XMLCh const *s)
       {
         if (s == nullptr)
-          return nullptr;
-        std::size_t const n (xercesc::XMLString::stringLen (s));
-        XMLCh *const r (new XMLCh[n + 1]);
-        std::copy (s, s + n + 1, r);
+        {
+          return String_Ptr (nullptr, Deleter{});
+        }
+        size_t const n (xercesc::XMLString::stringLen (s));
+        String_Ptr r (new XMLCh[n + 1], Deleter{});
+        std::copy (s, s + n + 1, r.get ());
         return r;
       }
 
-      void release () noexcept
-      {
-        if (xerces_allocated_)
-          xercesc::XMLString::release (std::addressof (s_));
-        else
-          delete[] s_;
-        s_ = nullptr;
-      }
-
-      XMLCh *s_{};
-      bool xerces_allocated_{};
+      String_Ptr s_{nullptr, Deleter{}};
     };
 
     template <>
     inline std::basic_string<char> transcode<char> (XMLCh const *s, char *)
     {
       if (s == nullptr)
+      {
         return std::basic_string<char> ();
+      }
 
       char *buf = xercesc::XMLString::transcode (s);
       if (buf == nullptr)
-        throw std::bad_alloc ();
-
-      auto const release = [] (char *value)
       {
-        xercesc::XMLString::release (std::addressof (value));
-      };
-      std::unique_ptr<char, decltype (release)> buffer (buf, release);
+        throw std::bad_alloc ();
+      }
+
+      std::unique_ptr<char, void (*) (char *)> buffer (
+        buf,
+        [] (char *value)
+        {
+          xercesc::XMLString::release (std::addressof (value));
+        });
 
       return std::basic_string<char> (buffer.get ());
     }
@@ -138,29 +147,37 @@ namespace XSCRT
     inline std::basic_string<wchar_t> transcode<wchar_t> (XMLCh const *s, wchar_t *)
     {
       if (s == nullptr)
+      {
         return std::basic_string<wchar_t> ();
+      }
 
       std::basic_string<wchar_t> result;
-      std::size_t const length (xercesc::XMLString::stringLen (s));
+      size_t const length (xercesc::XMLString::stringLen (s));
       result.reserve (length);
 
-      for (std::size_t i{}; i < length; ++i)
+      for (size_t i{}; i < length; ++i)
       {
         std::uint32_t code_point (static_cast<std::uint32_t> (s[i]));
 
         if (code_point >= 0xD800 && code_point <= 0xDBFF)
         {
           if (++i == length)
+          {
             throw std::invalid_argument ("Invalid UTF-16 surrogate pair");
+          }
 
           std::uint32_t const low (static_cast<std::uint32_t> (s[i]));
           if (low < 0xDC00 || low > 0xDFFF)
+          {
             throw std::invalid_argument ("Invalid UTF-16 surrogate pair");
+          }
 
           code_point = 0x10000 + ((code_point - 0xD800) << 10) + (low - 0xDC00);
         }
         else if (code_point >= 0xDC00 && code_point <= 0xDFFF)
+        {
           throw std::invalid_argument ("Invalid UTF-16 surrogate pair");
+        }
 
         if (sizeof (wchar_t) == 2 && code_point > 0xFFFF)
         {
@@ -169,7 +186,9 @@ namespace XSCRT
           result.push_back (static_cast<wchar_t> (0xDC00 + (code_point & 0x3FF)));
         }
         else
+        {
           result.push_back (static_cast<wchar_t> (code_point));
+        }
       }
 
       return result;
@@ -185,9 +204,9 @@ namespace XSCRT
     inline XMLCh *transcode (std::basic_string<wchar_t> const &s)
     {
       std::unique_ptr<XMLCh[]> result (new XMLCh[s.length () * 2 + 1]);
-      std::size_t out{};
+      size_t out{};
 
-      for (std::size_t i{}; i < s.length (); ++i)
+      for (size_t i{}; i < s.length (); ++i)
       {
         std::uint32_t code_point (static_cast<std::uint32_t> (s[i]));
 
@@ -232,7 +251,9 @@ namespace XSCRT
           result[out++] = static_cast<XMLCh> (0xDC00 + (code_point & 0x3FF));
         }
         else
+        {
           result[out++] = static_cast<XMLCh> (code_point);
+        }
       }
 
       result[out] = XMLCh{};
@@ -353,7 +374,9 @@ namespace XSCRT
         xercesc::DOMElement const *const parent (dom_cast<xercesc::DOMElement const *> (ce_->getParentNode ()));
 
         if (parent == nullptr)
+        {
           throw std::out_of_range ("DOM element has no element parent");
+        }
 
         return Element<C> (parent);
       }
@@ -388,13 +411,16 @@ namespace XSCRT
       xercesc::DOMElement *dom_element ()
       {
         if (e_ == nullptr)
+        {
           throw std::logic_error ("DOM element is read-only");
+        }
 
         return e_;
       }
 
     private:
       xercesc::DOMElement *e_{};
+      /// The DOM element is owned by its document.
       xercesc::DOMElement const *ce_{};
 
       string_ name_;
@@ -468,7 +494,9 @@ namespace XSCRT
       void value (string_ const &v)
       {
         if (a_ == nullptr)
+        {
           throw std::logic_error ("DOM attribute is read-only");
+        }
 
         value_ = v;
         a_->setValue (string (v).c_str ());
@@ -483,13 +511,16 @@ namespace XSCRT
       xercesc::DOMAttr *dom_attribute ()
       {
         if (a_ == nullptr)
+        {
           throw std::logic_error ("DOM attribute is read-only");
+        }
 
         return a_;
       }
 
     private:
       xercesc::DOMAttr *a_{};
+      /// The DOM attribute is owned by its document.
       xercesc::DOMAttr const *ca_{};
 
       string_ name_;
@@ -499,12 +530,11 @@ namespace XSCRT
     template <typename C>
     std::basic_string<C> prefix (std::basic_string<C> const &n)
     {
-      std::size_t i{};
+      size_t i{};
       while (i < n.length () && n[i] != ':')
+      {
         ++i;
-
-      // std::wcerr << "prefix " << n << " "
-      //            << std::wstring (n, i == n.length () ? i : 0, i) << std::endl;
+      }
 
       return std::basic_string<C> (n, i == n.length () ? i : 0, i);
     }
@@ -512,9 +542,11 @@ namespace XSCRT
     template <typename C>
     std::basic_string<C> uq_name (std::basic_string<C> const &n)
     {
-      std::size_t i{};
+      size_t i{};
       while (i < n.length () && n[i] != ':')
+      {
         ++i;
+      }
 
       return std::basic_string<C> (n.c_str () + (i == n.length () ? 0 : i + 1));
     }

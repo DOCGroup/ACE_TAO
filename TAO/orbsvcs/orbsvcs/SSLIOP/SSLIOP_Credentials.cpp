@@ -24,14 +24,16 @@ TAO::SSLIOP_Credentials::SSLIOP_Credentials (::X509 *cert, ::EVP_PKEY *evp)
       // credentials Id.
       BIGNUM * bn = ASN1_INTEGER_to_BN (::X509_get_serialNumber (x), nullptr);
       if (BN_is_zero (bn))
-        this->id_ = CORBA::string_dup ("X509: 00");
+        {
+          this->id_ = CORBA::string_dup ("X509: 00");
+        }
       else
         {
           char * id = BN_bn2hex (bn);
 
           ACE_CString s =
             ACE_CString ("X509: ")
-            + ACE_CString (const_cast<const char *> (id));
+            + ACE_CString (id);
 
           this->id_ = CORBA::string_dup (s.c_str ());
 
@@ -49,7 +51,7 @@ TAO::SSLIOP_Credentials::SSLIOP_Credentials (::X509 *cert, ::EVP_PKEY *evp)
 
       TimeBase::UtcT & t = this->expiry_time_;
 
-      const ASN1_TIME * exp = X509_get_notAfter (x);
+      ASN1_TIME const * exp = X509_get_notAfter (x);
 
       if (exp->length > ACE_SIZEOF_LONG_LONG)
         {
@@ -61,17 +63,13 @@ TAO::SSLIOP_Credentials::SSLIOP_Credentials (::X509 *cert, ::EVP_PKEY *evp)
       else
         {
           t.time = 0;
-          for (int i = 0; i < exp->length; ++i)
+          for (int i {}; i < exp->length; ++i)
             {
               t.time <<= 8;
               t.time |= (unsigned char) exp->data[i];
             }
         }
     }
-}
-
-TAO::SSLIOP_Credentials::~SSLIOP_Credentials ()
-{
 }
 
 char *
@@ -95,18 +93,20 @@ TAO::SSLIOP_Credentials::expiry_time ()
 SecurityLevel3::CredentialsState
 TAO::SSLIOP_Credentials::creds_state ()
 {
-  const ::X509 *x = this->x509_.in ();
+  ::X509 const *x = this->x509_.in ();
 
   // The pointer to the underlying X509 structure should only be zero
   // if destroy() was called on this Credentials object.
   if (x == nullptr)
+  {
     throw CORBA::BAD_OPERATION ();
+  }
 
   if (this->creds_state_ == SecurityLevel3::CS_Valid)
     {
       // Make sure the X.509 certificate is still valid.
 
-      const int after_status =
+      int const after_status =
         ::X509_cmp_current_time (X509_get_notAfter (x));
 
       if (after_status == 0)
@@ -115,13 +115,15 @@ TAO::SSLIOP_Credentials::creds_state ()
           throw CORBA::BAD_PARAM ();
         }
       else if (after_status > 0)     // Certificate has expired.
-        this->creds_state_ = SecurityLevel3::CS_Expired;
+        {
+          this->creds_state_ = SecurityLevel3::CS_Expired;
+        }
     }
   else if (this->creds_state_ == SecurityLevel3::CS_Invalid)
     {
       // Check if the X.509 certificate has become valid.
 
-      const int before_status =
+      int const before_status =
         ::X509_cmp_current_time (X509_get_notBefore (x));
 
       if (before_status == 0)
@@ -130,7 +132,9 @@ TAO::SSLIOP_Credentials::creds_state ()
           throw CORBA::BAD_PARAM ();
         }
       else if (before_status < 0)     // Certificate is now valid.
-        this->creds_state_ = SecurityLevel3::CS_Valid;
+        {
+          this->creds_state_ = SecurityLevel3::CS_Valid;
+        }
     }
 
   return this->creds_state_;
@@ -144,13 +148,13 @@ TAO::SSLIOP_Credentials::add_relinquished_listener (
 }
 
 void
-TAO::SSLIOP_Credentials::remove_relinquished_listener (const char * /* id */)
+TAO::SSLIOP_Credentials::remove_relinquished_listener (char const * /* id */)
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 bool
-TAO::SSLIOP_Credentials::operator== (const TAO::SSLIOP_Credentials &rhs)
+TAO::SSLIOP_Credentials::operator== (TAO::SSLIOP_Credentials const &rhs)
 {
   ::X509 * xa = this->x509_.in ();
   ::X509 * xb = rhs.x509_.in ();
@@ -159,10 +163,10 @@ TAO::SSLIOP_Credentials::operator== (const TAO::SSLIOP_Credentials &rhs)
 
   // No need for a full blown ACE_TRY/CATCH block.
 
-  const SecurityLevel3::CredentialsType lct =
+  SecurityLevel3::CredentialsType const lct =
     this->creds_type ();
 
-  const SecurityLevel3::CredentialsType rct =
+  SecurityLevel3::CredentialsType const rct =
     const_cast<TAO::SSLIOP_Credentials &> (rhs).creds_type ();
 
   // Don't bother check the creds_id and expiry_time attributes.  They
@@ -199,7 +203,9 @@ TAO::SSLIOP::Credentials_ptr
 TAO::SSLIOP_Credentials::_duplicate (TAO::SSLIOP::Credentials_ptr obj)
 {
   if (!CORBA::is_nil (obj))
+  {
     obj->_add_ref ();
+  }
 
   return obj;
 }

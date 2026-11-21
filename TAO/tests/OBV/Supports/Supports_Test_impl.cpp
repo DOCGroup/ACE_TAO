@@ -4,42 +4,36 @@
 
 #include "ace/streams.h"
 
-/* vt_graph_impl */
-
-vt_graph_impl::vt_graph_impl ()
-{
-}
-
-// Creates a vt_graph_impl with the given number of nodes. There will be one
-// root node and the rest will be children of it.
+/// Creates a graph with the requested number of nodes. The first node is the
+/// root and all remaining nodes are its children.
 vt_graph_impl::vt_graph_impl (int num_nodes)
 {
-  nodes_ ().length (0);
   add_node ("ROOT");
-  for (int i = 1; i < num_nodes; i++)
+  for (int i = 1; i < num_nodes; ++i)
     {
       add_node ("CHILD");
       nodes_ ()[0]->add_edge (nodes_ ()[i]);
     }
 }
 
-// Get the number of nodes in the vt_graph.
-CORBA::Long vt_graph_impl::size ()
+/// Returns the number of nodes in the graph.
+CORBA::Long
+vt_graph_impl::size ()
 {
   return nodes_ ().length ();
 }
 
-// Add a node to the graph with no edges.
+/// Adds a node to the graph with no edges.
 void
-vt_graph_impl::add_node (const char * name)
+vt_graph_impl::add_node (char const *name)
 {
-  Supports_Test::Node * new_node = 0;
+  Supports_Test::Node *new_node {};
   ACE_NEW (new_node, node_impl (name));
   nodes_ ().length (nodes_ ().length () + 1);
   nodes_ ()[nodes_ ().length () - 1] = new_node;
 }
 
-// Print out information about each node.
+/// Prints information about each node.
 void
 vt_graph_impl::print ()
 {
@@ -47,39 +41,40 @@ vt_graph_impl::print ()
               "Printing graph data...\n"));
 
   ACE_DEBUG ((LM_DEBUG,
-              "Number of nodes: [%d]\n", nodes_ ().length ()));
+              "Number of nodes: [%u]\n", nodes_ ().length ()));
 
-  for (size_t i = 0; i < nodes_ ().length (); i++)
+  for (size_t i = 0; i < nodes_ ().length (); ++i)
     nodes_ ()[i]->print ();
 }
 
-
-/* vt_graph_init_impl - factory operations */
+CORBA::ValueBase *
+vt_graph_impl::_copy_value ()
+{
+  vt_graph_impl *copy {};
+  ACE_NEW_THROW_EX (copy, vt_graph_impl, CORBA::NO_MEMORY ());
+  CORBA::ValueBase_var owner (copy);
+  copy->nodes_ (this->nodes_ ());
+  return owner._retn ();
+}
 
 Supports_Test::vt_graph *
 vt_graph_init_impl::create ()
 {
-  vt_graph_impl * ret_val = 0;
-  ACE_NEW_RETURN (ret_val, vt_graph_impl, 0);
+  vt_graph_impl *ret_val {};
+  ACE_NEW_RETURN (ret_val, vt_graph_impl, nullptr);
   return ret_val;
 }
 
 CORBA::ValueBase *
 vt_graph_init_impl::create_for_unmarshal ()
 {
-  vt_graph_impl * ret_val = 0;
-  ACE_NEW_RETURN (ret_val, vt_graph_impl, 0);
+  vt_graph_impl *ret_val {};
+  ACE_NEW_RETURN (ret_val, vt_graph_impl, nullptr);
   return ret_val;
 }
 
-
-/* test_impl */
-
-test_impl::test_impl (CORBA::ORB_ptr orb) : orb_ (CORBA::ORB::_duplicate (orb))
-{
-}
-
-test_impl::~test_impl ()
+test_impl::test_impl (CORBA::ORB_ptr orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -105,7 +100,7 @@ void
 test_impl::pass_obj_graph_out (
   Supports_Test::graph_out graph_param)
 {
-  vt_graph_impl * the_vt_graph = 0;
+  vt_graph_impl *the_vt_graph {};
   ACE_NEW (the_vt_graph, vt_graph_impl (4));
   graph_param = the_vt_graph->_this ();
 
@@ -116,9 +111,9 @@ test_impl::pass_obj_graph_out (
 
 void
 test_impl::pass_vt_graph_out (
-    Supports_Test::vt_graph_out vt_graph_param)
+  Supports_Test::vt_graph_out vt_graph_param)
 {
-  vt_graph_impl * the_vt_graph = 0;
+  vt_graph_impl *the_vt_graph {};
   ACE_NEW (the_vt_graph, vt_graph_impl (4));
   vt_graph_param = the_vt_graph;
 
@@ -156,23 +151,12 @@ test_impl::finish ()
   this->orb_->shutdown (false);
 }
 
-
-/* node_impl */
-
-node_impl::node_impl ()
+node_impl::node_impl (char const *name)
 {
+  name_ (name);
 }
 
-// Initialize state.
-node_impl::node_impl (const char * name)
-{
-        name_ (name);
-        weight_ (0);
-        degree_ (0);
-        neighbors_ ().length (0);
-}
-
-// Add an edge from this node to neighbor.
+/// Adds an edge from this node to neighbor.
 void
 node_impl::add_edge (Supports_Test::Node * neighbor)
 {
@@ -182,11 +166,11 @@ node_impl::add_edge (Supports_Test::Node * neighbor)
   neighbor->_add_ref ();
 }
 
-// Remove the edge from this node to neighbor.
+/// Removes the edge from this node to neighbor.
 void
 node_impl::remove_edge (Supports_Test::Node * neighbor)
 {
-  for (unsigned int i = 0; i < neighbors_ ().length (); i++)
+  for (unsigned int i = 0; i < neighbors_ ().length (); ++i)
     if (neighbors_ ()[i] == neighbor)
       {
         neighbors_ ()[i] = neighbors_ ()[neighbors_ ().length () - 1];
@@ -208,24 +192,35 @@ node_impl::print ()
   cout << "    Weight: " << weight_ () << endl;
   cout << "    Degree: " << degree_ () << endl;
   cout << "    Neighbors: " << endl;
-  for (size_t i = 0; i < neighbors_ ().length (); i++)
+  for (size_t i = 0; i < neighbors_ ().length (); ++i)
     cout << "      " << neighbors_ ()[i]->name_ () << endl;
 }
 
-/* node_init_impl - factory operations */
+CORBA::ValueBase *
+node_impl::_copy_value ()
+{
+  node_impl *copy {};
+  ACE_NEW_THROW_EX (copy, node_impl, CORBA::NO_MEMORY ());
+  CORBA::ValueBase_var owner (copy);
+  copy->name_ (this->name_ ());
+  copy->weight_ (this->weight_ ());
+  copy->degree_ (this->degree_ ());
+  copy->neighbors_ (this->neighbors_ ());
+  return owner._retn ();
+}
 
 Supports_Test::Node *
 node_init_impl::create ()
 {
-  node_impl * ret_val = 0;
-  ACE_NEW_RETURN (ret_val, node_impl, 0);
+  node_impl *ret_val {};
+  ACE_NEW_RETURN (ret_val, node_impl, nullptr);
   return ret_val;
 }
 
 CORBA::ValueBase *
 node_init_impl::create_for_unmarshal ()
 {
-  node_impl * ret_val = 0;
-  ACE_NEW_RETURN (ret_val, node_impl, 0);
+  node_impl *ret_val {};
+  ACE_NEW_RETURN (ret_val, node_impl, nullptr);
   return ret_val;
 }

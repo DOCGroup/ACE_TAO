@@ -31,6 +31,8 @@
 #endif
 
 #include <algorithm>
+#include <cstring>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -51,16 +53,16 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
     LANA_ENUM   lenum;
     unsigned char result;
 
-    ACE_OS::memset (&ncb, 0, sizeof(ncb));
+    std::memset (&ncb, 0, sizeof(ncb));
     ncb.ncb_command = NCBENUM;
     ncb.ncb_buffer  = reinterpret_cast<unsigned char*> (&lenum);
     ncb.ncb_length  = sizeof(lenum);
 
     result = Netbios (&ncb);
 
-    for(int i = 0; i < lenum.length; i++)
+    for(int i = 0; i < lenum.length; ++i)
       {
-        ACE_OS::memset (&ncb, 0, sizeof(ncb));
+        std::memset (&ncb, 0, sizeof(ncb));
         ncb.ncb_command  = NCBRESET;
         ncb.ncb_lana_num = lenum.lana [i];
 
@@ -73,8 +75,8 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
         }
 
         ADAPTERSTAT adapter;
-        ACE_OS::memset (&ncb, 0, sizeof (ncb));
-        ACE_OS::strcpy (reinterpret_cast<char*> (ncb.ncb_callname), "*");
+        std::memset (&ncb, 0, sizeof (ncb));
+        std::strcpy (reinterpret_cast<char*> (ncb.ncb_callname), "*");
         ncb.ncb_command     = NCBASTAT;
         ncb.ncb_lana_num    = lenum.lana[i];
         ncb.ncb_buffer      = reinterpret_cast<unsigned char*> (&adapter);
@@ -84,9 +86,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
         if (result == 0)
         {
-          ACE_OS::memcpy (node->node,
-              adapter.adapt.adapter_address,
-              6);
+          std::memcpy (node->node, adapter.adapt.adapter_address, 6);
           return 0;
         }
       }
@@ -95,21 +95,27 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
   // It's easiest to know the first MAC-using interface. Use the BSD
   // getifaddrs function that simplifies access to connected interfaces.
-  struct ifaddrs *ifap = nullptr;
-  struct ifaddrs *p_if = nullptr;
+  struct ifaddrs *ifap {};
+  struct ifaddrs *p_if {};
 
   if (::getifaddrs (&ifap) != 0)
+  {
     return -1;
+  }
 
   for (p_if = ifap; p_if != nullptr; p_if = p_if->ifa_next)
     {
       if (p_if->ifa_addr == nullptr)
+      {
         continue;
+      }
 
       // Check to see if it's up and is not either PPP or loopback
       if ((p_if->ifa_flags & IFF_UP) == IFF_UP &&
           (p_if->ifa_flags & (IFF_LOOPBACK | IFF_POINTOPOINT)) == 0)
+      {
         break;
+      }
     }
   if (p_if == nullptr)
     {
@@ -119,14 +125,16 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
     }
 
   struct ifreq ifr;
-  ACE_OS::strcpy (ifr.ifr_name, p_if->ifa_name);
+  std::strcpy (ifr.ifr_name, p_if->ifa_name);
   ::freeifaddrs (ifap);
 
   ACE_HANDLE handle =
     ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
 
   if (handle == ACE_INVALID_HANDLE)
+  {
     return -1;
+  }
 
 # ifdef ACE_LACKS_IOCTL
   int info = 0;
@@ -144,9 +152,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
   ACE_OS::close (handle);
 
-  ACE_OS::memcpy (node->node,
-                  sa->sa_data,
-                  6);
+  std::memcpy (node->node, sa->sa_data, 6);
 
   return 0;
 
@@ -154,7 +160,6 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
   struct ifconf ifc;
   struct ifreq ifr_buf[32];
-
 
   ACE_HANDLE handle =
     ACE_OS::socket (AF_INET, SOCK_DGRAM, 0);
@@ -164,9 +169,8 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
       return -1;
     }
 
-
   ifc.ifc_len = sizeof(ifr_buf);
-  ifc.ifc_req = &ifr_buf[0];
+  ifc.ifc_req = ifr_buf;
 
   if (ACE_OS::ioctl (handle, SIOCGIFCONF, &ifc) < 0)
     {
@@ -177,10 +181,10 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
   int numif = ifc.ifc_len / sizeof(struct ifreq);
 
   // find first eligible device
-  struct ifreq* ifr = nullptr;
+  struct ifreq* ifr {};
   for (int i=0; i< numif ;++i)
     {
-      ifr = &ifr_buf[i];
+      ifr = ifr_buf + i;
 
       // get device flags
       if (ACE_OS::ioctl (handle, SIOCGIFFLAGS, ifr) < 0)
@@ -215,9 +219,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
   ACE_OS::close (handle);
 
-  ACE_OS::memcpy (node->node,
-                  sa->sa_data,
-                  6);
+  std::memcpy (node->node, sa->sa_data, 6);
 
   return 0;
 
@@ -227,7 +229,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
   char buffer[BUFFERSIZE];
 
   struct ifconf ifc;
-  struct ifreq* ifr = nullptr;
+  struct ifreq* ifr {};
 
   ACE_HANDLE handle =
     ACE_OS::socket (AF_INET, SOCK_DGRAM, 0);
@@ -252,23 +254,25 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
       if (ifr->ifr_addr.sa_family == AF_LINK)
         {
-          if(ACE_OS::strcmp (ifr->ifr_name, "en0") == 0)
+          if(std::strcmp (ifr->ifr_name, "en0") == 0)
             {
               struct sockaddr_dl* sdl =
                 (struct sockaddr_dl *) &ifr->ifr_addr;
 
-              ACE_OS::memcpy (node->node,
-                              LLADDR(sdl),
-                              6);
+              std::memcpy (node->node, LLADDR(sdl), 6);
             }
         }
 
       ptr += sizeof(ifr->ifr_name);
 
       if(sizeof(ifr->ifr_addr) > ifr->ifr_addr.sa_len)
-        ptr += sizeof(ifr->ifr_addr);
+        {
+          ptr += sizeof(ifr->ifr_addr);
+        }
       else
-        ptr += ifr->ifr_addr.sa_len;
+        {
+          ptr += ifr->ifr_addr.sa_len;
+        }
     }
 
   ACE_OS::close (handle);
@@ -282,7 +286,9 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
   size_t result_sz = 0u;
   if (sysctl (name, name_elts, 0, &result_sz, 0, 0u) != 0)
-    return -1;
+    {
+      return -1;
+    }
 
 # ifdef ACE_HAS_ALLOC_HOOKS
   char *const result =
@@ -308,7 +314,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
       if (addr->sdl_alen >= sizeof node->node)
         {
-          ACE_OS::memcpy (node->node, LLADDR (addr), sizeof node->node);
+          std::memcpy (node->node, LLADDR (addr), sizeof node->node);
           ACE_NETDB_CLEANUP;
           return 0;
         }
@@ -318,7 +324,9 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
           ifa_msghdr *const ifa =
             reinterpret_cast<ifa_msghdr *> (result + pos + n);
           if (ifa->ifam_type != RTM_NEWADDR)
-            break;
+            {
+              break;
+            }
           n += ifa->ifam_msglen;
         }
     }
@@ -342,7 +350,7 @@ ACE_OS::getaddrinfo_emulation (const char *name, addrinfo **result)
   int herr = 0;
   const hostent *host = ACE_OS::gethostbyname_r (name, &entry, buffer, &herr);
 
-  if (host == 0)
+  if (host == nullptr)
     {
       switch (herr)
         {
@@ -354,13 +362,14 @@ ACE_OS::getaddrinfo_emulation (const char *name, addrinfo **result)
         case NO_RECOVERY:
           return EAI_FAIL;
         case ENOTSUP:
-          if (ACE_OS::inet_aton (name, (in_addr *) &buffer[0]) != 0)
+          if (ACE_OS::inet_aton (name, reinterpret_cast<in_addr *> (buffer)) != 0)
             {
               host = &entry;
               entry.h_length = sizeof (in_addr);
-              entry.h_addr_list = (char **) (buffer + sizeof (in_addr));
+              entry.h_addr_list = reinterpret_cast<char **> (
+                buffer + sizeof (in_addr));
               entry.h_addr_list[0] = buffer;
-              entry.h_addr_list[1] = 0;
+              entry.h_addr_list[1] = nullptr;
               break;
             }
           // fall-through
@@ -381,11 +390,12 @@ ACE_OS::getaddrinfo_emulation (const char *name, addrinfo **result)
 # endif
 
   ACE_ALLOCATOR_RETURN (*result,
-                        (addrinfo *) ACE_ALLOC calloc (n, sizeof (addrinfo)),
+                        static_cast<addrinfo *> (
+                          ACE_ALLOC calloc (n, sizeof (addrinfo))),
                         EAI_MEMORY);
 
   sockaddr_in *const addr_storage =
-    (sockaddr_in *) ACE_ALLOC calloc (n, sizeof (sockaddr_in));
+    static_cast<sockaddr_in *> (ACE_ALLOC calloc (n, sizeof (sockaddr_in)));
 
   if (!addr_storage)
     {
@@ -398,12 +408,14 @@ ACE_OS::getaddrinfo_emulation (const char *name, addrinfo **result)
     {
       (*result)[i].ai_family = AF_INET;
       (*result)[i].ai_addrlen = sizeof (sockaddr_in);
-      (*result)[i].ai_addr = (sockaddr *) addr_storage + i;
+      (*result)[i].ai_addr = reinterpret_cast<sockaddr *> (addr_storage) + i;
       (*result)[i].ai_addr->sa_family = AF_INET;
-      ACE_OS::memcpy (&addr_storage[i].sin_addr, host->h_addr_list[i],
-                      (std::min) (size_t (host->h_length), sizeof (in_addr)));
+      std::memcpy (std::addressof (addr_storage[i].sin_addr), host->h_addr_list[i],
+                   (std::min) (size_t (host->h_length), sizeof (in_addr)));
       if (i < n - 1)
-        (*result)[i].ai_next = (*result) + i + 1;
+        {
+          (*result)[i].ai_next = (*result) + i + 1;
+        }
     }
 
   return 0;
@@ -429,9 +441,13 @@ ACE_OS::getnameinfo_emulation (const sockaddr *saddr, ACE_SOCKET_LEN saddr_len,
                                char *host, ACE_SOCKET_LEN host_len)
 {
   if (saddr_len != sizeof (sockaddr_in) || saddr->sa_family != AF_INET)
-    return EAI_FAMILY; // IPv6 support requries actual OS-provided getnameinfo
+    {
+      return EAI_FAMILY; // IPv6 support requries actual OS-provided getnameinfo
+    }
 
-  const void *addr = &((const sockaddr_in *) saddr)->sin_addr;
+  sockaddr_in const *const sin
+    = reinterpret_cast<sockaddr_in const *> (saddr);
+  const void *addr = &sin->sin_addr;
   int h_error;
   hostent hentry;
   ACE_HOSTENT_DATA buf;
@@ -445,19 +461,21 @@ ACE_OS::getnameinfo_emulation (const sockaddr *saddr, ACE_SOCKET_LEN saddr_len,
                              AF_INET, &hentry, buf, &h_error);
 
   if (hp == 0 || hp->h_name == 0)
-    return EAI_NONAME;
+    {
+      return EAI_NONAME;
+    }
 
-  if (ACE_OS::strlen (hp->h_name) >= size_t (host_len))
+  if (std::strlen (hp->h_name) >= size_t (host_len))
     {
       if (host_len > 0)
         {
-          ACE_OS::memcpy (host, hp->h_name, host_len - 1);
+          std::memcpy (host, hp->h_name, host_len - 1);
           host[host_len - 1] = '\0';
         }
       return EAI_OVERFLOW;
     }
 
-  ACE_OS::strcpy (host, hp->h_name);
+  std::strcpy (host, hp->h_name);
   return 0;
 }
 #endif /* ACE_LACKS_GETNAMEINFO */
@@ -473,17 +491,17 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 int
 ACE_OS::netdb_acquire ()
 {
-  return ACE_OS::thread_mutex_lock ((ACE_thread_mutex_t *)
+  return ACE_OS::thread_mutex_lock (static_cast<ACE_thread_mutex_t *> (
     ACE_OS_Object_Manager::preallocated_object[
-      ACE_OS_Object_Manager::ACE_OS_MONITOR_LOCK]);
+      ACE_OS_Object_Manager::ACE_OS_MONITOR_LOCK]));
 }
 
 int
 ACE_OS::netdb_release ()
 {
-  return ACE_OS::thread_mutex_unlock ((ACE_thread_mutex_t *)
+  return ACE_OS::thread_mutex_unlock (static_cast<ACE_thread_mutex_t *> (
     ACE_OS_Object_Manager::preallocated_object[
-      ACE_OS_Object_Manager::ACE_OS_MONITOR_LOCK]);
+      ACE_OS_Object_Manager::ACE_OS_MONITOR_LOCK]));
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

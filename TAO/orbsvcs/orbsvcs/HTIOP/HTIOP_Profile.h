@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef HTIOP_PROFILE_H
 #define HTIOP_PROFILE_H
 #include /**/ "ace/pre.h"
@@ -73,7 +72,11 @@ namespace TAO
                TAO_ORB_Core *orb_core);
 
       /// Profile constructor, default.
-      Profile (TAO_ORB_Core *orb_core);
+      explicit Profile (TAO_ORB_Core *orb_core);
+      Profile (Profile const&) = delete;
+      Profile (Profile&&) = delete;
+      Profile& operator= (Profile const&) = delete;
+      Profile& operator= (Profile&&) = delete;
 
       /// Destructor is to be called only through <_decr_refcnt>.
       ~Profile () override;

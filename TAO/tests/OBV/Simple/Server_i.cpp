@@ -13,7 +13,6 @@ Checkpoint_i::orb (CORBA::ORB_ptr o)
   TAO_OBV_REGISTER_FACTORY (Event_factory, Event);
 }
 
-
 // Sidebar on assignment from pointer to _var type.
 //
 //   Event_var e_var (event);
@@ -38,7 +37,6 @@ Checkpoint_i::orb (CORBA::ORB_ptr o)
 //
 // Is there any general solution with faulty reference counting ?
 
-
 void
 Checkpoint_i::put_event (Event *event)
 {
@@ -56,14 +54,4 @@ Checkpoint_i::shutdown ()
 
   // Instruct the ORB to shutdown.
   this->orb_->shutdown ();
-}
-
-// Constructor.
-Checkpoint_i::Checkpoint_i ()
-{
-}
-
-// Destructor.
-Checkpoint_i::~Checkpoint_i ()
-{
 }

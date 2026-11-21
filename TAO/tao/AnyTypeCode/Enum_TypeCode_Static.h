@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Enum_TypeCode_Static.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_ENUM_TYPECODE_STATIC_H
 #define TAO_ENUM_TYPECODE_STATIC_H
@@ -51,7 +49,6 @@ namespace TAO
         private TAO::Null_RefCount_Policy
     {
     public:
-      /// Constructor.
       Enum (char const * id,
             char const * name,
             char const * const * enumerators,
@@ -65,12 +62,12 @@ namespace TAO
        *
        * @see @c CORBA::TypeCode
        */
-      //@{
+      /// @{
       bool tao_marshal (TAO_OutputCDR & cdr,
                         CORBA::ULong offset) const override;
       void tao_duplicate () override;
       void tao_release () override;
-      //@}
+      /// @}
 
     protected:
       /**
@@ -80,7 +77,7 @@ namespace TAO
        *
        * @see @c CORBA::TypeCode
        */
-      //@{
+      /// @{
       CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const override;
       CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const override;
       CORBA::TypeCode_ptr get_compact_typecode_i () const override;
@@ -88,7 +85,7 @@ namespace TAO
       char const * name_i () const override;
       CORBA::ULong member_count_i () const override;
       char const * member_name_i (CORBA::ULong index) const override;
-      //@}
+      /// @}
 
     private:
       /**
@@ -101,7 +98,7 @@ namespace TAO
        *       they are marshaled into a CDR stream in order to
        *       increase cache hits by improving spatial locality.
        */
-      //@{
+      /// @{
       /// Base attributes containing repository ID and name of
       /// structure type.
       Base_Attributes<char const *> base_attributes_;

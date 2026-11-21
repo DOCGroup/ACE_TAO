@@ -6,19 +6,15 @@
  */
 //=============================================================================
 
-
 #include "orbsvcs/Log_Macros.h"
 #include "ace/streams.h"
 #include "orbsvcs/CosConcurrencyControlC.h"
 #include "tao/debug.h"
 #include "orbsvcs/Concurrency/Concurrency_Utils.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include <memory>
 
-// Default constructor
-TAO_Concurrency_Server::TAO_Concurrency_Server ()
-{
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constructor which takes an ORB and POA.
 TAO_Concurrency_Server::TAO_Concurrency_Server (CORBA::ORB_ptr orb,
@@ -47,7 +43,7 @@ TAO_Concurrency_Server::init (CORBA::ORB_ptr orb,
         PortableServer::string_to_ObjectId ("ConcurrencyService");
 
       poa->activate_object_with_id (id.in (),
-                                    &this->lock_set_factory_);
+                                    std::addressof (this->lock_set_factory_));
 
       // Stringify the objref we'll be implementing, and print it to
       // stdout.  Someone will take that string and give it to a
@@ -62,7 +58,7 @@ TAO_Concurrency_Server::init (CORBA::ORB_ptr orb,
                   "listening as object <%s>\n",
                   str.in ()));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Concurrency Service");
       return CORBA::Object::_nil ();
@@ -77,11 +73,11 @@ TAO_Concurrency_Server::fini ()
   try
     {
       PortableServer::ObjectId_var id =
-        this->poa_->servant_to_id (&this->lock_set_factory_);
+        this->poa_->servant_to_id (std::addressof (this->lock_set_factory_));
 
       this->poa_->deactivate_object (id.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       if (TAO_debug_level > 0)
         {
@@ -95,13 +91,9 @@ TAO_Concurrency_Server::fini ()
 }
 
 CC_LockSetFactory *
-TAO_Concurrency_Server::GetLockSetFactory()
+TAO_Concurrency_Server::GetLockSetFactory ()
 {
-  return &this->lock_set_factory_;
-}
-
-TAO_Concurrency_Server::~TAO_Concurrency_Server ()
-{
+  return std::addressof (this->lock_set_factory_);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -40,6 +40,12 @@ class PolicyFactory
     public virtual ::CORBA::LocalObject
 {
 public:
+  PolicyFactory () = default;
+  PolicyFactory (PolicyFactory const &) = delete;
+  PolicyFactory (PolicyFactory &&) = delete;
+  PolicyFactory &operator= (PolicyFactory const &) = delete;
+  PolicyFactory &operator= (PolicyFactory &&) = delete;
+
   /**
    * @name Methods Required by the PolicyFactory Interface
    *
@@ -47,12 +53,12 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all PolicyFactory sub-classes.
    */
-  //@{
+  /// @{
   /// Construct a Test::Policy object as a test.
-  virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                           const CORBA::Any & value);
+  CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
+                                   CORBA::Any const &value) override;
 
-  //@}
+  /// @}
 };
 
 #if defined(_MSC_VER)

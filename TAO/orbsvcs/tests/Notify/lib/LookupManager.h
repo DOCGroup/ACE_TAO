@@ -35,17 +35,15 @@ class TAO_Notify_Tests_Priority_Mapping;
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_LookupManager
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_LookupManager ();
 
-  /// Destructor
   ~TAO_Notify_Tests_LookupManager ();
 
   /// Init
   void init (CORBA::ORB_ptr orb);
 
-  ///= Register Objects
-
+  /// @name Object registration
+  /// @{
   /// Register the application starter object.
   void _register (TAO_Notify_Tests_Driver_Base* app);
   void _register (TAO_Notify_Tests_Activation_Manager* activation_manager);
@@ -53,9 +51,10 @@ public:
 
   /// Register Objects with Naming Service
   void _register(CORBA::Object_ptr obj, const char* obj_name);
+  /// @}
 
-  ///= Resolve methods
-
+  /// @name Object resolution
+  /// @{
   /// Resolve the application starter object.
   void resolve (TAO_Notify_Tests_Driver_Base*& app);
   void resolve (TAO_Notify_Tests_Activation_Manager*& activation_manager);
@@ -81,33 +80,34 @@ public:
   void resolve (CosNotifyFilter::FilterFactory_var& ff, const char *filter_factory_name);
   void resolve (CosNotifyFilter::Filter_var& filter, const char *filter_name);
   void resolve (CosNotifyFilter::FilterAdmin_var& filter_admin, const char *filter_admin_name);
+  /// @}
 
 protected:
-  /// Application Starter
-  TAO_Notify_Tests_Driver_Base* app_;
+  /// Non-owning registered application starter.
+  TAO_Notify_Tests_Driver_Base* app_ {};
 
-  /// Activation Manager
-  TAO_Notify_Tests_Activation_Manager* activation_manager_;
+  /// Non-owning registered activation manager.
+  TAO_Notify_Tests_Activation_Manager* activation_manager_ {};
 
   /// Resolve to CORBA::Object
   CORBA::Object_ptr resolve_object (const char* obj_name);
 
-  // The ORB that we use.
+  /// The ORB that we use.
   CORBA::ORB_var orb_;
 
-  // Reference to the root poa.
+  /// Reference to the root POA.
   PortableServer::POA_var root_poa_;
 
-  // A naming context.
+  /// A naming context.
   CosNaming::NamingContextExt_var naming_;
 
-  // Priority Mapping.
-  TAO_Notify_Tests_Priority_Mapping *priority_mapping_;
+  /// Non-owning registered priority mapping.
+  TAO_Notify_Tests_Priority_Mapping* priority_mapping_ {};
 };
 
 TAO_NOTIFY_TEST_SINGLETON_DECLARE (ACE_Singleton, TAO_Notify_Tests_LookupManager, TAO_SYNCH_MUTEX)
 
-typedef ACE_Singleton<TAO_Notify_Tests_LookupManager, TAO_SYNCH_MUTEX> _TAO_Notify_Tests_LookupManager;
+using _TAO_Notify_Tests_LookupManager = ACE_Singleton<TAO_Notify_Tests_LookupManager, TAO_SYNCH_MUTEX>;
 
 #define LOOKUP_MANAGER  _TAO_Notify_Tests_LookupManager::instance()
 

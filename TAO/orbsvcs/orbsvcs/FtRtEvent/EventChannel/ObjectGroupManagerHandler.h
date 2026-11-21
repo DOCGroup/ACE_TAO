@@ -13,6 +13,8 @@
 #include "orbsvcs/FTRT_GroupManagerS.h"
 #include "ace/Auto_Event.h"
 
+#include <atomic>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ObjectGroupManagerHandler
@@ -45,7 +47,7 @@ public:
   void set_state_excep (::Messaging::ExceptionHolder * excep_holder) override;
 private:
   ACE_Auto_Event& evt_;
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> num_backups_;
+  std::atomic<int> num_backups_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

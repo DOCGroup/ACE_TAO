@@ -21,9 +21,9 @@ class Echo_Client_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  Echo_Client_Request_Interceptor (int& result);
+  explicit Echo_Client_Request_Interceptor (int& result);
 
-  // Canonical name of the interceptor.
+  /// Canonical name of the interceptor.
   char * name () override;
 
   void destroy () override;

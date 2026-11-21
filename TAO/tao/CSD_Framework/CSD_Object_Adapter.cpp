@@ -3,12 +3,14 @@
 #include "tao/CSD_Framework/CSD_Strategy_Proxy.h"
 #include "tao/CSD_Framework/CSD_POA.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CSD_Object_Adapter::~TAO_CSD_Object_Adapter () = default;
 
 TAO_CSD_Object_Adapter::TAO_CSD_Object_Adapter (
-  const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters,
+  TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters const &creation_parameters,
   TAO_ORB_Core &orb_core)
   :  TAO_Object_Adapter (creation_parameters, orb_core)
 {
@@ -20,7 +22,7 @@ TAO_CSD_Object_Adapter::do_dispatch (
   TAO::Portable_Server::Servant_Upcall& upcall)
 {
   TAO_Root_POA& poa = upcall.poa ();
-  TAO_CSD_POA *csd_poa = dynamic_cast<TAO_CSD_POA*> (&poa);
+  TAO_CSD_POA * const csd_poa = dynamic_cast<TAO_CSD_POA*> (std::addressof (poa));
 
   if (csd_poa == nullptr)
     {

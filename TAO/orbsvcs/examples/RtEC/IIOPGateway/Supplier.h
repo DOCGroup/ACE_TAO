@@ -10,6 +10,7 @@
 #define SUPPLIER_H
 
 #include "orbsvcs/RtecEventCommS.h"
+#include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,19 +26,25 @@
 class Supplier : public POA_RtecEventComm::PushSupplier
 {
 public:
-  /// Constructor
-  Supplier ();
+  Supplier () = default;
+  Supplier (Supplier const &) = delete;
+  Supplier (Supplier &&) = delete;
+  Supplier &operator= (Supplier const &) = delete;
+  Supplier &operator= (Supplier &&) = delete;
 
   /// Run the test
   int run (int argc, ACE_TCHAR* argv[]);
 
-  // = The RtecEventComm::PushSupplier methods
-
+  /// @name RtecEventComm::PushSupplier methods
+  /// @{
   /// The skeleton methods.
-  virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
+  /// @}
 
 private:
   int parse_args (int argc, ACE_TCHAR *argv[]);
+
+  ACE_TString event_channel_name_;
 };
 
 #endif /* SUPPLIER_H */

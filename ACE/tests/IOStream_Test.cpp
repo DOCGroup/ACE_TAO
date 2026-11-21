@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Thread.h"
 #include "ace/Acceptor.h"
@@ -116,7 +115,6 @@ operator>> (ACE_SOCK_IOStream & stream, qchar *buf)
   return stream;
 }
 
-
 ACE_SOCK_IOStream &
 operator<< (ACE_SOCK_IOStream &stream, qchar *buf)
 {
@@ -148,7 +146,7 @@ operator<< (ostream &stream, qchar *buf)
 // the server.
 
 static void *
-client (void *arg = 0)
+client (void *arg = nullptr)
 {
   ACE_UNUSED_ARG (arg);
 
@@ -261,12 +259,11 @@ client (void *arg = 0)
   return 0;
 }
 
-
 // Test the server's ability to receive data from the client and then
 // begin a two-way conversation.
 
 static void *
-server (void *arg = 0)
+server (void *arg = nullptr)
 {
   // We don't _need_ to dynamically allocate the ACE_SOCK_IOStream.
   // But if we don't, it doesn't get destroyed on some platforms,

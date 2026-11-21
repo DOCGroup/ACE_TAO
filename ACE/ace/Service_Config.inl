@@ -18,7 +18,9 @@ ACE_Service_Config::open (const ACE_TCHAR program_name[],
                            ignore_static_svcs,
                            ignore_default_svc_conf,
                            ignore_debug_flag) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   return current()->open (program_name,
                           logger_key,
@@ -26,7 +28,6 @@ ACE_Service_Config::open (const ACE_TCHAR program_name[],
                           ignore_default_svc_conf,
                           ignore_debug_flag);
 }
-
 
 ACE_INLINE int
 ACE_Service_Config::open (int argc,
@@ -39,14 +40,18 @@ ACE_Service_Config::open (int argc,
   ACE_TRACE ("ACE_Service_Config::open");
 
   if (singleton()->parse_args_i(argc, argv) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (singleton()->open_i (argv[0],
                            logger_key,
                            ignore_static_svcs,
                            ignore_default_svc_conf,
                            ignore_debug_flag) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   return current()->open (argc,
                           argv,

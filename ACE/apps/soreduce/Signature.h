@@ -3,45 +3,31 @@
 
 // Author: Phil Mesnier
 
-
 #ifndef _SIGNATURE_H_
 #define _SIGNATURE_H_
 
-// Signature class encapsulates a single line of nm output. This line may be
-// either an "undefined" name to be resolved, or text or data which resolves
-// the unknowns. Some of the features of the Signature class are currently
-// unused, such as owner_, which is anticipation of analysis that may lead to
-// further code reduction. The premise being that unresolved symbols that are
-// defined within otherwise unused code should not be resolved. However this
-// information is not available in the output of nm. Further research is
-// required.
-//
-// Signatures are reference counted to avoid duplication.
-
 #include <ace/SString.h>
 
+/**
+ * @brief Encapsulates one symbol reported by nm.
+ *
+ * Shared signatures avoid duplicating symbol strings across lists.
+ */
 class Signature {
 public:
-  enum Kind {
-    text_,
-    undef_
-  };
-
-  Signature (const ACE_CString &);
+  explicit Signature (ACE_CString const &);
+  Signature (Signature const &) = delete;
+  Signature (Signature &&) = delete;
+  Signature &operator= (Signature const &) = delete;
+  Signature &operator= (Signature &&) = delete;
   void used ();
-  int used_count() const;
+  size_t used_count () const;
 
-  const ACE_CString &name() const;
-
-  Signature *dup();
-  void release();
+  ACE_CString const &name() const;
 
 private:
   ACE_CString name_;
-  int ref_count_;
-  int used_;
-  Signature * owner_;
-  Kind kind_;
+  size_t used_ {};
 };
 
 #endif

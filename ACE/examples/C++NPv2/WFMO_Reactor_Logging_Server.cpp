@@ -9,7 +9,8 @@
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Thread_Manager.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
+#include <memory>
 
 #include "Reactor_Logging_Server_T.h"
 #include "Logging_Acceptor_Ex.h"
@@ -20,7 +21,7 @@ private:
   ACE_Manual_Event quit_seen_;
 
 public:
-  Quit_Handler (ACE_Reactor *r) : ACE_Event_Handler (r) {
+  explicit Quit_Handler (ACE_Reactor *r) : ACE_Event_Handler (r) {
     SetConsoleMode (ACE_STDIN, ENABLE_LINE_INPUT
                                | ENABLE_ECHO_INPUT
                                | ENABLE_PROCESSED_INPUT);
@@ -38,29 +39,32 @@ public:
                                 ACE_Event_Handler::DONT_CALL);
   }
 
-  virtual int handle_input (ACE_HANDLE h) {
+  int handle_input (ACE_HANDLE h) override {
     CHAR user_input[BUFSIZ];
     DWORD count;
-    if (!ReadFile (h, user_input, BUFSIZ, &count, 0))
-      return -1;
+    if (!ReadFile (h, user_input, BUFSIZ, &count, nullptr))
+      {
+        return -1;
+      }
 
     user_input[count] = '\0';
-    if (ACE_OS::strncmp (user_input, "quit", 4) == 0)
-      return -1;
+    if (std::strncmp (user_input, "quit", 4) == 0)
+      {
+        return -1;
+      }
     return 0;
   }
 
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask) {
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override {
     quit_seen_.signal ();
     return 0;
   }
 
-  virtual int handle_signal (int, siginfo_t *, ucontext_t *) {
+  int handle_signal (int, siginfo_t *, ucontext_t *) override {
     reactor ()->end_reactor_event_loop ();
     return 0;
   }
 };
-
 
 class Logging_Event_Handler_WFMO : public Logging_Event_Handler_Ex
 {
@@ -69,14 +73,13 @@ public:
     : Logging_Event_Handler_Ex (r) {}
 
 protected:
-  int handle_input (ACE_HANDLE) {
+  int handle_input (ACE_HANDLE) override {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, monitor, lock_, -1);
     return logging_handler_.log_record ();
   }
 
   ACE_Thread_Mutex lock_; // Serialize threads in thread pool.
 };
-
 
 class Logging_Acceptor_WFMO : public Logging_Acceptor_Ex
 {
@@ -86,8 +89,8 @@ public:
     : Logging_Acceptor_Ex (r) {};
 
 protected:
-  virtual int handle_input (ACE_HANDLE) {
-    Logging_Event_Handler_WFMO *peer_handler = 0;
+  int handle_input (ACE_HANDLE) override {
+    Logging_Event_Handler_WFMO *peer_handler {};
     ACE_NEW_RETURN (peer_handler,
                     Logging_Event_Handler_WFMO (reactor ()),
                     -1);
@@ -103,7 +106,6 @@ protected:
   }
 };
 
-
 static ACE_THR_FUNC_RETURN event_loop (void *arg) {
   ACE_Reactor *reactor = static_cast<ACE_Reactor *> (arg);
 
@@ -112,25 +114,23 @@ static ACE_THR_FUNC_RETURN event_loop (void *arg) {
   return 0;
 }
 
-
 using Server_Logging_Daemon = Reactor_Logging_Server<Logging_Acceptor_WFMO>;
-
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   const size_t N_THREADS = 4;
   ACE_WFMO_Reactor wfmo_reactor;
-  ACE_Reactor reactor (&wfmo_reactor);
+  ACE_Reactor reactor (std::addressof (wfmo_reactor));
 
   Server_Logging_Daemon *server;
   // Ignore argv[0]...
   --argc; ++argv;
   ACE_NEW_RETURN (server,
-                  Server_Logging_Daemon (argc, argv, &reactor),
+                  Server_Logging_Daemon (argc, argv, std::addressof (reactor)),
                   1);
-  Quit_Handler quit_handler (&reactor);
+  Quit_Handler quit_handler (std::addressof (reactor));
   ACE_Thread_Manager::instance ()->spawn_n
-    (N_THREADS, event_loop, &reactor);
+    (N_THREADS, event_loop, std::addressof (reactor));
   return ACE_Thread_Manager::instance ()->wait ();
 }
 

@@ -28,7 +28,6 @@ namespace ACE
         class ACE_INET_Export AuthenticationBase
           {
             public:
-              /// Destructor
               virtual ~AuthenticationBase ();
 
               /// Returns authentication scheme (f.i. 'ftp' or 'http:basic').
@@ -50,7 +49,6 @@ namespace ACE
               virtual void password (const ACE_CString& pw) = 0;
 
             protected:
-              /// Constructor
               AuthenticationBase ();
           };
 
@@ -63,10 +61,8 @@ namespace ACE
         class ACE_INET_Export AuthenticatorBase
           {
             public:
-              /// Default constructor
               AuthenticatorBase ();
 
-              /// Destructor
               virtual ~AuthenticatorBase ();
 
               /// Verifies authentication for given info and returns true if

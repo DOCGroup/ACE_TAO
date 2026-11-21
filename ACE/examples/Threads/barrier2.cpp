@@ -8,12 +8,12 @@
 // should work with this flag disabled!  The BARRIER_TYPE is supposed
 // to enable/disable barrier sync on each svc a worker has done.
 
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
 
+#include <cstring>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -28,28 +28,32 @@ public:
                int n_threads,
                int inp_serialize = 1);
 
+  Worker_Task (Worker_Task const &) = delete;
+  Worker_Task (Worker_Task &&) = delete;
+  Worker_Task &operator= (Worker_Task const &) = delete;
+  Worker_Task &operator= (Worker_Task &&) = delete;
+
+  /// Produces input for workers.
   virtual int producer ();
-  // produce input for workers
 
-  virtual int input (ACE_Message_Block *mb);
-  // Fill one message block via a certain input strategy.
+  /// Fills one message block via the selected input strategy.
+  virtual int input (ACE_Message_Block_Unique_Ptr &mb);
 
+  /// Forwards one message block via the selected output strategy.
   virtual int output (ACE_Message_Block *mb);
-  // Forward one message block via a certain output strategy to the
-  // next task if any.
 
+  /// Performs one message block-dependent service.
   virtual int service (ACE_Message_Block *mb, int iter);
-  // Perform one message block dependant service.
 
 private:
   int put (ACE_Message_Block *mb, ACE_Time_Value *tv=nullptr) override;
+  int put_owned (ACE_Message_Block_Unique_Ptr &mb);
 
+  /// Prints a message and waits for all other threads on each iteration.
   int svc () override;
-  // Iterate <n_iterations> time printing off a message and "waiting"
-  // for all other threads to complete this iteration.
 
   //FUZZ: disable check_for_lack_ACE_OS
-  // = Not needed for this test.
+  /// These lifecycle hooks are not needed for this test.
   int open (void *) override { return 0; }
   int close (u_long) override
   {
@@ -60,8 +64,8 @@ private:
     return 0;
   }
 
+  /// Number of worker threads to run.
   int nt_;
-  // Number of worker threads to run.
 
   int inp_serialize_;
 
@@ -84,10 +88,14 @@ Worker_Task<BARRIER>::Worker_Task (ACE_Thread_Manager *thr_mgr,
   // service in the context of the caller thread.
 
   if (nt_ > 0 && inp_serialize == 1)
-    if (this->activate (THR_NEW_LWP, n_threads) == -1)
-      ACE_ERROR ((LM_ERROR,
-                  "%p\n",
-                  "activate failed"));
+    {
+      if (this->activate (THR_NEW_LWP, n_threads) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "activate failed"));
+        }
+    }
 }
 
 // Simply enqueue the Message_Block into the end of the queue.
@@ -96,18 +104,22 @@ template <class BARRIER> int
 Worker_Task<BARRIER>::put (ACE_Message_Block *mb,
                            ACE_Time_Value *tv)
 {
-  int result;
+  int result {};
 
   if (this->inp_serialize_)
-    result = this->putq (mb, tv);
+    {
+      result = this->putq (mb, tv);
+    }
   else
     {
       static int iter = 0;
       result = this->service (mb, iter++);
 
       if (this->output (mb) < 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%t) output not connected!\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) output not connected!\n"));
+        }
 
       mb->release ();
     }
@@ -123,7 +135,7 @@ Worker_Task<BARRIER>::service (ACE_Message_Block *mb,
   if (length > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) in iteration %d len=%d text got:\n",
+                  "(%t) in iteration %d len=%B text got:\n",
                   iter,
                   length));
       ACE_OS::write (ACE_STDOUT,
@@ -147,11 +159,12 @@ Worker_Task<BARRIER>::svc ()
   // Keep looping, reading a message out of the queue, until we get a
   // message with a length == 0, which signals us to quit.
 
-  for (int iter = 1; ;iter++)
+  for (int iter = 1; ; ++iter)
     {
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
 
       int result = this->getq (mb);
+      ACE_Message_Block_Unique_Ptr message_block {mb};
 
       if (result == -1)
         {
@@ -170,14 +183,12 @@ Worker_Task<BARRIER>::svc ()
           ACE_DEBUG ((LM_DEBUG,
                       "(%t) in iteration %d got quit, exit!\n",
                       iter));
-                      mb->release ();
           break;
         }
 
       this->barrier_.wait ();
       this->output (mb);
 
-      mb->release ();
     }
 
   // Note that the <ACE_Task::svc_run> method automatically removes us
@@ -194,14 +205,17 @@ Worker_Task<BARRIER>::producer ()
   for (;;)
     {
       // Allocate a new message.
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
 
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (BUFSIZ),
                       -1);
+      ACE_Message_Block_Unique_Ptr message_block {mb};
 
-      if (this->input (mb) == -1)
+      if (this->input (message_block) == -1)
+      {
         return -1;
+      }
     }
 
   ACE_NOTREACHED (return 0);
@@ -214,23 +228,38 @@ Worker_Task<BARRIER>::output (ACE_Message_Block *mb)
 }
 
 template <class BARRIER> int
-Worker_Task<BARRIER>::input (ACE_Message_Block *mb)
+Worker_Task<BARRIER>::put_owned (ACE_Message_Block_Unique_Ptr &mb)
 {
-  ACE_Message_Block *mb1;
+  int const result = this->put (mb.get ());
+  if (!this->inp_serialize_ || result != -1)
+  {
+    mb.release ();
+  }
+  return result;
+}
+
+template <class BARRIER> int
+Worker_Task<BARRIER>::input (ACE_Message_Block_Unique_Ptr &message_block)
+{
+  ACE_Message_Block *mb = message_block.get ();
 
 #if !defined (manual)
   static int l = 0;
-  char str[] = "kalle";
-  ACE_OS::strcpy (mb->rd_ptr (), str);
+  char const str[] = "kalle";
+  std::strcpy (mb->rd_ptr (), str);
 
-  size_t n = ACE_OS::strlen (str);
+  size_t n = std::strlen (str);
 
   if (l == 1000)
+  {
     n = 1;
-  l++;
+  }
+  ++l;
 
   if (l == 0 || (l % 100 == 0))
+  {
     ACE_OS::sleep (5);
+  }
   if (n <= 1)
 #else
     ACE_DEBUG ((LM_DEBUG,
@@ -245,21 +274,25 @@ Worker_Task<BARRIER>::input (ACE_Message_Block *mb)
       // cout << "\nvor loop, dump of task msg queue:\n" << endl;
       // this->msg_queue ()->dump ();
 
-      for (int i = 0; i < nt_; i++)
+      for (int i = 0; i < nt_; ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%t) eof, sending block for thread=%d\n",
                       i + 1));
 
-          ACE_NEW_RETURN (mb1,
+          ACE_Message_Block *raw_mb1 {};
+          ACE_NEW_RETURN (raw_mb1,
                           ACE_Message_Block (2),
                           -1);
+          ACE_Message_Block_Unique_Ptr mb1 {raw_mb1};
           mb1->length (0);
 
-          if (this->put (mb1) == -1)
-            ACE_ERROR ((LM_ERROR,
-                        "(%t) %p\n",
-                        "put"));
+          if (this->put_owned (mb1) == -1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "(%t) %p\n",
+                          "put"));
+            }
 #if defined (delay_put)
           // this sleep helps to shutdown correctly -> was an error!
           ACE_OS::sleep (1);
@@ -273,10 +306,12 @@ Worker_Task<BARRIER>::input (ACE_Message_Block *mb)
       // producing.
       mb->wr_ptr (n);
 
-      if (this->put (mb) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "(%t) %p\n",
-                    "put"));
+      if (this->put_owned (message_block) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%t) %p\n",
+                      "put"));
+        }
     }
   return 0;
 }

@@ -16,11 +16,14 @@
 class PLUGTOP_Export Test_Topology_Factory : public TAO_Notify::Topology_Factory
 {
 public:
-  Test_Topology_Factory ();
-  /////////////////////////////////////////////////
-  // override virtual methods from Topology_Factory
-  virtual TAO_Notify::Topology_Saver* create_saver ();
-  virtual TAO_Notify::Topology_Loader* create_loader ();
+  Test_Topology_Factory () = default;
+  Test_Topology_Factory (Test_Topology_Factory const&) = delete;
+  Test_Topology_Factory (Test_Topology_Factory&&) = delete;
+  Test_Topology_Factory& operator= (Test_Topology_Factory const&) = delete;
+  Test_Topology_Factory& operator= (Test_Topology_Factory&&) = delete;
+
+  TAO_Notify::Topology_Saver* create_saver () override;
+  TAO_Notify::Topology_Loader* create_loader () override;
 };
 
 ACE_FACTORY_DECLARE (PLUGTOP, Test_Topology_Factory)

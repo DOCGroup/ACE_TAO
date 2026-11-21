@@ -168,14 +168,14 @@ public:
                  ACE_CDR::Octet giop_major_version = ACE_CDR_GIOP_MAJOR_VERSION,
                  ACE_CDR::Octet giop_minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
-  /// destructor
   ~ACE_OutputCDR ();
 
   /**
    * Disambiguate overload when inserting booleans, octets, chars, and
    * bounded strings.
    */
-  //@{ @name Helper classes
+  /// @name Helper classes
+  /// @{
 
   struct ACE_Export from_boolean
   {
@@ -217,10 +217,10 @@ public:
   {
     from_string (ACE_CDR::Char* s,
                  ACE_CDR::ULong b,
-                 ACE_CDR::Boolean nocopy = 0);
+                 ACE_CDR::Boolean nocopy = false);
     from_string (const ACE_CDR::Char* s,
                  ACE_CDR::ULong b,
-                 ACE_CDR::Boolean nocopy = 0);
+                 ACE_CDR::Boolean nocopy = false);
     ACE_CDR::Char *val_;
     ACE_CDR::ULong bound_;
     ACE_CDR::Boolean nocopy_;
@@ -230,10 +230,10 @@ public:
   {
     from_wstring (ACE_CDR::WChar* ws,
                   ACE_CDR::ULong b,
-                  ACE_CDR::Boolean nocopy = 0);
+                  ACE_CDR::Boolean nocopy = false);
     from_wstring (const ACE_CDR::WChar* ws,
                   ACE_CDR::ULong b,
-                  ACE_CDR::Boolean nocopy = 0);
+                  ACE_CDR::Boolean nocopy = false);
     ACE_CDR::WChar *val_;
     ACE_CDR::ULong bound_;
     ACE_CDR::Boolean nocopy_;
@@ -256,7 +256,7 @@ public:
     ACE_CDR::ULong bound_;
   };
 #endif
-  //@}
+  /// @}
 
   /**
    * @{ @name Write operations
@@ -295,12 +295,13 @@ public:
   ACE_CDR::Boolean write_wstring (const std::wstring &x);
 #endif
 
-  //@}
+  /// @}
 
   /// @note the portion written starts at @a x and ends
   ///    at @a x + @a length.
   /// The length is *NOT* stored into the CDR stream.
-  //@{ @name Array write operations
+  /// @name Array write operations
+  /// @{
   ACE_CDR::Boolean write_boolean_array (const ACE_CDR::Boolean *x,
                                         ACE_CDR::ULong length);
   ACE_CDR::Boolean write_char_array (const ACE_CDR::Char *x,
@@ -333,7 +334,7 @@ public:
   /// Write an octet array contained inside a MB, this can be optimized
   /// to minimize copies.
   ACE_CDR::Boolean write_octet_array_mb (const ACE_Message_Block* mb);
-  //@}
+  /// @}
 
   /**
    * @{ @name Placeholder/replace operations
@@ -397,12 +398,13 @@ public:
   ACE_CDR::Boolean replace (ACE_CDR::Octet x, char* loc);
   ACE_CDR::Boolean replace (ACE_CDR::Float x, char* loc);
   ACE_CDR::Boolean replace (ACE_CDR::Double x, char* loc);
-  //@}
+  /// @}
 
   /**
    * Return 0 on failure and 1 on success.
    */
-  //@{ @name Append contents of own CDR stream to another
+  /// @name Append contents of own CDR stream to another
+  /// @{
   ACE_CDR::Boolean append_boolean (ACE_InputCDR &);
   ACE_CDR::Boolean append_char (ACE_InputCDR &);
   ACE_CDR::Boolean append_wchar (ACE_InputCDR &);
@@ -420,7 +422,7 @@ public:
 
   ACE_CDR::Boolean append_wstring (ACE_InputCDR &);
   ACE_CDR::Boolean append_string (ACE_InputCDR &);
-  //@}
+  /// @}
 
   /// Returns @c false if an error has occurred.
   /**
@@ -547,14 +549,14 @@ public:
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 
 private:
-  // Find the message block in the chain of message blocks
-  // that the provide location locates.
+  /// Find the message block in the chain of message blocks
+  /// that the provide location locates.
   ACE_Message_Block* find (char* loc);
 
-  ACE_OutputCDR (const ACE_OutputCDR&) = delete;
-  ACE_OutputCDR& operator= (const ACE_OutputCDR&) = delete;
-  ACE_OutputCDR (ACE_OutputCDR&&) = delete;
-  ACE_OutputCDR& operator= (ACE_OutputCDR&&) = delete;
+  ACE_OutputCDR (ACE_OutputCDR const &) = delete;
+  ACE_OutputCDR &operator= (ACE_OutputCDR const &) = delete;
+  ACE_OutputCDR (ACE_OutputCDR &&) = delete;
+  ACE_OutputCDR &operator= (ACE_OutputCDR &&) = delete;
 
   ACE_CDR::Boolean write_1 (const ACE_CDR::Octet *x);
   ACE_CDR::Boolean write_2 (const ACE_CDR::UShort *x);
@@ -579,10 +581,8 @@ private:
                                 size_t align,
                                 ACE_CDR::ULong length);
 
-
   ACE_CDR::Boolean write_wchar_array_i (const ACE_CDR::WChar* x,
                                         ACE_CDR::ULong length);
-
 
   /**
    * Grow the CDR stream. When it returns @a buf contains a pointer to
@@ -610,7 +610,7 @@ private:
    * The current_alignment is used to readjust the buffer following
    * the stolen message block.
    */
-  size_t current_alignment_;
+  size_t current_alignment_ {};
 #endif /* ACE_LACKS_CDR_ALIGNMENT */
 
   /**
@@ -619,7 +619,7 @@ private:
    * to write on it, even if it is past the start and end of the
    * buffer.
    */
-  bool current_is_writable_;
+  bool current_is_writable_ {true};
 
   /**
    * If not zero swap bytes at writing so the created CDR stream byte
@@ -634,7 +634,7 @@ private:
   bool do_byte_swap_;
 
   /// Set to false when an error ocurrs.
-  bool good_bit_;
+  bool good_bit_ {true};
 
   /// Break-even point for copying.
   size_t const memcpy_tradeoff_;
@@ -649,8 +649,8 @@ protected:
   ACE_CDR::Octet minor_version_;
 
   /// If not nil, invoke for translation of character and string data.
-  ACE_Char_Codeset_Translator *char_translator_;
-  ACE_WChar_Codeset_Translator *wchar_translator_;
+  ACE_Char_Codeset_Translator *char_translator_ {};
+  ACE_WChar_Codeset_Translator *wchar_translator_ {};
 
   /**
    * Some wide char codesets may be defined with a maximum number
@@ -663,7 +663,6 @@ protected:
    */
   static size_t wchar_maxbytes_;
 };
-
 
 // ****************************************************************
 
@@ -776,19 +775,19 @@ public:
   /// copies or too many temporaries.
   struct ACE_Export Transfer_Contents
   {
-    Transfer_Contents (ACE_InputCDR &rhs);
+    explicit Transfer_Contents (ACE_InputCDR &rhs);
 
     ACE_InputCDR &rhs_;
   };
   /// Transfer the contents from @a rhs to a new CDR
-  ACE_InputCDR (Transfer_Contents rhs);
+  explicit ACE_InputCDR (Transfer_Contents rhs);
 
-  /// Destructor
   virtual ~ACE_InputCDR ();
 
   /// Disambiguate overloading when extracting octets, chars,
   /// booleans, and bounded strings
-  //@{ @name Helper classes
+  /// @name Helper classes
+  /// @{
 
   struct ACE_Export to_boolean
   {
@@ -872,12 +871,13 @@ public:
     ACE_CDR::ULong bound_;
   };
 #endif /* ACE_LACKS_STD_WSTRING */
-  //@}
+  /// @}
 
   /**
    * Return @c false on failure and @c true on success.
    */
-  //@{ @name Read basic IDL types
+  /// @name Read basic IDL types
+  /// @{
   ACE_CDR::Boolean read_boolean (ACE_CDR::Boolean& x);
   ACE_CDR::Boolean read_char (ACE_CDR::Char &x);
   ACE_CDR::Boolean read_wchar (ACE_CDR::WChar& x);
@@ -902,14 +902,15 @@ public:
 #if !defined(ACE_LACKS_STD_WSTRING)
   ACE_CDR::Boolean read_wstring (std::wstring& x);
 #endif
-  //@}
+  /// @}
 
   /**
    * The buffer @a x must be large enough to contain @a length
    * elements.
    * Return @c false on failure and @c true on success.
    */
-  //@{ @name Read basic IDL types arrays
+  /// @name Read basic IDL types arrays
+  /// @{
   ACE_CDR::Boolean read_boolean_array (ACE_CDR::Boolean* x,
                                        ACE_CDR::ULong length);
   ACE_CDR::Boolean read_char_array (ACE_CDR::Char *x,
@@ -938,12 +939,13 @@ public:
                                           ACE_CDR::ULong length);
   ACE_CDR::Boolean read_int8_array (ACE_CDR::Int8 *x, ACE_CDR::ULong length);
   ACE_CDR::Boolean read_uint8_array (ACE_CDR::UInt8 *x, ACE_CDR::ULong length);
-  //@}
+  /// @}
 
   /**
    * Return @c false on failure and @c true on success.
    */
-  //@{ @name Skip elements
+  /// @name Skip elements
+  /// @{
   ACE_CDR::Boolean skip_boolean ();
   ACE_CDR::Boolean skip_char ();
   ACE_CDR::Boolean skip_wchar ();
@@ -958,7 +960,7 @@ public:
   ACE_CDR::Boolean skip_double ();
   ACE_CDR::Boolean skip_longdouble ();
   ACE_CDR::Boolean skip_fixed ();
-  //@}
+  /// @}
 
   /**
    * The next field must be a string, this method skips it. It is
@@ -986,8 +988,8 @@ public:
    */
   const ACE_Message_Block* start () const;
 
-  // = The following functions are useful to read the contents of the
-  //   CDR stream from a socket or file.
+  /// @name Reading the stream from a socket or file
+  /// @{
 
   /**
    * Grow the internal buffer, reset @c rd_ptr to the first byte in
@@ -1010,6 +1012,7 @@ public:
 
   /// Steal the contents from the current CDR.
   ACE_Message_Block *steal_contents ();
+  /// @}
 
   /// Steal the contents of @a cdr and make a shallow copy into this
   /// stream.
@@ -1106,15 +1109,15 @@ protected:
   bool do_byte_swap_;
 
   /// set to @c false when an error occurs.
-  bool good_bit_;
+  bool good_bit_ {true};
 
   /// The GIOP versions for this stream
   ACE_CDR::Octet major_version_;
   ACE_CDR::Octet minor_version_;
 
   /// If not nil, invoke for translation of character and string data.
-  ACE_Char_Codeset_Translator *char_translator_;
-  ACE_WChar_Codeset_Translator *wchar_translator_;
+  ACE_Char_Codeset_Translator *char_translator_ {};
+  ACE_WChar_Codeset_Translator *wchar_translator_ {};
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE::Monitor_Control::Size_Monitor *monitor_;
@@ -1387,7 +1390,6 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CString &x);
 
-
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
@@ -1396,10 +1398,11 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Not used by CORBA or TAO
+/// Not used by CORBA or TAO.
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                ACE_CDR::Char x);
-// CDR output operators for primitive types
+/// @name CDR output operators for primitive types
+/// @{
 
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                ACE_CDR::Short x);
@@ -1421,8 +1424,10 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                ACE_CDR::Double x);
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                const ACE_CDR::Fixed &x);
+/// @}
 
-// CDR output operator from helper classes
+/// @name CDR output operators from helper classes
+/// @{
 
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                ACE_OutputCDR::from_boolean x);
@@ -1456,11 +1461,13 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
 #endif
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_uint8 x);
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_int8 x);
+/// @}
 
-// Not used by CORBA or TAO
+/// Not used by CORBA or TAO.
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Char &x);
-// CDR input operators for primitive types
+/// @name CDR input operators for primitive types
+/// @{
 
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Short &x);
@@ -1482,8 +1489,10 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Double &x);
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Fixed &x);
+/// @}
 
-// CDR input operator from helper classes
+/// @name CDR input operators from helper classes
+/// @{
 
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_InputCDR::to_boolean x);
@@ -1513,6 +1522,7 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
 #endif
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &os, ACE_InputCDR::to_uint8 x);
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &os, ACE_InputCDR::to_int8 x);
+/// @}
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

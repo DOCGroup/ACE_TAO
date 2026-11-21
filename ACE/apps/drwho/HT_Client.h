@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _HT_CLIENT_H
 #define _HT_CLIENT_H
 
@@ -22,8 +21,8 @@
 class HT_Client : public Hash_Table
 {
 public:
-  virtual Protocol_Record *insert (const char *key_name,
-                                   int max_len = MAXUSERIDNAMELEN);
+  Protocol_Record *insert (const char *key_name,
+                           int max_len = MAXUSERIDNAMELEN) override;
 };
 
 #endif /* _HT_CLIENT_H */

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   COIOP_Connection_Handler.h
  *
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_COIOP_CONNECTION_HANDLER_H
 #define TAO_COIOP_CONNECTION_HANDLER_H
@@ -30,8 +28,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// ****************************************************************
-
 /**
  * @class TAO_COIOP_Connection_Handler
  *
@@ -47,28 +43,26 @@ class TAO_Strategies_Export TAO_COIOP_Connection_Handler
 public:
   explicit TAO_COIOP_Connection_Handler (ACE_Thread_Manager *t = nullptr);
 
-  /// Constructor.
   explicit TAO_COIOP_Connection_Handler (TAO_ORB_Core *orb_core);
 
-  /// Destructor.
   ~TAO_COIOP_Connection_Handler ();
 
   /// Called by the <Strategy_Acceptor> when the handler is completely
   /// connected.  Argument is unused.
   int open (void *) override;
 
-  //@{
+  /// @{
   /**
    * Connection_Handler overloads
    */
   int open_handler (void *) override;
-  //@}
+  /// @}
 
   /// Close called by the Acceptor or Connector when connection
   /// establishment fails.
   int close (u_long = 0) override;
 
-  //@{
+  /// @{
   /** @name Event Handler overloads
    */
   int resume_handler () override;
@@ -78,7 +72,7 @@ public:
   int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
   int handle_timeout (ACE_Time_Value const &current_time,
                       void const *act = nullptr) override;
-  //@}
+  /// @}
 
   /// Add ourselves to Cache.
   int add_transport_to_cache ();

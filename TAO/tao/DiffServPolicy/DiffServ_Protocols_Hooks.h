@@ -1,14 +1,10 @@
 // -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   DiffServ_Protocols_Hooks.h
  *
  *  @author Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  *          Johnny Willemsen <jwillemsen@remedy.nl>
  */
-// ===================================================================
-
 #ifndef TAO_DIFFSERV_PROTOCOLS_HOOKS_H
 #define TAO_DIFFSERV_PROTOCOLS_HOOKS_H
 
@@ -30,10 +26,8 @@ class TAO_DiffServPolicy_Export TAO_DS_Network_Priority_Protocols_Hooks
       : public TAO_Network_Priority_Protocols_Hooks
 {
 public:
-  /// Constructor
   TAO_DS_Network_Priority_Protocols_Hooks () = default;
 
-  /// Destructor
   ~TAO_DS_Network_Priority_Protocols_Hooks () override = default;
 
   /// Initialize the network priority protocols hooks instance.
@@ -55,7 +49,6 @@ public:
   ///
   CORBA::Long get_dscp_codepoint (TAO_Service_Context &sc) override;
 
-protected:
   TAO_DS_Network_Priority_Protocols_Hooks (TAO_DS_Network_Priority_Protocols_Hooks const &) = delete;
   TAO_DS_Network_Priority_Protocols_Hooks &operator= (
     TAO_DS_Network_Priority_Protocols_Hooks const &) = delete;
@@ -63,9 +56,10 @@ protected:
   TAO_DS_Network_Priority_Protocols_Hooks &operator= (
     TAO_DS_Network_Priority_Protocols_Hooks &&) = delete;
 
+protected:
+  /// Non-owning pointer provided by init_hooks().
   TAO_ORB_Core * orb_core_ {};
 };
-
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_DiffServPolicy,
                                TAO_DS_Network_Priority_Protocols_Hooks)

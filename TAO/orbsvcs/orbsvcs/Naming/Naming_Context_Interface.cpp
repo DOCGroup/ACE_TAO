@@ -11,6 +11,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Naming_Context::TAO_Naming_Context (TAO_Naming_Context_Impl *impl)
@@ -19,9 +21,7 @@ TAO_Naming_Context::TAO_Naming_Context (TAO_Naming_Context_Impl *impl)
 }
 
 TAO_Naming_Context::~TAO_Naming_Context ()
-{
-  delete impl_;
-}
+= default;
 
 PortableServer::POA_ptr
 TAO_Naming_Context::_default_POA (/*env*/)
@@ -30,39 +30,39 @@ TAO_Naming_Context::_default_POA (/*env*/)
 }
 
 void
-TAO_Naming_Context::bind (const CosNaming::Name &n, CORBA::Object_ptr obj)
+TAO_Naming_Context::bind (CosNaming::Name const &n, CORBA::Object_ptr obj)
 {
   impl_->bind (n, obj);
 }
 
 void
-TAO_Naming_Context::rebind (const CosNaming::Name &n, CORBA::Object_ptr obj)
+TAO_Naming_Context::rebind (CosNaming::Name const &n, CORBA::Object_ptr obj)
 {
   impl_->rebind (n, obj);
 }
 
 void
-TAO_Naming_Context::bind_context (const CosNaming::Name &n,
+TAO_Naming_Context::bind_context (CosNaming::Name const &n,
                                   CosNaming::NamingContext_ptr nc)
 {
   impl_->bind_context (n, nc);
 }
 
 void
-TAO_Naming_Context::rebind_context (const CosNaming::Name &n,
+TAO_Naming_Context::rebind_context (CosNaming::Name const &n,
                                     CosNaming::NamingContext_ptr nc)
 {
   impl_->rebind_context (n, nc);
 }
 
 CORBA::Object_ptr
-TAO_Naming_Context::resolve (const CosNaming::Name &n)
+TAO_Naming_Context::resolve (CosNaming::Name const &n)
 {
   return impl_->resolve (n);
 }
 
 void
-TAO_Naming_Context::unbind (const CosNaming::Name &n)
+TAO_Naming_Context::unbind (CosNaming::Name const &n)
 {
   impl_->unbind (n);
 }
@@ -74,7 +74,7 @@ TAO_Naming_Context::new_context ()
 }
 
 CosNaming::NamingContext_ptr
-TAO_Naming_Context::bind_new_context (const CosNaming::Name &n)
+TAO_Naming_Context::bind_new_context (CosNaming::Name const &n)
 {
   return impl_->bind_new_context (n);
 }
@@ -95,13 +95,15 @@ TAO_Naming_Context::list (CORBA::ULong how_many,
 
 void
 TAO_Naming_Context::
-to_string_helper_length (CORBA::ULong &len, const char * &src)
+to_string_helper_length (CORBA::ULong &len, char const *&src)
 {
-  for (const char *j =src; *j != '\0'; ++j)
+  for (char const *j =src; *j != '\0'; ++j)
     {
       ++len;
       if (*j == '.' || *j == '\\' || *j == '/')
-        ++len;
+        {
+          ++len;
+        }
     }
   ++len; // '.' seperator or '/' seperator
 
@@ -109,7 +111,7 @@ to_string_helper_length (CORBA::ULong &len, const char * &src)
 
 void
 TAO_Naming_Context::
-to_string_helper_assign (char * &k, const char * &src)
+to_string_helper_assign (char *&k, char const *&src)
 {
   for (; *src != '\0'; ++src)
     {
@@ -125,13 +127,15 @@ to_string_helper_assign (char * &k, const char * &src)
 }
 
 char *
-TAO_Naming_Context::to_string (const CosNaming::Name &n)
+TAO_Naming_Context::to_string (CosNaming::Name const &n)
 {
   // Accepts a Name and returns a stringified name.
 
   // Check for invalid name.
   if (n.length () == 0)
+  {
     throw CosNaming::NamingContext::InvalidName();
+  }
 
   // Length of the return string
   CORBA::ULong len = 0;
@@ -139,12 +143,12 @@ TAO_Naming_Context::to_string (const CosNaming::Name &n)
   CORBA::ULong i;
   for (i=0; i < n.length (); ++i)
     {
-      const char *id = n[i].id.in ();
+      char const *id = n[i].id.in ();
 
       // Count number of characters in id
       this->to_string_helper_length (len, id);
 
-      const char *kind = n[i].kind.in ();
+      char const *kind = n[i].kind.in ();
 
       // Count number of characters in kind
       this->to_string_helper_length (len, kind);
@@ -156,7 +160,7 @@ TAO_Naming_Context::to_string (const CosNaming::Name &n)
 
   // check for memory allocation
   //
-  if (str_name == 0)
+  if (str_name == nullptr)
     {
       throw CORBA::NO_MEMORY ();
     }
@@ -168,10 +172,10 @@ TAO_Naming_Context::to_string (const CosNaming::Name &n)
     {
       // Stringify Id
       //
-      const char *id = n[i].id.in ();
+      char const *id = n[i].id.in ();
       this->to_string_helper_assign (k, id);
 
-      const char *kind = n[i].kind.in ();
+      char const *kind = n[i].kind.in ();
 
       if (*kind != '\0')
         {
@@ -205,7 +209,7 @@ TAO_Naming_Context::to_string (const CosNaming::Name &n)
 
 void
 TAO_Naming_Context::
-to_name_helper (char *dest, const char*& src, Hint hint)
+to_name_helper (char *dest, char const *&src, Hint hint)
 {
   for (; *src != '\0'; ++src, ++dest)
     {
@@ -217,7 +221,7 @@ to_name_helper (char *dest, const char*& src, Hint hint)
 
       if (*src == '\\')
         {
-          src++;
+          ++src;
           if (*src == '\0')
             {
               // Case: The very last component
@@ -235,7 +239,7 @@ to_name_helper (char *dest, const char*& src, Hint hint)
 }
 
 CosNaming::Name *
-TAO_Naming_Context::to_name (const char *sn)
+TAO_Naming_Context::to_name (char const *sn)
 {
   // Returns the Name from its stringified form.
   CosNaming::Name n;
@@ -246,13 +250,12 @@ TAO_Naming_Context::to_name (const char *sn)
   // Total length of the unstrigified name
   CORBA::ULong len=0;
 
-
-  for (const char *j = sn; *j != '\0'; ++j)
+  for (char const *j = sn; *j != '\0'; ++j)
     {
       // Make a pass through the Name and count each character
       if (*j == '/')
         {
-          ncomp++;
+          ++ncomp;
         }
       else if (*j == '\\')
         {
@@ -269,11 +272,12 @@ TAO_Naming_Context::to_name (const char *sn)
       ++len;
     }
 
-
   // Check for InvalidName i.e. Invalid stringified name
   //
   if (len == 0)
+  {
     throw CosNaming::NamingContext::InvalidName();
+  }
 
   // Assign the length of the return unstringified name.
   //
@@ -283,7 +287,7 @@ TAO_Naming_Context::to_name (const char *sn)
   //
   CORBA::ULong count = 0;
 
-  for (const char *k = sn; *k != '\0';)
+  for (char const *k = sn; *k != '\0';)
     {
       if (count > ncomp)
         {
@@ -298,7 +302,7 @@ TAO_Naming_Context::to_name (const char *sn)
 
       if (*k == '.')
         {
-          k++;
+          ++k;
           // Assign to kind
           this->to_name_helper (kind, k, HINT_KIND);
         }
@@ -310,12 +314,14 @@ TAO_Naming_Context::to_name (const char *sn)
       n[count].id   = id;
       n[count].kind = kind;
 
-      count++;
+      ++count;
 
       // End
-       if (*k == '\0')
-         break;
-      k++;
+      if (*k == '\0')
+        {
+          break;
+        }
+      ++k;
     }
 
   return new CosNaming::Name (n);
@@ -325,16 +331,18 @@ int
 TAO_Naming_Context::to_url_is_alnum_or_punctuation (char c)
 {
   if (ACE_OS::ace_isalnum (c))
+  {
     return 1;
+  }
 
   // NON US-ASCII characters excluding those in this array are the
   // characters that need to be escaped
   static char non_escaped_punctuation[] =
     { ';', '/', ':', '?', '@', '=', '+', '$', ',', '-',
       '_', '.', '!', '~', '*', '\'', '(', ')' };
-  const size_t non_escaped_punctuation_count =
+  size_t const non_escaped_punctuation_count =
     sizeof(non_escaped_punctuation)/sizeof(non_escaped_punctuation[0]);
-  for (const char *j = non_escaped_punctuation;
+  for (char const *j = non_escaped_punctuation;
        j != non_escaped_punctuation + non_escaped_punctuation_count;
        ++j)
     {
@@ -342,49 +350,56 @@ TAO_Naming_Context::to_url_is_alnum_or_punctuation (char c)
       // and hence need not be escaped, then don't increment the
       // count.
       if (*j == c)
+      {
         return 1;
+      }
     }
   return 0;
 }
 
 size_t
 TAO_Naming_Context::to_url_validate_and_compute_size (
-    const char *addr,
-    const char *sn)
+    char const *addr,
+    char const *sn)
 {
-  size_t addr_len = ACE_OS::strlen (addr);
+  const size_t addr_len = std::strlen (addr);
 
   // Check for invalid address
   if (addr_len == 0)
+  {
     throw CosNaming::NamingContextExt::InvalidAddress ();
+  }
 
   // Make a pass through the in string name to count the number of
   // characters and if the character
   // is to be escaped, increment the number of characters by 3.
   size_t sn_len = 0;
-  for (const char *i = sn; *i != '\0'; ++i)
+  for (char const *i = sn; *i != '\0'; ++i)
     {
       ++sn_len;
 
       if (TAO_Naming_Context::to_url_is_alnum_or_punctuation (*i))
+      {
         continue;
+      }
       sn_len += 3;
     }
 
   if (sn_len == 0)
+  {
     throw CosNaming::NamingContextExt::InvalidName ();
+  }
 
   return addr_len + sn_len;
 }
 
 char *
-TAO_Naming_Context::to_url (const char * addr,
-                            const char * sn)
+TAO_Naming_Context::to_url (char const *addr,
+                            char const *sn)
 {
   /// Compute how many characters will be required for the URL
   size_t no_char =
     TAO_Naming_Context::to_url_validate_and_compute_size (addr, sn);
-
 
   // The 'corbaname:' tag is to be prepended at the starting of the
   // return parameter.
@@ -396,20 +411,20 @@ TAO_Naming_Context::to_url (const char * addr,
   char *str_url = CORBA::string_alloc (static_cast<CORBA::ULong> (no_char + sizeof (prefix)));
 
   // Copy 'prefix' to the return parameter.
-  char *dest = ACE_OS::strcpy (str_url , prefix);
+  char *dest = std::strcpy (str_url , prefix);
 
   /// move to end of dest string
-  dest += ACE_OS::strlen(dest);
+  dest += std::strlen(dest);
 
   // Concatenate the address
-  dest = ACE_OS::strcat (dest, addr);
+  dest = std::strcat (dest, addr);
 
   /// Concatenate the seperator between the addr and Name
-  dest += ACE_OS::strlen(dest);
-  dest = ACE_OS::strcat (dest, "#");
+  dest += std::strlen(dest);
+  dest = std::strcat (dest, "#");
 
   /// move to end of dest string
-  dest += ACE_OS::strlen(dest);
+  dest += std::strlen(dest);
 
   // Now append the stringified object name to the return variable.
   // The percent '%' character is used as an escape. If a character
@@ -419,7 +434,7 @@ TAO_Naming_Context::to_url (const char * addr,
   // the low-order nibble of the octet and the second hexadecimal
   // character represents the low order nibble.
 
-  for (const char *i = sn; *i != '\0'; ++i)
+  for (char const *i = sn; *i != '\0'; ++i)
     {
       if (TAO_Naming_Context::to_url_is_alnum_or_punctuation (*i))
         {
@@ -444,7 +459,7 @@ TAO_Naming_Context::to_url (const char * addr,
 }
 
 CORBA::Object_ptr
-TAO_Naming_Context::resolve_str (const char * n)
+TAO_Naming_Context::resolve_str (char const *n)
 {
   // Similar to <resolve> above. It accepts a strigified name as an
   // argument instead of a Name.
@@ -462,9 +477,7 @@ TAO_Naming_Context::stale (bool value)
   this->impl_->stale (value);
 }
 
-TAO_Naming_Context_Impl::~TAO_Naming_Context_Impl ()
-{
-}
+TAO_Naming_Context_Impl::~TAO_Naming_Context_Impl () = default;
 
 void
 TAO_Naming_Context_Impl::stale (bool value)

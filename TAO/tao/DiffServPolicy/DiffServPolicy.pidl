@@ -1,6 +1,5 @@
 // -*- IDL -*-
 
-// ================================================================
 /**
  *  @file DiffServPolicy.pidl
  *
@@ -22,8 +21,6 @@
  *
  * 2. The files are ready to use
  */
-// ================================================================
-
 #ifndef TAO_DIFFSERV_POLICY_IDL
 #define TAO_DIFFSERV_POLICY_IDL
 

@@ -27,8 +27,7 @@ ACE_MEM_Acceptor::dump () const
 // Do nothing routine for constructor.
 
 ACE_MEM_Acceptor::ACE_MEM_Acceptor ()
-  : mmap_prefix_ (nullptr),
-    malloc_options_ (ACE_DEFAULT_BASE_ADDR, 0),
+  : malloc_options_ (ACE_DEFAULT_BASE_ADDR, 0),
     preferred_strategy_ (ACE_MEM_IO::Reactive)
 {
   ACE_TRACE ("ACE_MEM_Acceptor::ACE_MEM_Acceptor");
@@ -50,8 +49,7 @@ ACE_MEM_Acceptor::ACE_MEM_Acceptor (const ACE_MEM_Addr &remote_sap,
                                     int reuse_addr,
                                     int backlog,
                                     int protocol)
-  : mmap_prefix_ (nullptr),
-    malloc_options_ (ACE_DEFAULT_BASE_ADDR, 0),
+  : malloc_options_ (ACE_DEFAULT_BASE_ADDR, 0),
     preferred_strategy_ (ACE_MEM_IO::Reactive)
 {
   ACE_TRACE ("ACE_MEM_Acceptor::ACE_MEM_Acceptor");
@@ -59,8 +57,10 @@ ACE_MEM_Acceptor::ACE_MEM_Acceptor (const ACE_MEM_Addr &remote_sap,
                   reuse_addr,
                   backlog,
                   protocol) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("ACE_MEM_Acceptor::ACE_MEM_Acceptor")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("ACE_MEM_Acceptor::ACE_MEM_Acceptor")));
+    }
 }
 
 int
@@ -92,12 +92,14 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
   if (this->shared_accept_start (timeout,
                                  restart,
                                  in_blocking_mode) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
-      sockaddr *addr = nullptr;
+      sockaddr *addr {};
       struct sockaddr_in inet_addr;
-      int *len_ptr = nullptr;
+      int *len_ptr {};
       int len = 0;
 
       if (remote_sap != nullptr)
@@ -108,13 +110,15 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
         }
 
       do
-        // On Win32 the third parameter to <accept> must be a NULL
-        // pointer if to ignore the client's address.
-        new_stream.set_handle (ACE_OS::accept (this->get_handle (),
-                                               addr,
-                                               len_ptr));
+        {
+          // On Win32 the third parameter to <accept> must be a NULL
+          // pointer if to ignore the client's address.
+          new_stream.set_handle (ACE_OS::accept (this->get_handle (),
+                                                 addr,
+                                                 len_ptr));
+        }
       while (new_stream.get_handle () == ACE_INVALID_HANDLE
-             && restart != 0
+             && restart
              && errno == EINTR
              && timeout == nullptr);
 
@@ -128,7 +132,9 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
   if (this->shared_accept_finish (new_stream,
                                   in_blocking_mode,
                                   reset_new_handle) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   // Allocate 2 * MAXPATHLEN so we can accomodate the unique
   // name that gets appended later
@@ -136,7 +142,9 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
 
   ACE_INET_Addr local_addr;
   if (new_stream.get_local_addr (local_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (this->mmap_prefix_ != nullptr)
     {
@@ -185,21 +193,27 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
 #endif /* ACE_WIN32 || !_ACE_USE_SV_SEM */
   if (ACE::send (new_handle, &client_signaling,
                  sizeof (ACE_INT16)) == -1)
-    ACELIB_ERROR_RETURN ((LM_DEBUG,
-                       ACE_TEXT ("ACE_MEM_Acceptor::accept error sending strategy\n")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_DEBUG,
+                            ACE_TEXT ("ACE_MEM_Acceptor::accept error sending strategy\n")),
+                           -1);
+    }
 
   //   Now we get the signaling strategy the client support.
   if (ACE::recv (new_handle, &client_signaling,
                  sizeof (ACE_INT16)) == -1)
-    ACELIB_ERROR_RETURN ((LM_DEBUG,
-                       ACE_TEXT ("ACE_MEM_Acceptor::%p error receiving strategy\n"),
-                       ACE_TEXT ("accept")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_DEBUG,
+                            ACE_TEXT ("ACE_MEM_Acceptor::%p error receiving strategy\n"),
+                            ACE_TEXT ("accept")),
+                           -1);
+    }
 
   // Ensure minimum buffer size
   if (this->malloc_options_.minimum_bytes_ < ACE_MEM_STREAM_MIN_BUFFER)
+  {
     this->malloc_options_.minimum_bytes_ = ACE_MEM_STREAM_MIN_BUFFER;
+  }
 
   // Client will decide what signaling strategy to use.
 
@@ -207,7 +221,9 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
   if (new_stream.init (buf,
                        static_cast<ACE_MEM_IO::Signal_Strategy> (client_signaling),
                        &this->malloc_options_) == -1)
+  {
     return -1;
+  }
 
   // @@ Need to handle timeout here.
   ACE_UINT16 buf_len = static_cast<ACE_UINT16> ((ACE_OS::strlen (buf) + 1) *
@@ -216,16 +232,20 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
   // No need to worry about byte-order because both parties should always
   // be on the same machine.
   if (ACE::send (new_handle, &buf_len, sizeof (ACE_UINT16)) == -1)
+  {
     return -1;
+  }
 
   // Now send the pathname of the mmap file.
   if (ACE::send (new_handle, buf, buf_len) == -1)
+  {
     return -1;
+  }
   return 0;
 }
 
 int
-ACE_MEM_Acceptor::shared_accept_finish (ACE_MEM_Stream new_stream,
+ACE_MEM_Acceptor::shared_accept_finish (const ACE_MEM_Stream &new_stream,
                                         int in_blocking_mode,
                                         bool reset_new_handle) const
 {
@@ -257,7 +277,9 @@ ACE_MEM_Acceptor::shared_accept_finish (ACE_MEM_Stream new_stream,
   ACE_UNUSED_ARG (reset_new_handle);
 #endif /* ACE_WIN32 */
   if (new_handle == ACE_INVALID_HANDLE)
+  {
     return -1;
+  }
 
   return 0;
 }

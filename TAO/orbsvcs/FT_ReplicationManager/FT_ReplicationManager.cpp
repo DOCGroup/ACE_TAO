@@ -10,6 +10,8 @@
  *  @author Curt Hibbs <hibbs_c@ociweb.com>
  */
 //=============================================================================
+#include <memory>
+
 #include "orbsvcs/Log_Macros.h"
 #include "FT_ReplicationManager.h"
 #include "FT_Property_Validator.h"
@@ -68,15 +70,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO::FT_ReplicationManager::FT_ReplicationManager ()
   : orb_ (CORBA::ORB::_nil ())
   , poa_ (PortableServer::POA::_nil ())
-  , ior_output_file_ (nullptr)
-  , ns_name_ ("")
   , naming_context_ (CosNaming::NamingContext::_nil ())
   , replication_manager_ref_ (FT::ReplicationManager::_nil ())
   , fault_notifier_ (FT::FaultNotifier::_nil ())
-  , fault_notifier_ior_string_ (nullptr)
   , fault_consumer_ ()
   , factory_registry_ ("ReplicationManager::FactoryRegistry")
-  , quit_ (0)
 {
   // init must be called before using this object.
 }
@@ -87,7 +85,7 @@ TAO::FT_ReplicationManager::~FT_ReplicationManager () = default;
 int TAO::FT_ReplicationManager::parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("n:o:f:"));
-  int c;
+  int c {};
 
   while ( (c = get_opts ()) != -1)
   {
@@ -98,7 +96,7 @@ int TAO::FT_ReplicationManager::parse_args (int argc, ACE_TCHAR * argv[])
         break;
 
       case 'n':
-        this->ns_name_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
+        this->ns_name_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
         break;
 
       case 'f':
@@ -124,7 +122,7 @@ int TAO::FT_ReplicationManager::parse_args (int argc, ACE_TCHAR * argv[])
 }
 
 //public
-const char * TAO::FT_ReplicationManager::identity () const
+char const * TAO::FT_ReplicationManager::identity () const
 {
   return this->identity_.c_str ();
 }
@@ -132,7 +130,7 @@ const char * TAO::FT_ReplicationManager::identity () const
 //public
 int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb)
 {
-  int result = 0;
+  int result {};
 
   if (TAO_debug_level > 1)
   {
@@ -142,7 +140,6 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb)
     ));
   }
 
-
   this->orb_ = CORBA::ORB::_duplicate (orb);
 
   // Get the RootPOA.
@@ -150,7 +147,6 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb)
     TAO_OBJID_ROOTPOA);
   this->poa_ = PortableServer::POA::_narrow (
     poa_obj.in ());
-
 
   // initialize the FactoryRegistry
   this->factory_registry_.init (this->orb_.in (), this->poa_.in ());
@@ -175,10 +171,10 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb)
   // If we were given an initial IOR string for a Fault Notifier on the
   // command line, convert it to an IOR, then register the fault
   // notifier.
-  if (this->fault_notifier_ior_string_ != nullptr)
+  if (!this->fault_notifier_ior_string_.empty ())
   {
     CORBA::Object_var notifier_obj = this->orb_->string_to_object (
-      this->fault_notifier_ior_string_);
+      this->fault_notifier_ior_string_.c_str ());
     FT::FaultNotifier_var notifier = FT::FaultNotifier::_narrow (
       notifier_obj.in ());
     if (! CORBA::is_nil (notifier.in ()))
@@ -221,14 +217,14 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb)
   }
 
   // Publish our IOR, either to a file or the Naming Service.
-  if (this->ior_output_file_ != nullptr)
+  if (!this->ior_output_file_.empty ())
   {
     this->identity_ = "file:";
-    this->identity_ += ACE_TEXT_ALWAYS_CHAR(this->ior_output_file_);
+    this->identity_ += ACE_TEXT_ALWAYS_CHAR (this->ior_output_file_.c_str ());
     result = this->write_ior ();
   }
 
-  if (result == 0 && this->ns_name_.length () != 0)
+  if (result == 0 && !this->ns_name_.empty ())
   {
     this->identity_ = "name:";
     this->identity_ += this->ns_name_;
@@ -308,7 +304,6 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb)
   this->properties_support_.set_default_property (FT::FT_CHECKPOINT_INTERVAL, value);
 #endif
 
-
   return result;
 }
 
@@ -319,20 +314,19 @@ int TAO::FT_ReplicationManager::idle (int & result)
   return this->quit_;
 }
 
-
 //public
 int TAO::FT_ReplicationManager::fini ()
 {
-  int result = 0;
+  int result {};
 
   result = this->fault_consumer_.fini ();
 
-  if (this->ior_output_file_ != nullptr)
+  if (!this->ior_output_file_.empty ())
   {
-    ACE_OS::unlink (this->ior_output_file_);
-    this->ior_output_file_ = nullptr;
+    ACE_OS::unlink (this->ior_output_file_.c_str ());
+    this->ior_output_file_.clear ();
   }
-  if (this->ns_name_.length () != 0)
+  if (!this->ns_name_.empty ())
   {
     this->naming_context_->unbind (this->this_name_);
     this->ns_name_.clear ();
@@ -372,7 +366,7 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
 
   // Re-initialize our consumer.
   // Swallow any exception.
-  int result = 0;
+  int result {};
   try
   {
     //@@ should we check to see if a notifier is already registered, rather than
@@ -383,7 +377,7 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
     // in the first place.
 
     // Create a fault analyzer.
-    TAO::FT_FaultAnalyzer * analyzer = nullptr;
+    TAO::FT_FaultAnalyzer * analyzer {};
     ACE_NEW_NORETURN (
       analyzer,
       TAO::FT_ReplicationManagerFaultAnalyzer (this));
@@ -404,7 +398,7 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
         analyzer);
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception (
       ACE_TEXT ("TAO::FT_ReplicationManager::register_fault_notifier_i: ")
@@ -427,7 +421,6 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
   }
 }
 
-
 // Returns the reference of the Fault Notifier.
 //CORBA
 FT::FaultNotifier_ptr
@@ -440,12 +433,11 @@ TAO::FT_ReplicationManager::get_fault_notifier ()
   return FT::FaultNotifier::_duplicate (this->fault_notifier_.in ());
 }
 
-
 // TAO-specific find factory registry
 //CORBA
 ::PortableGroup::FactoryRegistry_ptr
 TAO::FT_ReplicationManager::get_factory_registry (
-  const PortableGroup::Criteria & selection_criteria)
+  PortableGroup::Criteria const & selection_criteria)
 {
   ACE_UNUSED_ARG (selection_criteria);
   return this->factory_registry_.reference ();
@@ -455,7 +447,7 @@ TAO::FT_ReplicationManager::get_factory_registry (
 //public
 void TAO::FT_ReplicationManager::shutdown ()
 {
-  this->quit_ = 1;
+  this->quit_ = true;
 }
 
 // Get the type_id associated with an object group.
@@ -463,8 +455,8 @@ void TAO::FT_ReplicationManager::shutdown ()
 char * TAO::FT_ReplicationManager::type_id (
   PortableGroup::ObjectGroup_ptr object_group)
 {
-  char * result = nullptr;
-  TAO::PG_Object_Group * group = nullptr;
+  char * result {};
+  TAO::PG_Object_Group * group {};
   if (this->group_factory_.find_group (object_group, group))
   {
     result = group->get_type_id ();
@@ -482,7 +474,7 @@ char * TAO::FT_ReplicationManager::type_id (
 //CORBA
 void
 TAO::FT_ReplicationManager::set_default_properties (
-  const PortableGroup::Properties & props)
+  PortableGroup::Properties const & props)
 {
   this->properties_support_.set_default_properties (props);
   //@@ validate properties?
@@ -498,7 +490,7 @@ TAO::FT_ReplicationManager::get_default_properties ()
 //CORBA
 void
 TAO::FT_ReplicationManager::remove_default_properties (
-    const PortableGroup::Properties & props)
+    PortableGroup::Properties const & props)
 {
   this->properties_support_.remove_default_properties (props);
 }
@@ -506,8 +498,8 @@ TAO::FT_ReplicationManager::remove_default_properties (
 //CORBA
 void
 TAO::FT_ReplicationManager::set_type_properties (
-    const char *type_id,
-    const PortableGroup::Properties & overrides)
+    char const *type_id,
+    PortableGroup::Properties const & overrides)
 {
   this->properties_support_.set_type_properties (
     type_id,
@@ -517,7 +509,7 @@ TAO::FT_ReplicationManager::set_type_properties (
 //CORBA
 PortableGroup::Properties *
 TAO::FT_ReplicationManager::get_type_properties (
-    const char *type_id)
+    char const *type_id)
 {
   return this->properties_support_.get_type_properties (type_id);
 }
@@ -525,8 +517,8 @@ TAO::FT_ReplicationManager::get_type_properties (
 //CORBA
 void
 TAO::FT_ReplicationManager::remove_type_properties (
-    const char *type_id,
-    const PortableGroup::Properties & props)
+    char const *type_id,
+    PortableGroup::Properties const & props)
 {
   this->properties_support_.remove_type_properties (
     type_id,
@@ -537,9 +529,9 @@ TAO::FT_ReplicationManager::remove_type_properties (
 void
 TAO::FT_ReplicationManager::set_properties_dynamically (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Properties & overrides)
+    PortableGroup::Properties const & overrides)
 {
-  TAO::PG_Object_Group * group = nullptr;
+  TAO::PG_Object_Group * group {};
   if (this->group_factory_.find_group (object_group, group))
   {
     group->set_properties_dynamically (overrides);
@@ -558,7 +550,7 @@ TAO::FT_ReplicationManager::get_properties (
   PortableGroup::Properties_var result;
   ACE_NEW_THROW_EX (result, PortableGroup::Properties(), CORBA::NO_MEMORY ());
 
-  TAO::PG_Object_Group * group = nullptr;
+  TAO::PG_Object_Group * group {};
   if (this->group_factory_.find_group (object_group, group))
   {
     group->get_properties (result);
@@ -570,7 +562,6 @@ TAO::FT_ReplicationManager::get_properties (
   return result._retn();
 }
 
-
 //////////////////////////////////////////////////////
 // FT::FTObjectGroupManager methods
 
@@ -579,11 +570,11 @@ TAO::FT_ReplicationManager::get_properties (
 PortableGroup::ObjectGroup_ptr
 TAO::FT_ReplicationManager::set_primary_member (
   PortableGroup::ObjectGroup_ptr object_group,
-  const PortableGroup::Location & the_location)
+  PortableGroup::Location const & the_location)
 {
   METHOD_ENTRY (TAO::FT_ReplicationManager::set_primary_member);
   PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil();
-  TAO::PG_Object_Group * group = nullptr;
+  TAO::PG_Object_Group * group {};
   if (this->group_factory_.find_group (object_group, group))
   {
     PortableGroup::TagGroupTaggedComponent tag_component;
@@ -610,12 +601,12 @@ TAO::FT_ReplicationManager::set_primary_member (
 PortableGroup::ObjectGroup_ptr
 TAO::FT_ReplicationManager::create_member (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Location & the_location,
-    const char * type_id,
-    const PortableGroup::Criteria & the_criteria)
+    PortableGroup::Location const & the_location,
+    char const * type_id,
+    PortableGroup::Criteria const & the_criteria)
 {
   PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil();
-  TAO::PG_Object_Group * group = nullptr;
+  TAO::PG_Object_Group * group {};
   if (this->group_factory_.find_group (object_group, group))
   {
     group->create_member (the_location, type_id, the_criteria);
@@ -634,19 +625,18 @@ TAO::FT_ReplicationManager::create_member (
   return result._retn();
 }
 
-
 //CORBA
 PortableGroup::ObjectGroup_ptr
 TAO::FT_ReplicationManager::add_member (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Location & the_location,
+    PortableGroup::Location const & the_location,
     CORBA::Object_ptr member)
 {
   METHOD_ENTRY (TAO::FT_ReplicationManager::add_member);
   PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil ();
 
   // Find the object group corresponding to this IOGR
-  TAO::PG_Object_Group * group = nullptr;
+  TAO::PG_Object_Group * group {};
   if (this->group_factory_.find_group (object_group, group))
   {
     group->add_member (
@@ -672,12 +662,12 @@ TAO::FT_ReplicationManager::add_member (
 PortableGroup::ObjectGroup_ptr
 TAO::FT_ReplicationManager::remove_member (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Location & the_location)
+    PortableGroup::Location const & the_location)
 {
   PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil ();
 
   // Find the object group corresponding to this IOGR
-  TAO::PG_Object_Group * group = nullptr;
+  TAO::PG_Object_Group * group {};
   if (this->group_factory_.find_group (object_group, group))
   {
     group->remove_member (the_location);
@@ -701,10 +691,10 @@ PortableGroup::Locations *
 TAO::FT_ReplicationManager::locations_of_members (
     PortableGroup::ObjectGroup_ptr object_group)
 {
-  PortableGroup::Locations * result = nullptr;
+  PortableGroup::Locations * result {};
 
   // Find the object group corresponding to this IOGR
-  TAO::PG_Object_Group * group = nullptr;
+  TAO::PG_Object_Group * group {};
   if (this->group_factory_.find_group (object_group, group))
   {
     result = group->locations_of_members ();
@@ -725,7 +715,7 @@ TAO::FT_ReplicationManager::locations_of_members (
 //CORBA
 PortableGroup::ObjectGroups *
 TAO::FT_ReplicationManager::groups_at_location (
-    const PortableGroup::Location & the_location)
+    PortableGroup::Location const & the_location)
 {
   return this->group_factory_.groups_at_location (the_location);
 }
@@ -735,8 +725,8 @@ PortableGroup::ObjectGroupId
 TAO::FT_ReplicationManager::get_object_group_id (
     PortableGroup::ObjectGroup_ptr object_group)
 {
-  PortableGroup::ObjectGroupId result = 0;
-  TAO::PG_Object_Group * group = nullptr;
+  PortableGroup::ObjectGroupId result {};
+  TAO::PG_Object_Group * group {};
   if (this->group_factory_.find_group (object_group, group))
   {
     group->get_object_group_id ();
@@ -763,7 +753,7 @@ TAO::FT_ReplicationManager::get_object_group_ref (
   PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil ();
 
   // Find the object group corresponding to this IOGR
-  TAO::PG_Object_Group * group = nullptr;
+  TAO::PG_Object_Group * group {};
   if (this->group_factory_.find_group (object_group, group))
   {
     result = group->reference ();
@@ -789,7 +779,7 @@ TAO::FT_ReplicationManager::get_object_group_ref_from_id (
   PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil ();
 
   // Find the object group corresponding to this IOGR
-  TAO::PG_Object_Group * group = nullptr;
+  TAO::PG_Object_Group * group {};
   if (this->group_factory_.find_group (group_id, group))
   {
     result = group->reference ();
@@ -811,12 +801,12 @@ TAO::FT_ReplicationManager::get_object_group_ref_from_id (
 CORBA::Object_ptr
 TAO::FT_ReplicationManager::get_member_ref (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Location & the_location)
+    PortableGroup::Location const & the_location)
 {
   CORBA::Object_var result = CORBA::Object::_nil();
 
   // Find the object group corresponding to this IOGR
-  TAO::PG_Object_Group * group = nullptr;
+  TAO::PG_Object_Group * group {};
   if (this->group_factory_.find_group (object_group, group))
   {
     result = group->get_member_reference (the_location);
@@ -834,15 +824,14 @@ TAO::FT_ReplicationManager::get_member_ref (
   return result._retn();
 }
 
-
 //////////////////////////////////////////////////////
 // PortableGroup::GenericFactory methods
 
 //CORBA
 CORBA::Object_ptr
 TAO::FT_ReplicationManager::create_object (
-  const char * type_id,
-  const PortableGroup::Criteria & the_criteria,
+  char const * type_id,
+  PortableGroup::Criteria const & the_criteria,
   PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id)
 {
   METHOD_ENTRY (TAO::FT_ReplicationManager::create_object)
@@ -866,7 +855,7 @@ TAO::FT_ReplicationManager::create_object (
     // that knows about the factory, too.
 
  // Allocate a new FactoryCreationId for use as an "out" parameter.
-  PortableGroup::GenericFactory::FactoryCreationId_ptr factory_id_ptr = nullptr;
+  PortableGroup::GenericFactory::FactoryCreationId_ptr factory_id_ptr {};
   ACE_NEW_THROW_EX (factory_id_ptr,
                     PortableGroup::GenericFactory::FactoryCreationId,
                     CORBA::NO_MEMORY (
@@ -885,9 +874,9 @@ TAO::FT_ReplicationManager::create_object (
 //CORBA
 void
 TAO::FT_ReplicationManager::delete_object (
-  const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id)
+  PortableGroup::GenericFactory::FactoryCreationId const & factory_creation_id)
 {
-  PortableGroup::ObjectGroupId group_id = 0;
+  PortableGroup::ObjectGroupId group_id {};
   if (factory_creation_id >>= group_id)
   {
     this->group_factory_.delete_group (
@@ -902,23 +891,21 @@ TAO::FT_ReplicationManager::delete_object (
 //private
 int TAO::FT_ReplicationManager::write_ior ()
 {
-  int result = -1;
-  FILE* out = ACE_OS::fopen (this->ior_output_file_, "w");
+  std::unique_ptr<FILE, int (*) (FILE *)> out (
+    ACE_OS::fopen (this->ior_output_file_.c_str (), ACE_TEXT ("w")),
+    ACE_OS::fclose);
   if (out)
   {
-    CORBA::String_var ior_str = this->orb_->object_to_string (
+    CORBA::String_var const ior_str = this->orb_->object_to_string (
       this->replication_manager_ref_.in ());
-    ACE_OS::fprintf (out, "%s", ior_str.in ());
-    ACE_OS::fclose (out);
-    result = 0;
+    ACE_OS::fprintf (out.get (), "%s", ior_str.in ());
+    return 0;
   }
-  else
-  {
-    ORBSVCS_ERROR ( (LM_ERROR,
-      ACE_TEXT ("%T %n (%P|%t) - Open failed for %s\n"), this->ior_output_file_
-    ));
-  }
-  return result;
+
+  ORBSVCS_ERROR ( (LM_ERROR,
+    ACE_TEXT ("%T %n (%P|%t) - Open failed for %s\n"), this->ior_output_file_.c_str ()
+  ));
+  return -1;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

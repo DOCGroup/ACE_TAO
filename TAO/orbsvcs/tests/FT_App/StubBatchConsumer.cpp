@@ -8,11 +8,9 @@ StubBatchConsumer::StubBatchConsumer ()
 {
 }
 
-
 StubBatchConsumer::~StubBatchConsumer ()
 {
 }
-
 
 int StubBatchConsumer::parse_args (int argc, ACE_TCHAR * argv[])
 {
@@ -22,7 +20,6 @@ int StubBatchConsumer::parse_args (int argc, ACE_TCHAR * argv[])
   // No options for now
   return optionError;
 }
-
 
 ::PortableServer::POA_ptr StubBatchConsumer::_default_POA ()
 {
@@ -34,7 +31,6 @@ PortableServer::ObjectId StubBatchConsumer::objectId()const
   return this->object_id_.in();
 }
 
-
 /**
  * register this object
  */
@@ -44,7 +40,6 @@ int StubBatchConsumer::init (CORBA::ORB_ptr orb, ::FT::FaultNotifier_var & notif
   this->orb_ = CORBA::ORB::_duplicate (orb);
   this->notifier_ = notifier;
   this->identity_ = "StubBatchConsumer";
-
 
   // Use the ROOT POA for now
   CORBA::Object_var poa_object =
@@ -57,7 +52,6 @@ int StubBatchConsumer::init (CORBA::ORB_ptr orb, ::FT::FaultNotifier_var & notif
 
   // Get the POA .
   this->poa_ = PortableServer::POA::_narrow (poa_object.in ());
-
 
   if (CORBA::is_nil(this->poa_.in ()))
   {
@@ -105,7 +99,6 @@ void StubBatchConsumer::fini ()
   this->notifier_->disconnect_consumer(this->consumer_id_);
 }
 
-
 int StubBatchConsumer::idle(int & result)
 {
   ACE_UNUSED_ARG(result);
@@ -115,11 +108,9 @@ int StubBatchConsumer::idle(int & result)
 ////////////////
 // CORBA methods
 
-
 //virtual
 void StubBatchConsumer::push_structured_events (
-    const CosNotification::EventBatch & notifications
-  )
+    const CosNotification::EventBatch & notifications)
 {
   ACE_UNUSED_ARG (notifications);
   //@@ sequence of structured event handling not written yet
@@ -127,8 +118,7 @@ void StubBatchConsumer::push_structured_events (
 
 void StubBatchConsumer::offer_change (
     const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed
-  )
+    const CosNotification::EventTypeSeq & removed)
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);
@@ -139,8 +129,7 @@ void StubBatchConsumer::offer_change (
 }
 
 //virtual
-void StubBatchConsumer::disconnect_sequence_push_consumer (
-  )
+void StubBatchConsumer::disconnect_sequence_push_consumer ()
 {
   ACE_ERROR ((LM_ERROR,
     "StubBatchConsumer:disconnect_sequence_push_consumer interpreted as quit request.\n"

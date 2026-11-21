@@ -3,12 +3,7 @@
 #include "ACEXML/common/ZipCharStream.h"
 #include "ace/ACE.h"
 
-
-ACEXML_ZipCharStream::ACEXML_ZipCharStream ()
-  : filename_ (0), encoding_ (0), size_ (0), infile_ (0), pos_ (0),
-    limit_ (0)
-{
-}
+ACEXML_ZipCharStream::ACEXML_ZipCharStream () = default;
 
 ACEXML_ZipCharStream::~ACEXML_ZipCharStream ()
 {
@@ -16,43 +11,44 @@ ACEXML_ZipCharStream::~ACEXML_ZipCharStream ()
 }
 
 int
-ACEXML_ZipCharStream::open (const ACEXML_Char *name)
+ACEXML_ZipCharStream::open (ACEXML_Char const *name)
 {
-  delete[] this->filename_;
-  this->filename_ = 0;
-
-  delete[] this->encoding_;
-  this->encoding_ = 0;
+  this->filename_.reset ();
+  this->encoding_.reset ();
 
   this->infile_ = zzip_fopen (name, ACE_TEXT ("r"));
-  if (this->infile_ == 0)
-    return -1;
+  if (this->infile_ == nullptr)
+    {
+      return -1;
+    }
 
-  this->filename_ = ACE::strnew (ACE::basename (name));
+  this->filename_.reset (ACE::strnew (ACE::basename (name)));
   return this->determine_encoding();
 }
 
 int
 ACEXML_ZipCharStream::determine_encoding ()
 {
-  if (this->infile_ == 0)
-    return -1;
+  if (this->infile_ == nullptr)
+    {
+      return -1;
+    }
   char input[4];
   int i = 0;
   for (; i < 4 && (input[i] = this->peekchar_i(i)) > 0; ++i)
     ;
   if (i < 4)
-    return -1;
-  const ACEXML_Char* temp = ACEXML_Encoding::get_encoding (input);
-  if (!temp)
-    return -1;
+    {
+      return -1;
+    }
+  ACEXML_Char const *temp = ACEXML_Encoding::get_encoding (input);
+  if (temp == nullptr)
+    {
+      return -1;
+    }
   else
     {
-      if (this->encoding_)
-        delete [] this->encoding_;
-      this->encoding_ = ACE::strnew (temp);
-  //     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("File's encoding is %s\n"),
-//                   this->encoding_));
+      this->encoding_.reset (ACE::strnew (temp));
     }
 
   // Move over the byte-order-mark if present.
@@ -61,12 +57,18 @@ ACEXML_ZipCharStream::determine_encoding ()
     {
       ACEXML_Char ch;
       if ((ch = this->peekchar_i()) < 0)
-        return -1;
+        {
+          return -1;
+        }
       if (ch == '\xFF' || ch == '\xFE' || ch == '\xEF' || ch == '\xBB' ||
           ch == '\xBF')
-        this->get(ch);
+        {
+          this->get(ch);
+        }
       else
-        break;
+        {
+          break;
+        }
     }
 
   return 0;
@@ -75,8 +77,10 @@ ACEXML_ZipCharStream::determine_encoding ()
 void
 ACEXML_ZipCharStream::rewind()
 {
-  if (this->infile_ == 0)
-    return;
+  if (this->infile_ == nullptr)
+    {
+      return;
+    }
   zzip_rewind (this->infile_);
   this->determine_encoding();
 }
@@ -84,38 +88,41 @@ ACEXML_ZipCharStream::rewind()
 int
 ACEXML_ZipCharStream::available ()
 {
-  if (this->infile_ == 0)
-    return -1;
+  if (this->infile_ == nullptr)
+    {
+      return -1;
+    }
   long curr;
   if ((curr = zzip_tell (this->infile_)) < 0)
-    return -1;
+    {
+      return -1;
+    }
   return (this->size_ - curr);
 }
 
 int
 ACEXML_ZipCharStream::close ()
 {
-  if (this->infile_ != 0)
+  if (this->infile_ != nullptr)
     {
       zzip_close (this->infile_);
-      this->infile_ = 0;
+      this->infile_ = nullptr;
     }
-  delete[] this->filename_;
-  this->filename_ = 0;
-  delete[] this->encoding_;
-  this->encoding_ = 0;
+  this->filename_.reset ();
+  this->encoding_.reset ();
   this->size_ = 0;
   this->pos_ = 0;
   this->limit_ = 0;
   return 0;
 }
 
-
 int
 ACEXML_ZipCharStream::getchar_i (char& ch)
 {
-  if (this->infile_ == 0)
-    return -1;
+  if (this->infile_ == nullptr)
+    {
+      return -1;
+    }
 
   if (this->pos_ < this->limit_)
     {
@@ -124,7 +131,9 @@ ACEXML_ZipCharStream::getchar_i (char& ch)
     }
   this->limit_ = zzip_read (this->infile_, this->buf_, sizeof (this->buf_));
   if (this->limit_ == 0)
-    return -1;
+    {
+      return -1;
+    }
   this->pos_ = 0;
   ch = this->buf_[this->pos_++];
   return 0;
@@ -133,13 +142,19 @@ ACEXML_ZipCharStream::getchar_i (char& ch)
 int
 ACEXML_ZipCharStream::peekchar_i (ACE_OFF_T offset)
 {
-  if (this->infile_ == 0)
-    return -1;
+  if (this->infile_ == nullptr)
+    {
+      return -1;
+    }
 
   if (offset > (ACE_OFF_T) sizeof (this->buf_))
-    return -1;
+    {
+      return -1;
+    }
   if (this->pos_ + offset < this->limit_)
-    return this->buf_[this->pos_ + offset];
+    {
+      return this->buf_[this->pos_ + offset];
+    }
   int i = 0;
   for (; this->pos_ < this->limit_; ++this->pos_, ++i)
     this->buf_[i] = this->buf_[this->pos_];
@@ -147,7 +162,9 @@ ACEXML_ZipCharStream::peekchar_i (ACE_OFF_T offset)
                             sizeof (this->buf_) - i);
   this->limit_ += i;
   if (this->limit_ == 0)
-    return -1;
+    {
+      return -1;
+    }
   this->pos_ = 0;
   return this->buf_[this->pos_ + offset];
 }
@@ -155,14 +172,18 @@ ACEXML_ZipCharStream::peekchar_i (ACE_OFF_T offset)
 int
 ACEXML_ZipCharStream::read (ACEXML_Char *str, size_t len)
 {
-  if (this->infile_ == 0)
-    return -1;
+  if (this->infile_ == nullptr)
+    {
+      return -1;
+    }
 
   size_t i = 0;
   for (; i < len && this->pos_ < this->limit_; ++i)
     str[i] = this->buf_[this->pos_++];
   if (i == len)
-    return len;
+    {
+      return len;
+    }
   len = len - i;
   this->pos_ = 0;
   this->limit_ = 0;
@@ -180,7 +201,6 @@ ACEXML_ZipCharStream::get (ACEXML_Char& ch)
 #endif /* ACE_USES_WCHAR */
 }
 
-
 int
 ACEXML_ZipCharStream::peek ()
 {
@@ -191,26 +211,28 @@ ACEXML_ZipCharStream::peek ()
 #endif /* ACE_USES_WCHAR */
 }
 
-const ACEXML_Char*
+ACEXML_Char const *
 ACEXML_ZipCharStream::getEncoding ()
 {
-  return this->encoding_;
+  return this->encoding_.get ();
 }
 
-const ACEXML_Char*
+ACEXML_Char const *
 ACEXML_ZipCharStream::getSystemId ()
 {
-  return this->filename_;
+  return this->filename_.get ();
 }
 
 #if defined (ACE_USES_WCHAR)
 int
-ACEXML_ZipCharStream::get_i (ACEXML_Char& ch)
+ACEXML_ZipCharStream::get_i (ACEXML_Char &ch)
 {
-  if (ACE_OS::strcmp (this->encoding_, ACE_TEXT ("UTF-8")) == 0)
-    return this->getchar_i (ch);
+  if (ACE_OS::strcmp (this->encoding_.get (), ACE_TEXT ("UTF-8")) == 0)
+    {
+      return this->getchar_i (ch);
+    }
 
-  int BE = (ACE_OS::strcmp (this->encoding_,
+  int BE = (ACE_OS::strcmp (this->encoding_.get (),
                             ACE_TEXT ("UTF-16BE")) == 0) ? 1 : 0;
   ACEXML_Char input[2];
   int i = 0;
@@ -229,12 +251,14 @@ int
 ACEXML_ZipCharStream::peek_i ()
 {
   // If we are reading a UTF-8 encoded file, just use the plain unget.
-  if (ACE_OS::strcmp (this->encoding_, ACE_TEXT ("UTF-8")) == 0)
-    return this->peekchar_i();
+  if (ACE_OS::strcmp (this->encoding_.get (), ACE_TEXT ("UTF-8")) == 0)
+    {
+      return this->peekchar_i();
+    }
 
   // Peek into the stream. This reads two characters off the stream, keeps
   // it in peek_.
-  int BE = (ACE_OS::strcmp (this->encoding_,
+  int BE = (ACE_OS::strcmp (this->encoding_.get (),
                             ACE_TEXT ("UTF-16BE")) == 0) ? 1 : 0;
 
   ACEXML_Char input[2];
@@ -242,7 +266,9 @@ ACEXML_ZipCharStream::peek_i ()
   for (; i < 2 && (input[i] = this->peekchar_i (i)) > 0; ++i)
     ;
   if (i < 2)
-    return -1;
+    {
+      return -1;
+    }
   return (BE ? input[0] << 8 | input[1] : input[1] << 8 | input[0]);
 }
 #endif /* ACE_USES_WCHAR */

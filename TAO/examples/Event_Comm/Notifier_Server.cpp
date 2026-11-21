@@ -3,16 +3,7 @@
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 
-// Constructor.
-Notifier_Server::Notifier_Server ()
-{
-}
-
-// Destructor.
-
-Notifier_Server::~Notifier_Server ()
-{
-}
+#include <memory>
 
 int
 Notifier_Server::close ()
@@ -33,7 +24,7 @@ Notifier_Server::close ()
       // Instruct the ORB to shutdown.
       this->orb_manager_.orb ()->shutdown ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return -1;
     }
@@ -41,8 +32,7 @@ Notifier_Server::close ()
     return 0;
 }
 
-// The naming service is initialized and the naming context as well as
-// the object name is bound to the naming server.
+/// Initializes the naming service and binds the object name to it.
 
 int
 Notifier_Server::init_naming_service ()
@@ -72,7 +62,7 @@ Notifier_Server::init_naming_service ()
       this->naming_server_->bind (notifier_obj_name,
                                   notifier_obj.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Notifier_Server::init_naming_service\n");
       return -1;
@@ -81,8 +71,7 @@ Notifier_Server::init_naming_service ()
   return 0;
 }
 
-
-// Initialize the server.
+/// Initializes the notifier server.
 int
 Notifier_Server::init (int argc,
                        ACE_TCHAR *argv[])
@@ -104,7 +93,7 @@ Notifier_Server::init (int argc,
  // Activate the servant in the POA.
  CORBA::String_var str =
    this->orb_manager_.activate_under_child_poa (NOTIFIER_BIND_NAME,
-                                                 &this->servant_);
+                                                std::addressof (this->servant_));
 
  return this->init_naming_service ();
 }
@@ -122,7 +111,7 @@ Notifier_Server::run ()
 }
 
 ACE_Reactor *
-Notifier_Server::reactor ()
+Notifier_Server::reactor () const
 {
   return TAO_ORB_Core_instance ()->reactor ();
 }

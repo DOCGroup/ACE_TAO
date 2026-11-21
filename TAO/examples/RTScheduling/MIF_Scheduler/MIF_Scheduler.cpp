@@ -2,6 +2,7 @@
 #include "tao/RTScheduling/Request_Interceptor.h"
 #include "test.h"
 #include <atomic>
+#include <cstring>
 
 std::atomic<long> server_guid_counter;
 
@@ -43,7 +44,7 @@ Segment_Sched_Param_Policy::importance (CORBA::Short importance)
 CORBA::Policy_ptr
 Segment_Sched_Param_Policy::copy ()
 {
-  Segment_Sched_Param_Policy *copy = 0;
+  Segment_Sched_Param_Policy *copy {};
   ACE_NEW_THROW_EX (copy,
                     Segment_Sched_Param_Policy,
                     CORBA::NO_MEMORY ());
@@ -92,8 +93,8 @@ MIF_Scheduler::~MIF_Scheduler ()
 {
   while (free_que_.message_count () > 0)
     {
-      DT *dt = 0;
-      ACE_Message_Block *msg = 0;
+      DT *dt {};
+      ACE_Message_Block *msg {};
       free_que_.dequeue_head (msg);
       dt = dynamic_cast<DT*> (msg);
       delete dt;
@@ -104,7 +105,7 @@ void
 MIF_Scheduler::incr_thr_count ()
 {
   lock_.acquire ();
-  wait_++;
+  ++wait_;
   lock_.release ();
 }
 
@@ -125,7 +126,7 @@ MIF_Scheduler::wait ()
 void
 MIF_Scheduler::resume_main ()
 {
-  wait_--;
+  --wait_;
   wait_cond_.signal ();
 }
 
@@ -146,7 +147,6 @@ MIF_Scheduler::create_segment_scheduling_parameter (CORBA::Short importance)
   return segment_policy;
 }
 
-
 void
 MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType &/*guid*/,
                                              const char *,
@@ -156,10 +156,7 @@ MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
   size_t count = 0;
   RTScheduling::Current::IdType_var guid = this->current_->id ();
 
-  ACE_OS::memcpy (&count,
-                  guid->get_buffer (),
-                  guid->length ());
-
+  std::memcpy (&count, guid->get_buffer (), guid->length ());
 
   MIF_Scheduling::SegmentSchedulingParameterPolicy_var sched_param =
     MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (sched_policy);
@@ -171,11 +168,10 @@ MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
                 "%t MIF_Scheduler::begin_scheduling_segment - Importance %d\n",
                 desired_priority));
 
-
   if (desired_priority != 100)
     {
       //NOT Main Thread
-      DT* new_dt = 0;
+      DT *new_dt {};
       ACE_NEW (new_dt,
                DT (this->lock_,
                    count));
@@ -210,9 +206,7 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &/
   size_t count = 0;
   RTScheduling::Current::IdType_var guid = this->current_->id ();
 
-  ACE_OS::memcpy (&count,
-                  guid->get_buffer (),
-                  guid->length ());
+  std::memcpy (&count, guid->get_buffer (), guid->length ());
 
   MIF_Scheduling::SegmentSchedulingParameterPolicy_var sched_param =
     MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (sched_policy);
@@ -224,7 +218,7 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &/
                 "%t MIF_Scheduler::update_scheduling_segment - Importance %d\n",
                 desired_priority));
 
-  DT* new_dt = 0;
+  DT *new_dt {};
   ACE_NEW (new_dt,
            DT (this->lock_,
                count));
@@ -234,7 +228,7 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &/
   if (ready_que_.message_count () > 0)
     {
       DT* run_dt;
-      ACE_Message_Block* msg = 0;
+      ACE_Message_Block *msg {};
       ready_que_.dequeue_head (msg);
       run_dt = dynamic_cast<DT*> (msg);
       if ((desired_priority == 100) || run_dt->msg_priority () >= (unsigned int)desired_priority)
@@ -252,7 +246,10 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &/
           delete new_dt;
         }
     }
-  else delete new_dt;
+  else
+  {
+    delete new_dt;
+  }
 }
 
 void
@@ -260,18 +257,16 @@ MIF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid
                                        const char *)
 {
   size_t count = 0;
-  ACE_OS::memcpy (&count,
-                  guid.get_buffer (),
-                  guid.length ());
+  std::memcpy (&count, guid.get_buffer (), guid.length ());
 
   ACE_DEBUG ((LM_DEBUG,
-              "MIF_Scheduler::end_scheduling_segment %d\n",
+              "MIF_Scheduler::end_scheduling_segment %B\n",
                   count));
 
   if (ready_que_.message_count () > 0)
     {
-      DT* run_dt = 0;
-      ACE_Message_Block* msg = 0;
+      DT *run_dt {};
+      ACE_Message_Block *msg {};
       ready_que_.dequeue_head (msg);
       run_dt = dynamic_cast<DT*> (msg);
       lock_.acquire ();
@@ -305,15 +300,13 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
 
   CORBA::OctetSeq seq_buf (guid_length);
   seq_buf.length (seq_buf.maximum ());
-  ACE_OS::memcpy (seq_buf.get_buffer (),
-                  guid->get_buffer (),
-                  guid_length);
+  std::memcpy (seq_buf.get_buffer (), guid->get_buffer (), guid_length);
 
   int cxt_data_length = sizeof (int) + guid_length;
   srv_con.context_data.length (cxt_data_length);
 
   int i = 0;
-  for (;i < guid_length;i++)
+  for (;i < guid_length;++i)
     {
       srv_con.context_data [i] = seq_buf [i];
     }
@@ -321,18 +314,16 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
   int importance = sched_param_var->importance ();
   CORBA::OctetSeq int_buf (sizeof (importance));
   int_buf.length (int_buf.maximum ());
-  ACE_OS::memcpy (int_buf.get_buffer (),
-                  &importance,
-                  sizeof (importance));
+  std::memcpy (int_buf.get_buffer (), &importance, sizeof (importance));
 
   int j = 0;
-  for (;i < cxt_data_length;i++)
+  for (;i < cxt_data_length;++i)
     {
       srv_con.context_data [i] = int_buf [j++];
     }
 
   request_info->add_request_service_context (srv_con,
-                                             0);
+                                             false);
 
   lock_.acquire ();
   if (ready_que_.message_count () > 0)
@@ -341,7 +332,9 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
       ACE_hthread_t current;
       ACE_Thread::self (current);
       if (ACE_Thread::getprio (current, priority) == -1)
+      {
         return;
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   "Initial thread priority is %d %d\n",
@@ -356,15 +349,17 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
 
           ACE_Thread::self (current);
           if (ACE_Thread::getprio (current, priority) == -1)
+          {
             return;
+          }
 
           ACE_DEBUG ((LM_DEBUG,
                       "Bumped thread priority is %d\n",
                       priority));
         }
 
-      DT* run_dt = 0;
-      ACE_Message_Block* msg = 0;
+      DT *run_dt {};
+      ACE_Message_Block *msg {};
       ready_que_.dequeue_head (msg);
       run_dt = dynamic_cast<DT*> (msg);
       run_dt->resume ();
@@ -397,39 +392,32 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
                RTScheduling::Current::IdType);
 
       guid->length (sizeof(size_t));
-      ACE_OS::memcpy (guid->get_buffer (),
-                      serv_cxt->context_data.get_buffer (),
-                      sizeof (size_t));
+      std::memcpy (guid->get_buffer (), serv_cxt->context_data.get_buffer (), sizeof (size_t));
 
       size_t gu_id;
-      ACE_OS::memcpy (&gu_id,
-                      guid->get_buffer (),
-                      guid->length ());
+      std::memcpy (&gu_id, guid->get_buffer (), guid->length ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "MIF_Scheduler::receive_request %d\n",
+                  "MIF_Scheduler::receive_request %B\n",
                   gu_id));
-
 
       CORBA::OctetSeq int_buf (sizeof (long));
       int_buf.length (int_buf.maximum ());
       int i = sizeof (long);
-      for (unsigned int j = 0;j < sizeof (int);j++)
+      for (unsigned int j = 0;j < sizeof (int);++j)
         {
           int_buf [j] = serv_cxt->context_data [i++];
         }
 
       int importance = 0;
-      ACE_OS::memcpy (&importance,
-                      int_buf.get_buffer (),
-                      sizeof (importance));
+      std::memcpy (&importance, int_buf.get_buffer (), sizeof (importance));
 
       guid_out = guid;
       sched_param_out = DT_TEST::instance ()->scheduler ()->create_segment_scheduling_parameter (importance);
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "%t The Guid is %d Importance is %d\n",
+                    "%t The Guid is %B Importance is %d\n",
                     gu_id,
                     importance));
 
@@ -452,18 +440,16 @@ MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr)
   RTScheduling::Current::IdType_var guid = current_->id ();
 
   size_t count;
-  ACE_OS::memcpy (&count,
-                  guid->get_buffer (),
-                  guid->length ());
+  std::memcpy (&count, guid->get_buffer (), guid->length ());
 
   ACE_DEBUG ((LM_DEBUG,
-              "MIF_Scheduler::send_reply %d\n",
+              "MIF_Scheduler::send_reply %B\n",
               count));
 
   if (ready_que_.message_count () > 0)
     {
-      DT* run_dt = 0;
-      ACE_Message_Block* msg = 0;
+      DT *run_dt {};
+      ACE_Message_Block *msg {};
       ready_que_.dequeue_head (msg);
       run_dt = dynamic_cast<DT*> (msg);
       lock_.acquire ();
@@ -478,8 +464,8 @@ MIF_Scheduler::send_exception (PortableInterceptor::ServerRequestInfo_ptr)
 {
   if (ready_que_.message_count () > 0)
     {
-      DT* run_dt = 0;
-      ACE_Message_Block* msg = 0;
+      DT *run_dt {};
+      ACE_Message_Block *msg {};
       ready_que_.dequeue_head (msg);
       run_dt = dynamic_cast<DT*> (msg);
       lock_.acquire ();
@@ -497,13 +483,10 @@ MIF_Scheduler::send_other (PortableInterceptor::ServerRequestInfo_ptr)
       RTScheduling::Current::IdType_var guid = current_->id ();
 
       size_t count;
-      ACE_OS::memcpy (&count,
-                      guid->get_buffer (),
-                      guid->length ());
-
+      std::memcpy (&count, guid->get_buffer (), guid->length ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "MIF_Scheduler::send_other %d\n",
+                  "MIF_Scheduler::send_other %B\n",
                   count));
     }
 
@@ -538,16 +521,13 @@ MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr)
   RTScheduling::Current::IdType_var guid = current_->id ();
 
   size_t gu_id;
-  ACE_OS::memcpy (&gu_id,
-                  guid->get_buffer (),
-                  guid->length ());
+  std::memcpy (&gu_id, guid->get_buffer (), guid->length ());
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "MIF_Scheduler::receive_reply Guid = %d Imp = %d\n",
+                "MIF_Scheduler::receive_reply Guid = %B Imp = %d\n",
                 gu_id,
                 importance));
-
 
   DT* new_dt;
   ACE_NEW (new_dt,
@@ -562,7 +542,9 @@ MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr)
   ACE_hthread_t current;
   ACE_Thread::self (current);
   if (ACE_Thread::getprio (current, priority) == -1)
+  {
     return;
+  }
 
   RTCORBA::Priority rtpriority;
   RTCORBA::PriorityMapping* pm = this->mapping_manager_->mapping ();
@@ -588,9 +570,7 @@ MIF_Scheduler::receive_exception (PortableInterceptor::ClientRequestInfo_ptr)
   RTScheduling::Current::IdType_var guid = current_->id ();
 
   size_t gu_id;
-  ACE_OS::memcpy (&gu_id,
-                  guid->get_buffer (),
-                  guid->length ());
+  std::memcpy (&gu_id, guid->get_buffer (), guid->length ());
 
   DT* new_dt;
   ACE_NEW (new_dt,
@@ -606,7 +586,9 @@ MIF_Scheduler::receive_exception (PortableInterceptor::ClientRequestInfo_ptr)
   ACE_hthread_t current;
   ACE_Thread::self (current);
   if (ACE_Thread::getprio (current, priority) == -1)
+  {
     return;
+  }
 
   RTCORBA::Priority rtpriority;
   RTCORBA::PriorityMapping* pm = this->mapping_manager_->mapping ();
@@ -632,11 +614,9 @@ MIF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr)
   RTScheduling::Current::IdType_var guid = current_->id ();
 
   size_t gu_id;
-  ACE_OS::memcpy (&gu_id,
-                  guid->get_buffer (),
-                  guid->length ());
+  std::memcpy (&gu_id, guid->get_buffer (), guid->length ());
 
-  DT* new_dt = 0;
+  DT *new_dt {};
   ACE_NEW (new_dt,
            DT (this->lock_,
                gu_id));
@@ -650,7 +630,9 @@ MIF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr)
   ACE_hthread_t current;
   ACE_Thread::self (current);
   if (ACE_Thread::getprio (current, priority) == -1)
+  {
     return;
+  }
 
   RTCORBA::Priority rtpriority;
   RTCORBA::PriorityMapping* pm = this->mapping_manager_->mapping ();

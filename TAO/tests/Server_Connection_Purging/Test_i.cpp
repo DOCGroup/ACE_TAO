@@ -6,7 +6,7 @@ test_i::test_i (CORBA::ORB_ptr orb)
 }
 
 void
-test_i::send_stuff (const char* string)
+test_i::send_stuff (char const *string)
 {
   ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - %s\n", string));
 }
@@ -15,6 +15,6 @@ void
 test_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) About to invoke shudown...\n"));
+              "(%P|%t) About to invoke shutdown...\n"));
   this->orb_->shutdown (false);
 }

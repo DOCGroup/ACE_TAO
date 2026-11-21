@@ -3,21 +3,25 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_errno.h"
 
+#include <cstring>
+
 #if defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #   define ACE_NETDBCALL_RETURN(OP,TYPE,FAILVALUE,TARGET,SIZE) \
   do \
   { \
     if (ACE_OS::netdb_acquire ())  \
-      return FAILVALUE; \
+      { \
+        return FAILVALUE; \
+      } \
     else \
       { \
         TYPE ace_result_; \
         ACE_OSCALL (OP, TYPE, ace_result_); \
         if (ace_result_ != FAILVALUE) \
-          ACE_OS::memcpy (TARGET, \
-                    ace_result_, \
-                    SIZE < sizeof (TYPE) ? SIZE : sizeof (TYPE)); \
+          { \
+            std::memcpy (TARGET, \ ace_result_, \ SIZE < sizeof (TYPE) ? SIZE : sizeof (TYPE)); \
+          } \
         ACE_OS::netdb_release (); \
         return ace_result_; \
       } \
@@ -29,9 +33,9 @@
         TYPE ace_result_; \
         ACE_OSCALL(OP,TYPE,ace_result_); \
         if (ace_result_ != FAILVALUE) \
-          ACE_OS::memcpy (TARGET, \
-                    ace_result_, \
-                    SIZE < sizeof (TYPE) ? SIZE : sizeof (TYPE)); \
+          { \
+            std::memcpy (TARGET, \ ace_result_, \ SIZE < sizeof (TYPE) ? SIZE : sizeof (TYPE)); \
+          } \
         return ace_result_; \
   } while(0)
 # endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
@@ -51,7 +55,9 @@ ACE_OS::gethostbyaddr (const char *addr, int length, int type)
 # else
 
   if (0 == addr || '\0' == addr[0])
+    {
       return 0;
+    }
 
 #   if defined (ACE_VXWORKS_HAS_GETHOSTBYADDR_REENTRANT)
   // VxWorks 6.x has a gethostbyaddr() that is threadsafe and
@@ -102,7 +108,9 @@ ACE_OS::gethostbyaddr_r (const char *addr,
 # elif defined (ACE_HAS_REENTRANT_FUNCTIONS)
 
   if (0 == addr || '\0' == addr[0])
+    {
       return 0;
+    }
 
 #   if defined (__GLIBC__)
   // GNU C library has a different signature
@@ -117,10 +125,14 @@ ACE_OS::gethostbyaddr_r (const char *addr,
                          sizeof (ACE_HOSTENT_DATA),
                          &result,
                          h_errnop) == 0)
-    return result;
+    {
+      return result;
+    }
   //FUZZ: enable check_for_lack_ACE_OS
   else
-    return (struct hostent *) 0;
+    {
+      return (struct hostent *) 0;
+    }
 #   elif defined (ACE_VXWORKS_HAS_GETHOSTBYADDR_REENTRANT)
   ACE_UNUSED_ARG (h_errnop);
   // VxWorks 6.x has a threadsafe gethostbyaddr() which returns a heap-allocated
@@ -144,16 +156,16 @@ ACE_OS::gethostbyaddr_r (const char *addr,
     result->h_addr_list = (char **) buffer;
     // Store the actual address _after_ the address list.
     result->h_addr_list[0] = (char *) &result->h_addr_list[2];
-    ACE_OS::memcpy (result->h_addr_list[0], hp->h_addr_list[0], hp->h_length);
+    std::memcpy (result->h_addr_list[0], hp->h_addr_list[0], hp->h_length);
     // Null-terminate the list of addresses.
     result->h_addr_list[1] = 0;
     // And no aliases, so null-terminate h_aliases.
     result->h_aliases = &result->h_addr_list[1];
 
-    if (((2*sizeof(char*))+hp->h_length+ACE_OS::strlen (hp->h_name)+1) <= sizeof (ACE_HOSTENT_DATA))
+    if (((2*sizeof(char*))+hp->h_length+std::strlen (hp->h_name)+1) <= sizeof (ACE_HOSTENT_DATA))
     {
       result->h_name = (char *) result->h_addr_list[0] + hp->h_length;
-      ACE_OS::strcpy (result->h_name, hp->h_name);
+      std::strcpy (result->h_name, hp->h_name);
     }
     else
     {
@@ -223,7 +235,9 @@ ACE_OS::gethostbyname (const char *name)
 # else
 
   if (0 == name || '\0' == name[0])
+    {
       return 0;
+    }
 
 #   if defined (ACE_VXWORKS_HAS_GETHOSTBYNAME_REENTRANT)
   // VxWorks 6.x has a gethostbyname() that is threadsafe and
@@ -268,7 +282,9 @@ ACE_OS::gethostbyname_r (const char *name,
 # elif defined (ACE_HAS_REENTRANT_FUNCTIONS)
 
   if (0 == name || '\0' == name[0])
+    {
       return (struct hostent *)0;
+    }
 
 #   if defined (__GLIBC__)
   // GNU C library has a different signature
@@ -281,10 +297,14 @@ ACE_OS::gethostbyname_r (const char *name,
                          sizeof (ACE_HOSTENT_DATA),
                          &result,
                          h_errnop) == 0)
-    return result;
+    {
+      return result;
+    }
   //FUZZ: enable check_for_lack_ACE_OS
   else
-    return (struct hostent *) 0;
+    {
+      return (struct hostent *) 0;
+    }
 #   elif defined (ACE_VXWORKS_HAS_GETHOSTBYNAME_REENTRANT)
   ACE_UNUSED_ARG (h_errnop);
   // VxWorks 6.x has a threadsafe gethostbyname() which returns a heap-allocated
@@ -308,16 +328,16 @@ ACE_OS::gethostbyname_r (const char *name,
     result->h_addr_list = (char **) buffer;
     // Store the actual address _after_ the address list.
     result->h_addr_list[0] = (char *) &result->h_addr_list[2];
-    ACE_OS::memcpy (result->h_addr_list[0], hp->h_addr_list[0], hp->h_length);
+    std::memcpy (result->h_addr_list[0], hp->h_addr_list[0], hp->h_length);
     // Null-terminate the list of addresses.
     result->h_addr_list[1] = 0;
     // And no aliases, so null-terminate h_aliases.
     result->h_aliases = &result->h_addr_list[1];
 
-    if (((2*sizeof(char*))+hp->h_length+ACE_OS::strlen (hp->h_name)+1) <= sizeof (ACE_HOSTENT_DATA))
+    if (((2*sizeof(char*))+hp->h_length+std::strlen (hp->h_name)+1) <= sizeof (ACE_HOSTENT_DATA))
     {
       result->h_name = (char *) result->h_addr_list[0] + hp->h_length;
-      ACE_OS::strcpy (result->h_name, hp->h_name);
+      std::strcpy (result->h_name, hp->h_name);
     }
     else
     {
@@ -366,7 +386,7 @@ ACE_OS::gethostbyname_r (const char *name,
   ACE_UNUSED_ARG (buffer);
 
   // FUZZ: disable check_for_lack_ACE_OS
-  struct hostent *result2 = nullptr;
+  struct hostent *result2 {};
   ACE_SOCKCALL (::gethostbyname (name),
                 struct hostent *,
                 0,
@@ -388,7 +408,7 @@ ACE_OS::getipnodebyaddr (const void *src, size_t len, int family)
   ACE_UNUSED_ARG (family);
   ACE_NOTSUP_RETURN (0);
 #  else
-  struct hostent *hptr = nullptr;
+  struct hostent *hptr {};
   int errnum;
   //FUZZ: disable check_for_lack_ACE_OS
   if ((hptr = ::getipnodebyaddr (src, len, family, &errnum)) == 0)
@@ -401,9 +421,11 @@ ACE_OS::getipnodebyaddr (const void *src, size_t len, int family)
 #else
   // IPv4-only implementation
   if (family == AF_INET)
-    return ACE_OS::gethostbyaddr (static_cast<const char *> (src),
-                                  static_cast<int> (len),
-                                  family);
+    {
+      return ACE_OS::gethostbyaddr (static_cast<const char *> (src),
+                                    static_cast<int> (len),
+                                    family);
+    }
 
   ACE_NOTSUP_RETURN (0);
 # endif /* defined (ACE_HAS_IPV6) && !defined (ACE_WIN32) */
@@ -425,7 +447,7 @@ ACE_OS::getipnodebyname (const char *name, int family, int flags)
                        struct hostent *, 0);
 #     endif /* ACE_HAS_NONCONST_GETBY */
 #   else
-  struct hostent *hptr = nullptr;
+  struct hostent *hptr {};
   int errnum;
   //FUZZ: disable check_for_lack_ACE_OS
   if ((hptr = ::getipnodebyname (name, family, flags, &errnum)) == 0)
@@ -439,7 +461,9 @@ ACE_OS::getipnodebyname (const char *name, int family, int flags)
   // IPv4-only implementation
   ACE_UNUSED_ARG (flags);
   if (family == AF_INET)
-    return ACE_OS::gethostbyname (name);
+    {
+      return ACE_OS::gethostbyname (name);
+    }
 
   ACE_NOTSUP_RETURN (0);
 # endif /* defined (ACE_HAS_IPV6) && !ACE_LACKS_GETIPNODEBYNAME_IPV6 */
@@ -486,9 +510,13 @@ ACE_OS::getprotobyname_r (const char *name,
                           sizeof (ACE_PROTOENT_DATA),
                           &result) == 0)
   //FUZZ: enable check_for_lack_ACE_OS
-    return result;
+    {
+      return result;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 # else
 #   if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
   ACE_UNUSED_ARG (result);
@@ -560,9 +588,13 @@ ACE_OS::getprotobynumber_r (int proto,
                             sizeof (ACE_PROTOENT_DATA),
                             &result) == 0)
   //FUZZ: enable check_for_lack_ACE_OS
-    return result;
+    {
+      return result;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 # else
 #   if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
   ACE_UNUSED_ARG (result);
@@ -639,10 +671,14 @@ ACE_OS::getservbyname_r (const char *svc,
                          buf,
                          sizeof (ACE_SERVENT_DATA),
                          &result) == 0)
-    return result;
+    {
+      return result;
+    }
   //FUZZ: enable check_for_lack_ACE_OS
   else
-    return (struct servent *) 0;
+    {
+      return (struct servent *) 0;
+    }
 # else
 #   if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
   ACE_UNUSED_ARG (result);

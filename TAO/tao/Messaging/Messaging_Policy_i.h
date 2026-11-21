@@ -126,7 +126,7 @@ public:
 
   void destroy () override;
 
-  // Return the cached policy type for this policy.
+  /// Returns the cached policy type for this policy.
   TAO_Cached_Policy_Type _tao_cached_type () const override;
 private:
   /// The attribute

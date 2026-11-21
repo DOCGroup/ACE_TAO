@@ -1,37 +1,36 @@
 interface Cubit
 {
-  // = TITLE
-  //    Defines an interface that encapsulates operations that cube
-  //    numbers.
-  //
-  // = DESCRIPTION
-  //    This interface encapsulates operations that cube
-  //    octets, shorts, longs, structs and unions.
+  /// Defines an interface that encapsulates operations that cube numbers.
+  ///
+  /// This interface encapsulates operations that cube octets, shorts,
+  /// longs, structs, and unions.
 
   struct Many
   {
-    octet o;            // + 3 bytes padding (normally) ...
+    /// Octet member, normally followed by three bytes of padding.
+    octet o;
     long l;
-    short s;            // + 2 bytes padding (normally) ...
+    /// Short member, normally followed by two bytes of padding.
+    short s;
   };
 
+  /// Cube an octet.
   octet cube_octet (in octet o);
-  // Cube an octet.
 
+  /// Cube a short.
   short cube_short (in short s);
-  // Cube a short.
 
+  /// Cube a long.
   long cube_long (in long l);
-  // Cube a long.
 
+  /// Cube each of the members of a struct.
   Many cube_struct (in Many values);
-  // Cube each of the members of a struct.
 
+  /// Null operation.
   oneway void noop ();
-  // Null operation.
 
+  /// Shut down the application.
   oneway void shutdown ();
-  // shut down the application
 
 };
 

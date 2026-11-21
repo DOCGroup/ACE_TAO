@@ -74,8 +74,6 @@ module IF_EXE_M_R {
 
                 /* Keywords: FOOA reference */
 
-
-
     /* Keywords: FOOP direction */
 
     enum ENUM_FOOPDirection {

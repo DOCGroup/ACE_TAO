@@ -1,13 +1,15 @@
 #include "TestC.h"
 #include <iostream>
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_unistd.h"
 #include "ace/Task.h"
 #include "ace/Thread.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
 #include "tao/ORBInitializer_Registry.h"
+
+#include <cstdio>
+#include <cstring>
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int number_of_tries = 5;
@@ -33,12 +35,12 @@ public:
   Worker (Messenger_ptr m)
     : messenger(Messenger::_duplicate (m)) {}
 
-  int svc ()
+  int svc () override
   {
     int offset = get_offset ();
     CORBA::String_var message = CORBA::string_dup( "Hello!");
     char user [100];
-    ACE_OS::snprintf(user, 100, "client %d", offset / 100);
+    std::snprintf (user, sizeof (user), "client %d", offset / 100);
     int try_count = 0;
     for (; try_count < number_of_tries; ++try_count)
       {
@@ -68,38 +70,37 @@ public:
   }
 };
 
-
 class Client_Req_Int
   : public virtual PortableInterceptor::ClientRequestInterceptor,
     public virtual ::CORBA::LocalObject
 {
 public:
-  virtual char * name ()
+  char * name () override
   {
     return CORBA::string_dup ("Client_Req_Int");
   }
 
-  virtual void destroy ()
+  void destroy () override
   {
   }
 
-  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr)
+  void send_poll (PortableInterceptor::ClientRequestInfo_ptr) override
   {
   }
 
-  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr)
+  void receive_reply (PortableInterceptor::ClientRequestInfo_ptr) override
   {
   }
 
-  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr)
+  void receive_other (PortableInterceptor::ClientRequestInfo_ptr) override
   {
   }
 
-  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr)
+  void receive_exception (PortableInterceptor::ClientRequestInfo_ptr) override
   {
   }
 
-  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
+  void send_request (PortableInterceptor::ClientRequestInfo_ptr ri) override
   {
     if (CORBA::is_nil (this->pic_.in()))
       {
@@ -107,7 +108,7 @@ public:
         if (CORBA::is_nil (this->pic_.in()))
           {
             int argc = 0;
-            ACE_TCHAR **argv = 0;
+            ACE_TCHAR **argv {};
             CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
             CORBA::Object_var obj = orb->resolve_initial_references ("PICurrent");
             this->pic_ = PortableInterceptor::Current::_narrow (obj.in ());
@@ -115,8 +116,10 @@ public:
       }
 
     CORBA::String_var op = ri->operation ();
-    if (ACE_OS::strcmp (op.in (), "send_message") != 0)
+    if (std::strcmp (op.in (), "send_message") != 0)
+    {
       return;
+    }
 
     CORBA::ULong v (0);
     CORBA::Any_var out = this->pic_->get_slot (slot_id);
@@ -127,7 +130,7 @@ public:
         IOP::ServiceContext sc;
         sc.context_id = ::service_id;
 
-        ri->add_request_service_context (sc, 0);
+        ri->add_request_service_context (sc, false);
       }
     else
       {
@@ -145,13 +148,11 @@ class ORB_Initializer : public virtual PortableInterceptor::ORBInitializer,
                         public virtual ::CORBA::LocalObject
 {
 public:
-  virtual void
-  pre_init (PortableInterceptor::ORBInitInfo_ptr)
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr) override
   {
   }
 
-  virtual void
-  post_init (PortableInterceptor::ORBInitInfo_ptr info)
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override
   {
     slot_id = info->allocate_slot_id ();
     ACE_DEBUG ((LM_DEBUG, "Allocated slot with id %d.\n", slot_id));
@@ -208,7 +209,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var obj = orb->string_to_object(ior);
       Messenger_var messenger = Messenger::_narrow(obj.in());

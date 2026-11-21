@@ -93,7 +93,6 @@ ACE::HTBP::Channel::data_consumed() const
   return this->data_consumed_;
 }
 
-
 ACE_INLINE
 const ACE_SOCK_Stream&
 ACE::HTBP::Channel::ace_stream () const
@@ -113,7 +112,9 @@ void
 ACE::HTBP::Channel::set_handle (ACE_HANDLE h)
 {
   if (h == 0)
-    return;
+    {
+      return;
+    }
   this->ace_stream_.set_handle (h);
 }
 

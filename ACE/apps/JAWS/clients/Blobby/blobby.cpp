@@ -15,30 +15,34 @@
  */
 //=============================================================================
 
-
 #include "Options.h"
+#include "Blob.h"
+#include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
-#include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
+#include <memory>
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Options is a singleton
-  Options *options = Options::instance ();
+  Options * const options = Options::instance ();
   options->parse_args (argc, argv);
 
   // Explain what is going to happen
   if (options->debug_)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("hostname = %C, port = %d, filename = %s, ")
-                ACE_TEXT ("length = %d, offset = %d, operation = %c\n"),
-                options->hostname_,
-                options->port_,
-                options->filename_,
-                options->length_,
-                options->offset_,
-                options->operation_));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("hostname = %C, port = %d, filename = %s, ")
+                  ACE_TEXT ("length = %d, offset = %d, operation = %c\n"),
+                  options->hostname_.c_str (),
+                  options->port_,
+                  options->filename_.c_str (),
+                  options->length_,
+                  options->offset_,
+                  options->operation_));
+    }
 
   // Create a blob
   ACE_Blob blob;
@@ -46,70 +50,83 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // User requested a read
   if (options->operation_ == 'r')
     {
-      ACE_Message_Block mb (0, options->length_);
+      ACE_Message_Block mb (static_cast<char const *> (nullptr), options->length_);
 
       // Open the blob
-      if (blob.open (options->filename_,
-                     options->hostname_,
+      if (blob.open (options->filename_.c_str (),
+                     options->hostname_.c_str (),
                      options->port_) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("open error")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("open error")),
+                            -1);
+        }
 
       // Read from it
-      if (blob.read (&mb, options->length_, options->offset_) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("read error")),
-                          -1);
+      if (blob.read (std::addressof (mb), options->length_, options->offset_) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("read error")),
+                            -1);
+        }
 
       // Write to STDOUT
       if (ACE_OS::write (ACE_STDOUT, mb.rd_ptr(), mb.length()) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("write error")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("write error")),
+                            -1);
+        }
     }
   else
     {
-      int total = options->length_ + options->offset_;
+      int const total = options->length_ + options->offset_;
       ACE_Message_Block mb (total);
 
       // Open the file to be sent
-      ACE_HANDLE h = ACE_OS::open (options->filename_, O_RDONLY);
-      if (h == ACE_INVALID_HANDLE)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("file open error")),
-                          -1);
+      std::unique_ptr<FILE, decltype (&ACE_OS::fclose)> input_file (
+        ACE_OS::fopen (options->filename_.c_str (), ACE_TEXT ("rb")),
+        &ACE_OS::fclose);
+      if (!input_file)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("file open error")),
+                            -1);
+        }
 
       // Open the blob
-      if (blob.open (options->filename_, options->hostname_, options->port_) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("connection open error")),
-                          -1);
+      if (blob.open (options->filename_.c_str (), options->hostname_.c_str (), options->port_) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("connection open error")),
+                            -1);
+        }
 
       // Read from the file
-      if (ACE_OS::read (h, mb.wr_ptr (), total) != total)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("file read error")),
-                          -1);
-
-      // Close the file
-      ACE_OS::close (h);
+      if (ACE_OS::fread (mb.wr_ptr (), 1, total, input_file.get ()) != static_cast<size_t> (total))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("file read error")),
+                            -1);
+        }
 
       // Adjust the offset
       mb.wr_ptr (mb.size ());
 
       // Write to the blob
-      if (blob.write (&mb, options->length_, options->offset_) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("network write error")),
-                          -1);
+      if (blob.write (std::addressof (mb), options->length_, options->offset_) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("network write error")),
+                            -1);
+        }
     }
 
   blob.close ();

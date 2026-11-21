@@ -16,10 +16,11 @@ Thread_Task::Thread_Task ()
    dt_creator_ (0),
    base_time_ (0),
    dist_ (0),
-   job_name_ (),
-   task_stats_ (0)
+   job_name_ ()
 {
 }
+
+Thread_Task::~Thread_Task () = default;
 
 int
 Thread_Task::svc ()
@@ -33,16 +34,14 @@ Thread_Task::svc ()
                       importance_));
         }
 
-      const char * name = 0;
+      char const *name {};
       CORBA::Policy_var implicit_sched_param = CORBA::Policy::_duplicate (sched_param_.in ());
       this->current_->begin_scheduling_segment (name,
                                                 sched_param_.in (),
                                                 implicit_sched_param.in ());
 
       RTScheduling::Current::IdType_var guid = this->current_->id ();
-      ACE_OS::memcpy (&count_,
-                      guid->get_buffer (),
-                      guid->length ());
+      ACE_OS::memcpy (&count_, guid->get_buffer (), guid->length ());
 
       ACE_TCHAR msg [BUFSIZ];
       ACE_OS::sprintf (msg,
@@ -88,7 +87,6 @@ Thread_Task::perform_task ()
 {
   return 0;
 }
-
 
 const char*
 Thread_Task::job ()

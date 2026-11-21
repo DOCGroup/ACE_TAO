@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ub_any_seq.cpp
  *
@@ -7,10 +5,10 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #include "helper.h"
+
+#include <cstring>
 #include "ub_any_seq.h"
 #include "tao/debug.h"
 
@@ -22,18 +20,12 @@ const CORBA::ULong NUM_TEST_TYPES = 4;
 // ************************************************************************
 
 Test_AnySeq::Test_AnySeq ()
-  : opname_ (CORBA::string_dup ("test_anyseq")),
+  : opname_ ("test_anyseq"),
     in_ (new CORBA::AnySeq (TEST_SEQ_LENGTH)),
     inout_ (new CORBA::AnySeq (TEST_SEQ_LENGTH)),
     out_ (new CORBA::AnySeq),
     ret_ (new CORBA::AnySeq)
 {
-}
-
-Test_AnySeq::~Test_AnySeq ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
 }
 
 const char *
@@ -53,7 +45,7 @@ Test_AnySeq::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const CORBA::AnySeq* tmp = 0;
+  CORBA::AnySeq const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new CORBA::AnySeq (*tmp);
 
@@ -77,9 +69,9 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref)
   this->in_->length (TEST_SEQ_LENGTH);
   this->inout_->length (TEST_SEQ_LENGTH);
 
-  for (CORBA::ULong i=0; i < this->in_->length (); i++)
+  for (CORBA::ULong i=0; i < this->in_->length (); ++i)
     {
-      CORBA::ULong index =
+      CORBA::ULong const index =
         (CORBA::ULong) (gen->gen_short () % NUM_TEST_TYPES);
       switch (index)
         {
@@ -88,18 +80,22 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref)
             CORBA::Short s;
             s = gen->gen_short ();
                   if (TAO_debug_level > 0)
-              ACE_DEBUG ((LM_DEBUG,
-                          "setting short = %d\n", s));
+                    {
+                ACE_DEBUG ((LM_DEBUG,
+                            "setting short = %d\n", s));
+                    }
             this->in_[i] <<= s;
             this->inout_[i] <<= 0; // different from in_
           }
           break;
         case 1:
           {
-            CORBA::String_var str = gen->gen_string ();
+            CORBA::String_var const str = gen->gen_string ();
             if (TAO_debug_level > 0)
-              ACE_DEBUG ((LM_DEBUG,
-                          "setting string = %C\n", str.in ()));
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                            "setting string = %C\n", str.in ()));
+              }
             this->in_[i] <<= str.in ();
             this->inout_[i] <<= 0; // different from in_
           }
@@ -107,12 +103,14 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref)
         case 2:
           {
                   if (TAO_debug_level > 0)
-                    ACE_DEBUG ((LM_DEBUG,
-                          "setting coffee object\n" ));
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                            "setting coffee object\n" ));
+                    }
             try
               {
                 // get access to a Coffee Object
-                Coffee_var cobj = objref->make_coffee ();
+                Coffee_var const cobj = objref->make_coffee ();
 
                 // insert the coffee object into the Any
                 this->in_[i] <<= cobj.in ();
@@ -128,8 +126,10 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref)
           break;
         case 3:
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "setting constant string\n" ));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "setting constant string\n" ));
+            }
           this->in_[i] <<= "Const string";
           this->inout_[i] <<= 0; // different from in_
           break;
@@ -144,9 +144,9 @@ Test_AnySeq::reset_parameters ()
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
-  for (CORBA::ULong i=0; i < this->in_->length (); i++)
+  for (CORBA::ULong i=0; i < this->in_->length (); ++i)
     {
-      CORBA::ULong index =
+      CORBA::ULong const index =
         (CORBA::ULong) (gen->gen_long () % NUM_TEST_TYPES);
 
       switch (index)
@@ -161,7 +161,7 @@ Test_AnySeq::reset_parameters ()
           break;
         case 1:
           {
-            CORBA::String_var str = gen->gen_string ();
+            CORBA::String_var const str = gen->gen_string ();
             this->in_[i] <<= str.in ();
             this->inout_[i] <<= str.in ();
           }
@@ -181,13 +181,12 @@ Test_AnySeq::reset_parameters ()
   return 0;
 }
 
-
 int
 Test_AnySeq::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      CORBA::AnySeq_out out (this->out_.out ());
+      CORBA::AnySeq_out const out (this->out_.out ());
 
       this->ret_ = objref->test_anyseq (this->in_.in (),
                                         this->inout_.inout (),
@@ -212,7 +211,7 @@ Test_AnySeq::check_validity ()
   const char *str_ret;
   Coffee_ptr obj_in, obj_inout, obj_out, obj_ret;
 
-  for (CORBA::ULong i=0; i < this->in_->length (); i++)
+  for (CORBA::ULong i=0; i < this->in_->length (); ++i)
     {
       if ((this->in_[i] >>= short_in) &&
           (this->inout_[i] >>= short_inout) &&
@@ -239,23 +238,27 @@ Test_AnySeq::check_validity ()
               return 0;
             }
           else
+          {
             continue;
+          }
         }
       else if ((this->in_[i] >>= str_in) &&
                (this->inout_[i] >>= str_inout) &&
                (this->out_[i] >>= str_out) &&
                (this->ret_[i] >>= str_ret))
         {
-          if (ACE_OS::strcmp (str_in, str_inout) ||
-              ACE_OS::strcmp (str_in, str_out) ||
-              ACE_OS::strcmp (str_in, str_ret))
+          if (std::strcmp (str_in, str_inout) ||
+              std::strcmp (str_in, str_out) ||
+              std::strcmp (str_in, str_ret))
             {
               ACE_DEBUG ((LM_DEBUG,
                           "mismatch of string values\n"));
               return 0;
             }
           else
+          {
             continue;
+          }
         }
       else if ((this->in_[i] >>= obj_in) &&
                (this->inout_[i] >>= obj_inout) &&
@@ -272,7 +275,9 @@ Test_AnySeq::check_validity ()
             }
         }
       else
+      {
         continue;
+      }
     }
 
   // Everything checks out.
@@ -310,12 +315,12 @@ void
 Test_AnySeq::print_sequence (const CORBA::AnySeq &s)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "maximum = %d\n"
-              "length = %d\n",
+              "maximum = %u\n"
+              "length = %u\n",
               s.maximum (),
               s.length ()));
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));
-  for (CORBA::ULong i=0; i < s.length (); i++)
+  for (CORBA::ULong i=0; i < s.length (); ++i)
     {
       /*     const CORBA::Any& vs = s[i];
 

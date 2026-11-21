@@ -15,14 +15,16 @@ TAO_PI_Server_Loader::init (int, ACE_TCHAR* [])
 
   // Only allow initialization once.
   if (this->initialized_)
+  {
     return 0;
+  }
 
   this->initialized_ = true;
 
   // Register the ORB initializer.
   try
     {
-      /// Register the Messaging ORBInitializer.
+      /// Register the PortableServer ORBInitializer.
       PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
 

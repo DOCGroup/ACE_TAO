@@ -1,20 +1,19 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Offer_Iterators.h
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  *  @author Seth Widoff <sbw1@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_OFFER_ITERATORS_H
 #define TAO_OFFER_ITERATORS_H
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/Trader/Trader_Utils.h"
+
+#include <deque>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -27,26 +26,25 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
   // TAO_Offer_Iterator
   // *************************************************************
 
+/**
+ * @brief Implements the CosTrading::OfferIterator IDL interface.
+ *
+ * This abstract base class allows for different OfferIterator
+ * implementations. The interface returns service offers from a query
+ * through successive operations on the iterator.
+ */
 class TAO_Offer_Iterator
   : public virtual POA_CosTrading::OfferIterator
 {
-  // = TITLE
-  //     This class implements CosTrading::OfferIterator IDL
-  //     interface.
-
-  // = DESCRIPTION
-  //     This is an abstract base class  to allow for different
-  //     implementations of OfferIterator.
-  // BEGIN SPEC
-  //   The OfferIterator interface is used to return a set of service
-  //   offers from the query operation by enabling the service offers
-  //   to be extracted by successive operations on the OfferIterator
-  //   interface.
-  // END SPEC
 public:
-  TAO_Offer_Iterator (const TAO_Property_Filter& property_filter);
+  TAO_Offer_Iterator (TAO_Offer_Iterator const&) = delete;
+  TAO_Offer_Iterator& operator= (TAO_Offer_Iterator const&) = delete;
+  TAO_Offer_Iterator (TAO_Offer_Iterator&&) = delete;
+  TAO_Offer_Iterator& operator= (TAO_Offer_Iterator&&) = delete;
 
-  ~TAO_Offer_Iterator () override;
+  explicit TAO_Offer_Iterator (TAO_Property_Filter const& property_filter);
+
+  ~TAO_Offer_Iterator () override = default;
 
   /**
    * BEGIN SPEC
@@ -62,15 +60,13 @@ public:
   virtual void add_offer (CosTrading::OfferId offer_id,
                           const CosTrading::Offer* offer) = 0;
 
-  virtual CORBA::ULong max_left () = 0;
+  /// The max_left operation returns the number of service offers
+  /// remaining in the iterator. The exception UnknownMaxLeft is raised
+  /// if the iterator cannot determine the remaining number of service
+  /// offers (e.g., if the iterator determines its set of service
+  /// offers through lazy evaluation).
 
-  // BEGIN SPEC
-  // The max_left operation returns the number of service offers
-  // remaining in the iterator. The exception UnknownMaxLeft is raised
-  // if the iterator cannot determine the remaining number of service
-  // offers (e.g., if the iterator determines its set of service
-  // offers through lazy evaluation).
-  // END SPEC
+  CORBA::ULong max_left () override = 0;
 
   /**
    * BEGIN SPEC
@@ -86,14 +82,9 @@ public:
    * to be extracted.
    * END SPEC
    */
-  virtual CORBA::Boolean next_n (CORBA::ULong n,
-                                 CosTrading::OfferSeq_out offers) = 0;
+  CORBA::Boolean next_n (CORBA::ULong n,
+                         CosTrading::OfferSeq_out offers) override = 0;
  protected:
-  TAO_Offer_Iterator (TAO_Offer_Iterator const&) = delete;
-  TAO_Offer_Iterator& operator= (TAO_Offer_Iterator const&) = delete;
-  TAO_Offer_Iterator (TAO_Offer_Iterator&&) = delete;
-  TAO_Offer_Iterator& operator= (TAO_Offer_Iterator&&) = delete;
-
   /// The filter through which each returned offer must pass. Used to
   /// strip offers of undesirable properties.
   TAO_Property_Filter pfilter_;
@@ -103,26 +94,27 @@ public:
   // TAO_Query_Only_Offer_Iterator
   // *************************************************************
 
+/**
+ * @brief Implements an OfferIterator for a query-only trader.
+ *
+ * The iterator stores pointers to Offers and accesses them directly
+ * because the trader's service offers are not changed or removed.
+ */
 class TAO_Query_Only_Offer_Iterator
   : public TAO_Offer_Iterator
-  // = TITLE
-  //     An implementation of the CosTrading::OfferIterator IDL
-  //     interface that takes advantage of the fact that the trader is
-  //     Query Only, and therefore its service offers are not being
-  //     changed or removed.
-  //
-  // = DESCRIPTION
-  //     The iterator stores pointers to Offers to be iterated over,
-  //     and later accesses the Offers directly through the pointers.
-  //
 {
 public:
-  TAO_Query_Only_Offer_Iterator (const TAO_Property_Filter& pfilter);
+  TAO_Query_Only_Offer_Iterator (TAO_Query_Only_Offer_Iterator const&) = delete;
+  TAO_Query_Only_Offer_Iterator& operator= (TAO_Query_Only_Offer_Iterator const&) = delete;
+  TAO_Query_Only_Offer_Iterator (TAO_Query_Only_Offer_Iterator&&) = delete;
+  TAO_Query_Only_Offer_Iterator& operator= (TAO_Query_Only_Offer_Iterator&&) = delete;
 
-  ~TAO_Query_Only_Offer_Iterator () override;
+  explicit TAO_Query_Only_Offer_Iterator (TAO_Property_Filter const& pfilter);
 
-  /// Deposit at maximum n offers into the return sequence and return 1,
-  /// or return 0 if the iterator is done and no offers are returned.
+  ~TAO_Query_Only_Offer_Iterator () override = default;
+
+  /// Deposit at most n offers into the return sequence and return true,
+  /// or return false if the iterator is done and no offers are returned.
   CORBA::Boolean next_n (CORBA::ULong n,
                          CosTrading::OfferSeq_out offers) override;
 
@@ -134,41 +126,34 @@ public:
                   CosTrading::Offer const* offer) override;
 
 private:
-  TAO_Query_Only_Offer_Iterator (TAO_Query_Only_Offer_Iterator const&) = delete;
-  TAO_Query_Only_Offer_Iterator& operator= (TAO_Query_Only_Offer_Iterator const&) = delete;
-  TAO_Query_Only_Offer_Iterator (TAO_Query_Only_Offer_Iterator&&) = delete;
-  TAO_Query_Only_Offer_Iterator& operator= (TAO_Query_Only_Offer_Iterator&&) = delete;
-
   /// Structure that stores pointers to offers
   /// to iterate over.
-  ACE_Unbounded_Queue <CosTrading::Offer *> offers_;
+  std::deque<CosTrading::Offer const *> offers_;
 };
 
   // *************************************************************
   // TAO_Offer_Iterator_Collection
   // *************************************************************
 
+/**
+ * @brief Collects several offer iterators into one iterator.
+ *
+ * A query may query several other traders, and this collection merges
+ * their results into a single set. Since a query returns a sequence and
+ * an iterator, this class collects returned iterators into one iterator.
+ * The result is a distributed tree of iterators, which can become
+ * inefficient when the trader graph is deep.
+ */
 class TAO_Offer_Iterator_Collection :
   public virtual POA_CosTrading::OfferIterator
-// = TITLE
-//   A collection of offer iterator to query in turn.
-//
-// = DESCRIPTION
-//   Since a query could conceivable query several other traders, it
-//   needs a way to merge the results into a single set of results
-//   suitable for being returned to the user. And since all the query
-//   method can return to the user is a sequence and an iterator, and
-//   the size of the sequence is constrained, there needs to be some
-//   way to collect all the returned offer_iterators into a single
-//   offer_iterator. This is that collection. The results of
-//   collecting all the iterators in this way is a distributed tree of
-//   iterators, which could conceivably become hugely inefficient if
-//   the trader graph is deep enough.
 {
 public:
-  // = Constructors.
+  TAO_Offer_Iterator_Collection (TAO_Offer_Iterator_Collection const&) = delete;
+  TAO_Offer_Iterator_Collection& operator= (TAO_Offer_Iterator_Collection const&) = delete;
+  TAO_Offer_Iterator_Collection (TAO_Offer_Iterator_Collection&&) = delete;
+  TAO_Offer_Iterator_Collection& operator= (TAO_Offer_Iterator_Collection&&) = delete;
 
-  TAO_Offer_Iterator_Collection ();
+  TAO_Offer_Iterator_Collection () = default;
 
   ~TAO_Offer_Iterator_Collection () override;
 
@@ -186,12 +171,7 @@ public:
   void add_offer_iterator (CosTrading::OfferIterator_ptr offer_iter);
 
 private:
-  TAO_Offer_Iterator_Collection (TAO_Offer_Iterator_Collection const&) = delete;
-  TAO_Offer_Iterator_Collection& operator= (TAO_Offer_Iterator_Collection const&) = delete;
-  TAO_Offer_Iterator_Collection (TAO_Offer_Iterator_Collection&&) = delete;
-  TAO_Offer_Iterator_Collection& operator= (TAO_Offer_Iterator_Collection&&) = delete;
-
-  using Offer_Iters = ACE_Unbounded_Queue<CosTrading::OfferIterator*>;
+  using Offer_Iters = std::deque<CosTrading::OfferIterator*>;
 
   /// The iterator collection.
   Offer_Iters iters_;
@@ -201,27 +181,24 @@ private:
   // TAO_Offer_Id_Iterator
   // *************************************************************
 
+/**
+ * @brief Stores the overflow of offer IDs from the Admin list_offers method.
+ *
+ * The OfferIdIterator interface returns offer identifiers from the
+ * list_offers and list_proxies operations through successive operations.
+ */
 class TAO_Offer_Id_Iterator :
   public virtual POA_CosTrading::OfferIdIterator
-// = TITLE
-//   Silly little iterator that contains the overflow of offer ids
-//   from the Admin list_offers method.
-//
-// = DESCRIPTION
-//
-//   BEGIN SPEC
-//   The OfferIdIterator interface is used to return a set of offer
-//   identifiers from the list_offers operation and the list_proxies
-//   operation in the Admin interface by enabling the offer identifiers
-//   to be extracted by successive operations on the OfferIdIterator
-//   interface.
-//   END SPEC
 {
  public:
-  /// No op constructor
-  TAO_Offer_Id_Iterator();
+  TAO_Offer_Id_Iterator (TAO_Offer_Id_Iterator const&) = delete;
+  TAO_Offer_Id_Iterator& operator= (TAO_Offer_Id_Iterator const&) = delete;
+  TAO_Offer_Id_Iterator (TAO_Offer_Id_Iterator&&) = delete;
+  TAO_Offer_Id_Iterator& operator= (TAO_Offer_Id_Iterator&&) = delete;
 
-  ~TAO_Offer_Id_Iterator () override;
+  TAO_Offer_Id_Iterator () = default;
+
+  ~TAO_Offer_Id_Iterator () override = default;
 
   /**
    * The max_left operation returns the number of offer identifiers
@@ -258,11 +235,6 @@ class TAO_Offer_Id_Iterator :
   void insert_id(CosTrading::OfferId new_id);
 
  private:
-  TAO_Offer_Id_Iterator (TAO_Offer_Id_Iterator const&) = delete;
-  TAO_Offer_Id_Iterator& operator= (TAO_Offer_Id_Iterator const&) = delete;
-  TAO_Offer_Id_Iterator (TAO_Offer_Id_Iterator&&) = delete;
-  TAO_Offer_Id_Iterator& operator= (TAO_Offer_Id_Iterator&&) = delete;
-
   TAO_String_Queue ids_;
 };
 

@@ -22,6 +22,7 @@
 
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class X> class ACE_Intrusive_Auto_Ptr;
@@ -47,18 +48,15 @@ class TAO_Reply_Dispatcher;
 class TAO_Export TAO_Muxed_TMS : public TAO_Transport_Mux_Strategy
 {
 public:
-  /// Constructor.
-  TAO_Muxed_TMS (TAO_Transport *transport);
+  explicit TAO_Muxed_TMS (TAO_Transport *transport);
 
-  /// Destructor.
   ~TAO_Muxed_TMS () override;
 
   /// Generate and return an unique request id for the current
   /// invocation.
   CORBA::ULong request_id () override;
 
-  // = Please read the documentation in the TAO_Transport_Mux_Strategy
-  //   class.
+  /// See TAO_Transport_Mux_Strategy for documentation.
   int bind_dispatcher (CORBA::ULong request_id,
                        ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd) override;
   int unbind_dispatcher (CORBA::ULong request_id) override;
@@ -73,15 +71,17 @@ public:
 
 private:
   TAO_Muxed_TMS (TAO_Muxed_TMS const &) = delete;
+  TAO_Muxed_TMS (TAO_Muxed_TMS &&) = delete;
   TAO_Muxed_TMS &operator= (TAO_Muxed_TMS const &) = delete;
+  TAO_Muxed_TMS &operator= (TAO_Muxed_TMS &&) = delete;
 
 private:
   /// Lock to protect the state of the object
-  ACE_Lock *lock_;
+  std::unique_ptr<ACE_Lock> lock_;
 
   /// Used to generate a different request_id on each call to
   /// request_id().
-  CORBA::ULong request_id_generator_;
+  CORBA::ULong request_id_generator_ {};
 
   /// Keep track of the orb core pointer. We need to this to create the
   /// Reply Dispatchers.

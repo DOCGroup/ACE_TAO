@@ -22,15 +22,19 @@ class ACE_Svc_Export Handle_L_SPIPE : public ACE_Service_Object, public ACE_SPIP
 {
 public:
   Handle_L_SPIPE ();
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int info (ACE_TCHAR **, size_t) const;
-  virtual int fini ();
+  Handle_L_SPIPE (Handle_L_SPIPE const &) = delete;
+  Handle_L_SPIPE (Handle_L_SPIPE &&) = delete;
+  Handle_L_SPIPE &operator= (Handle_L_SPIPE const &) = delete;
+  Handle_L_SPIPE &operator= (Handle_L_SPIPE &&) = delete;
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int info (ACE_TCHAR **, size_t) const override;
+  int fini () override;
 
 private:
   int open (const ACE_SPIPE_Addr &rendezvous_spipe);
-  virtual int get_handle () const;
-  virtual int handle_input (int fd);
-  virtual int handle_close (int fd, ACE_Reactor_Mask);
+  int get_handle () const override;
+  int handle_input (int fd) override;
+  int handle_close (int fd, ACE_Reactor_Mask) override;
 
   static const ACE_TCHAR *DEFAULT_RENDEZVOUS;
 };
@@ -45,6 +49,5 @@ extern ACE_Service_Object_Type lsp;
 #endif /* __ACE_INLINE__ */
 
 #endif /* _HANDLE_L_SPIPE_H */
-
 
 #endif /* ACE_HAS_STREAM_PIPES */

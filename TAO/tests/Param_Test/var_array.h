@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    var_array.h
  *
@@ -7,25 +5,19 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #ifndef PARAM_TEST_VAR_ARRAY_H
 #define PARAM_TEST_VAR_ARRAY_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test var arrays
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test var arrays
 class Test_Var_Array
 {
 public:
-  /// ctor
   Test_Var_Array ();
 
-  /// dtor
-  ~Test_Var_Array ();
+  ~Test_Var_Array () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -60,7 +52,7 @@ private:
   void print (const Param_Test::Var_Array_slice *a);
 
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   Param_Test::Var_Array in_;

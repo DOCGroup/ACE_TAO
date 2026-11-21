@@ -1,10 +1,8 @@
 /* -*- C++ -*- */
+/// Defines an interface that encapsulates operations that return the current
+/// time of day and shut down the server.
 interface UDP
 {
-  // = TITLE
-  //    Defines an interface that encapsulates operations that
-  //    return the current time of day and shuts down the server.
-
   struct LongStruct
   {
     long x;
@@ -20,8 +18,6 @@ interface UDP
   oneway void invoke (in string client_name,
                       in long request_id);
 
+  /// Shuts down the application.
   oneway void shutdown ();
-  // Shutdown the application.
 };
-
-

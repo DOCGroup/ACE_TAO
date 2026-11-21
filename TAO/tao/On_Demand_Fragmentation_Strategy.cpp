@@ -9,26 +9,25 @@
 #include "ace/Truncate.h"
 
 TAO_On_Demand_Fragmentation_Strategy::TAO_On_Demand_Fragmentation_Strategy (
-  TAO_Transport * transport,
+  TAO_Transport *transport,
   CORBA::ULong max_message_size)
   : transport_ (transport)
   , max_message_size_ (max_message_size)
 {
 }
 
-TAO_On_Demand_Fragmentation_Strategy::~TAO_On_Demand_Fragmentation_Strategy (
-  )
-{
-}
+TAO_On_Demand_Fragmentation_Strategy::~TAO_On_Demand_Fragmentation_Strategy () = default;
 
 int
 TAO_On_Demand_Fragmentation_Strategy::fragment (
-  TAO_OutputCDR & cdr,
+  TAO_OutputCDR &cdr,
   ACE_CDR::ULong pending_alignment,
   ACE_CDR::ULong pending_length)
 {
   if (this->transport_ == nullptr)
+  {
     return 0;  // No transport.  Can't fragment.
+  }
 
   TAO_GIOP_Message_Version giop_version;
 
@@ -38,7 +37,9 @@ TAO_On_Demand_Fragmentation_Strategy::fragment (
   // supports them in 1.2 or better since GIOP 1.1 fragments do not
   // have a fragment message header.
   if (giop_version.major == 1 && giop_version.minor < 2)
+  {
     return -1;
+  }
 
   // Determine increase in CDR stream length if pending data is
   // marshaled, taking into account the alignment for the given data
@@ -64,16 +65,20 @@ TAO_On_Demand_Fragmentation_Strategy::fragment (
     {
       // Pad the outgoing fragment if necessary.
       if (cdr.align_write_ptr (ACE_CDR::MAX_ALIGNMENT) != 0)
+      {
         return -1;
+      }
 
       // More fragments to come.
       cdr.more_fragments (true);
 
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - On_Demand_Fragmentation_Strategy::fragment, "
-                    "sending fragment of size %d\n",
-                    cdr.total_length ()));
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         "TAO (%P|%t) - On_Demand_Fragmentation_Strategy::fragment, "
+                         "sending fragment of size %B\n",
+                         cdr.total_length ()));
+        }
 
       // Send the current CDR stream contents through the transport,
       // making sure to switch on the the GIOP flags "more fragments"
@@ -88,7 +93,9 @@ TAO_On_Demand_Fragmentation_Strategy::fragment (
           || this->transport_->messaging_object ()->generate_fragment_header (
                cdr,
                cdr.request_id ()) != 0)
+      {
         return -1;
+      }
     }
 
   return 0;

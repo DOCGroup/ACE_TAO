@@ -58,12 +58,10 @@ template <class SVC_HANDLER>
 class ACE_NonBlocking_Connect_Handler : public ACE_Event_Handler
 {
 public:
-  /// Constructor.
   ACE_NonBlocking_Connect_Handler (ACE_Connector_Base<SVC_HANDLER> &connector,
                                    SVC_HANDLER *,
                                    long timer_id);
 
-  /// Destructor.
   ~ACE_NonBlocking_Connect_Handler () override;
 
   /// Close up and return underlying SVC_HANDLER through @c sh.
@@ -129,7 +127,7 @@ private:
   SVC_HANDLER *svc_handler_;
 
   /// Same as svc_handler_ if svc_handler_ is reference counted.
-  SVC_HANDLER *cleanup_svc_handler_;
+  SVC_HANDLER *cleanup_svc_handler_ {};
 
   /// Associated timer id.
   long timer_id_;
@@ -193,7 +191,8 @@ public:
   /// Shutdown a connector and release resources.
   ~ACE_Connector () override;
 
-  // = Connection establishment methods.
+  /// @name Connection establishment methods
+  /// @{
 
   /**
    * Initiate connection of @a svc_handler to peer at @a remote_addr
@@ -257,6 +256,7 @@ public:
    * decide the fate of the @a svc_handler.
    */
   virtual int cancel (SVC_HANDLER *svc_handler);
+  /// @}
 
   /// Close down the Connector.  All pending non-blocking connects are
   /// canceled and the corresponding svc_handler is closed.
@@ -290,11 +290,14 @@ protected:
    */
   int flags_;
 
-  // = Helpful typedefs.
+  /// Helper type for nonblocking connection handlers.
   using NBCH = ACE_NonBlocking_Connect_Handler<SVC_HANDLER>;
 
-  // = The following two methods define the Connector's strategies for
-  // creating, connecting, and activating SVC_HANDLER's, respectively.
+  /** @name Connector strategy bridge methods
+   * These methods define how the Connector creates, connects, and activates
+   * SVC_HANDLER instances.
+   */
+  /// @{
 
   /**
    * Bridge method for creating a SVC_HANDLER.  The default is to
@@ -339,6 +342,7 @@ protected:
    * multi-processing).
    */
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler);
+  /// @}
 
   /// Creates and registers ACE_NonBlocking_Connect_Handler.
   int nonblocking_connect (SVC_HANDLER *,
@@ -358,7 +362,8 @@ protected:
   /// progress.
   ACE_Unbounded_Set<ACE_HANDLE> &non_blocking_handles () override;
 
-  // = Dynamic linking hooks.
+  /// @name Dynamic linking hooks
+  /// @{
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
   int init (int argc, ACE_TCHAR *argv[]) override;
@@ -368,8 +373,10 @@ protected:
 
   /// Default version returns address info in @a buf.
   int info (ACE_TCHAR **strp, size_t length) const override;
+  /// @}
 
-  // = Service management hooks.
+  /// @name Service management hooks
+  /// @{
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
   int suspend () override;
@@ -377,6 +384,7 @@ protected:
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
   int resume () override;
+  /// @}
 
 private:
   /// This is the peer connector factory.
@@ -408,17 +416,18 @@ class ACE_Strategy_Connector
   : public ACE_Connector <SVC_HANDLER, PEER_CONNECTOR>
 {
 public:
-  // Useful STL-style traits.
+  /// @name Strategy types
+  /// @{
   using creation_strategy_type = ACE_Creation_Strategy<SVC_HANDLER>;
   using connect_strategy_type = ACE_Connect_Strategy<SVC_HANDLER, PEER_CONNECTOR>;
   using concurrency_strategy_type = ACE_Concurrency_Strategy<SVC_HANDLER>;
   using base_type = ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>;
 
-  // = Define some useful (old style) traits.
   using CREATION_STRATEGY = ACE_Creation_Strategy<SVC_HANDLER>;
   using CONNECT_STRATEGY = ACE_Connect_Strategy<SVC_HANDLER, PEER_CONNECTOR>;
   using CONCURRENCY_STRATEGY = ACE_Concurrency_Strategy<SVC_HANDLER>;
   using SUPER = ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>;
+  /// @}
 
   /**
    * Initialize a connector.  @a flags indicates how SVC_HANDLER's
@@ -439,8 +448,8 @@ public:
    * non-blocking I/O on the SVC_HANDLER when it is opened.
    * Default strategies would be created and used.
    */
-  virtual int open (ACE_Reactor *r,
-                    int flags);
+  int open (ACE_Reactor *r,
+            int flags) override;
 
   /**
    * Initialize a connector.  @a flags indicates how SVC_HANDLER's
@@ -458,20 +467,24 @@ public:
   virtual ~ACE_Strategy_Connector ();
 
   /// Close down the Connector
-  virtual int close ();
+  int close () override;
 
-  // = Strategies accessors
+  /// @name Strategy accessors
+  /// @{
   virtual ACE_Creation_Strategy<SVC_HANDLER> *creation_strategy () const;
   virtual ACE_Connect_Strategy<SVC_HANDLER, PEER_CONNECTOR> *connect_strategy () const;
   virtual ACE_Concurrency_Strategy<SVC_HANDLER> *concurrency_strategy () const;
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = The following three methods define the <Connector>'s strategies
-  // for creating, connecting, and activating SVC_HANDLER's,
-  // respectively.
+  /** @name Strategy bridge methods
+   * These methods define how the Connector creates, connects, and activates
+   * SVC_HANDLER instances.
+   */
+  /// @{
 
   /**
    * Bridge method for creating a SVC_HANDLER.  The strategy for
@@ -484,20 +497,20 @@ protected:
    * dynamically linking the handler, etc.).  Returns -1 if failure,
    * else 0.
    */
-  virtual int make_svc_handler (SVC_HANDLER *&sh);
+  int make_svc_handler (SVC_HANDLER *&sh) override;
 
   /**
    * Bridge method for connecting the new connection into the
    * SVC_HANDLER.  The default behavior delegates to the
    * <PEER_CONNECTOR::connect> in the <Connect_Strategy>.
    */
-  virtual int connect_svc_handler (SVC_HANDLER *&sh,
-                                   const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
-                                   ACE_Time_Value *timeout,
-                                   const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
-                                   int reuse_addr,
-                                   int flags,
-                                   int perms);
+  int connect_svc_handler (SVC_HANDLER *&sh,
+                           const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
+                           ACE_Time_Value *timeout,
+                           const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
+                           int reuse_addr,
+                           int flags,
+                           int perms) override;
 
   /**
    * Bridge method for connecting the new connection into the
@@ -509,14 +522,14 @@ protected:
    * the internal locks in the Connect_Strategy, while saving a TSS
    * copy in @a sh_copy, usually located in the stack.
    */
-  virtual int connect_svc_handler (SVC_HANDLER *&sh,
-                                   SVC_HANDLER *&sh_copy,
-                                   const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
-                                   ACE_Time_Value *timeout,
-                                   const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
-                                   int reuse_addr,
-                                   int flags,
-                                   int perms);
+  int connect_svc_handler (SVC_HANDLER *&sh,
+                           SVC_HANDLER *&sh_copy,
+                           const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
+                           ACE_Time_Value *timeout,
+                           const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
+                           int reuse_addr,
+                           int flags,
+                           int perms) override;
 
   /**
    * Bridge method for activating a SVC_HANDLER with the appropriate
@@ -528,30 +541,33 @@ protected:
    * SVC_HANDLER as an "active object" via multi-threading or
    * multi-processing).
    */
-  virtual int activate_svc_handler (SVC_HANDLER *svc_handler);
+  int activate_svc_handler (SVC_HANDLER *svc_handler) override;
+  /// @}
 
-  // = Strategy objects.
+  /// @name Strategy objects
+  /// @{
 
   /// Creation strategy for an Connector.
-  CREATION_STRATEGY *creation_strategy_;
+  CREATION_STRATEGY *creation_strategy_ {};
 
   /// True if Connector created the creation strategy and thus should
   /// delete it, else false.
-  bool delete_creation_strategy_;
+  bool delete_creation_strategy_ {};
 
   /// Connect strategy for a Connector.
-  CONNECT_STRATEGY *connect_strategy_;
+  CONNECT_STRATEGY *connect_strategy_ {};
 
   /// True if Connector created the connect strategy and thus should
   /// delete it, else false.
-  bool delete_connect_strategy_;
+  bool delete_connect_strategy_ {};
 
   /// Concurrency strategy for a Connector.
-  CONCURRENCY_STRATEGY *concurrency_strategy_;
+  CONCURRENCY_STRATEGY *concurrency_strategy_ {};
 
   /// True if Connector created the concurrency strategy and thus should
   /// delete it, else false.
-  bool delete_concurrency_strategy_;
+  bool delete_concurrency_strategy_ {};
+  /// @}
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SL3_CONTEXT_ESTABLISHMENT_POLICY_H
 #define TAO_SL3_CONTEXT_ESTABLISHMENT_POLICY_H
 
@@ -34,26 +33,23 @@ namespace TAO
 {
   namespace SL3
   {
-    /**
-     * @class ContextEstablishmentPolicy
-     *
-     * @brief
-     *
-     *
-     */
     class ContextEstablishmentPolicy
       : public virtual SecurityLevel3::ContextEstablishmentPolicy,
         public virtual ::CORBA::LocalObject
     {
     public:
-      /// Constructor
       ContextEstablishmentPolicy (
         SecurityLevel3::CredsDirective             creds_directive,
-        const SecurityLevel3::OwnCredentialsList & creds_list,
+        SecurityLevel3::OwnCredentialsList const & creds_list,
         SecurityLevel3::FeatureDirective           use_client_auth,
         SecurityLevel3::FeatureDirective           use_target_auth,
         SecurityLevel3::FeatureDirective           use_confidentiality,
         SecurityLevel3::FeatureDirective           use_integrity);
+
+      ContextEstablishmentPolicy (ContextEstablishmentPolicy const &) = delete;
+      ContextEstablishmentPolicy (ContextEstablishmentPolicy &&) = delete;
+      ContextEstablishmentPolicy &operator= (ContextEstablishmentPolicy const &) = delete;
+      ContextEstablishmentPolicy &operator= (ContextEstablishmentPolicy &&) = delete;
 
       /**
        * @name SecurityLevel3::ContextEstablishmentPolicy Methods
@@ -61,7 +57,7 @@ namespace TAO
        * Methods required by the
        * SecurityLevel3::ContextEstablishmentPolicy interface.
        */
-      //@{
+      /// @{
       SecurityLevel3::CredsDirective creds_directive () override;
 
       SecurityLevel3::OwnCredentialsList * creds_list () override;
@@ -79,15 +75,14 @@ namespace TAO
       CORBA::Policy_ptr copy () override;
 
       void destroy () override;
-      //@}
+      /// @}
 
     protected:
-      /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~ContextEstablishmentPolicy () override;
+      ~ContextEstablishmentPolicy () override = default;
 
     private:
       SecurityLevel3::CredsDirective     creds_directive_;

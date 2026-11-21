@@ -1,12 +1,8 @@
 /* -*- C++ -*- */
-//
-// ============================================================================
-//
-// = DESCRIPTION
-//   This is a helper class for the throughput tests of the Event
-//   Channel.
-//
-// ============================================================================
+/**
+ * @file ECT_Supplier.h
+ * @brief Event Channel throughput test supplier task.
+ */
 
 #ifndef ECT_SUPPLIER_H
 #define ECT_SUPPLIER_H
@@ -22,22 +18,24 @@
 #include "orbsvcs/RtecSchedulerC.h"
 #include "ace/Task.h"
 
+/// Generates event bursts and records supplier-side throughput.
 class Test_Supplier : public ACE_Task<ACE_SYNCH>
 {
-  //
-  // = TITLE
-  //   Simplifies the supplier task startup.
-  //
-  // = DESCRIPTION
-  //
 public:
-  Test_Supplier (ECT_Driver *driver);
+  /// Create a supplier task with default event types.
+  Test_Supplier ();
 
-  int svc ();
-  // Run the test, just forwards to the driver
+  Test_Supplier (Test_Supplier const&) = delete;
+  Test_Supplier (Test_Supplier&&) = delete;
+  Test_Supplier& operator= (Test_Supplier const&) = delete;
+  Test_Supplier& operator= (Test_Supplier&&) = delete;
 
+  /// Run the supplier task and send configured event bursts.
+  int svc () override;
+
+  /// Connect this supplier to the event channel and configure its QoS.
   void connect (RtecScheduler::Scheduler_ptr scheduler,
-                const char* name,
+                char const* name,
                 int burst_count,
                 int burst_size,
                 int event_size,
@@ -45,55 +43,50 @@ public:
                 int type_start,
                 int type_count,
                 RtecEventChannelAdmin::EventChannel_ptr ec);
-  // This method connects the supplier to the EC.
-
+  /// Disconnect from the event channel and deactivate the servant.
   void disconnect ();
-  // Disconnect from the EC.
 
-  virtual void disconnect_push_supplier ();
-  // The methods in the skeleton.
+  /// Handle disconnection forwarded by the supplier adapter.
+  void disconnect_push_supplier ();
 
+  /// Return the event source ID assigned to this supplier.
   RtecEventComm::EventSourceID supplier_id () const;
-  // The supplier ID.
 
+  /// Return the proxy used to send events to the channel.
   RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy ();
-  // We talk to the EC (as a supplier) using this proxy, no duplicates
-  // are done here...
 
-  void dump_results (const ACE_TCHAR* name,
+  /// Print this supplier's throughput statistics.
+  void dump_results (ACE_TCHAR const* name,
                      ACE_Basic_Stats::scale_factor_type global_scale_factor);
-  // Dump the results...
 
+  /// Add this supplier's measurements to aggregate statistics.
   void accumulate (ACE_Throughput_Stats& stats) const;
-  // Add our statistics to <stats>
 
 private:
-  ECT_Driver *driver_;
-  // Class we forward to.
+  /// Event source ID generated from the supplier name.
+  RtecEventComm::EventSourceID supplier_id_ {};
 
-  void *cookie_;
-  // The test provide us a cookie so we can give back our identity.
-
-  RtecEventComm::EventSourceID supplier_id_;
-  // We generate an id based on the name....
-
+  /// Proxy used to send events to the event channel.
   RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;
-  // We talk to the EC (as a supplier) using this proxy.
 
+  /// Adapter that forwards supplier disconnection callbacks.
   ACE_PushSupplier_Adapter<Test_Supplier> supplier_;
-  // We also connect to the EC as a consumer so we can receive the
-  // timeout events.
 
+  /// Accumulated supplier-side throughput measurements.
   ACE_Throughput_Stats throughput_;
-  // Measure the elapsed time spent while sending the events.
 
-  int burst_count_;
-  int burst_size_;
-  int event_size_;
-  int burst_pause_;
-  int type_start_;
-  int type_count_;
-  // The test data.
+  /// Number of bursts to send.
+  int burst_count_ {};
+  /// Events per burst.
+  int burst_size_ {};
+  /// Payload size in bytes for each event.
+  int event_size_ {};
+  /// Pause between bursts in microseconds.
+  int burst_pause_ {};
+  /// First event type to publish.
+  int type_start_ {};
+  /// Number of consecutive event types to publish.
+  int type_count_ {};
 };
 
 #endif /* ECT_SUPPLIER_H */

@@ -11,6 +11,8 @@
 
 #include "ace/config-all.h"
 
+#include <atomic>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -33,19 +35,17 @@ class Server_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
-  Server_Request_Interceptor ();
+  Server_Request_Interceptor () = default;
 
   Server_Request_Interceptor (Server_Request_Interceptor const &) = delete;
   Server_Request_Interceptor (Server_Request_Interceptor &&) = delete;
   Server_Request_Interceptor &operator= (Server_Request_Interceptor const &) = delete;
   Server_Request_Interceptor &operator= (Server_Request_Interceptor &&) = delete;
 
-  /// Destructor.
-  ~Server_Request_Interceptor () override;
+  ~Server_Request_Interceptor () override = default;
 
   /// Set the references to which requests will be forwarded.
-  void forward_reference (char const * iorstr);
+  void forward_reference (char const * iorstr) override;
 
   /**
    * @name Methods Required by the Server Request Interceptor
@@ -55,7 +55,7 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all server request interceptors.
    */
-  //@{
+  /// @{
   /// Return the name of this ServerRequestinterceptor.
   char * name () override;
 
@@ -75,12 +75,13 @@ public:
 
   void send_other (
     PortableInterceptor::ServerRequestInfo_ptr ri) override;
-  //@}
+  /// @}
 
 private:
-  /// References to the two objects used in this test.
-  CORBA::String_var iorstr_;
-    int request_forwarded_;
+  /// IOR of the forwarding target.
+  CORBA::String_var iorstr_ {};
+  /// Prevent concurrent requests from forwarding more than once.
+  std::atomic<bool> request_forwarded_ {};
 };
 
 #if defined(_MSC_VER)

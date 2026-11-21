@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "testS.h"
 #include "ace/Task.h"
 #include "ace/Auto_Event.h"
@@ -20,11 +19,15 @@ class test_i :
   public virtual POA_test
 {
 public:
-  test_i (PortableServer::POA_ptr poa);
+  explicit test_i (PortableServer::POA_ptr poa);
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
 
   ~test_i ();
 
-  void method ();
+  void method () override;
 
   PortableServer::POA_var poa_;
 };
@@ -54,14 +57,17 @@ class Object_Activator : public ACE_Task_Base
 public:
   Object_Activator (ACE_Thread_Manager &thread_manager,
                     PortableServer::POA_ptr poa);
+  Object_Activator (Object_Activator const &) = delete;
+  Object_Activator (Object_Activator &&) = delete;
+  Object_Activator &operator= (Object_Activator const &) = delete;
+  Object_Activator &operator= (Object_Activator &&) = delete;
 
-  int svc ();
+  int svc () override;
 
   ACE_Auto_Event object_activated_;
 
   PortableServer::POA_var poa_;
 };
-
 
 Object_Activator::Object_Activator (ACE_Thread_Manager &thread_manager,
                                     PortableServer::POA_ptr poa)
@@ -75,19 +81,17 @@ Object_Activator::svc ()
 {
   try
     {
-      test_i *servant =
-        new test_i (this->poa_.in ());
-
-      PortableServer::ServantBase_var safe_servant (servant);
+      PortableServer::ServantBase_var safe_servant (
+        new test_i (this->poa_.in ()));
 
       PortableServer::ObjectId_var id =
-        this->poa_->activate_object (servant);
+        this->poa_->activate_object (safe_servant.in ());
 
       this->object_activated_.signal ();
 
       this->poa_->deactivate_object (id.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Exception caught in activator thread");
@@ -97,22 +101,26 @@ Object_Activator::svc ()
   return 0;
 }
 
-Object_Activator *global_object_activator = 0;
+Object_Activator *global_object_activator {};
 
 class Servant_Activator :
   public PortableServer::ServantActivator
 {
 public:
-  Servant_Activator (PortableServer::POA_ptr poa);
+  explicit Servant_Activator (PortableServer::POA_ptr poa);
+  Servant_Activator (Servant_Activator const &) = delete;
+  Servant_Activator (Servant_Activator &&) = delete;
+  Servant_Activator &operator= (Servant_Activator const &) = delete;
+  Servant_Activator &operator= (Servant_Activator &&) = delete;
 
-  PortableServer::Servant incarnate (const PortableServer::ObjectId &oid,
-                                     PortableServer::POA_ptr poa);
+  PortableServer::Servant incarnate (PortableServer::ObjectId const &oid,
+                                     PortableServer::POA_ptr poa) override;
 
-  void etherealize (const PortableServer::ObjectId &oid,
+  void etherealize (PortableServer::ObjectId const &oid,
                     PortableServer::POA_ptr adapter,
                     PortableServer::Servant servant,
                     CORBA::Boolean cleanup_in_progress,
-                    CORBA::Boolean remaining_activations);
+                    CORBA::Boolean remaining_activations) override;
 
   PortableServer::POA_var poa_;
 
@@ -125,16 +133,14 @@ Servant_Activator::Servant_Activator (PortableServer::POA_ptr poa)
 }
 
 PortableServer::Servant
-Servant_Activator::incarnate (const PortableServer::ObjectId &,
+Servant_Activator::incarnate (PortableServer::ObjectId const &,
                               PortableServer::POA_ptr)
 {
-  test_i *servant =
-    new test_i (this->poa_.in ());
-
-  PortableServer::ServantBase_var safe_servant (servant);
+  PortableServer::ServantBase_var safe_servant (
+    new test_i (this->poa_.in ()));
 
   this->id_ =
-    this->poa_->activate_object (servant);
+    this->poa_->activate_object (safe_servant.in ());
 
   this->poa_->deactivate_object (this->id_.in ());
 
@@ -174,7 +180,7 @@ Servant_Activator::incarnate (const PortableServer::ObjectId &,
 }
 
 void
-Servant_Activator::etherealize (const PortableServer::ObjectId &,
+Servant_Activator::etherealize (PortableServer::ObjectId const &,
                                 PortableServer::POA_ptr,
                                 PortableServer::Servant servant,
                                 CORBA::Boolean,
@@ -203,10 +209,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       CORBA::PolicyList policies;
-      CORBA::ULong current_length = 0;
-
-      policies.length (current_length + 1);
-      policies[current_length++] =
+      policies.length (1);
+      policies[0] =
         root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER);
 
       PortableServer::POA_var child_poa =
@@ -245,7 +249,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught");
       return -1;

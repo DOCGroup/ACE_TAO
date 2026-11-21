@@ -15,7 +15,7 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
   // not work on platforms using environment variable.
   if (ACE_BIT_ENABLED (components, LOOKUP))
     {
-      TAO_Lookup<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* lookup;
+      TAO_Lookup<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* lookup {};
 
       ACE_NEW (lookup,
                (TAO_Lookup<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
@@ -27,7 +27,7 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
     }
   if (ACE_BIT_ENABLED (components, REGISTER))
     {
-      TAO_Register<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* reg;
+      TAO_Register<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* reg {};
 
       ACE_NEW (reg,
                (TAO_Register<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
@@ -39,7 +39,7 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
     }
   if (ACE_BIT_ENABLED (components, ADMIN))
     {
-      TAO_Admin<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* admin;
+      TAO_Admin<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* admin {};
 
       ACE_NEW (admin,
                (TAO_Admin<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
@@ -51,7 +51,7 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
     }
   if (ACE_BIT_ENABLED (components, PROXY))
     {
-      TAO_Proxy<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* proxy;
+      TAO_Proxy<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* proxy {};
 
       ACE_NEW (proxy,
                (TAO_Proxy<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
@@ -63,7 +63,7 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
     }
   if (ACE_BIT_ENABLED (components, LINK))
     {
-      TAO_Link<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* link;
+      TAO_Link<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* link {};
 
       ACE_NEW (link,
                (TAO_Link<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>) (*this));
@@ -80,8 +80,7 @@ TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::~TAO_Trader ()
 {
   // Remove Trading Components from POA
 
-
-  for (int i = LOOKUP_IF; i <= LINK_IF; i++)
+  for (int i = LOOKUP_IF; i <= LINK_IF; ++i)
     {
       if (this->ifs_[i] != nullptr)
         {
@@ -119,7 +118,7 @@ TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::lock ()
 
 template <class IF>
 TAO_Trader_Components<IF>::
-TAO_Trader_Components (const TAO_Trading_Components_i& comps)
+TAO_Trader_Components (TAO_Trading_Components_i const& comps)
   : comps_ (comps)
 {
 }
@@ -155,7 +154,7 @@ TAO_Trader_Components<IF>::link_if ()
 }
 template <class IF>
 TAO_Support_Attributes<IF>::
-TAO_Support_Attributes (const TAO_Support_Attributes_i& attrs)
+TAO_Support_Attributes (TAO_Support_Attributes_i const& attrs)
   : attrs_ (attrs)
 {
 }
@@ -186,7 +185,7 @@ TAO_Support_Attributes<IF>::type_repos ( )
 
 template <class IF>
 TAO_Import_Attributes<IF>::
-TAO_Import_Attributes (const TAO_Import_Attributes_i& attrs)
+TAO_Import_Attributes (TAO_Import_Attributes_i const& attrs)
   : attrs_ (attrs)
 {
 }
@@ -259,7 +258,7 @@ TAO_Import_Attributes<IF>::max_follow_policy ()
 
 template <class IF>
 TAO_Link_Attributes<IF>::
-TAO_Link_Attributes (const TAO_Link_Attributes_i& attrs)
+TAO_Link_Attributes (TAO_Link_Attributes_i const& attrs)
   : attrs_ (attrs)
 {
 }

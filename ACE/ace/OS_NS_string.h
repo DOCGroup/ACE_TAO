@@ -40,7 +40,7 @@ namespace ACE_OS {
    *
    *  @todo To be complete, we should add strcoll, and strxfrm.
    */
-  //@{
+  /// @{
   /// Finds characters in a buffer (const void version).
   ACE_NAMESPACE_INLINE_FUNCTION
   const void *memchr (const void *s, int c, size_t len);
@@ -172,7 +172,6 @@ namespace ACE_OS {
   extern ACE_Export
   char *strerror_emulation (int errnum);
 #endif /* ACE_LACKS_STRERROR */
-
 
   /// Returns a string describing the signal number passed in the
   /// argument @a signum. If the supplied signal number is out of range,
@@ -405,7 +404,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *strtok (wchar_t *s, const wchar_t *tokens);
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOK */
-  //@}
+  /// @}
 
   /// Finds the next token in a string (safe char version).
   ACE_NAMESPACE_INLINE_FUNCTION

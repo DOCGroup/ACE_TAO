@@ -9,12 +9,10 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Malloc_T.h"
 #include "ace/High_Res_Timer.h"
-
 
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
@@ -30,7 +28,7 @@ speed_test (ACE_UINT32 loops)
     speed = 0.0;
 
   ACE_Time_Value tc;
-  void *ptr = nullptr;
+  void *ptr {};
   ACE_UINT32 i = loops;
   size_t n_chunks = 10;
   size_t chunk_size = 8;
@@ -81,7 +79,7 @@ stdspeed_test (ACE_UINT32 loops)
     speed = 0.0;
 
   ACE_Time_Value tc;
-  void *ptr = nullptr;
+  void *ptr {};
   ACE_UINT32 i = loops;
   size_t n_chunks   = 10,
     chunk_size = 8;
@@ -126,19 +124,23 @@ run_main (int argc, ACE_TCHAR *argv[])
   size_t n_chunks   = 0;
   size_t requested_size = 0;
   size_t depth = 0;
-  char *ptr1 = nullptr;
-  char *ptr2 = nullptr;
-  char *ptr3 = nullptr;
-  char *ptr4 = nullptr;
+  char *ptr1 {};
+  char *ptr2 {};
+  char *ptr3 {};
+  char *ptr4 {};
   ACE_UINT32 loops = 0;
 
   const char *str1 = "12345678";
   const char *str3 = "ABCDEFGH";
 
   if (argc < 2)
-    loops = 10000000;
+    {
+      loops = 10000000;
+    }
   else
-    loops = ACE_OS::atoi (argv[1]);
+    {
+      loops = ACE_OS::atoi (argv[1]);
+    }
 
   n_chunks = 2;
 
@@ -153,62 +155,80 @@ run_main (int argc, ACE_TCHAR *argv[])
       DYNAMIC_ALLOCATOR allocator (n_chunks, chunk_size);
 
       if ((depth = allocator.pool_depth ()) != n_chunks)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Expected pool depth %B but reported %B\n"),
-                    n_chunks, depth));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Expected pool depth %B but reported %B\n"),
+                      n_chunks, depth));
+        }
       requested_size = chunk_size;
       ACE_DEBUG ((LM_INFO,
                   ACE_TEXT (" (%t) Allocating chunk 1: %B bytes, should succeed...\n"),
                   requested_size));
 
-      ptr1 = (char *) allocator.malloc (requested_size);
+      ptr1 = static_cast<char *> (allocator.malloc (requested_size));
       if (!ptr1)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT (" (%t) Failed, exiting.\n")), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT (" (%t) Failed, exiting.\n")), -1);
+        }
 
       ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) OK, succeeded.\n")));
       if ((depth = allocator.pool_depth ()) != (n_chunks - 1))
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Expected pool depth %B but reported %B\n"),
-                    n_chunks - 1, depth));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Expected pool depth %B but reported %B\n"),
+                      n_chunks - 1, depth));
+        }
 
       requested_size = chunk_size + 1;
       ACE_DEBUG ((LM_INFO,
                   ACE_TEXT (" (%t) Allocating chunk 2: %B bytes, too big, should fail...\n"),
                   requested_size));
 
-      ptr2 = (char *) allocator.malloc (requested_size);
+      ptr2 = static_cast<char *> (allocator.malloc (requested_size));
       if (!ptr2)
-        ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) OK, failed.\n")));
+        {
+          ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) OK, failed.\n")));
+        }
       else
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT (" (%t) Something is wrong...\n")), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT (" (%t) Something is wrong...\n")), -1);
+        }
 
       requested_size = chunk_size - 1;
       ACE_DEBUG ((LM_INFO,
                   ACE_TEXT (" (%t) Allocating chunk 3: %B bytes, ")
                   ACE_TEXT ("should succeed...\n"),
                   requested_size));
-      ptr3 = (char *) allocator.malloc (requested_size);
+      ptr3 = static_cast<char *> (allocator.malloc (requested_size));
       if (!ptr3)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT (" (%t) Failed, exiting.\n")), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT (" (%t) Failed, exiting.\n")), -1);
+        }
 
       ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) OK, succeeded.\n")));
 
       // One chunk too far...
       if ((depth = allocator.pool_depth ()) != 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Expected pool depth 0 but reported %B\n"),
-                    depth));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Expected pool depth 0 but reported %B\n"),
+                      depth));
+        }
       requested_size = chunk_size;
       ACE_DEBUG ((LM_INFO,
                   ACE_TEXT (" (%t) Allocating chunk 4: %B bytes, no free chunks,")
                   ACE_TEXT (" should fail...\n"),
                   requested_size));
 
-      ptr4 = (char *) allocator.malloc (requested_size);
+      ptr4 = static_cast<char *> (allocator.malloc (requested_size));
       if (!ptr4)
-        ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) OK, failed.\n")));
+        {
+          ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) OK, failed.\n")));
+        }
       else
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT (" (%t) Something is wrong\n")), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT (" (%t) Something is wrong\n")), -1);
+        }
 
       ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Writing to chunk 1:   %C\n"), str1));
       ACE_OS::memcpy (ptr1, str1, chunk_size);
@@ -227,9 +247,11 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Allocating chunk: %B bytes, ")
                   ACE_TEXT ("should succeed...\n"),
                   requested_size));
-      ptr1 = (char *) allocator.malloc (requested_size);
+      ptr1 = static_cast<char *> (allocator.malloc (requested_size));
       if (!ptr1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT (" (%t) Failed, exiting.\n")), -1);
+      }
 
       ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) OK, succeeded.\n")));
 

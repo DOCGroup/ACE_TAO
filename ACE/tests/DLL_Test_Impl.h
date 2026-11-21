@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TESTS_DLL_TEST_IMPL_H
 #define ACE_TESTS_DLL_TEST_IMPL_H
 
@@ -30,10 +29,8 @@
 class Hello_Impl : public Hello
 {
 public:
-  /// Constructor
   Hello_Impl ();
 
-  /// Destructor
   ~Hello_Impl ();
 
   /// See the documentation in the base class

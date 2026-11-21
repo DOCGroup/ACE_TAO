@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    dif2.idl
  *
@@ -8,8 +7,6 @@
  *
  *  @author Andy Gokhale <gokhale@dre.vanderbilt.edu>
  */
-//=============================================================================
-
 
 module OldDif2
 {
@@ -44,7 +41,7 @@ module OldDif2
 
   interface ex2 : ex1
   {
-    // Operations continued from ex1.
+    /// Operations continued from ex1.
     char op7 (in char c,
               out boolean b,
               inout octet o);

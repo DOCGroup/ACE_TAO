@@ -9,6 +9,7 @@
 
 #include "ace/INet/ClientRequestHandler.h"
 #include <istream>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -22,18 +23,16 @@ namespace ACE
       {
       }
 
-    URLStream::~URLStream ()
-      {
-      }
+    URLStream::~URLStream () = default;
 
     bool URLStream::operator ! ()
       {
-        return this->request_handler_ == 0 || !this->request_handler_->is_response_ok ();
+        return this->request_handler_ == nullptr || !this->request_handler_->is_response_ok ();
       }
 
     URLStream::operator bool ()
       {
-        return this->request_handler_ != 0 && this->request_handler_->is_response_ok ();
+        return this->request_handler_ != nullptr && this->request_handler_->is_response_ok ();
       }
 
     std::istream& URLStream::operator * ()
@@ -46,8 +45,8 @@ namespace ACE
     std::istream* URLStream::operator -> ()
       {
         return this->request_handler_ ?
-          &this->request_handler_->response_stream () :
-          &ACE::IOS::Null::in_stream_;
+          std::addressof (this->request_handler_->response_stream ()) :
+          std::addressof (ACE::IOS::Null::in_stream_);
       }
 
     URLStream::URLStream (ClientRequestHandler& rh)
@@ -67,7 +66,7 @@ namespace ACE
       {
       }
 
-    URL_Base::~URL_Base () {}
+    URL_Base::~URL_Base () = default;
 
     bool URL_Base::parse (const ACE_CString& url_string)
       {
@@ -89,7 +88,9 @@ namespace ACE
                 // parse path part
                 sos.put (ch);
                 for (ch = sis.get (); ch != '?' && ch != '#' && ch != eof ;ch = sis.get ())
-                  sos.put (ch);
+                  {
+                    sos.put (ch);
+                  }
                 this->set_path (sos.str ());
                 sos.clear ();
               }
@@ -103,7 +104,9 @@ namespace ACE
               {
                 // parse query part
                 for (ch = sis.get (); ch != '#' && ch != eof ;ch = sis.get ())
-                  sos.put (ch);
+                  {
+                    sos.put (ch);
+                  }
                 this->set_query (sos.str ());
                 sos.clear ();
               }
@@ -146,11 +149,14 @@ namespace ACE
         ClientRequestHandler* rh = this->create_default_request_handler ();
         if (rh)
           {
-            rh->handle_open_request (*this);
-            return URLStream (rh);
+            URLStream stream (rh);
+            stream.request_handler_->handle_open_request (*this);
+            return stream;
           }
         else
-          return URLStream (0);
+        {
+          return URLStream (nullptr);
+        }
       }
 
     URLStream URL_Base::open (ClientRequestHandler& rh) const
@@ -164,14 +170,14 @@ namespace ACE
         ACE_CString::size_type pos = url_string.find (':');
         if (pos >0 )
           {
-            Factory* url_factory = 0;
+            Factory* url_factory {};
             if (factories_->find (url_string.substr (0, pos), url_factory) == 0)
               {
                 return url_factory->create_from_string (url_string);
               }
           }
 
-        return 0;
+        return nullptr;
       }
 
 #if defined (ACE_HAS_WCHAR)
@@ -213,12 +219,14 @@ namespace ACE
 
     void URL_Base::register_factory (Factory* url_factory)
       {
-        if (factories_ == 0)
+        if (factories_ == nullptr)
           {
             factories_ = URL_Base::TURLFactorySingleton::instance ();
           }
         if (url_factory)
+        {
           factories_->bind (url_factory->protocol (), url_factory);
+        }
       }
 
     void URL_Base::deregister_factory (Factory* url_factory)
@@ -229,20 +237,19 @@ namespace ACE
           };
       }
 
-    URL_Base::TURLFactoryMap* URL_Base::factories_ = 0;
+    URL_Base::TURLFactoryMap* URL_Base::factories_ {};
 
     URL_Base::Factory::Factory ()
       {}
 
-    URL_Base::Factory::~Factory ()
-      {}
+    URL_Base::Factory::~Factory () = default;
 
     URL_INetBase::URL_INetBase (u_short port)
       : URL_Base (), port_ (port)
       {
       }
 
-    URL_INetBase::~URL_INetBase () {}
+    URL_INetBase::~URL_INetBase () = default;
 
     int URL_INetBase::parse_authority (std::istream& is)
       {
@@ -271,7 +278,9 @@ namespace ACE
                  ch != '/' && ch != ':' && ch != '@' && ch != '?' && ch != '#' && ch != eof ;
 #endif
                  ch = is.get ())
-              sos.put (ch);
+              {
+                sos.put (ch);
+              }
           }
 
 #if defined (ACE_HAS_IPV6)
@@ -307,9 +316,13 @@ namespace ACE
             is >> port; // should stop at '/' or '?' or '#' or eof
             ch = is.get ();
             if (ch == '/' || ch == '?' || ch == '#' || ch == eof)
-              this->set_port (port);
+              {
+                this->set_port (port);
+              }
             else
+            {
               this->set_port (0);
+            }
           }
         else
           {
@@ -334,7 +347,9 @@ namespace ACE
         ACE::IOS::CString_OStream sos;
         sos << this->get_host().c_str ();
         if (this->get_port () != this->default_port ())
+        {
           sos << ':' << this->get_port ();
+        }
         return sos.str ();
       }
 
@@ -345,16 +360,20 @@ namespace ACE
       {
       }
 
-    URL_INetAuthBase::~URL_INetAuthBase () {}
+    URL_INetAuthBase::~URL_INetAuthBase () = default;
 
     ACE_CString URL_INetAuthBase::get_authority () const
       {
         ACE::IOS::CString_OStream sos;
         if (!this->get_user_info ().empty ())
+        {
           sos << this->get_user_info ().c_str () << "@";
+        }
         sos << this->get_host().c_str ();
         if (this->get_port () != this->default_port ())
+        {
           sos << ':' << this->get_port ();
+        }
         return sos.str ();
       }
 
@@ -374,7 +393,9 @@ namespace ACE
              ch != '/' && ch != ':' && ch != '@' && ch != '?' && ch != '#' && ch != eof ;
 #endif
              ch = is.get ())
-          sos.put (ch);
+          {
+            sos.put (ch);
+          }
 
         if (ch == '@')
           {
@@ -411,9 +432,9 @@ namespace ACE
         authenticator_ptr auth;
         if (URL_INetAuthBase::authenticators_.unbind (auth_id, auth) == 0)
           {
-            auth.release ();
+            return auth.release ();
           }
-        return 0;
+        return nullptr;
       }
 
     bool URL_INetAuthBase::authenticate (AuthenticationBase& authentication)
@@ -431,14 +452,20 @@ namespace ACE
 
             // release lock before calling user code
             if (URL_INetAuthBase::authenticators_.mutex ().release () != 0)
+            {
               return false;
+            }
 
             if (auth_ptr->authenticate (authentication))
+            {
               return true;
+            }
 
             // re-acquire lock
             if (URL_INetAuthBase::authenticators_.mutex ().acquire () != 0)
+            {
               return false;
+            }
           }
 
         return false;

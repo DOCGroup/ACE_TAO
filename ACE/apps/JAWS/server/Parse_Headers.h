@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef PARSE_HEADERS_H
 #define PARSE_HEADERS_H
 
@@ -25,6 +24,9 @@ friend class Headers;
 
 private:
   Headers_Map_Item ();
+  Headers_Map_Item (Headers_Map_Item const &) = delete;
+  Headers_Map_Item (Headers_Map_Item &&) = delete;
+  Headers_Map_Item &operator= (Headers_Map_Item &&) = delete;
   ~Headers_Map_Item ();
 
   // operator const char * () const;
@@ -37,8 +39,8 @@ public:
   const char *value () const;
 
 private:
-  const char *header_;
-  const char *value_;
+  const char *header_ {};
+  const char *value_ {};
 };
 
 /**
@@ -51,7 +53,11 @@ class Headers_Map
 {
 public:
   Headers_Map ();
-  ~Headers_Map ();
+  Headers_Map (Headers_Map const &) = delete;
+  Headers_Map (Headers_Map &&) = delete;
+  Headers_Map &operator= (Headers_Map const &) = delete;
+  Headers_Map &operator= (Headers_Map &&) = delete;
+  ~Headers_Map () = default;
 
   Headers_Map_Item &operator[] (const char *const header);
   const Headers_Map_Item &operator[] (const char *const header) const;
@@ -72,7 +78,7 @@ private:
   Headers_Map_Item map_[MAX_HEADERS];
   Headers_Map_Item garbage_;
 
-  int num_headers_;
+  int num_headers_ {};
 };
 
 /**
@@ -88,7 +94,11 @@ class Headers
 {
 public:
   Headers ();
-  ~Headers ();
+  Headers (Headers const &) = delete;
+  Headers (Headers &&) = delete;
+  Headers &operator= (Headers const &) = delete;
+  Headers &operator= (Headers &&) = delete;
+  ~Headers () = default;
 
   void recognize (const char *const header);
 
@@ -116,7 +126,7 @@ private:
 
 private:
   Headers_Map map_;
-  int done_;
+  bool done_ {};
 };
 
 #endif /* PARSE_HEADERS_H */

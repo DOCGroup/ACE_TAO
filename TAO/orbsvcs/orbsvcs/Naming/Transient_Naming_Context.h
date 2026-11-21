@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_TRANSIENT_NAMING_CONTEXT_H
 #define TAO_TRANSIENT_NAMING_CONTEXT_H
 #include /**/ "ace/pre.h"
@@ -20,7 +19,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -39,13 +37,12 @@ public:
   /// Underlying data structure.
   using HASH_MAP = ACE_Hash_Map_Manager<TAO_ExtId, TAO_IntId, ACE_Null_Mutex>;
 
-  /// Constructor.
-  TAO_Transient_Bindings_Map (size_t hash_table_size);
+  explicit TAO_Transient_Bindings_Map (size_t hash_table_size);
 
-  /// Destructor.
   ~TAO_Transient_Bindings_Map () override;
 
-  // = Accessors.
+  /// @name Accessors
+  /// @{
 
   /// Get a reference to the underlying hash map.
   HASH_MAP &map ();
@@ -57,15 +54,17 @@ public:
   /// underlying hash map.
   size_t current_size () override;
 
-  // = Name bindings manipulation methods.
+  /// @}
+  /// @name Name bindings manipulation methods
+  /// @{
 
   /**
    * Add a binding with the specified parameters to the table.
    * Return 0 on success and -1 on failure, 1 if there already is a
    * binding with <id> and <kind>.
    */
-  int bind (const char *id,
-                    const char *kind,
+  int bind (char const *id,
+                    char const *kind,
                     CORBA::Object_ptr obj,
                     CosNaming::BindingType type) override;
 
@@ -75,8 +74,8 @@ public:
    * 0 or 1 on success.  Return -1 or -2 on failure. (-2 is returned
    * if the new and old bindings differ in type).
    */
-  int rebind (const char *id,
-                      const char *kind,
+  int rebind (char const *id,
+                      char const *kind,
                       CORBA::Object_ptr obj,
                       CosNaming::BindingType type) override;
 
@@ -84,8 +83,8 @@ public:
    * Remove a binding containing <id> and <kind> from the table.
    * Return 0 on success and -1 on failure.
    */
-  int unbind (const char * id,
-              const char * kind) override;
+  int unbind (char const *id,
+              char const *kind) override;
 
   /**
    * Find the binding containing <id> and <kind> in the table, and
@@ -94,15 +93,16 @@ public:
    * reference is assigned to <obj>, so the caller is responsible for
    * its deallocation.
    */
-  int find (const char * id,
-                    const char * kind,
+  int find (char const *id,
+                    char const *kind,
                     CORBA::Object_ptr & obj,
                     CosNaming::BindingType &type) override;
 
+  /// @}
 private:
   /// Helper: factors common code from <bind> and <rebind>.
-  int shared_bind (const char *id,
-                   const char *kind,
+  int shared_bind (char const *id,
+                   char const *kind,
                    CORBA::Object_ptr obj,
                    CosNaming::BindingType type,
                    int rebind);
@@ -130,16 +130,15 @@ public:
   /// Underlying data structure.
   using HASH_MAP = TAO_Transient_Bindings_Map::HASH_MAP;
 
-  /// Constructor.
   TAO_Transient_Naming_Context (PortableServer::POA_ptr poa,
-                                const char *poa_id,
+                                char const *poa_id,
                                 size_t hash_table_size
                                 = ACE_DEFAULT_MAP_SIZE);
 
-  /// Destructor.
   ~TAO_Transient_Naming_Context () override;
 
-  // = Utility methods.
+  /// @name Utility methods
+  /// @{
   /**
    * This utility method factors out the code needed to create a new
    * Transient Naming Context servant and activate it under the
@@ -148,10 +147,12 @@ public:
    * and from outside (e.g., Naming_Utils.cpp).
    */
   static CosNaming::NamingContext_ptr make_new_context (PortableServer::POA_ptr poa,
-                                                        const char *poa_id,
+                                                        char const *poa_id,
                                                         size_t context_size);
 
-  // = Methods not implemented in TAO_Hash_Naming_Context.
+  /// @}
+  /// @name Methods not implemented in TAO_Hash_Naming_Context
+  /// @{
 
   /**
    * This operation returns a new naming context implemented by the
@@ -170,6 +171,7 @@ public:
              CosNaming::BindingList_out &bl,
              CosNaming::BindingIterator_out &bi) override;
 
+  /// @}
 protected:
   /// Counter used for generation of POA ids for children Naming
   /// Contexts.

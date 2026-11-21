@@ -7,6 +7,7 @@
 #include "ace/PI_Malloc.h"
 #include "ace/Process_Mutex.h"
 #include "ace/Process.h"
+#include <memory>
 
 #define BACKING_STORE "map.store"
 #define MAP_NAME "records.db"
@@ -24,13 +25,17 @@ ACE_Process_Mutex coordMutex("Coord-Mutex");
 // Listing 2 code/ch17
 HASH_MAP* smap (ALLOCATOR *shmem_allocator)
 {
-  void *db = nullptr;
+  void *db {};
   if (shmem_allocator->find (MAP_NAME, db) == 0)
-    return (HASH_MAP *) db;
+  {
+    return static_cast<HASH_MAP *> (db);
+  }
   size_t hash_table_size = sizeof (HASH_MAP);
   void *hash_map = shmem_allocator->malloc (hash_table_size);
   if (hash_map == nullptr)
+  {
     return nullptr;
+  }
   new (hash_map) HASH_MAP (hash_table_size, shmem_allocator);
   if (shmem_allocator->bind (MAP_NAME, hash_map) == -1)
     {
@@ -39,7 +44,7 @@ HASH_MAP* smap (ALLOCATOR *shmem_allocator)
       shmem_allocator->remove ();
       return nullptr;
     }
-  return (HASH_MAP*)hash_map;
+  return static_cast<HASH_MAP *> (hash_map);
 }
 // Listing 2
 // Listing 6 code/ch17
@@ -49,20 +54,20 @@ int processRecords (HASH_MAP *map, ALLOCATOR *shmem_allocator)
 
   size_t mapLength = map->current_size ();
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) Found %d records\n\n"),
+              ACE_TEXT ("(%P|%t) Found %B records\n\n"),
               mapLength));
 
-  int *todelete = new int[mapLength];
+  std::unique_ptr<int[]> todelete = std::make_unique<int[]> (mapLength);
   int i = 0;
 
   for (HASH_MAP::iterator iter = map->begin ();
       iter != map->end ();
-      iter++)
+      ++iter)
     {
       int key = (*iter).ext_id_;
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) [%d] Preprocessing %d:%@\n"),
-                  i+1, key, &(*iter).ext_id_));
+                  i+1, key, std::addressof ((*iter).ext_id_)));
 
       todelete[i++] = key;    // Mark message for deletion.
 
@@ -70,33 +75,39 @@ int processRecords (HASH_MAP *map, ALLOCATOR *shmem_allocator)
       Record record;
       int result = map->find (key, record, shmem_allocator);
       if (result == -1)
-        ACE_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("Could not find record for %d\n"),
-                    key));
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("Could not find record for %d\n"),
+                      key));
+        }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Record name: %C|id1:%d|id2:%d\n"),
-                    record.name (), record.id1(), record.id2()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Record name: %C|id1:%d|id2:%d\n"),
+                      record.name (), record.id1(), record.id2()));
+        }
     }
 
   // Delete everything we processed.
-  for (int j = 0; j < i ; j++)
+  for (int j = 0; j < i ; ++j)
     {
       int result = map->unbind (todelete[j],
                                 shmem_allocator);
       if (result == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Failed on key %d: %p\n"),
-                           ACE_TEXT ("unbind"),
-                           todelete[j]),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Failed on key %d: %p\n"),
+                             ACE_TEXT ("unbind"),
+                             todelete[j]),
+                            -1);
+        }
       else
-        ACE_DEBUG ((LM_INFO,
-                    ACE_TEXT ("Fully processed and removed %d\n"),
-                    j));
+        {
+          ACE_DEBUG ((LM_INFO,
+                      ACE_TEXT ("Fully processed and removed %d\n"),
+                      j));
+        }
     }
-
-  delete [] todelete;
 
   return 0;
 }
@@ -109,10 +120,10 @@ int addRecords(HASH_MAP *map, ALLOCATOR *shmem_allocator)
   char buf[32];
   int mapLength = static_cast<int> (map->current_size ());
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Map has %d entries; adding 20 more\n"),
+              ACE_TEXT ("Map has %B entries; adding 20 more\n"),
               mapLength));
 
-  for (int i = mapLength ; i < mapLength + 20; i++)
+  for (int i = mapLength ; i < mapLength + 20; ++i)
     {
       ACE_OS::sprintf (buf, "%s:%d", "Record", i);
 
@@ -123,8 +134,10 @@ int addRecords(HASH_MAP *map, ALLOCATOR *shmem_allocator)
 
       int result = map->bind (i, newRecord, shmem_allocator);
       if (result == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("bind failed")), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("bind failed")), -1);
+        }
     }
 
   return 0;
@@ -137,29 +150,29 @@ int handle_child ()
 
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, coordMutex, -1);
 
-  ALLOCATOR * shmem_allocator = nullptr;
+  ALLOCATOR *allocator {};
   ACE_MMAP_Memory_Pool_Options options
     (ACE_DEFAULT_BASE_ADDR,
      ACE_MMAP_Memory_Pool_Options::ALWAYS_FIXED);
 
-  ACE_NEW_RETURN (shmem_allocator,
+  ACE_NEW_RETURN (allocator,
                   ALLOCATOR (BACKING_STORE,
                              BACKING_STORE,
                              &options),
                   -1);
+  std::unique_ptr<ALLOCATOR> shmem_allocator (allocator);
 
-  HASH_MAP *map = smap (shmem_allocator);
+  HASH_MAP *map = smap (shmem_allocator.get ());
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) Map has %d entries\n"),
+              ACE_TEXT ("(%P|%t) Map has %B entries\n"),
               map->current_size ()));
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("In child, map is located at %@\n"),
               map));
 
-  processRecords (map, shmem_allocator);
+  processRecords (map, shmem_allocator.get ());
   shmem_allocator->sync ();
-  delete shmem_allocator;
 
   return 0;
 }
@@ -169,17 +182,18 @@ int handle_parent (ACE_TCHAR *cmdLine)
 {
   ACE_TRACE ("handle_parent");
 
-  ALLOCATOR * shmem_allocator = nullptr;
+  ALLOCATOR *allocator {};
   ACE_MMAP_Memory_Pool_Options options
     (ACE_DEFAULT_BASE_ADDR,
      ACE_MMAP_Memory_Pool_Options::ALWAYS_FIXED);
 
   ACE_NEW_RETURN
-    (shmem_allocator,
+    (allocator,
      ALLOCATOR (BACKING_STORE, BACKING_STORE, &options),
      -1);
+  std::unique_ptr<ALLOCATOR> shmem_allocator (allocator);
 
-  HASH_MAP *map = smap (shmem_allocator);
+  HASH_MAP *map = smap (shmem_allocator.get ());
 
   ACE_Process processa, processb;
   ACE_Process_Options poptions;
@@ -192,7 +206,7 @@ int handle_parent (ACE_TCHAR *cmdLine)
     ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon,
                       coordMutex, -1);
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) Map has %d entries\n"),
+                ACE_TEXT ("(%P|%t) Map has %B entries\n"),
                 map->current_size ()));
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("In parent, map is located at %@\n"),
@@ -202,21 +216,20 @@ int handle_parent (ACE_TCHAR *cmdLine)
     processa.spawn (poptions);
 
     // First append a few records.
-    addRecords (map, shmem_allocator);
+    addRecords (map, shmem_allocator.get ());
   }
-
 
   {
     ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon,
                       coordMutex, -1);
 
     // Add a few more records..
-    addRecords (map, shmem_allocator);
+    addRecords (map, shmem_allocator.get ());
 
     // Let's see what's left.
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) Parent finished adding, ")
-                ACE_TEXT ("map has %d entries\n"),
+                ACE_TEXT ("map has %B entries\n"),
                 map->current_size ()));
 
     // Have another child try to eat them up.
@@ -230,16 +243,19 @@ int handle_parent (ACE_TCHAR *cmdLine)
   // around anymore; it's now safe to remove it.
   // !!This will remove the backing store.!!
   shmem_allocator->remove ();
-  delete shmem_allocator;
   return 0;
 }
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (argc == 1) // parent
-    ACE_ASSERT (handle_parent (argv[0]) == 0);
+    {
+      ACE_ASSERT (handle_parent (argv[0]) == 0);
+    }
   else
+  {
     ACE_ASSERT (handle_child () == 0);
+  }
 
   ACE_UNUSED_ARG (argv);
   return 0;

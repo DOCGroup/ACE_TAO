@@ -68,7 +68,6 @@ public:
     PROACTOR_CB     = 4
   };
 
-
   enum SystemType  // open for future extention
   {
     ACE_OS_UNDEFINED= 0x0000,
@@ -88,7 +87,6 @@ public:
 
   virtual Proactor_Type  get_impl_type ();
 
-  /// Virtual destructor.
   ~ACE_POSIX_Proactor () override;
 
   /// Close down the Proactor.
@@ -268,7 +266,6 @@ public:
                          int signal_number = ACE_SIGRTMIN) override;
 
 protected:
-  /// Constructor.
   ACE_POSIX_Proactor ();
 
   /**
@@ -322,7 +319,6 @@ class ACE_Export ACE_POSIX_AIOCB_Proactor : public ACE_POSIX_Proactor
   friend class ACE_POSIX_Asynch_Accept;
   friend class ACE_POSIX_Asynch_Connect;
 
-
 public:
   /// Constructor defines max number asynchronous operations
   /// which can be started at the same time
@@ -330,7 +326,6 @@ public:
 
   Proactor_Type  get_impl_type () override;
 
-  /// Destructor.
   ~ACE_POSIX_AIOCB_Proactor () override;
 
   /// Close down the Proactor.
@@ -444,21 +439,20 @@ protected:
   /// Process the internal results queue
   int process_result_queue ();
 
-
   /// This class takes care of doing <accept> when we use
   /// AIO_CONTROL_BLOCKS strategy.
-  ACE_AIOCB_Notify_Pipe_Manager *aiocb_notify_pipe_manager_;
+  ACE_AIOCB_Notify_Pipe_Manager *aiocb_notify_pipe_manager_ {};
 
   /// Use a dynamically allocated array to keep track of all the aio's
   /// issued currently.
-  aiocb **aiocb_list_;
-  ACE_POSIX_Asynch_Result **result_list_;
+  aiocb **aiocb_list_ {};
+  ACE_POSIX_Asynch_Result **result_list_ {};
 
   /// To maintain the maximum size of the array (list).
   size_t aiocb_list_max_size_;
 
   /// To maintain the current size of the array (list).
-  size_t aiocb_list_cur_size_;
+  size_t aiocb_list_cur_size_ {};
 
   /// Mutex to protect work with lists.
   ACE_SYNCH_MUTEX mutex_;
@@ -470,10 +464,10 @@ protected:
 
   /// Number of ACE_POSIX_Asynch_Result's waiting for start
   /// i.e. deferred AIOs
-  size_t num_deferred_aiocb_ ;
+  size_t num_deferred_aiocb_ {};
 
   /// Number active,i.e. running requests
-  size_t num_started_aio_ ;
+  size_t num_started_aio_ {};
 
   /// Queue which keeps "post_completed" ACE_POSIX_Asynch_Result's
   ACE_Unbounded_Queue<ACE_POSIX_Asynch_Result *> result_queue_;
@@ -518,7 +512,6 @@ public:
   ACE_POSIX_SIG_Proactor (const sigset_t mask_set,
                           size_t nmaxop = ACE_AIO_DEFAULT_SIZE);
 
-  /// Destructor.
   ~ACE_POSIX_SIG_Proactor () override;
 
   /**
@@ -590,7 +583,6 @@ protected:
   sigset_t RT_completion_signals_;
 };
 
-
 #endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
 
 /**
@@ -611,7 +603,6 @@ class ACE_Export ACE_POSIX_Asynch_Timer : public ACE_POSIX_Asynch_Result
 #endif
 
 protected:
-  /// Constructor.
   ACE_POSIX_Asynch_Timer (const ACE_Handler::Proxy_Ptr &handler_proxy,
                           const void *act,
                           const ACE_Time_Value &tv,
@@ -619,7 +610,6 @@ protected:
                           int priority = 0,
                           int signal_number = ACE_SIGRTMIN);
 
-  /// Destructor.
   ~ACE_POSIX_Asynch_Timer () override = default;
 
   /// This method calls the handler's handle_timeout method.

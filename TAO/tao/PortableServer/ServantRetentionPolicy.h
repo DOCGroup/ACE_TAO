@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file ServantRetentionPolicy.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_PORTABLESERVER_SERVANTRETENTIONPOLICY_H
 #define TAO_PORTABLESERVER_SERVANTRETENTIONPOLICY_H
 #include /**/ "ace/pre.h"
@@ -41,7 +37,7 @@ namespace TAO
       public virtual ::CORBA::LocalObject
     {
     public:
-      ServantRetentionPolicy (::PortableServer::ServantRetentionPolicyValue value);
+      explicit ServantRetentionPolicy (::PortableServer::ServantRetentionPolicyValue value);
 
       CORBA::Policy_ptr copy () override;
 

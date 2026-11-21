@@ -47,7 +47,7 @@ module CosNotification
   /// Define a sequence of properties.
   typedef sequence<Property> PropertySeq;
 
-  //@{
+  /// @{
   /**
    * @name Different kinds of property sequences
    *
@@ -66,7 +66,7 @@ module CosNotification
 
   /// Specify administrative properties
   typedef PropertySeq AdminProperties;
-  //@}
+  /// @}
 
   /**
    * @struct _EventType
@@ -222,7 +222,7 @@ module CosNotification
   /// Sequence of events, for batch processing
   typedef sequence<StructuredEvent> EventBatch;
 
-  //@{
+  /// @{
   /**
    * @name Constants for QoS Properties
    *
@@ -279,7 +279,7 @@ module CosNotification
   /// MaxEventsPerConsumer takes on a value of type long
   const string MaxEventsPerConsumer = "MaxEventsPerConsumer";
 
-  //@}
+  /// @}
 
   /**
    * @interface QoSAdmin
@@ -328,7 +328,7 @@ module CosNotification
       raises ( UnsupportedQoS );
   };
 
-  //@{
+  /// @{
   /**
    * @name Constants for Admin Properties
    *
@@ -348,7 +348,7 @@ module CosNotification
 
   /// RejectNewEvents takes on a value of type Boolean
   const string RejectNewEvents = "RejectNewEvents";
-  //@}
+  /// @}
 
   /**
    * @interface AdminPropertiesAdmin

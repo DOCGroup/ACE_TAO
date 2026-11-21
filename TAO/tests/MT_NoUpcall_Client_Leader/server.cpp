@@ -3,10 +3,9 @@
 #include "chatter.h"
 #include "police.h"
 
-#include "ace/SString.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
+ACE_TCHAR const* ior_output_file = ACE_TEXT ("server.ior");
 int nr_threads = 1;
 
 int
@@ -16,11 +15,12 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 't':
-        nr_threads = ACE_OS::atoi(get_opts.opt_arg ());
-        break;
+    {
+      switch (c)
+        {
+        case 't':
+          nr_threads = ACE_OS::atoi(get_opts.opt_arg ());
+          break;
 
       case '?':
       default:
@@ -30,7 +30,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "\n",
                            argv [0]),
                           -1);
-      }
+        }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -48,7 +49,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     orb_ = CORBA::ORB_init (argc, argv, "myorb-server");
 
     if (parse_args (argc, argv) != 0)
+    {
       return 1;
+    }
 
     CORBA::Object_var poa_object =
       orb_->resolve_initial_references("RootPOA");
@@ -66,9 +69,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Creating the servant and activating it
     //
-    Test_Idl_SharedIntf_i* intf_i = new Test_Idl_SharedIntf_i(orb_.in());
-
-    PortableServer::ServantBase_var base_var = intf_i;
+    PortableServer::ServantBase_var base_var = new Test_Idl_SharedIntf_i (orb_.in());
     PortableServer::ObjectId_var intfId_var =
       poa->activate_object(base_var.in());
 
@@ -85,11 +86,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Output the IOR to the <ior_output_file>
     FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-    if (output_file == 0)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                          "Cannot open output file for writing IOR: %s\n",
-                          ior_output_file),
+    if (output_file == nullptr)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot open output file for writing IOR: %s\n",
+                           ior_output_file),
                           1);
+      }
     ACE_OS::fprintf (output_file, "%s", intfString_var.in ());
     ACE_OS::fclose (output_file);
 
@@ -99,7 +102,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     // Running ORB in separate thread
     Worker worker (orb_.in ());
     if (worker.activate (THR_NEW_LWP | THR_JOINABLE, nr_threads) != 0)
+    {
       ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "Cannot activate server thread(s)"), -1);
+    }
 
     ACE_DEBUG((LM_INFO,"(%P|%t) Await client initialization\n"));
     poll ("./client.ior");
@@ -124,7 +129,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       worker.thr_mgr()->wait ();
 
-      root_poa->destroy(1, 1);
+      root_poa->destroy(true, true);
 
       orb_->destroy();
 
@@ -133,7 +138,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       result = (worker2.nrequests() == worker2.nreplies())? 0 : -1;
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
   {
     ex._tao_print_exception ("Error: Exception caught:");
   }

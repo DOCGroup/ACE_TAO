@@ -14,7 +14,7 @@ Annotation_Test::Annotation_Test (const std::string &name)
     scope_ (0),
     disable_output_ (false)
 {
-  total_test_count_++;
+  ++total_test_count_;
 }
 
 Annotation_Test::~Annotation_Test ()
@@ -58,7 +58,7 @@ Annotation_Test::failed (const std::string &message)
     ACE_TEXT ("Annotation Test: %C: FAILED\nFailed IDL:\n"),
     name_.c_str ()));
   print_idl_with_line_numbers ();
-  failed_test_count_++;
+  ++failed_test_count_;
   failed_ = true;
   throw Failed ();
 }
@@ -169,7 +169,7 @@ Annotation_Test::run (const std::string &idl)
 AST_Decl *
 Annotation_Test::assert_node (const char *name, UTL_Scope *from)
 {
-  AST_Decl *node = 0;
+  AST_Decl *node {};
   UTL_ScopedName *scoped_name = FE_Utils::string_to_scoped_name (name);
 
   UTL_Scope *scope = from ? from : (scope_ ? scope_ : idl_global->scopes ().bottom ());
@@ -224,7 +224,7 @@ Annotation_Test::assert_annotation_appl_count (
       std::string const node_name = node->name ()->get_string_copy ();
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("Annotation Test Error: %C:\n")
-        ACE_TEXT ("asserted that %C has %d annotation(s), but there are %d!\n"),
+        ACE_TEXT ("asserted that %C has %B annotation(s), but there are %B!\n"),
         name_.c_str (), node_name.c_str (), count, annotations.size ()));
       failed ();
     }
@@ -249,7 +249,7 @@ Annotation_Test::assert_annotation_appl (
       std::string const node_name = node->name ()->get_string_copy ();
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("Annotation Test Error: %C:\n")
-        ACE_TEXT ("can not access %C annotation %d, ")
+        ACE_TEXT ("can not access %C annotation %B, ")
         ACE_TEXT ("it has no annotations!\n"),
         name_.c_str (), node_name.c_str (), index));
       failed ();
@@ -260,8 +260,8 @@ Annotation_Test::assert_annotation_appl (
       std::string const node_name = node->name ()->get_string_copy ();
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("Annotation Test Error: %C:\n")
-        ACE_TEXT ("can not access %C annotation %d, ")
-        ACE_TEXT ("it only has %d annotation(s)!\n"),
+        ACE_TEXT ("can not access %C annotation %B, ")
+        ACE_TEXT ("it only has %B annotation(s)!\n"),
         name_.c_str (), node_name.c_str (), index, annotations.size ()));
       failed ();
     }
@@ -272,7 +272,7 @@ Annotation_Test::assert_annotation_appl (
       std::string const node_name = node->name ()->get_string_copy ();
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("Annotation Test Error: %C:\n")
-        ACE_TEXT ("%C annotation %d is null!\n"),
+        ACE_TEXT ("%C annotation %B is null!\n"),
         name_.c_str (), node_name.c_str (), index));
       failed ();
     }
@@ -283,7 +283,7 @@ Annotation_Test::assert_annotation_appl (
       std::string const node_name = node->name ()->get_string_copy ();
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("Annotation Test Error: %C:\n")
-        ACE_TEXT ("%C annotation %d is a %C, looking for a %C!\n"),
+        ACE_TEXT ("%C annotation %B is a %C, looking for a %C!\n"),
         name_.c_str (), node_name.c_str (), index,
         anno_appl_name.c_str (), anno_decl_name.c_str ()));
       failed ();
@@ -311,7 +311,7 @@ Annotation_Test::assert_annotation_member_count (
       std::string const anno_decl_name = anno_decl->name ()->get_string_copy ();
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("Annotation Test Error: %C:\n")
-        ACE_TEXT ("%C should have %d members, but it actually has %d!\n"),
+        ACE_TEXT ("%C should have %B members, but it actually has %B!\n"),
         name_.c_str (), anno_decl_name.c_str (), count, actual_count));
       failed ();
     }
@@ -505,9 +505,9 @@ Annotation_Test::print_idl_with_line_numbers ()
       const std::string line = idl_.substr (start, end - start);
       const bool mark_line = line_number == marked_line;
       ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("%C%4u: %C%C\n"),
+        ACE_TEXT ("%C%4q: %C%C\n"),
         mark_line ? start_marker : " ",
-        line_number, line.c_str (),
+        static_cast<ssize_t> (line_number), line.c_str (),
         mark_line ? end_marker : ""));
       if (end == std::string::npos) {
         break;

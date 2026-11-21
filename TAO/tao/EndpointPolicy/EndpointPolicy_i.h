@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   EndpointPolicy_i.h
  *
  *  @author  Yan Dai <dai_y@ociweb.com>
  */
-//=============================================================================
-
 
 #ifndef TAO_ENDPOINTPOLICY_I_H
 #define TAO_ENDPOINTPOLICY_I_H
@@ -30,7 +27,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
 /**
  * @class TAO_EndpointPolicy_i
  *
@@ -44,18 +40,17 @@ class TAO_EndpointPolicy_Export TAO_EndpointPolicy_i
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
-  TAO_EndpointPolicy_i (EndpointPolicy::EndpointList const& value);
+  explicit TAO_EndpointPolicy_i (EndpointPolicy::EndpointList const &value);
 
-  /// Copy constructor.
-  TAO_EndpointPolicy_i (TAO_EndpointPolicy_i const& rhs);
+  TAO_EndpointPolicy_i (TAO_EndpointPolicy_i const &rhs);
+
+  TAO_EndpointPolicy_i (TAO_EndpointPolicy_i &&) = delete;
+  TAO_EndpointPolicy_i &operator= (TAO_EndpointPolicy_i &&) = delete;
 
   ~TAO_EndpointPolicy_i () override = default;
 
-  /// Returns a copy of this>
+  /// Returns a copy of this policy.
   virtual TAO_EndpointPolicy_i *clone () const;
-
-  // = The EndpointPolicy::Policy methods
 
   CORBA::PolicyType policy_type () override;
 
@@ -63,16 +58,15 @@ public:
 
   void destroy () override;
 
-  // Return the cached policy type for this policy.
+  /// Returns the cached policy type for this policy.
   TAO_Cached_Policy_Type _tao_cached_type () const override;
 
-  EndpointPolicy::EndpointList * value () override;
+  EndpointPolicy::EndpointList *value () override;
 
 private:
   /// The attribute
   EndpointPolicy::EndpointList value_;
 };
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

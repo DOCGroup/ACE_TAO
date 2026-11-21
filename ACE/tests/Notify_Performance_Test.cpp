@@ -11,7 +11,7 @@
  */
 //=============================================================================
 
-#include <utility>
+#include <memory>
 
 #include "test_config.h"
 #include "ace/Profile_Timer.h"
@@ -21,7 +21,6 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/Dev_Poll_Reactor.h"
-#include <memory>
 #include "ace/Atomic_Op.h"
 
 #if defined (ACE_HAS_THREADS)
@@ -70,17 +69,25 @@ client (void *arg)
   thread_counter = opt_nthreads;
 
   // To pass or not to pass is the question
-  Handler *handler = nullptr;
+  Handler *handler {};
   if (!opt_pass_notify_data)
-    handler = nullptr;
+    {
+      handler = nullptr;
+    }
   else
+  {
     handler = (Handler *) arg;
+  }
 
-  for (int i = 0; i < opt_nloops; i++)
-    ACE_Reactor::instance ()->notify (handler);
+  for (int i = 0; i < opt_nloops; ++i)
+    {
+      ACE_Reactor::instance ()->notify (handler);
+    }
 
   if (--thread_counter == 0)
+  {
     ACE_Reactor::instance()->end_reactor_event_loop ();
+  }
 
   return nullptr;
 }
@@ -90,7 +97,7 @@ client (void *arg)
 static void
 create_reactor ()
 {
-  ACE_Reactor_Impl *impl = nullptr;
+  ACE_Reactor_Impl *impl {};
 
   if (opt_wfmo_reactor)
     {
@@ -108,7 +115,7 @@ create_reactor ()
       ACE_NEW (impl, ACE_Dev_Poll_Reactor);
 #endif /* ACE_HAS_EVENT_POLL || ACE_HAS_DEV_POLL */
     }
-  ACE_Reactor *reactor = nullptr;
+  ACE_Reactor *reactor {};
   ACE_NEW (reactor, ACE_Reactor (impl));
   ACE_Reactor::instance (reactor);
 }
@@ -116,15 +123,23 @@ create_reactor ()
 static void
 print_results (ACE_Profile_Timer::ACE_Elapsed_Time &et)
 {
-  const ACE_TCHAR *reactor_type = nullptr;
+  const ACE_TCHAR *reactor_type {};
   if (opt_wfmo_reactor)
-    reactor_type = ACE_TEXT ("WFMO_Reactor");
+    {
+      reactor_type = ACE_TEXT ("WFMO_Reactor");
+    }
   else if (opt_select_reactor)
-    reactor_type = ACE_TEXT ("Select_Reactor");
+    {
+      reactor_type = ACE_TEXT ("Select_Reactor");
+    }
   else if (opt_dev_poll_reactor)
-    reactor_type = ACE_TEXT ("Dev_Poll_Reactor");
+    {
+      reactor_type = ACE_TEXT ("Dev_Poll_Reactor");
+    }
   else
+  {
     reactor_type = ACE_TEXT ("Platform's default Reactor");
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\nNotify_Performance Test statistics:\n\n")));
@@ -138,11 +153,15 @@ print_results (ACE_Profile_Timer::ACE_Elapsed_Time &et)
               ACE_TEXT ("\tIteration per thread: %d\n"),
               opt_nloops));
   if (opt_pass_notify_data)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("\tData was passed in the notify() call\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("\tData was passed in the notify() call\n")));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("\tNo data was passed in the notify() call\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("\tNo data was passed in the notify() call\n")));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\n\tTiming results notify() call:\n")));
@@ -162,43 +181,36 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("pswdc:l:"));
 
   for (int c; (c = getopt ()) != -1; )
-    switch (c)
-      {
-  //FUZZ: enable check_for_lack_ACE_OS
-      case 'p':
-        opt_dev_poll_reactor = 1;
-        break;
-      case 's':
-        opt_select_reactor = 1;
-        break;
-      case 'w':
-        opt_wfmo_reactor = 1;
-        break;
-      case 'c':
-        opt_nthreads = ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      case 'l':
-        opt_nloops = ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      case 'd':
-        opt_pass_notify_data = 1;
-        break;
-      }
+    {
+      switch (c)
+        {
+        //FUZZ: enable check_for_lack_ACE_OS
+        case 'p':
+          opt_dev_poll_reactor = 1;
+          break;
+        case 's':
+          opt_select_reactor = 1;
+          break;
+        case 'w':
+          opt_wfmo_reactor = 1;
+          break;
+        case 'c':
+          opt_nthreads = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        case 'l':
+          opt_nloops = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        case 'd':
+          opt_pass_notify_data = 1;
+          break;
+        }
+    }
 
   // Sets up the correct reactor (based on platform and options)
   create_reactor ();
 
   // Manage memory automagically.
   std::unique_ptr<ACE_Reactor> reactor (ACE_Reactor::instance ());
-  std::unique_ptr<ACE_Reactor_Impl> impl;
-
-  // If we are using other that the default implementation, we must
-  // clean up.
-  if (opt_select_reactor || opt_wfmo_reactor || opt_dev_poll_reactor)
-    {
-      std::unique_ptr<ACE_Reactor_Impl> auto_impl (ACE_Reactor::instance ()->implementation ());
-      impl = std::move(auto_impl);
-    }
 
   // Callback object
   Handler handler;
@@ -209,7 +221,9 @@ run_main (int argc, ACE_TCHAR *argv[])
        ACE_THR_FUNC (client),
        (void *) &handler,
        THR_NEW_LWP | THR_DETACHED) == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n%a"), ACE_TEXT ("thread create failed")));
+  }
 
   // Timer business
   ACE_Profile_Timer timer;

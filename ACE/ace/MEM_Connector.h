@@ -35,7 +35,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_MEM_Connector : public ACE_SOCK_Connector
 {
 public:
-  /// Default constructor.
   ACE_MEM_Connector ();
 
   /**
@@ -138,9 +137,11 @@ public:
   /// Set the preferred signaling strategy.
   void preferred_strategy (ACE_MEM_IO::Signal_Strategy strategy);
 
-  // = Meta-type info
+  /// @name Peer types
+  /// @{
   using PEER_ADDR = ACE_INET_Addr;
   using PEER_STREAM = ACE_MEM_Stream;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

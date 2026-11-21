@@ -3,6 +3,8 @@
 #include "ace/Signal.h"
 #include "ace/Sig_Handler.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_SELECT_REACTOR_TOKEN>
@@ -24,8 +26,12 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::resume_handler (const ACE_Handle
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
   while ((h = handle_iter ()) != ACE_INVALID_HANDLE)
-    if (this->resume_i (h) == -1)
-      return -1;
+    {
+      if (this->resume_i (h) == -1)
+        {
+          return -1;
+        }
+    }
 
   return 0;
 }
@@ -49,8 +55,12 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::suspend_handler (const ACE_Handl
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
   while ((h = handle_iter ()) != ACE_INVALID_HANDLE)
-    if (this->suspend_i (h) == -1)
-      return -1;
+    {
+      if (this->suspend_i (h) == -1)
+        {
+          return -1;
+        }
+    }
 
   return 0;
 }
@@ -119,10 +129,11 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::uses_event_associations ()
   return false;
 }
 
-// = The remaining methods in this file must be called with locks
-// held.
+/// @name Operations requiring locks
+/// These operations must be called with locks held.
+/// @{
 
-// Performs operations on the "ready" bits.
+/// Performs operations on the ready bits.
 
 template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ready_ops (ACE_Event_Handler *handler,
@@ -133,7 +144,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ready_ops (ACE_Event_Handler *ha
   return this->ready_ops (handler->get_handle (), mask, ops);
 }
 
-// Performs operations on the "dispatch" masks.
+/// Performs operations on the dispatch masks.
 
 template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::mask_ops (ACE_Event_Handler *handler,
@@ -175,6 +186,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_wakeup (ACE_HANDLE handle
   ACE_TRACE ("ACE_Select_Reactor_T::cancel_wakeup");
   return this->mask_ops (handle, mask, ACE_Reactor::CLR_MASK);
 }
+/// @}
 
 template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE ACE_Lock &
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::lock ()
@@ -188,7 +200,10 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wakeup_all_threads ()
 {
   // Send a notification, but don't block if there's no one to receive
   // it.
-  this->notify (0, ACE_Event_Handler::NULL_MASK, const_cast<ACE_Time_Value *> (&ACE_Time_Value::zero));
+  this->notify (0,
+                ACE_Event_Handler::NULL_MASK,
+                const_cast<ACE_Time_Value *> (
+                  std::addressof (ACE_Time_Value::zero)));
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int

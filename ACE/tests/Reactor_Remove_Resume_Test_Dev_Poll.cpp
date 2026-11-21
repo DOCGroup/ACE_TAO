@@ -13,7 +13,6 @@
  * @author  Ossama Othman
  */
 
-
 #include "test_config.h"
 
 #if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
@@ -91,7 +90,9 @@ Bogus_Handler::handle_close (ACE_HANDLE,
                              ACE_Reactor_Mask)
 {
   if (this->okay_to_close_)
+  {
     return 0;
+  }
 
   overall_result = -1;
 
@@ -334,7 +335,6 @@ handle_events (ACE_Reactor & reactor,
       timeout.sec (2);
       int const result = reactor.handle_events (&timeout);
 
-
       if (result > 0)
         {
           ACE_ERROR ((LM_ERROR,
@@ -348,7 +348,9 @@ handle_events (ACE_Reactor & reactor,
                       ACE_TEXT ("Event loop failed unexpectedly\n")));
         }
       else
+      {
         return 0;
+      }
     }
 
   return -1;
@@ -415,7 +417,7 @@ struct Run_Test
 
         ACE_Pipe the_pipe;
         if (the_pipe.open () != 0
-            || register_handler (&reactor,
+            || register_handler (std::addressof (reactor),
                                  the_pipe.read_handle (),
                                  okay_to_close,
                                  suspension_test) != 0
@@ -449,11 +451,15 @@ run_main (int, ACE_TCHAR *[])
   std::for_each (factories, factories + factory_count, Run_Test ());
 
   if (overall_result != 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Test failed.\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Test failed.\n")));
+    }
   else
-    ACE_ERROR ((LM_INFO,
-                ACE_TEXT ("Test passed.\n")));
+    {
+      ACE_ERROR ((LM_INFO,
+                  ACE_TEXT ("Test passed.\n")));
+    }
 
   ACE_END_TEST;
 

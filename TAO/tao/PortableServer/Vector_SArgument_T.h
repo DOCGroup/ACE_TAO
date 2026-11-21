@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Vector_SArgument_T.h
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
-
 #ifndef TAO_VECTOR_SARGUMENT_T_H
 #define TAO_VECTOR_SARGUMENT_T_H
 

@@ -5,21 +5,18 @@
 #include "JAWS/Export.h"
 #include "JAWS/Pipeline.h"
 
+/// Provides common task handling for pipeline components.
 template <class TYPE>
 class JAWS_Pipeline_Abstract_Handler : public JAWS_Pipeline_Task
-  // = TITLE
-  //   Methods that are common to pipeline components
 {
 public:
   JAWS_Pipeline_Abstract_Handler ();
-  virtual ~JAWS_Pipeline_Abstract_Handler ();
-  // ACE_Task hooks
+  ~JAWS_Pipeline_Abstract_Handler () override;
 
-  virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
-  // inherited from ACE_Task
+  int put (ACE_Message_Block *mb, ACE_Time_Value *tv = nullptr) override;
 
+  /// Process data supplied by the pipeline.
   virtual int handle_put (TYPE *data, ACE_Time_Value *tv) = 0;
-  // Callback hook for specialized data processing
 };
 
 #include "JAWS/Pipeline_Handler_T.cpp"

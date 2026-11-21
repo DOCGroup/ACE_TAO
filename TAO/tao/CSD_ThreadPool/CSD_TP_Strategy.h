@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CSD_TP_Strategy.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
-
 #ifndef TAO_CSD_TP_STRATEGY_H
 #define TAO_CSD_TP_STRATEGY_H
 
@@ -24,7 +20,6 @@
 
 #include "tao/CSD_Framework/CSD_Strategy_Base.h"
 #include "tao/Intrusive_Ref_Count_Handle_T.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -55,13 +50,10 @@ namespace TAO
       : public Strategy_Base
     {
     public:
-      /// Constructor.
       explicit TP_Strategy(Thread_Counter num_threads = 1,
                            bool serialize_servants = true);
 
-      /// Virtual Destructor.
-      ~TP_Strategy() override;
-
+      ~TP_Strategy() override = default;
       /// Set the number of threads in the pool (must be > 0).
       void set_num_threads(Thread_Counter num_threads);
 
@@ -99,6 +91,11 @@ namespace TAO
       /// This is requested on the user application level.
       void cancel_requests(PortableServer::Servant servant);
 
+      TP_Strategy (TP_Strategy const &) = delete;
+      TP_Strategy &operator= (TP_Strategy const &) = delete;
+      TP_Strategy (TP_Strategy &&) = delete;
+      TP_Strategy &operator= (TP_Strategy &&) = delete;
+
     protected:
       /// Handle the dispatching of a remote request.
       ///
@@ -107,9 +104,9 @@ namespace TAO
       /// servicing the queue, and performing the actual dispatch logic.
       Strategy_Base::DispatchResult dispatch_remote_request_i
                              (TAO_ServerRequest&              server_request,
-                              const PortableServer::ObjectId& object_id,
+                              PortableServer::ObjectId const &object_id,
                               PortableServer::POA_ptr         poa,
-                              const char*                     operation,
+                              char const *                    operation,
                               PortableServer::Servant         servant) override;
 
       /// Handle the dispatching of a collocated request.
@@ -119,9 +116,9 @@ namespace TAO
       /// servicing the queue, and performing the actual dispatch logic.
       Strategy_Base::DispatchResult dispatch_collocated_request_i
                              (TAO_ServerRequest&              server_request,
-                              const PortableServer::ObjectId& object_id,
+                              PortableServer::ObjectId const &object_id,
                               PortableServer::POA_ptr         poa,
-                              const char*                     operation,
+                              char const *                    operation,
                               PortableServer::Servant         servant) override;
 
       /// Event - The POA has been activated.
@@ -135,21 +132,16 @@ namespace TAO
       void poa_deactivated_event_i() override;
 
       /// Event - A servant has been activated
-      void servant_activated_event_i
-                                     (PortableServer::Servant servant,
-                                      const PortableServer::ObjectId& oid) override;
+      void servant_activated_event_i (
+        PortableServer::Servant servant,
+        PortableServer::ObjectId const &oid) override;
 
       /// Event - A servant has been deactivated
-      void servant_deactivated_event_i
-                                    (PortableServer::Servant servant,
-                                     const PortableServer::ObjectId& oid) override;
+      void servant_deactivated_event_i (
+        PortableServer::Servant servant,
+        PortableServer::ObjectId const &oid) override;
 
     private:
-      TP_Strategy (TP_Strategy const &) = delete;
-      TP_Strategy &operator= (TP_Strategy const &) = delete;
-      TP_Strategy (TP_Strategy &&) = delete;
-      TP_Strategy &operator= (TP_Strategy &&) = delete;
-
       /**
       * Helper method that is responsible for looking up the servant
       * state object in the servant state map *if* the "serialize
@@ -166,7 +158,6 @@ namespace TAO
       */
       TP_Servant_State::HandleType get_servant_state
                                       (PortableServer::Servant servant);
-
 
       /// This is the active object used by the worker threads.
       /// The request queue is owned/managed by the task object.

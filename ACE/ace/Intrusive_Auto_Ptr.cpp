@@ -14,7 +14,7 @@ ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Intrusive_Auto_Ptr)
 template <class X>
 ACE_Intrusive_Auto_Ptr<X>::~ACE_Intrusive_Auto_Ptr ()
 {
-  reset (0);
+  reset (nullptr);
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

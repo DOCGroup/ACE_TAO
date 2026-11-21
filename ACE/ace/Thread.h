@@ -167,7 +167,7 @@ public:
 
   /// Wait for one thread to exit and reap its exit status.
   static int join (ACE_hthread_t,
-                   ACE_THR_FUNC_RETURN * = 0);
+                   ACE_THR_FUNC_RETURN * = nullptr);
 
   /// Continue the execution of a previously suspended thread.
   static int resume (ACE_hthread_t);

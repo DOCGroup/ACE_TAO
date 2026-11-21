@@ -36,10 +36,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_INET_Addr : public ACE_Addr
 {
 public:
-  /// Default constructor.
   ACE_INET_Addr ();
 
-  /// Copy constructor.
   ACE_INET_Addr (const ACE_INET_Addr &);
 
   /// Creates an ACE_INET_Addr from a sockaddr_in structure.
@@ -108,10 +106,10 @@ public:
                  const wchar_t protocol[] = ACE_TEXT_WIDE ("tcp"));
 #endif /* ACE_HAS_WCHAR */
 
-  /// Default dtor.
   ~ACE_INET_Addr () override;
 
-  // = Direct initialization methods.
+  /// @name Direct initialization methods
+  /// @{
 
   // These methods are useful after the object has been constructed.
 
@@ -208,6 +206,7 @@ public:
 
   int set (const wchar_t addr[], int address_family = AF_UNSPEC);
 #endif /* ACE_HAS_WCHAR */
+  /// @}
 
   /// Return a pointer to the underlying network address.
   void *get_addr () const override;
@@ -394,8 +393,8 @@ private:
   /// Insure that @a hostname is properly null-terminated.
   int get_host_name_i (char hostname[], size_t hostnamelen) const;
 
-  // Methods to gain access to the actual address of
-  // the underlying internet address structure.
+  /// Methods to gain access to the actual address of
+  /// the underlying internet address structure.
   void *ip_addr_pointer () const;
   int ip_addr_size () const;
   int determine_type () const;
@@ -413,8 +412,8 @@ private:
     sockaddr_in6 in6_;
 #endif /* ACE_HAS_IPV6 */
   } inet_addr_;
-  // If there is more than one address assigned to a given name, this
-  // holds all of them; one is always copied to inet_addr_.
+  /// If there is more than one address assigned to a given name, this
+  /// holds all of them; one is always copied to inet_addr_.
   std::vector<union ip46> inet_addrs_;
   std::vector<union ip46>::iterator inet_addrs_iter_;
 };

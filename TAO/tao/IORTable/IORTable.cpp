@@ -1,13 +1,10 @@
 /* -*- C++ -*- */
 
-// =================================================================
 /**
  * @file IORTable.cpp
  *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
-// =================================================================
-
 #include "tao/IORTable/IORTable.h"
 #include "tao/IORTable/Table_Adapter.h"
 

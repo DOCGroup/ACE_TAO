@@ -42,7 +42,6 @@ be_visitor_context_svth::visit_component (be_component *node)
       << "class " << lname << "_Servant;"
       << be_nl_2;
 
-
   os_ << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl;
 
   os_ << "class " << lname << "_Context_T" << be_idt_nl;
@@ -60,7 +59,6 @@ be_visitor_context_svth::visit_component (be_component *node)
     {
       os_ << ": public BASE";
     }
-
 
   os_ << be_uidt_nl
       << "{" << be_nl

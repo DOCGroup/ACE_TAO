@@ -66,7 +66,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       IORTable::Table_var ior_table =
         IORTable::Table::_narrow(obj.in());
 
-
       //------- Get NameService Root Context
 
       obj =
@@ -78,7 +77,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       //-------- Prepare Servant
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       Hello *hello_impl;
       ACE_NEW_RETURN (hello_impl,
@@ -105,7 +106,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       if (!CORBA::is_nil(ior_table.in()))
+      {
         ior_table->bind("HelloObj", ior.in());
+      }
 
       // Output the IOR to the <ior_output_file>
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");

@@ -26,14 +26,13 @@ class DT_Test //:public ACE_Task <ACE_SYNCH>
 
   int activate_task ();
 
-
 /*   protected: */
 /*   /// task svc */
 /*   virtual int svc (); */
 
-
  private:
-  /// = Policies
+  /// @name Scheduling and ORB state
+  /// @{
   long thr_sched_policy_;
   long thr_scope_policy_;
   ACE_Sched_Params::Policy sched_policy_;
@@ -43,8 +42,9 @@ class DT_Test //:public ACE_Task <ACE_SYNCH>
   RTScheduling::Current_var current_;
   MIF_DT_Creator* dt_creator_;
   PortableServer::Servant_var<MIF_Scheduler> scheduler_;
+  /// @}
 };
 
-typedef ACE_Singleton <DT_Test, TAO_SYNCH_MUTEX> DT_TEST;
+using DT_TEST = ACE_Singleton <DT_Test, TAO_SYNCH_MUTEX>;
 
 #endif /*TEST_H*/

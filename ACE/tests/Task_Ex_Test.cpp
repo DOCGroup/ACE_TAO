@@ -58,7 +58,7 @@ int Consumer::open (void*)
 
 int Consumer::svc ()
 {
-  User_Defined_Msg* pMsg=nullptr;
+  User_Defined_Msg* pMsg{};
   while(this->getq (pMsg)!=-1)
   {
     ACE_TEST_ASSERT (pMsg!=nullptr);
@@ -67,7 +67,9 @@ int Consumer::svc ()
                ACE_TEXT("Consumer::svc got msg id=%d\n"),
                pMsg->msg_id ()));
     if(pMsg->msg_id ()==NUMBER_OF_MSGS-1)
+    {
       break;
+    }
   }
 
   ACE_DEBUG((LM_INFO,
@@ -75,7 +77,6 @@ int Consumer::svc ()
 
   return 0;
 }
-
 
 /// producer function produces user defined messages.
 ACE_THR_FUNC_RETURN producer (void *arg)
@@ -90,7 +91,7 @@ ACE_THR_FUNC_RETURN producer (void *arg)
   }
   for (int i=0;i!=NUMBER_OF_MSGS;++i)
   {
-    User_Defined_Msg* pMsg=nullptr;
+    User_Defined_Msg* pMsg{};
     ACE_NEW_NORETURN(pMsg, User_Defined_Msg(i));
     if (pMsg==nullptr)
     {
@@ -121,9 +122,11 @@ run_main (int, ACE_TCHAR *[])
 
   Consumer c;
   if(c.open (nullptr)==-1)
-    ACE_ERROR_RETURN((LM_ERROR,
-                      ACE_TEXT ("main Error opening consumer\n")),-1);
-
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("main Error opening consumer\n")),
+                        -1);
+    }
 
   int result=ACE_Thread_Manager::instance()->spawn_n (PRODUCER_THREADS_NO,
                                                       ACE_THR_FUNC(producer),

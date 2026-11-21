@@ -1,5 +1,6 @@
 // -*- C++ -*-
 #include "ace/OS_NS_macros.h"
+#include <memory>
 // for timespec_t, perhaps move it to os_time.h
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_sys_mman.h"
@@ -8,6 +9,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_errno.h"
+
+#include <cstring>
 
 #if defined (ACE_USES_FIFO_SEM)
 #  include "ace/OS_NS_sys_stat.h"
@@ -106,7 +109,7 @@ ACE_TSS_Emulation::ts_object (const ACE_thread_key_t key)
 
 /*****************************************************************************/
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_OS::thr_equal (ACE_thread_t t1, ACE_thread_t t2)
 {
 #if defined (ACE_HAS_PTHREADS)
@@ -153,7 +156,7 @@ ACE_OS::condattr_init (ACE_condattr_t &attributes, int type)
     * require zeroing of mutex/condition objects to function correctly
     * but also of the attribute objects.
     */
-  ACE_OS::memset (&attributes, 0, sizeof (attributes));
+  std::memset (&attributes, 0, sizeof (attributes));
 #       endif
   if (
       ACE_ADAPT_RETVAL (pthread_condattr_init (&attributes), result) == 0
@@ -299,13 +302,17 @@ ACE_OS::cond_init (ACE_cond_t *cv,
    *   block of memory so as to avoid spurious EBUSY return code
    *   when calling this routine.
    */
-  ACE_OS::memset (cv, 0, sizeof (*cv));
+  std::memset (cv, 0, sizeof (*cv));
 #     endif
 
   if (ACE_ADAPT_RETVAL (pthread_cond_init (cv, &attributes), result) == 0)
-     result = 0;
+    {
+      result = 0;
+    }
   else
-     result = -1;       // ACE_ADAPT_RETVAL used it for intermediate status
+    {
+      result = -1;       // ACE_ADAPT_RETVAL used it for intermediate status
+    }
 
   return result;
 #   elif defined (ACE_HAS_WTHREADS) && defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
@@ -392,7 +399,9 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   timespec_t ts;
 
   if (timeout != 0)
-    ts = *timeout; // Calls ACE_Time_Value::operator timespec_t().
+    {
+      ts = *timeout; // Calls ACE_Time_Value::operator timespec_t().
+    }
 
 #   if defined (ACE_HAS_PTHREADS)
 
@@ -406,7 +415,9 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   // values consistent.  EAGAIN is from Pthreads DRAFT4
   if (result == -1 &&
       (errno == ETIMEDOUT || errno == EAGAIN))
-    errno = ETIME;
+    {
+      errno = ETIME;
+    }
 
 #   elif defined (ACE_HAS_WTHREADS) && defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
   int msec_timeout = 0;
@@ -426,7 +437,9 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   return result;
 #   endif /* ACE_HAS_PTHREADS */
   if (timeout != 0)
-    timeout->set (ts); // Update the time value before returning.
+    {
+      timeout->set (ts); // Update the time value before returning.
+    }
 
   return result;
 # else
@@ -460,7 +473,7 @@ ACE_OS::event_init (ACE_event_t *event,
                     void *arg,
                     LPSECURITY_ATTRIBUTES sa)
 {
-  ACE_condattr_t *pattr = nullptr;
+  ACE_condattr_t *pattr {};
   return ACE_OS::event_init (event, type, pattr, manual_reset, initial_state, name, arg, sa);
 }
 
@@ -581,7 +594,9 @@ ACE_OS::recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
       // does fail, it'll be on the first try, so don't worry about resetting
       // the state.
       if (ACE_OS::recursive_mutex_unlock (m) == -1)
-        return -1;
+        {
+          return -1;
+        }
       ++state.relock_count_;
     }
 #    else /* not ACE_WIN32 */
@@ -602,11 +617,13 @@ ACE_OS::recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
   // and can either set the mutex internals directly or get in line for
   // the mutex... this part is handled in recursive_mutex_cond_relock().
   if (ACE_OS::thread_mutex_lock (&m->nesting_mutex_) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
 #    if !defined (ACE_NDEBUG)
   if (m->nesting_level_ == 0
-      || ACE_OS::thr_equal (ACE_OS::thr_self (), m->owner_id_) == 0)
+      || !ACE_OS::thr_equal (ACE_OS::thr_self (), m->owner_id_))
     {
       ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
       errno = EINVAL;
@@ -641,7 +658,6 @@ ACE_OS::recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
 }
-
 
 // This method is called after waiting on a condition variable when a
 // recursive mutex must be reacquired. If the platform doesn't natively
@@ -705,7 +721,9 @@ ACE_OS::recursive_mutex_destroy (ACE_recursive_thread_mutex_t *m)
 #else
   if (ACE_OS::cond_destroy (&m->lock_available_) == -1
       || ACE_OS::thread_mutex_destroy (&m->nesting_mutex_) == -1)
-    return -1;
+    {
+      return -1;
+    }
   return 0;
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */
 #else
@@ -730,12 +748,16 @@ ACE_OS::recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
 #    endif /* ACE_HAS_PTHREADS_UNIX98_EXT */
 #  else
   if (ACE_OS::thread_mutex_init (&m->nesting_mutex_, 0, name, arg) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (ACE_OS::cond_init (&m->lock_available_,
                               (short) USYNC_THREAD,
                               name,
                               0) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       m->nesting_level_ = 0;
@@ -763,31 +785,35 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m)
 
   // Acquire the guard.
   if (ACE_OS::thread_mutex_lock (&m->nesting_mutex_) == -1)
-    result = -1;
+    {
+      result = -1;
+    }
   else
-  {
-    // If there's no contention, just grab the lock immediately
-    // (since this is the common case we'll optimize for it).
-    if (m->nesting_level_ == 0)
-      m->owner_id_ = t_id;
+    {
+      // If there's no contention, just grab the lock immediately
+      // (since this is the common case we'll optimize for it).
+      if (m->nesting_level_ == 0)
+        {
+          m->owner_id_ = t_id;
+        }
       // If we already own the lock, then increment the nesting level
       // and return.
-    else if (ACE_OS::thr_equal (t_id, m->owner_id_) == 0)
-    {
+      else if (!ACE_OS::thr_equal (t_id, m->owner_id_))
+        {
           // Wait until the nesting level has dropped to zero, at
           // which point we can acquire the lock.
-      while (m->nesting_level_ > 0)
-        ACE_OS::cond_wait (&m->lock_available_,
-                            &m->nesting_mutex_);
+          while (m->nesting_level_ > 0)
+            ACE_OS::cond_wait (&m->lock_available_,
+                                &m->nesting_mutex_);
 
           // At this point the nesting_mutex_ is held...
-      m->owner_id_ = t_id;
-    }
+          m->owner_id_ = t_id;
+        }
 
-    // At this point, we can safely increment the nesting_level_ no
-    // matter how we got here!
-    ++m->nesting_level_;
-  }
+      // At this point, we can safely increment the nesting_level_ no
+      // matter how we got here!
+      ++m->nesting_level_;
+    }
 
   {
     // Save/restore errno.
@@ -815,16 +841,20 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
 
   // Try to acquire the guard.
   if (ACE_OS::thread_mutex_lock (&m->nesting_mutex_, timeout) == -1)
-    result = -1;
+    {
+      result = -1;
+    }
   else
     {
       // If there's no contention, just grab the lock immediately
       // (since this is the common case we'll optimize for it).
       if (m->nesting_level_ == 0)
-        m->owner_id_ = t_id;
+        {
+          m->owner_id_ = t_id;
+        }
       // If we already own the lock, then increment the nesting level
       // and return.
-      else if (ACE_OS::thr_equal (t_id, m->owner_id_) == 0)
+      else if (!ACE_OS::thr_equal (t_id, m->owner_id_))
         {
           // Wait until the nesting level has dropped to zero, at
           // which point we can acquire the lock.
@@ -852,7 +882,7 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
 
       // At this point, we can safely increment the nesting_level_ no
       // matter how we got here!
-      m->nesting_level_++;
+      ++m->nesting_level_;
 
       // Save/restore errno.
       ACE_Errno_Guard error (errno);
@@ -888,25 +918,29 @@ ACE_OS::recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m)
 
   // Acquire the guard.
   if (ACE_OS::thread_mutex_lock (&m->nesting_mutex_) == -1)
-    result = -1;
-  else
-  {
-      // If there's no contention, just grab the lock immediately.
-    if (m->nesting_level_ == 0)
     {
-      m->owner_id_ = t_id;
-      m->nesting_level_ = 1;
-    }
-      // If we already own the lock, then increment the nesting level
-      // and proceed.
-    else if (ACE_OS::thr_equal (t_id, m->owner_id_))
-      m->nesting_level_++;
-    else
-    {
-      errno = EBUSY;
       result = -1;
     }
-  }
+  else
+    {
+      // If there's no contention, just grab the lock immediately.
+      if (m->nesting_level_ == 0)
+        {
+          m->owner_id_ = t_id;
+          m->nesting_level_ = 1;
+        }
+      // If we already own the lock, then increment the nesting level
+      // and proceed.
+      else if (ACE_OS::thr_equal (t_id, m->owner_id_))
+        {
+          ++m->nesting_level_;
+        }
+      else
+        {
+          errno = EBUSY;
+          result = -1;
+        }
+    }
 
   {
     // Save/restore errno.
@@ -940,7 +974,7 @@ ACE_OS::recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m)
   {
 #    if !defined (ACE_NDEBUG)
       if (m->nesting_level_ == 0
-          || ACE_OS::thr_equal (t_id, m->owner_id_) == 0)
+          || !ACE_OS::thr_equal (t_id, m->owner_id_))
 {
   errno = EINVAL;
   result = -1;
@@ -948,7 +982,7 @@ ACE_OS::recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m)
       else
 #    endif /* ACE_NDEBUG */
 {
-  m->nesting_level_--;
+  --m->nesting_level_;
   if (m->nesting_level_ == 0)
   {
               // This may not be strictly necessary, but it does put
@@ -996,25 +1030,31 @@ ACE_OS::rw_rdlock (ACE_rwlock_t *rw)
 #   endif /* ACE_HAS_PTHREADS */
   int result = 0;
   if (ACE_OS::mutex_lock (&rw->lock_) == -1)
-    result = -1; // -1 means didn't get the mutex.
+    {
+      result = -1; // -1 means didn't get the mutex.
+    }
   else
     {
       // Give preference to writers who are waiting.
       while (rw->ref_count_ < 0 || rw->num_waiting_writers_ > 0)
         {
-          rw->num_waiting_readers_++;
+          ++rw->num_waiting_readers_;
           if (ACE_OS::cond_wait (&rw->waiting_readers_, &rw->lock_) == -1)
             {
               result = -2; // -2 means that we need to release the mutex.
               break;
             }
-          rw->num_waiting_readers_--;
+          --rw->num_waiting_readers_;
         }
     }
   if (result == 0)
-    rw->ref_count_++;
+    {
+      ++rw->ref_count_;
+    }
   if (result != -1)
-    ACE_OS::mutex_unlock (&rw->lock_);
+    {
+      ACE_OS::mutex_unlock (&rw->lock_);
+    }
 #   if defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_POP (0);
 #   endif /* defined (ACE_HAS_PTHREADS) */
@@ -1055,7 +1095,7 @@ ACE_OS::rw_tryrdlock (ACE_rwlock_t *rw)
         }
       else
         {
-          rw->ref_count_++;
+          ++rw->ref_count_;
           result = 0;
         }
 
@@ -1140,12 +1180,14 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
   ACE_PTHREAD_CLEANUP_PUSH (&rw->lock_);
 #   endif /* defined (ACE_HAS_PTHREADS) */
 
+  // -1 means didn't get the mutex, error
   if (ACE_OS::mutex_lock (&rw->lock_) == -1)
-    return -1;
-    // -1 means didn't get the mutex, error
-  else if (rw->important_writer_)
-    // an other reader upgrades already
     {
+      return -1;
+    }
+  else if (rw->important_writer_)
+    {
+      // an other reader upgrades already
       result = -1;
       errno = EBUSY;
     }
@@ -1153,7 +1195,7 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
     {
       while (rw->ref_count_ > 1) // wait until only I am left
         {
-          rw->num_waiting_writers_++; // prohibit any more readers
+          ++rw->num_waiting_writers_; // prohibit any more readers
           rw->important_writer_ = true;
 
           if (ACE_OS::cond_wait (&rw->waiting_important_writer_, &rw->lock_) == -1)
@@ -1163,7 +1205,7 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
               // but something went wrong
             }
           rw->important_writer_ = false;
-          rw->num_waiting_writers_--;
+          --rw->num_waiting_writers_;
         }
       if (result == 0)
         {
@@ -1206,12 +1248,18 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
 #  endif /* ACE_HAS_PTHREADS_UNIX98_EXT */
 # else /* NT, POSIX, and VxWorks don't support this natively. */
   if (ACE_OS::mutex_lock (&rw->lock_) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (rw->ref_count_ > 0) // Releasing a reader.
-    rw->ref_count_--;
+    {
+      --rw->ref_count_;
+    }
   else if (rw->ref_count_ == -1) // Releasing a writer.
-    rw->ref_count_ = 0;
+    {
+      rw->ref_count_ = 0;
+    }
   else
     {
       (void) ACE_OS::mutex_unlock (&rw->lock_);
@@ -1270,12 +1318,14 @@ ACE_OS::rw_wrlock (ACE_rwlock_t *rw)
   int result = 0;
 
   if (ACE_OS::mutex_lock (&rw->lock_) == -1)
-    result = -1; // -1 means didn't get the mutex.
+    {
+      result = -1; // -1 means didn't get the mutex.
+    }
   else
     {
       while (rw->ref_count_ != 0)
         {
-          rw->num_waiting_writers_++;
+          ++rw->num_waiting_writers_;
 
           if (ACE_OS::cond_wait (&rw->waiting_writers_, &rw->lock_) == -1)
             {
@@ -1283,13 +1333,17 @@ ACE_OS::rw_wrlock (ACE_rwlock_t *rw)
               break;
             }
 
-          rw->num_waiting_writers_--;
+          --rw->num_waiting_writers_;
         }
     }
   if (result == 0)
-    rw->ref_count_ = -1;
+    {
+      rw->ref_count_ = -1;
+    }
   if (result != -1)
-    ACE_OS::mutex_unlock (&rw->lock_);
+    {
+      ACE_OS::mutex_unlock (&rw->lock_);
+    }
 #   if defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_POP (0);
 #   endif /* defined (ACE_HAS_PTHREADS) */
@@ -1390,7 +1444,9 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   if (s->name_)
     {
       if (!s->avoid_unlink_)
-        ACE_OS::sema_unlink (s->name_);
+        {
+          ACE_OS::sema_unlink (s->name_);
+        }
 #if defined (ACE_HAS_ALLOC_HOOKS)
       ACE_Allocator::instance()->free ((void *) s->name_);
 #else
@@ -1465,7 +1521,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
                    int max,
                    LPSECURITY_ATTRIBUTES sa)
 {
-  ACE_condattr_t *pattr = nullptr;
+  ACE_condattr_t *pattr {};
   return ACE_OS::sema_init (s, count, type, pattr, name, arg, max, sa);
 }
 
@@ -1575,9 +1631,13 @@ ACE_OS::sema_init (ACE_sema_t *s,
                              ACE_DEFAULT_FILE_PERMS,
                              count);
       if (s->sema_ == (sem_t *) SEM_FAILED)
-        return -1;
+        {
+          return -1;
+        }
       else
-        return 0;
+        {
+          return 0;
+        }
     }
 #  endif /* ACE_LACKS_NAMED_POSIX_SEM */
   else
@@ -1598,7 +1658,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
 #   if defined (ACE_LACKS_NAMED_POSIX_SEM)
       s->new_sema_ = true;
 #   endif /* ACE_LACKS_NAMED_POSIX_SEM */
-      ACE_OS::memset(s->sema_, 0, sizeof(*s->sema_));
+      std::memset (s->sema_, 0, sizeof (*s->sema_));
       return ::sem_init (s->sema_, type != USYNC_THREAD, count);
 #  endif /* ACE_LACKS_UNNAMED_SEMAPHORE */
     }
@@ -1609,15 +1669,15 @@ ACE_OS::sema_init (ACE_sema_t *s,
   ACE_UNUSED_ARG (sa);
   int             flags = 0;
   mode_t          mode = S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP;
+  char uname[ACE_UNIQUE_NAME_LEN];
 
   if (type == USYNC_THREAD)
     {
       // Create systemwide unique name for semaphore
-      char   uname[ACE_UNIQUE_NAME_LEN];
       ACE_OS::unique_name ((const void *) s,
                             uname,
                             ACE_UNIQUE_NAME_LEN);
-      name = &uname[0];
+      name = uname;
     }
 
   s->name_ = 0;
@@ -1627,11 +1687,15 @@ ACE_OS::sema_init (ACE_sema_t *s,
   if (ACE_OS::mkfifo (ACE_TEXT_CHAR_TO_TCHAR (name), mode) < 0)
     {
       if (errno != EEXIST)    /* already exists OK else ERR */
-        return -1;
+        {
+          return -1;
+        }
       // check if this is a real FIFO, not just some other existing file
       ACE_stat fs;
       if (ACE_OS::stat (name, &fs))
-        return -1;
+        {
+          return -1;
+        }
       if (!S_ISFIFO (fs.st_mode))
         {
           // existing file is not a FIFO
@@ -1639,8 +1703,10 @@ ACE_OS::sema_init (ACE_sema_t *s,
           return -1;
         }
     }
-    else
+  else
+    {
       creator = true; // remember we created it for initialization at end
+    }
 
   // for processshared semaphores remember who we are to be able to remove
   // the FIFO when we're done with it
@@ -1650,22 +1716,30 @@ ACE_OS::sema_init (ACE_sema_t *s,
       if (s->name_ == 0)
         {
           if (creator)
-            ACE_OS::unlink (name);
+            {
+              ACE_OS::unlink (name);
+            }
           return -1;
         }
     }
 
   if ((s->fd_[0] = ACE_OS::open (name, O_RDONLY | O_NONBLOCK)) == ACE_INVALID_HANDLE
       || (s->fd_[1] = ACE_OS::open (name, O_WRONLY | O_NONBLOCK)) == ACE_INVALID_HANDLE)
-    return -1;
+    {
+      return -1;
+    }
 
   /* turn off nonblocking for fd_[0] */
   if ((flags = ACE_OS::fcntl (s->fd_[0], F_GETFL, 0)) < 0)
-    return -1;
+    {
+      return -1;
+    }
 
   flags &= ~O_NONBLOCK;
   if (ACE_OS::fcntl (s->fd_[0], F_SETFL, flags) < 0)
-    return -1;
+    {
+      return -1;
+    }
 
   //if (s->name_ && count)
   if (creator && count)
@@ -1778,7 +1852,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
                    int max,
                    LPSECURITY_ATTRIBUTES sa)
 {
-  ACE_condattr_t *pattr = nullptr;
+  ACE_condattr_t *pattr {};
   return ACE_OS::sema_init (s, count, type, pattr, name, arg, max, sa);
 }
 
@@ -1880,7 +1954,7 @@ ACE_OS::sema_post (ACE_sema_t *s)
       else
         result = 0;
 
-      s->count_++;
+      ++s->count_;
       ACE_OS::mutex_unlock (&s->lock_);
     }
   return result;
@@ -1914,9 +1988,11 @@ ACE_OS::sema_post (ACE_sema_t *s, u_int release_count)
   // first initialized.  Posix doesn't seem to have
   // this restriction.  Should we impose the restriction in
   // our semaphore simulation?
-  for (size_t i = 0; i < release_count; i++)
+  for (size_t i = 0; i < release_count; ++i)
     if (ACE_OS::sema_post (s) == -1)
-      return -1;
+      {
+        return -1;
+      }
 
   return 0;
 #endif /* ACE_WIN32 */
@@ -2028,7 +2104,7 @@ ACE_OS::sema_wait (ACE_sema_t *s)
     {
       // Keep track of the number of waiters so that we can signal
       // them properly in <ACE_OS::sema_post>.
-      s->waiters_++;
+      ++s->waiters_;
 
       // Wait until the semaphore count is > 0.
       while (s->count_ == 0)
@@ -2083,7 +2159,9 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   ts = tv; // Calls ACE_Time_Value::operator timespec_t().
   ACE_OSCALL (::sem_timedwait (s->sema_, &ts), int, rc);
   if (rc == -1 && errno == ETIMEDOUT)
-    errno = ETIME;  /* POSIX returns ETIMEDOUT but we need ETIME */
+    {
+      errno = ETIME;  /* POSIX returns ETIMEDOUT but we need ETIME */
+    }
   return rc;
 #   elif !defined (ACE_DISABLE_POSIX_SEM_TIMEOUT_EMULATION)
   int result = 0;
@@ -2178,7 +2256,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
     {
       // Keep track of the number of waiters so that we can signal
       // them properly in <ACE_OS::sema_post>.
-      s->waiters_++;
+      ++s->waiters_;
 
       // Wait until the semaphore count is > 0 or until we time out.
       while (s->count_ == 0)
@@ -2336,7 +2414,7 @@ ACE_OS::sigtimedwait (const sigset_t *sset,
   ACE_OS_TRACE ("ACE_OS::sigtimedwait");
 #if defined (ACE_HAS_SIGTIMEDWAIT)
   timespec_t ts;
-  timespec_t *tsp = nullptr;
+  timespec_t *tsp {};
 
   if (timeout != 0)
     {
@@ -2359,7 +2437,9 @@ ACE_OS::sigwait (sigset_t *sset, int *sig)
   ACE_OS_TRACE ("ACE_OS::sigwait");
   int local_sig;
   if (sig == 0)
-    sig = &local_sig;
+    {
+      sig = &local_sig;
+    }
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_WTHREADS) || defined (ACE_LACKS_SIGWAIT)
     ACE_UNUSED_ARG (sset);
@@ -2589,7 +2669,7 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
 //   ACE_OS_TRACE ("ACE_OS::thr_getspecific");
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_TSS_EMULATION)
-    if (ACE_TSS_Emulation::is_key (key) == 0)
+    if (!ACE_TSS_Emulation::is_key (key))
       {
         errno = EINVAL;
         data = 0;
@@ -2903,7 +2983,9 @@ ACE_OS::thr_setcancelstate (int new_state, int *old_state)
                                 result),
               int, result);
   if (result == -1)
-    return -1;
+    {
+      return -1;
+    }
   switch (local_old)
     {
     case PTHREAD_CANCEL_ENABLE:
@@ -2955,7 +3037,9 @@ ACE_OS::thr_setcanceltype (int new_type, int *old_type)
                                 result),
               int, result);
   if (result == -1)
-    return -1;
+    {
+      return -1;
+    }
   switch (local_old)
     {
     case PTHREAD_CANCEL_DEFERRED:
@@ -3007,7 +3091,7 @@ ACE_OS::thr_setprio (ACE_hthread_t ht_id, int priority, int policy)
 
   int result;
   struct sched_param param;
-  ACE_OS::memset ((void *) &param, 0, sizeof param);
+  std::memset (&param, 0, sizeof param);
 
   // If <policy> is -1, we don't want to use it for
   // pthread_setschedparam().  Instead, obtain policy from
@@ -3016,7 +3100,9 @@ ACE_OS::thr_setprio (ACE_hthread_t ht_id, int priority, int policy)
     {
       ACE_OSCALL (ACE_ADAPT_RETVAL (pthread_getschedparam (ht_id, &policy, &param), result), int, result);
       if (result == -1)
-        return result;
+        {
+          return result;
+        }
     }
 
   param.sched_priority = priority;
@@ -3415,7 +3501,9 @@ int
 ACE_OS_Thread_Mutex_Guard::release ()
 {
   if (owner_ == -1)
-    return 0;
+    {
+      return 0;
+    }
   else
     {
       owner_ = -1;
@@ -3428,7 +3516,9 @@ ACE_OS_Thread_Mutex_Guard::ACE_OS_Thread_Mutex_Guard (ACE_thread_mutex_t &m)
   : lock_ (m), owner_ (-1)
 {
   if (!ACE_OS_Object_Manager::starting_up ())
-    acquire ();
+    {
+      acquire ();
+    }
 }
 
 ACE_INLINE
@@ -3451,7 +3541,9 @@ int
 ACE_OS_Recursive_Thread_Mutex_Guard::release ()
 {
   if (owner_ == -1)
-    return 0;
+    {
+      return 0;
+    }
   else
     {
       owner_ = -1;
@@ -3466,7 +3558,9 @@ ACE_OS_Recursive_Thread_Mutex_Guard::ACE_OS_Recursive_Thread_Mutex_Guard (
      owner_ (-1)
 {
   if (!ACE_OS_Object_Manager::starting_up ())
-    acquire ();
+    {
+      acquire ();
+    }
 }
 
 ACE_INLINE
@@ -3476,7 +3570,6 @@ ACE_OS_Recursive_Thread_Mutex_Guard::~ACE_OS_Recursive_Thread_Mutex_Guard ()
 }
 
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
-
 
 /*****************************************************************************/
 
@@ -3499,7 +3592,7 @@ ACE_INLINE
 ACE_Thread_ID&
 ACE_Thread_ID::operator= (const ACE_Thread_ID &id)
 {
-  if (this != &id)
+  if (this != std::addressof (id))
     {
       this->thread_id_ = id.thread_id_;
       this->thread_handle_ = id.thread_handle_;

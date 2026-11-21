@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_TRANSPORT_QUEUEING_STRATEGIES_H
 #define TAO_TRANSPORT_QUEUEING_STRATEGIES_H
 
@@ -47,7 +46,6 @@ namespace TAO
   class TAO_Export Transport_Queueing_Strategy
   {
   public:
-    /// Destructor
     virtual ~Transport_Queueing_Strategy ();
 
     /// Return true if a message must be queued
@@ -71,7 +69,7 @@ namespace TAO
       size_t msg_count,
       size_t total_bytes,
       bool &must_flush,
-      const ACE_Time_Value &current_deadline,
+      ACE_Time_Value const &current_deadline,
       bool &set_timer,
       ACE_Time_Value &interval) const = 0;
   };
@@ -84,16 +82,16 @@ namespace TAO
   class Flush_Transport_Queueing_Strategy : public Transport_Queueing_Strategy
   {
   public:
-    virtual bool must_queue (bool queue_empty) const;
+    bool must_queue (bool queue_empty) const override;
 
-    virtual bool buffering_constraints_reached (
+    bool buffering_constraints_reached (
       TAO_Stub *stub,
       size_t msg_count,
       size_t total_bytes,
       bool &must_flush,
-      const ACE_Time_Value &current_deadline,
+      ACE_Time_Value const &current_deadline,
       bool &set_timer,
-      ACE_Time_Value &interval) const;
+      ACE_Time_Value &interval) const override;
   };
 }
 

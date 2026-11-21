@@ -47,7 +47,6 @@ class TAO_Export TAO_Server_Strategy_Factory : public ACE_Service_Object
 public:
   struct Active_Object_Map_Creation_Parameters
   {
-    /// Constructor.
     Active_Object_Map_Creation_Parameters ();
 
     /// Default size of object lookup table.
@@ -67,12 +66,12 @@ public:
 
     /// Flag to indicate whether the active hint should be used with
     /// the IOR.
-    int use_active_hint_in_ids_;
+    bool use_active_hint_in_ids_ { true };
 
     /// Flag to indicate whether reactivations of servants was required
     /// (under the system id policy).  If not, certain resources may
     /// not be required.
-    int allow_reactivation_of_system_ids_;
+    bool allow_reactivation_of_system_ids_ { true };
 
     CORBA::ULong poa_map_size_;
 
@@ -80,13 +79,11 @@ public:
 
     TAO_Demux_Strategy poa_lookup_strategy_for_persistent_id_policy_;
 
-    int use_active_hint_in_poa_names_;
+    bool use_active_hint_in_poa_names_ { true };
   };
 
-  /// Constructor.
   TAO_Server_Strategy_Factory ();
 
-  /// Destructor.
   ~TAO_Server_Strategy_Factory () override;
 
   /**

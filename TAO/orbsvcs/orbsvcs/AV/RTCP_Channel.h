@@ -9,6 +9,8 @@
 #include "ace/Message_Block.h"
 #include "ace/SString.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -28,19 +30,24 @@ public:
   /// Constructor for an incoming channel.  Requires the synchronization source
   /// id and address of the sender.
   RTCP_Channel_In(ACE_UINT32 ssrc,
-                  const ACE_Addr *addr);
+                  ACE_Addr const *addr);
 
-  /// Destructor
   ~RTCP_Channel_In();
+
+  RTCP_Channel_In () = delete;
+  RTCP_Channel_In (RTCP_Channel_In const &) = delete;
+  RTCP_Channel_In (RTCP_Channel_In &&) = delete;
+  RTCP_Channel_In &operator= (RTCP_Channel_In const &) = delete;
+  RTCP_Channel_In &operator= (RTCP_Channel_In &&) = delete;
 
   /// This operation takes the incoming ACE_Message_Block, converts it to an
   /// RTP_Packet and calls updateStatistics.  It also uses compares the peer_addr
   /// to the stored peer_address_ to check for loops.
   void recv_rtp_packet (ACE_Message_Block *mb,
-                        const ACE_Addr *peer_addr);
+                        ACE_Addr const *peer_addr);
 
   /// Takes statistics of incoming RTP traffic and creates a receiver report block.
-  RR_Block *getRRBlock();
+  std::unique_ptr<RR_Block> getRRBlock();
 
   /// Returns the delay since last sender report.
   ACE_UINT32 dlsr ();
@@ -61,22 +68,13 @@ public:
   int active () { return this->active_; }
 
 private:
-  /// Don't want default constructor.
-  RTCP_Channel_In();
-
-  /// Don't want copy constructor.
-  RTCP_Channel_In (RTCP_Channel_In const &) = delete;
-  RTCP_Channel_In &operator= (RTCP_Channel_In const &) = delete;
-  RTCP_Channel_In (RTCP_Channel_In &&) = delete;
-  RTCP_Channel_In &operator= (RTCP_Channel_In &&) = delete;
-
   /// The synchronization source id of the source this channel represents.
   ACE_UINT32 remote_ssrc_;
 
   /// The canonical name of the source this channel represents.
   ACE_CString cname_;
 
-  // Used to declare a source valid
+  /// Used to declare the source valid.
   /// The highest sequence number seen.
   ACE_UINT16 max_seq_ {};
 
@@ -102,14 +100,14 @@ private:
   ACE_UINT32 received_prior_ {};
 
   /// The last transit time.
-  ACE_UINT32 transit_;
+  ACE_UINT32 transit_ {};
 
   /// The inter-arrival jitter measured in timestamp units.
-  double jitter_;
+  double jitter_ {};
 
-  // Used for jitter calculations
+  /// Used for jitter calculations.
   /// Flag to indicate the first data packet received.
-  char first_data_packet_;
+  bool first_data_packet_ {true};
 
   /// The first timestamp received.
   ACE_UINT32 init_time_stamp_ {};
@@ -118,31 +116,31 @@ private:
   ACE_Time_Value init_local_time_ {};
 
   /// The address that the first RTP packet was received from.
-  ACE_Addr *peer_address_ {};
+  std::unique_ptr<ACE_Addr> peer_address_;
 
   /// The most significant word of the last sender report NTP timestamp.
-  ACE_UINT32 ntp_ts_msw_;
+  ACE_UINT32 ntp_ts_msw_ {};
 
   /// The least significant word of the last sender report NTP timestamp.
-  ACE_UINT32 ntp_ts_lsw_;
+  ACE_UINT32 ntp_ts_lsw_ {};
 
   /// The last sender report RTP timestamp.
   ACE_UINT32 rtp_ts_ {};
 
   /// The last time a sender report was received in 1/65536 seconds.
   /// Used to calculate DLSR.
-  ACE_UINT32 last_sr_time_;
+  ACE_UINT32 last_sr_time_ {};
 
   /// Flag to indicate whether or not the source is active.
-  int active_;
+  bool active_ {};
 
   /// This is a counter to indicate the number of reporting intervals that have
   /// passed since data has been received.  After 32, declare the source inactive.
-  int no_data_counter_;
+  int no_data_counter_ {};
 
   /// This flag indicates that data has been received since the last report was
   /// sent.
-  char data_since_last_report_;
+  bool data_since_last_report_ {};
 
   /// The RTP payload type.
   int payload_type_ {};
@@ -168,10 +166,8 @@ private:
 class RTCP_Channel_Out
 {
 public:
-  /// Constructor.
   RTCP_Channel_Out();
 
-  /// Destructor.
   ~RTCP_Channel_Out();
 
   /// Update the channel statistics each time an RTP packet is sent.
@@ -187,10 +183,10 @@ public:
   ACE_UINT32 octets_sent ();
 
   /// Sets the canonical name of the source.
-  void cname (const char *cname) { this->cname_ = cname; }
+  void cname (char const *cname) { this->cname_ = cname; }
 
   /// Returns the canonical name of the source.
-  const char *cname () { return this->cname_.c_str(); }
+  char const *cname () { return this->cname_.c_str(); }
 
   /// Returns whether or not this source is active.
   char active ();
@@ -200,19 +196,19 @@ private:
   ACE_CString cname_;
 
   /// Flag to indicate whether or not this channel is active.
-  char active_;
+  bool active_ {};
 
   /// The sequence number of the last RTP packet sent.
-  unsigned int seq_num_;
+  unsigned int seq_num_ {};
 
   /// The timestamp of the last RTP packet sent.
-  unsigned int timestamp_;
+  unsigned int timestamp_ {};
 
   /// The total number of packets sent.
-  unsigned int packets_sent_;
+  unsigned int packets_sent_ {};
 
   /// The total numbef of octets sent.
-  unsigned int octets_sent_;
+  unsigned int octets_sent_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

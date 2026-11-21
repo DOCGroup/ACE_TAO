@@ -10,14 +10,19 @@ class Hello
   : public virtual POA_Test::Hello
 {
 public:
-  /// Constructor
-  Hello (CORBA::ORB_ptr orb);
+  explicit Hello (CORBA::ORB_ptr orb);
+  Hello (Hello const &) = delete;
+  Hello (Hello &&) = delete;
+  Hello &operator= (Hello const &) = delete;
+  Hello &operator= (Hello &&) = delete;
 
-  // = The skeleton methods
-  char * get_string () override;
+  /// @name Skeleton methods
+  /// @{
+  char *get_string () override;
   Test::Hello_ptr get_Hello () override;
 
   void shutdown () override;
+  /// @}
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

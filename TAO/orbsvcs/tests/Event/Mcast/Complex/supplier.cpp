@@ -3,6 +3,7 @@
 #include "orbsvcs/RtecEventCommC.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "ace/Log_Msg.h"
+#include <cstddef>
 
 void
 send_events (RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer)
@@ -15,7 +16,7 @@ send_events (RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer)
   events[0].header.ttl = 1;
   events[0].header.source = SOURCE_ID;
 
-  for (int i = 0; i < 100; ++i)
+  for (size_t i {}; i < 100; ++i)
     {
       // Send 1 event of each type.
       events[0].header.type = A_EVENT_TYPE;
@@ -30,7 +31,7 @@ send_events (RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer)
 }
 
 int
-check_for_nil (CORBA::Object_ptr obj, const char *message)
+check_for_nil (CORBA::Object_ptr obj, char const *message)
 {
   if (CORBA::is_nil (obj))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -38,7 +39,9 @@ check_for_nil (CORBA::Object_ptr obj, const char *message)
                        message),
                       -1);
   else
+  {
     return 0;
+  }
 }
 
 int
@@ -48,7 +51,7 @@ parse_args (int /*argc*/, ACE_TCHAR ** /*argv*/)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -57,7 +60,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) == -1)
+      {
         return 1;
+      }
 
       // Obtain reference to EC.
       CORBA::Object_var obj =
@@ -65,7 +70,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       RtecEventChannelAdmin::EventChannel_var ec =
         RtecEventChannelAdmin::EventChannel::_narrow (obj.in ());
       if (check_for_nil (ec.in (), "EC") == -1)
+      {
         return 1;
+      }
 
       // Obtain reference to SupplierAdmin.
       RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
@@ -91,7 +98,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ec->destroy ();
     }
 
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception in Supplier:");
       return 1;

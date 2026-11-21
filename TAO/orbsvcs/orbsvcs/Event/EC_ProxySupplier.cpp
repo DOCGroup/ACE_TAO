@@ -23,7 +23,6 @@ TAO_EC_ProxyPushSupplier::TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel_Base* e
   : event_channel_ (ec),
     refcount_ (1),
     suspended_ (false),
-    child_ (nullptr),
     consumer_validate_connection_(validate_connection)
 {
   this->lock_ =
@@ -96,13 +95,17 @@ TAO_EC_ProxyPushSupplier::shutdown ()
     consumer = this->consumer_._retn ();
 
     if (connected)
+    {
       this->cleanup_i ();
+    }
   }
 
   this->deactivate ();
 
   if (CORBA::is_nil (consumer.in ()))
+  {
     return;
+  }
 
   try
     {
@@ -123,8 +126,7 @@ TAO_EC_ProxyPushSupplier::cleanup_i ()
 
   // @@ Why don't we have a destroy() method in the
   // filter_builder?
-  delete this->child_;
-  this->child_ = nullptr;
+  this->child_.reset ();
 }
 
 void
@@ -165,7 +167,9 @@ TAO_EC_ProxyPushSupplier::_decr_refcnt ()
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
     --this->refcount_;
     if (this->refcount_ != 0)
+    {
       return this->refcount_;
+    }
   }
 
   this->refcount_zero_hook ();
@@ -183,7 +187,7 @@ TAO_EC_ProxyPushSupplier::filter (const RtecEventComm::EventSet& event,
                               this->event_channel_,
                               this);
 
-  int result = 0;
+  int result {};
   {
     ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,
@@ -205,7 +209,7 @@ TAO_EC_ProxyPushSupplier::filter_nocopy (RtecEventComm::EventSet& event,
                               this->event_channel_,
                               this);
 
-  int result = 0;
+  int result {};
   {
     ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,
@@ -226,10 +230,14 @@ TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
   // The mutex is already held by the caller (usually the filter()
   // method)
   if (!this->is_connected_i ())
+  {
     return; // TAO_THROW (RtecEventComm::Disconnected ());????
+  }
 
   if (this->suspended_)
+  {
     return;
+  }
 
   TAO_ESF_RefCount_Guard<CORBA::ULong> ace_mon (this->refcount_);
   // The guard will decrement the reference count, notice that the
@@ -261,7 +269,9 @@ TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
   }
 
   if (this->child_ != nullptr)
+  {
     this->child_->clear ();
+  }
 }
 
 void
@@ -276,10 +286,14 @@ TAO_EC_ProxyPushSupplier::push_nocopy (RtecEventComm::EventSet& event,
   // The mutex is already held by the caller (usually the filter()
   // method)
   if (!this->is_connected_i ())
+  {
     return; // TAO_THROW (RtecEventComm::Disconnected ());????
+  }
 
   if (this->suspended_)
+  {
     return;
+  }
 
   TAO_ESF_RefCount_Guard<CORBA::ULong> ace_mon (this->refcount_);
   // The guard will decrement the reference count, notice that the
@@ -310,7 +324,9 @@ TAO_EC_ProxyPushSupplier::push_nocopy (RtecEventComm::EventSet& event,
   }
 
   if (this->child_ != nullptr)
+  {
     this->child_->clear ();
+  }
 }
 
 void
@@ -324,10 +340,14 @@ TAO_EC_ProxyPushSupplier::push_to_consumer (
             RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
     if (!this->is_connected_i ())
+    {
       return; // ACE_THROW (RtecEventComm::Disconnected ());????
+    }
 
     if (this->suspended_)
+    {
       return;
+    }
   }
 
   try
@@ -453,7 +473,9 @@ TAO_EC_ProxyPushSupplier::can_match (
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
 
   if (!this->is_connected_i ())
+  {
     return 0;
+  }
 
   return this->child_->can_match (header);
 }

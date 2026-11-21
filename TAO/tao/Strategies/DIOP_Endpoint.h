@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     DIOP_Endpoint.h
  *
@@ -8,8 +7,6 @@
  *
  *  @author  Michael Kircher
  */
-//=============================================================================
-
 
 #ifndef TAO_DIOP_ENDPOINT_H
 #define TAO_DIOP_ENDPOINT_H
@@ -45,7 +42,6 @@ public:
   friend class TAO_DIOP_Profile;
   friend class TAO_SSLIOP_Profile;
 
-  /// Default constructor.
   TAO_DIOP_Endpoint ();
 
   /// Constructor.  This is the most efficient constructor since it
@@ -55,7 +51,6 @@ public:
                      ACE_INET_Addr const &addr,
                      CORBA::Short priority = TAO_INVALID_PRIORITY);
 
-  /// Constructor.
   TAO_DIOP_Endpoint (ACE_INET_Addr const &addr,
                      int use_dotted_decimal_addresses);
 
@@ -64,17 +59,15 @@ public:
                      CORBA::UShort port,
                      CORBA::Short priority);
 
-  /// Destructor.
-  ~TAO_DIOP_Endpoint () = default;
+  ~TAO_DIOP_Endpoint () override = default;
 
-  /**
-   * @name TAO_Endpoint Methods
-   *
-   * Please check the documentation in Endpoint.h for details.
-   */
-  //@{
+  /// @name TAO_Endpoint methods
+  /// Please check the documentation in Endpoint.h for details.
+  /// @{
   TAO_Endpoint *next () override;
   int addr_to_string (char *buffer, size_t length) override;
+
+  /// Allocate memory and return a copy of this endpoint.
   TAO_Endpoint *duplicate () override;
 
   /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
@@ -83,12 +76,10 @@ public:
 
   /// Return a hash value for this object.
   CORBA::ULong hash () override;
-  //@}
+  /// @}
 
-  // Allocates memory and returns a copy of <this>
-
-  // = DIOP_Endpoint-specific methods.
-
+  /// @name DIOP-specific methods
+  /// @{
   /// Return a reference to the <object_addr>.
   ACE_INET_Addr const &object_addr () const;
 
@@ -105,6 +96,7 @@ public:
 
   /// Set the port number.
   CORBA::UShort port (CORBA::UShort p);
+  /// @}
 
 private:
   TAO_DIOP_Endpoint (TAO_DIOP_Endpoint const &) = delete;

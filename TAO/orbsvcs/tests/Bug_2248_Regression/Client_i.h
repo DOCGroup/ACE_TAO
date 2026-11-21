@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef BUG_2248_REGRESSION_CLIENT_I_H
 #define BUG_2248_REGRESSION_CLIENT_I_H
 
@@ -19,22 +18,22 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+struct Client_Options;
+
 class Client_i
 {
 public:
-  /// Our constructor
-  Client_i (CORBA::ORB_ptr orb);
+  explicit Client_i (CORBA::ORB_ptr orb);
 
   Client_i (Client_i const &) = delete;
   Client_i (Client_i &&) = delete;
   Client_i &operator= (Client_i const &) = delete;
   Client_i &operator= (Client_i &&) = delete;
 
-  /// Initialize the ORB etc.
-  int init ();
+  int init (Client_Options const &options);
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 #include /**/ "ace/post.h"

@@ -55,7 +55,9 @@ void
 UpdateableServerInfo::update_repo ()
 {
   if (!needs_update_)
+  {
     return;
+  }
 
   needs_update_ = false;
   int err = repo_->update_server (si_);
@@ -81,7 +83,6 @@ UpdateableServerInfo::operator* () const
 {
   return *(si_.get());
 }
-
 
 const Server_Info_Ptr&
 UpdateableServerInfo::edit (bool active)

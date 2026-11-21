@@ -33,11 +33,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Serv_Export TAO_Notify_PropertySeq
 {
 public:
-  /// Constructor
   TAO_Notify_PropertySeq ();
 
-  /// Destructor
   ~TAO_Notify_PropertySeq ();
+
+  TAO_Notify_PropertySeq (TAO_Notify_PropertySeq const &) = delete;
+  TAO_Notify_PropertySeq (TAO_Notify_PropertySeq &&) = delete;
+  TAO_Notify_PropertySeq &operator= (TAO_Notify_PropertySeq const &) = delete;
+  TAO_Notify_PropertySeq &operator= (TAO_Notify_PropertySeq &&) = delete;
 
   /// Return 0 on success, -1 on error.
   int init (const CosNotification::PropertySeq& prop_seq);

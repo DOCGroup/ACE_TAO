@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Recursive_Type_TypeCode.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Ossama Othman
  */
-//=============================================================================
 
 #ifndef TAO_RECURSIVE_TYPE_TYPECODE_H
 #define TAO_RECURSIVE_TYPE_TYPECODE_H
@@ -87,11 +85,11 @@ namespace TAO
        *
        * @see @c CORBA::TypeCode
        */
-      //@{
+      /// @{
       bool tao_marshal_kind (TAO_OutputCDR & cdr) const override;
       bool tao_marshal (TAO_OutputCDR & cdr,
                         CORBA::ULong offset) const override;
-      //@}
+      /// @}
 
     protected:
       /**
@@ -102,10 +100,10 @@ namespace TAO
        *
        * @see @c CORBA::TypeCode
        */
-      //@{
+      /// @{
       CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const override;
       CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const override;
-      //@}
+      /// @}
 
     public:
       /// Set @c struct @c TypeCode parameters.
@@ -164,7 +162,6 @@ namespace TAO
 }  // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #ifdef __ACE_INLINE__
 # include "tao/AnyTypeCode/Recursive_Type_TypeCode.inl"

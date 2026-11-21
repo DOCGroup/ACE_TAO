@@ -37,34 +37,36 @@ ACE_Condition<ACE_Thread_Mutex>::dump () const
 }
 
 ACE_Condition<ACE_Thread_Mutex>::ACE_Condition (ACE_Thread_Mutex &m,
-                                                const ACE_TCHAR *name,
+                                                ACE_TCHAR const *name,
                                                 void *arg)
-  : mutex_ (m),
-    removed_ (false)
+  : mutex_ (m)
 {
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::ACE_Condition<ACE_Thread_Mutex>");
   if (ACE_OS::cond_init (&this->cond_,
                          (short) USYNC_THREAD,
                          name,
                          arg) != 0)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Condition<ACE_Thread_Mutex>::ACE_Condition<ACE_Thread_Mutex>")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Condition<ACE_Thread_Mutex>::ACE_Condition<ACE_Thread_Mutex>")));
+    }
 }
 
 ACE_Condition<ACE_Thread_Mutex>::ACE_Condition (ACE_Thread_Mutex &m,
-                                                const ACE_Condition_Attributes &attributes,
-                                                const ACE_TCHAR *name,
+                                                ACE_Condition_Attributes const &attributes,
+                                                ACE_TCHAR const *name,
                                                 void *arg)
-  : mutex_ (m),
-    removed_ (false)
+  : mutex_ (m)
 {
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::ACE_Condition<ACE_Thread_Mutex>");
   if (ACE_OS::cond_init (&this->cond_,
                          const_cast<ACE_condattr_t &> (attributes.attributes ()),
                          name, arg) != 0)
-    ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Condition<ACE_Thread_Mutex>::ACE_Condition<ACE_Thread_Mutex>")));
+    {
+      ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Condition<ACE_Thread_Mutex>::ACE_Condition<ACE_Thread_Mutex>")));
+    }
 }
 
 ACE_Condition<ACE_Thread_Mutex>::~ACE_Condition ()
@@ -86,7 +88,7 @@ ACE_Condition<ACE_Thread_Mutex>::wait ()
 
 int
 ACE_Condition<ACE_Thread_Mutex>::wait (ACE_Thread_Mutex &mutex,
-                                  const ACE_Time_Value *abstime)
+                                  ACE_Time_Value const *abstime)
 {
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::wait");
   return ACE_OS::cond_timedwait (&this->cond_,
@@ -95,7 +97,7 @@ ACE_Condition<ACE_Thread_Mutex>::wait (ACE_Thread_Mutex &mutex,
 }
 
 int
-ACE_Condition<ACE_Thread_Mutex>::wait (const ACE_Time_Value *abstime)
+ACE_Condition<ACE_Thread_Mutex>::wait (ACE_Time_Value const *abstime)
 {
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::wait");
   return this->wait (this->mutex_, abstime);

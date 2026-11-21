@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TIMER_HASH_H
 #define ACE_TIMER_HASH_H
 #include /**/ "ace/pre.h"
@@ -32,7 +31,6 @@ using ACE_Hash_Upcall = ACE_Timer_Hash_Upcall<ACE_Event_Handler *, ACE_Event_Han
 using ACE_Hash_Timer_List = ACE_Timer_List_T<ACE_Event_Handler *, ACE_Hash_Upcall, ACE_Null_Mutex>;
 
 using ACE_Hash_Timer_Heap = ACE_Timer_Heap_T<ACE_Event_Handler *, ACE_Hash_Upcall, ACE_Null_Mutex>;
-
 
 using ACE_Timer_Hash = ACE_Timer_Hash_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX, ACE_Hash_Timer_List>;
 

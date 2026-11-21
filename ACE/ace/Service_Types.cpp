@@ -1,4 +1,5 @@
 #include "ace/Service_Types.h"
+#include "ace/ACE.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Service_Types.inl"
@@ -25,16 +26,28 @@ ACE_Service_Type_Impl::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
+void
+ACE_Service_Type_Impl::Name_Deleter::operator() (ACE_TCHAR *name) const
+{
+  if (name != nullptr)
+    {
+#if defined (ACE_HAS_ALLOC_HOOKS)
+      ACE_Allocator::instance ()->free (name);
+#else
+      delete [] name;
+#endif /* ACE_HAS_ALLOC_HOOKS */
+    }
+}
+
 ACE_Service_Type_Impl::ACE_Service_Type_Impl (void *so,
                                               const ACE_TCHAR *s_name,
                                               u_int f,
                                               ACE_Service_Object_Exterminator gobbler,
                                               int stype)
-  : name_ (nullptr),
-    obj_ (so),
+  : obj_ (so),
     gobbler_ (gobbler),
     flags_ (f),
-  service_type_ (stype)
+    service_type_ (stype)
 {
   ACE_TRACE ("ACE_Service_Type_Impl::ACE_Service_Type_Impl");
   this->name (s_name);
@@ -43,14 +56,13 @@ ACE_Service_Type_Impl::ACE_Service_Type_Impl (void *so,
 ACE_Service_Type_Impl::~ACE_Service_Type_Impl ()
 {
   ACE_TRACE ("ACE_Service_Type_Impl::~ACE_Service_Type_Impl");
+}
 
-  // It's ok to call this, even though we may have already deleted it
-  // in the fini() method since it would then be NULL.
-#if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_Allocator::instance()->free(const_cast <ACE_TCHAR *> (this->name_));
-#else
-  delete [] const_cast <ACE_TCHAR *> (this->name_);
-#endif /* ACE_HAS_ALLOC_HOOKS */
+void
+ACE_Service_Type_Impl::name (const ACE_TCHAR *name)
+{
+  ACE_TRACE ("ACE_Service_Type_Impl::name");
+  this->name_.reset (ACE::strnew (name));
 }
 
 int
@@ -58,26 +70,26 @@ ACE_Service_Type_Impl::fini () const
 {
   ACE_TRACE ("ACE_Service_Type_Impl::fini");
 
-#if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_Allocator::instance()->free(const_cast <ACE_TCHAR *> (this->name_));
-#else
-  delete [] const_cast <ACE_TCHAR *> (this->name_);
-#endif /* ACE_HAS_ALLOC_HOOKS */
-  (const_cast <ACE_Service_Type_Impl *> (this))->name_ = nullptr;
+  this->name_.reset ();
 
   if (ACE_BIT_ENABLED (this->flags_,
                        ACE_Service_Type::DELETE_OBJ))
     {
       if (gobbler_ != nullptr)
-        gobbler_ (this->object ());
+        {
+          gobbler_ (this->object ());
+        }
       else
-        // Cast to remove const-ness.
-        operator delete ((void *) this->object ());
+        {
+          operator delete (this->object ());
+        }
     }
 
   if (ACE_BIT_ENABLED (this->flags_,
                        ACE_Service_Type::DELETE_THIS))
+  {
     delete const_cast <ACE_Service_Type_Impl *> (this);
+  }
 
   return 0;
 }
@@ -104,7 +116,9 @@ ACE_Service_Object_Type::init (int argc, ACE_TCHAR *argv[]) const
     static_cast<ACE_Service_Object *> (obj);
 
   if (so == nullptr)
+  {
     return -1;
+  }
 
   this->initialized_ = so->init (argc, argv);
 
@@ -125,7 +139,9 @@ ACE_Service_Object_Type::fini () const
   // initialized, i.e. init() returned 0. This is necessary to
   // maintain the ctor/dtor-like semantics for init/fini.
   if (so != nullptr && this->initialized_ == 0)
-      so->fini ();
+  {
+    so->fini ();
+  }
 
   return ACE_Service_Type_Impl::fini ();
 }
@@ -171,7 +187,6 @@ ACE_Module_Type::ACE_Module_Type (void *m,
                                   u_int f,
                                   int stype)
   : ACE_Service_Type_Impl (m, m_name, f, nullptr, stype)
-  , link_ (nullptr)
 {
   ACE_TRACE ("ACE_Module_Type::ACE_Module_Type");
 }
@@ -195,15 +210,19 @@ ACE_Module_Type::init (int argc, ACE_TCHAR *argv[]) const
   // remove fail, we end up with a double delete during
   // shutdown. Bugzilla #3847
   //
-  mod->name (this->name_);
+  mod->name (this->name_.get ());
   MT_Task *reader = mod->reader ();
   MT_Task *writer = mod->writer ();
 
   if (reader->init (argc, argv) == -1
       || writer->init (argc, argv) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 int
@@ -217,9 +236,13 @@ ACE_Module_Type::suspend () const
 
   if (reader->suspend () == -1
       || writer->suspend () == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 int
@@ -233,9 +256,13 @@ ACE_Module_Type::resume () const
 
   if (reader->resume () == -1
       || writer->resume () == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 // Note, these operations are somewhat too familiar with the
@@ -251,10 +278,14 @@ ACE_Module_Type::fini () const
   MT_Task *writer = mod->writer ();
 
   if (reader != nullptr)
+  {
     reader->fini ();
+  }
 
   if (writer != nullptr)
+  {
     writer->fini ();
+  }
 
   // Close the module and delete the memory.
   mod->close (MT_Module::M_DELETE);
@@ -273,9 +304,13 @@ ACE_Module_Type::info (ACE_TCHAR **str, size_t len) const
                     ACE_TEXT ("# ACE_Module\n"));
 
   if (*str == nullptr && (*str = ACE_OS::strdup (buf)) == nullptr)
-    return -1;
+    {
+      return -1;
+    }
   else
-    ACE_OS::strsncpy (*str, buf, len);
+    {
+      ACE_OS::strsncpy (*str, buf, len);
+    }
   return static_cast<int> (ACE_OS::strlen (buf));
 }
 
@@ -318,7 +353,9 @@ ACE_Stream_Type::suspend () const
   for (ACE_Module_Type *m = this->head_;
        m != nullptr;
        m = m->link ())
-    m->suspend ();
+    {
+      m->suspend ();
+    }
 
   return 0;
 }
@@ -331,7 +368,9 @@ ACE_Stream_Type::resume () const
   for (ACE_Module_Type *m = this->head_;
        m != nullptr;
        m = m->link ())
-    m->resume ();
+    {
+      m->resume ();
+    }
 
   return 0;
 }
@@ -340,8 +379,7 @@ ACE_Stream_Type::ACE_Stream_Type (void *s,
                                   const ACE_TCHAR *s_name,
                                   u_int f,
                                   int stype)
-  : ACE_Service_Type_Impl (s, s_name, f, nullptr, stype),
-    head_ (nullptr)
+  : ACE_Service_Type_Impl (s, s_name, f, nullptr, stype)
 {
   ACE_TRACE ("ACE_Stream_Type::ACE_Stream_Type");
 }
@@ -363,9 +401,13 @@ ACE_Stream_Type::info (ACE_TCHAR **str, size_t len) const
                     ACE_TEXT ("# STREAM\n"));
 
   if (*str == nullptr && (*str = ACE_OS::strdup (buf)) == nullptr)
-    return -1;
+    {
+      return -1;
+    }
   else
-    ACE_OS::strsncpy (*str, buf, len);
+    {
+      ACE_OS::strsncpy (*str, buf, len);
+    }
   return static_cast<int> (ACE_OS::strlen (buf));
 }
 
@@ -397,7 +439,7 @@ ACE_Stream_Type::remove (ACE_Module_Type *mod)
 {
   ACE_TRACE ("ACE_Stream_Type::remove");
 
-  ACE_Module_Type *prev = nullptr;
+  ACE_Module_Type *prev {};
   void *obj = this->object ();
   MT_Stream *str = (MT_Stream *) obj;
   int result = 0;
@@ -410,20 +452,28 @@ ACE_Stream_Type::remove (ACE_Module_Type *mod)
       if (m == mod)
         {
           if (prev == nullptr)
-            this->head_ = link;
+            {
+              this->head_ = link;
+            }
           else
-            prev->link (link);
+            {
+              prev->link (link);
+            }
 
           // Final arg is an indication to *not* delete the Module.
           if (str->remove (m->name (),
                            MT_Module::M_DELETE_NONE) == -1)
+          {
             result = -1;
+          }
 
           // Do not call m->fini (); as this will result in a double delete
           // of the ACE_Module_type when ACE_Service_Repository::fini is called
         }
       else
+      {
         prev = m;
+      }
 
       m = link;
     }
@@ -452,8 +502,12 @@ ACE_Stream_Type::find (const ACE_TCHAR *module_name) const
   for (ACE_Module_Type *m = this->head_;
        m != nullptr;
        m = m->link ())
-    if (ACE_OS::strcmp (m->name (), module_name) == 0)
-      return m;
+    {
+      if (ACE_OS::strcmp (m->name (), module_name) == 0)
+        {
+          return m;
+        }
+    }
 
   return nullptr;
 }

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_LB_CLIENT_REQUEST_INTERCEPTOR_H
 #define TAO_LB_CLIENT_REQUEST_INTERCEPTOR_H
 
@@ -26,7 +25,6 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -63,7 +61,7 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all client request interceptors.
    */
-  //@{
+  /// @{
   /// Return the name of this ClientRequestInterceptor.
   char * name () override;
 
@@ -78,7 +76,7 @@ public:
   void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
   void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri) override;
-  //@}
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

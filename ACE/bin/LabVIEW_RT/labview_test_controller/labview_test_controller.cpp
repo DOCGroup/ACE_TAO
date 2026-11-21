@@ -11,6 +11,8 @@
 #include <fcntl.h>
 #include <io.h>
 #include <memory.h>
+#include <memory>
+#include <new>
 #include <process.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,10 +21,6 @@
 #include <sys/stat.h>
 
 #include <Winsock2.h>
-
-// NULL is the documented way to check DLL handles, and this is plain
-// Windows code, not ACE, so we stick to the Microsoft way...
-// FUZZ: disable check_for_NULL
 
 // This is plain Windows code, not ACE. Therefore we disable
 // the check for ACE_OS
@@ -45,17 +43,16 @@ static HANDLE logf = INVALID_HANDLE_VALUE;
 
 BOOL APIENTRY DllMain( HANDLE hModule,
                        DWORD  ul_reason_for_call,
-                       LPVOID lpReserved
-                      )
+                       LPVOID lpReserved)
 {
   if (ul_reason_for_call == DLL_PROCESS_ATTACH)
     {
-      return (0 != _beginthreadex (0,            // security
+      return (0 != _beginthreadex (nullptr,      // security
                                    8 * 1024,     // stack size
                                    test_control, // entrypoint
-                                   0,            // param
+                                   nullptr,      // param
                                    0,            // creation flags
-                                   0));          // ptr to thread id
+                                   nullptr));    // ptr to thread id
     }
 
   return TRUE;
@@ -64,9 +61,9 @@ BOOL APIENTRY DllMain( HANDLE hModule,
 class Test
 {
 public:
-  Test () : dll_handle_ (NULL),
-            thr_handle_ (0),
-            entry_ (0),
+  Test () : dll_handle_ (nullptr),
+            thr_handle_ (nullptr),
+            entry_ (nullptr),
             running_ (false),
             status_ (-1)
     {}
@@ -89,10 +86,10 @@ private:
   bool running_;
   int status_;
   enum { CMDLINE_LEN = 1024, ARGV_SIZE = 100 };
-  char name_[CMDLINE_LEN];
-  char cmdline_[CMDLINE_LEN];
-  int argc_;
-  char *argv_[ARGV_SIZE];
+  char name_[CMDLINE_LEN] {};
+  char cmdline_[CMDLINE_LEN] {};
+  int argc_ {};
+  char *argv_[ARGV_SIZE] {};
 };
 
 class Peer
@@ -141,8 +138,8 @@ Peer::command ()
   // request-reply command lines, so we can make assumptions about a complete
   // line being available to make life easier.
   const int MAX_RECV = 1024;
-  char line[MAX_RECV], *p;
-  p = &line[0];
+  char line[MAX_RECV];
+  char *p = line;
   int count = 0, len = 0;
   while ((count = recv (this->handle_, p, MAX_RECV - len, 0)) > 0)
     {
@@ -150,7 +147,7 @@ Peer::command ()
       len += count;
       p += count;
       char *nl;
-      if ((nl = strchr (line, '\n')) == 0)
+      if ((nl = strchr (line, '\n')) == nullptr)
         continue;
 
       // At this point we have a 0-terminated string with a newline ending
@@ -161,7 +158,7 @@ Peer::command ()
     return -1;         // Relay closed/error socket to caller
 
   char *cmd = strtok (line, "\t \n\r");
-  if (cmd == 0)
+  if (cmd == nullptr)
     {
       char err[1024];
       sprintf (err, "Can't parse input: %s\n", line);
@@ -183,15 +180,15 @@ Peer::command ()
   //     name and reset the stdout/stderr log.
   if (strcmp ("run", cmd) == 0)
     {
-      char *test = strtok (0, "\t \n\r");
-      if (test == 0)
+      char *test = strtok (nullptr, "\t \n\r");
+      if (test == nullptr)
         {
           this->reply ("Malformed run command\n");
           return -1;
         }
       // start() pulls apart the rest of the command line...
       const char *errmsg = this->test_.start (test);
-      if (errmsg == 0)
+      if (errmsg == nullptr)
         this->reply ("OK\n");
       else
         this->reply (errmsg);
@@ -222,21 +219,21 @@ Peer::command ()
     }
   else if (strcmp ("waitforfile", cmd) == 0)
     {
-      char *name = strtok (0, "\t \n\r");
-      if (name == 0)
+      char *name = strtok (nullptr, "\t \n\r");
+      if (name == nullptr)
         {
           this->reply ("Malformed waitforfile command\n");
           return -1;
         }
-      char *secs_s = strtok (0, "\t \n\r");
+      char *secs_s = strtok (nullptr, "\t \n\r");
       int secs = 0;
-      if (secs_s == 0 || (secs = atoi (secs_s)) <= 0)
+      if (secs_s == nullptr || (secs = atoi (secs_s)) <= 0)
         {
           this->reply ("Malformed waitforfile command\n");
           return -1;
         }
       struct _stat info;
-      const char *msg = 0;
+      const char *msg {};
       bool found = false;
       while (secs > 0)
         {
@@ -299,10 +296,10 @@ Peer::command ()
           logf = CreateFile (LogName,
                              FILE_ALL_ACCESS,
                              FILE_SHARE_READ,
-                             0,    // security
+                             nullptr, // security
                              CREATE_ALWAYS,
                              FILE_ATTRIBUTE_NORMAL,
-                             0);
+                             nullptr);
           SetStdHandle (STD_OUTPUT_HANDLE, logf);
           SetStdHandle (STD_ERROR_HANDLE, logf);
         }
@@ -342,7 +339,7 @@ Test::run ()
       char msg[256];
       sprintf (msg, "Exception in %s caught by labview_test_controller\n",
                this->name_);
-      WriteFile (logf, msg, (DWORD)strlen(msg), &bl, 0);
+      WriteFile (logf, msg, (DWORD)strlen(msg), &bl, nullptr);
       FlushFileBuffers (logf);
       CloseHandle (logf);
       throw;
@@ -361,7 +358,7 @@ Test::start (const char *name)
   if (this->running_)
     return "Already running\n";
 
-  const char *msg = 0;
+  const char *msg {};
 
   // Reset test status to not inadvertantly report a previous test.
   this->status_ = -1;
@@ -375,9 +372,9 @@ Test::start (const char *name)
   this->argv_[0] = this->name_;
   this->argc_ = 1;
   size_t cmdchars = 0;
-  for (char *token = strtok (0, "\t \n\r");
-       token != 0 && (cmdchars + strlen (token) + 1) < CMDLINE_LEN;
-       token = strtok (0, "\t \n\r"))
+  for (char *token = strtok (nullptr, "\t \n\r");
+       token != nullptr && (cmdchars + strlen (token) + 1) < CMDLINE_LEN;
+       token = strtok (nullptr, "\t \n\r"))
     {
       // We have a new token and it will fit in cmdline_. Copy it to the
       // next spot in cmdline_, add it to argv_/argc_ then update cmdchars
@@ -389,11 +386,11 @@ Test::start (const char *name)
     }
   char libspec[1024];
   sprintf (libspec, "%s.dll", name);
-  if ((this->dll_handle_ = LoadLibrary (libspec)) == NULL)
+  if ((this->dll_handle_ = LoadLibrary (libspec)) == nullptr)
     return format_errmsg (GetLastError (), libspec);
 
   this->entry_ = (TEST_FUNC) GetProcAddress (this->dll_handle_, "main");
-  if (this->entry_ == NULL)
+  if (this->entry_ == nullptr)
     {
       msg = format_errmsg (GetLastError (), "main");
       this->cleanup ();
@@ -402,7 +399,7 @@ Test::start (const char *name)
   else
     {
       unsigned int thread_id; /* unused */
-      uintptr_t h = _beginthreadex (0,             // security
+      uintptr_t h = _beginthreadex (nullptr,       // security
                                     1024 * 1024,   // stack size
                                     run_test,      // entrypoint
                                     (void *)this,  // arglist
@@ -452,20 +449,20 @@ Test::kill ()
 void
 Test::cleanup ()
 {
-  if (this->dll_handle_ != NULL)
+  if (this->dll_handle_ != nullptr)
     {
       FreeLibrary (this->dll_handle_);
-      this->dll_handle_ = NULL;
+      this->dll_handle_ = nullptr;
     }
-  if (this->thr_handle_ != 0)
+  if (this->thr_handle_ != nullptr)
     {
       CloseHandle (this->thr_handle_);
-      this->thr_handle_ = 0;
+      this->thr_handle_ = nullptr;
     }
-  this->entry_   = 0;
+  this->entry_   = nullptr;
   this->argc_ = 0;
   for (int i = 0; i < ARGV_SIZE; ++i)
-    this->argv_[i] = 0;
+    this->argv_[i] = nullptr;
   memset (this->cmdline_, 0, CMDLINE_LEN);
 }
 
@@ -518,28 +515,32 @@ test_control (void * /* param */)
     {
       listen (acceptor, 10);
       SOCKET peer;
-      while ((peer = accept (acceptor, 0, 0)) != INVALID_SOCKET)
+      while ((peer = accept (acceptor, nullptr, nullptr)) != INVALID_SOCKET)
         {
-          Peer *p = new Peer (peer);
-          if (p == 0)
+          std::unique_ptr<Peer> p (new (std::nothrow) Peer (peer));
+          if (p == nullptr)
             {
               perror ("Out of memory");
               closesocket (peer);
               peer = INVALID_SOCKET;
               continue;
             }
-          if (0 == _beginthreadex (0,            // security
-                                   64 * 1024,    // stack size
-                                   peer_svc,     // entrypoint
-                                   (void *)p,    // param
-                                   0,            // creation flags
-                                   0))           // ptr to thread id
+          auto const thread_handle = _beginthreadex (0,            // security
+                                                     64 * 1024,    // stack size
+                                                     peer_svc,     // entrypoint
+                                                     p.get (),     // param
+                                                     0,            // creation flags
+                                                     0);           // ptr to thread id
+          if (thread_handle == 0)
             {
               perror ("beginthreadex peer");
               closesocket (peer);
-              delete p;
             }
-          p = 0;
+          else
+            {
+              p.release ();
+              ::CloseHandle (reinterpret_cast<HANDLE> (thread_handle));
+            }
           peer = INVALID_SOCKET;
         }
       perror ("accept");
@@ -579,9 +580,9 @@ format_errmsg (unsigned int errcode, const char *prefix)
   static char errmsg[errmsgsize];
 
   sprintf (errmsg, "%s: ", prefix);
-  size_t len = strlen (errmsg);
+  const size_t len = strlen (errmsg);
   char *next = &errmsg[len];
-  size_t max_fmt = errmsgsize - len;
+  const size_t max_fmt = errmsgsize - len;
   if (0 != FormatMessage (FORMAT_MESSAGE_FROM_SYSTEM |
                           FORMAT_MESSAGE_IGNORE_INSERTS,
                           0,
@@ -597,7 +598,7 @@ format_errmsg (unsigned int errcode, const char *prefix)
 
   errno = errcode;
   char *msg = _strerror (prefix);
-  sprintf (errmsg, "err %d: %s", errcode, msg);
+  sprintf (errmsg, "err %u: %s", errcode, msg);
   return errmsg;
 }
 

@@ -8,11 +8,9 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_AV_TRANSPORT_H
 #define TAO_AV_TRANSPORT_H
 #include /**/ "ace/pre.h"
-
 
 #include "orbsvcs/AV/FlowSpec_Entry.h"
 #include "orbsvcs/AV/AV_Core.h"
@@ -26,6 +24,7 @@
 #include "ace/Connector.h"
 #include "ace/Addr.h"
 #include "ace/SOCK_Dgram.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -45,7 +44,7 @@ class TAO_AV_Export TAO_AV_Transport_Item
 public:
   /// Creator method, the Transport name can only be set when the
   /// object is created.
-  TAO_AV_Transport_Item (const ACE_CString &name);
+  explicit TAO_AV_Transport_Item (ACE_CString const &name);
   TAO_AV_Transport_Item (TAO_AV_Transport_Item const &) = delete;
   TAO_AV_Transport_Item &operator= (TAO_AV_Transport_Item const &) = delete;
   TAO_AV_Transport_Item (TAO_AV_Transport_Item &&) = delete;
@@ -53,7 +52,7 @@ public:
 
   /// Return a reference to the character representation of the Transport
   /// factories name.
-  const ACE_CString &name ();
+  ACE_CString const &name ();
 
   /// Return a pointer to the Transport factory.
   TAO_AV_Transport_Factory *factory ();
@@ -65,8 +64,8 @@ private:
   /// Transport factory name.
   ACE_CString name_;
 
-  /// Pointer to factory object.
-  TAO_AV_Transport_Factory *factory_;
+  /// Non-owning pointer; AV_Core conditionally deletes the factory by ref_count.
+  TAO_AV_Transport_Factory *factory_ {};
 };
 
 class TAO_AV_Flow_Protocol_Factory;
@@ -80,7 +79,7 @@ class TAO_AV_Export TAO_AV_Flow_Protocol_Item
 public:
   /// creator method, the Flow_Protocol name can only be set when the
   /// object is created.
-  TAO_AV_Flow_Protocol_Item (const ACE_CString &name);
+  explicit TAO_AV_Flow_Protocol_Item (ACE_CString const &name);
   TAO_AV_Flow_Protocol_Item (TAO_AV_Flow_Protocol_Item const &) = delete;
   TAO_AV_Flow_Protocol_Item &operator= (TAO_AV_Flow_Protocol_Item const &) = delete;
   TAO_AV_Flow_Protocol_Item (TAO_AV_Flow_Protocol_Item &&) = delete;
@@ -88,7 +87,7 @@ public:
 
   /// return a reference to the character representation of the Flow_Protocol
   /// factories name.
-  const ACE_CString &name ();
+  ACE_CString const &name ();
 
   /// return a pointer to the Flow_Protocol factory.
   TAO_AV_Flow_Protocol_Factory *factory ();
@@ -100,8 +99,8 @@ private:
   /// Flow_Protocol factory name.
   ACE_CString name_;
 
-  /// pointer to factory object.
-  TAO_AV_Flow_Protocol_Factory *factory_;
+  /// Non-owning pointer; AV_Core conditionally deletes the factory by ref_count.
+  TAO_AV_Flow_Protocol_Factory *factory_ {};
 };
 
 /**
@@ -111,7 +110,6 @@ private:
 class TAO_AV_Export TAO_AV_Flow_Handler
 {
 public:
-  /// Constructor.
   TAO_AV_Flow_Handler ();
 
   virtual ~TAO_AV_Flow_Handler ();
@@ -149,12 +147,12 @@ public:
   virtual int change_qos (AVStreams::QoS);
 
 protected:
-  TAO_AV_Transport *transport_;
-  TAO_AV_Callback *callback_;
-  TAO_AV_Protocol_Object *protocol_object_;
-  long timer_id_;
-  ACE_Reactor *reactor_;
-  void *timeout_arg_;
+  std::unique_ptr<TAO_AV_Transport> transport_;
+  TAO_AV_Callback *callback_ {};
+  TAO_AV_Protocol_Object *protocol_object_ {};
+  long timer_id_ {-1};
+  ACE_Reactor *reactor_ {};
+  void *timeout_arg_ {};
 };
 
 //  Transports
@@ -242,12 +240,12 @@ public:
                             TAO_AV_Flow_Protocol_Factory *factory,
                             TAO_AV_Core::Flow_Component flow_comp) = 0;
 
-  const char *flowname ();
+  char const *flowname ();
   virtual int close () = 0;
 protected:
   ACE_CString flowname_;
-  TAO_AV_Core *av_core_;
-  ACE_Addr *address_;
+  TAO_AV_Core *av_core_ {};
+  ACE_Addr *address_ {};
 };
 
 /**
@@ -263,7 +261,7 @@ public:
   TAO_AV_Connector &operator= (TAO_AV_Connector const &) = delete;
   TAO_AV_Connector (TAO_AV_Connector &&) = delete;
   TAO_AV_Connector &operator= (TAO_AV_Connector &&) = delete;
-  const char *flowname ();
+  char const *flowname ();
 
   virtual int open (TAO_Base_StreamEndPoint *endpoint,
                     TAO_AV_Core *av_core,
@@ -278,8 +276,8 @@ protected:
   ACE_CString flowname_;
 };
 
-using TAO_AV_ConnectorSet = ACE_Unbounded_Set<TAO_AV_Connector*>;
-using TAO_AV_ConnectorSetItor = ACE_Unbounded_Set_Iterator<TAO_AV_Connector*>;
+using TAO_AV_ConnectorSet = ACE_Unbounded_Set<TAO_AV_Connector *>;
+using TAO_AV_ConnectorSetItor = TAO_AV_ConnectorSet::iterator;
 
 /**
  * @class TAO_AV_Connector_Registry
@@ -311,8 +309,8 @@ protected:
   TAO_AV_ConnectorSet connectors_;
 };
 
-using TAO_AV_AcceptorSet = ACE_Unbounded_Set<TAO_AV_Acceptor*>;
-using TAO_AV_AcceptorSetItor = ACE_Unbounded_Set_Iterator<TAO_AV_Acceptor*>;
+using TAO_AV_AcceptorSet = ACE_Unbounded_Set<TAO_AV_Acceptor *>;
+using TAO_AV_AcceptorSetItor = TAO_AV_AcceptorSet::iterator;
 
 /**
  * @class TAO_AV_Acceptor_Registry
@@ -355,11 +353,11 @@ public:
   TAO_AV_Transport_Factory &operator= (TAO_AV_Transport_Factory const &) = delete;
   TAO_AV_Transport_Factory (TAO_AV_Transport_Factory &&) = delete;
   TAO_AV_Transport_Factory &operator= (TAO_AV_Transport_Factory &&) = delete;
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int match_protocol (const char *protocol_string);
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  virtual int match_protocol (char const *protocol_string);
   virtual TAO_AV_Acceptor *make_acceptor ();
   virtual TAO_AV_Connector *make_connector ();
-  int ref_count;
+  int ref_count {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

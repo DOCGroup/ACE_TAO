@@ -1,21 +1,19 @@
 #ifndef TAO_FT_CORBA_ORB_IDL
 #define TAO_FT_CORBA_ORB_IDL
 
-// Including the $TAO_ROOT/tao one so that we dont depend on the
-// Svc_Utils
+/// Including the $TAO_ROOT/tao one so that we dont depend on the
+/// Svc_Utils
 #include "tao/TimeBase.pidl" // 98-10.47.idl
-// Proprietary includes for TAO
+/// Proprietary includes for TAO
 #include "tao/IOP.pidl" // from 98-03-01.idl
 #include "tao/GIOP.pidl" // from 98-03-01.idl
 #include "tao/Policy.pidl"
 
 #include "PortableGroup_Simple_DS.idl"
 
-
 #pragma prefix "omg.org"
 
-
-// These have been moved to the file IOP.pidl
+/// These have been moved to the file IOP.pidl
 module FT
 {
   /// FTDomainId's are denoted as strings

@@ -14,9 +14,7 @@
 #include "jaws3/THYBRID_Concurrency.h"
 #include "jaws3/Options.h"
 
-
 using JAWS_Empty_Message_Block = ACE_Singleton<ACE_Message_Block, ACE_SYNCH_NULL_MUTEX>;
-
 
 int
 JAWS_Concurrency_Impl::svc ()
@@ -25,8 +23,10 @@ JAWS_Concurrency_Impl::svc ()
 
   while (this->getq (ph) != -1)
     {
-      if (ph == 0)
+      if (ph == nullptr)
+      {
         continue;
+      }
 
       if (ph->service () == -1)
         {
@@ -40,17 +40,18 @@ JAWS_Concurrency_Impl::svc ()
   return 0;
 }
 
-
 JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>
 ::JAWS_Concurrency_Bridge (JAWS_Concurrency_Impl *impl)
   : impl_ (impl)
 {
-  if (this->impl_ == 0)
+  if (this->impl_ == nullptr)
     {
-      const char *concurrency;
+      char const *concurrency;
       concurrency = JAWS_Options::instance ()->getenv ("JAWS_CONCURRENCY");
-      if (concurrency == 0)
+      if (concurrency == nullptr)
+      {
         concurrency = JAWS_DEFAULT_CONCURRENCY;
+      }
 
       if (ACE_OS::strcasecmp (concurrency, "TPR") == 0)
         this->impl_ = JAWS_TPR_Concurrency::instance ();
@@ -59,12 +60,13 @@ JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>
       else if (ACE_OS::strcasecmp (concurrency, "THYBRID") == 0)
         this->impl_ = JAWS_THYBRID_Concurrency::instance ();
       else
+      {
         this->impl_ = JAWS_THYBRID_Concurrency::instance ();
+      }
         // Since synchronous IO is the default IO, need an aggressive
         // default concurrency mechanism.
     }
 }
-
 
 int
 JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>
@@ -73,14 +75,12 @@ JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>
   return this->impl_->putq (ph);
 }
 
-
 int
 JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>
 ::getq (JAWS_Protocol_Handler *&ph)
 {
   return this->impl_->getq (ph);
 }
-
 
 void
 JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>::shutdown ()

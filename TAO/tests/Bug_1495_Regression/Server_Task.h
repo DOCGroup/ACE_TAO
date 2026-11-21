@@ -22,7 +22,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 class Server_Task : public ACE_Task_Base
 {
   public:
-    /// Constructor
     Server_Task (ACE_TCHAR const *output,
                  CORBA::ORB_ptr sorb,
                  ACE_Manual_Event &me,
@@ -36,15 +35,16 @@ class Server_Task : public ACE_Task_Base
     int svc () override;
 
   private:
-    /// Output file for the server IOR
-    ACE_TCHAR const *output_;
+    /// Borrowed command-line path; argv outlives this task.
+    ACE_TCHAR const * const output_;
 
     /// Manual thread event to signal the main thread to create
     /// the client thread.
+    /// Borrowed; the event outlives this task.
     ACE_Manual_Event &me_;
 
     /// Points to my ORB.
-    CORBA::ORB_var sorb_;
+    CORBA::ORB_var const sorb_;
 };
 
 #include /**/ "ace/post.h"

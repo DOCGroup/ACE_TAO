@@ -1,13 +1,8 @@
 /* -*- C++ -*- */
-//
-// ============================================================================
-//
-// = DESCRIPTION
-//   This test to measure how many events per minute can the EC
-//   process, it also serves as an example how how to encode complex
-//   data types in a octet sequence.
-//
-// ============================================================================
+/**
+ * @file ECT_Consumer_Driver.h
+ * @brief Driver for the remote Event Channel throughput consumer.
+ */
 
 #ifndef ECT_CONSUMER_DRIVER_H
 #define ECT_CONSUMER_DRIVER_H
@@ -23,75 +18,61 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "ace/Task.h"
 #include "ace/High_Res_Timer.h"
+#include "orbsvcs/Event_Service_Constants.h"
+#include <array>
+#include <memory>
 
+/// Connects consumers to a remote event channel and reports throughput.
 class ECT_Consumer_Driver : public ECT_Driver
 {
-  //
-  // = TITLE
-  //
-  // = DESCRIPTION
-  //
 public:
-  ECT_Consumer_Driver ();
-  ~ECT_Consumer_Driver () override;
+  ECT_Consumer_Driver () = default;
 
-  enum {
-    MAX_CONSUMERS = 16
-    // Maximum number of consumers.
-  };
+  ECT_Consumer_Driver (ECT_Consumer_Driver const&) = delete;
+  ECT_Consumer_Driver (ECT_Consumer_Driver&&) = delete;
+  ECT_Consumer_Driver& operator= (ECT_Consumer_Driver const&) = delete;
+  ECT_Consumer_Driver& operator= (ECT_Consumer_Driver&&) = delete;
 
+  static constexpr int MAX_CONSUMERS {16};
+
+  /// Connect to the named services, receive events, and print results.
   int run (int argc, ACE_TCHAR* argv[]);
-  // Execute the test.
 
-  void shutdown_consumer (void* consumer_cookie) override;
-  // Callback method for consumers, each consumer will call this
-  // method once it receives all the shutdown events from the
-  // suppliers.
+  /// Called after a consumer receives all supplier shutdown events.
+  void shutdown_consumer () override;
 
 private:
+  /// Parse test-specific command-line options.
   int parse_args (int argc, ACE_TCHAR* argv[]);
-  // parse the command line args
 
+  /// Connect and disconnect all configured consumers.
   void connect_consumers (RtecScheduler::Scheduler_ptr scheduler,
                           RtecEventChannelAdmin::EventChannel_ptr local_ec);
   void disconnect_consumers ();
-  // Connect and disconnect the consumers.
 
+  /// Print per-consumer and aggregate throughput results.
   void dump_results ();
-  // Print out the results
 
 private:
-  Test_Consumer* consumers_[ECT_Consumer_Driver::MAX_CONSUMERS];
-  // The consumer array.
+  struct Options
+  {
+    int n_consumers {1};
+    int n_suppliers {1};
+    int type_start {ACE_ES_EVENT_UNDEFINED};
+    int type_count {1};
+    int stall_length {};
+    bool shutdown_event_channel {true};
+    ACE_TCHAR const* pid_file_name {};
+  } options_;
 
-  int n_consumers_;
-  // The number of consumers.
+  /// Own consumers; disconnect() releases their POA references.
+  std::array<std::unique_ptr<Test_Consumer>, MAX_CONSUMERS> consumers_ {};
 
-  int n_suppliers_;
-  // How many suppliers are sending events, used for shutdown, each
-  // supplier sends a shutdown message after it finishes, the consumer
-  // finishes when all the suppliers do.
-
-  int type_start_;
-  int type_count_;
-  // We receive the events whose type is in the range
-  // [type_start,type_start+type_count)
-
-  int stall_length_;
-  // How long (in seconds) the consumer will wait after receiving the first event.
-
-  int shutdown_event_channel_;
-  // If not zero it will shutdown the event channel upon exit.
-
-  const ACE_TCHAR* pid_file_name_;
-  // The name of a file where the process stores its pid
-
-  CORBA::ORB_var orb_;
-  // A reference to the ORB, to shut it down properly.
+  /// ORB used by this driver.
+  CORBA::ORB_var orb_ {};
 
   TAO_SYNCH_MUTEX lock_;
-  int active_count_;
-  // How many consumers are still receiving events.
+  int active_count_ {};
 };
 
 #endif /* ECT_CONSUMER_DRIVER_H */

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    IORInterceptor_Details.h
  *
@@ -13,7 +12,6 @@
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_IOR_INTERCEPTOR_DETAILS_H
 #define TAO_IOR_INTERCEPTOR_DETAILS_H
@@ -49,7 +47,7 @@ namespace TAO
   class IORInterceptor_Details
   {
   public:
-    void apply_policies (const CORBA::PolicyList& policies);
+    void apply_policies (CORBA::PolicyList const &policies);
   };
 }
 

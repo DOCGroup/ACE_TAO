@@ -6,16 +6,14 @@
 
 Current_Test_Impl::Current_Test_Impl (CORBA::ORB_ptr orb,
                                       PortableServer::POA_ptr poa,
-                                      int do_collocated_calls)
+                                      bool do_collocated_calls)
     : orb_ (CORBA::ORB::_duplicate (orb))
     , poa_ (PortableServer::POA::_duplicate (poa))
     , do_collocated_calls_ (do_collocated_calls)
 {
 }
 
-Current_Test_Impl::~Current_Test_Impl ()
-{
-}
+Current_Test_Impl::~Current_Test_Impl () = default;
 
 ::CORBA::Long
 Current_Test_Impl::self_test ()
@@ -56,7 +54,6 @@ Current_Test_Impl::test_transport_current ()
                 ACE_TEXT ("(%P|%t) server - Successfully accessed IIOP Transport Current\n")));
   }
 }
-
 
 void
 Current_Test_Impl::invoked_by_client ()

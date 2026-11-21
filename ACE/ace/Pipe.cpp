@@ -32,8 +32,10 @@ ACE_Pipe::dump () const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Pipe::dump");
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("handles_[0] = %d"), this->handles_[0]));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nhandles_[1] = %d\n"), this->handles_[1]));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("handles_[0] = %H"),
+                 this->handles_[0]));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nhandles_[1] = %H\n"),
+                 this->handles_[1]));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -61,14 +63,18 @@ ACE_Pipe::open (int buffer_size)
   ACE_OS::snprintf (addr.sun_path, sizeof addr.sun_path, "/tmp/ACE-Pipe-%d-%p",
                     ACE_OS::rand_r (&seed), this);
 
-  if (ACE_OS::bind (this->handles_[0], (sockaddr*) &addr, sizeof addr) == -1)
+  if (ACE_OS::bind (this->handles_[0],
+                    reinterpret_cast<sockaddr *> (&addr),
+                    sizeof addr) == -1)
     {
       this->close ();
       return -1;
     }
 
   if ((this->handles_[1] = ACE_OS::socket (AF_LOCAL, SOCK_DGRAM, 0)) == -1 ||
-      ACE_OS::connect (this->handles_[1], (sockaddr*) &addr, sizeof addr) == -1)
+      ACE_OS::connect (this->handles_[1],
+                       reinterpret_cast<sockaddr *> (&addr),
+                       sizeof addr) == -1)
     {
       ACE_OS::unlink (addr.sun_path);
       this->close ();
@@ -117,7 +123,9 @@ ACE_Pipe::open (int buffer_size)
   // Close down the acceptor endpoint since we don't need it anymore.
   acceptor.close ();
   if (result == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   this->handles_[0] = reader.get_handle ();
   this->handles_[1] = writer.get_handle ();
@@ -168,10 +176,12 @@ ACE_Pipe::open (int buffer_size)
 #elif defined (ACE_HAS_STREAM_PIPES) || defined (__QNX__)
   ACE_UNUSED_ARG (buffer_size);
   if (ACE_OS::pipe (this->handles_) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("pipe")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("pipe")),
+                           -1);
+    }
 
 # if !defined(__QNX__)
   int arg = RMSGN;
@@ -197,10 +207,12 @@ ACE_Pipe::open (int buffer_size)
                           SOCK_STREAM,
                           0,
                           this->handles_) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("socketpair")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("socketpair")),
+                          -1);
+    }
 # if defined (ACE_LACKS_SO_SNDBUF) && defined (ACE_LACKS_SO_RCVBUF)
   ACE_UNUSED_ARG (buffer_size);
 # endif
@@ -241,7 +253,9 @@ ACE_Pipe::open (ACE_HANDLE handles[2])
   ACE_TRACE ("ACE_Pipe::open");
 
   if (this->open () == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       handles[0] = this->handles_[0];
@@ -265,8 +279,10 @@ ACE_Pipe::ACE_Pipe (ACE_HANDLE handles[2])
   ACE_TRACE ("ACE_Pipe::ACE_Pipe");
 
   if (this->open (handles) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("ACE_Pipe::ACE_Pipe")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("ACE_Pipe::ACE_Pipe")));
+    }
 }
 
 ACE_Pipe::ACE_Pipe (ACE_HANDLE read,

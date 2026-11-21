@@ -23,10 +23,9 @@ LifeCycle::parse_args (int argc,
     ACE_Arg_Shifter arg_shifter (argc,
                                  argv);
 
-    const ACE_TCHAR *current_arg = 0;
-
     while (arg_shifter.is_anything_left ())
     {
+      ACE_TCHAR const *current_arg {};
       if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-count"))))
         {
           this->count_ = ACE_OS::atoi (current_arg);
@@ -93,7 +92,7 @@ LifeCycle::init (int argc, ACE_TCHAR *argv[])
 void
 LifeCycle::run_test()
 {
-  for (int i = 0; i < this->count_; ++i)
+  for (int i {}; i < this->count_; ++i)
     {
      this->create_ec ();
 
@@ -204,7 +203,6 @@ LifeCycle::destroy_ec ()
                 "destroyed event channel\n"));
 }
 
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
@@ -220,7 +218,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       test.run_test ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Error: ");
       return 1;

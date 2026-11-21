@@ -1,15 +1,7 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This simple test exercises and illustrates use of OS wrapper functions.
-//
-// = AUTHOR
-//    Steve Huston <shuston@riverace.com>
-//
-// ============================================================================
+/// @file OS_Test.cpp
+/// This simple test exercises and illustrates use of OS wrapper functions.
+///
+/// @author Steve Huston <shuston@riverace.com>
 
 #include "test_config.h"
 #include "ace/ACE.h"
@@ -52,9 +44,11 @@ access_test ()
   if (status == -1)
     {
       if (errno == ENOTSUP)
-        ACE_ERROR_RETURN ((LM_INFO,
-                           ACE_TEXT ("ACE_OS::access() not supported\n")),
-                          0);
+        {
+          ACE_ERROR_RETURN ((LM_INFO,
+                             ACE_TEXT ("ACE_OS::access() not supported\n")),
+                            0);
+        }
     }
   else
     {
@@ -88,11 +82,13 @@ rename_test ()
   // is verified.
   FILE *f = ACE_OS::fopen (old_file, ACE_TEXT ("w+"));
   if (f == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%s: %p\n"),
-                       old_file,
-                       ACE_TEXT ("fopen")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%s: %p\n"),
+                         old_file,
+                         ACE_TEXT ("fopen")),
+                        -1);
+    }
   // Write something in the old_file so it has non-zero length
   ACE_OS::fwrite (ACE_TEXT ("this is a test\n"), sizeof (ACE_TCHAR), 15, f);
   ACE_OS::fclose (f);
@@ -136,7 +132,9 @@ rename_test ()
                   ACE_TEXT ("Rename test 1: old_file still there\n")));
     }
   if (result == 0)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Rename when dest. exists: success\n")));
+  }
 
   // Now test 2 - rename when the new file does not exist. If test 1 worked,
   // the old_file is now new_file and there is no old_file.
@@ -160,14 +158,18 @@ rename_test ()
                   ACE_TEXT ("Rename test 2: old_file still there\n")));
     }
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Rename when dest. gone: success\n")));
+  }
 
   ACE_OS::unlink (new_file);
   ACE_OS::unlink (old_file);
 
   // Test 3: It should fail... there are no files.
   if (ACE_OS::rename (old_file, new_file) == -1)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Rename test 3 should bomb, and did.\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Rename test 3 should bomb, and did.\n")));
+    }
   else
     {
       result = -1;
@@ -318,7 +320,6 @@ string_emulation_test ()
 
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strcmp (ACE_OS::itoa (42, itow1, 16),
                                 ACE_TEXT_WIDE ("2a")) == 0);
-
 
     //FUZZ: disable check_for_lack_ACE_OS
     // ========================================================================
@@ -570,7 +571,6 @@ string_emulation_test ()
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strtok (nullptr, ACE_TEXT_WIDE (" ")) == nullptr);
 #  endif /* ACE_LACKS_WCSTOK */
 
-
   }
 #endif /* ACE_HAS_WCHAR */
 
@@ -663,7 +663,9 @@ getpwnam_r_test ()
 
   const char* login = getlogin ();
   if (login == nullptr)
+  {
     login = "root";
+  }
 
   if (ACE_OS::getpwnam_r (login,
                           &pwd,
@@ -719,7 +721,9 @@ version_test ()
               compile_time_check ? ACE_TEXT ("OK") : ACE_TEXT ("FAIL")));
 
   if(run_time_check && compile_time_check)
+  {
     return 0;
+  }
   return 1;
 }
 
@@ -787,7 +791,6 @@ ctime_r_test ()
 
   return result;
 }
-
 
 int
 string_strsncpy_test ()
@@ -934,7 +937,6 @@ string_strsncpy_test ()
   return 0;
 }
 
-
 // Test conversion between narrow and wide chars.
 int
 string_convert_test ()
@@ -993,7 +995,7 @@ strsignal_test ()
 
   int test_status = 0;
 
-  const char* result = nullptr;
+  const char* result {};
 
   for (int i=-1; i < (ACE_NSIG + 1); ++i)
     {
@@ -1031,8 +1033,8 @@ cpu_info_test ()
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("This system has %d processors\n"),
-                  number_processors));
+                  ACE_TEXT ("This system has %q processors\n"),
+                  static_cast<ACE_INT64> (number_processors)));
     }
 
   if (number_processors_online == -1)
@@ -1044,17 +1046,19 @@ cpu_info_test ()
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("This system has %d processors online\n"),
-                  number_processors_online));
+                  ACE_TEXT ("This system has %q processors online\n"),
+                  static_cast<ACE_INT64> (number_processors_online)));
     }
 
   if ((number_processors_online != -1 && number_processors != -1) &&
       number_processors_online > number_processors)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%d online processors; should be <= %d\n"),
-                       number_processors_online,
-                       number_processors),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%q online processors; should be <= %q\n"),
+                         static_cast<ACE_INT64> (number_processors_online),
+                         static_cast<ACE_INT64> (number_processors)),
+                        -1);
+    }
 
   return 0;
 }
@@ -1090,14 +1094,15 @@ pagesize_test ()
   if (pagesize <= 0)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, pagesize should return a value bigger ")
-                            ACE_TEXT ("then zero, it returned %d\n"), pagesize));
+                            ACE_TEXT ("then zero, it returned %q\n"),
+                            static_cast<ACE_INT64> (pagesize)));
       return 1;
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Pagesize returned %d\n"),
-                  pagesize));
+                  ACE_TEXT ("Pagesize returned %q\n"),
+                  static_cast<ACE_INT64> (pagesize)));
     }
   return 0;
 }
@@ -1222,7 +1227,7 @@ ceilf_test ()
   float result = 0.0;
   int error_count = 0;
 
-  for (size_t i = 0 ; i < sizeof (values) / sizeof (float) ; i++)
+  for (size_t i = 0 ; i < sizeof (values) / sizeof (float) ; ++i)
     {
       result = ACE_OS::ceil (values [i]);
       if (ACE::is_inequal(result, results[i]))
@@ -1250,7 +1255,7 @@ floorf_test ()
   float result = 0.0;
   int error_count = 0;
 
-  for (size_t i = 0 ; i < sizeof (values) / sizeof (float) ; i++)
+  for (size_t i = 0 ; i < sizeof (values) / sizeof (float) ; ++i)
     {
       result = ACE_OS::floor (values [i]);
       if (ACE::is_inequal(result, results[i]))
@@ -1276,7 +1281,7 @@ ceil_test ()
   double result = 0.0;
   int error_count = 0;
 
-  for (size_t i = 0 ; i < sizeof (values) / sizeof (double) ; i++)
+  for (size_t i = 0 ; i < sizeof (values) / sizeof (double) ; ++i)
     {
       result = ACE_OS::ceil (values [i]);
       if (ACE::is_inequal(result, results[i]))
@@ -1304,7 +1309,7 @@ floor_test ()
   double result = 0.0;
   int error_count = 0;
 
-  for (size_t i = 0 ; i < sizeof (values) / sizeof (double) ; i++)
+  for (size_t i = 0 ; i < sizeof (values) / sizeof (double) ; ++i)
     {
       result = ACE_OS::floor (values [i]);
       if (ACE::is_inequal(result, results[i]))
@@ -1332,7 +1337,7 @@ ceill_test ()
   long double result = 0.0;
   int error_count = 0;
 
-  for (size_t i = 0 ; i < sizeof (values) / sizeof (long double) ; i++)
+  for (size_t i = 0 ; i < sizeof (values) / sizeof (long double) ; ++i)
     {
       result = ACE_OS::ceil (values [i]);
       if (ACE::is_inequal(result, results[i]))
@@ -1360,7 +1365,7 @@ floorl_test ()
   long double result = 0.0;
   int error_count = 0;
 
-  for (size_t i = 0 ; i < sizeof (values) / sizeof (long double) ; i++)
+  for (size_t i = 0 ; i < sizeof (values) / sizeof (long double) ; ++i)
     {
       result = ACE_OS::floor (values [i]);
       if (ACE::is_inequal(result, results[i]))
@@ -1386,7 +1391,7 @@ log2_test ()
   int result = 0;
   int error_count = 0;
 
-  for (size_t i = 0 ; i < sizeof (values) / sizeof (double) ; i++)
+  for (size_t i = 0 ; i < sizeof (values) / sizeof (double) ; ++i)
     {
       result = static_cast<int> (ACE_OS::log2 (values [i]) + 0.5);
       if (result != results [i])
@@ -1637,16 +1642,24 @@ run_main (int, ACE_TCHAR *[])
   int result;
 
   if ((result = access_test ()) != 0)
+  {
     status = result;
+  }
 
   if ((result = rename_test ()) != 0)
+  {
     status = result;
+  }
 
   if ((result = string_emulation_test ()) != 0)
+  {
     status = result;
+  }
 
   if ((result = snprintf_test (ACE_OS::snprintf)) != 0)
+  {
     status = result;
+  }
 
 #if defined (ACE_HAS_VSNPRINTF_EMULATION)
   if ((result = snprintf_test (snprintf_emulation)) != 0)
@@ -1657,61 +1670,99 @@ run_main (int, ACE_TCHAR *[])
 #endif
 
   if ((result = getpwnam_r_test ()) != 0)
+  {
     status = result;
+  }
 
   if ((result = ctime_r_test ()) != 0)
+  {
     status = result;
+  }
 
   if ((result = string_strsncpy_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = strsignal_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = cpu_info_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = pagesize_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = ceilf_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = floorf_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = ceil_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = floor_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = ceill_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = floorl_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = log2_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = last_error_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = ace_ctype_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = swab_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = compiler_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = version_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   if ((result = gai_strerror_test   ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   ACE_END_TEST;
   return status;

@@ -8,9 +8,7 @@ namespace TAO
     ::Compression::CompressorFactory_ptr compressor_factory,
     ::Compression::CompressionLevel compression_level)
     : compression_level_ (compression_level),
-      compressor_factory_ (compressor_factory),
-      compressed_bytes_ (0),
-      uncompressed_bytes_ (0)
+      compressor_factory_ (compressor_factory)
   {
   }
 
@@ -30,39 +28,27 @@ namespace TAO
   ::CORBA::ULongLong
   BaseCompressor::compressed_bytes ()
   {
-    ::CORBA::ULongLong return_value {};
-    {
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
-      return_value = compressed_bytes_;
-    }
-    return return_value;
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+    return this->compressed_bytes_;
   }
 
   ::CORBA::ULongLong
   BaseCompressor::uncompressed_bytes ()
   {
-    ::CORBA::ULongLong return_value {};
-    {
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
-      return_value = uncompressed_bytes_;
-    }
-    return return_value;
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+    return this->uncompressed_bytes_;
   }
 
   ::Compression::CompressionRatio
   BaseCompressor::compression_ratio ()
   {
-    ::Compression::CompressionRatio return_value {};
-    {
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
-      if (this->uncompressed_bytes_ > 0)
-        {
-          return_value =
-            static_cast< ::Compression::CompressionRatio>
-              ((::Compression::CompressionRatio) this->compressed_bytes_ / this->uncompressed_bytes_);
-        }
-    }
-    return return_value;
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+    if (this->uncompressed_bytes_ > 0)
+      {
+        return static_cast< ::Compression::CompressionRatio> (this->compressed_bytes_)
+          / this->uncompressed_bytes_;
+      }
+    return {};
   }
 
   void

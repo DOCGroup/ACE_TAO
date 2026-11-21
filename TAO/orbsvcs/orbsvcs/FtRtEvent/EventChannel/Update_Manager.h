@@ -30,17 +30,17 @@ public:
     int num_backups,
     int transaction_depth,
     bool& success);
-  ~Update_Manager();
+  ~Update_Manager() = default;
 
   void handle_reply(int id);
   void handle_exception(int id);
 
-private:
   Update_Manager(Update_Manager const&) = delete;
   Update_Manager(Update_Manager&&) = delete;
   Update_Manager& operator=(Update_Manager const&) = delete;
   Update_Manager& operator=(Update_Manager&&) = delete;
 
+private:
   ACE_Auto_Event& evt_;
   bit_vector replied_;
   bit_vector signal_condition_;

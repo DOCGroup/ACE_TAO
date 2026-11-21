@@ -94,8 +94,12 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Default constructor.
   ACE_Singleton ();
+
+  ACE_Singleton (ACE_Singleton const &) = delete;
+  ACE_Singleton (ACE_Singleton &&) = delete;
+  ACE_Singleton &operator= (ACE_Singleton const &) = delete;
+  ACE_Singleton &operator= (ACE_Singleton &&) = delete;
 
   /// Contained instance.
   TYPE instance_;
@@ -141,8 +145,12 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Default constructor.
   ACE_Unmanaged_Singleton ();
+
+  ACE_Unmanaged_Singleton (ACE_Unmanaged_Singleton const &) = delete;
+  ACE_Unmanaged_Singleton (ACE_Unmanaged_Singleton &&) = delete;
+  ACE_Unmanaged_Singleton &operator= (ACE_Unmanaged_Singleton const &) = delete;
+  ACE_Unmanaged_Singleton &operator= (ACE_Unmanaged_Singleton &&) = delete;
 
   /// Pointer to the Singleton (ACE_Cleanup) instance.
   static ACE_Unmanaged_Singleton<TYPE, ACE_LOCK> *singleton_;
@@ -187,14 +195,15 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Default constructor.
   ACE_TSS_Singleton ();
 
   /// Contained instance.
   ACE_TSS_TYPE (TYPE) instance_;
 
-  void operator= (const ACE_TSS_Singleton<TYPE,ACE_LOCK> &) = delete;
-  ACE_TSS_Singleton (const ACE_TSS_Singleton<TYPE,ACE_LOCK> &) = delete;
+  ACE_TSS_Singleton (ACE_TSS_Singleton const &) = delete;
+  ACE_TSS_Singleton (ACE_TSS_Singleton &&) = delete;
+  ACE_TSS_Singleton &operator= (ACE_TSS_Singleton const &) = delete;
+  ACE_TSS_Singleton &operator= (ACE_TSS_Singleton &&) = delete;
 
   /// Pointer to the Singleton (ACE_Cleanup) instance.
   static ACE_TSS_Singleton<TYPE, ACE_LOCK> *singleton_;
@@ -233,8 +242,12 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Default constructor.
   ACE_Unmanaged_TSS_Singleton ();
+
+  ACE_Unmanaged_TSS_Singleton (ACE_Unmanaged_TSS_Singleton const &) = delete;
+  ACE_Unmanaged_TSS_Singleton (ACE_Unmanaged_TSS_Singleton &&) = delete;
+  ACE_Unmanaged_TSS_Singleton &operator= (ACE_Unmanaged_TSS_Singleton const &) = delete;
+  ACE_Unmanaged_TSS_Singleton &operator= (ACE_Unmanaged_TSS_Singleton &&) = delete;
 
   /// Pointer to the Singleton (ACE_Cleanup) instance.
   static ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK> *singleton_;
@@ -292,10 +305,13 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Default constructor.
   ACE_DLL_Singleton_T ();
 
-  /// Destructor.
+  ACE_DLL_Singleton_T (ACE_DLL_Singleton_T const &) = delete;
+  ACE_DLL_Singleton_T (ACE_DLL_Singleton_T &&) = delete;
+  ACE_DLL_Singleton_T &operator= (ACE_DLL_Singleton_T const &) = delete;
+  ACE_DLL_Singleton_T &operator= (ACE_DLL_Singleton_T &&) = delete;
+
   ~ACE_DLL_Singleton_T ();
 
   /// Contained instance.

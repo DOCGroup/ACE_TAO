@@ -18,7 +18,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Reactor.h"
 #include "ace/SOCK_Connector.h"
@@ -38,15 +37,15 @@ My_Accept_Handler::My_Accept_Handler (ACE_INET_Addr &addr)
   : addr_ (addr)
 {
   if (addr.get_port_number() != 0)
+  {
     this->open (addr);
+  }
 }
-
 
 My_Accept_Handler::~My_Accept_Handler ()
 {
   this->peer_acceptor_.close ();     // Prevent handle leaks
 }
-
 
 int
 My_Accept_Handler::open (ACE_INET_Addr &addr)
@@ -151,7 +150,9 @@ client (void *arg)
   int connected_port = server_addr.get_port_number ();
 
   if (connected_port > max_connected_port)
+  {
     max_connected_port = connected_port;
+  }
 
   cli_stream.close ();
 
@@ -193,7 +194,6 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       My_Accept_Handler *eh = new My_Accept_Handler (addr);
 
-
       if ( ACE_Reactor::instance()->register_handler (
                                          eh,
                                          ACE_Event_Handler::ACCEPT_MASK) == -1)
@@ -215,11 +215,12 @@ run_main (int argc, ACE_TCHAR *argv[])
            ACE_THR_FUNC (client),
            reinterpret_cast <void *> (&addr),
            THR_NEW_LWP | THR_DETACHED) == -1)
-
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) %p\n"),
-                           ACE_TEXT ("thread create failed")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) %p\n"),
+                             ACE_TEXT ("thread create failed")),
+                            1);
+        }
 
       ACE_Thread_Manager::instance ()->wait ();
 
@@ -241,7 +242,9 @@ run_main (int argc, ACE_TCHAR *argv[])
       if (eh->port () == idx)
         {
           if (idx > max_listened_port)
+          {
             max_listened_port = idx;
+          }
         }
       else
         {

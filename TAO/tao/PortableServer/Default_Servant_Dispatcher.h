@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Default_Servant_Dispatcher.h
  *
  *  @author Frank Hunleth (fhunleth@cs.wustl.edu)
  */
-//=============================================================================
-
 #ifndef Default_Servant_DISPATCHER_H
 #define Default_Servant_DISPATCHER_H
 #include /**/ "ace/pre.h"

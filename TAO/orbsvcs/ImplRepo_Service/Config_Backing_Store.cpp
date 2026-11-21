@@ -5,6 +5,8 @@
 #include "utils.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 static const ACE_TCHAR* STARTUP_COMMAND = ACE_TEXT("StartupCommand");
 static const ACE_TCHAR* WORKING_DIR = ACE_TEXT("WorkingDir");
 static const ACE_TCHAR* ENVIRONMENT = ACE_TEXT("Environment");
@@ -87,10 +89,12 @@ void Config_Backing_Store::loadActivators ()
 
           const ACE_CString name_cstr = ACE_TEXT_ALWAYS_CHAR (name.c_str ());
 
-          Activator_Info* ai = nullptr;
+          Activator_Info* ai {};
           ACE_NEW (ai, Activator_Info (name_cstr, token, ior));
 
-          Activator_Info_Ptr info (ai);
+          std::unique_ptr<Activator_Info> ai_owner (ai);
+          Activator_Info_Ptr info (ai_owner.get ());
+          ai_owner.release ();
           activators ().bind (lcase (name_cstr), info);
           ++index;
         }
@@ -107,7 +111,7 @@ Config_Backing_Store::loadServers ()
     {
       int index = 0;
       ACE_TString name;
-      Server_Info *si = nullptr;
+      Server_Info *si {};
       u_int tmp_int = 0;
       ACE_CString tmp;
 
@@ -118,7 +122,9 @@ Config_Backing_Store::loadServers ()
           if (this->servers ().find (name_cstr, info) != 0)
             {
               ACE_NEW (si, Server_Info);
-              info.reset (si);
+              std::unique_ptr<Server_Info> si_owner (si);
+              info.reset (si_owner.get ());
+              si_owner.release ();
               si->key_name_ = name_cstr;
             }
 
@@ -154,10 +160,12 @@ Config_Backing_Store::loadServers ()
               if (tmp.length () > 0 &&
                   this->servers ().find (tmp, si->alt_info_) != 0)
                 {
-                  Server_Info *base_si = nullptr;
+                  Server_Info *base_si {};
                   ACE_NEW (base_si, Server_Info);
+                  std::unique_ptr<Server_Info> base_si_owner (base_si);
                   base_si->key_name_ = tmp;
-                  si->alt_info_.reset (base_si);
+                  si->alt_info_.reset (base_si_owner.get ());
+                  base_si_owner.release ();
                   this->servers ().bind (tmp, si->alt_info_);
                 }
             }

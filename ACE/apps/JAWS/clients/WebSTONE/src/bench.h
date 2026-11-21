@@ -29,7 +29,6 @@
 #define MAXTOTALPROCS       MAXCLIENTS          /* overall max # of procs */
 #define MAXPROCSPERNODE     MAXCLIENTS          /* max # of procs/node */
 
-
 #define CONTENT_LENGTH_STRING   "CONTENT-LENGTH:"
 #define OKSTR               "OK"
 #define OKSTRLEN            ((int)strlen(OKSTR))
@@ -39,7 +38,6 @@
 #define READYSTRLEN         ((int)strlen(READYSTR))
 #define ABORTSTR            "ABORT"
 #define ABORTSTRLEN         ((int)strlen(ABORTSTR))
-
 
 #define MAXNUMOFFILES 1     /* max # of files per page */
 #define URL_SIZE            1024
@@ -207,7 +205,6 @@ typedef struct page_list {
     int                 port_number[MAXNUMOFFILES];
 }page_list_t;
 
-
 /* shared variables */
 extern THREAD FILE *debugfile;
 extern int debug;
@@ -254,7 +251,7 @@ extern double   timevaldouble(struct timeval *);
 extern void     doubletimeval(const double, struct timeval *);
 
 extern void     addtime(struct timeval *, struct timeval *);
-extern void     compdifftime(struct timeval *, struct timeval *, struct timeval *);
+extern void     compdifftime(const struct timeval *, const struct timeval *, struct timeval *);
 extern void     mintime(struct timeval *, struct timeval *);
 extern void     maxtime(struct timeval *, struct timeval *);
 extern void     avgtime(struct timeval *, int, struct timeval *);

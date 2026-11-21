@@ -8,7 +8,7 @@ Oneway_Buffering::Oneway_Buffering (CORBA::ORB_ptr orb,
 }
 
 void
-Oneway_Buffering::receive_data (const Test::Payload &the_payload)
+Oneway_Buffering::receive_data (Test::Payload const &the_payload)
 {
   this->admin_->request_received (the_payload.length ());
 }

@@ -15,11 +15,11 @@ This example uses the push/push model.
 In this example, the Notify Service initiation is incorporated into the
 MessengerServer.
 
-The MessengerSupplier in this example plays the role of a server for
+The MessengerServer in this example plays the role of a server for
 the MessengerClient and the role of a supplier for the MessengerConsumer.
 The flow of messages is shown below:
 
-MessengerClient->(MessengerSupplier->NotificationChannel)->MessengerConsumer.
+MessengerClient->(MessengerServer->NotificationChannel)->MessengerConsumer.
 
 How to Run
 ----------
@@ -38,7 +38,4 @@ To start the consumer
 
 To start the client
 -------------------
-./MessengerClient
-To start the client:
-------------------
 ./MessengerClient

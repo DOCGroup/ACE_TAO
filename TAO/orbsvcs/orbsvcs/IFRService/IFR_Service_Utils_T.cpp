@@ -55,8 +55,7 @@ void
 TAO_IFR_Generic_Utils<T>::set_initializers (
     const T &initializers,
     ACE_Configuration *config,
-    ACE_Configuration_Section_Key &key
-  )
+    ACE_Configuration_Section_Key &key)
 {
   CORBA::ULong length = initializers.length ();
 
@@ -195,8 +194,7 @@ TAO_Port_Desc_Seq_Utils<T_desc_seq>::port_descriptions (
     T_desc_seq &desc_seq,
     ACE_Configuration *config,
     ACE_Configuration_Section_Key &key,
-    char const *sub_section
-  )
+    char const *sub_section)
 {
   ACE_Configuration_Section_Key sub_key;
   int status = config->open_section (key,
@@ -269,8 +267,7 @@ TAO_Port_Desc_Seq_Utils<T_desc_seq>::get_is_multiple (
     T_desc_seq & /* desc_seq */,
     ACE_Configuration * /* config */,
     ACE_Configuration_Section_Key & /* key */,
-    CORBA::ULong /* index */
-  )
+    CORBA::ULong /* index */)
 {
   // All types except UsesDescription have no is_multiple member.
 }

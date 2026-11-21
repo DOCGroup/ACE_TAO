@@ -5,9 +5,8 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-//
-// ACE_Atomic_Op_Ex inline functions
-//
+/// @name ACE_Atomic_Op_Ex inline functions
+/// @{
 
 template <class ACE_LOCK, class TYPE>
 ACE_INLINE TYPE
@@ -190,9 +189,9 @@ ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator= (
   return *this;
 }
 
-//
-// ACE_Atomic_Op inline functions
-//
+/// @}
+/// @name ACE_Atomic_Op inline functions
+/// @{
 
 template <class ACE_LOCK, class TYPE> ACE_INLINE
 ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op (
@@ -201,7 +200,6 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op (
 {
   // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op");
 }
-
 
 template <class ACE_LOCK, class TYPE>
 ACE_INLINE ACE_Atomic_Op<ACE_LOCK, TYPE> &
@@ -342,5 +340,6 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::value_i ()
 {
   return this->impl_.value_i ();
 }
+/// @}
 
 ACE_END_VERSIONED_NAMESPACE_DECL

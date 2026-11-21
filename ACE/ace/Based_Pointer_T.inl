@@ -1,5 +1,6 @@
 // -*- C++ -*-
 #include "ace/Global_Macros.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -27,11 +28,15 @@ ACE_Based_Pointer_Basic<CONCRETE>::operator= (CONCRETE *rhs)
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::operator=");
   if (rhs == 0)
-    // Store a value of <target_> that indicate "NULL" pointer.
-    this->target_ = -1;
+    {
+      // Store a value of <target_> that indicate "NULL" pointer.
+      this->target_ = -1;
+    }
   else
-    this->target_ = ((char *) rhs
-                     - ((char *) this - this->base_offset_));
+    {
+      this->target_ = ((char *) rhs
+                       - ((char *) this - this->base_offset_));
+    }
 }
 
 template <class CONCRETE> ACE_INLINE void
@@ -39,11 +44,15 @@ ACE_Based_Pointer<CONCRETE>::operator= (CONCRETE *rhs)
 {
   ACE_TRACE ("ACE_Based_Pointer<CONCRETE>::operator=");
   if (rhs == 0)
-    // Store a value of <target_> that indicate "NULL" pointer.
-    this->target_ = -1;
+    {
+      // Store a value of <target_> that indicate "NULL" pointer.
+      this->target_ = -1;
+    }
   else
-    this->target_ = ((char *) rhs
-                     - ((char *) this - this->base_offset_));
+    {
+      this->target_ = ((char *) rhs
+                       - ((char *) this - this->base_offset_));
+    }
 }
 
 template <class CONCRETE> ACE_INLINE CONCRETE
@@ -59,9 +68,13 @@ ACE_Based_Pointer_Basic<CONCRETE>::addr () const
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::addr");
 
   if (this->target_ == -1)
-    return 0;
+    {
+      return 0;
+    }
   else
-    return const_cast<CONCRETE *> (ACE_Based_Pointer_Basic::based (this));
+    {
+      return const_cast<CONCRETE *> (ACE_Based_Pointer_Basic::based (this));
+    }
 }
 
 template <class CONCRETE> ACE_INLINE
@@ -90,7 +103,8 @@ template <class CONCRETE> ACE_INLINE bool
 ACE_Based_Pointer_Basic<CONCRETE>::operator== (const ACE_Based_Pointer_Basic &rhs) const
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::operator==");
-  return ACE_Based_Pointer_Basic::based (this) == ACE_Based_Pointer_Basic::based (&rhs);
+  return ACE_Based_Pointer_Basic::based (this)
+    == ACE_Based_Pointer_Basic::based (std::addressof (rhs));
 }
 
 template <class CONCRETE> ACE_INLINE bool
@@ -104,28 +118,32 @@ template <class CONCRETE> ACE_INLINE bool
 ACE_Based_Pointer_Basic<CONCRETE>::operator< (const ACE_Based_Pointer_Basic &rhs) const
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::operator<");
-  return ACE_Based_Pointer_Basic::based (this) < ACE_Based_Pointer_Basic::based (&rhs);
+  return ACE_Based_Pointer_Basic::based (this)
+    < ACE_Based_Pointer_Basic::based (std::addressof (rhs));
 }
 
 template <class CONCRETE> ACE_INLINE bool
 ACE_Based_Pointer_Basic<CONCRETE>::operator<= (const ACE_Based_Pointer_Basic &rhs) const
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::operator<=");
-  return ACE_Based_Pointer_Basic::based (this) <= ACE_Based_Pointer_Basic::based (&rhs);
+  return ACE_Based_Pointer_Basic::based (this)
+    <= ACE_Based_Pointer_Basic::based (std::addressof (rhs));
 }
 
 template <class CONCRETE> ACE_INLINE bool
 ACE_Based_Pointer_Basic<CONCRETE>::operator> (const ACE_Based_Pointer_Basic &rhs) const
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::operator>");
-  return ACE_Based_Pointer_Basic::based (this) > ACE_Based_Pointer_Basic::based (&rhs);
+  return ACE_Based_Pointer_Basic::based (this)
+    > ACE_Based_Pointer_Basic::based (std::addressof (rhs));
 }
 
 template <class CONCRETE> ACE_INLINE bool
 ACE_Based_Pointer_Basic<CONCRETE>::operator>= (const ACE_Based_Pointer_Basic &rhs) const
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::operator>=");
-  return ACE_Based_Pointer_Basic::based (this) >= ACE_Based_Pointer_Basic::based (&rhs);
+  return ACE_Based_Pointer_Basic::based (this)
+    >= ACE_Based_Pointer_Basic::based (std::addressof (rhs));
 }
 
 template <class CONCRETE> ACE_INLINE void

@@ -44,7 +44,7 @@ ACE_Codeset_Registry::registry_to_locale(ACE_CDR::ULong codeset_id,
 // Tell if two codesets are compatible. This wraps the
 // rpc_cs_char_set_compat_check function.
 ACE_INLINE
-int
+bool
 ACE_Codeset_Registry::is_compatible (ACE_CDR::ULong codeset_id,
                                      ACE_CDR::ULong other)
 {

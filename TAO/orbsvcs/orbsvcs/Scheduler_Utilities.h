@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SCHEDULER_UTILITIES_H
 #define ACE_SCHEDULER_UTILITIES_H
 #include /**/ "ace/pre.h"

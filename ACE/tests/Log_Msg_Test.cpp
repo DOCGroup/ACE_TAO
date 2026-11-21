@@ -59,7 +59,7 @@ public:
 
 private:
   /// Flag for testing verbose logging.
-  bool verbose_logging_;
+  bool verbose_logging_ {};
 
   /// Flag for testing recursive callback logging.
   bool recursive_;
@@ -89,10 +89,13 @@ Logger::log (ACE_Log_Record &log_record)
   if (!this->verbose_logging_)
     {
       if (use_log_msg)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Logger::log->%s\n"),
-                    log_record.msg_data ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Logger::log->%s\n"),
+                      log_record.msg_data ()));
+        }
       else
+        {
 #ifdef ACE_LACKS_IOSTREAM_TOTALLY
         ACE_OS::fprintf (ace_file_stream::instance ()->output_file (),
                          "Recursive Logger callback = %s\n",
@@ -103,6 +106,7 @@ Logger::log (ACE_Log_Record &log_record)
           << log_record.msg_data ()
           << endl;
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+        }
     }
   else
     {
@@ -114,10 +118,13 @@ Logger::log (ACE_Log_Record &log_record)
       if (result == 0)
         {
           if (use_log_msg)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("Logger::log->%s\n"),
-                        verbose_msg));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("Logger::log->%s\n"),
+                          verbose_msg));
+            }
           else
+            {
 #ifdef ACE_LACKS_IOSTREAM_TOTALLY
             ACE_OS::fprintf (ace_file_stream::instance ()->output_file (),
                              "Recursive Logger callback = %s\n",
@@ -128,12 +135,15 @@ Logger::log (ACE_Log_Record &log_record)
               << log_record.msg_data ()
               << endl;
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+            }
         }
     }
 
   // Cleanup on the way out.
   if (use_log_msg)
+  {
     this->recursive_ = true;
+  }
 }
 
 static void
@@ -161,7 +171,7 @@ test_callbacks ()
   logger.verbose (true);
 
   // Set the callback object.
-  ACE_LOG_MSG->msg_callback (&logger);
+  ACE_LOG_MSG->msg_callback (std::addressof (logger));
 
   // This message should show up via the Logger callback.
   ACE_DEBUG ((LM_DEBUG,
@@ -206,19 +216,25 @@ test_log_msg_features (const ACE_TCHAR *program)
   int counter = 1 ;
 
   if (ACE_LOG_MSG->open (program) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("cannot open logger!!!\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("cannot open logger!!!\n")));
+    }
 
   cause_error ();
 
   // Check to see what happened.
   if (ACE_LOG_MSG->op_status () == -1
       && ACE_LOG_MSG->errnum () == EWOULDBLOCK)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("op_status and errnum work!\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("op_status and errnum work!\n")));
+    }
   else
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("op_status and errnum failed!\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("op_status and errnum failed!\n")));
+    }
 
   const char *badname = "badname";
 
@@ -227,18 +243,20 @@ test_log_msg_features (const ACE_TCHAR *program)
   // start catching them as errors.
   if (ACE_OS::open (badname,
                     O_RDONLY) == ACE_INVALID_HANDLE)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("%n: (%x), can't open %C%r\n"),
-                10000,
-                badname,
-                cleanup));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("%n: (%x), can't open %C%r\n"),
+                  10000,
+                  badname,
+                  cleanup));
+    }
 
   // Try a log operation that would overflow the logging buffer if not
   // properly guarded.
   ACE_TCHAR big[ACE_Log_Record::MAXLOGMSGLEN + 1];
   size_t i = 0;
   static const ACE_TCHAR alphabet[] = ACE_TEXT ("abcdefghijklmnopqrstuvwxyz");
-  size_t j = ACE_OS::strlen (alphabet);
+  const size_t j = ACE_OS::strlen (alphabet);
   while (i < ACE_Log_Record::MAXLOGMSGLEN)
     {
       size_t const index = i++;
@@ -384,7 +402,7 @@ test_acelib_category()
 
   Log_Count  counter;
 
-  ACE_LOG_MSG->msg_callback (&counter);
+  ACE_LOG_MSG->msg_callback (std::addressof (counter));
 
   // Disable the LM_DEBUG and LM_INFO messages.
   u_long priority_mask =
@@ -446,7 +464,6 @@ test_acelib_category()
     ++failed;
   }
 
-
   if (failed == 0) {
     ACE_DEBUG((LM_DEBUG, "All ace lib category log passed\n"));
   }
@@ -479,11 +496,13 @@ test_ostream ()
 
   // Check for errors.
   if (myostream.bad ())
+  {
     return -1;
+  }
 
   OFSTREAM *old_stream = ace_file_stream::instance ()->output_file ();
   // Set the ostream.
-  ACE_LOG_MSG->msg_ostream (&myostream);
+  ACE_LOG_MSG->msg_ostream (std::addressof (myostream));
 
   // This message should show up in the ostream.
   ACE_DEBUG ((LM_DEBUG,
@@ -527,7 +546,7 @@ test_ostream ()
     }
 
   // Allocate the input buffer
-  char *buffer = nullptr;
+  char *buffer {};
   ACE_NEW_RETURN (buffer,
                   char[info.size_ + 1],
                   -1);
@@ -540,14 +559,13 @@ test_ostream ()
   if (size != info.size_)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Read %d bytes, rather than expected %d bytes\n"),
+                         ACE_TEXT ("Read %b bytes, rather than expected %q bytes\n"),
                          size,
-                         info.size_),
+                         static_cast<ACE_INT64> (info.size_)),
                         -1);
     }
   // Make sure to NUL-terminate this turkey!
   buffer[size] = '\0';
-
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%C"),
@@ -571,7 +589,6 @@ test_ostream ()
 
   return 0;
 }
-
 
 // For testing the format specifiers, a class is defined as a callback
 // mechanism. It will get the formatted messages and check them for
@@ -631,7 +648,7 @@ Log_Spec_Verify::log (ACE_Log_Record &log_record)
   else
     {
       const ACE_TCHAR *b = log_record.msg_data ();
-      const ACE_TCHAR *expect = nullptr;
+      const ACE_TCHAR *expect {};
 
       ++this->tests_;
 
@@ -656,7 +673,7 @@ Log_Spec_Verify::log (ACE_Log_Record &log_record)
           // Check if we have a string, exact length could vary
           if (b != log_record.msg_data () && ACE_OS::strlen (b) < 15)
             {
-              ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Test %s failed; expected %d\n"),
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Test %s failed; expected %B\n"),
                           log_record.msg_data (), ACE_OS::strlen (b)));
               ++this->fail_;
             }
@@ -719,17 +736,23 @@ Log_Spec_Verify::log (ACE_Log_Record &log_record)
 
   // Cleanup on the way out.
   if (use_log_msg)
+  {
     this->recursive_ = true;
+  }
 }
 
 int
 Log_Spec_Verify::result ()
 {
   if (this->fail_ == 0)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("All logging specifier tests passed.\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("All logging specifier tests passed.\n")));
+    }
   else
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%d logging specifier tests failed!\n"),
-                this->fail_));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%d logging specifier tests failed!\n"),
+                  this->fail_));
+    }
 
   if (this->tests_ != 21)
     {
@@ -754,8 +777,8 @@ test_format_specs ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%}%IONE\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%}%IENDINDENTING\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%W\n"), ACE_TEXT_WIDE ("My string test\n")));
-  ACE_WCHAR_T *nill_string = nullptr;
-  char* char_nill_string = nullptr;
+  ACE_WCHAR_T *nill_string {};
+  char* char_nill_string {};
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%W\n"), nill_string));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s\n"), nill_string));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C\n"), char_nill_string));
@@ -768,7 +791,7 @@ test_format_specs ()
 
   Log_Spec_Verify  verifier;
 
-  ACE_LOG_MSG->msg_callback (&verifier);
+  ACE_LOG_MSG->msg_callback (std::addressof (verifier));
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE);
   ACE_LOG_MSG->linenum (42);

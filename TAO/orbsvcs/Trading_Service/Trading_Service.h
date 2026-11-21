@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _TRADING_SERVICE_H
 #define _TRADING_SERVICE_H
 
@@ -33,7 +32,6 @@ class Trading_Service;
 class Trading_Shutdown : public ACE_Event_Handler
 {
 public:
-  /// Constructor.
   explicit Trading_Shutdown (Trading_Service &trader);
 
   Trading_Shutdown (Trading_Shutdown const &) = delete;

@@ -14,12 +14,13 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_main.h"
 
 #if defined (ACE_WIN32)
 
 #include "ace/WFMO_Reactor.h"
+
+#include <memory>
 
 class Event_Handler : public ACE_Event_Handler
 {
@@ -31,17 +32,22 @@ public:
                 "Event_Handler created\n"));
   }
 
-  ~Event_Handler ()
+  Event_Handler (Event_Handler const &) = delete;
+  Event_Handler (Event_Handler &&) = delete;
+  Event_Handler &operator= (Event_Handler const &) = delete;
+  Event_Handler &operator= (Event_Handler &&) = delete;
+
+  ~Event_Handler () override
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Event_Handler destroyed\n"));
   }
 
-  int handle_signal (int, siginfo_t * = 0, ucontext_t * = 0)
+  int handle_signal (int, siginfo_t * = nullptr, ucontext_t * = nullptr) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Event_Handler::handle_signal called\n"));
-    volatile int* pInt = 0x0000000;
+    volatile int *pInt = 0x0000000;
     *pInt = 20;
     return 0;
   }
@@ -61,7 +67,7 @@ class ACE_WFMO_Reactor_Test
 public:
   static void doit (ACE_WFMO_Reactor &wfmo_reactor)
   {
-    for (int i = 1; i <= 10; i++)
+    for (int i = 1; i <= 10; ++i)
       {
         ACE_DEBUG ((LM_DEBUG,
                     "Active threads in WFMO_Reactor (before handle_events) = %d\n",
@@ -89,7 +95,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 {
   Event_Handler handler;
   ACE_WFMO_Reactor wfmo_reactor;
-  wfmo_reactor.register_handler (&handler);
+  wfmo_reactor.register_handler (std::addressof (handler));
 
   ACE_WFMO_Reactor_Test::doit (wfmo_reactor);
 

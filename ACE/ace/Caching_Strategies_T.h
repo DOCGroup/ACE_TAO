@@ -16,6 +16,8 @@
 #include /**/ "ace/config-all.h"
 #include "ace/Caching_Utility_T.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -42,7 +44,6 @@ template <class ATTRIBUTES, class CACHING_UTILITY>
 class ACE_Caching_Strategy
 {
 public:
-  /// Destructor.
   virtual ~ACE_Caching_Strategy ();
 
   /// Accessor method for the timer attributes.
@@ -54,7 +55,8 @@ public:
   /// Set the percentage of entries to purge.
   virtual void purge_percent (double percentage) = 0;
 
-  // = Strategy related Operations
+  /// @name Strategy-related operations
+  /// @{
 
   /// This method acts as a notification about the CONTAINERs bind
   /// method call.
@@ -80,6 +82,7 @@ public:
   /// method call
   virtual int notify_rebind (int result,
                              const ATTRIBUTES &attr) = 0;
+  /// @}
 
   /// Purge the cache.
   virtual CACHING_UTILITY &caching_utility () = 0;
@@ -108,67 +111,73 @@ class ACE_Caching_Strategy_Adapter
   : public ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
 {
 public:
-  /// Constructor.
+  /// When @a implementation is non-null, @a delete_implementation controls ownership.
   ACE_Caching_Strategy_Adapter (IMPLEMENTATION *implementation = nullptr,
                                 bool delete_implementation = false);
 
-  /// Destructor.
-  ~ACE_Caching_Strategy_Adapter ();
+  ~ACE_Caching_Strategy_Adapter () override = default;
+
+  ACE_Caching_Strategy_Adapter (ACE_Caching_Strategy_Adapter const &) = delete;
+  ACE_Caching_Strategy_Adapter &operator= (ACE_Caching_Strategy_Adapter const &) = delete;
+  ACE_Caching_Strategy_Adapter (ACE_Caching_Strategy_Adapter &&) = delete;
+  ACE_Caching_Strategy_Adapter &operator= (ACE_Caching_Strategy_Adapter &&) = delete;
 
   /// Accessor method for the timer attributes.
-  ATTRIBUTES attributes ();
+  ATTRIBUTES attributes () override;
 
   /// Get the percentage of entries to purge.
-  double purge_percent ();
+  double purge_percent () override;
 
   /// Set the percentage of entries to purge.
-  void purge_percent (double percentage);
+  void purge_percent (double percentage) override;
 
-  // = Strategy related Operations
+  /// @name Strategy-related operations
+  /// @{
 
   /// This method acts as a notification about the CONTAINERs bind
   /// method call.
   int notify_bind (int result,
-                   const ATTRIBUTES &attr);
+                   const ATTRIBUTES &attr) override;
 
   /// This method acts as a notification about the CONTAINERs find
   /// method call
   int notify_find (int result,
-                   ATTRIBUTES &attr);
+                   ATTRIBUTES &attr) override;
 
   /// This method acts as a notification about the CONTAINERs unbind
   /// method call
   int notify_unbind (int result,
-                     const ATTRIBUTES &attr);
+                     const ATTRIBUTES &attr) override;
 
   /// This method acts as a notification about the CONTAINERs trybind
   /// method call
   int notify_trybind (int result,
-                      ATTRIBUTES &attr);
+                      ATTRIBUTES &attr) override;
 
   /// This method acts as a notification about the CONTAINERs rebind
   /// method call
   int notify_rebind (int result,
-                     const ATTRIBUTES &attr);
+                     const ATTRIBUTES &attr) override;
+  /// @}
 
   /// Accessor to the implementation.
   IMPLEMENTATION &implementation ();
 
   /// Purge the cache.
-  CACHING_UTILITY &caching_utility ();
+  CACHING_UTILITY &caching_utility () override;
 
   /// Dumps the state of the object.
-  void dump () const;
+  void dump () const override;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  /// Implementation class.
-  IMPLEMENTATION *implementation_;
+  /// Owns the implementation when this adapter created or was given it.
+  std::unique_ptr<IMPLEMENTATION> owned_implementation_ {};
 
-  /// Do we need to delete the implementation?
-  bool delete_implementation_;
+  /// Views the implementation, which may be borrowed.
+  IMPLEMENTATION *implementation_ {};
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -197,10 +206,13 @@ template <class ATTRIBUTES, class CACHING_UTILITY>
 class ACE_LRU_Caching_Strategy
 {
 public:
-  // Traits.
+  /// @name Traits
+  /// @{
   using CACHING_ATTRIBUTES = ATTRIBUTES;
+  /// @}
 
-  // = Initialisation and termination.
+  /// @name Initialization and termination
+  /// @{
 
   /**
    * The <container> is the map in which the entries reside.  The
@@ -210,8 +222,10 @@ public:
    * set to 10%.
    */
   ACE_LRU_Caching_Strategy ();
+  /// @}
 
-  // = Operations of the strategy.
+  /// @name Strategy operations
+  /// @{
 
   /// Accessor method for the timer attributes.
   ATTRIBUTES attributes ();
@@ -221,8 +235,10 @@ public:
 
   /// Set the percentage of entries to purge.
   void purge_percent (double percentage);
+  /// @}
 
-  // =  Strategy related Operations
+  /// @name Strategy-related operations
+  /// @{
 
   /// This method acts as a notification about the CONTAINERs bind
   /// method call.
@@ -239,7 +255,6 @@ public:
   int notify_unbind (int result,
                      const ATTRIBUTES &attr);
 
-
   /// This method acts as a notification about the CONTAINERs trybind
   /// method call
   int notify_trybind (int result,
@@ -249,6 +264,7 @@ public:
   /// method call
   int notify_rebind (int result,
                      const ATTRIBUTES &attr);
+  /// @}
 
   /// Purge the cache.
   CACHING_UTILITY &caching_utility ();
@@ -265,7 +281,7 @@ private:
   ATTRIBUTES timer_;
 
   /// The level about which the purging will happen automagically.
-  double purge_percent_;
+  double purge_percent_ {10};
 
   /// This is the helper class which will decide and expunge entries
   /// from the cache.
@@ -298,10 +314,13 @@ template <class ATTRIBUTES, class CACHING_UTILITY>
 class ACE_LFU_Caching_Strategy
 {
 public:
-  // Traits.
+  /// @name Traits
+  /// @{
   using CACHING_ATTRIBUTES = ATTRIBUTES;
+  /// @}
 
-  // = Initialisation and termination methods.
+  /// @name Initialization and termination methods
+  /// @{
 
   /**
    * The <container> is the map in which the entries reside.  The
@@ -311,8 +330,10 @@ public:
    * set to 10%.
    */
   ACE_LFU_Caching_Strategy ();
+  /// @}
 
-  // = Strategy methods.
+  /// @name Strategy methods
+  /// @{
 
   /// Access the attributes.
   ATTRIBUTES attributes ();
@@ -322,8 +343,10 @@ public:
 
   /// Set the percentage of entries to purge.
   void purge_percent (double percentage);
+  /// @}
 
-  // =  Strategy related Operations
+  /// @name Strategy-related operations
+  /// @{
 
   /// This method acts as a notification about the CONTAINERs bind
   /// method call.
@@ -348,6 +371,7 @@ public:
   /// method call
   int notify_rebind (int result,
                      const ATTRIBUTES &attr);
+  /// @}
 
   /// Purge the cache.
   CACHING_UTILITY &caching_utility ();
@@ -360,7 +384,7 @@ public:
 
 private:
   /// The level about which the purging will happen automagically.
-  double purge_percent_;
+  double purge_percent_ {10};
 
   /// This is the helper class which will decide and expunge entries
   /// from the cache.
@@ -393,7 +417,8 @@ class ACE_FIFO_Caching_Strategy
 public:
   using CACHING_ATTRIBUTES = ATTRIBUTES;
 
-  // = Initialisation and termination.
+  /// @name Initialization and termination
+  /// @{
 
   /**
    * The <container> is the map in which the entries reside.  The
@@ -403,8 +428,10 @@ public:
    * set to 10%.
    */
   ACE_FIFO_Caching_Strategy ();
+  /// @}
 
-  // = Strategy methods.
+  /// @name Strategy methods
+  /// @{
 
   /// Accessor method.
   ATTRIBUTES attributes ();
@@ -414,8 +441,10 @@ public:
 
   /// Set the percentage of entries to purge.
   void purge_percent (double percentage);
+  /// @}
 
-  // =  Strategy related Operations
+  /// @name Strategy-related operations
+  /// @{
 
   /// Notification for an item getting bound into the cache.
   int notify_bind (int result,
@@ -439,6 +468,7 @@ public:
   /// Notification for an item getting bound again into the cache.
   int notify_rebind (int result,
                      const ATTRIBUTES &attr);
+  /// @}
 
   /// Purge the cache.
   CACHING_UTILITY &caching_utility ();
@@ -455,7 +485,7 @@ private:
   ATTRIBUTES order_;
 
   /// The level about which the purging will happen automagically.
-  double purge_percent_;
+  double purge_percent_ {10};
 
   /// This is the helper class which will decide and expunge entries
   /// from the cache.
@@ -478,10 +508,14 @@ template<class ATTRIBUTES, class CACHING_UTILITY>
 class ACE_Null_Caching_Strategy
 {
 public:
-  // = Traits.
+  /// @name Traits
+  /// @{
   using CACHING_ATTRIBUTES = ATTRIBUTES;
+  /// @}
 
-  // = Strategy methods. All are NO_OP methods!!!
+  /// @name Strategy methods
+  /// These methods are all no-ops.
+  /// @{
 
   /// Accessor method.
   ATTRIBUTES attributes ();
@@ -491,8 +525,10 @@ public:
 
   /// Set the percentage of entries to purge.
   void purge_percent (double percentage);
+  /// @}
 
-  // =  Strategy related Operations
+  /// @name Strategy-related operations
+  /// @{
 
   /// Notification for an item getting bound into the cache.
   int notify_bind (int result,
@@ -516,6 +552,7 @@ public:
   /// Notification for an item getting bound again into the cache.
   int notify_rebind (int result,
                      const ATTRIBUTES &attr);
+  /// @}
 
   /// Purge the cache.
   CACHING_UTILITY &caching_utility ();

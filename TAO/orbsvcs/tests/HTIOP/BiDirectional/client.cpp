@@ -3,7 +3,6 @@
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/AnyTypeCode/Any.h"
 
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 void do_nothing ()
@@ -41,7 +40,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb = CORBA::ORB::_nil();
   PortableServer::POA_var root_poa = PortableServer::POA::_nil();
-  Callback_i *servant = 0;
+  Callback_i *servant {};
 
   try
     {
@@ -90,7 +89,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var object =
         orb->string_to_object (ior);
@@ -105,7 +106,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                              ior),
                             1);
         }
-
 
       servant = new Callback_i (orb.in ());
 
@@ -137,7 +137,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
 
   if (!CORBA::is_nil(root_poa.in()))
+  {
     root_poa->destroy (true, true);
+  }
   delete servant;
 
   return 0;

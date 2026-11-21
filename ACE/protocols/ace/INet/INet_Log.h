@@ -4,7 +4,6 @@
  *  * Macros used for logging in INet
  */
 
-
 #ifndef INET_LOG_MACROS_H_
 #define INET_LOG_MACROS_H_
 
@@ -125,6 +124,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #  define INET_ERROR_BREAK(L, X) { INET_ERROR (L, X); break; }
 # endif
 #endif
-
 
 #endif

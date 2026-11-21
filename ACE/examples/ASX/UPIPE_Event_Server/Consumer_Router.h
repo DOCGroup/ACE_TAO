@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// The interface between one or more consumers and an Event Server
-// ACE_Stream.
 
 #ifndef _CONSUMER_ROUTER_H
 #define _CONSUMER_ROUTER_H
@@ -28,24 +26,41 @@ class Consumer_Handler
   : public Peer_Handler<CONSUMER_ROUTER, CONSUMER_KEY>
 {
 public:
-  Consumer_Handler (ACE_Thread_Manager *tm = 0);
-  virtual int open (void *);
+  explicit Consumer_Handler (ACE_Thread_Manager *tm = nullptr);
+  Consumer_Handler (Consumer_Handler const &) = delete;
+  Consumer_Handler (Consumer_Handler &&) = delete;
+  Consumer_Handler &operator= (Consumer_Handler const &) = delete;
+  Consumer_Handler &operator= (Consumer_Handler &&) = delete;
+  int open (void *) override;
 };
 
+/// The interface between one or more consumers and an Event Server ACE_Stream.
 class Consumer_Router : public CONSUMER_ROUTER
 {
 public:
-  Consumer_Router (ACE_Thread_Manager *thr_manager);
+  explicit Consumer_Router (ACE_Thread_Manager *thr_manager);
+  Consumer_Router (Consumer_Router const &) = delete;
+  Consumer_Router (Consumer_Router &&) = delete;
+  Consumer_Router &operator= (Consumer_Router const &) = delete;
+  Consumer_Router &operator= (Consumer_Router &&) = delete;
 
 protected:
-  // ACE_Task hooks..
-  virtual int open (void *a = 0);
-  virtual int close (u_long flags = 0);
-  virtual int put (ACE_Message_Block *msg, ACE_Time_Value * = 0);
-  virtual int svc ();
+  /// @name ACE_Task hooks
+  /// @{
 
-  // Dynamic linking hooks.
-  virtual int info (ACE_TCHAR **info_string, size_t length) const;
+  int open (void *a = nullptr) override;
+  int close (u_long flags = 0) override;
+  int put (ACE_Message_Block *msg, ACE_Time_Value * = nullptr) override;
+  int svc () override;
+
+  /// @}
+
+  /// @name Dynamic linking hooks
+  /// @{
+
+  int info (ACE_TCHAR **info_string, size_t length) const override;
+
+  /// @}
 };
 #endif /* ACE_HAS_THREADS */
 #endif /* _CONSUMER_ROUTER_H */

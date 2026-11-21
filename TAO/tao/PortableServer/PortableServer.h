@@ -1,13 +1,9 @@
 /* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file PortableServer.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
-
 #ifndef TAO_PORTABLESERVER_H
 #define TAO_PORTABLESERVER_H
 

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_MALLOC_BASE_H
 #define ACE_MALLOC_BASE_H
 #include /**/ "ace/pre.h"
@@ -42,7 +41,8 @@ public:
   /// Unsigned integer type used for specifying memory block lengths.
   using size_type = size_t;
 
-  // = Memory Management
+  /// @name Memory management
+  /// @{
 
   /// Get pointer to a default ACE_Allocator.
   static ACE_Allocator *instance ();
@@ -57,7 +57,6 @@ public:
   /// "No-op" constructor (needed to make certain compilers happy).
   ACE_Allocator ();
 
-  /// Virtual destructor
   virtual ~ACE_Allocator ();
 
   /// Allocate @a nbytes, but don't give them any initial value.
@@ -77,8 +76,10 @@ public:
 
   /// Remove any resources associated with this memory manager.
   virtual int remove () = 0;
+  /// @}
 
-  // = Map manager like functions
+  /// @name Map operations
+  /// @{
 
   /**
    * Associate @a name with @a pointer.  If @a duplicates == 0 then do
@@ -117,9 +118,12 @@ public:
   /// Break any association of name.  Returns the value of pointer in
   /// case the caller needs to deallocate memory.
   virtual int unbind (const char *name, void *&pointer) = 0;
+  /// @}
 
-  // = Protection and "sync" (i.e., flushing memory to persistent
-  // backing store).
+  /** @name Memory protection and synchronization
+   * Synchronization flushes memory to persistent backing storage.
+   */
+  /// @{
 
   /**
    * Sync @a len bytes of the memory region to the backing store
@@ -142,6 +146,7 @@ public:
   /// Change the protection of the pages of the mapped region to @a prot
   /// starting at @a addr up to @a len bytes.
   virtual int protect (void *addr, size_type len, int prot = PROT_RDWR) = 0;
+  /// @}
 
 #if defined (ACE_HAS_MALLOC_STATS)
   /// Dump statistics of how malloc is behaving.
@@ -156,6 +161,23 @@ private:
 
   /// Pointer to a process-wide ACE_Allocator instance.
   static ACE_Allocator *allocator_;
+};
+
+/// Deallocates array storage allocated through ACE's allocation macros.
+template <typename T>
+struct ACE_Array_Deleter
+{
+  void operator() (T *ptr) const
+  {
+    if (ptr != nullptr)
+      {
+#if defined (ACE_HAS_ALLOC_HOOKS)
+        ACE_Allocator::instance ()->free (ptr);
+#else
+        delete [] ptr;
+#endif /* ACE_HAS_ALLOC_HOOKS */
+      }
+  }
 };
 
 /**
@@ -174,7 +196,7 @@ public:
   using const_pointer = const T *;
   using reference = T &;
   using const_reference = const T &;
-  using size_type = std::size_t;
+  using size_type = size_t;
   using difference_type = std::ptrdiff_t;
   template <typename U> struct rebind { using other = ACE_Allocator_Std_Adapter<U>; };
 
@@ -183,16 +205,19 @@ public:
   template <typename U>
   ACE_Allocator_Std_Adapter(const ACE_Allocator_Std_Adapter<U>&) {}
 
-  static T* allocate(std::size_t n)
+  static T* allocate(size_t n)
   {
     void* raw_mem = ACE_Allocator::instance()->malloc(n * sizeof(T));
 #if !defined (ACE_INTEGRITY) || _HAS_EXCEPTIONS
-    if (!raw_mem) throw std::bad_alloc();
+    if (!raw_mem)
+      {
+        throw std::bad_alloc();
+      }
 #endif
     return static_cast<T*>(raw_mem);
   }
 
-  static void deallocate(T* ptr, std::size_t)
+  static void deallocate(T* ptr, size_t)
   {
     ACE_Allocator::instance()->free(ptr);
   }

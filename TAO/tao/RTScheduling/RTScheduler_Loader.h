@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    RTScheduler_Loader.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Yamuna Krishnamurthy <yamuna@oomworks.com>
  */
-//=============================================================================
 
 #ifndef TAO_RTSCHEDULER_LOADER_H
 #define TAO_RTSCHEDULER_LOADER_H
@@ -30,21 +28,19 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTScheduler_Export TAO_RTScheduler_Loader : public ACE_Service_Object
 {
 public:
-  /// Constructor.
-  TAO_RTScheduler_Loader ();
+  TAO_RTScheduler_Loader () = default;
 
-  /// Destructor.
   ~TAO_RTScheduler_Loader () override;
 
-  /// Initialize the RTScheduler loader hooks.
-  int init (int argc, ACE_TCHAR* []) override;
-
-private:
   TAO_RTScheduler_Loader (TAO_RTScheduler_Loader const &) = delete;
   TAO_RTScheduler_Loader &operator= (TAO_RTScheduler_Loader const &) = delete;
   TAO_RTScheduler_Loader (TAO_RTScheduler_Loader &&) = delete;
   TAO_RTScheduler_Loader &operator= (TAO_RTScheduler_Loader &&) = delete;
 
+  /// Initialize the RTScheduler loader hooks.
+  int init (int argc, ACE_TCHAR* []) override;
+
+private:
   /// Set to true after init is called.
   bool initialized_ {};
 };

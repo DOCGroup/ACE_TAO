@@ -14,7 +14,3 @@ SMR_Client::SMR_Client (short port_number)
                 Options::program_name,
                 1));
 }
-
-SMR_Client::~SMR_Client ()
-{
-}

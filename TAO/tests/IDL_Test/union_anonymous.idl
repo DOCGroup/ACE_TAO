@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    union_anonymous.idl
  *
@@ -10,12 +9,11 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
  */
-//=============================================================================
 
-// Tricky case of lookup for a recursive union. When defined
-// inside another datatype like this, the union is referenced
-// inside itself before the closing brace is seen, but not
-// declared yet.
+/// Tricky case of lookup for a recursive union. When defined
+/// inside another datatype like this, the union is referenced
+/// inside itself before the closing brace is seen, but not
+/// declared yet.
 struct Element
 {
   union ValueUnion switch (short)
@@ -27,8 +25,8 @@ struct Element
   } Value;
 };
 
-// Test for various kinds of declarations inside a union,
-// similar to the example in enum_in_struct.idl.
+/// Test for various kinds of declarations inside a union,
+/// similar to the example in enum_in_struct.idl.
 typedef long NamedLongArray[10];
 
 union decl_heavy_union switch (short)
@@ -58,9 +56,9 @@ union decl_heavy_union switch (short)
     {
       case 1: long a;
       case 2: char b;
+  /// The following caused compile problems once
+  /// when generating ostream ops
     } m_un_arr[10];
-  // The following caused compile problems once
-  // when generating ostream ops
   case 5:
     NamedLongArray m_named_long_array;
   case 6:

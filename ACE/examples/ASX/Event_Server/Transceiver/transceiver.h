@@ -4,52 +4,76 @@
 
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
+#include <string>
 
-// Generate and receives messages from the event server.
-//
-// This class is both a consumer and supplier of events, i.e.,
-// it's a ``transceiver.''
+/**
+ * @class Event_Transceiver
+ * @brief Sends and receives messages through the event server.
+ *
+ * This class acts as both a consumer and supplier of events.
+ */
 class Event_Transceiver : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  // Performs the actual initialization.
+  /// Perform the actual initialization.
   Event_Transceiver (int argc, ACE_TCHAR *argv[]);
 
-  // No-op constructor (required by the <ACE_Connector>).
-  Event_Transceiver ();
+  /// No-op constructor required by ACE_Connector.
+  Event_Transceiver () = default;
 
-  // = Svc_Handler hook called by the <ACE_Connector>.
-  // Initialize the transceiver when we are connected.
-  virtual int open (void *);
+  Event_Transceiver (Event_Transceiver const &) = delete;
+  Event_Transceiver (Event_Transceiver &&) = delete;
+  Event_Transceiver &operator= (Event_Transceiver const &) = delete;
+  Event_Transceiver &operator= (Event_Transceiver &&) = delete;
 
-  // = Demultplexing hooks from the <ACE_Reactor>.
-  // Receive data from STDIN or socket.
-  virtual int handle_input (ACE_HANDLE);
+  /// @name Service handler hooks
+  /// @{
 
-  // Close down via SIGINT.
-  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
+  /// Initialize the transceiver when it is connected.
+  int open (void *) override;
 
-  // Close down the event loop.
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  /// @}
+
+  /// @name Reactor hooks
+  /// @{
+
+  /// Receive data from standard input or the socket.
+  int handle_input (ACE_HANDLE) override;
+
+  /// Close down via SIGINT.
+  int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
+
+  /// Close down the event loop.
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
+
+  /// @}
 
 private:
-  // Reads data from socket and writes to ACE_STDOUT.
+  enum class Role
+  {
+    Consumer,
+    Supplier
+  };
+
+  struct Options
+  {
+    u_short port_number {ACE_DEFAULT_SERVER_PORT};
+    std::basic_string<ACE_TCHAR> host_name {ACE_DEFAULT_SERVER_HOST};
+    Role role {Role::Supplier};
+  };
+
+  /// Read data from the socket and write it to ACE_STDOUT.
   int receiver ();
 
-  // Writes data from ACE_STDIN to socket.
+  /// Write data from ACE_STDIN to the socket.
   int transmitter ();
 
-  // Parse the command-line arguments.
+  /// Parse the command-line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
-  // Port number of event server.
-  u_short port_number_;
+  ACE_TCHAR const *role_name () const;
 
-  // Name of event server.
-  const ACE_TCHAR *host_name_;
-
-  // Are we playing the Consumer or Supplier role?
-  const ACE_TCHAR *role_;
+  Options options_;
 };
 
 #endif /* ACE_TRANSCEIVER_H */

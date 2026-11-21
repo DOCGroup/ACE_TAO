@@ -2,7 +2,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
 // This is the primary entry point into the ACE_Service_Config (the
 // constructor just handles simple initializations).
 
@@ -40,7 +39,9 @@ ACE_Service_Gestalt::open (int argc,
   if (this->parse_args_i (argc,
                           argv,
                           ignore_default_svc_conf) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   return this->open_i (argv == 0 ? 0 : argv[0],
                        logger_key,
@@ -61,7 +62,9 @@ ACE_Service_Gestalt::find (const ACE_TCHAR name[],
   // will also have been destroyed - so just check for repo_ before
   // doing anything with it.
   if (this->repo_ != 0)
-    return this->repo_->find (name, srp, ignore_suspended);
+    {
+      return this->repo_->find (name, srp, ignore_suspended);
+    }
 
   return 0;
 }

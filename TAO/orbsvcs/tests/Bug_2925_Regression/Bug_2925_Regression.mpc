@@ -20,7 +20,7 @@ project(*Server) : orbsvcsexe, portablegroup, diffservpolicy {
   }
 }
 
-project(*Client) : orbsvcsexe, portablegroup, diffservpolicy {
+project(*Client) : orbsvcsexe, portablegroup, diffservpolicy, utils {
   after += *IDL
   exename = client
 

@@ -1,11 +1,10 @@
-// -*- IDL -*-
+/// -*- IDL -*-
 #ifndef HTIOP_IDL
 #define HTIOP_IDL
 
-// This is a OMG specified IDL. When HTIOP modules start getting
-// complicated we may want to have them here.
+/// This is a OMG specified IDL. When HTIOP modules start getting
+/// complicated we may want to have them here.
 #pragma prefix "omg.org"
-
 
 module HTIOP
 {

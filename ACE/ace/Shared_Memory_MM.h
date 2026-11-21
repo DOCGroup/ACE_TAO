@@ -34,10 +34,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Shared_Memory_MM : public ACE_Shared_Memory
 {
 public:
-  /// Default constructor.
   ACE_Shared_Memory_MM ();
 
-  /// Constructor.
   ACE_Shared_Memory_MM (ACE_HANDLE handle,
                         size_t length = static_cast<size_t> (-1),
                         int prot = PROT_RDWR,
@@ -45,7 +43,6 @@ public:
                         char *addr = nullptr,
                         ACE_OFF_T pos = 0);
 
-  /// Constructor.
   ACE_Shared_Memory_MM (const ACE_TCHAR *file_name,
                         size_t length = static_cast<size_t> (-1),
                         int flags = O_RDWR | O_CREAT,
@@ -81,7 +78,8 @@ public:
   /// Remove the shared memory segment and the underlying file.
   int remove () override;
 
-  // = Allocation and deallocation methods.
+  /// @name Allocation and deallocation
+  /// @{
   /// Create a new chuck of memory containing @a size bytes.
   void *malloc (size_t size = 0) override;
 
@@ -94,6 +92,7 @@ public:
 
   /// Return the ID of the shared memory segment (i.e., an ACE_HANDLE).
   ACE_HANDLE get_id () const override;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

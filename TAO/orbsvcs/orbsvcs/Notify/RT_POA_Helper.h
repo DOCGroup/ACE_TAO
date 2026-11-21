@@ -29,7 +29,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RT_Notify_Export TAO_Notify_RT_POA_Helper : public TAO_Notify_POA_Helper
 {
 public:
-  /// Destructor
   ~TAO_Notify_RT_POA_Helper ();
 
   /// Create a new PortableServer::POA.

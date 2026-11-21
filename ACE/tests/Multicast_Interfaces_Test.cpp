@@ -45,7 +45,7 @@ get_valid_ipv4_interface_names_win32 (nameset &names)
     }
 
   // Get required output buffer and retrieve info for real.
-  char *buf = 0;
+  char *buf {};
   ACE_NEW (buf, char[bufLen]);
   PIP_ADAPTER_ADDRESSES pAddrs = reinterpret_cast<PIP_ADAPTER_ADDRESSES> (buf);
   if (::GetAdaptersAddresses (AF_INET, 0, 0, pAddrs, &bufLen) != NO_ERROR)
@@ -74,11 +74,13 @@ get_valid_ipv4_interface_names_win32 (nameset &names)
 void
 get_valid_ipv4_interface_names_getifaddrs (nameset &names)
 {
-  ifaddrs *ifap = nullptr;
-  ifaddrs *p_if = nullptr;
+  ifaddrs *ifap {};
+  ifaddrs *p_if {};
 
   if (::getifaddrs (&ifap) != 0)
+  {
     return;
+  }
 
   for (p_if = ifap; p_if != nullptr; p_if = p_if->ifa_next)
     {
@@ -126,7 +128,7 @@ get_valid_ipv6_interface_names_win32 (nameset &names)
     }
 
   // Get required output buffer and retrieve info for real.
-  char *buf = 0;
+  char *buf {};
   ACE_NEW (buf, char[bufLen]);
   PIP_ADAPTER_ADDRESSES pAddrs = reinterpret_cast<PIP_ADAPTER_ADDRESSES> (buf);
   if (::GetAdaptersAddresses (AF_INET6, 0, 0, pAddrs, &bufLen) != NO_ERROR)
@@ -155,11 +157,13 @@ get_valid_ipv6_interface_names_win32 (nameset &names)
 void
 get_valid_ipv6_interface_names_getifaddrs (nameset &names)
 {
-  ifaddrs *ifap = nullptr;
-  ifaddrs *p_if = nullptr;
+  ifaddrs *ifap {};
+  ifaddrs *p_if {};
 
   if (::getifaddrs (&ifap) != 0)
-    return;
+    {
+      return;
+    }
 
   for (p_if = ifap; p_if != nullptr; p_if = p_if->ifa_next)
     {

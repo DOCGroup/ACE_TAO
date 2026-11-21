@@ -10,14 +10,12 @@
 
 #include <iostream>
 
-// Implementation skeleton constructor
 Test_i::Test_i (Terminator &terminator)
   : message_count_ (0)
   , terminator_ (terminator)
 {
 }
 
-// Implementation skeleton destructor
 Test_i::~Test_i ()
 {
 }
@@ -33,7 +31,7 @@ Test_i::send_message (const char * user_name,
        << "Message:      " << message << std::endl;
   if (message_count_ == 4)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb {};
       ACE_NEW_RETURN(mb, ACE_Message_Block(2), 0);
       ACE_OS::sprintf(mb->wr_ptr (), "0");
       terminator_.putq(mb);

@@ -7,10 +7,12 @@
 void
 JAWS_Referenced_Filecache_Factory::destroy (JAWS_Cache_Object *object)
 {
-  JAWS_FILE *file = (JAWS_FILE *) object->data ();
+  JAWS_FILE *file = static_cast<JAWS_FILE *> (const_cast<void *> (object->data ()));
   file->close ();
   if (file->map ())
+  {
     file->map ()->close ();
+  }
   delete file;
   this->JAWS_Referenced_Cache_Object_Factory::destroy (object);
 }
@@ -18,10 +20,12 @@ JAWS_Referenced_Filecache_Factory::destroy (JAWS_Cache_Object *object)
 void
 JAWS_Counted_Filecache_Factory::destroy (JAWS_Cache_Object *object)
 {
-  JAWS_FILE *file = (JAWS_FILE *) object->data ();
+  JAWS_FILE *file = static_cast<JAWS_FILE *> (const_cast<void *> (object->data ()));
   file->close ();
   if (file->map ())
+  {
     file->map ()->close ();
+  }
   delete file;
   this->JAWS_Counted_Cache_Object_Factory::destroy (object);
 }

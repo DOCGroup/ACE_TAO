@@ -25,15 +25,21 @@ ACE::fini ()
   if (ACE::init_fini_count_ > 0)
     {
       if (--ACE::init_fini_count_ == 0)
-        return ACE_Object_Manager::instance ()->fini ();
+        {
+          return ACE_Object_Manager::instance ()->fini ();
+        }
       else
-        // Wait for remaining fini () calls.
-        return 1;
+        {
+          // Wait for remaining fini () calls.
+          return 1;
+        }
     }
   else
-    // More ACE::fini () calls than ACE::init () calls.  Bad
-    // application!
-    return -1;
+    {
+      // More ACE::fini () calls than ACE::init () calls.  Bad
+      // application!
+      return -1;
+    }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

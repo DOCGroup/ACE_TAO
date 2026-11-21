@@ -1,5 +1,5 @@
 #include "Hello.h"
-#include <iostream>
+#include "ace/Log_Msg.h"
 
 Hello::Hello (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
@@ -13,9 +13,11 @@ Hello::get_string ()
 }
 
 void
-Hello::set_string (const char * s)
+Hello::set_string (char const *s)
 {
-  std::cout << "Call to Hello::set_string (" << s << ")" << std::endl;
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Call to Hello::set_string (%C)\n"),
+              s));
 }
 
 void

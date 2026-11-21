@@ -47,10 +47,10 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  void *item_;
+  void *item_ {};
 
-  ACE_DLList_Node *next_;
-  ACE_DLList_Node *prev_;
+  ACE_DLList_Node *next_ {};
+  ACE_DLList_Node *prev_ {};
 
 protected:
   ACE_DLList_Node ();

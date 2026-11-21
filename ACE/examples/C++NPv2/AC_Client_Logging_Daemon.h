@@ -7,9 +7,12 @@
 
 #include "ace/Handle_Set.h"
 #include "ace/Log_Record.h"
+#include "ace/Message_Block.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Synch_Traits.h"
+
+#include <array>
 
 class AC_CLD_Connector;
 
@@ -18,42 +21,47 @@ class AC_Output_Handler
 public:
   enum { QUEUE_MAX = sizeof (ACE_Log_Record) * ACE_IOV_MAX };
 
-  virtual int open (void *); // Initialization hook method.
+  /// Initialization hook method.
+  int open (void *) override;
 
-  // Entry point into the <AC_Output_Handler>.
-  virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0);
+  /// Entry point into the <AC_Output_Handler>.
+  int put (ACE_Message_Block *, ACE_Time_Value * = nullptr) override;
 
 protected:
-  AC_CLD_Connector *connector_;
+  AC_CLD_Connector *connector_ {};
 
-  // Handle disconnects from the logging server.
-  virtual int handle_input (ACE_HANDLE handle);
+  /// Handle disconnects from the logging server.
+  int handle_input (ACE_HANDLE handle) override;
 
-  // Hook method forwards log records to server logging daemon.
-  virtual int svc ();
+  /// Hook method forwards log records to server logging daemon.
+  int svc () override;
 
-  // Send the buffered log records using a gather-write operation.
-  virtual int send (ACE_Message_Block *chunk[], size_t &count);
+  /// Send the buffered log records using a gather-write operation.
+  virtual int send (
+    std::array<ACE_Message_Block_Unique_Ptr, ACE_IOV_MAX> &chunk,
+    size_t &count);
 };
 
 class AC_Input_Handler
   : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> {
 public:
-  AC_Input_Handler (AC_Output_Handler *handler = 0)
+  explicit AC_Input_Handler (AC_Output_Handler *handler = nullptr)
     : output_handler_ (handler) {}
-  virtual int open (void *); // Initialization hook method.
-  virtual int close (u_long = 0); // Shutdown hook method.
+  /// Initialization hook method.
+  int open (void *) override;
+  /// Shutdown hook method.
+  int close (u_long = 0) override;
 
 protected:
-  // Reactor hook methods.
-  virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = 0);
+  /// Reactor hook methods.
+  int handle_input (ACE_HANDLE handle) override;
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                    ACE_Reactor_Mask = 0) override;
 
-  // Pointer to the output handler.
+  /// Pointer to the output handler.
   AC_Output_Handler *output_handler_;
 
-  // Keep track of connected client handles.
+  /// Keep track of connected client handles.
   ACE_Handle_Set connected_clients_;
 };
 

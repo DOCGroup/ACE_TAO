@@ -18,7 +18,7 @@ LB_server::destroy ()
     {
       this->naming_manager_->delete_object_group ("BasicGroup");
 
-      this->root_poa_->destroy (1, 1);
+      this->root_poa_->destroy (true, true);
 
       this->orb_->destroy ();
     }
@@ -152,7 +152,9 @@ LB_server::create_object_group (const char *group_name)
   try
     {
       if (this->parse_args (argc_, argv_) != 0)
+      {
         return -1;
+      }
 
       PortableGroup::Criteria criteria (2);
       criteria.length (1);

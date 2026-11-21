@@ -34,7 +34,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_UTILS_Export TAO_ORB_Manager
 {
 public:
-  /** Constructor.
+  /**
    *
    *  @param orb  pointer to an ORB which is duplicated an stored
    *              internally in an ORB_var.  If pointer is nullptr,

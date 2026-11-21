@@ -13,10 +13,10 @@
 #include "ftrtec_export.h"
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "ace/Vector_T.h"
 #include "ace/Singleton.h"
 #include "ace/Synch.h"
 #include <memory>
+#include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,7 +32,7 @@ public:
   using BackupList = FtRtecEventChannelAdmin::EventChannelList;
 
   struct Info {
-    bool primary;
+    bool primary {};
     CORBA::Object_var iogr;
     FtRtecEventChannelAdmin::EventChannel_var successor;
     BackupList backups;
@@ -62,14 +62,14 @@ public:
   void name(const char* nam);
   GroupInfoPublisherBase();
 
-private:
   GroupInfoPublisherBase(GroupInfoPublisherBase const&) = delete;
   GroupInfoPublisherBase(GroupInfoPublisherBase&&) = delete;
   GroupInfoPublisherBase& operator=(GroupInfoPublisherBase const&) = delete;
   GroupInfoPublisherBase& operator=(GroupInfoPublisherBase&&) = delete;
 
+private:
   CosNaming::NamingContext_var naming_context_;
-  using Subscribers = ACE_Vector<TAO_FTEC_Become_Primary_Listener*, 2>;
+  using Subscribers = std::vector<TAO_FTEC_Become_Primary_Listener*>;
   Subscribers subscribers_;
   PortableServer::ObjectId object_id_;
   CosNaming::Name name_;

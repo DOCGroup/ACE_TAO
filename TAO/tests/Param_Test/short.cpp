@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    short.cpp
  *
@@ -7,8 +5,6 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #include "helper.h"
 #include "short.h"
@@ -18,14 +14,8 @@
 // ************************************************************************
 
 Test_Short::Test_Short ()
-  : opname_ (CORBA::string_dup ("test_short"))
+  : opname_ ("test_short")
 {
-}
-
-Test_Short::~Test_Short ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
 }
 
 const char *
@@ -101,7 +91,9 @@ Test_Short::check_validity ()
       this->ret_ == this->in_ * 4)
     return 1; // success
   else
+  {
     return 0;
+  }
 }
 
 CORBA::Boolean

@@ -9,19 +9,11 @@
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 
-
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   EC_Schedule driver;
   return driver.run (argc, argv);
-}
-
-// ****************************************************************
-
-EC_Schedule::EC_Schedule ()
-  :  scheduler_impl_ (0)
-{
 }
 
 int
@@ -48,7 +40,7 @@ EC_Schedule::print_usage ()
 void
 EC_Schedule::initialize_ec_impl ()
 {
-  this->scheduler_impl_ = new ACE_Config_Scheduler;
+  this->scheduler_impl_ = std::make_unique<ACE_Config_Scheduler> ();
   this->scheduler_ = this->scheduler_impl_->_this ();
 
   this->EC_Driver::initialize_ec_impl ();
@@ -64,7 +56,7 @@ void
 EC_Schedule::cleanup_ec ()
 {
   this->EC_Driver::cleanup_ec ();
-  delete this->scheduler_impl_;
+  this->scheduler_impl_.reset ();
 }
 
 void

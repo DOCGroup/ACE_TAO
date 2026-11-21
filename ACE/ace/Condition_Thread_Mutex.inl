@@ -12,7 +12,7 @@ ACE_Condition<ACE_Thread_Mutex>::remove ()
   // has called the cond_wait routine after the signal call.  Since
   // the condition signal is not queued in any way, deadlock occurs.
 
-  int result = 0;
+  int result {};
 
   if (!this->removed_)
     {

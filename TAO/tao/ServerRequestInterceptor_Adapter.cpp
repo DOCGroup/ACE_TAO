@@ -6,4 +6,3 @@ TAO::ServerRequestInterceptor_Adapter::~ServerRequestInterceptor_Adapter () = de
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-

@@ -47,10 +47,10 @@ FOO_ClientRequestInterceptor::send_request (
       throw CORBA::INTERNAL ();
     }
 
-  CORBA::ULong maximum   = component->component_data.maximum ();
-  CORBA::ULong length    = component->component_data.length ();
-  CORBA::Octet * buffer  = component->component_data.get_buffer ();
-  CORBA::Boolean release = 0;  // TaggedComponent retains ownership.
+  CORBA::ULong const maximum = component->component_data.maximum ();
+  CORBA::ULong const length = component->component_data.length ();
+  CORBA::Octet *buffer = component->component_data.get_buffer ();
+  CORBA::Boolean const release {};  // TaggedComponent retains ownership.
 
   CORBA::OctetSeq data (maximum, length, buffer, release);
 
@@ -59,7 +59,7 @@ FOO_ClientRequestInterceptor::send_request (
     this->codec_->decode_value (data,
                                 CORBA::_tc_string);
 
-  const char * name = 0;
+  char const *name {};
 
   if (!(decoded_data.in () >>= name))
     {

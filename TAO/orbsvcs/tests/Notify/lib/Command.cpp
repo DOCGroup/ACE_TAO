@@ -5,9 +5,8 @@
 
 #include "ace/Log_Msg.h"
 
-
 TAO_Notify_Tests_Command::TAO_Notify_Tests_Command ()
-  :next_ (0), command_ (INVALID)
+  : command_ (INVALID)
 {
 }
 
@@ -51,5 +50,7 @@ TAO_Notify_Tests_Command::execute ()
     }
 
   if (this->next_)
+  {
     this->next_->execute ();
+  }
 }

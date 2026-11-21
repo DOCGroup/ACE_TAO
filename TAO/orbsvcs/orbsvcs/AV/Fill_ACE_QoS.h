@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef FILL_ACE_QOS_H
 #define FILL_ACE_QOS_H
 
@@ -39,10 +38,8 @@ public:
   using FLOW_SPEC_HASH_MAP = ACE_Hash_Map_Manager<ACE_CString, ACE_Flow_Spec *, ACE_Null_Mutex>;
 
   //Initialization and termination methods.
-  /// constructor.
   Fill_ACE_QoS ();
 
-  /// destructor.
   ~Fill_ACE_QoS ();
 
   /// To be used by receivers. Fills the receiver qos and sets the
@@ -65,14 +62,13 @@ public:
   FLOW_SPEC_HASH_MAP& map ();
 
 private:
-  // The Service Provider is currently set to NULL for all ACE_QoS.
+  /// The Service Provider is currently null for all ACE_QoS values.
   static const iovec iov_;
 
-  // A NO_TRAFFIC flow spec. Senders set the receiving qos to this
-  // while the receivers set the sending qos to this.
-  ACE_Flow_Spec *default_traffic_;
+  /// NO_TRAFFIC flow spec borrowed by ACE_QoS until the QoS call completes.
+  ACE_Flow_Spec default_traffic_;
 
-  // A list of flowspecs indexed by the flowspec name.
+  /// Flow specs indexed by flow spec name.
   FLOW_SPEC_HASH_MAP flow_spec_map_;
 };
 

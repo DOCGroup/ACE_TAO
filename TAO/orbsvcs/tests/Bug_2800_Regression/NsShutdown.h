@@ -1,17 +1,15 @@
-
 #ifndef SHUTDOWN_H
 #define SHUTDOWN_H
 #include /**/ "ace/pre.h"
 
 #include "TestS.h"
 
-/// Implement the Test::Hello interface
+/// Implement the Test::NsShutdown interface
 class NsShutdown
   : public virtual POA_Test::NsShutdown
 {
 public:
-  /// Constructor
-  NsShutdown (CORBA::ORB_ptr orb);
+  explicit NsShutdown (CORBA::ORB_ptr orb);
 
   NsShutdown (NsShutdown const &) = delete;
   NsShutdown (NsShutdown &&) = delete;
@@ -27,4 +25,4 @@ private:
 };
 
 #include /**/ "ace/post.h"
-#endif /* HELLO_H */
+#endif /* SHUTDOWN_H */

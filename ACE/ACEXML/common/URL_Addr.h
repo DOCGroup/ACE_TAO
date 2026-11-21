@@ -20,6 +20,7 @@
 #include "ace/INET_Addr.h"
 #include "ACEXML/common/XML_Types.h"
 #include "ACEXML/common/ACEXML_Export.h"
+#include <memory>
 
 /**
  *  @class ACEXML_URL_Addr
@@ -32,13 +33,13 @@ public:
   /// Initialization and termination methods.
   ACEXML_URL_Addr ();
 
-  /// Constructor.
   ACEXML_URL_Addr (const ACEXML_Char *host_name,
                    const ACEXML_Char *path_name,
                    unsigned short port = ACE_DEFAULT_HTTP_PORT);
 
-  /// Copy constructor.
   ACEXML_URL_Addr (const ACEXML_URL_Addr &addr);
+  ACEXML_URL_Addr (ACEXML_URL_Addr &&) = delete;
+  ACEXML_URL_Addr &operator= (ACEXML_URL_Addr &&) = delete;
 
   /// Essentially the copy constructor.
   int set (const ACEXML_URL_Addr &addr);
@@ -51,13 +52,18 @@ public:
    *  <address> it is assumed to be an ip-number or ip-address number, with
    *  the port number <ACE_DEFAULT_HTTP_PORT>.
    */
+#if defined (ACE_USES_WCHAR)
   virtual int string_to_addr (const ACEXML_Char* address,
                               int address_family = AF_UNSPEC);
+#else
+  int string_to_addr (const ACEXML_Char* address,
+                      int address_family = AF_UNSPEC) override;
+#endif
 
   //  Function to shut up Borland C++
 #if defined (ACE_USES_WCHAR)
-  virtual int string_to_addr (const char* addresss,
-                              int address_family = AF_UNSPEC);
+  int string_to_addr (const char* addresss,
+                      int address_family = AF_UNSPEC) override;
 #endif
 
   /**
@@ -69,9 +75,9 @@ public:
    *  "www.cs.wustl.edu:80/~schmidt/"). Returns -1 if the <size> of the
    *  <buffer> is too small, else 0.
    */
-  virtual int addr_to_string (ACEXML_Char *s,
-                              size_t size,
-                              int ipaddr_format = 1) const;
+  int addr_to_string (ACEXML_Char *s,
+                      size_t size,
+                      int ipaddr_format = 1) const override;
 
   /**
    *  Transform the current ACE_INET_Addr address into string format. If
@@ -85,10 +91,8 @@ public:
    */
   virtual const ACEXML_Char *addr_to_string (int ipaddr_format = 1);
 
-  /// Assignment operator.
   void operator= (const ACEXML_URL_Addr &addr);
 
-  /// Destructor.
   ~ACEXML_URL_Addr ();
 
   /**
@@ -101,7 +105,7 @@ public:
   bool operator != (const ACEXML_URL_Addr &SAP) const;
 
   /// Computes and returns hash value.
-  virtual u_long hash () const;
+  u_long hash () const override;
 
   /// Return the path name.
   const ACEXML_Char *get_path_name () const;
@@ -110,15 +114,22 @@ public:
   int destroy ();
 
 private:
+  struct Free_Deleter
+  {
+    void operator() (ACEXML_Char *ptr) const;
+  };
+
+  using ACEXML_Char_Ptr = std::unique_ptr<ACEXML_Char, Free_Deleter>;
+
   /// Calculate the maximum length of the address string
   size_t calculate_length (int ipaddr_format) const;
 
   /// Our path name.
-  ACEXML_Char *path_name_;
+  ACEXML_Char_Ptr path_name_ {};
 
   /// The dynamically created address string that's used for the
   /// <addr_to_string> method.
-  ACEXML_Char *addr_string_;
+  ACEXML_Char_Ptr addr_string_ {};
 
   /// Current length of the <addr_string_>
   size_t addr_string_len_;

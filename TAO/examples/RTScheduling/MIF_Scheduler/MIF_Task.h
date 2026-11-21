@@ -14,14 +14,12 @@ class MIF_Task : public Thread_Task
             char *job_name,
             DT_Creator *dt_creator);
 
-  ~MIF_Task ();
-
-  virtual int activate_task (RTScheduling::Current_ptr current,
+  int activate_task (RTScheduling::Current_ptr current,
                              CORBA::Policy_ptr sched_param,
                              long flags,
-                             ACE_Time_Value* base_time);
+                             ACE_Time_Value* base_time) override;
 
-  virtual int perform_task ();
+  int perform_task () override;
 
  private:
   void pre_activate ();

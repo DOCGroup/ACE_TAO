@@ -1,6 +1,4 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Default_Policy_Validator.h
  *
@@ -9,8 +7,6 @@
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  *  @author  Frank Hunleth  <fhuntleth@cs.wustl.edu>
  */
-//=============================================================================
-
 #ifndef TAO_DEFAULT_POLICY_VALIDATOR_H_
 #define TAO_DEFAULT_POLICY_VALIDATOR_H_
 
@@ -30,10 +26,8 @@ class TAO_PortableServer_Export TAO_POA_Default_Policy_Validator
   : public TAO_Policy_Validator
 {
 public:
-  /// Constructor.
   explicit TAO_POA_Default_Policy_Validator (TAO_ORB_Core &orb_core);
 
-  /// Destructor.
   ~TAO_POA_Default_Policy_Validator () override = default;
 
 protected:

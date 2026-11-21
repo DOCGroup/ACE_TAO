@@ -1,4 +1,4 @@
-// -*- IDL -*-
+/// -*- IDL -*-
 
 #ifndef _SECURITY_IDL_
 #define _SECURITY_IDL_
@@ -15,7 +15,7 @@ module Security {
     typedef string SecurityName;
     typedef sequence<octet> Opaque;
 
-    // Constant declarations for Security Service Options
+    /// Constant declarations for Security Service Options
     const CORBA::ServiceOption SecurityLevel1 = 1;
     const CORBA::ServiceOption SecurityLevel2 = 2;
     const CORBA::ServiceOption NonRepudiation = 3;
@@ -26,18 +26,18 @@ module Security {
     const CORBA::ServiceOption StandardSecureInteroperability = 8;
     const CORBA::ServiceOption DCESecureInteroperability = 9;
 
-    // Service options for Common Secure Interoperability
+    /// Service options for Common Secure Interoperability
     const CORBA::ServiceOption CommonInteroperabilityLevel0 = 10;
     const CORBA::ServiceOption CommonInteroperabilityLevel1 = 11;
     const CORBA::ServiceOption CommonInteroperabilityLevel2 = 12;
 
-    // Security mech types supported for secure association
+    /// Security mech types supported for secure association
     const CORBA::ServiceDetailType SecurityMechanismType = 1;
 
-    // privilege types supported in standard access policy
+    /// privilege types supported in standard access policy
     const CORBA::ServiceDetailType SecurityAttribute = 2;
 
-   // extensible families for standard data types
+   /// extensible families for standard data types
     struct ExtensibleFamily {
         unsigned short        family_definer;
         unsigned short        family;
@@ -47,16 +47,16 @@ module Security {
 
     typedef sequence<OID> OIDList;
 
-    // security attributes
+    /// security attributes
     typedef unsigned long SecurityAttributeType;
 
-    // other attributes; family = 0
+    /// other attributes; family = 0
 
     const SecurityAttributeType    AuditId = 1;
     const SecurityAttributeType    AccountingId = 2;
     const SecurityAttributeType    NonRepudiationId = 3;
 
-    // privilege attributes; family = 1
+    /// privilege attributes; family = 1
 
     const SecurityAttributeType    _Public = 1;
     const SecurityAttributeType    AccessId = 2;
@@ -77,14 +77,14 @@ module Security {
     struct SecAttribute {
         AttributeType         attribute_type;
         OID                   defining_authority;
+        /// the value of this attribute can be
+        /// decoded only with knowledge of defining authority
         Opaque                value;
-        // the value of this attribute can be
-        // decoded only with knowledge of defining authority
     };
 
     typedef sequence <SecAttribute> AttributeList;
 
-    // Authentication return status
+    /// Authentication return status
     enum AuthenticationStatus {
         SecAuthSuccess,
         SecAuthFailure,
@@ -92,19 +92,19 @@ module Security {
         SecAuthExpired
     };
 
-    // Association return status
+    /// Association return status
     enum AssociationStatus {
         SecAssocSuccess,
         SecAssocFailure,
         SecAssocContinue
     };
 
-    // Authentication method
+    /// Authentication method
     typedef unsigned long AuthenticationMethod;
 
     typedef sequence<AuthenticationMethod> AuthenticationMethodList;
 
-    // Credential types
+    /// Credential types
 
     enum InvocationCredentialsType {
         SecOwnCredentials,
@@ -112,7 +112,7 @@ module Security {
         SecTargetCredentials
     };
 
-    // Declarations related to Rights
+    /// Declarations related to Rights
 
     struct Right {
         ExtensibleFamily        rights_family;
@@ -126,7 +126,7 @@ module Security {
         SecAnyRight
     };
 
-    // Delegation related
+    /// Delegation related
 
     enum DelegationState {
         SecInitiator,
@@ -138,13 +138,13 @@ module Security {
         NoDelegate
     };
 
-    // pick up from TimeBase
+    /// pick up from TimeBase
 
     typedef TimeBase::UtcT        UtcT;
     typedef TimeBase::IntervalT   IntervalT;
     typedef TimeBase::TimeT       TimeT;
 
-    // Security features available on credentials.
+    /// Security features available on credentials.
 
     enum SecurityFeature {
         SecNoDelegation,
@@ -160,8 +160,8 @@ module Security {
         SecEstablishTrustInClient
     };
 
-    // Quality of protection which can be specified
-    // for an object reference and used to protect messages
+    /// Quality of protection which can be specified
+    /// for an object reference and used to protect messages
     enum QOP {
         SecQOPNoProtection,
         SecQOPIntegrity,
@@ -169,13 +169,13 @@ module Security {
         SecQOPIntegrityAndConfidentiality
     };
 
-    // Type of SecurityContext
+    /// Type of SecurityContext
     enum SecurityContextType {
         SecClientSecurityContext,
         SecServerSecurityContext
     };
 
-    // Operational State of a Security Context
+    /// Operational State of a Security Context
     enum SecurityContextState {
         SecContextInitialized,
         SecContextContinued,
@@ -194,18 +194,18 @@ module Security {
       CORBA::OctetSeq application_data;
     };
 
-    // For use with SecurityReplaceable
+    /// For use with SecurityReplaceable
     struct OpaqueBuffer {
       Opaque buffer;
       unsigned long startpos;
+      /// startpos <= endpos
+      /// OpaqueBuffer is said to be empty if startpos == endpos
       unsigned long endpos;
-      // startpos <= endpos
-      // OpaqueBuffer is said to be empty if startpos == endpos
     };
 
-    // Association options which can be administered
-    // on secure invocation policy and used to
-    // initialize security context
+    /// Association options which can be administered
+    /// on secure invocation policy and used to
+    /// initialize security context
     typedef unsigned short    AssociationOptions;
 
     const AssociationOptions NoProtection = 1;
@@ -219,26 +219,26 @@ module Security {
     const AssociationOptions SimpleDelegation = 256;
     const AssociationOptions CompositeDelegation = 512;
 
-    // Flag to indicate whether association options being
-    // administered are the "required" or "supported" set
+    /// Flag to indicate whether association options being
+    /// administered are the "required" or "supported" set
     enum RequiresSupports {
         SecRequires,
         SecSupports
     };
 
-    // Direction of communication for which
-    // secure invocation policy applies
+    /// Direction of communication for which
+    /// secure invocation policy applies
     enum CommunicationDirection {
         SecDirectionBoth,
         SecDirectionRequest,
         SecDirectionReply
     };
 
-    // security association mechanism type
+    /// security association mechanism type
     typedef string MechanismType;
     typedef sequence<MechanismType> MechanismTypeList;
 
-    // AssociationOptions-Direction pair
+    /// AssociationOptions-Direction pair
     struct OptionsDirectionPair {
         AssociationOptions           options;
         CommunicationDirection       direction;
@@ -246,14 +246,16 @@ module Security {
 
     typedef sequence <OptionsDirectionPair> OptionsDirectionPairList;
 
-    // Delegation mode which can be administered
+    /// Delegation mode which can be administered
     enum DelegationMode {
-        SecDelModeNoDelegation,       // i.e. use own credentials
-        SecDelModeSimpleDelegation,   // delegate received credentials
+        /// i.e. use own credentials
+        SecDelModeNoDelegation,
+        /// delegate received credentials
+        SecDelModeSimpleDelegation,
         SecDelModeCompositeDelegation // delegate both
     };
 
-    // Association options supported by a given mech type
+    /// Association options supported by a given mech type
     struct MechandOptions {
         MechanismType        mechanism_type;
         AssociationOptions   options_supported;
@@ -261,13 +263,13 @@ module Security {
 
     typedef sequence <MechandOptions> MechandOptionsList;
 
-    // Attribute of the SecurityLevel2::EstablishTrustPolicy
+    /// Attribute of the SecurityLevel2::EstablishTrustPolicy
     struct EstablishTrust {
       boolean trust_in_client;
       boolean trust_in_target;
     };
 
-    // Audit
+    /// Audit
     typedef unsigned long  AuditChannelId;
     typedef unsigned short _EventType;
 
@@ -308,15 +310,15 @@ module Security {
     const SelectorType    Time = 6;
     const SelectorType    DayOfWeek = 7;
 
-    // values defined for audit_needed and audit_write are:
-    // InterfaceName: CORBA::RepositoryId
-    // ObjectRef: object reference
-    // Operation: op_name
-    // Initiator: Credentials
-    // SuccessFailure: boolean
-    // Time: utc time on audit_write; time picked up from
-    //       environment in audit_needed if required
-    // DayOfWeek: DayOfTheWeek
+    /// values defined for audit_needed and audit_write are:
+    /// InterfaceName: CORBA::RepositoryId
+    /// ObjectRef: object reference
+    /// Operation: op_name
+    /// Initiator: Credentials
+    /// SuccessFailure: boolean
+    /// Time: utc time on audit_write; time picked up from
+    /// environment in audit_needed if required
+    /// DayOfWeek: DayOfTheWeek
 
     struct SelectorValue {
         SelectorType        selector;
@@ -325,9 +327,9 @@ module Security {
 
     typedef sequence <SelectorValue> SelectorValueList;
 
-    // Constant declaration for valid Security Policy Types
+    /// Constant declaration for valid Security Policy Types
 
-    // General administrative policies
+    /// General administrative policies
     const CORBA::PolicyType SecClientInvocationAccess = 1;
     const CORBA::PolicyType SecTargetInvocationAccess = 2;
     const CORBA::PolicyType SecApplicationAccess      = 3;
@@ -339,11 +341,11 @@ module Security {
     const CORBA::PolicyType SecTargetSecureInvocation = 9;
     const CORBA::PolicyType SecNonRepudiation         = 10;
 
-
-    // Policies used to control attributes of a binding to a target
+    /// Policies used to control attributes of a binding to a target
     const CORBA::PolicyType SecMechanismsPolicy            = 12;
     const CORBA::PolicyType SecInvocationCredentialsPolicy = 13;
-    const CORBA::PolicyType SecFeaturePolicy               = 14; // obsolete
+    /// obsolete
+    const CORBA::PolicyType SecFeaturePolicy               = 14;
     const CORBA::PolicyType SecQOPPolicy                   = 15;
 
     const CORBA::PolicyType SecDelegationDirectivePolicy = 38;

@@ -99,7 +99,7 @@ run_main (int, ACE_TCHAR *[])
 
   // Bug 1890 is all about ACE_Select_Reactor, so run it on that reactor
   // regardless of platform.
-  ACE_Select_Reactor *impl_ptr = nullptr;
+  ACE_Select_Reactor *impl_ptr {};
   ACE_NEW_RETURN (impl_ptr, ACE_Select_Reactor, -1);
   std::unique_ptr<ACE_Select_Reactor> auto_impl (impl_ptr);
 
@@ -121,7 +121,9 @@ run_main (int, ACE_TCHAR *[])
 
   // Verify that the results are what we expect
   if (!(success = timer->check_expected_results ()))
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Test failed\n")));
+  }
 
   // Cleanup
   timer->close ();
@@ -227,7 +229,7 @@ Timer::close()
 {
   for (int i = 0; i != nhandlers; ++i)
     {
-      this->reactor ()->remove_handler (&handler_[i],
+      this->reactor ()->remove_handler (std::addressof (handler_[i]),
                                         ACE_Event_Handler::ALL_EVENTS_MASK |
                                         ACE_Event_Handler::DONT_CALL);
     }
@@ -297,7 +299,7 @@ Timer::remove_some_handlers()
     ACE_Event_Handler::ALL_EVENTS_MASK | ACE_Event_Handler::DONT_CALL;
   for (int i = 0; i != nhandlers; ++i)
     {
-      if (-1 == reactor()->remove_handler(&handler_[i], mask))
+      if (-1 == reactor()->remove_handler(std::addressof (handler_[i]), mask))
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Cannot remove handler %d in %p\n"),
@@ -306,7 +308,7 @@ Timer::remove_some_handlers()
         }
     }
 
-  if (-1 == reactor()->register_handler(&special_handler(),
+  if (-1 == reactor()->register_handler(std::addressof (special_handler()),
                                         ACE_Event_Handler::ALL_EVENTS_MASK))
     {
       ACE_ERROR ((LM_ERROR,

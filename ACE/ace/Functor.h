@@ -24,7 +24,6 @@
  */
 //==========================================================================
 
-
 #ifndef ACE_FUNCTOR_H
 #define ACE_FUNCTOR_H
 #include /**/ "ace/pre.h"
@@ -57,10 +56,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Command_Base
 {
 public:
-  /// Default constructor.
   ACE_Command_Base ();
 
-  /// Virtual destructor.
   virtual ~ACE_Command_Base () = default;
 
   /**
@@ -83,7 +80,6 @@ class ACE_Export ACE_Noop_Command
   : public ACE_Command_Base
 {
 public:
-  /// Constructor
   ACE_Noop_Command() = default;
 
   /// Implement the empty execute() member function
@@ -290,7 +286,7 @@ template<>
 class ACE_Export ACE_Equal_To<const char *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
+  /// Simply calls std::strcmp
   int operator () (const char *lhs,
                    const char *rhs) const;
 };
@@ -303,7 +299,7 @@ template<>
 class ACE_Export ACE_Equal_To<char *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
+  /// Simply calls std::strcmp
   int operator () (const char *lhs,
                    const char *rhs) const;
 };
@@ -381,7 +377,7 @@ template<>
 class ACE_Export ACE_Less_Than<const char *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
+  /// Simply calls std::strcmp
   int operator () (const char *lhs,
                    const char *rhs) const;
 };
@@ -394,7 +390,7 @@ template<>
 class ACE_Export ACE_Less_Than<char *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
+  /// Simply calls std::strcmp
   int operator () (const char *lhs,
                    const char *rhs) const;
 };
@@ -442,7 +438,7 @@ template<>
 class ACE_Export ACE_Equal_To<const wchar_t *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
+  /// Simply calls std::wcscmp
   int operator () (const wchar_t *lhs,
                    const wchar_t *rhs) const;
 };
@@ -455,7 +451,7 @@ template<>
 class ACE_Export ACE_Equal_To<wchar_t *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
+  /// Simply calls std::wcscmp
   int operator () (const wchar_t *lhs,
                    const wchar_t *rhs) const;
 };
@@ -468,7 +464,7 @@ template<>
 class ACE_Export ACE_Less_Than<const wchar_t *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
+  /// Simply calls std::wcscmp
   int operator () (const wchar_t *lhs,
                    const wchar_t *rhs) const;
 };
@@ -481,7 +477,7 @@ template<>
 class ACE_Export ACE_Less_Than<wchar_t *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
+  /// Simply calls std::wcscmp
   int operator () (const wchar_t *lhs,
                    const wchar_t *rhs) const;
 };

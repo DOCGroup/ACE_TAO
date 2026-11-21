@@ -1,4 +1,4 @@
-// -*- IDL -*-
+/// -*- IDL -*-
 
 #ifndef _SECURITY_LEVEL_1_IDL_
 #define _SECURITY_LEVEL_1_IDL_
@@ -11,10 +11,11 @@ module SecurityLevel1 {
 
 # pragma version SecurityLevel1 1.8
 
-  local interface Current : CORBA::Current {  // Locality Constrained
+  /// Locality Constrained
+  local interface Current : CORBA::Current {
 #   pragma version Current 1.8
 
-    // thread specific operations
+    /// thread specific operations
 
     Security::AttributeList get_attributes (
        in    Security::AttributeTypeList  attributes

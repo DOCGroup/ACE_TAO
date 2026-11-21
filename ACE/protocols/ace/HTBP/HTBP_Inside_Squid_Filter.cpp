@@ -1,14 +1,17 @@
 // ACE_HTBP_Filter.cpp
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <memory>
+#include <string>
+
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_stdio.h"
 #include "HTBP_Session.h"
 #include "HTBP_Inside_Squid_Filter.h"
 
 #if !defined (__ACE_INLINE__)
 #include "HTBP_Inside_Squid_Filter.inl"
 #endif
-
-#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -21,7 +24,7 @@ ACE::HTBP::Inside_Squid_Filter::send_data_trailer (ACE::HTBP::Channel *ch)
 
 int
 ACE::HTBP::Inside_Squid_Filter::make_request_header (ACE::HTBP::Channel *ch,
-                                                     const char *cmd,
+                                                     char const* cmd,
                                                      char *buffer,
                                                      size_t buffer_size)
 {
@@ -34,17 +37,17 @@ ACE::HTBP::Inside_Squid_Filter::make_request_header (ACE::HTBP::Channel *ch,
 
   ACE::HTBP::Session *session = ch->session();
 
-  const char * format = "%shttp://%s:%d/%s/%d/request%d.html HTTP/1.1\n";
+  char const* format = "%shttp://%s:%d/%s/%d/request%d.html HTTP/1.1\n";
   char remote_host[ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1];
   unsigned remote_port = session->peer_addr().get_port_number();
-  const char *local_htid = session->local_addr().get_htid();
+  char const* local_htid = session->local_addr().get_htid();
 
   ACE_UINT32 tempId = session->session_id().id_;
   size_t sid_size = 1;
   size_t rid_size = 1;
-  while (tempId /= 10) sid_size++;
+  while (tempId /= 10) ++sid_size;
   tempId = ch->request_count();
-  while (tempId /= 10) rid_size++;
+  while (tempId /= 10) ++rid_size;
 
   // This test was originally get_host_name() == -1, but this is
   // problematic if the address doesn't resolve to a name. I think
@@ -58,47 +61,44 @@ ACE::HTBP::Inside_Squid_Filter::make_request_header (ACE::HTBP::Channel *ch,
                        ACE_TEXT("peer_addr hostname\n")),
                       -1);
 
-
-  size_t size =
-    ACE_OS::strlen(format)
+  const size_t size =
+    std::strlen (format)
     - 12    // subtract out the size of the format specifiers
-    + ACE_OS::strlen (cmd)
-    + ACE_OS::strlen (remote_host)
+    + std::strlen (cmd)
+    + std::strlen (remote_host)
     + 5     // maximum size for a the remote port number
-    + ACE_OS::strlen (local_htid)
+    + std::strlen (local_htid)
     + sid_size // size of session id
     + rid_size; // size of request id
 
   if (size > buffer_size)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("HTBP::Inside_Squid_Filter: insufficient ")
-                       ACE_TEXT("buffer space for request header, need %d ")
-                       ACE_TEXT("got %d\n"),
+                       ACE_TEXT("buffer space for request header, need %B ")
+                       ACE_TEXT("got %B\n"),
                        size, buffer_size),
                       -1);
 
-  ACE_OS::sprintf (buffer,format,
+  std::sprintf (buffer, format,
                    cmd,remote_host,remote_port,
                    local_htid, session->session_id().id_,
                    ch->request_count());
 
-  return ACE_OS::strlen(buffer);
+  return std::strlen (buffer);
 }
 
 ssize_t
 ACE::HTBP::Inside_Squid_Filter::send_data_header (ssize_t data_len,
                                                 ACE::HTBP::Channel *ch)
 {
-  char *buffer = new char[BUFSIZ];
-  std::unique_ptr<char[]> guard (buffer);
+  std::unique_ptr<char[]> buffer (new char[BUFSIZ]);
   ssize_t result = -1;
-  if (this->make_request_header (ch,"POST ",buffer,BUFSIZ) != -1)
+  if (this->make_request_header (ch,"POST ",buffer.get (),BUFSIZ) != -1)
     {
-      ACE_CString header (buffer);
+      ACE_CString header (buffer.get ());
       header += "Content-Type: application/octet-stream\nContent-Length: ";
-      char datalenstr[20];
-      ACE_OS::itoa (data_len,datalenstr,10);
-      header += datalenstr;
+      const std::string data_length = std::to_string (data_len);
+      header += data_length.c_str ();
       header += "\n\n";
       result = ch->ace_stream().send(header.c_str(),header.length());
     }
@@ -123,7 +123,7 @@ ACE::HTBP::Inside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
       return 0;
     }
   char *header_end = this->header_complete(ch);
-  if (header_end == 0)
+  if (header_end == nullptr)
     {
       if (ch->state() != ACE::HTBP::Channel::Closed)
         {
@@ -138,13 +138,13 @@ ACE::HTBP::Inside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
     }
   char *start = ch->leftovers().rd_ptr();
   ACE_CString token = "Content-Length: ";
-  char *tpos = ACE_OS::strstr(start,token.c_str());
-  char *nl = ACE_OS::strchr (start,'\n');
-  if (tpos != 0)
+  char *tpos = std::strstr (start, token.c_str ());
+  char *nl = std::strchr (start, '\n');
+  if (tpos != nullptr)
     {
       tpos += token.length();
       *nl = 0;
-      ch->data_len (ACE_OS::strtol(tpos,0,10));
+      ch->data_len (std::strtol (tpos, nullptr, 10));
       start = nl+1;
     }
 
@@ -174,8 +174,7 @@ ACE::HTBP::Inside_Squid_Filter::recv_data_trailer (ACE::HTBP::Channel *ch)
 int
 ACE::HTBP::Inside_Squid_Filter::send_ack (ACE::HTBP::Channel *ch)
 {
-  char *buffer = new char[BUFSIZ];
-  std::unique_ptr<char[]> guard (buffer);
+  std::unique_ptr<char[]> buffer (new char[BUFSIZ]);
   ssize_t result = -1;
   if (ch->state() == ACE::HTBP::Channel::Ack_Sent)
     {
@@ -184,9 +183,9 @@ ACE::HTBP::Inside_Squid_Filter::send_ack (ACE::HTBP::Channel *ch)
                          ACE_TEXT("state is already ACK_SENT\n")),
                         1);
     }
-  if (this->make_request_header (ch,"GET ",buffer,BUFSIZ) != -1)
+  if (this->make_request_header (ch,"GET ",buffer.get (),BUFSIZ) != -1)
     {
-      ACE_CString header (buffer);
+      ACE_CString header (buffer.get ());
       header += "\n";
       result = ch->ace_stream().send(header.c_str(),header.length());
     }
@@ -200,10 +199,12 @@ int
 ACE::HTBP::Inside_Squid_Filter::recv_ack (ACE::HTBP::Channel *ch)
 {
   char *header_end = this->header_complete(ch);
-  if (header_end == 0)
+  if (header_end == nullptr)
     {
       if (ch->state() != ACE::HTBP::Channel::Closed)
+      {
         errno = EWOULDBLOCK;
+      }
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT("HTBP::Inside_Squid_Filter::")
                          ACE_TEXT("recv_ack, ")
@@ -218,13 +219,13 @@ ACE::HTBP::Inside_Squid_Filter::recv_ack (ACE::HTBP::Channel *ch)
 
   char *start = ch->leftovers().rd_ptr();
   ACE_CString token = "Content-Length: ";
-  char *tpos = ACE_OS::strstr(start,token.c_str());
-  char *nl = ACE_OS::strchr (start,'\n');
-  if (tpos != 0)
+  char *tpos = std::strstr (start, token.c_str ());
+  char *nl = std::strchr (start, '\n');
+  if (tpos != nullptr)
     {
       tpos += token.length();
       *nl = 0;
-      ch->data_len (ACE_OS::strtol(tpos,0,10));
+      ch->data_len (std::strtol (tpos, nullptr, 10));
       start = nl+1;
     }
 

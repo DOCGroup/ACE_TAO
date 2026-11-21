@@ -36,12 +36,16 @@ TAO_LB_MemberLocator::preinvoke (
   catch (PortableGroup::ObjectGroupNotFound const & ex)
     {
       if (TAO_debug_level > 0)
+      {
         ex._tao_print_exception ("LoadManager::next_member()");
+      }
     }
   catch (PortableGroup::MemberNotFound const & ex)
     {
       if (TAO_debug_level > 0)
+      {
         ex._tao_print_exception ("LoadManager::next_member()");
+      }
     }
 
   throw CORBA::OBJECT_NOT_EXIST ();

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SSLIOP_CLIENT_CREDENTIALS_H
 #define TAO_SSLIOP_CLIENT_CREDENTIALS_H
 
@@ -46,7 +45,6 @@ namespace TAO
         public virtual SSLIOP_Credentials
     {
     public:
-      /// Constructor
       ClientCredentials (::X509 * cert, ::EVP_PKEY * evp, ::SSL * ssl);
 
       /**
@@ -55,9 +53,9 @@ namespace TAO
        * Methods required by the SecurityLevel3::Credentials
        * interface.
        */
-      //@{
+      /// @{
       SecurityLevel3::CredentialsType creds_type () override;
-      //@}
+      /// @}
 
       /**
        * @name SecurityLevel3::ClientCredentials Methods
@@ -65,7 +63,7 @@ namespace TAO
        * Methods required by the SecurityLevel3::ClientCredentials
        * interface.
        */
-      //@{
+      /// @{
       char * context_id () override;
 
       SecurityLevel3::Principal * client_principal () override;
@@ -89,15 +87,14 @@ namespace TAO
       CORBA::Boolean confidentiality () override;
 
       CORBA::Boolean integrity () override;
-      //@}
+      /// @}
 
     protected:
-      /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~ClientCredentials ();
+      ~ClientCredentials () override = default;
 
     private:
       /// Reference to the OpenSSL @c SSL data structure associated

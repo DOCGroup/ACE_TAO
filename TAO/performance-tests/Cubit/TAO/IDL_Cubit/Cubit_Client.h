@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef _CUBIT_CLIENT_H
 #define _CUBIT_CLIENT_H
 
@@ -40,7 +39,6 @@
 class Cubit_Client
 {
 public:
-  // = Constructor and destructor.
   Cubit_Client (int shutdown = 0);
 
   ~Cubit_Client ();

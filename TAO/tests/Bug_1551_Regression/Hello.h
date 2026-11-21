@@ -6,11 +6,12 @@
 
 #include "TestS.h"
 
+#include <atomic>
+
 class Hello
   : public virtual POA_Test::Hello
 {
 public:
-  /// Constructor
   Hello (CORBA::ORB_ptr orb, bool simulate_crashes);
   Hello (Hello const &) = delete;
   Hello &operator= (Hello const &) = delete;
@@ -20,11 +21,11 @@ public:
   void short_sleep () override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
-  bool simulate_crashes_;
+  bool const simulate_crashes_;
 
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX,long> atomic_counter_;
+  std::atomic<long> atomic_counter_ {200};
 };
 
 #include /**/ "ace/post.h"

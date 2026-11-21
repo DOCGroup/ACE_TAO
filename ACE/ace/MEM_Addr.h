@@ -8,7 +8,6 @@
  */
 //==========================================================================
 
-
 #ifndef ACE_MEM_ADDR_H
 #define ACE_MEM_ADDR_H
 #include /**/ "ace/pre.h"
@@ -34,25 +33,19 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_MEM_Addr : public ACE_Addr
 {
 public:
-  /// Default constructor.
   ACE_MEM_Addr ();
 
-  /// Copy constructor.
   ACE_MEM_Addr (const ACE_MEM_Addr &);
 
-  /// Assignment operator
   ACE_MEM_Addr& operator= (const ACE_MEM_Addr&) = default;
 
   /// Creates an ACE_MEM_Addr from a @a port_number
-  ACE_MEM_Addr (u_short port_number);
+  explicit ACE_MEM_Addr (u_short port_number);
 
   /// Creates an ACE_MEM_Addr from a @a port_name.
   explicit ACE_MEM_Addr (const ACE_TCHAR port_name[]);
 
-  /// Default dtor.
   ~ACE_MEM_Addr () override = default;
-
-  // = Direct initialization methods.
 
   /// Default initialization routine.
   int initialize_local (u_short port);
@@ -60,7 +53,8 @@ public:
   /// Check if @a sap designates an endpoint on the same host.
   int same_host (const ACE_INET_Addr& sap);
 
-  // These methods are useful after the object has been constructed.
+  /// @name Methods for reinitializing an existing address
+  /// @{
 
   /**
    * Initializes an ACE_MEM_Addr from a @a port_number.  If @a encode
@@ -73,6 +67,8 @@ public:
   /// Uses <getservbyname> to initialize an ACE_MEM_Addr from a
   /// @a port_name, the remote <host_name>, and the <protocol>.
   int set (const ACE_TCHAR port_name[]);
+
+  /// @}
 
   /// Return a pointer to the underlying network address.
   void *get_addr () const override;

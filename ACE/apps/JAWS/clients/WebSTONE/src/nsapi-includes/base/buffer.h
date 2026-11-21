@@ -7,9 +7,7 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * buffer.h: For performing buffered I/O on a file or socket descriptor.
@@ -32,14 +30,12 @@
  * Rob McCool
  */
 
-
 #ifndef BUFFER_H
 #define BUFFER_H
 
 #ifdef XP_WIN32
 #include <nt/ntbuffer.h>
 #else
-
 
 /*
  * We need certain system specific functions and symbols.
@@ -59,7 +55,6 @@
 #ifdef FILE_UNIX_MMAP
 #include <sys/types.h>          /* caddr_t */
 #endif
-
 
 /* ------------------------------ Structures ------------------------------ */
 
@@ -96,9 +91,7 @@ typedef struct {
     char *errmsg;
 } netbuf;
 
-
 /* -------------------------------- Macros -------------------------------- */
-
 
 /*
  * netbuf_getc gets a character from the given network buffer and returns
@@ -118,7 +111,6 @@ typedef struct {
  ((b)->pos != (b)->cursize ? (int)((b)->inbuf[(b)->pos++]) : filebuf_next(b,1))
 #endif
 
-
 /*
  * buffer_error returns the last error that occurred with buffer. Don't use
  * this unless you know an error occurred. Independent of network/file type.
@@ -134,9 +126,7 @@ typedef struct {
 #define buffer_flush(buf,fd) \
     system_write(fd,&(buf)->inbuf[(buf)->pos], (buf)->cursize - (buf)->pos)
 
-
 /* ------------------------------ Prototypes ------------------------------ */
-
 
 /*
  * buffer_open opens a new buffer reading the specified file, with an I/O
@@ -191,7 +181,6 @@ void netbuf_close(netbuf *buf);
 
 int filebuf_grab(filebuf *buf, int sz);
 int netbuf_grab(netbuf *buf, int sz);
-
 
 /*
  * netbuf_buf2sd will send n bytes from the (probably previously read)

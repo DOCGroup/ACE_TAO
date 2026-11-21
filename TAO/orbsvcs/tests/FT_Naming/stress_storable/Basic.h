@@ -20,7 +20,6 @@ class Basic
   : public virtual POA_Test::Basic
 {
 public:
-  /// Constructor
   Basic (CORBA::Object_ptr object_group,
          FT_Naming::NamingManager_ptr lm,
          CORBA::ORB_ptr orb,

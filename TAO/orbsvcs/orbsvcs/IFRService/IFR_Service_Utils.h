@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    IFR_Service_Utils.h
@@ -10,7 +9,6 @@
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu> Jaiganesh Balasubramanian <jai@doc.ece.uci.edu> Priyanka Gontla <pgontla@doc.ece.uci.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_IFR_SERVICE_UTILS_H
 #define TAO_IFR_SERVICE_UTILS_H

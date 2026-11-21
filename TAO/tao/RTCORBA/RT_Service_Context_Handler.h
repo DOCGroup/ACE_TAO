@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file RT_Service_Context_Handler.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_RT_SERVICE_CONTEXT_HANDLER_H
 #define TAO_RT_SERVICE_CONTEXT_HANDLER_H
@@ -28,7 +26,7 @@ class TAO_RT_Service_Context_Handler :
 {
 public:
   int process_service_context (TAO_Transport& transport,
-                               const IOP::ServiceContext& context,
+                               IOP::ServiceContext const &context,
                                TAO_ServerRequest *request) override;
   int generate_service_context (
     TAO_Stub *stub,

@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
@@ -34,9 +34,9 @@ ACE_UNIX_Addr::operator == (const ACE_UNIX_Addr &sap) const
       i = 1;
     }
 #endif /* ACE_LINUX */
-  return ACE_OS::strncmp (this->unix_addr_.sun_path + i,
-                          sap.unix_addr_.sun_path + i,
-                          sizeof (this->unix_addr_.sun_path) - 1) == 0;
+  return std::strncmp (this->unix_addr_.sun_path + i,
+                       sap.unix_addr_.sun_path + i,
+                       sizeof (this->unix_addr_.sun_path) - 1) == 0;
 }
 
 // Compare two addresses for inequality.

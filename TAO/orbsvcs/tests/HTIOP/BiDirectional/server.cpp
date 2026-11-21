@@ -4,8 +4,7 @@
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/AnyTypeCode/Any.h"
 
-
-const ACE_TCHAR *ior_output_file = 0;
+const ACE_TCHAR *ior_output_file {};
 int no_iterations = 10;
 
 int
@@ -88,7 +87,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       Simple_Server_i *server_impl = new Simple_Server_i (orb.in (),
                                                           no_iterations);

@@ -6,13 +6,15 @@
 // This is the interface program that accesses the remote object
 
 int
-Echo_Client_i::run (const char *name,
+Echo_Client_i::run (char const *name,
                     int argc,
                     ACE_TCHAR *argv[])
 {
   // Initialize the client.
   if (client_.init (name, argc, argv) == -1)
+  {
     return -1;
+  }
 
   try
     {
@@ -24,8 +26,10 @@ Echo_Client_i::run (const char *name,
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("ECHO? ")));
 
-          if (ACE_OS::fgets (buf, sizeof buf, stdin) == 0)
+          if (ACE_OS::fgets (buf, sizeof buf, stdin) == nullptr)
+          {
             break;
+          }
 
           CORBA::String_var s = client_->echo_string (buf);
 
@@ -34,10 +38,12 @@ Echo_Client_i::run (const char *name,
                       s.in ()));
         }
 
-      if (client_.do_shutdown () == 1)
+      if (client_.do_shutdown ())
+      {
         client_->shutdown ();
+      }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("\n Exception in RMI");
       return -1;

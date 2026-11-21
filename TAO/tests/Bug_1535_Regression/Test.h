@@ -10,19 +10,21 @@ class Hello
   : public virtual POA_Test
 {
 public:
-  Hello (PortableServer::POA_ptr poa);
+  explicit Hello (PortableServer::POA_ptr poa);
   Hello (Hello const &) = delete;
   Hello &operator= (Hello const &) = delete;
   Hello (Hello &&) = delete;
   Hello &operator= (Hello &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void print_hello_world () override;
 
   PortableServer::POA_ptr _default_POA () override;
+  /// @}
 
 private:
-  PortableServer::POA_var poa_;
+  PortableServer::POA_var const poa_;
 };
 
 #include /**/ "ace/post.h"

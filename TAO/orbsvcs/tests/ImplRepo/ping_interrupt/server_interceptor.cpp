@@ -2,16 +2,12 @@
 #include "tao/OctetSeqC.h"
 
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 Ping_Death_Request_Interceptor::Ping_Death_Request_Interceptor (int *counter)
-  : myname_ ("Ping_Death_Interceptor"),
-    counter_ (counter),
+  : counter_ (counter),
     poa_ (PortableServer::POA::_nil())
-{
-}
-
-Ping_Death_Request_Interceptor::~Ping_Death_Request_Interceptor ()
 {
 }
 
@@ -24,7 +20,7 @@ Ping_Death_Request_Interceptor::set_poa (PortableServer::POA_ptr poa)
 char *
 Ping_Death_Request_Interceptor::name ()
 {
-  return CORBA::string_dup (this->myname_);
+  return CORBA::string_dup ("Ping_Death_Interceptor");
 }
 
 void
@@ -38,12 +34,12 @@ Ping_Death_Request_Interceptor::receive_request_service_contexts (
 {
   CORBA::String_var operation = ri->operation ();
 
-  if (ACE_OS::strcmp (operation.in(), "ping") != 0)
+  if (std::strcmp (operation.in (), "ping") != 0)
     {
       return;
     }
 
-  if (this->counter_ != 0)
+  if (this->counter_ != nullptr)
     {
       ++(*counter_);
     }
@@ -53,7 +49,7 @@ Ping_Death_Request_Interceptor::receive_request_service_contexts (
     }
   try
     {
-      this->poa_->destroy (1,1);
+      this->poa_->destroy (true,true);
     }
   catch (const CORBA::Exception &ex)
     {

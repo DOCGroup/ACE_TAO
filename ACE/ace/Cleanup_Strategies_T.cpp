@@ -30,7 +30,9 @@ ACE_Recyclable_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (
   VALUE value;
 
   if (container.unbind (*key, value) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   value.first->recycler (0, 0);
 
@@ -66,7 +68,9 @@ ACE_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (
       (*value)->close ();
 
       if (container.unbind (*key) == -1)
-        return -1;
+        {
+          return -1;
+        }
     }
 
   return 0;

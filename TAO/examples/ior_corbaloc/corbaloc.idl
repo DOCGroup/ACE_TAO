@@ -1,19 +1,10 @@
 module corbaloc
 {
-
+  /// Checks whether the client can reach the server and reports the result.
   interface Status
   {
-    // = TITLE
-    //     A simple interface to check the status of
-    //     connection between the client and the server.
-    //
-    // = DESCRIPTION
-    //     Prints out the status.
-
+    /// Returns false when the server receives the client request.
     boolean print_status ();
-    // Return <true == 0> if the server received the
-    // request from the client.
-
   };
 };
 

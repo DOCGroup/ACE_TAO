@@ -233,10 +233,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                     "server (%P|%t): sched_params failed\n"));
     }
 
-
   try
     {
-      ORBInitializer *initializer = 0;
+      ORBInitializer *initializer {};
       ACE_NEW_RETURN (initializer,
                       ORBInitializer,
                       -1);  // No exceptions yet!
@@ -247,7 +246,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
-
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");

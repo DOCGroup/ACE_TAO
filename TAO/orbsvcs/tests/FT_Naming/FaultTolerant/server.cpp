@@ -19,7 +19,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       LB_server lb_server (argc, argv);
 
       if (lb_server.start_orb_and_poa () != 0)
+      {
         return 1;
+      }
 
       // Either the object group was created or it existed
       // previously.
@@ -123,7 +125,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   ACE_TEXT ("(%P|%t) server - event loop finished\n")));
 
       if (lb_server.destroy () == -1)
+      {
         return 1;
+      }
     }
   catch (const CORBA::Exception& ex)
     {

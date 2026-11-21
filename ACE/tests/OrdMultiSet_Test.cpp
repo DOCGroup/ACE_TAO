@@ -12,19 +12,17 @@
  */
 //=============================================================================
 
-
 // Note, for this test the config.h file *must* come first!
 #include "ace/config-all.h"
 
 #include "test_config.h"
 #include "ace/Containers.h"
 
-
 int
 run_main (int, ACE_TCHAR *[])
 {
   int ret = 0;
-  int *ptr = nullptr;
+  int *ptr {};
 
   ACE_START_TEST (ACE_TEXT ("OrdMultiSet_Test"));
 
@@ -35,11 +33,15 @@ run_main (int, ACE_TCHAR *[])
   // Put in a range of odd ints, without an iterator.
   int i;
   for (i = -10; i < 10; ++i)
-    set.insert (2 * i + 1);
+    {
+      set.insert (2 * i + 1);
+    }
 
   // Put in an interleaved range of even ints, using an iterator.
   for (i = -10; i <= 10; ++i)
-    set.insert (2 * i, iter);
+    {
+      set.insert (2 * i, iter);
+    }
 
   // Remove the first and last elements of range.
   while (set.remove (-20) == 0)
@@ -87,7 +89,7 @@ run_main (int, ACE_TCHAR *[])
       ACE_TEST_ASSERT (iter.done () == 0);
 
       // Make sure the current element is what we expect.
-      int *ptr = nullptr;
+      int *ptr {};
       iter.next (ptr);
       ACE_TEST_ASSERT (ptr != nullptr);
       ACE_TEST_ASSERT (*ptr == i);
@@ -108,7 +110,7 @@ run_main (int, ACE_TCHAR *[])
       ACE_TEST_ASSERT (iter.done () == 0);
 
       // make sure the current element is what we expect
-      int& l = *iter;
+      int const & l = *iter;
       ACE_TEST_ASSERT (l == i);
 
       // move to the next element in the set

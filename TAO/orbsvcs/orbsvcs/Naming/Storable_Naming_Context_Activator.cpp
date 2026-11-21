@@ -7,6 +7,7 @@
 //=============================================================================
 
 #include "orbsvcs/Naming/Storable_Naming_Context_Activator.h"
+#include <string>
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 #include "orbsvcs/Naming/Naming_Context_Interface.h"
@@ -22,29 +23,25 @@ TAO_Storable_Naming_Context_Activator::TAO_Storable_Naming_Context_Activator (
   CORBA::ORB_ptr orb,
   TAO::Storable_Factory *persistence_factory,
   TAO_Storable_Naming_Context_Factory *context_impl_factory,
-  const ACE_TCHAR *)
+  ACE_TCHAR const *)
   : orb_(orb),
     persistence_factory_(persistence_factory),
     context_impl_factory_(context_impl_factory)
 {
 }
 
-TAO_Storable_Naming_Context_Activator::~TAO_Storable_Naming_Context_Activator ()
-{
-  delete persistence_factory_;
-  delete this->context_impl_factory_;
-}
+TAO_Storable_Naming_Context_Activator::~TAO_Storable_Naming_Context_Activator () = default;
 
 PortableServer::Servant
 TAO_Storable_Naming_Context_Activator::incarnate (
-    const PortableServer::ObjectId &oid,
+    PortableServer::ObjectId const &oid,
     PortableServer::POA_ptr poa)
 {
   // Make sure complete initialization has been done
-  ACE_ASSERT (persistence_factory_ != 0);
+  ACE_ASSERT (persistence_factory_ != nullptr);
 
   // Make sure complete initialization has been done
-  ACE_ASSERT (context_impl_factory_ != 0);
+  ACE_ASSERT (context_impl_factory_ != nullptr);
 
   CORBA::String_var poa_id = PortableServer::ObjectId_to_string (oid);
 
@@ -56,9 +53,9 @@ TAO_Storable_Naming_Context_Activator::incarnate (
 
   { // Does this already exist on disk?
 
-    ACE_CString file_name = poa_id.in ();
+    std::string file_name = poa_id.in ();
     std::unique_ptr<TAO::Storable_Base> fl (
-       persistence_factory_->create_stream (file_name.c_str (),
+       persistence_factory_->create_stream (file_name,
                                             "rw"));
 
     if (!fl->exists()) {
@@ -72,30 +69,29 @@ TAO_Storable_Naming_Context_Activator::incarnate (
     this->context_impl_factory_->create_naming_context_impl (orb_,
                                                              poa,
                                                              poa_id.in (),
-                                                             persistence_factory_);
+                                                             persistence_factory_.get ());
 
   // Put <context_impl> into the unique pointer temporarily, in case next
   // allocation fails.
   std::unique_ptr<TAO_Storable_Naming_Context> temp (context_impl);
 
-  TAO_Naming_Context *context = nullptr;
+  TAO_Naming_Context *context {};
   ACE_NEW_THROW_EX (context,
                     TAO_Naming_Context (context_impl),
                     CORBA::NO_MEMORY ());
 
+  // Transfer ownership to TAO_Naming_Context after it was constructed.
+  temp.release ();
+
   // Let <implementation> know about it's <interface>.
   context_impl->interface (context);
-
-  // Release unique pointer, and start using reference counting to
-  // control our servant.
-  temp.release ();
 
   return context;
 }
 
 void
 TAO_Storable_Naming_Context_Activator::etherealize (
-    const PortableServer::ObjectId &/*oid*/,
+    PortableServer::ObjectId const &/*oid*/,
     PortableServer::POA_ptr /*adapter*/,
     PortableServer::Servant servant,
     CORBA::Boolean /*cleanup_in_progress*/,

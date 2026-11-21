@@ -15,19 +15,24 @@
 class OrbShutdownTask : public ACE_Task_Base
 {
 public:
-  OrbShutdownTask();
-  virtual ~OrbShutdownTask() = default;
+  OrbShutdownTask () = default;
+  ~OrbShutdownTask () override = default;
 
-  void orb(CORBA::ORB_ptr orb);
+  OrbShutdownTask (OrbShutdownTask const &) = delete;
+  OrbShutdownTask (OrbShutdownTask &&) = delete;
+  OrbShutdownTask &operator= (OrbShutdownTask const &) = delete;
+  OrbShutdownTask &operator= (OrbShutdownTask &&) = delete;
 
-  virtual int open(void*);
-  virtual int svc();
-  virtual int close(u_long);
+  void orb (CORBA::ORB_ptr orb);
+
+  int open (void *) override;
+  int svc () override;
+  int close (u_long) override;
 
 private:
   CORBA::ORB_var orb_;
 };
 
-typedef ACE_Singleton<OrbShutdownTask, TAO_SYNCH_MUTEX> TheOrbShutdownTask;
+using TheOrbShutdownTask = ACE_Singleton<OrbShutdownTask, TAO_SYNCH_MUTEX>;
 
 #endif

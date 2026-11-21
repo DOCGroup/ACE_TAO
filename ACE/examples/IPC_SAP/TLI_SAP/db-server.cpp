@@ -4,7 +4,6 @@
 #include "ace/TLI_Acceptor.h"
 #include "ace/Thread_Manager.h"
 
-
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_TLI)
 
 // Global thread manager.
@@ -47,7 +46,7 @@ lookup_name (ACE_HANDLE handle)
   char sendline[MAXLINE];
 
   ACE_DEBUG ((LM_DEBUG,
-              "stream handle = %d, thread id = %t\n",
+              "stream handle = %H, thread id = %t\n",
               handle));
   stream.set_handle (handle);
 
@@ -59,7 +58,7 @@ lookup_name (ACE_HANDLE handle)
   employee_id = ACE_OS::atoi (recvline);
   found = 0;
 
-  for (index = 0; found == 0 && employee_db[index].emp_id; index++)
+  for (index = 0; found == 0 && employee_db[index].emp_id; ++index)
     if (employee_id == employee_db[index].emp_id)
       {
         found = 1;
@@ -98,7 +97,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (server.accept (new_stream) == -1)
         ACE_OS::t_error ("server.accept error");
 
-      if (thr_mgr.spawn (ACE_THR_FUNC (lookup_name),
+      if (thr_mgr.spawn (lookup_name,
                          (void *) new_stream.get_handle (),
                          THR_DETACHED) == -1)
         ACE_DEBUG ((LM_ERROR,

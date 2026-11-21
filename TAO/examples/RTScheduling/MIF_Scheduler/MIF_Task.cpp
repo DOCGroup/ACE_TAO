@@ -1,5 +1,6 @@
 #include "MIF_Task.h"
 #include "test.h"
+#include "../Task_Stats.h"
 
 #include "ace/OS_NS_errno.h"
 #include "ace/Countdown_Time.h"
@@ -20,14 +21,8 @@ MIF_Task::MIF_Task (int importance,
   this->dist_ = dist;
   this->job_name_ = CORBA::string_dup (job_name);
 
-  // create the stat object.
-  ACE_NEW (task_stats_, Task_Stats);
+  task_stats_ = std::make_unique<Task_Stats> ();
   task_stats_->init (iter_);
-}
-
-MIF_Task::~MIF_Task ()
-{
-  delete task_stats_;
 }
 
 void
@@ -94,9 +89,9 @@ MIF_Task::perform_task ()
       static CORBA::ULong prime_number = 9619;
       CORBA::Policy_var sched_param;
       sched_param = dt_creator_->sched_param (this->importance_);
-      const char * name = 0;
+      char const *name {};
 
-      for (int i = 0; i < this->iter_; i++)
+      for (int i = 0; i < this->iter_; ++i)
         {
           ACE_Time_Value run_time = ACE_OS::gettimeofday () - *base_time_;
           TASK_STATS::instance ()->sample (run_time.sec (), count_);
@@ -123,7 +118,7 @@ MIF_Task::perform_task ()
           this->job_->work (this->load_,
                             this->importance_);
 
-          for (int j = 0; j < this->iter_; j++)
+          for (int j = 0; j < this->iter_; ++j)
             {
               ACE_Time_Value run_time = ACE_OS::gettimeofday () - *base_time_;
               TASK_STATS::instance ()->sample (run_time.sec (), count_);
@@ -159,7 +154,9 @@ MIF_Task::perform_task ()
     this->count_));
 
   if (dist_)
+  {
     job_->shutdown ();
+  }
 
   return 0;
 }

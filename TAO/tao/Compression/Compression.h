@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file Compression.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_COMPRESSION_GIOP_H
 #define TAO_COMPRESSION_GIOP_H
@@ -44,16 +42,14 @@ public:
   /// Used to force the initialization of the ORB code.
   static int Initializer ();
 
- private:
   TAO_Compression_Loader (TAO_Compression_Loader const &) = delete;
   TAO_Compression_Loader &operator= (TAO_Compression_Loader const &) = delete;
   TAO_Compression_Loader (TAO_Compression_Loader &&) = delete;
   TAO_Compression_Loader &operator= (TAO_Compression_Loader &&) = delete;
 };
 
-static int
-  TAO_Requires_Compression_Initializer = TAO_Compression_Loader::Initializer
-  ();
+static int const TAO_Requires_Compression_Initializer =
+  TAO_Compression_Loader::Initializer ();
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

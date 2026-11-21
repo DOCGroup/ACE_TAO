@@ -31,10 +31,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_FILE_Addr : public ACE_Addr
 {
 public:
-  /// Default constructor.
   ACE_FILE_Addr ();
 
-  /// Copy constructor.
   ACE_FILE_Addr (const ACE_FILE_Addr &sa);
 
   /// Acts like a copy constructor.  If @a sa == ACE_Addr::sap_any then
@@ -47,7 +45,6 @@ public:
   /// Create a ACE_FILE_Addr from a pathname.
   int set (const ACE_TCHAR *filename);
 
-  /// Assignment operator.
   ACE_FILE_Addr &operator= (const ACE_FILE_Addr &);
 
   /// Return a pointer to the address.

@@ -1,9 +1,14 @@
-// file      : XMLSchema/TypeInfo.hpp
-// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+/**
+ * @file TypeInfo.hpp
+ * @author Boris Kolpackov <boris@dre.vanderbilt.edu>
+ */
 #ifndef XMLSCHEMA_TYPE_INFO_HPP
 #define XMLSCHEMA_TYPE_INFO_HPP
 
+#include <utility>
+
 #include <ace/XML_Utils/XSCRT/ExtendedTypeInfo.hpp>
+#include <ace/XML_Utils/XMLSchema/Types.hpp>
 
 namespace XMLSchema
 {

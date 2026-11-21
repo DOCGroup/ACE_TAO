@@ -1,16 +1,8 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This simple test exercises and illustrates use of ACE value-added
-//    functions.
-//
-// = AUTHOR
-//    Steve Huston <shuston@riverace.com>
-//
-// ============================================================================
+/// @file ACE_Test.cpp
+/// This simple test exercises and illustrates use of ACE value-added
+/// functions.
+///
+/// @author Steve Huston <shuston@riverace.com>
 
 #include "test_config.h"
 
@@ -25,13 +17,16 @@ log2_test ()
   u_long result = 0;
   int error_count = 0;
 
-  for (size_t i = 0 ; i < sizeof (values) / sizeof (u_long) ; i++)
+  for (size_t i = 0 ; i < sizeof (values) / sizeof (u_long) ; ++i)
     {
       result = ACE::log2(values [i]);
       if (result != results [i])
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Log2 error: input %d, output %d, expected %d\n"), values [i], result, results [i]));
-          error_count++;
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Log2 error: input %Q, output %Q, expected %Q\n"),
+                      static_cast<ACE_UINT64> (values[i]),
+                      static_cast<ACE_UINT64> (result),
+                      static_cast<ACE_UINT64> (results[i])));
+          ++error_count;
         }
     }
 
@@ -49,12 +44,16 @@ ace_debug_test ()
   if (debug == nullptr)
     {
       if (ACE::debug())
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE::debug() returns true.\n")));
+      }
     }
   else
     {
       if (!ACE::debug())
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE::debug() returns false.\n")));
+      }
     }
 
   return test_status;
@@ -103,7 +102,6 @@ execname_test ()
   return error_count;
 }
 
-
 int
 run_main (int, ACE_TCHAR *[])
 {
@@ -113,13 +111,19 @@ run_main (int, ACE_TCHAR *[])
   int result;
 
   if ((result = execname_test ()) != 0)
+  {
     status = result;
+  }
 
   if ((result = log2_test ()) != 0)
+  {
     status = result;
+  }
 
   if ((result = ace_debug_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   ACE_END_TEST;
   return status;

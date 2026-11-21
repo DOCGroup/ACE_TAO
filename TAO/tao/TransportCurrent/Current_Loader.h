@@ -1,13 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Current_Loader.h
  *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
-//=============================================================================
-
 
 #ifndef TAO_TRANSPORT_CURRENT_LOADER_H
 #define TAO_TRANSPORT_CURRENT_LOADER_H
@@ -36,16 +33,22 @@ namespace TAO
       : public ACE_Service_Object
     {
     public:
+      Current_Loader () = default;
+
+      Current_Loader (Current_Loader const &) = delete;
+      Current_Loader &operator= (Current_Loader const &) = delete;
+      Current_Loader (Current_Loader &&) = delete;
+      Current_Loader &operator= (Current_Loader &&) = delete;
+
       /// Initializes object when dynamic linking occurs.
       int init (int argc, ACE_TCHAR *argv[]) override;
 
     protected:
       /// Protected destructor to enforce reference counting discipline
-      ~Current_Loader () override;
+      ~Current_Loader () override = default;
     };
   }
 }
-
 
 #if defined (TAO_AS_STATIC_LIBS)
 namespace TAO
@@ -65,7 +68,6 @@ ACE_FACTORY_DECLARE (TAO_Transport_Current,
                      TAO_Transport_Current_Loader)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 

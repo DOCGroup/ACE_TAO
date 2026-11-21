@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file   Priority_Mapping.h
  *
@@ -8,8 +7,6 @@
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #ifndef TAO_PRIORITY_MAPPING_H
 #define TAO_PRIORITY_MAPPING_H
@@ -37,7 +34,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTCORBA_Export TAO_Priority_Mapping
 {
 public:
-  /// The destructor
   virtual ~TAO_Priority_Mapping ();
 
   virtual CORBA::Boolean

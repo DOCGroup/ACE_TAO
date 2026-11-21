@@ -4,15 +4,15 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Root_POA *
-TAO_PG_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
+TAO_PG_Servant_Dispatcher::create_Root_POA (ACE_CString const &name,
                                             PortableServer::POAManager_ptr poa_manager,
-                                            const TAO_POA_Policy_Set &policies,
+                                            TAO_POA_Policy_Set const &policies,
                                             ACE_Lock &lock,
                                             TAO_SYNCH_MUTEX &thread_lock,
                                             TAO_ORB_Core &orb_core,
                                             TAO_Object_Adapter *object_adapter)
 {
-  TAO_Root_POA *poa = nullptr;
+  TAO_Root_POA *poa {};
 
   ACE_NEW_THROW_EX (poa,
                     TAO_GOA (name,

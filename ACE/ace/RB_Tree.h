@@ -8,13 +8,13 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_RB_TREE_H
 #define ACE_RB_TREE_H
 #include /**/ "ace/pre.h"
 
 #include "ace/Global_Macros.h"
 #include "ace/Functor_T.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -52,10 +52,8 @@ template <class EXT_ID, class INT_ID>
 class ACE_RB_Tree_Node : public ACE_RB_Tree_Node_Base
 {
 public:
-  /// Constructor.
   ACE_RB_Tree_Node (const EXT_ID &k, const INT_ID &t);
 
-  /// Destructor.
   ~ACE_RB_Tree_Node ();
 
   /// Key accessor.
@@ -99,13 +97,13 @@ private:
   RB_Tree_Node_Color color_;
 
   /// Pointer to node's parent.
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> *parent_;
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *parent_ {};
 
   /// Pointer to node's left child.
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> *left_;
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *left_ {};
 
   /// Pointer to node's right child.
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> *right_;
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *right_ {};
 };
 
 class ACE_RB_Tree_Base
@@ -125,8 +123,6 @@ public:
   ACE_Allocator * allocator () const { return this->allocator_; }
 
 protected:
-  // = Protected members.
-
   /// Pointer to a memory allocator.
   ACE_Allocator *allocator_;
 };
@@ -187,18 +183,20 @@ public:
   using lock_type = ACE_LOCK;
   using ENTRY = ACE_RB_Tree_Node<EXT_ID, INT_ID>;
 
-  // = ACE-style iterator typedefs.
+  /// @name ACE-style iterator aliases
+  /// @{
   using ITERATOR = ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
   using REVERSE_ITERATOR = ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
+  /// @}
 
-  // = STL-style iterator typedefs.
+  /// @name STL-style iterator aliases
+  /// @{
   using iterator = ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
   using reverse_iterator = ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
+  /// @}
 
-  /// Constructor.
-  ACE_RB_Tree (ACE_Allocator *alloc = nullptr);
+  explicit ACE_RB_Tree (ACE_Allocator *alloc = nullptr);
 
-  /// Copy constructor.
   ACE_RB_Tree (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &rbt);
 
   /// Initialize an RB Tree.
@@ -208,10 +206,10 @@ public:
   /// resources.
   int close ();
 
-  /// Destructor.
   virtual ~ACE_RB_Tree ();
 
-  // = insertion, removal, and search methods.
+  /// @name Insertion, removal, and search methods
+  /// @{
 
   /**
    * Associate @a ext_id with @a int_id.  If @a ext_id is already in the
@@ -230,7 +228,6 @@ public:
   int bind (const EXT_ID &ext_id,
             const INT_ID &int_id,
             ACE_RB_Tree_Node<EXT_ID, INT_ID> *&entry);
-
 
   /**
    * Associate @a ext_id with @a int_id if and only if @a ext_id is not
@@ -344,13 +341,14 @@ public:
    * in had better have been allocated by the tree that is unbinding it.
    */
   int unbind (ACE_RB_Tree_Node<EXT_ID, INT_ID> *entry);
+  /// @}
 
-  // = Public helper methods.
+  /// @name Public helper methods
+  /// @{
 
   /// Returns the current number of nodes in the tree.
   size_t current_size () const;
 
-  /// Assignment operator.
   void operator= (const ACE_RB_Tree<EXT_ID,
                   INT_ID,
                   COMPARE_KEYS,
@@ -368,8 +366,10 @@ public:
 
   /// Dump the state of an object.
   void dump () const;
+  /// @}
 
-  // = STL styled iterator factory functions.
+  /// @name STL-style iterator factories
+  /// @{
 
   /// Return forward iterator positioned at first node in tree.
   ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> begin ();
@@ -382,6 +382,7 @@ public:
 
   /// Return reverse iterator positioned at first node in tree.
   ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> rend ();
+  /// @}
 
   /// Recursively tests the invariant red-black properties at each
   /// node of the tree.  Returns 0 if invariant holds, else -1.
@@ -390,8 +391,9 @@ public:
   /// algorithmic complexity bounds provided by the other methods.
   int test_invariant ();
 
-  // = DEPRECATED methods.
-  //   Please migrate your code to use the new methods instead
+  /// @name Deprecated compatibility methods
+  /// Migrate to the corresponding current public methods.
+  /// @{
 
   /**
    * Returns a pointer to the item corresponding to the
@@ -428,6 +430,7 @@ public:
   /// @deprecated
   /// Destroys all nodes and sets the root pointer null.
   void clear ();
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -442,7 +445,9 @@ protected:
   ACE_RB_Tree (void *location,
                ACE_Allocator *alloc);
 
-  // = Protected methods. These should only be called with locks held.
+  /// @name Protected methods
+  /// These methods should only be called with locks held.
+  /// @{
 
   /// Recursively tests the invariant red-black properties at each
   /// node of the tree.  Returns 0 if invariant holds, else -1.
@@ -557,21 +562,20 @@ protected:
 
   /// Less than comparison function for keys, using comparison functor.
   int lessthan (const EXT_ID &k1, const EXT_ID &k2);
+  /// @}
 
 private:
-  // = Private members.
-
   /// Synchronization variable for the MT_SAFE ACE_RB_Tree.
   ACE_LOCK lock_;
 
   /// The root of the tree.
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> *root_;
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *root_ {};
 
   /// Comparison functor for comparing nodes in the tree.
   COMPARE_KEYS compare_keys_;
 
   /// The current number of nodes in the tree.
-  size_t current_size_;
+  size_t current_size_ {};
 };
 
 /**
@@ -583,13 +587,14 @@ template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_RB_Tree_Iterator_Base
 {
 public:
-  /// Copy constructor.
+
   ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter);
 
   /// Assignment operator: copies both the tree reference and the position in the tree.
   void operator= (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter);
 
-  // = Iteration methods.
+  /// @name Iterator operations
+  /// @{
 
   /// Returns 1 when the iteration has completed, otherwise 0.
   int done () const;
@@ -613,6 +618,7 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
+  /// @}
 
 protected:
   /// Create the singular iterator.  No valid iterator can be equal to
@@ -642,10 +648,10 @@ protected:
   ACE_RB_Tree_Iterator_Base (const EXT_ID& key,
                              ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS,ACE_LOCK> &tree);
 
-  /// Destructor.
   ~ACE_RB_Tree_Iterator_Base ();
 
-  // = Internal methods
+  /// @name Internal iterator methods
+  /// @{
 
   /// Move forward by one element in the tree.  Returns 0 when
   /// there are no more elements in the tree, otherwise 1.
@@ -657,14 +663,13 @@ protected:
 
   /// Dump the state of an object.
   void dump_i () const;
-
-  // = Protected members.
+  /// @}
 
   /// Reference to the ACE_RB_Tree over which we're iterating.
-  const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> *tree_;
+  const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> *tree_ {};
 
   /// Pointer to the node currently under the iterator.
-  ACE_RB_Tree_Node <EXT_ID, INT_ID> *node_;
+  ACE_RB_Tree_Node <EXT_ID, INT_ID> *node_ {};
 };
 
 /**
@@ -705,10 +710,10 @@ public:
   ACE_RB_Tree_Iterator (const EXT_ID &key,
                         ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree);
 
-  /// Destructor.
   ~ACE_RB_Tree_Iterator ();
 
-  // = ACE-style iteration methods.
+  /// @name ACE-style iteration methods
+  /// @{
 
   /// Move forward by one element in the tree.  Returns
   /// 0 when all elements have been seen, else 1.
@@ -716,8 +721,10 @@ public:
 
   /// Dump the state of an object.
   void dump () const;
+  /// @}
 
-  // = STL-style iteration methods.
+  /// @name STL-style iteration methods
+  /// @{
 
   /// Prefix advance.
   ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> & operator++ ();
@@ -730,6 +737,7 @@ public:
 
   /// Postfix reverse.
   ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> operator-- (int);
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -747,7 +755,9 @@ public:
    */
   int next (ACE_RB_Tree_Node<EXT_ID, INT_ID> *&next_entry) const;
 
-  // = DEPRECATED methods.  Please migrate your code to use the new methods instead
+  /// @name Deprecated iterator methods
+  /// Migrate to the corresponding current iterator methods.
+  /// @{
 
   /// @deprecated
   /// Accessor for key of node under iterator (if any).
@@ -775,10 +785,11 @@ public:
 
   /**
    * @deprecated: use the base class <done> method instead.
-   * Returns 0 if the iterator is positioned over a valid ACE_RB_Tree
-   * node, returns 1 if not.
+   * Returns true if the iterator is not positioned over a valid
+   * ACE_RB_Tree node.
    */
-  int is_done ();
+  bool is_done ();
+  /// @}
 };
 
 /**
@@ -820,10 +831,10 @@ public:
   ACE_RB_Tree_Reverse_Iterator (const EXT_ID &key,
                                 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree);
 
-  /// Destructor.
   ~ACE_RB_Tree_Reverse_Iterator ();
 
-  // = ACE-style iteration methods.
+  /// @name ACE-style iteration methods
+  /// @{
 
   /// Move forward by one element in the tree.  Returns
   /// 0 when all elements have been seen, else 1.
@@ -831,8 +842,10 @@ public:
 
   /// Dump the state of an object.
   void dump () const;
+  /// @}
 
-  // = STL-style iteration methods.
+  /// @name STL-style iteration methods
+  /// @{
 
   /// Prefix advance.
   ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> & operator++ ();
@@ -845,6 +858,7 @@ public:
 
   /// Postfix reverse.
   ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> operator-- (int);
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

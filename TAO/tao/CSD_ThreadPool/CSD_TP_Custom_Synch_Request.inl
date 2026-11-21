@@ -9,7 +9,6 @@ TAO::CSD::TP_Custom_Synch_Request::TP_Custom_Synch_Request
 {
 }
 
-
 ACE_INLINE
 bool
 TAO::CSD::TP_Custom_Synch_Request::wait()

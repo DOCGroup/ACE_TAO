@@ -39,13 +39,14 @@ TAO_FTEC_ProxyPushSupplier::activate (
   }
 }
 
-    // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
 void TAO_FTEC_ProxyPushSupplier::connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
                 const RtecEventChannelAdmin::ConsumerQOS &qos)
 {
   if (Request_Context_Repository().is_executed_request())
+  {
     return;
+  }
 
   FtRtecEventChannelAdmin::Operation update;
   FtRtecEventChannelAdmin::Connect_push_consumer_param param;
@@ -68,11 +69,12 @@ void TAO_FTEC_ProxyPushSupplier::connect_push_consumer (
   }
 }
 
-
 void TAO_FTEC_ProxyPushSupplier::disconnect_push_supplier ()
 {
   if (Request_Context_Repository().is_executed_request())
+  {
     return;
+  }
 
   FtRtecEventChannelAdmin::Operation update;
   update.object_id = id();
@@ -86,11 +88,12 @@ void TAO_FTEC_ProxyPushSupplier::disconnect_push_supplier ()
   svc->replicate_request(update, nullptr);
 }
 
-
 void TAO_FTEC_ProxyPushSupplier::suspend_connection ()
 {
   if (Request_Context_Repository().is_executed_request())
+  {
     return;
+  }
 
   FtRtecEventChannelAdmin::Operation update;
   update.object_id = id();
@@ -115,7 +118,9 @@ void TAO_FTEC_ProxyPushSupplier::suspend_connection ()
 void TAO_FTEC_ProxyPushSupplier::resume_connection ()
 {
   if (Request_Context_Repository().is_executed_request())
+  {
     return;
+  }
 
   Request_Context_Repository().set_object_id(id());
   FtRtecEventChannelAdmin::Operation update;
@@ -138,7 +143,6 @@ void TAO_FTEC_ProxyPushSupplier::resume_connection ()
   }
 }
 
-
 void TAO_FTEC_ProxyPushSupplier::get_state(FtRtecEventChannelAdmin::ProxyPushSupplierStat& state)
 {
   state.object_id = this->object_id_.in ();
@@ -151,7 +155,6 @@ void TAO_FTEC_ProxyPushSupplier::get_state(FtRtecEventChannelAdmin::ProxyPushSup
   }
 }
 
-
 void TAO_FTEC_ProxyPushSupplier::set_state(const FtRtecEventChannelAdmin::ProxyPushSupplierStat& state)
 {
   if (!CORBA::is_nil(state.parameter.info().push_consumer.in()))
@@ -159,7 +162,9 @@ void TAO_FTEC_ProxyPushSupplier::set_state(const FtRtecEventChannelAdmin::ProxyP
     Inherited::connect_push_consumer(state.parameter.info().push_consumer.in(),
       state.parameter.info().qos);
     if (state.suspended)
+    {
       Inherited::suspend_connection();
+    }
   }
 }
 

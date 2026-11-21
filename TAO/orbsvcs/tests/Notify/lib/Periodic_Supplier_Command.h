@@ -29,20 +29,18 @@ class TAO_Notify_Tests_Periodic_Supplier;
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Periodic_Supplier_Command : public TAO_Notify_Tests_Command
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_Periodic_Supplier_Command ();
 
-  /// Destructor
   ~TAO_Notify_Tests_Periodic_Supplier_Command ();
 
   /// Parse args and populate options.
-  virtual void init (ACE_Arg_Shifter& arg_shifter);
+  void init (ACE_Arg_Shifter& arg_shifter) override;
 
   /// Execute the command.
-  virtual void execute_i ();
+  void execute_i () override;
 
   /// Name of object
-  virtual const char* get_name ();
+  const char* get_name () override;
   static const char* name ();
 
 protected:
@@ -64,21 +62,25 @@ protected:
   /// QoS
   CosNotification::QoSProperties qos_;
 
-  // Offer change
+  /// Offer change.
   CosNotification::EventTypeSeq added_;
   CosNotification::EventTypeSeq removed_;
 
-  ///= Methods
-  // Retreive the suppliers.
+  /// @name Methods
+  /// @{
+  /// Retrieve the suppliers.
   TAO_Notify_Tests_Periodic_Supplier* supplier ();
+  /// @}
 
-  ///= Handlers
+  /// @name Handlers
+  /// @{
   void handle_create ();
   void handle_offers ();
   void handle_disconnect ();
   void handle_deactivate ();
   void handle_status ();
   void handle_set_qos ();
+  /// @}
 };
 
 #include /**/ "ace/post.h"

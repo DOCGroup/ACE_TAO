@@ -4,14 +4,16 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class SVC_HANDLER> ACE_INLINE
 ACE_Singleton_Strategy<SVC_HANDLER>::ACE_Singleton_Strategy (SVC_HANDLER *sh,
                                                              ACE_Thread_Manager *tm)
-  : svc_handler_ (0),
-    delete_svc_handler_ (1)
+  : svc_handler_ {},
+    delete_svc_handler_ {true}
 {
   ACE_TRACE ("ACE_Singleton_Strategy<SVC_HANDLER>::ACE_Singleton_Strategy");
   if (this->open (sh, tm) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Singleton_Strategy")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Singleton_Strategy")));
+    }
 }
 
 template <class SVC_HANDLER> ACE_INLINE int
@@ -30,9 +32,11 @@ ACE_Creation_Strategy<SVC_HANDLER>::ACE_Creation_Strategy (ACE_Thread_Manager *t
 {
   ACE_TRACE ("ACE_Creation_Strategy<SVC_HANDLER>::ACE_Creation_Strategy");
   if (this->open (thr_mgr, reactor) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Creation_Strategy")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Creation_Strategy")));
+    }
 }
 
 template <class SVC_HANDLER> ACE_INLINE
@@ -48,9 +52,11 @@ ACE_DLL_Strategy<SVC_HANDLER>::ACE_DLL_Strategy (const ACE_TCHAR dll_name[],
                   svc_name,
                   svc_rep,
                   thr_mgr) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("open")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("open")));
+    }
 }
 
 template <class SVC_HANDLER> ACE_INLINE
@@ -76,15 +82,17 @@ ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy (ACE_Reactor *reactor,
   if (this->open (reactor,
                   mask,
                   flags) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy")));
+    }
 }
 
 template <class SVC_HANDLER> ACE_INLINE
 ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy (int flags)
   : ACE_Concurrency_Strategy<SVC_HANDLER> (flags),
-    reactor_ (0),
+    reactor_ {},
     mask_ (ACE_Event_Handler::NULL_MASK)
 {
   ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy");
@@ -102,15 +110,17 @@ ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy (ACE_Thread_Manager *thr_m
                   thr_flags,
                   n_threads,
                   flags) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy")));
+    }
 }
 
 template <class SVC_HANDLER> ACE_INLINE
 ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy (int flags)
   : ACE_Concurrency_Strategy<SVC_HANDLER> (flags),
-    thr_mgr_ (0),
+    thr_mgr_ {},
     thr_flags_ (0),
     n_threads_ (1)
 {
@@ -141,9 +151,11 @@ ACE_Process_Strategy<SVC_HANDLER>::ACE_Process_Strategy (size_t n_processes,
                   acceptor,
                   reactor,
                   avoid_zombies) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Process_Strategy")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Process_Strategy")));
+    }
 }
 
 template <class SVC_HANDLER> ACE_INLINE
@@ -159,10 +171,14 @@ ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::ACE_Schedule_All_Reactive_Strat
 {
   ACE_TRACE ("ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::ACE_Schedule_All_Reactive_Strategy");
 
-  if (scheduler == 0 || scheduler->reactor () == 0)
-    this->reactor_ = ACE_Reactor::instance ();
+  if (scheduler == nullptr || scheduler->reactor () == nullptr)
+    {
+      this->reactor_ = ACE_Reactor::instance ();
+    }
   else
-    this->reactor_ = scheduler->reactor ();
+    {
+      this->reactor_ = scheduler->reactor ();
+    }
 }
 
 template <class SVC_HANDLER> ACE_INLINE
@@ -172,10 +188,14 @@ ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::ACE_Schedule_All_Threaded_Strat
 {
   ACE_TRACE ("ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::ACE_Schedule_All_Threaded_Strategy");
 
-  if (scheduler == 0 || scheduler->thr_mgr () == 0)
-    this->thr_mgr_ = ACE_Thread_Manager::instance ();
+  if (scheduler == nullptr || scheduler->thr_mgr () == nullptr)
+    {
+      this->thr_mgr_ = ACE_Thread_Manager::instance ();
+    }
   else
-    this->thr_mgr_ = scheduler->thr_mgr ();
+    {
+      this->thr_mgr_ = scheduler->thr_mgr ();
+    }
 }
 
 template <class T> ACE_INLINE
@@ -183,12 +203,12 @@ ACE_Refcounted_Hash_Recyclable<T>::ACE_Refcounted_Hash_Recyclable ()
   : ACE_Refcountable_T<ACE_Null_Mutex> (0),
     ACE_Hashable (),
     ACE_Recyclable (ACE_RECYCLABLE_UNKNOWN),
-    t_ ()
+    t_ {}
 {
 }
 
 template <class T> ACE_INLINE
-ACE_Refcounted_Hash_Recyclable<T>::ACE_Refcounted_Hash_Recyclable (const T &t,
+ACE_Refcounted_Hash_Recyclable<T>::ACE_Refcounted_Hash_Recyclable (T const &t,
                                                                    long refcount,
                                                                    ACE_Recyclable_State state)
   : ACE_Refcountable_T<ACE_Null_Mutex> (refcount),

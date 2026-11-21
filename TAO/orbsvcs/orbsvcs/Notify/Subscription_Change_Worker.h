@@ -31,13 +31,10 @@ class TAO_Notify_Proxy;
 class TAO_Notify_Serv_Export TAO_Notify_Subscription_Change_Worker : public TAO_ESF_Worker<TAO_Notify_Proxy>
 {
 public:
-  /// Constructor
   TAO_Notify_Subscription_Change_Worker (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed);
 
-  /// Destructor
   virtual ~TAO_Notify_Subscription_Change_Worker ();
 
-  ///= TAO_ESF_Worker method
   void work (TAO_Notify_Proxy* proxy) override;
 
 protected:

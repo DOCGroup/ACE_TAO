@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_NAME_REQUEST_REPLY_H
 #define ACE_NAME_REQUEST_REPLY_H
 
@@ -66,62 +65,56 @@ public:
     MAX_NAME_LENGTH = MAXPATHLEN + 1
   };
 
-  /// Default constructor.
   ACE_Name_Request ();
 
   /// Create a ACE_Name_Request message.
-  ACE_Name_Request (ACE_INT32 msg_type, // Type of request.
-                    const ACE_WCHAR_T name[], //
+  /// @param msg_type Type of request.
+  /// @param timeout Maximum time willing to wait for the request.
+  ACE_Name_Request (ACE_INT32 msg_type,
+                    const ACE_WCHAR_T name[],
                     const ACE_UINT32 name_length,
                     const ACE_WCHAR_T value[],
                     const ACE_UINT32 value_length,
                     const char type[],
                     const ACE_UINT32 type_length,
-                    ACE_Time_Value *timeout = nullptr); // Max time willing to wait for request.
+                    ACE_Time_Value *timeout = nullptr);
 
   /// Initialize length_ in order to ensure correct byte ordering
   /// before a request is sent.
   void init ();
 
-  // = Set/get the length of the encoded/decoded message.
+  /// @name Request field accessors
+  /// @{
   ACE_UINT32 length () const;
   void length (ACE_UINT32);
 
-  // = Set/get the type of the message.
   ACE_INT32 msg_type () const;
   void msg_type (ACE_INT32);
 
-  // = Set/get the blocking semantics.
   ACE_UINT32 block_forever () const;
   void block_forever (ACE_UINT32);
 
-  // = Set/get the timeout.
   ACE_Time_Value timeout () const;
   void timeout (const ACE_Time_Value timeout);
 
-  // = Set/get the name
   const ACE_WCHAR_T *name () const;
   void name (const ACE_WCHAR_T *);
 
-  // = Set/get the value
   const ACE_WCHAR_T *value () const;
   void value (const ACE_WCHAR_T *);
 
-  // = Set/get the type
   const char *type () const;
   void type (const char *);
 
-  // = Set/get the len of name
   ACE_UINT32 name_len () const;
   void name_len (ACE_UINT32);
 
-  // = Set/get the len of value
   ACE_UINT32 value_len () const;
   void value_len (ACE_UINT32);
 
-  // = Set/get the len of type
   ACE_UINT32 type_len () const;
   void type_len (ACE_UINT32);
+  /// @}
 
   /// Encode the message before transmission.
   int encode (void *&);
@@ -133,9 +126,8 @@ public:
   void dump () const;
 
 private:
-  // = The 5 fields in the <Transfer> struct are transmitted to the server.
-  // The remaining 2 fields are not tranferred -- they are used only on
-  // the server-side to simplify lookups.
+  /// Five fields of @c Transfer are transmitted to the server. The remaining
+  /// two fields are used only on the server side to simplify lookups.
 
   struct Transfer
   {
@@ -200,31 +192,30 @@ public:
     MAX_NAME_LENGTH = MAXPATHLEN + 1
   };
 
-  /// Default constructor.
   ACE_Name_Reply ();
 
   /// Create a ACE_Name_Reply message.
-  ACE_Name_Reply (ACE_UINT32 type, ACE_UINT32 err); // Type of reply.
+  /// @param type Type of reply.
+  ACE_Name_Reply (ACE_UINT32 type, ACE_UINT32 err);
 
   /// Initialize length_ in order to ensure correct byte ordering
   /// before a reply is sent.
   void init ();
 
-  // = Set/get the length of the encoded/decoded message.
+  /// @name Reply field accessors
+  /// @{
   ACE_UINT32 length () const;
   void length (ACE_UINT32);
 
-  // = Set/get the type of the message.
   ACE_INT32 msg_type () const;
   void msg_type (ACE_INT32);
 
-  // = Set/get the status of the reply (0 == success, -1 == failure).
   ACE_INT32 status () const;
   void status (ACE_INT32);
 
-  // = Set/get the errno of a failed reply.
   ACE_UINT32 errnum () const;
   void errnum (ACE_UINT32);
+  /// @}
 
   /// Encode the message before transfer.
   int encode (void *&);
@@ -236,7 +227,7 @@ public:
   void dump () const;
 
 private:
-  // = The 3 fields in the <Transfer> struct are transmitted to the server.
+  /// The three fields of @c Transfer are transmitted to the server.
 
   struct Transfer
   {

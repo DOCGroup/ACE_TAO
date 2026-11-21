@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file ThreadStrategyORBControl.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_THREADSTRATEGYORBCONTROL_H
 #define TAO_THREADSTRATEGYORBCONTROL_H
 

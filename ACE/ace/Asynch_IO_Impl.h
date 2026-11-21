@@ -55,7 +55,7 @@ public:
   virtual const void *act () const = 0;
 
   /// Did the operation succeed?
-  virtual int success () const = 0;
+  virtual bool success () const = 0;
 
   /// This ACT is not the same as the ACT associated with the
   /// asynchronous operation.
@@ -129,10 +129,12 @@ public:
    */
   virtual int cancel () = 0;
 
-  // = Access methods.
+  /// @name Access methods
+  /// @{
 
   /// Return the underlying proactor.
   virtual ACE_Proactor* proactor () const = 0;
+  /// @}
 
 protected:
   ACE_Asynch_Operation_Impl () = default;
@@ -336,7 +338,6 @@ protected:
 class ACE_Asynch_Read_File_Result_Impl : public virtual ACE_Asynch_Read_Stream_Result_Impl
 {
 public:
-  /// Destructor.
   ~ACE_Asynch_Read_File_Result_Impl () override = default;
 
 protected:
@@ -488,7 +489,6 @@ protected:
   ACE_Asynch_Accept_Result_Impl () = default;
 };
 
-
 /**
  * @class ACE_Asynch_Connect_Impl
  *
@@ -534,7 +534,6 @@ public:
 protected:
   ACE_Asynch_Connect_Result_Impl () = default;
 };
-
 
 /**
  * @class ACE_Asynch_Transmit_File_Impl
@@ -599,7 +598,6 @@ public:
 protected:
   ACE_Asynch_Transmit_File_Result_Impl () = default;
 };
-
 
 /**
  * @class ACE_Asynch_Read_Dgram_Impl

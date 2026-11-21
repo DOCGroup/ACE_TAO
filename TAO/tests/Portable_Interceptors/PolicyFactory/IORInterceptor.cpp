@@ -1,11 +1,6 @@
 #include "IORInterceptor.h"
 #include "testC.h"
 
-IORInterceptor::IORInterceptor ()
-  : success_ (false)
-{
-}
-
 IORInterceptor::~IORInterceptor ()
 {
   ACE_ASSERT (this->success_);
@@ -48,7 +43,7 @@ IORInterceptor::establish_components (
           this->success_ = true;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "EXCEPTION: ""IORInterceptor::establish_components:");

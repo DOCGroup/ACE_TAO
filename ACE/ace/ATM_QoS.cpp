@@ -111,7 +111,7 @@ ACE_ATM_QoS::ACE_ATM_QoS(int rate,
 
   size += sizeof(Q2931_IE_TYPE) + sizeof(ULONG) + sizeof(ATM_QOS_CLASS_IE);
 
-  qos_.ProviderSpecific.buf = (char *) ACE_OS::malloc(size);
+  qos_.ProviderSpecific.buf = static_cast<char *> (ACE_OS::malloc(size));
   if (qos_.ProviderSpecific.buf == 0) {
     ACELIB_ERROR((LM_ERROR,
                ACE_TEXT ("ACE_ATM_QoS::ACE_ATM_QoS: Unable to allocate %d bytes for qos_.ProviderSpecific.buf\n"),
@@ -140,9 +140,7 @@ ACE_ATM_QoS::ACE_ATM_QoS(int rate,
   ie_ptr->IELength = sizeof( Q2931_IE_TYPE )
     + sizeof( ULONG )
     + sizeof( ATM_BROADBAND_BEARER_CAPABILITY_IE );
-  ACE_OS::memcpy(ie_ptr->IE,
-                 &ie_bbc,
-                 sizeof(ATM_BROADBAND_BEARER_CAPABILITY_IE));
+  ACE_OS::memcpy(ie_ptr->IE, &ie_bbc, sizeof(ATM_BROADBAND_BEARER_CAPABILITY_IE));
 
   ie_ptr = (Q2931_IE *) ((char *)ie_ptr + ie_ptr->IELength);
   ie_ptr->IEType = IE_QOSClass;
@@ -291,7 +289,7 @@ ACE_ATM_QoS::set_cbr_rate (int rate,
 
   size += sizeof(Q2931_IE_TYPE) + sizeof(ULONG) + sizeof(ATM_QOS_CLASS_IE);
 
-  qos_.ProviderSpecific.buf = (char *) ACE_OS::malloc(size);
+  qos_.ProviderSpecific.buf = static_cast<char *> (ACE_OS::malloc(size));
   if (qos_.ProviderSpecific.buf == 0) {
     ACELIB_ERROR((LM_ERROR,
                ACE_TEXT ("ACE_ATM_QoS::ACE_ATM_QoS: Unable to allocate %d bytes for qos_.ProviderSpecific.buf\n"),
@@ -320,9 +318,7 @@ ACE_ATM_QoS::set_cbr_rate (int rate,
   ie_ptr->IELength = sizeof( Q2931_IE_TYPE ) +
                      sizeof( ULONG ) +
                      sizeof( ATM_BROADBAND_BEARER_CAPABILITY_IE );
-  ACE_OS::memcpy( ie_ptr->IE,
-                  &ie_bbc,
-                  sizeof( ATM_BROADBAND_BEARER_CAPABILITY_IE ));
+  ACE_OS::memcpy( ie_ptr->IE, &ie_bbc, sizeof( ATM_BROADBAND_BEARER_CAPABILITY_IE ));
 
   ie_ptr = (Q2931_IE *) ((char *)ie_ptr + ie_ptr->IELength);
   ie_ptr->IEType = IE_QOSClass;
@@ -460,13 +456,15 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
       return 0;
     }
 
-  buf = (char *) ACE_OS::malloc (info.options);
+  buf = static_cast<char *> (ACE_OS::malloc (info.options));
 
   if (buf == 0)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unable to allocate %d bytes for options\n"),
-                       info.options),
-                      0);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Unable to allocate %d bytes for options\n"),
+                         info.options),
+                        0);
+    }
 
   popt = (struct t_opthdr *) buf;
 
@@ -505,9 +503,7 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
           return 0;
         }
 
-      ACE_OS::memcpy(source_addr->address,
-                     local_addr.sap.t_atm_sap_addr.address,
-                     ATMNSAP_ADDR_LEN);
+      ACE_OS::memcpy(source_addr->address, local_addr.sap.t_atm_sap_addr.address, ATMNSAP_ADDR_LEN);
 
       popt = T_OPT_NEXTHDR (buf, info.options , popt);
     }
@@ -550,9 +546,13 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
       bearer->clipping_susceptibility = T_ATM_NULL;
 
       if (ACE_BIT_ENABLED (flags, OPT_FLAGS_PMP))
-        bearer->connection_configuration = T_ATM_1_TO_MANY;
+        {
+          bearer->connection_configuration = T_ATM_1_TO_MANY;
+        }
       else
-        bearer->connection_configuration = T_ATM_1_TO_1;
+        {
+          bearer->connection_configuration = T_ATM_1_TO_1;
+        }
 
       popt = T_OPT_NEXTHDR (buf, info.options, popt);
 

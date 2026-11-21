@@ -82,11 +82,9 @@ public:
   /// Get the event handle.
   ACE_HANDLE get_handle () const override = 0;
 
-  //
-  // = Factory methods for the operations
-  //
-  // Note that the user does not have to use or know about these
-  // methods.
+  /// @name Operation implementation factories
+  /// These methods are normally used internally by ACE_Proactor.
+  /// @{
 
   /// Create the correct implementation class for doing Asynch_Read_Stream.
   virtual ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream () = 0;
@@ -116,12 +114,12 @@ public:
   /// Create the correct implementation class for doing
   /// Asynch_Write_Dgram.
   virtual ACE_Asynch_Write_Dgram_Impl *create_asynch_write_dgram () = 0;
+  /// @}
 
-  //
-  // = Factory methods for the results
-  //
-  // Note that the user does not have to use or know about these
-  // methods unless they want to "fake" results.
+  /// @name Result implementation factories
+  /// These methods are normally used internally, unless applications need to
+  /// create custom results.
+  /// @{
 
   /// Create the correct implementation class for ACE_Asynch_Read_Stream::Result class.
   virtual ACE_Asynch_Read_Stream_Result_Impl *
@@ -245,6 +243,7 @@ public:
                          ACE_HANDLE event = ACE_INVALID_HANDLE,
                          int priority = 0,
                          int signal_number = 0) = 0;
+  /// @}
 
   /**
    * Post @a how_many completions to the completion port so that all

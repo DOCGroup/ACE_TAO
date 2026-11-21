@@ -1,23 +1,15 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    Test ACE_OS::strptime
-//
-// = AUTHOR
-//    Johnny Willemsen
-//
-// ============================================================================
+/// @file Bug_3432_Regression_Test.cpp
+/// Test ACE_OS::strptime
+///
+/// @author Johnny Willemsen
 
 #include "test_config.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_time.h"
 
+#include <cstring>
 
 int
 strptime_test ()
@@ -43,7 +35,7 @@ strptime_test ()
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("strftime is not supported on this platform\n")));
     }
-  else if (ACE_OS::strcmp (lBuffer, original_time) != 0)
+  else if (std::strcmp (lBuffer, original_time) != 0)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%C != %C\n"), lBuffer, original_time));
       ++error_count;
@@ -65,7 +57,9 @@ run_main (int, ACE_TCHAR *[])
   int result = 0;
 
   if ((result = strptime_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   ACE_END_TEST;
   return status;

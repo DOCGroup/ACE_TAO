@@ -6,8 +6,7 @@
 class Manager
 {
 public:
-  Manager ();
-  // Ctor
+  Manager () = default;
 
   ~Manager ();
 
@@ -16,33 +15,33 @@ public:
   Manager &operator= (Manager const &) = delete;
   Manager &operator= (Manager &&) = delete;
 
+  /// Initializes the ORB, POA, and related objects.
   int init (int argc, ACE_TCHAR * argv[]);
-  // Initialize the ORB, POA etc.
 
+  /// Activates the servant.
   int activate_servant ();
-  // Activate the servant etc.
 
+  /// Runs the ORB event loop.
   int run ();
-  // Run the ORB's event loop.
 
-  CORBA::ORB_ptr orb ();
-  // ORB's accessor.
+  /// Returns the ORB.
+  CORBA::ORB_ptr orb () const;
 
-  CORBA::Object_ptr server ();
-  // Server's accessor.
+  /// Returns the server object.
+  CORBA::Object_ptr server () const;
 
 private:
-  CORBA::ORB_var orb_;
-  // Our ORB
+  /// ORB used by this manager.
+  CORBA::ORB_var orb_ {};
 
-  PortableServer::POA_var new_poa_var_;
-  // The new poa that is created.
+  /// Newly created POA.
+  PortableServer::POA_var new_poa_var_ {};
 
-  PortableServer::ServantLocator_var servant_locator_;
-  // Our servant locator
+  /// Servant locator used by this manager.
+  PortableServer::ServantLocator_var servant_locator_ {};
 
-  CORBA::Object_var server_;
-  //
+  /// Server object reference.
+  CORBA::Object_var server_ {};
 };
 
 #endif /*_MANAGER_H_ */

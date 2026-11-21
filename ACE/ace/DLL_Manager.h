@@ -55,10 +55,8 @@ public:
   /// Error stack. Fixed size should suffice. Ignores any errors exceeding the size.
   using ERROR_STACK = ACE_Fixed_Stack<ACE_TString, 10>;
 
-  /// Default constructor.
   ACE_DLL_Handle ();
 
-  /// Destructor.
   ~ACE_DLL_Handle ();
 
   /// Returns the name of the shared library (without prefixes or suffixes).
@@ -170,18 +168,18 @@ private:
    */
   bool open_i (const ACE_TCHAR *dll_name, int open_mode, ERROR_STACK* errors);
 
-  ACE_DLL_Handle (const ACE_DLL_Handle &) = delete;
-  void operator= (const ACE_DLL_Handle &) = delete;
+  ACE_DLL_Handle (ACE_DLL_Handle const &) = delete;
+  ACE_DLL_Handle &operator= (ACE_DLL_Handle const &) = delete;
   ACE_DLL_Handle (ACE_DLL_Handle &&) = delete;
-  void operator= (ACE_DLL_Handle &&) = delete;
+  ACE_DLL_Handle &operator= (ACE_DLL_Handle &&) = delete;
 
 private:
   /// Keep track of how many ACE_DLL objects have a reference to this
   /// dll.
-  sig_atomic_t refcount_;
+  sig_atomic_t refcount_ {};
 
   /// Name of the shared library.
-  ACE_TCHAR *dll_name_;
+  ACE_TCHAR *dll_name_ {};
 
   /// Handle to the actual library loaded by the OS.
   ACE_SHLIB_HANDLE handle_;
@@ -264,10 +262,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Default constructor.
   ACE_DLL_Manager (int size = ACE_DLL_Manager::DEFAULT_SIZE);
 
-  /// Destructor.
   ~ACE_DLL_Manager ();
 
   /// Allocate handle_vector_.
@@ -286,20 +282,20 @@ private:
   /// Close the singleton instance.
   static void close_singleton ();
 
-  ACE_DLL_Manager (const ACE_DLL_Manager &) = delete;
-  void operator= (const ACE_DLL_Manager &) = delete;
+  ACE_DLL_Manager (ACE_DLL_Manager const &) = delete;
+  ACE_DLL_Manager &operator= (ACE_DLL_Manager const &) = delete;
   ACE_DLL_Manager (ACE_DLL_Manager &&) = delete;
-  void operator= (ACE_DLL_Manager &&) = delete;
+  ACE_DLL_Manager &operator= (ACE_DLL_Manager &&) = delete;
 
 private:
   /// Vector containing all loaded handle objects.
-  ACE_DLL_Handle **handle_vector_;
+  ACE_DLL_Handle **handle_vector_ {};
 
   /// Current number of handles.
-  int current_size_;
+  int current_size_ {};
 
   /// Maximum number of handles.
-  int total_size_;
+  int total_size_ {};
 
   /// Unload strategy.
   u_long unload_policy_;

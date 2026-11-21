@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_LB_MONITOR_MAP_H
 #define TAO_LB_MONITOR_MAP_H
 
@@ -25,7 +24,6 @@
 
 #include "ace/Hash_Map_Manager_T.h"
 
-
 /// Load monitor hash map.
 using TAO_LB_MonitorMap = ACE_Hash_Map_Manager_Ex<
   PortableGroup::Location,
@@ -33,7 +31,6 @@ using TAO_LB_MonitorMap = ACE_Hash_Map_Manager_Ex<
   TAO_PG_Location_Hash,
   TAO_PG_Location_Equal_To,
   ACE_Null_Mutex>;
-
 
 #include /**/ "ace/post.h"
 

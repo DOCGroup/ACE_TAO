@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file ThreadStrategySingle.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_THREADSTRATEGYSINGLE_H
 #define TAO_THREADSTRATEGYSINGLE_H
 #include /**/ "ace/pre.h"

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ub_string.h
  *
@@ -7,24 +5,19 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_UNBOUNDED_STRING_H
 #define PARAM_TEST_UNBOUNDED_STRING_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test unbounded strings
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test unbounded strings
 class Test_Unbounded_String
 {
 public:
-  /// ctor
   Test_Unbounded_String ();
 
-  /// dtor
-  ~Test_Unbounded_String ();
+  ~Test_Unbounded_String () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -52,19 +45,19 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
-  char *in_;
+  CORBA::String_var in_;
 
   /// inout parameter
-  char *inout_;
+  CORBA::String_var inout_;
 
   /// out parameter
-  char *out_;
+  CORBA::String_var out_;
 
   /// return value
-  char *ret_;
+  CORBA::String_var ret_;
 };
 
 #endif /* PARAM_TEST_UNBOUNDED_STRING_H */

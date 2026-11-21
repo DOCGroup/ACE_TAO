@@ -5,18 +5,16 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i ()
-{
-}
+TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i () = default;
 
 TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i (
   CosNotifyChannelAdmin::EventChannelFactory_ptr event_channel_factory)
   : notify_factory_ (event_channel_factory)
 {
   CosNotifyChannelAdmin::ChannelID id;
-  CosNotifyChannelAdmin::AdminID adminID = 0;
-  CosNotification::QoSProperties initial_qos;
-  CosNotification::AdminProperties initial_admin;
+  CosNotifyChannelAdmin::AdminID adminID {};
+  CosNotification::QoSProperties const initial_qos;
+  CosNotification::AdminProperties const initial_admin;
 
   this->event_channel_ =
           this->notify_factory_->create_channel (initial_qos,
@@ -35,15 +33,14 @@ TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i (
 
   this->consumer_admin_->subscription_change (added, removed);
 
-    ACE_NEW_THROW_EX (this->notifier_,
-                  TAO_NotifyLogNotification(this->event_channel_.in ()),
-                   CORBA::NO_MEMORY ());
+  TAO_NotifyLogNotification *notifier {};
+  ACE_NEW_THROW_EX (notifier,
+                    TAO_NotifyLogNotification (this->event_channel_.in ()),
+                    CORBA::NO_MEMORY ());
+  this->notifier_.reset (notifier);
 }
 
-TAO_NotifyLogFactory_i::~TAO_NotifyLogFactory_i()
-{
-  // No-Op.
-}
+TAO_NotifyLogFactory_i::~TAO_NotifyLogFactory_i () = default;
 
 DsNotifyLogAdmin::NotifyLogFactory_ptr
 TAO_NotifyLogFactory_i::activate (CORBA::ORB_ptr orb,
@@ -51,11 +48,10 @@ TAO_NotifyLogFactory_i::activate (CORBA::ORB_ptr orb,
 {
   TAO_LogMgr_i::init (orb, poa);
 
-
-  PortableServer::ObjectId_var oid =
+  PortableServer::ObjectId_var const oid =
     this->factory_poa_->activate_object (this);
 
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     this->factory_poa_->id_to_reference (oid.in ());
 
   // narrow and store the result..
@@ -84,13 +80,13 @@ TAO_NotifyLogFactory_i::create (
                   max_size,
                   & thresholds,
                   id_out);
-  DsLogAdmin::LogId id = id_out;
+  DsLogAdmin::LogId const id = id_out;
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-  DsLogAdmin::Log_var log =
+  DsLogAdmin::Log_var const log =
     this->create_log_reference (id);
 #else
-  DsLogAdmin::Log_var log =
+  DsLogAdmin::Log_var const log =
     this->create_log_object (id);
 #endif
 
@@ -156,7 +152,7 @@ TAO_NotifyLogFactory_i::create_log_servant (DsLogAdmin::LogId id)
                                      *this,
                                      this->log_mgr_.in (),
                                      this->notify_factory_.in (),
-                                     this->notifier_,
+                                     this->notifier_.get (),
                                      id
                                      ),
                     CORBA::NO_MEMORY ());
@@ -247,12 +243,10 @@ TAO_NotifyLogFactory_i::obtain_notification_push_supplier (
 }
 
 CosEventChannelAdmin::ProxyPushSupplier_ptr
-TAO_NotifyLogFactory_i::obtain_push_supplier (
-      )
+TAO_NotifyLogFactory_i::obtain_push_supplier ()
 {
   return consumer_admin_->obtain_push_supplier ();
 }
-
 
 CosEventChannelAdmin::ProxyPullSupplier_ptr
 TAO_NotifyLogFactory_i::obtain_pull_supplier (
@@ -270,8 +264,8 @@ TAO_NotifyLogFactory_i::destroy ()
 
 //CosNotifyComm::NotifySubscribe
 void
-TAO_NotifyLogFactory_i::subscription_change (const CosNotification::EventTypeSeq& added,
-                          const CosNotification::EventTypeSeq& removed)
+TAO_NotifyLogFactory_i::subscription_change (CosNotification::EventTypeSeq const &added,
+                                             CosNotification::EventTypeSeq const &removed)
 {
   consumer_admin_->subscription_change (added, removed);
 }
@@ -283,14 +277,15 @@ TAO_NotifyLogFactory_i::get_qos ()
 }
 
 void
-TAO_NotifyLogFactory_i::set_qos (const CosNotification::QoSProperties& qos)
+TAO_NotifyLogFactory_i::set_qos (CosNotification::QoSProperties const &qos)
 {
   consumer_admin_->set_qos (qos);
 }
 
 void
-TAO_NotifyLogFactory_i::validate_qos (const CosNotification::QoSProperties& required_qos,
-                   CosNotification::NamedPropertyRangeSeq_out available_qos)
+TAO_NotifyLogFactory_i::validate_qos (
+    CosNotification::QoSProperties const &required_qos,
+    CosNotification::NamedPropertyRangeSeq_out available_qos)
 {
   consumer_admin_->validate_qos (required_qos, available_qos);
 }

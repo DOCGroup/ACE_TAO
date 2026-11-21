@@ -96,13 +96,15 @@ public:
   /// file
   ~ACE_Naming_Context () override;
 
-  // = Dynamic initialization hooks.
+  /// @name Dynamic initialization hooks
+  /// @{
   /// Initialize name options and naming context when dynamically
   /// linked.
   int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Close down the test when dynamically unlinked.
   int fini () override;
+  /// @}
 
   /// Returns information about this context.
   int info (ACE_TCHAR **strp, size_t length) const override;
@@ -250,19 +252,19 @@ public:
 
 private:
   /// Keep track of the options such as database name etc per Naming Context
-  ACE_Name_Options *name_options_;
+  ACE_Name_Options *name_options_ {};
 
   /// Name space (can be either local or remote) dynamically bound.
-  ACE_Name_Space *name_space_;
+  ACE_Name_Space *name_space_ {};
 
   /// Holds the local hostname.
   ACE_TCHAR hostname_[MAXHOSTNAMELEN + 1];
 
   /// Holds name of net name server.
-  const ACE_TCHAR *netnameserver_host_;
+  const ACE_TCHAR *netnameserver_host_ {};
 
   /// Holds port number of the net name server.
-  int netnameserver_port_;
+  int netnameserver_port_ {};
 
   /// 1 if we're on the same local machine as the name server, else 0.
   int local ();
@@ -341,13 +343,13 @@ public:
 
 private:
   /// Extra debugging info
-  bool debugging_;
+  bool debugging_ {false};
 
   /// Extra verbose messages
-  bool verbosity_;
+  bool verbosity_ {false};
 
   /// Use Win32 Registry
-  bool use_registry_;
+  bool use_registry_ {false};
 
   /// Port to connect to nameserver process.
   int nameserver_port_;
@@ -359,7 +361,7 @@ private:
   ACE_TCHAR *namespace_dir_;
 
   /// Name of this process.
-  const ACE_TCHAR *process_name_;
+  const ACE_TCHAR *process_name_ {};
 
   /// Name of the database that stores the name/value/type bindings.
   const ACE_TCHAR *database_;
@@ -368,7 +370,8 @@ private:
   char *base_address_;
 
   /// The context in which the naming database will be created.
-  ACE_Naming_Context::Context_Scope_Type context_;
+  ACE_Naming_Context::Context_Scope_Type context_
+    {ACE_Naming_Context::PROC_LOCAL};
 };
 
 ACE_FACTORY_DECLARE (ACE, ACE_Naming_Context)

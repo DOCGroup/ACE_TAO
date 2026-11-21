@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef RECEIVER_QOS_EVENT_HANDLER_H
 #define RECEIVER_QOS_EVENT_HANDLER_H
 
@@ -17,36 +16,41 @@
 #include "ace/Event_Handler.h"
 #include "ace/QoS/QoS_Session.h"
 #include "ace/QoS/SOCK_Dgram_Mcast_QoS.h"
+#include "Fill_ACE_QoS.h"
 
 class Receiver_QoS_Event_Handler : public ACE_Event_Handler
 {
 public:
-  /// Constructor.
-  Receiver_QoS_Event_Handler ();
+  Receiver_QoS_Event_Handler () = delete;
 
-  /// Constructor.
-  Receiver_QoS_Event_Handler (const ACE_SOCK_Dgram_Mcast_QoS &dgram_mcast_qos,
-                              ACE_QoS_Session *qos_session);
+  Receiver_QoS_Event_Handler (ACE_SOCK_Dgram_Mcast_QoS &dgram_mcast_qos,
+                              ACE_QoS_Session *qos_session,
+                              Fill_ACE_QoS &flow_spec_list);
+  Receiver_QoS_Event_Handler (Receiver_QoS_Event_Handler const &) = delete;
+  Receiver_QoS_Event_Handler (Receiver_QoS_Event_Handler &&) = delete;
+  Receiver_QoS_Event_Handler &operator= (Receiver_QoS_Event_Handler const &) = delete;
+  Receiver_QoS_Event_Handler &operator= (Receiver_QoS_Event_Handler &&) = delete;
 
-  /// Destructor.
-  ~Receiver_QoS_Event_Handler ();
+  ~Receiver_QoS_Event_Handler () override = default;
 
   /// Override this to return the handle of the Dgram_Mcast
   /// that we are using.
-  virtual ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
   /// Handles a READ event.
-  virtual int handle_input (ACE_HANDLE fd);
+  int handle_input (ACE_HANDLE fd) override;
 
   /// Handles a QoS event.
-  virtual int handle_qos (ACE_HANDLE fd);
+  int handle_qos (ACE_HANDLE fd) override;
 
 private:
-  ACE_SOCK_Dgram_Mcast_QoS dgram_mcast_qos_;
-  ACE_QoS_Session *qos_session_;
+  /// Borrowed socket; the caller keeps it alive for the handler's lifetime.
+  ACE_SOCK_Dgram_Mcast_QoS &dgram_mcast_qos_;
+  /// Borrowed session; its creator retains ownership.
+  ACE_QoS_Session *qos_session_ {};
   ACE_INET_Addr remote_addr_;
+  Fill_ACE_QoS &flow_spec_list_;
 };
 
 #endif  /* RECEIVER_QOS_EVENT_HANDLER_H */
-
 

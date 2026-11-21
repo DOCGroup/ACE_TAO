@@ -25,13 +25,11 @@
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredEvent
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_StructuredEvent ();
   TAO_Notify_Tests_StructuredEvent (const char* name);
   TAO_Notify_Tests_StructuredEvent (const char* domain, const char* type);
   TAO_Notify_Tests_StructuredEvent (const char* name, const char* domain, const char* type);
 
-  /// Destructor
   ~TAO_Notify_Tests_StructuredEvent ();
 
   void name (const char* name);
@@ -40,16 +38,16 @@ public:
   const char* type ();
 
   /// add <name,value> to optional header sequence.
-  void opt_header (const char* name, CORBA::Any& value);
+  void opt_header (const char* name, CORBA::Any const & value);
 
   /// add <name,value> to filterable body sequence.
-  void filter (const char* name, CORBA::Any& value);
+  void filter (const char* name, CORBA::Any const & value);
 
   /// add <name,value> to variable header sequence.
-  void qos (const char* name, CORBA::Any& value);
+  void qos (const char* name, CORBA::Any const & value);
 
   /// The remainder_of_body
-  void payload (CORBA::Any& value);
+  void payload (CORBA::Any const & value);
 
   /// access the underlying event.
   CosNotification::StructuredEvent& event ();

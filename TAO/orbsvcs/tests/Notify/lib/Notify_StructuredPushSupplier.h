@@ -16,7 +16,7 @@
 
 #include "StructuredPushSupplier.h"
 
-typedef TAO_Notify_Tests_StructuredPushSupplier TAO_Notify_StructuredPushSupplier;
+using TAO_Notify_StructuredPushSupplier = TAO_Notify_Tests_StructuredPushSupplier;
 
 #include /**/ "ace/post.h"
 #endif /* TAO_NOTIFY_STRUCTUREDPUSHSUPPLIER_H */

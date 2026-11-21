@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    ExtLocalInterfaceDef_i.h
@@ -10,7 +9,6 @@
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_EXTLOCALINTERFACEDEF_I_H
 #define TAO_EXTLOCALINTERFACEDEF_I_H
@@ -31,16 +29,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/// Mixes IDL3 attribute exception support into local interface definitions.
 class TAO_IFRService_Export TAO_ExtLocalInterfaceDef_i
   : public virtual TAO_LocalInterfaceDef_i,
     public virtual TAO_InterfaceAttrExtension_i
 {
-  // = TITLE
-  //    TAO_ExtLocaltInterfaceDef_i
-  //
-  // = DESCRIPTION
-  //    Mixes in IDL3 attribute exceptions.
-  //
 public:
   explicit TAO_ExtLocalInterfaceDef_i (TAO_Repository_i *repo);
 

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "pragmaS.h"
 #include "unionC.h"
 #include "repo_id_modC.h"
@@ -20,12 +19,36 @@
 #include "expressionsC.h"
 #include "structC.h"
 #include "valuetypeC.h"
+#include "valuetype_opt_accessorC.h"
+
+#include <memory>
 #include "fixedA.h"
 
 #include "ace/Log_Msg.h"
 #include "tao/AnyTypeCode/Any.h"
 
 #include <cstring>
+#include <type_traits>
+
+static_assert (std::is_abstract<OBV_Supports_Inherited_Operation>::value,
+               "A valuetype that supports an inherited operation is abstract");
+static_assert (!std::is_abstract<OBV_Copy_Derived>::value,
+               "A concrete derived valuetype gets its own copy implementation");
+static_assert (std::is_abstract<OBV_Copy_Operation_Derived>::value,
+               "A derived operation-bearing valuetype requires its own copy");
+static_assert (std::is_abstract<OBV_Copy_Factory_Derived>::value,
+               "A factory-bearing derived valuetype must provide its own copy");
+static_assert (std::is_abstract<OBV_Copy_Factory_Operation_Derived>::value,
+               "A derived valuetype must not inherit a sliced copy through a factory base");
+static_assert (std::is_base_of<CORBA::ValueFactoryBase,
+                               Accessor_Optimized_Derived_init>::value,
+               "An optimized derived valuetype retains its concrete factory");
+static_assert (!std::is_abstract<Accessor_Optimized_Refcount_Derived>::value,
+               "An optimized valuetype inherits supported-interface refcount overrides");
+static_assert (!std::is_abstract<Accessor_Optimized_Refcount_Inherited>::value,
+               "An optimized valuetype can add a supported interface with an inherited counter");
+static_assert (std::is_abstract<Accessor_Optimized_Operation_Derived>::value,
+               "An optimized derived valuetype must not inherit a sliced copy");
 
 class hello_i : public virtual POA_hello
 {
@@ -53,6 +76,35 @@ class schmooze_i : public virtual gleep::schmooze
 
 class schmeer_i : public virtual gleep::schmeer
 {
+};
+
+class Application_Factory_Value_impl :
+  public virtual OBV_Application_Factory_Value,
+  public CORBA::DefaultValueRefCountBase
+{
+public:
+  explicit Application_Factory_Value_impl (CORBA::Long extra_state)
+    : extra_state_ (extra_state)
+  {
+  }
+
+  CORBA::ValueBase *_copy_value () override
+  {
+    Application_Factory_Value_impl *copy {};
+    ACE_NEW_THROW_EX (copy,
+                      Application_Factory_Value_impl (this->extra_state_),
+                      CORBA::NO_MEMORY ());
+    copy->value (this->value ());
+    return copy;
+  }
+
+  CORBA::Long extra_state () const
+  {
+    return this->extra_state_;
+  }
+
+private:
+  CORBA::Long extra_state_;
 };
 
 class schlemiel_i : public virtual gleep::schlemiel
@@ -208,6 +260,231 @@ test_default_initialized_valuetype (int &error_count)
   expect_equals<CORBA::Long> (
     error_count, "DefaultInitializedValue::long_value",
     value.long_value (), 0);
+}
+
+void
+test_valuetype_copy (int &error_count)
+{
+  OBV_Copy_Base base_value;
+  base_value.base_value (19);
+  CORBA::ValueBase_var base_copy (base_value._copy_value ());
+  Copy_Base * const base_downcast = Copy_Base::_downcast (base_copy.in ());
+  if (base_downcast == nullptr)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Copy_Base copy has wrong type\n"));
+    }
+  else
+    {
+      expect_equals<CORBA::Long> (
+        error_count, "Copy_Base member", base_downcast->base_value (), 19);
+    }
+
+  OBV_DefaultInitializedValue generated_value;
+  generated_value.boolean_value (true);
+  generated_value.long_value (17);
+  CORBA::ValueBase_var generated_copy (generated_value._copy_value ());
+  DefaultInitializedValue * const generated_downcast =
+    DefaultInitializedValue::_downcast (generated_copy.in ());
+  if (generated_downcast == nullptr)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Generated OBV copy has wrong type\n"));
+    }
+  else
+    {
+      expect_equals<CORBA::Boolean> (
+        error_count, "Generated OBV copy boolean value",
+        generated_downcast->boolean_value (), true);
+      expect_equals<CORBA::Long> (
+        error_count, "Generated OBV copy long value",
+        generated_downcast->long_value (), 17);
+    }
+
+  Application_Factory_Value_impl application_value (73);
+  application_value.value (29);
+  CORBA::ValueBase_var application_copy (application_value._copy_value ());
+  Application_Factory_Value_impl * const application_downcast =
+    dynamic_cast<Application_Factory_Value_impl *> (application_copy.in ());
+  if (application_downcast == nullptr)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR,
+                  "Application_Factory_Value copy has wrong type\n"));
+    }
+  else
+    {
+      expect_equals<CORBA::Long> (
+        error_count, "Application_Factory_Value copy value",
+        application_downcast->value (), 29);
+      expect_equals<CORBA::Long> (
+        error_count, "Application_Factory_Value copy extra state",
+        application_downcast->extra_state (), 73);
+    }
+
+  OBV_Supported_Interface_Value supported_value;
+  supported_value.value (17);
+  CORBA::ValueBase_var supported_copy (supported_value._copy_value ());
+  Supported_Interface_Value * const supported_downcast =
+    Supported_Interface_Value::_downcast (supported_copy.in ());
+  if (supported_downcast == nullptr)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Supported_Interface_Value copy has wrong type\n"));
+    }
+  else
+    {
+      expect_equals<CORBA::Long> (
+        error_count, "Supported_Interface_Value copy",
+        supported_downcast->value (), 17);
+    }
+
+  OBV_Copy_Derived derived_value;
+  derived_value.base_value (23);
+  derived_value.derived_value (42);
+  CORBA::ValueBase_var derived_copy (derived_value._copy_value ());
+  Copy_Derived * const derived_downcast =
+    Copy_Derived::_downcast (derived_copy.in ());
+  if (derived_downcast == nullptr)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Copy_Derived copy has wrong type\n"));
+    }
+  else
+    {
+      expect_equals<CORBA::Long> (
+        error_count, "Copy_Derived base member",
+        derived_downcast->base_value (), 23);
+      expect_equals<CORBA::Long> (
+        error_count, "Copy_Derived member",
+        derived_downcast->derived_value (), 42);
+    }
+
+  CORBA::ValueBase_var leaf_value (new OBV_Copy_Leaf);
+  Copy_Leaf * const leaf = Copy_Leaf::_downcast (leaf_value.in ());
+  leaf->leaf_value (51);
+
+  OBV_Copy_Alias_Holder alias_holder;
+  alias_holder.leaf (leaf);
+  CORBA::ValueBase_var alias_copy (alias_holder._copy_value ());
+  Copy_Alias_Holder * const alias_downcast =
+    Copy_Alias_Holder::_downcast (alias_copy.in ());
+  if (alias_downcast == nullptr)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Copy_Alias_Holder copy has wrong type\n"));
+    }
+  else
+    {
+      Copy_Leaf * const copied_leaf = alias_downcast->leaf ();
+      if (copied_leaf == leaf)
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR, "Copy_Alias_Holder shares its aliased valuetype\n"));
+        }
+      else
+        {
+          expect_equals<CORBA::Long> (
+            error_count, "Copy_Alias_Holder copied leaf",
+            copied_leaf->leaf_value (), 51);
+          copied_leaf->leaf_value (52);
+          expect_equals<CORBA::Long> (
+            error_count, "Copy_Alias_Holder original leaf unchanged",
+            leaf->leaf_value (), 51);
+        }
+    }
+
+  Copy_Leaf_var retained_copy;
+  {
+    CORBA::ValueBase_var holder_copy (alias_holder._copy_value ());
+    Copy_Alias_Holder * const holder_downcast =
+      Copy_Alias_Holder::_downcast (holder_copy.in ());
+    if (holder_downcast == nullptr)
+      {
+        ++error_count;
+        ACE_ERROR ((LM_ERROR, "Copy_Alias_Holder copy has wrong type\n"));
+      }
+    else
+      {
+        Copy_Leaf * const nested_copy = holder_downcast->leaf ();
+        nested_copy->_add_ref ();
+        retained_copy = nested_copy;
+      }
+  }
+  if (retained_copy.in () != nullptr
+      && retained_copy->_refcount_value () != 1)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Copy_Alias_Holder leaked its nested copy\n"));
+    }
+
+  Copy_Leaf_Sequence leaves;
+  leaves.length (1);
+  leaf->_add_ref ();
+  Copy_Leaf_var leaf_ref (leaf);
+  leaves[0] = leaf_ref;
+  OBV_Copy_Sequence_Holder sequence_holder;
+  sequence_holder.leaves (leaves);
+  CORBA::ValueBase_var sequence_copy (sequence_holder._copy_value ());
+  Copy_Sequence_Holder * const sequence_downcast =
+    Copy_Sequence_Holder::_downcast (sequence_copy.in ());
+  if (sequence_downcast == nullptr)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Copy_Sequence_Holder copy has wrong type\n"));
+    }
+  else
+    {
+      Copy_Leaf * const copied_leaf = sequence_downcast->leaves ()[0];
+      if (copied_leaf != leaf)
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR, "Copy_Sequence_Holder does not share its valuetype\n"));
+        }
+      else
+        {
+          expect_equals<CORBA::Long> (
+            error_count, "Copy_Sequence_Holder shared leaf",
+            copied_leaf->leaf_value (), 51);
+          copied_leaf->leaf_value (53);
+          expect_equals<CORBA::Long> (
+            error_count, "Copy_Sequence_Holder original leaf updated",
+            leaf->leaf_value (), 53);
+        }
+    }
+
+  Copy_Leaf_Struct leaf_struct;
+  leaf->_add_ref ();
+  leaf_struct.leaf = leaf;
+  OBV_Copy_Struct_Holder struct_holder;
+  struct_holder.value (leaf_struct);
+  CORBA::ValueBase_var struct_copy (struct_holder._copy_value ());
+  Copy_Struct_Holder * const struct_downcast =
+    Copy_Struct_Holder::_downcast (struct_copy.in ());
+  if (struct_downcast == nullptr)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Copy_Struct_Holder copy has wrong type\n"));
+    }
+  else
+    {
+      Copy_Leaf * const copied_leaf = struct_downcast->value ().leaf.in ();
+      if (copied_leaf != leaf)
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR, "Copy_Struct_Holder does not share its valuetype\n"));
+        }
+      else
+        {
+          expect_equals<CORBA::Long> (
+            error_count, "Copy_Struct_Holder shared leaf",
+            copied_leaf->leaf_value (), 53);
+          copied_leaf->leaf_value (54);
+          expect_equals<CORBA::Long> (
+            error_count, "Copy_Struct_Holder original leaf updated",
+            leaf->leaf_value (), 54);
+        }
+    }
 }
 
 void
@@ -687,6 +964,133 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv);
 
+      Accessor_Optimized_Value_init * const opt_accessor_factory =
+        new Accessor_Optimized_Value_init;
+      orb->register_value_factory (
+        opt_accessor_factory->tao_repository_id (),
+        opt_accessor_factory);
+
+      CORBA::ValueBase_var opt_accessor_value (
+        opt_accessor_factory->create_for_unmarshal ());
+      opt_accessor_factory->_remove_ref ();
+      if (Accessor_Optimized_Value::_downcast (opt_accessor_value.in ())
+          == nullptr)
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR,
+                      "Accessor_Optimized_Value factory returned wrong type\n"));
+        }
+
+      Accessor_Optimized_Leaf_init * const opt_leaf_factory =
+        new Accessor_Optimized_Leaf_init;
+      orb->register_value_factory (opt_leaf_factory->tao_repository_id (),
+                                   opt_leaf_factory);
+      CORBA::ValueBase_var opt_leaf_value (
+        opt_leaf_factory->create_for_unmarshal ());
+      opt_leaf_factory->_remove_ref ();
+      Accessor_Optimized_Leaf * const opt_leaf =
+        Accessor_Optimized_Leaf::_downcast (opt_leaf_value.in ());
+      opt_leaf->leaf_value (53);
+
+      Accessor_Optimized_Derived_init * const opt_derived_factory =
+        new Accessor_Optimized_Derived_init;
+      orb->register_value_factory (opt_derived_factory->tao_repository_id (),
+                                  opt_derived_factory);
+      CORBA::ValueBase_var opt_derived_value (
+        opt_derived_factory->create_for_unmarshal ());
+      opt_derived_factory->_remove_ref ();
+      Accessor_Optimized_Derived * const opt_derived =
+        Accessor_Optimized_Derived::_downcast (opt_derived_value.in ());
+      opt_derived->value (31);
+      opt_derived->derived_value (47);
+      opt_derived->child (opt_leaf);
+      CORBA::ValueBase_var opt_derived_copy (opt_derived->_copy_value ());
+      Accessor_Optimized_Derived * const opt_derived_downcast =
+        Accessor_Optimized_Derived::_downcast (opt_derived_copy.in ());
+      if (opt_derived_downcast == nullptr
+          || opt_derived_downcast->value () != 31
+          || opt_derived_downcast->derived_value () != 47
+          || opt_derived_downcast->child () == opt_leaf)
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR,
+                      "Accessor_Optimized_Derived copy is incomplete\n"));
+        }
+      else if (opt_derived_downcast->child ()->leaf_value () != 53)
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR,
+                      "Accessor_Optimized_Derived nested copy is incorrect\n"));
+        }
+
+      Accessor_Optimized_Refcount_Inherited_init * const inherited_factory =
+        new Accessor_Optimized_Refcount_Inherited_init;
+      CORBA::ValueBase_var inherited_value (
+        inherited_factory->create_for_unmarshal ());
+      inherited_factory->_remove_ref ();
+      Accessor_Optimized_Refcount_Inherited * const inherited_downcast =
+        Accessor_Optimized_Refcount_Inherited::_downcast (inherited_value.in ());
+      if (inherited_downcast == nullptr)
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR,
+                      "Inherited refcount factory returned wrong type\n"));
+        }
+      else
+        {
+          inherited_downcast->parent_value (19);
+          inherited_downcast->inherited_value (23);
+          CORBA::ValueBase_var inherited_copy (
+            inherited_downcast->_copy_value ());
+          Accessor_Optimized_Refcount_Inherited * const copied_inherited =
+            Accessor_Optimized_Refcount_Inherited::_downcast (
+              inherited_copy.in ());
+          if (copied_inherited == nullptr
+              || copied_inherited->parent_value () != 19
+              || copied_inherited->inherited_value () != 23)
+            {
+              ++error_count;
+              ACE_ERROR ((LM_ERROR,
+                          "Inherited refcount valuetype copy is incorrect\n"));
+            }
+        }
+
+      Accessor_Optimized_Refcount_Multi_Derived_init * const
+        multi_inherited_factory =
+          new Accessor_Optimized_Refcount_Multi_Derived_init;
+      CORBA::ValueBase_var multi_inherited_value (
+        multi_inherited_factory->create_for_unmarshal ());
+      multi_inherited_factory->_remove_ref ();
+      Accessor_Optimized_Refcount_Multi_Derived * const
+        multi_inherited_downcast =
+        Accessor_Optimized_Refcount_Multi_Derived::_downcast (
+          multi_inherited_value.in ());
+      if (multi_inherited_downcast == nullptr)
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR,
+                      "Inherited supported-interface factory returned wrong type\n"));
+        }
+      else
+        {
+          multi_inherited_downcast->base_value (29);
+          multi_inherited_downcast->multi_derived_value (31);
+          CORBA::ValueBase_var multi_inherited_copy (
+            multi_inherited_downcast->_copy_value ());
+          Accessor_Optimized_Refcount_Multi_Derived * const
+            copied_multi_inherited =
+            Accessor_Optimized_Refcount_Multi_Derived::_downcast (
+              multi_inherited_copy.in ());
+          if (copied_multi_inherited == nullptr
+              || copied_multi_inherited->base_value () != 29
+              || copied_multi_inherited->multi_derived_value () != 31)
+            {
+              ++error_count;
+              ACE_ERROR ((LM_ERROR,
+                          "Inherited supported-interface valuetype copy is incorrect\n"));
+            }
+        }
+
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");
 
@@ -698,7 +1102,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var obj;
 
       hello_i h;
-      PortableServer::ObjectId_var id = root_poa->activate_object (&h);
+      PortableServer::ObjectId_var id = root_poa->activate_object (std::addressof (h));
       obj = root_poa->id_to_reference (id.in ());
       obj = hello::_narrow (obj.in ());
 
@@ -711,7 +1115,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       goodbye_i g;
-      id = root_poa->activate_object (&g);
+      id = root_poa->activate_object (std::addressof (g));
       obj = root_poa->id_to_reference (id.in ());
       obj = goodbye::_narrow (obj.in ());
 
@@ -724,7 +1128,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       sayonara_i s;
-      id = root_poa->activate_object (&s);
+      id = root_poa->activate_object (std::addressof (s));
       obj = root_poa->id_to_reference (id.in ());
       obj = salutation::sayonara::_narrow (obj.in ());
 
@@ -743,7 +1147,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       toi.length (4);
 
       ciao_i c;
-      id = root_poa->activate_object (&c);
+      id = root_poa->activate_object (std::addressof (c));
       obj = root_poa->id_to_reference (id.in ());
       obj = ciao::_narrow (obj.in ());
 
@@ -756,7 +1160,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       aloha_i a;
-      id = root_poa->activate_object (&a);
+      id = root_poa->activate_object (std::addressof (a));
       obj = root_poa->id_to_reference (id.in ());
       obj = aloha::_narrow (obj.in ());
 
@@ -921,7 +1325,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       field.value._d (FTYPE_VARCHAR);
       CORBA::Any any1;
       any1 <<= field;
-      const Field *outfield = 0;
+      const Field *outfield {};
 
       if ((any1 >>= outfield) == 0)
         {
@@ -983,6 +1387,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   test_default_initialized_struct (error_count);
   test_default_initialized_exception (error_count);
   test_default_initialized_valuetype (error_count);
+  test_valuetype_copy (error_count);
   test_default_initialized_union (error_count);
   test_fixed_typecodes (error_count);
   test_union_discriminators (error_count);

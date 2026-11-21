@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-
 //=============================================================================
 /**
  *  @file    URL_Locator.h
@@ -8,7 +7,6 @@
  *  @author Nanbor Wang
  */
 //=============================================================================
-
 
 #ifndef ACE_URL_LOCATOR_H
 #define ACE_URL_LOCATOR_H
@@ -30,7 +28,7 @@
 class ACE_Svc_Export ACE_URL_Locator
 {
 public:
-  // Request type
+  /// Request operation codes.
   enum ACE_URL_Locator_Op_Type
   {
     QUERY = 0,
@@ -44,7 +42,7 @@ public:
   /// Human Readable operation name.
   static const char * const opname[];
 
-  // = Specify how to select offers.
+  /// Specifies how offers are selected.
   enum ACE_Selection_Criteria
   {
     NONE = 0,                   // URL that contains none of the properties.
@@ -55,7 +53,7 @@ public:
 
   static const char * const selection_name[];
 
-    /// errno will set to one of these value.
+  /// Error codes reported through errno.
   enum ACE_URL_Locator_Error
   {
     OK,                         // Everything is fine.
@@ -67,12 +65,9 @@ public:
     UNKNOWN,                    // Unknown error.
     MAX_URL_ERROR
   };
-  // Possible error code of URL_Locator.
-
   /// Human readable error status.
   static const char * const err_name[];
 
-  /// Default destructor.
   virtual ~ACE_URL_Locator () = 0;
 
   /**
@@ -100,9 +95,9 @@ public:
 
   /// Modify a previously registered offer.
   virtual int modify_offer (const ACE_WString &offer_id,
-                            const ACE_WString *url = 0,
-                            const ACE_URL_Property_Seq *del = 0,
-                            const ACE_URL_Property_Seq *modify = 0) = 0;
+                            const ACE_WString *url = nullptr,
+                            const ACE_URL_Property_Seq *del = nullptr,
+                            const ACE_URL_Property_Seq *modify = nullptr) = 0;
 
   /// Provide a human readable error status.
   virtual const char *error_status ();

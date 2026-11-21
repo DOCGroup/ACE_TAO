@@ -39,7 +39,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTEvent_Serv_Export TAO_EC_QOS_Info
 {
 public:
-  /// Constructor
   TAO_EC_QOS_Info ();
 
   /// Copy constructor, it does the obvious thing, but if it is not

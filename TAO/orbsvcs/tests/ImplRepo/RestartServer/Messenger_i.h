@@ -15,20 +15,18 @@ class Terminator;
 class  Messenger_i : public virtual POA_Messenger
 {
 public:
-  //Constructor
   Messenger_i (CORBA::ORB_ptr orb, Terminator &terminator);
 
-  //Destructor
   virtual ~Messenger_i ();
 
-  virtual CORBA::Boolean send_message (
+  CORBA::Boolean send_message (
     const char * user_name,
     const char * subject,
-    char *& message);
+    char *& message) override;
 
-  virtual void abort (CORBA::Short delay_secs);
+  void abort (CORBA::Short delay_secs) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Use an ORB reference to shutdown the application.
@@ -38,6 +36,5 @@ private:
 
   Terminator& terminator_;
 };
-
 
 #endif /* MESSENGERI_H_  */

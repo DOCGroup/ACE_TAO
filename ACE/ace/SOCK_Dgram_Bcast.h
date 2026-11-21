@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SOCK_DGRAM_BCAST_H
 #define ACE_SOCK_DGRAM_BCAST_H
 #include /**/ "ace/pre.h"
@@ -32,11 +31,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Bcast_Node
 {
 public:
-  /// Default constructor.
   ACE_Bcast_Node (ACE_INET_Addr &,
                   ACE_Bcast_Node *);
 
-  /// Destructor.
   ~ACE_Bcast_Node () = default;
 
   /// Broadcast address for the interface.
@@ -57,7 +54,6 @@ public:
 class ACE_Export ACE_SOCK_Dgram_Bcast : public ACE_SOCK_Dgram
 {
 public:
-  /// Default constructor.
   ACE_SOCK_Dgram_Bcast ();
 
   ACE_SOCK_Dgram_Bcast (const ACE_Addr &local,
@@ -66,7 +62,6 @@ public:
                         int reuse_addr = 0,
                         const ACE_TCHAR *host_name = nullptr);
 
-  /// Default dtor.
   ~ACE_SOCK_Dgram_Bcast ();
 
   // Initiate a connectionless datagram broadcast endpoint.
@@ -123,7 +118,7 @@ private:
   int mk_broadcast (const ACE_TCHAR *host_name);
 
   /// Points to the head of the list of broadcast interfaces.
-  ACE_Bcast_Node *if_list_;
+  ACE_Bcast_Node *if_list_ {};
 
   /// Do not allow this function to percolate up to this interface...
   int get_remote_addr (ACE_Addr &) const;

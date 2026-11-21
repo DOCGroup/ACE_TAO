@@ -1,4 +1,5 @@
 #include "ace/Token.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "ace/Token.inl"
@@ -26,10 +27,11 @@ ACE_Token::dump () const
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nthread = %d"), ACE_Thread::self ()));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nthread = %@"),
+                 reinterpret_cast<void *> (ACE_Thread::self ())));
   // @@ Is there a portable way to do this?
   // ACELIB_DEBUG ((LM_DEBUG, "\nowner_ = %d", (long) this->owner_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nowner_ addr = %x"), &this->owner_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nowner_ addr = %@"), std::addressof (this->owner_)));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nwaiters_ = %d"), this->waiters_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nin_use_ = %d"), this->in_use_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nnesting level = %d"), this->nesting_level_));
@@ -39,8 +41,7 @@ ACE_Token::dump () const
 
 ACE_Token::ACE_Token_Queue_Entry::ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
                                                          ACE_thread_t t_id)
-  : next_ (nullptr),
-    thread_id_ (t_id),
+  : thread_id_ (t_id),
 #if defined (ACE_TOKEN_USES_SEMAPHORE)
     cv_ (0),
 #else
@@ -58,8 +59,7 @@ ACE_Token::ACE_Token_Queue_Entry::ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
 ACE_Token::ACE_Token_Queue_Entry::ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
                                                          ACE_thread_t t_id,
                                                          ACE_Condition_Attributes &attributes)
-  : next_ (nullptr),
-    thread_id_ (t_id),
+  : thread_id_ (t_id),
 #if defined (ACE_TOKEN_USES_SEMAPHORE)
     cv_ (0),
 #else
@@ -76,8 +76,6 @@ ACE_Token::ACE_Token_Queue_Entry::ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
 }
 
 ACE_Token::ACE_Token_Queue::ACE_Token_Queue ()
-  : head_ (nullptr),
-    tail_ (nullptr)
 {
   ACE_TRACE ("ACE_Token::ACE_Token_Queue::ACE_Token_Queue");
 }
@@ -89,31 +87,43 @@ void
 ACE_Token::ACE_Token_Queue::remove_entry (ACE_Token::ACE_Token_Queue_Entry *entry)
 {
   ACE_TRACE ("ACE_Token::ACE_Token_Queue::remove_entry");
-  ACE_Token_Queue_Entry *curr = nullptr;
-  ACE_Token_Queue_Entry *prev = nullptr;
+  ACE_Token_Queue_Entry *curr {};
+  ACE_Token_Queue_Entry *prev {};
 
   if (this->head_ == nullptr)
+  {
     return;
+  }
 
   for (curr = this->head_;
        curr != nullptr && curr != entry;
        curr = curr->next_)
-    prev = curr;
+    {
+      prev = curr;
+    }
 
   if (curr == nullptr)
-    // Didn't find the entry...
-    return;
+    {
+      // Didn't find the entry...
+      return;
+    }
   else if (prev == nullptr)
-    // Delete at the head.
-    this->head_ = this->head_->next_;
+    {
+      // Delete at the head.
+      this->head_ = this->head_->next_;
+    }
   else
-    // Delete in the middle.
-    prev->next_ = curr->next_;
+    {
+      // Delete in the middle.
+      prev->next_ = curr->next_;
+    }
 
   // We need to update the tail of the list if we've deleted the last
   // entry.
   if (curr->next_ == nullptr)
+  {
     this->tail_ = prev;
+  }
 }
 
 //
@@ -126,20 +136,20 @@ ACE_Token::ACE_Token_Queue::insert_entry (ACE_Token::ACE_Token_Queue_Entry &entr
   if (this->head_ == nullptr)
     {
       // No other threads - just add me
-      this->head_ = &entry;
-      this->tail_ = &entry;
+      this->head_ = std::addressof (entry);
+      this->tail_ = std::addressof (entry);
     }
   else if (requeue_position == -1)
     {
       // Insert at the end of the queue.
-      this->tail_->next_ = &entry;
-      this->tail_ = &entry;
+      this->tail_->next_ = std::addressof (entry);
+      this->tail_ = std::addressof (entry);
     }
   else if (requeue_position == 0)
     {
       // Insert at head of queue.
       entry.next_ = this->head_;
-      this->head_ = &entry;
+      this->head_ = std::addressof (entry);
     }
   else
     // Insert in the middle of the queue somewhere.
@@ -148,14 +158,18 @@ ACE_Token::ACE_Token_Queue::insert_entry (ACE_Token::ACE_Token_Queue_Entry &entr
 
       ACE_Token::ACE_Token_Queue_Entry *insert_after = this->head_;
       while (requeue_position-- && insert_after->next_ != nullptr)
-        insert_after = insert_after->next_;
+        {
+          insert_after = insert_after->next_;
+        }
 
       entry.next_ = insert_after->next_;
 
       if (entry.next_ == nullptr)
-        this->tail_ = &entry;
+      {
+        this->tail_ = std::addressof (entry);
+      }
 
-      insert_after->next_ = &entry;
+      insert_after->next_ = std::addressof (entry);
     }
 }
 
@@ -222,8 +236,8 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
 
   // Which queue we should end up in...
   ACE_Token_Queue *queue = (op_type == ACE_Token::READ_TOKEN
-                            ? &this->readers_
-                            : &this->writers_);
+                            ? std::addressof (this->readers_)
+                            : std::addressof (this->writers_));
 
   // Allocate queue entry on stack.  This works since we don't exit
   // this method's activation record until we've got the token.
@@ -262,7 +276,9 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
           // Note, this should obey whatever thread-specific interrupt
           // policy is currently in place...
           if (errno == EINTR)
+          {
             continue;
+          }
 
 #if defined (ACE_TOKEN_DEBUGGING)
           cerr << '(' << ACE_Thread::self () << ')'
@@ -274,9 +290,13 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
           // We come here if a timeout occurs or some serious
           // ACE_Condition object error.
           if (errno == ETIME)
-            timed_out = true;
+            {
+              timed_out = true;
+            }
           else
-            error = true;
+            {
+              error = true;
+            }
 
           // Stop the loop.
           break;
@@ -366,15 +386,17 @@ ACE_Token::renew (int requeue_position,
   if (this->writers_.head_ == nullptr &&
       (this->in_use_ == ACE_Token::WRITE_TOKEN ||
        this->readers_.head_ == nullptr))
-    // Immediate return.
-    return 0;
+    {
+      // Immediate return.
+      return 0;
+    }
 
   // We've got to sleep until we get the token again.
 
   // Determine which queue should this thread go to.
   ACE_Token::ACE_Token_Queue *this_threads_queue =
     this->in_use_ == ACE_Token::READ_TOKEN ?
-    &this->readers_ : &this->writers_;
+    std::addressof (this->readers_) : std::addressof (this->writers_);
 
   ACE_Token::ACE_Token_Queue_Entry my_entry (this->lock_,
                                              this->owner_);
@@ -408,7 +430,9 @@ ACE_Token::renew (int requeue_position,
           // Note, this should obey whatever thread-specific interrupt
           // policy is currently in place...
           if (errno == EINTR)
+          {
             continue;
+          }
 
 #if defined (ACE_TOKEN_DEBUGGING)
           cerr << '(' << ACE_Thread::self () << ')'
@@ -420,9 +444,13 @@ ACE_Token::renew (int requeue_position,
           // We come here if a timeout occurs or some serious
           // ACE_Condition object error.
           if (errno == ETIME)
-            timed_out = true;
+            {
+              timed_out = true;
+            }
           else
-            error = true;
+            {
+              error = true;
+            }
 
           // Stop the loop.
           break;
@@ -481,7 +509,9 @@ ACE_Token::release ()
 
   // Nested release...
   if (this->nesting_level_ > 0)
-    --this->nesting_level_;
+    {
+      --this->nesting_level_;
+    }
   else
     {
       //
@@ -513,18 +543,18 @@ ACE_Token::wakeup_next_waiter ()
     }
 
   // Wakeup next waiter.
-  ACE_Token_Queue *queue = nullptr;
+  ACE_Token_Queue *queue {};
 
   // Writer threads get priority to run first.
   if (this->writers_.head_ != nullptr)
     {
       this->in_use_ = ACE_Token::WRITE_TOKEN;
-      queue = &this->writers_;
+      queue = std::addressof (this->writers_);
     }
   else
     {
       this->in_use_ = ACE_Token::READ_TOKEN;
-      queue = &this->readers_;
+      queue = std::addressof (this->readers_);
     }
 
   // Wake up waiter and make it runable.

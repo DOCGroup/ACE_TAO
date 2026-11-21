@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    multdim_array.cpp
  *
@@ -7,30 +5,21 @@
  *
  *  @author   Bala
  */
-//=============================================================================
-
 
 #include "helper.h"
 #include "multdim_array.h"
-
 
 // ************************************************************************
 //               Test_Multdim_Array
 // ************************************************************************
 
 Test_Multdim_Array::Test_Multdim_Array ()
-  : opname_ (CORBA::string_dup ("test_multdim_array")),
+  : opname_ ("test_multdim_array"),
     in_ (new Param_Test::Multdim_Array),
     inout_ (new Param_Test::Multdim_Array),
     out_ (new Param_Test::Multdim_Array),
     ret_ (new Param_Test::Multdim_Array)
 {
-}
-
-Test_Multdim_Array::~Test_Multdim_Array ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
 }
 
 const char *
@@ -49,7 +38,6 @@ Test_Multdim_Array::dii_req_invoke (CORBA::Request *req)
   req->set_return_type (Param_Test::_tc_Multdim_Array);
 
   req->invoke ();
-
 
   Param_Test::Multdim_Array_forany forany;
   req->return_value () >>= forany;
@@ -72,11 +60,11 @@ Test_Multdim_Array::init_parameters (Param_Test_ptr /*objref*/
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
-  for (CORBA::ULong i=0; i < Param_Test::DIM2; i++)
+  for (CORBA::ULong i=0; i < Param_Test::DIM2; ++i)
     {
-      for (CORBA::ULong j=0; j < Param_Test::DIM3; j++)
+      for (CORBA::ULong j=0; j < Param_Test::DIM3; ++j)
         {
-          for (CORBA::ULong k=0; k < Param_Test::DIM1; k++)
+          for (CORBA::ULong k=0; k < Param_Test::DIM1; ++k)
             {
               this->in_ [i][j][k] = gen->gen_long ();
               this->inout_ [i][j][k] = 0;
@@ -100,11 +88,11 @@ Test_Multdim_Array::reset_parameters ()
   // needed for repeated DII calls
   this->inout_ = new Param_Test::Multdim_Array;
 
-  for (CORBA::ULong i=0; i < Param_Test::DIM2; i++)
+  for (CORBA::ULong i=0; i < Param_Test::DIM2; ++i)
     {
-      for (CORBA::ULong j=0; j < Param_Test::DIM3; j++)
+      for (CORBA::ULong j=0; j < Param_Test::DIM3; ++j)
         {
-          for (CORBA::ULong k=0; k < Param_Test::DIM1; k++)
+          for (CORBA::ULong k=0; k < Param_Test::DIM1; ++k)
             {
               this->inout_ [i][j][k] = 0;
               this->in_ [i][j][k] = gen->gen_long ();
@@ -150,7 +138,9 @@ Test_Multdim_Array::check_validity ()
                      this->ret_.in ()))
     return 1;
   else
+  {
     return 0;
+  }
 }
 
 CORBA::Boolean
@@ -164,14 +154,16 @@ CORBA::Boolean
 Test_Multdim_Array::compare (const Param_Test::Multdim_Array_slice *a1,
                              const Param_Test::Multdim_Array_slice *a2)
 {
-  for (CORBA::ULong i=0; i < Param_Test::DIM2; i++)
+  for (CORBA::ULong i=0; i < Param_Test::DIM2; ++i)
     {
-      for (CORBA::ULong j=0; j < Param_Test::DIM3; j++)
+      for (CORBA::ULong j=0; j < Param_Test::DIM3; ++j)
         {
-          for (CORBA::ULong k=0; k < Param_Test::DIM1; k++)
+          for (CORBA::ULong k=0; k < Param_Test::DIM1; ++k)
             {
               if (a1[i][j][k] != a2[i][j][k])
+              {
                 return 0;
+              }
             }
         }
     }
@@ -194,11 +186,11 @@ Test_Multdim_Array::print_values ()
 void
 Test_Multdim_Array::print (const Param_Test::Multdim_Array_slice *a)
 {
-  for (CORBA::ULong i = 0; i < Param_Test::DIM2; i++)
+  for (CORBA::ULong i = 0; i < Param_Test::DIM2; ++i)
     {
-      for (CORBA::ULong j=0; j < Param_Test::DIM3; j++)
+      for (CORBA::ULong j=0; j < Param_Test::DIM3; ++j)
         {
-          for (CORBA::ULong k=0; k < Param_Test::DIM1; k++)
+          for (CORBA::ULong k=0; k < Param_Test::DIM1; ++k)
             {
               ACE_DEBUG ((LM_DEBUG, "\t\tElement #%d #%d #%d = %d\n",i,j,k, a[i][j][k]));
             }

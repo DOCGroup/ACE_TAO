@@ -10,10 +10,10 @@
  */
 //=============================================================================
 
-
 #include "orbsvcs/CosConcurrencyControlC.h"
 #include "orbsvcs/CosNamingC.h"
 #include "CC_naming_service.h"
+#include <string>
 
 #ifndef _CC_TESTS_H_
 #define _CC_TESTS_H_
@@ -36,11 +36,13 @@ enum
 class CC_Test
 {
 public:
-  /// Default constructor
-  CC_Test (CC_naming_service *ns);
+  explicit CC_Test (CC_naming_service *ns);
+  CC_Test (CC_Test const &) = delete;
+  CC_Test (CC_Test &&) = delete;
+  CC_Test &operator= (CC_Test const &) = delete;
+  CC_Test &operator= (CC_Test &&) = delete;
 
-  /// Destructor
-  virtual ~CC_Test ();
+  virtual ~CC_Test () = default;
 
   /// Run the test times_to_run number of times. Returns CC_SUCCESS on
   /// success CC_FAIL otherwise.
@@ -48,16 +50,10 @@ public:
 
   /// Create a new lock set using the default global lock set factory
   /// from the naming service.
-  CosConcurrencyControl::LockSet_ptr create_lock_set ();
-
-  /// Returns a human readable string from the lock mode enum.
-  char *get_lock_mode_name (CosConcurrencyControl::lock_mode mode);
+  CosConcurrencyControl::LockSet_var create_lock_set ();
 
 protected:
-  /// The result of the test being performed.
-  int result;
-
-  /// The naming service beeing used to register and look up locks
+  /// Borrowed naming service used to register and look up locks.
   CC_naming_service *naming_service_;
 };
 
@@ -78,8 +74,11 @@ public:
   Test_Single_Lock_With_Mode (CC_naming_service *naming_service,
                               CosConcurrencyControl::lock_mode mode);
 
-  /// Destructor
-  ~Test_Single_Lock_With_Mode () override;
+  ~Test_Single_Lock_With_Mode () override = default;
+  Test_Single_Lock_With_Mode (Test_Single_Lock_With_Mode const &) = delete;
+  Test_Single_Lock_With_Mode (Test_Single_Lock_With_Mode &&) = delete;
+  Test_Single_Lock_With_Mode &operator= (Test_Single_Lock_With_Mode const &) = delete;
+  Test_Single_Lock_With_Mode &operator= (Test_Single_Lock_With_Mode &&) = delete;
 
   /// Runs the test the specified number of times.
   int run (int times_to_run = 1) override;
@@ -103,18 +102,21 @@ public:
    * before calling this method. The name is the name the lock will be
    * registered under in the naming service.
    */
-  Test_Setup_LockSet (CC_naming_service *naming_service_,
-                      char *name);
+  Test_Setup_LockSet (CC_naming_service *naming_service,
+                      std::string const &name);
 
-  /// Destructor
-  ~Test_Setup_LockSet () override;
+  ~Test_Setup_LockSet () override = default;
+  Test_Setup_LockSet (Test_Setup_LockSet const &) = delete;
+  Test_Setup_LockSet (Test_Setup_LockSet &&) = delete;
+  Test_Setup_LockSet &operator= (Test_Setup_LockSet const &) = delete;
+  Test_Setup_LockSet &operator= (Test_Setup_LockSet &&) = delete;
 
   /// Runs the test the specified number of times.
   int run (int times_to_run = 1) override;
 
 private:
   /// The name of the lock
-  char *my_name_;
+  std::string my_name_;
 };
 
 /**
@@ -131,18 +133,21 @@ public:
    * before calling this method. The name is the name the lock will be
    * looked up under in the naming service.
    */
-  Test_Use_Already_Created_LockSet (CC_naming_service *naming_service_,
-                                   char *name);
+  Test_Use_Already_Created_LockSet (CC_naming_service *naming_service,
+                                   std::string const &name);
 
-  /// Destructor
-  ~Test_Use_Already_Created_LockSet () override;
+  ~Test_Use_Already_Created_LockSet () override = default;
+  Test_Use_Already_Created_LockSet (Test_Use_Already_Created_LockSet const &) = delete;
+  Test_Use_Already_Created_LockSet (Test_Use_Already_Created_LockSet &&) = delete;
+  Test_Use_Already_Created_LockSet &operator= (Test_Use_Already_Created_LockSet const &) = delete;
+  Test_Use_Already_Created_LockSet &operator= (Test_Use_Already_Created_LockSet &&) = delete;
 
   /// Runs the test the specified number of times.
   int run (int times_to_run = 1) override;
 
 private:
   /// The name of the lock
-  char *my_name_;
+  std::string my_name_;
 };
 
 /**
@@ -159,18 +164,21 @@ public:
    * before calling this method. The name is the name the lock will be
    * looked up under in the naming service.
    */
-  Test_Unlock_Already_Created_LockSet (CC_naming_service *naming_service_,
-                                       char *name);
+  Test_Unlock_Already_Created_LockSet (CC_naming_service *naming_service,
+                                       std::string const &name);
 
-  /// Destructor
-  ~Test_Unlock_Already_Created_LockSet () override;
+  ~Test_Unlock_Already_Created_LockSet () override = default;
+  Test_Unlock_Already_Created_LockSet (Test_Unlock_Already_Created_LockSet const &) = delete;
+  Test_Unlock_Already_Created_LockSet (Test_Unlock_Already_Created_LockSet &&) = delete;
+  Test_Unlock_Already_Created_LockSet &operator= (Test_Unlock_Already_Created_LockSet const &) = delete;
+  Test_Unlock_Already_Created_LockSet &operator= (Test_Unlock_Already_Created_LockSet &&) = delete;
 
   /// Runs the test the specified number of times.
   int run (int times_to_run = 1) override;
 
 private:
   /// The name of the lock
-  char *my_name_;
+  std::string my_name_;
 };
 
 /**
@@ -182,13 +190,15 @@ private:
 class Test_Release_Not_Held_Lock : public CC_Test
 {
 public:
-  /// Default constructor. The naming service must be initialized
-  /// before calling this method. The mode is the mode of the lock
-  Test_Release_Not_Held_Lock (CC_naming_service *naming_service_,
-                                CosConcurrencyControl::lock_mode mode_);
+  /// The naming service must be initialized before the test is created.
+  Test_Release_Not_Held_Lock (CC_naming_service *naming_service,
+                              CosConcurrencyControl::lock_mode mode);
 
-  /// Destructor
-  ~Test_Release_Not_Held_Lock () override;
+  ~Test_Release_Not_Held_Lock () override = default;
+  Test_Release_Not_Held_Lock (Test_Release_Not_Held_Lock const &) = delete;
+  Test_Release_Not_Held_Lock (Test_Release_Not_Held_Lock &&) = delete;
+  Test_Release_Not_Held_Lock &operator= (Test_Release_Not_Held_Lock const &) = delete;
+  Test_Release_Not_Held_Lock &operator= (Test_Release_Not_Held_Lock &&) = delete;
 
   /// Runs the test the specified number of times.
   int run (int times_to_run = 1) override;

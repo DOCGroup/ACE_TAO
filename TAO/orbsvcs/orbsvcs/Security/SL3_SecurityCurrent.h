@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SL3_SECURITY_CURRENT_H
 #define TAO_SL3_SECURITY_CURRENT_H
 
@@ -56,7 +55,6 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      /// Constructor
       SecurityCurrent (size_t tss_slot, TAO_ORB_Core * oc);
 
       /**
@@ -65,11 +63,11 @@ namespace TAO
        * Methods required by the SecurityLevel3::SecurityCurrent
        * interface.
        */
-      //@{
+      /// @{
       SecurityLevel3::ClientCredentials_ptr client_credentials () override;
 
       CORBA::Boolean request_is_local () override;
-      //@}
+      /// @}
 
       /// Return the TSS slot ID assigned to the "SecurityCurrent"
       /// object.
@@ -80,12 +78,11 @@ namespace TAO
       size_t tss_slot () const;
 
     protected:
-      /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~SecurityCurrent () override;
+      ~SecurityCurrent () override = default;
 
     private:
       /// Set the thread-specific storage
@@ -109,16 +106,16 @@ namespace TAO
        * Prevent copying through the copy constructor and the
        * assignment operator.
        */
-      //@{
+      /// @{
       SecurityCurrent (SecurityCurrent const &) = delete;
       SecurityCurrent (SecurityCurrent &&) = delete;
-      void operator= (SecurityCurrent const &) = delete;
-      void operator= (SecurityCurrent &&) = delete;
-      //@}
+      SecurityCurrent &operator= (SecurityCurrent const &) = delete;
+      SecurityCurrent &operator= (SecurityCurrent &&) = delete;
+      /// @}
 
     private:
       /// Thread-specific storage slot assigned to this object.
-      const size_t tss_slot_;
+      size_t const tss_slot_;
 
       /// Pointer to the ORB Core corresponding to the ORB with which
       /// this object is registered.

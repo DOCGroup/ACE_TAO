@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Var_Array_SArgument_T.h
  *
  *  @authors Jeff Parsons, Carlos O'Ryan and Ossama Othman
  */
-//=============================================================================
-
 #ifndef TAO_VAR_ARRAY_SARGUMENT_T_H
 #define TAO_VAR_ARRAY_SARGUMENT_T_H
 

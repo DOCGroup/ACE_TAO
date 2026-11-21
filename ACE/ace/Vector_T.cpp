@@ -6,6 +6,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Vector_T.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Vector_T.inl"
@@ -16,20 +17,24 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE_Tcs(ACE_Vector)
 
 template <class T, size_t DEFAULT_SIZE>
-void ACE_Vector<T, DEFAULT_SIZE>::resize (const size_t new_size,
-                                          const T& t)
+void ACE_Vector<T, DEFAULT_SIZE>::resize (size_t const new_size,
+                                          T const &t)
 {
   ACE_Array<T>::size (new_size);
   if (new_size > length_)
-    for (size_t i = length_; i < new_size; ++i)
-      (*this)[i]=t;
+    {
+      for (size_t i = length_; i < new_size; ++i)
+        {
+          (*this)[i]=t;
+        }
+    }
 
   curr_max_size_ = this->max_size ();
   length_ = new_size;
 }
 
 template <class T, size_t DEFAULT_SIZE>
-void ACE_Vector<T, DEFAULT_SIZE>::push_back (const T& elem)
+void ACE_Vector<T, DEFAULT_SIZE>::push_back (T const &elem)
 {
   if (length_ == curr_max_size_)
     {
@@ -37,7 +42,9 @@ void ACE_Vector<T, DEFAULT_SIZE>::push_back (const T& elem)
       curr_max_size_ = this->max_size ();
     }
   else
-    ACE_Array<T>::size (length_ + 1);
+    {
+      ACE_Array<T>::size (length_ + 1);
+    }
 
   ++length_;
   (*this)[length_-1] = elem;
@@ -50,17 +57,25 @@ void ACE_Vector<T, DEFAULT_SIZE>::dump () const
 
 // Compare this vector with <s> for equality.
 template <class T, size_t DEFAULT_SIZE> bool
-ACE_Vector<T, DEFAULT_SIZE>::operator== (const ACE_Vector<T, DEFAULT_SIZE> &s) const
+ACE_Vector<T, DEFAULT_SIZE>::operator== (ACE_Vector<T, DEFAULT_SIZE> const &s) const
 {
-  if (this == &s)
-    return true;
+  if (this == std::addressof (s))
+    {
+      return true;
+    }
   else if (this->size () != s.size ())
-    return false;
-
-  const size_t len = s.size ();
-  for (size_t slot = 0; slot < len; ++slot)
-    if ((*this)[slot] != s[slot])
+    {
       return false;
+    }
+
+  size_t const len = s.size ();
+  for (size_t slot = 0; slot < len; ++slot)
+      {
+        if ((*this)[slot] != s[slot])
+          {
+            return false;
+          }
+      }
 
   return true;
 }
@@ -75,12 +90,12 @@ ACE_Vector_Iterator<T, DEFAULT_SIZE>::next (T *&item)
 
   if (this->done ())
     {
-      item = 0;
+      item = nullptr;
       return 0;
     }
   else
     {
-      item = &vector_[current_];
+      item = std::addressof (vector_[current_]);
       return 1;
     }
 }

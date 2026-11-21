@@ -22,17 +22,20 @@ my $cli = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\
 
 $nsiorfile   = "ns.ior";
 $srviorfile = "Messenger.ior";
+$con_readyfile = "MessengerConsumer.ready";
 
 my $ns_nsiorfile = $ns->LocalFile ($nsiorfile);
 my $srv_nsiorfile = $srv->LocalFile ($nsiorfile);
 my $con_nsiorfile = $con->LocalFile ($nsiorfile);
 my $cli_nsiorfile = $cli->LocalFile ($nsiorfile);
 my $srv_srviorfile = $srv->LocalFile ($srviorfile);
+my $con_con_readyfile = $con->LocalFile ($con_readyfile);
 $ns->DeleteFile ($nsiorfile);
 $srv->DeleteFile ($nsiorfile);
 $con->DeleteFile ($nsiorfile);
 $cli->DeleteFile ($nsiorfile);
 $srv->DeleteFile ($srviorfile);
+$con->DeleteFile ($con_readyfile);
 
 $NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 $NS = $ns->CreateProcess ($NameService, " -o $ns_nsiorfile");
@@ -40,7 +43,8 @@ $NS = $ns->CreateProcess ($NameService, " -o $ns_nsiorfile");
 $SRV = $srv->CreateProcess ("MessengerServer", "-ORBdebuglevel $debug_level ".
                                                "-o $srv_srviorfile ".
                                                "-ORBInitRef NameService=file://$srv_nsiorfile");
-$CON = $con->CreateProcess ("MessengerConsumer", "-ORBInitRef NameService=file://$con_nsiorfile");
+$CON = $con->CreateProcess ("MessengerConsumer", "-o $con_con_readyfile ".
+                                                 "-ORBInitRef NameService=file://$con_nsiorfile");
 $CLI = $cli->CreateProcess ("MessengerClient", "-ORBInitRef NameService=file://$cli_nsiorfile ");
 
 # start Naming Service
@@ -101,6 +105,14 @@ if ($CON_status != 0) {
     exit 1;
 }
 
+if ($con->WaitForFileTimed ($con_readyfile, $con->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find consumer ready file <$con_con_readyfile>\n";
+    $CON->Kill (); $CON->TimedWait (1);
+    $SRV->Kill (); $SRV->TimedWait (1);
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+}
+
 # start MessengerClient
 $CLI_status = $CLI->SpawnWaitKill ($cli->ProcessStartWaitInterval());
 
@@ -138,5 +150,6 @@ $srv->DeleteFile ($nsiorfile);
 $con->DeleteFile ($nsiorfile);
 $cli->DeleteFile ($nsiorfile);
 $srv->DeleteFile ($srviorfile);
+$con->DeleteFile ($con_readyfile);
 
 exit $status;

@@ -22,7 +22,6 @@ template<class Task>
 class Task_Activator
 {
 public:
-  /// Constructor
   /**
    * @todo If we were to define a generic ACE class for this then we
    *       should certainly change the constructor.  For example, we
@@ -50,12 +49,11 @@ public:
                   int nthreads,
                   Task *task);
 
-  Task_Activator (const Task_Activator &) = delete;
+  Task_Activator (Task_Activator const &) = delete;
   Task_Activator (Task_Activator &&) = delete;
-  Task_Activator &operator= (const Task_Activator &) = delete;
+  Task_Activator &operator= (Task_Activator const &) = delete;
   Task_Activator &operator= (Task_Activator &&) = delete;
 
-  /// Destructor
   /**
    * Wait until the task terminates before returning, this is useful
    * in programs that need to guarantee that the task object is not
@@ -73,6 +71,7 @@ public:
   void release ();
 
 protected:
+  /// Borrowed task pointer; ownership remains with the caller.
   Task *task_;
 };
 

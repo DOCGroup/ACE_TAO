@@ -17,6 +17,8 @@
 #include "tao/Reply_Dispatcher.h"
 #include "tao/CDR.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -44,7 +46,6 @@ class TAO_Export TAO_Asynch_Reply_Dispatcher_Base
   : public TAO_Reply_Dispatcher
 {
 public:
-  /// Default constructor.
   TAO_Asynch_Reply_Dispatcher_Base (TAO_ORB_Core *orb_core,
                                     ACE_Allocator *allocator = nullptr);
 
@@ -53,7 +54,6 @@ public:
 
   /// Install the timeout handler
   virtual long schedule_timer (CORBA::ULong , const ACE_Time_Value &) = 0;
-
 
   /// A helper method that can be used by the subclasses
   /**
@@ -73,7 +73,6 @@ public:
   bool try_dispatch_reply ();
 
 protected:
-  /// Destructor.
   ~TAO_Asynch_Reply_Dispatcher_Base () override;
 
 private:
@@ -110,7 +109,7 @@ protected:
 
 private:
   /// Lock to protect @c is_reply_dispatched_ flag.
-  ACE_Lock *lock_;
+  std::unique_ptr<ACE_Lock> lock_ {};
 
   /// Has the reply been dispatched?
   bool is_reply_dispatched_;

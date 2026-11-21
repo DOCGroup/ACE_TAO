@@ -239,7 +239,7 @@ JAWS_Asynch_IO_Handler_Factory::create_io_handler ()
 {
   JAWS_TRACE ("JAWS_Asynch_IO_Handler_Factory::create");
 
-  JAWS_Asynch_IO_Handler *handler = 0;
+  JAWS_Asynch_IO_Handler *handler {};
   handler = new JAWS_Asynch_IO_Handler (this);
 
   return handler;
@@ -259,7 +259,6 @@ JAWS_Asynch_IO_Handler_Factory::destroy_io_handler (JAWS_IO_Handler *handler)
       delete handler;
     }
 }
-
 
 JAWS_Asynch_IO_Handler::JAWS_Asynch_IO_Handler (JAWS_Asynch_IO_Handler_Factory *factory)
   : JAWS_IO_Handler (factory),
@@ -349,7 +348,7 @@ JAWS_Asynch_Handler::act (const void *act_ref)
   JAWS_TRACE ("JAWS_Asynch_Handler::act");
 
   // Set the ioh from the act
-  this->ioh_ = (JAWS_Asynch_IO_Handler *) act_ref;
+  this->ioh_ = static_cast<JAWS_Asynch_IO_Handler *> (const_cast<void *> (act_ref));
 }
 
 #if 0
@@ -387,7 +386,7 @@ JAWS_Asynch_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result
 
   this->dispatch_handler ();
 
-  if (result.act () != 0)
+  if (result.act () != nullptr)
     {
       // This callback is for io->receive_file()
       JAWS_TRACE ("JAWS_Asynch_Handler::handle_read_stream (recv_file)");
@@ -397,7 +396,9 @@ JAWS_Asynch_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result
         {
           if (result.message_block ().length ()
               == result.message_block ().size ())
-            code = ACE_Filecache_Handle::ACE_SUCCESS;
+            {
+              code = ACE_Filecache_Handle::ACE_SUCCESS;
+            }
           else
             {
               ACE_Asynch_Read_Stream ar;
@@ -406,21 +407,31 @@ JAWS_Asynch_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result
                               result.message_block ().size ()
                               - result.message_block ().length (),
                               result.act ()) == -1)
-                code = -1;
+                {
+                  code = -1;
+                }
               else
-                return;
+                {
+                  return;
+                }
             }
         }
       else
+      {
         code = -1;
+      }
 
       if (code == ACE_Filecache_Handle::ACE_SUCCESS)
-        this->handler ()->receive_file_complete ();
+        {
+          this->handler ()->receive_file_complete ();
+        }
       else
+      {
         this->handler ()->receive_file_error (code);
+      }
 
       result.message_block ().release ();
-      delete (ACE_Filecache_Handle *) result.act ();
+      delete static_cast<ACE_Filecache_Handle *> (result.act ());
     }
   else
     {
@@ -429,9 +440,13 @@ JAWS_Asynch_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result
 
       if (result.success ()
           && result.bytes_transferred () != 0)
-        this->handler ()->read_complete (&result.message_block ());
+        {
+          this->handler ()->read_complete (&result.message_block ());
+        }
       else
+      {
         this->handler ()->read_error ();
+      }
     }
 }
 
@@ -443,10 +458,14 @@ JAWS_Asynch_Handler::handle_write_stream (const ACE_Asynch_Write_Stream::Result
 
   result.message_block ().release ();
 
-  if (result.act () == (void *) JAWS_Asynch_IO::CONFIRMATION)
-    this->handler ()->confirmation_message_complete ();
+  if (result.act () == nullptr)
+    {
+      this->handler ()->confirmation_message_complete ();
+    }
   else
+  {
     this->handler ()->error_message_complete ();
+  }
 }
 
 void
@@ -457,14 +476,18 @@ JAWS_Asynch_Handler::handle_transmit_file (const
   this->dispatch_handler ();
 
   if (result.success ())
-    this->handler ()->transmit_file_complete ();
+    {
+      this->handler ()->transmit_file_complete ();
+    }
   else
+  {
     this->handler ()->transmit_file_error (-1);
+  }
 
   result.header_and_trailer ()->header ()->release ();
   result.header_and_trailer ()->trailer ()->release ();
   delete result.header_and_trailer ();
-  delete (JAWS_Cached_FILE *) result.act ();
+  delete static_cast<JAWS_Cached_FILE *> (result.act ());
 }
 
 void
@@ -479,7 +502,9 @@ JAWS_Asynch_Handler::handle_accept (const ACE_Asynch_Accept::Result &result)
       this->handler ()->accept_complete (result.accept_handle ());
     }
   else
+  {
     this->handler ()->accept_error ();
+  }
 }
 
 void

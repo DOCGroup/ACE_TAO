@@ -7,7 +7,7 @@
 #include "ace/INET_Addr.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   EC_BCast driver;
   return driver.run (argc, argv);
@@ -25,13 +25,15 @@ int
 EC_BCast::parse_args (int& argc, ACE_TCHAR* argv[])
 {
   if (this->EC_Driver::parse_args (argc, argv) != 0)
+  {
     return -1;
+  }
 
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *arg = arg_shifter.get_current ();
+          ACE_TCHAR const * const arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (arg, ACE_TEXT("-port")) == 0)
         {
@@ -99,18 +101,24 @@ EC_BCast::execute_test ()
                     ACE_TEXT_ALWAYS_CHAR(address_server_arg),
                     lAttributes)
       == -1)
+  {
     return;
+  }
 
   gateway.run (this->orb_.in (),
                this->event_channel_.in ());
 
   if (this->allocate_tasks () == -1)
+  {
     return;
+  }
 
   this->activate_tasks ();
 
   if (this->verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "BCast (%P|%t) suppliers are active\n"));
+  }
 
   ACE_Time_Value tv (30, 0);
   this->orb_->run (tv);

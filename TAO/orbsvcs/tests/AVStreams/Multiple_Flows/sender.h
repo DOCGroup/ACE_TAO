@@ -11,14 +11,19 @@
  */
 //=============================================================================
 
+#include <cstddef>
+#include <cstdio>
+#include <memory>
+#include <string>
 
+#include "ace/OS_NS_stdio.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 
 using ProtocolObject_Set = ACE_Unbounded_Set<TAO_AV_Protocol_Object*>;
-using ProtocolObject_SetItor = ACE_Unbounded_Set_Iterator<TAO_AV_Protocol_Object*>;
+using ProtocolObject_SetItor = ProtocolObject_Set::iterator;
 
 /**
  * @class Sender_StreamEndPoint
@@ -28,14 +33,20 @@ using ProtocolObject_SetItor = ACE_Unbounded_Set_Iterator<TAO_AV_Protocol_Object
 class Sender_StreamEndPoint : public TAO_Client_StreamEndPoint
 {
 public:
+  Sender_StreamEndPoint () = default;
+  Sender_StreamEndPoint (Sender_StreamEndPoint const &) = delete;
+  Sender_StreamEndPoint &operator= (Sender_StreamEndPoint const &) = delete;
+  Sender_StreamEndPoint (Sender_StreamEndPoint &&) = delete;
+  Sender_StreamEndPoint &operator= (Sender_StreamEndPoint &&) = delete;
+
   /// Create the application callback and return its handle to
   /// AVStreams for further application callbacks.
-  int get_callback (const char *flowname,
+  int get_callback (char const *flowname,
                     TAO_AV_Callback *&callback) override;
 
   /// Set protocol object corresponding to the transport protocol
   /// chosen.
-  int set_protocol_object (const char *flowname,
+  int set_protocol_object (char const *flowname,
                            TAO_AV_Protocol_Object *object) override;
 
 protected:
@@ -59,8 +70,7 @@ using SENDER_ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_A
 class Sender
 {
 public:
-  /// Constructor
-  Sender ();
+  Sender () = default;
   Sender (Sender const &) = delete;
   Sender &operator= (Sender const &) = delete;
   Sender (Sender &&) = delete;
@@ -92,32 +102,35 @@ private:
   AVStreams::MMDevice_var receiver_mmdevice_;
 
   /// The sender MMDevice.
-  TAO_MMDevice *sender_mmdevice_;
+  // Non-owning; ServantBase_var and the POA manage the servant reference.
+  TAO_MMDevice *sender_mmdevice_ {};
 
   /// Stream controller
-  TAO_StreamCtrl *streamctrl_;
+  // Non-owning; ServantBase_var and the stream controller manage the servant reference.
+  TAO_StreamCtrl *streamctrl_ {};
 
   /// Number of frames sent.
-  int frame_count_;
-
-  /// File from which data is read.
-  ACE_CString filename_;
+  size_t frame_count_ {};
 
   /// The Naming Service client.
   TAO_Naming_Client naming_client_;
 
   /// File handle of the file read from.
-  FILE *input_file_;
-
-  /// Selected protocol - default is UDP
-  ACE_CString protocol_;
-
-  /// Rate at which the data will be sent.
-  int frame_rate_;
+  std::unique_ptr<FILE, int (*) (FILE *)> input_file_ {nullptr, std::fclose};
 
   /// Message block into which data is read from a file and then sent.
-  ACE_Message_Block mb_;
+  ACE_Message_Block mb_ {BUFSIZ};
+
+  struct Options
+  {
+    std::string filename {"input"};
+    std::string protocol {"UDP"};
+    int frame_rate {30};
+  };
+
+  Options options_;
 
   /// Protocol object corresponding to the transport protocol selected.
+  // Non-owning protocol objects managed by the AVStreams framework.
   ProtocolObject_Set protocol_object_;
 };

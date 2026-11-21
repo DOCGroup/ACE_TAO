@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef __ACE_CACHE_MAP_MANAGER_TEST_H
 #define __ACE_CACHE_MAP_MANAGER_TEST_H
 

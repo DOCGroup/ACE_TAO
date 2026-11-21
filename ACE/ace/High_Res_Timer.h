@@ -149,7 +149,6 @@ public:
   /// Initialize the timer.
   ACE_High_Res_Timer ();
 
-  /// Destructor.
   ~ACE_High_Res_Timer ();
 
   /// Reinitialize the timer.

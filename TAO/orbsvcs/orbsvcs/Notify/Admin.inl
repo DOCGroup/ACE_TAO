@@ -8,7 +8,6 @@ TAO_Notify_Admin::event_channel () const
   return this->ec_.get();
 }
 
-
 ACE_INLINE TAO_Notify_FilterAdmin&
 TAO_Notify_Admin::filter_admin ()
 {
@@ -44,7 +43,7 @@ TAO_Notify_Admin::is_default () const
 ACE_INLINE TAO_Notify_Admin::TAO_Notify_Proxy_Container&
 TAO_Notify_Admin::proxy_container()
 {
-  ACE_ASSERT( proxy_container_.get() != 0 );
+  ACE_ASSERT( proxy_container_.get() != nullptr );
   return *proxy_container_;
 }
 

@@ -54,7 +54,9 @@ ACE_Synch_Options::set (unsigned long options,
    * but ubsan complains about it.
    */
   if (timeout_ != ACE_Time_Value(0))
+  {
     ACE_SET_BITS (this->options_, ACE_Synch_Options::USE_TIMEOUT);
+  }
 
   this->arg_ = arg;
 }

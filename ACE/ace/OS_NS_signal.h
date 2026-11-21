@@ -122,7 +122,7 @@ inline int ace_sigsuspend_helper (const sigset_t *s)
 # if !defined (ACE_HAS_SIGINFO_T)
 struct ACE_Export siginfo_t
 {
-  siginfo_t (ACE_HANDLE handle);
+  explicit siginfo_t (ACE_HANDLE handle);
 
   /// Win32 HANDLE that has become signaled.
   ACE_HANDLE si_handle_;
@@ -141,7 +141,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef struct sigaction ACE_SIGACTION;
 
 namespace ACE_OS {
-  //@{ @name A set of wrappers for Signals.
+  /// @name A set of wrappers for Signals.
+  /// @{
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int kill (pid_t pid,
@@ -193,7 +194,7 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int raise (const int signum);
-  //@}
+  /// @}
 
 } /* namespace ACE_OS */
 

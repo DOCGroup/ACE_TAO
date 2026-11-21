@@ -132,7 +132,6 @@ public:
    */
   virtual int insertAttribute (ACEXML_Attribute_Def_Builder *def) = 0;
 
-
   /**
    * Dump the content of the attribute definition.
    */

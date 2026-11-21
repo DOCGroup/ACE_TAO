@@ -8,7 +8,12 @@
 class ACE_Svc_Export RWWR_Test : public Benchmark_Performance
 {
 public:
-  virtual int svc ();
+  RWWR_Test () = default;
+  RWWR_Test (RWWR_Test const &) = delete;
+  RWWR_Test (RWWR_Test &&) = delete;
+  RWWR_Test &operator= (RWWR_Test const &) = delete;
+  RWWR_Test &operator= (RWWR_Test &&) = delete;
+  int svc () override;
 
 private:
   static ACE_RW_Mutex rw_lock;
@@ -19,14 +24,14 @@ ACE_RW_Mutex RWWR_Test::rw_lock;
 int
 RWWR_Test::svc ()
 {
-  int ni = this->thr_id ();
+  int const ni = this->thr_id ();
   synch_count = 2;
 
   while (!this->done ())
     {
       rw_lock.acquire_write ();
-      performance_test_options.thr_work_count[ni]++;
-      buffer++;
+      ++performance_test_options.thr_work_count[ni];
+      ++buffer;
       rw_lock.release ();
     }
 

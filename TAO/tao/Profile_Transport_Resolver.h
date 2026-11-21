@@ -20,6 +20,8 @@
 
 #include "tao/Transport_Selection_Guard.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -36,14 +38,17 @@ namespace CORBA
 {
   class Object;
   class PolicyList;
-
-  class Object;
   using Object_ptr = Object *;
 }
 
 namespace TAO
 {
   class Synch_Twoway_Invocation;
+
+  struct Policy_List_Deleter
+  {
+    void operator() (CORBA::PolicyList *policies) const;
+  };
 
   /**
    * @class Profile_Transport_Resolver
@@ -60,7 +65,6 @@ namespace TAO
   class TAO_Export Profile_Transport_Resolver
   {
   public:
-    /// Constructor
     /**
      * With @a block we tell whether this resolved should always deliver
      * a connection by blocking or unblock before the connection is
@@ -84,7 +88,7 @@ namespace TAO
      */
     void resolve (ACE_Time_Value *val);
 
-    //@{
+    /// @{
     /**
      * @name Accessors and mutators for this class. The following methods
      * are used by the clients of this class to access strategies and
@@ -116,7 +120,7 @@ namespace TAO
     /// Accessor to indicate whether we should block while
     /// establishing a connection.
     bool blocked_connect () const;
-    //@}
+    /// @}
 
     /// Signal to let the resolver know that the transport has been
     /// released back to the cache.
@@ -153,8 +157,10 @@ namespace TAO
     /// ORB.
     bool get_connection_timeout (ACE_Time_Value &max_wait_time);
 
-    void operator= (const Profile_Transport_Resolver &);
-    Profile_Transport_Resolver (const Profile_Transport_Resolver &);
+    Profile_Transport_Resolver (Profile_Transport_Resolver const &) = delete;
+    Profile_Transport_Resolver &operator= (Profile_Transport_Resolver const &) = delete;
+    Profile_Transport_Resolver (Profile_Transport_Resolver &&) = delete;
+    Profile_Transport_Resolver &operator= (Profile_Transport_Resolver &&) = delete;
 
   private:
     bool try_connect_i (TAO_Transport_Descriptor_Interface *desc,
@@ -194,7 +200,7 @@ namespace TAO
      * Policy_ForwardC.h, and that is what we precisely want to
      * avoid.
      */
-    CORBA::PolicyList *inconsistent_policies_;
+    std::unique_ptr<CORBA::PolicyList, Policy_List_Deleter> inconsistent_policies_ {};
 
     /// Has the transport been idle?
     mutable bool is_released_;

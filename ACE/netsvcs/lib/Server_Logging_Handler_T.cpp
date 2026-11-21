@@ -2,7 +2,6 @@
 #define ACE_SERVER_LOGGING_HANDLERT_C
 
 #include "ace/config-all.h"
-#include <memory>
 #include "ace/Get_Opt.h"
 #include "ace/Log_Record.h"
 #include "ace/CDR_Stream.h"
@@ -11,7 +10,7 @@
 
 // Track number of requests.
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR>
-COUNTER ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::request_count_ = (COUNTER) 0;
+COUNTER ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::request_count_ {};
 
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR>
 ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ACE_Server_Logging_Handler_T
@@ -57,23 +56,23 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
   // don't support framing natively.  Allocate a message block for the
   // payload; initially at least large enough to hold the header, but
   // needs some room for alignment.
-  ACE_Message_Block *payload_p = 0;
-  ACE_Message_Block *header_p = 0;
+  ACE_Message_Block *payload_p {};
+  ACE_Message_Block *header_p {};
   ACE_NEW_RETURN (header_p,
                   ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE),
                   -1);
 
-  std::unique_ptr <ACE_Message_Block> header (header_p);
+  ACE_Message_Block_Unique_Ptr header {header_p};
 
   // Align the Message Block for a CDR stream
   ACE_CDR::mb_align (header.get ());
 
-  ACE_CDR::Boolean byte_order;
-  ACE_CDR::ULong length;
+  ACE_CDR::Boolean byte_order {};
+  ACE_CDR::ULong length {};
 
-  ssize_t count = ACE::recv_n (this->peer ().get_handle (),
-                               header->wr_ptr (),
-                               8);
+  ssize_t const count = ACE::recv_n (this->peer ().get_handle (),
+                                     header->wr_ptr (),
+                                     8);
   switch (count)
     {
       // Handle shutdown and error cases.
@@ -120,7 +119,7 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
   ACE_NEW_RETURN (payload_p,
                   ACE_Message_Block (length),
                   -1);
-  std::unique_ptr <ACE_Message_Block> payload (payload_p);
+  ACE_Message_Block_Unique_Ptr payload {payload_p};
 
   // Ensure there's sufficient room for log record payload.
   ACE_CDR::grow (payload.get (), 8 + ACE_CDR::MAX_ALIGNMENT + length);
@@ -197,8 +196,8 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
 
         u_long count = this->request_count_;
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("request count = %d, length = %d\n"),
-                    count,
+                    ACE_TEXT ("request count = %Q, length = %d\n"),
+                    static_cast<ACE_UINT64> (count),
                     length));
 
         // Perform the actual <recv> this time.
@@ -206,7 +205,7 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
                                           length);
         if (n != length)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("%d != %d, %p at host %C\n"),
+                             ACE_TEXT ("%b != %d, %p at host %C\n"),
                              n,
                              length,
                              ACE_TEXT ("server logger"),
@@ -271,7 +270,7 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::op
 #endif /* ! __GNUG__ */
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) accepted connection from host %C on fd %d\n"),
+              ACE_TEXT ("(%t) accepted connection from host %C on fd %H\n"),
               client_addr.get_host_name (),
               this->peer ().get_handle ()));
 
@@ -335,7 +334,7 @@ ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::init (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT ("get_local_addr")),
                       -1);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("starting up Logging Server at port %d on handle %d\n"),
+              ACE_TEXT ("starting up Logging Server at port %d on handle %H\n"),
               server_addr.get_port_number (),
               this->acceptor ().get_handle ()));
   return 0;

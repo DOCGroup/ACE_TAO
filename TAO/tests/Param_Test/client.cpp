@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    client.cpp
  *
@@ -8,8 +6,6 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #ifndef CLIENT_CPP
 #define CLIENT_CPP
@@ -18,22 +14,14 @@
 #include "results.h"
 #include "client.h"
 
-// Constructor.
 template <class T>
 Param_Test_Client<T>::Param_Test_Client (CORBA::ORB_ptr orb,
                                          Param_Test_ptr objref,
-                                         T *t)
+                                         T *test_object)
   : orb_ (orb),
     param_test_ (objref),
-    test_object_ (t)
+    test_object_ (test_object)
 {
-}
-
-// destructor
-template <class T>
-Param_Test_Client<T>::~Param_Test_Client ()
-{
-  delete this->test_object_;
 }
 
 // All the individual tests.
@@ -67,9 +55,8 @@ Param_Test_Client<T>::run_sii_test ()
                         -1);
     }
 
-
   // Make the calls in a loop.
-  for (i = 0; i < opt->loop_count (); i++)
+  for (i = 0; i < opt->loop_count (); ++i)
     {
       try
         {
@@ -173,7 +160,7 @@ Param_Test_Client<T>::run_dii_test ()
     }
 
       // Make the calls in a loop.
-  for (CORBA::ULong i = 0; i < opt->loop_count (); i++)
+  for (CORBA::ULong i = 0; i < opt->loop_count (); ++i)
     {
       this->results_.call_count (this->results_.call_count () + 1);
 
@@ -247,6 +234,5 @@ Param_Test_Client<T>::run_dii_test ()
     }
   return this->results_.error_count () ? -1 : 0;
 }
-
 
 #endif /* CLIENT_CPP */

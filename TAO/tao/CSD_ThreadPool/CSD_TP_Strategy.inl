@@ -10,7 +10,6 @@ TAO::CSD::TP_Strategy::TP_Strategy(Thread_Counter  num_threads,
   // Assumes that num_threads > 0.
 }
 
-
 ACE_INLINE
 void
 TAO::CSD::TP_Strategy::set_num_threads(Thread_Counter num_threads)
@@ -19,7 +18,6 @@ TAO::CSD::TP_Strategy::set_num_threads(Thread_Counter num_threads)
   this->num_threads_ = num_threads;
 }
 
-
 ACE_INLINE
 void
 TAO::CSD::TP_Strategy::set_servant_serialization(bool serialize_servants)
@@ -27,6 +25,5 @@ TAO::CSD::TP_Strategy::set_servant_serialization(bool serialize_servants)
   // Simple Mutator.
   this->serialize_servants_ = serialize_servants;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -6,56 +6,56 @@
 #include "tao/PortableServer/Root_POA.h"
 #include <iostream>
 
-PortableServer::POA_ptr
-createPOA (PortableServer::POA_ptr root_poa, char const * poa_name)
+PortableServer::POA_var
+create_poa (PortableServer::POA_ptr root_poa, char const *poa_name)
 {
   PortableServer::LifespanPolicy_var life =
-    root_poa->create_lifespan_policy(PortableServer::PERSISTENT);
+    root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
 
   PortableServer::IdAssignmentPolicy_var assign =
-    root_poa->create_id_assignment_policy(PortableServer::USER_ID);
+    root_poa->create_id_assignment_policy (PortableServer::USER_ID);
 
   CORBA::PolicyList pols;
-  pols.length(2);
-  pols[0] = PortableServer::LifespanPolicy::_duplicate(life.in());
-  pols[1] = PortableServer::IdAssignmentPolicy::_duplicate(assign.in());
+  pols.length (2);
+  pols[0] = PortableServer::LifespanPolicy::_duplicate (life.in ());
+  pols[1] = PortableServer::IdAssignmentPolicy::_duplicate (assign.in ());
 
-  PortableServer::POAManager_var mgr = root_poa->the_POAManager();
-  PortableServer::POA_var poa =
-    root_poa->create_POA(poa_name, mgr.in(), pols);
+  PortableServer::POAManager_var const manager = root_poa->the_POAManager ();
+  PortableServer::POA_var poa = root_poa->create_POA (poa_name, manager.in (), pols);
 
-  life->destroy();
-  assign->destroy();
+  life->destroy ();
+  assign->destroy ();
 
-  return poa._retn();
+  return poa;
 }
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  try {
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+  try
+  {
+    CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-    CORBA::Object_var obj = orb->resolve_initial_references("RootPOA");
-    PortableServer::POA_var root_poa = PortableServer::POA::_narrow(obj.in());
+    CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
+    PortableServer::POA_var const root_poa = PortableServer::POA::_narrow (obj.in ());
 
-    PortableServer::POAManager_var mgr = root_poa->the_POAManager();
+    PortableServer::POAManager_var const manager = root_poa->the_POAManager ();
 
-    char const * poa_name = "MessengerService";
+    constexpr char poa_name[] = "MessengerService";
 
-    PortableServer::POA_var messenger_poa = createPOA(root_poa.in(), poa_name);
+    PortableServer::POA_var const messenger_poa = create_poa (root_poa.in (), poa_name);
 
-    PortableServer::Servant_var<Messenger_i> messenger_servant = new Messenger_i;
+    PortableServer::Servant_var<Messenger_i> const messenger_servant = new Messenger_i;
 
-    PortableServer::ObjectId_var object_id =
-      PortableServer::string_to_ObjectId("messenger_object");
+    PortableServer::ObjectId_var const object_id =
+      PortableServer::string_to_ObjectId ("messenger_object");
 
     //
     // Activate the servant with the messenger POA,
     // obtain its object reference, and get a
     // stringified IOR.
     //
-    messenger_poa->activate_object_with_id(object_id.in(), messenger_servant.in());
+    messenger_poa->activate_object_with_id (object_id.in (), messenger_servant.in ());
 
     //
     // Create binding between "MessengerService" and
@@ -63,12 +63,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Use a TAO extension to get the non imrified poa
     // to avoid forwarding requests back to the ImR.
 
-    TAO_Root_POA * tpoa = dynamic_cast<TAO_Root_POA *>(messenger_poa.in());
-    obj = tpoa->id_to_reference_i(object_id.in(), false);
-    CORBA::String_var messenger_ior = orb->object_to_string(obj.in());
-    obj = orb->resolve_initial_references("IORTable");
-    IORTable::Table_var table = IORTable::Table::_narrow(obj.in());
-    table->bind(poa_name, messenger_ior.in());
+    TAO_Root_POA * const tpoa = dynamic_cast<TAO_Root_POA *> (messenger_poa.in ());
+    obj = tpoa->id_to_reference_i (object_id.in (), false);
+    CORBA::String_var const messenger_ior = orb->object_to_string (obj.in ());
+    obj = orb->resolve_initial_references ("IORTable");
+    IORTable::Table_var const table = IORTable::Table::_narrow (obj.in ());
+    table->bind (poa_name, messenger_ior.in ());
 
     //
     // This server is now ready to run.
@@ -81,21 +81,22 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     //
     // Stop discarding requests.
     //
-    mgr->activate();
+    manager->activate ();
 
     std::cout << "Messenger server ready." << std::endl;
 
-    orb->run();
+    orb->run ();
 
     std::cout << "Messenger server shutting down." << std::endl;
 
-    root_poa->destroy(1,1);
-    orb->destroy();
+    root_poa->destroy (true, true);
+    orb->destroy ();
   }
-  catch (CORBA::Exception const & ex) {
-    std::cerr << "Server main() Caught CORBA::Exception" << ex << std::endl;
-    return 1;
-  }
+  catch (CORBA::Exception const &ex)
+    {
+      std::cerr << "Server main() Caught CORBA::Exception" << ex << std::endl;
+      return 1;
+    }
 
   return 0;
 }

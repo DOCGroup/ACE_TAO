@@ -177,7 +177,9 @@ be_visitor_facet_ami_exs::visit_operation (be_operation *node)
       return this->gen_facet_executor_op (node);
     }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 int
@@ -227,9 +229,13 @@ be_visitor_facet_ami_exs::init ()
     dynamic_cast<be_interface*> (d);
 
   if (callback_iface == nullptr)
-   this->sync_ = true;
+    {
+      this->sync_ = true;
+    }
   else
-    this->sync_ = false;
+    {
+      this->sync_ = false;
+    }
 
 }
 int
@@ -239,8 +245,9 @@ be_visitor_facet_ami_exs::gen_reply_handler_class ()
 
   this->init ();
   if (this->sync_)
-    return 0;
-
+    {
+      return 0;
+    }
 
   std::string const suffix = "_reply_handler";
   UTL_Scope *s = this->iface_->defined_in ();
@@ -639,7 +646,9 @@ int
 be_visitor_facet_ami_exs::gen_facet_executor_sync_op (be_operation *node)
 {
    if (node->is_sendc_ami())
-     return 0;
+     {
+       return 0;
+     }
 
    os_ << be_nl_2;
   // generate the return type.
@@ -694,7 +703,9 @@ be_visitor_facet_ami_exs::gen_facet_executor_sync_op (be_operation *node)
   pdt = dynamic_cast<AST_PredefinedType*> (bt);
   bool ret = true;
   if ((pdt != nullptr) && (pdt->pt () == AST_PredefinedType::PT_void))
-    ret =false;
+    {
+      ret =false;
+    }
 
   os_  << "::" << scope->full_name () << smart_scope
       << orig_iface_name << "_var receptacle_objref =" << be_idt_nl
@@ -752,5 +763,4 @@ Facet_AMI_Exec_Op_Attr_Generator::emit (be_interface * /*derived_interface*/,
 {
   return visitor_->visit_scope (base_interface);
 }
-
 

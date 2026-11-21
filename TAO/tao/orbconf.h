@@ -539,7 +539,6 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
              TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
 #endif  /* !TAO_HAS_CONNECTION_TIMEOUT_POLICY */
 
-
 // To explicitly disable ROUTING_POLICY support uncomment the following
 // #define TAO_HAS_ROUTING_POLICY 0
 

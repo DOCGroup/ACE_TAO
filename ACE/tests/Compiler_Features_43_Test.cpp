@@ -16,14 +16,14 @@ namespace DynamicAny {
 struct TAO_DynCommon : virtual DynamicAny::DynAny {
   ~TAO_DynCommon() override
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("~TAO_DynCommon %@\n"), this));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("~TAO_DynCommon %@\n"), static_cast<void *> (this)));
   }
 };
 struct TAO_DynAny_i : virtual TAO_DynCommon, virtual DynamicAny::DynAny {
-    ~TAO_DynAny_i() override { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("~TAO_DynAny_i %@\n"), this)); }
+    ~TAO_DynAny_i() override { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("~TAO_DynAny_i %@\n"), static_cast<void *> (this))); }
 };
 struct TAO_DynValueCommon_i : virtual TAO_DynAny_i, virtual DynamicAny::DynValueCommon {
-    ~TAO_DynValueCommon_i() override { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("~TAO_DynValueCommon_i %@\n"), this)); }
+    ~TAO_DynValueCommon_i() override { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("~TAO_DynValueCommon_i %@\n"), static_cast<void *> (this))); }
 };
 // ============================================================
 // CreateDynAnyUtils<T>
@@ -39,7 +39,7 @@ struct CreateDynAnyUtils {
         }
         catch (DA_IMPL* original) {
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT("!!! CAUGHT pointer %@ at depth %d (destroying blank %@) !!!\n"),
-                original, depth, p));
+                        static_cast<void *> (original), depth, static_cast<void *> (p)));
             return original;
         }
         return guard.release();
@@ -49,46 +49,49 @@ struct CreateDynAnyUtils {
 // TAO_DynValue_i
 // ============================================================
 struct TAO_DynValue_i : virtual DynamicAny::DynValue, virtual TAO_DynValueCommon_i {
-    TAO_DynValue_i() { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("TAO_DynValue_i ctor %@\n"), this)); }
-    ~TAO_DynValue_i() override { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("~TAO_DynValue_i dtor %@\n"), this)); }
+    TAO_DynValue_i() { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("TAO_DynValue_i ctor %@\n"), static_cast<void *> (this))); }
+    ~TAO_DynValue_i() override { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("~TAO_DynValue_i dtor %@\n"), static_cast<void *> (this))); }
     static TAO_DynValue_i* cached ;
     std::vector<void*> da_members_;
     void from_inputCDR(bool trigger_indirection, int depth) {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT("  from_inputCDR depth=%d this=%@\n"), depth, this));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT("  from_inputCDR depth=%d this=%@\n"), depth, static_cast<void *> (this)));
         // Simulates deep recursion of ACE_TAO (exactly like in the real DynValue_i)
         if (depth < 3) {
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT("    Creating nested member at depth %d\n"), depth + 1));
             try {
-                auto* member = CreateDynAnyUtils<TAO_DynValue_i>::create(trigger_indirection, depth + 1);
+                TAO_DynValue_i* member = CreateDynAnyUtils<TAO_DynValue_i>::create(trigger_indirection, depth + 1);
                 da_members_.push_back(member);
             }
             catch (TAO_DynValue_i* orig) {
-                ACE_DEBUG ((LM_DEBUG,ACE_TEXT("    Nested member threw indirection %@\n"), orig));
+                ACE_DEBUG ((LM_DEBUG,ACE_TEXT("    Nested member threw indirection %@\n"), static_cast<void *> (orig)));
                 da_members_.push_back(orig);
             }
         }
         if (trigger_indirection && cached && depth >= 2) {
-            ACE_DEBUG ((LM_DEBUG,ACE_TEXT("*** INDIRECTION - THROWING CACHED POINTER %@ ***\n"), cached));
+            ACE_DEBUG ((LM_DEBUG,ACE_TEXT("*** INDIRECTION - THROWING CACHED POINTER %@ ***\n"), static_cast<void *> (cached)));
             cached->_add_ref();
             throw cached; // throw of the raw pointer
         }
-        if (!cached) cached = this;
+        if (!cached)
+          {
+            cached = this;
+          }
     }
-    void _add_ref() { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("    _add_ref on %@\n"), this)); }
+    void _add_ref() { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("    _add_ref on %@\n"), static_cast<void *> (this))); }
 };
-TAO_DynValue_i* TAO_DynValue_i::cached = nullptr;
+TAO_DynValue_i* TAO_DynValue_i::cached {};
 
 int run_main (int, ACE_TCHAR*[])
 {
   ACE_START_TEST (ACE_TEXT ("Compiler_Features_43_Test"));
 
-  int res = {};
+  int res {};
 
   TAO_DynValue_i::cached = nullptr;
   try
   {
-    auto* result = CreateDynAnyUtils<TAO_DynValue_i>::create(true, 0);
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Success - returned %@\n"), result));
+    TAO_DynValue_i* result = CreateDynAnyUtils<TAO_DynValue_i>::create(true, 0);
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Success - returned %@\n"), static_cast<void *> (result)));
     delete result;
   }
   catch (...) {

@@ -79,7 +79,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       Roundtrip *roundtrip_impl;
       ACE_NEW_RETURN (roundtrip_impl,
@@ -112,7 +114,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Worker_Thread worker (orb.in ());
 
-      worker.activate (THR_NEW_LWP | THR_JOINABLE, 4, 1);
+      worker.activate (THR_NEW_LWP | THR_JOINABLE, 4, true);
       worker.thr_mgr ()->wait ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));

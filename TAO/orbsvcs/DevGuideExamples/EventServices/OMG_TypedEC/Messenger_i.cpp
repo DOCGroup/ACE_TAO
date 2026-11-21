@@ -9,31 +9,28 @@
 
 #include "Messenger_i.h"
 #include <iostream>
-// Implementation skeleton constructor
+
 Messenger_i::Messenger_i (CORBA::ORB_ptr orb,
                           CosEventChannelAdmin::ProxyPushSupplier_ptr supplier,
                           int event_limit)
-  : orb_(CORBA::ORB::_duplicate(orb))
-  , supplier_(CosEventChannelAdmin::ProxyPushSupplier::_duplicate(supplier))
-  , event_limit_(event_limit)
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    supplier_ (CosEventChannelAdmin::ProxyPushSupplier::_duplicate (supplier)),
+    event_limit_ (event_limit)
 {
 }
 
-// Implementation skeleton destructor
-Messenger_i::~Messenger_i ()
-{
-}
-
-void Messenger_i::send_message (char const * user_name,
-                                char const * subject,
-                                char const * message)
+void
+Messenger_i::send_message (char const *user_name,
+                           char const *subject,
+                           char const *message)
 {
   std::cout << "Message from: " << user_name << std::endl;
   std::cout << "Subject:      " << subject << std::endl;
   std::cout << "Message:      " << message << std::endl;
 
-  if (--event_limit_ <= 0) {
-    supplier_->disconnect_push_supplier();
-    orb_->shutdown(0);
-  }
+  if (--this->event_limit_ <= 0)
+    {
+      this->supplier_->disconnect_push_supplier ();
+      this->orb_->shutdown (false);
+    }
 }

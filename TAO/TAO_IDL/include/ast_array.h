@@ -84,7 +84,7 @@ class TAO_IDL_FE_Export AST_Array : public virtual AST_ConcreteType
 {
 public:
   AST_Array (UTL_ScopedName *n,
-             std::size_t ndims,
+             size_t ndims,
              UTL_ExprList *dims,
              bool local,
              bool abstract);
@@ -97,7 +97,7 @@ public:
 
   // Data Accessors.
 
-  std::size_t n_dims () const;
+  size_t n_dims () const;
 
   std::vector<std::unique_ptr<AST_Expression>> const &dims () const;
 
@@ -145,7 +145,7 @@ private:
   // Compute how many dimensions.
   std::vector<std::unique_ptr<AST_Expression>> compute_dims (
     UTL_ExprList *dims,
-    std::size_t ndims);
+    size_t ndims);
 
   /**
    * Annotations on the base type

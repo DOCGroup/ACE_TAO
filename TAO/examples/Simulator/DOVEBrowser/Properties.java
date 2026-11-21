@@ -1,15 +1,8 @@
-//
-// = FILENAME
-//    Properties.java
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//    This class defines the possible data type values carried by events
-//
-// ============================================================================
-
+/**
+ * @file Properties.java
+ * @author Michael Kircher (mk1@cs.wustl.edu)
+ * @brief This class defines the possible data type values carried by events
+ */
 
 public class Properties {
   public static final int DOUBLE = 0;

@@ -44,36 +44,42 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::ACE_Condition (ACE_Recursive_Thread_M
   : mutex_ (m)
 {
   if (ACE_OS::cond_init (&this->cond_) != 0)
-    ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Condition<ACE_Recursive_Thread_Mutex>::ACE_Condition<ACE_Recursive_Thread_Mutex>")));
+    {
+      ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Condition<ACE_Recursive_Thread_Mutex>::ACE_Condition<ACE_Recursive_Thread_Mutex>")));
+    }
 }
 
 ACE_Condition<ACE_Recursive_Thread_Mutex>::ACE_Condition (ACE_Recursive_Thread_Mutex &m,
-                                                          const ACE_Condition_Attributes &attributes)
+                                                          ACE_Condition_Attributes const &attributes)
   : mutex_ (m)
 {
   if (ACE_OS::cond_init (&this->cond_,
                          const_cast<ACE_condattr_t &> (attributes.attributes ())) != 0)
-    ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Condition<ACE_Recursive_Thread_Mutex>::ACE_Condition<ACE_Recursive_Thread_Mutex>")));
+    {
+      ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Condition<ACE_Recursive_Thread_Mutex>::ACE_Condition<ACE_Recursive_Thread_Mutex>")));
+    }
 }
 
 int
-ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (const ACE_Time_Value *abstime)
+ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (ACE_Time_Value const *abstime)
 {
   return this->wait (this->mutex_, abstime);
 }
 
 int
 ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (ACE_Recursive_Thread_Mutex &mutex,
-                                                 const ACE_Time_Value *abstime)
+                                                 ACE_Time_Value const *abstime)
 {
   ACE_recursive_mutex_state mutex_state_holder;
   ACE_recursive_thread_mutex_t &recursive_mutex = mutex.lock ();
 
   if (ACE_OS::recursive_mutex_cond_unlock (&recursive_mutex,
                                            mutex_state_holder) == -1)
+  {
     return -1;
+  }
 
   // We wait on the condition, specifying the nesting mutex. For platforms
   // with ACE_HAS_RECURSIVE_MUTEXES, this is the recursive mutex itself,

@@ -8,12 +8,10 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_FTRT_CLIENTORB_INTERCEPTOR_H
 #define TAO_FTRT_CLIENTORB_INTERCEPTOR_H
 
 #include /**/ "ace/pre.h"
-
 
 #include "tao/PI/PI.h"
 #include "tao/PortableInterceptorC.h"
@@ -38,10 +36,8 @@ class FTRT_ClientORB_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// ctor.
-  FTRT_ClientORB_Interceptor (CORBA::Long transaction_depth);
+  explicit FTRT_ClientORB_Interceptor (CORBA::Long transaction_depth);
 
-  /// dtor.
   ~FTRT_ClientORB_Interceptor () override = default;
 
   /// Canonical name of the interceptor.
@@ -59,14 +55,13 @@ public:
 
   void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-private:
   FTRT_ClientORB_Interceptor (FTRT_ClientORB_Interceptor const &) = delete;
   FTRT_ClientORB_Interceptor &operator= (FTRT_ClientORB_Interceptor const &) = delete;
   FTRT_ClientORB_Interceptor (FTRT_ClientORB_Interceptor &&) = delete;
   FTRT_ClientORB_Interceptor &operator= (FTRT_ClientORB_Interceptor &&) = delete;
 
-  char const *myname_;
-  CORBA::Long transaction_depth_;
+private:
+  CORBA::Long const transaction_depth_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

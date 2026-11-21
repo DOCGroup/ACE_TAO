@@ -20,7 +20,6 @@ enum
     FRAME_TREE
 };
 
-
 class MainFrame : public wxFrame
 {
 public:

@@ -120,7 +120,6 @@ Client::create_widgets (/**/)
 
   box_.addWidget(this->slider_);
 
-
   // Connect the valuechanged SIGNAL routine with the slot that we
   // have defined. THe slot routine would invoke the remote call.
   QObject::connect (this->slider_,

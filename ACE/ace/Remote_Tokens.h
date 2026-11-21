@@ -59,8 +59,7 @@ public:
    */
   int open (const ACE_TCHAR *name,
             int ignore_deadlock = 0,
-            int debug = 0);
-
+            int debug = 0) override;
 
   /**
    * Open a connection with the token server.  This only need be used
@@ -79,10 +78,10 @@ public:
    * token server.  Asynchronous operations are not supported.
    * Returns 0 on success, -1 on failure with @c errno == problem.
    */
-  virtual int acquire (int notify = 0,
-                       void (*sleep_hook)(void *) = 0,
-                       ACE_Synch_Options &options =
-                       ACE_Synch_Options::synch);
+  int acquire (int notify = 0,
+               void (*sleep_hook)(void *) = nullptr,
+               ACE_Synch_Options &options =
+               ACE_Synch_Options::synch) override;
 
   /**
    * Try to acquire the distributed token.  If the token is already
@@ -90,7 +89,7 @@ public:
    * Returns 0 on success (the token was acquired), and -1 with
    * EWOULDBLOCK if the token was already held.
    */
-  virtual int tryacquire (void (*sleep_hook)(void *) = 0);
+  int tryacquire (void (*sleep_hook)(void *) = nullptr) override;
 
   /**
    * Renew the token by offering to release it if there are any other
@@ -105,9 +104,9 @@ public:
    * before reacquiring the token (effectively, the position in the
    * waiter list.)
    */
-  virtual int renew (int requeue_position = 0,
-                     ACE_Synch_Options &options =
-                     ACE_Synch_Options::synch);
+  int renew (int requeue_position = 0,
+             ACE_Synch_Options &options =
+             ACE_Synch_Options::synch) override;
 
   /**
    * Release the distributed token. Similar to ACE_Local_Mutex, if the
@@ -115,18 +114,18 @@ public:
    * applicable.) Returns 0 on success, -1 on failure with @c errno ==
    * problem.
    */
-  virtual int release (ACE_Synch_Options &options =
-                       ACE_Synch_Options::synch);
+  int release (ACE_Synch_Options &options =
+               ACE_Synch_Options::synch) override;
 
   /// Become interface compliant for our guards.  This has no
   /// functionality.
-  virtual int remove (ACE_Synch_Options &options = ACE_Synch_Options::synch);
+  int remove (ACE_Synch_Options &options = ACE_Synch_Options::synch) override;
 
   /// Override the default to do nothing.
-  virtual void token_acquired (ACE_TPQ_Entry *);
+  void token_acquired (ACE_TPQ_Entry *) override;
 
   /// The client id of the current token holder
-  virtual const ACE_TCHAR* owner_id ();
+  ACE_TCHAR const *owner_id () override;
 
   /**
    * Sets the server address for all instances of ACE_Remote_Token_Proxy
@@ -177,12 +176,12 @@ public:
   void dump () const;
 
   /// Return deep copy.
-  virtual ACE_Token_Proxy *clone () const;
+  ACE_Token_Proxy *clone () const override;
 
 protected:
   /// Make the correct type of ACE_Tokens.
   /// This is called by the ACE_Token_Manager.
-  virtual ACE_Tokens *create_token (const ACE_TCHAR *name);
+  ACE_Tokens *create_token (const ACE_TCHAR *name) override;
 };
 
 /**
@@ -213,15 +212,15 @@ public:
   void dump () const;
 
   /// Returns ACE_RW_Token::RLOCK;
-  virtual int type () const;
+  int type () const override;
 
   /// Return deep copy.
-  virtual ACE_Token_Proxy *clone () const;
+  ACE_Token_Proxy *clone () const override;
 
 protected:
   /// Make the correct type of ACE_Tokens.  This is called by the Token
   /// Manager.
-  virtual ACE_Tokens *create_token (const ACE_TCHAR *name);
+  ACE_Tokens *create_token (const ACE_TCHAR *name) override;
 };
 
 /**
@@ -251,15 +250,15 @@ public:
   void dump () const;
 
   /// Returns ACE_RW_Token::WLOCK;
-  virtual int type () const;
+  int type () const override;
 
   /// Return deep copy.
-  virtual ACE_Token_Proxy *clone () const;
+  ACE_Token_Proxy *clone () const override;
 
 protected:
   /// Make the correct type of ACE_Tokens.  This is called by the Token
   /// Manager.
-  virtual ACE_Tokens *create_token (const ACE_TCHAR *name);
+  ACE_Tokens *create_token (const ACE_TCHAR *name) override;
 };
 
 /**
@@ -274,6 +273,11 @@ protected:
 class ACE_Export ACE_TSS_Connection : public ACE_TSS<ACE_SOCK_Stream>
 {
 public:
+  ACE_TSS_Connection (ACE_TSS_Connection const &) = delete;
+  ACE_TSS_Connection (ACE_TSS_Connection &&) = delete;
+  ACE_TSS_Connection &operator= (ACE_TSS_Connection const &) = delete;
+  ACE_TSS_Connection &operator= (ACE_TSS_Connection &&) = delete;
+
   // Necessary to make some compilers work...
   ACE_TSS_Connection ();
   ~ACE_TSS_Connection ();
@@ -282,7 +286,7 @@ public:
   ACE_SOCK_Stream *get_connection ();
 
   /// Factory Method that creates a new SOCK Stream.
-  virtual ACE_SOCK_Stream *make_TSS_TYPE () const;
+  ACE_SOCK_Stream *make_TSS_TYPE () const override;
 
   /// Inheritance and operator overloading don't mix.  Redefine this
   /// from ACE_TSS so that we can use it.
@@ -298,10 +302,6 @@ protected:
   /// The address of the Token Server used by all instances of
   /// Token_Proxy.
   static ACE_INET_Addr server_address_;
-
-private:
-  ACE_TSS_Connection (const ACE_TSS_Connection &) = delete;
-  void operator= (const ACE_TSS_Connection &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

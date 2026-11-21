@@ -37,15 +37,17 @@ TAO_Linear_Search_OpTable::bind (char const *,
 int
 TAO_Linear_Search_OpTable::find (char const *opname,
                                  TAO_Skeleton& skelfunc,
-                                 std::size_t const)
+                                 size_t const)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_LINEAR_SEARCH_OPTABLE_FIND_START);
 
   TAO_operation_db_entry const * const entry = lookup (opname);
   if (entry == nullptr)
-    TAOLIB_ERROR_RETURN ((LM_ERROR,
+    {
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("TAO_Linear_Search_Table:find failed\n")),
                       -1);
+    }
 
   // Valid entry. Figure out the skel_ptr.
   skelfunc = entry->skel_ptr;
@@ -53,20 +55,21 @@ TAO_Linear_Search_OpTable::find (char const *opname,
   return 0;
 }
 
-
 int
 TAO_Linear_Search_OpTable::find (char const *opname,
                                  TAO_Collocated_Skeleton &skelfunc,
                                  TAO::Collocation_Strategy st,
-                                 std::size_t const)
+                                 size_t const)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_LINEAR_SEARCH_OPTABLE_FIND_START);
 
   TAO_operation_db_entry const * const entry = lookup (opname);
   if (entry == nullptr)
-    TAOLIB_ERROR_RETURN ((LM_ERROR,
+    {
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("TAO_Linear_Search_Table:find failed\n")),
                       -1);
+    }
 
   switch (st)
     {

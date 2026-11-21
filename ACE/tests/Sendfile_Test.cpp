@@ -49,8 +49,7 @@ client (void *arg)
                    &timeout) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("connection failed")));
+                  ACE_TEXT ("(%P|%t) connect failed: %p\n")));
       Test_Result = 1;
       return nullptr;
     }
@@ -74,7 +73,9 @@ client (void *arg)
   // The server will verify that this data pattern gets there intact.
 
   for (i = 0; i < sizeof buffer; ++i)
-    buffer[i] = static_cast<u_char> (i);
+    {
+      buffer[i] = static_cast<u_char> (i);
+    }
 
   const ACE_TCHAR file[] = ACE_TEXT ("Sendfile_Test_File");
   static const size_t file_sz = sizeof (file) / sizeof (file[0]);
@@ -85,7 +86,7 @@ client (void *arg)
       || (in_fd = ACE_OS::open (test_file, O_CREAT | O_RDWR | O_TRUNC,
                                 ACE_DEFAULT_FILE_PERMS)) == ACE_INVALID_HANDLE)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) open %p\n"), test_file));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) open %s: %p\n"), test_file));
       Test_Result = 1;
       goto cleanup;
     }
@@ -96,7 +97,7 @@ client (void *arg)
 
   if (byte_count != static_cast<ssize_t> (sizeof (buffer)))
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) write %p\n"), test_file));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) write %s: %p\n"), test_file));
       Test_Result = 1;
     }
 
@@ -108,15 +109,16 @@ client (void *arg)
   if (len == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("Test 1, sendfile failed")));
+                  ACE_TEXT ("(%P|%t) Test 1, sendfile failed: %p\n")));
       Test_Result = 1;
       goto cleanup;
     }
   else if (len != 255)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) sendfile len %b; should be 255\n"),
-                len));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) sendfile len %b; should be 255\n"),
+                  len));
+    }
 
   //*******************   TEST 2   ******************************
   //
@@ -141,19 +143,23 @@ client (void *arg)
                   len));
     }
 
-  for (i = 0; i < static_cast<size_t>(len); i++)
-    if (buffer2[i] != buffer[i])
+  for (i = 0; i < static_cast<size_t>(len); ++i)
+    {
+      if (buffer2[i] != buffer[i])
       {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Test 2, rcvd byte %B is %d, not %d\n"),
                     i, buffer2[i], buffer[i]));
         Test_Result = 1;
       }
+    }
 
 cleanup:
   cli_stream.close ();
   if (in_fd != ACE_INVALID_HANDLE)
+  {
     (void) ACE_OS::close (in_fd);
+  }
 
   return nullptr;
 }
@@ -173,8 +179,7 @@ server (void *arg)
                              &timeout) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("accept")));
+                    ACE_TEXT ("(%P|%t) accept: %p\n")));
       Test_Result = 1;
       return nullptr;
     }
@@ -200,8 +205,7 @@ server (void *arg)
   if (len == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("Test 1, recv failed")));
+                  ACE_TEXT ("(%P|%t) Test 1, recv failed: %p\n")));
       Test_Result = 1;
     }
 
@@ -212,16 +216,18 @@ server (void *arg)
                   len));
     }
 
-  for (i = 0; i < static_cast<int>(len); i++)
-    if (buffer[i] != i)
+  for (i = 0; i < static_cast<int>(len); ++i)
+    {
+      if (buffer[i] != i)
       {
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Test 1, rcvd byte %d is %d, not %d\n"),
+                    ACE_TEXT ("(%P|%t) Test 1, rcvd byte %B is %d, not %B\n"),
                     i,
                     buffer[i],
                     i));
         Test_Result = 1;
       }
+    }
 
   //*******************   TEST 2   ******************************
   //
@@ -263,9 +269,10 @@ spawn ()
   // Bind listener to any port and then find out what the port was.
   if (peer_acceptor.open (ACE_Addr::sap_any) == -1
       || peer_acceptor.get_local_addr (server_addr) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) %p\n"),
-                ACE_TEXT ("open")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) open: %p\n")));
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -277,9 +284,7 @@ spawn ()
         {
         case -1:
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) %p\n"),
-                      ACE_TEXT ("fork failed"),
-                      1));
+                      ACE_TEXT ("(%P|%t) fork failed: %p\n")));
           ACE_OS::abort ();
         case 0:
           client (&server_addr);
@@ -295,18 +300,16 @@ spawn ()
            reinterpret_cast<void *> (&peer_acceptor),
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) %p\n%a"),
-                    ACE_TEXT ("thread create failed"),
-                    1));
+                    ACE_TEXT ("(%P|%t) %s: %p\n%a"),
+                    ACE_TEXT ("server thread create failed")));
 
       if (ACE_Thread_Manager::instance ()->spawn
           (ACE_THR_FUNC (client),
            reinterpret_cast<void *> (&server_addr),
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) %p\n%a"),
-                    ACE_TEXT ("thread create failed"),
-                    1));
+                    ACE_TEXT ("(%P|%t) %s: %p\n%a"),
+                    ACE_TEXT ("client thread create failed")));
 
       // Wait for the threads to exit.
       ACE_Thread_Manager::instance ()->wait ();

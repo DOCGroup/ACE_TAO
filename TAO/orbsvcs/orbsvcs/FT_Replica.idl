@@ -1,10 +1,10 @@
-// FT_replica.idl
+/// @file FT_Replica.idl
 #ifndef _FT_REPLICA_IDL_
 #define _FT_REPLICA_IDL_
 
-// The OMG FT file has been split into sevaral pieces.  This is one of them.
-// It contains the interfaces that a typical FT Replica (replicated servant)
-// will need to implement.
+/// The OMG FT file has been split into sevaral pieces.  This is one of them.
+/// It contains the interfaces that a typical FT Replica (replicated servant)
+/// will need to implement.
 
 #include "FT_CORBA.idl"   // common FT definitions
 
@@ -12,13 +12,13 @@
 
 module FT
 {
-  // Specification of PullMonitorable Interface
-  // which Application Objects Inherit
+  /// Specification of PullMonitorable Interface
+  /// which Application Objects Inherit
   interface PullMonitorable {
     boolean is_alive();
   };
 
-  // Specifications for Logging and Recovery
+  /// Specifications for Logging and Recovery
   typedef sequence<octet> State;
 
   exception NoStateAvailable {};
@@ -27,8 +27,8 @@ module FT
   exception NoUpdateAvailable {};
   exception InvalidUpdate {};
 
-  // Specification of Checkpointable Interface
-  // which Updateable and Application Objects Inherit
+  /// Specification of Checkpointable Interface
+  /// which Updateable and Application Objects Inherit
   interface Checkpointable {
     State get_state()
       raises(NoStateAvailable);
@@ -36,8 +36,8 @@ module FT
       raises(InvalidState);
   };
 
-  // Specification of Updateable Interface
-  // which Application Objects Inherit
+  /// Specification of Updateable Interface
+  /// which Application Objects Inherit
   interface Updateable : Checkpointable
   {
     State get_update()

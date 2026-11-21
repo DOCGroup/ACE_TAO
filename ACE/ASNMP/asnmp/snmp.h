@@ -54,7 +54,7 @@ class ASNMP_Export Snmp_Result
 public:
   Snmp_Result ();
   virtual ~Snmp_Result();
-  virtual void result(Snmp *snmp, int result) = 0;
+  virtual void result (Snmp *snmp, int result) = 0;
 };
 
 // Snmp session class - supports Version 1 operations in blocking mode
@@ -66,68 +66,70 @@ public:
  */
 class ASNMP_Export Snmp : public transaction_result
 {
-  Snmp_Result * result_;
-  Pdu * pdu_;
-  unsigned hold_req_id_;
+  Snmp_Result *result_ {};
+  Pdu *pdu_ {};
+  unsigned hold_req_id_ {};
 public:
-  Snmp(unsigned short port = INADDR_ANY);
-  virtual ~Snmp();
+  explicit Snmp (unsigned short port = INADDR_ANY);
+  ~Snmp () override;
+  Snmp (Snmp const &) = delete;
+  Snmp (Snmp &&) = delete;
+  Snmp &operator= (Snmp const &) = delete;
+  Snmp &operator= (Snmp &&) = delete;
 
   /// retrieve data from a peer agent for a given list of oid values
   /// default port 161
-  int get( Pdu &pdu, UdpTarget &target, Snmp_Result * cb = 0);
+  int get (Pdu &pdu, UdpTarget &target, Snmp_Result *cb = nullptr);
 
   /**
    * retrieve data lexically adjacent to the oids specified in the pdu
    * from the peer agent
    * default port 161
    */
-  int get_next( Pdu &pdu, UdpTarget &target, Snmp_Result * cb = 0);
+  int get_next (Pdu &pdu, UdpTarget &target, Snmp_Result *cb = nullptr);
 
   /// set data in the agent from the list of oids in the pdu
   /// default port 161
-  int set( Pdu &pdu, UdpTarget &target, Snmp_Result * cb = 0);
+  int set (Pdu &pdu, UdpTarget &target, Snmp_Result *cb = nullptr);
 
   /// send an SNMPv1 trap (unreliable) to a remote system (def port 162)
-  int trap( Pdu &pdu, UdpTarget &target);
+  int trap (Pdu &pdu, UdpTarget &target);
 
   /// status of object after construction
-  int valid() const;
+  int valid () const;
 
   /// given error code, return string reason
-  static const char * error_string(int code);
+  static char const *error_string (int code);
 
   /// retrieve a reason string if any of the above commands fail
-  const char * error_string();
+  char const *error_string ();
 
   /// for async transaction results
-  void result(transaction * t, int rc);
+  void result (transaction *t, int rc) override;
 
   /// allow the host name to be overriden
-  static void override_host_name(const char* name);
+  static void override_host_name (char const *name);
 
   /// returns the overriden host name
-  static void get_host_name(char* name, int len);
+  static void get_host_name (char *name, int len);
 
 protected:
-  void check_default_port(UdpTarget& target,unsigned short port=DEF_AGENT_PORT);
-  int run_transaction(Pdu& pdu, UdpTarget& target);
-  int run_transaction(Pdu& pdu, UdpTarget& target, Snmp_Result * cb);
-  int validate_args(const Pdu& pdu, const UdpTarget& target) const;
-
-  Snmp(const Snmp&);
+  void check_default_port (UdpTarget &target, unsigned short port = DEF_AGENT_PORT);
+  int run_transaction (Pdu &pdu, UdpTarget &target);
+  int run_transaction (Pdu &pdu, UdpTarget &target, Snmp_Result *cb);
+  int validate_args (Pdu const &pdu, UdpTarget const &target) const;
 
   /// io object
   ACE_SOCK_Dgram iv_snmp_session_;
 
   /// status of construction
-  int construct_status_;
+  int construct_status_ {SNMP_CLASS_ERROR};
 
   /// result code from last transaction
-  int last_transaction_status_;
+  int last_transaction_status_ {};
 
   /// transaction request id
-  unsigned req_id_;
+  unsigned req_id_ {};
 
   static char host_name_[MAXHOSTNAMELEN];
 };

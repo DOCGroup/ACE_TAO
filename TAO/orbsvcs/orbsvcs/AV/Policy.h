@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_AV_POLICY_H
 #define TAO_AV_POLICY_H
 
@@ -52,7 +51,7 @@ struct TAO_AV_RTCP_Sdes
 class TAO_AV_Export TAO_AV_Policy
 {
 public:
-  TAO_AV_Policy (CORBA::ULong type);
+  explicit TAO_AV_Policy (CORBA::ULong type);
   CORBA::ULong type ();
 protected:
   CORBA::ULong type_;
@@ -61,7 +60,7 @@ protected:
 class  TAO_AV_Export TAO_AV_SSRC_Policy : public TAO_AV_Policy
 {
 public:
-  TAO_AV_SSRC_Policy (CORBA::ULong ssrc = 0);
+  explicit TAO_AV_SSRC_Policy (CORBA::ULong ssrc = 0);
   CORBA::ULong value ();
   void value (CORBA::ULong ssrc);
 protected:
@@ -71,7 +70,7 @@ protected:
 class  TAO_AV_Export TAO_AV_Payload_Type_Policy : public TAO_AV_Policy
 {
 public:
-  TAO_AV_Payload_Type_Policy (int payload_type = -1);
+  explicit TAO_AV_Payload_Type_Policy (int payload_type = -1);
   int value ();
   void value (int pt);
 protected:
@@ -83,7 +82,7 @@ class TAO_AV_Export TAO_AV_RTCP_Sdes_Policy : public TAO_AV_Policy
 public:
   TAO_AV_RTCP_Sdes_Policy ();
   TAO_AV_RTCP_Sdes &value ();
-  void value (const TAO_AV_RTCP_Sdes& sdes_val);
+  void value (TAO_AV_RTCP_Sdes const &sdes_val);
 protected:
   TAO_AV_RTCP_Sdes sdes_;
 };
@@ -95,7 +94,7 @@ public:
   int value ();
   void value (int val);
 protected:
-  int value_;
+  int value_ {};
 };
 
 using TAO_AV_PolicyList = TAO::unbounded_value_sequence<TAO_AV_Policy*>;
@@ -137,13 +136,11 @@ public:
 
   virtual int receive_frame (ACE_Message_Block *frame,
                              TAO_AV_frame_info *frame_info = nullptr,
-                             const ACE_Addr &address = ACE_Addr::sap_any);
+                             ACE_Addr const &address = ACE_Addr::sap_any);
 
-  // Called when a frame arrives for a FlowConsumer.
-
-  /// address from which the frame was received.
+  /// Called when a frame arrives for a FlowConsumer.
   virtual int receive_control_frame (ACE_Message_Block *frame,
-                                     const ACE_Addr &address = ACE_Addr::sap_any);
+                                     ACE_Addr const &address = ACE_Addr::sap_any);
 
   /// Called during Streamctrl->destroy i.e tear_down  of the stream
   virtual int handle_destroy ();
@@ -162,8 +159,9 @@ public:
   /// get the policies for the protocol object.
   virtual TAO_AV_PolicyList get_policies ();
 protected:
-  TAO_AV_Protocol_Object *protocol_object_;
-  TAO_AV_Flow_Handler *handler_;
+  /// Non-owning protocol object and flow handler assigned by open().
+  TAO_AV_Protocol_Object *protocol_object_ {};
+  TAO_AV_Flow_Handler *handler_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

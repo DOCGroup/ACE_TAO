@@ -20,6 +20,9 @@
 #include "ace/OS_NS_time.h"
 #include "ace/CORBA_macros.h"
 #include <cstring>
+#include <memory>
+#include <new>
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -50,19 +53,30 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_IIOP_Connection_Handler_Array_Guard
 {
 public:
-  TAO_IIOP_Connection_Handler_Array_Guard (TAO_IIOP_Connection_Handler **p, unsigned count);
+  TAO_IIOP_Connection_Handler_Array_Guard (
+    std::vector<TAO_IIOP_Connection_Handler *> const &handlers,
+    unsigned count);
   ~TAO_IIOP_Connection_Handler_Array_Guard ();
 
 private:
+  TAO_IIOP_Connection_Handler_Array_Guard (
+    TAO_IIOP_Connection_Handler_Array_Guard const &) = delete;
+  TAO_IIOP_Connection_Handler_Array_Guard &operator= (
+    TAO_IIOP_Connection_Handler_Array_Guard const &) = delete;
+  TAO_IIOP_Connection_Handler_Array_Guard (
+    TAO_IIOP_Connection_Handler_Array_Guard &&) = delete;
+  TAO_IIOP_Connection_Handler_Array_Guard &operator= (
+    TAO_IIOP_Connection_Handler_Array_Guard &&) = delete;
+
   /// Handler.
-  TAO_IIOP_Connection_Handler **ptr_;
-  unsigned count_;
+  std::vector<TAO_IIOP_Connection_Handler *> const &handlers_;
+  unsigned const count_;
 };
 
 TAO_IIOP_Connection_Handler_Array_Guard::TAO_IIOP_Connection_Handler_Array_Guard (
-  TAO_IIOP_Connection_Handler **p,
+  std::vector<TAO_IIOP_Connection_Handler *> const &handlers,
   unsigned count)
-  : ptr_ (p),
+  : handlers_ (handlers),
     count_ (count)
 {
 }
@@ -70,15 +84,13 @@ TAO_IIOP_Connection_Handler_Array_Guard::TAO_IIOP_Connection_Handler_Array_Guard
 TAO_IIOP_Connection_Handler_Array_Guard::~TAO_IIOP_Connection_Handler_Array_Guard ()
 {
   ACE_Errno_Guard eguard (errno);
-  if (this->ptr_ != nullptr)
+  for (unsigned i {}; i < this->count_; ++i)
     {
-      for (unsigned i = 0; i < this->count_; i++)
-        this->ptr_[i]->remove_reference ();
+      this->handlers_[i]->remove_reference ();
     }
 }
 
 //---------------------------------------------------------------------------
-
 
 TAO_IIOP_Connector::~TAO_IIOP_Connector () = default;
 
@@ -101,35 +113,45 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
 
   // Create our connect strategy
   if (this->create_connect_strategy () == -1)
+  {
     return -1;
+  }
 
   /// Our connect creation strategy
-  TAO_IIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy = nullptr;
+  TAO_IIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy {};
 
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_IIOP_CONNECT_CREATION_STRATEGY
                       (orb_core->thr_mgr (),
                        orb_core),
                   -1);
+  std::unique_ptr<TAO_IIOP_CONNECT_CREATION_STRATEGY> creation_strategy_owner (
+    connect_creation_strategy);
 
   /// Our activation strategy
-  TAO_IIOP_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = nullptr;
+  TAO_IIOP_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy {};
 
   ACE_NEW_RETURN (concurrency_strategy,
                   TAO_IIOP_CONNECT_CONCURRENCY_STRATEGY (orb_core),
                   -1);
 
-  return this->base_connector_.open (this->orb_core ()->reactor (),
-                                     connect_creation_strategy,
-                                     &this->connect_strategy_,
-                                     concurrency_strategy);
+  std::unique_ptr<TAO_IIOP_CONNECT_CONCURRENCY_STRATEGY> concurrency_strategy_owner (
+    concurrency_strategy);
+
+  int const result = this->base_connector_.open (this->orb_core ()->reactor (),
+                                                 creation_strategy_owner.get (),
+                                                 std::addressof (this->connect_strategy_),
+                                                 concurrency_strategy_owner.get ());
+  this->creation_strategy_.reset (creation_strategy_owner.release ());
+  this->concurrency_strategy_.reset (concurrency_strategy_owner.release ());
+  return result;
 }
 
 int
 TAO_IIOP_Connector::close ()
 {
-  delete this->base_connector_.concurrency_strategy ();
-  delete this->base_connector_.creation_strategy ();
+  this->concurrency_strategy_.reset ();
+  this->creation_strategy_.reset ();
   return this->base_connector_.close ();
 }
 
@@ -142,12 +164,14 @@ TAO_IIOP_Connector::supports_parallel_connects() const
 int
 TAO_IIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {
-  TAO_IIOP_Endpoint *iiop_endpoint = this->remote_endpoint (endpoint);
+  TAO_IIOP_Endpoint * const iiop_endpoint = this->remote_endpoint (endpoint);
 
   if (iiop_endpoint == nullptr)
+  {
     return -1;
+  }
 
-  const ACE_INET_Addr &remote_address = iiop_endpoint->object_addr ();
+  ACE_INET_Addr const &remote_address = iiop_endpoint->object_addr ();
 
   // Verify that the remote ACE_INET_Addr was initialized properly.
   // Failure can occur if hostname lookup failed when initializing the
@@ -179,11 +203,13 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                                      TAO_Transport_Descriptor_Interface &desc,
                                      ACE_Time_Value *timeout)
 {
-  TAO_IIOP_Connection_Handler *svc_handler = nullptr;
+  TAO_IIOP_Connection_Handler *svc_handler {};
   TAO_IIOP_Endpoint *iiop_endpoint =
     this->remote_endpoint (desc.endpoint());
   if (iiop_endpoint == nullptr)
+  {
     return nullptr;
+  }
 
   int const result =
     this->begin_connection (svc_handler, r, iiop_endpoint, timeout);
@@ -206,8 +232,8 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       return nullptr;
     }
 
-  TAO_IIOP_Connection_Handler **sh_ptr = &svc_handler;
-  TAO_IIOP_Endpoint **ep_ptr = &iiop_endpoint;
+  TAO_IIOP_Connection_Handler **sh_ptr = std::addressof (svc_handler);
+  TAO_IIOP_Endpoint **ep_ptr = std::addressof (iiop_endpoint);
   TAO_LF_Multi_Event mev;
   mev.add_event (svc_handler);
 
@@ -218,7 +244,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                                ep_ptr,
                                1U,
                                r,
-                               &mev,
+                               std::addressof (mev),
                                timeout);
 
   // If complete_connection was unsuccessful then remove
@@ -246,30 +272,41 @@ TAO_IIOP_Connector::make_parallel_connection (
   TAO_Transport_Descriptor_Interface & desc,
   ACE_Time_Value * timeout)
 {
-  TAO_Endpoint *root_ep = desc.endpoint();
-  unsigned max_count = 1;
+  TAO_Endpoint * const root_ep = desc.endpoint();
+  size_t max_count {1};
   long ns_stagger =
     this->orb_core ()->orb_params ()->parallel_connect_delay ();
-  time_t sec_stagger = ns_stagger/1000;
+  time_t const sec_stagger = ns_stagger/1000;
   ns_stagger = (ns_stagger % 1000) * 1000000;
   for (TAO_Endpoint *ep = root_ep->next_filtered (this->orb_core(), nullptr);
        ep != nullptr;
        ep = ep->next_filtered (this->orb_core(), root_ep))
-    ++max_count;
+    {
+      ++max_count;
+    }
 
   if (TAO_debug_level > 2)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::")
-                ACE_TEXT ("make_parallel_connection, ")
-                ACE_TEXT ("to %d endpoints\n"), max_count));
-  TAO_IIOP_Endpoint **eplist = nullptr;
-  TAO_IIOP_Connection_Handler **shlist = nullptr;
-  ACE_NEW_RETURN (shlist, TAO_IIOP_Connection_Handler *[max_count], nullptr);
-  ACE_NEW_RETURN (eplist, TAO_IIOP_Endpoint *[max_count], nullptr);
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::")
+                     ACE_TEXT ("make_parallel_connection, ")
+                     ACE_TEXT ("to %B endpoints\n"), max_count));
+    }
+  std::vector<TAO_IIOP_Connection_Handler *> shlist;
+  std::vector<TAO_IIOP_Endpoint *> eplist;
+  try
+    {
+      shlist.resize (max_count, nullptr);
+      eplist.resize (max_count, nullptr);
+    }
+  catch (std::bad_alloc const &)
+    {
+      return nullptr;
+    }
 
   TAO_LF_Multi_Event mev;
-  int result = 0;
-  unsigned count = 0;
+  int result {};
+  unsigned count {};
   for (TAO_Endpoint *ep = root_ep->next_filtered (this->orb_core(),nullptr);
        ep != nullptr;
        ep = ep->next_filtered(this->orb_core(),root_ep))
@@ -294,9 +331,11 @@ TAO_IIOP_Connector::make_parallel_connection (
                 {
                   struct timespec nsleep = {sec_stagger, ns_stagger};
                   ACE_OS::nanosleep (&nsleep);
-                  result = this->active_connect_strategy_->poll (&mev);
+                  result = this->active_connect_strategy_->poll (std::addressof (mev));
                   if (result != -1)
+                  {
                     break;
+                  }
                 }
             }
           else
@@ -308,12 +347,12 @@ TAO_IIOP_Connector::make_parallel_connection (
 
       if (result != -1) // we have a winner!
         {
-          count++;
+          ++count;
           break; // no waiting involved since a connection is completed
         }
     }
 
-  TAO_Transport *winner = nullptr;
+  TAO_Transport *winner {};
   if (count > 0) // only complete if at least one pending or success
     {
       // Make sure that we always do a remove_reference for every member
@@ -322,20 +361,20 @@ TAO_IIOP_Connector::make_parallel_connection (
 
       winner = this->complete_connection (result,
                                           desc,
-                                          shlist,
-                                          eplist,
+                                          shlist.data (),
+                                          eplist.data (),
                                           count,r,
-                                          &mev,
+                                          std::addressof (mev),
                                           timeout);
 
       // We add here an extra reference so that when svc_handler_auto_ptr
       // will go out of scope the winner will be still alive.
-      if (winner)
+      if (winner != nullptr)
+      {
         winner->add_reference ();
+      }
     }
 
-  delete [] shlist; // reference reductions should have been done already
-  delete [] eplist;
   return winner;
 }
 
@@ -345,9 +384,9 @@ TAO_IIOP_Connector::begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
                                       TAO_IIOP_Endpoint *iiop_endpoint,
                                       ACE_Time_Value *timeout)
 {
-  const ACE_INET_Addr &remote_address = iiop_endpoint->object_addr ();
+  ACE_INET_Addr const &remote_address = iiop_endpoint->object_addr ();
 
-  u_short port = this->orb_core ()->orb_params ()->iiop_client_port_base ();
+  u_short const port = this->orb_core ()->orb_params ()->iiop_client_port_base ();
   ACE_UINT32 const ia_any = INADDR_ANY;
   ACE_INET_Addr local_addr(port, ia_any);
 
@@ -383,8 +422,8 @@ TAO_IIOP_Connector::begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
   svc_handler = nullptr;
 
   int result = -1;
-  u_short span = this->orb_core ()->orb_params ()->iiop_client_port_span ();
-  for (u_short offset = 0; offset <= span; ++offset)
+  u_short const span = this->orb_core ()->orb_params ()->iiop_client_port_span ();
+  for (u_short offset {}; offset <= span; ++offset)
     {
       local_addr.set_port_number (port + offset);
       if (TAO_debug_level > 0 && (port + offset) > 0 )
@@ -415,69 +454,39 @@ TAO_IIOP_Connector::begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
   return result;
 }
 
-namespace TAO_IIOP
-{
-  /// RAII holder for a TAO_Transport list
-  class TList_Holder
-  {
-  public:
-    TList_Holder (size_t count)
-      : tlist_ (nullptr)
-    {
-      // Resources are acquired during initialization (RAII)
-      ACE_NEW (tlist_, TAO_Transport*[count]);
-    }
-
-    ~TList_Holder ()
-    {
-      // Resources are unacquired during uninitialization
-      delete [] tlist_;
-    }
-
-    operator TAO_Transport** ()
-    {
-      return tlist_;
-    }
-
-  private:
-    TAO_Transport** tlist_;
-  private:
-    void operator= (const TList_Holder &) = delete;
-    TList_Holder (const TList_Holder &) = delete;
-  };
-}
-
 TAO_Transport *
 TAO_IIOP_Connector::complete_connection (int result,
                                          TAO_Transport_Descriptor_Interface &desc,
-                                         TAO_IIOP_Connection_Handler **&sh_list,
-                                         TAO_IIOP_Endpoint **ep_list,
+                                         TAO_IIOP_Connection_Handler * const *sh_list,
+                                         TAO_IIOP_Endpoint * const *ep_list,
                                          unsigned count,
                                          TAO::Profile_Transport_Resolver *r,
                                          TAO_LF_Multi_Event *mev,
                                          ACE_Time_Value *timeout)
 {
-  TAO_IIOP::TList_Holder tlist(count);
+  std::vector<TAO_Transport *> tlist (count, nullptr);
 
-  TAO_Transport *transport  = nullptr;
+  TAO_Transport *transport {};
 
   //  populate the transport list
-  for (unsigned i = 0; i < count; i++)
-    tlist[i] = sh_list[i]->transport();
+  for (unsigned i {}; i < count; ++i)
+    {
+      tlist[i] = sh_list[i]->transport();
+    }
 
   if (result != -1)
     {
       // We received a completed connection and 0 or more pending.
       // the winner is the last member of the list, because the
       // iterator stopped on a successful connect.
-      transport = tlist[count-1];
+      transport = tlist[count - 1];
 
-      this->cleanup_pending (transport, tlist, count);
+      this->cleanup_pending (transport, tlist.data (), count);
 
       desc.reset_endpoint (ep_list[count-1]);
       TAO::Transport_Cache_Manager &tcm =
         this->orb_core ()->lane_resources ().transport_cache ();
-      if (tcm.cache_transport (&desc, transport) == -1)
+      if (tcm.cache_transport (std::addressof (desc), transport) == -1)
         {
           // Cache is full, so close the connection again
           sh_list[count-1]->close ();
@@ -496,27 +505,31 @@ TAO_IIOP_Connector::complete_connection (int result,
                                                      timeout))
             {
               if (TAO_debug_level > 2)
-                TAOLIB_ERROR ((LM_ERROR,
-                            ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::")
-                            ACE_TEXT ("complete_connection, wait for completion ")
-                            ACE_TEXT ("failed for 1 pending connect\n")));
+                {
+                  TAOLIB_ERROR ((LM_ERROR,
+                                 ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::")
+                                 ACE_TEXT ("complete_connection, wait for completion ")
+                                 ACE_TEXT ("failed for 1 pending connect\n")));
+                }
             }
         }
       else
         {
           if (!this->wait_for_connection_completion (r,
                                                      transport,
-                                                     tlist,
+                                                     tlist.data (),
                                                      count,
                                                      mev,
                                                      timeout))
             {
               if (TAO_debug_level > 2)
-                TAOLIB_ERROR ((LM_ERROR,
-                            ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::")
-                            ACE_TEXT ("complete_connection, wait for completion ")
-                            ACE_TEXT ("failed for %d pending connects\n"),
-                            count));
+                {
+                  TAOLIB_ERROR ((LM_ERROR,
+                                 ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::")
+                                 ACE_TEXT ("complete_connection, wait for completion ")
+                                 ACE_TEXT ("failed for %u pending connects\n"),
+                                 count));
+                }
             }
         }
     }
@@ -539,12 +552,12 @@ TAO_IIOP_Connector::complete_connection (int result,
 
   // At this point, the connection has been successfully created
   // connected or not connected, but we have a connection.
-  TAO_IIOP_Connection_Handler *svc_handler = nullptr;
-  TAO_IIOP_Endpoint *iiop_endpoint = nullptr;
+  TAO_IIOP_Connection_Handler *svc_handler {};
+  TAO_IIOP_Endpoint *iiop_endpoint {};
 
   if (transport != nullptr)
     {
-      for (unsigned i = 0; i < count; i++)
+      for (unsigned i {}; i < count; ++i)
         {
           if (transport == tlist[i])
             {
@@ -560,7 +573,7 @@ TAO_IIOP_Connector::complete_connection (int result,
       // Give users a clue to the problem.
       if (TAO_debug_level > 3)
         {
-          for (unsigned i = 0; i < count; i++)
+          for (unsigned i {}; i < count; ++i)
             {
               TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::complete_connection,")
@@ -594,9 +607,11 @@ TAO_IIOP_Connector::complete_connection (int result,
   if (transport->connection_handler()->error_detected(leader_follower))
     {
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG((LM_DEBUG,
-                   ACE_TEXT("TAO (%P|%t) - IIOP_Connector::make_connection, ")
-                   ACE_TEXT("transport in error before cache!\n")));
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::make_connection, ")
+                         ACE_TEXT ("transport in error before cache!\n")));
+        }
       transport->connection_handler()->cancel_pending_connection();
       return nullptr;
     }
@@ -605,7 +620,7 @@ TAO_IIOP_Connector::complete_connection (int result,
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::make_connection, ")
-                  ACE_TEXT ("new %s connection to <%C:%d> on Transport[%B]\n"),
+                  ACE_TEXT ("new %s connection to <%C:%d> on handle [%H]\n"),
                   transport->is_connected() ?
                   ACE_TEXT("connected") : ACE_TEXT("not connected"),
                   iiop_endpoint->host (),
@@ -621,13 +636,13 @@ TAO_IIOP_Connector::complete_connection (int result,
   struct timespec ts = udelay;
   ACE_OS::nanosleep (&ts);
 #endif // INDUCE_BUG_2654_C
-  int retval = 0;
+  int retval {};
 
   // Only for parallel connect, update the cache to show this in idle state
   if (count > 1 && desc.reset_endpoint (iiop_endpoint))
     {
       retval = this->orb_core ()->
-        lane_resources ().transport_cache ().cache_transport (&desc,
+        lane_resources ().transport_cache ().cache_transport (std::addressof (desc),
                                                               transport);
     }
 
@@ -655,14 +670,15 @@ TAO_IIOP_Connector::complete_connection (int result,
   if (svc_handler->error_detected(leader_follower))
     {
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG((LM_DEBUG,
-                   ACE_TEXT("TAO (%P|%t) - IIOP_Connector::make_connection, ")
-                   ACE_TEXT("transport in error after cache!\n")));
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::make_connection, ")
+                         ACE_TEXT ("transport in error after cache!\n")));
+        }
       svc_handler->cancel_pending_connection();
       transport->purge_entry();
       return nullptr;
     }
-
 
 #if defined (INDUCE_BUG_2654_D)
   // at this point the connection handler's close connection will manage
@@ -685,7 +701,7 @@ TAO_IIOP_Connector::complete_connection (int result,
 TAO_Profile *
 TAO_IIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
-  TAO_Profile *pfile = nullptr;
+  TAO_Profile *pfile {};
   ACE_NEW_RETURN (pfile,
                   TAO_IIOP_Profile (this->orb_core ()),
                   nullptr);
@@ -708,7 +724,7 @@ TAO_IIOP_Connector::make_profile ()
   // or:
   //    host:port/object_key
 
-  TAO_Profile *profile = nullptr;
+  TAO_Profile *profile {};
   ACE_NEW_THROW_EX (profile,
                     TAO_IIOP_Profile (this->orb_core ()),
                     CORBA::NO_MEMORY (
@@ -724,14 +740,18 @@ int
 TAO_IIOP_Connector::check_prefix (const char *endpoint)
 {
   // Check for a valid string
-  if (!endpoint || !*endpoint)
-    return -1;  // Failure
+  if (endpoint == nullptr || *endpoint == '\0')
+    {
+      return -1;  // Failure
+    }
 
-  static const char *protocol[] = { "iiop", "iioploc" };
+  static char const * const protocol[] = { "iiop", "iioploc" };
 
   size_t const slot = std::strchr (endpoint, ':') - endpoint;
   if (slot == 0) // an empty string is valid for corbaloc.
-    return 0;
+    {
+      return 0;
+    }
 
   size_t const len0 = std::strlen (protocol[0]);
   size_t const len1 = std::strlen (protocol[1]);
@@ -739,9 +759,13 @@ TAO_IIOP_Connector::check_prefix (const char *endpoint)
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.
   if (slot == len0 && ACE_OS::strncasecmp (endpoint, protocol[0], len0) == 0)
-    return 0;
+    {
+      return 0;
+    }
   else if (slot == len1 && ACE_OS::strncasecmp (endpoint, protocol[1], len1) == 0)
-    return 0;
+    {
+      return 0;
+    }
 
   return -1;
   // Failure: not an IIOP IOR
@@ -758,13 +782,17 @@ TAO_IIOP_Endpoint *
 TAO_IIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != IOP::TAG_INTERNET_IOP)
+  {
     return nullptr;
+  }
 
   TAO_IIOP_Endpoint *iiop_endpoint =
     dynamic_cast<TAO_IIOP_Endpoint *> (endpoint );
 
   if (iiop_endpoint == nullptr)
+  {
     return nullptr;
+  }
 
   return iiop_endpoint;
 }
@@ -773,11 +801,11 @@ int
 TAO_IIOP_Connector::cancel_svc_handler (
   TAO_Connection_Handler * svc_handler)
 {
-  TAO_IIOP_Connection_Handler* handler=
+  TAO_IIOP_Connection_Handler * const handler =
     dynamic_cast<TAO_IIOP_Connection_Handler*>(svc_handler);
 
   // Cancel from the connector
-  if (handler)
+  if (handler != nullptr)
     {
       handler->abort();
       return this->base_connector_.cancel (handler);

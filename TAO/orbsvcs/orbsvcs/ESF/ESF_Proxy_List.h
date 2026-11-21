@@ -17,6 +17,7 @@
 
 #include /**/ "tao/Versioned_Namespace.h"
 
+#include <cstddef>
 #include "ace/Unbounded_Set.h"
 #include "ace/Containers.h"
 
@@ -31,21 +32,20 @@ template<class PROXY>
 class TAO_ESF_Proxy_List
 {
 public:
-  /// A typedef for the underlying implementaiton class
+  /// An alias for the underlying implementation class
   using Implementation = ACE_Unbounded_Set<PROXY *>;
 
-  /// A typedef for the underlying iterator
-  using Iterator = ACE_Unbounded_Set_Iterator<PROXY *>;
+  /// An alias for the underlying iterator
+  using Iterator = typename Implementation::iterator;
 
-  /// Constructor
-  TAO_ESF_Proxy_List ();
+  TAO_ESF_Proxy_List () = default;
 
   /// Return the first element in the collection, or end() if there
   /// are none
-  ACE_Unbounded_Set_Iterator<PROXY*> begin ();
+  Iterator begin ();
 
   /// Return one past the last element in the collection
-  ACE_Unbounded_Set_Iterator<PROXY*> end ();
+  Iterator end ();
 
   /// Return the number of elements in the collection
   size_t size () const;
@@ -65,7 +65,7 @@ public:
 
 private:
   /// The underlying implementation object
-  ACE_Unbounded_Set<PROXY*> impl_;
+  Implementation impl_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

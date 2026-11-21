@@ -37,7 +37,6 @@ class ACE_Time_Value;
 class ACE_Export ACE_SOCK_Dgram : public ACE_SOCK
 {
 public:
-  /// Default constructor.
   ACE_SOCK_Dgram ();
 
   /// This is a BSD-style method (i.e., no QoS) for initiating a socket
@@ -84,10 +83,10 @@ public:
             int reuse_addr = 0,
             int ipv6_only = 0);
 
-  /// Default dtor.
   ~ACE_SOCK_Dgram ();
 
-  // = Data transfer routines.
+  /// @name Data transfer
+  /// @{
   /// Send an @a n byte @a buf to the datagram socket (uses <sendto(3)>).
   ssize_t send (const void *buf,
                 size_t n,
@@ -199,8 +198,9 @@ public:
                 int flags,
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
+  /// @}
 
-  // = Meta-type info.
+  /// Peer address type.
   using PEER_ADDR = ACE_INET_Addr;
 
   /// Dump the state of an object.

@@ -38,7 +38,6 @@ TAO_POA_Manager::TAO_POA_Manager (
 }
 #endif
 
-
 TAO_POA_Manager::~TAO_POA_Manager ()
 {
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
@@ -71,8 +70,8 @@ TAO_POA_Manager::activate_i ()
       // strategy to launch the dispatching threads.
 
       for (POA_COLLECTION::iterator iterator = this->poa_collection_.begin ();
-       iterator != this->poa_collection_.end ();
-       ++iterator)
+           iterator != this->poa_collection_.end ();
+           ++iterator)
         {
           (*iterator)->poa_activated_hook ();
         }
@@ -153,7 +152,7 @@ TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
 void
 TAO_POA_Manager::adapter_manager_state_changed (PortableServer::POAManager::State state)
 {
-  PortableInterceptor::AdapterState adapter_state =
+  PortableInterceptor::AdapterState const adapter_state =
     static_cast<PortableInterceptor::AdapterState> (state);
 
   TAO_IORInterceptor_Adapter *ior_adapter =
@@ -209,8 +208,7 @@ TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion)
            iterator != this->poa_collection_.end ();
            ++iterator)
         {
-          TAO_Root_POA *poa = *iterator;
-          poa->wait_for_completions (wait_for_completion);
+          (*iterator)->wait_for_completions (wait_for_completion);
         }
     }
 
@@ -261,8 +259,7 @@ TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion)
            iterator != this->poa_collection_.end ();
            ++iterator)
         {
-          TAO_Root_POA *poa = *iterator;
-          poa->wait_for_completions (wait_for_completion);
+          (*iterator)->wait_for_completions (wait_for_completion);
         }
     }
 
@@ -283,12 +280,9 @@ TAO_POA_Manager::remove_poa (TAO_Root_POA *poa)
   // move back in.
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-  if (result == 0)
+  if (result == 0 && this->poa_collection_.is_empty ())
     {
-      if (this->poa_collection_.is_empty ())
-        {
-          this->poa_manager_factory_.remove_poamanager (this);
-        }
+      this->poa_manager_factory_.remove_poamanager (this);
     }
 #endif
   return result;

@@ -6,7 +6,6 @@
 #include "orbsvcs/Naming/FaultTolerant/nsgroup_svc.h"
 #include "ace/Task.h"
 
-
 const ACE_TCHAR *group_names[] =
   {ACE_TEXT("C++ Group"), ACE_TEXT("FORTRAN Group"), ACE_TEXT("Groovy Group"), ACE_TEXT("Basic Group"),
    ACE_TEXT("Java Group"), ACE_TEXT("Forth Group"), ACE_TEXT("COBOL Group"), ACE_TEXT("Ruby Group"),
@@ -33,7 +32,7 @@ public:
 
   int svc ()
   {
-    for (int g = 0, i = 0; i < 100; i++)
+    for (int g = 0, i = 0; i < 100; ++i)
       {
         try {
           group_svc.member_list (group_names[g]);
@@ -46,7 +45,9 @@ public:
                       ex._name(), group_names[g]));
         }
         if (group_names[++g] == 0)
+        {
           g = 0;
+        }
       }
 
     return 0;
@@ -63,23 +64,25 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'k':
-        ior = get_opts.opt_arg ();
-        break;
-      case 'n':
-        hammers = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage:  %s ")
-                           ACE_TEXT ("-k <ior> ")
-                           ACE_TEXT ("\n"),
-                           argv [0]),
-                          -1);
-      }
+    {
+      switch (c)
+        {
+        case 'k':
+          ior = get_opts.opt_arg ();
+          break;
+        case 'n':
+          hammers = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage:  %s ")
+                             ACE_TEXT ("-k <ior> ")
+                             ACE_TEXT ("\n"),
+                             argv [0]),
+                            -1);
+        }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -93,11 +96,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) - Acquiring Name Service\n")));
-
 
       CORBA::Object_var nmobj = orb->resolve_initial_references ("NameManager");
       FT_Naming::NamingManager_var naming_manager =
@@ -107,10 +111,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       try {
         ACE_Time_Value timeout (10); // Wait up to 10 seconds for the naming service
         if (name_svc.init (orb.in (), &timeout) != 0)
-          ACE_ERROR_RETURN ((LM_DEBUG,
-                             ACE_TEXT ("client: Could not connect to ")
-                             ACE_TEXT ("naming service.\n")),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_DEBUG,
+                               ACE_TEXT ("client: Could not connect to ")
+                               ACE_TEXT ("naming service.\n")),
+                              1);
+          }
       }
       catch (const CORBA::Exception& ex)
       {
@@ -119,7 +125,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_TEXT ("service facade:"));
         return 1;
       }
-
 
       Hammer hammer;
 
@@ -136,7 +141,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Test::Basic_var basic;
 
       // Iterate enough so we get a few wrap-arounds
-      for (int i = 0; i < 15; i++)
+      for (int i = 0; i < 15; ++i)
       {
         if (i == 3) {
           hammer.activate (THR_NEW_LWP | THR_JOINABLE, hammers);

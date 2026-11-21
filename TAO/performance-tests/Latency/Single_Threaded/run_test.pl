@@ -29,7 +29,7 @@ for ($iter = 0; $iter <= $#ARGV; $iter++) {
     }
     elsif ($ARGV[$iter] eq "-n") {
         $iteration = $ARGV[$iter + 1];
-        $i++;
+        $iter++;
     }
 }
 

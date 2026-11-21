@@ -22,7 +22,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_FUNCTOR_T_H
 #define ACE_FUNCTOR_T_H
 #include /**/ "ace/pre.h"
@@ -63,7 +62,6 @@ public:
   /// @c action_ of the Command to @a action.
   ACE_Command_Callback (RECEIVER &recvr, ACTION action);
 
-  /// Virtual destructor.
   ~ACE_Command_Callback () override = default;
 
   /// Invokes the method @c action_ from the object @c receiver_.
@@ -95,7 +93,6 @@ public:
   /// <action_> of the Command to <action>.
   ACE_Member_Function_Command (RECEIVER &recvr, PTMF ptmf);
 
-  /// Virtual destructor.
   ~ACE_Member_Function_Command () override = default;
 
   /// Invokes the method <action_> from the object <receiver_>.  The

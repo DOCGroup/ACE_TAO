@@ -59,9 +59,13 @@ ACE_OS::gettimeofday ()
 #endif /* 0 */
 #if !defined (ACE_WIN32) && !defined (ACE_LACKS_GETTIMEOFDAY)
   if (result == -1)
-    return ACE_Time_Value ((time_t)-1);
+    {
+      return ACE_Time_Value ((time_t)-1);
+    }
   else
-    return ACE_Time_Value (tv);
+    {
+      return ACE_Time_Value (tv);
+    }
 #endif // !defined (ACE_WIN32)
 }
 

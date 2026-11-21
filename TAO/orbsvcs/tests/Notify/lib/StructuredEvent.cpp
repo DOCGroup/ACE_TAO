@@ -1,6 +1,5 @@
 #include "StructuredEvent.h"
 
-
 TAO_Notify_Tests_StructuredEvent::TAO_Notify_Tests_StructuredEvent ()
 {
 }
@@ -47,7 +46,8 @@ TAO_Notify_Tests_StructuredEvent::type ()
 }
 
 void
-TAO_Notify_Tests_StructuredEvent::opt_header (const char* name, CORBA::Any& value)
+TAO_Notify_Tests_StructuredEvent::opt_header (const char* name,
+                                             CORBA::Any const & value)
 {
   CosNotification::PropertySeq& opt =  event_.header.variable_header;
   opt.length (opt.length () + 1);
@@ -57,7 +57,8 @@ TAO_Notify_Tests_StructuredEvent::opt_header (const char* name, CORBA::Any& valu
 }
 
 void
-TAO_Notify_Tests_StructuredEvent::filter (const char* name, CORBA::Any& value)
+TAO_Notify_Tests_StructuredEvent::filter (const char* name,
+                                          CORBA::Any const & value)
 {
   CosNotification::PropertySeq& filter = event_.filterable_data;
   filter.length (filter.length () + 1);
@@ -67,13 +68,14 @@ TAO_Notify_Tests_StructuredEvent::filter (const char* name, CORBA::Any& value)
 }
 
 void
-TAO_Notify_Tests_StructuredEvent::qos (const char* name, CORBA::Any& value)
+TAO_Notify_Tests_StructuredEvent::qos (const char* name,
+                                       CORBA::Any const & value)
 {
   this->opt_header (name, value);
 }
 
 void
-TAO_Notify_Tests_StructuredEvent::payload (CORBA::Any& value)
+TAO_Notify_Tests_StructuredEvent::payload (CORBA::Any const & value)
 {
   event_.remainder_of_body = value;
 }

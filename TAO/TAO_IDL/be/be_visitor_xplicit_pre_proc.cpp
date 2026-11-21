@@ -768,7 +768,7 @@ be_visitor_xplicit_pre_proc::visit_array (be_array *node)
 
   std::unique_ptr<UTL_ExprList, UTL_ExprList_Deleter> v_list;
 
-  for (std::size_t i = 0; i < node->n_dims (); ++i)
+  for (size_t i = 0; i < node->n_dims (); ++i)
     {
       AST_Expression *v {};
       ACE_NEW_RETURN (v,
@@ -1015,14 +1015,14 @@ be_visitor_xplicit_pre_proc::xplicit_iface_rel_name (AST_Decl *d)
         {
           std::string const& head = tmp->local_name ()->get_string ();
 
-          std::size_t const head_start = name.find (head);
+          size_t const head_start = name.find (head);
           if (head_start == std::string::npos)
             {
               tmp = ScopeAsDecl (tmp->defined_in ());
               continue;
             }
 
-          std::size_t const tail_start = head_start + head.size () + 2;
+          size_t const tail_start = head_start + head.size () + 2;
           if (tail_start > name.size ())
             {
               tmp = ScopeAsDecl (tmp->defined_in ());

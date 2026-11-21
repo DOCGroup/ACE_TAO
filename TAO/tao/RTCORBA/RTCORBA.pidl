@@ -29,7 +29,7 @@
 
 module RTCORBA
 {
-  // Priorities.
+  /// Priorities.
   typedef short NativePriority;
   typedef short Priority;
   const Priority minPriority = 0;
@@ -41,7 +41,7 @@ module RTCORBA
   typedef long NetworkPriority;
   native NetworkPriorityMapping;
 
-  // Threadpool types.
+  /// Threadpool types.
   typedef unsigned long ThreadpoolId;
 
   struct ThreadpoolLane
@@ -52,9 +52,9 @@ module RTCORBA
   };
   typedef sequence <ThreadpoolLane> ThreadpoolLanes;
 
-  // RT Policies.
+  /// RT Policies.
 
-  // Priority Model Policy.
+  /// Priority Model Policy.
   const CORBA::PolicyType PRIORITY_MODEL_POLICY_TYPE = 40;
   enum PriorityModel
   {
@@ -68,7 +68,7 @@ module RTCORBA
       readonly attribute Priority server_priority;
   };
 
-  // Threadpool Policy.
+  /// Threadpool Policy.
   const CORBA::PolicyType THREADPOOL_POLICY_TYPE = 41;
   local interface ThreadpoolPolicy : CORBA::Policy
   {
@@ -84,28 +84,28 @@ module RTCORBA
 
   typedef sequence <Protocol> ProtocolList;
 
-  // Server Protocol Policy
+  /// Server Protocol Policy
   const CORBA::PolicyType SERVER_PROTOCOL_POLICY_TYPE = 42;
 
-  // Locality constrained interface
+  /// Locality constrained interface
   local interface ServerProtocolPolicy : CORBA::Policy
   {
     readonly attribute ProtocolList protocols;
   };
 
-  // Client Protocol Policy
+  /// Client Protocol Policy
   const CORBA::PolicyType CLIENT_PROTOCOL_POLICY_TYPE = 43;
 
-  // Locality constrained interface
+  /// Locality constrained interface
   local interface ClientProtocolPolicy : CORBA::Policy
   {
     readonly attribute ProtocolList protocols;
   };
 
-  // Private Connection Policy
+  /// Private Connection Policy
   const CORBA::PolicyType PRIVATE_CONNECTION_POLICY_TYPE = 44;
 
-  // Locality constrained interface
+  /// Locality constrained interface
   local interface PrivateConnectionPolicy : CORBA::Policy {};
 
   local interface TCPProtocolProperties : ProtocolProperties
@@ -120,17 +120,17 @@ module RTCORBA
 
   local interface GIOPProtocolProperties : ProtocolProperties {};
 
-  // Properties for TAO-specific protocols (these protocols &
-  // interfaces are not specified by the OMG).
+  /// Properties for TAO-specific protocols (these protocols &
+  /// interfaces are not specified by the OMG).
 
-  // Communication over Unix Domain Sockets (Local IPC).
+  /// Communication over Unix Domain Sockets (Local IPC).
   local interface UnixDomainProtocolProperties : ProtocolProperties
   {
     attribute long send_buffer_size;
     attribute long recv_buffer_size;
   };
 
-  // Communication over Shared Memory.
+  /// Communication over Shared Memory.
   local interface SharedMemoryProtocolProperties : ProtocolProperties
   {
     attribute long send_buffer_size;
@@ -160,9 +160,7 @@ module RTCORBA
     attribute boolean enable_network_priority;
   };
 
-  // End of TAO-specific interfaces.
-
-  // PriorityBandedConnectionPolicy.
+  /// PriorityBandedConnectionPolicy.
   struct PriorityBand
   {
     Priority low;
@@ -176,13 +174,13 @@ module RTCORBA
     readonly attribute PriorityBands priority_bands;
   };
 
-  // RT Current.
+  /// RT Current.
   local interface Current : CORBA::Current
   {
     attribute Priority the_priority;
   };
 
-  // Mutex.
+  /// Mutex.
   local interface Mutex
   {
       void lock ();
@@ -191,22 +189,19 @@ module RTCORBA
       boolean try_lock (in TimeBase::TimeT max_wait);
   };
 
-  // RTORB.
+  /// RTORB.
   local interface RTORB
   {
-    // Mutex creation/destruction.
+    /// Mutex creation/destruction.
     Mutex create_mutex ();
     void destroy_mutex (in Mutex the_mutex);
 
-    // TAO specific
-    // Named Mutex creation/opening
+    /// TAO-specific named mutex creation/opening.
     exception MutexNotFound {};
     Mutex create_named_mutex (in string name,
                               out boolean created_flag);
     Mutex open_named_mutex (in string name)
       raises (MutexNotFound);
-
-    // End TAO specific
 
     TCPProtocolProperties create_tcp_protocol_properties(
                                                      in long send_buffer_size,
@@ -243,7 +238,7 @@ module RTCORBA
                                                      in boolean no_delay,
                                                      in boolean enable_network_priority);
 
-    // Threadpool creation/destruction.
+    /// Threadpool creation/destruction.
     exception InvalidThreadpool {};
 
     ThreadpoolId create_threadpool (in unsigned long stacksize,
@@ -264,7 +259,7 @@ module RTCORBA
     void destroy_threadpool (in ThreadpoolId threadpool)
       raises (InvalidThreadpool);
 
-    // RT Policies creation.
+    /// RT Policies creation.
     PriorityModelPolicy create_priority_model_policy (in PriorityModel priority_model,
                                                       in Priority server_priority);
 

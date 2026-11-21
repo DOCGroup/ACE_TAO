@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_HASH_MAP_MANAGER_T_CPP
 #define ACE_HASH_MAP_MANAGER_T_CPP
 
@@ -22,6 +21,8 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Malloc_Base.h"
+
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -54,9 +55,7 @@ ACE_Hash_Map_Entry<EXT_ID, INT_ID>::ACE_Hash_Map_Entry (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class INT_ID>
-ACE_Hash_Map_Entry<EXT_ID, INT_ID>::~ACE_Hash_Map_Entry ()
-{
-}
+ACE_Hash_Map_Entry<EXT_ID, INT_ID>::~ACE_Hash_Map_Entry () = default;
 
 template <class EXT_ID, class INT_ID> EXT_ID &
 ACE_Hash_Map_Entry<EXT_ID, INT_ID>::key ()
@@ -87,8 +86,8 @@ ACE_Hash_Map_Entry<EXT_ID, INT_ID>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("next_ = %d"), this->next_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("prev_ = %d"), this->prev_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("next_ = %@"), this->next_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("prev_ = %@"), this->prev_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -98,8 +97,8 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::dump 
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("total_size_ = %d\n"), this->total_size_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("cur_size_ = %d\n"), this->cur_size_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("total_size_ = %B\n"), this->total_size_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("cur_size_ = %B\n"), this->cur_size_));
   this->table_allocator_->dump ();
   this->entry_allocator_->dump ();
   this->lock_.dump ();
@@ -111,7 +110,7 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::create_buckets (size_t size)
 {
   size_t bytes = size * sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>);
-  void *ptr = nullptr;
+  void *ptr {};
 
   ACE_ALLOCATOR_RETURN (ptr,
                         this->table_allocator_->malloc (bytes),
@@ -124,9 +123,13 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::creat
   // Initialize each entry in the hash table to be a circular linked
   // list with the dummy node in the front serving as the anchor of
   // the list.
-  for (size_t i = 0; i < size; i++)
-    new (&this->table_[i]) ACE_Hash_Map_Entry<EXT_ID, INT_ID> (&this->table_[i],
-                                                               &this->table_[i]);
+  for (size_t i {}; i < size; ++i)
+    {
+      new (std::addressof (this->table_[i]))
+        ACE_Hash_Map_Entry<EXT_ID, INT_ID> (
+          std::addressof (this->table_[i]),
+          std::addressof (this->table_[i]));
+    }
   return 0;
 }
 
@@ -142,12 +145,16 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::open 
   this->close_i ();
 
   if (table_alloc == nullptr)
-    table_alloc = ACE_Allocator::instance ();
+    {
+      table_alloc = ACE_Allocator::instance ();
+    }
 
   this->table_allocator_ = table_alloc;
 
   if (entry_alloc == nullptr)
-    entry_alloc = table_alloc;
+    {
+      entry_alloc = table_alloc;
+    }
 
   this->entry_allocator_ = entry_alloc;
 
@@ -156,7 +163,9 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::open 
   // was made: it used to have an enum that was supposed to be defined
   // to be ACE_DEFAULT_MAP_SIZE, but instead was defined to be 0).
   if (size == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   return this->create_buckets (size);
 }
@@ -172,10 +181,10 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::close
       this->unbind_all_i ();
 
       // Iterate through the buckets cleaning up the sentinels.
-      for (size_t i = 0; i < this->total_size_; i++)
+      for (size_t i {}; i < this->total_size_; ++i)
         {
           // Destroy the dummy entry.
-          ACE_Hash_Map_Entry<EXT_ID, INT_ID> *entry = &this->table_[i];
+          ACE_Hash_Map_Entry<EXT_ID, INT_ID> *entry = std::addressof (this->table_[i]);
 
           // The second argument results in a no-op instead of
           // deallocation.
@@ -201,10 +210,10 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::unbin
 {
   // Iterate through the entire map calling the destuctor of each
   // <ACE_Hash_Map_Entry>.
-  for (size_t i = 0; i < this->total_size_; i++)
+  for (size_t i {}; i < this->total_size_; ++i)
     {
       for (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp_ptr = this->table_[i].next_;
-           temp_ptr != &this->table_[i];
+           temp_ptr != std::addressof (this->table_[i]);
            )
         {
           ACE_Hash_Map_Entry<EXT_ID, INT_ID> *hold_ptr = temp_ptr;
@@ -216,8 +225,8 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::unbin
         }
 
       // Restore the sentinel.
-      this->table_[i].next_ = &this->table_[i];
-      this->table_[i].prev_ = &this->table_[i];
+      this->table_[i].next_ = std::addressof (this->table_[i]);
+      this->table_[i].prev_ = std::addressof (this->table_[i]);
     }
 
   this->cur_size_ = 0;
@@ -230,10 +239,10 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bind_
                                                                                    const INT_ID &int_id,
                                                                                    ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
-  size_t loc = 0;
+  size_t loc {};
   if (this->shared_find (ext_id, entry, loc) == -1)
     {
-      void *ptr = nullptr;
+      void *ptr {};
       // Not found.
       ACE_ALLOCATOR_RETURN (ptr,
                             this->entry_allocator_->malloc (sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>)),
@@ -242,14 +251,16 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bind_
       entry = new (ptr) ACE_Hash_Map_Entry<EXT_ID, INT_ID> (ext_id,
                                                             int_id,
                                                             this->table_[loc].next_,
-                                                            &this->table_[loc]);
+                                                            std::addressof (this->table_[loc]));
       this->table_[loc].next_ = entry;
       entry->next_->prev_ = entry;
       ++this->cur_size_;
       return 0;
     }
   else
-    return 1;
+    {
+      return 1;
+    }
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
@@ -257,11 +268,11 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::trybi
                                                                                       INT_ID &int_id,
                                                                                       ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
-  size_t loc = 0;
+  size_t loc {};
   if (this->shared_find (ext_id, entry, loc) == -1)
     {
       // Not found.
-      void *ptr = nullptr;
+      void *ptr {};
       ACE_ALLOCATOR_RETURN (ptr,
                             this->entry_allocator_->malloc (sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>)),
                             -1);
@@ -269,23 +280,25 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::trybi
       entry = new (ptr) ACE_Hash_Map_Entry<EXT_ID, INT_ID> (ext_id,
                                                             int_id,
                                                             this->table_[loc].next_,
-                                                            &this->table_[loc]);
+                                                            std::addressof (this->table_[loc]));
       this->table_[loc].next_ = entry;
       entry->next_->prev_ = entry;
       ++this->cur_size_;
       return 0;
     }
   else
-    return 1;
+    {
+      return 1;
+    }
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
 ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::unbind_i (const EXT_ID &ext_id,
                                                                                      INT_ID &int_id)
 {
-  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp = nullptr;
+  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp {};
 
-  size_t loc = 0;
+  size_t loc {};
   if (this->shared_find (ext_id, temp, loc) == -1)
     {
       errno = ENOENT;
@@ -326,10 +339,12 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::share
 
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp = this->table_[loc].next_;
 
-  while (temp != &this->table_[loc] && this->equal (temp->ext_id_, ext_id) == 0)
-    temp = temp->next_;
+  while (temp != std::addressof (this->table_[loc]) && this->equal (temp->ext_id_, ext_id) == 0)
+    {
+      temp = temp->next_;
+    }
 
-  if (temp == &this->table_[loc])
+  if (temp == std::addressof (this->table_[loc]))
     {
       errno = ENOENT;
       return -1;
@@ -346,9 +361,11 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebin
                                                                                      const INT_ID &int_id,
                                                                                      ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
-  size_t dummy = 0;
+  size_t dummy {};
   if (this->shared_find (ext_id, entry, dummy) == -1)
-    return this->bind_i (ext_id, int_id);
+    {
+      return this->bind_i (ext_id, int_id);
+    }
   else
     {
       entry->ext_id_ = ext_id;
@@ -363,9 +380,11 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebin
                                                                                      INT_ID &old_int_id,
                                                                                      ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
-  size_t dummy = 0;
+  size_t dummy {};
   if (this->shared_find (ext_id, entry, dummy) == -1)
-    return this->bind_i (ext_id, int_id);
+    {
+      return this->bind_i (ext_id, int_id);
+    }
   else
     {
       old_int_id = entry->int_id_;
@@ -382,9 +401,11 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebin
                                                                                      INT_ID &old_int_id,
                                                                                      ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
-  size_t dummy = 0;
+  size_t dummy {};
   if (this->shared_find (ext_id, entry, dummy) == -1)
-    return this->bind_i (ext_id, int_id);
+    {
+      return this->bind_i (ext_id, int_id);
+    }
   else
     {
       old_ext_id = entry->ext_id_;
@@ -403,8 +424,8 @@ ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>:
   ACE_TRACE ("ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::dump_i");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("index_ = %d "), this->index_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("next_ = %x"), this->next_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("index_ = %b "), this->index_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("next_ = %@"), this->next_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -414,24 +435,30 @@ ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>:
   ACE_TRACE ("ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::forward_i");
 
   if (this->map_man_->table_ == 0)
-    return -1;
+    {
+      return -1;
+    }
   // Handle initial case specially.
   else if (this->index_ == -1)
     {
-      this->index_++;
+      ++this->index_;
       return this->forward_i ();
     }
   else if (this->index_ >= static_cast<ssize_t> (this->map_man_->total_size_))
-    return 0;
+    {
+      return 0;
+    }
 
   this->next_ = this->next_->next_;
-  if (this->next_ == &this->map_man_->table_[this->index_])
+  if (this->next_ == std::addressof (this->map_man_->table_[this->index_]))
     {
       while (++this->index_ < static_cast<ssize_t> (this->map_man_->total_size_))
         {
           this->next_ = this->map_man_->table_[this->index_].next_;
-          if (this->next_ != &this->map_man_->table_[this->index_])
-            break;
+          if (this->next_ != std::addressof (this->map_man_->table_[this->index_]))
+            {
+              break;
+            }
         }
     }
 
@@ -444,23 +471,29 @@ ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>:
   ACE_TRACE ("ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::reverse_i");
 
   if (this->map_man_->table_ == 0)
-    return -1;
+    {
+      return -1;
+    }
   else if (this->index_ == static_cast<ssize_t> (this->map_man_->total_size_))
     {
       --this->index_;
       return this->reverse_i ();
     }
   else if (this->index_ < 0)
-    return 0;
+    {
+      return 0;
+    }
 
   this->next_ = this->next_->prev_;
-  if (this->next_ == &this->map_man_->table_[this->index_])
+  if (this->next_ == std::addressof (this->map_man_->table_[this->index_]))
     {
       while (--this->index_ >= 0)
         {
           this->next_ = this->map_man_->table_[this->index_].prev_;
-          if (this->next_ != &this->map_man_->table_[this->index_])
-            break;
+          if (this->next_ != std::addressof (this->map_man_->table_[this->index_]))
+            {
+              break;
+            }
         }
     }
 
@@ -475,8 +508,8 @@ ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_
   ACE_TRACE ("ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::dump_i");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("index_ = %d "), this->index_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("next_ = %x"), this->next_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("index_ = %b "), this->index_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("next_ = %@"), this->next_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -486,7 +519,9 @@ ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_
   ACE_TRACE ("ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::forward_i");
 
   if (this->map_man_->table_ == 0)
-    return -1;
+    {
+      return -1;
+    }
   // Handle initial case specially.
   else if (this->index_ == -1)
     {
@@ -494,16 +529,20 @@ ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_
       return this->forward_i ();
     }
   else if (this->index_ >= (ssize_t) this->map_man_->total_size_)
-    return 0;
+    {
+      return 0;
+    }
 
   this->next_ = this->next_->next_;
-  if (this->next_ == &this->map_man_->table_[this->index_])
+  if (this->next_ == std::addressof (this->map_man_->table_[this->index_]))
     {
       while (++this->index_ < (ssize_t) this->map_man_->total_size_)
         {
           this->next_ = this->map_man_->table_[this->index_].next_;
-          if (this->next_ != &this->map_man_->table_[this->index_])
-            break;
+          if (this->next_ != std::addressof (this->map_man_->table_[this->index_]))
+            {
+              break;
+            }
         }
     }
 
@@ -516,23 +555,29 @@ ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_
   ACE_TRACE ("ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::reverse_i");
 
   if (this->map_man_->table_ == 0)
-    return -1;
+    {
+      return -1;
+    }
   else if (this->index_ == (ssize_t) this->map_man_->total_size_)
     {
       --this->index_;
       return this->reverse_i ();
     }
   else if (this->index_ < 0)
-    return 0;
+    {
+      return 0;
+    }
 
   this->next_ = this->next_->prev_;
-  if (this->next_ == &this->map_man_->table_[this->index_])
+  if (this->next_ == std::addressof (this->map_man_->table_[this->index_]))
     {
       while (--this->index_ >= 0)
         {
           this->next_ = this->map_man_->table_[this->index_].prev_;
-          if (this->next_ != &this->map_man_->table_[this->index_])
-            break;
+          if (this->next_ != std::addressof (this->map_man_->table_[this->index_]))
+            {
+              break;
+            }
         }
     }
 

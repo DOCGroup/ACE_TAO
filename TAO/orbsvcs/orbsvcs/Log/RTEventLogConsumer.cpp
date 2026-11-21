@@ -20,14 +20,12 @@ TAO_Rtec_LogConsumer::TAO_Rtec_LogConsumer (TAO_RTEventLog_i * log)
 {
 }
 
-TAO_Rtec_LogConsumer::~TAO_Rtec_LogConsumer ()
-{
-}
+TAO_Rtec_LogConsumer::~TAO_Rtec_LogConsumer () = default;
 
 void
 TAO_Rtec_LogConsumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin)
 {
-  RtecEventComm::PushConsumer_var myself = this->_this ();
+  RtecEventComm::PushConsumer_var const myself = this->_this ();
   this->supplier_proxy_ = consumer_admin->obtain_push_supplier ();
 
   ACE_ConsumerQOS_Factory qos;

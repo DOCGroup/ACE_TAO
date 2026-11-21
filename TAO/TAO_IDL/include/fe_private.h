@@ -83,11 +83,11 @@ struct TAO_IDL_FE_Export TAO_IDL_CPP_Keyword_Entry
 class TAO_IDL_FE_Export TAO_IDL_CPP_Keyword_Table
 {
 private:
-  std::size_t hash (char const *str,
-                    std::size_t len);
+  size_t hash (char const *str,
+                    size_t len);
 public:
   TAO_IDL_CPP_Keyword_Entry const *lookup (char const *str,
-                                           std::size_t len);
+                                           size_t len);
 };
 
 #endif /* _FE_FE_HH */

@@ -3,13 +3,13 @@
 #include /**/ "ace/pre.h"
 
 #include "HelloS.h"
+#include <atomic>
 
 /// Implement the Test::Hello interface
 class Hello
   : public virtual POA_Test::Hello
 {
 public:
-  /// Constructor
   explicit Hello (CORBA::ORB_ptr orb);
 
   Hello (Hello const &) = delete;
@@ -17,18 +17,19 @@ public:
   Hello (Hello &&) = delete;
   Hello &operator= (Hello &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void method (CORBA::Short count) override;
 
   void set_callback (Test::CallBack_ptr cb) override;
-
+  /// @}
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
   Test::CallBack_var callback_;
-  int count_;
+  std::atomic<int> count_ {};
 };
 
 #include /**/ "ace/post.h"

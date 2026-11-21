@@ -10,6 +10,8 @@
 
 #include "ace/Dynamic_Service.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -132,7 +134,7 @@ TAO::Remote_Object_Proxy_Broker *
 the_tao_remote_object_proxy_broker ()
 {
   static TAO::Remote_Object_Proxy_Broker the_broker;
-  return &the_broker;
+  return std::addressof (the_broker);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

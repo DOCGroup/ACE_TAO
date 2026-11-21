@@ -28,9 +28,9 @@ Running the test
 receiver
 --------
 
-receiver
+receiver [-d]
 
--f <input_filename> -> The name of the file from which data is sent to the receiver
+-d          --> Increase TAO_debug_level for debug messages.
 
 sender
 ------

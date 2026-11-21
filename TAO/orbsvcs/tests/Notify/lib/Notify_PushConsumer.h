@@ -17,14 +17,13 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_NOTIFY_PUSHCONSUMER_H
 #define TAO_NOTIFY_PUSHCONSUMER_H
 #include /**/ "ace/pre.h"
 
 #include "PushConsumer.h"
 
-typedef TAO_Notify_Tests_PushConsumer TAO_Notify_PushConsumer;
+using TAO_Notify_PushConsumer = TAO_Notify_Tests_PushConsumer;
 
 #include /**/ "ace/post.h"
 #endif /* TAO_NOTIFY_PUSHCONSUMER_H */

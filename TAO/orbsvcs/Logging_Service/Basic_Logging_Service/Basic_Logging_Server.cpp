@@ -9,15 +9,19 @@ class Logging_Svc_Shutdown
   : public Shutdown_Functor
 {
 public:
-  Logging_Svc_Shutdown (Basic_Logging_Service& svc);
+  explicit Logging_Svc_Shutdown (Basic_Logging_Service & svc);
+  Logging_Svc_Shutdown (Logging_Svc_Shutdown const &) = delete;
+  Logging_Svc_Shutdown (Logging_Svc_Shutdown &&) = delete;
+  Logging_Svc_Shutdown &operator= (Logging_Svc_Shutdown const &) = delete;
+  Logging_Svc_Shutdown &operator= (Logging_Svc_Shutdown &&) = delete;
 
-  void operator() (int which_signal);
+  void operator() (int which_signal) override;
 
 private:
-  Basic_Logging_Service&        svc_;
+  Basic_Logging_Service & svc_;
 };
 
-Logging_Svc_Shutdown::Logging_Svc_Shutdown (Basic_Logging_Service& svc)
+Logging_Svc_Shutdown::Logging_Svc_Shutdown (Basic_Logging_Service & svc)
   : svc_ (svc)
 {
 }
@@ -30,36 +34,34 @@ Logging_Svc_Shutdown::operator() (int which_signal)
                 "Basic_Logging_Service: shutting down on signal %d\n",
                 which_signal));
 
-  (void) this->svc_.shutdown ();
+  this->svc_.shutdown ();
 }
 
 // Driver function for the Basic_Logging_Service
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
-  Basic_Logging_Service service;
+  Basic_Logging_Service service {};
 
   Logging_Svc_Shutdown killer (service);
   Service_Shutdown kill_contractor (killer);
 
   try
     {
-      int rc;
-
-      rc = service.init (argc, argv);
-      if (rc == -1)
+      int const init_result = service.init (argc, argv);
+      if (init_result == -1)
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           "Failed to initialize the Telecom Log Service.\n"),
+                           ACE_TEXT ("Failed to initialize the Telecom Log Service.\n")),
                           1);
 
-      rc = service.run ();
-      if (rc == -1)
+      int const run_result = service.run ();
+      if (run_result == -1)
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           "Failed to start the Telecom Log Service.\n"),
+                           ACE_TEXT ("Failed to start the Telecom Log Service.\n")),
                           1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Failed to start the Telecom Log Service.\n");
       return 1;

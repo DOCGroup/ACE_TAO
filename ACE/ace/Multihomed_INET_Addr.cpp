@@ -11,17 +11,13 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Multihomed_INET_Addr)
 
-// Default constructor
-
 ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr ()
-  : secondaries_ (0)
 {
   ACE_TRACE ("ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr");
 }
 
 ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr (const char address[])
- : ACE_INET_Addr (address),
-   secondaries_ (0)
+ : ACE_INET_Addr (address)
 {
 }
 
@@ -35,24 +31,29 @@ ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
   ACE_INET_Addr::set(port_number, host_name, encode, address_family);
 
   // check for secondary INET addrs
-  if (secondary_host_names && size){
+  if (secondary_host_names && size)
+  {
     // we have a non-zero pointer and size
     this->secondaries_.size(size); // size the array
 
     size_t next_empty_slot = 0;
-    for (size_t i = 0; i < size; ++i) {
+    for (size_t i = 0; i < size; ++i)
+    {
       int ret = this->secondaries_[next_empty_slot].set(port_number,
                                                        secondary_host_names[i],
                                                        encode,
                                                        address_family);
-      if (ret) {
+      if (ret)
+      {
         ACELIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("Invalid INET addr (%C:%u) will be ignored\n"),
                     secondary_host_names[i], port_number));
         this->secondaries_.size(this->secondaries_.size() - 1);
       }
       else
+      {
         ++next_empty_slot;
+      }
     }
   }
 
@@ -70,24 +71,29 @@ ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
   ACE_INET_Addr::set(port_number, host_name, encode, address_family);
 
   // check for secondary INET addrs
-  if (secondary_host_names && size){
+  if (secondary_host_names && size)
+  {
     // we have a non-zero pointer and size
     this->secondaries_.size(size); // size the array
 
     size_t next_empty_slot = 0;
-    for (size_t i = 0; i < size; ++i) {
+    for (size_t i = 0; i < size; ++i)
+    {
       int ret = this->secondaries_[next_empty_slot].set(port_number,
                                                        secondary_host_names[i],
                                                        encode,
                                                        address_family);
-      if (ret) {
+      if (ret)
+      {
         ACELIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("Invalid INET addr (%s:%u) will be ignored\n"),
                     ACE_TEXT_WCHAR_TO_TCHAR (secondary_host_names[i]), port_number));
         this->secondaries_.size(this->secondaries_.size() - 1);
       }
       else
+      {
         ++next_empty_slot;
+      }
     }
   }
 
@@ -104,24 +110,29 @@ ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
   ACE_INET_Addr::set(port_number, primary_ip_addr, encode);
 
   // check for secondary INET addrs
-  if (secondary_ip_addrs && size){
+  if (secondary_ip_addrs && size)
+  {
     // we have a non-zero pointer and size
     this->secondaries_.size(size); // size the array
 
     size_t next_empty_slot = 0;
-    for (size_t i = 0; i < size; ++i) {
+    for (size_t i = 0; i < size; ++i)
+    {
       int const ret = this->secondaries_[next_empty_slot].set(port_number,
                                                               secondary_ip_addrs[i],
                                                               encode);
 
-      if (ret) {
+      if (ret)
+      {
         ACELIB_DEBUG ((LM_DEBUG,
                     "Invalid INET addr (%u:%u) will be ignored\n",
                     secondary_ip_addrs[i], port_number));
         this->secondaries_.size(this->secondaries_.size() - 1);
       }
       else
+      {
         ++next_empty_slot;
+      }
     }
   }
 
@@ -139,12 +150,14 @@ ACE_Multihomed_INET_Addr::set (u_short port_number,
 {
   this->secondaries_.size(size);
 
-  for (size_t i = 0; i < size; ++i) {
+  for (size_t i = 0; i < size; ++i)
+  {
     int const ret = this->secondaries_[i].set(port_number,
                                               secondary_host_names[i],
                                               encode,
                                               address_family);
-    if (ret) {
+    if (ret)
+    {
       return ret;
     }
   }
@@ -166,12 +179,14 @@ ACE_Multihomed_INET_Addr::set (u_short port_number,
 {
   this->secondaries_.size(size);
 
-  for (size_t i = 0; i < size; ++i) {
+  for (size_t i = 0; i < size; ++i)
+  {
     int ret = this->secondaries_[i].set(port_number,
                                        secondary_host_names[i],
                                        encode,
                                        address_family);
-    if (ret) {
+    if (ret)
+    {
       return ret;
     }
   }
@@ -189,12 +204,14 @@ ACE_Multihomed_INET_Addr::set (u_short port_number,
 {
   this->secondaries_.size(size);
 
-  for (size_t i = 0; i < size; ++i) {
+  for (size_t i = 0; i < size; ++i)
+  {
     int ret = this->secondaries_[i].set(port_number,
                                        secondary_ip_addrs[i],
                                        encode);
 
-    if (ret) {
+    if (ret)
+    {
       return ret;
     }
   }
@@ -207,7 +224,9 @@ ACE_Multihomed_INET_Addr::set_port_number (u_short port_number, int encode)
 {
   size_t i = 0;
   while (i < secondaries_.size())
-    secondaries_[i++].set_port_number(port_number, encode);
+    {
+      secondaries_[i++].set_port_number(port_number, encode);
+    }
 
   this->ACE_INET_Addr::set_port_number(port_number, encode);
 }
@@ -226,7 +245,9 @@ ACE_Multihomed_INET_Addr::get_secondary_addresses(ACE_INET_Addr *secondary_addrs
         secondary_addrs[i].set (this->secondaries_[i]);
 
       if (ret)
+      {
         return ret;
+      }
     }
 
   return 0;
@@ -237,7 +258,9 @@ ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in *addrs,
                                         size_t size) const
 {
   if (size == 0)
+  {
     return;
+  }
   // Copy primary address(es) to the first slot(s) of the user-supplied array
   ACE_INET_Addr me (*this);
   size_t i = 0;
@@ -250,7 +273,9 @@ ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in *addrs,
           ++i;
         }
       if (!me.next ())
+      {
         break;
+      }
     }
 
   // Copy secondary addresses to remaining slots of the user-supplied
@@ -267,7 +292,9 @@ ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in *addrs,
               ++i;
             }
              if (!copy.next ())
-            break;
+             {
+               break;
+             }
         }
     }
 }
@@ -278,7 +305,9 @@ ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in6 *addrs,
                                         size_t size) const
 {
   if (size == 0)
-    return;
+    {
+      return;
+    }
   // Copy primary address(es) to the first slot(s) of the user-supplied array
   ACE_INET_Addr me (*this);
   size_t i = 0;
@@ -291,7 +320,9 @@ ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in6 *addrs,
           ++i;
         }
       if (!me.next ())
-        break;
+        {
+          break;
+        }
     }
 
   // Copy secondary addresses to remaining slots of the user-supplied
@@ -309,7 +340,9 @@ ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in6 *addrs,
               ++i;
             }
           if (!copy.next ())
-            break;
+            {
+              break;
+            }
         }
     }
 }

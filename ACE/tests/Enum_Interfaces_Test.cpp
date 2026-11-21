@@ -36,30 +36,38 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Platform: %C, %C, %C\n"),
               uname.sysname, uname.release, uname.version ));
 
-  ACE_INET_Addr *the_addr_array = nullptr;
+  ACE_INET_Addr *the_addr_array {};
   size_t how_many = 0;
 
   int rc = ACE::get_ip_interfaces (how_many, the_addr_array);
 
   if (rc != 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE::get_ip_interfaces failed")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("ACE::get_ip_interfaces failed")));
+    }
   else if (how_many == 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("No interfaces presently configured in the kernel\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("No interfaces presently configured in the kernel\n")));
+    }
   else
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" there are %d interfaces\n"), how_many));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" there are %B interfaces\n"), how_many));
       int num_ipv4 = 0;
       int num_ipv6 = 0;
-      for (size_t i = 0; i < how_many; i++)
+      for (size_t i = 0; i < how_many; ++i)
         {
           if (the_addr_array[i].get_type() == AF_INET)
-            ++num_ipv4;
+            {
+              ++num_ipv4;
+            }
 #if defined (ACE_HAS_IPV6)
           else if (the_addr_array[i].get_type() == AF_INET6)
-            ++num_ipv6;
+            {
+              ++num_ipv6;
+            }
 #endif /* ACE_HAS_IPV6 */
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\t%C\n"),
                     the_addr_array[i].get_host_addr ()));

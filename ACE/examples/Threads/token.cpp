@@ -5,14 +5,18 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_time.h"
 
-
 #if defined (ACE_HAS_THREADS)
 
 class My_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  My_Task (int n);
-  virtual int svc ();
+  explicit My_Task (int n);
+  int svc () override;
+
+  My_Task (My_Task const &) = delete;
+  My_Task (My_Task &&) = delete;
+  My_Task &operator= (My_Task const &) = delete;
+  My_Task &operator= (My_Task &&) = delete;
 
   static void sleep_hook (void *);
 
@@ -32,8 +36,7 @@ My_Task::My_Task (int n)
 void
 My_Task::sleep_hook (void *)
 {
-  ACE_DEBUG ((LM_ERROR, "(%u) blocking, My_Task::sleep_hook () called\n",
-              ACE_Thread::self())) ;
+  ACE_DEBUG ((LM_ERROR, "(%t) blocking, My_Task::sleep_hook () called\n"));
 }
 
 // Test out the behavior of the ACE_Token class.
@@ -41,7 +44,7 @@ My_Task::sleep_hook (void *)
 int
 My_Task::svc ()
 {
-  for (size_t i = 0; i < 100; i++)
+  for (size_t i = 0; i < 100; ++i)
     {
       // Wait for up to 1 millisecond past the current time to get the token.
       ACE_Time_Value timeout (ACE_OS::time (0), 1000);
@@ -54,7 +57,9 @@ My_Task::svc ()
           this->token_.release ();
         }
       else
+      {
         ACE_Thread::yield ();
+      }
     }
   return 0;
 }

@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_VALUETYPE_FIELD_CDR_CS_H_
 #define _BE_VISITOR_VALUETYPE_FIELD_CDR_CS_H_
 
@@ -38,7 +37,8 @@ public:
   /// visit the field node
   int visit_field (be_field *node) override;
 
-  // =visit operations on all possible data types that a field can be
+  /// @name Field type visitor methods
+  /// @{
 
   /// visit array type
   int visit_array (be_array *node) override;
@@ -89,6 +89,8 @@ public:
   /// visit union type
   int visit_union (be_union *node) override;
 
+  /// @}
+
   std::string pre_, post_;
 
 private:
@@ -117,13 +119,16 @@ public:
   /// visit the field node
   int visit_field (be_field *node) override;
 
-  // = visit operations for data types that require a local variable.
+  /// @name Visitor methods for types that require a local variable
+  /// @{
 
   /// visit array type
   int visit_array (be_array *node) override;
 
   /// visit typedef type
   int visit_typedef (be_typedef *node) override;
+
+  /// @}
 };
 
 #endif /*  _BE_VISITOR_VALUETYPE_FIELD_CDR_CS_H_ */

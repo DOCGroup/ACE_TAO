@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file RequestProcessingPolicy.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_PORTABLESERVER_REQUESTPROCESSINGPOLICY_H
 #define TAO_PORTABLESERVER_REQUESTPROCESSINGPOLICY_H
 #include /**/ "ace/pre.h"
@@ -41,7 +37,7 @@ namespace TAO
       public virtual ::CORBA::LocalObject
     {
     public:
-      RequestProcessingPolicy (::PortableServer::RequestProcessingPolicyValue value);
+      explicit RequestProcessingPolicy (::PortableServer::RequestProcessingPolicyValue value);
 
       CORBA::Policy_ptr copy () override;
 

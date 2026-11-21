@@ -2,8 +2,9 @@
 #define ACE_BUFFERED_STREAM_BUFFER_CPP
 
 #include "ace/INet/BufferedStreamBuffer.h"
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
+#include <new>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -17,11 +18,13 @@ namespace ACE
         typename std::basic_ios<ACE_CHAR_T, TR>::openmode mode)
       : bufsize_ (bufsz),
         mode_ (mode),
-        interceptor_ (0)
+        interceptor_ (nullptr)
       {
-        char_type* p = 0;
-        ACE_NEW_NORETURN (p, char_type [bufsz]);
-        this->buffer_.reset (p);
+        this->buffer_.reset (new (std::nothrow) char_type [bufsz]);
+        if (!this->buffer_)
+          {
+            throw std::bad_alloc ();
+          }
 
         this->setg (this->buffer_.get () + 4,
                     this->buffer_.get () + 4,
@@ -31,22 +34,26 @@ namespace ACE
       }
 
     template <class ACE_CHAR_T, class TR>
-    BasicBufferedStreamBuffer<ACE_CHAR_T, TR>::~BasicBufferedStreamBuffer ()
-      {
-      }
+    BasicBufferedStreamBuffer<ACE_CHAR_T, TR>::~BasicBufferedStreamBuffer () = default;
 
     template <class ACE_CHAR_T, class TR>
     typename BasicBufferedStreamBuffer<ACE_CHAR_T, TR>::int_type
     BasicBufferedStreamBuffer<ACE_CHAR_T, TR>::overflow (int_type c)
       {
-        if (!(this->mode_ & ios_type::out)) return char_traits::eof ();
+        if (!(this->mode_ & ios_type::out))
+          {
+            return char_traits::eof ();
+          }
 
         if (c != char_traits::eof ())
         {
           *this->pptr () = char_traits::to_char_type (c);
           this->pbump (1);
         }
-        if (this->flush_buffer () == std::streamsize (-1)) return char_traits::eof ();
+        if (this->flush_buffer () == std::streamsize (-1))
+          {
+            return char_traits::eof ();
+          }
 
         return c;
       }
@@ -55,31 +62,45 @@ namespace ACE
     typename BasicBufferedStreamBuffer<ACE_CHAR_T, TR>::int_type
     BasicBufferedStreamBuffer<ACE_CHAR_T, TR>::underflow ()
       {
-        if (!(this->mode_ & ios_type::in)) return char_traits::eof ();
+        if (!(this->mode_ & ios_type::in))
+          {
+            return char_traits::eof ();
+          }
 
         if (this->gptr () && (this->gptr () < this->egptr ()))
-          return char_traits::to_int_type (*this->gptr ());
+          {
+            return char_traits::to_int_type (*this->gptr ());
+          }
 
         int putback = int (this->gptr () - this->eback ());
-        if (putback > 4) putback = 4;
+        if (putback > 4)
+          {
+            putback = 4;
+          }
 
-        ACE_OS::memmove (this->buffer_.get () + (4 - putback),
-                         this->gptr () - putback,
-                         putback * sizeof (char_type));
+        std::memmove (this->buffer_.get () + (4 - putback),
+                      this->gptr () - putback,
+                      putback * sizeof (char_type));
 
         if (this->interceptor_)
-          this->interceptor_->before_read (this->bufsize_ - 4);
+          {
+            this->interceptor_->before_read (this->bufsize_ - 4);
+          }
 
         int n = this->read_from_stream (this->buffer_.get () + 4,
                                         this->bufsize_ - 4);
 
         if (this->interceptor_)
-          this->interceptor_->after_read (this->buffer_.get () + 4, n);
+          {
+            this->interceptor_->after_read (this->buffer_.get () + 4, n);
+          }
 
         if (n <= 0)
           {
             if (this->interceptor_)
-              this->interceptor_->on_eof ();
+              {
+                this->interceptor_->on_eof ();
+              }
 
             return char_traits::eof ();
           }
@@ -98,7 +119,10 @@ namespace ACE
       {
         if (this->pptr () && this->pptr () > this->pbase ())
         {
-          if (this->flush_buffer () == -1) return -1;
+          if (this->flush_buffer () == -1)
+            {
+              return -1;
+            }
         }
         return 0;
       }
@@ -159,12 +183,16 @@ namespace ACE
         int n = int (this->pptr () - this->pbase ());
 
         if (this->interceptor_)
-          this->interceptor_->before_write (this->pbase (), n);
+          {
+            this->interceptor_->before_write (this->pbase (), n);
+          }
 
         int n_out = this->write_to_stream (this->pbase (), n);
 
         if (this->interceptor_)
-          this->interceptor_->after_write (n_out);
+          {
+            this->interceptor_->after_write (n_out);
+          }
 
         if (n_out == n)
         {

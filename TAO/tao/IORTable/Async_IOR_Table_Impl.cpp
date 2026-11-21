@@ -15,40 +15,54 @@ void
 TAO_Async_IOR_Table_Impl::async_find (::IORTable::Locate_ResponseHandler handler,
                                       char const *object_key)
 {
-  // We don't want the lock held during locate, so make it go out
-  // of scope before then.
+  std::string ior;
+  IORTable::AsyncLocator_var async_locator;
+  IORTable::Locator_var locator;
+  bool found {};
+  TAO_AMH_Locate_ResponseHandler_var const rh = handler;
   {
-    ACE_CString key (object_key);
-    ACE_CString ior;
-    TAO_AMH_Locate_ResponseHandler_var rh = handler;
+    std::string const key (object_key);
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
-    if (this->map_.find (key, ior) == 0)
+    Map::const_iterator const iter = this->map_.find (key);
+    if (iter != this->map_.end ())
       {
-        rh->forward_ior (ior.c_str(), false);
-        return;
+        ior = iter->second;
+        found = true;
       }
-    if (CORBA::is_nil (this->async_locator_.in ()))
+    else
       {
-        if (CORBA::is_nil (this->locator_.in ()))
+        async_locator = IORTable::AsyncLocator::_duplicate (this->async_locator_.in ());
+        if (CORBA::is_nil (async_locator.in ()))
           {
-            rh->raise_excep (IORTable::NotFound ());
+            locator = IORTable::Locator::_duplicate (this->locator_.in ());
           }
-        else
-          {
-            try
-              {
-                ior = this->locator_->locate (object_key);
-                rh->forward_ior (ior.c_str(), false);
-              }
-            catch (CORBA::Exception const &ex)
-              {
-                rh->raise_excep (ex);
-              }
-          }
-        return;
       }
   }
-  this->async_locator_->async_locate (handler, object_key);
+
+  if (found)
+    {
+      rh->forward_ior (ior.c_str (), false);
+    }
+  else if (!CORBA::is_nil (async_locator.in ()))
+    {
+      async_locator->async_locate (handler, object_key);
+    }
+  else if (!CORBA::is_nil (locator.in ()))
+    {
+      try
+        {
+          ior = locator->locate (object_key);
+          rh->forward_ior (ior.c_str (), false);
+        }
+      catch (CORBA::Exception const &ex)
+        {
+          rh->raise_excep (ex);
+        }
+    }
+  else
+    {
+      rh->raise_excep (IORTable::NotFound ());
+    }
 }
 
 void

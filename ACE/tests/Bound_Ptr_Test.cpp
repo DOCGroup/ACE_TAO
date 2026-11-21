@@ -131,10 +131,14 @@ void Child::do_something ()
   // case it is not strictly necessary since the child will only exist if the
   // parent still exists).
   if (strong_parent == nullptr)
+  {
     return;
+  }
 
   for (int i = 0; i < 5; ++i)
-    strong_parent->do_something ();
+    {
+      strong_parent->do_something ();
+    }
 }
 
 size_t Printer::instance_count_ = 0;
@@ -242,7 +246,6 @@ Method_Request_end::call ()
   return -1;
 }
 
-// Constructor
 // Associates the activation queue with this task's message queue,
 // allowing easy access to the message queue for shutting it down
 // when it's time to stop this object's service threads.
@@ -252,8 +255,6 @@ Scheduler::Scheduler ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Scheduler created\n")));
 }
-
-// Destructor
 
 Scheduler::~Scheduler ()
 {
@@ -303,7 +304,9 @@ Scheduler::svc ()
                   ACE_TEXT ("(%t) calling method request\n")));
       // Call it.
       if (mo->call () == -1)
+      {
         break;
+      }
 
       // Destructor automatically deletes it.
     }
@@ -336,7 +339,6 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Bound_Ptr_Test"));
 
-
   // =========================================================================
   // The following test uses the ACE_Strong_Bound_Ptr in a single
   // thread of control, hence we use the ACE_Null_Mutex
@@ -344,7 +346,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) performing synchronous test...\n")));
 
-  Parent *parent1 = nullptr;
+  Parent *parent1 {};
   ACE_NEW_RETURN (parent1,
                   Parent,
                   -1);
@@ -363,7 +365,7 @@ run_main (int, ACE_TCHAR *[])
     p->child_->do_something ();
   }
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Parent instance count is %d, expecting 0\n"),
+              ACE_TEXT ("(%t) Parent instance count is %B, expecting 0\n"),
               Parent::instance_count_));
   if (Parent::instance_count_ != 0)
     {
@@ -372,7 +374,7 @@ run_main (int, ACE_TCHAR *[])
                          -1);
     }
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Child instance count is %d, expecting 0\n"),
+              ACE_TEXT ("(%t) Child instance count is %B, expecting 0\n"),
               Child::instance_count_));
   if (Child::instance_count_ != 0)
     {
@@ -388,7 +390,7 @@ run_main (int, ACE_TCHAR *[])
                          -1);
     }
 
-  Printer *printer1 = nullptr;
+  Printer *printer1 {};
   ACE_NEW_RETURN (printer1,
                   Printer ("I am printer 1"),
                   -1);
@@ -407,7 +409,7 @@ run_main (int, ACE_TCHAR *[])
     r9->print ();
   }
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Printer instance count is %d, expecting 0\n"),
+              ACE_TEXT ("(%t) Printer instance count is %B, expecting 0\n"),
               Printer::instance_count_));
   if (Printer::instance_count_ != 0)
     {
@@ -432,7 +434,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) performing asynchronous test...\n")));
 
-  Scheduler *scheduler_ptr = nullptr;
+  Scheduler *scheduler_ptr {};
 
   // Create active objects..
   ACE_NEW_RETURN (scheduler_ptr,
@@ -449,17 +451,19 @@ run_main (int, ACE_TCHAR *[])
     }
 
   {
-    Printer *printer2 = nullptr;
+    Printer *printer2 {};
     ACE_NEW_RETURN (printer2,
                     Printer ("I am printer 2"),
                     -1);
 
     Printer_var r (printer2);
 
-    for (int i = 0; i < n_loops; i++)
-      // Spawn off the methods, which run in a separate thread as
-      // active object invocations.
-      scheduler->print (r);
+    for (int i = 0; i < n_loops; ++i)
+      {
+        // Spawn off the methods, which run in a separate thread as
+        // active object invocations.
+        scheduler->print (r);
+      }
   }
 
   // Close things down.
@@ -468,10 +472,12 @@ run_main (int, ACE_TCHAR *[])
   scheduler->wait ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Printer instance count is %d, expecting 0\n"),
+              ACE_TEXT ("(%t) Printer instance count is %B, expecting 0\n"),
               Printer::instance_count_));
   if (Printer::instance_count_ != 0)
+  {
     return -1;
+  }
 
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;

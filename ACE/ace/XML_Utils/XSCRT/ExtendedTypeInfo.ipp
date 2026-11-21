@@ -1,9 +1,8 @@
-// file      : XSCRT/ExtendedTypeInfo.ipp
-// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+/// @file XSCRT/ExtendedTypeInfo.ipp
+/// @author Boris Kolpackov <boris@dre.vanderbilt.edu>
 
 namespace XSCRT
 {
-  // TypeId
   inline TypeId::TypeId (std::type_info const &tid)
     : tid_ (std::addressof (tid))
   {
@@ -24,7 +23,6 @@ namespace XSCRT
     return tid_->before (*other.tid_);
   }
 
-  // ExtendedTypeInfo::BaseInfo
   inline ExtendedTypeInfo::BaseInfo::BaseInfo (Access::Value access, bool virtual_base, TypeId const &tid)
     : tid_ (tid)
     , virtual_base_ (virtual_base)
@@ -47,7 +45,6 @@ namespace XSCRT
     return virtual_base_;
   }
 
-  // ExtendedTypeInfo
   inline ExtendedTypeInfo::ExtendedTypeInfo (TypeId const &tid)
     : tid_ (tid)
   {
@@ -78,7 +75,6 @@ namespace XSCRT
     add_base (access, virtual_base, TypeId (tid));
   }
 
-  // ExtendedTypeInfoMap
   inline ExtendedTypeInfoMap &extended_type_info_map ()
   {
     static ExtendedTypeInfoMap extended_type_info_map_;

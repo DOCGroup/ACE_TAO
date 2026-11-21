@@ -2,7 +2,7 @@
 #include "worker.h"
 #include "chatter.h"
 
-Chatter::Chatter (CORBA::ORB_ptr orb, const ACE_TCHAR *ior, ACE_Condition<ACE_Mutex>& cond)
+Chatter::Chatter (CORBA::ORB_ptr orb, ACE_TCHAR const* ior, ACE_Condition<ACE_Mutex>& cond)
  : Worker (orb),
    nrequests_ (0),
    nreplies_ (0),
@@ -38,26 +38,28 @@ Chatter::svc ()
         Test_Idl::SharedIntf::_narrow(rawObject.in());
 
      if (CORBA::is_nil (intf_var.in ()))
+     {
        ACE_ERROR_RETURN ((LM_ERROR, "Nil reference <%s>\n", ior_), -1);
+     }
 
      // make call on server
      {
        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, request_reply_count_mutex_, -1);
        nrq= nrequests ();
-       nrequests_++;
+       ++nrequests_;
      }
      ACE_DEBUG((LM_INFO,"(%P|%t) Chatter[%d] started for %s\n", nrq, ior_));
      intf_var->ping();
      {
        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, request_reply_count_mutex_, -1);
-       nreplies_++;
+       ++nreplies_;
      }
 
      ACE_DEBUG((LM_INFO,"(%P|%t) Chatter[%d,%d,%d] completed for %s\n", nrq, nrequests_, nreplies_, ior_));
      cond_.signal();
      return 0;
    }
-   catch (const CORBA::Exception& ex)
+   catch (CORBA::Exception const& ex)
    {
       ex._tao_print_exception ("Exception caught:");
       ACE_DEBUG((LM_INFO,"(%P|%t) Chatter[%d] %p for %s\n", nrq, "failed", ior_));
@@ -79,7 +81,9 @@ Chatter::farewell ()
         Test_Idl::SharedIntf::_narrow(rawObject.in());
 
      if (CORBA::is_nil (intf_var.in ()))
+     {
        ACE_ERROR_RETURN ((LM_ERROR, "Nil reference <%s>\n", ior_), -1);
+     }
 
      // make call on server
      ACE_DEBUG((LM_INFO,"(%P|%t) farewell START for %s\n", ior_));
@@ -87,12 +91,11 @@ Chatter::farewell ()
 
       ACE_DEBUG((LM_INFO,"(%P|%t) farewell COMPLETE for %s\n", ior_));
    }
-   catch (const CORBA::Exception& ex)
+   catch (CORBA::Exception const& ex)
    {
       ex._tao_print_exception ("Exception caught:");
       ACE_DEBUG((LM_INFO,"(%P|%t) %p for %s\n", "farewell FAILED", ior_));
    }
    return 0;
 }
-
 

@@ -15,6 +15,7 @@
 #include "ace/Null_Mutex.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/INet/INet_Export.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -34,16 +35,16 @@ namespace ACE
               ConnectionKey ();
               virtual ~ConnectionKey ();
 
-              bool operator ==(const ConnectionKey& key) const;
+              bool operator == (ConnectionKey const& key) const;
 
-              bool operator !=(const ConnectionKey& key) const;
+              bool operator != (ConnectionKey const& key) const;
 
               virtual u_long hash () const = 0;
 
               virtual ConnectionKey* duplicate () const = 0;
 
             protected:
-              virtual bool equal (const ConnectionKey& key) const = 0;
+              virtual bool equal (ConnectionKey const& key) const = 0;
           };
 
         /**
@@ -51,30 +52,34 @@ namespace ACE
         *
         * @brief Holder class for connection keys.
         *
-        * Implements non-copying holder object used as ext_id in
-        * connection cache map.
+        * Borrows an input key and duplicates it when copied into the cache map.
         */
         class ConnectionCacheKey
           {
             public:
               ConnectionCacheKey ();
-              ConnectionCacheKey (const ConnectionKey& key);
-              ConnectionCacheKey (const ConnectionCacheKey& cachekey);
+              explicit ConnectionCacheKey (ConnectionKey const& key);
+              ConnectionCacheKey (ConnectionCacheKey const& cachekey);
               virtual ~ConnectionCacheKey ();
 
-              ConnectionCacheKey& operator =(const ConnectionCacheKey& cachekey);
+              ConnectionCacheKey& operator = (ConnectionCacheKey const& cachekey);
+              ConnectionCacheKey (ConnectionCacheKey&&) = delete;
+              ConnectionCacheKey& operator = (ConnectionCacheKey&&) = delete;
 
-              bool operator ==(const ConnectionCacheKey& cachekey) const;
+              bool operator == (ConnectionCacheKey const& cachekey) const;
 
-              bool operator !=(const ConnectionCacheKey& cachekey) const;
+              bool operator != (ConnectionCacheKey const& cachekey) const;
 
               u_long hash () const;
 
-              const ConnectionKey& key () const;
+              ConnectionKey const& key () const;
 
             private:
-              ConnectionKey* key_;
-              bool delete_key_;
+              /// Owns a duplicate when this key was copied into the map.
+              std::unique_ptr<ConnectionKey> owned_key_ {};
+
+              /// Views the borrowed key or the owned duplicate.
+              ConnectionKey const* key_ {};
           };
 
         /**
@@ -91,7 +96,6 @@ namespace ACE
               ConnectionHolder ();
           };
 
-
         /**
         * @class ACE_INet_ConnectionFactory
         *
@@ -107,19 +111,18 @@ namespace ACE
               ConnectionFactory ();
               virtual ~ConnectionFactory ();
 
+              /// Returns a newly allocated connection whose ownership is
+              /// transferred to the ConnectionCache on successful insertion.
               virtual ConnectionHolder* create_connection (
-                  const ConnectionKey& key) const = 0;
+                  ConnectionKey const& key) const = 0;
           };
-
 
         /**
         * @class ACE_INet_ConnectionCacheValue
         *
         * @brief Holder class for connections.
         *
-        * Implements non-copying holder object maintaining
-        * connection state used as int_id in connection
-        * cache map.
+        * Implements a non-owning holder for connection state in the cache map.
         */
         class ConnectionCacheValue
           {
@@ -133,21 +136,23 @@ namespace ACE
                   CST_CLOSED
                 };
 
-              typedef ConnectionHolder connection_type;
+              using connection_type = ConnectionHolder;
 
               ConnectionCacheValue ();
               explicit ConnectionCacheValue (connection_type* connection);
-              ConnectionCacheValue (const ConnectionCacheValue& cacheval);
+              ConnectionCacheValue (ConnectionCacheValue const& cacheval);
 
-              ConnectionCacheValue& operator =(const ConnectionCacheValue& cacheval);
+              ConnectionCacheValue& operator = (ConnectionCacheValue const& cacheval);
+              ConnectionCacheValue (ConnectionCacheValue&&) = delete;
+              ConnectionCacheValue& operator = (ConnectionCacheValue&&) = delete;
 
-              bool operator == (const ConnectionCacheValue& cacheval) const;
+              bool operator == (ConnectionCacheValue const& cacheval) const;
 
-              bool operator != (const ConnectionCacheValue& cacheval) const;
+              bool operator != (ConnectionCacheValue const& cacheval) const;
 
               connection_type* connection ();
 
-              const connection_type* connection () const;
+              connection_type const* connection () const;
 
               void connection (connection_type* conn);
 
@@ -157,9 +162,9 @@ namespace ACE
 
             private:
               State state_;
-              connection_type* connection_;
+              /// Borrowed while the cache owns and manages the connection.
+              connection_type* connection_ {};
           };
-
 
         /**
         * @class ACE_INet_ConnectionCache
@@ -170,25 +175,28 @@ namespace ACE
         class ACE_INET_Export ConnectionCache
           {
             public:
-              typedef ConnectionHolder connection_type;
-              typedef ConnectionFactory factory_type;
+              using connection_type = ConnectionHolder;
+              using factory_type = ConnectionFactory;
 
-              typedef ACE_Hash_Map_Manager_Ex <ConnectionCacheKey,
-                                               ConnectionCacheValue,
-                                               ACE_Hash<ConnectionCacheKey>,
-                                               ACE_Equal_To<ConnectionCacheKey>,
-                                               ACE_SYNCH_NULL_MUTEX> map_type;
+              using map_type =
+                ACE_Hash_Map_Manager_Ex<ConnectionCacheKey,
+                                         ConnectionCacheValue,
+                                         ACE_Hash<ConnectionCacheKey>,
+                                         ACE_Equal_To<ConnectionCacheKey>,
+                                         ACE_SYNCH_NULL_MUTEX>;
 
-              typedef map_type::iterator map_iter_type;
+              using map_iter_type = map_type::iterator;
 
-              typedef ACE_Hash_Map_Entry <ConnectionCacheKey,
-                                          ConnectionCacheValue> map_entry_type;
+              using map_entry_type = ACE_Hash_Map_Entry<ConnectionCacheKey, ConnectionCacheValue>;
 
-              /// Constructor
-              ConnectionCache(size_t size = ACE_DEFAULT_MAP_SIZE);
+              explicit ConnectionCache (size_t size = ACE_DEFAULT_MAP_SIZE);
 
-              /// Destructor
               ~ConnectionCache ();
+
+              ConnectionCache (ConnectionCache const&) = delete;
+              ConnectionCache& operator = (ConnectionCache const&) = delete;
+              ConnectionCache (ConnectionCache&&) = delete;
+              ConnectionCache& operator = (ConnectionCache&&) = delete;
 
               /// Claim a connection from the cache.
               /// Creates a new connection using <connection_factory>
@@ -200,28 +208,28 @@ namespace ACE
               /// Returns true if a connection could be successfully
               /// claimed and sets <connection> to the claimed connection.
               /// Returns false otherwise.
-              bool claim_connection(const ConnectionKey& key,
+              bool claim_connection (ConnectionKey const& key,
                                     connection_type*& connection,
-                                    const factory_type& connection_factory,
+                                    factory_type const& connection_factory,
                                     bool wait = true);
 
               /// Release a previously claimed connection making it
               /// available for renewed claiming.
               /// Returns true if the connection was successfully released.
-              bool release_connection(const ConnectionKey& key,
+              bool release_connection (ConnectionKey const& key,
                                     connection_type* connection);
 
               /// Close a previously claimed connection.
               /// Deletes the actual connection object and marks the cache entry
               /// as CLOSED.
               /// Returns true is the connection was successfully closed.
-              bool close_connection(const ConnectionKey& key,
+              bool close_connection (ConnectionKey const& key,
                                     connection_type* connection);
 
               /// Returns true if the cache contains a connection matching
               /// <key>. Cache entries with state CLOSED are not considered.
               /// Returns false otherwise.
-              bool has_connection (const ConnectionKey& key);
+              bool has_connection (ConnectionKey const& key);
 
               /// Unconditionally closes all active connections.
               void close_all_connections ();
@@ -231,23 +239,22 @@ namespace ACE
 
             private:
               /// Updates cache entry state
-              bool set_connection (const ConnectionKey& key,
-                                   const ConnectionCacheValue& cacheval);
+              bool set_connection (ConnectionKey const& key,
+                                   ConnectionCacheValue const& cacheval);
 
               /// Attempts to claim an existing connection.
               /// Returns true and sets @a connection if successful.
               /// Returns false otherwise.
               /// Does not wait when no connection available.
-              bool claim_existing_connection(const ConnectionKey& key,
+              bool claim_existing_connection (ConnectionKey const& key,
                                              connection_type*& connection,
                                              ConnectionCacheValue::State& state);
 
               /// Looks up a matching cache entry for @a key and updates
               /// <cacheval> with the entry state if found.
               /// Returns true if found, false otherwise.
-              bool find_connection (const ConnectionKey& key,
+              bool find_connection (ConnectionKey const& key,
                                     ConnectionCacheValue& cacheval);
-
 
               mutable ACE_SYNCH_MUTEX lock_;
               ACE_SYNCH_CONDITION condition_;

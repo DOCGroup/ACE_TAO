@@ -1,4 +1,4 @@
-// -*- IDL -*-
+/// -*- IDL -*-
 #include "tao/PortableInterceptor.pidl"
 #include "tao/PI_Server/PI_Server_include.pidl"
 

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_LB_CLIENT_ORB_INITIALIZER_H
 #define TAO_LB_CLIENT_ORB_INITIALIZER_H
 
@@ -52,11 +51,11 @@ public:
    * Methods required by the PortableInterceptor::ORBInitializer
    * interface.
    */
-  //@{
+  /// @{
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
-  //@}
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

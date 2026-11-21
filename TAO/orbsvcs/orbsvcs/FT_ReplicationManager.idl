@@ -1,5 +1,4 @@
 /* -*- IDL -*- */
-//=============================================================================
 /**
  *  @file    FT_ReplicationManager.idl
  *
@@ -8,7 +7,6 @@
  *
  *  @author Curt Hibbs <hibbs_c@ociweb.com>
  */
-//=============================================================================
 
 #ifndef _FT_REPLICATION_MANAGER_IDL_
 #define _FT_REPLICATION_MANAGER_IDL_
@@ -24,7 +22,7 @@ module FT
 {
   exception InterfaceNotFound {};
 
-  // Specification of ReplicationManager Interface
+  /// Specification of ReplicationManager Interface
   interface ReplicationManager : ::PortableGroup::PropertyManager,
                                  FTObjectGroupManager,
                                  ::PortableGroup::GenericFactory
@@ -68,6 +66,5 @@ module FT
     oneway void shutdown ();
   };
 };
-
 
 #endif // _FT_REPLICATION_MANAGER_IDL_

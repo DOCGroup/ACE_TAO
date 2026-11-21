@@ -12,7 +12,6 @@
 
 #include <iostream>
 
-// Implementation skeleton constructor
 Messenger_i::Messenger_i (CORBA::ORB_ptr orb, Terminator &terminator)
   : orb_ (CORBA::ORB::_duplicate (orb))
   , message_count_ (0)
@@ -20,7 +19,6 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb, Terminator &terminator)
 {
 }
 
-// Implementation skeleton destructor
 Messenger_i::~Messenger_i ()
 {
 }
@@ -40,7 +38,7 @@ CORBA::Boolean Messenger_i::send_message (
 void
 Messenger_i::abort (CORBA::Short delay_secs)
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_NEW(mb, ACE_Message_Block(2));
   ACE_OS::sprintf(mb->wr_ptr (), "%d", delay_secs);
   terminator_.putq(mb);

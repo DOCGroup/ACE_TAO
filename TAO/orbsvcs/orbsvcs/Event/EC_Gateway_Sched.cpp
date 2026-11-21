@@ -8,10 +8,6 @@ TAO_EC_Gateway_Sched::TAO_EC_Gateway_Sched ()
 {
 }
 
-TAO_EC_Gateway_Sched::~TAO_EC_Gateway_Sched ()
-{
-}
-
 void
 TAO_EC_Gateway_Sched::init (RtecEventChannelAdmin::EventChannel_ptr supplier_ec,
                            RtecEventChannelAdmin::EventChannel_ptr consumer_ec,
@@ -29,7 +25,9 @@ TAO_EC_Gateway_Sched::init (RtecEventChannelAdmin::EventChannel_ptr supplier_ec,
       || CORBA::is_nil (consumer_sched)
       || consumer_name == 0
       || supplier_name == 0)
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   this->supplier_info_ =
     supplier_sched->create (supplier_name);

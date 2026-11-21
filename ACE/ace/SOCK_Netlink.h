@@ -40,7 +40,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_SOCK_Netlink : public ACE_SOCK
 {
 public:
-  /// Default constructor.
   ACE_SOCK_Netlink();
   ~ACE_SOCK_Netlink();
   ACE_SOCK_Netlink (ACE_Netlink_Addr &local,

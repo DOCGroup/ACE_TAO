@@ -11,24 +11,14 @@
 // TITLE, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT,
 // COMPATIBILITY, AND SECURITY OR ACCURACY.*
 //
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    SOCK_SEQPACK_SCTP_Test.cpp
-//
-// = DESCRIPTION
-//    Performs several tests on the ACE_SOCK_SEQPACK_Connector,
-//    ACE_SOCK_SEQPACK_Acceptor, and ACE_SOCK_SEQPACK_Association classes
-//    specifically for SCTP using the loopback interface.  Attempts to
-//    replicate behavior of SOCK_Test.cpp, but integrating IPv6 tests
-//    directly.
-//
-// = AUTHOR
-//    Dave Craig <dwc@qualcomm.com>
-//
+/// @file SOCK_SEQPACK_SCTP_Test.cpp
+/// Performs several tests on the ACE_SOCK_SEQPACK_Connector,
+/// ACE_SOCK_SEQPACK_Acceptor, and ACE_SOCK_SEQPACK_Association classes
+/// specifically for SCTP using the loopback interface.  Attempts to
+/// replicate behavior of SOCK_Test.cpp, but integrating IPv6 tests
+/// directly.
+///
+/// @author Dave Craig <dwc@qualcomm.com>
 
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
@@ -80,9 +70,11 @@ Server (void *arg)
   // hang tests.
   //
   if (-1 == AcceptorSocket->enable (ACE_NONBLOCK))
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) %p\n"),
-                ACE_TEXT ("AcceptorSocket.enable (ACE_NONBLOCK)")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("AcceptorSocket.enable (ACE_NONBLOCK)")));
+    }
 
   //
   // Set up select to wait for I/O events.
@@ -99,14 +91,18 @@ Server (void *arg)
                           &tv);
 
   if (-1 == result)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) %p\n"),
-                       ACE_TEXT ("select")),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) %p\n"),
+                         ACE_TEXT ("select")),
+                        0);
+    }
   if (0 == result)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("(%P|%t) select timed out, shutting down\n")),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) select timed out, shutting down\n")),
+                        0);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) waiting for client to connect\n")));
@@ -119,17 +115,21 @@ Server (void *arg)
     // Enable non-blocking I/O.
     //
     if (Stream.enable (ACE_NONBLOCK))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%P|%t) %p\n"),
-                         ACE_TEXT ("Stream.enable (ACE_NONBLOCK)")),
-                        0);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("(%P|%t) %p\n"),
+                           ACE_TEXT ("Stream.enable (ACE_NONBLOCK)")),
+                          0);
+      }
 
     unsigned char byte = BYTE_MESG;
 
     if (-1 == Stream.send_n (&byte, 1))
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("Stream.send_n")));
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) %p\n"),
+                    ACE_TEXT ("Stream.send_n")));
+      }
 
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) byte sent\n")));
@@ -138,19 +138,23 @@ Server (void *arg)
     // Abruptly terminate the association.
     //
     if (-1 == Stream.abort ())
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("Association.abort")));
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) %p\n"),
+                    ACE_TEXT ("Association.abort")));
+      }
 
     //
     // Negative test: make sure that we cannot send on a closed association.
     //
     if (-1 != Stream.send_n (&byte, 1))
-      //FUZZ: disable check_for_lack_ACE_OS
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) Negative test fail: Association")
-                  ACE_TEXT(".send_n succeeded after abort()\n")));
-      //FUZZ: enable check_for_lack_ACE_OS
+      {
+        //FUZZ: disable check_for_lack_ACE_OS
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Negative test fail: Association")
+                    ACE_TEXT (".send_n succeeded after abort()\n")));
+        //FUZZ: enable check_for_lack_ACE_OS
+      }
 
   }
 
@@ -158,9 +162,11 @@ Server (void *arg)
   // Close server socket.
   //
   if (-1 == AcceptorSocket->close ())
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) %p\n"),
-                ACE_TEXT ("AcceptorSocket.close")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("AcceptorSocket.close")));
+    }
 
   return ACE_THR_FUNC_RETURN_NULL;
 }
@@ -201,7 +207,6 @@ Client(void *arg)
                 ACE_TEXT ("Association.disable (ACE_NONBLOCK)")));
   }
 
-
   if (-1 == Stream.recv_n (&b, 1, &tv, &bytes))
   {
     ACE_ERROR ((LM_ERROR,
@@ -210,13 +215,17 @@ Client(void *arg)
   }
 
   if (1 == bytes)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) Client received %B bytes\n"),
-                bytes));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) Client received %B bytes\n"),
+                  bytes));
+    }
   else
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) Client received %B bytes; expected 1\n"),
-                bytes));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) Client received %B bytes; expected 1\n"),
+                  bytes));
+    }
 
   //
   // Give server a little time to abort the association.
@@ -227,10 +236,12 @@ Client(void *arg)
   // socket or some failure other than a timeout.
   ssize_t cnt = Stream.recv_n (&b, 1, &tv, &bytes);
   if (cnt > 0 || (cnt == -1 && errno == ETIME))
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) Negative test failed; Association")
-                ACE_TEXT (".recv_n returned %b (w/ %m) after abort\n"),
-                cnt));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) Negative test failed; Association")
+                  ACE_TEXT (".recv_n returned %b (w/ %m) after abort\n"),
+                  cnt));
+    }
 
   return ACE_THR_FUNC_RETURN_NULL;
 }

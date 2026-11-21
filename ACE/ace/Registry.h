@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_REGISTRY_H
 #define ACE_REGISTRY_H
 #include /**/ "ace/pre.h"
@@ -45,14 +44,13 @@ public:
   struct ACE_Export Name_Component
   {
     ACE_TString id_;
+    /// The id_ field is used, but the kind_ field is currently ignored.
     ACE_TString kind_;
 
+    /// Comparison operators.
     bool operator== (const Name_Component &rhs) const;
     bool operator!= (const Name_Component &rhs) const;
-    // Comparison
   };
-  // The <id_> field is used,
-  // but the <kind_> field is currently ignored
 
   /// A Name is an ordered collections of components (ids)
   using Name = ACE_Unbounded_Set<Name_Component>;
@@ -74,19 +72,17 @@ public:
     /// Empty (default) constructor
     Binding ();
 
-    /// Constructor
     /// (Name version)
     Binding (const Name &binding_name,
              Binding_Type binding_type);
 
-    /// Constructor
     /// (String version)
     Binding (const ACE_TString &binding_name,
              Binding_Type binding_type);
 
+    /// Comparison operators.
     bool operator== (const Binding &rhs) const;
     bool operator!= (const Binding &rhs) const;
-    // Comparison
 
     /// Name accessor
     /// (Name version)
@@ -129,7 +125,6 @@ public:
   class ACE_Export Object
   {
   public:
-    /// Default constructor
     Object (void *data = nullptr,
             u_long size = 0,
             u_long type = REG_NONE);
@@ -188,7 +183,7 @@ public:
     Naming_Context ();
 
     /// Constructor: key_ will be set to @a key
-    Naming_Context (const HKEY &key);
+    explicit Naming_Context (const HKEY &key);
 
     /// Destructor will call <Naming_Context::close>.
     ~Naming_Context ();
@@ -251,7 +246,6 @@ public:
 
     /// Delete object with @a name in @c this context
     int unbind (const ACE_TString &name);
-
 
     // The following interfaces are for Naming Context
 
@@ -414,7 +408,6 @@ public:
     /// Friend factory
     friend class Naming_Context;
 
-    /// Default constructor
     Binding_Iterator ();
 
     /// Next entry
@@ -452,10 +445,8 @@ public:
     class ACE_Export Iteration_State
       {
       public:
-        /// Constructor
         Iteration_State ();
 
-        /// Destructor
         virtual ~Iteration_State ();
 
         /// Set the iterator reference.
@@ -470,9 +461,9 @@ public:
 
       protected:
         /// Pointer to parent iterator
-        Binding_Iterator *parent_;
+        Binding_Iterator *parent_ {};
 
-        u_long index_;
+        u_long index_ {};
       };
 
   private:
@@ -545,7 +536,7 @@ public:
 
 private:
   /// Check if @a machine_name is the local host
-  static int is_local_host (const ACE_TCHAR *machine_name);
+  static bool is_local_host (const ACE_TCHAR *machine_name);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

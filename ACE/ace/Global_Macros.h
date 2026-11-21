@@ -121,25 +121,55 @@
 #define ACE_GUARD_RETURN(MUTEX, OBJ, LOCK, RETURN) \
   ACE_GUARD_REACTION(MUTEX, OBJ, LOCK, return RETURN)
 #endif /* !ACE_GUARD_RETURN */
+#if !defined (ACE_GUARD_CONST_ACTION)
+#define ACE_GUARD_CONST_ACTION(MUTEX, OBJ, LOCK, ACTION, REACTION) \
+   const ACE_Guard< MUTEX > OBJ (LOCK); \
+   if (OBJ.locked () != 0) { ACTION; } \
+   else { REACTION; }
+#endif /* !ACE_GUARD_CONST_ACTION */
+#if !defined (ACE_GUARD_CONST_REACTION)
+#define ACE_GUARD_CONST_REACTION(MUTEX, OBJ, LOCK, REACTION) \
+  ACE_GUARD_CONST_ACTION(MUTEX, OBJ, LOCK, ;, REACTION)
+#endif /* !ACE_GUARD_CONST_REACTION */
+#if !defined (ACE_GUARD_CONST)
+#define ACE_GUARD_CONST(MUTEX, OBJ, LOCK) \
+  ACE_GUARD_CONST_REACTION(MUTEX, OBJ, LOCK, return)
+#endif /* !ACE_GUARD_CONST */
+#if !defined (ACE_GUARD_RETURN_CONST)
+#define ACE_GUARD_RETURN_CONST(MUTEX, OBJ, LOCK, RETURN) \
+  ACE_GUARD_CONST_REACTION(MUTEX, OBJ, LOCK, return RETURN)
+#endif /* !ACE_GUARD_RETURN_CONST */
 #if !defined (ACE_WRITE_GUARD)
 # define ACE_WRITE_GUARD(MUTEX,OBJ,LOCK) \
   ACE_Write_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) return;
+    if (OBJ.locked () == 0) \
+      { \
+        return; \
+      }
 #endif /* !ACE_WRITE_GUARD */
 #if !defined (ACE_WRITE_GUARD_RETURN)
 # define ACE_WRITE_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
   ACE_Write_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) return RETURN;
+    if (OBJ.locked () == 0) \
+      { \
+        return RETURN; \
+      }
 #endif /* ACE_WRITE_GUARD_RETURN */
 #if !defined (ACE_READ_GUARD)
 # define ACE_READ_GUARD(MUTEX,OBJ,LOCK) \
   ACE_Read_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) return;
+    if (OBJ.locked () == 0) \
+      { \
+        return; \
+      }
 #endif /* !ACE_READ_GUARD */
 #if !defined (ACE_READ_GUARD_RETURN)
 # define ACE_READ_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
   ACE_Read_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) return RETURN;
+    if (OBJ.locked () == 0) \
+      { \
+        return RETURN; \
+      }
 #endif /* !ACE_READ_GUARD_RETURN */
 // FUZZ: enable check_for_ACE_Guard
 
@@ -391,7 +421,7 @@ using ACE_Service_Object_Exterminator = void (*)(void *);
  * Notice that in all the macros the SERVICE_CLASS parameter must be
  * the name of a class derived from ACE_Service_Object.
  */
-//@{
+/// @{
 /// Declare a the data structure required to register a statically
 /// linked service into the service configurator.
 /**
@@ -523,7 +553,6 @@ static ACE_Static_Svc_##SERVICE_CLASS ace_static_svc_##SERVICE_CLASS;
 #define ACE_MAKE_SVC_CONFIG_FACTORY_NAME(VERSIONED_NAMESPACE,SERVICE_CLASS) ACE_MAKE_SVC_CONFIG_FUNCTION_NAME(_make,VERSIONED_NAMESPACE,SERVICE_CLASS)
 #define ACE_MAKE_SVC_CONFIG_GOBBLER_NAME(VERSIONED_NAMESPACE,SERVICE_CLASS) ACE_MAKE_SVC_CONFIG_FUNCTION_NAME(_gobble,VERSIONED_NAMESPACE,SERVICE_CLASS)
 
-
 /// Declare the factory method used to create dynamically loadable
 /// services.
 /**
@@ -622,17 +651,17 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 /// method.
 #define ACE_SVC_INVOKE(SERVICE_CLASS) ACE_SVC_NAME(SERVICE_CLASS) (0)
 
-//@}
+/// @}
 
 /** @name Helper macros for services defined in the netsvcs library.
  *
  * The ACE services defined in netsvcs use this helper macros for
  * simplicity.
  */
-//@{
+/// @{
 # define ACE_SVC_FACTORY_DECLARE(X) ACE_FACTORY_DECLARE (ACE_Svc, X)
 # define ACE_SVC_FACTORY_DEFINE(X) ACE_FACTORY_DEFINE (ACE_Svc, X)
-//@}
+/// @}
 
 #if !defined (ACE_WIN32)
 // Add some typedefs and macros to enhance Win32 conformance...
@@ -778,21 +807,21 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 #   define ACE_MEM_POOL _ACE_MEM_POOL
 #   define ACE_MEM_POOL_OPTIONS typename _ACE_MEM_POOL::OPTIONS
 
-// @deprecated These macros are not longer used in ACE_Svc_Handler.
+/// @deprecated These macros are no longer used in ACE_Svc_Handler.
 // Handle ACE_Svc_Handler
 #   define ACE_PEER_STREAM_1 typename _ACE_PEER_STREAM
 #   define ACE_PEER_STREAM_2 _ACE_PEER_STREAM
 #   define ACE_PEER_STREAM _ACE_PEER_STREAM
 #   define ACE_PEER_STREAM_ADDR typename _ACE_PEER_STREAM::PEER_ADDR
 
-// @deprecated These macros are not longer used in ACE_Acceptor.
+/// @deprecated These macros are no longer used in ACE_Acceptor.
 // Handle ACE_Acceptor
 #   define ACE_PEER_ACCEPTOR_1 typename _ACE_PEER_ACCEPTOR
 #   define ACE_PEER_ACCEPTOR_2 _ACE_PEER_ACCEPTOR
 #   define ACE_PEER_ACCEPTOR _ACE_PEER_ACCEPTOR
 #   define ACE_PEER_ACCEPTOR_ADDR typename _ACE_PEER_ACCEPTOR::PEER_ADDR
 
-// @deprecated These macros are not longer used in ACE_Connector.
+/// @deprecated These macros are no longer used in ACE_Connector.
 // Handle ACE_Connector
 #   define ACE_PEER_CONNECTOR_1 typename _ACE_PEER_CONNECTOR
 #   define ACE_PEER_CONNECTOR_2 _ACE_PEER_CONNECTOR

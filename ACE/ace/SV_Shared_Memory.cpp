@@ -33,11 +33,17 @@ ACE_SV_Shared_Memory::open_and_attach (key_t external_id,
 {
   ACE_TRACE ("ACE_SV_Shared_Memory::open_and_attach");
   if (this->open (external_id, sz, create, perms) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (this->attach (virtual_addr, flags) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
+  {
     return 0;
+  }
 }
 
 // Constructor interface to this->open_and_attach () member function.
@@ -52,16 +58,15 @@ ACE_SV_Shared_Memory::ACE_SV_Shared_Memory (key_t external_id,
   ACE_TRACE ("ACE_SV_Shared_Memory::ACE_SV_Shared_Memory");
   if (this->open_and_attach (external_id, sz, create,
                              perms, virtual_addr, flags) == -1)
-    ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_SV_Shared_Memory::ACE_SV_Shared_Memory")));
+    {
+      ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_SV_Shared_Memory::ACE_SV_Shared_Memory")));
+    }
 }
 
 // The "do nothing" constructor.
 
 ACE_SV_Shared_Memory::ACE_SV_Shared_Memory ()
-  : internal_id_ (0),
-    size_ (0),
-    segment_ptr_ (nullptr)
 {
   ACE_TRACE ("ACE_SV_Shared_Memory::ACE_SV_Shared_Memory");
 }
@@ -75,13 +80,14 @@ ACE_SV_Shared_Memory::ACE_SV_Shared_Memory ()
 
 ACE_SV_Shared_Memory::ACE_SV_Shared_Memory (ACE_HANDLE int_id,
                                             int flags)
-  : internal_id_ (int_id),
-    size_ (0)
+  : internal_id_ (int_id)
 {
   ACE_TRACE ("ACE_SV_Shared_Memory::ACE_SV_Shared_Memory");
   if (this->attach (nullptr, flags) == -1)
-    ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_SV_Shared_Memory::ACE_SV_Shared_Memory")));
+    {
+      ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_SV_Shared_Memory::ACE_SV_Shared_Memory")));
+    }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

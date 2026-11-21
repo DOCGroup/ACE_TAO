@@ -272,7 +272,9 @@ ACE_OS::strnlen (const char *s, size_t maxlen)
   size_t i;
   for (i = 0; i < maxlen; ++i)
     if (s[i] == '\0')
-      break;
+      {
+        break;
+      }
   return i;
 #endif /* ACE_HAS_STRNLEN */
 }
@@ -286,7 +288,9 @@ ACE_OS::strnlen (const ACE_WCHAR_T *s, size_t maxlen)
   size_t i;
   for (i = 0; i < maxlen; ++i)
     if (s[i] == '\0')
-      break;
+      {
+        break;
+      }
   return i;
 #endif /* ACE_HAS_WCSNLEN */
 }
@@ -444,7 +448,7 @@ ACE_INLINE wchar_t *
 ACE_OS::strtok (wchar_t *s, const wchar_t *tokens)
 {
 #if defined (ACE_HAS_3_PARAM_WCSTOK)
-  static wchar_t *lasts = nullptr;
+  static wchar_t *lasts {};
   return ::wcstok (s, tokens, &lasts);
 #else
   return ::wcstok (s, tokens);

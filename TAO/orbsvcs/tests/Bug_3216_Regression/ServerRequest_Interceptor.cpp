@@ -7,17 +7,8 @@
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/CDR.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 #include "Hello.h"
-
-TAO249_ServerRequest_Interceptor::TAO249_ServerRequest_Interceptor ()
-: orb_ (nullptr),
-  client_id_ (0)
-{
-}
-
-TAO249_ServerRequest_Interceptor::~TAO249_ServerRequest_Interceptor () = default;
-
 
 char *
 TAO249_ServerRequest_Interceptor::name ()
@@ -32,15 +23,13 @@ TAO249_ServerRequest_Interceptor::destroy ()
 
 void
 TAO249_ServerRequest_Interceptor::receive_request_service_contexts (
-  PortableInterceptor::ServerRequestInfo_ptr
-  )
+  PortableInterceptor::ServerRequestInfo_ptr)
 {
 }
 
 void
 TAO249_ServerRequest_Interceptor::receive_request (
-  PortableInterceptor::ServerRequestInfo_ptr ri
-  )
+  PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   CORBA::String_var op = ri->operation ();
 
@@ -49,11 +38,11 @@ TAO249_ServerRequest_Interceptor::receive_request (
     IOP::ServiceContext_var sc =
       ri->get_request_service_context (IOP::FT_GROUP_VERSION);
 
-    TAO_InputCDR cdr (reinterpret_cast <const char*>
+    TAO_InputCDR cdr (reinterpret_cast <char const *>
                      (sc->context_data.get_buffer ()),
                      sc->context_data.length ());
 
-    CORBA::Boolean byte_order;
+    CORBA::Boolean byte_order {};
 
     if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
       {
@@ -66,46 +55,41 @@ TAO249_ServerRequest_Interceptor::receive_request (
     Hello::normal_context_ok_ = false;
     Hello::extended_context_ok_ = false;
 
-    if (! ACE_OS::strcmp (op.in (), "check_normal_context"))
+    if (std::strcmp (op.in (), "check_normal_context") == 0)
       {
         FT::FTGroupVersionServiceContext ftrsc;
         Hello::normal_context_ok_ = (cdr >> ftrsc) != 0;
       }
-    else if (! ACE_OS::strcmp (op.in (), "check_extended_context"))
+    else if (std::strcmp (op.in (), "check_extended_context") == 0)
       {
         FT::TagFTGroupTaggedComponent tftgtc;
         Hello::extended_context_ok_ = (cdr >> tftgtc) != 0;
       }
   }
-catch (CORBA::Exception const &ex)
-  {
-    ACE_DEBUG ((LM_ERROR, "Unexpected (non regression) error - test failed\n"));
-    ex._tao_print_exception (
-                               "Exception in TAO249_ServerRequest_Interceptor::receive_request\n");
-    throw;
-  }
-
-
+  catch (CORBA::Exception const &ex)
+    {
+      ACE_DEBUG ((LM_ERROR, "Unexpected (non regression) error - test failed\n"));
+      ex._tao_print_exception (
+        "Exception in TAO249_ServerRequest_Interceptor::receive_request\n");
+      throw;
+    }
 }
 
 void
 TAO249_ServerRequest_Interceptor::send_reply (
-  PortableInterceptor::ServerRequestInfo_ptr
-  )
+  PortableInterceptor::ServerRequestInfo_ptr)
 {
 }
 
 void
 TAO249_ServerRequest_Interceptor::send_exception (
-  PortableInterceptor::ServerRequestInfo_ptr
-  )
+  PortableInterceptor::ServerRequestInfo_ptr)
 {
 }
 
 void
 TAO249_ServerRequest_Interceptor::send_other (
-  PortableInterceptor::ServerRequestInfo_ptr
-  )
+  PortableInterceptor::ServerRequestInfo_ptr)
 {
 }
 

@@ -22,16 +22,10 @@
 class ICustomEventHandler
 {
     public:
-        /// Default constructor.
-        ///
-        /// @return
         ICustomEventHandler()
         {
         }
 
-        /// Default destructor.
-        ///
-        /// @return
         virtual ~ICustomEventHandler()
         {
         }
@@ -52,12 +46,10 @@ class CCustomEventHandlerUpcall
     public:
         using TTimerQueue = ACE_Timer_Queue_T<ICustomEventHandler *, CCustomEventHandlerUpcall, ACE_Null_Mutex>;
 
-        /// Default constructor
         CCustomEventHandlerUpcall()
         {
         }
 
-        /// Destructor.
         ~CCustomEventHandlerUpcall()
         {
         }
@@ -113,18 +105,12 @@ class CCustomEventHandlerUpcall
 class CTestEventHandler : public ICustomEventHandler
 {
     public:
-        /// Default constructor.
-        ///
-        /// @return
         CTestEventHandler(long* p_iCallCount)
         : m_p_iCallCount(p_iCallCount)
         {
             ACE_DEBUG((LM_DEBUG, ACE_TEXT("%I(%t) Initializing test event handler.\n")));
         }
 
-        /// Default destructor.
-        ///
-        /// @return
         ~CTestEventHandler() override
         {
             ACE_DEBUG((LM_DEBUG, ACE_TEXT("%I(%t) Destroying test event handler.\n")));
@@ -139,8 +125,8 @@ class CTestEventHandler : public ICustomEventHandler
             long iParameter = ACE_Utils::truncate_cast<long> ((intptr_t)p_vParameter);
 
             ACE_DEBUG((LM_DEBUG,
-                       ACE_TEXT("%I(%t) Incrementing test event handler call count by %d.\n"),
-                       iParameter));
+                       ACE_TEXT("%I(%t) Incrementing test event handler call count by %q.\n"),
+                       static_cast<ACE_INT64> (iParameter)));
 
             m_Mutex.acquire();
             *m_p_iCallCount += iParameter;
@@ -177,7 +163,7 @@ run_main (int, ACE_TCHAR *[])
     {
         // Create a test event handler
         long iCallCount = 0;
-        CTestEventHandler* p_TestEventHandler = nullptr;
+        CTestEventHandler* p_TestEventHandler {};
         ACE_NEW_RETURN(p_TestEventHandler, CTestEventHandler(&iCallCount), -1);
 
         ACE_DEBUG((LM_DEBUG,
@@ -199,7 +185,7 @@ run_main (int, ACE_TCHAR *[])
     {
         // Create a test event handler
         long iCallCount = 0;
-        CTestEventHandler* p_TestEventHandler = nullptr;
+        CTestEventHandler* p_TestEventHandler {};
         ACE_NEW_RETURN(p_TestEventHandler, CTestEventHandler(&iCallCount), -1);
 
         ACE_DEBUG((LM_DEBUG,
@@ -226,7 +212,7 @@ run_main (int, ACE_TCHAR *[])
     {
         // Create a test event handler
         long iCallCount = 0;
-        CTestEventHandler* p_TestEventHandler = nullptr;
+        CTestEventHandler* p_TestEventHandler {};
         ACE_NEW_RETURN(p_TestEventHandler, CTestEventHandler(&iCallCount), -1);
 
         ACE_DEBUG((LM_DEBUG,
@@ -255,7 +241,7 @@ run_main (int, ACE_TCHAR *[])
     {
         // Create a test event handler
         long iCallCount = 0;
-        CTestEventHandler* p_TestEventHandler = nullptr;
+        CTestEventHandler* p_TestEventHandler {};
         ACE_NEW_RETURN(p_TestEventHandler, CTestEventHandler(&iCallCount), -1);
 
         ACE_DEBUG((LM_DEBUG,

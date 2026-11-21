@@ -13,22 +13,24 @@ TAO_NVList_Adapter_Impl::create_list (
 {
   ACE_ASSERT (CORBA::ULong (count) <= UINT_MAX);
   // Create an empty list
-  ACE_NEW_THROW_EX (new_list,
+  CORBA::NVList_ptr list {};
+  ACE_NEW_THROW_EX (list,
                     CORBA::NVList,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         0,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
+  CORBA::NVList_var list_owner (list);
 
   // If count is greater than 0, create a list of NamedValues.
   if (count != 0)
     {
-      new_list->max_ = (CORBA::ULong) count;
+      list->max_ = static_cast<CORBA::ULong> (count);
 
-      for (CORBA::Long i = 0; i < count; ++i)
+      for (CORBA::Long i {}; i < count; ++i)
         {
-          CORBA::NamedValue_ptr nv = nullptr;
+          CORBA::NamedValue_ptr nv {};
           ACE_NEW_THROW_EX (nv,
                             CORBA::NamedValue,
                             CORBA::NO_MEMORY (
@@ -37,9 +39,20 @@ TAO_NVList_Adapter_Impl::create_list (
                                 ENOMEM),
                               CORBA::COMPLETED_NO));
 
-          new_list->values_.enqueue_tail (nv);
+          CORBA::NamedValue_var nv_owner (nv);
+
+          if (list->values_.enqueue_tail (nv_owner.in ()) == -1)
+            {
+              throw CORBA::NO_MEMORY (
+                CORBA::SystemException::_tao_minor_code (0, ENOMEM),
+                CORBA::COMPLETED_NO);
+            }
+
+          (void) nv_owner._retn ();
         }
     }
+
+  new_list = list_owner._retn ();
 }
 
 void

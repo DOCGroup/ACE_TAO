@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef _QT_CLIENT_H
 #define _QT_CLIENT_H
 
@@ -22,7 +21,6 @@ class Client : public QObject
 {
   Q_OBJECT
 public:
-  /// ctor
   Client (CORBA::ORB_ptr orb,
           QApplication &app);
 
@@ -47,10 +45,10 @@ public:
 
 private:
   /// A push button
-  QPushButton *push_button_;
+  QPushButton *push_button_ {};
 
   /// A slider widget
-  QSlider *slider_;
+  QSlider *slider_ {};
 
   /// The ORB
   CORBA::ORB_var orb_;

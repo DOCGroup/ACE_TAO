@@ -5,6 +5,9 @@
 #include "QoS_Session_Impl.h"
 #include "ace/Log_Category.h"
 
+#include <cerrno>
+#include <new>
+
 #if !defined (__ACE_INLINE__)
 #include "QoS_Session_Impl.inl"
 #endif /* __ACE_INLINE__ */
@@ -20,7 +23,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-int ACE_RAPI_Session::rsvp_error = 0;
+int ACE_RAPI_Session::rsvp_error {};
 
 // Call back function used by RAPI to report RSVP events. This
 // function translates the RAPI QoS parameters into the more generic
@@ -39,18 +42,18 @@ rsvp_callback (rapi_sid_t /* sid */,
                rapi_flowspec_t *flow_spec_list,
                int /* ad_spec_no */,
                rapi_adspec_t * /* ad_spec_list */,
-               void *args
-               )
+               void *args)
 {
-  if (args == 0)
-    ACELIB_DEBUG ((LM_DEBUG,
-                "Argument in the call back function is null\n\n"));
+  if (args == nullptr)
+    ACELIB_ERROR_RETURN ((LM_ERROR,
+                          "Argument in the call back function is null\n"),
+                         -1);
 
-  ACE_QoS_Session *qos_session = (ACE_QoS_Session *) args;
+  ACE_QoS_Session *qos_session = static_cast<ACE_QoS_Session *> (args);
 
-  qos_flowspecx_t *csxp = nullptr;
+  qos_flowspecx_t *csxp {};
 
-  if (!flow_spec_list)
+  if (flow_spec_list == nullptr)
     {
       ACELIB_DEBUG ((LM_DEBUG,
                   "(%N|%l) Null flow_spec_list\n"));
@@ -59,12 +62,6 @@ rsvp_callback (rapi_sid_t /* sid */,
     {
       // Extended Legacy format.
       csxp = &flow_spec_list->specbody_qosx;
-      if(!csxp)
-        {
-          ACELIB_ERROR_RETURN ((LM_ERROR,
-                            "(%N|%l) Null csxp\n"),
-                            -1);
-        }
     }
 
   ACE_QoS ace_qos = qos_session->qos ();
@@ -78,13 +75,14 @@ rsvp_callback (rapi_sid_t /* sid */,
                     "No. of TSpecs received : %d %d\n",
                     flow_spec_no, &flow_spec_list->len));
 
-        ACE_Flow_Spec *receiving_fs = nullptr;
+        ACE_Flow_Spec *receiving_fs {};
 
         if (flow_spec_no != 0)
           {
-            ACE_NEW_RETURN (receiving_fs,
-                            ACE_Flow_Spec,
-                            -1);
+            if (csxp == nullptr)
+              ACELIB_ERROR_RETURN ((LM_ERROR,
+                                    "(%N|%l) Missing flow specification\n"),
+                                   -1);
 
             ACE_NEW_RETURN (receiving_fs,
                             ACE_Flow_Spec ((u_long)csxp->xspec_r,
@@ -131,10 +129,15 @@ rsvp_callback (rapi_sid_t /* sid */,
                     "No. of FlowSpecs received : %d\n",
                     flow_spec_no));
 
-        ACE_Flow_Spec *sending_flow = nullptr;
+        ACE_Flow_Spec *sending_flow {};
 
         if (flow_spec_no != 0)
           {
+            if (csxp == nullptr)
+              ACELIB_ERROR_RETURN ((LM_ERROR,
+                                    "(%N|%l) Missing flow specification\n"),
+                                   -1);
+
             ACE_NEW_RETURN (sending_flow,
                             ACE_Flow_Spec,
                             -1);
@@ -183,7 +186,7 @@ rsvp_callback (rapi_sid_t /* sid */,
                     "Code=%d  Val=%d  Node= %s\n",
                     errcode,
                     errvalue,
-                    ACE_OS::inet_ntoa(((sockaddr_in *)errnode)->sin_addr)));
+                    ACE_OS::inet_ntoa (reinterpret_cast<sockaddr_in *> (errnode)->sin_addr)));
         qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_PATH_ERROR);
       }
       break;
@@ -195,7 +198,7 @@ rsvp_callback (rapi_sid_t /* sid */,
                     "Code=%d  Val=%d  Node= %s\n",
                     errcode,
                     errvalue,
-                    ACE_OS::inet_ntoa(((sockaddr_in *)errnode)->sin_addr)));
+                    ACE_OS::inet_ntoa (reinterpret_cast<sockaddr_in *> (errnode)->sin_addr)));
         qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_RESV_ERROR);
       }
       break;
@@ -221,18 +224,21 @@ rsvp_callback (rapi_sid_t /* sid */,
   return 0;
 }
 
-// Constructor.
 ACE_RAPI_Session::ACE_RAPI_Session ()
 {
   ACE_TRACE ("ACE_RAPI_Session::ACE_RAPI_Session");
   //this->source_port (DEFAULT_SOURCE_SENDER_PORT);
-  ACE_NEW (this->src_addr_,
-           ACE_INET_Addr ("0"));
+  this->src_addr_.reset (new (std::nothrow) ACE_INET_Addr ("0"));
+  if (this->src_addr_ == nullptr)
+    {
+      errno = ENOMEM;
+      return;
+    }
 }
 
-// Open a RAPI QoS session [dest IP, dest port, Protocol ID].
+/// Open a RAPI QoS session [dest IP, dest port, Protocol ID].
 int
-ACE_RAPI_Session::open (ACE_INET_Addr dest_addr,
+ACE_RAPI_Session::open (ACE_INET_Addr const &dest_addr,
                         ACE_Protocol_ID protocol_id)
 {
   char buf [BUFSIZ];
@@ -249,11 +255,11 @@ ACE_RAPI_Session::open (ACE_INET_Addr dest_addr,
   // the callback function. The callback function uses this argument to
   // update the QoS of this session based on the RSVP event it receives.
 
-  if ((this->session_id_ = rapi_session((struct sockaddr *) dest_addr.get_addr (),
+  if ((this->session_id_ = rapi_session (static_cast<sockaddr *> (dest_addr.get_addr ()),
                                         protocol_id,
                                         0,
                                         rsvp_callback,
-                                        (void *) this,
+                                        this,
                                         &rsvp_error)) == NULL_SID)
     ACELIB_ERROR_RETURN ((LM_ERROR,
                        "rapi_session () call fails. Error\n"),
@@ -267,7 +273,7 @@ ACE_RAPI_Session::open (ACE_INET_Addr dest_addr,
   return 0;
 }
 
-// Close the RAPI QoS Session.
+/// Close the RAPI QoS Session.
 int
 ACE_RAPI_Session::close ()
 {
@@ -285,14 +291,14 @@ ACE_RAPI_Session::close ()
   return 0;
 }
 
-//Get the most recent RSVP event that occurred
+/// Returns the most recent QoS event.
 ACE_QoS_Session::RSVP_Event_Type
-ACE_RAPI_Session::rsvp_event_type ()
+ACE_RAPI_Session::rsvp_event_type () const
 {
   return this->rsvp_event_type_;
 }
 
-//Set the most recent RSVP event that occurred
+/// Sets the most recent QoS event.
 void
 ACE_RAPI_Session::rsvp_event_type (ACE_QoS_Session::RSVP_Event_Type event_type)
 {
@@ -302,28 +308,32 @@ ACE_RAPI_Session::rsvp_event_type (ACE_QoS_Session::RSVP_Event_Type event_type)
 int
 ACE_RAPI_Session::qos (ACE_SOCK * /* socket */,
                        ACE_QoS_Manager * /* qos_manager */,
-                       const ACE_QoS &ace_qos)
+                       ACE_QoS const &ace_qos)
 {
   // If sender : call sending_qos ()
   // If receiver : call receiving_qos ()
   // If both : call sending_qos () and receiving_qos ()
 
   if (this->flags_ != ACE_QOS_RECEIVER)
-    return this->sending_qos (ace_qos);
+    {
+      return this->sending_qos (ace_qos);
+    }
 
   if (this->flags_ != ACE_QOS_SENDER)
-    return this->receiving_qos (ace_qos);
+    {
+      return this->receiving_qos (ace_qos);
+    }
 
   return 0;
 }
 
-// Set sending QoS for this RAPI session.
+/// Set sending QoS for this RAPI session.
 int
-ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
+ACE_RAPI_Session::sending_qos (ACE_QoS const &ace_qos)
 {
   ACE_Flow_Spec *sending_flowspec = ace_qos.sending_flowspec ();
 
-  if (sending_flowspec == 0)
+  if (sending_flowspec == nullptr)
     {
       int result = rapi_sender (this->session_id_,
                                 0,
@@ -334,23 +344,29 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
                                 0,
                                 25);
       if (result != 0)
-        ACELIB_ERROR_RETURN ((LM_ERROR,
-                           "(%N|%l) rapi_sender error %d:\n\tPATH Generation can't be started\n",
-                           result),
-                          -1);
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                                "(%N|%l) rapi_sender error %d:\n\tPATH Generation can't be started\n",
+                                result),
+                               -1);
+        }
       else
-        ACELIB_DEBUG ((LM_DEBUG,
-                    "rapi_sender () call succeeds with PATH Tear!\n"));
+        {
+          ACELIB_DEBUG ((LM_DEBUG,
+                         "rapi_sender () call succeeds with PATH Tear!\n"));
+        }
 
       return 0;
     }
 
   rapi_tspec_t *t_spec = this->init_tspec_simplified (*sending_flowspec);
-  if (t_spec == 0)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       "(%N|%l) Error in translating from ACE Flow Spec to"
-                       " RAPI TSpec\n"),
-                      -1);
+  if (t_spec == nullptr)
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            "(%N|%l) Error in translating from ACE Flow Spec to"
+                            " RAPI TSpec\n"),
+                           -1);
+    }
 
   char buffer[BUFSIZ];
 
@@ -388,10 +404,9 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
 
   // Set the Sender TSpec for this QoS session.
 
-
   int result = rapi_sender(this->session_id_,
                            0,
-                           (sockaddr *) this->src_addr_->get_addr (),
+                           static_cast<sockaddr *> (this->src_addr_->get_addr ()),
                            0,
                            t_spec,
                            0,
@@ -408,23 +423,27 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
                            0,
                            sending_flowspec->ttl ()) ;
   */
-  if(result!= 0)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       "(%N|%l) rapi_sender error %d:\n\tPATH Generation can't be started\n",
-                      result),
-                      -1);
+  if (result != 0)
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            "(%N|%l) rapi_sender error %d:\n\tPATH Generation can't be started\n",
+                            result),
+                           -1);
+    }
   else
-    ACELIB_DEBUG ((LM_DEBUG,
-                "rapi_sender () call succeeds !\n"));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     "rapi_sender () call succeeds !\n"));
+    }
   return 0;
 }
 
-// Set receiving QoS for this RAPI session.
+/// Set receiving QoS for this RAPI session.
 int
-ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
+ACE_RAPI_Session::receiving_qos (ACE_QoS const &ace_qos)
 {
   ACE_Flow_Spec *receiving_flowspec = ace_qos.receiving_flowspec ();
-  if (receiving_flowspec == 0)
+  if (receiving_flowspec == nullptr)
     {
       if (rapi_reserve(this->session_id_,
                        0,
@@ -454,10 +473,9 @@ ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
       return 0;
     }
 
-
   rapi_flowspec_t *flow_spec = init_flowspec_simplified (*receiving_flowspec);
 
-  if (flow_spec == 0)
+  if (flow_spec == nullptr)
     ACELIB_ERROR_RETURN ((LM_ERROR,
                        "(%N|%l) Error in translating from ACE Flow Spec to"
                        " RAPI FlowSpec\n"),
@@ -500,7 +518,7 @@ ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
                    // of the resevation, by means of a confirmation upcall of
                    // type RAPI_RESV_CONFIRM.
                    //                   (sockaddr *)receiver_addr.get_addr (),
-                   (sockaddr *)&Receiver_host,
+                   reinterpret_cast<sockaddr *> (&Receiver_host),
                    RAPI_RSTYLE_WILDCARD,
                    // This applies the flowspec to all the senders. Given this,
                    // @@I am passing the filter_spec to be null, hoping this will work.
@@ -534,12 +552,11 @@ ACE_RAPI_Session::update_qos ()
   return 0;
 }
 
-// Construct a simplified RAPI Sender TSpec object
-// from an ACE_Flow_Spec. Note the form of the TSpec is
-// simplified as against the full bodied IntServ version.
-
+/// Construct a simplified RAPI Sender TSpec object
+/// from an ACE_Flow_Spec. Note the form of the TSpec is
+/// simplified as against the full bodied IntServ version.
 rapi_tspec_t *
-ACE_RAPI_Session::init_tspec_simplified (const ACE_Flow_Spec &flow_spec)
+ACE_RAPI_Session::init_tspec_simplified (ACE_Flow_Spec const &flow_spec)
 {
   rapi_tspec_t *t_spec;
 
@@ -564,13 +581,11 @@ ACE_RAPI_Session::init_tspec_simplified (const ACE_Flow_Spec &flow_spec)
   return (t_spec);
 }
 
-
-// Construct a simplified RAPI flowspec object from ACE_Flow_Spec.
-// Note the form of the FlowSpec is simplified as against the
-// full bodied IntServ version.
-
+/// Construct a simplified RAPI flowspec object from ACE_Flow_Spec.
+/// Note the form of the FlowSpec is simplified as against the
+/// full bodied IntServ version.
 rapi_flowspec_t *
-ACE_RAPI_Session::init_flowspec_simplified(const ACE_Flow_Spec &flow_spec)
+ACE_RAPI_Session::init_flowspec_simplified (ACE_Flow_Spec const &flow_spec)
 {
   rapi_flowspec_t *flowsp;
   ACE_NEW_RETURN (flowsp,
@@ -621,17 +636,16 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // This is a GQoS session ID generator.
-int ACE_GQoS_Session::GQoS_session_id = 0;
+int ACE_GQoS_Session::GQoS_session_id {};
 
-// Constructor.
 ACE_GQoS_Session::ACE_GQoS_Session ()
 {
   ACE_TRACE ("ACE_GQoS_Session::ACE_GQoS_Session");
 }
 
-// Open a GQoS session [dest IP, dest port, Protocol ID].
+/// Open a GQoS session [dest IP, dest port, Protocol ID].
 int
-ACE_GQoS_Session::open (ACE_INET_Addr dest_addr,
+ACE_GQoS_Session::open (ACE_INET_Addr const &dest_addr,
                         ACE_Protocol_ID protocol_id)
 {
   this->dest_addr_ = dest_addr;
@@ -642,7 +656,7 @@ ACE_GQoS_Session::open (ACE_INET_Addr dest_addr,
   return 0;
 }
 
-// Close the GQoS Session.
+/// Close the GQoS Session.
 int
 ACE_GQoS_Session::close ()
 {
@@ -650,38 +664,44 @@ ACE_GQoS_Session::close ()
   return 0;
 }
 
-// Set the QoS for this GQoS session.
+/// Set the QoS for this GQoS session.
 int
 ACE_GQoS_Session::qos (ACE_SOCK *socket,
                        ACE_QoS_Manager *qos_manager,
-                       const ACE_QoS &ace_qos)
+                       ACE_QoS const &ace_qos)
 {
   // Confirm if the current session is one of the QoS sessions
   // subscribed to by the given socket.
 
   if (qos_manager->qos_session_set ().find (this) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("This QoS session was not subscribed to")
-                       ACE_TEXT (" by the socket\n")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("This QoS session was not subscribed to")
+                            ACE_TEXT (" by the socket\n")),
+                           -1);
+    }
 
   // Set the QOS according to the supplied ACE_QoS. The I/O control
   // code used under the hood is SIO_SET_QOS.
 
-  u_long ret_bytes = 0;
+  u_long ret_bytes {};
 
   ACE_QoS qos = ace_qos;
   if (ACE_OS::ioctl (socket->get_handle (),
                      ACE_SIO_SET_QOS,
                      qos,
                      &ret_bytes) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error in Qos set ACE_OS::ioctl() %d\n"),
-                       ret_bytes),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("Error in Qos set ACE_OS::ioctl() %d\n"),
+                            ret_bytes),
+                           -1);
+    }
   else
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Setting QoS with ACE_OS::ioctl () succeeds\n")));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("Setting QoS with ACE_OS::ioctl () succeeds\n")));
+    }
 
   return 0;
 }
@@ -693,14 +713,14 @@ ACE_GQoS_Session::update_qos ()
   return 0;
 }
 
-//Get the most recent RSVP event that occurred
+/// Returns the most recent QoS event.
 ACE_QoS_Session::RSVP_Event_Type
-ACE_GQoS_Session::rsvp_event_type ()
+ACE_GQoS_Session::rsvp_event_type () const
 {
   return this->rsvp_event_type_;
 }
 
-//Set the most recent RSVP event that occurred
+/// Sets the most recent QoS event.
 void
 ACE_GQoS_Session::rsvp_event_type (ACE_QoS_Session::RSVP_Event_Type event_type)
 {

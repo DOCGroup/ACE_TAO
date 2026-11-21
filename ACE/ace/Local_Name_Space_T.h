@@ -25,6 +25,8 @@
 #include "ace/Local_Name_Space.h"
 #include "ace/Null_Mutex.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// A short-hand name for our set of name/value/type tuples passed back
@@ -57,13 +59,13 @@ template <class ALLOCATOR>
 class ACE_Name_Space_Map : public MAP_MANAGER
 {
 public:
-  /// Constructor.
-  ACE_Name_Space_Map (ALLOCATOR *alloc);
+  explicit ACE_Name_Space_Map (ALLOCATOR *alloc);
 
-  // = The following methods are Proxies to the underlying methods
-  // provided by ACE_Hash_Map_Manager.  When they are called, they
-  // acquire the lock, set the allocator to the one specific to this
-  // process, and then call down to perform the intended operation.
+  /** @name Map operation proxies
+   * These methods acquire the lock, set the allocator for this process, and
+   * call the corresponding ACE_Hash_Map_Manager operation.
+   */
+  /// @{
   int bind (const ACE_NS_String &,
             const ACE_NS_Internal &,
             ALLOCATOR *alloc);
@@ -83,6 +85,7 @@ public:
             ALLOCATOR *alloc);
 
   int close (ALLOCATOR *alloc);
+  /// @}
 };
 
 /**
@@ -113,6 +116,11 @@ public:
   ACE_Local_Name_Space (ACE_Naming_Context::Context_Scope_Type scope_in,
                         ACE_Name_Options *name_options);
 
+  ACE_Local_Name_Space (ACE_Local_Name_Space const &) = delete;
+  ACE_Local_Name_Space &operator= (ACE_Local_Name_Space const &) = delete;
+  ACE_Local_Name_Space (ACE_Local_Name_Space &&) = delete;
+  ACE_Local_Name_Space &operator= (ACE_Local_Name_Space &&) = delete;
+
   /**
    * Specifies the scope of this namespace, opens and memory-maps the
    * associated file (if accessible) or contacts the dedicated name
@@ -120,9 +128,8 @@ public:
    */
   int open (ACE_Naming_Context::Context_Scope_Type scope_in);
 
-  /// Destructor, do some cleanup :TBD: last dtor should "compress"
-  /// file
-  ~ACE_Local_Name_Space () override;
+  /// Release the owned allocator and lock.
+  ~ACE_Local_Name_Space () override = default;
 
   /// Bind a new name to a naming context (Wide character strings).
   int bind (const ACE_NS_WString &name,
@@ -207,7 +214,6 @@ public:
   void dump () const override;
   virtual void dump_i () const;
 
-  // = I just know this is going to cause problems on some platform...
   using ALLOCATOR = ACE_Allocator_Adapter<ACE_Malloc<_ACE_MEM_POOL, ACE_LOCK>>;
 
   ACE_ALLOC_HOOK_DECLARE;
@@ -221,34 +227,34 @@ private:
   /// Factor out code from bind() and rebind().
   int shared_bind (const ACE_NS_WString &name,
                    const ACE_NS_WString &value,
-                   const char *type, int rebind);
+                   const char *type, bool rebind);
   int shared_bind_i (const ACE_NS_WString &name,
                      const ACE_NS_WString &value,
-                     const char *type, int rebind);
+                     const char *type, bool rebind);
 
   /// Allocate the appropriate type of map manager that stores the
   /// key/value binding.
   int create_manager ();
   int create_manager_i ();
 
-  /// Pointer to the allocator
-  ALLOCATOR *allocator_;
+  /// Owns the process-local allocator used by the shared map proxy.
+  std::unique_ptr<ALLOCATOR> allocator_;
 
-  /// Pointer to the allocated map manager.
-  ACE_Name_Space_Map <ALLOCATOR> *name_space_map_;
+  /// Non-owning pointer to the map manager, which may reside in shared memory.
+  ACE_Name_Space_Map<ALLOCATOR> *name_space_map_ {};
 
   /// Scope of this naming context (e.g., PROC_LOCAL, NODE_LOCAL, or
   /// NET_LOCAL).
-  ACE_Naming_Context::Context_Scope_Type ns_scope_;
+  ACE_Naming_Context::Context_Scope_Type ns_scope_ {};
 
   /// Keep track of the options such as database name etc
-  ACE_Name_Options *name_options_;
+  ACE_Name_Options *name_options_ {};
 
   /// Name of the file used as the backing store.
   ACE_TCHAR context_file_[MAXPATHLEN + MAXNAMELEN];
 
   /// Synchronization variable.
-  ACE_LOCK *lock_;
+  std::unique_ptr<ACE_LOCK> lock_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

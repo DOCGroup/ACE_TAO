@@ -173,8 +173,7 @@ TAO_ValueDef_i::supported_interfaces_i ()
 
 void
 TAO_ValueDef_i::supported_interfaces (
-    CORBA::InterfaceDefSeq const &supported_interfaces
-  )
+    CORBA::InterfaceDefSeq const &supported_interfaces)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -185,8 +184,7 @@ TAO_ValueDef_i::supported_interfaces (
 
 void
 TAO_ValueDef_i::supported_interfaces_i (
-    CORBA::InterfaceDefSeq const &supported_interfaces
-  )
+    CORBA::InterfaceDefSeq const &supported_interfaces)
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "supported",
@@ -200,7 +198,6 @@ TAO_ValueDef_i::supported_interfaces_i (
   this->repo_->config ()->set_integer_value (supported_key,
                                              "count",
                                              count);
-  char *stringified {};
   CORBA::ULong kind = 0;
   bool concrete_seen = false;
   CORBA::DefinitionKind def_kind;
@@ -246,7 +243,7 @@ TAO_ValueDef_i::supported_interfaces_i (
                                           this->repo_,
                                           CORBA::dk_Value);
 
-      stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
       char const * const supported_id =
         supported_interfaces[i]->_interface_repository_id ();
       this->repo_->config ()->set_string_value (supported_key,
@@ -517,8 +514,7 @@ TAO_ValueDef_i::abstract_base_values_i ()
 
 void
 TAO_ValueDef_i::abstract_base_values (
-    CORBA::ValueDefSeq const &abstract_base_values
-  )
+    CORBA::ValueDefSeq const &abstract_base_values)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -529,8 +525,7 @@ TAO_ValueDef_i::abstract_base_values (
 
 void
 TAO_ValueDef_i::abstract_base_values_i (
-    CORBA::ValueDefSeq const &abstract_base_values
-  )
+    CORBA::ValueDefSeq const &abstract_base_values)
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "abstract_bases",
@@ -550,8 +545,6 @@ TAO_ValueDef_i::abstract_base_values_i (
   this->repo_->config ()->set_integer_value (bases_key,
                                              "count",
                                              count);
-  char *stringified {};
-
   for (CORBA::ULong i {}; i < count; ++i)
     {
       char const * const base_path =
@@ -575,7 +568,7 @@ TAO_ValueDef_i::abstract_base_values_i (
 
       char const * const base_id =
         abstract_base_values[i]->_interface_repository_id ();
-      stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->set_string_value (bases_key,
                                                 stringified,
                                                 base_id);
@@ -1358,8 +1351,7 @@ TAO_ValueDef_i::create_attribute (
     char const *name,
     char const *version,
     CORBA::IDLType_ptr type,
-    CORBA::AttributeMode mode
-  )
+    CORBA::AttributeMode mode)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::AttributeDef::_nil ());
 
@@ -1378,8 +1370,7 @@ TAO_ValueDef_i::create_attribute_i (
     char const *name,
     char const *version,
     CORBA::IDLType_ptr type,
-    CORBA::AttributeMode mode
-  )
+    CORBA::AttributeMode mode)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1430,8 +1421,7 @@ TAO_ValueDef_i::create_operation (
     CORBA::OperationMode mode,
     CORBA::ParDescriptionSeq const &params,
     CORBA::ExceptionDefSeq const &exceptions,
-    CORBA::ContextIdSeq const &contexts
-  )
+    CORBA::ContextIdSeq const &contexts)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::OperationDef::_nil ());
 
@@ -1456,8 +1446,7 @@ TAO_ValueDef_i::create_operation_i (
     CORBA::OperationMode mode,
     CORBA::ParDescriptionSeq const &params,
     CORBA::ExceptionDefSeq const &exceptions,
-    CORBA::ContextIdSeq const &contexts
-  )
+    CORBA::ContextIdSeq const &contexts)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1517,8 +1506,6 @@ TAO_ValueDef_i::create_operation_i (
       this->repo_->config ()->set_integer_value (params_key,
                                                  "count",
                                                  length);
-      char *type_path {};
-
       for (i = 0; i < length; ++i)
         {
           // Oneway operations cannot have INOUT or OUT parameters.
@@ -1539,7 +1526,7 @@ TAO_ValueDef_i::create_operation_i (
           this->repo_->config ()->set_string_value (param_key,
                                                     "name",
                                                     params[i].name.in ());
-          type_path =
+          char * const type_path =
             TAO_IFR_Service_Utils::reference_to_path (
                 params[i].type_def.in ()
               );
@@ -1705,8 +1692,7 @@ TAO_ValueDef_i::value_contents (
     std::deque<CORBA::DefinitionKind> &kind_queue,
     std::deque<ACE_TString> &path_queue,
     CORBA::DefinitionKind limit_type,
-    CORBA::Boolean exclude_inherited
-  )
+    CORBA::Boolean exclude_inherited)
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,

@@ -38,9 +38,7 @@ namespace ACE
         *this = url;
       }
 
-    URL::~URL ()
-      {
-      }
+    URL::~URL () = default;
 
     URL& URL::operator =(const URL& url)
       {
@@ -67,15 +65,19 @@ namespace ACE
                     "/" :
                     this->get_path ().c_str ());
         if (!this->get_query ().empty ())
+        {
           sos << '?' << this->get_query ().c_str ();
+        }
         if (!this->get_fragment ().empty ())
+        {
           sos << '#' << this->get_fragment ().c_str ();
+        }
         return sos.str ();
       }
 
     ACE::INet::ClientRequestHandler* URL::create_default_request_handler () const
       {
-        ACE::INet::ClientRequestHandler* prh = 0;
+        ACE::INet::ClientRequestHandler* prh {};
         ACE_NEW_NORETURN (prh, ACE::HTTP::ClientRequestHandler ());
         return prh;
       }
@@ -87,8 +89,7 @@ namespace ACE
         ACE::INet::URL_Base::register_factory (this);
       }
 
-    URL::Factory::~Factory ()
-      {}
+    URL::Factory::~Factory () = default;
 
     const ACE_CString& URL::Factory::protocol ()
       {
@@ -97,7 +98,7 @@ namespace ACE
 
     ACE::INet::URL_Base* URL::Factory::create_from_string (const ACE_CString& url_string)
       {
-        URL* purl = 0;
+        URL* purl {};
         ACE_NEW_NORETURN (purl, URL (url_string));
         return purl;
       }

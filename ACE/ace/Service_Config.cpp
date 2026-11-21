@@ -53,20 +53,24 @@ void
 ACE_Threading_Helper<ACE_Thread_Mutex>::set (void* p)
 {
   if (ACE_Thread::setspecific (key_, p) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-               ACE_TEXT ("(%P|%t) Service Config failed to set thread key value: %p\n"),
-               ACE_TEXT("")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("(%P|%t) Service Config failed to set thread key value: %p\n"),
+                     ACE_TEXT("")));
+    }
 }
 
 void*
 ACE_Threading_Helper<ACE_Thread_Mutex>::get ()
 {
-  void* temp = nullptr;
+  void* temp {};
   if (ACE_Thread::getspecific (key_, &temp) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Service Config failed to get thread key value: %p\n"),
-                       ACE_TEXT("")),
-                      0);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("(%P|%t) Service Config failed to get thread key value: %p\n"),
+                            ACE_TEXT("")),
+                           0);
+    }
   return temp;
 }
 
@@ -96,19 +100,19 @@ ACE_Threading_Helper<ACE_Null_Mutex>::get ()
   */
 using ACE_SERVICE_CONFIG_SINGLETON = ACE_Unmanaged_Singleton<ACE_Service_Config, ACE_SYNCH_RECURSIVE_MUTEX>;
 
-
-/// ctor
-ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt * psg)
+ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt *psg)
   : saved_ (ACE_Service_Config::current ())
 {
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) - SCG:<ctor=%@>")
-                ACE_TEXT (" - config=%@ repo=%@ superseded by repo=%@\n"),
-                this,
-                this->saved_.get (),
-                this->saved_->repo_,
-                psg->repo_));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("ACE (%P|%t) - SCG:<ctor=%@>")
+                     ACE_TEXT (" - config=%@ repo=%@ superseded by repo=%@\n"),
+                     this,
+                     this->saved_.get (),
+                     this->saved_->repo_,
+                     psg->repo_));
+    }
 
   // Modify the TSS if the repo has changed
   ACE_Service_Config::current (psg);
@@ -116,32 +120,31 @@ ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt * psg)
 
 ACE_Service_Config_Guard::~ACE_Service_Config_Guard ()
 {
-  ACE_Service_Gestalt* s = this->saved_.get ();
+  ACE_Service_Gestalt *s = this->saved_.get ();
   ACE_ASSERT (s != nullptr);
 
   ACE_Service_Config::current (s);
 
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) SCG:<dtor=%@>")
-                ACE_TEXT (" - new repo=%@\n"),
-                this,
-                this->saved_->repo_));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("ACE (%P|%t) SCG:<dtor=%@>")
+                     ACE_TEXT (" - new repo=%@\n"),
+                     this,
+                     this->saved_->repo_));
+    }
 }
-
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Service_Config)
 
 // Set the signal handler to point to the handle_signal() function.
-ACE_Sig_Adapter *ACE_Service_Config::signal_handler_ = nullptr;
+ACE_Sig_Adapter *ACE_Service_Config::signal_handler_ {};
 
 // Trigger a reconfiguration.
 sig_atomic_t ACE_Service_Config::reconfig_occurred_ = 0;
 
-// = Set by command-line options.
-
 /// Pathname of file to write process id.
-ACE_TCHAR *ACE_Service_Config::pid_file_name_ = nullptr;
+ACE_TCHAR *ACE_Service_Config::pid_file_name_ {};
 
 /// Shall we become a daemon process?
 bool ACE_Service_Config::be_a_daemon_ = false;
@@ -179,38 +182,41 @@ ACE_Service_Config::parse_args_i (int argc, ACE_TCHAR *argv[])
   //FUZZ: disable check_for_lack_ACE_OS
   for (int c; (c = getopt ()) != -1; )
   //FUZZ: enable check_for_lack_ACE_OS
-    switch (c)
-      {
-      case 'p':
-        ACE_Service_Config::pid_file_name_ = getopt.opt_arg ();
-        break;
-      case 'b':
-        ACE_Service_Config::be_a_daemon_ = true;
-        break;
-      case 's':
+    {
+      switch (c)
         {
-          // There's no point in dealing with this on NT since it
-          // doesn't really support signals very well...
-#if !defined (ACE_LACKS_UNIX_SIGNALS)
-          ACE_Service_Config::signum_ =
-            ACE_OS::atoi (getopt.opt_arg ());
-
-          if (ACE_Reactor::instance ()->register_handler
-              (ACE_Service_Config::signum_,
-               ACE_Service_Config::signal_handler_) == -1)
-            ACELIB_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("cannot obtain signal handler\n")),
-                              -1);
-#endif /* ACE_LACKS_UNIX_SIGNALS */
+        case 'p':
+          ACE_Service_Config::pid_file_name_ = getopt.opt_arg ();
           break;
-        }
-      default:; // unknown arguments are benign
+        case 'b':
+          ACE_Service_Config::be_a_daemon_ = true;
+          break;
+        case 's':
+          {
+            // There's no point in dealing with this on NT since it
+            // doesn't really support signals very well...
+#if !defined (ACE_LACKS_UNIX_SIGNALS)
+            ACE_Service_Config::signum_ =
+              ACE_OS::atoi (getopt.opt_arg ());
 
-      }
+            if (ACE_Reactor::instance ()->register_handler
+                (ACE_Service_Config::signum_,
+                 ACE_Service_Config::signal_handler_) == -1)
+              {
+                ACELIB_ERROR_RETURN ((LM_ERROR,
+                                      ACE_TEXT ("cannot obtain signal handler\n")),
+                                     -1);
+              }
+#endif /* ACE_LACKS_UNIX_SIGNALS */
+            break;
+          }
+        default:; // unknown arguments are benign
+
+        }
+    }
 
   return 0;
 } /* parse_args_i () */
-
 
 int
 ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
@@ -225,13 +231,17 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
   ACE_Log_Msg *log_msg = ACE_LOG_MSG;
 
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) SC::open_i - this=%@, opened=%d\n"),
-                this, this->is_opened_));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("ACE (%P|%t) SC::open_i - this=%@, opened=%d\n"),
+                     this, this->is_opened_));
+    }
 
   // Guard against reentrant processing.
   if (this->is_opened_)
+  {
     return 0;
+  }
 
   this->is_opened_ = true;
 
@@ -244,7 +254,9 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
       // If we have to become a daemn and that fails
       // return -1 here
       if (ACE::daemonize () == -1)
+      {
         return -1;
+      }
     }
 
   // Write process id to file.
@@ -266,7 +278,9 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
 
   // Only use STDERR if the caller hasn't already set the flags.
   if (flags == 0)
+  {
     flags = (u_long) ACE_Log_Msg::STDERR;
+  }
 
   const ACE_TCHAR *key = logger_key;
 
@@ -285,11 +299,15 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
   if (log_msg->open (program_name,
                      flags,
                      key) == -1)
+  {
     return -1;
+  }
 
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_STARTUP,
-                ACE_TEXT ("starting up daemon %n\n")));
+    {
+      ACELIB_DEBUG ((LM_STARTUP,
+                     ACE_TEXT ("starting up daemon %n\n")));
+    }
 
   // Initialize the Service Repository (this will still work if
   // user forgets to define an object of type ACE_Service_Config).
@@ -311,8 +329,10 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
       if ((ACE_Reactor::instance () != nullptr) &&
           (ACE_Reactor::instance ()->register_handler
            (ss, ACE_Service_Config::signal_handler_) == -1))
-        ACELIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("can't register signal handler\n")));
+        {
+          ACELIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("can't register signal handler\n")));
+        }
     }
 #endif /* ACE_LACKS_UNIX_SIGNALS */
 
@@ -332,7 +352,6 @@ ACE_Service_Config::insert (ACE_Static_Svc_Descriptor* stsd)
 {
   return ACE_Service_Config::instance ()->insert (stsd);
 }
-
 
 // Totally remove <svc_name> from the daemon by removing it from the
 // ACE_Reactor, and unlinking it if necessary.
@@ -366,7 +385,6 @@ ACE_Service_Config::resume (const ACE_TCHAR svc_name[])
   return ACE_Service_Repository::instance ()->resume (svc_name);
 }
 
-
 ACE_Service_Config::ACE_Service_Config (bool ignore_static_svcs,
                                         size_t size,
                                         int signum)
@@ -376,31 +394,29 @@ ACE_Service_Config::ACE_Service_Config (bool ignore_static_svcs,
   // TODO: Need to find a more customizable way of instantiating the
   // gestalt but perhaps we should leave this out untill such
   // customizations are identified.
-  ACE_Service_Gestalt* tmp = nullptr;
+  ACE_Service_Gestalt *tmp {};
   ACE_NEW_NORETURN (tmp,
                     ACE_Service_Gestalt (size, false, ignore_static_svcs));
 
-  this->is_opened_ = false;
-  this->instance_ = tmp;
+  this->instance_.reset (tmp);
   this->threadkey_.set (tmp);
 
   ACE_Service_Config::signum_ = signum;
 }
 
-ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
-                                        const ACE_TCHAR *logger_key)
+ACE_Service_Config::ACE_Service_Config (ACE_TCHAR const program_name[],
+                                        ACE_TCHAR const *logger_key)
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
 
   // TODO: Need to find a more customizable way of instantiating the
   // gestalt but perhaps we should leave this out untill such
   // customizations are identified.
-  ACE_Service_Gestalt* tmp = nullptr;
+  ACE_Service_Gestalt *tmp {};
   ACE_NEW_NORETURN (tmp,
                     ACE_Service_Gestalt (ACE_Service_Repository::DEFAULT_SIZE, false));
 
-  this->is_opened_ = false;
-  this->instance_ = tmp;
+  this->instance_.reset (tmp);
   this->threadkey_.set (tmp);
 
   if (this->open (program_name,
@@ -447,7 +463,6 @@ ACE_Service_Config::current (ACE_Service_Gestalt* newcurrent)
   ACE_Service_Config::singleton()->threadkey_.set (newcurrent);
 }
 
-
 #if (ACE_USES_CLASSIC_SVC_CONF == 0)
 ACE_Service_Type *
 ACE_Service_Config::create_service_type  (const ACE_TCHAR *n,
@@ -455,7 +470,7 @@ ACE_Service_Config::create_service_type  (const ACE_TCHAR *n,
                                           ACE_DLL &dll,
                                           int active)
 {
-  ACE_Service_Type *sp = nullptr;
+  ACE_Service_Type *sp {};
   ACE_NEW_RETURN (sp,
                   ACE_Service_Type (n, o, dll, active),
                   0);
@@ -470,7 +485,7 @@ ACE_Service_Config::create_service_type_impl (const ACE_TCHAR *name,
                                               u_int flags,
                                               ACE_Service_Object_Exterminator gobbler)
 {
-  ACE_Service_Type_Impl *stp = nullptr;
+  ACE_Service_Type_Impl *stp {};
 
   // Note, the only place we need to put a case statement.  This is
   // also the place where we'd put the RTTI tests, if the compiler
@@ -503,7 +518,6 @@ ACE_Service_Config::create_service_type_impl (const ACE_TCHAR *name,
   return stp;
 }
 
-
 // Signal handling API to trigger dynamic reconfiguration.
 void
 ACE_Service_Config::handle_signal (int sig, siginfo_t *, ucontext_t *)
@@ -528,18 +542,22 @@ ACE_Service_Config::reconfigure ()
   if (ACE::debug ())
     {
 #if !defined (ACE_NLOGGING)
-      time_t t = ACE_OS::time (nullptr);
+      time_t const t = ACE_OS::time (nullptr);
 
       if (ACE::debug ())
-        ACELIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("beginning reconfiguration at %s"),
-                    ACE_OS::ctime (&t)));
+        {
+          ACELIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("beginning reconfiguration at %s"),
+                         ACE_OS::ctime (&t)));
+        }
 #endif /* ! ACE_NLOGGING */
     }
   if (ACE_Service_Config::process_directives () == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("process_directives")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("process_directives")));
+    }
 }
 
 // Tidy up and perform last rites on a terminating ACE_Service_Config.
@@ -558,7 +576,6 @@ ACE_Service_Config::close ()
   return 0;
 }
 
-
 int
 ACE_Service_Config::fini_svcs ()
 {
@@ -566,14 +583,20 @@ ACE_Service_Config::fini_svcs ()
 
   // Clear the LM_DEBUG bit from log messages if appropriate
   if (ACE::debug ())
+  {
     ACE_Log_Msg::disable_debug_messages ();
+  }
 
   int result = 0;
   if (ACE_Service_Repository::instance () != nullptr)
+  {
     result = ACE_Service_Repository::instance ()->fini ();
+  }
 
   if (ACE::debug ())
+  {
     ACE_Log_Msg::enable_debug_messages ();
+  }
 
   return result;
 }

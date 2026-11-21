@@ -1,4 +1,5 @@
 // -*- C++ -*-
+#include <memory>
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE TAO_AMH_Locate_ResponseHandler_ptr
@@ -11,7 +12,6 @@ TAO_AMH_Locate_ResponseHandler::_duplicate (TAO_AMH_Locate_ResponseHandler_ptr x
 
   return x;
 }
-
 
 // Inline operations for class TAO_AMH_Locate_ResponseHandler_var
 ACE_INLINE
@@ -55,7 +55,7 @@ ACE_INLINE TAO_AMH_Locate_ResponseHandler_var &
 TAO_AMH_Locate_ResponseHandler_var::operator= (
     TAO_AMH_Locate_ResponseHandler_var const &p)
 {
-  if (this != &p)
+  if (this != std::addressof (p))
     {
       CORBA::release (this->ptr_);
       this->ptr_ = TAO_AMH_Locate_ResponseHandler::_duplicate (p.ptr ());

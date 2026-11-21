@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    PG_Object_Adapter_Factory.h
  *
  *  @author  Johnny Willemsen
  */
-// ===================================================================
 
 #ifndef TAO_PG_OBJECT_ADAPTER_FACTORY_H
 #define TAO_PG_OBJECT_ADAPTER_FACTORY_H
@@ -28,11 +26,15 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_PortableGroup_Export TAO_PG_Object_Adapter_Factory : public TAO_Object_Adapter_Factory
 {
 public:
-  /// Constructor
-  TAO_PG_Object_Adapter_Factory ();
+  TAO_PG_Object_Adapter_Factory () = default;
+
+  TAO_PG_Object_Adapter_Factory (TAO_PG_Object_Adapter_Factory const &) = delete;
+  TAO_PG_Object_Adapter_Factory (TAO_PG_Object_Adapter_Factory &&) = delete;
+  TAO_PG_Object_Adapter_Factory & operator= (TAO_PG_Object_Adapter_Factory const &) = delete;
+  TAO_PG_Object_Adapter_Factory & operator= (TAO_PG_Object_Adapter_Factory &&) = delete;
 
   /// Create adapter.
-  TAO_Adapter *create (TAO_ORB_Core *orb_core) override;
+  TAO_Adapter * create (TAO_ORB_Core * orb_core) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

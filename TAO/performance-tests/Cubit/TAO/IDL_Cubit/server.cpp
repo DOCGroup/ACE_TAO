@@ -48,7 +48,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       if (cubit_server.init (argc, argv)== -1)
+      {
         return -1;
+      }
 
       cubit_server.run ();
 

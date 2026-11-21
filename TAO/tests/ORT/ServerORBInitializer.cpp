@@ -23,7 +23,6 @@ ServerORBInitializer::post_init (
 
   ACE_ASSERT (!CORBA::is_nil (poa_current.in ()));
 
-
   CORBA::String_var orb_id = info->orb_id ();
 
   // Create and register the test's ServerRequestInterceptor
@@ -41,7 +40,6 @@ ServerORBInitializer::post_init (
   PortableInterceptor::ServerRequestInterceptor_var server_interceptor = tmp;
 
   info->add_server_request_interceptor (server_interceptor.in ());
-
 
   // Create and register the test's IORInterceptor
 

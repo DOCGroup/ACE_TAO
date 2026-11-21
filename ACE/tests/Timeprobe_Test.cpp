@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 //#define ACE_ENABLE_TIMEPROBES
 //#define ACE_MT_TIMEPROBES
 //#define ACE_TSS_TIMEPROBES
@@ -21,7 +20,6 @@
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Timeprobe.h"
-
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -100,7 +98,7 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_TIMEPROBE ("Starting Test");
 
-  for (int i = 0; i < 3; i++)
+  for (int i = 0; i < 3; ++i)
     {
       work (i);
       ACE_TIMEPROBE (EVENT_ZERO + i);

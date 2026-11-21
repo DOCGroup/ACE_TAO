@@ -192,10 +192,10 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
         dynamic_cast<be_union_branch*> (member_ptr);
 
       ACE_ASSERT (branch != nullptr);
-      std::size_t numberOfLabels = branch->label_list_length ();
+      size_t numberOfLabels = branch->label_list_length ();
 
       // Check for a default branch for the current union field.
-      std::size_t labelNumber;
+      size_t labelNumber;
       for (labelNumber= 0u; labelNumber < numberOfLabels; ++labelNumber)
         if (branch->label (labelNumber)->label_kind ()
             == AST_UnionLabel::UL_default)

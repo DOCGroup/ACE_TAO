@@ -15,6 +15,7 @@
 
 #include /**/ "ace/config-all.h"
 #include "ace/Default_Constants.h"
+#include <atomic>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,7 +28,6 @@
 #include "ace/Singleton.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/Synch_Traits.h"
-#include "ace/Atomic_Op.h"
 #include "ace/Guard_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -257,7 +257,8 @@ public:
   /// Registers a service descriptor for a static service object
   int insert (ACE_Static_Svc_Descriptor *stsd);
 
-  // = Utility methods.
+  /// @name Utility methods
+  /// @{
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
   /// Dynamically link the shared object file and retrieve a pointer to
@@ -316,15 +317,16 @@ public:
 
   struct Processed_Static_Svc
   {
-    Processed_Static_Svc (const ACE_Static_Svc_Descriptor *);
+    explicit Processed_Static_Svc (const ACE_Static_Svc_Descriptor *);
     ~Processed_Static_Svc ();
-    ACE_TCHAR * name_;
+    ACE_TCHAR * name_ {};
     const ACE_Static_Svc_Descriptor *assd_;
     ACE_ALLOC_HOOK_DECLARE;
   };
 
   /// Get the current ACE_Service_Repository held by this object.
   ACE_Service_Repository* current_service_repository ();
+  /// @}
 
 protected:
   int parse_args_i (int, ACE_TCHAR *argv[],
@@ -383,7 +385,6 @@ protected:
 
   /// Performs the common initialization tasks for a new or previously
   /// closed instance. Must not be virtual, as it is called from the
-  /// constructor.
   int init_i ();
 
 protected:
@@ -421,7 +422,7 @@ protected:
   /// to be the case anymore. This variable is incremented by the
   /// <ACE_Service_Gestalt::open> method and decremented by the
   /// <ACE_Service_Gestalt::close> method.
-  int is_opened_;
+  int is_opened_ {};
 
   /// Indicates where to write the logging output.  This is typically
   /// either a STREAM pipe or a socket
@@ -431,33 +432,32 @@ protected:
   bool no_static_svcs_;
 
   /// Queue of services specified on the command-line.
-  ACE_SVC_QUEUE* svc_queue_;
+  ACE_SVC_QUEUE* svc_queue_ {};
 
   /**
    * Queue of svc.conf files specified on the command-line.
    * @@ This should probably be made to handle unicode filenames...
    */
-  ACE_SVC_QUEUE* svc_conf_file_queue_;
+  ACE_SVC_QUEUE* svc_conf_file_queue_ {};
 
   /// The service repository to hold the services.
-  ACE_Service_Repository* repo_;
+  ACE_Service_Repository* repo_ {};
 
   /// Repository of statically linked services.
-  ACE_STATIC_SVCS* static_svcs_;
+  ACE_STATIC_SVCS* static_svcs_ {};
 
   /// Repository of statically linked services for which process
   /// directive was called, but the service is not already a member of
   /// the static_svcs_ list.
-  ACE_PROCESSED_STATIC_SVCS* processed_static_svcs_;
+  ACE_PROCESSED_STATIC_SVCS* processed_static_svcs_ {};
 
   /// Support for intrusive reference counting
-  ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> refcnt_;
+  std::atomic<long> refcnt_ {0};
 
  public:
   static void intrusive_add_ref (ACE_Service_Gestalt*);
   static void intrusive_remove_ref (ACE_Service_Gestalt*);
 }; /* class ACE_Service_Gestalt */
-
 
 /**
  * @class ACE_Service_Type_Dynamic_Guard
@@ -505,7 +505,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #if defined (__ACE_INLINE__)
 #include "ace/Service_Gestalt.inl"
 #endif /* __ACE_INLINE__ */
-
 
 #include /**/ "ace/post.h"
 

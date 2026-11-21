@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file     IIOPEndpointValue_i.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author  Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
 
 #ifndef _TAO_IIOP_ENDPOINT_VALUE_I_H_
 #define _TAO_IIOP_ENDPOINT_VALUE_I_H_
@@ -36,7 +34,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -64,7 +61,12 @@ public:
 
   /// Value initializing constructor, this is typically for creation
   /// of one-off values.
-  IIOPEndpointValue_i (char const* host, CORBA::UShort port);
+  IIOPEndpointValue_i (char const *host, CORBA::UShort port);
+
+  IIOPEndpointValue_i (IIOPEndpointValue_i const &) = delete;
+  IIOPEndpointValue_i &operator= (IIOPEndpointValue_i const &) = delete;
+  IIOPEndpointValue_i (IIOPEndpointValue_i &&) = delete;
+  IIOPEndpointValue_i &operator= (IIOPEndpointValue_i &&) = delete;
 
   ~IIOPEndpointValue_i () override = default;
 
@@ -90,15 +92,10 @@ public:
   CORBA::UShort port () override;
   void port (CORBA::UShort p) override;
 
-  // Protocol tag get operator, inherited from EndpointValueBase
+  /// Protocol tag getter inherited from EndpointValueBase.
   CORBA::ULong protocol_tag () override;
 
 private:
-  IIOPEndpointValue_i (IIOPEndpointValue_i const &) = delete;
-  IIOPEndpointValue_i &operator= (IIOPEndpointValue_i const &) = delete;
-  IIOPEndpointValue_i (IIOPEndpointValue_i &&) = delete;
-  IIOPEndpointValue_i &operator= (IIOPEndpointValue_i &&) = delete;
-
   CORBA::Boolean is_equivalent_i (CORBA::UShort port, char const* host) const;
 
   CORBA::String_var host_;

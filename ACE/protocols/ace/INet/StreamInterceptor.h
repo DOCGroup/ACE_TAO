@@ -35,9 +35,9 @@ namespace ACE
         class StreamInterceptorBase
           {
             public:
-              typedef std::basic_ios<ACE_CHAR_T, TR> ios_type;
-              typedef ACE_CHAR_T char_type;
-              typedef typename ios_type::openmode openmode;
+              using ios_type = std::basic_ios<ACE_CHAR_T, TR>;
+              using char_type = ACE_CHAR_T;
+              using openmode = typename ios_type::openmode;
 
               virtual ~StreamInterceptorBase ();
             protected:
@@ -53,7 +53,7 @@ namespace ACE
               virtual void on_eof ();
           };
 
-        typedef StreamInterceptorBase<char> StreamInterceptor;
+        using StreamInterceptor = StreamInterceptorBase<char>;
       }
   }
 

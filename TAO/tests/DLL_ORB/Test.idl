@@ -1,6 +1,5 @@
-// -*- IDL -*-
+/// -*- IDL -*-
 
-//=============================================================================
 /**
  * @file Test.idl
  *
@@ -8,7 +7,6 @@
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 /**
  * @class Test
@@ -18,11 +16,11 @@
 interface Test
 {
 
-  // Simple two-way operation to invoke so that the ORB transport
-  // internals are excercised.
+  /// Simple two-way operation to invoke so that the ORB transport
+  /// internals are excercised.
   void invoke_me ();
 
-  // Shutdown the server-side ORB.
+  /// Shutdown the server-side ORB.
   oneway void shutdown ();
 
 };

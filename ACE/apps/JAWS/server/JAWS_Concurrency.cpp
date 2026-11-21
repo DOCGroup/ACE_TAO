@@ -1,9 +1,5 @@
 #include "JAWS_Concurrency.h"
 
-JAWS_Concurrency_Base::JAWS_Concurrency_Base ()
-{
-}
-
 int
 JAWS_Concurrency_Base::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 {
@@ -13,32 +9,24 @@ JAWS_Concurrency_Base::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 int
 JAWS_Concurrency_Base::svc ()
 {
-  int result = 0;
-
   for (;;)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb {};
 
       // At this point we could set a timeout value so that the
       // threading strategy can delete a thread if there is nothing to
       // do.  Carefully think how to implement it so you don't leave
       // yourself with 0 threads.
 
-      result = this->getq (mb);
-      if (result == -1 || mb == 0)
+      int const result = this->getq (mb);
+      if (result == -1 || mb == nullptr)
+      {
         break;
+      }
 
       this->put_next (mb);
     }
   return 0;
-}
-
-JAWS_Dispatch_Policy::JAWS_Dispatch_Policy ()
-{
-}
-
-JAWS_Dispatch_Policy::~JAWS_Dispatch_Policy ()
-{
 }
 
 JAWS_Dispatcher::JAWS_Dispatcher (JAWS_Dispatch_Policy *policy)
@@ -53,7 +41,9 @@ JAWS_Thread_Pool_Task::JAWS_Thread_Pool_Task (long flags,
     maxthreads_ (maxthreads)
 {
   if (this->activate (flags, nthreads) == -1)
+  {
     ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Thread_Pool_Task::activate"));
+  }
 }
 
 JAWS_Thread_Per_Task::JAWS_Thread_Per_Task (long flags, int maxthreads)
@@ -69,8 +59,10 @@ JAWS_Thread_Per_Task::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
   const int nthreads = 1;
 
   if (this->activate (this->flags_, nthreads, force_active) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Thread_Pool_Task::activate"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Thread_Pool_Task::activate"),
+                        -1);
+    }
 
   this->putq (mb, tv);
 

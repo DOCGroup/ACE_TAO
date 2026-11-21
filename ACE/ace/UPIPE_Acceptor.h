@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_UPIPE_ACCEPTOR_H
 #define ACE_UPIPE_ACCEPTOR_H
 #include /**/ "ace/pre.h"
@@ -36,7 +35,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_UPIPE_Acceptor : public ACE_SPIPE_Acceptor
 {
 public:
-  /// Default constructor.
   ACE_UPIPE_Acceptor ();
 
   /// Initialize passive endpoint.
@@ -57,7 +55,9 @@ public:
   /// rendezvous point.
   int remove ();
 
-  // = Passive connection acceptance method.
+  /// @name Passive connection acceptance
+  /// @{
+
   /**
    * Accept a new data transfer connection.  A @a timeout of 0 means
    * block forever, a @a timeout of {0, 0} means poll.  @a restart == 1
@@ -68,6 +68,8 @@ public:
               ACE_Time_Value *timeout = nullptr,
               bool restart = true,
               bool reset_new_handle = false);
+
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

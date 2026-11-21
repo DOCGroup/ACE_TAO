@@ -3,22 +3,17 @@
 #pragma hdrstop
 #include "ChatClientWnd.h"
 #include "ReceiverImpl.h"
+
+#include <memory>
 //---------------------------------------------------------------------------
-TReceiverImplementation::TReceiverImplementation ()
-  : orb_ (0)
+void TReceiverImplementation::message (char const *msg)
 {
-}
-//---------------------------------------------------------------------------
-TReceiverImplementation::~TReceiverImplementation ()
-{
-}
-//---------------------------------------------------------------------------
-void TReceiverImplementation::message (const char* msg)
-{
-  ::PostMessage (ChatClientWindow->Handle,
-                 WM_MESSAGE_RECEIVED,
-                 (WPARAM) new String (msg),
-                 (LPARAM) 0);
+  std::unique_ptr<String> message = std::make_unique<String> (msg);
+  if (::PostMessage (ChatClientWindow->Handle,
+                     WM_MESSAGE_RECEIVED,
+                     reinterpret_cast<WPARAM> (message.get ()),
+                     0))
+    message.release ();
 }
 //---------------------------------------------------------------------------
 void TReceiverImplementation::shutdown ()

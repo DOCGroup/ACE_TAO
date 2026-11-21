@@ -18,7 +18,7 @@ Server_Task::svc ()
       ACE_Time_Value tv (15, 0);
       this->orb_->run (tv);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return -1;
     }

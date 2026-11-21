@@ -1,17 +1,17 @@
-// Forward declaration to make recursive construct.
+/// Forward declaration to make recursive construct.
 valuetype BaseNode;
 
 //@@ Doesn't work for now
 //typedef sequence<BaseNode> BaseNodeSeq;
 
-// Performance test: One may try to pass
-// over the wire a cyclic graph and measure
-// how quickly TAO evaporates memory ;-)
+/// Performance test: One may try to pass
+/// over the wire a cyclic graph and measure
+/// how quickly TAO evaporates memory ;-)
 
 valuetype BaseNode
 {
   //@@ TODO:
-  //public BaseNodeSeq node_seq;
+  /// public BaseNodeSeq node_seq;
 
   public BaseNode left;
   public BaseNode right;

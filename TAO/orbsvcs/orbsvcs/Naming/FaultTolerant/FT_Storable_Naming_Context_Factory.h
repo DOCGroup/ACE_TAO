@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_FT_STORABLE_NAMING_CONTEXT_FACTORY_H
 #define TAO_FT_STORABLE_NAMING_CONTEXT_FACTORY_H
 #include /**/ "ace/pre.h"
@@ -37,8 +36,7 @@ public:
   /// Data structure used by TAO_Persistent_Context_Index.
   using HASH_MAP = TAO_Storable_Naming_Context_Factory::HASH_MAP;
 
-  /// Constructor.
-  TAO_FT_Storable_Naming_Context_Factory (
+  explicit TAO_FT_Storable_Naming_Context_Factory (
     size_t hash_table_size = ACE_DEFAULT_MAP_SIZE,
     TAO_FT_Naming_Replication_Manager *rep = nullptr);
 
@@ -46,7 +44,14 @@ public:
   /// this class goes out of scope, its hash_map remains in persistent storage.
   ~TAO_FT_Storable_Naming_Context_Factory () override = default;
 
-  TAO_FT_Naming_Replication_Manager * replicator ();
+  TAO_FT_Storable_Naming_Context_Factory (TAO_FT_Storable_Naming_Context_Factory const &) = delete;
+  TAO_FT_Storable_Naming_Context_Factory (TAO_FT_Storable_Naming_Context_Factory &&) = delete;
+  TAO_FT_Storable_Naming_Context_Factory &operator= (
+    TAO_FT_Storable_Naming_Context_Factory const &) = delete;
+  TAO_FT_Storable_Naming_Context_Factory &operator= (
+    TAO_FT_Storable_Naming_Context_Factory &&) = delete;
+
+  TAO_FT_Naming_Replication_Manager * replicator () const;
 
   /// Factory method for creating an implementation object for naming contexts.
   /// If an existing naming context implementation is being rebuilt,
@@ -55,18 +60,11 @@ public:
   TAO_Storable_Naming_Context *create_naming_context_impl (
     CORBA::ORB_ptr orb,
     PortableServer::POA_ptr poa,
-    const char *poa_id,
+    char const *poa_id,
     TAO::Storable_Factory *factory) override;
 
+  /// Borrowed from the Naming server; the factory does not own it.
   TAO_FT_Naming_Replication_Manager *replicator_;
-
-private:
-  TAO_FT_Storable_Naming_Context_Factory (TAO_FT_Storable_Naming_Context_Factory const &) = delete;
-  TAO_FT_Storable_Naming_Context_Factory (TAO_FT_Storable_Naming_Context_Factory &&) = delete;
-  TAO_FT_Storable_Naming_Context_Factory &operator= (
-    TAO_FT_Storable_Naming_Context_Factory const &) = delete;
-  TAO_FT_Storable_Naming_Context_Factory &operator= (
-    TAO_FT_Storable_Naming_Context_Factory &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

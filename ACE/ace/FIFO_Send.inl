@@ -8,7 +8,7 @@ ACE_INLINE ssize_t
 ACE_FIFO_Send::send (const void *buf, size_t len)
 {
   ACE_TRACE ("ACE_FIFO_Send::send");
-  return ACE_OS::write (this->get_handle (), (const char *) buf, len);
+  return ACE_OS::write (this->get_handle (), buf, len);
 }
 
 ACE_INLINE ssize_t

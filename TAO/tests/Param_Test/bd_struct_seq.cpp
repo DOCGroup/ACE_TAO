@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    bd_struct_seq.cpp
  *
@@ -7,8 +5,6 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #include "helper.h"
 #include "bd_struct_seq.h"
@@ -20,19 +16,11 @@ const CORBA::ULong MAX_STRUCTSEQ_LEN = 1;
 // ************************************************************************
 
 Test_Bounded_Struct_Sequence::Test_Bounded_Struct_Sequence ()
-  : opname_ (CORBA::string_dup ("test_bounded_struct_sequence")),
+  : opname_ ("test_bounded_struct_sequence"),
     inout_ (new Param_Test::Bounded_StructSeq),
     out_ (new Param_Test::Bounded_StructSeq),
     ret_ (new Param_Test::Bounded_StructSeq)
 {
-}
-
-Test_Bounded_Struct_Sequence::~Test_Bounded_Struct_Sequence ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
-  // the other data members will be freed as they are "_var"s and objects
-  // (rather than pointers to objects)
 }
 
 const char *
@@ -51,7 +39,7 @@ Test_Bounded_Struct_Sequence::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::Bounded_StructSeq *tmp = 0;
+  Param_Test::Bounded_StructSeq const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Bounded_StructSeq (*tmp);
 
@@ -75,7 +63,7 @@ Test_Bounded_Struct_Sequence::init_parameters (Param_Test_ptr /* objref */
   // set the length of the sequence
   this->in_.length (MAX_STRUCTSEQ_LEN);
   // now set each individual element
-  for (CORBA::ULong i = 0; i < this->in_.length (); i++)
+  for (CORBA::ULong i = 0; i < this->in_.length (); ++i)
     {
       // generate some arbitrary struct to be filled into the ith location in
       // the sequence
@@ -108,7 +96,7 @@ Test_Bounded_Struct_Sequence::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      Param_Test::Bounded_StructSeq_out out (this->out_.out ());
+      Param_Test::Bounded_StructSeq_out const out (this->out_.out ());
 
       this->ret_ = objref->test_bounded_struct_sequence (this->in_,
                                                          this->inout_.inout (),
@@ -131,7 +119,9 @@ Test_Bounded_Struct_Sequence::check_validity ()
       this->compare (this->in_, this->ret_.in ()))
     return 1;
   else
+  {
     return 0;
+  }
 }
 
 CORBA::Boolean
@@ -166,11 +156,15 @@ Test_Bounded_Struct_Sequence::compare (const Param_Test::Bounded_StructSeq &s1,
                                        const Param_Test::Bounded_StructSeq &s2)
 {
   if (s1.maximum () != s2.maximum ())
-      return 0;
-  if (s1.length () != s2.length ())
+  {
     return 0;
+  }
+  if (s1.length () != s2.length ())
+  {
+    return 0;
+  }
 
-  for (CORBA::ULong i=0; i < s1.length (); i++)
+  for (CORBA::ULong i=0; i < s1.length (); ++i)
     {
       const Param_Test::Fixed_Struct& vs1 = s1[i];
       const Param_Test::Fixed_Struct& vs2 = s2[i];
@@ -182,7 +176,9 @@ Test_Bounded_Struct_Sequence::compare (const Param_Test::Bounded_StructSeq &s1,
           || !ACE::is_equal (vs1.f, vs2.f)
           || vs1.b != vs2.b
           || !ACE::is_equal (vs1.d, vs2.d))
+      {
         return 0;
+      }
     }
 
   return 1; // success
@@ -192,12 +188,12 @@ void
 Test_Bounded_Struct_Sequence::print_sequence (const Param_Test::Bounded_StructSeq &s)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "maximum = %d\n"
-              "length = %d\n",
+              "maximum = %u\n"
+              "length = %u\n",
               s.maximum (),
               s.length ()));
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));
-  for (CORBA::ULong i=0; i < s.length (); i++)
+  for (CORBA::ULong i=0; i < s.length (); ++i)
     {
       const Param_Test::Fixed_Struct& vs = s[i];
 

@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CSD_TP_Strategy_Factory.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
-
 #ifndef TAO_CSD_TP_STRATEGY_FACTORY_H
 #define TAO_CSD_TP_STRATEGY_FACTORY_H
 
@@ -17,7 +13,6 @@
 #include "tao/Versioned_Namespace.h"
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"
-
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -40,15 +35,11 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Strategy_Factory : public ACE_Service_Object
     {
       public:
-        /// Constructor.
         TP_Strategy_Factory() = default;
 
-        /// Virtual Destructor.
-        ~TP_Strategy_Factory() override;
-
+        ~TP_Strategy_Factory() override = default;
         int init (int argc, ACE_TCHAR* argv[]) override;
 
-      private:
         TP_Strategy_Factory (TP_Strategy_Factory const &) = delete;
         TP_Strategy_Factory &operator= (TP_Strategy_Factory const &) = delete;
         TP_Strategy_Factory (TP_Strategy_Factory &&) = delete;

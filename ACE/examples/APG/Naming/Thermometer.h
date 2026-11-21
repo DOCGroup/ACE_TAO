@@ -2,19 +2,22 @@
 #ifndef THERMOMETER_H
 #define THERMOMETER_H
 
-#include "ace/OS_NS_stdlib.h"
+#include <cstdlib>
+#include <string>
+#include <utility>
+
 #include "ace/Log_Msg.h"
 
 class Thermometer
 {
 public:
-  Thermometer (const char *addr)
-    : addr_(addr), threshold_(5)
+  explicit Thermometer (std::string address)
+    : addr_ (std::move (address))
   { }
 
   float temperature ()
   {
-    int success = ACE_OS::rand () % 10;
+    int const success = std::rand () % 10;
     if (success < this->threshold_)
       {
         this->threshold_ = 7;
@@ -22,11 +25,11 @@ public:
       }
 
     this->threshold_ = 3;
-    int itemp = 80 + ACE_OS::rand () % 10; // 80 <= t <= 90
-    return (float)itemp;
+    int const itemp = 80 + std::rand () % 10; // 80 <= t <= 90
+    return static_cast<float> (itemp);
   }
 
-  const char *address ()
+  std::string const &address () const
   {
     return this->addr_;
   }
@@ -39,8 +42,8 @@ public:
   }
 
 private:
-  const char *addr_;
-  int threshold_;
+  std::string addr_;
+  int threshold_ {5};
 };
 
 #endif /* THERMOMETER_H */

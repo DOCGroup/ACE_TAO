@@ -72,13 +72,16 @@ class TAO_ORB_Core;
 class TAO_Export TAO_Queued_Message : public TAO_LF_Invocation_Event
 {
 public:
-  /// Constructor
+  TAO_Queued_Message () = delete;
   TAO_Queued_Message (TAO_ORB_Core *oc,
                       ACE_Allocator *alloc = nullptr,
                       bool is_heap_allocated = false);
 
-  /// Destructor
   ~TAO_Queued_Message () override;
+  TAO_Queued_Message (TAO_Queued_Message const &) = delete;
+  TAO_Queued_Message &operator= (TAO_Queued_Message const &) = delete;
+  TAO_Queued_Message (TAO_Queued_Message &&) = delete;
+  TAO_Queued_Message &operator= (TAO_Queued_Message &&) = delete;
 
   /** @name Intrusive list manipulation
    *
@@ -104,7 +107,7 @@ public:
    * };<BR>
    *
    */
-  //@{
+  /// @{
   /// Set/get the next element in the list
   TAO_Queued_Message *next () const;
 
@@ -122,11 +125,11 @@ public:
   /// Insert the current element at the head of the queue.
   void push_front (TAO_Queued_Message *&head,
                    TAO_Queued_Message *&tail);
-  //@}
+  /// @}
 
   /** @name Template Methods
    */
-  //@{
+  /// @{
   /// Return the length of the message
   /**
    * If the message has been partially sent it returns the number of
@@ -200,15 +203,15 @@ public:
    *  of this method (which will be called in a tight loop).
    * @return true if the relative roundtrip timeout has expired.
    */
-  virtual bool is_expired (const ACE_Time_Value &now) const;
+  virtual bool is_expired (ACE_Time_Value const &now) const;
 
   /// Provide a hook for copying the underlying data
   /**
    * @param chain For use in determining origin of underlying data.
    * This parameter must not be modified (through const_cast).
    */
-  virtual void copy_if_necessary (const ACE_Message_Block* chain) = 0;
-  //@}
+  virtual void copy_if_necessary (ACE_Message_Block const *chain) = 0;
+  /// @}
 
 protected:
   /*
@@ -227,14 +230,9 @@ protected:
   TAO_ORB_Core *orb_core_;
 
 private:
-  TAO_Queued_Message (TAO_Queued_Message const &) = delete;
-  TAO_Queued_Message &operator= (TAO_Queued_Message const &) = delete;
-  TAO_Queued_Message (TAO_Queued_Message &&) = delete;
-  TAO_Queued_Message &operator= (TAO_Queued_Message &&) = delete;
-
   /// Implement an intrusive double-linked list for the message queue
-  TAO_Queued_Message *next_;
-  TAO_Queued_Message *prev_;
+  TAO_Queued_Message *next_ {};
+  TAO_Queued_Message *prev_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -242,7 +240,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #if defined (__ACE_INLINE__)
 # include "tao/Queued_Message.inl"
 #endif /* __ACE_INLINE__ */
-
 
 #include /**/ "ace/post.h"
 

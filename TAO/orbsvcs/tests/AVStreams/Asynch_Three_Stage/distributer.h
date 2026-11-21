@@ -11,6 +11,8 @@
  */
 //=============================================================================
 
+#ifndef TAO_AVSTREAMS_ASYNCH_THREE_STAGE_DISTRIBUTER_H
+#define TAO_AVSTREAMS_ASYNCH_THREE_STAGE_DISTRIBUTER_H
 
 #include "Connection_Manager.h"
 #include "orbsvcs/AV/AVStreams_i.h"
@@ -27,22 +29,23 @@
 class Distributer_Receiver_Callback : public TAO_AV_Callback
 {
 public:
-  /// Constructor.
-  Distributer_Receiver_Callback ();
+  Distributer_Receiver_Callback () = default;
+  Distributer_Receiver_Callback (Distributer_Receiver_Callback const &) = delete;
+  Distributer_Receiver_Callback &operator= (Distributer_Receiver_Callback const &) = delete;
+  Distributer_Receiver_Callback (Distributer_Receiver_Callback &&) = delete;
+  Distributer_Receiver_Callback &operator= (Distributer_Receiver_Callback &&) = delete;
 
-  // Method that is called when there is data to be received from a
-  // sender.
+  /// Receive and forward a frame from the sender.
   int receive_frame (ACE_Message_Block *frame,
                      TAO_AV_frame_info *frame_info,
                      ACE_Addr const &peer_address) override;
 
-  // Called when the sender is done sending data and wants to close
-  // down the connection.
+  /// Shut down the receiver stream when the sender finishes.
   int handle_destroy () override;
 
 private:
   /// Count of the frames passing through us.
-  int frame_count_;
+  int frame_count_ {1};
 };
 
 /**
@@ -55,8 +58,14 @@ private:
 class Distributer_Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
 {
 public:
-  // Create a receiver application callback.
-  int get_callback (const char *flowname,
+  Distributer_Receiver_StreamEndPoint () = default;
+  Distributer_Receiver_StreamEndPoint (Distributer_Receiver_StreamEndPoint const &) = delete;
+  Distributer_Receiver_StreamEndPoint &operator= (Distributer_Receiver_StreamEndPoint const &) = delete;
+  Distributer_Receiver_StreamEndPoint (Distributer_Receiver_StreamEndPoint &&) = delete;
+  Distributer_Receiver_StreamEndPoint &operator= (Distributer_Receiver_StreamEndPoint &&) = delete;
+
+  /// Return the receiver's application callback.
+  int get_callback (char const *flowname,
                     TAO_AV_Callback *&callback) override;
 
 private:
@@ -72,14 +81,18 @@ private:
 class Distributer_Sender_StreamEndPoint : public TAO_Client_StreamEndPoint
 {
 public:
-  /// Create the application callback and return its handle to
-  /// AVStreams for further application callbacks.
-  int get_callback (const char *flowname,
+  Distributer_Sender_StreamEndPoint () = default;
+  Distributer_Sender_StreamEndPoint (Distributer_Sender_StreamEndPoint const &) = delete;
+  Distributer_Sender_StreamEndPoint &operator= (Distributer_Sender_StreamEndPoint const &) = delete;
+  Distributer_Sender_StreamEndPoint (Distributer_Sender_StreamEndPoint &&) = delete;
+  Distributer_Sender_StreamEndPoint &operator= (Distributer_Sender_StreamEndPoint &&) = delete;
+
+  int get_callback (char const *flowname,
                     TAO_AV_Callback *&callback) override;
 
   /// Set protocol object corresponding to the transport protocol
   /// chosen.
-  int set_protocol_object (const char *flowname,
+  int set_protocol_object (char const *flowname,
                            TAO_AV_Protocol_Object *object) override;
 
 protected:
@@ -108,11 +121,7 @@ using RECEIVER_ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_B
 class Distributer
 {
 public:
-  /// Constructor
-  Distributer ();
-
-  /// Destructor.
-  ~Distributer ();
+  Distributer () = default;
   Distributer (Distributer const &) = delete;
   Distributer &operator= (Distributer const &) = delete;
   Distributer (Distributer &&) = delete;
@@ -124,9 +133,9 @@ public:
   /// Parse args.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
-  // Flag to know when we are done.
-  int done () const;
-  void done (int);
+  /// Get or set whether stream processing has finished.
+  bool done () const;
+  void done (bool);
 
   /// Accessor to connection manager.
   Connection_Manager &connection_manager ();
@@ -141,20 +150,15 @@ protected:
   /// The receiver endpoint strategy.
   RECEIVER_ENDPOINT_STRATEGY receiver_endpoint_strategy_;
 
-  /// The distributer receiver multimedia device
-  TAO_MMDevice *distributer_receiver_mmdevice_;
+  struct Options
+  {
+    ACE_CString sender_name {"sender"};
+    ACE_CString distributer_name {"distributer"};
+    ACE_TString addr_file {ACE_TEXT ("addr_file")};
+  };
 
-  /// The distributer receiver multimedia device
-  TAO_MMDevice *distributer_sender_mmdevice_;
-
-  /// The name of the sender to connect to.
-  ACE_CString sender_name_;
-
-  /// Our name.
-  ACE_CString distributer_name_;
-
-  /// Flag to know when we are done.
-  int done_;
-
-  ACE_TString addr_file_;
+  Options options_;
+  bool done_ {};
 };
+
+#endif /* TAO_AVSTREAMS_ASYNCH_THREE_STAGE_DISTRIBUTER_H */

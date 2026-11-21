@@ -12,10 +12,6 @@ TAO::SSLIOP::ClientCredentials::ClientCredentials (
 {
 }
 
-TAO::SSLIOP::ClientCredentials::~ClientCredentials ()
-{
-}
-
 SecurityLevel3::CredentialsType
 TAO::SSLIOP::ClientCredentials::creds_type ()
 {

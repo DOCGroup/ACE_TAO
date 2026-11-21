@@ -55,8 +55,10 @@
  */
 
 #include "tao/Range_Checking_T.h"
+#include <memory>
 
 #include <algorithm>
+#include <utility>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -75,12 +77,11 @@ public:
   using element_traits = ELEMENT_TRAITS;
   using range = range_checking<value_type, true>;
 
-  /// Default constructor.
   generic_sequence()
     : maximum_(allocation_traits::default_maximum())
     , length_(0)
     , buffer_(allocation_traits::default_buffer_allocation())
-    , release_(buffer_ != 0)
+    , release_(buffer_ != nullptr)
   {
   }
 
@@ -105,14 +106,13 @@ public:
   {
   }
 
-  /// Copy constructor
   generic_sequence(generic_sequence const & rhs)
     : maximum_(0)
     , length_(0)
-    , buffer_(0)
+    , buffer_(nullptr)
     , release_(false)
   {
-    if (rhs.maximum_ == 0 || rhs.buffer_ == 0)
+    if (rhs.maximum_ == 0 || rhs.buffer_ == nullptr)
     {
       maximum_ = rhs.maximum_;
       length_ = rhs.length_;
@@ -130,7 +130,6 @@ public:
     swap(tmp);
   }
 
-  /// Assignment operator
   generic_sequence & operator=(generic_sequence const & rhs)
   {
     generic_sequence tmp(rhs);
@@ -138,7 +137,42 @@ public:
     return * this;
   }
 
-  /// Destructor.
+  generic_sequence (generic_sequence &&rhs)
+    : maximum_ (allocation_traits::default_maximum ())
+    , length_ (0)
+    , buffer_ (nullptr)
+    , release_ (false)
+  {
+    if (rhs.release_)
+      {
+        this->maximum_ = rhs.maximum_;
+        this->length_ = rhs.length_;
+        this->buffer_ = rhs.buffer_;
+        this->release_ = true;
+        rhs.maximum_ = allocation_traits::default_maximum ();
+        rhs.length_ = 0;
+        rhs.buffer_ = nullptr;
+        rhs.release_ = false;
+      }
+    else
+      {
+        // A borrowed buffer has no ownership to transfer, so keep the source
+        // intact and copy its contents.
+        generic_sequence copy (rhs);
+        this->swap (copy);
+      }
+  }
+
+  generic_sequence &operator= (generic_sequence &&rhs)
+  {
+    if (this != std::addressof (rhs))
+      {
+        generic_sequence tmp (std::move (rhs));
+        this->swap (tmp);
+      }
+    return *this;
+  }
+
   ~generic_sequence()
   {
     if (release_)
@@ -170,7 +204,7 @@ public:
   {
     if (length <= maximum_)
     {
-      if (buffer_ == 0)
+      if (buffer_ == nullptr)
         {
           buffer_ = allocbuf(maximum_);
           release_ = true;
@@ -255,7 +289,7 @@ public:
    */
   value_type const * get_buffer() const
   {
-    if (buffer_ == 0)
+    if (buffer_ == nullptr)
     {
       buffer_ = allocbuf(maximum_);
       release_ = true;
@@ -295,9 +329,9 @@ public:
   {
     if (orphan && !release_)
     {
-      return 0;
+      return nullptr;
     }
-    if (buffer_ == 0)
+    if (buffer_ == nullptr)
     {
       buffer_ = allocbuf(maximum_);
       if (!orphan)

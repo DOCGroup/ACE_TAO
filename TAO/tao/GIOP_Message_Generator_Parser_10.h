@@ -33,7 +33,7 @@ class TAO_GIOP_Message_Generator_Parser_10:
 public:
   /// Write the request header in to @a msg
   bool write_request_header (
-      const TAO_Operation_Details &opdetails,
+      TAO_Operation_Details const &opdetails,
       TAO_Target_Specification &spec,
       TAO_OutputCDR &msg) override;
 
@@ -69,7 +69,7 @@ public:
   int parse_reply (TAO_InputCDR &input,
                    TAO_Pluggable_Reply_Params &params) override;
 
-    /// Parse the reply message from the server
+  /// Parse the locate reply message from the server
   int parse_locate_reply (TAO_InputCDR &input,
                           TAO_Pluggable_Reply_Params &params) override;
 

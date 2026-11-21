@@ -17,7 +17,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Task.h"
 
@@ -26,6 +25,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
+
+#include <memory>
 
 // Number of iterations to run the test.
 static size_t n_iterations = 100;
@@ -44,7 +45,6 @@ public:
   /// Create the thread pool containing <n_threads>.
   Thread_Pool (int n_threads);
 
-  /// Destructor...
   ~Thread_Pool () override;
 
   /**
@@ -122,9 +122,9 @@ Thread_Pool::svc ()
   // Keep looping, reading a message out of the queue, until we get a
   // message with a length == 0, which signals us to quit.
 
-  for (int count = 1; ; count++)
+  for (int count = 1; ; ++count)
     {
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
 
       int result = this->getq (mb);
 
@@ -134,7 +134,7 @@ Thread_Pool::svc ()
         {
           // The queue has been deactivated, so let's bail out.
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) in iteration %d, queue len = %d, ")
+                      ACE_TEXT ("(%t) in iteration %d, queue len = %B, ")
                       ACE_TEXT ("queue deactivated, exiting\n"),
                       count,
                       this->msg_queue ()->message_count ()));
@@ -145,14 +145,16 @@ Thread_Pool::svc ()
       size_t length = mb->length ();
 
       if (length > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) in iteration %d, queue len = %d, ")
-                    ACE_TEXT ("length = %d, text = \"%*s\"\n"),
-                    count,
-                    this->msg_queue ()->message_count (),
-                    length,
-                    length - 1,
-                    mb->rd_ptr ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%t) in iteration %d, queue len = %B, ")
+                      ACE_TEXT ("length = %B, text = \"%*s\"\n"),
+                      count,
+                      this->msg_queue ()->message_count (),
+                      length,
+                      static_cast<int> (length - 1),
+                      mb->rd_ptr ()));
+        }
 
       // We're responsible for deallocating this.
       mb->release ();
@@ -160,7 +162,7 @@ Thread_Pool::svc ()
       if (length == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) in iteration %d, queue len = %d, ")
+                      ACE_TEXT ("(%t) in iteration %d, queue len = %B, ")
                       ACE_TEXT ("got \"empty\" message, exiting\n"),
                       count,
                       this->msg_queue ()->message_count ()));
@@ -183,10 +185,12 @@ Thread_Pool::open (void *)
   // Create a pool of worker threads.
   if (this->activate (THR_NEW_LWP,
                       this->n_threads_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("activate failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("activate failed")),
+                        -1);
+    }
   return 0;
 }
 
@@ -198,9 +202,11 @@ int
 Thread_Pool::test_queue_deactivation_shutdown ()
 {
   if (this->open () == -1)
+  {
     return -1;
+  }
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   // Run the main loop that generates messages and enqueues them into
   // the pool of threads managed by <ACE_Task>.
@@ -216,7 +222,7 @@ Thread_Pool::test_queue_deactivation_shutdown ()
                                          nullptr,
                                          nullptr,
                                          nullptr,
-                                         &this->lock_adapter_),
+                                         std::addressof (this->lock_adapter_)),
                       -1);
 
       if (manual)
@@ -238,12 +244,18 @@ Thread_Pool::test_queue_deactivation_shutdown ()
           n = ACE_OS::strlen (mb->rd_ptr ());
 
           if (count == n_iterations)
-            n = 1; // Indicate that we need to shut down.
+            {
+              n = 1; // Indicate that we need to shut down.
+            }
           else
-            count++;
+          {
+            ++count;
+          }
 
           if (count == 0 || (count % 20 == 0))
+          {
             ACE_OS::sleep (1);
+          }
         }
 
       if (n > 1)
@@ -254,9 +266,11 @@ Thread_Pool::test_queue_deactivation_shutdown ()
 
           // Pass the message to the Thread_Pool.
           if (this->put (mb) == -1)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT (" (%t) %p\n"),
-                        ACE_TEXT ("put")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT (" (%t) %p\n"),
+                          ACE_TEXT ("put")));
+            }
         }
       else
         {
@@ -286,9 +300,11 @@ int
 Thread_Pool::test_empty_message_shutdown ()
 {
   if (this->open () == -1)
+  {
     return -1;
+  }
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   // Run the main loop that generates messages and enqueues them into
   // the pool of threads managed by <ACE_Task>.
@@ -303,7 +319,7 @@ Thread_Pool::test_empty_message_shutdown ()
                                          nullptr,
                                          nullptr,
                                          nullptr,
-                                         &this->lock_adapter_),
+                                         std::addressof (this->lock_adapter_)),
                       -1);
 
       if (manual)
@@ -325,12 +341,18 @@ Thread_Pool::test_empty_message_shutdown ()
           n = ACE_OS::strlen (mb->rd_ptr ());
 
           if (count == n_iterations)
-            n = 1; // Indicate that we need to shut down.
+            {
+              n = 1; // Indicate that we need to shut down.
+            }
           else
-            count++;
+          {
+            ++count;
+          }
 
           if (count == 0 || (count % 20 == 0))
+          {
             ACE_OS::sleep (1);
+          }
         }
 
       if (n > 1)
@@ -341,9 +363,11 @@ Thread_Pool::test_empty_message_shutdown ()
 
           // Pass the message to the Thread_Pool.
           if (this->put (mb) == -1)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT (" (%t) %p\n"),
-                        ACE_TEXT ("put")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT (" (%t) %p\n"),
+                          ACE_TEXT ("put")));
+            }
         }
       else
         {
@@ -360,11 +384,11 @@ Thread_Pool::test_empty_message_shutdown ()
           // inform it to shutdown.
           for (i = this->thr_count ();
                i > 0;
-               i--)
+               --i)
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%t) end of input, ")
-                          ACE_TEXT ("enqueueing \"empty\" message %d\n"),
+                          ACE_TEXT ("enqueueing \"empty\" message %B\n"),
                           i));
 
               // Note the use of reference counting to avoid copying
@@ -372,9 +396,11 @@ Thread_Pool::test_empty_message_shutdown ()
               ACE_Message_Block *dup = mb->duplicate ();
 
               if (this->put (dup) == -1)
-                ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT (" (%t) %p\n"),
-                            ACE_TEXT ("put")));
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT (" (%t) %p\n"),
+                              ACE_TEXT ("put")));
+                }
             }
 
           mb->release ();
@@ -413,7 +439,9 @@ run_main (int, ACE_TCHAR *[])
   // thread pool, and demonstrate how to shutdown by enqueueing
   // "empty" messages into the queue.
   if (thread_pool.test_empty_message_shutdown () == -1)
+  {
     return 1;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) waiting for worker tasks to finish...\n")));
@@ -421,7 +449,9 @@ run_main (int, ACE_TCHAR *[])
   // point the barrier in the destructor of the <ACE_Task> portion of
   // <Thread_Pool> will return.
   if (thread_pool.wait () == -1)
+  {
     return 1;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) starting queue deactivation shutdown test\n")));
@@ -430,7 +460,9 @@ run_main (int, ACE_TCHAR *[])
   // consumed by the threads in the thread pool, and demonstate how to
   // shutdown using the <ACE_Message_Queue::deactivate> method.
   if (thread_pool.test_queue_deactivation_shutdown () == -1)
+  {
     return 1;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) waiting for worker tasks to finish...\n")));
@@ -438,7 +470,9 @@ run_main (int, ACE_TCHAR *[])
   // point the barrier in the destructor of the <ACE_Task> portion of
   // <Thread_Pool> will return.
   if (thread_pool.wait () == -1)
+  {
     return 1;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) all worker tasks destroyed, exiting test...\n")));

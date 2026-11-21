@@ -31,6 +31,8 @@
 
 #include "ace/Log_Category.h"
 
+#include <memory>
+
 // This is a workaround for platforms with non-standard
 // definitions of the ip_mreq structure
 #if ! defined (IMR_MULTIADDR)
@@ -51,16 +53,20 @@ public:
                               int clip_portnum)       // clip port# info?
     {
       if (ip_addr.addr_to_string (ret_string, len, 1) == -1)
-        ACE_OS::strcpy (ret_string, ACE_TEXT ("<?>"));
+        {
+          ACE_OS::strcpy (ret_string, ACE_TEXT ("<?>"));
+        }
       else
         {
           ACE_TCHAR *pc = ACE_OS::strrchr (ret_string, ACE_TEXT (':'));
           if (clip_portnum && pc)
-            *pc = ACE_TEXT ('\0'); // clip port# info.
+            {
+              *pc = ACE_TEXT ('\0'); // clip port# info.
+            }
         }
     }
     // op== for ip_mreq structs.
-    static int is_equal (const ip_mreq &m1, const ip_mreq &m2)
+    static bool is_equal (const ip_mreq &m1, const ip_mreq &m2)
       {
         return m1.IMR_MULTIADDR.s_addr == m2.IMR_MULTIADDR.s_addr
           && m1.imr_interface.s_addr == m2.imr_interface.s_addr;
@@ -133,7 +139,6 @@ ACE_SOCK_Dgram_Mcast::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-// Constructor.
 ACE_SOCK_Dgram_Mcast::ACE_SOCK_Dgram_Mcast
   (ACE_SOCK_Dgram_Mcast::options opts)
  : send_addr_ ()
@@ -142,7 +147,6 @@ ACE_SOCK_Dgram_Mcast::ACE_SOCK_Dgram_Mcast
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::ACE_SOCK_Dgram_Mcast");
 }
 
-// Destructor.
 ACE_SOCK_Dgram_Mcast::~ACE_SOCK_Dgram_Mcast ()
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::~ACE_SOCK_Dgram_Mcast");
@@ -168,14 +172,18 @@ ACE_SOCK_Dgram_Mcast::open (const ACE_INET_Addr &mcast_addr,
   // No sanity check?  We should probably flag an error if the user
   // makes multiple calls to open().
   if (this->get_handle () != ACE_INVALID_HANDLE)
+  {
     return 0;
+  }
 
   // Invoke lower-layer ::open.
   if (ACE_SOCK::open (SOCK_DGRAM,
                       mcast_addr.get_type (),
                       0, // always use 0
                       reuse_addr) == -1)
+  {
     return -1;
+  }
 
   return this->open_i (mcast_addr, net_if, reuse_addr);
 }
@@ -196,7 +204,9 @@ ACE_SOCK_Dgram_Mcast::open_i (const ACE_INET_Addr &mcast_addr,
                                       SO_REUSEPORT,
                                       &one,
                                       sizeof one) == -1)
+      {
         return -1;
+      }
 #endif /* SO_REUSEPORT */
     }
 
@@ -212,22 +222,30 @@ ACE_SOCK_Dgram_Mcast::open_i (const ACE_INET_Addr &mcast_addr,
         {
           if (bind_addy.set (mcast_addr.get_port_number (), "::",
                              1, AF_INET6) == -1)
-            return -1;
+            {
+              return -1;
+            }
         }
       else
         // Bind to "any" address and explicit port#.
         if (bind_addy.set (mcast_addr.get_port_number ()) == -1)
-          return -1;
+          {
+            return -1;
+          }
 #else
       // Bind to "any" address and explicit port#.
       if (bind_addy.set (mcast_addr.get_port_number ()) == -1)
+      {
         return -1;
+      }
 #endif /* ACE_HAS_IPV6 */
     }
 
   // Bind to the address (which may be INADDR_ANY) and port# (which may be 0)
   if (ACE_SOCK_Dgram::shared_open (bind_addy, bind_addy.get_type ()) == -1)
+  {
     return -1;
+  }
 
   // Cache the actual bound address (which may be INADDR_ANY)
   // and the actual bound port# (which will be a valid, non-zero port#).
@@ -247,7 +265,9 @@ ACE_SOCK_Dgram_Mcast::open_i (const ACE_INET_Addr &mcast_addr,
   if (net_if)
     {
       if (this->set_nic (net_if, mcast_addr.get_type ()))
+      {
         return -1;
+      }
 #if defined (ACE_HAS_ALLOC_HOOKS)
       this->send_net_if_ = static_cast<ACE_TCHAR*>(ACE_Allocator::instance()->malloc(sizeof(ACE_TCHAR) * (ACE_OS::strlen (net_if) + 1)));
 #else
@@ -276,11 +296,13 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
 
       // Take advantage of the BSD getifaddrs function that simplifies
       // access to connected interfaces.
-      struct ifaddrs *ifap = nullptr;
-      struct ifaddrs *p_if = nullptr;
+      struct ifaddrs *ifap {};
+      struct ifaddrs *p_if {};
 
       if (::getifaddrs (&ifap) != 0)
+      {
         return -1;
+      }
 
       // Not every interface is for IP, and not all are up and multicast.
       for (p_if = ifap;
@@ -291,12 +313,16 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
           // interface has no assigned address.
           // If there is an address but it's not the family we want, ignore it.
           if (p_if->ifa_addr == nullptr || p_if->ifa_addr->sa_family != family)
+          {
             continue;
+          }
 
           // Check to see if it's up and supports multicast.
-          unsigned int wanted = IFF_UP | IFF_MULTICAST;
+          unsigned int const wanted = IFF_UP | IFF_MULTICAST;
           if ((p_if->ifa_flags & wanted) != wanted)
+          {
             continue;
+          }
 
           // Sometimes the kernel returns 0.0.0.0 as the interface
           // address, skip those...
@@ -306,7 +332,9 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
                 reinterpret_cast<sockaddr_in *> (p_if->ifa_addr);
 
               if (addr->sin_addr.s_addr == INADDR_ANY)
+              {
                 continue;
+              }
             }
 #  if defined (ACE_HAS_IPV6)
           else if (p_if->ifa_addr->sa_family == AF_INET6)
@@ -316,7 +344,9 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
 
               // Skip the ANY address
               if (IN6_IS_ADDR_UNSPECIFIED(&addr->sin6_addr))
-                continue;
+                {
+                  continue;
+                }
             }
 #  endif /* ACE_HAS_IPV6 */
 
@@ -324,7 +354,9 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
           if (this->join (mcast_addr,
                           reuse_addr,
                           ACE_TEXT_CHAR_TO_TCHAR(p_if->ifa_name)) == 0)
+          {
             ++nr_subscribed;
+          }
         }
 
       ::freeifaddrs (ifap);
@@ -340,7 +372,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
       // specify that we don't want to know about multicast addresses. This
       // does not avoid multicastable interfaces and makes the size-check
       // more reliable across varying conditions.
-      DWORD flags = GAA_FLAG_SKIP_MULTICAST;
+      DWORD const flags = GAA_FLAG_SKIP_MULTICAST;
       if ((dwRetVal = ::GetAdaptersAddresses (family,
                                               flags,
                                               0,
@@ -353,18 +385,18 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
 
       // Get required output buffer and retrieve info for real.
       PIP_ADAPTER_ADDRESSES pAddrs;
-      char *buf;
-      ACE_NEW_RETURN (buf,
+      char *buf_raw {};
+      ACE_NEW_RETURN (buf_raw,
                       char[bufLen],
                       -1);
-      pAddrs = reinterpret_cast<PIP_ADAPTER_ADDRESSES> (buf);
+      std::unique_ptr<char[]> buf (buf_raw);
+      pAddrs = reinterpret_cast<PIP_ADAPTER_ADDRESSES> (buf.get ());
       if ((dwRetVal = ::GetAdaptersAddresses (family,
                                               flags,
                                               0,
                                               pAddrs,
                                               &bufLen)) != NO_ERROR)
         {
-          delete[] buf; // clean up
           errno = dwRetVal;
           return -1;
         }
@@ -394,18 +426,17 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
             }
         }
 
-      delete[] buf; // clean up
-
 # else
 
       // Subscribe on all local multicast-capable network interfaces, by
       // doing recursive calls with specific interfaces.
 
-      ACE_INET_Addr *if_addrs = nullptr;
-      size_t if_cnt;
+      ACE_INET_Addr *if_addrs {};
+      size_t if_cnt {};
 
       if (ACE::get_ip_interfaces (if_cnt, if_addrs) != 0)
         return -1;
+      std::unique_ptr<ACE_INET_Addr[]> safe_if_addrs (if_addrs);
 
       if (if_cnt < 2)
         {
@@ -434,8 +465,6 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
             }
         }
 
-      delete [] if_addrs;
-
 # endif /* ACE_WIN32 */
 
       if (nr_subscribed == 0)
@@ -453,7 +482,9 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
   if (mcast_addr.get_type () == AF_INET6)
     {
       if (this->make_multicast_ifaddr6 (nullptr, mcast_addr, net_if) == -1)
-        return -1;
+        {
+          return -1;
+        }
     }
   else
 #endif /* ACE_HAS_IPV6 - Fall into IPv4-only case */
@@ -462,7 +493,9 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
       if (this->make_multicast_ifaddr (nullptr,
                                        mcast_addr,
                                        net_if) == -1)
+      {
         return -1;
+      }
     }
 
   return 0;
@@ -565,7 +598,9 @@ ACE_SOCK_Dgram_Mcast::subscribe_i (const ACE_INET_Addr &mcast_addr,
   // Open the socket IFF this is the first ::subscribe and ::open
   // was not explicitly invoked.
   if (this->open (mcast_addr, net_if, reuse_addr) == -1)
+  {
     return -1;
+  }
 
   // Only do this if net_if == 0, i.e., INADDR_ANY
   if (net_if == nullptr)
@@ -573,20 +608,26 @@ ACE_SOCK_Dgram_Mcast::subscribe_i (const ACE_INET_Addr &mcast_addr,
       int const result = this->subscribe_ifs (mcast_addr, net_if, reuse_addr);
       // Check for error or "short-circuit" return.
       if (result != 0)
+      {
         return result;
+      }
     }
 
 #if defined (ACE_HAS_IPV6)
   if (mcast_addr.get_type () == AF_INET6)
     {
       if (this->make_multicast_ifaddr6 (&mreq6, mcast_addr, net_if) == -1)
-        return -1;
+        {
+          return -1;
+        }
       // Tell IP stack to pass messages sent to this group.
       else if (this->ACE_SOCK::set_option (IPPROTO_IPV6,
                                            IPV6_JOIN_GROUP,
                                            &mreq6,
                                            sizeof mreq6) == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       return 0;
     }
@@ -595,13 +636,17 @@ ACE_SOCK_Dgram_Mcast::subscribe_i (const ACE_INET_Addr &mcast_addr,
 
   // Create multicast addr/if struct.
   if (this->make_multicast_ifaddr (&mreq, mcast_addr, net_if) == -1)
-    return -1;
+    {
+      return -1;
+    }
   // Tell IP stack to pass messages sent to this group.
   else if (this->ACE_SOCK::set_option (IPPROTO_IP,
                                        IP_ADD_MEMBERSHIP,
                                        &mreq,
                                        sizeof mreq) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   return 0;
 }
@@ -612,25 +657,28 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::unsubscribe_ifs");
 
-
   if (ACE_BIT_ENABLED (this->opts_, OPT_NULLIFACE_ALL)
       && net_if == nullptr)
     {
 #if defined (ACE_HAS_IPV6)
       if (mcast_addr.get_type () == AF_INET6)
         {
-          size_t nr_unsubscribed = 0;
+          size_t nr_unsubscribed {};
 # if defined(ACE_LINUX)
           struct if_nameindex *intf = ACE_OS::if_nameindex ();
 
           if (intf == nullptr)
-            return -1;
+            {
+              return -1;
+            }
 
           int index = 0;
           while (intf[index].if_index != 0 || intf[index].if_name != nullptr)
             {
               if (this->leave (mcast_addr, ACE_TEXT_CHAR_TO_TCHAR(intf[index].if_name)) == 0)
-                ++nr_unsubscribed;
+                {
+                  ++nr_unsubscribed;
+                }
 
               ++index;
             }
@@ -652,18 +700,18 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
 
           // Get required output buffer and retrieve info for real.
           PIP_ADAPTER_ADDRESSES pAddrs;
-          char *buf;
-          ACE_NEW_RETURN (buf,
+          char *buf_raw {};
+          ACE_NEW_RETURN (buf_raw,
                           char[bufLen],
                           -1);
-          pAddrs = reinterpret_cast<PIP_ADAPTER_ADDRESSES> (buf);
+          std::unique_ptr<char[]> buf (buf_raw);
+          pAddrs = reinterpret_cast<PIP_ADAPTER_ADDRESSES> (buf.get ());
           if ((dwRetVal = ::GetAdaptersAddresses (AF_INET6,
                                                   0,
                                                   0,
                                                   pAddrs,
                                                   &bufLen)) != NO_ERROR)
             {
-              delete[] buf; // clean up
               return -1;
             }
 
@@ -674,8 +722,6 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
 
               pAddrs = pAddrs->Next;
             }
-
-          delete[] buf; // clean up
 
 # endif /* ACE_WIN32 */
 
@@ -692,8 +738,8 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
           // Unsubscribe on all local multicast-capable network interfaces, by
           // doing recursive calls with specific interfaces.
 
-          ACE_INET_Addr *if_addrs = nullptr;
-          size_t if_cnt;
+          ACE_INET_Addr *if_addrs {};
+          size_t if_cnt {};
 
           // NOTE - <get_ip_interfaces> doesn't always get all of the
           // interfaces.  In particular, it may not get a PPP interface.  This
@@ -701,15 +747,20 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
           // old versions of MSVC.  The reliable way of getting the interface
           // list is available only with MSVC 5 and newer.
           if (ACE::get_ip_interfaces (if_cnt, if_addrs) != 0)
-            return -1;
+            {
+              return -1;
+            }
+          std::unique_ptr<ACE_INET_Addr[]> safe_if_addrs (if_addrs);
 
-          size_t nr_unsubscribed = 0;
+          size_t nr_unsubscribed {};
 
           if (if_cnt < 2)
             {
               if (this->leave (mcast_addr,
                                ACE_TEXT ("0.0.0.0")) == 0)
-                ++nr_unsubscribed;
+                {
+                  ++nr_unsubscribed;
+                }
             }
           else
             {
@@ -718,16 +769,18 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
                   --if_cnt;
                   // Convert to 0-based for indexing, next loop check
                   if (if_addrs[if_cnt].get_type () != AF_INET || if_addrs[if_cnt].is_loopback ())
-                    continue;
+                    {
+                      continue;
+                    }
                   char addr_buf[INET6_ADDRSTRLEN];
                   if (this->leave (mcast_addr,
                                    ACE_TEXT_CHAR_TO_TCHAR
                                    (if_addrs[if_cnt].get_host_addr (addr_buf, INET6_ADDRSTRLEN))) == 0)
-                    ++nr_unsubscribed;
+                    {
+                      ++nr_unsubscribed;
+                    }
                 }
             }
-
-          delete [] if_addrs;
 
           if (nr_unsubscribed == 0)
             {
@@ -741,8 +794,8 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
       // Unsubscribe on all local multicast-capable network interfaces, by
       // doing recursive calls with specific interfaces.
 
-      ACE_INET_Addr *if_addrs = nullptr;
-      size_t if_cnt;
+      ACE_INET_Addr *if_addrs {};
+      size_t if_cnt {};
 
       // NOTE - <get_ip_interfaces> doesn't always get all of the
       // interfaces.  In particular, it may not get a PPP interface.  This
@@ -750,15 +803,20 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
       // old versions of MSVC.  The reliable way of getting the interface list
       // is available only with MSVC 5 and newer.
       if (ACE::get_ip_interfaces (if_cnt, if_addrs) != 0)
+      {
         return -1;
+      }
+      std::unique_ptr<ACE_INET_Addr[]> safe_if_addrs (if_addrs);
 
-      size_t nr_unsubscribed = 0;
+      size_t nr_unsubscribed {};
 
       if (if_cnt < 2)
         {
           if (this->leave (mcast_addr,
                            ACE_TEXT ("0.0.0.0")) == 0)
+          {
             ++nr_unsubscribed;
+          }
         }
       else
         {
@@ -767,16 +825,18 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
               --if_cnt;
               // Convert to 0-based for indexing, next loop check
               if (if_addrs[if_cnt].is_loopback ())
+              {
                 continue;
+              }
               char addr_buf[INET6_ADDRSTRLEN];
               if (this->leave (mcast_addr,
                                ACE_TEXT_CHAR_TO_TCHAR
                                (if_addrs[if_cnt].get_host_addr (addr_buf, INET6_ADDRSTRLEN))) == 0)
+              {
                 ++nr_unsubscribed;
+              }
             }
         }
-
-      delete [] if_addrs;
 
       if (nr_unsubscribed == 0)
         {
@@ -790,7 +850,6 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
 
   return 0;
 }
-
 
 int
 ACE_SOCK_Dgram_Mcast::leave (const ACE_INET_Addr &mcast_addr,
@@ -840,7 +899,9 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_i (const ACE_INET_Addr &mcast_addr,
 
   // Check for error or "short-circuit" return.
   if (result != 0)
+  {
     return result;
+  }
 
 #if defined (ACE_HAS_IPV6)
   if (mcast_addr.get_type () == AF_INET6)

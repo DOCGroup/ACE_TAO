@@ -36,16 +36,20 @@ public:
   ~Test_Task () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  // = Task hooks.
+  /// @name Task hooks
+  /// @{
   ///FUZZ: enable check_for_lack_ACE_OS
   int open (void *args = nullptr) override;
   int close (u_long flags = 0) override;
   int svc () override;
+  /// @}
 
-  // = Event Handler hooks.
+  /// @name Event Handler hooks
+  /// @{
   int handle_input (ACE_HANDLE handle) override;
   int handle_close (ACE_HANDLE fd,
                             ACE_Reactor_Mask close_mask) override;
+  /// @}
 private:
   /// Number of iterations handled.
   size_t handled_;
@@ -57,7 +61,7 @@ private:
 // Static data member initialization.
 int Test_Task::task_count_ = 0;
 
-static ACE_Atomic_Op<ACE_Thread_Mutex, int> done_count = MAX_TASKS * 2;
+static ACE_Atomic_Op<ACE_Thread_Mutex, int> done_count {MAX_TASKS * 2};
 static ACE_Recursive_Thread_Mutex recursive_lock;
 
 Test_Task::Test_Task ()
@@ -65,7 +69,7 @@ Test_Task::Test_Task ()
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, recursive_lock);
 
-  Test_Task::task_count_++;
+  ++Test_Task::task_count_;
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) TT+ Test_Task::task_count_ = %d\n"),
@@ -95,7 +99,7 @@ Test_Task::close (u_long)
 {
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, recursive_lock, -1);
 
-  Test_Task::task_count_--;
+  --Test_Task::task_count_;
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) close Test_Task::task_count_ = %d\n"),
@@ -112,7 +116,7 @@ Test_Task::svc ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) svc\n")));
 
-  for (size_t i = 0; i < ACE_MAX_ITERATIONS; i++)
+  for (size_t i = 0; i < ACE_MAX_ITERATIONS; ++i)
     {
       ACE_OS::thr_yield ();
 
@@ -124,14 +128,18 @@ Test_Task::svc ()
                                     &timeout) == -1)
         {
           if (errno == ETIME)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%t) %p\n"),
-                        ACE_TEXT ("notify() timed out")));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%t) %p\n"),
+                          ACE_TEXT ("notify() timed out")));
+            }
           else
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("(%t) %p\n"),
-                               ACE_TEXT ("notify")),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("(%t) %p\n"),
+                                 ACE_TEXT ("notify")),
+                                -1);
+            }
         }
     }
 
@@ -147,13 +155,13 @@ Test_Task::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 int
 Test_Task::handle_input (ACE_HANDLE)
 {
-  this->handled_++;
+  ++this->handled_;
 
   if (this->handled_ == ACE_MAX_ITERATIONS)
     {
-      done_count--;
+      --done_count;
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) handle_input, handled_ = %d, done_count = %d\n"),
+                  ACE_TEXT ("(%t) handle_input, handled_ = %B, done_count = %d\n"),
                   this->handled_,
                   done_count.value ()));
     }
@@ -174,7 +182,8 @@ worker (void *args)
   ACE_Time_Value timeout (4);
 
   for (;;)
-    switch (reactor->handle_events (timeout))
+    {
+      switch (reactor->handle_events (timeout))
       {
       case -1:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -186,6 +195,7 @@ worker (void *args)
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Reactor shutdown\n")));
         return nullptr;
       }
+    }
 
   ACE_NOTREACHED (return nullptr);
 }
@@ -210,7 +220,7 @@ run_main (int, ACE_TCHAR *[])
 
   // Activate all of the Tasks.
 
-  for (int i = 0; i < MAX_TASKS; i++)
+  for (int i = 0; i < MAX_TASKS; ++i)
     {
       tt1[i].open (ACE_Reactor::instance ());
       tt2[i].open (&reactor);
@@ -222,24 +232,30 @@ run_main (int, ACE_TCHAR *[])
       (ACE_THR_FUNC (worker),
        (void *) ACE_Reactor::instance (),
        THR_BOUND | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawn")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawn")),
+                        -1);
+    }
 
   else if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (worker), (void *) &reactor,
        THR_BOUND | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawn")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawn")),
+                        -1);
+    }
 
   if (ACE_Thread_Manager::instance ()->wait () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("wait")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("wait")),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) all threads are finished\n")));

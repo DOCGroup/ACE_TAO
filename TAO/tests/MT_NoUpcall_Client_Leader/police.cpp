@@ -1,7 +1,7 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_unistd.h"
 
-void poll (const char* filename)
+void poll (char const* filename)
 {
   int r;
   do

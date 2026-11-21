@@ -29,7 +29,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Hashable
 {
 public:
-  /// Destructor.
   virtual ~ACE_Hashable () = default;
 
   /// Computes and returns hash value.  This "caches" the hash value to

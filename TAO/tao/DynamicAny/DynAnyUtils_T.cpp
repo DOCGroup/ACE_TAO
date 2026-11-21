@@ -1,6 +1,4 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    DynAnyUtils_T.cpp
  *
@@ -8,8 +6,6 @@
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
-
 #ifndef TAO_DYNANYUTILS_T_CPP
 #define TAO_DYNANYUTILS_T_CPP
 
@@ -45,7 +41,7 @@ namespace TAO
 
     if (the_dynany->has_components ())
       {
-        DynamicAny::DynAny_var cc = the_dynany->check_component ();
+        DynamicAny::DynAny_var const cc = the_dynany->check_component ();
         TAO_DynCommon *dc = dynamic_cast<TAO_DynCommon *> (cc.in ());
         DynAnyBasicTypeUtils<T>::insert_value (val, dc);
       }
@@ -70,7 +66,7 @@ namespace TAO
 
     if (the_dynany->has_components ())
       {
-        DynamicAny::DynAny_var cc = the_dynany->check_component ();
+        DynamicAny::DynAny_var const cc = the_dynany->check_component ();
         TAO_DynCommon *dc = dynamic_cast<TAO_DynCommon *> (cc.in ());
         return DynAnyBasicTypeUtils<T>::get_value (dc);
       }
@@ -114,7 +110,7 @@ namespace TAO
     ANY_TC any_tc,
     CORBA::Boolean allow_truncation)
   {
-    DA_IMPL *p = nullptr;
+    DA_IMPL *p {};
     ACE_NEW_THROW_EX (p,
                       DA_IMPL (allow_truncation),
                       CORBA::NO_MEMORY ());
@@ -143,7 +139,7 @@ namespace TAO
     ANY_TC any_tc,
     CORBA::Boolean allow_truncation)
   {
-    DA_IMPL *p = nullptr;
+    DA_IMPL *p {};
     ACE_NEW_THROW_EX (p,
                       DA_IMPL (allow_truncation),
                       CORBA::NO_MEMORY ());

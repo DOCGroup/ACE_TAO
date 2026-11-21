@@ -25,6 +25,8 @@
 #include "ace/OS_NS_stdio.h"
 #include <algorithm>
 
+#include <cstring>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /*
@@ -35,7 +37,6 @@ const char ACE_Stack_Trace::UNSUPPORTED[] = "<stack traces unsupported platform>
 const char ACE_Stack_Trace::UNABLE_TO_GET_TRACE[] = "<unable to get trace>";
 
 ACE_Stack_Trace::ACE_Stack_Trace (ssize_t starting_frame_offset, size_t num_frames)
-  : buflen_(0)
 {
   // cannot initialize arrays, so we must assign.
   this->buf_[0] = '\0';
@@ -45,7 +46,7 @@ ACE_Stack_Trace::ACE_Stack_Trace (ssize_t starting_frame_offset, size_t num_fram
 const char*
 ACE_Stack_Trace::c_str () const
 {
-  return &this->buf_[0];
+  return this->buf_;
 }
 
 #if defined(__GLIBC__) || defined(ACE_HAS_EXECINFO_H) || defined(VXWORKS) || \
@@ -63,7 +64,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset, size_t num_frame
 {
   ACE_UNUSED_ARG (starting_frame_offset);
   ACE_UNUSED_ARG (num_frames);
-  ACE_OS::strcpy (&this->buf_[0], UNABLE_TO_GET_TRACE);
+  std::strcpy (this->buf_, UNABLE_TO_GET_TRACE);
 }
 
 #elif (defined(__GLIBC__) || defined(ACE_HAS_EXECINFO_H))
@@ -81,22 +82,24 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset, size_t num_frame
   char** stack_syms;
 
   if (num_frames == 0)
+  {
     num_frames = MAX_FRAMES;
+  }
 
   size_t starting_frame =
     determine_starting_frame (INITIAL_FRAME, starting_frame_offset);
 
-  stack_size = ::backtrace (&stack[0], sizeof(stack)/sizeof(stack[0]));
+  stack_size = ::backtrace (stack, sizeof(stack)/sizeof(stack[0]));
   if (stack_size != 0)
     {
       stack_syms = ::backtrace_symbols (stack, stack_size);
 
       for (size_t i = starting_frame;
            i < stack_size && num_frames > 0;
-           i++, num_frames--)
+           ++i, --num_frames)
         {
           // this could be more efficient by remembering where we left off in buf_
-          char *symp = &stack_syms[i][0];
+          char *symp = stack_syms[i];
           while (this->buflen_ < SYMBUFSIZ - 2 && *symp != '\0')
             {
               this->buf_[this->buflen_++] = *symp++;
@@ -109,7 +112,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset, size_t num_frame
     }
   else
     {
-      ACE_OS::strcpy (&this->buf_[0], UNABLE_TO_GET_TRACE);
+      std::strcpy (this->buf_, UNABLE_TO_GET_TRACE);
     }
 }
 #elif defined(VXWORKS) && !defined(__RTP__)
@@ -130,7 +133,7 @@ struct ACE_Stack_Trace_stackstate
 
 //@TODO: Replace with a TSS-based pointer to avoid problems in multithreaded environs,
 //       or use a mutex to serialize access to this.
-static ACE_Stack_Trace_stackstate* ACE_Stack_Trace_stateptr = nullptr;
+static ACE_Stack_Trace_stackstate* ACE_Stack_Trace_stateptr {};
 
 static void
 ACE_Stack_Trace_Add_Frame_To_Buf (INSTR *caller,
@@ -139,7 +142,9 @@ ACE_Stack_Trace_Add_Frame_To_Buf (INSTR *caller,
                                   ACE_VX_USR_ARG_T *args)
 {
   if (ACE_Stack_Trace_stateptr == 0)
-    return;
+    {
+      return;
+    }
 
   ACE_Stack_Trace_stackstate *stackstate = ACE_Stack_Trace_stateptr;
 
@@ -149,7 +154,9 @@ ACE_Stack_Trace_Add_Frame_To_Buf (INSTR *caller,
   --stackstate->starting_frame;
 
   if (stackstate->num_frames == 0 || stackstate->starting_frame > 0)
-    return;
+    {
+      return;
+    }
 
   // These are references so that the structure gets updated
   // in the code below.
@@ -161,17 +168,21 @@ ACE_Stack_Trace_Add_Frame_To_Buf (INSTR *caller,
 
   // VxWorks can pass -1 for "nargs" if there was an error
   if (nargs == -1)
-    nargs = 0;
+    {
+      nargs = 0;
+    }
 
-  len += ACE_OS::sprintf (&buf[len], "%p: %p (", caller, func);
+  len += ACE_OS::sprintf (buf + len, "%p: %p (", caller, func);
   for (int i = 0; i < nargs; ++i)
     {
       if (i != 0)
-        len += ACE_OS::sprintf (&buf[len], ", ");
-      len += ACE_OS::sprintf(&buf[len], "0x" ACE_VX_ARG_FORMAT, args[i]);
+        {
+          len += ACE_OS::sprintf (buf + len, ", ");
+        }
+      len += ACE_OS::sprintf (buf + len, "0x" ACE_VX_ARG_FORMAT, args[i]);
     }
 
-  len += ACE_OS::sprintf(&buf[len], ")\n");
+  len += ACE_OS::sprintf (buf + len, ")\n");
 }
 
 void
@@ -182,12 +193,14 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
   const ssize_t INITIAL_FRAME = 3;
 
   if (num_frames == 0)
-    num_frames = MAX_FRAMES;
+    {
+      num_frames = MAX_FRAMES;
+    }
 
   size_t starting_frame =
     determine_starting_frame (INITIAL_FRAME, starting_frame_offset);
 
-  ACE_Stack_Trace_stackstate state (&this->buf_[0], this->buflen_,
+  ACE_Stack_Trace_stackstate state (this->buf_, this->buflen_,
                                     num_frames, starting_frame);
 
   REG_SET regs;
@@ -197,7 +210,6 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
   ACE_Stack_Trace_stateptr = &state;
   trcStack (&regs, (FUNCPTR)ACE_Stack_Trace_Add_Frame_To_Buf, taskIdSelf ());
 }
-
 
 #elif defined(VXWORKS) && defined(__RTP__)
 #  include <setjmp.h>
@@ -218,7 +230,10 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
   const size_t MAX_FRAMES = 128;
   const ssize_t INITIAL_FRAME = 2;
 
-  if (num_frames == 0) num_frames = MAX_FRAMES;
+  if (num_frames == 0)
+    {
+      num_frames = MAX_FRAMES;
+    }
   size_t starting_frame =
     determine_starting_frame (INITIAL_FRAME, starting_frame_offset);
 
@@ -226,7 +241,10 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
   setjmp (regs);
 
   TASK_DESC desc;
-  if (taskInfoGet (taskIdSelf (), &desc) == ERROR) return;
+  if (taskInfoGet (taskIdSelf (), &desc) == ERROR)
+    {
+      return;
+    }
 
   TRC_OS_CTX osCtx;
   osCtx.stackBase = desc.td_pStackBase;
@@ -250,11 +268,14 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
       if (trcLibFuncs.lvlInfoGet (fp, pc, &osCtx, &prevFp, &prevPc, &prevFn)
           == ERROR)
         {
-          ACE_OS::strcpy (this->buf_, UNABLE_TO_GET_TRACE);
+          std::strcpy (this->buf_, UNABLE_TO_GET_TRACE);
           return;
         }
 
-      if(prevPc == 0 || prevFp == 0) break;
+      if (prevPc == 0 || prevFp == 0)
+        {
+          break;
+        }
 
       if (depth >= starting_frame)
         {
@@ -265,15 +286,18 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
 
           static constexpr int N_ARGS = 12;
           ACE_VX_USR_ARG_T buf[N_ARGS];
-          ACE_VX_USR_ARG_T *pArgs = nullptr;
+          ACE_VX_USR_ARG_T *pArgs {};
           int numArgs =
             trcLibFuncs.lvlArgsGet (prevPc, prevFn, prevFp,
                                     buf, N_ARGS, &pArgs);
 
           // VxWorks can return -1 for "numArgs" if there was an error
-          if (numArgs == -1) numArgs = 0;
+          if (numArgs == -1)
+            {
+              numArgs = 0;
+            }
 
-          size_t len = ACE_OS::strlen (this->buf_);
+          const size_t len = std::strlen (this->buf_);
           size_t space = SYMBUFSIZ - len - 1;
           char *cursor = this->buf_ + len;
           size_t written = ACE_OS::snprintf (cursor, space, "%p %s",
@@ -281,10 +305,16 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
           cursor += written;
           space -= written;
 
-          if (space < 1) return; //no point in logging when we're out of buffer
+          if (space < 1)
+            {
+              return; //no point in logging when we're out of buffer
+            }
           for (int arg = 0; numArgs != -1 && pArgs && arg < numArgs; ++arg)
             {
-              if (arg == 0) *cursor++ = '(', --space;
+              if (arg == 0)
+                {
+                  *cursor++ = '(', --space;
+                }
               written = ACE_OS::snprintf (cursor, space,
                                           (arg < numArgs - 1) ?
                                           ACE_VX_ARG_FORMAT ", " :
@@ -292,9 +322,15 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
                                           pArgs[arg]);
               cursor += written;
               space -= written;
-              if (space && arg == numArgs - 1) *cursor++ = ')', --space;
+              if (space && arg == numArgs - 1)
+                {
+                  *cursor++ = ')', --space;
+                }
             }
-          if (space) *cursor++ = '\n', --space;
+          if (space)
+            {
+              *cursor++ = '\n', --space;
+            }
           *cursor++ = 0; //we saved space for the null terminator
         }
 
@@ -315,7 +351,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
 void
 ACE_Stack_Trace::generate_trace (ssize_t, size_t)
 {
-  ACE_OS::strcpy (&this->buf_[0], "<stack traces unsupported on Win64 unless "
+      std::strcpy (this->buf_, "<stack traces unsupported on Win64 unless "
     "ACE is built with _WIN32_WINNT set to 0x501 or above>");
 }
 
@@ -368,7 +404,6 @@ typedef struct _dbghelp_functions
   SymCleanup_t SymCleanup;
 } dbghelp_functions;
 
-
 #  pragma warning (push)
 #  pragma warning (disable:4706)
 static bool load_dbghelp_library_if_needed (dbghelp_functions *pDbg)
@@ -377,7 +412,9 @@ static bool load_dbghelp_library_if_needed (dbghelp_functions *pDbg)
   //search so we get the "enhanced" dbghelp if the user has it but it is not
   //first on the path.
   if (!(pDbg->hMod = ACE_TEXT_LoadLibrary (ACE_TEXT ("Dbghelp"))))
-    return false;
+    {
+      return false;
+    }
 
   //@TODO: Cache this so we don't have to re-link every time.  When to unload?
 
@@ -394,7 +431,6 @@ static bool load_dbghelp_library_if_needed (dbghelp_functions *pDbg)
 }
 #  pragma warning (pop)
 
-
 struct frame_state {
   STACKFRAME64 sf;
   PSYMBOL_INFO pSym;
@@ -405,7 +441,9 @@ static int
 add_frame_to_buf (struct frame_state const *fs, void *usrarg)
 {
   if (fs == 0 || usrarg == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   char *buf = static_cast<char *> (usrarg);
 
@@ -460,9 +498,12 @@ cs_operate(int (*func)(struct frame_state const *, void *), void *usrarg,
   dbghelp_functions dbg;
   if (!load_dbghelp_library_if_needed (&dbg))
     {
-      ACE_OS::strcpy (static_cast<char *> (usrarg),
+      std::strcpy (static_cast<char *> (usrarg),
                       "<error loading dbghelp.dll>");
-      if (dbg.hMod) FreeLibrary (dbg.hMod);
+      if (dbg.hMod)
+        {
+          FreeLibrary (dbg.hMod);
+        }
       return 1;
     }
 
@@ -548,10 +589,14 @@ cs_operate(int (*func)(struct frame_state const *, void *), void *usrarg,
                                  dbg.SymFunctionTableAccess64,
                                  dbg.SymGetModuleBase64, 0);
       if (!ok || fs.sf.AddrFrame.Offset == 0)
-        break;
+        {
+          break;
+        }
 
       if (current_frame < starting_frame)
-        continue;
+        {
+          continue;
+        }
 
       func (&fs, usrarg);
     }
@@ -576,19 +621,21 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
   const ssize_t INITIAL_FRAME = 3;
 
   if (num_frames == 0)
-    num_frames = MAX_FRAMES;
+    {
+      num_frames = MAX_FRAMES;
+    }
 
   size_t starting_frame =
     determine_starting_frame (INITIAL_FRAME, starting_frame_offset);
 
-  cs_operate (&add_frame_to_buf, &this->buf_[0], starting_frame, num_frames);
+  cs_operate (&add_frame_to_buf, this->buf_, starting_frame, num_frames);
 }
 
 #else // Unsupported platform
 void
 ACE_Stack_Trace::generate_trace (ssize_t, size_t)
 {
-  ACE_OS::strcpy (&this->buf_[0], UNSUPPORTED);
+  std::strcpy (this->buf_, UNSUPPORTED);
 }
 #endif
 

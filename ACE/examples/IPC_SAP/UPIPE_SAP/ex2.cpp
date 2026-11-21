@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_main.h"
 #include "ace/UPIPE_Connector.h"
 #include "ace/UPIPE_Acceptor.h"
@@ -23,17 +22,19 @@
 static int size = 0;
 static int iterations = 0;
 
-static void *
+static ACE_THR_FUNC_RETURN
 supplier (void *)
 {
   ACE_UPIPE_Stream s_stream;
 
   ACE_UPIPE_Addr c_addr (ACE_TEXT("pattern"));
 
-  std::unique_ptr<char[]> mybuf (new char[size]);
+  std::unique_ptr<char[]> mybuf (std::make_unique<char[]> (size));
 
-  for (int i = 0; i < size; i++)
-    mybuf[i] = 'a';
+  for (int i = 0; i < size; ++i)
+    {
+      mybuf[i] = 'a';
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) supplier starting connect thread\n"));
@@ -41,46 +42,52 @@ supplier (void *)
   ACE_UPIPE_Connector con;
 
   if (con.connect (s_stream, c_addr) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%t) %p\n",
-                "ACE_UPIPE_Acceptor.connect failed"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%t) %p\n",
+                  "ACE_UPIPE_Acceptor.connect failed"));
+    }
 
   // Test asynchronicity (the "acausal principle" ;-)).
   s_stream.enable (ACE_SIGIO);
 
-  ACE_Message_Block *mb_p;
+  ACE_Message_Block *mb_p {};
 
-  for (int j = 0; j < iterations; j++)
+  for (int j = 0; j < iterations; ++j)
     {
       ACE_NEW_RETURN (mb_p,
                       ACE_Message_Block (size,
                                          ACE_Message_Block::MB_DATA,
                                          (ACE_Message_Block *) nullptr,
                                          mybuf.get ()),
-                      nullptr);
+                      ACE_THR_FUNC_RETURN_NULL);
       if (s_stream.send (mb_p) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%t) %p\n",
-                           "send failed"),
-                          0);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%t) %p\n",
+                             "send failed"),
+                            0);
+        }
     }
 
   ACE_NEW_RETURN (mb_p,
                   ACE_Message_Block ((size_t) 0),
-                  nullptr);
+                  ACE_THR_FUNC_RETURN_NULL);
 
   // Insert a 0-sized message block to signal the other side to shut
   // down.
   if (s_stream.send (mb_p) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%t) %p\n",
-                       "send failed"),
-                          0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%t) %p\n",
+                         "send failed"),
+                        0);
+    }
   s_stream.close ();
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 consumer (void *)
 {
   ACE_UPIPE_Stream c_stream;
@@ -91,8 +98,10 @@ consumer (void *)
 
   if (c_stream.control (ACE_IO_Cntl_Msg::SET_HWM,
                         &wm) == -1)
-    ACE_DEBUG ((LM_DEBUG,
-                "set HWM failed\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "set HWM failed\n"));
+    }
 
   ACE_UPIPE_Addr serv_addr (ACE_TEXT("pattern"));
 
@@ -103,21 +112,25 @@ consumer (void *)
               "(%t) consumer spawning the supplier thread\n"));
 
   // Spawn the supplier thread.
-  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (supplier),
-                                              (void *) nullptr,
+  if (ACE_Thread_Manager::instance ()->spawn (supplier,
+                                              nullptr,
                                               THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "spawn"),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "spawn"),
+                        0);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) consumer starting accept\n"));
 
   if (acc.accept (c_stream) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%t) %p\n",
-                "ACE_UPIPE_Acceptor.accept failed"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%t) %p\n",
+                  "ACE_UPIPE_Acceptor.accept failed"));
+    }
 
   // Time measurement.
   time_t currsec;
@@ -126,20 +139,22 @@ consumer (void *)
 
   int received_messages = 0;
 
-  for (ACE_Message_Block *mb = nullptr;
+  for (ACE_Message_Block *mb {};
        c_stream.recv (mb) != -1 && mb->size () != 0;
        mb->release ())
-    received_messages++;
+    {
+      ++received_messages;
+    }
 
   ACE_OS::time (&currsec);
   time_t secs = (time_t) currsec - start;
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Transferred %d blocks of size %d\n"
-              "The program ran %d seconds\n",
+              "The program ran %: seconds\n",
               received_messages, size, secs));
   c_stream.close ();
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int
@@ -149,13 +164,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : 16;
 
   // Spawn the two threads.
-  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (consumer),
-                                              (void *) nullptr,
+  if (ACE_Thread_Manager::instance ()->spawn (consumer,
+                                              nullptr,
                                               THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "spawn"),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "spawn"),
+                        1);
+    }
   // Wait for producer and consumer threads to exit.
   ACE_Thread_Manager::instance ()->wait ();
   return 0;

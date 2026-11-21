@@ -47,7 +47,8 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  // = Control the tracing level.
+  /// @name Tracing controls
+  /// @{
   /// Determine if tracing is enabled or not
   static bool is_tracing();
 
@@ -62,6 +63,7 @@ public:
 
   /// Get the nesting indentation level.
   static int get_nesting_indent ();
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

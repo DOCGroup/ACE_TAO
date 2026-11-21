@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    client.cpp
  *
@@ -8,8 +6,6 @@
  *
  *  @author   Jeff Parsons
  */
-//=============================================================================
-
 
 #ifndef CLIENT_CPP
 #define CLIENT_CPP
@@ -17,32 +13,24 @@
 #include "options.h"
 #include "results.h"
 #include "client.h"
+#include <utility>
 
-// Constructor.p
 template <class T>
 Alt_Mapping_Client<T>::Alt_Mapping_Client (CORBA::ORB_ptr orb,
                                            Alt_Mapping_ptr objref,
-                                           T *t)
+                                           std::unique_ptr<T> t)
   : orb_ (orb),
     alt_mapping_test_ (objref),
-    test_object_ (t)
+    test_object_ (std::move (t))
 {
-}
-
-// destructor
-template <class T>
-Alt_Mapping_Client<T>::~Alt_Mapping_Client ()
-{
-  delete this->test_object_;
 }
 
 // All the individual tests.
 template <class T> int
 Alt_Mapping_Client<T>::run_sii_test ()
 {
-  CORBA::ULong i = 0;  // loop index
-  Options *opt = OPTIONS::instance (); // get the options
-  const char *opname = this->test_object_->opname (); // operation
+  Options const *opt = OPTIONS::instance (); // get the options
+  char const * const opname = this->test_object_->opname (); // operation
 
   if (opt->debug ())
     ACE_DEBUG ((LM_DEBUG,
@@ -56,7 +44,7 @@ Alt_Mapping_Client<T>::run_sii_test ()
 
   // Declare the Env
   // Initialize parameters for the test.
-  int check = this->test_object_->init_parameters (this->alt_mapping_test_);
+  int const check = this->test_object_->init_parameters (this->alt_mapping_test_);
 
   if (check == -1)
     {
@@ -67,9 +55,8 @@ Alt_Mapping_Client<T>::run_sii_test ()
                         -1);
     }
 
-
   // Make the calls in a loop.
-  for (i = 0; i < opt->loop_count (); i++)
+  for (CORBA::ULong i {}; i < opt->loop_count (); ++i)
     {
       try
         {
@@ -96,7 +83,7 @@ Alt_Mapping_Client<T>::run_sii_test ()
               this->test_object_->print_values ();
             }
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           this->results_.error_count (this->results_.error_count () + 1);
           ex._tao_print_exception (opname);

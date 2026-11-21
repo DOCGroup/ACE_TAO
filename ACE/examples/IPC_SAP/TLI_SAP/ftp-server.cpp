@@ -4,7 +4,6 @@
 #include "ace/Thread_Manager.h"
 #include "ace/TLI_Acceptor.h"
 
-
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_TLI)
 
 ACE_Thread_Manager thr_mgr;
@@ -21,15 +20,16 @@ read_file (void *fd)
   // as a long on all current ACE platforms.
   stream.set_handle ((int) (long) fd);
 
-  ACE_DEBUG((LM_DEBUG, "start (tid = %t, fd = %d)\n",
-             stream.get_handle ()));
+  ACE_DEBUG ((LM_DEBUG, "start (tid = %t, fd = %H)\n",
+              stream.get_handle ()));
 
   while ((n = stream.recv (buf, sizeof buf, &flags)) > 0)
-    continue;
+    {
+    }
 
   ACE_UNUSED_ARG (n);
 
-  ACE_DEBUG ((LM_DEBUG,"finish (tid = %t, fd = %d)\n",
+  ACE_DEBUG ((LM_DEBUG, "finish (tid = %t, fd = %H)\n",
               stream.get_handle ()));
 
   if (stream.close () == -1)
@@ -52,7 +52,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Wait for a connection from a client.  This is an example of a
   // concurrent server.
 
-  for (int count = 1; ; count++)
+  for (int count = 1; ; ++count)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "thread %t, blocking for accept #%d\n",
@@ -61,7 +61,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (server.accept (new_stream) == -1)
         ACE_OS::t_error ("server.accept error");
 
-      else if (thr_mgr.spawn (ACE_THR_FUNC (read_file),
+      else if (thr_mgr.spawn (read_file,
                               (void *) new_stream.get_handle (),
                               THR_DETACHED | THR_BOUND) == -1)
         ACE_OS::perror ("can't create worker thread\n");

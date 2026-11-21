@@ -47,9 +47,11 @@ ACE_Token_Invariant_Manager::mutex_acquired (const ACE_TCHAR *token_name)
 
   ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon, this->lock_, -1);
 
-  ACE_Mutex_Invariants *inv = nullptr;
+  ACE_Mutex_Invariants *inv {};
   if (this->get_mutex (token_name, inv) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   return inv->acquired ();
 }
@@ -61,13 +63,19 @@ ACE_Token_Invariant_Manager::acquired (const ACE_Token_Proxy *proxy)
 
   // Reach into the proxy to find the token type.
   if (proxy->token_->type () == ACE_Tokens::MUTEX)
-    return this->mutex_acquired (proxy->name ());
+    {
+      return this->mutex_acquired (proxy->name ());
+    }
   else // ACE_Tokens::RWLOCK.
     {
       if (proxy->type () == ACE_RW_Token::READER)
-        return this->reader_acquired (proxy->name ());
+        {
+          return this->reader_acquired (proxy->name ());
+        }
       else // ACE_RW_Token::WRITER.
-        return this->writer_acquired (proxy->name ());
+        {
+          return this->writer_acquired (proxy->name ());
+        }
     }
 }
 
@@ -78,7 +86,9 @@ ACE_Token_Invariant_Manager::releasing (const ACE_Token_Proxy *proxy)
 
   // Reach into the proxy to find the token type.
   if (proxy->token_->type () == ACE_Tokens::MUTEX)
-    this->mutex_releasing (proxy->name ());
+    {
+      this->mutex_releasing (proxy->name ());
+    }
   else // ACE_Tokens::RWLOCK.
     this->rwlock_releasing (proxy->name ());
 }
@@ -89,9 +99,11 @@ ACE_Token_Invariant_Manager::mutex_releasing (const ACE_TCHAR *token_name)
   ACE_TRACE ("ACE_Token_Invariant_Manager::mutex_releasing");
   ACE_GUARD (ACE_TOKEN_CONST::MUTEX, ace_mon, this->lock_);
 
-  ACE_Mutex_Invariants *inv = nullptr;
+  ACE_Mutex_Invariants *inv {};
   if (this->get_mutex (token_name, inv) == 0)
-    inv->releasing ();
+    {
+      inv->releasing ();
+    }
 }
 
 int
@@ -100,9 +112,11 @@ ACE_Token_Invariant_Manager::reader_acquired (const ACE_TCHAR *token_name)
   ACE_TRACE ("ACE_Token_Invariant_Manager::reader_acquired");
   ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon, this->lock_, -1);
 
-  ACE_RWLock_Invariants *inv = nullptr;
+  ACE_RWLock_Invariants *inv {};
   if (this->get_rwlock (token_name, inv) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   return inv->reader_acquired ();
 }
@@ -114,9 +128,11 @@ ACE_Token_Invariant_Manager::writer_acquired (const ACE_TCHAR *token_name)
 
   ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon, this->lock_, -1);
 
-  ACE_RWLock_Invariants *inv = nullptr;
+  ACE_RWLock_Invariants *inv {};
   if (this->get_rwlock (token_name, inv) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   return inv->writer_acquired ();
 }
@@ -128,9 +144,11 @@ ACE_Token_Invariant_Manager::rwlock_releasing (const ACE_TCHAR *token_name)
 
   ACE_GUARD (ACE_TOKEN_CONST::MUTEX, ace_mon, this->lock_);
 
-  ACE_RWLock_Invariants *inv = nullptr;
+  ACE_RWLock_Invariants *inv {};
   if (this->get_rwlock (token_name, inv) == 0)
-    inv->releasing ();
+    {
+      inv->releasing ();
+    }
 }
 
 void
@@ -147,7 +165,6 @@ ACE_Token_Invariant_Manager::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-
 int
 ACE_Token_Invariant_Manager::get_mutex (const ACE_TCHAR *token_name,
                                         ACE_Mutex_Invariants *&inv)
@@ -155,8 +172,8 @@ ACE_Token_Invariant_Manager::get_mutex (const ACE_TCHAR *token_name,
   ACE_TRACE ("ACE_Token_Invariant_Manager::get_mutex");
   TOKEN_NAME name (token_name);
   if (mutex_collection_.find (name, inv) == -1)
-    // We did not find one in the collection.
     {
+      // We did not find one in the collection.
       ACE_Mutex_Invariants *new_invariant;
 
       ACE_NEW_RETURN (new_invariant,
@@ -169,8 +186,10 @@ ACE_Token_Invariant_Manager::get_mutex (const ACE_TCHAR *token_name,
         }
 
       if (mutex_collection_.find (name, inv) == -1)
-        // We did not find one in the collection.
-        return -1;
+        {
+          // We did not find one in the collection.
+          return -1;
+        }
     }
 
   return 0;
@@ -183,24 +202,27 @@ ACE_Token_Invariant_Manager::get_rwlock (const ACE_TCHAR *token_name,
   ACE_TRACE ("ACE_Token_Invariant_Manager::get_rwlock");
   TOKEN_NAME name (token_name);
   if (rwlock_collection_.find (name, inv) == -1)
-    // We did not find one in the collection.
     {
+      // We did not find one in the collection.
       ACE_RWLock_Invariants *new_invariant;
 
       ACE_NEW_RETURN (new_invariant,
                       ACE_RWLock_Invariants,
                       -1);
       if (rwlock_collection_.bind (name, new_invariant) == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       if (rwlock_collection_.find (name, inv) == -1)
-        // We did not find one in the collection.
-        return -1;
+        {
+          // We did not find one in the collection.
+          return -1;
+        }
     }
 
   return 0;
 }
-
 
 ACE_Token_Invariant_Manager::~ACE_Token_Invariant_Manager ()
 {
@@ -208,14 +230,14 @@ ACE_Token_Invariant_Manager::~ACE_Token_Invariant_Manager ()
 
   MUTEX_COLLECTION::ITERATOR iterator (mutex_collection_);
 
-  for (MUTEX_COLLECTION::ENTRY *temp = nullptr;
+  for (MUTEX_COLLECTION::ENTRY *temp {};
        iterator.next (temp) != 0;
        iterator.advance ())
     delete temp->int_id_;
 
   RWLOCK_COLLECTION::ITERATOR iterator2 (rwlock_collection_);
 
-  for (RWLOCK_COLLECTION::ENTRY *temp2 = nullptr;
+  for (RWLOCK_COLLECTION::ENTRY *temp2 {};
        iterator2.next (temp2) != 0;
        iterator2.advance ())
     delete temp2->int_id_;
@@ -234,14 +256,18 @@ ACE_Mutex_Invariants::acquired ()
       return 0;
     }
   else
-    return 1;
+    {
+      return 1;
+    }
 }
 
 void
 ACE_Mutex_Invariants::releasing ()
 {
   if (owners_ == 1)
-    --owners_;
+    {
+      --owners_;
+    }
 }
 
 void
@@ -271,7 +297,9 @@ ACE_RWLock_Invariants::writer_acquired ()
       return 0;
     }
   else
-    return 1;
+    {
+      return 1;
+    }
 }
 
 int
@@ -293,9 +321,13 @@ void
 ACE_RWLock_Invariants::releasing ()
 {
   if (writers_ == 1)
-    writers_ = 0;
+    {
+      writers_ = 0;
+    }
   else if (readers_ > 0)
-    --readers_;
+    {
+      --readers_;
+    }
 }
 
 void

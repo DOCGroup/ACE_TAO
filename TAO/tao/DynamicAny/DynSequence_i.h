@@ -1,13 +1,9 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file    DynSequence_i.h
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
-
-
 #ifndef TAO_DYNSEQUENCE_I_H
 #define TAO_DYNSEQUENCE_I_H
 #include /**/ "ace/pre.h"
@@ -20,7 +16,8 @@
 
 #include "tao/DynamicAny/DynCommon.h"
 #include "tao/LocalObject.h"
-#include "ace/Containers.h"
+
+#include "ace/Array_Base.h"
 
 #if defined (_MSC_VER)
 # pragma warning(push)
@@ -40,11 +37,15 @@ class TAO_DynamicAny_Export TAO_DynSequence_i
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
-  explicit TAO_DynSequence_i (CORBA::Boolean allow_truncation=true);
+  explicit TAO_DynSequence_i (CORBA::Boolean allow_truncation = true);
 
-  /// Destructor.
-  ~TAO_DynSequence_i () = default;
+  ~TAO_DynSequence_i () override = default;
+
+  /// Use copy() or assign() instead of these.
+  TAO_DynSequence_i (TAO_DynSequence_i const &src) = delete;
+  TAO_DynSequence_i &operator= (TAO_DynSequence_i const &src) = delete;
+  TAO_DynSequence_i (TAO_DynSequence_i &&) = delete;
+  TAO_DynSequence_i &operator= (TAO_DynSequence_i &&) = delete;
 
   /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc);
@@ -52,10 +53,15 @@ public:
   /// Initialize using an Any.
   void init (CORBA::Any const& any);
 
-  // = LocalObject methods.
+  /// @name LocalObject methods
+  /// @{
+
   static TAO_DynSequence_i *_narrow (CORBA::Object_ptr obj);
 
-  // = Functions specific to DynSequence.
+  /// @}
+
+  /// @name Functions specific to DynSequence
+  /// @{
 
   CORBA::ULong get_length () override;
 
@@ -69,8 +75,10 @@ public:
 
   void set_elements_as_dyn_any (DynamicAny::DynAnySeq const& value) override;
 
+  /// @}
 
-  // = DynAny common functions not implemented in class TAO_DynCommon.
+  /// @name DynAny common functions not implemented in TAO_DynCommon
+  /// @{
 
   void from_any (CORBA::Any const& value) override;
 
@@ -82,6 +90,8 @@ public:
 
   DynamicAny::DynAny_ptr current_component () override;
 
+  /// @}
+
 private:
   // Utility, turns the type of elements contained in the sequence.
   CORBA::TypeCode_ptr get_element_type ();
@@ -89,13 +99,6 @@ private:
   // Called by both versions of init().
   void init_common ();
 
-  // = Use copy() or assign() instead of these
-  TAO_DynSequence_i (TAO_DynSequence_i const &src) = delete;
-  TAO_DynSequence_i &operator= (TAO_DynSequence_i const &src) = delete;
-  TAO_DynSequence_i (TAO_DynSequence_i &&) = delete;
-  TAO_DynSequence_i &operator= (TAO_DynSequence_i &&) = delete;
-
-private:
   /// Each component is also a DynAny.
   ACE_Array_Base<DynamicAny::DynAny_var> da_members_;
 };

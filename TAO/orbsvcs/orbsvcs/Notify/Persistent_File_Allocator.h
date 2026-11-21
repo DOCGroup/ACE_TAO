@@ -24,9 +24,10 @@
 #include "orbsvcs/Notify/notify_serv_export.h"
 #include "orbsvcs/Notify/Random_File.h"
 #include "orbsvcs/Notify/Bit_Vector.h"
-#include "ace/Containers_T.h"
-#include "ace/Unbounded_Queue.h"
 #include "ace/Thread_Manager.h"
+
+#include <deque>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -53,13 +54,15 @@ public:
 class TAO_Notify_Serv_Export Persistent_Storage_Block
 {
 public:
-  /// The constructor.  Initializes the callback to NULL.
+  /// The constructor.  Initializes the callback to nullptr.
   Persistent_Storage_Block(
     const size_t block_number,
     const size_t block_size);
   /// The copy constructor.  Makes a deep copy of the passed in PSB.
   Persistent_Storage_Block(const Persistent_Storage_Block& psb);
-  /// The destructor.
+  Persistent_Storage_Block& operator= (Persistent_Storage_Block const &psb);
+  Persistent_Storage_Block (Persistent_Storage_Block &&) = delete;
+  Persistent_Storage_Block& operator= (Persistent_Storage_Block &&) = delete;
   ~Persistent_Storage_Block();
 
   /// Set our block to not have any data at all - a no-op.  This can be
@@ -95,8 +98,8 @@ public:
   bool get_allocator_owns() const;
 
 private:
-  /// Our raw data.
-  unsigned char* data_;
+  /// Our owned data buffer.
+  std::unique_ptr<unsigned char[]> data_;
   /// The block number corresponding to our data.
   size_t block_number_;
   /// Are we a no-op with just a callback?
@@ -124,10 +127,13 @@ private:
 class TAO_Notify_Serv_Export Persistent_File_Allocator
 {
 public:
-  /// The constructor.
   Persistent_File_Allocator();
-  /// The destructor.
   ~Persistent_File_Allocator();
+
+  Persistent_File_Allocator (const Persistent_File_Allocator&) = delete;
+  Persistent_File_Allocator (Persistent_File_Allocator&&) = delete;
+  Persistent_File_Allocator& operator= (const Persistent_File_Allocator&) = delete;
+  Persistent_File_Allocator& operator= (Persistent_File_Allocator&&) = delete;
 
   bool open (const ACE_TCHAR* filename,
     const size_t block_size = 512);
@@ -188,7 +194,7 @@ private:
   ACE_Thread_Manager thread_manager_;
   Random_File pstore_;
   Bit_Vector free_blocks_;
-  ACE_Unbounded_Queue<Persistent_Storage_Block*> block_queue_;
+  std::deque<Persistent_Storage_Block*> block_queue_;
   TAO_SYNCH_MUTEX lock_;
   TAO_SYNCH_MUTEX free_blocks_lock_;
   TAO_SYNCH_MUTEX queue_lock_;

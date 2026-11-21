@@ -4,81 +4,82 @@
 
 #include "ace/os_include/os_stddef.h"
 #include "ace/os_include/os_limits.h"
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/// Options singleton.
 class Options
-  // = TITLE
-  //   Options Singleton.
 {
 public:
+  /// Returns the singleton.
   static Options *instance ();
-  // Return Singleton.
 
+  /// Parses the command-line arguments.
   void parse_args (int argc, ACE_TCHAR *argv[]);
-  // Parse the arguments.
 
-  // = Accessor methods.
-  const char *program_name ();
-  const char *slave_name ();
-  int debug ();
-  int exec_slave ();
-  size_t iteration_count ();
-  int use_sbrk ();
-  int use_shmem ();
-  size_t max_msg_size ();
-  size_t spawn_count ();
-  int spawn_threads ();
-  int use_mmap ();
-  int child ();
+  std::string const &program_name () const;
+  std::string const &slave_name () const;
+  bool debug () const;
+  bool exec_slave () const;
+  size_t iteration_count () const;
+  bool use_sbrk () const;
+  bool use_shmem () const;
+  size_t max_msg_size () const;
+  size_t spawn_count () const;
+  bool spawn_threads () const;
+  bool use_mmap () const;
+  bool child () const;
 
 private:
-  Options ();
-  // Ensure Singleton.
+  /// Singleton-only constructor.
+  Options () = default;
 
-  static Options *instance_;
-  // Singleton.
+  Options (Options const &) = delete;
+  Options (Options &&) = delete;
+  Options &operator= (Options const &) = delete;
+  Options &operator= (Options &&) = delete;
 
+  /// Prints usage information and exits.
   void print_usage_and_die ();
-  // Explain usage and exit.
 
-  char program_name_[MAXPATHLEN];
-  // Name of the program.
+  /// Program name.
+  std::string program_name_ {};
 
-  char slave_name_[MAXPATHLEN];
-  // Name of slave process.
+  /// Slave process name.
+  std::string slave_name_ { "slave" };
 
-  int debug_;
-  // Flag to indicate if we are debugging.
+  /// Whether debugging is enabled.
+  bool debug_ {};
 
-  int exec_slave_;
-  // Flag to indicate if we should exec after forking.
+  /// Whether to exec after forking.
+  bool exec_slave_ {};
 
-  size_t iteration_count_;
-  // Number of iterations to call malloc_recurse().
+  /// Number of iterations to call malloc_recurse().
+  size_t iteration_count_ { 100 };
 
-  int use_sbrk_;
-  // Should we use sbrk(2)?
+  /// Whether to use sbrk(2).
+  bool use_sbrk_ {};
 
-  int use_shmem_;
-  // Should we use Shared Memory?
+  /// Whether to use shared memory.
+  bool use_shmem_ {};
 
-  size_t max_msg_size_;
-  // Maximum number of bytes to malloc.
+  /// Maximum number of bytes to allocate.
+  size_t max_msg_size_ { 127 };
 
-  size_t spawn_count_;
-  // Number of threads.
+  /// Number of threads.
+  size_t spawn_count_ { 1 };
 
-  int spawn_threads_;
-  // Spawn threads vs. processes.
+  /// Whether to spawn threads instead of processes.
+  bool spawn_threads_ { true };
 
-  int use_mmap_;
-  // Use mmap() as the backing store.
+  /// Whether to use mmap() as the backing store.
+  bool use_mmap_ {};
 
-  int child_;
-  // We're a child process.
+  /// Whether this is a child process.
+  bool child_ {};
 };
 
 #endif /* _OPTIONS */

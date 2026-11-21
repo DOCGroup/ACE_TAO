@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// ****************************************************************
-
 ACE_INLINE
 TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint () = default;
 

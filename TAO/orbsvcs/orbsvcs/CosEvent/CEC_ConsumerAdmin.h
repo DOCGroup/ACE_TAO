@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CEC_CONSUMERADMIN_H
 #define TAO_CEC_CONSUMERADMIN_H
 
@@ -54,9 +53,8 @@ public:
    * the @a event_channel argument.
    * In any case it assumes ownership.
    */
-  TAO_CEC_ConsumerAdmin (TAO_CEC_EventChannel* event_channel);
+  explicit TAO_CEC_ConsumerAdmin (TAO_CEC_EventChannel* event_channel);
 
-  /// Destructor...
   ~TAO_CEC_ConsumerAdmin () override = default;
 
   TAO_CEC_ConsumerAdmin (TAO_CEC_ConsumerAdmin const &) = delete;
@@ -69,7 +67,7 @@ public:
   void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPullSupplier> *worker);
 
   /// Push the event to all the consumers
-  void push (const CORBA::Any &event);
+  void push (CORBA::Any const &event);
 
   /// Used to inform the EC that a Supplier has connected or
   /// disconnected from it.
@@ -84,13 +82,17 @@ public:
   /// this
   virtual void shutdown ();
 
-  // = The CosEventChannelAdmin::ConsumerAdmin methods...
+  /// @name The CosEventChannelAdmin::ConsumerAdmin methods
+  /// @{
   CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier () override;
   CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier () override;
 
-  // = The PortableServer::ServantBase methods
+  /// @}
+  /// @name The PortableServer::ServantBase methods
+  /// @{
   PortableServer::POA_ptr _default_POA () override;
 
+  /// @}
 private:
   /// The Event Channel we belong to
   TAO_CEC_EventChannel *event_channel_;
@@ -114,7 +116,7 @@ private:
 class TAO_CEC_Propagate_Event_Push : public TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier>
 {
 public:
-  TAO_CEC_Propagate_Event_Push (const CORBA::Any& event);
+  explicit TAO_CEC_Propagate_Event_Push (CORBA::Any const &event);
 
   TAO_CEC_Propagate_Event_Push (TAO_CEC_Propagate_Event_Push const &) = delete;
   TAO_CEC_Propagate_Event_Push (TAO_CEC_Propagate_Event_Push &&) = delete;
@@ -133,7 +135,7 @@ private:
 class TAO_CEC_Propagate_Event_Pull : public TAO_ESF_Worker<TAO_CEC_ProxyPullSupplier>
 {
 public:
-  TAO_CEC_Propagate_Event_Pull (const CORBA::Any& event);
+  explicit TAO_CEC_Propagate_Event_Pull (CORBA::Any const &event);
 
   TAO_CEC_Propagate_Event_Pull (TAO_CEC_Propagate_Event_Pull const &) = delete;
   TAO_CEC_Propagate_Event_Pull (TAO_CEC_Propagate_Event_Pull &&) = delete;

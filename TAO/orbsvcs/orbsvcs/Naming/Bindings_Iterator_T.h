@@ -14,6 +14,8 @@
 
 #include "orbsvcs/Naming/Hash_Naming_Context.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -47,23 +49,28 @@ template <class ITERATOR, class TABLE_ENTRY>
 class TAO_Bindings_Iterator : public virtual POA_CosNaming::BindingIterator
 {
 public:
-  // = Intialization and termination methods.
+  /// @name Initialization and termination methods
+  /// @{
   /**
-   * Constructor expects a pointer to a
-   * dynamically allocated hash map iterator (destructor
-   * deallocates hash map iterator).
+   * Constructor takes ownership of a dynamically allocated hash map iterator.
    */
   TAO_Bindings_Iterator (TAO_Hash_Naming_Context *context,
-                         ITERATOR *hash_iter,
+                         std::unique_ptr<ITERATOR> hash_iter,
                          PortableServer::POA_ptr poa);
 
-  /// Destructor.
   ~TAO_Bindings_Iterator () override;
+
+  TAO_Bindings_Iterator (TAO_Bindings_Iterator const &) = delete;
+  TAO_Bindings_Iterator (TAO_Bindings_Iterator &&) = delete;
+  TAO_Bindings_Iterator &operator= (TAO_Bindings_Iterator const &) = delete;
+  TAO_Bindings_Iterator &operator= (TAO_Bindings_Iterator &&) = delete;
 
   /// Returns the Default POA of this Servant object
   PortableServer::POA_ptr _default_POA () override;
 
-  // = Idl methods.
+  /// @}
+  /// @name Idl methods
+  /// @{
 
   /// This operation passes back the next unseen binding.  True is
   /// returned if a binding is passed back, and false is returned otherwise.
@@ -80,7 +87,9 @@ public:
   /// This operation destroys the iterator.
   void destroy () override;
 
-  // = Helper method.
+  /// @}
+  /// @name Helper method
+  /// @{
 
   /**
    * Helper function used by TAO_*_Naming_Context and
@@ -90,12 +99,8 @@ public:
    */
   static int populate_binding (TABLE_ENTRY *hash_entry, CosNaming::Binding &b);
 
+  /// @}
 private:
-  TAO_Bindings_Iterator (TAO_Bindings_Iterator const &) = delete;
-  TAO_Bindings_Iterator (TAO_Bindings_Iterator &&) = delete;
-  TAO_Bindings_Iterator &operator= (TAO_Bindings_Iterator const &) = delete;
-  TAO_Bindings_Iterator &operator= (TAO_Bindings_Iterator &&) = delete;
-
   /**
    * Flag indicating whether this iterator is still valid.  (The
    * iterator becomes invalid when <destroy> method has been invoked
@@ -113,8 +118,8 @@ private:
    */
   TAO_Hash_Naming_Context *context_;
 
-  /// A pointer to the hash map iterator.
-  ITERATOR *hash_iter_;
+  /// Owned hash map iterator.
+  std::unique_ptr<ITERATOR> hash_iter_;
 
   /// Implement a different _default_POA().
   PortableServer::POA_var poa_;

@@ -25,7 +25,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_main.h"
 #include "ace/Service_Config.h"
 #include "ace/Proactor.h"
@@ -41,7 +40,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_socket.h"
 
-
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms supporting
   // POSIX aio calls.
@@ -52,7 +50,6 @@ static u_short port = ACE_DEFAULT_SERVER_PORT;
 static int done = 0;
 static int read_size = 2;
 
-
 Receiver::Receiver ()
   : mb_ (read_size + 1),
     handle_ (ACE_INVALID_HANDLE)
@@ -62,7 +59,7 @@ Receiver::Receiver ()
 Receiver::~Receiver ()
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Receiver: Closing down Remote connection:%d\n",
+              "Receiver: Closing down Remote connection:%H\n",
               this->handle_));
 
   ACE_OS::closesocket (this->handle_);
@@ -94,9 +91,11 @@ Receiver::open (ACE_HANDLE handle,
 
   if (this->rs_.read (this->mb_,
                       read_size) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "Receiver::open: Failed to issue the read"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "Receiver::open: Failed to issue the read"));
+    }
 }
 
 void
@@ -108,12 +107,12 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
   result.message_block ().rd_ptr ()[result.bytes_transferred ()] = '\0';
 
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_read", result.bytes_to_read ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", result.handle ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transfered", result.bytes_transferred ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (uintptr_t) result.act ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_read", result.bytes_to_read ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %H\n", "handle", result.handle ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered", result.bytes_transferred ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "act", const_cast<void *> (result.act ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (uintptr_t) result.completion_key ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "completion_key", const_cast<void *> (result.completion_key ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
   ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block", result.message_block ().rd_ptr ()));
@@ -135,9 +134,11 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 
       if (this->rs_.read (this->mb_,
                           read_size) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "Receiver::handle_read_stream: Failed to issue the read"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "Receiver::handle_read_stream: Failed to issue the read"));
+        }
 
       // Cancel the read.
 
@@ -146,9 +147,11 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 
       int ret_val = this->rs_.cancel ();
       if (ret_val == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "Receiver::handle_read_stream: Failed to cancel the read"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "Receiver::handle_read_stream: Failed to cancel the read"));
+        }
 
       ACE_DEBUG ((LM_DEBUG, "Asynch IO : Cancel : Result = %d\n",
                   ret_val));
@@ -178,21 +181,23 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != EOF)
-    switch (c)
-      {
-      case 'p':
-        port = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 's':
-        read_size = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      default:
-        ACE_ERROR ((LM_ERROR, "%p.\n",
-                    "usage :\n"
-                    "-p <port>\n"
-                    "-s <read_size>\n"));
-        return -1;
-      }
+    {
+      switch (c)
+        {
+        case 'p':
+          port = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 's':
+          read_size = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        default:
+          ACE_ERROR ((LM_ERROR, "%p.\n",
+                      "usage :\n"
+                      "-p <port>\n"
+                      "-s <read_size>\n"));
+          return -1;
+        }
+    }
 
   return 0;
 }
@@ -201,7 +206,9 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
 
   // Note: acceptor parameterized by the Receiver
   ACE_Asynch_Acceptor<Receiver> acceptor;
@@ -209,16 +216,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Listening passively.
   if (acceptor.open (ACE_INET_Addr (port),
                      read_size,
-                     1) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE:acceptor::open failed\n"),
-                      1);
+                     true) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ACE:acceptor::open failed\n"),
+                        1);
+    }
 
   int success = 1;
 
   while (success > 0  && !done)
-    // dispatch events
-    success = ACE_Proactor::instance ()->handle_events ();
+    {
+      // dispatch events
+      success = ACE_Proactor::instance ()->handle_events ();
+    }
 
   return 0;
 }

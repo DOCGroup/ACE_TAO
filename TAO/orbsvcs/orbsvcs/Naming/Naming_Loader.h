@@ -1,17 +1,13 @@
 // -*- C++ -*-
 
-// ============================================================================
-// FILENAME
-//   Naming_Loader.h
-//
-// DESCRIPTION
-//   This class loads the Naming Service dynamically
-//   either from svc.conf file or <string_to_object> call.
-//
-// AUTHORS
-//   Priyanka Gontla <pgontla@ece.uci.edu>
-//
-// ============================================================================
+/**
+ * @file Naming_Loader.h
+ *
+ * @brief Loads the Naming Service dynamically from a @c svc.conf file or a
+ * @c string_to_object call.
+ *
+ * @author Priyanka Gontla <pgontla@ece.uci.edu>
+ */
 
 #ifndef TAO_NAMING_LOADER_H
 #define TAO_NAMING_LOADER_H
@@ -24,19 +20,24 @@
 
 #include "orbsvcs/Naming/Naming_Server.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Naming_Serv_Export TAO_Naming_Loader : public TAO_Object_Loader
 {
 public:
-  /// Constructor
   /// By default will use the standard Naming_Server.  If a server is provided
   /// it will use that one instead. This object takes ownership of the provided
   /// Naming Server.
-  TAO_Naming_Loader (TAO_Naming_Server *server = nullptr);
+  explicit TAO_Naming_Loader (TAO_Naming_Server *server = nullptr);
 
-  /// Destructor
   ~TAO_Naming_Loader () override;
+
+  TAO_Naming_Loader (TAO_Naming_Loader const &) = delete;
+  TAO_Naming_Loader (TAO_Naming_Loader &&) = delete;
+  TAO_Naming_Loader &operator= (TAO_Naming_Loader const &) = delete;
+  TAO_Naming_Loader &operator= (TAO_Naming_Loader &&) = delete;
 
   /// Called by the Service Configurator framework to initialize the
   /// Event Service. Defined in <ace/Service_Config.h>
@@ -55,13 +56,7 @@ public:
 protected:
   /// TODO: Need to set up service configurator to initialize the naming server
   /// Instance of the TAO_Naming_Server
-  TAO_Naming_Server *naming_server_;
-
-private:
-  TAO_Naming_Loader (TAO_Naming_Loader const &) = delete;
-  TAO_Naming_Loader (TAO_Naming_Loader &&) = delete;
-  TAO_Naming_Loader &operator= (TAO_Naming_Loader const &) = delete;
-  TAO_Naming_Loader &operator= (TAO_Naming_Loader &&) = delete;
+  std::unique_ptr<TAO_Naming_Server> naming_server_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

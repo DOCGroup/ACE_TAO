@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CEC_TYPEDSUPPLIERADMIN_H_
 #define TAO_CEC_TYPEDSUPPLIERADMIN_H_
 
@@ -35,11 +34,14 @@ class  TAO_Event_Serv_Export TAO_CEC_TypedSupplierAdmin
   : public POA_CosTypedEventChannelAdmin::TypedSupplierAdmin
 {
 public:
-  /// Constructor
-   TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedEventChannel* event_channel);
+  explicit TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedEventChannel* event_channel);
 
-  /// Destructor
   ~TAO_CEC_TypedSupplierAdmin () override = default;
+
+  TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedSupplierAdmin const &) = delete;
+  TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedSupplierAdmin &&) = delete;
+  TAO_CEC_TypedSupplierAdmin &operator= (TAO_CEC_TypedSupplierAdmin const &) = delete;
+  TAO_CEC_TypedSupplierAdmin &operator= (TAO_CEC_TypedSupplierAdmin &&) = delete;
 
   /// For each elements call <worker->work()>.
   void for_each (TAO_ESF_Worker<TAO_CEC_TypedProxyPushConsumer> *worker);
@@ -53,27 +55,28 @@ public:
   /// this
   virtual void shutdown ();
 
-  // = The CosTypedEventChannelAdmin::TypedSupplierAdmin methods...
+  /// @name The CosTypedEventChannelAdmin::TypedSupplierAdmin methods
+  /// @{
   CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr obtain_typed_push_consumer (
       char const *supported_interface) override;
 
   CosEventChannelAdmin::ProxyPullConsumer_ptr obtain_typed_pull_consumer (
       char const *uses_interface) override;
 
-  // = The CosEventChannelAdmin::SupplierAdmin methods...
+  /// @}
+  /// @name The CosEventChannelAdmin::SupplierAdmin methods
+  /// @{
   CosEventChannelAdmin::ProxyPushConsumer_ptr obtain_push_consumer () override;
 
   CosEventChannelAdmin::ProxyPullConsumer_ptr obtain_pull_consumer () override;
 
-  // = The PortableServer::ServantBase methods
+  /// @}
+  /// @name The PortableServer::ServantBase methods
+  /// @{
   PortableServer::POA_ptr _default_POA () override;
 
+  /// @}
 private:
-  TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedSupplierAdmin const &) = delete;
-  TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedSupplierAdmin &&) = delete;
-  TAO_CEC_TypedSupplierAdmin &operator= (TAO_CEC_TypedSupplierAdmin const &) = delete;
-  TAO_CEC_TypedSupplierAdmin &operator= (TAO_CEC_TypedSupplierAdmin &&) = delete;
-
   /// The Event Channel we belong to
   TAO_CEC_TypedEventChannel *typed_event_channel_;
 

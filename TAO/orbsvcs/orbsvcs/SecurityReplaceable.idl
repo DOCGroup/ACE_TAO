@@ -1,4 +1,4 @@
-// -*- IDL -*-
+/// -*- IDL -*-
 #ifndef _SECURITY_REPLACEABLE_IDL_
 #define _SECURITY_REPLACEABLE_IDL_
 
@@ -48,7 +48,6 @@ module SecurityReplaceable {
       in   SecurityLevel2::Credentials         creds_list
     );
 
-
     Security::AssociationStatus init_security_context (
       in   SecurityLevel2::Credentials        creds,
       in   Security::SecurityName             target_security_name,
@@ -56,7 +55,8 @@ module SecurityReplaceable {
       in   Security::DelegationMode           delegation_mode,
       in   Security::OptionsDirectionPairList association_options,
       in   Security::MechanismType            mechanism,
-      in   Security::Opaque                   comp_data, //from IOR
+      /// from IOR
+      in   Security::Opaque                   comp_data,
       in   Security::ChannelBindings          chan_binding,
       out  Security::OpaqueBuffer             security_token,
       out  ClientSecurityContext              security_context
@@ -72,7 +72,6 @@ module SecurityReplaceable {
     Security::MechandOptionsList get_supported_mechs ();
 
   };
-
 
   local interface SecurityContext {
 

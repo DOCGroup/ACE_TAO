@@ -17,7 +17,7 @@
 template<typename T>
 struct testing_range_checking
 {
-  typedef T value_type;
+  using value_type = T;
 
   inline static void check(
       CORBA::ULong index,
@@ -25,9 +25,10 @@ struct testing_range_checking
       CORBA::ULong maximum,
       char const * function_name)
   {
-    if (index < length) {
-      return;
-    }
+    if (index < length)
+      {
+        return;
+      }
     std::ostringstream error;
     error << "Out of range access in " << function_name
           << ", index=" << index

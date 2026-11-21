@@ -35,17 +35,23 @@ template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK>
 class TAO_ESF_Copy_On_Read : public TAO_ESF_Proxy_Collection<PROXY>
 {
 public:
-  /// Constructors
   TAO_ESF_Copy_On_Read ();
-  TAO_ESF_Copy_On_Read (const COLLECTION &collection);
+  explicit TAO_ESF_Copy_On_Read (COLLECTION const &collection);
 
-  // = The TAO_ESF_Proxy_Collection methods
+  TAO_ESF_Copy_On_Read (TAO_ESF_Copy_On_Read const &) = delete;
+  TAO_ESF_Copy_On_Read (TAO_ESF_Copy_On_Read &&) = delete;
+  TAO_ESF_Copy_On_Read &operator= (TAO_ESF_Copy_On_Read const &) = delete;
+  TAO_ESF_Copy_On_Read &operator= (TAO_ESF_Copy_On_Read &&) = delete;
+
+  /// @name The TAO_ESF_Proxy_Collection methods
+  /// @{
   void for_each (TAO_ESF_Worker<PROXY> *worker) override;
   void connected (PROXY *proxy) override;
   void reconnected (PROXY *proxy) override;
   void disconnected (PROXY *proxy) override;
   void shutdown () override;
 
+  /// @}
 private:
   COLLECTION collection_;
 

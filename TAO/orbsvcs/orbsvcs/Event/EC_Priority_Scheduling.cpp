@@ -9,23 +9,18 @@
 #include "orbsvcs/Event/EC_Priority_Scheduling.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-TAO_EC_Priority_Scheduling::~TAO_EC_Priority_Scheduling ()
-{
-}
 
 void
 TAO_EC_Priority_Scheduling::add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *supplier,
       TAO_EC_ProxyPushConsumer *consumer)
 {
-  ORBSVCS_DEBUG ((LM_DEBUG, "add_proxy_supplier_dependencies - %x %x\n",
+  ORBSVCS_DEBUG ((LM_DEBUG, "add_proxy_supplier_dependencies - %@ %@\n",
               supplier, consumer));
   const RtecEventChannelAdmin::SupplierQOS& qos =
     consumer->publications ();
-  for (CORBA::ULong i = 0; i < qos.publications.length (); ++i)
+  for (CORBA::ULong i {}; i < qos.publications.length (); ++i)
     {
       const RtecEventComm::EventHeader &header =
         qos.publications[i].event.header;
@@ -53,7 +48,7 @@ TAO_EC_Priority_Scheduling::schedule_event (const RtecEventComm::EventSet &event
   RtecEventChannelAdmin::SupplierQOS qos =
     consumer->publications ();
 
-  for (CORBA::ULong j = 0; j != event.length (); ++j)
+  for (CORBA::ULong j {}; j != event.length (); ++j)
     {
       const RtecEventComm::Event& e = event[j];
       RtecEventComm::Event* buffer =
@@ -62,13 +57,15 @@ TAO_EC_Priority_Scheduling::schedule_event (const RtecEventComm::EventSet &event
 
       TAO_EC_QOS_Info qos_info;
 
-      for (CORBA::ULong i = 0; i != qos.publications.length (); ++i)
+      for (CORBA::ULong i {}; i != qos.publications.length (); ++i)
         {
           const RtecEventComm::EventHeader &qos_header =
             qos.publications[i].event.header;
 
           if (TAO_EC_Filter::matches (e.header, qos_header) == 0)
+          {
             continue;
+          }
 
           qos_info.rt_info = qos.publications[i].dependency_info.rt_info;
 

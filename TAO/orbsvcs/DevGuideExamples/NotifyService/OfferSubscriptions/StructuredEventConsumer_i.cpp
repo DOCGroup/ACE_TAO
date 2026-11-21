@@ -2,41 +2,37 @@
 #include "tao/PortableServer/PS_CurrentC.h"
 #include <iostream>
 
-StructuredEventConsumer_i::StructuredEventConsumer_i(CORBA::ORB_ptr orb)
-  : orb_(CORBA::ORB::_duplicate(orb))
+StructuredEventConsumer_i::StructuredEventConsumer_i (CORBA::ORB_ptr orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
 void
 StructuredEventConsumer_i::push_structured_event (
-       CosNotification::StructuredEvent const &event
-      )
+  CosNotification::StructuredEvent const &event)
 {
-    const char *value;
-
-    for (unsigned int i=0; i<event.filterable_data.length(); i++) {
-       event.filterable_data[i].value >>= value;
-       std::cout << event.filterable_data[i].name << "\t" <<value<< std::endl;
+  char const *value {};
+  CORBA::ULong const length = event.filterable_data.length ();
+  for (CORBA::ULong i {}; i < length; ++i)
+    {
+      event.filterable_data[i].value >>= value;
+      std::cout << event.filterable_data[i].name << "\t" << value << std::endl;
     }
-
 }
 
 void
-StructuredEventConsumer_i::disconnect_structured_push_consumer (
-      )
+StructuredEventConsumer_i::disconnect_structured_push_consumer ()
 {
-   CORBA::Object_var obj = orb_->resolve_initial_references ("POACurrent");
-   PortableServer::Current_var current =
-                          PortableServer::Current::_narrow (obj.in());
-   PortableServer::POA_var poa = current->get_POA ();
-   PortableServer::ObjectId_var objectId = current->get_object_id ();
-   poa->deactivate_object (objectId.in());
+  CORBA::Object_var obj = orb_->resolve_initial_references ("POACurrent");
+  PortableServer::Current_var current = PortableServer::Current::_narrow (obj.in ());
+  PortableServer::POA_var poa = current->get_POA ();
+  PortableServer::ObjectId_var object_id = current->get_object_id ();
+  poa->deactivate_object (object_id.in ());
 }
 
 void
 StructuredEventConsumer_i::offer_change (
-        CosNotification::EventTypeSeq const &,
-        CosNotification::EventTypeSeq const &
-      )
+  CosNotification::EventTypeSeq const &,
+  CosNotification::EventTypeSeq const &)
 {
 }

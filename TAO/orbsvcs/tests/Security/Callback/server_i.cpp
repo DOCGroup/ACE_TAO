@@ -1,12 +1,7 @@
 #include "server_i.h"
 
 server_i::server_i (CORBA::ORB_ptr orb)
-  : orb_ (CORBA::ORB::_duplicate (orb)),
-    client_ ()
-{
-}
-
-server_i::~server_i ()
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -17,7 +12,7 @@ server_i::set_client (client_ptr c)
 }
 
 void
-server_i::test_request (const char *msg)
+server_i::test_request (char const *msg)
 {
   this->client_->test_reply (msg);
 }

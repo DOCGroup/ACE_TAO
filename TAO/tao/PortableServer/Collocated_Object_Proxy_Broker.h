@@ -1,6 +1,4 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Collocated_Object_Proxy_Broker.h
  *
@@ -10,8 +8,6 @@
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  *  @author  Balachandran Natarajan (modified the implementation)
  */
-//=============================================================================
-
 #ifndef TAO_COLLOCATED_OBJECT_PROXY_BROKER_H
 #define TAO_COLLOCATED_OBJECT_PROXY_BROKER_H
 #include /**/ "ace/pre.h"
@@ -61,9 +57,6 @@ namespace TAO
 
   };
 }
-
-// -----------------------------------------------------
-
 /// This function is used to access the unique instance of strategized
 /// proxy broker. All the CORBA::Object share the proxy broker.
 TAO::Collocated_Object_Proxy_Broker *the_tao_collocated_object_proxy_broker ();

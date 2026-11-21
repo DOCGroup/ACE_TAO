@@ -9,6 +9,9 @@
 
 #include "ace/OS_NS_stdio.h"
 
+#include <cstring>
+#include <memory>
+
 #include <openssl/x509.h>
 #include <openssl/pem.h>
 
@@ -30,26 +33,28 @@ TAO_SSLIOP_PASSWORD_CALLBACK_NAME (char *buf,
   // @@ I'm probably over complicating this implementation, but that's
   //    what you get when you try to be overly efficient.  :-)
   //        -Ossama
-  const char * password = static_cast<char *> (userdata);
+  char const * password = static_cast<char *> (userdata);
 
   int pwlen = -1;
 
   if (password != nullptr)
     {
-      pwlen = static_cast<int> (ACE_OS::strlen (password));
+      pwlen = static_cast<int> (std::strlen (password));
 
       int copy_len = pwlen + 1;  // Include the NULL terminator
 
       // Clear the portion of the buffer that exceeds the space that
       // will be occupied by the password.
       if (copy_len < size)
-        ACE_OS::memset (buf + copy_len, 0, size - copy_len);
+      {
+        std::memset (buf + copy_len, 0, size - copy_len);
+      }
 
       // Make sure we don't overflow the OpenSSL supplied buffer.
       // Truncate the password if necessary.
       copy_len = (copy_len > size) ? size : copy_len;
 
-      ACE_OS::memcpy (buf, password, copy_len);
+      std::memcpy (buf, password, copy_len);
 
       // NULL terminate the truncated password.
       if (copy_len > size)
@@ -68,15 +73,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::CredentialsAcquirer::CredentialsAcquirer (
    TAO::SL3::CredentialsCurator_ptr curator,
-   const CORBA::Any & acquisition_arguments)
+   CORBA::Any const & acquisition_arguments)
   : lock_ (),
     curator_ (TAO::SL3::CredentialsCurator::_duplicate (curator)),
-    acquisition_arguments_ (acquisition_arguments),
-    destroyed_ (false)
-{
-}
-
-TAO::SSLIOP::CredentialsAcquirer::~CredentialsAcquirer ()
+    acquisition_arguments_ (acquisition_arguments)
 {
 }
 
@@ -115,7 +115,7 @@ TAO::SSLIOP::CredentialsAcquirer::get_continuation_data ()
 
 SecurityLevel3::AcquisitionStatus
 TAO::SSLIOP::CredentialsAcquirer::continue_acquisition (
-    const CORBA::Any & /* acquisition_arguments */)
+    CORBA::Any const & /* acquisition_arguments */)
 {
   // SSL/TLS credentials acquisition does generate continuation data.
   throw CORBA::BAD_INV_ORDER ();
@@ -126,20 +126,26 @@ TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list)
 {
   this->check_validity ();
 
-  const ::SSLIOP::AuthData *data {};
+  ::SSLIOP::AuthData const *data {};
 
   if (!(this->acquisition_arguments_ >>= data))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   TAO::SSLIOP::X509_var x509 = this->make_X509 (data->certificate);
 
   if (x509.in () == nullptr)
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   TAO::SSLIOP::EVP_PKEY_var evp = this->make_EVP_PKEY (data->key);
 
   if (evp.in () == nullptr)
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   // Verify that the private key is consistent with the certificate.
   if (::X509_check_private_key (x509.in (), evp.in ()) != 1)
@@ -152,7 +158,7 @@ TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list)
       throw CORBA::BAD_PARAM ();
     }
 
-  TAO::SSLIOP::OwnCredentials * creds = nullptr;
+  TAO::SSLIOP::OwnCredentials * creds {};
   ACE_NEW_THROW_EX (creds,
                     TAO::SSLIOP::OwnCredentials (x509.in (), evp.in ()),
                     CORBA::NO_MEMORY ());
@@ -195,149 +201,117 @@ TAO::SSLIOP::CredentialsAcquirer::check_validity ()
              this->lock_);
 
   if (this->destroyed_)
+  {
     throw CORBA::BAD_INV_ORDER ();
+  }
 }
 
 ::X509 *
-TAO::SSLIOP::CredentialsAcquirer::make_X509 (const ::SSLIOP::File &certificate)
+TAO::SSLIOP::CredentialsAcquirer::make_X509 (::SSLIOP::File const &certificate)
 {
   // No password is used or needed when reading ASN.1 encoded
   // certificates.
 
-  const char *filename = certificate.filename.in ();
+  char const *filename = certificate.filename.in ();
 
   if (filename == nullptr)
+  {
     return nullptr;
+  }
 
-  FILE *fp = nullptr;
-  ::X509 *x = nullptr;
+  std::unique_ptr<FILE, int (*) (FILE *)> fp (
+      ACE_OS::fopen (filename,
+                     certificate.type == ::SSLIOP::ASN1 ? "rb" : "r"),
+      ACE_OS::fclose);
+  ::X509 *x {};
+
+  if (fp == nullptr)
+    {
+      if (TAO_debug_level > 0)
+        ORBSVCS_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) SSLIOP::CredentialsAcquirer::make_X509 - %p\n"),
+                    ACE_TEXT ("fopen")));
+
+      return nullptr;
+    }
 
   if (certificate.type == ::SSLIOP::ASN1)
     {
-      // ASN.1/DER encoded certificate
-
-      // No password is used or needed when reading ASN.1 encoded
-      // certificates.
-
-      fp = ACE_OS::fopen (filename, "rb");
-
-      if (fp == nullptr)
-        {
-          if (TAO_debug_level > 0)
-            ORBSVCS_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) SSLIOP::CredentialsAcquirer::make_X509 - %p\n"),
-                        ACE_TEXT ("fopen")));
-
-          return nullptr;
-        }
-
       // Read ASN.1 / DER encoded X.509 certificate from a file, and
       // convert it to OpenSSL's internal X.509 format.
-      x = ::d2i_X509_fp (fp, nullptr);
+      x = ::d2i_X509_fp (fp.get (), nullptr);
     }
   else
     {
-      // PEM encoded certificate
-
-      fp = ACE_OS::fopen (filename, "r");
-
-      if (fp == nullptr)
-        {
-          if (TAO_debug_level > 0)
-            ORBSVCS_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) SSLIOP::CredentialsAcquirer::make_X509 - %p\n"),
-                        ACE_TEXT ("fopen")));
-
-          return nullptr;
-        }
-
-      const char *password = certificate.password.in ();
+      char const *password = certificate.password.in ();
 
       // Read PEM encoded X.509 certificate from a file, and convert
       // it to OpenSSL's internal X.509 format.
-      x = PEM_read_X509 (fp,
+      x = PEM_read_X509 (fp.get (),
                          nullptr,
                          TAO_SSLIOP_PASSWORD_CALLBACK_NAME,
                          const_cast<char *> (password));
     }
 
-  (void) ACE_OS::fclose (fp);
-
   if (x == nullptr && TAO_debug_level > 0)
+  {
     ACE_SSL_Context::report_error ();
+  }
 
   return x;
 }
 
 ::EVP_PKEY *
-TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (const ::SSLIOP::File &key)
+TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (::SSLIOP::File const &key)
 {
   // No password is used or needed when reading ASN.1 encoded
   // private keys.
 
-  const char *filename = key.filename.in ();
+  char const *filename = key.filename.in ();
 
   if (filename == nullptr)
+  {
     return nullptr;
+  }
 
-  FILE *fp = nullptr;
-  ::EVP_PKEY *evp = nullptr;
+  std::unique_ptr<FILE, int (*) (FILE *)> fp (
+      ACE_OS::fopen (filename, key.type == ::SSLIOP::ASN1 ? "rb" : "r"),
+      ACE_OS::fclose);
+  ::EVP_PKEY *evp {};
+
+  if (fp == nullptr)
+    {
+      if (TAO_debug_level > 0)
+        ORBSVCS_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) SSLIOP::CredentialsAcquirer::make_EVP_PKEY ")
+                    ACE_TEXT ("- %p\n"),
+                    ACE_TEXT ("fopen")));
+
+      return nullptr;
+    }
 
   if (key.type == ::SSLIOP::ASN1)
     {
-      // ASN.1/DER encoded private key
-
-      // No password is used or needed when reading ASN.1 encoded
-      // private keys.
-
-      fp = ACE_OS::fopen (filename, "rb");
-
-      if (fp == nullptr)
-        {
-          if (TAO_debug_level > 0)
-            ORBSVCS_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) SSLIOP::CredentialsAcquirer::make_EVP_PKEY ")
-                        ACE_TEXT ("- %p\n"),
-                        ACE_TEXT ("fopen")));
-
-          return nullptr;
-        }
-
       // Read ASN.1 / DER encoded private key from a file, and convert
       // it to OpenSSL's internal private key format.
-      evp = ::d2i_PrivateKey_fp (fp, nullptr);
+      evp = ::d2i_PrivateKey_fp (fp.get (), nullptr);
     }
   else
     {
-      // PEM encoded private key
-
-      fp = ACE_OS::fopen (filename, "r");
-
-      if (fp == nullptr)
-        {
-          if (TAO_debug_level > 0)
-            ORBSVCS_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) SSLIOP::CredentialsAcquirer::make_EVP_PKEY ")
-                        ACE_TEXT ("- %p\n"),
-                        ACE_TEXT ("fopen")));
-
-          return nullptr;
-        }
-
-      const char *password = key.password.in ();
+      char const *password = key.password.in ();
 
       // Read PEM encoded private key from a file, and convert it to
       // OpenSSL's internal private key format.
-      evp = PEM_read_PrivateKey (fp,
+      evp = PEM_read_PrivateKey (fp.get (),
                                  nullptr,
                                  TAO_SSLIOP_PASSWORD_CALLBACK_NAME,
                                  const_cast<char *> (password));
     }
 
-  (void) ACE_OS::fclose (fp);
-
   if (evp == nullptr && TAO_debug_level > 0)
+  {
     ACE_SSL_Context::report_error ();
+  }
 
   return evp;
 }

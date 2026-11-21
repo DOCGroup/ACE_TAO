@@ -17,13 +17,14 @@ ACE_Dynamic_Service_Dependency::ACE_Dynamic_Service_Dependency (const ACE_Servic
   this->init (cfg, principal);
 }
 
-
 ACE_Dynamic_Service_Dependency::~ACE_Dynamic_Service_Dependency ()
 {
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) DSD, this=%@ - destroying\n"),
-                this));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("(%P|%t) DSD, this=%@ - destroying\n"),
+                     this));
+    }
 }
 
 void
@@ -40,6 +41,5 @@ ACE_Dynamic_Service_Dependency::init (const ACE_Service_Gestalt *cfg,
     }
   this->tracker_ = st->dll ();
 }
-
 
 ACE_END_VERSIONED_NAMESPACE_DECL

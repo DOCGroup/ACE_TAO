@@ -36,7 +36,7 @@ Server_i::Server_i ()
 
 Server_i::~Server_i()
 {
-  this->root_poa_->destroy(1, 1);
+  this->root_poa_->destroy(true, true);
   this->orb_->destroy();
 }
 
@@ -78,7 +78,9 @@ Server_i::init (int argc, ACE_TCHAR** argv)
 
       int retval = this->parse_args (argc, argv);
       if (retval != 0)
+      {
         return retval;
+      }
 
       CORBA::Object_var obj =
         this->orb_->resolve_initial_references ("RootPOA");
@@ -152,7 +154,6 @@ Server_i::init (int argc, ACE_TCHAR** argv)
       throw;
     }
 
-
   return 0;
 }
 
@@ -179,7 +180,6 @@ Server_i::run ()
       ex._tao_print_exception ("Server_i::run");
       throw;
     }
-
 
   return 0;
 }

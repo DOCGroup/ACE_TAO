@@ -16,29 +16,29 @@
 #include "tao/Resume_Handle.h"
 #include "tao/Protocols_Hooks.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIPMC_Connection_Handler::TAO_UIPMC_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_UIPMC_SVC_HANDLER (t, 0 , 0),
-    TAO_Connection_Handler (0),
-    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2),
-    send_hi_water_mark_ (0u)
+  : TAO_UIPMC_SVC_HANDLER (t, nullptr, nullptr),
+    TAO_Connection_Handler (nullptr),
+    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
   // Creation_Strategy requires a constructor with that signature, we
   // don't use that implementation, but some (most?) compilers
   // instantiate it anyway.
-  ACE_ASSERT (0);
+  ACE_ASSERT (false);
 }
 
 TAO_UIPMC_Connection_Handler::TAO_UIPMC_Connection_Handler (TAO_ORB_Core *orb_core)
-  : TAO_UIPMC_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
+  : TAO_UIPMC_SVC_HANDLER (orb_core->thr_mgr (), nullptr, nullptr),
     TAO_Connection_Handler (orb_core),
-    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2),
-    send_hi_water_mark_ (0u)
+    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
-  TAO_UIPMC_Transport* specific_transport = nullptr;
+  TAO_UIPMC_Transport *specific_transport {};
   ACE_NEW(specific_transport,
           TAO_UIPMC_Transport (this, orb_core));
 
@@ -61,26 +61,26 @@ TAO_UIPMC_Connection_Handler::~TAO_UIPMC_Connection_Handler ()
     }
 }
 
-const ACE_INET_Addr &
+ACE_INET_Addr const &
 TAO_UIPMC_Connection_Handler::addr () const
 {
   return this->addr_;
 }
 
 void
-TAO_UIPMC_Connection_Handler::addr (const ACE_INET_Addr &addr)
+TAO_UIPMC_Connection_Handler::addr (ACE_INET_Addr const &addr)
 {
   this->addr_ = addr;
 }
 
-const ACE_INET_Addr &
+ACE_INET_Addr const &
 TAO_UIPMC_Connection_Handler::local_addr () const
 {
   return this->local_addr_;
 }
 
 void
-TAO_UIPMC_Connection_Handler::local_addr (const ACE_INET_Addr &addr)
+TAO_UIPMC_Connection_Handler::local_addr (ACE_INET_Addr const &addr)
 {
   this->local_addr_ = addr;
 }
@@ -100,7 +100,7 @@ TAO_UIPMC_Connection_Handler::open_handler (void *v)
 int
 TAO_UIPMC_Connection_Handler::open (void*)
 {
-  TAO_MIOP_Resource_Factory *const factory =
+  TAO_MIOP_Resource_Factory * const factory =
     ACE_Dynamic_Service<TAO_MIOP_Resource_Factory>::instance (
       this->orb_core ()->configuration(),
       ACE_TEXT ("MIOP_Resource_Factory"));
@@ -119,7 +119,7 @@ TAO_UIPMC_Connection_Handler::open (void*)
   protocol_properties.enable_multicast_loop_ =
     this->orb_core ()->orb_params ()->ip_multicastloop ();
 
-  TAO_Protocols_Hooks *tph =
+  TAO_Protocols_Hooks * const tph =
     this->orb_core ()->get_protocols_hooks ();
 
   if (tph != nullptr)
@@ -128,7 +128,7 @@ TAO_UIPMC_Connection_Handler::open (void*)
         {
           tph->client_protocol_properties_at_orb_level (protocol_properties);
         }
-      catch (const ::CORBA::Exception&)
+      catch (::CORBA::Exception const &)
         {
           return -1;
         }
@@ -158,7 +158,7 @@ TAO_UIPMC_Connection_Handler::open (void*)
           result = this->peer ().set_option (
             IPPROTO_IPV6,
             IPV6_MULTICAST_HOPS,
-            (void *) &hop_limit,
+            static_cast<void *> (&hop_limit),
             sizeof (hop_limit));
         }
       else
@@ -177,7 +177,7 @@ TAO_UIPMC_Connection_Handler::open (void*)
           result = this->peer ().set_option (
             IPPROTO_IP,
             IP_MULTICAST_TTL,
-            (void *) &hop_limit,
+            static_cast<void *> (&hop_limit),
             sizeof (hop_limit));
         }
 
@@ -210,7 +210,7 @@ TAO_UIPMC_Connection_Handler::open (void*)
       result = this->peer ().set_option (
         IPPROTO_IPV6,
         IPV6_MULTICAST_LOOP,
-        (void *) &enable_loop,
+        static_cast<void *> (&enable_loop),
         sizeof (enable_loop));
     }
   else
@@ -229,7 +229,7 @@ TAO_UIPMC_Connection_Handler::open (void*)
       result = this->peer ().set_option (
         IPPROTO_IP,
         IP_MULTICAST_LOOP,
-        (void *) &enable_loop,
+        static_cast<void *> (&enable_loop),
         sizeof (enable_loop));
     }
 
@@ -280,29 +280,35 @@ TAO_UIPMC_Connection_Handler::open (void*)
             {
               this->send_hi_water_mark_ = 256u;
               if (TAO_debug_level)
-                ORBSVCS_ERROR ((LM_ERROR,
+                {
+                  ORBSVCS_ERROR ((LM_ERROR,
                             ACE_TEXT ("TAO (%P|%t) - UIPMC_Connection_Handler::")
                             ACE_TEXT ("open, -ORBSendHighWaterMark not specified, ")
                             ACE_TEXT ("using value of %u bytes\n"),
                             this->send_hi_water_mark_));
+                }
             }
           else if (TAO_debug_level)
-            ORBSVCS_ERROR ((LM_ERROR,
+            {
+              ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - UIPMC_Connection_Handler::")
                         ACE_TEXT ("open, -ORBSendHighWaterMark not specified, ")
                         ACE_TEXT ("using -ORBSndSock value of %u bytes\n"),
                         this->send_hi_water_mark_));
+            }
         }
       else
         {
           // Assume a small buffer
           this->send_hi_water_mark_ = 1024u;
           if (TAO_debug_level)
-            ORBSVCS_ERROR ((LM_ERROR,
+            {
+              ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - UIPMC_Connection_Handler::")
                         ACE_TEXT ("open, -ORBSendHighWaterMark not specified ")
                         ACE_TEXT ("and getsockopt failed (Errno: '%m'), using %u bytes\n"),
                         this->send_hi_water_mark_));
+            }
           return -1;
         }
 #endif // defined (ACE_LACKS_SO_SNDBUF)
@@ -312,7 +318,9 @@ TAO_UIPMC_Connection_Handler::open (void*)
   // Use C-style cast b/c otherwise we get warnings on lots of
   // compilers
   if (!this->transport ()->post_open ((size_t) this->peer ().get_handle ()))
+  {
     return -1;
+  }
 
   this->state_changed (TAO_LF_Event::LFS_SUCCESS,
                        this->orb_core ()->leader_follower ());
@@ -354,8 +362,8 @@ TAO_UIPMC_Connection_Handler::handle_output (ACE_HANDLE handle)
 }
 
 int
-TAO_UIPMC_Connection_Handler::handle_timeout (const ACE_Time_Value &,
-                                              const void *)
+TAO_UIPMC_Connection_Handler::handle_timeout (ACE_Time_Value const &,
+                                              void const *)
 {
   // Using this to ensure this instance will be deleted (if necessary)
   // only after reset_state(). Without this, when this refcount==1 -
@@ -414,11 +422,11 @@ TAO_UIPMC_Connection_Handler::add_transport_to_cache ()
   TAO_UIPMC_Endpoint endpoint (addr);
 
   // Construct a property object
-  TAO_Base_Transport_Property prop (&endpoint);
+  TAO_Base_Transport_Property prop (std::addressof (endpoint));
 
   // Add the handler to Cache
   return this->orb_core ()->lane_resources ()
-          .transport_cache ().cache_transport (&prop,
+          .transport_cache ().cache_transport (std::addressof (prop),
                                                this->transport ());
 }
 
@@ -451,14 +459,14 @@ TAO_UIPMC_Connection_Handler::set_tos (int tos)
 # else /* !IPV6_TCLASS */
         result = this->peer ().set_option (IPPROTO_IPV6,
                                            IPV6_TCLASS,
-                                           (int *) &tos,
+                                           &tos,
                                            (int) sizeof (tos));
       else
 # endif /* IPV6_TCLASS */
 #endif /* ACE_HAS_IPV6 */
       result = this->peer ().set_option (IPPROTO_IP,
                                          IP_TOS,
-                                         (int *) &tos,
+                                         &tos,
                                          (int) sizeof (tos));
 
       if (TAO_debug_level)
@@ -475,7 +483,9 @@ TAO_UIPMC_Connection_Handler::set_tos (int tos)
 
       // On successful setting of TOS field.
       if (result == 0)
+      {
         this->dscp_codepoint_ = tos;
+      }
     }
 
   return 0;
@@ -486,7 +496,7 @@ TAO_UIPMC_Connection_Handler::set_dscp_codepoint (CORBA::Long dscp_codepoint)
 {
   int tos = IPDSFIELD_DSCP_DEFAULT << 2;
 
-  CORBA::Long codepoint = dscp_codepoint;
+  CORBA::Long const codepoint = dscp_codepoint;
 
   tos = static_cast<int> (codepoint) << 2;
 
@@ -519,7 +529,7 @@ TAO_UIPMC_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_pri
 }
 
 int
-TAO_UIPMC_Connection_Handler::handle_write_ready (const ACE_Time_Value *t)
+TAO_UIPMC_Connection_Handler::handle_write_ready (ACE_Time_Value const *t)
 {
   return ACE::handle_write_ready (this->peer ().get_handle (), t);
 }

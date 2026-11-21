@@ -24,7 +24,8 @@ ACE_IPC_SAP::dump () const
   ACE_TRACE ("ACE_IPC_SAP::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("handle_ = %d"), this->handle_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("handle_ = %H"),
+                 this->handle_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -81,7 +82,9 @@ ACE_IPC_SAP::enable (int value) const
                          ACE_OS::getpid ()) == -1
           || ACE::set_flags (this->handle_,
                                         FASYNC) == -1)
+      {
         return -1;
+      }
       break;
 #else
       ACE_NOTSUP_RETURN (-1);
@@ -93,13 +96,17 @@ ACE_IPC_SAP::enable (int value) const
       if (ACE_OS::fcntl (this->handle_,
                          F_SETFD,
                          1) == -1)
+      {
         return -1;
+      }
       break;
 #endif /* F_SETFD */
     case ACE_NONBLOCK:
       if (ACE::set_flags (this->handle_,
                                      ACE_NONBLOCK) == ACE_INVALID_HANDLE)
+      {
         return -1;
+      }
       break;
     default:
       return -1;
@@ -153,7 +160,9 @@ ACE_IPC_SAP::disable (int value) const
                          0) == -1
           || ACE::clr_flags (this->handle_,
                                         FASYNC) == -1)
+      {
         return -1;
+      }
       break;
 #else
       ACE_NOTSUP_RETURN (-1);
@@ -165,13 +174,17 @@ ACE_IPC_SAP::disable (int value) const
       if (ACE_OS::fcntl (this->handle_,
                          F_SETFD,
                          0) == -1)
+      {
         return -1;
+      }
       break;
 #endif /* F_SETFD */
     case ACE_NONBLOCK:
       if (ACE::clr_flags (this->handle_,
                                      ACE_NONBLOCK) == -1)
+      {
         return -1;
+      }
       break;
     default:
       return -1;

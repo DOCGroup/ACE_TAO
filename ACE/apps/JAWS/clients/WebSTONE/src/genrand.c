@@ -26,7 +26,6 @@ main(const int argc, char* argv[])
 {
   FILE* file;
   int i;
-  int my_random;
   int size;
   char *cp;
 
@@ -44,7 +43,7 @@ main(const int argc, char* argv[])
 
   size = atoi(argv[1]);
 
-  for (cp = argv[1]; *cp; cp++)
+  for (cp = argv[1]; *cp; ++cp)
   {
     switch(*cp)
       {
@@ -59,9 +58,9 @@ main(const int argc, char* argv[])
       }
   }
 
-  for (i = 0; i < size; i++)
+  for (i = 0; i < size; ++i)
     {
-      my_random = ((RANDOM() % 94) + 33);
+      int my_random = ((RANDOM() % 94) + 33);
       fputc((char)my_random, file);
     }
 

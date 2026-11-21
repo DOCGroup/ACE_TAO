@@ -38,8 +38,13 @@ template <class ACE_SAFELY_INCREMENTABLE_DECREMENTABLE>
 class ACE_Auto_IncDec
 {
 public:
+  ACE_Auto_IncDec (ACE_Auto_IncDec const &) = delete;
+  ACE_Auto_IncDec (ACE_Auto_IncDec &&) = delete;
+  ACE_Auto_IncDec &operator= (ACE_Auto_IncDec const &) = delete;
+  ACE_Auto_IncDec &operator= (ACE_Auto_IncDec &&) = delete;
+
   /// Implicitly increment the counter.
-  ACE_Auto_IncDec (ACE_SAFELY_INCREMENTABLE_DECREMENTABLE &counter);
+  explicit ACE_Auto_IncDec (ACE_SAFELY_INCREMENTABLE_DECREMENTABLE &counter);
 
   /// Implicitly decrement the counter.
   ~ACE_Auto_IncDec ();
@@ -54,9 +59,6 @@ protected:
   /// Reference to the @c ACE_SAFELY_INCREMENTABLE_DECREMENTABLE counter
   /// we're incrementing/decrementing.
   ACE_SAFELY_INCREMENTABLE_DECREMENTABLE &counter_;
-private:
-  void operator= (const ACE_Auto_IncDec<ACE_SAFELY_INCREMENTABLE_DECREMENTABLE> &) = delete;
-  ACE_Auto_IncDec (const ACE_Auto_IncDec<ACE_SAFELY_INCREMENTABLE_DECREMENTABLE> &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

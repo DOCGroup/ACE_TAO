@@ -17,7 +17,7 @@ public:
   Get_Task (ACE_Thread_Manager *thr_mgr,
             int n_threads);
 
-  virtual int svc ();
+  int svc () override;
 
   const ACE_Array<ACE_CString>& results ();
 
@@ -36,9 +36,13 @@ Get_Task::Get_Task (ACE_Thread_Manager *thr_mgr,
 {
   // Create worker threads.
   if (this->activate (THR_NEW_LWP, n_threads_) == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("activate failed")));
+  }
   else
+  {
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) started %d threads\n"), n_threads_));
+  }
 }
 
 void Get_Task::shutdown ()
@@ -83,7 +87,9 @@ int Get_Task::svc ()
             }
         }
       else
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) failed to open URL %C\n"), http_url.to_string ().c_str ()));
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) failed to open URL %C\n"), http_url.to_string ().c_str ()));
+      }
       shutdown ();
     }
   else
@@ -107,7 +113,7 @@ class Get_MultiTask : public ACE_Task<ACE_MT_SYNCH>
 public:
   Get_MultiTask (ACE_Thread_Manager *thr_mgr);
 
-  virtual int svc ();
+  int svc () override;
 
   int failures ();
 
@@ -142,7 +148,9 @@ Get_MultiTask::Get_MultiTask (ACE_Thread_Manager *thr_mgr)
 {
   // Create worker threads.
   if (this->activate (THR_NEW_LWP, n_threads_) == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("activate failed")));
+  }
 }
 
 const char* Get_MultiTask::get_url ()
@@ -168,7 +176,9 @@ void Get_MultiTask::wait_for_all ()
   if (n_open_urls_ == n_threads_)
     signal_.broadcast (); // signal all threads that all urls are opened
   else
+  {
     signal_.wait (); // wait for all urls to be opened
+  }
 }
 
 void Get_MultiTask::shutdown ()
@@ -199,9 +209,13 @@ int Get_MultiTask::svc ()
       ACE::HTTP::ClientRequestHandler rh;
       http_url.open (rh);
       if (rh.response_stream ())
-          ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) opened URL %C\n"), http_url.to_string ().c_str ()));
+      {
+        ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) opened URL %C\n"), http_url.to_string ().c_str ()));
+      }
       else
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) failed to open URL %C\n"), http_url.to_string ().c_str ()));
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) failed to open URL %C\n"), http_url.to_string ().c_str ()));
+      }
       wait_for_all ();
       if (rh.response_stream ())
         {
@@ -257,7 +271,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   if (get_task.results ().size () != ACE_Utils::truncate_cast<size_t> (n_threads))
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%d results found; ")
+                  ACE_TEXT ("%B results found; ")
                   ACE_TEXT ("should be %d\n"),
                   get_task.results ().size (),
                   n_threads));

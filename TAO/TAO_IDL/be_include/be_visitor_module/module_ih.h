@@ -1,6 +1,5 @@
 /* -*- c++ -*- */
 
-
 //=============================================================================
 /**
  *  @file    module_ih.h
@@ -11,7 +10,6 @@
  *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
  */
 //=============================================================================
-
 
 #ifndef _BE_VISITOR_MODULE_MODULE_IH_H_
 #define _BE_VISITOR_MODULE_MODULE_IH_H_

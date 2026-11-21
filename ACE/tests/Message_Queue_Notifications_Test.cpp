@@ -27,7 +27,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Reactor.h"
 #include "ace/Task.h"
@@ -37,9 +36,10 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Condition.h"
 #include "ace/Null_Mutex.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <cstring>
+#include <memory>
 
 static int iterations = 10;
 
@@ -57,13 +57,14 @@ static constexpr int watermark_iterations = 2 * default_high_water_mark;
 class Message_Handler : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
-  /// Constructor.
   Message_Handler (ACE_Reactor &reactor);
 
-  // = Demuxing hooks.
+  /// @name Demultiplexing hooks
+  /// @{
   int handle_input (ACE_HANDLE) override;
   int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
   int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
+  /// @}
 
 private:
   int process_message ();
@@ -108,7 +109,8 @@ Message_Handler::Message_Handler (ACE_Reactor &reactor)
                             this,
                             ACE_Event_Handler::READ_MASK)
 {
-  this->msg_queue ()->notification_strategy (&this->notification_strategy_);
+  this->msg_queue ()->notification_strategy (
+    std::addressof (this->notification_strategy_));
   this->make_message ();
 }
 
@@ -153,14 +155,16 @@ Message_Handler::handle_exception (ACE_HANDLE fd)
 int
 Message_Handler::process_message ()
 {
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   if (this->getq (mb,
                   (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("dequeue_head")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("dequeue_head")),
+                        -1);
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -178,7 +182,7 @@ Message_Handler::make_message ()
 {
   if (--iterations > 0)
     {
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
       ACE_NEW (mb,
                ACE_Message_Block ((char *) ACE_TEXT ("hello")));
 
@@ -189,7 +193,7 @@ Message_Handler::make_message ()
 }
 
 Watermark_Test::Watermark_Test ()
-  : len_ (ACE_OS::strlen (default_message) + 1),
+  : len_ (std::strlen (default_message) + 1),
     hwm_ (this->len_ * default_high_water_mark),
     lwm_ (this->len_ * default_low_water_mark),
     role_ (0)
@@ -215,9 +219,11 @@ Watermark_Test::producer ()
     {
       this->put_message ();
       this->print_producer_debug_message ();
-      i--;
+      --i;
       if (this->msg_queue ()->is_full ())
+      {
         break;
+      }
     }
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Producer: High water mark hit ----\n")));
@@ -232,7 +238,7 @@ Watermark_Test::producer ()
 
   this->print_producer_debug_message ();
 
-  for (i--; i >= 0 ; i--)
+  for (--i; i >= 0 ; --i)
     {
       this->put_message ();
       this->print_producer_debug_message ();
@@ -250,7 +256,7 @@ Watermark_Test::consumer ()
 
   // Let producer proceed and block in putq.
 
-  for (int i = watermark_iterations; i >= 0; i--)
+  for (int i = watermark_iterations; i >= 0; --i)
     {
       this->get_message ();
       ACE_OS::sleep (0);
@@ -262,13 +268,15 @@ Watermark_Test::consumer ()
 int
 Watermark_Test::get_message ()
 {
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   if (this->getq (mb) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("dequeue_head")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("dequeue_head")),
+                        -1);
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -285,7 +293,7 @@ Watermark_Test::get_message ()
 int
 Watermark_Test::put_message (ACE_Time_Value *timeout)
 {
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (default_message,
@@ -337,15 +345,17 @@ run_main (int, ACE_TCHAR *[])
   Message_Handler mh (reactor);
 
   while (iterations > 0)
-    reactor.handle_events ();
+    {
+      reactor.handle_events ();
+    }
 
 #if defined (ACE_HAS_THREADS)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Starting message queue watermark test...\n")));
   Watermark_Test watermark_test;
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("High water mark is %d\n")
-              ACE_TEXT ("Low water mark is %d\n"),
+              ACE_TEXT ("High water mark is %B\n")
+              ACE_TEXT ("Low water mark is %B\n"),
               default_high_water_mark,
               default_low_water_mark));
 

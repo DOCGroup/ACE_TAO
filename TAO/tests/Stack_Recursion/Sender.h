@@ -13,8 +13,11 @@ class Sender
   : public virtual POA_Test::Sender
 {
 public:
-  /// Constructor
-  Sender (CORBA::ORB_ptr orb);
+  explicit Sender (CORBA::ORB_ptr orb);
+  Sender (Sender const &) = delete;
+  Sender (Sender &&) = delete;
+  Sender &operator= (Sender const &) = delete;
+  Sender &operator= (Sender &&) = delete;
 
   /// Print out the results
   void dump_results ();
@@ -22,15 +25,17 @@ public:
   /// Get the status of the flag..
   bool is_done () const;
 
-  // = The skeleton methods
-  virtual CORBA::Boolean get_data (CORBA::ULong size,
-                                   Test::Payload_out payload);
+  /// @name Skeleton methods
+  /// @{
+  CORBA::Boolean get_data (CORBA::ULong size,
+                           Test::Payload_out payload) override;
 
-  virtual CORBA::Long get_event_count ();
+  CORBA::Long get_event_count () override;
 
-  virtual void ping ();
+  void ping () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
+  /// @}
 
 private:
   TAO_SYNCH_MUTEX mutex_;

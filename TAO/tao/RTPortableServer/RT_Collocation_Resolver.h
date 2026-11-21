@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    RT_Collocation_Resolver.h
  *
  *  @author  Irfan Pyarali
  */
-// ===================================================================
 
 #ifndef TAO_RT_COLLOCATION_RESOLVER_H
 #define TAO_RT_COLLOCATION_RESOLVER_H
@@ -42,16 +40,15 @@ class TAO_RTPortableServer_Export TAO_RT_Collocation_Resolver :
 public:
   TAO_RT_Collocation_Resolver () = default;
 
-  /// Is @a object collocated?
-  CORBA::Boolean is_collocated (CORBA::Object_ptr object) const override;
-
-private:
   TAO_RT_Collocation_Resolver (TAO_RT_Collocation_Resolver const &) = delete;
   TAO_RT_Collocation_Resolver &operator= (TAO_RT_Collocation_Resolver const &) = delete;
   TAO_RT_Collocation_Resolver (TAO_RT_Collocation_Resolver &&) = delete;
   TAO_RT_Collocation_Resolver &operator= (TAO_RT_Collocation_Resolver &&) = delete;
-};
 
+  /// Is @a object collocated?
+  CORBA::Boolean is_collocated (CORBA::Object_ptr object) const override;
+
+};
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTPortableServer, TAO_RT_Collocation_Resolver)
 ACE_FACTORY_DECLARE (TAO_RTPortableServer, TAO_RT_Collocation_Resolver)

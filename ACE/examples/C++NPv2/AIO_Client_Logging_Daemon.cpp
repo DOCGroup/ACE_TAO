@@ -24,6 +24,8 @@
 #include "ace/Singleton.h"
 #include "ace/Task.h"
 #include "ace/Thread_Manager.h"
+
+#include <memory>
 #include "ace/Unbounded_Set.h"
 #include "ace/os_include/os_netdb.h"
 #include "AIO_CLD_export.h"
@@ -44,12 +46,11 @@ public:
 
 protected:
   // Service handler factory method.
-  virtual AIO_Input_Handler *make_handler ();
+  AIO_Input_Handler *make_handler () override;
 
   // Set of all connected clients
   ACE_Unbounded_Set<AIO_Input_Handler *> clients_;
 };
-
 
 class AIO_Client_Logging_Daemon : public ACE_Task<ACE_NULL_SYNCH> {
 protected:
@@ -61,9 +62,9 @@ protected:
 
 public:
   // Service Configurator hook methods.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini ();
-  virtual int svc ();
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int fini () override;
+  int svc () override;
 };
 
 /******************************************************/
@@ -76,7 +77,11 @@ AIO_Output_Handler::~AIO_Output_Handler () {
 
 int AIO_Output_Handler::put (ACE_Message_Block *mb,
                              ACE_Time_Value *timeout) {
-  if (can_write_) { start_write (mb); return 0; }
+  if (can_write_)
+    {
+      start_write (mb);
+      return 0;
+    }
   return putq (mb, timeout);
 }
 
@@ -87,27 +92,29 @@ void AIO_Output_Handler::open
   peer.set_option (SOL_SOCKET, SO_SNDBUF,
                    &bufsiz, sizeof bufsiz);
 
-  reader_.open (*this, new_handle, 0, proactor ());
-  writer_.open (*this, new_handle, 0, proactor ());
+  reader_.open (*this, new_handle, nullptr, proactor ());
+  writer_.open (*this, new_handle, nullptr, proactor ());
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_NEW (mb, ACE_Message_Block (1));
   reader_.read (*mb, 1);
   ACE_Sig_Action no_sigpipe ((ACE_SignalHandler) SIG_IGN);
-  no_sigpipe.register_action (SIGPIPE, 0);
-  can_write_ = 1;
-  start_write (0);
+  no_sigpipe.register_action (SIGPIPE, nullptr);
+  can_write_ = true;
+  start_write (nullptr);
 }
 
 void AIO_Output_Handler::start_write (ACE_Message_Block *mblk) {
-  if (mblk == 0) {
+  if (mblk == nullptr) {
     ACE_Time_Value nonblock (0);
     getq (mblk, &nonblock);
   }
-  if (mblk != 0) {
-    can_write_ = 0;
+  if (mblk != nullptr) {
+    can_write_ = false;
     if (writer_.write (*mblk, mblk->length ()) == -1)
+    {
       ungetq (mblk);
+    }
   }
 }
 
@@ -117,7 +124,7 @@ void AIO_Output_Handler::handle_read_stream
   writer_.cancel ();
   ACE_OS::closesocket (result.handle ());
   handle (ACE_INVALID_HANDLE);
-  can_write_ = 0;
+  can_write_ = false;
   CLD_CONNECTOR::instance ()->reconnect ();
 }
 
@@ -126,16 +133,26 @@ void AIO_Output_Handler::handle_write_stream
   ACE_Message_Block &mblk = result.message_block ();
   if (!result.success ()) {
     mblk.rd_ptr (mblk.base ());
-    ungetq (&mblk);
+    ungetq (std::addressof (mblk));
   }
   else {
     can_write_ = handle () == result.handle ();
     if (mblk.length () == 0) {
       mblk.release ();
-      if (can_write_) start_write ();
+      if (can_write_)
+      {
+        start_write ();
+      }
     }
-    else if (can_write_) start_write (&mblk);
-    else { mblk.rd_ptr (mblk.base ()); ungetq (&mblk); }
+    else if (can_write_)
+      {
+        start_write (std::addressof (mblk));
+      }
+    else
+      {
+        mblk.rd_ptr (mblk.base ());
+        ungetq (std::addressof (mblk));
+      }
   }
 }
 
@@ -144,48 +161,55 @@ void AIO_Output_Handler::handle_write_stream
 AIO_Input_Handler::~AIO_Input_Handler () {
   reader_.cancel ();
   ACE_OS::closesocket (handle ());
-  if (mblk_ != 0) mblk_->release ();
-  mblk_ = 0;
+  mblk_.reset ();
   acceptor_->remove (this);
 }
 
 void AIO_Input_Handler::open
   (ACE_HANDLE new_handle, ACE_Message_Block &) {
-  reader_.open (*this, new_handle, 0, proactor ());
-  ACE_NEW_NORETURN
-    (mblk_, ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE));
+  reader_.open (*this, new_handle, nullptr, proactor ());
+  ACE_Message_Block *message_block {};
+  ACE_NEW_NORETURN (message_block, ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE));
+  mblk_.reset (message_block);
   // Align the Message Block for a CDR stream
-  ACE_CDR::mb_align (mblk_);
+  ACE_CDR::mb_align (mblk_.get ());
   reader_.read (*mblk_, LOG_HEADER_SIZE);
 }
 
 void AIO_Input_Handler::handle_read_stream
     (const ACE_Asynch_Read_Stream::Result &result) {
   if (!result.success () || result.bytes_transferred () == 0)
-    delete this;
+    {
+      delete this;
+    }
   else if (result.bytes_transferred () < result.bytes_to_read ())
-    reader_.read (*mblk_, result.bytes_to_read () -
-                  result.bytes_transferred ());
+    {
+      reader_.read (*mblk_, result.bytes_to_read () -
+                    result.bytes_transferred ());
+    }
   else if (mblk_->length () == LOG_HEADER_SIZE) {
-    ACE_InputCDR cdr (mblk_);
+    ACE_InputCDR cdr (mblk_.get ());
 
-    ACE_CDR::Boolean byte_order;
+    ACE_CDR::Boolean byte_order {};
     cdr >> ACE_InputCDR::to_boolean (byte_order);
     cdr.reset_byte_order (byte_order);
 
-    ACE_CDR::ULong length;
+    ACE_CDR::ULong length {};
     cdr >> length;
 
     mblk_->size (length + LOG_HEADER_SIZE);
     reader_.read (*mblk_, length);
   }
   else {
-    if (OUTPUT_HANDLER::instance ()->put (mblk_) == -1)
-      mblk_->release ();
+    ACE_Message_Block *message_block = mblk_.release ();
+    if (OUTPUT_HANDLER::instance ()->put (message_block) == -1)
+    {
+      message_block->release ();
+    }
 
-    ACE_NEW_NORETURN
-      (mblk_, ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE));
-    ACE_CDR::mb_align (mblk_);
+    ACE_NEW_NORETURN (message_block, ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE));
+    mblk_.reset (message_block);
+    ACE_CDR::mb_align (mblk_.get ());
     reader_.read (*mblk_, LOG_HEADER_SIZE);
   }
 }
@@ -197,14 +221,19 @@ void AIO_CLD_Acceptor::close () {
     iter (clients_.begin ());
   AIO_Input_Handler **ih;
   for (; iter.next (ih); ++iter)
+  {
     delete *ih;
+  }
 }
 
 AIO_Input_Handler * AIO_CLD_Acceptor::make_handler () {
   AIO_Input_Handler *ih;
-  ACE_NEW_RETURN (ih, AIO_Input_Handler (this), 0);
+  ACE_NEW_RETURN (ih, AIO_Input_Handler (this), nullptr);
   if (clients_.insert (ih) == -1)
-    { delete ih; return 0; }
+    {
+      delete ih;
+      return nullptr;
+    }
   return ih;
 }
 
@@ -217,7 +246,6 @@ AIO_Input_Handler * AIO_CLD_Acceptor::make_handler () {
 #  define CLD_KEY_FILENAME "cld-key.pem"
 #endif /* !CLD_KEY_FILENAME */
 
-
 int AIO_CLD_Connector::validate_connection
   (const ACE_Asynch_Connect::Result& result,
    const ACE_INET_Addr &remote, const ACE_INET_Addr&) {
@@ -226,16 +254,21 @@ int AIO_CLD_Connector::validate_connection
     ACE_Time_Value delay (retry_delay_);
     retry_delay_ *= 2;
     if (retry_delay_ > MAX_RETRY_DELAY)
+    {
       retry_delay_ = MAX_RETRY_DELAY;
-    proactor ()->schedule_timer (*this, 0, delay);
+    }
+    proactor ()->schedule_timer (*this, nullptr, delay);
     return -1;
   }
   retry_delay_ = INITIAL_RETRY_DELAY;
 
-  if (ssl_ctx_ == 0) {
+  if (ssl_ctx_ == nullptr) {
     OpenSSL_add_ssl_algorithms ();
     ssl_ctx_ = SSL_CTX_new (SSLv23_client_method ());
-    if (ssl_ctx_ == 0) return -1;
+    if (ssl_ctx_ == nullptr)
+    {
+      return -1;
+    }
 
     if (SSL_CTX_use_certificate_file (ssl_ctx_,
                                       CLD_CERTIFICATE_FILENAME,
@@ -245,12 +278,12 @@ int AIO_CLD_Connector::validate_connection
                                        SSL_FILETYPE_PEM) <= 0
        || !SSL_CTX_check_private_key (ssl_ctx_)) {
       SSL_CTX_free (ssl_ctx_);
-      ssl_ctx_ = 0;
+      ssl_ctx_ = nullptr;
       return -1;
     }
     ssl_ = SSL_new (ssl_ctx_);
-    if (ssl_ == 0) {
-      SSL_CTX_free (ssl_ctx_); ssl_ctx_ = 0;
+    if (ssl_ == nullptr) {
+      SSL_CTX_free (ssl_ctx_); ssl_ctx_ = nullptr;
       return -1;
     }
   }
@@ -263,10 +296,13 @@ int AIO_CLD_Connector::validate_connection
 #else
   SSL_set_fd (ssl_, result.connect_handle ());
 #endif /* ACE_WIN32 */
-  SSL_set_verify (ssl_, SSL_VERIFY_PEER, 0);
+  SSL_set_verify (ssl_, SSL_VERIFY_PEER, nullptr);
 
   if (SSL_connect (ssl_) == -1
-      || SSL_shutdown (ssl_) == -1) return -1;
+      || SSL_shutdown (ssl_) == -1)
+  {
+    return -1;
+  }
   return 0;
 }
 
@@ -293,6 +329,7 @@ int AIO_Client_Logging_Daemon::init
                        ACE_Get_Opt::ARG_REQUIRED);
 
   for (int c; (c = get_opt ()) != -1;)
+  {
     switch (c) {
     case 'p': // Client logging daemon acceptor port number.
       cld_port = static_cast<u_short> (ACE_OS::atoi (get_opt.opt_arg ()));
@@ -305,10 +342,13 @@ int AIO_Client_Logging_Daemon::init
         (sld_host, get_opt.opt_arg (), MAXHOSTNAMELEN);
       break;
     }
+  }
 
   if (cld_addr_.set (cld_port) == -1 ||
       sld_addr_.set (sld_port, sld_host) == -1)
+  {
     return -1;
+  }
   return activate ();
 }
 
@@ -319,9 +359,14 @@ int AIO_Client_Logging_Daemon::fini () {
 }
 
 int AIO_Client_Logging_Daemon::svc () {
-  if (acceptor_.open (cld_addr_) == -1) return -1;
+  if (acceptor_.open (cld_addr_) == -1)
+  {
+    return -1;
+  }
   if (CLD_CONNECTOR::instance ()->connect (sld_addr_) == 0)
+  {
     ACE_Proactor::instance ()->proactor_run_event_loop ();
+  }
   acceptor_.close ();
   CLD_CONNECTOR::close ();
   OUTPUT_HANDLER::close ();
@@ -338,8 +383,8 @@ int AIO_Client_Logging_Daemon::svc () {
 class AIO_Client_Logging_Daemon : public ACE_Task<ACE_NULL_SYNCH> {
 public:
   // Service Configurator hook methods.
-  virtual int init (int, ACE_TCHAR *[]);
-  virtual int fini ();
+  int init (int, ACE_TCHAR *[]) override;
+  int fini () override;
 };
 
 int AIO_Client_Logging_Daemon::init (int, ACE_TCHAR *[]) {
@@ -354,5 +399,4 @@ int AIO_Client_Logging_Daemon::fini () {
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
 
 ACE_FACTORY_DEFINE (AIO_CLD, AIO_Client_Logging_Daemon)
-
 

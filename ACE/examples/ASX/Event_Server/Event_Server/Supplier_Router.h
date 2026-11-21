@@ -13,58 +13,48 @@
 #include "ace/Svc_Handler.h"
 #include "Peer_Router.h"
 
+/**
+ * @class Supplier_Router
+ * @brief Routes messages between Suppliers and the Event Server ACE_Stream.
+ *
+ * The Supplier_Router normally sits below the stream and sends messages from
+ * Suppliers upstream to Consumers connected to the Consumer_Router. On the
+ * reader side, it forwards all messages up the stream. On the writer side, it
+ * queues outgoing messages and sends them on a separate thread. This path is
+ * expected to be uncommon, so the separate thread avoids taxing the main
+ * thread that processes normal messages. ACE_Stream calls the task hooks
+ * through base-class pointers.
+ */
 class Supplier_Router : public Peer_Router
 {
-  // = TITLE
-  //     Provides the interface between one or more Suppliers and the
-  //     Event Server ACE_Stream.
-  //
-  // = DESCRIPTION
-  //     This class normally sits on "bottom" of the Stream and sends
-  //     all messages coming from Suppliers via its "write" <Task>
-  //     "upstream" to all the Consumers connected to the
-  //     <Consumer_Router>.  Normally, the messages flow up the
-  //     stream to <Consumer_Router>s.  However, if Consumers
-  //     transmit data to the <Consumer_Router>, we dutifully push it
-  //     out to the Suppliers via the <Supplier_Router>.
-  //
-  //     When used on the "reader" side of a Stream, the
-  //     <Supplier_Router> simply forwards all messages up the stream.
-  //     When used on the "writer" side, the <Supplier_Router> queues
-  //     up outgoing messages to suppliers and sends them in a
-  //     separate thread.  The reason for this is that it's really an
-  //     "error" for a <Supplier_Router> to send messages to
-  //     Suppliers, so we don't expect this to happen very much.  When
-  //     it does we use a separate thread to avoid taxing the main
-  //     thread, which processes "normal" messages.
-  //
-  //     All of these methods are called via base class pointers by
-  //     the <ACE_Stream> apparatus.  Therefore, we can put them in
-  //     the protected section.
 public:
-  Supplier_Router (Peer_Router_Context *prc);
-  // Initialization method.
+  /// Construct a router using the shared peer-router context.
+  explicit Supplier_Router (Peer_Router_Context *prc);
+  Supplier_Router (Supplier_Router const &) = delete;
+  Supplier_Router (Supplier_Router &&) = delete;
+  Supplier_Router &operator= (Supplier_Router const &) = delete;
+  Supplier_Router &operator= (Supplier_Router &&) = delete;
 
 protected:
-  // = ACE_Task hooks.
+  /// @name ACE_Task hooks
+  /// @{
 
-  virtual int open (void *a = 0);
-  // Called by the Stream to initialize the router.
+  /// Initialize the router when it is added to the stream.
+  int open (void *a = nullptr) override;
 
-  virtual int close (u_long flags = 0);
-  // Called by the Stream to shutdown the router.
+  /// Shut down the router when it is removed from the stream.
+  int close (u_long flags = 0) override;
 
-  virtual int put (ACE_Message_Block *msg, ACE_Time_Value * = 0);
-  // Called by the <SUPPLIER_HANDLER> to pass a message to the Router.
-  // The Router queues up this message, which is then processed in the
-  // <svc> method in a separate thread.
+  /// Queue a message received from a peer for forwarding up the stream.
+  int put (ACE_Message_Block *msg, ACE_Time_Value * = nullptr) override;
 
-  virtual int svc ();
-  // Runs in a separate thread to dequeue messages and pass them up
-  // the stream.
+  /// Dequeue messages and pass them up the stream.
+  int svc () override;
 
-  virtual int info (ACE_TCHAR **info_string, size_t length) const;
-  // Dynamic linking hook.
+  /// @}
+
+  /// Dynamic linking hook.
+  int info (ACE_TCHAR **info_string, size_t length) const override;
 };
 
 #endif /* _SUPPLIER_ROUTER_H */

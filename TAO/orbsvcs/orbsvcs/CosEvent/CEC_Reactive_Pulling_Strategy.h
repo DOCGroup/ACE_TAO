@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CEC_REACTIVE_PULLING_STRATEGY_H
 #define TAO_CEC_REACTIVE_PULLING_STRATEGY_H
 
@@ -26,7 +25,6 @@
 #include "tao/PolicyC.h"
 
 #include "ace/Event_Handler.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -48,15 +46,14 @@ class TAO_CEC_Reactive_Pulling_Strategy;
 class TAO_Event_Serv_Export TAO_CEC_Pulling_Strategy_Adapter : public ACE_Event_Handler
 {
 public:
-  /// Constructor
-  TAO_CEC_Pulling_Strategy_Adapter (TAO_CEC_Reactive_Pulling_Strategy *adaptee);
+  explicit TAO_CEC_Pulling_Strategy_Adapter (TAO_CEC_Reactive_Pulling_Strategy *adaptee);
 
   TAO_CEC_Pulling_Strategy_Adapter (TAO_CEC_Pulling_Strategy_Adapter const &) = delete;
   TAO_CEC_Pulling_Strategy_Adapter (TAO_CEC_Pulling_Strategy_Adapter &&) = delete;
   TAO_CEC_Pulling_Strategy_Adapter &operator= (TAO_CEC_Pulling_Strategy_Adapter const &) = delete;
   TAO_CEC_Pulling_Strategy_Adapter &operator= (TAO_CEC_Pulling_Strategy_Adapter &&) = delete;
 
-  // = Documented in ACE_Event_Handler.
+  /// Documented in ACE_Event_Handler.
   int handle_timeout (ACE_Time_Value const &tv,
                       void const *arg = nullptr) override;
 
@@ -80,8 +77,8 @@ class TAO_Event_Serv_Export TAO_CEC_Reactive_Pulling_Strategy : public TAO_CEC_P
 public:
   /// The scheduler is used to find the range of priorities and similar
   /// info.
-  TAO_CEC_Reactive_Pulling_Strategy (const ACE_Time_Value &rate,
-                                     const ACE_Time_Value &relative_timeout,
+  TAO_CEC_Reactive_Pulling_Strategy (ACE_Time_Value const &rate,
+                                     ACE_Time_Value const &relative_timeout,
                                      TAO_CEC_EventChannel *event_channel,
                                      CORBA::ORB_ptr orb);
 
@@ -92,13 +89,15 @@ public:
   TAO_CEC_Reactive_Pulling_Strategy &operator= (TAO_CEC_Reactive_Pulling_Strategy &&) = delete;
 
   /// Receive the timeout from the adapter
-  void handle_timeout (const ACE_Time_Value &tv,
-                       const void* arg);
+  void handle_timeout (ACE_Time_Value const &tv,
+                       void const *arg);
 
-  // = The CEC_Pulling_Strategy methods.
+  /// @name The CEC_Pulling_Strategy methods
+  /// @{
   void activate () override;
   void shutdown () override;
 
+  /// @}
 private:
   /// The Adapter for the reactor events
   TAO_CEC_Pulling_Strategy_Adapter adapter_;

@@ -37,15 +37,14 @@ struct TAO_Message_Semantics
         TAO_ASYNCH_POLL
       };
 
-    TAO_Message_Semantics ()
-      : type_ (TAO_TWOWAY_REQUEST), mode_ (TAO_SYNCH_MODE) {}
-    TAO_Message_Semantics (Type type)
-      : type_ (type), mode_ (TAO_SYNCH_MODE) {}
+    TAO_Message_Semantics () = default;
+    explicit TAO_Message_Semantics (Type type)
+      : type_ (type) {}
     TAO_Message_Semantics (Type type, Mode mode)
       : type_ (type), mode_ (mode) {}
 
-    Type type_;
-    Mode mode_;
+    Type type_ {TAO_TWOWAY_REQUEST};
+    Mode mode_ {TAO_SYNCH_MODE};
   };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -7,8 +7,7 @@ Memory_Growth::Memory_Growth (CORBA::ORB_ptr orb)
 }
 
 void
-Memory_Growth::send_objref (const Test::PayLoad & /*p*/
-                            )
+Memory_Growth::send_objref (const Test::PayLoad & /*p*/)
 {
   ACE_Manual_Event me;
 

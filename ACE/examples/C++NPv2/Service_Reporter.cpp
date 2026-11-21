@@ -24,10 +24,13 @@ int Service_Reporter::init (int argc, ACE_TCHAR *argv[]) {
                        ACE_Get_Opt::ARG_REQUIRED);
 
   for (int c; (c = get_opt ()) != -1; )
-    switch (c) {
-    case 'p':
-      local_addr.set_port_number
-        (ACE_OS::atoi (get_opt.opt_arg ()));
+    {
+      switch (c)
+        {
+        case 'p':
+          local_addr.set_port_number
+            (ACE_OS::atoi (get_opt.opt_arg ()));
+        }
     }
 
   acceptor_.open (local_addr);
@@ -36,13 +39,12 @@ int Service_Reporter::init (int argc, ACE_TCHAR *argv[]) {
             ACE_Event_Handler::ACCEPT_MASK);
 }
 
-
 int Service_Reporter::handle_input (ACE_HANDLE) {
   ACE_SOCK_Stream peer_stream;
   acceptor_.accept (peer_stream);
 
   ACE_Service_Repository_Iterator iterator
-    (*ACE_Service_Repository::instance (), 0);
+    (*ACE_Service_Repository::instance (), false);
 
   for (const ACE_Service_Type *st;
        iterator.next (st) != 0;
@@ -62,7 +64,7 @@ int Service_Reporter::handle_input (ACE_HANDLE) {
       ACE_Utils::truncate_cast<u_long> (
         ACE_OS::strlen (state) * sizeof (ACE_TCHAR));
 
-    ACE_TCHAR *report = 0;   // Ask info() to allocate buffer
+    ACE_TCHAR *report {};   // Ask info() to allocate buffer
     int len = st->type ()->info (&report, 0);
     iov[2].iov_base = static_cast<ACE_TCHAR *> (report);
 
@@ -76,7 +78,6 @@ int Service_Reporter::handle_input (ACE_HANDLE) {
   return 0;
 }
 
-
 int Service_Reporter::info (ACE_TCHAR **bufferp,
                             size_t length) const {
   ACE_INET_Addr local_addr;
@@ -87,21 +88,23 @@ int Service_Reporter::info (ACE_TCHAR **bufferp,
     (buf, ACE_TEXT ("%hu"), local_addr.get_port_number ());
   ACE_OS::strcat
     (buf, ACE_TEXT ("/tcp # lists services in daemon\n"));
-  if (*bufferp == 0)
-    *bufferp = ACE::strnew (buf);
+  if (*bufferp == nullptr)
+    {
+      *bufferp = ACE::strnew (buf);
+    }
   else
+  {
     ACE_OS::strncpy (*bufferp, buf, length);
+  }
 
   return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (*bufferp));
 }
-
 
 int Service_Reporter::suspend ()
 { return reactor ()->suspend_handler (this); }
 
 int Service_Reporter::resume ()
 { return reactor ()->resume_handler (this); }
-
 
 int Service_Reporter::fini () {
   reactor ()->remove_handler

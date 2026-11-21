@@ -1,4 +1,5 @@
 #include "ace/FILE_Addr.h"
+#include <memory>
 #include "ace/Lib_Find.h"
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_stdlib.h"
@@ -50,7 +51,9 @@ ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
 #  endif /* ACE_DEFAULT_TEMP_FILE */
 
       if (ACE_OS::mktemp (this->filename_) == nullptr)
+      {
         return -1;
+      }
       this->base_set (AF_FILE,
                       static_cast<int> (ACE_OS::strlen (this->filename_) + 1));
 #endif /* ACE_DISABLE_MKTEMP */
@@ -63,8 +66,6 @@ ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
     }
   return 0;
 }
-
-// Copy constructor.
 
 ACE_FILE_Addr::ACE_FILE_Addr (const ACE_FILE_Addr &sa)
   : ACE_Addr (AF_FILE, sizeof this->filename_)
@@ -86,8 +87,10 @@ ACE_FILE_Addr::set (const ACE_TCHAR *filename)
 ACE_FILE_Addr &
 ACE_FILE_Addr::operator= (const ACE_FILE_Addr &sa)
 {
-  if (this != &sa)
+  if (this != std::addressof (sa))
+  {
     this->set (sa);
+  }
   return *this;
 }
 
@@ -110,7 +113,8 @@ ACE_FILE_Addr::addr_to_string (ACE_TCHAR *s, size_t len) const
 void *
 ACE_FILE_Addr::get_addr () const
 {
-  return (void *)&this->filename_;
+  return const_cast<void *> (
+    static_cast<void const *> (std::addressof (this->filename_)));
 }
 
 void

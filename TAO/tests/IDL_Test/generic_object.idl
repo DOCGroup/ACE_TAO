@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    generic_object.idl
  *
@@ -11,11 +10,9 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
  */
-//=============================================================================
 
-
-// The IDL compiler deals with these in a completely different way
-// that it deals with a derived object, i.e., an interface.
+/// The IDL compiler deals with these in a completely different way
+/// that it deals with a derived object, i.e., an interface.
 
 enum ObjectType
 {
@@ -29,7 +26,7 @@ union Selecter switch (ObjectType)
   case OT_THAT: Object that_object;
 };
 
-// Test stub code for generic object parameters.
+/// Test stub code for generic object parameters.
 interface generic
 {
   Object op (in Object inarg,

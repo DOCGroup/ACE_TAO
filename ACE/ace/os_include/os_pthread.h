@@ -137,9 +137,9 @@
    typedef pthread_t ACE_hthread_t;
    typedef pthread_t ACE_thread_t;
 
-   // native TSS key type
+   /// Native TSS key type.
    typedef pthread_key_t ACE_OS_thread_key_t;
-   // TSS key type to be used by application
+   /// TSS key type to be used by applications.
 #  if defined (ACE_HAS_TSS_EMULATION)
      typedef u_int ACE_thread_key_t;
 #  else  /* ! ACE_HAS_TSS_EMULATION */

@@ -36,7 +36,6 @@ ACE_SOCK_SEQPACK_Connector::shared_open (ACE_SOCK_SEQPACK_Association &new_assoc
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::shared_open");
 
-
   // Only open a new socket if we don't already have a valid handle.
   if (new_association.get_handle () == ACE_INVALID_HANDLE &&
 #if defined (ACE_HAS_LKSCTP)
@@ -47,9 +46,13 @@ ACE_SOCK_SEQPACK_Connector::shared_open (ACE_SOCK_SEQPACK_Association &new_assoc
                                protocol_family,
                                protocol,
                                reuse_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 int
@@ -76,9 +79,13 @@ ACE_SOCK_SEQPACK_Connector::shared_open (ACE_SOCK_SEQPACK_Association &new_assoc
                                g,
                                flags,
                                reuse_addr) == -1)
+    {
       return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 int
@@ -107,9 +114,13 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
   // Enable non-blocking, if required.
   if (timeout != nullptr
       && new_association.enable (ACE_NONBLOCK) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 // Multihomed version of same
@@ -129,21 +140,23 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
       // Create an array of sockaddr_in to hold the underlying
       // representations of the primary and secondary
       // addresses.
-      sockaddr_in*  local_inet_addrs = nullptr;
+      sockaddr_in*  local_inet_addrs {};
 #if defined(ACE_HAS_ALLOC_HOOKS)
       ACE_ALLOCATOR_NORETURN (local_inet_addrs, static_cast<sockaddr_in*>(ACE_Allocator::instance()->malloc(sizeof(sockaddr_in) * (num_addresses))));
 #else
       ACE_NEW_NORETURN (local_inet_addrs, sockaddr_in[num_addresses]);
 #endif
       if (!local_inet_addrs)
+      {
         return -1;
+      }
 
       // Populate the array by invoking the get_addresses method on
       // the Multihomed_INET_Addr
       local_sap.get_addresses(local_inet_addrs, num_addresses);
 
 #if defined (ACE_HAS_LKSCTP)
-      sockaddr_in *local_sockaddr = nullptr;
+      sockaddr_in *local_sockaddr {};
       sockaddr_in portst;
       int sn = sizeof(sockaddr);
 
@@ -175,17 +188,15 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
         }
 
         // set the local port # assigned by the os to every secondary addr
-        for (size_t i = 1; i < num_addresses; i++)
+        for (size_t i = 1; i < num_addresses; ++i)
         {
           local_inet_addrs[i].sin_port = portst.sin_port;
         }
 
         // copy all of the secondary addrs into a sockaddr structure
-        for (size_t i = 0; i < num_addresses - 1; i++)
+        for (size_t i = 0; i < num_addresses - 1; ++i)
         {
-          ACE_OS::memcpy(&(local_sockaddr[i]),
-                         &(local_inet_addrs[i + 1]),
-                         sizeof(sockaddr_in));
+          ACE_OS::memcpy(&(local_sockaddr[i]), &(local_inet_addrs[i + 1]), sizeof(sockaddr_in));
         }
 
         // bind other ifaces
@@ -226,9 +237,13 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
   // Enable non-blocking, if required.
   if (timeout != nullptr
       && new_association.enable (ACE_NONBLOCK) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 int
@@ -247,30 +262,39 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_finish (ACE_SOCK_SEQPACK_Association 
         {
           // This expression checks if we were polling.
           if (*timeout == ACE_Time_Value::zero)
-            error = EWOULDBLOCK;
+            {
+              error = EWOULDBLOCK;
+            }
           // Wait synchronously using timeout.
           else if (this->complete (new_association,
                                    nullptr,
                                    timeout) == -1)
-            error = errno;
+            {
+              error = errno;
+            }
           else
-            return 0;
+            {
+              return 0;
+            }
         }
     }
 
   // EISCONN is treated specially since this routine may be used to
   // check if we are already connected.
   if (result != -1 || error == EISCONN)
-    // Start out with non-blocking disabled on the <new_association>.
-    new_association.disable (ACE_NONBLOCK);
+    {
+      // Start out with non-blocking disabled on the <new_association>.
+      new_association.disable (ACE_NONBLOCK);
+    }
   else if (!(error == EWOULDBLOCK || error == ETIMEDOUT))
-    new_association.close ();
+    {
+      new_association.close ();
+    }
 
   return result;
 }
 
 // Actively connect and produce a new ACE_SOCK_SEQPACK_Association if things go well...
-
 
 int
 ACE_SOCK_SEQPACK_Connector::connect (ACE_SOCK_SEQPACK_Association &new_association,
@@ -288,11 +312,15 @@ ACE_SOCK_SEQPACK_Connector::connect (ACE_SOCK_SEQPACK_Association &new_associati
                          remote_sap.get_type (),
                          protocol,
                          reuse_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (this->shared_connect_start (new_association,
                                        timeout,
                                        local_sap) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   int result = ACE_OS::connect (new_association.get_handle (),
                                 reinterpret_cast<sockaddr *> (remote_sap.get_addr ()),
@@ -320,11 +348,15 @@ ACE_SOCK_SEQPACK_Connector::connect (ACE_SOCK_SEQPACK_Association &new_associati
                          remote_sap.get_type (),
                          protocol,
                          reuse_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (this->shared_connect_start (new_association,
                                        timeout,
                                        local_sap) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   int result = ACE_OS::connect (new_association.get_handle (),
                                 reinterpret_cast<sockaddr *> (remote_sap.get_addr ()),
@@ -410,9 +442,11 @@ ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Associa
                      protocol) == -1
       && timeout != nullptr
       && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector")));
+    }
 }
 
 // Multihomed version of same
@@ -437,9 +471,11 @@ ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Associa
                      protocol) == -1
       && timeout != nullptr
       && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector")));
+    }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

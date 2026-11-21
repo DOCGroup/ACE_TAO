@@ -36,6 +36,8 @@
 #include "ace/Sock_Connect.h"
 #include "ace/os_include/netinet/os_tcp.h"
 
+#include <cstring>
+
 #include "ace/Atomic_Op.h"
 #include "ace/Synch_Traits.h"
 
@@ -62,7 +64,7 @@ static size_t max_aio_operations = 0;
 static int both = 0;
 
 // Host that we're connecting to.
-static const ACE_TCHAR *host = nullptr;
+static const ACE_TCHAR *host {};
 
 // number of Client instances
 static int clients = 1;
@@ -110,12 +112,16 @@ disable_signal (int sigmin, int sigmax)
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
   sigset_t signal_set;
   if (ACE_OS::sigemptyset (&signal_set) == - 1)
+  {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Error: (%P|%t):%p\n"),
                 ACE_TEXT ("sigemptyset failed")));
+  }
 
-  for (int i = sigmin; i <= sigmax; i++)
+  for (int i = sigmin; i <= sigmax; ++i)
+  {
     ACE_OS::sigaddset (&signal_set, i);
+  }
 
   // Put the <signal_set>.
 # if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
@@ -125,10 +131,12 @@ disable_signal (int sigmin, int sigmax)
 # else
   if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, nullptr) != 0)
 # endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Error: (%P|%t): %p\n"),
                        ACE_TEXT ("SIG_BLOCK failed")),
                       -1);
+  }
 #else
   ACE_UNUSED_ARG (sigmin);
   ACE_UNUSED_ARG (sigmax);
@@ -199,7 +207,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
   ACE_UNUSED_ARG (type_proactor);
   ACE_UNUSED_ARG (max_op);
 
-  ACE_WIN32_Proactor *proactor_impl = 0;
+  ACE_WIN32_Proactor *proactor_impl {};
 
   ACE_NEW_RETURN (proactor_impl,
                   ACE_WIN32_Proactor,
@@ -210,7 +218,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
 
 #elif defined (ACE_HAS_AIO_CALLS)
 
-  ACE_POSIX_Proactor * proactor_impl = nullptr;
+  ACE_POSIX_Proactor * proactor_impl {};
 
   switch (type_proactor)
     {
@@ -282,25 +290,28 @@ MyTask::start (int num_threads,
                size_t max_op)
 {
   if (this->create_proactor (type_proactor, max_op) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p.\n"),
                        ACE_TEXT ("unable to create proactor")),
                       -1);
+  }
 
   if (this->activate (THR_NEW_LWP, num_threads) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p.\n"),
                        ACE_TEXT ("unable to activate thread pool")),
                       -1);
+  }
 
-  for (; num_threads > 0; num_threads--)
+  for (; num_threads > 0; --num_threads)
     {
       sem_.acquire ();
     }
 
   return 0;
 }
-
 
 int
 MyTask::stop ()
@@ -314,9 +325,11 @@ MyTask::stop ()
     }
 
   if (this->wait () == -1)
+  {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p.\n"),
                 ACE_TEXT ("unable to stop thread pool")));
+  }
 
   return 0;
 }
@@ -502,9 +515,13 @@ TestData::TestData ()
 {
   int i;
   for (i = 0; i < MAX_SERVERS; ++i)
+  {
     this->server_list_[i] = nullptr;
+  }
   for (i = 0; i < MAX_CLIENTS; ++i)
+  {
     this->client_list_[i] = nullptr;
+  }
 }
 
 bool
@@ -516,7 +533,9 @@ TestData::testing_done ()
   int clt_dn = this->clients_.sessions_down_.value ();
 
   if (svr_up == 0 && clt_up == 0)      // No connections up yet
+  {
     return false;
+  }
 
   return (svr_dn >= svr_up && clt_dn >= clt_up);
 }
@@ -586,16 +605,21 @@ TestData::server_done (Server *s)
       if (this->server_list_[i] == s)
         {
           if (s->id () != i)
+          {
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("Server %d is pos %d in list\n"),
                         s->id (),
                         i));
+          }
           this->server_list_[i] = nullptr;
           break;
         }
     }
   if (i >= MAX_SERVERS)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Server %@ done but not listed\n"), s));
+  {
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Server %@ done but not listed\n"),
+                static_cast<void *> (s)));
+  }
 
   return;
 }
@@ -621,16 +645,21 @@ TestData::client_done (Client *c)
       if (this->client_list_[i] == c)
         {
           if (c->id () != i)
+          {
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("Client %d is pos %d in list\n"),
                         c->id (),
                         i));
+          }
           this->client_list_[i] = nullptr;
           break;
         }
     }
   if (i >= MAX_CLIENTS)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Client %@ done but not listed\n"), c));
+  {
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Client %@ done but not listed\n"),
+                static_cast<void *> (c)));
+  }
 
   return;
 }
@@ -647,13 +676,17 @@ TestData::stop_all ()
     for (i = 0; i < MAX_CLIENTS; ++i)
       {
         if (this->client_list_[i] != nullptr)
+        {
           this->client_list_[i]->cancel ();
+        }
       }
 
     for (i = 0; i < MAX_SERVERS; ++i)
       {
         if (this->server_list_[i] != nullptr)
+        {
           this->server_list_[i]->cancel ();
+        }
       }
   }
   {
@@ -661,13 +694,17 @@ TestData::stop_all ()
     for (i = 0; i < MAX_CLIENTS; ++i)
       {
         if (this->client_list_[i] != nullptr)
+        {
           delete this->client_list_[i];
+        }
       }
 
     for (i = 0; i < MAX_SERVERS; ++i)
       {
         if (this->server_list_[i] != nullptr)
+        {
           delete this->server_list_[i];
+        }
       }
   }
 }
@@ -717,8 +754,10 @@ TestData::report ()
       this->clients_.r_cnt_.value () == 0 ||
       this->servers_.w_cnt_.value () == 0 ||
       this->servers_.r_cnt_.value () == 0   )
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("It appears that this test didn't ")
                 ACE_TEXT ("really do anything. Something is very wrong.\n")));
+  }
 }
 
 // Session set-up struct.
@@ -770,13 +809,17 @@ Master::Master (TestData *tester, const ACE_INET_Addr &recv_addr, int expected)
     recv_in_progress_ (false)
 {
   if (this->sock_.open (recv_addr) == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Master socket %p\n"), ACE_TEXT ("open")));
+  }
   else
     {
       if (this->rd_.open (*this, this->sock_.get_handle ()) == -1)
+      {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Master reader %p\n"),
                     ACE_TEXT ("open")));
+      }
       this->mb_ = new ACE_Message_Block (sizeof (Session_Data));
       start_recv ();
     }
@@ -785,7 +828,9 @@ Master::Master (TestData *tester, const ACE_INET_Addr &recv_addr, int expected)
 Master::~Master ()
 {
   if (this->recv_in_progress_)
+  {
     this->rd_.cancel ();
+  }
   this->sock_.close ();
 
   if (this->mb_ != nullptr)
@@ -802,11 +847,13 @@ Master::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
   if (result.success ())
     {
       if (result.bytes_transferred () != sizeof (Session_Data))
+      {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%t) Master session data expected %B bytes; ")
                     ACE_TEXT ("received %B\n"),
                     sizeof (Session_Data),
                     result.bytes_transferred ()));
+      }
       else
         {
           ACE_Message_Block *mb = result.message_block ();
@@ -883,7 +930,9 @@ Master::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
         prio = LM_DEBUG;
 #else
       if (result.error () == ECANCELED)
+      {
         prio = LM_DEBUG;
+      }
 #endif /* ACE_WIN32 */
       // Multiple steps to log the error without squashing errno.
       ACE_LOG_MSG->conditional_set (__FILE__,
@@ -895,7 +944,9 @@ Master::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
                         ACE_TEXT ("recv"));
       // If canceled, don't try to restart.
       if (prio == LM_DEBUG)
+      {
         return;
+      }
     }
   this->start_recv ();
 }
@@ -904,14 +955,20 @@ void
 Master::start_recv ()
 {
   if (this->mb_ == nullptr)
+  {
     return;
+  }
 
   size_t unused = 0;
   this->mb_->reset ();
   if (this->rd_.recv (this->mb_, unused, 0) == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) Master %p\n"), ACE_TEXT ("recv")));
+  }
   else
+  {
     this->recv_in_progress_ = true;
+  }
 }
 
 // ***************************************************
@@ -942,11 +999,13 @@ Server::~Server ()
               this->total_w_, this->total_snd_,
               this->total_r_, this->total_rcv_));
   if (this->io_count_ != 0)
+  {
     ACE_ERROR ((LM_WARNING,
                 ACE_TEXT ("(%t) Server %d deleted with ")
                 ACE_TEXT ("%d I/O outstanding\n"),
                 this->id_,
                 this->io_count_));
+  }
 
   // This test bounces data back and forth between Clients and Servers.
   // Therefore, if there was significantly more data in one direction, that's
@@ -955,26 +1014,40 @@ Server::~Server ()
   if (this->total_snd_ > this->total_rcv_)
     {
       if (this->total_rcv_ == 0)
+      {
         issue_data_warning = 1;
+      }
       else if (this->total_snd_ / this->total_rcv_ > 2)
+      {
         issue_data_warning = 1;
+      }
     }
   else
     {
       if (this->total_snd_ == 0)
+      {
         issue_data_warning = 1;
+      }
       else if (this->total_rcv_ / this->total_snd_ > 2)
+      {
         issue_data_warning = 1;
+      }
     }
   if (issue_data_warning)
+  {
     ACE_DEBUG ((LM_WARNING,
                 ACE_TEXT ("(%t) Above byte counts look odd; need review\n")));
+  }
 
   if (this->tester_ != nullptr)
+  {
     this->tester_->server_done (this);
+  }
 
   if (this->handle () != ACE_INVALID_HANDLE)
+  {
     ACE_OS::closesocket (this->handle ());
+  }
 
   this->id_ = -1;
   this->handle (ACE_INVALID_HANDLE);
@@ -1003,19 +1076,27 @@ Server::go (ACE_HANDLE handle, const ACE_INET_Addr &client)
     ACE_GUARD (ACE_SYNCH_MUTEX, monitor, this->lock_);
 
     if (this->ws_.open (*this, this->handle ()) == -1)
+    {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%t) %p\n"),
                   ACE_TEXT ("Server::ACE_Asynch_Write_Dgram::open")));
+    }
     else if (this->rs_.open (*this, this->handle ()) == -1)
+    {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%t) %p\n"),
                   ACE_TEXT ("Server::ACE_Asynch_Read_Dgram::open")));
+    }
     else
+    {
       this->initiate_read ();
+    }
   }
 
   if (this->io_count_ > 0)
+  {
     return;
+  }
 
   delete this;     // Error setting up I/O factories
 }
@@ -1024,9 +1105,11 @@ int
 Server::initiate_read ()
 {
   if (this->flg_cancel_ || this->handle () == ACE_INVALID_HANDLE)
+  {
     return -1;
+  }
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (1024), //BUFSIZ + 1),
                   -1);
@@ -1043,8 +1126,8 @@ Server::initiate_read ()
                         -1);
     }
 
-  this->io_count_++;
-  this->total_r_++;
+  ++this->io_count_;
+  ++this->total_r_;
   return 0;
 }
 
@@ -1076,8 +1159,8 @@ Server::initiate_write (ACE_Message_Block *mb, size_t nbytes)
                        -1);
     }
 
-  this->io_count_++;
-  this->total_w_++;
+  ++this->io_count_;
+  ++this->total_w_;
   return 0;
 }
 
@@ -1104,7 +1187,7 @@ Server::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
                     ACE_TEXT ("bytes_to_read"),
                     result.bytes_to_read ()));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %d\n"),
+                    ACE_TEXT ("%s = %H\n"),
                     ACE_TEXT ("handle"),
                     result.handle ()));
         ACE_DEBUG ((LM_DEBUG,
@@ -1114,7 +1197,7 @@ Server::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %@\n"),
                     ACE_TEXT ("act"),
-                    result.act ()));
+                    const_cast<void *> (result.act ())));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %d\n"),
                     ACE_TEXT ("success"),
@@ -1122,11 +1205,11 @@ Server::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %@\n"),
                     ACE_TEXT ("completion_key"),
-                    result.completion_key ()));
+                    const_cast<void *> (result.completion_key ())));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %d\n"),
+                    ACE_TEXT ("%s = %Q\n"),
                     ACE_TEXT ("error"),
-                    result.error ()));
+                    static_cast<ACE_UINT64> (result.error ())));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %s\n"),
                     ACE_TEXT ("message_block"),
@@ -1142,10 +1225,14 @@ Server::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
           prio = LM_DEBUG;
 #else
         if (result.error () == ECANCELED)
-          prio = LM_DEBUG;
+          {
+            prio = LM_DEBUG;
+          }
 #endif /* ACE_WIN32 */
         else
+        {
           prio = LM_ERROR;
+        }
         ACE_LOG_MSG->errnum (result.error ());
         ACE_LOG_MSG->log (prio,
                           ACE_TEXT ("(%t) Server %d; %p\n"),
@@ -1166,7 +1253,7 @@ Server::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
 
         // If client says we're done, ack it; we're done reading.
         size_t to_send = result.bytes_transferred ();
-        if (ACE_OS::strcmp (mb->rd_ptr (), close_req_msg) == 0)
+        if (std::strcmp (mb->rd_ptr (), close_req_msg) == 0)
           {
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%t) Server %d saw close request; ack\n"),
@@ -1179,15 +1266,21 @@ Server::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
         if (this->initiate_write (mb, to_send) == 0)
           {
             if (duplex != 0 && !this->flg_closing_)
+            {
               this->initiate_read ();
+            }
           }
       }
     else
+    {
       mb->release ();
+    }
 
     --this->io_count_;
     if (this->io_count_ > 0)
+    {
       return;
+    }
   }
   delete this;
 }
@@ -1215,7 +1308,7 @@ Server::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
                     ACE_TEXT ("bytes_to_write"),
                     result.bytes_to_write ()));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %d\n"),
+                    ACE_TEXT ("%s = %H\n"),
                     ACE_TEXT ("handle"),
                     result.handle ()));
         ACE_DEBUG ((LM_DEBUG,
@@ -1225,7 +1318,7 @@ Server::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %@\n"),
                     ACE_TEXT ("act"),
-                    result.act ()));
+                    const_cast<void *> (result.act ())));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %d\n"),
                     ACE_TEXT ("success"),
@@ -1233,11 +1326,11 @@ Server::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %@\n"),
                     ACE_TEXT ("completion_key"),
-                    result.completion_key ()));
+                    const_cast<void *> (result.completion_key ())));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %d\n"),
+                    ACE_TEXT ("%s = %Q\n"),
                     ACE_TEXT ("error"),
-                    result.error ()));
+                    static_cast<ACE_UINT64> (result.error ())));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %s\n"),
                     ACE_TEXT ("message_block"),
@@ -1253,10 +1346,14 @@ Server::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
           prio = LM_DEBUG;
 #else
         if (result.error () == ECANCELED)
-          prio = LM_DEBUG;
+          {
+            prio = LM_DEBUG;
+          }
 #endif /* ACE_WIN32 */
         else
+        {
           prio = LM_ERROR;
+        }
         ACE_LOG_MSG->errnum (result.error ());
         ACE_LOG_MSG->log (prio,
                           ACE_TEXT ("(%t) Server %d; %p\n"),
@@ -1278,12 +1375,16 @@ Server::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
         this->total_snd_ += result.bytes_transferred ();
 
         if (duplex == 0 && !this->flg_closing_)
+        {
           this->initiate_read ();
+        }
       }
 
     --this->io_count_;
     if (this->io_count_ > 0)
+    {
       return;
+    }
   }
   delete this;
 }
@@ -1318,14 +1419,18 @@ Connector::start (const ACE_INET_Addr& addr, int num)
 {
   ACE_OS::sleep(3);  // Let Master get going
   if (num > MAX_CLIENTS)
+  {
     num = MAX_CLIENTS;
+  }
 
   if (num < 0)
+  {
     num = 1;
+  }
 
   int rc = 0;
 
-  for (; rc < num;  rc++)
+  for (; rc < num;  ++rc)
     {
       ACE_SOCK_CODgram sock;
       if (sock.open (addr) == -1)
@@ -1373,7 +1478,6 @@ Connector::start (const ACE_INET_Addr& addr, int num)
   return rc;
 }
 
-
 Client::Client ()
 {
   ACE_ERROR ((LM_ERROR, ACE_TEXT ("Shouldn't use this constructor!\n")));
@@ -1401,10 +1505,12 @@ Client::~Client ()
               this->total_w_, this->total_snd_,
               this->total_r_, this->total_rcv_));
   if (this->io_count_ != 0)
+  {
     ACE_ERROR ((LM_WARNING,
                 ACE_TEXT ("(%t) Client %d deleted with %d I/O outstanding\n"),
                 this->id_,
                 this->io_count_));
+  }
 
   // This test bounces data back and forth between Clients and Servers.
   // Therefore, if there was significantly more data in one direction, that's
@@ -1413,23 +1519,35 @@ Client::~Client ()
   if (this->total_snd_ > this->total_rcv_)
     {
       if (this->total_rcv_ == 0)
+      {
         issue_data_warning = 1;
+      }
       else if (this->total_snd_ / this->total_rcv_ > 2)
+      {
         issue_data_warning = 1;
+      }
     }
   else
     {
       if (this->total_snd_ == 0)
+      {
         issue_data_warning = 1;
+      }
       else if (this->total_rcv_ / this->total_snd_ > 2)
+      {
         issue_data_warning = 1;
+      }
     }
   if (issue_data_warning)
+  {
     ACE_DEBUG ((LM_WARNING,
                 ACE_TEXT ("(%t) Above byte counts look odd; need review\n")));
+  }
 
   if (this->tester_ != nullptr)
+  {
     this->tester_->client_done (this);
+  }
 
   this->id_ = -1;
   if (this->handle () != ACE_INVALID_HANDLE)
@@ -1472,23 +1590,31 @@ Client::go (ACE_HANDLE handle, const ACE_INET_Addr &server)
 
     // Open send and receive factories.
     if (this->ws_.open (*this, handle) == -1)
+    {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%t) Client %d: %p\n"),
                   this->id_,
                   ACE_TEXT ("ACE_Asynch_Write_Dgram::open")));
+    }
     else if (this->rs_.open (*this, handle) == -1)
+    {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%t) Client %d: %p\n"),
                   this->id_,
                   ACE_TEXT ("ACE_Asynch_Read_Dgram::open")));
+    }
     else if (this->initiate_write () == 0)
       {
         if (duplex != 0)    // Start an asynchronous read
+        {
           this->initiate_read ();
+        }
       }
 
     if (this->io_count_ > 0)
+    {
       return;
+    }
   }
   delete this;
 }
@@ -1497,7 +1623,9 @@ int
 Client::initiate_write ()
 {
   if (this->flg_cancel_ || this->handle () == ACE_INVALID_HANDLE)
+  {
     return -1;
+  }
 
   // stop_writing_ is set to 1 to say "stop". To avoid repeating the
   // close datagram for every echo, only send it once. Sure, there's a risk
@@ -1506,14 +1634,16 @@ Client::initiate_write ()
   if (this->stop_writing_ > 0)    // Need to tell server to "close"
     {
       if (this->stop_writing_ > 1)   // Already told server to close
-        return 0;
+        {
+          return 0;
+        }
 
       ++this->stop_writing_;
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) Client %d requesting close\n"),
                   this->id_));
       ACE_Message_Block *mb =
-        new ACE_Message_Block (ACE_OS::strlen (close_req_msg) + 1);
+        new ACE_Message_Block (std::strlen (close_req_msg) + 1);
       mb->copy (close_req_msg);
       size_t unused;   // Number of bytes sent
       if (this->ws_.send (mb, unused, 0, this->server_addr_) == -1)
@@ -1526,19 +1656,19 @@ Client::initiate_write ()
                             -1);
         }
 
-      this->io_count_++;
-      this->total_w_++;
+      ++this->io_count_;
+      ++this->total_w_;
       return 0;
     }
 
   static const size_t complete_message_length =
-    ACE_OS::strlen (complete_message);
+    std::strlen (complete_message);
 
 #if defined (ACE_WIN32)
 
-  ACE_Message_Block *mb1 = 0,
-                    *mb2 = 0,
-                    *mb3 = 0;
+  ACE_Message_Block *mb1 {},
+                    *mb2 {},
+                    *mb3 {};
 
   // No need to allocate +1 for proper printing - the memory includes it already
   ACE_NEW_RETURN (mb1,
@@ -1575,7 +1705,7 @@ Client::initiate_write ()
     }
 #else /* ACE_WIN32 */
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   // No need to allocate +1 for proper printing - the memory includes
   // it already
@@ -1596,8 +1726,8 @@ Client::initiate_write ()
     }
 #endif /* ACE_WIN32 */
 
-  this->io_count_++;
-  this->total_w_++;
+  ++this->io_count_;
+  ++this->total_w_;
   return 0;
 }
 
@@ -1605,18 +1735,20 @@ int
 Client::initiate_read ()
 {
   if (this->flg_cancel_ || this->handle_ == ACE_INVALID_HANDLE)
+  {
     return -1;
+  }
 
   static const size_t complete_message_length =
-    ACE_OS::strlen (complete_message);
+    std::strlen (complete_message);
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
-  ACE_Message_Block *mb1 = 0,
-                    *mb2 = 0,
-                    *mb3 = 0,
-                    *mb4 = 0,
-                    *mb5 = 0,
-                    *mb6 = 0;
+  ACE_Message_Block *mb1 {},
+                    *mb2 {},
+                    *mb3 {},
+                    *mb4 {},
+                    *mb5 {},
+                    *mb6 {};
 
   // We allocate +1 only for proper printing - we can just set the last byte
   // to '\0' before printing out
@@ -1638,7 +1770,6 @@ Client::initiate_read ()
   mb3->cont (mb4);
   mb4->cont (mb5);
   mb5->cont (mb6);
-
 
   // hide last byte in each message block, reserving it for later to set '\0'
   // for proper printouts
@@ -1666,7 +1797,7 @@ Client::initiate_read ()
   size_t blksize = ( complete_message_length > BUFSIZ ) ?
                      complete_message_length : BUFSIZ;
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   // We allocate +1 only for proper printing - we can just set the last byte
   // to '\0' before printing out
@@ -1687,8 +1818,8 @@ Client::initiate_read ()
     }
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
-  this->io_count_++;
-  this->total_r_++;
+  ++this->io_count_;
+  ++this->total_r_;
   return 0;
 }
 
@@ -1712,7 +1843,7 @@ Client::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
                     ACE_TEXT ("bytes_to_write"),
                     result.bytes_to_write ()));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %d\n"),
+                    ACE_TEXT ("%s = %H\n"),
                     ACE_TEXT ("handle"),
                     result.handle ()));
         ACE_DEBUG ((LM_DEBUG,
@@ -1722,7 +1853,7 @@ Client::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %@\n"),
                     ACE_TEXT ("act"),
-                    result.act ()));
+                    const_cast<void *> (result.act ())));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %d\n"),
                     ACE_TEXT ("success"),
@@ -1730,11 +1861,11 @@ Client::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %@\n"),
                     ACE_TEXT ("completion_key"),
-                    result.completion_key ()));
+                    const_cast<void *> (result.completion_key ())));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %d\n"),
+                    ACE_TEXT ("%s = %Q\n"),
                     ACE_TEXT ("error"),
-                    result.error ()));
+                    static_cast<ACE_UINT64> (result.error ())));
 
 #if defined (ACE_WIN32)
         size_t bytes_transferred = result.bytes_transferred ();
@@ -1790,10 +1921,14 @@ Client::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
           prio = LM_DEBUG;
 #else
         if (result.error () == ECANCELED)
-          prio = LM_DEBUG;
+          {
+            prio = LM_DEBUG;
+          }
 #endif /* ACE_WIN32 */
         else
+        {
           prio = LM_ERROR;
+        }
         ACE_LOG_MSG->errnum (result.error ());
         ACE_LOG_MSG->log (prio,
                           ACE_TEXT ("(%t) Client %d; %p\n"),
@@ -1823,15 +1958,21 @@ Client::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
         if (duplex != 0)   // full duplex, continue write
           {
             if ((this->total_snd_- this->total_rcv_) < 1024*32 ) //flow control
-              this->initiate_write ();
+              {
+                this->initiate_write ();
+              }
           }
         else  // half-duplex   read reply, after read we will start write
-          this->initiate_read ();
+          {
+            this->initiate_read ();
+          }
       }
 
     --this->io_count_;
     if (this->io_count_ > 0)
+    {
       return;
+    }
   }
   delete this;
 }
@@ -1856,7 +1997,7 @@ Client::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
                     ACE_TEXT ("bytes_to_read"),
                     result.bytes_to_read ()));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %d\n"),
+                    ACE_TEXT ("%s = %H\n"),
                     ACE_TEXT ("handle"),
                     result.handle ()));
         ACE_DEBUG ((LM_DEBUG,
@@ -1866,7 +2007,7 @@ Client::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %@\n"),
                     ACE_TEXT ("act"),
-                    result.act ()));
+                    const_cast<void *> (result.act ())));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %d\n"),
                     ACE_TEXT ("success"),
@@ -1874,11 +2015,11 @@ Client::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %@\n"),
                     ACE_TEXT ("completion_key"),
-                    result.completion_key ()));
+                    const_cast<void *> (result.completion_key ())));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %d\n"),
+                    ACE_TEXT ("%s = %Q\n"),
                     ACE_TEXT ("error"),
-                    result.error ()));
+                    static_cast<ACE_UINT64> (result.error ())));
 
 #if defined (ACE_WIN32)
         char index = 0;
@@ -1916,10 +2057,14 @@ Client::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
           prio = LM_DEBUG;
 #else
         if (result.error () == ECANCELED)
-          prio = LM_DEBUG;
+          {
+            prio = LM_DEBUG;
+          }
 #endif /* ACE_WIN32 */
         else
+        {
           prio = LM_ERROR;
+        }
         ACE_Log_Msg::instance ()->errnum (result.error ());
         ACE_Log_Msg::instance ()->log (prio,
                                        ACE_TEXT ("(%t) Client %d; %p\n"),
@@ -1940,7 +2085,7 @@ Client::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
 
         // If we've closed and the server acked, we're done.
         if (this->stop_writing_ &&
-            ACE_OS::strcmp (mb->rd_ptr (), close_ack_msg) == 0)
+            std::strcmp (mb->rd_ptr (), close_ack_msg) == 0)
           {
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%t) Client %d recvd close-ack\n"),
@@ -1949,16 +2094,22 @@ Client::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
         else
           {
             if (duplex != 0)
-              this->initiate_read ();
+              {
+                this->initiate_read ();
+              }
             else  // half-duplex  write, after write we will start read
-              this->initiate_write ();
+              {
+                this->initiate_write ();
+              }
           }
       }
 
     mb->release ();
     --this->io_count_;
     if (this->io_count_ > 0)
+    {
       return;
+    }
   }
   delete this;
 }
@@ -2002,7 +2153,9 @@ static int
 set_proactor_type (const ACE_TCHAR *ptype)
 {
   if (!ptype)
+  {
     return 0;
+  }
 
   switch (ACE_OS::ace_toupper (*ptype))
     {
@@ -2040,7 +2193,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   clients = 10;                   // number of clients
   loglevel = 0;                   // log level : only errors and highlights
   // Default transfer limit 50 messages per Sender
-  xfer_limit = 50 * ACE_OS::strlen (complete_message);
+  xfer_limit = 50 * std::strlen (complete_message);
 
   // Linux kernels up to at least 2.6.9 (RHEL 4) can't do full duplex aio.
 # if defined (ACE_LINUX)
@@ -2048,7 +2201,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
 #endif
 
   if (argc == 1) // no arguments , so one button test
-    return 0;
+    {
+      return 0;
+    }
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("x:t:o:n:p:d:h:c:v:ub"));
   int c;
@@ -2060,7 +2215,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'x':  // xfer limit
         xfer_limit = static_cast<size_t> (ACE_OS::atoi (get_opt.opt_arg ()));
         if (xfer_limit == 0)
+        {
           xfer_limit = 1;          // Bare minimum.
+        }
         break;
       case 'b':  // both client and server
         both = 1;
@@ -2083,14 +2240,18 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'c':     // number of clients
         clients = ACE_OS::atoi (get_opt.opt_arg ());
         if (clients > MAX_CLIENTS)
+        {
           clients = MAX_CLIENTS;
+        }
         break;
       case 'o':     // max number of aio for proactor
         max_aio_operations = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 't':    //  Proactor Type
         if (set_proactor_type (get_opt.opt_arg ()))
+        {
           break;
+        }
         return print_usage (argc, argv);
       case 'u':
       default:
@@ -2107,7 +2268,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("Proactor_UDP_Test"));
 
   if (::parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
 
   disable_signal (ACE_SIGRTMIN, ACE_SIGRTMAX);
   disable_signal (SIGPIPE, SIGPIPE);
@@ -2135,12 +2298,18 @@ run_main (int argc, ACE_TCHAR *argv[])
       if (both != 0 || host != nullptr)
         {
           if (host == nullptr)
-            host = ACE_LOCALHOST;
+            {
+              host = ACE_LOCALHOST;
+            }
 
           if (addr.set (port, host, 1, addr.get_type ()) == -1)
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), host));
+            {
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), host));
+            }
           else
+          {
             rc += connector.start (addr, clients);
+          }
         }
 
       // Wait a few seconds to let things get going, then poll til
@@ -2152,7 +2321,9 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Sleeping til sessions run down.\n")));
   while (!test.testing_done ())
-    ACE_OS::sleep (1);
+    {
+      ACE_OS::sleep (1);
+    }
 
   test.stop_all ();
 

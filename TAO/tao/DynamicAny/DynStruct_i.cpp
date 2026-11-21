@@ -9,6 +9,8 @@
 
 #include "tao/CDR.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynStruct_i::TAO_DynStruct_i (CORBA::Boolean allow_truncation)
@@ -19,7 +21,7 @@ TAO_DynStruct_i::TAO_DynStruct_i (CORBA::Boolean allow_truncation)
 void
 TAO_DynStruct_i::check_typecode (CORBA::TypeCode_ptr tc)
 {
-  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc);
+  CORBA::TCKind const kind = TAO_DynAnyFactory::unalias (tc);
 
   if (kind == CORBA::tk_struct || kind == CORBA::tk_except)
     {
@@ -51,17 +53,16 @@ TAO_DynStruct_i::init (CORBA::Any const& any)
   this->set_from_any (any);
 }
 
-
 // This code is common to from_any() and the init() overload that takes
 // an Any argument.
 void
 TAO_DynStruct_i::set_from_any (CORBA::Any const& any)
 {
   // member_type() does not work with aliased type codes.
-  CORBA::TypeCode_var unaliased_tc =
+  CORBA::TypeCode_var const unaliased_tc =
     TAO_DynAnyFactory::strip_alias (any._tao_get_typecode ());
 
-  CORBA::ULong numfields =
+  CORBA::ULong const numfields =
     unaliased_tc->member_count ();
 
   // Resize the array.
@@ -73,26 +74,28 @@ TAO_DynStruct_i::set_from_any (CORBA::Any const& any)
   TAO::Any_Impl *impl = any.impl ();
   TAO_OutputCDR out;
   TAO_InputCDR in (static_cast<ACE_Message_Block *> (nullptr));
-  TAO::Unknown_IDL_Type *unk = nullptr;
+  TAO::Unknown_IDL_Type *unk {};
 
   if (impl->encoded ())
     {
       unk = dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
       if (unk == nullptr)
+      {
         throw CORBA::INTERNAL ();
+      }
 
       in = unk->_tao_get_cdr ();
     }
   else
     {
       impl->marshal_value (out);
-      TAO_InputCDR tmp_in (out);
+      TAO_InputCDR const tmp_in (out);
       in = tmp_in;
     }
 
   // If we have an exception type, unmarshal the repository ID.
-  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (any._tao_get_typecode ());
+  CORBA::TCKind const kind = TAO_DynAnyFactory::unalias (any._tao_get_typecode ());
 
   if (kind == CORBA::tk_except)
     {
@@ -100,9 +103,9 @@ TAO_DynStruct_i::set_from_any (CORBA::Any const& any)
       in >> str.out ();
     }
 
-  for (CORBA::ULong i = 0; i < numfields; i++)
+  for (CORBA::ULong i {}; i < numfields; ++i)
     {
-      CORBA::TypeCode_var field_tc =
+      CORBA::TypeCode_var const field_tc =
         unaliased_tc->member_type (i);
 
       CORBA::Any field_any;
@@ -121,7 +124,7 @@ TAO_DynStruct_i::set_from_any (CORBA::Any const& any)
           this->allow_truncation_);
 
       // Move to the next field in the CDR stream.
-      (void) TAO_Marshal_Object::perform_skip (field_tc.in (), &in);
+      (void) TAO_Marshal_Object::perform_skip (field_tc.in (), std::addressof (in));
     }
 }
 
@@ -133,7 +136,7 @@ TAO_DynStruct_i::init (CORBA::TypeCode_ptr tc)
   this->type_ = CORBA::TypeCode::_duplicate (tc);
 
   // member_type() does not work with aliased type codes.
-  CORBA::TypeCode_var unaliased_tc =
+  CORBA::TypeCode_var const unaliased_tc =
   TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
   this->component_count_ =
@@ -144,11 +147,9 @@ TAO_DynStruct_i::init (CORBA::TypeCode_ptr tc)
 
   this->init_common ();
 
-  CORBA::TypeCode_var mtype;
-
-  for (CORBA::ULong i = 0; i < this->component_count_; ++i)
+  for (CORBA::ULong i {}; i < this->component_count_; ++i)
     {
-      mtype = unaliased_tc->member_type (i);
+      CORBA::TypeCode_var const mtype = unaliased_tc->member_type (i);
 
       // Recursively initialize each member.
       this->da_members_[i] =
@@ -158,9 +159,6 @@ TAO_DynStruct_i::init (CORBA::TypeCode_ptr tc)
           this->allow_truncation_);
     }
 }
-
-// ****************************************************************
-
 TAO_DynStruct_i *
 TAO_DynStruct_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
@@ -171,9 +169,6 @@ TAO_DynStruct_i::_narrow (CORBA::Object_ptr _tao_objref)
 
   return dynamic_cast<TAO_DynStruct_i *> (_tao_objref);
 }
-
-// ****************************************************************
-
 DynamicAny::FieldName
 TAO_DynStruct_i::current_member_name ()
 {
@@ -194,7 +189,7 @@ TAO_DynStruct_i::current_member_name ()
     }
 
   // member_name() does not work with aliased type codes.
-  CORBA::TypeCode_var unaliased_tc =
+  CORBA::TypeCode_var const unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ());
   char const* name =
     unaliased_tc->member_name (this->current_position_);
@@ -223,12 +218,12 @@ TAO_DynStruct_i::current_member_kind ()
     }
 
   // member_type() does not work with aliased type codes.
-  CORBA::TypeCode_var unaliased_tc =
+  CORBA::TypeCode_var const unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ());
-  CORBA::TypeCode_var tc =
+  CORBA::TypeCode_var const tc =
   unaliased_tc->member_type (this->current_position_);
 
-  CORBA::TCKind retval = TAO_DynAnyFactory::unalias (tc.in ());
+  CORBA::TCKind const retval = TAO_DynAnyFactory::unalias (tc.in ());
 
   return retval;
 }
@@ -266,7 +261,7 @@ TAO_DynStruct_i::get_members ()
     }
 
   // Assign name and value to each pearl on the string.
-  for (CORBA::ULong i = 0; i < this->component_count_; ++i)
+  for (CORBA::ULong i {}; i < this->component_count_; ++i)
     {
       safe_retval[i].id =
         CORBA::string_dup (unaliased_tc->member_name (i));
@@ -287,7 +282,7 @@ TAO_DynStruct_i::set_members (DynamicAny::NameValuePairSeq const& values)
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::ULong length = values.length ();
+  CORBA::ULong const length = values.length ();
 
   // Check for length match.
   if (length != this->component_count_)
@@ -295,22 +290,16 @@ TAO_DynStruct_i::set_members (DynamicAny::NameValuePairSeq const& values)
       throw DynamicAny::DynAny::InvalidValue ();
     }
 
-  CORBA::TypeCode_var value_tc;
-  CORBA::TypeCode_var my_tc;
-  CORBA::Boolean equivalent;
-
   // member_type() does not work with aliased type codes.
-  CORBA::TypeCode_var unaliased_tc =
+  CORBA::TypeCode_var const unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       // Check for type and name match.
-      my_tc = unaliased_tc->member_type (i);
-
-      value_tc = values[i].value.type ();
-
-      equivalent = my_tc->equivalent (value_tc.in ());
+      CORBA::TypeCode_var const my_tc = unaliased_tc->member_type (i);
+      CORBA::TypeCode_var const value_tc = values[i].value.type ();
+      CORBA::Boolean const equivalent = my_tc->equivalent (value_tc.in ());
 
       if (!equivalent)
         {
@@ -348,11 +337,11 @@ TAO_DynStruct_i::get_members_as_dyn_any ()
   DynamicAny::NameDynAnyPairSeq_var safe_retval = members;
 
   // member_name() does not work with aliased type codes.
-  CORBA::TypeCode_var unaliased_tc =
+  CORBA::TypeCode_var const unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
   // Assign name and value to each pearl on the string.
-  for (CORBA::ULong i = 0; i < this->component_count_; ++i)
+  for (CORBA::ULong i {}; i < this->component_count_; ++i)
     {
       safe_retval[i].id = CORBA::string_dup (unaliased_tc->member_name (i));
 
@@ -376,7 +365,7 @@ TAO_DynStruct_i::set_members_as_dyn_any (
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::ULong length = values.length ();
+  CORBA::ULong const length = values.length ();
 
   // Check for length match.
   if (length != this->component_count_)
@@ -384,22 +373,16 @@ TAO_DynStruct_i::set_members_as_dyn_any (
       throw DynamicAny::DynAny::InvalidValue ();
     }
 
-  CORBA::TypeCode_var value_tc;
-  CORBA::TypeCode_var my_tc;
-  CORBA::Boolean equivalent;
-
   // member_type() does not work with aliased type codes.
-  CORBA::TypeCode_var unaliased_tc =
+  CORBA::TypeCode_var const unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       // Check for type and name match.
-      my_tc = unaliased_tc->member_type (i);
-
-      value_tc = values[i].value->type ();
-
-      equivalent = my_tc->equivalent (value_tc.in ());
+      CORBA::TypeCode_var const my_tc = unaliased_tc->member_type (i);
+      CORBA::TypeCode_var const value_tc = values[i].value->type ();
+      CORBA::Boolean const equivalent = my_tc->equivalent (value_tc.in ());
 
       if (!equivalent)
         {
@@ -414,9 +397,6 @@ TAO_DynStruct_i::set_members_as_dyn_any (
 
   this->current_position_ = length ? 0 : -1;
 }
-
-// ****************************************************************
-
 void
 TAO_DynStruct_i::from_any (CORBA::Any const& any)
 {
@@ -425,8 +405,8 @@ TAO_DynStruct_i::from_any (CORBA::Any const& any)
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::TypeCode_var tc = any.type ();
-  CORBA::Boolean equivalent =
+  CORBA::TypeCode_var const tc = any.type ();
+  CORBA::Boolean const equivalent =
     this->type_->equivalent (tc.in ());
 
   if (equivalent)
@@ -435,26 +415,28 @@ TAO_DynStruct_i::from_any (CORBA::Any const& any)
       TAO::Any_Impl *impl = any.impl ();
       TAO_OutputCDR out;
       TAO_InputCDR in (static_cast<ACE_Message_Block *> (nullptr));
-      TAO::Unknown_IDL_Type *unk = nullptr;
+      TAO::Unknown_IDL_Type *unk {};
 
       if (impl->encoded ())
         {
           unk = dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
           if (unk == nullptr)
+          {
             throw CORBA::INTERNAL ();
+          }
 
           in = unk->_tao_get_cdr ();
         }
       else
         {
           impl->marshal_value (out);
-          TAO_InputCDR tmp_in (out);
+          TAO_InputCDR const tmp_in (out);
           in = tmp_in;
         }
 
       // If we have an exception type, unmarshal the repository ID.
-      CORBA::TCKind kind =
+      CORBA::TCKind const kind =
         TAO_DynAnyFactory::unalias (this->type_.in ());
 
       if (kind == CORBA::tk_except)
@@ -463,21 +445,20 @@ TAO_DynStruct_i::from_any (CORBA::Any const& any)
           in >> str.out ();
         }
 
-      CORBA::TypeCode_var field_tc;
-      CORBA::TypeCode_var unaliased =
+      CORBA::TypeCode_var const unaliased =
         TAO::unaliased_typecode (this->type_.in ());
 
-      for (CORBA::ULong i = 0; i < this->component_count_; ++i)
+      for (CORBA::ULong i {}; i < this->component_count_; ++i)
         {
-          field_tc = unaliased->member_type (i);
+          CORBA::TypeCode_var const field_tc = unaliased->member_type (i);
 
           CORBA::Any field_any;
           TAO_InputCDR unk_in (in);
-          TAO::Unknown_IDL_Type *unk = nullptr;
-          ACE_NEW (unk,
+          TAO::Unknown_IDL_Type *field_unk {};
+          ACE_NEW (field_unk,
                    TAO::Unknown_IDL_Type (field_tc.in (),
                                           unk_in));
-          field_any.replace (unk);
+          field_any.replace (field_unk);
 
           this->da_members_[i]->destroy ();
 
@@ -488,7 +469,7 @@ TAO_DynStruct_i::from_any (CORBA::Any const& any)
               this->allow_truncation_);
 
           // Move to the next field in the CDR stream.
-          (void) TAO_Marshal_Object::perform_skip (field_tc.in (), &in);
+          (void) TAO_Marshal_Object::perform_skip (field_tc.in (), std::addressof (in));
         }
 
       this->current_position_ = this->component_count_ ? 0 : -1;
@@ -510,20 +491,19 @@ TAO_DynStruct_i::to_any ()
   TAO_OutputCDR out_cdr;
 
   // If we have an exception type, marshal the repository ID.
-  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (this->type_.in ());
+  CORBA::TCKind const kind = TAO_DynAnyFactory::unalias (this->type_.in ());
 
   if (kind == CORBA::tk_except)
     {
       out_cdr << this->type_->id ();
     }
 
-  TAO::Any_Impl *field_impl = nullptr;
-  TAO::Unknown_IDL_Type *field_unk = nullptr;
+  TAO::Unknown_IDL_Type *field_unk {};
   TAO_InputCDR field_in_cdr (static_cast<ACE_Message_Block *> (nullptr));
 
-  for (CORBA::ULong i = 0; i < this->component_count_; ++i)
+  for (CORBA::ULong i {}; i < this->component_count_; ++i)
     {
-      CORBA::TypeCode_var field_tc =
+      CORBA::TypeCode_var const field_tc =
         this->da_members_[i]->type ();
 
       // Recursive step.
@@ -531,7 +511,7 @@ TAO_DynStruct_i::to_any ()
         this->da_members_[i]->to_any ();
 
       TAO_OutputCDR field_out_cdr;
-      field_impl = field_any->impl ();
+      TAO::Any_Impl *field_impl = field_any->impl ();
 
       if (field_impl->encoded ())
         {
@@ -539,14 +519,16 @@ TAO_DynStruct_i::to_any ()
             dynamic_cast<TAO::Unknown_IDL_Type *> (field_impl);
 
           if (field_unk == nullptr)
+          {
             throw CORBA::INTERNAL ();
+          }
 
           field_in_cdr = field_unk->_tao_get_cdr ();
         }
       else
         {
           field_impl->marshal_value (field_out_cdr);
-          TAO_InputCDR tmp (field_out_cdr);
+          TAO_InputCDR const tmp (field_out_cdr);
           field_in_cdr = tmp;
         }
 
@@ -557,12 +539,12 @@ TAO_DynStruct_i::to_any ()
 
   TAO_InputCDR in_cdr (out_cdr);
 
-  CORBA::Any_ptr retval = nullptr;
+  CORBA::Any_ptr retval {};
   ACE_NEW_THROW_EX (retval,
                     CORBA::Any,
                     CORBA::NO_MEMORY ());
 
-  TAO::Unknown_IDL_Type *unk = nullptr;
+  TAO::Unknown_IDL_Type *unk {};
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (),
                                            in_cdr),
@@ -580,7 +562,7 @@ TAO_DynStruct_i::equal (DynamicAny::DynAny_ptr rhs)
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::TypeCode_var tc = rhs->type ();
+  CORBA::TypeCode_var const tc = rhs->type ();
 
   if (!tc->equivalent (this->type_.in ()))
     {
@@ -590,7 +572,7 @@ TAO_DynStruct_i::equal (DynamicAny::DynAny_ptr rhs)
   DynamicAny::DynAny_var tmp;
   CORBA::Boolean member_equal;
 
-  for (CORBA::ULong i = 0; i < this->component_count_; ++i)
+  for (CORBA::ULong i {}; i < this->component_count_; ++i)
     {
       rhs->seek (static_cast <CORBA::Long> (i));
 
@@ -619,7 +601,7 @@ TAO_DynStruct_i::destroy ()
   if (!this->ref_to_component_ || this->container_is_destroying_)
     {
       // Do a deep destroy.
-      for (CORBA::ULong i = 0; i < this->component_count_; ++i)
+      for (CORBA::ULong i {}; i < this->component_count_; ++i)
         {
           this->set_flag (da_members_[i].in (), true);
 
@@ -649,7 +631,7 @@ TAO_DynStruct_i::current_component ()
       return DynamicAny::DynAny::_nil ();
     }
 
-  CORBA::ULong index = static_cast <CORBA::ULong> (this->current_position_);
+  CORBA::ULong const index = static_cast <CORBA::ULong> (this->current_position_);
 
   this->set_flag (this->da_members_[index].in (), false);
 

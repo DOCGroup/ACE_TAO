@@ -1,13 +1,13 @@
 #include "ace/String_Base.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/INet/HTTP_Request.h"
+#include <string>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/INet/HTTP_Request.inl"
 #endif
 
 #include "ace/INet/INet_Log.h"
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -53,16 +53,14 @@ namespace ACE
       {
       }
 
-    Request::~Request()
-      {
-      }
+    Request::~Request() = default;
 
     void Request::set_host(const ACE_CString& host, u_short port)
       {
         ACE_CString val(host);
         val += ':';
-        char buf[16];
-        val += ACE_OS::itoa (port, buf, 10);
+        const std::string port_string = std::to_string (port);
+        val += port_string.c_str ();
         this->set (HOST, val);
       }
 
@@ -84,13 +82,23 @@ namespace ACE
           this->get (AUTHORIZATION, auth);
           ACE_CString::ITERATOR it (auth);
           while (!it.done () && ACE_OS::ace_isspace (*it))
+          {
             ++it;
+          }
           while (!it.done () && !ACE_OS::ace_isspace (*it))
-            scheme += *it++;
+            {
+              scheme += *it;
+              ++it;
+            }
           while (!it.done () && ACE_OS::ace_isspace (*it))
+          {
             ++it;
+          }
           while (!it.done ())
-            auth_info += *it++;
+            {
+              auth_info += *it;
+              ++it;
+            }
         }
       }
 
@@ -136,7 +144,9 @@ namespace ACE
         // get method
         ch = this->read_ws_field (str, method, MAX_METHOD_LENGTH);
         if (ch == eof_  || !ACE_OS::ace_isspace (ch))
+        {
           return false; // invalid HTTP method string
+        }
         // skip whitespace
         while (ACE_OS::ace_isspace (str.peek ()))
           {
@@ -145,7 +155,9 @@ namespace ACE
         // get uri
         ch = this->read_ws_field (str, uri, MAX_URI_LENGTH);
         if (ch == eof_ || !ACE_OS::ace_isspace (ch))
+        {
           return false; // invalid HTTP uri string
+        }
         // skip whitespace
         while (ACE_OS::ace_isspace (str.peek ()))
           {
@@ -154,17 +166,25 @@ namespace ACE
         // get version
         ch = this->read_ws_field (str, version, MAX_VERSION_LENGTH);
         if (ch == eof_ || !ACE_OS::ace_isspace (ch))
+        {
           return false; // invalid HTTP version string
+        }
         // skip to eol
         while (ch != '\n' && ch != eof_)
+        {
           ch = str.get ();
+        }
         // get header lines
         if (!Header::read (str))
+        {
           return false;
+        }
         // skip empty line
         ch = str.get ();
         while (ch != '\n' && ch != eof_)
+        {
           ch = str.get ();
+        }
         this->set_method (method);
         this->set_URI (uri);
         this->set_version(version);

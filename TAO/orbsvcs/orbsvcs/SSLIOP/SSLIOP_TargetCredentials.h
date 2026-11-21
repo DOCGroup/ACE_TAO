@@ -49,9 +49,9 @@ namespace TAO
        * Methods required by the SecurityLevel3::Credentials
        * interface.
        */
-      //@{
+      /// @{
       SecurityLevel3::CredentialsType creds_type () override;
-      //@}
+      /// @}
 
       /**
        * @name SecurityLevel3::TargetCredentials Methods
@@ -59,7 +59,7 @@ namespace TAO
        * Methods required by the SecurityLevel3::TargetCredentials
        * interface.
        */
-      //@{
+      /// @{
       char * context_id () override;
 
       SecurityLevel3::Principal * client_principal () override;
@@ -89,7 +89,7 @@ namespace TAO
       CORBA::Boolean target_endorsed () override;
 
       void release () override;
-      //@}
+      /// @}
     };
   }
 }

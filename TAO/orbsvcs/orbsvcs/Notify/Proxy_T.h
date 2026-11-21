@@ -19,7 +19,6 @@
 
 #include "orbsvcs/Notify/Proxy.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -33,53 +32,40 @@ template <class SERVANT_TYPE>
 class TAO_Notify_Proxy_T : public SERVANT_TYPE, public virtual TAO_Notify_Proxy
 {
 public:
-  /// Constructor
   TAO_Notify_Proxy_T ();
 
-  /// Destructor
   ~TAO_Notify_Proxy_T ();
 
   /// Implements TAO_Notify_Object::servant method.
   virtual PortableServer::Servant servant ();
 
   /// ServantBase refcount methods.
-  virtual void _add_ref ();
-  virtual void _remove_ref ();
+  void _add_ref () override;
+  void _remove_ref () override;
 
+  // SERVANT_TYPE may be a CosEvent servant without these Notify operations.
+  // Retain virtual here so both servant families can instantiate this template.
   virtual void validate_event_qos (
-    const CosNotification::QoSProperties & required_qos,
-    CosNotification::NamedPropertyRangeSeq_out available_qos
-  );
+    CosNotification::QoSProperties const &required_qos,
+    CosNotification::NamedPropertyRangeSeq_out available_qos);
 
- virtual CosNotification::QoSProperties * get_qos (
-  );
+  virtual CosNotification::QoSProperties *get_qos ();
 
-  virtual void set_qos (
-    const CosNotification::QoSProperties & qos
-  );
+  virtual void set_qos (CosNotification::QoSProperties const &qos);
 
   virtual void validate_qos (
-    const CosNotification::QoSProperties & required_qos,
-    CosNotification::NamedPropertyRangeSeq_out available_qos
-  );
+    CosNotification::QoSProperties const &required_qos,
+    CosNotification::NamedPropertyRangeSeq_out available_qos);
 
-  virtual CosNotifyFilter::FilterID add_filter (
-    CosNotifyFilter::Filter_ptr new_filter
-  );
+  virtual CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr new_filter);
 
-  virtual void remove_filter (
-    CosNotifyFilter::FilterID filter
-  );
+  virtual void remove_filter (CosNotifyFilter::FilterID filter);
 
-  virtual CosNotifyFilter::Filter_ptr get_filter (
-    CosNotifyFilter::FilterID filter
-  );
+  virtual CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID filter);
 
-  virtual CosNotifyFilter::FilterIDSeq * get_all_filters (
-  );
+  virtual CosNotifyFilter::FilterIDSeq *get_all_filters ();
 
-  virtual void remove_all_filters (
-  );
+  virtual void remove_all_filters ();
 };
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT

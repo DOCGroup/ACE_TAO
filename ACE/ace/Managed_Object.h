@@ -21,6 +21,7 @@
 
 #include "ace/Object_Manager.h"
 #include "ace/Global_Macros.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -41,7 +42,6 @@ template <class TYPE>
 class ACE_Cleanup_Adapter : public ACE_Cleanup
 {
 public:
-  /// Default constructor.
   ACE_Cleanup_Adapter ();
 
   /// Virtual destructor, needed by some compilers for vtable placement.
@@ -51,8 +51,10 @@ public:
   TYPE &object ();
 
 private:
-  ACE_Cleanup_Adapter (const ACE_Cleanup_Adapter<TYPE> &) = delete;
-  void operator= (const ACE_Cleanup_Adapter<TYPE> &) = delete;
+  ACE_Cleanup_Adapter (ACE_Cleanup_Adapter<TYPE> const &) = delete;
+  ACE_Cleanup_Adapter (ACE_Cleanup_Adapter<TYPE> &&) = delete;
+  ACE_Cleanup_Adapter &operator= (ACE_Cleanup_Adapter<TYPE> const &) = delete;
+  ACE_Cleanup_Adapter &operator= (ACE_Cleanup_Adapter<TYPE> &&) = delete;
 
   /// Contained object.
   TYPE object_;
@@ -112,8 +114,9 @@ public:
 
     // Cast the return type of the the object pointer based
     // on the type of the function template parameter.
-    return &((ACE_Cleanup_Adapter<TYPE> *)
-             ACE_Object_Manager::preallocated_object[identifier])->object ();
+    return std::addressof (
+      static_cast<ACE_Cleanup_Adapter<TYPE> *> (
+        ACE_Object_Manager::preallocated_object[identifier])->object ());
   }
   /// Get the preallocated array identified by "id".  Returns a
   /// pointer to the array.  Beware: no error indication is provided,
@@ -127,17 +130,20 @@ public:
 
     // Cast the return type of the the object pointer based
     // on the type of the function template parameter.
-    return &((ACE_Cleanup_Adapter<TYPE> *)
-             ACE_Object_Manager::preallocated_array[identifier])->object ();
+    return std::addressof (
+      static_cast<ACE_Cleanup_Adapter<TYPE> *> (
+        ACE_Object_Manager::preallocated_array[identifier])->object ());
   }
 
 protected:
-  // Disallow instantiation of this class.
+  /// Disallow instantiation of this class.
   ACE_Managed_Object () = delete;
 
 private:
-  ACE_Managed_Object (const ACE_Managed_Object<TYPE> &) = delete;
-  void operator= (const ACE_Managed_Object<TYPE> &) = delete;
+  ACE_Managed_Object (ACE_Managed_Object<TYPE> const &) = delete;
+  ACE_Managed_Object (ACE_Managed_Object<TYPE> &&) = delete;
+  ACE_Managed_Object &operator= (ACE_Managed_Object<TYPE> const &) = delete;
+  ACE_Managed_Object &operator= (ACE_Managed_Object<TYPE> &&) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

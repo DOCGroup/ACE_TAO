@@ -50,7 +50,8 @@ public:
   /// Maximum size of a logging message with the verbose headers
   static constexpr int MAXVERBOSELOGMSGLEN = VERBOSE_LEN + MAXLOGMSGLEN;
 
-  // = Initialization
+  /// @name Initialization
+  /// @{
   /**
    * Create a Log_Record and set its priority, time stamp, and
    * process id.
@@ -62,8 +63,8 @@ public:
   ACE_Log_Record (ACE_Log_Priority lp,
                   const ACE_Time_Value &time_stamp,
                   long pid);
+  /// @}
 
-  /// Default dtor.
   ~ACE_Log_Record ();
 
   /// Write the contents of the logging record to the appropriate
@@ -169,31 +170,30 @@ private:
    * correctly.  In addition, the field must be an ACE_INT32 in order
    * to be passed portable across platforms.
    */
-  ACE_INT32 length_;
+  ACE_INT32 length_ {};
 
   /// Type of logging record.
-  ACE_UINT32 type_;
+  ACE_UINT32 type_ {};
 
   /// Time that the logging record was generated.
-  time_t secs_;
-  ACE_UINT32 usecs_;
+  time_t secs_ {};
+  ACE_UINT32 usecs_ {};
 
   /// Id of process that generated the logging record.
-  ACE_UINT32 pid_;
+  ACE_UINT32 pid_ {};
 
-  /// Logging record data
-  ACE_TCHAR *msg_data_;   // Heap-allocated text message area
+  /// Heap-allocated logging record data.
+  ACE_TCHAR *msg_data_ {};
 
   /// Allocated size of msg_data_ in ACE_TCHARs
-  size_t msg_data_size_;
+  size_t msg_data_size_ {};
 
-  ///
-  ACE_Log_Category_TSS* category_;
+  ACE_Log_Category_TSS* category_ {};
 
-  ACE_Log_Record (const ACE_Log_Record&) = delete;
-  ACE_Log_Record& operator= (const ACE_Log_Record&) = delete;
-  ACE_Log_Record (ACE_Log_Record&&) = delete;
-  ACE_Log_Record& operator= (ACE_Log_Record&& rhs) = delete;
+  ACE_Log_Record (ACE_Log_Record const &) = delete;
+  ACE_Log_Record &operator= (ACE_Log_Record const &) = delete;
+  ACE_Log_Record (ACE_Log_Record &&) = delete;
+  ACE_Log_Record &operator= (ACE_Log_Record &&) = delete;
 };
 
 // Forward decls.

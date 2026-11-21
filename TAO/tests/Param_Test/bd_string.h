@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    bd_string.h
  *
@@ -7,25 +5,19 @@
  *
  *  @author   Carlos O'Ryan
  */
-//=============================================================================
-
 
 #ifndef PARAM_TEST_BOUNDED_STRING_H
 #define PARAM_TEST_BOUNDED_STRING_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        tests bounded strings
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// tests bounded strings
 class Test_Bounded_String
 {
 public:
-  /// ctor
   Test_Bounded_String ();
 
-  /// dtor
-  ~Test_Bounded_String ();
+  ~Test_Bounded_String () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -53,19 +45,19 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
-  char *in_;
+  CORBA::String_var in_;
 
   /// inout parameter
-  char *inout_;
+  CORBA::String_var inout_;
 
   /// out parameter
-  char *out_;
+  CORBA::String_var out_;
 
   /// return value
-  char *ret_;
+  CORBA::String_var ret_;
 };
 
 #endif /* PARAM_TEST_BOUNDED_STRING_H */

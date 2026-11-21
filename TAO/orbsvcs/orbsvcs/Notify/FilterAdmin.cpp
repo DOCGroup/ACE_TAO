@@ -14,22 +14,17 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Implementation skeleton constructor
-TAO_Notify_FilterAdmin::TAO_Notify_FilterAdmin ()
-{
-}
+TAO_Notify_FilterAdmin::TAO_Notify_FilterAdmin () = default;
 
-
-// Implementation skeleton destructor
-TAO_Notify_FilterAdmin::~TAO_Notify_FilterAdmin ()
-{
-}
+TAO_Notify_FilterAdmin::~TAO_Notify_FilterAdmin () = default;
 
 CosNotifyFilter::FilterID
 TAO_Notify_FilterAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter)
 {
   if (CORBA::is_nil (new_filter))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -40,9 +35,13 @@ TAO_Notify_FilterAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter)
     CosNotifyFilter::Filter::_duplicate (new_filter);
 
   if (this->filter_list_.bind (new_id, new_filter_var) == -1)
+  {
       throw CORBA::INTERNAL ();
+  }
   else
+  {
     return new_id;
+  }
 }
 
 void
@@ -52,7 +51,9 @@ TAO_Notify_FilterAdmin::remove_filter (CosNotifyFilter::FilterID filter_id)
                       CORBA::INTERNAL ());
 
   if (this->filter_list_.unbind (filter_id) == -1)
+  {
     throw CosNotifyFilter::FilterNotFound ();
+  }
 }
 
 CosNotifyFilter::Filter_ptr
@@ -65,7 +66,9 @@ TAO_Notify_FilterAdmin::get_filter (CosNotifyFilter::FilterID filter_id)
 
   if (this->filter_list_.find (filter_id,
                                filter_var) == -1)
+  {
     throw CosNotifyFilter::FilterNotFound ();
+  }
 
   return filter_var._retn ();
 }
@@ -79,7 +82,7 @@ TAO_Notify_FilterAdmin::get_all_filters ()
   // Figure out the length of the list.
   size_t len = this->filter_list_.current_size ();
 
-  CosNotifyFilter::FilterIDSeq* list_ptr = nullptr;
+  CosNotifyFilter::FilterIDSeq* list_ptr {};
 
   // Allocate the list of <len> length.
   ACE_NEW_THROW_EX (list_ptr,
@@ -116,7 +119,9 @@ void
 TAO_Notify_FilterAdmin::save_persistent (TAO_Notify::Topology_Saver& saver)
 {
   if (this->filter_list_.current_size() == 0)
+  {
     return;
+  }
 
   bool changed = true;
 
@@ -152,12 +157,12 @@ TAO_Notify_FilterAdmin::save_persistent (TAO_Notify::Topology_Saver& saver)
 }
 
 TAO_Notify::Topology_Object*
-TAO_Notify_FilterAdmin::load_child (const ACE_CString &type, CORBA::Long id,
-  const TAO_Notify::NVPList& attrs)
+TAO_Notify_FilterAdmin::load_child (ACE_CString const &type, CORBA::Long id,
+  TAO_Notify::NVPList const &attrs)
 {
   if (type == "filter")
   {
-   TAO_Notify_Object::ID mapid = 0;
+   TAO_Notify_Object::ID mapid {};
    attrs.load("MapId", mapid);
 
    TAO_Notify_FilterFactory* factory = ec_->default_filter_factory_servant ();
@@ -167,7 +172,9 @@ TAO_Notify_FilterAdmin::load_child (const ACE_CString &type, CORBA::Long id,
     {
       this->filter_ids_.set_last_used(id);
       if (this->filter_list_.bind (id, filter) != 0)
+      {
         throw CORBA::INTERNAL ();
+      }
     }
   }
   return this;
@@ -184,6 +191,5 @@ TAO_Notify_FilterAdmin::event_channel (TAO_Notify_EventChannel* ec)
 {
   this->ec_.reset (ec);
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

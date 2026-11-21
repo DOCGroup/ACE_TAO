@@ -46,10 +46,8 @@ class TAO_Transport;
 class TAO_Export TAO_Connection_Handler : public TAO_LF_CH_Event
 {
 public:
-  /// Constructor
   explicit TAO_Connection_Handler (TAO_ORB_Core *orb_core);
 
-  /// Destructor
   virtual ~TAO_Connection_Handler ();
 
   /// Return the underlying transport object
@@ -136,7 +134,7 @@ protected:
   /// Set options on the socket
   int set_socket_option (ACE_SOCK &sock, int snd_size, int rcv_size);
 
-  //@{
+  /// @{
   /**
    * @name Helper methods for Event_Handler-based derived classes.
    *
@@ -175,7 +173,7 @@ protected:
    * See the SSLIOP protocol for an interesting use-case
    */
   virtual void pos_io_hook (int & return_value);
-  //@}
+  /// @}
 
 private:
   TAO_Connection_Handler (const TAO_Connection_Handler &) = delete;
@@ -227,7 +225,6 @@ public:
 private:
   T& ref_;
 };
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

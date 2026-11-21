@@ -17,6 +17,8 @@
 #include "ace/Service_Config.h"
 #include "ace/Truncate.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation_Adapter.inl"
 #endif /* __ACE_INLINE__ */
@@ -61,11 +63,11 @@ namespace TAO
 
     // Initial state
     TAO::Invocation_Status status = TAO_INVOKE_START;
-    ACE_Time_Value *max_wait_time = nullptr;
+    ACE_Time_Value *max_wait_time {};
     ACE_Time_Value tmp_wait_time = ACE_Time_Value::zero;
     if (this->get_timeout (stub, tmp_wait_time))
       {
-        max_wait_time= &tmp_wait_time;
+      max_wait_time = std::addressof (tmp_wait_time);
       }
 
     TAO::Invocation_Retry_State retry_state (*stub);
@@ -97,7 +99,7 @@ namespace TAO
                                      details,
                                      effective_target,
                                      max_wait_time,
-                                     &retry_state);
+                                     std::addressof (retry_state));
           }
         else
           {
@@ -130,7 +132,7 @@ namespace TAO
   bool
   Invocation_Adapter::get_timeout (TAO_Stub *stub, ACE_Time_Value &timeout)
   {
-    bool has_timeout = false;
+    bool has_timeout {};
     this->target_->orb_core ()->call_timeout_hook (stub, has_timeout, timeout);
 
     return has_timeout;
@@ -204,16 +206,20 @@ namespace TAO
           // Grab the syncscope policy from the ORB.
           Messaging::SyncScope sync_scope;
 
-          bool has_synchronization = false;
+          bool has_synchronization {};
 
           stub->orb_core ()->call_sync_scope_hook (stub,
                                                    has_synchronization,
                                                    sync_scope);
           if (has_synchronization)
-            details.response_flags (CORBA::Octet (sync_scope));
+            {
+              details.response_flags (CORBA::Octet (sync_scope));
+            }
           else
-            details.response_flags (
-              CORBA::Octet (Messaging::SYNC_WITH_TRANSPORT));
+            {
+              details.response_flags (
+                CORBA::Octet (Messaging::SYNC_WITH_TRANSPORT));
+            }
           break;
         }
       case TAO_TWOWAY_INVOCATION:
@@ -250,9 +256,11 @@ namespace TAO
     if (TAO_debug_level)
       {
         if (max_wait_time && *max_wait_time == ACE_Time_Value::zero)
-          TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - Invocation_Adapter::invoke_remote_i, ")
-                      ACE_TEXT ("max wait time consumed during transport resolution\n")));
+          {
+            TAOLIB_DEBUG ((LM_DEBUG,
+                           ACE_TEXT ("TAO (%P|%t) - Invocation_Adapter::invoke_remote_i, ")
+                           ACE_TEXT ("max wait time consumed during transport resolution\n")));
+          }
       }
     // Update the request id now that we have a transport
     if (resolver.transport ())
@@ -362,32 +370,40 @@ namespace TAO
   {
     // The object pointer has to be changed to a TAO_Stub pointer
     // in order to obtain the profiles.
-    TAO_Stub *stubobj = nullptr;
+    TAO_Stub *stubobj {};
 
-    bool nil_forward_ref = false;
+    bool nil_forward_ref {};
     if (CORBA::is_nil (effective_target.in ()))
-      nil_forward_ref = true;
+      {
+        nil_forward_ref = true;
+      }
     else
       {
         stubobj = effective_target->_stubobj ();
 
         if (stubobj && stubobj->base_profiles ().size () == 0)
-          nil_forward_ref = true;
+          {
+            nil_forward_ref = true;
+          }
       }
 
     if (nil_forward_ref)
-      throw ::CORBA::TRANSIENT (
-        CORBA::SystemException::_tao_minor_code (
-          TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
-          0),
-        CORBA::COMPLETED_NO);
+      {
+        throw ::CORBA::TRANSIENT (
+          CORBA::SystemException::_tao_minor_code (
+            TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
+            0),
+          CORBA::COMPLETED_NO);
+      }
 
     if (stubobj == nullptr)
-      throw ::CORBA::INTERNAL (
-        CORBA::SystemException::_tao_minor_code (
-          TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
-          EINVAL),
-        CORBA::COMPLETED_NO);
+      {
+        throw ::CORBA::INTERNAL (
+          CORBA::SystemException::_tao_minor_code (
+            TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
+            EINVAL),
+          CORBA::COMPLETED_NO);
+      }
 
     // Reset the profile in the stubs
     stub->add_forward_profiles (stubobj->base_profiles (), permanent_forward);

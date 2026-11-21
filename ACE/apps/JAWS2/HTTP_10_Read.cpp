@@ -5,7 +5,6 @@
 #include "JAWS/IO_Handler.h"
 #include "JAWS/Policy.h"
 
-
 // --------------- READ TASK ----------------------
 
 JAWS_HTTP_10_Read_Task::JAWS_HTTP_10_Read_Task ()
@@ -21,11 +20,14 @@ JAWS_HTTP_10_Read_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
 {
   JAWS_TRACE ("JAWS_HTTP_10_Read_Task::handle_put");
 
-  JAWS_IO_Handler *handler = data->io_handler ();
-  JAWS_Dispatch_Policy *policy = this->policy ();
-  if (policy == 0) policy = data->policy ();
+  JAWS_IO_Handler *handler_ptr = data->io_handler ();
+  JAWS_Dispatch_Policy *dispatch_policy = this->policy ();
+  if (dispatch_policy == 0)
+    {
+      dispatch_policy = data->policy ();
+    }
 
-  JAWS_IO *io = policy->io ();
+  JAWS_IO *io_ptr = dispatch_policy->io ();
 
   if (data->length () > 0)
     {
@@ -38,8 +40,8 @@ JAWS_HTTP_10_Read_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
   data->rd_ptr (data->wr_ptr ());
   data->crunch ();
 
-  io->read (handler, data, data->size ());
-  switch (handler->status ())
+  io_ptr->read (handler_ptr, data, data->size ());
+  switch (handler_ptr->status ())
     {
     case JAWS_IO_Handler::READ_OK:
       {

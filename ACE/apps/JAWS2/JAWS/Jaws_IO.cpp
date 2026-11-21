@@ -1,7 +1,6 @@
 #include "ace/Message_Block.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Filecache.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_uio.h"
 #include "ace/OS_NS_sys_socket.h"
@@ -15,44 +14,16 @@
 
 #include "ace/Asynch_IO.h"  //for ACE_Asynch_Write_Stream
 #include <algorithm>
+#include <cstring>
 
 JAWS_IO::JAWS_IO ()
   : handle_ (ACE_INVALID_HANDLE),
-    handler_ (0),
-    inet_addr_ (0),
-    acceptor_ (0)
+    handler_ (nullptr),
+    acceptor_ (nullptr)
 {
 }
 
-JAWS_IO::~JAWS_IO ()
-{
-}
-
-#if 0
-ACE_HANDLE
-JAWS_IO::handle ()
-{
-  return this->handle_;
-}
-
-void
-JAWS_IO::handle (ACE_HANDLE handle)
-{
-  this->handle_ = handle;
-}
-
-void
-JAWS_IO::handler (JAWS_IO_Handler *handler)
-{
-  this->handler_ = handler;
-}
-
-void
-JAWS_IO::acceptor (JAWS_IO_Acceptor *acceptor)
-{
-  this->acceptor_ = acceptor;
-}
-#endif /* 0 */
+JAWS_IO::~JAWS_IO () = default;
 
 JAWS_Synch_IO::JAWS_Synch_IO ()
 {
@@ -62,7 +33,9 @@ JAWS_Synch_IO::JAWS_Synch_IO ()
 JAWS_Synch_IO::~JAWS_Synch_IO ()
 {
   if (this->handle_ != ACE_INVALID_HANDLE)
+  {
     ACE_OS::closesocket (this->handle_);
+  }
 }
 
 void
@@ -73,9 +46,13 @@ JAWS_Synch_IO::accept (JAWS_IO_Handler *ioh,
   ACE_SOCK_Stream new_stream;
   new_stream.set_handle (ACE_INVALID_HANDLE);
   if (this->acceptor_->accept (new_stream) == -1)
-    ioh->accept_error ();
+    {
+      ioh->accept_error ();
+    }
   else
+  {
     ioh->accept_complete (new_stream.get_handle ());
+  }
 }
 
 void
@@ -91,7 +68,9 @@ JAWS_Synch_IO::read (JAWS_IO_Handler *ioh,
   int result = stream.recv (mb->wr_ptr (), size);
 
   if (result <= 0)
-    ioh->read_error ();
+    {
+      ioh->read_error ();
+    }
   else
     {
       JAWS_TRACE ("JAWS_Synch_IO::read success");
@@ -118,7 +97,7 @@ JAWS_Synch_IO::receive_file (JAWS_IO_Handler *ioh,
       stream.set_handle (ioh->handle ());
 
       int const bytes_to_memcpy = (std::min) (entire_length, initial_data_length);
-      ACE_OS::memcpy (handle.address (), initial_data, bytes_to_memcpy);
+      std::memcpy (handle.address (), initial_data, bytes_to_memcpy);
 
       int bytes_to_read = entire_length - bytes_to_memcpy;
 
@@ -126,13 +105,19 @@ JAWS_Synch_IO::receive_file (JAWS_IO_Handler *ioh,
                                  handle.address () + initial_data_length,
                                  bytes_to_read);
       if (bytes == bytes_to_read)
-        ioh->receive_file_complete ();
+        {
+          ioh->receive_file_complete ();
+        }
       else
+      {
         result = -1;
+      }
     }
 
   if (result != ACE_Filecache_Handle::ACE_SUCCESS)
+  {
     ioh->receive_file_error (result);
+  }
 }
 
 void
@@ -163,7 +148,9 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
             {
               count = ACE_OS::read (handle, buf, sizeof (buf));
               if (count <= 0)
+              {
                 break;
+              }
 
               if (stream.send_n (buf, count) < count)
                 {
@@ -181,9 +168,13 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
     }
 
   if (result == 0)
-    ioh->transmit_file_complete ();
+    {
+      ioh->transmit_file_complete ();
+    }
   else
+  {
     ioh->transmit_file_error (result);
+  }
 }
 
 void
@@ -242,7 +233,7 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
         {
           iov[iovcnt].iov_base = const_cast<char*> (header);
           iov[iovcnt].iov_len =  header_size;
-          iovcnt++;
+          ++iovcnt;
         }
 
       ACE_FILE_Info info;
@@ -251,13 +242,13 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
         {
           iov[iovcnt].iov_base = (char *) cf.mmap ()->addr ();
           iov[iovcnt].iov_len = info.size_;
-          iovcnt++;
+          ++iovcnt;
         }
       if (trailer_size > 0)
         {
           iov[iovcnt].iov_base = const_cast<char*> (trailer);
           iov[iovcnt].iov_len = trailer_size;
-          iovcnt++;
+          ++iovcnt;
         }
       if (ACE_OS::writev (ioh->handle (), iov, iovcnt) < 0)
         {
@@ -328,7 +319,9 @@ JAWS_Asynch_IO::JAWS_Asynch_IO ()
 JAWS_Asynch_IO::~JAWS_Asynch_IO ()
 {
   if (this->handle_ != ACE_INVALID_HANDLE)
+  {
     ACE_OS::closesocket (this->handle_);
+  }
 }
 
 void
@@ -349,7 +342,9 @@ JAWS_Asynch_IO::accept (JAWS_IO_Handler *ioh,
   size_t bytes_to_read = JAWS_Data_Block::JAWS_DATA_BLOCK_SIZE;
 
   if (db->policy ()->acceptor ()->accept (bytes_to_read, ioh) == -1)
+  {
     ioh->accept_error ();
+  }
 }
 
 void
@@ -368,7 +363,9 @@ JAWS_Asynch_IO::read (JAWS_IO_Handler *ioh,
 
   if (ar.open (*(aioh->handler ()), aioh->handle ()) == -1
       || ar.read (*mb, size) == -1)
+  {
     aioh->read_error ();
+  }
 }
 
 void
@@ -385,7 +382,7 @@ JAWS_Asynch_IO::receive_file (JAWS_IO_Handler *ioh,
   JAWS_Asynch_IO_Handler *aioh =
     dynamic_cast<JAWS_Asynch_IO_Handler *> (ioh);
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_Filecache_Handle *handle;
 
   ACE_NEW (handle, ACE_Filecache_Handle (filename, entire_length, ACE_NOMAP));
@@ -394,9 +391,7 @@ JAWS_Asynch_IO::receive_file (JAWS_IO_Handler *ioh,
 
   if (result == ACE_Filecache_Handle::ACE_SUCCESS)
     {
-      ACE_OS::memcpy (handle->address (),
-                      initial_data,
-                      initial_data_length);
+      std::memcpy (handle->address (), initial_data, initial_data_length);
 
       int bytes_to_read = entire_length - initial_data_length;
 
@@ -414,7 +409,9 @@ JAWS_Asynch_IO::receive_file (JAWS_IO_Handler *ioh,
 
           if (ar.open (*(aioh->handler ()), aioh->handle ()) == -1
               || ar.read (*mb, mb->size () - mb->length (), handle) == -1)
+          {
             result = -1;
+          }
         }
     }
 
@@ -441,7 +438,7 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
   JAWS_Asynch_IO_Handler *aioh =
     dynamic_cast<JAWS_Asynch_IO_Handler *> (ioh);
 
-  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer = 0;
+  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer {};
 
   int result = 0;
 
@@ -468,7 +465,9 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
                                0,  // flags
                                0 // act
                                ) == -1)
+      {
         result = -1;
+      }
     }
 
   if (result != 0)
@@ -495,7 +494,7 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
   JAWS_Asynch_IO_Handler *aioh =
     dynamic_cast<JAWS_Asynch_IO_Handler *> (ioh);
 
-  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer = 0;
+  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer {};
   JAWS_Cached_FILE *cf = new JAWS_Cached_FILE (filename);
 
   if (cf->file ()->get_handle () != ACE_INVALID_HANDLE)
@@ -518,7 +517,9 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
                                0,  // flags
                                cf // act
                                ) == -1)
+      {
         result = -1;
+      }
     }
 
   if (result != 0)
@@ -556,7 +557,7 @@ JAWS_Asynch_IO::send_message (JAWS_IO_Handler *ioh,
   JAWS_Asynch_IO_Handler *aioh =
     dynamic_cast<JAWS_Asynch_IO_Handler *> (ioh);
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_NEW (mb, ACE_Message_Block (buffer, length));
 
   if (mb == 0)
@@ -572,9 +573,13 @@ JAWS_Asynch_IO::send_message (JAWS_IO_Handler *ioh,
       mb->release ();
 
       if (act == CONFIRMATION)
-        ioh->confirmation_message_complete ();
+        {
+          ioh->confirmation_message_complete ();
+        }
       else
+      {
         ioh->error_message_complete ();
+      }
     }
 }
 

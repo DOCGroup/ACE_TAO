@@ -27,8 +27,7 @@ TAO_ComponentContainer_i::create_component (
     char const *name,
     char const *version,
     CORBA::ComponentIR::ComponentDef_ptr base_component,
-    CORBA::InterfaceDefSeq const &supports_interfaces
-  )
+    CORBA::InterfaceDefSeq const &supports_interfaces)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::ComponentDef::_nil ());
 
@@ -47,8 +46,7 @@ TAO_ComponentContainer_i::create_component_i (
     char const *name,
     char const *version,
     CORBA::ComponentIR::ComponentDef_ptr base_component,
-    CORBA::InterfaceDefSeq const &supports_interfaces
-  )
+    CORBA::InterfaceDefSeq const &supports_interfaces)
 {
   TAO_ComponentContainer_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -140,8 +138,7 @@ TAO_ComponentContainer_i::create_home (
     CORBA::ComponentIR::HomeDef_ptr base_home,
     CORBA::ComponentIR::ComponentDef_ptr managed_component,
     CORBA::InterfaceDefSeq const &supports_interfaces,
-    CORBA::ValueDef_ptr primary_key
-  )
+    CORBA::ValueDef_ptr primary_key)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::HomeDef::_nil ());
 
@@ -164,8 +161,7 @@ TAO_ComponentContainer_i::create_home_i (
     CORBA::ComponentIR::HomeDef_ptr base_home,
     CORBA::ComponentIR::ComponentDef_ptr managed_component,
     CORBA::InterfaceDefSeq const &supports_interfaces,
-    CORBA::ValueDef_ptr primary_key
-  )
+    CORBA::ValueDef_ptr primary_key)
 {
   TAO_ComponentContainer_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -216,15 +212,13 @@ TAO_ComponentContainer_i::create_home_i (
                                                  "count",
                                                  length);
 
-      char *stringified {};
-
       for (i = 0; i < length; ++i)
         {
           char * const supported_path =
             TAO_IFR_Service_Utils::reference_to_path (
                 supports_interfaces[i]
               );
-          stringified = TAO_IFR_Service_Utils::int_to_string (i);
+          char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (supports_key,
                                                     stringified,
                                                     supported_path);
@@ -260,8 +254,7 @@ TAO_ComponentContainer_i::create_event (
     CORBA::Boolean is_truncatable,
     CORBA::ValueDefSeq const &abstract_base_values,
     CORBA::InterfaceDefSeq const &supported_interfaces,
-    CORBA::ExtInitializerSeq const &initializers
-  )
+    CORBA::ExtInitializerSeq const &initializers)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::EventDef::_nil ());
 
@@ -290,8 +283,7 @@ TAO_ComponentContainer_i::create_event_i (
     CORBA::Boolean is_truncatable,
     CORBA::ValueDefSeq const &abstract_base_values,
     CORBA::InterfaceDefSeq const &supported_interfaces,
-    CORBA::ExtInitializerSeq const &initializers
-  )
+    CORBA::ExtInitializerSeq const &initializers)
 {
   TAO_ComponentContainer_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -382,11 +374,9 @@ TAO_ComponentContainer_i::create_event_i (
       this->repo_->config ()->set_integer_value (supported_key,
                                                  "count",
                                                  length);
-      char *supported_path {};
-
       for (i = 0; i < length; ++i)
         {
-          supported_path =
+          char * const supported_path =
             TAO_IFR_Service_Utils::reference_to_path (
                 supported_interfaces[i]
               );
@@ -408,7 +398,6 @@ TAO_ComponentContainer_i::create_event_i (
                                             initializers_key);
 
       CORBA::ULong count = 0;
-      char *stringified {};
       ACE_Configuration_Section_Key initializer_key;
       ACE_Configuration_Section_Key outer_key;
       ACE_Configuration_Section_Key inner_key;
@@ -416,7 +405,7 @@ TAO_ComponentContainer_i::create_event_i (
 
       for (i = 0; i < length; ++i)
         {
-          stringified = TAO_IFR_Service_Utils::int_to_string (i);
+          char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (initializers_key,
                                                 stringified,
                                                 1,
@@ -442,7 +431,7 @@ TAO_ComponentContainer_i::create_event_i (
 
               for (CORBA::ULong j {}; j < count; ++j)
                 {
-                  stringified = TAO_IFR_Service_Utils::int_to_string (j);
+                  char * const stringified = TAO_IFR_Service_Utils::int_to_string (j);
                   this->repo_->config ()->open_section (outer_key,
                                                         stringified,
                                                         1,
@@ -486,7 +475,7 @@ TAO_ComponentContainer_i::create_event_i (
                       excep_path
                     );
 
-                  stringified = TAO_IFR_Service_Utils::int_to_string (k);
+                  char * const stringified = TAO_IFR_Service_Utils::int_to_string (k);
                   this->repo_->config ()->set_string_value (outer_key,
                                                             stringified,
                                                             excep_path);

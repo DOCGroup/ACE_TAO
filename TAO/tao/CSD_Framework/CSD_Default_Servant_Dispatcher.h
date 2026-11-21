@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    CSD_Default_Servant_Dispatcher.h
  *
  *  @author Yan Dai (dai_y@ociweb.com)
  */
-//=============================================================================
 
 #ifndef TAO_CSD_DEFAULT_SERVANT_DISPATCHER_H
 #define TAO_CSD_DEFAULT_SERVANT_DISPATCHER_H
@@ -31,12 +29,19 @@ class TAO_CSD_FW_Export TAO_CSD_Default_Servant_Dispatcher
   : public virtual TAO_Default_Servant_Dispatcher
 {
 public:
+  TAO_CSD_Default_Servant_Dispatcher () = default;
+
   ~TAO_CSD_Default_Servant_Dispatcher () override;
 
+  TAO_CSD_Default_Servant_Dispatcher (TAO_CSD_Default_Servant_Dispatcher const &) = delete;
+  TAO_CSD_Default_Servant_Dispatcher &operator= (TAO_CSD_Default_Servant_Dispatcher const &) = delete;
+  TAO_CSD_Default_Servant_Dispatcher (TAO_CSD_Default_Servant_Dispatcher &&) = delete;
+  TAO_CSD_Default_Servant_Dispatcher &operator= (TAO_CSD_Default_Servant_Dispatcher &&) = delete;
+
   /// Factory method for creating new CSD Root POA.
-  TAO_Root_POA *create_Root_POA (const ACE_CString &name,
+  TAO_Root_POA *create_Root_POA (ACE_CString const &name,
                                  PortableServer::POAManager_ptr poa_manager,
-                                 const TAO_POA_Policy_Set &policies,
+                                 TAO_POA_Policy_Set const &policies,
                                  ACE_Lock &lock,
                                  TAO_SYNCH_MUTEX &thread_lock,
                                  TAO_ORB_Core &orb_core,

@@ -15,6 +15,7 @@
 #include "tao/operation_details.h"
 
 #include "ace/os_include/os_errno.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -42,11 +43,6 @@ namespace TAO
   {
   }
 
-  DII_Invocation_Adapter::~DII_Invocation_Adapter ()
-  {
-    delete[] ex_data_;
-  }
-
   void
   DII_Invocation_Adapter::invoke (TAO::Exception_Data const* /*ex_data*/,
                                   unsigned long ex_count)
@@ -54,20 +50,22 @@ namespace TAO
     // Convert DII exception list to a form the invocation can use
     // to filter raised user exceptions.
     ex_count = this->exception_list_->count ();
-    ACE_NEW_THROW_EX (this->ex_data_,
+    TAO::Exception_Data *exception_data {};
+    ACE_NEW_THROW_EX (exception_data,
                       TAO::Exception_Data[ex_count],
                       CORBA::NO_MEMORY ());
-    for (unsigned long l=0; l<ex_count ;++l)
+    std::unique_ptr<TAO::Exception_Data[]> const ex_data (exception_data);
+    for (unsigned long l {}; l < ex_count; ++l)
     {
-      CORBA::TypeCode_var xtc = this->exception_list_->item (l);
-      this->ex_data_[l].id = xtc->id ();
-      this->ex_data_[l].alloc = nullptr;
+      CORBA::TypeCode_var const xtc = this->exception_list_->item (l);
+      ex_data[l].id = xtc->id ();
+      ex_data[l].alloc = nullptr;
 #if TAO_HAS_INTERCEPTORS == 1
-      this->ex_data_[l].tc_ptr = xtc.in ();
+      ex_data[l].tc_ptr = xtc.in ();
 #endif
     }
 
-    Invocation_Adapter::invoke (this->ex_data_, ex_count);
+    Invocation_Adapter::invoke (ex_data.get (), ex_count);
   }
 
   Invocation_Status
@@ -77,7 +75,7 @@ namespace TAO
     CORBA::Object_var &effective_target,
     Collocation_Strategy strat)
   {
-    TAO_DII_Arguments_Converter_Impl* dii_arguments_converter
+    TAO_DII_Arguments_Converter_Impl* const dii_arguments_converter
       = ACE_Dynamic_Service<TAO_DII_Arguments_Converter_Impl>::instance (
         "DII_Arguments_Converter");
     details.cac (dii_arguments_converter);
@@ -126,7 +124,7 @@ namespace TAO
     // forward requested byte order
     synch._tao_byte_order (this->_tao_byte_order ());
 
-    Invocation_Status status = synch.remote_twoway (max_wait_time);
+    Invocation_Status const status = synch.remote_twoway (max_wait_time);
 
     if (status == TAO_INVOKE_RESTART &&
         (synch.reply_status () == GIOP::LOCATION_FORWARD ||
@@ -144,7 +142,6 @@ namespace TAO
     return status;
   }
 
-  //================================================================
   DII_Deferred_Invocation_Adapter::DII_Deferred_Invocation_Adapter (
       CORBA::Object *target,
       Argument **args,
@@ -180,7 +177,7 @@ namespace TAO
     // to prevent memory leaks. The invoke may encounter errors
     // before being able to handover the dispatcher to the invocation
     // using and managing it.
-    TAO_DII_Deferred_Reply_Dispatcher *new_rd = nullptr;
+    TAO_DII_Deferred_Reply_Dispatcher *new_rd {};
     ACE_NEW_THROW_EX (new_rd,
         TAO_DII_Deferred_Reply_Dispatcher (this->request_,
                                            this->orb_core_),
@@ -200,7 +197,7 @@ namespace TAO
     CORBA::Object_var &effective_target,
     Collocation_Strategy strat)
   {
-    TAO_DII_Arguments_Converter_Impl* dii_arguments_converter
+    TAO_DII_Arguments_Converter_Impl* const dii_arguments_converter
       = ACE_Dynamic_Service<TAO_DII_Arguments_Converter_Impl>::instance (
         "DII_Arguments_Converter");
     details.cac (dii_arguments_converter);
@@ -301,7 +298,6 @@ namespace TAO
                                                     effective_target,
                                                     strat);
   }
-
 
 } // End namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL

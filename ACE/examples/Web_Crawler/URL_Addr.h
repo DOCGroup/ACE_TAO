@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    URL_Addr.h
@@ -9,11 +8,12 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_URL_ADDR_H
 #define ACE_URL_ADDR_H
 
 #include "ace/INET_Addr.h"
+
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -29,14 +29,12 @@
 class ACE_URL_Addr : public ACE_INET_Addr
 {
 public:
-  /// Constructor.
   ACE_URL_Addr ();
 
   ACE_URL_Addr (const ACE_TCHAR *host_name,
                 const ACE_TCHAR *path_name,
                 u_short port = ACE_DEFAULT_HTTP_PORT);
 
-  /// Copy constructor.
   ACE_URL_Addr (const ACE_URL_Addr &addr);
 
   /// Essentially the copy constructor.
@@ -50,8 +48,8 @@ public:
    * the @a address it is assumed to be an ip-number or ip-address
    * number, with the port number ACE_DEFAULT_HTTP_PORT.
    */
-  virtual int string_to_addr (const ACE_TCHAR *address,
-                              int address_family = AF_UNSPEC);
+  int string_to_addr (const ACE_TCHAR *address,
+                      int address_family = AF_UNSPEC) override;
 
   /**
    * Transform the current ACE_INET_Addr address into string format.
@@ -62,9 +60,9 @@ public:
    * "www.cs.wustl.edu:80/~schmidt/").  Returns -1 if the @a size of
    * the <buffer> is too small, else 0.
    */
-  virtual int addr_to_string (ACE_TCHAR *s,
-                              size_t size,
-                              int ipaddr_format = 1) const;
+  int addr_to_string (ACE_TCHAR *s,
+                      size_t size,
+                      int ipaddr_format = 1) const override;
 
   /**
    * Transform the current <ACE_INET_Addr> address into string format.
@@ -78,11 +76,9 @@ public:
    */
   virtual const ACE_TCHAR *addr_to_string (int ipaddr_format = 1) const;
 
-  /// Assignment operator.
   void operator= (const ACE_URL_Addr &addr);
 
-  /// Destructor.
-  ~ACE_URL_Addr ();
+  ~ACE_URL_Addr () = default;
 
   /**
    * Compare two addresses for equality.  The addresses are considered
@@ -95,7 +91,7 @@ public:
   bool operator != (const ACE_URL_Addr &SAP) const;
 
   /// Computes and returns hash value.
-  virtual u_long hash () const;
+  u_long hash () const override;
 
   /// Return the path name.
   const ACE_TCHAR *get_path_name () const;
@@ -103,15 +99,11 @@ public:
   /// Commit suicide.
   int destroy ();
 private:
-  /// Our path name.
-  ACE_TCHAR *path_name_;
+  /// URL path.
+  std::basic_string<ACE_TCHAR> path_name_;
 
-  /// The dynamically address string that's used for the
-  /// <addr_to_string> method.
-  ACE_TCHAR *addr_string_;
-
-  /// Current length of the <addr_string_>
-  size_t addr_string_len_;
+  /// Cached result of addr_to_string().
+  mutable std::basic_string<ACE_TCHAR> addr_string_;
 };
 
 #endif /* ACE_URL_ADDR_H */

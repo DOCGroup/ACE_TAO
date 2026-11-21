@@ -36,10 +36,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_LF_Invocation_Event: public TAO_LF_Event
 {
 public:
-  /// Constructor
   TAO_LF_Invocation_Event ();
 
-  /// Destructor
   ~TAO_LF_Invocation_Event () override;
 
 protected:

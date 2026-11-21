@@ -17,7 +17,6 @@ be_visitor_union_cdr_op_cs::be_visitor_union_cdr_op_cs (
 {
 }
 
-
 namespace {
   void
   serialize_disc (TAO_OutStream * const os,

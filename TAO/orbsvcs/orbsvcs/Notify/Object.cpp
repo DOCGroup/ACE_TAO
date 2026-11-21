@@ -16,23 +16,19 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Object::TAO_Notify_Object ()
-: poa_ (0)
-, proxy_poa_ (0)
-, own_proxy_poa_ (false)
-, object_poa_ (0)
-, own_object_poa_ (false)
-, id_ (0)
-, own_worker_task_ (false)
-, shutdown_ (false)
 {
   if (TAO_debug_level > 2 )
-    ORBSVCS_DEBUG ((LM_DEBUG,"object:%x  created\n", this ));
+  {
+    ORBSVCS_DEBUG ((LM_DEBUG,"object:%@  created\n", this ));
+  }
 }
 
 TAO_Notify_Object::~TAO_Notify_Object ()
 {
   if (TAO_debug_level > 2 )
-    ORBSVCS_DEBUG ((LM_DEBUG,"object:%x  destroyed\n", this ));
+  {
+    ORBSVCS_DEBUG ((LM_DEBUG,"object:%@  destroyed\n", this ));
+  }
 
   this->destroy_proxy_poa ();
   this->destroy_object_poa ();
@@ -80,7 +76,6 @@ TAO_Notify_Object::activate (
   return this->poa_->activate_with_id (servant, this->id_);
 }
 
-
 void
 TAO_Notify_Object::deactivate ()
 {
@@ -106,7 +101,9 @@ TAO_Notify_Object::shutdown ()
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 1);
 
     if (this->shutdown_ == 1)
+    {
       return 1; // Another thread has already run shutdown.
+    }
 
     this->shutdown_ = 1;
   }
@@ -146,8 +143,14 @@ TAO_Notify_Object::destroy_proxy_poa ()
   {
     try
     {
-      if ( this->proxy_poa_ == this->object_poa_ ) this->object_poa_ = nullptr;
-      if ( this->proxy_poa_ == this->poa_ ) this->poa_ = nullptr;
+      if ( this->proxy_poa_ == this->object_poa_ )
+      {
+        this->object_poa_ = nullptr;
+      }
+      if ( this->proxy_poa_ == this->poa_ )
+      {
+        this->poa_ = nullptr;
+      }
 
       if ( this->own_proxy_poa_ == true )
       {
@@ -160,7 +163,9 @@ TAO_Notify_Object::destroy_proxy_poa ()
     catch (const CORBA::Exception& ex)
     {
       if (TAO_debug_level > 2)
+      {
         ex._tao_print_exception ("Proxy shutdown error (%P|%t)\n");
+      }
     }
   }
 }
@@ -172,8 +177,14 @@ TAO_Notify_Object::destroy_object_poa ()
   {
     try
     {
-      if (this->object_poa_ == this->proxy_poa_) this->proxy_poa_ = nullptr;
-      if (this->object_poa_ == this->poa_) this->poa_ = nullptr;
+      if (this->object_poa_ == this->proxy_poa_)
+      {
+        this->proxy_poa_ = nullptr;
+      }
+      if (this->object_poa_ == this->poa_)
+      {
+        this->poa_ = nullptr;
+      }
 
       if (this->own_object_poa_ == true)
       {
@@ -186,7 +197,9 @@ TAO_Notify_Object::destroy_object_poa ()
     catch (const CORBA::Exception& ex)
     {
       if (TAO_debug_level > 2)
+      {
         ex._tao_print_exception ("Proxy shutdown error (%P|%t)\n");
+      }
     }
   }
 }
@@ -246,7 +259,9 @@ TAO_Notify_Object::set_qos (const CosNotification::QoSProperties & qos)
   TAO_Notify_QoSProperties new_qos_properties;
 
   if (new_qos_properties.init (qos, err_seq) == -1)
+  {
     throw CORBA::INTERNAL ();
+  }
 
   // Apply the appropriate concurrency QoS
   if (new_qos_properties.thread_pool ().is_valid ())
@@ -262,8 +277,10 @@ TAO_Notify_Object::set_qos (const CosNotification::QoSProperties & qos)
       }
   }
   else if (new_qos_properties.thread_pool_lane ().is_valid ())
-    TAO_Notify_PROPERTIES::instance()->builder()->
-    apply_lane_concurrency (*this, new_qos_properties.thread_pool_lane ().value ());
+    {
+      TAO_Notify_PROPERTIES::instance()->builder()->
+      apply_lane_concurrency (*this, new_qos_properties.thread_pool_lane ().value ());
+    }
 
   // Update the Thread Task's QoS properties..
   this->worker_task_->update_qos_properties (new_qos_properties);
@@ -273,10 +290,14 @@ TAO_Notify_Object::set_qos (const CosNotification::QoSProperties & qos)
 
   // Init the the overall QoS on this object.
   if (new_qos_properties.copy (this->qos_properties_) == -1)
+  {
     throw CORBA::INTERNAL ();
+  }
 
   if (err_seq.length () > 0) // Unsupported Property
-    throw CosNotification::UnsupportedQoS (err_seq);
+    {
+      throw CosNotification::UnsupportedQoS (err_seq);
+    }
 }
 
 CosNotification::QoSProperties*
@@ -302,7 +323,6 @@ TAO_Notify_Object::find_qos_property_value (
   // zero on success.  We must convert this to a boolean value.
   return (this->qos_properties_.find (name, value) == 0);
 }
-
 
 void
 TAO_Notify_Object::qos_changed (const TAO_Notify_QoSProperties& /*qos_properties*/)

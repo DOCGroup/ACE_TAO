@@ -19,15 +19,19 @@
 class  Inner_i : public virtual POA_Inner
 {
 public:
-  // ctor takes a 1 to delay and return string, a 0 to crash
-  Inner_i (int d);
+  /// ctor takes a 1 to delay and return string, a 0 to crash
+  explicit Inner_i (int d);
 
-  // will either return a string after a brief delay, or crash
-  virtual char * answer (const char *question);
+  /// will either return a string after a brief delay, or crash
+  char *answer (char const *question) override;
+
+  Inner_i (Inner_i const &) = delete;
+  Inner_i (Inner_i &&) = delete;
+  Inner_i &operator= (Inner_i const &) = delete;
+  Inner_i &operator= (Inner_i &&) = delete;
 
 private:
-  int divisor_;
+  int const divisor_;
 };
-
 
 #endif /* AMH_INNER_H_  */

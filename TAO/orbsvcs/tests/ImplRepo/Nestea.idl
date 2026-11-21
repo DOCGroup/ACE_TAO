@@ -1,17 +1,17 @@
-// Just implements a nice little Nestea server
+/// Just implements a nice little Nestea server
 interface Nestea_Bookshelf
 {
+  /// Add a number of cans to the bookshelf.
   void drink (in long cans);
-  // Add a number of cans to the bookshelf.
 
+  /// Crush some of those cans.
   void crush (in long cans);
-  // Crush some of those cans.
 
+  /// How many cans are in the collection?
   long bookshelf_size ();
-  // How many cans are in the collection?
 
+  /// What does the server think of your collection?
   string get_praise ();
-  // What does the server think of your collection?
 
   oneway void shutdown();
 };

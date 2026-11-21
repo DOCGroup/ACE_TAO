@@ -11,8 +11,7 @@
 static JAWS_Event_Result
 JAWS_synch_send ( ACE_HANDLE handle
                 , ACE_Message_Block *mb
-                , const ACE_Time_Value *tv = 0
-                )
+                , ACE_Time_Value const *tv = nullptr)
 {
   JAWS_Event_Result io_result;
 
@@ -39,7 +38,9 @@ JAWS_synch_send ( ACE_HANDLE handle
   else if ((size_t) result < mb->length ())
     {
       if (result > 0)
+      {
         mb->rd_ptr (result);
+      }
 
       JAWS_Event_Result tmp_io_result ( result
                                       , JAWS_Event_Result::JE_ERROR
@@ -50,7 +51,9 @@ JAWS_synch_send ( ACE_HANDLE handle
   else
     {
       if (result > 0)
+      {
         mb->rd_ptr (result);
+      }
 
       JAWS_Event_Result tmp_io_result ( result
                                       , JAWS_Event_Result::JE_OK
@@ -67,46 +70,47 @@ JAWS_Synch_IO::send ( ACE_HANDLE handle
                     , ACE_Message_Block *mb
                     , JAWS_Event_Completer *completer
                     , const ACE_Time_Value &tv
-                    , void *act
-                    )
+                    , void *act)
 {
   JAWS_Event_Result io_result;
-  const ACE_Time_Value *tvp = 0;
+  ACE_Time_Value const *tvp {};
 
   if (ACE_Time_Value::zero < tv)
+  {
     tvp = &tv;
+  }
 
   io_result = JAWS_synch_send (handle, mb, tvp);
 
   if (completer)
+  {
     completer->output_complete (io_result, act);
+  }
 }
-
 
 void
 JAWS_Synch_IO::send ( ACE_HANDLE handle
                     , ACE_Message_Block *mb
                     , JAWS_Event_Completer *completer
-                    , void *act
-                    )
+                    , void *act)
 {
   this->send (handle, mb, completer, ACE_Time_Value::zero, act);
 }
-
 
 void
 JAWS_Synch_IO::recv ( ACE_HANDLE handle
                     , ACE_Message_Block *mb
                     , JAWS_Event_Completer *completer
                     , const ACE_Time_Value &tv
-                    , void *act
-                    )
+                    , void *act)
 {
   JAWS_Event_Result io_result;
-  const ACE_Time_Value *tvp = 0;
+  ACE_Time_Value const *tvp {};
 
   if (ACE_Time_Value::zero < tv)
+  {
     tvp = &tv;
+  }
 
   ssize_t result = ACE::recv (handle, mb->wr_ptr (), mb->space (), tvp);
   if (result < 0)
@@ -120,7 +124,9 @@ JAWS_Synch_IO::recv ( ACE_HANDLE handle
   else
     {
       if (result > 0)
+      {
         mb->wr_ptr (result);
+      }
 
       JAWS_Event_Result tmp_io_result ( result
                                       , JAWS_Event_Result::JE_OK
@@ -130,20 +136,19 @@ JAWS_Synch_IO::recv ( ACE_HANDLE handle
     }
 
   if (completer)
+  {
     completer->input_complete (io_result, act);
+  }
 }
-
 
 void
 JAWS_Synch_IO::recv ( ACE_HANDLE handle
                     , ACE_Message_Block *mb
                     , JAWS_Event_Completer *completer
-                    , void *act
-                    )
+                    , void *act)
 {
   this->recv (handle, mb, completer, ACE_Time_Value::zero, act);
 }
-
 
 void
 JAWS_Synch_IO::transmit ( ACE_HANDLE handle
@@ -152,14 +157,15 @@ JAWS_Synch_IO::transmit ( ACE_HANDLE handle
                         , const ACE_Time_Value &tv
                         , void *act
                         , ACE_Message_Block *header
-                        , ACE_Message_Block *trailer
-                        )
+                        , ACE_Message_Block *trailer)
 {
   JAWS_Event_Result io_result;
-  const ACE_Time_Value *tvp = 0;
+  ACE_Time_Value const *tvp {};
 
   if (ACE_Time_Value::zero < tv)
+  {
     tvp = &tv;
+  }
 
   size_t bytes = 0;
 
@@ -170,7 +176,9 @@ JAWS_Synch_IO::transmit ( ACE_HANDLE handle
       if (io_result.status () != JAWS_Event_Result::JE_OK)
         {
           if (completer)
+          {
             completer->input_complete (io_result, act);
+          }
 
           return;
         }
@@ -181,7 +189,9 @@ JAWS_Synch_IO::transmit ( ACE_HANDLE handle
   while ((len = ACE::recv (source, buf.wr_ptr (), buf.space (), tvp)) >= 0)
     {
       if (len == 0)
+      {
         break;
+      }
 
       buf.wr_ptr (len);
       io_result = JAWS_synch_send (handle, & buf);
@@ -194,7 +204,9 @@ JAWS_Synch_IO::transmit ( ACE_HANDLE handle
                                           );
 
           if (completer)
+          {
             completer->input_complete (tmp_io_result, act);
+          }
 
           return;
         }
@@ -214,7 +226,9 @@ JAWS_Synch_IO::transmit ( ACE_HANDLE handle
                                           );
 
           if (completer)
+          {
             completer->input_complete (tmp_io_result, act);
+          }
 
           return;
         }
@@ -238,9 +252,10 @@ JAWS_Synch_IO::transmit ( ACE_HANDLE handle
     }
 
   if (completer)
+  {
     completer->input_complete (io_result, act);
+  }
 }
-
 
 void
 JAWS_Synch_IO::transmit ( ACE_HANDLE handle
@@ -248,8 +263,7 @@ JAWS_Synch_IO::transmit ( ACE_HANDLE handle
                         , JAWS_Event_Completer *completer
                         , void *act
                         , ACE_Message_Block *header
-                        , ACE_Message_Block *trailer
-                        )
+                        , ACE_Message_Block *trailer)
 {
   this->transmit ( handle
                  , source

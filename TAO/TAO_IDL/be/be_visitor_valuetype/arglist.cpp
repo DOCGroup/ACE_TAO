@@ -92,6 +92,11 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
         }
       else
         {
+          if (this->ctx_->interface () != nullptr
+              && this->ctx_->interface () != node->defined_in ())
+            {
+              *os << " override";
+            }
           *os << " = 0;" << be_uidt;
         }
       break;

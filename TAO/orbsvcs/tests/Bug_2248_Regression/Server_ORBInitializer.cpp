@@ -6,11 +6,6 @@
 
 #include "Server_Request_Interceptor.h"
 
-Server_ORBInitializer::Server_ORBInitializer ()
-  : server_interceptor_ ()
-{
-}
-
 void
 Server_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)

@@ -4,7 +4,6 @@
 #include "PushConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_Notify_Tests_PushConsumer_Traits::TAO_Notify_Tests_PushConsumer_Traits ()
   :type_ (CosNotifyChannelAdmin::ANY_EVENT)
 {

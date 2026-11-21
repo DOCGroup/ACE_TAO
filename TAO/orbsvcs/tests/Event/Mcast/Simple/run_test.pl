@@ -28,12 +28,11 @@ $test->AddLibPath ("../Common");
 
 my $rundate = POSIX::strftime("%Y_%m_%d_%H_%M", localtime);
 my @output_files = ();
-for ($i = 0; $i < 4; $i++) {
-    $output_files[$i] = $test->LocalFile ("run_test_".$i."_".$rundate);
+for ($i = 0; $i < 2; $i++) {
+    for ($j = 0; $j < 4; $j++) {
+        $output_files[$i][$j] = $test->LocalFile ("run_test_".$i."_".$j."_".$rundate);
+    }
 }
-
-# String indicating end of test output.
-my $test_terminator = "###########################################";
 
 # Amount of delay (in seconds) between starting a server and a client
 # to allow proper server initialization.
@@ -62,19 +61,19 @@ sub run_test {
     print STDERR " $test_comments[$index]\n\n";
 
     # Supplier EC.
-    if (run_ec (0, $supplier_conffile[$index], $supplier_iorfile) != 0) {
+    if (run_ec ($index, 0, $supplier_conffile[$index], $supplier_iorfile) != 0) {
         kill_processes ();
         return -1;
     }
 
     # Consumer EC.
-    if (run_ec (1, $consumer_conffile[$index], $consumer_iorfile) != 0) {
+    if (run_ec ($index, 1, $consumer_conffile[$index], $consumer_iorfile) != 0) {
         kill_processes ();
         return -1;
     }
 
     # Consumer.
-    $ps[2] = $test->CreateProcess ("consumer", "-ORBLogFile $output_files[2] ".
+    $ps[2] = $test->CreateProcess ("consumer", "-ORBLogFile $output_files[$index][2] ".
                                                "-ORBInitRef Event_Service=file://$consumer_iorfile");
     if ($ps[2]->Spawn () == -1) {
         kill_processes ();
@@ -85,7 +84,7 @@ sub run_test {
     sleep ($sleeptime);
 
     # Supplier.
-    $ps[3] = $test->CreateProcess ("supplier", "-ORBLogFile $output_files[3] ".
+    $ps[3] = $test->CreateProcess ("supplier", "-ORBLogFile $output_files[$index][3] ".
                                                "-ORBInitRef Event_Service=file://$supplier_iorfile");
     if ($ps[3]->Spawn () == -1) {
         kill_processes ();
@@ -98,13 +97,14 @@ sub run_test {
 
 # Start Event Channel server.
 sub run_ec {
-    my $ec_id = $_[0];
-    my $conf_file = $_[1];
-    my $ior_file = $_[2];
+    my $test_index = $_[0];
+    my $ec_id = $_[1];
+    my $conf_file = $_[2];
+    my $ior_file = $_[3];
 
     $test->DeleteFile ($ior_file);
 
-    $ps[$ec_id] = $test->CreateProcess ("gateway-ec", "-ORBLogFile $output_files[$ec_id] ".
+    $ps[$ec_id] = $test->CreateProcess ("gateway-ec", "-ORBLogFile $output_files[$test_index][$ec_id] ".
                                                       "-ORBsvcconf $conf_file -i $ior_file");
     if ($ps[$ec_id]->Spawn () == -1) {
         return 1;
@@ -139,25 +139,17 @@ sub kill_processes {
 
 sub analyze_results {
     my $test_number = $_[0];
-    my $process_id  = $_[1];
     print STDERR " $test_comments[$test_number]\n\n";
 
-    if (! open (TEST_OUTPUT, "<$output_files[$process_id]")) {
-        print STDERR "ERROR: Could not open $output_files[$process_id]\n";
+    my $output_file = $output_files[$test_number][2];
+    if (! open (TEST_OUTPUT, "<$output_file")) {
+        print STDERR "ERROR: Could not open $output_file\n";
         return -1;
-    }
-
-    my $output_start = $test_comments[$test_number];
-    while (<TEST_OUTPUT>) {
-        # Skip output not pertinent to this test.
-        last if m/\Q$output_start\E/;
     }
 
     my $status = 0;
     my $events_received = 0;
     while (<TEST_OUTPUT>) {
-        last if m/$test_terminator/;
-
         if (m/Received event/) {
             $events_received += 1;
         }
@@ -181,7 +173,7 @@ sub analyze_results {
         return 0;
     }
 
-    print STDERR "ERROR - check $output_files[$process_id] for full output.\n";
+    print STDERR "ERROR - check $output_file for full output.\n";
     return -1;
 }
 
@@ -196,14 +188,12 @@ for ($i = 0; $i < 2; $i++) {
         $status = 1;
     }
 
-    print STDERR "$test_terminator\n\n";
+    print STDERR "###########################################\n\n";
 }
 
 for ($i = 0; $i < 2; $i++) {
-    for ($j= 0; $j < 4; $j++) {
-        if (analyze_results ($i, $j) == -1) {
-            $status = 1;
-        }
+    if (analyze_results ($i) == -1) {
+        $status = 1;
     }
     print STDERR "\n";
 }

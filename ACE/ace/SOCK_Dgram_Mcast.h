@@ -196,7 +196,7 @@ public:
    * You must invoke open() or join(), to create/bind a socket and define
    * operational parameters, before performing any I/O with this instance.
    */
-  ACE_SOCK_Dgram_Mcast (options opts = DEFOPTS);
+  explicit ACE_SOCK_Dgram_Mcast (options opts = DEFOPTS);
 
   /// Release all resources and implicitly or explicitly unsubscribe
   /// from all currently subscribed groups.
@@ -238,7 +238,8 @@ public:
             const ACE_TCHAR *net_if = nullptr,
             int reuse_addr = 1);
 
-  // = Multicast group subscribe/unsubscribe routines.
+  /// @name Multicast group subscriptions
+  /// @{
 
   /// Join a multicast group on a given interface (or all interfaces, if
   /// supported).
@@ -273,7 +274,6 @@ public:
             int reuse_addr = 1,               // (see above)
             const ACE_TCHAR *net_if = nullptr);
 
-
   /// Leave a multicast group on a given interface (or all interfaces, if
   /// supported).
   /**
@@ -293,8 +293,10 @@ public:
    */
   int leave (const ACE_INET_Addr &mcast_addr,
              const ACE_TCHAR *net_if = nullptr);
+  /// @}
 
-  // = Data transfer routines.
+  /// @name Data transfer
+  /// @{
 
   /// Send @a n bytes in @a buf, using the multicast address and network interface
   /// defined by the first open() or subscribe().
@@ -307,8 +309,10 @@ public:
   ssize_t send (const iovec iov[],
                 int n,
                 int flags = 0) const;
+  /// @}
 
-  // = Options.
+  /// @name Socket options
+  /// @{
 
   /// Set a socket option.
   /**
@@ -341,6 +345,7 @@ public:
 
   /// Read accessor for the constructor options (@see enum options above)
   int opts () const;
+  /// @}
 
 private:
   /// Subscribe to a multicast address on one or more network interface(s).
@@ -388,9 +393,9 @@ private:
  using subscription_list_iter_t = ACE_DLList_Iterator<ip_mreq>;
  /// List of currently subscribed addr/iface pairs (and assc. types).
  mutable subscription_list_t  subscription_list_;
- /// Lock used to protect subscription list.
+ /// Lock used to protect subscription list. The lock type need not
+ /// support recursive locking.
  mutable ACE_SDM_LOCK subscription_list_lock_;
-     // (Lock type does not need to support recursive locking.)
 #endif /* ACE_SOCK_DGRAM_MCAST_DUMPABLE */
 };
 

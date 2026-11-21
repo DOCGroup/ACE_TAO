@@ -1,14 +1,10 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Servant_var.h
  *
  * @author Jody Hagins <jody@atdesk.com>
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
-//=============================================================================
-
 #ifndef TAO_PORTABLESERVER_SERVANT_VAR_H
 #define TAO_PORTABLESERVER_SERVANT_VAR_H
 #include /**/ "ace/pre.h"

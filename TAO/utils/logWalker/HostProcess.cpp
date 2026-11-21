@@ -4,7 +4,7 @@
 #include "Thread.h"
 #include "Session.h"
 
-#include "ace/OS_NS_stdio.h"
+#include <cstdio>
 
 PeerNode::PeerNode (long h, PeerProcess *p)
   :handle_ (h),
@@ -23,18 +23,18 @@ HostProcess::~HostProcess ()
 {
   for (AddrList::ITERATOR i(this->listen_endpoints_);
        !i.done();
-       i++)
+       ++i)
     {
       delete reinterpret_cast<Endpoint *>(i.next()->item_);
     }
   for (ThreadList::ITERATOR i(this->threads_);
        !i.done();
-       i++)
+       ++i)
     {
       delete reinterpret_cast<Thread *>(i.next()->item_);
     }
 #if 0
-  for (PeerProcs::ITERATOR i = by_addr_.begin(); i != servers_.end(); i++)
+  for (PeerProcs::ITERATOR i = by_addr_.begin(); i != servers_.end(); ++i)
     {
       PeerProcs::ENTRY *entry;
       if (i.next(entry) == 0)
@@ -59,18 +59,20 @@ HostProcess::proc_name () const
 Thread *
 HostProcess::find_thread (long tid, size_t offset)
 {
-  Thread *thr = 0;
+  Thread *thr {};
   for (ACE_DLList_Iterator<Thread> i(threads_);
        !i.done();
        i.advance())
     {
       i.next(thr);
       if (thr->id() == tid)
+      {
         return thr;
+      }
     }
   char alias[20];
-  ACE_OS::snprintf (alias, 20, "Thread[" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "]",
-                   this->threads_.size() + 1);
+  std::snprintf (alias, 20, "Thread[" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "]",
+                 this->threads_.size() + 1);
   thr = new Thread (tid, alias, offset);
   threads_.insert_tail (thr);
   return thr;
@@ -79,7 +81,7 @@ HostProcess::find_thread (long tid, size_t offset)
 Thread *
 HostProcess::find_thread_for_peer (const ACE_CString &addr)
 {
-  Thread *thr = 0;
+  Thread *thr {};
   Endpoint ep (addr.c_str());
   for (ACE_DLList_Iterator<Thread> i(threads_);
        !i.done();
@@ -87,26 +89,32 @@ HostProcess::find_thread_for_peer (const ACE_CString &addr)
     {
       i.next(thr);
       PeerProcess *pp = thr->peek_new_connection();
-      if (pp == 0)
+      if (pp == nullptr)
+      {
         continue;
+      }
 
       if (pp->match_server_addr(ep))
+      {
         return thr;
+      }
     }
-  return 0;
+  return nullptr;
 }
 
 Thread *
 HostProcess::find_thread_for_handle (long h)
 {
-  Thread *thr = 0;
+  Thread *thr {};
   for (ACE_DLList_Iterator<Thread> i(threads_);
        !i.done();
        i.advance())
     {
       i.next(thr);
-      if (thr->active_handle() == h && thr->giop_target() != 0)
+      if (thr->active_handle() == h && thr->giop_target() != nullptr)
+      {
         return thr;
+      }
     }
   return thr;
 }
@@ -114,7 +122,7 @@ HostProcess::find_thread_for_handle (long h)
 PeerProcess *
 HostProcess::find_peer (const ACE_CString &addr)
 {
-  PeerProcess *pp = 0;
+  PeerProcess *pp {};
   Endpoint ep (addr.c_str());
   (void)this->by_addr_.find(ep,pp);
   return pp;
@@ -124,25 +132,27 @@ PeerProcess *
 HostProcess::find_peer (long h)
 {
   if (this->by_handle_.size() == 0)
-    return 0;
+  {
+    return nullptr;
+  }
   for (PeerArray::ITERATOR i(this->by_handle_);
        !i.done();
-       i++)
+       ++i)
     {
       PeerNode *node = reinterpret_cast<PeerNode *>(i.next()->item_);
       if (node->handle_ == h)
+      {
         return node->peer_;
+      }
     }
-  return 0;
+  return nullptr;
 }
-
 
 long
 HostProcess::pid () const
 {
   return this->pid_;
 }
-
 
 const ACE_Time_Value &
 HostProcess::start_time () const
@@ -164,10 +174,12 @@ HostProcess::has_endpoint (const Endpoint& addr, bool listen)
        !i.done();
        ++i)
     {
-      Endpoint *elem = 0;
+      Endpoint *elem {};
       i.next (elem);
       if (*elem == addr)
+      {
         return true;
+      }
     }
   return false;
 }
@@ -189,18 +201,20 @@ HostProcess::add_peer(long handle, PeerProcess *peer)
 {
   peer->set_owner (this);
   PeerProcess *existing = this->find_peer(handle);
-  if (existing != 0)
+  if (existing != nullptr)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "add_peer, found existing for %d\n",
-                  handle));
+                  "add_peer, found existing for %q\n",
+                  static_cast<ACE_INT64> (handle)));
     }
   const Endpoint &addr = peer->is_server() ?
     peer->server_addr() : peer->last_client_addr();
   int result = this->by_addr_.bind (addr,peer);
   if (result < 0)
-    ACE_ERROR ((LM_ERROR,"add_peer, cannot bind to addr %s result = %d,  %p\n",
-                addr.addr_.c_str(), result, "by_addr_.bind"));
+    {
+      ACE_ERROR ((LM_ERROR,"add_peer, cannot bind to addr %s result = %d,  %p\n",
+                  addr.addr_.c_str(), result, "by_addr_.bind"));
+    }
 
   PeerNode *node = new PeerNode (handle,peer);
   this->by_handle_.insert_tail(node);
@@ -210,10 +224,12 @@ void
 HostProcess::remove_peer(long h)
 {
   if (this->by_handle_.size() == 0)
+  {
     return;
+  }
   for (PeerArray::ITERATOR i(this->by_handle_);
        !i.done();
-       i++)
+       ++i)
     {
       PeerNode *node = reinterpret_cast<PeerNode *>(i.next()->item_);
       if (node->handle_ == h)
@@ -228,20 +244,22 @@ void
 HostProcess::dump_summary (ostream &strm)
 {
   strm << "Host process " << this->proc_name_ << " pid(" << this->pid_ << ") from logfile " << this->logfile_name_ <<  endl;
-  size_t num = this->listen_endpoints_.size();
+  size_t const num = this->listen_endpoints_.size();
   if (num > 0)
     {
       strm << "  listening on ";
-      size_t count = 0;
+      size_t count {};
       for (ACE_DLList_Iterator <Endpoint> t_iter (this->listen_endpoints_);
            !t_iter.done();
            t_iter.advance())
         {
-          Endpoint *ep = 0;
+          Endpoint *ep {};
           t_iter.next(ep);
           strm << ep->addr_.c_str();
           if (++count < num)
+          {
             strm << ", ";
+          }
         }
       strm << endl;
     }
@@ -261,7 +279,9 @@ HostProcess::dump_ident (ostream &strm, const char *message)
 {
   strm <<"\nHost process ";
   if (this->proc_name_.length())
+  {
     strm << this->proc_name_;
+  }
   strm << " pid (" << this->pid_ << ") " << message << endl;
 }
 
@@ -269,15 +289,15 @@ void
 HostProcess::dump_thread_summary (ostream &strm)
 {
   this->dump_ident (strm, "thread summary:");
-  long total_sent = 0;
-  long total_recv = 0;
-  size_t total_bytes_sent = 0;
-  size_t total_bytes_recv = 0;
+  long total_sent {};
+  long total_recv {};
+  size_t total_bytes_sent {};
+  size_t total_bytes_recv {};
   for (ACE_DLList_Iterator <Thread> t_iter (this->threads_);
        !t_iter.done();
        t_iter.advance())
     {
-      Thread *thr = 0;
+      Thread *thr {};
       t_iter.next(thr);
       thr->dump_summary (strm);
       thr->get_summary (total_recv, total_sent, total_bytes_recv, total_bytes_sent);
@@ -293,16 +313,15 @@ HostProcess::split_thread_invocations (Session *session, const ACE_Time_Value& s
        !t_iter.done();
        t_iter.advance())
     {
-      Thread *thr = 0;
+      Thread *thr {};
       t_iter.next(thr);
       char fname[100];
       thr->split_filename(fname,100);
-      ostream *strm = session->stream_for (0, this, "threads", fname);
+      Session::Output_Stream strm = session->stream_for ({}, this, "threads", fname);
       thr->dump_invocations (*strm);
       *strm << endl;
       thr->dump_incidents (*strm, start);
       *strm << endl;
-      delete strm;
     }
 }
 void
@@ -313,7 +332,7 @@ HostProcess::dump_thread_invocations (ostream &strm, const ACE_Time_Value& start
        !t_iter.done();
        t_iter.advance())
     {
-      Thread *thr = 0;
+      Thread *thr {};
       t_iter.next(thr);
       thr->dump_invocations (strm);
       strm << endl;
@@ -328,19 +347,26 @@ HostProcess::iterate_peers (int group,
                             ostream *strm,
                             Session *session)
 {
-  bool first = true;
-  for (PeerProcs::ITERATOR i = this->by_addr_.begin(); i != by_addr_.end(); i++)
+  bool first {true};
+  Session::Output_Stream output;
+  for (PeerProcs::ITERATOR i = this->by_addr_.begin(); i != by_addr_.end(); ++i)
     {
       PeerProcs::ENTRY *entry;
       if (i.next(entry) == 0)
+      {
         continue;
+      }
       PeerProcess *pp = entry->item();
-      if (pp == 0)
+      if (pp == nullptr)
+      {
         continue;
+      }
       if ((group != 3) &&
           ((pp->is_server() && group == 1)
            || (!pp->is_server() && group == 2)))
+      {
         continue;
+      }
 
       switch (operation)
         {
@@ -352,21 +378,21 @@ HostProcess::iterate_peers (int group,
           *strm << endl;
           break;
         case 2:
-          if (strm == 0)
+          if (strm == nullptr)
             {
               char fname[100];
               entry->item()->split_filename(fname,100);
-              strm = session->stream_for (0, this, "peers",fname);
-              this->dump_ident (*strm, "Invocation Detail");
-              entry->item()->dump_invocation_detail (*strm);
-              *strm << endl;
-              delete (strm);
-              strm = 0;
+              output = session->stream_for ({}, this, "peers", fname);
+              this->dump_ident (*output, "Invocation Detail");
+              entry->item()->dump_invocation_detail (*output);
+              *output << endl;
             }
           else
             {
               if (!first)
+              {
                 this->dump_ident (*strm,"Invocations continued");
+              }
               entry->item()->dump_invocation_detail (*strm);
               *strm << endl;
             }
@@ -383,21 +409,29 @@ void
 HostProcess::dump_peer_summary (ostream &strm)
 {
   this->dump_ident (strm, "peer processes:");
-  size_t num_servers = 0;
-  size_t num_clients = 0;
+  size_t num_servers {};
+  size_t num_clients {};
   strm << " total peers: " << this->by_addr_.current_size() << endl;
-  for (PeerProcs::ITERATOR i = this->by_addr_.begin(); i != by_addr_.end(); i++)
+  for (PeerProcs::ITERATOR i = this->by_addr_.begin(); i != by_addr_.end(); ++i)
     {
       PeerProcs::ENTRY *entry;
       if (i.next(entry) == 0)
+      {
         break;
+      }
       PeerProcess *pp = entry->item();
-      if (pp == 0)
-        break;
+      if (pp == nullptr)
+        {
+          break;
+        }
       if (pp->is_server())
-        ++num_servers;
+        {
+          ++num_servers;
+        }
       else
-        ++num_clients;
+        {
+          ++num_clients;
+        }
     }
 
   strm << " from " << num_clients << " clients" << endl;
@@ -416,7 +450,7 @@ HostProcess::dump_object_detail (ostream &strm)
 void
 HostProcess::split_peer_invocations (Session *session)
 {
-  this->iterate_peers (3, 2, 0, session);
+  this->iterate_peers (3, 2, nullptr, session);
 }
 
 void
@@ -430,5 +464,5 @@ HostProcess::dump_invocation_detail(ostream &strm)
 void
 HostProcess::reconcile_peers (Session *session)
 {
-  this->iterate_peers (3, 3, 0, session);
+  this->iterate_peers (3, 3, nullptr, session);
 }

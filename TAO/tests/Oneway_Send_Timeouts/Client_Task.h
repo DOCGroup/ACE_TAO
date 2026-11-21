@@ -6,14 +6,21 @@
 #include "ace/ARGV.h"
 #include "ace/Task.h"
 
+#include <string>
+
 class Client_Task : public ACE_Task_Base
 {
 public:
-  Client_Task (const std::string& args)
+  explicit Client_Task (std::string const &args)
     : args_ (args)
   {}
 
-  virtual int svc ()
+  Client_Task (Client_Task const &) = delete;
+  Client_Task &operator= (Client_Task const &) = delete;
+  Client_Task (Client_Task &&) = delete;
+  Client_Task &operator= (Client_Task &&) = delete;
+
+  int svc () override
   {
     ACE_ARGV my_args (args_.c_str ());
 

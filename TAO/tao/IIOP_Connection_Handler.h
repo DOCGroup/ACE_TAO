@@ -61,13 +61,11 @@ public:
   Reference_Count remove_reference ();
 #endif
 
-  TAO_IIOP_Connection_Handler (ACE_Thread_Manager * = nullptr);
+  explicit TAO_IIOP_Connection_Handler (ACE_Thread_Manager * = nullptr);
 
-  /// Constructor.
-  TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core);
+  explicit TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core);
 
-  /// Destructor.
-  ~TAO_IIOP_Connection_Handler ();
+  ~TAO_IIOP_Connection_Handler () override;
 
   /// Called by the @c Strategy_Acceptor when the handler is completely
   /// connected.  Argument is unused.
@@ -77,7 +75,7 @@ public:
   /// establishment fails.
   int close (u_long = 0) override;
 
-  //@{
+  /// @{
   /** @name Event Handler overloads
    */
   int resume_handler () override;
@@ -87,7 +85,7 @@ public:
   int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
   int handle_timeout (ACE_Time_Value const &current_time,
                       void const *act = nullptr) override;
-  //@}
+  /// @}
 
   /// Add ourselves to Cache.
   int add_transport_to_cache ();
@@ -110,12 +108,12 @@ public:
   void abort ();
 
 protected:
-  //@{
+  /// @{
   /**
    * @name TAO_Connection Handler overloads
    */
   int release_os_resources () override;
-  //@}
+  /// @}
 
   int handle_write_ready (ACE_Time_Value const *timeout) override;
 
@@ -124,6 +122,11 @@ protected:
   int set_tos (int tos);
 
 private:
+  TAO_IIOP_Connection_Handler (TAO_IIOP_Connection_Handler const &) = delete;
+  TAO_IIOP_Connection_Handler &operator= (TAO_IIOP_Connection_Handler const &) = delete;
+  TAO_IIOP_Connection_Handler (TAO_IIOP_Connection_Handler &&) = delete;
+  TAO_IIOP_Connection_Handler &operator= (TAO_IIOP_Connection_Handler &&) = delete;
+
   /// Stores the type of service value.
   int dscp_codepoint_;
 };

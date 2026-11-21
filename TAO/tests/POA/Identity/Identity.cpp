@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    Identity.cpp
@@ -8,25 +7,29 @@
  *
  *  @author Irfan Pyarali
  */
-//=============================================================================
-
-
 #include "testS.h"
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
 
+#include <memory>
+
 class test_i : public POA_test
 {
 public:
-  test_i (PortableServer::POA_ptr poa)
+  explicit test_i (PortableServer::POA_ptr poa)
     : poa_ (PortableServer::POA::_duplicate (poa))
-    {
-    }
+  {
+  }
 
-  PortableServer::POA_ptr _default_POA ()
-    {
-      return PortableServer::POA::_duplicate (this->poa_.in ());
-    }
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
+
+  PortableServer::POA_ptr _default_POA () override
+  {
+    return PortableServer::POA::_duplicate (this->poa_.in ());
+  }
 
 protected:
   PortableServer::POA_var poa_;
@@ -51,8 +54,7 @@ create_poas (PortableServer::POA_ptr root_poa,
   policies[2] = root_poa->create_id_assignment_policy (PortableServer::SYSTEM_ID);
 
   // Creation of the firstPOA
-  ACE_CString name = "firstPOA";
-  first_poa = root_poa->create_POA (name.c_str (),
+  first_poa = root_poa->create_POA ("firstPOA",
                                     PortableServer::POAManager::_nil (),
                                     policies);
 
@@ -61,8 +63,7 @@ create_poas (PortableServer::POA_ptr root_poa,
   policies[1] = root_poa->create_id_uniqueness_policy (PortableServer::UNIQUE_ID);
 
   // Creation of the secondPOA
-  name = "secondPOA";
-  second_poa = root_poa->create_POA (name.c_str (),
+  second_poa = root_poa->create_POA ("secondPOA",
                                      PortableServer::POAManager::_nil (),
                                      policies);
 
@@ -71,8 +72,7 @@ create_poas (PortableServer::POA_ptr root_poa,
   policies[2] = root_poa->create_id_assignment_policy (PortableServer::USER_ID);
 
   // Creation of the thirdPOA
-  name = "thirdPOA";
-  third_poa = root_poa->create_POA (name.c_str (),
+  third_poa = root_poa->create_POA ("thirdPOA",
                                     PortableServer::POAManager::_nil (),
                                     policies);
 
@@ -81,13 +81,12 @@ create_poas (PortableServer::POA_ptr root_poa,
   policies[1] = root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID);
 
   // Creation of the forthPOA
-  name = "forthPOA";
-  forth_poa = root_poa->create_POA (name.c_str (),
+  forth_poa = root_poa->create_POA ("forthPOA",
                                     PortableServer::POAManager::_nil (),
                                     policies);
 
   // Creation of the new POAs over, so destroy the policies
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < policies.length ();
        ++i)
     {
@@ -102,7 +101,7 @@ test_poas (CORBA::ORB_ptr orb,
            PortableServer::POA_ptr second_poa,
            PortableServer::POA_ptr third_poa,
            PortableServer::POA_ptr forth_poa,
-           int perform_deactivation_test)
+           bool perform_deactivation_test)
 {
   {
     test_i servant (root_poa);
@@ -113,10 +112,10 @@ test_poas (CORBA::ORB_ptr orb,
 
     ACE_DEBUG ((LM_DEBUG, "%C\n", string.in ()));
 
-    PortableServer::ObjectId_var id = root_poa->reference_to_id (obj.in ());
+    PortableServer::ObjectId_var const id = root_poa->reference_to_id (obj.in ());
 
     root_poa->activate_object_with_id (id.in (),
-                                       &servant);
+                                       std::addressof (servant));
 
     obj = root_poa->id_to_reference (id.in ());
 
@@ -127,18 +126,18 @@ test_poas (CORBA::ORB_ptr orb,
     PortableServer::ServantBase_var servant_from_reference =
       root_poa->reference_to_servant (obj.in ());
 
-    PortableServer::ServantBase_var servant_from_id =
+    PortableServer::ServantBase_var const servant_from_id =
       root_poa->id_to_servant (id.in ());
 
     if (servant_from_reference.in () != servant_from_id.in ()
-        || servant_from_reference.in () != &servant)
+        || servant_from_reference.in () != std::addressof (servant))
       {
         ACE_ERROR ((LM_ERROR,
                     "Mismatched servant_from_reference, "
                     "servant_from_id and &servant\n"));
       }
 
-    obj = root_poa->servant_to_reference (&servant);
+    obj = root_poa->servant_to_reference (std::addressof (servant));
 
     string = orb->object_to_string (obj.in ());
 
@@ -150,7 +149,8 @@ test_poas (CORBA::ORB_ptr orb,
 
     ACE_DEBUG ((LM_DEBUG, "%C\n", string.in ()));
 
-    PortableServer::ObjectId_var id_from_servant = root_poa->servant_to_id (&servant);
+    PortableServer::ObjectId_var const id_from_servant =
+      root_poa->servant_to_id (std::addressof (servant));
 
     ACE_ASSERT (id_from_servant.in () == id.in ());
 
@@ -159,11 +159,11 @@ test_poas (CORBA::ORB_ptr orb,
     if (perform_deactivation_test)
       {
         root_poa->activate_object_with_id (id.in (),
-                                           &servant);
+                                           std::addressof (servant));
 
         servant_from_reference = root_poa->reference_to_servant (obj.in ());
 
-        ACE_ASSERT (servant_from_reference.in () == &servant);
+        ACE_ASSERT (servant_from_reference.in () == std::addressof (servant));
 
         root_poa->deactivate_object (id.in ());
       }
@@ -172,7 +172,7 @@ test_poas (CORBA::ORB_ptr orb,
   {
     test_i servant (root_poa);
 
-    PortableServer::ObjectId_var id = root_poa->activate_object (&servant);
+    PortableServer::ObjectId_var const id = root_poa->activate_object (std::addressof (servant));
 
     CORBA::Object_var obj = root_poa->id_to_reference (id.in ());
 
@@ -199,10 +199,10 @@ test_poas (CORBA::ORB_ptr orb,
 
     ACE_DEBUG ((LM_DEBUG, "%C\n", string.in ()));
 
-    PortableServer::ObjectId_var id = first_poa->reference_to_id (obj.in ());
+    PortableServer::ObjectId_var const id = first_poa->reference_to_id (obj.in ());
 
     first_poa->activate_object_with_id (id.in (),
-                                        &servant);
+                                        std::addressof (servant));
 
     obj = first_poa->id_to_reference (id.in ());
 
@@ -213,11 +213,11 @@ test_poas (CORBA::ORB_ptr orb,
     PortableServer::ServantBase_var servant_from_reference =
       first_poa->reference_to_servant (obj.in ());
 
-    PortableServer::ServantBase_var servant_from_id =
+    PortableServer::ServantBase_var const servant_from_id =
       first_poa->id_to_servant (id.in ());
 
     if (servant_from_reference .in () != servant_from_id.in ()
-        || servant_from_reference.in () != &servant)
+        || servant_from_reference.in () != std::addressof (servant))
       {
         ACE_ERROR ((LM_ERROR,
                     "Mismatched servant_from_reference, "
@@ -229,11 +229,11 @@ test_poas (CORBA::ORB_ptr orb,
     if (perform_deactivation_test)
       {
         first_poa->activate_object_with_id (id.in (),
-                                            &servant);
+                                            std::addressof (servant));
 
         servant_from_reference = first_poa->reference_to_servant (obj.in ());
 
-        ACE_ASSERT (servant_from_reference.in () == &servant);
+        ACE_ASSERT (servant_from_reference.in () == std::addressof (servant));
 
         first_poa->deactivate_object (id.in ());
       }
@@ -242,7 +242,7 @@ test_poas (CORBA::ORB_ptr orb,
   {
     test_i servant (first_poa);
 
-    PortableServer::ObjectId_var id = first_poa->activate_object (&servant);
+    PortableServer::ObjectId_var const id = first_poa->activate_object (std::addressof (servant));
 
     CORBA::Object_var obj = first_poa->id_to_reference (id.in ());
 
@@ -269,10 +269,10 @@ test_poas (CORBA::ORB_ptr orb,
 
     ACE_DEBUG ((LM_DEBUG, "%C\n", string.in ()));
 
-    PortableServer::ObjectId_var id = second_poa->reference_to_id (obj.in ());
+    PortableServer::ObjectId_var const id = second_poa->reference_to_id (obj.in ());
 
     second_poa->activate_object_with_id (id.in (),
-                                         &servant);
+                                         std::addressof (servant));
 
     obj = second_poa->id_to_reference (id.in ());
 
@@ -283,18 +283,18 @@ test_poas (CORBA::ORB_ptr orb,
     PortableServer::ServantBase_var servant_from_reference =
       second_poa->reference_to_servant (obj.in ());
 
-    PortableServer::ServantBase_var servant_from_id =
+    PortableServer::ServantBase_var const servant_from_id =
       second_poa->id_to_servant (id.in ());
 
     if (servant_from_reference.in () != servant_from_id.in ()
-        || servant_from_reference.in () != &servant)
+        || servant_from_reference.in () != std::addressof (servant))
       {
         ACE_ERROR ((LM_ERROR,
                     "Mismatched servant_from_reference, "
                     "servant_from_id and &servant\n"));
       }
 
-    obj = second_poa->servant_to_reference (&servant);
+    obj = second_poa->servant_to_reference (std::addressof (servant));
 
     string = orb->object_to_string (obj.in ());
 
@@ -306,7 +306,8 @@ test_poas (CORBA::ORB_ptr orb,
 
     ACE_DEBUG ((LM_DEBUG, "%C\n", string.in ()));
 
-    PortableServer::ObjectId_var id_from_servant = second_poa->servant_to_id (&servant);
+    PortableServer::ObjectId_var const id_from_servant =
+      second_poa->servant_to_id (std::addressof (servant));
 
     ACE_ASSERT (id_from_servant.in () == id.in ());
 
@@ -315,11 +316,11 @@ test_poas (CORBA::ORB_ptr orb,
     if (perform_deactivation_test)
       {
         second_poa->activate_object_with_id (id.in (),
-                                             &servant);
+                                             std::addressof (servant));
 
         servant_from_reference = second_poa->reference_to_servant (obj.in ());
 
-        ACE_ASSERT (servant_from_reference.in () == &servant);
+        ACE_ASSERT (servant_from_reference.in () == std::addressof (servant));
 
         second_poa->deactivate_object (id.in ());
       }
@@ -328,7 +329,7 @@ test_poas (CORBA::ORB_ptr orb,
   {
     test_i servant (second_poa);
 
-    PortableServer::ObjectId_var id = second_poa->activate_object (&servant);
+    PortableServer::ObjectId_var const id = second_poa->activate_object (std::addressof (servant));
 
     CORBA::Object_var obj = second_poa->id_to_reference (id.in ());
 
@@ -348,7 +349,7 @@ test_poas (CORBA::ORB_ptr orb,
 
   {
     test_i servant (third_poa);
-    PortableServer::ObjectId_var id = PortableServer::string_to_ObjectId ("hello");
+    PortableServer::ObjectId_var const id = PortableServer::string_to_ObjectId ("hello");
 
     CORBA::Object_var obj = third_poa->create_reference_with_id (id.in (),
                                                                  "IDL:test:1.0");
@@ -357,7 +358,7 @@ test_poas (CORBA::ORB_ptr orb,
 
     ACE_DEBUG ((LM_DEBUG, "%C\n", string.in ()));
 
-    PortableServer::ObjectId_var id_from_reference = third_poa->reference_to_id (obj.in ());
+    PortableServer::ObjectId_var const id_from_reference = third_poa->reference_to_id (obj.in ());
 
     string = PortableServer::ObjectId_to_string (id_from_reference.in ());
     ACE_DEBUG ((LM_DEBUG, "%C\n", string.in ()));
@@ -365,7 +366,7 @@ test_poas (CORBA::ORB_ptr orb,
     ACE_ASSERT (id_from_reference.in () == id.in ());
 
     third_poa->activate_object_with_id (id.in (),
-                                        &servant);
+                                        std::addressof (servant));
 
     obj = third_poa->id_to_reference (id.in ());
 
@@ -376,18 +377,18 @@ test_poas (CORBA::ORB_ptr orb,
     PortableServer::ServantBase_var servant_from_reference =
       third_poa->reference_to_servant (obj.in ());
 
-    PortableServer::ServantBase_var servant_from_id =
+    PortableServer::ServantBase_var const servant_from_id =
       third_poa->id_to_servant (id.in ());
 
     if (servant_from_reference.in () != servant_from_id.in ()
-        || servant_from_reference.in () != &servant)
+        || servant_from_reference.in () != std::addressof (servant))
       {
         ACE_ERROR ((LM_ERROR,
                     "Mismatched servant_from_reference, "
                     "servant_from_id and &servant\n"));
       }
 
-    obj = third_poa->servant_to_reference (&servant);
+    obj = third_poa->servant_to_reference (std::addressof (servant));
 
     string = orb->object_to_string (obj.in ());
 
@@ -399,7 +400,8 @@ test_poas (CORBA::ORB_ptr orb,
 
     ACE_DEBUG ((LM_DEBUG, "%C\n", string.in ()));
 
-    PortableServer::ObjectId_var id_from_servant = third_poa->servant_to_id (&servant);
+    PortableServer::ObjectId_var const id_from_servant =
+      third_poa->servant_to_id (std::addressof (servant));
 
     string = PortableServer::ObjectId_to_string (id_from_servant.in ());
     ACE_DEBUG ((LM_DEBUG, "%C\n", string.in ()));
@@ -411,11 +413,11 @@ test_poas (CORBA::ORB_ptr orb,
     if (perform_deactivation_test)
       {
         third_poa->activate_object_with_id (id.in (),
-                                            &servant);
+                                            std::addressof (servant));
 
         servant_from_reference = third_poa->reference_to_servant (obj.in ());
 
-        ACE_ASSERT (servant_from_reference.in () == &servant);
+        ACE_ASSERT (servant_from_reference.in () == std::addressof (servant));
 
         third_poa->deactivate_object (id.in ());
       }
@@ -423,7 +425,7 @@ test_poas (CORBA::ORB_ptr orb,
 
   {
     test_i servant (forth_poa);
-    PortableServer::ObjectId_var id = PortableServer::string_to_ObjectId ("hello");
+    PortableServer::ObjectId_var const id = PortableServer::string_to_ObjectId ("hello");
 
     CORBA::Object_var obj = forth_poa->create_reference_with_id (id.in (),
                                                                  "IDL:test:1.0");
@@ -432,7 +434,7 @@ test_poas (CORBA::ORB_ptr orb,
 
     ACE_DEBUG ((LM_DEBUG, "%C\n", string.in ()));
 
-    PortableServer::ObjectId_var id_from_reference = forth_poa->reference_to_id (obj.in ());
+    PortableServer::ObjectId_var const id_from_reference = forth_poa->reference_to_id (obj.in ());
 
     string = PortableServer::ObjectId_to_string (id_from_reference.in ());
     ACE_DEBUG ((LM_DEBUG, "%C\n", string.in ()));
@@ -440,7 +442,7 @@ test_poas (CORBA::ORB_ptr orb,
     ACE_ASSERT (id_from_reference.in () == id.in ());
 
     forth_poa->activate_object_with_id (id.in (),
-                                        &servant);
+                                        std::addressof (servant));
 
     obj = forth_poa->id_to_reference (id.in ());
 
@@ -451,11 +453,11 @@ test_poas (CORBA::ORB_ptr orb,
     PortableServer::ServantBase_var servant_from_reference =
       forth_poa->reference_to_servant (obj.in ());
 
-    PortableServer::ServantBase_var servant_from_id =
+    PortableServer::ServantBase_var const servant_from_id =
       forth_poa->id_to_servant (id.in ());
 
     if (servant_from_reference.in () != servant_from_id.in ()
-        || servant_from_reference.in () != &servant)
+        || servant_from_reference.in () != std::addressof (servant))
       {
         ACE_ERROR ((LM_ERROR,
                     "Mismatched servant_from_reference, "
@@ -467,11 +469,11 @@ test_poas (CORBA::ORB_ptr orb,
     if (perform_deactivation_test)
       {
         forth_poa->activate_object_with_id (id.in (),
-                                            &servant);
+                                            std::addressof (servant));
 
         servant_from_reference = forth_poa->reference_to_servant (obj.in ());
 
-        ACE_ASSERT (servant_from_reference.in () == &servant);
+        ACE_ASSERT (servant_from_reference.in () == std::addressof (servant));
 
         forth_poa->deactivate_object (id.in ());
       }
@@ -479,22 +481,22 @@ test_poas (CORBA::ORB_ptr orb,
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       // Obtain the RootPOA.
-      CORBA::Object_var obj =
+      CORBA::Object_var const obj =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in ());
+      PortableServer::POA_var const root_poa = PortableServer::POA::_narrow (obj.in ());
 
-      const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters
-        = TAO_ORB_Core_instance ()->server_factory ()->active_object_map_creation_parameters ();
+      TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters const &creation_parameters =
+        TAO_ORB_Core_instance ()->server_factory ()->active_object_map_creation_parameters ();
 
-      int perform_deactivation_test = creation_parameters.allow_reactivation_of_system_ids_;
+      bool const perform_deactivation_test = creation_parameters.allow_reactivation_of_system_ids_;
 
       PortableServer::POA_var first_poa;
       PortableServer::POA_var second_poa;
@@ -516,17 +518,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                  forth_poa.in (),
                  perform_deactivation_test);
 
-      first_poa->destroy (1,
-                          1);
+      first_poa->destroy (true,
+                          true);
 
-      second_poa->destroy (1,
-                           1);
+      second_poa->destroy (true,
+                           true);
 
-      third_poa->destroy (1,
-                          1);
+      third_poa->destroy (true,
+                          true);
 
-      forth_poa->destroy (1,
-                          1);
+      forth_poa->destroy (true,
+                          true);
 
       create_poas (root_poa.in (),
                    PortableServer::PERSISTENT,
@@ -547,7 +549,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception!");
       return -1;

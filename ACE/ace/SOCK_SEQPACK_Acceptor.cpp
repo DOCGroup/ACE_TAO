@@ -36,7 +36,9 @@ ACE_SOCK_SEQPACK_Acceptor::shared_accept_start (ACE_Time_Value *timeout,
       if (ACE::handle_timed_accept (handle,
                                     timeout,
                                     restart) == -1)
-        return -1;
+        {
+          return -1;
+        }
       else
         {
           in_blocking_mode = ACE_BIT_DISABLED (ACE::get_flags (handle),
@@ -46,7 +48,9 @@ ACE_SOCK_SEQPACK_Acceptor::shared_accept_start (ACE_Time_Value *timeout,
           if (in_blocking_mode
               && ACE::set_flags (handle,
                                  ACE_NONBLOCK) == -1)
+          {
             return -1;
+          }
         }
     }
 
@@ -80,8 +84,10 @@ ACE_SOCK_SEQPACK_Acceptor::shared_accept_finish (ACE_SOCK_SEQPACK_Association ne
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   if (reset_new_handle)
-    // Reset the event association inherited by the new handle.
-    ::WSAEventSelect ((SOCKET) new_handle, 0, 0);
+    {
+      // Reset the event association inherited by the new handle.
+      ::WSAEventSelect ((SOCKET) new_handle, 0, 0);
+    }
 #else
   ACE_UNUSED_ARG (reset_new_handle);
 #endif /* ACE_WIN32 */
@@ -103,26 +109,30 @@ ACE_SOCK_SEQPACK_Acceptor::accept (ACE_SOCK_SEQPACK_Association &new_association
   if (this->shared_accept_start (timeout,
                                  restart,
                                  in_blocking_mode) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       // On Win32 the third parameter to <accept> must be a NULL
       // pointer if we want to ignore the client's address.
-      int *len_ptr = nullptr;
-      sockaddr *addr = nullptr;
+      int *len_ptr {};
+      sockaddr *addr {};
       int len = 0;
 
       if (remote_addr != nullptr)
         {
           len = remote_addr->get_size ();
           len_ptr = &len;
-          addr = (sockaddr *) remote_addr->get_addr ();
+          addr = static_cast<sockaddr *> (remote_addr->get_addr ());
         }
 
       do
-        new_association.set_handle (ACE_OS::accept (this->get_handle (),
-                                               addr,
-                                               len_ptr));
+        {
+          new_association.set_handle (ACE_OS::accept (this->get_handle (),
+                                                      addr,
+                                                      len_ptr));
+        }
       while (new_association.get_handle () == ACE_INVALID_HANDLE
              && restart != 0
              && errno == EINTR
@@ -176,7 +186,9 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Addr &local_sap,
           local_inet6_addr.sin6_addr = in6addr_any;
         }
       else
-        local_inet6_addr = *reinterpret_cast<sockaddr_in6 *> (local_sap.get_addr ());
+        {
+          local_inet6_addr = *reinterpret_cast<sockaddr_in6 *> (local_sap.get_addr ());
+        }
 
       // We probably don't need a bind_port written here.
       // There are currently no supported OS's that define
@@ -184,7 +196,9 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Addr &local_sap,
       if (ACE_OS::bind (this->get_handle (),
                         reinterpret_cast<sockaddr *> (&local_inet6_addr),
                         sizeof local_inet6_addr) == -1)
-        error = 1;
+        {
+          error = 1;
+        }
     }
   else
 #endif
@@ -200,21 +214,29 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Addr &local_sap,
           local_inet_addr.sin_port = 0;
         }
       else
+      {
         local_inet_addr = *reinterpret_cast<sockaddr_in *> (local_sap.get_addr ());
+      }
       if (local_inet_addr.sin_port == 0)
         {
           if (ACE::bind_port (this->get_handle ()) == -1)
+          {
             error = 1;
+          }
         }
       else if (ACE_OS::bind (this->get_handle (),
                              reinterpret_cast<sockaddr *> (&local_inet_addr),
                              sizeof local_inet_addr) == -1)
-        error = 1;
+        {
+          error = 1;
+        }
     }
   else if (ACE_OS::bind (this->get_handle (),
-                         (sockaddr *) local_sap.get_addr (),
+                         static_cast<sockaddr *> (local_sap.get_addr ()),
                          local_sap.get_size ()) == -1)
-    error = 1;
+    {
+      error = 1;
+    }
 
   if (error != 0
       || ACE_OS::listen (this->get_handle (),
@@ -255,7 +277,9 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
           local_inet6_addr.sin6_addr = in6addr_any;
         }
       else
-        local_inet6_addr = *reinterpret_cast<sockaddr_in6 *> (local_sap.get_addr ());
+        {
+          local_inet6_addr = *reinterpret_cast<sockaddr_in6 *> (local_sap.get_addr ());
+        }
 
       // We probably don't need a bind_port written here.
       // There are currently no supported OS's that define
@@ -263,7 +287,9 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
       if (ACE_OS::bind (this->get_handle (),
                         reinterpret_cast<sockaddr *> (&local_inet6_addr),
                         sizeof local_inet6_addr) == -1)
-        error = 1;
+        {
+          error = 1;
+        }
     }
   else
 #endif
@@ -328,7 +354,7 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
           // Create an array of sockaddr_in to hold the underlying
           // representations of the primary and secondary
           // addresses.
-          sockaddr_in*  local_inet_addrs = nullptr;
+          sockaddr_in*  local_inet_addrs {};
 #if defined(ACE_HAS_ALLOC_HOOKS)
           ACE_ALLOCATOR_NORETURN (local_inet_addrs,
                                   static_cast<sockaddr_in*>(ACE_Allocator::instance()->malloc(sizeof(sockaddr_in) * num_addresses)));
@@ -338,7 +364,9 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
 #endif
 
           if (!local_inet_addrs)
-            error = 1;
+            {
+              error = 1;
+            }
           else
             {
               // Populate the array by invoking the get_addresses method
@@ -347,9 +375,6 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
                                       num_addresses);
 
 #if defined (ACE_HAS_LKSCTP)
-
-              sockaddr_in *local_sockaddr = nullptr;
-
               // bind the primary first
               if (ACE_OS::bind (this->get_handle (),
                                 reinterpret_cast<sockaddr *> (&(local_inet_addrs[0])),
@@ -361,21 +386,20 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
               // do we need to bind multiple addresses?
               if (num_addresses > 1)
               {
+                sockaddr_in *local_sockaddr {};
                 ACE_NEW_NORETURN(local_sockaddr,
                                sockaddr_in[num_addresses - 1]);
 
                 // all of the secondary addresses need the local port set
-                for (size_t i = 1; i < num_addresses; i++)
+                for (size_t i = 1; i < num_addresses; ++i)
                 {
                   local_inet_addrs[i].sin_port = local_inet_addrs[0].sin_port;
                 }
 
                 // copy only the sockaddrs that we need to bindx
-                for (size_t i = 0; i < num_addresses - 1; i++)
+                for (size_t i = 0; i < num_addresses - 1; ++i)
                 {
-                  ACE_OS::memcpy(&(local_sockaddr[i]),
-                                 &(local_inet_addrs[i + 1]),
-                                 sizeof(sockaddr_in));
+                  ACE_OS::memcpy(&(local_sockaddr[i]), &(local_inet_addrs[i + 1]), sizeof(sockaddr_in));
                 }
 
                 // now call bindx
@@ -395,7 +419,9 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
               if (ACE_OS::bind (this->get_handle (),
                                 reinterpret_cast<sockaddr *> (local_inet_addrs),
                                 static_cast<int> (name_len)) == -1)
+              {
                 error = 1;
+              }
 #endif /* ACE_HAS_LKSCTP */
             }
 
@@ -407,9 +433,11 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
         }
     }
   else if (ACE_OS::bind (this->get_handle (),
-                         (sockaddr *) local_sap.get_addr (),
+                         static_cast<sockaddr *> (local_sap.get_addr ()),
                          local_sap.get_size ()) == -1)
-    error = 1;
+    {
+      error = 1;
+    }
 
   if (error != 0 || ACE_OS::listen (this->get_handle (), backlog) == -1)
     {
@@ -433,7 +461,9 @@ ACE_SOCK_SEQPACK_Acceptor::open (const ACE_Addr &local_sap,
   ACE_TRACE ("ACE_SOCK_SEQPACK_Acceptor::open");
 
   if (protocol_family == PF_UNSPEC)
+  {
     protocol_family = local_sap.get_type ();
+  }
 
 #if defined (ACE_HAS_LKSCTP)
   if (ACE_SOCK::open (SOCK_STREAM,
@@ -446,9 +476,13 @@ ACE_SOCK_SEQPACK_Acceptor::open (const ACE_Addr &local_sap,
                       g,
                       flags,
                       reuse_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return this->shared_open (local_sap, protocol_family, backlog);
+    {
+      return this->shared_open (local_sap, protocol_family, backlog);
+    }
 }
 
 ACE_SOCK_SEQPACK_Acceptor::ACE_SOCK_SEQPACK_Acceptor (const ACE_Addr &local_sap,
@@ -469,9 +503,11 @@ ACE_SOCK_SEQPACK_Acceptor::ACE_SOCK_SEQPACK_Acceptor (const ACE_Addr &local_sap,
                   protocol_family,
                   backlog,
                   protocol) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_SOCK_SEQPACK_Acceptor")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_SOCK_SEQPACK_Acceptor")));
+    }
 }
 
 // General purpose routine for performing server ACE_SOCK creation.
@@ -486,7 +522,9 @@ ACE_SOCK_SEQPACK_Acceptor::open (const ACE_Addr &local_sap,
   ACE_TRACE ("ACE_SOCK_SEQPACK_Acceptor::open");
 
   if (local_sap != ACE_Addr::sap_any)
-    protocol_family = local_sap.get_type ();
+    {
+      protocol_family = local_sap.get_type ();
+    }
   else if (protocol_family == PF_UNSPEC)
     {
 #if defined (ACE_HAS_IPV6)
@@ -504,11 +542,15 @@ ACE_SOCK_SEQPACK_Acceptor::open (const ACE_Addr &local_sap,
                       protocol_family,
                       protocol,
                       reuse_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return this->shared_open (local_sap,
-                              protocol_family,
-                              backlog);
+    {
+      return this->shared_open (local_sap,
+                                protocol_family,
+                                backlog);
+    }
 }
 
 // Multihomed version of same.
@@ -523,7 +565,9 @@ ACE_SOCK_SEQPACK_Acceptor::open (const ACE_Multihomed_INET_Addr &local_sap,
   ACE_TRACE ("ACE_SOCK_SEQPACK_Acceptor::open");
 
   if (local_sap.ACE_Addr::operator!= (ACE_Addr::sap_any))
-    protocol_family = local_sap.get_type ();
+    {
+      protocol_family = local_sap.get_type ();
+    }
   else if (protocol_family == PF_UNSPEC)
     {
 #if defined (ACE_HAS_IPV6)
@@ -541,11 +585,15 @@ ACE_SOCK_SEQPACK_Acceptor::open (const ACE_Multihomed_INET_Addr &local_sap,
                       protocol_family,
                       protocol,
                       reuse_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return this->shared_open (local_sap,
-                              protocol_family,
-                              backlog);
+    {
+      return this->shared_open (local_sap,
+                                protocol_family,
+                                backlog);
+    }
 }
 
 // General purpose routine for performing server ACE_SOCK creation.
@@ -562,9 +610,11 @@ ACE_SOCK_SEQPACK_Acceptor::ACE_SOCK_SEQPACK_Acceptor (const ACE_Addr &local_sap,
                   protocol_family,
                   backlog,
                   protocol) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_SOCK_SEQPACK_Acceptor")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_SOCK_SEQPACK_Acceptor")));
+    }
 }
 
 // Multihomed version of same.
@@ -581,9 +631,11 @@ ACE_SOCK_SEQPACK_Acceptor::ACE_SOCK_SEQPACK_Acceptor (const ACE_Multihomed_INET_
                   protocol_family,
                   backlog,
                   protocol) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_SOCK_SEQPACK_Acceptor")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_SOCK_SEQPACK_Acceptor")));
+    }
 }
 
 int

@@ -7,16 +7,12 @@ test_i::test_i (CORBA::ORB_ptr orb)
 {
 }
 
-test_i::~test_i ()
-{
-}
-
 void
 test_i::op ()
 {
   // PortableInterceptor::ServerRequestInterceptor::receive_request()
   // should have been invoked.
-  if (::receive_request_called == 0)
+  if (!::receive_request_called)
     {
       ACE_ERROR ((LM_ERROR,
                   "PortableInterceptor::ServerRequestInterceptor::"

@@ -1,13 +1,10 @@
 /* -*- C++ -*- */
 
-// =================================================================
 /**
  * @file Async_IORTable.cpp
  *
  * @author Phil Mesnier <mesnier_p@ociweb.com>
  */
-// =================================================================
-
 #include "tao/IORTable/Async_IORTable.h"
 #include "tao/IORTable/Async_Table_Adapter.h"
 

@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CSD_TP_Queue.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
-
 #ifndef TAO_CSD_TP_QUEUE_H
 #define TAO_CSD_TP_QUEUE_H
 
@@ -57,12 +53,9 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Queue
     {
     public:
-      /// Default Constructor.
       TP_Queue() = default;
 
-      /// Destructor.
-      ~TP_Queue();
-
+      ~TP_Queue() = default;
       /// Place a request at the end of the queue.
       void put(TP_Request* request);
 
@@ -74,16 +67,16 @@ namespace TAO
       /// visiting every request).
       void accept_visitor(TP_Queue_Visitor& visitor);
 
-    private:
       TP_Queue (TP_Queue const &) = delete;
       TP_Queue &operator= (TP_Queue const &) = delete;
       TP_Queue (TP_Queue &&) = delete;
       TP_Queue &operator= (TP_Queue &&) = delete;
 
-      /// The request at the front of the queue.
+    private:
+      /// Non-owning front link; put() adds a reference for each queued request.
       TP_Request* head_ {};
 
-      /// The request at the end of the queue.
+      /// Non-owning tail link to a request whose queue reference is held by put().
       TP_Request* tail_ {};
     };
   }

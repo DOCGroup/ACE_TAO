@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef CDR_OUT_ARG_TEST_I_H
 #define CDR_OUT_ARG_TEST_I_H
 
@@ -22,11 +21,15 @@
 class CDR_Out_Arg_i : public POA_Interop::CDR_Out_Arg
 {
 public:
-  CDR_Out_Arg_i (CORBA::ORB_ptr orb);
+  explicit CDR_Out_Arg_i (CORBA::ORB_ptr orb);
+  CDR_Out_Arg_i (CDR_Out_Arg_i const &) = delete;
+  CDR_Out_Arg_i (CDR_Out_Arg_i &&) = delete;
+  CDR_Out_Arg_i &operator= (CDR_Out_Arg_i const &) = delete;
+  CDR_Out_Arg_i &operator= (CDR_Out_Arg_i &&) = delete;
 
-  void get_out (CORBA::Long_out arg);
+  void get_out (CORBA::Long_out arg) override;
 
-  void shutdown ();
+  void shutdown () override;
 
 private:
   /// The ORB pseudo-reference (for shutdown).

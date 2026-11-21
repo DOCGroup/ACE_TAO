@@ -5,6 +5,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Map_T.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
@@ -15,9 +17,7 @@ TAO_Incremental_Key_Generator::operator() (PortableServer::ObjectId &id)
   id.length (cntr_size);
 
   // Add new key data.
-  ACE_OS::memcpy (id.get_buffer (),
-                  &++this->counter_,
-                  cntr_size);
+  std::memcpy (id.get_buffer (), &++this->counter_, cntr_size);
 
   // Success.
   return 0;
@@ -72,7 +72,7 @@ TAO_Ignore_Original_Key_Adapter::decode (PortableServer::ObjectId const &modifie
                         modified_key.length (),
                         const_cast <CORBA::Octet *>
                                    (modified_key.get_buffer ()),
-                        0);
+                        false);
 
   // Success.
   return 0;
@@ -96,9 +96,7 @@ TAO_Preserve_Original_Key_Adapter::encode (PortableServer::ObjectId const &origi
   active_key.encode (modified_key.get_buffer ());
 
   // Copy the original key after the active key.
-  ACE_OS::memcpy (modified_key.get_buffer () + active_key_size,
-                  original_key.get_buffer (),
-                  original_key.length ());
+  std::memcpy (modified_key.get_buffer () + active_key_size, original_key.get_buffer (), original_key.length ());
 
   // Success.
   return 0;
@@ -129,7 +127,7 @@ TAO_Preserve_Original_Key_Adapter::decode (PortableServer::ObjectId const &modif
                             (modified_key.length () - active_key_size),
                         const_cast <CORBA::Octet *>
                             (modified_key.get_buffer ()) + active_key_size,
-                        0);
+                        false);
 
   // Success.
   return 0;

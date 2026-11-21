@@ -13,7 +13,6 @@ TAO_ZIOPPolicy_Validator::TAO_ZIOPPolicy_Validator (TAO_ORB_Core &orb_core)
 {
 }
 
-
 void
 TAO_ZIOPPolicy_Validator::validate_impl (TAO_Policy_Set & /*policies*/)
 {

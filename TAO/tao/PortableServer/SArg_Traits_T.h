@@ -1,14 +1,10 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    SArg_Traits_T.h
  *
  *  @author Jeff Parsons
  *  @author Carlos O'Ryan
  */
-//=============================================================================
-
 #ifndef TAO_SARG_TRAITS_T_H
 #define TAO_SARG_TRAITS_T_H
 

@@ -12,48 +12,45 @@
 #include "inner_cb.h"
 
 #include <iostream>
-// Implementation skeleton constructor
 Asynch_Middle_i::Asynch_Middle_i (PortableServer::POA_ptr poa,
-                    Inner_ptr inner)
-  : poa_ (PortableServer::POA::_duplicate(poa)),
-    inner_ (Inner::_duplicate(inner))
+                                  Inner_ptr inner)
+  : poa_ (PortableServer::POA::_duplicate (poa)),
+    inner_ (Inner::_duplicate (inner))
 {
 }
 
 void
 Asynch_Middle_i::get_the_answer (AMH_MiddleResponseHandler_ptr _tao_rh,
-                                 const char * question)
+                                 char const *question)
 {
   // The callback handler servant instance holds on to a reference to the
   // AMH response handler. That way, it can forward the reply back to the
   // originial client after getting the reply from the inner server.
-  PortableServer::ServantBase_var servant = new Inner_callback_i(this->poa_.in(),
-                                                                 _tao_rh);
-  PortableServer::ObjectId_var objid =
-    this->poa_->activate_object(servant.in());
-  CORBA::Object_var obj = this->poa_->id_to_reference (objid.in());
+  PortableServer::ServantBase_var const servant (
+    new Inner_callback_i (this->poa_.in (), _tao_rh));
+  PortableServer::ObjectId_var const object_id (
+    this->poa_->activate_object (servant.in ()));
+  CORBA::Object_var const object (this->poa_->id_to_reference (object_id.in ()));
 
-  AMI_InnerHandler_var cb =  AMI_InnerHandler::_narrow(obj.in());
+  AMI_InnerHandler_var const callback (AMI_InnerHandler::_narrow (object.in ()));
 
   // forward the request on to the inner server, with the callback handler
   // reference.
-  this->inner_->sendc_answer (cb.in(),question);
+  this->inner_->sendc_answer (callback.in (), question);
 
   // nothing else to do. Our client will block until the callback handler
   // forwards the reply.
 }
 
-
 //------------------------------------------------------------------------
 
-// Implementation skeleton constructor
 Middle_i::Middle_i (Inner_ptr inner)
-  : inner_ (Inner::_duplicate(inner))
+  : inner_ (Inner::_duplicate (inner))
 {
 }
 
 char *
-Middle_i::get_the_answer ( const char * question )
+Middle_i::get_the_answer (char const *question)
 {
-  return inner_->answer (question);
+  return this->inner_->answer (question);
 }

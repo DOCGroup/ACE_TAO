@@ -1,9 +1,7 @@
 #include "Receiver.h"
 
 Receiver::Receiver (CORBA::ORB_ptr orb)
-  :  message_count_ (0)
-  ,  byte_count_ (0)
-  , orb_ (CORBA::ORB::_duplicate (orb))
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -19,10 +17,10 @@ Receiver::dump_results ()
 }
 
 void
-Receiver::receive_data (const Test::Payload &payload)
+Receiver::receive_data (Test::Payload const &payload)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-  this->message_count_++;
+  ++this->message_count_;
   this->byte_count_ += payload.length ();
 }
 

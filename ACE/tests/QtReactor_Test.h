@@ -19,9 +19,11 @@ public:
   QTestApplication( int argc, char *argv[] );
   virtual void exec( int msec = 0 );
 public slots:
-  virtual void finishTest(); //!< slot to finish the test, connected to finishTimer_
+  /// Slot connected to finishTimer_ to finish the test.
+  virtual void finishTest();
 private:
-  QTimer finishTimer_; //!< timer to finish the test
+  /// Timer to finish the test.
+  QTimer finishTimer_;
 };
 
 #endif /*QTREACTOR_TEST_H*/

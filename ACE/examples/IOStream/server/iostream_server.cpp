@@ -11,7 +11,15 @@
 #include "iostream_server.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
+
+static void
+end_event_loop_handler (int, siginfo_t *, ucontext_t *)
+{
+  ACE_Reactor::end_event_loop ();
+}
 
 int
 Handler::open (void *)
@@ -26,20 +34,20 @@ Handler::open (void *)
 
 Handler::Handler ()
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P) starting handler %x\n", this));
+  ACE_DEBUG ((LM_DEBUG, "(%P) starting handler %@\n", this));
 }
 
 Handler::~Handler ()
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P) shutting down handler %x\n", this));
+  ACE_DEBUG ((LM_DEBUG, "(%P) shutting down handler %@\n", this));
   ACE_Reactor::end_event_loop ();
 }
 
 int
 Handler::handle_input (ACE_HANDLE)
 {
-  int i;
-  float f;
+  int i {};
+  float f {};
 
   // Check to see if the socket is closed down.
   if (this->peer ().eof ())
@@ -51,7 +59,7 @@ Handler::handle_input (ACE_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "error getting data"), -1);
 
   cerr << "(" << ACE_OS::getpid () << ") Client sent:\n\t";
-  cerr << "(" << i << ") (" << f << ") (" << s << ")" << endl ;
+  cerr << "(" << i << ") (" << f << ") (" << s << ")" << endl;
 
   if (!(this->peer () << "Received: " << i << " " << f << " " << s << endl))
     ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "error sending data"), -1);
@@ -77,7 +85,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   ACE_Service_Config daemon;
 
   // Create an adapter to end the event loop.
-  ACE_Sig_Adapter sa ((ACE_Sig_Handler_Ex) ACE_Reactor::end_event_loop);
+  ACE_Sig_Adapter sa (end_event_loop_handler);
 
   ACE_Sig_Set sig_set;
   sig_set.sig_add (SIGINT);
@@ -86,12 +94,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   // Register ourselves to receive SIGINT and SIGQUIT so we can shut
   // down gracefully via signals.
   if (ACE_Reactor::instance ()->register_handler (sig_set,
-                                                  &sa) == -1)
+                                                  std::addressof (sa)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n"), -1);
 
   IOStream_Acceptor peer_acceptor;
 
-  ACE_INET_Addr addr (argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT);
+  ACE_INET_Addr const addr (argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT);
 
   if (peer_acceptor.open (addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

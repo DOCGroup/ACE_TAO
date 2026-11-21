@@ -9,27 +9,32 @@ class ClientInterceptor
 : public virtual PortableInterceptor::ClientRequestInterceptor,
   public virtual ::CORBA::LocalObject
 {
- public:
+public:
   ClientInterceptor ();
 
-  virtual ~ClientInterceptor ();
+  ~ClientInterceptor () override = default;
 
-  virtual char * name ();
+  char *name () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_request (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
- private:
-  const char *myname_;
+  ClientInterceptor (ClientInterceptor const &) = delete;
+  ClientInterceptor (ClientInterceptor &&) = delete;
+  ClientInterceptor &operator= (ClientInterceptor const &) = delete;
+  ClientInterceptor &operator= (ClientInterceptor &&) = delete;
+
+private:
+  char const *myname_;
 };
 
 #endif

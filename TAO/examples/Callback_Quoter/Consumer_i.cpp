@@ -13,7 +13,7 @@
 #include "Consumer_i.h"
 
 void
-Consumer_i::push (const Callback_Quoter::Info &data)
+Consumer_i::push (Callback_Quoter::Info const &data)
 {
   // On getting the needed information you now proceed to the next
   // step, which could be obtaining the shares.

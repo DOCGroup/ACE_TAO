@@ -22,7 +22,6 @@
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 
-
 TAO_NOTIFY_TEST_Export
 const char* Any_String (const CORBA::Any& any);
 

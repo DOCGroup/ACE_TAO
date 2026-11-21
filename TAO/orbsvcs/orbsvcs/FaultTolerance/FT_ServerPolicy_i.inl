@@ -4,7 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_FT_Heart_Beat_Enabled_Policy::TAO_FT_Heart_Beat_Enabled_Policy (
-    const CORBA::Boolean heartbeat
+    CORBA::Boolean const heartbeat
   )
   : heartbeat_enabled_value_ (heartbeat)
 {
@@ -12,7 +12,7 @@ TAO_FT_Heart_Beat_Enabled_Policy::TAO_FT_Heart_Beat_Enabled_Policy (
 
 ACE_INLINE
 TAO_FT_Heart_Beat_Enabled_Policy::TAO_FT_Heart_Beat_Enabled_Policy (
-    const TAO_FT_Heart_Beat_Enabled_Policy &rhs
+    TAO_FT_Heart_Beat_Enabled_Policy const &rhs
   )
   : CORBA::Object (),
     CORBA::Policy (),

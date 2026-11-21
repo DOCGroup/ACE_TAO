@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    complex_any.cpp
  *
@@ -9,10 +7,12 @@
  *  @author Jeff Parsons
  *  @author Frank Buschmann
  */
-//=============================================================================
-
 
 #include "helper.h"
+
+#include <cstring>
+#include <cstdlib>
+
 #include "complex_any.h"
 #include "tao/debug.h"
 
@@ -26,16 +26,10 @@ const int LEVEL_3_LENGTH = 3;
 size_t Test_Complex_Any::counter = 0;
 
 Test_Complex_Any::Test_Complex_Any ()
-  : opname_ (CORBA::string_dup ("test_complex_any")),
+  : opname_ ("test_complex_any"),
     out_ (new CORBA::Any),
     ret_ (new CORBA::Any)
 {
-}
-
-Test_Complex_Any::~Test_Complex_Any ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
 }
 
 const char *
@@ -62,7 +56,8 @@ Test_Complex_Any::dii_req_invoke (CORBA::Request *req)
   CORBA::NamedValue_ptr o2 =
     req->arguments ()->item (1);
   *o2->value () >>= tmp;
-  this->inout_ = CORBA::Any (*tmp);
+  CORBA::Any const value (*tmp);
+  this->inout_ = value;
 
   CORBA::NamedValue_ptr o3 =
     req->arguments ()->item (2);
@@ -92,18 +87,20 @@ Test_Complex_Any::reset_parameters ()
   level2_seq.length (LEVEL_2_LENGTH);
   level3_seq.length (LEVEL_3_LENGTH);
 
-  for (int j = 0; j < LEVEL_2_LENGTH; j++)
+  for (int j = 0; j < LEVEL_2_LENGTH; ++j)
     {
-      for (int i = 0; i < LEVEL_3_LENGTH; i++)
+      for (int i = 0; i < LEVEL_3_LENGTH; ++i)
         {
           Param_Test::level4 level4_struct;
 
           char *l5_str = gen->gen_string ();
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "setting level 5 string = %C\n",
-                        l5_str));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "setting level 5 string = %C\n",
+                          l5_str));
+            }
 
           level4_struct.level5_string = l5_str;
 
@@ -114,27 +111,33 @@ Test_Complex_Any::reset_parameters ()
           char *l9_str = gen->gen_string ();
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "setting level 9 string = %C\n",
-                        l9_str));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "setting level 9 string = %C\n",
+                          l9_str));
+            }
 
           level8_struct.level9_string = l9_str;
 
-          CORBA::Short l9_bool = ACE_OS::rand () % 2;
+          CORBA::Short const l9_bool = std::rand () % 2;
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "setting level 9 boolean = %d\n",
-                        l9_bool));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "setting level 9 boolean = %d\n",
+                          l9_bool));
+            }
 
           level8_struct.level9_boolean = (CORBA::Boolean) l9_bool;
 
-          CORBA::Short l9_short = gen->gen_short ();
+          CORBA::Short const l9_short = gen->gen_short ();
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "setting level 9 short = %d\n",
-                        l9_short));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "setting level 9 short = %d\n",
+                          l9_short));
+            }
 
           level8_struct.level9_short = l9_short;
 
@@ -174,29 +177,43 @@ Test_Complex_Any::run_sii_test (Param_Test_ptr objref)
 CORBA::Boolean
 Test_Complex_Any::check_validity ()
 {
-  const CORBA::AnySeq *level2_in_seq = 0;
-  const CORBA::AnySeq *level2_test_seq = 0;
+  CORBA::AnySeq const *level2_in_seq {};
+  CORBA::AnySeq const *level2_test_seq {};
 
   if (!(this->in_ >>= level2_in_seq))
+  {
     return 0;
+  }
 
   if (!(this->inout_ >>= level2_test_seq))
+  {
     return 0;
+  }
 
   if (this->comp_engine (level2_in_seq, level2_test_seq) == 0)
+  {
     return 0;
+  }
 
   if (!(this->out_.in () >>= level2_test_seq))
+  {
     return 0;
+  }
 
   if (this->comp_engine (level2_in_seq, level2_test_seq) == 0)
+  {
     return 0;
+  }
 
   if (!(this->ret_.in () >>= level2_test_seq))
+  {
     return 0;
+  }
 
   if (this->comp_engine (level2_in_seq, level2_test_seq) == 0)
+  {
     return 0;
+  }
 
   return 1;
 }
@@ -213,15 +230,19 @@ Test_Complex_Any::comp_engine (const CORBA::AnySeq *level2_in_seq,
       return 0;
     }
 
-  for (CORBA::ULong i = 0; i < level2_in_seq->length (); i++)
+  for (CORBA::ULong i = 0; i < level2_in_seq->length (); ++i)
     {
-      const CORBA::AnySeq *level3_in_seq = 0;
-      const CORBA::AnySeq *level3_test_seq = 0;
+      CORBA::AnySeq const *level3_in_seq {};
+      CORBA::AnySeq const *level3_test_seq {};
 
       if (!((*level2_in_seq)[i] >>= level3_in_seq))
+      {
         return 0;
+      }
       if (!((*level2_comp_seq)[i] >>= level3_test_seq))
+      {
         return 0;
+      }
 
       if (level3_in_seq->length() != level3_test_seq->length())
         {
@@ -230,17 +251,21 @@ Test_Complex_Any::comp_engine (const CORBA::AnySeq *level2_in_seq,
           return 0;
         }
 
-      for (CORBA::ULong j = 0; j < level3_in_seq->length (); j ++)
+      for (CORBA::ULong j = 0; j < level3_in_seq->length (); ++j)
         {
-          const Param_Test::level4 *level4_in_struct = 0;
-          const Param_Test::level4 *level4_test_struct = 0;
+          Param_Test::level4 const *level4_in_struct {};
+          Param_Test::level4 const *level4_test_struct {};
 
           if (!((*level3_in_seq)[j] >>= level4_in_struct))
+          {
             return 0;
+          }
           if (!((*level3_test_seq)[j] >>= level4_test_struct))
+          {
             return 0;
+          }
 
-          if (ACE_OS::strcmp (level4_in_struct->level5_string,
+          if (std::strcmp (level4_in_struct->level5_string,
                               level4_test_struct->level5_string))
             {
               ACE_DEBUG ((LM_DEBUG,
@@ -254,24 +279,36 @@ Test_Complex_Any::comp_engine (const CORBA::AnySeq *level2_in_seq,
           const CORBA::Any *level7_test_any;
 
           if (!(level4_in_struct->level5_any >>= level6_in_any))
+          {
             return 0;
+          }
           if (!(level4_test_struct->level5_any >>= level6_test_any))
+          {
             return 0;
+          }
 
           if (!((*level6_in_any) >>= level7_in_any))
+          {
             return 0;
+          }
           if (!((*level6_test_any) >>= level7_test_any))
+          {
             return 0;
+          }
 
-          const Param_Test::level8 *level8_in_struct = 0;
-          const Param_Test::level8 *level8_test_struct = 0;
+          Param_Test::level8 const *level8_in_struct {};
+          Param_Test::level8 const *level8_test_struct {};
 
           if (!((*level7_in_any) >>= level8_in_struct))
+          {
             return 0;
+          }
           if (!((*level7_test_any) >>= level8_test_struct))
+          {
             return 0;
+          }
 
-          if (ACE_OS::strcmp (level8_in_struct->level9_string,
+          if (std::strcmp (level8_in_struct->level9_string,
                                level8_test_struct->level9_string))
             {
               ACE_DEBUG ((LM_DEBUG,

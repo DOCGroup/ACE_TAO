@@ -1,5 +1,6 @@
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
+#include <memory>
 
 // Listing 1 code/ch17
 #include "ace/MMAP_Memory_Pool.h"
@@ -11,7 +12,7 @@ using ALLOCATOR = ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_PI_Cont
 using MALLOC_LIFO_ITERATOR =
   ACE_Malloc_LIFO_Iterator_T<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_PI_Control_Block>;
 
-ALLOCATOR  *g_allocator;
+std::unique_ptr<ALLOCATOR> g_allocator;
 // Listing 1
 // Listing 2 code/ch17
 class Record
@@ -20,10 +21,10 @@ public:
   Record (int id1, int id2, char *name)
     : id1_(id1), id2_(id2)
   {
-    size_t len = ACE_OS::strlen (name) + 1;
+    const size_t len = std::strlen (name) + 1;
     char *buf =
       reinterpret_cast<char *> (g_allocator->malloc (len));
-    ACE_OS::strcpy (buf, name);
+    std::strcpy (buf, name);
     name_ = buf;
   }
 
@@ -48,7 +49,7 @@ void showRecords ()
   {
     MALLOC_LIFO_ITERATOR iter (*g_allocator);
 
-    for (void *temp = nullptr; iter.next (temp) != 0; iter.advance ())
+    for (void *temp {}; iter.next (temp) != 0; iter.advance ())
       {
         Record *record =
           reinterpret_cast<Record *> (temp);
@@ -63,24 +64,28 @@ int addRecords ()
 {
   char buf[32];
 
-  for (int i = 0; i < 10; i++)
+  for (int i = 0; i < 10; ++i)
     {
       ACE_OS::sprintf (buf, "%s:%d", "Record", i);
 
       void *memory = g_allocator->malloc (sizeof (Record));
       if (memory == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("Unable to malloc")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("Unable to malloc")),
+                            -1);
+        }
 
       // Allocate and place record
       Record* newRecord = new (memory) Record (i, i+1, buf);
       if (g_allocator->bind (buf, newRecord) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("bind failed")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("bind failed")),
+                            -1);
+        }
     }
 
   return 0;
@@ -92,16 +97,18 @@ int addRecords ()
 
 int ACE_TMAIN (int argc, ACE_TCHAR *[])
 {
+  ALLOCATOR *allocator {};
   if (argc > 1)
     {
       ACE_MMAP_Memory_Pool_Options options
         (ACE_DEFAULT_BASE_ADDR,
          ACE_MMAP_Memory_Pool_Options::ALWAYS_FIXED);
-      ACE_NEW_RETURN (g_allocator,
+      ACE_NEW_RETURN (allocator,
                       ALLOCATOR (BACKING_STORE,
                                  BACKING_STORE,
                                  &options),
                       -1);
+      g_allocator.reset (allocator);
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Mapped to base address %@\n"),
                   g_allocator->base_addr ()));
@@ -112,11 +119,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *[])
     {
       ACE_MMAP_Memory_Pool_Options options
         (nullptr, ACE_MMAP_Memory_Pool_Options::NEVER_FIXED);
-      ACE_NEW_RETURN (g_allocator,
+      ACE_NEW_RETURN (allocator,
                       ALLOCATOR (BACKING_STORE,
                                  BACKING_STORE,
                                  &options),
                       -1);
+      g_allocator.reset (allocator);
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Mapped to base address %@\n"),
@@ -126,7 +134,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *[])
     }
 
   g_allocator->sync ();
-  delete g_allocator;
+  g_allocator.reset ();
   return 0;
 }
 // Listing 3

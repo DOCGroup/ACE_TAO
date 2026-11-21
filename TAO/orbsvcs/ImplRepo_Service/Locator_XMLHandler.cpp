@@ -25,10 +25,9 @@ const ACE_TCHAR* Locator_XMLHandler::PID_TAG = ACE_TEXT("pid");
 const ACE_TCHAR* Locator_XMLHandler::KEYNAME_TAG = ACE_TEXT("key_name");
 const ACE_TCHAR* Locator_XMLHandler::ALTKEY_TAG = ACE_TEXT("altkey");
 
-
 Locator_XMLHandler::Locator_XMLHandler (XML_Backing_Store& repo)
   : repo_(repo),
-    si_ (0),
+    si_ {},
     server_started_ (false),
     extra_params_ (),
     env_vars_ (),
@@ -41,7 +40,7 @@ static void convertEnvList (const Locator_XMLHandler::EnvList& in,
 {
   CORBA::ULong const sz = static_cast<CORBA::ULong> (in.size ());
   out.length (sz);
-  for (CORBA::ULong i = 0; i < sz; ++i)
+  for (CORBA::ULong i {}; i < sz; ++i)
     {
       out[i].name = ACE_TEXT_ALWAYS_CHAR (in[i].name.c_str ());
       out[i].value = ACE_TEXT_ALWAYS_CHAR (in[i].value.c_str ());
@@ -53,7 +52,7 @@ static void convertPeerList (const Locator_XMLHandler::PeerList& in,
 {
   CORBA::ULong const sz = static_cast<CORBA::ULong> (in.size ());
   out.length (sz);
-  for (CORBA::ULong i = 0; i < sz; ++i)
+  for (CORBA::ULong i {}; i < sz; ++i)
     {
       out[i] = in[i].c_str ();
     }
@@ -67,7 +66,9 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
 {
   if (ACE_OS::strcasecmp (qName, SERVER_INFO_TAG) == 0)
     {
-      ACE_NEW (this->si_, Server_Info);
+      Server_Info *si {};
+      ACE_NEW (si, Server_Info);
+      this->si_.reset (si);
       this->env_vars_.clear ();
 
       // if attrs exists and if the previously required 9 fields
@@ -110,7 +111,7 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
                   if (value.length() > 0 &&
                       this->repo_.servers ().find (value, this->si_->alt_info_) != 0)
                     {
-                      Server_Info *base_si = nullptr;
+                      Server_Info *base_si {};
                       ACE_NEW (base_si, Server_Info);
                       base_si->key_name_ = value;
                       this->si_->alt_info_.reset (base_si);
@@ -187,7 +188,7 @@ Locator_XMLHandler::endElement (const ACEXML_Char*,
     convertEnvList (this->env_vars_, this->si_->env_vars);
     convertPeerList (this->peer_list_, this->si_->peers);
 
-    this->repo_.load_server (this->si_,
+    this->repo_.load_server (this->si_.release (),
                              this->server_started_,
                              this->extra_params_);
   }

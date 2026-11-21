@@ -8,7 +8,6 @@
  */
 //==========================================================================
 
-
 #ifndef ACE_FIFO_H
 #define ACE_FIFO_H
 #include /**/ "ace/pre.h"
@@ -72,15 +71,14 @@ protected:
    * Protected constructors ensure this class cannot be used directly.
    * User code must use ACE_FIFO_Send and/or ACE_FIFO_Recv.
    */
-  //@{
-  /// Default constructor.
+  /// @{
   ACE_FIFO ();
 
   /// Open up the named pipe on the @a rendezvous in accordance with the
   /// flags.
   ACE_FIFO (const ACE_TCHAR *rendezvous, int flags, mode_t perms,
             LPSECURITY_ATTRIBUTES sa = 0);
-  //@}
+  /// @}
 
 private:
   /// Rendezvous point in the file system.

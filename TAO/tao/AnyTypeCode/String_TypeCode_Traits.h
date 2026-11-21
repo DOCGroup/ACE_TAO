@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    String_TypeCode_Traits.h
  *
@@ -11,13 +10,11 @@
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_STRING_TYPECODE_TRAITS_H
 #define TAO_STRING_TYPECODE_TRAITS_H
 
 #include /**/ "ace/pre.h"
-
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,7 +23,6 @@
 #include "tao/AnyTypeCode/String_TypeCode.h"
 #include "tao/AnyTypeCode/True_RefCount_Policy.h"
 #include "tao/AnyTypeCode/Any.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

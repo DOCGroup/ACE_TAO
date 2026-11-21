@@ -1,13 +1,13 @@
 #include "Echo_Caller.h"
 #include "Server_Task.h"
 
-Echo_Caller::Echo_Caller(CORBA::ORB_ptr orb)
-  : orb_ (CORBA::ORB::_duplicate(orb))
+Echo_Caller::Echo_Caller (CORBA::ORB_ptr orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
 void
-Echo_Caller::start_task(Test::Echo_ptr client)
+Echo_Caller::start_task (Test::Echo_ptr client)
 {
   Server_Task task (client);
 
@@ -23,8 +23,8 @@ Echo_Caller::start_task(Test::Echo_ptr client)
 }
 
 void
-Echo_Caller::shutdown()
+Echo_Caller::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG, "Server received shutdown message\n"));
-  orb_->shutdown(0);
+  this->orb_->shutdown (false);
 }

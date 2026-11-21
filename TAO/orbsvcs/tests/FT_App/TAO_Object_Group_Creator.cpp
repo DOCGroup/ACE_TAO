@@ -37,7 +37,6 @@ int TAO::Object_Group_Creator::set_factory_registry (PortableGroup::FactoryRegis
   return CORBA::is_nil (this->registry_.in ()) ? -1 : 0 ;
 }
 
-
 int TAO::Object_Group_Creator::init (CORBA::ORB_ptr orb)
 {
   int result = 0;
@@ -115,7 +114,6 @@ int TAO::Object_Group_Creator::unregister_role (const char * role)
   return result;
 }
 
-
 int TAO::Object_Group_Creator::create_detector_for_replica (
   CORBA::Object_ptr replica,
   const char * role,
@@ -161,7 +159,7 @@ int TAO::Object_Group_Creator::create_detector_for_replica (
         PortableGroup::Criteria_var criteria;
         ACE_NEW_NORETURN (criteria,
           PortableGroup::Criteria);
-        if (criteria.ptr () == 0)
+        if (criteria.ptr () == nullptr)
         {
           ACE_ERROR ( (LM_ERROR,
             "%T %n (%P|%t)Object_Group_Creater: Error cannot allocate criteria.\n"
@@ -184,7 +182,6 @@ int TAO::Object_Group_Creator::create_detector_for_replica (
   }
   return result;
 }
-
 
 CORBA::Object_ptr TAO::Object_Group_Creator::create_infrastructure_managed_group (
     const char * type_id)
@@ -296,7 +293,7 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
       creation_id >>= group_id;
     }
 
-    const PortableGroup::Location * first_location = 0;
+    PortableGroup::Location const *first_location {};
 
     for (CORBA::ULong nFact = 0; nFact < count; ++nFact)
     {
@@ -392,7 +389,7 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
       }
     }
 
-    if (first_location != 0 && this->have_replication_manager_)
+    if (first_location != nullptr && this->have_replication_manager_)
     {
       group = this->replication_manager_->set_primary_member (group.in (), * first_location);
     }
@@ -404,7 +401,6 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
 
   return group._retn ();
 }
-
 
 int TAO::Object_Group_Creator::fini ()
 {

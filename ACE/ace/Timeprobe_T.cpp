@@ -11,18 +11,15 @@
 
 #include "ace/Timeprobe.h"
 #include "ace/High_Res_Timer.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe_Ex (u_long size)
-  : timeprobes_ (0),
-    lock_ (),
-    max_size_ (size),
-    current_size_ (0),
-    report_buffer_full_ (0),
-    allocator_ (0)
+  : lock_ (),
+    max_size_ (size)
 {
   ACE_timeprobe_t *temp;
   //FUZZ: disable check_for_lack_ACE_OS
@@ -39,14 +36,11 @@ template <class ACE_LOCK, class ALLOCATOR>
 ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::
 ACE_Timeprobe_Ex (ALLOCATOR *allocator,
                u_long size)
-  : timeprobes_ (0),
-    lock_ (),
+  : lock_ (),
     max_size_ (size),
-    current_size_ (0),
-    report_buffer_full_ (0),
     allocator_ (allocator)
 {
-  ACE_timeprobe_t *temp = nullptr;
+  ACE_timeprobe_t *temp {};
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_NEW_MALLOC_ARRAY (temp,
                         (ACE_timeprobe_t *) this->allocator ()->
@@ -142,7 +136,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::increase_size (u_long size)
 
   if (size > this->max_size_)
     {
-      ACE_timeprobe_t *temp = nullptr;
+      ACE_timeprobe_t *temp {};
       //FUZZ: disable check_for_lack_ACE_OS
       ACE_NEW_MALLOC_ARRAY (temp,
                             (ACE_timeprobe_t *) this->allocator ()->
@@ -154,9 +148,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::increase_size (u_long size)
 
       if (this->max_size_ > 0)
         {
-          ACE_OS::memcpy (temp,
-                          this->timeprobes_,
-                          this->max_size_ * sizeof (ACE_timeprobe_t));
+          std::memcpy (temp, this->timeprobes_, this->max_size_ * sizeof (ACE_timeprobe_t));
 
           // Iterates over the array explicitly calling the destructor for
           // each probe instance, then deallocates the memory
@@ -234,8 +226,8 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_times ()
                                           : this->current_size_;
 
   ACELIB_DEBUG ((LM_DEBUG,
-              "\nACE_Timeprobe_Ex; %u timestamps were recorded:\n",
-              size));
+              "\nACE_Timeprobe_Ex; %Q timestamps were recorded:\n",
+              static_cast<ACE_UINT64> (size)));
 
   if (size == 0)
     return;
@@ -320,8 +312,8 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_absolute_times ()
                                           : this->current_size_;
 
   ACELIB_DEBUG ((LM_DEBUG,
-              "\nACE_Timeprobe_Ex; %u timestamps were recorded:\n",
-              size));
+              "\nACE_Timeprobe_Ex; %Q timestamps were recorded:\n",
+              static_cast<ACE_UINT64> (size)));
 
   if (size == 0)
     return;
@@ -340,11 +332,10 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_absolute_times ()
       ACE_High_Res_Timer::hrtime_to_tv (tv, this->timeprobes_ [i].time_);
 
       ACELIB_DEBUG ((LM_DEBUG,
-                  "%-50.50s %8.8x %12.12u\n",
+                  "%-50.50s %8.8x %12.12q\n",
                   this->find_description_i (i),
                   this->timeprobes_ [i].thread_,
-                  tv.sec () * 1000000
-                   + tv.usec ()));
+                  static_cast<ACE_INT64> (tv.sec () * 1000000 + tv.usec ())));
 
       // Modulus increment: loops around at the end.
       i = (i + 1) % this->max_size_;
@@ -362,7 +353,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::find_description_i (u_long i)
       EVENT_DESCRIPTIONS::iterator iterator = this->sorted_event_descriptions_.begin ();
       for (u_long j = 0;
            j < this->sorted_event_descriptions_.size () - 1;
-           iterator++, j++)
+           ++iterator, ++j)
         {
           EVENT_DESCRIPTIONS::iterator next_event_descriptions = iterator;
           ++next_event_descriptions;
@@ -377,18 +368,18 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::find_description_i (u_long i)
 template <class ACE_LOCK, class ALLOCATOR> void
 ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::sort_event_descriptions_i ()
 {
-  size_t total_elements = this->event_descriptions_.size ();
+  size_t const total_elements = this->event_descriptions_.size ();
 
   for (size_t i = 0;
        i < total_elements;
-       i++)
+       ++i)
     {
       EVENT_DESCRIPTIONS::iterator iterator = this->event_descriptions_.begin ();
       ACE_Event_Descriptions min_entry = *iterator;
 
       for (;
            iterator != this->event_descriptions_.end ();
-           iterator++)
+           ++iterator)
         if ((*iterator).minimum_id_ < min_entry.minimum_id_)
           min_entry = *iterator;
 

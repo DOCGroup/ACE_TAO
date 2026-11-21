@@ -45,7 +45,9 @@ ACE_LSOCK_Dgram::open (const ACE_Addr &local,
   if (ACE_SOCK_Dgram::open (local,
                             protocol_family,
                             protocol) == -1)
+  {
     return -1;
+  }
   ACE_LSOCK::set_handle (this->ACE_SOCK_Dgram::get_handle ());
   return 0;
 }
@@ -60,9 +62,11 @@ ACE_LSOCK_Dgram::ACE_LSOCK_Dgram (const ACE_Addr &local,
   if (this->open (local,
                   protocol_family,
                   protocol) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_LSOCK_Dgram")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_LSOCK_Dgram")));
+    }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

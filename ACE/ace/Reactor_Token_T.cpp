@@ -1,5 +1,6 @@
 #include "ace/Log_Category.h"
 #include "ace/Reactor_Token_T.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -21,7 +22,7 @@ template <class ACE_TOKEN_TYPE>
 ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::ACE_Reactor_Token_T
   (ACE_Reactor_Impl &r,
    int s_queue)
-    : reactor_ (&r)
+    : reactor_ (std::addressof (r))
 {
   ACE_TRACE ("ACE_Reactor_Token_T::ACE_Reactor_Token");
 
@@ -30,7 +31,6 @@ ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::ACE_Reactor_Token_T
 
 template <class ACE_TOKEN_TYPE>
 ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::ACE_Reactor_Token_T (int s_queue)
-  : reactor_ (nullptr)
 {
   ACE_TRACE ("ACE_Reactor_Token_T::ACE_Reactor_Token");
 
@@ -52,7 +52,7 @@ ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::reactor ()
 template <class ACE_TOKEN_TYPE> void
 ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::reactor (ACE_Reactor_Impl &reactor)
 {
-  this->reactor_ = &reactor;
+  this->reactor_ = std::addressof (reactor);
 }
 
 // Used to wakeup the reactor.
@@ -62,7 +62,8 @@ ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::sleep_hook ()
 {
   ACE_TRACE ("ACE_Reactor_Token_T::sleep_hook");
   ACE_Time_Value ping (ACE_Time_Value::zero);
-  if (this->reactor_->notify (0, ACE_Event_Handler::EXCEPT_MASK, &ping) == -1)
+  if (this->reactor_->notify (0, ACE_Event_Handler::EXCEPT_MASK,
+                              std::addressof (ping)) == -1)
     {
       if (errno == ETIME)
         {

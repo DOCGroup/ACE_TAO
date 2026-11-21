@@ -7,18 +7,9 @@ Foo_C_Statistics::Foo_C_Statistics(unsigned num_remote_clients,
 : num_remote_clients_ (num_remote_clients),
   num_collocated_clients_ (num_collocated_clients)
 {
-  for (unsigned i = 0; i < 10; i++)
-    {
-      this->expected_[i] = 0;
-      this->actual_[i] = 0;
-    }
 }
 
-
-Foo_C_Statistics::~Foo_C_Statistics()
-{
-}
-
+Foo_C_Statistics::~Foo_C_Statistics() = default;
 
 void
 Foo_C_Statistics::expected(unsigned op_num, unsigned count, bool remote_client)
@@ -33,24 +24,21 @@ Foo_C_Statistics::expected(unsigned op_num, unsigned count, bool remote_client)
     }
 }
 
-
 void
 Foo_C_Statistics::actual(unsigned op_num, unsigned count)
 {
   this->actual_[op_num-1] += count;
 }
 
-
 void
 Foo_C_Statistics::actual_in_values(unsigned op_num, LongVector lv)
 {
-  size_t sz = lv.size();
-  for (size_t i = 0; i < sz; i++)
+  size_t const sz = lv.size();
+  for (size_t i = 0; i < sz; ++i)
     {
       this->actual_in_values_[op_num-1].push_back (lv[i]);
     }
 }
-
 
 bool
 Foo_C_Statistics::actual_vs_expected()
@@ -62,7 +50,7 @@ Foo_C_Statistics::actual_vs_expected()
   Foo_C_Statistics collocated_client_stats (0, 1);
   Foo_C_Custom_ClientEngine::expected_results (collocated_client_stats);
 
-  for (unsigned i = 0; i < 10; i++)
+  for (unsigned i = 0; i < 10; ++i)
     {
       if (this->expected_[i] != this->actual_[i])
         {
@@ -95,7 +83,7 @@ Foo_C_Statistics::actual_vs_expected()
 
       sort (this->actual_in_values_[i]);
 
-      for (unsigned j = 0; j < actual_size - 1; j++)
+      for (unsigned j = 0; j < actual_size - 1; ++j)
         {
           if (this->actual_in_values_[i][j] != this->actual_in_values_[i][j + 1] - 1)
             {
@@ -105,5 +93,4 @@ Foo_C_Statistics::actual_vs_expected()
     }
   return true;
 }
-
 

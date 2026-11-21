@@ -62,9 +62,11 @@ int run_main (int, ACE_TCHAR *[])
 
 #if defined (ACE_HAS_THREADS)
   if (ACE_Thread_Manager::instance ()->spawn_n (2, run_thread_receiver) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawn_n ()")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawn_n ()")), -1);
+    }
 
   ACE_Thread_Manager::instance ()->wait ();
 #endif

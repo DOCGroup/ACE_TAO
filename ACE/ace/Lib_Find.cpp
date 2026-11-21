@@ -8,6 +8,8 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_fcntl.h"
 
+#include <cstring>
+
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
@@ -31,7 +33,9 @@ ACE::ldfind (const ACE_TCHAR* filename,
                                          expanded_filename,
                                          sizeof expanded_filename
                                          / sizeof (ACE_TCHAR)))
-    filename = expanded_filename;
+    {
+      filename = expanded_filename;
+    }
 #endif /* ACE_WIN32 */
 
   ACE_TCHAR tempcopy[MAXPATHLEN + 1];
@@ -51,7 +55,9 @@ ACE::ldfind (const ACE_TCHAR* filename,
       return -1;
     }
   else
+  {
     ACE_OS::strcpy (tempcopy, filename);
+  }
 
   // Insert canonical directory separators.
   ACE_TCHAR *separator_ptr;
@@ -121,12 +127,16 @@ ACE::ldfind (const ACE_TCHAR* filename,
 #if defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
   size_t const len_searchfilename = ACE_OS::strlen (searchfilename);
   if (!has_suffix)
-    ACE_OS::strcpy (searchfilename + len_searchfilename, decorator);
+    {
+      ACE_OS::strcpy (searchfilename + len_searchfilename, decorator);
+    }
 
-  for (int tag = 1; tag >= 0; tag --)
+  for (int tag = 1; tag >= 0; --tag)
     {
       if (tag == 0)
-        searchfilename [len_searchfilename] = 0;
+        {
+          searchfilename [len_searchfilename] = 0;
+        }
 
 #endif /* ACE_LD_DECORATOR_STR && !ACE_DISABLE_DEBUG_DLL_CHECK */
       // Use absolute pathname if there is one.
@@ -154,7 +164,9 @@ ACE::ldfind (const ACE_TCHAR* filename,
                                 searchfilename,
                                 has_suffix ? ACE_TEXT ("") : dll_suffix);
               if (ACE_OS::access (pathname, F_OK) == 0)
+              {
                 return 0;
+              }
 
               // Second, try matching the filename *with* adding a prefix.
               ACE_OS::snprintf (pathname, maxpathnamelen,
@@ -164,7 +176,9 @@ ACE::ldfind (const ACE_TCHAR* filename,
                                 searchfilename,
                                 has_suffix ? ACE_TEXT ("") : dll_suffix);
               if (ACE_OS::access (pathname, F_OK) == 0)
+              {
                 return 0;
+              }
             }
         }
 
@@ -173,7 +187,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
       else
         {
 #if defined (ACE_WIN32)
-          ACE_TCHAR *file_component = nullptr;
+          ACE_TCHAR *file_component {};
           DWORD pathlen =
             ACE_TEXT_SearchPath (0,
                                  searchfilename,
@@ -187,7 +201,9 @@ ACE::ldfind (const ACE_TCHAR* filename,
               return -1;
             }
           else if (pathlen > 0)
-            return 0;
+            {
+              return 0;
+            }
 
           // In case not found we should try again with the ACE_DLL_PREFIX
           // prefixed
@@ -206,9 +222,11 @@ ACE::ldfind (const ACE_TCHAR* filename,
               return -1;
             }
           else if (pathlen > 0)
-            return 0;
+            {
+              return 0;
+            }
 #else
-          ACE_TCHAR *ld_path = nullptr;
+          ACE_TCHAR *ld_path {};
 #  if defined ACE_DEFAULT_LD_SEARCH_PATH
           ld_path = const_cast<ACE_TCHAR*> (ACE_DEFAULT_LD_SEARCH_PATH);
 #  else
@@ -241,7 +259,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
 
               // Look at each dynamic lib directory in the search path.
 
-              ACE_TCHAR *nextholder = nullptr;
+              ACE_TCHAR *nextholder {};
               const ACE_TCHAR *path_entry =
                 ACE::strsplit_r (ld_path,
                                  ACE_LD_SEARCH_PATH_SEPARATOR_STR,
@@ -271,7 +289,9 @@ ACE::ldfind (const ACE_TCHAR* filename,
                   // We need to do it here rather than anywhere else so
                   // that the loop condition will still work.
                   else if (path_entry[0] == '\0')
-                    path_entry = ACE_TEXT (".");
+                    {
+                      path_entry = ACE_TEXT (".");
+                    }
 
                   // First, try matching the filename *without* adding a
                   // prefix.
@@ -282,7 +302,9 @@ ACE::ldfind (const ACE_TCHAR* filename,
                                     searchfilename,
                                     has_suffix ? ACE_TEXT ("") : dll_suffix);
                   if (ACE_OS::access (pathname, F_OK) == 0)
+                  {
                     break;
+                  }
 
                   // Second, try matching the filename *with* adding a
                   // prefix.
@@ -294,7 +316,9 @@ ACE::ldfind (const ACE_TCHAR* filename,
                                     searchfilename,
                                     has_suffix ? ACE_TEXT ("") : dll_suffix);
                   if (ACE_OS::access (pathname, F_OK) == 0)
+                  {
                     break;
+                  }
 
                   // Fetch the next item in the path
                   path_entry =
@@ -333,9 +357,11 @@ ACE::ldopen (const ACE_TCHAR *filename,
   if (ACE::ldfind (filename,
                    buf,
                    sizeof (buf) /sizeof (ACE_TCHAR)) == -1)
-    return nullptr;
-  else
-    return ACE_OS::fopen (buf, type);
+    {
+      return nullptr;
+    }
+
+  return ACE_OS::fopen (buf, type);
 }
 
 ACE_TCHAR *
@@ -344,7 +370,7 @@ ACE::ldname (const ACE_TCHAR *entry_point)
   ACE_TRACE ("ACE::ldname");
 
 #if defined(ACE_NEEDS_DL_UNDERSCORE)
-  size_t size =
+  const size_t size =
     1 // leading '_'
     + ACE_OS::strlen (entry_point)
     + 1;
@@ -359,7 +385,7 @@ ACE::ldname (const ACE_TCHAR *entry_point)
 
   return new_name;
 #else /* ACE_NEEDS_DL_UNDERSCORE */
-  size_t size =
+  const size_t size =
     ACE_OS::strlen (entry_point)
     + 1;
 
@@ -390,7 +416,9 @@ ACE::get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len)
   // Make sure to return -1 if there is an error
   if ((result == 0 && ::GetLastError () != ERROR_SUCCESS)
       || (result > static_cast<int> (buffer_len)))
-    result = -1;
+    {
+      result = -1;
+    }
 
 #else /* ACE_WIN32 */
 
@@ -449,7 +477,9 @@ ACE::open_temp_file (const ACE_TCHAR *name, int mode, int perm)
 #endif /* ACE_WIN32 */
 
   if (handle == ACE_INVALID_HANDLE)
-    return ACE_INVALID_HANDLE;
+    {
+      return ACE_INVALID_HANDLE;
+    }
 
   // Unlink it so that the file will be removed automatically when the
   // process goes away.
@@ -458,9 +488,9 @@ ACE::open_temp_file (const ACE_TCHAR *name, int mode, int perm)
       ACE_OS::close (handle);
       return ACE_INVALID_HANDLE;
     }
-  else
-    // Return the handle.
-    return handle;
+
+  // Return the handle.
+  return handle;
 }
 
 size_t
@@ -470,16 +500,17 @@ ACE::strrepl (char *s, char search, char replace)
 
   size_t replaced = 0;
 
-  for (size_t i = 0; s[i] != '\0'; i++)
-    if (s[i] == search)
-      {
-        s[i] = replace;
-        ++replaced;
-      }
+  for (size_t i = 0; s[i] != '\0'; ++i)
+    {
+      if (s[i] == search)
+        {
+          s[i] = replace;
+          ++replaced;
+        }
+    }
 
   return replaced;
 }
-
 
 // Split a string up into 'token'-delimited pieces, ala Perl's
 // "split".
@@ -489,14 +520,16 @@ ACE::strsplit_r (char *str,
                  const char *token,
                  char *&next_start)
 {
-  char *result = nullptr;
+  char *result {};
 
   if (str != nullptr)
+  {
     next_start = str;
+  }
 
   if (next_start != nullptr)
     {
-      char *tok_loc = ACE_OS::strstr (next_start, token);
+      char *tok_loc = std::strstr (next_start, token);
 
       if (tok_loc != nullptr)
         {
@@ -505,7 +538,7 @@ ACE::strsplit_r (char *str,
 
           // Insure it's terminated.
           *tok_loc = '\0';
-          next_start = tok_loc + ACE_OS::strlen (token);
+          next_start = tok_loc + std::strlen (token);
         }
       else
         {
@@ -523,10 +556,12 @@ ACE::strsplit_r (wchar_t *str,
                  const wchar_t *token,
                  wchar_t *&next_start)
 {
-  wchar_t *result = nullptr;
+  wchar_t *result {};
 
   if (str != nullptr)
+  {
     next_start = str;
+  }
 
   if (next_start != nullptr)
     {
@@ -558,12 +593,14 @@ ACE::strrepl (wchar_t *s, wchar_t search, wchar_t replace)
 
   size_t replaced = 0;
 
-  for (size_t i = 0; s[i] != '\0'; i++)
-    if (s[i] == search)
-      {
-        s[i] = replace;
-        ++replaced;
-      }
+  for (size_t i = 0; s[i] != '\0'; ++i)
+    {
+      if (s[i] == search)
+        {
+          s[i] = replace;
+          ++replaced;
+        }
+    }
 
   return replaced;
 }

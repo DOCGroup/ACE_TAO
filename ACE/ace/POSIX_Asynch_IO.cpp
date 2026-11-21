@@ -11,6 +11,7 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_sys_stat.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -32,7 +33,7 @@ ACE_POSIX_Asynch_Result::act () const
   return this->act_;
 }
 
-int
+bool
 ACE_POSIX_Asynch_Result::success () const
 {
   return this->success_;
@@ -95,7 +96,9 @@ ACE_POSIX_Asynch_Result::post_completion (ACE_Proactor_Impl *proactor_impl)
   ACE_POSIX_Proactor *posix_proactor = dynamic_cast<ACE_POSIX_Proactor *> (proactor_impl);
 
   if (posix_proactor == nullptr)
+  {
     ACELIB_ERROR_RETURN ((LM_ERROR, "Dynamic cast to POSIX Proactor failed\n"), -1);
+  }
 
   // Post myself.
   return posix_proactor->post_completion (this);
@@ -112,11 +115,7 @@ ACE_POSIX_Asynch_Result::ACE_POSIX_Asynch_Result
    int priority,
    int signal_number)
   : handler_proxy_ (handler_proxy),
-    act_ (act),
-    bytes_transferred_ (0),
-    success_ (0),
-    completion_key_ (nullptr),
-    error_ (0)
+    act_ (act)
 {
   aio_offset = offset;
   aio_reqprio = priority;
@@ -148,10 +147,14 @@ ACE_POSIX_Asynch_Operation::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
     {
       ACE_Handler *handler = handler_proxy.get ()->handler ();
       if (handler != nullptr)
+      {
         this->handle_ = handler->handle ();
+      }
     }
   if (this->handle_ == ACE_INVALID_HANDLE)
+  {
     return -1;
+  }
 
 #if 0
   // @@ If <proactor> is 0, let us not bother about getting this
@@ -176,7 +179,9 @@ int
 ACE_POSIX_Asynch_Operation::cancel ()
 {
   if (!posix_proactor_)
+  {
     return -1;
+  }
   return posix_proactor_->cancel_aio (this->handle_);
 }
 
@@ -261,7 +266,9 @@ ACE_POSIX_Asynch_Read_Stream_Result::complete (size_t bytes_transferred,
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
+  {
     handler->handle_read_stream (result);
+  }
 }
 
 ACE_POSIX_Asynch_Read_Stream_Result::~ACE_POSIX_Asynch_Read_Stream_Result () = default;
@@ -280,9 +287,11 @@ ACE_POSIX_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
                                     int priority,
                                     int signal_number)
 {
-  size_t space = message_block.space ();
+  size_t const space = message_block.space ();
   if (bytes_to_read > space)
-     bytes_to_read=space;
+  {
+    bytes_to_read=space;
+  }
 
   if (bytes_to_read == 0)
     {
@@ -291,7 +300,7 @@ ACE_POSIX_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
     }
 
   // Create the Asynch_Result.
-  ACE_POSIX_Asynch_Read_Stream_Result *result = nullptr;
+  ACE_POSIX_Asynch_Read_Stream_Result *result {};
   ACE_POSIX_Proactor *proactor = this->posix_proactor ();
   ACE_NEW_RETURN (result,
                   ACE_POSIX_Asynch_Read_Stream_Result (this->handler_proxy_,
@@ -304,9 +313,12 @@ ACE_POSIX_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
                                                        signal_number),
                   -1);
 
-  int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::ACE_OPCODE_READ);
-  if (return_val == -1)
-    delete result;
+  std::unique_ptr<ACE_POSIX_Asynch_Result> result_owner (result);
+  int return_val = proactor->start_aio (result_owner.get (), ACE_POSIX_Proactor::ACE_OPCODE_READ);
+  if (return_val != -1)
+    {
+      result_owner.release ();
+    }
 
   return return_val;
 }
@@ -375,7 +387,9 @@ ACE_POSIX_Asynch_Write_Stream_Result::complete (size_t bytes_transferred,
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
+  {
     handler->handle_write_stream (result);
+  }
 }
 
 ACE_POSIX_Asynch_Write_Stream_Result::~ACE_POSIX_Asynch_Write_Stream_Result () = default;
@@ -394,18 +408,22 @@ ACE_POSIX_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
                                       int priority,
                                       int signal_number)
 {
-  size_t len = message_block.length ();
+  size_t const len = message_block.length ();
   if (bytes_to_write > len)
-     bytes_to_write = len;
+    {
+      bytes_to_write = len;
+    }
 
   if (bytes_to_write == 0)
-    ACELIB_ERROR_RETURN
-      ((LM_ERROR,
-        ACE_TEXT ("ACE_POSIX_Asynch_Write_Stream::write:")
-        ACE_TEXT ("Attempt to write 0 bytes\n")),
-      -1);
+    {
+      ACELIB_ERROR_RETURN
+        ((LM_ERROR,
+          ACE_TEXT ("ACE_POSIX_Asynch_Write_Stream::write:")
+          ACE_TEXT ("Attempt to write 0 bytes\n")),
+         -1);
+    }
 
-  ACE_POSIX_Asynch_Write_Stream_Result *result = nullptr;
+  ACE_POSIX_Asynch_Write_Stream_Result *result {};
   ACE_POSIX_Proactor *proactor = this->posix_proactor ();
   ACE_NEW_RETURN (result,
                   ACE_POSIX_Asynch_Write_Stream_Result (this->handler_proxy_,
@@ -418,9 +436,12 @@ ACE_POSIX_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
                                                         signal_number),
                   -1);
 
-  int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::ACE_OPCODE_WRITE);
-  if (return_val == -1)
-    delete result;
+  std::unique_ptr<ACE_POSIX_Asynch_Result> result_owner (result);
+  int return_val = proactor->start_aio (result_owner.get (), ACE_POSIX_Proactor::ACE_OPCODE_WRITE);
+  if (return_val != -1)
+    {
+      result_owner.release ();
+    }
 
   return return_val;
 }
@@ -480,7 +501,9 @@ ACE_POSIX_Asynch_Read_File_Result::complete (size_t bytes_transferred,
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
+  {
     handler->handle_read_file (result);
+  }
 }
 
 ACE_POSIX_Asynch_Read_File_Result::~ACE_POSIX_Asynch_Read_File_Result () = default;
@@ -501,18 +524,22 @@ ACE_POSIX_Asynch_Read_File::read (ACE_Message_Block &message_block,
                                   int priority,
                                   int signal_number)
 {
-  size_t space = message_block.space ();
+  size_t const space = message_block.space ();
   if ( bytes_to_read > space )
-     bytes_to_read=space;
+    {
+      bytes_to_read=space;
+    }
 
   if ( bytes_to_read == 0 )
-    ACELIB_ERROR_RETURN
-      ((LM_ERROR,
-        ACE_TEXT ("ACE_POSIX_Asynch_Read_File::read:")
-        ACE_TEXT ("Attempt to read 0 bytes or no space in the message block\n")),
-       -1);
+    {
+      ACELIB_ERROR_RETURN
+        ((LM_ERROR,
+          ACE_TEXT ("ACE_POSIX_Asynch_Read_File::read:")
+          ACE_TEXT ("Attempt to read 0 bytes or no space in the message block\n")),
+         -1);
+    }
 
-  ACE_POSIX_Asynch_Read_File_Result *result = nullptr;
+  ACE_POSIX_Asynch_Read_File_Result *result {};
   ACE_POSIX_Proactor *proactor = this->posix_proactor ();
   ACE_NEW_RETURN (result,
                   ACE_POSIX_Asynch_Read_File_Result (this->handler_proxy_,
@@ -527,9 +554,12 @@ ACE_POSIX_Asynch_Read_File::read (ACE_Message_Block &message_block,
                                                      signal_number),
                   -1);
 
-  int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::ACE_OPCODE_READ);
-  if (return_val == -1)
-    delete result;
+  std::unique_ptr<ACE_POSIX_Asynch_Result> result_owner (result);
+  int return_val = proactor->start_aio (result_owner.get (), ACE_POSIX_Proactor::ACE_OPCODE_READ);
+  if (return_val != -1)
+    {
+      result_owner.release ();
+    }
 
   return return_val;
 }
@@ -603,7 +633,9 @@ ACE_POSIX_Asynch_Write_File_Result::complete (size_t bytes_transferred,
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
+  {
     handler->handle_write_file (result);
+  }
 }
 
 ACE_POSIX_Asynch_Write_File_Result::~ACE_POSIX_Asynch_Write_File_Result  () = default;
@@ -624,18 +656,22 @@ ACE_POSIX_Asynch_Write_File::write (ACE_Message_Block &message_block,
                                     int priority,
                                     int signal_number)
 {
-  size_t len = message_block.length ();
+  size_t const len = message_block.length ();
   if (bytes_to_write > len)
-     bytes_to_write = len;
+    {
+      bytes_to_write = len;
+    }
 
   if (bytes_to_write == 0)
-    ACELIB_ERROR_RETURN
-      ((LM_ERROR,
-        ACE_TEXT ("ACE_POSIX_Asynch_Write_File::write:")
-        ACE_TEXT ("Attempt to write 0 bytes\n")),
-      -1);
+    {
+      ACELIB_ERROR_RETURN
+        ((LM_ERROR,
+          ACE_TEXT ("ACE_POSIX_Asynch_Write_File::write:")
+          ACE_TEXT ("Attempt to write 0 bytes\n")),
+         -1);
+    }
 
-  ACE_POSIX_Asynch_Write_File_Result *result = nullptr;
+  ACE_POSIX_Asynch_Write_File_Result *result {};
   ACE_POSIX_Proactor *proactor = this->posix_proactor ();
   ACE_NEW_RETURN (result,
                   ACE_POSIX_Asynch_Write_File_Result (this->handler_proxy_,
@@ -650,9 +686,12 @@ ACE_POSIX_Asynch_Write_File::write (ACE_Message_Block &message_block,
                                                       signal_number),
                   -1);
 
-  int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::ACE_OPCODE_WRITE);
-  if (return_val == -1)
-    delete result;
+  std::unique_ptr<ACE_POSIX_Asynch_Result> result_owner (result);
+  int return_val = proactor->start_aio (result_owner.get (), ACE_POSIX_Proactor::ACE_OPCODE_WRITE);
+  if (return_val != -1)
+    {
+      result_owner.release ();
+    }
 
   return return_val;
 }
@@ -674,7 +713,6 @@ ACE_POSIX_Asynch_Write_File::write (ACE_Message_Block &message_block,
 }
 
 // *********************************************************************
-
 
 size_t
 ACE_POSIX_Asynch_Accept_Result::bytes_to_read () const
@@ -741,7 +779,9 @@ ACE_POSIX_Asynch_Accept_Result::complete (size_t bytes_transferred,
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
+  {
     handler->handle_accept (result);
+  }
 }
 
 ACE_POSIX_Asynch_Accept_Result::~ACE_POSIX_Asynch_Accept_Result () = default;
@@ -784,16 +824,20 @@ ACE_POSIX_Asynch_Accept::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
   // if we are already opened,
   // we could not create a new handler without closing the previous
   if (this->flg_open_)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("%N:%l:ACE_POSIX_Asynch_Accept::open:")
-                       ACE_TEXT("acceptor already open\n")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT("%N:%l:ACE_POSIX_Asynch_Accept::open:")
+                            ACE_TEXT("acceptor already open\n")),
+                           -1);
+    }
 
   if (-1 == ACE_POSIX_Asynch_Operation::open (handler_proxy,
                                               handle,
                                               completion_key,
                                               proactor))
-    return -1;
+    {
+      return -1;
+    }
 
   flg_open_ = true;
 
@@ -825,22 +869,26 @@ ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
   ACE_TRACE ("ACE_POSIX_Asynch_Accept::accept");
 
   if (!this->flg_open_)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("%N:%l:ACE_POSIX_Asynch_Accept::accept")
-                       ACE_TEXT("acceptor was not opened before\n")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT("%N:%l:ACE_POSIX_Asynch_Accept::accept")
+                            ACE_TEXT("acceptor was not opened before\n")),
+                           -1);
+    }
 
   // Sanity check: make sure that enough space has been allocated by
   // the caller.
   size_t address_size = sizeof (sockaddr_in);
 #if defined (ACE_HAS_IPV6)
   if (addr_family == AF_INET6)
-    address_size = sizeof (sockaddr_in6);
+    {
+      address_size = sizeof (sockaddr_in6);
+    }
 #else
   ACE_UNUSED_ARG (addr_family);
 #endif
-  size_t available_space = message_block.space ();
-  size_t space_needed = bytes_to_read + 2 * address_size;
+  size_t const available_space = message_block.space ();
+  size_t const space_needed = bytes_to_read + 2 * address_size;
 
   if (available_space < space_needed)
     {
@@ -850,7 +898,7 @@ ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
 
   // Common code for both WIN and POSIX.
   // Create future Asynch_Accept_Result
-  ACE_POSIX_Asynch_Accept_Result *result = nullptr;
+  ACE_POSIX_Asynch_Accept_Result *result {};
   ACE_NEW_RETURN (result,
                   ACE_POSIX_Asynch_Accept_Result (this->handler_proxy_,
                                                   this->handle_,
@@ -862,6 +910,7 @@ ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
                                                   priority,
                                                   signal_number),
                   -1);
+  std::unique_ptr<ACE_POSIX_Asynch_Result> result_owner (result);
 
   // Enqueue result
   {
@@ -871,12 +920,14 @@ ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
         ACELIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("ACE_POSIX_Asynch_Accept::accept: %p\n")
                     ACE_TEXT ("enqueue_tail")));
-        delete result;  // to avoid memory  leak
         return -1;
       }
+    result_owner.release ();
 
     if (this->result_queue_.size () > 1)
+    {
       return 0;
+    }
   }
 
   // If this is the only item, then it means there the set was empty
@@ -907,30 +958,44 @@ ACE_POSIX_Asynch_Accept::cancel_uncompleted (int flg_notify)
 
   int retval = 0;
 
-  for (; ; retval++)
+  for (; ; ++retval)
     {
-      ACE_POSIX_Asynch_Accept_Result* result = nullptr;
+      ACE_POSIX_Asynch_Accept_Result* result {};
 
       this->result_queue_.dequeue_head (result);
 
       if (result == nullptr)
+      {
         break;
+      }
 
-      if (this->flg_open_ == 0 || flg_notify == 0) //if we should not notify
-        delete result ;                            // we have to delete result
-      else                                 //else notify as any cancelled AIO
+      auto result_deleter = [] (ACE_POSIX_Asynch_Accept_Result *result)
         {
-          // Store the new handle.
-          result->aio_fildes = ACE_INVALID_HANDLE ;
-          result->set_bytes_transferred (0);
-          result->set_error (ECANCELED);
+          delete result;
+        };
+      std::unique_ptr<ACE_POSIX_Asynch_Accept_Result, decltype (result_deleter)>
+        result_owner (result, result_deleter);
 
-          if (this->posix_proactor ()->post_completion (result) == -1)
-            ACELIB_ERROR ((LM_ERROR,
-                        ACE_TEXT("(%P | %t):%p\n"),
-                        ACE_TEXT("ACE_POSIX_Asynch_Accept::")
-                        ACE_TEXT("cancel_uncompleted")
-                        ));
+      if (this->flg_open_ == 0 || flg_notify == 0)
+        {
+          continue;
+        }
+
+      // Store the new handle.
+      result->aio_fildes = ACE_INVALID_HANDLE;
+      result->set_bytes_transferred (0);
+      result->set_error (ECANCELED);
+
+      if (this->posix_proactor ()->post_completion (result_owner.get ()) == -1)
+        {
+          ACELIB_ERROR ((LM_ERROR,
+                         ACE_TEXT("(%P | %t):%p\n"),
+                         ACE_TEXT("ACE_POSIX_Asynch_Accept::")
+                         ACE_TEXT("cancel_uncompleted")));
+        }
+      else
+        {
+          result_owner.release ();
         }
     }
   return retval;
@@ -953,12 +1018,18 @@ ACE_POSIX_Asynch_Accept::cancel ()
     int num_cancelled = cancel_uncompleted (flg_open_);
 
     if (num_cancelled == 0)
-      rc = 1 ;        // AIO_ALLDONE
+      {
+        rc = 1 ;        // AIO_ALLDONE
+      }
     else if (num_cancelled > 0)
-      rc = 0 ;        // AIO_CANCELED
+      {
+        rc = 0 ;        // AIO_CANCELED
+      }
 
     if (!this->flg_open_)
-      return rc ;
+      {
+        return rc ;
+      }
   }
 
   ACE_Asynch_Pseudo_Task & task =
@@ -1002,7 +1073,9 @@ ACE_POSIX_Asynch_Accept::close ()
     }
 
   if (this->handle_ == ACE_INVALID_HANDLE)
+  {
     return 0;
+  }
 
   ACE_Asynch_Pseudo_Task & task =
     this->posix_proactor ()->get_asynch_pseudo_task ();
@@ -1046,17 +1119,23 @@ ACE_POSIX_Asynch_Accept::handle_input (ACE_HANDLE /* fd */)
   // able to just go ahead and do the <accept> now on this <fd>. This
   // should be the same as the <listen_handle>.
 
-  ACE_POSIX_Asynch_Accept_Result* result = nullptr;
+  ACE_POSIX_Asynch_Accept_Result* result {};
+  auto result_deleter = [] (ACE_POSIX_Asynch_Accept_Result *result)
+    {
+      delete result;
+    };
 
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0));
 
     // Deregister this info pertaining to this accept call.
     if (this->result_queue_.dequeue_head (result) != 0)
-      ACELIB_ERROR ((LM_ERROR,
-                  ACE_TEXT("%N:%l:(%P | %t):%p\n"),
-                  ACE_TEXT("ACE_POSIX_Asynch_Accept::handle_input:")
-                  ACE_TEXT( " dequeueing failed")));
+      {
+        ACELIB_ERROR ((LM_ERROR,
+                       ACE_TEXT("%N:%l:(%P | %t):%p\n"),
+                       ACE_TEXT("ACE_POSIX_Asynch_Accept::handle_input:")
+                       ACE_TEXT( " dequeueing failed")));
+      }
 
     // Disable the handle in the reactor if no more accepts are pending.
     if (this->result_queue_.size () == 0)
@@ -1067,6 +1146,9 @@ ACE_POSIX_Asynch_Accept::handle_input (ACE_HANDLE /* fd */)
         task.suspend_io_handler (this->get_handle());
       }
   }
+
+  std::unique_ptr<ACE_POSIX_Asynch_Accept_Result, decltype (result_deleter)>
+    result_owner (result, result_deleter);
 
   // Issue <accept> now.
   // @@ We shouldnt block here since we have already done poll/select
@@ -1096,11 +1178,21 @@ ACE_POSIX_Asynch_Accept::handle_input (ACE_HANDLE /* fd */)
 
   // Notify the main process about this completion
   // Send the Result through the notification pipe.
-  if (this->posix_proactor ()->post_completion (result) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT("Error:(%P | %t):%p\n"),
-                ACE_TEXT("ACE_POSIX_Asynch_Accept::handle_input: ")
-                ACE_TEXT(" <post_completion> failed")));
+  if (this->posix_proactor ()->post_completion (result_owner.get ()) == -1)
+    {
+      if (new_handle != ACE_INVALID_HANDLE)
+        {
+          ACE_OS::closesocket (new_handle);
+        }
+      ACELIB_ERROR ((LM_ERROR,
+                  ACE_TEXT("Error:(%P | %t):%p\n"),
+                  ACE_TEXT("ACE_POSIX_Asynch_Accept::handle_input: ")
+                  ACE_TEXT(" <post_completion> failed")));
+    }
+  else
+    {
+      result_owner.release ();
+    }
 
   return 0;
 }
@@ -1117,7 +1209,6 @@ void ACE_POSIX_Asynch_Connect_Result::connect_handle (ACE_HANDLE handle)
 {
   this->aio_fildes = handle;
 }
-
 
 ACE_POSIX_Asynch_Connect_Result::ACE_POSIX_Asynch_Connect_Result
   (const ACE_Handler::Proxy_Ptr &handler_proxy,
@@ -1151,7 +1242,9 @@ ACE_POSIX_Asynch_Connect_Result::complete (size_t bytes_transferred,
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
+  {
     handler->handle_connect (result);
+  }
 }
 
 ACE_POSIX_Asynch_Connect_Result::~ACE_POSIX_Asynch_Connect_Result () = default;
@@ -1192,7 +1285,9 @@ ACE_POSIX_Asynch_Connect::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
   ACE_TRACE ("ACE_POSIX_Asynch_Connect::open");
 
   if (this->flg_open_)
+  {
     return -1;
+  }
 
   //int result =
   ACE_POSIX_Asynch_Operation::open (handler_proxy,
@@ -1221,14 +1316,16 @@ ACE_POSIX_Asynch_Connect::connect (ACE_HANDLE connect_handle,
   ACE_TRACE ("ACE_POSIX_Asynch_Connect::connect");
 
   if (this->flg_open_ == 0)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("%N:%l:ACE_POSIX_Asynch_Connect::connect")
-                       ACE_TEXT("connector was not opened before\n")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT("%N:%l:ACE_POSIX_Asynch_Connect::connect")
+                            ACE_TEXT("connector was not opened before\n")),
+                           -1);
+    }
 
   // Common code for both WIN and POSIX.
   // Create future Asynch_Connect_Result
-  ACE_POSIX_Asynch_Connect_Result *result = nullptr;
+  ACE_POSIX_Asynch_Connect_Result *result {};
   ACE_NEW_RETURN (result,
                   ACE_POSIX_Asynch_Connect_Result (this->handler_proxy_,
                                                    connect_handle,
@@ -1237,6 +1334,17 @@ ACE_POSIX_Asynch_Connect::connect (ACE_HANDLE connect_handle,
                                                    priority,
                                                    signal_number),
                   -1);
+  auto result_deleter = [] (ACE_POSIX_Asynch_Connect_Result *result)
+    {
+      ACE_HANDLE handle = result->connect_handle ();
+      if (handle != ACE_INVALID_HANDLE)
+        {
+          ACE_OS::closesocket (handle);
+        }
+      delete result;
+    };
+  std::unique_ptr<ACE_POSIX_Asynch_Connect_Result, decltype (result_deleter)>
+    result_owner (result, result_deleter);
 
   int rc = connect_i (result,
                       remote_sap,
@@ -1247,7 +1355,9 @@ ACE_POSIX_Asynch_Connect::connect (ACE_HANDLE connect_handle,
   connect_handle = result->connect_handle ();
 
   if (rc != 0)
-    return post_result (result, true);
+  {
+    return post_result (result_owner.release (), true);
+  }
 
   //  Enqueue result we will wait for completion
   {
@@ -1261,9 +1371,10 @@ ACE_POSIX_Asynch_Connect::connect (ACE_HANDLE connect_handle,
                      ACE_TEXT ("bind")));
 
         result->set_error (EFAULT);
-        return post_result (result, true);
+        return post_result (result_owner.release (), true);
       }
   }
+  result_owner.release ();
 
   ACE_Asynch_Pseudo_Task & task =
     this->posix_proactor ()->get_asynch_pseudo_task ();
@@ -1287,8 +1398,9 @@ ACE_POSIX_Asynch_Connect::connect (ACE_HANDLE connect_handle,
       return -1;
     }
   else
+  {
     result = nullptr;
-
+  }
 
   return 0;
 }
@@ -1296,10 +1408,20 @@ ACE_POSIX_Asynch_Connect::connect (ACE_HANDLE connect_handle,
 int ACE_POSIX_Asynch_Connect::post_result (ACE_POSIX_Asynch_Connect_Result * result,
                                            bool post_enable)
 {
-  if (this->flg_open_ && post_enable != 0)
+  auto result_deleter = [] (ACE_POSIX_Asynch_Connect_Result *result)
     {
-      if (this->posix_proactor ()->post_completion (result) == 0)
-        return 0;
+      delete result;
+    };
+  std::unique_ptr<ACE_POSIX_Asynch_Connect_Result, decltype (result_deleter)>
+    result_owner (result, result_deleter);
+
+  if (this->flg_open_ && post_enable)
+    {
+      if (this->posix_proactor ()->post_completion (result_owner.get ()) == 0)
+        {
+          result_owner.release ();
+          return 0;
+        }
 
       ACELIB_ERROR ((LM_ERROR,
                   ACE_TEXT("Error:(%P | %t):%p\n"),
@@ -1310,11 +1432,11 @@ int ACE_POSIX_Asynch_Connect::post_result (ACE_POSIX_Asynch_Connect_Result * res
   ACE_HANDLE handle = result->connect_handle ();
 
   if (handle != ACE_INVALID_HANDLE)
+  {
     ACE_OS::closesocket (handle);
+  }
 
-   delete result;
-
-   return -1;
+  return -1;
 }
 
 //connect_i
@@ -1359,7 +1481,7 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
           ACE_OS::setsockopt (handle,
                               SOL_SOCKET,
                               SO_REUSEADDR,
-                              (const char*) &one,
+                              reinterpret_cast<char const *> (&one),
                               sizeof one) == -1 )
         {
           result->set_error (errno);
@@ -1374,7 +1496,7 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
   if (local_sap != ACE_Addr::sap_any)
     {
       sockaddr * laddr = reinterpret_cast<sockaddr *> (local_sap.get_addr ());
-      size_t size = local_sap.get_size ();
+      size_t const size = local_sap.get_size ();
 
       if (ACE_OS::bind (handle, laddr, size) == -1)
         {
@@ -1407,10 +1529,14 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
       if (rc < 0)  // failure
         {
           if (errno == EWOULDBLOCK || errno == EINPROGRESS)
+          {
             return 0; // connect started
+          }
 
           if (errno == EINTR)
-             continue;
+          {
+            continue;
+          }
 
           result->set_error (errno);
         }
@@ -1420,7 +1546,6 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
 
   ACE_NOTREACHED (return 0);
 }
-
 
 //@@ New method cancel_uncompleted
 // It performs cancellation of all pending requests
@@ -1443,11 +1568,11 @@ ACE_POSIX_Asynch_Connect::cancel_uncompleted (bool flg_notify,
   int retval = 0;
 
   MAP_MANAGER::ITERATOR  iter (result_map_);
-  MAP_MANAGER::ENTRY *   me = nullptr;
+  MAP_MANAGER::ENTRY *me {};
 
   set.reset ();
 
-  for (; iter.next (me) != 0;  retval++ , iter.advance ())
+  for (; iter.next (me) != 0;  ++retval, iter.advance ())
     {
        ACE_HANDLE handle = me->ext_id_;
        ACE_POSIX_Asynch_Connect_Result* result = me->int_id_ ;
@@ -1482,12 +1607,18 @@ ACE_POSIX_Asynch_Connect::cancel ()
     num_cancelled = cancel_uncompleted (flg_open_, set);
   }
   if (num_cancelled == 0)
-    rc = 1 ;        // AIO_ALLDONE
+    {
+      rc = 1 ;        // AIO_ALLDONE
+    }
   else if (num_cancelled > 0)
-    rc = 0 ;        // AIO_CANCELED
+    {
+      rc = 0 ;        // AIO_CANCELED
+    }
 
   if (!this->flg_open_)
-    return rc ;
+    {
+      return rc ;
+    }
 
   ACE_Asynch_Pseudo_Task & task =
     this->posix_proactor ()->get_asynch_pseudo_task ();
@@ -1528,12 +1659,14 @@ ACE_POSIX_Asynch_Connect::handle_output (ACE_HANDLE fd)
 {
   ACE_TRACE ("ACE_POSIX_Asynch_Connect::handle_output");
 
-  ACE_POSIX_Asynch_Connect_Result* result = nullptr;
+  ACE_POSIX_Asynch_Connect_Result* result {};
 
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0));
     if (this->result_map_.unbind (fd, result) != 0) // not found
-      return -1;
+      {
+        return -1;
+      }
   }
 
   int sockerror  = 0 ;
@@ -1542,7 +1675,7 @@ ACE_POSIX_Asynch_Connect::handle_output (ACE_HANDLE fd)
   ACE_OS::getsockopt (fd,
                       SOL_SOCKET,
                       SO_ERROR,
-                      (char*) &sockerror,
+                      reinterpret_cast<char *> (&sockerror),
                       &lsockerror);
 
   result->set_bytes_transferred (0);
@@ -1558,7 +1691,6 @@ ACE_POSIX_Asynch_Connect::handle_output (ACE_HANDLE fd)
   return 0;
 }
 
-
 int
 ACE_POSIX_Asynch_Connect::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
 {
@@ -1569,12 +1701,14 @@ ACE_POSIX_Asynch_Connect::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
 
   task.remove_io_handler (fd);
 
-  ACE_POSIX_Asynch_Connect_Result* result = nullptr;
+  ACE_POSIX_Asynch_Connect_Result* result {};
 
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0));
     if (this->result_map_.unbind (fd, result) != 0) // not found
-      return -1;
+      {
+        return -1;
+      }
   }
 
   result->set_bytes_transferred (0);
@@ -1681,11 +1815,12 @@ ACE_POSIX_Asynch_Transmit_File_Result::complete (size_t bytes_transferred,
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
+  {
     handler->handle_transmit_file (result);
+  }
 }
 
 ACE_POSIX_Asynch_Transmit_File_Result::~ACE_POSIX_Asynch_Transmit_File_Result () = default;
-
 
 // *********************************************************************
 
@@ -1707,7 +1842,6 @@ public:
   ACE_POSIX_Asynch_Transmit_Handler (ACE_POSIX_Proactor *posix_proactor,
                                      ACE_POSIX_Asynch_Transmit_File_Result *result);
 
-  /// Destructor.
   ~ACE_POSIX_Asynch_Transmit_Handler () override;
 
   /// Do the transmission. All the info to do the transmission is in
@@ -1716,11 +1850,12 @@ public:
 
 protected:
   /// The asynch result pointer made from the initial transmit file
-  /// request.
+  /// request. Keep this raw pointer because its protected destructor
+  /// restricts deletion to this friend handler.
   ACE_POSIX_Asynch_Transmit_File_Result *result_;
 
-  /// Message bloack used to do the transmission.
-  ACE_Message_Block *mb_;
+  /// Message block used to do the transmission.
+  ACE_Message_Block_Unique_Ptr mb_;
 
   enum ACT
   {
@@ -1753,6 +1888,8 @@ protected:
   /// This is called when asynchronous reads from the file complete.
   void handle_read_file (const ACE_Asynch_Read_File::Result &result) override;
 
+  void complete_failure (u_long error);
+
   /// Issue asynch read from  the file.
   int initiate_read_file ();
 
@@ -1765,12 +1902,10 @@ protected:
 
 // ************************************************************
 
-// Constructor.
 ACE_POSIX_Asynch_Transmit_Handler::ACE_POSIX_Asynch_Transmit_Handler
       (ACE_POSIX_Proactor *posix_proactor,
        ACE_POSIX_Asynch_Transmit_File_Result *result)
   : result_ (result),
-    mb_ (nullptr),
     header_act_ (this->HEADER_ACT),
     data_act_ (this->DATA_ACT),
     trailer_act_ (this->TRAILER_ACT),
@@ -1781,20 +1916,34 @@ ACE_POSIX_Asynch_Transmit_Handler::ACE_POSIX_Asynch_Transmit_Handler
     ws_ (posix_proactor)
 {
   // Allocate memory for the message block.
-  ACE_NEW (this->mb_,
-           ACE_Message_Block (this->result_->bytes_per_send ()
-                              + 1));
+  ACE_Message_Block *message_block {};
+  ACE_NEW (message_block,
+           ACE_Message_Block (this->result_->bytes_per_send () + 1));
+  this->mb_.reset (message_block);
   // Init the file size.
   file_size_ = ACE_OS::filesize (this->result_->file ());
 }
 
-// Destructor.
 ACE_POSIX_Asynch_Transmit_Handler::~ACE_POSIX_Asynch_Transmit_Handler ()
 {
-  delete result_;
-  mb_->release ();
+  delete this->result_;
 }
 
+void
+ACE_POSIX_Asynch_Transmit_Handler::complete_failure (u_long error)
+{
+  ACE_SEH_TRY
+    {
+      this->result_->complete (this->bytes_transferred_,
+                               0,
+                               nullptr,
+                               error);
+    }
+  ACE_SEH_FINALLY
+    {
+      delete this;
+    }
+}
 
 // Do the transmission.
 // Initiate transmitting the header. When that completes
@@ -1812,27 +1961,33 @@ ACE_POSIX_Asynch_Transmit_Handler::transmit ()
                       this->result_->file (),
                       nullptr,
                       nullptr) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       "ACE_Asynch_Transmit_Handler:read_file open failed\n"),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                           "ACE_Asynch_Transmit_Handler:read_file open failed\n"),
+                           -1);
+    }
 
   // Open Asynch_Write_Stream.
   if (this->ws_.open (this->proxy (),
                       this->result_->socket (),
                       nullptr,
                       nullptr) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       "ACE_Asynch_Transmit_Handler:write_stream open failed\n"),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                           "ACE_Asynch_Transmit_Handler:write_stream open failed\n"),
+                           -1);
+    }
 
   // Transmit the header.
   if (this->ws_.write (*this->result_->header_and_trailer ()->header (),
                        this->result_->header_and_trailer ()->header_bytes (),
-                       reinterpret_cast<void *> (&this->header_act_),
+                       reinterpret_cast<void *> (std::addressof (this->header_act_)),
                        0) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       "Asynch_Transmit_Handler:transmitting header:write_stream failed\n"),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                           "Asynch_Transmit_Handler:transmitting header:write_stream failed\n"),
+                           -1);
+    }
   return 0;
 }
 
@@ -1849,41 +2004,29 @@ ACE_POSIX_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_S
 
       ACELIB_ERROR ((LM_ERROR,
                   "Asynch_Transmit_File failed.\n"));
-
-      ACE_SEH_TRY
-        {
-          this->result_->complete (this->bytes_transferred_,
-                                   0,      // Failure.
-                                   nullptr,      // @@ Completion key.
-                                   0);     // @@ Error no.
-        }
-      ACE_SEH_FINALLY
-        {
-          // This is crucial to prevent memory leaks. This deletes
-          // the result pointer also.
-          delete this;
-        }
+      this->complete_failure (result.error ());
+      return;
     }
 
   // Write stream successful.
 
   // Partial write to socket.
-  size_t unsent_data = result.bytes_to_write () - result.bytes_transferred ();
+  size_t const unsent_data = result.bytes_to_write () - result.bytes_transferred ();
   if (unsent_data != 0)
     {
       ACELIB_DEBUG ((LM_DEBUG,
                   "%N:%l:Partial write to socket: Asynch_write called again\n"));
 
-      // Duplicate the message block and retry remaining data
-      if (this->ws_.write (*result.message_block ().duplicate (),
+      // Retry the remaining data from the current read pointer.
+      if (this->ws_.write (result.message_block (),
                            unsent_data,
                            result.act (),
                            this->result_->priority (),
                            this->result_->signal_number ()) == -1)
         {
-          // @@ Handle this error.
           ACELIB_ERROR ((LM_ERROR,
                       "Asynch_Transmit_Handler:write_stream failed\n"));
+          this->complete_failure (errno);
           return;
         }
 
@@ -1898,7 +2041,7 @@ ACE_POSIX_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_S
   // Not a partial write. A full write.
 
   // Check ACT to see what was sent.
-  ACT act = * (ACT *) result.act ();
+  ACT const act = *static_cast<ACT const *> (result.act ());
 
   switch (act)
     {
@@ -1923,15 +2066,19 @@ ACE_POSIX_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_S
     case DATA_ACT:
       // If header/data was sent, initiate the file data transmission.
       if (this->initiate_read_file () == -1)
-        // @@ Handle this error.
-        ACELIB_ERROR ((LM_ERROR,
-                    "Error:Asynch_Transmit_Handler:read_file couldnt be initiated\n"));
+        {
+          ACELIB_ERROR ((LM_ERROR,
+                      "Error:Asynch_Transmit_Handler:read_file couldnt be initiated\n"));
+          this->complete_failure (errno);
+          return;
+        }
       break;
 
     default:
-      // @@ Handle this error.
       ACELIB_ERROR ((LM_ERROR,
                   "Error:ACE_Asynch_Transmit_Handler::handle_write_stream::Unexpected act\n"));
+      this->complete_failure (EINVAL);
+      return;
     }
 }
 
@@ -1941,23 +2088,16 @@ ACE_POSIX_Asynch_Transmit_Handler::handle_read_file (const ACE_Asynch_Read_File:
   // Failure.
   if (result.success () == 0)
     {
-      ACE_SEH_TRY
-        {
-          this->result_->complete (this->bytes_transferred_,
-                                   0,      // Failure.
-                                   nullptr,      // @@ Completion key.
-                                   errno); // Error no.
-        }
-      ACE_SEH_FINALLY
-        {
-          delete this;
-        }
+      this->complete_failure (result.error ());
       return;
     }
 
   // Read successful.
   if (result.bytes_transferred () == 0)
+  {
+    this->complete_failure (EIO);
     return;
+  }
 
   // Increment offset.
   this->file_offset_ += result.bytes_transferred ();
@@ -1965,13 +2105,13 @@ ACE_POSIX_Asynch_Transmit_Handler::handle_read_file (const ACE_Asynch_Read_File:
   // Write data to network.
   if (this->ws_.write (result.message_block (),
                        result.bytes_transferred (),
-                       (void *)&this->data_act_,
+                       std::addressof (this->data_act_),
                        this->result_->priority (),
                        this->result_->signal_number ()) == -1)
     {
-      // @@ Handle this error.
       ACELIB_ERROR ((LM_ERROR,
                   "Error:ACE_Asynch_Transmit_File : write to the stream failed\n"));
+      this->complete_failure (errno);
       return;
     }
 }
@@ -1985,12 +2125,14 @@ ACE_POSIX_Asynch_Transmit_Handler::initiate_read_file ()
       // File is sent. Send the trailer.
       if (this->ws_.write (*this->result_->header_and_trailer ()->trailer (),
                            this->result_->header_and_trailer ()->trailer_bytes (),
-                           (void *)&this->trailer_act_,
+                           std::addressof (this->trailer_act_),
                            this->result_->priority (),
                            this->result_->signal_number ()) == -1)
-        ACELIB_ERROR_RETURN ((LM_ERROR,
-                           "Error:Asynch_Transmit_Handler:write_stream writing trailer failed\n"),
-                          -1);
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                                "Error:Asynch_Transmit_Handler:write_stream writing trailer failed\n"),
+                               -1);
+        }
       return 0;
     }
   else
@@ -2009,9 +2151,11 @@ ACE_POSIX_Asynch_Transmit_Handler::initiate_read_file ()
                           nullptr, // Act
                           this->result_->priority (),
                           this->result_->signal_number ()) == -1)
-        ACELIB_ERROR_RETURN ((LM_ERROR,
-                           "Error:Asynch_Transmit_Handler::read from file failed\n"),
-                          -1);
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                                "Error:Asynch_Transmit_Handler::read from file failed\n"),
+                               -1);
+        }
       return 0;
     }
 }
@@ -2039,28 +2183,38 @@ ACE_POSIX_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
   ssize_t file_size = ACE_OS::filesize (file);
 
   if (file_size == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("Error:%N:%l:%p\n"),
-                       ACE_TEXT("POSIX_Asynch_Transmit_File:filesize failed")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT("Error:%N:%l:%p\n"),
+                            ACE_TEXT("POSIX_Asynch_Transmit_File:filesize failed")),
+                           -1);
+    }
 
   if (bytes_to_write == 0)
-    bytes_to_write = file_size;
+    {
+      bytes_to_write = file_size;
+    }
 
   if (offset > (size_t) file_size)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("Error:%p\n"),
-                       ACE_TEXT("Asynch_Transmit_File:File size is less than offset")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT("Error:%p\n"),
+                            ACE_TEXT("Asynch_Transmit_File:File size is less than offset")),
+                           -1);
+    }
 
   if (offset != 0)
-    bytes_to_write = file_size - offset + 1;
+    {
+      bytes_to_write = file_size - offset + 1;
+    }
 
   if (bytes_per_send == 0)
+  {
     bytes_per_send = bytes_to_write;
+  }
 
   // Configure the result parameter.
-  ACE_POSIX_Asynch_Transmit_File_Result *result = nullptr;
+  ACE_POSIX_Asynch_Transmit_File_Result *result {};
 
   ACE_NEW_RETURN (result,
                   ACE_POSIX_Asynch_Transmit_File_Result (this->handler_proxy_,
@@ -2077,20 +2231,31 @@ ACE_POSIX_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
                                                          priority,
                                                          signal_number),
                   -1);
+  auto result_deleter = [] (ACE_POSIX_Asynch_Transmit_File_Result *result)
+    {
+      delete result;
+    };
+  std::unique_ptr<ACE_POSIX_Asynch_Transmit_File_Result, decltype (result_deleter)>
+    result_owner (result, result_deleter);
 
   // Make the auxillary handler and initiate transmit.
-  ACE_POSIX_Asynch_Transmit_Handler *transmit_handler = nullptr;
+  ACE_POSIX_Asynch_Transmit_Handler *transmit_handler {};
 
   ACE_NEW_RETURN (transmit_handler,
                   ACE_POSIX_Asynch_Transmit_Handler (this->posix_proactor (),
-                                                     result),
+                                                     result_owner.get ()),
                   -1);
+  result_owner.release ();
+  std::unique_ptr<ACE_POSIX_Asynch_Transmit_Handler> transmit_handler_owner (
+    transmit_handler);
 
-  ssize_t return_val = transmit_handler->transmit ();
+  int return_val = transmit_handler_owner->transmit ();
 
   if (return_val == -1)
-    // This deletes the <result> in it too.
-    delete transmit_handler;
+    {
+      return -1;
+    }
+  transmit_handler_owner.release ();
 
   return 0;
 }
@@ -2123,9 +2288,8 @@ ACE_POSIX_Asynch_Read_Dgram_Result::remote_address (ACE_Addr& addr) const
 sockaddr *
 ACE_POSIX_Asynch_Read_Dgram_Result::saddr () const
 {
-  return (sockaddr *) this->remote_address_->get_addr ();
+  return static_cast<sockaddr *> (this->remote_address_->get_addr ());
 }
-
 
 int
 ACE_POSIX_Asynch_Read_Dgram_Result::flags () const
@@ -2160,7 +2324,6 @@ ACE_POSIX_Asynch_Read_Dgram_Result::ACE_POSIX_Asynch_Read_Dgram_Result
       (handler_proxy, act, event, 0, 0, priority, signal_number),
     bytes_to_read_ (bytes_to_read),
     message_block_ (message_block),
-    remote_address_ (nullptr),
     addr_len_ (0),
     flags_ (flags),
     handle_ (handle)
@@ -2169,7 +2332,9 @@ ACE_POSIX_Asynch_Read_Dgram_Result::ACE_POSIX_Asynch_Read_Dgram_Result
   this->aio_fildes = handle;
   this->aio_buf = message_block->wr_ptr ();
   this->aio_nbytes = bytes_to_read;
-  ACE_NEW (this->remote_address_, ACE_INET_Addr);
+  ACE_INET_Addr *remote_address {};
+  ACE_NEW (remote_address, ACE_INET_Addr);
+  this->remote_address_.reset (remote_address);
 }
 
 void
@@ -2198,13 +2363,12 @@ ACE_POSIX_Asynch_Read_Dgram_Result::complete (size_t bytes_transferred,
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
+  {
     handler->handle_read_dgram (result);
+  }
 }
 
-ACE_POSIX_Asynch_Read_Dgram_Result::~ACE_POSIX_Asynch_Read_Dgram_Result ()
-{
-  delete this->remote_address_;
-}
+ACE_POSIX_Asynch_Read_Dgram_Result::~ACE_POSIX_Asynch_Read_Dgram_Result () = default;
 
 //***************************************************************************
 size_t
@@ -2224,7 +2388,6 @@ ACE_POSIX_Asynch_Write_Dgram_Result::handle () const
 {
   return this->handle_;
 }
-
 
 ACE_Message_Block*
 ACE_POSIX_Asynch_Write_Dgram_Result::message_block () const
@@ -2279,7 +2442,9 @@ ACE_POSIX_Asynch_Write_Dgram_Result::complete (size_t bytes_transferred,
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
+  {
     handler->handle_write_dgram (result);
+  }
 }
 
 ACE_POSIX_Asynch_Write_Dgram_Result::~ACE_POSIX_Asynch_Write_Dgram_Result () = default;
@@ -2296,9 +2461,9 @@ ACE_POSIX_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
                                    int priority,
                                    int signal_number)
 {
-  size_t space = message_block->space ();
+  size_t const space = message_block->space ();
   // Create the Asynch_Result.
-  ACE_POSIX_Asynch_Read_Dgram_Result *result = nullptr;
+  ACE_POSIX_Asynch_Read_Dgram_Result *result {};
   ACE_POSIX_Proactor *proactor = this->posix_proactor ();
   ACE_NEW_RETURN (result,
                   ACE_POSIX_Asynch_Read_Dgram_Result (this->handler_proxy_,
@@ -2313,9 +2478,12 @@ ACE_POSIX_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
                                                       signal_number),
                   -1);
 
-  int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::ACE_OPCODE_READ);
-  if (return_val == -1)
-    delete result;
+  std::unique_ptr<ACE_POSIX_Asynch_Result> result_owner (result);
+  int return_val = proactor->start_aio (result_owner.get (), ACE_POSIX_Proactor::ACE_OPCODE_READ);
+  if (return_val != -1)
+    {
+      result_owner.release ();
+    }
 
   return return_val;
 }
@@ -2338,15 +2506,17 @@ ACE_POSIX_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
                                     int priority,
                                     int signal_number)
 {
-  size_t len = message_block->length ();
+  size_t const len = message_block->length ();
   if (len == 0)
-    ACELIB_ERROR_RETURN
-      ((LM_ERROR,
-        ACE_TEXT ("ACE_POSIX_Asynch_Write_Stream::write:")
-        ACE_TEXT ("Attempt to write 0 bytes\n")),
-      -1);
+    {
+      ACELIB_ERROR_RETURN
+        ((LM_ERROR,
+          ACE_TEXT ("ACE_POSIX_Asynch_Write_Stream::write:")
+          ACE_TEXT ("Attempt to write 0 bytes\n")),
+         -1);
+    }
 
-  ACE_POSIX_Asynch_Write_Dgram_Result *result = nullptr;
+  ACE_POSIX_Asynch_Write_Dgram_Result *result {};
   ACE_POSIX_Proactor *proactor = this->posix_proactor ();
   ACE_NEW_RETURN (result,
                   ACE_POSIX_Asynch_Write_Dgram_Result (this->handler_proxy_,
@@ -2360,9 +2530,12 @@ ACE_POSIX_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
                                                        signal_number),
                   -1);
 
-  int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::ACE_OPCODE_WRITE);
-  if (return_val == -1)
-    delete result;
+  std::unique_ptr<ACE_POSIX_Asynch_Result> result_owner (result);
+  int return_val = proactor->start_aio (result_owner.get (), ACE_POSIX_Proactor::ACE_OPCODE_WRITE);
+  if (return_val != -1)
+    {
+      result_owner.release ();
+    }
 
   return return_val;
 }

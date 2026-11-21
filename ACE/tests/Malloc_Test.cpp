@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "Malloc_Test.h"
 
@@ -23,7 +22,6 @@
 #include "ace/RW_Thread_Mutex.h"
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_unistd.h"
-
 
 #if defined (ACE_HAS_PROCESS_SPAWN)
 
@@ -124,15 +122,15 @@ init_test (const void *base_addr = nullptr)
 static Test_Data *
 initialize (MALLOC *allocator)
 {
-  double *temp = nullptr;
+  double *temp {};
   ACE_ALLOCATOR_RETURN (temp,
-                        (double *) allocator->malloc (sizeof (double)),
+                        static_cast<double *> (allocator->malloc (sizeof (double))),
                         nullptr);
   // Make sure that doubles work!
   *temp = 5.0;
   allocator->free (temp);
 
-  void *ptr = nullptr;
+  void *ptr {};
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Test_Data)),
                         nullptr);
@@ -143,12 +141,11 @@ initialize (MALLOC *allocator)
   data1->i3_ = 333;
   data1->d1_ = 87.5;
 
-  void *gap = nullptr;
+  void *gap {};
   ACE_ALLOCATOR_RETURN (gap,
                         allocator->malloc (sizeof (256)),
                         nullptr);
   allocator->free (gap);
-
 
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Test_Data)),
@@ -245,8 +242,8 @@ parent (Test_Data *data)
   int cntr;
 
   for (cntr = 0 ; cntr < 1024; ++cntr)
-    small_buf[cntr] = (char *) myalloc->malloc (1);
-  char *big_buf = (char *) myalloc->malloc (1024 * 4069);
+    small_buf[cntr] = static_cast<char *> (myalloc->malloc (1));
+  char *big_buf = static_cast<char *> (myalloc->malloc (1024 * 4069));
 #endif /* ACE_TEST_REMAP_ON_FAULT */
 
   int result = myalloc->bind ("bar", data);
@@ -264,7 +261,7 @@ parent (Test_Data *data)
 static int
 child ()
 {
-  void *bar = nullptr;
+  void *bar {};
   // Perform "busy waiting" here until the parent stores data under a
   // new name called "bar" in <ACE_Malloc>.  This isn't a good design
   // -- it's just to test that synchronization is working across
@@ -356,7 +353,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P) PARENT allocator at = %@, ")
                   ACE_TEXT ("data allocated at %@\n"),
-                  myalloc,
+                  static_cast<void *> (myalloc),
                   data));
       myalloc->dump ();
       int result = myalloc->bind ("foo", data);
@@ -365,18 +362,22 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_Process p;
       pid_t pid = p.spawn (options);
       if (pid == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("spawn")), 1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("spawn")), 1);
+        }
 
       parent (data);
 
       // Synchronize on the exit of the child.
       result = p.wait ();
       if (result == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("wait")), 1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("wait")), 1);
+        }
       ACE_TEST_ASSERT (myalloc->ref_counter () == 1);
       myalloc->remove ();
       ACE_Process_Mutex::unlink (MUTEX_NAME);
@@ -388,7 +389,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       // In this case we're the child process.
       ACE_APPEND_LOG (ACE_TEXT ("Malloc_Test-child"));
 
-      void *data = nullptr;
+      void *data {};
       MALLOC *myalloc = myallocator (CHILD_BASE_ADDR);
       int result = myalloc->find ("foo", data);
       ACE_TEST_ASSERT (result != -1);
@@ -396,7 +397,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P) CHILD allocator at = %@, ")
                   ACE_TEXT ("data allocated at %@\n"),
-                  myalloc,
+                  static_cast<void *> (myalloc),
                   data));
       myalloc->dump ();
       child ();

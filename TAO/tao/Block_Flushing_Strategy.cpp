@@ -50,7 +50,9 @@ TAO_Block_Flushing_Strategy::flush_message (TAO_Transport *transport,
   while (!msg->all_data_sent ())
     {
       if (this->call_handle_output (transport, dc) == -1)
+      {
         return -1;
+      }
     }
   return 0;
 }
@@ -63,7 +65,9 @@ TAO_Block_Flushing_Strategy::flush_transport (TAO_Transport *transport,
   while (!transport->queue_is_empty ())
     {
       if (this->call_handle_output (transport, dc) == -1)
+      {
         return -1;
+      }
     }
   return 0;
 }

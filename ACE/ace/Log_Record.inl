@@ -14,11 +14,13 @@ ACE_INLINE
 ACE_Log_Record::~ACE_Log_Record ()
 {
   if (this->msg_data_)
+    {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-    ACE_Allocator::instance()->free(this->msg_data_);
+      ACE_Allocator::instance()->free(this->msg_data_);
 #else
-    delete [] this->msg_data_;
+      delete [] this->msg_data_;
 #endif /* ACE_HAS_ALLOC_HOOKS */
+    }
 }
 
 ACE_INLINE ACE_UINT32
@@ -34,7 +36,6 @@ ACE_Log_Record::category (ACE_Log_Category_TSS* t)
   ACE_TRACE ("ACE_Log_Record::category");
   this->category_ = t;
 }
-
 
 ACE_INLINE ACE_Log_Category_TSS*
 ACE_Log_Record::category () const

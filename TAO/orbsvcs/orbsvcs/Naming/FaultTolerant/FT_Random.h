@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef FT_RANDOM_H
 #define FT_RANDOM_H
 
@@ -21,7 +20,6 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/Naming/FaultTolerant/FT_Location_Index_Map.h"
-
 
 #include "orbsvcs/CosLoadBalancingS.h"
 #include "ace/Vector_T.h"
@@ -45,10 +43,8 @@ class TAO_FT_Naming_Manager;
 class TAO_FtNaming_Export TAO_FT_Random
 {
 public:
-  /// Constructor.
   TAO_FT_Random () = default;
 
-  /// Destructor
   virtual ~TAO_FT_Random () = default;
 
   /// This function obtains the next object's location as it is bound

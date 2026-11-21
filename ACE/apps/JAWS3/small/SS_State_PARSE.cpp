@@ -8,37 +8,36 @@
 int
 TeraSS_State_PARSE::service (JAWS_Event_Completer *ec, void *data)
 {
-  JAWS_Event_Result fake_good_result (0, JAWS_Event_Result::JE_OK);
-  JAWS_Event_Result fake_bad_result (0, JAWS_Event_Result::JE_ERROR);
+  JAWS_Event_Result const fake_good_result (0, JAWS_Event_Result::JE_OK);
+  JAWS_Event_Result const fake_bad_result (0, JAWS_Event_Result::JE_ERROR);
 
   // Parse the request.
-  TeraSS_Data *tdata = (TeraSS_Data *) data;
+  TeraSS_Data * const tdata = static_cast<TeraSS_Data *> (data);
   char *p = tdata->mb ().rd_ptr ();
   while (p < tdata->mb ().wr_ptr () && *p != '\r' && *p != '\n')
-    p++;
+    ++p;
   if (p == tdata->mb ().wr_ptr ())
     {
       // Return to the READ state.
-      ec->input_complete (fake_bad_result, 0);
+      ec->input_complete (fake_bad_result, nullptr);
       return 0;
     }
   *p = '\0';
 
   // Make us transition into the WRITE state.
-  ec->input_complete (fake_good_result, 0);
+  ec->input_complete (fake_good_result, nullptr);
   return 0;
 }
 
 JAWS_Protocol_State *
-TeraSS_State_PARSE::transition ( const JAWS_Event_Result &result
-                               , void *
-                               , void *
-                               )
+TeraSS_State_PARSE::transition (JAWS_Event_Result const &result,
+                                void *,
+                                void *)
 {
   // In the PARSE state, we transition to WRITE on success,
   // and to READ on failure.
 
-  JAWS_Protocol_State *next_state = 0;
+  JAWS_Protocol_State *next_state {};
 
   switch (result.status ())
     {

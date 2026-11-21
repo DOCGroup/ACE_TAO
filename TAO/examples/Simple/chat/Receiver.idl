@@ -1,13 +1,11 @@
 /* -*- C++ -*- */
 interface Receiver
 {
-  // = TITLE
-  //    The Receiver interface is implemented by the simple chat
-  //    clients.The interface functions are called by the chat server.
+  /// Implemented by simple chat clients; the chat server calls its operations.
 
+  /// Displays the message in the client application.
   void message (in string msg);
-  // Displays the message in the client application.
 
+  /// Called by the chat server before it goes away.
   oneway void shutdown ();
-  // Called by the chat server before it goes away.
 };

@@ -20,7 +20,7 @@ ACE_Dirent_Selector::~ACE_Dirent_Selector ()
 }
 
 int
-ACE_Dirent_Selector::open (const ACE_TCHAR *dir,
+ACE_Dirent_Selector::open (ACE_TCHAR const *dir,
                            ACE_SCANDIR_SELECTOR sel,
                            ACE_SCANDIR_COMPARATOR cmp)
 {

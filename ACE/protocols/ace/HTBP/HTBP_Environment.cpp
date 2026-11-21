@@ -3,11 +3,10 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE::HTBP::Environment::Environment (ACE_Configuration *config,
-                                     int using_registry,
-                                     const ACE_TCHAR *persistent_file)
+                                     bool using_registry,
+                                     ACE_TCHAR const* persistent_file)
   : config_ (config),
-    imp_exp_ (0),
-    own_config_ (config != 0)
+    own_config_ (config != nullptr)
 {
   initialize (using_registry,
               persistent_file);
@@ -16,11 +15,14 @@ ACE::HTBP::Environment::Environment (ACE_Configuration *config,
 ACE::HTBP::Environment::~Environment ()
 {
   if (!own_config_)
-    this->clear();
+    {
+      this->clear();
+    }
   else
-    delete this->config_;
+    {
+      delete this->config_;
+    }
 
-  delete this->imp_exp_;
 }
 
 void
@@ -33,16 +35,20 @@ ACE::HTBP::Environment::clear ()
 }
 
 int
-ACE::HTBP::Environment::initialize (int use_registry,
-                                    const ACE_TCHAR *persistent_file)
+ACE::HTBP::Environment::initialize (bool use_registry,
+                                    ACE_TCHAR const* persistent_file)
 {
-  if (this->config_ == 0)
+  if (this->config_ == nullptr)
     {
       int result = -1;
       if (use_registry)
+      {
         result = this->open_registry_config();
+      }
       if (result == -1)
+      {
         result = this->open_persistent_config (persistent_file);
+      }
       if (result != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -53,10 +59,11 @@ ACE::HTBP::Environment::initialize (int use_registry,
         }
     }
 
-
-  ACE_NEW_RETURN (this->imp_exp_,
+  ACE_Ini_ImpExp *imp_exp {};
+  ACE_NEW_RETURN (imp_exp,
                   ACE_Ini_ImpExp (*this->config_),
                   -1);
+  this->imp_exp_.reset (imp_exp);
 
   if (this->config_->open_section (config_->root_section (),
                                    ACE_TEXT("htbp"), 1,
@@ -88,7 +95,7 @@ ACE::HTBP::Environment::open_registry_config ()
 }
 
 int
-ACE::HTBP::Environment::open_persistent_config (const ACE_TCHAR *persistent_file)
+ACE::HTBP::Environment::open_persistent_config (ACE_TCHAR const* persistent_file)
 {
   ACE_Configuration_Heap *heap;
   ACE_NEW_RETURN (heap,
@@ -97,15 +104,19 @@ ACE::HTBP::Environment::open_persistent_config (const ACE_TCHAR *persistent_file
   // do this before trying to open so it isn't leaked if the open fails.
   this->config_ = heap;
   this->own_config_ = true;
-  if (persistent_file == 0)
-    heap->open();
+  if (persistent_file == nullptr)
+    {
+      heap->open();
+    }
   else
     if (heap->open (persistent_file) != 0)
-      ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("(%P|%t) ACE::HTBP::Environment::")
-                          ACE_TEXT ("open_config: %p\n"),
-                          persistent_file),
-                        -1 );
+      {
+        ACE_ERROR_RETURN (( LM_ERROR,
+                            ACE_TEXT ("(%P|%t) ACE::HTBP::Environment::")
+                            ACE_TEXT ("open_config: %p\n"),
+                            persistent_file),
+                          -1 );
+      }
   return 0;
 }
 
@@ -118,13 +129,12 @@ ACE::HTBP::Environment::get_htid_url (ACE_TString &htid_url) const
 }
 
 int
-ACE::HTBP::Environment::set_htid_url (const ACE_TCHAR *htid_generator_url)
+ACE::HTBP::Environment::set_htid_url (ACE_TCHAR const* htid_generator_url)
 {
   return this->config_->set_string_value (this->htbp_key_,
                                           ACE_TEXT("htid_url"),
                                           htid_generator_url);
 }
-
 
 int
 ACE::HTBP::Environment::get_htid_via_proxy (int &via_proxy) const
@@ -151,7 +161,7 @@ ACE::HTBP::Environment::get_proxy_host (ACE_TString &proxy_host) const
 }
 
 int
-ACE::HTBP::Environment::set_proxy_host (const ACE_TCHAR *proxy_host)
+ACE::HTBP::Environment::set_proxy_host (ACE_TCHAR const* proxy_host)
 {
   return this->config_->set_string_value (this->htbp_key_,
                                           ACE_TEXT("proxy_host"),
@@ -171,7 +181,9 @@ ACE::HTBP::Environment::get_proxy_port (unsigned int &proxy_port) const
                                                 ACE_TEXT("proxy_port"),
                                                 port_str);
       if (result == 0)
+      {
         proxy_port = ACE_OS::strtol(port_str.c_str(),0,10);
+      }
     }
   return result;
 }
@@ -185,13 +197,13 @@ ACE::HTBP::Environment::set_proxy_port (unsigned int proxy_port)
 }
 
 int
-ACE::HTBP::Environment::import_config (const ACE_TCHAR *filename)
+ACE::HTBP::Environment::import_config (ACE_TCHAR const* filename)
 {
   return this->imp_exp_->import_config (filename);
 }
 
 int
-ACE::HTBP::Environment::export_config (const ACE_TCHAR *filename)
+ACE::HTBP::Environment::export_config (ACE_TCHAR const* filename)
 {
   return this->imp_exp_->export_config (filename);
 }

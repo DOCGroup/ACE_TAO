@@ -38,7 +38,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj.in ());
 
-      for (int i = 0; i < 4; i++)
+      for (int i = 0; i < 4; ++i)
         {
           RTScheduling::DistributableThread_var DT = current->lookup ((task.guids ())[i]);
 
@@ -51,7 +51,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

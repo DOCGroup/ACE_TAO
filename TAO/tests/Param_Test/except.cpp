@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file   except.cpp
  *
@@ -7,8 +5,6 @@
  *
  *  @author Carlos O'Ryan
  */
-//=============================================================================
-
 
 #include "helper.h"
 #include "except.h"
@@ -21,15 +17,9 @@
 // ************************************************************************
 
 Test_Exception::Test_Exception ()
-  : opname_ (CORBA::string_dup ("test_exception")),
+  : opname_ ("test_exception"),
     iterations_ (0)
 {
-}
-
-Test_Exception::~Test_Exception ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
 }
 
 const char *
@@ -43,7 +33,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
 {
   try
     {
-      this->in_++;
+      ++this->in_;
       req->add_in_arg ("s1") <<= this->in_;
       req->add_inout_arg ("s2") <<= this->inout_;
       req->add_out_arg ("s3") <<= this->out_;
@@ -68,13 +58,13 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
     }
   catch (CORBA::UnknownUserException& user_ex)
     {
-      const Param_Test::Ooops* oops = 0;
-      const Param_Test::BadBoy* bad_boy = 0;
+      Param_Test::Ooops const *oops {};
+      Param_Test::BadBoy const *bad_boy {};
 
       if (user_ex.exception () >>= oops)
         {
           const char *reason = oops->reason.in ();
-          CORBA::ULong mod_value = oops->input;
+          CORBA::ULong const mod_value = oops->input;
 
           if (TAO_debug_level > 0)
             {
@@ -243,7 +233,7 @@ Test_Exception::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      this->in_++;
+      ++this->in_;
       this->ret_ = objref->test_exception (this->in_,
                                            this->inout_,
                                            this->out_);
@@ -288,7 +278,7 @@ Test_Exception::run_sii_test (Param_Test_ptr objref)
       // 'SystemException' should be caught here, 'CORBA::NO_MEMORY'
       // system exception is thrown by the servant when the
           // IN argument == 2.
-      int d = this->in_ % 4;
+      int const d = this->in_ % 4;
 
       if (d != 2)
         {
@@ -330,7 +320,7 @@ Test_Exception::run_sii_test (Param_Test_ptr objref)
       // Param_Test::test_exception() knows nothing about it.
       // 'Ooops' however, should not be caught here. 'BadBoy'
       // is thrown by the servant when the IN argument == 3.
-      int d = this->in_ % 4;
+      int const d = this->in_ % 4;
 
       if (d != 3)
         {

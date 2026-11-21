@@ -78,15 +78,20 @@ namespace ACE
     {
     public:
       friend class Notifier;
-      // Initialization and termination methods.
-      /// Constructor.
-      Channel (Session *s = 0);
+      /// @name Initialization and termination methods
+      /// @{
+      explicit Channel (Session *s = nullptr);
 
-      Channel (ACE_SOCK_Stream &s);
-      Channel (ACE_HANDLE h);
+      explicit Channel (ACE_SOCK_Stream &s);
+      explicit Channel (ACE_HANDLE h);
 
-      /// Destructor.
       ~Channel ();
+      /// @}
+
+      Channel (Channel const&) = delete;
+      Channel& operator= (Channel const&) = delete;
+      Channel (Channel&&) = delete;
+      Channel& operator= (Channel&&) = delete;
 
       enum State {
         Init,
@@ -101,7 +106,8 @@ namespace ACE
         Header_Pending
       };
 
-      // = I/O functions.
+      /// @name I/O functions
+      /// @{
 
       /// The Channel is a sibling of the ACE_SOCK_IO class, rather than a
       /// decendant. This is due to the requirement to wrap all messages with
@@ -112,22 +118,22 @@ namespace ACE
       ssize_t recv (void *buf,
                     size_t n,
                     int flags,
-                    const ACE_Time_Value *timeout = 0);
+                    ACE_Time_Value const* timeout = nullptr);
 
       /// Recv an <n> byte buffer from the connected socket.
       ssize_t recv (void *buf,
                     size_t n,
-                    const ACE_Time_Value *timeout = 0);
+                    ACE_Time_Value const* timeout = nullptr);
 
       /// Recv an <iovec> of size <n> from the connected socket.
       ssize_t recvv (iovec iov[],
                      int n,
-                     const ACE_Time_Value *timeout = 0);
+                     ACE_Time_Value const* timeout = nullptr);
 
       /// Same as above.  Deprecated.
       ssize_t recv (iovec iov[],
                     size_t n,
-                    const ACE_Time_Value *timeout = 0);
+                    ACE_Time_Value const* timeout = nullptr);
 
       /**
        * Allows a client to read from a socket without having to provide a
@@ -138,25 +144,27 @@ namespace ACE
        * delete [] io_vec->iov_base.
        */
       ssize_t recvv (iovec *io_vec,
-                     const ACE_Time_Value *timeout = 0);
+                     ACE_Time_Value const* timeout = nullptr);
 
       /// Send an <n> byte buffer to the connected socket.
       ssize_t send (const void *buf,
                     size_t n,
                     int flags,
-                    const ACE_Time_Value *timeout = 0);
+                    ACE_Time_Value const* timeout = nullptr);
 
       /// Send an <n> byte buffer to the connected socket.
       ssize_t send (const void *buf,
                     size_t n,
-                    const ACE_Time_Value *timeout = 0);
+                    ACE_Time_Value const* timeout = nullptr);
 
       /// Send an <iovec> of size <n> to the connected socket.
       ssize_t sendv (const iovec iov[],
                      int n,
-                     const ACE_Time_Value *timeout = 0);
+                     ACE_Time_Value const* timeout = nullptr);
 
-      // = Selectively close endpoints.
+      /// @}
+      /// @name Selectively close endpoints
+      /// @{
       /// Close down the reader.
       int close_reader ();
 
@@ -170,8 +178,10 @@ namespace ACE
        */
       int close ();
 
-      // = Meta-type info
-      typedef ACE_INET_Addr PEER_ADDR;
+      /// @}
+      /// @name Meta-type info
+      /// @{
+      using PEER_ADDR = ACE_INET_Addr;
 
       /// Dump the state of an object.
       void dump () const;
@@ -179,6 +189,7 @@ namespace ACE
       /// Declare the dynamic allocation hooks.
       ACE_ALLOC_HOOK_DECLARE;
 
+      /// @}
     public:
       Session *session () const;
       void session (Session *);
@@ -211,7 +222,7 @@ namespace ACE
        * which is passed as the <value>.
        */
       int disable (int value) const;
-      //@}
+      /// @}
 
       // buffer related methods.
       ACE_Message_Block &leftovers ();

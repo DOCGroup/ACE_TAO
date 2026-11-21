@@ -14,18 +14,10 @@
  */
 //=============================================================================
 
-
 #if !defined (AIRPLANE_I_H)
 #define AIRPLANE_I_H
 
 #include "AirplaneS.h"
-
-// Forward declarations.
-class Airplane_i;
-
-// Typedefs.
-typedef Airplane_i *Airplane_i_ptr;
-typedef Airplane_i_ptr Airplane_i_ref;
 
 /**
  * @class Airplane_i:
@@ -38,14 +30,17 @@ typedef Airplane_i_ptr Airplane_i_ref;
 class Airplane_i: public POA_Paper_Airplane_Server
 {
 public:
-  /// Constructor
   Airplane_i ();
 
-  /// Destructor
-  ~Airplane_i ();
+  Airplane_i (Airplane_i const &) = delete;
+  Airplane_i &operator= (Airplane_i const &) = delete;
+  Airplane_i (Airplane_i &&) = delete;
+  Airplane_i &operator= (Airplane_i &&) = delete;
+
+  ~Airplane_i () override = default;
 
   /// Returns a random plane.
-  virtual char *get_plane ();
+  char *get_plane () override;
 };
 
 #endif /* AIRPLANE_I_H */

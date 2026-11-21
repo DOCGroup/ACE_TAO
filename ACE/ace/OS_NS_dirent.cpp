@@ -1,6 +1,5 @@
 #include "ace/OS_NS_dirent.h"
 
-
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_dirent.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
@@ -9,6 +8,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_stdlib.h"
+#include <algorithm>
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
@@ -48,7 +48,7 @@ ACE_OS::opendir_emulation (const ACE_TCHAR *filename)
 #    define INVALID_FILE_ATTRIBUTES 0xFFFFFFFF
 #  endif
 
-  ACE_DIR *dir = nullptr;
+  ACE_DIR *dir {};
   ACE_TCHAR extra[3] = {0,0,0};
 
    // Check if filename is a directory.
@@ -81,9 +81,13 @@ ACE_OS::opendir_emulation (const ACE_TCHAR *filename)
       if (filename[lastchar-1] != '*')
         {
           if (filename[lastchar-1] != '/' && filename[lastchar-1] != '\\')
-            ACE_OS::strcpy (extra, ACE_TEXT ("/*"));
+            {
+              ACE_OS::strcpy (extra, ACE_TEXT ("/*"));
+            }
           else
-            ACE_OS::strcpy (extra, ACE_TEXT ("*"));
+            {
+              ACE_OS::strcpy (extra, ACE_TEXT ("*"));
+            }
         }
     }
 
@@ -93,7 +97,9 @@ ACE_OS::opendir_emulation (const ACE_TCHAR *filename)
                   0);
   ACE_OS::strcpy (dir->directory_name_, filename);
   if (extra[0])
-    ACE_OS::strcat (dir->directory_name_, extra);
+    {
+      ACE_OS::strcat (dir->directory_name_, extra);
+    }
   dir->current_handle_ = INVALID_HANDLE_VALUE;
   dir->started_reading_ = 0;
   dir->dirent_ = 0;
@@ -151,7 +157,9 @@ ACE_OS::readdir_emulation (ACE_DIR *d)
       return d->dirent_;
     }
   else
-    return 0;
+    {
+      return 0;
+    }
 #else /* ACE_WIN32 */
   ACE_UNUSED_ARG (d);
   ACE_NOTSUP_RETURN (0);
@@ -169,13 +177,17 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
   ACE_DIR *dirp = ACE_OS::opendir (dirname);
 
   if (dirp == 0)
-    return -1;
+    {
+      return -1;
+    }
   // A sanity check here.  "namelist" had better not be zero.
   else if (namelist == 0)
-    return -1;
+    {
+      return -1;
+    }
 
-  ACE_DIRENT **vector = nullptr;
-  ACE_DIRENT *dp = nullptr;
+  ACE_DIRENT **vector {};
+  ACE_DIRENT *dp {};
   int arena_size = 0;
   int nfiles = 0;
   int fail = 0;
@@ -185,27 +197,35 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
        dp = ACE_OS::readdir (dirp))
     {
       if (selector && (*selector)(dp) == 0)
-        continue;
+        {
+          continue;
+        }
 
       // If we get here, we have a dirent that the user likes.
       if (nfiles == arena_size)
         {
-          ACE_DIRENT **newv = nullptr;
+          ACE_DIRENT **newv {};
           int new_arena_size;
           if (arena_size == 0)
-            new_arena_size = 10;
+            {
+              new_arena_size = 10;
+            }
           else
-            new_arena_size = arena_size * 2;
+            {
+              new_arena_size = arena_size * 2;
+            }
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-          newv = (ACE_DIRENT **) ACE_Allocator::instance()->malloc (new_arena_size * sizeof (ACE_DIRENT *));
+          newv = static_cast<ACE_DIRENT **> (
+            ACE_Allocator::instance ()->malloc (
+              new_arena_size * sizeof (ACE_DIRENT *)));
           if (newv && vector)
             {
               ACE_OS::memcpy (newv, vector, arena_size * sizeof (ACE_DIRENT *));
             }
 #else
-          newv = (ACE_DIRENT **) ACE_OS::realloc (vector,
-                                              new_arena_size * sizeof (ACE_DIRENT *));
+          newv = static_cast<ACE_DIRENT **> (
+            ACE_OS::realloc (vector, new_arena_size * sizeof (ACE_DIRENT *)));
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
           arena_size = new_arena_size;
@@ -220,18 +240,21 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
 
 #if defined (ACE_LACKS_STRUCT_DIR)
 #if defined (ACE_HAS_ALLOC_HOOKS)
-      ACE_DIRENT *newdp = (ACE_DIRENT *) ACE_Allocator::instance()->malloc (sizeof (ACE_DIRENT));
+      ACE_DIRENT *newdp = static_cast<ACE_DIRENT *> (
+        ACE_Allocator::instance ()->malloc (sizeof (ACE_DIRENT)));
 #else
-      ACE_DIRENT *newdp = (ACE_DIRENT *) ACE_OS::malloc (sizeof (ACE_DIRENT));
+      ACE_DIRENT *newdp = static_cast<ACE_DIRENT *> (
+        ACE_OS::malloc (sizeof (ACE_DIRENT)));
 #endif /* ACE_HAS_ALLOC_HOOKS */
 #else
       size_t dsize =
         sizeof (ACE_DIRENT) +
         ((ACE_OS::strlen (dp->d_name) + 1) * sizeof (ACE_TCHAR));
 #if defined (ACE_HAS_ALLOC_HOOKS)
-      ACE_DIRENT *newdp = (ACE_DIRENT *) ACE_Allocator::instance()->malloc (dsize);
+      ACE_DIRENT *newdp = static_cast<ACE_DIRENT *> (
+        ACE_Allocator::instance ()->malloc (dsize));
 #else
-      ACE_DIRENT *newdp = (ACE_DIRENT *) ACE_OS::malloc (dsize);
+      ACE_DIRENT *newdp = static_cast<ACE_DIRENT *> (ACE_OS::malloc (dsize));
 #endif /* ACE_HAS_ALLOC_HOOKS */
 #endif /* ACE_LACKS_STRUCT_DIR */
 
@@ -243,9 +266,12 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
 
 #if defined (ACE_LACKS_STRUCT_DIR)
 #if defined (ACE_HAS_ALLOC_HOOKS)
-      newdp->d_name = (ACE_TCHAR*) ACE_Allocator::instance()->malloc ((ACE_OS::strlen (dp->d_name) + 1) * sizeof (ACE_TCHAR));
+      newdp->d_name = static_cast<ACE_TCHAR *> (
+        ACE_Allocator::instance ()->malloc (
+          (ACE_OS::strlen (dp->d_name) + 1) * sizeof (ACE_TCHAR)));
 #else
-      newdp->d_name = (ACE_TCHAR*) ACE_OS::malloc ((ACE_OS::strlen (dp->d_name) + 1) * sizeof (ACE_TCHAR));
+      newdp->d_name = static_cast<ACE_TCHAR *> (
+        ACE_OS::malloc ((ACE_OS::strlen (dp->d_name) + 1) * sizeof (ACE_TCHAR)));
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
       if (newdp->d_name == 0)
@@ -266,7 +292,8 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
       ACE_OS::strcpy (newdp->d_name, dp->d_name);
       vector[nfiles++] = newdp;
 #else
-      vector[nfiles++] = (ACE_DIRENT *) ACE_OS::memcpy (newdp, dp, dsize);
+      vector[nfiles++] = static_cast<ACE_DIRENT *> (
+        ACE_OS::memcpy (newdp, dp, dsize));
 #endif /* ACE_LACKS_STRUCT_DIR */
     }
 
@@ -300,11 +327,16 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
 
   *namelist = vector;
 
-  if (comparator)
-    ACE_OS::qsort (*namelist,
-                   nfiles,
-                   sizeof (ACE_DIRENT *),
-                   (ACE_COMPARE_FUNC) comparator);
+  if (comparator && nfiles > 1)
+    {
+      std::sort (*namelist, *namelist + nfiles,
+        [comparator] (ACE_DIRENT *left, ACE_DIRENT *right)
+        {
+          ACE_DIRENT const *left_entry = left;
+          ACE_DIRENT const *right_entry = right;
+          return comparator (&left_entry, &right_entry) < 0;
+        });
+    }
 
   return nfiles;
 }

@@ -147,7 +147,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_DEBUG ((LM_DEBUG, "Started Server %s \n", base.c_str()));
 
     orb->run();
-    root_poa->destroy(1,1);
+    root_poa->destroy(true,true);
     orb->destroy();
   }
   catch(const CORBA::Exception& ex) {

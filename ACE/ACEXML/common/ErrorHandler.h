@@ -62,7 +62,6 @@ public:
   virtual void warning (ACEXML_SAXParseException &exception) = 0;
 };
 
-
 #include /**/ "ace/post.h"
 
 #endif /* _ACEXML_ERRORHANDLER_H_ */

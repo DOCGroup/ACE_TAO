@@ -22,12 +22,16 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Null_Barrier
 {
 public:
+  ACE_Null_Barrier (ACE_Null_Barrier const &) = delete;
+  ACE_Null_Barrier (ACE_Null_Barrier &&) = delete;
+  ACE_Null_Barrier &operator= (ACE_Null_Barrier const &) = delete;
+  ACE_Null_Barrier &operator= (ACE_Null_Barrier &&) = delete;
+
   /// Initialize the barrier to synchronize <count> threads.
   ACE_Null_Barrier (unsigned int,
                     const char * = nullptr,
                     void * = nullptr) {}
 
-  /// Default dtor.
   ~ACE_Null_Barrier () = default;
 
   /// Block the caller until all <count> threads have called <wait> and
@@ -39,10 +43,6 @@ public:
 
   /// Declare the dynamic allocation hooks.
   //ACE_ALLOC_HOOK_DECLARE;
-
-private:
-  void operator= (const ACE_Null_Barrier &) = delete;
-  ACE_Null_Barrier (const ACE_Null_Barrier &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

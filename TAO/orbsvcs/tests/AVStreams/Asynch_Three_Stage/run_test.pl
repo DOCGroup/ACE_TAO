@@ -6,7 +6,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
-use File::stat;
+use File::Compare;
 
 $status = 0;
 $debug_level = '0';
@@ -44,9 +44,9 @@ my $re2_outputfile2 = $re2->LocalFile ($outputfile2);
 $ns->DeleteFile ($nsiorfile);
 $sv->DeleteFile ($nsiorfile);
 $sv1->DeleteFile ($nsiorfile);
-$re1->DeleteFile ($nfsiorfile);
-$re2->DeleteFile ($nfsiorfile);
-$di->DeleteFile ($nfsiorfile);
+$re1->DeleteFile ($nsiorfile);
+$re2->DeleteFile ($nsiorfile);
+$di->DeleteFile ($nsiorfile);
 $sv->DeleteFile ($inputfile);
 $sv1->DeleteFile ($inputfile);
 $re1->DeleteFile ($outputfile1);
@@ -63,6 +63,21 @@ if ($sv->PutFile ($inputfile) == -1) {
 if ($sv1->PutFile ($inputfile) == -1) {
     print STDERR "ERROR: cannot set file <$sv1_inputfile>\n";
     exit 1;
+}
+
+sub check_output {
+    my ($target, $outputfile, $local_outputfile) = @_;
+
+    if ($target->GetFile ($outputfile) == -1) {
+        print STDERR "ERROR: cannot retrieve file <$local_outputfile>\n";
+        $status = 1;
+    }
+    elsif (File::Compare::compare ($inputfile, $outputfile) != 0) {
+        print STDERR "ERROR: received file <$local_outputfile> differs from input\n";
+        $status = 1;
+    }
+
+    unlink $outputfile;
 }
 
 $NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
@@ -200,12 +215,15 @@ if ($NS_status != 0) {
     $status = 1;
 }
 
+check_output ($re1, $outputfile1, $re1_outputfile1);
+check_output ($re2, $outputfile2, $re2_outputfile2);
+
 $ns->DeleteFile ($nsiorfile);
 $sv->DeleteFile ($nsiorfile);
 $sv1->DeleteFile ($nsiorfile);
-$re1->DeleteFile ($nfsiorfile);
-$re2->DeleteFile ($nfsiorfile);
-$di->DeleteFile ($nfsiorfile);
+$re1->DeleteFile ($nsiorfile);
+$re2->DeleteFile ($nsiorfile);
+$di->DeleteFile ($nsiorfile);
 $re1->DeleteFile ($outputfile1);
 $re2->DeleteFile ($outputfile2);
 
@@ -318,12 +336,15 @@ if ($NS_status != 0) {
     $status = 1;
 }
 
+check_output ($re1, $outputfile1, $re1_outputfile1);
+check_output ($re2, $outputfile2, $re2_outputfile2);
+
 $ns->DeleteFile ($nsiorfile);
 $sv->DeleteFile ($nsiorfile);
 $sv1->DeleteFile ($nsiorfile);
-$re1->DeleteFile ($nfsiorfile);
-$re2->DeleteFile ($nfsiorfile);
-$di->DeleteFile ($nfsiorfile);
+$re1->DeleteFile ($nsiorfile);
+$re2->DeleteFile ($nsiorfile);
+$di->DeleteFile ($nsiorfile);
 $re1->DeleteFile ($outputfile1);
 $re2->DeleteFile ($outputfile2);
 
@@ -448,12 +469,15 @@ if ($NS_status != 0) {
     $status = 1;
 }
 
+check_output ($re1, $outputfile1, $re1_outputfile1);
+check_output ($re2, $outputfile2, $re2_outputfile2);
+
 $ns->DeleteFile ($nsiorfile);
 $sv->DeleteFile ($nsiorfile);
 $sv1->DeleteFile ($nsiorfile);
-$re1->DeleteFile ($nfsiorfile);
-$re2->DeleteFile ($nfsiorfile);
-$di->DeleteFile ($nfsiorfile);
+$re1->DeleteFile ($nsiorfile);
+$re2->DeleteFile ($nsiorfile);
+$di->DeleteFile ($nsiorfile);
 $sv->DeleteFile ($inputfile);
 $sv1->DeleteFile ($inputfile);
 $re1->DeleteFile ($outputfile1);

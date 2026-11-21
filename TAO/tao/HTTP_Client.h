@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_HTTP_CLIENT_H
 #define TAO_HTTP_CLIENT_H
 
@@ -33,6 +32,8 @@
 #include "ace/Message_Block.h"
 #include "tao/HTTP_Handler.h"
 
+#include <string>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -50,8 +51,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_HTTP_Client
 {
 public:
-  TAO_HTTP_Client ();
-  ~TAO_HTTP_Client ();
+  TAO_HTTP_Client () = default;
+  ~TAO_HTTP_Client () = default;
 
   /// Initializes the class with the given filename, hostname and port.
   /// it should be called with the filename, before any read/write calls
@@ -71,7 +72,7 @@ private:
   ACE_INET_Addr inet_addr_;
 
   /// The filename
-  ACE_TCHAR *filename_;
+  std::basic_string<ACE_TCHAR> filename_;
 
   /// The connector endpoint to initiate the client connection
   ACE_Connector<TAO_HTTP_Handler, ACE_SOCK_CONNECTOR> connector_;

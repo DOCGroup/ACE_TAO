@@ -11,12 +11,17 @@
 class Server_Task : public ACE_Task_Base
 {
 public:
-  Server_Task (const std::string& args)
+  explicit Server_Task (std::string const &args)
     : args_ (args)
   {}
-  ~Server_Task () { this->force_shutdown (); }
+  ~Server_Task () override { this->force_shutdown (); }
 
-  virtual int svc ()
+  Server_Task (Server_Task const &) = delete;
+  Server_Task &operator= (Server_Task const &) = delete;
+  Server_Task (Server_Task &&) = delete;
+  Server_Task &operator= (Server_Task &&) = delete;
+
+  int svc () override
   {
     bool initializer = false;
     {
@@ -46,7 +51,7 @@ public:
     return 0;
   }
 
-  bool ready ()
+  bool ready () const
   {
     if (server_)
     {

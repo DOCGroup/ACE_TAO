@@ -10,9 +10,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename T>
-TAO_Intrusive_Ref_Count_Base<T>::~TAO_Intrusive_Ref_Count_Base()
-{
-}
+TAO_Intrusive_Ref_Count_Base<T>::~TAO_Intrusive_Ref_Count_Base () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

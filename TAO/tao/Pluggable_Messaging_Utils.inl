@@ -6,9 +6,7 @@ ACE_INLINE
 TAO_Pluggable_Reply_Params_Base::TAO_Pluggable_Reply_Params_Base ()
   : svc_ctx_ (),
     request_id_ (0),
-    is_dsi_ (0),
     dsi_nvlist_align_ (0),
-    argument_flag_ (false),
     service_context_ (0),
     reply_status_ (GIOP::NO_EXCEPTION),
     locate_reply_status_ (GIOP::UNKNOWN_OBJECT)

@@ -7,7 +7,8 @@ ACE_INLINE ssize_t
 ACE_FIFO_Send_Msg::send (const void *buf, size_t len)
 {
   ACE_TRACE ("ACE_FIFO_Send_Msg::send");
-  ACE_Str_Buf send_msg ((char *) buf, static_cast<int> (len));
+  ACE_Str_Buf send_msg (const_cast<void *> (buf),
+                        static_cast<int> (len));
 
   return this->send (send_msg);
 }
@@ -20,12 +21,16 @@ ACE_FIFO_Send_Msg::send (const ACE_Str_Buf *data,
 {
   ACE_TRACE ("ACE_FIFO_Send_Msg::send");
   if (ACE_OS::putmsg (this->get_handle (),
-                      (strbuf *) cntl,
-                      (strbuf *) data,
+                      cntl,
+                      data,
                       flags) == -1)
-    return-1;
+    {
+      return-1;
+    }
   else
-    return (cntl == 0 ? 0 : cntl->len) + (data == 0 ? 0 : data->len);
+    {
+      return (cntl == 0 ? 0 : cntl->len) + (data == 0 ? 0 : data->len);
+    }
 }
 
 ACE_INLINE ssize_t
@@ -37,13 +42,17 @@ ACE_FIFO_Send_Msg::send (int band,
   ACE_TRACE ("ACE_FIFO_Send_Msg::send");
 
   if (ACE_OS::putpmsg (this->get_handle (),
-                       (strbuf *) cntl,
-                       (strbuf *) data,
+                       cntl,
+                       data,
                        band,
                        flags) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return (cntl == 0 ? 0 : cntl->len) + (data == 0 ? 0 : data->len);
+    {
+      return (cntl == 0 ? 0 : cntl->len) + (data == 0 ? 0 : data->len);
+    }
 }
 #endif /* ACE_HAS_STREAM_PIPES */
 

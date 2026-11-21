@@ -1,6 +1,7 @@
 #include "orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.h"
-#include <assert.h>
 #include <algorithm>
+#include <assert.h>
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.inl"
@@ -19,20 +20,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 Dynamic_Bitset::Dynamic_Bitset(Dynamic_Bitset::size_type size)
   : buffer_size_(ceil(size,BITS_PER_BLOCK))
   , bit_size_(size)
-  , buffer_(new block[buffer_size_])
+  , buffer_ (std::make_unique<block[]> (buffer_size_))
 {
 //FUZZ: enable check_for_lack_ACE_OS/
-  ACE_OS::memset(buffer_, 0, buffer_size_*BYTES_PER_BLOCK);
 }
-
 
 Dynamic_Bitset& Dynamic_Bitset::operator = (Dynamic_Bitset const& other)
 {
   Dynamic_Bitset temp(other);
   // swap buffer
-  block* tmp_blk = temp.buffer_;
-  temp.buffer_ = this->buffer_;
-  this->buffer_= tmp_blk;
+  temp.buffer_.swap (this->buffer_);
 
   this->buffer_size_ = other.buffer_size_;
   this->bit_size_ = other.bit_size_;
@@ -47,7 +44,7 @@ Dynamic_Bitset& Dynamic_Bitset::operator &= (Dynamic_Bitset const& other)
   size_type len = ceil(bit_size_,BITS_PER_BLOCK);
   //FUZZ: enable check_for_lack_ACE_OS/
 
-  for (size_type i = 0; i < len; ++i)
+  for (size_type i {}; i < len; ++i)
     buffer_[i] &= other.buffer_[i];
   return *this;
 }
@@ -66,7 +63,9 @@ void Dynamic_Bitset::set(Dynamic_Bitset::size_type bit, bool val)
   size_type bit_pos = bit%BITS_PER_BLOCK;
   block mask = 1 << bit_pos;
   if (val == false)
+  {
     mask ^= static_cast<block> (-1);
+  }
   buffer_[block_pos] |= mask;
 }
 
@@ -77,7 +76,7 @@ void Dynamic_Bitset::flip()
   //FUZZ: enable check_for_lack_ACE_OS/
 
   block mask = static_cast<block> (-1);
-  for (size_type i = 0; i < len; ++i)
+  for (size_type i {}; i < len; ++i)
     buffer_[i] ^= mask;
 }
 
@@ -89,7 +88,7 @@ void Dynamic_Bitset::resize(Dynamic_Bitset::size_type num_bits, bool value)
 
   if (len > this->buffer_size_) {
     Dynamic_Bitset tmp(num_bits);
-    ACE_OS::memcpy(tmp.buffer_, this->buffer_, this->buffer_size_*BYTES_PER_BLOCK);
+    std::memcpy (tmp.buffer_.get (), this->buffer_.get (), this->buffer_size_ * BYTES_PER_BLOCK);
     block mask = static_cast<block> (-1);
 
     size_type block_pos = this->bit_size_/BITS_PER_BLOCK;
@@ -104,31 +103,36 @@ void Dynamic_Bitset::resize(Dynamic_Bitset::size_type num_bits, bool value)
       tmp.buffer_[block_pos] &= mask;
     }
 
-
     for (size_type i = block_pos +1; i < len; ++i) {
       mask = value ? static_cast<block> (-1) : 0;
         tmp.buffer_[i] = mask;
     }
 
-    std::swap(tmp.buffer_, this->buffer_);
+    tmp.buffer_.swap (this->buffer_);
     this->buffer_size_ = tmp.buffer_size_;
     this->bit_size_ = tmp.bit_size_;
   }
   else
+  {
     bit_size_ = num_bits;
+  }
 }
 
 bool operator == (Dynamic_Bitset const& lhs, Dynamic_Bitset const& rhs)
 {
   Dynamic_Bitset::size_type bit_size = lhs.size();
   if (bit_size != rhs.size())
+  {
     return false;
+  }
   Dynamic_Bitset::size_type block_pos = bit_size/Dynamic_Bitset::BITS_PER_BLOCK;
   Dynamic_Bitset::size_type bit_pos = bit_size%Dynamic_Bitset::BITS_PER_BLOCK;
   Dynamic_Bitset::size_type i;
   for (i = 0; i < block_pos; ++i)
     if (lhs.buffer_[i] != rhs.buffer_[i])
+    {
       return false;
+    }
   Dynamic_Bitset::block mask = static_cast<Dynamic_Bitset::block> (-1);
   mask >>= (Dynamic_Bitset::BITS_PER_BLOCK-bit_pos);
   return ((lhs.buffer_[i] ^ rhs.buffer_[i]) & mask ) == 0;

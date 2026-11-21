@@ -102,7 +102,7 @@ Test_Singleton::Test_Singleton (u_short variety)
   if (variety_ != current_++)
     {
       ACE_DEBUG ((LM_ERROR,
-                  ACE_TEXT ("ERROR: instance %u created out of order!\n"),
+                  ACE_TEXT ("ERROR: instance %d created out of order!\n"),
                  variety_));
       ++error;
     }
@@ -118,7 +118,7 @@ Test_Singleton::~Test_Singleton ()
   if (variety_ != --current_)
     {
       ACE_OS::fprintf (stderr,
-                       ACE_TEXT ("ERROR: instance %u destroyed out of order!\n"),
+                       ACE_TEXT ("ERROR: instance %d destroyed out of order!\n"),
                        variety_);
       /* ACE_DEBUG ((LM_ERROR, ACE_TEXT ("ERROR: instance %u destroyed out of order!\n"),
                  variety_)); */
@@ -151,7 +151,7 @@ testFailedServiceInit (int, ACE_TCHAR *[])
     }
 
   // Try to find the service; it should not be there.
-  ACE_Service_Type const *svcp = nullptr;
+  ACE_Service_Type const *svcp {};
   if (-1 != ACE_Service_Repository::instance ()->find (ACE_TEXT ("Refuses_Svc"),
                                                        &svcp))
     {
@@ -162,13 +162,16 @@ testFailedServiceInit (int, ACE_TCHAR *[])
       ACE_TCHAR msg[1024];
       ACE_TCHAR *msgp = msg;
       if (svc_impl->info (&msgp, sizeof (msg) / sizeof (ACE_TCHAR)) > 0)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Refuses_Svc said: %s\n"), msg));
+      }
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Repo reports no Refuses_Svc; correct.\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Repo reports no Refuses_Svc; correct.\n")));
+    }
 }
-
 
 void
 testLoadingServiceConfFileAndProcessNo (int argc, ACE_TCHAR *argv[])
@@ -269,11 +272,14 @@ testLoadingServiceConfFileAndProcessNo (int argc, ACE_TCHAR *argv[])
   ACE_Thread_Manager::instance ()->wait ();
 
   if (error == error0)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("testLoadingServiceConfFileAndProcessNo completed successfully\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("testLoadingServiceConfFileAndProcessNo completed successfully\n")));
+    }
   else
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT("testLoadingServiceConfFileAndProcessNo test failed\n")));
+  }
 }
-
 
 void
 testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
@@ -325,13 +331,17 @@ testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
   if (daemon.open (new_argv.argc (), new_argv.argv ()) == -1)
     {
       if (errno == ENOENT)
-        ACE_DEBUG ((LM_WARNING,
-                    ACE_TEXT ("ACE_Service_Config::open: %p\n"),
-                    svc_conf));
+        {
+          ACE_DEBUG ((LM_WARNING,
+                      ACE_TEXT ("ACE_Service_Config::open: %p\n"),
+                      svc_conf));
+        }
       else
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("ACE_Service_Config::open: %p\n"),
-                    ACE_TEXT ("error")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("ACE_Service_Config::open: %p\n"),
+                      ACE_TEXT ("error")));
+        }
     }
 
   ACE_Time_Value tv (argc > 1 ? ACE_OS::atoi (argv[1]) : 2);
@@ -347,7 +357,6 @@ testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
   // Wait for all threads to complete.
   ACE_Thread_Manager::instance ()->wait ();
 }
-
 
 // Loading and unloading the ACE logger service should not smash singletons.
 void
@@ -379,7 +388,9 @@ testUnloadingACELoggingStrategy (int, ACE_TCHAR *[])
   // these skew the scoreboard results.
   u_long mask = ACE_LOG_MSG->priority_mask (ACE_Log_Msg::PROCESS);
   ACE_LOG_MSG->priority_mask (mask & ~LM_ERROR, ACE_Log_Msg::PROCESS);
-  ACE_DEBUG ((LM_DEBUG, "Was %x, now %x\n", mask, mask & ~LM_ERROR));
+  ACE_DEBUG ((LM_DEBUG, "Was %Q, now %Q\n",
+              static_cast<ACE_UINT64> (mask),
+              static_cast<ACE_UINT64> (mask & ~LM_ERROR)));
   int error_count = ACE_Service_Config::process_directive (load_logger);
   ACE_LOG_MSG->priority_mask (mask);
   if (error_count != 0)
@@ -394,11 +405,13 @@ testUnloadingACELoggingStrategy (int, ACE_TCHAR *[])
 
   ACE_Reactor *r2 = ACE_Reactor::instance ();
   if (r1 != r2)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Reactor before %@, after %@\n"), r1, r2));
+  {
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Reactor before %@, after %@\n"),
+                static_cast<void *> (r1), static_cast<void *> (r2)));
+  }
 }
 
-
-// @brief The size of a repository is unlimited and can be exceeded
+/// @brief The size of a repository is unlimited and can be exceeded
 void
 testLimits (int , ACE_TCHAR *[])
 {
@@ -482,9 +495,13 @@ testLimits (int , ACE_TCHAR *[])
     }
 
   if (error == error0)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Limits test completed successfully\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Limits test completed successfully\n")));
+    }
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Limits test failed\n")));
+  }
 }
 
 void
@@ -496,13 +513,13 @@ testrepository (int, ACE_TCHAR *[])
   ACE_Service_Type s1 (ACE_TEXT ("1"), nullptr, handle, false);
   ACE_Service_Type s2 (ACE_TEXT ("2"), nullptr, handle, false);
   ACE_Service_Type s3 (ACE_TEXT ("3"), nullptr, handle, false);
-  ACE_Service_Type* result = nullptr;
+  ACE_Service_Type* result {};
   repository.insert (&s0);
   if (repository.current_size () != 1)
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
   repository.insert (&s1);
@@ -510,7 +527,7 @@ testrepository (int, ACE_TCHAR *[])
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
   repository.insert (&s2);
@@ -518,7 +535,7 @@ testrepository (int, ACE_TCHAR *[])
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
   if (repository.remove (ACE_TEXT ("1"), &result) != 0)
@@ -531,7 +548,7 @@ testrepository (int, ACE_TCHAR *[])
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
   if (repository.array ()[1] != nullptr)
@@ -546,7 +563,7 @@ testrepository (int, ACE_TCHAR *[])
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
   repository.remove (ACE_TEXT ("0"), &result);
@@ -562,7 +579,7 @@ testrepository (int, ACE_TCHAR *[])
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
   repository.close ();
@@ -570,12 +587,11 @@ testrepository (int, ACE_TCHAR *[])
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
 }
 
-// @brief ??
 void
 testOrderlyInstantiation (int , ACE_TCHAR *[])
 {
@@ -616,9 +632,11 @@ nonacethreadentry (void *args)
       ++error;
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("In thr %t, located Test_Object_1_Thr ")
-                ACE_TEXT ("via ACE_Service_Config\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("In thr %t, located Test_Object_1_Thr ")
+                  ACE_TEXT ("via ACE_Service_Config\n")));
+    }
 
   if (0 != ACE_Service_Repository::instance()->find
       (ACE_TEXT("Test_Object_1_Thr")))
@@ -629,9 +647,11 @@ nonacethreadentry (void *args)
       ++error;
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("In thr %t, located Test_Object_1_Thr ")
-                ACE_TEXT ("via ACE_Service_Repository\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("In thr %t, located Test_Object_1_Thr ")
+                  ACE_TEXT ("via ACE_Service_Repository\n")));
+    }
 
   return ACE_THR_FUNC_RETURN_NULL;
 }
@@ -717,8 +737,10 @@ testNonACEThread ()
           ++error;
         }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Main thr %t DOES find Test_Object_1_Thr\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Main thr %t DOES find Test_Object_1_Thr\n")));
+        }
     }
 
   if (-1 == ACE_Service_Config::process_directive (svc_remove))
@@ -754,7 +776,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 #endif
   // Test with a large amount of threads to determine whether
   // TSS works correctly with non ACE threads
-  for (unsigned int i = 0 ; i < n_threads; i++)
+  for (unsigned int i = 0 ; i < n_threads; ++i)
     {
       testNonACEThread();
     }

@@ -20,16 +20,18 @@ TAO_CSD_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
 {
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // orb_core() TAO extension.
-  TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
+  TAO_ORBInitInfo_var const tao_info = TAO_ORBInitInfo::_narrow (info);
 
   if (CORBA::is_nil (tao_info.in ()))
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
+        {
+          TAOLIB_ERROR ((LM_ERROR,
                     "(%P|%t) TAO_CSD_ORBInitializer::pre_init:\n"
                     "(%P|%t)    Unable to narrow "
                     "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
                     "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
+        }
 
       throw ::CORBA::INTERNAL ();
     }

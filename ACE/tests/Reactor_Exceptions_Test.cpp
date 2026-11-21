@@ -16,6 +16,8 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Select_Reactor.h"
 
+#include <memory>
+
 // Just need a simple exception class.
 class Except {};
 
@@ -54,20 +56,24 @@ My_Handler::handle_input (ACE_HANDLE)
   ACE_INET_Addr from_addr;
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Activity occurred on handle %d!\n"),
+              ACE_TEXT ("Activity occurred on handle %H!\n"),
               ACE_SOCK_Dgram::get_handle ()));
 
   ssize_t n = ACE_SOCK_Dgram::recv (buf,
                                     sizeof buf,
                                     from_addr);
   if (n == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("handle_input")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("handle_input")));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("got buf = %s\n"),
-                buf));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("got buf = %s\n"),
+                  buf));
+    }
 
   throw_exception ();
   return 0;
@@ -107,10 +113,12 @@ worker (void*)
   ACE_Reactor::instance ()->owner (ACE_OS::thr_self ());
 
   for (;;)
-    if (ACE_Reactor::instance ()->handle_events () == -1)
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) exception return\n")));
-        break;
+        if (ACE_Reactor::instance ()->handle_events () == -1)
+          {
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) exception return\n")));
+            break;
+          }
       }
 
   return nullptr;
@@ -131,7 +139,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_INET_Addr remote_addr (port, ACE_LOCALHOST, PF_INET);
   ACE_Reactor reactor (new My_Reactor, true);
 
-  ACE_Reactor::instance (&reactor);
+    ACE_Reactor::instance (std::addressof (reactor));
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
   {
@@ -140,12 +148,14 @@ run_main (int argc, ACE_TCHAR *argv[])
     My_Handler handler (local_addr);
 
     if (ACE_Reactor::instance ()->register_handler
-        (&handler,
+        (std::addressof (handler),
          ACE_Event_Handler::READ_MASK) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("register_handler")),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("register_handler")),
+                          -1);
+      }
 
 #if defined (ACE_HAS_THREADS)
     thr_mgr->spawn (ACE_THR_FUNC (worker));
@@ -157,10 +167,12 @@ run_main (int argc, ACE_TCHAR *argv[])
 
     ACE_SOCK_Dgram dgram (ACE_sap_any_cast (ACE_INET_Addr &), PF_INET);
 
-    for (size_t i = 0; i < ACE_MAX_ITERATIONS; i++)
-      dgram.send (ACE_TEXT ("Hello"),
-                  sizeof (ACE_TEXT ("Hello")),
-                  remote_addr);
+    for (size_t i = 0; i < ACE_MAX_ITERATIONS; ++i)
+      {
+        dgram.send (ACE_TEXT ("Hello"),
+                    sizeof (ACE_TEXT ("Hello")),
+                    remote_addr);
+      }
     // Barrier to wait for the other thread to return.
     thr_mgr->wait ();
 

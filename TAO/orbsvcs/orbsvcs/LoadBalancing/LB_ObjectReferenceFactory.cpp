@@ -5,6 +5,7 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -27,28 +28,20 @@ TAO_LB_ObjectReferenceFactory::TAO_LB_ObjectReferenceFactory (
     table_ (TAO_LB_ORF_GROUP_TABLE_SIZE),
     fcids_ (),
     orb_ (CORBA::ORB::_duplicate (orb)),
-    lm_ (CosLoadBalancing::LoadManager::_duplicate (lm))
+    lm_ (CosLoadBalancing::LoadManager::_duplicate (lm)),
+    registered_members_ (repository_ids.length (), false)
 {
   // Claim ownership of the old ObjectReferenceFactory.
   CORBA::add_ref (old_orf);
 
   this->location_.length (1);
   this->location_[0].id = CORBA::string_dup (location);
-
-  CORBA::ULong const len = repository_ids.length ();
-  ACE_NEW (this->registered_members_,
-           CORBA::Boolean[len]);
-
-  ACE_ASSERT (this->registered_members_ != nullptr);
-  ACE_OS::memset (this->registered_members_,
-                  0,
-                  len * sizeof (CORBA::Boolean));
 }
 
 ::CORBA::ValueBase *
 TAO_LB_ObjectReferenceFactory::_copy_value ()
 {
-  ::CORBA::ValueBase * ret_val = nullptr;
+  ::CORBA::ValueBase * ret_val {};
   // Not implemented
   return ret_val;
 }
@@ -59,8 +52,8 @@ TAO_LB_ObjectReferenceFactory::~TAO_LB_ObjectReferenceFactory ()
   // "_var" object, meaning that will be done automatically.
   if (!CORBA::is_nil (this->lm_.in ()))
     {
-      const CORBA::ULong len = this->fcids_.size ();
-      for (CORBA::ULong i = 0; i < len; ++i)
+      fcid_list::size_type const len = this->fcids_.size ();
+      for (fcid_list::size_type i {}; i < len; ++i)
         {
           try
             {
@@ -76,8 +69,6 @@ TAO_LB_ObjectReferenceFactory::~TAO_LB_ObjectReferenceFactory ()
 
   // @todo De-register LoadAlert objects.
   // @todo De-register object group members.
-
-  delete [] this->registered_members_;
 }
 
 CORBA::Object_ptr
@@ -86,7 +77,9 @@ TAO_LB_ObjectReferenceFactory::make_object (
     PortableInterceptor::ObjectId const & id)
 {
   if (repository_id == nullptr)
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   CORBA::Object_var obj =
     this->old_orf_->make_object (repository_id,
@@ -94,7 +87,7 @@ TAO_LB_ObjectReferenceFactory::make_object (
 
   PortableGroup::ObjectGroup_var object_group;
 
-  CORBA::ULong index = 0;
+  CORBA::ULong index {};
 
   CORBA::Boolean const found_group =
     this->find_object_group (repository_id,
@@ -117,24 +110,30 @@ TAO_LB_ObjectReferenceFactory::make_object (
           catch (PortableGroup::ObjectGroupNotFound const & ex)
             {
               if (TAO_debug_level > 0)
-                ex._tao_print_exception (
-                  "TAO_LB_ObjectReferenceFactory::""make_object");
+                {
+                  ex._tao_print_exception (
+                    "TAO_LB_ObjectReferenceFactory::""make_object");
+                }
 
               throw CORBA::BAD_PARAM ();
             }
           catch (PortableGroup::MemberAlreadyPresent const & ex)
             {
               if (TAO_debug_level > 0)
-                ex._tao_print_exception (
-                  "TAO_LB_ObjectReferenceFactory::""make_object");
+                {
+                  ex._tao_print_exception (
+                    "TAO_LB_ObjectReferenceFactory::""make_object");
+                }
 
               throw CORBA::BAD_INV_ORDER ();
             }
           catch (PortableGroup::ObjectNotAdded const & ex)
             {
               if (TAO_debug_level > 0)
-                ex._tao_print_exception (
-                  "TAO_LB_ObjectReferenceFactory::""make_object");
+                {
+                  ex._tao_print_exception (
+                    "TAO_LB_ObjectReferenceFactory::""make_object");
+                }
 
               throw CORBA::UNKNOWN ();
             }
@@ -158,7 +157,9 @@ TAO_LB_ObjectReferenceFactory::find_object_group (
   PortableGroup::ObjectGroup_out object_group)
 {
   if (!this->load_managed_object (repository_id, index))
+  {
     return false;
+  }
 
   PortableGroup::ObjectGroup_var group;
   if (this->table_.find (repository_id, group) != 0)
@@ -187,9 +188,12 @@ TAO_LB_ObjectReferenceFactory::find_object_group (
                                       criteria,
                                       fcid.out ());
 
-          CORBA::ULong const len = this->fcids_.size ();
-          this->fcids_.size (len + 1); // Incremental growth.  Yuck!
-          this->fcids_[len] = fcid;
+          fcid_list::size_type const next_fcid_index = this->fcids_.size ();
+          if (this->fcids_.size (next_fcid_index + 1) == -1)
+            {
+              throw CORBA::NO_MEMORY ();
+            }
+          this->fcids_[next_fcid_index] = fcid;
         }
       else
         {
@@ -200,10 +204,12 @@ TAO_LB_ObjectReferenceFactory::find_object_group (
       if (this->table_.bind (repository_id, group) != 0)
         {
           if (TAO_debug_level > 0)
-            ORBSVCS_ERROR ((LM_ERROR,
-                        "TAO_LB_ObjectReferenceFactory::"
-                        "find_object_group - "
-                        "Couldn't bind object group reference.\n"));
+            {
+              ORBSVCS_ERROR ((LM_ERROR,
+                              "TAO_LB_ObjectReferenceFactory::"
+                              "find_object_group - "
+                              "Couldn't bind object group reference.\n"));
+            }
 
           throw CORBA::INTERNAL ();
         }
@@ -222,8 +228,10 @@ TAO_LB_ObjectReferenceFactory::load_managed_object (char const * repository_id,
 
   CORBA::ULong const len = this->repository_ids_.length ();
   for (i = 0; i < len; ++i)
-    if (ACE_OS::strcmp (this->repository_ids_[i], repository_id) == 0)
+    if (std::strcmp (this->repository_ids_[i], repository_id) == 0)
+    {
       return true;
+    }
 
   return false;
 }

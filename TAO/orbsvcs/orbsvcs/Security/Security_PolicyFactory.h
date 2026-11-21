@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SECURITY_POLICY_FACTORY_H
 #define TAO_SECURITY_POLICY_FACTORY_H
 

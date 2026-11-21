@@ -1,7 +1,10 @@
 #include "ace/Log_Msg.h"
 #include "ace/Log_Category.h"
-#include "ace/Atomic_Op.h"
 #include "ace/OS_NS_Thread.h"
+#include "ace/Guard_T.h"
+
+#include <atomic>
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Log_Category.inl"
@@ -19,7 +22,6 @@ ACE_Log_Category_tss_destroy(void * p)
 
 ACE_Log_Category::ACE_Log_Category(const char* name)
   : name_(name)
-  , id_(0)
 /// Default per-process priority mask
 /// By default, all priorities are enabled.
   , priority_mask_(LM_SHUTDOWN
@@ -48,15 +50,16 @@ ACE_Log_Category::~ACE_Log_Category()
 
   if (this->id_ > 0)
     {
-      void *temp = nullptr;
+      void *temp {};
       if (ACE_OS::thr_getspecific (this->key_, &temp) == -1)
         {
           return; // This should not happen!
         }
-      if (temp != nullptr) {
-        delete static_cast <ACE_Log_Category_TSS *> (temp);
-        ACE_OS::thr_setspecific (this->key_, nullptr);
-      }
+      if (temp != nullptr)
+        {
+          delete static_cast <ACE_Log_Category_TSS *> (temp);
+          ACE_OS::thr_setspecific (this->key_, nullptr);
+        }
       ACE_OS::thr_keyfree (this->key_);
     }
 #endif
@@ -65,7 +68,6 @@ ACE_Log_Category::~ACE_Log_Category()
 ACE_Log_Category_TSS::ACE_Log_Category_TSS(ACE_Log_Category* category, ACE_Log_Msg* logger)
   : category_(category)
   , logger_(logger)
-  , priority_mask_(0)
 {
 }
 
@@ -82,22 +84,26 @@ ACE_Log_Category::per_thr_obj()
     // make sure we only create the key once!
     if (this->id_ == 0)
       {
-        static ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int> log_category_id_assigner(1);
+        static std::atomic<unsigned int> log_category_id_assigner {1};
         id_ = log_category_id_assigner++; // for atomic integers, post increment is more efficient
 
         if (ACE_OS::thr_keycreate (&this->key_,
                                    &ACE_Log_Category_tss_destroy) != 0)
+        {
           return nullptr; // Major problems, this should *never* happen!
+        }
       }
   }
 
-  void *temp = nullptr;
+  void *temp {};
   if (ACE_OS::thr_getspecific (this->key_, &temp) == -1)
     {
       return nullptr; // This should not happen!
     }
   if (temp != nullptr)
+  {
     return static_cast <ACE_Log_Category_TSS *> (temp);
+  }
 
   ACE_Log_Category_TSS * result;
 
@@ -113,12 +119,13 @@ ACE_Log_Category::per_thr_obj()
 
   return result;
 #else // defined (ACE_HAS_THREADS)
-  if (this->id_ == 0) {
-    static unsigned int log_category_id_assigner = 0;
-    id_ = log_category_id_assigner++;
-    per_thr_obj_.logger_ = ACE_Log_Msg::instance();
-  }
-  return &per_thr_obj_;
+  if (this->id_ == 0)
+    {
+      static unsigned int log_category_id_assigner = 0;
+      id_ = log_category_id_assigner++;
+      per_thr_obj_.logger_ = ACE_Log_Msg::instance();
+    }
+  return std::addressof (per_thr_obj_);
 #endif // defined (ACE_HAS_THREADS)
 }
 

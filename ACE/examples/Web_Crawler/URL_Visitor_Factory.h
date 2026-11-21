@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _URL_VISITOR_FACTORY_H
 #define _URL_VISITOR_FACTORY_H
 
@@ -30,7 +29,6 @@
 class URL_Visitor_Factory
 {
 public:
-  /// Destructor.
   virtual ~URL_Visitor_Factory ();
 
   /// Factory Method that makes the appropriate type of <URL_Visitor>.
@@ -50,10 +48,10 @@ class URL_Validation_Visitor_Factory : public URL_Visitor_Factory
 {
 public:
   /// Factory Method that makes a <URL_Validation_Visitor>.
-  virtual URL_Visitor *make_visitor ();
+  URL_Visitor *make_visitor () override;
 
   /// Factory Method that makes a <FIFO_Command_Processor>.
-  virtual Command_Processor *make_command_processor ();
+  Command_Processor *make_command_processor () override;
 };
 
 /**
@@ -65,10 +63,10 @@ class URL_Download_Visitor_Factory : public URL_Visitor_Factory
 {
 public:
   /// Factory Method that makes a <URL_Download_Visitor>.
-  virtual URL_Visitor *make_visitor ();
+  URL_Visitor *make_visitor () override;
 
   /// Factory Method that makes a <FIFO_Command_Processor>.
-  virtual Command_Processor *make_command_processor ();
+  Command_Processor *make_command_processor () override;
 };
 
 #endif /* _URL_VISITOR_FACTORY_H */

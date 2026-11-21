@@ -17,7 +17,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_poll.h"
 
-
 // Should we be verbose?
 static int verbose = 0;
 
@@ -44,7 +43,7 @@ init_poll_array ()
 {
   int i;
 
-  for (i = 0; i < MAX_HANDLES; i++)
+  for (i = 0; i < MAX_HANDLES; ++i)
     {
       poll_array[i].fd = ACE_INVALID_HANDLE;
       poll_array[i].events = POLLIN;
@@ -56,18 +55,20 @@ init_buffer (size_t index)
 {
   ACE_INT32 len;
 
- if (ACE::recv_n (poll_array[index].fd,
-                  (void *) &len,
-                  sizeof (ACE_INT32)) != sizeof (ACE_INT32))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) %p\n",
-                       "recv_n failed"),
-                      -1);
+  if (ACE::recv_n (poll_array[index].fd,
+                   &len,
+                   sizeof (ACE_INT32)) != sizeof (ACE_INT32))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) %p\n",
+                         "recv_n failed"),
+                        -1);
+    }
   else
     {
       len = ntohl (len);
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) reading messages of size %d from handle %d\n",
+                  "(%P|%t) reading messages of size %d from handle %H\n",
                   len,
                   poll_array[index].fd));
 
@@ -85,7 +86,7 @@ handle_data (size_t &n_handles)
   // Handle pending logging messages first (s_handle + 1 is guaranteed
   // to be lowest client descriptor).
 
-  for (size_t index = 1; index < n_handles; index++)
+  for (size_t index = 1; index < n_handles; ++index)
     {
       if (ACE_BIT_ENABLED (poll_array[index].revents, POLLIN))
         {
@@ -107,28 +108,32 @@ handle_data (size_t &n_handles)
           // <recv> will not block in this case!
 
           if (n == -1)
-            ACE_ERROR ((LM_ERROR,
-                        "%p\n",
-                        "read failed"));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "%p\n",
+                          "read failed"));
+            }
           else if (n == 0)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) closing oneway server at handle %d\n",
+                          "(%P|%t) closing oneway server at handle %H\n",
                           poll_array[index].fd));
 
               // Handle client connection shutdown.
               ACE_OS::close (poll_array[index].fd);
               poll_array[index].fd = poll_array[--n_handles].fd;
 
-              ACE_OS::free ((void *) buffer_array[index].buf_);
+              ACE_OS::free (buffer_array[index].buf_);
               buffer_array[index].buf_ = nullptr;
               buffer_array[index].len_ = 0;
             }
           else if (verbose)
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) %*s",
-                        n,
-                        buffer_array[index].buf_));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) %*s",
+                          static_cast<int> (n),
+                          buffer_array[index].buf_));
+            }
         }
     }
 }
@@ -148,18 +153,22 @@ handle_connections (ACE_SSL_SOCK_Acceptor &peer_acceptor,
       // feature that doesn't block).
 
       while (ACE_OS::poll (poll_array, 1, nonblock) > 0)
-        if (peer_acceptor.accept (new_stream, &client) == -1)
-          ACE_OS::perror ("accept");
-        else
-          {
-            const char *s = client.get_host_name ();
+        {
+          if (peer_acceptor.accept (new_stream, &client) == -1)
+            {
+              ACE_OS::perror ("accept");
+            }
+          else
+            {
+              const char *s = client.get_host_name ();
 
-            ACE_ASSERT (s != nullptr);
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) client %s\n",
-                        s));
-            poll_array[n_handles++].fd = new_stream.get_handle ();
-          }
+              ACE_ASSERT (s != nullptr);
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) client %s\n",
+                          s));
+              poll_array[n_handles++].fd = new_stream.get_handle ();
+            }
+        }
     }
 }
 
@@ -187,7 +196,8 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       // Wait for client I/O events (handle interrupts).
       while (ACE_OS::poll (poll_array, n_handles) == -1
              && errno == EINTR)
-        continue;
+        {
+        }
 
       handle_data (n_handles);
       handle_connections (peer_acceptor, n_handles);

@@ -7,7 +7,7 @@
 #include "orbsvcs/Event/EC_Default_Factory.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
@@ -36,7 +36,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       RtecEventChannelAdmin::EventChannel_var event_channel =
         ec_impl._this ();
 
-
       // ****************************************************************
 
       // Obtain the consumer admin..
@@ -62,7 +61,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       EC_Counting_Consumer interval_consumer ("Consumer/interval");
       // Create a consumer, intialize its RT_Info structures, and
       // connnect to the event channel....
-
 
       {
         // Let's say that the execution time for event 2 is 1

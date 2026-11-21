@@ -39,8 +39,6 @@ namespace TAO
     (*any) <<= *this->x_->value ();
   }
 
-  // ========================================================================
-
   CORBA::Boolean
   NVList_Argument::marshal (TAO_OutputCDR &cdr)
   {
@@ -86,10 +84,12 @@ namespace TAO
     CORBA::ULong const len = this->x_->count ();
     lst->length (len);
 
-    for (CORBA::ULong i = 0; i < len; ++i)
+    for (CORBA::ULong i {}; i < len; ++i)
       {
         if (this->x_->item (i)->value () == nullptr)
+        {
           return;
+        }
 
         (*lst)[i].argument.replace (this->x_->item (i)->value ()->impl ());
 

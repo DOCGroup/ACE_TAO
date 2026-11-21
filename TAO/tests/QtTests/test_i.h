@@ -6,7 +6,6 @@
  */
 //=============================================================================
 
-
 #ifndef _QT_TEST_I_H
 #define _QT_TEST_I_H
 
@@ -29,9 +28,7 @@ class LCD_Display_imp : public QObject,
    */
   Q_OBJECT
 public:
-  LCD_Display_imp (CORBA::ORB_ptr);
-
-  // ctor
+  explicit LCD_Display_imp (CORBA::ORB_ptr);
 
   void shutdown ();
 

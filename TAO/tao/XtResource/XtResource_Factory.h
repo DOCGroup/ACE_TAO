@@ -38,22 +38,23 @@ namespace TAO
   class TAO_XtResource_Export XtResource_Factory : public GUIResource_Factory
   {
   public:
-    XtResource_Factory (XtAppContext context);
+    explicit XtResource_Factory (XtAppContext context);
 
-    /// Create or obtain current reactor implementation
-    ACE_Reactor_Impl *reactor_impl () override;
-
-  private:
     XtResource_Factory (XtResource_Factory const &) = delete;
     XtResource_Factory &operator= (XtResource_Factory const &) = delete;
     XtResource_Factory (XtResource_Factory &&) = delete;
     XtResource_Factory &operator= (XtResource_Factory &&) = delete;
 
-    /// Reactor created by this factory.
+  protected:
+    /// Create or obtain current reactor implementation
+    ACE_Reactor_Impl *reactor_impl () override;
+
+  private:
+    /// Non-owning cache; ACE_Reactor owns the implementation after wrapping it.
     ACE_XtReactor *reactor_impl_ {};
 
     /// Xt context for XtReactor
-    XtAppContext  context_;
+    XtAppContext const context_;
 
     /// for internal locking
     TAO_SYNCH_MUTEX lock_;

@@ -61,7 +61,8 @@ public:
   /// Remove the underlying shared memory segment.
   int remove () override;
 
-  // = Allocation and deallocation methods.
+  /// @name Allocation and deallocation
+  /// @{
   /// Create a new chuck of memory containing @a size bytes.
   void *malloc (size_t = 0) override;
 
@@ -74,6 +75,7 @@ public:
   /// Return the ID of the shared memory segment (i.e., a System V
   /// shared memory internal id).
   ACE_HANDLE get_id () const override;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

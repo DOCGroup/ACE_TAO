@@ -91,7 +91,8 @@ public:
   /// Set the I/O handle.
   virtual void set_handle (ACE_HANDLE);
 
-  // = Get/set priority
+  /// @name Priority accessors.
+  /// @{
 
   /// Get the priority of the Event_Handler.
   /// @note Priorities run from MIN_PRIORITY (which is the "lowest priority")
@@ -100,6 +101,7 @@ public:
 
   /// Set the priority of the Event_Handler.
   virtual void priority (int priority);
+  /// @}
 
   /// Called when input events occur (e.g., connection or data).
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
@@ -132,7 +134,7 @@ public:
 
   /// Called when object is signaled by OS (either via UNIX signals or
   /// when a Win32 object becomes signaled).
-  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  virtual int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr);
 
   enum
     {
@@ -161,7 +163,9 @@ public:
   virtual int handle_qos (ACE_HANDLE = ACE_INVALID_HANDLE);
   virtual int handle_group_qos (ACE_HANDLE = ACE_INVALID_HANDLE);
 
-  // = Accessors to set/get the various event demultiplexors.
+  /// @name Reactor accessors.
+  /// @{
+
   /// Set the event demultiplexors.
   virtual void reactor (ACE_Reactor *reactor);
 
@@ -170,6 +174,7 @@ public:
 
   /// Get only the reactor's timer related interface.
   virtual ACE_Reactor_Timer_Interface *reactor_timer_interface () const;
+  /// @}
 
   /**
    * Used to read from non-socket ACE_HANDLEs in our own thread to
@@ -229,7 +234,6 @@ public:
   class ACE_Export Policy
   {
   public:
-    /// Virtual destructor.
     virtual ~Policy ();
   };
 
@@ -268,7 +272,7 @@ public:
 
   private:
     /// Private constructor.
-    Reference_Counting_Policy (Value value);
+    explicit Reference_Counting_Policy (Value value);
 
     /// The value of the policy.
     Value value_;
@@ -310,16 +314,13 @@ private:
 class ACE_Export ACE_Event_Handler_var
 {
 public:
-  /// Default constructor.
   ACE_Event_Handler_var ();
 
   /// Construct with a handler.
   ACE_Event_Handler_var (ACE_Event_Handler *p);
 
-  /// Copy constructor.
   ACE_Event_Handler_var (const ACE_Event_Handler_var &b);
 
-  /// Destructor.
   ~ACE_Event_Handler_var ();
 
   /// Assignment to a handler.
@@ -349,7 +350,7 @@ public:
 
 private:
   /// Handler.
-  ACE_Event_Handler *ptr_;
+  ACE_Event_Handler *ptr_ {};
 };
 
 /// Define that we can use in user code to check if this
@@ -391,12 +392,11 @@ public:
 
   ACE_Notification_Buffer (ACE_Event_Handler *eh, ACE_Reactor_Mask mask);
 
-  /// Default destructor.
   ~ACE_Notification_Buffer () = default;
 
   /// Pointer to the Event_Handler that will be dispatched
   /// by the main event loop.
-  ACE_Event_Handler *eh_;
+  ACE_Event_Handler *eh_ {};
 
   /// Mask that indicates which method to call.
   ACE_Reactor_Mask mask_;

@@ -29,6 +29,8 @@
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
@@ -41,12 +43,12 @@ static TAO::TypeCode::Alias<char const *,
     CORBA::tk_alias,
     "IDL:omg.org/PortableServer/ObjectId:2.3",
     "ObjectId",
-    &CORBA::_tc_OctetSeq);
+    std::addressof (CORBA::_tc_OctetSeq));
 
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ObjectId =
-    &_tao_tc_PortableServer_ObjectId;
+    std::addressof (_tao_tc_PortableServer_ObjectId);
 }
 
 

@@ -43,26 +43,33 @@ using PACKETS_RECEIVED_MONITOR =
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
 template<typename OS_MP_TYPE>
-Monitor_Base*
-create_os_monitor (const char* name = nullptr,
+Monitor_Base_Unique_Ptr
+create_os_monitor (char const* name = nullptr,
                    ACE_Time_Value period = ACE_Time_Value::zero)
 {
-  Monitor_Base* retval = nullptr;
-
-  ACE_VERSIONED_NAMESPACE_NAME::MC_ADMINMANAGER *mgr =
+  ACE_VERSIONED_NAMESPACE_NAME::MC_ADMINMANAGER * const mgr =
     ACE_VERSIONED_NAMESPACE_NAME::ACE_Dynamic_Service<
       ACE_VERSIONED_NAMESPACE_NAME::MC_ADMINMANAGER>::instance (
         "MC_ADMINMANAGER");
 
-  const char* working_name =
-    (name == 0 ? OS_MP_TYPE::default_name () : name);
-
-  retval = mgr->admin ().monitor_point (working_name);
-
-  if (retval == 0)
+  if (mgr == nullptr)
     {
-      ACE_NEW_RETURN (retval, OS_MP_TYPE (working_name), 0);
-      (void) mgr->admin ().monitor_point (retval, period);
+      return {};
+    }
+
+  char const* const working_name =
+    (name == nullptr ? OS_MP_TYPE::default_name () : name);
+
+  Monitor_Base_Unique_Ptr retval (mgr->admin ().monitor_point (working_name));
+
+  if (retval == nullptr)
+    {
+      Monitor_Base *monitor {};
+      ACE_NEW_RETURN (monitor,
+                      OS_MP_TYPE (working_name),
+                      Monitor_Base_Unique_Ptr {});
+      retval.reset (monitor);
+      (void) mgr->admin ().monitor_point (retval.get (), period);
     }
 
   return retval;

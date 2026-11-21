@@ -67,7 +67,7 @@ const int SHMSZ = 27;
 static ACE_TCHAR *shm_key;
 
 // Synchronize the start of the parent and the child.
-static SYNCHRONIZER *synchronizer = nullptr;
+static SYNCHRONIZER *synchronizer {};
 
 static void *
 child (void * = nullptr)
@@ -84,14 +84,14 @@ child (void * = nullptr)
   result = shm_child.open (shm_key);
   ACE_TEST_ASSERT (result != -1);
 
-  char *shm = (char *) shm_child.malloc ();
+  char *shm = static_cast<char *> (shm_child.malloc ());
 
   ACE_TEST_ASSERT (shm != nullptr);
 
-  for (char *s = shm; *s != '\0'; s++)
+  for (char *s = shm; *s != '\0'; ++s)
     {
       ACE_TEST_ASSERT (*t == s[0]);
-      t++;
+      ++t;
     }
 
   // Indicate to the parent that we're done.
@@ -109,14 +109,16 @@ parent (void * = nullptr)
   result = shm_parent.open (shm_key, SHMSZ);
   ACE_TEST_ASSERT (result != -1);
 
-  char *shm = (char *) shm_parent.malloc ();
+  char *shm = static_cast<char *> (shm_parent.malloc ());
 
   ACE_TEST_ASSERT (shm != nullptr);
 
   char *s = shm;
 
-  for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
-    *s++ = *c;
+  for (const char *c = ACE_ALPHABET; *c != '\0'; ++c)
+    {
+      *s++ = *c;
+    }
 
   *s = '\0';
 
@@ -126,8 +128,10 @@ parent (void * = nullptr)
 
   // Perform a "busy wait" until the child sets the character to '*'.
   while (*shm != '*')
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P) spinning in parent!\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P) spinning in parent!\n")));
+    }
 
   result = shm_parent.remove ();
   ACE_TEST_ASSERT (result != -1);
@@ -209,7 +213,9 @@ run_main (int, ACE_TCHAR *[])
   // Get the temporary directory,
   // The - 24 is for the filename, mm_shared_mem_testXXXXXX
   if (ACE::get_temp_dir (temp_file, MAXPATHLEN - 24) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Temporary path too long\n")), -1);
+  }
 
   // Add the filename to the end
   ACE_OS::strcat (temp_file, ACE_TEXT ("mm_shared_mem_testXXXXXX"));
@@ -220,10 +226,12 @@ run_main (int, ACE_TCHAR *[])
   if (ACE_OS::mktemp (shm_key) == nullptr
       || (ACE_OS::unlink (shm_key) == -1
           && errno == EPERM))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) %p\n"),
-                       shm_key),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) %p\n"),
+                         shm_key),
+                        1);
+    }
   spawn ();
 
 #else /* !ACE_LACKS_MMAP */

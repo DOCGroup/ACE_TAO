@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef NONBLOCKING_CONN_TEST_H
 #define NONBLOCKING_CONN_TEST_H
 
@@ -42,10 +41,10 @@ public:
   void connection_status (Connection_Status &status,
                           int &completion_counter);
 
-  int open (void *);
+  int open (void *) override;
 
   int handle_close (ACE_HANDLE handle,
-                    ACE_Reactor_Mask mask);
+                    ACE_Reactor_Mask mask) override;
 
   Connection_Status *status_;
   int *completion_counter_;

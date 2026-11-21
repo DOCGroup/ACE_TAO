@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Pipe.h"
 #include "ace/Process.h"
@@ -48,21 +47,23 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
     {
-    case 'd':
-      close_pipe = 0;
-      break;
-    case 'c':
-      child_process = 1;
-      break;
-    case 'i':
-      iterations = ACE_OS::atoi (get_opt.opt_arg ());
-      break;
-    default:
-      print_usage_and_die ();
-      break;
-  }
+      switch (c)
+        {
+        case 'd':
+          close_pipe = 0;
+          break;
+        case 'c':
+          child_process = 1;
+          break;
+        case 'i':
+          iterations = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        default:
+          print_usage_and_die ();
+          break;
+        }
+    }
 }
 
 // Consolidate the ACE_Pipe initializations.
@@ -81,7 +82,9 @@ open_pipe (ACE_Pipe &pipe,
   ACE_TEST_ASSERT (result == 1);
 
   if (close_pipe)
+  {
     pipe.close ();
+  }
 }
 #endif
 
@@ -125,7 +128,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       ACE_exitcode status = 0;
 
-      for (int i = 0; i < ::iterations; i++)
+      for (int i = 0; i < ::iterations; ++i)
         {
           ACE_Process server;
 

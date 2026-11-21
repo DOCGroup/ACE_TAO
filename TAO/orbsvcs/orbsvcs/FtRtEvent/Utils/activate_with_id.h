@@ -21,7 +21,7 @@ void
 activate_object_with_id (T * &result,
                          PortableServer::POA_ptr poa,
                          PortableServer::ServantBase *servant,
-                         const FtRtecEventComm::ObjectId &oid)
+                         FtRtecEventComm::ObjectId const &oid)
 {
   PortableServer::ObjectId const &id =
     reinterpret_cast<PortableServer::ObjectId const &> (oid);

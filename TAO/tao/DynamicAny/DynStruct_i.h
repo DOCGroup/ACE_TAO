@@ -1,13 +1,9 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file    DynStruct_i.h
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
-
-
 #ifndef TAO_DYNSTRUCT_I_H
 #define TAO_DYNSTRUCT_I_H
 #include /**/ "ace/pre.h"
@@ -20,7 +16,8 @@
 
 #include "tao/DynamicAny/DynCommon.h"
 #include "tao/LocalObject.h"
-#include "ace/Containers.h"
+
+#include "ace/Array_Base.h"
 
 #if defined (_MSC_VER)
 # pragma warning(push)
@@ -40,11 +37,15 @@ class TAO_DynamicAny_Export TAO_DynStruct_i
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
-  explicit TAO_DynStruct_i (CORBA::Boolean allow_truncation=true);
+  explicit TAO_DynStruct_i (CORBA::Boolean allow_truncation = true);
 
-  /// Destructor.
-  ~TAO_DynStruct_i () = default;
+  ~TAO_DynStruct_i () override = default;
+
+  /// Use copy() or assign() instead of these.
+  TAO_DynStruct_i (TAO_DynStruct_i const &src) = delete;
+  TAO_DynStruct_i &operator= (TAO_DynStruct_i const &src) = delete;
+  TAO_DynStruct_i (TAO_DynStruct_i &&) = delete;
+  TAO_DynStruct_i &operator= (TAO_DynStruct_i &&) = delete;
 
   /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc);
@@ -52,10 +53,15 @@ public:
   /// Initialize using an Any.
   void init (CORBA::Any const& any);
 
-  // = LocalObject methods.
+  /// @name LocalObject methods
+  /// @{
+
   static TAO_DynStruct_i *_narrow (CORBA::Object_ptr obj);
 
-  // = Functions specific to DynStruct.
+  /// @}
+
+  /// @name Functions specific to DynStruct
+  /// @{
 
   DynamicAny::FieldName current_member_name () override;
 
@@ -70,7 +76,10 @@ public:
   void set_members_as_dyn_any (
       DynamicAny::NameDynAnyPairSeq const& value) override;
 
-  // = DynAny common functions not implemented in class TAO_DynCommon.
+  /// @}
+
+  /// @name DynAny common functions not implemented in TAO_DynCommon
+  /// @{
 
   void from_any (CORBA::Any const& value) override;
 
@@ -81,6 +90,8 @@ public:
   void destroy () override;
 
   DynamicAny::DynAny_ptr current_component () override;
+
+  /// @}
 
 private:
   /// Check if the typecode is acceptable.
@@ -93,13 +104,6 @@ private:
   /// Called by both versions of init().
   void init_common ();
 
-  // = Use copy() or assign() instead of these.
-  TAO_DynStruct_i (TAO_DynStruct_i const &src) = delete;
-  TAO_DynStruct_i &operator= (TAO_DynStruct_i const &src) = delete;
-  TAO_DynStruct_i (TAO_DynStruct_i &&) = delete;
-  TAO_DynStruct_i &operator= (TAO_DynStruct_i &&) = delete;
-
-private:
   /// Each component is also a DynAny.
   ACE_Array_Base<DynamicAny::DynAny_var> da_members_;
 };

@@ -1,22 +1,17 @@
 // -*- C++ -*-
 #include "Messenger_i.h"
 
-#include <ace/streams.h>
+#include <iostream>
 
 Messenger_i::Messenger_i (CORBA::ORB_ptr orb, long instance)
-: instance_(instance)
-, orb_(CORBA::ORB::_duplicate(orb))
-, isHit_(false)
+  : instance_ (instance),
+    orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
-Messenger_i::~Messenger_i ()
+bool Messenger_i::acknowledgeHit ()
 {
-}
-
-bool Messenger_i::acknowledgeHit()
-{
-  bool isHit = isHit_;
+  bool const isHit = isHit_;
   isHit_ = false;
   return isHit;
 }
@@ -26,13 +21,13 @@ CORBA::Long Messenger_i::send_message (CORBA::Long thread,
                                        CORBA::Long obj,
                                        CORBA::Long req)
 {
-  cout << "* Invoked: (" << instance_ << "." << thread << "." << iter
-    << "." << obj << "." << req << ")" << endl;
+  std::cout << "* Invoked: (" << instance_ << "." << thread << "." << iter
+            << "." << obj << "." << req << ")" << std::endl;
   isHit_ = true;
   return instance_;
 }
 
 void Messenger_i::shutdownOrb ()
 {
-  orb_->shutdown(0);
+  orb_->shutdown (false);
 }

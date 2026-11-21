@@ -27,8 +27,7 @@ ACE_OS_Thread_Adapter::ACE_OS_Thread_Adapter (
                              , selector
                              , handler
 #endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
-                             , cancel_flags
-                             )
+                             , cancel_flags)
 {
 }
 
@@ -61,10 +60,14 @@ ACE_OS_Thread_Adapter::invoke ()
       int old = 0;
       int val = cancel_flags & (THR_CANCEL_ENABLE | THR_CANCEL_DISABLE);
       if (val == THR_CANCEL_ENABLE || val == THR_CANCEL_DISABLE)
+      {
         ACE_OS::thr_setcancelstate (val, &old);
+      }
       val = cancel_flags & (THR_CANCEL_DEFERRED | THR_CANCEL_ASYNCHRONOUS);
       if (val == THR_CANCEL_DEFERRED || val == THR_CANCEL_ASYNCHRONOUS)
+      {
         ACE_OS::thr_setcanceltype (val, &old);
+      }
     }
 
   ACE_THR_FUNC_RETURN status = ACE_THR_FUNC_RETURN_NULL;
@@ -77,11 +80,13 @@ ACE_OS_Thread_Adapter::invoke ()
             ACE_OS_Object_Manager::thread_hook ();
 
           if (hook)
-            // Invoke the start hook to give the user a chance to
-            // perform some initialization processing before the
-            // <func> is invoked.
-            status = hook->start (reinterpret_cast<ACE_THR_FUNC> (func),
-                                  arg);
+            {
+              // Invoke the start hook to give the user a chance to
+              // perform some initialization processing before the
+              // <func> is invoked.
+              status = hook->start (reinterpret_cast<ACE_THR_FUNC> (func),
+                                    arg);
+            }
           else
             {
               // Call thread entry point.

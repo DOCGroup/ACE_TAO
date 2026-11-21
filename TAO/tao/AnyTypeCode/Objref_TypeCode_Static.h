@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Objref_TypeCode_Static.h
  *
@@ -15,7 +14,6 @@
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_OBJREF_TYPECODE_STATIC_H
 #define TAO_OBJREF_TYPECODE_STATIC_H
@@ -30,7 +28,6 @@
 
 #include "tao/AnyTypeCode/TypeCode_Base_Attributes.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -56,7 +53,6 @@ namespace TAO
         private TAO::Null_RefCount_Policy
     {
     public:
-      /// Constructor.
       Objref (CORBA::TCKind kind,
               char const * id,
               char const * name);
@@ -69,12 +65,12 @@ namespace TAO
        *
        * @see @c CORBA::TypeCode
        */
-      //@{
+      /// @{
       bool tao_marshal (TAO_OutputCDR & cdr,
                         CORBA::ULong offset) const override;
       void tao_duplicate () override;
       void tao_release () override;
-      //@}
+      /// @}
 
     protected:
       /**
@@ -86,7 +82,7 @@ namespace TAO
        *
        * @see @c CORBA::TypeCode
        */
-      //@{
+      /// @{
       CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const override;
       CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const override;
       CORBA::TypeCode_ptr get_compact_typecode_i () const override;

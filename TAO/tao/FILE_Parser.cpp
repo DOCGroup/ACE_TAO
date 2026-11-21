@@ -6,10 +6,9 @@
 #include "tao/Object.h"
 
 #include "ace/Read_Buffer.h"
-#include "ace/Malloc_Base.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 static const char file_prefix[] = "file:";
 
@@ -18,9 +17,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 bool
 TAO_FILE_Parser::match_prefix (const char *ior_string) const
 {
-  return (ACE_OS::strncmp (ior_string,
-                           ::file_prefix,
-                           sizeof (::file_prefix) - 1) == 0);
+  return (std::strncmp (ior_string,
+                        ::file_prefix,
+                        sizeof (::file_prefix) - 1) == 0);
 }
 
 CORBA::Object_ptr
@@ -35,31 +34,22 @@ TAO_FILE_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
                               ACE_TEXT("r"));
 
   if (file == nullptr)
+  {
     return CORBA::Object::_nil ();
+  }
 
   ACE_Read_Buffer reader (file, true);
 
-  char* string = reader.read ();
+  ACE_Read_Buffer_Unique_Ptr string (
+    reader.read (), {reader.alloc ()});
 
   if (string == nullptr)
+  {
     return CORBA::Object::_nil ();
+  }
 
-  CORBA::Object_ptr object = CORBA::Object::_nil ();
-  try
-    {
-      object = orb->string_to_object (string);
-
-      reader.alloc ()->free (string);
-    }
-  catch (const ::CORBA::Exception&)
-    {
-      reader.alloc ()->free (string);
-      throw;
-    }
-
-  return object;
+  return orb->string_to_object (string.get ());
 }
-
 
 ACE_STATIC_SVC_DEFINE (TAO_FILE_Parser,
                        ACE_TEXT ("FILE_Parser"),

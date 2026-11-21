@@ -558,7 +558,9 @@ ace_cc_yynewstate:
   }
       ace_cc_yystacksize *= 2;
       if (ace_cc_yystacksize > ACE_CC_YYMAXDEPTH)
-  ace_cc_yystacksize = ACE_CC_YYMAXDEPTH;
+      {
+        ace_cc_yystacksize = ACE_CC_YYMAXDEPTH;
+      }
 #ifndef ACE_CC_YYSTACK_USE_ALLOCA
       ace_cc_yyfree_stacks = 1;
 #endif
@@ -587,7 +589,9 @@ ace_cc_yynewstate:
 #endif
 
       if (ace_cc_yyssp >= ace_cc_yyss + ace_cc_yystacksize - 1)
-  ACE_CC_YYABORT;
+      {
+        ACE_CC_YYABORT;
+      }
     }
 
 #if ACE_CC_YYDEBUG != 0
@@ -606,7 +610,9 @@ ace_cc_yynewstate:
 
   ace_cc_yyn = ace_cc_yypact[ace_cc_yystate];
   if (ace_cc_yyn == ACE_CC_YYFLAG)
+  {
     goto ace_cc_yydefault;
+  }
 
   /* Not known => get a lookahead token if don't already have one.  */
 
@@ -654,7 +660,9 @@ ace_cc_yynewstate:
 
   ace_cc_yyn += ace_cc_yychar1;
   if (ace_cc_yyn < 0 || ace_cc_yyn > ACE_CC_YYLAST || ace_cc_yycheck[ace_cc_yyn] != ace_cc_yychar1)
+  {
     goto ace_cc_yydefault;
+  }
 
   ace_cc_yyn = ace_cc_yytable[ace_cc_yyn];
 
@@ -668,7 +676,9 @@ ace_cc_yynewstate:
   if (ace_cc_yyn < 0)
     {
       if (ace_cc_yyn == ACE_CC_YYFLAG)
-  goto ace_cc_yyerrlab;
+      {
+        goto ace_cc_yyerrlab;
+      }
       ace_cc_yyn = -ace_cc_yyn;
       goto ace_cc_yyreduce;
     }
@@ -676,7 +686,9 @@ ace_cc_yynewstate:
     goto ace_cc_yyerrlab;
 
   if (ace_cc_yyn == ACE_CC_YYFINAL)
+  {
     ACE_CC_YYACCEPT;
+  }
 
   /* Shift the lookahead token.  */
 
@@ -687,7 +699,9 @@ ace_cc_yynewstate:
 
   /* Discard the token being shifted unless it is eof.  */
   if (ace_cc_yychar != ACE_CC_YYEOF)
+  {
     ace_cc_yychar = ACE_CC_YYEMPTY;
+  }
 
   *++ace_cc_yyvsp = ace_cc_yylval;
 #ifdef ACE_CC_YYLSP_NEEDED
@@ -695,7 +709,10 @@ ace_cc_yynewstate:
 #endif
 
   /* count tokens shifted since error; after three, turn off error status.  */
-  if (ace_cc_yyerrstatus) ace_cc_yyerrstatus--;
+  if (ace_cc_yyerrstatus)
+  {
+    ace_cc_yyerrstatus--;
+  }
 
   ace_cc_yystate = ace_cc_yyn;
   goto ace_cc_yynewstate;
@@ -705,13 +722,17 @@ ace_cc_yydefault:
 
   ace_cc_yyn = ace_cc_yydefact[ace_cc_yystate];
   if (ace_cc_yyn == 0)
+  {
     goto ace_cc_yyerrlab;
+  }
 
 /* Do a reduction.  ace_cc_yyn is the number of a rule to reduce with.  */
 ace_cc_yyreduce:
   ace_cc_yylen = ace_cc_yyr2[ace_cc_yyn];
   if (ace_cc_yylen > 0)
+  {
     ace_cc_yyval = ace_cc_yyvsp[1-ace_cc_yylen]; /* implement default value of the action */
+  }
 
 #if ACE_CC_YYDEBUG != 0
   if (ace_cc_yydebug)
@@ -874,7 +895,9 @@ case 30:
   if (ace_cc_yystate >= 0 && ace_cc_yystate <= ACE_CC_YYLAST && ace_cc_yycheck[ace_cc_yystate] == *ace_cc_yyssp)
     ace_cc_yystate = ace_cc_yytable[ace_cc_yystate];
   else
+  {
     ace_cc_yystate = ace_cc_yydefgoto[ace_cc_yyn - ACE_CC_YYNTBASE];
+  }
 
   goto ace_cc_yynewstate;
 
@@ -938,7 +961,9 @@ ace_cc_yyerrlab1:   /* here on error raised explicitly by an action */
 
       /* return failure if at end of input */
       if (ace_cc_yychar == ACE_CC_YYEOF)
-  ACE_CC_YYABORT;
+      {
+        ACE_CC_YYABORT;
+      }
 
 #if ACE_CC_YYDEBUG != 0
       if (ace_cc_yydebug)
@@ -966,7 +991,10 @@ ace_cc_yyerrdefault:  /* current state does not do anything special for the erro
 
 ace_cc_yyerrpop:   /* pop the current state because it cannot handle the error token */
 
-  if (ace_cc_yyssp == ace_cc_yyss) ACE_CC_YYABORT;
+  if (ace_cc_yyssp == ace_cc_yyss)
+  {
+    ACE_CC_YYABORT;
+  }
   ace_cc_yyvsp--;
   ace_cc_yystate = *--ace_cc_yyssp;
 #ifdef ACE_CC_YYLSP_NEEDED
@@ -988,17 +1016,23 @@ ace_cc_yyerrhandle:
 
   ace_cc_yyn = ace_cc_yypact[ace_cc_yystate];
   if (ace_cc_yyn == ACE_CC_YYFLAG)
+  {
     goto ace_cc_yyerrdefault;
+  }
 
   ace_cc_yyn += ACE_CC_YYTERROR;
   if (ace_cc_yyn < 0 || ace_cc_yyn > ACE_CC_YYLAST || ace_cc_yycheck[ace_cc_yyn] != ACE_CC_YYTERROR)
+  {
     goto ace_cc_yyerrdefault;
+  }
 
   ace_cc_yyn = ace_cc_yytable[ace_cc_yyn];
   if (ace_cc_yyn < 0)
     {
       if (ace_cc_yyn == ACE_CC_YYFLAG)
-  goto ace_cc_yyerrpop;
+      {
+        goto ace_cc_yyerrpop;
+      }
       ace_cc_yyn = -ace_cc_yyn;
       goto ace_cc_yyreduce;
     }
@@ -1006,7 +1040,9 @@ ace_cc_yyerrhandle:
     goto ace_cc_yyerrpop;
 
   if (ace_cc_yyn == ACE_CC_YYFINAL)
+  {
     ACE_CC_YYACCEPT;
+  }
 
 #if ACE_CC_YYDEBUG != 0
   if (ace_cc_yydebug)

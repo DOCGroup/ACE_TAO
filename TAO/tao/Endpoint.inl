@@ -11,7 +11,6 @@ TAO_Endpoint::TAO_Endpoint (CORBA::ULong tag,
   //    memory.
   , tag_ (tag)
   , priority_ (priority)
-
 {
 }
 

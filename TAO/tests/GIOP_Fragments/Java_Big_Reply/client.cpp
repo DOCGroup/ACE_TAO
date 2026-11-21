@@ -58,7 +58,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-
       Client_Task client_task (reply_gen.in (),
                                10,
                                ACE_Thread_Manager::instance ());

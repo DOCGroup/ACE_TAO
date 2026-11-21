@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    HomeDef_i.h
@@ -10,7 +9,6 @@
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_HOMEDEF_I_H
 #define TAO_HOMEDEF_I_H
@@ -29,18 +27,12 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/// Represents a home definition containing factory and finder declarations.
 class TAO_IFRService_Export TAO_HomeDef_i
   : public virtual TAO_ExtInterfaceDef_i
 {
-  // = TITLE
-  //    HomTAO_HomeDef_ieDef_i
-  //
-  // = DESCRIPTION
-  //    Represents a home definition, containing factory and finder.
-  //
 public:
   explicit TAO_HomeDef_i (TAO_Repository_i *repo);
 
@@ -131,7 +123,7 @@ public:
       CORBA::ExceptionDefSeq const &exceptions);
 
 private:
-  // Common code for create_factory_i and create_finder_i.
+  /// Shared implementation for create_factory_i and create_finder_i.
   CORBA::Object_ptr create_common (
       CORBA::DefinitionKind created_kind,
       char const *id,

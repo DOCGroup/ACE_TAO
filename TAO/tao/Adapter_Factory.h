@@ -23,7 +23,6 @@
 
 #include "ace/Service_Object.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Adapter;
@@ -32,11 +31,18 @@ class TAO_ORB_Core;
 class TAO_Export TAO_Adapter_Factory : public ACE_Service_Object
 {
 public:
-  /// Destructor
+  TAO_Adapter_Factory () = default;
+
   ~TAO_Adapter_Factory () override;
 
   /// Create a new adapter
   virtual TAO_Adapter *create (TAO_ORB_Core *orb_core) = 0;
+
+private:
+  TAO_Adapter_Factory (TAO_Adapter_Factory const &) = delete;
+  TAO_Adapter_Factory &operator= (TAO_Adapter_Factory const &) = delete;
+  TAO_Adapter_Factory (TAO_Adapter_Factory &&) = delete;
+  TAO_Adapter_Factory &operator= (TAO_Adapter_Factory &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

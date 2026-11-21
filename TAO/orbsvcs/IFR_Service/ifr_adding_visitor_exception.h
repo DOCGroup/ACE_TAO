@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_IFR_ADDING_VISITOR_EXCEPTION_H
 #define TAO_IFR_ADDING_VISITOR_EXCEPTION_H
 
@@ -31,11 +30,9 @@
 class ifr_adding_visitor_exception : public ifr_adding_visitor
 {
 public:
-  /// Constructor.
   ifr_adding_visitor_exception (AST_Decl *scope,
                                 CORBA::Boolean in_reopened_);
 
-  /// Destructor.
   ~ifr_adding_visitor_exception () override;
   ifr_adding_visitor_exception (ifr_adding_visitor_exception const &) = delete;
   ifr_adding_visitor_exception (ifr_adding_visitor_exception &&) = delete;

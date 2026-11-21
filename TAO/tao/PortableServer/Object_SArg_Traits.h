@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Object_SArg_Traits.h
  *
  *  @author  Ossama Othman
  */
-//=============================================================================
-
 #ifndef TAO_OBJECT_SARG_TRAITS_H
 #define TAO_OBJECT_SARG_TRAITS_H
 
@@ -35,9 +31,6 @@ namespace CORBA
   using Object_var = TAO_Pseudo_Var_T<Object>;
   using Object_out = TAO_Pseudo_Out_T<Object>;
 }
-
-// --------------------------------------------------------------
-
 namespace TAO
 {
   /// Used in generated code if CORBA::Object is an argument or

@@ -8,35 +8,39 @@ namespace ACE
 
     ACE_INLINE
     SSL_X509Cert::SSL_X509Cert ()
-      : ssl_cert_ (0)
+      : ssl_cert_ (nullptr)
       {
       }
 
     ACE_INLINE
     SSL_X509Cert::SSL_X509Cert (::X509* ssl_cert)
-      : ssl_cert_ (0)
+      : ssl_cert_ (nullptr)
       {
         *this = ssl_cert;
       }
 
     ACE_INLINE
     SSL_X509Cert::SSL_X509Cert (const SSL_X509Cert& cert)
+      : ssl_cert_ (nullptr)
       {
         *this = cert;
       }
 
     ACE_INLINE
-    SSL_X509Cert::~SSL_X509Cert ()
-      {
-      }
+    SSL_X509Cert::~SSL_X509Cert () = default;
 
     ACE_INLINE
     SSL_X509Cert& SSL_X509Cert::operator= (::X509* ssl_cert)
       {
-        if (this->ssl_cert_ != 0)
+        if (this->ssl_cert_ == ssl_cert)
+          {
+            return *this;
+          }
+
+        if (this->ssl_cert_ != nullptr)
           ::X509_free (this->ssl_cert_);
 
-        if (ssl_cert != 0)
+        if (ssl_cert != nullptr)
           {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
             ::X509_up_ref(ssl_cert);
@@ -51,9 +55,14 @@ namespace ACE
       }
 
     ACE_INLINE
-    SSL_X509Cert& SSL_X509Cert::operator= (const SSL_X509Cert& ssl_cert)
+    SSL_X509Cert& SSL_X509Cert::operator= (SSL_X509Cert const& ssl_cert)
       {
-        return (*this = &(const_cast<SSL_X509Cert&> (ssl_cert)));
+        if (this != std::addressof (ssl_cert))
+          {
+            *this = ssl_cert.ssl_cert_;
+          }
+
+        return *this;
       }
 
     ACE_INLINE

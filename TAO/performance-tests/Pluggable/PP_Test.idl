@@ -1,29 +1,18 @@
 /* -*- C++ -*- */
+/// Defines operations used to test TAO Pluggable Protocols. The operations
+/// send octets, voids, and octet sequences.
 interface Pluggable_Test
 {
-  // = TITLE
-  //    Defines an interface that encapsulates operations designed to
-  //    test the TAO Pluggable Protocols implementation.
-  //
-  // = DESCRIPTION
-  //    This interface encapsulates operations that send
-  //    octets, voids, and octet sequences.
-
+  /// Tests the basic latency of a nil oneway operation.
   oneway void send_oneway ();
-  // Test the basic latency of a nil oneway operation.
-
+  /// Tests the basic latency of a nil operation.
   void send_void ();
-  // Test the basic latency of a nil operation.
-
+  /// Shuts down the application.
   oneway void shutdown ();
-  // shutdown the application.
-
 };
 
+/// Creates <Pluggable_Test> objects.
 interface Pluggable_Test_Factory
 {
-  // = TITLE
-  //    Creates Pluggable_Test objects.
-
   Pluggable_Test make_pluggable_test ();
 };

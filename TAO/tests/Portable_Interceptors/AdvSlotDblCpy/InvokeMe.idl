@@ -1,5 +1,5 @@
-// file      : StateTransfer.idl
-// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+/// @file InvokeMe.idl
+/// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 interface InvokeMe
 {
   void

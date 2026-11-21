@@ -55,7 +55,9 @@ run_main (int, ACE_TCHAR *[])
   int result;
 
   if ((result = getmacaddress_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   ACE_END_TEST;
   return status;

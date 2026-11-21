@@ -1,6 +1,4 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Fixed_Size_SArgument_T.h
  *
@@ -8,8 +6,6 @@
  *  @author Carlos O'Ryan
  *  @author Ossama Othman
  */
-//=============================================================================
-
 #ifndef TAO_FIXED_SIZE_SARGUMENT_T_H
 #define TAO_FIXED_SIZE_SARGUMENT_T_H
 
@@ -46,13 +42,13 @@ namespace TAO
      *
      * @see @c TAO::Argument.
      */
-    //@{
+    /// @{
     CORBA::Boolean demarshal (TAO_InputCDR &cdr) override;
 
 #if TAO_HAS_INTERCEPTORS == 1
     void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    //@}
+    /// @}
 
     /// Retrieve underlying argument.
     S const & arg () const;
@@ -61,9 +57,6 @@ namespace TAO
     /// Reference to the "IN" argument.
     S x_ {};
   };
-
-  // ------------------------------------------------------------
-
   /**
    * @class Inout_Fixed_Size_SArgument_T
    *
@@ -74,7 +67,6 @@ namespace TAO
   class Inout_Fixed_Size_SArgument_T : public InoutArgument
   {
   public:
-    /// Constructor.
     Inout_Fixed_Size_SArgument_T ();
 
     /**
@@ -85,22 +77,19 @@ namespace TAO
      *
      * @see @c TAO::Argument.
      */
-    //@{
+    /// @{
     CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
     CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
     void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    //@}
+    /// @}
 
     S & arg ();
 
   private:
     S x_ {};
   };
-
-  // ------------------------------------------------------------
-
   /**
    * @class Out_Fixed_Size_SArgument_T
    *
@@ -111,7 +100,6 @@ namespace TAO
   class Out_Fixed_Size_SArgument_T : public OutArgument
   {
   public:
-    /// Constructor.
     Out_Fixed_Size_SArgument_T ();
 
     /**
@@ -122,21 +110,18 @@ namespace TAO
      *
      * @see @c TAO::Argument.
      */
-    //@{
+    /// @{
     CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
 #if TAO_HAS_INTERCEPTORS == 1
     void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    //@}
+    /// @}
 
     S & arg ();
 
   private:
     S x_ {};
   };
-
-  // ------------------------------------------------------------
-
   /**
    * @class Ret_Fixed_Size_SArgument_T
    *
@@ -147,7 +132,6 @@ namespace TAO
   class Ret_Fixed_Size_SArgument_T : public RetArgument
   {
   public:
-    /// Constructor.
     Ret_Fixed_Size_SArgument_T ();
 
     /**
@@ -158,21 +142,18 @@ namespace TAO
      *
      * @see @c TAO::Argument.
      */
-    //@{
+    /// @{
     CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
 #if TAO_HAS_INTERCEPTORS == 1
     void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    //@}
+    /// @}
 
     S & arg ();
 
   private:
     S x_ {};
   };
-
-  // ------------------------------------------------------------
-
   /**
    * @struct Fixed_Size_SArg_Traits_T
    *

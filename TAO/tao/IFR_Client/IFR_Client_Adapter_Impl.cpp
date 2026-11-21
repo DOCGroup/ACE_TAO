@@ -8,6 +8,8 @@
 #include "tao/ORB.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Stub.h"
+#include <array>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -38,9 +40,9 @@ TAO_IFR_Client_Adapter_Impl::dispose (CORBA::InterfaceDef_ptr orphan)
 CORBA::InterfaceDef_ptr
 TAO_IFR_Client_Adapter_Impl::get_interface (
     CORBA::ORB_ptr orb,
-    const char *repo_id)
+    char const *repo_id)
 {
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     orb->resolve_initial_references ("InterfaceRepository");
 
   if (CORBA::is_nil (obj.in ()))
@@ -48,25 +50,21 @@ TAO_IFR_Client_Adapter_Impl::get_interface (
       throw ::CORBA::INTF_REPOS ();
     }
 
-  CORBA::Repository_var repo =
-    CORBA::Repository::_narrow (obj.in ()
-                               );
+  CORBA::Repository_var const repo =
+    CORBA::Repository::_narrow (obj.in ());
 
   if (CORBA::is_nil (repo.in ()))
     {
       throw ::CORBA::INTF_REPOS ();
     }
 
-  CORBA::Contained_var result = repo->lookup_id (repo_id);
+  CORBA::Contained_var const result = repo->lookup_id (repo_id);
 
   if (CORBA::is_nil (result.in ()))
     {
       return CORBA::InterfaceDef::_nil ();
     }
-  else
-    {
-      return CORBA::InterfaceDef::_narrow (result.in ());
-    }
+  return CORBA::InterfaceDef::_narrow (result.in ());
 }
 
 CORBA::InterfaceDef_ptr
@@ -75,14 +73,11 @@ TAO_IFR_Client_Adapter_Impl::get_interface_remote (
 {
   TAO::Arg_Traits<CORBA::InterfaceDef>::ret_val _tao_retval;
 
-  TAO::Argument *_tao_signature [] =
-    {
-      &_tao_retval
-    };
+  std::array<TAO::Argument *, 1> args {std::addressof (_tao_retval)};
 
   TAO::Invocation_Adapter _tao_call (
       target,
-      _tao_signature,
+      args.data (),
       1,
       "_interface",
       10,
@@ -92,7 +87,7 @@ TAO_IFR_Client_Adapter_Impl::get_interface_remote (
     {
       _tao_call.invoke (nullptr, 0);
     }
-  catch (const ::CORBA::OBJECT_NOT_EXIST&)
+  catch (::CORBA::OBJECT_NOT_EXIST const &)
     {
       return CORBA::InterfaceDef::_nil ();
     }
@@ -112,21 +107,23 @@ TAO_IFR_Client_Adapter_Impl::create_operation_list (
 
   // Get the parameters (if any) from the OperationDef, and for each
   // parameter add a corresponding entry to the result.
-  CORBA::ParDescriptionSeq_var params = opDef->params ();
+  CORBA::ParDescriptionSeq_var const params = opDef->params ();
 
-  CORBA::ULong paramCount = params->length ();
+  CORBA::ULong const paramCount = params->length ();
 
-  for (CORBA::ULong i = 0; i < paramCount; ++i)
+  for (CORBA::ULong i {}; i < paramCount; ++i)
     {
       CORBA::Any value;
-      TAO::Unknown_IDL_Type *unk = nullptr;
-      ACE_NEW (unk,
+      TAO::Unknown_IDL_Type *unk_raw {};
+      ACE_NEW (unk_raw,
                TAO::Unknown_IDL_Type (params[i].type.in ()));
-      value.replace (unk);
+      std::unique_ptr<TAO::Unknown_IDL_Type> unk (unk_raw);
+      // Any::replace takes ownership of this implementation.
+      value.replace (unk.release ());
 
       // Convert the parameter mode to an arg mode
-      CORBA::Flags flags = 0;
-      switch(params[i].mode)
+      CORBA::Flags flags {};
+      switch (params[i].mode)
         {
         case CORBA::PARAM_IN:
           flags = CORBA::ARG_IN;
@@ -139,17 +136,15 @@ TAO_IFR_Client_Adapter_Impl::create_operation_list (
           break;
         default:
           // Shouldn't happen
-          throw ::CORBA::INTERNAL();
+          throw ::CORBA::INTERNAL ();
         }
 
       // Add an argument to the NVList.
       result->add_value (params[i].name.in (), value, flags);
-   }
+    }
 }
 
 #endif /*TAO_HAS_MINIMUM_CORBA*/
-// *********************************************************************
-
 // Initialization and registration of dynamic service object.
 
 int
@@ -159,7 +154,6 @@ TAO_IFR_Client_Adapter_Impl::Initializer ()
 
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_IFR_Client_Adapter_Impl);
 }
-
 
 ACE_STATIC_SVC_DEFINE (
     TAO_IFR_Client_Adapter_Impl,

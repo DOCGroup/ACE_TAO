@@ -11,7 +11,9 @@
 
 #include "ace/Object_Manager.h"
 #include "ace/Process_Mutex.h"
-#include "ace/OS_NS_string.h"
+#include <memory>
+
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -22,8 +24,8 @@ ACE_PI_Control_Block::ACE_Malloc_Header::dump () const
   ACE_TRACE ("ACE_PI_Control_Block::ACE_Malloc_Header::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nnext_block = %x"), (ACE_Malloc_Header *) this->next_block_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nsize = %d\n"), this->size_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nnext_block = %@"), (ACE_Malloc_Header *) this->next_block_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nsize = %B\n"), this->size_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -35,28 +37,28 @@ ACE_PI_Control_Block::print_alignment_info ()
   ACE_TRACE ("ACE_PI_Control_Block::ACE_Control_Block::print_alignment_info");
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("Start ---> ACE_PI_Control_Block::print_alignment_info:\n")));
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Sizeof ptr: %d\n")
-              ACE_TEXT ("Sizeof size_t: %d\n")
-              ACE_TEXT ("Sizeof long: %d\n")
-              ACE_TEXT ("Sizeof double: %d\n")
-              ACE_TEXT ("Sizeof ACE_MALLOC_ALIGN: %d\n")
-              ACE_TEXT ("sizeof ACE_MALLOC_PADDING: %d\n")
-              ACE_TEXT ("Sizeof ACE_MALLOC_HEADER_SIZE: %d\n")
-              ACE_TEXT ("Sizeof ACE_PI_MALLOC_PADDING_SIZE: %d\n")
-              ACE_TEXT ("Sizeof ACE_PI_CONTROL_BLOCK_SIZE: %d\n")
-              ACE_TEXT ("Sizeof ACE_PI_CONTROL_BLOCK_ALIGN_BYTES: %d\n")
-              ACE_TEXT ("Sizeof (MALLOC_HEADER): %d\n")
-              ACE_TEXT ("Sizeof (CONTROL_BLOCK): %d\n"),
+              ACE_TEXT ("Sizeof ptr: %B\n")
+              ACE_TEXT ("Sizeof size_t: %B\n")
+              ACE_TEXT ("Sizeof long: %B\n")
+              ACE_TEXT ("Sizeof double: %B\n")
+              ACE_TEXT ("Sizeof ACE_MALLOC_ALIGN: %B\n")
+              ACE_TEXT ("sizeof ACE_MALLOC_PADDING: %B\n")
+              ACE_TEXT ("Sizeof ACE_MALLOC_HEADER_SIZE: %B\n")
+              ACE_TEXT ("Sizeof ACE_PI_MALLOC_PADDING_SIZE: %B\n")
+              ACE_TEXT ("Sizeof ACE_PI_CONTROL_BLOCK_SIZE: %B\n")
+              ACE_TEXT ("Sizeof ACE_PI_CONTROL_BLOCK_ALIGN_BYTES: %B\n")
+              ACE_TEXT ("Sizeof (MALLOC_HEADER): %B\n")
+              ACE_TEXT ("Sizeof (CONTROL_BLOCK): %B\n"),
               sizeof (char *),
               sizeof (size_t),
               sizeof (long),
               sizeof (double),
-              ACE_MALLOC_ALIGN,
-              ACE_MALLOC_PADDING,
-              ACE_MALLOC_HEADER_SIZE,
-              ACE_PI_MALLOC_PADDING_SIZE,
-              ACE_PI_CONTROL_BLOCK_SIZE,
-              ACE_PI_CONTROL_BLOCK_ALIGN_BYTES,
+              static_cast<size_t> (ACE_MALLOC_ALIGN),
+              static_cast<size_t> (ACE_MALLOC_PADDING),
+              static_cast<size_t> (ACE_MALLOC_HEADER_SIZE),
+              static_cast<size_t> (ACE_PI_MALLOC_PADDING_SIZE),
+              static_cast<size_t> (ACE_PI_CONTROL_BLOCK_SIZE),
+              static_cast<size_t> (ACE_PI_CONTROL_BLOCK_ALIGN_BYTES),
               sizeof (ACE_Malloc_Header),
               sizeof (ACE_PI_Control_Block)
               ));
@@ -73,16 +75,16 @@ ACE_PI_Control_Block::dump () const
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("Name Node:\n")));
   for (ACE_Name_Node *nextn = this->name_head_;
-       nextn != 0;
+       nextn != nullptr;
        nextn = nextn->next_)
     nextn->dump ();
 
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("freep_ = %x"), (ACE_Malloc_Header *) this->freep_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("freep_ = %@"), (ACE_Malloc_Header *) this->freep_));
   this->base_.dump ();
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nMalloc Header:\n")));
   for (ACE_Malloc_Header *nexth = ((ACE_Malloc_Header *)this->freep_)->next_block_;
-       nexth != 0 && nexth != &this->base_;
+       nexth != nullptr && nexth != std::addressof (this->base_);
        nexth = nexth->next_block_)
     nexth->dump ();
 
@@ -107,15 +109,11 @@ ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node (const char *name,
 {
   ACE_TRACE ("ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node");
   char *n = this->name_;
-  ACE_OS::strcpy (n, name);
+  std::strcpy (n, name);
   if (next != nullptr)
+  {
     next->prev_ = this;
-}
-
-ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node (const ACE_Name_Node &)
-{
-  ACE_TRACE ("ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node");
-  ACE_ASSERT (0); // not implemented!
+  }
 }
 
 const char *
@@ -127,14 +125,10 @@ ACE_PI_Control_Block::ACE_Name_Node::name () const
 void
 ACE_PI_Control_Block::ACE_Name_Node::name (const char *)
 {
-  ACE_ASSERT (0); // not implemented yet.
+  ACE_ASSERT (false); // not implemented yet.
 }
 
-ACE_PI_Control_Block::ACE_Malloc_Header::ACE_Malloc_Header ()
-  : next_block_ (nullptr),
-    size_ (0)
-{
-}
+ACE_PI_Control_Block::ACE_Malloc_Header::ACE_Malloc_Header () = default;
 
 void
 ACE_PI_Control_Block::ACE_Name_Node::dump () const
@@ -143,10 +137,10 @@ ACE_PI_Control_Block::ACE_Name_Node::dump () const
   ACE_TRACE ("ACE_PI_Control_Block::ACE_Name_Node::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT("pointer = %x"), (const char *) this->pointer_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT("\nnext_ = %x"), (ACE_Name_Node *) this->next_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT("pointer = %@"), (const char *) this->pointer_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT("\nnext_ = %@"), (ACE_Name_Node *) this->next_));
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT("\nname_ = (%x, %s)"),
+              ACE_TEXT("\nname_ = (%@, %s)"),
               (const char *) this->name_,
               (const char *) this->name_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT("\n")));

@@ -8,7 +8,7 @@
 #include "ace/OS_main.h"
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_CEC_Default_Factory::init_svcs ();
 
@@ -33,7 +33,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         event_service.init (command_line.get_argc(), command_line.get_TCHAR_argv());
 
       if (result == -1)
+      {
         return 1;
+      }
 
       // @@ Run forever... even after the EC is destroyed...
       //    The "Right Way"[tm] to fix this is to modify
@@ -60,7 +62,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       // Destroy the ORB
       orb->destroy();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (argv[0]);
       return 1;

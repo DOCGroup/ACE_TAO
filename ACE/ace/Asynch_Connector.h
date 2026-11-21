@@ -45,7 +45,7 @@ class ACE_Asynch_Connector : public ACE_Handler
 {
 public:
   /// A do nothing constructor.
-  ACE_Asynch_Connector ();
+  ACE_Asynch_Connector () = default;
 
   /// Virtual destruction
   ~ACE_Asynch_Connector () override = default;
@@ -74,7 +74,6 @@ public:
    * @note On POSIX, delegates cancelation to ACE_POSIX_Asynch_Connect.
    */
   virtual int cancel ();
-
 
   /**
    * Template method to validate peer before service is opened.
@@ -125,7 +124,6 @@ protected:
   /// This is called when an outstanding accept completes.
   void handle_connect (const ACE_Asynch_Connect::Result &result) override;
 
-
   /// This parses the address from read buffer.
   void parse_address (const ACE_Asynch_Connect::Result &result,
                       ACE_INET_Addr &remote_address,
@@ -146,10 +144,10 @@ private:
   ACE_Asynch_Connect asynch_connect_;
 
   /// Flag that indicates if parsing of addresses is necessary.
-  bool pass_addresses_;
+  bool pass_addresses_ {};
 
   /// Flag that indicates if address validation is required.
-  bool validate_new_connection_;
+  bool validate_new_connection_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

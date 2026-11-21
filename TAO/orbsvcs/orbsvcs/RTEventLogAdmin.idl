@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    RTEventLogAdmin.idl
  *
@@ -9,14 +8,12 @@
  *
  *  @author D A Hanvey (d.hanvey@qub.ac.uk)
  */
-//=============================================================================
-
 
 #ifndef RTEVENT_LOG_ADMIN_IDL
 #define RTEVENT_LOG_ADMIN_IDL
 
 #include "RtecEventChannelAdmin.idl"
-// CORBA Event Service
+/// CORBA Event Service
 
 #include "DsLogAdmin.idl"
 

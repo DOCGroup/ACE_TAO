@@ -27,11 +27,14 @@
 class test_i : public virtual POA_FOO::test
 {
 public:
-  /// Constructor.
-  test_i (CORBA::ORB_ptr orb);
+  explicit test_i (CORBA::ORB_ptr orb);
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
 
   /// Shutdown the ORB.
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Pseudo-reference to the ORB.

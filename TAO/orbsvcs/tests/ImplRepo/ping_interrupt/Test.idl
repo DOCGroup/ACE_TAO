@@ -1,7 +1,7 @@
 interface Test
 {
 
-  // Return the number of the server after a delay
+  /// Return the number of the server after a delay
   short get_server_num (in short delay_secs);
 
 };

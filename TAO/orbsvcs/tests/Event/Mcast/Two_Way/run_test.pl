@@ -53,8 +53,9 @@ sub run_test {
     # Start EC clients.
     for ($i = 0; $i < $apps_number; $i++) {
         my $ps_index = $apps_number + $i;
+        my $ec_index = $i;
         $ps[$ps_index] = $test->CreateProcess ("application", "-ORBLogFile $test_results[$ps_index] -d ".
-                                               "-ORBInitRef Event_Service=file://$test_ec_ior.$ps_index");
+                                               "-ORBInitRef Event_Service=file://$test_ec_ior$ec_index");
         if ($ps[$ps_index]->Spawn () == -1) {
             print STDERR "ERROR detected clients Spawn\n";
             kill_processes ();
@@ -105,7 +106,7 @@ sub wait_kill_processes
         }
     }
 
-    return 0;
+    return $result;
 }
 
 sub kill_processes
@@ -117,8 +118,10 @@ sub kill_processes
     return 0;
 }
 
+my %heartbeats = ();
+
 sub analyze_results {
-    my $filename = @$_[0];
+    my $filename = $_[0];
     if (! open (TEST_OUTPUT, "<$filename")) {
         print STDERR "ERROR: Could not open $filename\n";
         return -1;
@@ -146,15 +149,14 @@ sub analyze_results {
     foreach $pid (keys %heartbeats) {
         my $ideal_heartbeats = $apps_number * 50;
         my $received_heartbeats = $heartbeats{$pid};
-        my $in_range = (($ideal_heartbeats - $received_heartbeats)
-                        <= $number_of_applications);
+        my $in_range = abs ($ideal_heartbeats - $received_heartbeats) <= $apps_number;
         my $range_note = " (";
         if (! $in_range) {
             $range_note .= "NOT ";
             $status = -1;
         }
         $range_note.=
-            "within range of $number_of_applications from $ideal_heartbeats)";
+            "within range of $apps_number from $ideal_heartbeats)";
         print STDERR
             "Received $received_heartbeats heartbeats from pid $pid";
         print STDERR "$range_note\n";

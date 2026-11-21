@@ -20,11 +20,13 @@
 #include "ace/os_include/netinet/os_tcp.h"
 #include "ace/os_include/os_netdb.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_DIOP_SVC_HANDLER (t, 0 , 0),
-    TAO_Connection_Handler (0),
+  : TAO_DIOP_SVC_HANDLER (t, nullptr, 0),
+    TAO_Connection_Handler (nullptr),
     dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
   // This constructor should *never* get called, it is just here to
@@ -32,15 +34,15 @@ TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (ACE_Thread_Manager *t)
   // Creation_Strategy requires a constructor with that signature, we
   // don't use that implementation, but some (most?) compilers
   // instantiate it anyway.
-  ACE_ASSERT (0);
+  ACE_ASSERT (false);
 }
 
 TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core)
-  : TAO_DIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
+  : TAO_DIOP_SVC_HANDLER (orb_core->thr_mgr (), nullptr, 0),
     TAO_Connection_Handler (orb_core),
     dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
-  TAO_DIOP_Transport *specific_transport = nullptr;
+  TAO_DIOP_Transport *specific_transport {};
   ACE_NEW (specific_transport,
            TAO_DIOP_Transport (this, orb_core));
 
@@ -134,11 +136,13 @@ TAO_DIOP_Connection_Handler::open (void*)
   if (this->set_socket_option (this->peer (),
                                protocol_properties.send_buffer_size_,
                                protocol_properties.recv_buffer_size_) == -1)
+  {
     return -1;
+  }
 
   if (protocol_properties.hop_limit_ >= 0)
     {
-      int result = 0;
+      int result {};
 #if defined (ACE_HAS_IPV6)
       if (this->local_addr_.get_type () == AF_INET6)
         {
@@ -152,7 +156,7 @@ TAO_DIOP_Connection_Handler::open (void*)
           result = this->peer ().set_option (
             IPPROTO_IPV6,
             IPV6_UNICAST_HOPS,
-            (void *) &hop_limit,
+            std::addressof (hop_limit),
             sizeof (hop_limit));
         }
       else
@@ -168,7 +172,7 @@ TAO_DIOP_Connection_Handler::open (void*)
           result = this->peer ().set_option (
             IPPROTO_IP,
             IP_TTL,
-            (void *) &hop_limit,
+            std::addressof (hop_limit),
             sizeof (hop_limit));
         }
 
@@ -197,7 +201,9 @@ TAO_DIOP_Connection_Handler::open (void*)
   // Use C-style cast b/c otherwise we get warnings on lots of
   // compilers
   if (!this->transport ()->post_open ((size_t) this->peer ().get_handle ()))
+  {
     return -1;
+  }
 
   this->state_changed (TAO_LF_Event::LFS_SUCCESS,
                        this->orb_core ()->leader_follower ());
@@ -242,7 +248,9 @@ TAO_DIOP_Connection_Handler::open_server ()
   if (this->set_socket_option (this->peer (),
                                protocol_properties.send_buffer_size_,
                                protocol_properties.recv_buffer_size_) == -1)
+  {
     return -1;
+  }
 
   if (TAO_debug_level > 5)
     {
@@ -327,7 +335,7 @@ TAO_DIOP_Connection_Handler::release_os_resources ()
 int
 TAO_DIOP_Connection_Handler::add_transport_to_cache ()
 {
-  ACE_INET_Addr addr;
+  ACE_INET_Addr const addr;
 
   // This function is called by the acceptor to add this
   // transport to the transport cache.  This is really
@@ -340,11 +348,11 @@ TAO_DIOP_Connection_Handler::add_transport_to_cache ()
       this->orb_core ()->orb_params ()->cache_incoming_by_dotted_decimal_address ());
 
   // Construct a property object
-  TAO_Base_Transport_Property prop (&endpoint);
+  TAO_Base_Transport_Property prop (std::addressof (endpoint));
 
   // Add the handler to Cache
   return this->orb_core ()->lane_resources ()
-    .transport_cache ().cache_transport (&prop, this->transport ());
+    .transport_cache ().cache_transport (std::addressof (prop), this->transport ());
 }
 
 int
@@ -352,11 +360,13 @@ TAO_DIOP_Connection_Handler::set_tos (int tos)
 {
   if (tos != this->dscp_codepoint_)
     {
-      int result = 0;
+      int result {};
 #if defined (ACE_HAS_IPV6)
       ACE_INET_Addr local_addr;
       if (this->peer ().get_local_addr (local_addr) == -1)
-        return -1;
+        {
+          return -1;
+        }
       else if (local_addr.get_type () == AF_INET6)
 # if !defined (IPV6_TCLASS)
         // IPv6 defines option IPV6_TCLASS for specifying traffic class/priority
@@ -371,17 +381,21 @@ TAO_DIOP_Connection_Handler::set_tos (int tos)
           return 0;
         }
 # else /* !IPV6_TCLASS */
-        result = this->peer ().set_option (IPPROTO_IPV6,
-                                           IPV6_TCLASS,
-                                           (int *) &tos ,
-                                           (int) sizeof (tos));
+        {
+          result = this->peer ().set_option (IPPROTO_IPV6,
+                                             IPV6_TCLASS,
+                                             &tos,
+                                             static_cast<int> (sizeof (tos)));
+        }
       else
 # endif /* IPV6_TCLASS */
 #endif /* ACE_HAS_IPV6 */
-      result = this->peer ().set_option (IPPROTO_IP,
-                                         IP_TOS,
-                                         (int *) &tos ,
-                                         (int) sizeof (tos));
+        {
+          result = this->peer ().set_option (IPPROTO_IP,
+                                             IP_TOS,
+                                             &tos,
+                                             static_cast<int> (sizeof (tos)));
+        }
 
       if (TAO_debug_level)
         {
@@ -395,7 +409,9 @@ TAO_DIOP_Connection_Handler::set_tos (int tos)
 
       // On successful setting of TOS field.
       if (result == 0)
+      {
         this->dscp_codepoint_ = tos;
+      }
     }
   return 0;
 }
@@ -420,7 +436,7 @@ TAO_DIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
 
       if (tph != nullptr)
         {
-          CORBA::Long codepoint = tph->get_dscp_codepoint ();
+          CORBA::Long const codepoint = tph->get_dscp_codepoint ();
 
           tos = (int)(codepoint) << 2;
           this->set_tos (tos);

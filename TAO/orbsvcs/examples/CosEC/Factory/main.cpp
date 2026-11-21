@@ -7,6 +7,5 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   TAO_CEC_Default_Factory::init_svcs ();
   FactoryDriver driver;
-  driver.start (argc, argv);
-  return 0;
+  return driver.start (argc, argv);
 }

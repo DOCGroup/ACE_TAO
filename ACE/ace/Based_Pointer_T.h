@@ -126,10 +126,10 @@ public:
   void dump () const;
 
 protected:
-  ptrdiff_t target_;
+  ptrdiff_t target_ {};
 
   /// Keep track of our offset from the base pointer.
-  ptrdiff_t base_offset_;
+  ptrdiff_t base_offset_ {};
 
   /// Convert input pointer to CONCRETE using the base_offset_ and target_ adjustments
   static CONCRETE *based (ACE_Based_Pointer_Basic *p);

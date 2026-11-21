@@ -7,44 +7,45 @@ namespace ACE
   {
 
     ACE_INLINE
-    bool ConnectionKey::operator ==(const ConnectionKey& key) const
+    bool ConnectionKey::operator == (ConnectionKey const& key) const
       {
         return this->equal (key);
       }
 
     ACE_INLINE
-    bool ConnectionKey::operator !=(const ConnectionKey& key) const
+    bool ConnectionKey::operator != (ConnectionKey const& key) const
       {
         return !this->equal (key);
       }
 
     ACE_INLINE
-    bool ConnectionCacheKey::operator ==(const ConnectionCacheKey& cachekey) const
+    bool ConnectionCacheKey::operator == (ConnectionCacheKey const& cachekey) const
       {
-        return this->key_ ? (this->key () == cachekey.key ()) : !cachekey.key_;
+        return this->key_ == nullptr ? cachekey.key_ == nullptr :
+          cachekey.key_ != nullptr && this->key () == cachekey.key ();
       }
 
     ACE_INLINE
-    bool ConnectionCacheKey::operator !=(const ConnectionCacheKey& cachekey) const
+    bool ConnectionCacheKey::operator != (ConnectionCacheKey const& cachekey) const
       {
         return !(*this == cachekey);
       }
 
     ACE_INLINE
-    const ConnectionKey& ConnectionCacheKey::key () const
+    ConnectionKey const& ConnectionCacheKey::key () const
       {
         return *this->key_;
       }
 
     ACE_INLINE
-    bool ConnectionCacheValue::operator == (const ConnectionCacheValue& cacheval) const
+    bool ConnectionCacheValue::operator == (ConnectionCacheValue const& cacheval) const
       {
         return this->connection () == cacheval.connection () &&
                 this->state () == cacheval.state ();
       }
 
     ACE_INLINE
-    bool ConnectionCacheValue::operator != (const ConnectionCacheValue& cacheval) const
+    bool ConnectionCacheValue::operator != (ConnectionCacheValue const& cacheval) const
       {
         return !((*this) == cacheval);
       }
@@ -56,7 +57,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    const ConnectionCacheValue::connection_type* ConnectionCacheValue::connection () const
+    ConnectionCacheValue::connection_type const* ConnectionCacheValue::connection () const
       {
         return this->connection_;
       }

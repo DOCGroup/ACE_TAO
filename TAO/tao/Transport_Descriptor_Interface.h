@@ -21,6 +21,8 @@
 
 #include "tao/Basic_Types.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Endpoint;
@@ -45,7 +47,6 @@ class TAO_Endpoint;
 class TAO_Export TAO_Transport_Descriptor_Interface
 {
 public:
-  /// Destructor
   virtual ~TAO_Transport_Descriptor_Interface ();
 
   /// This call allocates and copies the contents of this class and
@@ -73,22 +74,25 @@ public:
   void set_bidir_flag (CORBA::Boolean flag);
 
 protected:
-  /// Default Constructor
   TAO_Transport_Descriptor_Interface ();
 
-  /// Constructor
   TAO_Transport_Descriptor_Interface (TAO_Endpoint *endpoint,
                                       CORBA::Boolean take_ownership = false);
 
   /// The base property of the connection ie. the peer's endpoint
-  TAO_Endpoint *endpoint_;
+  TAO_Endpoint *endpoint_ {};
+
+  /// Own the endpoint when ownership was transferred to this descriptor.
+  std::unique_ptr<TAO_Endpoint> owned_endpoint_ {};
 
   /// Should the endpoint be used in either direction?
-  CORBA::Boolean bidir_flag_;
+  CORBA::Boolean bidir_flag_ {};
 
-  /// Is the endpoint allocated on the heap? If so, we will have to
-  /// delete it when we destruct ourselves.
-  CORBA::Boolean release_;
+private:
+  TAO_Transport_Descriptor_Interface (TAO_Transport_Descriptor_Interface const &) = delete;
+  TAO_Transport_Descriptor_Interface &operator= (TAO_Transport_Descriptor_Interface const &) = delete;
+  TAO_Transport_Descriptor_Interface (TAO_Transport_Descriptor_Interface &&) = delete;
+  TAO_Transport_Descriptor_Interface &operator= (TAO_Transport_Descriptor_Interface &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

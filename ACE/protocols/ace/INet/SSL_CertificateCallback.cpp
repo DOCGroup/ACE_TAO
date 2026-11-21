@@ -25,25 +25,19 @@ namespace ACE
         this->err_code_ = ::X509_STORE_CTX_get_error (cert_ctx);
       }
 
-    SSL_CertificateCallbackArg::~SSL_CertificateCallbackArg ()
-      {
-      }
+    SSL_CertificateCallbackArg::~SSL_CertificateCallbackArg () = default;
 
     SSL_CertificateCallback::SSL_CertificateCallback ()
       {
       }
 
-    SSL_CertificateCallback::~SSL_CertificateCallback ()
-      {
-      }
+    SSL_CertificateCallback::~SSL_CertificateCallback () = default;
 
     SSL_CertificateAcceptor::SSL_CertificateAcceptor ()
       {
       }
 
-    SSL_CertificateAcceptor::~SSL_CertificateAcceptor ()
-      {
-      }
+    SSL_CertificateAcceptor::~SSL_CertificateAcceptor () = default;
 
     void SSL_CertificateAcceptor::handle_certificate_failure (SSL_CertificateCallbackArg& arg)
       {

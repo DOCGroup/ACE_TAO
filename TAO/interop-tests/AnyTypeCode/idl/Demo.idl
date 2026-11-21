@@ -18,8 +18,6 @@ module Demo
     NestedSeq bars;
   };
 
-  //------------------------------
-
   union BaseUnion switch (short)
   {
     case 1: string str;
@@ -34,8 +32,6 @@ module Demo
     default: BaseUnion defaultBar;
   };
 
-  //------------------------------
-
   valuetype BaseValue
   {
     public string str;
@@ -48,8 +44,6 @@ module Demo
     public BaseValue foo1;
     public BaseValue foo2;
   };
-
-  //------------------------------
 
   interface ATC_Test
   {

@@ -2,6 +2,8 @@
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
+#include <memory>
+
 #include "ace/Object_Manager.h"
 #include "ace/os_include/os_typeinfo.h"
 
@@ -12,7 +14,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // singleton token manager
-ACE_Token_Manager *ACE_Token_Manager::token_manager_ = 0;
+ACE_Token_Manager *ACE_Token_Manager::token_manager_ {};
 
 ACE_Token_Manager::ACE_Token_Manager ()
 {
@@ -25,12 +27,12 @@ ACE_Token_Manager::~ACE_Token_Manager ()
 
   COLLECTION::ITERATOR iterator (collection_);
 
-  for (COLLECTION::ENTRY *temp = nullptr;
+  for (COLLECTION::ENTRY *temp {};
        iterator.next (temp) != 0;
        iterator.advance ())
     {
       // @ should I be doing an unbind here?
-      delete temp->int_id_;
+      std::unique_ptr<ACE_Tokens> owned_token {temp->int_id_};
       // The ext_id_'s delete themselves when the array of
       // COLLECTION::ENTRYs goes away.
     }
@@ -43,22 +45,22 @@ ACE_Token_Manager::instance ()
 
   // This first check is to avoid acquiring the mutex in the common
   // case.  Double-Check pattern rules.
-  if (token_manager_ == 0)
+  if (token_manager_ == nullptr)
     {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
       ACE_TOKEN_CONST::MUTEX *lock =
         ACE_Managed_Object<ACE_TOKEN_CONST::MUTEX>::get_preallocated_object
           (ACE_Object_Manager::ACE_TOKEN_MANAGER_CREATION_LOCK);
-      ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon, *lock, 0);
+      ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon, *lock, nullptr);
 #endif /* ACE_MT_SAFE */
 
-      if (token_manager_ == 0)
+      if (token_manager_ == nullptr)
         {
           ACE_NEW_RETURN (token_manager_,
                           ACE_Token_Manager,
-                          0);
+                          nullptr);
           // Register for destruction with ACE_Object_Manager.
-          ACE_Object_Manager::at_exit (token_manager_, 0, typeid (token_manager_).name ());
+          ACE_Object_Manager::at_exit (token_manager_, nullptr, typeid (token_manager_).name ());
         }
     }
 
@@ -76,27 +78,26 @@ ACE_Token_Manager::get_token (ACE_Token_Proxy *proxy,
 
   ACE_GUARD (ACE_TOKEN_CONST::MUTEX, ace_mon, this->lock_);
 
-  TOKEN_NAME name (token_name);
+  TOKEN_NAME const name (token_name);
 
   if (collection_.find (name, proxy->token_) == -1)
     // We did not find one in the collection.
     {
       // Make one.
-      proxy->token_ = proxy->create_token (token_name);
+      std::unique_ptr<ACE_Tokens> token {proxy->create_token (token_name)};
+      proxy->token_ = token.get ();
 
       // Put it in the collection.
       if (collection_.bind (name, proxy->token_) == -1)
-        {
-          delete proxy->token_;
-          proxy->token_ = 0;
-        }
+        proxy->token_ = nullptr;
+      else
+        token.release ();
     }
 
-  if (proxy->token_ != 0)
+  if (proxy->token_ != nullptr)
     proxy->token_->inc_reference ();
 
-  // We may be returning proxy->token_ == 0 if new failed, caller must
-  // check.
+  // The caller must check proxy->token_ because creation or insertion may fail.
 }
 
 // 0. check_deadlock (TOKEN)
@@ -120,7 +121,7 @@ ACE_Token_Manager::check_deadlock (ACE_Token_Proxy *proxy)
   // Whether or not we detect deadlock, we have to unmark all tokens
   // for the next time.
   COLLECTION::ITERATOR iterator (collection_);
-  for (COLLECTION::ENTRY *temp = nullptr;
+  for (COLLECTION::ENTRY *temp {};
        iterator.next (temp) != 0;
        iterator.advance ())
       temp->int_id_->visit (0);
@@ -164,11 +165,11 @@ ACE_Token_Manager::check_deadlock (ACE_Tokens *token, ACE_Token_Proxy *proxy)
       // Recurse on each owner.
       while (!owners.is_empty ())
         {
-          ACE_TPQ_Entry *e;
+          ACE_TPQ_Entry *e {};
           owners.pop (e);
           // If the owner is waiting on another token, recurse.
-          ACE_Tokens *twf = this->token_waiting_for (e->client_id ());
-          if ((twf != 0) &&
+          ACE_Tokens *const twf = this->token_waiting_for (e->client_id ());
+          if ((twf != nullptr) &&
               (this->check_deadlock (twf, proxy) == 1))
             {
               if (debug_)
@@ -189,12 +190,11 @@ ACE_Token_Manager::check_deadlock (ACE_Tokens *token, ACE_Token_Proxy *proxy)
     }
 }
 
-
 ACE_Tokens *
 ACE_Token_Manager::token_waiting_for (const ACE_TCHAR *client_id)
 {
   COLLECTION::ITERATOR iterator (collection_);
-  for (COLLECTION::ENTRY *temp = nullptr;
+  for (COLLECTION::ENTRY *temp {};
        iterator.next (temp) != 0;
        iterator.advance ())
     {
@@ -202,8 +202,8 @@ ACE_Token_Manager::token_waiting_for (const ACE_TCHAR *client_id)
         return temp->int_id_;
     }
 
-  // nothing was found, return NULL.
-  return 0;
+  // Nothing was found.
+  return nullptr;
 }
 
 // Notify the token manager that a token is has been released.  If
@@ -221,9 +221,9 @@ ACE_Token_Manager::release_token (ACE_Tokens *&token)
     {
       // No one has the token, so we can delete it and remove it from
       // our collection.  First, let's get it from the collection.
-      TOKEN_NAME token_name (token->name ());
+      TOKEN_NAME const token_name (token->name ());
 
-      ACE_Tokens *temp;
+      ACE_Tokens *temp {};
 
       if (collection_.unbind (token_name, temp) == -1)
         // we did not find one in the collection
@@ -238,12 +238,12 @@ ACE_Token_Manager::release_token (ACE_Tokens *&token)
         {
           // sanity pointer comparison.  The token referenced by the
           // proxy better be the one we found in the list.
-          ACE_ASSERT (token == temp);
-          delete token;  // or delete temp
+          std::unique_ptr<ACE_Tokens> owned_token {temp};
+          ACE_ASSERT (token == owned_token.get ());
           // we set their token to zero.  if the calling proxy is
           // still going to be used, it had better check it's token
           // value before calling a method on it!
-          token = 0;
+          token = nullptr;
         }
     }
   // else

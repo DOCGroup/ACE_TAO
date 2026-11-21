@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   RTScheduler_Manager.h
  *
  *  @author Yamuna Krishnmaurthy <yamuna@oomworks.com>
  */
-//=============================================================================
 
 #ifndef TAO_RTSCHEDULER_MANAGER_H
 #define TAO_RTSCHEDULER_MANAGER_H
@@ -33,8 +31,12 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Manager :
 public:
   TAO_RTScheduler_Manager () = default;
 
-  /// Constructor.
-  TAO_RTScheduler_Manager (TAO_ORB_Core* orb);
+  explicit TAO_RTScheduler_Manager (TAO_ORB_Core *orb);
+
+  TAO_RTScheduler_Manager (TAO_RTScheduler_Manager const &) = delete;
+  TAO_RTScheduler_Manager &operator= (TAO_RTScheduler_Manager const &) = delete;
+  TAO_RTScheduler_Manager (TAO_RTScheduler_Manager &&) = delete;
+  TAO_RTScheduler_Manager &operator= (TAO_RTScheduler_Manager &&) = delete;
 
   void rtscheduler (RTScheduling::Scheduler_ptr rtscheduler);
 
@@ -44,7 +46,6 @@ public:
   using _ptr_type = TAO_RTScheduler_Manager_ptr;
   using _var_type = TAO_RTScheduler_Manager_var;
 
-  // the static operations
   static TAO_RTScheduler_Manager_ptr _duplicate (TAO_RTScheduler_Manager_ptr obj);
   static TAO_RTScheduler_Manager_ptr _narrow (CORBA::Object_ptr obj);
   static TAO_RTScheduler_Manager_ptr _nil ()
@@ -52,21 +53,16 @@ public:
       return nullptr;
     }
 
-  virtual const char* _interface_repository_id () const;
+  const char* _interface_repository_id () const override;
 
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_RTScheduler_Manager () = default;
+  ~TAO_RTScheduler_Manager () override = default;
 
 private:
-  TAO_RTScheduler_Manager (TAO_RTScheduler_Manager const &) = delete;
-  void operator= (TAO_RTScheduler_Manager const &) = delete;
-  TAO_RTScheduler_Manager (TAO_RTScheduler_Manager &&) = delete;
-  void operator= (TAO_RTScheduler_Manager &&) = delete;
+  // Borrowed from the ORB that creates this manager.
   TAO_ORB_Core *orb_ {};
-
-private:
   RTScheduling::Scheduler_var rtscheduler_;
 };
 
@@ -74,16 +70,15 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Manager_var
   : private TAO_Base_var
 {
 public:
-  TAO_RTScheduler_Manager_var (); // default constructor
+  TAO_RTScheduler_Manager_var ();
   TAO_RTScheduler_Manager_var (TAO_RTScheduler_Manager_ptr);
-  TAO_RTScheduler_Manager_var (const TAO_RTScheduler_Manager_var &); // copy constructor
-  ~TAO_RTScheduler_Manager_var (); // destructor
+  TAO_RTScheduler_Manager_var (const TAO_RTScheduler_Manager_var &);
+  ~TAO_RTScheduler_Manager_var ();
 
   TAO_RTScheduler_Manager_var &operator= (TAO_RTScheduler_Manager_ptr);
   TAO_RTScheduler_Manager_var &operator= (const TAO_RTScheduler_Manager_var &);
   TAO_RTScheduler_Manager_ptr operator-> () const;
 
-  /// in, inout, out, _retn
   operator const TAO_RTScheduler_Manager_ptr &() const;
   operator TAO_RTScheduler_Manager_ptr &();
   TAO_RTScheduler_Manager_ptr in () const;

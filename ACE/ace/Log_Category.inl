@@ -115,7 +115,9 @@ ACE_INLINE ssize_t
 ACE_Log_Category_TSS::log (const ACE_Log_Formatter &formatter)
 {
   if (this->log_priority_enabled (formatter.priority ()))
-    return logger_->log (formatter);
+    {
+      return logger_->log (formatter);
+    }
 
   return 0;
 }
@@ -134,7 +136,9 @@ ACE_Log_Category_TSS::log (const ACE_TCHAR *format,
                            va_list argp)
 {
   if (this->log_priority_enabled (priority) == 0)
-    return 0;
+    {
+      return 0;
+    }
   return logger_->log(format, priority, argp, this);
 }
 
@@ -152,7 +156,9 @@ ACE_Log_Category_TSS::log_hexdump (ACE_Log_Priority priority,
                                    const ACE_TCHAR *text)
 {
   if (this->log_priority_enabled (priority) == 0)
-    return 0;
+    {
+      return 0;
+    }
   return logger_->log_hexdump(priority, buffer, size, text, this);
 }
 

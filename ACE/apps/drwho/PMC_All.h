@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _PMC_ALL_H
 #define _PMC_ALL_H
 
@@ -22,13 +21,13 @@
 class PMC_All : public PM_Client
 {
 protected:
-  virtual Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record);
-  virtual int encode (char *packet, int &total_bytes);
-  virtual int decode (char *packet, int &total_bytes);
+  Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record) override;
+  int encode (char *packet, int &total_bytes) override;
+  int decode (char *packet, int &total_bytes) override;
 
 public:
   PMC_All ();
-  virtual void process ();
+  void process () override;
 };
 
 #endif /* _PMC_ALL_H */

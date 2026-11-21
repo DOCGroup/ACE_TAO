@@ -35,7 +35,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS
 {
-  //@{ @name A set of wrappers for memory mapped files.
+  /// @name A set of wrappers for memory mapped files.
+  /// @{
   ACE_NAMESPACE_INLINE_FUNCTION
   int madvise (caddr_t addr,
                size_t len,
@@ -65,7 +66,7 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   int munmap (void *addr,
               size_t len);
-  //@}
+  /// @}
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_HANDLE shm_open (const ACE_TCHAR *filename,

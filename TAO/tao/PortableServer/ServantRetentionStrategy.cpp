@@ -1,11 +1,7 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    ServantRetentionStrategy.cpp
  */
-//=============================================================================
-
 #include "tao/PortableServer/ServantRetentionStrategy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

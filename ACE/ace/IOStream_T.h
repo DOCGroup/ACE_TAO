@@ -32,6 +32,8 @@
 #   include "ace/os_include/os_ctype.h"
 #  endif /**/
 
+#  include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class STREAM> STREAM & operator>> (STREAM &stream, ACE_Quoted_String &str);
@@ -117,9 +119,13 @@ public:
    */
   ACE_IOStream (u_int streambuf_size = ACE_STREAMBUF_SIZE);
 
-  /// We have to get rid of the <streambuf_> ourselves since we gave it
-  /// to the <iostream> base class;
-  virtual ~ACE_IOStream ();
+  /// The streambuf is owned here; the iostream base class only borrows it.
+  ~ACE_IOStream () override = default;
+
+  ACE_IOStream (ACE_IOStream const &) = delete;
+  ACE_IOStream (ACE_IOStream &&) = delete;
+  ACE_IOStream &operator= (ACE_IOStream const &) = delete;
+  ACE_IOStream &operator= (ACE_IOStream &&) = delete;
 
   /// The only ambiguity in the multiple inheritance is the <close>
   /// function.
@@ -145,7 +151,7 @@ public:
   /// The converse of the <String::put> operator.
   virtual ACE_IOStream<STREAM> &operator<< (ACE_IOStream_String &v);
 
-  // = Using the macros to provide get/set operators.
+  /// Use macros to provide get/set operators.
   GETPUT_FUNC_SET (ACE_IOStream<STREAM>)
 
 #  if defined (ACE_LACKS_IOSTREAM_FX)
@@ -154,17 +160,23 @@ public:
       if (good ())
         {
           if (tie () != 0)
-             tie ()->flush ();
+            {
+              tie ()->flush ();
+            }
           if (!noskip && flags () & skipws)
             {
               int ch;
               while (isspace (ch = rdbuf ()->sbumpc ()))
                 continue;
               if (ch != EOF)
+                {
                   rdbuf ()->sputbackc (ch);
+                }
             }
           if (good ())
+            {
               return 1;
+            }
         }
       setstate (failbit);
       return (0);
@@ -176,9 +188,13 @@ public:
       if (good ())
         {
           if (tie () != 0)
-             tie ()->flush ();
+            {
+              tie ()->flush ();
+            }
           if (good ())
+            {
               return 1;
+            }
         }
       setstate (failbit);
       return (0);
@@ -187,7 +203,9 @@ public:
   virtual int opfx ()
     {
       if (good () && tie () != 0)
-        tie ()->flush ();
+        {
+          tie ()->flush ();
+        }
       return good ();
     }
   virtual void osfx () {  if (flags () & unitbuf) flush (); }
@@ -212,14 +230,13 @@ public:
 protected:
   /// This is where all of the action takes place.  The streambuf_ is
   /// the interface to the underlying STREAM.
-  ACE_Streambuf_T<STREAM> *streambuf_;
+  std::unique_ptr<ACE_Streambuf_T<STREAM>> streambuf_;
 
 private:
-  // We move these into the private section so that they cannot be
-  // used by the application programmer.  This is necessary because
-  // streambuf_ will be buffering IO on the STREAM object.  If these
-  // functions were used in your program, there is a danger of getting
-  // the datastream out of sync.
+  /// These functions are private so that they cannot be used by the
+  /// application programmer. This is necessary because streambuf_ will
+  /// be buffering IO on the STREAM object. If used, these functions can
+  /// get the data stream out of sync.
   ssize_t send (...) = delete;
   ssize_t recv (...) = delete;
   ssize_t send_n (...) = delete;

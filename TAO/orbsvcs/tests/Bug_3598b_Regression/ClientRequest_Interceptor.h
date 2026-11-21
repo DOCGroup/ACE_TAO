@@ -19,23 +19,19 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-/**
-* @class ClientRequest_Interceptor
-*
-*/
 class ClientRequest_Interceptor
-: public virtual PortableInterceptor::ClientRequestInterceptor,
-  public virtual ::CORBA::LocalObject
+  : public virtual PortableInterceptor::ClientRequestInterceptor,
+    public virtual ::CORBA::LocalObject
 {
 public:
-  ClientRequest_Interceptor ();
+  ClientRequest_Interceptor () = default;
 
   ClientRequest_Interceptor (ClientRequest_Interceptor const &) = delete;
   ClientRequest_Interceptor (ClientRequest_Interceptor &&) = delete;
   ClientRequest_Interceptor &operator= (ClientRequest_Interceptor const &) = delete;
   ClientRequest_Interceptor &operator= (ClientRequest_Interceptor &&) = delete;
 
-  ~ClientRequest_Interceptor () override;
+  ~ClientRequest_Interceptor () override = default;
 
   /// Canonical name of the interceptor.
   char * name () override;
@@ -52,12 +48,7 @@ public:
 
   void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-
-static CORBA::Boolean success_flag_;
-
-private:
-  /// Name of the interceptor
-  char const *name_;
+  static CORBA::Boolean success_flag_;
 };
 #if defined(_MSC_VER)
 #pragma warning(pop)

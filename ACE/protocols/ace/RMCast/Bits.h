@@ -17,5 +17,4 @@ namespace ACE_RMCast
 // FUZZ: enable check_for_ACE_Guard
 }
 
-
 #endif  // ACE_RMCAST_BITS_H

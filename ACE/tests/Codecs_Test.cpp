@@ -9,12 +9,10 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Codecs.h"
 #include <memory>
 #include "ace/ACE.h"
-
 
 // Don't change the strings thinking that they are typos
 
@@ -45,7 +43,6 @@ encode_decode_stream (const ACE_Byte* stream, size_t length)
               ACE_TEXT ("Base64 encoded stream = %C\n"),
               encodeBuf));
 
-
   std::unique_ptr<ACE_Byte[]> cleanup_encodeBuf (encodeBuf);
 
   size_t decode_len = 0;
@@ -65,11 +62,13 @@ encode_decode_stream (const ACE_Byte* stream, size_t length)
               decodeBuf));
 
   for (size_t i = 0; i < length; ++i)
-    if (decodeBuf[i] != stream[i])
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Encoded->Decoded stream differs from original stream\n")));
-      return -1;
+      if (decodeBuf[i] != stream[i])
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Encoded->Decoded stream differs from original stream\n")));
+          return -1;
+        }
     }
   return 0;
 }

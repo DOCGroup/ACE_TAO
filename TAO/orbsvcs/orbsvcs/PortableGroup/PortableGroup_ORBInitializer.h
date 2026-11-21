@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file PortableGroup_ORBInitializer.h
  *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_PORTABLEGROUP_ORB_INITIALIZER_H
 #define TAO_PORTABLEGROUP_ORB_INITIALIZER_H
@@ -38,6 +35,13 @@ class TAO_PortableGroup_Export TAO_PortableGroup_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
+  TAO_PortableGroup_ORBInitializer () = default;
+
+  TAO_PortableGroup_ORBInitializer (TAO_PortableGroup_ORBInitializer const &) = delete;
+  TAO_PortableGroup_ORBInitializer (TAO_PortableGroup_ORBInitializer &&) = delete;
+  TAO_PortableGroup_ORBInitializer & operator= (TAO_PortableGroup_ORBInitializer const &) = delete;
+  TAO_PortableGroup_ORBInitializer & operator= (TAO_PortableGroup_ORBInitializer &&) = delete;
+
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;

@@ -8,6 +8,8 @@
 #include "ace/os_include/os_fcntl.h"
 #include "ace/os_include/os_string.h"
 
+#include <cstring>
+
 #if defined (ACE_USES_ASM_SYMBOL_IN_DLSYM)
 #  include "ace/OS_Memory.h"
 #  include "ace/OS_NS_string.h"
@@ -31,7 +33,9 @@ ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
   ACE_OSCALL (::dlsym (handle, ACE_TEXT ("_fini")), void *, ptr);
 
   if (ptr != 0)
-    (*((int (*)(void)) ptr)) (); // Call _fini hook explicitly.
+    {
+      (*((int (*)(void)) ptr)) (); // Call _fini hook explicitly.
+    }
 # endif /* ACE_HAS_AUTOMATIC_INIT_FINI */
   return ::dlclose (handle);
 #elif defined (ACE_WIN32)
@@ -47,10 +51,12 @@ ACE_OS::dlerror ()
 {
   ACE_OS_TRACE ("ACE_OS::dlerror");
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
-  const char *err = nullptr;
+  const char *err {};
   ACE_OSCALL (::dlerror (), const char *, err);
   if (err == 0)
-    return 0;
+    {
+      return 0;
+    }
 #   if defined (ACE_USES_WCHAR)
   const size_t BufLen = 256;
   static wchar_t buf[BufLen];
@@ -111,7 +117,7 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
   ACE_WIN32CALL_RETURN (ACE_TEXT_LoadLibrary (fname), ACE_SHLIB_HANDLE, 0);
 # elif defined (ACE_VXWORKS) && !defined (__RTP__)
   ACE_UNUSED_ARG (mode);
-  MODULE* handle = nullptr;
+  MODULE* handle {};
   // Open readonly
   ACE_HANDLE filehandle = ACE_OS::open (fname,
                                         O_RDONLY,
@@ -128,7 +134,9 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
         {
           // ouch something went wrong most likely unresolved externals
           if (handle)
-            ::unldByModuleId ( handle, 0 );
+            {
+              ::unldByModuleId ( handle, 0 );
+            }
           handle = 0;
         }
     }
@@ -153,7 +161,9 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 
   // Check if the handle is valid before making any calls using it.
   if (handle == ACE_SHLIB_INVALID_HANDLE)
-    return nullptr;
+    {
+      return nullptr;
+    }
 
   // Get the correct OS type.
 #if defined (ACE_USES_WCHAR)
@@ -168,11 +178,11 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
 
 #   if defined (ACE_USES_ASM_SYMBOL_IN_DLSYM)
-  int const l = ACE_OS::strlen (symbolname) + 2;
+  int const l = std::strlen (symbolname) + 2;
   char *asm_symbolname {};
   ACE_NEW_RETURN (asm_symbolname, char[l], 0);
-  ACE_OS::strcpy (asm_symbolname, "_") ;
-  ACE_OS::strcpy (asm_symbolname + 1, symbolname) ;
+  std::strcpy (asm_symbolname, "_");
+  std::strcpy (asm_symbolname + 1, symbolname);
   void *ace_result;
   ACE_OSCALL (::dlsym (handle, asm_symbolname), void *, ace_result);
   delete [] asm_symbolname;
@@ -189,7 +199,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   ACE_UNUSED_ARG (handle);
 #if (ACE_VXWORKS < 0x690)
   SYM_TYPE symtype;
-  char *value = nullptr;
+  char *value {};
   STATUS status;
   ACE_OSCALL (::symFindByName(sysSymTbl, symbolname, &value, &symtype), int, status);
 
@@ -198,7 +208,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   STATUS status;
 
   SYMBOL_DESC symbolDesc;     /* symFind() descriptor */
-  ACE_OS::memset (&symbolDesc, 0, sizeof (SYMBOL_DESC));
+  std::memset (&symbolDesc, 0, sizeof (SYMBOL_DESC));
   symbolDesc.mask = SYM_FIND_BY_NAME;
   symbolDesc.name = symbolname;
 

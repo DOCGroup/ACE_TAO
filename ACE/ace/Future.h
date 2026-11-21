@@ -71,7 +71,6 @@ template <class T>
 class ACE_Future_Observer
 {
 public:
-  /// Destructor
   virtual ~ACE_Future_Observer () = default;
 
   /// Called by the ACE_Future in which we are subscribed to when
@@ -82,7 +81,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Constructor
   ACE_Future_Observer () = default;
 };
 
@@ -158,7 +156,8 @@ private:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  // = Encapsulate reference count and object lifetime of instances.
+  /// @name Reference-counted representation management
+  /// @{
 
   /// Allocate a new ACE_Future_Rep<T> instance, returning NULL if it
   /// cannot be created.
@@ -174,7 +173,7 @@ private:
    *
    * Precondition (rep != 0).
    */
-  static ACE_Future_Rep<T> *attach (ACE_Future_Rep<T> *&rep);
+  static ACE_Future_Rep<T> *attach (ACE_Future_Rep<T> *rep);
 
   /**
    * Decreases the reference count and deletes rep if there are no
@@ -191,6 +190,7 @@ private:
    * Precondition (rep != 0 && new_rep != 0)
    */
   static void assign (ACE_Future_Rep<T> *&rep, ACE_Future_Rep<T> *new_rep);
+  /// @}
 
   /// Is result available?
   int ready () const;
@@ -208,9 +208,11 @@ private:
   /// Keep a list of ACE_Future_Observers unread by client's reader thread.
   OBSERVER_COLLECTION observer_collection_;
 
-  // = Condition variable and mutex that protect the <value_>.
+  /// @name Result synchronization
+  /// @{
   mutable ACE_SYNCH_RECURSIVE_MUTEX value_ready_mutex_;
   mutable ACE_SYNCH_RECURSIVE_CONDITION value_ready_;
+  /// @}
 
 private:
   ACE_Future_Rep ();
@@ -230,7 +232,6 @@ template <class T>
 class ACE_Future
 {
 public:
-  /// Constructor.
   ACE_Future ();
 
   /// Copy constructor binds @a this and @a r to the same
@@ -241,7 +242,6 @@ public:
   /// result @a r immediately.
   ACE_Future (const T &r);
 
-  /// Destructor.
   ~ACE_Future ();
 
   /// Assignment operator that binds @a this and @a r to the same
@@ -347,7 +347,7 @@ public:
    * rarely, if ever, be used and that modifying the underlying
    * ACE_Future_Rep should be done with extreme caution.
    */
-  ACE_Future_Rep<T> *get_rep ();
+  ACE_Future_Rep<T> *get_rep () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

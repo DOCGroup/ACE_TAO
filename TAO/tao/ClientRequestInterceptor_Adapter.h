@@ -73,7 +73,7 @@ namespace TAO
      * client side, only "starting" and "ending" interception points.
      *
      */
-    //@{
+    /// @{
     /// This method implements one of the "starting" client side
     /// interception points.
     virtual void send_request (Invocation_Base &invocation) = 0;

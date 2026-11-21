@@ -31,16 +31,23 @@ public:
 
   TAO_FTEC_ProxyPushSupplier(TAO_EC_Event_Channel_Base* event_channel,
                            int validate_connection);
+
+  TAO_FTEC_ProxyPushSupplier(TAO_FTEC_ProxyPushSupplier const&) = delete;
+  TAO_FTEC_ProxyPushSupplier(TAO_FTEC_ProxyPushSupplier&&) = delete;
+  TAO_FTEC_ProxyPushSupplier& operator=(TAO_FTEC_ProxyPushSupplier const&) = delete;
+  TAO_FTEC_ProxyPushSupplier& operator=(TAO_FTEC_ProxyPushSupplier&&) = delete;
     /// Activate in the POA
- virtual void activate (
-       RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy);
-    // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
+  void activate (
+    RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy) override;
+  /// @name RtecEventChannelAdmin::ProxyPushSupplier operations
+  /// @{
   void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
                 RtecEventChannelAdmin::ConsumerQOS const& qos) override;
   void disconnect_push_supplier () override;
   void suspend_connection () override;
   void resume_connection () override;
+  /// @}
 
   const FtRtecEventChannelAdmin::ObjectId& id() const;
 

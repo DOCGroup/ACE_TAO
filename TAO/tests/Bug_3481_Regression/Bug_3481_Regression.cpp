@@ -2,14 +2,14 @@
 
 struct Foo_i : Foo
 {
-  static size_t s_count_;
+  inline static size_t s_count_ {};
 
   Foo_i ()
   {
     ++s_count_;
   }
 
-  ~Foo_i ()
+  ~Foo_i () override
   {
     --s_count_;
   }
@@ -20,13 +20,11 @@ struct Foo_i : Foo
   Foo_i &operator= (Foo_i &&) = delete;
 };
 
-size_t Foo_i::s_count_ = 0;
-
 int
 ACE_TMAIN (int, ACE_TCHAR * [])
 {
   {
-    Foo_var f1 = new Foo_i;
+    Foo_var const f1 {new Foo_i};
     FooSeq fs;
     fs.length (1);
     fs[0] = f1;

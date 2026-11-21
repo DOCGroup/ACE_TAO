@@ -17,7 +17,7 @@ Test_i::Test_i (CORBA::Short server_num,
 
 Test_i::~Test_i ()
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_NEW (mb,
            ACE_Message_Block(0,
                              ACE_Message_Block::MB_HANGUP));
@@ -30,5 +30,4 @@ Test_i::get_server_num ()
 {
   return this->server_num_;
 }
-
 

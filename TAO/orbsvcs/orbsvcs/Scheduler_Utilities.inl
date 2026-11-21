@@ -1,7 +1,6 @@
 // ============================================================================
 // ============================================================================
 
-
 // Construct a helper class instance from values for
 // the fields of the IDL struct it wraps.
 
@@ -26,7 +25,6 @@ ACE_RT_Info::ACE_RT_Info (const char* entry_point_,
     this->quantum = quantum_;
     this->threads = threads_;
 }
-
 
 // Construct a helper class instance from the IDL struct it wraps.
 

@@ -10,8 +10,7 @@ PortableInterceptor::SlotId slot_id = 2093843211;
 
 void
 ClientORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr /* info */
-    )
+    PortableInterceptor::ORBInitInfo_ptr /* info */)
 {
 }
 
@@ -35,7 +34,7 @@ ClientORBInitializer::post_init (
 
   ::slot_id = info->allocate_slot_id ();
 
-  PortableInterceptor::ClientRequestInterceptor_ptr foo;
+  PortableInterceptor::ClientRequestInterceptor_ptr foo {};
   ACE_NEW_THROW_EX (foo,
                     ClientRequestInterceptor (::slot_id,
                                               pi_current.in ()),

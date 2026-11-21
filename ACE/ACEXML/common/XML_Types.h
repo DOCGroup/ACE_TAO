@@ -75,7 +75,6 @@ using ACEXML_String = ACE_CString;
 #   define ACEXML_INLINE
 # endif /* __ACEXML_INLINE */
 
-
 #include /**/ "ace/post.h"
 
 #endif /* _ACEXML_XML_TYPE_H_ */

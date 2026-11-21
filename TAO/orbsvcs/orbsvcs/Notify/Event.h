@@ -42,9 +42,9 @@ public:
   using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_Event>;
 
   // Codes to distinguish marshaled events in persistent storage
-  enum {MARSHAL_ANY=1,MARSHAL_STRUCTURED=2};
+  static constexpr int MARSHAL_ANY = 1;
+  static constexpr int MARSHAL_STRUCTURED = 2;
 
-  /// Constructor
   TAO_Notify_Event ();
 
   TAO_Notify_Event (const TAO_Notify_Event &) = delete;
@@ -52,8 +52,7 @@ public:
   TAO_Notify_Event &operator= (const TAO_Notify_Event &) = delete;
   TAO_Notify_Event &operator= (TAO_Notify_Event &&) = delete;
 
-  /// Destructor
-  virtual ~TAO_Notify_Event ();
+  ~TAO_Notify_Event () override;
 
   /// Translate Any to Structured
   static void translate (const CORBA::Any& any, CosNotification::StructuredEvent& notification);
@@ -96,7 +95,8 @@ public:
   /// Unmarshal an event from a CDR. (for persistence)
   static TAO_Notify_Event* unmarshal (TAO_InputCDR & cdr);
 
-  ///= Accessors
+  /// @name Accessors
+  /// @{
   /// Priority
   const TAO_Notify_Property_Short& priority () const;
 
@@ -108,10 +108,11 @@ public:
 
   /// Event creation time
   const ACE_Time_Value& creation_time () const;
+  /// @}
 
 protected:
-  /// = QoS properties
-
+  /// @name QoS properties
+  /// @{
   /// Priority.
   TAO_Notify_Property_Short priority_;
 
@@ -120,15 +121,16 @@ protected:
 
   /// Reliability
   TAO_Notify_Property_Boolean reliable_;
+  /// @}
 
 private:
   /// Return a pointer to a copy of this event on the heap
   virtual TAO_Notify_Event* copy () const = 0;
 
-  virtual void release ();
+  void release () override;
 
   mutable Ptr clone_;
-  bool        is_on_heap_;
+  bool is_on_heap_ {};
   ACE_Time_Value time_;
 };
 

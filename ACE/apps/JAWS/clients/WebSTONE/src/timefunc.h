@@ -15,7 +15,7 @@ extern double   timevaldouble(struct timeval *);
 extern void     doubletimeval(const double, struct timeval *);
 
 extern void     addtime(struct timeval *, struct timeval *);
-extern void     compdifftime(struct timeval *, struct timeval *, struct timeval *);
+extern void     compdifftime(const struct timeval *, const struct timeval *, struct timeval *);
 extern void     mintime(struct timeval *, struct timeval *);
 extern void     maxtime(struct timeval *, struct timeval *);
 extern void     avgtime(struct timeval *, int, struct timeval *);

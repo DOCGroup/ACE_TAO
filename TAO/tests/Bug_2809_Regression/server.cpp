@@ -14,7 +14,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   try
     {
-      CORBA::ORB_var orb1_ = CORBA::ORB_init (argc, argv, "ServerORB1");
+      CORBA::ORB_var const orb1 = CORBA::ORB_init (argc, argv, "ServerORB1");
 
       if (TAO_debug_level != 0)
         {
@@ -24,15 +24,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_INFO, "TAO_debug_level after first ORB_init: %d\n",
                   TAO_debug_level));
 
+      ACE_TCHAR debug_option[] = ACE_TEXT ("-ORBDebugLevel");
+      ACE_TCHAR debug_level[] = ACE_TEXT ("10");
       ACE_TCHAR *my_argv[] =
         {
           argv[0],
-          const_cast<ACE_TCHAR *> (ACE_TEXT ("-ORBDebugLevel")),
-          const_cast<ACE_TCHAR *> (ACE_TEXT ("10"))
+          debug_option,
+          debug_level
         };
-      int my_argc = 3;
+      int my_argc {3};
 
-      CORBA::ORB_var orb2_ = CORBA::ORB_init (my_argc, my_argv, "ServerORB2");
+      CORBA::ORB_var const orb2 = CORBA::ORB_init (my_argc, my_argv, "ServerORB2");
 
       ACE_DEBUG ((LM_INFO, "TAO_debug_level after second ORB_init: %d\n",
                   TAO_debug_level));
@@ -41,6 +43,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR_RETURN ((LM_ERROR, "Error, wrong debug level, should be 10\n"), 1);
         }
+
+      orb2->destroy ();
+      orb1->destroy ();
     }
   catch (CORBA::Exception const &ex)
     {

@@ -7,6 +7,8 @@
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <cstring>
+
 UPN_i::UPN_i (Replicator &owner)
   :owner_ (owner)
 {
@@ -25,7 +27,7 @@ UPN_i::notify_update (CORBA::ULongLong seq_num,
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) UPN_i::notify_updated_entity ")
-                          ACE_TEXT ("expected %Lu got %Lu\n"),
+                          ACE_TEXT ("expected %Q got %Q\n"),
                           expected, seq_num ));
         }
       this->owner_.replica_seq_num_ = seq_num;
@@ -36,7 +38,7 @@ UPN_i::notify_update (CORBA::ULongLong seq_num,
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) UPN_i::notify_updated_entity ")
-                          ACE_TEXT ("expected %Lu got %Lu\n"),
+                          ACE_TEXT ("expected %Q got %Q\n"),
                           expected, seq_num ));
         }
       --this->owner_.replica_seq_num_;
@@ -163,7 +165,6 @@ Replicator::svc ()
   return 0;
 }
 
-
 int
 Replicator::handle_exception (ACE_HANDLE )
 {
@@ -185,7 +186,7 @@ Replicator::handle_exception (ACE_HANDLE )
       ImplementationRepository::UpdateInfoSeq payload (len);
       payload.length (len);
       CORBA::Long p = 0;
-      for (CORBA::Long l = 0; l < len; l++)
+      for (CORBA::Long l {}; l < len; ++l)
         {
           if (this->to_send_[l].action._d () != ImplementationRepository::access ||
               this->to_send_[l].action.state () != ImplementationRepository::AAM_UPDATE_FAILED)
@@ -228,10 +229,10 @@ Replicator::send_access_state (const char *name, ImplementationRepository::AAM_S
 
   CORBA::Long len = this->to_send_.length ();
   bool found = false;
-  for (CORBA::Long i = 0; !found && i < len; i++)
+  for (CORBA::Long i {}; !found && i < len; ++i)
     {
       if (this->to_send_[i].action._d () == ImplementationRepository::access &&
-          ACE_OS::strcmp (this->to_send_[i].name, name) == 0)
+          std::strcmp (this->to_send_[i].name, name) == 0)
         {
           found = true;
           this->to_send_[i].action.state
@@ -245,7 +246,9 @@ Replicator::send_access_state (const char *name, ImplementationRepository::AAM_S
       this->to_send_[len].action.state (state);
     }
   if (this->notified_)
+  {
     return;
+  }
   this->notified_ = true;
   this->reactor_->notify (this);
 }
@@ -260,9 +263,9 @@ Replicator::send_entity (ImplementationRepository::UpdateInfo &info)
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
   CORBA::Long len = this->to_send_.length ();
   bool found = false;
-  for (CORBA::Long i = 0; !found && i < len; i++)
+  for (CORBA::Long i {}; !found && i < len; ++i)
     {
-      if (ACE_OS::strcmp (this->to_send_[i].name, info.name) == 0)
+      if (std::strcmp (this->to_send_[i].name, info.name) == 0)
         {
           if (this->to_send_[i].action._d () == info.action._d ())
             {
@@ -318,7 +321,9 @@ Replicator::send_entity (ImplementationRepository::UpdateInfo &info)
       this->to_send_[len] = info;
     }
   if (this->notified_)
+  {
     return;
+  }
   this->notified_ = true;
   this->reactor_->notify (this);
 }
@@ -349,7 +354,7 @@ Replicator::send_registration (char *&imr_ior)
     {
       ORBSVCS_DEBUG ((LM_INFO,
         ACE_TEXT("Initializing repository with ft ior=<%C> ")
-        ACE_TEXT("and replica seq number %Lu\n"),
+        ACE_TEXT("and replica seq number %Q\n"),
         imr_ior, replica_seq_num_));
     }
 

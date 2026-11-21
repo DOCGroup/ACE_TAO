@@ -45,15 +45,15 @@ class ACE_Export ACE_Sig_Set
 public:
   /// Initialize sigset_ with @a sigset.  If @a sigset == 0 then fill
   /// the set.
-  ACE_Sig_Set (sigset_t *sigset);
+  explicit ACE_Sig_Set (sigset_t *sigset);
 
   /// Initialize sigset_ with @a sigset.  If @a sigset == 0 then fill
   /// the set.
-  ACE_Sig_Set (ACE_Sig_Set *sigset);
+  explicit ACE_Sig_Set (ACE_Sig_Set *sigset);
 
   /// If @a fill == false then initialize the sigset_ to be empty, else
   /// full.
-  ACE_Sig_Set (bool fill = false);
+  explicit ACE_Sig_Set (bool fill = false);
 
   ~ACE_Sig_Set ();
 
@@ -157,10 +157,10 @@ public:
   ACE_Sig_Action& operator = (ACE_Sig_Action const &) = default;
   ACE_Sig_Action &operator = (ACE_Sig_Action&&)  = default;
 
-  /// Default dtor.
   ~ACE_Sig_Action ();
 
-  // = Signal action management.
+  /// @name Signal action management
+  /// @{
   /// Register @c this as the current disposition and store old
   /// disposition into @a oaction if it is non-NULL.
   int register_action (int signum,
@@ -199,6 +199,7 @@ public:
 
   /// Get current signal handler (pointer to function).
   ACE_SignalHandler handler ();
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -223,7 +224,7 @@ public:
   /// This is kind of conditional Guard, needed when guard should be
   /// activated only when a specific condition met. When condition ==
   /// true (default), Guard is activated
-  ACE_Sig_Guard (ACE_Sig_Set *mask = nullptr, bool condition = true);
+  explicit ACE_Sig_Guard (ACE_Sig_Set *mask = nullptr, bool condition = true);
 
   /// Restore blocked signals.
   ~ACE_Sig_Guard ();

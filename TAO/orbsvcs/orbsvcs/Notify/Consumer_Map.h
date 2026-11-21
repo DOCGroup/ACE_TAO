@@ -16,7 +16,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #include "orbsvcs/Notify/Event_Map_T.h"
 #include "orbsvcs/Notify/ProxySupplier.h"
 

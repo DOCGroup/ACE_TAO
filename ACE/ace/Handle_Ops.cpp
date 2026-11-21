@@ -4,7 +4,6 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/Time_Value.h"
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_HANDLE
@@ -30,13 +29,17 @@ ACE::handle_timed_open (ACE_Time_Value *timeout,
       if (handle == ACE_INVALID_HANDLE
           && (errno == EWOULDBLOCK
               && (timeout->sec () > 0 || timeout->usec () > 0)))
-        // This expression checks if we were polling.
-        errno = ETIMEDOUT;
+        {
+          // This expression checks if we were polling.
+          errno = ETIMEDOUT;
+        }
 
       return handle;
     }
   else
+  {
     return ACE_OS::open (name, flags, static_cast<mode_t> (perms), sa);
+  }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -2,6 +2,7 @@
 #define TAO_OBJREF_VAROUT_T_CPP
 
 #include "tao/Objref_VarOut_T.h"
+#include <memory>
 #include "tao/Environment.h"
 
 #if !defined (__ACE_INLINE__)
@@ -28,7 +29,7 @@ template <typename T>
 TAO_Objref_Var_T<T> &
 TAO_Objref_Var_T<T>::operator= (const TAO_Objref_Var_T<T> & p)
 {
-  if (this != &p)
+  if (this != std::addressof (p))
     {
       TAO::Objref_Traits<T>::release (this->ptr_);
       this->ptr_ = TAO::Objref_Traits<T>::duplicate (p.ptr ());

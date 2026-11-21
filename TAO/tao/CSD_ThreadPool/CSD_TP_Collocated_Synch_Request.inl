@@ -1,14 +1,14 @@
 // -*- C++ -*-
-#include <memory>
+#include <utility>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO::CSD::TP_Collocated_Synch_Request::TP_Collocated_Synch_Request
                              (TAO_ServerRequest&              server_request,
-                              const PortableServer::ObjectId& object_id,
+                              PortableServer::ObjectId const &object_id,
                               PortableServer::POA_ptr         poa,
-                              const char*                     operation,
+                              char const *                    operation,
                               PortableServer::Servant         servant,
                               TP_Servant_State*               servant_state)
   : TP_Corba_Request(object_id,
@@ -20,32 +20,28 @@ TAO::CSD::TP_Collocated_Synch_Request::TP_Collocated_Synch_Request
 {
 }
 
-
 ACE_INLINE
 bool
 TAO::CSD::TP_Collocated_Synch_Request::wait()
 {
-  bool dispatched = this->synch_helper_.wait_while_pending();
+  bool const dispatched = this->synch_helper_.wait_while_pending();
 
   if (dispatched)
     {
       // Check to see if the dispatching caused an exception to be raised.
-      if (this->exception_ != nullptr)
+      if (this->exception_)
         {
           // An exception was raised during the actual dispatching to
           // the servant.  We need to raise the exception to our caller,
           // which is the thread that made the collocated request in the
           // first place.
-          CORBA::Exception* ex = this->exception_;
-          this->exception_ = nullptr;
-
-          std::unique_ptr<CORBA::Exception> ex_holder(ex);
-          ex->_raise ();
+          std::unique_ptr<CORBA::Exception> ex_holder (
+            std::move (this->exception_));
+          ex_holder->_raise ();
         }
     }
 
   return dispatched;
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

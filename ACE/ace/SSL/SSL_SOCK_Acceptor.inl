@@ -67,9 +67,13 @@ ACE_SSL_SOCK_Acceptor::open (const ACE_Addr &local_sap,
                             backlog,
                             protocol,
                             ipv6_only) != 0)
-    return -1;
+    {
+      return -1;
+    }
   else
-    this->set_handle (this->acceptor_.get_handle ());
+    {
+      this->set_handle (this->acceptor_.get_handle ());
+    }
 
   return 0;
 }

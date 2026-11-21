@@ -58,7 +58,7 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
                             policies);
 
       exception_message = "While policy->destroy";
-      for (CORBA::ULong i = 0; i < policies.length (); ++i)
+      for (CORBA::ULong i {}; i < policies.length (); ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
           policy->destroy ();

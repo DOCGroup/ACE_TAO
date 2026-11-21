@@ -50,16 +50,17 @@ public:
   inline ACE_Quoted_String (const ACE_IOStream_String &s) { *this = s; }
   inline ACE_Quoted_String &operator= (const ACE_IOStream_String& s)
   {
-    return (ACE_Quoted_String &) ACE_IOStream_String::operator= (s);
+    return static_cast<ACE_Quoted_String &> (ACE_IOStream_String::operator= (s));
   }
   inline ACE_Quoted_String &operator = (const char c) {
-    return (ACE_Quoted_String &) ACE_IOStream_String::operator= (c);
+    return static_cast<ACE_Quoted_String &> (ACE_IOStream_String::operator= (c));
   }
   inline ACE_Quoted_String &operator = (const char *c) {
-    return (ACE_Quoted_String &) ACE_IOStream_String::operator= (c);
+    return static_cast<ACE_Quoted_String &> (ACE_IOStream_String::operator= (c));
   }
   inline bool operator < (const ACE_Quoted_String &s) const {
-    return *(ACE_IOStream_String *) this < (ACE_IOStream_String) s;
+    return static_cast<ACE_IOStream_String const &> (*this)
+      < static_cast<ACE_IOStream_String const &> (s);
   }
 #    if defined (ACE_WIN32) && defined (_MSC_VER)
   inline int length () { return this->GetLength (); }
@@ -193,7 +194,6 @@ protected:
   /// descriptions.
   virtual int sync ();
 
-  // = Signatures for the underflow/overflow discussed above.
   virtual int underflow ();
 
   /// The overflow function receives the character which caused the
@@ -205,17 +205,15 @@ protected:
   void reset_base ();
 
 protected:
-  // = Two pointer sets for manipulating the read/write areas.
-  char *eback_saved_;
+  /// Saved pointers used to manipulate the read/write areas.
+  char *eback_saved_ {};
   char *gptr_saved_;
   char *egptr_saved_;
-  char *pbase_saved_;
+  char *pbase_saved_ {};
   char *pptr_saved_;
   char *epptr_saved_;
 
-  // = With cur_mode_ we keep track of our current IO mode.
-
-  // This helps us to optimize the underflow/overflow functions.
+  /// Track the current I/O mode to optimize underflow/overflow.
   u_char cur_mode_;
   const u_char get_mode_;
   const u_char put_mode_;
@@ -329,9 +327,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // trailing '_'.  Since we can't count on 'em, I've defined them to
 // what GNU wants here.
 //
-typedef ios& (*__manip_)(ios&);
-typedef istream& (*__imanip_)(istream&);
-typedef ostream& (*__omanip_)(ostream&);
+using __manip_ = ios& (*)(ios&);
+using __imanip_ = istream& (*)(istream&);
+using __omanip_ = ostream& (*)(ostream&);
 
 // Trying to do something like is shown below instead of using the
 // __*manip typedefs causes Linux do segfault when "<<endl" is done.

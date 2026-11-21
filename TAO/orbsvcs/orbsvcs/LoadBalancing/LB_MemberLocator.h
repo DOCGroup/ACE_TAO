@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_LB_MEMBER_LOCATOR_H
 #define TAO_LB_MEMBER_LOCATOR_H
 
@@ -41,8 +40,7 @@ class TAO_LB_MemberLocator
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor
-  TAO_LB_MemberLocator (TAO_LB_LoadManager * load_balancer);
+  explicit TAO_LB_MemberLocator (TAO_LB_LoadManager * load_balancer);
 
   /**
    * @name The PortableServer::ServantLocator methods.
@@ -50,7 +48,7 @@ public:
    * Methods required by the PortableServer::ServantLocator
    * interface.
    */
-  //@{
+  /// @{
   /// Clients requests are forwarded via the
   /// PortableServer::ForwardRequest exception thrown in this method.
   PortableServer::Servant preinvoke (
@@ -72,10 +70,10 @@ public:
   TAO_LB_MemberLocator & operator= (TAO_LB_MemberLocator const &) = delete;
   TAO_LB_MemberLocator & operator= (TAO_LB_MemberLocator &&) = delete;
 
-  //@}
+  /// @}
 
 private:
-  /// The load balancer/manager implementation.
+  /// Borrowed manager; its lifetime must exceed that of this POA-owned locator.
   TAO_LB_LoadManager * load_manager_;
 };
 

@@ -153,7 +153,6 @@ public:
      */
     ACE_Reactor_Mask close_masks_ { ACE_Event_Handler::NULL_MASK };
 
-    /// Default constructor
     Common_Info () = default;
 
     /// Reset the state of the structure
@@ -187,7 +186,6 @@ public:
     /// This is set when the entry needed to be suspended.
     bool suspend_entry_ {};
 
-    /// Default constructor
     Current_Info () = default;
 
     /// Reset the state of the structure
@@ -226,7 +224,6 @@ public:
     /// This is set when the entry needed to be suspended.
     bool suspend_entry_ {};
 
-    /// Default constructor
     To_Be_Added_Info () = default;
 
     /// Reset the state of the structure
@@ -267,7 +264,6 @@ public:
     /// This is set when the entry needed to be resumed.
     bool resume_entry_ {};
 
-    /// Default constructor
     Suspended_Info () = default;
 
     /// Reset the state of the structure
@@ -293,10 +289,8 @@ public:
     void dump () const;
   };
 
-  /// Constructor.
   ACE_WFMO_Reactor_Handler_Repository (ACE_WFMO_Reactor &wfmo_reactor);
 
-  /// Destructor.
   virtual ~ACE_WFMO_Reactor_Handler_Repository ();
 
   /// Initialize the repository of the appropriate @a size.
@@ -305,7 +299,8 @@ public:
   /// Close down the handler repository.
   int close ();
 
-  // = Search structure operations.
+  /// @name Search structure operations
+  /// @{
 
   /// Insert I/O Event_Handler entry into the system. This method
   /// assumes that the lock are head *before* this method is invoked.
@@ -328,12 +323,14 @@ public:
   /// Remove all bindings of <ACE_HANDLE, ACE_Event_Handler> tuples.
   void unbind_all ();
 
-  // = Sanity checking.
+  /// @}
 
-  // Check the @a handle to make sure it's a valid ACE_HANDLE
+  /// Check the @a handle to make sure it's a valid ACE_HANDLE.
   int invalid_handle (ACE_HANDLE handle) const;
 
-  // = Accessors.
+  /// @name Accessors
+  /// @{
+
   /// Maximum ACE_HANDLE value, plus 1.
   DWORD max_handlep1 () const;
 
@@ -428,6 +425,7 @@ public:
 
   /// Dump the state of an object.
   void dump () const;
+  /// @}
 
 protected:
   /// Reference to our WFMO_Reactor.
@@ -489,7 +487,6 @@ protected:
 class ACE_Export ACE_WFMO_Reactor_Notify : public ACE_Reactor_Notify
 {
 public:
-  /// Constructor
   ACE_WFMO_Reactor_Notify (size_t max_notifies = 1024);
 
   /// Initialization. @a timer_queue is stored to call gettimeofday().
@@ -575,14 +572,14 @@ public:
 
 private:
   /// Pointer to the wfmo_reactor's timer queue.
-  ACE_Timer_Queue *timer_queue_;
+  ACE_Timer_Queue *timer_queue_ {};
 
   /**
    * Called when the notification event waited on by
    * <ACE_WFMO_Reactor> is signaled.  This dequeues all pending
    * ACE_Event_Handlers and dispatches them.
    */
-  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  virtual int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr);
 
   /// An auto event is used so that we can signal() it to wakeup one
   /// thread up (e.g., when the <notify> method is called).
@@ -643,6 +640,11 @@ private:
 class ACE_Export ACE_WFMO_Reactor : public ACE_Reactor_Impl
 {
 public:
+  ACE_WFMO_Reactor (ACE_WFMO_Reactor const &) = delete;
+  ACE_WFMO_Reactor (ACE_WFMO_Reactor &&) = delete;
+  ACE_WFMO_Reactor &operator= (ACE_WFMO_Reactor const &) = delete;
+  ACE_WFMO_Reactor &operator= (ACE_WFMO_Reactor &&) = delete;
+
   friend class ACE_WFMO_Reactor_Handler_Repository;
   friend class ACE_WFMO_Reactor_Test;
 
@@ -708,7 +710,8 @@ public:
   /// Close down the ACE_WFMO_Reactor and release all of its resources.
   virtual ~ACE_WFMO_Reactor ();
 
-  // = Event loop drivers.
+  /// @name Event loop drivers
+  /// @{
 
   /**
    * This method is not currently implemented.  We recommend that you
@@ -754,9 +757,10 @@ public:
    */
   virtual int handle_events (ACE_Time_Value &max_wait_time);
   virtual int alertable_handle_events (ACE_Time_Value &max_wait_time);
+  /// @}
 
-
-  // = Event handling control.
+  /// @name Event handling control
+  /// @{
 
   /**
    * Return the status of Reactor.  If this function returns 0, the reactor is
@@ -771,8 +775,10 @@ public:
    * is in active state and can be deactivated/reactivated as wish.
    */
   virtual void deactivate (int do_stop);
+  /// @}
 
-  // = Register and remove Handlers.
+  /// @name Handler registration and removal
+  /// @{
 
   /**
    * Register an ACE_Event_Handler @a event_handler.  Since no Event
@@ -892,8 +898,10 @@ public:
 
   /// Calls remove_handler() for every signal in @a sigset.
   virtual int remove_handler (const ACE_Sig_Set &sigset);
+  /// @}
 
-  // = Suspend and resume Handlers.
+  /// @name Handler suspension and resumption
+  /// @{
 
   /// Suspend @a event_handler temporarily.  Use
   /// ACE_Event_Handler::get_handle() to get the handle.
@@ -934,8 +942,10 @@ public:
    * return true.
    */
   virtual bool uses_event_associations ();
+  /// @}
 
-  // Timer management.
+  /// @name Timer management
+  /// @{
 
   /**
    * Schedule an ACE_Event_Handler that will expire after an amount
@@ -986,8 +996,10 @@ public:
   virtual int cancel_timer (long timer_id,
                             const void **arg = nullptr,
                             int dont_call_handle_close = 1);
+  /// @}
 
-  // = High-level Event_Handler scheduling operations
+  /// @name Event handler scheduling
+  /// @{
 
   /**
    * Add @a masks_to_be_added to the @a event_handler's entry in
@@ -1020,8 +1032,10 @@ public:
    */
   virtual int cancel_wakeup (ACE_HANDLE handle,
                              ACE_Reactor_Mask masks_to_be_deleted);
+  /// @}
 
-  // = Notification methods.
+  /// @name Notification methods
+  /// @{
 
   /**
    * Wakeup one <ACE_WFMO_Reactor> thread if it is currently blocked
@@ -1064,8 +1078,10 @@ public:
    */
   virtual int purge_pending_notifications (ACE_Event_Handler * = nullptr,
                                            ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK);
+  /// @}
 
-  // = Assorted helper methods.
+  /// @name Helper methods
+  /// @{
 
   /**
    * Return the Event_Handler associated with @a handle.  Return 0 if
@@ -1126,8 +1142,10 @@ public:
 
   /// Not implemented
   virtual int requeue_position ();
+  /// @}
 
-  // = Low-level wait_set mask manipulation methods.
+  /// @name Wait set mask operations
+  /// @{
 
   /**
    * Modify @a masks of the @a event_handler's entry in WFMO_Reactor
@@ -1146,8 +1164,10 @@ public:
   virtual int mask_ops (ACE_HANDLE handle,
                         ACE_Reactor_Mask masks,
                         int ops);
+  /// @}
 
-  // = Low-level ready_set mask manipulation methods.
+  /// @name Ready set mask operations
+  /// @{
 
   /// Not implemented
   virtual int ready_ops (ACE_Event_Handler *event_handler,
@@ -1158,6 +1178,7 @@ public:
   virtual int ready_ops (ACE_HANDLE handle,
                          ACE_Reactor_Mask,
                          int ops);
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -1254,23 +1275,23 @@ protected:
 
   /// Keeps track of whether we should delete the signal handler (if we
   /// didn't create it, then we don't delete it).
-  bool delete_signal_handler_;
+  bool delete_signal_handler_ {};
 
   /// Defined as a pointer to allow overriding by derived classes...
   ACE_Timer_Queue *timer_queue_ {};
 
   /// Keeps track of whether we should delete the timer queue (if we
   /// didn't create it, then we don't delete it).
-  bool delete_timer_queue_;
+  bool delete_timer_queue_ {};
 
   /// Keeps track of whether we should delete the handler repository
-  bool delete_handler_rep_;
+  bool delete_handler_rep_ {};
 
   /// Used when <notify> is called.
   ACE_Reactor_Notify *notify_handler_ {};
 
   /// Keeps track of whether we should delete the notify handler.
-  bool delete_notify_handler_;
+  bool delete_notify_handler_ {};
 
   /**
    * Synchronization for the ACE_WFMO_Reactor.
@@ -1337,10 +1358,6 @@ protected:
   /// This flag is used to keep track of whether we are actively handling
   /// events or not.
   sig_atomic_t deactivated_;
-
-private:
-  ACE_WFMO_Reactor (const ACE_WFMO_Reactor &) = delete;
-  ACE_WFMO_Reactor &operator = (const ACE_WFMO_Reactor &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

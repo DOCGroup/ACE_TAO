@@ -44,10 +44,8 @@ class ACE_Thread_Hook;
 class ACE_Export ACE_Object_Manager_Base
 {
 protected:
-  /// Default constructor.
   ACE_Object_Manager_Base ();
 
-  /// Destructor.
   virtual ~ACE_Object_Manager_Base ();
 
 public:
@@ -96,7 +94,7 @@ protected:
   bool shutting_down_i ();
 
   /// State of the Object_Manager;
-  Object_Manager_State object_manager_state_;
+  Object_Manager_State object_manager_state_ {OBJ_MAN_UNINITIALIZED};
 
   /**
    * Flag indicating whether the ACE_Object_Manager was dynamically
@@ -104,10 +102,10 @@ protected:
    * application, then the application is responsible for destroying
    * it.)
    */
-  bool dynamically_allocated_;
+  bool dynamically_allocated_ {};
 
   /// Link to next Object_Manager, for chaining.
-  ACE_Object_Manager_Base *next_;
+  ACE_Object_Manager_Base *next_ {};
 private:
   ACE_Object_Manager_Base (const ACE_Object_Manager_Base &) = delete;
   ACE_Object_Manager_Base &operator= (const ACE_Object_Manager_Base &) = delete;
@@ -187,15 +185,10 @@ public:
 #endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
 public:
-  // = Applications shouldn't use these so they're hidden here.
-
-  // They're public so that the ACE_Object_Manager can be
-  // constructed/destructed in <main> with
-  // <ACE_HAS_NONSTATIC_OBJECT_MANAGER>.
-  /// Constructor.
+  /// These remain public so ACE_Object_Manager can be constructed and
+  /// destroyed in @c main when @c ACE_HAS_NONSTATIC_OBJECT_MANAGER is enabled.
   ACE_OS_Object_Manager ();
 
-  /// Destructor.
   ~ACE_OS_Object_Manager () override;
 
   /// Accessor to singleton instance.
@@ -212,10 +205,10 @@ public:
   static void *preallocated_object[ACE_OS_PREALLOCATED_OBJECTS];
 
   /// Default signal set used, for example, in ACE_Sig_Guard.
-  sigset_t *default_mask_;
+  sigset_t *default_mask_ {};
 
   /// Thread hook that's used by this process.
-  ACE_Thread_Hook *thread_hook_;
+  ACE_Thread_Hook *thread_hook_ {};
 
   /// For at_exit support.
   ACE_OS_Exit_Info exit_info_;

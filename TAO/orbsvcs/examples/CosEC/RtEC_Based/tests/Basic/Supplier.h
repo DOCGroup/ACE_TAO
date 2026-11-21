@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef COSECSUPPLIER_H_
 #define COSECSUPPLIER_H_
 
@@ -30,8 +29,14 @@
 class Supplier : public POA_CosEventComm::PushSupplier
 {
 public:
+  Supplier () = default;
+  Supplier (Supplier const &) = delete;
+  Supplier (Supplier &&) = delete;
+  Supplier &operator= (Supplier const &) = delete;
+  Supplier &operator= (Supplier &&) = delete;
+
   /// This method connects the supplier to the EC.
-  void open (CosEventChannelAdmin::EventChannel_ptr event_channel);
+  void open (CosEventChannelAdmin::EventChannel_ptr const event_channel);
 
   /// Disconnect from the EC.
   void close ();
@@ -42,17 +47,17 @@ public:
   void disconnect ();
 
   /// Send one event.
-  void send_event (const CORBA::Any &data);
+  void send_event (CORBA::Any const &data);
 
   /// The POA_CosEventComm::PushSupplier method.
-  virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
 
 private:
   /// We talk to the EC using this proxy.
-  CosEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;
+  CosEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_ {};
 
   /// We talk to the EC using this proxy.
-  CosEventChannelAdmin::SupplierAdmin_var supplier_admin_;
+  CosEventChannelAdmin::SupplierAdmin_var supplier_admin_ {};
 };
 
 #endif /* COSECSUPPLIER_H_ */

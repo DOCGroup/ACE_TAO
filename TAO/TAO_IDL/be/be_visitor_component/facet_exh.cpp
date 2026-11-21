@@ -61,13 +61,11 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
       << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
-      << "/// Constructor" << be_nl
       << "/// @param[in] ctx - Container context" << be_nl
       << lname << "_exec_i (" << be_idt_nl
       << smart_scope << c_scope->full_name () << "::CCM_"
       << this->node_->local_name ()
       << "_Context_ptr ctx);" << be_uidt_nl
-      << "/// Destructor" << be_nl
       << "virtual ~" << lname << "_exec_i ();";
 
   if (impl->node_type () == AST_Decl::NT_interface)

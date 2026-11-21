@@ -18,19 +18,20 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
   ACE_DEBUG ((LM_DEBUG,
         "Init POA\n"));
 
-  const ACE_TCHAR *current_arg = 0;
-
   POA_name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()); // Read the name of the POA
   arg_shifter.consume_arg ();
 
   while (arg_shifter.is_anything_left ())
     {
+      ACE_TCHAR const *current_arg {};
       if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-PriorityModel"))))
         {
           if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("CLIENT")) == 0)
             priority_model_ = RTCORBA::CLIENT_PROPAGATED;
           else
+          {
             priority_model_ = RTCORBA::SERVER_DECLARED;
+          }
           arg_shifter.consume_arg ();
 
           server_priority_ = ACE_OS::atoi (current_arg);
@@ -65,10 +66,12 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
                   //if (TAO_debug_level > 0)
                   ACE_DEBUG ((LM_DEBUG, "lane parsed - %d, %d, %d\n",
                               lanes_[l_index].lane_priority, lanes_[l_index].static_threads, lanes_[l_index].dynamic_threads));
-                  l_index++;
+                  ++l_index;
                 }
         else
-                break;
+        {
+          break;
+        }
             } /* while -- lane values */
 
         } /* if -Lanes */
@@ -119,10 +122,12 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
                   //if (TAO_debug_level > 0)
                   ACE_DEBUG ((LM_DEBUG, "band parsed - %d, %d\n",
                               bands_[b_index].low, bands_[b_index].high));
-                  b_index++;
+                  ++b_index;
                 }
               else
+              {
                 break;
+              }
             } /* while -- Band values */
     ACE_DEBUG ((LM_DEBUG,
           "Bands Initialized\n"));
@@ -157,10 +162,10 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
     {
       // Create a thread-pool.
       CORBA::ULong stacksize = 0;
-      CORBA::Boolean allow_request_buffering = 0;
+      CORBA::Boolean allow_request_buffering = false;
       CORBA::ULong max_buffered_requests = 0;
       CORBA::ULong max_request_buffer_size = 0;
-      CORBA::Boolean allow_borrowing = 0;
+      CORBA::Boolean allow_borrowing = false;
 
       // Create the thread-pool.
       RTCORBA::ThreadpoolId threadpool_id =
@@ -182,7 +187,7 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
   if (thread_pool_)
     {
       CORBA::ULong stacksize = 0;
-      CORBA::Boolean allow_request_buffering = 0;
+      CORBA::Boolean allow_request_buffering = false;
       CORBA::ULong max_buffered_requests = 0;
       CORBA::ULong max_request_buffer_size = 0;
 
@@ -194,7 +199,6 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
                                    allow_request_buffering,
                                    max_buffered_requests,
                                    max_request_buffer_size);
-
 
       thread_pool_policy = rt_orb->create_threadpool_policy (threadpool_id_1);
 
@@ -282,7 +286,9 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
         "Initialized POA Policy\n"));
 
   if (TAO_debug_level > 0)
+  {
     ACE_DEBUG ((LM_DEBUG, "creating POA %C\n", POA_name_.c_str ()));
+  }
 
   // Get the POA Manager.
   PortableServer::POAManager_var poa_manager =

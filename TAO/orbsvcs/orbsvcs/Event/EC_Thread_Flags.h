@@ -42,11 +42,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTEvent_Serv_Export TAO_EC_Thread_Flags
 {
 public:
-  TAO_EC_Thread_Flags () { }
+  TAO_EC_Thread_Flags () = default;
   /*! \brief See \a operator=() */
-  TAO_EC_Thread_Flags (const char* symbolic_flags)
+  explicit TAO_EC_Thread_Flags (const char* symbolic_flags)
     { this->parse_symbols(symbolic_flags); }
-  ~TAO_EC_Thread_Flags ();
+  ~TAO_EC_Thread_Flags () = default;
 
   // Default Copy CTOR is fine.
 
@@ -89,20 +89,27 @@ public:
   */
   long default_priority () const;
 
-
   struct Supported_Flag
   {
-    const char* n; /// Flag name, e.g., THR_NEW_LWP
-    long        v; /// Flag value, i.e., actual symbol
+    /// Flag name, e.g., THR_NEW_LWP.
+    const char* n;
+
+    /// Flag value, i.e., actual symbol.
+    long        v;
   };
 
   // TETFSF == TAO_EC_THREAD_FLAGS_SUPPORTED_FLAGS
   static Supported_Flag supported_flags_[];
 
 protected:
-  long flags_; /// Value of all flags OR'd together
-  long scope_; /// Value of THR_SCOPE_*
-  long sched_; /// Value of THR_SCHED_*
+  /// Value of all flags OR'd together.
+  long flags_ {};
+
+  /// Value of THR_SCOPE_*.
+  long scope_ {};
+
+  /// Value of THR_SCHED_*.
+  long sched_ {};
 
   void parse_symbols (const char* syms);
 };

@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   RT_Current.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #ifndef TAO_RT_CURRENT_H
 #define TAO_RT_CURRENT_H
@@ -43,7 +40,6 @@ class TAO_RTCORBA_Export TAO_RT_Current
   , public ::CORBA::LocalObject
 {
 public:
-  /// Default constructor.
   explicit TAO_RT_Current (TAO_ORB_Core *orb_core);
 
   RTCORBA::Priority the_priority () override;

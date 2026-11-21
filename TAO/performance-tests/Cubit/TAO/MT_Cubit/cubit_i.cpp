@@ -9,10 +9,6 @@ Cubit_i::Cubit_i (CORBA::ORB_ptr orb,
 {
 }
 
-Cubit_i::~Cubit_i ()
-{
-}
-
 CORBA::Octet
 Cubit_i::cube_octet (CORBA::Octet o)
 {
@@ -32,7 +28,7 @@ Cubit_i::cube_long (CORBA::Long l)
 }
 
 Cubit::Many
-Cubit_i::cube_struct (const Cubit::Many &values)
+Cubit_i::cube_struct (Cubit::Many const &values)
 {
   Cubit::Many out_values;
 

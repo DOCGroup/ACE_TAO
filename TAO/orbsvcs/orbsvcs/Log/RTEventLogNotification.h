@@ -47,24 +47,23 @@ class TAO_RTEventLog_Serv_Export TAO_RTEventLogNotification :
   public POA_RtecEventComm::PushSupplier
 {
 public:
-  /// Constructor.
-  TAO_RTEventLogNotification (RtecEventChannelAdmin::EventChannel_ptr event_channel);
+  explicit TAO_RTEventLogNotification (RtecEventChannelAdmin::EventChannel_ptr event_channel);
 
-  /// Destructor.
   ~TAO_RTEventLogNotification () override;
 
   /// The skeleton methods.
   void disconnect_push_supplier () override;
 
 protected:
-  // = Helper methods
-
+  /// @name Helper methods
+  /// @{
   /// Used to connect this PushSupplier to the EventChannel
   /// that will log these events.
   void obtainProxyConsumer ();
 
   // Send the event on the event channel.
   void send_notification (CORBA::Any const & any) override;
+  /// @}
 
 private:
   TAO_RTEventLogNotification (TAO_RTEventLogNotification const &) = delete;

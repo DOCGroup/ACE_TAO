@@ -25,8 +25,8 @@ Client_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
                         ENOMEM),
                       CORBA::COMPLETED_NO));
 
-  PortableInterceptor::ClientRequestInterceptor_var
-    client_interceptor = client_interceptor_;
+  PortableInterceptor::ClientRequestInterceptor_var const client_interceptor (
+    client_interceptor_);
 
   info->add_client_request_interceptor (client_interceptor.in ());
 }

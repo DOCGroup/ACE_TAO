@@ -14,6 +14,8 @@
 
 #include "ace/Event_Handler.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -60,9 +62,9 @@ template <class T>
 class ACE_Event_Handler_T : public ACE_Event_Handler
 {
 public:
-  // = Typedefs to simplify pointer-to-member-function registration.
-
-  // Get/set the underlying handle.
+  /// @name Typedefs to simplify pointer-to-member-function registration
+  /// @{
+  /// Get/set the underlying handle.
   using GET_HANDLE = ACE_HANDLE (T::*)() const;
   using SET_HANDLE = void (T::*)(ACE_HANDLE);
 
@@ -75,25 +77,31 @@ public:
   /// Handle close events.
   using CL_HANDLER = int (T::*)(ACE_HANDLE, ACE_Reactor_Mask);
   using SIG_HANDLER = int (T::*)(int, siginfo_t *, ucontext_t *);
+  /// @}
 
   /// Initialize the op_handler.
   ACE_Event_Handler_T (T *op_handler,
-                       int delete_handler,
-                       GET_HANDLE get_handle = 0,
-                       IO_HANDLER input = 0,
-                       CL_HANDLER close = 0,
-                       SIG_HANDLER sig = 0,
-                       TO_HANDLER timeout = 0,
-                       IO_HANDLER output = 0,
-                       SET_HANDLE set_handle = 0,
-                       IO_HANDLER except = 0);
+                       bool delete_handler,
+                       GET_HANDLE get_handle = nullptr,
+                       IO_HANDLER input = nullptr,
+                       CL_HANDLER close = nullptr,
+                       SIG_HANDLER sig = nullptr,
+                       TO_HANDLER timeout = nullptr,
+                       IO_HANDLER output = nullptr,
+                       SET_HANDLE set_handle = nullptr,
+                       IO_HANDLER except = nullptr);
 
   /// Close down and delete the <op_handler>
   ~ACE_Event_Handler_T () override;
 
-  // = Override all the ACE_Event_Handler methods.
+  ACE_Event_Handler_T (ACE_Event_Handler_T const &) = delete;
+  ACE_Event_Handler_T &operator= (ACE_Event_Handler_T const &) = delete;
+  ACE_Event_Handler_T (ACE_Event_Handler_T &&) = delete;
+  ACE_Event_Handler_T &operator= (ACE_Event_Handler_T &&) = delete;
 
-  // These methods all delegate down to the <T> operations handler.
+  /// @name ACE_Event_Handler overrides
+  /// These methods delegate to the @c T operations handler.
+  /// @{
   ACE_HANDLE get_handle () const override;
   void set_handle (ACE_HANDLE) override;
   int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
@@ -101,14 +109,17 @@ public:
   int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
   int handle_timeout (const ACE_Time_Value &tv, const void *arg = nullptr) override;
   int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask close_mask) override;
-  int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0) override;
+  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
+  /// @}
 
-  // = Get/set the operations handler.
+  /// @name Get/set the operations handler
+  /// @{
   T *op_handler ();
   void op_handler (T *);
+  /// @}
 
-  // = Get/set the target pointer-to-method used for dispatching.
-
+  /// @name Get/set the target pointer-to-method used for dispatching
+  /// @{
   GET_HANDLE handle_get ();
   void handle_get (GET_HANDLE);
 
@@ -132,6 +143,7 @@ public:
 
   SIG_HANDLER sig_handler ();
   void sig_handler (SIG_HANDLER);
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -139,14 +151,30 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-protected:
-  /// Pointer to the object that handles all the delegated operations.
-  T *op_handler_;
+private:
+  struct Op_Handler_Deleter
+  {
+    bool delete_handler {};
 
-  // = Handle input, output, and exception events.
+    void operator() (T *op_handler) const
+    {
+      if (this->delete_handler)
+        {
+          delete op_handler;
+        }
+    }
+  };
+
+protected:
+  /// Can own or borrow the operations handler, according to its deleter.
+  std::unique_ptr<T, Op_Handler_Deleter> op_handler_;
+
+  /// @name Input, output, and exception event handlers
+  /// @{
   IO_HANDLER input_handler_;
   IO_HANDLER output_handler_;
   IO_HANDLER except_handler_;
+  /// @}
 
   /// Handle timeout events.
   TO_HANDLER to_handler_;
@@ -157,13 +185,11 @@ protected:
   /// Handle signal events.
   SIG_HANDLER sig_handler_;
 
-  /// Keeps track of whether we need to delete the handler in the
-  /// destructor.
-  int delete_handler_;
-
-  // = Get/set underlying handle.
+  /// @name Get/set underlying handle
+  /// @{
   SET_HANDLE set_handle_;
   GET_HANDLE get_handle_;
+  /// @}
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

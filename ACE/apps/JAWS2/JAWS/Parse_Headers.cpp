@@ -1,6 +1,6 @@
 #include "JAWS/Parse_Headers.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
+#include <cstring>
 
 #define ACCESSOR(T,C,x) \
 T C :: x () const { return this-> x##_; }\
@@ -13,7 +13,9 @@ JAWS_Parse_Headers::parse_headers (JAWS_Header_Info *info,
   for (;;)
     {
       if (mb.rd_ptr () == mb.wr_ptr ())
-          break;
+      {
+        break;
+      }
 
       char *p = mb.rd_ptr ();
 
@@ -22,7 +24,9 @@ JAWS_Parse_Headers::parse_headers (JAWS_Header_Info *info,
         {
           int r = this->parse_header_name (info, mb);
           if (r == 1)
+          {
             return info->end_of_headers ();
+          }
           continue;
         }
       else
@@ -31,7 +35,9 @@ JAWS_Parse_Headers::parse_headers (JAWS_Header_Info *info,
           if (r == 1)
             {
               if (info->end_of_headers ())
+              {
                 return 1;
+              }
               break;
             }
           continue;
@@ -81,9 +87,11 @@ JAWS_Parse_Headers::skipset (const char *set, char *start, char *end)
   char *p = start;
   while (p < end)
     {
-      if (ACE_OS::strchr (set, *p) != 0)
+      if (std::strchr (set, *p) != nullptr)
+      {
         break;
-      p++;
+      }
+      ++p;
     }
   return p;
 }
@@ -94,9 +102,11 @@ JAWS_Parse_Headers::skipcset (const char *set, char *start, char *end)
   char *p = start;
   while (p < end)
     {
-      if (ACE_OS::strchr (set, *p) == 0)
+      if (std::strchr (set, *p) == nullptr)
+      {
         break;
-      p++;
+      }
+      ++p;
     }
   return p;
 }
@@ -134,7 +144,9 @@ JAWS_Parse_Headers::parse_header_name (JAWS_Header_Info *info,
           info->create_next_header_value (0);
           info->end_of_headers (1);
           if (mb.rd_ptr () == mb.wr_ptr ())
+          {
             mb.crunch ();
+          }
           return 1;
         }
 
@@ -175,7 +187,9 @@ JAWS_Parse_Headers::parse_header_value (JAWS_Header_Info *info,
           // Move the rd_ptr back one character if the last thing we
           // see is a carriage return.  Assert: wr_ptr > rd_ptr.
           if (q[-1] == '\r')
-            mb.rd_ptr (q-1);
+            {
+              mb.rd_ptr (q-1);
+            }
 
           return 1;
         }
@@ -193,7 +207,7 @@ JAWS_Parse_Headers::parse_header_value (JAWS_Header_Info *info,
       if (*q == '\n')
         {
           info->end_of_line (1);
-          q++;
+          ++q;
         }
       mb.rd_ptr (q);
 
@@ -214,16 +228,20 @@ JAWS_Parse_Headers::parse_header_value (JAWS_Header_Info *info,
             }
 
           if (*q != '\n')
-            info->append_last_header_value (' ');
+            {
+              info->append_last_header_value (' ');
+            }
         }
 
       // Append to last header value character by character
       while (q < mb.wr_ptr ())
         {
           if (*q == '\n')
-            break;
+            {
+              break;
+            }
           info->append_last_header_value (*q);
-          q++;
+          ++q;
         }
 
       // Need more input
@@ -239,7 +257,9 @@ JAWS_Parse_Headers::parse_header_value (JAWS_Header_Info *info,
         {
           // Reduce by one character if line discipline is "\r\n"
           if (info->append_last_header_value () == '\r')
-            info->reduce_last_header_value ();
+            {
+              info->reduce_last_header_value ();
+            }
 
           // Move past newline, set end of line flag
           mb.rd_ptr (q+1);
@@ -253,7 +273,6 @@ JAWS_Parse_Headers::parse_header_value (JAWS_Header_Info *info,
   return 1;
 }
 
-
 JAWS_Header_Info::JAWS_Header_Info ()
   : end_of_headers_ (0),
     end_of_line_ (1),
@@ -266,13 +285,14 @@ JAWS_Header_Info::JAWS_Header_Info ()
 JAWS_Header_Info::~JAWS_Header_Info ()
 {
   JAWS_Header_Table_Iterator iter (this->table_);
-  JAWS_Header_Data *data_ptr;
 
   for (iter.first (); !iter.done (); iter.advance ())
     {
-      data_ptr = iter.next ();
+      JAWS_Header_Data *data_ptr = iter.next ();
       if (data_ptr)
+      {
         delete data_ptr;
+      }
     }
 }
 
@@ -287,11 +307,15 @@ JAWS_Header_Info::dump ()
       JAWS_Header_Data *data;
       data = iter.next ();
       if (data != 0)
-        ACE_DEBUG ((LM_DEBUG,
+        {
+          ACE_DEBUG ((LM_DEBUG,
                     "%s -- %s\n",
                     data->header_name (), data->header_value ()));
+        }
       else
+      {
         ACE_DEBUG ((LM_DEBUG, "NULL ENTRY\n"));
+      }
     }
   ACE_DEBUG ((LM_DEBUG, "== END HEADER INFO DUMP ==\n"));
 }
@@ -306,15 +330,19 @@ void
 JAWS_Header_Info::append_last_header_value (char c)
 {
   if (this->last_header_data_ == 0)
+  {
     return;
+  }
 
   if (this->last_header_length_ == 0 && (c == ' ' || c == '\t'))
-    return;
+    {
+      return;
+    }
 
   if (this->last_header_length_ < MAX_HEADER_LENGTH-1)
     {
       this->header_buf_[this->last_header_length_] = c;
-      this->last_header_length_++;
+      ++this->last_header_length_;
       this->header_buf_[this->last_header_length_] = '\0';
     }
 
@@ -324,7 +352,9 @@ int
 JAWS_Header_Info::append_last_header_value ()
 {
   if (this->last_header_data_ == 0 || this->last_header_length_ == 0)
+  {
     return -1;
+  }
 
   return this->header_buf_[this->last_header_length_-1];
 }
@@ -333,16 +363,20 @@ void
 JAWS_Header_Info::append_last_header_value (const char *begin, const char *end)
 {
   if (this->last_header_data_ == 0)
+  {
     return;
+  }
 
   while (this->last_header_length_ < MAX_HEADER_LENGTH-1)
     {
       if (begin == end)
+      {
         break;
+      }
 
       this->header_buf_[this->last_header_length_] = *begin;
-      this->last_header_length_++;
-      begin++;
+      ++this->last_header_length_;
+      ++begin;
     }
 
   this->header_buf_[this->last_header_length_] = '\0';
@@ -351,11 +385,14 @@ JAWS_Header_Info::append_last_header_value (const char *begin, const char *end)
 void
 JAWS_Header_Info::reduce_last_header_value ()
 {
-  if (this->last_header_data_ == 0) return;
+  if (this->last_header_data_ == 0)
+  {
+    return;
+  }
 
   if (this->last_header_length_ > 0)
     {
-      this->last_header_length_--;
+      --this->last_header_length_;
       this->header_buf_[this->last_header_length_] = '\0';
     }
 }
@@ -404,9 +441,13 @@ JAWS_Header_Info::finish_last_header_value ()
       // The above performs a strdup.
 
       if (this->status () == JAWS_Header_Info::STATUS_CODE_OK)
-        this->table_.insert (this->last_header_data_);
+        {
+          this->table_.insert (this->last_header_data_);
+        }
       else
+      {
         delete this->last_header_data_;
+      }
       this->last_header_data_ = 0;
     }
 }

@@ -36,14 +36,12 @@ class TAO_Codeset_Export TAO_UTF16_BOM_Translator
   : public ACE_WChar_Codeset_Translator
 {
 public:
-  /// Constructor
   /// @param forceBE: true forces all wchar, warray, and wstrings to big-endian byte order
   explicit TAO_UTF16_BOM_Translator (bool forceBE);
 
-  /// Virtual destruction
   ~TAO_UTF16_BOM_Translator () override = default;
 
-  // = Documented in $ACE_ROOT/ace/CDR_Stream.h
+  /// @see ACE_WChar_Codeset_Translator
   ACE_CDR::Boolean read_wchar (ACE_InputCDR &,
                                ACE_CDR::WChar &) override;
   ACE_CDR::Boolean read_wstring (ACE_InputCDR &,
@@ -66,25 +64,24 @@ public:
   ACE_CDR::ULong ncs () override { return 0x00010109; }
   ACE_CDR::ULong tcs () override { return 0x00010109; }
 
-private:
   TAO_UTF16_BOM_Translator (TAO_UTF16_BOM_Translator const &) = delete;
   TAO_UTF16_BOM_Translator &operator= (TAO_UTF16_BOM_Translator const &) = delete;
   TAO_UTF16_BOM_Translator (TAO_UTF16_BOM_Translator &&) = delete;
   TAO_UTF16_BOM_Translator &operator= (TAO_UTF16_BOM_Translator &&) = delete;
 
+private:
   ACE_CDR::Boolean read_wchar_array_i (ACE_InputCDR &,
                                        ACE_CDR::WChar *,
-                                       ACE_CDR::ULong&,
-                                       int adjust_len = 0);
+                                       ACE_CDR::ULong &,
+                                       bool adjust_len = false);
 
   ACE_CDR::Boolean write_wchar_array_i (ACE_OutputCDR &,
-                                        const ACE_CDR::WChar *,
+                                        ACE_CDR::WChar const *,
                                         ACE_CDR::ULong);
 
   ACE_CDR::Boolean write_swapped_wchar_array_i (ACE_OutputCDR & cdr,
-                                            const ACE_CDR::WChar *x,
+                                            ACE_CDR::WChar const *x,
                                             ACE_CDR::ULong length);
-
 
   ACE_CDR::Boolean write_wchar_i (ACE_OutputCDR &,
                                   ACE_CDR::WChar ,

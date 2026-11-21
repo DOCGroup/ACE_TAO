@@ -81,7 +81,6 @@ public:
   /// Copy Constructor - claims a "copy" of rhs object's reference to T.
   TAO_Intrusive_Ref_Count_Handle (const TAO_Intrusive_Ref_Count_Handle& b);
 
-  /// Destructor
   ~TAO_Intrusive_Ref_Count_Handle ();
 
   /// Assignment Operator with T* argument.

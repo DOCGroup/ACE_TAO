@@ -34,10 +34,12 @@ test_accept (ACE_Addr listen_addr, int v6_only)
                      0,
                      v6_only) == -1
       || acceptor.get_local_addr (listening_at) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) %p\n"),
-                       ACE_TEXT ("open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) %p\n"),
+                         ACE_TEXT ("open")),
+                        -1);
+    }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) listening at port %d\n"),
               listening_at.get_port_number ()));
 
@@ -68,11 +70,17 @@ test_accept (ACE_Addr listen_addr, int v6_only)
   v6_stream.close();
 
   if (v6_only && v4_ok)
-    status = 1;
+    {
+      status = 1;
+    }
   if (!v6_only && !v4_ok)
-    status = 1;
+    {
+      status = 1;
+    }
   if (!v6_ok)
-    status = 1;
+    {
+      status = 1;
+    }
 #else
   status = v4_ok ? 0 : 1;
 #endif /* ACE_HAS_IPV6 */
@@ -88,9 +96,13 @@ run_main (int, ACE_TCHAR *[])
   int status = 0;
 
   if (test_accept (ACE_Addr::sap_any, 1) != 0)
+  {
     status = 1;
+  }
   if (test_accept (ACE_Addr::sap_any, 0) != 0)
+  {
     status = 1;
+  }
 
   ACE_END_TEST;
   return status;

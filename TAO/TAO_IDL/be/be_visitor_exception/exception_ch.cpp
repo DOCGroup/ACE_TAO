@@ -53,14 +53,12 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
                         -1);
     }
 
-  // Constructors and destructor.
   *os << be_nl_2
       << node->local_name () << " ();" << be_nl
       << node->local_name () << " (" << node->local_name ()
       << " const &);" << be_nl
       << "~" << node->local_name () << " () override = default;\n" << be_nl;
 
-  // Assignment operator.
   *os << node->local_name () << " &operator= ("
       << node->local_name () << " const &);" << be_nl_2;
 

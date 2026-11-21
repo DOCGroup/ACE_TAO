@@ -8,8 +8,8 @@
 int
 ACE_TMAIN(int, ACE_TCHAR *[])
 {
-  int niterations = 10;
-  int norbs = 10;
+  int const niterations = 10;
+  int const norbs = 10;
 
   try
     {
@@ -17,11 +17,11 @@ ACE_TMAIN(int, ACE_TCHAR *[])
         {
           for (int j = 0; j != norbs; ++j)
             {
-              char buf[16];
+              char buf[16] {};
               ACE_OS::sprintf (buf, "ORB_%4.4d", j);
 
-              int argc = 0;
-              ACE_TCHAR **argv = 0;
+              int argc {};
+              ACE_TCHAR **argv {};
               CORBA::ORB_var orb =
                 CORBA::ORB_init (argc, argv, buf);
 
@@ -38,15 +38,16 @@ ACE_TMAIN(int, ACE_TCHAR *[])
                                     1);
                 }
 
-              CORBA::Long count =
+              CORBA::Long const count =
                 test->instance_count ();
 
-              if (count != norbs*i + j + 1)
+              CORBA::Long const expected_count = norbs * i + j + 1;
+              if (count != expected_count)
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               "Incorrect number of objects "
                               "(%d != %d)\n",
-                              count, norbs * i + j + 1));
+                              count, expected_count));
                 }
               test->destroy ();
             }
@@ -54,11 +55,11 @@ ACE_TMAIN(int, ACE_TCHAR *[])
 
       for (int j = 0; j != norbs; ++j)
         {
-          char buf[16];
+          char buf[16] {};
           ACE_OS::sprintf (buf, "ORB_%4.4d", j);
 
-          int argc = 0;
-          ACE_TCHAR **argv = 0;
+          int argc {};
+          ACE_TCHAR **argv {};
           CORBA::ORB_var orb =
             CORBA::ORB_init (argc, argv, buf);
 
@@ -73,7 +74,7 @@ ACE_TMAIN(int, ACE_TCHAR *[])
           orb->destroy ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("main()");
       return 1;

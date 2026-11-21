@@ -34,13 +34,12 @@
 
 class JAWS_Symbol_Table;
 
+/// Associates an ACE string key with an ACE string value.
 class JAWS_Export JAWS_Symbol_Table : public JAWS_SYMBOL_TABLE_BASE
-// = TITLE
-//     A class the associates a string with another string.
 {
 public:
+  /// The hash table size should be a prime number.
   JAWS_Symbol_Table (size_t size = 211);
-  // Hash table <size> should be a prime.
 };
 
 #endif /* JAWS_SYMBOL_TABLE_H */

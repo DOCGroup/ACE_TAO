@@ -127,7 +127,7 @@ Child::test ()
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("testing base exception\n")));
 
-  std::unique_ptr<Base> base_excep (new Base ());
+  std::unique_ptr<Base> base_excep = std::make_unique<Base> ();
   try
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("throwing base exception\n")));
@@ -138,7 +138,7 @@ Child::test ()
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("caught base\n")));
   }
 
-  std::unique_ptr<Derived> derived_excep (new Derived ());
+  std::unique_ptr<Derived> derived_excep = std::make_unique<Derived> ();
   try
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("throwing derived exception\n")));
@@ -149,7 +149,7 @@ Child::test ()
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("caught derived\n")));
   }
 
-  std::unique_ptr<Derived> derived_excep_base (new Derived ());
+  std::unique_ptr<Derived> derived_excep_base = std::make_unique<Derived> ();
   try
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("throwing derived exception\n")));
@@ -183,6 +183,6 @@ dynamic_cast_test (Parent *target)
   Child *c {};
   c = dynamic_cast<Child*> (target);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("dynamic_cast_test: parent %@; child %@\n"),
-              target, c));
+              static_cast<void *> (target), static_cast<void *> (c)));
   return target == c ? 0 : -1;
 }

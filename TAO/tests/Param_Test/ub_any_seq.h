@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ub_any_seq.h
  *
@@ -7,25 +5,19 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #ifndef PARAM_TEST_UNBOUNDED_ANY_SEQUENCE_H
 #define PARAM_TEST_UNBOUNDED_ANY_SEQUENCE_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test sequences of Anys
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test sequences of Anys
 class Test_AnySeq
 {
 public:
-  /// ctor
   Test_AnySeq ();
 
-  /// dtor
-  ~Test_AnySeq ();
+  ~Test_AnySeq () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -61,7 +53,7 @@ protected:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   CORBA::AnySeq_var in_;

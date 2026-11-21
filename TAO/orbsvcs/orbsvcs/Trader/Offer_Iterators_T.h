@@ -1,14 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Offer_Iterators_T.h
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  *  @author Seth Widoff <sbw1@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_REGISTER_OFFER_ITERATOR_H
 #define TAO_REGISTER_OFFER_ITERATOR_H
@@ -21,7 +18,6 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -39,16 +35,20 @@ template <class MAP_LOCK_TYPE>
 class TAO_Register_Offer_Iterator : public TAO_Offer_Iterator
 {
 public:
+  TAO_Register_Offer_Iterator (TAO_Register_Offer_Iterator const&) = delete;
+  TAO_Register_Offer_Iterator& operator= (TAO_Register_Offer_Iterator const&) = delete;
+  TAO_Register_Offer_Iterator (TAO_Register_Offer_Iterator&&) = delete;
+  TAO_Register_Offer_Iterator& operator= (TAO_Register_Offer_Iterator&&) = delete;
+
   /// Takes service type and trader reference in order to
   /// later locate offers using their ids.
   TAO_Register_Offer_Iterator (TAO_Offer_Database<MAP_LOCK_TYPE>& db,
                                TAO_Property_Filter const& pfilter);
 
-  /// Destructor.
   ~TAO_Register_Offer_Iterator () override;
 
-  /// Deposit at maximum n offers into the return sequence and return 1,
-  /// or return 0 if the iterator is done and no offers are returned.
+  /// Deposit at most n offers into the return sequence and return true,
+  /// or return false if the iterator is done and no offers are returned.
   CORBA::Boolean next_n (CORBA::ULong n,
                          CosTrading::OfferSeq_out offers) override;
 
@@ -65,11 +65,6 @@ public:
                   CosTrading::Offer const*) override;
 
 private:
-  TAO_Register_Offer_Iterator (TAO_Register_Offer_Iterator const&) = delete;
-  TAO_Register_Offer_Iterator& operator= (TAO_Register_Offer_Iterator const&) = delete;
-  TAO_Register_Offer_Iterator (TAO_Register_Offer_Iterator&&) = delete;
-  TAO_Register_Offer_Iterator& operator= (TAO_Register_Offer_Iterator&&) = delete;
-
   /// A reference to the trader is needed for access to the map of offers.
   TAO_Offer_Database<MAP_LOCK_TYPE> &db_;
 

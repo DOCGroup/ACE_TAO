@@ -32,7 +32,8 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
-  //@{ @name A set of wrappers for explicit dynamic linking.
+  /// @name A set of wrappers for explicit dynamic linking.
+  /// @{
   ACE_NAMESPACE_INLINE_FUNCTION
   int dlclose (ACE_SHLIB_HANDLE handle);
 
@@ -46,7 +47,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   void *dlsym (ACE_SHLIB_HANDLE handle,
                const ACE_TCHAR *symbol);
-  //@}
+  /// @}
 
 } /* namespace ACE_OS */
 

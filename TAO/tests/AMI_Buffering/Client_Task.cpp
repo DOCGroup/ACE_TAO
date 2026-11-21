@@ -3,7 +3,6 @@
 
 Client_Task::Client_Task (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
-  , terminate_loop_ (false)
 {
 }
 
@@ -28,10 +27,12 @@ Client_Task::svc ()
 
           ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
           if (this->terminate_loop_)
+          {
             break;
+          }
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return -1;
     }

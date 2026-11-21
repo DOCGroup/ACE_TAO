@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Guard_T.h"
@@ -21,7 +20,6 @@
 #include "ace/Thread_Mutex.h"
 #include "ace/Signal.h"
 #include "TSS_Test_Errno.h"
-
 
 static u_int errors = 0;
 
@@ -49,7 +47,7 @@ int Errno::flags_;
 int Errno::created_;
 int Errno::deleted_;
 
-ACE_Thread_Mutex *Errno::lock_ = nullptr;
+ACE_Thread_Mutex *Errno::lock_ {};
 
 // This is our thread-specific error handler . . .
 // See comment below about why it's dynamically allocated.
@@ -85,7 +83,7 @@ worker (void *c)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) worker, iterations = %d\n"), count));
 
   ACE_thread_key_t key = ACE_OS::NULL_key;
-  int *ip = nullptr;
+  int *ip {};
 
   // Make one key that will be available when the thread exits so that
   // we'll have something to cleanup!
@@ -100,10 +98,12 @@ worker (void *c)
   ACE_NEW_RETURN (ip, int, nullptr);
 
   if (ACE_Thread::setspecific (key, (void *) ip) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                ACE_TEXT ("ACE_Thread::setspecific")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                  ACE_TEXT ("ACE_Thread::setspecific")));
+    }
 
-  for (int i = 0; i < count; i++)
+  for (int i = 0; i < count; ++i)
     {
       if (ACE_Thread::keycreate (&key, cleanup) == -1)
         {
@@ -115,23 +115,29 @@ worker (void *c)
       ACE_NEW_RETURN (ip, int, nullptr);
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) in worker at location 1, ")
-                            ACE_TEXT ("key = %d, ip = %x\n"),
-                  key, ip));
+                            ACE_TEXT ("key = %d, ip = %@\n"),
+                  key, static_cast<void *> (ip)));
 
       // Needed to work around (possibly broken?) strict aliasing warning in GCC.
       void *v_ip (reinterpret_cast <void *> (ip));
 
       if (ACE_Thread::setspecific (key, v_ip) == -1)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("ACE_Thread::setspecific")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("ACE_Thread::setspecific")));
+        }
 
       if (ACE_Thread::getspecific (key, &v_ip) == -1)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("ACE_Thread::getspecific")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("ACE_Thread::getspecific")));
+        }
 
       if (ACE_Thread::setspecific (key, (void *) nullptr) == -1)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("ACE_Thread::setspecific")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("ACE_Thread::setspecific")));
+        }
 
       // See comment in cleanup () above.
       delete ip;
@@ -193,8 +199,8 @@ worker (void *c)
       ACE_NEW_RETURN (ip, int, 0);
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) in worker at location 2, ")
-                            ACE_TEXT ("key = %d, ip = %x\n"),
-                  key, ip));
+                            ACE_TEXT ("key = %d, ip = %@\n"),
+                  key, static_cast<void *> (ip)));
 
       // Needed to work around (possibly broken?) strict aliasing warning in GCC.
       void *v_ip2 (reinterpret_cast <void *> (ip));
@@ -254,8 +260,10 @@ run_main (int, ACE_TCHAR *[])
        ACE_THR_FUNC (worker),
        &iterations,
        THR_BOUND) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n")), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n")), 1);
+    }
 
   ACE_Thread_Manager::instance ()->wait ();
 
@@ -263,7 +271,6 @@ run_main (int, ACE_TCHAR *[])
   delete tss_error;
 
   Errno::deallocate_lock ();
-
 
   if (Errno::created () != Errno::deleted ())
     {

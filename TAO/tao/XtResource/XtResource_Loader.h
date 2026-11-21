@@ -42,11 +42,10 @@ namespace TAO
   class TAO_XtResource_Export XtResource_Loader
   {
   public:
-    XtResource_Loader  (XtAppContext context);
+    explicit XtResource_Loader (XtAppContext context);
 
     virtual ~XtResource_Loader ();
 
-  private:
     XtResource_Loader (XtResource_Loader const &) = delete;
     XtResource_Loader &operator= (XtResource_Loader const &) = delete;
     XtResource_Loader (XtResource_Loader &&) = delete;

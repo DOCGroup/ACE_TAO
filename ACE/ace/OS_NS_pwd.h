@@ -35,7 +35,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS
 {
-  //@{ @name A set of wrappers for password routines.
+  /// @name A set of wrappers for password routines.
+  /// @{
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void endpwent ();
@@ -55,7 +56,7 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void setpwent ();
-  //@}
+  /// @}
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

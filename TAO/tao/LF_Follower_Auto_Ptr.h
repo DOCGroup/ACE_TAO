@@ -32,22 +32,25 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_LF_Follower_Auto_Ptr
 {
 public:
-  /// Constructor
-  TAO_LF_Follower_Auto_Ptr (TAO_Leader_Follower &);
+  explicit TAO_LF_Follower_Auto_Ptr (TAO_Leader_Follower &);
 
-  /// Destructor
   ~TAO_LF_Follower_Auto_Ptr ();
 
   /// Implement the smart pointer methods
   TAO_LF_Follower *get ();
-  TAO_LF_Follower *operator->();
-  operator TAO_LF_Follower *();
+  TAO_LF_Follower *operator-> ();
+  operator TAO_LF_Follower * ();
+
+  TAO_LF_Follower_Auto_Ptr (TAO_LF_Follower_Auto_Ptr const &) = delete;
+  TAO_LF_Follower_Auto_Ptr &operator= (TAO_LF_Follower_Auto_Ptr const &) = delete;
+  TAO_LF_Follower_Auto_Ptr (TAO_LF_Follower_Auto_Ptr &&) = delete;
+  TAO_LF_Follower_Auto_Ptr &operator= (TAO_LF_Follower_Auto_Ptr &&) = delete;
 
 private:
   /// Keep a reference to the leader follower
   TAO_Leader_Follower &leader_follower_;
 
-  /// The follower
+  /// Follower returned to the leader/follower pool on destruction.
   TAO_LF_Follower *follower_;
 };
 

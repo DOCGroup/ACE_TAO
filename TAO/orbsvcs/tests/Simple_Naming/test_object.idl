@@ -1,9 +1,6 @@
+/// A simple interface used to test the Naming Service.
 interface Test_Object
 {
-  // = TITLE
-  //   This is a simple interface that tests the Naming Service.
-
+  /// Identifies an object served by an individual servant.
   attribute short id;
-  // This provides an easy way to differentiate objects if each
-  // objects is served by a separate servant.
 };

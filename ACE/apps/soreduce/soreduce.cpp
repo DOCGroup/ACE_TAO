@@ -34,10 +34,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "discovering libraries\n"));
 
-  for (int i = 1; i < argc; group.add_executable (argv[i++]))
-    {
-      // No action.
-    }
+  for (int i = 1; i < argc; ++i)
+    group.add_executable (argv[i]);
 
   ACE_DEBUG ((LM_DEBUG, "loading object modules\n"));
   group.load_modules ();

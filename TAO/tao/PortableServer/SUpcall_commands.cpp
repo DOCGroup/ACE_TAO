@@ -71,7 +71,6 @@ _non_existent_Upcall_Command::execute ()
     this->servant_-> _non_existent ();
 }
 
-
 # if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 void
 _get_component_thru_poa_Upcall_Command::execute ()
@@ -96,7 +95,6 @@ _get_component_Upcall_Command::execute ()
 }
 
 # endif /* !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
-
 
 void
 _repository_id_thru_poa_Upcall_Command::execute ()

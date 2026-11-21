@@ -182,17 +182,17 @@ double cput, realt;         /* user, real time (seconds) */
 
 void err (char *s);
 void mes (char *s);
-void pattern (register char *cp, register int cnt);
+void pattern (char *cp, int cnt);
 char *outfmt (double b);
-static void getrusage (int ignored, register struct rusage *ru);
+static void getrusage (int ignored, struct rusage *ru);
 void prep_timer ();
 double read_timer (char *str, int len);
-static void prusage (register struct rusage *r0, struct rusage *r1, struct timeval *e, struct timeval *b, char *outp);
+static void prusage (struct rusage *r0, struct rusage *r1, struct timeval *e, struct timeval *b, char *outp);
 static void tvadd (struct timeval *tsum, struct timeval *t0, struct timeval *t1);
 static void tvsub (struct timeval *tdiff, struct timeval *t1, struct timeval *t0);
-static void psecs (long l, register char *cp);
+static void psecs (long l, char *cp);
 void delay (int us);
-int mread (int fd, register char *bufp, unsigned n);
+int mread (int fd, char *bufp, unsigned n);
 int Nread (ACE_SOCK_Stream &s, void *buf, int count);
 int Nwrite (ACE_SOCK_Stream &s, void *buf, int count);
 
@@ -210,14 +210,13 @@ sigpipe ()
 {
 }
 
-char *title = 0;
+char *title {};
 int new_line = 0;
 
 int
 main (int argc, char *argv[])
 {
   ACE_SOCK_Stream connection_stream;
-  unsigned long addr_tmp;
   int c;
 
   if (argc < 2)
@@ -321,7 +320,7 @@ main (int argc, char *argv[])
   total_msg_len = sizeof (long) + data_buf_len;
 
   // allocate the buffer
-  message_buf = (Data_Control_Message *) malloc (total_msg_len);
+  message_buf = static_cast<Data_Control_Message *> (malloc (total_msg_len));
   if (message_buf == 0)
     err ("malloc");
 
@@ -456,16 +455,15 @@ main (int argc, char *argv[])
                           -1);
 
       long ack;
-      int send_result;
       while (nbuf--)
         {
-          send_result = send_n ((char *) message_buf, total_msg_len);
+          int const send_result = send_n ((char *) message_buf, total_msg_len);
           if (send_result != total_msg_len)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%p only sent %d of %d bytes on call %d\n",
                                "ttcp", send_result, total_msg_len, numCalls + 1),
                               -1);
-          numCalls++;
+          ++numCalls;
           nbytes += data_buf_len;
 
           if (recv_n ((char *) &ack, sizeof ack) != sizeof ack)
@@ -475,7 +473,8 @@ main (int argc, char *argv[])
                               -1);
 
           if (ack != data_buf_len)
-            ACE_DEBUG ((LM_DEBUG, "received ack for only %d bytes\n", ack));
+            ACE_DEBUG ((LM_DEBUG, "received ack for only %q bytes\n",
+                        static_cast<ACE_INT64> (ack)));
         }
     }
   else
@@ -511,7 +510,7 @@ main (int argc, char *argv[])
           if (cnt != message_buf->size_)
             ACE_ERROR_RETURN ((LM_ERROR, "recv data failed\n"), -1);
 
-          numCalls++;
+          ++numCalls;
           nbytes += cnt;
 
           if (send_n ((char *) &cnt, sizeof cnt) != sizeof cnt)
@@ -551,7 +550,7 @@ main (int argc, char *argv[])
       ACE_OS::sprintf (filename, "%s.results", title);
       fd = fopen(filename, "a+");
       if (new_line)
-        fprintf(fd, "\n  -l %ldk \t", data_buf_len/1024);
+        fprintf(fd, "\n  -l %dk \t", data_buf_len/1024);
       tmp = ((double) nbytes) / realt;
       fprintf(fd, "%.2f ", tmp * 8.0 / 1024.0 / 1024.0);
       fclose(fd);
@@ -559,18 +558,18 @@ main (int argc, char *argv[])
 #endif
 
   fprintf (stdout,
-           "ttcp%s: %ld bytes in %.2f real seconds = %s/sec +++\n",
+           "ttcp%s: %lu bytes in %.2f real seconds = %s/sec +++\n",
            trans ? "-t" : "-r",
            nbytes, realt, outfmt (((double) nbytes) / realt));
   if (verbose)
     {
       fprintf (stdout,
-               "ttcp%s: %ld bytes in %.2f CPU seconds = %s/cpu sec\n",
+               "ttcp%s: %lu bytes in %.2f CPU seconds = %s/cpu sec\n",
                trans ? "-t" : "-r",
                nbytes, cput, outfmt (((double) nbytes) / cput));
     }
   fprintf (stdout,
-           "ttcp%s: %d I/O calls, msec/call = %.2f, calls/sec = %.2f\n",
+           "ttcp%s: %lu I/O calls, msec/call = %.2f, calls/sec = %.2f\n",
            trans ? "-t" : "-r",
            numCalls,
            1024.0 * realt / ((double) numCalls),
@@ -579,9 +578,9 @@ main (int argc, char *argv[])
   if (verbose)
     {
       fprintf (stdout,
-        "ttcp%s: buffer address %#x\n",
+        "ttcp%s: buffer address %p\n",
         trans ? "-t" : "-r",
-        message_buf);
+        static_cast<void *> (message_buf));
     }
   exit (0);
 
@@ -636,14 +635,14 @@ mes (char *s)
 }
 
 void
-pattern (register char *cp, register int cnt)
+pattern (char *cp, int cnt)
 {
-  register char c;
+  char c;
   c = 0;
   while (cnt-- > 0)
   {
     while (!isprint ((c & 0x7F)))
-      c++;
+      ++c;
     *cp++ = (c++ & 0x7F);
   }
 }
@@ -683,7 +682,7 @@ static struct rusage ru0;       /* Resource utilization at the start */
 #if defined(SYSV)
 /*ARGSUSED */
 static void
-getrusage (int ignored, register struct rusage *ru)
+getrusage (int ignored, struct rusage *ru)
 {
   struct tms buf;
 
@@ -707,7 +706,6 @@ prep_timer ()
   itime0.it_interval.tv_usec = 0;
   itime0.it_value.tv_sec = LONG_MAX / 22; /* greatest possible value , itimer() count backwards */
   itime0.it_value.tv_usec = 0;
-
 
   getrusage (RUSAGE_SELF, &ru0);
 
@@ -758,13 +756,15 @@ read_timer (char *str, int len)
 }
 
 static void
-prusage (register struct rusage *r0, struct rusage *r1,
+prusage (struct rusage *r0, struct rusage *r1,
          struct timeval *e, struct timeval *b, char *outp)
 {
   struct timeval tdiff;
-  register time_t t;
-  register char *cp;
-  register int i;
+  time_t t;
+  char *cp;
+#if !defined (SYSV)
+  int i;
+#endif /* !SYSV */
   int ms;
 
   t = (r1->ru_utime.tv_sec - r0->ru_utime.tv_sec) * 100 +
@@ -773,13 +773,13 @@ prusage (register struct rusage *r0, struct rusage *r1,
       (r1->ru_stime.tv_usec - r0->ru_stime.tv_usec) / 10000;
   ms = (e->tv_sec - b->tv_sec) * 100 + (e->tv_usec - b->tv_usec) / 10000;
 
-#define END(x)  {while(*x) x++;}
+#define END(x)  {while(*x) ++x;}
 #if defined(SYSV)
   cp = "%Uuser %Ssys %Ereal %P";
 #else
   cp = "%Uuser %Ssys %Ereal %P %Xi+%Dd %Mmaxrss %F+%Rpf %Ccsw";
 #endif
-  for (; *cp; cp++)
+  for (; *cp; ++cp)
     {
       if (*cp != '%')
         *outp++ = *cp;
@@ -887,9 +887,9 @@ tvsub (struct timeval *tdiff, struct timeval *t1, struct timeval *t0)
 }
 
 static void
-psecs (long l, register char *cp)
+psecs (long l, char *cp)
 {
-  register int i;
+  int i;
 
   i = l / 3600;
   if (i)
@@ -917,7 +917,7 @@ psecs (long l, register char *cp)
 int
 Nread (ACE_SOCK_Stream &s, void *buf, int count)
 {
-  numCalls++;
+  ++numCalls;
   return (s.recv (buf, count));
 }
 
@@ -927,7 +927,7 @@ Nread (ACE_SOCK_Stream &s, void *buf, int count)
 int
 Nwrite (ACE_SOCK_Stream &s, void *buf, int count)
 {
-  numCalls++;
+  ++numCalls;
   return s.send (buf, count);
 }
 
@@ -951,15 +951,14 @@ delay (int us)
  * grouping as it is written with.  Written by Robert S. Miles, BRL.
  */
 int
-mread (int fd, register char *bufp, unsigned n)
+mread (int fd, char *bufp, unsigned n)
 {
-  register unsigned count = 0;
-  register int nread;
+  unsigned count = 0;
 
   do
     {
-      nread = read (fd, bufp, n - count);
-      numCalls++;
+      int const nread = read (fd, bufp, n - count);
+      ++numCalls;
       if (nread < 0)
       {
         perror ("ttcp_mread");

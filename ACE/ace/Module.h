@@ -86,11 +86,16 @@ public:
 
   /// Create an initialized module with @a module_name as its identity
   /// and @a reader and @a writer as its tasks.
-  ACE_Module (const ACE_TCHAR *module_name,
+  explicit ACE_Module (ACE_TCHAR const *module_name,
               ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *writer = nullptr,
               ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *reader = nullptr,
               void *args = nullptr,
               int flags = M_DELETE);
+
+  ACE_Module (ACE_Module const &) = delete;
+  ACE_Module (ACE_Module &&) = delete;
+  ACE_Module &operator= (ACE_Module const &) = delete;
+  ACE_Module &operator= (ACE_Module &&) = delete;
 
   /**
    * Initialize the module with @a module_name as its identity
@@ -99,7 +104,7 @@ public:
    * value of flags_.  Should not be called from within
    * <ACE_Task::module_closed>.
    */
-  int open (const ACE_TCHAR *module_name,
+  int open (ACE_TCHAR const *module_name,
             ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *writer = nullptr,
             ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *reader = nullptr,
             void *a = nullptr,
@@ -114,7 +119,8 @@ public:
    */
   int close (int flags = M_DELETE_NONE);
 
-  // = ACE_Task manipulation routines
+  /// @name ACE_Task manipulation routines
+  /// @{
   /// Get the writer task.
   ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *writer ();
 
@@ -141,20 +147,25 @@ public:
 
   /// Set and get pointer to sibling ACE_Task in an ACE_Module
   ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *sibling (ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *orig);
+  /// @}
 
-  // = Identify the module
+  /// @name Module identity
+  /// @{
   /// Get the module name.
-  const ACE_TCHAR *name () const;
+  ACE_TCHAR const *name () const;
 
   /// Set the module name.
-  void name (const ACE_TCHAR *);
+  void name (ACE_TCHAR const *);
+  /// @}
 
-  // = Argument to the Tasks.
+  /// @name Task argument
+  /// @{
   /// Get the argument passed to the tasks.
   void *arg () const;
 
   /// Set the argument passed to the tasks.
   void arg (void *);
+  /// @}
 
   /// Link to other modules in the ustream stack
   void link (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *m);
@@ -178,21 +189,21 @@ private:
 
   /// Pair of Tasks that form the "read-side" and "write-side" of the
   /// ACE_Module partitioning.
-  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *q_pair_[2];
+  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *q_pair_[2] {};
 
   /// Name of the ACE_Module.
-  ACE_TCHAR name_[MAXPATHLEN + 1];
+  ACE_TCHAR name_[MAXPATHLEN + 1] {};
 
   /// Next ACE_Module in the stack.
-  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *next_;
+  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *next_ {};
 
   /// Argument passed through to the reader and writer task when they
   /// are opened.
-  void *arg_;
+  void *arg_ {};
 
   /// Holds flags which are used to determine if the reader and writer
   /// task have to be deleted on exit
-  int flags_;
+  int flags_ {M_FLAGS_NOT_SET};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

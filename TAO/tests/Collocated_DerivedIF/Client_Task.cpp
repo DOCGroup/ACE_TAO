@@ -1,65 +1,64 @@
-
 #include "Client_Task.h"
 #include "TestC.h"
 
-Client_Task::Client_Task (const ACE_TCHAR *ior,
-                          CORBA::ORB_ptr corb,
-                          ACE_Thread_Manager *thr_mgr)
-  : ACE_Task_Base (thr_mgr)
-    , input_ (ior)
-    , corb_ (CORBA::ORB::_duplicate (corb))
+#include <cstring>
 
+Client_Task::Client_Task (std::basic_string<ACE_TCHAR> const &ior,
+                          CORBA::ORB_ptr corb,
+                          ACE_Thread_Manager *const thr_mgr)
+  : ACE_Task_Base (thr_mgr)
+  , input_ (ior)
+  , corb_ (CORBA::ORB::_duplicate (corb))
 {
 }
 
 int
 Client_Task::svc ()
 {
-  int status = 0;
+  bool failed {};
 
   try
     {
-      CORBA::Object_var tmp =
-        this->corb_->string_to_object (input_);
+      CORBA::Object_var const tmp {
+        this->corb_->string_to_object (this->input_.c_str ())};
 
-       Test::HelloAgain_var hello_again =
-         Test::HelloAgain::_narrow(tmp.in ());
+      Test::HelloAgain_var const hello_again {Test::HelloAgain::_narrow (tmp.in ())};
 
-      if (CORBA::is_nil (hello_again.in()))
+      if (CORBA::is_nil (hello_again.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::HelloAgain reference <%s>\n",
-                             input_),
-                             1);
+                             ACE_TEXT ("Nil Test::HelloAgain reference <%s>\n"),
+                             this->input_.c_str ()),
+                            1);
         }
 
-      CORBA::String_var  the_string = hello_again->get_string ();
-      if (ACE_OS::strcmp (the_string.in (), "Hello there!") != 0)
-         {
-           ACE_ERROR ((LM_ERROR, "(%P|%t) - Error, incorrect string returned <%C>\n",
-                       the_string.in ()));
-           status = 1;
-         }
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string from hello_again returned <%C>\n",
-                  the_string.in ()));
-       the_string = hello_again->get_string_again ();
-
-      if (ACE_OS::strcmp (the_string.in (), "Bye!") != 0)
+      CORBA::String_var the_string {hello_again->get_string ()};
+      if (std::strcmp (the_string.in (), "Hello there!") != 0)
         {
           ACE_ERROR ((LM_ERROR, "(%P|%t) - Error, incorrect string returned <%C>\n",
                       the_string.in ()));
-          status = 1;
+          failed = true;
+        }
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string from hello_again returned <%C>\n",
+                  the_string.in ()));
+      the_string = hello_again->get_string_again ();
+
+      if (std::strcmp (the_string.in (), "Bye!") != 0)
+        {
+          ACE_ERROR ((LM_ERROR, "(%P|%t) - Error, incorrect string returned <%C>\n",
+                      the_string.in ()));
+          failed = true;
         }
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string  from hello_again returned <%C>\n",
                   the_string.in ()));
       hello_again->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
-      status = 1;
+      failed = true;
     }
 
-  return status;
+  return failed;
 }

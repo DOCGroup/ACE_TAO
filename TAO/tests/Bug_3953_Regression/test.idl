@@ -1,37 +1,22 @@
-//
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/NestedUpcall
-//
-// = FILENAME
-//    test.idl
-//
-// = DESCRIPTION
-//    A simple test of nested upcalls.
-//
-// = AUTHOR
-//    Irfan Pyarali
-//
-// ============================================================================
+/// @file test.idl
+/// @brief IDL definitions for the nested-upcall regression test.
+/// @author Irfan Pyarali
 
 interface client
 {
+  /// Decrements c time_to_live and pings the server until it reaches zero.
   void ping (in unsigned short time_to_live);
-  // Decrements <time_to_live>.  If <time_to_live> becomes zero, it
-  // stops. Otherwise, it pings the server.
 };
 
 interface server
 {
+  /// Turns around and starts pinging the client.
   void start (in client c,
               in unsigned short time_to_live);
-  // Turns around and starts pinging the client.
 
+  /// Decrements c time_to_live and pings the client until it reaches zero.
   void ping (in unsigned short time_to_live);
-  // Decrements <time_to_live>.  If <time_to_live> becomes zero, it
-  // stops. Otherwise, it pings the client.
 
+  /// Shuts down the server.
   oneway void shutdown ();
-  // Shutdown the server.
 };

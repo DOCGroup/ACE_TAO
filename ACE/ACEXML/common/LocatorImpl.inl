@@ -27,29 +27,27 @@ ACEXML_LocatorImpl::getLineNumber () const
 }
 
 ACEXML_INLINE void
-ACEXML_LocatorImpl::setPublicId (const ACEXML_Char *id)
+ACEXML_LocatorImpl::setPublicId (ACEXML_Char const *id)
 {
-  delete[] this->publicId_;
-  this->publicId_ = ACE::strnew (id);
+  this->publicId_.reset (ACE::strnew (id));
 }
 
 ACEXML_INLINE void
-ACEXML_LocatorImpl::setSystemId (const ACEXML_Char *id)
+ACEXML_LocatorImpl::setSystemId (ACEXML_Char const *id)
 {
-  delete[] this->systemId_;
-  this->systemId_ = ACE::strnew (id);
+  this->systemId_.reset (ACE::strnew (id));
 }
 
-ACEXML_INLINE const ACEXML_Char *
+ACEXML_INLINE ACEXML_Char const *
 ACEXML_LocatorImpl::getPublicId () const
 {
-  return this->publicId_;
+  return this->publicId_.get ();
 }
 
-ACEXML_INLINE const ACEXML_Char *
+ACEXML_INLINE ACEXML_Char const *
 ACEXML_LocatorImpl::getSystemId () const
 {
-  return this->systemId_;
+  return this->systemId_.get ();
 }
 
 ACEXML_INLINE void

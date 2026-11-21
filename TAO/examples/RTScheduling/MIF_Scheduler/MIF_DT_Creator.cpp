@@ -2,12 +2,15 @@
 #include "test.h"
 #include "MIF_Task.h"
 
+#include <cerrno>
+#include <new>
+
 MIF_DT_Creator::MIF_DT_Creator ()
 {
   DT_TEST::instance ()->dt_creator (this);
 }
 
-Thread_Task*
+std::unique_ptr<Thread_Task>
 MIF_DT_Creator::create_thr_task (int importance,
                                  time_t start_time,
                                  int load,
@@ -15,16 +18,18 @@ MIF_DT_Creator::create_thr_task (int importance,
                                  int dist,
                                  char *job_name)
 {
-  MIF_Task* task;
-  ACE_NEW_RETURN (task,
-                  MIF_Task (importance,
-                            start_time,
-                            load,
-                            iter,
-                            dist,
-                            job_name,
-                            this),
-                  0);
+  std::unique_ptr<Thread_Task> task (
+    new (std::nothrow) MIF_Task (importance,
+                                 start_time,
+                                 load,
+                                 iter,
+                                 dist,
+                                 job_name,
+                                 this));
+  if (!task)
+    {
+      errno = ENOMEM;
+    }
   return task;
 }
 
@@ -52,13 +57,15 @@ MIF_DT_Creator::yield (time_t suspend_time,
           ACE_OS::sleep (1);
           CORBA::Policy_var sched_param;
           sched_param = this->sched_param (100);
-          const char * name = 0;
+          char const *name {};
           current->update_scheduling_segment (name,
                                               sched_param.in (),
                                               sched_param.in ());
           now = ACE_OS::gettimeofday ();
           if (suspend_time == 1)
+          {
             break;
+          }
         }
     }
   catch (const CORBA::Exception& ex)

@@ -164,7 +164,6 @@ class ACE_Export ACE_Flow_Spec
 #endif /* ACE_HAS_WINSOCK2 */
 {
 public:
-  /// Default constructor.
   ACE_Flow_Spec ();
 
   /// Constructor that initializes all the fields.
@@ -269,7 +268,6 @@ class ACE_Export ACE_QoS
 #endif /* ACE_HAS_WINSOCK2 */
 {
 public:
-  /// Constructor
   ACE_QoS ();
 
   /// Get the flow spec for data sending.
@@ -293,8 +291,8 @@ public:
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 #else
 private:
-  ACE_Flow_Spec *sending_flowspec_;
-  ACE_Flow_Spec *receiving_flowspec_;
+  ACE_Flow_Spec *sending_flowspec_ {};
+  ACE_Flow_Spec *receiving_flowspec_ {};
 #endif
 };
 
@@ -379,7 +377,6 @@ private:
 // method.
 using ACE_QOS_CONDITION_FUNC = int (*)(iovec *, iovec *, ACE_QoS *, ACE_QoS *, iovec *, iovec *, ACE_SOCK_GROUP *, unsigned long);
 
-
 /**
  * @class ACE_Accept_QoS_Params
  *
@@ -399,7 +396,7 @@ public:
    * passed back to the application as a condition function parameter,
    * i.e., it is an Asynchronous Completion Token (ACT).
    */
-  ACE_Accept_QoS_Params (ACE_QOS_CONDITION_FUNC qos_condition_callback = 0,
+  ACE_Accept_QoS_Params (ACE_QOS_CONDITION_FUNC qos_condition_callback = nullptr,
                          unsigned long callback_data = 0);
 
   /// Get QoS condition callback.

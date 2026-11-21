@@ -9,6 +9,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <cstring>
+
 int run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("UNIX_Addr_Test"));
@@ -166,11 +168,10 @@ int run_main (int, ACE_TCHAR *[])
   ACE_TEST_ASSERT(addr.set("@") == 0);  // Empty abstract path
   ACE_TEST_ASSERT(addr.set("@@/tmp/test") == 0);  // Multiple @ prefixes
 
-
   // Test path with embedded null
   char null_path[] = "@/tmp/te\0st";
   ACE_TEST_ASSERT(addr.set(null_path) == 0);
-  ACE_TEST_ASSERT(ACE_OS::strcmp(addr.get_path_name() + 1, "/tmp/te") == 0);
+  ACE_TEST_ASSERT (std::strcmp (addr.get_path_name () + 1, "/tmp/te") == 0);
 
   // Abstract paths with difference at the end
   {

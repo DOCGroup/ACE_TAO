@@ -1,6 +1,4 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    PortableServer_WFunctions.h
  *
@@ -8,8 +6,6 @@
  *
  *  @author  Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
-
 #ifndef TAO_PORTABLESERVER_WFUNCTIONS_H
 #define TAO_PORTABLESERVER_WFUNCTIONS_H
 

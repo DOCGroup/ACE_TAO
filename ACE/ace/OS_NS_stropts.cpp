@@ -25,7 +25,8 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                                    out_buffer_p,
                                    out_buffer,
                                    bytes_returned,
-                                   (WSAOVERLAPPED *) overlapped,
+                                   reinterpret_cast<WSAOVERLAPPED *> (
+                                     overlapped),
                                    func),
                        int,
                        SOCKET_ERROR);
@@ -72,7 +73,8 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                                        buffer_p,
                                        buffer,
                                        bytes_returned,
-                                       (WSAOVERLAPPED *) overlapped,
+                                       reinterpret_cast<WSAOVERLAPPED *> (
+                                         overlapped),
                                        func),
                            int,
                            SOCKET_ERROR);
@@ -92,7 +94,6 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                                 0,
                                 0);
 
-
       if (result == SOCKET_ERROR)
         {
           unsigned long dwErr = ::WSAGetLastError ();
@@ -110,7 +111,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
               }
           }
 
-    char *qos_buf = nullptr;
+    char *qos_buf {};
     ACE_NEW_RETURN (qos_buf,
                     char [dwBufferLen],
                     -1);
@@ -128,7 +129,9 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                        0);
 
     if (result == SOCKET_ERROR)
-      return result;
+      {
+        return result;
+      }
 
     ACE_Flow_Spec sending_flowspec (qos->SendingFlowspec.TokenRate,
                                     qos->SendingFlowspec.TokenBucketSize,
@@ -167,7 +170,6 @@ ACE_OS::ioctl (ACE_HANDLE socket,
        ace_qos.sending_flowspec (&sending_flowspec);
        ace_qos.receiving_flowspec (&receiving_flowspec);
        ace_qos.provider_specific (*((struct iovec *) (&qos->ProviderSpecific)));
-
 
       return result;
     }

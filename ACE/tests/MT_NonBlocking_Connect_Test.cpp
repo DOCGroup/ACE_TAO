@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
@@ -29,6 +28,9 @@
 #include "ace/Connector.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/Thread_Mutex.h"
+
+#include <memory>
+#include <vector>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -88,7 +90,7 @@ int
 Svc_Handler::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "%t close connection on handle %d.\n",
+              "%t close connection on handle %H.\n",
               this->get_handle ()));
   return 0;
 }
@@ -110,7 +112,7 @@ Concurrency_Strategy<SVC_HANDLER>::
   if (++count % 4 == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%t connection on handle %d has artificially failed.\n",
+                  "%t connection on handle %H has artificially failed.\n",
                   svc_handler->get_handle ()));
       return -1;
     }
@@ -138,8 +140,10 @@ public:
     , threads_ (number_of_threads)
   {
     // Open the connector.
-    this->base_connector_.open (&this->reactor_,
-                                &this->cns_, &this->cts_, &this->cys_);
+    this->base_connector_.open (std::addressof (this->reactor_),
+                                std::addressof (this->cns_),
+                                std::addressof (this->cts_),
+                                std::addressof (this->cys_));
   }
 
   int svc () override;
@@ -160,7 +164,7 @@ int
 Connect_Thread::svc ()
 {
   size_t const nr_names = sizeof hosts / sizeof (char *);
-  ACE_INET_Addr *addresses = new ACE_INET_Addr[nr_names];
+  std::vector<ACE_INET_Addr> addresses (nr_names);
 
   for (size_t i = 0; i < nr_names; ++i)
     {
@@ -184,7 +188,7 @@ Connect_Thread::svc ()
                   hosts[i]));
 
       // Create a new handler. It's what begin_connection() in TAO does.
-      Svc_Handler *svc_handler = nullptr;
+      Svc_Handler *svc_handler {};
       result = this->base_connector_.connect (svc_handler,
                                               remote_addr,
                                               synch_options,
@@ -219,7 +223,7 @@ Connect_Thread::svc ()
                                            ACE_Event_Handler::READ_MASK);
 
           ACE_DEBUG ((LM_DEBUG,
-                      "%t connection for %s completed on handle %d.\n",
+                      "%t connection for %s completed on handle %H.\n",
                       hosts[i],
                       svc_handler->get_handle ()));
           // We are connected successfully. Close the connection.
@@ -242,8 +246,6 @@ Connect_Thread::svc ()
       // Close the connector.
       this->base_connector_.close ();
     }
-
-  delete[] addresses;
 
   return 0;
 }
@@ -331,7 +333,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Validate options.
   result = parse_args (argc, argv);
   if (result != 0)
+  {
     return result;
+  }
 
   if (test_select_reactor)
     {

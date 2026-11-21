@@ -5,37 +5,33 @@
 //     Bottom_Impl Implementation
 //
 
-Bottom_Impl::Bottom_Impl (CORBA::ORB_ptr orb)
-{
-  this->orb_ = CORBA::ORB::_duplicate (orb);
-}
-
-Bottom_Impl::~Bottom_Impl ()
+Bottom_Impl::Bottom_Impl (CORBA::ORB_ptr const orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
 char *
 Bottom_Impl::top_quote ()
 {
-  return CORBA::string_dup(Quote::top);
+  return CORBA::string_dup (Quote::top);
 }
 
 char *
 Bottom_Impl::left_quote ()
 {
-  return CORBA::string_dup(Quote::left);
+  return CORBA::string_dup (Quote::left);
 }
 
 char *
 Bottom_Impl::right_quote ()
 {
-  return CORBA::string_dup(Quote::right);
+  return CORBA::string_dup (Quote::right);
 }
 
 char *
 Bottom_Impl::bottom_quote ()
 {
-  return CORBA::string_dup(Quote::bottom);
+  return CORBA::string_dup (Quote::bottom);
 }
 
 void
@@ -47,16 +43,9 @@ Bottom_Impl::shutdown ()
 ///////////////////////////////////////////////////////////
 //     Delegated_Bottom_Impl Implementation
 //
-Delegated_Bottom_Impl::Delegated_Bottom_Impl (Multiple::Bottom_ptr delegate,
-                                              CORBA::ORB_ptr orb)
+Delegated_Bottom_Impl::Delegated_Bottom_Impl (Multiple::Bottom_ptr const delegate)
   : delegate_ (delegate)
 {
-  this->orb_ = CORBA::ORB::_duplicate (orb);
-}
-
-Delegated_Bottom_Impl::~Delegated_Bottom_Impl ()
-{
-  // No-Op.
 }
 
 char *
@@ -73,7 +62,7 @@ Delegated_Bottom_Impl::top_quote ()
 char *
 Delegated_Bottom_Impl::left_quote ()
 {
-    ACE_DEBUG ((LM_DEBUG,
+  ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Delegating the call: <left_quote>\n")));
 
   CORBA::String_var msg =
@@ -109,5 +98,4 @@ Delegated_Bottom_Impl::shutdown ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Delegating Shut-Down.\n")));
   this->delegate_->shutdown ();
-  //this->orb_->shutdown (false);
 }

@@ -4,7 +4,7 @@
 #include "ace/Read_Buffer.h"
 #include "testC.h"
 
-static ACE_TCHAR *IOR = 0;
+static ACE_TCHAR *IOR {};
 static int iterations = 1;
 static int oneway = 0;
 static int shutdown_server = 0;
@@ -60,8 +60,10 @@ parse_args (int argc, ACE_TCHAR **argv)
       }
 
   if (IOR == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Please specify the IOR for the servant\n"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Please specify the IOR for the servant\n"), -1);
+    }
 
   // Indicates successful parsing of command line.
   return 0;
@@ -96,8 +98,10 @@ print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time,
                   tmp < 0.0 ? 0.0 : tmp));
     }
   else
-    ACE_ERROR ((LM_ERROR,
-                "\tNo time stats printed.  Zero iterations or error occurred.\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "\tNo time stats printed.  Zero iterations or error occurred.\n"));
+    }
 }
 
 int
@@ -113,7 +117,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int parse_args_result =
         parse_args (argc, argv);
       if (parse_args_result != 0)
+      {
         return parse_args_result;
+      }
 
       // Get an object reference from the argument string.
       CORBA::Object_var object =
@@ -137,7 +143,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       int i = 0;
 
-      for (i = 0; i < iterations; i++)
+      for (i = 0; i < iterations; ++i)
         {
           if (oneway && timed_method)
             {

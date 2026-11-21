@@ -1,11 +1,7 @@
 #include "Consumer.h"
 
-Consumer::Consumer ()
-{
-}
-
 void
-Consumer::push (const RtecEventComm::EventSet& events)
+Consumer::push (RtecEventComm::EventSet const &events)
 {
   if (events.length () == 0)
     {

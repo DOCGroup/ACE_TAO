@@ -5,15 +5,17 @@
 #include "Logging_Acceptor.h"
 #include "Logging_Event_Handler.h"
 
-
 int Logging_Acceptor::open (const ACE_INET_Addr &local_addr) {
-  if (acceptor_.open (local_addr) == -1) return -1;
+  if (acceptor_.open (local_addr) == -1)
+  {
+    return -1;
+  }
   return reactor ()->register_handler
            (this, ACE_Event_Handler::ACCEPT_MASK);
 }
 
 int Logging_Acceptor::handle_input (ACE_HANDLE) {
-  Logging_Event_Handler *peer_handler = nullptr;
+  Logging_Event_Handler *peer_handler {};
   ACE_NEW_RETURN (peer_handler,
                   Logging_Event_Handler (reactor ()),
                   -1);

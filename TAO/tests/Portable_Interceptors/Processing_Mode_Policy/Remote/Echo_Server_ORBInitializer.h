@@ -27,21 +27,24 @@ class Echo_Server_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-  Echo_Server_ORBInitializer
-    (PortableInterceptor::ProcessingMode proc_mode);
+  explicit Echo_Server_ORBInitializer (
+      PortableInterceptor::ProcessingMode proc_mode);
+  Echo_Server_ORBInitializer (Echo_Server_ORBInitializer const &) = delete;
+  Echo_Server_ORBInitializer (Echo_Server_ORBInitializer &&) = delete;
+  Echo_Server_ORBInitializer &operator= (Echo_Server_ORBInitializer const &) = delete;
+  Echo_Server_ORBInitializer &operator= (Echo_Server_ORBInitializer &&) = delete;
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
 private:
-  PortableInterceptor::ProcessingMode processing_mode_;
+  PortableInterceptor::ProcessingMode const processing_mode_;
 };
 
 #if defined (_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
 
 #include /**/ "ace/post.h"
 

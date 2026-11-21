@@ -25,6 +25,7 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Basic_Types.h"
 
+#include <atomic>
 // The ACE_ASSERT macro used to be defined here, include ace/Assert.h
 // for backwards compatibility.
 #include "ace/Assert.h"
@@ -293,7 +294,8 @@ public:
             u_long options_flags = ACE_DEFAULT_LOG_FLAGS,
             const ACE_TCHAR *logger_key = nullptr);
 
-  // = Set/get the options flags.
+  /// @name Options flag accessors
+  /// @{
 
   /**
    * Enable the bits in the logger's options flags.
@@ -309,6 +311,7 @@ public:
    * Return the bits in the logger's options flags.
    */
   u_long flags ();
+  /// @}
 
   /** @name Allow apps to acquire and release internal synchronization
    *        lock
@@ -317,20 +320,21 @@ public:
    * implementation. By exporting the lock, applications can hold the
    * lock atomically over a number of calls to ACE_Log_Msg.
    */
-  //@{
+  /// @{
   /// Acquire the internal lock.
   int acquire ();
 
   /// Release the internal lock.
   int release ();
-  //@}
+  /// @}
 
   /// Call after doing a @c fork() to resynchronize the process id and
   /// @c program_name_ variables.
   void sync (const ACE_TCHAR *program_name);
 
-  // = Set/get methods.  Note that these are non-static and thus will
-  // be thread-specific.
+  /// @name Thread-specific accessors
+  /// These accessors are non-static and thread-specific.
+  /// @{
 
   /// Set the result of the operation status (by convention, -1 means
   /// error).
@@ -444,6 +448,7 @@ public:
 
   /// Query tracing status on a per-thread basis...
   bool tracing_enabled () const;
+  /// @}
 
   using MASK_TYPE = enum
   {
@@ -451,7 +456,8 @@ public:
     THREAD = 1
   };
 
-  // = Get/set the priority mask.
+  /// @name Priority mask accessors
+  /// @{
   /// Get the current ACE_Log_Priority mask.
   u_long priority_mask (MASK_TYPE = THREAD);
 
@@ -478,6 +484,7 @@ public:
                             const wchar_t *,
                             ...);
 #endif /* ACE_USES_WCHAR */
+  /// @}
 
   /// Optimize reading of the pid (avoids a system call if the value is
   /// cached...).
@@ -607,8 +614,8 @@ public:
    */
   static void init_hook (ACE_OS_Log_Msg_Attributes &attributes
 # if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
-                         , ACE_SEH_EXCEPT_HANDLER selector = 0
-                         , ACE_SEH_EXCEPT_HANDLER handler = 0
+                         , ACE_SEH_EXCEPT_HANDLER selector = nullptr
+                         , ACE_SEH_EXCEPT_HANDLER handler = nullptr
 # endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
                          );
 
@@ -630,13 +637,13 @@ private:
   void cleanup_ostream ();
 
   /// Status of operation (-1 means failure, >= 0 means success).
-  int status_;
+  int status_ {};
 
   /// Type of error that occurred (see <sys/errno.h>).
-  int errnum_;
+  int errnum_ {};
 
   /// Line number where the error occurred.
-  int linenum_;
+  int linenum_ {};
 
   /// File where the error occurred.
   char file_[MAXPATHLEN + 1];
@@ -644,35 +651,36 @@ private:
   /// The log message, which resides in thread-specific storage.  Note
   /// that only the current log message is stored here -- it will be
   /// overwritten by the subsequent call to log().
-  ACE_TCHAR* msg_; // Add one for NUL-terminator.
+  /// An extra character is allocated for the NUL terminator.
+  ACE_TCHAR* msg_ {};
 
   /// Indicates whether we should restart system calls that are
   /// interrupted.
-  bool restart_;
+  bool restart_ {true};
 
   /// The ostream where logging messages can be written.
-  ACE_OSTREAM_TYPE *ostream_;
+  ACE_OSTREAM_TYPE *ostream_ {};
 
   /// This pointer is 0 if we are not reference counting (the user has not
   /// passed "true" for the delete_ostream argument to msg_ostream).
   /// If we are reference counting, this points to a shared count that will
   /// be deleted when it reaches zero.  Since we want optional but shared
   /// ownership neither std::unique_ptr nor ACE_Strong_Bound_Ptr have the right
-  /// semantics.  *Bound_Ptr also doesn't take advantage of Atomic_Op.
-  using Atomic_ULong = ACE_Atomic_Op<ACE_MT_SYNCH::MUTEX, unsigned long>;
-  Atomic_ULong *ostream_refcount_;
+  /// semantics.
+  using Ostream_Refcount = std::atomic<unsigned long>;
+  Ostream_Refcount *ostream_refcount_ {};
 
   /// The callback object.
-  ACE_Log_Msg_Callback *msg_callback_;
+  ACE_Log_Msg_Callback *msg_callback_ {};
 
   /// Depth of the nesting for printing traces.
-  int trace_depth_;
+  int trace_depth_ {};
 
   /// Are we already within an ACE_Trace constructor call?
-  bool trace_active_;
+  bool trace_active_ {};
 
   /// Are we allowing tracing in this thread?
-  bool tracing_enabled_;
+  bool tracing_enabled_ {true};
 
   /**
    * If we're running in the context of an ACE_Thread_Manager this
@@ -680,19 +688,21 @@ private:
    * thread descriptor of the thread.  This can be used to rapidly
    * access all thread data kept in ACE_Thread_Descriptor.
    */
-  ACE_Thread_Descriptor *thr_desc_;
+  ACE_Thread_Descriptor *thr_desc_ {};
 
   /**
    * Keeps track of all the per-thread ACE_Log_Priority values that
    * are currently enabled.  Default is for all logging priorities to
    * be disabled.
    */
-  u_long priority_mask_;
+  u_long priority_mask_ {default_priority_mask_};
 
   /// Always timestamp?
-  int timestamp_;
+  int timestamp_ {};
 
-  // = The following fields are *not* kept in thread-specific storage.
+  /// @name Process-wide state
+  /// These fields are not kept in thread-specific storage.
+  /// @{
 
   // We only want one instance for the entire process!
 
@@ -726,6 +736,7 @@ private:
    * Priority mask to use for each new instance
    */
   static u_long default_priority_mask_;
+  /// @}
 
   /// Anonymous struct since there will only be one instance.  This
   /// struct keeps information stored away in case we actually end up
@@ -754,9 +765,11 @@ private:
 
   //friend void ACE_OS::cleanup_tss (const u_int);
 
-  // = Disallow these operations.
+  /// @name Disabled copy operations
+  /// @{
   ACE_Log_Msg &operator= (const ACE_Log_Msg &);
   ACE_Log_Msg (const ACE_Log_Msg &);
+  /// @}
 };
 
 #ifdef ACE_LACKS_VA_FUNCTIONS

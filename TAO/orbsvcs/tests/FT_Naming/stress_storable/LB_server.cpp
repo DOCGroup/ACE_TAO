@@ -16,7 +16,7 @@ LB_server::destroy ()
 {
   try
     {
-      this->root_poa_->destroy (1, 1);
+      this->root_poa_->destroy (true, true);
 
       this->orb_->destroy ();
     }
@@ -148,7 +148,9 @@ LB_server::create_object_group ()
   try
     {
       if (this->parse_args (argc_, argv_) != 0)
+      {
         return -1;
+      }
 
       PortableGroup::Criteria criteria (1);
       criteria.length (1);
@@ -167,7 +169,7 @@ LB_server::create_object_group ()
                                  "Basic Group", "Java Group", "Forth Group",
                                  "COBOL Group", "Ruby Group", "Scala Group",
                                  "R Group", 0};
-      for (int i = 0; group_names[i] != 0; i++)
+      for (int i = 0; group_names[i] != 0; ++i)
         {
           try
             {

@@ -85,7 +85,6 @@ TAO_ORB_Parameters::linger (int x)
   this->linger_ = x;
 }
 
-
 ACE_INLINE time_t
 TAO_ORB_Parameters::accept_error_delay () const
 {
@@ -97,7 +96,6 @@ TAO_ORB_Parameters::accept_error_delay (time_t x)
 {
   this->accept_error_delay_ = x;
 }
-
 
 ACE_INLINE void
 TAO_ORB_Parameters::service_port (TAO::MCAST_SERVICEID service_id,
@@ -336,7 +334,6 @@ TAO_ORB_Parameters::disable_rt_collocation_resolver (bool x)
 {
   this->disable_rt_collocation_resolver_ = x;
 }
-
 
 ACE_INLINE bool
 TAO_ORB_Parameters::negotiate_codesets () const

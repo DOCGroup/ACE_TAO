@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    fixed_array.h
  *
@@ -7,25 +5,19 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #ifndef PARAM_TEST_FIXED_ARRAY_H
 #define PARAM_TEST_FIXED_ARRAY_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test fixed arrays
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test fixed arrays
 class Test_Fixed_Array
 {
 public:
-  /// ctor
   Test_Fixed_Array ();
 
-  /// dtor
-  ~Test_Fixed_Array ();
+  ~Test_Fixed_Array () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -60,7 +52,7 @@ private:
   void print (const Param_Test::Fixed_Array_slice *a);
 
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   Param_Test::Fixed_Array in_;

@@ -2,6 +2,7 @@
 #include "ace/Log_Msg.h"
 #include "tao/Object_KeyC.h"
 #include <algorithm>
+#include <cstring>
 
 /// This function was defined in IOGR_Maker.cpp. It is moved
 /// here because the use of <algorithm> header
@@ -14,15 +15,16 @@ void replace_key(char* ior, char* end_ior,
                  const TAO::ObjectKey& oldkey,
                  const TAO::ObjectKey& newkey)
 {
-  size_t keylen = oldkey.length();
+  size_t const keylen = oldkey.length();
   ACE_ASSERT(keylen == newkey.length());
 
   char* pos = ior;
-  const char* oldkey_begin = (const char*)oldkey.get_buffer();
+  const char *oldkey_begin =
+    reinterpret_cast<const char *> (oldkey.get_buffer ());
   const char* oldkey_end = oldkey_begin + keylen;
 
   while ((pos = std::search(pos, end_ior,oldkey_begin, oldkey_end)) != end_ior) {
-    ACE_OS::memcpy(pos, newkey.get_buffer(), keylen);
+    std::memcpy (pos, newkey.get_buffer (), keylen);
     pos+= keylen;
   }
 }

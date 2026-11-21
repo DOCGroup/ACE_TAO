@@ -4,50 +4,72 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 # -*- perl -*-
 
+use strict;
+use warnings;
 use lib "$ENV{ACE_ROOT}/bin";
+use PerlACE::TestTarget;
 
-require ACEutils;
-require Process;
+my $status = 0;
+my $server = PerlACE::TestTarget::create_target (1)
+  || die "Create target 1 failed\n";
+my $ior_base = "chapter_test_$$.ior";
+my $db_base = "chapter_test_$$.db";
+my $assets_base = "chapter_test_$$.assets";
+my $ior_file = $server->LocalFile ($ior_base);
+my $db_file = $server->LocalFile ($db_base);
+my $assets_file = $server->LocalFile ($assets_base);
 
-$status = 0;
-$iorfile = "chapter_test.ior";
-unlink $iorfile;
+for my $file ($db_file, $assets_file)
+  {
+    open my $handle, '>', $file or die "Cannot create $file: $!\n";
+    close $handle or die "Cannot close $file: $!\n";
+  }
 
+$server->SetEnv ('CCS_DB', $db_file);
+$server->SetEnv ('CCS_ASSETS', $assets_file);
+$server->DeleteFile ($ior_base);
 
+my $server_process = $server->CreateProcess ('server', "-o $ior_file");
+my $server_started = 0;
+if ($server_process->Spawn () != 0)
+  {
+    print STDERR "ERROR: cannot start server\n";
+    $status = 1;
+  }
+else
+  {
+    $server_started = 1;
+  }
 
-# Hacked call
-$server = Process::Create ("exec ".$EXEPREFIX."server".$EXE_EXT.">$iorfile",
-                           "");
-# Proper call
-#$server = Process::Create ($EXEPREFIX."server".$EXE_EXT, ">$iorfile");
+if ($server_started && $status == 0
+    && $server->WaitForFileTimed ($ior_base,
+                                  $server->ProcessStartWaitInterval ()) == -1)
+  {
+    print STDERR "ERROR: timed out waiting for IOR file <$ior_file>\n";
+    $status = 1;
+  }
+elsif ($server_started && $status == 0)
+  {
+    my $client_process = $server->CreateProcess ('client', "file://$ior_file");
+    my $client_status = $client_process->SpawnWaitKill (60);
+    if ($client_status != 0)
+      {
+        print STDERR "ERROR: client returned $client_status\n";
+        $status = 1;
+      }
+  }
 
-if (ACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
-  print STDERR "ERROR: timedout waiting for file <$iorfile>\n";
-  $server->Kill (); $server->TimedWait (1);
-  exit 1;
-}
+if ($server_started)
+  {
+    my $server_status = $server_process->TerminateWaitKill (5);
+    if ($server_status != 0)
+      {
+        print STDERR "ERROR: server returned $server_status\n";
+        $status = 1;
+      }
+  }
 
-open(ior_handle, "$iorfile");
-$ior_content = <ior_handle>;
-
-$client = Process::Create($EXEPREFIX."client$EXE_EXT", "$ior_content");
-
-if ($client->TimedWait (60) == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $status = 1;
-  $client->Kill (); $client->TimedWait (1);
-}
-
-
-
-
-$server->Terminate ();
-if ($server->TimedWait (5) == -1) {
-  print STDERR "ERROR: cannot terminate the server\n";
-  $server->Kill (); $server->TimedWait (1);
-  $status = 1;
-}
-
-unlink $iorfile;
-
+$server->DeleteFile ($ior_base);
+$server->DeleteFile ($db_base);
+$server->DeleteFile ($assets_base);
 exit $status;

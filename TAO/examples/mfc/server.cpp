@@ -20,7 +20,6 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-
 /////////////////////////////////////////////////////////////////////////////
 // CServerApp
 
@@ -36,7 +35,6 @@ BEGIN_MESSAGE_MAP(CServerApp, CWinApp)
         // Standard print setup command
         ON_COMMAND(ID_FILE_PRINT_SETUP, CWinApp::OnFilePrintSetup)
 END_MESSAGE_MAP()
-
 
 // Thread-Function!
 static unsigned long
@@ -91,7 +89,6 @@ CServerApp::CServerApp()
   // Place all significant initialization in InitInstance
 }
 
-
 CServerApp::~CServerApp()
 {
   try
@@ -99,7 +96,7 @@ CServerApp::~CServerApp()
       CORBA::ORB_var the_shutdown_orb;
 
       int argc = 0;
-      ACE_TCHAR **argv = 0;
+      ACE_TCHAR **argv {};
       const ACE_TCHAR *orb_name = ACE_TEXT("");
 
       // Retrieving a reference to the ORB used inside the thread
@@ -116,7 +113,6 @@ CServerApp::~CServerApp()
     {
       ex._tao_print_exception ("Caught exception:");
     }
-
 
   ACE::fini ();
 }
@@ -178,7 +174,9 @@ BOOL CServerApp::InitInstance()
 
   // Dispatch commands specified on the command line
   if (!ProcessShellCommand(cmdInfo))
-    return FALSE;
+    {
+      return FALSE;
+    }
 
   // The one and only window has been initialized, so show and update it.
   m_pMainWnd->ShowWindow(SW_SHOW);
@@ -188,7 +186,6 @@ BOOL CServerApp::InitInstance()
 
   return TRUE;
 }
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CAboutDlg dialog used for App About

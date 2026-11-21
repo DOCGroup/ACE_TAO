@@ -7,8 +7,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Exclusive_TMS::TAO_Exclusive_TMS (TAO_Transport *transport)
   : TAO_Transport_Mux_Strategy (transport),
-    request_id_generator_ (0),
-    request_id_ (0),
     rd_ (nullptr)
 {
 }
@@ -34,12 +32,16 @@ TAO_Exclusive_TMS::request_id ()
 
   if ((bidir_flag == 1 && ACE_ODD (this->request_id_generator_))
        || (bidir_flag == 0 && ACE_EVEN (this->request_id_generator_)))
+  {
     ++this->request_id_generator_;
+  }
 
   if (TAO_debug_level > 4)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::request_id - [%d]\n"),
-                this->request_id_generator_));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::request_id - [%d]\n"),
+                     this->request_id_generator_));
+    }
 
   return this->request_id_generator_;
 }
@@ -50,7 +52,7 @@ TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
                                     ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd)
 {
   this->request_id_ = request_id;
-  this->rd_ = rd.get ();
+  this->rd_.reset (rd.get ());
 
   return 0;
 }
@@ -58,14 +60,16 @@ TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
 bool
 TAO_Exclusive_TMS::has_request ()
 {
-  return this->rd_ != nullptr;
+  return this->rd_.get () != nullptr;
 }
 
 int
 TAO_Exclusive_TMS::unbind_dispatcher (CORBA::ULong request_id)
 {
   if (!this->rd_ || this->request_id_ != request_id)
+  {
     return -1;
+  }
 
   this->rd_.release ();
 
@@ -79,9 +83,11 @@ TAO_Exclusive_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   if (!this->rd_ || this->request_id_ != params.request_id_)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::dispatch_reply - [%d] != [%d]\n"),
-                    this->request_id_, params.request_id_));
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::dispatch_reply - [%d] != [%d]\n"),
+                         this->request_id_, params.request_id_));
+        }
 
       // The return value 0 informs the transport that the mux strategy
       // did not find the right reply handler.
@@ -104,9 +110,11 @@ TAO_Exclusive_TMS::reply_timed_out (CORBA::ULong request_id)
   if (!this->rd_ || this->request_id_ != request_id)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::reply_timed_out - [%d] != [%d]\n"),
-                    this->request_id_, request_id));
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::reply_timed_out - [%d] != [%d]\n"),
+                         this->request_id_, request_id));
+        }
 
       // The return value 0 informs the transport that the mux strategy
       // did not find the right reply handler.
@@ -127,7 +135,7 @@ TAO_Exclusive_TMS::idle_after_send ()
 {
   // if there is no reply dispatcher (possible in case of AMI requests)
   // release the transport now
-  if (this->rd_ != nullptr)
+  if (this->rd_)
     {
       return false;
     }
@@ -164,8 +172,10 @@ TAO_Exclusive_TMS::idle_after_reply ()
 void
 TAO_Exclusive_TMS::connection_closed ()
 {
-  if (this->rd_ != nullptr)
+  if (this->rd_)
+  {
     this->rd_->connection_closed ();
+  }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

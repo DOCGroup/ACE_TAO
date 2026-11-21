@@ -8,10 +8,6 @@ TAO_Notify_Method_Request_Shutdown::TAO_Notify_Method_Request_Shutdown (TAO_Noti
 {
 }
 
-TAO_Notify_Method_Request_Shutdown::~TAO_Notify_Method_Request_Shutdown ()
-{
-}
-
 TAO_Notify_Method_Request_Queueable*
 TAO_Notify_Method_Request_Shutdown::copy ()
 {

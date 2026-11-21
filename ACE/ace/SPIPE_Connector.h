@@ -32,7 +32,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_SPIPE_Connector
 {
 public:
-  /// Default constructor.
   ACE_SPIPE_Connector ();
 
   /**
@@ -94,9 +93,11 @@ public:
   /// Resets any event associations on this handle
   bool reset_new_handle (ACE_HANDLE handle);
 
-  // = Meta-type info
+  /// @name Peer types
+  /// @{
   using PEER_ADDR = ACE_SPIPE_Addr;
   using PEER_STREAM = ACE_SPIPE_Stream;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

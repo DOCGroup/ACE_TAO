@@ -25,7 +25,6 @@
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Priority_Mapping
 {
 public:
-  /// The destructor
   virtual ~TAO_Notify_Tests_Priority_Mapping ();
 
   virtual CORBA::Boolean

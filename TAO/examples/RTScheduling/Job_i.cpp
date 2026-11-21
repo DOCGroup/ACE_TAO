@@ -13,15 +13,11 @@ Job_i::Job_i (DT_Creator* dt_creator)
   : dt_creator_ (dt_creator),
     guid_ (0)
 {
-  // create the stat object.
-  ACE_NEW (task_stats_, Task_Stats);
+  task_stats_ = std::make_unique<Task_Stats> ();
   task_stats_->init (100);
 }
 
-Job_i::~Job_i ()
-{
-  delete task_stats_;
-}
+Job_i::~Job_i () = default;
 
 const ACE_CString&
 Job_i::name ()
@@ -57,7 +53,7 @@ Job_i::work (CORBA::ULong work,
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-    "Job_i::work: %d units of work\n",
+    "Job_i::work: %u units of work\n",
     work));
 
   CORBA::Object_var object =
@@ -69,13 +65,11 @@ Job_i::work (CORBA::ULong work,
   RTScheduling::Current::IdType_var guid = current->id ();
 
   if (guid_ == 0)
-    ACE_OS::memcpy (&guid_,
-                    guid->get_buffer (),
-                    sizeof (guid->length ()));
+    ACE_OS::memcpy (&guid_, guid->get_buffer (), sizeof (guid->length ()));
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-    "%t Guid is %d, Importance is %d\n",
+    "%t Guid is %B, Importance is %d\n",
     guid_,
     importance));
 
@@ -87,13 +81,15 @@ Job_i::work (CORBA::ULong work,
 
   dt_creator_->log_msg (ACE_TEXT_ALWAYS_CHAR(msg));
 
-  for (; work != 0; work--)
+  for (; work != 0; ++work)
     {
       //    ACE_hrtime_t now = ACE_OS::gethrtime ();
 
       ACE_Time_Value *base_time = dt_creator_->base_time ();
       if (base_time == 0)
+      {
         return;
+      }
 
       ACE_Time_Value run_time = ACE_OS::gettimeofday () - *(base_time);
       TASK_STATS::instance ()->sample (run_time.sec (), guid_);
@@ -114,7 +110,7 @@ Job_i::work (CORBA::ULong work,
 
       CORBA::Policy_var sched_param;
       sched_param = dt_creator_->sched_param (importance);
-      const char * name = 0;
+      char const *name {};
       current->update_scheduling_segment (name,
                 sched_param.in (),
                 sched_param.in ());

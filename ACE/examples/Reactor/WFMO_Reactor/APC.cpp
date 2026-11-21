@@ -18,18 +18,26 @@
 #include "ace/Auto_Event.h"
 #include "ace/Log_Msg.h"
 
+#include <memory>
+
 class Event_Handler : public ACE_Event_Handler
 {
 public:
-  int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  Event_Handler () = default;
+  Event_Handler (Event_Handler const &) = delete;
+  Event_Handler (Event_Handler &&) = delete;
+  Event_Handler &operator= (Event_Handler const &) = delete;
+  Event_Handler &operator= (Event_Handler &&) = delete;
 
-  int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
+  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
+
+  int handle_timeout (ACE_Time_Value const &tv, void const *arg = nullptr) override;
 
   ACE_Auto_Event handle_;
-  int iterations_;
+  int iterations_ {};
 };
 
-static Event_Handler *global_event_handler;
+static Event_Handler *global_event_handler {};
 
 static void WINAPI
 apc_callback (DWORD)
@@ -40,7 +48,7 @@ apc_callback (DWORD)
   global_event_handler->handle_.signal ();
 }
 
-void
+static void
 queue_apc ()
 {
   DWORD result = ::QueueUserAPC (reinterpret_cast<PAPCFUNC> (&apc_callback),
@@ -67,8 +75,8 @@ Event_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
 }
 
 int
-Event_Handler::handle_timeout (const ACE_Time_Value &,
-                               const void *)
+Event_Handler::handle_timeout (ACE_Time_Value const &,
+                               void const *)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%t) timeout occurred @ %T\n"));
@@ -81,14 +89,14 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 {
   Event_Handler event_handler;
   event_handler.iterations_ = 5;
-  global_event_handler = &event_handler;
+  global_event_handler = std::addressof (event_handler);
 
-  int result = ACE_Reactor::instance ()->register_handler (&event_handler,
+  int result = ACE_Reactor::instance ()->register_handler (std::addressof (event_handler),
                                                            event_handler.handle_.handle ());
   ACE_TEST_ASSERT (result == 0);
 
   ACE_Time_Value timeout (2);
-  result = ACE_Reactor::instance ()->schedule_timer (&event_handler,
+  result = ACE_Reactor::instance ()->schedule_timer (std::addressof (event_handler),
                                                      0,
                                                      timeout,
                                                      timeout);
@@ -96,7 +104,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   ACE_Reactor::run_alertable_event_loop ();
 
-  ACE_Reactor::instance ()->cancel_timer(&event_handler);
+  ACE_Reactor::instance ()->cancel_timer (std::addressof (event_handler));
 
   return 0;
 }

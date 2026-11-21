@@ -5,30 +5,27 @@
 #include <FL/Fl.H>
 #include <FL/Fl_Window.H>
 #include <FL/Fl_Roller.H>
+#include <memory>
 
 class Client
 {
-  // = TITLE
-  //   Run the client thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run the client threads.
-  //
 public:
-  Client (CORBA::ORB_ptr orb,
-          Fl_Window* parent);
-  // ctor
+  Client (CORBA::ORB_ptr orb, Fl_Window *parent);
+  Client (Client const &) = delete;
+  Client (Client &&) = delete;
+  Client &operator= (Client const &) = delete;
+  Client &operator= (Client &&) = delete;
 
-  ~Client ();
+  ~Client () = default;
 
   void show ();
   // Call show on all the window objects
 
-  void parse_args (int argc, ACE_TCHAR *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
 private:
-  static void x_cb (Fl_Widget *widget, void* cookie);
-  static void y_cb (Fl_Widget *widget, void* cookie);
+  static void x_cb (Fl_Widget *, void *cookie);
+  static void y_cb (Fl_Widget *, void *cookie);
   // The callbacks
 
   void x_changed ();
@@ -36,24 +33,25 @@ private:
   // The methods for the callbacks
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
   // The ORB
 
-  Fl_Roller* x_roller_;
-  Fl_Roller* y_roller_;
+  std::unique_ptr<Fl_Roller> x_roller_;
+  std::unique_ptr<Fl_Roller> y_roller_;
   // The rollers
 
-  Simple_Server_var server_;
+  Simple_Server_var server_ {};
   // The server.
 };
 
-int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO::FlResource_Loader fl_loader;
 
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       Fl_Window window (300, 100);
@@ -66,11 +64,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       client.show ();
 
-      client.parse_args (argc, argv);
+      if (client.parse_args (argc, argv) != 0)
+        return 1;
 
       Fl::run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
@@ -78,31 +77,22 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
   return 0;
 }
 
-Client::Client (CORBA::ORB_ptr orb,
-                Fl_Window* parent)
-  :  orb_ (CORBA::ORB::_duplicate (orb))
+Client::Client (CORBA::ORB_ptr orb, Fl_Window *parent)
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    x_roller_ (std::make_unique<Fl_Roller> (10, parent->h () / 2 - 20,
+                                            parent->w () / 2 - 10, 40)),
+    y_roller_ (std::make_unique<Fl_Roller> (3 * parent->w () / 4 - 20, 10,
+                                            40, parent->h () - 20))
 {
-  this->x_roller_ =
-    new Fl_Roller (10, parent->h () / 2 - 20,
-                   parent->w () / 2 - 10, 40);
   this->x_roller_->type (FL_HORIZONTAL);
   this->x_roller_->callback (Client::x_cb, this);
   this->x_roller_->range (-360, 360);
   this->x_roller_->step (1);
 
-  this->y_roller_ =
-    new Fl_Roller (3 * parent->w () / 4 - 20, 10,
-                   40, parent->h () - 20);
   this->y_roller_->type (FL_VERTICAL);
   this->y_roller_->callback (Client::y_cb, this);
   this->y_roller_->range (-360, 360);
   this->y_roller_->step (1);
-}
-
-Client::~Client ()
-{
-  delete x_roller_;
-  delete y_roller_;
 }
 
 void
@@ -113,16 +103,16 @@ Client::show ()
 }
 
 void
-Client::x_cb (Fl_Widget*, void* cookie)
+Client::x_cb (Fl_Widget *, void *cookie)
 {
-  Client *self = static_cast<Client*> (cookie);
+  Client * const self = static_cast<Client *> (cookie);
   self->x_changed ();
 }
 
 void
-Client::y_cb (Fl_Widget*, void* cookie)
+Client::y_cb (Fl_Widget *, void *cookie)
 {
-  Client *self = static_cast<Client*> (cookie);
+  Client * const self = static_cast<Client *> (cookie);
   self->y_changed ();
 }
 
@@ -131,10 +121,10 @@ Client::x_changed ()
 {
   try
     {
-      CORBA::Long x = CORBA::Long (this->x_roller_->value ());
+      CORBA::Long const x = static_cast<CORBA::Long> (this->x_roller_->value ());
       this->server_->set_x_angle (x);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client::x_changed");
     }
@@ -145,22 +135,22 @@ Client::y_changed ()
 {
   try
     {
-      CORBA::Long y = CORBA::Long (this->y_roller_->value ());
+      CORBA::Long const y = static_cast<CORBA::Long> (this->y_roller_->value ());
       this->server_->set_y_angle (y);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
-      ex._tao_print_exception ("Client::x_changed");
+      ex._tao_print_exception ("Client::y_changed");
     }
 }
 
-void
+int
 Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
+  ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -170,16 +160,17 @@ Client::parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case '?':
       default:
-        ACE_ERROR ((LM_ERROR,
-                    "usage:  %s "
-                    "-k <ior> "
-                    "\n",
-                    argv [0]));
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("usage: %s -k <ior>\n"),
+                           argv [0]),
+                          -1);
       }
 
-  CORBA::Object_var object =
+  CORBA::Object_var const object =
     this->orb_->string_to_object (ior);
 
-  this->server_ =
-    Simple_Server::_narrow (object.in ());
+  this->server_ = Simple_Server::_narrow (object.in ());
+  if (CORBA::is_nil (this->server_.in ()))
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Object reference <%s> is nil.\n"), ior), -1);
+  return 0;
 }

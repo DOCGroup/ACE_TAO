@@ -10,10 +10,9 @@
 class Worker_Thread : public ACE_Task_Base
 {
 public:
-  /// Constructor
-  Worker_Thread (CORBA::ORB_ptr orb);
+  explicit Worker_Thread (CORBA::ORB_ptr orb);
 
-  // = The service method
+  /// The service method
   virtual int svc ();
 
 private:

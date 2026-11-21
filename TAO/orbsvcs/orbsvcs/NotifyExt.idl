@@ -20,7 +20,7 @@
  */
 module NotifyExt
 {
-  // Priority defs. same as RTCORBA
+  /// Priority defs. same as RTCORBA
   typedef short Priority;
   const Priority minPriority = 0;
   const Priority maxPriority = 32767;
@@ -36,7 +36,7 @@ module NotifyExt
    */
   const string ThreadPool = "ThreadPool";
 
-  // ThreadPoolParams : same as RTCORBA::create_threadpool
+  /// ThreadPoolParams : same as RTCORBA::create_threadpool
   struct ThreadPoolParams
   {
     PriorityModel priority_model;
@@ -134,7 +134,7 @@ module NotifyExt
 
   interface ConsumerAdmin : CosNotifyChannelAdmin::ConsumerAdmin
   {
-    // Create a new push-style proxy supplier
+    /// Create a new push-style proxy supplier
     /**
      * @param ctype The event format that the ProxyConsumer should
      *   support
@@ -156,7 +156,7 @@ module NotifyExt
 
   interface SupplierAdmin : CosNotifyChannelAdmin::SupplierAdmin
   {
-    // Create a new push-style proxy supplier
+    /// Create a new push-style proxy supplier
     /**
      * @param ctype The event format that the ProxyConsumer should
      *   support

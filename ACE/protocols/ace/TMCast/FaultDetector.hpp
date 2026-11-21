@@ -7,10 +7,7 @@ namespace ACE_TMCast
   class FaultDetector
   {
   public:
-    FaultDetector ()
-        : alone_ (true), silence_period_ (-1)
-    {
-    }
+    FaultDetector () = default;
 
   public:
     class Failed {};
@@ -37,7 +34,8 @@ namespace ACE_TMCast
     }
 
   private:
-    bool alone_; // true if we haven't heard from any members yet.
-    short silence_period_;
+    /// True until a message has been received from another member.
+    bool alone_ {true};
+    short silence_period_ {-1};
   };
 }

@@ -16,7 +16,6 @@
 #include "orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.h"
 #include "orbsvcs/FtRtEvent/EventChannel/ProxyConsumerStateWorker.h"
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -52,18 +51,22 @@ public:
 
   using StateWorker = ProxyConsumerStateWorker;
 
-  /// constructor...
-  TAO_FTEC_SupplierAdmin (TAO_EC_Event_Channel_Base* event_channel);
+  explicit TAO_FTEC_SupplierAdmin (TAO_EC_Event_Channel_Base* event_channel);
 
-  /// destructor...
-  ~TAO_FTEC_SupplierAdmin () override;
+  TAO_FTEC_SupplierAdmin(TAO_FTEC_SupplierAdmin const&) = delete;
+  TAO_FTEC_SupplierAdmin(TAO_FTEC_SupplierAdmin&&) = delete;
+  TAO_FTEC_SupplierAdmin& operator=(TAO_FTEC_SupplierAdmin const&) = delete;
+  TAO_FTEC_SupplierAdmin& operator=(TAO_FTEC_SupplierAdmin&&) = delete;
 
+  ~TAO_FTEC_SupplierAdmin () override = default;
 
-  // = The RtecEventChannelAdmin::SupplierAdmin methods...
+  /// @name RtecEventChannelAdmin::SupplierAdmin methods
+  /// @{
   RtecEventChannelAdmin::ProxyPushConsumer_ptr
       obtain_push_consumer () override;
 
   void disconnect(RtecEventChannelAdmin::ProxyPushConsumer_ptr obj);
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

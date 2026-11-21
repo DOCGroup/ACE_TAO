@@ -4,40 +4,35 @@
 
 #include "ace/Get_Opt.h"
 
-#include <algorithm>
-#include <functional>
-
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'k':
-        ior = get_opts.opt_arg ();
-        break;
+    {
+      switch (c)
+        {
+        case 'k':
+          ior = get_opts.opt_arg ();
+          break;
 
-      case '?':
-      case 'h':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+        case '?':
+        case 'h':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-k <ior> "
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+    }
 
   // Successful command line parsing.
   return 0;
 }
-
-template <typename T> void dump (T *); // Forward declaration.
 
 template<typename T>
 void
@@ -48,27 +43,33 @@ perform_invocation (Test::Hello_ptr hello,
   // TypeCode state is managed correctly.
   for (unsigned int n = 0; n < 2; ++n)
     {
-      CORBA::Any_var my_any =
+      CORBA::Any_var const my_any =
         hello->get_any (the_any);
 
-      T const *my_foo = nullptr;
+      T const *my_foo {};
       if (!(my_any.in () >>= my_foo))
+      {
         throw Test::Demarshaling_From_Any_Failed ();
+      }
 
-      CORBA::TypeCode_var the_tc = the_any.type ();
-      CORBA::TypeCode_var my_tc  = my_any->type ();
+      CORBA::TypeCode_var const the_tc = the_any.type ();
+      CORBA::TypeCode_var const my_tc  = my_any.in ().type ();
 
       CORBA::Boolean const equal_tc =
         the_tc->equal (my_tc.in ());
 
       if (!equal_tc)
+      {
         throw Test::Recursive_Type_In_Any_Test_Failed ();
+      }
 
       CORBA::Boolean const equiv_tc =
         the_tc->equivalent (my_tc.in ());
 
       if (!equiv_tc)
+      {
         throw Test::Recursive_Type_In_Any_Test_Failed ();
+      }
     }
 }
 
@@ -81,7 +82,7 @@ nested_recursive_struct_test (CORBA::ORB_ptr /* orb */,
 
   CORBA::Any the_any;
 
-  Test::NestedRecursiveStruct5 foo5;
+  Test::NestedRecursiveStruct5 const foo5 {};
 
   the_any <<= foo5;
 
@@ -96,15 +97,18 @@ nested_recursive_struct_test (CORBA::ORB_ptr /* orb */,
  * Test method invocation functor.
  */
 template <typename T>
-struct Caller : public std::function<void(T)>
+struct Caller
 {
-  /// Constructor.
   Caller (CORBA::ORB_ptr o, Test::Hello_ptr h)
     : orb (CORBA::ORB::_duplicate (o))
     , hello (Test::Hello::_duplicate (h))
-    , success (true)
   {
   }
+
+  Caller (Caller const &) = delete;
+  Caller &operator= (Caller const &) = delete;
+  Caller (Caller &&) = delete;
+  Caller &operator= (Caller &&) = delete;
 
   /// Function call operator overload.
   void operator() (T const f)
@@ -122,26 +126,29 @@ struct Caller : public std::function<void(T)>
       }
   }
 
-  CORBA::ORB_var orb;
-  Test::Hello_var hello;
-  bool success;
+  CORBA::ORB_var const orb;
+  Test::Hello_var const hello;
+  bool success {true};
 };
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior) != 0)
+      {
         return 1;
+      }
 
-      CORBA::Object_var tmp =
+      CORBA::Object_var const tmp =
         orb->string_to_object (ior);
 
-      Test::Hello_var hello =
+      Test::Hello_var const hello =
         Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
@@ -155,22 +162,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       using test_func = void (*) (CORBA::ORB_ptr,
                                   Test::Hello_ptr);
 
-      static test_func const tests[] =
+      static constexpr test_func tests[] =
         {
           nested_recursive_struct_test
         };
 
-      static constexpr size_t test_count = sizeof (tests) / sizeof (tests[0]);
-
-      // Have some fun with the STL.  :-)
-      Caller<test_func> c =
-        std::for_each (tests,
-                       tests + test_count,
-                       Caller<test_func> (orb.in (),
-                                          hello.in ()));
+      Caller<test_func> c (orb.in (), hello.in ());
+      for (test_func const test : tests)
+        {
+          c (test);
+        }
 
       if (!c.success)
+      {
         throw Test::Recursive_Type_In_Any_Test_Failed ();
+      }
 
       hello->shutdown ();
 

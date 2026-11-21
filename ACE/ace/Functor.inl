@@ -1,5 +1,8 @@
 // -*- C++ -*-
 
+#include <cstring>
+#include <cwchar>
+
 //=============================================================================
 /**
  *  @file    Functor.inl
@@ -21,7 +24,6 @@
  */
 //=============================================================================
 
-
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 
@@ -30,8 +32,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 //////////////////////////////////////////////////////////////
 // GOF Command Pattern Classes and Template Specializations //
 //////////////////////////////////////////////////////////////
-
-// Default constructor.
 
 ACE_INLINE
 ACE_Command_Base::ACE_Command_Base ()
@@ -163,13 +163,13 @@ ACE_Hash<void *>::operator () (const void *t) const
 ACE_INLINE int
 ACE_Equal_To<const char *>::operator () (const char *lhs, const char *rhs) const
 {
-  return !ACE_OS::strcmp (lhs, rhs);
+  return !std::strcmp (lhs, rhs);
 }
 
 ACE_INLINE int
 ACE_Equal_To<char *>::operator () (const char *lhs, const char *rhs) const
 {
-  return !ACE_OS::strcmp (lhs, rhs);
+  return !std::strcmp (lhs, rhs);
 }
 
 ACE_INLINE int
@@ -206,15 +206,14 @@ ACE_Equal_To<ACE_UINT64>::operator () (const ACE_UINT64 lhs, const ACE_UINT64 rh
 ACE_INLINE int
 ACE_Less_Than<const char *>::operator () (const char *lhs, const char *rhs) const
 {
-  return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
+  return (std::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
 
 ACE_INLINE int
 ACE_Less_Than<char *>::operator () (const char *lhs, const char *rhs) const
 {
-  return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
+  return (std::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
-
 
 #if defined (ACE_HAS_WCHAR)
 
@@ -234,26 +233,26 @@ ACE_INLINE int
 ACE_Equal_To<const wchar_t *>::operator () (const wchar_t *lhs,
                                             const wchar_t *rhs) const
 {
-  return !ACE_OS::strcmp (lhs, rhs);
+  return !std::wcscmp (lhs, rhs);
 }
 
 ACE_INLINE int
 ACE_Equal_To<wchar_t *>::operator () (const wchar_t *lhs,
                                       const wchar_t *rhs) const
 {
-  return !ACE_OS::strcmp (lhs, rhs);
+  return !std::wcscmp (lhs, rhs);
 }
 
 ACE_INLINE int
 ACE_Less_Than<const wchar_t *>::operator () (const wchar_t *lhs, const wchar_t *rhs) const
 {
-  return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
+  return (std::wcscmp (lhs, rhs) < 0) ? 1 : 0;
 }
 
 ACE_INLINE int
 ACE_Less_Than<wchar_t *>::operator () (const wchar_t *lhs, const wchar_t *rhs) const
 {
-  return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
+  return (std::wcscmp (lhs, rhs) < 0) ? 1 : 0;
 }
 
 #endif  // ACE_HAS_WCHAR

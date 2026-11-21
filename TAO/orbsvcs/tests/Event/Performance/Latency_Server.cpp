@@ -10,20 +10,21 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 
+#include <memory>
 
-const ACE_TCHAR *ior_file_name = ACE_TEXT("ec.ior");
+static ACE_TCHAR const* ior_file_name = ACE_TEXT("ec.ior");
 
 /// Parse the arguments.
 static int parse_args (int argc, ACE_TCHAR *argv[]);
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
-  int priority =
+  int priority {
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
-     + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
+     + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2};
   priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                                   priority);
 
@@ -88,7 +89,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
                                             root_poa.in ());
@@ -101,27 +104,27 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var str =
         orb->object_to_string (ec.in ());
 
-      if (ior_file_name != 0)
+      if (ior_file_name != nullptr)
         {
-          FILE *output_file= ACE_OS::fopen (ior_file_name, "w");
-          if (output_file == 0)
+          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+            ACE_OS::fopen (ior_file_name, "w"), ACE_OS::fclose);
+          if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
                                ior_file_name),
                               1);
-          ACE_OS::fprintf (output_file, "%s", str.in ());
-          ACE_OS::fclose (output_file);
+          ACE_OS::fprintf (output_file.get (), "%s", str.in ());
         }
 
       orb->run ();
 
       PortableServer::ObjectId_var id =
-        root_poa->servant_to_id (&ec_impl);
+        root_poa->servant_to_id (std::addressof (ec_impl));
       root_poa->deactivate_object (id.in ());
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (argv[0]);
     }
@@ -134,7 +137,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)

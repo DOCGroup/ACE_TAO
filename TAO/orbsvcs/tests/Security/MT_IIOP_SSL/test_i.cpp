@@ -25,7 +25,9 @@ Simple_Server_i::validate_protocol ()
                          this->mutex_));
 
       if (this->validated_ != NOT_VALIDATED)
+      {
         return;
+      }
 
       TAO::Transport_Cache_Manager::HASH_MAP &map =
         this->orb_->orb_core ()->lane_resources ().transport_cache ().map ();
@@ -40,16 +42,16 @@ Simple_Server_i::validate_protocol ()
            iter != end_iter;
            ++iter)
         {
-          TAO_Transport *t =
+          TAO_Transport * const t =
             (*iter).int_id_.transport ();
 
           // @@ Worst possible way to check. If SSLIOP had a tag
           // things would have been a  lot simpler.
-          TAO::SSLIOP::Transport *ssl_t =
+          TAO::SSLIOP::Transport * const ssl_t =
             dynamic_cast<TAO::SSLIOP::Transport *> (t);
 
           // There should be no SSL Transport
-          if (ssl_t != 0)
+          if (ssl_t != nullptr)
             {
               this->validated_ = VALIDATED_NOSUCCESS;
               break;
@@ -59,15 +61,19 @@ Simple_Server_i::validate_protocol ()
     }
 
   if (this->validated_ == VALIDATED_NOSUCCESS)
+  {
     throw Simple_Server::WrongProtocolType ();
+  }
 }
 
 CORBA::Long
 Simple_Server_i::test_method (CORBA::Long x)
 {
   if (TAO_debug_level > 0)
+  {
     ACE_DEBUG ((LM_DEBUG, "Request in thread [%t]\n"));
-  ACE_Time_Value tv (0, 15000);
+  }
+  ACE_Time_Value const tv (0, 15000);
   ACE_OS::sleep (tv);
   return x;
 }

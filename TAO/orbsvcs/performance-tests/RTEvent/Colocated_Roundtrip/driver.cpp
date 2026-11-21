@@ -27,10 +27,9 @@
 #include "ace/Basic_Stats.h"
 #include "ace/Barrier.h"
 
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  const CORBA::Long experiment_id = 1;
+  CORBA::Long const experiment_id = 1;
 
   TAO_EC_Default_Factory::init_svcs ();
 
@@ -125,7 +124,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           if (options.unique_low_priority_event)
             event_range = 1 + options.low_priority_consumers;
           else
+          {
             event_range = 2;
+          }
         }
 
       Client_Group high_priority_group;
@@ -148,7 +149,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       int per_thread_period = options.low_priority_period;
       if (options.global_low_priority_rate)
+      {
         per_thread_period = options.low_priority_period * options.nthreads;
+      }
 
       Low_Priority_Setup<Client_Group> low_priority_setup (
           options.low_priority_consumers,
@@ -212,7 +215,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - starting cleanup\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

@@ -39,8 +39,12 @@ class TAO_Notify_Serv_Export TAO_Notify_Constraint_Interpreter
 public:
   TAO_Notify_Constraint_Interpreter ();
 
-  /// Destructor
-  virtual ~TAO_Notify_Constraint_Interpreter ();
+  ~TAO_Notify_Constraint_Interpreter () override;
+
+  TAO_Notify_Constraint_Interpreter (const TAO_Notify_Constraint_Interpreter&) = delete;
+  TAO_Notify_Constraint_Interpreter (TAO_Notify_Constraint_Interpreter&&) = delete;
+  TAO_Notify_Constraint_Interpreter& operator= (const TAO_Notify_Constraint_Interpreter&) = delete;
+  TAO_Notify_Constraint_Interpreter& operator= (TAO_Notify_Constraint_Interpreter&&) = delete;
 
   /**
    * This method builds an expression tree representing the

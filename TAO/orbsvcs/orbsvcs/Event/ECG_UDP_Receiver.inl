@@ -84,7 +84,7 @@ TAO_ECG_UDP_Receiver::set_handler_shutdown (
 }
 
 ACE_INLINE void
-TAO_ECG_UDP_Receiver::get_addr (const RtecEventComm::EventHeader& header,
+TAO_ECG_UDP_Receiver::get_addr (RtecEventComm::EventHeader const &header,
                                 RtecUDPAdmin::UDP_Addr_out addr)
 {
   if (CORBA::is_nil (this->addr_server_.in ()))
@@ -101,7 +101,7 @@ TAO_ECG_UDP_Receiver::get_addr (const RtecEventComm::EventHeader& header,
 }
 
 ACE_INLINE void
-TAO_ECG_UDP_Receiver::get_address (const RtecEventComm::EventHeader& header,
+TAO_ECG_UDP_Receiver::get_address (RtecEventComm::EventHeader const &header,
                                    RtecUDPAdmin::UDP_Address_out addr)
 {
   if (CORBA::is_nil (this->addr_server_.in ()))

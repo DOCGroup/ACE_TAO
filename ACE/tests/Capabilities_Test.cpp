@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
@@ -23,10 +22,12 @@ load_config ()
 {
   ACE_Capabilities caps;
   if (caps.getent (config, ACE_TEXT ("Config")) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Can't read %s\n"),
-                       config),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Can't read %s\n"),
+                         config),
+                        1);
+    }
 
   int b = 0;
   caps.getval (ACE_TEXT ("bool"), b);
@@ -55,7 +56,6 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Capabilities_Test"));
 
-
   // --------------------------------------------------------
   // Create config file
   // --------------------------------------------------------
@@ -74,11 +74,12 @@ run_main (int, ACE_TCHAR *[])
                                 ACE_DEFAULT_FILE_PERMS);
 
   if (fd == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE_OS::open")),
-                      -1);
-
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("ACE_OS::open")),
+                        -1);
+    }
 
   if (ACE_OS::write (fd, file_contents, sizeof(file_contents)) !=
       (ssize_t) sizeof(file_contents))
@@ -100,7 +101,6 @@ run_main (int, ACE_TCHAR *[])
                         -1);
     }
   // --------------------------------------------------------
-
 
   int const result = load_config ();
 

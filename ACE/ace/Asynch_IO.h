@@ -108,7 +108,7 @@ public:
   const void *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This is the ACT associated with the handle on which the
@@ -163,14 +163,12 @@ public:
    */
   int signal_number () const;
 
-
-  /// Destructor.
   virtual ~ACE_Asynch_Result ();
 
 protected:
   /// Constructor. This implementation will not be deleted.  The
   /// implementation will be deleted by the Proactor.
-  ACE_Asynch_Result (ACE_Asynch_Result_Impl *implementation);
+  explicit ACE_Asynch_Result (ACE_Asynch_Result_Impl *implementation);
 
   /// Get the implementation class.
   ACE_Asynch_Result_Impl *implementation () const;
@@ -245,17 +243,16 @@ public:
    */
   int cancel ();
 
-
-  // = Access methods.
+  /// @name Access methods
+  /// @{
 
   /// Return the underlying proactor.
   ACE_Proactor* proactor () const;
+  /// @}
 
-  /// Destructor.
   virtual ~ACE_Asynch_Operation () = default;
 
 protected:
-  /// Constructor.
   ACE_Asynch_Operation () = default;
 
   /// Return the underlying implementation class.
@@ -286,10 +283,14 @@ class ACE_Asynch_Read_Stream_Impl;
 class ACE_Export ACE_Asynch_Read_Stream : public ACE_Asynch_Operation
 {
 public:
+  ACE_Asynch_Read_Stream (ACE_Asynch_Read_Stream const &) = delete;
+  ACE_Asynch_Read_Stream (ACE_Asynch_Read_Stream &&) = delete;
+  ACE_Asynch_Read_Stream &operator= (ACE_Asynch_Read_Stream const &) = delete;
+  ACE_Asynch_Read_Stream &operator= (ACE_Asynch_Read_Stream &&) = delete;
+
   /// A do nothing constructor.
   ACE_Asynch_Read_Stream ();
 
-  /// Destructor
   ~ACE_Asynch_Read_Stream () override;
 
   /**
@@ -359,7 +360,7 @@ public:
 
 protected:
   /// Implementation class that all methods will be forwarded to.
-  ACE_Asynch_Read_Stream_Impl *implementation_;
+  ACE_Asynch_Read_Stream_Impl *implementation_ {};
 
 public:
 /**
@@ -395,18 +396,13 @@ public:
     ACE_Asynch_Read_Stream_Result_Impl *implementation () const;
 
   protected:
-    /// Constructor.
-    Result (ACE_Asynch_Read_Stream_Result_Impl *implementation);
+    explicit Result (ACE_Asynch_Read_Stream_Result_Impl *implementation);
 
-    /// Destructor.
     ~Result () override;
 
     /// The implementation class.
     ACE_Asynch_Read_Stream_Result_Impl *implementation_;
   };
-private:
-  void operator= (const ACE_Asynch_Read_Stream &) = delete;
-  ACE_Asynch_Read_Stream (const ACE_Asynch_Read_Stream &) = delete;
 };
 
 // Forward declarations
@@ -428,10 +424,14 @@ class ACE_Asynch_Write_Stream_Result_Impl;
 class ACE_Export ACE_Asynch_Write_Stream : public ACE_Asynch_Operation
 {
 public:
+  ACE_Asynch_Write_Stream (ACE_Asynch_Write_Stream const &) = delete;
+  ACE_Asynch_Write_Stream (ACE_Asynch_Write_Stream &&) = delete;
+  ACE_Asynch_Write_Stream &operator= (ACE_Asynch_Write_Stream const &) = delete;
+  ACE_Asynch_Write_Stream &operator= (ACE_Asynch_Write_Stream &&) = delete;
+
   /// A do nothing constructor.
   ACE_Asynch_Write_Stream ();
 
-  /// Destructor.
   ~ACE_Asynch_Write_Stream () override;
 
   /**
@@ -513,7 +513,7 @@ public:
 
 protected:
   /// Implementation class that all methods will be forwarded to.
-  ACE_Asynch_Write_Stream_Impl *implementation_;
+  ACE_Asynch_Write_Stream_Impl *implementation_ {};
 
 public:
 /**
@@ -549,18 +549,13 @@ public:
     ACE_Asynch_Write_Stream_Result_Impl *implementation () const;
 
   protected:
-    /// Constructor.
-    Result (ACE_Asynch_Write_Stream_Result_Impl *implementation);
+    explicit Result (ACE_Asynch_Write_Stream_Result_Impl *implementation);
 
-    /// Destructor.
     ~Result () override;
 
     /// Implementation class.
     ACE_Asynch_Write_Stream_Result_Impl *implementation_;
   };
-private:
-  void operator= (const ACE_Asynch_Write_Stream &) = delete;
-  ACE_Asynch_Write_Stream (const ACE_Asynch_Write_Stream &) = delete;
 };
 
 // Forward declarations
@@ -585,10 +580,14 @@ class ACE_Asynch_Read_File_Result_Impl;
 class ACE_Export ACE_Asynch_Read_File : public ACE_Asynch_Read_Stream
 {
 public:
+  ACE_Asynch_Read_File (ACE_Asynch_Read_File const &) = delete;
+  ACE_Asynch_Read_File (ACE_Asynch_Read_File &&) = delete;
+  ACE_Asynch_Read_File &operator= (ACE_Asynch_Read_File const &) = delete;
+  ACE_Asynch_Read_File &operator= (ACE_Asynch_Read_File &&) = delete;
+
   /// A do nothing constructor.
   ACE_Asynch_Read_File ();
 
-  /// Destructor.
   ~ACE_Asynch_Read_File () override;
 
   /**
@@ -661,7 +660,7 @@ public:
 protected:
   /// Delegation/implementation class that all methods will be
   /// forwarded to.
-  ACE_Asynch_Read_File_Impl *implementation_;
+  ACE_Asynch_Read_File_Impl *implementation_ {};
 
 public:
 /**
@@ -694,9 +693,8 @@ public:
 
   protected:
     /// Constructor. This implementation will not be deleted.
-    Result (ACE_Asynch_Read_File_Result_Impl *implementation);
+    explicit Result (ACE_Asynch_Read_File_Result_Impl *implementation);
 
-    /// Destructor.
     ~Result () override;
 
     /// The implementation class.
@@ -707,9 +705,6 @@ public:
     /// one auto generated by MSVC is flagged as infinitely recursive
     void operator= (Result &) {}
   };
-private:
-  void operator= (const ACE_Asynch_Read_File &) = delete;
-  ACE_Asynch_Read_File (const ACE_Asynch_Read_File &) = delete;
 };
 
 // Forward declarations
@@ -734,10 +729,14 @@ class ACE_Asynch_Write_File_Result_Impl;
 class ACE_Export ACE_Asynch_Write_File : public ACE_Asynch_Write_Stream
 {
 public:
+  ACE_Asynch_Write_File (ACE_Asynch_Write_File const &) = delete;
+  ACE_Asynch_Write_File (ACE_Asynch_Write_File &&) = delete;
+  ACE_Asynch_Write_File &operator= (ACE_Asynch_Write_File const &) = delete;
+  ACE_Asynch_Write_File &operator= (ACE_Asynch_Write_File &&) = delete;
+
   /// A do nothing constructor.
   ACE_Asynch_Write_File ();
 
-  /// Destructor.
   ~ACE_Asynch_Write_File () override;
 
   /**
@@ -795,7 +794,7 @@ public:
 
 protected:
   /// Implementation object.
-  ACE_Asynch_Write_File_Impl *implementation_;
+  ACE_Asynch_Write_File_Impl *implementation_ {};
 
 public:
 /**
@@ -828,9 +827,8 @@ public:
 
   protected:
     /// Constructor. This implementation will not be deleted.
-    Result (ACE_Asynch_Write_File_Result_Impl *implementation);
+    explicit Result (ACE_Asynch_Write_File_Result_Impl *implementation);
 
-    /// Destructor.
     ~Result () override;
 
     /// The implementation class.
@@ -841,9 +839,6 @@ public:
     /// one auto generated by MSVC is flagged as infinitely recursive
     void operator= (Result &) {}
   };
-private:
-  void operator= (const ACE_Asynch_Write_File &) = delete;
-  ACE_Asynch_Write_File (const ACE_Asynch_Write_File &) = delete;
 };
 
 // Forward declarations
@@ -866,10 +861,14 @@ class ACE_Asynch_Accept_Impl;
 class ACE_Export ACE_Asynch_Accept : public ACE_Asynch_Operation
 {
 public:
+  ACE_Asynch_Accept (ACE_Asynch_Accept const &) = delete;
+  ACE_Asynch_Accept (ACE_Asynch_Accept &&) = delete;
+  ACE_Asynch_Accept &operator= (ACE_Asynch_Accept const &) = delete;
+  ACE_Asynch_Accept &operator= (ACE_Asynch_Accept &&) = delete;
+
   /// A do nothing constructor.
   ACE_Asynch_Accept ();
 
-  /// Destructor.
   ~ACE_Asynch_Accept () override;
 
   /**
@@ -932,7 +931,7 @@ public:
 protected:
   /// Delegation/implementation class that all methods will be
   /// forwarded to.
-  ACE_Asynch_Accept_Impl *implementation_;
+  ACE_Asynch_Accept_Impl *implementation_ {};
 
 public:
 /**
@@ -971,19 +970,14 @@ public:
 
   protected:
     /// Constructor. Implementation will not be deleted.
-    Result (ACE_Asynch_Accept_Result_Impl *implementation);
+    explicit Result (ACE_Asynch_Accept_Result_Impl *implementation);
 
-    /// Destructor.
     ~Result () override;
 
     /// Implementation class.
     ACE_Asynch_Accept_Result_Impl *implementation_;
   };
-private:
-  void operator= (const ACE_Asynch_Accept &) = delete;
-  ACE_Asynch_Accept (const ACE_Asynch_Accept &) = delete;
 };
-// Forward declarations
 class ACE_Asynch_Connect_Result_Impl;
 class ACE_Asynch_Connect_Impl;
 
@@ -1001,10 +995,14 @@ class ACE_Asynch_Connect_Impl;
 class ACE_Export ACE_Asynch_Connect : public ACE_Asynch_Operation
 {
 public:
+  ACE_Asynch_Connect (ACE_Asynch_Connect const &) = delete;
+  ACE_Asynch_Connect (ACE_Asynch_Connect &&) = delete;
+  ACE_Asynch_Connect &operator= (ACE_Asynch_Connect const &) = delete;
+  ACE_Asynch_Connect &operator= (ACE_Asynch_Connect &&) = delete;
+
   /// A do nothing constructor.
   ACE_Asynch_Connect ();
 
-  /// Destructor.
   ~ACE_Asynch_Connect () override;
 
   /**
@@ -1036,7 +1034,7 @@ public:
 protected:
   /// Delegation/implementation class that all methods will be
   /// forwarded to.
-  ACE_Asynch_Connect_Impl *implementation_;
+  ACE_Asynch_Connect_Impl *implementation_ {};
 
 public:
 /**
@@ -1065,17 +1063,13 @@ public:
 
   protected:
     /// Constructor. Implementation will not be deleted.
-    Result (ACE_Asynch_Connect_Result_Impl *implementation);
+    explicit Result (ACE_Asynch_Connect_Result_Impl *implementation);
 
-    /// Destructor.
     ~Result () override;
 
     /// Implementation class.
     ACE_Asynch_Connect_Result_Impl *implementation_;
   };
-private:
-  void operator= (const ACE_Asynch_Connect &) = delete;
-  ACE_Asynch_Connect (const ACE_Asynch_Connect &) = delete;
 };
 
 // Forward declarations
@@ -1103,13 +1097,17 @@ class ACE_Asynch_Transmit_File_Impl;
 class ACE_Export ACE_Asynch_Transmit_File : public ACE_Asynch_Operation
 {
 public:
+  ACE_Asynch_Transmit_File (ACE_Asynch_Transmit_File const &) = delete;
+  ACE_Asynch_Transmit_File (ACE_Asynch_Transmit_File &&) = delete;
+  ACE_Asynch_Transmit_File &operator= (ACE_Asynch_Transmit_File const &) = delete;
+  ACE_Asynch_Transmit_File &operator= (ACE_Asynch_Transmit_File &&) = delete;
+
   // Forward declarations
   class Header_And_Trailer;
 
   /// A do nothing constructor.
   ACE_Asynch_Transmit_File ();
 
-  /// Destructor.
   ~ACE_Asynch_Transmit_File () override;
 
   /**
@@ -1159,7 +1157,7 @@ public:
 
 protected:
   /// The implementation class.
-  ACE_Asynch_Transmit_File_Impl *implementation_;
+  ACE_Asynch_Transmit_File_Impl *implementation_ {};
 
 public:
 /**
@@ -1204,10 +1202,8 @@ public:
     ACE_Asynch_Transmit_File_Result_Impl *implementation () const;
 
   protected:
-    /// Constructor.
-    Result (ACE_Asynch_Transmit_File_Result_Impl *implementation);
+    explicit Result (ACE_Asynch_Transmit_File_Result_Impl *implementation);
 
-    /// Destructor.
     ~Result () override;
 
     /// The implementation class.
@@ -1226,13 +1222,11 @@ public:
   class ACE_Export Header_And_Trailer
   {
   public:
-    /// Constructor.
     Header_And_Trailer (ACE_Message_Block *header = nullptr,
                         size_t header_bytes = 0,
                         ACE_Message_Block *trailer = nullptr,
                         size_t trailer_bytes = 0);
 
-    /// Destructor
     virtual ~Header_And_Trailer ();
 
     /// This method allows all the member to be set in one fell swoop.
@@ -1284,11 +1278,7 @@ public:
     /// Target data structure.
     ACE_TRANSMIT_FILE_BUFFERS transmit_buffers_;
   };
-private:
-  void operator= (const ACE_Asynch_Transmit_File &) = delete;
-  ACE_Asynch_Transmit_File (const ACE_Asynch_Transmit_File &) = delete;
 };
-
 
 // Forward declarations
 class ACE_Asynch_Read_Dgram_Result_Impl;
@@ -1311,10 +1301,14 @@ class ACE_Addr;
 class ACE_Export ACE_Asynch_Read_Dgram : public ACE_Asynch_Operation
 {
 public:
+  ACE_Asynch_Read_Dgram (ACE_Asynch_Read_Dgram const &) = delete;
+  ACE_Asynch_Read_Dgram (ACE_Asynch_Read_Dgram &&) = delete;
+  ACE_Asynch_Read_Dgram &operator= (ACE_Asynch_Read_Dgram const &) = delete;
+  ACE_Asynch_Read_Dgram &operator= (ACE_Asynch_Read_Dgram &&) = delete;
+
   /// A do nothing constructor.
   ACE_Asynch_Read_Dgram ();
 
-  /// Destructor
   ~ACE_Asynch_Read_Dgram () override;
 
   /**
@@ -1368,7 +1362,7 @@ public:
 
 protected:
   /// Implementation class that all methods will be forwarded to.
-  ACE_Asynch_Read_Dgram_Impl *implementation_;
+  ACE_Asynch_Read_Dgram_Impl *implementation_ {};
 
 public:
 /**
@@ -1410,18 +1404,13 @@ public:
     ACE_Asynch_Read_Dgram_Result_Impl *implementation () const;
 
   protected:
-    /// Constructor.
-    Result (ACE_Asynch_Read_Dgram_Result_Impl *implementation);
+    explicit Result (ACE_Asynch_Read_Dgram_Result_Impl *implementation);
 
-    /// Destructor.
     ~Result () override;
 
     /// The implementation class.
     ACE_Asynch_Read_Dgram_Result_Impl *implementation_;
   };
-private:
-  void operator= (const ACE_Asynch_Read_Dgram &) = delete;
-  ACE_Asynch_Read_Dgram (const ACE_Asynch_Read_Dgram &) = delete;
 };
 
 // Forward declarations
@@ -1444,10 +1433,14 @@ class ACE_Asynch_Write_Dgram_Result_Impl;
 class ACE_Export ACE_Asynch_Write_Dgram : public ACE_Asynch_Operation
 {
 public:
+  ACE_Asynch_Write_Dgram (ACE_Asynch_Write_Dgram const &) = delete;
+  ACE_Asynch_Write_Dgram (ACE_Asynch_Write_Dgram &&) = delete;
+  ACE_Asynch_Write_Dgram &operator= (ACE_Asynch_Write_Dgram const &) = delete;
+  ACE_Asynch_Write_Dgram &operator= (ACE_Asynch_Write_Dgram &&) = delete;
+
   /// A do nothing constructor.
   ACE_Asynch_Write_Dgram ();
 
-  /// Destructor.
   ~ACE_Asynch_Write_Dgram () override;
 
   /**
@@ -1501,7 +1494,7 @@ public:
 
 protected:
   /// Implementation class that all methods will be forwarded to.
-  ACE_Asynch_Write_Dgram_Impl *implementation_;
+  ACE_Asynch_Write_Dgram_Impl *implementation_ {};
 
 public:
 /**
@@ -1540,18 +1533,13 @@ public:
     ACE_Asynch_Write_Dgram_Result_Impl *implementation () const;
 
   protected:
-    /// Constructor.
-    Result (ACE_Asynch_Write_Dgram_Result_Impl *implementation);
+    explicit Result (ACE_Asynch_Write_Dgram_Result_Impl *implementation);
 
-    /// Destructor.
     ~Result () override;
 
     /// Implementation class.
     ACE_Asynch_Write_Dgram_Result_Impl *implementation_;
   };
-private:
-  void operator= (const ACE_Asynch_Write_Dgram &) = delete;
-  ACE_Asynch_Write_Dgram (const ACE_Asynch_Write_Dgram &) = delete;
 };
 
 /**
@@ -1565,11 +1553,16 @@ private:
 class ACE_Export ACE_Handler
 {
 public:
+  ACE_Handler (ACE_Handler const &) = delete;
+  ACE_Handler (ACE_Handler &&) = delete;
+  ACE_Handler &operator= (ACE_Handler const &) = delete;
+  ACE_Handler &operator= (ACE_Handler &&) = delete;
+
   /// A do nothing constructor.
   ACE_Handler ();
 
   /// A do nothing constructor which allows proactor to be set to @a p.
-  ACE_Handler (ACE_Proactor *p);
+  explicit ACE_Handler (ACE_Proactor *p);
 
   /// Virtual destruction.
   virtual ~ACE_Handler ();
@@ -1659,17 +1652,13 @@ public:
 
 protected:
   /// The proactor associated with this handler.
-  ACE_Proactor *proactor_;
+  ACE_Proactor *proactor_ {};
 
   /// The ACE_HANDLE in use with this handler.
   ACE_HANDLE    handle_;
 
   /// Refers to proxy for this handler.
   ACE_Refcounted_Auto_Ptr<Proxy, ACE_SYNCH_MUTEX> proxy_;
-
-private:
-  ACE_Handler (const ACE_Handler &) = delete;
-  ACE_Handler operator= (const ACE_Handler &) = delete;
 };
 
 // Forward declarations

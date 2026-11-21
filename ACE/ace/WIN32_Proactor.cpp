@@ -22,14 +22,13 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_WIN32_Wakeup_Completion : public ACE_WIN32_Asynch_Result
 {
 public:
-  /// Constructor.
-  ACE_WIN32_Wakeup_Completion (ACE_Handler::Proxy_Ptr &handler_proxy,
-                               const void *act = nullptr,
-                               ACE_HANDLE event = ACE_INVALID_HANDLE,
-                               int priority = 0,
-                               int signal_number = ACE_SIGRTMIN);
+  explicit ACE_WIN32_Wakeup_Completion (
+    ACE_Handler::Proxy_Ptr &handler_proxy,
+    const void *act = nullptr,
+    ACE_HANDLE event = ACE_INVALID_HANDLE,
+    int priority = 0,
+    int signal_number = ACE_SIGRTMIN);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Wakeup_Completion ();
 
   /// This method calls the <handler>'s <handle_wakeup> method.
@@ -41,17 +40,15 @@ public:
 
 ACE_WIN32_Proactor::ACE_WIN32_Proactor (size_t number_of_threads,
                                         bool used_with_reactor_event_loop)
-  : completion_port_ (0),
-    // This *MUST* be 0, *NOT* ACE_INVALID_HANDLE !!!
-    number_of_threads_ (static_cast<DWORD> (number_of_threads)),
+  : number_of_threads_ (static_cast<DWORD> (number_of_threads)),
     used_with_reactor_event_loop_ (used_with_reactor_event_loop)
 {
   // Create the completion port.
   this->completion_port_ = ::CreateIoCompletionPort (INVALID_HANDLE_VALUE,
-                                                     0,
+                                                     nullptr,
                                                      0,
                                                      this->number_of_threads_);
-  if (this->completion_port_ == 0)
+  if (this->completion_port_ == nullptr)
     ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("CreateIoCompletionPort")));
@@ -76,13 +73,13 @@ int
 ACE_WIN32_Proactor::close ()
 {
   // Close the completion port
-  if (this->completion_port_ != 0)
+  if (this->completion_port_ != nullptr)
     {
       // To avoid memory leaks we should delete all results from queue.
 
       for (;;)
         {
-          ACE_OVERLAPPED *overlapped = nullptr;
+          ACE_OVERLAPPED *overlapped {};
           u_long bytes_transferred = 0;
           ULONG_PTR completion_key = 0;
 
@@ -94,17 +91,17 @@ ACE_WIN32_Proactor::close ()
              &overlapped,
              0);  // poll
 
-          if (overlapped == 0 || res == FALSE)
+          if (overlapped == nullptr || res == FALSE)
             break;
 
           ACE_WIN32_Asynch_Result *asynch_result =
-            (ACE_WIN32_Asynch_Result *) overlapped;
+            static_cast<ACE_WIN32_Asynch_Result *> (overlapped);
 
           delete asynch_result;
         }
 
       int result = ACE_OS::close (this->completion_port_);
-      this->completion_port_ = 0;
+      this->completion_port_ = nullptr;
       return result;
     }
 
@@ -122,7 +119,7 @@ ACE_WIN32_Proactor::register_handle (ACE_HANDLE handle,
                                             this->completion_port_,
                                             comp_key,
                                             this->number_of_threads_);
-  if (cp == 0)
+  if (cp == nullptr)
     {
       ACE_OS::set_errno_to_last_error ();
       // If errno == ERROR_INVALID_PARAMETER, then this handle was
@@ -144,7 +141,7 @@ ACE_WIN32_Proactor::register_handle (ACE_HANDLE handle,
 ACE_Asynch_Read_Stream_Impl *
 ACE_WIN32_Proactor::create_asynch_read_stream ()
 {
-  ACE_Asynch_Read_Stream_Impl *implementation = nullptr;
+  ACE_Asynch_Read_Stream_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Read_Stream (this),
                   0);
@@ -154,7 +151,7 @@ ACE_WIN32_Proactor::create_asynch_read_stream ()
 ACE_Asynch_Write_Stream_Impl *
 ACE_WIN32_Proactor::create_asynch_write_stream ()
 {
-  ACE_Asynch_Write_Stream_Impl *implementation = nullptr;
+  ACE_Asynch_Write_Stream_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Write_Stream (this),
                   0);
@@ -164,7 +161,7 @@ ACE_WIN32_Proactor::create_asynch_write_stream ()
 ACE_Asynch_Read_Dgram_Impl *
 ACE_WIN32_Proactor::create_asynch_read_dgram ()
 {
-  ACE_Asynch_Read_Dgram_Impl *implementation = nullptr;
+  ACE_Asynch_Read_Dgram_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Read_Dgram (this),
                   0);
@@ -174,7 +171,7 @@ ACE_WIN32_Proactor::create_asynch_read_dgram ()
 ACE_Asynch_Write_Dgram_Impl *
 ACE_WIN32_Proactor::create_asynch_write_dgram ()
 {
-  ACE_Asynch_Write_Dgram_Impl *implementation = nullptr;
+  ACE_Asynch_Write_Dgram_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Write_Dgram (this),
                   0);
@@ -184,7 +181,7 @@ ACE_WIN32_Proactor::create_asynch_write_dgram ()
 ACE_Asynch_Read_File_Impl *
 ACE_WIN32_Proactor::create_asynch_read_file ()
 {
-  ACE_Asynch_Read_File_Impl *implementation = nullptr;
+  ACE_Asynch_Read_File_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Read_File (this),
                   0);
@@ -194,7 +191,7 @@ ACE_WIN32_Proactor::create_asynch_read_file ()
 ACE_Asynch_Write_File_Impl *
 ACE_WIN32_Proactor::create_asynch_write_file ()
 {
-  ACE_Asynch_Write_File_Impl *implementation = nullptr;
+  ACE_Asynch_Write_File_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Write_File (this),
                   0);
@@ -204,7 +201,7 @@ ACE_WIN32_Proactor::create_asynch_write_file ()
 ACE_Asynch_Accept_Impl *
 ACE_WIN32_Proactor::create_asynch_accept ()
 {
-  ACE_Asynch_Accept_Impl *implementation = nullptr;
+  ACE_Asynch_Accept_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Accept (this),
                   0);
@@ -214,7 +211,7 @@ ACE_WIN32_Proactor::create_asynch_accept ()
 ACE_Asynch_Connect_Impl *
 ACE_WIN32_Proactor::create_asynch_connect ()
 {
-  ACE_Asynch_Connect_Impl *implementation = nullptr;
+  ACE_Asynch_Connect_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Connect (this),
                   0);
@@ -224,7 +221,7 @@ ACE_WIN32_Proactor::create_asynch_connect ()
 ACE_Asynch_Transmit_File_Impl *
 ACE_WIN32_Proactor::create_asynch_transmit_file ()
 {
-  ACE_Asynch_Transmit_File_Impl *implementation = nullptr;
+  ACE_Asynch_Transmit_File_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Transmit_File (this),
                   0);
@@ -242,7 +239,7 @@ ACE_WIN32_Proactor::create_asynch_read_stream_result
    int priority,
    int signal_number)
 {
-  ACE_Asynch_Read_Stream_Result_Impl *implementation = nullptr;
+  ACE_Asynch_Read_Stream_Result_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Read_Stream_Result (handler_proxy,
                                                        handle,
@@ -267,7 +264,7 @@ ACE_WIN32_Proactor::create_asynch_write_stream_result
    int priority,
    int signal_number)
 {
-  ACE_Asynch_Write_Stream_Result_Impl *implementation = nullptr;
+  ACE_Asynch_Write_Stream_Result_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Write_Stream_Result (handler_proxy,
                                                         handle,
@@ -294,7 +291,7 @@ ACE_WIN32_Proactor::create_asynch_read_file_result
    int priority,
    int signal_number)
 {
-  ACE_Asynch_Read_File_Result_Impl *implementation = nullptr;
+  ACE_Asynch_Read_File_Result_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Read_File_Result (handler_proxy,
                                                      handle,
@@ -323,7 +320,7 @@ ACE_WIN32_Proactor::create_asynch_write_file_result
   int priority,
   int signal_number)
 {
-  ACE_Asynch_Write_File_Result_Impl *implementation = nullptr;
+  ACE_Asynch_Write_File_Result_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Write_File_Result (handler_proxy,
                                                       handle,
@@ -352,7 +349,7 @@ ACE_WIN32_Proactor::create_asynch_read_dgram_result
    int priority,
    int signal_number)
 {
-  ACE_Asynch_Read_Dgram_Result_Impl *implementation = nullptr;
+  ACE_Asynch_Read_Dgram_Result_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Read_Dgram_Result (handler_proxy,
                                                       handle,
@@ -380,7 +377,7 @@ ACE_WIN32_Proactor::create_asynch_write_dgram_result
    int priority,
    int signal_number)
 {
-  ACE_Asynch_Write_Dgram_Result_Impl *implementation = nullptr;
+  ACE_Asynch_Write_Dgram_Result_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Write_Dgram_Result(handler_proxy,
                                                       handle,
@@ -407,7 +404,7 @@ ACE_WIN32_Proactor::create_asynch_accept_result
    int priority,
    int signal_number)
 {
-  ACE_Asynch_Accept_Result_Impl *implementation = nullptr;
+  ACE_Asynch_Accept_Result_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Accept_Result (handler_proxy,
                                                   listen_handle,
@@ -431,7 +428,7 @@ ACE_WIN32_Proactor::create_asynch_connect_result
    int priority,
    int signal_number)
 {
-  ACE_Asynch_Connect_Result_Impl *implementation = nullptr;
+  ACE_Asynch_Connect_Result_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Connect_Result (handler_proxy,
                                                    connect_handle,
@@ -459,7 +456,7 @@ ACE_WIN32_Proactor::create_asynch_transmit_file_result
    int priority,
    int signal_number)
 {
-  ACE_Asynch_Transmit_File_Result_Impl *implementation = nullptr;
+  ACE_Asynch_Transmit_File_Result_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Transmit_File_Result (handler_proxy,
                                                          socket,
@@ -486,7 +483,7 @@ ACE_WIN32_Proactor::create_asynch_timer (const ACE_Handler::Proxy_Ptr &handler_p
                                          int priority,
                                          int signal_number)
 {
-  ACE_Asynch_Result_Impl *implementation = nullptr;
+  ACE_Asynch_Result_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Timer (handler_proxy,
                                           act,
@@ -557,7 +554,7 @@ ACE_WIN32_Proactor::handle_events ()
 int
 ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
 {
-  ACE_OVERLAPPED *overlapped = nullptr;
+  ACE_OVERLAPPED *overlapped {};
   u_long bytes_transferred = 0;
   ULONG_PTR completion_key = 0;
 
@@ -567,7 +564,7 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
                                              &completion_key,
                                              &overlapped,
                                              milli_seconds);
-  if (result == FALSE && overlapped == 0)
+  if (result == FALSE && overlapped == nullptr)
     {
       ACE_OS::set_errno_to_last_error ();
 
@@ -591,10 +588,11 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
           return -1;
         }
     }
-  else if (overlapped != 0)
+  else if (overlapped != nullptr)
     {
       // Narrow the result.
-      ACE_WIN32_Asynch_Result *asynch_result = (ACE_WIN32_Asynch_Result *) overlapped;
+      ACE_WIN32_Asynch_Result *asynch_result =
+        static_cast<ACE_WIN32_Asynch_Result *> (overlapped);
 
       // If errors happen, grab the error.
       if (result == FALSE)
@@ -623,7 +621,7 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
 
       this->application_specific_code (asynch_result,
                                        static_cast<size_t> (bytes_transferred),
-                                       (void *) completion_key,
+                                       reinterpret_cast<void const *> (completion_key),
                                        result_err);
     }
   return 1;
@@ -640,7 +638,7 @@ ACE_WIN32_Proactor::application_specific_code (ACE_WIN32_Asynch_Result *asynch_r
       // Call completion hook
       asynch_result->complete (bytes_transferred,
                                error ? 0 : 1,
-                               (void *) completion_key,
+                               completion_key,
                                error);
     }
   ACE_SEH_FINALLY
@@ -663,9 +661,9 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
   //   error will be extracted later in handle_events()
 
   DWORD bytes_transferred = 0;
-  const void * completion_key = nullptr ;
+  void const *completion_key {};
 
-  if (result != 0)
+  if (result != nullptr)
     {
       // This cast is ok since the original API calls restricted the transfer
       // counts to DWORD range.
@@ -695,7 +693,7 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
 
   // If Proactor event is valid, signal it
   if (handle != ACE_INVALID_HANDLE
-      && handle != 0)
+      && handle != nullptr)
     ACE_OS::event_signal (&handle);
 
   return 0;
@@ -704,9 +702,9 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
 int
 ACE_WIN32_Proactor::post_wakeup_completions (int how_many)
 {
-  ACE_WIN32_Wakeup_Completion *wakeup_completion = nullptr;
+  ACE_WIN32_Wakeup_Completion *wakeup_completion {};
 
-  for (ssize_t ci = 0; ci < how_many; ci++)
+  for (ssize_t ci = 0; ci < how_many; ++ci)
     {
       ACE_NEW_RETURN
         (wakeup_completion,
@@ -765,7 +763,7 @@ ACE_WIN32_Asynch_Timer::complete (size_t,
                                   u_long)
 {
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
-  if (handler != 0)
+  if (handler != nullptr)
     handler->handle_time_out (this->time_, this->act ());
 }
 
@@ -781,9 +779,7 @@ ACE_WIN32_Wakeup_Completion::ACE_WIN32_Wakeup_Completion
 {
 }
 
-ACE_WIN32_Wakeup_Completion::~ACE_WIN32_Wakeup_Completion ()
-{
-}
+ACE_WIN32_Wakeup_Completion::~ACE_WIN32_Wakeup_Completion () = default;
 
 void
 ACE_WIN32_Wakeup_Completion::complete (size_t       /* bytes_transferred */,
@@ -792,7 +788,7 @@ ACE_WIN32_Wakeup_Completion::complete (size_t       /* bytes_transferred */,
                                        u_long       /*  error */)
 {
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
-  if (handler != 0)
+  if (handler != nullptr)
     handler->handle_wakeup ();
 }
 

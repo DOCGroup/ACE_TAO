@@ -33,24 +33,27 @@ public:
   /// Initializes instance variables.
   ACE_Addr (int type = -1, int size = -1);
 
-  /// Destructor.
   virtual ~ACE_Addr () = default;
 
-  // = Get/set the size of the address.
+  /// @name Address size accessors
+  /// @{
 
   /// Return the size of the address.
   int get_size () const;
 
   /// Sets the size of the address.
   void set_size (int size);
+  /// @}
 
-  // = Get/set the type of the address.
+  /// @name Address type accessors
+  /// @{
 
   /// Get the type of the address.
   int get_type () const;
 
   /// Set the type of the address.
   void set_type (int type);
+  /// @}
 
   /// Return a pointer to the address.
   virtual void *get_addr () const;
@@ -58,12 +61,14 @@ public:
   /// Set a pointer to the address.
   virtual void set_addr (const void *, int len);
 
-  // = Equality/inequality tests
+  /// @name Address comparison
+  /// @{
   /// Check for address equality.
   bool operator == (const ACE_Addr &sap) const;
 
   /// Check for address inequality.
   bool operator != (const ACE_Addr &sap) const;
+  /// @}
 
   /// Initializes instance variables.
   void base_set (int type, int size);

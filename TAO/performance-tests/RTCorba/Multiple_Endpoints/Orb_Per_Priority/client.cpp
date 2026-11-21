@@ -12,52 +12,46 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
 
+/// Runs client threads and collects their throughput statistics.
 class Client : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run the client thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run the client threads.
-  //
 public:
-  Client ();
-  // ctor
+  Client () = default;
 
+  /// Sets the test attributes.
   void set (int niterations,
             int id,
             CORBA::ORB_ptr,
             ACE_Barrier *before,
             ACE_Barrier *after);
-  // Set the test attributes.
 
+  /// Adds this client's throughput statistics to the aggregate.
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
-  // Accumulate the throughput statistics into <throughput>
 
+  /// Outputs the accumulated statistics.
   void dump_stats (const ACE_TCHAR* msg,
                    ACE_High_Res_Timer::global_scale_factor_type gsf);
-  // Accumulate the throughput statistics into <throughput>
 
-  // = The ACE_Task_Base methods....
-  virtual int svc ();
+  int svc () override;
 
 private:
-  CORBA::ORB_ptr orb_;
+  CORBA::ORB_ptr orb_ {};
 
+  /// Server reference used for invocations.
   Test_var server_;
-  // The server.
 
-  int niterations_;
-  // The number of iterations on each client thread.
+  /// Number of iterations for each client thread.
+  int niterations_ {};
 
-  int id_;
-  // The application ID for this thread...
+  /// Identifier for this client thread.
+  int id_ {};
 
+  /// Per-thread throughput statistics.
   ACE_Throughput_Stats throughput_;
-  // Keep throughput statistics on a per-thread basis
 
-  ACE_Barrier *before_connection_;
-  ACE_Barrier *after_connection_;
+  /// Barriers for coordinating connection setup.
+  ACE_Barrier *before_connection_ {};
+  ACE_Barrier *after_connection_ {};
 };
 
 // ****************************************************************
@@ -86,7 +80,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         if (nthreads < MAX_THREADS)
           {
             priorities[nthreads] = ACE_OS::atoi (get_opts.opt_arg ());
-            nthreads++;
+            ++nthreads;
           }
         break;
       case 'n':
@@ -146,7 +140,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       // Obtain Priority Mapping used by the ORB.
       CORBA::Object_var object =
@@ -212,10 +208,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 }
 
 // ****************************************************************
-
-Client::Client ()
-{
-}
 
 void
 Client::set (int niterations,

@@ -106,7 +106,9 @@ ACE_OS::inet_pton (int family, const char *strptr, void *addrptr)
   if (family == AF_INET)
     {
       if (ACE_OS::inet_aton (strptr, static_cast<in_addr *> (addrptr)))
-        return 1; // Success
+        {
+          return 1; // Success
+        }
 
       return 0; // Input is not a valid presentation format
     }

@@ -23,6 +23,8 @@ my $ctrl = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed
 
 $pingiorfile = "ping.ior";
 $pongiorfile = "pong.ior";
+my $ping_endpoint = "127.0.0.1:12345";
+my $pong_endpoint = "127.0.0.1:23456";
 
 my $ping_pingiorfile = $ping->LocalFile ($pingiorfile);
 my $pong_pongiorfile = $pong->LocalFile ($pongiorfile);
@@ -34,13 +36,14 @@ $ctrl->DeleteFile ($pingiorfile);
 $ctrl->DeleteFile ($pongiorfile);
 
 $PING = $ping->CreateProcess ("ping",
-                              " -o $ping_pingiorfile");
+                              " -o $ping_pingiorfile -r UDP=$ping_endpoint -s UDP=$pong_endpoint");
 $PONG = $pong->CreateProcess ("pong",
-                              " -o $pong_pongiorfile");
+                              " -o $pong_pongiorfile -r UDP=$ping_endpoint -s UDP=$pong_endpoint");
 $CTRL = $ctrl->CreateProcess ("control",
                               " -ORBDebugLevel $debug_level ".
                               " -f file://$ctrl_pingiorfile ".
-                              " -g file://$ctrl_pongiorfile");
+                              " -g file://$ctrl_pongiorfile ".
+                              " -r $ping_endpoint -s $pong_endpoint");
 
 print STDERR "Starting Ping\n";
 

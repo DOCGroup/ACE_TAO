@@ -11,7 +11,6 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Client_Task (Test::Roundtrip_ptr roundtrip,
                int niterations);
 

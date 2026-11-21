@@ -36,10 +36,9 @@ template <class SVC_HANDLER>
 class TAO_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
 {
 public:
-  /**
-   * Constructor.
-   */
-  TAO_Creation_Strategy (TAO_ORB_Core *orb_core);
+  TAO_Creation_Strategy () = delete;
+
+  explicit TAO_Creation_Strategy (TAO_ORB_Core *orb_core);
 
   /// Create a SVC_HANDLER  and set the ORB_Core pointer on it.
   int make_svc_handler (SVC_HANDLER *&sh) override;
@@ -60,8 +59,9 @@ template <class SVC_HANDLER>
 class TAO_Concurrency_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
 {
 public:
-  /// Constructor.
-  TAO_Concurrency_Strategy (TAO_ORB_Core *orb_core);
+  TAO_Concurrency_Strategy () = delete;
+
+  explicit TAO_Concurrency_Strategy (TAO_ORB_Core *orb_core);
 
   /**
    * Activates the Svc_Handler, and then if specified by the
@@ -79,8 +79,9 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 class TAO_Accept_Strategy : public ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
 {
 public:
-  /// Constructor.
-  TAO_Accept_Strategy (TAO_ORB_Core *orb_core);
+  TAO_Accept_Strategy () = delete;
+
+  explicit TAO_Accept_Strategy (TAO_ORB_Core *orb_core);
 
   /// Initialize the <peer_acceptor_> with @a local_addr.  If the
   /// process runs out of handles, purge some "old" connections.

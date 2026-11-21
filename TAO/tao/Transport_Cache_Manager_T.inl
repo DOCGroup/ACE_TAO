@@ -13,7 +13,7 @@ namespace TAO
   {
     // Compose the ExternId & Intid
     Cache_ExtId ext_id (prop);
-    int retval = 0;
+    int retval {};
     {
       ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
                                 guard,
@@ -23,9 +23,13 @@ namespace TAO
 
       // If it has already connected, go directly to the IDLE_BNP state
       if (int_id.is_connected () && state == ENTRY_CONNECTING)
-        int_id.recycle_state (ENTRY_IDLE_AND_PURGABLE);
+        {
+          int_id.recycle_state (ENTRY_IDLE_AND_PURGABLE);
+        }
       else
-        int_id.recycle_state (state);
+        {
+          int_id.recycle_state (state);
+        }
 
       retval = this->bind_i (ext_id, int_id);
       if (retval == 0)
@@ -41,15 +45,15 @@ namespace TAO
   ACE_INLINE int
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge_entry (HASH_MAP_ENTRY *&entry)
   {
-    int retval = 0;
+    int retval {};
 
     if (entry)
     {
-      HASH_MAP_ENTRY* cached_entry = nullptr;
+      HASH_MAP_ENTRY* cached_entry {};
       ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
-      if (entry != 0) // in case someone beat us to it (entry is reference to transport member)
+      if (entry != nullptr) // in case someone beat us to it (entry is reference to transport member)
       {
-        // Store the entry in a temporary and zero out the reference.
+        // Store the entry in a temporary and null out the reference.
         // If there is only one reference count for the transport, we will end up causing
         // it's destruction.  And the transport can not be holding a cache map entry if
         // that happens.
@@ -126,7 +130,9 @@ namespace TAO
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
     if (!entry) // in case someone beat us to it (entry is reference to transport member)
-      return -1;
+      {
+        return -1;
+      }
 
     return this->make_idle_i (entry);
   }
@@ -150,12 +156,14 @@ namespace TAO
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::
     close (Connection_Handler_Set &handlers)
   {
-    // The cache lock pointer should only be zero if
+    // The cache lock pointer should only be null if
     // Transport_Cache_Manager_T::open() was never called.  Note that
     // only one thread opens the Transport_Cache_Manager_T at any given
-    // time, so it is safe to check for a non-zero lock pointer.
-    if (this->cache_lock_ == 0)
-      return -1;
+    // time, so it is safe to check for a non-null lock pointer.
+    if (this->cache_lock_ == nullptr)
+      {
+        return -1;
+      }
 
     long timer_id = -1;
     int result = -1;
@@ -178,16 +186,17 @@ namespace TAO
               {
                 TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
-                  ACE_TEXT ("close, failed to cancel idle scanner timer %ld, ")
-                  ACE_TEXT ("result %d\n"), timer_id, cancel_result));
+                  ACE_TEXT ("close, failed to cancel idle scanner timer %q, ")
+                  ACE_TEXT ("result %d\n"),
+                  static_cast<ACE_INT64> (timer_id), cancel_result));
               }
           }
         else if (TAO_debug_level > 6)
           {
             TAOLIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
-              ACE_TEXT ("close, canceled idle scanner timer %ld, result %d\n"),
-              timer_id, cancel_result));
+              ACE_TEXT ("close, canceled idle scanner timer %q, result %d\n"),
+              static_cast<ACE_INT64> (timer_id), cancel_result));
           }
       }
 

@@ -7,6 +7,8 @@
 #include "tao/RTScheduling/RTScheduler.h"
 #include "ace/Task.h"
 
+#include <memory>
+
 class Task_Stats;
 class DT_Creator;
 
@@ -14,6 +16,7 @@ class RTSCHEDTESTLIB_Export Thread_Task : public ACE_Task <ACE_SYNCH>
 {
  public:
   Thread_Task ();
+  ~Thread_Task () override;
 
   virtual int activate_task (RTScheduling::Current_ptr current,
                              CORBA::Policy_ptr sched_param,
@@ -26,12 +29,14 @@ class RTSCHEDTESTLIB_Export Thread_Task : public ACE_Task <ACE_SYNCH>
 
   time_t start_time ();
 
-  /// = Job get/set
+  /// @name Job accessors
+  /// @{
   /// Returns the name of the Job exec'ed by this Task.
   const char* job ();
 
   /// Sets the Job to exec.
   void job (Job_ptr job);
+  /// @}
 
   int dist ();
 
@@ -39,7 +44,7 @@ class RTSCHEDTESTLIB_Export Thread_Task : public ACE_Task <ACE_SYNCH>
 
  protected:
   /// task svc
-  virtual int svc ();
+  int svc () override;
   RTScheduling::Current_var current_;
   CORBA::Policy_var sched_param_;
   time_t start_time_;
@@ -53,7 +58,7 @@ class RTSCHEDTESTLIB_Export Thread_Task : public ACE_Task <ACE_SYNCH>
   int dist_;
   CORBA::String_var job_name_;
   Job_var job_;
-  Task_Stats *task_stats_;
+  std::unique_ptr<Task_Stats> task_stats_ {};
 };
 
 #endif /* THREAD_TASK_H */

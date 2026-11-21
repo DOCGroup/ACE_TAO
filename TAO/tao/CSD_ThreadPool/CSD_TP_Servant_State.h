@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CSD_TP_Servant_State.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
-
 #ifndef TAO_CSD_TP_SERVANT_STATE_H
 #define TAO_CSD_TP_SERVANT_STATE_H
 
@@ -57,24 +53,21 @@ namespace TAO
       /// Handle Type (aka, Smart Pointer Type).
       using HandleType = TAO_Intrusive_Ref_Count_Handle<TP_Servant_State>;
 
-      /// Default Constructor.
       TP_Servant_State() = default;
 
-      /// Virtual Destructor.
-      virtual ~TP_Servant_State();
-
+      ~TP_Servant_State() override = default;
       /// Accessor for the servant busy flag.
       bool busy_flag() const;
 
       /// Mutator for the servant busy flag.
       void busy_flag(bool new_value);
 
-    private:
       TP_Servant_State (TP_Servant_State const &) = delete;
       TP_Servant_State &operator= (TP_Servant_State const &) = delete;
       TP_Servant_State (TP_Servant_State &&) = delete;
       TP_Servant_State &operator= (TP_Servant_State &&) = delete;
 
+    private:
       /// The servant's current "busy" state (true == busy, false == not busy)
       bool busy_flag_ {};
     };

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Smart_Proxies.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Brian Wallis <brian.wallis@ot.com.au>
  */
-//=============================================================================
 
 #ifndef TAO_SMARTPROXIES_H
 #define TAO_SMARTPROXIES_H
@@ -17,7 +15,6 @@
 
 #include "tao/SmartProxies/smartproxies_export.h"
 #include "tao/Object.h"
-#include "tao/TAO_Singleton.h"
 #include "tao/LocalObject.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -37,24 +34,20 @@ class TAO_SmartProxies_Export TAO_Smart_Proxy_Base
   : public ::CORBA::LocalObject
 {
 public:
-  /// Destructor
   ~TAO_Smart_Proxy_Base () override;
 
-protected:
-  /// Constructor.
-  TAO_Smart_Proxy_Base () = default;
-
-  /// Constructor.
-  TAO_Smart_Proxy_Base (CORBA::Object_ptr proxy);
-
-  /// The proxy to which remote/collocated calls are made.
-  CORBA::Object_var base_proxy_;
-
-private:
   TAO_Smart_Proxy_Base (TAO_Smart_Proxy_Base const &) = delete;
   TAO_Smart_Proxy_Base &operator= (TAO_Smart_Proxy_Base const &) = delete;
   TAO_Smart_Proxy_Base (TAO_Smart_Proxy_Base &&) = delete;
   TAO_Smart_Proxy_Base &operator= (TAO_Smart_Proxy_Base &&) = delete;
+
+protected:
+  TAO_Smart_Proxy_Base () = default;
+
+  explicit TAO_Smart_Proxy_Base (CORBA::Object_ptr proxy);
+
+  /// The proxy to which remote/collocated calls are made.
+  CORBA::Object_var base_proxy_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -13,7 +13,6 @@
 
 #include /**/ "ace/pre.h"
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -50,7 +49,7 @@ class ACE_Export ACE_Dynamic_Service_Dependency
 public:
   ACE_Dynamic_Service_Dependency  (const ACE_Service_Gestalt *cfg,
                                    const ACE_TCHAR *principal);
-  ACE_Dynamic_Service_Dependency  (const ACE_TCHAR *principal);
+  explicit ACE_Dynamic_Service_Dependency  (const ACE_TCHAR *principal);
   ~ACE_Dynamic_Service_Dependency ();
 
 private:
@@ -61,7 +60,6 @@ private:
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
 
 #include /**/ "ace/post.h"
 

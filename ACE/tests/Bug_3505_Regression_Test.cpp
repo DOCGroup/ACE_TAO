@@ -1,15 +1,7 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    Test bugzilla 3505
-//
-// = AUTHOR
-//    Johnny Willemsen <jwillemsen@remedy.nl>
-//
-// ============================================================================
+/// @file Bug_3505_Regression_Test.cpp
+/// Test bugzilla 3505
+///
+/// @author Johnny Willemsen <jwillemsen@remedy.nl>
 
 #include "ace/Service_Gestalt.h"
 #include "test_config.h"

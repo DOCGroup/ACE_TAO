@@ -3,13 +3,9 @@
 #include "ace/Log_Msg.h"
 
 Client_Request_Interceptor::
-Client_Request_Interceptor (const char *id)
+Client_Request_Interceptor (char const *id)
   : myname_ ("Client_Request_Interceptor"),
     orb_id_ (CORBA::string_dup (id))
-{
-}
-
-Client_Request_Interceptor::~Client_Request_Interceptor ()
 {
 }
 
@@ -49,7 +45,7 @@ Client_Request_Interceptor::receive_reply (
       IOP::ServiceContext_var sc =
         ri->get_reply_service_context (IOP::RTCorbaPriority);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
 
@@ -72,17 +68,17 @@ Client_Request_Interceptor::receive_exception (
 {
   if (CORBA::is_nil (this->orb_.in ()))
     {
-      int argc = 0;
-      ACE_TCHAR **argv = 0;
+      int argc {};
+      ACE_TCHAR **argv {};
       this->orb_ = CORBA::ORB_init (argc, argv,
                                     this->orb_id_.in ());
     }
 
-  CORBA::String_var operation = ri->operation ();
+  CORBA::String_var const operation = ri->operation ();
 
-  CORBA::Object_var target = ri->target ();
+  CORBA::Object_var const target = ri->target ();
 
-  CORBA::String_var ior =
+  CORBA::String_var const ior =
     this->orb_->object_to_string (target.in ());
 
   ACE_DEBUG ((LM_DEBUG,

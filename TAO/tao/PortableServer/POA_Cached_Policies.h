@@ -1,6 +1,4 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file POA_Cached_Policies.h
  *
@@ -8,8 +6,6 @@
  *
  *  @author  Irfan Pyarali
  */
-//=============================================================================
-
 #ifndef TAO_POA_CACHED_POLICIES_H
 #define TAO_POA_CACHED_POLICIES_H
 #include /**/ "ace/pre.h"
@@ -64,7 +60,7 @@ namespace TAO
       /**
        * @name Accessor methods to cached values.
        */
-      //@{
+      /// @{
       ::PortableServer::ThreadPolicyValue thread () const;
       ::PortableServer::LifespanPolicyValue lifespan () const;
       ::PortableServer::IdUniquenessPolicyValue id_uniqueness () const;
@@ -109,7 +105,7 @@ namespace TAO
       void priority_model (PriorityModel priority_model);
       void server_priority (CORBA::Short priority);
       void implicit_activation (::PortableServer::ImplicitActivationPolicyValue value);
-      //@}
+      /// @}
 
     protected:
       /// Helper method to update a particular policy.

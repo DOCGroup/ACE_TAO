@@ -21,6 +21,8 @@
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "ace/Null_Mutex.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Barrier;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -43,10 +45,14 @@ private:
   Activity ();
   ~Activity ();
 
+  Activity (Activity const &) = delete;
+  Activity (Activity &&) = delete;
+  Activity &operator= (Activity const &) = delete;
+  Activity &operator= (Activity &&) = delete;
+
 public:
   /// initialize the ORB et. al.
   int init (int& argc, ACE_TCHAR *argv []);
-
 
   /// Activate the tasks, jobs, poas.
   void run (int argc, ACE_TCHAR *argv[]);
@@ -54,22 +60,27 @@ public:
   /// Resolve the naming service.
   int resolve_naming_service ();
 
-  /// = Accessors
+  /// @name Accessors
+  /// @{
   CORBA::ORB_ptr orb ();
   RTCORBA::Current_ptr current ();
   void builder (Builder* builder);
+  /// @}
 
   /// Returns priority if server declared model else -1
   CORBA::Short get_server_priority (CORBA::Object_ptr server);
-  /// = Callbacks
+  /// @name Callbacks
+  /// @{
   /// Task ended notification
   void task_ended (Periodic_Task* ended_task);
 
   /// Job shutdown notification
   void job_ended (Job_i* ended_job);
+  /// @}
 
 protected:
-  /// = Activation methods.
+  /// @name Activation methods
+  /// @{
   /// Activate the POA's
   void activate_poa_list ();
 
@@ -85,17 +96,19 @@ protected:
   /// Create a file whose name is specified in the -Started_Flag <file_name> argument at startup.
   /// This file flags that the Activity has finished its bootstrapping step.
   void create_started_flag_file (int argc, ACE_TCHAR *argv[]);
+  /// @}
 
-  /// = Data members
-
+  /// @name Data members
+  /// @{
   /// The Builder object.
-  Builder* builder_;
+  /// Borrowed from the Builder service object.
+  Builder *builder_ {};
 
   /// ACE_Barrier to synch. tasks.
-  ACE_Barrier* barrier_;
+  std::unique_ptr<ACE_Barrier> barrier_;
 
   /// Mutex to serialize access to our internal state.
-  ACE_Lock* state_lock_;
+  std::unique_ptr<ACE_Lock> state_lock_;
 
   /// The ORB that we use.
   CORBA::ORB_var orb_;
@@ -110,18 +123,20 @@ protected:
   PortableServer::POA_var root_poa_;
 
   /// A naming context.
-  CosNaming::NamingContextExt_ptr naming_;
+  CosNaming::NamingContextExt_var naming_;
 
   /// The Priority Mapping helper.
-  RTCORBA::PriorityMapping *priority_mapping_;
+  /// Borrowed from the priority mapping manager.
+  RTCORBA::PriorityMapping *priority_mapping_ {};
 
   /// Count the number of periodic tasks active.
-  int active_task_count_;
+  int active_task_count_ {};
 
   /// Count the number of Jobs active
-  int active_job_count_;
+  int active_job_count_ {};
+  /// @}
 };
 
-typedef ACE_Singleton<Activity, ACE_Null_Mutex> ACTIVITY;
+using ACTIVITY = ACE_Singleton<Activity, ACE_Null_Mutex>;
 
 #endif /* ACTIVITY_H */

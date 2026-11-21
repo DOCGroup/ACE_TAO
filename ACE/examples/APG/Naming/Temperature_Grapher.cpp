@@ -8,7 +8,7 @@
 // Listing 1 code/ch21
 void Temperature_Grapher::monitor ()
 {
-  for (;;)
+  while (true)
     {
       this->update_graph ();
       ACE_OS::sleep (this->opt_.poll_interval ());
@@ -19,10 +19,9 @@ void Temperature_Grapher::monitor ()
 // Listing 2 code/ch21
 void Temperature_Grapher::update_graph ()
 {
-  Name_Binding_Ptr lastUpdate
-    (this->naming_context_.fetch ("lastUpdate"));
+  Name_Binding_Ptr lastUpdate {this->naming_context_.fetch ("lastUpdate")};
 
-  if (!lastUpdate.get ())
+  if (!lastUpdate)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("No data to graph\n")));
       return;
@@ -30,10 +29,9 @@ void Temperature_Grapher::update_graph ()
   // Listing 2
 
   // Listing 3 code/ch21
-  Name_Binding_Ptr lastGraphed
-    (this->naming_context_.fetch ("lastGraphed"));
+  Name_Binding_Ptr lastGraphed {this->naming_context_.fetch ("lastGraphed")};
 
-  if (lastGraphed.get () &&
+  if (lastGraphed &&
       lastGraphed->int_value () == lastUpdate->int_value ())
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Data already graphed\n")));
@@ -42,7 +40,7 @@ void Temperature_Grapher::update_graph ()
   // Listing 3
 
   // Listing 4 code/ch21
-  ACE_BINDING_SET set;
+  ACE_BINDING_SET set {};
   if (this->naming_context_.list_name_entries
         (set, "history[") != 0)
     {
@@ -53,25 +51,24 @@ void Temperature_Grapher::update_graph ()
   // Listing 4
 
   // Listing 5 code/ch21
-  Graphable_Element_List graphable;
+  Graphable_Element_List graphable {};
   ACE_BINDING_ITERATOR set_iterator (set);
-  for (ACE_Name_Binding *entry = 0;
+  for (ACE_Name_Binding *entry {};
        set_iterator.next (entry) != 0;
        set_iterator.advance ())
     {
-      Name_Binding binding (entry);
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s\t%s\t%s\n"),
+      Name_Binding binding {entry};
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C\t%C\t%C\n"),
                   binding.type (),
                   binding.name (),
                   binding.value ()));
 
-      Graphable_Element *ge = new Graphable_Element (entry);
-      graphable.push_back (*ge);
+      graphable.emplace_back (entry);
     }
   // Listing 5
 
   // Listing 6 code/ch21
-  Graph g;
+  Graph g {};
   g.graph (lastUpdate->value (), graphable);
   this->naming_context_.rebind ("lastGraphed",
                                 lastUpdate->int_value ());

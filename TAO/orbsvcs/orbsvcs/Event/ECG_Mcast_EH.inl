@@ -22,7 +22,7 @@ Observer_Disconnect_Command::Observer_Disconnect_Command (
 ACE_INLINE
 TAO_ECG_Mcast_EH::
 Observer_Disconnect_Command::Observer_Disconnect_Command (
-                          const Observer_Disconnect_Command & rhs)
+                          Observer_Disconnect_Command const &rhs)
   : handle_ (rhs.handle_)
   , ec_ (RtecEventChannelAdmin::EventChannel::_duplicate (rhs.ec_.in()))
 {
@@ -32,7 +32,7 @@ ACE_INLINE
 TAO_ECG_Mcast_EH::Observer_Disconnect_Command &
 TAO_ECG_Mcast_EH::
 Observer_Disconnect_Command::operator= (
-                         const Observer_Disconnect_Command & rhs)
+                         Observer_Disconnect_Command const &rhs)
 {
   this->handle_ = rhs.handle_;
   this->ec_ = RtecEventChannelAdmin::EventChannel::_duplicate (rhs.ec_.in());

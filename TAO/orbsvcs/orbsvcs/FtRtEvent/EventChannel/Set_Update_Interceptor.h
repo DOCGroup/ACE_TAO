@@ -39,13 +39,11 @@ class TAO_Set_Update_Interceptor
 {
 public:
   TAO_Set_Update_Interceptor ();
-  // ctor.
 
   ~TAO_Set_Update_Interceptor () override = default;
-  // dtor.
 
+  /// Canonical name of the interceptor.
   char * name () override;
-  // Canonical name of the interceptor.
 
   void destroy () override;
 
@@ -59,12 +57,12 @@ public:
 
   void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-private:
   TAO_Set_Update_Interceptor (TAO_Set_Update_Interceptor const &) = delete;
   TAO_Set_Update_Interceptor &operator= (TAO_Set_Update_Interceptor const &) = delete;
   TAO_Set_Update_Interceptor (TAO_Set_Update_Interceptor &&) = delete;
   TAO_Set_Update_Interceptor &operator= (TAO_Set_Update_Interceptor &&) = delete;
 
+private:
   char const *myname_;
 };
 

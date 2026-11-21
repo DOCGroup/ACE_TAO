@@ -18,8 +18,9 @@
 #include "ace/Naming_Context.h"
 #include "ace/Profile_Timer.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
+
+#include <cstring>
 
 #if !defined ACE_LACKS_FCNTL || defined ACE_WIN32
 
@@ -31,7 +32,9 @@ static void
 initialize_array (int * array, int size)
 {
   for (int n = 0; n < size; ++n)
-    array[n] = n;
+    {
+      array[n] = n;
+    }
 }
 
 static void
@@ -59,7 +62,7 @@ test_bind (ACE_Naming_Context &ns_context)
   randomize (array, sizeof (array) / sizeof (array[0]));
 
   // do the binds
-  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
+  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; ++i)
     {
       ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", array[i]);
       ACE_NS_WString w_name (name);
@@ -79,10 +82,10 @@ test_find_failure (ACE_Naming_Context &ns_context)
   ACE_OS::snprintf (name, BUFSIZ, "%s", "foo-bar");
   ACE_NS_WString w_name (name);
   ACE_NS_WString w_value;
-  char *l_type = nullptr;
+  char *l_type {};
 
   // Do the finds.
-  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
+  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; ++i)
     {
       int resolve = ns_context.resolve (w_name, w_value, l_type);
       ACE_TEST_ASSERT (resolve == -1);
@@ -98,7 +101,7 @@ test_rebind (ACE_Naming_Context &ns_context)
   randomize (array, sizeof (array) / sizeof (array[0]));
 
   // do the rebinds
-  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
+  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; ++i)
     {
       ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", array[i]);
       ACE_NS_WString w_name (name);
@@ -121,7 +124,7 @@ test_unbind (ACE_Naming_Context &ns_context)
   randomize (array, sizeof (array) / sizeof (array[0]));
 
   // do the unbinds
-  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
+  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; ++i)
     {
       ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", array[i]);
       ACE_NS_WString w_name (name);
@@ -142,7 +145,7 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
   randomize (array, sizeof (array) / sizeof (array[0]));
 
   // do the finds
-  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
+  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; ++i)
     {
       if (sign == 1)
         {
@@ -159,14 +162,16 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
 
       ACE_NS_WString w_name (name);
       ACE_NS_WString w_value;
-      char *type_out = nullptr;
+      char *type_out {};
       ACE_NS_WString val (temp_val);
 
       int const resolve_result = ns_context.resolve (w_name, w_value, type_out);
       if (resolve_result != result)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Error, resolve result not equal to resutlt (%d != %d)\n"),
-                    resolve_result, result));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Error, resolve result not equal to resutlt (%d != %d)\n"),
+                      resolve_result, result));
+        }
 
       char *l_value = w_value.char_rep ();
 
@@ -176,17 +181,21 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
           if (ns_context.name_options ()->debug ())
             {
               if (type_out)
-                ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("Name: %C\tValue: %C\tType: %C\n"),
-                            name, l_value, type_out));
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("Name: %C\tValue: %C\tType: %C\n"),
+                              name, l_value, type_out));
+                }
               else
-                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Name: %C\tValue: %C\n"),
-                            name, l_value));
+                {
+                  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Name: %C\tValue: %C\n"),
+                              name, l_value));
+                }
             }
 
           if (type_out)
             {
-              ACE_TEST_ASSERT (ACE_OS::strcmp (type_out, temp_type) == 0);
+              ACE_TEST_ASSERT (std::strcmp (type_out, temp_type) == 0);
               delete[] type_out;
             }
         }
@@ -205,7 +214,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_UNUSED_ARG (argv);
 #else
   ACE_TCHAR temp_file [BUFSIZ];
-  ACE_Naming_Context *ns_context = nullptr;
+  ACE_Naming_Context *ns_context {};
   ACE_NEW_RETURN (ns_context, ACE_Naming_Context, -1);
 
   ACE_Name_Options *name_options = ns_context->name_options ();

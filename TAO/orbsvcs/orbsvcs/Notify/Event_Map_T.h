@@ -35,11 +35,14 @@ class TAO_Notify_Event_Map_T
 public:
   using ENTRY = TAO_Notify_Event_Map_Entry_T<PROXY>;
 
-  /// Constructor
   TAO_Notify_Event_Map_T ();
 
-  /// Destructor
   ~TAO_Notify_Event_Map_T ();
+
+  TAO_Notify_Event_Map_T (TAO_Notify_Event_Map_T const &) = delete;
+  TAO_Notify_Event_Map_T (TAO_Notify_Event_Map_T &&) = delete;
+  TAO_Notify_Event_Map_T &operator= (TAO_Notify_Event_Map_T const &) = delete;
+  TAO_Notify_Event_Map_T &operator= (TAO_Notify_Event_Map_T &&) = delete;
 
   /// Init
   void init ();
@@ -87,7 +90,7 @@ protected:
   ACE_LOCK lock_;
 
   /// Count of proxys connected.
-  int proxy_count_;
+  int proxy_count_ {};
 
   /// The default broadcast list for EventType::special.
   ENTRY broadcast_entry_;

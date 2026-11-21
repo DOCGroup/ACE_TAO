@@ -57,8 +57,8 @@ int test_STL_algorithm (T & container)
                    Element_Counter <T> ()).get_count ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "std::for_each handled %d elements\n",
-              count));
+              "std::for_each handled %q elements\n",
+              static_cast<ACE_INT64> (count)));
 
   // Test the reverse iterator using std::for_each.
   ACE_DEBUG ((LM_DEBUG,
@@ -70,8 +70,8 @@ int test_STL_algorithm (T & container)
                    Element_Counter <T> ()).get_count ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "std::for_each handled %d elements\n",
-              count));
+              "std::for_each handled %q elements\n",
+              static_cast<ACE_INT64> (count)));
 
   return 0;
 }

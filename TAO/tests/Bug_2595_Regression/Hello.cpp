@@ -9,9 +9,10 @@ void
 Hello::op (::Test::Fls_out fstruct,
            ::Test::Vls_out vstruct)
 {
-  Test::Fls a {5, 1.0};
+  Test::Fls const a {5, 1.0};
   fstruct = a;
-  vstruct = new Test::Vls;
+  Test::Vls_var value = new Test::Vls;
+  vstruct = value._retn ();
 }
 
 void

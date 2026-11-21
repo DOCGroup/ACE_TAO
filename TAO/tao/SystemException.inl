@@ -37,7 +37,6 @@ CORBA::SystemException::_downcast (const CORBA::Exception *exception)
   return dynamic_cast<const CORBA::SystemException *> (exception);
 }
 
-
 #define TAO_STANDARD_SYSTEM_EXCEPTION_LIST \
     TAO_SYSTEM_EXCEPTION (UNKNOWN) \
     TAO_SYSTEM_EXCEPTION (BAD_PARAM) \

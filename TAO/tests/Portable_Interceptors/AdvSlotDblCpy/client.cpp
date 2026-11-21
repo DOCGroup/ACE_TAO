@@ -5,23 +5,32 @@ namespace
 {
   class always
   {
-    const InvokeMe_ptr server_;
   public:
-    always(const InvokeMe_ptr x):server_(x) {}
-    ~always()
+    explicit always (InvokeMe_ptr server) : server_ (server) {}
+
+    always (always const &) = delete;
+    always (always &&) = delete;
+    always & operator = (always const &) = delete;
+    always & operator = (always &&) = delete;
+
+    ~always ()
     {
       ACE_DEBUG ((LM_DEBUG, "\n"));
       server_->shutdown ();
     }
+
+  private:
+    // Borrowed from the client-side var; Shutdown is destroyed before it.
+    InvokeMe_ptr const server_;
   };
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (argc != 2)
         {
@@ -29,15 +38,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           return -1;
         }
 
-      CORBA::Object_var obj = orb->string_to_object (argv[1]);
-      InvokeMe_var server = InvokeMe::_narrow (obj.in ());
+      CORBA::Object_var const obj = orb->string_to_object (argv[1]);
+      InvokeMe_var const server = InvokeMe::_narrow (obj.in ());
 
-      always Shutdown( server.in ()); // When goes out of scope!
+      always const Shutdown (server.in ()); // When goes out of scope!
       server->invoke_me ();
       ACE_DEBUG ((LM_DEBUG, "\n"));
       server->invoke_me ();
     }
-  catch (const ::CORBA::Exception &ex)
+  catch (::CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("ERROR : unexpected CORBA exception caught : ");
       return 1;

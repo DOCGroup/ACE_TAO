@@ -39,7 +39,7 @@ namespace ACE_RMCast
 
   void Retransmit::send (Message_ptr m)
   {
-    if (m->find (Data::id) != 0)
+    if (m->find (Data::id) != nullptr)
     {
       SN const* sn = static_cast<SN const*> (m->find (SN::id));
 
@@ -100,7 +100,7 @@ namespace ACE_RMCast
   track_thunk (void* obj)
   {
     reinterpret_cast<Retransmit*> (obj)->track ();
-    return 0;
+    return ACE_THR_FUNC_RETURN_NULL;
   }
 
   void Retransmit::
@@ -133,18 +133,24 @@ namespace ACE_RMCast
       time += params_.tick ();
 
       while (!stop_)
-      {
-        if (cond_.wait (&time) == -1)
         {
-          if (errno != ETIME)
-            ACE_OS::abort ();
-          else
-            break;
+          if (cond_.wait (&time) == -1)
+            {
+              if (errno != ETIME)
+                {
+                  ACE_OS::abort ();
+                }
+              else
+                {
+                  break;
+                }
+            }
         }
-      }
 
       if (stop_)
-        break;
+        {
+          break;
+        }
     }
   }
 }

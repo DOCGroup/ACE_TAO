@@ -8,10 +8,6 @@ test_i::test_i (CORBA::Short num,
 {
 }
 
-test_i::~test_i ()
-{
-}
-
 CORBA::Short
 test_i::number ()
 {

@@ -33,7 +33,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Dirent
 {
 public:
-  /// Default constructor.
   ACE_Dirent () = default;
 
   /// Constructor calls @c opendir()
@@ -49,7 +48,8 @@ public:
   /// Closes the directory stream and frees the ACE_DIR structure.
   void close ();
 
-  // = Iterator methods.
+  /// @name Iterator methods
+  /// @{
   /**
    * Returns a pointer to a structure representing the directory entry
    * at the current position in the directory stream to which dirp
@@ -68,8 +68,10 @@ public:
    * directory is actually read.
    */
   ACE_DIRENT *read ();
+  /// @}
 
-  // = Manipulators.
+  /// @name Position manipulators
+  /// @{
   /// Returns the current location associated with the directory
   /// stream.
   long tell ();
@@ -95,6 +97,7 @@ public:
    * @c opendir() would.
    */
   void rewind ();
+  /// @}
 
 private:
   /// Pointer to the directory stream.

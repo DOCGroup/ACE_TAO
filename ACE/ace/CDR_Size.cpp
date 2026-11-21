@@ -86,7 +86,9 @@ ACE_SizeCDR::write_string (ACE_CDR::ULong len,
   if (len != 0)
     {
       if (this->write_ulong (len + 1))
+      {
         return this->write_char_array (x, len + 1);
+      }
     }
   else
     {
@@ -95,7 +97,9 @@ ACE_SizeCDR::write_string (ACE_CDR::ULong len,
       // notion of null v. empty strings; nulls aren't part of the OMG-IDL
       // string model.)
       if (this->write_ulong (1))
+      {
         return this->write_char (0);
+      }
     }
 
   return (this->good_bit_ = false);
@@ -148,13 +152,19 @@ ACE_SizeCDR::write_wstring (ACE_CDR::ULong len,
     }
 
   else
-    if (x != nullptr)
+    {
+      if (x != nullptr)
       {
         if (this->write_ulong (len + 1))
-          return this->write_wchar_array (x, len + 1);
+          {
+            return this->write_wchar_array (x, len + 1);
+          }
       }
-    else if (this->write_ulong (1))
-      return this->write_wchar (0);
+      else if (this->write_ulong (1))
+        {
+          return this->write_wchar (0);
+        }
+    }
    return (this->good_bit_ = false);
 }
 
@@ -199,7 +209,9 @@ ACE_SizeCDR::write_wchar_array_i (const ACE_CDR::WChar *,
                                     ACE_CDR::ULong length)
 {
   if (length == 0)
+  {
     return true;
+  }
 
   size_t const align = (ACE_OutputCDR::wchar_maxbytes () == 2) ?
     ACE_CDR::SHORT_ALIGN :
@@ -209,7 +221,6 @@ ACE_SizeCDR::write_wchar_array_i (const ACE_CDR::WChar *,
   return true;
 }
 
-
 ACE_CDR::Boolean
 ACE_SizeCDR::write_array (const void *,
                           size_t size,
@@ -217,7 +228,9 @@ ACE_SizeCDR::write_array (const void *,
                           ACE_CDR::ULong length)
 {
   if (length == 0)
+  {
     return true;
+  }
 
   this->adjust (size * length, align);
   return true;

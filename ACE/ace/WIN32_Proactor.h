@@ -118,8 +118,8 @@ public:
   virtual ACE_Asynch_Connect_Impl *create_asynch_connect ();
   virtual ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file ();
 
-  // Methods used to create Asynch_IO_Result objects. We create the right
-  // objects here in these methods.
+  /// Methods used to create Asynch_IO_Result objects. We create the right
+  /// objects here in these methods.
 
   virtual ACE_Asynch_Read_Stream_Result_Impl *create_asynch_read_stream_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                                                                 ACE_HANDLE handle,
@@ -201,7 +201,6 @@ public:
                                                                         int priority,
                                                                         int signal_number = 0);
 
-
   virtual ACE_Asynch_Transmit_File_Result_Impl *create_asynch_transmit_file_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                                                                     ACE_HANDLE socket,
                                                                                     ACE_HANDLE file,
@@ -231,7 +230,7 @@ protected:
 
   /// Called when object is signaled by OS (either via UNIX signals or
   /// when a Win32 object becomes signaled).
-  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  virtual int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr);
 
   /// Called when object is removed from the ACE_Reactor.
   virtual int handle_close (ACE_HANDLE handle,
@@ -259,8 +258,8 @@ protected:
   virtual int post_wakeup_completions (int how_many);
 
   /// Handle for the completion port. Unix doesnt have completion
-  /// ports.
-  ACE_HANDLE completion_port_;
+  /// ports. This must start as nullptr, not ACE_INVALID_HANDLE.
+  ACE_HANDLE completion_port_ {};
 
   /// This number is passed to the @c CreateIOCompletionPort system
   /// call.
@@ -298,7 +297,6 @@ class ACE_WIN32_Asynch_Timer : public ACE_WIN32_Asynch_Result
   friend class ACE_WIN32_Proactor;
 
 protected:
-  /// Constructor.
   ACE_WIN32_Asynch_Timer (const ACE_Handler::Proxy_Ptr &handler_proxy,
                           const void *act,
                           const ACE_Time_Value &tv,

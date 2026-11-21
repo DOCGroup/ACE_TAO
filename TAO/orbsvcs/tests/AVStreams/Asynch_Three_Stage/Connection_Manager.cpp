@@ -1,129 +1,125 @@
 #include "Connection_Manager.h"
-
-Connection_Manager::Connection_Manager ()
-{
-}
-
-Connection_Manager::~Connection_Manager ()
-{
-}
+#include <cstdio>
+#include <memory>
 
 void
-Connection_Manager::load_ep_addr (const char* file_name)
+Connection_Manager::load_ep_addr (char const *file_name)
 {
-  FILE* addr_file = ACE_OS::fopen (file_name, "r");
+  using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
+  File_Ptr addr_file (ACE_OS::fopen (file_name, "r"), ACE_OS::fclose);
 
-  if (addr_file == 0)
+  if (!addr_file)
     {
       ACE_ERROR ((LM_DEBUG,
                   "Cannot open addr file %C\n",
                   file_name));
       return;
     }
-  else
-    ACE_DEBUG ((LM_DEBUG,
-                "Addr file opened successfully\n"));
+  ACE_DEBUG ((LM_DEBUG, "Addr file opened successfully\n"));
 
-  while (1)
+  while (true)
     {
       char buf [BUFSIZ];
 
-      // Read from the file into a buffer
-
-
-      /*
-      int n = ACE_OS::fread (buf,
-                             1,
-                             BUFSIZ,
-                             addr_file);
-      */
-
-      if ((ACE_OS::fgets (buf,BUFSIZ,addr_file)) == 0)
+      if (ACE_OS::fgets (buf, BUFSIZ, addr_file.get ()) == nullptr)
         {
           // At end of file break the loop and end the sender.
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,"End of Addr file\n"));
+          {
+            ACE_DEBUG ((LM_DEBUG, "End of Addr file\n"));
+          }
           break;
         }
 
-
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "%C\n",
-                    buf));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "%C\n",
+                      buf));
+        }
 
-      Endpoint_Addresses* addr;
-      ACE_NEW (addr,
-               Endpoint_Addresses);
+      Endpoint_Addresses addr {};
 
       TAO_Tokenizer addr_tokenizer (buf,'/');
 
       ACE_CString flowname;
 
-      if (addr_tokenizer [0] == 0)
+      if (addr_tokenizer [0] == nullptr)
         {
           ACE_ERROR ((LM_ERROR,
                       "Corresponding flow name not specified for endpoint addresses\n"));
           return;
         }
       else
+      {
         flowname += addr_tokenizer [0];
+      }
 
-      if (addr_tokenizer [1] != 0)
+      if (addr_tokenizer [1] != nullptr)
         {
           ACE_CString token (addr_tokenizer [1]);
 
           ACE_CString::size_type pos = token.find ('\r');
           if (pos != ACE_CString::npos)
             {
-              addr->sender_addr = CORBA::string_dup ((token.substr (0, pos)).c_str ());
+              addr.sender_addr = CORBA::string_dup ((token.substr (0, pos)).c_str ());
             }
           else
-            addr->sender_addr = CORBA::string_dup (token.c_str());
+          {
+            addr.sender_addr = CORBA::string_dup (token.c_str());
+          }
 
-          pos = addr->sender_addr.find ('\n');
+          pos = addr.sender_addr.find ('\n');
           if (pos != ACE_CString::npos)
             {
-              addr->sender_addr = (addr->sender_addr.substr (0, pos)).c_str ();
+              addr.sender_addr = (addr.sender_addr.substr (0, pos)).c_str ();
             }
         }
 
-      if (addr_tokenizer [2] != 0)
+      if (addr_tokenizer [2] != nullptr)
         {
           ACE_CString token (addr_tokenizer [2]);
 
           ACE_CString::size_type pos = token.find ('\r');
           if (pos != ACE_CString::npos)
             {
-              addr->receiver_addr = CORBA::string_dup ((token.substr (0,pos)).c_str ());
+              addr.receiver_addr = CORBA::string_dup ((token.substr (0,pos)).c_str ());
             }
           else
-            addr->receiver_addr = CORBA::string_dup (token.c_str());
+          {
+            addr.receiver_addr = CORBA::string_dup (token.c_str());
+          }
 
-          pos = addr->receiver_addr.find ('\n');
+          pos = addr.receiver_addr.find ('\n');
           if (pos != ACE_CString::npos)
             {
-              addr->receiver_addr = (addr->receiver_addr.substr (0, pos)).c_str ();
+              addr.receiver_addr = (addr.receiver_addr.substr (0, pos)).c_str ();
             }
         }
 
-      int result = ep_addr_.bind (flowname,
-                                  addr);
+      int const result = this->ep_addr_.bind (flowname,
+                                              addr);
       if (result == 0)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "Flowname %C Bound Successfully\n",
-                        flowname.c_str ()));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Flowname %C Bound Successfully\n",
+                          flowname.c_str ()));
+            }
         }
       else if (result == 1)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Flowname %C already exists\n",
-                    flowname.c_str ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Flowname %C already exists\n",
+                      flowname.c_str ()));
+        }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "Flowname %C Bound Failed\n",
-                    flowname.c_str ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Flowname %C Bound Failed\n",
+                      flowname.c_str ()));
+        }
     }
 }
 
@@ -132,15 +128,17 @@ Connection_Manager::init (CORBA::ORB_ptr orb)
 {
   // Initialize the naming service
   if (this->naming_client_.init (orb) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) Unable to initialize "
-                       "the TAO_Naming_Client.\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         " (%P|%t) Unable to initialize "
+                         "the TAO_Naming_Client.\n"),
+                        -1);
+    }
   return 0;
 }
 
 void
-Connection_Manager::bind_to_receivers (const ACE_CString &sender_name,
+Connection_Manager::bind_to_receivers (ACE_CString const &sender_name,
                                        AVStreams::MMDevice_ptr sender)
 {
   this->sender_name_ = sender_name;
@@ -175,7 +173,7 @@ Connection_Manager::bind_to_receivers (const ACE_CString &sender_name,
       this->receiver_context_ =
         this->sender_context_->bind_new_context (name);
     }
-  catch (const CosNaming::NamingContext::AlreadyBound&)
+  catch (CosNaming::NamingContext::AlreadyBound const &)
     {
       //
       // The sender context already exists, probably created by the
@@ -230,7 +228,7 @@ Connection_Manager::find_receivers ()
 
   if (!CORBA::is_nil (iterator.in ()))
     {
-      CORBA::Boolean more = 1;
+      CORBA::Boolean more = true;
 
       // Check to see if there are more receivers listed.
       while (more)
@@ -248,7 +246,7 @@ Connection_Manager::add_to_receivers (CosNaming::BindingList &binding_list)
 {
   for (CORBA::ULong i = 0;
        i < binding_list.length ();
-       i++)
+       ++i)
     {
       // Get the receiver name from the binding list.
       ACE_CString receiver_name =
@@ -291,26 +289,27 @@ Connection_Manager::connect_to_receivers (AVStreams::MMDevice_ptr sender)
       ACE_CString flowname =
         (*iterator).ext_id_;
 
-      Endpoint_Addresses* addr = 0;
-      ep_addr_.find (flowname,
-                     addr);
+      Endpoint_Addresses addr {};
+      bool const have_addr = this->ep_addr_.find (flowname, addr) == 0;
 
       ACE_CString sender_addr_str;
       ACE_CString receiver_addr_str;
 
-      if (addr != 0)
+      if (have_addr)
         {
-          sender_addr_str = addr->sender_addr;
-          receiver_addr_str = addr->receiver_addr;
+          sender_addr_str = addr.sender_addr;
+          receiver_addr_str = addr.receiver_addr;
           ACE_DEBUG ((LM_DEBUG,
                       "Address Strings %C %C\n",
                       sender_addr_str.c_str (),
                       receiver_addr_str.c_str ()));
         }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "No endpoint address for flowname %C\n",
-                    flowname.c_str ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "No endpoint address for flowname %C\n",
+                      flowname.c_str ()));
+        }
 
       ACE_INET_Addr receiver_addr (receiver_addr_str.c_str ());
       ACE_INET_Addr sender_addr (sender_addr_str.c_str ());
@@ -333,12 +332,14 @@ Connection_Manager::connect_to_receivers (AVStreams::MMDevice_ptr sender)
         CORBA::string_dup (sender_entry.entry_to_string ());
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Connection_Manager::connect_to_receivers Flow Spec Entry %C\n",
-                    sender_entry.entry_to_string ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Connection_Manager::connect_to_receivers Flow Spec Entry %C\n",
+                      sender_entry.entry_to_string ()));
+        }
 
       // Create the stream control for this stream.
-      TAO_StreamCtrl *streamctrl = 0;
+      TAO_StreamCtrl *streamctrl {};
       ACE_NEW (streamctrl,
                TAO_StreamCtrl);
 
@@ -364,8 +365,8 @@ Connection_Manager::connect_to_receivers (AVStreams::MMDevice_ptr sender)
 }
 
 void
-Connection_Manager::bind_to_sender (const ACE_CString &sender_name,
-                                    const ACE_CString &receiver_name,
+Connection_Manager::bind_to_sender (ACE_CString const &sender_name,
+                                    ACE_CString const &receiver_name,
                                     AVStreams::MMDevice_ptr receiver)
 {
   this->sender_name_ =
@@ -380,7 +381,7 @@ Connection_Manager::bind_to_sender (const ACE_CString &sender_name,
   CosNaming::Name name (1);
   name.length (1);
 
-  int sender_context_exists = 0;
+  bool sender_context_exists {};
 
   try
     {
@@ -395,7 +396,7 @@ Connection_Manager::bind_to_sender (const ACE_CString &sender_name,
       // We reach here if there was no exception raised in <resolve>.
       // Therefore, there must be a valid sender context available.
       //
-      sender_context_exists = 1;
+      sender_context_exists = true;
 
       this->sender_context_ =
         CosNaming::NamingContext::_narrow (object.in ());
@@ -410,7 +411,7 @@ Connection_Manager::bind_to_sender (const ACE_CString &sender_name,
       this->receiver_context_ =
         CosNaming::NamingContext::_narrow (object.in ());
     }
-  catch (const CosNaming::NamingContext::NotFound&)
+  catch (CosNaming::NamingContext::NotFound const &)
     {
       name [0].id =
         CORBA::string_dup (this->sender_name_.c_str ());
@@ -456,7 +457,7 @@ Connection_Manager::bind_to_sender (const ACE_CString &sender_name,
           this->sender_ =
             AVStreams::MMDevice::_narrow (object.in ());
         }
-      catch (const CosNaming::NamingContext::NotFound&)
+      catch (CosNaming::NamingContext::NotFound const &)
         {
           // No problem if the sender was not there.
         }
@@ -467,24 +468,25 @@ void
 Connection_Manager::connect_to_sender ()
 {
   if (CORBA::is_nil (this->sender_.in ()))
+  {
     return;
+  }
 
   ACE_CString flowname =
     this->sender_name_ +
     "_" +
     this->receiver_name_;
 
-  Endpoint_Addresses* addr = 0;
-  ep_addr_.find (flowname,
-                 addr);
+  Endpoint_Addresses addr {};
+  bool const have_addr = this->ep_addr_.find (flowname, addr) == 0;
 
   ACE_CString sender_addr_str;
   ACE_CString receiver_addr_str;
 
-  if (addr != 0)
+  if (have_addr)
     {
-      sender_addr_str = addr->sender_addr;
-      receiver_addr_str = addr->receiver_addr;
+      sender_addr_str = addr.sender_addr;
+      receiver_addr_str = addr.receiver_addr;
 
       ACE_DEBUG ((LM_DEBUG,
                   "Address Strings %C %C\n",
@@ -505,7 +507,6 @@ Connection_Manager::connect_to_sender ()
 
   sender_entry.set_peer_addr (&receiver_addr);
 
-
   // Set the flow specification for the stream between sender and
   // receiver.
   AVStreams::flowSpec flow_spec (1);
@@ -514,12 +515,14 @@ Connection_Manager::connect_to_sender ()
     CORBA::string_dup (sender_entry.entry_to_string ());
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Connection_Manager::connect_to_sender Flow Spec Entry %C\n",
-                sender_entry.entry_to_string ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Connection_Manager::connect_to_sender Flow Spec Entry %C\n",
+                  sender_entry.entry_to_string ()));
+    }
 
   // Create the stream control for this stream
-  TAO_StreamCtrl* streamctrl = 0;
+  TAO_StreamCtrl* streamctrl {};
   ACE_NEW (streamctrl,
            TAO_StreamCtrl);
 
@@ -549,8 +552,10 @@ Connection_Manager::connect_to_sender ()
                            flow_spec);
 
   if (result == 0)
-    ACE_ERROR ((LM_ERROR,
-                "Streamctrl::bind_devs failed\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Streamctrl::bind_devs failed\n"));
+    }
 
   // Start the data sending.
   AVStreams::flowSpec start_spec;
@@ -558,30 +563,22 @@ Connection_Manager::connect_to_sender ()
 }
 
 void
-Connection_Manager::add_streamctrl (const ACE_CString &flowname,
+Connection_Manager::add_streamctrl (ACE_CString const &flowname,
                                     TAO_StreamEndPoint *endpoint)
 {
   // Get the stream controller for this endpoint.
   CORBA::Any_var streamctrl_any =
     endpoint->get_property_value ("Related_StreamCtrl");
 
-  AVStreams::StreamCtrl_ptr streamctrl;
+  AVStreams::StreamCtrl_ptr streamctrl {};
 
-  if( streamctrl_any.in() >>= streamctrl )
-  {
-     // Any still owns the pointer, so we duplicate it
-     AVStreams::StreamCtrl::_duplicate( streamctrl);
-     this->streamctrls_.bind (flowname, streamctrl);
-  }
-}
-
-void
-Connection_Manager::destroy (const ACE_CString &flowname)
-{
-  this->protocol_objects_.unbind (flowname);
-  this->receivers_.unbind (flowname);
-
-  this->streamctrls_.unbind (flowname);
+  if (streamctrl_any.in () >>= streamctrl)
+    {
+      // Any still owns the pointer, so duplicate it before storing.
+      AVStreams::StreamCtrl_var streamctrl_copy =
+        AVStreams::StreamCtrl::_duplicate (streamctrl);
+      this->streamctrls_.bind (flowname, streamctrl_copy);
+    }
 }
 
 Connection_Manager::Receivers &

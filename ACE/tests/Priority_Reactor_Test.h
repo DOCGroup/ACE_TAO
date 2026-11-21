@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TESTS_PRIORITY_REACTOR_TEST_H
 #define ACE_TESTS_PRIORITY_REACTOR_TEST_H
 
@@ -43,8 +42,8 @@ public:
   static int get_countdown ();
 
   /// The Svc_Handler callbacks.
-  virtual int open (void *);
-  virtual int handle_input (ACE_HANDLE h);
+  int open (void *) override;
+  int handle_input (ACE_HANDLE h) override;
 
 private:
   /// How many writers are we waiting for.
@@ -65,8 +64,8 @@ private:
 class Write_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
 {
 public:
-  virtual int open (void *);
-  virtual int svc ();
+  int open (void *) override;
+  int svc () override;
 };
 
 #endif /* ACE_TESTS_PRIORITY_REACTOR_TEST_H */

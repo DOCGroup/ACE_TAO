@@ -1,19 +1,13 @@
+#include "PCB.h"
 #include "ace/Log_Msg.h"
 #include "PCB.h"
 #include "PTimerDispatcher.h"
 
-PCB::PCB() : count_(0)
-{
-  ACE_TRACE ("PCB::PCB");
-}
-
-PCB::~PCB() = default;
-
-int PCB::handleEvent (const void *arg)
+int PCB::handleEvent (void const *arg)
 {
   ACE_TRACE ("PCB::handleEvent");
 
-  const int *val = static_cast<const int*> (arg);
+  int const *val = static_cast<int const *> (arg);
   ACE_ASSERT ((*val) == timerID_);
 
   ACE_UNUSED_ARG (val);
@@ -30,10 +24,12 @@ int PCB::handleEvent (const void *arg)
       // New interval is 10 ms.
       ACE_Time_Value interval (0L, 1000L);
       if (PTimer::instance ()->reset_interval (timerID_, interval) != -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("reset_interval")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("reset_interval")),
+                            -1);
+        }
     }
 
   if (count_++ == 10)

@@ -59,7 +59,6 @@ class Prime_Scheduler : public ACE_Task_Base
   friend class Method_Request_name;
   friend class Method_Request_end;
 public:
-  /// Constructor.
   Prime_Scheduler (const ACE_TCHAR *,
                    Prime_Scheduler * = nullptr);
 
@@ -71,28 +70,33 @@ public:
   /// Terminator.
   virtual int shutdown ();
 
-  /// Destructor.
   ~Prime_Scheduler () override;
 
-  // = These methods are part of the Active Object Proxy interface.
+  /// @name Active Object proxy methods
+  /// @{
   ACE_Future<u_long> work (u_long param, int count = 1);
   ACE_Future<const ACE_TCHAR*> name ();
   void end ();
+  /// @}
 
 protected:
   /// Runs the Prime_Scheduler's event loop, which dequeues
   /// <Method_Requests> and dispatches them.
   int svc () override;
 
-  // = These are the Servant methods that do the actual work.
+  /// @name Servant methods
+  /// @{
   u_long work_i (u_long, int);
   const ACE_TCHAR *name_i ();
+  /// @}
 
 private:
-  // = These are the <Prime_Scheduler> implementation details.
+  /// @name Prime_Scheduler implementation details
+  /// @{
   ACE_TCHAR *name_;
   ACE_Activation_Queue activation_queue_;
   Prime_Scheduler *scheduler_;
+  /// @}
 };
 
 /**
@@ -231,7 +235,6 @@ Method_Request_end::call ()
   return -1;
 }
 
-// Constructor
 Prime_Scheduler::Prime_Scheduler (const ACE_TCHAR *newname,
                                   Prime_Scheduler *new_scheduler)
   : scheduler_ (new_scheduler)
@@ -244,8 +247,6 @@ Prime_Scheduler::Prime_Scheduler (const ACE_TCHAR *newname,
               ACE_TEXT ("(%t) Prime_Scheduler %s created\n"),
               this->name_));
 }
-
-// Destructor
 
 Prime_Scheduler::~Prime_Scheduler ()
 {
@@ -260,7 +261,7 @@ Prime_Scheduler::~Prime_Scheduler ()
 int
 Prime_Scheduler::open (void *)
 {
-  task_count++;
+  ++task_count;
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Prime_Scheduler %s open\n"),
               this->name_));
@@ -276,7 +277,7 @@ Prime_Scheduler::shutdown ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Prime_Scheduler %s shutdown\n"),
               this->name_));
-  task_count--;
+  --task_count;
   return 0;
 }
 
@@ -295,7 +296,9 @@ Prime_Scheduler::svc ()
                   ACE_TEXT ("(%t) calling method request\n")));
       // Call it.
       if (mo->call () == -1)
+      {
         break;
+      }
       // Destructor automatically deletes it.
     }
 
@@ -331,8 +334,10 @@ ACE_Future<const ACE_TCHAR *>
 Prime_Scheduler::name ()
 {
   if (this->scheduler_)
-    // Delegate to the Prime_Scheduler.
-    return this->scheduler_->name ();
+    {
+      // Delegate to the Prime_Scheduler.
+      return this->scheduler_->name ();
+    }
   else
     {
       ACE_Future<const ACE_TCHAR*> new_future;
@@ -405,7 +410,7 @@ run_main (int, ACE_TCHAR *[])
   result = matias->open ();
   ACE_TEST_ASSERT (result != -1);
 
-  for (int i = 0; i < n_loops; i++)
+  for (int i = 0; i < n_loops; ++i)
     {
       {
         ACE_Future<u_long> fresulta;
@@ -428,8 +433,10 @@ run_main (int, ACE_TCHAR *[])
 
         // See if the result is available...
         if (fresulta.ready ())
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) wow.. work is ready.....\n")));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%t) wow.. work is ready.....\n")));
+          }
 
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%t) non-blocking call done... now blocking...\n")));
@@ -468,7 +475,7 @@ run_main (int, ACE_TCHAR *[])
                     (u_int) resultd,
                     (u_int) resulte));
 
-        const ACE_TCHAR *name = nullptr;
+        const ACE_TCHAR *name {};
         fname.get (name);
 
         ACE_DEBUG ((LM_DEBUG,
@@ -514,12 +521,16 @@ run_main (int, ACE_TCHAR *[])
 
     if (f1.get (value, &timeout) == 0
         && value == 100)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Ace_Future<T>::Set followed by Ace_Future<T>::Get works.\n")));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("Ace_Future<T>::Set followed by Ace_Future<T>::Get works.\n")));
+      }
     else
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("ACE_Future<T>::Set followed by Ace_Future<T>::Get does ")
-                  ACE_TEXT ("not work, broken Ace_Future<> implementation.\n")));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("ACE_Future<T>::Set followed by Ace_Future<T>::Get does ")
+                    ACE_TEXT ("not work, broken Ace_Future<> implementation.\n")));
+      }
   }
 
   {

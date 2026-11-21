@@ -21,6 +21,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "orbsvcs/Naming/FaultTolerant/nsgroup_svc.h"
 
+#include <cstring>
 #include <iostream>
 
 #if defined (_MSC_VER)
@@ -35,18 +36,14 @@ class My_Test_Object :
 {
 public:
   My_Test_Object (CORBA::Short id = 0);
-  // Constructor.
 
   ~My_Test_Object ();
-  // Destructor.
 
-  // = Interface implementation accessor methods.
+  /// Sets the test object's id.
+  void id (CORBA::Short id) override;
 
-  void id (CORBA::Short id);
-  // Sets id.
-
-  CORBA::Short id ();
-  // Gets id.
+  /// Gets the test object's id.
+  CORBA::Short id () override;
 
 private:
   short id_;
@@ -140,7 +137,6 @@ do_equivalence_objectgroup_test (
   int c_depth,
   int o_breadth);
 
-
 //==============================================================================
 //
 //==============================================================================
@@ -156,11 +152,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   int c_depth   = 4;
   int o_breadth = 4;
 
-  ACE_TCHAR *ns1ref = 0;
-  ACE_TCHAR *ns2ref = 0;
+  // These IOR arguments borrow their storage from argv.
+  ACE_TCHAR *ns1ref {};
+  ACE_TCHAR *ns2ref {};
 
-  ACE_TCHAR *nm1ref = 0;
-  ACE_TCHAR *nm2ref = 0;
+  ACE_TCHAR *nm1ref {};
+  ACE_TCHAR *nm2ref {};
 
   typedef enum {
     TT_FAILOVER,
@@ -469,7 +466,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     return RC_ERROR;
   }
 
-
   return rc;
 }
 
@@ -546,7 +542,7 @@ do_failover_name_test (
     level1_context = root_context_1->bind_new_context (level1);
     ACE_OS::thr_yield ();
 
-    for (i=0; i<o_breadth; i++)
+    for (i=0; i<o_breadth; ++i)
     {
       // Instantiate a dummy object and bind it under the new context.
       My_Test_Object *impl1 = new My_Test_Object (i+1);
@@ -607,7 +603,7 @@ do_failover_name_test (
   try
   {
     CosNaming::NamingContext_var next_context = root_context_1;
-    for (i=0; i<c_depth; i++)
+    for (i=0; i<c_depth; ++i)
     {
       // Bind level1 context under root.
       CosNaming::Name deep;
@@ -631,7 +627,7 @@ do_failover_name_test (
   // Create a wide context tree
   try
   {
-    for (i=0; i<c_breadth; i++)
+    for (i=0; i<c_breadth; ++i)
     {
       // Bind all level of context under root.
       CosNaming::Name wide;
@@ -751,7 +747,7 @@ do_failover_name_test (
     deep.length (c_depth);
 
     char deep_name[16];
-    for (i=0; i<c_depth; i++)
+    for (i=0; i<c_depth; ++i)
     {
       ACE_OS::sprintf (deep_name, "deep_%d", i);
       deep[i].id = CORBA::string_dup (deep_name);
@@ -934,7 +930,7 @@ do_failover_name_test (
     CosNaming::Name deep;
     deep.length (c_depth);
     char deep_name[16];
-    for (i=0; i<c_depth; i++)
+    for (i=0; i<c_depth; ++i)
     {
       ACE_OS::sprintf (deep_name, "deep_%d", i);
       deep[i].id = CORBA::string_dup (deep_name);
@@ -965,7 +961,7 @@ do_failover_name_test (
     CosNaming::Name deep;
     deep.length (c_depth-1);
     char deep_name[16];
-    for (i=0; i<c_depth-1; i++)
+    for (i=0; i<c_depth-1; ++i)
     {
       ACE_OS::sprintf (deep_name, "deep_%d", i);
       deep[i].id = CORBA::string_dup (deep_name);
@@ -1065,7 +1061,6 @@ do_failover_objectgroup_test (
                           RC_ERROR);
     }
 
-
     const ACE_TCHAR * test_group = ACE_TEXT ("test_group");
     const ACE_TCHAR * policy     = ACE_TEXT ("round");
 
@@ -1086,7 +1081,6 @@ do_failover_objectgroup_test (
                    ACE_TEXT ("INFO: Object Group Found In Repository\n")));
     }
 
-
   }
   catch (const CORBA::Exception& ex)
   {
@@ -1097,7 +1091,6 @@ do_failover_objectgroup_test (
 
   return RC_SUCCESS;
 }
-
 
 //==============================================================================
 //
@@ -1174,7 +1167,7 @@ do_persistence_name_test (
       ACE_OS::thr_yield ();
     }
 
-    for (i=0; i<o_breadth; i++)
+    for (i=0; i<o_breadth; ++i)
     {
       // Instantiate a dummy object and bind it under the new context.
       My_Test_Object *impl1 = new My_Test_Object (i+1);
@@ -1190,7 +1183,6 @@ do_persistence_name_test (
         root_context_1->bind (level1, obj1.in ());
         ACE_OS::thr_yield ();
       }
-
 
       // See if the newly bound object is available in the repository
       try {
@@ -1233,7 +1225,7 @@ do_persistence_name_test (
     try
     {
       CosNaming::NamingContext_var next_context = root_context_1;
-      for (i=0; i<c_depth; i++)
+      for (i=0; i<c_depth; ++i)
       {
         // Bind level1 context under root.
         CosNaming::Name deep;
@@ -1258,7 +1250,7 @@ do_persistence_name_test (
   // Create a wide context tree
   try
   {
-    for (i=0; i<c_breadth; i++)
+    for (i=0; i<c_breadth; ++i)
     {
       // Bind all level of context under root.
       CosNaming::Name wide;
@@ -1317,7 +1309,6 @@ do_persistence_name_test (
 
   return RC_SUCCESS;
 }
-
 
 /// Persistence ObjectGroup Test
 int
@@ -1452,7 +1443,7 @@ do_persistence_objectgroup_test (
                            loc[0].id.in(),
                            the_string.in ()));
 
-              if ( ACE_OS::strcmp (the_string.in (), loc[0].id.in()) != 0 ) {
+              if (std::strcmp (the_string.in (), loc[0].id.in ()) != 0) {
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("ERROR: object group member at %C reports %C\n\n"),
                                    loc[0].id.in(),
@@ -1580,7 +1571,7 @@ do_persistence_objectgroup_test (
             if (locations->length () != num_locations)
               {
                 ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("ERROR: Expected %d members but got %d ")
+                            ACE_TEXT ("ERROR: Expected %u members but got %u ")
                             ACE_TEXT ("instead\n"),
                             num_locations, locations->length ()));
               }
@@ -1731,7 +1722,6 @@ do_equivalence_name_test (
     int ns2_count =
       root_context_2->_stubobj ()->base_profiles ().profile_count ();
 
-
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("INFO: ns1ref profile count: %d\n"),
                 ns1_count));
@@ -1758,7 +1748,7 @@ do_equivalence_name_test (
     level1_context = root_context_1->bind_new_context (level1);
     ACE_OS::thr_yield ();
 
-    for (i=0; i<o_breadth; i++)
+    for (i=0; i<o_breadth; ++i)
     {
       // Instantiate a dummy object and bind it under the new context.
       My_Test_Object *impl1 = new My_Test_Object (i+1);
@@ -1814,7 +1804,7 @@ do_equivalence_name_test (
   try
   {
     CosNaming::NamingContext_var next_context = root_context_1;
-    for (i=0; i<c_depth; i++)
+    for (i=0; i<c_depth; ++i)
     {
       // Bind level1 context under root.
       CosNaming::Name deep;
@@ -1838,7 +1828,7 @@ do_equivalence_name_test (
   // Create a wide context tree
   try
   {
-    for (i=0; i<c_breadth; i++)
+    for (i=0; i<c_breadth; ++i)
     {
       // Bind all level of context under root.
       CosNaming::Name wide;
@@ -1963,7 +1953,7 @@ do_equivalence_name_test (
     CosNaming::Name deep;
     deep.length (c_depth);
     char deep_name[16];
-    for (i=0; i<c_depth; i++)
+    for (i=0; i<c_depth; ++i)
     {
       ACE_OS::sprintf (deep_name, "deep_%d", i);
       deep[i].id = CORBA::string_dup (deep_name);
@@ -2146,7 +2136,7 @@ do_equivalence_name_test (
     CosNaming::Name deep;
     deep.length (c_depth);
     char deep_name[16];
-    for (i=0; i<c_depth; i++)
+    for (i=0; i<c_depth; ++i)
     {
       ACE_OS::sprintf (deep_name, "deep_%d", i);
       deep[i].id = CORBA::string_dup (deep_name);
@@ -2177,7 +2167,7 @@ do_equivalence_name_test (
     CosNaming::Name deep;
     deep.length (c_depth-1);
     char deep_name[16];
-    for (i=0; i<c_depth-1; i++)
+    for (i=0; i<c_depth-1; ++i)
     {
       ACE_OS::sprintf (deep_name, "deep_%d", i);
       deep[i].id = CORBA::string_dup (deep_name);
@@ -2206,7 +2196,6 @@ do_equivalence_name_test (
   return RC_SUCCESS;
 }
 
-
 /// Equivalence ObjectGroup Test
 int
 do_equivalence_objectgroup_test (
@@ -2224,7 +2213,6 @@ do_equivalence_objectgroup_test (
   const int RC_SUCCESS =  0;
   const int RC_ERROR   = -1;
   int error_count = 0;
-
 
   FT_Naming::NamingManager_var naming_manager_1;
   FT_Naming::NamingManager_var naming_manager_2;
@@ -2318,7 +2306,6 @@ do_equivalence_objectgroup_test (
     int nm2_count =
       naming_manager_2->_stubobj ()->base_profiles ().profile_count ();
 
-
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("INFO: nm1ref profile count: %d\n"),
                 nm1_count));
@@ -2326,7 +2313,6 @@ do_equivalence_objectgroup_test (
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("INFO: nm2ref profile count: %d\n"),
                 nm2_count));
-
 
     /// Setup 1st NS_group_svc with 1st Naming Manager
     NS_group_svc svc1;

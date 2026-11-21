@@ -43,11 +43,14 @@ namespace TAO
     class Current_Impl : public TAO::SL3::SecurityCurrent_Impl
     {
     public:
-      /// Constructor.
-      Current_Impl ();
+      Current_Impl () = default;
 
-      /// Destructor
-      ~Current_Impl () override;
+      ~Current_Impl () override = default;
+
+      Current_Impl (Current_Impl const &) = delete;
+      Current_Impl (Current_Impl &&) = delete;
+      Current_Impl &operator= (Current_Impl const &) = delete;
+      Current_Impl &operator= (Current_Impl &&) = delete;
 
       /// Implementation of the SSLIOP-specific
       /// SecurityLevel3::client_credentials() method.
@@ -75,10 +78,6 @@ namespace TAO
     protected:
       /// Return the unique tag that identifies the concrete subclass.
       CORBA::ULong tag () const override;
-
-    private:
-      Current_Impl (const Current_Impl &) = delete;
-      void operator= (const Current_Impl &) = delete;
 
     private:
       /// The SSL session state corresponding to the current upcall.

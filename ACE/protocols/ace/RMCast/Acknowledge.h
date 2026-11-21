@@ -24,36 +24,28 @@ namespace ACE_RMCast
   class Acknowledge : public Element
   {
   public:
-    Acknowledge (Parameters const& params);
+    explicit Acknowledge (Parameters const& params);
 
-    virtual void
-    in_start (In_Element* in);
+    void in_start (In_Element* in) override;
 
-    virtual void
-    out_start (Out_Element* out);
+    void out_start (Out_Element* out) override;
 
-    virtual void
-    out_stop ();
+    void out_stop () override;
 
   public:
-    virtual void
-    recv (Message_ptr m);
+    void recv (Message_ptr m) override;
 
-    virtual void
-    send (Message_ptr m);
+    void send (Message_ptr m) override;
 
   private:
     struct Descr
     {
       //@@ There should be no default c-tor.
       //
-      Descr ()
-          : nak_count_ (0), timer_ (1)
-      {
-      }
+      Descr () = default;
 
       Descr (unsigned long timer)
-          : nak_count_ (0), timer_ (timer)
+          : timer_ (timer)
       {
       }
 
@@ -66,7 +58,7 @@ namespace ACE_RMCast
       bool
       lost () const
       {
-        return m_.get () == 0;
+        return m_.get () == nullptr;
       }
 
     public:
@@ -110,8 +102,8 @@ namespace ACE_RMCast
     private:
       Message_ptr m_;
 
-      unsigned long nak_count_;
-      unsigned long timer_;
+      unsigned long nak_count_ {};
+      unsigned long timer_ {1};
     };
 
   private:
@@ -146,7 +138,10 @@ namespace ACE_RMCast
       {
         int r (Base::bind (sn, d));
 
-        if (r == 0 && sn > max_sn_) max_sn_ = sn;
+        if (r == 0 && sn > max_sn_)
+          {
+            max_sn_ = sn;
+          }
 
         return r;
       }
@@ -156,7 +151,10 @@ namespace ACE_RMCast
       {
         int r (Base::rebind (sn, d));
 
-        if (r == 0 && sn > max_sn_) max_sn_ = sn;
+        if (r == 0 && sn > max_sn_)
+          {
+            max_sn_ = sn;
+          }
 
         return r;
       }
@@ -170,7 +168,10 @@ namespace ACE_RMCast
         {
           for (--max_sn_; max_sn_ >= sn_; --max_sn_)
           {
-            if (find (max_sn_) == 0) break;
+            if (find (max_sn_) == 0)
+              {
+                break;
+              }
           }
         }
 
@@ -193,7 +194,10 @@ namespace ACE_RMCast
       u64
       max_sn () const
       {
-        if (current_size () == 0) return sn_;
+        if (current_size () == 0)
+          {
+            return sn_;
+          }
 
         return max_sn_;
       }
@@ -202,13 +206,11 @@ namespace ACE_RMCast
       u64 sn_, max_sn_;
     };
 
-    typedef
-    ACE_Hash_Map_Manager_Ex<Address,
-                            Queue,
-                            AddressHasher,
-                            ACE_Equal_To<Address>,
-                            ACE_Null_Mutex>
-    Map;
+    using Map = ACE_Hash_Map_Manager_Ex<Address,
+                                        Queue,
+                                        AddressHasher,
+                                        ACE_Equal_To<Address>,
+                                        ACE_Null_Mutex>;
 
   private:
     void

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 
 #include "ace/Log_Msg.h"
@@ -22,7 +21,6 @@
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
 
 bool reactor_task_ready = false;
-
 
 //#define RUN_DEBUG 1
 
@@ -36,7 +34,7 @@ class EntryExit
 public:
   EntryExit (const ACE_TCHAR* class_name,
              const ACE_TCHAR *method_name,
-             void *location = 0)
+             void *location = nullptr)
   {
     class_name_ [20] = method_name_[20] = 0;
 
@@ -65,7 +63,6 @@ private:
 #define EE_DEBUG(CNAME,MNAME,LOC)
 
 #endif // if defined RUN_DEBUG
-
 
 static void
 handle_signal (int )

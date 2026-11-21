@@ -52,14 +52,17 @@ namespace TAO
       /// Constructor. @a arg parameter is used to pass any special
       /// state/info to the service handler upon creation.  Currently used
       /// by HTIOP to pass protocol configuration properties.
-      Connect_Creation_Strategy (ACE_Thread_Manager * = nullptr,
-                                 TAO_ORB_Core* orb_core = nullptr,
-                                 void *arg = nullptr,
-                                 CORBA::Boolean flag = false);
+      explicit Connect_Creation_Strategy (ACE_Thread_Manager * = nullptr,
+                                          TAO_ORB_Core* orb_core = nullptr,
+                                          void *arg = nullptr,
+                                          CORBA::Boolean flag = false);
+      Connect_Creation_Strategy (Connect_Creation_Strategy const&) = delete;
+      Connect_Creation_Strategy (Connect_Creation_Strategy&&) = delete;
+      Connect_Creation_Strategy& operator= (Connect_Creation_Strategy const&) = delete;
+      Connect_Creation_Strategy& operator= (Connect_Creation_Strategy&&) = delete;
 
       /// Makes HTIOP_Client_Connection_Handlers
       int make_svc_handler (SVC_HANDLER *&sh) override;
-
 
     private:
       /// Pointer to the ORB_Core on which we are activated
@@ -84,8 +87,11 @@ namespace TAO
       public ACE_Concurrency_Strategy<SVC_HANDLER>
     {
     public:
-      /// Constructor.
-      Connect_Concurrency_Strategy (TAO_ORB_Core *orb_core);
+      explicit Connect_Concurrency_Strategy (TAO_ORB_Core *orb_core);
+      Connect_Concurrency_Strategy (Connect_Concurrency_Strategy const&) = delete;
+      Connect_Concurrency_Strategy (Connect_Concurrency_Strategy&&) = delete;
+      Connect_Concurrency_Strategy& operator= (Connect_Concurrency_Strategy const&) = delete;
+      Connect_Concurrency_Strategy& operator= (Connect_Concurrency_Strategy&&) = delete;
 
       /// Activates the Svc_Handler, and if the right wait strategy is in
       /// use, registers the handle with the reactor.

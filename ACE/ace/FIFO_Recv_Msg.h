@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_FIFO_RECV_MSG_H
 #define ACE_FIFO_RECV_MSG_H
 #include /**/ "ace/pre.h"
@@ -43,7 +42,6 @@ class ACE_Str_Buf;
 class ACE_Export ACE_FIFO_Recv_Msg : public ACE_FIFO_Recv
 {
 public:
-  /// Default constructor.
   ACE_FIFO_Recv_Msg ();
 
   /// Open up a record-oriented named pipe for reading.

@@ -39,17 +39,20 @@ namespace TAO
   class TAO_FtNaming_Export FT_PG_Group_Factory : public PG_Group_Factory
   {
   public:
-    /// Constructor.
     FT_PG_Group_Factory () = default;
 
-    /// Destructor.
     ~FT_PG_Group_Factory () override = default;
+
+    FT_PG_Group_Factory (FT_PG_Group_Factory const &) = delete;
+    FT_PG_Group_Factory (FT_PG_Group_Factory &&) = delete;
+    FT_PG_Group_Factory &operator= (FT_PG_Group_Factory const &) = delete;
+    FT_PG_Group_Factory &operator= (FT_PG_Group_Factory &&) = delete;
 
     /**
      * indicate the object group state is stale.
      * only valid when object group persistence is enabled.
      */
-    void set_object_group_stale (const FT_Naming::ObjectGroupUpdate & group_info);
+    void set_object_group_stale (FT_Naming::ObjectGroupUpdate const & group_info);
 
     void set_replicator (TAO_FT_Naming_Replication_Manager *repl);
 
@@ -59,10 +62,10 @@ namespace TAO
       PortableGroup::FactoryRegistry_ptr factory_registry,
       TAO::PG_Object_Group_Manipulator & manipulator,
       CORBA::Object_ptr empty_group,
-      const PortableGroup::TagGroupTaggedComponent & tagged_component,
-      const char * type_id,
-      const PortableGroup::Criteria & the_criteria,
-      const TAO::PG_Property_Set_var & type_properties,
+      PortableGroup::TagGroupTaggedComponent const & tagged_component,
+      char const * type_id,
+      PortableGroup::Criteria const & the_criteria,
+      TAO::PG_Property_Set_var const & type_properties,
       TAO::Storable_Factory & storable_factory) override;
 
     PG_Object_Group_Storable * restore_persistent_group (
@@ -72,13 +75,8 @@ namespace TAO
       TAO::PG_Object_Group_Manipulator & manipulator,
       TAO::Storable_Factory & storable_factory) override;
 
+    /// Borrowed from the Naming server for outgoing replication updates.
     TAO_FT_Naming_Replication_Manager *replicator_ {};
-
-  private:
-    FT_PG_Group_Factory (FT_PG_Group_Factory const &) = delete;
-    FT_PG_Group_Factory (FT_PG_Group_Factory &&) = delete;
-    FT_PG_Group_Factory &operator= (FT_PG_Group_Factory const &) = delete;
-    FT_PG_Group_Factory &operator= (FT_PG_Group_Factory &&) = delete;
   };
 } // namespace TAO
 

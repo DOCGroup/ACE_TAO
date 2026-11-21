@@ -48,6 +48,11 @@ class ACE_Time_Value;
 class ACE_Export ACE_Mutex
 {
 public:
+  ACE_Mutex (ACE_Mutex const &) = delete;
+  ACE_Mutex (ACE_Mutex &&) = delete;
+  ACE_Mutex &operator= (ACE_Mutex const &) = delete;
+  ACE_Mutex &operator= (ACE_Mutex &&) = delete;
+
   /// Initialize the mutex.
   ACE_Mutex (int type = USYNC_THREAD,
              const ACE_TCHAR *name = nullptr,
@@ -154,7 +159,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  // = This should be protected but some C++ compilers complain...
+  /// This section is public because some C++ compilers reject protected access.
 public:
 #if defined ACE_HAS_PTHREADS && defined ACE_LACKS_MUTEXATTR_PSHARED
 # define ACE_MUTEX_USE_PROCESS_LOCK
@@ -169,14 +174,14 @@ public:
 
 #ifdef ACE_MUTEX_USE_PROCESS_LOCK
   /// This lock resides in shared memory.
-  Process_Lock *process_lock_;
+  Process_Lock *process_lock_ {};
 
   /**
    * Remember the name of the mutex if we created it so we can unlink
    * it when we go away (only the actor that initialized the memory
    * can destroy it).
    */
-  const ACE_TCHAR *lockname_;
+  const ACE_TCHAR *lockname_ {};
 #endif /* ACE_MUTEX_USE_PROCESS_LOCK */
 
   /// Mutex type supported by the OS.
@@ -187,11 +192,7 @@ public:
   /// destructor.  This flag isn't protected by a lock, so make sure
   /// that you don't have multiple threads simultaneously calling
   /// @c remove on the same object, which is a bad idea anyway.
-  bool removed_;
-
-private:
-  ACE_Mutex &operator= (const ACE_Mutex &) = delete;
-  ACE_Mutex (const ACE_Mutex &) = delete;
+  bool removed_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

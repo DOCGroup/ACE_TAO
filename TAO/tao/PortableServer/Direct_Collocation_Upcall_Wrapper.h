@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Direct_Collocation_Upcall_Wrapper.h
  *
  *  @author Johnny Willemsen
  */
-//=============================================================================
-
 #ifndef TAO_DIRECT_COLLOCATION_UPCALL_WRAPPER_H
 #define TAO_DIRECT_COLLOCATION_UPCALL_WRAPPER_H
 

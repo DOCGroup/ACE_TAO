@@ -34,7 +34,7 @@ public:
 #endif
   }
 
-  virtual int handle_signal (int, siginfo_t*, ucontext_t*)
+  int handle_signal (int, siginfo_t*, ucontext_t*) override
   {
     ACE_DEBUG ((LM_DEBUG, "Shutting down...\n"));
     this->orb_->shutdown ();
@@ -62,7 +62,6 @@ DT_Test::init (int argc, ACE_TCHAR *argv [])
 
   TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ());
 
-
   ACE_NEW_RETURN (scheduler_,
       MIF_Scheduler (orb_.in ()), -1);
 
@@ -86,7 +85,9 @@ DT_Test::run (int argc, ACE_TCHAR* argv [])
 
   TASK_STATS::instance ()->init (this->dt_creator_->total_load ());
   if (this->dt_creator_->resolve_naming_service () == -1)
+  {
     return;
+  }
 
   this->dt_creator_->activate_root_poa ();
 
@@ -109,13 +110,11 @@ DT_Test::run (int argc, ACE_TCHAR* argv [])
         "Test Terminating......\n"));
 }
 
-
 void
 DT_Test::dt_creator (MIF_DT_Creator* dt_creator)
 {
   this->dt_creator_ = dt_creator;
 }
-
 
 MIF_Scheduler*
 DT_Test::scheduler ()

@@ -2,10 +2,11 @@
 
 #include "ace/Log_Category.h"
 #include "ace/ACE.h"
-#include "ace/OS_NS_string.h"
 #include "ace/os_include/net/os_if.h"
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_Memory.h"
+
+#include <cstring>
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
@@ -62,7 +63,6 @@ ACE_SOCK_Dgram_Bcast::close ()
 // Here's the simple-minded constructor.
 
 ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast ()
-  : if_list_ (nullptr)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast");
 }
@@ -75,15 +75,16 @@ ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast (const ACE_Addr &local,
                                             int protocol,
                                             int reuse_addr,
                                             const ACE_TCHAR *host_name)
-  : ACE_SOCK_Dgram (local, protocol_family, protocol, reuse_addr),
-    if_list_ (nullptr)
+  : ACE_SOCK_Dgram (local, protocol_family, protocol, reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast");
 
   if (this->mk_broadcast (host_name) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_SOCK_Dgram_Bcast")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_SOCK_Dgram_Bcast")));
+    }
 }
 
 // Here's the general-purpose open routine.
@@ -99,7 +100,9 @@ ACE_SOCK_Dgram_Bcast::open (const ACE_Addr &local,
 
   if (this->ACE_SOCK_Dgram::open (local, protocol_family,
                                   protocol, reuse_addr) == -1)
+  {
     return -1;
+  }
 
   return this->mk_broadcast (host_name);
 }
@@ -116,11 +119,13 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
   if (ACE_OS::setsockopt (this->get_handle (),
                           SOL_SOCKET,
                           SO_BROADCAST,
-                          (char *) &one,
+                          reinterpret_cast<char const *> (&one),
                           sizeof one) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR, ACE_TEXT("%p\n"),
-                      ACE_TEXT("ACE_SOCK_Dgram_Bcast::mk_broadcast: setsockopt failed")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR, ACE_TEXT("%p\n"),
+                            ACE_TEXT("ACE_SOCK_Dgram_Bcast::mk_broadcast: setsockopt failed")),
+                           -1);
+    }
 
 #if !defined (ACE_WIN32)
   ACE_HANDLE s = this->get_handle ();
@@ -135,10 +140,12 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
   // techniques.
   if (ACE_OS::ioctl (s,
                      SIOCGIFCONF,
-                     (char *) &ifc) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR, ACE_TEXT("%p\n"),
-                      ACE_TEXT("ACE_SOCK_Dgram_Bcast::mk_broadcast: ioctl (get interface configuration)")),
-                      ACE_INVALID_HANDLE);
+                     &ifc) == -1)
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR, ACE_TEXT("%p\n"),
+                            ACE_TEXT("ACE_SOCK_Dgram_Bcast::mk_broadcast: ioctl (get interface configuration)")),
+                           ACE_INVALID_HANDLE);
+    }
 
   struct ifreq *ifr = ifc.ifc_req;
 
@@ -150,21 +157,24 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
       hostent *hp = ACE_OS::gethostbyname (ACE_TEXT_ALWAYS_CHAR (host_name));
 
       if (hp == nullptr)
-        return -1;
+        {
+          return -1;
+        }
       else
-        ACE_OS::memcpy ((char *) &host_addr.sin_addr.s_addr,
+        {
+          std::memcpy (&host_addr.sin_addr.s_addr,
 # ifdef ACE_HOSTENT_H_ADDR
-                        (char *) hp->ACE_HOSTENT_H_ADDR,
+                       hp->ACE_HOSTENT_H_ADDR,
 # else
-                        (char *) hp->h_addr,
+                       hp->h_addr,
 # endif
-                        hp->h_length);
+                       hp->h_length);
+        }
     }
-
 
 #if !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (ACE_VXWORKS) && !defined(__APPLE__)
   for (int n = ifc.ifc_len / sizeof (struct ifreq) ; n > 0;
-       n--, ifr++)
+       --n, ++ifr)
 #else
   /*
      There are addresses longer than sizeof (struct sockaddr) eg. IPv6
@@ -179,25 +189,27 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
           (nbytes -= sizeof (ifr->ifr_name) + ifr->ifr_addr.sa_len,
             ifr = (struct ifreq *)
               ((caddr_t) &ifr->ifr_addr + ifr->ifr_addr.sa_len)) :
-          (nbytes -= sizeof (struct ifreq), ifr++)))
+          (nbytes -= sizeof (struct ifreq), ++ifr)))
 #endif /* !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (ACE_VXWORKS) && !defined(__APPLE__) */
     {
 #if defined (__QNX__) || defined (ACE_VXWORKS)
       // Silently skip link interfaces
       if (ifr->ifr_addr.sa_family == AF_LINK)
-        continue;
+        {
+          continue;
+        }
 #endif /* __QNX__ || ACE_VXWORKS */
       // Compare host ip address with interface ip address.
       if (host_name)
         {
           struct sockaddr_in if_addr;
 
-          ACE_OS::memcpy (&if_addr,
-                          &ifr->ifr_addr,
-                          sizeof if_addr);
+          std::memcpy (&if_addr, &ifr->ifr_addr, sizeof if_addr);
 
           if (host_addr.sin_addr.s_addr != if_addr.sin_addr.s_addr)
+          {
             continue;
+          }
         }
 
       if (ifr->ifr_addr.sa_family != AF_INET)
@@ -208,10 +220,12 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
           // in "debugging" mode.
           if (ifr->ifr_addr.sa_family != 0
               || ACE::debug ())
-          ACELIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("warning %p: sa_family: %d\n"),
-                      ACE_TEXT("ACE_SOCK_Dgram_Bcast::mk_broadcast: Not AF_INET"),
-                      ifr->ifr_addr.sa_family));
+            {
+              ACELIB_DEBUG ((LM_DEBUG,
+                             ACE_TEXT("warning %p: sa_family: %d\n"),
+                             ACE_TEXT("ACE_SOCK_Dgram_Bcast::mk_broadcast: Not AF_INET"),
+                             ifr->ifr_addr.sa_family));
+            }
           continue;
         }
 
@@ -220,7 +234,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
 
       if (ACE_OS::ioctl (s,
                          SIOCGIFFLAGS,
-                         (char *) &flags) == -1)
+                         &flags) == -1)
         {
           ACELIB_ERROR ((LM_ERROR, ACE_TEXT("%p [%C]\n"),
                      ACE_TEXT("ACE_SOCK_Dgram_Bcast::mk_broadcast: ioctl (get interface flags)"),
@@ -239,17 +253,21 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
 
       if (ACE_BIT_ENABLED (flags.ifr_flags,
                            IFF_LOOPBACK))
+      {
         continue;
+      }
 
       if (ACE_BIT_ENABLED (flags.ifr_flags,
                            IFF_BROADCAST))
         {
           if (ACE_OS::ioctl (s,
                              SIOCGIFBRDADDR,
-                             (char *) &if_req) == -1)
-            ACELIB_ERROR ((LM_ERROR, ACE_TEXT("%p [%C]\n"),
-                       ACE_TEXT("ACE_SOCK_Dgram_Bcast::mk_broadcast: ioctl (get broadaddr)"),
-                       flags.ifr_name));
+                             &if_req) == -1)
+            {
+              ACELIB_ERROR ((LM_ERROR, ACE_TEXT("%p [%C]\n"),
+                             ACE_TEXT("ACE_SOCK_Dgram_Bcast::mk_broadcast: ioctl (get broadaddr)"),
+                             flags.ifr_name));
+            }
           else
             {
               ACE_INET_Addr addr (reinterpret_cast <sockaddr_in *>
@@ -264,9 +282,11 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
       else
         {
           if (host_name != nullptr)
-            ACELIB_ERROR ((LM_ERROR, ACE_TEXT("%p [%C]\n"),
-                        ACE_TEXT("ACE_SOCK_Dgram_Bcast::mk_broadcast: Broadcast is not enabled for this interface."),
-                        flags.ifr_name));
+            {
+              ACELIB_ERROR ((LM_ERROR, ACE_TEXT("%p [%C]\n"),
+                             ACE_TEXT("ACE_SOCK_Dgram_Bcast::mk_broadcast: Broadcast is not enabled for this interface."),
+                             flags.ifr_name));
+            }
         }
     }
 #else
@@ -285,7 +305,9 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
       return -1;
     }
   else
+  {
     return 0;
+  }
 }
 
 // Broadcast the datagram to every interface.  Returns the average
@@ -302,7 +324,9 @@ ACE_SOCK_Dgram_Bcast::send (const void *buf,
   ssize_t total_bytes = 0;
 
   if (this->if_list_ == nullptr)
+  {
     return -1;
+  }
 
   for (ACE_Bcast_Node *temp = this->if_list_;
        temp != nullptr;
@@ -316,11 +340,15 @@ ACE_SOCK_Dgram_Bcast::send (const void *buf,
                                                  flags);
 
       if (bytes_sent == -1)
-        return -1;
+        {
+          return -1;
+        }
       else
-        total_bytes += bytes_sent;
+        {
+          total_bytes += bytes_sent;
+        }
 
-      iterations++;
+      ++iterations;
     }
 
   return iterations == 0 ? 0 : total_bytes / iterations;
@@ -338,7 +366,9 @@ ACE_SOCK_Dgram_Bcast::send (const iovec iov[],
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::send");
 
   if (this->if_list_ == nullptr)
+  {
     return -1;
+  }
 
   // Send the message to every interface.
 
@@ -352,7 +382,9 @@ ACE_SOCK_Dgram_Bcast::send (const iovec iov[],
                                 n,
                                 temp->bcast_addr_,
                                 flags) == -1)
+      {
         return -1;
+      }
     }
 
   return 0;

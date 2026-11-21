@@ -9,11 +9,15 @@ class ACE_Svc_Export Smart_Test_Factory
 {
 public:
   Smart_Test_Factory ();
+  Smart_Test_Factory (Smart_Test_Factory const &) = delete;
+  Smart_Test_Factory (Smart_Test_Factory &&) = delete;
+  Smart_Test_Factory &operator= (Smart_Test_Factory const &) = delete;
+  Smart_Test_Factory &operator= (Smart_Test_Factory &&) = delete;
 
-  // This method will create the smart_proxy.
-  virtual Test_ptr create_proxy (Test_ptr proxy);
+  /// This method will create the smart_proxy.
+  Test_ptr create_proxy (Test_ptr proxy) override;
 };
 
-// The following Factory is used by the ACE_Service_Config to
-// dynamically initialize the state of the Smart_Proxy_Factory
+/// The following Factory is used by the ACE_Service_Config to
+/// dynamically initialize the state of the Smart_Proxy_Factory
 ACE_SVC_FACTORY_DECLARE (Smart_Test_Factory)

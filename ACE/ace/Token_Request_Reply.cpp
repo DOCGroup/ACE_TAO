@@ -1,4 +1,5 @@
 #include "ace/Token_Request_Reply.h"
+#include <cstring>
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
@@ -23,7 +24,7 @@ ACE_Token_Request::ACE_Token_Request (int token_type,
   this->requeue_position (0);      // to avoid Purify UMR
   this->notify (0);                // to avoid Purify UMR
   transfer_.arg_ = 0;              // to avoid Purify UMR
-  ACE_OS::memset (transfer_.data_, 0, sizeof transfer_.data_); // to avoid Purify UMR
+  std::memset (transfer_.data_, 0, sizeof transfer_.data_); // to avoid Purify UMR
   this->token_name (token_name, client_id);
   this->options (options);
 }
@@ -34,7 +35,7 @@ ACE_Token_Request::ACE_Token_Request (int token_type,
 int
 ACE_Token_Request::encode (void *&buf)
 {
-  buf = (void *) &this->transfer_;
+  buf = &this->transfer_;
   return this->length ();
 }
 
@@ -48,10 +49,10 @@ ACE_Token_Request::decode ()
 
   options_.set (transfer_.use_timeout_ == 1 ? ACE_Synch_Options::USE_TIMEOUT : 0,
                 ACE_Time_Value (transfer_.sec_, transfer_.usec_),
-                (void *) transfer_.arg_);
+                reinterpret_cast<void *> (transfer_.arg_));
 
   // Decode the variable-sized portion.
-  size_t token_len = ACE_OS::strlen (this->token_name_);
+  const size_t token_len = ACE_OS::strlen (this->token_name_);
 
   // Check to make sure this->tokenName_ isn't too long!
   if (token_len >= ACE_MAXTOKENNAMELEN)
@@ -67,10 +68,10 @@ ACE_Token_Request::decode ()
   // token_name_ plus '\0'
   // ':'
   // client_id_ plus '\0'
-  size_t data_size = ACE_TOKEN_REQUEST_HEADER_SIZE
-                     + ACE_OS::strlen (this->token_name_) + 1
-                     + ACE_OS::strlen (this->client_id_) + 1
-                     + 1;
+  const size_t data_size = ACE_TOKEN_REQUEST_HEADER_SIZE
+                           + ACE_OS::strlen (this->token_name_) + 1
+                           + ACE_OS::strlen (this->client_id_) + 1
+                           + 1;
 
   // Make sure the message was correctly received and framed.
   return this->length () == data_size ? 0 : -1;
@@ -83,18 +84,26 @@ ACE_Token_Request::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("*******\nlength = %d\ntoken name = %s\nclient id = %s\n"),
-             this->length (), this->token_name (), this->client_id ()));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("*******\nlength = %Q\ntoken name = %s\nclient id = %s\n"),
+                 static_cast<ACE_UINT64> (this->length ()),
+                 this->token_name (),
+                 this->client_id ()));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("type = ")));
 
   if (this->token_type () == ACE_Tokens::MUTEX)
-    ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("MUTEX\n")));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("MUTEX\n")));
+    }
   else // == ACE_Tokens::RWLOCK
     {
       if (this->proxy_type () == ACE_RW_Token::READER)
-        ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("RLOCK\n")));
+        {
+          ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("RLOCK\n")));
+        }
       else // == WRITER
-        ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("WLOCK\n")));
+        {
+          ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("WLOCK\n")));
+        }
     }
 
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("operation = ")));
@@ -115,11 +124,14 @@ ACE_Token_Request::dump () const
     }
 
   if (this->options ()[ACE_Synch_Options::USE_TIMEOUT] == 0)
-    ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("blocking forever\n")));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("blocking forever\n")));
+    }
   else
     {
-      ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("waiting for %d secs and %d usecs\n"),
-                 this->options ().timeout ().sec (), this->options ().timeout ().usec ()));
+      ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("waiting for %: secs and %q usecs\n"),
+                     this->options ().timeout ().sec (),
+                     static_cast<ACE_INT64> (this->options ().timeout ().usec ())));
     }
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -144,7 +156,7 @@ ACE_Token_Reply::ACE_Token_Reply () // Type of reply.
 int
 ACE_Token_Reply::encode (void *&buf)
 {
-  buf = (void *) &this->transfer_;
+  buf = &this->transfer_;
   return this->length ();
 }
 
@@ -163,8 +175,9 @@ void
 ACE_Token_Reply::dump () const
 {
 #if defined (ACE_HAS_DUMP)
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("*******\nlength = %d\nerrnum = %d"),
-             this->length (), this->errnum ()));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("*******\nlength = %Q\nerrnum = %d"),
+                 static_cast<ACE_UINT64> (this->length ()),
+                 this->errnum ()));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("arg = %d"), this->arg ()));
 #endif /* ACE_HAS_DUMP */
 }

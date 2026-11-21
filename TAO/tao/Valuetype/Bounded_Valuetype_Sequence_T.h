@@ -106,13 +106,15 @@ private:
     TAO::bounded_valuetype_sequence<object_t, object_t_var, MAX> const &source)
   {
     ::CORBA::ULong const length = source.length ();
-    if (length > source.maximum () || !(strm << length)) {
-      return false;
-    }
-    for(CORBA::ULong i {}; i < length; ++i) {
-      if (!(strm << source[i])) {
+    if (length > source.maximum () || !(strm << length))
+      {
         return false;
       }
+    for(CORBA::ULong i {}; i < length; ++i) {
+      if (!(strm << source[i]))
+        {
+          return false;
+        }
     }
     return true;
   }
@@ -122,20 +124,23 @@ private:
     using sequence = TAO::bounded_valuetype_sequence<object_t, object_t_var, MAX>;
     using sequence_allocation_traits = typename sequence::allocation_traits;
     ::CORBA::ULong new_length {};
-    if (!(strm >> new_length)) {
-      return false;
-    }
-    if ((new_length > strm.length()) || (new_length > target.maximum ())) {
+    if (!(strm >> new_length))
+      {
         return false;
-    }
+      }
+    if ((new_length > strm.length()) || (new_length > target.maximum ()))
+      {
+        return false;
+      }
     sequence tmp(new_length,
                  sequence_allocation_traits::allocbuf_noinit(new_length),
                  true);
     typename sequence::value_type * buffer = tmp.get_buffer();
     for(CORBA::ULong i {}; i < new_length; ++i) {
-      if (!(strm >> buffer[i])) {
-        return false;
-      }
+      if (!(strm >> buffer[i]))
+        {
+          return false;
+        }
     }
     tmp.swap(target);
     return true;

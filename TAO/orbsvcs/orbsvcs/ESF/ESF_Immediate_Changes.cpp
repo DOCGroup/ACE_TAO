@@ -21,7 +21,7 @@ TAO_ESF_Immediate_Changes<PROXY,C,ITERATOR,ACE_LOCK>::
 
 template<class PROXY, class C, class ITERATOR, class ACE_LOCK>
 TAO_ESF_Immediate_Changes<PROXY,C,ITERATOR,ACE_LOCK>::
-    TAO_ESF_Immediate_Changes (const C &collection)
+    TAO_ESF_Immediate_Changes (C const &collection)
       :  collection_ (collection)
 {
 }
@@ -33,7 +33,7 @@ TAO_ESF_Immediate_Changes<PROXY,C,ITERATOR,ACE_LOCK>::
   ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
   worker->set_size(this->collection_.size());
-  ITERATOR end = this->collection_.end ();
+  ITERATOR const end = this->collection_.end ();
   for (ITERATOR i = this->collection_.begin (); i != end; ++i)
     {
       worker->work ((*i));

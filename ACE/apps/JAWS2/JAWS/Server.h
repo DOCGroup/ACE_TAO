@@ -15,23 +15,29 @@ public:
   JAWS_Server (int argc, char *argv[]);
 
   void init (int argc, char *argv[]);
-  int open (JAWS_Pipeline_Handler *ph, JAWS_Dispatch_Policy *dp = 0);
+  int open (JAWS_Pipeline_Handler *ph, JAWS_Dispatch_Policy *dp = nullptr);
 
 private:
+  /// Parse command-line arguments.
   void parse_args (int argc, ACE_TCHAR *argv[]);
-  // Parse arguments
 
 private:
-  int ratio_;           // ratio of asynch ops to threads
-  int port_;            // port to listen on
-  int concurrency_;     // 0 => pool, 1 => per request
-  int dispatch_;        // 0 => synch, 1 => asynch
-  int nthreads_;        // number of threads
-  int maxthreads_;      // maximum number of threads
-  long flags_;          // thread creation flags
+  /// Ratio of asynchronous operations to threads.
+  int ratio_;
+  /// Port on which to listen.
+  int port_;
+  /// Concurrency strategy: 0 for thread pool, 1 for per-request threads.
+  int concurrency_;
+  /// I/O strategy: 0 for synchronous, 1 for asynchronous.
+  int dispatch_;
+  /// Number of worker threads.
+  int nthreads_;
+  /// Maximum number of worker threads.
+  int maxthreads_;
+  /// Thread creation flags.
+  long flags_;
 
   JAWS_Default_Dispatch_Policy policy_;
 };
-
 
 #endif /* !defined (JAWS_SERVER_H) */

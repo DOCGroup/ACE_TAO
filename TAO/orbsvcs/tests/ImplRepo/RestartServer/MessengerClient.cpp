@@ -17,6 +17,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opts ()) != -1)
+  {
     switch (c)
       {
       case 'k':
@@ -47,6 +48,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
+  }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -64,7 +66,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
     if (parse_args (argc, argv) != 0)
+    {
       return 1;
+    }
 
     // Destringify ior
     CORBA::Object_var obj = orb->string_to_object(ior);

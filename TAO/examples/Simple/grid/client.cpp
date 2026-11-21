@@ -1,4 +1,4 @@
-# include "Grid_Client_i.h"
+#include "Grid_Client_i.h"
 
 // The client program for the application.
 
@@ -13,5 +13,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   if (client.run ("Grid", argc, argv) == -1)
     return -1;
   else
+  {
     return 0;
+  }
 }

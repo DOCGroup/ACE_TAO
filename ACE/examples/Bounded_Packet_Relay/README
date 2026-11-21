@@ -110,8 +110,8 @@ ACE_Message_Block before sending it to the relay object.
 The output object is passive.  If logging is turned on, it will report
 the arrival time, relative to the start of the transmission, of each
 output message, and the contents of that message.  The output object
-will also "consume" each ACE_Message_Block passed to it, calling
-delete on the passed pointer.
+consumes each ACE_Message_Block passed to it and releases the message
+after handling it.
 
 3.2. RUN-TIME CHARACTERSITICS
 

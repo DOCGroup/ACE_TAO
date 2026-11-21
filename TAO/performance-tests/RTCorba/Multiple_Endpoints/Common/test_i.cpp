@@ -19,7 +19,7 @@ void
 Test_i::shutdown (const char *orb_id)
 {
   int argc = 0;
-  ACE_TCHAR **argv = 0;
+  ACE_TCHAR **argv {};
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv,
                                         orb_id);

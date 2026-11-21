@@ -1,6 +1,6 @@
-// Tests for interoperability between TAO and JacORB for sending wchar data
-// The CDR defines separate serialization functions for reading and writing
-// wchar, wchar[] and wstring data. Encapsulated wchar data is also tested.
+/// Tests for interoperability between TAO and JacORB for sending wchar data
+/// The CDR defines separate serialization functions for reading and writing
+/// wchar, wchar[] and wstring data. Encapsulated wchar data is also tested.
 
 module interop {
   typedef wchar warray[10];
@@ -23,10 +23,10 @@ module interop {
   };
 
   interface WChar_Passer {
-    // The server and client for this test should both use a well known test
-    // data to allow individual string comparisons against reference strings.
-    // The separate test key value allows the tester to devise several strings,
-    // arrays, or wchar values that may be tested separately.
+    /// The server and client for this test should both use a well known test
+    /// data to allow individual string comparisons against reference strings.
+    /// The separate test key value allows the tester to devise several strings,
+    /// arrays, or wchar values that may be tested separately.
 
     readonly attribute string orb_name;
 

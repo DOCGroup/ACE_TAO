@@ -23,7 +23,6 @@ class TAO_RTEC_Perf_Export Loopback_Consumer
 
 {
 public:
-  /// Constructor
   Loopback_Consumer (CORBA::Long experiment_id,
                      CORBA::Long event_type,
                      Loopback_Supplier *supplier,
@@ -35,13 +34,13 @@ public:
   /// Disconnect from the event channel
   void disconnect ();
 
-  //@{
+  /// @{
   /** @name The RtecEventComm::PushConsumer methods
    */
-  virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer ();
-  virtual PortableServer::POA_ptr _default_POA ();
-  //@}
+  void push (const RtecEventComm::EventSet& events) override;
+  void disconnect_push_consumer () override;
+  PortableServer::POA_ptr _default_POA () override;
+  /// @}
 
 private:
   /// Synchronize access to the internal data

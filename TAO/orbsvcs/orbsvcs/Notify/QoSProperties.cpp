@@ -27,17 +27,17 @@ TAO_Notify_QoSProperties::TAO_Notify_QoSProperties ()
   unsupported_[0] = CosNotification::StartTimeSupported;
 }
 
-TAO_Notify_QoSProperties::~TAO_Notify_QoSProperties ()
-{
-}
+TAO_Notify_QoSProperties::~TAO_Notify_QoSProperties () = default;
 
 int
 TAO_Notify_QoSProperties::unsupported (ACE_CString& name)
 {
-  for (int i = 0; i < UNSUPPORTED_PROPERTY_COUNT; ++i)
+  for (int i {}; i < UNSUPPORTED_PROPERTY_COUNT; ++i)
     {
       if (this->unsupported_[i] == name)
+      {
         return 1;
+      }
     }
 
   return 0;
@@ -132,7 +132,7 @@ TAO_Notify_QoSProperties::init (const CosNotification::PropertySeq& prop_seq, Co
   int err_index = -1;
 
   ACE_CString name;
-  for (CORBA::ULong i = 0; i < prop_seq.length (); ++i)
+  for (CORBA::ULong i {}; i < prop_seq.length (); ++i)
     {
       name = prop_seq[i].name.in();
 
@@ -145,7 +145,9 @@ TAO_Notify_QoSProperties::init (const CosNotification::PropertySeq& prop_seq, Co
           err_seq[err_index].name = CORBA::string_dup (prop_seq[i].name);
         }
       else if (this->property_map_.rebind (prop_seq[i].name.in (), prop_seq[i].value) == -1)
-        return -1;
+        {
+          return -1;
+        }
       // Note call to rebind. This allows to call <init> to set updates.
     }
 
@@ -192,7 +194,9 @@ TAO_Notify_QoSProperties::copy (TAO_Notify_QoSProperties& qos_properties)
   for (; iter.next (entry); iter.advance ())
     {
       if (qos_properties.property_map_.rebind (entry->ext_id_, entry->int_id_) == -1)
+      {
         return -1;
+      }
     }
 
   return 0;
@@ -202,7 +206,9 @@ int
 TAO_Notify_QoSProperties::transfer (TAO_Notify_QoSProperties& qos_properties)
 {
   if (this->copy (qos_properties) == -1)
+  {
     return -1;
+  }
 
   // unbind the properties that we don't want to transfer.
   qos_properties.property_map_.unbind (NotifyExt::ThreadPool);

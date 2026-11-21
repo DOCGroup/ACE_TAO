@@ -57,16 +57,14 @@ using ATM_Addr = int;
 class ACE_Export ACE_ATM_Addr : public ACE_Addr
 {
 public:
-  // Constants used for ATM options
+  /// Constants used for ATM options.
   static const long LINE_RATE;
   static const int OPT_FLAGS_CPID;
   static const int OPT_FLAGS_PMP;
   static const int DEFAULT_SELECTOR;
 
-  /// Default constructor.
   ACE_ATM_Addr (u_char selector = DEFAULT_SELECTOR);
 
-  /// Copy constructor.
   ACE_ATM_Addr (const ACE_ATM_Addr &,
                 u_char selector = DEFAULT_SELECTOR);
 
@@ -87,7 +85,6 @@ public:
   ACE_ATM_Addr (const ACE_TCHAR sap[],
                 u_char selector = DEFAULT_SELECTOR);
 
-  /// Default dtor.
   ~ACE_ATM_Addr () = default;
 
   /// Default initialization for non-address values (e.g.,
@@ -182,7 +179,6 @@ private:
 
 // Close versioned namespace, if enabled by the user.
 ACE_END_VERSIONED_NAMESPACE_DECL
-
 
 #if defined (__ACE_INLINE__)
 #include "ace/ATM_Addr.inl"

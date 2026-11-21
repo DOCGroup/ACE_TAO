@@ -82,7 +82,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Parse our own client arguments
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       // Obtain the servant reference with our active ZIOP policies.
       CORBA::Object_var tmp (orb->string_to_object(ior));

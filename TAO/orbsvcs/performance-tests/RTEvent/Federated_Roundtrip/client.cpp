@@ -25,15 +25,14 @@
 #include "ace/Sched_Params.h"
 #include "ace/Barrier.h"
 
-
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
-int nthreads   = 0;
-int high_priority_period = 0;
-int high_priority_workload = 0;
-int low_priority_period  = 0;
-int low_priority_workload = 0;
-int disable_low_priority = 0;
-int use_rt_corba = 0;
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+int nthreads {};
+int high_priority_period {};
+int high_priority_workload {};
+int low_priority_period {};
+int low_priority_workload {};
+bool disable_low_priority {};
+bool use_rt_corba {};
 
 class Roundtrip_Peer : public Peer_Base
 {
@@ -46,13 +45,13 @@ public:
   {
   }
 
-  //@{
+  /// @{
   /** @name The Federated_Test::Peer methods
    */
-  virtual Federated_Test::Experiment_Results *
+  Federated_Test::Experiment_Results *
       run_experiment (CORBA::Long experiment_id,
-                      CORBA::Long iterations);
-  //@}
+                      CORBA::Long iterations) override;
+  /// @}
 
 private:
   RT_Class *rt_class_;
@@ -92,11 +91,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 'z':
-        disable_low_priority = 1;
+        disable_low_priority = true;
         break;
 
       case 'r':
-        use_rt_corba = 1;
+        use_rt_corba = true;
         break;
 
       case '?':
@@ -130,7 +129,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ORB_Holder orb (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       RTServer_Setup rtserver_setup (use_rt_corba,
                                      orb,

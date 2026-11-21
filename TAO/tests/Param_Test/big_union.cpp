@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    big_union.cpp
  *
@@ -7,10 +5,10 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #include "helper.h"
+
+#include <cstring>
 #include "big_union.h"
 
 // ************************************************************************
@@ -20,14 +18,8 @@
 size_t Test_Big_Union::counter = 0;
 
 Test_Big_Union::Test_Big_Union ()
-  : opname_ (CORBA::string_dup ("test_big_union"))
+  : opname_ ("test_big_union")
 {
-}
-
-Test_Big_Union::~Test_Big_Union ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
 }
 
 const char *
@@ -47,7 +39,7 @@ Test_Big_Union::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::Big_Union *tmp = 0;
+  Param_Test::Big_Union const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Big_Union (*tmp);
 
@@ -89,7 +81,7 @@ int
 Test_Big_Union::reset_parameters ()
 {
   Generator *gen = GENERATOR::instance (); // value generator
-  CORBA::ULong index = (counter++ % Test_Big_Union::BIG_UNION_N_BRANCHES);
+  CORBA::ULong const index = (counter++ % Test_Big_Union::BIG_UNION_N_BRANCHES);
 
   switch (index)
     {
@@ -112,7 +104,7 @@ Test_Big_Union::reset_parameters ()
       break;
     case 2:
       {
-        CORBA::Long x = gen->gen_long ();
+        CORBA::Long const x = gen->gen_long ();
         this->in_.the_long (x);
         this->inout_.the_long (x);
       }
@@ -131,7 +123,7 @@ Test_Big_Union::reset_parameters ()
       break;
     case 4:
       {
-        CORBA::String_var str = gen->gen_string ();
+        CORBA::String_var const str = gen->gen_string ();
         this->in_.the_string (str);
         this->inout_.the_string (str);
       }
@@ -140,7 +132,7 @@ Test_Big_Union::reset_parameters ()
       {
         CORBA::ShortSeq seq;
         seq.length (gen->gen_short () % 50);
-        for (size_t i = 0; i < seq.length (); i++)
+        for (size_t i = 0; i < seq.length (); ++i)
           seq[i] = gen->gen_short ();
         this->in_.the_sequence (seq);
         this->inout_.the_sequence (seq);
@@ -156,21 +148,21 @@ Test_Big_Union::reset_parameters ()
       break;
     case 7:
       {
-        CORBA::Octet octet = gen->gen_short () % 255;
+        CORBA::Octet const octet = gen->gen_short () % 255;
         this->in_.the_octet (octet);
         this->inout_.the_octet (octet);
       }
       break;
     case 8:
       {
-        CORBA::Char x = '@';
+        CORBA::Char const x = '@';
         this->in_.the_char (x);
         this->inout_.the_char (x);
       }
       break;
     case 9:
       {
-        CORBA::Boolean x = gen->gen_short () % 2;
+        CORBA::Boolean const x = gen->gen_short () % 2;
         this->in_.the_boolean (x);
         this->inout_.the_boolean (x);
       }
@@ -184,7 +176,7 @@ Test_Big_Union::reset_parameters ()
         // set the length of the sequence
         var_struct.dummy1 = gen->gen_string ();
         var_struct.dummy2 = gen->gen_string ();
-        CORBA::ULong len = gen->gen_long () % 10 + 1;
+        CORBA::ULong const len = gen->gen_long () % 10 + 1;
         var_struct.seq.length (len);
         for (CORBA::ULong i = 0; i != len; ++i)
           {
@@ -243,7 +235,6 @@ Test_Big_Union::check_validity ()
       return 0;
     }
 
-
   switch (this->in_._d ())
     {
     case 0:
@@ -278,7 +269,9 @@ Test_Big_Union::check_validity ()
                 || CORBA::is_nil (inout)
                 || CORBA::is_nil (out)
                 || CORBA::is_nil (ret))
+            {
               return 0;
+            }
 
             Coffee::Desc_var in_desc =
               in->description ();
@@ -289,13 +282,15 @@ Test_Big_Union::check_validity ()
             Coffee::Desc_var ret_desc =
               ret->description ();
 
-            if (ACE_OS::strcmp (in_desc->name.in (),
+            if (std::strcmp (in_desc->name.in (),
                                 inout_desc->name.in ())
-                || ACE_OS::strcmp (in_desc->name.in (),
+                || std::strcmp (in_desc->name.in (),
                                    out_desc->name.in ())
-                || ACE_OS::strcmp (in_desc->name.in (),
+                || std::strcmp (in_desc->name.in (),
                                    ret_desc->name.in ()))
+            {
               return 0;
+            }
           }
         catch (const CORBA::Exception&)
           {
@@ -305,10 +300,10 @@ Test_Big_Union::check_validity ()
       break;
     case 2:
       {
-        CORBA::Long in    = this->in_.the_long ();
-        CORBA::Long inout = this->inout_.the_long ();
-        CORBA::Long out   = this->out_->the_long ();
-        CORBA::Long ret   = this->ret_->the_long ();
+        CORBA::Long const in    = this->in_.the_long ();
+        CORBA::Long const inout = this->inout_.the_long ();
+        CORBA::Long const out   = this->out_->the_long ();
+        CORBA::Long const ret   = this->ret_->the_long ();
 
         if (in != out || in != inout || in != ret)
           {
@@ -345,9 +340,9 @@ Test_Big_Union::check_validity ()
         const char* out   = this->out_->the_string ();
         const char* ret   = this->ret_->the_string ();
 
-        if (ACE_OS::strcmp (in,out)
-            || ACE_OS::strcmp (in,inout)
-            || ACE_OS::strcmp (in,ret))
+        if (std::strcmp (in,out)
+            || std::strcmp (in,inout)
+            || std::strcmp (in,ret))
           {
             return 0;
           }
@@ -367,7 +362,9 @@ Test_Big_Union::check_validity ()
         if (in.length () != out.length ()
             || in.length () != inout.length ()
             || in.length () != ret.length ())
+        {
           return 0;
+        }
 
         for (CORBA::ULong i = 0; i != in.length (); ++i)
           {
@@ -382,10 +379,10 @@ Test_Big_Union::check_validity ()
       break;
     case 6:
       {
-        CORBA::Any in = this->in_.the_any ();
-        CORBA::Any inout = this->inout_.the_any ();
-        CORBA::Any out = this->out_->the_any ();
-        CORBA::Any ret = this->ret_->the_any ();
+        CORBA::Any const in = this->in_.the_any ();
+        CORBA::Any const inout = this->inout_.the_any ();
+        CORBA::Any const out = this->out_->the_any ();
+        CORBA::Any const ret = this->ret_->the_any ();
 
         CORBA::Short in_short;
         CORBA::Short inout_short;
@@ -410,10 +407,10 @@ Test_Big_Union::check_validity ()
       break;
     case 7:
       {
-        CORBA::Octet in    = this->in_.the_octet ();
-        CORBA::Octet inout = this->inout_.the_octet ();
-        CORBA::Octet out   = this->out_->the_octet ();
-        CORBA::Octet ret   = this->ret_->the_octet ();
+        CORBA::Octet const in    = this->in_.the_octet ();
+        CORBA::Octet const inout = this->inout_.the_octet ();
+        CORBA::Octet const out   = this->out_->the_octet ();
+        CORBA::Octet const ret   = this->ret_->the_octet ();
 
         if (in != out || in != inout || in != ret)
           {
@@ -423,10 +420,10 @@ Test_Big_Union::check_validity ()
       break;
     case 8:
       {
-        CORBA::Char in    = this->in_.the_char ();
-        CORBA::Char inout = this->inout_.the_char ();
-        CORBA::Char out   = this->out_->the_char ();
-        CORBA::Char ret   = this->ret_->the_char ();
+        CORBA::Char const in    = this->in_.the_char ();
+        CORBA::Char const inout = this->inout_.the_char ();
+        CORBA::Char const out   = this->out_->the_char ();
+        CORBA::Char const ret   = this->ret_->the_char ();
 
         if (in != out || in != inout || in != ret)
           {
@@ -436,10 +433,10 @@ Test_Big_Union::check_validity ()
       break;
     case 9:
       {
-        CORBA::Boolean in    = this->in_.the_boolean ();
-        CORBA::Boolean inout = this->inout_.the_boolean ();
-        CORBA::Boolean out   = this->out_->the_boolean ();
-        CORBA::Boolean ret   = this->ret_->the_boolean ();
+        CORBA::Boolean const in    = this->in_.the_boolean ();
+        CORBA::Boolean const inout = this->inout_.the_boolean ();
+        CORBA::Boolean const out   = this->out_->the_boolean ();
+        CORBA::Boolean const ret   = this->ret_->the_boolean ();
 
         if (in != out || in != inout || in != ret)
           {
@@ -458,17 +455,17 @@ Test_Big_Union::check_validity ()
         const Param_Test::Var_Struct& ret =
           this->ret_->the_var_struct ();
 
-        if (!(ACE_OS::strcmp (in.dummy1.in (),
+        if (!(std::strcmp (in.dummy1.in (),
                               inout.dummy1.in ()) == 0
-              && ACE_OS::strcmp (in.dummy2.in (),
+              && std::strcmp (in.dummy2.in (),
                                  inout.dummy2.in ()) == 0)
-            || !(ACE_OS::strcmp (in.dummy1.in (),
+            || !(std::strcmp (in.dummy1.in (),
                                  out.dummy1.in ()) == 0
-               && ACE_OS::strcmp (in.dummy2.in (),
+               && std::strcmp (in.dummy2.in (),
                                   out.dummy2.in ()) == 0)
-            || !(ACE_OS::strcmp (in.dummy1.in (),
+            || !(std::strcmp (in.dummy1.in (),
                                  ret.dummy1.in ()) == 0
-               && ACE_OS::strcmp (in.dummy2.in (),
+               && std::strcmp (in.dummy2.in (),
                                   ret.dummy2.in ()) == 0))
           {
             return 0;
@@ -481,15 +478,15 @@ Test_Big_Union::check_validity ()
             return 0;
           }
 
-        CORBA::ULong len = in.seq.length ();
+        CORBA::ULong const len = in.seq.length ();
 
         for (CORBA::ULong i = 0; i != len; ++i)
           {
-            if (ACE_OS::strcmp (in.seq[i],
+            if (std::strcmp (in.seq[i],
                                 inout.seq[i])
-                || ACE_OS::strcmp (in.seq[i],
+                || std::strcmp (in.seq[i],
                                    out.seq[i])
-                || ACE_OS::strcmp (in.seq[i],
+                || std::strcmp (in.seq[i],
                                    ret.seq[i]))
               {
                 return 0;

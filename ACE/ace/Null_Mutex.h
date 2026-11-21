@@ -34,8 +34,9 @@ class ACE_Time_Value;
 class ACE_Export ACE_Null_Mutex
 {
 public:
-  ACE_Null_Mutex (const ACE_TCHAR * = 0)
-    : lock_ (0) {}
+  ACE_Null_Mutex (const ACE_TCHAR * = nullptr)
+  {
+  }
   ~ACE_Null_Mutex () = default;
   /// Return 0.
   int remove () {return 0;}
@@ -76,7 +77,8 @@ public:
   /// Declare the dynamic allocation hooks.
   //ACE_ALLOC_HOOK_DECLARE;
 
-  int lock_; // A dummy lock.
+  /// A dummy lock.
+  int lock_ {};
 
   ACE_ALLOC_HOOK_DECLARE;
 };
@@ -182,7 +184,7 @@ public:
   ACE_Null_Mutex * operator () (const ACE_TCHAR *name)
   {
     ACE_Null_Mutex *p;
-    ACE_NEW_RETURN (p, ACE_Null_Mutex (name), 0);
+    ACE_NEW_RETURN (p, ACE_Null_Mutex (name), nullptr);
     return p;
   }
 };

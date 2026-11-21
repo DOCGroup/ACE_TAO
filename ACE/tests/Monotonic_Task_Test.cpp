@@ -16,7 +16,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Reactor.h"
 #include "ace/Timer_Queue.h"
@@ -34,6 +33,8 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
+
+#include <memory>
 
 #if defined (ACE_HAS_MONOTONIC_TIME_POLICY) && defined (ACE_HAS_MONOTONIC_CONDITIONS)
 
@@ -77,7 +78,7 @@ public:
       status_ (0)
   {
     // set monotonic timer aware thread manager for this task
-    this->thr_mgr (&this->tm_);
+    this->thr_mgr (std::addressof (this->tm_));
   }
 
   ~MyTask () override { stop (); }
@@ -109,10 +110,12 @@ MyTask::start ()
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
   if (this->activate (THR_NEW_LWP, 1) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p.\n"),
-                       ACE_TEXT ("unable to activate thread")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p.\n"),
+                         ACE_TEXT ("unable to activate thread")),
+                        -1);
+    }
 
   if (this->cond_.wait () != 0) // wait for task to start
     {
@@ -251,7 +254,9 @@ MyTask::svc ()
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) MyTask::svc - waiting for stop\n")));
 
     if (!this->stop_)
+    {
       this->cond_.wait ();
+    }
   }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) MyTask finished\n")));
@@ -305,7 +310,9 @@ run_main (int , ACE_TCHAR *[])
             }
         }
       else
+      {
         status = 1;
+      }
 
       // ok, now stop task
       if (my_task.stop () != 0)
@@ -318,7 +325,9 @@ run_main (int , ACE_TCHAR *[])
       set_system_time (ACE_OS::gettimeofday () + tv_shift);
     }
   else
+  {
     status = 1;
+  }
 
 #  endif /* ACE_HAS_THREADS */
 

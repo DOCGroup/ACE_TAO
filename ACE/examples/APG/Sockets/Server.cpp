@@ -13,10 +13,12 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_SOCK_Acceptor acceptor;
 
   if (acceptor.open (port_to_listen, 1) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("acceptor.open")),
-                      100);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("acceptor.open")),
+                        100);
+    }
   // Listing 1
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -34,7 +36,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
    */
   //FUZZ: enable check_for_lack_ACE_OS
 
-  while (1)
+  while (true)
     {
       ACE_SOCK_Stream peer;
       ACE_INET_Addr peer_addr;
@@ -54,34 +56,37 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 #endif /* 0 */
 
       // Listing 4 code/ch06
-      if (acceptor.accept (peer, &peer_addr, &timeout, 0) == -1)
+      if (acceptor.accept (peer, &peer_addr, &timeout, false) == -1)
         {
-          if (ACE_OS::last_error() == EINTR)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) Interrupted while ")
-                        ACE_TEXT ("waiting for connection\n")));
-          else
-            if (ACE_OS::last_error() == ETIMEDOUT)
+          if (ACE_OS::last_error () == EINTR)
+            {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) Timeout while ")
+                          ACE_TEXT ("(%P|%t) Interrupted while ")
                           ACE_TEXT ("waiting for connection\n")));
+            }
+          else
+            if (ACE_OS::last_error () == ETIMEDOUT)
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("(%P|%t) Timeout while ")
+                            ACE_TEXT ("waiting for connection\n")));
+              }
         }
       // Listing 4
       // Listing 5 code/ch06
       else
         {
-          ACE_TCHAR peer_name[MAXHOSTNAMELEN];
+          ACE_TCHAR peer_name[MAXHOSTNAMELEN] {};
           peer_addr.addr_to_string (peer_name, MAXHOSTNAMELEN);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) Connection from %s\n"),
                       peer_name));
           // Listing 5
           // Listing 7 code/ch06
-          char buffer[4096];
-          ssize_t bytes_received;
+          char buffer[4096] {};
+          ssize_t bytes_received {};
 
-          while ((bytes_received =
-                    peer.recv (buffer, sizeof(buffer))) != -1)
+          while ((bytes_received = peer.recv (buffer, sizeof (buffer))) > 0)
             {
               peer.send_n (buffer, bytes_received);
             }

@@ -79,8 +79,8 @@ public:
   static constexpr size_t ECG_DEFAULT_MTU = 1024;
 
   /// Initialization and termination methods.
-  //@{
-  TAO_ECG_CDR_Message_Sender (CORBA::Boolean crc = false);
+  /// @{
+  explicit TAO_ECG_CDR_Message_Sender (CORBA::Boolean crc = false);
 
   /// Set the endpoint for sending messages.
   /**
@@ -92,10 +92,10 @@ public:
 
   // Shutdown this component.  Frees up the endpoint.
   void shutdown ();
-  //@}
+  /// @}
 
   /// Setters/getters.
-  //@{
+  /// @{
   /// Get the local endpoint used to send the events.
   int get_local_addr (ACE_INET_Addr& addr);
 
@@ -107,7 +107,7 @@ public:
    */
   int mtu (CORBA::ULong mtu);
   CORBA::ULong mtu () const;
-  //@}
+  /// @}
 
   /// The main method - send a CDR message.
   /**
@@ -151,8 +151,8 @@ private:
    * The maximum fragment payload (i.e. the size without the header is
    * also required); @a total_length returns the total message size.
    */
-  CORBA::ULong compute_fragment_count (const ACE_Message_Block* begin,
-                                       const ACE_Message_Block* end,
+  CORBA::ULong compute_fragment_count (ACE_Message_Block const *begin,
+                                       ACE_Message_Block const *end,
                                        int iov_size,
                                        CORBA::ULong max_fragment_payload,
                                        CORBA::ULong& total_length);

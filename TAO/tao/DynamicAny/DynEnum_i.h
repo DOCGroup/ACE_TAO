@@ -1,14 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    DynEnum_i.h
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
-
-
 #ifndef TAO_DYNENUM_I_H
 #define TAO_DYNENUM_I_H
 #include /**/ "ace/pre.h"
@@ -41,11 +36,15 @@ class TAO_DynamicAny_Export TAO_DynEnum_i
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
-  explicit TAO_DynEnum_i (CORBA::Boolean allow_truncation=true);
+  explicit TAO_DynEnum_i (CORBA::Boolean allow_truncation = true);
 
-  /// Destructor.
-  ~TAO_DynEnum_i () = default;
+  ~TAO_DynEnum_i () override = default;
+
+  /// Use copy() or assign() instead of these.
+  TAO_DynEnum_i (TAO_DynEnum_i const &src) = delete;
+  TAO_DynEnum_i &operator= (TAO_DynEnum_i const &src) = delete;
+  TAO_DynEnum_i (TAO_DynEnum_i &&) = delete;
+  TAO_DynEnum_i &operator= (TAO_DynEnum_i &&) = delete;
 
   /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc);
@@ -53,10 +52,15 @@ public:
   /// Initialize using an Any.
   void init (CORBA::Any const& any);
 
-  // = LocalObject methods.
+  /// @name LocalObject methods
+  /// @{
+
   static TAO_DynEnum_i *_narrow (CORBA::Object_ptr obj);
 
-  // = Functions specific to DynEnum.
+  /// @}
+
+  /// @name Functions specific to DynEnum
+  /// @{
 
   char * get_as_string () override;
 
@@ -66,7 +70,10 @@ public:
 
   void set_as_ulong (CORBA::ULong value) override;
 
-  // = DynAny common functions not implemented in class TAO_DynCommon.
+  /// @}
+
+  /// @name DynAny common functions not implemented in TAO_DynCommon
+  /// @{
 
   void from_any (CORBA::Any const& value) override;
 
@@ -78,17 +85,12 @@ public:
 
   DynamicAny::DynAny_ptr current_component () override;
 
+  /// @}
+
 private:
   // Called by both versions of init().
   void init_common ();
 
-  // = Use copy() or assign() instead of these.
-  TAO_DynEnum_i (TAO_DynEnum_i const &src) = delete;
-  TAO_DynEnum_i &operator= (TAO_DynEnum_i const &src) = delete;
-  TAO_DynEnum_i (TAO_DynEnum_i &&) = delete;
-  TAO_DynEnum_i &operator= (TAO_DynEnum_i &&) = delete;
-
-private:
   /// Current numeric value of the enum.
   CORBA::ULong value_ {};
 };

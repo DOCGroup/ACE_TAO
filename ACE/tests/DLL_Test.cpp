@@ -45,9 +45,11 @@ int handle_test (ACE_DLL &dll)
   if (handle != ACE_SHLIB_INVALID_HANDLE)
     {
       if (local_dll.set_handle (handle) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Error setting handle.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Error setting handle.\n")),
+                            -1);
+        }
       return 0;
     }
   ACE_ERROR_RETURN ((LM_ERROR,
@@ -88,10 +90,12 @@ int basic_test (ACE_DLL &dll)
   ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (foo);
   Hello_Factory factory = reinterpret_cast<Hello_Factory> (tmp);
   if (factory == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       dll.error ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         dll.error ()),
+                        -1);
+    }
 
   std::unique_ptr<Hello> my_hello (factory ());
 
@@ -125,16 +129,21 @@ int dynamic_cast_test (ACE_DLL &dll)
   ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (foo);
   PFN pfnAcquire = reinterpret_cast<PFN> (tmp);
   if (pfnAcquire == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       dll.error ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         dll.error ()),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("before %@ %@\n"),
-              &child,  dynamic_cast<Child*> (parent)));
+              static_cast<void *> (&child),
+              static_cast<void *> (dynamic_cast<Child*> (parent))));
 
   if (pfnAcquire (&child) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("dynamic_cast failed.\n")), -1);
+  }
 
   return 0;
 }
@@ -168,7 +177,7 @@ run_main (int, ACE_TCHAR *[])
   void* invalid_handle = ACE_OS::dlsym (ACE_SHLIB_INVALID_HANDLE, ACE_TEXT ("open"));
   if (invalid_handle != nullptr)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE_OS::dlsym using invalid handle should be nullptr and not %@\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE_OS::dlsym using invalid handle should be nullptr\n")));
       ++retval;
     }
   else

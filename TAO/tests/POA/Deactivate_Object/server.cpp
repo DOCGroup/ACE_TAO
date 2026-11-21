@@ -2,7 +2,7 @@
 #include "ace/OS_NS_stdio.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -10,25 +10,27 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil RootPOA\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Panic: nil RootPOA\n"),
+                            1);
+        }
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      Hello *hello_impl = 0;
+      Hello *hello_impl {};
       ACE_NEW_RETURN (hello_impl,
                       Hello (orb.in ()),
                       1);
 
-      PortableServer::ServantBase_var owner_transfer(hello_impl);
+      PortableServer::ServantBase_var owner_transfer (hello_impl);
 
       poa_manager->activate ();
 
@@ -43,13 +45,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         root_poa->reference_to_servant (obj_var.in ());
 
       // Assert correctness.
-      ACE_ASSERT (hello_impl == servant.in());
+      ACE_ASSERT (hello_impl == servant.in ());
+
+      // The ObjectId returned by reference_to_id must own its key data.
+      obj_var = CORBA::Object::_nil ();
 
       root_poa->deactivate_object (new_obj_id.in ());
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

@@ -126,20 +126,19 @@ class TAO_RTEvent_Serv_Export TAO_ECG_Mcast_Gateway
 {
 public:
   /// The Service_Object entry points.
-  //@{
-  virtual int init (int argc, ACE_TCHAR* argv[]) override;
-  virtual int fini () override;
-  //@}
+  /// @{
+  int init (int argc, ACE_TCHAR* argv[]) override;
+  int fini () override;
+  /// @}
 
   /// Helper function to register the Gateway into the service
   /// configurator.
   static int init_svcs ();
 
-  /// Constructor.
   TAO_ECG_Mcast_Gateway ();
 
   /// Values for some configuration parameters to init ().
-  //@{
+  /// @{
   enum Service_Type {ECG_MCAST_SENDER,
                      ECG_MCAST_RECEIVER,
                      ECG_MCAST_TWO_WAY};
@@ -151,7 +150,7 @@ public:
   enum Handler_Type {ECG_HANDLER_BASIC,
                      ECG_HANDLER_COMPLEX,
                      ECG_HANDLER_UDP};
-  //@}
+  /// @}
 
   /**
    * @struct Attributes
@@ -219,17 +218,17 @@ public:
 
 private:
   /// Helpers.
-  //@{
+  /// @{
   /// Check that arguments to run() are not nil.
   void verify_args (CORBA::ORB_ptr orb,
                     RtecEventChannelAdmin::EventChannel_ptr ec);
 
   /// Verifies configuration values specified through init() make sense.
   int validate_configuration ();
-  //@}
+  /// @}
 
   /// Allocate and initialize appropriate objects.
-  //@{
+  /// @{
   PortableServer::ServantBase *
         init_address_server ();
 
@@ -249,10 +248,10 @@ private:
         init_handler (TAO_ECG_Dgram_Handler *recv,
                       RtecEventChannelAdmin::EventChannel_ptr ec,
                       ACE_Reactor * reactor);
-  //@}
+  /// @}
 
   /// Flags controlling configuration.
-  //@{
+  /// @{
   Service_Type service_type_;
   Handler_Type handler_type_;
   Address_Server_Type address_server_type_;
@@ -263,7 +262,7 @@ private:
   int non_blocking_;
 
   RtecEventChannelAdmin::ConsumerQOS consumer_qos_;
-  //@}
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

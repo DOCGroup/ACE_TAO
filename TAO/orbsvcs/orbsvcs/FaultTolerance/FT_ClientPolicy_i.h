@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_FT_CLIENTPOLICY_I_H
 #define TAO_FT_CLIENTPOLICY_I_H
 #include /**/ "ace/pre.h"
@@ -45,20 +44,19 @@ class TAO_FT_Request_Duration_Policy
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
-  TAO_FT_Request_Duration_Policy (const TimeBase::TimeT& relative_expiry);
+  explicit TAO_FT_Request_Duration_Policy (TimeBase::TimeT const &relative_expiry);
 
-  /// Copy constructor.
-  TAO_FT_Request_Duration_Policy (const TAO_FT_Request_Duration_Policy &rhs);
+  TAO_FT_Request_Duration_Policy (TAO_FT_Request_Duration_Policy const &rhs);
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any& val);
+  static CORBA::Policy_ptr create (CORBA::Any const &val);
 
   /// Returns a copy of <this>.
   TAO_FT_Request_Duration_Policy *clone () const;
 
-  // = The FT::RequestDurationPolicy methods
+  /// @name FT::RequestDurationPolicy methods
+  /// @{
   TimeBase::TimeT request_duration_policy_value () override;
 
   CORBA::PolicyType policy_type () override;
@@ -66,6 +64,7 @@ public:
   CORBA::Policy_ptr copy () override;
 
   void destroy () override;
+  /// @}
 
   /// Change the CORBA representation to the ACE representation.
   void set_time_value (ACE_Time_Value &time_value);
@@ -74,7 +73,6 @@ private:
   /// The attribute
   TimeBase::TimeT request_duration_;
 };
-
 
 /**
  * @class TAO_FT_Heart_Beat_Policy
@@ -89,22 +87,21 @@ class TAO_FT_Heart_Beat_Policy
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
-  TAO_FT_Heart_Beat_Policy (const CORBA::Boolean boolean,
-                            const TimeBase::TimeT &interval,
-                            const TimeBase::TimeT &timeout);
+  TAO_FT_Heart_Beat_Policy (CORBA::Boolean const boolean,
+                            TimeBase::TimeT const &interval,
+                            TimeBase::TimeT const &timeout);
 
-  /// Copy constructor.
-  TAO_FT_Heart_Beat_Policy (const TAO_FT_Heart_Beat_Policy &rhs);
+  TAO_FT_Heart_Beat_Policy (TAO_FT_Heart_Beat_Policy const &rhs);
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any& val);
+  static CORBA::Policy_ptr create (CORBA::Any const &val);
 
   /// Returns a copy of <this>.
   TAO_FT_Heart_Beat_Policy *clone () const;
 
-  // = The FT::HeartBeatPolicy methods
+  /// @name FT::HeartbeatPolicy methods
+  /// @{
   FT::HeartbeatPolicyValue heartbeat_policy_value () override;
 
   CORBA::PolicyType policy_type () override;
@@ -112,13 +109,15 @@ public:
   CORBA::Policy_ptr copy () override;
 
   void destroy () override;
+  /// @}
 
   /// Change the CORBA representation to the ACE representation.
   void set_time_value (ACE_Time_Value &time_value,
-                       const TimeBase::TimeT &timebase);
+                       TimeBase::TimeT const &timebase);
 
 private:
-  // The attributes
+  /// @name Attributes
+  /// @{
   /// <heartbeat_> indicates whether heartbeating is enabled or not.
   CORBA::Boolean heartbeat_;
 
@@ -127,6 +126,7 @@ private:
 
   /// The timeouts for the heartbeats
   TimeBase::TimeT heartbeat_timeout_;
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -138,7 +138,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #if defined (__ACE_INLINE__)
 #include "orbsvcs/FaultTolerance/FT_ClientPolicy_i.inl"
 #endif /* __ACE_INLINE__ */
-
 
 #include /**/ "ace/post.h"
 #endif /* TAO_FT_CLIENTPOLICY_I_H */

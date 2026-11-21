@@ -12,8 +12,9 @@
 #include <QtGui/qslider.h>
 #include "ace/OS_NS_stdio.h"
 
+#include <memory>
 
-const ACE_TCHAR *ior_output_file = 0;
+const ACE_TCHAR *ior_output_file {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -79,7 +80,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       LCD_Display_imp display_impl (orb.in ());
 
       PortableServer::ObjectId_var id =
-        root_poa->activate_object (&display_impl);
+        root_poa->activate_object (std::addressof (display_impl));
 
       CORBA::Object_var object = root_poa->id_to_reference (id.in ());
 

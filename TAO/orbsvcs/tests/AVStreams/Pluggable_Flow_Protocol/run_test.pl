@@ -6,7 +6,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
-use File::stat;
+use File::Compare;
 
 $status = 0;
 $debug_level = '0';
@@ -107,6 +107,15 @@ if ($CL_status != 0) {
 $SV_status = $SV->TerminateWaitKill ($sv->ProcessStopWaitInterval());
 if ($SV_status != 0) {
     print STDERR "ERROR: receiver returned $SV_status\n";
+    $status = 1;
+}
+
+if ($sv->GetFile ($outputfile) == -1) {
+    print STDERR "ERROR: cannot retrieve output file <$sv_outputfile>\n";
+    $status = 1;
+}
+elsif (File::Compare::compare ($inputfile, $outputfile) != 0) {
+    print STDERR "ERROR: received file differs from input\n";
     $status = 1;
 }
 

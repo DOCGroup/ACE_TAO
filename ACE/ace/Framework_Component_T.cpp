@@ -11,7 +11,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class Concrete>
 ACE_Framework_Component_T<Concrete>::ACE_Framework_Component_T (Concrete *concrete)
-  : ACE_Framework_Component ((void *) concrete, concrete->dll_name (), concrete->name ())
+  : ACE_Framework_Component (concrete, concrete->dll_name (), concrete->name ())
 {
   ACE_TRACE ("ACE_Framework_Component_T<Concrete>::ctor");
 }

@@ -18,92 +18,83 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/CosNotifyCommS.h"
 
-
 class Filter_StructuredPushSupplier;
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @brief Simple supplier object.
+ *
+ * This class is a supplier of events.
+ */
 class Supplier
 {
-  // = TITLE
-  //   Simple supplier object
-  //
-  // = DESCRIPTION
-  //   This class is a supplier of events.
-  //
 public:
-  Supplier ();
-  // Constructor
+  Supplier () = default;
+  ~Supplier () = default;
 
-  ~Supplier ();
-  // Destructor.
+  Supplier (Supplier const &) = delete;
+  Supplier (Supplier &&) = delete;
+  Supplier &operator= (Supplier const &) = delete;
+  Supplier &operator= (Supplier &&) = delete;
 
-  int run (int argc, ACE_TCHAR* argv[]);
-  // Run the test
+  /// Run the test.
+  int run (int argc, ACE_TCHAR *argv[]);
 
 private:
-  // = Data Members
+  /// The ORB used by this supplier.
   CORBA::ORB_var orb_;
-  // The ORB that we use.
 
+  /// Handle to the name service.
   CosNaming::NamingContext_var naming_context_;
-  // Handle to the name service.
 
+  /// The notify log factory from the Log Service.
   DsNotifyLogAdmin::NotifyLogFactory_var notify_log_factory_;
-  // The notify log factory from the Log Service.
 
   DsNotifyLogAdmin::NotifyLog_var notify_log_;
-
-  Filter_StructuredPushSupplier* supplier_1;
 
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
 };
 
+/**
+ * @brief Supplier for the filter example.
+ */
 class Filter_StructuredPushSupplier
   : public POA_CosNotifyComm::StructuredPushSupplier
 {
-  // = TITLE
-  //   Filter_StructuredPushSupplier
-  //
-  // = DESCRIPTION
-  //   Supplier for the filter example.
-  //
  public:
-  Filter_StructuredPushSupplier ();
-  // Constructor.
+  Filter_StructuredPushSupplier () = default;
 
+  Filter_StructuredPushSupplier (Filter_StructuredPushSupplier const &) = delete;
+  Filter_StructuredPushSupplier (Filter_StructuredPushSupplier &&) = delete;
+  Filter_StructuredPushSupplier &operator= (Filter_StructuredPushSupplier const &) = delete;
+  Filter_StructuredPushSupplier &operator= (Filter_StructuredPushSupplier &&) = delete;
+
+  /// Connects the supplier to the EventChannel and creates a proxy.
   void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin);
-  // Connect the Supplier to the EventChannel.
-  // Creates a new proxy supplier and connects to it.
 
+  /// Disconnects from the supplier.
   void disconnect ();
-  // Disconnect from the supplier.
 
-  virtual void send_event (const CosNotification::StructuredEvent& event);
-  // Send one event.
+  /// Sends one event.
+  void send_event (CosNotification::StructuredEvent const &event);
 
 protected:
-  // = Data members
+  /// The proxy to which this supplier is connected.
   CosNotifyChannelAdmin::StructuredProxyPushConsumer_var proxy_consumer_;
-  // The proxy that we are connected to.
 
-  CosNotifyChannelAdmin::ProxyID proxy_consumer_id_;
-  // This supplier's id.
+  /// This supplier's ID.
+  CosNotifyChannelAdmin::ProxyID proxy_consumer_id_ {};
 
-  // = Protected Methods
-  virtual ~Filter_StructuredPushSupplier ();
-  // Destructor
+  ~Filter_StructuredPushSupplier () override = default;
 
-  // = NotifySubscribe
-  virtual void subscription_change (
-        const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed);
+  void subscription_change (
+        CosNotification::EventTypeSeq const &added,
+        CosNotification::EventTypeSeq const &removed) override;
 
-  // = StructuredPushSupplier method
-  virtual void disconnect_structured_push_supplier ();
+  void disconnect_structured_push_supplier () override;
 };
-
 
 #endif /* NOTIFY_SUPPLIER_H */

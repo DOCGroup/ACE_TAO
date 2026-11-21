@@ -5,8 +5,8 @@ module TAO_Trader_Test
 
 interface Remote_Output
 {
-  // Ensure that the object reference returned from the query actually
-  // works.
+  /// Ensure that the object reference returned from the query actually
+  /// works.
   void confirm ();
 };
 
@@ -26,7 +26,7 @@ interface PostScript_Printer : Remote_Output
 {
 };
 
-// Sequences used to test sequence type equivalence in the trader.
+/// Sequences used to test sequence type equivalence in the trader.
 typedef sequence<short> ShortSeq;
 typedef sequence<unsigned short> UShortSeq;
 typedef sequence<long> LongSeq;
@@ -36,7 +36,4 @@ typedef sequence<float> FloatSeq;
 typedef sequence<double> DoubleSeq;
 typedef sequence<string> StringSeq;
 };
-
-
-
 

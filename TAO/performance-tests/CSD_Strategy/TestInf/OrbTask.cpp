@@ -8,16 +8,16 @@
 
 #include "OrbTask.h"
 
-namespace { enum { MAX_ORB_TASK_WORKER_THREADS = 20 }; }
+constexpr unsigned MAX_ORB_TASK_WORKER_THREADS = 20;
 
-OrbTask::OrbTask(CORBA::ORB_ptr orb, unsigned num_threads)
-  : orb_(CORBA::ORB::_duplicate(orb)),
-    num_threads_(num_threads)
+OrbTask::OrbTask (CORBA::ORB_ptr orb, unsigned num_threads)
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    num_threads_ (num_threads)
 {
 }
 
 int
-OrbTask::open(void*)
+OrbTask::open (void *)
 {
   if (this->num_threads_ < 1)
     {
@@ -37,7 +37,7 @@ OrbTask::open(void*)
                        -1);
     }
 
-  if (CORBA::is_nil(this->orb_.in()))
+  if (CORBA::is_nil (this->orb_.in ()))
     {
       ACE_ERROR_RETURN((LM_ERROR,
                         "(%P|%t) OrbTask failed to open.  "
@@ -45,7 +45,7 @@ OrbTask::open(void*)
                         -1);
     }
 
-  if (this->activate(THR_NEW_LWP | THR_JOINABLE, this->num_threads_) != 0)
+  if (this->activate (THR_NEW_LWP | THR_JOINABLE, this->num_threads_) != 0)
     {
       // Assumes that when activate returns non-zero return code that
       // no threads were activated.
@@ -59,13 +59,12 @@ OrbTask::open(void*)
   return 0;
 }
 
-
 int
-OrbTask::svc()
+OrbTask::svc ()
 {
   try
   {
-    this->orb_->run();
+    this->orb_->run ();
   }
   catch (...)
   {
@@ -77,9 +76,8 @@ OrbTask::svc()
   return 0;
 }
 
-
 int
-OrbTask::close(u_long)
+OrbTask::close (u_long)
 {
   return 0;
 }

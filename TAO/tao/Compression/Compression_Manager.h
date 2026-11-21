@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   Compression_Manager.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_COMPRESSION_MANAGER_H
 #define TAO_COMPRESSION_MANAGER_H
@@ -50,12 +48,12 @@ namespace TAO
 
     ::Compression::CompressorFactorySeq *get_factories () override;
 
-  private:
     CompressionManager (CompressionManager const &) = delete;
     CompressionManager &operator= (CompressionManager const &) = delete;
     CompressionManager (CompressionManager &&) = delete;
     CompressionManager &operator= (CompressionManager &&) = delete;
 
+  private:
     TAO_SYNCH_MUTEX mutex_;
     ::Compression::CompressorFactorySeq factories_;
   };

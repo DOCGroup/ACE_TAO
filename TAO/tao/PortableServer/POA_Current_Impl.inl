@@ -1,6 +1,9 @@
 // -*- C++ -*-
 #include "tao/SystemException.h"
 
+#include <cstring>
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -31,8 +34,7 @@ namespace TAO
           this->object_id_.length (id_size);
 
           // Get the buffer and copy the new object id in it's place.
-          ACE_OS::memcpy (this->object_id_.get_buffer (),
-                          id.get_buffer (), id_size);
+          std::memcpy (this->object_id_.get_buffer (), id.get_buffer (), id_size);
         }
       else
         {
@@ -55,13 +57,13 @@ namespace TAO
       object_id_.replace (system_id.maximum (),
                           system_id.length (),
                           const_cast <CORBA::Octet *> (system_id.get_buffer ()),
-                          0);
+                          false);
     }
 
     ACE_INLINE void
     POA_Current_Impl::object_key (const TAO::ObjectKey &key)
     {
-      this->object_key_ = &key;
+      this->object_key_ = std::addressof (key);
     }
 
     ACE_INLINE const TAO::ObjectKey &

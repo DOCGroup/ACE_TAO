@@ -38,7 +38,9 @@ CServerDoc::~CServerDoc()
 BOOL CServerDoc::OnNewDocument()
 {
   if (!CDocument::OnNewDocument())
-    return FALSE;
+    {
+      return FALSE;
+    }
 
   // TODO: add reinitialization code here
   // (SDI documents will reuse this document)

@@ -1,18 +1,14 @@
 // -*- C++ -*-
 
-// ===========================================================================
-// FILENAME
-//   Concurrency_Loader.h
-//
-// DESCRIPTION
-//   This class loads the Concurrency Service dynamically
-//   either from svc.conf file or <string_to_object> call.
-//
-// AUTHORS
-//   Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
-//   Priyanka Gontla <pgontla<ece.uci.edu>
-//
-// ===========================================================================
+/**
+ * @file Concurrency_Loader.h
+ *
+ * @brief Loads the Concurrency Service dynamically from a @c svc.conf file
+ * or a @c string_to_object call.
+ *
+ * @author Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
+ * @author Priyanka Gontla <pgontla<ece.uci.edu>
+ */
 
 #ifndef TAO_CONCURRENCY_LOADER_H
 #define TAO_CONCURRENCY_LOADER_H
@@ -30,11 +26,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Concurrency_Serv_Export TAO_Concurrency_Loader : public TAO_Object_Loader
 {
 public:
-  /// Constructor
-  TAO_Concurrency_Loader ();
+  TAO_Concurrency_Loader () = default;
 
-  /// Destructor
-  ~TAO_Concurrency_Loader () override;
+  ~TAO_Concurrency_Loader () override = default;
+
+  TAO_Concurrency_Loader (TAO_Concurrency_Loader const &) = delete;
+  TAO_Concurrency_Loader &operator= (TAO_Concurrency_Loader const &) = delete;
+  TAO_Concurrency_Loader (TAO_Concurrency_Loader &&) = delete;
+  TAO_Concurrency_Loader &operator= (TAO_Concurrency_Loader &&) = delete;
 
   /// Called by the Service Configurator framework to initialize the
   /// Event Service. Defined in <ace/Service_Config.h>
@@ -49,16 +48,9 @@ public:
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                    int argc, ACE_TCHAR *argv[]) override;
 
-
- protected:
+protected:
   /// Instance of the TAO_Concurrency_Server
   TAO_Concurrency_Server concurrency_server_;
-
-private:
-  TAO_Concurrency_Loader (const TAO_Concurrency_Loader &) = delete;
-  TAO_Concurrency_Loader &operator = (const TAO_Concurrency_Loader &) = delete;
-  TAO_Concurrency_Loader (TAO_Concurrency_Loader &&) = delete;
-  TAO_Concurrency_Loader &operator = (TAO_Concurrency_Loader &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

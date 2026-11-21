@@ -2,7 +2,9 @@
 #include "ace/Env_Value_T.h"
 #include "ace/SString.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdio.h"
 #include "ace/streams.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -38,16 +40,19 @@ namespace ACE
           {
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
-            FILE* output_stream = ACE_OS::fopen (filename.c_str (), ACE_TEXT ("a"));
+            std::unique_ptr<FILE, int (*) (FILE *)> output_stream (
+              ACE_OS::fopen (filename.c_str (), ACE_TEXT ("a")), ACE_OS::fclose);
 
-            ACE_LOG_MSG->msg_ostream (output_stream, 1);
+            ACE_LOG_MSG->msg_ostream (output_stream.get (), true);
+            output_stream.release ();
 
 #else /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
-            ofstream* output_stream = 0;
+            ofstream* output_stream_raw {};
 
-            ACE_NEW_NORETURN (output_stream,
+            ACE_NEW_NORETURN (output_stream_raw,
                               ofstream ());
+            std::unique_ptr<ofstream> output_stream (output_stream_raw);
             if (output_stream)
               {
                 output_stream->open (ACE_TEXT_ALWAYS_CHAR (filename.c_str ()),
@@ -55,7 +60,8 @@ namespace ACE
 
                 if (!output_stream->bad ())
                   {
-                    ACE_LOG_MSG->msg_ostream (output_stream, 1);
+                    ACE_LOG_MSG->msg_ostream (output_stream.get (), true);
+                    output_stream.release ();
                   }
               }
 

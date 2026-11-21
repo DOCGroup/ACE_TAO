@@ -17,6 +17,8 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/ACE.h"
 
+#include <memory>
+
 static const char message[] = "abcdefghijklmnopqrstuvwxyz";
 static constexpr size_t message_size = 26;
 static int iteration = 1;
@@ -76,12 +78,14 @@ Event_Handler::Event_Handler (ACE_Reactor &reactor,
                   ACE_TEXT ("Event_Handler sent %b bytes; should be %B\n"),
                   result, message_size));
       if (result <= 0)
+      {
         return;
+      }
     }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Event_Handler::Event_Handler for %@\n"),
-              this));
+              static_cast<void *> (this)));
   this->ok_ = true;
 }
 
@@ -89,7 +93,7 @@ Event_Handler::~Event_Handler ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Event_Handler::~Event_Handler for %@\n"),
-              this));
+              static_cast<void *> (this)));
 }
 
 int
@@ -102,14 +106,16 @@ Event_Handler::handle_input (ACE_HANDLE handle)
                  buf,
                  sizeof buf - 1);
   if (result != static_cast<ssize_t> (message_size))
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Handler recv'd %b bytes; expected %B\n"),
-                result, message_size));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Handler recv'd %b bytes; expected %B\n"),
+                  result, message_size));
+    }
   buf[result > 0 ? result : 0] = '\0';
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Message %C received for %@\n"),
               buf,
-              this));
+              static_cast<void *> (this)));
 
   return -1;
 }
@@ -135,7 +141,7 @@ Event_Handler::handle_close (ACE_HANDLE,
       break;
     }
 
-  iteration++;
+  ++iteration;
   delete this;
 
   return 0;
@@ -149,7 +155,7 @@ test (ACE_Reactor_Impl &reactor_impl,
               ACE_TEXT ("\nTesting with %C\n\n"),
               reactor_type));
 
-  ACE_Reactor reactor (&reactor_impl,
+  ACE_Reactor reactor (std::addressof (reactor_impl),
                        false);
 
   Event_Handler *e = new Event_Handler (reactor,

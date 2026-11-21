@@ -15,27 +15,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-  Topology_Savable::~Topology_Savable ()
-  {
-  }
+  Topology_Savable::~Topology_Savable () = default;
 
   void
   Topology_Savable::reconnect ()
   {
   }
 
-  Topology_Object::Topology_Object ()
-    : TAO_Notify_Object ()
-    , Topology_Savable ()
-    , self_changed_ (false)
-    , children_changed_ (false)
-    , topology_parent_ (0)
-  {
-  }
+  Topology_Object::Topology_Object () = default;
 
-  Topology_Object::~Topology_Object ()
-  {
-  }
+  Topology_Object::~Topology_Object () = default;
 
   void
   Topology_Object::initialize (Topology_Parent* topology_parent)
@@ -51,24 +40,23 @@ namespace TAO_Notify
     return this->topology_parent_;
   }
 
-
   Topology_Object *
   Topology_Object::load_child (const ACE_CString & /*type*/,
     CORBA::Long /* id */,
     const NVPList& /* attrs */)
   {
-    return 0;
+    return nullptr;
   }
 
   bool
   Topology_Object::is_persistent () const
   {
-    bool result = false;
+    bool result {};
     if (this->qos_properties_.event_reliability().is_valid ())
     {
       result = CosNotification::Persistent == this->qos_properties_.event_reliability().value ();
     }
-    else if (this->topology_parent () != 0)
+    else if (this->topology_parent () != nullptr)
     {
       result = this->topology_parent ()->is_persistent ();
     }
@@ -85,7 +73,7 @@ namespace TAO_Notify
   bool
   Topology_Object::send_change ()
   {
-    bool saving = false;
+    bool saving {};
     if (is_persistent ())
     {
       while (this->self_changed_ || this->children_changed_)
@@ -109,7 +97,7 @@ namespace TAO_Notify
   bool
   Topology_Object::send_deletion_change ()
   {
-    bool saving = false;
+    bool saving {};
     if (is_persistent ())
     {
       saving = this->change_to_parent ();
@@ -122,7 +110,7 @@ namespace TAO_Notify
   bool
     Topology_Object::change_to_parent ()
     {
-      bool result = false;
+      bool result {};
       Topology_Parent * parent = this->topology_parent();
       if (parent != nullptr)
       {
@@ -134,7 +122,7 @@ namespace TAO_Notify
   void
   Topology_Object::get_id_path (TAO_Notify::IdVec & id_path) const
   {
-    if (this->topology_parent() != 0)
+    if (this->topology_parent() != nullptr)
     {
       this->topology_parent()->get_id_path (id_path);
     }

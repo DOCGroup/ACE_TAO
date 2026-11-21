@@ -12,12 +12,14 @@
 #include "tao/CORBA_String.h"
 #include "tao/SystemException.h"
 
-#include "ace/OS_NS_string.h"
-
 #include "test_macros.h"
 
-using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
+#include <cstring>
+#if defined(ACE_HAS_WCHAR)
+#  include <cwchar>
+#endif
 
+using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
 
 template<typename charT>
 struct helper
@@ -55,7 +57,7 @@ struct helper <char>
   static bool
   equal (char const *lhs, char const *rhs)
   {
-    return ACE_OS::strcmp (lhs, rhs) == 0;
+    return std::strcmp (lhs, rhs) == 0;
   }
 };
 
@@ -91,7 +93,7 @@ struct helper <CORBA::WChar>
   static bool
   equal (CORBA::WChar const *lhs, CORBA::WChar const *rhs)
   {
-    return ACE_OS::strcmp (lhs, rhs) == 0;
+    return std::wcscmp (lhs, rhs) == 0;
   }
 };
 #endif
@@ -99,12 +101,12 @@ struct helper <CORBA::WChar>
 template<class charT>
 struct Tester
 {
-  typedef string_traits <charT, true> tested_element_traits;
-  typedef string_sequence_element <tested_element_traits> tested_element;
-  typedef charT *string_type;
-  typedef charT const *const_string_type;
-  typedef typename tested_element_traits::string_var string_var;
-  typedef typename tested_element_traits::string_mgr string_mgr;
+  using tested_element_traits = string_traits <charT, true>;
+  using tested_element = string_sequence_element <tested_element_traits>;
+  using string_type = charT *;
+  using const_string_type = charT const *;
+  using string_var = typename tested_element_traits::string_var;
+  using string_mgr = typename tested_element_traits::string_mgr;
 
   int
   test_assignment_from_const_string ()
@@ -150,7 +152,7 @@ struct Tester
       tested_element x(xe, true);
 
       string_type ye = helper <charT>::dup_sample1 ();
-      tested_element y(ye, true);
+      tested_element const y(ye, true);
 
       d.reset ();
       r.reset ();
@@ -214,7 +216,7 @@ struct Tester
     expected_calls r (tested_element_traits::release_calls);
 
     {
-      string_type xe = 0;
+      string_type xe {};
       tested_element x(xe, true);
 
       string_type y =
@@ -249,12 +251,12 @@ struct Tester
     {
       string_type xe =
         tested_element_traits::duplicate (helper <charT>::sample0 ());
-      tested_element x(xe, true);
+      tested_element const x(xe, true);
 
       d.reset ();
       r.reset ();
 
-      tested_element y (x);
+      tested_element const y (x);
 
       FAIL_RETURN_IF_NOT(d.expect(0), d);
       FAIL_RETURN_IF_NOT(r.expect(0), r);
@@ -285,7 +287,7 @@ struct Tester
       d.reset ();
       r.reset ();
 
-      tested_element y (x);
+      tested_element const y (x);
 
       x = y;
 
@@ -322,7 +324,7 @@ struct Tester
       tested_element x(xe, true);
       FAIL_RETURN_IF_NOT(d.expect(1), d);
 
-      string_var y (helper <charT>::sample0());
+      string_var const y (helper <charT>::sample0());
 
       FAIL_RETURN_IF_NOT(d.expect(0), d);
       FAIL_RETURN_IF_NOT(r.expect(0), r);
@@ -382,7 +384,7 @@ struct Tester
   int
   test_all ()
   {
-    int status = 0;
+    int status {};
     status += this->test_assignment_from_const_string ();
     status += this->test_assignment_from_element ();
     status += this->test_self_assignment ();
@@ -397,7 +399,7 @@ struct Tester
 
 int ACE_TMAIN (int, ACE_TCHAR*[])
 {
-  int status = 0;
+  int status {};
 
   try
     {
@@ -406,7 +408,7 @@ int ACE_TMAIN (int, ACE_TCHAR*[])
       Tester <char> wchar_tester;
       status += wchar_tester.test_all ();
     }
-  catch (const ::CORBA::Exception& ex)
+  catch (::CORBA::Exception const &ex)
     {
       ex._tao_print_exception("ERROR : unexpected CORBA exception caugth :");
       ++status;

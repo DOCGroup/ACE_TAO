@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 // ============================================================================
 /**
  *  @file test_config.h
@@ -18,6 +17,8 @@
 #define ACE_TEST_CONFIG_H
 
 #include "ace/config-all.h"
+
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -49,18 +50,18 @@
 
 #define ACE_LOG_FILE_EXT_NAME ACE_TEXT (".log")
 
-const size_t ACE_MAX_CLIENTS = 30;
-const size_t ACE_NS_MAX_ENTRIES = 1000;
-const size_t ACE_DEFAULT_USECS = 1000;
-const size_t ACE_MAX_TIMERS = 4;
-const size_t ACE_MAX_DELAY = 10;
-const size_t ACE_MAX_INTERVAL = 0;
-const size_t ACE_MAX_ITERATIONS = 10;
-const size_t ACE_MAX_PROCESSES = 10;
-const size_t ACE_MAX_THREADS = 4;
+constexpr size_t ACE_MAX_CLIENTS = 30;
+constexpr size_t ACE_NS_MAX_ENTRIES = 1000;
+constexpr size_t ACE_DEFAULT_USECS = 1000;
+constexpr size_t ACE_MAX_TIMERS = 4;
+constexpr size_t ACE_MAX_DELAY = 10;
+constexpr size_t ACE_MAX_INTERVAL {};
+constexpr size_t ACE_MAX_ITERATIONS = 10;
+constexpr size_t ACE_MAX_PROCESSES = 10;
+constexpr size_t ACE_MAX_THREADS = 4;
 
 #define ACE_START_TEST(NAME) \
-  const ACE_TCHAR *program = NAME; \
+  ACE_TCHAR const * const program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
   if (ace_file_stream::instance()->set_output (program) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("set_output failed")), -1); \
@@ -74,7 +75,7 @@ const size_t ACE_MAX_THREADS = 4;
 
 #if !defined (ACE_WIN32)
 #define ACE_APPEND_LOG(NAME) \
-  const ACE_TCHAR *program = NAME; \
+  ACE_TCHAR const * const program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
   ace_file_stream::instance()->close (); \
   if (ace_file_stream::instance()->set_output (program, 1) != 0) \
@@ -82,7 +83,7 @@ const size_t ACE_MAX_THREADS = 4;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Starting %s test at %D\n"), program));
 #else /* ACE_WIN32 */
 #define ACE_APPEND_LOG(NAME) \
-  const ACE_TCHAR *program = NAME; \
+  ACE_TCHAR const * const program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
   if (ace_file_stream::instance()->set_output (program, 1) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("set_output failed")), -1); \
@@ -149,7 +150,7 @@ private:
 };
 
 inline ACE_Test_Output::ACE_Test_Output ()
-  : output_file_ (0)
+  : output_file_ {}
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   this->output_file_ = new OFSTREAM;
@@ -159,7 +160,7 @@ inline ACE_Test_Output::ACE_Test_Output ()
 inline ACE_Test_Output::~ACE_Test_Output ()
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-  ACE_LOG_MSG->msg_ostream (&cerr);
+  ACE_LOG_MSG->msg_ostream (std::addressof (cerr));
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
@@ -181,12 +182,12 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 {
   ACE_TCHAR temp[MAXPATHLEN];
   // Ignore the error value since the directory may already exist.
-  const ACE_TCHAR *test_dir {};
+  ACE_TCHAR const *test_dir = ACE_OS::getenv (ACE_TEXT ("ACE_TEST_DIR"));
 
-  test_dir = ACE_OS::getenv (ACE_TEXT ("ACE_TEST_DIR"));
-
-  if (test_dir == 0)
-    test_dir = ACE_TEXT ("");
+  if (test_dir == nullptr)
+    {
+      test_dir = ACE_TEXT ("");
+    }
 
   ACE_OS::sprintf (temp,
                    ACE_TEXT ("%s%s%s%s"),
@@ -220,13 +221,19 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   this->output_file_->open (ACE_TEXT_ALWAYS_CHAR (temp),
                             ios::out | (append ? ios::app : ios::trunc));
   if (this->output_file_->bad ())
-    return -1;
+    {
+      return -1;
+    }
 #else /* when ACE_LACKS_IOSTREAM_TOTALLY */
-  ACE_TCHAR *fmode = 0;
+  ACE_TCHAR const *fmode {};
   if (append)
-    fmode = ACE_TEXT ("a");
+    {
+      fmode = ACE_TEXT ("a");
+    }
   else
-    fmode = ACE_TEXT ("w");
+    {
+      fmode = ACE_TEXT ("w");
+    }
   this->output_file_ = ACE_OS::fopen (temp, fmode);
 # endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
@@ -255,7 +262,7 @@ randomize (int array[], size_t size)
 {
   size_t i;
 
-  for (i = 0; i < size; i++)
+  for (i = 0; i < size; ++i)
     array [i] = static_cast<int> (i);
 
   // See with a fixed number so that we can produce "repeatable"
@@ -264,7 +271,7 @@ randomize (int array[], size_t size)
 
   // Generate an array of random numbers from 0 .. size - 1.
 
-  for (i = 0; i < size; i++)
+  for (i = 0; i < size; ++i)
     {
       size_t index = ACE_OS::rand() % size--;
       int temp = array [index];

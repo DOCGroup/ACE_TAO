@@ -11,27 +11,18 @@
  */
 //=============================================================================
 
+#ifndef TAO_AV_COMPONENT_SWITCHING_SENDER_H
+#define TAO_AV_COMPONENT_SWITCHING_SENDER_H
+
+#include <cstddef>
+#include <cstdio>
+#include <memory>
+#include <string>
 
 #include "Connection_Manager.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
-
-/**
- * @class Signal_Handler
- *
- * This class Handles the SIGINT signal through the Reactor.
- * Useful to gracefully release the process
- */
-class Signal_Handler : public ACE_Event_Handler
-{
-public:
-  Signal_Handler ();
-
-  /// Override this method to implement graceful shutdown.
-  int handle_signal(int signum, siginfo_t*,ucontext_t*);
-};
-
 
 /**
  * @class Sender_Callback
@@ -44,6 +35,12 @@ public:
 class Sender_Callback : public TAO_AV_Callback
 {
 public:
+  Sender_Callback () = default;
+  Sender_Callback (Sender_Callback const &) = delete;
+  Sender_Callback &operator= (Sender_Callback const &) = delete;
+  Sender_Callback (Sender_Callback &&) = delete;
+  Sender_Callback &operator= (Sender_Callback &&) = delete;
+
   /**
    * Called when the sender has finished reading the file and wants
    * to close down the connection. Also called when the distributer
@@ -53,10 +50,10 @@ public:
 
   /// Accessor methods for the flowname of the callback
   ACE_CString &flowname ();
-  void flowname (const ACE_CString &flowname);
+  void flowname (ACE_CString const &flowname);
 
 private:
-  //// Flowname of the callback.
+  /// Callback flow name.
   ACE_CString flowname_;
 };
 
@@ -68,22 +65,25 @@ private:
 class Sender_StreamEndPoint : public TAO_Client_StreamEndPoint
 {
 public:
-  //// Create the application callback and return its handle to
-  //// AVStreams for further application callbacks.
-  int get_callback (const char *flowname,
+  Sender_StreamEndPoint () = default;
+  Sender_StreamEndPoint (Sender_StreamEndPoint const &) = delete;
+  Sender_StreamEndPoint &operator= (Sender_StreamEndPoint const &) = delete;
+  Sender_StreamEndPoint (Sender_StreamEndPoint &&) = delete;
+  Sender_StreamEndPoint &operator= (Sender_StreamEndPoint &&) = delete;
+
+  /// Return the sender callback for AVStreams upcalls.
+  int get_callback (char const *flowname,
                     TAO_AV_Callback *&callback) override;
 
-  //// Set protocol object corresponding to the transport protocol
-  //// chosen.
-  int set_protocol_object (const char *flowname,
+  /// Set the protocol object selected for the transport.
+  int set_protocol_object (char const *flowname,
                            TAO_AV_Protocol_Object *object) override;
 
-  //// Perform application specific actions before accepting new
-  //// connections.
+  /// Handle stream setup before accepting a new connection.
   CORBA::Boolean handle_preconnect (AVStreams::flowSpec &flowspec) override;
 
 protected:
-  //// Application callback.
+  /// Application callback.
   Sender_Callback callback_;
 };
 
@@ -103,10 +103,8 @@ using SENDER_ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_A
 class Sender
 {
 public:
-  //// Constructor
-  Sender ();
+  Sender () = default;
 
-  //// Destructor
   ~Sender ();
   Sender (Sender const &) = delete;
   Sender &operator= (Sender const &) = delete;
@@ -115,47 +113,46 @@ public:
 
   void shut_down ();
 
-  //// Method to initialize the various data components.
+  /// Initialize sender state and establish the streams.
   int init (int argc,
             ACE_TCHAR *argv[]);
 
-  //// Method to pace and send data from a file.
+  /// Pace and send data from the input file.
   int pace_data ();
 
-  //// Accessor to the connection manager.
+  /// Access the connection manager.
   Connection_Manager &connection_manager ();
 
 private:
-  //// Method to parse the command line arguments.
+  /// Parse command-line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
-  //// The endpoint strategy used by the sender.
+  /// Endpoint strategy used by the sender.
   SENDER_ENDPOINT_STRATEGY endpoint_strategy_;
 
-  //// The sender MMDevice.
-  TAO_MMDevice *sender_mmdevice_;
+  /// Non-owning pointer to the POA-managed sender MMDevice servant.
+  TAO_MMDevice *sender_mmdevice_ {};
 
-  //// Number of frames sent.
-  int frame_count_;
+  /// Number of frames sent.
+  size_t frame_count_ {};
 
-  //// File from which data is read.
-  ACE_CString filename_;
+  /// File handle of the input file.
+  std::unique_ptr<FILE, int (*) (FILE *)> input_file_ {nullptr, std::fclose};
 
-  //// File handle of the file read from.
-  FILE *input_file_;
+  /// Message block used to read and send file data.
+  ACE_Message_Block mb_ {BUFSIZ};
 
-  //// Rate at which the data will be sent.
-  double frame_rate_;
+  struct Options
+  {
+    std::string filename {"input"};
+    std::string sender_name {"sender"};
+    int frame_rate {5};
+  };
 
-  //// Message block into which data is read from a file and then sent.
-  ACE_Message_Block mb_;
+  Options options_;
 
-  //// Name of this sender.
-  ACE_CString sender_name_;
-
-  //// Connection manager.
+  /// Connection manager.
   Connection_Manager connection_manager_;
-
-  //// Reference to the signal handler.
-  Signal_Handler signal_handler_;
 };
+
+#endif /* TAO_AV_COMPONENT_SWITCHING_SENDER_H */

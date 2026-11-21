@@ -1,4 +1,4 @@
-// -*- IDL -*-
+/// -*- IDL -*-
 
 #ifndef _SECURITY_LEVEL_2_IDL_
 #define _SECURITY_LEVEL_2_IDL_
@@ -11,12 +11,12 @@ module SecurityLevel2 {
 
 # pragma version SecurityLevel2 1.8
 
-  // Forward declaration of interfaces
+  /// Forward declaration of interfaces
   local interface PrincipalAuthenticator;
   local interface Credentials;
   local interface Current;
 
-  // Interface PrincipalAuthenticator
+  /// Interface PrincipalAuthenticator
   local interface PrincipalAuthenticator {
 #   pragma version PrincipalAuthenticator 1.8
 
@@ -44,8 +44,7 @@ module SecurityLevel2 {
     );
   };
 
-
-  // Interface Credentials
+  /// Interface Credentials
   local interface Credentials {
 #   pragma version Credentials 1.8
 
@@ -121,7 +120,7 @@ module SecurityLevel2 {
 
   };
 
-  // RequiredRights Interface
+  /// RequiredRights Interface
   interface RequiredRights {
 
     void get_required_rights(
@@ -140,8 +139,7 @@ module SecurityLevel2 {
     );
   };
 
-
-  // interface audit channel
+  /// interface audit channel
   local interface AuditChannel {
 
 # pragma version AuditChannel 1.8
@@ -158,8 +156,7 @@ module SecurityLevel2 {
 
   };
 
-
-  // interface for Audit Decision
+  /// interface for Audit Decision
   local interface AuditDecision {
 
 #   pragma version AuditDecision 1.8
@@ -173,7 +170,6 @@ module SecurityLevel2 {
 
   };
 
-
   local interface AccessDecision {
 
 #   pragma version AccessDecision 1.8
@@ -186,7 +182,7 @@ module SecurityLevel2 {
     );
   };
 
-  // Policy interfaces to control bindings
+  /// Policy interfaces to control bindings
 
   local interface QOPPolicy : CORBA::Policy {
 #   pragma version QOPPolicy 1.8
@@ -218,7 +214,7 @@ module SecurityLevel2 {
 
 #   pragma version SecurityManager 1.8
 
-    // Process/Capsule/ORB Instance specific operations
+    /// Process/Capsule/ORB Instance specific operations
 
     readonly attribute Security::MechandOptionsList
       supported_mechanisms;
@@ -250,14 +246,14 @@ module SecurityLevel2 {
     );
   };
 
-  // Interface Current derived from SecurityLevel1::Current providing
-  // additional operations on Current at this security level.
-  // This is implemented by the ORB
+  /// Interface Current derived from SecurityLevel1::Current providing
+  /// additional operations on Current at this security level.
+  /// This is implemented by the ORB
   local interface Current : SecurityLevel1::Current {
 
 #    pragma version Current 1.8
 
-    // Thread specific
+    /// Thread specific
 
     readonly attribute ReceivedCredentials received_credentials;
 
@@ -273,9 +269,9 @@ module TAO {
     {
       /* TAO-specific access_allowed that works around deficiencies in
          the SecurityLevel2::AccessDecision::access_allowed() operation. */
-      // Parameter object_id should be PortableInterceptor::ObjectId, but
-      // using that type would require including the PI_Forward.pidl file.
-      // By using the real type, we can avoid that dependency.
+      /// Parameter object_id should be PortableInterceptor::ObjectId, but
+      /// using that type would require including the PI_Forward.pidl file.
+      /// By using the real type, we can avoid that dependency.
       boolean access_allowed_ex (
          in ::CORBA::ORBid orb_id,
          in ::CORBA::OctetSeq adapter_id,
@@ -302,7 +298,7 @@ module TAO {
                           in ::CORBA::OctetSeq adapter_id,
                           in ::CORBA::OctetSeq object_id);
 
-      // Should there be some kind of "find" interface?
+      /// Should there be some kind of "find" interface?
     };
   };
 };

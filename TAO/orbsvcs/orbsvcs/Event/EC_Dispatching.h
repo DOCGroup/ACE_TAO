@@ -44,7 +44,6 @@ class TAO_EC_ProxyPushSupplier;
 class TAO_RTEvent_Serv_Export TAO_EC_Dispatching
 {
 public:
-  /// Destructor...
   virtual ~TAO_EC_Dispatching ();
 
   /// Initialize all the data structures, activate any internal threads,

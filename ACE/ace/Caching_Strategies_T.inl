@@ -7,27 +7,20 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE
-ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::ACE_Caching_Strategy_Adapter (IMPLEMENTATION *implementation,
-                                                                                                         bool delete_implementation)
-  : implementation_ (implementation),
-    delete_implementation_ (delete_implementation)
+ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::ACE_Caching_Strategy_Adapter (
+  IMPLEMENTATION *implementation,
+  bool delete_implementation)
+  : implementation_ (implementation)
 {
-  if (this->implementation_ == 0)
+  if (this->implementation_ == nullptr)
     {
       ACE_NEW (this->implementation_,
                IMPLEMENTATION);
-      this->delete_implementation_ = true;
+      this->owned_implementation_.reset (this->implementation_);
     }
-}
-
-template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE
-ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::~ACE_Caching_Strategy_Adapter ()
-{
-  if (this->delete_implementation_)
+  else if (delete_implementation)
     {
-      delete this->implementation_;
-      this->delete_implementation_ = false;
-      this->implementation_ = nullptr;
+      this->owned_implementation_.reset (this->implementation_);
     }
 }
 
@@ -138,7 +131,9 @@ ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_bind (
   const ATTRIBUTES & /* attr */)
 {
   if (result == 0)
-    ++this->timer_;
+    {
+      ++this->timer_;
+    }
 
   return result;
 }
@@ -179,7 +174,9 @@ ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_rebind (
   const ATTRIBUTES & /* attr */)
 {
   if (result == 0)
-    ++this->timer_;
+    {
+      ++this->timer_;
+    }
 
   return result;
 }
@@ -235,7 +232,9 @@ ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_find (int result,
                                                                     ATTRIBUTES &attr)
 {
   if (result == 0)
-    ++attr;
+    {
+      ++attr;
+    }
 
   return result;
 }
@@ -305,7 +304,9 @@ ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_bind (int result,
   ACE_UNUSED_ARG (attr);
 
   if (result == 0)
-    ++this->order_;
+    {
+      ++this->order_;
+    }
 
   return result;
 }
@@ -344,7 +345,9 @@ ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_rebind (int resul
   ACE_UNUSED_ARG (attr);
 
   if (result == 0)
-    ++this->order_;
+    {
+      ++this->order_;
+    }
 
   return result;
 }

@@ -15,8 +15,11 @@ class Factory
   : public virtual POA_PortableGroup::GenericFactory
 {
 public:
-  /// Constructor
   Factory ();
+  Factory (Factory const &) = delete;
+  Factory &operator= (Factory const &) = delete;
+  Factory (Factory &&) = delete;
+  Factory &operator= (Factory &&) = delete;
   /// creates a Test::Simple servant reference.
   /// This reference is then passed as a FactoryInfos property
   /// when the LoadManager creates the object group.
@@ -38,7 +41,7 @@ public:
         factory_creation_id) override;
 private:
   /// The factory creation id.
-  CORBA::ULong fcid_;
+  CORBA::ULong fcid_ {};
 
   /// Table that maps FactoryCreationId to Factory_Node
   Factory_Map factory_map_;

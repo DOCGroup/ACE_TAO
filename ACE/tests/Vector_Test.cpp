@@ -34,48 +34,60 @@ int run_main (int, ACE_TCHAR *[])
   size_t i;
 
   for (i = 0; i < TOP; ++i)
-    vector.push_back (i);
+    {
+      vector.push_back (i);
+    }
 
   ACE_TEST_ASSERT (vector.size () == TOP);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Size: %d\n"),
+              ACE_TEXT ("Size: %B\n"),
               vector.size ()));
 
   for (i = 0; i < TOP; ++i)
-    ACE_TEST_ASSERT (vector[i] == i);
+    {
+      ACE_TEST_ASSERT (vector[i] == i);
+    }
 
   // Test to be sure the iterator gets the correct count and entries.
   ITERATOR iter (vector);
-  DATA *p_item = nullptr ;
+  DATA *p_item {} ;
   size_t iter_count = 0;
   while (!iter.done ())
     {
       if (iter.next (p_item) == 0)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Fail to get value on iter pass %d\n"),
-                    iter_count));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Fail to get value on iter pass %B\n"),
+                      iter_count));
+        }
       if (*p_item != iter_count)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Iter pass %d got %d\n"),
-                    iter_count, *p_item));
-      iter_count++;
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Iter pass %B got %B\n"),
+                      iter_count, *p_item));
+        }
+      ++iter_count;
       iter.advance();
     }
   if (iter_count != TOP)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Iterated %d elements; expected %d\n"),
-                iter_count, TOP));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Iterated %B elements; expected %B\n"),
+                  iter_count, TOP));
+    }
 
   for (i = 0; i < (TOP - LEFT); ++i)
-    vector.pop_back ();
+    {
+      vector.pop_back ();
+    }
 
   ACE_TEST_ASSERT (vector.size () == LEFT);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Size: %d\n"),
+              ACE_TEXT ("Size: %B\n"),
               vector.size ()));
 
   for (i = 0; i < LEFT; ++i)
     {
       ACE_TEST_ASSERT (vector[i] == i);
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("vector[%d]:%d\n"),
+                  ACE_TEXT ("vector[%B]:%B\n"),
                   i, vector[i]));
     }
 
@@ -96,14 +108,14 @@ int run_main (int, ACE_TCHAR *[])
           ACE_TEST_ASSERT (vector[i] == 0);
         }
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("vector[%d]:%d\n"),
+                  ACE_TEXT ("vector[%B]:%B\n"),
                   i, vector[i]));
     }
 
   vector.clear ();
   ACE_TEST_ASSERT (vector.size () == 0);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Size: %d\n"),
+              ACE_TEXT ("Size: %B\n"),
               vector.size ()));
 
   // test resize (shrink and enlarge with buffer realloc)
@@ -118,7 +130,9 @@ int run_main (int, ACE_TCHAR *[])
   // 1, 1, 1, 1, 1, 1, 1, 1,
   // 1, 1, 1, 1, 1, 1, 1, 1,
   for (i = 0; i < boundary; ++i)
-    vector2.push_back (FILLER1);
+    {
+      vector2.push_back (FILLER1);
+    }
 
   // we throw almost everything away.
   vector2.resize (1, 0);
@@ -130,12 +144,16 @@ int run_main (int, ACE_TCHAR *[])
   // 2, 2, 2, 2, 2, 2, 2, 2,
   // 2,
   for (i = 0; i < boundary; ++i)
-    vector2.push_back (FILLER2);
+    {
+      vector2.push_back (FILLER2);
+    }
 
   // now we check the result
   ACE_TEST_ASSERT (vector2[0] == FILLER1);
   for (i = 0; i < boundary; ++i)
-    ACE_TEST_ASSERT (vector2[i+1] == FILLER2);
+    {
+      ACE_TEST_ASSERT (vector2[i+1] == FILLER2);
+    }
 
   VECTOR v1;
   VECTOR v2;
@@ -144,17 +162,25 @@ int run_main (int, ACE_TCHAR *[])
   v1.push_back (2);
   v2.push_back (2);
   if (v1 != v2)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Inequality test failed!\n")));
+  }
   if (!(v1 == v2))
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Equality test failed!\n")));
+  }
 
   v1.push_back (3);
   if (v1.size () != 3)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("v1's size should be 3\n")));
+  }
 
   v1.swap (v2);
   if (v2.size () != 3)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("v2's size should be 3\n")));
+  }
 
   // Assert that vector standard iterators work
   {
@@ -165,7 +191,7 @@ int run_main (int, ACE_TCHAR *[])
     ACE_TEST_ASSERT (vector.begin () == vector.end ());
 
     size_t i;
-    for (i = 0; i < size; i++)
+    for (i = 0; i < size; ++i)
       {
         vector.push_back (i + offset);
       }
@@ -188,5 +214,4 @@ int run_main (int, ACE_TCHAR *[])
 
   return 0;
 }
-
 

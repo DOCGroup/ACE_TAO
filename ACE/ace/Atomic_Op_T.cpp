@@ -47,7 +47,6 @@ ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::dump () const
 template <class ACE_LOCK, class TYPE>
 ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::ACE_Atomic_Op_Ex (ACE_LOCK & mtx)
   : mutex_ (mtx)
-  , value_ (0)
 {
   // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::ACE_Atomic_Op_Ex");
 }

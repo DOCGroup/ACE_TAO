@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    small_union.cpp
  *
@@ -7,8 +5,6 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #include "helper.h"
 #include "small_union.h"
@@ -20,14 +16,8 @@
 size_t Test_Small_Union::counter = 0;
 
 Test_Small_Union::Test_Small_Union ()
-  : opname_ (CORBA::string_dup ("test_small_union"))
+  : opname_ ("test_small_union")
 {
-}
-
-Test_Small_Union::~Test_Small_Union ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
 }
 
 const char *
@@ -47,7 +37,7 @@ Test_Small_Union::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::Small_Union *tmp = 0;
+  Param_Test::Small_Union const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Small_Union (*tmp);
 
@@ -89,13 +79,13 @@ int
 Test_Small_Union::reset_parameters ()
 {
   Generator *gen = GENERATOR::instance (); // value generator
-  CORBA::ULong index = (counter++ % 2);
+  CORBA::ULong const index = (counter++ % 2);
 
   switch (index)
     {
     case 0:
       {
-        CORBA::Long l = gen->gen_long ();
+        CORBA::Long const l = gen->gen_long ();
         this->in_.the_long (l);
         this->inout_.the_long (l);
       }
@@ -103,7 +93,7 @@ Test_Small_Union::reset_parameters ()
     default:
     case 1:
       {
-        CORBA::Short s = gen->gen_short ();
+        CORBA::Short const s = gen->gen_short ();
         this->in_.the_short (s);
         this->inout_.the_short (s);
       }
@@ -143,28 +133,31 @@ Test_Small_Union::check_validity ()
       return 0;
     }
 
-
   switch (this->in_._d ())
     {
     case Param_Test::A_LONG:
       {
-        CORBA::Long in    = this->in_.the_long ();
-        CORBA::Long inout = this->inout_.the_long ();
-        CORBA::Long out   = this->out_->the_long ();
-        CORBA::Long ret   = this->ret_->the_long ();
+        CORBA::Long const in    = this->in_.the_long ();
+        CORBA::Long const inout = this->inout_.the_long ();
+        CORBA::Long const out   = this->out_->the_long ();
+        CORBA::Long const ret   = this->ret_->the_long ();
         if (in != out || in != inout || in != ret)
+        {
           return 0;
+        }
       }
       break;
 
     case Param_Test::A_SHORT:
       {
-        CORBA::Short in    = this->in_.the_short ();
-        CORBA::Short inout = this->inout_.the_short ();
-        CORBA::Short out   = this->out_->the_short ();
-        CORBA::Short ret   = this->ret_->the_short ();
+        CORBA::Short const in    = this->in_.the_short ();
+        CORBA::Short const inout = this->inout_.the_short ();
+        CORBA::Short const out   = this->out_->the_short ();
+        CORBA::Short const ret   = this->ret_->the_short ();
         if (in != out || in != inout || in != ret)
+        {
           return 0;
+        }
       }
       break;
 

@@ -11,21 +11,18 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_errno.h"
-
 
 void
 siglistset (sigset_t x, int *sigset, int can_miss = 0)
 {
   bool empty = true;
-  int result = 0;
 
-  for (int i = 1; i < ACE_NSIG; i++)
+  for (int i = 1; i < ACE_NSIG; ++i)
     {
-      result = ACE_OS::sigismember (&x, i);
+      int result = ACE_OS::sigismember (&x, i);
 
       if (result > 0)
         {
@@ -43,9 +40,13 @@ siglistset (sigset_t x, int *sigset, int can_miss = 0)
     }
 
   if (empty)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Empty!!\n\n"))) ;
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Empty!!\n\n"))) ;
+    }
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n\n"))) ;
+  }
 }
 
 int
@@ -73,8 +74,10 @@ run_main (int, ACE_TCHAR *[])
   ACE_OS::sigfillset (&x) ;
 
   // fill the comparison set
-  for (i = 0 ; i < ACE_NSIG ; i++)
-    sigset [i] = 1 ;
+  for (i = 0 ; i < ACE_NSIG ; ++i)
+    {
+      sigset [i] = 1 ;
+    }
 
   // There's no guarantee that the valid signals are sequential without
   // missed spots. For example, Red Hat Enterprise Linux 3 (any version
@@ -88,8 +91,10 @@ run_main (int, ACE_TCHAR *[])
   ACE_OS::sigemptyset (&x) ;
 
   // empty the comparison set
-  for (i = 0 ; i < ACE_NSIG ; i++)
-    sigset [i] = 0 ;
+  for (i = 0 ; i < ACE_NSIG ; ++i)
+    {
+      sigset [i] = 0 ;
+    }
 
   siglistset (x, sigset) ;
 

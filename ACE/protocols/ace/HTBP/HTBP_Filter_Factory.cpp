@@ -6,7 +6,6 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE::HTBP::Filter_Factory::Filter_Factory ()
@@ -18,15 +17,15 @@ ACE::HTBP::Filter_Factory::~Filter_Factory ()
 }
 
 ACE::HTBP::Filter *
-ACE::HTBP::Filter_Factory::get_filter (int inside)
+ACE::HTBP::Filter_Factory::get_filter (bool inside)
 {
-  ACE::HTBP::Filter *filter = 0;
+  ACE::HTBP::Filter *filter {};
   if (inside)
     ACE_NEW_RETURN (filter,
-                    ACE::HTBP::Inside_Squid_Filter (),0);
+                    ACE::HTBP::Inside_Squid_Filter (), nullptr);
   else
     ACE_NEW_RETURN (filter,
-                    ACE::HTBP::Outside_Squid_Filter (),0);
+                    ACE::HTBP::Outside_Squid_Filter (), nullptr);
   return filter;
 }
 

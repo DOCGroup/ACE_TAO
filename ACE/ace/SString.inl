@@ -6,6 +6,8 @@
 
 #include "ace/OS_NS_stdlib.h"
 
+#include <cstring>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -110,7 +112,7 @@ ACE_SString::operator== (const ACE_SString &s) const
 {
   ACE_TRACE ("ACE_SString::operator==");
   return this->len_ == s.len_
-    && ACE_OS::strcmp (this->rep_, s.rep_) == 0;
+    && std::strcmp (this->rep_, s.rep_) == 0;
 }
 
 // Less than comparison operator.
@@ -120,7 +122,7 @@ ACE_SString::operator < (const ACE_SString &s) const
   ACE_TRACE ("ACE_SString::operator <");
 
   return (this->rep_ && s.rep_)
-    ? ACE_OS::strcmp (this->rep_, s.rep_) < 0
+    ? std::strcmp (this->rep_, s.rep_) < 0
     : ((s.rep_) ? true : false);
 }
 
@@ -132,7 +134,7 @@ ACE_SString::operator > (const ACE_SString &s) const
   ACE_TRACE ("ACE_SString::operator >");
 
   return (this->rep_ && s.rep_)
-    ? ACE_OS::strcmp (this->rep_, s.rep_) > 0
+    ? std::strcmp (this->rep_, s.rep_) > 0
     : ((this->rep_) ? true : false );
 }
 
@@ -149,29 +151,37 @@ ACE_INLINE int
 ACE_SString::compare (const ACE_SString &s) const
 {
   ACE_TRACE ("ACE_SString::compare");
-  return ACE_OS::strcmp (this->rep_, s.rep_);
+  return std::strcmp (this->rep_, s.rep_);
 }
 
 ACE_INLINE ACE_SString::size_type
 ACE_SString::find (const char *s, size_type pos) const
 {
   char *substr = this->rep_ + pos;
-  char *pointer = ACE_OS::strstr (substr, s);
+  char *pointer = std::strstr (substr, s);
   if (pointer == nullptr)
-    return ACE_SString::npos;
+    {
+      return ACE_SString::npos;
+    }
   else
-    return static_cast<ACE_SString::size_type> (pointer - this->rep_);
+    {
+      return static_cast<ACE_SString::size_type> (pointer - this->rep_);
+    }
 }
 
 ACE_INLINE ACE_SString::size_type
 ACE_SString::find (char c, size_type pos) const
 {
   char *substr = this->rep_ + pos;
-  char *pointer = ACE_OS::strchr (substr, c);
+  char *pointer = std::strchr (substr, c);
   if (pointer == nullptr)
-    return ACE_SString::npos;
+    {
+      return ACE_SString::npos;
+    }
   else
-    return static_cast<ACE_SString::size_type> (pointer - this->rep_);
+    {
+      return static_cast<ACE_SString::size_type> (pointer - this->rep_);
+    }
 }
 
 ACE_INLINE ACE_SString::size_type
@@ -192,13 +202,17 @@ ACE_INLINE ACE_SString::size_type
 ACE_SString::rfind (char c, size_type pos) const
 {
   if (pos == ACE_SString::npos)
-    pos = this->len_;
+    {
+      pos = this->len_;
+    }
 
   // Do not change to prefix operator!  Proper operation of this loop
   // depends on postfix decrement behavior.
   for (size_type i = pos; i-- != 0; )
     if (this->rep_[i] == c)
-      return i;
+      {
+        return i;
+      }
 
   return ACE_SString::npos;
 }

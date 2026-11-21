@@ -16,33 +16,33 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Protocols_Hooks.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_UIOP_SVC_HANDLER (t, 0 , 0),
-    TAO_Connection_Handler (0)
+  : TAO_UIOP_SVC_HANDLER (t, nullptr, 0),
+    TAO_Connection_Handler (nullptr)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
   // Creation_Strategy requires a constructor with that signature, we
   // don't use that implementation, but some (most?) compilers
   // instantiate it anyway.
-  ACE_ASSERT (0);
+  ACE_ASSERT (false);
 }
 
-
 TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (TAO_ORB_Core *orb_core)
-  : TAO_UIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
+  : TAO_UIOP_SVC_HANDLER (orb_core->thr_mgr (), nullptr, 0),
     TAO_Connection_Handler (orb_core)
 {
-  TAO_UIOP_Transport *specific_transport = nullptr;
+  TAO_UIOP_Transport *specific_transport {};
   ACE_NEW (specific_transport,
            TAO_UIOP_Transport (this, orb_core));
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
 }
-
 
 TAO_UIOP_Connection_Handler::~TAO_UIOP_Connection_Handler ()
 {
@@ -69,7 +69,9 @@ int
 TAO_UIOP_Connection_Handler::open (void*)
 {
   if (this->shared_open() == -1)
+  {
     return -1;
+  }
 
   TAO_UIOP_Protocol_Properties protocol_properties;
 
@@ -103,12 +105,16 @@ TAO_UIOP_Connection_Handler::open (void*)
   if (this->set_socket_option (this->peer (),
                                protocol_properties.send_buffer_size_,
                                protocol_properties.recv_buffer_size_) == -1)
+  {
     return -1;
+  }
 
   if (this->transport ()->wait_strategy ()->non_blocking ())
     {
       if (this->peer ().enable (ACE_NONBLOCK) == -1)
+      {
         return -1;
+      }
     }
 
   // Called by the <Strategy_Acceptor> when the handler is completely
@@ -116,19 +122,26 @@ TAO_UIOP_Connection_Handler::open (void*)
   ACE_UNIX_Addr addr;
 
   if (this->peer ().get_remote_addr (addr) == -1)
+  {
     return -1;
+  }
 
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG,
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - UIOP_Connection_Handler::open, connection to server ")
-                ACE_TEXT ("<%C> on %d\n"),
-                addr.get_path_name (), this->peer ().get_handle ()));
+                ACE_TEXT ("<%C> on %H\n"),
+                addr.get_path_name (),
+                this->peer ().get_handle ()));
+    }
 
   // Set that the transport is now connected, if fails we return -1
   // Use C-style cast b/c otherwise we get warnings on lots of
   // compilers
   if (!this->transport ()->post_open ((size_t) this->get_handle ()))
+  {
     return -1;
+  }
 
   this->state_changed (TAO_LF_Event::LFS_SUCCESS,
                        this->orb_core ()->leader_follower ());
@@ -178,7 +191,7 @@ TAO_UIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
   // will delete this. At that point this->reset_state() is in no
   // man's territory and that causes SEGV on some platforms (Windows!)
 
-  TAO_Auto_Reference<TAO_UIOP_Connection_Handler> safeguard (*this);
+  TAO_Auto_Reference<TAO_UIOP_Connection_Handler> const safeguard (*this);
 
   // NOTE: Perhaps not the best solution, as it feels like the upper
   // layers should be responsible for this?
@@ -194,7 +207,7 @@ TAO_UIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
 int
 TAO_UIOP_Connection_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
-  ACE_ASSERT (0);
+  ACE_ASSERT (false);
   return 0;
 }
 
@@ -217,19 +230,21 @@ TAO_UIOP_Connection_Handler::add_transport_to_cache ()
 
   // Get the peername.
   if (this->peer ().get_remote_addr (addr) == -1)
+  {
     return -1;
+  }
 
   // Construct an  UIOP_Endpoint object
   TAO_UIOP_Endpoint endpoint (addr);
 
   // Construct a property object
-  TAO_Base_Transport_Property prop (&endpoint);
+  TAO_Base_Transport_Property prop (std::addressof (endpoint));
 
   TAO::Transport_Cache_Manager &cache =
     this->orb_core ()->lane_resources ().transport_cache ();
 
   // Add the handler to Cache
-  return cache.cache_transport (&prop, this->transport ());
+  return cache.cache_transport (std::addressof (prop), this->transport ());
 }
 
 int

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    COIOP_Connector.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_COIOP_CONNECTOR_H
 #define TAO_COIOP_CONNECTOR_H
@@ -31,8 +29,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Endpoint;
 class TAO_COIOP_Endpoint;
 
-// ****************************************************************
-
 /**
  * @class TAO_COIOP_Connector
  *
@@ -45,18 +41,16 @@ class TAO_COIOP_Endpoint;
 class TAO_Strategies_Export TAO_COIOP_Connector : public TAO_Connector
 {
 public:
-  /// Constructor.
   TAO_COIOP_Connector ();
 
-  /// Destructor.
-  ~TAO_COIOP_Connector () = default;
+  ~TAO_COIOP_Connector () override = default;
 
   /**
    * @name The TAO_Connector Methods
    *
    * Please check the documentation in Transport_Connector.h for details.
    */
-  //@{
+  /// @{
   int open (TAO_ORB_Core *orb_core) override;
   int close () override;
 
@@ -65,7 +59,7 @@ public:
   int check_prefix (char const *endpoint) override;
 
   char object_key_delimiter () const override;
-  //@}
+  /// @}
 
 protected:
   /**
@@ -73,7 +67,7 @@ protected:
    *
    * Please check the documentation in Transport_Connector.h for details.
    */
-  //@{
+  /// @{
   int set_validate_endpoint (TAO_Endpoint *ep) override;
 
   TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
@@ -81,7 +75,7 @@ protected:
                                   ACE_Time_Value *timeout = nullptr) override;
 
   TAO_Profile *make_profile () override;
-  //@}
+  /// @}
 
   /// Cancel the passed cvs handler from the connector
   int cancel_svc_handler (TAO_Connection_Handler *svc_handler) override;

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    bd_short_seq.cpp
  *
@@ -7,8 +5,6 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #include "helper.h"
 #include "bd_short_seq.h"
@@ -18,18 +14,12 @@
 // ************************************************************************
 
 Test_Bounded_Short_Sequence::Test_Bounded_Short_Sequence ()
-  : opname_ (CORBA::string_dup ("test_bounded_short_sequence")),
+  : opname_ ("test_bounded_short_sequence"),
     in_ (new Param_Test::Bounded_Short_Seq),
     inout_ (new Param_Test::Bounded_Short_Seq),
     out_ (new Param_Test::Bounded_Short_Seq),
     ret_ (new Param_Test::Bounded_Short_Seq)
 {
-}
-
-Test_Bounded_Short_Sequence::~Test_Bounded_Short_Sequence ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
 }
 
 const char *
@@ -48,7 +38,7 @@ Test_Bounded_Short_Sequence::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::Bounded_Short_Seq *tmp = 0;
+  Param_Test::Bounded_Short_Seq const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Bounded_Short_Seq (*tmp);
 
@@ -70,7 +60,7 @@ Test_Bounded_Short_Sequence::init_parameters (Param_Test_ptr /*objref*/
   // ACE_UNUSED_ARG (objref);
 
   // get some sequence length (32 in this case)
-  CORBA::ULong len = this->in_->maximum ();
+  CORBA::ULong const len = this->in_->maximum ();
 
   // set the length of the sequence
   this->in_->length (len);
@@ -110,7 +100,7 @@ Test_Bounded_Short_Sequence::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      Param_Test::Bounded_Short_Seq_out out (this->out_.out ());
+      Param_Test::Bounded_Short_Seq_out const out (this->out_.out ());
 
       this->ret_ = objref->test_bounded_short_sequence (this->in_.in (),
                                                         this->inout_.inout (),
@@ -128,20 +118,20 @@ Test_Bounded_Short_Sequence::run_sii_test (Param_Test_ptr objref)
 CORBA::Boolean
 Test_Bounded_Short_Sequence::check_validity ()
 {
-  CORBA::Boolean flag = 0;
+  CORBA::Boolean flag = false;
   if ((this->in_->length () == this->inout_->length ()) &&
       (this->in_->length () == this->out_->length ()) &&
       (this->in_->length () == this->ret_->length ()))
     {
       flag = 1; // assume all are equal
       // lengths are same. Now compare the contents
-      for (CORBA::ULong i=0; i < this->in_->length () && flag; i++)
+      for (CORBA::ULong i=0; i < this->in_->length () && flag; ++i)
         {
           if (this->in_[i] != this->inout_[i] ||
               this->in_[i] != this->out_[i] ||
               this->in_[i] != this->ret_[i])
             // not equal
-            flag = 0;
+            flag = false;
         }
     }
   return flag;

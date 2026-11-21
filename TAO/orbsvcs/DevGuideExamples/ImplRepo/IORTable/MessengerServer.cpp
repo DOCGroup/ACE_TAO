@@ -1,125 +1,139 @@
 #include "Messenger_i.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/IORTable/IORTable.h"
+
 #include <iostream>
-#include <fstream>
 #include <fstream>
 #include "ace/Get_Opt.h"
 
-ACE_TCHAR const * ior_output_file1 = ACE_TEXT ("messenger1.ior");
-ACE_TCHAR const * ior_output_file2 = ACE_TEXT ("messenger2.ior");
+struct Command_Line_Options
+{
+  ACE_TCHAR const *ior_output_file1 { ACE_TEXT ("messenger1.ior") };
+  ACE_TCHAR const *ior_output_file2 { ACE_TEXT ("messenger2.ior") };
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Command_Line_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:i:"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        ior_output_file1 = get_opts.opt_arg ();
+        options.ior_output_file1 = get_opts.opt_arg ();
         break;
 
       case 'i':
-        ior_output_file2 = get_opts.opt_arg ();
+        options.ior_output_file2 = get_opts.opt_arg ();
         break;
 
       case '?':
       default:
-      ;
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("usage: %s [-o <iorfile>] [-i <iorfile>]\n"),
+                           argv[0]),
+                          -1);
       }
-  // Indicates successful parsing of the command line
+
   return 0;
 }
 
-PortableServer::POA_ptr
-createPersistentPOA (PortableServer::POA_ptr root_poa,
-                     char const * poa_name) {
+PortableServer::POA_var
+create_persistent_poa (PortableServer::POA_ptr root_poa,
+                       char const *poa_name)
+{
   PortableServer::LifespanPolicy_var life =
-    root_poa->create_lifespan_policy(PortableServer::PERSISTENT);
+    root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
 
   PortableServer::IdAssignmentPolicy_var assign =
-    root_poa->create_id_assignment_policy(PortableServer::USER_ID);
+    root_poa->create_id_assignment_policy (PortableServer::USER_ID);
 
   CORBA::PolicyList pols;
-  pols.length(2);
-  pols[0] = PortableServer::LifespanPolicy::_duplicate(life.in());
-  pols[1] = PortableServer::IdAssignmentPolicy::_duplicate(assign.in());
+  pols.length (2);
+  pols[0] = PortableServer::LifespanPolicy::_duplicate (life.in ());
+  pols[1] = PortableServer::IdAssignmentPolicy::_duplicate (assign.in ());
 
-  PortableServer::POAManager_var mgr = root_poa->the_POAManager();
-  PortableServer::POA_var poa =
-    root_poa->create_POA(poa_name, mgr.in(), pols);
+  PortableServer::POAManager_var const manager = root_poa->the_POAManager ();
+  PortableServer::POA_var poa = root_poa->create_POA (poa_name, manager.in (), pols);
 
-  life->destroy();
-  assign->destroy();
+  life->destroy ();
+  assign->destroy ();
 
-  return poa._retn();
+  return poa;
 }
 
-void writeIORFile (char const * ior, ACE_TCHAR const * name) {
-  std::ofstream out(ACE_TEXT_ALWAYS_CHAR (name));
+void
+write_ior_file (char const *ior, ACE_TCHAR const *name)
+{
+  std::ofstream out (ACE_TEXT_ALWAYS_CHAR (name));
   out << ior;
 }
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  try {
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+  try
+  {
+    Command_Line_Options options;
+    CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-    if (parse_args (argc, argv) != 0)
-      return 1;
+    if (parse_args (argc, argv, options) != 0)
+      {
+        return 1;
+      }
 
-    CORBA::Object_var obj = orb->resolve_initial_references("RootPOA");
-    PortableServer::POA_var root_poa = PortableServer::POA::_narrow(obj.in());
+    CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
+    PortableServer::POA_var const root_poa = PortableServer::POA::_narrow (obj.in ());
 
-    PortableServer::POAManager_var mgr = root_poa->the_POAManager();
+    PortableServer::POAManager_var const manager = root_poa->the_POAManager ();
 
-    char const * poa_name = "MessengerService";
+    constexpr char poa_name[] = "MessengerService";
 
-    PortableServer::POA_var poa = createPersistentPOA(root_poa.in(), poa_name);
+    PortableServer::POA_var const poa = create_persistent_poa (root_poa.in (), poa_name);
 
-    PortableServer::Servant_var<Messenger_i> servant1 = new Messenger_i;
-    PortableServer::Servant_var<Messenger_i> servant2 = new Messenger_i;
+    PortableServer::Servant_var<Messenger_i> const servant1 = new Messenger_i;
+    PortableServer::Servant_var<Messenger_i> const servant2 = new Messenger_i;
 
-    PortableServer::ObjectId_var id1 = PortableServer::string_to_ObjectId("Object1");
-    poa->activate_object_with_id(id1.in(), servant1.in());
-    PortableServer::ObjectId_var id2 = PortableServer::string_to_ObjectId("Object2");
-    poa->activate_object_with_id(id2.in(), servant2.in());
+    PortableServer::ObjectId_var const id1 = PortableServer::string_to_ObjectId ("Object1");
+    poa->activate_object_with_id (id1.in (), servant1.in ());
+    PortableServer::ObjectId_var const id2 = PortableServer::string_to_ObjectId ("Object2");
+    poa->activate_object_with_id (id2.in (), servant2.in ());
 
-    obj = poa->id_to_reference(id1.in());
-    CORBA::String_var ior1 = orb->object_to_string(obj.in());
-    obj = poa->id_to_reference(id2.in());
-    CORBA::String_var ior2 = orb->object_to_string(obj.in());
+    obj = poa->id_to_reference (id1.in ());
+    CORBA::String_var const ior1 = orb->object_to_string (obj.in ());
+    obj = poa->id_to_reference (id2.in ());
+    CORBA::String_var const ior2 = orb->object_to_string (obj.in ());
 
-    TAO_Root_POA * tpoa = dynamic_cast<TAO_Root_POA *>(poa.in());
-    obj = tpoa->id_to_reference_i(id1.in(), false);
-    CORBA::String_var direct_ior1 = orb->object_to_string(obj.in());
+    TAO_Root_POA * const tpoa = dynamic_cast<TAO_Root_POA *> (poa.in ());
+    obj = tpoa->id_to_reference_i (id1.in (), false);
+    CORBA::String_var const direct_ior1 = orb->object_to_string (obj.in ());
 
-    obj = orb->resolve_initial_references("IORTable");
-    IORTable::Table_var ior_table = IORTable::Table::_narrow(obj.in());
-    ior_table->bind("MessengerService/Object1", direct_ior1.in());
-    ior_table->bind("MessengerService/Object2", ior2.in());
+    obj = orb->resolve_initial_references ("IORTable");
+    IORTable::Table_var const ior_table = IORTable::Table::_narrow (obj.in ());
+    ior_table->bind ("MessengerService/Object1", direct_ior1.in ());
+    ior_table->bind ("MessengerService/Object2", ior2.in ());
 
-    writeIORFile(ior1.in(), ior_output_file1);
-    writeIORFile(ior2.in(), ior_output_file2);
+    write_ior_file (ior1.in (), options.ior_output_file1);
+    write_ior_file (ior2.in (), options.ior_output_file2);
 
-    mgr->activate();
+    manager->activate ();
 
     std::cout << "Messenger server ready." << std::endl;
 
-    orb->run();
+    orb->run ();
 
     std::cout << "Messenger server shutting down." << std::endl;
 
-    root_poa->destroy(1,1);
-    orb->destroy();
+    root_poa->destroy (true, true);
+    orb->destroy ();
 
     return 0;
-  } catch (CORBA::Exception const & ex) {
-    std::cerr << "Server main() Caught Exception" << ex << std::endl;
   }
+  catch (CORBA::Exception const &ex)
+    {
+      std::cerr << "Server main() Caught Exception" << ex << std::endl;
+    }
   return 1;
 }

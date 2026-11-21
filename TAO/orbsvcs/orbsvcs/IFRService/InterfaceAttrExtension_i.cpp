@@ -21,7 +21,6 @@ TAO_InterfaceAttrExtension_i::TAO_InterfaceAttrExtension_i (
 
 TAO_InterfaceAttrExtension_i::~TAO_InterfaceAttrExtension_i () = default;
 
-
 CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *
 TAO_InterfaceAttrExtension_i::describe_ext_interface ()
 {
@@ -203,8 +202,7 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i ()
 
   for (i = 0; i < length; ++i)
     {
-      char * const base_path =
-        TAO_IFR_Service_Utils::reference_to_path (bases[i]);
+      char * const base_path = TAO_IFR_Service_Utils::reference_to_path (bases[i]);
 
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            base_path,

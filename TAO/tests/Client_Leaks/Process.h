@@ -10,13 +10,19 @@ class Process
   : public virtual POA_Test::Process
 {
 public:
-  /// Constructor
-  Process (CORBA::ORB_ptr orb);
+  explicit Process (CORBA::ORB_ptr orb);
 
-  // = The skeleton methods
-  virtual CORBA::Long get_process_id ();
+  Process (Process const &) = delete;
+  Process (Process &&) = delete;
+  Process &operator= (Process const &) = delete;
+  Process &operator= (Process &&) = delete;
 
-  virtual void shutdown ();
+  /// @name Skeleton methods
+  /// @{
+  CORBA::Long get_process_id () override;
+
+  void shutdown () override;
+  /// @}
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

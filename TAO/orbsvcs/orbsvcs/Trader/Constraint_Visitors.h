@@ -1,13 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file Constraint_Visitors.h
  *
  *  @author Seth Widoff <sbw1@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_CONSTRAINT_VISITOR_H
 #define TAO_CONSTRAINT_VISITOR_H
@@ -15,7 +12,8 @@
 
 #include "orbsvcs/Trader/Interpreter_Utils.h"
 #include "orbsvcs/Trader/trading_serv_export.h"
-#include "ace/Containers.h"
+
+#include <deque>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -113,10 +111,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Trading_Serv_Export TAO_Constraint_Validator : public TAO_Constraint_Visitor
 {
 public:
-  /// Constructor.
+  TAO_Constraint_Validator (TAO_Constraint_Validator const&) = delete;
+  TAO_Constraint_Validator& operator= (TAO_Constraint_Validator const&) = delete;
+  TAO_Constraint_Validator (TAO_Constraint_Validator&&) = delete;
+  TAO_Constraint_Validator& operator= (TAO_Constraint_Validator&&) = delete;
+
   TAO_Constraint_Validator ();
 
-  /// Destructor.
   ~TAO_Constraint_Validator () override;
 
   /**
@@ -125,8 +126,6 @@ public:
    * comply with each other and the types accepted by the operator.
    */
   int validate (TAO_Constraint* root);
-
-  // = Visitor Methods
 
   int visit_constraint (TAO_Unary_Constraint* constraint) override;
 
@@ -195,11 +194,6 @@ private:
   /// expr_returns_boolean returns 1 if <expr_type>, when evaluated, will
   /// return a string.
   int expr_returns_string (TAO_Expression_Type expr_type);
-
-  TAO_Constraint_Validator (TAO_Constraint_Validator const&) = delete;
-  TAO_Constraint_Validator& operator= (TAO_Constraint_Validator const&) = delete;
-  TAO_Constraint_Validator (TAO_Constraint_Validator&&) = delete;
-  TAO_Constraint_Validator& operator= (TAO_Constraint_Validator&&) = delete;
 };
 
 /**
@@ -223,7 +217,11 @@ private:
 class TAO_Trading_Serv_Export TAO_Constraint_Evaluator : public TAO_Constraint_Visitor
 {
 public:
-  /// Constructor.
+  TAO_Constraint_Evaluator (TAO_Constraint_Evaluator const&) = delete;
+  TAO_Constraint_Evaluator& operator= (TAO_Constraint_Evaluator const&) = delete;
+  TAO_Constraint_Evaluator (TAO_Constraint_Evaluator&&) = delete;
+  TAO_Constraint_Evaluator& operator= (TAO_Constraint_Evaluator&&) = delete;
+
   TAO_Constraint_Evaluator ();
 
   /**
@@ -238,8 +236,6 @@ public:
   /// method returns 0 upon success, -1 upon failure.
   int evaluate_preference (TAO_Constraint* root,
                            TAO_Literal_Constraint& result);
-
-  // = Visitor Methods
 
   int visit_constraint (TAO_Unary_Constraint* constraint) override;
 
@@ -292,7 +288,7 @@ public:
   /// contains the left operand.
   int visit_in (TAO_Binary_Constraint* binary_in) override;
 
-  // = Compare the results of evaluating left and right operands.
+  /// Compare the results of evaluating left and right operands.
   int visit_less_than (TAO_Binary_Constraint* boolean_lt) override;
   int visit_less_than_equal (TAO_Binary_Constraint* boolean_lte) override;
   int visit_greater_than (TAO_Binary_Constraint* boolean_gt) override;
@@ -307,14 +303,15 @@ public:
   int visit_property (TAO_Property_Constraint* literal) override;
 
 private:
-  class TAO_Trading_Serv_Export Operand_Queue :
-    public ACE_Unbounded_Queue <TAO_Literal_Constraint>
-  // = TITLE
-  // A queue adapter with methods to setting and getting operands
-  // from the expression evaluation results.
+  /// A queue adapter for setting and getting expression operands.
+  class TAO_Trading_Serv_Export Operand_Queue
   {
   public:
-    Operand_Queue  ();
+    Operand_Queue ();
+
+    bool empty () const;
+    void clear ();
+    void push_front (TAO_Literal_Constraint const & operand);
 
     /// In a binary operation, obtain the left operand.
     TAO_Literal_Constraint& get_left_operand ();
@@ -327,6 +324,9 @@ private:
 
     /// Remove an operand from the queue.
     void dequeue_operand ();
+
+  private:
+    std::deque<TAO_Literal_Constraint> operands_;
   };
 
   /// Method for performing a arithmetic or comparison operation.
@@ -339,11 +339,8 @@ private:
   /// simple type as <sequence_type>. Return true in this eventuality.
   CORBA::Boolean sequence_does_contain (CORBA::Any* sequence,
                                         TAO_Literal_Constraint& element);
-
-  TAO_Constraint_Evaluator (const TAO_Constraint_Evaluator&) = delete;
-  TAO_Constraint_Evaluator& operator= (const TAO_Constraint_Evaluator&) = delete;
-  TAO_Constraint_Evaluator (TAO_Constraint_Evaluator&&) = delete;
-  TAO_Constraint_Evaluator& operator= (TAO_Constraint_Evaluator&&) = delete;
+  CORBA::Boolean sequence_does_contain (CORBA::Any const* sequence,
+                                        TAO_Literal_Constraint& element);
 
 protected:
   /// The map of property names to their values for a property.

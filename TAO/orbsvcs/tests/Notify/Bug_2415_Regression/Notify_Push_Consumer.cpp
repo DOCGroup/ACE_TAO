@@ -7,8 +7,7 @@
 
 Notify_Push_Consumer::Notify_Push_Consumer (
   Notify_Test_Client& client)
-  : client_ ( client )
-  , messages_received_( 0 )
+  : client_ (client)
 {
   this->client_.consumer_start (this);
 }
@@ -45,19 +44,20 @@ Notify_Push_Consumer::_connect (
   this->_remove_ref ();
 }
 
-
 void
 Notify_Push_Consumer::push_structured_event (
-  const CosNotification::StructuredEvent& event)
+  CosNotification::StructuredEvent const& event)
 {
-  messages_received_++;
-  ACE_DEBUG((LM_DEBUG, "{%d} domain = %s\n", messages_received_,
-    event.header.fixed_header.event_type.domain_name.in()));
+  ++this->messages_received_;
+  ACE_DEBUG ((LM_DEBUG,
+              "{%d} domain = %s\n",
+              this->messages_received_,
+              event.header.fixed_header.event_type.domain_name.in ()));
   this->client_.consumer_done (this);
 }
 
 int
-Notify_Push_Consumer::messages_received()
+Notify_Push_Consumer::messages_received () const
 {
-  return messages_received_;
+  return this->messages_received_;
 }

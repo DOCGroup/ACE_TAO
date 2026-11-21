@@ -71,9 +71,9 @@ namespace TAO
   void
   Any_Basic_Impl::insert (CORBA::Any &any,
                           CORBA::TypeCode_ptr tc,
-                          const void *value)
+                          void const *value)
   {
-    Any_Basic_Impl *new_impl = nullptr;
+    Any_Basic_Impl *new_impl {};
     ACE_NEW (new_impl,
              Any_Basic_Impl (tc,
                              const_cast<void *> (value)));
@@ -81,7 +81,7 @@ namespace TAO
   }
 
   CORBA::Boolean
-  Any_Basic_Impl::extract (const CORBA::Any &any,
+  Any_Basic_Impl::extract (CORBA::Any const &any,
                            CORBA::TypeCode_ptr tc,
                            void *_tao_elem)
   {
@@ -121,7 +121,9 @@ namespace TAO
           dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
         if (!unk)
+        {
           return false;
+        }
 
         // Get the kind of the type where we are extracting in ie. the
         // aliased  type if there are any. Passing the aliased kind
@@ -149,7 +151,7 @@ namespace TAO
         // Duplicated by Any_Impl base class constructor.
         ::CORBA::release (any_tc);
       }
-    catch (const ::CORBA::Exception&)
+    catch (::CORBA::Exception const &)
       {
       }
 
@@ -235,7 +237,7 @@ namespace TAO
       case CORBA::tk_wchar:
         return cdr >> CORBA::Any::to_wchar (this->u_.wc);
       default:
-        return 0;
+        return false;
     }
   }
 
@@ -253,7 +255,7 @@ namespace TAO
   {
     CORBA::TCKind const kind = tc->kind ();
 
-    TAO::Any_Basic_Impl *retval = nullptr;
+    TAO::Any_Basic_Impl *retval {};
 
     switch (kind)
     {
@@ -261,17 +263,17 @@ namespace TAO
         {
           CORBA::LongDouble tmp = ACE_CDR_LONG_DOUBLE_INITIALIZER;
           ACE_NEW_RETURN (retval,
-                          TAO::Any_Basic_Impl (tc, &tmp),
-                          0);
+                          TAO::Any_Basic_Impl (tc, std::addressof (tmp)),
+                          nullptr);
         }
 
         break;
       default:
         {
-          CORBA::ULongLong tmp = 0;
+          CORBA::ULongLong tmp {};
           ACE_NEW_RETURN (retval,
-                          TAO::Any_Basic_Impl (tc, &tmp),
-                          0);
+                          TAO::Any_Basic_Impl (tc, std::addressof (tmp)),
+                          nullptr);
         }
 
         break;

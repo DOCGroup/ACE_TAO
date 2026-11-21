@@ -19,9 +19,7 @@ namespace ACE
       }
 
     template <class STREAM_BUFFER>
-    FixedLengthStreamPolicyBase<STREAM_BUFFER>::~FixedLengthStreamPolicyBase ()
-      {
-      }
+    FixedLengthStreamPolicyBase<STREAM_BUFFER>::~FixedLengthStreamPolicyBase () = default;
 
     template <class STREAM_BUFFER>
     int FixedLengthStreamPolicyBase<STREAM_BUFFER>::read_from_stream (
@@ -34,7 +32,10 @@ namespace ACE
           if (this->count_ + length > this->length_)
             length = this->length_ - this->count_;
           n = this->read_from_stream_i (buf, length);
-          if (n > 0) this->count_ += n;
+          if (n > 0)
+            {
+              this->count_ += n;
+            }
         }
         return n;
       }
@@ -50,7 +51,10 @@ namespace ACE
           if ((this->count_ + length) > this->length_)
             length = this->length_ - this->count_;
           n = this->write_to_stream_i (buf, length);
-          if (n > 0) this->count_ += n;
+          if (n > 0)
+            {
+              this->count_ += n;
+            }
         }
         return n;
       }
@@ -63,9 +67,7 @@ namespace ACE
       }
 
     template <class STREAM_BUFFER>
-    ChunkedTransferStreamPolicyBase<STREAM_BUFFER>::~ChunkedTransferStreamPolicyBase ()
-      {
-      }
+    ChunkedTransferStreamPolicyBase<STREAM_BUFFER>::~ChunkedTransferStreamPolicyBase () = default;
 
     template <class STREAM_BUFFER>
     int ChunkedTransferStreamPolicyBase<STREAM_BUFFER>::getc ()

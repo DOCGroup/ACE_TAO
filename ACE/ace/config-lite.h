@@ -25,16 +25,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// ============================================================================
-// UNICODE macros (to be added later)
-// ============================================================================
-
 // Get the unicode (i.e. ACE_TCHAR) defines
 # include "ace/ace_wchar.h"
-
-// ============================================================================
-// at_exit declarations
-// ============================================================================
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -59,17 +51,13 @@ typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* noexcept */;
 }
 # endif /* ACE_HAS_SIG_C_FUNC */
 
-// ============================================================================
-// log_msg declarations
-// ============================================================================
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
+/// Prototype of Win32 structured exception handler functions.
+/// They are used to get the exception handling expression or serve
+/// as exception handlers.
 typedef int (*ACE_SEH_EXCEPT_HANDLER)(void *);
-// Prototype of win32 structured exception handler functions.
-// They are used to get the exception handling expression or
-// as exception handlers.
 # endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
 class ACE_OS_Thread_Descriptor;

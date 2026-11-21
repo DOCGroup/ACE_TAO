@@ -4,23 +4,26 @@
  * Timers & state data
  */
 
+#include <memory>
+#include <string>
+#include <utility>
+
 #include "ace/OS_NS_time.h"
 #include "ace/Log_Msg.h"
 #include "ace/Reactor.h"
 #include "ace/Event_Handler.h"
+#include "ace/Signal.h"
 
 // Listing 0 code/ch07
 class TemperatureSensor
 {
 public:
-  TemperatureSensor (const char *location)
-    : location_(location),
-      count_(0),
-      temperature_(0.0)
+  explicit TemperatureSensor (std::string location)
+    : location_ (std::move (location))
     // ...
   { }
 
-  const char *location () const
+  std::string const &location () const
   {
     return this->location_;
   }
@@ -37,9 +40,9 @@ public:
   }
 
 private:
-  const char *location_;
-  int count_;
-  float temperature_;
+  std::string location_;
+  int count_ {};
+  float temperature_ {};
   // ...
 };
 // Listing 0
@@ -48,38 +51,36 @@ private:
 class TemperatureQueryHandler : public ACE_Event_Handler
 {
 public:
-  TemperatureQueryHandler ()
-    : ACE_Event_Handler(),
-      counter_(0),
-      averageTemperature_(0.0)
-    // ...
-  {
-  }
+  TemperatureQueryHandler () = default;
+  TemperatureQueryHandler (TemperatureQueryHandler const &) = delete;
+  TemperatureQueryHandler (TemperatureQueryHandler &&) = delete;
+  TemperatureQueryHandler &operator= (TemperatureQueryHandler const &) = delete;
+  TemperatureQueryHandler &operator= (TemperatureQueryHandler &&) = delete;
 
-  int handle_timeout (const ACE_Time_Value &current_time,
-                      const void *arg) override
+  int handle_timeout (ACE_Time_Value const &current_time,
+                      void const *arg) override
   {
-    time_t epoch = ((timespec_t)current_time).tv_sec;
+    time_t const epoch = static_cast<timespec_t> (current_time).tv_sec;
 
-    const TemperatureSensor *const_sensor =
-      reinterpret_cast<const TemperatureSensor *> (arg);
-    TemperatureSensor *sensor =
+    TemperatureSensor const *const_sensor =
+      static_cast<TemperatureSensor const *> (arg);
+    TemperatureSensor *const sensor =
       const_cast<TemperatureSensor *> (const_sensor);
 
-    int queryCount = sensor->querySensor ();
+    int const query_count = sensor->querySensor ();
     this->updateAverageTemperature (sensor);
 
     ACE_DEBUG ((LM_INFO,
-                ACE_TEXT ("%s\t")
+                ACE_TEXT ("%C\t")
                 ACE_TEXT ("%d/%d\t")
                 ACE_TEXT ("%.2f/%.2f\t")
-                ACE_TEXT ("%s\n"),
-                sensor->location (),
+                ACE_TEXT ("%C\n"),
+                sensor->location ().c_str (),
                 ++this->counter_,
-                queryCount,
+                query_count,
                 this->averageTemperature_,
                 sensor->temperature (),
-                ACE_OS::ctime(&epoch)));
+                ACE_OS::ctime (&epoch)));
     return 0;
   }
 
@@ -89,8 +90,8 @@ private:
     // ...
   }
 
-  int counter_;
-  float averageTemperature_;
+  int counter_ {};
+  float averageTemperature_ {};
 };
 // Listing 1
 
@@ -99,7 +100,15 @@ private:
 class SigintHandler : public ACE_Event_Handler
 {
 public:
-  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override
+  SigintHandler () = default;
+  SigintHandler (SigintHandler const &) = delete;
+  SigintHandler (SigintHandler &&) = delete;
+  SigintHandler &operator= (SigintHandler const &) = delete;
+  SigintHandler &operator= (SigintHandler &&) = delete;
+
+  int handle_signal (int signum,
+                     siginfo_t * = nullptr,
+                     ucontext_t * = nullptr) override
   {
     if (signum == SIGINT)
       {
@@ -111,40 +120,43 @@ public:
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
+  std::unique_ptr<TemperatureQueryHandler> temperatureMonitor =
+    std::make_unique<TemperatureQueryHandler> ();
+
   // Listing 2 code/ch07
-  TemperatureQueryHandler *temperatureMonitor =
-    new TemperatureQueryHandler ();
   // Listing 2
 
-  ACE_Time_Value initialDelay (3);
-  ACE_Time_Value intervalOne (5);
+  ACE_Time_Value const initialDelay {3};
+  ACE_Time_Value const intervalOne {5};
   // Listing 3 code/ch07
-  TemperatureSensor *sensorOne =
-    new TemperatureSensor ("Kitchen");
+  std::unique_ptr<TemperatureSensor> sensorOne =
+    std::make_unique<TemperatureSensor> ("Kitchen");
 
-  ACE_Reactor::instance ()->schedule_timer (temperatureMonitor,
-                                            sensorOne,
-                                            initialDelay,
-                                            intervalOne);
+  long const timer_id_one = ACE_Reactor::instance ()->schedule_timer (
+    temperatureMonitor.get (), sensorOne.get (), initialDelay, intervalOne);
   // Listing 3
 
-  ACE_Time_Value intervalTwo (4);
+  ACE_Time_Value const intervalTwo {4};
   // Listing 4 code/ch07
-  TemperatureSensor *sensorTwo =
-    new TemperatureSensor ("Foyer");
+  std::unique_ptr<TemperatureSensor> sensorTwo =
+    std::make_unique<TemperatureSensor> ("Foyer");
 
-  ACE_Reactor::instance ()->schedule_timer (temperatureMonitor,
-                                            sensorTwo,
-                                            initialDelay,
-                                            intervalTwo);
+  long const timer_id_two = ACE_Reactor::instance ()->schedule_timer (
+    temperatureMonitor.get (), sensorTwo.get (), initialDelay, intervalTwo);
   // Listing 4
 
-  SigintHandler *handleExit = new SigintHandler ();
+  std::unique_ptr<SigintHandler> handleExit =
+    std::make_unique<SigintHandler> ();
 
   ACE_Reactor::instance ()->register_handler (SIGINT,
-                                              handleExit);
+                                              handleExit.get ());
 
   ACE_Reactor::instance ()->run_reactor_event_loop ();
+  ACE_Reactor::instance ()->cancel_timer (timer_id_one);
+  ACE_Reactor::instance ()->cancel_timer (timer_id_two);
+  ACE_Sig_Set signals;
+  signals.sig_add (SIGINT);
+  ACE_Reactor::instance ()->remove_handler (signals);
 
   return 0;
 }

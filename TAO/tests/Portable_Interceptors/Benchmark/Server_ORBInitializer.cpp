@@ -3,8 +3,8 @@
 #include "Interceptor_Type.h"
 #include "server_interceptors.h"
 
-Server_ORBInitializer::Server_ORBInitializer (int interceptor_type)
-  :  interceptor_type_ (interceptor_type)
+Server_ORBInitializer::Server_ORBInitializer (Interceptor_Type interceptor_type)
+  : interceptor_type_ (interceptor_type)
 {
 }
 
@@ -18,16 +18,15 @@ void
 Server_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-  PortableInterceptor::ServerRequestInterceptor_ptr tmp =
-    PortableInterceptor::ServerRequestInterceptor::_nil ();
+  PortableInterceptor::ServerRequestInterceptor_ptr tmp {};
 
   switch (this->interceptor_type_)
     {
     default:
-    case IT_NONE:
+    case Interceptor_Type::none:
       return;
 
-    case IT_NOOP:
+    case Interceptor_Type::noop:
       {
         // Installing the Vault interceptor
         ACE_NEW_THROW_EX (tmp,
@@ -35,7 +34,7 @@ Server_ORBInitializer::post_init (
                           CORBA::NO_MEMORY ());
         break;
       }
-    case IT_CONTEXT:
+    case Interceptor_Type::context:
       {
         // Installing the Vault interceptor
         ACE_NEW_THROW_EX (tmp,
@@ -43,7 +42,7 @@ Server_ORBInitializer::post_init (
                           CORBA::NO_MEMORY ());
         break;
       }
-    case IT_DYNAMIC:
+    case Interceptor_Type::dynamic:
       {
         // Installing the Vault interceptor
         ACE_NEW_THROW_EX (tmp,
@@ -53,7 +52,8 @@ Server_ORBInitializer::post_init (
       }
     }
 
-  PortableInterceptor::ServerRequestInterceptor_var interceptor = tmp;
+  // The var takes ownership of the allocated interceptor.
+  PortableInterceptor::ServerRequestInterceptor_var const interceptor (tmp);
 
   info->add_server_request_interceptor (interceptor.in ());
 }

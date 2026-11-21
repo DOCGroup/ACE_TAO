@@ -49,11 +49,13 @@ void *ptr;
 int
 recvdata(SOCKET sock, char *ptr, int nbytes) {
 
-  int nleft, nread;
+  int nleft;
 
   nleft = nbytes;
   while (nleft > 0)
     {
+      int nread;
+
       D_PRINTF( "In recvdata(%d, %d)\n", sock, nleft );
       nread = NETREAD(sock, ptr, nleft);
       D_PRINTF( "NETREAD() returned %d\n", nread );
@@ -80,12 +82,14 @@ recvdata(SOCKET sock, char *ptr, int nbytes) {
  */
 int
 senddata(SOCKET sock, char *ptr, int nbytes) {
-  int nleft, nwritten;
+  int nleft;
 
   D_PRINTF( "In senddata(%d, \"%.*s\", %d)\n", sock, nbytes, ptr, nbytes );
   nleft = nbytes;
   while (nleft > 0)
     {
+      int nwritten;
+
       nwritten = NETWRITE(sock, ptr, nleft);
       D_PRINTF( "senddata() returned %d\n", nwritten );
       if (BADSOCKET(nwritten))
@@ -115,12 +119,9 @@ timeval_to_text(const struct timeval *the_timeval) {
    */
   THREAD static char timeval_as_text[SIZEOF_TIMEVALTEXT+1];
   int seconds, microseconds;
-  int returnval = 0;
-
   seconds = the_timeval->tv_sec;
   microseconds = the_timeval->tv_usec;
-  returnval = sprintf(timeval_as_text,
-                      "%10d.%6.6d\t", seconds, microseconds);
+  sprintf(timeval_as_text, "%10d.%6.6d\t", seconds, microseconds);
   return timeval_as_text;
 }
 
@@ -131,21 +132,17 @@ double_to_text(const double the_double) {
    * given a double, return text
    */
   THREAD static char double_as_text[SIZEOF_DOUBLETEXT + 1];
-  int returnval = 0;
-
-  returnval = sprintf(double_as_text, "%17.01f\t", the_double);
+  sprintf(double_as_text, "%17.01f\t", the_double);
   return(double_as_text);
 }
 
 struct timeval
 text_to_timeval(char *timeval_as_text) {
-  int returnval = 0;
   long int seconds, microseconds;
   struct timeval the_timeval;
 
   D_PRINTF("T/%d %s\n", (int)timeval_as_text, timeval_as_text);
-  returnval = sscanf(timeval_as_text, "%ld.%ld",
-                     &seconds, &microseconds);
+  sscanf(timeval_as_text, "%ld.%ld", &seconds, &microseconds);
   the_timeval.tv_sec = seconds;
   the_timeval.tv_usec = microseconds;
   return the_timeval;
@@ -154,10 +151,9 @@ text_to_timeval(char *timeval_as_text) {
 double
 text_to_double(char *double_as_text) {
   double the_double = 0;
-  int returnval = 0;
 
   D_PRINTF("D/%d %s\n", (int)double_as_text, double_as_text);
-  returnval = sscanf(double_as_text, "%lf", &the_double);
+  sscanf(double_as_text, "%lf", &the_double);
   return(the_double);
 }
 
@@ -318,7 +314,7 @@ text_to_stats(char *stats_as_text) {
   the_stats->datatime = text_to_timeval(strtok((char *)0, "\t"));
   the_stats->totalpages = (unsigned long) text_to_double(strtok((char *)0, "\t"));
   the_stats->total_num_of_files = (unsigned int) text_to_double(strtok((char *)0, "\t"));
-  for (i = 0; i < number_of_pages; i++)
+  for (i = 0; i < number_of_pages; ++i)
     {
       the_stats->page_numbers[i] = (unsigned int) text_to_double(strtok((char *)0, "\t"));
     }
@@ -360,7 +356,7 @@ stats_to_text(const stats_t *the_stats) {
   tmpbuf = double_to_text((the_stats->total_num_of_files));
   strcat(stats_as_text, tmpbuf);
 
-  for (i = 0; i < number_of_pages; i++)
+  for (i = 0; i < number_of_pages; ++i)
     {
       tmpbuf = double_to_text((the_stats->page_numbers[i]));
       strcat(stats_as_text, tmpbuf);
@@ -554,7 +550,7 @@ rqstat_fprint(FILE *f, rqst_stats_t *stats)
 {
     struct timeval meantime, /*vartime,*/ stdtime;
 
-    fprintf(f, "%d connection(s) to server, %d errors\n",
+    fprintf(f, "%lu connection(s) to server, %lu errors\n",
             stats->totalconnects, stats->totalerrs);
 
     if (stats->totalconnects == 0) {

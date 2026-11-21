@@ -30,7 +30,8 @@ class ACE_INET_Addr;
 
 namespace ACE
 {
-  // = Socket connection establishment calls.
+  /// @name Socket connection utilities
+  /// @{
 
   /// Bind a new unused port to @a handle.
   extern ACE_Export int bind_port (ACE_HANDLE handle,
@@ -96,6 +97,7 @@ namespace ACE
    * so it only gets checked once.
    */
   extern ACE_Export int ipv6_enabled ();
+  /// @}
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

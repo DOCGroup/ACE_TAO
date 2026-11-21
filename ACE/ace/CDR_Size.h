@@ -40,7 +40,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_SizeCDR
 {
 public:
-  /// Default constructor.
   ACE_SizeCDR (ACE_CDR::Octet major_version = ACE_CDR_GIOP_MAJOR_VERSION,
                ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
@@ -53,8 +52,9 @@ public:
   /// Return current size.
   size_t total_length () const;
 
-  // Return 0 on failure and 1 on success.
-  //@{ @name Size-calculating pseudo-write operations
+  /// Return 0 on failure and 1 on success.
+  /// @name Size-calculating pseudo-write operations
+  /// @{
   ACE_CDR::Boolean write_boolean (ACE_CDR::Boolean x);
   ACE_CDR::Boolean write_char (ACE_CDR::Char x);
   ACE_CDR::Boolean write_wchar (ACE_CDR::WChar x);
@@ -86,12 +86,13 @@ public:
 #if !defined(ACE_LACKS_STD_WSTRING)
   ACE_CDR::Boolean write_wstring (const std::wstring &x);
 #endif
-  //@}
+  /// @}
 
   /// @note the portion written starts at <x> and ends
   ///    at <x + length>.
   /// The length is *NOT* stored into the CDR stream.
-  //@{ @name Array write operations
+  /// @name Array write operations
+  /// @{
   ACE_CDR::Boolean write_boolean_array (const ACE_CDR::Boolean *x,
                                         ACE_CDR::ULong length);
   ACE_CDR::Boolean write_char_array (const ACE_CDR::Char *x,
@@ -129,10 +130,10 @@ public:
                size_t align);
 
 private:
-  ACE_SizeCDR (const ACE_SizeCDR&) = delete;
-  ACE_SizeCDR& operator= (const ACE_SizeCDR&) = delete;
-  ACE_SizeCDR (ACE_SizeCDR&&) = delete;
-  ACE_SizeCDR& operator= (ACE_SizeCDR&&) = delete;
+  ACE_SizeCDR (ACE_SizeCDR const &) = delete;
+  ACE_SizeCDR &operator= (ACE_SizeCDR const &) = delete;
+  ACE_SizeCDR (ACE_SizeCDR &&) = delete;
+  ACE_SizeCDR &operator= (ACE_SizeCDR &&) = delete;
 
   ACE_CDR::Boolean write_1 (const ACE_CDR::Octet *x);
   ACE_CDR::Boolean write_2 (const ACE_CDR::UShort *x);
@@ -157,16 +158,15 @@ private:
                                 size_t align,
                                 ACE_CDR::ULong length);
 
-
   ACE_CDR::Boolean write_wchar_array_i (const ACE_CDR::WChar* x,
                                         ACE_CDR::ULong length);
 
 private:
   /// Set to false when an error occurs.
-  bool good_bit_;
+  bool good_bit_ {true};
 
   /// Current size.
-  size_t size_;
+  size_t size_ {};
 
 protected:
   /// GIOP version information
@@ -246,7 +246,6 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_SizeCDR &ss,
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* __ACE_INLINE__ */
-
 
 #include /**/ "ace/post.h"
 

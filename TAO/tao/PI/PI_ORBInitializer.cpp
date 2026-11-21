@@ -47,19 +47,19 @@ TAO_PI_ORBInitializer::register_policy_factories (
   // Bind the same policy factory to all PortableInterceptor related policy
   // types since a single policy factory is used to create each of the
   // different types of PortableInterceptor policies.
-  CORBA::PolicyType type[] = {
+  CORBA::PolicyType const type[] = {
     PortableInterceptor::PROCESSING_MODE_POLICY_TYPE
   };
 
-  const CORBA::PolicyType *end = type + sizeof (type) / sizeof (type[0]);
+  CORBA::PolicyType const *end = type + sizeof (type) / sizeof (type[0]);
 
-  for (CORBA::PolicyType *i = type; i != end; ++i)
+  for (CORBA::PolicyType const *i = type; i != end; ++i)
     {
       try
         {
           info->register_policy_factory (*i, this->policy_factory_.in ());
         }
-      catch (const ::CORBA::BAD_INV_ORDER& ex)
+      catch (::CORBA::BAD_INV_ORDER const &ex)
         {
           if (ex.minor () == (CORBA::OMGVMCID | 16))
             {

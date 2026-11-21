@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file PG_Null_Property_Validator.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_PG_NULL_PROPERTY_VALIDATOR_H
 #define TAO_PG_NULL_PROPERTY_VALIDATOR_H
@@ -19,7 +17,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -38,14 +35,14 @@ public:
    * This particular implementation performs no validation
    * whatsoever.
    */
-  void validate_property (const PortableGroup::Properties & props);
+  void validate_property (PortableGroup::Properties const & props);
 
   /// Validate the given criteria.
   /**
    * This particular implementation performs no validation
    * whatsoever.
    */
-  void validate_criteria (const PortableGroup::Properties & criteria);
+  void validate_criteria (PortableGroup::Properties const & criteria);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _MEM_MAP_STREAM_H
 #define _MEM_MAP_STREAM_H
 #include /**/ "ace/pre.h"
@@ -18,7 +17,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 #include "ace/Mem_Map.h"
 #include "ace/SOCK_Connector.h"
@@ -55,26 +53,28 @@ public:
 
   using STRAT_CONNECTOR = ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
 
-  // Mem_Map_Stream ();
-  // constructor added:KIRTHIKA
   /// Initialize this object.
   virtual int open (STRAT_CONNECTOR *connector,
                     const ACE_INET_Addr &);
 
-  /// Destructor.
   virtual ~Mem_Map_Stream ();
 
-  // = Accessor.
+  /// @name Accessor
+  /// @{
+
   /// Returns the underlying <ACE_SOCK_Stream>.
   ACE_SOCK_Stream &stream ();
 
-  // = I/O methods.
+  /// @}
+
+  /// @name I/O methods
+  /// @{
 
   /// Send <size> bytes in <buf> to the connected peer.  This is a
   /// completely unbuffered call.
   virtual ssize_t send_n (const void *buf,
                           size_t size,
-                          ACE_Time_Value *tv = 0);
+                          const ACE_Time_Value *tv = nullptr);
 
   /**
    * Return the next character in the stream and advance the <get>
@@ -141,18 +141,9 @@ public:
   /// Returns 1 if we're at the end of the HTTP stream, else 0.
   virtual int eof () const;
 
-
-  /*
-  typedef ACE_NOOP_Creation_Strategy<Svc_Handler>
-  NULL_CREATION_STRATEGY;
-  typedef ACE_NOOP_Concurrency_Strategy<Svc_Handler>
-  NULL_ACTIVATION_STRATEGY;
-  typedef ACE_Cached_Connect_Strategy<Svc_Handler,
-                                    ACE_SOCK_CONNECTOR,
-                                    ACE_SYNCH_NULL_MUTEX>
-                                    CACHED_CONNECT_STRATEGY;*/
-
   Svc_Handler *svc_handler ();
+
+  /// @}
 
 private:
   /**
@@ -162,34 +153,25 @@ private:
    */
   int grow_file_and_remap ();
 
-  //ACE_SOCK_Stream stream_;
-
   /**
    * Connection to peer. The granularity is at the Svc_Handler level.
    * The Svc_Handler has an SOCK_Stream.
    * Configure the Strategy Connector with a strategy that caches
    * connection.
    */
-  Svc_Handler *svc_handler_;
-  /*
-  NULL_CREATION_STRATEGY creation_strategy_;
-  NULL_ACTIVATION_STRATEGY activation_strategy_;
-  CACHED_CONNECT_STRATEGY caching_connect_strategy_;
-
-  STRAT_CONNECTOR *strat_connector_;  */
-
+  Svc_Handler *svc_handler_ {};
   /// Memory-mapped file that we're iterating over.
   ACE_Mem_Map mem_map_;
 
   /// Pointer to the address where the next <recv> method will start.
-  char *recv_pos_;
+  char *recv_pos_ {};
 
   /// Pointer to the address where the next <get_char> method will
   /// start.
-  char *get_pos_;
+  char *get_pos_ {};
 
   /// Address at the end of the file mapping.
-  char *end_of_mapping_plus1_;
+  char *end_of_mapping_plus1_ {};
 };
 
 #include /**/ "ace/post.h"

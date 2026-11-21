@@ -1,6 +1,4 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Network_Priority_Hook.h
  *
@@ -9,9 +7,6 @@
  *  @author  Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
-
 #ifndef TAO_NETWORK_PRIORITY_HOOK_H
 #define TAO_NETWORK_PRIORITY_HOOK_H
 
@@ -44,13 +39,11 @@ public:
   virtual void update_network_priority (TAO_Root_POA& poa,
                                         TAO_POA_Policy_Set& poa_policy_set);
 
-
   virtual void set_dscp_codepoint (TAO_ServerRequest &req, TAO_Root_POA& poa);
 
   /// Static initializer ensures the factory is loaded
   static int initialize ();
 };
-
 
 static int
 TAO_Requires_Network_Priority_Hook =

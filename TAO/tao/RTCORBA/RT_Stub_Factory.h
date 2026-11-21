@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    RT_Stub_Factory.h
  *
@@ -11,7 +10,6 @@
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  *  @author  Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_RT_STUB_FACTORY_H_
 #define TAO_RT_STUB_FACTORY_H_
@@ -45,15 +43,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTCORBA_Export TAO_RT_Stub_Factory : public TAO_Stub_Factory
 {
 public:
-  // -- Ctor/Dtor --
   ~TAO_RT_Stub_Factory () override;
 
   /// Creates a Stub Object.
-  TAO_Stub *create_stub (const char *repository_id,
-                         const TAO_MProfile &profiles,
+  TAO_Stub *create_stub (char const *repository_id,
+                         TAO_MProfile const &profiles,
                          TAO_ORB_Core *orb_core) override;
 };
-
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, TAO_RT_Stub_Factory)
 ACE_FACTORY_DECLARE (TAO_RTCORBA, TAO_RT_Stub_Factory)

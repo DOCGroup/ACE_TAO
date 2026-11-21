@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BUFFERED_ONEWAYS_TEST_I_H
 #define TAO_BUFFERED_ONEWAYS_TEST_I_H
 
@@ -21,17 +20,25 @@
 class test_i : public POA_test
 {
 public:
-  /// ctor.
-  test_i (CORBA::ORB_ptr orb);
+  explicit test_i (CORBA::ORB_ptr orb);
 
-  // = The test interface methods.
-  void method (CORBA::ULong request_number);
+  ~test_i () override = default;
 
-  void shutdown ();
+  test_i (test_i const &) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i &&) = delete;
+
+  /// @name Test interface methods
+  /// @{
+  void method (CORBA::ULong request_number) override;
+
+  void shutdown () override;
+  /// @}
 
 private:
   /// The ORB.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 #endif /* TAO_BUFFERED_ONEWAYS_TEST_I_H */

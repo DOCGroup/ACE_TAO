@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   COIOP_Transport.h
  *
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_COIOP_TRANSPORT_H
 #define TAO_COIOP_TRANSPORT_H
@@ -28,13 +26,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Forward decls.
 class TAO_COIOP_Connection_Handler;
 class TAO_ORB_Core;
 class TAO_Operation_Details;
 class TAO_Acceptor;
 
-// Service Handler for this transport
+/// Service handler type for the COIOP transport.
 using TAO_COIOP_SVC_HANDLER = ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 
 /**
@@ -46,12 +43,10 @@ using TAO_COIOP_SVC_HANDLER = ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 class TAO_Strategies_Export TAO_COIOP_Transport : public TAO_Transport
 {
 public:
-  /// Constructor.
   TAO_COIOP_Transport (TAO_COIOP_Connection_Handler *handler,
                        TAO_ORB_Core *orb_core);
 
-  /// Default destructor.
-  ~TAO_COIOP_Transport () = default;
+  ~TAO_COIOP_Transport () override = default;
 
   /// Look for the documentation in Transport.h.
   int handle_input (TAO_Resume_Handle &rh,
@@ -61,7 +56,7 @@ protected:
    *
    * These are implementations of template methods declared by TAO_Transport.
    */
-  //@{
+  /// @{
   ACE_Event_Handler *event_handler_i () override;
   TAO_Connection_Handler *connection_handler_i () override;
 
@@ -82,7 +77,7 @@ protected:
 
   int register_handler () override;
 
-  ///@}
+  /// @}
 public:
   /// @todo These methods IMHO should have more meaningful names.
   /// The names seem to indicate nothing.

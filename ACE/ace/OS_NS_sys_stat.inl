@@ -116,7 +116,9 @@ namespace ACE_OS
         return size;
       }
     else
-      return -1;
+      {
+        return -1;
+      }
 #else /* !ACE_LACKS_STAT */
     ACE_stat sb;
     return ACE_OS::stat (filename, &sb) == -1 ?

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    DII_Reply_Dispatcher.h
  *
@@ -44,6 +43,11 @@ public:
   TAO_DII_Deferred_Reply_Dispatcher (CORBA::Request_ptr req,
                                      TAO_ORB_Core *orb_core);
 
+  TAO_DII_Deferred_Reply_Dispatcher (TAO_DII_Deferred_Reply_Dispatcher const &) = delete;
+  TAO_DII_Deferred_Reply_Dispatcher &operator= (TAO_DII_Deferred_Reply_Dispatcher const &) = delete;
+  TAO_DII_Deferred_Reply_Dispatcher (TAO_DII_Deferred_Reply_Dispatcher &&) = delete;
+  TAO_DII_Deferred_Reply_Dispatcher &operator= (TAO_DII_Deferred_Reply_Dispatcher &&) = delete;
+
   /// The Reply_Dispatcher methods
   int dispatch_reply (TAO_Pluggable_Reply_Params &param) override;
 
@@ -57,15 +61,9 @@ public:
   }
 
 protected:
-  /// Destructor.
   ~TAO_DII_Deferred_Reply_Dispatcher () = default;
 
 private:
-  TAO_DII_Deferred_Reply_Dispatcher (TAO_DII_Deferred_Reply_Dispatcher const &) = delete;
-  TAO_DII_Deferred_Reply_Dispatcher &operator= (TAO_DII_Deferred_Reply_Dispatcher const &) = delete;
-  TAO_DII_Deferred_Reply_Dispatcher (TAO_DII_Deferred_Reply_Dispatcher &&) = delete;
-  TAO_DII_Deferred_Reply_Dispatcher &operator= (TAO_DII_Deferred_Reply_Dispatcher &&) = delete;
-
   /// Where the reply needs to go.
   CORBA::Request_var req_;
 };
@@ -84,17 +82,17 @@ public:
                                      TAO_ORB_Core *orb_core);
   ~TAO_DII_Asynch_Reply_Dispatcher () override;
 
+  TAO_DII_Asynch_Reply_Dispatcher (TAO_DII_Asynch_Reply_Dispatcher const &) = delete;
+  TAO_DII_Asynch_Reply_Dispatcher &operator= (TAO_DII_Asynch_Reply_Dispatcher const &) = delete;
+  TAO_DII_Asynch_Reply_Dispatcher (TAO_DII_Asynch_Reply_Dispatcher &&) = delete;
+  TAO_DII_Asynch_Reply_Dispatcher &operator= (TAO_DII_Asynch_Reply_Dispatcher &&) = delete;
+
   /// The Reply_Dispatcher methods
   int dispatch_reply (TAO_Pluggable_Reply_Params &param) override;
 
   void connection_closed () override;
 
 private:
-  TAO_DII_Asynch_Reply_Dispatcher (TAO_DII_Asynch_Reply_Dispatcher const &) = delete;
-  TAO_DII_Asynch_Reply_Dispatcher &operator= (TAO_DII_Asynch_Reply_Dispatcher const &) = delete;
-  TAO_DII_Asynch_Reply_Dispatcher (TAO_DII_Asynch_Reply_Dispatcher &&) = delete;
-  TAO_DII_Asynch_Reply_Dispatcher &operator= (TAO_DII_Asynch_Reply_Dispatcher &&) = delete;
-
   /// The buffer that is used to initialise the data block
   char buf_[ACE_CDR::DEFAULT_BUFSIZE];
 

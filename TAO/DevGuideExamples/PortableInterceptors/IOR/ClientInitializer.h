@@ -10,9 +10,14 @@ class ClientInitializer :
   public virtual ::CORBA::LocalObject
 {
  public:
-  ClientInitializer ();
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  ClientInitializer (ClientInitializer const &) = delete;
+  ClientInitializer (ClientInitializer &&) = delete;
+  ClientInitializer &operator= (ClientInitializer const &) = delete;
+  ClientInitializer &operator= (ClientInitializer &&) = delete;
+
+  ClientInitializer () = default;
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 };
 
 #endif

@@ -1,5 +1,9 @@
-// This file defines the Options class for CPP-inclient. IBM C++ compiler'd
-// template auto-instantiator needs this in a separate file.
+/**
+ * @file CPP-inclient.h
+ *
+ * Defines the CPP-inclient Options class. IBM's C++ template auto-instantiator
+ * requires this class to be in a separate file.
+ */
 
 #ifndef __CPP_INCLIENT_H
 #define __CPP_INCLIENT_H
@@ -8,99 +12,92 @@
 #include "ace/Barrier.h"
 #include "ace/Time_Value.h"
 
+/// Defines the options for the client test.
 class Options
-  // = TITLE
-  //   Define the options for this test.
 {
 public:
   Options ();
-  // Constructor.
 
   ~Options ();
-  // Destructor.
 
+  /// Parses the command-line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
-  // Parse the command-line arguments.
 
+  /// Returns the delay used to control the message transmission rate.
   const ACE_Time_Value &sleep_time () const;
-  // Return the amount of time to sleep in order to implement the
-  // proper transmission rates.
 
+  /// Returns the server port.
   u_short port () const;
-  // Port of the server.
 
+  /// Returns the server host.
   const ACE_TCHAR *host () const;
-  // Host of the server.
 
+  /// Returns the number of client threads.
   size_t threads () const;
-  // Number of threads.
 
+  /// Returns the string that shuts down the client and server.
   const ACE_TCHAR *quit_string () const;
-  // String that shuts down the client/server.
 
+  /// Reads data from the selected source.
   ssize_t read (void *buf, size_t len, size_t &iterations);
-  // Read from the appropriate location.
 
+  /// Returns the length of the message to send.
   size_t message_len () const;
-  // Returns the length of the message to send.
 
+  /// Returns the message buffer.
   const void *message_buf () const;
-  // Returns a pointer to the message.
 
+  /// Returns the client thread entry point.
   ACE_THR_FUNC thr_func ();
-  // Returns a pointer to the entry point into the thread that runs
-  // the client test function.
 
 private:
+  /// Initializes the message and synchronization barrier.
   int init ();
-  // Initialize the message we're sending to the user and set up the
-  // barrier.
 
+  /// Performs behavior shared by the one-way and two-way client tests.
   char *shared_client_test (u_short port,
                             ACE_SOCK_Stream &cli_stream);
-  // Performs the shared behavior of the oneway and twoway client
-  // tests.
 
+  /// Runs the two-way client test.
   static void *twoway_client_test (void *);
-  // Performs the twoway test.
 
+  /// Runs the one-way client test.
   static void *oneway_client_test (void *);
-  // Performs the oneway test.
 
+  /// Server host.
   const ACE_TCHAR *host_;
-  // Host of the server.
 
+  /// Server port.
   u_short port_;
-  // Port of the server.
 
+  /// Delay between messages.
   ACE_Time_Value sleep_time_;
-  // Sleep_Time value.
 
+  /// Number of client threads.
   size_t threads_;
-  // Number of threads.
 
+  /// String that shuts down the client and server.
   const ACE_TCHAR *quit_string_;
-  // String that shuts down the client/server.
 
+  /// Size of the message sent to the server.
   size_t message_len_;
-  // Size of the message we send to the server.
 
+  /// Message buffer sent to the server.
   char *message_buf_;
-  // Pointer to the message we send to the server.
 
+  /// Input source, either standard input or the message generator.
   ACE_HANDLE io_source_;
-  // Are we reading I/O from ACE_STDIN or from our generator?
 
+  /// Number of test iterations.
   size_t iterations_;
-  // Number of iterations.
 
+  /// Indicates whether the client uses one-way or two-way calls.
   char oneway_;
-  // Are we running oneway or twoway?
 
   // Please leave the ; inside the parenthesis to avoid Green Hills
   // (and probably other) compiler warning about extra ;.
+  /// Synchronizes the start of all client threads.
   ACE_MT (ACE_Barrier *barrier_;)
-  // Barrier used to synchronize the start of all the threads.
 };
 
 #endif /* __CPP_INCLIENT_H */

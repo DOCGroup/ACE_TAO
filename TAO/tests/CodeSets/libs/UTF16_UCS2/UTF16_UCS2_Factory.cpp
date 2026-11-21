@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "UTF16_UCS2_Factory.h"
 
 ACE_STATIC_SVC_DEFINE (UTF16_UCS2_Factory,

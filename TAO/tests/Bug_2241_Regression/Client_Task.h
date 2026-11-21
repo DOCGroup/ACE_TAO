@@ -9,12 +9,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 #include "tao/ORB.h"
 
-
 /// Implement a Task to run the client as a thread
 class Client_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Client_Task (ACE_TCHAR const *input,
                CORBA::ORB_ptr corb,
                ACE_Thread_Manager *thr_mgr);
@@ -27,6 +25,7 @@ public:
   int svc () override;
 
 private:
+  // Borrowed from main; the task finishes before the caller's argument storage expires.
   ACE_TCHAR const *input_;
 
   CORBA::ORB_var corb_;

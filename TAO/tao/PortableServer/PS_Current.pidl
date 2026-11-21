@@ -17,7 +17,6 @@ module PortableServer
 {
 # pragma version PortableServer 2.3
 
-  // Current interface.
   local interface Current : CORBA::Current
   {
 #   pragma version Current 2.3

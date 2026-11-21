@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    objref_struct.h
  *
@@ -7,26 +5,20 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #ifndef PARAM_TEST_OBJREF_STRUCT_H
 #define PARAM_TEST_OBJREF_STRUCT_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//           test variable sized structs
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test variable sized structs
 
 class Test_Objref_Struct
 {
 public:
-  /// ctor
   Test_Objref_Struct ();
 
-  /// dtor
-  ~Test_Objref_Struct ();
+  ~Test_Objref_Struct () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -54,7 +46,7 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   Param_Test::Objref_Struct in_;

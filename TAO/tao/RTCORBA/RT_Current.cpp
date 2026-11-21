@@ -23,9 +23,9 @@ TAO_RT_Current::TAO_RT_Current (TAO_ORB_Core *orb_core)
 RTCORBA::Priority
 TAO_RT_Current::the_priority ()
 {
-  TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks ();
+  TAO_Protocols_Hooks * const tph = this->orb_core_->get_protocols_hooks ();
 
-  RTCORBA::Priority priority = 0;
+  RTCORBA::Priority priority {};
 
   int const result =
       tph->get_thread_CORBA_priority (priority);
@@ -33,8 +33,10 @@ TAO_RT_Current::the_priority ()
   if (result == -1)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG, "ERROR: TAO_RT_Current::the_priority. "
+        {
+          TAOLIB_DEBUG ((LM_DEBUG, "ERROR: TAO_RT_Current::the_priority. "
                     "RT CORBA Priority accessed in a thread where it has not been set.\n"));
+        }
       // Spec does not define a minor code
       throw CORBA::INITIALIZE ();
     }
@@ -45,7 +47,7 @@ TAO_RT_Current::the_priority ()
 void
 TAO_RT_Current::the_priority (RTCORBA::Priority the_priority)
 {
-  TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks ();
+  TAO_Protocols_Hooks * const tph = this->orb_core_->get_protocols_hooks ();
 
   if (tph->set_thread_CORBA_priority (the_priority) == -1)
     {
@@ -57,11 +59,13 @@ TAO_RT_Current::the_priority (RTCORBA::Priority the_priority)
       // shall raise a DATA_CONVERSION system exception" i.e different exception.
 
       if (the_priority < 0) // short
-        throw CORBA::BAD_PARAM (
-                  CORBA::SystemException::_tao_minor_code (
-                  0,
-                  EINVAL),
-                  CORBA::COMPLETED_NO);
+        {
+          throw CORBA::BAD_PARAM (
+                    CORBA::SystemException::_tao_minor_code (
+                    0,
+                    EINVAL),
+                    CORBA::COMPLETED_NO);
+        }
 
       throw CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
     }

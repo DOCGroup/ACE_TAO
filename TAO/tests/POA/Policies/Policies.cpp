@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "tao/ORB.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/PortableServer/PortableServer.h"
@@ -20,23 +19,23 @@
 #include "ace/Log_Msg.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       // Initialize the ORB first.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       // Obtain the RootPOA.
-      CORBA::Object_var obj =
+      CORBA::Object_var const obj =
         orb->resolve_initial_references ("RootPOA");
 
       // Narrow to POA.
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (obj.in ());
 
       // Get the POAManager of the POA.
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
@@ -44,17 +43,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
 
       {
-        PortableServer::ThreadPolicy_var policy1 =
+        PortableServer::ThreadPolicy_var const policy1 =
           root_poa->create_thread_policy (PortableServer::ORB_CTRL_MODEL);
 
         CORBA::Any policy_value;
         policy_value <<= PortableServer::ORB_CTRL_MODEL;
 
-        CORBA::Policy_var policy =
+        CORBA::Policy_var const policy =
           orb->create_policy (PortableServer::THREAD_POLICY_ID,
                               policy_value);
 
-        PortableServer::ThreadPolicy_var policy2 =
+        PortableServer::ThreadPolicy_var const policy2 =
           PortableServer::ThreadPolicy::_narrow (policy.in ());
 
         ACE_ASSERT (policy1->value () == policy2->value ());
@@ -63,51 +62,51 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
       {
-        PortableServer::LifespanPolicy_var policy1 =
+        PortableServer::LifespanPolicy_var const policy1 =
           root_poa->create_lifespan_policy (PortableServer::TRANSIENT);
 
         CORBA::Any policy_value;
         policy_value <<= PortableServer::TRANSIENT;
 
-        CORBA::Policy_var policy =
+        CORBA::Policy_var const policy =
           orb->create_policy (PortableServer::LIFESPAN_POLICY_ID,
                               policy_value);
 
-        PortableServer::LifespanPolicy_var policy2 =
+        PortableServer::LifespanPolicy_var const policy2 =
           PortableServer::LifespanPolicy::_narrow (policy.in ());
 
         ACE_ASSERT (policy1->value () == policy2->value ());
       }
 
       {
-        PortableServer::IdUniquenessPolicy_var policy1 =
+        PortableServer::IdUniquenessPolicy_var const policy1 =
           root_poa->create_id_uniqueness_policy (PortableServer::UNIQUE_ID);
 
         CORBA::Any policy_value;
         policy_value <<= PortableServer::UNIQUE_ID;
 
-        CORBA::Policy_var policy =
+        CORBA::Policy_var const policy =
           orb->create_policy (PortableServer::ID_UNIQUENESS_POLICY_ID,
                               policy_value);
 
-        PortableServer::IdUniquenessPolicy_var policy2 =
+        PortableServer::IdUniquenessPolicy_var const policy2 =
           PortableServer::IdUniquenessPolicy::_narrow (policy.in ());
 
         ACE_ASSERT (policy1->value () == policy2->value ());
       }
 
       {
-        PortableServer::IdAssignmentPolicy_var policy1 =
+        PortableServer::IdAssignmentPolicy_var const policy1 =
           root_poa->create_id_assignment_policy (PortableServer::USER_ID);
 
         CORBA::Any policy_value;
         policy_value <<= PortableServer::USER_ID;
 
-        CORBA::Policy_var policy =
+        CORBA::Policy_var const policy =
           orb->create_policy (PortableServer::ID_ASSIGNMENT_POLICY_ID,
                               policy_value);
 
-        PortableServer::IdAssignmentPolicy_var policy2 =
+        PortableServer::IdAssignmentPolicy_var const policy2 =
           PortableServer::IdAssignmentPolicy::_narrow (policy.in ());
 
         ACE_ASSERT (policy1->value () == policy2->value ());
@@ -116,51 +115,51 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
 
       {
-        PortableServer::ImplicitActivationPolicy_var policy1 =
+        PortableServer::ImplicitActivationPolicy_var const policy1 =
           root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION);
 
         CORBA::Any policy_value;
         policy_value <<= PortableServer::IMPLICIT_ACTIVATION;
 
-        CORBA::Policy_var policy =
+        CORBA::Policy_var const policy =
           orb->create_policy (PortableServer::IMPLICIT_ACTIVATION_POLICY_ID,
                               policy_value);
 
-        PortableServer::ImplicitActivationPolicy_var policy2 =
+        PortableServer::ImplicitActivationPolicy_var const policy2 =
           PortableServer::ImplicitActivationPolicy::_narrow (policy.in ());
 
         ACE_ASSERT (policy1->value () == policy2->value ());
       }
 
       {
-        PortableServer::ServantRetentionPolicy_var policy1 =
+        PortableServer::ServantRetentionPolicy_var const policy1 =
           root_poa->create_servant_retention_policy (PortableServer::RETAIN);
 
         CORBA::Any policy_value;
         policy_value <<= PortableServer::RETAIN;
 
-        CORBA::Policy_var policy =
+        CORBA::Policy_var const policy =
           orb->create_policy (PortableServer::SERVANT_RETENTION_POLICY_ID,
                               policy_value);
 
-        PortableServer::ServantRetentionPolicy_var policy2 =
+        PortableServer::ServantRetentionPolicy_var const policy2 =
           PortableServer::ServantRetentionPolicy::_narrow (policy.in ());
 
         ACE_ASSERT (policy1->value () == policy2->value ());
       }
 
       {
-        PortableServer::RequestProcessingPolicy_var policy1 =
+        PortableServer::RequestProcessingPolicy_var const policy1 =
           root_poa->create_request_processing_policy (PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY);
 
         CORBA::Any policy_value;
         policy_value <<= PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY;
 
-        CORBA::Policy_var policy =
+        CORBA::Policy_var const policy =
           orb->create_policy (PortableServer::REQUEST_PROCESSING_POLICY_ID,
                               policy_value);
 
-        PortableServer::RequestProcessingPolicy_var policy2 =
+        PortableServer::RequestProcessingPolicy_var const policy2 =
           PortableServer::RequestProcessingPolicy::_narrow (policy.in ());
 
         ACE_ASSERT (policy1->value () == policy2->value ());
@@ -174,7 +173,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   "%s successful\n",
                   argv[0]));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught");
       return -1;

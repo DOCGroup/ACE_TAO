@@ -98,7 +98,7 @@ be_structure::gen_ostream_operator (TAO_OutStream *os,
       << "std::ostream &strm," << be_nl
       << this->name () << " const &";
 
-  std::size_t const n = this->pd_decls.size ();
+  size_t const n = this->pd_decls.size ();
 
   // be_exception is a subclass and could be empty.
   if (n > 0)
@@ -111,7 +111,7 @@ be_structure::gen_ostream_operator (TAO_OutStream *os,
       << "{" << be_idt_nl
       << "strm << \"" << this->name () << "(\"";
 
-  for (std::size_t i = 0; i < n; ++i)
+  for (size_t i = 0; i < n; ++i)
     {
       be_field *f = dynamic_cast<be_field*> (this->pd_decls[i]);
 

@@ -6,23 +6,34 @@
 
 class foo_i : public virtual POA_foo
 {
-  virtual char * foo_op (const char * inarg);
+public:
+  foo_i () = default;
+  foo_i (foo_i const &) = delete;
+  foo_i (foo_i &&) = delete;
+  foo_i &operator= (foo_i const &) = delete;
+  foo_i &operator= (foo_i &&) = delete;
 
-  virtual char * base_op (const char * inarg);
+  char * foo_op (char const *inarg) override;
+
+  char * base_op (char const *inarg) override;
 };
 
 class passer_i : public virtual POA_passer
 {
 public:
   passer_i (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
+  passer_i (passer_i const &) = delete;
+  passer_i (passer_i &&) = delete;
+  passer_i &operator= (passer_i const &) = delete;
+  passer_i &operator= (passer_i &&) = delete;
 
-  virtual void pass_ops (base_out outarg);
+  void pass_ops (base_out outarg) override;
 
-  virtual void pass_state (base_out outarg);
+  void pass_state (base_out outarg) override;
 
-  virtual void pass_nil (base_out outarg);
+  void pass_nil (base_out outarg) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 private:
   CORBA::ORB_var orb_;
   PortableServer::POA_var poa_;

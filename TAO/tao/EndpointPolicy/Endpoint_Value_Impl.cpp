@@ -1,11 +1,9 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file     Endpoint_Value_Impl.cpp
  *
  *  @author  Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
 
 #include "tao/EndpointPolicy/Endpoint_Value_Impl.h"
 

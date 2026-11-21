@@ -29,7 +29,9 @@ TAO_LF_Event::state_changed (LFS_STATE new_state, TAO_Leader_Follower &lf)
 
       /// Sort of double-checked optimization..
       if (this->follower_ != nullptr)
+      {
         this->follower_->signal ();
+      }
     }
 }
 

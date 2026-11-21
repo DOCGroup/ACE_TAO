@@ -20,7 +20,6 @@ ACE_POSIX_CB_Proactor::ACE_POSIX_CB_Proactor (size_t max_aio_operations)
   this->get_asynch_pseudo_task ().start ();
 }
 
-// Destructor.
 ACE_POSIX_CB_Proactor::~ACE_POSIX_CB_Proactor ()
 {
   this->close ();
@@ -36,7 +35,9 @@ void ACE_POSIX_CB_Proactor::aio_completion_func (sigval cb_data)
 {
   ACE_POSIX_CB_Proactor * impl = static_cast<ACE_POSIX_CB_Proactor *> (cb_data.sival_ptr);
   if ( impl != nullptr )
+  {
     impl->notify_completion (0);
+  }
 }
 
 #if defined (ACE_HAS_SIG_C_FUNC)
@@ -69,13 +70,14 @@ ACE_POSIX_CB_Proactor::notify_completion (int sig_num)
   return this->sema_.release();
 }
 
-
 ssize_t
 ACE_POSIX_CB_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
 {
   ssize_t const slot = ACE_POSIX_AIOCB_Proactor::allocate_aio_slot (result);
   if (slot == -1)
+  {
     return -1;
+  }
 
   // setup OS notification methods for this aio
   // @@ TODO: This gets the completion method back to this proactor to
@@ -121,11 +123,12 @@ ACE_POSIX_CB_Proactor::handle_events_i (u_long milli_seconds)
       int const lerror = errno;
       if (lerror != ETIME &&   // timeout
           lerror != EINTR )    // interrupted system call
-        ACELIB_ERROR ((LM_ERROR,
-                    ACE_TEXT("%N:%l:(%P | %t)::%p\n"),
-                    ACE_TEXT("ACE_POSIX_CB_Proactor::handle_events:")
-                    ACE_TEXT("semaphore acquire failed")
-                  ));
+        {
+          ACELIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("%N:%l:(%P | %t)::%p\n"),
+                         ACE_TEXT ("ACE_POSIX_CB_Proactor::handle_events:")
+                         ACE_TEXT ("semaphore acquire failed")));
+        }
     }
 
   size_t index = 0;          // start index to scan aiocb list
@@ -137,7 +140,7 @@ ACE_POSIX_CB_Proactor::handle_events_i (u_long milli_seconds)
   int ret_aio = 0;
   int ret_que = 0;
 
-  for (;; ret_aio++)
+  for (;; ++ret_aio)
     {
       ACE_POSIX_Asynch_Result * asynch_result =
           this->find_completed_aio (error_status,
@@ -146,7 +149,9 @@ ACE_POSIX_CB_Proactor::handle_events_i (u_long milli_seconds)
                                     count);
 
       if (asynch_result == nullptr)
-          break;
+      {
+        break;
+      }
 
       // Call the application code.
       this->application_specific_code (asynch_result,

@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 
 #ifdef ACE_HAS_NETLINK
@@ -27,8 +26,9 @@
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_time.h"
 
-#include <linux/rtnetlink.h>
+#include <memory>
 
+#include <linux/rtnetlink.h>
 
 /**
  * NETLINK SOCKET INTERFACE is a socket API communication
@@ -111,7 +111,6 @@
  };
 */
 
-
 // The global config params
 //
 static int one_button_test = 0;
@@ -128,7 +127,7 @@ get_if_index (const char*const interface,
   if_index = -1;
 
   struct ifreq if_req;
-  ACE_OS::memset (&if_req, 0, sizeof (struct ifreq));
+  ACE_OS::memset (std::addressof (if_req), 0, sizeof (struct ifreq));
 
   ACE_OS::strncpy (if_req.ifr_name,
                    static_cast<const char*> (interface),
@@ -137,15 +136,17 @@ get_if_index (const char*const interface,
   ACE_HANDLE s = ACE_OS::socket (AF_INET,SOCK_DGRAM,0);
 
   if (s == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("get_if_index - failed on\n")
-                       ACE_TEXT ("ACE_OS::socket")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("get_if_index - failed on\n")
+                         ACE_TEXT ("ACE_OS::socket")),
+                        -1);
+    }
 
   int result = ACE_OS::ioctl (s,
                               SIOCGIFINDEX,
-                              reinterpret_cast<char*> (&if_req));
+                              reinterpret_cast<char *> (std::addressof (if_req)));
 
   if (result == -1)
     {
@@ -174,7 +175,6 @@ struct Inet_Prefix
   ACE_UINT32 data[4];
 };
 
-
 /**
  * Contains header netlink message header of a type nlmsghdr with a
  * following request type dependent controlling structure, which is for
@@ -189,7 +189,6 @@ struct Netlink_Request
   char            buf_[256];
 };
 
-
 /**
  * The handler first is trying to delete an ip-address, further
  * to add the ip and, if successful to cleanup the address.
@@ -197,10 +196,8 @@ struct Netlink_Request
 class Secondary_Ipaddr_Handler : public ACE_Event_Handler
 {
 public:
-  // Default constructor
   Secondary_Ipaddr_Handler ();
 
-  // Destructor
   ~Secondary_Ipaddr_Handler () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -362,10 +359,12 @@ Secondary_Ipaddr_Handler::open (ACE_Reactor *const reactor,
   if (!reactor ||
       !ip_slash_mask || !ACE_OS::strlen (ip_slash_mask) ||
       !if_name || !ACE_OS::strlen (if_name))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("(%P) Secondary_Ipaddr_Handler::open: error ")
-                       ACE_TEXT("zero pointers or zero length strings used as input.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("(%P) Secondary_Ipaddr_Handler::open: error ")
+                         ACE_TEXT("zero pointers or zero length strings used as input.\n")),
+                        -1);
+    }
 
   this->reactor (reactor);
 
@@ -377,28 +376,34 @@ Secondary_Ipaddr_Handler::open (ACE_Reactor *const reactor,
   if (this->socket ().open (this->address_,
                             ACE_PROTOCOL_FAMILY_NETLINK,
                             NETLINK_ROUTE) == -1)
-    //FUZZ: disable check_for_lack_ACE_OS
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("(%P|%t) Secondary_Ipaddr_Handler::open: - failed\n")
-                       ACE_TEXT("to initialize netlink socket bu open ().\n")),
-                      -1);
-    //FUZZ: enable check_for_lack_ACE_OS
+    {
+      //FUZZ: disable check_for_lack_ACE_OS
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("(%P|%t) Secondary_Ipaddr_Handler::open: - failed\n")
+                         ACE_TEXT("to initialize netlink socket bu open ().\n")),
+                        -1);
+      //FUZZ: enable check_for_lack_ACE_OS
+    }
 
   // register with the reactor for input
   if (this->reactor ()->register_handler (this,
                                           ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("(%P|%t) Secondary_Ipaddr_Handler::open - ")
-                       ACE_TEXT("can't register with reactor for handling input.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("(%P|%t) Secondary_Ipaddr_Handler::open - ")
+                         ACE_TEXT("can't register with reactor for handling input.\n")),
+                        -1);
+    }
 
   if (this->reactor ()->schedule_timer (this,
                                         nullptr,
                                         ACE_Time_Value::zero) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("(%P) Secondary_Ipaddr_Handler::open - ")
-                       ACE_TEXT("can't schedule timer with reactor.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("(%P) Secondary_Ipaddr_Handler::open - ")
+                         ACE_TEXT("can't schedule timer with reactor.\n")),
+                        -1);
+    }
 
   this->seq_ = ACE_OS::time (nullptr);
 
@@ -425,7 +430,7 @@ Secondary_Ipaddr_Handler::handle_input (ACE_HANDLE)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%P) Secondary_Ipaddr_Handler::handle_input -  entered\n")));
 
-  nlmsghdr *hdr = nullptr;
+  nlmsghdr *hdr {};
   iovec iov;
 
   iov.iov_base = this->recv_buff_;
@@ -435,7 +440,7 @@ Secondary_Ipaddr_Handler::handle_input (ACE_HANDLE)
   ACE_Netlink_Addr raddr;
   raddr.set (0, 0);
 
-  rval_bytes = this->socket ().recv (&iov, 1, raddr);
+  rval_bytes = this->socket ().recv (std::addressof (iov), 1, raddr);
   switch (rval_bytes)
     {
     case -1: // Complain and leave
@@ -446,8 +451,8 @@ Secondary_Ipaddr_Handler::handle_input (ACE_HANDLE)
 
     case 0: // Complain and leave
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT("(%P) Secondary_Ipaddr_Handler::handle_input - "),
-                         ACE_TEXT("eof, closing daemon (fd = %d)\n"),
+                         ACE_TEXT("(%P) Secondary_Ipaddr_Handler::handle_input - ")
+                         ACE_TEXT("eof, closing daemon (fd = %H)\n"),
                          this->get_handle ()),
                         -1);
 
@@ -473,10 +478,12 @@ Secondary_Ipaddr_Handler::handle_input (ACE_HANDLE)
         }
 
       if (static_cast <int> (hdr->nlmsg_pid) != this->address_.get_pid () || hdr->nlmsg_seq != this->seq_)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("(%P) Secondary_Ipaddr_Handler::handle_input - ")
-                           ACE_TEXT("process id or message sequence is different\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("(%P) Secondary_Ipaddr_Handler::handle_input - ")
+                             ACE_TEXT("process id or message sequence is different\n")),
+                            -1);
+        }
 
       if (hdr->nlmsg_type == NLMSG_ERROR)
         {
@@ -521,7 +528,9 @@ Secondary_Ipaddr_Handler::handle_timeout (ACE_Time_Value const &,
                         -1);
     }
   else
+  {
     this->command_status_ = COMMAND_TIMEOUT; //invalidate command status
+  }
 
   switch (this->state_)
     {
@@ -575,7 +584,7 @@ Secondary_Ipaddr_Handler::handle_timeout (ACE_Time_Value const &,
     }
 
   this->schedule_one_sec_timer ();
-  this->state_++;
+  ++this->state_;
   return 0;
 }
 
@@ -616,10 +625,12 @@ Secondary_Ipaddr_Handler::schedule_one_sec_timer ()
   if (this->reactor ()->schedule_timer (this,
                                         nullptr,
                                         one_sec) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("(%P) Secondary_Ipaddr_Handler::schedule_one_sec_timer - ")
-                       ACE_TEXT("can't schedule timer with reactor.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("(%P) Secondary_Ipaddr_Handler::schedule_one_sec_timer - ")
+                         ACE_TEXT("can't schedule timer with reactor.\n")),
+                        -1);
+    }
   return 0;
 }
 
@@ -634,10 +645,12 @@ Secondary_Ipaddr_Handler::fill_inet_prefix (
                                             Inet_Prefix &inet_prefix,
                                             const char*const ip_slash_netmask)
 {
-  ACE_OS::memset (&inet_prefix, 0, sizeof inet_prefix);
+  ACE_OS::memset (std::addressof (inet_prefix), 0, sizeof inet_prefix);
   char* slash =  const_cast <char *> (ACE_OS::strchr (ip_slash_netmask,  '/'));
   if (slash)
+  {
     *slash = '\0'; // The idea from Igor Potulnitsky
+  }
 
   inet_prefix.family = AF_INET; // another option is AF_UNSPEC
   inet_prefix.bytelen = 4;
@@ -646,26 +659,37 @@ Secondary_Ipaddr_Handler::fill_inet_prefix (
   char ip_buff[32];
   ACE_OS::strncpy (ip_buff, ip_slash_netmask, sizeof (ip_buff));
 
-  char* to_search = ip_buff, *dot = nullptr;
+  char* to_search = ip_buff, *dot {};
 
-  for (int i = 0; i < 4; i++)
+  for (int i = 0; i < 4; ++i)
     {
       if (i < 3)
         {
           dot = ACE_OS::strchr (to_search,  '.');
           if (!dot || !ACE_OS::strlen (to_search))
-            return -1;
+            {
+              return -1;
+            }
           else
+          {
             *dot = '\0';
+          }
         }
       int num = ACE_OS::atoi (to_search);
       if (num < 0 || num > 255)
-        return -1;
+        {
+          return -1;
+        }
       else
-        ((u_char *) &inet_prefix.data)[i] = (u_char)num;
+      {
+        reinterpret_cast<u_char *> (std::addressof (inet_prefix.data[0]))[i] =
+          static_cast<u_char> (num);
+      }
 
       if (i < 3)
+      {
         to_search = dot + 1;
+      }
     }
 
   inet_prefix.bitlen = 32; // AF_INET: 32
@@ -675,7 +699,9 @@ Secondary_Ipaddr_Handler::fill_inet_prefix (
       int mask_len = 0;
       mask_len = ACE_OS::atoi (slash + 1);
       if (mask_len >= 0)
+      {
         inet_prefix.bitlen = mask_len;
+      }
       *slash = '/';
     }
   return 0;
@@ -689,7 +715,8 @@ Secondary_Ipaddr_Handler::fill_rtnetlink_request (
                                                   int data_length)
 {
   // points to the end of the aligned header
-  struct rtattr *rta = reinterpret_cast <struct rtattr*> (((reinterpret_cast <char*>(&hdr)) + NLMSG_ALIGN (hdr.nlmsg_len)));
+  struct rtattr *rta = reinterpret_cast<struct rtattr *> (
+    reinterpret_cast<char *> (std::addressof (hdr)) + NLMSG_ALIGN (hdr.nlmsg_len));
 
   rta->rta_type = type;
   rta->rta_len = RTA_LENGTH (data_length);
@@ -707,17 +734,19 @@ Secondary_Ipaddr_Handler::dispatch_ip_operation (
                                   if_name,
                                   this->netlink_request_,
                                   action) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Secondary_Ipaddr_Handler::ip_operation - "
-                       "init_netlink_request () failed.\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Secondary_Ipaddr_Handler::ip_operation - "
+                         "init_netlink_request () failed.\n"),
+                        -1);
+    }
 
   this->netlink_request_.nhdr_.nlmsg_seq = ++this->seq_;
   this->netlink_request_.nhdr_.nlmsg_flags |= NLM_F_ACK;
 
   iovec iov_send =
     {
-      static_cast <void*> (&this->netlink_request_.nhdr_),
+      std::addressof (this->netlink_request_.nhdr_),
       this->netlink_request_.nhdr_.nlmsg_len
     };
 
@@ -727,11 +756,13 @@ Secondary_Ipaddr_Handler::dispatch_ip_operation (
   if (this->socket ().send (&iov_send,
                             1,
                             addr_send) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("Secondary_Ipaddr_Handler::ip_operation - ")
-                       ACE_TEXT("send of request failed with errno %d.\n"),
-                       errno),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("Secondary_Ipaddr_Handler::ip_operation - ")
+                         ACE_TEXT("send of request failed with errno %d.\n"),
+                         errno),
+                        -1);
+    }
   return 0;
 }
 
@@ -744,10 +775,12 @@ Secondary_Ipaddr_Handler::delete_ip (
                                    ip_slash_mask,
                                    if_name,
                                    false) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("(%P) Secondary_Ipaddr_Handler::delete_ip - ")
-                       ACE_TEXT("dispatch_ip_operation() failed.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("(%P) Secondary_Ipaddr_Handler::delete_ip - ")
+                         ACE_TEXT("dispatch_ip_operation() failed.\n")),
+                        -1);
+    }
   return 0;
 }
 
@@ -759,10 +792,12 @@ Secondary_Ipaddr_Handler::add_ip (
   if (this->dispatch_ip_operation (ip_slash_mask,
                                    if_name,
                                    true) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("(%P) Secondary_Ipaddr_Handler::add_ip - ")
-                       ACE_TEXT("dispatch_ip_operation() failed.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("(%P) Secondary_Ipaddr_Handler::add_ip - ")
+                         ACE_TEXT("dispatch_ip_operation() failed.\n")),
+                        -1);
+    }
   return 0;
 }
 
@@ -773,7 +808,7 @@ Secondary_Ipaddr_Handler::init_netlink_request (
                                                 Netlink_Request& net_req,
                                                 bool action)
 {
-  ACE_OS::memset (&net_req, 0, sizeof(net_req));
+  ACE_OS::memset (std::addressof (net_req), 0, sizeof(net_req));
 
   // fill the request header
   net_req.nhdr_.nlmsg_len =
@@ -802,7 +837,7 @@ Secondary_Ipaddr_Handler::init_netlink_request (
 
   fill_rtnetlink_request (net_req.nhdr_,
                           IFA_LOCAL,
-                          &local_prefix.data,
+                          std::addressof (local_prefix.data),
                           local_prefix.bytelen);
 
   net_req.ifa_.ifa_prefixlen = local_prefix.bitlen; // number of bits in netmask
@@ -820,17 +855,21 @@ static int run_test (char*const ip_slash_netmask,
                            ip_slash_netmask,
                            if_name)
       == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("(%P) SOCK_Netlink_Test - run_test () failed ")
-                       ACE_TEXT("due to sec_ip_handler.open () error.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("(%P) SOCK_Netlink_Test - run_test () failed ")
+                         ACE_TEXT("due to sec_ip_handler.open () error.\n")),
+                        -1);
+    }
 
   ACE_Time_Value wait_time (4, 0);
 
   ACE_Reactor::instance()->run_reactor_event_loop (wait_time);
 
   if (sec_ip_handler.get_state () != Secondary_Ipaddr_Handler::SUCCESS)
+  {
     return -1;
+  }
 
   return 0;
 }

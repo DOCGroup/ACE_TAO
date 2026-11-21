@@ -43,8 +43,12 @@ class Client_Request_Interceptor
     public virtual Request_Interceptor
 {
 public:
-  /// Constructor.
-  Client_Request_Interceptor (const char *name);
+  explicit Client_Request_Interceptor (char const *name);
+
+  Client_Request_Interceptor (Client_Request_Interceptor const &) = delete;
+  Client_Request_Interceptor (Client_Request_Interceptor &&) = delete;
+  Client_Request_Interceptor &operator= (Client_Request_Interceptor const &) = delete;
+  Client_Request_Interceptor &operator= (Client_Request_Interceptor &&) = delete;
 
   /**
    * @name Methods Required by the Client Request Interceptor
@@ -54,26 +58,26 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all client request interceptors.
    */
-  //@{
-  virtual void send_request (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  /// @{
+  void send_request (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void send_poll (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_poll (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_reply (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_reply (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_exception (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_exception (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_other (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
-  //@}
+  void receive_other (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
+  /// @}
 
 private:
-  // Returns 1 if the client-side test is currently being run, and 0
-  // otherwise.
+  /// Returns 1 if the client-side test is currently being run, and 0
+  /// otherwise.
   CORBA::Boolean client_side_test (
     PortableInterceptor::ClientRequestInfo_ptr info);
 };

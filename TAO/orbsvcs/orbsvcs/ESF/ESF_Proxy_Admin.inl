@@ -18,7 +18,7 @@ template <class C>
 ACE_INLINE
 TAO_ESF_RefCountedRef<C>::~TAO_ESF_RefCountedRef ()
 {
-  if (this->counted_ != 0)
+  if (this->counted_ != nullptr)
     {
       this->counted_->_decr_refcnt ();
     }

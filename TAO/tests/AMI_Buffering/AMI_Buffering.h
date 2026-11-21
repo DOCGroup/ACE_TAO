@@ -10,7 +10,6 @@ class AMI_Buffering
   : public virtual POA_Test::AMI_Buffering
 {
 public:
-  /// Constructor
   AMI_Buffering (CORBA::ORB_ptr orb,
                  Test::AMI_Buffering_Admin_ptr admin);
   AMI_Buffering (AMI_Buffering const &) = delete;
@@ -18,7 +17,8 @@ public:
   AMI_Buffering (AMI_Buffering &&) = delete;
   AMI_Buffering &operator= (AMI_Buffering &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void receive_data (Test::Payload const &the_payload) override;
 
   void flush () override;
@@ -26,6 +26,7 @@ public:
   void sync () override;
 
   void shutdown () override;
+  /// @}
 
   /// internal implementation of shutdown. This
   void try_shutdown ();
@@ -33,7 +34,7 @@ public:
   class Nest_Guard
     {
     public:
-      Nest_Guard (AMI_Buffering &);
+      explicit Nest_Guard (AMI_Buffering &);
       ~Nest_Guard ();
       Nest_Guard (Nest_Guard const &) = delete;
       Nest_Guard &operator= (Nest_Guard const &) = delete;
@@ -50,14 +51,14 @@ public:
   Test::AMI_Buffering_Admin_var admin_;
 
   /// nesting depth count for receive_data processing
-  int nest_;
+  int nest_ {};
 
   /// maximum nesting depth reached during run
-  int max_nest_;
+  int max_nest_ {};
 
   /// flag indicating that a shutdown is required as soon
   /// as the nest count reaches 0.
-  bool must_shutdown_;
+  bool must_shutdown_ {};
 };
 
 #include /**/ "ace/post.h"

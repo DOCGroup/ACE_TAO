@@ -6,10 +6,10 @@
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   bool success = false;
-  int retries = 5;
 
   try
     {
+      int retries = 5;
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var obj =
@@ -20,7 +20,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            ACE_TEXT ("Could not resolve Notify Service")),
                           1);
 
-      for (int i = 0; !success && i < retries; i++)
+      for (int i = 0; !success && i < retries; ++i)
         {
           try
             {

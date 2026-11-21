@@ -66,9 +66,6 @@ namespace TAO
   } // End TypeCode namespace
 }  // End TAO namespace
 
-// ----------------------------------------------------------------
-
-
 template <typename DiscriminatorType,
           typename StringType,
           typename TypeCodeType>
@@ -77,7 +74,7 @@ TAO::TypeCode::Case_T<DiscriminatorType,
                       StringType,
                       TypeCodeType>::clone () const
 {
-  Case<StringType, TypeCodeType> *p = nullptr;
+  Case<StringType, TypeCodeType> *p {};
 
   using case_type = Case_T<DiscriminatorType,
                            StringType,
@@ -139,7 +136,7 @@ TAO::TypeCode::Case_T<DiscriminatorType,
                       StringType,
                       TypeCodeType>::label () const
 {
-  CORBA::Any *value = nullptr;
+  CORBA::Any *value {};
 
   ACE_NEW_THROW_EX (value,
                     CORBA::Any,

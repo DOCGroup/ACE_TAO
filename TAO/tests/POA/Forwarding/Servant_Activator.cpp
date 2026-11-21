@@ -9,7 +9,7 @@ ServantActivator::ServantActivator (CORBA::ORB_ptr orb,
 }
 
 PortableServer::Servant
-ServantActivator::incarnate (const PortableServer::ObjectId &,
+ServantActivator::incarnate (PortableServer::ObjectId const &,
                              PortableServer::POA_ptr)
 {
   this->orb_->shutdown (false);
@@ -19,7 +19,7 @@ ServantActivator::incarnate (const PortableServer::ObjectId &,
 }
 
 void
-ServantActivator::etherealize (const PortableServer::ObjectId &,
+ServantActivator::etherealize (PortableServer::ObjectId const &,
                                PortableServer::POA_ptr,
                                PortableServer::Servant servant,
                                CORBA::Boolean,
@@ -32,5 +32,7 @@ void
 ServantActivator::forward_requests ()
 {
   if (CORBA::is_nil (this->forward_to_.in ()))
+  {
     throw test::Cannot_Forward ();
+  }
 }

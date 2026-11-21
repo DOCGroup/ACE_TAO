@@ -37,22 +37,23 @@ namespace TAO
   class TAO_FoxResource_Export FoxResource_Factory : public GUIResource_Factory
   {
   public:
-    FoxResource_Factory (FXApp *app);
+    explicit FoxResource_Factory (FXApp *app);
+
+    FoxResource_Factory (FoxResource_Factory const &) = delete;
+    FoxResource_Factory &operator= (FoxResource_Factory const &) = delete;
+    FoxResource_Factory (FoxResource_Factory &&) = delete;
+    FoxResource_Factory &operator= (FoxResource_Factory &&) = delete;
 
   protected:
     /// Create or obtain current reactor implementation
     ACE_Reactor_Impl *reactor_impl () override;
 
   private:
-    FoxResource_Factory (FoxResource_Factory const &) = delete;
-    FoxResource_Factory &operator= (FoxResource_Factory const &) = delete;
-    FoxResource_Factory (FoxResource_Factory &&) = delete;
-    FoxResource_Factory &operator= (FoxResource_Factory &&) = delete;
+    /// Non-owning cache; ACE_Reactor owns the implementation after wrapping it.
+    ACE_FoxReactor *reactor_impl_ {};
 
-    /// Reactor created by this factory.
-    ACE_FoxReactor *reactor_impl_;
-
-    FXApp *fxapp_;
+    /// Borrowed; the application must outlive this factory and its reactor.
+    FXApp * const fxapp_;
   };
 }
 

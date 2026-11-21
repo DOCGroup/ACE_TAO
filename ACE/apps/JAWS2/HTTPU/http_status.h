@@ -12,8 +12,10 @@
 
 class HTTP_SCode_Base;
 
+/// A status code and its non-owning reason string.
+/// The reason string passed to the constructor must remain valid for
+/// the lifetime of the node.
 class HTTPU_Export HTTP_SCode_Node
-// Constructor should be passed a string literal.
 {
   friend class HTTP_SCode_Base;
 
@@ -61,11 +63,9 @@ private:
   static HTTP_SCode_Node DUMMY;
 };
 
+/// Maps numeric status codes to descriptive strings.
 class HTTPU_Export HTTP_SCode : public HTTP_SCode_Base
 {
-  // = TITLE
-  //     Go from numeric status codes to descriptive strings.
-  //
   friend class HTTP_SCode_Node;
   friend class ACE_Singleton<HTTP_SCode, ACE_SYNCH_MUTEX>;
 
@@ -74,11 +74,11 @@ protected:
   ~HTTP_SCode ();
 
 public:
+  /// Return the reason string corresponding to a status code number.
   const char * operator[] (int) const;
-  // Return the reason string corresponding to a status code number.
 
+  /// Return the singleton instance.
   static HTTP_SCode *instance ();
-  // Return reference to the singleton.
 
   enum
   {
@@ -90,7 +90,6 @@ public:
 private:
   static const char *table_[SC_TABLE_SIZE];
 };
-
 
 using HTTP_SCode_Singleton = ACE_Singleton<HTTP_SCode, ACE_SYNCH_MUTEX>;
 

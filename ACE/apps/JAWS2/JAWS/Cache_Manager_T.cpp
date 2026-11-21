@@ -53,8 +53,8 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
     this->factory_ = Object_Factory::instance ();
 
   ACE_NEW_MALLOC (this->hash_,
-                  (Cache_Hash *)
-                  this->allocator_->malloc (sizeof (Cache_Hash)),
+                  static_cast<Cache_Hash *> (
+                    this->allocator_->malloc (sizeof (Cache_Hash))),
                   Cache_Hash (alloc, hashsize));
 
   if (this->hash_ == 0)
@@ -64,25 +64,22 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
     }
 
   ACE_NEW_MALLOC (this->heap_,
-                  (Cache_Heap *)
-                  this->allocator_->malloc (sizeof (Cache_Heap)),
+                  static_cast<Cache_Heap *> (
+                    this->allocator_->malloc (sizeof (Cache_Heap))),
                   Cache_Heap (alloc, maxsize));
 
   if (this->heap_ == 0)
     {
       this->maxsize_ = 0;
 
-
       ACE_DES_FREE_TEMPLATE3(this->hash_, this->allocator_->free,
                              JAWS_Cache_Hash,
                              KEY, HASH_FUNC, EQ_FUNC);
-
 
       this->hash_ = 0;
       this->hashsize_ = 0;
     }
 }
-
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
@@ -127,7 +124,8 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
   if (this->factory_ == 0)
     this->factory_ = Object_Factory::instance ();
 
-  this->hash_ = (Cache_Hash *) this->allocator_->malloc (sizeof (Cache_Hash));
+  this->hash_ = static_cast<Cache_Hash *> (
+    this->allocator_->malloc (sizeof (Cache_Hash)));
   if (this->hash_ == 0)
     {
       errno = ENOMEM;
@@ -137,17 +135,16 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
     }
   new (this->hash_) Cache_Hash (alloc, hashsize);
 
-  this->heap_ = (Cache_Heap *) this->allocator_->malloc (sizeof (Cache_Heap));
+  this->heap_ = static_cast<Cache_Heap *> (
+    this->allocator_->malloc (sizeof (Cache_Heap)));
   if (this->heap_ == 0)
     {
       errno = ENOMEM;
       this->maxsize_ = 0;
 
-
       ACE_DES_FREE_TEMPLATE3(this->hash_, this->allocator_->free,
                              JAWS_Cache_Hash,
                              KEY, HASH_FUNC, EQ_FUNC);
-
 
       this->hash_ = 0;
       this->hashsize_ = 0;
@@ -177,7 +174,6 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::close ()
                              JAWS_Cache_Hash,
                              KEY, HASH_FUNC, EQ_FUNC);
 
-
       this->hash_ = 0;
     }
 
@@ -186,7 +182,6 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::close ()
       ACE_DES_FREE_TEMPLATE4(this->heap_, this->allocator_->free,
                              JAWS_Cache_List,
                              KEY, FACTORY, HASH_FUNC, EQ_FUNC);
-
 
       this->heap_ = 0;
     }
@@ -331,7 +326,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
   if (obj->count () == 0)
     {
-      KEY *key = (KEY *) obj->internal ();
+      KEY *key = static_cast<KEY *> (obj->internal ());
       this->factory_->destroy (obj);
       delete key;
       obj = 0;
@@ -452,7 +447,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
     {
       if (obj->count () == 0)
         {
-          KEY *key = (KEY *) obj->internal ();
+          KEY *key = static_cast<KEY *> (obj->internal ());
           this->factory_->destroy (obj);
           delete key;
           obj = 0;
@@ -475,7 +470,6 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
   return this->FLUSH_i ();
 }
-
 
 template <class KEY, class DATA, class CACHE_MANAGER>
 JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>
@@ -518,7 +512,9 @@ JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::~JAWS_Cache_Proxy ()
 template <class KEY, class DATA, class CACHE_MANAGER> DATA *
 JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::data () const
 {
-  return this->object_ ? (DATA *) this->object_->data () : 0;
+  return this->object_
+    ? static_cast<DATA *> (const_cast<void *> (this->object_->data ()))
+    : nullptr;
 }
 
 template <class KEY, class DATA, class CACHE_MANAGER>
@@ -532,6 +528,5 @@ JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::close (DATA *)
 {
   return 0;
 }
-
 
 #endif /* JAWS_CACHE_MANAGER_T_CPP */

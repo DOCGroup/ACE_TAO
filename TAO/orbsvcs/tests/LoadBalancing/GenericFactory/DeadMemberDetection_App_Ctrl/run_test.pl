@@ -67,11 +67,11 @@ for $test (@tests) {
     my $server1_ior1file = $server1->LocalFile ($ior1file);
     $server1->DeleteFile($ior1file);
     #Files which used by server2
-    my $server2_ior1file = $server2->LocalFile ($ior2file);
+    my $server2_iorfile = $server2->LocalFile ($ior2file);
     $server2->DeleteFile($ior2file);
     #Files which used by server3
-    my $server3_ior1file = $server3->LocalFile ($ior3file);
-    $server2->DeleteFile($ior3file);
+    my $server3_iorfile = $server3->LocalFile ($ior3file);
+    $server3->DeleteFile($ior3file);
 
     $status = 0;
     #-ORBVerboseLogging 1 -ORBDebugLevel 10 -ORBLogFile lm.log
@@ -104,7 +104,7 @@ for $test (@tests) {
     }
 
     if ($server2->PutFile ($ior2file) == -1) {
-        print STDERR "ERROR: cannot set file <$server2_ior2file>\n";
+        print STDERR "ERROR: cannot set file <$server2_iorfile>\n";
         $LM->Kill (); $LM->TimedWait (1);
         exit 1;
     }
@@ -148,7 +148,7 @@ for $test (@tests) {
     }
 
     if ($server3->GetFile ($ior3file) == -1) {
-        print STDERR "ERROR: cannot retrieve file <$server3_ior1file>\n";
+        print STDERR "ERROR: cannot retrieve file <$server3_iorfile>\n";
         $LM->Kill ();
         $SV1->Kill (); $SV1->TimedWait (1);
         $SV2->Kill (); $SV2->TimedWait (1);
@@ -204,10 +204,10 @@ for $test (@tests) {
     $server3->DeleteFile($ior3file);
 
     if ($status == 0) {
-      print STDERR "$description test passed.\n";
+      print STDERR "$test->{description} test passed.\n";
     }
     else {
-      print STDERR "$description test failed.\n";
+      print STDERR "$test->{description} test failed.\n";
     }
 }
 

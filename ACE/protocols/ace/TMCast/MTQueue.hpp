@@ -26,20 +26,25 @@ namespace ACE_TMCast
   public:
 
     MTQueue ()
-        : mutexp_ (new MutexType),
+        : mutexp_ (std::make_unique<MutexType> ()),
           mutex_ (*mutexp_),
           queue_ (),
           signal_ (false)
     {
     }
 
-    MTQueue (MutexType& mutex)
+    explicit MTQueue (MutexType& mutex)
         : mutexp_ (),
           mutex_ (mutex),
           queue_ (),
           signal_ (false)
     {
     }
+
+    MTQueue (MTQueue const&) = delete;
+    MTQueue (MTQueue&&) = delete;
+    MTQueue& operator= (MTQueue const&) = delete;
+    MTQueue& operator= (MTQueue&&) = delete;
 
   public:
     bool
@@ -63,7 +68,10 @@ namespace ACE_TMCast
     {
       ACE_Unbounded_Queue_Iterator<T> f (queue_);
       T* tmp;
-      if (!f.next (tmp)) throw Empty ();
+      if (!f.next (tmp))
+        {
+          throw Empty ();
+        }
 
       return *tmp;
     }
@@ -74,7 +82,10 @@ namespace ACE_TMCast
     {
       ACE_Unbounded_Queue_Const_Iterator<T> f (queue_);
       T* tmp;
-      if (!f.next (tmp)) throw Empty ();
+      if (!f.next (tmp))
+        {
+          throw Empty ();
+        }
 
       return *tmp;
     }
@@ -126,7 +137,7 @@ namespace ACE_TMCast
              !i.done ();
              i.advance ())
         {
-          ConditionalType** c = 0;
+          ConditionalType** c {};
 
           i.next (c);
 
@@ -158,13 +169,10 @@ namespace ACE_TMCast
     MutexType& mutex_;
     QueueType queue_;
 
-    typedef
-    ACE_Unbounded_Set<ConditionalType*>
-    ConditionalSet_;
+    using ConditionalSet_ = ACE_Unbounded_Set<ConditionalType*>;
 
-    typedef
-    ACE_Unbounded_Set_Const_Iterator<ConditionalType*>
-    ConditionalSetConstIterator_;
+    using ConditionalSetConstIterator_ =
+      ACE_Unbounded_Set_Const_Iterator<ConditionalType*>;
 
     ConditionalSet_ cond_set_;
 

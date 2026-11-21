@@ -9,9 +9,9 @@ long
 Clock_Ticks::get_hz ()
 {
 #if defined(_SC_CLK_TCK)
-  long r = ACE_OS::sysconf(_SC_CLK_TCK);
-  if(r != -1)
-    return r;
+  long const ticks = ACE_OS::sysconf (_SC_CLK_TCK);
+  if (ticks != -1)
+    return ticks;
 #endif /* _SC_CLK_TCK */
 
 #if defined(CLK_TCK)

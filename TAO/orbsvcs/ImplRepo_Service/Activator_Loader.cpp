@@ -18,16 +18,20 @@ ImR_Activator_Loader::init (int argc, ACE_TCHAR *argv[])
     {
       int err = this->opts_.init (argc, argv);
       if (err != 0)
+      {
         return -1;
+      }
 
       // Creates it's own internal orb, which we must run later
       err = this->service_.init (this->opts_);
       if (err != 0)
+      {
         return -1;
+      }
 
       // Create a thread in which to run the service
       ACE_ASSERT (this->runner_.get () == nullptr);
-      this->runner_= std::make_unique<ImR_Activator_ORB_Runner> (*this);
+      this->runner_ = std::make_unique<ImR_Activator_ORB_Runner> (*this);
       this->runner_->activate ();
     }
   catch (const CORBA::Exception&)
@@ -46,7 +50,7 @@ ImR_Activator_Loader::fini ()
       int ret = this->service_.fini ();
 
       this->runner_->wait ();
-      this->runner_.reset (nullptr);
+      this->runner_.reset ();
       return ret;
     }
   catch (const CORBA::Exception&)

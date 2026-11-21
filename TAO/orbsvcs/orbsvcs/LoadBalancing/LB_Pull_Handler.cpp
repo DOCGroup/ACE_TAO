@@ -28,7 +28,9 @@ TAO_LB_Pull_Handler::handle_timeout (
   TAO_LB_MonitorMap::iterator end   = this->monitor_map_->end ();
 
   if (begin == end)
+  {
     return 0;       // No work to be done.
+  }
 
   try
     {
@@ -61,7 +63,9 @@ TAO_LB_Pull_Handler::handle_timeout (
       // Catch the exception and ignore it.
 
       if (TAO_debug_level > 0)
+      {
         ex._tao_print_exception ("PullHandler::handle_timeout()\n");
+      }
     }
 
   return 0;

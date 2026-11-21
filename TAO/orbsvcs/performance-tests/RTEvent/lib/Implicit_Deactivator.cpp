@@ -43,8 +43,10 @@ Implicit_Deactivator::operator= (Implicit_Deactivator &rhs)
 
 Implicit_Deactivator::~Implicit_Deactivator ()
 {
-  if (this->id_.ptr () == 0)
+  if (this->id_.ptr () == nullptr)
+  {
     return;
+  }
 
   try
   {

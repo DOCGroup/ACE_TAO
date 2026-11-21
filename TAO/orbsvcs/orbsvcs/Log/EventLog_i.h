@@ -24,13 +24,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #include "orbsvcs/DsEventLogAdminS.h"
 #include "orbsvcs/Log/Log_i.h"
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "orbsvcs/Log/EventLogConsumer.h"
 
 #include "orbsvcs/Log/eventlog_serv_export.h"
+#include <memory>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -56,7 +56,6 @@ class TAO_EventLog_i :
   public POA_DsEventLogAdmin::EventLog
 {
 public:
-  /// Constructor.
   TAO_EventLog_i (CORBA::ORB_ptr orb,
                   PortableServer::POA_ptr poa,
                   PortableServer::POA_ptr log_poa,
@@ -78,13 +77,14 @@ public:
   void
   activate ();
 
-  // = The CosEventChannelAdmin::EventChannel interface methods.
+  /// @name CosEventChannelAdmin::EventChannel interface methods
+  /// @{
   CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers () override;
 
   CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers () override;
+  /// @}
 
 protected:
-  /// Destructor
   /**
    * Protected destructor to enforce proper memory management through
    * reference counting.
@@ -93,11 +93,11 @@ protected:
 
 private:
   /// The Event Channel that the log uses.
-  TAO_CEC_EventChannel * event_channel_;
+  std::unique_ptr<TAO_CEC_EventChannel> event_channel_;
 
   /// The PushConsumer that consumes the events and stores them
   /// in the log.
-  TAO_Event_LogConsumer * my_log_consumer_;
+  TAO_Event_LogConsumer * my_log_consumer_ {};
 
   PortableServer::POA_var poa_;
 

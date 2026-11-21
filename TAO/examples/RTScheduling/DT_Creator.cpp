@@ -1,26 +1,29 @@
 #include "DT_Creator.h"
 #include "Thread_Task.h"
 #include "Task_Stats.h"
-#include "DT_Creator.h"
 
 #include "tao/ORB_Core.h"
+
+#include <atomic>
+#include <cerrno>
+#include <new>
+#include <utility>
+
 #include "tao/RTScheduling/Current.h"
 
 #include "ace/High_Res_Timer.h"
-
-ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> guid_counter;
+#include "ace/Lock_Adapter_T.h"
 
 int
 DT_Creator::dt_task_init (ACE_Arg_Shifter& arg_shifter)
 {
-  static int dt_index = 0;
   time_t start_time = 0;
   int load = 0;
   int iter = 0;
   int importance = 0;
-  char *job_name = 0;
+  char *job_name {};
   int dist = 0;
-  const ACE_TCHAR* current_arg = 0;
+  ACE_TCHAR const *current_arg {};
 
   if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Importance")) == 0)
     {
@@ -55,98 +58,117 @@ DT_Creator::dt_task_init (ACE_Arg_Shifter& arg_shifter)
       arg_shifter.consume_arg ();
     }
 
-  dt_list_ [dt_index++] = this->create_thr_task (importance,
-             start_time,
-             load,
-             iter,
-             dist,
-             job_name);
+  std::unique_ptr<Thread_Task> task =
+    this->create_thr_task (importance,
+                           start_time,
+                           load,
+                           iter,
+                           dist,
+                           job_name);
+  if (!task)
+  {
+    return -1;
+  }
+  this->dt_list_.push_back (std::move (task));
 
   return 0;
 }
-
-int log_index = 0;
 
 int
 DT_Creator::init (int argc, ACE_TCHAR *argv [])
 {
   gsf_ = ACE_High_Res_Timer::global_scale_factor ();
-  state_lock_ = new ACE_Lock_Adapter <TAO_SYNCH_MUTEX>;
-  shutdown_lock_ = new ACE_Lock_Adapter <TAO_SYNCH_MUTEX>;
+  if (!this->state_lock_)
+  {
+    this->state_lock_ = std::make_unique<ACE_Lock_Adapter<TAO_SYNCH_MUTEX>> ();
+  }
+  if (!this->shutdown_lock_)
+  {
+    this->shutdown_lock_ = std::make_unique<ACE_Lock_Adapter<TAO_SYNCH_MUTEX>> ();
+  }
   active_dt_count_ = 0;
   active_job_count_ = 0;
-  ACE_NEW_RETURN (log, char*[BUFSIZ * 100],-1);
-
+  this->log_.clear ();
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  const ACE_TCHAR* current_arg = 0;
+  ACE_TCHAR const *current_arg {};
 
-  dt_count_ = 0;
-  poa_count_ = 0;
-  int poa_count = 0;
-  job_count_ = 0;
-  int job_count = 0;
   while (arg_shifter.is_anything_left ())
     {
       if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-GuidSeed"))))
         {
-          guid_counter = (long) ACE_OS::atoi (current_arg);
+          TAO_RTScheduler_Current::guid_counter.store (
+            ACE_OS::atoi (current_arg),
+            std::memory_order_relaxed);
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-DT_Count"))))
         {
-          dt_count_ = ACE_OS::atoi (current_arg);
-          ACE_NEW_RETURN (dt_list_, Thread_Task*[dt_count_], -1);
+          int const count = ACE_OS::atoi (current_arg);
+          if (count < 0)
+          {
+            return -1;
+          }
+          this->dt_list_.reserve (static_cast<size_t> (count));
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-POA_Count"))))
         {
-          poa_count_ = ACE_OS::atoi (current_arg);
-          ACE_NEW_RETURN (poa_list_, POA_Holder*[poa_count_], -1);
+          int const count = ACE_OS::atoi (current_arg);
+          if (count < 0)
+          {
+            return -1;
+          }
+          this->poa_list_.reserve (static_cast<size_t> (count));
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-JOB_Count"))))
         {
-          job_count_ = ACE_OS::atoi (current_arg);
-          ACE_NEW_RETURN (job_list_, Job_i*[job_count_], -1);
+          int const count = ACE_OS::atoi (current_arg);
+          if (count < 0)
+          {
+            return -1;
+          }
+          this->job_list_.reserve (static_cast<size_t> (count));
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-DT_Task")) == 0)
         {
           arg_shifter.consume_arg ();
-          dt_task_init (arg_shifter);
+          if (this->dt_task_init (arg_shifter) == -1)
+          {
+            return -1;
+          }
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-POA")) == 0)
         {
           arg_shifter.consume_arg ();
 
-          ACE_NEW_RETURN (this->poa_list_[poa_count], POA_Holder (), -1);
-
-          if (this->poa_list_[poa_count]->init (arg_shifter) == -1)
+          std::unique_ptr<POA_Holder> holder (
+            new (std::nothrow) POA_Holder ());
+          if (!holder)
             {
-              delete this->poa_list_[poa_count];
+              errno = ENOMEM;
               return -1;
             }
-          else
+          if (holder->init (arg_shifter) == -1)
             {
-              poa_count++;
+              return -1;
             }
+          this->poa_list_.push_back (std::move (holder));
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Job")) == 0)
         {
           arg_shifter.consume_arg ();
 
-          ACE_NEW_RETURN (this->job_list_[job_count], Job_i (this), -1);
-
-          if (this->job_list_[job_count]->init (arg_shifter) == -1)
-            {
-              delete this->job_list_[job_count];
-              return -1;
-            }
-          else
-            {
-              job_count++;
-            }
+          Job_i *job {};
+          ACE_NEW_RETURN (job, Job_i (this), -1);
+          PortableServer::ServantBase_var job_servant (job);
+          if (job->init (arg_shifter) == -1)
+          {
+            return -1;
+          }
+          this->job_list_.push_back (job_servant);
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-OutFile"))))
         {
@@ -230,7 +252,6 @@ DT_Creator::register_synch_obj ()
        synch.in ());
 }
 
-
 int
 DT_Creator::activate_root_poa ()
 {
@@ -255,7 +276,7 @@ DT_Creator::activate_poa_list ()
     ACE_DEBUG ((LM_DEBUG,
     "DT_Creator::activate_poa_list\n"));
 
-  if (poa_count_ > 0)
+  if (!this->poa_list_.empty ())
     {
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("RTORB");
@@ -267,9 +288,9 @@ DT_Creator::activate_poa_list ()
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in ());
 
-      for (int i = 0; i < poa_count_; ++i)
+      for (std::unique_ptr<POA_Holder> const & poa : this->poa_list_)
         {
-          poa_list_[i]->activate (rt_orb.in(), root_poa.in ());
+          poa->activate (rt_orb.in(), root_poa.in ());
         }
     }
 }
@@ -281,28 +302,26 @@ DT_Creator::activate_job_list ()
     ACE_DEBUG ((LM_DEBUG,
     "DT_Creator::activate_job_list\n"));
 
-  Job_i* job;
-
   CORBA::Object_var object =
     this->orb_->resolve_initial_references ("RootPOA");
 
   PortableServer::POA_var root_poa =
     PortableServer::POA::_narrow (object.in ());
 
-  for (int i = 0; i < job_count_; ++i)
+  for (PortableServer::ServantBase_var const & job_servant : this->job_list_)
     {
       ++active_job_count_;
 
-      job = job_list_[i];
+      Job_i * const job = dynamic_cast<Job_i *> (job_servant.in ());
 
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "Activating job:%C\n", job->name ().c_str ()));
+      }
 
       // find your poa
       PortableServer::POA_var host_poa =
-        root_poa->find_POA (job->poa ().c_str (), 0);
-
-      PortableServer::ServantBase_var servant_var (job);
+        root_poa->find_POA (job->poa ().c_str (), false);
 
       // Register with poa.
       PortableServer::ObjectId_var id;
@@ -333,14 +352,12 @@ DT_Creator::activate_schedule ()
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-    "Activating schedule, task count = %d\n",
-    dt_count_));
+    "Activating schedule, task count = %B\n",
+    this->dt_list_.size ()));
 
-  Thread_Task* task;
-
-  for (int i = 0; i < dt_count_; ++i)
+  for (std::unique_ptr<Thread_Task> const & task_owner : this->dt_list_)
     {
-      task = dt_list_[i];
+      Thread_Task * const task = task_owner.get ();
 
       if (task->dist ())
   {
@@ -386,10 +403,10 @@ DT_Creator::activate_schedule ()
     task->job (job.in ());
   }
     }
-  if (TAO_debug_level > 0 && dt_count_ > 0)
+  if (TAO_debug_level > 0 && !this->dt_list_.empty ())
     ACE_DEBUG ((LM_DEBUG,
-    "Activated schedule, task count = %d\n",
-    dt_count_));
+    "Activated schedule, task count = %B\n",
+    this->dt_list_.size ()));
 }
 
 int
@@ -436,16 +453,17 @@ DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current)
 
   CORBA::Policy_var sched_param;
   sched_param = this->sched_param (100);
-  const char * name = 0;
+  char const *name {};
   current->begin_scheduling_segment (name,
               sched_param.in (),
               sched_param.in ());
 
-  ACE_NEW (base_time_,
-     ACE_Time_Value (*(this->synch ()->base_time ())));
+  this->base_time_ = std::make_unique<ACE_Time_Value> (
+    *this->synch ()->base_time ());
 
-  for (int i = 0; i < this->dt_count_; i++)
+  for (std::unique_ptr<Thread_Task> const & task_owner : this->dt_list_)
     {
+      Thread_Task * const task = task_owner.get ();
       ACE_Time_Value now (ACE_OS::gettimeofday ());
 
       ACE_Time_Value elapsed_time =  now - *base_time_;
@@ -456,26 +474,26 @@ DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current)
            (int) now.sec (),
            (int) base_time_->sec());
 
-      log [log_index++] = ACE_OS::strdup (buf) ;
+      this->log_msg (buf);
 
       ACE_hthread_t curr_thr;
       ACE_Thread::self (curr_thr);
 
-      if (dt_list_ [i]->start_time () != 0 &&
-          (elapsed_time.sec () < dt_list_[i]->start_time ()))
+      if (task->start_time () != 0 &&
+          (elapsed_time.sec () < task->start_time ()))
         {
-          time_t suspension_time = dt_list_[i]->start_time () - elapsed_time.sec ();
+          time_t suspension_time = task->start_time () - elapsed_time.sec ();
           ACE_OS::sprintf (buf, "suspension_time = %lu\n",
                            static_cast<unsigned long> (suspension_time));
-          log [log_index++] = ACE_OS::strdup (buf);
-          yield (suspension_time, dt_list_[i]);
+          this->log_msg (buf);
+          yield (suspension_time, task);
         }
 
-      sched_param = this->sched_param (dt_list_ [i]->importance ());
-      dt_list_ [i]->activate_task (current,
-           sched_param.in (),
-           flags,
-           base_time_);
+      sched_param = this->sched_param (task->importance ());
+      task->activate_task (current,
+                           sched_param.in (),
+                           flags,
+                           this->base_time_.get ());
 
       ++active_dt_count_;
     }
@@ -494,10 +512,12 @@ DT_Creator::dt_ended ()
     ACE_GUARD (ACE_Lock, ace_mon, *state_lock_);
     --active_dt_count_;
     if (TAO_debug_level > 0)
+    {
       ACE_DEBUG ((LM_DEBUG, "Active dt count = %d\n",active_dt_count_));
+    }
     char buf [BUFSIZ];
     ACE_OS::sprintf (buf,"Active dt count = %d\n",active_dt_count_);
-    log [log_index++] = ACE_OS::strdup (buf);
+    this->log_.emplace_back (buf);
   }
   this->check_ifexit ();
 }
@@ -509,10 +529,12 @@ DT_Creator::job_ended ()
     ACE_GUARD (ACE_Lock, ace_mon, *state_lock_);
     --active_job_count_;
     if (TAO_debug_level > 0)
+    {
       ACE_DEBUG ((LM_DEBUG, "Active job count = %d\n",active_job_count_));
+    }
     char buf [BUFSIZ];
     ACE_OS::sprintf (buf,"Active job count = %d\n",active_job_count_);
-    log [log_index++] = ACE_OS::strdup (buf);
+    this->log_.emplace_back (buf);
   }
 
  this->check_ifexit ();
@@ -540,14 +562,14 @@ DT_Creator::check_ifexit ()
       ACE_DEBUG ((LM_DEBUG, "Shutdown in progress ...\n"));
 
       /*
-      for (int i = 0; i < dt_count_; i++)
+      for (std::unique_ptr<Thread_Task> const & task : this->dt_list_)
         {
-    dt_list_[i]->dump_stats ();
+          task->dump_stats ();
         }
 
-      for (int i = 0; i < job_count_; i ++)
+      for (PortableServer::ServantBase_var const & servant : this->job_list_)
         {
-    job_list_[i]->dump_stats ();
+          dynamic_cast<Job_i *> (servant.in ())->dump_stats ();
         }
       */
       TASK_STATS::instance ()->dump_samples (file_name_.c_str (),
@@ -559,15 +581,16 @@ DT_Creator::check_ifexit ()
 
       if (log_file != 0)
         {
-    // first dump what the caller has to say.
-    ACE_OS::fprintf (log_file, "Log File\n");
+          // First dump what the caller has to say.
+          ACE_OS::fprintf (log_file, "Log File\n");
 
-    for (int i = 0; i < log_index; i++)
-      {
-        ACE_OS::fprintf (log_file, "%s\n", log [i]);
-      }
+          {
+            ACE_GUARD (ACE_Lock, ace_mon, *state_lock_);
+            for (std::string const & message : this->log_)
+              ACE_OS::fprintf (log_file, "%s\n", message.c_str ());
+          }
 
-    ACE_OS::fclose (log_file);
+          ACE_OS::fclose (log_file);
         }
       ACE_DEBUG ((LM_DEBUG,
       "Log File Ready\n"));
@@ -579,22 +602,12 @@ DT_Creator::check_ifexit ()
 int
 DT_Creator::dt_count ()
 {
-  return dt_count_;
+  return static_cast<int> (this->dt_list_.size ());
 }
 
 DT_Creator::DT_Creator ()
- : dt_list_ (0),
-   poa_list_ (0),
-   job_list_ (0),
-   dt_count_ (0),
-   poa_count_ (0),
-   job_count_ (0),
-   state_lock_ (0),
-   shutdown_lock_ (0),
-   active_dt_count_ (0),
+ : active_dt_count_ (0),
    active_job_count_ (0),
-   log (0),
-   base_time_ (0),
    file_name_ (),
    log_file_name_ (),
    gsf_ (0),
@@ -604,29 +617,17 @@ DT_Creator::DT_Creator ()
 
 DT_Creator::~DT_Creator ()
 {
-  for (int i = 0; i < log_index; ++i)
-    ACE_OS::free (log[i]);
-  delete[] log;
-
-  for (int i = 0; i < this->dt_count_; ++i)
-    delete this->dt_list_[i];
-  delete[] dt_list_;
-  for (int i = 0; i < this->poa_count_; ++i)
-    delete this->poa_list_[i];
-  delete[] poa_list_;
-  delete[] job_list_;
-
-  delete base_time_;
-
-  delete state_lock_;
-  delete shutdown_lock_;
+  // Release the holders and servants while the ORB reference is still alive.
+  this->dt_list_.clear ();
+  this->poa_list_.clear ();
+  this->job_list_.clear ();
 }
 
-
 void
-DT_Creator::log_msg (char* msg)
+DT_Creator::log_msg (std::string msg)
 {
-  log [log_index++] = ACE_OS::strdup (msg);
+  ACE_GUARD (ACE_Lock, ace_mon, *state_lock_);
+  this->log_.push_back (std::move (msg));
 }
 
 CORBA::ORB_ptr
@@ -644,15 +645,17 @@ DT_Creator::orb (CORBA::ORB_ptr orb)
 ACE_Time_Value*
 DT_Creator::base_time ()
 {
-  return this->base_time_;
+  return this->base_time_.get ();
 }
 
 void
 DT_Creator::base_time (ACE_Time_Value* base_time)
 {
-  this->base_time_ = base_time;
+  if (this->base_time_.get () != base_time)
+  {
+    this->base_time_.reset (base_time);
+  }
 }
-
 
 Synch_i*
 DT_Creator::synch ()

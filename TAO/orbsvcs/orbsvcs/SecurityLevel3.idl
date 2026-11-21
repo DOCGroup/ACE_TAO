@@ -1,19 +1,12 @@
-//tabstop=4
-//***********************************************************************
-// ORBAsec SL3
-// ----------------------------------------------------------------------
+/// tabstop=4
+/// ORBAsec SL3
 // Copyright (C) 2001 Adiron, LLC.
-//                    All rights reserved.
-// ----------------------------------------------------------------------
-//***********************************************************************
+/// All rights reserved.
 
-//***********************************************************************
 /**
  * @note Some interfaces in this IDL module have been altered from the
  *       original Adiron sources.
  */
-//***********************************************************************
-
 
 #ifndef _SecurityLevel3_
 #define _SecurityLevel3_
@@ -83,19 +76,17 @@ module SecurityLevel3 {
      */
     const unsigned long ADIRON_VMCID = 0xA11C000;
 
-    //-------------------------------------------------------------
-    //  Security Level 3 Data Representations
-    //
-    //-------------------------------------------------------------
+    /// Security Level 3 Data Representations
+    ///
 
-    //
-    // A Principal Name
-    //   A principal name always has a type, and a path of
-    //   name components. They are ordered from least significant
-    //   to most significant. For example, if a principal is represented
-    //   by a single X.509 certificate, the first element in the path
-    //   is the SubjectDN, and the second is the IssuerDN.
-    //
+    ///
+    /// A Principal Name
+    /// A principal name always has a type, and a path of
+    /// name components. They are ordered from least significant
+    /// to most significant. For example, if a principal is represented
+    /// by a single X.509 certificate, the first element in the path
+    /// is the SubjectDN, and the second is the IssuerDN.
+    ///
     /**
      * A NameType is used for typing a PrincipalName data structure.
      * A NameType is a string that represents an ASN.1
@@ -172,10 +163,9 @@ module SecurityLevel3 {
      */
     typedef sequence<PrincipalName> PrincipalNameList;
 
-
-    //
-    // Attributes for privileges and other things. They are type value pairs.
-    //
+    ///
+    /// Attributes for privileges and other things. They are type value pairs.
+    ///
 
     /**
      * A PrinAttribute is a "type-value" pair, usually attributed to
@@ -236,7 +226,6 @@ module SecurityLevel3 {
      */
     typedef sequence<PrinAttribute> PrinAttributeList;
 
-
     /**
      * This is just a sequence of strings that make
      * up the components of a ResourceName.
@@ -260,10 +249,9 @@ module SecurityLevel3 {
      */
     typedef sequence<ResourceName> ResourceNameList;
 
-
-    //
-    // NameTypes used in SL3
-    //
+    ///
+    /// NameTypes used in SL3
+    ///
 
     /**
      * An NT_KerberosName is a NameType that signifies that the
@@ -315,9 +303,9 @@ module SecurityLevel3 {
      */
     const NameType NT_StringName = "oid:2.23.130.1.2.1";
 
-    //
-    // Privileges
-    //
+    ///
+    /// Privileges
+    ///
 
     /**
      * A ScopedPrivileges structure represents privileges that
@@ -337,9 +325,9 @@ module SecurityLevel3 {
      */
     typedef sequence<ScopedPrivileges> ScopedPrivilegesList;
 
-    //
-    // Principals
-    //
+    ///
+    /// Principals
+    ///
 
     /**
      * A Principal comes in three forms, which correspond to the
@@ -361,17 +349,20 @@ module SecurityLevel3 {
      * The Simple Principal Type (A)
      * @see PrincipalType
      */
-    const PrincipalType PT_Simple  = 0; // A,        valuetype SimplePrincipal
+    /// A,        valuetype SimplePrincipal
+    const PrincipalType PT_Simple  = 0;
     /**
      * The Quoting Principal Type (A|B)
      * @see PrincipalType
      */
-    const PrincipalType PT_Quoting = 1; // B | A,    valuetype QuotingPrincipal
+    /// B | A,    valuetype QuotingPrincipal
+    const PrincipalType PT_Quoting = 1;
     /**
      * The Proxy Principal Type (A for B)
      * @see PrincipalType
      */
-    const PrincipalType PT_Proxy   = 2; // B for A,  valuetype ProxyPrincipal
+    /// B for A,  valuetype ProxyPrincipal
+    const PrincipalType PT_Proxy   = 2;
 
     /**
      * A Principal is represented by a base value type, which is extended
@@ -473,12 +464,12 @@ module SecurityLevel3 {
          * @see TargetCredentials.client_authentication
          * @see TargetCredentials.target_authentication
          */
-        // For example, if a client uses the User/Password mechanism to
-        // communicate with a target, the client's OwnCredentials, created
-        // using a PasswordGenerator, will have the <code>authenticated</code>
-        // field in the principal in the initiator being true,
-        // although the client may not have been authenticated to the target.
-        //
+        /// For example, if a client uses the User/Password mechanism to
+        /// communicate with a target, the client's OwnCredentials, created
+        /// using a PasswordGenerator, will have the <code>authenticated</code>
+        /// field in the principal in the initiator being true,
+        /// although the client may not have been authenticated to the target.
+        ///
         public boolean            authenticated;
         /**
          * This field contains the other name types, such as
@@ -553,9 +544,9 @@ module SecurityLevel3 {
 
     };
 
-    //
-    // Statements
-    //
+    ///
+    /// Statements
+    ///
 
     /**
      * A Statement is a value type that has extensions which
@@ -581,7 +572,8 @@ module SecurityLevel3 {
      * IdentityStatement valuetype, if not truncated
      * @see IdentityStatement
      */
-    const StatementType ST_IdentityStatement    = 1; //valuetype IdentityStatement
+    /// valuetype IdentityStatement
+    const StatementType ST_IdentityStatement    = 1;
 
     /**
      * The Endorsement Statement Type.
@@ -590,7 +582,8 @@ module SecurityLevel3 {
      * EndorsementStatement valuetype, if not truncated
      * @see EndorsementStatement
      */
-    const StatementType ST_EndorsementStatement = 2; //valuetype EndorsementStatement
+    /// valuetype EndorsementStatement
+    const StatementType ST_EndorsementStatement = 2;
 
     /**
      * An encoding is a sequence of bytes.
@@ -833,14 +826,12 @@ module SecurityLevel3 {
     };
     typedef sequence<X509IdentityStatement> X509IdentityStatementList;
 
-    //-------------------------------------------------------------
-    //  Security Level 3 Application Users Interface
-    //
-    //-------------------------------------------------------------
+    /// Security Level 3 Application Users Interface
+    ///
 
-    //
-    // The Security Level 3 Credentials Model
-    //
+    ///
+    /// The Security Level 3 Credentials Model
+    ///
 
     /**
      * Credentials come in three types. OwnCredentials, ClientCredentials,
@@ -1037,7 +1028,6 @@ module SecurityLevel3 {
      * The FD_Use FeatureDirective means definitely to use the feature.
      */
     const FeatureDirective FD_Use                  =  2;
-
 
     /**
      * The Initiator Type of the Initiator Side of the Credentials states
@@ -1521,11 +1511,8 @@ module SecurityLevel3 {
         void release();
     };
 
-
-    //--------------------------------------------------------------------
-    // Security Invocation Policy
-    //
-    //--------------------------------------------------------------------
+    /// Security Invocation Policy
+    ///
 
     /**
      * The ContextEstablishmentPolicy policy object directs the
@@ -1617,7 +1604,6 @@ module SecurityLevel3 {
      */
     const CORBA::PolicyType ContextEstablishmentPolicyType = ADIRON_VMCID | 1001;
 
-
     /**
      * The ObjectCredentialsPolicy object is placed on the policy list
      * of a POA to indicate the own credentials
@@ -1642,11 +1628,8 @@ module SecurityLevel3 {
      */
     const CORBA::PolicyType ObjectCredentialsPolicyType = ADIRON_VMCID | 1002;
 
-
-    //--------------------------------------------------------------------
-    // Security Level 3 Credentials Acquisition Mechanism
-    //
-    //--------------------------------------------------------------------
+    /// Security Level 3 Credentials Acquisition Mechanism
+    ///
 
     /**
      * Credentials are acquired by a Credentials Acquirer by some
@@ -1888,11 +1871,9 @@ module SecurityLevel3 {
 
     };
 
-    //--------------------------------------------------------------------
-    // Security Service ORB Objects
-    //     Retrieved from the ORB by "resolve_initial_references".
-    //
-    //--------------------------------------------------------------------
+    /// Security Service ORB Objects
+    /// Retrieved from the ORB by "resolve_initial_references".
+    ///
 
     /**
      * The <code>SecurityManager</code> object represents the Security Level 3

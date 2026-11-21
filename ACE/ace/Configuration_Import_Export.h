@@ -44,12 +44,14 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Config_ImpExp_Base
 {
 public:
-  /// Constructor taking the ACE_Configuration to import/export to
-  ACE_Config_ImpExp_Base (ACE_Configuration& config);
+  ACE_Config_ImpExp_Base (ACE_Config_ImpExp_Base const &) = delete;
+  ACE_Config_ImpExp_Base (ACE_Config_ImpExp_Base &&) = delete;
+  ACE_Config_ImpExp_Base &operator= (ACE_Config_ImpExp_Base const &) = delete;
+  ACE_Config_ImpExp_Base &operator= (ACE_Config_ImpExp_Base &&) = delete;
 
-  /**
-   * Destructor
-   */
+  /// Constructor taking the ACE_Configuration to import/export to
+  explicit ACE_Config_ImpExp_Base (ACE_Configuration& config);
+
   virtual ~ACE_Config_ImpExp_Base () = default;
 
    /**
@@ -67,10 +69,6 @@ public:
 
 protected:
   ACE_Configuration &config_;
-
-private:
-  ACE_Config_ImpExp_Base (const ACE_Config_ImpExp_Base&) = delete;
-  ACE_Config_ImpExp_Base& operator= (const ACE_Config_ImpExp_Base&) = delete;
 };
 
 /**
@@ -90,10 +88,13 @@ private:
 class ACE_Export ACE_Registry_ImpExp : public ACE_Config_ImpExp_Base
 {
 public:
-  /// Construction
-  ACE_Registry_ImpExp (ACE_Configuration&);
+  ACE_Registry_ImpExp (ACE_Registry_ImpExp const &) = delete;
+  ACE_Registry_ImpExp (ACE_Registry_ImpExp &&) = delete;
+  ACE_Registry_ImpExp &operator= (ACE_Registry_ImpExp const &) = delete;
+  ACE_Registry_ImpExp &operator= (ACE_Registry_ImpExp &&) = delete;
 
-  /// Destruction.
+  explicit ACE_Registry_ImpExp (ACE_Configuration&);
+
   ~ACE_Registry_ImpExp () override = default;
 
   /**
@@ -116,9 +117,6 @@ private:
 
   int process_previous_line_format (ACE_TCHAR* buffer,
                                     ACE_Configuration_Section_Key& section);
-
-  ACE_Registry_ImpExp (const ACE_Registry_ImpExp&) = delete;
-  ACE_Registry_ImpExp& operator= (const ACE_Registry_ImpExp&) = delete;
 };
 
 /**
@@ -158,14 +156,13 @@ private:
 class ACE_Export ACE_Ini_ImpExp  : public ACE_Config_ImpExp_Base
 {
 public:
-  /**
-   * Construction
-   */
-  ACE_Ini_ImpExp (ACE_Configuration&);
+  ACE_Ini_ImpExp (ACE_Ini_ImpExp const &) = delete;
+  ACE_Ini_ImpExp (ACE_Ini_ImpExp &&) = delete;
+  ACE_Ini_ImpExp &operator= (ACE_Ini_ImpExp const &) = delete;
+  ACE_Ini_ImpExp &operator= (ACE_Ini_ImpExp &&) = delete;
 
-  /**
-   * Destructor
-   */
+  explicit ACE_Ini_ImpExp (ACE_Configuration&);
+
   ~ACE_Ini_ImpExp () override = default;
 
   /**
@@ -200,9 +197,6 @@ private:
    * first character past the last non-whitespace.
    */
   ACE_TCHAR *squish (ACE_TCHAR *src);
-
-  ACE_Ini_ImpExp (const ACE_Ini_ImpExp&) = delete;
-  ACE_Ini_ImpExp& operator= (const ACE_Ini_ImpExp&) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

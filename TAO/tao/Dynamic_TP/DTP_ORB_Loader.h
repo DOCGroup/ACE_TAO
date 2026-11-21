@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    DTP_ORB_Loader.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_DYNAMIC_TP_ORB_LOADER_H
 #define TAO_DYNAMIC_TP_ORB_LOADER_H
@@ -33,25 +31,22 @@ class TAO_ORB_Core;
 class TAO_Dynamic_TP_Export TAO_DTP_ORB_Loader : public ACE_Service_Object
 {
 public:
-  /// Constructor.
-  TAO_DTP_ORB_Loader ();
+  TAO_DTP_ORB_Loader () = default;
 
-  /// Destructor.
-  ~TAO_DTP_ORB_Loader () override;
+  ~TAO_DTP_ORB_Loader () override = default;
 
   /// Initialize the DynamicTP loader hooks.
   int init (int argc, ACE_TCHAR* []) override;
 
-private:
   TAO_DTP_ORB_Loader (TAO_DTP_ORB_Loader const &) = delete;
   TAO_DTP_ORB_Loader &operator= (TAO_DTP_ORB_Loader const &) = delete;
   TAO_DTP_ORB_Loader (TAO_DTP_ORB_Loader &&) = delete;
   TAO_DTP_ORB_Loader &operator= (TAO_DTP_ORB_Loader &&) = delete;
 
+private:
   /// Set to true after init is called.
   bool initialized_ {};
 };
-
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Dynamic_TP, TAO_DTP_ORB_Loader)
 ACE_FACTORY_DECLARE (TAO_Dynamic_TP, TAO_DTP_ORB_Loader)

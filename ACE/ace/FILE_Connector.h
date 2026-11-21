@@ -37,7 +37,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_FILE_Connector
 {
 public:
-  /// Default constructor.
   ACE_FILE_Connector ();
 
   /**
@@ -95,9 +94,11 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  // = Meta-type "trait" information.
+  /// @name Meta-type traits
+  /// @{
   using PEER_ADDR = ACE_FILE_Addr;
   using PEER_STREAM = ACE_FILE_IO;
+  /// @}
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

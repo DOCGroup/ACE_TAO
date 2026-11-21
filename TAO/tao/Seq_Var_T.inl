@@ -212,5 +212,4 @@ TAO_VarSeq_Var_T<T>::operator[] (CORBA::ULong index) const
   return this->ptr_->operator[] (index);
 }
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL

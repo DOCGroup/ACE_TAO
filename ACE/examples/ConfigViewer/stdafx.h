@@ -8,6 +8,3 @@
 #include "wx/listctrl.h"
 #include "wx/splitter.h"
 
-
-
-

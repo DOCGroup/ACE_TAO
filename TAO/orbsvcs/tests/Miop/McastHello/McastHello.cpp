@@ -18,13 +18,15 @@ McastHello::send_forty_two (CORBA::Long forty_two)
       this->small_request_status_ = 1;
     }
   else
+  {
     this->small_request_status_ = 0;
+  }
 }
 
 void
 McastHello::send_large_octet_array (const Test::Octets &payload)
 {
-  CORBA::Boolean valid_payload = 1;
+  CORBA::Boolean valid_payload = true;
   for (CORBA::ULong i = 0; i < payload.length (); ++i)
     {
       if ((CORBA::ULong) payload [i] != i % 256)
@@ -33,7 +35,7 @@ McastHello::send_large_octet_array (const Test::Octets &payload)
                       "ERROR: (%P|%t) McastHello::send_large_octet_array, "
                       "instance %d, unexpected value at index %d (%d != %d)\n",
                       instance_, i, payload [i], i % 256));
-          valid_payload = 0;
+          valid_payload = false;
           break;
         }
     }
@@ -44,7 +46,9 @@ McastHello::send_large_octet_array (const Test::Octets &payload)
       this->large_request_status_ = 1;
     }
   else
+  {
     this->large_request_status_ = 0;
+  }
 }
 
 void

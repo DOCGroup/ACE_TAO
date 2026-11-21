@@ -7,22 +7,26 @@
 
 class Stock_Consumer : public POA_RtecEventComm::PushConsumer {
 public:
-  Stock_Consumer ();
+  Stock_Consumer () = default;
 
+  Stock_Consumer (Stock_Consumer const &) = delete;
+  Stock_Consumer (Stock_Consumer &&) = delete;
+  Stock_Consumer &operator= (Stock_Consumer const &) = delete;
+  Stock_Consumer &operator= (Stock_Consumer &&) = delete;
+
+  /// Connects to the event channel using consumer_admin and subscriptions.
   void connect (RtecEventChannelAdmin::EventChannel_ptr event_channel,
-                const RtecEventChannelAdmin::ConsumerQOS &subscriptions);
-  // Connect to the event channel, using <consumer_admin> and
-  // <subscriptions>
+                RtecEventChannelAdmin::ConsumerQOS const &subscriptions);
 
+  /// Disconnects from the event channel.
   void disconnect ();
-  // Disconnect from the event channel.
 
-  void push (const RtecEventComm::EventSet& data);
-  void disconnect_push_consumer ();
+  void push (RtecEventComm::EventSet const &data) override;
+  void disconnect_push_consumer () override;
 
 private:
-  RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
-  // The supplier proxy.
+  /// Proxy supplier used to receive events.
+  RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_ {};
 };
 
 #endif /* TAO_TUTORIALS_QUOTER_RT_EVENT_SERVICE_STOCK_CONSUMER_H */

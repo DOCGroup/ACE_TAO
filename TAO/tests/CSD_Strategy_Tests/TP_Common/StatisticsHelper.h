@@ -7,9 +7,9 @@
 #include "ace/Vector_T.h"
 #include "ace/SString.h"
 
-typedef ACE_Vector< CORBA::Long, 1000 > LongVector;
-typedef ACE_Vector< ACE_CString, 1000 > StringVector;
-typedef ACE_Array< CORBA::Long > LongArray;
+using LongVector = ACE_Vector< CORBA::Long, 1000 >;
+using StringVector = ACE_Vector< ACE_CString, 1000 >;
+using LongArray = ACE_Array< CORBA::Long >;
 
 extern CSD_TP_Test_Export void swap (CORBA::Long& x, CORBA::Long& y);
 

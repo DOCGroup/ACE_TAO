@@ -6,7 +6,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
-use File::stat;
+use File::Compare;
 
 $status = 0;
 $debug_level = '0';
@@ -25,18 +25,19 @@ my $cl = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n
 $sleeptime = 2;
 
 $nsiorfile = "ns.ior";
-$outputfile = "output";
 $inputfile = "test_input";
 
 my $ns_nsiorfile = $ns->LocalFile ($nsiorfile);
 my $sv_nsiorfile = $sv->LocalFile ($nsiorfile);
 my $cl_nsiorfile = $cl->LocalFile ($nsiorfile);
-my $sv_outputfile = $sv->LocalFile ($outputfile);
+my $sv_output_one = $sv->LocalFile ("Data_Receiver_One");
+my $sv_output_two = $sv->LocalFile ("Data_Receiver_Two");
 $ns->DeleteFile ($nsiorfile);
 $sv->DeleteFile ($nsiorfile);
 $cl->DeleteFile ($nsiorfile);
 $cl->DeleteFile ($inputfile);
-$sv->DeleteFile ($outputfile);
+$sv->DeleteFile ("Data_Receiver_One");
+$sv->DeleteFile ("Data_Receiver_Two");
 
 # generate test stream data
 $inputfile = PerlACE::generate_test_file($inputfile, 102400);
@@ -50,8 +51,7 @@ $NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                           " -o $ns_nsiorfile");
 $SV = $sv->CreateProcess ("receiver",
                           " -ORBDebugLevel $debug_level ".
-                          " -ORBInitRef NameService=file://$sv_nsiorfile ".
-                          "-f $sv_outputfile");
+                          " -ORBInitRef NameService=file://$sv_nsiorfile ");
 $CL = $cl->CreateProcess ("sender",
                           " -ORBInitRef NameService=file://$cl_nsiorfile ".
                           "-f $cl_inputfile -r 2");
@@ -120,7 +120,25 @@ if ($NS_status != 0) {
 $ns->DeleteFile ($nsiorfile);
 $sv->DeleteFile ($nsiorfile);
 $cl->DeleteFile ($nsiorfile);
+my $get_one = $sv->GetFile ("Data_Receiver_One");
+my $get_two = $sv->GetFile ("Data_Receiver_Two");
+if ($get_one == -1 || $get_two == -1) {
+    print STDERR "ERROR: cannot retrieve receiver output files\n";
+    $status = 1;
+}
+else {
+    my $compare_one = compare ($inputfile, $sv_output_one);
+    my $compare_two = compare ($inputfile, $sv_output_two);
+    if ($compare_one != 0 || $compare_two != 0) {
+        print STDERR "ERROR: receiver output does not match input\n";
+        print STDERR "Input/output sizes: ", -s $inputfile, "/", -s $sv_output_one,
+                     " and ", -s $sv_output_two, "\n";
+        $status = 1;
+    }
+}
+
+$sv->DeleteFile ("Data_Receiver_One");
+$sv->DeleteFile ("Data_Receiver_Two");
 $cl->DeleteFile ($inputfile);
-$sv->DeleteFile ($outputfile);
 
 exit $status;

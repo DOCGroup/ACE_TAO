@@ -38,7 +38,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Mem_Map
 {
 public:
-  /// Default constructor.
   ACE_Mem_Map ();
 
   ACE_Mem_Map (const ACE_Mem_Map &) = delete;
@@ -96,7 +95,6 @@ public:
            ACE_OFF_T offset = 0,
            LPSECURITY_ATTRIBUTES sa = 0);
 
-  /// Destructor.
   ~ACE_Mem_Map ();
 
   /// Open the file without mapping it.
@@ -205,7 +203,7 @@ private:
   ACE_TCHAR filename_[MAXPATHLEN + 1];
 
   /// Length of the mapping.
-  size_t length_;
+  size_t length_ {};
 
   /// HANDLE for the open file.
   ACE_HANDLE handle_;
@@ -215,7 +213,7 @@ private:
 
   /// Keeps track of whether we need to close the handle.  This is set
   /// if we opened the file.
-  bool close_handle_;
+  bool close_handle_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

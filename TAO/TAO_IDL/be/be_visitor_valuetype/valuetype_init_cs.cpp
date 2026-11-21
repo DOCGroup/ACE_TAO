@@ -59,12 +59,10 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
 
   TAO_INSERT_COMMENT (os);
 
-  // ctor
   *os << be_nl_2
       << fname << "::" << lname << " ()" << be_nl
       << "{" << be_nl << "}";
 
-  // dtor
   *os << be_nl_2
       << fname << "::~" << lname << " ()" << be_nl
       << "{" << be_nl << "}";
@@ -86,7 +84,6 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
       <<   "return ::" << node->full_name ()
       <<                "::_tao_obv_static_repository_id ();"
       << be_uidt_nl << "}";
-
 
   if (factory_style == be_valuetype::FS_CONCRETE_FACTORY)
     {

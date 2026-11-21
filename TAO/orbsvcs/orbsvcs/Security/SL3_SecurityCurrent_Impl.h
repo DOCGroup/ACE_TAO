@@ -22,7 +22,6 @@
 #include "orbsvcs/Security/security_export.h"
 #include "orbsvcs/SecurityLevel3C.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -45,8 +44,13 @@ namespace TAO
     class TAO_Security_Export SecurityCurrent_Impl
     {
     public:
-      /// Destructor.
+      SecurityCurrent_Impl () = default;
       virtual ~SecurityCurrent_Impl ();
+
+      SecurityCurrent_Impl (SecurityCurrent_Impl const &) = delete;
+      SecurityCurrent_Impl (SecurityCurrent_Impl &&) = delete;
+      SecurityCurrent_Impl &operator= (SecurityCurrent_Impl const &) = delete;
+      SecurityCurrent_Impl &operator= (SecurityCurrent_Impl &&) = delete;
 
       /**
        * @name SecurityLevel3::Current Methods
@@ -54,14 +58,14 @@ namespace TAO
        * These methods are founds in the SecurityLevel3::Current
        * interface.
        */
-      //@{
+      /// @{
       /// Return the Credentials received from the client associate with
       /// the current request.
       virtual SecurityLevel3::ClientCredentials_ptr client_credentials () = 0;
 
       /// Is the current request local?
       virtual CORBA::Boolean request_is_local () = 0;
-      //@}
+      /// @}
 
       /// Return the unique tag that identifies the concrete subclass.
       virtual CORBA::ULong tag () const = 0;

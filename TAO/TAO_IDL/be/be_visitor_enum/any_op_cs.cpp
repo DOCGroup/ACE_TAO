@@ -62,7 +62,6 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
           << "}" << be_nl_2;
     }
 
-
   *os << be_global->core_versioning_end () << be_nl;
 
   *os << be_global->anyops_versioning_begin () << be_nl;

@@ -174,7 +174,9 @@ be_visitor_valuetype_marshal_cs::unmarshal_state (be_valuetype *node)
       *os << "return ci.handle_chunking (strm);" << be_uidt << be_nl_2;
     }
     else
-      *os << "return true;";
+      {
+        *os << "return true;";
+      }
   return 0;
 }
 
@@ -282,11 +284,13 @@ be_visitor_valuetype_marshal_cs::class_name (be_valuetype *node,
 {
   if (node->opt_accessor ())
     {
-      be_decl *scope =
-        dynamic_cast<be_scope*> (node->defined_in ())->decl ();
+      std::string name = node->full_name ();
+      if (name.compare (0, 2, "::") == 0)
+        {
+          name.erase (0, 2);
+        }
 
-      *os << scope->name () << "::"
-          << node->local_name ();
+      *os << name;
     }
   else
     {
@@ -299,7 +303,7 @@ int
 be_visitor_valuetype_marshal_cs::gen_fields (be_valuetype *node,
                                              be_visitor_context &ctx)
 {
-  std::size_t n_processed {};
+  size_t n_processed {};
   TAO_OutStream *os = ctx.stream ();
   this->elem_number_ = 0;
 

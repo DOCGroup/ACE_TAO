@@ -1,6 +1,4 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Acceptor_Filter_Factory.h
  *
@@ -9,9 +7,6 @@
  *  @author  Yan Dai <dai_y@ociweb.com>
  *  @author  Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
-
-
 #ifndef TAO_ACCEPTOR_FILTER_FACTORY_H
 #define TAO_ACCEPTOR_FILTER_FACTORY_H
 
@@ -57,7 +52,6 @@ public:
   /// Static initializer ensures the factory is loaded
   static int initialize ();
 };
-
 
 static int
 TAO_Requires_Acceptor_Filter_Factory =

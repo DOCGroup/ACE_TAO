@@ -1,6 +1,5 @@
 #include "orbsvcs/Event/EC_Masked_Type_Filter.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Masked_Type_Filter::
@@ -12,10 +11,6 @@ TAO_EC_Masked_Type_Filter::
      type_mask_ (type_mask),
      source_value_ (source_value),
      type_value_ (type_value)
-{
-}
-
-TAO_EC_Masked_Type_Filter::~TAO_EC_Masked_Type_Filter ()
 {
 }
 
@@ -38,15 +33,19 @@ TAO_EC_Masked_Type_Filter::size () const
 }
 
 int
-TAO_EC_Masked_Type_Filter::filter (const RtecEventComm::EventSet& event,
+TAO_EC_Masked_Type_Filter::filter (RtecEventComm::EventSet const &event,
                                    TAO_EC_QOS_Info& qos_info)
 {
   if (event.length () != 1)
+  {
     return 0;
+  }
 
   if ((event[0].header.type & this->type_mask_) != this->type_value_
       || (event[0].header.source & this->source_mask_) != this->source_value_)
+  {
     return 0;
+  }
 
   if (this->parent () != nullptr)
     {
@@ -60,11 +59,15 @@ TAO_EC_Masked_Type_Filter::filter_nocopy (RtecEventComm::EventSet& event,
                                           TAO_EC_QOS_Info& qos_info)
 {
   if (event.length () != 1)
+  {
     return 0;
+  }
 
   if ((event[0].header.type & this->type_mask_) != this->type_value_
       || (event[0].header.source & this->source_mask_) != this->source_value_)
+  {
     return 0;
+  }
 
   if (this->parent () != nullptr)
     {
@@ -74,7 +77,7 @@ TAO_EC_Masked_Type_Filter::filter_nocopy (RtecEventComm::EventSet& event,
 }
 
 void
-TAO_EC_Masked_Type_Filter::push (const RtecEventComm::EventSet &,
+TAO_EC_Masked_Type_Filter::push (RtecEventComm::EventSet const &,
                                  TAO_EC_QOS_Info &)
 {
 }
@@ -98,19 +101,21 @@ TAO_EC_Masked_Type_Filter::max_event_size () const
 
 int
 TAO_EC_Masked_Type_Filter::can_match (
-      const RtecEventComm::EventHeader& header) const
+      RtecEventComm::EventHeader const &header) const
 {
   if ((header.type & this->type_mask_) == this->type_value_
       && (header.source & this->source_mask_) == this->source_value_)
+  {
     return 1;
+  }
 
   return 0;
 }
 
 int
 TAO_EC_Masked_Type_Filter::add_dependencies (
-      const RtecEventComm::EventHeader&,
-      const TAO_EC_QOS_Info &)
+      RtecEventComm::EventHeader const &,
+      TAO_EC_QOS_Info const &)
 {
   return 0;
 }

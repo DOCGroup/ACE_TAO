@@ -1,13 +1,9 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file    DynValueCommon_i.h
  *
  *  @author simon dot massey at prismtech dot com
  */
-//=============================================================================
-
-
 #ifndef TAO_DYNVALUECOMMON_I_H
 #define TAO_DYNVALUECOMMON_I_H
 #include /**/ "ace/pre.h"
@@ -35,34 +31,40 @@ class TAO_DynamicAny_Export TAO_DynValueCommon_i
     public virtual TAO_DynAny_i
 {
 public:
-  /// Constructor.
   explicit TAO_DynValueCommon_i (CORBA::Boolean allow_truncation = true);
 
-  /// Destructor.
-  ~TAO_DynValueCommon_i () = default;
+  ~TAO_DynValueCommon_i () override = default;
 
-  // = LocalObject methods.
+  /// Use copy() or assign() instead of these.
+  TAO_DynValueCommon_i (TAO_DynValueCommon_i const &src) = delete;
+  TAO_DynValueCommon_i &operator= (TAO_DynValueCommon_i const &src) = delete;
+  TAO_DynValueCommon_i (TAO_DynValueCommon_i &&) = delete;
+  TAO_DynValueCommon_i &operator= (TAO_DynValueCommon_i &&) = delete;
+
+  /// @name LocalObject methods
+  /// @{
+
   static TAO_DynValueCommon_i *_narrow (CORBA::Object_ptr obj);
+
+  /// @}
 
   /// Called by DynValue and DynValueBox init() functions.
   void init_common ();
 
-  // = Functions specific to DynValueCommon.
+  /// @name Functions specific to DynValueCommon
+  /// @{
+
   CORBA::Boolean is_null () override;
 
   void set_to_null () override;
 
   void set_to_value () override = 0;
 
-private:
-  // = Use copy() or assign() instead of these.
-  TAO_DynValueCommon_i (TAO_DynValueCommon_i const &src) = delete;
-  TAO_DynValueCommon_i &operator= (TAO_DynValueCommon_i const &src) = delete;
-  TAO_DynValueCommon_i (TAO_DynValueCommon_i &&) = delete;
-  TAO_DynValueCommon_i &operator= (TAO_DynValueCommon_i &&) = delete;
+  /// @}
 
+private:
   /// Check if the typecode is acceptable. Needs to be provided by DynValue or DynValueBox
-  virtual void check_typecode (CORBA::TypeCode_ptr tc)=0;
+  virtual void check_typecode (CORBA::TypeCode_ptr tc) = 0;
 
 protected:
   CORBA::Boolean is_null_ {true};

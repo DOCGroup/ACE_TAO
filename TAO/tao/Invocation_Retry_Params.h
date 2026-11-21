@@ -47,12 +47,13 @@ namespace TAO
      * if the the connection to the server is closed when
      * trying to get a reply.
      */
-    int forward_on_reply_closed_limit_;
+    int forward_on_reply_closed_limit_ {};
 
     /**
-     * The delay to use between cycles of base and forward profiles.
+     * The delay to use between cycles of base and forward profiles. Defaults
+     * to 0.1 seconds.
      */
-    ACE_Time_Value init_retry_delay_;
+    ACE_Time_Value init_retry_delay_ { 0, 100000 };
   };
 }
 

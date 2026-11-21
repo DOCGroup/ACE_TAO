@@ -8,6 +8,8 @@
 #include "ace/OS_Memory.h"
 #include "ace/Truncate.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_CLOCK_GETTIME)
 # include "ace/os_include/os_time.h"
 #endif /* ACE_HAS_CLOCK_GETTIME */
@@ -49,7 +51,6 @@ ACE_OS::access (const char *path, int amode)
   return ::access (path, amode);
 #endif /* ACE_LACKS_ACCESS */
 }
-
 
 #if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
@@ -193,9 +194,13 @@ ACE_OS::dup (ACE_HANDLE handle)
                         0,
                         TRUE,
                         DUPLICATE_SAME_ACCESS))
-    return new_fd;
+    {
+      return new_fd;
+    }
   else
-    ACE_FAIL_RETURN (ACE_INVALID_HANDLE);
+    {
+      ACE_FAIL_RETURN (ACE_INVALID_HANDLE);
+    }
   /* NOTREACHED */
 #else
   return ::dup (handle);
@@ -227,7 +232,9 @@ ACE_OS::dup(ACE_HANDLE handle, pid_t pid)
       return new_fd;
     }
   else
-    ACE_FAIL_RETURN (ACE_INVALID_HANDLE);
+    {
+      ACE_FAIL_RETURN (ACE_INVALID_HANDLE);
+    }
   /*NOTREACHED*/
 #else
   ACE_UNUSED_ARG (pid);
@@ -368,9 +375,13 @@ ACE_OS::ftruncate (ACE_HANDLE handle, ACE_OFF_T offset)
   LARGE_INTEGER loff;
   loff.QuadPart = offset;
   if (::SetFilePointerEx (handle, loff, 0, FILE_BEGIN))
-    ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetEndOfFile (handle), ace_result_), int, -1);
+    {
+      ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetEndOfFile (handle), ace_result_), int, -1);
+    }
   else
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
 #elif defined (ACE_LACKS_FTRUNCATE)
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (offset);
@@ -404,14 +415,15 @@ ACE_OS::getcwd (wchar_t *buf, size_t size)
 #  if defined (ACE_WIN32)
   return ::_wgetcwd (buf, static_cast<int> (size));
 #  else
-  char *narrow_buf = new char[size];
-  char *result = nullptr;
-  result = ACE_OS::getcwd (narrow_buf, size);
+  std::unique_ptr<char[]> narrow_buf (new char[size]);
+  char *result {ACE_OS::getcwd (narrow_buf.get (), size)};
+  if (result == nullptr)
+    {
+      return nullptr;
+    }
   ACE_Ascii_To_Wide wide_buf (result);
-  delete [] narrow_buf;
-  if (result != 0)
-    ACE_OS::strsncpy (buf, wide_buf.wchar_rep (), size);
-  return result == 0 ? 0 : buf;
+  ACE_OS::strsncpy (buf, wide_buf.wchar_rep (), size);
+  return buf;
 #  endif /* ACE_WIN32 */
 }
 #endif /* ACE_HAS_WCHAR */
@@ -548,7 +560,9 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
   ACE_utsname host_info;
 
   if (ACE_OS::uname (&host_info) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       ACE_OS::strsncpy (name, host_info.nodename, maxnamelen);
@@ -567,7 +581,7 @@ ACE_OS::hostname (wchar_t name[], size_t maxnamelen)
                                           ace_result_), int, -1);
 #else /* ACE_WIN32 */
   // Emulate using the char version
-  char *char_name = nullptr;
+  char *char_name {};
 
   ACE_NEW_RETURN (char_name, char[maxnamelen], -1);
 
@@ -643,9 +657,13 @@ ACE_OS::lseek (ACE_HANDLE handle, ACE_OFF_T offset, int whence)
   DWORD const result =
     ::SetFilePointer (handle, low_offset, &high_offset, whence);
   if (result == INVALID_SET_FILE_POINTER && GetLastError() != NO_ERROR)
-    ACE_FAIL_RETURN (static_cast<ACE_OFF_T> (-1));
+    {
+      ACE_FAIL_RETURN (static_cast<ACE_OFF_T> (-1));
+    }
   else
-    return result;
+    {
+      return result;
+    }
 #elif defined (ACE_MQX)
   switch (whence)
     {
@@ -710,9 +728,13 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len)
 #if defined (ACE_WIN32)
   DWORD ok_len;
   if (::ReadFile (handle, buf, static_cast<DWORD> (len), &ok_len, 0))
-    return (ssize_t) ok_len;
+    {
+      return (ssize_t) ok_len;
+    }
   else
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
 
 #elif defined (ACE_LACKS_READ)
   ACE_UNUSED_ARG (handle);
@@ -761,9 +783,13 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len,
   DWORD ok_len;
   DWORD short_len = static_cast<DWORD> (len);
   if (::ReadFile (handle, buf, short_len, &ok_len, overlapped))
-    return (ssize_t) ok_len;
+    {
+      return (ssize_t) ok_len;
+    }
   else
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
 #else
   ACE_UNUSED_ARG (overlapped);
   return ACE_OS::read (handle, buf, len);
@@ -795,7 +821,7 @@ ACE_OS::pipe (ACE_HANDLE fds[])
   ACE_NOTSUP_RETURN (-1);
 # elif defined (ACE_WIN32)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL
-                        (::CreatePipe (&fds[0], &fds[1], 0, 0),
+                        (::CreatePipe (fds, fds + 1, 0, 0),
                          ace_result_), int, -1);
 # else
   return ::pipe (fds);
@@ -1011,7 +1037,9 @@ ACE_OS::swab (const void *src,
       to[ptr  ] = q;
     }
   if (ptr == length) /* I.e., if length is odd, */
-    to[ptr-1] = 0;   /* then pad with a NUL. */
+    {
+      to[ptr-1] = 0;   /* then pad with a NUL. */
+    }
 #elif defined (ACE_HAS_NONCONST_SWAB)
   const char *tmp = static_cast<const char*> (src);
   char *from = const_cast<char *> (tmp);
@@ -1037,7 +1065,10 @@ ACE_OS::sysconf (int name)
 {
   ACE_OS_TRACE ("ACE_OS::sysconf");
 #if defined (ACE_INTEGRITY)
-  if (name == _SC_PAGESIZE) return ACE_PAGE_SIZE;
+  if (name == _SC_PAGESIZE)
+    {
+      return ACE_PAGE_SIZE;
+    }
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_LACKS_SYSCONF)
   ACE_UNUSED_ARG (name);
@@ -1175,9 +1206,13 @@ ACE_OS::write (ACE_HANDLE handle, const void *buf, size_t nbyte)
   // than a DWORD length can hold.
   DWORD short_nbyte = static_cast<DWORD> (nbyte);
   if (::WriteFile (handle, buf, short_nbyte, &bytes_written, 0))
-    return (ssize_t) bytes_written;
+    {
+      return (ssize_t) bytes_written;
+    }
   else
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
 #elif defined (ACE_MQX)
   return MQX_Filesystem::inst ().write (handle, reinterpret_cast<const unsigned char *> (buf), nbyte);
 #elif defined (ACE_LACKS_WRITE)
@@ -1206,9 +1241,13 @@ ACE_OS::write (ACE_HANDLE handle,
 
   DWORD short_nbyte = static_cast<DWORD> (nbyte);
   if (::WriteFile (handle, buf, short_nbyte, &bytes_written, overlapped))
-    return (ssize_t) bytes_written;
+    {
+      return (ssize_t) bytes_written;
+    }
   else
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
 #else
   ACE_UNUSED_ARG (overlapped);
   return ACE_OS::write (handle, buf, nbyte);

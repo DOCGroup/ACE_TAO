@@ -10,18 +10,22 @@ class Oneway_Buffering
   : public virtual POA_Test::Oneway_Buffering
 {
 public:
-  /// Constructor
   Oneway_Buffering (CORBA::ORB_ptr orb,
                     Test::Oneway_Buffering_Admin_ptr admin);
 
-  // = The skeleton methods
-  virtual void receive_data (const Test::Payload &the_payload);
+  Oneway_Buffering (Oneway_Buffering const &) = delete;
+  Oneway_Buffering &operator= (Oneway_Buffering const &) = delete;
+  Oneway_Buffering (Oneway_Buffering &&) = delete;
+  Oneway_Buffering &operator= (Oneway_Buffering &&) = delete;
 
-  virtual void flush ();
+  /// The skeleton methods
+  void receive_data (Test::Payload const &the_payload) override;
 
-  virtual void sync ();
+  void flush () override;
 
-  virtual void shutdown ();
+  void sync () override;
+
+  void shutdown () override;
 
 private:
   /// Use an ORB reference to shutdown the application.

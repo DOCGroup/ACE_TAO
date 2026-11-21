@@ -29,11 +29,13 @@
 #include "tao/Wait_Strategy.h"
 #include "ace/os_include/os_netdb.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SCIOP_Connection_Handler::TAO_SCIOP_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_SCIOP_SVC_HANDLER (t, 0 , 0),
-    TAO_Connection_Handler (0),
+  : TAO_SCIOP_SVC_HANDLER (t, nullptr, 0),
+    TAO_Connection_Handler (nullptr),
     dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
   // This constructor should *never* get called, it is just here to
@@ -41,16 +43,15 @@ TAO_SCIOP_Connection_Handler::TAO_SCIOP_Connection_Handler (ACE_Thread_Manager *
   // Creation_Strategy requires a constructor with that signature, we
   // don't use that implementation, but some (most?) compilers
   // instantiate it anyway.
-  ACE_ASSERT (0);
+  ACE_ASSERT (false);
 }
 
-
 TAO_SCIOP_Connection_Handler::TAO_SCIOP_Connection_Handler (TAO_ORB_Core *orb_core)
-  : TAO_SCIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
+  : TAO_SCIOP_SVC_HANDLER (orb_core->thr_mgr (), nullptr, 0),
     TAO_Connection_Handler (orb_core),
     dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
-  TAO_SCIOP_Transport *specific_transport = nullptr;
+  TAO_SCIOP_Transport *specific_transport {};
   ACE_NEW (specific_transport,
            TAO_SCIOP_Transport (this, orb_core));
 
@@ -83,7 +84,9 @@ int
 TAO_SCIOP_Connection_Handler::open (void*)
 {
   if (this->shared_open() == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   TAO_SCIOP_Protocol_Properties protocol_properties;
 
@@ -121,19 +124,23 @@ TAO_SCIOP_Connection_Handler::open (void*)
   if (this->set_socket_option (this->peer (),
                                protocol_properties.send_buffer_size_,
                                protocol_properties.recv_buffer_size_) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
 #if !defined (ACE_LACKS_TCP_NODELAY)
   if (this->peer ().set_option (IPPROTO_SCTP,
                                 SCTP_NODELAY,
-                                (void *) &protocol_properties.no_delay_,
+                                std::addressof (protocol_properties.no_delay_),
                                 sizeof (protocol_properties.no_delay_)) == -1)
-    return -1;
+    {
+      return -1;
+    }
 #endif /* ! ACE_LACKS_TCP_NODELAY */
 
   if (protocol_properties.hop_limit_ >= 0)
     {
-      int result = 0;
+      int result {};
 #if defined (ACE_HAS_IPV6)
       ACE_INET_Addr local_addr;
       if (this->peer ().get_local_addr (local_addr) == -1)
@@ -152,7 +159,7 @@ TAO_SCIOP_Connection_Handler::open (void*)
           result = this->peer ().set_option (
             IPPROTO_IPV6,
             IPV6_UNICAST_HOPS,
-            (void *) &hop_limit,
+            std::addressof (hop_limit),
             sizeof (hop_limit));
         }
       else
@@ -168,7 +175,7 @@ TAO_SCIOP_Connection_Handler::open (void*)
           result = this->peer ().set_option (
             IPPROTO_IP,
             IP_TTL,
-            (void *) &hop_limit,
+            std::addressof (hop_limit),
             sizeof (hop_limit));
         }
 
@@ -187,7 +194,9 @@ TAO_SCIOP_Connection_Handler::open (void*)
   if (this->transport ()->wait_strategy ()->non_blocking ())
     {
       if (this->peer ().enable (ACE_NONBLOCK) == -1)
-        return -1;
+        {
+          return -1;
+        }
     }
 
   // Called by the <Strategy_Acceptor> when the handler is
@@ -195,17 +204,23 @@ TAO_SCIOP_Connection_Handler::open (void*)
 
   ACE_INET_Addr remote_addr;
   if (this->peer ().get_remote_addr (remote_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   ACE_INET_Addr local_addr;
   if (this->peer ().get_local_addr (local_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (TAO_debug_level > 2)
-    TAOLIB_DEBUG ((LM_DEBUG,
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT("TAO(%P|%t) - SCIOP_Connection_Handler::open, ")
                 ACE_TEXT("The local addr is (%C)\n"),
                 local_addr.get_host_addr ()));
+    }
 
   if (local_addr.get_ip_address () == remote_addr.get_ip_address ()
       && local_addr.get_port_number () == remote_addr.get_port_number ())
@@ -234,19 +249,24 @@ TAO_SCIOP_Connection_Handler::open (void*)
 
       // Verify that we can resolve the peer hostname.
       if (remote_addr.addr_to_string (client, sizeof (client)) == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - SCIOP_Connection_Handler::open, SCIOP ")
-                  ACE_TEXT ("connection to peer <%s> on [%d]\n"),
-                  client, this->peer ().get_handle ()));
+                  ACE_TEXT ("connection to peer <%s> on [%H]\n"),
+                  client,
+                  this->peer ().get_handle ()));
     }
 
   // Set that the transport is now connected, if fails we return -1
   // Use C-style cast b/c otherwise we get warnings on lots of
   // compilers
   if (!this->transport ()->post_open ((size_t) this->get_handle ()))
-    return -1;
+    {
+      return -1;
+    }
 
   this->state_changed (TAO_LF_Event::LFS_SUCCESS,
                        this->orb_core ()->leader_follower ());
@@ -314,7 +334,7 @@ int
 TAO_SCIOP_Connection_Handler::handle_close (ACE_HANDLE,
                                             ACE_Reactor_Mask)
 {
-  ACE_ASSERT (0);
+  ACE_ASSERT (false);
   return 0;
 }
 
@@ -337,7 +357,9 @@ TAO_SCIOP_Connection_Handler::add_transport_to_cache ()
 
   // Get the peername.
   if (this->peer ().get_remote_addr (addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   // Construct an  SCIOP_Endpoint object
   TAO_SCIOP_Endpoint endpoint (
@@ -345,13 +367,13 @@ TAO_SCIOP_Connection_Handler::add_transport_to_cache ()
       this->orb_core()->orb_params()->use_dotted_decimal_addresses ());
 
   // Construct a property object
-  TAO_Base_Transport_Property prop (&endpoint);
+  TAO_Base_Transport_Property prop (std::addressof (endpoint));
 
   TAO::Transport_Cache_Manager &cache =
     this->orb_core ()->lane_resources ().transport_cache ();
 
   // Idle the transport..
-  return cache.cache_transport (&prop, this->transport ());
+  return cache.cache_transport (std::addressof (prop), this->transport ());
 }
 
 int
@@ -361,7 +383,7 @@ TAO_SCIOP_Connection_Handler::process_listen_point_list (
   // Get the size of the list
   CORBA::ULong const len = listen_list.length ();
 
-  for (CORBA::ULong i = 0; i < len; ++ i)
+  for (CORBA::ULong i {}; i < len; ++ i)
     {
       IIOP::ListenPoint listen_point = listen_list[i];
       ACE_INET_Addr addr (listen_point.port,
@@ -380,16 +402,18 @@ TAO_SCIOP_Connection_Handler::process_listen_point_list (
         this->orb_core()->orb_params()->use_dotted_decimal_addresses ());
 
       // Construct a property object
-      TAO_Base_Transport_Property prop (&endpoint);
+      TAO_Base_Transport_Property prop (std::addressof (endpoint));
 
       // Mark the connection as bidirectional
-      prop.set_bidir_flag (1);
+      prop.set_bidir_flag (true);
 
       // The property for this handler has changed. Recache the
       // handler with this property
-      int const retval = this->transport ()->recache_transport (&prop);
+      int const retval = this->transport ()->recache_transport (std::addressof (prop));
       if (retval == -1)
-        return retval;
+        {
+          return retval;
+        }
 
       // Make the handler idle and ready for use
       this->transport ()->make_idle ();
@@ -405,8 +429,8 @@ TAO_SCIOP_Connection_Handler::set_tos (int tos)
     {
       int const result = this->peer ().set_option (IPPROTO_IP,
                                                    IP_TOS,
-                                                   (int *) &tos ,
-                                                   (int) sizeof (tos));
+                                                   &tos,
+                                                   static_cast<int> (sizeof (tos)));
 
       if (TAO_debug_level)
         {
@@ -420,7 +444,9 @@ TAO_SCIOP_Connection_Handler::set_tos (int tos)
 
       // On successful setting of TOS field.
       if (result == 0)
-        this->dscp_codepoint_ = tos;
+        {
+          this->dscp_codepoint_ = tos;
+        }
     }
 
   return 0;

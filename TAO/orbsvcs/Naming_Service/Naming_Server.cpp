@@ -12,6 +12,11 @@ class Naming_Svc_Shutdown : public Shutdown_Functor
 public:
   explicit Naming_Svc_Shutdown (TAO_Naming_Service &ns);
 
+  Naming_Svc_Shutdown (Naming_Svc_Shutdown const &) = delete;
+  Naming_Svc_Shutdown (Naming_Svc_Shutdown &&) = delete;
+  Naming_Svc_Shutdown &operator= (Naming_Svc_Shutdown const &) = delete;
+  Naming_Svc_Shutdown &operator= (Naming_Svc_Shutdown &&) = delete;
+
   void operator() (int which_signal) override;
 private:
   TAO_Naming_Service &ns_;
@@ -26,9 +31,11 @@ void
 Naming_Svc_Shutdown::operator() (int which_signal)
 {
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "Name Service: shutting down on signal %d\n",
-                which_signal));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      "Name Service: shutting down on signal %d\n",
+                      which_signal));
+    }
   (void) this->ns_.shutdown ();
 }
 
@@ -44,9 +51,11 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
   Service_Shutdown kill_contractor (killer);
 
   if (naming_service.init (argc, argv) == -1)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("Failed to start the Naming Service.\n")),
-                      1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("Failed to start the Naming Service.\n")),
+                            1);
+    }
 
   try
     {

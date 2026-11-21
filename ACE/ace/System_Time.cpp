@@ -8,12 +8,9 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_time.h"
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_System_Time::ACE_System_Time (const ACE_TCHAR *poolname)
-  : shmem_ (nullptr)
-  , delta_time_ (nullptr)
+ACE_System_Time::ACE_System_Time (ACE_TCHAR const *poolname)
 {
   ACE_TRACE ("ACE_System_Time::ACE_System_Time");
 
@@ -42,18 +39,20 @@ ACE_System_Time::ACE_System_Time (const ACE_TCHAR *poolname)
 #endif /* ACE_DEFAULT_BACKING_STORE */
     }
   else
-    ACE_OS::strsncpy (this->poolname_,
-                      poolname,
-                      (sizeof this->poolname_ / sizeof (ACE_TCHAR)));
+    {
+      ACE_OS::strsncpy (this->poolname_,
+                        poolname,
+                        (sizeof this->poolname_ / sizeof (ACE_TCHAR)));
+    }
 
-  ACE_NEW (this->shmem_,
-           ALLOCATOR (this->poolname_));
+  ALLOCATOR *shmem {};
+  ACE_NEW (shmem, ALLOCATOR (this->poolname_));
+  this->shmem_.reset (shmem);
 }
 
 ACE_System_Time::~ACE_System_Time ()
 {
   ACE_TRACE ("ACE_System_Time::~ACE_System_Time");
-  delete this->shmem_;
 }
 
 // Get the local system time.
@@ -84,7 +83,7 @@ ACE_System_Time::get_master_system_time (time_t &time_out)
   if (this->delta_time_ == nullptr)
     {
       // Try to find it
-      void * temp = nullptr;
+      void * temp {};
       if (this->shmem_->find (ACE_DEFAULT_TIME_SERVER_STR, temp) == -1)
         {
           // No time entry in shared memory (meaning no Clerk exists)
@@ -92,11 +91,13 @@ ACE_System_Time::get_master_system_time (time_t &time_out)
           return this->get_local_system_time (time_out);
         }
       else
-        // Extract the delta time.
-        this->delta_time_ = static_cast<long *> (temp);
+        {
+          // Extract the delta time.
+          this->delta_time_ = static_cast<long *> (temp);
+        }
     }
 
-  time_t local_time;
+  time_t local_time {};
 
   // If delta_time is positive, it means that the system clock is
   // ahead of our local clock so add delta to the local time to get an
@@ -109,9 +110,11 @@ ACE_System_Time::get_master_system_time (time_t &time_out)
       time_out = local_time + static_cast<ACE_UINT32> (*this->delta_time_);
     }
   else
-    // Return the last local time. Note that this is stored as the
-    // second field in shared memory.
-    time_out = *(this->delta_time_ + 1);
+    {
+      // Return the last local time. Note that this is stored as the
+      // second field in shared memory.
+      time_out = *(this->delta_time_ + 1);
+    }
   return 0;
 }
 
@@ -119,9 +122,11 @@ int
 ACE_System_Time::get_master_system_time (ACE_Time_Value &time_out)
 {
   ACE_TRACE ("ACE_System_Time::get_master_system_time");
-  time_t to;
+  time_t to {};
   if (this->get_master_system_time (to) == -1)
+  {
     return -1;
+  }
   time_out.sec (to);
   return 0;
 }

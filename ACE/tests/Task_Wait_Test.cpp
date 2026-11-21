@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Event.h"
 #include "ace/Thread_Manager.h"
@@ -44,21 +43,20 @@ int
 Do_Nothing_Task::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Task 0x%x, thread %t closing\n"),
-              this));
+              ACE_TEXT ("Task %@, thread %t closing\n"),
+              static_cast<void *> (this)));
   this->wait ();
   TaskDone.signal ();
   return 0;
 }
-
 
 // svc just waits a second then exits.
 int
 Do_Nothing_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Task 0x%x, thread %t waiting to exit\n"),
-              this));
+              ACE_TEXT ("Task %@, thread %t waiting to exit\n"),
+              static_cast<void *> (this)));
   ACE_OS::sleep (1);
 
   return 0;

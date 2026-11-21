@@ -1,9 +1,9 @@
-// Messenger.idl
-// Modified to make use of ValueTypes
+/// @file Messenger.idl
+/// Modified to make use of ValueTypes
 
-// Demonstrates how ValueTypes can let you make wrapper classes
-// that make sequences easier to work with, and can simplify
-// IDL interfaces by reducing the number of parameters.
+/// Demonstrates how ValueTypes can let you make wrapper classes
+/// that make sequences easier to work with, and can simplify
+/// IDL interfaces by reducing the number of parameters.
 
 valuetype Message {
   typedef sequence<string> AddrList;

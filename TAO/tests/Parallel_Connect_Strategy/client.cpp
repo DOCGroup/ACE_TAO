@@ -3,8 +3,8 @@
 #include "ace/High_Res_Timer.h"
 #include "tao/ORB_Core.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-int kill_server = 0;
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+bool kill_server = false;
 bool sanity_timeout = false;
 
 void hook (TAO_ORB_Core *,
@@ -21,7 +21,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:xt"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -30,7 +30,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ior = get_opts.opt_arg ();
         break;
       case 'x':
-        kill_server = 1;
+        kill_server = true;
         break;
       case 't':
         sanity_timeout = true;
@@ -58,7 +58,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       if (sanity_timeout)
         {
@@ -119,7 +121,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

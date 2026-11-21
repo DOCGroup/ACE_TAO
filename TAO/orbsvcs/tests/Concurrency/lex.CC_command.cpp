@@ -9,14 +9,12 @@
 
 #include "ace/OS_NS_string.h"
 
-
 /* cfront 1.2 defines "c_plusplus" instead of "__cplusplus" */
 #ifdef c_plusplus
 #ifndef __cplusplus
 #define __cplusplus
 #endif
 #endif
-
 
 #ifdef __cplusplus
 
@@ -52,7 +50,6 @@
 #else
 #define ace_cc_yyconst
 #endif
-
 
 #ifdef ACE_CC_YY_USE_PROTOS
 #define ACE_CC_YY_PROTO(proto) proto
@@ -138,7 +135,6 @@ extern FILE *ace_cc_yyin, *ace_cc_yyout;
  */
 typedef unsigned int ace_cc_yy_size_t;
 
-
 struct ace_cc_yy_buffer_state
 {
   FILE *ace_cc_yy_input_file;
@@ -204,12 +200,10 @@ static ACE_CC_YY_BUFFER_STATE ace_cc_yy_current_buffer = 0;
  */
 #define ACE_CC_YY_CURRENT_BUFFER ace_cc_yy_current_buffer
 
-
 /* ace_cc_yy_hold_char holds the character lost when ace_cc_yytext is formed. */
 static char ace_cc_yy_hold_char;
 
 static int ace_cc_yy_n_chars;   /* number of characters read into ace_cc_yy_ch_buf */
-
 
 int ace_cc_yyleng;
 
@@ -261,7 +255,6 @@ static void ace_cc_yy_flex_free ACE_CC_YY_PROTO(( void * ));
   }
 
 #define ACE_CC_YY_AT_BOL() (ace_cc_yy_current_buffer->ace_cc_yy_at_bol)
-
 
 #define ACE_CC_YY_SKIP_ACE_CC_YYWRAP
 typedef unsigned char ACE_CC_YY_CHAR;
@@ -608,8 +601,6 @@ ACE_CC_YY_DECL
   char *ace_cc_yy_cp = 0, *ace_cc_yy_bp = 0;
   int ace_cc_yy_act;
 
-
-
   if ( ace_cc_yy_init )
     {
     ace_cc_yy_init = 0;
@@ -619,13 +610,19 @@ ACE_CC_YY_DECL
 #endif
 
     if ( ! ace_cc_yy_start )
+    {
       ace_cc_yy_start = 1;  /* first start state */
+    }
 
     if ( ! ace_cc_yyin )
+    {
       ace_cc_yyin = stdin;
+    }
 
     if ( ! ace_cc_yyout )
+    {
       ace_cc_yyout = stdout;
+    }
 
     if ( ! ace_cc_yy_current_buffer )
       ace_cc_yy_current_buffer =
@@ -663,7 +660,9 @@ ace_cc_yy_match:
         {
         ace_cc_yy_current_state = (int) ace_cc_yy_def[ace_cc_yy_current_state];
         if ( ace_cc_yy_current_state >= 124 )
+        {
           ace_cc_yy_c = ace_cc_yy_meta[(unsigned int) ace_cc_yy_c];
+        }
         }
       ace_cc_yy_current_state = ace_cc_yy_nxt[ace_cc_yy_base[ace_cc_yy_current_state] + (unsigned int) ace_cc_yy_c];
       ++ace_cc_yy_cp;
@@ -681,9 +680,7 @@ ace_cc_yy_find_action:
 
     ACE_CC_YY_DO_BEFORE_ACTION;
 
-
 do_action:  /* This label is used only to access EOF actions. */
-
 
     switch ( ace_cc_yy_act )
   { /* beginning of action switch */
@@ -935,7 +932,6 @@ case ACE_CC_YY_STATE_EOF(INITIAL):
     } /* end of scanning one token */
   } /* end of ace_cc_yylex */
 
-
 /* ace_cc_yy_get_next_buffer - try to read in a new buffer
  *
  * Returns a code representing an action:
@@ -1013,7 +1009,9 @@ static int ace_cc_yy_get_next_buffer()
         if ( new_size <= 0 )
           b->ace_cc_yy_buf_size += b->ace_cc_yy_buf_size / 8;
         else
+        {
           b->ace_cc_yy_buf_size *= 2;
+        }
 
         b->ace_cc_yy_ch_buf = (char *)
           /* Include room in for 2 EOB chars. */
@@ -1036,7 +1034,9 @@ static int ace_cc_yy_get_next_buffer()
       }
 
     if ( num_to_read > ACE_CC_YY_READ_BUF_SIZE )
+    {
       num_to_read = ACE_CC_YY_READ_BUF_SIZE;
+    }
 
     /* Read in more data. */
     ACE_CC_YY_INPUT( (&ace_cc_yy_current_buffer->ace_cc_yy_ch_buf[number_to_move]),
@@ -1062,7 +1062,9 @@ static int ace_cc_yy_get_next_buffer()
     }
 
   else
+  {
     ret_val = EOB_ACT_CONTINUE_SCAN;
+  }
 
   ace_cc_yy_n_chars += number_to_move;
   ace_cc_yy_current_buffer->ace_cc_yy_ch_buf[ace_cc_yy_n_chars] = ACE_CC_YY_END_OF_BUFFER_CHAR;
@@ -1072,7 +1074,6 @@ static int ace_cc_yy_get_next_buffer()
 
   return ret_val;
   }
-
 
 /* ace_cc_yy_get_previous_state - get the state just before the EOB char was reached */
 
@@ -1096,14 +1097,15 @@ static ace_cc_yy_state_type ace_cc_yy_get_previous_state()
       {
       ace_cc_yy_current_state = (int) ace_cc_yy_def[ace_cc_yy_current_state];
       if ( ace_cc_yy_current_state >= 124 )
+      {
         ace_cc_yy_c = ace_cc_yy_meta[(unsigned int) ace_cc_yy_c];
+      }
       }
     ace_cc_yy_current_state = ace_cc_yy_nxt[ace_cc_yy_base[ace_cc_yy_current_state] + (unsigned int) ace_cc_yy_c];
     }
 
   return ace_cc_yy_current_state;
   }
-
 
 /* ace_cc_yy_try_NUL_trans - try to make a transition on the NUL character
  *
@@ -1131,14 +1133,15 @@ ace_cc_yy_state_type ace_cc_yy_current_state;
     {
     ace_cc_yy_current_state = (int) ace_cc_yy_def[ace_cc_yy_current_state];
     if ( ace_cc_yy_current_state >= 124 )
+    {
       ace_cc_yy_c = ace_cc_yy_meta[(unsigned int) ace_cc_yy_c];
+    }
     }
   ace_cc_yy_current_state = ace_cc_yy_nxt[ace_cc_yy_base[ace_cc_yy_current_state] + (unsigned int) ace_cc_yy_c];
   ace_cc_yy_is_jam = (ace_cc_yy_current_state == 123);
 
   return ace_cc_yy_is_jam ? 0 : ace_cc_yy_current_state;
   }
-
 
 #ifndef ACE_CC_YY_NO_UNPUT
 #ifdef ACE_CC_YY_USE_PROTOS
@@ -1176,7 +1179,6 @@ char *ace_cc_yy_bp;
     }
 
   *--ace_cc_yy_cp = (char) c;
-
 
   ace_cc_yytext_ptr = ace_cc_yy_bp;
   ace_cc_yy_hold_char = *ace_cc_yy_cp;
@@ -1259,7 +1261,6 @@ static int input()
   }
 #endif /* ! ACE_CC_YY_NO_INPUT */
 
-
 #ifdef ACE_CC_YY_USE_PROTOS
 void ace_cc_yyrestart( FILE *input_file )
 #else
@@ -1268,12 +1269,13 @@ FILE *input_file;
 #endif
   {
   if ( ! ace_cc_yy_current_buffer )
+  {
     ace_cc_yy_current_buffer = ace_cc_yy_create_buffer( ace_cc_yyin, ACE_CC_YY_BUF_SIZE );
+  }
 
   ace_cc_yy_init_buffer( ace_cc_yy_current_buffer, input_file );
   ace_cc_yy_load_buffer_state();
   }
-
 
 #ifdef ACE_CC_YY_USE_PROTOS
 void ace_cc_yy_switch_to_buffer( ACE_CC_YY_BUFFER_STATE new_buffer )
@@ -1283,7 +1285,9 @@ ACE_CC_YY_BUFFER_STATE new_buffer;
 #endif
   {
   if ( ace_cc_yy_current_buffer == new_buffer )
+  {
     return;
+  }
 
   if ( ace_cc_yy_current_buffer )
     {
@@ -1306,7 +1310,6 @@ ACE_CC_YY_BUFFER_STATE new_buffer;
 #endif
   }
 
-
 #ifdef ACE_CC_YY_USE_PROTOS
 void ace_cc_yy_load_buffer_state()
 #else
@@ -1318,7 +1321,6 @@ void ace_cc_yy_load_buffer_state()
   ace_cc_yyin = ace_cc_yy_current_buffer->ace_cc_yy_input_file;
   ace_cc_yy_hold_char = *ace_cc_yy_c_buf_p;
   }
-
 
 #ifdef ACE_CC_YY_USE_PROTOS
 ACE_CC_YY_BUFFER_STATE ace_cc_yy_create_buffer( FILE *file, int size )
@@ -1332,7 +1334,9 @@ int size;
 
   b = (ACE_CC_YY_BUFFER_STATE) ace_cc_yy_flex_alloc( sizeof( struct ace_cc_yy_buffer_state ) );
   if ( ! b )
+  {
     ACE_CC_YY_FATAL_ERROR( "out of dynamic memory in ace_cc_yy_create_buffer()" );
+  }
 
   b->ace_cc_yy_buf_size = size;
 
@@ -1341,7 +1345,9 @@ int size;
    */
   b->ace_cc_yy_ch_buf = (char *) ace_cc_yy_flex_alloc( b->ace_cc_yy_buf_size + 2 );
   if ( ! b->ace_cc_yy_ch_buf )
+  {
     ACE_CC_YY_FATAL_ERROR( "out of dynamic memory in ace_cc_yy_create_buffer()" );
+  }
 
   b->ace_cc_yy_is_our_buffer = 1;
 
@@ -1349,7 +1355,6 @@ int size;
 
   return b;
   }
-
 
 #ifdef ACE_CC_YY_USE_PROTOS
 void ace_cc_yy_delete_buffer( ACE_CC_YY_BUFFER_STATE b )
@@ -1359,17 +1364,22 @@ ACE_CC_YY_BUFFER_STATE b;
 #endif
   {
   if ( ! b )
+  {
     return;
+  }
 
   if ( b == ace_cc_yy_current_buffer )
+  {
     ace_cc_yy_current_buffer = (ACE_CC_YY_BUFFER_STATE) 0;
+  }
 
   if ( b->ace_cc_yy_is_our_buffer )
+  {
     ace_cc_yy_flex_free( (void *) b->ace_cc_yy_ch_buf );
+  }
 
   ace_cc_yy_flex_free( (void *) b );
   }
-
 
 #ifdef ACE_CC_YY_USE_PROTOS
 void ace_cc_yy_init_buffer( ACE_CC_YY_BUFFER_STATE b, FILE *file )
@@ -1378,7 +1388,6 @@ void ace_cc_yy_init_buffer( b, file )
 ACE_CC_YY_BUFFER_STATE b;
 FILE *file;
 #endif
-
 
   {
   ace_cc_yy_flush_buffer( b );
@@ -1397,7 +1406,6 @@ FILE *file;
 #endif
   }
 
-
 #ifdef ACE_CC_YY_USE_PROTOS
 void ace_cc_yy_flush_buffer( ACE_CC_YY_BUFFER_STATE b )
 #else
@@ -1407,7 +1415,9 @@ ACE_CC_YY_BUFFER_STATE b;
 
   {
   if ( ! b )
+  {
     return;
+  }
 
   b->ace_cc_yy_n_chars = 0;
 
@@ -1424,9 +1434,10 @@ ACE_CC_YY_BUFFER_STATE b;
   b->ace_cc_yy_buffer_status = ACE_CC_YY_BUFFER_NEW;
 
   if ( b == ace_cc_yy_current_buffer )
+  {
     ace_cc_yy_load_buffer_state();
   }
-
+  }
 
 #ifndef ACE_CC_YY_NO_SCAN_BUFFER
 #ifdef ACE_CC_YY_USE_PROTOS
@@ -1447,7 +1458,9 @@ ace_cc_yy_size_t size;
 
   b = (ACE_CC_YY_BUFFER_STATE) ace_cc_yy_flex_alloc( sizeof( struct ace_cc_yy_buffer_state ) );
   if ( ! b )
+  {
     ACE_CC_YY_FATAL_ERROR( "out of dynamic memory in ace_cc_yy_scan_buffer()" );
+  }
 
   b->ace_cc_yy_buf_size = size - 2; /* "- 2" to take care of EOB's */
   b->ace_cc_yy_buf_pos = b->ace_cc_yy_ch_buf = base;
@@ -1465,7 +1478,6 @@ ace_cc_yy_size_t size;
   }
 #endif
 
-
 #ifndef ACE_CC_YY_NO_SCAN_STRING
 #ifdef ACE_CC_YY_USE_PROTOS
 ACE_CC_YY_BUFFER_STATE ace_cc_yy_scan_string( ace_cc_yyconst char *ace_cc_yy_str )
@@ -1481,7 +1493,6 @@ ace_cc_yyconst char *ace_cc_yy_str;
   return ace_cc_yy_scan_bytes( ace_cc_yy_str, len );
   }
 #endif
-
 
 #ifndef ACE_CC_YY_NO_SCAN_BYTES
 #ifdef ACE_CC_YY_USE_PROTOS
@@ -1501,7 +1512,9 @@ int len;
   n = len + 2;
   buf = (char *) ace_cc_yy_flex_alloc( n );
   if ( ! buf )
+  {
     ACE_CC_YY_FATAL_ERROR( "out of dynamic memory in ace_cc_yy_scan_bytes()" );
+  }
 
   for ( i = 0; i < len; ++i )
     buf[i] = bytes[i];
@@ -1510,7 +1523,9 @@ int len;
 
   b = ace_cc_yy_scan_buffer( buf, n );
   if ( ! b )
+  {
     ACE_CC_YY_FATAL_ERROR( "bad buffer in ace_cc_yy_scan_bytes()" );
+  }
 
   /* It's okay to grow etc. this buffer, and we should throw it
    * away when we're done.
@@ -1520,7 +1535,6 @@ int len;
   return b;
   }
 #endif
-
 
 #ifndef ACE_CC_YY_NO_PUSH_STATE
 #ifdef ACE_CC_YY_USE_PROTOS
@@ -1555,7 +1569,6 @@ int new_state;
   }
 #endif
 
-
 #ifndef ACE_CC_YY_NO_POP_STATE
 static void ace_cc_yy_pop_state()
   {
@@ -1565,7 +1578,6 @@ static void ace_cc_yy_pop_state()
   BEGIN(ace_cc_yy_start_stack[ace_cc_yy_start_stack_ptr]);
   }
 #endif
-
 
 #ifndef ACE_CC_YY_NO_TOP_STATE
 static int ace_cc_yy_top_state()
@@ -1589,7 +1601,6 @@ char msg[];
   ACE_OS::exit( ACE_CC_YY_EXIT_FAILURE );
   }
 
-
 /* Redefine ace_cc_yyless() so it works in section 3 code. */
 
 #undef ace_cc_yyless
@@ -1604,7 +1615,6 @@ char msg[];
     ace_cc_yyleng = n; \
     } \
   while ( 0 )
-
 
 /* Internal utility routines. */
 
@@ -1639,7 +1649,6 @@ ace_cc_yyconst char *s;
   return n;
   }
 #endif
-
 
 #ifdef ACE_CC_YY_USE_PROTOS
 static void *ace_cc_yy_flex_alloc( ace_cc_yy_size_t size )

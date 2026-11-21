@@ -9,6 +9,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_Memory.h"
 #include "ace/os_include/os_netdb.h"
+#include <cstdio>
+#include <cstring>
 
 // This function packs the located friends userids, plus the machines
 // they are logged into (along with the inactive and active counts on
@@ -20,25 +22,29 @@ int
 PMS_Ruser::encode (char *packet, int &packet_length)
 {
   if (Options::get_opt (Options::DEBUGGING) != 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "in PMS_Ruser::encode"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "in PMS_Ruser::encode"));
+    }
 
-  Protocol_Record *prp;
   char *buf_ptr = packet;
 
-  ACE_OS::sprintf (buf_ptr,
+  std::sprintf (buf_ptr,
                    "Users   %d",
                    this->get_total_users ());
-  buf_ptr += ACE_OS::strlen (buf_ptr) + 1;
+  buf_ptr += std::strlen (buf_ptr) + 1;
 
   // We only send back info on hosts that we actually see.
 
-  for (;
-       (prp = this->get_next_friend ()) != 0;
-       *buf_ptr++ = '\t')
-    buf_ptr = this->handle_protocol_entries (ACE_OS::strecpy (buf_ptr,
-                                                              prp->get_host ()),
-                                             prp->get_drwho_list ());
+  for (Protocol_Record *prp = this->get_next_friend ();
+       prp != nullptr;
+       prp = this->get_next_friend ())
+    {
+      buf_ptr = this->handle_protocol_entries (ACE_OS::strecpy (buf_ptr,
+                                                                prp->get_host ()),
+                                               prp->get_drwho_list ());
+      *buf_ptr++ = '\t';
+    }
 
   *buf_ptr++ = '\n';
   packet_length = buf_ptr - packet;
@@ -63,16 +69,20 @@ int
 PMS_Ruser::decode (char *packet, int &packet_length)
 {
   if (Options::get_opt (Options::DEBUGGING) != 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "in PMS_Ruser::decode, packet_length = %d\n",
-                packet_length));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "in PMS_Ruser::decode, packet_length = %d\n",
+                  packet_length));
+    }
 
   if (*packet)
+  {
     Options::set_opt (Options::PRINT_LOGIN_NAME);
+  }
 
-  ACE_NEW_RETURN (this->ss,
-                  HT_Server,
-                  -1);
+  Search_Struct *lookup {};
+  ACE_NEW_RETURN (lookup, HT_Server, -1);
+  this->ss.reset (lookup);
   return 1;
 }
 
@@ -87,23 +97,31 @@ PMS_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
                                          prp->drwho_list_);
 
   if (Options::get_opt (Options::PRINT_LOGIN_NAME))
-    np->set_real_name ("");
+    {
+      np->set_real_name ("");
+    }
   else
     {
       passwd *pwent = ACE_OS::getpwnam (np->get_login_name ());
-      char *cp =
-        (char *) ACE_OS::strchr (np->set_real_name (pwent == 0
-                                                    ? np->get_login_name ()
-                                                    : ACE::strnew (pwent->pw_gecos)),
-                                 ',');
-      if (cp != 0)
+      char *cp = const_cast<char *> (
+        std::strchr (np->set_real_name (pwent == nullptr
+                                         ? np->get_login_name ()
+                                         : ACE::strnew (pwent->pw_gecos)),
+                     ','));
+      if (cp != nullptr)
+      {
         *cp = '\0';
+      }
     }
 
   if (current_node->get_idle_time () >= MAX_USER_TIMEOUT)
-    np->inactive_count_++;
+    {
+      ++np->inactive_count_;
+    }
   else
-    np->active_count_++;
+  {
+    ++np->active_count_;
+  }
 
   return prp;
 }
@@ -112,13 +130,13 @@ char *
 PMS_Ruser::handle_protocol_entries (char *buf_ptr,
                                     Drwho_Node *np)
 {
-  for (; np != 0; np = np->next_)
+  for (; np != nullptr; np = np->next_)
     {
-      ACE_OS::sprintf (buf_ptr,
+      std::sprintf (buf_ptr,
                        "%d %d ",
                        np->get_inactive_count (),
                        np->get_active_count ());
-      buf_ptr += ACE_OS::strlen (buf_ptr);
+      buf_ptr += std::strlen (buf_ptr);
 
       buf_ptr = ACE_OS::strecpy (ACE_OS::strecpy (buf_ptr,
                                                   np->get_login_name ()),

@@ -1,22 +1,22 @@
 #include "TestServer.h"
 
-#include <ace/streams.h>
+#include <iostream>
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
-  {
-    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+    {
+      CORBA::ORB_var orb (CORBA::ORB_init (argc, argv));
 
-    TestServer server (orb.in(), argc, argv);
-    server.run();
+      TestServer server (orb.in (), argc, argv);
+      server.run ();
 
-    orb->destroy();
-    return 0;
-  }
-  catch (const CORBA::Exception& ex)
-  {
-    cerr << "CORBA error: " << ex << endl;
-  }
+      orb->destroy ();
+      return 0;
+    }
+  catch (CORBA::Exception const &ex)
+    {
+      std::cerr << "CORBA error: " << ex << std::endl;
+    }
   return 1;
 }

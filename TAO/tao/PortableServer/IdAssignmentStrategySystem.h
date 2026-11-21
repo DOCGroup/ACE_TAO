@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file IdAssignmentStrategySystem.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_IDASSIGNMENTSTRATEGYSYSTEM_H
 #define TAO_IDASSIGNMENTSTRATEGYSYSTEM_H
 #include /**/ "ace/pre.h"

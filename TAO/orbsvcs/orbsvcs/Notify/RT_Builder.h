@@ -28,17 +28,22 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RT_Notify_Export TAO_Notify_RT_Builder : public TAO_Notify_Builder
 {
 public:
-  /// Constructor
   TAO_Notify_RT_Builder ();
 
-  /// Destructor
-  virtual ~TAO_Notify_RT_Builder ();
+  ~TAO_Notify_RT_Builder () override;
+
+  TAO_Notify_RT_Builder (TAO_Notify_RT_Builder const &) = delete;
+  TAO_Notify_RT_Builder (TAO_Notify_RT_Builder &&) = delete;
+  TAO_Notify_RT_Builder &operator= (TAO_Notify_RT_Builder const &) = delete;
+  TAO_Notify_RT_Builder &operator= (TAO_Notify_RT_Builder &&) = delete;
 
   /// Apply Thread Pools.
-  virtual void apply_thread_pool_concurrency (TAO_Notify_Object& object, const NotifyExt::ThreadPoolParams& tp_params);
+  void apply_thread_pool_concurrency (TAO_Notify_Object& object,
+                                     NotifyExt::ThreadPoolParams const &tp_params) override;
 
   /// Apply Thread Pools with Lanes.
-  virtual void apply_lane_concurrency (TAO_Notify_Object& object, const NotifyExt::ThreadPoolLanesParams& tpl_params);
+  void apply_lane_concurrency (TAO_Notify_Object& object,
+                              NotifyExt::ThreadPoolLanesParams const &tpl_params) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

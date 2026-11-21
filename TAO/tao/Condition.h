@@ -22,6 +22,8 @@
 #include "ace/Condition_T.h"
 #include "ace/Global_Macros.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -41,12 +43,13 @@ template <class MUTEX>
 class TAO_Condition
 {
 public:
-  /// Useful typedef
   using LOCK = MUTEX;
 
-  // = Initialiation and termination methods.
+  /// @name Initialization and termination
+  /// @{
+
   /// Initialize the condition variable.
-  TAO_Condition (MUTEX &m);
+  explicit TAO_Condition (MUTEX &m);
 
   /// A default constructor. Since no lock is provided by the user,
   /// one will be created internally.
@@ -55,7 +58,11 @@ public:
   /// Implicitly destroy the condition variable.
   ~TAO_Condition ();
 
-  // = Lock accessors.
+  /// @}
+
+  /// @name Wait and signal operations
+  /// @{
+
   /**
    * Block on condition, or until absolute time-of-day has passed.  If
    * abstime == 0 use "blocking" <wait> semantics.  Else, if <abstime>
@@ -83,25 +90,33 @@ public:
   /// Signal *all* waiting threads.
   int broadcast ();
 
-  // = Utility methods.
+  /// @}
+
+  /// @name Utility methods
+  /// @{
+
   /// Explicitly destroy the condition variable.
   int remove ();
 
   /// Returns a reference to the underlying mutex_;
   MUTEX *mutex ();
 
+  /// @}
+
 private:
-  TAO_Condition (const TAO_Condition<MUTEX> &) = delete;
-  TAO_Condition &operator= (const TAO_Condition<MUTEX> &) = delete;
+  TAO_Condition (TAO_Condition<MUTEX> const &) = delete;
+  TAO_Condition &operator= (TAO_Condition<MUTEX> const &) = delete;
+  TAO_Condition (TAO_Condition<MUTEX> &&) = delete;
+  TAO_Condition &operator= (TAO_Condition<MUTEX> &&) = delete;
 
-  /// Reference to mutex lock.
-  MUTEX *mutex_;
+  /// Internally owned mutex, empty when an external mutex is used.
+  std::unique_ptr<MUTEX> owned_mutex_ {};
 
-  /// A flag to indicate whether the lock needs to be deleted.
-  bool delete_lock_;
+  /// Mutex used by the condition variable.
+  MUTEX *mutex_ {};
 
   /// Condition variable.
-  TAO_SYNCH_CONDITION *cond_;
+  std::unique_ptr<TAO_SYNCH_CONDITION> cond_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

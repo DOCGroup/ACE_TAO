@@ -7,6 +7,9 @@
 #include "tao/ORB_Core.h"
 #include "tao/PI/ORBInitInfo.h"
 
+#include <array>
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
@@ -20,20 +23,22 @@ TAO_DiffServPolicy_ORBInitializer::pre_init (
   if (CORBA::is_nil (tao_info.in ()))
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
-                    "(%P|%t) TAO_RT_ORBInitializer::pre_init:\n"
-                    "(%P|%t)    Unable to narrow "
-                    "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
-                    "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+                       "(%P|%t) TAO_DiffServPolicy_ORBInitializer::pre_init:\n"
+                       "(%P|%t)    Unable to narrow "
+                       "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
+                       "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
+        }
 
       throw ::CORBA::INTERNAL ();
     }
 
   // Bind the service context handler for Diffserv
-  TAO_DiffServ_Service_Context_Handler* h = nullptr;
-  ACE_NEW (h,
-           TAO_DiffServ_Service_Context_Handler());
-  tao_info->orb_core ()->service_context_registry ().bind (IOP::REP_NWPRIORITY, h);
+  auto handler = std::make_unique<TAO_DiffServ_Service_Context_Handler> ();
+  tao_info->orb_core ()->service_context_registry ().bind (
+    IOP::REP_NWPRIORITY,
+    handler.release ());
 }
 
 void
@@ -49,7 +54,7 @@ TAO_DiffServPolicy_ORBInitializer::register_policy_factories (
 {
   if (CORBA::is_nil (this->policy_factory_.in ()))
     {
-      PortableInterceptor::PolicyFactory_ptr policy_factory;
+      PortableInterceptor::PolicyFactory_ptr policy_factory {};
       ACE_NEW_THROW_EX (policy_factory,
                         TAO_DiffServ_PolicyFactory,
                           CORBA::NO_MEMORY (
@@ -64,23 +69,18 @@ TAO_DiffServPolicy_ORBInitializer::register_policy_factories (
   // Bind the same policy factory to all DiffServ related policy
   // types since a single policy factory is used to create each of
   // the different types of DiffServ policies.
-  static CORBA::PolicyType const type[] = {
+  static constexpr std::array policy_types {
     TAO::CLIENT_NETWORK_PRIORITY_TYPE,
     TAO::NETWORK_PRIORITY_TYPE
   };
 
-  CORBA::PolicyType const* end =
-    type + sizeof (type) / sizeof (type[0]);
-
-  for (CORBA::PolicyType const * i = type;
-       i != end;
-       ++i)
+  for (CORBA::PolicyType const policy_type : policy_types)
     {
       try
         {
-          info->register_policy_factory (*i, this->policy_factory_.in ());
+          info->register_policy_factory (policy_type, this->policy_factory_.in ());
         }
-      catch (const ::CORBA::BAD_INV_ORDER& ex)
+      catch (::CORBA::BAD_INV_ORDER const &ex)
         {
           if (ex.minor () == (CORBA::OMGVMCID | 16))
             {
@@ -91,11 +91,6 @@ TAO_DiffServPolicy_ORBInitializer::register_policy_factories (
               // ORBInitializer.
               return;
             }
-          throw;
-        }
-      catch ( ::CORBA::Exception&)
-        {
-          // Rethrow any other exceptions...
           throw;
         }
     }

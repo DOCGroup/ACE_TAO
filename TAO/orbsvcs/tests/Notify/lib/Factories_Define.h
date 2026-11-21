@@ -13,7 +13,7 @@
 
 #define TAO_Notify_Tests_COMMAND_FACTORY_DEFINE(export, command, factory_name) \
 \
-typedef TAO_Notify_Tests_Command_Factory_T <command> command##_Factory;\
+using command##_Factory = TAO_Notify_Tests_Command_Factory_T <command>;\
 \
 ACE_STATIC_SVC_DECLARE_EXPORT (export, command##_Factory) \
 \
@@ -28,7 +28,6 @@ ACE_STATIC_SVC_DEFINE(command##_Factory, \
 \
 ACE_FACTORY_DEFINE (export, command##_Factory) \
 \
-
 
 #include /**/ "ace/post.h"
 #endif /* TAO_FACTORIES_DEFINE_H */

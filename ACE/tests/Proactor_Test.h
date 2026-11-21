@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TESTS_PROACTOR_TEST_H
 #define ACE_TESTS_PROACTOR_TEST_H
 
@@ -33,13 +32,13 @@ public:
   long get_total_w   () { return this->total_w_; }
   long get_total_r   () { return this->total_r_; }
 
-  // This is called to pass the new connection's addresses.
-  virtual void addresses (const ACE_INET_Addr& peer,
-                          const ACE_INET_Addr& local);
+  /// This is called to pass the new connection's addresses.
+  void addresses (const ACE_INET_Addr& peer,
+                  const ACE_INET_Addr& local) override;
 
   /// This is called after the new connection has been accepted.
-  virtual void open (ACE_HANDLE handle,
-                     ACE_Message_Block &message_block);
+  void open (ACE_HANDLE handle,
+             ACE_Message_Block &message_block) override;
   void cancel ();
 
 protected:
@@ -50,11 +49,11 @@ protected:
    *
    * These methods are called by the framework
    */
-  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
+  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
 
   /// This is called when an asynchronous <write> to the socket
   /// completes.
-  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
+  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
 
 private:
   int initiate_read_stream ();
@@ -68,12 +67,17 @@ private:
   ACE_HANDLE handle_;
   ACE_SYNCH_MUTEX lock_;
 
-  int io_count_;             // Number of currently outstanding I/O requests
+  /// Number of currently outstanding I/O requests.
+  int io_count_;
   int flg_cancel_;
-  size_t total_snd_;         // Number of bytes successfully sent
-  size_t total_rcv_;         // Number of bytes successfully received
-  int total_w_;              // Number of write operations
-  int total_r_;              // Number of read operations
+  /// Number of bytes successfully sent.
+  size_t total_snd_;
+  /// Number of bytes successfully received.
+  size_t total_rcv_;
+  /// Number of write operations.
+  int total_w_;
+  /// Number of read operations.
+  int total_r_;
 };
 
 // *******************************************
@@ -84,8 +88,8 @@ class Client : public ACE_Service_Handler
 {
 public:
   /// This is called after the new connection has been established.
-  virtual void open (ACE_HANDLE handle,
-                     ACE_Message_Block &message_block);
+  void open (ACE_HANDLE handle,
+             ACE_Message_Block &message_block) override;
 
   Client ();
   Client (TestData *tester, int id);
@@ -97,15 +101,15 @@ public:
   int    get_total_w   () { return this->total_w_; }
   int    get_total_r   () { return this->total_r_; }
 
-  // This is called to pass the new connection's addresses.
-  virtual void addresses (const ACE_INET_Addr& peer,
-                          const ACE_INET_Addr& local);
+  /// This is called to pass the new connection's addresses.
+  void addresses (const ACE_INET_Addr& peer,
+                  const ACE_INET_Addr& local) override;
 
   /// This is called when asynchronous reads from the socket complete
-  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
+  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
 
   /// This is called when asynchronous writes from the socket complete
-  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
+  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
 
   void cancel ();
 
@@ -124,7 +128,8 @@ private:
   ACE_SYNCH_MUTEX lock_;
 
   int io_count_;
-  int stop_writing_;           // Writes are shut down; just read.
+  /// Writes are shut down; just read.
+  int stop_writing_;
   int flg_cancel_;
   size_t total_snd_;
   size_t total_rcv_;

@@ -116,7 +116,7 @@ SOCKET rexec(const char **hostname, NETPORT port, char *username, char *password
     if (*command != '\0') {
         char *p = command;
         if (*p == '\001') {
-            p++;
+            ++p;
         }
         errexit("Rexec: Remote aborted connection: %s\n", p);
     }
@@ -237,11 +237,10 @@ static void MyOpenService(const char *remote_host)
 
 static BOOL Send(SOCKET s, const char *buf, size_t nbuf)
 {
-    int cnt;
     size_t sent = 0;
 
     while (sent < nbuf) {
-        cnt = send(s, &buf[sent], nbuf-sent, 0);
+        int cnt = send(s, &buf[sent], nbuf-sent, 0);
         if (cnt == -1) {
             return FALSE;
         }
@@ -291,7 +290,6 @@ static IDENT PassOutput()
 
 static void PassOutputThread(SOCKET sIO)
 {
-    RETVAL retval = 0;
     int count;
     char buf[4096];
 
@@ -300,7 +298,6 @@ static void PassOutputThread(SOCKET sIO)
             fprintf(stderr,
                     "Error writing to standard output: error = %lu.\n",
                     GetLastError());
-            retval = 1;
             break;
         }
     }
@@ -322,7 +319,6 @@ static IDENT PassError()
 
 static void PassErrorThread(SOCKET sErr)
 {
-    RETVAL retval = 0;
     int count;
     char buf[4096];
 
@@ -331,7 +327,6 @@ static void PassErrorThread(SOCKET sErr)
             fprintf(stderr,
                     "Error writing to standard error: error = %lu.\n",
             GetLastError());
-            retval = 1;
             break;
         }
     }

@@ -25,7 +25,9 @@ TAO_Notify_EventChannelFactory_i::create (PortableServer::POA_ptr default_POA,
   TAO_Root_POA *poa = dynamic_cast <TAO_Root_POA*> (default_POA);
 
   if (poa == 0)
+  {
     return notify_factory._retn ();
+  }
 
   CORBA::ORB_ptr orb = poa->orb_core ().orb () ;
 

@@ -40,7 +40,7 @@ Activator_NT_Service::handle_control (DWORD control_code)
     {
       report_status (SERVICE_STOP_PENDING);
       TAO_ORB_Core_instance ()->reactor ()->end_reactor_event_loop ();
-      TAO_ORB_Core_instance ()->orb ()->shutdown (1);
+      TAO_ORB_Core_instance ()->orb ()->shutdown (true);
     }
   else
     {
@@ -48,13 +48,11 @@ Activator_NT_Service::handle_control (DWORD control_code)
     }
 }
 
-
 int
 Activator_NT_Service::handle_exception (ACE_HANDLE)
 {
   return 0;
 }
-
 
 /**
  * We do almost the same thing as we do in run_standalone () except that

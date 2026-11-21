@@ -11,11 +11,14 @@
 #include "ace/UUID.h"
 #include "ace/Thread_Manager.h"
 #include "ace/TMCast/Group.hpp"
+#include <cstddef>
+#include <cstdlib>
+#include <cstring>
+#include <utility>
 
 #include "CrashPoint.h"
 #include "StateUpdate.h"
 #include "ReplicaController.h"
-
 
 // State slot.
 //
@@ -37,15 +40,10 @@ state_slot_id (PortableInterceptor::SlotId slot_id)
   state_slot_id_ = slot_id;
 }
 
-Checkpointable::
-~Checkpointable ()
-{
-}
-
 CORBA::Any* Checkpointable::
 get_state ()
 {
-  return 0;
+  return nullptr;
 }
 
 void Checkpointable::
@@ -53,20 +51,18 @@ associate_state (CORBA::ORB_ptr orb, CORBA::Any const& state)
 {
   try
   {
-    CORBA::Object_var pic_obj =
+    CORBA::Object_var const pic_obj =
       orb->resolve_initial_references ("PICurrent");
 
-
-    PortableInterceptor::Current_var pic =
+    PortableInterceptor::Current_var const pic =
       PortableInterceptor::Current::_narrow (
         pic_obj.in ());
 
-
     pic->set_slot (state_slot_id (), state);
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
-    ex._tao_print_exception ("Caught exception:");
+    ex._tao_print_exception (ACE_TEXT ("Caught exception:"));
   }
 }
 
@@ -74,26 +70,20 @@ associate_state (CORBA::ORB_ptr orb, CORBA::Any const& state)
 //
 
 ReplicaController::
-~ReplicaController ()
-{
-}
-
-ReplicaController::
 ReplicaController (CORBA::ORB_ptr orb)
-    : orb_ (CORBA::ORB::_duplicate (orb))
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
   try
   {
-    CORBA::Object_var poa_object =
+    CORBA::Object_var const poa_object =
       orb_->resolve_initial_references ("RootPOA");
 
-    root_poa_ = PortableServer::POA::_narrow (
-      poa_object.in ());
+    root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
-    ex._tao_print_exception ("Caught exception:");
-    ACE_OS::abort ();
+    ex._tao_print_exception (ACE_TEXT ("Caught exception:"));
+    std::abort ();
   }
 
   // Generate member id
@@ -103,12 +93,12 @@ ReplicaController (CORBA::ORB_ptr orb)
 
   ACE_INET_Addr address (10000, "239.255.0.1");
 
-  ACE_DEBUG ((LM_DEBUG, "Becoming a member with id %s\n",
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Becoming a member with id %C\n"),
               uuid.to_string ()->c_str ()));
 
-  group_.reset (new ACE_TMCast::Group (address, uuid.to_string ()->c_str ()));
+  group_ = std::make_unique<ACE_TMCast::Group> (address, uuid.to_string ()->c_str ());
 
-  int r = ACE_Thread_Manager::instance ()->spawn (
+  int const r = ACE_Thread_Manager::instance ()->spawn (
     &ReplicaController::listener_thunk, this);
 
   if (r < 0)
@@ -130,12 +120,12 @@ listener ()
 
       TAO_InputCDR cdr (buffer, n);
 
-      CORBA::OctetSeq object_id;
-      PortableInterceptor::AdapterName adapter_name;
+      CORBA::OctetSeq object_id {};
+      PortableInterceptor::AdapterName adapter_name {};
       CORBA::String_var client_id;
-      CORBA::Long retention_id;
-      CORBA::OctetSeq reply;
-      CORBA::Any state;
+      CORBA::Long retention_id {};
+      CORBA::OctetSeq reply {};
+      CORBA::Any state {};
 
       cdr >> object_id;
       cdr >> adapter_name;
@@ -145,47 +135,49 @@ listener ()
       cdr >> state;
 
       if (!cdr.good_bit ())
-      {
-        ACE_DEBUG ((LM_DEBUG, "CDR failed\n"));
-        //@@ what to do?
-      }
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("CDR failed\n")));
+          //@@ what to do?
+        }
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Received log for %s with rid %i\n",
+                  ACE_TEXT ("Received log for %C with rid %i\n"),
                   client_id.in (),
                   retention_id));
 
-
       RecordId rid (client_id.in (), retention_id);
 
-      CORBA::OctetSeq_var tmp (new CORBA::OctetSeq (reply));
+      CORBA::OctetSeq_var const tmp (new CORBA::OctetSeq (std::move (reply)));
       log_.insert (rid, tmp);
 
       // Update state.
-      CORBA::TypeCode_var tc = state.type ();
+      CORBA::TypeCode_var const tc = state.type ();
 
       if (tc->kind () != CORBA::tk_null)
       {
-        PortableServer::POA_var poa = resolve_poa (adapter_name);
+        PortableServer::POA_var const poa = resolve_poa (adapter_name);
 
-        PortableServer::ServantBase_var servant =
+        PortableServer::ServantBase_var const servant =
           poa->id_to_servant (object_id);
 
-        Checkpointable* target =
+        Checkpointable * const target =
           dynamic_cast<Checkpointable*> (servant.in ());
 
-        if (target) target->set_state (state);
+        if (target != nullptr)
+        {
+          target->set_state (state);
+        }
       }
     }
   }
   catch (ACE_TMCast::Group::Failed const&)
   {
     ACE_DEBUG ((LM_DEBUG,
-                "Group failure. Perhaps, I am alone in the group.\n"));
+                ACE_TEXT ("Group failure. Perhaps, I am alone in the group.\n")));
   }
   catch (ACE_TMCast::Group::InsufficienSpace const&)
   {
-    ACE_DEBUG ((LM_DEBUG, "Group::InsufficienSpace\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Group::InsufficienSpace\n")));
   }
 
   orb_->shutdown (false);
@@ -198,13 +190,12 @@ resolve_poa (PortableInterceptor::AdapterName const&)
   return PortableServer::POA::_duplicate (root_poa_.in ());
 }
 
-
 ACE_THR_FUNC_RETURN ReplicaController::
 listener_thunk (void* p)
 {
-  ReplicaController* obj = reinterpret_cast<ReplicaController*> (p);
+  ReplicaController *obj = reinterpret_cast<ReplicaController*> (p);
   obj->listener();
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 namespace
@@ -224,7 +215,7 @@ ReplicaController::tao_ft_interception_point (
     extract_context (ri));
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Received request from %C with rid %i\n",
+              ACE_TEXT ("(%P|%t) Received request from %C with rid %i\n"),
               ftr->client_id.in (),
               ftr->retention_id));
 
@@ -235,7 +226,7 @@ ReplicaController::tao_ft_interception_point (
   if (log_.contains (rid))
   {
     ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) Replaying reply for %C with rid %i\n",
+                ACE_TEXT ("(%P|%t) Replaying reply for %C with rid %i\n"),
                 ftr->client_id.in (),
                 ftr->retention_id));
 
@@ -256,51 +247,49 @@ ReplicaController::send_reply (
   FT::FTRequestServiceContext_var ftr (
     extract_context (ri));
 
-
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Sending reply for %s with rid %i\n",
+              ACE_TEXT ("(%P|%t) Sending reply for %C with rid %i\n"),
               ftr->client_id.in (),
               ftr->retention_id));
-
 
   // Prepare reply for logging.
 
   CORBA::Any_var result =
     ri->result ();
 
-  TAO_OutputCDR cdr;
-  result->impl ()->marshal_value (cdr);
+  TAO_OutputCDR reply_cdr;
+  result->impl ()->marshal_value (reply_cdr);
 
   Dynamic::ParameterList_var pl =
     ri->arguments ();
 
-  CORBA::ULong len = pl->length ();
+  CORBA::ULong const len = pl->length ();
 
-  for (CORBA::ULong index = 0; index != len ; ++index)
+  for (CORBA::ULong index {}; index != len; ++index)
   {
     //@@ No chance for PARAM_OUT
     if ((*pl)[index].mode == CORBA::PARAM_INOUT)
     {
-      (*pl)[index].argument.impl ()->marshal_value (cdr);
+      (*pl)[index].argument.impl ()->marshal_value (reply_cdr);
     }
   }
 
-  CORBA::OctetSeq_var reply;
+  CORBA::OctetSeq_var reply {};
 
-  ACE_NEW (reply.out (), CORBA::OctetSeq (cdr.total_length ()));
+  ACE_NEW (reply.out (), CORBA::OctetSeq (reply_cdr.total_length ()));
 
-  reply->length (cdr.total_length ());
+  reply->length (reply_cdr.total_length ());
 
-  CORBA::Octet* buf = reply->get_buffer ();
+  CORBA::Octet* reply_buffer = reply->get_buffer ();
 
   // @@ What if this throws an exception??  We don't have any way to
   // check whether this succeeded
-  for (ACE_Message_Block const* mb = cdr.begin ();
-       mb != 0;
+  for (ACE_Message_Block const *mb = reply_cdr.begin ();
+       mb != nullptr;
        mb = mb->cont ())
   {
-    ACE_OS::memcpy (buf, mb->rd_ptr (), mb->length ());
-    buf += mb->length ();
+    std::memcpy (reply_buffer, mb->rd_ptr (), mb->length ());
+    reply_buffer += mb->length ();
   }
 
   // Logging the reply and state update.
@@ -311,67 +300,73 @@ ReplicaController::send_reply (
   {
     // Extract state update.
 
-    CORBA::OctetSeq_var oid = ri->object_id ();
-    PortableInterceptor::AdapterName_var an = ri->adapter_name ();
+    CORBA::OctetSeq_var const oid = ri->object_id ();
+    PortableInterceptor::AdapterName_var const an = ri->adapter_name ();
 
     CORBA::Any_var state = ri->get_slot (state_slot_id ());
 
-    CORBA::TypeCode_var tc = state->type ();
+    CORBA::TypeCode_var const tc = state->type ();
 
     if (tc->kind () == CORBA::tk_null)
-    {
-      ACE_DEBUG ((LM_DEBUG, "Slot update is void\n"));
-
-      PortableServer::POA_var poa = resolve_poa (an.in ());
-
-      PortableServer::ServantBase_var servant =
-        poa->id_to_servant (oid.in ());
-
-      Checkpointable* target =
-        dynamic_cast<Checkpointable*> (servant.in ());
-
-      if (target)
       {
-        CORBA::Any_var tmp = target->get_state ();
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Slot update is void\n")));
 
-        if (tmp.ptr () != 0) state = tmp._retn ();
+        PortableServer::POA_var const poa = resolve_poa (an.in ());
+
+        PortableServer::ServantBase_var const servant =
+          poa->id_to_servant (oid.in ());
+
+        Checkpointable * const target =
+          dynamic_cast<Checkpointable*> (servant.in ());
+
+      if (target != nullptr)
+        {
+          CORBA::Any_var tmp = target->get_state ();
+
+          if (tmp.ptr () != nullptr)
+          {
+            state = tmp._retn ();
+          }
+        }
       }
-    }
 
-    TAO_OutputCDR cdr;
+    TAO_OutputCDR log_cdr;
 
-    cdr << oid.in ();
-    cdr << an.in ();
-    cdr << ftr->client_id.in ();
-    cdr << ftr->retention_id;
-    cdr << reply.in ();
-    cdr << state.in ();
+    log_cdr << oid.in ();
+    log_cdr << an.in ();
+    log_cdr << ftr->client_id.in ();
+    log_cdr << ftr->retention_id;
+    log_cdr << reply.in ();
+    log_cdr << state.in ();
 
-    size_t size = cdr.total_length ();
+    size_t const size = log_cdr.total_length ();
 
-    CORBA::OctetSeq_var msg;
+    CORBA::OctetSeq_var msg {};
 
     ACE_NEW (msg.out (), CORBA::OctetSeq (size));
 
     msg->length (size);
 
     {
-      CORBA::Octet* buf = msg->get_buffer ();
+      CORBA::Octet* log_buffer = msg->get_buffer ();
 
-      for (ACE_Message_Block const* mb = cdr.begin ();
-           mb != 0;
+      for (ACE_Message_Block const *mb = log_cdr.begin ();
+           mb != nullptr;
            mb = mb->cont ())
       {
-        ACE_OS::memcpy (buf, mb->rd_ptr (), mb->length ());
-        buf += mb->length ();
+        std::memcpy (log_buffer, mb->rd_ptr (), mb->length ());
+        log_buffer += mb->length ();
       }
     }
 
-    CORBA::Octet* buf = msg->get_buffer ();
+    CORBA::Octet* message_buffer = msg->get_buffer ();
 
     // Crash point 1.
     //
-    if (crash_point == 1 && ftr->retention_id > 2) ACE_OS::exit (1);
+    if (crash_point == 1 && ftr->retention_id > 2)
+    {
+      std::exit (1);
+    }
 
     try
     {
@@ -379,23 +374,23 @@ ReplicaController::send_reply (
       {
         try
         {
-          group_->send (buf, size);
-          ACE_DEBUG ((LM_DEBUG, "Sent log record of length %i\n", size));
+          group_->send (message_buffer, size);
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Sent log record of length %B\n"), size));
           break;
         }
         catch (ACE_TMCast::Group::Aborted const&)
         {
-          ACE_DEBUG ((LM_DEBUG, "Retrying to send log record.\n"));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Retrying to send log record.\n")));
         }
       }
     }
     catch (ACE_TMCast::Group::Failed const&)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Group failure. Perhaps, I am alone in the group.\n"));
+                  ACE_TEXT ("Group failure. Perhaps, I am alone in the group.\n")));
     }
   }
-
 
   // Now perform local logging.
   //
@@ -405,25 +400,26 @@ ReplicaController::send_reply (
   //
   log_.insert (rid, reply);
 
-
   // Crash point 2.
   //
-  if (crash_point == 2 && ftr->retention_id > 2) ACE_OS::exit (1);
+  if (crash_point == 2 && ftr->retention_id > 2)
+  {
+    std::exit (1);
+  }
 }
-
 
 namespace
 {
   FT::FTRequestServiceContext*
   extract_context (PortableInterceptor::ServerRequestInfo_ptr ri)
   {
-    IOP::ServiceContext_var svc =
+    IOP::ServiceContext_var const svc =
       ri->get_request_service_context (IOP::FT_REQUEST);
 
-    TAO_InputCDR cdr (reinterpret_cast<const char*> (svc->context_data.get_buffer ()),
+    TAO_InputCDR cdr (reinterpret_cast<char const *> (svc->context_data.get_buffer ()),
                       svc->context_data.length ());
 
-    CORBA::Boolean byte_order;
+    CORBA::Boolean byte_order {};
 
     if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     {
@@ -463,8 +459,7 @@ namespace
   }
 }
 
-
-char*
+char *
 ReplicaController::name ()
 {
   return CORBA::string_dup ("ReplicaController");

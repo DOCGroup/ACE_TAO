@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    InterfaceDef_i.h
@@ -10,7 +9,6 @@
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_INTERFACEDEF_I_H
 #define TAO_INTERFACEDEF_I_H
@@ -31,17 +29,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/// Represents an interface definition.
 class TAO_IFRService_Export TAO_InterfaceDef_i
   : public virtual TAO_Container_i,
     public virtual TAO_Contained_i,
     public virtual TAO_IDLType_i
 {
-  // = TITLE
-  //    TAO_InterfaceDef_i
-  //
-  // = DESCRIPTION
-  //    Represents an interface definition.
-  //
 public:
   explicit TAO_InterfaceDef_i (TAO_Repository_i *repo);
 

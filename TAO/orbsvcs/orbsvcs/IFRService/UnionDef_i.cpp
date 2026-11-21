@@ -157,8 +157,7 @@ TAO_UnionDef_i::discriminator_type_def_i ()
 
 void
 TAO_UnionDef_i::discriminator_type_def (
-    CORBA::IDLType_ptr discriminator_type_def
-  )
+    CORBA::IDLType_ptr discriminator_type_def)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -169,8 +168,7 @@ TAO_UnionDef_i::discriminator_type_def (
 
 void
 TAO_UnionDef_i::discriminator_type_def_i (
-    CORBA::IDLType_ptr discriminator_type_def
-  )
+    CORBA::IDLType_ptr discriminator_type_def)
 {
   char *disc_path =
     TAO_IFR_Service_Utils::reference_to_path (discriminator_type_def);

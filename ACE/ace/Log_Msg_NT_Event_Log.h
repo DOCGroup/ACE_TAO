@@ -33,10 +33,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Log_Msg_NT_Event_Log : public ACE_Log_Msg_Backend
 {
 public:
-  /// Constructor
   ACE_Log_Msg_NT_Event_Log () = default;
 
-  /// Destructor
   ~ACE_Log_Msg_NT_Event_Log () override;
 
   /// Open a new event log.

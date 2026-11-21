@@ -48,7 +48,6 @@ class ACE_Time_Value;
 class ACE_Export ACE_SOCK_SEQPACK_Connector
 {
 public:
-  /// Default constructor.
   ACE_SOCK_SEQPACK_Connector ();
 
   /**
@@ -250,10 +249,10 @@ public:
                int perms = 0,
                int protocol = 132);
 
-  /// Default dtor.
   ~ACE_SOCK_SEQPACK_Connector ();
 
-  // = Completion routine.
+  /// @name Nonblocking connection completion
+  /// @{
   /**
    * Try to complete a nonblocking connection that was begun by a
    * previous call to connect with a {0, 0} ACE_Time_Value timeout.
@@ -272,10 +271,13 @@ public:
 
   /// Resets any event associations on this handle
   bool reset_new_handle (ACE_HANDLE handle);
+  /// @}
 
-  // = Meta-type info
+  /// @name Peer types
+  /// @{
   using PEER_ADDR = ACE_Multihomed_INET_Addr;
   using PEER_STREAM = ACE_SOCK_SEQPACK_Association;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

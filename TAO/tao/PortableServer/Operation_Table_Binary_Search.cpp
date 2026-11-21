@@ -29,16 +29,18 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 int
 TAO_Binary_Search_OpTable::find (char const *opname,
                                  TAO_Skeleton &skelfunc,
-                                 std::size_t const /* length */)
+                                 size_t const /* length */)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_BINARY_SEARCH_OPTABLE_FIND_START);
 
   TAO_operation_db_entry const * const entry = lookup (opname);
 
   if (entry == nullptr)
-    TAOLIB_ERROR_RETURN ((LM_ERROR,
+    {
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("TAO_Binary_Search_Table:find failed\n")),
                       -1);
+    }
   // Valid entry. Figure out the skel_ptr.
   skelfunc = entry->skel_ptr;
 
@@ -49,16 +51,18 @@ int
 TAO_Binary_Search_OpTable::find (char const *opname,
                                  TAO_Collocated_Skeleton &skelfunc,
                                  TAO::Collocation_Strategy st,
-                                 std::size_t const /* length */)
+                                 size_t const /* length */)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_BINARY_SEARCH_OPTABLE_FIND_START);
 
   TAO_operation_db_entry const * const entry = lookup (opname);
 
   if (entry == nullptr)
-    TAOLIB_ERROR_RETURN ((LM_ERROR,
+    {
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("TAO_Binary_Search_Table:find failed\n")),
                       -1);
+    }
 
   switch (st)
     {

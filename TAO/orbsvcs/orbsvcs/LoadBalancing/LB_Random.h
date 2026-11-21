@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef LB_RANDOM_H
 #define LB_RANDOM_H
 
@@ -19,7 +18,6 @@
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -35,18 +33,17 @@ class TAO_LB_Random
   : public virtual POA_CosLoadBalancing::Strategy
 {
 public:
-  /// Constructor.
   /**
    * Seeds the OS' random number generator.
    */
-  TAO_LB_Random (PortableServer::POA_ptr poa);
+  explicit TAO_LB_Random (PortableServer::POA_ptr poa);
 
   /**
    * @name CosLoadBalancing::Strategy methods
    *
    * Methods required by the CosLoadBalancing::Strategy interface.
    */
-  //@{
+  /// @{
   char * name () override;
 
   CosLoadBalancing::Properties * get_properties () override;
@@ -66,7 +63,7 @@ public:
   void analyze_loads (
       PortableGroup::ObjectGroup_ptr object_group,
       CosLoadBalancing::LoadManager_ptr load_manager) override;
-  //@}
+  /// @}
 
   /// Returns the default POA for this servant.
   PortableServer::POA_ptr _default_POA () override;
@@ -96,7 +93,6 @@ private:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #include /**/ "ace/post.h"
 

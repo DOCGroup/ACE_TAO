@@ -21,7 +21,9 @@ ACE_Task_Base::grp_id (int identifier)
   // Thread_Manager, if there is one.
   this->grp_id_ = identifier;
   if (this->thr_mgr ())
-    this->thr_mgr ()->set_grp (this, identifier);
+    {
+      this->thr_mgr ()->set_grp (this, identifier);
+    }
 }
 
 ACE_INLINE ACE_Thread_Manager *
@@ -38,14 +40,14 @@ ACE_Task_Base::thr_mgr (ACE_Thread_Manager *thr_mgr)
   this->thr_mgr_ = thr_mgr;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Task_Base::is_reader () const
 {
   ACE_TRACE ("ACE_Task_Base::is_reader");
   return (ACE_BIT_ENABLED (this->flags_, ACE_Task_Flags::ACE_READER));
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Task_Base::is_writer () const
 {
   ACE_TRACE ("ACE_Task_Base::is_writer");

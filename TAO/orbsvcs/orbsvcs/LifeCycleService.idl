@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    LifeCycleService.idl
  *
@@ -9,8 +8,6 @@
  *
  *  @author Michael Kircher (mk1@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #ifndef TAO_LIFECYCLESERVICE_IDL
 #define TAO_LIFECYCLESERVICE_IDL
@@ -19,62 +16,55 @@
 
 module LifeCycleService
 {
+  /// @brief Wrapper for the CosLifeCycle GenericFactory.
+  ///
+  /// Inherited operations:
+  /// - `boolean supports(in Key k)`
+  /// - `Object create_object(in Key k, in Criteria the_criteria)`
+  ///   raises `NoFactory`, `InvalidCriteria`, or `CannotMeetCriteria`.
   interface Life_Cycle_Service : CosLifeCycle::GenericFactory
     {
-      // = TITLE
-      //   Wrapper for the CosLifeCycle GenericFactory
-      //
-      // = inherits:
-      //    boolean supports(in Key k);
-      //    Object create_object(in Key k, in Criteria the_criteria)
-      //          raises (NoFactory, InvalidCriteria, CannotMeetCriteria);
-
+      /// Provides a method for registering factories and their properties.
       void register_factory (in string name,
                              in string location,
                              in string description,
                              in Object _object);
-      // provide an method for registering factories with their properties
     };
 
+  /// @brief Evaluates criteria for CosLifeCycle.
+  ///
+  /// This interface wraps CosLifeCycle criteria to make access easier.
   interface Criteria_Evaluator
     {
-      // = TITLE
-      //   Criteria Evaluator
-      //
-      // = DESCRIPTION
-      //   Interface description for an evaluator of CosLifeCycle
-      //   Criterias. It is mainly a wrapper, which should make
-      //   access easier.
-      //
-      // @@ NOTE: The definition should be this. But see note below!
+      /// @@ NOTE: The definition should be this. But see note below!
       // typedef sequence <CosLifeCycle::NameValuePair> SeqNamedValuePair;
 
-      // @@ NOTE: This is just a workaround for a problem seen with
-      // explicit template builds. This file and CosLifeCycle.idl
-      // define a sequence of the same data structure which creates
-      // multiply defined symbols in the above configuration. We need
-      // to fix the IDL compile at some point of time. Till then this
-      // should be okay...
+      /// @@ NOTE: This is just a workaround for a problem seen with
+      /// explicit template builds. This file and CosLifeCycle.idl
+      /// define a sequence of the same data structure which creates
+      /// multiply defined symbols in the above configuration. We need
+      /// to fix the IDL compile at some point of time. Till then this
+      /// should be okay...
       typedef CosLifeCycle::Criteria SeqNamedValuePair;
       typedef CosLifeCycle::Criteria Criteria;
 
+      /// Raised if the questioned configuration is not available.
       exception NotAvailable { string reason; };
-      // raised if the questioned configuration is not available
 
+      /// Returns the initialization criteria.
       SeqNamedValuePair getInitialization ();
-      // get the initialization
 
+      /// Returns a filter string.
       string getFilter ();
-      // get a filter string
 
+      /// Returns the logical location.
       SeqNamedValuePair getLogicalLocation ();
-      // get the logical location
 
+      /// Returns the preferences; not implemented.
       string getPreferences ();
-      // get the preferences, not implemented
 
+      /// Sets the criteria searched for keywords.
       void setCriteria (in Criteria criteria_);
-      // set the Criteria which is searched for keywords
     };
 };
 

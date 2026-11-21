@@ -8,7 +8,6 @@
  */
 //=======================================================================
 
-
 #ifndef TAO_LB_LOAD_ALERT_INFO_H
 #define TAO_LB_LOAD_ALERT_INFO_H
 
@@ -33,7 +32,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 struct TAO_LB_LoadAlertInfo
 {
-  /// Constructor.
   TAO_LB_LoadAlertInfo () = default;
 
   /// Reference to the LoadAlert object.

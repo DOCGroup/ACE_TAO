@@ -12,20 +12,21 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Allocator;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
+/// Allocator singleton.
 class Malloc
-  // = TITLE
-  //      Allocator Singleton.
 {
 public:
+  /// Returns the static instance.
   static ACE_Allocator *instance ();
-  // Returns static instance.
 
 private:
+  /// Singleton-only constructor.
   Malloc ();
-  // Ensure Singleton.
 
-  static ACE_Allocator *instance_;
-  // Malloc Singleton.
+  Malloc (Malloc const &) = delete;
+  Malloc (Malloc &&) = delete;
+  Malloc &operator= (Malloc const &) = delete;
+  Malloc &operator= (Malloc &&) = delete;
 };
 
 #endif /* MY_MALLOC_H */

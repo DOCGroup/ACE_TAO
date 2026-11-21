@@ -1,12 +1,8 @@
 /* -*- C++ -*- */
-//
-// ============================================================================
-//
-// = DESCRIPTION
-//   Simple C++ data to show how custom marshalling can be used for
-//   non-IDL types.
-//
-// ============================================================================
+/**
+ * @file ECM_Data.h
+ * @brief Data types used to demonstrate custom marshaling of non-IDL data.
+ */
 
 #ifndef ECM_DATA_H
 #define ECM_DATA_H
@@ -22,11 +18,6 @@
 
 struct ECM_Data
 {
-  // Yes, an STL type could be used here and yes, we could write
-  // generic algorithms for marshalling and demarshalling using
-  // iterators.
-  // But ACE (and TAO) must be ported to platforms whose C++ compilers
-  // will crash and burn when faced with an STL construct.
   using Inventory = ACE_Map_Manager<CORBA::ULong, CORBA::Double, ACE_Null_Mutex>;
 
   CORBA::String_var description;

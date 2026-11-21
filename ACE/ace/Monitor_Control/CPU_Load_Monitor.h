@@ -45,41 +45,33 @@ namespace ACE
 #endif
     {
     public:
-      CPU_Load_Monitor (const char* name);
+      explicit CPU_Load_Monitor (char const* name);
 
       /// Implementation of the pure virtual method.
-      virtual void update ();
+      void update () override;
 
       /// Stores the default name, used if none is supplied by the user.
-      static const char* default_name ();
+      static char const* default_name ();
 
     private:
       /// Overridden reset, calls platform-specific reset.
-      virtual void clear_i ();
+      void clear_i () override;
 
       /// Common code to the constructor and to clear_i().
       void init ();
 
-    private:
 #if defined (ACE_LINUX)
-      void access_proc_stat (unsigned long *which_idle);
+      void access_proc_stat (unsigned long &which_idle);
 #endif
-
-    private:
-      static const char* default_name_;
 
       /// Linux implementation
 #if defined (ACE_LINUX)
-      unsigned long user_;
-      unsigned long wait_;
-      unsigned long kernel_;
-      unsigned long idle_;
-      unsigned long prev_idle_;
-      double prev_total_;
-#endif
-#if defined (ACE_LINUX)
-      FILE *file_ptr_;
-      char buf_[1024];
+      unsigned long user_ {};
+      unsigned long wait_ {};
+      unsigned long kernel_ {};
+      unsigned long idle_ {};
+      unsigned long prev_idle_ {};
+      double prev_total_ {};
 #endif
     };
   }

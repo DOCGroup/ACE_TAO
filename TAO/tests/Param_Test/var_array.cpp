@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    var_array.cpp
  *
@@ -7,10 +5,10 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #include "helper.h"
+
+#include <cstring>
 #include "var_array.h"
 
 // ************************************************************************
@@ -18,16 +16,10 @@
 // ************************************************************************
 
 Test_Var_Array::Test_Var_Array ()
-  : opname_ (CORBA::string_dup ("test_var_array")),
+  : opname_ ("test_var_array"),
     out_ (new Param_Test::Var_Array),
     ret_ (new Param_Test::Var_Array)
 {
-}
-
-Test_Var_Array::~Test_Var_Array ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
 }
 
 const char *
@@ -68,9 +60,8 @@ Test_Var_Array::init_parameters (Param_Test_ptr)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
-
   // fill the in_ array
-  for (CORBA::ULong i=0; i < Param_Test::DIM2; i++)
+  for (CORBA::ULong i=0; i < Param_Test::DIM2; ++i)
     {
       this->in_[i] = gen->gen_string ();
     }
@@ -94,7 +85,7 @@ Test_Var_Array::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      Param_Test::Var_Array_out out_arr (this->out_.out ());
+      Param_Test::Var_Array_out const out_arr (this->out_.out ());
       this->ret_ = objref->test_var_array (this->in_,
                                            this->inout_,
                                            out_arr);
@@ -116,7 +107,9 @@ Test_Var_Array::check_validity ()
       this->compare (this->in_, this->ret_.in ()))
     return 1;
   else
+  {
     return 0;
+  }
 }
 
 CORBA::Boolean
@@ -129,10 +122,12 @@ CORBA::Boolean
 Test_Var_Array::compare (const Param_Test::Var_Array_slice *a1,
                          const Param_Test::Var_Array_slice *a2)
 {
-  for (CORBA::ULong i=0; i < Param_Test::DIM2; i++)
+  for (CORBA::ULong i=0; i < Param_Test::DIM2; ++i)
     {
-      if (ACE_OS::strcmp (a1[i].in (), a2[i].in ()))
+      if (std::strcmp (a1[i].in (), a2[i].in ()))
+      {
         return 0;
+      }
     }
   return 1; // success
 }
@@ -153,7 +148,7 @@ Test_Var_Array::print_values ()
 void
 Test_Var_Array::print (const Param_Test::Var_Array_slice *a)
 {
-  for (CORBA::ULong i = 0; i < Param_Test::DIM2; i++)
+  for (CORBA::ULong i = 0; i < Param_Test::DIM2; ++i)
     {
       ACE_DEBUG ((LM_DEBUG, "\t\tElement #%d = %C\n",i, a[i].in ()));
     }

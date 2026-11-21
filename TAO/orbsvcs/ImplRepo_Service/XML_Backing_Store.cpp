@@ -11,6 +11,7 @@
 #include "ACEXML/parser/parser/Parser.h"
 #include "ACEXML/common/FileCharStream.h"
 #include "ACEXML/common/XML_Util.h"
+#include <memory>
 
 XML_Backing_Store::XML_Backing_Store(const Options& opts,
                                      CORBA::ORB_ptr orb,
@@ -63,7 +64,7 @@ XML_Backing_Store::persist ()
   ACE_OS::fprintf (fp,"<%s>\n", Locator_XMLHandler::ROOT_TAG);
 
   // Save servers
-  Locator_Repository::SIMap::ENTRY* sientry = nullptr;
+  Locator_Repository::SIMap::ENTRY* sientry {};
   Locator_Repository::SIMap::ITERATOR siit (this->servers ());
   for (; siit.next (sientry); siit.advance() )
     {
@@ -71,7 +72,7 @@ XML_Backing_Store::persist ()
     }
 
   // Save Activators
-  Locator_Repository::AIMap::ENTRY* aientry = nullptr;
+  Locator_Repository::AIMap::ENTRY* aientry {};
   Locator_Repository::AIMap::ITERATOR aiit (this->activators ());
   for (; aiit.next (aientry); aiit.advance ())
     {
@@ -146,7 +147,7 @@ XML_Backing_Store::persist (FILE* fp,
   if (elen + plen > 0)
     {
       ACE_OS::fprintf (fp,">\n");
-      for (CORBA::ULong i = 0; i < elen; ++i)
+      for (CORBA::ULong i {}; i < elen; ++i)
         {
           ACE_OS::fprintf (fp,"%s\t<%s", tag_prepend,
             Locator_XMLHandler::ENVIRONMENT_TAG);
@@ -155,7 +156,7 @@ XML_Backing_Store::persist (FILE* fp,
           ACE_OS::fprintf (fp," value=\"%s\"", val.c_str());
           ACE_OS::fprintf (fp,"/>\n");
         }
-      for (CORBA::ULong i = 0; i < plen; ++i)
+      for (CORBA::ULong i {}; i < plen; ++i)
         {
           ACE_OS::fprintf (fp,"%s\t<%s", tag_prepend,
             Locator_XMLHandler::PEER_TAG);
@@ -217,19 +218,16 @@ XML_Backing_Store::load_file (const ACE_TString& filename,
                               unsigned int debug,
                               FILE* open_file)
 {
-  // xml input source will take ownership
-  ACEXML_FileCharStream* fstm;
-  ACE_NEW_RETURN (fstm,
+  ACEXML_FileCharStream* fstm_raw {};
+  ACE_NEW_RETURN (fstm_raw,
                   ACEXML_FileCharStream,
                   -1);
+  std::unique_ptr<ACEXML_FileCharStream> fstm (fstm_raw);
 
-  int err;
   // use the open_file stream if it is provided
-  if (open_file != 0)
-    err = fstm->use_stream(open_file,
-                           filename.c_str());
-  else
-    err = fstm->open (filename.c_str());
+  int const err = open_file != nullptr
+    ? fstm->use_stream (open_file, filename.c_str ())
+    : fstm->open (filename.c_str ());
 
   if (debug > 9)
     {
@@ -240,14 +238,12 @@ XML_Backing_Store::load_file (const ACE_TString& filename,
 
   if (err != 0)
     {
-      delete fstm;
       return err;
     }
 
   ACEXML_Parser parser;
 
-  // InputSource takes ownership
-  ACEXML_InputSource input (fstm);
+  ACEXML_InputSource input (fstm.release ());
 
   parser.setContentHandler (&xml_handler);
   parser.setDTDHandler (&xml_handler);
@@ -289,7 +285,9 @@ XML_Backing_Store::load_server (Server_Info *info,
                                 bool server_started,
                                 const NameValues& )
 {
-  Server_Info_Ptr si (info);
+  std::unique_ptr<Server_Info> info_owner (info);
+  Server_Info_Ptr si (info_owner.get ());
+  info_owner.release ();
 
   this->servers ().rebind (info->key_name_, si);
 
@@ -320,10 +318,12 @@ XML_Backing_Store::load_activator (const ACE_CString& activator_name,
                                    const ACE_CString& ior,
                                    const NameValues& )
 {
-  Activator_Info *ai = nullptr;
+  Activator_Info *ai {};
   ACE_NEW (ai,
            Activator_Info (activator_name, token, ior));
 
-  Activator_Info_Ptr info (ai);
+  std::unique_ptr<Activator_Info> ai_owner (ai);
+  Activator_Info_Ptr info (ai_owner.get ());
+  ai_owner.release ();
   this->activators().rebind(Locator_Repository::lcase (activator_name), info);
 }

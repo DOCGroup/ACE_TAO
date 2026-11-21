@@ -4,6 +4,8 @@
 
 #include "ace/OS_NS_sys_time.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_PG
@@ -48,15 +50,18 @@ namespace TAO_PG
     ACE_NEW_RETURN (new_data.buf,
                     char[len],
                     -1);
-    ACE_OS::memcpy (new_data.buf, data, len);
+    std::memcpy (new_data.buf, data, len);
     new_data.len = len;
 
     if (is_last)
+    {
       this->last_fragment_id_ = id;
+    }
 
     this->data_length_ += len;
 
     if (TAO_debug_level >= 10)
+    {
       ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - TAO_PG::UIPMC_Recv_Packet::")
                   ACE_TEXT ("add_fragment, adding fragment %d with %d out ")
@@ -64,6 +69,7 @@ namespace TAO_PG
                   id,
                   len,
                   this->data_length_));
+    }
 
     if (this->fragments_.bind (id, new_data) != 0)
       {
@@ -76,16 +82,20 @@ namespace TAO_PG
 
     // We haven't encountered yet the last fragment.
     if (!is_last && this->last_fragment_id_ == 0)
+    {
       return 0;
+    }
 
     // We haven't encountered yet all the fragments but the last one is
     // already in.
     if (this->last_fragment_id_ + 1 != this->fragments_.current_size ())
+    {
       return 0;
+    }
 
     // Since fragments are enumerated from 0 to last_fragment_id_ this
     // is the heaviest but the most reliable check for packet completeness.
-    for (CORBA::ULong id2 = 0; id2 <= this->last_fragment_id_; ++id2)
+    for (CORBA::ULong id2 {}; id2 <= this->last_fragment_id_; ++id2)
       {
         if (this->fragments_.find (id2) == -1)
           {
@@ -113,12 +123,12 @@ namespace TAO_PG
   void
   UIPMC_Recv_Packet::copy_data (char *buf) const
   {
-    for (CORBA::ULong id = 0; id <= this->last_fragment_id_; ++id)
+    for (CORBA::ULong id {}; id <= this->last_fragment_id_; ++id)
       {
         Fragment f = { 0, 0 };
         this->fragments_.find (id, f);
 
-        ACE_OS::memcpy (buf, f.buf, f.len);
+        std::memcpy (buf, f.buf, f.len);
         buf += f.len;
       }
   }

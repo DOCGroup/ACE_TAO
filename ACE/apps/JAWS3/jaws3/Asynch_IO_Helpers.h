@@ -11,22 +11,20 @@
 
 class JAWS_Asynch_IO;
 
+/// Adapts a JAWS_Event_Completer to ACE_Handler.
+///
+/// Included conditionally by jaws3/Asynch_IO.cpp when the platform supports
+/// POSIX or Win32 asynchronous I/O.
 class JAWS_EC_AH_Adapter : public ACE_Handler
-// = TITLE
-//     A JAWS_Event_Completer - ACE_Handler adapter.
-//
-// = DESCRIPTION
-//     This class will be conditionally #included by jaws3/Asynch_IO.cpp
-//     if the given platform supports POSIX or WIN32 asynch IO.
 {
 public:
   static JAWS_EC_AH_Adapter * make (JAWS_Event_Completer *);
 
-  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
+  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
 
-  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
+  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
 
-  void handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result);
+  void handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result) override;
 
 private:
   JAWS_EC_AH_Adapter (JAWS_Event_Completer *completer)
@@ -37,8 +35,7 @@ private:
 protected:
   JAWS_Event_Result make_io_result ( const ACE_Asynch_Result &result
                                    , JAWS_Event_Result::JE_REASON reason_ok
-                                   , JAWS_Event_Result::JE_REASON reason_fail
-                                   );
+                                   , JAWS_Event_Result::JE_REASON reason_fail);
 
 private:
   JAWS_Event_Completer *completer_;

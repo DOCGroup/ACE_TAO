@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFY_LIFECYCLETST_H
 #define NOTIFY_LIFECYCLETST_H
 

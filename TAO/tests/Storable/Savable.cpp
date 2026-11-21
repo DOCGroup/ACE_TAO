@@ -1,4 +1,5 @@
 #include "Savable.h"
+#include <string>
 #include "tao/Storable_Base.h"
 #include "tao/Storable_Factory.h"
 #include "tao/Storable_File_Guard.h"
@@ -12,17 +13,17 @@ class Savable_File_Guard: public TAO::Storable_File_Guard
 public:
   Savable_File_Guard (Savable & savable, Method_Type method_type);
 
-  ~Savable_File_Guard ();
+  ~Savable_File_Guard () override;
 
-  virtual void set_object_last_changed (const time_t & time);
+  void set_object_last_changed (const time_t & time) override;
 
-  virtual time_t get_object_last_changed ();
+  time_t get_object_last_changed () override;
 
-  virtual int load_from_stream ();
+  int load_from_stream () override;
 
-  virtual bool is_loaded_from_stream ();
+  bool is_loaded_from_stream () override;
 
-  virtual TAO::Storable_Base * create_stream (const char * mode);
+  TAO::Storable_Base * create_stream (const char * mode) override;
 
 private:
   Savable & savable_;
@@ -67,9 +68,13 @@ Savable_File_Guard::load_from_stream ()
   savable_.loaded_from_stream_ = true;
   this->peer ().rewind ();
   if (this->peer ().good ())
-    return 0;
+    {
+      return 0;
+    }
   else
+  {
     return -1;
+  }
 }
 
 bool
@@ -95,7 +100,7 @@ Savable::Savable (TAO::Storable_Factory & storable_factory)
       this->i_[index] = 0;
       this->ui_[index] = 0;
       this->bytes_size_[index] = 0;
-      this->bytes_[index] = new char [this->bytes_size_max];
+      this->bytes_[index] = std::make_unique<char[]> (this->bytes_size_max);
       for (int i = 0; i < this->bytes_size_max; ++i)
         {
           this->bytes_[index][i] = ACE_CHAR_MAX;
@@ -114,13 +119,7 @@ Savable::Savable (TAO::Storable_Factory & storable_factory)
     }
 }
 
-Savable::~Savable ()
-{
-  for (int index = 0; index < 2; ++index)
-    {
-      delete []this->bytes_[index];
-    }
-}
+Savable::~Savable () = default;
 
 bool
 Savable::is_loaded_from_stream ()
@@ -139,7 +138,7 @@ Savable::read (TAO::Storable_Base & stream)
       stream >> this->i_[index];
       stream >> this->ui_[index];
       stream >> this->bytes_size_[index];
-      stream.read (this->bytes_size_[index], this->bytes_[index]);
+      stream.read (this->bytes_size_[index], this->bytes_[index].get ());
     }
 }
 
@@ -154,21 +153,21 @@ Savable::write (TAO::Storable_Base & stream)
       stream << this->i_[index];
       stream << this->ui_[index];
       stream << this->bytes_size_[index];
-      stream.write (this->bytes_size_[index], this->bytes_[index]);
+      stream.write (this->bytes_size_[index], this->bytes_[index].get ());
     }
 
   stream.flush ();
 }
 
 void
-Savable::string_set (int index, const ACE_CString &s)
+Savable::string_set (int index, std::string const &s)
 {
   Savable_File_Guard fg(*this, SFG::MUTATOR);
   this->string_[index] = s;
   this->write (fg.peer ());
 }
 
-const ACE_CString &
+std::string const &
 Savable::string_get (int index)
 {
   Savable_File_Guard fg(*this, SFG::ACCESSOR);

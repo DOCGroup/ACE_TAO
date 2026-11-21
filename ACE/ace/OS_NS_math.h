@@ -31,7 +31,6 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
-
 /*
  * We inline and undef some functions that may be implemented
  * as macros on some platforms. This way macro definitions will
@@ -59,7 +58,6 @@ inline double ace_log2_helper (double x)
     meaning the binary logarithm of x using the natural logarithm, for
     example, is:
 
-
                 log (x)
                    e
       log (x) = -------
@@ -77,7 +75,6 @@ inline double ace_log2_helper (double x)
 #  endif /* !ACE_LACKS_LOG2 */
 #endif /* defined (log2) */
 }
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

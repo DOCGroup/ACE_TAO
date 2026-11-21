@@ -24,7 +24,6 @@
 #include <openssl/x509.h>
 #include <openssl/crypto.h>
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -74,7 +73,6 @@ namespace TAO
     using X509_var = OpenSSL_st_var< ::X509 >;
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

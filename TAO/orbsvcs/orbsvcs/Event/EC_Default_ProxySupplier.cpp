@@ -15,10 +15,6 @@ TAO_EC_Default_ProxyPushSupplier::TAO_EC_Default_ProxyPushSupplier (
 {
 }
 
-TAO_EC_Default_ProxyPushSupplier::~TAO_EC_Default_ProxyPushSupplier ()
-{
-}
-
 void
 TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
       RtecEventComm::PushConsumer_ptr push_consumer,
@@ -26,7 +22,9 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
 {
   // Nil PushConsumers are illegal
   if (CORBA::is_nil (push_consumer))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   {
     ACE_GUARD_THROW_EX (
@@ -36,8 +34,10 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
 
     if (this->is_connected_i ())
       {
-        if (this->event_channel_->consumer_reconnect () == 0)
+        if (!this->event_channel_->consumer_reconnect ())
+        {
           throw RtecEventChannelAdmin::AlreadyConnected ();
+        }
 
         // Re-connections are allowed....
         this->cleanup_i ();
@@ -45,11 +45,11 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
         this->consumer_ =
           RtecEventComm::PushConsumer::_duplicate (push_consumer);
         this->qos_ = qos;
-        this->child_ =
+        this->child_.reset (
           this->event_channel_->filter_builder ()->build (this,
-                                                          this->qos_);
+                                                          this->qos_));
 
-        this->adopt_child (this->child_);
+        this->adopt_child (this->child_.get ());
 
         TAO_EC_Unlock reverse_lock (*this->lock_);
 
@@ -66,7 +66,9 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
         // this is probably an application error, handle it as
         // gracefully as possible
         if (this->is_connected_i ())
+        {
           return; // @@ Should we throw
+        }
       }
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
@@ -89,14 +91,14 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
 
 #if TAO_EC_ENABLE_DEBUG_MESSAGES
     ORBSVCS_DEBUG ((LM_DEBUG,
-                "Building filters for consumer <%x>.\n",
+                "Building filters for consumer <%@>.\n",
                 this));
 #endif /* TAO_EC_ENABLED_DEBUG_MESSAGES */
-    this->child_ =
+    this->child_.reset (
       this->event_channel_->filter_builder ()->build (this,
-                                                      this->qos_);
+                                                      this->qos_));
 
-    this->adopt_child (this->child_);
+    this->adopt_child (this->child_.get ());
   }
 
   // Notify the event channel...
@@ -107,7 +109,7 @@ void
 TAO_EC_Default_ProxyPushSupplier::disconnect_push_supplier ()
 {
   RtecEventComm::PushConsumer_var consumer;
-  int connected = 0;
+  int connected {};
 
   {
     ACE_GUARD_THROW_EX (
@@ -119,7 +121,9 @@ TAO_EC_Default_ProxyPushSupplier::disconnect_push_supplier ()
     consumer = this->consumer_._retn ();
 
     if (connected)
+    {
       this->cleanup_i ();
+    }
   }
 
   // Notify the event channel....

@@ -12,10 +12,12 @@ Server_i::set_callback (Test::Callback_ptr callback)
 
 void
 Server_i::request (Test::TimeStamp time_stamp,
-                   const Test::Payload &payload)
+                   Test::Payload const &payload)
 {
   if (CORBA::is_nil (this->callback_.in ()))
+  {
     return;
+  }
 
   this->callback_->response (time_stamp, payload);
 }
@@ -23,5 +25,5 @@ Server_i::request (Test::TimeStamp time_stamp,
 void
 Server_i::shutdown ()
 {
-  this->done_ = 1;
+  this->done_ = true;
 }

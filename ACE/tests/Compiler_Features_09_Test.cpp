@@ -27,15 +27,15 @@ class Base
 public:
   Base()
   {
-    constructors++;
+    ++constructors;
   }
   Base(Base const & )
   {
-    constructors++;
+    ++constructors;
   }
   ~Base()
   {
-    destructors++;
+    ++destructors;
   }
 
   static int constructors;
@@ -102,5 +102,4 @@ run_main (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return status;
 }
-
 

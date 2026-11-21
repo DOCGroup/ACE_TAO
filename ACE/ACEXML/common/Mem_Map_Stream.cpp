@@ -5,10 +5,9 @@
 #include "ACEXML/common/Mem_Map_Stream.h"
 
 ACEXML_Mem_Map_Stream::ACEXML_Mem_Map_Stream ()
-  : svc_handler_ (0),
-    recv_pos_ (0),
-    get_pos_ (0),
-    end_of_mapping_plus1_ (0)
+  : recv_pos_ (nullptr),
+    get_pos_ (nullptr),
+    end_of_mapping_plus1_ (nullptr)
 {
 }
 
@@ -35,7 +34,9 @@ int
 ACEXML_Mem_Map_Stream::get_char ()
 {
   if (this->eof () && this->grow_file_and_remap () == -1)
+  {
     return EOF;
+  }
   return *this->get_pos_++;
 }
 
@@ -52,8 +53,12 @@ ACEXML_Mem_Map_Stream::peek_char (size_t offset)
 {
   // We may need to iterate if the size of <n> is large.
   while (this->get_pos_ + offset >= this->end_of_mapping_plus1_)
-    if (this->grow_file_and_remap () == -1)
-      return EOF;
+    {
+      if (this->grow_file_and_remap () == -1)
+        {
+          return EOF;
+        }
+    }
 
   return this->get_pos_[offset];
 }
@@ -70,7 +75,7 @@ ACEXML_Mem_Map_Stream::recv (size_t &len)
   if (this->eof () && this->grow_file_and_remap () == -1)
     {
       len = 0;
-      return 0;
+      return nullptr;
     }
   const char *s = this->recv_pos_;
   this->seek (static_cast<ACE_OFF_T> (len), SEEK_CUR);
@@ -90,8 +95,12 @@ ACEXML_Mem_Map_Stream::peek_str (size_t offset,
 {
   // We will iterate if the size of <offset> is large.
   while (this->get_pos_ + (offset + size) > this->end_of_mapping_plus1_)
-    if (this->grow_file_and_remap () == -1)
-      return 0;
+    {
+      if (this->grow_file_and_remap () == -1)
+        {
+          return nullptr;
+        }
+    }
 
   return &this->get_pos_[offset];
 }
@@ -120,8 +129,12 @@ ACEXML_Mem_Map_Stream::seek (ACE_OFF_T offset, int whence)
 
   // Make sure that the backing store will cover this.
   while (this->get_pos_ > this->end_of_mapping_plus1_)
-    if (this->grow_file_and_remap () == -1)
-      this->get_pos_ = this->end_of_mapping_plus1_;
+    {
+      if (this->grow_file_and_remap () == -1)
+        {
+          this->get_pos_ = this->end_of_mapping_plus1_;
+        }
+    }
 
   this->recv_pos_ = this->get_pos_;
 
@@ -133,7 +146,7 @@ ACEXML_Mem_Map_Stream::seek (ACE_OFF_T offset, int whence)
 Svc_Handler *
 ACEXML_Mem_Map_Stream::svc_handler ()
 {
-  return this->svc_handler_;
+  return this->svc_handler_.get ();
 }
 
 size_t
@@ -146,13 +159,16 @@ int
 ACEXML_Mem_Map_Stream::open (Connector *connector,
                              const ACE_INET_Addr &addr)
 {
-  svc_handler_ = 0;
+  this->svc_handler_.reset ();
+
+  Svc_Handler *svc_handler {};
+  int const status = connector->connect (svc_handler, addr);
+  this->svc_handler_.reset (svc_handler);
 
   // Connect to the server at <addr>. If the handler has to be
   // connected to the server again, the Caching strategy takes care
   // and uses the same connection.
-  if (connector->connect (svc_handler_,
-                          addr) == -1)
+  if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p %s %d\n",
@@ -168,20 +184,26 @@ ACEXML_Mem_Map_Stream::open (Connector *connector,
   if (this->mem_map_.open (file.get_path_name (),
                            O_RDWR | O_CREAT | O_APPEND,
                            ACE_DEFAULT_FILE_PERMS) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "open"),
+                        -1);
+    }
   // Make sure to unlink this right away so that if this process
   // crashes these files will be removed automatically.
   else if (ACE_OS::unlink (file.get_path_name ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "unlink"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "unlink"),
+                        -1);
+    }
   else
-    // Initialize all the position pointers to 0.
-    this->rewind ();
+    {
+      // Initialize all the position pointers to 0.
+      this->rewind ();
+    }
 
   return 0;
 }
@@ -209,14 +231,20 @@ ACEXML_Mem_Map_Stream::grow_file_and_remap ()
         }
       bytes += n;
       if (n == 0 && !bytes)
-        return -1;
+        {
+          return -1;
+        }
       else if (n == 0)
-        break;
+        {
+          break;
+        }
       else if (ACE::write_n (this->mem_map_.handle (), buf, n) != n)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "write_n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%p\n",
+                             "write_n"),
+                            -1);
+        }
     }
 
 //   ssize_t n = this->svc_handler_->peer ().recv (buf, sizeof buf, 0, &tv);
@@ -237,11 +265,13 @@ ACEXML_Mem_Map_Stream::grow_file_and_remap ()
   if (this->mem_map_.map (static_cast<size_t> (-1),
                           PROT_RDWR,
                           ACE_MAP_PRIVATE,
-                          (void*)0) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "map"),
-                      -1);
+                          nullptr) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "map"),
+                        -1);
+    }
   // MAP_FAILED is used as a "first time in" flag.
   if (this->recv_pos_ == MAP_FAILED)
     {
@@ -260,6 +290,5 @@ ACEXML_Mem_Map_Stream::~ACEXML_Mem_Map_Stream ()
 {
   // Remove the mapping and the file.
   this->mem_map_.remove ();
-  delete this->svc_handler_;
 }
 

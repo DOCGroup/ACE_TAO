@@ -19,13 +19,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template <class HANDLER>
-ACE_Asynch_Connector<HANDLER>::ACE_Asynch_Connector ()
-  : pass_addresses_ (false),
-    validate_new_connection_ (false)
-{
-}
-
 template <class HANDLER> int
 ACE_Asynch_Connector<HANDLER>::open (bool pass_addresses,
                                      ACE_Proactor *proactor,
@@ -40,10 +33,12 @@ ACE_Asynch_Connector<HANDLER>::open (bool pass_addresses,
                                   ACE_INVALID_HANDLE,
                                   0,
                                   this->proactor ()) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE_Asynch_Connect::open")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("ACE_Asynch_Connect::open")),
+                           -1);
+    }
   return 0;
 }
 
@@ -59,10 +54,12 @@ ACE_Asynch_Connector<HANDLER>::connect (const ACE_INET_Addr & remote_sap,
                                      local_sap,
                                      reuse_addr,
                                      act) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE_Asynch_Connect::connect")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("ACE_Asynch_Connect::connect")),
+                           -1);
+    }
   return 0;
 }
 
@@ -70,7 +67,7 @@ template <class HANDLER> void
 ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result &result)
 {
   // Variable for error tracking
-  bool error = false;
+  bool error {};
 
   // If the asynchronous connect fails.
   if (!result.success () ||
@@ -100,9 +97,11 @@ ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result 
   ACE_INET_Addr remote_address;
   if (!error &&
       (this->validate_new_connection_ || this->pass_addresses_))
-    this->parse_address (result,
-                         remote_address,
-                         local_address);
+    {
+      this->parse_address (result,
+                           remote_address,
+                           local_address);
+    }
 
   // Call validate_connection even if there was an error - it's the only
   // way the application can learn the connect disposition.
@@ -112,12 +111,12 @@ ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result 
       error = true;
     }
 
-  HANDLER *new_handler = nullptr;
+  HANDLER *new_handler {};
   if (!error)
     {
       // The Template method
       new_handler = this->make_handler ();
-      if (new_handler == 0)
+      if (new_handler == nullptr)
         {
           error = true;
           ACELIB_ERROR ((LM_ERROR,
@@ -134,12 +133,16 @@ ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result 
 
       // Pass the addresses
       if (this->pass_addresses_)
-        new_handler->addresses (remote_address,
-                                local_address);
+        {
+          new_handler->addresses (remote_address,
+                                  local_address);
+        }
 
       // Pass the ACT
       if (result.act () != nullptr)
-        new_handler->act (result.act ());
+        {
+          new_handler->act (result.act ());
+        }
 
       // Set up the handler's new handle value
       new_handler->handle (result.connect_handle ());
@@ -153,7 +156,9 @@ ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result 
   // On failure, no choice but to close the socket
   if (error &&
       result.connect_handle() != ACE_INVALID_HANDLE)
-    ACE_OS::closesocket (result.connect_handle ());
+    {
+      ACE_OS::closesocket (result.connect_handle ());
+    }
 }
 
 template <class HANDLER> int
@@ -195,17 +200,21 @@ ACE_Asynch_Connector<HANDLER>::parse_address (const ACE_Asynch_Connect::Result &
   if (ACE_OS::getsockname (result.connect_handle (),
                            reinterpret_cast<sockaddr *> (&local_addr),
                            &local_size) < 0)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT("%p\n"),
-                ACE_TEXT("ACE_Asynch_Connector::<getsockname> failed")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                    ACE_TEXT("%p\n"),
+                    ACE_TEXT("ACE_Asynch_Connector::<getsockname> failed")));
+    }
 
   // Get the remote address.
   if (ACE_OS::getpeername (result.connect_handle (),
                            reinterpret_cast<sockaddr *> (&remote_addr),
                            &remote_size) < 0)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT("%p\n"),
-                ACE_TEXT("ACE_Asynch_Connector::<getpeername> failed")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                    ACE_TEXT("%p\n"),
+                    ACE_TEXT("ACE_Asynch_Connector::<getpeername> failed")));
+    }
 
   // Set the addresses.
   local_address.set  (reinterpret_cast<sockaddr_in *> (&local_addr),
@@ -215,7 +224,6 @@ ACE_Asynch_Connector<HANDLER>::parse_address (const ACE_Asynch_Connect::Result &
 
   return;
 }
-
 
 template <class HANDLER> ACE_Asynch_Connect &
 ACE_Asynch_Connector<HANDLER>::asynch_connect ()
@@ -227,8 +235,8 @@ template <class HANDLER> HANDLER *
 ACE_Asynch_Connector<HANDLER>::make_handler ()
 {
   // Default behavior
-  HANDLER *handler = nullptr;
-  ACE_NEW_RETURN (handler, HANDLER, 0);
+  HANDLER *handler {};
+  ACE_NEW_RETURN (handler, HANDLER, nullptr);
   return handler;
 }
 

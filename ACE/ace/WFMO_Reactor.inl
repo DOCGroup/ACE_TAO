@@ -71,11 +71,11 @@ ACE_WFMO_Reactor_Handler_Repository::Common_Info::dump () const
               this->io_entry_));
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Event Handler = %d\n"),
+              ACE_TEXT ("Event Handler = %@\n"),
               this->event_handler_));
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("I/O Handle = %d\n"),
+              ACE_TEXT ("I/O Handle = %H\n"),
               this->io_handle_));
 
   ACELIB_DEBUG ((LM_DEBUG,
@@ -91,8 +91,8 @@ ACE_WFMO_Reactor_Handler_Repository::Common_Info::dump () const
               this->delete_entry_));
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Close Masks = %d\n"),
-              this->close_masks_));
+              ACE_TEXT ("Close Masks = %Q\n"),
+              static_cast<ACE_UINT64> (this->close_masks_)));
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -146,7 +146,7 @@ ACE_WFMO_Reactor_Handler_Repository::Current_Info::dump (ACE_HANDLE event_handle
   Common_Info::dump ();
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Event Handle = %d\n"),
+              ACE_TEXT ("Event Handle = %H\n"),
               event_handle));
 
   ACELIB_DEBUG ((LM_DEBUG,
@@ -212,7 +212,7 @@ ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::dump () const
   Common_Info::dump ();
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Event Handle = %d\n"),
+              ACE_TEXT ("Event Handle = %H\n"),
               this->event_handle_));
 
   ACELIB_DEBUG ((LM_DEBUG,
@@ -276,7 +276,7 @@ ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::dump () const
   Common_Info::dump ();
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Event Handle = %d\n"),
+              ACE_TEXT ("Event Handle = %H\n"),
               this->event_handle_));
 
   ACELIB_DEBUG ((LM_DEBUG,
@@ -702,7 +702,7 @@ ACE_WFMO_Reactor::suspend_handlers ()
   // by ACE_WFMO_Reactor::open(), not by users, and should not be suspended.
   for (size_t i = 2;
        i < this->handler_rep_.max_handlep1_ && !error;
-       i++)
+       ++i)
     {
       result =
         this->handler_rep_.suspend_handler_i (this->handler_rep_.current_handles_[i],
@@ -714,7 +714,7 @@ ACE_WFMO_Reactor::suspend_handlers ()
   // Then suspend all to_be_added_handles
   for (size_t i = 0;
        i < this->handler_rep_.handles_to_be_added_ && !error;
-       i++)
+       ++i)
     {
       if (this->handler_rep_.to_be_added_info_[i].io_entry_)
         {
@@ -792,7 +792,7 @@ ACE_WFMO_Reactor::resume_handlers ()
   bool changes_required = false;
   for (size_t i = 0;
        i < this->handler_rep_.suspended_handles_ && !error;
-       i++)
+       ++i)
     {
       result =
         this->handler_rep_.resume_handler_i (this->handler_rep_.current_suspended_info_[i].event_handle_,
@@ -804,7 +804,7 @@ ACE_WFMO_Reactor::resume_handlers ()
   // Then resume all to_be_added_handles
   for (size_t i = 0;
         i < this->handler_rep_.handles_to_be_added_ && !error;
-        i++)
+        ++i)
     {
       if (this->handler_rep_.to_be_added_info_[i].io_entry_)
         {
@@ -974,7 +974,7 @@ ACE_WFMO_Reactor::register_handler (const ACE_Sig_Set &sigset,
   int result = 0;
 
 #if (ACE_NSIG > 0)
-  for (int s = 1; s < ACE_NSIG; s++)
+  for (int s = 1; s < ACE_NSIG; ++s)
     if (sigset.is_member (s)
         && this->signal_handler_->register_handler (s,
                                                     new_sh,
@@ -1007,7 +1007,7 @@ ACE_WFMO_Reactor::remove_handler (const ACE_Sig_Set &sigset)
   int result = 0;
 
 #if (ACE_NSIG > 0)
-  for (int s = 1; s < ACE_NSIG; s++)
+  for (int s = 1; s < ACE_NSIG; ++s)
     if (sigset.is_member (s)
         && this->signal_handler_->remove_handler (s) == -1)
       result = -1;

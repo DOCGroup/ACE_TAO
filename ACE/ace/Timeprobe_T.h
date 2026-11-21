@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TIMEPROBE_T_H
 #define ACE_TIMEPROBE_T_H
 #include /**/ "ace/pre.h"
@@ -67,7 +66,6 @@ public:
    */
   using ACE_Timeprobe = ACE_Timeprobe_Ex<ACE_LOCK, ACE_Allocator>;
 
-
   /// We can hold multiple event description tables.
   using EVENT_DESCRIPTIONS = ACE_Unbounded_Set<ACE_Event_Descriptions>;
 
@@ -77,7 +75,6 @@ public:
   /// Create Timeprobes with @a size slots
   ACE_Timeprobe_Ex (ALLOCATOR *allocator,
                  u_long size = ACE_DEFAULT_TIMEPROBE_TABLE_SIZE);
-  /// Destructor.
   ~ACE_Timeprobe_Ex ();
 
   /// Record a time. @a event is used to describe this time probe.
@@ -104,7 +101,8 @@ public:
   /// Not implemented (stupid MSVC won't let it be protected).
   ACE_Timeprobe_Ex (const ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR> &);
 
-  // = (Somewhat private) Accessors
+  /// @name Internal accessors
+  /// @{
 
   /// Event Descriptions
   ACE_Unbounded_Set<ACE_Event_Descriptions> &event_descriptions ();
@@ -129,6 +127,7 @@ public:
 
   /// Current size of timestamp table
   u_long current_size ();
+  /// @}
 
 protected:
   /// Obtain an allocator pointer.  If there is no allocator stored in
@@ -142,25 +141,25 @@ protected:
   EVENT_DESCRIPTIONS sorted_event_descriptions_;
 
   /// Time probe slots
-  ACE_timeprobe_t *timeprobes_;
+  ACE_timeprobe_t *timeprobes_ {};
 
   /// Synchronization variable.
   ACE_LOCK lock_;
 
   /// Max size of timestamp table
-  u_long max_size_;
+  u_long max_size_ {};
 
   /// Current size of timestamp table
-  u_long current_size_;
+  u_long current_size_ {};
 
   /// Flag indicating the report buffer has filled up, and is now
   /// acting as a ring-buffer using modulus arithmetic: this saves the
   /// max_size_ most recent time stamps and loses earlier ones until
   /// drained.
-  u_short report_buffer_full_;
+  u_short report_buffer_full_ {};
 
 private:
-   ALLOCATOR *   allocator_;
+   ALLOCATOR *   allocator_ {};
 };
 
 // template <class ACE_LOCK>
@@ -185,10 +184,8 @@ template <class Timeprobe>
 class ACE_Function_Timeprobe
 {
 public:
-  /// Constructor.
   ACE_Function_Timeprobe (Timeprobe &timeprobe, u_long event);
 
-  /// Destructor.
   ~ACE_Function_Timeprobe ();
 
 protected:

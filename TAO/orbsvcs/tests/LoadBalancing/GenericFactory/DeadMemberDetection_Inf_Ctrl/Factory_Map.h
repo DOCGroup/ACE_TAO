@@ -19,6 +19,5 @@ using Factory_Map = ACE_Hash_Map_Manager_Ex<
   ACE_Equal_To<ACE_UINT32>,
   ACE_Null_Mutex>;
 
-
 #include /**/ "ace/post.h"
 #endif /* FACTORY_MAP_H */

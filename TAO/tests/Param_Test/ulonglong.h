@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ulonglong.h
  *
@@ -7,8 +5,6 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #ifndef PARAM_TEST_ULONGLONG_H
 #define PARAM_TEST_ULONGLONG_H
@@ -18,11 +14,9 @@
 class Test_ULongLong
 {
 public:
-  /// ctor
   Test_ULongLong ();
 
-  /// dtor
-  ~Test_ULongLong ();
+  ~Test_ULongLong () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -50,7 +44,7 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   CORBA::ULongLong in_;

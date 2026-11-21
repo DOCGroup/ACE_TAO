@@ -9,23 +9,32 @@
  */
 //=============================================================================
 
-
 #include "testS.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_string.h"
+#include <memory>
+
+struct Options
+{
+  ACE_TCHAR const *ior_output_file {};
+};
 
 // The servant
 
 class Test_i : public POA_Test
 {
 public:
-  Test_i (CORBA::ORB_ptr orb);
+  explicit Test_i (CORBA::ORB_ptr orb);
 
-  CORBA::Short method  (CORBA::Short boo);
+  Test_i (Test_i const &) = delete;
+  Test_i (Test_i &&) = delete;
+  Test_i &operator= (Test_i const &) = delete;
+  Test_i &operator= (Test_i &&) = delete;
+
+  CORBA::Short method (CORBA::Short boo) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  void shutdown  ();
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;
@@ -42,7 +51,9 @@ Test_i :: method (CORBA::Short boo)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Test_i::method () invoked\n")));
   if (boo == 5)
+  {
     throw Test::Oops ("Invalid boo\n");
+  }
 
   return 0;
 }
@@ -53,42 +64,45 @@ Test_i::shutdown ()
   this->orb_->shutdown (false);
 }
 
-static const ACE_TCHAR *ior_output_file = 0;
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (Options &options, int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        ior_output_file = get_opts.opt_arg ();
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+    {
+      switch (c)
+        {
+        case 'o':
+          options.ior_output_file = get_opts.opt_arg ();
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-o <iorfile>"
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
+      Options options;
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (options, argc, argv) != 0)
+      {
         return 1;
+      }
 
       Test_i servant (orb.in ());
       // Obtain RootPOA.
@@ -103,7 +117,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       PortableServer::ObjectId_var id =
-        root_poa->activate_object (&servant);
+        root_poa->activate_object (std::addressof (servant));
 
       CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
 
@@ -114,21 +128,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->object_to_string (Test_object.in ());
 
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != 0)
+      if (options.ior_output_file != nullptr)
         {
-          FILE *output_file =
-            ACE_OS::fopen (ior_output_file, "w");
+          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+            ACE_OS::fopen (options.ior_output_file, "w"), ACE_OS::fclose);
 
-          if (output_file == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
-                               ior_output_file),
-                              1);
+          if (!output_file)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Cannot open output file for writing IOR: %s",
+                                 options.ior_output_file),
+                                1);
+            }
 
-          ACE_OS::fprintf (output_file,
+          ACE_OS::fprintf (output_file.get (),
                            "%s",
                            ior.in ());
-          ACE_OS::fclose (output_file);
         }
 
       poa_manager->activate ();
@@ -142,7 +157,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception in setting up server");
       ACE_ASSERT (0);

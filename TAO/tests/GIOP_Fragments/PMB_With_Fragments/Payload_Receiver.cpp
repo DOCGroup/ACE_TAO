@@ -21,13 +21,11 @@ Payload_Receiver::more_data (const Test::Payload &payload)
     }
 }
 
-
 void
 Payload_Receiver::shutdown ()
 {
   this->orb_->shutdown (false);
 }
-
 
 int
 Payload_Receiver::get_count () const

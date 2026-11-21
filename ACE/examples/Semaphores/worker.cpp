@@ -1,27 +1,21 @@
 #include "ace/Process_Semaphore.h"
-#include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
+#include <chrono>
+#include <thread>
 
-int ACE_TMAIN (int, ACE_TCHAR *[])
+int
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  // Create locked
-  ACE_Process_Semaphore s (0, ACE_TEXT ("AceTest"));
-
+  ACE_Process_Semaphore semaphore {0, ACE_TEXT ("AceTest")};
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Worker is going to acquire semaphore\n")));
-
-  s.acquire ();
-
+  semaphore.acquire ();
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Worker has acquired semaphore\n")));
 
-  // Do some init stuff. Simulated by a sleep...
-  ACE_OS::sleep(10);
-
-  s.release();
-
+  // Simulate initialization and work while preserving the semaphore example's timing.
+  std::this_thread::sleep_for (std::chrono::seconds {10});
+  semaphore.release ();
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Worker released semaphore\n")));
-
-  // Do the work...
-  ACE_OS::sleep(5);
+  std::this_thread::sleep_for (std::chrono::seconds {5});
 
   return 0;
 }

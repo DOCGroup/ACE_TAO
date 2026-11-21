@@ -29,11 +29,17 @@ run_main (int, ACE_TCHAR *[])
   for (OPERATIONS op : OPERATIONS ())
   {
     if (op == OPERATIONS::ADD_OBJECT_POLICY && count != 0)
+    {
       ACE_ERROR ((LM_ERROR, "Wrong order when using range based for loop\n"));
+    }
     if (op == OPERATIONS::ADD_CURRENT_POLICY && count != 1)
+    {
       ACE_ERROR ((LM_ERROR, "Wrong order when using range based for loop\n"));
+    }
     if (op == OPERATIONS::LAST_OPERATION && count != 2)
+    {
       ACE_ERROR ((LM_ERROR, "Wrong order when using range based for loop\n"));
+    }
     ++count;
   }
 

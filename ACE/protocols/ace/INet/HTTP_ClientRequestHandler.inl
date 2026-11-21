@@ -14,7 +14,7 @@ namespace ACE
     ACE_INLINE
     SessionBase* SessionHolder::operator -> ()
       {
-        return &this->session ();
+        return std::addressof (this->session ());
       }
 
     ACE_INLINE

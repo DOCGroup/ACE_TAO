@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 
 #include "ace/SString.h"
@@ -62,7 +61,6 @@ insertion_removal_test ()
                   ACE_TEXT ("------------- Populating map %u -------------\n"),
                   count));
 
-
       ACE_TString const * word = words;
       for (char const * i = letters;
            i != letters + letters_len;
@@ -72,16 +70,20 @@ insertion_removal_test ()
             m->insert (std::make_pair (*i, *word));
 
           if (result.second)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("Inserted \"%c | %s\"\n"),
-                        *i,
-                        word->c_str ()));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("Inserted \"%c | %s\"\n"),
+                          *i,
+                          word->c_str ()));
+            }
           else
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Insertion of \"%c | %s\" failed.\n"),
-                               *i,
-                               word->c_str ()),
-                              false);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Insertion of \"%c | %s\" failed.\n"),
+                                 *i,
+                                 word->c_str ()),
+                                false);
+            }
         }
 
       ACE_TEST_ASSERT (m->size () == letters_len);
@@ -178,7 +180,6 @@ insertion_removal_test ()
                         false);
     }
 
-
   // Remove range of letters from map.
   static size_t const removed_len = 3;
   Map::iterator const first = B.begin () + 2;
@@ -261,15 +262,17 @@ index_operator_test ()
            ++n, ++letter, ++word)
         {
           if ((*n).first  != *letter || (*n).second != *word)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Key/Datum mismatch:\n")
-                               ACE_TEXT ("    key \"%c\" should be \"%c\"\n")
-                               ACE_TEXT ("  datum \"%s\" should be \"%s\"\n"),
-                               (*n).first,
-                               *letter,
-                               (*n).second.c_str (),
-                               word->c_str ()),
-                              false);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Key/Datum mismatch:\n")
+                                 ACE_TEXT ("    key \"%c\" should be \"%c\"\n")
+                                 ACE_TEXT ("  datum \"%s\" should be \"%s\"\n"),
+                                 (*n).first,
+                                 *letter,
+                                 (*n).second.c_str (),
+                                 word->c_str ()),
+                                false);
+            }
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("\t%c\t%s\n"),
@@ -300,15 +303,17 @@ index_operator_test ()
            ++r, --letter, --word)
         {
           if ((*r).first != *letter || (*r).second != *word)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Key/Datum mismatch:\n")
-                               ACE_TEXT ("    key \"%c\" should be \"%c\"\n")
-                               ACE_TEXT ("  datum \"%s\" should be \"%s\"\n"),
-                               (*r).first,
-                               *letter,
-                               (*r).second.c_str (),
-                               word->c_str ()),
-                              false);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Key/Datum mismatch:\n")
+                                 ACE_TEXT ("    key \"%c\" should be \"%c\"\n")
+                                 ACE_TEXT ("  datum \"%s\" should be \"%s\"\n"),
+                                 (*r).first,
+                                 *letter,
+                                 (*r).second.c_str (),
+                                 word->c_str ()),
+                                false);
+            }
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("\t%c\t%s\n"),
@@ -349,14 +354,18 @@ public:
   ~RefCounted ()
   {
     if (this->refcount_)
+    {
       --(*this->refcount_);
+    }
   }
 
   RefCounted (RefCounted const & r)
     : refcount_ (r.refcount_ptr ())
   {
     if (this->refcount_)
+    {
       ++(*this->refcount_);
+    }
   }
 
   RefCounted &
@@ -408,7 +417,6 @@ reference_count_test ()
 
     ACE_TEST_ASSERT (counted.refcount () == 2);
 
-
     std::pair<Map::iterator, bool> result;
 
     {
@@ -426,7 +434,6 @@ reference_count_test ()
 
       ACE_TEST_ASSERT (result.second);
     }
-
 
     ACE_TEST_ASSERT (counted.refcount () == 4);
 

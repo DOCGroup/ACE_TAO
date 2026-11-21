@@ -4,19 +4,21 @@
 
 #include "HTTPU/http_export.h"
 
+/**
+ * Parses an HTTP or FTP URL.
+ *
+ * The caller distinguishes a missing username from an empty one, and likewise
+ * for a password. If the hostname is missing or empty, host() returns null.
+ */
 class HTTPU_Export HTTP_Parse_URL
 {
-  // CAVEAT:
-
-  // The user of the class is responsible for testing the difference
-  // between a missing username versus an empty one.  Same goes for
-  // password The RFC (1738) makes the differentiation for username
-  // and password.  If the hostname is missing (or empty), this class
-  // always returns a null value for the host.
-
 public:
-  HTTP_Parse_URL (const char *url = 0);
+  explicit HTTP_Parse_URL (char const *url = nullptr);
   ~HTTP_Parse_URL ();
+  HTTP_Parse_URL (HTTP_Parse_URL const &) = delete;
+  HTTP_Parse_URL (HTTP_Parse_URL &&) = delete;
+  HTTP_Parse_URL &operator= (HTTP_Parse_URL const &) = delete;
+  HTTP_Parse_URL &operator= (HTTP_Parse_URL &&) = delete;
 
   void init (const char *url);
 
@@ -31,9 +33,9 @@ public:
 
   enum URL_ERROR { URL_ERROR_NONE, URL_ERROR_STRDUP, URL_ERROR_SCHEME, URL_ERROR_SLASHSLASH };
 
-  int error () const { return( error_ ); }
+  int error () const { return error_; }
 
-  int is_cgi () const;
+  bool is_cgi () const;
 
 private:
   void parse_url ();
@@ -45,6 +47,7 @@ private:
   void set_port_from_scheme ();
 
 private:
+  /// Owns the buffer; the remaining string members point into it.
   char *url_;
 
   const char *scheme_;
@@ -55,7 +58,7 @@ private:
   const char *url_path_;
 
   int error_;
-  int is_cgi_;
+  bool is_cgi_;
 };
 
 #endif /* !defined (HTTPU_HTTP_PARSE_H) */

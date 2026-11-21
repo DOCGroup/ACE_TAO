@@ -18,25 +18,29 @@
 class CSD_PT_TestInf_Export ClientTask : public ACE_Task_Base
 {
 public:
-  ClientTask();
+  ClientTask () = default;
+  ClientTask (ClientTask const &) = delete;
+  ClientTask (ClientTask &&) = delete;
+  ClientTask &operator= (ClientTask const &) = delete;
+  ClientTask &operator= (ClientTask &&) = delete;
   virtual ~ClientTask();
 
-  void add_engine(ClientEngine* engine);
-  void num_loops(unsigned num_loops);
+  void add_engine (ClientEngine *engine);
+  void num_loops (unsigned num_loops);
 
-  virtual int open(void* arg = 0);
-  virtual int svc();
-  virtual int close(u_long);
+  int open (void *arg = nullptr) override;
+  int svc () override;
+  int close (u_long) override;
 
-  unsigned failure_count() const;
+  unsigned failure_count () const;
 
 private:
-    typedef ACE_Vector<ClientEngine_Handle> EngineVector;
+    using EngineVector = ACE_Vector<ClientEngine_Handle>;
 
     TAO_SYNCH_MUTEX lock_;
     EngineVector    engines_;
-    unsigned        failure_count_;
-    unsigned        num_loops_;
+    unsigned        failure_count_ {};
+    unsigned        num_loops_ {1};
 };
 
 #endif

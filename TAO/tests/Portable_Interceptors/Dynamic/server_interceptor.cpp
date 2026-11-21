@@ -28,12 +28,12 @@ void
 Echo_Server_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-  bool catched_exception = false;
+  bool catched_exception {};
   try
     {
       CORBA::String_var tmdi = ri->target_most_derived_interface ();
     }
-  catch (const ::CORBA::BAD_INV_ORDER& ex)
+  catch (::CORBA::BAD_INV_ORDER const& ex)
     {
       // BAD_INV_ORDER should be thrown with minor code 14
       catched_exception = (ex.minor () == (CORBA::OMGVMCID | 14));
@@ -52,7 +52,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
       CORBA::Boolean const tmdi = ri->target_is_a ("FOO");
       ACE_UNUSED_ARG(tmdi);
     }
-  catch (const ::CORBA::BAD_INV_ORDER& ex)
+  catch (::CORBA::BAD_INV_ORDER const& ex)
     {
       // BAD_INV_ORDER should be thrown with minor code 14
       catched_exception = (ex.minor () == (CORBA::OMGVMCID | 14));
@@ -71,7 +71,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
       PortableInterceptor::ReplyStatus const tmdi = ri->reply_status ();
       ACE_UNUSED_ARG(tmdi);
     }
-  catch (const ::CORBA::BAD_INV_ORDER& ex)
+  catch (::CORBA::BAD_INV_ORDER const& ex)
     {
       // BAD_INV_ORDER should be thrown with minor code 14
       catched_exception = (ex.minor () == (CORBA::OMGVMCID | 14));
@@ -89,7 +89,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
     {
       Dynamic::ParameterList_var paramlist = ri->arguments ();
     }
-  catch (const ::CORBA::BAD_INV_ORDER& ex)
+  catch (::CORBA::BAD_INV_ORDER const& ex)
     {
       // BAD_INV_ORDER should be thrown with minor code 14
       catched_exception = (ex.minor () == (CORBA::OMGVMCID | 14));
@@ -107,13 +107,13 @@ void
 Echo_Server_Request_Interceptor::receive_request (
   PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-  bool catched_exception = false;
+  bool catched_exception {};
   try
     {
       PortableInterceptor::ReplyStatus rstatus = ri->reply_status ();
       ACE_UNUSED_ARG (rstatus);
     }
-  catch (const ::CORBA::BAD_INV_ORDER& ex)
+  catch (::CORBA::BAD_INV_ORDER const& ex)
     {
       // BAD_INV_ORDER should be thrown with minor code 14
       catched_exception = (ex.minor () == (CORBA::OMGVMCID | 14));
@@ -153,8 +153,8 @@ Echo_Server_Request_Interceptor::receive_request (
     {
       Dynamic::ParameterList_var paramlist = ri->arguments ();
 
-      CORBA::Long param;
-      CORBA::ULong i = 0;  // index -- explicitly used to avoid
+      CORBA::Long param {};
+      CORBA::ULong i {};  // index -- explicitly used to avoid
                            // overloaded operator ambiguity.
       paramlist[i].argument >>= param;
 
@@ -194,7 +194,7 @@ Echo_Server_Request_Interceptor::receive_request (
       PortableInterceptor::ReplyStatus const tmdi = ri->reply_status ();
       ACE_UNUSED_ARG(tmdi);
     }
-  catch (const ::CORBA::BAD_INV_ORDER& ex)
+  catch (::CORBA::BAD_INV_ORDER const& ex)
     {
       // BAD_INV_ORDER should be thrown with minor code 14
       catched_exception = (ex.minor () == (CORBA::OMGVMCID | 14));
@@ -221,8 +221,8 @@ Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestI
     {
       Dynamic::ParameterList_var paramlist = ri->arguments ();
 
-      CORBA::Long param;
-      CORBA::ULong i = 0;  // index -- explicitly used to avoid
+      CORBA::Long param {};
+      CORBA::ULong i {};  // index -- explicitly used to avoid
                            // overloaded operator ambiguity.
       paramlist[i].argument >>= param;
       ACE_DEBUG ((LM_DEBUG,
@@ -234,8 +234,8 @@ Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestI
     {
       Dynamic::ParameterList_var paramlist = ri->arguments ();
 
-      CORBA::Long param1, param2, result = 0;
-      CORBA::ULong i = 0;  // index -- explicitly used to avoid
+      CORBA::Long param1 {}, param2 {}, result {};
+      CORBA::ULong i {};  // index -- explicitly used to avoid
                            // overloaded operator ambiguity.
       paramlist[i++].argument >>= param1;
       paramlist[i].argument >>= param2;

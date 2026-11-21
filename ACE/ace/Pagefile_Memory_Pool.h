@@ -65,7 +65,6 @@ public:
   ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_store_name = nullptr,
                             const OPTIONS *options = nullptr);
 
-  /// Destructor
   virtual ~ACE_Pagefile_Memory_Pool () = default;
 
   /// Ask system for initial chunk of shared memory.
@@ -106,7 +105,6 @@ public:
   /// Round up to the chunk size required by the operation system
   size_t round_to_chunk_size (size_t nbytes);
 
-  // = Don't need this methods here ...
   int sync (ssize_t = -1, int = MS_SYNC);
   int sync (void *, size_t, int = MS_SYNC);
   int protect (ssize_t = -1, int = PROT_RDWR);
@@ -176,7 +174,7 @@ private:
   Control_Block local_cb_;
 
   /// Shared memory pool statistics.
-  Control_Block *shared_cb_;
+  Control_Block *shared_cb_ {};
 
   /// File mapping handle.
   ACE_HANDLE object_handle_;

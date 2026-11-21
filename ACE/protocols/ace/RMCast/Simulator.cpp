@@ -6,7 +6,7 @@ namespace ACE_RMCast
 {
   Simulator::Simulator ()
   {
-    ACE_OS::srand ((unsigned int)ACE_OS::time (0));
+    ACE_OS::srand (static_cast<unsigned int> (ACE_OS::time (nullptr)));
   }
 
   void Simulator::send (Message_ptr m)

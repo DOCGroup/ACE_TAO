@@ -116,5 +116,4 @@ module DynAnyTests
     long double field_longdouble;
   };
 
-
 };

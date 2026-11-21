@@ -8,9 +8,10 @@
 #include "testing_string_traits.hpp"
 #include "tao/CORBA_String.h"
 
-#include "ace/OS_NS_string.h"
-
 #include "test_macros.h"
+
+#include <cstring>
+#include <cwchar>
 
 using namespace TAO::details;
 
@@ -22,58 +23,70 @@ struct helper {};
 template<>
 struct helper<char>
 {
-  static char const * empty() {
+  static char const * empty ()
+  {
     return "";
   }
-  static char const * sample0() {
+  static char const * sample0 ()
+  {
     return "Hello";
   }
-  static char const * sample1() {
+  static char const * sample1 ()
+  {
     return "World";
   }
-  static char * dup_sample0() {
+  static char * dup_sample0 ()
+  {
     return string_traits<char,true>::duplicate(sample0());
   }
-  static char * dup_sample1() {
+  static char * dup_sample1 ()
+  {
     return string_traits<char,true>::duplicate(sample1());
   }
-  static bool equal(char const * lhs, char const * rhs) {
-    return ACE_OS::strcmp(lhs, rhs) == 0;
+  static bool equal (char const *lhs, char const *rhs)
+  {
+    return std::strcmp (lhs, rhs) == 0;
   }
 };
 
 template<>
 struct helper<CORBA::WChar>
 {
-  static CORBA::WChar const * empty() {
+  static CORBA::WChar const * empty ()
+  {
     return L"";
   }
-  static CORBA::WChar const * sample0() {
+  static CORBA::WChar const * sample0 ()
+  {
     return L"Hello";
   }
-  static CORBA::WChar const * sample1() {
+  static CORBA::WChar const * sample1 ()
+  {
     return L"World";
   }
-  static CORBA::WChar * dup_sample0() {
+  static CORBA::WChar * dup_sample0 ()
+  {
     return string_traits<CORBA::WChar,true>::duplicate(sample0());
   }
-  static CORBA::WChar * dup_sample1() {
+  static CORBA::WChar * dup_sample1 ()
+  {
     return string_traits<CORBA::WChar,true>::duplicate(sample1());
   }
-  static bool equal(CORBA::WChar const * lhs, CORBA::WChar const * rhs) {
-    return ACE_OS::strcmp(lhs, rhs) == 0;
+  static bool equal (CORBA::WChar const *lhs, CORBA::WChar const *rhs)
+  {
+    return std::wcscmp (lhs, rhs) == 0;
   }
 };
 
 template<class charT>
 struct Tester
 {
-  typedef string_traits<charT,true> tested_string_traits;
-  typedef charT * string_type;
-  typedef charT const * const_string_type;
-  typedef typename tested_string_traits::string_var string_var;
-  typedef typename tested_string_traits::string_mgr string_mgr;
-  typedef typename tested_string_traits::string_out string_out;
+  using tested_string_traits = string_traits<charT,true>;
+  using string_type = charT *;
+  using const_string_type = charT const *;
+  using string_var = typename tested_string_traits::string_var;
+  using string_mgr = typename tested_string_traits::string_mgr;
+  using string_out = typename tested_string_traits::string_out;
 
   void test_copy_constructor()
   {
@@ -107,7 +120,7 @@ struct Tester
   }
 
 private:
-  Tester() {}
+  Tester () = default;
 
   boost::weak_ptr<Tester> self_;
 };

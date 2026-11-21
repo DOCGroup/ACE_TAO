@@ -7,9 +7,7 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * req.h: Request-specific data structures and functions
@@ -17,10 +15,8 @@
  * Rob McCool
  */
 
-
 #ifndef REQ_H
 #define REQ_H
-
 
 #include "netsite.h"
 #include "base/pblock.h"
@@ -29,13 +25,10 @@
 
 #include <sys/stat.h>
 
-
 /* ------------------------------ Constants ------------------------------- */
-
 
 #define REQ_HASHSIZE 10
 #define REQ_MAX_LINE 4096
-
 
 /*
  * The REQ_ return codes. These codes are used to determine what the server
@@ -53,9 +46,7 @@
 /* Tear down the session and exit */
 #define REQ_EXIT -3
 
-
 /* ------------------------------ Structures ------------------------------ */
-
 
 typedef struct {
     /* Server working variables */
@@ -87,9 +78,7 @@ typedef struct {
 
 } Request;
 
-
 /* ------------------------------ Prototypes ------------------------------ */
-
 
 /*
  * request_create creates a new request structure.
@@ -102,7 +91,6 @@ Request *request_create();
  */
 
 void request_free(Request *req);
-
 
 /*
  * Restarts a request for a given URI internally. If rq is non-NULL, the
@@ -117,7 +105,6 @@ void request_free(Request *req);
 
 Request *request_restart_internal(char *uri, Request *rq);
 
-
 /*
  * request_translate_uri performs virtual to physical mapping on the given
  * uri and returns either a path string or NULL depending on whether it was
@@ -125,7 +112,6 @@ Request *request_restart_internal(char *uri, Request *rq);
  */
 
 char *request_translate_uri(char *uri, Session *sn);
-
 
 /*
  * request_header finds the named header depending on the requesting
@@ -141,7 +127,6 @@ int request_header(char *name, char **value, Session *sn, Request *rq);
 
 int request_loadheaders(Session *sn, Request *rq);
 
-
 /*
  * request_stat_path tries to stat path. If path is NULL, it will look in
  * the vars pblock for "path". If the stat is successful, it returns the stat
@@ -153,7 +138,6 @@ int request_loadheaders(Session *sn, Request *rq);
  */
 
 struct stat *request_stat_path(char *path, Request *rq);
-
 
 /*
  * Parses the URI parameter in rq->vars and finds out what objects it
@@ -174,7 +158,6 @@ int request_pathchecks(Session *sn, Request *rq);
 
 int request_fileinfo(Session *sn, Request *rq);
 
-
 /*
  * request_handle_processed takes a Request structure with its reqpb
  * block filled in and handles the request.
@@ -182,14 +165,12 @@ int request_fileinfo(Session *sn, Request *rq);
 
 int request_handle_processed(Session *sn, Request *rq);
 
-
 /*
  * Complete a request by finding the service function and using it. Returns
  * REQ_NOACTION if no matching function was found.
  */
 
 int request_service(Session *sn, Request *rq);
-
 
 /*
  * request_handle handles one request from the session's inbuf.

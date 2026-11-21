@@ -25,6 +25,8 @@
 
 #include "tao/Policy_Current_Impl.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations
@@ -45,21 +47,17 @@ namespace TAO
 class TAO_Export TAO_TSS_Resources
 {
 public:
-  /// Constructor
   TAO_TSS_Resources ();
 
-  /// Destructor
   ~TAO_TSS_Resources ();
+
+  TAO_TSS_Resources (TAO_TSS_Resources const &) = delete;
+  TAO_TSS_Resources (TAO_TSS_Resources &&) = delete;
+  TAO_TSS_Resources &operator= (TAO_TSS_Resources const &) = delete;
+  TAO_TSS_Resources &operator= (TAO_TSS_Resources &&) = delete;
 
   /// Return a singleton instance of this class.
   static TAO_TSS_Resources * instance ();
-
-private:
-  /// Do not copy TSS resources
-  //@{
-  TAO_TSS_Resources (const TAO_TSS_Resources&);
-  void operator= (const TAO_TSS_Resources&);
-  //@}
 
 public:
   /**
@@ -104,7 +102,7 @@ public:
    * @c GUIResource_Factory has to be stored in TSS, as GUIReactors
    * are operational only in within the context of GUI event loops.
    */
-  TAO::GUIResource_Factory * gui_resource_factory_;
+  std::unique_ptr<TAO::GUIResource_Factory> gui_resource_factory_;
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 

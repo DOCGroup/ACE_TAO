@@ -3,7 +3,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
-
 const char* TT_Info::INTERFACE_NAMES[] =
 {
   "TAO_Trader_Test::Remote_IO",
@@ -144,11 +143,11 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
 {
   TAO_Property_Evaluator prop_eval (prop_seq);
 
-  for (int length = prop_seq.length (), k = 0; k < length; k++)
+  CORBA::ULong const property_count = prop_seq.length ();
+  for (CORBA::ULong k {}; k < property_count; ++k)
     {
-      CORBA::ULong seq_length = 0, i= 0;
-      CORBA::Any* value = 0;
-      CORBA::TypeCode_ptr tc = 0;
+      CORBA::Any const* value {};
+      CORBA::TypeCode_ptr tc {};
       ACE_DEBUG ((LM_DEBUG, "%-15s: ", prop_seq[k].name.in ()));
       try
         {
@@ -171,47 +170,47 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
           ACE_DEBUG ((LM_DEBUG, "Error retrieving property value.\n"));
         }
 
-      if (tc == 0)
+      if (tc == nullptr)
+      {
         continue;
-      int check = tc->equal (TAO_Trader_Test::_tc_StringSeq);
-
-      if (check)
+      }
+      if (tc->equal (TAO_Trader_Test::_tc_StringSeq))
         {
-          const TAO_Trader_Test::StringSeq* str_seq = 0;
+          TAO_Trader_Test::StringSeq const *str_seq {};
           (*value) >>= str_seq;
 
-          for (seq_length = str_seq->length (), i = 0; i < seq_length; i++)
-            ACE_DEBUG ((LM_DEBUG, "%C ", (const char *) (*str_seq)[i]));
+          CORBA::ULong const sequence_length = str_seq->length ();
+          for (CORBA::ULong i {}; i < sequence_length; ++i)
+            ACE_DEBUG ((LM_DEBUG, "%C ", static_cast<char const *> ((*str_seq)[i])));
 
           ACE_DEBUG ((LM_DEBUG, "\n"));
         }
       else
         {
-          check = tc->equal (TAO_Trader_Test::_tc_ULongSeq);
-
-          if (check)
+          if (tc->equal (TAO_Trader_Test::_tc_ULongSeq))
             {
-              const TAO_Trader_Test::ULongSeq* ulong_seq = 0;
+              TAO_Trader_Test::ULongSeq const *ulong_seq {};
               (*value) >>= ulong_seq;
 
-              for (seq_length = ulong_seq->length (), i = 0; i < seq_length; i++)
-                ACE_DEBUG ((LM_DEBUG, "%d ", (*ulong_seq)[i]));
+              CORBA::ULong const sequence_length = ulong_seq->length ();
+              for (CORBA::ULong i {}; i < sequence_length; ++i)
+                ACE_DEBUG ((LM_DEBUG, "%u ", (*ulong_seq)[i]));
 
               ACE_DEBUG ((LM_DEBUG, "\n"));
             }
           else
             {
               // @@ Print the any value...
-              CORBA::Char       char_val;
-              CORBA::Octet     octet_val;
-              CORBA::Boolean boolean_val;
-              CORBA::Short     short_val;
-              CORBA::UShort   ushort_val;
-              CORBA::Long       long_val;
-              CORBA::ULong     ulong_val;
-              CORBA::Float     float_val;
-              CORBA::Double   double_val;
-              const char *    string_val;
+              CORBA::Char char_val {};
+              CORBA::Octet octet_val {};
+              CORBA::Boolean boolean_val {};
+              CORBA::Short short_val {};
+              CORBA::UShort ushort_val {};
+              CORBA::Long long_val {};
+              CORBA::ULong ulong_val {};
+              CORBA::Float float_val {};
+              CORBA::Double double_val {};
+              char const *string_val {};
 
               if ((*value) >>= CORBA::Any::to_char (char_val))
                 {
@@ -232,7 +231,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
                 }
               else if ((*value) >>= ushort_val)
                 {
-                  ACE_DEBUG ((LM_DEBUG, "%ld\n", ushort_val));
+                  ACE_DEBUG ((LM_DEBUG, "%u\n", ushort_val));
                 }
               else if ((*value) >>= long_val)
                 {
@@ -240,7 +239,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
                 }
               else if ((*value) >>= ulong_val)
                 {
-                  ACE_DEBUG ((LM_DEBUG, "%ld\n", ulong_val));
+                  ACE_DEBUG ((LM_DEBUG, "%u\n", ulong_val));
                 }
               else if ((*value) >>= float_val)
                 {
@@ -260,56 +259,64 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
 }
 
 TT_Parse_Args::TT_Parse_Args (int& argc, ACE_TCHAR** argv)
-  : federated_ (0),
-    quiet_ (0),
-    ior_ (0)
+  : federated_ (false),
+    quiet_ (false)
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *current_arg = arg_shifter.get_current ();
+      ACE_TCHAR const * const current_arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (current_arg, ACE_TEXT("-f")) == 0 ||
           ACE_OS::strcmp (current_arg, ACE_TEXT("-federate")) == 0)
         {
           arg_shifter.consume_arg ();
-          this->federated_ = 1;
+          this->federated_ = true;
         }
       else if (ACE_OS::strcmp (current_arg, ACE_TEXT("-q")) == 0 ||
                ACE_OS::strcmp (current_arg, ACE_TEXT("-quiet")) == 0)
         {
           arg_shifter.consume_arg ();
-          this->quiet_ = 1;
+          this->quiet_ = true;
         }
       else if (ACE_OS::strcmp (current_arg, ACE_TEXT("-i")) == 0 ||
                ACE_OS::strcmp (current_arg, ACE_TEXT("-iorfile")) == 0)
         {
           arg_shifter.consume_arg ();
-          FILE* ior_file = 0;
+          FILE* ior_file {};
+          bool close_ior_file {};
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* file_name = arg_shifter.get_current ();
-              ior_file = ACE_OS::fopen (file_name, "r");
+              ACE_TCHAR const * const file_name = arg_shifter.get_current ();
+              ior_file = ACE_OS::fopen (file_name, ACE_TEXT ("r"));
+              close_ior_file = ior_file != nullptr;
 
-              if (ior_file == 0)
-                ACE_ERROR ((LM_ERROR,
-                            "Unable to open %s for reading: %p\n",
-                            file_name));
+              if (ior_file == nullptr)
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              "Unable to open %s for reading: %p\n",
+                              file_name));
+                }
 
               arg_shifter.consume_arg ();
             }
           else
+          {
             ior_file = ACE_OS::fdopen (ACE_STDIN, ACE_TEXT("r"));
+          }
 
-          if (ior_file != 0)
+          if (ior_file != nullptr)
             {
-              ACE_Read_Buffer read_buffer (ior_file, 1);
-              this->ior_ = read_buffer.read ();
+              ACE_Read_Buffer read_buffer (ior_file, close_ior_file);
+              this->ior_ = ACE_Read_Buffer_Unique_Ptr (
+                read_buffer.read (), {read_buffer.alloc ()});
             }
           else
+          {
             ACE_ERROR ((LM_ERROR, "Couldn't load ior.\n"));
+          }
         }
       else
         {
@@ -320,20 +327,15 @@ TT_Parse_Args::TT_Parse_Args (int& argc, ACE_TCHAR** argv)
     }
 }
 
-TT_Parse_Args::~TT_Parse_Args ()
-{
-  // Reclaim the ior string's memory.
-  ACE_Allocator* alloc = ACE_Allocator::instance ();
-  alloc->free (this->ior_);
-}
+TT_Parse_Args::~TT_Parse_Args () = default;
 
-int
+bool
 TT_Parse_Args::federated () const
 {
   return this->federated_;
 }
 
-int
+bool
 TT_Parse_Args::quiet () const
 {
   return this->quiet_;
@@ -342,5 +344,5 @@ TT_Parse_Args::quiet () const
 char*
 TT_Parse_Args::ior () const
 {
-  return this->ior_;
+  return this->ior_.get ();
 }

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_EVENT_UTILITIES_H
 #define ACE_EVENT_UTILITIES_H
 
@@ -20,7 +19,6 @@
 #include "orbsvcs/Event/event_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 
 using TAO_EC_Event_Initializer = void (*) (RtecEventComm::Event&);
 
@@ -94,8 +92,8 @@ class TAO_RTEvent_Export ACE_ConsumerQOS_Factory
 {
 public:
   /// Default construction.
-  ACE_ConsumerQOS_Factory (TAO_EC_Event_Initializer initializer = 0,
-                           CORBA::ULong qos_max_len = 0);
+  explicit ACE_ConsumerQOS_Factory (TAO_EC_Event_Initializer initializer = nullptr,
+                                    CORBA::ULong qos_max_len = 0);
 
   /// Death and destruction.
   ~ACE_ConsumerQOS_Factory ();
@@ -138,12 +136,11 @@ public:
   /// Insert a node that accepts any event, useful for bitmask filters.
   int insert_null_terminator ();
 
-  // = Insert operations add to the current conjunction or disjunction
-  // group.  These return 0 on success, -1 on failure.  Before insert
-  // is called, a start_XX_group method should be called.  If a
-  // start_XX_group method is not called, start_conjunction_group is
-  // assumed.
-
+  /// @name Insert operations
+  /// @{
+  /// Add entries to the current conjunction or disjunction group.
+  /// These return 0 on success and -1 on failure. Call a start_XX_group
+  /// method first; without one, start_conjunction_group is assumed.
   /// Insert the @a subscribe structure describing the event and
   /// receiving method into the current group.
   int insert (const RtecEventChannelAdmin::Dependency &subscribe);
@@ -173,16 +170,18 @@ public:
 
   /// This will be inserted as type ACE_ES_EVENT_ACT.
   int insert_act (RtecEventComm::EventData act);
+  /// @}
 
-  // = Conversion operators.  The Event Channel takes ConsumerQOS
-  // objects.
-
+  /// @name ConsumerQOS conversion operations
+  /// @{
+  /// The Event Channel accepts ConsumerQOS objects.
   /// Allows conversions to ConsumerQOS, which is expected by the
   /// PushSupplierProxy::connect_push_consumer interface.
   const RtecEventChannelAdmin::ConsumerQOS &get_ConsumerQOS ();
 
   /// Calls this->get_ConsumerQOS.
   operator const RtecEventChannelAdmin::ConsumerQOS &();
+  /// @}
 
   static void debug (const RtecEventChannelAdmin::ConsumerQOS& qos);
 
@@ -192,10 +191,10 @@ private:
 
   /// Whether a start_XX_group has been called yet.  This is to make
   /// sure that a designator is placed in the subscription list first.
-  int designator_set_;
+  bool designator_set_ {};
 
   /**
-   * If not zero this is a user-provided function used to initialize
+   * If not nullptr this is a user-provided function used to initialize
    * the events.  When the event contains unions this is required to
    * avoid marshaling and demarshaling of default initialized unions
    * that (AFAIK) is not CORBA compliant.
@@ -209,8 +208,8 @@ class TAO_RTEvent_Export ACE_SupplierQOS_Factory
 {
 public:
   /// Default construction.
-  ACE_SupplierQOS_Factory (TAO_EC_Event_Initializer initializer = 0,
-                           CORBA::ULong qos_max_len = 0);
+  explicit ACE_SupplierQOS_Factory (TAO_EC_Event_Initializer initializer = nullptr,
+                                    CORBA::ULong qos_max_len = 0);
 
   /**
    * Publish @a sid and @a type that is generate by a method described by
@@ -236,7 +235,7 @@ private:
   RtecEventChannelAdmin::SupplierQOS qos_;
 
   /**
-   * If not zero this is a user-provided function used to initialize
+   * If not nullptr this is a user-provided function used to initialize
    * the events.  When the event contains unions this is required to
    * avoid marshaling and demarshaling of default initialized unions
    * that (AFAIK) is not CORBA compliant.

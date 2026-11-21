@@ -118,7 +118,7 @@ AST_Factory::exceptions () const
   return this->pd_exceptions.get ();
 }
 
-std::size_t
+size_t
 AST_Factory::n_exceptions () const
 {
   return this->pd_n_exceptions;

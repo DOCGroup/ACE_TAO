@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #include "catior_export.h"
 #include "ace/String_Base.h"
 #include "ace/SStringfwd.h"
@@ -32,13 +31,12 @@ public:
   CORBA::Boolean decode (const ACE_CString& input, ACE_CString& output);
 
 private:
-  // These methods used to be functions in catior.cpp
-  CORBA::Boolean catiiop (char* string);
+  /// These methods used to be functions in catior.cpp
+  CORBA::Boolean catiiop (char const *string);
 
+  CORBA::Boolean catior (char const *str);
 
-  CORBA::Boolean catior (char const* str);
-
-  CORBA::Boolean catpoop (char* string);
+  CORBA::Boolean catpoop (char const *string);
 
   CORBA::Boolean cat_tag_orb_type (TAO_InputCDR& stream);
 
@@ -50,18 +48,18 @@ private:
 
   CORBA::Boolean cat_tag_policies (TAO_InputCDR& stream);
 
-  CORBA::Boolean cat_security_association (const CORBA::UShort& a);
+  CORBA::Boolean cat_security_association (CORBA::UShort a);
 
   CORBA::Boolean cat_tag_ssl_sec_trans (TAO_InputCDR& cdr);
 
-  CORBA::Boolean cat_octet_seq (const char* object_name,
+  CORBA::Boolean cat_octet_seq (char const *object_name,
                                 TAO_InputCDR& stream);
 
   CORBA::Boolean cat_object_key (TAO_InputCDR& stream);
 
   ACE_CString _find_info (CORBA::ULong id);
 
-  void displayHex (TAO_InputCDR & str);
+  void displayHex (TAO_InputCDR &str);
 
   CORBA::Boolean cat_codeset_info (TAO_InputCDR& cdr);
 
@@ -70,7 +68,7 @@ private:
   CORBA::Boolean cat_multiple_components (TAO_InputCDR& stream);
 
   CORBA::Boolean cat_profile_helper (TAO_InputCDR& stream,
-                                     const char* protocol);
+                                     char const *protocol);
 
   CORBA::Boolean cat_coiop_profile (TAO_InputCDR& stream);
 
@@ -83,7 +81,7 @@ private:
   CORBA::Boolean cat_sciop_profile (TAO_InputCDR& stream);
 
   CORBA::Boolean cat_nsk_profile_helper (TAO_InputCDR& stream,
-                                         const char* protocol);
+                                         char const *protocol);
 
   CORBA::Boolean cat_nskpw_profile (TAO_InputCDR& stream);
 

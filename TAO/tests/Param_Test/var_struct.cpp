@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    var_struct.cpp
  *
@@ -7,10 +5,10 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #include "helper.h"
+
+#include <cstring>
 #include "var_struct.h"
 
 // ************************************************************************
@@ -18,19 +16,11 @@
 // ************************************************************************
 
 Test_Var_Struct::Test_Var_Struct ()
-  : opname_ (CORBA::string_dup ("test_var_struct")),
+  : opname_ ("test_var_struct"),
     inout_ (new Param_Test::Var_Struct),
     out_ (new Param_Test::Var_Struct),
     ret_ (new Param_Test::Var_Struct)
 {
-}
-
-Test_Var_Struct::~Test_Var_Struct ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
-  // the other data members will be freed as they are "_var"s and objects
-  // (rather than pointers to objects)
 }
 
 const char *
@@ -50,7 +40,7 @@ Test_Var_Struct::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::Var_Struct *tmp = 0;
+  Param_Test::Var_Struct const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Var_Struct (*tmp);
 
@@ -71,7 +61,7 @@ Test_Var_Struct::init_parameters (Param_Test_ptr)
   Generator *gen = GENERATOR::instance (); // value generator
 
   // get some sequence length (not more than 10)
-  CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
+  CORBA::ULong const len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
 
   this->in_.dbl = 3.14159;
   this->in_.dummy1 = gen->gen_string ();
@@ -82,7 +72,7 @@ Test_Var_Struct::init_parameters (Param_Test_ptr)
   this->in_.seq.length (len);
 
   // now set each individual element
-  for (CORBA::ULong i = 0; i < this->in_.seq.length (); i++)
+  for (CORBA::ULong i = 0; i < this->in_.seq.length (); ++i)
     {
       // generate some arbitrary string to be filled into the ith location in
       // the sequence
@@ -92,7 +82,7 @@ Test_Var_Struct::init_parameters (Param_Test_ptr)
 
   this->inout_->dbl = 0.0;
   this->inout_->dummy1 = CORBA::string_dup ("");
-  this->inout_->boole = 0;
+  this->inout_->boole = false;
   this->inout_->dummy2 = CORBA::string_dup ("");
   this->inout_->shrt = 0;
   // set the length of the sequence
@@ -110,7 +100,7 @@ Test_Var_Struct::reset_parameters ()
 
   this->inout_->dbl = 0.0;
   this->inout_->dummy1 = CORBA::string_dup ("");
-  this->inout_->boole = 0;
+  this->inout_->boole = false;
   this->inout_->dummy2 = CORBA::string_dup ("");
   this->inout_->shrt = 0;
   // set the length of the sequence
@@ -124,7 +114,7 @@ Test_Var_Struct::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      Param_Test::Var_Struct_out out (this->out_.out ());
+      Param_Test::Var_Struct_out const out (this->out_.out ());
       this->ret_ = objref->test_var_struct (this->in_,
                                             this->inout_.inout (),
                                             out);
@@ -141,19 +131,19 @@ Test_Var_Struct::run_sii_test (Param_Test_ptr objref)
 CORBA::Boolean
 Test_Var_Struct::check_validity ()
 {
-  CORBA::Boolean flag = 0;
+  CORBA::Boolean flag = false;
   if (ACE::is_equal (this->in_.dbl, this->inout_->dbl) &&
       ACE::is_equal (this->in_.dbl, this->out_->dbl) &&
       ACE::is_equal (this->in_.dbl, this->ret_->dbl) &&
-      (!ACE_OS::strcmp (this->in_.dummy1, this->inout_->dummy1)) &&
-      (!ACE_OS::strcmp (this->in_.dummy1, this->out_->dummy1)) &&
-      (!ACE_OS::strcmp (this->in_.dummy1, this->ret_->dummy1)) &&
+      (!std::strcmp (this->in_.dummy1, this->inout_->dummy1)) &&
+      (!std::strcmp (this->in_.dummy1, this->out_->dummy1)) &&
+      (!std::strcmp (this->in_.dummy1, this->ret_->dummy1)) &&
       this->in_.boole == this->inout_->boole &&
       this->in_.boole == this->out_->boole &&
       this->in_.boole == this->ret_->boole &&
-      (!ACE_OS::strcmp (this->in_.dummy2, this->inout_->dummy2)) &&
-      (!ACE_OS::strcmp (this->in_.dummy2, this->out_->dummy2)) &&
-      (!ACE_OS::strcmp (this->in_.dummy2, this->ret_->dummy2)) &&
+      (!std::strcmp (this->in_.dummy2, this->inout_->dummy2)) &&
+      (!std::strcmp (this->in_.dummy2, this->out_->dummy2)) &&
+      (!std::strcmp (this->in_.dummy2, this->ret_->dummy2)) &&
       this->in_.shrt == this->inout_->shrt &&
       this->in_.shrt == this->out_->shrt &&
       this->in_.shrt == this->ret_->shrt &&
@@ -163,13 +153,13 @@ Test_Var_Struct::check_validity ()
     {
       flag = 1; // assume all are equal
       // lengths are same. Now compare the contents
-      for (CORBA::ULong i=0; i < this->in_.seq.length () && flag; i++)
+      for (CORBA::ULong i=0; i < this->in_.seq.length () && flag; ++i)
         {
-          if (ACE_OS::strcmp (this->in_.seq[i], this->inout_->seq[i]) ||
-              ACE_OS::strcmp (this->in_.seq[i], this->out_->seq[i]) ||
-              ACE_OS::strcmp (this->in_.seq[i], this->ret_->seq[i]))
+          if (std::strcmp (this->in_.seq[i], this->inout_->seq[i]) ||
+              std::strcmp (this->in_.seq[i], this->out_->seq[i]) ||
+              std::strcmp (this->in_.seq[i], this->ret_->seq[i]))
             // not equal
-            flag = 0;
+            flag = false;
         }
     }
   return flag;
@@ -208,7 +198,7 @@ Test_Var_Struct::print_values ()
 
   CORBA::ULong i;
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
-  for (i=0; i < this->in_.seq.length (); i++)
+  for (i=0; i < this->in_.seq.length (); ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
@@ -217,7 +207,7 @@ Test_Var_Struct::print_values ()
                   (this->in_.seq[i]? (const char *)this->in_.seq[i]:"<nul>")));
     }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
-  for (i=0; this->inout_.ptr () && (i < this->inout_->seq.length ()); i++)
+  for (i=0; this->inout_.ptr () && (i < this->inout_->seq.length ()); ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
@@ -226,9 +216,11 @@ Test_Var_Struct::print_values ()
                   (this->inout_->seq[i]? (const char *)this->inout_->seq[i]:"<nul>")));
     }
   if (!this->inout_.ptr ())
+  {
     ACE_DEBUG ((LM_DEBUG, "\ninout struct does not exist\n"));
+  }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
-  for (i=0; this->out_.ptr () && (i < this->out_->seq.length ()); i++)
+  for (i=0; this->out_.ptr () && (i < this->out_->seq.length ()); ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
@@ -237,9 +229,11 @@ Test_Var_Struct::print_values ()
                   (this->out_->seq[i]? (const char *)this->out_->seq[i]:"<nul>")));
     }
   if (!this->out_.ptr ())
+  {
     ACE_DEBUG ((LM_DEBUG, "\nout struct is NUL\n"));
+  }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
-  for (i=0; this->ret_.ptr () && (i < this->ret_->seq.length ()); i++)
+  for (i=0; this->ret_.ptr () && (i < this->ret_->seq.length ()); ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
@@ -248,6 +242,8 @@ Test_Var_Struct::print_values ()
                   (this->ret_->seq[i]? (const char *)this->ret_->seq[i]:"<nul>")));
     }
   if (!this->ret_.ptr ())
+  {
     ACE_DEBUG ((LM_DEBUG, "\nret struct is NUL\n"));
+  }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
 }

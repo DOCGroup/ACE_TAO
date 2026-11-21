@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef JAWS_IO_H
 #define JAWS_IO_H
 
@@ -26,7 +25,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 class JAWS_IO_Handler;
 
-
 /**
  * @class JAWS_IO
  *
@@ -41,7 +39,11 @@ class JAWS_IO
 {
 public:
   JAWS_IO ();
-  virtual ~JAWS_IO ();
+  JAWS_IO (JAWS_IO const &) = delete;
+  JAWS_IO (JAWS_IO &&) = delete;
+  JAWS_IO &operator= (JAWS_IO const &) = delete;
+  JAWS_IO &operator= (JAWS_IO &&) = delete;
+  virtual ~JAWS_IO () = default;
   void handler (JAWS_IO_Handler *handler);
 
   virtual void handle (ACE_HANDLE h) = 0;
@@ -84,8 +86,7 @@ protected:
 class JAWS_IO_Handler
 {
 public:
-  /// Destructor.
-  virtual ~JAWS_IO_Handler ();
+  virtual ~JAWS_IO_Handler () = default;
 
   /// This method is called by the IO class when new client data shows
   /// up.
@@ -133,30 +134,34 @@ class JAWS_Synch_IO : public JAWS_IO
 {
 public:
   JAWS_Synch_IO ();
+  JAWS_Synch_IO (JAWS_Synch_IO const &) = delete;
+  JAWS_Synch_IO (JAWS_Synch_IO &&) = delete;
+  JAWS_Synch_IO &operator= (JAWS_Synch_IO const &) = delete;
+  JAWS_Synch_IO &operator= (JAWS_Synch_IO &&) = delete;
 
-  ~JAWS_Synch_IO ();
+  ~JAWS_Synch_IO () override;
 
-  virtual void handle (ACE_HANDLE h);
-  virtual ACE_HANDLE handle () const;
+  void handle (ACE_HANDLE h) override;
+  ACE_HANDLE handle () const override;
 
-  void read (ACE_Message_Block& mb, int size);
+  void read (ACE_Message_Block& mb, int size) override;
 
   void transmit_file (const char *filename,
                       const char *header,
                       int header_size,
                       const char *trailer,
-                      int trailer_size);
+                      int trailer_size) override;
 
   void receive_file (const char *filename,
                      void *initial_data,
                      int initial_data_length,
-                     int entire_length);
+                     int entire_length) override;
 
   void send_confirmation_message (const char *buffer,
-                                  int length);
+                                  int length) override;
 
   void send_error_message (const char *buffer,
-                           int length);
+                           int length) override;
 
 protected:
   virtual void send_message (const char *buffer,
@@ -177,30 +182,34 @@ class JAWS_Asynch_IO : public JAWS_IO, public ACE_Handler
 {
 public:
   JAWS_Asynch_IO ();
+  JAWS_Asynch_IO (JAWS_Asynch_IO const &) = delete;
+  JAWS_Asynch_IO (JAWS_Asynch_IO &&) = delete;
+  JAWS_Asynch_IO &operator= (JAWS_Asynch_IO const &) = delete;
+  JAWS_Asynch_IO &operator= (JAWS_Asynch_IO &&) = delete;
 
-  ~JAWS_Asynch_IO ();
+  ~JAWS_Asynch_IO () override;
 
-  virtual void handle (ACE_HANDLE h) { ACE_Handler::handle (h); };
-  virtual ACE_HANDLE handle () const { return ACE_Handler::handle (); };
+  void handle (ACE_HANDLE h) override { ACE_Handler::handle (h); }
+  ACE_HANDLE handle () const override { return ACE_Handler::handle (); }
 
-  void read (ACE_Message_Block& mb, int size);
+  void read (ACE_Message_Block& mb, int size) override;
 
   void transmit_file (const char *filename,
                       const char *header,
                       int header_size,
                       const char *trailer,
-                      int trailer_size);
+                      int trailer_size) override;
 
   void receive_file (const char *filename,
                      void *initial_data,
                      int initial_data_length,
-                     int entire_length);
+                     int entire_length) override;
 
   void send_confirmation_message (const char *buffer,
-                                  int length);
+                                  int length) override;
 
   void send_error_message (const char *buffer,
-                           int length);
+                           int length) override;
 
 protected:
   enum Message_Types
@@ -215,19 +224,18 @@ protected:
 
   /// This method will be called when an asynchronous read completes on
   /// a stream.
-  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
+  void handle_read_stream (ACE_Asynch_Read_Stream::Result const &result) override;
 
   /// This method will be called when an asynchronous write completes
   /// on a stream.
-  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
+  void handle_write_stream (ACE_Asynch_Write_Stream::Result const &result) override;
 
   /// This method will be called when an asynchronous transmit file
   /// completes.
-  virtual void handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result);
+  void handle_transmit_file (ACE_Asynch_Transmit_File::Result const &result) override;
 };
 
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
-
 
 //-------------------Adding SYNCH IO no Caching
 
@@ -249,30 +257,34 @@ class JAWS_Synch_IO_No_Cache : public JAWS_IO
 {
 public:
   JAWS_Synch_IO_No_Cache ();
+  JAWS_Synch_IO_No_Cache (JAWS_Synch_IO_No_Cache const &) = delete;
+  JAWS_Synch_IO_No_Cache (JAWS_Synch_IO_No_Cache &&) = delete;
+  JAWS_Synch_IO_No_Cache &operator= (JAWS_Synch_IO_No_Cache const &) = delete;
+  JAWS_Synch_IO_No_Cache &operator= (JAWS_Synch_IO_No_Cache &&) = delete;
 
-  ~JAWS_Synch_IO_No_Cache ();
+  ~JAWS_Synch_IO_No_Cache () override;
 
-  virtual void handle (ACE_HANDLE h);
-  virtual ACE_HANDLE handle () const;
+  void handle (ACE_HANDLE h) override;
+  ACE_HANDLE handle () const override;
 
-  void read (ACE_Message_Block& mb, int size);
+  void read (ACE_Message_Block& mb, int size) override;
 
   void transmit_file (const char *filename,
                       const char *header,
                       int header_size,
                       const char *trailer,
-                      int trailer_size);
+                      int trailer_size) override;
 
   void receive_file (const char *filename,
                      void *initial_data,
                      int initial_data_length,
-                     int entire_length);
+                     int entire_length) override;
 
   void send_confirmation_message (const char *buffer,
-                                  int length);
+                                  int length) override;
 
   void send_error_message (const char *buffer,
-                           int length);
+                           int length) override;
 
 protected:
   virtual void send_message (const char *buffer, int length);

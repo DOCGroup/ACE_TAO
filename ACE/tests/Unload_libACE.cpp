@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 //FUZZ: disable check_for_lack_ACE_OS
 //FUZZ: disable check_for_improper_main_declaration
 
@@ -71,37 +70,39 @@ time_stamp (char date_and_time[], int date_and_timelen, int format)
       "Sat"
     };
 
-  char *ts = nullptr;
+  char *ts {};
 
   if (date_and_timelen >= TIME_STAMP_FIELD_WIDTH)
     {
-      time_t timeval;
-      struct tm *now;
-
-      time (&timeval);
-      now = localtime (&timeval);     /* Get current local time. */
+      time_t const timeval = time (nullptr);
+      struct tm now {};
+      if (timeval == static_cast<time_t> (-1)
+          || localtime_r (&timeval, &now) == nullptr)
+        {
+          return ts;
+        }
 
       if (format == 'Y')
         {
           sprintf (date_and_time,
                    "%3s %3s %2d %04d %02d:%02d:%02d.%06d",
-                   day_of_week_name[now->tm_wday],
-                   month_name[now->tm_mon],
-                   (int) now->tm_mday,
-                   (int) now->tm_year + 1900,
-                   (int) now->tm_hour,
-                   (int) now->tm_min, (int) now->tm_sec, (int) 0);
+                   day_of_week_name[now.tm_wday],
+                   month_name[now.tm_mon],
+                   (int) now.tm_mday,
+                   (int) now.tm_year + 1900,
+                   (int) now.tm_hour,
+                   (int) now.tm_min, (int) now.tm_sec, (int) 0);
         }
       else                      /* 'T' */
         {
           sprintf (date_and_time,
                    "%3s %2d %02d:%02d:%02d.%03d %04d",
-                   month_name[now->tm_mon],
-                   (int) now->tm_mday,
-                   (int) now->tm_hour,
-                   (int) now->tm_min,
-                   (int) now->tm_sec, (int) 0,
-                   (int) now->tm_year + 1900);
+                   month_name[now.tm_mon],
+                   (int) now.tm_mday,
+                   (int) now.tm_hour,
+                   (int) now.tm_min,
+                   (int) now.tm_sec, (int) 0,
+                   (int) now.tm_year + 1900);
         }
 
       ts = date_and_time;
@@ -115,11 +116,11 @@ main (int, char **)
   char const *const program = "UnloadLibACE";
 
   int status = 0;
-  void *handle = nullptr;
-  char *ace_root = nullptr;
+  void *handle {};
+  char *ace_root {};
   char tbuf[BUFSIZ];
   char ybuf[BUFSIZ];
-  FILE *logfp = nullptr;
+  FILE *logfp {};
 
   if ((logfp = fopen ("log/UnloadLibACE.log", "w")) != nullptr)
     {
@@ -247,7 +248,7 @@ main (int, char **)
 {
   char const *const program = "UnloadLibACE";
 
-  FILE *logfp = 0;
+  FILE *logfp {};
 
   if ((logfp = fopen ("log/UnloadLibACE.log", "w")) != 0)
     {

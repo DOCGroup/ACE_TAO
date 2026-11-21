@@ -19,8 +19,6 @@ Roundtrip_Handler::dump_results (
   this->latency_stats_.dump_results (ACE_TEXT("AMI Latency"), gsf);
 }
 
-// = The skeleton methods for test octet load
-
 void
 Roundtrip_Handler::test_octet_method (Test::Timestamp send_time)
 {
@@ -38,13 +36,11 @@ Roundtrip_Handler::test_octet_method_excep (::Messaging::ExceptionHolder *holder
       --this->pending_callbacks_;
       holder->raise_exception ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("test_octet_method:");
     }
 }
-
-// = The skeleton methods for test char load
 
 void
 Roundtrip_Handler::test_char_method (Test::Timestamp send_time)
@@ -63,13 +59,11 @@ Roundtrip_Handler::test_char_method_excep (::Messaging::ExceptionHolder *holder)
       --this->pending_callbacks_;
       holder->raise_exception ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("test_char_method:");
     }
 }
-
-// = The skeleton methods for test long load
 
 void
 Roundtrip_Handler::test_long_method (Test::Timestamp send_time)
@@ -88,13 +82,11 @@ Roundtrip_Handler::test_long_method_excep (::Messaging::ExceptionHolder *holder)
       --this->pending_callbacks_;
       holder->raise_exception ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("test_long_method:");
     }
 }
-
-// = The skeleton methods for test short load
 
 void
 Roundtrip_Handler::test_short_method (Test::Timestamp send_time)
@@ -113,13 +105,11 @@ Roundtrip_Handler::test_short_method_excep (::Messaging::ExceptionHolder *holder
       --this->pending_callbacks_;
       holder->raise_exception ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("test_short_method:");
     }
 }
-
-// = The skeleton methods for test double load
 
 void
 Roundtrip_Handler::test_double_method (Test::Timestamp send_time)
@@ -138,13 +128,11 @@ Roundtrip_Handler::test_double_method_excep (::Messaging::ExceptionHolder *holde
       --this->pending_callbacks_;
       holder->raise_exception ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("test_double_method:");
     }
 }
-
-// = The skeleton methods for test longlong load
 
 void
 Roundtrip_Handler::test_longlong_method (Test::Timestamp send_time)
@@ -163,14 +151,11 @@ Roundtrip_Handler::test_longlong_method_excep (::Messaging::ExceptionHolder *hol
       --this->pending_callbacks_;
       holder->raise_exception ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("test_longlong_method:");
     }
-}
-
-
-// = Other methods
+  }
 
 void
 Roundtrip_Handler::shutdown ()
@@ -184,7 +169,7 @@ Roundtrip_Handler::shutdown_excep (::Messaging::ExceptionHolder *holder)
     {
       holder->raise_exception ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("shutdown:");
     }

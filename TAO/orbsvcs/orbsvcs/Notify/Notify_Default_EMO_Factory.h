@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFY_DEFAULT_EMO_FACTORY_H
 #define NOTIFY_DEFAULT_EMO_FACTORY_H
 #include /**/ "ace/pre.h"

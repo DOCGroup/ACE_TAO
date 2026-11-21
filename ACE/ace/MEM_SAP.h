@@ -27,6 +27,8 @@
 #include "ace/MMAP_Memory_Pool.h"
 #include "ace/Process_Mutex.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_MEM_SAP;
@@ -43,7 +45,7 @@ public:
   using ACE_MEM_SAP_NODE_PTR = ACE_Based_Pointer<ACE_MEM_SAP_Node>;
 
   /// Initialize the node with its capacity.
-  ACE_MEM_SAP_Node (size_t cap);
+  explicit ACE_MEM_SAP_Node (size_t cap);
 
   /// Get the size of the data we hold.
   size_t size () const;
@@ -58,7 +60,7 @@ public:
   size_t capacity_;
 
   /// The actualy size used.
-  size_t size_;
+  size_t size_ {};
 
   ACE_MEM_SAP_NODE_PTR next_;
 };
@@ -75,8 +77,12 @@ public:
   using MALLOC_TYPE = ACE_Malloc_T<ACE_MMAP_Memory_Pool, ACE_Process_Mutex, ACE_PI_Control_Block>;
   using MALLOC_OPTIONS = ACE_MMAP_Memory_Pool_Options;
 
-  /// Destructor.
   virtual ~ACE_MEM_SAP ();
+
+  ACE_MEM_SAP (ACE_MEM_SAP const &) = delete;
+  ACE_MEM_SAP (ACE_MEM_SAP &&) = delete;
+  ACE_MEM_SAP &operator= (ACE_MEM_SAP const &) = delete;
+  ACE_MEM_SAP &operator= (ACE_MEM_SAP &&) = delete;
 
   /**
    * Initialize the MEM_SAP object.
@@ -123,7 +129,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = Class initializing methods to create/connect to a shared memory pool.
+  /// @name Shared memory pool initialization
+  /// @{
 
   /**
    * Create a new shm_malloc object.  Return 0 if succeed and -1
@@ -137,11 +144,12 @@ protected:
   /// Close down the share memory pool.  Clean up the
   /// mmap file if we are the last one using it.
   int close_shm_malloc ();
+  /// @}
 
   ACE_HANDLE handle_;
 
-  /// Data exchange channel.
-  MALLOC_TYPE *shm_malloc_;
+  /// Owns the shared-memory allocator backing the data exchange channel.
+  std::unique_ptr<MALLOC_TYPE> shm_malloc_;
 
   /// Constructor.  Prevent this class from being instantiated.
   ACE_MEM_SAP ();

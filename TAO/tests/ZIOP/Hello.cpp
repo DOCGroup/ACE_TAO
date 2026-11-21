@@ -33,7 +33,7 @@ Hello::big_request (const ::Test::Octet_Seq & octet_in)
   if (octet_in.length () > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("Server side BLOB received len = %d\n"),
+                  ACE_TEXT("Server side BLOB received len = %u\n"),
                   octet_in.length ()));
     }
   else

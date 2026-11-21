@@ -24,7 +24,6 @@
 class TAO_RTEC_Perf_Export Client_Options
 {
 public:
-  /// Constructor
   Client_Options (int &argc, ACE_TCHAR *argv[]);
 
   const ACE_TCHAR *ior;

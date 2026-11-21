@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ub_objref_seq.cpp
  *
@@ -7,10 +5,10 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #include "helper.h"
+
+#include <cstring>
 #include "ub_objref_seq.h"
 
 // ************************************************************************
@@ -27,19 +25,11 @@ static const char *Coffee_Flavor [] = {
 };
 
 Test_ObjRef_Sequence::Test_ObjRef_Sequence ()
-  : opname_ (CORBA::string_dup ("test_coffe_mix")),
+  : opname_ ("test_coffe_mix"),
     inout_ (new Param_Test::Coffee_Mix),
     out_ (new Param_Test::Coffee_Mix),
     ret_ (new Param_Test::Coffee_Mix)
 {
-}
-
-Test_ObjRef_Sequence::~Test_ObjRef_Sequence ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
-  // the other data members will be freed as they are "_var"s and objects
-  // (rather than pointers to objects)
 }
 
 const char *
@@ -59,7 +49,7 @@ Test_ObjRef_Sequence::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::Coffee_Mix *tmp = 0;
+  Param_Test::Coffee_Mix const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Coffee_Mix (*tmp);
 
@@ -83,20 +73,20 @@ Test_ObjRef_Sequence::init_parameters (Param_Test_ptr objref)
       Generator *gen = GENERATOR::instance (); // value generator
 
       // get some sequence length (not more than 10)
-      CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 5) + 5;
+      CORBA::ULong const len = (CORBA::ULong) (gen->gen_long () % 5) + 5;
 
       // set the length of the sequence
       this->in_.length (len);
       // now set each individual element
 
-      for (CORBA::ULong i = 0; i < this->in_.length (); i++)
+      for (CORBA::ULong i = 0; i < this->in_.length (); ++i)
         {
           // generate some arbitrary string to be filled into the ith location in
           // the sequence
           this->in_[i] = objref->make_coffee ();
 
           // select a Coffee flavor at random
-          CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 6);
+          CORBA::ULong const index = (CORBA::ULong) (gen->gen_long () % 6);
 
           desc.name = Coffee_Flavor [index];
           // set the attribute for the in object
@@ -128,7 +118,7 @@ Test_ObjRef_Sequence::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      Param_Test::Coffee_Mix_out out (this->out_.out ());
+      Param_Test::Coffee_Mix_out const out (this->out_.out ());
 
       this->ret_ = objref->test_coffe_mix (this->in_,
                                            this->inout_.inout (),
@@ -209,7 +199,7 @@ Test_ObjRef_Sequence::compare (const Param_Test::Coffee_Mix &s1,
           return 0;
         }
 
-      for (CORBA::ULong i=0; i < s1.length (); i++)
+      for (CORBA::ULong i=0; i < s1.length (); ++i)
         {
           Coffee_ptr vs1 = s1[i];
           Coffee_ptr vs2 = s2[i];
@@ -226,13 +216,13 @@ Test_ObjRef_Sequence::compare (const Param_Test::Coffee_Mix &s1,
 
           Coffee::Desc_var desc1 = vs1->description ();
 
-          CORBA::String_var n1 = desc1->name.in ();
+          CORBA::String_var const n1 = desc1->name.in ();
 
           Coffee::Desc_var desc2 = vs2->description ();
 
-          CORBA::String_var n2 = desc2->name.in ();
+          CORBA::String_var const n2 = desc2->name.in ();
 
-          if (ACE_OS::strcmp(n1.in (), n2.in ()) != 0)
+          if (std::strcmp(n1.in (), n2.in ()) != 0)
             {
               return 0;
             }
@@ -251,12 +241,12 @@ void
 Test_ObjRef_Sequence::print_sequence (const Param_Test::Coffee_Mix &s)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "maximum = %d\n"
-              "length = %d\n",
+              "maximum = %u\n"
+              "length = %u\n",
               s.maximum (),
               s.length ()));
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));
-  for (CORBA::ULong i=0; i < s.length (); i++)
+  for (CORBA::ULong i=0; i < s.length (); ++i)
     {
       Coffee_ptr c = s[i];
       if (CORBA::is_nil (c))

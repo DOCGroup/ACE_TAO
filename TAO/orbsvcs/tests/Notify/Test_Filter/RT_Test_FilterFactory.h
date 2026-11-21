@@ -33,31 +33,34 @@ class TAO_RT_Test_Filter_Export TAO_Notify_Tests_RT_Test_FilterFactory
   , public virtual TAO_Notify_FilterFactory
 {
 public:
-  /// Constructor
-  TAO_Notify_Tests_RT_Test_FilterFactory ();
+  TAO_Notify_Tests_RT_Test_FilterFactory () = default;
+  TAO_Notify_Tests_RT_Test_FilterFactory (TAO_Notify_Tests_RT_Test_FilterFactory const&) = delete;
+  TAO_Notify_Tests_RT_Test_FilterFactory (TAO_Notify_Tests_RT_Test_FilterFactory&&) = delete;
+  TAO_Notify_Tests_RT_Test_FilterFactory& operator= (TAO_Notify_Tests_RT_Test_FilterFactory const&) = delete;
+  TAO_Notify_Tests_RT_Test_FilterFactory& operator= (TAO_Notify_Tests_RT_Test_FilterFactory&&) = delete;
+  ~TAO_Notify_Tests_RT_Test_FilterFactory () override = default;
 
-  /// Destructor
-  ~TAO_Notify_Tests_RT_Test_FilterFactory ();
+  /// @name TAO_Notify_Tests_FilterFactory methods
+  /// @{
+  CosNotifyFilter::FilterFactory_ptr create (PortableServer::POA_ptr filter_poa) override;
+  void destroy () override;
+  /// @}
 
-  ///= TAO_Notify_Tests_FilterFactory methods.
+  /// @name CosNotifyFilter::FilterFactory methods
+  /// @{
+  CosNotifyFilter::Filter_ptr create_filter (char const* constraint_grammar) override;
 
-  virtual CosNotifyFilter::FilterFactory_ptr create (PortableServer::POA_ptr filter_poa);
-  virtual void destroy ();
+  CosNotifyFilter::MappingFilter_ptr create_mapping_filter (char const* constraint_grammar,
+                                                            CORBA::Any const& default_value) override;
 
-  ///= CosNotifyFilter::FilterFactory methods
-
-  virtual CosNotifyFilter::Filter_ptr create_filter (const char * constraint_grammar);
-
-  virtual CosNotifyFilter::MappingFilter_ptr create_mapping_filter (const char * constraint_grammar,
-                                                                    const CORBA::Any & default_value);
-
-  virtual TAO_Notify_Object::ID get_filter_id (CosNotifyFilter::Filter_ptr filter);
-  virtual CosNotifyFilter::Filter_ptr get_filter (const TAO_Notify_Object::ID& id);
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
+  TAO_Notify_Object::ID get_filter_id (CosNotifyFilter::Filter_ptr filter) override;
+  CosNotifyFilter::Filter_ptr get_filter (TAO_Notify_Object::ID const& id) override;
+  void save_persistent (TAO_Notify::Topology_Saver& saver) override;
+  /// @}
 
 protected:
   /// Release this object.
-  virtual void release ();
+  void release () override;
 
   /// The POA in which to activate the Filters.
   PortableServer::POA_var filter_poa_;

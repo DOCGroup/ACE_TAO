@@ -20,7 +20,7 @@ ACE_OS::wslen (const WChar *s)
   u_int len = 0;
 
   while (*s++ != 0)
-    len++;
+    ++len;
 
   return len;
 }

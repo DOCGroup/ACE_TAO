@@ -145,7 +145,9 @@ TAO_CDR_Encaps_Codec::decode (CORBA::OctetSeq const& data)
       CORBA::Any_var safe_any = any;
 
       if (cdr >> (*any))
-        return safe_any._retn ();
+        {
+          return safe_any._retn ();
+        }
     }
 
   throw IOP::Codec::FormatMismatch ();
@@ -184,7 +186,9 @@ TAO_CDR_Encaps_Codec::encode_value (CORBA::Any const& data)
             dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
           if (unk == nullptr)
-            throw ::CORBA::INTERNAL ();
+            {
+              throw ::CORBA::INTERNAL ();
+            }
 
           // We don't want unk's rd_ptr to move, in case we are shared by
           // another Any, so we use this to copy the state, not the buffer.
@@ -223,9 +227,7 @@ TAO_CDR_Encaps_Codec::encode_value (CORBA::Any const& data)
            i = i->cont ())
         {
           size_t const len = i->length ();
-          std::memcpy (buf,
-                       i->rd_ptr (),
-                       len);
+          std::memcpy (buf, i->rd_ptr (), len);
           buf += len;
         }
 
@@ -248,9 +250,7 @@ TAO_CDR_Encaps_Codec::decode_value (CORBA::OctetSeq const& data,
   ACE_Message_Block mb (data.length () + 2 * ACE_CDR::MAX_ALIGNMENT);
   ACE_CDR::mb_align (std::addressof (mb));
 
-  std::memcpy (mb.rd_ptr (),
-               data.get_buffer (),
-               data.length ());
+  std::memcpy (mb.rd_ptr (), data.get_buffer (), data.length ());
 
   // @todo How do we check for a type mismatch so that we can
   //       throw a IOP::Codec::TypeMismatch exception?
@@ -326,7 +326,9 @@ TAO_CDR_Encaps_Codec::check_type_for_encoding (CORBA::Any const& data) const
   if (this->major_ == 1
       && this->minor_ == 0
       && typecode->equivalent (CORBA::_tc_wstring))
-    throw IOP::Codec::InvalidTypeForEncoding ();
+    {
+      throw IOP::Codec::InvalidTypeForEncoding ();
+    }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

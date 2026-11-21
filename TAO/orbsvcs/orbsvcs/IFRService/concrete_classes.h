@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef CONCRETE_CLASSES_H
 #define CONCRETE_CLASSES_H
 

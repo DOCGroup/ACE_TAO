@@ -38,10 +38,8 @@ class TAO_Reply_Dispatcher;
 class TAO_Export TAO_Exclusive_TMS : public TAO_Transport_Mux_Strategy
 {
 public:
-  /// Constructor.
-  TAO_Exclusive_TMS (TAO_Transport *transport);
+  explicit TAO_Exclusive_TMS (TAO_Transport *transport);
 
-  /// Destructor.
   ~TAO_Exclusive_TMS () override;
 
   /**
@@ -50,7 +48,7 @@ public:
    * Please read the documentation in the TAO_Transport_Mux_Strategy class
    * for details.
    */
-  //@{
+  /// @{
   CORBA::ULong request_id () override;
   int bind_dispatcher (CORBA::ULong request_id,
                        ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd) override;
@@ -63,15 +61,21 @@ public:
   bool idle_after_reply () override;
   void connection_closed () override;
   bool has_request () override;
-  //@}
+  /// @}
+
+private:
+  TAO_Exclusive_TMS (TAO_Exclusive_TMS const &) = delete;
+  TAO_Exclusive_TMS (TAO_Exclusive_TMS &&) = delete;
+  TAO_Exclusive_TMS &operator= (TAO_Exclusive_TMS const &) = delete;
+  TAO_Exclusive_TMS &operator= (TAO_Exclusive_TMS &&) = delete;
 
 protected:
   /// Used to generate a different request_id on each call to
   /// request_id().
-  CORBA::ULong request_id_generator_;
+  CORBA::ULong request_id_generator_ {};
 
   /// Request id for the current request.
-  CORBA::ULong request_id_;
+  CORBA::ULong request_id_ {};
 
   /// Reply Dispatcher corresponding to the request. If this is zero we don't
   /// have a reply, if it not zero we have one

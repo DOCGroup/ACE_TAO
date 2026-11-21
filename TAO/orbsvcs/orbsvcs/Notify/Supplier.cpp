@@ -23,9 +23,7 @@ TAO_Notify_Supplier::TAO_Notify_Supplier (TAO_Notify_ProxyConsumer* proxy)
 {
 }
 
-TAO_Notify_Supplier::~TAO_Notify_Supplier ()
-{
-}
+TAO_Notify_Supplier::~TAO_Notify_Supplier () = default;
 
 TAO_Notify_Proxy*
 TAO_Notify_Supplier::proxy ()
@@ -35,17 +33,19 @@ TAO_Notify_Supplier::proxy ()
 
 void
 TAO_Notify_Supplier::dispatch_updates_i (
-  const CosNotification::EventTypeSeq& added,
-  const CosNotification::EventTypeSeq& removed)
+  CosNotification::EventTypeSeq const &added,
+  CosNotification::EventTypeSeq const &removed)
 {
   if (!CORBA::is_nil (this->subscribe_.in ()))
+  {
     this->subscribe_->subscription_change (added, removed);
+  }
 }
 
 bool
 TAO_Notify_Supplier::is_alive (bool allow_nil_supplier)
 {
-  bool status = false;
+  bool status {};
   CORBA::Object_var supplier = this->get_supplier ();
   if (CORBA::is_nil (supplier.in ()))
   {
@@ -54,15 +54,19 @@ TAO_Notify_Supplier::is_alive (bool allow_nil_supplier)
     // check should return true so it will be validated in
     // next period.
     if (allow_nil_supplier)
-      return true;
+      {
+        return true;
+      }
     else
+    {
       return status;
+    }
   }
 
   CORBA::PolicyList policy_list;
   try
     {
-      bool do_liveliness_check = false;
+      bool do_liveliness_check {};
       ACE_Time_Value now = ACE_OS::gettimeofday ();
       ACE_Time_Value last_ping = proxy_->last_ping();
       if (CORBA::is_nil (this->rtt_obj_.in ()))
@@ -89,7 +93,7 @@ TAO_Notify_Supplier::is_alive (bool allow_nil_supplier)
                                           CORBA::ADD_OVERRIDE);
 
         // Clean up the policy that was allocated in the try/catch
-        for (CORBA::ULong i = 0; i < policy_list.length (); i++)
+        for (CORBA::ULong i {}; i < policy_list.length (); ++i)
           policy_list[i]->destroy ();
 
         do_liveliness_check
@@ -97,18 +101,24 @@ TAO_Notify_Supplier::is_alive (bool allow_nil_supplier)
           : now - last_ping >= TAO_Notify_PROPERTIES::instance()->validate_client_delay ());
       }
       else
-        do_liveliness_check =
-          now - last_ping >= TAO_Notify_PROPERTIES::instance()->validate_client_interval ();
+        {
+          do_liveliness_check =
+            now - last_ping >= TAO_Notify_PROPERTIES::instance()->validate_client_interval ();
+        }
 
       if (CORBA::is_nil (rtt_obj_.in ()))
-        status = false;
+        {
+          status = false;
+        }
       else if (do_liveliness_check || allow_nil_supplier)
       {
         this->proxy_->last_ping (now);
         status = !rtt_obj_->_non_existent ();
       }
       else
+      {
         status = true;
+      }
     }
   catch (const CORBA::TIMEOUT&)
     {

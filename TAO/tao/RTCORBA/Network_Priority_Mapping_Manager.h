@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Network_Priority_Mapping_Manager.h
  *
  *  @author Yamuna Krishnamurthy (yamuna@oomworks.com)
  */
-//=============================================================================
-
 
 #ifndef TAO_NETWORK_PRIORITY_MAPPING_MANAGER_H
 #define TAO_NETWORK_PRIORITY_MAPPING_MANAGER_H
@@ -24,13 +21,13 @@
 #include "tao/RTCORBA/rtcorba_export.h"
 #include "tao/RTCORBA/Network_Priority_Mapping.h"
 #include "tao/LocalObject.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Network_Priority_Mapping_Manager;
 class TAO_Network_Priority_Mapping_Manager_var;
 using TAO_Network_Priority_Mapping_Manager_ptr = TAO_Network_Priority_Mapping_Manager *;
-
 
 namespace RTCORBA
 {
@@ -46,7 +43,6 @@ class TAO_RTCORBA_Export TAO_Network_Priority_Mapping_Manager :
   public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit TAO_Network_Priority_Mapping_Manager (RTCORBA::NetworkPriorityMapping * mapping);
 
   ///
@@ -59,7 +55,8 @@ public:
   using _ptr_type = TAO_Network_Priority_Mapping_Manager_ptr;
   using _var_type = TAO_Network_Priority_Mapping_Manager_var;
 
-  // the static operations
+  /// @name Static operations
+  /// @{
   static TAO_Network_Priority_Mapping_Manager_ptr _duplicate (
       TAO_Network_Priority_Mapping_Manager_ptr obj);
   static TAO_Network_Priority_Mapping_Manager_ptr _narrow (
@@ -69,8 +66,9 @@ public:
     {
       return nullptr;
     }
+  /// @}
 
-  const char* _interface_repository_id () const override;
+  char const * _interface_repository_id () const override;
 
 protected:
   /// Protected destructor to enforce proper memory management of this
@@ -86,24 +84,24 @@ private:
     TAO_Network_Priority_Mapping_Manager &&) = delete;
 
 private:
-  TAO_Network_Priority_Mapping *mapping_;
+  std::unique_ptr<TAO_Network_Priority_Mapping> mapping_;
 };
 
 class TAO_RTCORBA_Export TAO_Network_Priority_Mapping_Manager_var
   : private TAO_Base_var
 {
 public:
-  TAO_Network_Priority_Mapping_Manager_var (); // default constructor
+  TAO_Network_Priority_Mapping_Manager_var ();
   TAO_Network_Priority_Mapping_Manager_var (TAO_Network_Priority_Mapping_Manager_ptr);
-  TAO_Network_Priority_Mapping_Manager_var (const TAO_Network_Priority_Mapping_Manager_var &); // copy constructor
-  ~TAO_Network_Priority_Mapping_Manager_var (); // destructor
+  TAO_Network_Priority_Mapping_Manager_var (TAO_Network_Priority_Mapping_Manager_var const &);
+  ~TAO_Network_Priority_Mapping_Manager_var ();
 
   TAO_Network_Priority_Mapping_Manager_var &operator= (TAO_Network_Priority_Mapping_Manager_ptr);
-  TAO_Network_Priority_Mapping_Manager_var &operator= (const TAO_Network_Priority_Mapping_Manager_var &);
+  TAO_Network_Priority_Mapping_Manager_var &operator= (TAO_Network_Priority_Mapping_Manager_var const &);
   TAO_Network_Priority_Mapping_Manager_ptr operator-> () const;
 
   /// in, inout, out, _retn
-  operator const TAO_Network_Priority_Mapping_Manager_ptr &() const;
+  operator TAO_Network_Priority_Mapping_Manager_ptr const &() const;
   operator TAO_Network_Priority_Mapping_Manager_ptr &();
   TAO_Network_Priority_Mapping_Manager_ptr in () const;
   TAO_Network_Priority_Mapping_Manager_ptr &inout ();
@@ -111,8 +109,8 @@ public:
   TAO_Network_Priority_Mapping_Manager_ptr _retn ();
   TAO_Network_Priority_Mapping_Manager_ptr ptr () const;
 
-  // Hooks used by template sequence and object manager classes
-  // for non-defined forward declared interfaces.
+  /// Hooks used by template sequence and object manager classes for
+  /// forward-declared interfaces.
   static TAO_Network_Priority_Mapping_Manager_ptr duplicate (TAO_Network_Priority_Mapping_Manager_ptr);
   static void release (TAO_Network_Priority_Mapping_Manager_ptr);
   static TAO_Network_Priority_Mapping_Manager_ptr nil ();
@@ -121,8 +119,8 @@ public:
 
 private:
   TAO_Network_Priority_Mapping_Manager_ptr ptr_;
-  TAO_Network_Priority_Mapping_Manager_var (const TAO_Base_var &rhs) = delete;
-  TAO_Network_Priority_Mapping_Manager_var &operator= (const TAO_Base_var &rhs) = delete;
+  TAO_Network_Priority_Mapping_Manager_var (TAO_Base_var const &rhs) = delete;
+  TAO_Network_Priority_Mapping_Manager_var &operator= (TAO_Base_var const &rhs) = delete;
 };
 
 class TAO_RTCORBA_Export TAO_Network_Priority_Mapping_Manager_out
@@ -130,9 +128,9 @@ class TAO_RTCORBA_Export TAO_Network_Priority_Mapping_Manager_out
 public:
   TAO_Network_Priority_Mapping_Manager_out (TAO_Network_Priority_Mapping_Manager_ptr &);
   TAO_Network_Priority_Mapping_Manager_out (TAO_Network_Priority_Mapping_Manager_var &);
-  TAO_Network_Priority_Mapping_Manager_out (const TAO_Network_Priority_Mapping_Manager_out &);
-  TAO_Network_Priority_Mapping_Manager_out &operator= (const TAO_Network_Priority_Mapping_Manager_out &);
-  TAO_Network_Priority_Mapping_Manager_out &operator= (const TAO_Network_Priority_Mapping_Manager_var &);
+  TAO_Network_Priority_Mapping_Manager_out (TAO_Network_Priority_Mapping_Manager_out const &);
+  TAO_Network_Priority_Mapping_Manager_out &operator= (TAO_Network_Priority_Mapping_Manager_out const &);
+  TAO_Network_Priority_Mapping_Manager_out &operator= (TAO_Network_Priority_Mapping_Manager_var const &);
   TAO_Network_Priority_Mapping_Manager_out &operator= (TAO_Network_Priority_Mapping_Manager_ptr);
   operator TAO_Network_Priority_Mapping_Manager_ptr &();
   TAO_Network_Priority_Mapping_Manager_ptr &ptr ();

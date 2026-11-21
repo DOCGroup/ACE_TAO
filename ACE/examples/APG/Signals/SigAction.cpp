@@ -14,7 +14,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ::register_actions ();    // Register actions to happen.
 
   // This will be raised immediately.
-  ACE_OS::kill (ACE_OS::getpid(), SIGUSR2);
+  ACE_OS::kill (ACE_OS::getpid (), SIGUSR2);
 
   // This will pend until the first signal is completely
   // handled and returns, because we masked it out
@@ -24,9 +24,13 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   while (ACE_OS::sleep (100) == -1)
     {
       if (errno == EINTR)
-        continue;
+        {
+          continue;
+        }
       else
+      {
         ACE_OS::exit (1);
+      }
     }
   return 0;
 }
@@ -42,9 +46,13 @@ static void my_sighandler (int signo)
   ACE_OS::kill (ACE_OS::getpid (), SIGUSR1);
 
   if (signo == SIGUSR1)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Signal SIGUSR1\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Signal SIGUSR1\n")));
+    }
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Signal SIGUSR2\n")));
+  }
 
   ACE_OS::sleep (10);
 }

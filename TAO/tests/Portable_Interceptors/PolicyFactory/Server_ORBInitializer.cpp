@@ -6,12 +6,9 @@
 
 #include "tao/ORB_Constants.h"
 
-#include "ace/OS_NS_string.h"
-
 void
 Server_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr /* info */
-    )
+    PortableInterceptor::ORBInitInfo_ptr /* info */)
 {
 }
 

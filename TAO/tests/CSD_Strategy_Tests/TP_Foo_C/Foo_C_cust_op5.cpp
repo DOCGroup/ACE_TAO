@@ -3,7 +3,6 @@
 #include "CancelledExceptionC.h"
 #include "CustomExceptionC.h"
 
-
 Foo_C_cust_op5::Foo_C_cust_op5(Foo_C_i* servant)
   : TAO::CSD::TP_Custom_Request_Operation(servant),
     exception_(false),
@@ -22,7 +21,6 @@ Foo_C_cust_op5::Foo_C_cust_op5(Foo_C_i* servant)
   }
 }
 
-
 Foo_C_cust_op5::~Foo_C_cust_op5()
 {
   // This try-catch block is not really necessary, but we have to add it to
@@ -36,7 +34,6 @@ Foo_C_cust_op5::~Foo_C_cust_op5()
   {
   }
 }
-
 
 void
 Foo_C_cust_op5::result()
@@ -52,7 +49,6 @@ Foo_C_cust_op5::result()
     }
 }
 
-
 void
 Foo_C_cust_op5::execute_i()
 {
@@ -65,7 +61,6 @@ Foo_C_cust_op5::execute_i()
     this->exception_ = true;
   }
 }
-
 
 void
 Foo_C_cust_op5::cancel_i()

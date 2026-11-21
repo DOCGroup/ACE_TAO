@@ -39,7 +39,9 @@ ACE_FIFO::open (const ACE_TCHAR *r, int flags, mode_t perms,
   if ((flags & O_CREAT) != 0
       && ACE_OS::mkfifo (this->rendezvous_, perms) == -1
       && !(errno == EEXIST))
+  {
     return -1;
+  }
 
   this->set_handle (ACE_OS::open (this->rendezvous_, flags, 0, sa));
   return this->get_handle () == ACE_INVALID_HANDLE ? -1 : 0;
@@ -52,7 +54,9 @@ ACE_FIFO::ACE_FIFO (const ACE_TCHAR *fifo_name,
 {
   ACE_TRACE ("ACE_FIFO::ACE_FIFO");
   if (this->open (fifo_name, flags, perms, sa) == -1)
+  {
     ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_FIFO")));
+  }
 }
 
 ACE_FIFO::ACE_FIFO ()

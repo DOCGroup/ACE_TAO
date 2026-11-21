@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    union.idl
  *
@@ -11,10 +10,8 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
  */
-//=============================================================================
 
-
-// Implicit default case
+/// Implicit default case
 
 enum DataType
 {
@@ -26,16 +23,16 @@ enum DataType
 union Data switch (DataType)
 {
   case dtLong: long longData;
+  /// by default, empty union
   case dtShort: short shortData;
-  // by default, empty union
 };
 
-// Explicit default case
+/// Explicit default case
 
 module Necessary
 {
-  // It is important to have a module, in which
-  // the following union is declared.
+  /// It is important to have a module, in which
+  /// the following union is declared.
 
   typedef long Result;
 
@@ -52,7 +49,7 @@ module Necessary
     };
 };
 
-// Union with negative cases
+/// Union with negative cases
 union foo switch (short)
 {
   case -3:
@@ -62,7 +59,7 @@ union foo switch (short)
   case  0: long   foo_iface_member2;
 };
 
-// Make sure that CORBA_Any::to_* is used everywhere.
+/// Make sure that CORBA_Any::to_* is used everywhere.
 module UnionDiscTest
 {
   union BooleanUnion switch (boolean)
@@ -95,7 +92,7 @@ module AllBoolUnions
   union TwoBranchesDF switch (boolean) { default: octet val1; case FALSE: char val2; };
 };
 
-// Nested unions
+/// Nested unions
 
 enum disc1
 {
@@ -172,9 +169,9 @@ module UnionTest3
      };
 };
 
-// Make sure inner union is generated in header file with
-// proper scoping (or lack thereof) in its name, depending
-// on the platform.
+/// Make sure inner union is generated in header file with
+/// proper scoping (or lack thereof) in its name, depending
+/// on the platform.
 enum XType
 {
   X_A
@@ -197,7 +194,7 @@ union X switch (XType)
       } a;
 };
 
-// Example involving union members with multiple case labels.
+/// Example involving union members with multiple case labels.
 enum FieldType
 {
     FTYPE_CHAR,
@@ -214,17 +211,16 @@ union FieldValue switch (FieldType)
        string defstr;
 };
 
-
 struct Field
 {
   FieldValue value;
 };
 
-// A fix to the IDL compiler's typecode generation created
-// a problem with unions that have more than one member,
-// where any member except the last is itself a scoped type.
-// This is the simplest example that will reproduce the problem,
-// if it ever reappears.
+/// A fix to the IDL compiler's typecode generation created
+/// a problem with unions that have more than one member,
+/// where any member except the last is itself a scoped type.
+/// This is the simplest example that will reproduce the problem,
+/// if it ever reappears.
 enum TestOneEnum
 {
   TALL,

@@ -1,18 +1,10 @@
 module corbaname
 {
-
+  /// Simple interface for checking the connection between client and server.
+  /// Prints the connection status.
   interface Status
   {
-    // = TITLE
-    //     A simple interface to check the status of
-    //     connection between the client and the server.
-    //
-    // = DESCRIPTION
-    //     Prints out the status.
-
+    /// Returns true if the server received the request from the client.
     boolean print_status ();
-    // Return <true> if the server received the
-    // request from the client.
-
   };
 };

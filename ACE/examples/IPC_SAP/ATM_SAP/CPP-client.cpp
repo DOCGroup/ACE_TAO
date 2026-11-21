@@ -4,10 +4,9 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Log_Msg.h"
 
-
 #if defined (ACE_HAS_ATM)
 
-#define MAX_LEAVES  32
+constexpr int MAX_LEAVES = 32;
 
 /* ACE_ATM Client */
 
@@ -35,10 +34,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   int num_leaves = argc / 2 - 2;
 
   ACE_OS::printf( "ATM_Client: Connecting to ...\n" );
-  for ( int i = 0; i < num_leaves; i++ )
+  for ( int i = 0; i < num_leaves; ++i )
   {
     hosts[ i ].set( argv[ i*2 + 4 ],
-                    ( argv[ i*2 + 5 ] != 0 )
+                    ( argv[ i*2 + 5 ] != nullptr )
                       ? ACE_OS::atoi( argv[ i*2 + 5 ]) : ACE_ATM_Addr::DEFAULT_SELECTOR );
     ACE_OS::printf( "ATM_Client: leaf: %s (%s), sel: %d\n",
                     argv[ i*2 + 4 ],
@@ -126,7 +125,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   } else {
     // Point-to-multipoint connection
-    for ( int i = 0; i < num_leaves; i++ ) {
+    for ( int i = 0; i < num_leaves; ++i ) {
       con.add_leaf( atm_stream,
                     hosts[ i ],
                     i,
@@ -143,15 +142,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Send data to server (correctly handles "incomplete writes").
 
   int s_bytes;
-  int total;
   int xmit = 0;
   ACE_High_Res_Timer timer;
   ACE_Time_Value elapsed;
-  double real_time;
-  double actual_rate;
 
   for ( ;; ) {
-    total = 0;
+    int total = 0;
 
     timer.start_incr();
 
@@ -171,9 +167,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     timer.stop_incr();
     timer.elapsed_time_incr( elapsed );
-    real_time = elapsed.sec() * ACE_ONE_SECOND_IN_USECS + elapsed.usec();
+    double const real_time = elapsed.sec() * ACE_ONE_SECOND_IN_USECS + elapsed.usec();
     xmit += total;
-    actual_rate = ( double )xmit * ( double )8 / real_time;
+    double const actual_rate = ( double )xmit * ( double )8 / real_time;
 
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) bytes = %d, usec = %f, rate = %0.00f Mbps\n"),

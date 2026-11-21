@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_OBJECT_PROXY_BROKER_H
 #define TAO_OBJECT_PROXY_BROKER_H
 
@@ -49,7 +48,6 @@ namespace TAO
   class TAO_Export Object_Proxy_Broker
   {
   public:
-    /// Destructor
     virtual ~Object_Proxy_Broker ();
 
     virtual CORBA::Boolean _is_a (CORBA::Object_ptr target,

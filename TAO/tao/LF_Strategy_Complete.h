@@ -19,7 +19,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -29,7 +28,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_LF_Strategy_Complete : public TAO_LF_Strategy
 {
 public:
-  //@{
+  /// @{
   /** @name Virtual Methods
    *
    * Please check the documentation in TAO_LF_Strategy

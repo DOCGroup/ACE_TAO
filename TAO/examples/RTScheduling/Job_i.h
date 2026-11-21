@@ -18,6 +18,8 @@
 #include "ace/SString.h"
 #include "ace/Arg_Shifter.h"
 
+#include <memory>
+
 class DT_Creator;
 
 /**
@@ -28,28 +30,29 @@ class DT_Creator;
 class RTSCHEDTESTLIB_Export Job_i : public POA_Job
 {
  public:
-  /// Constructor
-  Job_i (DT_Creator* dt_creator);
+  explicit Job_i (DT_Creator* dt_creator);
 
-  ~Job_i ();
+  ~Job_i () override;
 
   /// Init the state of this object.
   int init (ACE_Arg_Shifter& arg_shifter);
 
-  /// = Accessors
+  /// @name Accessors
+  /// @{
   const ACE_CString& name ();
   const ACE_CString& poa ();
+  /// @}
 
-  /// = inteface Job method implementation.
-  virtual void work (CORBA::ULong work,
-         CORBA::Short importance);
+  /// Implements the Job::work operation.
+  void work (CORBA::ULong work,
+         CORBA::Short importance) override;
 
   virtual void post_work (int guid,
         int importance);
 
   void dump_stats ();
 
-  virtual void shutdown ();
+  void shutdown () override;
 
   int guid ();
 
@@ -62,7 +65,7 @@ class RTSCHEDTESTLIB_Export Job_i : public POA_Job
 
   DT_Creator* dt_creator_;
 
-  Task_Stats *task_stats_;
+  std::unique_ptr<Task_Stats> task_stats_ {};
 
   size_t guid_;
 };

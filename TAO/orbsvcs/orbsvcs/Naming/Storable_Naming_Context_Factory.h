@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_STORABLE_NAMING_CONTEXT_FACTORY_H
 #define TAO_STORABLE_NAMING_CONTEXT_FACTORY_H
 #include /**/ "ace/pre.h"
@@ -38,7 +37,6 @@ public:
   /// - alias for ease of use.
   using HASH_MAP = TAO_Storable_Naming_Context::HASH_MAP;
 
-  /// Constructor.
   TAO_Storable_Naming_Context_Factory (
     size_t hash_table_size = ACE_DEFAULT_MAP_SIZE);
 
@@ -53,7 +51,7 @@ public:
   virtual TAO_Storable_Naming_Context* create_naming_context_impl (
     CORBA::ORB_ptr orb,
     PortableServer::POA_ptr poa,
-    const char *poa_id,
+    char const *poa_id,
     TAO::Storable_Factory *factory);
 
 protected:

@@ -13,9 +13,9 @@ class  Test_i : public virtual POA_Test
 {
 public:
   Test_i (short server_num);
-  virtual ~Test_i ();
+  ~Test_i () override;
 
-  virtual CORBA::Short get_server_num (CORBA::Short delay_secs);
+  CORBA::Short get_server_num (CORBA::Short delay_secs) override;
 
 private:
   CORBA::Short server_num_;

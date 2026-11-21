@@ -1,12 +1,8 @@
-//=============================================================================
 /**
  *  @file    DynamicAny.cpp
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
-
-
 #include "tao/DynamicAny/DynamicAny.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
 
@@ -33,7 +29,6 @@ TAO_DynamicAny_Loader::Initializer ()
 {
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_DynamicAny_Loader);
 }
-
 
 ACE_STATIC_SVC_DEFINE (TAO_DynamicAny_Loader,
                        ACE_TEXT ("DynamicAny_Loader"),

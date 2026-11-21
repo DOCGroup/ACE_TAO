@@ -37,9 +37,9 @@ namespace TAO
       const char *operation,
       CORBA::Object_out forward_to)
     {
-      while (1)
+      while (true)
         {
-          bool wait_occurred_restart_call = false;
+          bool wait_occurred_restart_call {};
 
           int const result =
             this->prepare_for_upcall_i (key,
@@ -73,10 +73,12 @@ namespace TAO
       bool &wait_occurred_restart_call)
     {
       // Acquire the object adapter lock first.
-      int result = this->object_adapter_->lock ().acquire ();
+      int const result = this->object_adapter_->lock ().acquire ();
       if (result == -1)
-        // Locking error.
-        throw ::CORBA::OBJ_ADAPTER ();
+        {
+          // Locking error.
+          throw ::CORBA::OBJ_ADAPTER ();
+        }
 
       // We have acquired the object adapter lock.  Record this for later
       // use.
@@ -116,7 +118,9 @@ namespace TAO
                                           wait_occurred_restart_call);
 
           if (wait_occurred_restart_call)
+          {
             return TAO_Adapter::DS_FAILED;
+          }
 #if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
         }
       catch (const ::PortableServer::ForwardRequest& forward_request)
@@ -135,7 +139,9 @@ namespace TAO
       // For servants from Servant Locators, there is no active object map
       // entry.
       if (this->active_object_map_entry ())
+      {
         this->current_context_.priority (this->active_object_map_entry ()->priority_);
+      }
 
       if (this->state_ != OBJECT_ADAPTER_LOCK_RELEASED)
         {
@@ -191,8 +197,10 @@ namespace TAO
     {
       // Acquire the object adapter lock first.
       if (this->object_adapter_->lock ().acquire () == -1)
-        // Locking error.
-        throw ::CORBA::OBJ_ADAPTER ();
+        {
+          // Locking error.
+          throw ::CORBA::OBJ_ADAPTER ();
+        }
 
       // We have acquired the object adapter lock.  Record this for later
       // use.
@@ -295,8 +303,10 @@ namespace TAO
       // not be able to do so since it can't acquire the object adapterx
       // lock.
       if (this->poa_->enter() == -1)
-        // Locking error.
-        throw ::CORBA::OBJ_ADAPTER ();
+        {
+          // Locking error.
+          throw ::CORBA::OBJ_ADAPTER ();
+        }
 #endif /* !TAO_HAS_MINIMUM_POA == 0 */
     }
 
@@ -316,7 +326,9 @@ namespace TAO
     {
       // Cleanup servant related stuff.
       if (this->active_object_map_entry_ != nullptr)
+      {
         ++this->active_object_map_entry_->reference_count_;
+      }
     }
 
     void
@@ -359,7 +371,7 @@ namespace TAO
       //
       // Note that the object adapter lock is acquired before
       // <POA::outstanding_requests_> is decreased.
-      CORBA::ULong outstanding_requests =
+      CORBA::ULong const outstanding_requests =
         this->poa_->decrement_outstanding_requests ();
 
       // Check if all pending requests are over.

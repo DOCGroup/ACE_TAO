@@ -12,13 +12,13 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template<typename X, typename Functor>
 ACE_Utils::Auto_Functor<X,Functor>::~Auto_Functor()
 {
-  reset(0);
+  reset(nullptr);
 }
 
 template<typename X, typename Functor> void
 ACE_Utils::Auto_Functor<X,Functor>::reset(X * p)
 {
-  if(p_ != 0)
+  if(p_ != nullptr)
   {
     f_(p_);
   }

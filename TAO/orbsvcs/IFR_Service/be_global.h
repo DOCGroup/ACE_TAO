@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_IFR_BE_GLOBAL_H
 #define TAO_IFR_BE_GLOBAL_H
 
@@ -27,28 +26,17 @@
 
 class AST_Generator;
 
-// Defines a class containing all back end global data.
-
+/// Holds global data specific to the IDL compiler back end.
 class TAO_IFR_BE_Export BE_GlobalData
 {
 public:
-  // = TITLE
-  //    BE_GlobalData
-  //
-  // = DESCRIPTION
-  //    Storage of global data specific to the compiler back end
-  //
-  /// Constructor.
   BE_GlobalData ();
   BE_GlobalData (BE_GlobalData const &) = delete;
   BE_GlobalData (BE_GlobalData &&) = delete;
   BE_GlobalData &operator= (BE_GlobalData const &) = delete;
   BE_GlobalData &operator= (BE_GlobalData &&) = delete;
 
-  /// Destructor.
   virtual ~BE_GlobalData ();
-
-  // Data accessors.
 
   bool removing () const;
   void removing (bool value);

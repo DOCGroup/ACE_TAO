@@ -5,13 +5,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_TypeCodeFactory_Adapter_Impl::~TAO_TypeCodeFactory_Adapter_Impl () = default;
-
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_Adapter_Impl::create_struct_tc (
-    const char * id,
-    const char * name,
-    const CORBA::StructMemberSeq & members)
+    char const * id,
+    char const * name,
+    CORBA::StructMemberSeq const & members)
 {
   TAO_TypeCodeFactory_i tcf;
 
@@ -20,10 +18,10 @@ TAO_TypeCodeFactory_Adapter_Impl::create_struct_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_Adapter_Impl::create_union_tc (
-    const char * id,
-    const char * name,
+    char const * id,
+    char const * name,
     CORBA::TypeCode_ptr discriminator_type,
-    const CORBA::UnionMemberSeq & members)
+    CORBA::UnionMemberSeq const & members)
 {
   TAO_TypeCodeFactory_i tcf;
 
@@ -32,9 +30,9 @@ TAO_TypeCodeFactory_Adapter_Impl::create_union_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_Adapter_Impl::create_enum_tc (
-    const char * id,
-    const char * name,
-    const CORBA::EnumMemberSeq & members)
+    char const * id,
+    char const * name,
+    CORBA::EnumMemberSeq const & members)
 {
   TAO_TypeCodeFactory_i tcf;
 
@@ -43,8 +41,8 @@ TAO_TypeCodeFactory_Adapter_Impl::create_enum_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_Adapter_Impl::create_alias_tc (
-    const char * id,
-    const char * name,
+    char const * id,
+    char const * name,
     CORBA::TypeCode_ptr original_type)
 {
   TAO_TypeCodeFactory_i tcf;
@@ -54,9 +52,9 @@ TAO_TypeCodeFactory_Adapter_Impl::create_alias_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_Adapter_Impl::create_exception_tc (
-    const char * id,
-    const char * name,
-    const CORBA::StructMemberSeq & members)
+    char const * id,
+    char const * name,
+    CORBA::StructMemberSeq const & members)
 {
   TAO_TypeCodeFactory_i tcf;
 
@@ -65,8 +63,8 @@ TAO_TypeCodeFactory_Adapter_Impl::create_exception_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_Adapter_Impl::create_interface_tc (
-    const char * id,
-    const char * name)
+    char const * id,
+    char const * name)
 {
   TAO_TypeCodeFactory_i tcf;
 
@@ -121,11 +119,11 @@ TAO_TypeCodeFactory_Adapter_Impl::create_array_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_Adapter_Impl::create_value_tc (
-    const char * id,
-    const char * name,
+    char const * id,
+    char const * name,
     CORBA::ValueModifier type_modifier,
     CORBA::TypeCode_ptr concrete_base,
-    const CORBA::ValueMemberSeq & members)
+    CORBA::ValueMemberSeq const & members)
 {
   TAO_TypeCodeFactory_i tcf;
 
@@ -134,8 +132,8 @@ TAO_TypeCodeFactory_Adapter_Impl::create_value_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_Adapter_Impl::create_value_box_tc (
-    const char * id,
-    const char * name,
+    char const * id,
+    char const * name,
     CORBA::TypeCode_ptr boxed_type)
 {
   TAO_TypeCodeFactory_i tcf;
@@ -145,8 +143,8 @@ TAO_TypeCodeFactory_Adapter_Impl::create_value_box_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_Adapter_Impl::create_native_tc (
-    const char * id,
-    const char * name)
+    char const * id,
+    char const * name)
 {
   TAO_TypeCodeFactory_i tcf;
 
@@ -154,7 +152,7 @@ TAO_TypeCodeFactory_Adapter_Impl::create_native_tc (
 }
 
 CORBA::TypeCode_ptr
-TAO_TypeCodeFactory_Adapter_Impl::create_recursive_tc (const char * id)
+TAO_TypeCodeFactory_Adapter_Impl::create_recursive_tc (char const * id)
 {
   TAO_TypeCodeFactory_i tcf;
 
@@ -163,8 +161,8 @@ TAO_TypeCodeFactory_Adapter_Impl::create_recursive_tc (const char * id)
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_Adapter_Impl::create_abstract_interface_tc (
-    const char * id,
-    const char * name)
+    char const * id,
+    char const * name)
 {
   TAO_TypeCodeFactory_i tcf;
 
@@ -173,8 +171,8 @@ TAO_TypeCodeFactory_Adapter_Impl::create_abstract_interface_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_Adapter_Impl::create_local_interface_tc (
-    const char * id,
-    const char * name)
+    char const * id,
+    char const * name)
 {
   TAO_TypeCodeFactory_i tcf;
 
@@ -183,8 +181,8 @@ TAO_TypeCodeFactory_Adapter_Impl::create_local_interface_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_Adapter_Impl::create_component_tc (
-    const char *id,
-    const char *name)
+    char const *id,
+    char const *name)
 {
   TAO_TypeCodeFactory_i tcf;
 
@@ -193,8 +191,8 @@ TAO_TypeCodeFactory_Adapter_Impl::create_component_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_Adapter_Impl::create_home_tc (
-    const char *id,
-    const char *name)
+    char const *id,
+    char const *name)
 {
   TAO_TypeCodeFactory_i tcf;
 
@@ -203,11 +201,11 @@ TAO_TypeCodeFactory_Adapter_Impl::create_home_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_Adapter_Impl::create_event_tc (
-    const char *id,
-    const char *name,
+    char const *id,
+    char const *name,
     CORBA::ValueModifier type_modifier,
     CORBA::TypeCode_ptr concrete_base,
-    const CORBA::ValueMemberSeq &members)
+    CORBA::ValueMemberSeq const &members)
 {
   TAO_TypeCodeFactory_i tcf;
 
@@ -220,9 +218,8 @@ CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_Adapter_Impl::create_enum_tc (
   char const * /* id */,
   char const * /* name */,
-  ACE_Array_Base<CORBA::String_var> const & /* enumerators */,
-  CORBA::ULong /* ncases */
-  )
+  std::vector<CORBA::String_var> const & /* enumerators */,
+  CORBA::ULong /* ncases */)
 {
   throw ::CORBA::NO_IMPLEMENT ();
 }
@@ -232,11 +229,10 @@ TAO_TypeCodeFactory_Adapter_Impl::create_struct_except_tc (
   CORBA::TCKind /* kind */,
   char const * /* id */,
   char const * /* name */,
-  ACE_Array_Base<
+  std::vector<
     TAO::TypeCode::Struct_Field<CORBA::String_var,
                                 CORBA::TypeCode_var> > const & /* fields */,
-  CORBA::ULong /* nfields */
-  )
+  CORBA::ULong /* nfields */)
 {
   throw ::CORBA::NO_IMPLEMENT ();
 }
@@ -246,13 +242,12 @@ TAO_TypeCodeFactory_Adapter_Impl::create_union_tc (
   char const * /* id */,
   char const * /* name */,
   CORBA::TypeCode_ptr /* discriminant_type */,
-  ACE_Array_Base<TAO::TypeCode::Case<CORBA::String_var,
-                                     CORBA::TypeCode_var> > const & /* cases */,
+  std::vector<TAO::TypeCode::Case<CORBA::String_var,
+                                  CORBA::TypeCode_var> > const & /* cases */,
   CORBA::ULong /* ncases */,
   CORBA::Long /* default_index */,
   char const * /* default_case_name */,
-  CORBA::TypeCode_ptr /* default_case_type */
-  )
+  CORBA::TypeCode_ptr /* default_case_type */)
 {
   throw ::CORBA::NO_IMPLEMENT ();
 }
@@ -264,16 +259,13 @@ TAO_TypeCodeFactory_Adapter_Impl::create_value_event_tc (
   char const * /* name */,
   CORBA::ValueModifier /* modifier */,
   CORBA::TypeCode_ptr /* concrete_base */,
-  ACE_Array_Base<
+  std::vector<
     TAO::TypeCode::Value_Field<CORBA::String_var,
                                CORBA::TypeCode_var> > const & /* fields */,
-  CORBA::ULong /* nfields */
-  )
+  CORBA::ULong /* nfields */)
 {
   throw ::CORBA::NO_IMPLEMENT ();
 }
-
-// *********************************************************************
 
 // Initialization and registration of dynamic service object.
 

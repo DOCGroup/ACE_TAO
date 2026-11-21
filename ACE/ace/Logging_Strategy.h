@@ -78,10 +78,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Logging_Strategy : public ACE_Service_Object
 {
 public:
-  /// Constructor.
   ACE_Logging_Strategy ();
 
-  /// Destructor.
   ~ACE_Logging_Strategy () override;
 
   /// Dynamic linking initialization hook.

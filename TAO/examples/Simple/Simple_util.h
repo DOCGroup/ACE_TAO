@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_UTIL_H
 #define TAO_UTIL_H
 
@@ -34,36 +33,39 @@ template <class Servant>
 class Server
 {
 public:
-  /// Constructor.
   Server ();
 
-  /// Destructor.
   ~Server () = default;
+
+  Server (Server const &) = delete;
+  Server &operator= (Server const &) = delete;
+  Server (Server &&) = delete;
+  Server &operator= (Server &&) = delete;
 
   /// Initialize the Server state - parsing arguments and waiting.
   /// interface_name is the name used to register the Servant.
-  int init (const char *servant_name,
+  int init (char const *servant_name,
             int argc,
             ACE_TCHAR *argv[]);
 
   /// After calling <init>, this method will register the server with
   /// the TAO Naming Service using the name passed to this method.
-  int register_name (const char *name);
+  int register_name (char const *name);
 
   /// Run the orb.
   int run ();
 
   /// Ignore this method if you are not testing the InterOperable
   /// Naming Service.
-  int test_for_ins (const char *ior);
+  int test_for_ins (char const *ior);
 
 private:
   /// Parses the commandline arguments.
   int parse_args ();
 
   /// A holder of the servant that does ref counting for him.
-  typedef TAO_Intrusive_Ref_Count_Handle<Servant> Servant_var;
-  Servant_var servant_;
+  using Servant_var = TAO_Intrusive_Ref_Count_Handle<Servant>;
+  Servant_var servant_ {};
 
   /// The ORB manager - a helper class for accessing the POA and
   /// registering objects.
@@ -73,19 +75,19 @@ private:
   TAO_Naming_Client naming_client_;
 
   /// File where the IOR of the server object is stored.
-  ACE_TCHAR *ior_output_file_;
+  ACE_TCHAR *ior_output_file_ {};
 
   /// Flag to indicate whether naming service could be used
-  int naming_;
+  bool naming_ {};
 
   /// Used test the INS.
-  ACE_TCHAR *ins_;
+  ACE_TCHAR *ins_ {};
 
   /// Number of command line arguments.
-  int argc_;
+  int argc_ {};
 
   /// The command line arguments.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 };
 
 /**
@@ -101,14 +103,17 @@ template <class ServerInterface>
 class Client
 {
 public:
-  /// Constructor.
-  Client ();
+  Client () = default;
 
-  /// Destructor.
   ~Client ();
 
+  Client (Client const &) = delete;
+  Client &operator= (Client const &) = delete;
+  Client (Client &&) = delete;
+  Client &operator= (Client &&) = delete;
+
   /// Initialize the client communication endpoint with server.
-  int init (const char *name, int argc, ACE_TCHAR *argv[]);
+  int init (char const *name, int argc, ACE_TCHAR *argv[]);
 
   /// Return the interface object pointer.
   ServerInterface *operator-> () { return server_.in (); }
@@ -120,7 +125,7 @@ public:
   void do_shutdown (int);
 
   /// Initialize naming service
-  int obtain_initial_references (const char *name);
+  int obtain_initial_references (char const *name);
 
   CORBA::ORB_ptr orb ()
     {
@@ -150,14 +155,14 @@ private:
   ACE_CString ior_;
 
   /// Server object
-  typedef TAO_Intrusive_Ref_Count_Handle<ServerInterface> ServerInterface_var;
+  using ServerInterface_var = TAO_Intrusive_Ref_Count_Handle<ServerInterface>;
   ServerInterface_var server_;
 
   /// Flag to use the naming service
-  int naming_;
+  bool naming_ {};
 
   /// Flag for shutting down the server
-  int do_shutdown_;
+  bool do_shutdown_ {};
 };
 
 #include "Simple_util.cpp"

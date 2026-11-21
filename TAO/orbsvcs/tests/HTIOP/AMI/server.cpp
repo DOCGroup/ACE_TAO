@@ -10,15 +10,13 @@
  */
 //=============================================================================
 
-
 #include "ami_test_i.h"
 
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_sys_socket.h"
 
-
-const ACE_TCHAR *ior_output_file = 0;
+const ACE_TCHAR *ior_output_file {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -33,7 +31,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ior_output_file = get_opts.opt_arg ();
         break;
       case 'd':
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case '?':
       default:
@@ -71,7 +69,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       ACE_OS::socket_init ();
 

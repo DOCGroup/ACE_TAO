@@ -11,6 +11,7 @@
 #define EC_H
 
 #include "orbsvcs/RtecEventCommS.h"
+#include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,14 +25,19 @@
 class EC
 {
 public:
-  /// Constructor
-  EC ();
+  EC () = default;
+  EC (EC const &) = delete;
+  EC (EC &&) = delete;
+  EC &operator= (EC const &) = delete;
+  EC &operator= (EC &&) = delete;
 
   /// Run the test
   int run (int argc, ACE_TCHAR* argv[]);
 
 private:
   int parse_args (int argc, ACE_TCHAR *argv[]);
+
+  ACE_TString event_channel_name_;
 };
 
 #endif /* EC_H */

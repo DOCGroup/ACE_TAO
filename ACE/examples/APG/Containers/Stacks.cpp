@@ -2,11 +2,16 @@
 #include "ace/Log_Msg.h"
 #include "ace/Containers.h"
 #include "DataElement.h"
+#include <memory>
 
 class StackExample
 {
 public:
-  StackExample (): privateStack_(100) {}
+  StackExample () : privateStack_ (100) {}
+  StackExample (StackExample const &) = delete;
+  StackExample (StackExample &&) = delete;
+  StackExample &operator= (StackExample const &) = delete;
+  StackExample &operator= (StackExample &&) = delete;
 
   // Illustrate all the differnet
   // types of stacks provided by ACE.
@@ -23,7 +28,7 @@ private:
   int runFixedStack ();
 
 private:
-  ACE_Bounded_Stack<DataElement*> privateStack_;
+  ACE_Bounded_Stack<DataElement *> privateStack_;
 };
 
 int StackExample::run ()
@@ -55,9 +60,9 @@ int StackExample::runBoundedStack ()
   // The element array is constrained to this scope.
   {
     DataElement elem[100];
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 100; ++i)
       {
-        elem[i].setData(i);
+        elem[i].setData (i);
         // Push the element on the stack.
         bstack1.push (elem[i]);
       }
@@ -67,7 +72,7 @@ int StackExample::runBoundedStack ()
 
   // Make a copy!
   bstack2 = bstack1;
-  for (int j = 0; j < 100; j++)
+  for (int j = 0; j < 100; ++j)
     {
       DataElement elem;
       bstack2.pop (elem);
@@ -84,19 +89,20 @@ int StackExample::runFixedStack ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Using a fixed stack\n")));
 
   ACE_Fixed_Stack<DataElement*, 100> fstack;
-  for (int k = 0; k < 100; k++)
+  for (int k = 0; k < 100; ++k)
     {
-      DataElement* elem;
-      ACE_NEW_RETURN(elem, DataElement (k), -1);
+      DataElement *elem {};
+      ACE_NEW_RETURN (elem, DataElement (k), -1);
+      // ACE_Fixed_Stack stores raw pointers; this example deletes each pointee.
       fstack.push (elem);    // Push the element on the stack.
     }
 
-  for (int l = 0; l < 100; l++)
+  for (int l = 0; l < 100; ++l)
     {
-      DataElement* elem = nullptr;
+      DataElement *elem {};
       fstack.pop (elem);
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d:"), elem->getData ()));
-      delete elem;
+      std::unique_ptr<DataElement> element_owner {elem};
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d:"), element_owner->getData ()));
     }
 
   return 0;
@@ -107,12 +113,12 @@ int StackExample::runUnboundedStack ()
   ACE_TRACE ("StackExample::runUnboundedStack");
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Using an unbounded stack\n")));
 
-  ACE_Unbounded_Stack<DataElement*> ustack;
-  for (int m = 0; m < 100; m++)
+  ACE_Unbounded_Stack<DataElement *> ustack;
+  for (int m = 0; m < 100; ++m)
     {
-      DataElement *elem;
-      ACE_NEW_RETURN(elem, DataElement (m), -1);
-      // Push the element on both stacks.
+      DataElement *elem {};
+      ACE_NEW_RETURN (elem, DataElement (m), -1);
+      // Both ACE stacks hold borrowed raw pointers; this example owns each element.
       ustack.push (elem);
       privateStack_.push (elem);
     }
@@ -123,14 +129,14 @@ int StackExample::runUnboundedStack ()
 
   // This will cause the elements in the private stack to
   // also disappear!
-  ACE_Unbounded_Stack_Iterator<DataElement*> iter (ustack);
+  ACE_Unbounded_Stack_Iterator<DataElement *> iter (ustack);
   for (iter.first (); !iter.done (); iter.advance ())
     {
-      DataElement** elem = nullptr;
+      DataElement **elem {};
       iter.next (elem);
+      std::unique_ptr<DataElement> element_owner {*elem};
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d:"),
-                  (*elem)->getData ()));
-      delete (*elem);
+                  element_owner->getData ()));
     }
 
   return 0;

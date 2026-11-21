@@ -17,6 +17,8 @@
 #include "tao/Strategies/DIOP_Profile.h"
 #include <cstring>
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DIOP_Connector::TAO_DIOP_Connector ()
@@ -31,7 +33,9 @@ TAO_DIOP_Connector::open (TAO_ORB_Core *orb_core)
 
   // Create our connect strategy
   if (this->create_connect_strategy () == -1)
+  {
     return -1;
+  }
 
   return 0;
 }
@@ -49,7 +53,9 @@ TAO_DIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
     this->remote_endpoint (endpoint);
 
   if (diop_endpoint == nullptr)
+  {
     return -1;
+  }
 
   const ACE_INET_Addr &remote_address =
     diop_endpoint->object_addr ();
@@ -88,7 +94,9 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     this->remote_endpoint (desc.endpoint ());
 
   if (diop_endpoint == nullptr)
+  {
     return 0;
+  }
 
   const ACE_INET_Addr &remote_address =
     diop_endpoint->object_addr ();
@@ -115,29 +123,31 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     }
 #endif /* ACE_HAS_IPV6 && ACE_HAS_IPV6_V6ONLY */
 
-  TAO_DIOP_Connection_Handler *svc_handler = nullptr;
+  TAO_DIOP_Connection_Handler *svc_handler {};
 
   ACE_NEW_RETURN (svc_handler,
                   TAO_DIOP_Connection_Handler (this->orb_core ()),
-                  0);
+                  nullptr);
 
   // Make sure that we always do a remove_reference
   ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
 
-  u_short port = 0;
+  u_short const port {};
   const ACE_UINT32 ia_any = INADDR_ANY;
   ACE_INET_Addr local_addr (port, ia_any);
 
 #if defined (ACE_HAS_IPV6)
   if (remote_address.get_type () == AF_INET6)
-    local_addr.set (port,
-                    ACE_IPV6_ANY);
+    {
+      local_addr.set (port,
+                      ACE_IPV6_ANY);
+    }
 #endif /* ACE_HAS_IPV6 */
 
   svc_handler->local_addr (local_addr);
   svc_handler->addr (remote_address);
 
-  int retval = svc_handler->open (0);
+  int retval = svc_handler->open (nullptr);
 
   // Failure to open a connection.
   if (retval != 0)
@@ -155,10 +165,12 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     }
 
   if (TAO_debug_level > 2)
-    TAOLIB_DEBUG ((LM_DEBUG,
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - DIOP_Connector::connect, ")
-                ACE_TEXT ("new connection on HANDLE %d\n"),
+                ACE_TEXT ("new connection on HANDLE %H\n"),
                 svc_handler->peer ().get_handle ()));
+    }
 
   TAO_DIOP_Transport *transport =
     dynamic_cast <TAO_DIOP_Transport *> (svc_handler->transport ());
@@ -170,19 +182,21 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
       // Give users a clue to the problem.
       if (TAO_debug_level > 3)
-        TAOLIB_DEBUG ((LM_ERROR,
+        {
+          TAOLIB_DEBUG ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - DIOP_Connector::make_connection, ")
                     ACE_TEXT ("connection to <%C:%u> failed (%p)\n"),
                     diop_endpoint->host (),
                     diop_endpoint->port (),
                     ACE_TEXT ("errno")));
+        }
 
       return 0;
     }
 
   // Add the handler to Cache
   retval =
-    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&desc,
+    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (std::addressof (desc),
                                                                              transport);
 
   // Failure in adding to cache.
@@ -207,10 +221,10 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 TAO_Profile *
 TAO_DIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
-  TAO_Profile *pfile = nullptr;
+  TAO_Profile *pfile {};
   ACE_NEW_RETURN (pfile,
                   TAO_DIOP_Profile (this->orb_core ()),
-                  0);
+                  nullptr);
 
   if (pfile->decode (cdr) == -1)
     {
@@ -229,7 +243,7 @@ TAO_DIOP_Connector::make_profile ()
   // or:
   //    host:port/object_key
 
-  TAO_Profile *profile = nullptr;
+  TAO_Profile *profile {};
   ACE_NEW_THROW_EX (profile,
                     TAO_DIOP_Profile (this->orb_core ()),
                     CORBA::NO_MEMORY (
@@ -246,7 +260,9 @@ TAO_DIOP_Connector::check_prefix (const char *endpoint)
 {
   // Check for a valid string
   if (!endpoint || !*endpoint)
+  {
     return -1;  // Failure
+  }
 
   const char *protocol[] = { "diop", "dioploc" };
 
@@ -259,10 +275,14 @@ TAO_DIOP_Connector::check_prefix (const char *endpoint)
   // isn't in the IOR then it is not an IOR we can use.
   if (slot == len0
       && ACE_OS::strncasecmp (endpoint, protocol[0], len0) == 0)
-    return 0;
+    {
+      return 0;
+    }
   else if (slot == len1
            && ACE_OS::strncasecmp (endpoint, protocol[1], len1) == 0)
-    return 0;
+    {
+      return 0;
+    }
 
   return -1;
   // Failure: not an DIOP IOR
@@ -279,7 +299,9 @@ TAO_DIOP_Endpoint *
 TAO_DIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != TAO_TAG_DIOP_PROFILE)
+  {
     return 0;
+  }
 
   return dynamic_cast<TAO_DIOP_Endpoint *> (endpoint);
 }

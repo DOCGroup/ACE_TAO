@@ -1,22 +1,14 @@
 #include "Callback_i.h"
 
-Callback_i::Callback_i()
-  : num_callbacks_(0)
-{
-}
+Callback_i::Callback_i() = default;
 
-
-Callback_i::~Callback_i ()
-{
-}
-
+Callback_i::~Callback_i () = default;
 
 void
 Callback_i::test_method()
 {
-  this->num_callbacks_ ++;
+  ++this->num_callbacks_;
 }
-
 
 void
 Callback_i::gather_stats(Foo_B_Statistics& stats)

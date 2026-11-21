@@ -65,7 +65,6 @@ public:
   virtual const ACEXML_Char *getSystemId () const = 0;
 };
 
-
 #include /**/ "ace/post.h"
 
 #endif /* _ACEXML_LOCATOR_H_ */

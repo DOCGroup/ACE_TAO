@@ -40,6 +40,7 @@ public:
 
   TAO_Seq_Out_T &operator= (const TAO_Seq_Out_T<T> &);
   TAO_Seq_Out_T &operator= (T *);
+  TAO_Seq_Out_T &operator= (T_var const &) = delete;
 
   operator T *& ();
   T * operator-> ();
@@ -49,8 +50,6 @@ public:
 
 private:
   T *& ptr_;
-  // Assignment from T_var not allowed.
-  void operator= (const T_var &);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

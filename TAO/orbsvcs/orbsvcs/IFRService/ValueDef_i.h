@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    ValueDef_i.h
@@ -10,7 +9,6 @@
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_VALUEDEF_I_H
 #define TAO_VALUEDEF_I_H
@@ -31,16 +29,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/// Represents a valuetype definition.
 class TAO_IFRService_Export TAO_ValueDef_i : public virtual TAO_Container_i,
                                              public virtual TAO_Contained_i,
                                              public virtual TAO_IDLType_i
 {
-  // = TITLE
-  //    TAO_ValueDef_i
-  //
-  // = DESCRIPTION
-  //    Represents a valuetype definition.
-  //
 public:
   explicit TAO_ValueDef_i (TAO_Repository_i *repo);
 

@@ -192,7 +192,9 @@ ACE_Pipe::close_handle (int which)
   // that case!
 
   if (this->handles_[which] != ACE_INVALID_HANDLE)
-    result = ACE_OS::closesocket (this->handles_[which]);
+    {
+      result = ACE_OS::closesocket (this->handles_[which]);
+    }
   this->handles_[which] = ACE_INVALID_HANDLE;
   return result;
 }

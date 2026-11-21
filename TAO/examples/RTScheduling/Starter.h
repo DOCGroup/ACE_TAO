@@ -12,15 +12,15 @@
 class Starter
 {
  public:
-  Starter (CORBA::ORB_ptr orb);
+  explicit Starter (CORBA::ORB_ptr orb);
 
   void init ();
 
   void fire ();
 
-  typedef ACE_Hash_Map_Manager <ACE_CString,
-                                Synch_var,
-                                ACE_Null_Mutex> Synchs;
+  using Synchs = ACE_Hash_Map_Manager <ACE_CString,
+                                       Synch_var,
+                                       ACE_Null_Mutex>;
 
  private:
   void resolve_synch_objs ();

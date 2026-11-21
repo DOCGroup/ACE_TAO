@@ -5,18 +5,19 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_ECG_UDP_Out_Endpoint::TAO_ECG_UDP_Out_Endpoint ()
-  : request_id_generator_ (static_cast<CORBA::ULong> (ACE_OS::time (0))),
+  : request_id_generator_ (static_cast<CORBA::ULong> (ACE_OS::time (nullptr))),
     port_number_ (0),
     if_count_ (0),
-    ifs_ (nullptr)
+    ifs_ {}
 {
 }
 
 ACE_INLINE
 TAO_ECG_UDP_Out_Endpoint::TAO_ECG_UDP_Out_Endpoint (const TAO_ECG_UDP_Out_Endpoint& rhs)
-  : port_number_ (0),
+  : request_id_generator_ (rhs.request_id_generator_.load ()),
+    port_number_ (0),
     if_count_ (0),
-    ifs_ (nullptr)
+    ifs_ {}
 {
   *this = rhs;
 }

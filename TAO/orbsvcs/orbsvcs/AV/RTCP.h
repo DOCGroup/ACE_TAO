@@ -117,7 +117,7 @@ public:
   TAO_AV_RTCP_Flow_Factory ();
   ~TAO_AV_RTCP_Flow_Factory () override;
   int init (int argc, ACE_TCHAR *argv[]) override;
-  int match_protocol (const char *flow_string) override;
+  int match_protocol (char const *flow_string) override;
   TAO_AV_Protocol_Object *make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                 TAO_Base_StreamEndPoint *endpoint,
                                                 TAO_AV_Flow_Handler *handler,
@@ -136,7 +136,6 @@ public:
   /// RTCP callback.
   TAO_AV_RTCP_Callback ();
 
-  /// virtual destructor.
   ~TAO_AV_RTCP_Callback () override;
 
   /// Called during Streamctrl->start.
@@ -151,11 +150,11 @@ public:
   /// Called when a frame arrives for a FlowConsumer.
   int receive_frame (ACE_Message_Block *frame,
                      TAO_AV_frame_info *frame_info = nullptr,
-                     const ACE_Addr &peer_address = ACE_Addr::sap_any) override;
+                     ACE_Addr const &peer_address = ACE_Addr::sap_any) override;
   int send_frame (ACE_Message_Block *frame);
 
   int receive_control_frame (ACE_Message_Block *frame,
-                             const ACE_Addr &peer_address = ACE_Addr::sap_any) override;
+                             ACE_Addr const &peer_address = ACE_Addr::sap_any) override;
 
   /// Called during Streamctrl->destroy i.e tear_down  of the stream
   /// @@coryan:Call it handle_destroy or handle_close.
@@ -172,15 +171,20 @@ public:
   void ts_offset (ACE_UINT32 offset);
 
 protected:
+  int add_input_channel (ACE_UINT32 ssrc,
+                         ACE_Addr const *peer_address,
+                         RTCP_Channel_In *&channel);
+
+  /// Owns channels stored in the map; the callback destructor deletes them.
   ACE_Hash_Map_Manager<ACE_UINT32, RTCP_Channel_In*, ACE_Null_Mutex> inputs_;
   RTCP_Channel_Out output_;
-  int timeout_;
-  int timestamp_offset_;
-  int sdes_count_;
+  int timeout_ {};
+  int timestamp_offset_ {};
+  int sdes_count_ {};
 
-  int is_initial_timeout_;
-  int avg_rtcp_size_;
-  int packet_size_;
+  bool is_initial_timeout_ {true};
+  int avg_rtcp_size_ {};
+  int packet_size_ {};
 };
 
 class RTP_Packet;
@@ -193,21 +197,19 @@ class TAO_AV_Export TAO_AV_RTCP_Object
   : public TAO_AV_Protocol_Object
 {
 public:
-  /// constructor.
   TAO_AV_RTCP_Object (TAO_AV_Callback *client_cb,
                       TAO_AV_RTCP_Callback *&rtcp_cb,
                       TAO_AV_Transport *transport = nullptr);
 
-  /// Destructor
   ~TAO_AV_RTCP_Object () override;
 
   int handle_input () override;
   int handle_control_input (ACE_Message_Block *frame,
-                            const ACE_Addr &peer_address) override;
+                            ACE_Addr const &peer_address) override;
   virtual int handle_control_output (ACE_Message_Block *frame);
 
   /// set/get policies.
-  int set_policies (const TAO_AV_PolicyList &policy_list) override;
+  int set_policies (TAO_AV_PolicyList const &policy_list) override;
 
   /// start/stop the flow.
   int start () override;
@@ -218,11 +220,11 @@ public:
                   TAO_AV_frame_info *frame_info = nullptr) override;
 
   /// send a frame in iovecs.
-  int send_frame (const iovec *iov,
+  int send_frame (iovec const *iov,
                   int iovcnt,
                   TAO_AV_frame_info *frame_info = nullptr) override;
 
-  int send_frame (const char *buf,
+  int send_frame (char const *buf,
                   size_t len) override;
 
   /// end the stream.

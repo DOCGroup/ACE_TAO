@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TOKEN_REQUEST_REPLY_H
 #define ACE_TOKEN_REQUEST_REPLY_H
 #include /**/ "ace/pre.h"
@@ -57,7 +56,6 @@ public:
     TRY_ACQUIRE
   };
 
-  /// Default constructor.
   ACE_Token_Request () = default;
 
   /**
@@ -119,9 +117,8 @@ public:
   /// Set the timeout.
   void options (const ACE_Synch_Options &options);
 
-  // = Set/get the name of the token and the client id.  The set
-  // method is combined to make it easier on us.  We're copying the
-  // names as a contiguous buffer.
+  /// Get the token name and client ID, or set both names in one contiguous
+  /// buffer.
   ACE_TCHAR *token_name () const;
   ACE_TCHAR *client_id () const;
   void token_name (const ACE_TCHAR *token_name, const ACE_TCHAR *client_id);
@@ -137,9 +134,8 @@ public:
   void dump () const;
 
 private:
-  // = The 5 fields in the <Transfer> struct are transmitted to the server.
-  // The remaining 2 fields are not tranferred -- they are used only on
-  // the server-side to simplify lookups.
+  /// The request fields are transmitted to the server; the name pointers
+  /// below are server-side lookup helpers.
 
   struct Transfer
   {
@@ -161,7 +157,7 @@ private:
     /// this only makes sense when operation type is renew
     ACE_UINT32 notify_;
 
-    // = ACE_Synch_Options stuff
+    /// Timeout fields copied from ACE_Synch_Options.
 
     /// Indicates if we should block forever.  If 1, then <secTimeout_>
     /// and <usecTimeout_> indicates how long we should wait.  If 0,
@@ -203,7 +199,6 @@ private:
 class ACE_Export ACE_Token_Reply
 {
 public:
-  /// Default constructor.
   ACE_Token_Reply ();
 
   /// Get the length of the encoded/decoded message.

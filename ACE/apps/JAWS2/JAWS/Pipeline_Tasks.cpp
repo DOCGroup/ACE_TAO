@@ -5,7 +5,6 @@
 #include "JAWS/IO_Handler.h"
 #include "JAWS/Policy.h"
 
-
 JAWS_Pipeline_Handler::JAWS_Pipeline_Handler ()
   : policy_ (0)
 {
@@ -90,7 +89,10 @@ JAWS_Pipeline_Accept_Task::handle_put (JAWS_Data_Block *data,
   JAWS_IO_Handler *handler = data->io_handler ();
   JAWS_Dispatch_Policy *policy = this->policy ();
 
-  if (policy == 0) policy = data->policy ();
+  if (policy == 0)
+  {
+    policy = data->policy ();
+  }
 
   // data->policy ()->update (handler);
 
@@ -176,16 +178,14 @@ JAWS_Pipeline_Done_Task::put (ACE_Message_Block *mb, ACE_Time_Value *)
   JAWS_Data_Block *data = dynamic_cast<JAWS_Data_Block *> (mb);
 
   JAWS_IO_Handler *handler = data->io_handler ();
-  JAWS_Dispatch_Policy *policy = this->policy ();
-  if (policy == 0) policy = data->policy ();
-
-  // JAWS_IO *io = policy->io ();
 
   data->task (0);
   data->io_handler (0);
 
   if (handler)
+  {
     handler->done ();
+  }
 
   // hack, let Concurrency know we are done.
   return -2;

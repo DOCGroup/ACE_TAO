@@ -18,7 +18,10 @@
 #include "tao/ORB.h"
 #include "Command.h"
 
+#include <memory>
+
 class TAO_Notify_Tests_Application_Command;
+class TAO_Notify_Tests_Priority_Mapping;
 
 /**
  * @class TAO_Notify_Tests_Application_Command
@@ -28,21 +31,19 @@ class TAO_Notify_Tests_Application_Command;
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Application_Command : public TAO_Notify_Tests_Command
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_Application_Command ();
 
-  /// Destructor
   ~TAO_Notify_Tests_Application_Command ();
 
   /// Parse args and populate options.
-  virtual void init (ACE_Arg_Shifter& arg_shifter);
+  void init (ACE_Arg_Shifter& arg_shifter) override;
 
   /// Execute the command.
-  virtual void execute_i ();
+  void execute_i () override;
 
   /// Get the command name.
-  virtual const char* get_name ();
-  static const char* name ();
+  char const* get_name () override;
+  static char const *name ();
 
 protected:
   enum COMMAND
@@ -58,9 +59,13 @@ protected:
 
   /// Flag used with the DUMP_STATE command that asks for all samples to be put into the
   /// output data file.
-  int dump_samples_;
+  bool dump_samples_ {};
 
-  ///= Handlers
+  /// Owns the priority mapping registered as a borrowed pointer with the lookup manager.
+  std::unique_ptr<TAO_Notify_Tests_Priority_Mapping> priority_mapping_;
+
+  /// @name Command handlers
+  /// @{
   virtual void handle_init ();
   void handle_run ();
   void handle_wait_for_completion ();
@@ -68,6 +73,7 @@ protected:
   void handle_dump_stats ();
   void handle_signal_peer ();
   void handle_wait_to_start ();
+  /// @}
 };
 
 #include /**/ "ace/post.h"

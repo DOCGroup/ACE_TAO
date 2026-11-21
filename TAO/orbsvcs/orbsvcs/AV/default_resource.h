@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_AV_DEFAULT_RESOURCE_H
 #define TAO_AV_DEFAULT_RESOURCE_H
 #include /**/ "ace/pre.h"
@@ -37,10 +36,8 @@ class TAO_AV_Export TAO_AV_Default_Resource_Factory
   : public TAO_AV_Resource_Factory
 {
 public:
-  /// Constructor.
   TAO_AV_Default_Resource_Factory ();
 
-  /// Destructor.
   ~TAO_AV_Default_Resource_Factory () override;
   TAO_AV_Default_Resource_Factory (TAO_AV_Default_Resource_Factory const &) = delete;
   TAO_AV_Default_Resource_Factory &operator= (TAO_AV_Default_Resource_Factory const &) = delete;
@@ -50,7 +47,7 @@ public:
   /**
    * @name Service Configurator Hooks
    */
-  //@{
+  /// @{
   /// Dynamic linking hook
   int init (int argc, ACE_TCHAR *argv[]) override;
 };

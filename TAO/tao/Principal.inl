@@ -8,7 +8,9 @@ CORBA::Principal::_decr_refcount ()
   unsigned long const new_count = --this->refcount_;
 
   if (new_count == 0)
-    delete this;
+    {
+      delete this;
+    }
 
   return new_count;
 }
@@ -19,7 +21,6 @@ CORBA::Principal::_incr_refcount ()
 {
   return ++this->refcount_;
 }
-
 
 ACE_INLINE
 CORBA::Principal *
@@ -32,7 +33,6 @@ CORBA::Principal::_duplicate (CORBA::Principal * x)
 
   return x;
 }
-
 
 ACE_INLINE
 CORBA::Principal *

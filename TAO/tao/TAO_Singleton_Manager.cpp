@@ -13,7 +13,7 @@
 namespace
 {
   // Singleton instance pointer.
-  TAO_Singleton_Manager * the_instance = nullptr;
+  TAO_Singleton_Manager * the_instance {};
 }
 
 #if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1)
@@ -122,7 +122,7 @@ TAO_Singleton_Manager::instance ()
   // process.  So, it's not thread safe.
   if (the_instance == nullptr)
     {
-      TAO_Singleton_Manager *instance_pointer = nullptr;
+      TAO_Singleton_Manager *instance_pointer {};
 
       ACE_NEW_RETURN (instance_pointer,
                       TAO_Singleton_Manager,
@@ -205,7 +205,9 @@ TAO_Singleton_Manager::init (int register_with_object_manager)
                (ACE_CLEANUP_FUNC) TAO_SINGLETON_MANAGER_CLEANUP_DESTROYER_NAME,
                nullptr,
                typeid (*this).name ()) != 0)
+      {
         return -1;
+      }
 
       this->registered_with_object_manager_ = register_with_object_manager;
     }
@@ -260,7 +262,9 @@ TAO_Singleton_Manager::fini ()
   this->object_manager_state_ = OBJ_MAN_SHUT_DOWN;
 
   if (this == the_instance)
+  {
     the_instance = nullptr;
+  }
 
   if (this->dynamically_allocated_)
     {

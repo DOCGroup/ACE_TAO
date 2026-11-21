@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/// -*- C++ -*-
 
 #ifdef _SECURITY_ADMIN_IDL_
 #define _SECURITY_ADMIN_IDL_
@@ -11,7 +11,6 @@ module SecurityAdmin {
 
 #   pragma version SecurityAdmin 1.5
 
-    // interface AccessPolicy
     interface AccessPolicy : CORBA::Policy {
 
 #   pragma version AccessPolicy 1.5
@@ -26,7 +25,6 @@ module SecurityAdmin {
         );
     };
 
-    // interface DomainAccessPolicy
     interface DomainAccessPolicy : AccessPolicy {
 
 #    pragma version DomainAccessPolicy 1.5
@@ -64,7 +62,6 @@ module SecurityAdmin {
         );
     };
 
-    // interface AuditPolicy
     interface AuditPolicy : CORBA::Policy {
 
 # pragma version AuditPolicy 1.5
@@ -100,7 +97,6 @@ module SecurityAdmin {
         );
     };
 
-    // interface SecureInvocationPolicy
     interface SecureInvocationPolicy : CORBA::Policy {
 
 #    pragma version SecureInvocationPolicy 1.5
@@ -119,7 +115,6 @@ module SecurityAdmin {
         );
     };
 
-    // interface DelegationPolicy
     interface DelegationPolicy : CORBA::Policy {
 
 # pragma version DelegationPolicy 1.5

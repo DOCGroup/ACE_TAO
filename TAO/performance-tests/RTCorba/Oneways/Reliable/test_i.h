@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_RELIABLE_TEST_I_H
 #define TAO_RELIABLE_TEST_I_H
 
@@ -23,10 +22,10 @@
 class Test_i : public POA_Test
 {
 public:
-  /// ctor
-  Test_i (CORBA::ORB_ptr orb);
+  explicit Test_i (CORBA::ORB_ptr orb);
 
-  // = The Test methods.
+  /// @name Test methods
+  /// @{
   void oneway_payload_test (const Test::data &d);
 
   void oneway_work_test (CORBA::ULong work);
@@ -34,6 +33,7 @@ public:
   void twoway_work_test (CORBA::ULong work);
 
   void shutdown ();
+  /// @}
 
 private:
   /// The ORB

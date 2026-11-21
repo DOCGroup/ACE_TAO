@@ -33,7 +33,9 @@ ACE_Typed_SV_Message_Queue<T>::recv (ACE_Typed_SV_Message<T> &mb,
                                mb.type (),
                                mflags);
   if (length != -1)
-    mb.length (length);
+    {
+      mb.length (length);
+    }
 
   return length;
 }

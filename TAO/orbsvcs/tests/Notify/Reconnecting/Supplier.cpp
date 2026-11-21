@@ -6,17 +6,19 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_strings.h"
 
+#include <cstdlib>
+#include <cstring>
 
-static const char NOTIFY_FACTORY_NAME[] = "NotifyEventChannelFactory";
-static const char NAMING_SERVICE_NAME[] = "NameService";
+static constexpr char NOTIFY_FACTORY_NAME[] = "NotifyEventChannelFactory";
+static constexpr char NAMING_SERVICE_NAME[] = "NameService";
 
 ///////////////////////////
 // StructuredPushSupplier_i
 
 void
 StructuredPushSupplier_i::subscription_change (
-    const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed)
+    CosNotification::EventTypeSeq const& added,
+    CosNotification::EventTypeSeq const& removed)
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);
@@ -24,7 +26,6 @@ StructuredPushSupplier_i::subscription_change (
     ACE_TEXT ("(%P,%t) Supplier StructuredPushSupplier received subscription change\n")
     ));
 }
-
 
 void
 StructuredPushSupplier_i::disconnect_structured_push_supplier ()
@@ -39,8 +40,8 @@ StructuredPushSupplier_i::disconnect_structured_push_supplier ()
 
 void
 SequencePushSupplier_i::subscription_change (
-    const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed)
+    CosNotification::EventTypeSeq const& added,
+    CosNotification::EventTypeSeq const& removed)
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);
@@ -62,8 +63,8 @@ SequencePushSupplier_i::disconnect_sequence_push_supplier ()
 
 void
 AnyPushSupplier_i::subscription_change (
-    const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed)
+    CosNotification::EventTypeSeq const& added,
+    CosNotification::EventTypeSeq const& removed)
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);
@@ -71,7 +72,6 @@ AnyPushSupplier_i::subscription_change (
     ACE_TEXT ("(%P,%t) Supplier AnyPushSupplier received subscription change\n")
     ));
 }
-
 
 void
 AnyPushSupplier_i::disconnect_push_supplier ()
@@ -86,8 +86,6 @@ AnyPushSupplier_i::disconnect_push_supplier ()
 
 ReconnectionCallback_i::ReconnectionCallback_i (Supplier_Main & supplier_main)
   : supplier_main_ (supplier_main)
-  , id_is_valid_ (false)
-  , reconnect_count_ (0)
 {
 }
 
@@ -130,7 +128,6 @@ ReconnectionCallback_i::~ReconnectionCallback_i ()
   // if the fini method is not called.
 }
 
-
 void
 ReconnectionCallback_i::fini ()
 {
@@ -166,39 +163,20 @@ ReconnectionCallback_i::init (
   this->id_is_valid_ = true;
 }
 
-
 /////////////////
 // Supplier_Main
 
 Supplier_Main::Supplier_Main ()
-  : verbose_ (false)
-  , mode_ (MODE_ANY)
-  , send_ (10)
-  , use_naming_service_ (true)
-  , serial_number_ (0)
-  , disconnect_on_exit_ (false)
-  , id_file_ (ACE_TEXT ("supplier.ids"))
-  , pause_ (0)
-  , ec_id_ (0)
-  , sa_id_(0)
-  , structured_proxy_id_(0)
-  , sequence_proxy_id_(0)
-  , any_proxy_id_(0)
-  , reconnection_callback_ (*this)
-  , reconnecting_ (false)
-{
-}
-
-Supplier_Main::~Supplier_Main ()
+  : reconnection_callback_ (*this)
 {
 }
 
 int
 Supplier_Main::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  int result = 0;
+  int result {};
   int narg = 1;
-  bool corba_arg = false;
+  bool corba_arg {};
   while (narg < argc && result == 0)
   {
     int consumed = parse_single_arg (argc - narg, &argv[narg]);
@@ -233,7 +211,7 @@ Supplier_Main::parse_args (int argc, ACE_TCHAR *argv[])
 int
 Supplier_Main::parse_single_arg (int argc, ACE_TCHAR *argv[])
 {
-  int consumed = 0;
+  int consumed {};
   if (ACE_OS::strcasecmp (argv[0], ACE_TEXT ("-v")) == 0)
   {
     this->verbose_ = true;
@@ -390,7 +368,7 @@ Supplier_Main::save_ids()
   FILE *idf =
     ACE_OS::fopen (this->id_file_.c_str (), "w");
 
-  if (idf != 0)
+  if (idf != nullptr)
   {
     int endflag = 12345;
     int imode = static_cast<int>(this->mode_);
@@ -410,31 +388,35 @@ Supplier_Main::save_ids()
 bool
 Supplier_Main::load_ids()
 {
-  bool ok = false;
+  bool ok {};
   FILE *idf =
     ACE_OS::fopen (this->id_file_.c_str (), "r");
 
-  if (idf != 0)
+  if (idf != nullptr)
   {
-    int field = 0;
+    int field {};
 
-    char buffer[100] = ""; // because ACE fgets doesn't put a null if the file is empty
+    char buffer[100] {}; // Keep the buffer terminated if the file is empty.
     ACE_OS::fgets (buffer, sizeof(buffer), idf);
     ACE_OS::fclose (idf);
     char * pb = buffer;
-    while (!ok && *pb != 0)
+    while (!ok && *pb != '\0')
     {
-      char * eb = ACE_OS::strchr (pb, ',');
-      char * nb = eb + 1;
-      if (eb == 0)
+      char * eb = std::strchr (pb, ',');
+      char * nb {};
+      if (eb == nullptr)
       {
-        eb = pb + ACE_OS::strlen (pb);
+        eb = pb + std::strlen (pb);
         nb = eb;
       }
-      *eb = 0;
+      else
+      {
+        nb = eb + 1;
+      }
+      *eb = '\0';
       if (pb < eb)
       {
-        int value = ACE_OS::atoi(pb);
+        int const value = std::atoi (pb);
         switch (++field)
         {
         case 1:
@@ -500,7 +482,6 @@ Supplier_Main::reconnect (
   }
 }
 
-
 int
 Supplier_Main::resolve_naming_service ()
 {
@@ -551,7 +532,7 @@ Supplier_Main::resolve_notify_factory ()
 void
 Supplier_Main::init_event_channel ()
 {
-  bool ok = false;
+  bool ok {};
   if (this->reconnecting_)
   {
     try
@@ -577,12 +558,12 @@ Supplier_Main::init_event_channel ()
   if (!ok && this->channel_file_.length () > 0)
   {
     FILE * chf = ACE_OS::fopen (this->channel_file_.c_str (), "r");
-    if (chf != 0)
+    if (chf != nullptr)
     {
-      char buffer[100];
+      char buffer[100] {};
       ACE_OS::fgets (buffer, sizeof(buffer), chf);
       ACE_OS::fclose (chf);
-      this->ec_id_ = ACE_OS::atoi (buffer);
+      this->ec_id_ = std::atoi (buffer);
 
       try
       {
@@ -612,7 +593,7 @@ Supplier_Main::init_event_channel ()
   {
     CosNotification::QoSProperties qosprops (7);
     qosprops.length (7);
-    CORBA::ULong i = 0;
+    CORBA::ULong i {};
     qosprops[i].name = CORBA::string_dup(CosNotification::EventReliability);
     qosprops[i++].value <<= CosNotification::Persistent;
     qosprops[i].name = CORBA::string_dup(CosNotification::ConnectionReliability);
@@ -658,7 +639,7 @@ Supplier_Main::init_event_channel ()
   if (ok && this->channel_file_.length() > 0)
   {
     FILE * chf = ACE_OS::fopen (this->channel_file_.c_str (), "w");
-    if (chf != 0)
+    if (chf != nullptr)
     {
       ACE_OS::fprintf (chf, "%d\n", static_cast<int> (this->ec_id_));
       ACE_OS::fclose (chf);
@@ -671,7 +652,7 @@ CosNotifyChannelAdmin::AdminID default_admin_id = static_cast<CosNotifyChannelAd
 void
 Supplier_Main::init_supplier_admin ()
 {
-  bool ok = false;
+  bool ok {};
   if (this->reconnecting_ && this->sa_id_ != default_admin_id)
   {
     try
@@ -736,7 +717,7 @@ Supplier_Main::init_supplier_admin ()
 void
 Supplier_Main::init_structured_proxy_consumer ()
 {
-  bool ok = false;
+  bool ok {};
   CosNotifyChannelAdmin::ProxyConsumer_var proxy;
   if (this->reconnecting_)
   {
@@ -810,7 +791,7 @@ Supplier_Main::init_structured_proxy_consumer ()
 void
 Supplier_Main::init_sequence_proxy_consumer ()
 {
-  bool ok = false;
+  bool ok {};
   CosNotifyChannelAdmin::ProxyConsumer_var proxy;
   if (this->reconnecting_)
   {
@@ -886,7 +867,7 @@ Supplier_Main::init_sequence_proxy_consumer ()
 void
 Supplier_Main::init_any_proxy_consumer ()
 {
-  bool ok = false;
+  bool ok {};
   CosNotifyChannelAdmin::ProxyConsumer_var proxy;
   if (this->reconnecting_)
   {
@@ -1122,11 +1103,11 @@ void Supplier_Main::send_any_event ()
 
 int Supplier_Main::run ()
 {
-  int result = 0;
-  bool paused = false;
-  size_t reconnections = 0;
+  int result {};
+  bool paused {};
+  size_t reconnections {};
 
-  size_t send = 0;
+  size_t send {};
   while ( send < this->send_)
   {
     ACE_Time_Value tv(0, 100 * 1000);
@@ -1143,7 +1124,7 @@ int Supplier_Main::run ()
       }
       reconnections = this->reconnection_callback_.reconnect_count ();
       FILE * pause_file = ACE_OS::fopen ("Supplier.paused", "w");
-      if (pause_file != 0)
+      if (pause_file != nullptr)
       {
         ACE_OS::fputs (ACE_TEXT ("paused\n"), pause_file);
         ACE_OS::fclose (pause_file);
@@ -1193,7 +1174,6 @@ int Supplier_Main::run ()
   return result;
 }
 
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
@@ -1212,7 +1192,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       app.fini ();
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
   {
     ex._tao_print_exception ("Error: Supplier::main\t\n");
     result = -1;

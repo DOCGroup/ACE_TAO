@@ -25,6 +25,8 @@
 #include "tao/debug.h"
 #include "ace/Reactor.h"
 
+#include <memory>
+
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.inl"
 #endif /* __ACE_INLINE__ */
@@ -33,8 +35,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_CEC_Reactive_ConsumerControl constructor for the Un-typed EC
 TAO_CEC_Reactive_ConsumerControl::
-     TAO_CEC_Reactive_ConsumerControl (const ACE_Time_Value &rate,
-                                       const ACE_Time_Value &timeout,
+     TAO_CEC_Reactive_ConsumerControl (ACE_Time_Value const &rate,
+                                       ACE_Time_Value const &timeout,
                                        unsigned int retries,
                                        TAO_CEC_EventChannel *ec,
                                        CORBA::ORB_ptr orb)
@@ -44,7 +46,7 @@ TAO_CEC_Reactive_ConsumerControl::
     adapter_ (this),
     event_channel_ (ec),
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-    typed_event_channel_ (0),
+    typed_event_channel_ (nullptr),
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
     orb_ (CORBA::ORB::_duplicate (orb))
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
@@ -60,8 +62,8 @@ TAO_CEC_Reactive_ConsumerControl::
 // TAO_CEC_Reactive_ConsumerControl constructor for the Typed EC
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 TAO_CEC_Reactive_ConsumerControl::
-     TAO_CEC_Reactive_ConsumerControl (const ACE_Time_Value &rate,
-                                       const ACE_Time_Value &timeout,
+     TAO_CEC_Reactive_ConsumerControl (ACE_Time_Value const &rate,
+                                       ACE_Time_Value const &timeout,
                                        unsigned int retries,
                                        TAO_CEC_TypedEventChannel *ec,
                                        CORBA::ORB_ptr orb)
@@ -69,7 +71,7 @@ TAO_CEC_Reactive_ConsumerControl::
     timeout_ (timeout),
     retries_ (retries),
     adapter_ (this),
-    event_channel_ (0),
+    event_channel_ (nullptr),
     typed_event_channel_ (ec),
     orb_ (CORBA::ORB::_duplicate (orb))
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
@@ -111,7 +113,7 @@ TAO_CEC_Reactive_ConsumerControl::query_consumers ()
 
 bool
 TAO_CEC_Reactive_ConsumerControl::need_to_disconnect (
-                                    PortableServer::ServantBase* proxy)
+                                    PortableServer::ServantBase *proxy)
 {
   bool disconnect = true;
 
@@ -119,7 +121,7 @@ TAO_CEC_Reactive_ConsumerControl::need_to_disconnect (
   if (this->typed_event_channel_)
     {
       // Typed EC
-      TAO_CEC_TypedEventChannel::ServantRetryMap::ENTRY* entry = 0;
+      TAO_CEC_TypedEventChannel::ServantRetryMap::ENTRY *entry {};
       if (this->typed_event_channel_->
           get_servant_retry_map ().find (proxy, entry) == 0)
         {
@@ -135,7 +137,7 @@ TAO_CEC_Reactive_ConsumerControl::need_to_disconnect (
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   // Un-typed EC
-  TAO_CEC_EventChannel::ServantRetryMap::ENTRY* entry = 0;
+  TAO_CEC_EventChannel::ServantRetryMap::ENTRY *entry {};
   if (this->event_channel_->
       get_servant_retry_map ().find (proxy, entry) == 0)
     {
@@ -155,13 +157,13 @@ TAO_CEC_Reactive_ConsumerControl::need_to_disconnect (
 
 void
 TAO_CEC_Reactive_ConsumerControl::successful_transmission (
-                                    PortableServer::ServantBase* proxy)
+                                    PortableServer::ServantBase *proxy)
 {
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   if (this->typed_event_channel_)
     {
       // Typed EC
-      TAO_CEC_TypedEventChannel::ServantRetryMap::ENTRY* entry = 0;
+      TAO_CEC_TypedEventChannel::ServantRetryMap::ENTRY *entry {};
       if (this->typed_event_channel_->
           get_servant_retry_map ().find (proxy, entry) == 0)
         {
@@ -173,7 +175,7 @@ TAO_CEC_Reactive_ConsumerControl::successful_transmission (
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   // Un-typed EC
-  TAO_CEC_EventChannel::ServantRetryMap::ENTRY* entry = 0;
+  TAO_CEC_EventChannel::ServantRetryMap::ENTRY *entry {};
   if (this->event_channel_->
       get_servant_retry_map ().find (proxy, entry) == 0)
     {
@@ -188,14 +190,14 @@ TAO_CEC_Reactive_ConsumerControl::successful_transmission (
 
 void
 TAO_CEC_Reactive_ConsumerControl::handle_timeout (
-      const ACE_Time_Value &,
-      const void *)
+      ACE_Time_Value const &,
+      void const *)
 {
   try
     {
       // Query the state of the Current object *before* we initiate
       // the iteration...
-      CORBA::PolicyTypeSeq types;
+      CORBA::PolicyTypeSeq const types;
       CORBA::PolicyList_var policies =
         this->policy_current_->get_policy_overrides (types);
 
@@ -208,19 +210,19 @@ TAO_CEC_Reactive_ConsumerControl::handle_timeout (
           // Query the state of the consumers...
           this->query_consumers ();
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
           // Ignore all exceptions
         }
 
       this->policy_current_->set_policy_overrides (policies.in (),
                                                    CORBA::SET_OVERRIDE);
-      for (CORBA::ULong i = 0; i != policies->length (); ++i)
+      for (CORBA::ULong i {}; i != policies->length (); ++i)
         {
           policies[i]->destroy ();
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore all exceptions
     }
@@ -233,7 +235,7 @@ TAO_CEC_Reactive_ConsumerControl::activate ()
   try
     {
       // Get the PolicyCurrent object
-      CORBA::Object_var tmp =
+      CORBA::Object_var const tmp =
         this->orb_->resolve_initial_references ("PolicyCurrent");
 
       this->policy_current_ =
@@ -260,15 +262,17 @@ TAO_CEC_Reactive_ConsumerControl::activate ()
         // Schedule the timer after these policies has been set, because the
         // handle_timeout uses these policies, if done in front, the channel
         // can crash when the timeout expires before initiazation is ready.
-        timer_id_ = this->reactor_->schedule_timer (&this->adapter_,
+        timer_id_ = this->reactor_->schedule_timer (std::addressof (this->adapter_),
                                                     0,
                                                     this->rate_,
                                                     this->rate_);
         if (timer_id_ == -1)
-         return -1;
+        {
+          return -1;
+        }
       }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return -1;
     }
@@ -280,12 +284,12 @@ TAO_CEC_Reactive_ConsumerControl::activate ()
 int
 TAO_CEC_Reactive_ConsumerControl::shutdown ()
 {
-  int r = 0;
+  int r {};
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   r = this->reactor_->cancel_timer (timer_id_);
 #endif /* TAO_HAS_CORBA_MESSAGING */
-  this->adapter_.reactor (0);
+  this->adapter_.reactor (nullptr);
   return r;
 }
 
@@ -303,7 +307,7 @@ TAO_CEC_Reactive_ConsumerControl::consumer_not_exist (
                       ACE_TEXT ("ProxyPushSupplier disconnected due to consumer_not_exist\n")));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("Reactive_ConsumerControl::consumer_not_exist"));
@@ -319,7 +323,7 @@ TAO_CEC_Reactive_ConsumerControl::consumer_not_exist (
     {
       proxy->disconnect_pull_supplier ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("Reactive_ConsumerControl::consumer_not_exist"));
@@ -345,7 +349,7 @@ TAO_CEC_Reactive_ConsumerControl::system_exception (
             }
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore all exceptions..
     }
@@ -361,8 +365,8 @@ TAO_CEC_ConsumerControl_Adapter::TAO_CEC_ConsumerControl_Adapter (
 
 int
 TAO_CEC_ConsumerControl_Adapter::handle_timeout (
-      const ACE_Time_Value &tv,
-      const void *arg)
+      ACE_Time_Value const &tv,
+      void const *arg)
 {
   this->adaptee_->handle_timeout (tv, arg);
   return 0;
@@ -376,25 +380,25 @@ TAO_CEC_Ping_Push_Consumer::work (TAO_CEC_ProxyPushSupplier *supplier)
   try
     {
       CORBA::Boolean disconnected;
-      CORBA::Boolean non_existent =
+      CORBA::Boolean const non_existent =
         supplier->consumer_non_existent (disconnected);
       if (non_existent && !disconnected)
         {
           this->control_->consumer_not_exist (supplier);
         }
     }
-  catch (const CORBA::OBJECT_NOT_EXIST& )
+  catch (CORBA::OBJECT_NOT_EXIST const &)
     {
       this->control_->consumer_not_exist (supplier);
     }
-  catch (const CORBA::TRANSIENT& )
+  catch (CORBA::TRANSIENT const &)
     {
       if (this->control_->need_to_disconnect (supplier))
         {
           this->control_->consumer_not_exist (supplier);
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore all exceptions
     }
@@ -408,25 +412,25 @@ TAO_CEC_Ping_Pull_Consumer::work (TAO_CEC_ProxyPullSupplier *supplier)
   try
     {
       CORBA::Boolean disconnected;
-      CORBA::Boolean non_existent =
+      CORBA::Boolean const non_existent =
         supplier->consumer_non_existent (disconnected);
       if (non_existent && !disconnected)
         {
           this->control_->consumer_not_exist (supplier);
         }
     }
-  catch (const CORBA::OBJECT_NOT_EXIST& )
+  catch (CORBA::OBJECT_NOT_EXIST const &)
     {
       this->control_->consumer_not_exist (supplier);
     }
-  catch (const CORBA::TRANSIENT& )
+  catch (CORBA::TRANSIENT const &)
     {
       if (this->control_->need_to_disconnect (supplier))
         {
           this->control_->consumer_not_exist (supplier);
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore all exceptions
     }

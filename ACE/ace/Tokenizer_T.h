@@ -45,7 +45,7 @@ public:
    * \sa preserve_designators
    * \sa preserve_designators
    */
-  ACE_Tokenizer_T (ACE_CHAR_T *buffer);
+  explicit ACE_Tokenizer_T (ACE_CHAR_T *buffer);
 
   /**
    * \a d is a delimiter.
@@ -158,7 +158,7 @@ protected:
   int is_preserve_designator (ACE_CHAR_T start, ACE_CHAR_T &stop, int &strip);
 
   ACE_CHAR_T *buffer_;
-  int index_;
+  int index_ {};
 
   /**
    * @class Preserve_Entry
@@ -189,7 +189,7 @@ protected:
   Preserve_Entry preserves_[MAX_PRESERVES];
 
   /// Pointer to the next free spot in preserves_.
-  int preserves_index_;
+  int preserves_index_ {};
 
   /**
    * @class Delimiter_Entry
@@ -217,7 +217,7 @@ protected:
   Delimiter_Entry delimiters_[MAX_DELIMITERS];
 
   /// Pointer to the next free space in delimiters_.
-  int delimiter_index_;
+  int delimiter_index_ {};
 };
 
 using ACE_Tokenizer = ACE_Tokenizer_T<ACE_TCHAR>;

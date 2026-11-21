@@ -12,6 +12,9 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Truncate.h"
 
+#include <cstring>
+#include <vector>
+
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Value_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
@@ -59,16 +62,13 @@ TAO::TypeCode::Value<StringType,
     && (enc << this->nfields_);
 
   if (!success)
-    return false;
-
-  Value_Field<StringType, TypeCodeType> const * const begin =
-    &this->fields_[0];
-  Value_Field<StringType, TypeCodeType> const * const end =
-    begin + this->nfields_;
-
-  for (Value_Field<StringType, TypeCodeType> const * i = begin; i != end; ++i)
     {
-      Value_Field<StringType, TypeCodeType> const & field = *i;
+      return false;
+    }
+
+  for (CORBA::ULong i {}; i < this->nfields_; ++i)
+    {
+      Value_Field<StringType, TypeCodeType> const & field = this->fields_[i];
 
       if (!(enc << Traits<StringType>::get_string (field.name))
           || !marshal (enc,
@@ -76,7 +76,9 @@ TAO::TypeCode::Value<StringType,
                        ACE_Utils::truncate_cast<CORBA::ULong> (
                            offset + enc.total_length ()))
           || !(enc << field.visibility))
-        return false;
+        {
+          return false;
+        }
     }
 
   return
@@ -114,7 +116,7 @@ template <typename StringType,
           typename TypeCodeType,
           class FieldArrayType,
           class RefCountPolicy>
-const TypeCodeType&
+TypeCodeType const &
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
@@ -127,7 +129,7 @@ template <typename StringType,
           typename TypeCodeType,
           class FieldArrayType,
           class RefCountPolicy>
-const FieldArrayType&
+FieldArrayType const &
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
@@ -155,24 +157,30 @@ TAO::TypeCode::Value<StringType,
     tc->type_modifier ();
 
   if (tc_type_modifier != this->type_modifier_)
-    return false;
+    {
+      return false;
+    }
 
-  CORBA::TypeCode_var rhs_concrete_base_type =
+  CORBA::TypeCode_var const rhs_concrete_base_type =
     tc->concrete_base_type ();
 
   CORBA::Boolean const equal_concrete_base_types =
     this->equal (rhs_concrete_base_type.in ());
 
   if (!equal_concrete_base_types)
-    return false;
+    {
+      return false;
+    }
 
   CORBA::ULong const tc_nfields =
     tc->member_count ();
 
   if (tc_nfields != this->nfields_)
-    return false;
+    {
+      return false;
+    }
 
-  for (CORBA::ULong i = 0; i < this->nfields_; ++i)
+  for (CORBA::ULong i {}; i < this->nfields_; ++i)
     {
       Value_Field<StringType, TypeCodeType> const & lhs_field =
         this->fields_[i];
@@ -181,14 +189,18 @@ TAO::TypeCode::Value<StringType,
       CORBA::Visibility const rhs_visibility = tc->member_visibility (i);
 
       if (lhs_visibility != rhs_visibility)
-        return false;
+        {
+          return false;
+        }
 
       char const * const lhs_name =
         Traits<StringType>::get_string (lhs_field.name);
       char const * const rhs_name = tc->member_name (i);
 
       if (std::strcmp (lhs_name, rhs_name) != 0)
-        return false;
+        {
+          return false;
+        }
 
       CORBA::TypeCode_ptr const lhs_tc =
         Traits<StringType>::get_typecode (lhs_field.type);
@@ -199,7 +211,9 @@ TAO::TypeCode::Value<StringType,
         lhs_tc->equal (rhs_tc.in ());
 
       if (!equal_members)
-        return false;
+        {
+          return false;
+        }
     }
 
   return true;
@@ -219,16 +233,20 @@ TAO::TypeCode::Value<StringType,
     tc->type_modifier ();
 
   if (tc_type_modifier != this->type_modifier_)
-    return false;
+    {
+      return false;
+    }
 
-  CORBA::TypeCode_var rhs_concrete_base_type =
+  CORBA::TypeCode_var const rhs_concrete_base_type =
     tc->concrete_base_type ();
 
   CORBA::Boolean const equivalent_concrete_base_types =
     this->equivalent (rhs_concrete_base_type.in ());
 
   if (!equivalent_concrete_base_types)
-    return false;
+    {
+      return false;
+    }
 
   // Perform a structural comparison, excluding the name() and
   // member_name() operations.
@@ -237,9 +255,11 @@ TAO::TypeCode::Value<StringType,
     tc->member_count ();
 
   if (tc_nfields != this->nfields_)
-    return false;
+    {
+      return false;
+    }
 
-  for (CORBA::ULong i = 0; i < this->nfields_; ++i)
+  for (CORBA::ULong i {}; i < this->nfields_; ++i)
     {
       Value_Field<StringType, TypeCodeType> const & lhs_field =
         this->fields_[i];
@@ -250,7 +270,9 @@ TAO::TypeCode::Value<StringType,
         tc->member_visibility (i);
 
       if (lhs_visibility != rhs_visibility)
-        return false;
+        {
+          return false;
+        }
 
       CORBA::TypeCode_ptr const lhs_tc =
         Traits<StringType>::get_typecode (lhs_field.type);
@@ -261,7 +283,9 @@ TAO::TypeCode::Value<StringType,
         lhs_tc->equivalent (rhs_tc.in ());
 
       if (!equiv_types)
-        return false;
+        {
+          return false;
+        }
     }
 
   return true;
@@ -277,7 +301,7 @@ TAO::TypeCode::Value<StringType,
                      FieldArrayType,
                      RefCountPolicy>::get_compact_typecode_i () const
 {
-  ACE_Array_Base<Value_Field<CORBA::String_var, CORBA::TypeCode_var> >
+  std::vector<Value_Field<CORBA::String_var, CORBA::TypeCode_var> >
     tc_fields (this->nfields_);
 
   if (this->nfields_ > 0)
@@ -287,7 +311,7 @@ TAO::TypeCode::Value<StringType,
 
       static char const empty_name[] = "";
 
-      for (CORBA::ULong i = 0; i < this->nfields_; ++i)
+      for (CORBA::ULong i {}; i < this->nfields_; ++i)
         {
           // Member names will be stripped, i.e. not embedded within
           // the compact TypeCode.
@@ -376,7 +400,9 @@ TAO::TypeCode::Value<StringType,
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
   if (index >= this->nfields_)
-    throw ::CORBA::TypeCode::Bounds ();
+    {
+      throw ::CORBA::TypeCode::Bounds ();
+    }
 
   return Traits<StringType>::get_string (this->fields_[index].name);
 }
@@ -392,7 +418,9 @@ TAO::TypeCode::Value<StringType,
                      RefCountPolicy>::member_type_i (CORBA::ULong index) const
 {
   if (index >= this->nfields_)
-    throw ::CORBA::TypeCode::Bounds ();
+    {
+      throw ::CORBA::TypeCode::Bounds ();
+    }
 
   return
     CORBA::TypeCode::_duplicate (
@@ -410,7 +438,9 @@ TAO::TypeCode::Value<StringType,
                      RefCountPolicy>::member_visibility_i (CORBA::ULong index) const
 {
   if (index >= this->nfields_)
-    throw ::CORBA::TypeCode::Bounds ();
+    {
+      throw ::CORBA::TypeCode::Bounds ();
+    }
 
   return this->fields_[index].visibility;
 }

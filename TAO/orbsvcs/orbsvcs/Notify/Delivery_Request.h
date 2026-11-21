@@ -6,7 +6,6 @@
 #include "orbsvcs/Notify/notify_serv_export.h"
 #include "orbsvcs/Notify/Topology_Object.h"
 #include "orbsvcs/Notify/Event.h"
-#include <ace/Vector_T.h>
 #include <ace/Bound_Ptr.h>
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,8 +24,6 @@ namespace TAO_Notify
 class Delivery_Request;
 /// A reference-counted smart pointer to a Delivery_Request.
 using Delivery_Request_Ptr = ACE_Strong_Bound_Ptr<Delivery_Request, TAO_SYNCH_MUTEX>;
-
-using Delivery_Request_Queue = ACE_Unbounded_Queue<Delivery_Request_Ptr>;
 
 // Forward declarations of TAO_Notify classes/pointers/collections referenced
 // in this header
@@ -65,6 +62,11 @@ public:
   /// a normal destructor.
   ~Delivery_Request ();
 
+  Delivery_Request (const Delivery_Request&) = delete;
+  Delivery_Request (Delivery_Request&&) = delete;
+  Delivery_Request& operator= (const Delivery_Request&) = delete;
+  Delivery_Request& operator= (Delivery_Request&&) = delete;
+
   /// \brief A method to indicate the delivery is complete.
   ///
   /// To be called by the delivery method associated with this delivery request.
@@ -100,23 +102,14 @@ public:
   /// expose routing slip method
   void dispatch (TAO_Notify_ProxySupplier * proxy_supplier, bool filter);
 
-  // Meaningless, but needed by ACE_Vector on some platforms (gcc2.x LynxOS)
-  bool operator == (const Delivery_Request & rhs) const;
-  // Meaningless, but needed by ACE_Vector on some platforms
-  bool  operator != (const Delivery_Request & rhs) const;
-
 private:
   /// No null constructor.
   Delivery_Request ();
-  /// No copy constructor.
-  Delivery_Request (const Delivery_Request & rhs);
-  /// no assignment operator
-  Delivery_Request & operator = (const Delivery_Request & rhs);
 
 private:
   Routing_Slip_Ptr routing_slip_;
   size_t request_id_;
-  ACE_CDR::Octet delivery_type_;
+  ACE_CDR::Octet delivery_type_ {};
   IdVec destination_id_;
 };
 } // namespace

@@ -10,28 +10,24 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Barrier.h"
 #include "ace/Thread_Manager.h"
 
-
 #if defined (ACE_HAS_THREADS)
 
+/// Arguments passed to each test thread.
 struct Tester_Args
-  // = TITLE
-  //     These arguments are passed into each test thread.
 {
   Tester_Args (ACE_Barrier &tb, int i)
     : tester_barrier_ (tb),
     n_iterations_ (i) {}
 
+  /// Reference to the tester barrier controlling each thread iteration.
   ACE_Barrier &tester_barrier_;
-  // Reference to the tester barrier.  This controls each iteration
-  // of the tester function running in every thread.
 
+  /// Number of iterations to run.
   int n_iterations_;
-  // Number of iterations to run.
 };
 
 // Iterate <n_iterations> time printing off a message and "waiting"
@@ -42,15 +38,17 @@ wait_tester (Tester_Args *args)
 {
   for (int iterations = 1;
        iterations <= args->n_iterations_;
-       iterations++)
+       ++iterations)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) in iteration %d\n"),
                   iterations));
 
       // Block until all other threads have waited, then continue.
       if (args->tester_barrier_.wait () != 0)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("wait failed")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("wait failed")));
+        }
     }
 
   return nullptr;
@@ -63,12 +61,16 @@ static void *
 shut_tester (Tester_Args *args)
 {
   if (args->tester_barrier_.wait () == 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%t) wait succeeded, should have shut down\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%t) wait succeeded, should have shut down\n")));
+    }
   else if (errno != ESHUTDOWN)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%t) wait failed, expecting ESHUTDOWN, %p\n"),
-                ACE_TEXT ("got")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%t) wait failed, expecting ESHUTDOWN, %p\n"),
+                  ACE_TEXT ("got")));
+    }
   return nullptr;
 }
 
@@ -89,9 +91,9 @@ run_main (int, ACE_TCHAR *[])
 
   for (size_t iteration_count = 0;
        iteration_count < ACE_MAX_ITERATIONS;
-       iteration_count++)
+       ++iteration_count)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("starting iteration %d\n"),
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("starting iteration %B\n"),
                   iteration_count));
 
       if (ACE_Thread_Manager::instance ()->spawn_n
@@ -99,9 +101,10 @@ run_main (int, ACE_TCHAR *[])
            (ACE_THR_FUNC) wait_tester,
            (void *) &args,
            THR_NEW_LWP | THR_JOINABLE) == -1)
-
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("spawn_n")), 1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("spawn_n")), 1);
+        }
 
       ACE_Thread_Manager::instance ()->wait ();
     }
@@ -116,7 +119,9 @@ run_main (int, ACE_TCHAR *[])
        (ACE_THR_FUNC) shut_tester,
        (void *) &shut_args,
        THR_NEW_LWP | THR_JOINABLE) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n")), 1);
+  }
 
   shut_barrier.shutdown ();
   ACE_Thread_Manager::instance ()->wait ();

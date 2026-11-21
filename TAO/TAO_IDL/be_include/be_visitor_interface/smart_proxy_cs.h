@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_INTERFACE_SMART_PROXY_CS_H_
 #define _BE_INTERFACE_SMART_PROXY_CS_H_
 

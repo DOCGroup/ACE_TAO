@@ -11,7 +11,9 @@ void
 TAO_LF_Invocation_Event::state_changed_i (LFS_STATE new_state)
 {
   if (this->state_ == new_state)
+  {
     return;
+  }
 
   // Validate the state change
   if (this->state_ == TAO_LF_Event::LFS_IDLE)
@@ -19,7 +21,9 @@ TAO_LF_Invocation_Event::state_changed_i (LFS_STATE new_state)
       // From the LFS_IDLE state we can only become active.
       if (new_state == TAO_LF_Event::LFS_ACTIVE
           || new_state == TAO_LF_Event::LFS_CONNECTION_CLOSED)
+      {
         this->state_ = new_state;
+      }
       return;
     }
   else if (this->state_ == TAO_LF_Event::LFS_ACTIVE)
@@ -75,7 +79,9 @@ TAO_LF_Invocation_Event::is_state_final () const
 {
   if (this->state_ == TAO_LF_Event::LFS_TIMEOUT ||
       this->state_ == TAO_LF_Event::LFS_FAILURE)
+  {
     return true;
+  }
 
   return false;
 }

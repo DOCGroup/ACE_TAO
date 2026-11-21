@@ -61,15 +61,15 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
 
       struct t_bind *localaddr;
 
-      localaddr = (struct t_bind *)
-        ACE_OS::t_alloc (new_stream.get_handle (), T_BIND, T_ADDR);
+      localaddr = reinterpret_cast<struct t_bind *> (
+        ACE_OS::t_alloc (new_stream.get_handle (), T_BIND, T_ADDR));
 
       if (localaddr == 0)
         result = -1;
       else
         {
-          int one = 1;
 #if !defined (ACE_HAS_FORE_ATM_XTI)
+          int one = 1;
           // Reusing the address causes problems with FORE's API. The
           // issue may be that t_optmgmt isn't fully supported by
           // FORE. t_errno is TBADOPT after the t_optmgmt call so
@@ -87,16 +87,14 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
             {
               void *addr_buf = local_sap.get_addr ();
               localaddr->addr.len = local_sap.get_size ();
-              ACE_OS::memcpy(localaddr->addr.buf,
-                             addr_buf,
-                             localaddr->addr.len);
+              ACE_OS::memcpy(localaddr->addr.buf, addr_buf, localaddr->addr.len);
 
               if (ACE_OS::t_bind (new_stream.get_handle (),
                                   localaddr,
                                   localaddr) == -1)
                 result = -1;
 
-              ACE_OS::t_free ((char *) localaddr,
+              ACE_OS::t_free (reinterpret_cast<char *> (localaddr),
                               T_BIND);
             }
         }
@@ -111,10 +109,10 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
   else if (ACE_OS::t_bind (new_stream.get_handle (), 0, 0) == -1)
     return -1;
 
-  struct t_call *callptr = nullptr;
+  struct t_call *callptr {};
 
-  callptr = (struct t_call *)
-    ACE_OS::t_alloc (new_stream.get_handle (), T_CALL, T_ADDR);
+  callptr = reinterpret_cast<struct t_call *> (
+    ACE_OS::t_alloc (new_stream.get_handle (), T_CALL, T_ADDR));
 
   if (callptr == 0)
     {
@@ -124,15 +122,13 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
 
   void *addr_buf = remote_sap.get_addr ();
   callptr->addr.len = remote_sap.get_size ();
-  ACE_OS::memcpy (callptr->addr.buf,
-                  addr_buf,
-                  callptr->addr.len);
+  ACE_OS::memcpy (callptr->addr.buf, addr_buf, callptr->addr.len);
   //callptr->addr.buf = (char *) remote_sap.get_addr ();
 
   if (udata != 0)
-    ACE_OS::memcpy ((void *) &callptr->udata, (void *) udata, sizeof *udata);
+    ACE_OS::memcpy (&callptr->udata, udata, sizeof *udata);
   if (opt != 0)
-    ACE_OS::memcpy ((void *) &callptr->opt, (void *) opt, sizeof *opt);
+    ACE_OS::memcpy (&callptr->opt, opt, sizeof *opt);
 
   // Connect to remote endpoint.
 #if defined (ACE_HAS_FORE_ATM_XTI)
@@ -185,7 +181,7 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
       new_stream.set_handle (ACE_INVALID_HANDLE);
     }
 
-  if (ACE_OS::t_free ((char *) callptr, T_CALL) == -1)
+  if (ACE_OS::t_free (reinterpret_cast<char *> (callptr), T_CALL) == -1)
     return -1;
   return result;
 }
@@ -225,7 +221,7 @@ ACE_TLI_Connector::complete (ACE_TLI_Stream &new_stream,
           struct netbuf name;
 
           name.maxlen = remote_sap->get_size ();
-          name.buf    = (char *) remote_sap->get_addr ();
+          name.buf    = static_cast<char *> (remote_sap->get_addr ());
 
           if (ACE_OS::t_getname (new_stream.get_handle (),
                                  &name,

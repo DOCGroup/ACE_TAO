@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   RT_Protocols_Hooks.h
  *
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  */
-// ===================================================================
 
 #ifndef TAO_RT_PROTOCOLS_HOOKS_H
 #define TAO_RT_PROTOCOLS_HOOKS_H
@@ -34,10 +32,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTCORBA_Export TAO_RT_Protocols_Hooks : public TAO_Protocols_Hooks
 {
 public:
-  /// Constructor
   TAO_RT_Protocols_Hooks () = default;
 
-  /// Destructor
   ~TAO_RT_Protocols_Hooks () override;
 
   /// Initialize the protocols hooks instance.
@@ -87,7 +83,7 @@ public:
    * implement the RTCORBA::Current interface, but it is faster for
    * some critical components.
    */
-  //@{
+  /// @{
   int get_thread_CORBA_priority (CORBA::Short &priority) override;
 
   int get_thread_native_priority (CORBA::Short &) override;
@@ -99,7 +95,7 @@ public:
   int set_thread_CORBA_priority (CORBA::Short) override;
 
   int restore_thread_CORBA_and_native_priority (CORBA::Short, CORBA::Short) override;
-  //@}
+  /// @}
 
 protected:
   int set_thread_native_priority (CORBA::Short);
@@ -138,7 +134,7 @@ protected:
 protected:
   TAO_ORB_Core *orb_core_ {};
 
-  // Save a reference to the priority mapping manager.
+  /// Holds a reference to the priority mapping manager.
   TAO_Priority_Mapping_Manager_var mapping_manager_;
   TAO_Network_Priority_Mapping_Manager_var network_mapping_manager_;
 
@@ -149,7 +145,6 @@ ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, TAO_RT_Protocols_Hooks)
 ACE_FACTORY_DECLARE (TAO_RTCORBA, TAO_RT_Protocols_Hooks)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 

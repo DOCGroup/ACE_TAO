@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_LOCAL_SOCK_ACCEPTOR_H
 #define ACE_LOCAL_SOCK_ACCEPTOR_H
 #include /**/ "ace/pre.h"
@@ -39,7 +38,6 @@ class ACE_Reactor;
 class ACE_Export ACE_LSOCK_Acceptor : public ACE_SOCK_Acceptor
 {
 public:
-  /// Default constructor.
   ACE_LSOCK_Acceptor ();
 
   /// Initiate a passive mode socket.
@@ -58,7 +56,7 @@ public:
 
   /// Accept a new data transfer connection.
   int accept (ACE_LSOCK_Stream &new_ipc_sap,
-              ACE_Addr * = 0,
+              ACE_Addr * = nullptr,
               ACE_Time_Value *timeout = nullptr,
               bool restart = true,
               bool reset_new_handle = false) const;
@@ -70,9 +68,11 @@ public:
   /// Return the local endpoint address.
   int get_local_addr (ACE_Addr &) const;
 
-  // = Meta-type info
+  /// @name Peer types
+  /// @{
   using PEER_ADDR = ACE_UNIX_Addr;
   using PEER_STREAM = ACE_LSOCK_Stream;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

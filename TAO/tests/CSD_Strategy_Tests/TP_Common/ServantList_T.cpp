@@ -2,19 +2,6 @@
 #include "AppHelper.h"
 #include "TestAppExceptionC.h"
 
-
-template <typename T>
-ServantList<T>::ServantList()
-{
-}
-
-
-template <typename T>
-ServantList<T>::~ServantList()
-{
-}
-
-
 template <typename T>
 void
 ServantList<T>::create_and_activate(unsigned                num_servants,
@@ -22,7 +9,7 @@ ServantList<T>::create_and_activate(unsigned                num_servants,
                                     PortableServer::POA_ptr poa,
                                     const ACE_TCHAR*        ior_fname_prefix)
 {
-  for (unsigned i = 0; i < num_servants; i++)
+  for (unsigned i = 0; i < num_servants; ++i)
     {
       ACE_TCHAR buf[32];
       ACE_OS::sprintf(buf, ACE_TEXT("%02d"), i + 1);
@@ -48,13 +35,12 @@ ServantList<T>::create_and_activate(unsigned                num_servants,
     }
 }
 
-
 template <typename T>
 void
 ServantList<T>::create_and_activate(unsigned                num_servants,
                                     PortableServer::POA_ptr poa)
 {
-  for (unsigned i = 0; i < num_servants; i++)
+  for (unsigned i = 0; i < num_servants; ++i)
     {
       ServantRecord record;
       record.servant_ = new T();
@@ -74,7 +60,6 @@ ServantList<T>::create_and_activate(unsigned                num_servants,
       this->servant_records_.push_back(record);
     }
 }
-
 
 // Code for reference - doesn't work right now
 #if 0
@@ -102,14 +87,12 @@ ServantList<T>::deactivate(PortableServer::POA_ptr poa)
 }
 #endif
 
-
 template <typename T>
 typename ServantList<T>::T_stub_ptr
 ServantList<T>::objref(unsigned index)
 {
   return T_stub::_duplicate(this->servant_records_[index].obj_.in());
 }
-
 
 template <typename T>
 T*

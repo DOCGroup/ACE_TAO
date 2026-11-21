@@ -2,13 +2,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Worker_Task::TAO_Notify_Worker_Task ()
-{
-}
+TAO_Notify_Worker_Task::TAO_Notify_Worker_Task () = default;
 
-TAO_Notify_Worker_Task::~TAO_Notify_Worker_Task ()
-{
-}
+TAO_Notify_Worker_Task::~TAO_Notify_Worker_Task () = default;
 
 void
 TAO_Notify_Worker_Task::update_qos_properties (const TAO_Notify_QoSProperties& /*qos_properties*/)

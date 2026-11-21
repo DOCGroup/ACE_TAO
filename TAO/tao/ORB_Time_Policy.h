@@ -46,6 +46,7 @@ namespace TAO
 
   private:
     static ACE_Time_Policy_T<ACE_Default_Time_Policy> default_policy_;
+    /// Active policy owned by the default policy object or its service provider.
     static ACE_Dynamic_Time_Policy_Base const * active_policy_;
   };
 

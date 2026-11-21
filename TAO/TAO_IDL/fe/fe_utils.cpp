@@ -30,14 +30,75 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
+FE_Utils::Temp_File_Guard::Temp_File_Guard ()
+{
+  this->created_files_.reserve (4);
+}
+
+FE_Utils::Temp_File_Guard::~Temp_File_Guard ()
+{
+  if (this->active_)
+    {
+      for (std::string const& filename : this->created_files_)
+        {
+          if (!filename.empty ())
+            {
+              (void) ACE_OS::unlink (filename.c_str ());
+            }
+        }
+    }
+}
+
+void
+FE_Utils::Temp_File_Guard::register_created_file (std::string const& filename)
+{
+  for (std::string const& current : this->created_files_)
+    {
+      if (current == filename)
+        {
+          return;
+        }
+    }
+  this->created_files_.push_back (filename);
+}
+
+void
+FE_Utils::Temp_File_Guard::unregister_file (std::string const& filename)
+{
+  for (auto i = this->created_files_.begin ();
+       i != this->created_files_.end ();
+       ++i)
+    {
+      if (*i == filename)
+        {
+          this->created_files_.erase (i);
+          return;
+        }
+    }
+}
+
+void
+FE_Utils::Temp_File_Guard::file_renamed (std::string const& source,
+                                        std::string const& destination)
+{
+  this->unregister_file (source);
+  this->register_created_file (destination);
+}
+
+void
+FE_Utils::Temp_File_Guard::release ()
+{
+  this->active_ = false;
+}
+
 bool
 FE_Utils::duplicate_param_id (T_PARAMLIST_INFO *params)
 {
-  for (std::size_t cur_pos {}; cur_pos < params->size (); ++cur_pos)
+  for (size_t cur_pos {}; cur_pos < params->size (); ++cur_pos)
     {
       FE_Utils::T_Param_Info const& this_one = (*params)[cur_pos];
 
-      for (std::size_t j = cur_pos + 1; j < params->size (); ++j)
+      for (size_t j = cur_pos + 1; j < params->size (); ++j)
         {
           if (this_one.name_ == (*params)[j].name_)
             {
@@ -267,7 +328,6 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
   AST_Structure *connection =
     idl_global->gen ()->create_structure (&sn, false, false);
 
-
   /// If the field type is a param holder, we want
   /// to use the lookup to create a fresh one,
   /// since the field will own it and destroy it.
@@ -413,7 +473,7 @@ FE_Utils::path_cmp (std::string const& s, std::string const& t)
   // spelled when created. This 'feature' was preventing the
   // validation of included IDL files, necessary before generating
   // the corresponding C++ includes.
-  std::size_t const common_length = s.size () < t.size () ? s.size () : t.size ();
+  size_t const common_length = s.size () < t.size () ? s.size () : t.size ();
   int const compare = common_length == 0
     ? 0
     : ACE_OS::strncasecmp (s.c_str (), t.c_str (), common_length);
@@ -433,7 +493,7 @@ FE_Utils::hasspace (std::string const& s)
 {
   // Windows can't have a space as the first or last character
   // but a unix filename can. Need to check all characters.
-  for (std::size_t i = 0u; i < s.size (); ++i)
+  for (size_t i = 0u; i < s.size (); ++i)
     {
       if (std::isspace (static_cast<unsigned char> (s [i])))
         {
@@ -450,8 +510,8 @@ FE_Utils::check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list)
   std::string id;
   std::string retval;
   std::string const pattern ("sequence<");
-  std::size_t const len = pattern.length ();
-  for (std::size_t index {}; index < list->size (); ++index)
+  size_t const len = pattern.length ();
+  for (size_t index {}; index < list->size (); ++index)
     {
       FE_Utils::T_Param_Info const& param = (*list)[index];
 
@@ -472,11 +532,12 @@ FE_Utils::check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list)
   return retval;
 }
 
-FILE *
+FE_Utils::File_Handle
 FE_Utils::open_included_file (std::string const& filename,
                               std::string &directory)
 {
-  FILE * f {};
+  File_Handle file (
+    nullptr, ACE_OS::fclose);
   std::string the_file ("/");
   the_file += filename;
 
@@ -485,16 +546,16 @@ FE_Utils::open_included_file (std::string const& filename,
     {
       std::string const complete_filename = path_info.path_ + the_file;
 
-      f = ACE_OS::fopen (complete_filename.c_str (), "r");
+      file.reset (ACE_OS::fopen (complete_filename.c_str (), "r"));
 
-      if (f != nullptr)
+      if (file)
         {
           directory = path_info.path_;
           break;
         }
     }
 
-  return f;
+  return file;
 }
 
 bool
@@ -517,9 +578,10 @@ FE_Utils::is_include_file_found (std::string &inc_file,
   inc_file += idl_file_name;
   if (ACE_OS::realpath (inc_file.c_str (), abspath) != nullptr)
     {
-      FILE *test = ACE_OS::fopen (abspath, "r");
+      File_Handle test (
+        ACE_OS::fopen (abspath, "r"), ACE_OS::fclose);
 
-      if (test == nullptr)
+      if (!test)
         {
           return false;
         }
@@ -528,7 +590,6 @@ FE_Utils::is_include_file_found (std::string &inc_file,
           // Overwrite inc_file with abspath since the later
           // is normalized to the native OS representation.
           inc_file = abspath;
-          ACE_OS::fclose (test);
           return true;
         }
     }
@@ -557,7 +618,7 @@ FE_Utils::validate_included_idl_files ()
 
   std::vector<std::string> const& post_preproc_includes =
     idl_global->include_file_names ();
-  std::size_t const n_post_preproc_includes = post_preproc_includes.size ();
+  size_t const n_post_preproc_includes = post_preproc_includes.size ();
 
   char pre_abspath [MAXPATHLEN] = "";
   char post_abspath [MAXPATHLEN] = "";
@@ -569,12 +630,12 @@ FE_Utils::validate_included_idl_files ()
   std::vector<std::string> ordered_include_files;
   ordered_include_files.reserve (pre_preproc_includes.size ());
 
-  for (std::size_t i = 0u; i < n_post_preproc_includes; ++i)
+  for (size_t i = 0u; i < n_post_preproc_includes; ++i)
     {
       std::string const& post_tmp = post_preproc_includes[i];
       if (ACE_OS::realpath (post_tmp.c_str (), post_abspath) != nullptr)
         {
-          for (std::size_t j = 0u; j < pre_preproc_includes.size (); ++j)
+          for (size_t j = 0u; j < pre_preproc_includes.size (); ++j)
             {
               // Check this name with the name that we got from the
               // preprocessor.
@@ -859,9 +920,9 @@ FE_Utils::tmpl_mod_ref_check (AST_Decl *context,
 bool
 FE_Utils::check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
                                   std::string const &param_id,
-                                  std::size_t index)
+                                  size_t index)
 {
-  for (std::size_t local_index {}; local_index < index; ++local_index)
+  for (size_t local_index {}; local_index < index; ++local_index)
     {
       if ((*list)[local_index].name_ == param_id)
         {

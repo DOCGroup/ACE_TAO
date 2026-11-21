@@ -13,7 +13,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/// Constructor.
 TAO_FT_Storable_Naming_Context_Factory::
 TAO_FT_Storable_Naming_Context_Factory (size_t hash_table_size,
                                         TAO_FT_Naming_Replication_Manager *rep)
@@ -23,7 +22,7 @@ TAO_FT_Storable_Naming_Context_Factory (size_t hash_table_size,
 }
 
 TAO_FT_Naming_Replication_Manager *
-TAO_FT_Storable_Naming_Context_Factory::replicator ()
+TAO_FT_Storable_Naming_Context_Factory::replicator () const
 {
   return this->replicator_;
 }
@@ -32,9 +31,8 @@ TAO_Storable_Naming_Context*
 TAO_FT_Storable_Naming_Context_Factory::create_naming_context_impl (
   CORBA::ORB_ptr orb,
   PortableServer::POA_ptr poa,
-  const char *poa_id,
-  TAO::Storable_Factory *persistence_factory
-                                                                    )
+  char const *poa_id,
+  TAO::Storable_Factory *persistence_factory)
 {
   // Construct the naming context, forwarding the map and counter
   // even if they are defaulted
@@ -49,6 +47,5 @@ TAO_FT_Storable_Naming_Context_Factory::create_naming_context_impl (
 
   return context_impl;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

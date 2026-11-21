@@ -38,10 +38,8 @@ class TAO_Notify_Builder;
 class TAO_Notify_Serv_Export TAO_Notify_Properties
 {
 public:
-  /// Constructor
   TAO_Notify_Properties ();
 
-  /// Destructor
   ~TAO_Notify_Properties ();
 
   /// Return a singleton instance of this class.
@@ -49,7 +47,8 @@ public:
 
   static void close ();
 
-  // = Property Accessors
+  /// @name Property accessors
+  /// @{
   TAO_Notify_Factory* factory ();
   void factory (TAO_Notify_Factory* factory);
 
@@ -117,40 +116,41 @@ public:
 
   CosNotifyChannelAdmin::InterFilterGroupOperator defaultSupplierAdminFilterOp ();
   void defaultSupplierAdminFilterOp (CosNotifyChannelAdmin::InterFilterGroupOperator op);
+  /// @}
 
 protected:
   /// Object Factory
-  TAO_Notify_Factory* factory_;
+  TAO_Notify_Factory* factory_ {};
 
   /// Object Builder
-  TAO_Notify_Builder* builder_;
+  TAO_Notify_Builder* builder_ {};
 
   /// ORB
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// dispatching orb
-  CORBA::ORB_var dispatching_orb_;
+  CORBA::ORB_var dispatching_orb_ {};
 
   /// POA
-  PortableServer::POA_var default_poa_;
+  PortableServer::POA_var default_poa_ {};
 
   /// True if send asynch updates.
-  CORBA::Boolean asynch_updates_;
+  CORBA::Boolean asynch_updates_ {};
 
   /// True if clients can reconnect to proxies.
-  bool allow_reconnect_;
-  bool validate_client_;
-  ACE_Time_Value validate_client_delay_;
-  ACE_Time_Value validate_client_interval_;
+  bool allow_reconnect_ {};
+  bool validate_client_ {};
+  ACE_Time_Value validate_client_delay_ {};
+  ACE_Time_Value validate_client_interval_ {};
 
   /// True is separate dispatching orb
-  bool separate_dispatching_orb_;
+  bool separate_dispatching_orb_ {};
 
   /// True if updates are enabled (default).
-  CORBA::Boolean updates_;
+  CORBA::Boolean updates_ {true};
 
   /// The Update period for updates.
-  ACE_Time_Value update_period_;
+  ACE_Time_Value update_period_ {};
 
   /// The default EC QoS Properties.
   CosNotification::QoSProperties ec_qos_;
@@ -168,10 +168,12 @@ protected:
   CosNotification::QoSProperties pc_qos_;
 
   /// The default consumer admin filter operator.
-  CosNotifyChannelAdmin::InterFilterGroupOperator defaultConsumerAdminFilterOp_;
+  CosNotifyChannelAdmin::InterFilterGroupOperator defaultConsumerAdminFilterOp_
+    {CosNotifyChannelAdmin::OR_OP};
 
   /// The default supplier admin filter operator.
-  CosNotifyChannelAdmin::InterFilterGroupOperator defaultSupplierAdminFilterOp_;
+  CosNotifyChannelAdmin::InterFilterGroupOperator defaultSupplierAdminFilterOp_
+    {CosNotifyChannelAdmin::OR_OP};
 };
 
 /**

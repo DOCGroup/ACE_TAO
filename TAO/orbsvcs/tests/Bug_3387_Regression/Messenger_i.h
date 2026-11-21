@@ -7,27 +7,22 @@
 
 class  Messenger_i : public POA_Messenger
 {
- public:
-  Messenger_i (CORBA::ORB_ptr orb);
+public:
+  explicit Messenger_i (CORBA::ORB_ptr orb);
 
   Messenger_i (Messenger_i const &) = delete;
   Messenger_i (Messenger_i &&) = delete;
   Messenger_i &operator= (Messenger_i const &) = delete;
   Messenger_i &operator= (Messenger_i &&) = delete;
 
-  ~Messenger_i () override;
+  ~Messenger_i () override = default;
 
-  CORBA::Boolean send_message (char const *user_name,
-                               char const *subject,
-                               char *&message) override;
+  CORBA::Boolean send_message (char const *user_name, char const *subject, char *&message) override;
 
- private:
+private:
   CORBA::ORB_var orb_;
   CosNotifyChannelAdmin::StructuredProxyPushConsumer_var consumer_proxy_;
 };
 
 #endif
-
-
-
 

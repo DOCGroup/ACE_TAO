@@ -146,8 +146,12 @@ ACE_Array_Map<Key, Value, EqualTo, Alloc>::erase (
   typename ACE_Array_Map<Key, Value, EqualTo, Alloc>::iterator last)
 {
   if (this->begin () <= first && first < last && last < this->end ())
-    for (iterator i = first; i != last; ++i)
-      this->erase (i);
+    {
+      for (iterator i = first; i != last; ++i)
+        {
+          this->erase (i);
+        }
+    }
 }
 
 template<typename Key, typename Value, class EqualTo, class Alloc>
@@ -167,8 +171,12 @@ ACE_Array_Map<Key, Value, EqualTo, Alloc>::find (
   EqualTo eq;
 
   for (iterator i = this->begin (); i != the_end; ++i)
-    if (eq (k, i->first))
-      return i;
+    {
+      if (eq (k, i->first))
+        {
+          return i;
+        }
+    }
 
   return this->end ();
 }
@@ -183,8 +191,12 @@ ACE_Array_Map<Key, Value, EqualTo, Alloc>::find (
   EqualTo eq;
 
   for (const_iterator i = this->begin (); i != the_end; ++i)
-    if (eq (k, i->first))
-      return i;
+    {
+      if (eq (k, i->first))
+        {
+          return i;
+        }
+    }
 
   return this->end ();
 }

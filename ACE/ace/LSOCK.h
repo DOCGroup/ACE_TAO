@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_LOCAL_SOCK_H
 #define ACE_LOCAL_SOCK_H
 
@@ -52,13 +51,12 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = Ensure that ACE_LSOCK is an abstract base class
+  /// ACE_LSOCK is an abstract base class.
 
-  /// Default constructor.
   ACE_LSOCK ();
 
   /// Initialize based on @a handle.
-  ACE_LSOCK (ACE_HANDLE handle);
+  explicit ACE_LSOCK (ACE_HANDLE handle);
 
   /// Get handle.
   ACE_HANDLE get_handle () const;

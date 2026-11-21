@@ -1,7 +1,6 @@
 #include "ACEXML/parser/parser/ParserInternals.h"
 
-
-const ACEXML_Char* ACEXML_ParserInt::predef_ent_[] = {
+ACEXML_Char const *ACEXML_ParserInt::predef_ent_[] = {
   ACE_TEXT ("amp"),
   ACE_TEXT ("lt"),
   ACE_TEXT ("gt"),
@@ -9,7 +8,7 @@ const ACEXML_Char* ACEXML_ParserInt::predef_ent_[] = {
   ACE_TEXT ("quot")
 };
 
-const ACEXML_Char* ACEXML_ParserInt::predef_val_[] = {
+ACEXML_Char const *ACEXML_ParserInt::predef_val_[] = {
   ACE_TEXT ("&"),
   ACE_TEXT ("<"),
   ACE_TEXT (">"),
@@ -41,13 +40,16 @@ const ACEXML_Char ACEXML_ParserInt::base_char_table_[] = {
 
 #if defined (ACE_USES_WCHAR)
 
-int
-ACEXML_ParserInt::isBasechar_i (const ACEXML_Char c)
+bool
+ACEXML_ParserInt::isBasechar_i (ACEXML_Char const c)
 {
   if (c < 0x0100)
-    return ACEXML_ParserInt::base_char_table_[c];
+    {
+      return ACEXML_ParserInt::base_char_table_[c];
+    }
   else if (c < 0x0905)
-    return ((c >= 0x0100 && c <= 0x0131) ||
+    {
+      return ((c >= 0x0100 && c <= 0x0131) ||
             (c >= 0x0134 && c <= 0x013E) ||
             (c >= 0x0141 && c <= 0x0148) ||
             (c >= 0x014A && c <= 0x017E) ||
@@ -91,8 +93,10 @@ ACEXML_ParserInt::isBasechar_i (const ACEXML_Char c)
             (c >= 0x06D0 && c <= 0x06D3) ||
             (c == 0x06D5) ||
             (c >= 0x06E5 && c <= 0x06E6));
+    }
   else if (c < 0x10A0)
-    return ((c >= 0x0905 && c <= 0x0939) ||
+    {
+      return ((c >= 0x0905 && c <= 0x0939) ||
             (c == 0x093D) ||
             (c >= 0x0958 && c <= 0x0961) ||
             (c >= 0x0985 && c <= 0x098C) ||
@@ -179,8 +183,10 @@ ACEXML_ParserInt::isBasechar_i (const ACEXML_Char c)
             (c >= 0x0EC0 && c <= 0x0EC4) ||
             (c >= 0x0F40 && c <= 0x0F47) ||
             (c >= 0x0F49 && c <= 0x0F69));
+    }
   else
-    return ((c >= 0x10A0 && c <= 0x10C5) ||
+    {
+      return ((c >= 0x10A0 && c <= 0x10C5) ||
             (c >= 0x10D0 && c <= 0x10F6) ||
             (c == 0x1100) ||
             (c >= 0x1102 && c <= 0x1103) ||
@@ -239,21 +245,23 @@ ACEXML_ParserInt::isBasechar_i (const ACEXML_Char c)
             (c >= 0x30A1 && c <= 0x30FA) ||
             (c >= 0x3105 && c <= 0x312C) ||
             (c >= 0xAC00 && c <= 0xD7A3));
+    }
 };
 
-int
-ACEXML_ParserInt::isIdeographic_i (const ACEXML_Char c)
+bool
+ACEXML_ParserInt::isIdeographic_i (ACEXML_Char const c)
 {
   return ((c >= 0x4E00 && c <= 0x9FA5) ||
           (c == 3007) ||
           (c >= 0x3021 && c <= 0x3029));
 }
 
-int
-ACEXML_ParserInt::isCombiningchar_i (const ACEXML_Char c)
+bool
+ACEXML_ParserInt::isCombiningchar_i (ACEXML_Char const c)
 {
   if (c < 0x0901)
-    return ((c >= 0x0300 && c <= 0x0345) ||
+    {
+      return ((c >= 0x0300 && c <= 0x0345) ||
             (c >= 0x0360 && c <= 0x0361) ||
             (c >= 0x0483 && c <= 0x0486) ||
             (c >= 0x0591 && c <= 0x05A1) ||
@@ -269,8 +277,10 @@ ACEXML_ParserInt::isCombiningchar_i (const ACEXML_Char c)
             (c >= 0x06E0 && c <= 0x06E4) ||
             (c >= 0x06E7 && c <= 0x06E8) ||
             (c >= 0x06EA && c <= 0x06ED));
+    }
   else
-    return ((c >= 0x0901 && c <= 0x0903) ||
+    {
+      return ((c >= 0x0901 && c <= 0x0903) ||
             (c == 0x093C) ||
             (c >= 0x093E && c <= 0x094C) ||
             (c == 0x094D) ||
@@ -349,15 +359,19 @@ ACEXML_ParserInt::isCombiningchar_i (const ACEXML_Char c)
             (c >= 0x302A && c <= 0x302F) ||
             (c == 0x3099) ||
             (c == 0x309A));
+    }
 }
 
-int
-ACEXML_ParserInt::isDigit_i (const ACEXML_Char c)
+bool
+ACEXML_ParserInt::isDigit_i (ACEXML_Char const c)
 {
   if (c < 0x0040)
-    return (c >= 0x0030 && c <= 0x0039);
+    {
+      return (c >= 0x0030 && c <= 0x0039);
+    }
   else
-    return ((c >= 0x0660 && c <= 0x0669) ||
+    {
+      return ((c >= 0x0660 && c <= 0x0669) ||
             (c >= 0x06F0 && c <= 0x06F9) ||
             (c >= 0x0966 && c <= 0x096F) ||
             (c >= 0x09E6 && c <= 0x09EF) ||
@@ -371,10 +385,11 @@ ACEXML_ParserInt::isDigit_i (const ACEXML_Char c)
             (c >= 0x0E50 && c <= 0x0E59) ||
             (c >= 0x0ED0 && c <= 0x0ED9) ||
             (c >= 0x0F20 && c <= 0x0F29));
+    }
 }
 
-int
-ACEXML_ParserInt::isExtender_i (const ACEXML_Char c)
+bool
+ACEXML_ParserInt::isExtender_i (ACEXML_Char const c)
 {
   // The compiler should generate a jump table and index into it directly.
   switch (c)
@@ -383,9 +398,9 @@ ACEXML_ParserInt::isExtender_i (const ACEXML_Char c)
       case 0x0E46: case 0x0EC6: case 0x3005: case 0x3031: case 0x3032:
       case 0x3033: case 0x3034: case 0x3035: case 0x309D: case 0x309E:
       case 0x30FC: case 0x30FD: case 0x30FE:
-        return 1;
+        return true;
       default:
-        return 0;
+        return false;
     }
 }
 

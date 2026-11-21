@@ -1,30 +1,26 @@
 #include "ServantLocator.h"
 #include "test_i.h"
 
+#include <cstring>
+
 extern CORBA::Boolean receive_request_service_contexts_called;
 extern CORBA::Boolean ending_interception_point_called;
 
 ServantLocator::ServantLocator (CORBA::ORB_ptr orb)
-  : error_status_ (false),
-    orb_ (CORBA::ORB::_duplicate (orb)),
-    servant_ ()
-{
-}
-
-ServantLocator::~ServantLocator ()
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
 PortableServer::Servant
 ServantLocator::preinvoke (
-    const PortableServer::ObjectId & /* oid */,
+    PortableServer::ObjectId const & /* oid */,
     PortableServer::POA_ptr /* adapter */,
-    const char * operation,
+    char const *operation,
     PortableServer::ServantLocator::Cookie & /* the_cookie */)
 {
-  if (ACE_OS::strcmp (operation, "shutdown") != 0)
+  if (std::strcmp (operation, "shutdown") != 0)
     {
-      if (receive_request_service_contexts_called == 0)
+      if (!receive_request_service_contexts_called)
         {
           error_status_ = true;
           ACE_ERROR ((LM_ERROR,
@@ -36,9 +32,9 @@ ServantLocator::preinvoke (
           throw CORBA::INTERNAL ();
         }
 
-      if (this->servant_.in () == 0)
+      if (this->servant_.in () == nullptr)
         {
-          test_i * servant;
+          test_i *servant {};
 
           ACE_NEW_THROW_EX (servant,
                             test_i (this->orb_.in ()),
@@ -51,19 +47,18 @@ ServantLocator::preinvoke (
   return this->servant_.in ();
 }
 
-
 void
 ServantLocator::postinvoke (
-    const PortableServer::ObjectId & /* oid */,
+    PortableServer::ObjectId const & /* oid */,
     PortableServer::POA_ptr /* adapter */,
-    const char * operation,
+    char const *operation,
     PortableServer::ServantLocator::Cookie /* the_cookie */,
     PortableServer::Servant /* the_servant */)
 {
-  if (ACE_OS::strcmp (operation, "shutdown") != 0)
+  if (std::strcmp (operation, "shutdown") != 0)
     {
       // Ending interception points should be called after postinvoke().
-      if (::ending_interception_point_called != 0)
+      if (::ending_interception_point_called)
         {
           error_status_ = true;
           ACE_ERROR ((LM_ERROR,

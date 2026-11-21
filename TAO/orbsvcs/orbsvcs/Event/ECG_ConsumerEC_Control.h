@@ -43,11 +43,9 @@ namespace CORBA
 class TAO_RTEvent_Serv_Export TAO_ECG_ConsumerEC_Control
 {
 public:
-  /// Constructor.
   TAO_ECG_ConsumerEC_Control ();
 
-  /// Destructor.
-  virtual ~TAO_ECG_ConsumerEC_Control ();
+  virtual ~TAO_ECG_ConsumerEC_Control () = default;
 
   /// Activate any internal threads or timers used to poll the state of
   /// the event channel.

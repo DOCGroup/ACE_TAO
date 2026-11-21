@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ulonglong.cpp
  *
@@ -7,21 +5,13 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #include "helper.h"
 #include "ulonglong.h"
 
 Test_ULongLong::Test_ULongLong ()
-  : opname_ (CORBA::string_dup ("test_ulonglong"))
+  : opname_ ("test_ulonglong")
 {
-}
-
-Test_ULongLong::~Test_ULongLong ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
 }
 
 const char *
@@ -80,7 +70,6 @@ Test_ULongLong::run_sii_test (Param_Test_ptr objref)
                                            this->inout_,
                                            this->out_);
 
-
       return 0;
     }
   catch (const CORBA::Exception& ex)
@@ -98,7 +87,9 @@ Test_ULongLong::check_validity ()
       this->ret_ == this->in_ * 4)
     return 1; // success
   else
+  {
     return 0;
+  }
 }
 
 CORBA::Boolean

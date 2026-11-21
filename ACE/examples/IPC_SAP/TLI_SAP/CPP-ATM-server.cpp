@@ -2,7 +2,6 @@
 #include "ace/ATM_Addr.h"
 #include "ace/Log_Msg.h"
 
-
 #if defined (ACE_HAS_FORE_ATM_XTI)
 // ACE_TLI Server
 
@@ -56,7 +55,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG,
               "starting server at address %s\n",
               addr.addr_to_string ()));
-
 
   // Performs the iterative server activities
 

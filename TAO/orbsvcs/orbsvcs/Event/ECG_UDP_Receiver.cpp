@@ -15,7 +15,9 @@ TAO_ECG_UDP_Receiver::~TAO_ECG_UDP_Receiver ()
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
 
   if (this->handler_rptr_.get ())
+  {
     this->handler_rptr_->shutdown ();
+  }
 }
 
 void
@@ -44,7 +46,7 @@ TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
 }
 
 void
-TAO_ECG_UDP_Receiver::connect (const RtecEventChannelAdmin::SupplierQOS& pub)
+TAO_ECG_UDP_Receiver::connect (RtecEventChannelAdmin::SupplierQOS const &pub)
 {
   if (CORBA::is_nil (this->lcl_ec_.in ()))
     {
@@ -76,7 +78,7 @@ TAO_ECG_UDP_Receiver::connect (const RtecEventChannelAdmin::SupplierQOS& pub)
 }
 
 void
-TAO_ECG_UDP_Receiver::new_connect (const RtecEventChannelAdmin::SupplierQOS& pub)
+TAO_ECG_UDP_Receiver::new_connect (RtecEventChannelAdmin::SupplierQOS const &pub)
 {
   // Activate with poa.
   RtecEventComm::PushSupplier_var supplier_ref;
@@ -106,7 +108,7 @@ TAO_ECG_UDP_Receiver::new_connect (const RtecEventChannelAdmin::SupplierQOS& pub
 }
 
 void
-TAO_ECG_UDP_Receiver::reconnect (const RtecEventChannelAdmin::SupplierQOS& pub)
+TAO_ECG_UDP_Receiver::reconnect (RtecEventChannelAdmin::SupplierQOS const &pub)
 {
   // Obtain our object reference from the POA.
   RtecEventComm::PushSupplier_var supplier_ref;
@@ -139,7 +141,9 @@ void
 TAO_ECG_UDP_Receiver::shutdown ()
 {
   if (this->handler_rptr_.get ())
+  {
     this->handler_rptr_->shutdown ();
+  }
   TAO_ECG_Refcounted_Handler empty_handler_rptr;
   this->handler_rptr_ = empty_handler_rptr;
 
@@ -157,7 +161,7 @@ TAO_ECG_UDP_Receiver::shutdown ()
 class TAO_ECG_Event_CDR_Decoder: public TAO_ECG_CDR_Processor
 {
 public:
-  virtual int decode (TAO_InputCDR &cdr);
+  int decode (TAO_InputCDR &cdr) override;
 
   RtecEventComm::EventSet events;
 };

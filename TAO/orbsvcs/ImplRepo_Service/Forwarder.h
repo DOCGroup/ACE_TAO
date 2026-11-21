@@ -61,6 +61,7 @@ public:
   void send_exception (CORBA::Exception *ex) override;
 
 private:
+  /// Takes ownership of ex and transfers it to the AMH exception holder.
   void invoke_excep_i (CORBA::Exception *ex);
 
   CORBA::String_var key_str_;
@@ -68,7 +69,6 @@ private:
   CORBA::ORB_var orb_;
   TAO_AMH_DSI_Response_Handler_var resp_;
 };
-
 
 //---------------------------------------------------------------------------
 /**
@@ -84,7 +84,7 @@ private:
 class Locator_Export ImR_DSI_Forwarder : public virtual TAO_DynamicImplementation
 {
 public:
-  ImR_DSI_Forwarder (ImR_Locator_i& imr_impl);
+  explicit ImR_DSI_Forwarder (ImR_Locator_i& imr_impl);
   ~ImR_DSI_Forwarder () override;
 
   void _dispatch (TAO_ServerRequest& request,
@@ -102,7 +102,6 @@ public:
 
   void invoke_primary_interface(CORBA::ServerRequest_ptr request);
 
-
   void init(CORBA::ORB_ptr orb);
 
 private:
@@ -115,6 +114,5 @@ private:
   /// Variable to save the ORB reference passed to the constr.
   CORBA::ORB_ptr orb_;
 };
-
 
 #endif /* IMR_FORWARDER_H */

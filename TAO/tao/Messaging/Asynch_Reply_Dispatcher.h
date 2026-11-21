@@ -18,6 +18,8 @@
 #include "tao/Messaging/Asynch_Timeout_Handler.h"
 #include "tao/Asynch_Reply_Dispatcher_Base.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Allocator;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -43,11 +45,11 @@ public:
   TAO_Asynch_Reply_Dispatcher &operator= (TAO_Asynch_Reply_Dispatcher &&) = delete;
 
   /// @name The Reply Dispatcher methods
-  //@{
+  /// @{
   int dispatch_reply (TAO_Pluggable_Reply_Params &params) override;
 
   void connection_closed () override;
-  //@}
+  /// @}
 
   /// Inform that the reply timed out
   void reply_timed_out () override;
@@ -57,14 +59,28 @@ public:
                        ACE_Time_Value const &max_wait_time) override;
 
 private:
+  struct Timeout_Handler_Deleter
+  {
+    void operator() (TAO_Asynch_Timeout_Handler *handler) const noexcept
+    {
+      if (handler != nullptr)
+        {
+          handler->remove_reference ();
+        }
+    }
+  };
+
+  using Timeout_Handler_Unique_Ptr =
+    std::unique_ptr<TAO_Asynch_Timeout_Handler, Timeout_Handler_Deleter>;
+
   /// Stub for the call back method in the Reply Handler.
   TAO_Reply_Handler_Stub const reply_handler_stub_;
 
   /// Reply Handler passed in the Asynchronous Invocation.
   Messaging::ReplyHandler_var reply_handler_;
 
-  /// The reference to the timeout handler retained by this dispatcher.
-  TAO_Asynch_Timeout_Handler *timeout_handler_ {};
+  /// Owns one ACE_Event_Handler reference; the reactor holds another while scheduled.
+  Timeout_Handler_Unique_Ptr timeout_handler_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

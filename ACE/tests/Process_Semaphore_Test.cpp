@@ -53,18 +53,20 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
     {
-    case 'i':
-      iterations = ACE_OS::atoi (get_opt.opt_arg ());
-      break;
-    case 'c':
-      child_process = 1;
-      break;
-    default:
-      print_usage_and_die ();
-      break;
-  }
+      switch (c)
+        {
+        case 'i':
+          iterations = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'c':
+          child_process = 1;
+          break;
+        default:
+          print_usage_and_die ();
+          break;
+        }
+    }
 }
 
 static void
@@ -93,11 +95,15 @@ acquire_release ()
       sema_ping.release ();
 
       if (sema_pong.acquire ())
-        ACE_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%P) Failed acquiring pong\n")));
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("(%P) Failed acquiring pong\n")));
+        }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P) Pong\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P) Pong\n")));
+        }
     }
 
 #if defined (ACE_WIN32) || \
@@ -112,10 +118,14 @@ acquire_release ()
     wait.sec (wait.sec () + 3); // timeout in 3 secs
 
     if (sema_pong.acquire (wait))
-        ACE_TEST_ASSERT(errno == ETIME);
+      {
+        ACE_TEST_ASSERT (errno == ETIME);
+      }
     else
+      {
         ACE_DEBUG ((LM_ERROR,
                     ACE_TEXT ("(%P) Acquired pong without release()\n")));
+      }
 
     sema_ping.release ();   // release waiting parent before timeout
 #endif
@@ -125,11 +135,15 @@ acquire_release ()
     for (int i=0; i<iterations ;++i)
     {
       if (sema_ping.acquire ())
-        ACE_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%P) Failed acquiring ping\n")));
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("(%P) Failed acquiring ping\n")));
+        }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P) Ping\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P) Ping\n")));
+        }
 
       sema_pong.release ();
     }
@@ -216,13 +230,17 @@ run_main (int argc, ACE_TCHAR *argv[])
       // Wait for the child processes we created to exit.
       ACE_TEST_ASSERT (child.wait (&child_status) != -1);
       if (child_status == 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Child %d finished ok\n"),
-                    child.getpid ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Child %d finished ok\n"),
+                      child.getpid ()));
+        }
       else
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Child %d finished with status %d\n"),
-                    child.getpid (), child_status));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Child %d finished with status %d\n"),
+                      child.getpid (), child_status));
+        }
 
       ACE_END_TEST;
     }

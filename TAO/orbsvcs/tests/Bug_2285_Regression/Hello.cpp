@@ -10,12 +10,6 @@ Hello::Hello (CORBA::ORB_ptr orb, Test::Hello_ptr server, CORBA::ULong server_id
 {
 }
 
-char *
-Hello::get_string ()
-{
-  return CORBA::string_dup ("Hello there!");
-}
-
 void
 Hello::shutdown ()
 {
@@ -32,16 +26,14 @@ Hello::throw_exception ()
 CORBA::Boolean
 Hello::call_me_back (Test::Hello_ptr me)
 {
-  CORBA::Boolean result = me->call_back ();
-  return result;
+  return me->call_back ();
 }
 
 // Nested sequence step 2 - This op called by the server on the client
 CORBA::Boolean
 Hello::call_back ()
 {
-  CORBA::Boolean result = server_->check_request_id ();
-  return result;
+  return server_->check_request_id ();
 }
 
 // Nested sequence step 3 - This op called by the client on the server

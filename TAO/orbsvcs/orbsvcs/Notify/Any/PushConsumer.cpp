@@ -9,12 +9,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_PushConsumer::TAO_Notify_PushConsumer (TAO_Notify_ProxySupplier* proxy)
-  :TAO_Notify_Consumer (proxy)
-{
-}
-
-TAO_Notify_PushConsumer::~TAO_Notify_PushConsumer ()
+TAO_Notify_PushConsumer::TAO_Notify_PushConsumer (TAO_Notify_ProxySupplier *proxy)
+  : TAO_Notify_Consumer (proxy)
 {
 }
 
@@ -42,14 +38,14 @@ TAO_Notify_PushConsumer::init (CosEventComm::PushConsumer_ptr push_consumer)
     else
       {
         // "Port" consumer's object reference from receiving ORB to dispatching ORB.
-        CORBA::String_var temp =
-          TAO_Notify_PROPERTIES::instance()->orb()->object_to_string(push_consumer);
+        CORBA::String_var const temp =
+          TAO_Notify_PROPERTIES::instance ()->orb ()->object_to_string (push_consumer);
 
-        CORBA::Object_var obj =
-          TAO_Notify_PROPERTIES::instance()->dispatching_orb()->string_to_object(temp.in());
+        CORBA::Object_var const obj =
+          TAO_Notify_PROPERTIES::instance ()->dispatching_orb ()->string_to_object (temp.in ());
 
-        CosEventComm::PushConsumer_var new_cos_comm_pc =
-          CosEventComm::PushConsumer::_unchecked_narrow(obj.in());
+        CosEventComm::PushConsumer_var const new_cos_comm_pc =
+          CosEventComm::PushConsumer::_unchecked_narrow (obj.in ());
 
         this->push_consumer_ =
           CosEventComm::PushConsumer::_duplicate (new_cos_comm_pc.in());
@@ -66,7 +62,6 @@ TAO_Notify_PushConsumer::init (CosEventComm::PushConsumer_ptr push_consumer)
         this->publish_ =
           CosNotifyComm::NotifyPublish::_unchecked_narrow (obj.in());
 
-
         //--cj verify dispatching ORB
         if (TAO_debug_level >= 10)
           {
@@ -76,12 +71,12 @@ TAO_Notify_PushConsumer::init (CosEventComm::PushConsumer_ptr push_consumer)
         //--cj end
       }
   }
-  catch (const CORBA::TRANSIENT& ex)
+  catch (CORBA::TRANSIENT const &ex)
     {
       ex._tao_print_exception ("Got a TRANSIENT in NS_PushConsumer::init");
       ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) got it for NS_PushConsumer %@\n", this));
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // _narrow failed which probably means the interface is CosEventComm type.
     }
@@ -95,7 +90,7 @@ TAO_Notify_PushConsumer::release ()
 }
 
 void
-TAO_Notify_PushConsumer::push (const CORBA::Any& payload)
+TAO_Notify_PushConsumer::push (CORBA::Any const &payload)
 {
   //--cj verify dispatching ORB
   if (TAO_debug_level >= 10) {
@@ -109,7 +104,7 @@ TAO_Notify_PushConsumer::push (const CORBA::Any& payload)
 }
 
 void
-TAO_Notify_PushConsumer::push (const CosNotification::StructuredEvent& event)
+TAO_Notify_PushConsumer::push (CosNotification::StructuredEvent const &event)
 {
   CORBA::Any any;
 
@@ -121,7 +116,7 @@ TAO_Notify_PushConsumer::push (const CosNotification::StructuredEvent& event)
 
 /// Push a batch of events to this consumer.
 void
-TAO_Notify_PushConsumer::push (const CosNotification::EventBatch& event)
+TAO_Notify_PushConsumer::push (CosNotification::EventBatch const &event)
 {
   ACE_ASSERT(false);
   ACE_UNUSED_ARG (event);
@@ -132,13 +127,13 @@ ACE_CString
 TAO_Notify_PushConsumer::get_ior () const
 {
   ACE_CString result;
-  CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
+  CORBA::ORB_var const orb = TAO_Notify_PROPERTIES::instance ()->orb ();
   try
     {
-      CORBA::String_var ior = orb->object_to_string(this->push_consumer_.in());
-      result = static_cast<const char*> (ior.in ());
+      CORBA::String_var const ior = orb->object_to_string (this->push_consumer_.in ());
+      result = static_cast<char const *> (ior.in ());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       result.fast_clear();
     }
@@ -146,10 +141,10 @@ TAO_Notify_PushConsumer::get_ior () const
 }
 
 void
-TAO_Notify_PushConsumer::reconnect_from_consumer (TAO_Notify_Consumer* old_consumer)
+TAO_Notify_PushConsumer::reconnect_from_consumer (TAO_Notify_Consumer *old_consumer)
 {
-  TAO_Notify_PushConsumer* tmp =
-    dynamic_cast<TAO_Notify_PushConsumer*> (old_consumer);
+  TAO_Notify_PushConsumer * const tmp =
+    dynamic_cast<TAO_Notify_PushConsumer *> (old_consumer);
   ACE_ASSERT(tmp != nullptr);
   this->init(tmp->push_consumer_.in());
   this->schedule_timer(false);

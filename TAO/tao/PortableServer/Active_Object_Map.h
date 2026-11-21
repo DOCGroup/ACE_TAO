@@ -1,14 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Active_Object_Map.h
  *
  *  @author Irfan Pyarali
  */
-//=============================================================================
-
-
 #ifndef TAO_ACTIVE_OBJECT_MAP_H
 #define TAO_ACTIVE_OBJECT_MAP_H
 
@@ -48,15 +43,17 @@ struct TAO_Active_Object_Map_Entry;
 class TAO_Active_Object_Map
 {
 public:
-  /// Constructor.
   TAO_Active_Object_Map (
     int user_id_policy,
     int unique_id_policy,
     int persistent_id_policy,
     const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters);
 
-  /// Destructor.
   ~TAO_Active_Object_Map ();
+  TAO_Active_Object_Map (TAO_Active_Object_Map const &) = delete;
+  TAO_Active_Object_Map &operator= (TAO_Active_Object_Map const &) = delete;
+  TAO_Active_Object_Map (TAO_Active_Object_Map &&) = delete;
+  TAO_Active_Object_Map &operator= (TAO_Active_Object_Map &&) = delete;
 
   /// Must be used with UNIQUE_ID policy.
   int
@@ -131,7 +128,6 @@ public:
   find_servant_using_user_id (const PortableServer::ObjectId &user_id,
                               PortableServer::Servant &servant);
 
-
   /// Can be used with any policy.
   int
   find_servant_using_system_id_and_user_id (
@@ -190,6 +186,8 @@ public:
     const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters);
 
   /// Base class of the id map.
+  /// This map owns each entry stored as its value; successful unbinds and
+  /// TAO_Active_Object_Map destruction delete those entries.
   using user_id_map = ACE_Map<
     PortableServer::ObjectId,
     TAO_Active_Object_Map_Entry *>;
@@ -215,6 +213,8 @@ public:
     TAO_Ignore_Original_Key_Adapter>;
 
   /// Base class of the servant map.
+  /// This is a secondary index of entries owned by user_id_map; it never
+  /// deletes the entries.
   using servant_map = ACE_Map<
     PortableServer::Servant,
     TAO_Active_Object_Map_Entry *>;
@@ -255,13 +255,26 @@ public:
 
   /// Flag to see if we are using active maps in this active object
   /// map.
-  bool using_active_maps_ {false};
+  bool using_active_maps_ {};
 
   /// Size of the system id produced by the map.
   static size_t system_id_size_;
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
-  ACE::Monitor_Control::Size_Monitor *monitor_;
+  struct Size_Monitor_Deleter
+  {
+    void operator() (ACE::Monitor_Control::Size_Monitor *monitor) const
+    {
+      if (monitor != nullptr)
+        {
+          monitor->remove_from_registry ();
+          monitor->remove_ref ();
+        }
+    }
+  };
+
+  // remove_ref() owns the final destruction after registry removal.
+  std::unique_ptr<ACE::Monitor_Control::Size_Monitor, Size_Monitor_Deleter> monitor_;
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
 };
 
@@ -276,7 +289,6 @@ public:
 class TAO_Id_Uniqueness_Strategy
 {
 public:
-  /// Virtual destructor.
   virtual ~TAO_Id_Uniqueness_Strategy () = default;
 
   /// Must be used with UNIQUE_ID policy.
@@ -320,8 +332,8 @@ public:
   set_active_object_map (TAO_Active_Object_Map *active_object_map);
 
 protected:
-  /// Pointer to the active map.
-  TAO_Active_Object_Map *active_object_map_;
+  /// Non-owning back-reference to the active map that owns this strategy.
+  TAO_Active_Object_Map *active_object_map_ {};
 };
 
 /**
@@ -431,7 +443,6 @@ public:
 class TAO_Lifespan_Strategy
 {
 public:
-  /// Virtual destructor.
   virtual ~TAO_Lifespan_Strategy () = default;
 
   /// Can be used with any policy.
@@ -447,8 +458,8 @@ public:
   set_active_object_map (TAO_Active_Object_Map *active_object_map);
 
 protected:
-  /// Pointer to the active map.
-  TAO_Active_Object_Map *active_object_map_;
+  /// Non-owning back-reference to the active map that owns this strategy.
+  TAO_Active_Object_Map *active_object_map_ {};
 };
 
 /**
@@ -502,7 +513,6 @@ public:
 class TAO_Id_Assignment_Strategy
 {
 public:
-  /// Virtual destructor.
   virtual ~TAO_Id_Assignment_Strategy () = default;
 
   /// Must be used with SYSTEM_ID policy.
@@ -516,8 +526,8 @@ public:
   set_active_object_map (TAO_Active_Object_Map *active_object_map);
 
 protected:
-  /// Pointer to the active map.
-  TAO_Active_Object_Map *active_object_map_;
+  /// Non-owning back-reference to the active map that owns this strategy.
+  TAO_Active_Object_Map *active_object_map_ {};
 };
 
 #if !defined (CORBA_E_MICRO)
@@ -588,7 +598,6 @@ public:
 class TAO_Id_Hint_Strategy
 {
 public:
-  /// Virtual destructor.
   virtual ~TAO_Id_Hint_Strategy () = default;
 
   /// Find the user id from the system id.
@@ -631,7 +640,6 @@ class TAO_Active_Hint_Strategy : public TAO_Id_Hint_Strategy
 public:
   explicit TAO_Active_Hint_Strategy (CORBA::ULong map_size);
 
-  /// Virtual destructor.
   ~TAO_Active_Hint_Strategy () override = default;
 
   int
@@ -673,7 +681,6 @@ public:
 class TAO_No_Hint_Strategy : public TAO_Id_Hint_Strategy
 {
 public:
-  /// Virtual destructor.
   ~TAO_No_Hint_Strategy () override = default;
 
   int

@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_FT_IOGR_TEST_I_H
 #define TAO_FT_IOGR_TEST_I_H
 
@@ -23,19 +22,21 @@
 class Simple_Server_i : public POA_Simple_Server
 {
 public:
-  /// ctor
-  Simple_Server_i (CORBA::ORB_ptr orb);
+  explicit Simple_Server_i (CORBA::ORB_ptr orb);
+  Simple_Server_i (Simple_Server_i const&) = delete;
+  Simple_Server_i (Simple_Server_i&&) = delete;
+  Simple_Server_i& operator= (Simple_Server_i const&) = delete;
+  Simple_Server_i& operator= (Simple_Server_i&&) = delete;
 
-  /// ctor
-  Simple_Server_i ();
+  /// @name Simple_Server operations
+  /// @{
+  void remote_call () override;
 
-  // = The Simple_Server methods.
-  void remote_call ();
-
-  void shutdown ();
+  void shutdown () override;
+  /// @}
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 #endif /* TAO_FT_IOGR_TEST_I_H */

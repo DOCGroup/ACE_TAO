@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SSLIOP_CONNECTOR_H
 #define TAO_SSLIOP_CONNECTOR_H
 
@@ -27,6 +26,8 @@
 #include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
 
 #include "ace/SSL/SSL_SOCK_Connector.h"
+
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -53,7 +54,6 @@ namespace TAO
     class Connector : public TAO::IIOP_SSL_Connector
     {
     public:
-      /// Constructor.
       Connector (::Security::QOP qop, bool check_host);
 
       /**
@@ -61,7 +61,7 @@ namespace TAO
        *
        * Please check the documentation in Transport_Connector.h
        */
-      //@{
+      /// @{
       int open (TAO_ORB_Core *orb_core) override;
       int close () override;
       TAO_Transport *connect (TAO::Profile_Transport_Resolver *r,
@@ -69,9 +69,9 @@ namespace TAO
                               ACE_Time_Value *timeout) override;
 
       TAO_Profile *create_profile (TAO_InputCDR& cdr) override;
-      int check_prefix (const char *endpoint) override;
-      TAO_Profile * corbaloc_scan (const char *ior, size_t &len) override;
-      //@}
+      int check_prefix (char const *endpoint) override;
+      TAO_Profile * corbaloc_scan (char const *ior, size_t &len) override;
+      /// @}
 
     protected:
       /**
@@ -81,10 +81,10 @@ namespace TAO
        *
        * @see @c TAO_Connector
        */
-      //@{
+      /// @{
       TAO_Profile * make_profile () override;
       int cancel_svc_handler (TAO_Connection_Handler * svc_handler) override;
-      //@}
+      /// @}
 
       /// SSL-specific profile
       TAO_Profile * make_secure_profile ();
@@ -100,7 +100,7 @@ namespace TAO
       /// SSLIOP-specific connection establishment.
       TAO_Transport* ssliop_connect (TAO_SSLIOP_Endpoint *ssliop_endpoint,
                                      ::Security::QOP qop,
-                                     const ::Security::EstablishTrust &trust,
+                                     ::Security::EstablishTrust const &trust,
                                      TAO::Profile_Transport_Resolver *r,
                                      TAO_Transport_Descriptor_Interface *desc,
                                      ACE_Time_Value *timeout);
@@ -127,10 +127,14 @@ namespace TAO
 
       /// if true, do a match between the host name we connected to and what is
       /// in the server's certificate.
-      bool check_host_;
+      bool const check_host_;
 
       /// Our connect strategy
       CONNECT_STRATEGY connect_strategy_;
+
+      /// Owned here; base_connector_ borrows these strategy pointers.
+      std::unique_ptr<CONNECT_CREATION_STRATEGY> creation_strategy_ {};
+      std::unique_ptr<CONNECT_CONCURRENCY_STRATEGY> concurrency_strategy_ {};
 
       /// The connector initiating connection requests for IIOP.
       BASE_CONNECTOR base_connector_;

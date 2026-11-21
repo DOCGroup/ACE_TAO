@@ -14,7 +14,6 @@
  *          PolicyFactory.pidl
  */
 
-// File: PortableInterceptor.idl
 #ifndef _POLICYFACTORY_PIDL_
 #define _POLICYFACTORY_PIDL_
 

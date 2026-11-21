@@ -47,6 +47,7 @@ $SES = $supplier->CreateProcess ("Sequence_Supplier", $initref."-o $supplier_sup
 $SEC = $consumer->CreateProcess ("Sequence_Consumer");
 
 my $consumer_args = $initref; # ."-k $consumer_supplier_ior";
+my $startup_timeout = 60;
 
 sub run_test {
     local($name, $args_suffix, $SP, $CN, $tm) = @_;
@@ -63,7 +64,8 @@ sub run_test {
         return 1;
     }
 
-    if ($supplier->WaitForFileTimed ($supplier_ior, $supplier->ProcessStartWaitInterval()) == -1) {
+    if ($supplier->WaitForFileTimed ($supplier_ior,
+                                     $supplier->ProcessStartWaitInterval() + $startup_timeout) == -1) {
         print STDERR "ERROR: waiting for the supplier to start\n";
         $SP->Kill (); $SP->TimedWait (1);
         return 1;

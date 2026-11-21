@@ -11,7 +11,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// ctor
 ACE_Dynamic_Message_Strategy::ACE_Dynamic_Message_Strategy (unsigned long static_bit_field_mask,
                                                             unsigned long static_bit_field_shift,
                                                             unsigned long dynamic_priority_max,
@@ -46,7 +45,9 @@ ACE_Dynamic_Message_Strategy::priority_status (ACE_Message_Block & mb,
       // upward above the late priority range
       priority += pending_shift_;
       if (priority < min_pending_)
+      {
         priority = min_pending_;
+      }
     }
   // otherwise, if the priority is greater than the maximum late
   // priority value that can be represented, it is beyond late
@@ -58,21 +59,20 @@ ACE_Dynamic_Message_Strategy::priority_status (ACE_Message_Block & mb,
     }
   // otherwise, the message is late, but its priority is correct
   else
+  {
     status = ACE_Dynamic_Message_Strategy::LATE;
+  }
 
   // use (fast) bitwise operators to isolate and replace
   // the dynamic portion of the message's priority
   mb.msg_priority((mb.msg_priority() & static_bit_field_mask_) |
                   ((priority.usec () +
-                    ACE_ONE_SECOND_IN_USECS * (suseconds_t)(priority.sec())) <<
+                    ACE_ONE_SECOND_IN_USECS * static_cast<suseconds_t> (priority.sec ())) <<
                    static_bit_field_shift_));
 
   // returns the priority status of the message
   return status;
 }
-
-
-// Dump the state of the strategy.
 
 void
 ACE_Dynamic_Message_Strategy::dump () const
@@ -83,23 +83,23 @@ ACE_Dynamic_Message_Strategy::dump () const
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("static_bit_field_mask_ = %u\n")
-              ACE_TEXT ("static_bit_field_shift_ = %u\n")
-              ACE_TEXT ("dynamic_priority_max_ = %u\n")
-              ACE_TEXT ("dynamic_priority_offset_ = %u\n")
-              ACE_TEXT ("max_late_ = [%d sec, %d usec]\n")
-              ACE_TEXT ("min_pending_ = [%d sec, %d usec]\n")
-              ACE_TEXT ("pending_shift_ = [%d sec, %d usec]\n"),
-              this->static_bit_field_mask_,
-              this->static_bit_field_shift_,
-              this->dynamic_priority_max_,
-              this->dynamic_priority_offset_,
+              ACE_TEXT ("static_bit_field_mask_ = %Q\n")
+              ACE_TEXT ("static_bit_field_shift_ = %Q\n")
+              ACE_TEXT ("dynamic_priority_max_ = %Q\n")
+              ACE_TEXT ("dynamic_priority_offset_ = %Q\n")
+              ACE_TEXT ("max_late_ = [%: sec, %q usec]\n")
+              ACE_TEXT ("min_pending_ = [%: sec, %q usec]\n")
+              ACE_TEXT ("pending_shift_ = [%: sec, %q usec]\n"),
+              static_cast<ACE_UINT64> (this->static_bit_field_mask_),
+              static_cast<ACE_UINT64> (this->static_bit_field_shift_),
+              static_cast<ACE_UINT64> (this->dynamic_priority_max_),
+              static_cast<ACE_UINT64> (this->dynamic_priority_offset_),
               this->max_late_.sec (),
-              this->max_late_.usec (),
+              static_cast<ACE_INT64> (this->max_late_.usec ()),
               this->min_pending_.sec (),
-              this->min_pending_.usec (),
+              static_cast<ACE_INT64> (this->min_pending_.usec ()),
               this->pending_shift_.sec (),
-              this->pending_shift_.usec ()));
+              static_cast<ACE_INT64> (this->pending_shift_.usec ())));
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -116,6 +116,7 @@ ACE_Deadline_Message_Strategy::ACE_Deadline_Message_Strategy (unsigned long stat
 {
 }
 
+/// Dynamic priority conversion function based on time to deadline.
 void
 ACE_Deadline_Message_Strategy::convert_priority (ACE_Time_Value & priority,
                                                  const ACE_Message_Block & mb)
@@ -124,7 +125,6 @@ ACE_Deadline_Message_Strategy::convert_priority (ACE_Time_Value & priority,
   // to deadline of mb with respect to that absolute time.
   priority -= mb.msg_deadline_time ();
 }
-  // dynamic priority conversion function based on time to deadline
 
 void
 ACE_Deadline_Message_Strategy::dump () const
@@ -154,6 +154,7 @@ ACE_Laxity_Message_Strategy::ACE_Laxity_Message_Strategy (unsigned long static_b
 {
 }
 
+/// Dynamic priority conversion function based on laxity.
 void
 ACE_Laxity_Message_Strategy::convert_priority (ACE_Time_Value & priority,
                                                const ACE_Message_Block & mb)
@@ -163,8 +164,8 @@ ACE_Laxity_Message_Strategy::convert_priority (ACE_Time_Value & priority,
   priority += mb.msg_execution_time ();
   priority -= mb.msg_deadline_time ();
 }
-  // dynamic priority conversion function based on laxity
 
+/// Dumps the state of the strategy.
 void
 ACE_Laxity_Message_Strategy::dump () const
 {
@@ -181,6 +182,5 @@ ACE_Laxity_Message_Strategy::dump () const
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
-  // Dump the state of the strategy.
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef CONSUMER_DISPATCH_SET
 #define CONSUMER_DISPATCH_SET
 

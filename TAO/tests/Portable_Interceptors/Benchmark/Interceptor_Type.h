@@ -8,23 +8,22 @@
 
 /// The different type of interceptors have different functionality
 /// to perform.
-enum Interceptor_Type
+enum class Interceptor_Type
 {
   /// Do not register an interceptor
-  IT_NONE,
+  none,
 
   /// Does nothing on all interception points
-  IT_NOOP,
+  noop,
 
   /// Perform service context manipulation
-  IT_CONTEXT,
+  context,
 
   /// Invoke dynamic interface methods and does extraction from anys.
-  IT_DYNAMIC
+  dynamic
 };
 
-void get_interceptor_type (int argc, ACE_TCHAR *argv[],
-                           int &interceptor_type);
+Interceptor_Type get_interceptor_type (int argc, ACE_TCHAR *argv[]);
 
 #include /**/ "ace/post.h"
 #endif /* TAO_INTERCEPTOR_TYPE_H */

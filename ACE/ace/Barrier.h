@@ -35,7 +35,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Barrier
 {
 public:
-  ACE_Barrier (unsigned int, const ACE_TCHAR * = 0, void * = 0) {}
+  ACE_Barrier (unsigned int, const ACE_TCHAR * = nullptr, void * = nullptr) {}
   ~ACE_Barrier () = default;
   int wait () { ACE_NOTSUP_RETURN (-1); }
   void dump () const {}
@@ -52,7 +52,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 struct ACE_Export ACE_Sub_Barrier
 {
-  // = Initialization.
+  /// Initialization.
   ACE_Sub_Barrier (unsigned int count,
                    ACE_Thread_Mutex &lock,
                    const ACE_TCHAR *name = nullptr,
@@ -93,12 +93,16 @@ struct ACE_Export ACE_Sub_Barrier
 class ACE_Export ACE_Barrier
 {
 public:
+  ACE_Barrier (ACE_Barrier const &) = delete;
+  ACE_Barrier (ACE_Barrier &&) = delete;
+  ACE_Barrier &operator= (ACE_Barrier const &) = delete;
+  ACE_Barrier &operator= (ACE_Barrier &&) = delete;
+
   /// Initialize the barrier to synchronize @a count threads.
   ACE_Barrier (unsigned int count,
                const ACE_TCHAR *name = nullptr,
                void *arg = nullptr);
 
-  /// Default destructor.
   ~ACE_Barrier () = default;
 
   /// Block the caller until all @c count threads have called @c wait and
@@ -130,7 +134,7 @@ protected:
 
   /// Either 0 or 1, depending on whether we are the first generation
   /// of waiters or the next generation of waiters.
-  int current_generation_;
+  int current_generation_ {};
 
   /// Total number of threads that can be waiting at any one time.
   int count_;
@@ -146,10 +150,6 @@ protected:
   ACE_Sub_Barrier sub_barrier_1_;
   ACE_Sub_Barrier sub_barrier_2_;
   ACE_Sub_Barrier *sub_barrier_[2];
-
-private:
-  void operator= (const ACE_Barrier &) = delete;
-  ACE_Barrier (const ACE_Barrier &) = delete;
 };
 
 /**
@@ -164,9 +164,8 @@ class ACE_Export ACE_Thread_Barrier : public ACE_Barrier
 {
 public:
   /// Create a Thread_Barrier, passing in the optional @a name.
-  ACE_Thread_Barrier (unsigned int count, const ACE_TCHAR *name = nullptr);
+  explicit ACE_Thread_Barrier (unsigned int count, const ACE_TCHAR *name = nullptr);
 
-  /// Default destructor.
   ~ACE_Thread_Barrier () = default;
 
   /// Dump the state of an object.

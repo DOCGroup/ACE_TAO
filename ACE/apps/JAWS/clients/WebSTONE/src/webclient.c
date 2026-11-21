@@ -146,7 +146,6 @@ childhandler(void)
 
 int resolve_addrs(char *host, char *protocol, struct hostent *host_phe, struct protoent *proto_ppe, unsigned long *addr,
   short *type) {
-struct hostent *phe;
 struct protoent *ppe;
 
     /* if IP address given, convert to internal form */
@@ -157,7 +156,7 @@ struct protoent *ppe;
 
     } else {
   /* look up by name */
-  phe = gethostbyname(host);
+  struct hostent *phe = gethostbyname(host);
   if (phe == 0)
   {
       D_PRINTF( "Gethostbyname failed: %s", neterrstr() );
@@ -303,7 +302,7 @@ connecttomaster(char *str)
      * ZERO OUT THE COLON SO WE HAVE TWO STRINGS, THE HOSTNAME AND THE PORT
      */
     *tempch = '\0';
-    tempch++;
+    ++tempch;
 
     /* loop here to connect to webmaster - TCP/IP allows no more than 5
      * connection requests outstanding at once and thus the webmaster may
@@ -311,7 +310,7 @@ connecttomaster(char *str)
      */
 #define MAXTRIES 30
 #define TRYDELAY_SEC  1
-    for (tries = 0; tries < MAXTRIES; tries++) {
+    for (tries = 0; tries < MAXTRIES; ++tries) {
 
         sock = connectsock(ConnectStr,(NETPORT)atoi(tempch),"tcp");
 
@@ -418,11 +417,9 @@ static int
 makeload(int maxcount, int pageval, THREAD rqst_timer_t *timerarray, THREAD stats_t *timestat, THREAD SOCKET mastersock, THREAD page_stats_t *page_stats)
 {
     int cnt;
-    int returnval;
+    int returnval = -1;
     page_stats_t page_stats_tmp;
     char server[MAXHOSTNAMELEN];
-
-    NETPORT loc_portnum;
 
     D_PRINTF( "Starting makeload(maxcount %d, pageval %d)\n",
   maxcount, pageval );
@@ -432,8 +429,10 @@ makeload(int maxcount, int pageval, THREAD rqst_timer_t *timerarray, THREAD stat
     page_stats_init(&page_stats_tmp);
     D_PRINTF( "Page stats initialized\n" );
 
-    for (cnt = 0; cnt < maxcount; cnt++)
+    for (cnt = 0; cnt < maxcount; ++cnt)
     {
+        NETPORT loc_portnum;
+
   D_PRINTF( "Loop count %d in makeload()\n", cnt );
   if (pageval == -1)
   {
@@ -502,7 +501,7 @@ makeload(int maxcount, int pageval, THREAD rqst_timer_t *timerarray, THREAD stat
   else if (!timeexpired) /* INVALID, INCREMENT THE ERROR COUNTER */
   {
       D_PRINTF( "GET error counter incremented\n" );
-      timestat->rs.totalerrs++;
+      ++timestat->rs.totalerrs;
   }
 
   if (amclient) {
@@ -542,7 +541,7 @@ makeload(int maxcount, int pageval, THREAD rqst_timer_t *timerarray, THREAD stat
 
   rqstat_sum(ps_rs, pst_rs);
 
-  page_stats[pageval].totalpages++;
+  ++page_stats[pageval].totalpages;
 
   if (page_stats[pageval].page_size == 0)
   {
@@ -584,18 +583,16 @@ char  connectstr[MAXHOSTNAMELEN+10];
 void
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-    int   file_count=0;
     int   getoptch;
     int   currarg;
     extern char *optarg;
     extern int  optind;
     int   i, j;
     char  *tempch;
-    int   err;
-
 #define SLEEP_USEC  100
 #ifdef WIN32
     WSADATA   WSAData;
+    int       err;
 #else
 
     struct timeval sleeptime;
@@ -698,7 +695,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     D_PRINTF( "Running in debug mode\n\n" );
 
     /* print the command line */
-    for (i = 0; i < argc; i++)
+    for (i = 0; i < argc; ++i)
   D_PRINTF( "%s ", argv[i] );
     D_PRINTF( "\n\n" );
 
@@ -732,13 +729,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
        /*
         * GET THE URLS TO RETRIEVE.
         */
-       if (numfiles == MAXNUMOFFILES) {
-     returnerr("Maximum of %d files on the command line.\n");
+       if (numfiles == MAXNUMOFFILES)
+       {
+     returnerr("Maximum of %d files on the command line.\n",
+               MAXNUMOFFILES);
      usage(argv[0]);
        }
-       sscanf(argv[currarg],"%s",filelist[numfiles]);
-       numfiles++;
-       currarg++;
+       if (strlen(argv[currarg]) >= sizeof(filelist[0]))
+       {
+     returnerr("URL resource exceeds maximum length of %lu characters.\n",
+               (unsigned long)(sizeof(filelist[0]) - 1));
+     usage(argv[0]);
+       }
+       strcpy(filelist[numfiles], argv[currarg]);
+       ++numfiles;
+       ++currarg;
     }
 
     if ((numfiles != 0) && uil_filelist_f)
@@ -809,15 +814,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       /* take a guess at the number of URLs in the file */
       D_PRINTF( "About to parse filelist %s\n", uil_filelist );
       number_of_pages = count_file_list(uil_filelist);
+      if (number_of_pages <= 0)
+      {
+          errexit("No URL resources found in filelist %s\n", uil_filelist);
+      }
       numfiles = 1;
 
       /* IF WE HAVE A FILELIST, PARSE IT */
       /* allocate memory */
       D_PRINTF( "Allocating page list: %ld by %d\n",
   number_of_pages, numfiles );
-      for (i=0; i<number_of_pages; i++)
+      for (i=0; i<number_of_pages; ++i)
   {
-    for (j=0; j<MAXNUMOFFILES; j++)
+    for (j=0; j<MAXNUMOFFILES; ++j)
       {
         load_file_list[i].servername[j] =
     (char *)mymalloc(URL_SIZE);
@@ -859,7 +868,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
      * FIRST, SET UP SIGNAL HANDLING
      */
     signal(SIGCHLD, childhandler);
-    for(i = 0; i < numclients; i++)
+    for(i = 0; i < numclients; ++i)
     {
       thr_create (0, 0, ClientThread, 0, THR_BOUND, 0);
 
@@ -892,7 +901,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
        } */
 #else
     /* start threads on NT */
-    for (i = 0; i < numclients; i++)
+    for (i = 0; i < numclients; ++i)
     {
   if (_beginthread(ClientThread, 0, 0) == -1)
   {
@@ -960,7 +969,7 @@ void ClientThread(void *dummy)
     page_stats =
       (page_stats_t *)mymalloc((number_of_pages)*sizeof(page_stats_t));
 
-    for (i=0; i < number_of_pages; i++) {
+    for (i=0; i < number_of_pages; ++i) {
         page_stats_init(&(page_stats[i]));
     }
 
@@ -992,7 +1001,7 @@ void ClientThread(void *dummy)
     rand_r(&junk);
     D_PRINTF( "Random seed: %d\n", junk );
 
-    for (i=0; i < MAXNUMOFFILES; i++)
+    for (i=0; i < MAXNUMOFFILES; ++i)
     {
   rqtimer_init(&(timerarray[i]));
     }
@@ -1033,22 +1042,6 @@ void ClientThread(void *dummy)
     WaitForSingleObject(hSemaphore, INFINITE);
     ReleaseSemaphore(hSemaphore, 1, 0);
 #endif /* WIN32 */
-    if (testtime != 0)
-    {
-       /*
-        * IF RUNNING A TIMED TEST, WE WILL LOOP
-  * UNTIL THE ALARM GOES OFF.
-        * WE'LL ALSO NEED TO SET THE SIGNAL HANDLER
-        */
-#ifndef WIN32
-      /*signal(SIGALRM, alarmhandler);*/
-       /*
-        * SEND SIGALRM IN testtime SECONDS
-        */
-      /*alarm(testtime);*/
-#endif /* WIN32 */
-    }
-
     /*
      * AND THEY'RE OFF...
      */
@@ -1058,7 +1051,7 @@ void ClientThread(void *dummy)
     GETTIMEOFDAY(&(timestat.starttime), &(timestat.starttimezone));
 
     /* LOOP UNTIL WE HIT numloops, OR WE RUN OUT OF TIME */
-    for(loopcnt = 0;  (loopcnt < numloops) && !timeexpired;  loopcnt++)
+    for(loopcnt = 0;  (loopcnt < numloops) && !timeexpired;  ++loopcnt)
     {
   /*
    * THIS IS WHERE LOAD TESTING IS DONE.
@@ -1087,7 +1080,7 @@ void ClientThread(void *dummy)
     page_index = -1;
     while (ran_number >= 0)
       {
-        page_index++;
+        ++page_index;
         D_PRINTF( "Current page index %d: %ld - %d\n",
           page_index, ran_number,
           load_file_list[page_index].load_num
@@ -1095,7 +1088,10 @@ void ClientThread(void *dummy)
         ran_number -= load_file_list[page_index].load_num;
       }
 
-    if (page_index >= number_of_pages) { page_index--; }
+    if (page_index >= number_of_pages)
+      {
+        --page_index;
+      }
 
     D_PRINTF( "Final page index %d\n", page_index );
     filecnt = makeload(load_file_list[page_index].num_of_files,
@@ -1106,7 +1102,7 @@ void ClientThread(void *dummy)
       {
     for (page_number = 0;
          page_number < number_of_pages;
-         page_number++)
+         ++page_number)
     {
         filecnt = makeload(load_file_list[page_number].num_of_files,
       page_number, timerarray, &timestat, mastersock, page_stats);
@@ -1151,7 +1147,7 @@ void ClientThread(void *dummy)
   /*
    * DUMP THE LOG FILE INFORMATION.
    */
-  for (loop=0; loop < (loopcnt * file_count); loop++)
+  for (loop=0; loop < (loopcnt * file_count); ++loop)
   {
       fprintf(logfile, " entertime \t%d.%d\n"
            " beforeconnect \t%d.%d\n"
@@ -1160,8 +1156,8 @@ void ClientThread(void *dummy)
            " afterheader \t%d.%d\n"
            " afterbody \t%d.%d\n"
            " exittime \t%d.%d\n"
-           " total bytes \t%d\n"
-           " body bytes\t%d\n",
+           " total bytes \t%lu\n"
+           " body bytes\t%lu\n",
     timerarray[loop].entertime.tv_sec,
     timerarray[loop].entertime.tv_usec,
     timerarray[loop].beforeconnect.tv_sec,
@@ -1213,11 +1209,10 @@ void ClientThread(void *dummy)
   if (uil_filelist_f)
     /* write pagestats */
     {
-      char *page_stats_as_text;
-      for (i = 0; i < number_of_pages; i++)
+      for (i = 0; i < number_of_pages; ++i)
         {
+    char *page_stats_as_text = page_stats_to_text(&page_stats[i]);
     D_PRINTF( "On page_stats[%d]\n", i );
-    page_stats_as_text = page_stats_to_text(&page_stats[i]);
     returnval = strlen(page_stats_as_text);
     D_PRINTF( "page_stats_to_text[%d] returned %d\n",
       i, returnval );
@@ -1253,7 +1248,7 @@ void ClientThread(void *dummy)
     &(runningtime));
   printf("Total time of test (sec) %d.%d\n", runningtime.tv_sec,
     runningtime.tv_usec);
-  printf("Files retrieved per iteration: %d\n",numfiles);  /* 'per iteration' */
+  printf("Files retrieved per iteration: %ld\n",numfiles);  /* 'per iteration' */
   printf("----------------------------------\n");
   printf("Totals:\n\n");
   rqstat_print(&(timestat.rs));
@@ -1265,16 +1260,16 @@ void ClientThread(void *dummy)
 
   if (uil_filelist_f && numloops && verbose)
   {
-      for (loop = 0; loop < number_of_pages; loop++)
+      for (loop = 0; loop < number_of_pages; ++loop)
       {
     if (timestat.page_numbers[loop] != 0)
     {
         printf ("===============================================================================\n");
         printf ("Page # %d\n\n", loop);
-        printf ("Total number of times page was hit %d\n",
+        printf ("Total number of times page was hit %lu\n",
           page_stats[loop].totalpages);
         rqstat_print(&(page_stats[loop].rs));
-        printf ("Page size %d \n", page_stats[loop].page_size);
+        printf ("Page size %u \n", page_stats[loop].page_size);
         printf ("===============================================================================\n\n");
     } /* END if timestat */
       } /* END for loop */

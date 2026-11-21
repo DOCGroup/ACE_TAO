@@ -6,13 +6,6 @@
 #include "tao/CDR.h"
 #include "testS.h"
 
-Server_Request_Interceptor::Server_Request_Interceptor ()
-  : request_forwarded_ (0)
-{
-}
-
-Server_Request_Interceptor::~Server_Request_Interceptor () = default;
-
 void
 Server_Request_Interceptor::forward_reference (
   char const * iorstr)
@@ -33,8 +26,7 @@ Server_Request_Interceptor::destroy ()
 
 void
 Server_Request_Interceptor::receive_request_service_contexts (
-    PortableInterceptor::ServerRequestInfo_ptr //
-    )
+    PortableInterceptor::ServerRequestInfo_ptr)
 {
 }
 
@@ -46,10 +38,10 @@ Server_Request_Interceptor::receive_request (
     ri->get_request_service_context (IOP::FT_GROUP_VERSION);
 
   // extract the group component
-  TAO_InputCDR cdr (reinterpret_cast<const char*> (svc->context_data.get_buffer ()),
+  TAO_InputCDR cdr (reinterpret_cast<char const *> (svc->context_data.get_buffer ()),
                     svc->context_data.length ());
 
-  CORBA::Boolean byte_order;
+  CORBA::Boolean byte_order {};
 
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     {
@@ -64,29 +56,30 @@ Server_Request_Interceptor::receive_request (
 
   if (group_component.object_group_ref_version < 11)
     {
-      if (!request_forwarded_)
+      if (!this->request_forwarded_.load ())
         {
-          int argc = 0;
-          ACE_TCHAR** argv = 0;
-          CORBA::String_var orb_id = ri->orb_id ();
-          CORBA::ORB_var orb = CORBA::ORB_init(argc,argv,orb_id.in ());
+          int argc {};
+          ACE_TCHAR **argv {};
+          CORBA::String_var const orb_id = ri->orb_id ();
+          CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv, orb_id.in ());
 
-          CORBA::Object_var obj = orb->string_to_object (iorstr_.in());
+          CORBA::Object_var const obj = orb->string_to_object (this->iorstr_.in ());
 
-          ACE_DEBUG ((LM_DEBUG,
-                    "SERVER (%P|%t) Request will be forwarded "
-                    "to object 1\n" // "object 1" as in "obj_[0]"
-                    "SERVER (%P|%t) via "
-                    "receive_request_service_contexts().\n"));
-          request_forwarded_ = 1;
-          // Throw forward exception
-          throw PortableInterceptor::ForwardRequest (obj.in());
+          bool expected_forwarded {};
+          if (this->request_forwarded_.compare_exchange_strong (
+                expected_forwarded, true))
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "SERVER (%P|%t) Request will be forwarded "
+                          "to object 1\n"
+                          "SERVER (%P|%t) via "
+                          "receive_request_service_contexts().\n"));
+              throw PortableInterceptor::ForwardRequest (obj.in ());
+            }
         }
-      else
-        {
-          ACE_DEBUG ((LM_DEBUG,
-          "object_group_ref_version is %d\n", group_component.object_group_ref_version));
-        }
+
+      ACE_DEBUG ((LM_DEBUG, "object_group_ref_version is %d\n",
+                  group_component.object_group_ref_version));
     }
 }
 

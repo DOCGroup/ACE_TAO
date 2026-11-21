@@ -1,13 +1,12 @@
 /* -*- C++ -*- */
 interface Time
 {
-  // = TITLE
-  //    Defines an interface that encapsulates operations that
-  //    return the current time of day and shuts down the server.
+  /// Defines operations that return the current time of day and shut down
+  /// the server.
 
+  /// Returns the current time of day on another machine.
   long current_time ();
-  // Returns the current time of day on another machine.
 
+  /// Shuts down the application.
   oneway void shutdown ();
-  // Shutdown the application.
 };

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    CSD_Strategy_Base.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_CSD_FW_CUSTOM_SERVANT_DISPATCHING_STRATEGY_H
 #define TAO_CSD_FW_CUSTOM_SERVANT_DISPATCHING_STRATEGY_H
@@ -20,7 +18,6 @@
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/LocalObject.h"
-
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -59,41 +56,44 @@ namespace TAO
       /// Result Type for dispatching method(s).
       enum DispatchResult
       {
-        // The request dispatching has been handled.
+        /// The request dispatching has been handled.
         DISPATCH_HANDLED,
 
-        // The request dispatching has been rejected.
+        /// The request dispatching has been rejected.
         DISPATCH_REJECTED,
 
-        // Defer to "default" dispatching strategy (use the caller's thread).
+        /// Defer to "default" dispatching strategy (use the caller's thread).
         DISPATCH_DEFERRED
       };
 
-      /// Virtual Destructor.
       virtual ~Strategy_Base ();
+
+      Strategy_Base (Strategy_Base const &) = delete;
+      Strategy_Base &operator= (Strategy_Base const &) = delete;
+      Strategy_Base (Strategy_Base &&) = delete;
+      Strategy_Base &operator= (Strategy_Base &&) = delete;
 
       /// This method is invoked to "attach" this strategy object to
       /// the supplied POA.  Returns true for success, and false for failure.
-      CORBA::Boolean apply_to(PortableServer::POA_ptr poa );
+      CORBA::Boolean apply_to (PortableServer::POA_ptr poa) override;
 
     protected:
-      /// Default Constructor.
       Strategy_Base() = default;
 
       /// Subclass provides implementation to dispatch a remote request.
       virtual DispatchResult dispatch_remote_request_i
                             (TAO_ServerRequest&              server_request,
-                              const PortableServer::ObjectId& object_id,
+                              PortableServer::ObjectId const &object_id,
                               PortableServer::POA_ptr         poa,
-                              const char*                     operation,
+                              char const *                     operation,
                               PortableServer::Servant         servant) = 0;
 
       /// Subclass provides implementation to dispatch a collocated request.
       virtual DispatchResult dispatch_collocated_request_i
                           (TAO_ServerRequest&              server_request,
-                          const PortableServer::ObjectId& object_id,
+                          PortableServer::ObjectId const &object_id,
                           PortableServer::POA_ptr         poa,
-                          const char*                     operation,
+                          char const *                     operation,
                           PortableServer::Servant         servant) = 0;
 
       /// Event - The POA has been activated.
@@ -105,12 +105,12 @@ namespace TAO
       /// Event - A servant has been activated.
       virtual void servant_activated_event_i
                                   (PortableServer::Servant servant,
-                                   const PortableServer::ObjectId& oid);
+                                   PortableServer::ObjectId const &oid);
 
       /// Event - A servant has been deactivated.
       virtual void servant_deactivated_event_i
                                   (PortableServer::Servant servant,
-                                  const PortableServer::ObjectId& oid);
+                                  PortableServer::ObjectId const &oid);
 
     private:
       /// Only our friend, the proxy, is allowed to invoke our private operations.
@@ -134,12 +134,12 @@ namespace TAO
 
       /// Event - A servant has been activated.
       void servant_activated_event(PortableServer::Servant servant,
-                                  const PortableServer::ObjectId& oid);
+                                  PortableServer::ObjectId const &oid);
 
       /// Event - A servant has been deactivated.  This also occurs when
       ///         the POA is destroyed.
       void servant_deactivated_event(PortableServer::Servant servant,
-                                     const PortableServer::ObjectId& oid);
+                                     PortableServer::ObjectId const &oid);
 
       /// The POA to which this strategy has been applied.
       ::PortableServer::POA_var poa_;

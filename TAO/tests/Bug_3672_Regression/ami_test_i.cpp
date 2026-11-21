@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ami_test_i.cpp
  *
@@ -8,14 +6,12 @@
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
-//=============================================================================
-
 
 #include "ami_test_i.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_unistd.h"
 
-AMI_Test_i::AMI_Test_i (CORBA::ORB_ptr orb)
+AMI_Test_i::AMI_Test_i (CORBA::ORB_ptr const orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }

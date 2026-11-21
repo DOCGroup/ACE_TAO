@@ -25,7 +25,6 @@
 class TAO_RTEC_Perf_Export Client_Pair
 {
 public:
-  /// Constructor
   /**
    * We need a default constructor because this class is often used in
    * arrays.
@@ -77,13 +76,13 @@ public:
   /// Disconnect from the event channel
   void disconnect ();
 
-  //@{
+  /// @{
   /** @name Accessors
    */
   Supplier *supplier () const;
 
   Consumer *consumer () const;
-  //@}
+  /// @}
 
 private:
   Servant_var<Supplier> supplier_;

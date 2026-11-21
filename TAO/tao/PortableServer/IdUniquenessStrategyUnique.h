@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file IdUniquenessStrategyUnique.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_ID_UNIQUENESSSTRATEGYUNIQUE_H
 #define TAO_ID_UNIQUENESSSTRATEGYUNIQUE_H
 #include /**/ "ace/pre.h"
@@ -42,6 +38,7 @@ namespace TAO
       bool allow_multiple_activations () const override;
 
     private:
+      /// Non-owning back-reference set by the POA during strategy initialization.
       TAO_Root_POA *poa_ {};
     };
   }

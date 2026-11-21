@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_URL_ADDR_H
 #define ACE_URL_ADDR_H
 
@@ -20,6 +19,8 @@
 
 #include "websvcs_export.h"
 #include "ace/ACE.h"
+
+#include <memory>
 
 class ACE_URL_Addr_Visitor;
 
@@ -33,16 +34,12 @@ class ACE_URL_Addr_Visitor;
 class ACE_WEBSVCS_Export ACE_URL_Addr : public ACE_Addr
 {
 public:
-  /// Constructor.
   ACE_URL_Addr ();
 
-  /// The copy constructor.
   ACE_URL_Addr (const ACE_URL_Addr& address);
 
-  /// The assignment operator
   ACE_URL_Addr& operator= (const ACE_URL_Addr& address);
 
-  /// destructor
   virtual ~ACE_URL_Addr ();
 
   /// Get the original URL
@@ -76,18 +73,25 @@ public:
   static ACE_URL_Addr* create_address (const ACE_TCHAR *url);
 
   /// Returns 1 if the URL scheme is recognized, 0 otherwise.
-  static int known_scheme (const ACE_TCHAR *url);
+  static bool known_scheme (const ACE_TCHAR *url);
 
   /// Hash function
-  u_long hash () const;
+  u_long hash () const override;
 
 protected:
+  struct URL_Deleter
+  {
+    void operator () (ACE_TCHAR *) const;
+  };
+
+  using URL_String = std::unique_ptr<ACE_TCHAR, URL_Deleter>;
+
   /// Allows the derived classes to store the compact representation of
   /// the URL
   void set_url (ACE_TCHAR *url);
 
 private:
-  ACE_TCHAR *url_;
+  URL_String url_ {};
 };
 
 /**
@@ -123,7 +127,6 @@ class ACE_Mailto_Addr;
 class ACE_WEBSVCS_Export ACE_URL_Addr_Visitor
 {
 public:
-  /// Destructor
   virtual ~ACE_URL_Addr_Visitor ();
 
   /**
@@ -158,31 +161,27 @@ public:
 class ACE_WEBSVCS_Export ACE_HTTP_Addr : public ACE_URL_Addr
 {
 public:
-  /// Constructor
   ACE_HTTP_Addr ();
 
   /// Construct an HTTP URL from the host, path, query and port.
   ACE_HTTP_Addr (const ACE_TCHAR *host_name,
                  const ACE_TCHAR *path,
-                 const ACE_TCHAR *query = 0,
+                 const ACE_TCHAR *query = nullptr,
                  u_short port = ACE_DEFAULT_HTTP_PORT);
 
   /// Essentially the constructor above.
   int set (const ACE_TCHAR *host_name,
            const ACE_TCHAR *path,
-           const ACE_TCHAR *query = 0,
+           const ACE_TCHAR *query = nullptr,
            u_short port = ACE_DEFAULT_HTTP_PORT);
 
-  /// Copy constructor.
   ACE_HTTP_Addr (const ACE_HTTP_Addr &addr);
 
-  /// Assignment operator.
   ACE_HTTP_Addr& operator= (const ACE_HTTP_Addr &addr);
 
   /// Essentially the copy constructor.
   int set (const ACE_HTTP_Addr &addr);
 
-  /// Destructor
   virtual ~ACE_HTTP_Addr ();
 
   /**
@@ -218,12 +217,14 @@ public:
    */
   ACE_URL_Addr* create_relative_address (const ACE_TCHAR *url) const;
 
-  // = The ACE_URL methods, see the documentation above.
-  virtual int string_to_addr (const ACE_TCHAR *address);
-  virtual int addr_to_string (ACE_TCHAR *s,
-                              size_t size,
-                              int flags = 0) const;
-  virtual int accept (ACE_URL_Addr_Visitor* visitor);
+  /// @name Address conversion and visitor methods
+  /// @{
+  int string_to_addr (const ACE_TCHAR *address) override;
+  int addr_to_string (ACE_TCHAR *s,
+                      size_t size,
+                      int flags = 0) const override;
+  int accept (ACE_URL_Addr_Visitor* visitor) override;
+  /// @}
 
 private:
   /// Compute the size required to store the URL in a string
@@ -235,14 +236,14 @@ private:
 
 private:
   /// The host:port component in the URL
-  ACE_TCHAR *hostname_;
+  URL_String hostname_;
   u_short port_number_;
 
   /// The path component in the URL
-  ACE_TCHAR *path_;
+  URL_String path_;
 
   /// The query component in the URL
-  ACE_TCHAR *query_;
+  URL_String query_;
 };
 
 // ****************************************************************
@@ -261,32 +262,28 @@ private:
 class ACE_WEBSVCS_Export ACE_FTP_Addr : public ACE_URL_Addr
 {
 public:
-  /// Constructor
   ACE_FTP_Addr ();
 
   /// Construct an FTP URL from the host_name, the path, the username
   /// and the password.
   ACE_FTP_Addr (const ACE_TCHAR *host_name,
                 const ACE_TCHAR *path,
-                const ACE_TCHAR *user = 0,
-                const ACE_TCHAR *password = 0);
+                const ACE_TCHAR *user = nullptr,
+                const ACE_TCHAR *password = nullptr);
 
   /// Essentially the constructor above.
   int set (const ACE_TCHAR *host_name,
            const ACE_TCHAR *path,
-           const ACE_TCHAR *user = 0,
-           const ACE_TCHAR *password = 0);
+           const ACE_TCHAR *user = nullptr,
+           const ACE_TCHAR *password = nullptr);
 
-  /// Copy constructor.
   ACE_FTP_Addr (const ACE_FTP_Addr &addr);
 
-  /// Assignment operator
   ACE_FTP_Addr& operator= (const ACE_FTP_Addr &addr);
 
   /// Essentially the copy constructor.
   int set (const ACE_FTP_Addr &addr);
 
-  /// Destructor
   virtual ~ACE_FTP_Addr ();
 
   /// Get the host name component in the URL
@@ -305,12 +302,14 @@ public:
   /// obtain the host and the port.
   ACE_INET_Addr get_inet_address () const;
 
-  // = The ACE_Addr methods, see the documentation above.
-  virtual int string_to_addr (const ACE_TCHAR *address);
-  virtual int addr_to_string (ACE_TCHAR *s,
-                              size_t size,
-                              int flags = 0) const;
-  virtual int accept (ACE_URL_Addr_Visitor* visitor);
+  /// @name Address conversion and visitor methods
+  /// @{
+  int string_to_addr (const ACE_TCHAR *address) override;
+  int addr_to_string (ACE_TCHAR *s,
+                      size_t size,
+                      int flags = 0) const override;
+  int accept (ACE_URL_Addr_Visitor* visitor) override;
+  /// @}
 
 private:
   /// Compute the size required to store the URL in a string
@@ -322,14 +321,14 @@ private:
 
 private:
   /// The login name
-  ACE_TCHAR *user_;
-  ACE_TCHAR *password_;
+  URL_String user_;
+  URL_String password_;
 
   /// The hostname part.
-  ACE_TCHAR *hostname_;
+  URL_String hostname_;
 
   /// The other components.
-  ACE_TCHAR *path_;
+  URL_String path_;
 };
 
 // ****************************************************************
@@ -344,29 +343,25 @@ private:
 class ACE_WEBSVCS_Export ACE_Mailto_Addr : public ACE_URL_Addr
 {
 public:
-  /// Constructor
   ACE_Mailto_Addr ();
 
   /// Construct an FTP URL from the host, path and headers.
   ACE_Mailto_Addr (const ACE_TCHAR *user,
                    const ACE_TCHAR *hostname,
-                   const ACE_TCHAR *headers = 0);
+                   const ACE_TCHAR *headers = nullptr);
 
   /// Essentially the constructor above.
   int set (const ACE_TCHAR *user,
            const ACE_TCHAR *hostname,
-           const ACE_TCHAR *headers = 0);
+           const ACE_TCHAR *headers = nullptr);
 
-  /// Copy constructor.
   ACE_Mailto_Addr (const ACE_Mailto_Addr &addr);
 
-  /// Assignment operator
   ACE_Mailto_Addr& operator= (const ACE_Mailto_Addr &addr);
 
   /// Essentially the copy constructor.
   int set (const ACE_Mailto_Addr &addr);
 
-  /// Destructor
   virtual ~ACE_Mailto_Addr ();
 
   /// Get the username component in the URL
@@ -382,12 +377,14 @@ public:
   // over them would be a good idea. Similarly a method to *add*
   // headers would be nice also.
 
-  // = The ACE_URL methods, see the documentation above.
-  virtual int string_to_addr (const ACE_TCHAR *address);
-  virtual int addr_to_string (ACE_TCHAR *s,
-                              size_t size,
-                              int flags = 0) const;
-  virtual int accept (ACE_URL_Addr_Visitor* visitor);
+  /// @name Address conversion and visitor methods
+  /// @{
+  int string_to_addr (const ACE_TCHAR *address) override;
+  int addr_to_string (ACE_TCHAR *s,
+                      size_t size,
+                      int flags = 0) const override;
+  int accept (ACE_URL_Addr_Visitor* visitor) override;
+  /// @}
 
 private:
   /// Compute the size required to store the URL in a string
@@ -398,9 +395,9 @@ private:
   void clear ();
 
 private:
-  ACE_TCHAR *user_;
-  ACE_TCHAR *hostname_;
-  ACE_TCHAR *headers_;
+  URL_String user_;
+  URL_String hostname_;
+  URL_String headers_;
 };
 
 #if defined (__ACE_INLINE__)

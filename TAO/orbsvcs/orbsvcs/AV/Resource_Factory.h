@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_AV_DEFAULT_RESOURCE_FACTORY_H
 #define TAO_AV_DEFAULT_RESOURCE_FACTORY_H
 #include /**/ "ace/pre.h"
@@ -38,9 +37,9 @@ public:
   /**
    * @name Service Configurator Hooks
    */
-  //@{
+  /// @{
   /// Dynamic linking hook
-  virtual int init (int argc, ACE_TCHAR *argv[]) = 0;
+  int init (int argc, ACE_TCHAR *argv[]) override = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

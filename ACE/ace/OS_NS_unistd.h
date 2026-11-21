@@ -118,19 +118,19 @@ namespace ACE_OS
   int execvp (const char *file,
               char *const argv[]);
 
-  //@{
+  /// @{
   /// Forks and exec's a process in a manner that works Windows.
   /// argv[0] must be the full path name to the executable.
   ACE_NAMESPACE_INLINE_FUNCTION
   pid_t fork ();
 
-  // not in susv3
+  /// Not in SUSv3.
   extern ACE_Export
   pid_t fork (const ACE_TCHAR *program_name);
 
   extern ACE_Export
   pid_t fork_exec (ACE_TCHAR *argv[]);
-  //@}
+  /// @}
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int fsync (ACE_HANDLE handle);
@@ -175,7 +175,7 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   uid_t geteuid ();
 
-  // should call gethostname()
+  /// Should call gethostname().
   ACE_NAMESPACE_INLINE_FUNCTION
   int hostname (char name[],
                 size_t maxnamelen);

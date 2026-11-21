@@ -1,7 +1,5 @@
 // -*- C++ -*-
 
-
-//=============================================================================
 /**
  *  @file    Dynamic_Adapter_Impl.h
  *
@@ -9,8 +7,6 @@
  *
  *  @author  Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_DYNAMIC_ADAPTER_IMPL_H
 #define TAO_DYNAMIC_ADAPTER_IMPL_H
@@ -40,7 +36,7 @@ class TAO_DynamicInterface_Export TAO_Dynamic_Adapter_Impl
 {
 public:
   TAO_Dynamic_Adapter_Impl () = default;
-  ~TAO_Dynamic_Adapter_Impl () override;
+  ~TAO_Dynamic_Adapter_Impl () override = default;
 
   // CORBA::Object::_create_request and CORBA::Object::_request.
 

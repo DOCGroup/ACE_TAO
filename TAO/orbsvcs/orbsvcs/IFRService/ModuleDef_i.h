@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    ModuleDef_i.h
@@ -10,7 +9,6 @@
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_MODULEDEF_I_H
 #define TAO_MODULEDEF_I_H
@@ -31,16 +29,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/// Represents a module definition.
 class TAO_IFRService_Export TAO_ModuleDef_i
   : public virtual TAO_Contained_i,
     public virtual TAO_ComponentModuleDef_i
 {
-  // = TITLE
-  //    TAO_ModuleDef_i
-  //
-  // = DESCRIPTION
-  //    Represents a module definition.
-  //
 public:
   explicit TAO_ModuleDef_i (TAO_Repository_i *repo);
 

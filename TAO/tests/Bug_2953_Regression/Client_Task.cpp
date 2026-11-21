@@ -27,7 +27,9 @@ Client_Task::svc ()
 
           ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
           if (this->terminate_loop_)
+          {
             break;
+          }
         }
     }
   catch (const CORBA::Exception&)

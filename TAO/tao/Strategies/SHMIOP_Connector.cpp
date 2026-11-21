@@ -14,13 +14,14 @@
 #include "tao/Blocked_Connect_Strategy.h"
 #include "ace/OS_NS_strings.h"
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SHMIOP_Connector::TAO_SHMIOP_Connector ()
   : TAO_Connector (TAO_TAG_SHMEM_PROFILE),
     connect_strategy_ (),
-    base_connector_ (0)
+    base_connector_ (nullptr)
 {
 }
 
@@ -32,31 +33,43 @@ TAO_SHMIOP_Connector::open (TAO_ORB_Core *orb_core)
   // The SHMIOP always uses a blocked connect strategy
   // @todo: There are better ways of doing this. Let it be like this
   // for the  present.
-  ACE_NEW_RETURN (this->active_connect_strategy_,
+  TAO_Connect_Strategy *connect_strategy {};
+  ACE_NEW_RETURN (connect_strategy,
                   TAO_Blocked_Connect_Strategy (orb_core),
                   -1);
+  this->active_connect_strategy_.reset (connect_strategy);
 
   // Our connect creation strategy
-  TAO_SHMIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy = nullptr;
+  TAO_SHMIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy {};
 
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_SHMIOP_CONNECT_CREATION_STRATEGY
                       (orb_core->thr_mgr (),
                        orb_core),
                   -1);
+  std::unique_ptr<TAO_SHMIOP_CONNECT_CREATION_STRATEGY> creation_strategy_owner (
+    connect_creation_strategy);
 
   /// Our activation strategy
-  TAO_SHMIOP_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = nullptr;
+  TAO_SHMIOP_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy {};
 
   ACE_NEW_RETURN (concurrency_strategy,
                   TAO_SHMIOP_CONNECT_CONCURRENCY_STRATEGY (orb_core),
                   -1);
+  std::unique_ptr<TAO_SHMIOP_CONNECT_CONCURRENCY_STRATEGY> concurrency_strategy_owner (
+    concurrency_strategy);
 
-  if (this->base_connector_.open (this->orb_core ()->reactor (),
-                                  connect_creation_strategy,
-                                  &this->connect_strategy_,
-                                  concurrency_strategy) == -1)
-    return -1;
+  int const result = this->base_connector_.open (this->orb_core ()->reactor (),
+                                                 creation_strategy_owner.get (),
+                                                 std::addressof (this->connect_strategy_),
+                                                 concurrency_strategy_owner.get ());
+  this->creation_strategy_.reset (creation_strategy_owner.release ());
+  this->concurrency_strategy_.reset (concurrency_strategy_owner.release ());
+
+  if (result == -1)
+    {
+      return -1;
+    }
   // We can take advantage of the multithreaded shared-memory transport
   // if the client will block on read (i.e., will not allow callback.)
   else if (orb_core->client_factory ()->allow_callback () == 0)
@@ -71,8 +84,8 @@ TAO_SHMIOP_Connector::open (TAO_ORB_Core *orb_core)
 int
 TAO_SHMIOP_Connector::close ()
 {
-  delete this->base_connector_.concurrency_strategy ();
-  delete this->base_connector_.creation_strategy ();
+  this->concurrency_strategy_.reset ();
+  this->creation_strategy_.reset ();
   return this->base_connector_.close ();
 }
 
@@ -80,12 +93,16 @@ int
 TAO_SHMIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != TAO_TAG_SHMEM_PROFILE)
+  {
     return -1;
+  }
 
   TAO_SHMIOP_Endpoint *shmiop_endpoint =
     dynamic_cast <TAO_SHMIOP_Endpoint *>(endpoint);
   if (shmiop_endpoint == nullptr)
+  {
     return -1;
+  }
 
    const ACE_INET_Addr &remote_address =
      shmiop_endpoint->object_addr ();
@@ -122,25 +139,31 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                                        ACE_Time_Value *timeout)
 {
   if (TAO_debug_level > 0)
+    {
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - SHMIOP_Connector::make_connection, ")
                   ACE_TEXT ("looking for SHMIOP connection.\n")));
+    }
 
   TAO_SHMIOP_Endpoint *shmiop_endpoint =
     this->remote_endpoint (desc.endpoint ());
 
   if (shmiop_endpoint == nullptr)
+  {
     return 0;
+  }
 
   const ACE_INET_Addr &remote_address =
     shmiop_endpoint->object_addr ();
 
   if (TAO_debug_level > 2)
-    TAOLIB_DEBUG ((LM_DEBUG,
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - SHMIOP_Connector::make_connection, "
                 "making a new connection to <%C:%d>\n",
                 shmiop_endpoint->host (),
                 shmiop_endpoint->port ()));
+    }
 
   // Get the right synch options
   ACE_Synch_Options synch_options;
@@ -148,10 +171,10 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   this->active_connect_strategy_->synch_options (timeout,
                                                  synch_options);
 
-  TAO_SHMIOP_Connection_Handler *svc_handler = nullptr;
+  TAO_SHMIOP_Connection_Handler *svc_handler {};
 
   // Connect.
-  int result = this->base_connector_.connect (svc_handler,
+  int const result = this->base_connector_.connect (svc_handler,
                                               remote_address,
                                               synch_options);
 
@@ -192,17 +215,19 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   // At this point, the connection has be successfully connected.
   // #REFCOUNT# is one.
   if (TAO_debug_level > 2)
-    TAOLIB_DEBUG ((LM_DEBUG,
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - SHMIOP_Connector::make_connection, "
-                "new %C connection to <%C:%d> on Transport[%B]\n",
+                "new %C connection to <%C:%d> on handle [%H]\n",
                 transport->is_connected() ? "connected" : "not connected",
                 shmiop_endpoint->host (),
                 shmiop_endpoint->port (),
                 svc_handler->peer ().get_handle ()));
+    }
 
   // Add the handler to Cache
-  int retval =
-    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&desc,
+  int const retval =
+    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (std::addressof (desc),
                                                                              transport);
 
   // Failure in adding to cache.
@@ -241,10 +266,12 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       (void) transport->close_connection ();
 
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
+        {
+          TAOLIB_ERROR ((LM_ERROR,
                     "TAO (%P|%t) - SHMIOP_Connector [%B]::make_connection, "
                     "could not register the transport in the reactor.\n",
                     transport->id ()));
+        }
 
       return 0;
     }
@@ -256,12 +283,12 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 TAO_Profile *
 TAO_SHMIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
-  TAO_Profile *pfile = nullptr;
+  TAO_Profile *pfile {};
   ACE_NEW_RETURN (pfile,
                   TAO_SHMIOP_Profile (this->orb_core ()),
-                  0);
+                  nullptr);
 
-  int r = pfile->decode (cdr);
+  int const r = pfile->decode (cdr);
   if (r == -1)
     {
       pfile->_decr_refcnt ();
@@ -279,7 +306,7 @@ TAO_SHMIOP_Connector::make_profile ()
   // or:
   //    port/object_key
 
-  TAO_Profile *profile = nullptr;
+  TAO_Profile *profile {};
   ACE_NEW_THROW_EX (profile,
                     TAO_SHMIOP_Profile (this->orb_core ()),
                     CORBA::NO_MEMORY (
@@ -296,7 +323,9 @@ TAO_SHMIOP_Connector::check_prefix (const char *endpoint)
 {
   // Check for a valid string
   if (!endpoint || !*endpoint)
+  {
     return -1;  // Failure
+  }
 
   const char *protocol[] = { "shmiop", "shmioploc" };
 
@@ -309,10 +338,14 @@ TAO_SHMIOP_Connector::check_prefix (const char *endpoint)
   // isn't in the IOR then it is not an IOR we can use.
   if (slot == len0
       && ACE_OS::strncasecmp (endpoint, protocol[0], len0) == 0)
-    return 0;
+    {
+      return 0;
+    }
   else if (slot == len1
            && ACE_OS::strncasecmp (endpoint, protocol[1], len1) == 0)
-    return 0;
+    {
+      return 0;
+    }
 
   return -1;
   // Failure: not an SHMIOP IOR
@@ -329,12 +362,16 @@ TAO_SHMIOP_Endpoint *
 TAO_SHMIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != TAO_TAG_SHMEM_PROFILE)
+  {
     return 0;
+  }
 
   TAO_SHMIOP_Endpoint *shmiop_endpoint =
     dynamic_cast <TAO_SHMIOP_Endpoint *>(endpoint);
   if (shmiop_endpoint == nullptr)
+  {
     return 0;
+  }
 
   return shmiop_endpoint;
 }
@@ -347,8 +384,10 @@ TAO_SHMIOP_Connector::cancel_svc_handler (
     dynamic_cast<TAO_SHMIOP_Connection_Handler*>(svc_handler);
 
   if (handler)
-    // Cancel from the connector
-    return this->base_connector_.cancel (handler);
+    {
+      // Cancel from the connector
+      return this->base_connector_.cancel (handler);
+    }
 
   return -1;
 }

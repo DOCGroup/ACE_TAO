@@ -23,12 +23,11 @@
 
 #include "test_macros.h"
 
-
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
-CORBA::ULong const TMAX = 64;
+CORBA::ULong constexpr TMAX = 64;
 
-typedef bounded_object_reference_sequence<mock_reference, mock_reference_var,TMAX> tested_sequence;
+using tested_sequence = bounded_object_reference_sequence<mock_reference, mock_reference_var,TMAX>;
 
 CORBA::Boolean operator<< (TAO_OutputCDR &strm, const tested_sequence &sequence)
 {
@@ -42,12 +41,12 @@ CORBA::Boolean operator>> (TAO_InputCDR &strm, tested_sequence &sequence)
 
 struct Tester
 {
-  typedef tested_sequence::value_type value_type;
-  typedef tested_sequence::const_value_type const_value_type;
+  using value_type = tested_sequence::value_type;
+  using const_value_type = tested_sequence::const_value_type;
 
-  typedef tested_sequence::element_traits tested_element_traits;
-  typedef tested_sequence::allocation_traits tested_allocation_traits;
-  typedef TAO::details::range_checking<value_type,true> range;
+  using tested_element_traits = tested_sequence::element_traits;
+  using tested_allocation_traits = tested_sequence::allocation_traits;
+  using range = TAO::details::range_checking<value_type,true>;
 
   value_type * alloc_and_init_buffer()
   {
@@ -95,7 +94,7 @@ struct Tester
 
 int ACE_TMAIN(int,ACE_TCHAR*[])
 {
-  int status = 0;
+  int status {};
 
   try
     {

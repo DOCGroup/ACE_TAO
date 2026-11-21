@@ -19,7 +19,9 @@ TAO_RTScheduler_Manager_ptr
 TAO_RTScheduler_Manager::_duplicate (TAO_RTScheduler_Manager_ptr obj)
 {
   if (!CORBA::is_nil (obj))
+  {
     obj->_add_ref ();
+  }
   return obj;
 }
 

@@ -17,7 +17,7 @@ PortableServer::Servant_var<T>::_duplicate (T * p)
 {
   try
     {
-      if (p != 0)
+      if (p != nullptr)
         {
           p->_add_ref ();
         }
@@ -36,7 +36,6 @@ PortableServer::Servant_var<T>::~Servant_var ()  /* noexcept */
   // Unfortunately, there is no throw spec on _remove_ref, so we
   // can't assume that it will not throw.  If it does, then we are in
   // trouble.  In any event, we can't let the exception escape our
-  // destructor.
   try
     {
       if (this->ptr_ != nullptr)

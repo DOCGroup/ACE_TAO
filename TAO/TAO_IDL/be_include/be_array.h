@@ -28,7 +28,7 @@ class be_array : public virtual AST_Array,
 {
 public:
   be_array (UTL_ScopedName *n,
-            std::size_t ndims,
+            size_t ndims,
             UTL_ExprList *dims,
             bool local,
             bool abstract);

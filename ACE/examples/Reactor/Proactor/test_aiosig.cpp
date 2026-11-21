@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 //FUZZ: disable check_for_lack_ACE_OS
 //FUZZ: disable check_for_improper_main_declaration
 
@@ -116,7 +115,7 @@ query_aio_completions ()
   size_t number_of_compleions = 0;
   for (number_of_compleions = 0;
        number_of_compleions < 2;
-       number_of_compleions ++)
+       ++number_of_compleions)
     {
       // Wait for <milli_seconds> amount of time.
       // @@ Assigning <milli_seconds> to tv_sec.
@@ -206,15 +205,19 @@ query_aio_completions ()
         }
 
       if (number_of_compleions == 0)
-        // Print the buffer.
-        printf ("Number of bytes transferred : %d\n The buffer : %s\n",
-                nbytes,
-                mb1);
+        {
+          // Print the buffer.
+          printf ("Number of bytes transferred : %d\n The buffer : %s\n",
+                  nbytes,
+                  mb1);
+        }
       else
-        // Print the buffer.
-        printf ("Number of bytes transferred : %d\n The buffer : %s\n",
-                nbytes,
-                mb2);
+        {
+          // Print the buffer.
+          printf ("Number of bytes transferred : %d\n The buffer : %s\n",
+                  nbytes,
+                  mb2);
+        }
     }
   return 0;
 }
@@ -233,13 +236,19 @@ test_aio_calls ()
     }
 
   if (setup_signal_delivery () < 0)
-    return -1;
+    {
+      return -1;
+    }
 
   if (issue_aio_calls () < 0)
-    return -1;
+    {
+      return -1;
+    }
 
   if (query_aio_completions () < 0)
-    return -1;
+    {
+      return -1;
+    }
 
   return 0;
 }
@@ -279,10 +288,14 @@ int
 main (int, char *[])
 {
   if (test_aio_calls () == 0)
-    printf ("RT SIG test successful:\n"
-            "ACE_POSIX_SIG_PROACTOR should work in this platform\n");
+    {
+      printf ("RT SIG test successful:\n"
+              "ACE_POSIX_SIG_PROACTOR should work in this platform\n");
+    }
   else
-    printf ("RT SIG test failed:\n"
-            "ACE_POSIX_SIG_PROACTOR may not work in this platform\n");
+    {
+      printf ("RT SIG test failed:\n"
+              "ACE_POSIX_SIG_PROACTOR may not work in this platform\n");
+    }
   return 0;
 }

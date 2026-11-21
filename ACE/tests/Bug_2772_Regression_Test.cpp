@@ -1,15 +1,7 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    Test bug 2772 regression
-//
-// = AUTHOR
-//    Johnny Willemsen
-//
-// ============================================================================
+/// @file Bug_2772_Regression_Test.cpp
+/// Test bug 2772 regression
+///
+/// @author Johnny Willemsen
 
 #include "test_config.h"
 #include "ace/Recursive_Thread_Mutex.h"
@@ -118,7 +110,6 @@ void ThreadTest::workerThread()
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%t Thread finished double acquire.\n")));
     }
-
 
    // Wait for the STOP condition to occur
    m_stopCondition.wait();

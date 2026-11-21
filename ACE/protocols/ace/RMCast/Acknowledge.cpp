@@ -58,9 +58,12 @@ namespace ACE_RMCast
 
     for (;; ++sn)
     {
-      Queue::ENTRY* e = 0;
+      Queue::ENTRY* e {};
 
-      if (q.find (sn, e) == -1 || e->int_id_.lost ()) break;
+      if (q.find (sn, e) == -1 || e->int_id_.lost ())
+      {
+        break;
+      }
 
       Message_ptr m (e->int_id_.msg ());
       q.unbind (sn);
@@ -82,7 +85,9 @@ namespace ACE_RMCast
         Lock l (mutex_);
 
         if (stop_)
+        {
           break;
+        }
 
         if (hold_.current_size () != 0)
         {
@@ -92,7 +97,10 @@ namespace ACE_RMCast
           {
             Queue& q = (*i).int_id_;
 
-            if (q.current_size () == 0) continue;
+            if (q.current_size () == 0)
+            {
+              continue;
+            }
 
             track_queue ((*i).ext_id_, q, msgs);
           }
@@ -144,18 +152,24 @@ namespace ACE_RMCast
         Lock l (mutex_);
 
         while (!stop_)
-        {
-          if (cond_.wait (&time) == -1)
           {
-            if (errno != ETIME)
-              ACE_OS::abort ();
-            else
-              break;
+            if (cond_.wait (&time) == -1)
+              {
+                if (errno != ETIME)
+                  {
+                    ACE_OS::abort ();
+                  }
+                else
+                  {
+                    break;
+                  }
+              }
           }
-        }
 
         if (stop_)
-          break;
+          {
+            break;
+          }
       }
     }
   }
@@ -175,7 +189,7 @@ namespace ACE_RMCast
     //
     while (i != e)
     {
-      std::unique_ptr<NAK> nak (new NAK (addr));
+      std::unique_ptr<NAK> nak = std::make_unique<NAK> (addr);
 
       // Inner loop that fills NAK profile with up to max_elem elements.
       //
@@ -269,7 +283,7 @@ namespace ACE_RMCast
 
       u64 sn (static_cast<SN const*> (m->find (SN::id))->num ());
 
-      Map::ENTRY* e = 0;
+      Map::ENTRY* e {};
 
       if (hold_.find (from, e) == -1)
       {
@@ -334,7 +348,9 @@ namespace ACE_RMCast
           Profile_ptr nrtm (create_nrtm (max_elem));
 
           if (nrtm.get ())
+          {
             m->add (nrtm);
+          }
         }
       }
 
@@ -349,7 +365,7 @@ namespace ACE_RMCast
   {
     // Prepare NRTM.
     //
-    std::unique_ptr<NRTM> nrtm (new NRTM ());
+    std::unique_ptr<NRTM> nrtm = std::make_unique<NRTM> ();
 
     // Gather the information.
     //
@@ -357,27 +373,33 @@ namespace ACE_RMCast
       for (Map::iterator i (hold_.begin ()), e (hold_.end ()); i != e; ++i)
       {
         Address addr ((*i).ext_id_);
-        Queue& q = (*i).int_id_;
+        Queue const & q = (*i).int_id_;
 
         //@@ Should look for the highest known number.
         //
         nrtm->insert (addr, q.sn ());
 
         if (--max_elem == 0)
-          break;
+          {
+            break;
+          }
       }
     }
 
     if (nrtm->empty ())
-      return Profile_ptr (0);
+      {
+        return Profile_ptr (nullptr);
+      }
     else
-      return Profile_ptr (nrtm.release ());
+      {
+        return Profile_ptr (nrtm.release ());
+      }
   }
 
   ACE_THR_FUNC_RETURN Acknowledge::
   track_thunk (void* obj)
   {
     reinterpret_cast<Acknowledge*> (obj)->track ();
-    return 0;
+    return ACE_THR_FUNC_RETURN_NULL;
   }
 }

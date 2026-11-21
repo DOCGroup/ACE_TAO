@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    TypeCode_Case_T.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Ossama Othman
  */
-//=============================================================================
 
 #ifndef TAO_TYPECODE_CASE_T_H
 #define TAO_TYPECODE_CASE_T_H
@@ -85,12 +83,10 @@ namespace TAO
     class Case_T : public Case<StringType, TypeCodeType>
     {
     public:
-      /// Constructor.
       Case_T (DiscriminatorType member_label,
               char const * member_name,
               TypeCodeType member_type);
 
-      /// Constructor.
       /**
        * Constructor only used in the dynamically constructed @c union
        * @c TypeCode case.
@@ -105,13 +101,13 @@ namespace TAO
        *
        * @see @c TAO::TypeCode::Case
        */
-      //@{
+      /// @{
       Case<StringType, TypeCodeType> * clone () const override;
       CORBA::Any * label () const override;
       bool marshal_label (TAO_OutputCDR & cdr) const override;
       bool equal_label (CORBA::ULong index,
                         CORBA::TypeCode_ptr tc) const override;
-      //@}
+      /// @}
 
     private:
       /// IDL @c union case/member label value.

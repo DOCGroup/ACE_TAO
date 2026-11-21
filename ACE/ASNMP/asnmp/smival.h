@@ -35,36 +35,38 @@
 //----[ macros ]-------------------------------------------------------
 
 //======================================================================
-// SMI value structure conforming with SMI RFC
-//
-typedef struct {                /* smiVALUE portion of VarBind */
-          SmiUINT32 syntax;     /* Insert SNMP_SYNTAX_<type> */
+/// SMI value structure conforming with the SMI RFC.
+///
+/// SMI value portion of a VarBind.
+typedef struct {
+          /// Insert SNMP_SYNTAX_<type>.
+          SmiUINT32 syntax;
         union   {
-          SmiINT    sNumber;    /* SNMP_SYNTAX_INT
-                                   SNMP_SYNTAX_INT32 */
-          SmiUINT32 uNumber;    /* SNMP_SYNTAX_UINT32
-                                   SNMP_SYNTAX_CNTR32
-                                   SNMP_SYNTAX_GAUGE32
-                                   SNMP_SYNTAX_TIMETICKS */
-          SmiCNTR64 hNumber;    /* SNMP_SYNTAX_CNTR64 */
-          SmiOCTETS string;     /* SNMP_SYNTAX_OCTETS
-                                   SNMP_SYNTAX_BITS
-                                   SNMP_SYNTAX_OPAQUE
-                                   SNMP_SYNTAX_IPADDR
-                                   SNMP_SYNTAX_NSAPADDR */
-          SmiOID    oid;        /* SNMP_SYNTAX_OID */
-          SmiBYTE   empty;      /* SNMP_SYNTAX_NULL
-                                   SNMP_SYNTAX_NOSUCHOBJECT
-                                   SNMP_SYNTAX_NOSUCHINSTANCE
-                                   SNMP_SYNTAX_ENDOFMIBVIEW */
+          /// SNMP_SYNTAX_INT and SNMP_SYNTAX_INT32.
+          SmiINT    sNumber;
+          /// SNMP_SYNTAX_UINT32, SNMP_SYNTAX_CNTR32, SNMP_SYNTAX_GAUGE32,
+          /// and SNMP_SYNTAX_TIMETICKS.
+          SmiUINT32 uNumber;
+          /// SNMP_SYNTAX_CNTR64.
+          SmiCNTR64 hNumber;
+          /// SNMP_SYNTAX_OCTETS, SNMP_SYNTAX_BITS, SNMP_SYNTAX_OPAQUE,
+          /// SNMP_SYNTAX_IPADDR, and SNMP_SYNTAX_NSAPADDR.
+          SmiOCTETS string;
+          /// SNMP_SYNTAX_OID.
+          SmiOID    oid;
+          /// SNMP_SYNTAX_NULL, SNMP_SYNTAX_NOSUCHOBJECT,
+          /// SNMP_SYNTAX_NOSUCHINSTANCE, and SNMP_SYNTAX_ENDOFMIBVIEW.
+          SmiBYTE   empty;
                   }   value;
 }    SmiVALUE, *SmiLPVALUE;
 
-// An "abstract" (pure virtual) class that serves as the base class
-// for all specific SNMP syntax types.
-//
+/// An abstract (pure virtual) class that serves as the base class
+/// for all specific SNMP syntax types.
 class ASNMP_Export SnmpSyntax {
 public:
+  SnmpSyntax () = default;
+  SnmpSyntax (SnmpSyntax const &) = default;
+
   /// virtual function for getting a printable ASCII value for any SNMP Value
   virtual const char * to_string() = 0;
 
@@ -77,9 +79,8 @@ public:
   virtual  SnmpSyntax * clone() const = 0;
 
   /// virtual destructor to ensure deletion of derived classes...
-  virtual ~SnmpSyntax() {};
+  virtual ~SnmpSyntax() = default;
 
-  /// overloaded assignment operator
   /// This should be pure virtual, but WinNT compiler
   /// complains about unresolved reference at link time.
   virtual SnmpSyntax& operator=(SnmpSyntax &/*val*/)

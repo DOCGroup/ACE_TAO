@@ -73,7 +73,9 @@ Barrier_Task::Barrier_Task (ACE_Thread_Manager *thr_mgr,
 {
   // Create worker threads.
   if (this->activate (THR_NEW_LWP, n_threads) == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("activate failed")));
+  }
 }
 
 // Check to see if it's time to clean up by examining last_thread().
@@ -95,7 +97,7 @@ Barrier_Task::svc ()
 {
   for (int iterations = 1;
        iterations <= this->n_iterations_;
-       iterations++)
+       ++iterations)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) in iteration %d\n"),
@@ -133,10 +135,12 @@ run_main (int, ACE_TCHAR *[])
 
   // Only one of the threads should see a cleanup...
   if (close_cleanups != 1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%d threads saw cleanup indication; ")
-                ACE_TEXT ("should be 1\n"),
-                close_cleanups.value ()));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%d threads saw cleanup indication; ")
+                  ACE_TEXT ("should be 1\n"),
+                  close_cleanups.value ()));
+    }
 
   // Cleanup the thread hook so it doesn't leak.
   delete ACE_Thread_Hook::thread_hook ();

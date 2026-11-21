@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CSD_TP_Synch_Helper.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
-
 #ifndef TAO_CSD_TP_SYNCH_HELPER_H
 #define TAO_CSD_TP_SYNCH_HELPER_H
 
@@ -40,12 +36,10 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Synch_Helper
     {
     public:
-      /// Constructor.  Sets initial state to PENDING.
+      /// Starts in the PENDING state.
       TP_Synch_Helper();
 
-      /// Destructor.
-      ~TP_Synch_Helper();
-
+      ~TP_Synch_Helper() = default;
       /// Returns true if the helper state is DISPATCHED, and false if
       /// the helper state is CANCELLED.  However, if the helper state
       /// is PENDING, then this method will block the calling thread
@@ -61,12 +55,12 @@ namespace TAO
       /// wait_while_pending() to unblock.
       void cancelled();
 
-    private:
       TP_Synch_Helper (TP_Synch_Helper const &) = delete;
       TP_Synch_Helper &operator= (TP_Synch_Helper const &) = delete;
       TP_Synch_Helper (TP_Synch_Helper &&) = delete;
       TP_Synch_Helper &operator= (TP_Synch_Helper &&) = delete;
 
+    private:
       /// Enumeration Type for all possible states of this helper object.
       enum HelperState
       {

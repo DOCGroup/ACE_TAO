@@ -12,7 +12,7 @@
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char * const TAO_IIOP_SSL_Connect_Timeprobe_Description[] =
+static char const * const TAO_IIOP_SSL_Connect_Timeprobe_Description[] =
 {
   "IIOP_SSL_Connection_Handler::handle_input - start",
   "IIOP_SSL_Connection_Handler::handle_input - end",
@@ -65,17 +65,13 @@ TAO::IIOP_SSL_Connection_Handler::IIOP_SSL_Connection_Handler (
   // Delete the transport with TAO_IIOP_Connection_Handler.
   delete this->transport ();
 
-  IIOP_SSL_Transport *specific_transport = nullptr;
+  IIOP_SSL_Transport *specific_transport {};
   ACE_NEW (specific_transport,
            IIOP_SSL_Transport (this,
                                orb_core));
 
   // store this pointer
   this->transport (specific_transport);
-}
-
-TAO::IIOP_SSL_Connection_Handler::~IIOP_SSL_Connection_Handler ()
-{
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

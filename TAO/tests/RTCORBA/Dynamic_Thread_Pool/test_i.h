@@ -11,28 +11,31 @@
 class test_i : public POA_test
 {
 public:
-  /// Constructor.
   test_i (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa,
           long msec_sleep);
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
 
   /// Test method.
   CORBA::Long method (CORBA::Long client_id,
                       CORBA::Long iteration,
-                      CORBA::Long_out thread_count);
+                      CORBA::Long_out thread_count) override;
 
   /// Shutdown the server.
-  void shutdown ();
+  void shutdown () override;
 
   /// Our POA.
-  PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
 private:
   /// ORB.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
   /// Our POA.
-  PortableServer::POA_var poa_;
+  PortableServer::POA_var const poa_;
 
   /// Time spent in executing the upcall.
   ACE_Time_Value nap_time_;

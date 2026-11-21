@@ -22,86 +22,84 @@
 #include "orbsvcs/DsNotifyLogAdminC.h"
 #include "orbsvcs/Log/NotifyLogFactory_i.h"
 
-#define NOTIFY_KEY "NotifyLogFactory"
+#include <optional>
+#include <string>
 
+/// Implements the Telecom Log Service using Notification Service.
 class Notify_Logging_Service
   : public ACE_Task_Base
 {
-  // = TITLE
-  //   Notify_Logging_Service
-  //
-  // = DESCRIPTION
-  //   Implementation of the Telecom Log Service
 
  public:
-  Notify_Logging_Service ();
-  // Constructor.
+  Notify_Logging_Service () = default;
 
-  ~Notify_Logging_Service () override;
-  // Destructor.
+  ~Notify_Logging_Service () override = default;
 
   Notify_Logging_Service (Notify_Logging_Service const &) = delete;
   Notify_Logging_Service (Notify_Logging_Service &&) = delete;
   Notify_Logging_Service &operator= (Notify_Logging_Service const &) = delete;
   Notify_Logging_Service &operator= (Notify_Logging_Service &&) = delete;
 
-  int init (int argc, ACE_TCHAR * argv[]);
-  // Initializes the Telecom Log Service.
-  // Returns 0 on success, -1 on error.
+  /// Initializes the Telecom Log Service.
+  /// @return 0 on success, -1 on error.
+  int init (int argc, ACE_TCHAR * argv[]) override;
 
+  /// Runs the Telecom Log Service.
+  /// @return 0 on success, -1 on error.
   int run ();
-  // Run the Telecom Log Service.
-  // Returns 0 on success, -1 on error.
 
+  /// Shuts down the Telecom Log Service.
   void shutdown ();
-  // Shutdown the Telecom Service.
-  // Returns 0 on success, -1 on error.
 
 protected:
+  /// Initializes the ORB.
   int init_ORB (int & argc, ACE_TCHAR * argv []);
-  // initialize the ORB.
 
+  /// Parses the command-line arguments.
   int parse_args (int argc, ACE_TCHAR * argv[]);
-  // Parses the command line arguments.
 
+  /// Resolves the naming service.
   void resolve_naming_service ();
-  // Resolve the naming service.
 
+  /// Runs worker threads.
   int svc () override;
-  // Run worker threads.
 
-  // = Data members
+  /// @name Data members
+  /// @{
 
-  TAO_Notify_Service * notify_service_;
+  /// Borrowed from ACE_Dynamic_Service.
+  TAO_Notify_Service *notify_service_ {};
 
-  CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
-  // The Factory.
+  /// The ORB used by this service.
+  CORBA::ORB_var orb_ {};
 
-  TAO_NotifyLogFactory_i * notify_log_factory_;
-  // The Notify Log Factory.
+  /// The root POA.
+  PortableServer::POA_var poa_ {};
 
-  CORBA::ORB_var orb_;
-  // The ORB that we use.
+  /// A naming context.
+  CosNaming::NamingContext_var naming_ {};
 
-  PortableServer::POA_var poa_;
-  // Reference to the root poa.
+  /// The Notification Service event channel factory.
+  CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_ {};
 
-  CosNaming::NamingContext_var naming_;
-  // A naming context.
+  /// Keeps the factory servant alive while it is active in the POA.
+  PortableServer::ServantBase_var notify_log_factory_owner_ {};
 
-  ACE_CString service_name_;
-  // The name we use to bind with the NameService
+  /// The name used to bind with the NameService.
+  std::string service_name_ {"NotifyLogFactory"};
 
-  ACE_TCHAR const * ior_file_name_;
-  // The name of the file where we output the factory IOR.
+  /// The name of the file used to output the factory IOR.
+  std::optional<std::basic_string<ACE_TCHAR>> ior_file_name_ {};
 
-  ACE_TCHAR const * pid_file_name_;
-  // The name of the file where we output the process id.
+  /// The name of the file used to output the process ID.
+  std::optional<std::basic_string<ACE_TCHAR>> pid_file_name_ {};
 
-  bool bind_to_naming_service_;
-  // If true, bind to naming service
+  /// Whether to bind to the naming service.
+  bool bind_to_naming_service_ {true};
 
-  int nthreads_;
-  // Number of worker threads.
+  /// Number of worker threads.
+  int nthreads_ {};
+
+  /// @}
 };
 #endif /* NOTIFY_LOGGING_SERVICE_H */

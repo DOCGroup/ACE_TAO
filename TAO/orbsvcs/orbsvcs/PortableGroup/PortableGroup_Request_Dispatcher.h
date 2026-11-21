@@ -1,6 +1,5 @@
 //-*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    PortableGroup_Request_Dispatcher.h
  *
@@ -8,8 +7,6 @@
  *
  *  @author  Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_PORTABLEGROUP_REQUEST_DISPATCHER_H
 #define TAO_PORTABLEGROUP_REQUEST_DISPATCHER_H
@@ -38,8 +35,14 @@ class TAO_PortableGroup_Export PortableGroup_Request_Dispatcher
   friend class TAO_GOA;
 
 public:
-  /// Destructor.
+  PortableGroup_Request_Dispatcher () = default;
+
   ~PortableGroup_Request_Dispatcher () override = default;
+
+  PortableGroup_Request_Dispatcher (PortableGroup_Request_Dispatcher const &) = delete;
+  PortableGroup_Request_Dispatcher (PortableGroup_Request_Dispatcher &&) = delete;
+  PortableGroup_Request_Dispatcher & operator= (PortableGroup_Request_Dispatcher const &) = delete;
+  PortableGroup_Request_Dispatcher & operator= (PortableGroup_Request_Dispatcher &&) = delete;
 
   /**
    * Dispatch a request.

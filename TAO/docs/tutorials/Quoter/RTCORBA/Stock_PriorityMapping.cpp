@@ -15,9 +15,7 @@ Stock::Priority_Mapping::Priority_Mapping ()
 //
 // ~Stock::Priority_Mapping
 //
-Stock::Priority_Mapping::~Priority_Mapping ()
-{
-}
+Stock::Priority_Mapping::~Priority_Mapping () = default;
 
 //
 // register_mapping

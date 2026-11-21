@@ -38,7 +38,7 @@ namespace ACE
     class MONITOR_CONTROL_Export FreeBSD_Network_Interface_Monitor
     {
     protected:
-      FreeBSD_Network_Interface_Monitor (const ACE_TCHAR *lookup_str);
+      explicit FreeBSD_Network_Interface_Monitor (ACE_TCHAR const *lookup_str);
 
       /// Platform-specific implementation.
       void update_i ();
@@ -47,13 +47,13 @@ namespace ACE
       void clear_impl ();
 
     protected:
-      ACE_UINT64 value_;
+      ACE_UINT64 value_ {};
 
     private:
       void init ();
       void fetch (ACE_UINT64& value) const;
 
-      ACE_UINT64 start_;
+      ACE_UINT64 start_ {};
       ACE_CString lookup_str_;
     };
   }

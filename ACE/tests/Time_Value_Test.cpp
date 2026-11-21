@@ -21,7 +21,7 @@
 #include <sstream>
 #include <type_traits>
 
-int timeval_test_func (const ACE_Time_Value* timeout)
+int timeval_test_func (ACE_Time_Value const *timeout)
 {
   int ret = 0;
   timeval timeval_test;
@@ -37,13 +37,15 @@ int timeval_test_func (const ACE_Time_Value* timeout)
   if (timeval_test.tv_sec != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("timeval.tv_sec should be zero not %d\n"), timeval_test.tv_sec));
+                  ACE_TEXT ("timeval.tv_sec should be zero not %:\n"),
+                  timeval_test.tv_sec));
       ++ret;
     }
   if (timeval_test.tv_usec != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("timeval.tv_usec should be zero not %d\n"), timeval_test.tv_usec));
+                  ACE_TEXT ("timeval.tv_usec should be zero not %q\n"),
+                  static_cast<ACE_INT64> (timeval_test.tv_usec)));
       ++ret;
     }
 
@@ -54,7 +56,7 @@ int timeval_test_func (const ACE_Time_Value* timeout)
 }
 
 // Test whether ACE_Time_Value is stored correctly for the specified year month
-int test_year_month (const ACE_Time_Value& time, long year, long month)
+int test_year_month (ACE_Time_Value const &time, long year, long month)
 {
   int ret = 0;
 
@@ -62,24 +64,30 @@ int test_year_month (const ACE_Time_Value& time, long year, long month)
   if (dt.year () != year)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("time year should be %d not %d\n"), year, dt.year ()));
+                  ACE_TEXT ("time year should be %q not %q\n"),
+                  static_cast<ACE_INT64> (year),
+                  static_cast<ACE_INT64> (dt.year ())));
       ++ret;
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("time year is correct, it is %d\n"), dt.year ()));
+                  ACE_TEXT ("time year is correct, it is %q\n"),
+                  static_cast<ACE_INT64> (dt.year ())));
     }
   if (dt.month () != month)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("time month should be %d not %d\n"), month, dt.month ()));
+                  ACE_TEXT ("time month should be %q not %q\n"),
+                  static_cast<ACE_INT64> (month),
+                  static_cast<ACE_INT64> (dt.month ())));
       ++ret;
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("time month is correct, it is %d\n"), dt.month ()));
+                  ACE_TEXT ("time month is correct, it is %q\n"),
+                  static_cast<ACE_INT64> (dt.month ())));
     }
 
   return ret;
@@ -214,23 +222,23 @@ run_main (int, ACE_TCHAR *[])
   ACE_TEST_ASSERT (ACE_Time_Value::max_time.usec () != -1);
 
   // Test performance of normalize()
-  ACE_Time_Value v1(ACE_Numeric_Limits<time_t>::max(),
-                    ACE_Numeric_Limits<suseconds_t>::max());
-  ACE_Time_Value v2(ACE_Numeric_Limits<time_t>::min(),
-                   ACE_Numeric_Limits<suseconds_t>::min());
-  ACE_Time_Value v3(ACE_Numeric_Limits<time_t>::max(),
-                    ACE_Numeric_Limits<suseconds_t>::min());
-  ACE_Time_Value v4(ACE_Numeric_Limits<time_t>::min(),
-                    ACE_Numeric_Limits<suseconds_t>::max());
+  ACE_Time_Value v1((ACE_Numeric_Limits<time_t>::max) (),
+                    (ACE_Numeric_Limits<suseconds_t>::max) ());
+  ACE_Time_Value v2((ACE_Numeric_Limits<time_t>::min) (),
+                   (ACE_Numeric_Limits<suseconds_t>::min) ());
+  ACE_Time_Value v3((ACE_Numeric_Limits<time_t>::max) (),
+                    (ACE_Numeric_Limits<suseconds_t>::min) ());
+  ACE_Time_Value v4((ACE_Numeric_Limits<time_t>::min) (),
+                    (ACE_Numeric_Limits<suseconds_t>::max) ());
 
-  v1.set(ACE_Numeric_Limits<time_t>::max(),
-         ACE_Numeric_Limits<suseconds_t>::max());
-  v2.set(ACE_Numeric_Limits<time_t>::min(),
-         ACE_Numeric_Limits<suseconds_t>::min());
-  v3.set(ACE_Numeric_Limits<time_t>::max(),
-         ACE_Numeric_Limits<suseconds_t>::min());
-  v4.set(ACE_Numeric_Limits<time_t>::min(),
-         ACE_Numeric_Limits<suseconds_t>::max());
+  v1.set((ACE_Numeric_Limits<time_t>::max) (),
+         (ACE_Numeric_Limits<suseconds_t>::max) ());
+  v2.set((ACE_Numeric_Limits<time_t>::min) (),
+         (ACE_Numeric_Limits<suseconds_t>::min) ());
+  v3.set((ACE_Numeric_Limits<time_t>::max) (),
+         (ACE_Numeric_Limits<suseconds_t>::min) ());
+  v4.set((ACE_Numeric_Limits<time_t>::min) (),
+         (ACE_Numeric_Limits<suseconds_t>::max) ());
 
   v1.set(DBL_MAX);
 
@@ -241,15 +249,15 @@ run_main (int, ACE_TCHAR *[])
   if (msec_test3.sec () != 42)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("set_msec test failed: %d secs should be 42\n"),
+                  ACE_TEXT ("set_msec test failed: %: secs should be 42\n"),
                   msec_test3.sec ()));
       ++ret;
     }
   if (msec_test3.usec () != 555000)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("set_msec test failed: %d usecs should be 555000\n"),
-                  msec_test3.usec ()));
+                  ACE_TEXT ("set_msec test failed: %q usecs should be 555000\n"),
+                  static_cast<ACE_INT64> (msec_test3.usec ())));
       ++ret;
     }
 
@@ -292,15 +300,15 @@ run_main (int, ACE_TCHAR *[])
                   ACE_TEXT ("time_t is at least 64bit, this platform will not have problems after 2038\n")));
     }
 
-  ret += timeval_test_func ((ACE_Time_Value *) &ACE_Time_Value::zero);
+  ret += timeval_test_func (&ACE_Time_Value::zero);
 
   // Test whether some times in the past and the future are correctly converted to year/month, no need to check
   // day/time as that could be challenging due to timezones.
-  ACE_Time_Value dt20250726 ((time_t)1753519444);
+  ACE_Time_Value dt20250726 (static_cast<time_t> (1753519444));
   ret += test_year_month (dt20250726, 2025, 7);
-  ACE_Time_Value dt20370726 ((time_t)2132203444);
+  ACE_Time_Value dt20370726 (static_cast<time_t> (2132203444));
   ret += test_year_month (dt20370726, 2037, 7);
-  ACE_Time_Value dt20570726 ((time_t)2763355444);
+  ACE_Time_Value dt20570726 (static_cast<time_t> (2763355444));
   ret += test_year_month (dt20570726, 2057, 7);
   ACE_END_TEST;
 

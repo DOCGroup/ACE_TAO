@@ -36,6 +36,12 @@ class TAO_ZIOP_PolicyFactory
   , public ::CORBA::LocalObject
 {
 public:
+  TAO_ZIOP_PolicyFactory () = default;
+  TAO_ZIOP_PolicyFactory (TAO_ZIOP_PolicyFactory const &) = delete;
+  TAO_ZIOP_PolicyFactory &operator= (TAO_ZIOP_PolicyFactory const &) = delete;
+  TAO_ZIOP_PolicyFactory (TAO_ZIOP_PolicyFactory &&) = delete;
+  TAO_ZIOP_PolicyFactory &operator= (TAO_ZIOP_PolicyFactory &&) = delete;
+
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                    CORBA::Any const& value) override;
 

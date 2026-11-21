@@ -47,7 +47,7 @@ namespace ACE
       void clear_impl ();
 
     protected:
-      ACE_UINT64 value_;
+      ACE_UINT64 value_ {};
     };
   }
 }

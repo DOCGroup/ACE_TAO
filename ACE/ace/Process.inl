@@ -4,6 +4,7 @@
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_pwd.h"
 #include "ace/OS_NS_string.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -67,7 +68,9 @@ ACE_Process::wait (ACE_exitcode *status,
 #endif /* ACE_WIN32 */
                   );
   if (status != 0)
-    *status = this->exit_code_;
+    {
+      *status = this->exit_code_;
+    }
 
   return retv;
 }
@@ -76,18 +79,26 @@ ACE_INLINE int
 ACE_Process::kill (int signum)
 {
   if (this->getpid () != -1)
-    return ACE_OS::kill (this->getpid (), signum);
+    {
+      return ACE_OS::kill (this->getpid (), signum);
+    }
   else
-    return -1;
+    {
+      return -1;
+    }
 }
 
 ACE_INLINE int
 ACE_Process::terminate ()
 {
   if (this->getpid () != -1)
-    return ACE::terminate_process (this->getpid ());
+    {
+      return ACE::terminate_process (this->getpid ());
+    }
   else
-    return -1;
+    {
+      return -1;
+    }
 }
 
 ACE_INLINE int
@@ -182,7 +193,7 @@ ACE_Process_Options::get_process_attributes () const
 ACE_INLINE LPSECURITY_ATTRIBUTES
 ACE_Process_Options::set_process_attributes ()
 {
-  process_attributes_ = &security_buf1_;
+  process_attributes_ = std::addressof (security_buf1_);
   return process_attributes_;
 }
 
@@ -195,7 +206,7 @@ ACE_Process_Options::get_thread_attributes () const
 ACE_INLINE LPSECURITY_ATTRIBUTES
 ACE_Process_Options::set_thread_attributes ()
 {
-  thread_attributes_ = &security_buf2_;
+  thread_attributes_ = std::addressof (security_buf2_);
   return thread_attributes_;
 }
 
@@ -251,7 +262,9 @@ ACE_Process_Options::setreugid (const ACE_TCHAR* user)
       return 0;
     }
   else
-    return -1;
+    {
+      return -1;
+    }
 #else
   ACE_UNUSED_ARG (user);
   ACE_NOTSUP_RETURN (-1);
@@ -311,7 +324,9 @@ ACE_INLINE ACE_TCHAR *
 ACE_Process_Options::command_line_buf (size_t *max_lenp)
 {
   if (max_lenp != 0)
-    *max_lenp = this->command_line_buf_len_;
+    {
+      *max_lenp = this->command_line_buf_len_;
+    }
   return this->command_line_buf_;
 }
 
@@ -319,9 +334,13 @@ ACE_INLINE ACE_TCHAR *
 ACE_Process_Options::working_directory ()
 {
   if (working_directory_[0] == '\0')
-    return 0;
+    {
+      return 0;
+    }
   else
-    return working_directory_;
+    {
+      return working_directory_;
+    }
 }
 
 ACE_INLINE void
@@ -348,7 +367,9 @@ ACE_INLINE const ACE_TCHAR *
 ACE_Process_Options::process_name ()
 {
   if (process_name_[0] == '\0')
-    this->process_name (this->command_line_argv ()[0]);
+    {
+      this->process_name (this->command_line_argv ()[0]);
+    }
 
   return this->process_name_;
 }

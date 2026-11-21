@@ -85,7 +85,6 @@ class TAO_IDL_FE_Export UTL_DeclList : public UTL_List
 public:
   // Operations
 
-  // Constructor(s)
   UTL_DeclList (FE_Declarator *s,
                 UTL_DeclList *cdr);
   UTL_DeclList (UTL_DeclList const &) = delete;
@@ -113,7 +112,6 @@ class TAO_IDL_FE_Export UTL_DecllistActiveIterator
 public:
   // Operations
 
-  // Constructor(s)
   explicit UTL_DecllistActiveIterator (UTL_DeclList *s);
 
   // Get current item

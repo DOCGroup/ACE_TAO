@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    objref.h
  *
@@ -7,25 +5,19 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #ifndef PARAM_TEST_OBJREF_H
 #define PARAM_TEST_OBJREF_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test objrefs
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test objrefs
 class Test_ObjRef
 {
 public:
-  /// ctor
   Test_ObjRef ();
 
-  /// dtor
-  ~Test_ObjRef ();
+  ~Test_ObjRef () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -53,7 +45,7 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   Coffee_var in_;

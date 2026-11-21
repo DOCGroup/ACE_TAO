@@ -56,7 +56,6 @@ public:
   /// Allow assignment
   ACE_DLL& operator= (const ACE_DLL &rhs);
 
-
   /**
    * This constructor performs the actions of open() during construction.
    * @param dll_name  The name or path of the DLL to load.
@@ -80,7 +79,6 @@ public:
                     int open_mode = ACE_DEFAULT_SHLIB_MODE,
                     bool close_handle_on_destruction = true);
 
-  /// Copy constructor.
   ACE_DLL (const ACE_DLL &);
 
   /**
@@ -176,24 +174,23 @@ private:
               bool close_handle_on_destruction = true,
               ACE_SHLIB_HANDLE handle = 0);
 
-
 public:
   /// Open mode.
-  int open_mode_;
+  int open_mode_ {};
 
   /// Keep track of the name of the loaded dll, so it can be used
   /// to remove framework components, singletons that live in the dll,
   /// prior to unloading the dll in the close() method.
-  ACE_TCHAR *dll_name_;
+  ACE_TCHAR *dll_name_ {};
 
   /// This flag keeps track of whether we should close the handle
   /// automatically when the object is destroyed.
   bool close_handle_on_destruction_;
 
-  ACE_DLL_Handle *dll_handle_;
+  ACE_DLL_Handle *dll_handle_ {};
 
   /// Flag to record if the last operation had an error.
-  bool error_;
+  bool error_ {};
 
   /// Any error messages encountered during last operation.
   ACE_TString errmsg_;

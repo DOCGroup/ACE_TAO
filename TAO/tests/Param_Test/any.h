@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    any.h
  *
@@ -7,25 +5,19 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #ifndef PARAM_TEST_ANY_H
 #define PARAM_TEST_ANY_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test Anys
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test Anys
 class Test_Any
 {
 public:
-  /// ctor
   Test_Any ();
 
-  /// dtor
-  ~Test_Any ();
+  ~Test_Any () = default;
 
   enum
   {
@@ -67,7 +59,7 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// Coffee object used to test Any with object.
   Coffee_var cobj_;

@@ -65,7 +65,7 @@ ACE_ATM_Stream::get_peer_name () const
   }
 
   char buffer[256];
-  for (unsigned int index = 0; index < ATM_ADDR_SIZE - 1; index++) {
+  for (unsigned int index = 0; index < ATM_ADDR_SIZE - 1; ++index) {
     buffer[ index * 3 ] = '\0';
     ACE_OS::sprintf (buffer, "%s%02x.", buffer, name.satm_number.Addr[ index ]);
   }
@@ -81,19 +81,20 @@ ACE_ATM_Stream::get_peer_name () const
   // Find the host address in the ATM hosts file and return the
   //  host name
   char line[256];
-  char *host_ptr, *host_name = 0;
-  ACE_NEW_RETURN (host_name, char[256], 0);
+  char *host_ptr;
+  char *host_name {};
+  ACE_NEW_RETURN (host_name, char[256], nullptr);
   while (!atm_hosts.eof ()) {
     atm_hosts.getline (line, 256);
     // Convert the line to lower case to ease comparison
     for (index = 0; index < ACE_OS::strlen (line); ++index)
       line[index] = ACE_OS::ace_tolower (line[index]);
-    if (ACE_OS::strstr (line, buffer) != 0)
+    if (ACE_OS::strstr (line, buffer) != nullptr)
       {
         char *strtok_p;
         // Grab the second token which is the host name
         ACE_OS::strtok_r (line, " \t", &strtok_p);
-        host_ptr = ACE_OS::strtok (0, " \t", &strtok_p);
+        host_ptr = ACE_OS::strtok (nullptr, " \t", &strtok_p);
         ACE_OS::strcpy (host_name, host_ptr);
         break;
       }
@@ -156,7 +157,7 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
       return -1;
     }
 
-  char *buf_req = (char *) ACE_OS::malloc (info.options);
+  char *buf_req = static_cast<char *> (ACE_OS::malloc (info.options));
   if (buf_req == 0)
     {
       ACE_OS::fprintf (stderr,
@@ -165,7 +166,7 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
       return -1;
     }
 
-  char *buf_ret = (char *) ACE_OS::malloc (info.options);
+  char *buf_ret = static_cast<char *> (ACE_OS::malloc (info.options));
   if (buf_ret == 0)
     {
       ACE_OS::fprintf (stderr,
@@ -205,9 +206,7 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
     return -1;
   }
 
-  ACE_OS::memcpy (connect_opts,
- (char *) popt_ret + sizeof (struct t_opthdr),
-                 opt_size);
+  ACE_OS::memcpy (connect_opts, (char *) popt_ret + sizeof (struct t_opthdr), opt_size);
 
   ACE_OS::free (buf_ret);
   ACE_OS::free (buf_req);

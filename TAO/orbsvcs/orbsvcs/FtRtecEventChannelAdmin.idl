@@ -1,12 +1,10 @@
-// -*- IDL -*-
+/// -*- IDL -*-
 
-//=============================================================================
 /**
  *  @file    FtRtecEventChannelAdmin.idl
  *
  *  @author Huang-Ming Huang
  */
-//=============================================================================
 
 #ifndef TAO_FTRTEC_EVENTCHANNELADMIN_IDL
 #define TAO_FTRTEC_EVENTCHANNELADMIN_IDL
@@ -45,7 +43,6 @@ module FtRtecEventChannelAdmin
     ObjectId object_id;
     ProxyPushConsumerConnectionParamter parameter;
   };
-
 
   struct ProxyPushSupplierConnectionInfo
   {
@@ -93,7 +90,6 @@ module FtRtecEventChannelAdmin
     any   result;
   };
 
-
   struct CacheEntry
   {
     string client_id;
@@ -138,7 +134,6 @@ module FtRtecEventChannelAdmin
   case CONNECT_PUSH_CONSUMER:
     Connect_push_consumer_param connect_consumer_param;
   };
-
 
   struct Operation {
      ObjectId object_id;

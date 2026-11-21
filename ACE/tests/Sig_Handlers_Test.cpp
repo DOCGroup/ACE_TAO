@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
@@ -22,6 +21,7 @@
 #include "ace/Assert.h"
 #include "ace/SString.h"
 
+#include <memory>
 
 class Test_SIGINT_Handler : public ACE_Event_Handler
 {
@@ -31,10 +31,10 @@ public:
   {
     int result = reactor->register_handler (SIGINT, this);
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("Main::Test_SIGINT_Handler (%u) - Result %i\n"),
-                this,
+                ACE_TEXT("Main::Test_SIGINT_Handler (%@) - Result %i\n"),
+                static_cast<void *> (this),
                 result));
-    Test_SIGINT_Handler::registration_count_++;
+    ++Test_SIGINT_Handler::registration_count_;
   }
 
   ~Test_SIGINT_Handler() override
@@ -46,10 +46,10 @@ public:
   {
     ACE_TEST_ASSERT (signal == SIGINT);
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("Main::Test_SIGINT_Handler (%u) - %s\n"),
-                this,
+                ACE_TEXT("Main::Test_SIGINT_Handler (%@) - %C\n"),
+                static_cast<void *> (this),
                 this->message_.c_str()));
-    Test_SIGINT_Handler::handle_signal_count_++;
+    ++Test_SIGINT_Handler::handle_signal_count_;
     return 0;
   }
 
@@ -71,8 +71,8 @@ public:
   {
     int result = reactor->register_handler (SIGINT, this);
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("Main::Test_SIGINT_Shutdown_Handler (%u) - Result %i\n"),
-                this,
+                ACE_TEXT("Main::Test_SIGINT_Shutdown_Handler (%@) - Result %i\n"),
+                static_cast<void *> (this),
                 result));
   }
 
@@ -80,8 +80,8 @@ public:
   {
     ACE_TEST_ASSERT (signal == SIGINT);
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("Main::Test_SIGINT_Shutdown_Handler (%u)\n"),
-                this));
+                ACE_TEXT("Main::Test_SIGINT_Shutdown_Handler (%@)\n"),
+                static_cast<void *> (this)));
     ACE_Reactor::instance ()->end_reactor_event_loop ();
     return 0;
   }
@@ -94,8 +94,8 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_Sig_Handlers multi_handlers;
   ACE_Select_Reactor reactor_impl (&multi_handlers);
-  ACE_Reactor reactor (&reactor_impl);
-  ACE_Reactor::instance (&reactor);
+  ACE_Reactor reactor (std::addressof (reactor_impl));
+  ACE_Reactor::instance (std::addressof (reactor));
 
   // Create a bevy of handlers.
 
@@ -115,7 +115,9 @@ run_main (int, ACE_TCHAR *[])
     {
       ACE_DEBUG ((LM_DEBUG,"\nwaiting for SIGINT\n"));
       if (ACE_Reactor::instance ()->handle_events () == -1)
+      {
         ACE_ERROR ((LM_ERROR,"%p\n","handle_events"));
+      }
     }
 
   ACE_END_TEST;

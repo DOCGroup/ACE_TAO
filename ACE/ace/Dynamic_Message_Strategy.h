@@ -61,13 +61,11 @@ public:
     ANY_STATUS  = 0x07
   };
 
-  /// Constructor.
   ACE_Dynamic_Message_Strategy (unsigned long static_bit_field_mask,
                                 unsigned long static_bit_field_shift,
                                 unsigned long dynamic_priority_max,
                                 unsigned long dynamic_priority_offset);
 
-  /// Virtual destructor.
   virtual ~ACE_Dynamic_Message_Strategy () = default;
 
   /// Updates the message's priority and returns its priority status.
@@ -150,17 +148,20 @@ class ACE_Export ACE_Deadline_Message_Strategy : public ACE_Dynamic_Message_Stra
 {
 public:
   /// Constructor with all arguments defaulted.
-  ACE_Deadline_Message_Strategy (unsigned long static_bit_field_mask = 0x3FFUL,       // 2^(10) - 1
-                                 unsigned long static_bit_field_shift = 10,           // 10 low order bits
-                                 unsigned long dynamic_priority_max = 0x3FFFFFUL,     // 2^(22)-1
-                                 unsigned long dynamic_priority_offset = 0x200000UL); // 2^(22-1)
+  /// @param static_bit_field_mask Default mask for 10 low-order static bits.
+  /// @param static_bit_field_shift Number of low-order bits (10).
+  /// @param dynamic_priority_max Maximum value for 22 dynamic bits.
+  /// @param dynamic_priority_offset Boundary at 2^(22-1).
+  ACE_Deadline_Message_Strategy (unsigned long static_bit_field_mask = 0x3FFUL,
+                                 unsigned long static_bit_field_shift = 10,
+                                 unsigned long dynamic_priority_max = 0x3FFFFFUL,
+                                 unsigned long dynamic_priority_offset = 0x200000UL);
 
-  /// Virtual destructor.
   ~ACE_Deadline_Message_Strategy () override = default;
 
   /// Dynamic priority conversion function based on time to deadline.
   void convert_priority (ACE_Time_Value &priority,
-                                 const ACE_Message_Block &mb) override;
+                         const ACE_Message_Block &mb) override;
 
   /// Dump the state of the strategy.
   void dump () const override;
@@ -184,18 +185,21 @@ public:
 class ACE_Export ACE_Laxity_Message_Strategy : public ACE_Dynamic_Message_Strategy
 {
 public:
-  /// Ctor, with all arguments defaulted.
-  ACE_Laxity_Message_Strategy (unsigned long static_bit_field_mask = 0x3FFUL,       // 2^(10) - 1
-                               unsigned long static_bit_field_shift = 10,           // 10 low order bits
-                               unsigned long dynamic_priority_max = 0x3FFFFFUL,     // 2^(22)-1
-                               unsigned long dynamic_priority_offset = 0x200000UL); // 2^(22-1)
+  /// Constructor with all arguments defaulted.
+  /// @param static_bit_field_mask Default mask for 10 low-order static bits.
+  /// @param static_bit_field_shift Number of low-order bits (10).
+  /// @param dynamic_priority_max Maximum value for 22 dynamic bits.
+  /// @param dynamic_priority_offset Boundary at 2^(22-1).
+  ACE_Laxity_Message_Strategy (unsigned long static_bit_field_mask = 0x3FFUL,
+                               unsigned long static_bit_field_shift = 10,
+                               unsigned long dynamic_priority_max = 0x3FFFFFUL,
+                               unsigned long dynamic_priority_offset = 0x200000UL);
 
-  /// virtual dtor.
   ~ACE_Laxity_Message_Strategy () override = default;
 
   /// Dynamic priority conversion function based on laxity.
   void convert_priority (ACE_Time_Value &priority,
-                                 const ACE_Message_Block &mb) override;
+                         const ACE_Message_Block &mb) override;
 
   /// Dump the state of the strategy.
   void dump () const override;

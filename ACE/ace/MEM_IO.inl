@@ -1,35 +1,14 @@
 // -*- C++ -*-
-#include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"
+
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE
-ACE_Reactive_MEM_IO::ACE_Reactive_MEM_IO ()
-{
-}
-
 #if defined (ACE_WIN32) || !defined (_ACE_USE_SV_SEM)
 ACE_INLINE
-ACE_MT_MEM_IO::Simple_Queue::Simple_Queue ()
-  : mq_ (0),
-    malloc_ (0)
-{
-}
-
-ACE_INLINE
-ACE_MT_MEM_IO::ACE_MT_MEM_IO ()
-{
-  this->recv_channel_.sema_ = 0;
-  this->recv_channel_.lock_ = 0;
-  this->send_channel_.sema_ = 0;
-  this->send_channel_.lock_ = 0;
-}
-
-ACE_INLINE
 ACE_MT_MEM_IO::Simple_Queue::Simple_Queue (MQ_Struct *mq)
-  : mq_ (mq),
-    malloc_ (0)
+  : mq_ (mq)
 {
 }
 
@@ -37,8 +16,10 @@ ACE_INLINE int
 ACE_MT_MEM_IO::Simple_Queue::init (MQ_Struct *mq,
                                    ACE_MEM_SAP::MALLOC_TYPE *malloc)
 {
-  if (this->mq_ != 0)
-    return -1;
+  if (this->mq_ != nullptr)
+    {
+      return -1;
+    }
 
   this->mq_ = mq;
   this->malloc_ = malloc;
@@ -53,12 +34,12 @@ ACE_Reactive_MEM_IO::get_buf_len (const ACE_OFF_T off, ACE_MEM_SAP_Node *&buf)
   ACE_TRACE ("ACE_Reactive_MEM_IO::get_buf_len");
 #endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
-  if (this->shm_malloc_ == 0)
+  if (this->shm_malloc_ == nullptr)
     {
       return -1;
     }
 
-  ssize_t retv = 0;
+  ssize_t retv {};
 
   ACE_SEH_TRY
     {
@@ -75,48 +56,40 @@ ACE_Reactive_MEM_IO::get_buf_len (const ACE_OFF_T off, ACE_MEM_SAP_Node *&buf)
 }
 
 // Send an n byte message to the connected socket.
-ACE_INLINE
-ACE_MEM_IO::ACE_MEM_IO ()
-  : deliver_strategy_ (0),
-    recv_buffer_ (0),
-    buf_size_ (0),
-    cur_offset_ (0)
-{
-  // ACE_TRACE ("ACE_MEM_IO::ACE_MEM_IO");
-}
-
 ACE_INLINE ssize_t
 ACE_MEM_IO::fetch_recv_buf (int flag, const ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_MEM_IO::fetch_recv_buf");
 
-  if (this->deliver_strategy_ == 0)
-    return -1;
+  if (!this->deliver_strategy_)
+    {
+      return -1;
+    }
 
   // This method can only be called when <buf_size_> == <cur_offset_>.
   ACE_ASSERT (this->buf_size_ == this->cur_offset_);
 
   // We have done using the previous buffer, return it to malloc.
-  if (this->recv_buffer_ != 0)
-    this->deliver_strategy_->release_buffer (this->recv_buffer_);
+  if (this->recv_buffer_ != nullptr)
+    {
+      this->deliver_strategy_->release_buffer (this->recv_buffer_);
+    }
 
   this->cur_offset_ = 0;
-  ssize_t retv = 0;
+  ssize_t retv {};
 
   if ((retv = this->deliver_strategy_->recv_buf (this->recv_buffer_,
                                                  flag,
                                                  timeout)) > 0)
-    this->buf_size_ = retv;
+    {
+      this->buf_size_ = retv;
+    }
   else
-    this->buf_size_ = 0;
+    {
+      this->buf_size_ = 0;
+    }
 
   return retv;
-}
-
-ACE_INLINE
-ACE_MEM_IO::~ACE_MEM_IO ()
-{
-  delete this->deliver_strategy_;
 }
 
 ACE_INLINE ssize_t
@@ -127,7 +100,7 @@ ACE_MEM_IO::send (const void *buf,
 {
   ACE_TRACE ("ACE_MEM_IO::send");
 
-  if (this->deliver_strategy_ == 0)
+  if (!this->deliver_strategy_)
     {
       return 0;
     }
@@ -136,12 +109,12 @@ ACE_MEM_IO::send (const void *buf,
     this->deliver_strategy_->acquire_buffer (
       ACE_Utils::truncate_cast<ssize_t> (len));
 
-  if (sbuf == 0)
+  if (sbuf == nullptr)
     {
       return -1;                  // Memory buffer not initialized.
     }
 
-  ACE_OS::memcpy (sbuf->data (), buf, len);
+  std::memcpy (sbuf->data (), buf, len);
 
   ///
 
@@ -160,7 +133,7 @@ ACE_MEM_IO::recv (void *buf,
 {
   ACE_TRACE ("ACE_MEM_IO::recv");
 
-  size_t count = 0;
+  size_t count {};
 
   size_t buf_len = this->buf_size_ - this->cur_offset_;
 
@@ -177,11 +150,11 @@ ACE_MEM_IO::recv (void *buf,
       buf_len = this->buf_size_;
     }
 
-  size_t length = (len > buf_len ? buf_len : len);
+  size_t const length = (len > buf_len ? buf_len : len);
 
-  ACE_OS::memcpy ((char *) buf + count,
-                  (char *) this->recv_buffer_->data () + this->cur_offset_,
-                  length);
+  std::memcpy (static_cast<char *> (buf) + count,
+               static_cast<char *> (this->recv_buffer_->data ()) + this->cur_offset_,
+               length);
   this->cur_offset_ += ACE_Utils::truncate_cast<ssize_t> (length);
   count += length;
 

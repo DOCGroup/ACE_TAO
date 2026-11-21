@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file ServantRetentionStrategyNonRetain.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_SERVANT_RETENTION_STRATEGY_NON_RETAIN_H
 #define TAO_SERVANT_RETENTION_STRATEGY_NON_RETAIN_H
 #include /**/ "ace/pre.h"
@@ -20,6 +16,7 @@
 
 #include "tao/PortableServer/Servant_Location.h"
 #include <atomic>
+#include <cstdint>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -117,8 +114,9 @@ namespace TAO
       TAO_Active_Object_Map * get_active_object_map() const override;
 
     protected:
+      /// Non-owning back-reference set by the POA during strategy initialization.
       TAO_Root_POA *poa_ {};
-      std::atomic<uint32_t> sys_id_count_ { 0 };
+      std::atomic<std::uint32_t> sys_id_count_ { 0 };
     };
   }
 }

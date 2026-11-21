@@ -58,7 +58,6 @@ be_visitor_map_buffer_type::visit_predefined_type (be_predefined_type *node)
   return 0;
 }
 
-
 int
 be_visitor_map_buffer_type::visit_sequence (be_sequence *node)
 {

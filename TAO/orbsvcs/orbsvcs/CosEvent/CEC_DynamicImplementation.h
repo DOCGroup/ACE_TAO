@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CEC_DYNAMICIMPLEMENTATION_H
 #define TAO_CEC_DYNAMICIMPLEMENTATION_H
 
@@ -17,7 +16,6 @@
 #include "tao/DynamicInterface/Server_Request.h"
 #include "tao/DynamicInterface/Dynamic_Implementation.h"
 #include "tao/ORB.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -29,15 +27,19 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_CEC_DynamicImplementationServer : public TAO_DynamicImplementation
 {
 public:
-  /// Constructor
   TAO_CEC_DynamicImplementationServer (PortableServer::POA_ptr poa,
                                        TAO_CEC_TypedProxyPushConsumer *typed_pp_consumer,
                                        TAO_CEC_TypedEventChannel *typed_event_channel);
 
-  /// Destructor
   ~TAO_CEC_DynamicImplementationServer () override = default;
 
-  // = The DynamicImplementation methods.
+  TAO_CEC_DynamicImplementationServer (TAO_CEC_DynamicImplementationServer const &) = delete;
+  TAO_CEC_DynamicImplementationServer (TAO_CEC_DynamicImplementationServer &&) = delete;
+  TAO_CEC_DynamicImplementationServer &operator= (TAO_CEC_DynamicImplementationServer const &) = delete;
+  TAO_CEC_DynamicImplementationServer &operator= (TAO_CEC_DynamicImplementationServer &&) = delete;
+
+  /// @name The DynamicImplementation methods
+  /// @{
   void invoke (CORBA::ServerRequest_ptr request) override;
 
   CORBA::RepositoryId _primary_interface (
@@ -49,6 +51,7 @@ public:
   /// Handles the _is_a call
   virtual void is_a (CORBA::ServerRequest_ptr request);
 
+  /// @}
 private:
   /// The POA
   PortableServer::POA_var poa_;

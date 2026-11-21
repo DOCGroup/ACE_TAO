@@ -118,8 +118,7 @@ TAO_InterfaceDef_i::describe_i ()
 
   for (i = 0; i < length; ++i)
     {
-      char * const base_path =
-        TAO_IFR_Service_Utils::reference_to_path (bases[i]);
+      char * const base_path = TAO_IFR_Service_Utils::reference_to_path (bases[i]);
 
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            base_path,
@@ -561,8 +560,7 @@ TAO_InterfaceDef_i::create_attribute (
     char const *name,
     char const *version,
     CORBA::IDLType_ptr type,
-    CORBA::AttributeMode mode
-  )
+    CORBA::AttributeMode mode)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::AttributeDef::_nil ());
 
@@ -581,8 +579,7 @@ TAO_InterfaceDef_i::create_attribute_i (
     char const *name,
     char const *version,
     CORBA::IDLType_ptr type,
-    CORBA::AttributeMode mode
-  )
+    CORBA::AttributeMode mode)
 {
   // This will throw an exception if a name clash is found.
   // create_common() will check for all other errors.
@@ -827,8 +824,7 @@ TAO_InterfaceDef_i::interface_contents (
     std::deque<CORBA::DefinitionKind> &kind_queue,
     std::deque<ACE_TString> &path_queue,
     CORBA::DefinitionKind limit_type,
-    CORBA::Boolean exclude_inherited
-  )
+    CORBA::Boolean exclude_inherited)
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -968,8 +964,7 @@ TAO_InterfaceDef_i::name_clash (char const *name)
 void
 TAO_InterfaceDef_i::base_interfaces_recursive (
     std::deque<CORBA::DefinitionKind> &kind_queue,
-    std::deque<ACE_TString> &path_queue
-  )
+    std::deque<ACE_TString> &path_queue)
 {
   ACE_Configuration_Section_Key inherited_key;
   int status =
@@ -1030,8 +1025,7 @@ TAO_InterfaceDef_i::base_interfaces_recursive (
 
 void
 TAO_InterfaceDef_i::inherited_attributes (
-    std::deque<ACE_Configuration_Section_Key> &key_queue
-  )
+    std::deque<ACE_Configuration_Section_Key> &key_queue)
 {
   std::deque<CORBA::DefinitionKind> kind_queue;
   std::deque<ACE_TString> path_queue;
@@ -1082,8 +1076,7 @@ TAO_InterfaceDef_i::inherited_attributes (
 
 void
 TAO_InterfaceDef_i::inherited_operations (
-    std::deque<ACE_Configuration_Section_Key> &key_queue
-  )
+    std::deque<ACE_Configuration_Section_Key> &key_queue)
 {
   std::deque<CORBA::DefinitionKind> kind_queue;
   std::deque<ACE_TString> path_queue;

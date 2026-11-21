@@ -1,7 +1,7 @@
 interface Echo
 {
-  // Defines an interface that encapsulates an operation that returns
-  // a string sequence, or a wstring sequence, respectively.
+  /// Defines an interface that encapsulates an operation that returns
+  /// a string sequence, or a wstring sequence, respectively.
 
   typedef sequence<string> List;
   typedef sequence<wstring> WList;

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_PAIR_T_H
 #define ACE_PAIR_T_H
 #include /**/ "ace/pre.h"
@@ -33,11 +32,10 @@ template <class T1, class T2>
 class ACE_Reference_Pair
 {
 public:
-  // = Traits.
+  /// Type aliases.
   using first_type = T1;
   using second_type = T2;
 
-  /// Constructor.
   ACE_Reference_Pair (T1 &t1, T2 &t2);
 
   /// Access first.
@@ -46,7 +44,7 @@ public:
   /// Access second.
   T2 &second () const;
 
-  // Compare pairs.
+  /// Compare pairs.
   bool operator== (const ACE_Reference_Pair<T1, T2> &rhs) const;
 
 protected:

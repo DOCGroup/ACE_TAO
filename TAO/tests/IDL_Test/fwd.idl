@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    fwd.idl
  *
@@ -11,15 +10,13 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
  */
-//=============================================================================
 
-
-// This file, along with its companion full.idl, test the
-// handling of forward interface declarations that are
-// not defined in the same IDL file. The two files have
-// mutually dependent interfaces. It is no longer necessary
-// for such ILD files to include each other, as long as
-// they are part of the same build.
+/// This file, along with its companion full.idl, test the
+/// handling of forward interface declarations that are
+/// not defined in the same IDL file. The two files have
+/// mutually dependent interfaces. It is no longer necessary
+/// for such ILD files to include each other, as long as
+/// they are part of the same build.
 
 module scope_test
 {
@@ -62,10 +59,10 @@ module mod2
   interface fwd;
 };
 
-// Tests a bug where code generation for an interface
-// which was forward declared, then fully defined with
-// both concrete and abstract parents caused the IDL
-// compiler to crash.
+/// Tests a bug where code generation for an interface
+/// which was forward declared, then fully defined with
+/// both concrete and abstract parents caused the IDL
+/// compiler to crash.
 module fwd_mixed_intf
 {
   interface mixed_parents;
@@ -78,9 +75,9 @@ module fwd_mixed_intf
   interface mixed_conc_first : concrete_parent, abstract_parent {};
 };
 
-// Tests a bug found when the scope traversal was fixed. Forwarded valuetypes
-// have some different syntax supplied when used as initialization arguments
-// or in marshaling. This generated code did not compile.
+/// Tests a bug found when the scope traversal was fixed. Forwarded valuetypes
+/// have some different syntax supplied when used as initialization arguments
+/// or in marshaling. This generated code did not compile.
 module obv_fwd
 {
   valuetype ForwardedType;

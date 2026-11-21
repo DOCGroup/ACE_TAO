@@ -12,7 +12,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               "\n\tPluggable_Test: client\n\n"));
 
   if (pp_test_client.init (argc, argv) == -1)
+  {
     return 1;
+  }
 
   int retval = pp_test_client.run ();
 

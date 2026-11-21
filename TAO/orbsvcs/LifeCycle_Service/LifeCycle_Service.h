@@ -9,18 +9,16 @@
  */
 //=============================================================================
 
-
-#include "ace/Get_Opt.h"
+#ifndef LIFECYCLE_SERVICE_H
+#define LIFECYCLE_SERVICE_H
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Get_Opt.h"
 #include "tao/Utils/ORB_Manager.h"
 #include "LifeCycle_Service_i.h"
-
-#ifndef LIFECYCLE_SERVICE_H
-#define LIFECYCLE_SERVICE_H
 
 /**
  * @class Life_Cycle_Service_Server
@@ -30,15 +28,13 @@
 class Life_Cycle_Service_Server
 {
 public:
-  /// Default constructor
-  Life_Cycle_Service_Server ();
+  Life_Cycle_Service_Server () = default;
 
   Life_Cycle_Service_Server (Life_Cycle_Service_Server const &) = delete;
   Life_Cycle_Service_Server (Life_Cycle_Service_Server &&) = delete;
   Life_Cycle_Service_Server &operator= (Life_Cycle_Service_Server const &) = delete;
   Life_Cycle_Service_Server &operator= (Life_Cycle_Service_Server &&) = delete;
 
-  /// Destructor
   ~Life_Cycle_Service_Server ();
 
   /// Initialize the Server state - parsing arguments and ...
@@ -56,14 +52,11 @@ private:
   /// instance of the ORB Manager
   TAO_ORB_Manager orb_manager_;
 
-  /// Instance of the creation service
-  Life_Cycle_Service_i * life_Cycle_Service_i_ptr_;
-
   /// reference to the naming service
   CosNaming::NamingContext_var namingContext_var_;
 
   /// debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
-  int debug_level_;
+  int debug_level_ {1};
 };
 
 #endif /* LIFECYCLE_SERVICE_H */

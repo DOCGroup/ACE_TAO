@@ -51,14 +51,18 @@ run_main (int, ACE_TCHAR *[] )
                   ACE_TEXT("ACE_Service_Config::open")));
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("Success: defaulted Service_Config::open ")
-                ACE_TEXT("with missing file got expected ENOENT\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("Success: defaulted Service_Config::open ")
+                  ACE_TEXT("with missing file got expected ENOENT\n")));
+    }
 
   result = ACE_Service_Config::close();
   if (result != 0)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%p\n"),
-                ACE_TEXT("Service_Config::close")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%p\n"),
+                  ACE_TEXT("Service_Config::close")));
+    }
 
   argc = 3;
   argv[1] = const_cast<ACE_TCHAR *>(ACE_TEXT("-S"));
@@ -74,9 +78,11 @@ run_main (int, ACE_TCHAR *[] )
                   ACE_TEXT("ACE_Service_Config::open")));
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("Success: Service_Config::open with command line ")
-                ACE_TEXT("directive ignored missing svc.conf\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("Success: Service_Config::open with command line ")
+                  ACE_TEXT("directive ignored missing svc.conf\n")));
+    }
 
   ACE_END_TEST;
   return failcount;

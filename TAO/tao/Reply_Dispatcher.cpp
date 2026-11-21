@@ -6,7 +6,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Constructor.
 TAO_Reply_Dispatcher::TAO_Reply_Dispatcher (ACE_Allocator *allocator)
   // Just an invalid reply status.
   : locate_reply_status_ (GIOP::UNKNOWN_OBJECT)
@@ -16,9 +15,7 @@ TAO_Reply_Dispatcher::TAO_Reply_Dispatcher (ACE_Allocator *allocator)
 {
 }
 
-// Destructor.
 TAO_Reply_Dispatcher::~TAO_Reply_Dispatcher () = default;
-
 
 void
 TAO_Reply_Dispatcher::intrusive_add_ref (TAO_Reply_Dispatcher* rd)

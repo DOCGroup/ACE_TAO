@@ -32,10 +32,10 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 
 #include <assert.h>
+#include <memory>
 #include <QtCore/qtimer.h>
 
 #include "ace/OS_NS_time.h"
@@ -79,7 +79,6 @@ void QTestApplication::exec (int msec)
   }
   inherited::exec ();
 }
-
 
 // maximum time for testing QtReactor (msec)
 const int TotalTestTime = 8000;
@@ -317,10 +316,10 @@ int DgramHandler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close_mask)
 {
   if (peer_.get_handle () != handle )
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Unknown handle %d DgramHandler::handle_close "
-                          "with mask %x. My handle is %d\n"),
+                ACE_TEXT ("Unknown handle %H DgramHandler::handle_close "
+                          "with mask %Q. My handle is %H\n"),
                 handle,
-                close_mask,
+                static_cast<ACE_UINT64> (close_mask),
                 peer_.get_handle ()));
   else
     peer_.close ();
@@ -399,13 +398,15 @@ int TCPConnectionHandler::handle_input (ACE_HANDLE handle)
 
   if (errno != EWOULDBLOCK)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT (" (%P:%p (%d)\n"),
-                       ACE_TEXT ("TCPConnectionHandler::handle_input call with no data on handle "), handle),
+                       ACE_TEXT (" (%P:%p (%H)\n"),
+                       ACE_TEXT ("TCPConnectionHandler::handle_input call with no data on handle "),
+                       handle),
                       -1);
 
   ACE_ERROR ((LM_WARNING,
-              ACE_TEXT (" (%P:%p (%d)\n"),
-              ACE_TEXT ("TCPConnectionHandler::handle_input call with no data on handle "), handle));
+              ACE_TEXT (" (%P:%p (%H)\n"),
+              ACE_TEXT ("TCPConnectionHandler::handle_input call with no data on handle "),
+              handle));
 
   return 0;
 }
@@ -415,7 +416,8 @@ int TCPConnectionHandler::handle_output (ACE_HANDLE handle)
   ACE_UNUSED_ARG (handle);
   if (!buffers_)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("TCPConnectionHandler::handle_output call for empty buffers (%d)\n"), handle));
+                ACE_TEXT ("TCPConnectionHandler::handle_output call for empty buffers (%H)\n"),
+                handle));
   if (0 > sendBuffers ()) // socket broken, kill yourself
     return -1;
 
@@ -502,11 +504,11 @@ int TCPConnectionHandler::handle_close (ACE_HANDLE handle,ACE_Reactor_Mask close
 {
   if (peer_.get_handle () != handle )
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Unknown handle %d TCPConnectionHandler::handle_close "
-                          "with mask %x. My handle is %d\n"),
+                ACE_TEXT ("Unknown handle %H TCPConnectionHandler::handle_close "
+                          "with mask %Q. My handle is %H\n"),
                 handle,
-                close_mask,
-                peer_.get_handle ()));
+                static_cast<ACE_UINT64> (close_mask),
+                peer_.get_handle ());
   else
     peer_.close ();
 
@@ -522,7 +524,6 @@ int TCPConnectionHandler::totalSent () const
 {
   return totalSent_;
 }
-
 
 /*
    HandlersRegister class implementation
@@ -680,7 +681,7 @@ int HandlersRegister::registerTCPServer (TCPConnectionHandler *handler)
       return 0;
     }
   ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("Too many servers registered (%d). ACE_Reactor or ACE_Acceptor broken?\n"),
+              ACE_TEXT ("Too many servers registered (%H). ACE_Reactor or ACE_Acceptor broken?\n"),
               handler->get_handle ()));
   return -1;
 }
@@ -805,7 +806,6 @@ int HandlersRegister::analyzeTCP () const
   return result;
 }
 
-
 /*
    TCPAcceptorHandler class implementation
 */
@@ -890,9 +890,9 @@ void testQtReactor (int argc, ACE_TCHAR *argv[])
   ACE_Argv_Type_Converter ct (argc, argv);
   QTestApplication app (argc, ct.get_ASCII_argv ());
 
-  ACE_QtReactor    qtReactor (&app);
-  ACE_Reactor      reactor (&qtReactor);
-  HandlersRegister handlersRegister (&reactor);
+  ACE_QtReactor    qtReactor (std::addressof (app));
+  ACE_Reactor      reactor (std::addressof (qtReactor));
+  HandlersRegister handlersRegister (std::addressof (reactor));
   ACE_Time_Value   testTime (TotalTestTime / 1000, (TotalTestTime % 1000) * 1000);
 
   if (0 <= handlersRegister.scheduleTimers (testTime)  &&

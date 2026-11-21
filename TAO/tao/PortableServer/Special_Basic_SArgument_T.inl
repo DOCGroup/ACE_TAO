@@ -19,9 +19,6 @@ TAO::In_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::arg () const
 {
   return this->x_;
 }
-
-// ===========================================================================
-
 template<typename S,
          typename to_S,
          typename from_S,
@@ -40,9 +37,6 @@ TAO::Inout_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::arg ()
 {
   return this->x_;
 }
-
-// ===========================================================================
-
 template<typename S,
          typename to_S,
          typename from_S,
@@ -60,9 +54,6 @@ TAO::Out_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::arg ()
 {
   return this->x_;
 }
-
-// ===========================================================================
-
 template<typename S,
          typename to_S,
          typename from_S,

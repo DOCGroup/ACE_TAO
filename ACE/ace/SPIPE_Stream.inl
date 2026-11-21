@@ -148,7 +148,7 @@ ACE_SPIPE_Stream::recv_handle (ACE_HANDLE &handle) const
 #if defined (ACE_HAS_STREAM_PIPES)
   strrecvfd recvfd;
 
-  if (ACE_OS::ioctl (this->get_handle (), I_RECVFD, (void *) &recvfd) == -1)
+  if (ACE_OS::ioctl (this->get_handle (), I_RECVFD, &recvfd) == -1)
     return -1;
   else
     {
@@ -203,7 +203,7 @@ ACE_SPIPE_Stream::recv_handle (strrecvfd &recvfd) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::recv_handle");
 #if defined (ACE_HAS_STREAM_PIPES)
-  return ACE_OS::ioctl (this->get_handle (), I_RECVFD, (void *) &recvfd);
+  return ACE_OS::ioctl (this->get_handle (), I_RECVFD, &recvfd);
 #else
   ACE_UNUSED_ARG (recvfd);
   ACE_NOTSUP_RETURN (-1);

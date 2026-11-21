@@ -1,15 +1,7 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This test exercises ACE_Service_Config assembling a stream.
-//
-// = AUTHOR
-//    Steve Huston <shuston@riverace.com>
-//
-// ============================================================================
+/// @file Service_Config_Stream_Test.cpp
+/// This test exercises ACE_Service_Config assembling a stream.
+///
+/// @author Steve Huston <shuston@riverace.com>
 
 #include "test_config.h"
 #include "ace/Log_Msg.h"
@@ -118,10 +110,12 @@ run_main (int, ACE_TCHAR *argv[])
                                           ACE_DEFAULT_LOGGER_KEY,
                                           false,
                                           true /*ignore def svc.conf*/)) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("open"),
-                1));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("open"),
+                  1));
+    }
 
   ACE_END_TEST;
   return status;

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _PM_SERVER_H
 #define _PM_SERVER_H
 
@@ -22,17 +21,17 @@
 class PM_Server : public Protocol_Manager
 {
 public:
-  PM_Server ();
-  virtual ~PM_Server ();
+  PM_Server () = default;
+  ~PM_Server () override;
 
-  virtual int encode (char *packet, int &total_bytes) = 0;
-  virtual int decode (char *packet, int &total_bytes) = 0;
+  int encode (char *packet, int &total_bytes) override = 0;
+  int decode (char *packet, int &total_bytes) override = 0;
   virtual int process ();
 
 protected:
   virtual char *handle_protocol_entries (char *bp,
                                          Drwho_Node *hp);
-  virtual Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record);
+  Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record) override;
 };
 
 #endif /* _PM_SERVER_H */

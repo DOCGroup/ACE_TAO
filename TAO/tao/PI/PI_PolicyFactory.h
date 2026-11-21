@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file PI_PolicyFactory.h
  *
  * @author Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_PI_POLICY_FACTORY_H
 #define TAO_PI_POLICY_FACTORY_H
@@ -34,7 +32,8 @@ class TAO_PI_Export TAO_PI_PolicyFactory
     public virtual ::CORBA::LocalObject
 {
 public:
-  CORBA::Policy_ptr create_policy (CORBA::PolicyType type, const CORBA::Any & value) override;
+  CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
+                                   CORBA::Any const &value) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

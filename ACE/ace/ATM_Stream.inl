@@ -36,7 +36,9 @@ ACE_ATM_Stream::open (ACE_ATM_Params params)
                              params.get_flags(),
                              params.get_reuse_addr());
   if (retval == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   struct sockaddr_atm sock_addr;
 

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  * @file SHMIOP_Endpoint.h
  *
@@ -8,7 +7,6 @@
  *
  * @author Marina Spivak <marina@cs.wustl.edu>
  */
-//==========================================================================
 
 #ifndef TAO_SHMIOP_ENDPOINT_H
 #define TAO_SHMIOP_ENDPOINT_H
@@ -43,7 +41,6 @@ class TAO_Strategies_Export TAO_SHMIOP_Endpoint : public TAO_Endpoint
 public:
   friend class TAO_SHMIOP_Profile;
 
-  /// Default constructor.
   TAO_SHMIOP_Endpoint ();
 
   /// Constructor.  This is the most efficient constructor since it
@@ -53,7 +50,6 @@ public:
                        ACE_INET_Addr const &addr,
                        CORBA::Short priority = TAO_INVALID_PRIORITY);
 
-  /// Constructor.
   TAO_SHMIOP_Endpoint (ACE_MEM_Addr const &addr,
                        int use_dotted_decimal_addresses);
 
@@ -67,15 +63,11 @@ public:
                        CORBA::UShort port,
                        CORBA::Short priority);
 
-  /// Destructor.
-  ~TAO_SHMIOP_Endpoint () override;
+  ~TAO_SHMIOP_Endpoint () override = default;
 
-  /**
-   * @name TAO_Endpoint Methods
-   *
-   * Please check the documentation in Endpoint.h for details.
-   */
-  //@{
+  /// @name TAO_Endpoint methods
+  /// Please check the documentation in Endpoint.h for details.
+  /// @{
   /// Return a copy of @c this
   TAO_Endpoint *next () override;
   int addr_to_string (char *buffer, size_t length) override;
@@ -87,10 +79,10 @@ public:
 
   /// Return a hash value for this object.
   CORBA::ULong hash () override;
-  //@}
+  /// @}
 
-  // = SHMIOP_Endpoint-specific methods.
-
+  /// @name SHMIOP-specific methods
+  /// @{
   /// Return a reference to the <object_addr>.
   ACE_INET_Addr const &object_addr () const;
 
@@ -107,6 +99,7 @@ public:
 
   /// Set the port number.
   CORBA::UShort port (CORBA::UShort p);
+  /// @}
 
 private:
   TAO_SHMIOP_Endpoint (TAO_SHMIOP_Endpoint const &) = delete;

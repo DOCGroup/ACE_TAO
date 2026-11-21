@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CSD_TP_Queue_Visitor.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
-
 #ifndef TAO_CSD_TP_QUEUE_VISITOR_H
 #define TAO_CSD_TP_QUEUE_VISITOR_H
 
@@ -29,7 +25,6 @@ namespace TAO
   {
     class TP_Request;
 
-
     /**
      * @class TP_Queue_Visitor
      *
@@ -45,8 +40,11 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Queue_Visitor
     {
     public:
-      /// Virtual Destructor.
-      virtual ~TP_Queue_Visitor();
+      virtual ~TP_Queue_Visitor() = default;
+      TP_Queue_Visitor (TP_Queue_Visitor const &) = delete;
+      TP_Queue_Visitor &operator= (TP_Queue_Visitor const &) = delete;
+      TP_Queue_Visitor (TP_Queue_Visitor &&) = delete;
+      TP_Queue_Visitor &operator= (TP_Queue_Visitor &&) = delete;
 
       /// Returns true to continue visitation.  Return false to stop
       /// visitation.  Sets the remove_flag to true if the request should
@@ -55,7 +53,6 @@ namespace TAO
       virtual bool visit_request(TP_Request* request, bool& remove_flag) = 0;
 
     protected:
-      /// Default Constructor.
       TP_Queue_Visitor() = default;
     };
   }

@@ -3,7 +3,6 @@
 #include "tao/debug.h"
 #include "Filter.h"
 
-
 Filter::Filter ()
   : event_count_ (5)
 {
@@ -47,7 +46,9 @@ void
 Filter::run_test ()
 {
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, " Obtaining FilterAdmin interface from ConsumerAdmin\n"));
+  }
 
   CosNotifyFilter::FilterAdmin_var ca_filter_admin =
     CosNotifyFilter::FilterAdmin::_narrow (consumer_admin_.in ());
@@ -61,7 +62,9 @@ void
 Filter::run_filter_test (CosNotifyFilter::FilterAdmin_ptr filter_admin)
 {
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, " Calling remove_all_filters\n"));
+  }
 
   // Clear all filters.
   filter_admin->remove_all_filters ();
@@ -69,14 +72,18 @@ Filter::run_filter_test (CosNotifyFilter::FilterAdmin_ptr filter_admin)
   this->verify_filter_count (filter_admin, 0);
 
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Adding a filter\n"));
+  }
 
   CosNotifyFilter::FilterID id_1 = this->add_filter (filter_admin);
 
   this->verify_filter_count (filter_admin, 1);
 
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Adding another filter\n"));
+  }
 
   this->add_filter (filter_admin);
 
@@ -89,7 +96,9 @@ Filter::run_filter_test (CosNotifyFilter::FilterAdmin_ptr filter_admin)
     }
 
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Calling remove_filter\n"));
+  }
 
   // remove the filter.
   filter_admin->remove_filter (id_1);
@@ -103,7 +112,9 @@ Filter::run_filter_test (CosNotifyFilter::FilterAdmin_ptr filter_admin)
     }
 
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Calling remove_all_filters\n"));
+  }
 
   filter_admin->remove_all_filters ();
 
@@ -136,7 +147,7 @@ Filter::add_filter (CosNotifyFilter::FilterAdmin_ptr filter_admin)
 
   ACE_ASSERT (!CORBA::is_nil (filter.in ()));
 
-  const char* test_filter_string = "A > B";
+  char const *test_filter_string = "A > B";
 
   CosNotifyFilter::ConstraintExpSeq constraint_list (1);
   constraint_list.length (1);
@@ -150,7 +161,9 @@ Filter::add_filter (CosNotifyFilter::FilterAdmin_ptr filter_admin)
 
   // Print the ID
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Added Filter %d\n", id));
+  }
 
   return id;
 }
@@ -160,14 +173,13 @@ Filter::print_filters (CosNotifyFilter::FilterAdmin_ptr filter_admin)
 {
   CosNotifyFilter::FilterIDSeq_var filter_seq = filter_admin->get_all_filters ();
 
-  ACE_DEBUG ((LM_DEBUG, "Getting all %d filters...\n", filter_seq->length ()));
+  ACE_DEBUG ((LM_DEBUG, "Getting all %u filters...\n", filter_seq->length ()));
 
   for (CORBA::ULong i = 0; i < filter_seq->length (); ++i)
     {
         ACE_DEBUG ((LM_DEBUG, " Filter %d\n", filter_seq[i]));
     }
 }
-
 
 void
 Filter::create_EC ()
@@ -200,7 +212,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       events.run_test ();
     }
-  catch (const CORBA::Exception& se)
+  catch (CORBA::Exception const &se)
     {
       se._tao_print_exception ("Error: ");
       return 1;

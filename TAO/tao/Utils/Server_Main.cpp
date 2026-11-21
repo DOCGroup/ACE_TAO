@@ -32,74 +32,67 @@ int
 TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[]) const
 {
   int result {};
-
   try
-  {
-    // Initialize the orb
-
-    CORBA::ORB_var const orb =
-      CORBA::ORB_init (argc, argv, this->name_.c_str ());
-
-    if (! ::CORBA::is_nil (orb.in ()))
     {
-      // create an instance of the servant object and give it a
-      // chance at the arguments.
-      SERVANT servant;
-      result = servant.parse_args (argc, argv);
-      if (result == 0)
-      {
-        //////////////////////////////////
-        // let the servant register itself
-        result = servant.init (orb.in ());
+      CORBA::ORB_var const orb =
+        CORBA::ORB_init (argc, argv, this->name_.c_str ());
 
-        if (result == 0)
+      if (!CORBA::is_nil (orb.in ()))
         {
-          TAOLIB_ERROR ((LM_INFO,
-            "%T %C (%P|%t) Ready %C\n", this->name_.c_str (), servant.identity ()));
+          SERVANT servant;
+          result = servant.parse_args (argc, argv);
 
-          //////////////////////////////////
-          // Run the event loop for the ORB.
-          // Initial run to initialize the orb
-          ACE_Time_Value tv (1, 0);
-          orb->run (tv);
+          if (result == 0)
+            {
+              result = servant.init (orb.in ());
 
-          // now run event loop
-          bool quit {};
-          while (result == 0 && !quit)
-          {
-            ACE_Time_Value work_tv (1, 0);
-            orb->perform_work (work_tv);
-            quit = servant.idle (result) != 0;
-          }
-          servant.fini ();
+              if (result == 0)
+                {
+                  TAOLIB_ERROR ((LM_INFO,
+                                 "%T %C (%P|%t) Ready %C\n",
+                                 this->name_.c_str (), servant.identity ()));
 
-          orb->shutdown (true);
+                  ACE_Time_Value tv (1, 0);
+                  orb->run (tv);
 
-          TAOLIB_ERROR ((LM_INFO,
-                      "%T %C (%P|%t) Terminated normally. %C\n",
-                      this->name_.c_str (),
-                      servant.identity ()));
+                  bool quit {};
+                  while (result == 0 && !quit)
+                    {
+                      ACE_Time_Value work_tv (1, 0);
+                      orb->perform_work (work_tv);
+                      quit = servant.idle (result) != 0;
+                    }
+                  servant.fini ();
+
+                  orb->shutdown (true);
+
+                  TAOLIB_ERROR ((LM_INFO,
+                                 "%T %C (%P|%t) Terminated normally. %C\n",
+                                 this->name_.c_str (),
+                                 servant.identity ()));
+                }
+              else
+                {
+                  TAOLIB_ERROR ((LM_ERROR,
+                                 "%T %C (%P|%t) Registration failed: %m\n",
+                                 this->name_.c_str ()));
+                  result = -1;
+                }
+            }
+          else
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                             "%T %C (%P|%t) ORB manager init failed\n",
+                             this->name_.c_str ()));
+              result = -1;
+            }
         }
-        else
-        {
-          TAOLIB_ERROR ((LM_ERROR,
-            "%T %C (%P|%t) Registration failed: %m\n", this->name_.c_str ()));
-          result = -1;
-        }
-      }
-      else
-      {
-        TAOLIB_ERROR ((LM_ERROR,
-          "%T %C (%P|%t) ORB manager init failed\n", this->name_.c_str ()));
-        result = -1;
-      }
     }
-  }
   catch (::CORBA::Exception const &ex)
-  {
-    ex._tao_print_exception (this->name_.c_str ());
-    result = -1;
-  }
+    {
+      ex._tao_print_exception (this->name_.c_str ());
+      result = -1;
+    }
   return result;
 }
 

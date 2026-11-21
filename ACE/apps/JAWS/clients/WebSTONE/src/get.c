@@ -47,13 +47,13 @@
 
 /* compare two strings with max length, ignoring case */
 int mystrincmp(const char *str1, const char *str2, int len) {
-    register int diff;
-
     while (*str1 && *str2 && len--) {
-        if (diff = UPPER(*str1) - UPPER(*str2))
+        int diff = UPPER(*str1) - UPPER(*str2);
+
+        if (diff)
             return diff < 0 ? -1 : 1;
-        str1++;
-        str2++;
+        ++str1;
+        ++str2;
     }
     return 0;
 }
@@ -186,7 +186,7 @@ get(char *loc, NETPORT port, char *url, rqst_timer_t *timer)
     }
 
     /* get and check status code from the first line of the header */
-    count = sscanf(headerbuffer, "HTTP/%s %d", version, &status);
+    count = sscanf(headerbuffer, "HTTP/%99s %d", version, &status);
     if (count != 2) {
         returnerr("Bad status line in get(): %s\n", headerbuffer);
         goto error;

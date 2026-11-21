@@ -64,7 +64,7 @@ public:
                     , JE_STATUS status = JE_IDLE
                     , JE_REASON reason = JE_NO_REASON
                     , int error_number = -1
-                    , void * data = 0
+                    , void * data = nullptr
                     )
     : bytes_ (bytes)
     , status_ (status)

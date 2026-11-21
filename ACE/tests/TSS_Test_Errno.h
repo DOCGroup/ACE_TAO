@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Guard_T.h"
 #include "ace/Thread_Mutex.h"
 
@@ -82,10 +81,9 @@ public:
 #endif /* ACE_HAS_THREADS */
 
 private:
-  // = errno_ and lineno_ will be thread-specific data so they don't
-  // need a lock.
-  int errno_;
-  int lineno_;
+  /// errno_ and lineno_ are thread-specific data, so they need no lock.
+  int errno_ {};
+  int lineno_ {};
 
   static int flags_;
   static int created_;

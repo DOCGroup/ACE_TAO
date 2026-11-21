@@ -74,13 +74,19 @@ public:
 
   ACE_Message_Queue_Base ();
 
+  ACE_Message_Queue_Base (ACE_Message_Queue_Base const &) = delete;
+  ACE_Message_Queue_Base (ACE_Message_Queue_Base &&) = delete;
+  ACE_Message_Queue_Base &operator= (ACE_Message_Queue_Base const &) = delete;
+  ACE_Message_Queue_Base &operator= (ACE_Message_Queue_Base &&) = delete;
+
   /// Close down the message queue and release all resources.
   virtual int close () = 0;
 
   /// Close down the message queue and release all resources.
   virtual ~ACE_Message_Queue_Base () = default;
 
-  // = Enqueue and dequeue methods.
+  /// @name Enqueue and dequeue methods
+  /// @{
 
   /**
    * Retrieve the first ACE_Message_Block without removing it.  Note
@@ -121,15 +127,19 @@ public:
                             ACE_Time_Value *timeout = nullptr) = 0;
   virtual int dequeue (ACE_Message_Block *&first_item,
                        ACE_Time_Value *timeout = nullptr) = 0;
+  /// @}
 
-  // = Check if queue is full/empty.
+  /// @name Queue boundary conditions
+  /// @{
   /// True if queue is full, else false.
   virtual bool is_full () = 0;
 
   /// True if queue is empty, else false.
   virtual bool is_empty () = 0;
+  /// @}
 
-  // = Queue statistic methods.
+  /// @name Queue statistics
+  /// @{
 
   /// Number of total bytes on the queue, i.e., sum of the message
   /// block sizes.
@@ -149,8 +159,10 @@ public:
   /// New value of the number of total length on the queue, i.e.,
   /// sum of the message block lengths.
   virtual void message_length (size_t new_length) = 0;
+  /// @}
 
-  // = Activation control methods.
+  /// @name Activation state and notification control
+  /// @{
 
   /**
    * Deactivate the queue and wake up all threads waiting on the queue
@@ -192,15 +204,10 @@ public:
 
   /// Set the notification strategy for the Message_Queue
   virtual void notification_strategy (ACE_Notification_Strategy *s) = 0;
-
-  // = Notification hook.
+  /// @}
 
   /// Dump the state of an object.
   virtual void dump () const = 0;
-
-private:
-  ACE_Message_Queue_Base (const ACE_Message_Queue_Base &) = delete;
-  void operator= (const ACE_Message_Queue_Base &) = delete;
 
 protected:
   /// Indicates the state of the queue, which can be

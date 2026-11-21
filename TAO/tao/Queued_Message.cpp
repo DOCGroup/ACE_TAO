@@ -12,8 +12,6 @@ TAO_Queued_Message::TAO_Queued_Message (TAO_ORB_Core *oc,
   : allocator_ (alloc)
   , is_heap_created_ (is_heap_allocated)
   , orb_core_ (oc)
-  , next_ (nullptr)
-  , prev_ (nullptr)
 {
 }
 
@@ -27,7 +25,7 @@ TAO_Queued_Message::remove_from_list (TAO_Queued_Message *&head,
     {
       this->prev_->next_ = this->next_;
     }
-  else if(head == this)
+  else if (head == this)
     {
       head = this->next_;
     }
@@ -36,7 +34,7 @@ TAO_Queued_Message::remove_from_list (TAO_Queued_Message *&head,
     {
       this->next_->prev_ = this->prev_;
     }
-  else if(tail == this)
+  else if (tail == this)
     {
       tail = this->prev_;
     }
@@ -86,7 +84,7 @@ TAO_Queued_Message::push_front (TAO_Queued_Message *&head,
 }
 
 bool
-TAO_Queued_Message::is_expired (const ACE_Time_Value &) const
+TAO_Queued_Message::is_expired (ACE_Time_Value const &) const
 {
   return false;
 }

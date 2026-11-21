@@ -37,7 +37,8 @@ class ACE_NS_WString;
 class ACE_Export ACE_NS_String
 {
 public:
-  // = Initialization.
+  /// @name Initialization
+  /// @{
   /// Default "no-op" constructor.
   ACE_NS_String ();
 
@@ -48,8 +49,8 @@ public:
 
   /// Converts an ACE_NS_WString to an ACE_NS_String;
   ACE_NS_String (const ACE_NS_WString &);
+  /// @}
 
-  /// Destructor
   ~ACE_NS_String ();
 
   /// Converts an ACE_NS_String to fresh copy of an ACE_NS_WString;
@@ -78,14 +79,14 @@ public:
 
 private:
   /// Length of the string.
-  size_t len_;
+  size_t len_ {};
 
   /// This actually points into shared/persistent memory.
-  ACE_WCHAR_T *rep_;
+  ACE_WCHAR_T *rep_ {};
 
   /// Should rep_ be deleted when destructed (only used
   /// for WString conversions)
-  bool delete_rep_;
+  bool delete_rep_ {false};
 };
 
 /**
@@ -100,7 +101,6 @@ public:
   /// No-op constructor.
   ACE_NS_Internal ();
 
-  /// Constructor.
   ACE_NS_Internal (ACE_NS_String &value, const char *type);
 
   /// Compare an ACE_NS_Internal
@@ -117,7 +117,7 @@ private:
   ACE_NS_String value_;
 
   /// Contains the type of the string.
-  const char *type_;
+  const char *type_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

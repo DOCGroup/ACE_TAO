@@ -10,7 +10,6 @@ ACE_Hash<ACE_CString>::operator () (const ACE_CString &t) const
   return t.hash ();
 }
 
-
 ACE_INLINE int
 ACE_Equal_To<ACE_CString>::operator () (const ACE_CString &lhs,
                                         const ACE_CString &rhs) const
@@ -30,7 +29,6 @@ ACE_Hash<std::string>::operator () (const std::string &t) const
 {
   return ACE::hash_pjw (t.c_str (), t.length ());
 }
-
 
 ACE_INLINE int
 ACE_Equal_To<std::string>::operator () (const std::string &lhs,
@@ -52,7 +50,6 @@ ACE_Hash<ACE_WString>::operator () (const ACE_WString &t) const
 {
   return t.hash ();
 }
-
 
 ACE_INLINE int
 ACE_Equal_To<ACE_WString>::operator () (const ACE_WString &lhs,

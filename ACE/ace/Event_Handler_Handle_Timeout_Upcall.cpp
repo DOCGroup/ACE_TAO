@@ -14,11 +14,11 @@ int
 ACE_Event_Handler_Handle_Timeout_Upcall::
 timeout (ACE_Timer_Queue &timer_queue,
         ACE_Event_Handler *event_handler,
-        const void *act,
+        void const *act,
         int recurring_timer,
-        const ACE_Time_Value &cur_time)
+        ACE_Time_Value const &cur_time)
 {
-  bool requires_reference_counting = false;
+  bool requires_reference_counting {};
 
   if (!recurring_timer)
     {
@@ -31,9 +31,13 @@ timeout (ACE_Timer_Queue &timer_queue,
   if (event_handler->handle_timeout (cur_time, act) == -1)
     {
       if (event_handler->reactor_timer_interface ())
-        event_handler->reactor_timer_interface ()->cancel_timer (event_handler, 0);
+        {
+          event_handler->reactor_timer_interface ()->cancel_timer (event_handler, 0);
+        }
       else
-        timer_queue.cancel (event_handler, 0); // 0 means "call handle_close()".
+        {
+          timer_queue.cancel (event_handler, 0); // 0 means "call handle_close()".
+        }
     }
 
   if (!recurring_timer && requires_reference_counting)
@@ -57,8 +61,10 @@ cancel_type (ACE_Timer_Queue &,
 
   // Upcall to the <handler>s handle_close method
   if (dont_call == 0)
-    event_handler->handle_close (ACE_INVALID_HANDLE,
-                                 ACE_Event_Handler::TIMER_MASK);
+    {
+      event_handler->handle_close (ACE_INVALID_HANDLE,
+                                   ACE_Event_Handler::TIMER_MASK);
+    }
 
   return 0;
 }
@@ -67,9 +73,9 @@ int
 ACE_Event_Handler_Handle_Timeout_Upcall::
 deletion (ACE_Timer_Queue &timer_queue,
           ACE_Event_Handler *event_handler,
-          const void *)
+          void const *)
 {
-  int requires_reference_counting = 0;
+  int requires_reference_counting {};
 
   this->cancel_type (timer_queue,
                      event_handler,

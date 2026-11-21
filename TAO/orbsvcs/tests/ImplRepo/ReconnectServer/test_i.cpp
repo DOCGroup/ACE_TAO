@@ -1,12 +1,10 @@
 #include "test_i.h"
 #include "ace/OS_NS_time.h"
 
-// Implementation skeleton constructor
 Test_Dummy_i::Test_Dummy_i ()
 {
 }
 
-// Implementation skeleton destructor
 Test_Dummy_i::~Test_Dummy_i ()
 {
 }
@@ -21,7 +19,6 @@ Test_Time_i::Test_Time_i ()
 {
 }
 
-// Implementation skeleton destructor
 Test_Time_i::~Test_Time_i ()
 {
 }
@@ -38,5 +35,4 @@ void Test_Time_i::shutdown ()
               "%C\n",
               "Time_i is shutting down"));
 }
-
 

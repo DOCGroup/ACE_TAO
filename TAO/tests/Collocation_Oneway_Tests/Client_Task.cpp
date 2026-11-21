@@ -4,15 +4,14 @@
 #include "Client_Task.h"
 #include "TestC.h"
 
-Client_Task::Client_Task (const ACE_TCHAR *ior,
+Client_Task::Client_Task (ACE_TCHAR const *ior,
                           CORBA::ORB_ptr corb,
-                          Client_Task::ClientSyncModeEnum syncMode,
+                          Client_Task::SyncMode sync_mode,
                           ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr)
-    , input_ (ior)
-    , corb_ (CORBA::ORB::_duplicate (corb))
-    , syncMode_ (syncMode)
-
+  , input_ (ior)
+  , corb_ (CORBA::ORB::_duplicate (corb))
+  , sync_mode_ (sync_mode)
 {
 }
 
@@ -21,75 +20,76 @@ Client_Task::svc ()
 {
   try
     {
-      CORBA::Object_var tmp =
-        this->corb_->string_to_object (input_);
+      CORBA::Object_var const tmp {this->corb_->string_to_object (this->input_.c_str ())};
 
-      Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in ());
+      Test::Hello_var hello {Test::Hello::_narrow (tmp.in ())};
 
       if (CORBA::is_nil (hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::Hello reference <%s>\n",
-                             input_),
-                             1);
+                             ACE_TEXT ("Nil Test::Hello reference <%s>\n"),
+                             this->input_.c_str ()),
+                           1);
         }
 
-      Test::Hello_var tmpVar = hello;
-      CORBA::Any anyPolicy;
+      Test::Hello_var const tmp_var {Test::Hello::_duplicate (hello.in ())};
+      CORBA::Any any_policy {};
 
-      Messaging::SyncScope selectedScope = Messaging::SYNC_NONE; // default
+      Messaging::SyncScope selected_scope {Messaging::SYNC_NONE};
 
-      if(syncMode_ == Client_Task::MODE_TRANSPORT) {
-          selectedScope = Messaging::SYNC_WITH_TRANSPORT;
+      if (this->sync_mode_ == SyncMode::transport)
+        {
+          selected_scope = Messaging::SYNC_WITH_TRANSPORT;
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - SYNC_WITH_TRANSPORT collocated oneway test\n"));
-      }
-      else if(syncMode_ == Client_Task::MODE_SERVER) {
-          selectedScope = Messaging::SYNC_WITH_SERVER;
+        }
+      else if (this->sync_mode_ == SyncMode::server)
+        {
+          selected_scope = Messaging::SYNC_WITH_SERVER;
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - SYNC_WITH_SERVER collocated oneway test\n"));
-      }
-      else if(syncMode_ == Client_Task::MODE_TARGET) {
-          selectedScope = Messaging::SYNC_WITH_TARGET;
+        }
+      else if (this->sync_mode_ == SyncMode::target)
+        {
+          selected_scope = Messaging::SYNC_WITH_TARGET;
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - SYNC_WITH_TARGET collocated oneway test\n"));
-      }
-      else if(syncMode_ == Client_Task::MODE_NONE) {
-          selectedScope = Messaging::SYNC_NONE;
+        }
+      else if (this->sync_mode_ == SyncMode::none)
+        {
+          selected_scope = Messaging::SYNC_NONE;
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - SYNC_NONE collocated oneway test\n"));
-      }
+        }
 
-      anyPolicy <<= selectedScope;
-      CORBA::PolicyList polList;
-      polList.length(1);
-      polList[0] = this->corb_->create_policy(
-        Messaging::SYNC_SCOPE_POLICY_TYPE, anyPolicy);
+      any_policy <<= selected_scope;
+      CORBA::PolicyList policy_list {};
+      policy_list.length (1);
+      policy_list[0] = this->corb_->create_policy (
+        Messaging::SYNC_SCOPE_POLICY_TYPE, any_policy);
 
-      CORBA::Object_var tmpGenericVar =
-        tmpVar->_set_policy_overrides(polList,CORBA::ADD_OVERRIDE);
+      CORBA::Object_var const tmp_generic_var {
+        tmp_var->_set_policy_overrides (policy_list, CORBA::ADD_OVERRIDE)};
 
       // do unchecked narrow because ORB's not activated. Otherwise get TRANSIENT exception
-      hello = Test::Hello::_narrow(tmpGenericVar.in());
+      hello = Test::Hello::_narrow (tmp_generic_var.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::Hello reference <%s>\n",
-                             input_),
-                             1);
+                             ACE_TEXT ("Nil Test::Hello reference <%s>\n"),
+                             this->input_.c_str ()),
+                           1);
         }
 
-      CORBA::String_var the_string =
-        hello->get_string ();
+      CORBA::String_var const the_string {hello->get_string ()};
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
                   the_string.in ()));
 
-      hello->onewayTest();
+      hello->onewayTest ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - returned from onewayTest() call\n"));
 
       hello->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

@@ -1,33 +1,20 @@
 #include "Blob_Handler.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
+#include <cstdio>
+#include <cstring>
+#include <memory>
+#include <new>
 
-// Empty constructor for compliance with new Connector behavior.
-ACE_Blob_Handler::ACE_Blob_Handler ()
-{
-}
-
-// Always use this constructor
 ACE_Blob_Handler::ACE_Blob_Handler (ACE_Message_Block * mb,
                                     size_t length,
                                     size_t offset,
-                                    ACE_TCHAR *filename) :
+                                    ACE_TCHAR const *filename) :
   mb_ (mb),
   length_ (length),
   offset_ (offset),
-  filename_ (ACE_OS::strdup (filename)),
-  bytecount_ (0)
+  filename_ (filename)
 {
-}
-
-ACE_Blob_Handler::~ACE_Blob_Handler ()
-{
-  if (filename_)
-    {
-      ACE_OS::free ((void *) filename_);
-      filename_ = 0;
-    }
 }
 
 // Called by Connector after connection is established
@@ -35,14 +22,17 @@ int
 ACE_Blob_Handler::open (void *)
 {
   if (this->send_request () != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Blob_Handler::open():send_request failed"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Blob_Handler::open():send_request failed"), -1);
+    }
 
   if (this->receive_reply () != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Blob_Handler::open():receive_reply failed"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Blob_Handler::open():receive_reply failed"), -1);
+    }
   return 0;
 }
 
-// No-op
 int
 ACE_Blob_Handler::close (u_long flags)
 {
@@ -50,15 +40,12 @@ ACE_Blob_Handler::close (u_long flags)
   return 0;
 }
 
-
-// Always overridden by the derived classes
 int
 ACE_Blob_Handler::send_request ()
 {
   return -1;
 }
 
-// Always overridden by the derived classes
 int
 ACE_Blob_Handler::receive_reply ()
 {
@@ -68,19 +55,17 @@ ACE_Blob_Handler::receive_reply ()
 // used to retrieve the number of bytes read/written by the
 // last operation on the Blob
 int
-ACE_Blob_Handler::byte_count ()
+ACE_Blob_Handler::byte_count () const
 {
   return bytecount_;
 }
 
-// Reader **************************************************
-
 ACE_Blob_Reader::ACE_Blob_Reader (ACE_Message_Block * mb,
                                   size_t length,
                                   size_t offset,
-                                  ACE_TCHAR *filename,
-                                  const char *request_prefix,
-                                  const char *request_suffix) :
+                                  ACE_TCHAR const *filename,
+                                  char const *request_prefix,
+                                  char const *request_suffix) :
   ACE_Blob_Handler (mb, length, offset, filename),
   request_prefix_ (request_prefix),
   request_suffix_ (request_suffix)
@@ -94,21 +79,28 @@ ACE_Blob_Reader::send_request ()
   char mesg [MAX_HEADER_SIZE];
 
   // Check to see if the request is too big
-  if (MAX_HEADER_SIZE < (ACE_OS::strlen (request_prefix_)
-                         + ACE_OS::strlen (filename_)
-                         + ACE_OS::strlen (request_suffix_) + 4))
-    ACE_ERROR_RETURN((LM_ERROR,"Request too large!"), -1);
+  if (MAX_HEADER_SIZE < (std::strlen (request_prefix_)
+                         + ACE_OS::strlen (filename_.c_str ())
+                         + std::strlen (request_suffix_) + 4))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Request too large!"), -1);
+    }
 
   // Create a message to send to the server requesting retrieval of the file
-  int len = ACE_OS::sprintf (mesg, "%s %s %s",
-                             request_prefix_,
-                             ACE_TEXT_ALWAYS_CHAR (filename_),
-                             request_suffix_);
+  int const len = std::snprintf (mesg, sizeof mesg, "%s %s %s",
+                                 request_prefix_,
+                                 ACE_TEXT_ALWAYS_CHAR (filename_.c_str ()),
+                                 request_suffix_);
+  if (len < 0 || static_cast<size_t> (len) >= sizeof mesg)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Request too large!"), -1);
+    }
 
   // Send the message to server
   if (peer ().send_n (mesg, len) != len)
-    ACE_ERROR_RETURN((LM_ERROR,"Error sending request"), -1);
-
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Error sending request"), -1);
+    }
 
   return 0;
 }
@@ -117,35 +109,35 @@ ACE_Blob_Reader::send_request ()
 int
 ACE_Blob_Reader::receive_reply ()
 {
-  ssize_t len;
   char buf [MAX_HEADER_SIZE + 1];
-  char *buf_ptr;
-  size_t bytes_read = 0;
-  size_t bytes_left = this->length_;
-  size_t offset_left = this->offset_;
-
-  // Receive the first MAX_HEADER_SIZE bytes to be able to strip off the
-  // header. Note that we assume that the header will fit into the
-  // first MAX_HEADER_SIZE bytes of the transmitted data.
-  if ((len = peer ().recv_n (buf, MAX_HEADER_SIZE)) >= 0)
+  char *buf_ptr {};
+  // The HTTP header is assumed to fit into the first MAX_HEADER_SIZE bytes.
+  ssize_t const header_length = peer ().recv_n (buf, MAX_HEADER_SIZE);
+  if (header_length < 0)
     {
-      buf[len] = '\0';
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Blob_Reader::receiveReply():Error while reading header"), -1);
+    }
 
-      // Search for the header termination string "\r\n\r\n", or "\n\n". If
-      // found, move past it to get to the data portion.
-      if ((buf_ptr = ACE_OS::strstr (buf,"\r\n\r\n")) != 0)
-        buf_ptr += 4;
-      else if ((buf_ptr = ACE_OS::strstr (buf, "\n\n")) != 0)
-        buf_ptr += 2;
-      else
-        buf_ptr = buf;
+  buf[header_length] = '\0';
 
-      // Determine number of data bytes read. This is equal to the
-      // total bytes read minus number of header bytes.
-      bytes_read = (buf + len) - buf_ptr;
+  // Search for the header termination string "\r\n\r\n", or "\n\n". If
+  // found, move past it to get to the data portion.
+  if ((buf_ptr = std::strstr (buf, "\r\n\r\n")) != nullptr)
+    {
+      buf_ptr += 4;
+    }
+  else if ((buf_ptr = std::strstr (buf, "\n\n")) != nullptr)
+    {
+      buf_ptr += 2;
     }
   else
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Blob_Reader::receiveReply():Error while reading header"), -1);
+    {
+      buf_ptr = buf;
+    }
+
+  size_t const bytes_read = (buf + header_length) - buf_ptr;
+  size_t bytes_left = this->length_;
+  size_t offset_left = this->offset_;
 
   // ***************************************************************
   // At this point, we have stripped off the header and are ready to
@@ -165,7 +157,7 @@ ACE_Blob_Reader::receive_reply ()
       // Determine how many data bytes are actually there. This is
       // basically the total number of data bytes we read minus any
       // offset we have.
-      size_t data_bytes = bytes_read - offset_left;
+      size_t const data_bytes = bytes_read - offset_left;
 
       // Check for the case where the bytes read are enough to fulfill
       // our request (for length bytes). If this is the case, then we
@@ -176,16 +168,20 @@ ACE_Blob_Reader::receive_reply ()
           // The first block contains enough data to satisfy the
           // length. So copy the data into the message buffer.
           if (mb_->copy (buf_ptr, bytes_left) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
-                               "ACE Blob_Reader::receiveReply():Error copying data into Message_Block"), -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+                                 "ACE Blob_Reader::receiveReply():Error copying data into Message_Block"), -1);
+            }
           bytecount_ = length_;
           return 0;
         }
 
       // Copy over all the data bytes into our message buffer.
       if (mb_->copy (buf_ptr, data_bytes) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
-                           "ACE_Blob_Reader::receiveReply():Error copying data into Message_Block" ), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+                             "ACE_Blob_Reader::receiveReply():Error copying data into Message_Block"), -1);
+        }
 
       // Adjust bytes left
       bytes_left -= data_bytes;
@@ -207,15 +203,14 @@ ACE_Blob_Reader::receive_reply ()
       // offset bytes into a temporary buffer. Otherwise, we should
       // receive MAX_HEADER_SIZE bytes into temporary buffer and
       // decrement offset_left.
-      if (offset_left < (sizeof buf))
-        len = offset_left;
-      else
-        len = sizeof buf;
-      if (peer().recv_n (buf, len) != len)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
-                           "ACE_Blob_Reader::receiveReply():Read error" ),
-                          -1);
-      offset_left -= len;
+      size_t const bytes_to_skip = offset_left < sizeof buf ? offset_left : sizeof buf;
+      if (peer ().recv_n (buf, bytes_to_skip) != static_cast<ssize_t> (bytes_to_skip))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+                             "ACE_Blob_Reader::receiveReply():Read error"),
+                            -1);
+        }
+      offset_left -= bytes_to_skip;
     }
 
   // *****************************************************************
@@ -224,16 +219,18 @@ ACE_Blob_Reader::receive_reply ()
   // receive the actual data. Receive the data directly into the
   // message buffer.
 
-  len = peer().recv_n (mb_->wr_ptr (), bytes_left);
+  ssize_t const bytes_received = peer ().recv_n (mb_->wr_ptr (), bytes_left);
 
-  if (len < 0 || static_cast<size_t> (len) != bytes_left)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
-                       "ACE_Blob_Reader::receiveReply():Read error" ),
-                      -1);
+  if (bytes_received < 0 || static_cast<size_t> (bytes_received) != bytes_left)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+                         "ACE_Blob_Reader::receiveReply():Read error"),
+                        -1);
+    }
 
   // Adjust the message buffer write pointer by number of bytes we
   // received.
-  mb_->wr_ptr (len);
+  mb_->wr_ptr (bytes_received);
 
   // Set the byte count to number of bytes received
   this->bytecount_ = length_;
@@ -241,14 +238,12 @@ ACE_Blob_Reader::receive_reply ()
   return 0;
 }
 
-// Writer **************************************************
-
 ACE_Blob_Writer::ACE_Blob_Writer (ACE_Message_Block * mb,
                                   size_t length,
                                   size_t offset,
-                                  ACE_TCHAR *filename,
-                                  const char *request_prefix,
-                                  const char *request_suffix) :
+                                  ACE_TCHAR const *filename,
+                                  char const *request_prefix,
+                                  char const *request_suffix) :
   ACE_Blob_Handler (mb, length, offset, filename),
   request_prefix_ (request_prefix),
   request_suffix_ (request_suffix)
@@ -259,41 +254,58 @@ int
 ACE_Blob_Writer::send_request ()
 {
   // Check for sanity -- check if we have any data to send.
-  if (offset_+ length_ > mb_->length ())
-    ACE_ERROR_RETURN((LM_ERROR, "%p\n",
-                      "ACE_Blob_Writer::sendRequest():Invalid offset/length"), -1);
+  size_t const buffer_length = mb_->length ();
+  if (offset_ > buffer_length || length_ > buffer_length - offset_)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+                         "ACE_Blob_Writer::sendRequest():Invalid offset/length"), -1);
+    }
 
   // Determine the length of the header message we will be sending to
   // the server. Note that we add 32 for safety -- this corresponds to
   // the number of bytes needed for the length field.
-  size_t mesglen =
-    ACE_OS::strlen (request_prefix_)
-    + ACE_OS::strlen (filename_)
-    + ACE_OS::strlen (request_suffix_)
+  size_t const buffer_size =
+    std::strlen (request_prefix_)
+    + ACE_OS::strlen (filename_.c_str ())
+    + std::strlen (request_suffix_)
     + 32; // safety
 
   // Allocate a buffer to hold the header
-  char *mesg = 0;
-  ACE_NEW_RETURN (mesg, char [mesglen], -1);
+  std::unique_ptr<char[]> mesg (new (std::nothrow) char[buffer_size]);
+  if (!mesg)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Unable to allocate request header"), -1);
+    }
 
-  // Create the header, store the actual length in mesglen.
-  mesglen = ACE_OS::sprintf (mesg, "%s /%s %s " ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "\n\n",
-                             request_prefix_, ACE_TEXT_ALWAYS_CHAR (filename_),
-                             request_suffix_, length_);
+  // Create the header and store its actual length.
+  int const message_length =
+    std::snprintf (mesg.get (), buffer_size,
+                   "%s /%s %s " ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "\n\n",
+                   request_prefix_, ACE_TEXT_ALWAYS_CHAR (filename_.c_str ()),
+                   request_suffix_, length_);
+  if (message_length < 0 || static_cast<size_t> (message_length) >= buffer_size)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Request too large!"), -1);
+    }
 
   // Send the header followed by the data
 
   // First send the header
-  if (peer ().send_n (mesg, mesglen) == -1)
-    ACE_ERROR_RETURN((LM_ERROR, "%p\n", "Error sending request"), -1);
+  if (peer ().send_n (mesg.get (), message_length) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Error sending request"), -1);
+    }
 
   // "Consume" the offset by moving the read pointer of the message
   // buffer
   mb_->rd_ptr (offset_);
 
   // Now send the data
-  if (peer ().send_n (mb_->rd_ptr (), length_) != (int)length_)
-    ACE_ERROR_RETURN((LM_ERROR, "%p\n", "Error sending file"), -1);
+  ssize_t const bytes_sent = peer ().send_n (mb_->rd_ptr (), length_);
+  if (bytes_sent < 0 || static_cast<size_t> (bytes_sent) != length_)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Error sending file"), -1);
+    }
 
   // Adjust the read pointer of the mesage buffer
   mb_->rd_ptr (length_);
@@ -308,34 +320,40 @@ ACE_Blob_Writer::receive_reply ()
   char buf[MAX_HEADER_SIZE];
 
   // Receive the reply from the server
-  size_t num_recvd = 0;
-  ssize_t len = peer ().recv_n (buf, sizeof buf - 1, 0, &num_recvd); // reserve one byte to store the \0
-  if (len ==-1)
-    ACE_ERROR_RETURN((LM_ERROR, "%p\n", "Error reading header"), -1);
+  size_t num_recvd {};
+  ssize_t const len = peer ().recv_n (buf, sizeof buf - 1, 0, std::addressof (num_recvd)); // reserve one byte to store the \0
+  if (len == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Error reading header"), -1);
+    }
 
   buf [num_recvd] = 0;
 
   // Parse the header
-  char *lasts = 0;
+  char *lasts {};
 
   // First check if this was a valid header -- HTTP/1.0
-  char *token = ACE_OS::strtok_r (buf, " \t", &lasts);
+  char * const token = ACE_OS::strtok_r (buf, " \t", std::addressof (lasts));
 
-  if ( (token == 0) || (ACE_OS::strcasecmp (token, "HTTP/1.0") != 0))
-    ACE_ERROR_RETURN((LM_ERROR, "%p\n", "Did not receive a HTTP/1.0 response"), -1);
+  if ((token == nullptr) || (ACE_OS::strcasecmp (token, "HTTP/1.0") != 0))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Did not receive a HTTP/1.0 response"), -1);
+    }
 
   // Get the return code.
-  int return_code = ACE_OS::atoi (ACE_OS::strtok_r (0, " \t", &lasts));
+  int const return_code = ACE_OS::atoi (ACE_OS::strtok_r (nullptr, " \t", std::addressof (lasts)));
 
   // Check if the transaction succeeded. The only success codes are in
   // the range of 200-299 (HTTP specification).
   if (return_code >= 200 && return_code < 300)
-    return 0;
+    {
+      return 0;
+    }
   else
     {
       // Something went wrong!
       // Get the description from the header message of what went wrong.
-      char *description = ACE_OS::strtok_r (0, "\n\r", &lasts);
+      char * const description = ACE_OS::strtok_r (nullptr, "\n\r", std::addressof (lasts));
       ACE_ERROR_RETURN((LM_ERROR, "%p\n", description), -1);
     }
   ACE_NOTREACHED(return 0);

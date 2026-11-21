@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Interpreter.h
  *
  *  @author Seth Widoff <sbw1@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_TCL_INTERPRETER_H
 #define TAO_TCL_INTERPRETER_H
@@ -15,6 +13,8 @@
 #include "orbsvcs/Trader/Constraint_Nodes.h"
 #include "orbsvcs/Trader/Constraint_Visitors.h"
 #include "orbsvcs/Trader/trading_serv_export.h"
+
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -30,28 +30,27 @@ class TAO_Constraint_Validator;
  */
 class TAO_Trading_Serv_Export TAO_Interpreter
 {
+public:
+  TAO_Interpreter (TAO_Interpreter const&) = delete;
+  TAO_Interpreter& operator= (TAO_Interpreter const&) = delete;
+  TAO_Interpreter (TAO_Interpreter&&) = delete;
+  TAO_Interpreter& operator= (TAO_Interpreter&&) = delete;
+
 protected:
-  /// Constructor.
   TAO_Interpreter ();
 
-  /// Destructor.
   ~TAO_Interpreter ();
 
   /// Using the Yacc generated parser, construct an expression tree
   /// representing <constraints> from the tokens returned by it.
   int build_tree (const char* preferences);
 
-  static int is_empty_string (const char* str);
+  static bool is_empty_string (const char* str);
 
   /// The root of the expression tree, not equal to null if build_tree
   /// successfully builds a tree from the constraints.
-  TAO_Constraint* root_;
+  std::unique_ptr<TAO_Constraint> root_;
 private:
-  TAO_Interpreter (TAO_Interpreter const&) = delete;
-  TAO_Interpreter& operator= (TAO_Interpreter const&) = delete;
-  TAO_Interpreter (TAO_Interpreter&&) = delete;
-  TAO_Interpreter& operator= (TAO_Interpreter&&) = delete;
-
   /// This mutex protects the <build_tree> method from reentrance.
   static TAO_SYNCH_MUTEX parserMutex__;
 };

@@ -12,12 +12,13 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "MT_Reactor_Timer_Test.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <algorithm>
+#include <memory>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -35,10 +36,9 @@
 
 Time_Handler::Time_Handler ()
 {
-  for (int i = 0;
-       i < Time_Handler::TIMER_SLOTS;
-       this->timer_id_[i++] = Time_Handler::TIMER_NOTSET)
-    continue;
+  std::fill_n (this->timer_id_,
+               Time_Handler::TIMER_SLOTS,
+               Time_Handler::TIMER_NOTSET);
 
   this->prev_timer_ = -1;
 }
@@ -75,8 +75,10 @@ Time_Handler::verify_results ()
   ACE_TEST_ASSERT (this->timer_id_[5] == Time_Handler::TIMER_FIRED);
   ACE_TEST_ASSERT (this->timer_id_[6] == Time_Handler::TIMER_FIRED);
 
-  for (int i = 7; i < Time_Handler::TIMER_SLOTS; i++)
-    ACE_TEST_ASSERT (this->timer_id_[i] == Time_Handler::TIMER_NOTSET);
+  for (int i = 7; i < Time_Handler::TIMER_SLOTS; ++i)
+    {
+      ACE_TEST_ASSERT (this->timer_id_[i] == Time_Handler::TIMER_NOTSET);
+    }
 
   return 0;
 }
@@ -128,9 +130,9 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
   ACE_GUARD_RETURN (ACE_Thread_Mutex, id_lock, this->lock_, 0);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("%T (%t): Timer #%d (id #%d) expired\n"),
-              time_tag,
-              this->timer_id_[time_tag]));
+              ACE_TEXT ("%T (%t): Timer #%q (id #%q) expired\n"),
+              static_cast<ACE_INT64> (time_tag),
+              static_cast<ACE_INT64> (this->timer_id_[time_tag])));
 
   ACE_TEST_ASSERT (time_tag > this->prev_timer_);
   ACE_TEST_ASSERT (this->timer_id_[time_tag] != Time_Handler::TIMER_NOTSET);
@@ -153,28 +155,36 @@ Dispatch_Count_Handler::Dispatch_Count_Handler ()
 
   // Initialize the pipe.
   if (this->pipe_.open () == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Pipe::open")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("ACE_Pipe::open")));
+    }
   // Register the "read" end of the pipe.
   else if (r->register_handler (this->pipe_.read_handle (),
                                 this,
                                 ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("register_handler")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("register_handler")));
+    }
   // Put something in our pipe and smoke it... ;-)
   else if (ACE::send (this->pipe_.write_handle (),
                       "z",
                       1) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("send")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("send")));
+    }
   // Call notify to prime the pump for this, as well.
   else if (r->notify (this) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("notify")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("notify")));
+    }
 }
 
 int
@@ -199,10 +209,12 @@ Dispatch_Count_Handler::handle_input (ACE_HANDLE h)
   this->input_seen_ = 1;
 
   if (ACE::recv (h, &c, 1) != 1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("recv")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("recv")),
+                        -1);
+    }
 
   ACE_TEST_ASSERT (c == 'z');
   ACE_DEBUG ((LM_DEBUG,
@@ -237,8 +249,8 @@ Dispatch_Count_Handler::handle_timeout (const ACE_Time_Value &tv,
   // This case just tests to make sure the Reactor is counting timer
   // expiration correctly.
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("%T (%t): expiration %d\n"),
-              value));
+              ACE_TEXT ("%T (%t): expiration %q\n"),
+              static_cast<ACE_INT64> (value)));
   return 0;
 }
 
@@ -287,15 +299,19 @@ run_main (int, ACE_TCHAR *[])
 
   Dispatch_Count_Handler callback;
 
-  for (int i = ACE_MAX_TIMERS; i > 0; i--)
-    // Schedule a timeout to expire immediately.
-    if (r->schedule_timer (&callback,
-                           reinterpret_cast <const void *> (static_cast <size_t> (i)),
-                           ACE_Time_Value (0)) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("schedule_timer")),
-                        1);
+  for (int i = ACE_MAX_TIMERS; i > 0; --i)
+    {
+      // Schedule a timeout to expire immediately.
+      if (r->schedule_timer (std::addressof (callback),
+                             reinterpret_cast <const void *> (static_cast <size_t> (i)),
+                             ACE_Time_Value (0)) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("schedule_timer")),
+                            1);
+        }
+    }
 
   ACE_Time_Value no_waiting (0);
   size_t events = 0;
@@ -306,7 +322,9 @@ run_main (int, ACE_TCHAR *[])
 
       // Timeout.
       if (result == 0)
+      {
         break;
+      }
 
       // Make sure there were no errors.
       ACE_TEST_ASSERT (result != -1);
@@ -320,7 +338,7 @@ run_main (int, ACE_TCHAR *[])
   if (events < ACE_MAX_TIMERS + 2)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("expected %d events, got %d instead\n"),
+                  ACE_TEXT ("expected %d events, got %B instead\n"),
                   ACE_MAX_TIMERS + 2,
                   events));
     }
@@ -359,7 +377,9 @@ run_main (int, ACE_TCHAR *[])
 
   status = other_thread.verify_results ();
   if (status != 0)
+  {
     test_result = 1;
+  }
 
 #else
   ACE_ERROR ((LM_INFO,

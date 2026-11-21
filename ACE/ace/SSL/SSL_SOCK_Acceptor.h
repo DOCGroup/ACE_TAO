@@ -49,10 +49,13 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_SSL_Export ACE_SSL_SOCK_Acceptor : public ACE_SSL_SOCK
 {
 public:
-  /// Default constructor.
+  ACE_SSL_SOCK_Acceptor (ACE_SSL_SOCK_Acceptor const &) = delete;
+  ACE_SSL_SOCK_Acceptor &operator= (ACE_SSL_SOCK_Acceptor const &) = delete;
+  ACE_SSL_SOCK_Acceptor (ACE_SSL_SOCK_Acceptor &&) = delete;
+  ACE_SSL_SOCK_Acceptor &operator= (ACE_SSL_SOCK_Acceptor &&) = delete;
+
   ACE_SSL_SOCK_Acceptor ();
 
-  /// Default destructor.
   ~ACE_SSL_SOCK_Acceptor ();
 
   /**
@@ -65,12 +68,12 @@ public:
    *                   @c ACE_SOCK::get_local_addr(ACE_Addr&) method
    *                   upon return.
    */
-  ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
-                         int reuse_addr = 0,
-                         int protocol_family = PF_UNSPEC,
-                         int backlog = ACE_DEFAULT_BACKLOG,
-                         int protocol = 0,
-                         int ipv6_only = 0);
+  explicit ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
+                                  int reuse_addr = 0,
+                                  int protocol_family = PF_UNSPEC,
+                                  int backlog = ACE_DEFAULT_BACKLOG,
+                                  int protocol = 0,
+                                  int ipv6_only = 0);
 
   /**
    * Initiate a passive-mode QoS-enabled acceptor socket.
@@ -119,7 +122,7 @@ public:
    *
    * These are the canonical methods exposed by the Acceptor pattern.
    */
-  //@{
+  /// @{
   /**
    * Accept a new ACE_SSL_SOCK_Stream connection. On successful return,
    * the socket has been accepted and the SSL handshake has been completed.
@@ -162,13 +165,13 @@ public:
               ACE_Time_Value *timeout = nullptr,
               bool restart = true,
               bool reset_new_handle = false) const;
-  //@}
+  /// @}
 
   /// Meta-type info
-  //@{
+  /// @{
   using PEER_ADDR = ACE_INET_Addr;
   using PEER_STREAM = ACE_SSL_SOCK_Stream;
-  //@}
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

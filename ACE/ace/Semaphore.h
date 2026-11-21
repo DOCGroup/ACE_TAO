@@ -32,11 +32,16 @@ class ACE_Time_Value;
 class ACE_Export ACE_Semaphore
 {
 public:
+  ACE_Semaphore (ACE_Semaphore const &) = delete;
+  ACE_Semaphore (ACE_Semaphore &&) = delete;
+  ACE_Semaphore &operator= (ACE_Semaphore const &) = delete;
+  ACE_Semaphore &operator= (ACE_Semaphore &&) = delete;
+
   /// Initialize the semaphore, with initial value of "count".
   ACE_Semaphore (unsigned int count = 1, // By default make this unlocked.
                  int type = USYNC_THREAD,
                  const ACE_TCHAR *name = nullptr,
-                 void * = 0,
+                 void * = nullptr,
                  int max = 0x7fffffff);
 
   /// Implicitly destroy the semaphore.
@@ -147,11 +152,7 @@ protected:
   /// destructor.  This flag isn't protected by a lock, so make sure
   /// that you don't have multiple threads simultaneously calling
   /// remove () on the same object, which is a bad idea anyway...
-  bool removed_;
-
-private:
-  void operator= (const ACE_Semaphore &) = delete;
-  ACE_Semaphore (const ACE_Semaphore &) = delete;
+  bool removed_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,11 +1,11 @@
 #include "ace/INet/HTTP_BasicAuthentication.h"
 #include "ace/Codecs.h"
+
 #include <memory>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/INet/HTTP_BasicAuthentication.inl"
 #endif
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -35,7 +35,7 @@ namespace ACE
             {
               size_t out_len = 0;
               std::unique_ptr<ACE_Byte[]> safe_buf (ACE_Base64::decode ((const ACE_Byte*)info.c_str (),
-                                                                         &out_len));
+                                                                         std::addressof (out_len)));
               ACE_CString credentials ((char*)safe_buf.get (), out_len);
               ACE_CString::size_type pos = credentials.find (':');
               if (pos != ACE_CString::npos)
@@ -47,9 +47,7 @@ namespace ACE
         }
       }
 
-    BasicAuthentication::~BasicAuthentication()
-      {
-      }
+    BasicAuthentication::~BasicAuthentication() = default;
 
     void BasicAuthentication::set_credentials (Request& request) const
       {
@@ -60,7 +58,7 @@ namespace ACE
         std::unique_ptr<ACE_Byte[]> safe_buf (
             ACE_Base64::encode ((const ACE_Byte*)credentials.c_str (),
                                 credentials.length (),
-                                &out_len,
+                                std::addressof (out_len),
                                 false));
         ACE_CString enc_cred ((char*)safe_buf.get (), out_len);
         request.set_credentials (SCHEME, enc_cred);

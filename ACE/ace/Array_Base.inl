@@ -109,8 +109,7 @@ ACE_Array_Iterator<T>::dump () const
 
 template <class T> ACE_INLINE
 ACE_Array_Iterator<T>::ACE_Array_Iterator (ACE_Array_Base<T> &a)
-    : current_ (0),
-      array_ (a)
+    : array_ (a)
 {
   // ACE_TRACE ("ACE_Array_Iterator<T>::ACE_Array_Iterator");
 }

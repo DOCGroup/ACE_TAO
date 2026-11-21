@@ -8,10 +8,11 @@
 #ifndef IMR_ASYNCACCESSMANAGER_H_
 #define IMR_ASYNCACCESSMANAGER_H_
 
+#include <vector>
+
 #include "locator_export.h"
 
 #include "ImR_ActivatorS.h" // ImR_Activator_AMIS.h
-#include "ace/Vector_T.h"
 #include "ace/SString.h"
 
 #include "Forwarder.h"
@@ -65,6 +66,8 @@ class Locator_Export AsyncAccessManager
 
   void add_interest (ImR_ResponseHandler *rh, bool manual);
   ImplementationRepository::AAM_Status status () const;
+  /// Stores and takes ownership of rh when no handler is registered. Returns
+  /// true when the caller retains ownership; nullptr clears the stored handler.
   bool force_remove_rh (ImR_ResponseHandler *rh);
 
   void activator_replied_start_running (bool success, int pid);
@@ -97,7 +100,7 @@ class Locator_Export AsyncAccessManager
   ImR_ResponseHandler *remove_on_death_rh_;
   ImR_Locator_i &locator_;
   PortableServer::POA_var poa_;
-  ACE_Vector<ImR_ResponseHandler *> rh_list_;
+  std::vector<ImR_ResponseHandler *> rh_list_;
 
   ImplementationRepository::AAM_Status status_;
 
@@ -127,8 +130,8 @@ public:
                      PortableServer::POA_ptr poa);
   virtual ~ActivatorReceiver ();
 
-  void start_server ();
-  void start_server_excep (Messaging::ExceptionHolder * excep_holder);
+  void start_server () override;
+  void start_server_excep (Messaging::ExceptionHolder * excep_holder) override;
 
   void shutdown ();
   void shutdown_excep (Messaging::ExceptionHolder * excep_holder);
@@ -158,7 +161,7 @@ class AccessLiveListener : public LiveListener
   virtual ~AccessLiveListener ();
   bool start ();
 
-  bool status_changed (LiveStatus status);
+  bool status_changed (LiveStatus status) override;
 
  private:
   AsyncAccessManager_ptr aam_;

@@ -82,7 +82,7 @@ private:
   ACE_Thread_Manager *tm_;
 
   /// Keeps track of the exit status for the thread.
-  ACE_THR_FUNC_RETURN status_;
+  ACE_THR_FUNC_RETURN status_ {ACE_THR_FUNC_RETURN_NULL};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

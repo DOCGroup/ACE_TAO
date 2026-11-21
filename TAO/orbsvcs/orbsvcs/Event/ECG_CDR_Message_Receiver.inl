@@ -2,18 +2,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_ECG_CDR_Message_Receiver::Requests::Requests ()
-  : fragmented_requests_ (0)
-  , size_ (0)
-  , id_range_low_ (0)
-  , id_range_high_ (0)
-  , min_purge_count_ (0)
-{
-}
-
-// ****************************************************************
-
-ACE_INLINE
 TAO_ECG_CDR_Message_Receiver::TAO_ECG_CDR_Message_Receiver (CORBA::Boolean crc)
   : ignore_from_ ()
   , request_map_ ()

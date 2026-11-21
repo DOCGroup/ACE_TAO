@@ -2,8 +2,8 @@
 #include "Rwho_DB_Manager.h"
 #include "PM_Server.h"
 #include "ace/ACE.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdio.h"
+#include <cstdio>
+#include <cstring>
 
 // This is the main method for the server side of things.  It reads
 // the RWHO file on the local machine and inserts HOST_NAME
@@ -35,7 +35,9 @@ PM_Server::insert_protocol_info (Protocol_Record &protocol_record)
   Drwho_Node *current_node = protocol_record.get_drwho_list ();
 
   if (current_node->get_idle_time () < MAX_USER_TIMEOUT)
-        this->increment_total_users ();
+  {
+    this->increment_total_users ();
+  }
 
   if (prp)
     {
@@ -44,9 +46,11 @@ PM_Server::insert_protocol_info (Protocol_Record &protocol_record)
                               prp->drwho_list_);
 
       if (current_node->get_idle_time () >= MAX_USER_TIMEOUT)
-        np->inactive_count_++;
+        ++np->inactive_count_;
       else
-        np->active_count_++;
+      {
+        ++np->active_count_;
+      }
     }
 
   return prp;
@@ -59,21 +63,17 @@ char *
 PM_Server::handle_protocol_entries (char *buf_ptr,
                                     Drwho_Node *np)
 {
-  for (; np != 0; np = np->next_)
+  for (; np != nullptr; np = np->next_)
     {
-      ACE_OS::sprintf (buf_ptr,
+      std::sprintf (buf_ptr,
                        "%d %d %s",
                        np->get_inactive_count (),
                        np->get_active_count (),
                        np->get_host_name ());
-      buf_ptr += ACE_OS::strlen (buf_ptr) + 1;
+      buf_ptr += std::strlen (buf_ptr) + 1;
     }
 
   return buf_ptr;
-}
-
-PM_Server::PM_Server ()
-{
 }
 
 PM_Server::~PM_Server ()

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CEC_PULLING_STRATEGY_H
 #define TAO_CEC_PULLING_STRATEGY_H
 
@@ -38,8 +37,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Event_Serv_Export TAO_CEC_Pulling_Strategy
 {
 public:
-  /// destructor...
-  virtual ~TAO_CEC_Pulling_Strategy ();
+  TAO_CEC_Pulling_Strategy () = default;
+
+  TAO_CEC_Pulling_Strategy (TAO_CEC_Pulling_Strategy const &) = delete;
+  TAO_CEC_Pulling_Strategy (TAO_CEC_Pulling_Strategy &&) = delete;
+  TAO_CEC_Pulling_Strategy &operator= (TAO_CEC_Pulling_Strategy const &) = delete;
+  TAO_CEC_Pulling_Strategy &operator= (TAO_CEC_Pulling_Strategy &&) = delete;
+
+  virtual ~TAO_CEC_Pulling_Strategy () = default;
 
   /// Initialize all the data structures, activate any internal threads,
   /// etc.

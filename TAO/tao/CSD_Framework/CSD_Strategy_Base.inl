@@ -1,6 +1,8 @@
 // -*- C++ -*-
 #include "tao/debug.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -37,7 +39,7 @@ TAO::CSD::Strategy_Base::dispatch_request
       case DISPATCH_REJECTED:
         if (server_request.collocated ())
           {
-             CORBA::NO_IMPLEMENT ex;
+             CORBA::NO_IMPLEMENT const ex;
              ex._raise ();
           }
         else
@@ -48,7 +50,7 @@ TAO::CSD::Strategy_Base::dispatch_request
                 server_request.response_expected() &&
                 !server_request.deferred_reply())
               {
-                CORBA::NO_IMPLEMENT ex;
+                CORBA::NO_IMPLEMENT const ex;
                 server_request.tao_send_reply_exception(ex);
               }
           }
@@ -57,21 +59,22 @@ TAO::CSD::Strategy_Base::dispatch_request
       case DISPATCH_DEFERRED:
         // Perform the "default" dispatching strategy logic for this request
         // right now, using the current thread.
-        upcall.servant()->_dispatch(server_request, &upcall);
+        upcall.servant()->_dispatch(server_request, std::addressof (upcall));
         break;
 
       default:
         if (TAO_debug_level > 0)
-          TAOLIB_ERROR((LM_ERROR,
-                     ACE_TEXT("(%P|%t) Unknown result (%d) from call to ")
-                     ACE_TEXT("dispatch_remote_request_i().\n"), result));
+          {
+            TAOLIB_ERROR((LM_ERROR,
+                          ACE_TEXT("(%P|%t) Unknown result (%d) from call to ")
+                          ACE_TEXT("dispatch_remote_request_i().\n"), result));
+          }
         // Since we do not know what to do here, just do the minimum, which
         // treats this case just like the DISPATCH_HANDLED case, for better
         // or worse.  Hitting this default case means a coding error.
         break;
     }
 }
-
 
 ACE_INLINE
 bool
@@ -106,7 +109,7 @@ ACE_INLINE
 void
 TAO::CSD::Strategy_Base::servant_activated_event
                                 (PortableServer::Servant servant,
-                                 const PortableServer::ObjectId& oid)
+                                 PortableServer::ObjectId const &oid)
 {
   this->servant_activated_event_i(servant, oid);
 }
@@ -115,7 +118,7 @@ ACE_INLINE
 void
 TAO::CSD::Strategy_Base::servant_deactivated_event
                                 (PortableServer::Servant servant,
-                                 const PortableServer::ObjectId& oid)
+                                 PortableServer::ObjectId const &oid)
 {
   this->servant_deactivated_event_i(servant, oid);
 }

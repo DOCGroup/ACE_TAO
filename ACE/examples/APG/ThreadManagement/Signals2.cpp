@@ -6,19 +6,27 @@
 #include "ace/Task.h"
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
+
+#include <memory>
 #include "ace/Sig_Handler.h"
 
 class SignalableTask : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  int handle_signal (int signum, siginfo_t *  = nullptr, ucontext_t * = nullptr) override
+  SignalableTask () = default;
+  SignalableTask (SignalableTask const &) = delete;
+  SignalableTask (SignalableTask &&) = delete;
+  SignalableTask &operator= (SignalableTask const &) = delete;
+  SignalableTask &operator= (SignalableTask &&) = delete;
+
+  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override
   {
     if (signum == SIGUSR1)
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%t) received a %S signal\n"),
                     signum));
-        handle_alert();
+        handle_alert ();
       }
 
     return 0;
@@ -28,25 +36,29 @@ public:
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Starting thread\n")));
 
-    while (1)
+    while (true)
       {
-        ACE_Message_Block* mb = nullptr;
-        ACE_Time_Value tv (0, 1000);
+        ACE_Message_Block *mb {};
+        ACE_Time_Value tv {0, 1000};
         tv += ACE_OS::time (nullptr);
 
-        int result = this->getq(mb, &tv);
+        int const result = this->getq (mb, &tv);
 
         if (result == -1 && errno == EWOULDBLOCK)
-          continue;
+          {
+            continue;
+          }
         else
-          process_message (mb);
+          {
+            process_message (mb);
+          }
       }
 
     ACE_NOTREACHED (return 0);
   }
 
   void handle_alert ();
-  void process_message (ACE_Message_Block *mb);
+  void process_message (ACE_Message_Block *);
 };
 
 void
@@ -69,12 +81,14 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   handler.activate (THR_NEW_LWP | THR_JOINABLE, 5);
 
   ACE_Sig_Handler sh;
-  sh.register_handler (SIGUSR1, &handler);
+  sh.register_handler (SIGUSR1, std::addressof (handler));
 
   ACE_OS::sleep (1);      // Allow threads to start
 
-  for (int i = 0; i < 5; i++)
-    ACE_OS::kill (ACE_OS::getpid (), SIGUSR1);
+  for (int i = 0; i < 5; ++i)
+    {
+      ACE_OS::kill (ACE_OS::getpid (), SIGUSR1);
+    }
   handler.wait ();
   return 0;
 }

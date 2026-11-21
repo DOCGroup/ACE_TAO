@@ -50,7 +50,9 @@ run_main (int, ACE_TCHAR *[])
   string100 s100("world");
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("String %C bound %d\n"), s100.c_str(), s100.bound ()));
+              ACE_TEXT ("String %C bound %u\n"),
+              s100.c_str (),
+              static_cast<unsigned int> (s100.bound ())));
 
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Template alias works.\n")));

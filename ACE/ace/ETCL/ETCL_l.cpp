@@ -8,7 +8,6 @@
 #define YY_FLEX_MAJOR_VERSION 2
 #define YY_FLEX_MINOR_VERSION 5
 
-
 /* cfront 1.2 defines "c_plusplus" instead of "__cplusplus" */
 #ifdef c_plusplus
 #ifndef __cplusplus
@@ -53,7 +52,6 @@
 #else
 #define yyconst
 #endif
-
 
 #ifdef YY_USE_PROTOS
 #define YY_PROTO(proto) proto
@@ -141,7 +139,6 @@ extern FILE *yyin, *yyout;
  */
 typedef unsigned int yy_size_t;
 
-
 struct yy_buffer_state
 {
   FILE *yy_input_file;
@@ -207,12 +204,10 @@ static YY_BUFFER_STATE yy_current_buffer = 0;
  */
 #define YY_CURRENT_BUFFER yy_current_buffer
 
-
 /* yy_hold_char holds the character lost when yytext is formed. */
 static char yy_hold_char;
 
 static int yy_n_chars;    /* number of characters read into yy_ch_buf */
-
 
 int yyleng;
 
@@ -261,7 +256,6 @@ static void yy_flex_free YY_PROTO(( void * ));
   }
 
 #define YY_AT_BOL() (yy_current_buffer->yy_at_bol)
-
 
 typedef unsigned char YY_CHAR;
 FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;
@@ -455,7 +449,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
  */
 //=============================================================================
 
-
 #include "ace/ETCL/ETCL_Interpreter.h"
 #include "ace/ETCL/ETCL_y.h"
 
@@ -638,13 +631,19 @@ YY_DECL
 #endif
 
     if ( ! yy_start )
+    {
       yy_start = 1; /* first start state */
+    }
 
     if ( ! yyin )
+    {
       yyin = stdin;
+    }
 
     if ( ! yyout )
+    {
       yyout = stdout;
+    }
 
     if ( ! yy_current_buffer )
       yy_current_buffer =
@@ -679,7 +678,9 @@ yy_match:
         {
         yy_current_state = (int) yy_def[yy_current_state];
         if ( yy_current_state >= 118 )
+        {
           yy_c = yy_meta[(unsigned int) yy_c];
+        }
         }
       yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
       ++yy_cp;
@@ -697,9 +698,7 @@ yy_find_action:
 
     YY_DO_BEFORE_ACTION;
 
-
 do_action:  /* This label is used only to access EOF actions. */
-
 
     switch ( yy_act )
   { /* beginning of action switch */
@@ -875,7 +874,7 @@ YY_RULE_SETUP
 //#line 84 "ETCL/ETCL.ll"
 {
       yylval.constraint =
-        new ETCL_Literal_Constraint ((ACE_CDR::Boolean) 1);
+        new ETCL_Literal_Constraint ((ACE_CDR::Boolean) true);
       YY_LEX_DEBUG; return ETCL_BOOLEAN;
     }
   YY_BREAK
@@ -884,7 +883,7 @@ YY_RULE_SETUP
 //#line 89 "ETCL/ETCL.ll"
 {
       yylval.constraint =
-        new ETCL_Literal_Constraint ((ACE_CDR::Boolean) 0);
+        new ETCL_Literal_Constraint ((ACE_CDR::Boolean) false);
       YY_LEX_DEBUG; return ETCL_BOOLEAN;
     }
   YY_BREAK
@@ -1043,7 +1042,9 @@ case YY_STATE_EOF(INITIAL):
         else
           {
           if ( ! yy_did_buffer_switch_on_eof )
+          {
             YY_NEW_FILE;
+          }
           }
         break;
         }
@@ -1077,7 +1078,6 @@ case YY_STATE_EOF(INITIAL):
   } /* end of action switch */
     } /* end of scanning one token */
   } /* end of yylex */
-
 
 /* yy_get_next_buffer - try to read in a new buffer
  *
@@ -1156,7 +1156,9 @@ static int yy_get_next_buffer()
         if ( new_size <= 0 )
           b->yy_buf_size += b->yy_buf_size / 8;
         else
+        {
           b->yy_buf_size *= 2;
+        }
 
         b->yy_ch_buf = (char *)
           /* Include room in for 2 EOB chars. */
@@ -1179,7 +1181,9 @@ static int yy_get_next_buffer()
       }
 
     if ( num_to_read > YY_READ_BUF_SIZE )
+    {
       num_to_read = YY_READ_BUF_SIZE;
+    }
 
     /* Read in more data. */
     YY_INPUT( (&yy_current_buffer->yy_ch_buf[number_to_move]),
@@ -1205,7 +1209,9 @@ static int yy_get_next_buffer()
     }
 
   else
+  {
     ret_val = EOB_ACT_CONTINUE_SCAN;
+  }
 
   yy_n_chars += number_to_move;
   yy_current_buffer->yy_ch_buf[yy_n_chars] = YY_END_OF_BUFFER_CHAR;
@@ -1215,7 +1221,6 @@ static int yy_get_next_buffer()
 
   return ret_val;
   }
-
 
 /* yy_get_previous_state - get the state just before the EOB char was reached */
 
@@ -1238,14 +1243,15 @@ static yy_state_type yy_get_previous_state()
       {
       yy_current_state = (int) yy_def[yy_current_state];
       if ( yy_current_state >= 118 )
+      {
         yy_c = yy_meta[(unsigned int) yy_c];
+      }
       }
     yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
     }
 
   return yy_current_state;
   }
-
 
 /* yy_try_NUL_trans - try to make a transition on the NUL character
  *
@@ -1273,7 +1279,9 @@ yy_state_type yy_current_state;
     {
     yy_current_state = (int) yy_def[yy_current_state];
     if ( yy_current_state >= 118 )
+    {
       yy_c = yy_meta[(unsigned int) yy_c];
+    }
     }
   yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
   yy_is_jam = (yy_current_state == 117);
@@ -1317,7 +1325,6 @@ char *yy_bp;
     }
 
   *--yy_cp = (char) c;
-
 
   yytext_ptr = yy_bp;
   yy_hold_char = *yy_cp;
@@ -1394,7 +1401,6 @@ static int input()
   *yy_c_buf_p = '\0'; /* preserve yytext */
   yy_hold_char = *++yy_c_buf_p;
 
-
   return c;
   }
 #endif /* YY_NO_INPUT */
@@ -1404,7 +1410,6 @@ void yyflush_current_buffer ()
   YY_FLUSH_BUFFER;
 }
 
-
 #ifdef YY_USE_PROTOS
 void yyrestart( FILE *input_file )
 #else
@@ -1413,12 +1418,13 @@ FILE *input_file;
 #endif
   {
   if ( ! yy_current_buffer )
+  {
     yy_current_buffer = yy_create_buffer( yyin, YY_BUF_SIZE );
+  }
 
   yy_init_buffer( yy_current_buffer, input_file );
   yy_load_buffer_state();
   }
-
 
 #ifdef YY_USE_PROTOS
 void yy_switch_to_buffer( YY_BUFFER_STATE new_buffer )
@@ -1428,7 +1434,9 @@ YY_BUFFER_STATE new_buffer;
 #endif
   {
   if ( yy_current_buffer == new_buffer )
+  {
     return;
+  }
 
   if ( yy_current_buffer )
     {
@@ -1449,7 +1457,6 @@ YY_BUFFER_STATE new_buffer;
   yy_did_buffer_switch_on_eof = 1;
   }
 
-
 #ifdef YY_USE_PROTOS
 void yy_load_buffer_state()
 #else
@@ -1461,7 +1468,6 @@ void yy_load_buffer_state()
   yyin = yy_current_buffer->yy_input_file;
   yy_hold_char = *yy_c_buf_p;
   }
-
 
 #ifdef YY_USE_PROTOS
 YY_BUFFER_STATE yy_create_buffer( FILE *file, int size )
@@ -1475,7 +1481,9 @@ int size;
 
   b = (YY_BUFFER_STATE) yy_flex_alloc( sizeof( struct yy_buffer_state ) );
   if ( ! b )
+  {
     YY_FATAL_ERROR( "out of dynamic memory in yy_create_buffer()" );
+  }
 
   b->yy_buf_size = size;
 
@@ -1484,7 +1492,9 @@ int size;
    */
   b->yy_ch_buf = (char *) yy_flex_alloc( b->yy_buf_size + 2 );
   if ( ! b->yy_ch_buf )
+  {
     YY_FATAL_ERROR( "out of dynamic memory in yy_create_buffer()" );
+  }
 
   b->yy_is_our_buffer = 1;
 
@@ -1492,7 +1502,6 @@ int size;
 
   return b;
   }
-
 
 #ifdef YY_USE_PROTOS
 void yy_delete_buffer( YY_BUFFER_STATE b )
@@ -1502,17 +1511,22 @@ YY_BUFFER_STATE b;
 #endif
   {
   if ( ! b )
+  {
     return;
+  }
 
   if ( b == yy_current_buffer )
+  {
     yy_current_buffer = (YY_BUFFER_STATE) 0;
+  }
 
   if ( b->yy_is_our_buffer )
+  {
     yy_flex_free( (void *) b->yy_ch_buf );
+  }
 
   yy_flex_free( (void *) b );
   }
-
 
 #ifdef YY_USE_PROTOS
 void yy_init_buffer( YY_BUFFER_STATE b, FILE *file )
@@ -1521,7 +1535,6 @@ void yy_init_buffer( b, file )
 YY_BUFFER_STATE b;
 FILE *file;
 #endif
-
 
   {
   yy_flush_buffer( b );
@@ -1532,7 +1545,6 @@ FILE *file;
   b->yy_is_interactive = file ? (ACE_OS::isatty( ACE_OS::fileno(file) ) > 0) : 0;
   }
 
-
 #ifdef YY_USE_PROTOS
 void yy_flush_buffer( YY_BUFFER_STATE b )
 #else
@@ -1542,7 +1554,9 @@ YY_BUFFER_STATE b;
 
   {
   if ( ! b )
+  {
     return;
+  }
 
   b->yy_n_chars = 0;
 
@@ -1559,9 +1573,10 @@ YY_BUFFER_STATE b;
   b->yy_buffer_status = YY_BUFFER_NEW;
 
   if ( b == yy_current_buffer )
+  {
     yy_load_buffer_state();
   }
-
+  }
 
 #ifndef YY_NO_SCAN_BUFFER
 #ifdef YY_USE_PROTOS
@@ -1582,7 +1597,9 @@ yy_size_t size;
 
   b = (YY_BUFFER_STATE) yy_flex_alloc( sizeof( struct yy_buffer_state ) );
   if ( ! b )
+  {
     YY_FATAL_ERROR( "out of dynamic memory in yy_scan_buffer()" );
+  }
 
   b->yy_buf_size = size - 2;  /* "- 2" to take care of EOB's */
   b->yy_buf_pos = b->yy_ch_buf = base;
@@ -1600,7 +1617,6 @@ yy_size_t size;
   }
 #endif
 
-
 #ifndef YY_NO_SCAN_STRING
 #ifdef YY_USE_PROTOS
 YY_BUFFER_STATE yy_scan_string( yyconst char *yy_str )
@@ -1616,7 +1632,6 @@ yyconst char *yy_str;
   return yy_scan_bytes( yy_str, len );
   }
 #endif
-
 
 #ifndef YY_NO_SCAN_BYTES
 #ifdef YY_USE_PROTOS
@@ -1636,7 +1651,9 @@ int len;
   n = len + 2;
   buf = (char *) yy_flex_alloc( n );
   if ( ! buf )
+  {
     YY_FATAL_ERROR( "out of dynamic memory in yy_scan_bytes()" );
+  }
 
   for ( i = 0; i < len; ++i )
     buf[i] = bytes[i];
@@ -1645,7 +1662,9 @@ int len;
 
   b = yy_scan_buffer( buf, n );
   if ( ! b )
+  {
     YY_FATAL_ERROR( "bad buffer in yy_scan_bytes()" );
+  }
 
   /* It's okay to grow etc. this buffer, and we should throw it
    * away when we're done.
@@ -1655,7 +1674,6 @@ int len;
   return b;
   }
 #endif
-
 
 #ifndef YY_NO_PUSH_STATE
 #ifdef YY_USE_PROTOS
@@ -1690,7 +1708,6 @@ int new_state;
   }
 #endif
 
-
 #ifndef YY_NO_POP_STATE
 static void yy_pop_state()
   {
@@ -1700,7 +1717,6 @@ static void yy_pop_state()
   BEGIN(yy_start_stack[yy_start_stack_ptr]);
   }
 #endif
-
 
 #ifndef YY_NO_TOP_STATE
 static int yy_top_state()
@@ -1724,7 +1740,6 @@ char msg[];
   ACE_OS::exit( YY_EXIT_FAILURE );
   }
 
-
 /* Redefine yyless() so it works in section 3 code. */
 
 #undef yyless
@@ -1739,7 +1754,6 @@ char msg[];
     yyleng = n; \
     } \
   while ( 0 )
-
 
 /* Internal utility routines. */
 
@@ -1774,7 +1788,6 @@ yyconst char *s;
   return n;
   }
 #endif
-
 
 #ifdef YY_USE_PROTOS
 static void *yy_flex_alloc( yy_size_t size )
@@ -1823,7 +1836,6 @@ int main()
 #endif
 //#line 122 "ETCL/ETCL.ll"
 
-
 const char*
 extract_string(char* str)
 {
@@ -1834,15 +1846,25 @@ extract_string(char* str)
         {
           ++i;
           if (*i == 0)
-            return 0;
+            {
+              return 0;
+            }
           else if (*i == 't')
-            *t = '\t';
+            {
+              *t = '\t';
+            }
           else if (*i == 'n')
-            *t = '\n';
+            {
+              *t = '\n';
+            }
           else if (*i == '\\')
-            *t = '\\';
+            {
+              *t = '\\';
+            }
           else
-            *t = *i;
+            {
+              *t = *i;
+            }
           continue;
         }
 

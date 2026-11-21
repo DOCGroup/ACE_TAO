@@ -3,7 +3,6 @@
 #include "ace/Log_Category.h"
 #include "ace/Malloc_Base.h"
 
-
 #if !defined (ACE_LACKS_SBRK)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -22,13 +21,17 @@ ACE_Sbrk_Memory_Pool::acquire (size_t nbytes,
   void *cp = ACE_OS::sbrk (rounded_bytes);
 
   if (cp == MAP_FAILED)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) cp = %u\n",
-                       cp),
-                      0);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            "(%P|%t) cp = %u\n",
+                            cp),
+                           0);
+    }
   else
-    // ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) acquired more chunks, nbytes = %d, rounded_bytes = %d, new break = %u\n"), nbytes, rounded_bytes, cp));
-  return cp;
+    {
+      // ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) acquired more chunks, nbytes = %d, rounded_bytes = %d, new break = %u\n"), nbytes, rounded_bytes, cp));
+      return cp;
+    }
 }
 
 /* No-op for now... */

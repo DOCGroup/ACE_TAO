@@ -33,13 +33,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_SPIPE_Addr : public ACE_Addr
 {
 public:
-  /// Default constructor.
   ACE_SPIPE_Addr ();
 
-  /// Copy constructor.
   ACE_SPIPE_Addr (const ACE_SPIPE_Addr &sa);
 
-  /// Assignment operator
   ACE_SPIPE_Addr& operator= (const ACE_SPIPE_Addr&) = default;
 
   /// Create a ACE_SPIPE_Addr from a rendezvous point in the file
@@ -65,14 +62,17 @@ public:
   /// Transform the string into the current addressing format.
   virtual int string_to_addr (const ACE_TCHAR *addr);
 
-  // = Equality/inequality tests
+  /// @name Equality comparisons
+  /// @{
   /// Check for equality.
   bool operator == (const ACE_SPIPE_Addr &SAP) const;
 
   /// Check for inequality
   bool operator != (const ACE_SPIPE_Addr &SAP) const;
+  /// @}
 
-  // = SPIPE-specific address operations
+  /// @name SPIPE address operations
+  /// @{
   /// Pathname of rendezvous point in file system.
   const ACE_TCHAR *get_path_name () const;
 
@@ -87,6 +87,7 @@ public:
 
   /// Get group ids.
   gid_t group_id () const;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -95,7 +96,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  /// Contains security attributes.
+  /// Contains the security attributes and rendezvous pathname.
   struct SPIPE_Addr
   {
     /// Group id.
@@ -107,7 +108,6 @@ private:
     /// Pathname in the file system.
     ACE_TCHAR rendezvous_[MAXPATHLEN + 1];
   } SPIPE_addr_;
-  // Contents of an SPIPE address.
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

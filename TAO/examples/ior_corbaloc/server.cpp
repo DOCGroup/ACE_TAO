@@ -1,32 +1,40 @@
-// server.cpp
-
 #include "status_i.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/CosNamingC.h"
 
-int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
+#include <memory>
+#include <string>
+
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       // First initialize the ORB, that will remove some arguments...
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       if (argc < 2)
         {
-          ACE_DEBUG ((LM_DEBUG, "\nUsage:\n  %s [NAME to insert in Naming Service]\n", argv[0]));
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("\nUsage:\n  %s [NAME to insert in Naming Service]\n"),
+                      argv [0]));
           return -1;
         }
       // Get a reference to the RootPOA
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
       // narrow down to the correct reference
-      PortableServer::POA_var poa =
+      PortableServer::POA_var const poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
+      if (CORBA::is_nil (poa.in ()))
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot narrow RootPOA\n")), 1);
+      }
+
       // Set a POA Manager
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         poa->the_POAManager ();
 
       // Activate the POA Manager
@@ -34,28 +42,39 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       // Create the servant
       corbaloc_Status_i status_i;
-      status_i.set_name (ACE_TEXT_ALWAYS_CHAR (argv[1]));
+      std::string const server_name (ACE_TEXT_ALWAYS_CHAR (argv [1]));
+      status_i.set_name (server_name);
       // Activate it to obtain the reference
-      PortableServer::ObjectId_var id =
-        poa->activate_object (&status_i);
+      PortableServer::ObjectId_var const id =
+        poa->activate_object (std::addressof (status_i));
 
-      CORBA::Object_var object = poa->id_to_reference (id.in ());
+      CORBA::Object_var const object = poa->id_to_reference (id.in ());
 
-      corbaloc::Status_var status =
+      corbaloc::Status_var const status =
         corbaloc::Status::_narrow (object.in ());
 
+      if (CORBA::is_nil (status.in ()))
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot narrow Status servant\n")), 1);
+      }
+
       // Get a reference to Naming Context
-      CORBA::Object_var naming_context_object =
+      CORBA::Object_var const naming_context_object =
         orb->resolve_initial_references ("NameService");
 
       // Narrow down the reference
-      CosNaming::NamingContext_var naming_context =
+      CosNaming::NamingContext_var const naming_context =
         CosNaming::NamingContext::_narrow (naming_context_object.in ());
+
+      if (CORBA::is_nil (naming_context.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Cannot narrow Naming Service\n")),
+                          1);
 
       // Bind Iterator_Factory to the Naming Context
       CosNaming::Name name (1);
       name.length (1);
-      name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (argv[1]));
+      name[0].id = CORBA::string_dup (server_name.c_str ());
 
       naming_context->rebind (name, status.in ());
 
@@ -66,12 +85,16 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       poa->destroy (true, true);
       orb->destroy ();
     }
-  catch (const CORBA::SystemException& ex){
-    ex._tao_print_exception ("CORBA exception raised! ");
-  }
-  catch (const CORBA::Exception& ex){
-    ex._tao_print_exception ("Exception caught in server");
-  }
+  catch (CORBA::SystemException const &ex)
+    {
+      ex._tao_print_exception ("CORBA exception raised! ");
+      return 1;
+    }
+  catch (CORBA::Exception const &ex)
+    {
+      ex._tao_print_exception ("Exception caught in server");
+      return 1;
+    }
 
   return 0;
 }

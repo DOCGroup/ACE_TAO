@@ -28,12 +28,17 @@ public:
   {
   }
 
+  TAO_Dynamic_Statistic (TAO_Dynamic_Statistic const&) = delete;
+  TAO_Dynamic_Statistic (TAO_Dynamic_Statistic&&) = delete;
+  TAO_Dynamic_Statistic& operator= (TAO_Dynamic_Statistic const&) = delete;
+  TAO_Dynamic_Statistic& operator= (TAO_Dynamic_Statistic&&) = delete;
+
   /// Take the interface, update the data, calculate the statistic and
   /// store it for later calculations.  The implementation of this
   /// method is expected to call the receive base class method. This
   /// method isn't pure virtual in Monitor_Base, but we reintroduce
   /// it here to force all subclasses to implement it.
-  virtual void update () = 0;
+  void update () override = 0;
 
 protected:
   TYPE* interf_;

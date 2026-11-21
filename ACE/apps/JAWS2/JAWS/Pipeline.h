@@ -22,16 +22,14 @@ using JAWS_Pipeline_Task = ACE_Task<ACE_NULL_SYNCH>;
 class JAWS_IO_Handler;
 class JAWS_Dispatch_Policy;
 
+/// Provides the common ACE_Task hooks used by pipeline components.
 class JAWS_Export JAWS_Pipeline : public JAWS_Pipeline_Task
-  // = TITLE
-  //   Methods that are common to pipeline components
 {
 public:
   JAWS_Pipeline ();
-  // ACE_Task hooks
 
-  virtual int open (void * = 0);
-  virtual int close (u_long = 0);
+  int open (void * = nullptr) override;
+  int close (u_long = 0) override;
 };
 
 #endif /* !defined (JAWS_PIPELINE_H) */

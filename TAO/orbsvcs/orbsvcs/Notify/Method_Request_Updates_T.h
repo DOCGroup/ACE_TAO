@@ -35,12 +35,10 @@ template <class SEQ, class PROXY, class SEQ_PARAM, class PROXY_PARAM>
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Updates_T
 {
 public:
-  /// Constructor
   TAO_Notify_Method_Request_Updates_T (SEQ_PARAM added,
                                        SEQ_PARAM removed,
                                        PROXY_PARAM proxy);
 
-  /// Destructor
   virtual ~TAO_Notify_Method_Request_Updates_T ();
 
   /// Execute the Request

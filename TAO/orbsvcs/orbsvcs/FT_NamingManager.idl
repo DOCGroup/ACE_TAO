@@ -1,5 +1,4 @@
 /* -*- IDL -*- */
-//=============================================================================
 /**
  *  @file    FT_NamingManager.idl
  *
@@ -7,7 +6,6 @@
  *
  *  @author Kevin Stanley <stanleyk@ociweb.com>
  */
-//=============================================================================
 
 #ifndef _FT_NAMING_MANAGER_IDL_
 #define _FT_NAMING_MANAGER_IDL_
@@ -29,7 +27,7 @@ module FT_Naming
   typedef string GroupName;
   typedef sequence<string> GroupNames;
 
-  // Specification of NamingManager Interface
+  /// Specification of NamingManager Interface
   interface NamingManager : PortableGroup::PropertyManager,
                             PortableGroup::ObjectGroupManager
   {
@@ -51,11 +49,10 @@ module FT_Naming
     void set_load_balancing_strategy (in string group_name,
                                       in LoadBalancingStrategyValue lb_strategy);
 
-    // Return names of all groups defined in the NamingManager
+    /// Return names of all groups defined in the NamingManager
     GroupNames groups (in LoadBalancingStrategyValue target_stategy);
 
   };
 };
-
 
 #endif // _FT_NAMING_MANAGER_IDL_

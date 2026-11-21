@@ -3,17 +3,19 @@
 
 #include "CallbackS.h"
 
-
 class Callback_i : public virtual POA_Callback
 {
-  public:
-    Callback_i();
+public:
+  Callback_i () = default;
 
-    virtual ~Callback_i();
+  ~Callback_i () override = default;
 
-    virtual void test_method (
-    );
+  Callback_i (Callback_i const &) = delete;
+  Callback_i (Callback_i &&) = delete;
+  Callback_i & operator= (Callback_i const &) = delete;
+  Callback_i & operator= (Callback_i &&) = delete;
+
+  void test_method () override;
 };
-
 
 #endif

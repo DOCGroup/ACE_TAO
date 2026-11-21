@@ -10,10 +10,9 @@ class Hello
   : public virtual POA_Test::Hello
 {
 public:
-  /// Constructor
-  Hello (CORBA::ORB_ptr orb);
+  explicit Hello (CORBA::ORB_ptr orb);
 
-  // = The skeleton methods
+  /// The skeleton methods
   char* get_string () override;
 
   void shutdown () override;

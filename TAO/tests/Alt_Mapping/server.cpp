@@ -1,12 +1,8 @@
-
-//=============================================================================
 /**
  *  @file    server.cpp
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
-
 
 #include "alt_mapping_i.h"
 #include "tao/Codeset/Codeset.h"
@@ -14,12 +10,12 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
+#include <memory>
 
 // Parses the command line arguments and returns an error status.
-static FILE *ior_output_file = 0;
-static ACE_TCHAR const *ior_output_filename = ACE_TEXT("test.ior");
+ACE_TCHAR const* ior_output_filename = ACE_TEXT("test.ior");
 
-static int
+int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("do:"));
@@ -29,7 +25,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'd':  // debug flag
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'o':
         ior_output_filename = get_opts.opt_arg ();
@@ -51,7 +47,7 @@ int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   PortableServer::POA_var oa_ptr;
-  Alt_Mapping_i *svnt = 0;
+  Alt_Mapping_i *svnt {};
 
   try
     {
@@ -67,9 +63,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       temp = orb_ptr->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (temp.in()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) Unable to get root poa reference.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) Unable to get root poa reference.\n"),
+                            1);
+        }
 
       oa_ptr = PortableServer::POA::_narrow (temp.in());
 
@@ -86,6 +84,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_NEW_RETURN (svnt,
                       Alt_Mapping_i (orb_ptr.in ()),
                      -1);
+      PortableServer::ServantBase_var servant_owner (svnt);
 
       // Register with GoodPOA with a specific name
       PortableServer::ObjectId_var id =
@@ -109,21 +108,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       str.in ()));
         }
 
-      ior_output_file = ACE_OS::fopen (ior_output_filename, "w");
-
-      if (ior_output_file == nullptr)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing: %p\n",
-                             ior_output_filename),
-                            -1);
+          std::unique_ptr<FILE, int (*) (FILE *)> ior_output_file (
+            ACE_OS::fopen (ior_output_filename, "w"), ACE_OS::fclose);
+
+          if (!ior_output_file)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Unable to open %s for writing: %p\n",
+                                 ior_output_filename),
+                                -1);
+            }
+
+          ACE_OS::fprintf (ior_output_file.get (),
+                           "%s",
+                           str.in ());
         }
-
-      ACE_OS::fprintf (ior_output_file,
-                       "%s",
-                       str.in ());
-      ACE_OS::fclose (ior_output_file);
-
 
       // Make the POAs controlled by this manager active
       poa_manager->activate ();
@@ -132,19 +132,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       oa_ptr->destroy (true, true);
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const &userex)
     {
       userex._tao_print_exception ("User Exception");
       return -1;
     }
-
-  /// Free resources.
-  delete svnt;
 
   return 0;
 }

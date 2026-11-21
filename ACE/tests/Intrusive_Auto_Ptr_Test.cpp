@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Intrusive_Auto_Ptr.h"
 #include "ace/Thread_Manager.h"
@@ -49,20 +48,21 @@ bool One::released = true;
 
 void
 One::intrusive_add_ref (One *one) {
-  one->ref++;
+  ++one->ref;
 }
 
 void
 One::intrusive_remove_ref (One *one) {
-  one->ref--;
+  --one->ref;
   if (one->ref == 0)
+  {
     delete one;
+  }
 }
 
 int run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Intrusive_Auto_Ptr_Test"));
-
 
   One *theone (new One(0));
 

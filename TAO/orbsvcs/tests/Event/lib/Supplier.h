@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef EC_SUPPLIER_H
 #define EC_SUPPLIER_H
 
@@ -93,8 +92,10 @@ public:
   void event_type (int event_number,
                    RtecEventComm::Event& event);
 
-  // = The PushSupplier methods
-  virtual void disconnect_push_supplier ();
+  /// @name PushSupplier operations
+  /// @{
+  void disconnect_push_supplier () override;
+  /// @}
 
 private:
   /// Class we forward to.
@@ -144,7 +145,6 @@ private:
 class EC_Supplier_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   EC_Supplier_Task (EC_Supplier* supplier,
                     EC_Driver* driver,
                     void* cookie,
@@ -153,10 +153,10 @@ public:
                     int burst_pause,
                     int payload_size,
                     int shutdown_event_type,
-                    ACE_Thread_Manager* thr_mgr = 0);
+                    ACE_Thread_Manager* thr_mgr = nullptr);
 
   /// The svc call
-  virtual int svc ();
+  int svc () override;
 
 private:
   /// The supplier

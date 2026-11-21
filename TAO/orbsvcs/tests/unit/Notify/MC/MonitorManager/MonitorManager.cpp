@@ -16,7 +16,7 @@ ACE_TMAIN (int, ACE_TCHAR* argv[])
         }
 
       // Run the service.
-      const ACE_Service_Type* st = 0;
+      const ACE_Service_Type* st {};
       ACE_Service_Repository::instance ()->find (ACE_TEXT("TAO_MonitorAndControl"),
                                                  &st);
       if (st == 0)

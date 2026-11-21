@@ -11,18 +11,13 @@
 
 #include "Identity_i.h"
 
-Identity_i::Identity_i (const char *name)
+Identity_i::Identity_i (char const *name)
   : name_ (name)
 {
 }
 
-Identity_i::~Identity_i ()
-{
-}
-
 void
-Identity_i::get_name (CORBA::String_out name
- )
+Identity_i::get_name (CORBA::String_out name)
 {
   name = this->name_.in ();
 }

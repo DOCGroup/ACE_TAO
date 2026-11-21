@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Trace.h"
 
@@ -35,7 +34,6 @@ static int    odd = 0;
 class Time_Handler : public ACE_Handler
 {
 public:
-  /// Default constructor
   Time_Handler ();
 
   /// Handle the timeout.
@@ -81,7 +79,6 @@ private:
   int expirations_;
 };
 
-
 Time_Handler::Time_Handler ()
   : timer_id_ (-1)
 {
@@ -93,20 +90,24 @@ Time_Handler::handle_time_out (const ACE_Time_Value &, const void *arg)
 {
   size_t current_counter = *(reinterpret_cast<const size_t *> (arg));
   if (current_counter != counter)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Expected timer %d, not %d\n"),
-                counter,
-                current_counter));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Expected timer %B, not %B\n"),
+                  counter,
+                  current_counter));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("[%@] Timer id %d with counter #%d|%d expired.\n"),
-              this,
-              this->timer_id (),
+              ACE_TEXT ("[%@] Timer id %q with counter #%B|%B expired.\n"),
+              static_cast<void *> (this),
+              static_cast<ACE_INT64> (this->timer_id ()),
               counter,
               current_counter));
 
   if (current_counter == (ACE_MAX_TIMERS - 1))
-    done = 1;
+    {
+      done = 1;
+    }
   else if (counter == ACE_MAX_TIMERS - 1)
     {
       done = 1;
@@ -131,11 +132,15 @@ Time_Handler::timer_id (long t)
 Repeat_Timer_Handler::~Repeat_Timer_Handler ()
 {
   if (this->expirations_ == 2)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Repeater expired twice; correct\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Repeater expired twice; correct\n")));
+    }
   else
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Repeater expired %d times; should be 2\n"),
-                this->expirations_));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Repeater expired %d times; should be 2\n"),
+                  this->expirations_));
+    }
 }
 
 void
@@ -143,7 +148,9 @@ Repeat_Timer_Handler::handle_time_out (const ACE_Time_Value &, const void *)
 {
   // Let the first one go.
   if (++this->expirations_ == 1)
+  {
     return;
+  }
 
   if (this->expirations_ == 2)
     {
@@ -177,19 +184,23 @@ test_registering_all_handlers ()
   size_t which[ACE_MAX_TIMERS];
   long secs = 0;
   size_t i = 0;
-  for ( ; i < ACE_MAX_TIMERS; i++, secs++)
+  for ( ; i < ACE_MAX_TIMERS; ++i, ++secs)
     {
       which[i] = i;
       t_id[i] =
         ACE_Proactor::instance ()->schedule_timer
-            (rt[i], &which[i], ACE_Time_Value (2 * secs + 1));
+            (rt[i], std::addressof (which[i]), ACE_Time_Value (2 * secs + 1));
       if (t_id[i] == -1)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("schedule_timer")));
+      }
       rt[i].timer_id (t_id[i]);
     }
 
   while (!done)
-    ACE_Proactor::instance ()->handle_events ();
+    {
+      ACE_Proactor::instance ()->handle_events ();
+    }
 }
 
 static void
@@ -206,18 +217,22 @@ test_registering_one_handler ()
   counter = 0;
   long secs = 0;
   size_t i = 0;
-  for ( ; i < ACE_MAX_TIMERS; i++, secs++)
+  for ( ; i < ACE_MAX_TIMERS; ++i, ++secs)
     {
       which[i] = i;
       t_id[i] =
         ACE_Proactor::instance ()->schedule_timer
-          (rt[0], &which[i], ACE_Time_Value (2 * secs + 1));
+          (rt[0], std::addressof (which[i]), ACE_Time_Value (2 * secs + 1));
       if (t_id[i] == -1)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("schedule_timer")));
+      }
     }
 
   while (!done)
-    ACE_Proactor::instance ()->handle_events ();
+    {
+      ACE_Proactor::instance ()->handle_events ();
+    }
 }
 
 static void
@@ -235,26 +250,34 @@ test_canceling_odd_timers ()
   odd = 1;
   size_t i = 0;
   long secs = 0;
-  for ( ; i < ACE_MAX_TIMERS; i++, secs++)
+  for ( ; i < ACE_MAX_TIMERS; ++i, ++secs)
     {
       which[i] = i;
       t_id[i] = ACE_Proactor::instance ()->schedule_timer
-        (rt[i], &which[i], ACE_Time_Value (2 * secs + 1));
+        (rt[i], std::addressof (which[i]), ACE_Time_Value (2 * secs + 1));
       if (t_id[i] == -1)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("schedule_timer")));
+      }
       rt[i].timer_id (t_id[i]);
     }
 
-  for (i = 0; i < ACE_MAX_TIMERS; i++)
-    // Cancel handlers with odd numbered timer ids.
-    if (ACE_ODD (rt[i].timer_id ()))
-      {
-        if (ACE_Proactor::instance ()->cancel_timer (rt[i].timer_id ()) == -1)
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("cancel_timer")));
-      }
+  for (i = 0; i < ACE_MAX_TIMERS; ++i)
+    {
+      // Cancel handlers with odd numbered timer ids.
+      if (ACE_ODD (rt[i].timer_id ()))
+        {
+          if (ACE_Proactor::instance ()->cancel_timer (rt[i].timer_id ()) == -1)
+            {
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("cancel_timer")));
+            }
+        }
+    }
 
   while (!done)
-    ACE_Proactor::instance ()->handle_events ();
+    {
+      ACE_Proactor::instance ()->handle_events ();
+    }
 }
 
 static void
@@ -275,12 +298,13 @@ test_cancel_repeat_timer ()
 
   ACE_Time_Value test_timer (4 * Repeat_Timer_Handler::REPEAT_INTERVAL);
   if (-1 == ACE_Proactor::instance ()->proactor_run_event_loop (test_timer))
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("proactor loop fail")));
+  }
 
   // handler should be deleted by its own handle_time_out().
   return;
 }
-
 
 // If any command line arg is given, run the test with high res timer
 // queue. Else run it normally.
@@ -302,23 +326,18 @@ run_main (int argc, ACE_TCHAR *[])
       // precision for a 1 second timer is beyond me ...  I think it
       // is a cut&paste error.
       //
-      // The use of std::unique_ptr<> is optional, ACE uses dangerous memory
-      // management idioms everywhere, I thought I could demonstrate how
-      // to do it right in at least one test.  Notice the lack of
-      // ACE_NEW_RETURN, that monstrosity has no business in proper C++
-      // code ...
       using Timer_Queue = ACE_Timer_Heap_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX, ACE_FPointer_Time_Policy>;
 
-      std::unique_ptr<Timer_Queue> tq(new Timer_Queue);
+      std::unique_ptr<Timer_Queue> tq = std::make_unique<Timer_Queue> ();
       // ... notice how the policy is in the derived timer queue type.
       // The abstract timer queue does not have a time policy ...
-      tq->set_time_policy(&ACE_High_Res_Timer::gettimeofday_hr);
+      ACE_FPointer_Time_Policy const time_policy (&ACE_High_Res_Timer::gettimeofday_hr);
+      tq->set_time_policy (time_policy);
       // ... and then the timer queue is replaced.  Strangely, the
       // Proactor does *not* copy the timers, it just deletes the
       // existing timer queue ....
       r->timer_queue(tq.get());
-      // ... the Proactor has assumed ownership, release the
-      // auto_ptr<> ...
+      // The proactor takes ownership of the timer queue.
       tq.release();
     }
 

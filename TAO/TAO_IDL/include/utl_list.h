@@ -108,7 +108,7 @@ public:
   void set_tail (UTL_List *l);
 
   // How long is this list?
-  std::size_t length () const;
+  size_t length () const;
 
   // Cleanup.
   virtual void destroy ();
@@ -118,7 +118,7 @@ private:
   UTL_List *pd_cdr_data;
 
   // Operations
-  std::size_t list_length (std::size_t n) const;
+  size_t list_length (size_t n) const;
 
   // Friend class.
   friend class UTL_ListActiveIterator;

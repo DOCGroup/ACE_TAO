@@ -23,22 +23,21 @@
 namespace Kokyu
 {
   using Priority_t = long;
-  using Deadline_t = ACE_Time_Value; //absolute deadline
-  using Execution_Time_t = ACE_Time_Value; //execution time
-  //typedef int Guid_t;
+  /// Absolute deadline.
+  using Deadline_t = ACE_Time_Value;
+  /// Execution time.
+  using Execution_Time_t = ACE_Time_Value;
 
+  /// Type of prioritization strategy to use for a dispatching queue.
   enum Dispatching_Type_t
-    // Defines the type of prioritization strategy
-    // to be used by a dispatching queue
     {
       FIFO_DISPATCHING,
       DEADLINE_DISPATCHING,
       LAXITY_DISPATCHING
     };
 
+  /// Criticality of an operation for dynamic scheduling.
   enum Criticality_t
-    // Defines the criticality of the operation.
-    // For use with Dynamic Scheduler.
     {
       VERY_LOW_CRITICALITY,
       LOW_CRITICALITY,
@@ -47,11 +46,9 @@ namespace Kokyu
       VERY_HIGH_CRITICALITY
     };
 
+  /// Importance used by RtecScheduler as a tie-breaker when other scheduling
+  /// parameters are equal.
   enum Importance_t
-    // Defines the importance of the operation,
-    // which can be used by the RtecScheduler as a
-    // "tie-breaker" when other scheduling
-    // parameters are equal.
     {
       VERY_LOW_IMPORTANCE,
       LOW_IMPORTANCE,
@@ -63,25 +60,25 @@ namespace Kokyu
   struct Kokyu_Export Reordering_Queue_Attributes
   {
     Reordering_Queue_Attributes ();
-    unsigned long static_bit_field_mask_;
-    unsigned long static_bit_field_shift_;
-    unsigned long dynamic_priority_max_;
-    unsigned long dynamic_priority_offset_;
+    unsigned long static_bit_field_mask_ {};
+    unsigned long static_bit_field_shift_ {};
+    unsigned long dynamic_priority_max_ {0x7FFFFFFFUL};
+    unsigned long dynamic_priority_offset_ {0x08000000UL};
   };
 
   struct Kokyu_Export ConfigInfo
   {
-    Priority_t preemption_priority_;
+    Priority_t preemption_priority_ {};
 
-    // OS priority of the dispatching thread associated with the queue
-    Priority_t thread_priority_;
+    /// OS priority of the dispatching thread associated with the queue.
+    Priority_t thread_priority_ {};
 
-    // type of dispatching queue
-    Dispatching_Type_t dispatching_type_;
+    /// Type of dispatching queue.
+    Dispatching_Type_t dispatching_type_ {FIFO_DISPATCHING};
 
-    //allocator to be used for dynamic memory allocation. If each
-    //thread gets its own memory pool, contention will be less
-    ACE_Allocator *allocator_;
+    /// Borrowed allocator for dynamic memory; it must outlive tasks using this configuration.
+    /// A separate allocator per thread can reduce contention.
+    ACE_Allocator *allocator_ {};
 
     Reordering_Queue_Attributes reordering_flags_;
 
@@ -94,7 +91,7 @@ namespace Kokyu
   {
   public:
     ConfigInfoSet config_info_set_;
-    int immediate_activation_;
+    bool immediate_activation_ {};
 
   public:
     Dispatcher_Attributes ();
@@ -103,18 +100,17 @@ namespace Kokyu
     int thread_creation_flags () const;
 
   private:
-    int sched_policy_;
-    int sched_scope_;
-    int base_thread_creation_flags_;
+    int sched_policy_ {ACE_SCHED_FIFO};
+    int sched_scope_ {ACE_SCOPE_THREAD};
+    int base_thread_creation_flags_ {THR_NEW_LWP | THR_BOUND | THR_JOINABLE};
   };
-
 
   struct Kokyu_Export QoSDescriptor
   {
-    Priority_t preemption_priority_;
-    Deadline_t deadline_;
-    Execution_Time_t execution_time_;
-    Importance_t importance_;
+    Priority_t preemption_priority_ {};
+    Deadline_t deadline_ {};
+    Execution_Time_t execution_time_ {};
+    Importance_t importance_ {};
   };
 
   enum Block_Flag_t {BLOCK, UNBLOCK};
@@ -122,29 +118,30 @@ namespace Kokyu
   class Kokyu_Export Dispatch_Command
   {
   public:
-    Dispatch_Command(int dont_delete = 0,
-                      ACE_Allocator *allocator = 0);
-    //dont_delete indicates whether this object needs to be deleted once processed.
-    //allocator indicates the ACE_Allocator, if any, from which this object was created.
-    //This same allocator has to be used for the deletion also
+    Dispatch_Command (Dispatch_Command const &) = delete;
+    Dispatch_Command (Dispatch_Command &&) = delete;
+    Dispatch_Command &operator= (Dispatch_Command const &) = delete;
+    Dispatch_Command &operator= (Dispatch_Command &&) = delete;
+
+    /// @param dont_delete Keeps this object from being deleted after processing.
+    /// @param allocator Allocator used to create and delete this object.
+    explicit Dispatch_Command (bool dont_delete = false,
+                               ACE_Allocator *allocator = nullptr);
 
     /// Command callback
     virtual int execute () = 0;
 
-    int can_be_deleted () const;
+    bool can_be_deleted () const;
 
     void destroy ();
   protected:
-    /// Destructor
-    // only inheritance is possible and object should be on heap,
-    // since object could be handed over to a different thread.
+    /// Commands are heap allocated because they can be handed to another thread.
     virtual ~Dispatch_Command ();
 
   private:
-    int dont_delete_;
+    bool dont_delete_;
+    /// Allocator used by destroy() to deallocate this command.
     ACE_Allocator *allocator_;
-    //if this object has to be deleted, then delete it using the allocator
-    //if one is present.
   };
 
   enum DSRT_Sched_Type_t
@@ -162,21 +159,22 @@ namespace Kokyu
 
   struct Kokyu_Export DSRT_ConfigInfo
   {
-    //not used currently
-    DSRT_Sched_Type_t sched_strategy_;
+    /// Reserved; currently unused.
+    DSRT_Sched_Type_t sched_strategy_ {DSRT_FP};
 
-    ACE_Sched_Params::Policy sched_policy_;
-    int sched_scope_;
+    ACE_Sched_Params::Policy sched_policy_ {ACE_SCHED_RR};
+    int sched_scope_ {ACE_SCOPE_THREAD};
 
-    //type of implementation
-    DSRT_Dispatcher_Impl_t impl_type_;
+    /// Type of implementation.
+    DSRT_Dispatcher_Impl_t impl_type_ {DSRT_CV_BASED};
 
     DSRT_ConfigInfo ();
   };
-} //end of namespace
+}
 
 //to satisfy ACE_Array<ConfigInfo>
-ACE_INLINE bool operator != (const Kokyu::ConfigInfo& lhs, const Kokyu::ConfigInfo& rhs);
+ACE_INLINE bool operator != (Kokyu::ConfigInfo const &lhs,
+                             Kokyu::ConfigInfo const &rhs);
 
 #if defined (__ACE_INLINE__)
 #include "Kokyu_defs.inl"

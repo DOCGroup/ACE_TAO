@@ -872,6 +872,10 @@ project(Compiler_Features_42_Test) : acetest {
   specific(vs2019,vs2022) {
     LanguageStandard = stdcpp20
   }
+  specific(nmake) {
+    compile_flags -= /std:c++17
+    compile_flags += /std:c++20
+  }
 }
 
 project(Compiler_Features_43_Test) : acetest {
@@ -1047,6 +1051,13 @@ project(Hash Map Bucket Iterator Test) : acetest {
   }
 }
 
+project(Monitor Point Registry Test) : acetest {
+  exename = Monitor_Point_Registry_Test
+  Source_Files {
+    Monitor_Point_Registry_Test.cpp
+  }
+}
+
 project(INET Addr Test) : acetest {
   exename = INET_Addr_Test
   Source_Files {
@@ -1201,6 +1212,13 @@ project(Message Queue Test) : acetest {
   exename = Message_Queue_Test
   Source_Files {
     Message_Queue_Test.cpp
+  }
+}
+
+project(Read Buffer Test) : acetest {
+  exename = Read_Buffer_Test
+  Source_Files {
+    Read_Buffer_Test.cpp
   }
 }
 

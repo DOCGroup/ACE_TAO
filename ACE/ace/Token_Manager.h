@@ -43,14 +43,17 @@ class ACE_Mutex_Token;
  */
 class ACE_Export ACE_Token_Manager : public ACE_Cleanup
 {
-  //   To add a new type of token (e.g. semaphore), do the following
-  //   steps: 1. Create a new derivation of ACE_Token.  This class
-  //   defines the semantics of the new Token.  2.  Create a
-  //   derivation of ACE_Token_Manager.  You will only need to
-  //   redefine make_mutex.
+  /// To add a new type of token (e.g. semaphore), do the following
+  /// steps: 1. Create a new derivation of ACE_Token. This class
+  /// defines the semantics of the new Token. 2. Create a derivation
+  /// of ACE_Token_Manager. You will only need to redefine make_mutex.
 public:
   ACE_Token_Manager ();
   virtual ~ACE_Token_Manager ();
+  ACE_Token_Manager (ACE_Token_Manager const &) = delete;
+  ACE_Token_Manager (ACE_Token_Manager &&) = delete;
+  ACE_Token_Manager &operator= (ACE_Token_Manager const &) = delete;
+  ACE_Token_Manager &operator= (ACE_Token_Manager &&) = delete;
 
   /// Get the pointer to token manager singleton.
   static ACE_Token_Manager *instance ();

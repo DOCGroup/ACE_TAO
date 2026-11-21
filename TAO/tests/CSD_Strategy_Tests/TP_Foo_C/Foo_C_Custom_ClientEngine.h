@@ -20,11 +20,16 @@ public:
                             Foo_C_ptr              objref,
                             TAO::CSD::TP_Strategy* strategy,
                             unsigned               client_id);
-  virtual ~Foo_C_Custom_ClientEngine();
+  ~Foo_C_Custom_ClientEngine() override;
 
-  virtual bool execute();
+  bool execute() override;
 
   static void expected_results(Foo_C_Statistics& stats);
+
+  Foo_C_Custom_ClientEngine (Foo_C_Custom_ClientEngine const &) = delete;
+  Foo_C_Custom_ClientEngine (Foo_C_Custom_ClientEngine &&) = delete;
+  Foo_C_Custom_ClientEngine & operator= (Foo_C_Custom_ClientEngine const &) = delete;
+  Foo_C_Custom_ClientEngine & operator= (Foo_C_Custom_ClientEngine &&) = delete;
 
 private:
   Foo_C_Custom_Proxy proxy_;

@@ -5,23 +5,18 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Default_Endpoint_Selector_Factory::TAO_Default_Endpoint_Selector_Factory (
-  )
-  : default_endpoint_selector_ (new TAO_Default_Endpoint_Selector)
+TAO_Default_Endpoint_Selector_Factory::TAO_Default_Endpoint_Selector_Factory ()
+  : default_endpoint_selector_ (std::make_unique<TAO_Default_Endpoint_Selector> ())
 {
 }
 
-TAO_Default_Endpoint_Selector_Factory::~TAO_Default_Endpoint_Selector_Factory ()
-{
-  delete this->default_endpoint_selector_;
-}
-
+TAO_Default_Endpoint_Selector_Factory::~TAO_Default_Endpoint_Selector_Factory () = default;
 
 TAO_Invocation_Endpoint_Selector *
 TAO_Default_Endpoint_Selector_Factory::get_selector ()
 {
   // Trivial endpoint selector.  Just return the default selector.
-  return this->default_endpoint_selector_;
+  return this->default_endpoint_selector_.get ();
 }
 
 // ****************************************************************

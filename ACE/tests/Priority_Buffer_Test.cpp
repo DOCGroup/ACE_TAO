@@ -12,11 +12,9 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Message_Queue.h"
 #include "ace/Thread_Manager.h"
-
 
 #if defined (ACE_HAS_THREADS)
 
@@ -48,16 +46,18 @@ consumer (void *args)
 
   // Keep looping, reading a message out of the queue, until we get a
   // message with a length == 0, which signals us to quit.
-  for (char c = 'z'; ; c--)
+  for (char c = 'z'; ; --c)
     {
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
 
       int result = msg_queue->dequeue_head (mb);
 
       if (result == -1)
+      {
         break;
+      }
 
-      local_count++;
+      ++local_count;
 
       size_t length = mb->length ();
 
@@ -76,8 +76,10 @@ consumer (void *args)
       mb->release ();
 
       if (length == 0)
-        // This was a "shutdown" message, so break out of the loop.
-        break;
+        {
+          // This was a "shutdown" message, so break out of the loop.
+          break;
+        }
     }
 
   ACE_TEST_ASSERT (local_count == message_count);
@@ -96,9 +98,9 @@ producer (void *args)
   ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue =
     reinterpret_cast<ACE_Message_Queue<ACE_MT_SYNCH> *> (args);
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
-  for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
+  for (const char *c = ACE_ALPHABET; *c != '\0'; ++c)
     {
       ++message_count;
 
@@ -115,10 +117,12 @@ producer (void *args)
 
       // Enqueue in priority order.
       if (msg_queue->enqueue_prio (mb) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%t) %p\n"),
-                           ACE_TEXT ("put_next")),
-                          0);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%t) %p\n"),
+                             ACE_TEXT ("put_next")),
+                            0);
+        }
     }
 
   // Now send a 0-sized shutdown message to the other thread
@@ -127,9 +131,11 @@ producer (void *args)
                   nullptr);
 
   if (msg_queue->enqueue_tail (mb) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%t) %p\n"),
-                ACE_TEXT ("put_next")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%t) %p\n"),
+                  ACE_TEXT ("put_next")));
+    }
 
   ++message_count;
 
@@ -158,10 +164,12 @@ run_main (int, ACE_TCHAR *[])
       (ACE_THR_FUNC (producer),
        (void *) &msg_queue,
        THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawn")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawn")),
+                        1);
+    }
 
   // Wait for producer and consumer threads to exit.
   ACE_Thread_Manager::instance ()->wait ();

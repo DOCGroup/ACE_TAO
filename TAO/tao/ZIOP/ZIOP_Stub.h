@@ -51,6 +51,11 @@ public:
 
   ~TAO_ZIOP_Stub () override;
 
+  TAO_ZIOP_Stub (TAO_ZIOP_Stub const &) = delete;
+  TAO_ZIOP_Stub (TAO_ZIOP_Stub &&) = delete;
+  TAO_ZIOP_Stub &operator= (TAO_ZIOP_Stub const &) = delete;
+  TAO_ZIOP_Stub &operator= (TAO_ZIOP_Stub &&) = delete;
+
   /**
    * Returns the effective policy if @a type is a known client-exposed
    * policy type.  Returns the effective override for all other policy
@@ -75,22 +80,12 @@ private:
   CORBA::Policy *effective_compression_enabling_policy ();
   CORBA::Policy *effective_compression_id_list_policy ();
 
-  // The following attribute are used to cache
-  // the different kind of policies and avoid to
-  // parse the MProfile's policy list each time we
-  // are asked about a given policy.
-
+  /// Cache policy references to avoid reparsing the MProfile policy list.
   CORBA::Policy_var compression_enabling_policy_;
 
   CORBA::Policy_var compression_id_list_policy_;
 
   CORBA::Boolean are_policies_parsed_ {};
-
-private:
-  TAO_ZIOP_Stub (TAO_ZIOP_Stub const &) = delete;
-  TAO_ZIOP_Stub (TAO_ZIOP_Stub &&) = delete;
-  TAO_ZIOP_Stub &operator= (TAO_ZIOP_Stub const &) = delete;
-  TAO_ZIOP_Stub &operator= (TAO_ZIOP_Stub &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

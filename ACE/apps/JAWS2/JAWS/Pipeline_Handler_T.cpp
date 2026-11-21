@@ -3,7 +3,6 @@
 
 #include "JAWS/Pipeline_Handler_T.h"
 
-
 template <class TYPE>
 JAWS_Pipeline_Abstract_Handler<TYPE>::JAWS_Pipeline_Abstract_Handler ()
 {

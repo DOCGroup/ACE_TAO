@@ -9,110 +9,144 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Profile_Timer.h"
+#include "ace/Default_Constants.h"
 
+/**
+ * @class Options
+ * @brief Singleton storing Event Server configuration and run statistics.
+ */
 class Options
 {
-  // = TITLE
-  //     Option Singleton for Event Server.
 public:
-  static Options *instance ();
-  // Singleton access point.
+  /// Return the singleton instance.
+  static Options &instance ();
 
+  /// Parse command-line arguments and set the options.
   void parse_args (int argc, ACE_TCHAR *argv[]);
-  // Parse the command-line arguments and set the options.
 
-  // = Timer management.
+  /// @name Timer management
+  /// @{
+
   void stop_timer ();
   void start_timer ();
 
-  // = Set/get the number of threads.
+  /// @}
+
+  /// @name Thread count
+  /// @{
+
   void thr_count (size_t count);
-  size_t thr_count ();
+  size_t thr_count () const;
 
-  // = Set/get the size of the queue.
+  /// @}
+
+  /// @name Queue length
+  /// @{
+
   void initial_queue_length (size_t length);
-  size_t initial_queue_length ();
+  size_t initial_queue_length () const;
 
-  // = Set/get the high water mark.
+  /// @}
+
+  /// @name Queue water marks
+  /// @{
+
   void high_water_mark (size_t size);
-  size_t high_water_mark ();
+  size_t high_water_mark () const;
 
-  // = Set/get the high water mark.
   void low_water_mark (size_t size);
-  size_t low_water_mark ();
+  size_t low_water_mark () const;
 
-  // = Set/get the size of a message.
+  /// @}
+
+  /// @name Message size
+  /// @{
+
   void message_size (size_t size);
-  size_t message_size ();
+  size_t message_size () const;
 
-  // = Set/get the number of iterations.
+  /// @}
+
+  /// @name Iteration count
+  /// @{
+
   void iterations (size_t n);
-  size_t iterations ();
+  size_t iterations () const;
 
-  // Set/get threading flags.
+  /// @}
+
+  /// @name Thread flags
+  /// @{
+
   void t_flags (long flag);
-  long t_flags ();
+  long t_flags () const;
 
-  // Set/get supplier port number.
+  /// @}
+
+  /// @name Router ports
+  /// @{
+
   void supplier_port (u_short port);
-  u_short supplier_port ();
+  u_short supplier_port () const;
 
-  // Set/get consumer port number.
   void consumer_port (u_short port);
-  u_short consumer_port ();
+  u_short consumer_port () const;
 
-  // Enabled if we're in debugging mode.
-  int debug ();
+  /// @}
 
-  // Enabled if we're in verbose mode.
-  int verbose ();
+  /// Return true when debugging is enabled.
+  bool debug () const;
 
-  // Print the results to the STDERR.
+  /// Return true when verbose output is enabled.
+  bool verbose () const;
+
+  /// Print the run results to standard error.
   void print_results ();
 
 private:
-  // = Ensure we're a Singleton.
-  Options ();
-  ~Options ();
+  Options () = default;
+  ~Options () = default;
+  Options (Options const &) = delete;
+  Options (Options &&) = delete;
+  Options &operator= (Options const &) = delete;
+  Options &operator= (Options &&) = delete;
 
+  /// Time the process.
   ACE_Profile_Timer itimer_;
-  // Time the process.
 
-  size_t thr_count_;
-  // Number of threads to spawn.
+  /// Number of threads to spawn.
+  size_t thr_count_ {4};
 
-  long t_flags_;
-  // Flags to <thr_create>.
+  /// Flags to <thr_create>.
+  long t_flags_ {};
 
-  size_t high_water_mark_;
-  // ACE_Task high water mark.
+  /// ACE_Task high water mark.
+  size_t high_water_mark_ {8 * 1024};
 
-  size_t low_water_mark_;
-  // ACE_Task low water mark.
+  /// ACE_Task low water mark.
+  size_t low_water_mark_ {1024};
 
-  size_t message_size_;
-  // Size of a message.
+  /// Size of a message.
+  size_t message_size_ {128};
 
-  size_t initial_queue_length_;
-  // Initial number of items in the queue.
+  /// Initial number of items in the queue.
+  size_t initial_queue_length_ {};
 
-  size_t iterations_;
-  // Number of iterations to run the test program.
+  /// Number of iterations to run the test program.
+  size_t iterations_ {100000};
 
-  int debugging_;
-  // Extra debugging info.
+  /// Extra debugging info.
+  bool debugging_ {};
 
-  int verbosity_;
-  // Extra verbose messages.
+  /// Extra verbose messages.
+  bool verbosity_ {};
 
-  u_short consumer_port_;
-  // Port that the Consumer_Router is using.
+  /// Port that the Consumer_Router is using.
+  u_short consumer_port_ {ACE_DEFAULT_SERVER_PORT};
 
-  u_short supplier_port_;
-  // Port that the Supplier_Router is using.
+  /// Port that the Supplier_Router is using.
+  u_short supplier_port_ {ACE_DEFAULT_SERVER_PORT + 1};
 
-  static Options *instance_;
-  // Static Singleton.
 };
 
 #include "Options.inl"

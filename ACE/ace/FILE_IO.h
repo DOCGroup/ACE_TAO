@@ -44,7 +44,6 @@ class ACE_Export ACE_FILE_IO : public ACE_FILE
 public:
   friend class ACE_FILE_Connector;
 
-  /// Default constructor.
   ACE_FILE_IO ();
 
   /// send upto @a n bytes in @a buf.
@@ -153,8 +152,10 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  // = Meta-type info
+  /// @name Meta-type information
+  /// @{
   using PEER_ADDR = ACE_FILE_Addr;
+  /// @}
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

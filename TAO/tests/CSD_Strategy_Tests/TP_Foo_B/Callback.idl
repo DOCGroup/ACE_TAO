@@ -6,5 +6,4 @@ interface Callback
   void test_method();
 };
 
-
 #endif

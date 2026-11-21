@@ -7,38 +7,38 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
 
-const ACE_TCHAR *server_ior = ACE_TEXT("file://server.ior");
-const ACE_TCHAR *admin_ior = ACE_TEXT("file://admin.ior");
+ACE_TCHAR const *server_ior = ACE_TEXT("file://server.ior");
+ACE_TCHAR const *admin_ior = ACE_TEXT("file://admin.ior");
 int iterations = 20;
 
-int run_message_count_test = 0;
-int run_timeout_test = 0;
-int run_timeout_reactive_test = 0;
-int run_buffer_size_test = 0;
+bool run_message_count_test = false;
+bool run_timeout_test = false;
+bool run_timeout_reactive_test = false;
+bool run_buffer_size_test = false;
 
-const int PAYLOAD_LENGTH = 1024;
-const int BUFFERED_MESSAGES_COUNT = 10;
-const unsigned int TIMEOUT_MILLISECONDS = 50;
-const int BUFFER_SIZE = 10 * PAYLOAD_LENGTH;
+constexpr int PAYLOAD_LENGTH = 1024;
+constexpr int BUFFERED_MESSAGES_COUNT = 10;
+constexpr unsigned int TIMEOUT_MILLISECONDS = 50;
+constexpr int BUFFER_SIZE = 10 * PAYLOAD_LENGTH;
 
 /// Check that no more than 10% of the messages are not sent.
-const double LIVENESS_TOLERANCE = 0.9;
+constexpr double LIVENESS_TOLERANCE = 0.9;
 
 /// Limit the depth of the liveness test, avoid blowing up the stack
 /// on the server
-const int LIVENESS_MAX_DEPTH = 256;
+constexpr int LIVENESS_MAX_DEPTH = 256;
 
 /// Factor in GIOP overhead in the buffer size test
-const double GIOP_OVERHEAD = 0.9;
+constexpr double GIOP_OVERHEAD = 0.9;
 
-const ACE_Time_Value TRANSIENT_HOLDOFF (0, 500); // 0.5ms delay
-const int TRANSIENT_LIMIT = 10;
+ACE_Time_Value const TRANSIENT_HOLDOFF (0, 500); // 0.5ms delay
+constexpr int TRANSIENT_LIMIT = 10;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:a:i:ctbr"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -56,19 +56,19 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 'c':
-        run_message_count_test = 1;
+        run_message_count_test = true;
         break;
 
       case 't':
-        run_timeout_test = 1;
+        run_timeout_test = true;
         break;
 
       case 'b':
-        run_buffer_size_test = 1;
+        run_buffer_size_test = true;
         break;
 
       case 'r':
-        run_timeout_reactive_test = 1;
+        run_timeout_reactive_test = true;
         break;
 
       case '?':
@@ -117,7 +117,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var tmp =
         orb->string_to_object(server_ior);
@@ -194,7 +196,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_OS::sleep(1);
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_DEBUG ((LM_DEBUG, "(%P) Client: "));
       ex._tao_print_exception ("CORBA Exception caught:");
@@ -211,7 +213,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 int
 configure_policies (CORBA::ORB_ptr orb,
-                    const TAO::BufferingConstraint &buffering_constraint,
+                    TAO::BufferingConstraint const &buffering_constraint,
                     Test::Oneway_Buffering_ptr oneway_buffering,
                     Test::Oneway_Buffering_out flusher)
 {
@@ -281,7 +283,7 @@ sync_server (Test::Oneway_Buffering_ptr flusher)
           flusher->flush ();
           break;
         }
-      catch (const CORBA::TRANSIENT &)
+      catch (CORBA::TRANSIENT const &)
         {
           if (++transient_count < TRANSIENT_LIMIT)
             {
@@ -305,7 +307,7 @@ sync_server (Test::Oneway_Buffering_ptr flusher)
           flusher->sync ();
           break;
         }
-      catch (const CORBA::TRANSIENT &)
+      catch (CORBA::TRANSIENT const &)
         {
           if (++transient_count < TRANSIENT_LIMIT)
             {
@@ -326,8 +328,8 @@ sync_server (Test::Oneway_Buffering_ptr flusher)
 
 CORBA::ULong
 request_count (
-  const Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin,
-  const CORBA::ULong expected_request_count= static_cast<CORBA::ULong>(0))
+  Test::Oneway_Buffering_Admin_ptr const oneway_buffering_admin,
+  CORBA::ULong const expected_request_count = static_cast<CORBA::ULong> (0))
 {
   CORBA::ULong count;
   int transient_count= 0;
@@ -338,7 +340,7 @@ request_count (
           count= oneway_buffering_admin->request_count (expected_request_count);
           break;
         }
-      catch (const CORBA::TRANSIENT &)
+      catch (CORBA::TRANSIENT const &)
         {
           if (++transient_count < TRANSIENT_LIMIT)
             {
@@ -361,8 +363,8 @@ request_count (
 
 void
 receive_data (
-  const Test::Oneway_Buffering_ptr oneway_buffering,
-  const Test::Payload &payload)
+  Test::Oneway_Buffering_ptr const oneway_buffering,
+  Test::Payload const &payload)
 {
   int transient_count= 0;
   while (true)
@@ -371,7 +373,7 @@ receive_data (
         {
           return oneway_buffering->receive_data (payload);
         }
-      catch (const CORBA::TRANSIENT &)
+      catch (CORBA::TRANSIENT const &)
         {
           if (++transient_count < TRANSIENT_LIMIT)
             {
@@ -392,8 +394,8 @@ receive_data (
 
 CORBA::ULong
 bytes_received_count (
-  const Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin,
-  const CORBA::ULong expected_bytes_received_count= static_cast<CORBA::ULong>(0))
+  Test::Oneway_Buffering_Admin_ptr const oneway_buffering_admin,
+  CORBA::ULong const expected_bytes_received_count = static_cast<CORBA::ULong> (0))
 {
   CORBA::ULong count;
   int transient_count= 0;
@@ -404,7 +406,7 @@ bytes_received_count (
           count= oneway_buffering_admin->bytes_received_count (expected_bytes_received_count);
           break;
         }
-      catch (const CORBA::TRANSIENT &)
+      catch (CORBA::TRANSIENT const &)
         {
           if (++transient_count < TRANSIENT_LIMIT)
             {
@@ -505,7 +507,9 @@ run_message_count (CORBA::ORB_ptr orb,
                         oneway_buffering, flusher.out ());
 
   if (test_failed != 0)
+  {
     return test_failed;
+  }
 
   Test::Payload payload (PAYLOAD_LENGTH);
   payload.length (PAYLOAD_LENGTH);
@@ -539,7 +543,7 @@ run_message_count (CORBA::ORB_ptr orb,
           CORBA::ULong iteration_count =
             send_count - initial_receive_count;
 
-          const bool
+          bool const
             too_few= (iteration_count < static_cast<CORBA::ULong> (BUFFERED_MESSAGES_COUNT));
 
           CORBA::ULong receive_count =
@@ -586,7 +590,9 @@ run_message_count (CORBA::ORB_ptr orb,
                        oneway_buffering_admin);
 
   if (liveness_test_failed)
+  {
     test_failed = 1;
+  }
 
   return test_failed;
 }
@@ -608,7 +614,9 @@ run_timeout (CORBA::ORB_ptr orb,
                         oneway_buffering, flusher.out ());
 
   if (test_failed != 0)
+  {
     return test_failed;
+  }
 
   Test::Payload payload (PAYLOAD_LENGTH);
   payload.length (PAYLOAD_LENGTH);
@@ -652,9 +660,9 @@ run_timeout (CORBA::ORB_ptr orb,
                   ACE_ERROR ((LM_ERROR,
                               "ERROR: Iteration %d flush before "
                               "timeout expired. "
-                              "Elapsed = %d, Timeout = %d msecs\n",
+                              "Elapsed = %Q, Timeout = %u msecs\n",
                               i,
-                              elapsed.msec (), TIMEOUT_MILLISECONDS));
+                              static_cast<ACE_UINT64> (elapsed.msec ()), TIMEOUT_MILLISECONDS));
                 }
               // terminate the while loop.
               break;
@@ -666,9 +674,9 @@ run_timeout (CORBA::ORB_ptr orb,
               ACE_ERROR ((LM_ERROR,
                           "ERROR: Iteration %d no flush past "
                           "timeout threshold. "
-                          "Elapsed = %d, Timeout = %d msecs\n",
+                          "Elapsed = %Q, Timeout = %u msecs\n",
                           i,
-                          elapsed.msec (), TIMEOUT_MILLISECONDS));
+                          static_cast<ACE_UINT64> (elapsed.msec ()), TIMEOUT_MILLISECONDS));
               break;
             }
         }
@@ -680,8 +688,9 @@ run_timeout (CORBA::ORB_ptr orb,
                        oneway_buffering_admin);
 
   if (liveness_test_failed)
+  {
     test_failed = 1;
-
+  }
 
   return test_failed;
 }
@@ -703,7 +712,9 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
                         oneway_buffering, flusher.out ());
 
   if (test_failed != 0)
+  {
     return test_failed;
+  }
 
   Test::Payload payload (PAYLOAD_LENGTH);
   payload.length (PAYLOAD_LENGTH);
@@ -755,9 +766,9 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
                   ACE_DEBUG ((LM_DEBUG,
                               "DEBUG: Iteration %d flush before "
                               "timeout expired. "
-                              "Elapsed = %d, Timeout = %d msecs\n",
+                              "Elapsed = %Q, Timeout = %u msecs\n",
                               i,
-                              elapsed.msec (), TIMEOUT_MILLISECONDS));
+                              static_cast<ACE_UINT64> (elapsed.msec ()), TIMEOUT_MILLISECONDS));
                 }
               // terminate the while loop.
               break;
@@ -769,9 +780,9 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
               ACE_DEBUG ((LM_DEBUG,
                           "DEBUG: Iteration %d no flush past "
                           "timeout threshold. "
-                          "Elapsed = %d, Timeout = %d msecs\n",
+                          "Elapsed = %Q, Timeout = %u msecs\n",
                           i,
-                          elapsed.msec (), TIMEOUT_MILLISECONDS));
+                          static_cast<ACE_UINT64> (elapsed.msec ()), TIMEOUT_MILLISECONDS));
               break;
             }
         }
@@ -783,8 +794,9 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
                        oneway_buffering_admin);
 
   if (liveness_test_failed)
+  {
     test_failed = 1;
-
+  }
 
   return test_failed;
 }
@@ -806,7 +818,9 @@ run_buffer_size (CORBA::ORB_ptr orb,
                         oneway_buffering, flusher.out ());
 
   if (test_failed != 0)
+  {
     return test_failed;
+  }
 
   Test::Payload payload (PAYLOAD_LENGTH);
   payload.length (PAYLOAD_LENGTH);
@@ -814,7 +828,7 @@ run_buffer_size (CORBA::ORB_ptr orb,
     payload[j] = CORBA::Octet(j % 256);
 
   CORBA::ULong bytes_sent = 0;
-  const CORBA::ULong
+  CORBA::ULong const
     expected_size= static_cast<CORBA::ULong>(GIOP_OVERHEAD * BUFFER_SIZE);
 
   for (int i = 0; i != iterations; ++i)
@@ -886,7 +900,9 @@ run_buffer_size (CORBA::ORB_ptr orb,
                        oneway_buffering_admin);
 
   if (liveness_test_failed)
+  {
     test_failed = 1;
+  }
 
   return test_failed;
 }

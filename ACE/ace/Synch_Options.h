@@ -88,7 +88,6 @@ public:
                      const void *arg = nullptr);
 
   /// Initialize the object; arguments are the same as for the
-  /// constructor.
   void set (unsigned long options = 0,
             const ACE_Time_Value &timeout = ACE_Time_Value::zero,
             const void *arg = nullptr);
@@ -121,7 +120,8 @@ public:
    */
   const ACE_Time_Value *time_value () const;
 
-  // = Static data members (singletons)
+  /// @name Common settings
+  /// @{
 
   /// This is the default setting for options, which will block
   /// synchronously.
@@ -132,6 +132,7 @@ public:
 
   /// This is the default asynchronous setting.
   static ACE_Synch_Options asynch;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

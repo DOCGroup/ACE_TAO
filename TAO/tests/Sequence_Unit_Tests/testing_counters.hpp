@@ -21,10 +21,7 @@
 class call_counter
 {
 public:
-  inline call_counter()
-    : count_(0)
-    , failure_countdown_(0)
-  {}
+  inline call_counter() = default;
 
   inline long current_count() const
   {
@@ -46,8 +43,8 @@ public:
   }
 
 private:
-  long count_;
-  long failure_countdown_;
+  long count_ {};
+  long failure_countdown_ {};
 };
 
 /**

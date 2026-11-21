@@ -15,10 +15,9 @@ class Memory_Growth
   : public virtual POA_Test::Memory_Growth
 {
 public:
-  /// Constructor
-  Memory_Growth (CORBA::ORB_ptr orb);
+  explicit Memory_Growth (CORBA::ORB_ptr orb);
 
-  // = The skeleton methods
+  /// The skeleton methods
   virtual void ping ();
 
   virtual void shutdown ();

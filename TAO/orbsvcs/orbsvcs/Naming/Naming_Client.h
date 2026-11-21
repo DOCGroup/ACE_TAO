@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_NAMING_CLIENT_H
 #define TAO_NAMING_CLIENT_H
 #include /**/ "ace/pre.h"
@@ -38,18 +37,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Naming_Export TAO_Naming_Client
 {
 public:
-  /// Default constructor.
-  TAO_Naming_Client ();
+  TAO_Naming_Client () = default;
 
   /**
    * Look for a Naming Service for a period of @a timeout using
    * @c resolve_initial_references.  Return 0 if Naming Service is
    * successfully located, and -1 on failure.
    */
-  int init (CORBA::ORB_ptr orb, ACE_Time_Value *timeout = 0);
+  int init (CORBA::ORB_ptr orb, ACE_Time_Value *timeout = nullptr);
 
-  /// Destructor.
-  ~TAO_Naming_Client ();
+  ~TAO_Naming_Client () = default;
 
   /// Returns a pointer to the root Naming Context.
   CosNaming::NamingContext_ptr operator-> () const;

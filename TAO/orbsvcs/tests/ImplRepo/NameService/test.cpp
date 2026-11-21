@@ -11,17 +11,21 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (ns_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Could not resolve Naming Service"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Could not resolve Naming Service"),
+                            1);
+        }
 
       CosNaming::NamingContext_var inc =
         CosNaming::NamingContext::_narrow (ns_obj.in ());
 
       if (CORBA::is_nil (inc.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Could not resolve Naming Service"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Could not resolve Naming Service"),
+                            1);
+        }
 
       CosNaming::Name name;
       name.length (1);

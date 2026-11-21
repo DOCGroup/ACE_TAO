@@ -73,7 +73,6 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (Admin_Traits_PTR admin_ptr)
                  this->proxy_id_);
 }
 
-
 template <class Peer_Traits>
 void
 TAO_Notify_Tests_Peer_T<Peer_Traits>::connect ()
@@ -110,8 +109,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::connect ()
 template <class Peer_Traits>
 void
 TAO_Notify_Tests_Peer_T<Peer_Traits>::set_qos (
-    CosNotification::QoSProperties& qos
-  )
+    CosNotification::QoSProperties& qos)
 {
   this->get_proxy ()->set_qos (qos);
 }
@@ -187,8 +185,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::disconnect ()
 
 template <class Peer_Traits>
 PortableServer::POA_ptr
-TAO_Notify_Tests_Peer_T<Peer_Traits>::_default_POA (
-  )
+TAO_Notify_Tests_Peer_T<Peer_Traits>::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }

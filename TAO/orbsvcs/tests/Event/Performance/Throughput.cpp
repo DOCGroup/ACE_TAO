@@ -5,7 +5,7 @@
 #include "ace/Get_Opt.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   EC_Throughput driver;
   return driver.run (argc, argv);
@@ -13,15 +13,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-EC_Throughput::EC_Throughput ()
-{
-}
-
 int
 EC_Throughput::parse_args (int& argc, ACE_TCHAR* argv[])
 {
   if (this->EC_Driver::parse_args (argc, argv) != 0)
+  {
     return -1;
+  }
   return 0;
 }
 

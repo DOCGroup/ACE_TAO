@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef SUPPLIER_H
 #define SUPPLIER_H
 
@@ -28,18 +27,20 @@
 class Supplier : public POA_RtecEventComm::PushSupplier
 {
 public:
-  /// Constructor
-  Supplier ();
+  Supplier () = default;
+  Supplier (Supplier const &) = delete;
+  Supplier (Supplier &&) = delete;
+  Supplier &operator= (Supplier const &) = delete;
+  Supplier &operator= (Supplier &&) = delete;
 
   /// Run the test
   int run (int argc, ACE_TCHAR* argv[]);
 
-  // = The RtecEventComm::PushSupplier methods
-
+  /// @name RtecEventComm::PushSupplier methods
+  /// @{
   /// The skeleton methods.
-  virtual void disconnect_push_supplier ();
-
-private:
+  void disconnect_push_supplier () override;
+  /// @}
 };
 
 #endif /* SUPPLIER_H */

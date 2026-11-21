@@ -43,7 +43,9 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ref_counter ()
 {
   ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
   if (this->cb_ptr_ != 0)
-    return this->cb_ptr_->ref_counter_;
+    {
+      return this->cb_ptr_->ref_counter_;
+    }
 
   return -1;
 }

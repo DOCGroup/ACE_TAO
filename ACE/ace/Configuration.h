@@ -34,7 +34,7 @@
 #include "ace/MMAP_Memory_Pool.h"
 #include "ace/Local_Memory_Pool.h"
 #include "ace/Synch_Traits.h"
-
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -95,7 +95,6 @@ class ACE_Export ACE_Configuration_Section_Key
 {
   friend class ACE_Configuration;
 public:
-  /// Default constructor.
   ACE_Configuration_Section_Key () = default;
 
   /// Constructor that initializes to a pointer to a concrete internal key.
@@ -107,12 +106,18 @@ public:
   /// Copy constructor, increments the reference count on the key.
   ACE_Configuration_Section_Key (const ACE_Configuration_Section_Key &rhs);
 
+  /// Move constructor, transferring the referenced key.
+  ACE_Configuration_Section_Key (ACE_Configuration_Section_Key &&rhs) noexcept;
+
   /// Destructor, decrements reference count on the referenced key.
   ~ACE_Configuration_Section_Key ();
 
   /// Assignment operator, increments reference count for this object
   /// and decrements it on @a rhs.
   ACE_Configuration_Section_Key &operator= (const ACE_Configuration_Section_Key &rhs);
+
+  /// Move assignment operator, transferring the referenced key.
+  ACE_Configuration_Section_Key &operator= (ACE_Configuration_Section_Key &&rhs) noexcept;
 private:
   ACE_Section_Key_Internal *key_ {};
 };
@@ -142,7 +147,6 @@ public:
     INVALID
   };
 
-  /// Destructor
   virtual ~ACE_Configuration () = default;
 
   /// Obtain a reference to the root section of this configuration.
@@ -376,7 +380,6 @@ public:
   static ACE_TCHAR NULL_String_;
 
 protected:
-  /// Default ctor
   ACE_Configuration ();
 
   /// Resolves the internal key from a section key
@@ -390,7 +393,7 @@ protected:
    * valid.  The path separator is allowed, except for the first character,
    * if @a allow_path is true.
    */
-  int validate_name (const ACE_TCHAR* name, int allow_path = 0);
+  int validate_name (const ACE_TCHAR* name, int allow_path = false);
 
   /**
    * Test to see if @a name is valid.  The default value for a key can be
@@ -420,7 +423,7 @@ class ACE_Export ACE_Section_Key_Win32 : public ACE_Section_Key_Internal
 {
 public:
   /// Constructor based on an HKEY
-  ACE_Section_Key_Win32 (HKEY hKey);
+  explicit ACE_Section_Key_Win32 (HKEY hKey);
 
   HKEY hKey_;
 
@@ -453,7 +456,6 @@ public:
   explicit ACE_Configuration_Win32Registry (HKEY hKey,
                                             u_long security_access = KEY_ALL_ACCESS);
 
-  /// Destructor
   virtual ~ACE_Configuration_Win32Registry () = default;
 
   virtual int open_section (const ACE_Configuration_Section_Key& base,
@@ -560,10 +562,8 @@ public:
   /// Copy ctor
   ACE_Configuration_ExtId (const ACE_Configuration_ExtId& rhs);
 
-  /// destructor
   ~ACE_Configuration_ExtId () = default;
 
-  /// Assignment operator
   ACE_Configuration_ExtId& operator= (const ACE_Configuration_ExtId& rhs);
 
   /// Equality comparison operator (must match name_).
@@ -580,11 +580,15 @@ public:
   /// ACE_Hash_Map_Manager.
   u_long hash  () const;
 
-  // = Data members.
+  /// @name Stored name
+  /// @{
   const ACE_TCHAR * name_ {};
+  /// @}
 
-  // Accessors
+  /// @name Accessors
+  /// @{
   const ACE_TCHAR *name ();
+  /// @}
 };
 
 using SUBSECTION_MAP = ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, int>;
@@ -601,7 +605,6 @@ using SUBSECTION_HASH = ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, int, AC
 class ACE_Export ACE_Configuration_Value_IntId
 {
 public:
-  /// Default constructor
   ACE_Configuration_Value_IntId ();
 
   /// String constructor, takes ownership of string
@@ -616,16 +619,15 @@ public:
   /// Copy ctor
   ACE_Configuration_Value_IntId (const ACE_Configuration_Value_IntId& rhs);
 
-  /// Destructor
   ~ACE_Configuration_Value_IntId () = default;
 
-  /// Assignment operator
   ACE_Configuration_Value_IntId& operator= (
     const ACE_Configuration_Value_IntId& rhs);
 
   void free (ACE_Allocator *alloc);
 
-  // = Data members.
+  /// @name Stored value
+  /// @{
 
   /**
    * Points to the string value or binary data or IS the integer
@@ -636,7 +638,8 @@ public:
     void *     ptr_;
     u_int      int_;
   }                             data_;
-  size_t                        length_;
+  size_t                        length_ {};
+  /// @}
 };
 
 using VALUE_MAP = ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId>;
@@ -655,7 +658,6 @@ using VALUE_ENTRY = VALUE_HASH::ENTRY;
 class ACE_Export ACE_Configuration_Section_IntId
 {
 public:
-  /// Default ctor
   ACE_Configuration_Section_IntId ();
 
   /// Named ctor
@@ -665,20 +667,20 @@ public:
   /// Copy ctor
   ACE_Configuration_Section_IntId (const ACE_Configuration_Section_IntId& rhs);
 
-  /// Destructor
   ~ACE_Configuration_Section_IntId () = default;
 
-  /// Assignment operator
   ACE_Configuration_Section_IntId& operator= (
     const ACE_Configuration_Section_IntId& rhs);
 
   /// Frees the hash table and all its values
   void free (ACE_Allocator *alloc);
 
-  // = Data Members.
-  VALUE_MAP* value_hash_map_;
+  /// @name Section maps
+  /// @{
+  VALUE_MAP* value_hash_map_ {};
 
-  SUBSECTION_MAP* section_hash_map_;
+  SUBSECTION_MAP* section_hash_map_ {};
+  /// @}
 };
 
 using SECTION_MAP = ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId>;
@@ -686,6 +688,11 @@ using SECTION_HASH = ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, ACE_Config
 
 // Deprecated typedef.  Use the SECTION_HASH::ENTRY trait instead.
 using SECTION_ENTRY = SECTION_HASH::ENTRY;
+
+struct ACE_Configuration_Path_Deleter
+{
+  void operator() (ACE_TCHAR* path) const;
+};
 
 /**
  * @class ACE_Configuration_Section_Key_Heap
@@ -700,22 +707,21 @@ class ACE_Export ACE_Configuration_Section_Key_Heap
 {
 public:
   /// Constructor based on the full path of the section
-  ACE_Configuration_Section_Key_Heap (const ACE_TCHAR* path);
+  explicit ACE_Configuration_Section_Key_Heap (const ACE_TCHAR* path);
 
   /// The path itself
-  ACE_TCHAR* path_;
+  std::unique_ptr<ACE_TCHAR, ACE_Configuration_Path_Deleter> path_;
 
   /// The value iterator
-  VALUE_HASH::ITERATOR* value_iter_;
+  std::unique_ptr<VALUE_HASH::ITERATOR> value_iter_ {};
 
   /// The sub section iterator
-  SUBSECTION_HASH::ITERATOR* section_iter_;
+  std::unique_ptr<SUBSECTION_HASH::ITERATOR> section_iter_ {};
 
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Destructor - will delete the iterators
-  ~ACE_Configuration_Section_Key_Heap () override;
+  ~ACE_Configuration_Section_Key_Heap () override = default;
 
   // Not used
   ACE_Configuration_Section_Key_Heap (const ACE_Configuration_Section_Key_Heap& rhs);
@@ -741,10 +747,8 @@ protected:
 class ACE_Export ACE_Configuration_Heap : public ACE_Configuration
 {
 public:
-  /// Default ctor
   ACE_Configuration_Heap ();
 
-  /// Destructor
   ~ACE_Configuration_Heap () override;
 
   /**
@@ -860,9 +864,9 @@ private:
   ACE_Configuration_Heap (const ACE_Configuration_Heap& rhs);
   ACE_Configuration_Heap& operator= (const ACE_Configuration_Heap& rhs);
 
-  ACE_Allocator *allocator_;
-  SECTION_MAP *index_;
-  size_t default_map_size_;
+  std::unique_ptr<ACE_Allocator> allocator_ {};
+  SECTION_MAP *index_ {};
+  size_t default_map_size_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

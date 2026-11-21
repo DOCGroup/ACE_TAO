@@ -50,17 +50,21 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Service_Manager : public ACE_Service_Object
 {
 public:
-  /// Constructor.
   ACE_Service_Manager ();
 
-  /// Destructor.
   ~ACE_Service_Manager () override;
+
+  ACE_Service_Manager (ACE_Service_Manager const &) = delete;
+  ACE_Service_Manager &operator= (ACE_Service_Manager const &) = delete;
+  ACE_Service_Manager (ACE_Service_Manager &&) = delete;
+  ACE_Service_Manager &operator= (ACE_Service_Manager &&) = delete;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = Perform the various meta-services.
+  /// @name Service management
+  /// @{
 
   /// Trigger a reconfiguration of the Service Configurator by
   /// re-reading its local <svc.conf> file.
@@ -70,26 +74,39 @@ protected:
   /// information back to the client.
   virtual int list_services ();
 
-  // = Dynamic linking hooks.
+  /// @}
+
+  /// @name Dynamic linking hooks
+  /// @{
+
   int init (int argc, ACE_TCHAR *argv[]) override;
   int info (ACE_TCHAR **info_string, size_t length) const override;
   int fini () override;
 
-  // = Scheduling hooks.
+  /// @}
+
+  /// @name Scheduling hooks
+  /// @{
+
   int suspend () override;
   int resume () override;
+
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
 
-protected:
   int open (const ACE_INET_Addr &sia);
 
-  // = Demultiplexing hooks.
+  /// @name Demultiplexing hooks
+  /// @{
+
   ACE_HANDLE get_handle () const override;
   int handle_input (ACE_HANDLE fd) override;
   int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask) override;
   int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
+
+  /// @}
 
   /// Handle one request.
   virtual void process_request (ACE_TCHAR *request);
@@ -102,13 +119,10 @@ protected:
   ACE_SOCK_Acceptor acceptor_;
 
   /// Keep track whether we debug or not.
-  bool debug_;
-
-  /// The signal used to trigger reconfiguration.
-  int signum_;
+  bool debug_ {};
 
   /// Default port for the Acceptor to listen on.
-  static u_short DEFAULT_PORT_;
+  static constexpr u_short DEFAULT_PORT_ {10000};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

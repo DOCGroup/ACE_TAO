@@ -20,7 +20,7 @@
 class TP_Task : public ACE_Task_Base
 {
 public:
-  explicit TP_Task (CORBA::ORB_var &orb)
+  explicit TP_Task (CORBA::ORB_var const &orb)
     : orb_ (orb)
   {
   }
@@ -39,7 +39,7 @@ private:
   TP_Task (TP_Task &&) = delete;
   TP_Task &operator= (TP_Task &&) = delete;
 
-  CORBA::ORB_var &orb_;
+  CORBA::ORB_var const &orb_;
 };
 
 #endif

@@ -10,19 +10,22 @@
 #include "tao/ORB.h"
 #include "ace/SString.h"
 
-
 class ClientApp : public TestAppBase
 {
   public:
     ClientApp();
-    virtual ~ClientApp();
+    ~ClientApp() override;
 
   protected:
-    virtual int run_i(int argc, ACE_TCHAR* argv[]);
+    int run_i(int argc, ACE_TCHAR* argv[]) override;
 
+    ClientApp (ClientApp const &) = delete;
+    ClientApp (ClientApp &&) = delete;
+    ClientApp & operator= (ClientApp const &) = delete;
+    ClientApp & operator= (ClientApp &&) = delete;
 
   private:
-    // These are all called, in order, by the run_i() method.
+    /// These are all called, in order, by the run_i() method.
     int init(int argc, ACE_TCHAR* argv[]);
     void poa_setup();
     void csd_setup();
@@ -33,7 +36,7 @@ class ClientApp : public TestAppBase
     bool check_validity ();
     void cleanup();
 
-    // Helper methods used by the methods above.
+    /// Helper methods used by the methods above.
     int parse_args(int argc, ACE_TCHAR* argv[]);
 
     int set_arg(unsigned&   value,
@@ -48,8 +51,7 @@ class ClientApp : public TestAppBase
     PortableServer::POA_ptr create_poa(CORBA::ORB_ptr orb,
                                        const char* poa_name);
 
-
-    typedef ServantList<Callback_i> ServantListType;
+    using ServantListType = ServantList<Callback_i>;
 
     CORBA::ORB_var               orb_;
     PortableServer::POA_var      poa_;

@@ -6,7 +6,7 @@
 #include <iostream>
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://Messenger.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://Messenger.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -48,21 +48,25 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init( argc, argv );
 
       if (parse_args (argc, argv) != 0)
-        return 1;
+        {
+          return 1;
+        }
 
       // Destringify ior
       CORBA::Object_var obj = orb->string_to_object( ior );
-      if( CORBA::is_nil( obj.in() ) ) {
-        std::cerr << "Nil Messenger reference" << std::endl;
-        return 1;
-      }
+      if( CORBA::is_nil( obj.in() ) )
+        {
+          std::cerr << "Nil Messenger reference" << std::endl;
+          return 1;
+        }
 
       // Narrow
       Messenger_var messenger = Messenger::_narrow( obj.in() );
-      if( CORBA::is_nil( messenger.in() ) ) {
-        std::cerr << "Argument is not a Messenger reference" << std::endl;
-        return 1;
-      }
+      if( CORBA::is_nil( messenger.in() ) )
+        {
+          std::cerr << "Argument is not a Messenger reference" << std::endl;
+          return 1;
+        }
 
       // Obtain a reference to the CodecFactory.
       CORBA::Object_var obj2 =
@@ -97,11 +101,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Any uid_as_any;
 
       uid_as_any <<= uid;
-      CORBA::OctetSeq client_uid = *codec->encode (uid_as_any);
-      messenger->send_message( client_uid );
+      CORBA::OctetSeq_var const client_uid {codec->encode (uid_as_any)};
+      messenger->send_message (client_uid.in ());
     }
 
-  catch(const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       std::cerr << "Exception in MessengerClient: " << ex << std::endl;
       return 1;

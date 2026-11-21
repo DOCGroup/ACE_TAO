@@ -96,7 +96,7 @@ private:
   /// The flag is set to false if <poa_> and <id_> haven't been set
   /// yet, or if deactivation already happened, or if
   /// disallow_deactivation () method is invoked.
-  int deactivate_;
+  bool deactivate_ {};
 };
 
 //***************************************************************************

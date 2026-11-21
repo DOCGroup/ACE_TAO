@@ -32,15 +32,21 @@
 #include "ace/Auto_Event.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
+#include <atomic>
+#include <memory>
 
 // Globals for this test
-bool stop_test = false;
+std::atomic<bool> stop_test {};
 ACE_Reactor reactor;
 
 class Simple_Handler : public ACE_Event_Handler
 {
 public:
   Simple_Handler () = default;
+  Simple_Handler (Simple_Handler const &) = delete;
+  Simple_Handler (Simple_Handler &&) = delete;
+  Simple_Handler &operator= (Simple_Handler const &) = delete;
+  Simple_Handler &operator= (Simple_Handler &&) = delete;
 
   int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
   int handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close_mask) override;
@@ -77,7 +83,8 @@ Simple_Handler::handle_signal (int, siginfo_t *s, ucontext_t *)
 int
 Simple_Handler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask)
 {
-  ACE_DEBUG ((LM_DEBUG, "Simple_Handler::handle_close handle = %d\n", handle));
+  ACE_DEBUG ((LM_DEBUG, "Simple_Handler::handle_close handle = %H\n",
+              handle));
   ++this->handle_close_count_;
 
   if (this->handle_close_count_ == 1)
@@ -91,42 +98,48 @@ Simple_Handler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask)
 // Globals for this test
 Simple_Handler simple_handler;
 
-void
-worker ()
+static ACE_THR_FUNC_RETURN
+worker (void *)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) Thread creation\n"));
   ACE_DEBUG ((LM_DEBUG, "(%t) Thread sleeping\n"));
   ACE_OS::sleep (1);
-  ACE_DEBUG ((LM_DEBUG, "(%t) Thread signaling %d\n", simple_handler.event1_.handle()));
+  ACE_DEBUG ((LM_DEBUG, "(%t) Thread signaling %H\n",
+              simple_handler.event1_.handle()));
   simple_handler.event1_.signal ();
   ACE_DEBUG ((LM_DEBUG, "(%t) Thread sleeping\n"));
   ACE_OS::sleep (1);
-  ACE_DEBUG ((LM_DEBUG, "(%t) Thread signaling %d\n", simple_handler.event1_.handle()));
+  ACE_DEBUG ((LM_DEBUG, "(%t) Thread signaling %H\n",
+              simple_handler.event1_.handle()));
   ACE_DEBUG ((LM_DEBUG, "Note: This signal should be \"lost\" because of the suspended handler\n"));
   simple_handler.event1_.signal ();
   ACE_DEBUG ((LM_DEBUG, "(%t) Thread sleeping\n"));
   ACE_OS::sleep (1);
-  ACE_DEBUG ((LM_DEBUG, "(%t) Thread resetting %d\n", simple_handler.event1_.handle()));
+  ACE_DEBUG ((LM_DEBUG, "(%t) Thread resetting %H\n",
+              simple_handler.event1_.handle()));
   simple_handler.event1_.reset ();
-  ACE_DEBUG ((LM_DEBUG, "(%t) Thread signaling %d\n", simple_handler.event2_.handle()));
+  ACE_DEBUG ((LM_DEBUG, "(%t) Thread signaling %H\n",
+              simple_handler.event2_.handle()));
   simple_handler.event2_.signal ();
   ACE_DEBUG ((LM_DEBUG, "(%t) Thread sleeping\n"));
   ACE_OS::sleep (1);
-  ACE_DEBUG ((LM_DEBUG, "(%t) Thread signaling %d\n", simple_handler.event1_.handle()));
+  ACE_DEBUG ((LM_DEBUG, "(%t) Thread signaling %H\n",
+              simple_handler.event1_.handle()));
   simple_handler.event1_.signal ();
   ACE_DEBUG ((LM_DEBUG, "(%t) Thread death\n"));
+  return 0;
 }
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  int result = reactor.register_handler (&simple_handler, simple_handler.event1_.handle ());
+  int result = reactor.register_handler (std::addressof (simple_handler), simple_handler.event1_.handle ());
   ACE_TEST_ASSERT (result == 0);
 
-  result = reactor.register_handler (&simple_handler, simple_handler.event2_.handle ());
+  result = reactor.register_handler (std::addressof (simple_handler), simple_handler.event2_.handle ());
   ACE_TEST_ASSERT (result == 0);
 
-  result = ACE_OS::thr_create ((ACE_THR_FUNC) worker, 0, 0, 0);
+  result = ACE_OS::thr_create (worker, nullptr, 0, 0);
   ACE_TEST_ASSERT (result == 0);
 
   result = 0;

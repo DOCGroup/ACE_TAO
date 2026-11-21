@@ -1,9 +1,11 @@
 #include "ClientInterceptor.h"
 #include "tao/OctetSeqC.h"
 #include "tao/PI/ClientRequestInfo.h"
-#include <iostream>
 
-const CORBA::ULong service_ctx_id = 0xdeed;
+#include <iostream>
+#include <utility>
+
+constexpr CORBA::ULong service_ctx_id = 0xdeed;
 
 ClientInterceptor::
 ClientInterceptor (IOP::CodecFactory_var cf)
@@ -20,10 +22,6 @@ ClientInterceptor (IOP::CodecFactory_var cf)
 
   // Obtain the CDR encapsulation Codec.
   this->codec = cf->create_codec (encoding);
-}
-
-ClientInterceptor::~ClientInterceptor ()
-{
 }
 
 char *
@@ -46,7 +44,6 @@ ClientInterceptor::send_poll (
   std::cout << "Calling send_poll()." << std::endl;
 }
 
-
 void
 ClientInterceptor::send_request (
                                  PortableInterceptor::ClientRequestInfo_ptr ri)
@@ -56,13 +53,14 @@ ClientInterceptor::send_request (
   IOP::ServiceContext sc;
   sc.context_id = service_ctx_id;
 
-  const CORBA::Long gid = 9007;
+  constexpr CORBA::Long gid = 9007;
   std::cout << "GID: " << gid << std::endl;
 
   CORBA::Any gid_as_any;
   gid_as_any <<= gid;
 
-  sc.context_data = *codec->encode(gid_as_any);
+  CORBA::OctetSeq_var encoded {this->codec->encode (gid_as_any)};
+  sc.context_data = std::move (encoded.inout ());
 
   // Add this context to the service context list.
   ri->add_request_service_context (sc, false);

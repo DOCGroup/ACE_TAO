@@ -1,14 +1,14 @@
 /* -*- C++ -*- */
-//
-// ============================================================================
-//
-// = DESCRIPTION
-//   An example on custom marshaling in TAO.
-//
-// ============================================================================
+/**
+ * @file ECM_Supplier.h
+ * @brief Supplier driver for the custom marshaling event-channel test.
+ */
 
 #ifndef ECM_SUPPLIER_H
 #define ECM_SUPPLIER_H
+
+#include <array>
+#include <memory>
 
 #include "ace/Task.h"
 
@@ -20,121 +20,78 @@
 
 class ECMS_Driver;
 
+/// Sends custom-marshaled event payloads through the event channel.
 class Test_Supplier : public ACE_Task<ACE_SYNCH>
 {
-  //
-  // = TITLE
-  //   Simplifies the supplier task startup.
-  //
-  // = DESCRIPTION
-  //   Runs the ECMS_Driver::supplier_task() method in another thread.
-  //
 public:
-  Test_Supplier (ECMS_Driver *driver);
+  explicit Test_Supplier (ECMS_Driver& driver);
+  Test_Supplier (Test_Supplier const&) = delete;
+  Test_Supplier (Test_Supplier&&) = delete;
+  Test_Supplier& operator= (Test_Supplier const&) = delete;
+  Test_Supplier& operator= (Test_Supplier&&) = delete;
 
-  int svc ();
-  // Run the test, just forwards to the driver
+  /// Run the supplier task in its worker thread.
+  int svc () override;
 
-  void connect (const char* name,
+  /// Connect the supplier servant to the event channel.
+  void connect (char const* name,
                 int event_a,
                 int event_b,
                 RtecEventChannelAdmin::EventChannel_ptr ec);
-  // This method connects the supplier to the EC.
-
+  /// Disconnect the supplier from the event channel.
   void disconnect ();
-  // Disconnect from the EC.
 
+  /// Handle disconnection forwarded by the supplier adapter.
   void disconnect_push_supplier ();
-  // The methods in the skeleton.
 
+  /// Return this supplier's event source ID.
   RtecEventComm::EventSourceID supplier_id () const;
-  // The supplier ID.
 
+  /// Return the proxy used to send events to the event channel.
   RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy ();
-  // We talk to the EC (as a supplier) using this proxy, no duplicates
-  // are done here...
 
 private:
-  ECMS_Driver *driver_;
-  // Class we forward to.
-
-  void *cookie_;
-  // The test provide us a cookie so we can give back our identity.
-
-  RtecEventComm::EventSourceID supplier_id_;
-  // We generate an id based on the name....
-
+  ECMS_Driver& driver_;
+  RtecEventComm::EventSourceID supplier_id_ {};
   RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;
-  // We talk to the EC (as a supplier) using this proxy.
-
   ACE_PushSupplier_Adapter<Test_Supplier> supplier_;
-  // We also connect to the EC as a consumer so we can receive the
-  // timeout events.
 };
 
+/// Coordinates supplier tasks and custom event payload construction.
 class ECMS_Driver
 {
-  //
-  // = TITLE
-  //
-  // = DESCRIPTION
-  //
 public:
   ECMS_Driver ();
+  ECMS_Driver (ECMS_Driver const&) = delete;
+  ECMS_Driver (ECMS_Driver&&) = delete;
+  ECMS_Driver& operator= (ECMS_Driver const&) = delete;
+  ECMS_Driver& operator= (ECMS_Driver&&) = delete;
 
-  enum {
-    MAX_SUPPLIERS = 16
-    // Maximum number of suppliers.
-  };
+  static constexpr int MAX_SUPPLIERS = 16;
 
+  /// Parse options and run the supplier test.
   int run (int argc, ACE_TCHAR* argv[]);
-  // Execute the test.
 
-  int supplier_task (Test_Supplier *supplier,
-                     void *supplier_cookie);
-  // This method is run by the supplier task.
-
-  void push_supplier (void* supplier_cookie,
-                      RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
-                      const RtecEventComm::EventSet &events);
-  // Callback method for suppliers, we push for them to their
-  // consumers and take statistics on the way.
-  // It is possible that we ignore the <consumer> parameter when
-  // testing the short-circuit case.
+  /// Build and send events for one supplier task.
+  int supplier_task (Test_Supplier& supplier);
 
 private:
+  /// Parse supplier-specific command-line options.
   int parse_args (int argc, ACE_TCHAR* argv[]);
-  // parse the command line args
-
+  /// Connect and disconnect all configured suppliers.
   void connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec);
   void disconnect_suppliers ();
-  // Connect the suppliers.
-
+  /// Start event generation for all suppliers.
   void activate_suppliers ();
-  // Activate the suppliers, i.e. they start generating events.
 
-private:
-  Test_Supplier* suppliers_[ECMS_Driver::MAX_SUPPLIERS];
-  // The suppliers array.
-
-  int n_suppliers_;
-  // The number of suppliers.
-
-  int event_count_;
-  // How many messages we will send in each suppliers.
-
-  int event_period_;
-  // The time between each event generation, in microseconds.
-
-  int event_size_;
-  // The event size (number of elements in the payload).
-
-  int event_a_;
-  int event_b_;
-  // We send two types of events, with different contents.
-
-  const ACE_TCHAR* pid_file_name_;
-  // The name of a file where the process stores its pid
+  std::array<std::unique_ptr<Test_Supplier>, MAX_SUPPLIERS> suppliers_ {};
+  int n_suppliers_ {};
+  int event_count_ {};
+  int event_period_ {};
+  int event_size_ {};
+  int event_a_ {};
+  int event_b_ {};
+  ACE_TCHAR const* pid_file_name_ {};
 };
 
 #endif /* ECM_SUPPLIER_H */

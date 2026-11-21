@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// The interface between one or more peers and a stream.  A peer
-// typically runs remotely on another machine.
 
 #ifndef _PEER_ROUTER_H
 #define _PEER_ROUTER_H
@@ -16,11 +14,11 @@
 #include "ace/UPIPE_Addr.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Map_Manager.h"
+#include <memory>
 
 #if defined (ACE_HAS_THREADS)
 #include "ace/RW_Mutex.h"
 
-// Forward declaration.
 template <class PEER_HANDLER, class KEY>
 class Peer_Router;
 
@@ -28,82 +26,98 @@ template <class PEER_HANDLER, class KEY>
 class Acceptor_Factory : public ACE_Acceptor<PEER_HANDLER, ACE_UPIPE_ACCEPTOR>
 {
 public:
-  Acceptor_Factory (Peer_Router<PEER_HANDLER, KEY> *pr);
-  Peer_Router<PEER_HANDLER, KEY> *router ();
+  explicit Acceptor_Factory (Peer_Router<PEER_HANDLER, KEY> *pr);
+  Acceptor_Factory (Acceptor_Factory const &) = delete;
+  Acceptor_Factory (Acceptor_Factory &&) = delete;
+  Acceptor_Factory &operator= (Acceptor_Factory const &) = delete;
+  Acceptor_Factory &operator= (Acceptor_Factory &&) = delete;
 
-  int init (int argc, ACE_TCHAR *argv[]);
-  // Initialize the acceptor when it's linked dynamically.
+  Peer_Router<PEER_HANDLER, KEY> *router () const;
+
+  /// Initialize the acceptor when it is linked dynamically.
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
 private:
-  Peer_Router<PEER_HANDLER, KEY> *pr_;
+  /// Non-owning back-reference; the router owns this factory.
+  Peer_Router<PEER_HANDLER, KEY> *pr_ {};
 };
 
-// Receive input from a Peer..
+/// Receives input from a peer.
 template <class ROUTER, class KEY>
 class Peer_Handler : public ACE_Svc_Handler<ACE_UPIPE_STREAM, ACE_MT_SYNCH>
 {
 public:
-  Peer_Handler (ACE_Thread_Manager * = 0);
+  explicit Peer_Handler (ACE_Thread_Manager * = nullptr);
+  Peer_Handler (Peer_Handler const &) = delete;
+  Peer_Handler (Peer_Handler &&) = delete;
+  Peer_Handler &operator= (Peer_Handler const &) = delete;
+  Peer_Handler &operator= (Peer_Handler &&) = delete;
 
-  virtual int open (void * = 0);
-  // Called by the ACE_Acceptor::handle_input() to activate this object.
+  /// Called by ACE_Acceptor::handle_input() to activate this object.
+  int open (void * = nullptr) override;
 
-  virtual int handle_input (ACE_HANDLE);
-  // Receive input from the peer..
+  /// Receive input from the peer.
+  int handle_input (ACE_HANDLE) override;
 
-  virtual int put (ACE_Message_Block *, ACE_Time_Value *tv = 0);
-  // Send output to a peer.
+  /// Send output to a peer.
+  int put (ACE_Message_Block *, ACE_Time_Value *tv = nullptr) override;
 
 protected:
-  ROUTER *router_task_;
-  // Pointer to write task..
+  /// Non-owning pointer to the router task.
+  ROUTER *router_task_ {};
 
 private:
-  // Don't need this method here...
-  virtual int svc ();
+  /// Not used by this handler.
+  int svc () override;
 };
 
-// This abstract base class provides mechanisms for routing messages
-// to/from a ACE_Stream from/to one or more peers (which are typically
-// running on remote hosts).  A subclass of Peer_Router overrides the
-// open(), close(), and put() methods in order to specialize the
-// behavior of the router to meet application-specific requirements.
-
+/**
+ * @class Peer_Router
+ * @brief Routes messages between a stream and one or more peer handlers.
+ *
+ * This abstract base class provides mechanisms for routing messages
+ * to and from an ACE_Stream. A subclass overrides open(), close(), and
+ * put() to specialize the router for its application.
+ */
 template <class PEER_HANDLER, class PEER_KEY>
 class Peer_Router : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  Peer_Router (ACE_Thread_Manager * = 0);
-  ~Peer_Router ();
+  explicit Peer_Router (ACE_Thread_Manager * = nullptr);
+  ~Peer_Router () = default;
+  Peer_Router (Peer_Router const &) = delete;
+  Peer_Router (Peer_Router &&) = delete;
+  Peer_Router &operator= (Peer_Router const &) = delete;
+  Peer_Router &operator= (Peer_Router &&) = delete;
 
   using HANDLER = Peer_Handler<Peer_Router<PEER_HANDLER, PEER_KEY>, PEER_KEY>;
 
-  // Remove a PEER_HANDLER from the PEER_MAP.
+  /// Remove a PEER_HANDLER from the PEER_MAP.
   virtual int unbind_peer (PEER_KEY);
 
-  // Add a PEER_HANDLER to the PEER_MAP.
+  /// Add a PEER_HANDLER to the PEER_MAP.
   virtual int bind_peer (PEER_KEY, HANDLER *);
 
-  // Send the message block to the peer(s)..
+  /// Send a message block to the peers.
   int send_peers (ACE_Message_Block *mb);
 
 protected:
-  // Handle control messages arriving from adjacent Modules.
+  /// Handle control messages arriving from adjacent modules.
   virtual int control (ACE_Message_Block *);
 
-  // Map used to keep track of active peers.
+  /// Map of active peers.
   ACE_Map_Manager <PEER_KEY, PEER_HANDLER *, ACE_RW_Mutex> peer_map_;
 
-  // Dynamic linking initialization hooks inherited from ACE_Task.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini ();
+  /// @name Dynamic linking initialization hooks inherited from ACE_Task
+  /// @{
 
-  // Factory for accepting new PEER_HANDLERs.
-  Acceptor_Factory<PEER_HANDLER, PEER_KEY> *acceptor_;
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int fini () override;
 
-private:
-  Peer_Router (const Peer_Router<PEER_HANDLER, PEER_KEY> &) = delete;
-  void operator= (const Peer_Router<PEER_HANDLER, PEER_KEY> &) = delete;
+  /// @}
+
+  /// Factory for accepting new PEER_HANDLERs.
+  std::unique_ptr<Acceptor_Factory<PEER_HANDLER, PEER_KEY>> acceptor_ {};
 };
 
 #if defined (__ACE_INLINE__)

@@ -11,6 +11,8 @@
 #include "ace/os_include/sys/os_socket.h"
 #include "ace/Svc_Handler.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 #include "tao/Connection_Handler.inl"
 #endif /* __ACE_INLINE__ */
@@ -53,17 +55,21 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
   if (snd_size != 0
       && sock.set_option (SOL_SOCKET,
                           SO_SNDBUF,
-                          (void *) &snd_size,
+                          std::addressof (snd_size),
                           sizeof (snd_size)) == -1)
   {
     if (TAO_debug_level)
-      TAOLIB_DEBUG ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - Connection_Handler::")
-                  ACE_TEXT ("set_socket_option, setting SO_SNDBUF failed ")
-                  ACE_TEXT ("'%m'\n")));
+      {
+        TAOLIB_DEBUG ((LM_ERROR,
+                       ACE_TEXT ("TAO (%P|%t) - Connection_Handler::")
+                       ACE_TEXT ("set_socket_option, setting SO_SNDBUF failed ")
+                       ACE_TEXT ("'%m'\n")));
+      }
 
     if (errno != ENOTSUP)
-      return -1;
+      {
+        return -1;
+      }
   }
 #endif /* !ACE_LACKS_SO_SNDBUF */
 
@@ -71,17 +77,21 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
   if (rcv_size != 0
       && sock.set_option (SOL_SOCKET,
                           SO_RCVBUF,
-                          (void *) &rcv_size,
+                          std::addressof (rcv_size),
                           sizeof (int)) == -1)
   {
-      if (TAO_debug_level)
+    if (TAO_debug_level)
+      {
         TAOLIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) - Connection_Handler::")
-                    ACE_TEXT ("set_socket_option, setting SO_RCVBUF failed ")
-                    ACE_TEXT ("'%m'\n")));
+                       ACE_TEXT ("TAO (%P|%t) - Connection_Handler::")
+                       ACE_TEXT ("set_socket_option, setting SO_RCVBUF failed ")
+                       ACE_TEXT ("'%m'\n")));
+      }
 
     if (errno != ENOTSUP)
-      return -1;
+      {
+        return -1;
+      }
   }
 #endif /* !ACE_LACKS_SO_RCVBUF */
 
@@ -101,24 +111,26 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
 int
 TAO_Connection_Handler::svc_i ()
 {
-  int result = 0;
+  int result {};
 
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - Connection_Handler::svc_i begin\n")));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) - Connection_Handler::svc_i begin\n")));
+    }
 
   // Here we simply synthesize the "typical" event loop one might find
   // in a reactive handler, except that this can simply block waiting
   // for input.
 
-  ACE_Time_Value *max_wait_time = nullptr;
+  ACE_Time_Value *max_wait_time {};
   ACE_Time_Value timeout;
   ACE_Time_Value current_timeout;
 
   if (this->orb_core_->thread_per_connection_timeout (timeout))
     {
       current_timeout = timeout;
-      max_wait_time = &current_timeout;
+      max_wait_time = std::addressof (current_timeout);
     }
 
   TAO_Resume_Handle rh (this->orb_core_, ACE_INVALID_HANDLE);
@@ -155,9 +167,12 @@ TAO_Connection_Handler::svc_i ()
       current_timeout = timeout;
 
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - Connection_Handler::svc_i - "
-                       "loop <%d> shutdown = %d\n", current_timeout.msec (), this->is_closed_));
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         "TAO (%P|%t) - Connection_Handler::svc_i - "
+                         "loop <%d> shutdown = %d\n",
+                         current_timeout.msec (), this->is_closed_));
+        }
       if (this->is_closed_)
         {
           return result;
@@ -165,8 +180,10 @@ TAO_Connection_Handler::svc_i ()
     }
 
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG  ((LM_DEBUG,
-                 "TAO (%P|%t) - Connection_Handler::svc_i - end\n"));
+    {
+      TAOLIB_DEBUG  ((LM_DEBUG,
+                     "TAO (%P|%t) - Connection_Handler::svc_i - end\n"));
+    }
 
   return result;
 }
@@ -191,7 +208,7 @@ TAO_Connection_Handler::handle_output_eh (ACE_HANDLE, ACE_Event_Handler * eh)
   // resume the handle once data is written..
   TAO_Resume_Handle resume_handle (this->orb_core (), eh->get_handle ());
 
-  int return_value = 0;
+  int return_value {};
   this->pre_io_hook (return_value);
   if (return_value != 0)
     {
@@ -223,21 +240,25 @@ TAO_Connection_Handler::handle_input_eh (ACE_HANDLE h, ACE_Event_Handler *eh)
   if (!this->transport ()->wait_strategy ()->can_process_upcalls ())
     {
       if (TAO_debug_level > 6)
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - Connection_Handler[%B]::handle_input_eh, "
-                    "not going to handle_input on transport "
-                    "because upcalls temporarily suspended on this thread\n",
-                    this->transport()->id()));
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         "TAO (%P|%t) - Connection_Handler[%B]::handle_input_eh, "
+                         "not going to handle_input on transport "
+                         "because upcalls temporarily suspended on this thread\n",
+                         this->transport ()->id ()));
+        }
 
       // defer upcall at leader_follower
       if (this->transport ()->wait_strategy ()->defer_upcall (eh) != 0)
         {
           if (TAO_debug_level > 5)
-            TAOLIB_ERROR ((LM_ERROR,
-                      "TAO (%P|%t) - Connection_Handler[%B]::handle_input_eh, "
-                      "Error deferring upcall handler[%d]\n",
-                      this->transport ()->id (),
-                      eh->get_handle ()));
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                             "TAO (%P|%t) - Connection_Handler[%B]::handle_input_eh, "
+                             "Error deferring upcall handler[%H]\n",
+                             this->transport ()->id (),
+                             eh->get_handle ()));
+            }
           return -1;
         }
       // Returning 0 causes the wait strategy to exit and the leader thread
@@ -273,18 +294,22 @@ TAO_Connection_Handler::handle_input_internal (
       ACE_HANDLE const handle = eh->get_handle();
       TAOLIB_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Connection_Handler[%B]::handle_input_internal, "
-                  "handle = %d/%d\n",
-                  t_id, handle, h));
+                  "handle = %H/%H\n",
+                  t_id,
+                  handle,
+                  h));
     }
 
   TAO_Resume_Handle resume_handle (this->orb_core (), eh->get_handle ());
 
-  int return_value = 0;
+  int return_value {};
 
   this->pre_io_hook (return_value);
 
   if (return_value != 0)
+  {
     return return_value;
+  }
 
   return_value = this->transport ()->handle_input (resume_handle);
 
@@ -299,8 +324,11 @@ TAO_Connection_Handler::handle_input_internal (
       ACE_HANDLE const handle = eh->get_handle ();
       TAOLIB_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Connection_Handler[%B]::handle_input_internal, "
-                  "handle = %d/%d, retval = %d\n",
-                  t_id, handle, h, return_value));
+                  "handle = %H/%H, retval = %d\n",
+                  t_id,
+                  handle,
+                  h,
+                  return_value));
     }
 
   if (return_value != 0)
@@ -321,16 +349,14 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
 
   this->is_closed_ = true;
 
-  // Save the ID for debugging messages
   ACE_HANDLE const handle = eh->get_handle ();
-
   size_t const id = this->transport ()->id ();
   if (TAO_debug_level)
     {
       TAOLIB_DEBUG  ((LM_DEBUG,
                    "TAO (%P|%t) - Connection_Handler[%B]::"
                    "close_connection_eh, purging entry from cache\n",
-                   handle));
+                   id));
     }
 
   this->transport ()->pre_close ();
@@ -346,7 +372,9 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
           // If the ORB is nil, get the reactor from orb_core which gets it
           // from LF.
           if (eh_reactor == nullptr)
+          {
             eh_reactor = this->transport()->orb_core()->reactor ();
+          }
         }
 
       // The Reactor must not be null, otherwise something else is
@@ -358,7 +386,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
           TAOLIB_DEBUG  ((LM_DEBUG,
                        "TAO (%P|%t) - Connection_Handler[%B]::"
                        "close_connection_eh, removing from the reactor\n",
-                       handle));
+                       id));
         }
 
       // Use id instead of handle. Why? "handle" may be invalid for RW
@@ -369,7 +397,9 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
       // will make things safer.
       ACE_HANDLE tmp_handle = handle;
       if (this->orb_core_->has_shutdown ())
+      {
         tmp_handle = (ACE_HANDLE) id;
+      }
 
       eh_reactor->remove_handler (tmp_handle,
                                   ACE_Event_Handler::ALL_EVENTS_MASK |
@@ -382,7 +412,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
           TAOLIB_DEBUG  ((LM_DEBUG,
                        "TAO (%P|%t) - Connection_Handler[%B]::"
                        "close_connection_eh, cancel all timers\n",
-                       handle));
+                       id));
         }
 
       eh_reactor->cancel_timer (eh);

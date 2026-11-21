@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_MPROFILE_H
 #define TAO_MPROFILE_H
 
@@ -21,10 +20,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
+#include <memory>
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -53,14 +53,12 @@ using TAO_PHandle = CORBA::ULong;
 class TAO_Export TAO_MProfile
 {
 public:
-  TAO_MProfile (CORBA::ULong sz = 0);
+  explicit TAO_MProfile (CORBA::ULong sz = 0);
 
   /**
-   * **NOTE:  IF mprofiles->last_ > 0, THEN this->size_ will be set to
-   *          mprofiles->last_.  Otherwise this->size_ - mprofiles->size_.
-   *          Furthermore, current_ is set back to 0!  i.e. rewound.
-   * The reference count on any profiles in mprofiles is increment
-   * when their references (i.e. pointers) are copied.
+   * Copies the used profiles from @a mprofiles and rewinds the current
+   * position. Profile reference counts are incremented for each copied
+   * profile.
    */
   TAO_MProfile (const TAO_MProfile &mprofiles);
 
@@ -75,12 +73,7 @@ public:
   /// NOT THREAD SAFE
   int set (CORBA::ULong sz);
 
-  /**
-   * Inits this to the values of mprofile.  NOTE: We use
-   * mprofile->last_ instead of mprofile->size_ to set this->size_.
-   * This is so we can use set () to trim a profile list!!
-   * NOT THREAD SAFE
-   */
+  /// Copies the used profiles from @a mprofile. NOT THREAD SAFE.
   int set (const TAO_MProfile &mprofile);
 
   /// increase the number of profiles this object can hold.
@@ -117,8 +110,7 @@ public:
   /// Returns the number of profiles stored in the list (last_+1).
   CORBA::ULong profile_count () const;
 
-  /// return the maximum number of profiles that can be stored in this
-  /// container, (size_+1)
+  /// Return the maximum number of profiles that can be stored in this container.
   CORBA::ULong size () const;
 
   /// Return the profile at position <slot>.  If <slot> is out of range
@@ -189,7 +181,7 @@ protected:
 protected:
   /// Stores the policy list for the profile of this MProfile.
   friend class TAO_Profile;
-  CORBA::PolicyList *policy_list_;
+  std::unique_ptr<CORBA::PolicyList> policy_list_;
 
   CORBA::Boolean is_policy_list_initialized_;
 
@@ -197,11 +189,8 @@ protected:
   /// is created.
   TAO_SYNCH_RECURSIVE_MUTEX mutex_;
 
-protected:
-  /// Return the complete list of profiles, this object retains
-  /// ownership!
-  TAO_Profile **pfiles () const;
-
+  /// Return the complete list of profiles retained by this object.
+  TAO_Profile *const *pfiles () const;
 
 private:
   /// Helper method to implement the destructor
@@ -224,16 +213,13 @@ private:
    */
   TAO_MProfile  *forward_from_;
 
-  /// Actual list of profiles.
-  TAO_Profile **pfiles_;
+  /// Profiles whose reference counts are held by this MProfile.
+  std::vector<TAO_Profile *> pfiles_;
 
-  /// Points to the next profile to be used.  0 ... size_
+  /// Points to the next profile to be used.  0 ... pfiles_.size ()
   TAO_PHandle current_;
 
-  /// Max size of array
-  TAO_PHandle size_;
-
-  /// Index plus 1 of last valid entry!  May be < size_.
+  /// Index plus 1 of last valid entry!  May be < pfiles_.size ().
   TAO_PHandle last_;
 };
 

@@ -1,15 +1,8 @@
-//
-// = FILENAME
-//   DOVEBrowserApplet.java
-//
-// = AUTHOR
-//   Michael Kircher (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//   Entry point for the demo when started inside an applet.
-//
-// ============================================================================
-
+/**
+ * @file DOVEBrowserApplet.java
+ * @author Michael Kircher (mk1@cs.wustl.edu)
+ * @brief Entry point for the demo when started inside an applet.
+ */
 
 import java.awt.*;
 
@@ -40,11 +33,4 @@ public class DOVEBrowserApplet extends java.applet.Applet {
     demoCore_.run ();
   }
 }
-
-
-
-
-
-
-
 

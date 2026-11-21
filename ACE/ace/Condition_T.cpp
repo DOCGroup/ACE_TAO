@@ -38,7 +38,7 @@ ACE_Condition<MUTEX>::dump () const
 
 template <class MUTEX>
 ACE_Thread_Condition<MUTEX>::ACE_Thread_Condition (MUTEX &m,
-                                                   const ACE_TCHAR *name,
+                                                   ACE_TCHAR const *name,
                                                    void *arg)
   : ACE_Condition<MUTEX> (m, USYNC_THREAD, name, arg)
 {
@@ -58,7 +58,7 @@ ACE_Thread_Condition<MUTEX>::dump () const
 template <class MUTEX>
 ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
                                      int type,
-                                     const ACE_TCHAR *name,
+                                     ACE_TCHAR const *name,
                                      void *arg)
   :
     mutex_ (m)
@@ -69,15 +69,17 @@ ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
                          (short) type,
                          name,
                          arg) != 0)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Condition::ACE_Condition")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Condition::ACE_Condition")));
+    }
 }
 
 template <class MUTEX>
 ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
-                                     const ACE_Condition_Attributes &attributes,
-                                     const ACE_TCHAR *name,
+                                     ACE_Condition_Attributes const &attributes,
+                                     ACE_TCHAR const *name,
                                      void *arg)
   : mutex_ (m)
 {
@@ -85,9 +87,11 @@ ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
   if (ACE_OS::cond_init (&this->cond_,
                          const_cast<ACE_condattr_t &> (attributes.attributes ()),
                          name, arg) != 0)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Condition::ACE_Condition")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Condition::ACE_Condition")));
+    }
 }
 
 template <class MUTEX>
@@ -96,9 +100,11 @@ ACE_Condition<MUTEX>::~ACE_Condition ()
   // ACE_TRACE ("ACE_Condition<MUTEX>::~ACE_Condition");
 
   if (this->remove () == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Condition::~ACE_Condition")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Condition::~ACE_Condition")));
+    }
 }
 
 template <class MUTEX> int
@@ -111,7 +117,7 @@ ACE_Condition<MUTEX>::wait ()
 
 template <class MUTEX> int
 ACE_Condition<MUTEX>::wait (MUTEX &mutex,
-                            const ACE_Time_Value *abstime)
+                            ACE_Time_Value const *abstime)
 {
 // ACE_TRACE ("ACE_Condition<MUTEX>::wait");
   if (abstime == nullptr)
@@ -132,7 +138,7 @@ ACE_Condition<MUTEX>::wait (MUTEX &mutex,
 /// then we do a regular cond_wait(), else we do a timed wait for up to
 /// @a abstime
 template <class MUTEX> int
-ACE_Condition<MUTEX>::wait (const ACE_Time_Value *abstime)
+ACE_Condition<MUTEX>::wait (ACE_Time_Value const *abstime)
 {
 // ACE_TRACE ("ACE_Condition<MUTEX>::wait");
   return this->wait (this->mutex_, abstime);

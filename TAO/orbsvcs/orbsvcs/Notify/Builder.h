@@ -47,8 +47,8 @@ public:
 
   virtual ~TAO_Notify_Builder ();
 
-  ///= Factory Methods
-
+  /// @name Factory methods
+  /// @{
   /// Build EventChannel Factory.
   virtual CosNotifyChannelAdmin::EventChannelFactory_ptr
   build_event_channel_factory (PortableServer::POA_ptr poa
@@ -71,7 +71,6 @@ public:
                        , const CosNotifyChannelAdmin::ChannelID id
                        , char const *ec_name = nullptr);
 
-
   /// Build ConsumerAdmin
   virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr
   build_consumer_admin (TAO_Notify_EventChannel* ec
@@ -84,8 +83,7 @@ public:
   /// be an appropriate base class for it to return.
   virtual TAO_Notify_ConsumerAdmin *
   build_consumer_admin (TAO_Notify_EventChannel* ec
-                        , const CosNotifyChannelAdmin::AdminID id //CORBA::Long id          // note: an in parameter!
-                        );
+                        , const CosNotifyChannelAdmin::AdminID id);
 
   /// Build SupplierAdmin
   virtual CosNotifyChannelAdmin::SupplierAdmin_ptr
@@ -99,8 +97,7 @@ public:
   /// be an appropriate base class for it to return.
   virtual TAO_Notify_SupplierAdmin *
   build_supplier_admin (TAO_Notify_EventChannel * ec
-                        , const CosNotifyChannelAdmin::AdminID id //CORBA::Long id          // note: an in parameter!
-                        );
+                        , const CosNotifyChannelAdmin::AdminID id);
 
   /// Build ProxyConsumer
   virtual CosNotifyChannelAdmin::ProxyConsumer_ptr
@@ -135,6 +132,7 @@ public:
   /// Build CosEC style ProxyConsumer.
   virtual CosEventChannelAdmin::ProxyPushConsumer_ptr
   build_proxy (TAO_Notify_SupplierAdmin* sa);
+  /// @}
 
   /// Apply Reactive concurrency.
   virtual void apply_reactive_concurrency (TAO_Notify_Object& object);

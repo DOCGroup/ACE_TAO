@@ -1,5 +1,10 @@
 #include "Task_Stats.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdio.h"
+
+#include <memory>
+#include <new>
+#include <utility>
 
 #if !defined (__ACE_INLINE__)
 #include "Task_Stats.inl"
@@ -15,8 +20,6 @@ Task_Stats::Task_Stats (size_t max_samples)
     end_time_ (0),
     max_samples_ (max_samples),
     samples_count_ (0),
-    time_inv_ (0),
-    time_exec_ (0),
     exec_time_min_ (0),
     exec_time_min_at_ (0),
     exec_time_max_ (0),
@@ -26,17 +29,25 @@ Task_Stats::Task_Stats (size_t max_samples)
 {
 }
 
-Task_Stats::~Task_Stats ()
-{
-  delete[] this->time_inv_;
-  delete[] this->time_exec_;
-}
-
 int
 Task_Stats::init ()
 {
-  ACE_NEW_RETURN (this->time_inv_, ACE_UINT64[this->max_samples_], -1);
-  ACE_NEW_RETURN (this->time_exec_, ACE_UINT64[this->max_samples_], -1);
+  std::unique_ptr<ACE_UINT64[]> time_inv (
+    new (std::nothrow) ACE_UINT64[this->max_samples_]);
+  if (!time_inv)
+  {
+    return -1;
+  }
+
+  std::unique_ptr<ACE_UINT64[]> time_exec (
+    new (std::nothrow) ACE_UINT64[this->max_samples_]);
+  if (!time_exec)
+  {
+    return -1;
+  }
+
+  this->time_inv_ = std::move (time_inv);
+  this->time_exec_ = std::move (time_exec);
   return 0;
 }
 
@@ -54,14 +65,22 @@ Task_Stats::end_time (ACE_hrtime_t time)
 
 void
 Task_Stats::dump_samples (
-  const ACE_TCHAR *file_name,
-  const ACE_TCHAR *msg,
+  ACE_TCHAR const *file_name,
+  ACE_TCHAR const *msg,
   ACE_High_Res_Timer::global_scale_factor_type scale_factor)
 {
-  FILE* output_file = ACE_OS::fopen (file_name, "w");
+  std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+    ACE_OS::fopen (file_name, ACE_TEXT ("w")), ACE_OS::fclose);
+  if (!output_file)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Cannot open sample output file: %s\n"),
+                  file_name));
+      return;
+    }
 
   // first dump what the caller has to say.
-  ACE_OS::fprintf (output_file, "%s\n", ACE_TEXT_ALWAYS_CHAR (msg));
+  ACE_OS::fprintf (output_file.get (), "%s\n", ACE_TEXT_ALWAYS_CHAR (msg));
 
   // next, compose and dump what we want to say.
 
@@ -76,12 +95,12 @@ Task_Stats::dump_samples (
     double(samples_count_) / elapsed_seconds;
 
   ACE_OS::sprintf (out_msg, ACE_TEXT("#Throughtput: %f\n"), throughput);
-  ACE_OS::fprintf (output_file, ACE_TEXT("%s\n"),out_msg);
+  ACE_OS::fprintf (output_file.get (), ACE_TEXT("%s\n"),out_msg);
 
   // dump latency stats.
   this->dump_latency_stats (out_msg, scale_factor);
-  ACE_OS::fprintf (output_file, "%s\n", ACE_TEXT_ALWAYS_CHAR (out_msg));
-  ACE_OS::fprintf (output_file, "#Invocation time \t Execution time\n");
+  ACE_OS::fprintf (output_file.get (), "%s\n", ACE_TEXT_ALWAYS_CHAR (out_msg));
+  ACE_OS::fprintf (output_file.get (), "#Invocation time \t Execution time\n");
 
   // dump the samples recorded.
   for (size_t i = 0; i != this->samples_count_; ++i)
@@ -92,10 +111,11 @@ Task_Stats::dump_samples (
       ACE_UINT64 y = this->time_exec_[i] / scale_factor;
       ACE_UINT32 val_2 = ACE_CU64_TO_CU32 (y);
 
-      ACE_OS::fprintf (output_file, "%u \t %u\n",val_1, val_2);
+      ACE_OS::fprintf (output_file.get (),
+                       ACE_UINT32_FORMAT_SPECIFIER_ASCII " \t "
+                       ACE_UINT32_FORMAT_SPECIFIER_ASCII "\n",
+                       val_1, val_2);
     }
-
-  ACE_OS::fclose (output_file);
 }
 
 void
@@ -129,13 +149,20 @@ Task_Stats::dump_latency_stats (
   ACE_UINT64 tmax_ = this->time_inv_[samples_count_-1] / sf;
   ACE_UINT32 tmax = ACE_CU64_TO_CU32 (tmax_);
 
-  ACE_OS::sprintf(out_msg,
-                ACE_TEXT ("#latency   : %u[%d]/%u/%u[%d]/%u (min/avg/max/var^2)\n #first invocation time = %u, last invocation time = %u\n"),
-                l_min, this->exec_time_min_at_,
-                l_avg,
-                l_max, this->exec_time_max_at_,
-                l_dev,
-                tmin,tmax);
+  ACE_OS::sprintf (out_msg,
+                   ACE_TEXT ("#latency   : ")
+                   ACE_UINT32_FORMAT_SPECIFIER ACE_TEXT ("[")
+                   ACE_UINT32_FORMAT_SPECIFIER ACE_TEXT ("]/")
+                   ACE_UINT32_FORMAT_SPECIFIER ACE_TEXT ("/")
+                   ACE_UINT32_FORMAT_SPECIFIER ACE_TEXT ("[")
+                   ACE_UINT32_FORMAT_SPECIFIER ACE_TEXT ("]/")
+                   ACE_UINT32_FORMAT_SPECIFIER
+                   ACE_TEXT (" (min/avg/max/var^2)\n #first invocation time = ")
+                   ACE_UINT32_FORMAT_SPECIFIER
+                   ACE_TEXT (", last invocation time = ")
+                   ACE_UINT32_FORMAT_SPECIFIER ACE_TEXT ("\n"),
+                   l_min, this->exec_time_min_at_, l_avg,
+                   l_max, this->exec_time_max_at_, l_dev, tmin, tmax);
 }
 
 ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, Base_Time,  TAO_SYNCH_MUTEX);

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _FILE_MANAGER_H
 #define _FILE_MANAGER_H
 
@@ -30,19 +29,18 @@
 class File_Manager
 {
 public:
-  /// Constructor.
   File_Manager ();
 
   int open_file (const char *filename);
   void get_login_and_real_name (const char *&login_name,
                                 const char *&real_name);
 private:
-  int number_of_friends;
-  int max_key_length;
+  int number_of_friends {};
+  int max_key_length {};
 
-  char *buffer_ptr;
-  char *current_ptr;
-  int buffer_size;
+  char *buffer_ptr {};
+  char *current_ptr {};
+  int buffer_size {};
 
   int open_friends_file (const char *filename);
   int open_passwd_file ();

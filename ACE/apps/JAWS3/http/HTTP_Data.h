@@ -11,13 +11,18 @@ class JAWS_HTTP_Service_Handler;
 class JAWS_HTTP_Data
 {
 public:
-  JAWS_HTTP_Data (JAWS_HTTP_Service_Handler *sh);
+  explicit JAWS_HTTP_Data (JAWS_HTTP_Service_Handler *sh);
+  JAWS_HTTP_Data (JAWS_HTTP_Data const &) = delete;
+  JAWS_HTTP_Data (JAWS_HTTP_Data &&) = delete;
+  JAWS_HTTP_Data &operator= (JAWS_HTTP_Data const &) = delete;
+  JAWS_HTTP_Data &operator= (JAWS_HTTP_Data &&) = delete;
 
   ACE_SOCK_Stream & peer ();
   ACE_Message_Block & mb ();
   ACE_FILE_IO & file_io ();
 
 private:
+  /// Non-owning back pointer to the service handler.
   JAWS_HTTP_Service_Handler *sh_;
   ACE_Message_Block mb_;
   ACE_FILE_IO file_io_;

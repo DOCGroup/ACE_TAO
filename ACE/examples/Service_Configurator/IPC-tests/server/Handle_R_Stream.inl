@@ -10,7 +10,7 @@
 ACE_INLINE
 Handle_R_Stream::Handle_R_Stream ()
 {
-  if (Handle_R_Stream::login_name == 0) {
+  if (Handle_R_Stream::login_name == nullptr) {
 #if !defined(ACE_LACKS_CUSERID)
     Handle_R_Stream::login_name = ACE_OS::cuserid (Handle_R_Stream::login);
 #else
@@ -26,11 +26,17 @@ ACE_INLINE int
 Handle_R_Stream::open (const ACE_INET_Addr &sia, int async)
 {
   if (this->ACE_SOCK_Acceptor::open (sia) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (async && this->ACE_SOCK_Acceptor::enable (ACE_SIGIO) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 ACE_INLINE int
@@ -50,7 +56,7 @@ Handle_R_Stream::info (ACE_TCHAR **strp, size_t length) const
                    ACE_TEXT("tcp"),
                    ACE_TEXT("# tests remote stream\n"));
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
     {
       return -1;
     }
@@ -79,13 +85,16 @@ Handle_R_Stream::init (int argc, ACE_TCHAR *argv[])
        }
 
   if (this->open (sis) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
-
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+    }
   else if (ACE_Reactor::instance ()->register_handler
            (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "registering service with ACE_Reactor\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "registering service with ACE_Reactor\n"),
+                        -1);
+    }
   return 0;
 }
 
@@ -106,31 +115,37 @@ ACE_INLINE int
 Handle_R_Stream::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
-  int  bytes;
+  int  bytes {};
 
   // Try to find out if the implementation of the reactor that we are
   // using requires us to reset the event association for the newly
   // created handle. This is because the newly created handle will
   // inherit the properties of the listen handle, including its event
   // associations.
-  int reset_new_handle =
+  int const reset_new_handle =
     ACE_Reactor::instance ()->uses_event_associations ();
 
   if (this->accept (this->new_remote_stream, // stream
-                    0, // remote address
-                    0, // timeout
+                    nullptr, // remote address
+                    nullptr, // timeout
                     1, // restart
                     reset_new_handle  // reset new handler
                     ) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    ACE_DEBUG ((LM_INFO, "new_remote_stream fd = %d\n",
-               this->new_remote_stream.get_handle ()));
+    {
+      ACE_DEBUG ((LM_INFO, "new_remote_stream fd = %H\n",
+                  this->new_remote_stream.get_handle ()));
+    }
 
   ACE_INET_Addr sa;
 
   if (this->new_remote_stream.get_remote_addr (sa) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   ACE_DEBUG ((LM_INFO,
               "accepted from host %s at port %d\n",
@@ -144,7 +159,7 @@ Handle_R_Stream::handle_input (ACE_HANDLE)
 
   ACE_OS::puts (ACE_TEXT ("----------------------------------------"));
 
-  time_t t = ACE_OS::time (0L);
+  time_t const t = ACE_OS::time (nullptr);
   ACE_TCHAR *cs = ACE_OS::ctime (&t);
 
   if (this->new_remote_stream.send (4,
@@ -152,10 +167,14 @@ Handle_R_Stream::handle_input (ACE_HANDLE)
                                     ACE_OS::strlen (Handle_R_Stream::login_name),
                                     cs,
                                     ACE_OS::strlen (cs)) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (this->new_remote_stream.close () == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   return 0;
 }

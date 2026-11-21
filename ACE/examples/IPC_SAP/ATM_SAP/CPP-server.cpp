@@ -4,7 +4,6 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Log_Msg.h"
 
-
 #if defined (ACE_HAS_ATM)
 // ACE_ATM Server
 
@@ -28,7 +27,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   unsigned char selector = ( argc == 2 ) ? ACE_OS::atoi( argv[ 1 ]) : ACE_ATM_Addr::DEFAULT_SELECTOR;
   addr.set_selector( selector );
   ACE_OS::printf( "ATM_Server: selector changed to %d\n", addr.get_selector());
-
 
   // Create a server, reuse the addr.
   ACE_ATM_Acceptor  peer_acceptor;

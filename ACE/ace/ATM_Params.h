@@ -8,7 +8,6 @@
  */
 //==========================================================================
 
-
 #ifndef ACE_ATM_PARAMS_H
 #define ACE_ATM_PARAMS_H
 #include /**/ "ace/pre.h"
@@ -85,7 +84,6 @@ public:
                     | ACE_FLAG_MULTIPOINT_D_ROOT, // connector by default
                   int reuse_addr = 0);
 
-  /// Destructor.
   ~ACE_ATM_Params ();
 
   /// Get protocol family.

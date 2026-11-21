@@ -22,7 +22,9 @@ CORBA::Context::_decr_refcount ()
   CORBA::ULong const new_count = --this->refcount_;
 
   if (new_count == 0)
+  {
     delete this;
+  }
 
   return new_count;
 }
@@ -76,7 +78,7 @@ CORBA::Context::get_values (char const* /* start_scope */,
 
 CORBA::ContextList::ContextList (CORBA::ULong len, char* *ctx_list)
 {
-  for (CORBA::ULong i=0; i < len; i++)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       this->add (ctx_list [i]);
     }
@@ -84,9 +86,9 @@ CORBA::ContextList::ContextList (CORBA::ULong len, char* *ctx_list)
 
 CORBA::ContextList::~ContextList ()
 {
-  for (CORBA::ULong i = 0; i < this->count (); ++i)
+  for (CORBA::ULong i {}; i < this->count (); ++i)
     {
-      char **ctx = nullptr;
+      char **ctx {};
 
       if (this->ctx_list_.get (ctx, i) == -1)
         {
@@ -112,7 +114,7 @@ CORBA::ContextList::add_consume (char *ctx)
 char *
 CORBA::ContextList::item (CORBA::ULong slot)
 {
-  char **ctx = nullptr;
+  char **ctx {};
 
   if (this->ctx_list_.get (ctx, slot) == -1)
     {
@@ -140,12 +142,7 @@ CORBA::ContextList::_duplicate ()
 void
 CORBA::ContextList::_destroy ()
 {
-  CORBA::ULong const current = --this->refcount_;
-
-  if (current == 0)
-    {
-      delete this;
-    }
+  this->_decr_refcount ();
 }
 
 void
@@ -157,9 +154,9 @@ CORBA::ContextList::_incr_refcount ()
 void
 CORBA::ContextList::_decr_refcount ()
 {
-  --this->refcount_;
+  CORBA::ULong const refcount = --this->refcount_;
 
-  if (this->refcount_ != 0)
+  if (refcount == 0)
     {
       delete this;
     }

@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -162,7 +162,7 @@ ACE_Thread::disablecancel (struct cancel_state *old_state)
                                            &old_cstate);
   if (result == 0 && old_state != 0)
     {
-      ACE_OS::memset (old_state,
+      std::memset (old_state,
                       0,
                       sizeof (*old_state));
       old_state->cancelstate = old_cstate;
@@ -183,12 +183,16 @@ ACE_Thread::enablecancel (struct cancel_state *old_state,
   result = ACE_OS::thr_setcancelstate (THR_CANCEL_ENABLE,
                                        &old_cstate);
   if (result != 0)
-    return result;
+    {
+      return result;
+    }
 
   result = ACE_OS::thr_setcanceltype (flag,
                                       &old_ctype);
   if (result != 0)
-    return result;
+    {
+      return result;
+    }
 
   if (old_state != 0)
     {
@@ -210,7 +214,9 @@ ACE_Thread::setcancelstate (struct cancel_state &new_state,
   if (new_state.cancelstate != 0
       && ACE_OS::thr_setcancelstate (new_state.cancelstate,
                                      &old_cstate) != 0)
-    return -1;
+    {
+      return -1;
+    }
 
   if (new_state.canceltype != 0
       && ACE_OS::thr_setcanceltype (new_state.canceltype,

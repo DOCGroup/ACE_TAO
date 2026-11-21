@@ -21,6 +21,8 @@
 #include "ace/Guard_T.h"
 #include "ace/Object_Manager.h"
 
+#include <memory>
+
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
@@ -33,7 +35,7 @@
 # include "ace/OS_NS_fcntl.h"
 #endif /* VXWORKS */
 
-ACE_Test_Output *ACE_Test_Output::instance_ = nullptr;
+ACE_Test_Output *ACE_Test_Output::instance_ {};
 
 ACE_Test_Output::ACE_Test_Output ()
   : output_file_ (nullptr)
@@ -46,7 +48,7 @@ ACE_Test_Output::ACE_Test_Output ()
 ACE_Test_Output::~ACE_Test_Output ()
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-  ACE_LOG_MSG->msg_ostream (&cerr, false);
+  ACE_LOG_MSG->msg_ostream (std::addressof (cerr), false);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
@@ -75,7 +77,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 {
   ACE_TCHAR temp[MAXPATHLEN + 1] = { 0 };
   // Ignore the error value since the directory may already exist.
-  const ACE_TCHAR *test_dir = nullptr;
+  const ACE_TCHAR *test_dir {};
 
 #if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
   test_dir = ACE_OS::getenv (ACE_TEXT ("ACE_TEST_DIR"));
@@ -96,7 +98,9 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 
 #endif /* ACE_WIN32 */
   if (test_dir == nullptr)
+  {
     test_dir = ACE_DEFAULT_TEST_DIR;
+  }
 
   // This could be done with ACE_OS::sprintf() but it requires different
   // format strings for wide-char POSIX vs. narrow-char POSIX and Windows.
@@ -132,9 +136,11 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   this->output_file_->open (ACE_TEXT_ALWAYS_CHAR (temp),
                             ios::out | (append ? ios::app : ios::trunc));
   if (!this->output_file_->good ())
+  {
     return -1;
+  }
 #else /* when ACE_LACKS_IOSTREAM_TOTALLY */
-  const ACE_TCHAR *fmode = 0;
+  ACE_TCHAR const *fmode {};
   if (append)
     fmode = ACE_TEXT ("a");
   else

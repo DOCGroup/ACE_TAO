@@ -15,9 +15,8 @@
 
 module Messaging
 {
-  //
-  // Messaging Quality of Service
-  //
+  /// @name Messaging Quality of Service
+  /// @{
 
   typedef short Priority;
 
@@ -37,9 +36,10 @@ module Messaging
   const Ordering ORDER_PRIORITY = 0x04;
   const Ordering ORDER_DEADLINE = 0x08;
 
-  //
-  // Locally-Constrained Policy Objects
-  //
+  /// @}
+
+  /// @name Locally-Constrained Policy Objects
+  /// @{
 
   /// Rebind Policy (default = TRANSPARENT)
   local interface RebindPolicy : CORBA::Policy {
@@ -93,6 +93,7 @@ module Messaging
   local interface QueueOrderPolicy : CORBA::Policy {
     readonly attribute Ordering allowed_orders;
   };
+  /// @}
 };
 
 #endif /*TAO_MESSAGING_NO_IMPL_PIDL*/

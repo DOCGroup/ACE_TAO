@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFIER_I_H
 #define NOTIFIER_I_H
 
@@ -26,6 +25,8 @@
 #include "ace/SString.h"
 #include "ace/Null_Mutex.h"
 
+#include <memory>
+
 /**
  * @class Notifier_i
  *
@@ -37,24 +38,26 @@
 class Notifier_i : public POA_Notifier
 {
 public:
-  /// Constructor.
   Notifier_i () = default;
 
-  /// Destructor.
-  ~Notifier_i () = default;
+  ~Notifier_i () override;
+
+  Notifier_i (Notifier_i const &) = delete;
+  Notifier_i &operator= (Notifier_i const &) = delete;
+  Notifier_i (Notifier_i &&) = delete;
+  Notifier_i &operator= (Notifier_i &&) = delete;
 
   /// Register a distributed callback handler that is invoked when the
   /// given stock reaches the desired threshold value.
-  void register_callback (const char *stock_name,
+  void register_callback (char const *stock_name,
                           CORBA::Long threshold_value,
                           Callback_Quoter::Consumer_ptr consumer_handler) override;
 
   /// Remove the consumer object.
   void unregister_callback (Callback_Quoter::Consumer_ptr consumer_handler) override;
 
-
   /// Get the market status.
-  void market_status (const char *stock_name, CORBA::Long stock_value) override;
+  void market_status (char const *stock_name, CORBA::Long stock_value) override;
 
   /// Get the orb pointer.
   void orb (CORBA::ORB_ptr orb);
@@ -64,7 +67,7 @@ public:
 
 public:
   /// The ORB manager.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /**
    * @class Consumer_Data
@@ -75,18 +78,18 @@ public:
   {
   public:
     /// Comparison operator.
-    bool operator== (const Consumer_Data &rhs) const;
+    bool operator== (Consumer_Data const &rhs) const;
 
     /// Stores the consumer object reference.
     Callback_Quoter::Consumer_var consumer_;
 
     /// Stores the stock threshold value.
-    CORBA::Long desired_value_;
+    CORBA::Long desired_value_ {};
   };
 
-  typedef ACE_Unbounded_Set<Consumer_Data> CONSUMERS;
+  using CONSUMERS = ACE_Unbounded_Set<Consumer_Data>;
 
-  typedef ACE_Hash_Map_Manager<ACE_CString, CONSUMERS *, ACE_Null_Mutex> CONSUMER_MAP;
+  using CONSUMER_MAP = ACE_Hash_Map_Manager<ACE_CString, CONSUMERS *, ACE_Null_Mutex>;
 
   /// This is the hash map with each hash_entry consisting of the stockname
   /// and an unbounded set of consumer object pointer and the desired stockvalue.
@@ -94,7 +97,11 @@ public:
 
   ///This marks the exit of the notifier. This should be taken care of
   /// before the consumer tries to unregister after the notifier quits.
-  int notifier_exited_ {0};
+  bool notifier_exited_ {};
+
+private:
+  /// Releases mapped consumer sets before closing the ACE map.
+  int close_consumer_map ();
 };
 
 #endif /* NOTIFIER_I_H */

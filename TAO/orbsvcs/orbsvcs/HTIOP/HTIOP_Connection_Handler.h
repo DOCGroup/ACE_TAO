@@ -18,7 +18,6 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #include "tao/corbafwd.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/Connection_Handler.h"
@@ -42,17 +41,18 @@ namespace TAO
      * the Connector
      */
 
-
     class HTIOP_Export Connection_Handler : public SVC_HANDLER,
                                             public TAO_Connection_Handler
     {
     public:
-      Connection_Handler (ACE_Thread_Manager* t = nullptr);
+      explicit Connection_Handler (ACE_Thread_Manager* t = nullptr);
 
-      /// Constructor.
-      Connection_Handler (TAO_ORB_Core *orb_core);
+      explicit Connection_Handler (TAO_ORB_Core *orb_core);
+      Connection_Handler (Connection_Handler const&) = delete;
+      Connection_Handler (Connection_Handler&&) = delete;
+      Connection_Handler& operator= (Connection_Handler const&) = delete;
+      Connection_Handler& operator= (Connection_Handler&&) = delete;
 
-      /// Destructor.
       ~Connection_Handler () override;
 
       /// Called by the <Strategy_Acceptor> when the handler is completely
@@ -64,7 +64,8 @@ namespace TAO
 #if 0  // for now, an active version of HTIOP is not defined, but the
        // methods are kept here as a place-holder.
 
-      /// = Active object activation method.
+      /// @name Active object methods
+      /// @{
       virtual int activate (long flags = THR_NEW_LWP,
                             int n_threads = 1,
                             int force_active = 0,
@@ -76,22 +77,21 @@ namespace TAO
                             size_t stack_size[] = nullptr,
                             ACE_thread_t  thread_names[] = nullptr);
 
-
       /// Only used when the handler is turned into an active object by
       /// calling <activate>.  This serves as the event loop in such cases.
       virtual int svc ();
+      /// @}
 #endif /* 0 */
 
-      //@{
-      /** @name Event Handler overloads
-       */
+      /// @name Event Handler overloads
+      /// @{
       int resume_handler () override;
       int close_connection () override;
       int handle_input (ACE_HANDLE) override;
       int handle_output (ACE_HANDLE) override;
       int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
       int close (u_long = 0) override;
-      //@}
+      /// @}
 
       /// Add ourselves to Cache.
       int add_transport_to_cache ();
@@ -102,17 +102,14 @@ namespace TAO
       ///Set the Diff-Serv codepoint if the Policy dicates the setting of
       ///Network Priority This method is a no-op, but implemented to
       ///satisfy the base class interface.
-      int set_dscp_codepoint (CORBA::Boolean set_network_priority);
-      int set_dscp_codepoint (CORBA::Long dscp);
+      int set_dscp_codepoint (CORBA::Boolean set_network_priority) override;
+      int set_dscp_codepoint (CORBA::Long dscp) override;
 
-
-      //@{
-      /**
-       * @name TAO_Connection Handler overloads
-       */
+      /// @name TAO_Connection_Handler overloads
+      /// @{
       int release_os_resources () override;
       int handle_write_ready (const ACE_Time_Value *timeout) override;
-      //@}
+      /// @}
 
     private:
     };

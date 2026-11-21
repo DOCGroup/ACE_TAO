@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CSD_TP_Custom_Asynch_Request.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
-
 #ifndef TAO_CSD_TP_CUSTOM_ASYNCH_REQUEST_H
 #define TAO_CSD_TP_CUSTOM_ASYNCH_REQUEST_H
 
@@ -44,12 +40,14 @@ namespace TAO
                                              : public TP_Custom_Request
     {
     public:
-      /// Constructor.
       TP_Custom_Asynch_Request(TP_Custom_Request_Operation* op,
                                TP_Servant_State*            servant_state);
 
-      /// Virtual Destructor.
-      ~TP_Custom_Asynch_Request() override;
+      ~TP_Custom_Asynch_Request() override = default;
+      TP_Custom_Asynch_Request (TP_Custom_Asynch_Request const &) = delete;
+      TP_Custom_Asynch_Request &operator= (TP_Custom_Asynch_Request const &) = delete;
+      TP_Custom_Asynch_Request (TP_Custom_Asynch_Request &&) = delete;
+      TP_Custom_Asynch_Request &operator= (TP_Custom_Asynch_Request &&) = delete;
 
     protected:
       /// Dispatch the request to the servant.

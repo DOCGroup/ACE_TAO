@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "Options.h"
 #include "SMR_Server.h"
 #include "ace/ACE.h"
@@ -22,14 +21,16 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_sys_socket.h"
 
+#include <memory>
+
 static char *
 time_stamp ()
 {
   time_t time_now;
   char *temp;
 
-  time_now = ACE_OS::time (0);
-  temp = ACE_OS::asctime (ACE_OS::localtime (&time_now));
+  time_now = ACE_OS::time (nullptr);
+  temp = ACE_OS::asctime (ACE_OS::localtime (std::addressof (time_now)));
   temp[12] = 0;
   return temp;
 }
@@ -48,15 +49,15 @@ exit_server (int sig)
 
 // Returns TRUE if the program was started by INETD.
 
-static int
+static bool
 started_by_inetd ()
 {
   sockaddr_in sin;
   int size = sizeof sin;
 
   return ACE_OS::getsockname (0,
-                              reinterpret_cast<sockaddr *> (&sin),
-                              &size) == 0;
+                              reinterpret_cast<sockaddr *> (std::addressof (sin)),
+                              std::addressof (size)) == 0;
 }
 
 // Does the drwho service.
@@ -65,14 +66,18 @@ static void
 do_drwho (SMR_Server &smr_server)
 {
   if (smr_server.receive () == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                Options::program_name));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  Options::program_name));
+    }
 
   if (smr_server.send () == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                Options::program_name));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  Options::program_name));
+    }
 }
 
 // If the server is started with any argument at all then it doesn't
@@ -89,19 +94,25 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Options::set_options (argc, argv);
   Options::set_opt (Options::STAND_ALONE_SERVER);
 
-  int inetd_controlled = started_by_inetd ();
+  const bool inetd_controlled = started_by_inetd ();
 
   if (!inetd_controlled && Options::get_opt (Options::BE_A_DAEMON))
+  {
     ACE::daemonize ();
+  }
 
   SMR_Server smr_server (Options::port_number);
 
   if (inetd_controlled)
-    do_drwho (smr_server);
+    {
+      do_drwho (smr_server);
+    }
   else
     {
       for (;;)
-        do_drwho (smr_server);
+        {
+          do_drwho (smr_server);
+        }
 
       /* NOTREACHED */
     }

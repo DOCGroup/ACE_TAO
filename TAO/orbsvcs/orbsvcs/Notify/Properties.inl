@@ -121,7 +121,6 @@ TAO_Notify_Properties::validate_client_interval (ACE_Time_Value b)
   this->validate_client_interval_ = b;
 }
 
-
 ACE_INLINE bool
 TAO_Notify_Properties::separate_dispatching_orb ()
 {
@@ -217,7 +216,6 @@ TAO_Notify_Properties::defaultConsumerAdminFilterOp (CosNotifyChannelAdmin::Inte
 {
   this->defaultConsumerAdminFilterOp_ = op;
 }
-
 
 ACE_INLINE CosNotifyChannelAdmin::InterFilterGroupOperator
 TAO_Notify_Properties::defaultSupplierAdminFilterOp ()

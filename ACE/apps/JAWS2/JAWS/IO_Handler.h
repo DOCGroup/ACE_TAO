@@ -149,21 +149,18 @@ public:
 
   /// This method will be called when an asynchronous read completes on
   /// a stream.
-  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result
-                                   &result);
+  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
 
   /// This method will be called when an asynchronous write completes
   /// on a stream.
-  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result
-                                    &result);
+  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
 
   /// This method will be called when an asynchronous transmit file
   /// completes.
-  virtual void handle_transmit_file (const ACE_Asynch_Transmit_File::Result
-                                     &result);
+  void handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result) override;
 
   /// This method will be called when an asynchronous accept completes.
-  virtual void handle_accept (const ACE_Asynch_Accept::Result &result);
+  void handle_accept (const ACE_Asynch_Accept::Result &result) override;
 
   virtual void handler (JAWS_Asynch_IO_Handler *ioh);
   virtual JAWS_Asynch_IO_Handler * handler ();
@@ -171,10 +168,10 @@ public:
   virtual void dispatch_handler ();
 
   /// Call back entry point for ACE_Asynch_Acceptor
-  virtual void open (ACE_HANDLE h, ACE_Message_Block &mb);
+  void open (ACE_HANDLE h, ACE_Message_Block &mb) override;
 
   /// Receives the ACT.
-  virtual void act (const void *act_ref);
+  void act (const void *act_ref) override;
 
   //virtual ACE_HANDLE handle () const;
 
@@ -183,43 +180,42 @@ private:
 };
 #endif /* defined(ACE_HAS_WIN32_OVERLAPPED_IO) || defined(ACE_HAS_AIO_CALLS) */
 
-
 class JAWS_Export JAWS_IO_Handler : public JAWS_Abstract_IO_Handler
 {
 public:
   JAWS_IO_Handler (JAWS_IO_Handler_Factory *factory);
-  virtual ~JAWS_IO_Handler ();
+  ~JAWS_IO_Handler () override;
 
   // Inherited from JAWS_IO_Handler
 
-  virtual void accept_complete (ACE_HANDLE handle);
-  virtual void accept_error ();
-  virtual void read_complete (ACE_Message_Block *data);
-  virtual void read_error ();
-  virtual void transmit_file_complete ();
-  virtual void transmit_file_error (int result);
-  virtual void receive_file_complete ();
-  virtual void receive_file_error (int result);
-  virtual void write_error ();
-  virtual void confirmation_message_complete ();
-  virtual void error_message_complete ();
+  void accept_complete (ACE_HANDLE handle) override;
+  void accept_error () override;
+  void read_complete (ACE_Message_Block *data) override;
+  void read_error () override;
+  void transmit_file_complete () override;
+  void transmit_file_error (int result) override;
+  void receive_file_complete () override;
+  void receive_file_error (int result) override;
+  void write_error () override;
+  void confirmation_message_complete () override;
+  void error_message_complete () override;
 
-  virtual JAWS_IO_Handler_Factory *factory ();
-  virtual ACE_HANDLE handle () const;
+  JAWS_IO_Handler_Factory *factory () override;
+  ACE_HANDLE handle () const override;
 
-  virtual void done ();
-  virtual int status ();
-  virtual void idle ();
+  void done () override;
+  int status () override;
+  void idle () override;
 
   virtual void acquire ();
   virtual void lock ();
   virtual void release ();
 
-  virtual void task (JAWS_Pipeline_Handler *ph);
-  virtual JAWS_Pipeline_Handler *task ();
+  void task (JAWS_Pipeline_Handler *ph) override;
+  JAWS_Pipeline_Handler *task () override;
 
-  virtual void message_block (JAWS_Data_Block *mb);
-  virtual JAWS_Data_Block *message_block ();
+  void message_block (JAWS_Data_Block *mb) override;
+  JAWS_Data_Block *message_block () override;
 
 protected:
   /// The state of the handler.
@@ -242,7 +238,6 @@ protected:
 class JAWS_Export JAWS_IO_Handler_Factory
 {
 public:
-  /// Destructor
   virtual ~JAWS_IO_Handler_Factory ();
 
   /// This creates a new JAWS_IO_Handler
@@ -262,14 +257,13 @@ using JAWS_Synch_IO_Handler_Factory_Singleton = ACE_Singleton<JAWS_Synch_IO_Hand
 class JAWS_Export JAWS_Asynch_IO_Handler_Factory : public JAWS_IO_Handler_Factory
 {
 public:
-  /// Destructor
-  virtual ~JAWS_Asynch_IO_Handler_Factory ();
+  ~JAWS_Asynch_IO_Handler_Factory () override;
 
   /// This creates a new JAWS_IO_Handler
-  virtual JAWS_IO_Handler *create_io_handler ();
+  JAWS_IO_Handler *create_io_handler () override;
 
   /// This deletes a JAWS_IO_Handler
-  virtual void destroy_io_handler (JAWS_IO_Handler *handler);
+  void destroy_io_handler (JAWS_IO_Handler *handler) override;
 };
 
 class JAWS_Export JAWS_Asynch_IO_Handler : public JAWS_IO_Handler
@@ -281,13 +275,13 @@ friend class JAWS_Waiter;
   // Provide implementations for the common functions.
 public:
   explicit JAWS_Asynch_IO_Handler (JAWS_Asynch_IO_Handler_Factory *factory);
-  virtual ~JAWS_Asynch_IO_Handler ();
+  ~JAWS_Asynch_IO_Handler () override;
 
   virtual ACE_Handler *handler ();
 
-  virtual void acquire ();
-  virtual void lock ();
-  virtual void release ();
+  void acquire () override;
+  void lock () override;
+  void release () override;
 
 protected:
   JAWS_Asynch_Handler *handler_;

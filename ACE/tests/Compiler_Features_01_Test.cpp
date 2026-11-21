@@ -15,7 +15,6 @@
 // does not compile the platform is just too broken.
 #include <list>
 
-
 int
 run_main (int, ACE_TCHAR *[])
 {
@@ -57,5 +56,4 @@ run_main (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return status;
 }
-
 

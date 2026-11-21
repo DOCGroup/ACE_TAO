@@ -6,8 +6,7 @@
 
 void
 FOO_Client_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr /* info */
-    )
+    PortableInterceptor::ORBInitInfo_ptr /* info */)
 {
 }
 
@@ -29,7 +28,7 @@ FOO_Client_ORBInitializer::post_init (
   IOP::Codec_var codec =
     codec_factory->create_codec (encoding);
 
-  PortableInterceptor::ClientRequestInterceptor_ptr foo;
+  PortableInterceptor::ClientRequestInterceptor_ptr foo {};
   ACE_NEW_THROW_EX (foo,
                     FOO_ClientRequestInterceptor (codec.in ()),
                     CORBA::NO_MEMORY (

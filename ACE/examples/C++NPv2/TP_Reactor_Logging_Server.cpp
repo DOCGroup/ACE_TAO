@@ -14,6 +14,7 @@
 #else
 # include <string>
 #endif
+#include <cstring>
 
 #include <memory>
 #include "Reactor_Logging_Server_T.h"
@@ -21,10 +22,9 @@
 
 using Server_Logging_Daemon = Reactor_Logging_Server<Logging_Acceptor_Ex>;
 
-
 class Quit_Handler : public ACE_Event_Handler {
 public:
-  Quit_Handler (ACE_Reactor *r) : ACE_Event_Handler (r) {}
+  explicit Quit_Handler (ACE_Reactor *r) : ACE_Event_Handler (r) {}
 
   int handle_exception (ACE_HANDLE) override {
     reactor ()->end_reactor_event_loop ();
@@ -39,7 +39,6 @@ protected:
   ~Quit_Handler () override = default;
 };
 
-
 static ACE_THR_FUNC_RETURN event_loop (void *arg) {
   ACE_Reactor *reactor = static_cast<ACE_Reactor *> (arg);
 
@@ -48,18 +47,17 @@ static ACE_THR_FUNC_RETURN event_loop (void *arg) {
   return ACE_THR_FUNC_RETURN_NULL;
 }
 
-
 static ACE_THR_FUNC_RETURN controller (void *arg) {
   ACE_Reactor *reactor = static_cast<ACE_Reactor *> (arg);
 
-  Quit_Handler *quit_handler = nullptr;
+  Quit_Handler *quit_handler {};
   ACE_NEW_RETURN (quit_handler, Quit_Handler (reactor), ACE_THR_FUNC_RETURN_NULL);
 
 #if defined (ACE_WIN32) && defined (ACE_USES_OLD_IOSTREAMS)
   for (;;) {
     char user_input[80];
     ACE_OS::fgets (user_input, sizeof (user_input), stdin);
-    if (ACE_OS::strcmp (user_input, "quit") == 0) {
+    if (std::strcmp (user_input, "quit") == 0) {
       reactor->notify (quit_handler);
       break;
     }
@@ -79,14 +77,13 @@ static ACE_THR_FUNC_RETURN controller (void *arg) {
   return ACE_THR_FUNC_RETURN_NULL;
 }
 
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   const size_t N_THREADS = 4;
   ACE_TP_Reactor tp_reactor;
-  ACE_Reactor reactor (&tp_reactor);
+  ACE_Reactor reactor (std::addressof (tp_reactor));
   std::unique_ptr<ACE_Reactor> delete_instance
-    (ACE_Reactor::instance (&reactor));
+    (ACE_Reactor::instance (std::addressof (reactor)));
 
   Server_Logging_Daemon *server;
   // Ignore argv[0]...

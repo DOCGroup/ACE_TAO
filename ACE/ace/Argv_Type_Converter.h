@@ -45,6 +45,11 @@ public:
 
   ~ACE_Argv_Type_Converter ();
 
+  ACE_Argv_Type_Converter (ACE_Argv_Type_Converter const &) = delete;
+  ACE_Argv_Type_Converter (ACE_Argv_Type_Converter &&) = delete;
+  ACE_Argv_Type_Converter &operator= (ACE_Argv_Type_Converter const &) = delete;
+  ACE_Argv_Type_Converter &operator= (ACE_Argv_Type_Converter &&) = delete;
+
   /// Returns the pointer of converted command line.
   ACE_TCHAR** get_TCHAR_argv ();
 
@@ -55,12 +60,6 @@ public:
   int& get_argc ();
 
 private:
-  /// Copy Constructor should not be used.
-  ACE_Argv_Type_Converter (const ACE_Argv_Type_Converter&);
-
-  /// Assignment '=' operator should not be used.
-  ACE_Argv_Type_Converter operator= (const ACE_Argv_Type_Converter&);
-
 #if defined (ACE_USES_WCHAR)
 
   /// Perform common initialization for two Ctor's.
@@ -78,16 +77,15 @@ private:
   void cleanup ();
 #endif  // ACE_USES_WCHAR
 
-private:
   /// Original number of input parameter, same as 'argc'.
   int &saved_argc_;
 
-  /// Data member pointer that contains converted argv in ACE_ANTI_TCHAR.
-  char** char_argv_;
+  /// Borrows the original char argv or owns its converted copy, depending on original_type_.
+  char** char_argv_ {};
 
 #if defined (ACE_USES_WCHAR)
-  /// Data member pointer that contains converted argv in ACE_TCHAR.
-  wchar_t** wchar_argv_;
+  /// Borrows the original wide argv or owns its converted copy, depending on original_type_.
+  wchar_t** wchar_argv_ {};
 
   /// argc value before any argv has been passed.
   int before_pass_argc_;
@@ -97,10 +95,10 @@ private:
   bool const original_type_;
 
   /// true indicates wchar_t type argv has been passed.
-  bool wchar_passed_;
+  bool wchar_passed_ {};
 
   /// true indicates char type argv has been passed.
-  bool char_passed_;
+  bool char_passed_ {};
 #endif  /* ACE_USES_WCHAR */
 };
 

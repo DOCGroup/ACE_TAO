@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef HTTP_HELPERS_H
 #define HTTP_HELPERS_H
 
@@ -26,20 +25,20 @@
 class HTTP_Helper
 {
 public:
-  // Convert and HTTP-date into a time_t
+  /// Convert and HTTP-date into a time_t
   static time_t HTTP_mktime (const char *httpdate);
 
-  // Create today's date
+  /// Create today's date
   static const char *HTTP_date ();
   static const char *HTTP_date (char *s);
 
-  // Month conversions (ascii <--> numeric)
+  /// Month conversions (ascii <--> numeric)
   static int HTTP_month (const char *month);
   static const char *HTTP_month (int month);
 
   static char *HTTP_decode_string (char *path);
 
-  // Encode/Decode base64 stuff (weak security model)
+  /// Encode/Decode base64 stuff (weak security model)
   static char *HTTP_decode_base64 (char *data);
   static char *HTTP_encode_base64 (char *data);
 

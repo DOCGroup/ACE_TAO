@@ -53,7 +53,9 @@ be_visitor_operation_argument_marshal::pre_process (be_decl *bd)
         {
           if (this->last_arg_printed_ !=
               be_visitor_operation_argument_marshal::TAO_ARG_NONE)
+          {
             *os << " &&";
+          }
         }
       else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
         {
@@ -65,13 +67,17 @@ be_visitor_operation_argument_marshal::pre_process (be_decl *bd)
         {
           if (this->last_arg_printed_ !=
               be_visitor_operation_argument_marshal::TAO_ARG_NONE)
+          {
             *os << " &&";
+          }
         }
       else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
         {
           if (this->last_arg_printed_ !=
               be_visitor_operation_argument_marshal::TAO_ARG_NONE)
+          {
             *os << " &&";
+          }
         }
       break;
     case AST_Argument::dir_OUT:
@@ -83,7 +89,9 @@ be_visitor_operation_argument_marshal::pre_process (be_decl *bd)
         {
           if (this->last_arg_printed_ !=
               be_visitor_operation_argument_marshal::TAO_ARG_NONE)
+          {
             *os << " &&";
+          }
         }
       break;
     }

@@ -42,12 +42,12 @@ ACE_SPIPE_Stream::send (size_t n, ...) const
   int total_tuples = static_cast<int> (n / 2);
   iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
-  iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
+  iovp = static_cast<iovec *> (alloca (total_tuples * sizeof (iovec)));
 #else
 # ifdef ACE_HAS_ALLOC_HOOKS
-  ACE_ALLOCATOR_RETURN (iovp, (iovec *)
+  ACE_ALLOCATOR_RETURN (iovp, static_cast<iovec *> (
                         ACE_Allocator::instance ()->malloc (total_tuples *
-                                                            sizeof (iovec)),
+                                                            sizeof (iovec))),
                         -1);
 # else
   ACE_NEW_RETURN (iovp,
@@ -58,7 +58,7 @@ ACE_SPIPE_Stream::send (size_t n, ...) const
 
   va_start (argp, n);
 
-  for (int i = 0; i < total_tuples; i++)
+  for (int i = 0; i < total_tuples; ++i)
     {
       iovp[i].iov_base = va_arg (argp, char *);
       iovp[i].iov_len  = va_arg (argp, int);
@@ -90,12 +90,12 @@ ACE_SPIPE_Stream::recv (size_t n, ...) const
   int total_tuples = static_cast<int> (n / 2);
   iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
-  iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
+  iovp = static_cast<iovec *> (alloca (total_tuples * sizeof (iovec)));
 #else
 # ifdef ACE_HAS_ALLOC_HOOKS
-  ACE_ALLOCATOR_RETURN (iovp, (iovec *)
+  ACE_ALLOCATOR_RETURN (iovp, static_cast<iovec *> (
                         ACE_Allocator::instance ()->malloc (total_tuples *
-                                                            sizeof (iovec)),
+                                                            sizeof (iovec))),
                         -1);
 # else
   ACE_NEW_RETURN (iovp,
@@ -106,7 +106,7 @@ ACE_SPIPE_Stream::recv (size_t n, ...) const
 
   va_start (argp, n);
 
-  for (int i = 0; i < total_tuples; i++)
+  for (int i = 0; i < total_tuples; ++i)
     {
       iovp[i].iov_base = va_arg (argp, char *);
       iovp[i].iov_len  = va_arg (argp, int);

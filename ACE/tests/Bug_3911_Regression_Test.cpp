@@ -63,6 +63,9 @@ protected:
   };
 
 public:
+  ShmemMan (ShmemMan const &) = delete;
+  ShmemMan &operator= (ShmemMan const &) = delete;
+
   ~ShmemMan()
   {
     c_memory_pool->release();
@@ -88,7 +91,7 @@ public:
 
   void* getMemoryBlock(const char* block_name, unsigned int block_size)
   {
-    void* shared = nullptr;
+    void* shared {};
 
     ACE_DEBUG((LM_INFO, ACE_TEXT("errno = %d. Looking for a Shared Memory block named %C\n"),
                         ACE_OS::last_error(),
@@ -130,7 +133,7 @@ public:
   };
 };
 
-ShmemMan* ShmemMan::c_instance = nullptr;
+ShmemMan* ShmemMan::c_instance {};
 
 const char* block_name = "block_1";
 

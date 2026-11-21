@@ -7,10 +7,10 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
-ACE_Date_Time::update (const ACE_Time_Value& timevalue)
+ACE_Date_Time::update (ACE_Time_Value const &timevalue)
 {
-  time_t time = timevalue.sec ();
-  struct tm tm_time;
+  time_t const time = timevalue.sec ();
+  struct tm tm_time {};
   ACE_OS::localtime_r (&time, &tm_time);
   this->day_ = tm_time.tm_mday;
   this->month_ = tm_time.tm_mon + 1;    // localtime's months are 0-11
@@ -27,7 +27,7 @@ ACE_Date_Time::update ()
 {
   ACE_TRACE ("ACE_Date_Time::update");
 
-  update(ACE_OS::gettimeofday ());
+  this->update (ACE_OS::gettimeofday ());
 }
 
 ACE_INLINE
@@ -38,7 +38,7 @@ ACE_Date_Time::ACE_Date_Time ()
 }
 
 ACE_INLINE
-ACE_Date_Time::ACE_Date_Time (const ACE_Time_Value& timevalue)
+ACE_Date_Time::ACE_Date_Time (ACE_Time_Value const &timevalue)
 {
   ACE_TRACE ("ACE_Date_Time::ACE_Date_Time: timevalue");
   this->update (timevalue);

@@ -1,17 +1,13 @@
-// -*- IDL -*-
+/// -*- IDL -*-
 
-//=============================================================================
 /**
  * @file LB_ORT.idl
  */
-//=============================================================================
-
 
 #ifndef TAO_LB_ORT_IDL
 #define TAO_LB_ORT_IDL
 
 #include "tao/ObjRefTemplate/ObjectReferenceTemplate_include.pidl"
-
 
 module TAO_LB
 {
@@ -21,6 +17,5 @@ module TAO_LB
     : PortableInterceptor::ObjectReferenceFactory {};
 
 };
-
 
 #endif  /* TAO_LB_ORT_IDL */

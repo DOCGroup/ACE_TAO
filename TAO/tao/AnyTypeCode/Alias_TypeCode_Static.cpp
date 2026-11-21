@@ -78,7 +78,7 @@ TAO::TypeCode::Alias<char const *,
   // base attributes (id and name).  Perform an equality comparison of
   // the content.
 
-  CORBA::TypeCode_var rhs_content_type = tc->content_type ();
+  CORBA::TypeCode_var const rhs_content_type = tc->content_type ();
 
   return
     Traits<char const *>::get_typecode (this->content_type_)->equal (
@@ -111,7 +111,7 @@ TAO::TypeCode::Alias<char const *,
       throw ::CORBA::INITIALIZE ();
     }
 
-  CORBA::TypeCode_var compact_content_type =
+  CORBA::TypeCode_var const compact_content_type =
     Traits<char const *>::get_typecode (
       this->content_type_)->get_compact_typecode ();
 

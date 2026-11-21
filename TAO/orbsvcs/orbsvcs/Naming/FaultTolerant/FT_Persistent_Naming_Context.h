@@ -40,13 +40,19 @@ public:
    * load balancing.
    */
   TAO_FT_Persistent_Naming_Context (PortableServer::POA_ptr poa,
-                                    const char *poa_id,
+                                    char const *poa_id,
                                     TAO_Persistent_Context_Index *context_index,
                                     HASH_MAP *map = nullptr,
                                     ACE_UINT32 *counter = nullptr);
 
-  /// Destructor.
   ~TAO_FT_Persistent_Naming_Context () override = default;
+
+  TAO_FT_Persistent_Naming_Context (TAO_FT_Persistent_Naming_Context const &) = delete;
+  TAO_FT_Persistent_Naming_Context (TAO_FT_Persistent_Naming_Context &&) = delete;
+  TAO_FT_Persistent_Naming_Context &operator= (
+    TAO_FT_Persistent_Naming_Context const &) = delete;
+  TAO_FT_Persistent_Naming_Context &operator= (
+    TAO_FT_Persistent_Naming_Context &&) = delete;
 
   /**
    * Override the resolve operation to support load balancing using
@@ -60,12 +66,6 @@ public:
 
 protected:
   static TAO_FT_Naming_Manager *naming_manager_impl_;
-
-private:
-  TAO_FT_Persistent_Naming_Context (TAO_FT_Persistent_Naming_Context const &) = delete;
-  TAO_FT_Persistent_Naming_Context (TAO_FT_Persistent_Naming_Context &&) = delete;
-  TAO_FT_Persistent_Naming_Context &operator= (TAO_FT_Persistent_Naming_Context const &) = delete;
-  TAO_FT_Persistent_Naming_Context &operator= (TAO_FT_Persistent_Naming_Context &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

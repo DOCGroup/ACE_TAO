@@ -58,7 +58,6 @@ class ACE_Export ACE_Proactor_Handle_Timeout_Upcall
   friend class ACE_Proactor;
 
 public:
-  /// Constructor.
   ACE_Proactor_Handle_Timeout_Upcall ();
 
   /// This method is called when a timer is registered.
@@ -113,7 +112,7 @@ protected:
 
   /// Handle to the proactor. This is needed for posting a timer result
   /// to the Proactor's completion queue.
-  ACE_Proactor *proactor_;
+  ACE_Proactor *proactor_ {};
 };
 
 /**
@@ -127,7 +126,8 @@ protected:
  */
 class ACE_Export ACE_Proactor
 {
-  // = Here are the private typedefs that the ACE_Proactor uses.
+  /// @name Internal timer types
+  /// @{
 
   using TIMER_QUEUE_ITERATOR = ACE_Timer_Queue_Iterator_T<ACE_Handler *>;
   using TIMER_LIST = ACE_Timer_List_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX>;
@@ -136,8 +136,7 @@ class ACE_Export ACE_Proactor
   using TIMER_HEAP_ITERATOR = ACE_Timer_Heap_Iterator_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX>;
   using TIMER_WHEEL = ACE_Timer_Wheel_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX>;
   using TIMER_WHEEL_ITERATOR = ACE_Timer_Wheel_Iterator_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX>;
-
-  // = Friendship.
+  /// @}
 
   /// Timer handler runs a thread and manages the timers, on behalf of
   /// the Proactor.
@@ -154,8 +153,12 @@ public:
                 bool delete_implementation = false,
                 ACE_Proactor_Timer_Queue *tq = nullptr);
 
-  /// Destruction.
   ~ACE_Proactor ();
+
+  ACE_Proactor (ACE_Proactor const &) = delete;
+  ACE_Proactor (ACE_Proactor &&) = delete;
+  ACE_Proactor &operator= (ACE_Proactor const &) = delete;
+  ACE_Proactor &operator= (ACE_Proactor &&) = delete;
 
   /// Get pointer to a process-wide ACE_Proactor.  @a threads should
   /// be part of another method.
@@ -179,7 +182,8 @@ public:
   /// Name of component--ACE_Proactor in this case.
   static const ACE_TCHAR *name ();
 
-  // = Proactor event loop management methods.
+  /// @name Proactor event loop management
+  /// @{
 
   /// Run the event loop until the <ACE_Proactor::handle_events> method
   /// returns -1 or the <end_event_loop> method is invoked.
@@ -264,13 +268,14 @@ public:
   /// <run_event_loop> method can be restarted.
   int proactor_reset_event_loop ();
 
-
   /// This method adds the @a handle to the I/O completion port. This
   /// function is a no-op function for Unix systems and returns 0;
   int register_handle (ACE_HANDLE handle,
                        const void *completion_key);
+  /// @}
 
-  // = Timer management.
+  /// @name Timer management
+  /// @{
   /**
    * Schedule a @a handler that will expire after <time>.  If it
    * expires then @a act is passed in as the value to the @a handler's
@@ -315,8 +320,9 @@ public:
    * wasn't found.
    */
   int cancel_timer (long timer_id,
-                    const void **act = 0,
+                    const void **act = nullptr,
                     int dont_call_handle_close = 1);
+  /// @}
 
   /**
    * Dispatch a single set of events, waiting up to a specified time limit
@@ -365,10 +371,9 @@ public:
   /// Get the implementation class.
   ACE_Proactor_Impl *implementation () const;
 
-  // = Factory methods for the operations
-
-  // Note that the user does not have to use or know about these
-  // methods.
+  /// @name Operation implementation factories
+  /// These methods are normally used internally by ACE_Proactor.
+  /// @{
 
   /// Create the correct implementation class for doing
   /// Asynch_Read_Stream.
@@ -403,11 +408,12 @@ public:
   /// Create the correct implementation class for doing
   /// Asynch_Write_Dgram.
   ACE_Asynch_Write_Dgram_Impl *create_asynch_write_dgram ();
+  /// @}
 
-  // = Factory methods for the results
-
-  // Note that the user does not have to use or know about these
-  // methods unless they want to "fake" results.
+  /// @name Result implementation factories
+  /// These methods are normally used internally, unless applications need to
+  /// create custom results.
+  /// @{
 
   /// Create the correct implementation class for
   /// ACE_Asynch_Read_Stream::Result class.
@@ -540,6 +546,7 @@ public:
                          ACE_HANDLE event = ACE_INVALID_HANDLE,
                          int priority = 0,
                          int signal_number = ACE_SIGRTMIN);
+  /// @}
 
 protected:
   /**
@@ -561,7 +568,7 @@ protected:
 
   /// Delegation/implementation class that all methods will be
   /// forwarded to.
-  ACE_Proactor_Impl *implementation_;
+  ACE_Proactor_Impl *implementation_ {};
 
   /// Flag used to indicate whether we are responsible for cleaning up
   /// the implementation instance.
@@ -574,31 +581,25 @@ protected:
   static bool delete_proactor_;
 
   /// Handles timeout events.
-  ACE_Proactor_Timer_Handler *timer_handler_;
+  ACE_Proactor_Timer_Handler *timer_handler_ {};
 
   /// This will manage the thread in the Timer_Handler.
   ACE_Thread_Manager thr_mgr_;
 
   /// Timer Queue.
-  ACE_Proactor_Timer_Queue *timer_queue_;
+  ACE_Proactor_Timer_Queue *timer_queue_ {};
 
   /// Flag on whether to delete the timer queue.
-  int delete_timer_queue_;
+  int delete_timer_queue_ {};
 
   /// Terminate the proactor event loop.
-  sig_atomic_t end_event_loop_;
+  sig_atomic_t end_event_loop_ {};
 
   /// Number of threads in the event loop.
-  sig_atomic_t event_loop_thread_count_;
+  sig_atomic_t event_loop_thread_count_ {};
 
   /// Mutex to protect work with lists.
   ACE_SYNCH_MUTEX mutex_;
-
-
-private:
-  /// Deny access since member-wise won't work...
-  ACE_Proactor (const ACE_Proactor &);
-  ACE_Proactor &operator= (const ACE_Proactor &);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -623,6 +624,10 @@ public:
   ACE_Proactor (size_t /* number_of_threads */ = 0,
                 Timer_Queue * /* tq */ = 0) {}
   ~ACE_Proactor () {}
+  ACE_Proactor (ACE_Proactor const &) = delete;
+  ACE_Proactor (ACE_Proactor &&) = delete;
+  ACE_Proactor &operator= (ACE_Proactor const &) = delete;
+  ACE_Proactor &operator= (ACE_Proactor &&) = delete;
   int handle_events () { return -1; }
   int handle_events (ACE_Time_Value &) { return -1; }
 

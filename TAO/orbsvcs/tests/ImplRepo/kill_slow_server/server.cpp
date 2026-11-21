@@ -26,7 +26,6 @@ private:
   CORBA::ORB_var orb_;
 };
 
-
 PortableServer::POA_var root_poa;
 PortableServer::POA_var poa_a;
 
@@ -73,6 +72,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int c;
 
       while ((c = get_opts ()) != -1)
+      {
         switch (c)
           {
           case 'p':
@@ -87,6 +87,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             return 1;
             break;
           }
+      }
 
       //      ACE_OS::sleep (poa_delay);
       CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
@@ -140,7 +141,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       table->bind (base.c_str (), test_ior.in ());
 
       runner->wait ();
-      root_poa->destroy(1,1);
+      root_poa->destroy(true,true);
       orb->destroy();
     }
   catch(const CORBA::Exception& ex)

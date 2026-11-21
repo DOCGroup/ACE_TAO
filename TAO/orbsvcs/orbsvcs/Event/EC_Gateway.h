@@ -21,7 +21,6 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/RtecEventCommS.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -43,11 +42,9 @@ class TAO_RTEvent_Serv_Export TAO_EC_Gateway
   : public POA_RtecEventChannelAdmin::Observer
 {
 public:
-  /// Default constructor.
-  TAO_EC_Gateway ();
+  TAO_EC_Gateway () = default;
 
-  /// Destructor
-  virtual ~TAO_EC_Gateway ();
+  virtual ~TAO_EC_Gateway () = default;
 
   /// The gateway must disconnect from all the relevant event channels,
   /// or any other communication media (such as multicast groups).
@@ -58,7 +55,7 @@ public:
   RtecEventChannelAdmin::Observer_Handle observer_handle () const;
 
 private:
-  RtecEventChannelAdmin::Observer_Handle handle_;
+  RtecEventChannelAdmin::Observer_Handle handle_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file     Excessive_Object_Deactivations.cpp
@@ -10,21 +9,24 @@
  *
  *  @author  Irfan Pyarali
  */
-//=============================================================================
-
-
 #include "testS.h"
 
 class test_i : public POA_test
 {
 public:
-  void deactivate_self ();
+  test_i () = default;
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
 
-  PortableServer::POA_ptr _default_POA ();
+  void deactivate_self () override;
 
-  PortableServer::POA_var poa_;
+  PortableServer::POA_ptr _default_POA () override;
 
-  PortableServer::ObjectId id_;
+  PortableServer::POA_var poa_ {};
+
+  PortableServer::ObjectId id_ {};
 };
 
 PortableServer::POA_ptr
@@ -39,18 +41,18 @@ test_i::deactivate_self ()
   this->poa_->deactivate_object (this->id_);
 
   // Exception flag
-  int expected_exception_raised = 0;
+  bool expected_exception_raised {};
 
   try
     {
       this->poa_->deactivate_object (this->id_);
     }
-  catch (const PortableServer::POA::ObjectNotActive& )
+  catch (PortableServer::POA::ObjectNotActive const &)
     {
       // This is the correct exception! Ignore
-      expected_exception_raised = 1;
+      expected_exception_raised = true;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Exception caught of incorrect type");
@@ -65,24 +67,24 @@ test_i::deactivate_self ()
 
 void
 test_object_deactivation (PortableServer::POA_ptr poa,
-                          const PortableServer::ObjectId &id)
+                          PortableServer::ObjectId const &id)
 {
   test_i servant;
-  int expected_exception_raised = 0;
+  bool expected_exception_raised {};
 
-  PortableServer::ObjectId_var invalid_id =
+  PortableServer::ObjectId_var const invalid_id =
     PortableServer::string_to_ObjectId ("invalid id");
 
   try
     {
       poa->deactivate_object (invalid_id.in ());
     }
-  catch (const PortableServer::POA::ObjectNotActive& )
+  catch (PortableServer::POA::ObjectNotActive const &)
     {
       // This is the correct exception! Ignore
-      expected_exception_raised = 1;
+      expected_exception_raised = true;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Exception caught of incorrect type");
@@ -92,26 +94,24 @@ test_object_deactivation (PortableServer::POA_ptr poa,
   // Make sure an exception was raised and it was of the correct
   // type.
   ACE_ASSERT (expected_exception_raised);
-
-
   poa->activate_object_with_id (id,
                                 &servant);
 
   poa->deactivate_object (id);
 
   // Reset flag
-  expected_exception_raised = 0;
+  expected_exception_raised = false;
 
   try
     {
       poa->deactivate_object (id);
     }
-  catch (const PortableServer::POA::ObjectNotActive& )
+  catch (PortableServer::POA::ObjectNotActive const &)
     {
       // This is the correct exception! Ignore
-      expected_exception_raised = 1;
+      expected_exception_raised = true;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Exception caught of incorrect type");
@@ -130,9 +130,9 @@ test_object_deactivation (PortableServer::POA_ptr poa,
 
   servant.id_ = id;
 
-  CORBA::Object_var object = poa->id_to_reference (id);
+  CORBA::Object_var const object = poa->id_to_reference (id);
 
-  test_var test =
+  test_var const test =
     test::_narrow (object.in ());
 
   test->deactivate_self ();
@@ -142,27 +142,27 @@ test_object_deactivation (PortableServer::POA_ptr poa,
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       // Initialize the ORB first.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA");
 
       // Get the POA_var object from Object_var.
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (obj.in ());
 
       // Get the POAManager of the RootPOA.
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      CORBA::PolicyList empty_policies;
-      PortableServer::POA_var child_poa =
+      CORBA::PolicyList const empty_policies;
+      PortableServer::POA_var const child_poa =
         root_poa->create_POA ("child",
                               poa_manager.in (),
                               empty_policies);
@@ -185,7 +185,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught");
       return -1;

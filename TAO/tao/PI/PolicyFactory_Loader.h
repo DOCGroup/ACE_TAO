@@ -1,14 +1,10 @@
 // -*- C++ -*-
 
-
-//=============================================================================
 /**
  *  @file    PolicyFactory_Loader.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 
 #ifndef TAO_POLICYFACTORY_LOADER_H
 #define TAO_POLICYFACTORY_LOADER_H
@@ -39,7 +35,6 @@ public:
 
 static int
 TAO_Requires_PolicyFactory_Initializer = TAO_PolicyFactory_Loader::Initializer ();
-
 
 ACE_STATIC_SVC_DECLARE (TAO_PolicyFactory_Loader)
 ACE_FACTORY_DECLARE (TAO_PI, TAO_PolicyFactory_Loader)

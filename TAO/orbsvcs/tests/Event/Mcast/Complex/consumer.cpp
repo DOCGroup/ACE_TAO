@@ -3,23 +3,28 @@
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventCommS.h"
+#include <cstddef>
 
 class EC_Consumer:
   public POA_RtecEventComm::PushConsumer
 {
 public:
-  /// Constructor.
   EC_Consumer (CORBA::ORB_var orb,
                RtecEventChannelAdmin::EventChannel_var ec);
 
+  EC_Consumer (EC_Consumer const &) = delete;
+  EC_Consumer (EC_Consumer &&) = delete;
+  EC_Consumer &operator= (EC_Consumer const &) = delete;
+  EC_Consumer &operator= (EC_Consumer &&) = delete;
+
   /// PushConsumer methods.
-  //@{
+  /// @{
   /// Logs each event.  Initiates shutdown after receiving 100 events
   /// of each type.
-  virtual void push (const RtecEventComm::EventSet &events);
+  void push (RtecEventComm::EventSet const &events) override;
 
   /// No-op.
-  virtual void disconnect_push_consumer ();
+  void disconnect_push_consumer () override;
 
 private:
   /// Helper - destroys EC, shutdowns the ORB and prints number of
@@ -27,11 +32,11 @@ private:
   void disconnect ();
 
   /// Number of events of different types pushed to us by EC.
-  //@{
-  size_t a_events_;
-  size_t b_events_;
-  size_t c_events_;
-  //@}
+  /// @{
+  size_t a_events_ {};
+  size_t b_events_ {};
+  size_t c_events_ {};
+  /// @}
 
   /// Cache these pointers for cleanup.
   CORBA::ORB_var orb_;
@@ -40,10 +45,7 @@ private:
 
 EC_Consumer::EC_Consumer (CORBA::ORB_var orb,
                           RtecEventChannelAdmin::EventChannel_var ec)
-  : a_events_ (0),
-    b_events_ (0),
-    c_events_ (0),
-    orb_ (orb),
+  : orb_ (orb),
     ec_ (ec)
 {
 }
@@ -51,7 +53,7 @@ EC_Consumer::EC_Consumer (CORBA::ORB_var orb,
 void
 EC_Consumer::push (const RtecEventComm::EventSet &events)
 {
-  for (CORBA::ULong i = 0; i < events.length (); ++i)
+  for (CORBA::ULong i {}; i < events.length (); ++i)
     {
       switch (events[i].header.type)
         {
@@ -78,7 +80,9 @@ EC_Consumer::push (const RtecEventComm::EventSet &events)
   if (this->a_events_ >= 100
       && this->b_events_ >= 100
       && this->c_events_ >= 100)
+  {
     this->disconnect ();
+  }
 }
 
 void
@@ -106,7 +110,7 @@ EC_Consumer::disconnect ()
 
 ////////////////////////////////////////////////////////////
 int
-check_for_nil (CORBA::Object_ptr obj, const char *message)
+check_for_nil (CORBA::Object_ptr obj, char const *message)
 {
   if (CORBA::is_nil (obj))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -114,7 +118,9 @@ check_for_nil (CORBA::Object_ptr obj, const char *message)
                        message),
                       -1);
   else
+  {
     return 0;
+  }
 }
 
 int
@@ -124,7 +130,7 @@ parse_args (int /* argc */, ACE_TCHAR ** /* argv */)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -133,14 +139,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) == -1)
+      {
         return 1;
+      }
 
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (obj.in ());
       if (check_for_nil (poa.in (), "POA") == -1)
+      {
         return 1;
+      }
 
       PortableServer::POAManager_var manager =
         poa->the_POAManager ();
@@ -150,14 +160,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       RtecEventChannelAdmin::EventChannel_var ec =
         RtecEventChannelAdmin::EventChannel::_narrow (obj.in ());
       if (check_for_nil (ec.in (), "EC") == -1)
+      {
         return 1;
+      }
 
       // Create the consumer and register it with POA.
       PortableServer::Servant_var<EC_Consumer> consumer_impl =
         new EC_Consumer (orb, ec);
 
       if (!consumer_impl.in ())
+      {
         return -1;
+      }
 
       RtecEventComm::PushConsumer_var consumer;
       TAO_EC_Object_Deactivator consumer_deactivator;
@@ -189,7 +203,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Receive events from EC.
       orb->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception in Consumer:");
       return 1;

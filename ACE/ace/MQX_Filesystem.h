@@ -185,9 +185,9 @@ private:
    * @name Current Filesystem for resolving relative paths.
    */
   ///@{
-  MQX_FILE_PTR current_fs_;
-  char current_fs_name_[IOCFG_FS_MAX_DEVLEN];
-  unsigned current_fs_name_len_;
+  MQX_FILE_PTR current_fs_ {};
+  char current_fs_name_[IOCFG_FS_MAX_DEVLEN] {};
+  unsigned current_fs_name_len_ {};
   ///@}
 
   /**

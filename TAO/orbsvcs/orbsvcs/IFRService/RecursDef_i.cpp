@@ -1,6 +1,5 @@
 #include "orbsvcs/IFRService/RecursDef_i.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //-----------------------------------------------------------------------------
@@ -28,7 +27,9 @@ bool TAO_RecursiveDef_OuterScopes::SeenBefore (ACE_TString const &id)
         pOuterScope = pOuterScope->pNextOuterID_)
   {
     if (pOuterScope->id_ == id)
+    {
       return true;
+    }
   }
 
   return false;

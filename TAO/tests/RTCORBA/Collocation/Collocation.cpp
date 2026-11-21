@@ -17,7 +17,7 @@ struct Test_Object_And_Servant
   test_i *servant_;
 };
 
-typedef ACE_Array_Base<Test_Object_And_Servant> Tests;
+using Tests = ACE_Array_Base<Test_Object_And_Servant>;
 
 void
 setup_test_parameters (Test_Object_And_Servant *test,
@@ -31,11 +31,11 @@ public:
           PortableServer::POA_ptr poa,
           Tests &tests);
 
-  void start ();
+  void start () override;
 
-  void method ();
+  void method () override;
 
-  PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
   int client_propagated ();
 
@@ -213,7 +213,7 @@ test_i::start ()
   Tests::ITERATOR iterator (this->tests_);
   while (!iterator.done ())
     {
-      Test_Object_And_Servant *test = 0;
+      Test_Object_And_Servant *test {};
       iterator.next (test);
 
       setup_test_parameters (test,
@@ -340,9 +340,13 @@ setup_test_parameters (Test_Object_And_Servant *test,
       test->servant_->in_lane ())
     {
       if (current_thread_priority == default_thread_priority)
-        test->servant_->invocation_lane (0);
+        {
+          test->servant_->invocation_lane (0);
+        }
       else
+      {
         test->servant_->invocation_lane (1);
+      }
     }
 
   if (!test->servant_->serviced_by_rt_tp ())
@@ -442,7 +446,7 @@ Server::Server (CORBA::ORB_ptr orb)
 void
 Server::create_servant_in_root_poa ()
 {
-  test_i *servant = 0;
+  test_i *servant {};
   ACE_NEW_THROW_EX (servant,
                     test_i (this->orb_.in (),
                             this->root_poa_.in (),
@@ -504,7 +508,7 @@ Server::create_poa_and_servant_with_tp_policy (const char *poa_name,
   RTPortableServer::POA_var rt_poa =
     RTPortableServer::POA::_narrow (poa.in ());
 
-  test_i *servant1 = 0;
+  test_i *servant1 {};
   ACE_NEW_THROW_EX (servant1,
                     test_i (this->orb_.in (),
                             poa.in (),
@@ -527,7 +531,7 @@ Server::create_poa_and_servant_with_tp_policy (const char *poa_name,
         }
       else
         {
-          test_i *servant2 = 0;
+          test_i *servant2 {};
 
           ACE_NEW_THROW_EX (servant2,
                             test_i (this->orb_.in (),
@@ -634,7 +638,7 @@ Server::create_poa_and_servant_with_tp_with_lanes_policy (const char *poa_name,
   RTPortableServer::POA_var rt_poa =
     RTPortableServer::POA::_narrow (poa.in ());
 
-  test_i *servant1 = 0;
+  test_i *servant1 {};
   ACE_NEW_THROW_EX (servant1,
                     test_i (this->orb_.in (),
                             poa.in (),
@@ -657,7 +661,7 @@ Server::create_poa_and_servant_with_tp_with_lanes_policy (const char *poa_name,
     }
   else
     {
-      test_i *servant2 = 0;
+      test_i *servant2 {};
 
       ACE_NEW_THROW_EX (servant2,
                         test_i (this->orb_.in (),
@@ -712,7 +716,7 @@ Server::start_testing ()
   Tests::ITERATOR iterator (this->tests_);
   while (!iterator.done ())
     {
-      Test_Object_And_Servant *test = 0;
+      Test_Object_And_Servant *test {};
       iterator.next (test);
 
       setup_test_parameters (test,
@@ -752,7 +756,7 @@ public:
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
-  int svc ();
+  int svc () override;
 
   CORBA::ORB_var orb_;
 };
@@ -816,7 +820,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Make sure we can support multiple priorities that are
       // required for this test.
       if (!check_supported_priorities (orb.in ()))
+      {
         return 2;
+      }
 
       // Thread Manager for managing task.
       ACE_Thread_Manager thread_manager;
@@ -846,8 +852,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                 2);
             }
           else
-            // Unexpected error.
-            ACE_ASSERT (0);
+            {
+              // Unexpected error.
+              ACE_ASSERT (0);
+            }
         }
 
       // Wait for task to exit.

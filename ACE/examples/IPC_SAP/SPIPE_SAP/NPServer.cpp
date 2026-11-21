@@ -4,7 +4,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-
 #if defined (ACE_WIN32)
 #define MAKE_PIPE_NAME(X) ACE_TEXT ("\\\\.\\pipe\\") ACE_TEXT (X)
 #else
@@ -17,15 +16,16 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   ACE_SPIPE_Acceptor acceptor;
   ACE_SPIPE_Stream new_stream;
   char buf[BUFSIZ];
-  int  n;
   const ACE_TCHAR *rendezvous = MAKE_PIPE_NAME ("acepipe");
 
   // Initialize named pipe listener.
 
   if (acceptor.open (ACE_SPIPE_Addr (rendezvous)) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("open")), 1);
+  }
 
   for (;;)
     {
@@ -34,14 +34,17 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 
       // Accept a client connection.
       if (acceptor.accept (new_stream, nullptr) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("accept")),
                           1);
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Accepted connection\n")));
 
+      int n {};
       while ((n = new_stream.recv (buf, sizeof buf)) > 0)
         {
           ACE_OS::fprintf (stderr,

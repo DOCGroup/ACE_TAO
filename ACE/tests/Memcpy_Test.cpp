@@ -82,11 +82,15 @@ run_main (int, ACE_TCHAR *[])
   struct timeval start, now;
 
   for (size_t i = ITERATIONS; i > 0; --i)
-    testit (0);
+    {
+      testit (0);
+    }
 
   start = ACE_High_Res_Timer::gettimeofday_hr ();
   for (size_t j = ITERATIONS; j > 0; --j)
-    testit (0);
+    {
+      testit (0);
+    }
 
   now = ACE_High_Res_Timer::gettimeofday_hr ();
 
@@ -98,7 +102,9 @@ run_main (int, ACE_TCHAR *[])
 
   start = ACE_High_Res_Timer::gettimeofday_hr ();
   for (size_t k = ITERATIONS; k > 0; --k)
-    testit (1);
+    {
+      testit (1);
+    }
 
   now = ACE_High_Res_Timer::gettimeofday_hr ();
 

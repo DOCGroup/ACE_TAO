@@ -9,13 +9,16 @@
 int ExFilter(EXCEPTION_POINTERS *ep, DWORD code_arg)
 {
   ACE_DEBUG ((LM_INFO,("In SEH Filter\n")));
-  ACE_DEBUG ((LM_INFO,("Code param=%d\n"), code_arg));
-  ACE_DEBUG ((LM_INFO,("\tep->ExceptionRecord->ExceptionCode =%d\n"), ep->ExceptionRecord->ExceptionCode));
+  ACE_DEBUG ((LM_INFO,("Code param=%u\n"), static_cast<unsigned int> (code_arg)));
+  ACE_DEBUG ((LM_INFO,("\tep->ExceptionRecord->ExceptionCode =%u\n"),
+              static_cast<unsigned int> (ep->ExceptionRecord->ExceptionCode)));
   ACE_DEBUG ((LM_INFO,("\tep->ExceptionRecord->ExceptionAddress =%@\n"), ep->ExceptionRecord->ExceptionAddress));
   if (ep->ExceptionRecord->NumberParameters >= 1)
-    ACE_DEBUG ((LM_INFO,("\tep->ExceptionRecord->ExceptionInformation[0]=%@\n"), ep->ExceptionRecord->ExceptionInformation[0]));
+    ACE_DEBUG ((LM_INFO,("\tep->ExceptionRecord->ExceptionInformation[0]=%Q\n"),
+                static_cast<ACE_UINT64> (ep->ExceptionRecord->ExceptionInformation[0])));
   if (ep->ExceptionRecord->NumberParameters == 2)
-    ACE_DEBUG ((LM_INFO,("\tep->ExceptionRecord->ExceptionInformation[1]=%@\n"), ep->ExceptionRecord->ExceptionInformation[1]));
+    ACE_DEBUG ((LM_INFO,("\tep->ExceptionRecord->ExceptionInformation[1]=%Q\n"),
+                static_cast<ACE_UINT64> (ep->ExceptionRecord->ExceptionInformation[1])));
   return 1;
 }
 

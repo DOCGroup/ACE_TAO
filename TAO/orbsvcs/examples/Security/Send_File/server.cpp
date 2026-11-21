@@ -3,8 +3,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-
-const ACE_TCHAR *ior_output_file = 0;
+ACE_TCHAR const *ior_output_file {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -13,6 +12,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opts ()) != -1)
+  {
     switch (c)
       {
       case 'o':
@@ -27,6 +27,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
+  }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -43,9 +44,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
+      }
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -54,7 +57,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       Simple_Server_i server_impl (orb.in ());
 
@@ -67,14 +72,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != 0)
+      if (ior_output_file != nullptr)
         {
           FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
+          if (output_file == nullptr)
+          {
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
                                ior_output_file),
                               1);
+          }
           ACE_OS::fprintf (output_file, "%s", ior.in ());
           ACE_OS::fclose (output_file);
         }
@@ -89,7 +96,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_OS::sleep (5);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

@@ -16,6 +16,8 @@
 
 #include /**/ "ace/config-all.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -129,7 +131,6 @@ public:
     COUNTER::attach_strong (this->counter_);
   }
 
-  /// Destructor.
   ~ACE_Strong_Bound_Ptr ();
 
   /// Assignment operator that binds @c this and @a r to the same object.
@@ -148,13 +149,13 @@ public:
     // of being accepted by broken compilers.
     //
 
-    // This will work if &r == this, by first increasing the ref count
-
     COUNTER *new_counter = r.counter_;
     X* new_ptr = dynamic_cast<X*> (r.ptr_);
     COUNTER::attach_strong (new_counter);
     if (COUNTER::detach_strong (this->counter_) == 0)
-      delete this->ptr_;
+      {
+        delete this->ptr_;
+      }
     this->counter_ = new_counter;
     this->ptr_ = new_ptr;
 
@@ -259,7 +260,6 @@ public:
   /// Constructor binds @c this and @a r to the same object.
   ACE_Weak_Bound_Ptr (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r);
 
-  /// Destructor.
   ~ACE_Weak_Bound_Ptr ();
 
   /// Assignment operator that binds @c this and @a r to the same object.

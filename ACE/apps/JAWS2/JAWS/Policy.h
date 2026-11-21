@@ -40,17 +40,17 @@ public:
   JAWS_Default_Dispatch_Policy ();
   virtual ~JAWS_Default_Dispatch_Policy ();
 
-  virtual int ratio ();
-  virtual JAWS_IO *io ();
-  virtual JAWS_IO_Handler_Factory *ioh_factory ();
-  virtual JAWS_IO_Acceptor *acceptor ();
-  virtual JAWS_Concurrency_Base *concurrency ();
+  int ratio () override;
+  JAWS_IO *io () override;
+  JAWS_IO_Handler_Factory *ioh_factory () override;
+  JAWS_IO_Acceptor *acceptor () override;
+  JAWS_Concurrency_Base *concurrency () override;
 
-  virtual void ratio (int r);
-  virtual void io (JAWS_IO *iop);
-  virtual void ioh_factory (JAWS_IO_Handler_Factory *factoryp);
-  virtual void acceptor (JAWS_IO_Acceptor *acceptorp);
-  virtual void concurrency (JAWS_Concurrency_Base *concp);
+  void ratio (int r) override;
+  void io (JAWS_IO *iop) override;
+  void ioh_factory (JAWS_IO_Handler_Factory *factoryp) override;
+  void acceptor (JAWS_IO_Acceptor *acceptorp) override;
+  void concurrency (JAWS_Concurrency_Base *concp) override;
 
 private:
   int ratio_;

@@ -32,17 +32,21 @@ SOFTWARE INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT OR CONSEQUENTIAL
 DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
+#include <cstring>
+#include <memory>
+#include <string>
 #include "ace/OS_main.h"
 #include "asnmp/integer.h"
 #include "test_config.h"
 
 #if !defined (ACE_WIN32)
-static long l = LONG_MAX, nl = LONG_MIN;  // limits.h
-static unsigned long ul = ULONG_MAX, def = 0;
-static int i = INT_MAX, ni = INT_MIN;
-static unsigned int ui = UINT_MAX;
-static unsigned short us = 10;
-static unsigned short si = 32768;
+static constexpr long l = LONG_MAX, nl = LONG_MIN;  // limits.h
+static constexpr unsigned long ul = ULONG_MAX;
+static constexpr unsigned long def {};
+static constexpr int i = INT_MAX, ni = INT_MIN;
+static constexpr unsigned int ui = UINT_MAX;
+static constexpr unsigned short us = 10;
+static constexpr unsigned short si = 32768;
  #endif /*ACE_WIN32*/
 
 /*
@@ -63,51 +67,50 @@ static unsigned short si = 32768;
 static void TestInteger32()
 {
 #if !defined (ACE_WIN32)
-   // constructors
    SnmpInt32 i1;
-   ACE_ASSERT(i1 == static_cast<long> (def));
+   ACE_TEST_ASSERT(i1 == static_cast<long> (def));
    SnmpInt32 i2(l);
-   ACE_ASSERT(i2 == l);
+   ACE_TEST_ASSERT(i2 == l);
+   ACE_TEST_ASSERT (std::strcmp (i2.to_string (), std::to_string (l).c_str ()) == 0);
    SnmpInt32 i3(nl);
-   ACE_ASSERT(i3 == nl);
+   ACE_TEST_ASSERT(i3 == nl);
    SnmpInt32 i4(ul);
-   ACE_ASSERT(i4 == static_cast<long> (ul));
+   ACE_TEST_ASSERT(i4 == static_cast<long> (ul));
    SnmpInt32 i5(i);
-   ACE_ASSERT(i5 == i);
+   ACE_TEST_ASSERT(i5 == i);
    SnmpInt32 i6(ni);
-   ACE_ASSERT(i6 == ni);
+   ACE_TEST_ASSERT(i6 == ni);
    SnmpInt32 i7(ui);
-   ACE_ASSERT(i7 == static_cast<long> (ui));
-   SnmpInt32 *i8 = new SnmpInt32(i5);
-   ACE_ASSERT(i8 != 0);
-   delete i8;
+   ACE_TEST_ASSERT(i7 == static_cast<long> (ui));
+   std::unique_ptr<SnmpInt32> i8 = std::make_unique<SnmpInt32> (i5);
+   ACE_TEST_ASSERT(i8 != nullptr);
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i1(\"\") [%u]\n",
-    (unsigned long)i1));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i2(\"%u\") [%u]\n",
-    l, (unsigned long)i2));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i3(\"%u\") [%u]\n",
-    nl, (unsigned long)i3));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i4(\"%u\") [%u]\n",
-    ul, (unsigned long)i4));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i5(\"%u\") [%u]\n",
-    i, (unsigned long)i5));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i6(\"%u\") [%u]\n",
-    ni, (unsigned long)i6));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i7(\"%u\") [%u]\n",
-    ui, (unsigned long)i7));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i1(\"\") [%Q]\n",
+    static_cast<ACE_UINT64> (i1)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i2(\"%q\") [%Q]\n",
+    static_cast<ACE_INT64> (l), static_cast<ACE_UINT64> (i2)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i3(\"%q\") [%Q]\n",
+    static_cast<ACE_INT64> (nl), static_cast<ACE_UINT64> (i3)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i4(\"%Q\") [%Q]\n",
+    static_cast<ACE_UINT64> (ul), static_cast<ACE_UINT64> (i4)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i5(\"%d\") [%Q]\n",
+    i, static_cast<ACE_UINT64> (i5)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i6(\"%d\") [%Q]\n",
+    ni, static_cast<ACE_UINT64> (i6)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i7(\"%u\") [%Q]\n",
+    ui, static_cast<ACE_UINT64> (i7)));
 
   // assignent
   i1 = i2;  // obj
-  ACE_ASSERT(i1 == i2);
+  ACE_TEST_ASSERT(i1 == i2);
   i1 = i1; // self
-  ACE_ASSERT(i1 == i1);
+  ACE_TEST_ASSERT(i1 == i1);
   i1 = def; // unsigned long
-  ACE_ASSERT(i1 == static_cast<long> (def));
+  ACE_TEST_ASSERT(i1 == static_cast<long> (def));
   i1 = us; // unsigned short
-  ACE_ASSERT(i1 == static_cast<long> (us));
+  ACE_TEST_ASSERT(i1 == static_cast<long> (us));
   i1 = si; // unsigned short
-  ACE_ASSERT(i1 == static_cast<long> (si));
+  ACE_TEST_ASSERT(i1 == static_cast<long> (si));
  #endif /*ACE_WIN32*/
 }
 
@@ -128,51 +131,50 @@ static void TestInteger32()
 static void TestUnsignedInteger32()
 {
 #if !defined (ACE_WIN32)
-  // constructors
    SnmpUInt32 u1;
-   ACE_ASSERT(u1 == def);
+   ACE_TEST_ASSERT(u1 == def);
    SnmpUInt32 u2(l);
-   ACE_ASSERT(u2 == static_cast<unsigned long> (l));
+   ACE_TEST_ASSERT(u2 == static_cast<unsigned long> (l));
    SnmpUInt32 u3(nl);
-   ACE_ASSERT(u3 == static_cast<unsigned long> (nl));
+   ACE_TEST_ASSERT(u3 == static_cast<unsigned long> (nl));
    SnmpUInt32 u4(ul);
-   ACE_ASSERT(u4 == ul);
+   ACE_TEST_ASSERT(u4 == ul);
+   ACE_TEST_ASSERT (std::strcmp (u4.to_string (), std::to_string (ul).c_str ()) == 0);
    SnmpUInt32 u5(i);
-   ACE_ASSERT(u5 == static_cast<unsigned long> (i));
+   ACE_TEST_ASSERT(u5 == static_cast<unsigned long> (i));
    SnmpUInt32 u6(ni);
-   ACE_ASSERT(u6 == static_cast<unsigned long> (ni));
+   ACE_TEST_ASSERT(u6 == static_cast<unsigned long> (ni));
    SnmpUInt32 u7(ui);
-   ACE_ASSERT(u7 == ui);
-   SnmpUInt32 *u8 = new SnmpUInt32(u5);
-   ACE_ASSERT(u8 != 0);
-   delete u8;
+   ACE_TEST_ASSERT(u7 == ui);
+   std::unique_ptr<SnmpUInt32> u8 = std::make_unique<SnmpUInt32> (u5);
+   ACE_TEST_ASSERT(u8 != nullptr);
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u1(\"\") [%u]\n",
-    (unsigned long)u1));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u2(\"%u\") [%u]\n",
-    l, (unsigned long)u2));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u3(\"%u\") [%u]\n",
-    nl, (unsigned long)u3));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u4(\"%u\") [%u]\n",
-    ul, (unsigned long)u4));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u5(\"%u\") [%u]\n",
-    i, (unsigned long)u5));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u6(\"%u\") [%u]\n",
-    ni, (unsigned long)u6));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u7(\"%u\") [%u]\n",
-    ui, (unsigned long)u7));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u1(\"\") [%Q]\n",
+    static_cast<ACE_UINT64> (u1)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u2(\"%q\") [%Q]\n",
+    static_cast<ACE_INT64> (l), static_cast<ACE_UINT64> (u2)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u3(\"%q\") [%Q]\n",
+    static_cast<ACE_INT64> (nl), static_cast<ACE_UINT64> (u3)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u4(\"%Q\") [%Q]\n",
+    static_cast<ACE_UINT64> (ul), static_cast<ACE_UINT64> (u4)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u5(\"%d\") [%Q]\n",
+    i, static_cast<ACE_UINT64> (u5)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u6(\"%d\") [%Q]\n",
+    ni, static_cast<ACE_UINT64> (u6)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u7(\"%u\") [%Q]\n",
+    ui, static_cast<ACE_UINT64> (u7)));
 
  // assignent
   u1 = u2;  // obj
-  ACE_ASSERT(u1 == u2);
+  ACE_TEST_ASSERT(u1 == u2);
   u1 = u1; // self
-  ACE_ASSERT(u1 == u1);
+  ACE_TEST_ASSERT(u1 == u1);
   u1 = def; // unsigned long
-  ACE_ASSERT(u1 == def);
+  ACE_TEST_ASSERT(u1 == def);
   u1 = us; // unsigned short
-  ACE_ASSERT(u1 == static_cast<unsigned long> (us));
+  ACE_TEST_ASSERT(u1 == static_cast<unsigned long> (us));
   u1 = si; // unsigned short
-  ACE_ASSERT(u1 == static_cast<unsigned long> (si));
+  ACE_TEST_ASSERT(u1 == static_cast<unsigned long> (si));
 #endif /*ACE_WIN32 */
 }
 

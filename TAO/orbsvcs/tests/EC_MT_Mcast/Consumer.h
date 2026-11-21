@@ -6,41 +6,38 @@
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
+#include <atomic>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/// Simple consumer object that subscribes to one event type.
 class Consumer : public POA_RtecEventComm::PushConsumer
 {
-  // = TITLE
-  //   Simple consumer object
-  //
-  // = DESCRIPTION
-  //   This class is a consumer of events.
-  //   It simply subscribes to one event type.
-  //
 public:
-  Consumer ();
-  // Constructor
+  Consumer () = default;
+  Consumer (Consumer const&) = delete;
+  Consumer (Consumer&&) = delete;
+  Consumer& operator= (Consumer const&) = delete;
+  Consumer& operator= (Consumer&&) = delete;
 
+  /// Connects to the Event Channel.
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
-  // Connect to the Event Channel
 
+  /// Disconnects from the Event Channel.
   void disconnect ();
-  // Disconnect from the event channel
 
-  // = The RtecEventComm::PushConsumer methods
-
-  void push (RtecEventComm::EventSet const &events) override;
+  /// Receives events and disconnect notifications from the Event Channel.
+  void push (RtecEventComm::EventSet const& events) override;
   void disconnect_push_consumer () override;
-  // The skeleton methods.
 
 private:
-  CORBA::ULong event_count_;
-  // Keep track of the number of events received.
+  /// Number of events received.
+  std::atomic<CORBA::ULong> event_count_ {};
 
+  /// Proxy used to communicate with the Event Channel.
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy_;
-  // The proxy
 };
 
 #endif /* CONSUMER_H */

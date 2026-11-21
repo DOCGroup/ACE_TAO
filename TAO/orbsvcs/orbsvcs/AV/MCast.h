@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_AV_MCAST_H
 #define TAO_AV_MCAST_H
 #include /**/ "ace/pre.h"
@@ -17,6 +16,7 @@
 #include "orbsvcs/AV/Protocol_Factory.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,7 +33,7 @@ class TAO_AV_UDP_MCast_Transport
 public:
   TAO_AV_UDP_MCast_Transport ();
 
-  TAO_AV_UDP_MCast_Transport (TAO_AV_UDP_MCast_Flow_Handler *handler);
+  explicit TAO_AV_UDP_MCast_Transport (TAO_AV_UDP_MCast_Flow_Handler *handler);
 
   ~TAO_AV_UDP_MCast_Transport () override;
 
@@ -75,7 +75,8 @@ public:
                 int iovcnt,
                 ACE_Time_Value *s = nullptr) override;
 protected:
-  TAO_AV_UDP_MCast_Flow_Handler *handler_;
+  /// Non-owning back-reference to the flow handler that owns this transport.
+  TAO_AV_UDP_MCast_Flow_Handler *handler_ {};
   ACE_INET_Addr peer_addr_;
   ACE_INET_Addr local_addr_;
 };
@@ -98,8 +99,9 @@ public:
   ACE_Event_Handler *event_handler () override { return this; }
   void set_peer_addr (ACE_INET_Addr *peer_addr);
 protected:
-  ACE_INET_Addr *peer_addr_;
-  ACE_SOCK_Dgram_Mcast *dgram_mcast_;
+  /// Non-owning peer address set by the multicast flow setup.
+  ACE_INET_Addr *peer_addr_ {};
+  std::unique_ptr<ACE_SOCK_Dgram_Mcast> dgram_mcast_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

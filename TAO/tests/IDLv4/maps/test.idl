@@ -14,7 +14,7 @@ typedef map<int32, TestStruct> TestStructMap;
 typedef map<int32, string> TestIntStringMap;
 
 struct DataStruct {
-  // NOTE: Bounded maps are not actually bounded as std::map doesn't support that
+  /// NOTE: Bounded maps are not actually bounded as std::map doesn't support that
 
   map<int32, int32> intIntMap;
   map<string, int32, 4> stringIntMapBounded;
@@ -28,7 +28,8 @@ struct DataStruct {
   map<string, TestStructMap> stringMapMap;
   map<uint32, TestStructMap, 2> uint32MapMapBounded;
 
-  map<TestIntStringMap, string> mapStringMap; // test map typedef used directly in struct
+  /// test map typedef used directly in struct
+  map<TestIntStringMap, string> mapStringMap;
 
   TestStructMap testStructMapArray[3];
   sequence<TestStructMap> testStructMapSeq;

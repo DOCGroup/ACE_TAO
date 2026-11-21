@@ -103,7 +103,7 @@ run_main (int, ACE_TCHAR *[])
   // regardless of platform. In particular, this test relies on a handler
   // that doesn't consume ready-to-read data being called back - this won't
   // happen with ACE_WFMO_Reactor.
-  ACE_Select_Reactor *impl_ptr = nullptr;
+  ACE_Select_Reactor *impl_ptr {};
   ACE_NEW_RETURN (impl_ptr, ACE_Select_Reactor, -1);
   std::unique_ptr<ACE_Select_Reactor> auto_impl (impl_ptr);
 
@@ -229,7 +229,7 @@ void Timer::close()
 {
   for(int i = 0; i != nhandlers; ++i)
   {
-      reactor()->remove_handler(&handler_[i], ACE_Event_Handler::ALL_EVENTS_MASK);
+      reactor()->remove_handler(std::addressof (handler_[i]), ACE_Event_Handler::ALL_EVENTS_MASK);
   }
   reactor()->cancel_timer(this);
 }

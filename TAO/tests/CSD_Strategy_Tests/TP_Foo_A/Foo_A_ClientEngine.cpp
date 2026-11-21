@@ -39,7 +39,7 @@ Foo_A_ClientEngine::execute()
       check_validity = false;
     }
 
-  for (CORBA::Long j = 1; j <= 5; j++)
+  for (CORBA::Long j = 1; j <= 5; ++j)
     {
       this->obj_->op4(495 + (i * 5) + j);
     }
@@ -65,7 +65,6 @@ Foo_A_ClientEngine::execute()
 
   return check_validity;
 }
-
 
 void
 Foo_A_ClientEngine::expected_results(Foo_A_Statistics& stats)

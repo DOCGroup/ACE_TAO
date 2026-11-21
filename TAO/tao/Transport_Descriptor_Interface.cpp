@@ -8,30 +8,39 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Transport_Descriptor_Interface::~TAO_Transport_Descriptor_Interface ()
+TAO_Transport_Descriptor_Interface::TAO_Transport_Descriptor_Interface () = default;
+
+TAO_Transport_Descriptor_Interface::TAO_Transport_Descriptor_Interface (
+  TAO_Endpoint *endpoint,
+  CORBA::Boolean take_ownership)
+  : endpoint_ (endpoint)
 {
-  if (this->release_)
+  if (take_ownership)
     {
-      delete this->endpoint_;
+      this->owned_endpoint_.reset (endpoint);
     }
 }
+
+TAO_Transport_Descriptor_Interface::~TAO_Transport_Descriptor_Interface () = default;
 
 CORBA::Boolean
 TAO_Transport_Descriptor_Interface::reset_endpoint (TAO_Endpoint *ep)
 {
   // calling on a dynamically allocation descriptor is not allowed.
-  if (this->release_)
-    return false;
+  if (this->owned_endpoint_ != nullptr)
+    {
+      return false;
+    }
 
   for (TAO_Endpoint *ptr = this->endpoint_; ptr != nullptr; ptr = ptr->next())
-
-    if (ptr == ep)
       {
-        this->endpoint_ = ep;
-        return true;
+        if (ptr == ep)
+          {
+            this->endpoint_ = ep;
+            return true;
+          }
       }
   return false;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

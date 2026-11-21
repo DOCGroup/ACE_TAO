@@ -13,13 +13,18 @@ class ServerApp : public TestAppBase
 {
   public:
     ServerApp();
-    virtual ~ServerApp() = default;
+    ~ServerApp() override = default;
 
   protected:
-    virtual int run_i(int argc, ACE_TCHAR* argv[]);
+    int run_i(int argc, ACE_TCHAR* argv[]) override;
+
+    ServerApp (ServerApp const &) = delete;
+    ServerApp (ServerApp &&) = delete;
+    ServerApp & operator= (ServerApp const &) = delete;
+    ServerApp & operator= (ServerApp &&) = delete;
 
   private:
-    // These are all called, in order, by the run_i() method.
+    /// These are all called, in order, by the run_i() method.
     int  init(int argc, ACE_TCHAR* argv[]);
     void poa_setup();
     void csd_setup();
@@ -31,7 +36,7 @@ class ServerApp : public TestAppBase
     bool check_validity ();
     void cleanup();
 
-    // Helper methods used by the methods above.
+    /// Helper methods used by the methods above.
     int parse_args(int argc, ACE_TCHAR* argv[]);
 
     int set_arg(unsigned&   value,
@@ -46,8 +51,8 @@ class ServerApp : public TestAppBase
     PortableServer::POA_ptr create_poa(CORBA::ORB_ptr orb,
                                        const char* poa_name);
 
-    typedef ServantList<Foo_B_i> FooServantListType;
-    typedef ServantList<Callback_i> CallbackServantListType;
+    using FooServantListType = ServantList<Foo_B_i>;
+    using CallbackServantListType = ServantList<Callback_i>;
 
     CORBA::ORB_var               orb_;
     PortableServer::POA_var      poa_;

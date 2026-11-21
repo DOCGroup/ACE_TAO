@@ -28,7 +28,6 @@ In_Fixed_Array_Clonable_Argument_T (typename S_forany::_slice_type const * x)
 {
 }
 
-
 // ===========================================================================
 
 template<typename S_forany,

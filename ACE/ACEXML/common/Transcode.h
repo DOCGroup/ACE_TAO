@@ -47,7 +47,6 @@ public:
     ACEXML_NON_UNICODE = -5
   } ACEXML_STATUS;
 
-
   // The following functions translate a unicode characters
   // into different encoding.  Return number of characters put into
   // destination or consumed from src if success without
@@ -136,7 +135,8 @@ public:
 //                           ACEXML_UTF16 &dst);
   // This function does not handle surrogates.
 
-  // = The following functions are non-inlined:
+  /// @name Non-inlined conversions
+  /// @{
 
   /*
    * Convert a UTF-8 string into a UTF-16 string.
@@ -163,6 +163,7 @@ public:
   static int utf16s2utf8s (const ACEXML_UTF16 *src,
                            ACEXML_UTF8 *dst,
                            size_t len);
+  /// @}
 };
 
 #include /**/ "ace/post.h"

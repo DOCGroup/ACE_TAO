@@ -8,7 +8,6 @@
  */
 //==========================================================================
 
-
 #ifndef ACE_SV_MESSAGE_H
 #define ACE_SV_MESSAGE_H
 
@@ -30,10 +29,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_SV_Message
 {
 public:
-  /// Constructor
   ACE_SV_Message (long type = 0);
 
-  /// Destructor
   ~ACE_SV_Message ();
 
   /// Get the message type.
@@ -54,7 +51,6 @@ protected:
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
 
 #if defined (__ACE_INLINE__)
 #include "ace/SV_Message.inl"

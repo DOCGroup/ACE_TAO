@@ -51,5 +51,4 @@ using JAWS_String_Counted_Cache_Manager =
   JAWS_Cache_Manager<JAWS_Strdup_String, JAWS_Counted_Cache_Object_Factory, JAWS_String_Hash_Functor,
                      JAWS_String_Equal_Functor>;
 
-
 #endif /* JAWS_CACHE_MANAGER_H */

@@ -18,7 +18,6 @@ const ACE_Addr ACE_Addr::sap_any (AF_ANY, -1);
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Addr)
 
-
 // Initializes instance variables.  Note that 0 is an unspecified
 // protocol family type...
 

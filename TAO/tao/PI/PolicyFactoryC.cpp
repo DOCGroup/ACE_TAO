@@ -28,7 +28,8 @@
 
 #include "tao/PI/PolicyFactoryC.h"
 #include "tao/CDR.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
@@ -48,16 +49,14 @@ namespace TAO
 
 PortableInterceptor::PolicyFactory_ptr
 TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::duplicate (
-    PortableInterceptor::PolicyFactory_ptr p
-  )
+    PortableInterceptor::PolicyFactory_ptr p)
 {
   return PortableInterceptor::PolicyFactory::_duplicate (p);
 }
 
 void
 TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::release (
-    PortableInterceptor::PolicyFactory_ptr p
-  )
+    PortableInterceptor::PolicyFactory_ptr p)
 {
   ::CORBA::release (p);
 }
@@ -71,8 +70,7 @@ TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::nil ()
 ::CORBA::Boolean
 TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::marshal (
     PortableInterceptor::PolicyFactory_ptr p,
-    TAO_OutputCDR & cdr
-  )
+    TAO_OutputCDR & cdr)
 {
   return ::CORBA::Object::marshal (p, cdr);
 }
@@ -85,8 +83,7 @@ PortableInterceptor::PolicyFactory::~PolicyFactory ()
 
 PortableInterceptor::PolicyFactory_ptr
 PortableInterceptor::PolicyFactory::_narrow (
-    ::CORBA::Object_ptr _tao_objref
-  )
+    ::CORBA::Object_ptr _tao_objref)
 {
   return PolicyFactory::_duplicate (
       dynamic_cast<PolicyFactory_ptr> (_tao_objref)
@@ -95,8 +92,7 @@ PortableInterceptor::PolicyFactory::_narrow (
 
 PortableInterceptor::PolicyFactory_ptr
 PortableInterceptor::PolicyFactory::_unchecked_narrow (
-    ::CORBA::Object_ptr _tao_objref
-  )
+    ::CORBA::Object_ptr _tao_objref)
 {
   return PolicyFactory::_duplicate (
       dynamic_cast<PolicyFactory_ptr> (_tao_objref)
@@ -121,22 +117,11 @@ PortableInterceptor::PolicyFactory::_tao_release (PolicyFactory_ptr obj)
 }
 
 ::CORBA::Boolean
-PortableInterceptor::PolicyFactory::_is_a (const char *value)
+PortableInterceptor::PolicyFactory::_is_a (char const *value)
 {
-  if (
-      !ACE_OS::strcmp (
-          value,
-          "IDL:omg.org/PortableInterceptor/PolicyFactory:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          value,
-          "IDL:omg.org/CORBA/LocalObject:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-    )
+  if (std::strcmp (value, "IDL:omg.org/PortableInterceptor/PolicyFactory:1.0") == 0 ||
+      std::strcmp (value, "IDL:omg.org/CORBA/LocalObject:1.0") == 0 ||
+      std::strcmp (value, "IDL:omg.org/CORBA/Object:1.0") == 0)
     {
       return true; // success using local knowledge
     }

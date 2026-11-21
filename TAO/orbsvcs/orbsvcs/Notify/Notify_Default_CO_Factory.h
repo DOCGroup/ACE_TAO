@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFY_DEFAULT_CO_FACTORY_H
 #define NOTIFY_DEFAULT_CO_FACTORY_H
 

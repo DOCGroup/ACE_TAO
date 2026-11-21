@@ -31,7 +31,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Allocator;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward Declarations.
@@ -55,10 +54,8 @@ class TAO_Pluggable_Reply_Params;
 class TAO_Export TAO_Reply_Dispatcher
 {
 public:
-  /// Constructor.
-  TAO_Reply_Dispatcher (ACE_Allocator *allocator = nullptr);
+  explicit TAO_Reply_Dispatcher (ACE_Allocator *allocator = nullptr);
 
-  /// Destructor.
   virtual ~TAO_Reply_Dispatcher ();
 
   /**

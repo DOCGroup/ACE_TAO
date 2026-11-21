@@ -21,7 +21,6 @@ ACE_NT_Service::ACE_NT_Service (DWORD start_timeout,
   svc_status_.dwWaitHint = 0;
 }
 
-
 ACE_INLINE
 ACE_NT_Service::ACE_NT_Service (const ACE_TCHAR *name,
                                 const ACE_TCHAR *desc,
@@ -43,13 +42,11 @@ ACE_NT_Service::ACE_NT_Service (const ACE_TCHAR *name,
   svc_status_.dwCheckPoint = 0;
 }
 
-
 ACE_INLINE int
 ACE_NT_Service::svc ()
 {
   return -1;
 }
-
 
 ACE_INLINE
 const ACE_TCHAR *

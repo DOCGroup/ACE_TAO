@@ -40,7 +40,7 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::writer (ACE_Task<ACE_SYNCH_USE, TIME_POL
 
   this->q_pair_[1] = q;
 
-  if (q != 0)
+  if (q != nullptr)
     {
       ACE_CLR_BITS (q->flags_, ACE_Task_Flags::ACE_READER);
       // Set the q's module pointer to point to us.
@@ -62,7 +62,7 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::reader (ACE_Task<ACE_SYNCH_USE, TIME_POL
 
   this->q_pair_[0] = q;
 
-  if (q != 0)
+  if (q != nullptr)
     {
       ACE_SET_BITS (q->flags_, ACE_Task_Flags::ACE_READER);
       // Set the q's module pointer to point to us.
@@ -85,7 +85,7 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::link (ACE_Module<ACE_SYNCH_USE, TIME_POL
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> int
-ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::open (const ACE_TCHAR *module_name,
+ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::open (ACE_TCHAR const *module_name,
                                  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *writer_q,
                                  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *reader_q,
                                  void *arg,
@@ -97,12 +97,16 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::open (const ACE_TCHAR *module_name,
 
   // We may already have readers and/or writers.
   if (this->reader ())
-    this->close_i (0, M_DELETE_READER);
+    {
+      this->close_i (0, M_DELETE_READER);
+    }
 
   if (this->writer ())
-    this->close_i (1, M_DELETE_WRITER);
+    {
+      this->close_i (1, M_DELETE_WRITER);
+    }
 
-  if (writer_q == 0)
+  if (writer_q == nullptr)
     {
       using TASK_TYPE = ACE_Thru_Task<ACE_SYNCH_USE, TIME_POLICY>;
       ACE_NEW_NORETURN (writer_q,
@@ -110,7 +114,7 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::open (const ACE_TCHAR *module_name,
       ACE_SET_BITS (flags, M_DELETE_WRITER);
     }
 
-  if (reader_q == 0)
+  if (reader_q == nullptr)
     {
       using TASK_TYPE = ACE_Thru_Task<ACE_SYNCH_USE, TIME_POLICY>;
       ACE_NEW_NORETURN (reader_q,
@@ -119,7 +123,7 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::open (const ACE_TCHAR *module_name,
     }
 
   // Make sure that the memory is allocated before proceeding.
-  if (writer_q == 0 || reader_q == 0)
+  if (writer_q == nullptr || reader_q == nullptr)
     {
       // These calls will delete writer_q and/or reader_q, if
       // necessary.
@@ -151,24 +155,25 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::sibling (ACE_Task<ACE_SYNCH_USE, TIME_PO
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::sibling");
   if (this->q_pair_[0] == orig)
-    return this->q_pair_[1];
+    {
+      return this->q_pair_[1];
+    }
   else if (this->q_pair_[1] == orig)
-    return this->q_pair_[0];
+    {
+      return this->q_pair_[0];
+    }
   else
-    return 0;
+    {
+      return nullptr;
+    }
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY>
 ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::ACE_Module ()
-  : next_ (0)
-  , arg_ (nullptr)
-  , flags_ (M_FLAGS_NOT_SET)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::ACE_Module");
   this->name (ACE_TEXT ("<unknown>"));
   // Do nothing...
-  this->q_pair_[0] = 0;
-  this->q_pair_[1] = 0;
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY>
@@ -178,27 +183,26 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::~ACE_Module ()
 
   // Only close down if we haven't already done so.
   if (this->reader () || this->writer ())
-    this->close ();
+    {
+      this->close ();
+    }
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY>
-ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::ACE_Module (const ACE_TCHAR *module_name,
+ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::ACE_Module (ACE_TCHAR const *module_name,
                                        ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *writer_q,
                                        ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *reader_q,
                                        void *args,
                                        int flags /* = M_DELETE */)
-  : next_ (0),
-    flags_ (M_FLAGS_NOT_SET)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::ACE_Module");
 
-  this->q_pair_[0] = 0;
-  this->q_pair_[1] = 0;
-
   if (this->open (module_name, writer_q, reader_q, args, flags) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Module")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Module")));
+    }
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> int
@@ -211,13 +215,19 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::close (int flags /* = M_DELETE_NONE */)
   // Only pay attention to the flags parameter if we haven't already
   // set the task delete policies.
   if (this->flags_ == M_FLAGS_NOT_SET)
-    ACE_SET_BITS (flags_, flags);
+    {
+      ACE_SET_BITS (flags_, flags);
+    }
 
   if (this->close_i (0, flags_) == -1)
-    result = -1;
+    {
+      result = -1;
+    }
 
   if (this->close_i (1, flags_) == -1)
-    result = -1;
+    {
+      result = -1;
+    }
 
   return result;
 }
@@ -228,8 +238,10 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::close_i (int which,
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::close_i");
 
-  if (this->q_pair_[which] == 0)
-    return 0;
+  if (this->q_pair_[which] == nullptr)
+    {
+      return 0;
+    }
 
   // Copy task pointer to prevent problems when ACE_Task::close
   // changes the task pointer
@@ -241,10 +253,12 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::close_i (int which,
   int result = 0;
 
   if (task->module_closed () == -1)
-    result = -1;
+    {
+      result = -1;
+    }
 
   task->flush ();
-  task->next (0);
+  task->next (nullptr);
 
   // Should we also delete it ?
   if (flags != M_DELETE_NONE
@@ -263,9 +277,9 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::close_i (int which,
       delete task;
     }
 
-  // Set the tasks pointer to 0 so that we don't try to close()
+  // Set the tasks pointer to nullptr so that we don't try to close()
   // this object again if the destructor gets called.
-  this->q_pair_[which] = 0;
+  this->q_pair_[which] = nullptr;
 
   // Finally remove the delete bit.
   ACE_CLR_BITS (flags_, which + 1);

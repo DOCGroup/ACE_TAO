@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CSD_TP_Remote_Request.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
-
 #ifndef TAO_CSD_TP_REMOTE_REQUEST_H
 #define TAO_CSD_TP_REMOTE_REQUEST_H
 
@@ -57,17 +53,18 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Remote_Request : public TP_Corba_Request
     {
     public:
-      /// Constructor.
       TP_Remote_Request(TAO_ServerRequest&              server_request,
-                        const PortableServer::ObjectId& object_id,
+                        PortableServer::ObjectId const &object_id,
                         PortableServer::POA_ptr         poa,
-                        const char*                     operation,
+                        char const *                    operation,
                         PortableServer::Servant         servant,
                         TP_Servant_State*               servant_state);
 
-      /// Virtual Destructor.
-      ~TP_Remote_Request() override;
-
+      ~TP_Remote_Request() override = default;
+      TP_Remote_Request (TP_Remote_Request const &) = delete;
+      TP_Remote_Request &operator= (TP_Remote_Request const &) = delete;
+      TP_Remote_Request (TP_Remote_Request &&) = delete;
+      TP_Remote_Request &operator= (TP_Remote_Request &&) = delete;
 
     protected:
       /// Prepare this TP_Remote_Request object to be placed into the

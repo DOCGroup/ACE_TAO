@@ -19,7 +19,6 @@
 # error This header is only meant to be included after "tao/orbconf.h".
 #endif  /* !TAO_ORBCONF_H */
 
-
 #if !defined (TAO_HAS_VERSIONED_NAMESPACE) \
   && defined (ACE_HAS_VERSIONED_NAMESPACE) \
   && ACE_HAS_VERSIONED_NAMESPACE == 1

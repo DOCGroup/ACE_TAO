@@ -47,7 +47,7 @@ class TAO_FtRtEvent_Export  UUID
     UUID();
 
     /* This is used to create an uninitialized UUID. */
-    UUID(int);
+    explicit UUID(int);
 
     /*
      * Construct an UUID from the binary representation. If you want to avoid a memory
@@ -56,19 +56,19 @@ class TAO_FtRtEvent_Export  UUID
      * this class except is_valid() which is only useful if a UUID object is
      * constructed from the string representation.
      */
-    UUID(const unsigned char *buffer);
+    explicit UUID(unsigned char const *buffer);
 
     /*
      * Construct an UUID from the string representation. Use is_valid() to test if the
      * construction is successful or not.
      */
-    UUID(const ACE_TCHAR *);
+    explicit UUID(ACE_TCHAR const *);
 
     /* Construct an uuid from the string representation. */
-    bool from_string(const char *string_rep);
+    bool from_string(char const *string_rep);
 
-    bool operator==(const UUID &other) const;
-    bool operator!=(const UUID &other) const;
+    bool operator==(UUID const &other) const;
+    bool operator!=(UUID const &other) const;
 
     /*
      * Test if the UUID is valid. Used after constructing an UUID from an string

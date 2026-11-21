@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file ObjectReferenceTemplate.h
  *
@@ -8,7 +7,6 @@
  *
  * @author Bala Natarajan  <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_OBJECT_REFERENCE_TEMPLATE_H
 #define TAO_OBJECT_REFERENCE_TEMPLATE_H

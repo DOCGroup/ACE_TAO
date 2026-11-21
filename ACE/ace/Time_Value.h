@@ -49,7 +49,7 @@ class ACE_Export ACE_Time_Value
 {
 public:
   /// Constant "0".
-  static const ACE_Time_Value zero;
+  static ACE_Time_Value const zero;
 
   /**
    * Constant for maximum time representable.  Note that this time is
@@ -59,33 +59,31 @@ public:
    * dynamic subpriority strategies in the ACE_Dynamic_Message_Queue
    * class.
    */
-  static const ACE_Time_Value max_time;
+  static ACE_Time_Value const max_time;
 
-  /// Default Constructor.
   ACE_Time_Value ();
 
-  /// Constructor.
   explicit ACE_Time_Value (time_t sec, suseconds_t usec = 0);
 
-  // = Methods for converting to/from various time formats.
+  /// @name Time format conversions
+  /// @{
 
   /// Construct the ACE_Time_Value from a timeval.
-  explicit ACE_Time_Value (const struct timeval &t);
+  explicit ACE_Time_Value (struct timeval const &t);
 
   /// Construct the ACE_Time_Value object from a timespec_t.
-  explicit ACE_Time_Value (const timespec_t &t);
+  explicit ACE_Time_Value (timespec_t const &t);
 
-  ACE_Time_Value (const ACE_Time_Value&) = default;
-  ACE_Time_Value (ACE_Time_Value&&) = default;
+  ACE_Time_Value (ACE_Time_Value const &) = default;
+  ACE_Time_Value (ACE_Time_Value &&) = default;
 
   /// Construct the ACE_Time_Value object from a chrono duration.
   template< class Rep, class Period >
-  explicit ACE_Time_Value (const std::chrono::duration<Rep, Period>& duration)
+  explicit ACE_Time_Value (std::chrono::duration<Rep, Period> const &duration)
   {
     this->set (duration);
   }
 
-  /// Destructor
   virtual ~ACE_Time_Value () = default;
 
   /// Declare the dynamic allocation hooks.
@@ -93,7 +91,7 @@ public:
 
 # if defined (ACE_WIN32)
   /// Construct the ACE_Time_Value object from a Win32 FILETIME
-  explicit ACE_Time_Value (const FILETIME &ft);
+  explicit ACE_Time_Value (FILETIME const &ft);
 # endif /* ACE_WIN32 */
 
   /// Initializes the ACE_Time_Value from seconds and useconds.
@@ -104,26 +102,26 @@ public:
   void set (double d);
 
   /// Initializes the ACE_Time_Value from a timeval.
-  void set (const timeval &t);
+  void set (timeval const &t);
 
   /// Initializes the ACE_Time_Value object from a timespec_t.
-  void set (const timespec_t &t);
+  void set (timespec_t const &t);
 
 # if defined (ACE_WIN32)
   /// Initializes the ACE_Time_Value object from a Win32 FILETIME.
-  void set (const FILETIME &ft);
+  void set (FILETIME const &ft);
 # endif /* ACE_WIN32 */
 
   /// Initializes the ACE_Time_Value object from a std::duration.
   template< class Rep, class Period >
-  void set (const std::chrono::duration<Rep, Period>& duration)
+  void set (std::chrono::duration<Rep, Period> const &duration)
   {
     using std::chrono::seconds;
     using std::chrono::microseconds;
     using std::chrono::duration_cast;
 
-    auto const sec = duration_cast<seconds> (duration);
-    auto const usec = duration_cast<microseconds> (duration - sec);
+    seconds const sec = duration_cast<seconds> (duration);
+    microseconds const usec = duration_cast<microseconds> (duration - sec);
     this->set (ACE_Utils::truncate_cast<time_t> (sec.count ()), ACE_Utils::truncate_cast<suseconds_t> (usec.count ()));
   }
 
@@ -183,7 +181,7 @@ public:
    *       usec() methods.  There is no analogous "millisecond"
    *       component in an ACE_Time_Value.
    */
-  void set_msec (const ACE_UINT64 &ms);
+  void set_msec (ACE_UINT64 const &ms);
 
   /// Converts from milli-seconds format into ACE_Time_Value format.
   /**
@@ -199,7 +197,8 @@ public:
    *       usec() methods.  There is no analogous "millisecond"
    *       component in an ACE_Time_Value.
    */
-  void msec (int);  // converted to long then calls above.
+  /// Converts the value to long and calls the overload above.
+  void msec (int);
 
   /// Returns the value of the object as a timespec_t.
   operator timespec_t () const;
@@ -208,14 +207,16 @@ public:
   operator timeval () const;
 
   /// Returns a pointer to the object as a timeval.
-  operator const timeval *() const;
+  operator timeval const *() const;
 
 # if defined (ACE_WIN32)
   /// Returns the value of the object as a Win32 FILETIME.
   operator FILETIME () const;
 # endif /* ACE_WIN32 */
 
-  // = The following are accessor/mutator methods.
+  /// @}
+  /// @name Accessors and mutators
+  /// @{
 
   /// Get seconds.
   /**
@@ -247,37 +248,39 @@ public:
    */
   void to_usec (ACE_UINT64 &usec) const;
 
-  // = The following arithmetic methods operate on ACE_Time_Value's.
+  /// @}
+  /// @name Arithmetic operations
+  /// @{
 
   /// Add @a tv to this.
-  ACE_Time_Value &operator += (const ACE_Time_Value &tv);
+  ACE_Time_Value &operator += (ACE_Time_Value const &tv);
 
   /// Add @a tv to this.
   ACE_Time_Value &operator += (time_t tv);
 
   /// Assign @a tv to this
-  ACE_Time_Value &operator = (const ACE_Time_Value &) = default;
-  ACE_Time_Value &operator = (ACE_Time_Value &&)  = default;
+  ACE_Time_Value &operator = (ACE_Time_Value const &) = default;
+  ACE_Time_Value &operator = (ACE_Time_Value &&) = default;
 
   /// Assign @a tv to this
   ACE_Time_Value &operator = (time_t tv);
 
   /// Subtract @a tv to this.
-  ACE_Time_Value &operator -= (const ACE_Time_Value &tv);
+  ACE_Time_Value &operator -= (ACE_Time_Value const &tv);
 
   /// Subtract @a tv to this.
   ACE_Time_Value &operator -= (time_t tv);
 
   /// Add @a std::duration to this.
   template< class Rep, class Period >
-  ACE_Time_Value &operator += (const std::chrono::duration<Rep, Period>& duration)
+  ACE_Time_Value &operator += (std::chrono::duration<Rep, Period> const &duration)
   {
     return *this += ACE_Time_Value (duration);
   }
 
   /// Assign @a std::duration to this
   template< class Rep, class Period >
-  ACE_Time_Value &operator = (const std::chrono::duration<Rep, Period>& duration)
+  ACE_Time_Value &operator = (std::chrono::duration<Rep, Period> const &duration)
   {
     this->set (duration);
     return *this;
@@ -285,7 +288,7 @@ public:
 
   /// Subtract @a std::duration to this.
   template< class Rep, class Period >
-  ACE_Time_Value &operator -= (const std::chrono::duration<Rep, Period>& duration)
+  ACE_Time_Value &operator -= (std::chrono::duration<Rep, Period> const &duration)
   {
     return *this -= ACE_Time_Value (duration);
   }
@@ -327,45 +330,47 @@ public:
   ACE_Time_Value &operator-- ();
 
   /// Adds two ACE_Time_Value objects together, returns the sum.
-  friend ACE_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
-                                               const ACE_Time_Value &tv2);
+  friend ACE_Export ACE_Time_Value operator + (ACE_Time_Value const &tv1,
+                                               ACE_Time_Value const &tv2);
 
   /// Subtracts two ACE_Time_Value objects, returns the difference.
-  friend ACE_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
-                                               const ACE_Time_Value &tv2);
+  friend ACE_Export ACE_Time_Value operator - (ACE_Time_Value const &tv1,
+                                               ACE_Time_Value const &tv2);
 
   /// True if @a tv1 < @a tv2.
-  friend ACE_Export bool operator < (const ACE_Time_Value &tv1,
-                                     const ACE_Time_Value &tv2);
+  friend ACE_Export bool operator < (ACE_Time_Value const &tv1,
+                                     ACE_Time_Value const &tv2);
 
   /// True if @a tv1 > @a tv2.
-  friend ACE_Export bool operator > (const ACE_Time_Value &tv1,
-                                     const ACE_Time_Value &tv2);
+  friend ACE_Export bool operator > (ACE_Time_Value const &tv1,
+                                     ACE_Time_Value const &tv2);
 
   /// True if @a tv1 <= @a tv2.
-  friend ACE_Export bool operator <= (const ACE_Time_Value &tv1,
-                                      const ACE_Time_Value &tv2);
+  friend ACE_Export bool operator <= (ACE_Time_Value const &tv1,
+                                      ACE_Time_Value const &tv2);
 
   /// True if @a tv1 >= @a tv2.
-  friend ACE_Export bool operator >= (const ACE_Time_Value &tv1,
-                                      const ACE_Time_Value &tv2);
+  friend ACE_Export bool operator >= (ACE_Time_Value const &tv1,
+                                      ACE_Time_Value const &tv2);
 
   /// True if @a tv1 == @a tv2.
-  friend ACE_Export bool operator == (const ACE_Time_Value &tv1,
-                                      const ACE_Time_Value &tv2);
+  friend ACE_Export bool operator == (ACE_Time_Value const &tv1,
+                                      ACE_Time_Value const &tv2);
 
   /// True if @a tv1 != @a tv2.
-  friend ACE_Export bool operator != (const ACE_Time_Value &tv1,
-                                      const ACE_Time_Value &tv2);
+  friend ACE_Export bool operator != (ACE_Time_Value const &tv1,
+                                      ACE_Time_Value const &tv2);
 
-  //@{
+  /// @{
   /// Multiplies the time value by @a d
   friend ACE_Export ACE_Time_Value operator * (double d,
-                                               const ACE_Time_Value &tv);
+                                               ACE_Time_Value const &tv);
 
-  friend ACE_Export ACE_Time_Value operator * (const ACE_Time_Value &tv,
+  friend ACE_Export ACE_Time_Value operator * (ACE_Time_Value const &tv,
                                                double d);
-  //@}
+  /// @}
+
+  /// @}
 
   /// Get current time of day.
   /**
@@ -423,7 +428,7 @@ public:
 
 # if defined (ACE_WIN32)
   /// Const time difference between FILETIME and POSIX time.
-  static const DWORDLONG FILETIME_to_timval_skew;
+  static DWORDLONG const FILETIME_to_timval_skew;
 # endif /* ACE_WIN32 */
 
 private:
@@ -443,17 +448,18 @@ private:
   struct {
     time_t tv_sec;
     suseconds_t tv_usec;
-  } tv_;
-  // Must be mutable as the zero and max static members are const, but are modified
-  // in the timeval operations, having it not mutable will cause an access violation
-  // with some compilers as they put these in the const section.
-  mutable timeval ext_tv_;
+  } tv_ {};
+  /// Must be mutable as the zero and max static members are const, but are
+  /// modified in the timeval operations. Without mutable, some compilers place
+  /// these in the const section and cause an access violation.
+  mutable timeval ext_tv_ {};
 #else
-  timeval tv_;
+  timeval tv_ {};
 #endif /* ACE_HAS_TIME_T_LONG_MISMATCH */
 };
 
-extern ACE_Export std::ostream &operator<<(std::ostream &o, const ACE_Time_Value &v );
+extern ACE_Export std::ostream &operator<< (std::ostream &o,
+                                           ACE_Time_Value const &v);
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
@@ -469,14 +475,14 @@ namespace std
     * microseconds, milliseconds, seconds, minutes, or hours).
     *
     */
-    //@{
+    /// @{
     ACE_Export nanoseconds& operator <<(nanoseconds &ns, ACE_Time_Value const &tv);
     ACE_Export microseconds& operator <<(microseconds &us, ACE_Time_Value const &tv);
     ACE_Export milliseconds& operator <<(milliseconds &ms, ACE_Time_Value const &tv);
     ACE_Export seconds& operator <<(seconds &s, ACE_Time_Value const &tv);
     ACE_Export minutes& operator <<(minutes &m, ACE_Time_Value const &tv);
     ACE_Export hours& operator <<(hours &h, ACE_Time_Value const &tv);
-    //@}
+    /// @}
 
     /**
     * @name Adding ACE_Time_Value to chrono
@@ -485,14 +491,14 @@ namespace std
     * microseconds, milliseconds, seconds, minutes, or hours).
     *
     */
-    //@{
+    /// @{
     ACE_Export nanoseconds& operator +=(nanoseconds &ns, ACE_Time_Value const &tv);
     ACE_Export microseconds& operator +=(microseconds &us, ACE_Time_Value const &tv);
     ACE_Export milliseconds& operator +=(milliseconds &ms, ACE_Time_Value const &tv);
     ACE_Export seconds& operator +=(seconds &s, ACE_Time_Value const &tv);
     ACE_Export minutes& operator +=(minutes &m, ACE_Time_Value const &tv);
     ACE_Export hours& operator +=(hours &h, ACE_Time_Value const &tv);
-    //@}
+    /// @}
 
     /**
     * @name Substracting ACE_Time_Value from chrono
@@ -501,14 +507,14 @@ namespace std
     * microseconds, milliseconds, seconds, minutes, or hours).
     *
     */
-    //@{
+    /// @{
     ACE_Export nanoseconds& operator -=(nanoseconds &ns, ACE_Time_Value const &tv);
     ACE_Export microseconds& operator -=(microseconds &us, ACE_Time_Value const &tv);
     ACE_Export milliseconds& operator -=(milliseconds &ms, ACE_Time_Value const &tv);
     ACE_Export seconds& operator -=(seconds &s, ACE_Time_Value const &tv);
     ACE_Export minutes& operator -=(minutes &m, ACE_Time_Value const &tv);
     ACE_Export hours& operator -=(hours &h, ACE_Time_Value const &tv);
-    //@}
+    /// @}
   }
 }
 
@@ -521,8 +527,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // The MingW linker has problems with the exported statics
 // zero and max_time with these two statics the linker will be able to
 // resolve the static exported symbols.
-static const ACE_Time_Value& __zero_time = ACE_Time_Value::zero;
-static const ACE_Time_Value& __max_time = ACE_Time_Value::max_time;
+static ACE_Time_Value const &__zero_time = ACE_Time_Value::zero;
+static ACE_Time_Value const &__max_time = ACE_Time_Value::max_time;
 ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* __MINGW32__ */
 

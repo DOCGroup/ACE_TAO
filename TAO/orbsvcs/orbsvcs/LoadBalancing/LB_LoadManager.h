@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_LB_LOAD_MANAGER_H
 #define TAO_LB_LOAD_MANAGER_H
 
@@ -34,7 +33,6 @@
 #include "ace/Task.h"
 #include "tao/Condition.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LoadBalancing_Export TAO_LB_LoadManager
@@ -42,7 +40,6 @@ class TAO_LoadBalancing_Export TAO_LB_LoadManager
     public ACE_Task_Base
 {
 public:
-  /// Constructor.
   TAO_LB_LoadManager (int ping_timeout,
                       int ping_interval);
 
@@ -53,7 +50,7 @@ public:
    *
    * Methods required by the CosLoadBalancing::LoadManager interface.
    */
-  //@{
+  /// @{
   /// For the PUSH load monitoring style.
   void push_loads (PortableGroup::Location const & the_location,
                    CosLoadBalancing::LoadList const & loads) override;
@@ -98,14 +95,14 @@ public:
   void remove_load_monitor (
       PortableGroup::Location const & the_location) override;
 
-  //@}
+  /// @}
 
   /**
    * @name PortableGroup::PropertyManager Methods
    *
    * Methods required by the PortableGroup::PropertyManager interface.
    */
-  //@{
+  /// @{
   /// Set the default properties to be used by all object groups.
   void set_default_properties (
       PortableGroup::Properties const & props) override;
@@ -156,7 +153,7 @@ public:
   PortableGroup::Properties * get_properties (
       PortableGroup::ObjectGroup_ptr object_group) override;
 
-  //@}
+  /// @}
 
   /**
    * @name PortableGroup::ObjectGroupManager methods
@@ -164,7 +161,7 @@ public:
    * Methods required by the PortableGroup::ObjectGroupManager
    * interface.
    */
-  //@{
+  /// @{
   /// Create a member using the load balancer ObjectGroupManager, and
   /// add the created object to the ObjectGroup.
   PortableGroup::ObjectGroup_ptr create_member (
@@ -207,8 +204,8 @@ public:
       PortableGroup::ObjectGroup_ptr object_group) override;
 
   /// TAO specific method
-  virtual PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
-      PortableGroup::ObjectGroupId group_id);
+  PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
+      PortableGroup::ObjectGroupId group_id) override;
 
   /// Return the reference corresponding to the Replica of a given
   /// ObjectGroup at the given location.
@@ -216,14 +213,14 @@ public:
       PortableGroup::ObjectGroup_ptr object_group,
       PortableGroup::Location const & loc) override;
 
-  //@}
+  /// @}
 
   /**
    * @name PortableGroup::GenericFactory methods
    *
    * Methods required by the PortableGroup::GenericFactory interface.
    */
-  //@{
+  /// @{
   /**
    * Create an object of the specified type that adheres to the
    * restrictions defined by the provided Criteria.  The out
@@ -246,7 +243,7 @@ public:
       PortableGroup::GenericFactory::FactoryCreationId const &
         factory_creation_id) override;
 
-  //@}
+  /// @}
 
   /// Return the next member to which client requests will be
   /// forwarded.
@@ -271,7 +268,6 @@ public:
                    PortableServer::POA_ptr root_poa);
 
 protected:
-  /// Destructor.
   /**
    * Destructor is protected to enforce correct memory management
    * through reference counting.
@@ -378,7 +374,7 @@ private:
    * "Built-in" load balancing strategies defined by the load
    * balancing specification.
    */
-  //@{
+  /// @{
   /// The "RoundRobin" load balancing strategy.
   CosLoadBalancing::Strategy_var round_robin_;
 
@@ -393,7 +389,7 @@ private:
 
   /// The "LoadAverage" load balancing strategy.
   CosLoadBalancing::Strategy_var load_average_;
-  //@}
+  /// @}
 
   /// Cached instance of the Property name
   /// "org.omg.CosLoadBalancing.StrategyInfo".
@@ -410,14 +406,13 @@ private:
   TAO_SYNCH_MUTEX validate_lock_;
   TAO_Condition<TAO_SYNCH_MUTEX> validate_condition_;
 
-  bool shutdown_;
+  bool shutdown_ {};
 
   /// Short timeout for non_exist call. defaults to 1 second
   TimeBase::TimeT ping_timeout_;
   /// Long timeout for non_exist call. defaults to 5 seconds
   ACE_Time_Value ping_interval_;
 };
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

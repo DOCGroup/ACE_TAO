@@ -20,13 +20,16 @@ char *
 ACE_OS::strdup_emulation (const char *s)
 {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  char *t = (char *) ACE_Allocator::instance()->malloc (ACE_OS::strlen (s) + 1);
+  char *t = static_cast<char *> (
+    ACE_Allocator::instance()->malloc (ACE_OS::strlen (s) + 1));
 #else
-  char *t = (char *) ACE_OS::malloc (ACE_OS::strlen (s) + 1);
+  char *t = static_cast<char *> (ACE_OS::malloc (ACE_OS::strlen (s) + 1));
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-  if (t == 0)
-    return 0;
+  if (t == nullptr)
+    {
+      return nullptr;
+    }
 
   return ACE_OS::strcpy (t, s);
 }
@@ -38,11 +41,12 @@ ACE_OS::strdup_emulation (const char *s)
 wchar_t *
 ACE_OS::strdup_emulation (const wchar_t *s)
 {
-  wchar_t *buffer =
-    (wchar_t *) ACE_OS::malloc ((ACE_OS::strlen (s) + 1)
-                                * sizeof (wchar_t));
+  wchar_t *buffer = static_cast<wchar_t *> (
+    ACE_OS::malloc ((ACE_OS::strlen (s) + 1) * sizeof (wchar_t)));
   if (buffer == nullptr)
+  {
     return nullptr;
+  }
 
   return ACE_OS::strcpy (buffer, s);
 }
@@ -56,7 +60,8 @@ ACE_OS::strecpy (char *s, const char *t)
   const char *sscan = t;
 
   while ((*dscan++ = *sscan++) != '\0')
-    continue;
+    {
+    }
 
   return dscan;
 }
@@ -69,7 +74,8 @@ ACE_OS::strecpy (wchar_t *s, const wchar_t *t)
   const wchar_t *sscan = t;
 
   while ((*dscan++ = *sscan++) != ACE_TEXT_WIDE ('\0'))
-    continue;
+    {
+    }
 
   return dscan;
 }
@@ -99,20 +105,24 @@ ACE_OS::strerror (int errnum)
   // and set errno to EINVAL.
   ACE_Errno_Guard g (errno);
   errno = 0;
-  char *errmsg = nullptr;
+  char *errmsg {};
 
 # if defined (ACE_HAS_TR24731_2005_CRT)
   errmsg = ret_errortext;
   ACE_SECURECRTCALL (strerror_s (ret_errortext, sizeof(ret_errortext), errnum),
                      char *, 0, errmsg);
   if (errnum < 0 || errnum >= _sys_nerr)
-    g = EINVAL;
+    {
+      g = EINVAL;
+    }
 
   return errmsg;
 # else
 #  if defined (ACE_WIN32)
   if (errnum < 0 || errnum >= _sys_nerr)
-    errno = EINVAL;
+    {
+      errno = EINVAL;
+    }
 #  endif /* ACE_WIN32 */
   errmsg = ::strerror (errnum);
 
@@ -143,16 +153,18 @@ ACE_OS::strsignal (int signum)
 {
   static char signal_text[128];
 #if defined (ACE_HAS_STRSIGNAL)
-  char *ret_val = nullptr;
+  char *ret_val {};
 
 # if defined (ACE_NEEDS_STRSIGNAL_RANGE_CHECK)
   if (signum < 0 || signum >= ACE_NSIG)
-    ret_val = 0;
+    {
+      ret_val = nullptr;
+    }
   else
 # endif /* (ACE_NEEDS_STRSIGNAL_RANGE_CHECK */
   ret_val = ::strsignal (signum);
 
-  if (ret_val <= reinterpret_cast<char *> (0))
+  if (ret_val == nullptr)
     {
       ACE_OS::snprintf (signal_text, 128, "Unknown signal: %d", signum);
       ret_val = signal_text;
@@ -179,7 +191,9 @@ ACE_OS::strerror_r (int errnum, char *buf, size_t buflen)
 #ifdef ACE_HAS_STRERROR_R
 # ifdef ACE_HAS_STRERROR_R_XSI
   if (::strerror_r (errnum, buf, buflen) == 0)
-    return buf;
+    {
+      return buf;
+    }
   return const_cast <char*> ("Unknown Error");
 # else
   return ::strerror_r (errnum, buf, buflen);
@@ -193,8 +207,12 @@ const char *
 ACE_OS::strnchr (const char *s, int c, size_t len)
 {
   for (size_t i = 0; i < len; ++i)
-    if (s[i] == c)
-      return s + i;
+      {
+        if (s[i] == c)
+          {
+            return s + i;
+          }
+      }
 
   return nullptr;
 }
@@ -221,12 +239,14 @@ ACE_OS::strnstr (const char *s1, const char *s2, size_t len2)
 
   // Check if the substring is longer than the string being searched.
   if (len2 > len1)
+  {
     return nullptr;
+  }
 
   // Go upto <len>
   size_t const len = len1 - len2;
 
-  for (size_t i = 0; i <= len; i++)
+  for (size_t i = 0; i <= len; ++i)
     {
       if (ACE_OS::memcmp (s1 + i, s2, len2) == 0)
         {
@@ -246,12 +266,14 @@ ACE_OS::strnstr (const ACE_WCHAR_T *s1, const ACE_WCHAR_T *s2, size_t len2)
 
   // Check if the substring is longer than the string being searched.
   if (len2 > len1)
+  {
     return nullptr;
+  }
 
   // Go upto <len>
   size_t const len = len1 - len2;
 
-  for (size_t i = 0; i <= len; i++)
+  for (size_t i = 0; i <= len; ++i)
     {
       if (ACE_OS::memcmp (s1 + i, s2, len2 * sizeof (ACE_WCHAR_T)) == 0)
         {
@@ -320,20 +342,32 @@ char *
 ACE_OS::strtok_r_emulation (char *s, const char *tokens, char **lasts)
 {
   if (s == 0)
-    s = *lasts;
+    {
+      s = *lasts;
+    }
   else
-    *lasts = s;
+    {
+      *lasts = s;
+    }
   if (*s == 0)                  // We have reached the end
-    return 0;
+    {
+      return 0;
+    }
   size_t const l_org = ACE_OS::strlen (s);
   s = ::strtok (s, tokens);
   if (s == 0)
-    return 0;
+    {
+      return 0;
+    }
   size_t const l_sub = ACE_OS::strlen (s);
   if (s + l_sub < *lasts + l_org)
-    *lasts = s + l_sub + 1;
+    {
+      *lasts = s + l_sub + 1;
+    }
   else
-    *lasts = s + l_sub;
+    {
+      *lasts = s + l_sub;
+    }
   return s ;
 }
 #endif /* ACE_LACKS_STRTOK_R */
@@ -354,7 +388,9 @@ ACE_OS::strtok_r_emulation (ACE_WCHAR_T *s,
   }
   ACE_WCHAR_T*send = sbegin + ACE_OS::strcspn(sbegin, tokens);
   if (*send != 0)
+    {
       *send++ = 0;
+    }
   *lasts = send;
   return sbegin;
 }

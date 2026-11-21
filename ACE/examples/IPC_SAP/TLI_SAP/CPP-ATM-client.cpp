@@ -3,7 +3,6 @@
 #include "ace/ATM_Addr.h"
 #include "ace/Log_Msg.h"
 
-
 #if defined (ACE_HAS_FORE_ATM_XTI)
 
 /* ACE_XTI/ATM Client */

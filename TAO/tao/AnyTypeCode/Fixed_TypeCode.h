@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Fixed_TypeCode.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_FIXED_TYPECODE_H
 #define TAO_FIXED_TYPECODE_H
@@ -42,7 +40,6 @@ namespace TAO
       , private RefCountPolicy
     {
     public:
-      /// Constructor.
       Fixed (CORBA::UShort digits, CORBA::UShort scale);
 
       /**
@@ -53,11 +50,11 @@ namespace TAO
        *
        * @see @c CORBA::TypeCode
        */
-      //@{
+      /// @{
       bool tao_marshal (TAO_OutputCDR & cdr, CORBA::ULong offset) const override;
       void tao_duplicate () override;
       void tao_release () override;
-      //@}
+      /// @}
 
     protected:
       /**
@@ -68,7 +65,7 @@ namespace TAO
        *
        * @see @c CORBA::TypeCode
        */
-      //@{
+      /// @{
       CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const override;
       CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const override;
       CORBA::TypeCode_ptr get_compact_typecode_i () const override;
@@ -86,7 +83,6 @@ namespace TAO
 }  // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #ifdef __ACE_INLINE__
 # include "tao/AnyTypeCode/Fixed_TypeCode.inl"

@@ -4,7 +4,7 @@
 #include "orbsvcs/CosNamingC.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Consumer consumer;
 
@@ -13,13 +13,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Consumer::Consumer ()
-  : event_count_ (0)
-{
-}
-
 int
-Consumer::run (int argc, ACE_TCHAR* argv[])
+Consumer::run (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -73,14 +68,14 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
 
       // Simple subscription, but usually the helper classes in
       // $TAO_ROOT/orbsvcs/Event_Utils.h are a better way to do this.
-      RtecEventChannelAdmin::ConsumerQOS qos;
+      RtecEventChannelAdmin::ConsumerQOS qos {};
       qos.dependencies.length (2);
-      RtecEventComm::EventHeader& h0 =
+      RtecEventComm::EventHeader &h0 =
         qos.dependencies[0].event.header;
       h0.type   = ACE_ES_DISJUNCTION_DESIGNATOR;
       h0.source = ACE_ES_EVENT_SOURCE_ANY;
 
-      RtecEventComm::EventHeader& h1 =
+      RtecEventComm::EventHeader &h1 =
         qos.dependencies[1].event.header;
       h1.type   = ACE_ES_EVENT_UNDEFINED; // first free event type
       h1.source = ACE_ES_EVENT_SOURCE_ANY;
@@ -98,7 +93,7 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
       // work_pending()/perform_work() to do more interesting stuff.
       // Check the supplier for the proper way to do cleanup.
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Consumer::run");
       return 1;
@@ -107,7 +102,7 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
 }
 
 void
-Consumer::push (const RtecEventComm::EventSet& events)
+Consumer::push (RtecEventComm::EventSet const &events)
 {
   if (events.length () == 0)
     {
@@ -120,7 +115,7 @@ Consumer::push (const RtecEventComm::EventSet& events)
   if (this->event_count_ % 100 == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Consumer (%P|%t): %d events received\n",
+                  "Consumer (%P|%t): %u events received\n",
                   this->event_count_));
     }
 }

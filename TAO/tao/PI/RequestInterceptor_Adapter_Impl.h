@@ -1,10 +1,8 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    RequestInterceptor_Adapter_Impl.h
  */
-//=============================================================================
 
 #ifndef TAO_REQUEST_INTERCEPTOR_ADAPTER_IMPL_H
 #define TAO_REQUEST_INTERCEPTOR_ADAPTER_IMPL_H
@@ -43,7 +41,7 @@ class TAO_PI_Export TAO_RequestInterceptor_Adapter_Impl
   : public TAO::RequestInterceptor_Adapter
 {
 public:
-  ~TAO_RequestInterceptor_Adapter_Impl () override;
+  ~TAO_RequestInterceptor_Adapter_Impl () override = default;
 
   void popTSC (TAO_ORB_Core *orb_core) override;
   void pushTSC (TAO_ORB_Core *orb_core) override;

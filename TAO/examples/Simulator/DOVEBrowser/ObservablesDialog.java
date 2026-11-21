@@ -1,14 +1,8 @@
-//
-// = FILENAME
-//    ObservablesDialog.java
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//   Dialog for selecting Observables.
-//
-// ============================================================================
+/**
+ * @file ObservablesDialog.java
+ * @author Michael Kircher (mk1@cs.wustl.edu)
+ * @brief Dialog for selecting Observables.
+ */
 
 import java.awt.*;
 import java.awt.event.*;
@@ -33,7 +27,6 @@ public class ObservablesDialog extends Dialog {
     for (; enumeration.hasMoreElements();) {
       list_.add ((String)enumeration.nextElement());
     }
-
 
     Button ok_button_ = new Button ("OK");
     ok_button_.setFont ( new Font ("DialogHelvetica", Font.PLAIN, 10));

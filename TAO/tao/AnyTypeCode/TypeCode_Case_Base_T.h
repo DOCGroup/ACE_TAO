@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    TypeCode_Case_Base_T.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Ossama Othman
  */
-//=============================================================================
 
 #ifndef TAO_TYPECODE_CASE_H
 #define TAO_TYPECODE_CASE_H
@@ -48,19 +46,16 @@ namespace TAO
     class Case
     {
     public:
-      /// Constructor.
       /**
        * Constructor used when creating static @c union @c TypeCodes.
        */
       Case (char const * name, TypeCodeType tc);
 
-      /// Constructor.
       /**
        * Constructor used when creating dynamic @c union @c TypeCodes.
        */
       Case () = default;
 
-      /// Destructor.
       virtual ~Case () = default;
 
       /// Cloning/copying operation.
@@ -170,7 +165,6 @@ namespace ACE
 } // End namespace ACE.
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
 
 #ifdef __ACE_INLINE__
 # include "tao/AnyTypeCode/TypeCode_Case_Base_T.inl"

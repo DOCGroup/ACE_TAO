@@ -2,6 +2,7 @@
 #define TAO_ARRAY_VAROUT_T_CPP
 
 #include "tao/Array_VarOut_T.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Array_VarOut_T.inl"
@@ -29,7 +30,7 @@ TAO_FixedArray_Var_T<T,T_slice,TAG> &
 TAO_FixedArray_Var_T<T,T_slice,TAG>::operator= (
     TAO_FixedArray_Var_T<T,T_slice,TAG> const & p)
 {
-  if (this != &p)
+  if (this != std::addressof (p))
     {
       TAO::Array_Traits<FORANY>::free (this->ptr_);
 
@@ -62,7 +63,7 @@ TAO_VarArray_Var_T<T,T_slice,TAG> &
 TAO_VarArray_Var_T<T,T_slice,TAG>::operator= (
     TAO_VarArray_Var_T<T,T_slice,TAG> const & p)
 {
-  if (this != &p)
+  if (this != std::addressof (p))
     {
       TAO::Array_Traits<FORANY>::free (this->ptr_);
 

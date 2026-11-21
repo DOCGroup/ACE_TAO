@@ -11,8 +11,14 @@
  */
 //=============================================================================
 
+#ifndef TAO_AVSTREAMS_ASYNCH_THREE_STAGE_SENDER_H
+#define TAO_AVSTREAMS_ASYNCH_THREE_STAGE_SENDER_H
+
+#include <cstdio>
+#include <memory>
 
 #include "Connection_Manager.h"
+#include "ace/OS_NS_stdio.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
@@ -25,14 +31,20 @@
 class Sender_StreamEndPoint : public TAO_Client_StreamEndPoint
 {
 public:
+  Sender_StreamEndPoint () = default;
+  Sender_StreamEndPoint (Sender_StreamEndPoint const &) = delete;
+  Sender_StreamEndPoint &operator= (Sender_StreamEndPoint const &) = delete;
+  Sender_StreamEndPoint (Sender_StreamEndPoint &&) = delete;
+  Sender_StreamEndPoint &operator= (Sender_StreamEndPoint &&) = delete;
+
   /// Create the application callback and return its handle to
   /// AVStreams for further application callbacks.
-  int get_callback (const char *flowname,
+  int get_callback (char const *flowname,
                     TAO_AV_Callback *&callback) override;
 
   /// Set protocol object corresponding to the transport protocol
   /// chosen.
-  int set_protocol_object (const char *flowname,
+  int set_protocol_object (char const *flowname,
                            TAO_AV_Protocol_Object *object) override;
 
 protected:
@@ -56,8 +68,7 @@ using SENDER_ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_A
 class Sender
 {
 public:
-  /// Constructor
-  Sender ();
+  Sender () = default;
   Sender (Sender const &) = delete;
   Sender &operator= (Sender const &) = delete;
   Sender (Sender &&) = delete;
@@ -80,30 +91,28 @@ private:
   /// The endpoint strategy used by the sender.
   SENDER_ENDPOINT_STRATEGY endpoint_strategy_;
 
-  /// The sender MMDevice.
-  TAO_MMDevice *sender_mmdevice_;
-
   /// Number of frames sent.
-  int frame_count_;
-
-  /// File from which data is read.
-  ACE_TString filename_;
+  int frame_count_ {};
 
   /// File handle of the file read from.
-  FILE *input_file_;
-
-  /// File from which data is read.
-  ACE_TString addr_file_;
-
-  /// Rate at which the data will be sent.
-  double frame_rate_;
+  using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
+  File_Ptr input_file_ {nullptr, ACE_OS::fclose};
 
   /// Message block into which data is read from a file and then sent.
-  ACE_Message_Block mb_;
+  ACE_Message_Block mb_ {BUFSIZ};
 
-  /// Name of this sender.
-  ACE_TString sender_name_;
+  struct Options
+  {
+    ACE_TString filename {ACE_TEXT ("input")};
+    ACE_TString addr_file {ACE_TEXT ("addr_file")};
+    ACE_CString sender_name {"sender"};
+    double frame_rate {10.0};
+  };
 
-  // Connection manager.
+  Options options_;
+
+  /// Connection manager.
   Connection_Manager connection_manager_;
 };
+
+#endif /* TAO_AVSTREAMS_ASYNCH_THREE_STAGE_SENDER_H */

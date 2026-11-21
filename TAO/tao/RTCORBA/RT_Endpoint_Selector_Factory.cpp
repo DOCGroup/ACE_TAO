@@ -8,29 +8,23 @@
 
 #include "tao/Protocols_Hooks.h"
 
-#include "ace/Log_Msg.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 RT_Endpoint_Selector_Factory::RT_Endpoint_Selector_Factory ()
+  : rt_invocation_endpoint_selector_ (
+      std::make_unique<TAO_RT_Invocation_Endpoint_Selector> ())
 {
-  ACE_NEW (this->rt_invocation_endpoint_selector_,
-           TAO_RT_Invocation_Endpoint_Selector);
 }
 
-RT_Endpoint_Selector_Factory::~RT_Endpoint_Selector_Factory ()
-{
-  delete this->rt_invocation_endpoint_selector_;
-}
+RT_Endpoint_Selector_Factory::~RT_Endpoint_Selector_Factory () = default;
 
 TAO_Invocation_Endpoint_Selector *
 RT_Endpoint_Selector_Factory::get_selector ()
 {
-  return this->rt_invocation_endpoint_selector_;
+  return this->rt_invocation_endpoint_selector_.get ();
 }
-
-
-// ****************************************************************
 
 ACE_STATIC_SVC_DEFINE (RT_Endpoint_Selector_Factory,
                        ACE_TEXT ("RT_Endpoint_Selector_Factory"),

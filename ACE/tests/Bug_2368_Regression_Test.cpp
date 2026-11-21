@@ -13,6 +13,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
 
+#include <memory>
+
 static bool handleA_close_called = false;
 static bool handleB_close_called = false;
 
@@ -69,38 +71,50 @@ run_main (int, ACE_TCHAR *[])
   // Set up an ACE signal handler.
   if (ACE_Reactor::instance ()->register_handler
       (SIGINT,
-       &my_handlerA) == -1)
-    ACE_ERROR ((LM_DEBUG,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("register_handlerA")));
+       std::addressof (my_handlerA)) == -1)
+    {
+      ACE_ERROR ((LM_DEBUG,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("register_handlerA")));
+    }
 
   if (ACE_Reactor::instance ()->register_handler
       (SIGTERM,
-       &my_handlerB) == -1)
-    ACE_ERROR ((LM_DEBUG,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("register_handlerB")));
+       std::addressof (my_handlerB)) == -1)
+    {
+      ACE_ERROR ((LM_DEBUG,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("register_handlerB")));
+    }
 
-  ACE_Sig_Action *new_disp = nullptr;
+  ACE_Sig_Action *new_disp {};
   if (ACE_Reactor::instance ()->remove_handler
       (SIGINT,
        new_disp) == -1)
-    ACE_ERROR ((LM_DEBUG,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("remove_handlerB")));
+    {
+      ACE_ERROR ((LM_DEBUG,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("remove_handlerB")));
+    }
 
   if (ACE_Reactor::instance ()->close () == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("close")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("close")));
+    }
 
   if (!handleA_close_called)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Handle close hasn't been called for A.\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Handle close hasn't been called for A.\n")));
+    }
 
   if (!handleB_close_called)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Handle close hasn't been called for B.\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Handle close hasn't been called for B.\n")));
+    }
 
   ACE_END_TEST;
 

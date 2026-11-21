@@ -16,7 +16,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CORBA::Policy_ptr
 TAO::Security::PolicyFactory::create_policy (
     CORBA::PolicyType type,
-    const CORBA::Any &value)
+    CORBA::Any const & value)
 {
   // Not all security policies can be created using the
   // ORB::create_policy() mechanism.  Only those that can be created
@@ -29,13 +29,15 @@ TAO::Security::PolicyFactory::create_policy (
       // Extract the desired Quality-of-Protection value from the
       // given Any.
       if (!(value >>= qop))
-        throw CORBA::BAD_PARAM (
-          CORBA::SystemException::_tao_minor_code (
-            TAO::VMCID,
-            EINVAL),
-          CORBA::COMPLETED_NO);
+        {
+          throw CORBA::BAD_PARAM (
+            CORBA::SystemException::_tao_minor_code (
+              TAO::VMCID,
+              EINVAL),
+            CORBA::COMPLETED_NO);
+        }
 
-      TAO::Security::QOPPolicy * qop_policy = nullptr;
+      TAO::Security::QOPPolicy * qop_policy {};
       ACE_NEW_THROW_EX (qop_policy,
                         TAO::Security::QOPPolicy (qop),
                         CORBA::NO_MEMORY (
@@ -49,18 +51,20 @@ TAO::Security::PolicyFactory::create_policy (
 
   else if (type == ::Security::SecEstablishTrustPolicy)
     {
-      ::Security::EstablishTrust const *trust = nullptr;
+      ::Security::EstablishTrust const *trust {};
 
       // Extract the desired establishing of trust value from the
       // given Any.
       if (!(value >>= trust))
-        throw CORBA::BAD_PARAM (
-          CORBA::SystemException::_tao_minor_code (
-            TAO::VMCID,
-            EINVAL),
-          CORBA::COMPLETED_NO);
+        {
+          throw CORBA::BAD_PARAM (
+            CORBA::SystemException::_tao_minor_code (
+              TAO::VMCID,
+              EINVAL),
+            CORBA::COMPLETED_NO);
+        }
 
-      TAO::Security::EstablishTrustPolicy * trust_policy = nullptr;
+      TAO::Security::EstablishTrustPolicy * trust_policy {};
       ACE_NEW_THROW_EX (trust_policy,
                         TAO::Security::EstablishTrustPolicy (*trust),
                         CORBA::NO_MEMORY (
@@ -74,18 +78,20 @@ TAO::Security::PolicyFactory::create_policy (
 
   else if (type == SecurityLevel3::ContextEstablishmentPolicyType)
     {
-      SecurityLevel3::ContextEstablishmentPolicyArgument const * args = nullptr;
+      SecurityLevel3::ContextEstablishmentPolicyArgument const * args {};
 
       // Extract the desired establishing of trust value from the
       // given Any.
       if (!(value >>= args))
-        throw CORBA::BAD_PARAM (
-          CORBA::SystemException::_tao_minor_code (
-            TAO::VMCID,
-            EINVAL),
-          CORBA::COMPLETED_NO);
+        {
+          throw CORBA::BAD_PARAM (
+            CORBA::SystemException::_tao_minor_code (
+              TAO::VMCID,
+              EINVAL),
+            CORBA::COMPLETED_NO);
+        }
 
-      TAO::SL3::ContextEstablishmentPolicy * policy = nullptr;
+      TAO::SL3::ContextEstablishmentPolicy * policy {};
       ACE_NEW_THROW_EX (policy,
                         TAO::SL3::ContextEstablishmentPolicy (
                           args->creds_directive,
@@ -105,18 +111,20 @@ TAO::Security::PolicyFactory::create_policy (
 
   else if (type == SecurityLevel3::ObjectCredentialsPolicyType)
     {
-      SecurityLevel3::OwnCredentialsList const * creds = nullptr;
+      SecurityLevel3::OwnCredentialsList const * creds {};
 
       // Extract the desired establishing of trust value from the
       // given Any.
       if (!(value >>= creds))
-        throw CORBA::BAD_PARAM (
-          CORBA::SystemException::_tao_minor_code (
-            TAO::VMCID,
-            EINVAL),
-          CORBA::COMPLETED_NO);
+        {
+          throw CORBA::BAD_PARAM (
+            CORBA::SystemException::_tao_minor_code (
+              TAO::VMCID,
+              EINVAL),
+            CORBA::COMPLETED_NO);
+        }
 
-      TAO::SL3::ObjectCredentialsPolicy * policy = nullptr;
+      TAO::SL3::ObjectCredentialsPolicy * policy {};
       ACE_NEW_THROW_EX (policy,
                         TAO::SL3::ObjectCredentialsPolicy (*creds),
                         CORBA::NO_MEMORY (
@@ -132,9 +140,13 @@ TAO::Security::PolicyFactory::create_policy (
            || type == ::Security::SecMechanismsPolicy
            || type == ::Security::SecFeaturePolicy             // Deprecated.
            || type == ::Security::SecDelegationDirectivePolicy)
-    throw CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY);
+    {
+      throw CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY);
+    }
   else
+  {
     throw CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
+  }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

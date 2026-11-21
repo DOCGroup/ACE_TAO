@@ -17,15 +17,14 @@ void
 JAWS_Asynch_IO::send ( ACE_HANDLE handle
                      , ACE_Message_Block *mb
                      , JAWS_Event_Completer *completer
-                     , void *act
-                     )
+                     , void *act)
 {
   JAWS_EC_AH_Adapter *jecaha;
   jecaha = JAWS_EC_AH_Adapter::make (completer);
 
   ACE_Asynch_Write_Stream asynch_write_stream;
 
-  if (jecaha == 0
+  if (jecaha == nullptr
       || asynch_write_stream.open (*jecaha, handle) == -1
       || asynch_write_stream.write (*mb, mb->length (), act) == -1)
     {
@@ -36,24 +35,24 @@ JAWS_Asynch_IO::send ( ACE_HANDLE handle
                                   );
 
       if (completer)
+      {
         completer->output_complete (io_result, act);
+      }
     }
 }
-
 
 void
 JAWS_Asynch_IO::recv ( ACE_HANDLE handle
                      , ACE_Message_Block *mb
                      , JAWS_Event_Completer *completer
-                     , void *act
-                     )
+                     , void *act)
 {
   JAWS_EC_AH_Adapter *jecaha;
   jecaha = JAWS_EC_AH_Adapter::make (completer);
 
   ACE_Asynch_Read_Stream asynch_read_stream;
 
-  if (jecaha == 0
+  if (jecaha == nullptr
       || asynch_read_stream.open (*jecaha, handle) == -1
       || asynch_read_stream.read (*mb, mb->space (), act) == -1)
     {
@@ -64,10 +63,11 @@ JAWS_Asynch_IO::recv ( ACE_HANDLE handle
                                   );
 
       if (completer)
+      {
         completer->output_complete (io_result, act);
+      }
     }
 }
-
 
 void
 JAWS_Asynch_IO::transmit ( ACE_HANDLE handle
@@ -75,13 +75,12 @@ JAWS_Asynch_IO::transmit ( ACE_HANDLE handle
                          , JAWS_Event_Completer *completer
                          , void *act
                          , ACE_Message_Block *header
-                         , ACE_Message_Block *trailer
-                         )
+                         , ACE_Message_Block *trailer)
 {
   JAWS_EC_AH_Adapter *jecaha;
   jecaha = JAWS_EC_AH_Adapter::make (completer);
 
-  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer = 0;
+  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer {};
   header_and_trailer =
     new ACE_Asynch_Transmit_File::Header_And_Trailer ( header
                                                      , header->length ()
@@ -92,8 +91,8 @@ JAWS_Asynch_IO::transmit ( ACE_HANDLE handle
   ACE_Asynch_Transmit_File asynch_transmit_file;
 
   if (source == ACE_INVALID_HANDLE
-      || jecaha == 0
-      || header_and_trailer == 0
+      || jecaha == nullptr
+      || header_and_trailer == nullptr
       || asynch_transmit_file.open (*jecaha, handle) == -1
       || asynch_transmit_file.transmit_file ( source
                                             , header_and_trailer
@@ -113,10 +112,11 @@ JAWS_Asynch_IO::transmit ( ACE_HANDLE handle
                                   );
 
       if (completer)
+      {
         completer->output_complete (io_result, act);
+      }
     }
 }
-
 
 JAWS_EC_AH_Adapter *
 JAWS_EC_AH_Adapter::make (JAWS_Event_Completer *completer)
@@ -183,8 +183,7 @@ JAWS_Event_Result
 JAWS_EC_AH_Adapter
 ::make_io_result ( const ACE_Asynch_Result &result
                  , JAWS_Event_Result::JE_REASON reason_ok
-                 , JAWS_Event_Result::JE_REASON reason_fail
-                 )
+                 , JAWS_Event_Result::JE_REASON reason_fail)
 {
   size_t bytes = result.bytes_transferred ();
 
@@ -215,23 +214,19 @@ void
 JAWS_Asynch_IO::send ( ACE_HANDLE handle
                      , ACE_Message_Block *mb
                      , JAWS_Event_Completer *completer
-                     , void *act
-                     )
+                     , void *act)
 {
   JAWS_Reactive_IO::instance ()->send (handle, mb, completer, act);
 }
-
 
 void
 JAWS_Asynch_IO::recv ( ACE_HANDLE handle
                      , ACE_Message_Block *mb
                      , JAWS_Event_Completer *completer
-                     , void *act
-                     )
+                     , void *act)
 {
   JAWS_Reactive_IO::instance ()->recv (handle, mb, completer, act);
 }
-
 
 void
 JAWS_Asynch_IO::transmit ( ACE_HANDLE handle
@@ -239,8 +234,7 @@ JAWS_Asynch_IO::transmit ( ACE_HANDLE handle
                          , JAWS_Event_Completer *completer
                          , void *act
                          , ACE_Message_Block *header
-                         , ACE_Message_Block *trailer
-                         )
+                         , ACE_Message_Block *trailer)
 {
   JAWS_Reactive_IO::instance ()->transmit ( handle
                                           , source
@@ -264,24 +258,20 @@ JAWS_Asynch_IO::send ( ACE_HANDLE handle
                      , ACE_Message_Block *mb
                      , JAWS_Event_Completer *completer
                      , const ACE_Time_Value &tv
-                     , void *act
-                     )
+                     , void *act)
 {
   JAWS_Reactive_IO::instance ()->send (handle, mb, completer, tv, act);
 }
-
 
 void
 JAWS_Asynch_IO::recv ( ACE_HANDLE handle
                      , ACE_Message_Block *mb
                      , JAWS_Event_Completer *completer
                      , const ACE_Time_Value &tv
-                     , void *act
-                     )
+                     , void *act)
 {
   JAWS_Reactive_IO::instance ()->recv (handle, mb, completer, tv, act);
 }
-
 
 void
 JAWS_Asynch_IO::transmit ( ACE_HANDLE handle
@@ -290,8 +280,7 @@ JAWS_Asynch_IO::transmit ( ACE_HANDLE handle
                          , const ACE_Time_Value &tv
                          , void *act
                          , ACE_Message_Block *header
-                         , ACE_Message_Block *trailer
-                         )
+                         , ACE_Message_Block *trailer)
 {
   JAWS_Reactive_IO::instance ()->transmit ( handle
                                           , source

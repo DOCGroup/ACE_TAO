@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ub_wstr_seq.cpp
  *
@@ -7,8 +5,6 @@
  *
  *  @author   Jeff Parsons
  */
-//=============================================================================
-
 
 #include "helper.h"
 #include "ub_wstr_seq.h"
@@ -19,18 +15,12 @@
 // ************************************************************************
 
 Test_WString_Sequence::Test_WString_Sequence ()
-  : opname_ (CORBA::string_dup ("test_wstrseq")),
+  : opname_ ("test_wstrseq"),
     in_ (new CORBA::WStringSeq),
     inout_ (new CORBA::WStringSeq),
     out_ (new CORBA::WStringSeq),
     ret_ (new CORBA::WStringSeq)
 {
-}
-
-Test_WString_Sequence::~Test_WString_Sequence ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
 }
 
 const char *
@@ -50,7 +40,7 @@ Test_WString_Sequence::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const CORBA::WStringSeq *tmp = 0;
+  CORBA::WStringSeq const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new CORBA::WStringSeq (*tmp);
 
@@ -70,14 +60,14 @@ Test_WString_Sequence::init_parameters (Param_Test_ptr)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
-  CORBA::ULong len = 2;
+  CORBA::ULong const len = 2;
 
   // set the length of the sequences
   this->in_->length (len);
   this->inout_->length (len);
 
   // now set each individual element
-  for (CORBA::ULong i = 0; i < this->in_->length (); i++)
+  for (CORBA::ULong i = 0; i < this->in_->length (); ++i)
     {
       this->in_[i] = gen->gen_wstring ();
       this->inout_[i] = gen->gen_wstring ();
@@ -100,7 +90,7 @@ Test_WString_Sequence::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      CORBA::WStringSeq_out out (this->out_.out ());
+      CORBA::WStringSeq_out const out (this->out_.out ());
 
       this->ret_ = objref->test_wstrseq (this->in_.in (),
                                          this->inout_.inout (),
@@ -118,20 +108,20 @@ Test_WString_Sequence::run_sii_test (Param_Test_ptr objref)
 CORBA::Boolean
 Test_WString_Sequence::check_validity ()
 {
-  CORBA::Boolean flag = 0;
+  CORBA::Boolean flag = false;
   if ((this->in_->length () == this->inout_->length ()) &&
       (this->in_->length () == this->out_->length ()) &&
       (this->in_->length () == this->ret_->length ()))
     {
       flag = 1; // assume all are equal
       // lengths are same. Now compare the contents
-      for (CORBA::ULong i=0; i < this->in_->length () && flag; i++)
+      for (CORBA::ULong i=0; i < this->in_->length () && flag; ++i)
         {
           if (ACE_OS::wscmp (this->in_[i], this->inout_[i]) ||
               ACE_OS::wscmp (this->in_[i], this->out_[i]) ||
               ACE_OS::wscmp (this->in_[i], this->ret_[i]))
             // not equal
-            flag = 0;
+            flag = false;
         }
     }
   return flag;

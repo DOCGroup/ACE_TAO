@@ -6,17 +6,14 @@
  */
 //=============================================================================
 
-
 #include "demux_test_client.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_string.h"
 
-// Constructor
 Demux_Test_Client::Demux_Test_Client ()
   : argc_ (0),
-    argv_ (0),
     is_ (Demux_Test_Client::LINEAR),
     num_POAs_ (1),
     // default number of child POAs is 1 and each one will always have 1 object
@@ -24,14 +21,7 @@ Demux_Test_Client::Demux_Test_Client ()
     num_ops_ (1),
     demux_test_ (TAO_DEMUX_TEST_MAX_POAS * TAO_DEMUX_TEST_MAX_OBJS),
     loop_count_ (1),
-    ior_fp_ (0),
-    result_fp_ (0),
     step_ (5)
-{
-}
-
-// destructor
-Demux_Test_Client::~Demux_Test_Client ()
 {
 }
 
@@ -74,15 +64,12 @@ Demux_Test_Client::init (int argc, ACE_TCHAR *argv [])
                       -1);
 
   // now read all the IORS
-  CORBA::ULong i, j;
-
-  for (i = 0; i < this->num_POAs_; ++i)
-    for (j = 0; j < this->num_objs_; ++j)
+  for (CORBA::ULong i = 0; i < this->num_POAs_; ++i)
+    for (CORBA::ULong j = 0; j < this->num_objs_; ++j)
       {
-        char str [1024 * 10];
-        ACE_OS::memset (str, 0, sizeof (str));
+        char str [1024 * 10] {};
 
-        if (fscanf (this->ior_fp_, "%s", str) == EOF)
+        if (fscanf (this->ior_fp_.get (), "%s", str) == EOF)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
                                "IOR database has less entries than required\n"),
@@ -97,7 +84,6 @@ Demux_Test_Client::init (int argc, ACE_TCHAR *argv [])
             // now narrow to Demux_Test object
 
             this->demux_test_[i * j] = Demux_Test::_narrow (objref.in ());
-
 
             if (CORBA::is_nil (this->demux_test_[i * j].in ()))
               {
@@ -114,7 +100,7 @@ Demux_Test_Client::init (int argc, ACE_TCHAR *argv [])
           }
       } // j and i loop
 
-  ACE_OS::fclose (this->ior_fp_);
+  this->ior_fp_.reset ();
 
   // success
   return 0;
@@ -131,11 +117,11 @@ Demux_Test_Client::parse_args ()
     switch (c)
       {
       case 'd':  // debug flag
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'f':
-        this->ior_fp_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
-        if (this->ior_fp_ == 0)
+        this->ior_fp_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
+        if (!this->ior_fp_)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
                              get_opts.opt_arg ()), -1);
@@ -224,8 +210,8 @@ Demux_Test_Client::parse_args ()
   if (!this->ior_fp_)
     {
       // open default IOR file
-      this->ior_fp_ = ACE_OS::fopen ("ior.dat", "r");
-      if (this->ior_fp_ == 0)
+      this->ior_fp_.reset (ACE_OS::fopen ("ior.dat", "r"));
+      if (!this->ior_fp_)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Unable to open file ior.dat for reading\n"), -1);
     }
@@ -237,7 +223,8 @@ int
 Demux_Test_Client::run ()
 {
   // open a temporary results file
-  if ((this->result_fp_ = ACE_OS::fopen ("results.dat", "w")) == 0)
+  this->result_fp_.reset (ACE_OS::fopen ("results.dat", "w"));
+  if (!this->result_fp_)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Demux_Test_Client::run - "
@@ -271,8 +258,7 @@ Demux_Test_Client::run ()
       throw;
     }
 
-  ACE_OS::fclose (this->result_fp_);
-  this->result_fp_ = 0;
+  this->result_fp_.reset ();
 
   try
     {
@@ -303,23 +289,21 @@ Demux_Test_Client::run ()
 int
 Demux_Test_Client::run_linear_test ()
 {
-  CORBA::ULong j, k, l, m;
-  ACE_hrtime_t start, end;
+  CORBA::ULong m = 0;
 
-  m = 0;
-  for (j = 0; j < this->num_POAs_; ++j)
-    for (k = 0; k < this->num_objs_; k+=this->step_)
-      for (l = 0; l < this->num_ops_; ++l)
+  for (CORBA::ULong j = 0; j < this->num_POAs_; ++j)
+    for (CORBA::ULong k = 0; k < this->num_objs_; k += this->step_)
+      for (CORBA::ULong l = 0; l < this->num_ops_; ++l)
           {
-            start = ACE_OS::gethrtime ();
+            ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
             // invoke the method
             this->op_db_[l].op_ (this->demux_test_[j * k].in ());
 
-            end = ACE_OS::gethrtime ();
+            ACE_hrtime_t const end = ACE_OS::gethrtime ();
 
-            m++;
-            ACE_OS::fprintf (this->result_fp_, "%d %f\n", m,
+            ++m;
+            ACE_OS::fprintf (this->result_fp_.get (), "%d %f\n", m,
                              1.0 * ACE_UINT64_DBLCAST_ADAPTER (end - start));
           }
 

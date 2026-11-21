@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   LzoCompressor_Factory.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_LZOCOMPRESSOR_FACTORY_H
 #define TAO_LZOCOMPRESSOR_FACTORY_H
@@ -34,12 +32,14 @@ namespace TAO
 
         ::Compression::Compressor_ptr get_compressor (
             ::Compression::CompressionLevel compression_level) override;
-       private:
-         Lzo_CompressorFactory (Lzo_CompressorFactory const &) = delete;
-         Lzo_CompressorFactory &operator= (Lzo_CompressorFactory const &) = delete;
-         Lzo_CompressorFactory (Lzo_CompressorFactory &&) = delete;
-         Lzo_CompressorFactory &operator= (Lzo_CompressorFactory &&) = delete;
 
+        Lzo_CompressorFactory (Lzo_CompressorFactory const &) = delete;
+        Lzo_CompressorFactory &operator= (Lzo_CompressorFactory const &) = delete;
+        Lzo_CompressorFactory (Lzo_CompressorFactory &&) = delete;
+        Lzo_CompressorFactory &operator= (Lzo_CompressorFactory &&) = delete;
+
+      private:
+         TAO_SYNCH_MUTEX mutex_;
          ::Compression::Compressor_var compressor_;
     };
 }

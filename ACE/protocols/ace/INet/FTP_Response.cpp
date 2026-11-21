@@ -10,7 +10,6 @@
 #include "ace/INet/INet_Log.h"
 #include "ace/INet/String_IOStream.h"
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -24,9 +23,7 @@ namespace ACE
       {
       }
 
-    Response::~Response()
-      {
-      }
+    Response::~Response() = default;
 
     void Response::write(ostream& str) const
       {
@@ -71,7 +68,10 @@ namespace ACE
         sos << this->status_;
         sos.put (ch);
         ch = this->read_line (str, sos);
-        if (ch == '\r') ch = str.get ();
+        if (ch == '\r')
+          {
+            ch = str.get ();
+          }
         sos.close (); // close the stream before resizing the array invalidates the string reference
 
         INET_DEBUG (6, (LM_DEBUG, DLINFO

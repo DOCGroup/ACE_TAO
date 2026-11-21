@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    fixed_array.cpp
  *
@@ -7,8 +5,6 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #include "helper.h"
 #include "fixed_array.h"
@@ -18,15 +14,9 @@
 // ************************************************************************
 
 Test_Fixed_Array::Test_Fixed_Array ()
-  : opname_ (CORBA::string_dup ("test_fixed_array")),
+  : opname_ ("test_fixed_array"),
     ret_ (new Param_Test::Fixed_Array)
 {
-}
-
-Test_Fixed_Array::~Test_Fixed_Array ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
 }
 
 const char *
@@ -56,7 +46,7 @@ Test_Fixed_Array::dii_req_invoke (CORBA::Request *req)
 
   CORBA::NamedValue_ptr arg3 =
     req->arguments ()->item (2);
-  Param_Test::Fixed_Array_forany out_any (this->out_);
+  Param_Test::Fixed_Array_forany const out_any (this->out_);
   *arg3->value () >>= forany;
   Param_Test::Fixed_Array_copy (this->out_, forany.in ());
 }
@@ -69,7 +59,7 @@ Test_Fixed_Array::init_parameters (Param_Test_ptr /*objref*/
 
   //ACE_UNUSED_ARG (objref);
 
-  for (CORBA::ULong i=0; i < Param_Test::DIM1; i++)
+  for (CORBA::ULong i=0; i < Param_Test::DIM1; ++i)
     {
       this->in_ [i] = gen->gen_long ();
     }
@@ -80,7 +70,7 @@ Test_Fixed_Array::init_parameters (Param_Test_ptr /*objref*/
 int
 Test_Fixed_Array::reset_parameters ()
 {
-  for (CORBA::ULong i=0; i < Param_Test::DIM1; i++)
+  for (CORBA::ULong i=0; i < Param_Test::DIM1; ++i)
     {
       this->inout_ [i] = 0;
       this->out_ [i] = 0;
@@ -118,7 +108,9 @@ Test_Fixed_Array::check_validity ()
       this->compare (this->in_, this->ret_.in ()))
     return 1;
   else
+  {
     return 0;
+  }
 }
 
 CORBA::Boolean
@@ -132,10 +124,12 @@ CORBA::Boolean
 Test_Fixed_Array::compare (const Param_Test::Fixed_Array_slice *a1,
                            const Param_Test::Fixed_Array_slice *a2)
 {
-  for (CORBA::ULong i=0; i < Param_Test::DIM1; i++)
+  for (CORBA::ULong i=0; i < Param_Test::DIM1; ++i)
     {
       if (a1[i] != a2[i])
+      {
         return 0;
+      }
     }
   return 1; // success
 }
@@ -156,7 +150,7 @@ Test_Fixed_Array::print_values ()
 void
 Test_Fixed_Array::print (const Param_Test::Fixed_Array_slice *a)
 {
-  for (CORBA::ULong i = 0; i < Param_Test::DIM1; i++)
+  for (CORBA::ULong i = 0; i < Param_Test::DIM1; ++i)
     {
       ACE_DEBUG ((LM_DEBUG, "\t\tElement #%d = %d\n",i, a[i]));
     }

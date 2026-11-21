@@ -116,7 +116,6 @@ TAO_FixedArray_Var_T<T,T_slice,TAG>::TAO_FixedArray_Var_T (
   : TAO_Array_Var_Base_T<T,T_slice,TAG> (p)
 {}
 
-
 template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
 T_slice *
@@ -234,13 +233,6 @@ TAO_Array_Out_T<T,T_var,T_slice,TAG>::ptr ()
 
 template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_Array_Forany_T<T,T_slice,TAG>::TAO_Array_Forany_T ()
-  : ptr_ (nullptr),
-    nocopy_ (false)
-{}
-
-template<typename T, typename T_slice, typename TAG>
-ACE_INLINE
 TAO_Array_Forany_T<T,T_slice,TAG>::TAO_Array_Forany_T (
     T_slice * p,
     CORBA::Boolean nocopy)
@@ -254,12 +246,6 @@ TAO_Array_Forany_T<T,T_slice,TAG>::TAO_Array_Forany_T (
     TAO_Array_Forany_T<T,T_slice,TAG> const & p)
   : ptr_ (p.ptr_),
     nocopy_ (p.nocopy_)
-{
-}
-
-template<typename T, typename T_slice, typename TAG>
-ACE_INLINE
-TAO_Array_Forany_T<T,T_slice,TAG>::~TAO_Array_Forany_T ()
 {
 }
 

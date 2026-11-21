@@ -15,6 +15,7 @@
 #include <cctype>
 #include <clocale>
 #include <cmath>
+#include <cstring>
 
 #ifndef ACE_LACKS_WCHAR_H
 # include <cwchar>
@@ -60,7 +61,7 @@ ace_flock_t::dump () const
 
 # if 0
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("handle_ = %u"), this->handle_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("handle_ = %H"), this->handle_));
 #   if defined (ACE_WIN32)
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nInternal = %d"),
               this->overlapped_.Internal));
@@ -85,7 +86,6 @@ ace_flock_t::dump () const
 } /* namespace ACE_OS */
 
 /*****************************************************************************/
-
 
 #if defined (ACE_WIN32)
 namespace
@@ -153,7 +153,9 @@ ACE_OS::fopen (const char *filename,
   // crash.
   ACE_TCHAR const empty_mode[] = ACE_TEXT ("");
   if (!mode)
-    mode = empty_mode;
+    {
+      mode = empty_mode;
+    }
 
   for (ACE_TCHAR const* mode_ptr = mode; *mode_ptr != 0; ++mode_ptr)
     fopen_mode_to_open_mode_converter (*mode_ptr, hmode);
@@ -216,7 +218,7 @@ ACE_OS::fopen (const wchar_t *filename,
 #else
   int hmode = _O_TEXT;
 
-  for (const ACE_TCHAR *mode_ptr = mode; *mode_ptr != 0; mode_ptr++)
+  for (const ACE_TCHAR *mode_ptr = mode; *mode_ptr != 0; ++mode_ptr)
     fopen_mode_to_open_mode_converter (*mode_ptr, hmode);
 
   ACE_HANDLE handle = ACE_OS::open (filename, hmode);
@@ -290,14 +292,16 @@ ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
   char *name = ACE_OS::tempnam (ndir, npfx);
   // ACE_OS::tempnam returns a pointer to a malloc()-allocated space.
   // Convert that string to wide-char and free() the original.
-  wchar_t *wname = nullptr;
-  if (name != 0)
+  wchar_t *wname {};
+  if (name != nullptr)
     {
-      size_t namelen = ACE_OS::strlen (name) + 1;
+      size_t const namelen = ACE_OS::strlen (name) + 1;
       wname = reinterpret_cast<wchar_t *>
         (ACE_OS::malloc (namelen * sizeof (wchar_t)));
-      if (wname != 0)
+      if (wname != nullptr)
+      {
         ACE_OS::strcpy (wname, ACE_Ascii_To_Wide (name).wchar_rep ());
+      }
       ACE_OS::free (name);
     }
   return wname;
@@ -520,7 +524,9 @@ ACE_OS::vasprintf_emulation(char **bufp, const char *format, va_list argptr)
     {
       char *buf = reinterpret_cast<char*>(ACE_OS::malloc(size + 1));
       if (!buf)
-        return -1;
+        {
+          return -1;
+        }
 
       va_list aq;
       va_copy (aq, argptr);
@@ -528,7 +534,9 @@ ACE_OS::vasprintf_emulation(char **bufp, const char *format, va_list argptr)
       va_end (aq);
 
       if (size != -1)
-        *bufp = buf;
+        {
+          *bufp = buf;
+        }
     }
 
   return size;
@@ -550,7 +558,9 @@ ACE_OS::vaswprintf_emulation(wchar_t **bufp, const wchar_t *format, va_list argp
       wchar_t *buf = reinterpret_cast<wchar_t*>
         (ACE_OS::malloc((size + 1) * sizeof(wchar_t)));
       if (!buf)
+      {
         return -1;
+      }
 
       va_list aq;
       va_copy (aq, argptr);
@@ -558,7 +568,9 @@ ACE_OS::vaswprintf_emulation(wchar_t **bufp, const wchar_t *format, va_list argp
       va_end (aq);
 
       if (size != -1)
+      {
         *bufp = buf;
+      }
     }
 
   return size;
@@ -593,18 +605,19 @@ namespace { // helpers for vsnprintf_emulation
 
   struct Snprintf_Flags
   {
-    Snprintf_Flags ()
-      : val_ (SNPRINTF_NONE)
-    {}
+    Snprintf_Flags () = default;
 
     explicit Snprintf_Flags (const char *&fmt)
-      : val_ (SNPRINTF_NONE)
     {
       this->parse_flags (fmt);
       if (this->has (SNPRINTF_LEFT))
-        this->remove (SNPRINTF_ZERO);
+        {
+          this->remove (SNPRINTF_ZERO);
+        }
       if (this->has (SNPRINTF_SIGN))
-        this->remove (SNPRINTF_SPACE);
+        {
+          this->remove (SNPRINTF_SPACE);
+        }
     }
 
     void parse_flags (const char *&fmt)
@@ -628,21 +641,37 @@ namespace { // helpers for vsnprintf_emulation
     void parse_length (const char *&fmt)
     {
       if (fmt[0] == 'h' && fmt[1] == 'h')
-        this->add (SNPRINTF_CHAR), fmt += 2;
+        {
+          this->add (SNPRINTF_CHAR), fmt += 2;
+        }
       else if (fmt[0] == 'h')
-        this->add (SNPRINTF_SHORT), ++fmt;
+        {
+          this->add (SNPRINTF_SHORT), ++fmt;
+        }
       else if (fmt[0] == 'l' && fmt[1] == 'l')
-        this->add (SNPRINTF_LONGLONG), fmt += 2;
+        {
+          this->add (SNPRINTF_LONGLONG), fmt += 2;
+        }
       else if (fmt[0] == 'l')
-        this->add (SNPRINTF_LONG), ++fmt;
+        {
+          this->add (SNPRINTF_LONG), ++fmt;
+        }
       else if (fmt[0] == 'j')
-        this->add (SNPRINTF_INTMAX), ++fmt;
+        {
+          this->add (SNPRINTF_INTMAX), ++fmt;
+        }
       else if (fmt[0] == 'z')
-        this->add (SNPRINTF_SIZET), ++fmt;
+        {
+          this->add (SNPRINTF_SIZET), ++fmt;
+        }
       else if (fmt[0] == 't')
-        this->add (SNPRINTF_PTRDIFF), ++fmt;
+        {
+          this->add (SNPRINTF_PTRDIFF), ++fmt;
+        }
       else if (fmt[0] == 'L')
-        this->add (SNPRINTF_LONGDOUBLE), ++fmt;
+        {
+          this->add (SNPRINTF_LONGDOUBLE), ++fmt;
+        }
     }
 
     void width (int &w)
@@ -669,9 +698,13 @@ namespace { // helpers for vsnprintf_emulation
       if (std::isupper (c))
         {
           if (c == 'C' || c == 'S') // C,S specs are POSIX extensions
-            this->add (SNPRINTF_LONG);
+            {
+              this->add (SNPRINTF_LONG);
+            }
           else
-            this->add (SNPRINTF_UCASE);
+            {
+              this->add (SNPRINTF_UCASE);
+            }
           c = std::tolower (c);
         }
 
@@ -690,7 +723,7 @@ namespace { // helpers for vsnprintf_emulation
     void remove (Flag f) { this->val_ &= ~f; }
     bool has (Flag f) const { return (this->val_ & f) == f; }
     bool has_some (Flag f) const { return this->val_ & f; }
-    int val_;
+    int val_ {SNPRINTF_NONE};
   };
 
   struct Snprintf_Digit_Grouping
@@ -712,7 +745,9 @@ namespace { // helpers for vsnprintf_emulation
     int separators_needed (int digits) const
     {
       if (!this->grouping_)
-        return 0;
+        {
+          return 0;
+        }
       const char *grouping = this->grouping_;
       int group = *grouping;
       int separators = 0;
@@ -721,7 +756,9 @@ namespace { // helpers for vsnprintf_emulation
           digits -= group;
           ++separators;
           if (grouping[1])
-            group = *++grouping;
+            {
+              group = *++grouping;
+            }
         }
       return separators;
     }
@@ -733,11 +770,15 @@ namespace { // helpers for vsnprintf_emulation
         {
           *--buf = this->thousands_;
           if (this->grouping_[1])
-            this->separator_ = *++this->grouping_;
+            {
+              this->separator_ = *++this->grouping_;
+            }
           this->next_sep_ = this->separator_;
         }
       if (this->next_sep_ > 0 && this->next_sep_ < CHAR_MAX)
-        --this->next_sep_;
+        {
+          --this->next_sep_;
+        }
       return separate;
     }
 
@@ -751,15 +792,16 @@ namespace { // helpers for vsnprintf_emulation
     Snprintf_Buffer (char *buf, size_t max)
       : buf_ (buf)
       , avail_ (max - 1) // last byte is not available for writes, must be null
-      , written_ (0)
     {}
 
     void out (const char *s, size_t n)
     {
       if (n == 0)
-        return;
+        {
+          return;
+        }
       const size_t m = n > this->avail_ ? this->avail_ : n;
-      ACE_OS::memcpy (this->buf_, s, m);
+      std::memcpy (this->buf_, s, m);
       this->buf_ += m;
       this->avail_ -= m;
       this->written_ += n;
@@ -768,7 +810,9 @@ namespace { // helpers for vsnprintf_emulation
     void fill (char c, size_t n)
     {
       if (n == 0)
-        return;
+        {
+          return;
+        }
       const size_t m = n > this->avail_ ? this->avail_ : n;
       ACE_OS::memset (this->buf_, c, m);
       this->buf_ += m;
@@ -780,10 +824,14 @@ namespace { // helpers for vsnprintf_emulation
     {
       const int used = static_cast<int> (n);
       if (!flags.has (SNPRINTF_LEFT) && width > used)
-        this->fill (' ', width - used);
+        {
+          this->fill (' ', width - used);
+        }
       this->out (s, n);
       if (flags.has (SNPRINTF_LEFT) && width > used)
-        this->fill (' ', width - used);
+        {
+          this->fill (' ', width - used);
+        }
     }
 
     void conv_int (ACE_UINT64 val, Snprintf_Flags flags,
@@ -792,16 +840,24 @@ namespace { // helpers for vsnprintf_emulation
       if (val == 0 && precision == 0)
         {
           if (flags.has (SNPRINTF_SPACE) && !flags.has (SNPRINTF_UNSIGNED))
-            this->fill (' ', 1);
+            {
+              this->fill (' ', 1);
+            }
           if (flags.has (SNPRINTF_ALT) && base == 8)
-            this->fill ('0', 1);
+            {
+              this->fill ('0', 1);
+            }
           return;
         }
 
       if (precision >= 0)
-        flags.remove (SNPRINTF_ZERO);
+        {
+          flags.remove (SNPRINTF_ZERO);
+        }
       if (precision == -1)
-        precision = 1;
+        {
+          precision = 1;
+        }
 
 #ifdef ACE_LACKS_LOCALECONV
       static constexpr char thousands_sep = 0;
@@ -817,7 +873,9 @@ namespace { // helpers for vsnprintf_emulation
 #endif
 
       if (base != 10)
-        flags.remove (SNPRINTF_GROUP);
+        {
+          flags.remove (SNPRINTF_GROUP);
+        }
       Snprintf_Digit_Grouping dg (flags, grouping, thousands_sep);
 
       char buf[100];
@@ -828,7 +886,9 @@ namespace { // helpers for vsnprintf_emulation
       for (ACE_UINT64 v = val; v; v /= base)
         {
           if (dg.next (it))
-            ++sep_chars;
+            {
+              ++sep_chars;
+            }
           *--it = static_cast<char> (v % base < 10 ?
                                      '0' + v % base : a + v % base - 10);
         }
@@ -836,14 +896,22 @@ namespace { // helpers for vsnprintf_emulation
       const int digits = static_cast<int> (buf + sizeof buf - it - sep_chars);
 
       if (base == 8 && flags.has (SNPRINTF_ALT) && precision <= digits)
-        precision = digits + 1;
+        {
+          precision = digits + 1;
+        }
 
       if (flags.has (SNPRINTF_NEGATIVE))
-        *--it = '-';
+        {
+          *--it = '-';
+        }
       else if (flags.has (SNPRINTF_SPACE) && !flags.has (SNPRINTF_UNSIGNED))
-        *--it = ' ';
+        {
+          *--it = ' ';
+        }
       else if (flags.has (SNPRINTF_SIGN) && !flags.has (SNPRINTF_UNSIGNED))
-        *--it = '+';
+        {
+          *--it = '+';
+        }
 
       const bool has_sign = it < buf + sizeof buf - digits - sep_chars;
       bool has_0x = false;
@@ -858,11 +926,15 @@ namespace { // helpers for vsnprintf_emulation
       if (flags.has (SNPRINTF_ZERO) || precision > digits)
         {
           if (precision > digits)
-            padding = precision - digits;
+            {
+              padding = precision - digits;
+            }
 
           const int prefix = has_sign ? 1 : (has_0x ? 2 : 0);
           if (flags.has (SNPRINTF_ZERO) && width > digits + sep_chars + prefix)
-            padding = width - digits - prefix - sep_chars;
+            {
+              padding = width - digits - prefix - sep_chars;
+            }
 
           if (!flags.has (SNPRINTF_LEFT) && digits + padding + prefix < width)
             {
@@ -898,20 +970,30 @@ namespace { // helpers for vsnprintf_emulation
 # define SIGN_OFFSET 0
 #endif
       if (pval[SIGN_OFFSET] & 0x80)
-        val = -val, *it++ = '-';
+        {
+          val = -val, *it++ = '-';
+        }
       else if (flags.has (SNPRINTF_SIGN))
-        *it++ = '+';
+        {
+          *it++ = '+';
+        }
       else if (flags.has (SNPRINTF_SPACE))
-        *it++ = ' ';
+        {
+          *it++ = ' ';
+        }
       const bool has_sign = it > buf;
 
       if (!(val >= -(std::numeric_limits<long double>::max)()
             && val <= (std::numeric_limits<long double>::max)()))
         {
           if (val != val)
-            ACE_OS::strcpy (it, flags.has (SNPRINTF_UCASE) ? "NAN" : "nan");
+            {
+              std::strcpy (it, flags.has (SNPRINTF_UCASE) ? "NAN" : "nan");
+            }
           else
-            ACE_OS::strcpy (it, flags.has (SNPRINTF_UCASE) ? "INF" : "inf");
+            {
+              std::strcpy (it, flags.has (SNPRINTF_UCASE) ? "INF" : "inf");
+            }
           this->conv_str (buf, flags, width, -1);
           return;
         }
@@ -936,9 +1018,13 @@ namespace { // helpers for vsnprintf_emulation
           const int p = precision > 0 ? precision : (precision < 0 ? 6 : 1);
           precision = p - 1;
           if (exp < p && exp >= -4)
-            precision -= exp;
+            {
+              precision -= exp;
+            }
           else
-            flags.add (SNPRINTF_EXPONENT);
+            {
+              flags.add (SNPRINTF_EXPONENT);
+            }
         }
 
       if (flags.has (SNPRINTF_EXPONENT))
@@ -953,15 +1039,21 @@ namespace { // helpers for vsnprintf_emulation
           *it++ = flags.has (SNPRINTF_UCASE) ? 'X' : 'x';
           long double mant = std::frexp (val, &exp);
           if (mant != 0)
-            exp -= 4;
+            {
+              exp -= 4;
+            }
           const char a = flags.has (SNPRINTF_UCASE) ? 'A' : 'a';
           *it++ = hex_digit (mant, a);
           if (precision >= 0 || flags.has (SNPRINTF_ALT) || mant > 0)
-            *it++ = radix;
+            {
+              *it++ = radix;
+            }
           for (int i = 0; i < precision || precision == -1; ++i)
             {
               if ((precision == -1 && mant == 0) || it == buf + sizeof buf - 8)
-                break;
+                {
+                  break;
+                }
               *it++ = hex_digit (mant, a);
             }
           flags.add (SNPRINTF_EXPONENT);
@@ -993,9 +1085,13 @@ namespace { // helpers for vsnprintf_emulation
           const char *const frac_start = it;
 
           if (precision == -1)
-            precision = 6;
+            {
+              precision = 6;
+            }
           if (precision > 0 || flags.has (SNPRINTF_ALT))
-            *it++ = radix;
+            {
+              *it++ = radix;
+            }
 
           for (int i = 0; i < precision && it < buf + sizeof buf; ++i)
             {
@@ -1024,7 +1120,9 @@ namespace { // helpers for vsnprintf_emulation
       if (flags.has (SNPRINTF_EXPONENT))
         {
           if (!flags.has (SNPRINTF_HEXPONENT))
-            *it++ = flags.has (SNPRINTF_UCASE) ? 'E' : 'e';
+            {
+              *it++ = flags.has (SNPRINTF_UCASE) ? 'E' : 'e';
+            }
           Snprintf_Buffer sb (it, buf + sizeof buf - it);
           Snprintf_Flags exp_flags;
           exp_flags.add (SNPRINTF_SIGN);
@@ -1040,11 +1138,17 @@ namespace { // helpers for vsnprintf_emulation
       if (flags.has (SNPRINTF_ZERO) && used < width)
         {
           if (has_sign)
-            this->fill (*it++, 1);
+            {
+              this->fill (*it++, 1);
+            }
           if (flags.has (SNPRINTF_HEXPONENT))
-            this->out (it, 2), it += 2;
+            {
+              this->out (it, 2), it += 2;
+            }
           if (width > used)
-            this->fill ('0', width - used);
+            {
+              this->fill ('0', width - used);
+            }
           width = -1;
         }
 
@@ -1067,7 +1171,7 @@ namespace { // helpers for vsnprintf_emulation
     void conv_str (const char *str, Snprintf_Flags flags,
                    int width, int precision)
     {
-      const size_t len = ACE_OS::strlen (str),
+      const size_t len = std::strlen (str),
         n = (precision >= 0 && precision < int (len)) ? precision : len;
       this->pad (str, n, flags, width);
     }
@@ -1093,7 +1197,8 @@ namespace { // helpers for vsnprintf_emulation
     }
 
     char *buf_;
-    size_t avail_, written_;
+    size_t avail_;
+    size_t written_ {};
   };
 
 #ifdef EOVERFLOW
@@ -1104,7 +1209,7 @@ namespace { // helpers for vsnprintf_emulation
 
   int snprintf_read_int (const char *&fmt)
   {
-    char *end = nullptr;
+    char *end {};
     const unsigned long i = ACE_OS::strtoul (fmt, &end, 10);
     fmt = end;
     if (i > INT_MAX)
@@ -1131,21 +1236,18 @@ namespace { // helpers for vsnprintf_emulation
   {
     Snprintf_Positional_Args ()
       : pos_arg_ (this->pos_storage_)
-      , scanned_ (false)
     {}
 
     ~Snprintf_Positional_Args ()
     {
       if (this->pos_arg_ != this->pos_storage_)
-        ACE_Allocator::instance ()->free (this->pos_arg_);
+        {
+          ACE_Allocator::instance ()->free (this->pos_arg_);
+        }
     }
 
     struct Positional_Arg
     {
-      Positional_Arg ()
-        : type_ (PA_UNUSED)
-      {}
-
       enum {
         PA_UNUSED,
         PA_INT, PA_LONG, PA_LONGLONG, PA_INTMAX, PA_PTRDIFF, PA_SSIZE,
@@ -1154,7 +1256,7 @@ namespace { // helpers for vsnprintf_emulation
         PA_PCHAR, PA_PWCHAR, PA_PVOID,
         PA_PINT, PA_PINTMAX, PA_PLONG, PA_PLONGLONG, PA_PPTRDIFF, PA_PSHORT,
         PA_PSCHAR, PA_PSSIZE
-      } type_;
+      } type_ {PA_UNUSED};
 
       union
       {
@@ -1168,13 +1270,17 @@ namespace { // helpers for vsnprintf_emulation
 
     static void conv_storage_needed (const char *fmt, int &storage_needed)
     {
-      while (const char *f = ACE_OS::strpbrk (fmt, "*%"))
+      while (const char *f = std::strpbrk (fmt, "*%"))
         {
           if (!*f || *f == '%')
-            break;
+            {
+              break;
+            }
           const int p = snprintf_positional (++f);
           if (p > storage_needed)
-            storage_needed = p;
+            {
+              storage_needed = p;
+            }
           fmt = f;
         }
     }
@@ -1184,32 +1290,42 @@ namespace { // helpers for vsnprintf_emulation
       int storage_needed = n;
       const char *f = fmt;
       conv_storage_needed (f, storage_needed);
-      while (const char *const pct = ACE_OS::strchr (f, '%'))
+      while (const char *const pct = std::strchr (f, '%'))
         if (pct[1] == '%')
-          f = pct + 2;
+          {
+            f = pct + 2;
+          }
         else
           {
             const int p = snprintf_positional (++f);
             if (p > storage_needed)
-              storage_needed = p;
+              {
+                storage_needed = p;
+              }
             conv_storage_needed (f, storage_needed);
           }
 
       if (size_t (storage_needed) >
           sizeof this->pos_storage_ / sizeof (Positional_Arg))
-        this->pos_arg_ = static_cast<Positional_Arg *> (
-          ACE_Allocator::instance ()->calloc (
-            sizeof (Positional_Arg) * storage_needed));
+        {
+          this->pos_arg_ = static_cast<Positional_Arg *> (
+            ACE_Allocator::instance ()->calloc (
+              sizeof (Positional_Arg) * storage_needed));
+        }
 
       f = fmt;
       while (true)
         {
           static const char digits[] = "0123456789";
-          f += ACE_OS::strspn (f, "-+ #0'");
+          f += std::strspn (f, "-+ #0'");
           if (*f == '*')
-            (*this)[snprintf_positional (++f)].type_ = Positional_Arg::PA_INT;
+            {
+              (*this)[snprintf_positional (++f)].type_ = Positional_Arg::PA_INT;
+            }
           else
-            f += ACE_OS::strspn (f, digits);
+            {
+              f += std::strspn (f, digits);
+            }
 
           if (f[0] == '.' && f[1] == '*')
             {
@@ -1219,7 +1335,7 @@ namespace { // helpers for vsnprintf_emulation
           else if (*f == '.')
             {
               ++f;
-              f += ACE_OS::strspn (f, digits);
+              f += std::strspn (f, digits);
             }
 
           Snprintf_Flags flags;
@@ -1229,31 +1345,55 @@ namespace { // helpers for vsnprintf_emulation
             {
             case 'd': case 'i':
               if (flags.has (SNPRINTF_LONG))
-                (*this)[n].type_ = Positional_Arg::PA_LONG;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_LONG;
+                }
               else if (flags.has (SNPRINTF_LONGLONG))
-                (*this)[n].type_ = Positional_Arg::PA_LONGLONG;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_LONGLONG;
+                }
               else if (flags.has (SNPRINTF_INTMAX))
-                (*this)[n].type_ = Positional_Arg::PA_INTMAX;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_INTMAX;
+                }
               else if (flags.has (SNPRINTF_SIZET))
-                (*this)[n].type_ = Positional_Arg::PA_SSIZE;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_SSIZE;
+                }
               else if (flags.has (SNPRINTF_PTRDIFF))
-                (*this)[n].type_ = Positional_Arg::PA_PTRDIFF;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_PTRDIFF;
+                }
               else
-                (*this)[n].type_ = Positional_Arg::PA_INT;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_INT;
+                }
               break;
             case 'o': case 'u': case 'x': case 'X':
               if (flags.has (SNPRINTF_LONG))
-                (*this)[n].type_ = Positional_Arg::PA_ULONG;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_ULONG;
+                }
               else if (flags.has (SNPRINTF_LONGLONG))
-                (*this)[n].type_ = Positional_Arg::PA_ULONGLONG;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_ULONGLONG;
+                }
               else if (flags.has (SNPRINTF_INTMAX))
-                (*this)[n].type_ = Positional_Arg::PA_UINTMAX;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_UINTMAX;
+                }
               else if (flags.has (SNPRINTF_SIZET))
-                (*this)[n].type_ = Positional_Arg::PA_SIZE;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_SIZE;
+                }
               else if (flags.has (SNPRINTF_PTRDIFF))
-                (*this)[n].type_ = Positional_Arg::PA_UPTRDIFF;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_UPTRDIFF;
+                }
               else
-                (*this)[n].type_ = Positional_Arg::PA_UINT;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_UINT;
+                }
               break;
             case 'f': case 'F': case 'e': case 'E': case 'g': case 'G':
             case 'a': case 'A':
@@ -1279,21 +1419,37 @@ namespace { // helpers for vsnprintf_emulation
               break;
             case 'n':
               if (flags.has (SNPRINTF_LONG))
-                (*this)[n].type_ = Positional_Arg::PA_PLONG;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_PLONG;
+                }
               else if (flags.has (SNPRINTF_LONGLONG))
-                (*this)[n].type_ = Positional_Arg::PA_PLONGLONG;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_PLONGLONG;
+                }
               else if (flags.has (SNPRINTF_INTMAX))
-                (*this)[n].type_ = Positional_Arg::PA_PINTMAX;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_PINTMAX;
+                }
               else if (flags.has (SNPRINTF_SIZET))
-                (*this)[n].type_ = Positional_Arg::PA_PSSIZE;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_PSSIZE;
+                }
               else if (flags.has (SNPRINTF_PTRDIFF))
-                (*this)[n].type_ = Positional_Arg::PA_PPTRDIFF;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_PPTRDIFF;
+                }
               else if (flags.has (SNPRINTF_SHORT))
-                (*this)[n].type_ = Positional_Arg::PA_PSHORT;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_PSHORT;
+                }
               else if (flags.has (SNPRINTF_CHAR))
-                (*this)[n].type_ = Positional_Arg::PA_PSCHAR;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_PSCHAR;
+                }
               else
-                (*this)[n].type_ = Positional_Arg::PA_PINT;
+                {
+                  (*this)[n].type_ = Positional_Arg::PA_PINT;
+                }
               break;
             default:
               break;
@@ -1301,11 +1457,13 @@ namespace { // helpers for vsnprintf_emulation
 
           // Find the next conversion and set n to the positional arg number
           do
-            f = ACE_OS::strchr (f + 1, '%');
+            f = std::strchr (f + 1, '%');
           while (f && f[1] == '%' && ++f);
 
           if (!f)
-            break;
+            {
+              break;
+            }
           n = snprintf_positional (++f);
         }
 
@@ -1413,7 +1571,7 @@ namespace { // helpers for vsnprintf_emulation
     }
 
     Positional_Arg pos_storage_[10], *pos_arg_;
-    bool scanned_;
+    bool scanned_ {};
 
   private:
     Snprintf_Positional_Args (const Snprintf_Positional_Args&);
@@ -1433,7 +1591,7 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
   Snprintf_Buffer sb (buf, max);
   Snprintf_Positional_Args pos_arg;
 
-  while (const char *const pct = ACE_OS::strchr (fmt, '%'))
+  while (const char *const pct = std::strchr (fmt, '%'))
     {
       // Output up to next % in format string
       const bool escaped = pct[1] == '%';
@@ -1441,12 +1599,16 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
       sb.out (fmt, non_conv);
       fmt += 1 + non_conv;
       if (escaped)
-        continue;
+        {
+          continue;
+        }
 
       // Check if positional args are used (%1$d)
       const int posn = snprintf_positional (fmt);
       if (posn && !pos_arg.scanned_)
-        pos_arg.scan (posn, fmt, ap); // POSIX extension
+        {
+          pos_arg.scan (posn, fmt, ap); // POSIX extension
+        }
 
       // Parse flags (+- #'0)
       Snprintf_Flags flags (fmt);
@@ -1465,7 +1627,9 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
         {
           width = snprintf_read_int (fmt);
           if (width == -1)
-            return -1;
+            {
+              return -1;
+            }
         }
 
       // Parse precision (.integer, .*, or .*n$)
@@ -1476,13 +1640,17 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
           const int prec_p = snprintf_positional (fmt);
           precision = prec_p ? pos_arg[prec_p].i : va_arg (ap, int);
           if (precision < 0)
-            precision = WIDTH_PREC_UNSPEC;
+            {
+              precision = WIDTH_PREC_UNSPEC;
+            }
         }
       else if (*fmt == '.')
         {
           precision = snprintf_read_int (++fmt);
           if (precision == -1)
-            return -1;
+            {
+              return -1;
+            }
         }
 
       flags.parse_length (fmt);
@@ -1494,34 +1662,47 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
 #else
 # define GET_UNSIGNED_INTMAX                                    \
       else if (flags.has (SNPRINTF_INTMAX))                     \
-        val = va_arg (ap, uintmax_t);
+        {                                                         \
+          val = va_arg (ap, uintmax_t);                          \
+        }
 #endif
 #define GET_UNSIGNED_VA                                         \
       if (posn)                                                 \
-        val = pos_arg[posn].ui64;                               \
+        {                                                       \
+          val = pos_arg[posn].ui64;                             \
+        }                                                       \
       else if (flags.has (SNPRINTF_LONGLONG))                   \
-        val = va_arg (ap, unsigned long long);                  \
+        {                                                       \
+          val = va_arg (ap, unsigned long long);                \
+        }                                                       \
       else if (flags.has (SNPRINTF_LONG))                       \
-        val = va_arg (ap, unsigned long);                       \
+        {                                                       \
+          val = va_arg (ap, unsigned long);                     \
+        }                                                       \
       GET_UNSIGNED_INTMAX                                       \
       else if (flags.has (SNPRINTF_SIZET))                      \
-        val = va_arg (ap, size_t);                              \
+        {                                                       \
+          val = va_arg (ap, size_t);                            \
+        }                                                       \
       else if (flags.has (SNPRINTF_PTRDIFF))                    \
-        val = static_cast<uintptr_t> (va_arg (ap, ptrdiff_t));  \
+        {                                                       \
+          val = static_cast<uintptr_t> (va_arg (ap, ptrdiff_t));\
+        }                                                       \
       else                                                      \
-        val = va_arg (ap, unsigned int);                        \
+        {                                                       \
+          val = va_arg (ap, unsigned int);                      \
+        }                                                       \
       if (flags.has (SNPRINTF_SHORT))                           \
-        val = static_cast<unsigned short> (val);                \
+        {                                                       \
+          val = static_cast<unsigned short> (val);              \
+        }                                                       \
       else if (flags.has (SNPRINTF_CHAR))                       \
-        val = static_cast<unsigned char> (val)
+        {                                                       \
+          val = static_cast<unsigned char> (val);               \
+        }
 
 #define GET_ARG(MEMBER, TYPE) \
       (posn ? static_cast<TYPE> (pos_arg[posn].MEMBER) : va_arg (ap, TYPE))
-
-      ACE_UINT64 val;
-      ACE_INT64 sval;
-      long double fval;
-      wchar_t tmp_wstr[2] = {};
 
       // Parse conversion specifier (diouxXfFeEgGaAcCsSpn) and convert arg
       char spec = *fmt++;
@@ -1529,120 +1710,159 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
       switch (spec)
         {
         case 'd': case 'i':
-          if (posn)
-            sval = flags.has_some (SNPRINTF_LARGE_INT)
-              ? pos_arg[posn].i64 : pos_arg[posn].i;
-          else if (flags.has (SNPRINTF_LONGLONG))
-            sval = va_arg (ap, long long);
-          else if (flags.has (SNPRINTF_LONG))
-            sval = va_arg (ap, long);
+          {
+            ACE_INT64 sval;
+            if (posn)
+              {
+                sval = flags.has_some (SNPRINTF_LARGE_INT)
+                  ? pos_arg[posn].i64 : pos_arg[posn].i;
+              }
+            else if (flags.has (SNPRINTF_LONGLONG))
+              {
+                sval = va_arg (ap, long long);
+              }
+            else if (flags.has (SNPRINTF_LONG))
+              {
+                sval = va_arg (ap, long);
+              }
 #ifndef ACE_LACKS_STDINT_H
-          else if (flags.has (SNPRINTF_INTMAX))
-            sval = va_arg (ap, intmax_t);
+            else if (flags.has (SNPRINTF_INTMAX))
+              {
+                sval = va_arg (ap, intmax_t);
+              }
 #endif
-          else if (flags.has (SNPRINTF_SIZET))
-            sval = va_arg (ap, ssize_t);
-          else if (flags.has (SNPRINTF_PTRDIFF))
-            sval = va_arg (ap, ptrdiff_t);
-          else
-            sval = va_arg (ap, int);
+            else if (flags.has (SNPRINTF_SIZET))
+              {
+                sval = va_arg (ap, ssize_t);
+              }
+            else if (flags.has (SNPRINTF_PTRDIFF))
+              {
+                sval = va_arg (ap, ptrdiff_t);
+              }
+            else
+              {
+                sval = va_arg (ap, int);
+              }
 
-          if (flags.has (SNPRINTF_SHORT))
-            sval = static_cast<short> (sval);
-          else if (flags.has (SNPRINTF_CHAR))
-            sval = static_cast<signed char> (sval);
+            if (flags.has (SNPRINTF_SHORT))
+              {
+                sval = static_cast<short> (sval);
+              }
+            else if (flags.has (SNPRINTF_CHAR))
+              {
+                sval = static_cast<signed char> (sval);
+              }
 
-          flags.value (sval);
-          sb.conv_int (sval, flags, width, precision);
-          break;
+            flags.value (sval);
+            sb.conv_int (sval, flags, width, precision);
+            break;
+          }
 
         case 'o':
-          GET_UNSIGNED_VA;
-          sb.conv_int (val, flags, width, precision, 8);
-          break;
+          {
+            ACE_UINT64 val;
+            GET_UNSIGNED_VA;
+            sb.conv_int (val, flags, width, precision, 8);
+            break;
+          }
 
         case 'u':
-          GET_UNSIGNED_VA;
-          sb.conv_int (val, flags, width, precision);
-          break;
+          {
+            ACE_UINT64 val;
+            GET_UNSIGNED_VA;
+            sb.conv_int (val, flags, width, precision);
+            break;
+          }
 
         case 'x':
-          GET_UNSIGNED_VA;
-          sb.conv_int (val, flags, width, precision, 16);
-          break;
+          {
+            ACE_UINT64 val;
+            GET_UNSIGNED_VA;
+            sb.conv_int (val, flags, width, precision, 16);
+            break;
+          }
 
         case 'f':
-          fval = posn ? pos_arg[posn].f :
-            (flags.has (SNPRINTF_LONGDOUBLE) ? va_arg (ap, long double)
-             : va_arg (ap, double));
-          sb.conv_float (fval, flags, width, precision);
-          break;
-
         case 'e':
-          fval = posn ? pos_arg[posn].f :
-            (flags.has (SNPRINTF_LONGDOUBLE) ? va_arg (ap, long double)
-             : va_arg (ap, double));
-          sb.conv_float (fval, flags, width, precision);
-          break;
-
         case 'g':
-          fval = posn ? pos_arg[posn].f :
-            (flags.has (SNPRINTF_LONGDOUBLE) ? va_arg (ap, long double)
-             : va_arg (ap, double));
-          sb.conv_float (fval, flags, width, precision);
-          break;
-
         case 'a':
-          fval = posn ? pos_arg[posn].f :
-            (flags.has (SNPRINTF_LONGDOUBLE) ? va_arg (ap, long double)
-             : va_arg (ap, double));
-          sb.conv_float (fval, flags, width, precision);
-          break;
+          {
+            long double fval = posn ? pos_arg[posn].f :
+              (flags.has (SNPRINTF_LONGDOUBLE) ? va_arg (ap, long double)
+               : va_arg (ap, double));
+            sb.conv_float (fval, flags, width, precision);
+            break;
+          }
 
         case 'c':
           if (flags.has (SNPRINTF_LONG))
             {
+              wchar_t tmp_wstr[2] {};
               *tmp_wstr = static_cast<wchar_t> (
                 posn ? pos_arg[posn].ui64 : va_arg (ap, ACE_WINT_T_VA_ARG));
               sb.conv_str (tmp_wstr, flags, width, precision);
             }
           else
-            sb.conv_char (static_cast<unsigned char> (GET_ARG (i, int)),
-                          flags, width);
+            {
+              sb.conv_char (static_cast<unsigned char> (GET_ARG (i, int)),
+                            flags, width);
+            }
           break;
 
         case 's':
           if (flags.has (SNPRINTF_LONG))
-            sb.conv_str (GET_ARG (p, const wchar_t *), flags, width, precision);
+            {
+              sb.conv_str (GET_ARG (p, const wchar_t *), flags, width, precision);
+            }
           else
-            sb.conv_str (GET_ARG (p, const char *), flags, width, precision);
+            {
+              sb.conv_str (GET_ARG (p, const char *), flags, width, precision);
+            }
           break;
 
         case 'p':
-          val = reinterpret_cast<ACE_UINT64> (GET_ARG (p, void *));
-          sb.conv_int (val, flags, width, precision, 16);
-          break;
+          {
+            ACE_UINT64 val = reinterpret_cast<ACE_UINT64> (GET_ARG (p, void *));
+            sb.conv_int (val, flags, width, precision, 16);
+            break;
+          }
 
         case 'n':
           if (flags.has (SNPRINTF_LONGLONG))
-            *GET_ARG (p, long long *) = sb.written_;
+            {
+              *GET_ARG (p, long long *) = sb.written_;
+            }
           else if (flags.has (SNPRINTF_LONG))
-            *GET_ARG (p, long *) = static_cast<long> (sb.written_);
+            {
+              *GET_ARG (p, long *) = static_cast<long> (sb.written_);
+            }
 #ifndef ACE_LACKS_STDINT_H
           else if (flags.has (SNPRINTF_INTMAX))
-            *GET_ARG (p, intmax_t *) = sb.written_;
+            {
+              *GET_ARG (p, intmax_t *) = sb.written_;
+            }
 #endif
           else if (flags.has (SNPRINTF_SIZET))
-            *GET_ARG (p, ssize_t *) = sb.written_;
+            {
+              *GET_ARG (p, ssize_t *) = sb.written_;
+            }
           else if (flags.has (SNPRINTF_PTRDIFF))
-            *GET_ARG (p, ptrdiff_t *) = sb.written_;
+            {
+              *GET_ARG (p, ptrdiff_t *) = sb.written_;
+            }
           else if (flags.has (SNPRINTF_SHORT))
-            *GET_ARG (p, short *) = static_cast<short> (sb.written_);
+            {
+              *GET_ARG (p, short *) = static_cast<short> (sb.written_);
+            }
           else if (flags.has (SNPRINTF_CHAR))
-            *GET_ARG (p, signed char *) =
-              static_cast<signed char> (sb.written_);
+            {
+              *GET_ARG (p, signed char *) =
+                static_cast<signed char> (sb.written_);
+            }
           else
-            *GET_ARG (p, int *) = static_cast<int> (sb.written_);
+            {
+              *GET_ARG (p, int *) = static_cast<int> (sb.written_);
+            }
           break;
 
         default:
@@ -1651,7 +1871,7 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
     }
 
   // Output remaining part of format string
-  sb.out (fmt, ACE_OS::strlen (fmt));
+  sb.out (fmt, std::strlen (fmt));
   *sb.buf_ = 0;
   return static_cast<int> (sb.written_);
 }

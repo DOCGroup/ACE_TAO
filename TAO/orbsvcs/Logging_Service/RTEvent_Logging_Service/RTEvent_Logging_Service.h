@@ -18,79 +18,79 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Log/RTEventLogFactory_i.h"
 
+#include <optional>
+#include <string>
+
+/// Implements the Telecom Log Service.
 class RTEvent_Logging_Service
   : public ACE_Task_Base
 {
-  // = TITLE
-  //   RTEvent_Logging_Service
-  //
-  // = DESCRIPTION
-  //   Implementation of the Telecom Log Service
 
 public:
-  RTEvent_Logging_Service ();
-  // Constructor.
+  RTEvent_Logging_Service () = default;
 
-  ~RTEvent_Logging_Service () override;
-  // Destructor.
+  ~RTEvent_Logging_Service () override = default;
 
   RTEvent_Logging_Service (RTEvent_Logging_Service const &) = delete;
   RTEvent_Logging_Service (RTEvent_Logging_Service &&) = delete;
   RTEvent_Logging_Service &operator= (RTEvent_Logging_Service const &) = delete;
   RTEvent_Logging_Service &operator= (RTEvent_Logging_Service &&) = delete;
 
-  int init (int argc, ACE_TCHAR * argv[]);
-  // Initializes the Telecom Log Service.
+  /// Initializes the Telecom Log Service.
+  int init (int argc, ACE_TCHAR * argv[]) override;
 
+  /// Runs the Telecom Log Service.
+  /// @return 0 on success, -1 on error.
   int run ();
-    // Run the Telecom Log Service.
-  // Returns 0 on success, -1 on error.
 
+  /// Shuts down the Telecom Log Service.
   void shutdown ();
-  // Shutdown the Telecom Log Service.
-  // Returns 0 on success, -1 on error.
 
 protected:
+  /// Initializes the ORB.
   void init_ORB (int & argc, ACE_TCHAR * argv []);
-  // initializes the ORB.
 
+  /// Parses the command-line arguments.
   int parse_args (int argc, ACE_TCHAR * argv[]);
-  // parse the command line args
 
+  /// Resolves the naming service.
   void resolve_naming_service ();
-  // Resolve the naming service.
 
+  /// Runs worker threads.
   int svc () override;
-  // Run worker threads.
 
 private:
-  // = Data members
-  TAO_RTEventLogFactory_i * rtevent_log_factory_;
-  // The RTEvent Log Factory.
+  /// @name Data members
+  /// @{
 
-  CORBA::ORB_var orb_;
-  // The ORB that we use.
+  /// The ORB used by this service.
+  CORBA::ORB_var orb_ {};
 
-  PortableServer::POA_var poa_;
-  // Reference to the root poa.
+  /// The root POA.
+  PortableServer::POA_var poa_ {};
 
-  CosNaming::NamingContext_var naming_;
-  // A naming context.
+  /// Keeps the factory servant alive while it is active in the POA.
+  PortableServer::ServantBase_var rtevent_log_factory_owner_ {};
 
-  ACE_CString service_name_;
-  // The name we use to bind with the NameService
+  /// A naming context.
+  CosNaming::NamingContext_var naming_ {};
 
-  ACE_TCHAR const * ior_file_name_;
-  // The name of the file were we output the factory IOR.
+  /// The name used to bind with the NameService.
+  std::string service_name_ {"RTEventLogFactory"};
 
-  ACE_TCHAR const * pid_file_name_;
-  // The name of a file where the process stores its pid
+  /// The name of the file used to output the factory IOR.
+  std::optional<std::basic_string<ACE_TCHAR>> ior_file_name_ {};
 
-  bool bind_to_naming_service_;
-  // If true, bind to naming service
+  /// The name of the file where the process stores its PID.
+  std::optional<std::basic_string<ACE_TCHAR>> pid_file_name_ {};
 
-  int nthreads_;
-  // Number of worker threads.
+  /// Whether to bind to the naming service.
+  bool bind_to_naming_service_ {true};
+
+  /// Number of worker threads.
+  int nthreads_ {};
+
+  /// @}
 };
 
 #endif /* RTEVENT_LOGGING_SERVICE_H */

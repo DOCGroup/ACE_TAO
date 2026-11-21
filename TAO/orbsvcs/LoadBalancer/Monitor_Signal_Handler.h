@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_LB_MONITOR_SIGNAL_HANDLER_H
 #define TAO_LB_MONITOR_SIGNAL_HANDLER_H
 
@@ -19,7 +18,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosLoadBalancingC.h"
-
 
 /**
  * @class TAO_LB_Monitor_Signal_Handler
@@ -32,30 +30,28 @@
 class TAO_LB_Monitor_Signal_Handler : public TAO_LB_Signal_Handler
 {
 public:
-  /// Constructor.
   TAO_LB_Monitor_Signal_Handler (
     CORBA::ORB_ptr orb,
     PortableServer::POA_ptr poa,
     CosLoadBalancing::LoadManager_ptr load_manager,
-    PortableGroup::Location const & location);
+    PortableGroup::Location const &location);
+
+  TAO_LB_Monitor_Signal_Handler (TAO_LB_Monitor_Signal_Handler const &) = delete;
+  TAO_LB_Monitor_Signal_Handler (TAO_LB_Monitor_Signal_Handler &&) = delete;
+  TAO_LB_Monitor_Signal_Handler &operator= (TAO_LB_Monitor_Signal_Handler const &) = delete;
+  TAO_LB_Monitor_Signal_Handler &operator= (TAO_LB_Monitor_Signal_Handler &&) = delete;
 
 protected:
   /// Template method that initiates the cleanup process.
   int perform_cleanup (int signum) override;
 
 private:
-  TAO_LB_Monitor_Signal_Handler (TAO_LB_Monitor_Signal_Handler const &) = delete;
-  TAO_LB_Monitor_Signal_Handler (TAO_LB_Monitor_Signal_Handler &&) = delete;
-  TAO_LB_Monitor_Signal_Handler & operator= (TAO_LB_Monitor_Signal_Handler const &) = delete;
-  TAO_LB_Monitor_Signal_Handler & operator= (TAO_LB_Monitor_Signal_Handler &&) = delete;
-
   /// Reference to the LoadManager with which the LoadMonitor is
   /// registered.
   CosLoadBalancing::LoadManager_var load_manager_;
 
   /// Reference to the location the LoadMonitor resides at.
-  PortableGroup::Location const & location_;
+  PortableGroup::Location location_;
 };
-
 
 #endif  /* TAO_LB_MONITOR_SIGNAL_HANDLER_H */

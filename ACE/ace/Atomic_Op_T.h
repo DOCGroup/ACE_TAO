@@ -147,12 +147,13 @@ public:
   using arg_type = typename ACE_Type_Traits<TYPE>::parameter_type;
 
   /// Initialize @c value_ to 0.
-  ACE_Atomic_Op_Ex (ACE_LOCK & mtx);
+  explicit ACE_Atomic_Op_Ex (ACE_LOCK & mtx);
 
   /// Initialize @c value_ to c.
   ACE_Atomic_Op_Ex (ACE_LOCK & mtx, arg_type c);
 
-  // = Accessors.
+  /// @name Atomic operations and accessors
+  /// @{
 
   /// Atomically pre-increment @c value_.
   TYPE operator++ ();
@@ -202,6 +203,7 @@ public:
 
   /// Explicitly return @c value_.
   TYPE value () const;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -235,7 +237,7 @@ private:
   ACE_LOCK & mutex_;
 
   /// Current object decorated by the atomic op.
-  TYPE value_;
+  TYPE value_ {};
 };
 
 /**
@@ -262,7 +264,7 @@ public:
   ACE_Atomic_Op ();
 
   /// Initialize @c value_ to c.
-  ACE_Atomic_Op (arg_type c);
+  explicit ACE_Atomic_Op (arg_type c);
 
   /// Manage copying...
   ACE_Atomic_Op (ACE_Atomic_Op<ACE_LOCK, TYPE> const & c);

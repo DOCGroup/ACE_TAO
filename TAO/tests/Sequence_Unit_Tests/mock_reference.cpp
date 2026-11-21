@@ -13,11 +13,6 @@ call_counter mock_reference::serialize_calls;
 call_counter mock_reference::deserialize_calls;
 call_counter mock_reference::marshal_calls;
 
-mock_reference::
-~mock_reference()
-{
-}
-
 mock_reference * mock_reference::
 allocate(int id)
 {
@@ -27,16 +22,16 @@ allocate(int id)
 mock_reference * mock_reference::
 _nil()
 {
-  return 0;
+  return nullptr;
 }
 
 mock_reference * mock_reference::
 _duplicate(mock_reference * rhs)
 {
   duplicate_calls();
-  if (rhs == 0)
+  if (rhs == nullptr)
   {
-    return 0;
+    return nullptr;
   }
   return new mock_reference(*rhs);
 }
@@ -55,16 +50,14 @@ void CORBA::release(mock_reference * r)
 
 mock_reference *
 TAO::Objref_Traits<mock_reference>::duplicate (
-    mock_reference_ptr p
-  )
+    mock_reference_ptr p)
 {
   return mock_reference::_duplicate (p);
 }
 
 void
 TAO::Objref_Traits<mock_reference>::release (
-    mock_reference_ptr p
-  )
+    mock_reference_ptr p)
 {
   CORBA::release (p);
 }
@@ -78,8 +71,7 @@ TAO::Objref_Traits<mock_reference>::nil ()
 CORBA::Boolean
 TAO::Objref_Traits<mock_reference>::marshal (
     const mock_reference_ptr,
-    TAO_OutputCDR &
-  )
+    TAO_OutputCDR &)
 {
   mock_reference::marshal_calls ();
   return true;

@@ -10,7 +10,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // Class ACE_Metrics_Cache //
 /////////////////////////////
 
-
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_INLINE void
 ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_enqueue_start (u_long i)
@@ -23,7 +22,7 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_enqueue_start (u_long i)
 
       if (! this->interval_initialized_)
         {
-          this->interval_initialized_ = 1;
+          this->interval_initialized_ = true;
           ACE_hrtime_t hrtime_now = ACE_OS::gethrtime ();
           ACE_High_Res_Timer::hrtime_to_tv (this->interval_start_,
                                             hrtime_now);
@@ -39,7 +38,6 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_enqueue_start (u_long i)
         timeprobe (ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::WORK_START);
     }
 }
-
 
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_INLINE void
@@ -64,7 +62,6 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_enqueue_stop (u_long i)
 
 }
 
-
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_INLINE void
 ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_enqueue_suspend (u_long i)
@@ -80,7 +77,6 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_enqueue_suspend (u_long i)
       ++count;
     }
 }
-
 
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_INLINE void
@@ -98,7 +94,6 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_enqueue_resume (u_long i)
     }
 }
 
-
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_INLINE void
 ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_dequeue_start (u_long i)
@@ -111,7 +106,7 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_dequeue_start (u_long i)
 
       if (! this->interval_initialized_)
         {
-          this->interval_initialized_ = 1;
+          this->interval_initialized_ = true;
           ACE_hrtime_t hrtime_now = ACE_OS::gethrtime ();
           ACE_High_Res_Timer::hrtime_to_tv (this->interval_start_,
                                                     hrtime_now);
@@ -127,7 +122,6 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_dequeue_start (u_long i)
         timeprobe (ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::WORK_START);
     }
 }
-
 
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_INLINE void
@@ -151,7 +145,6 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_dequeue_stop (u_long i)
     }
 }
 
-
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_INLINE void
 ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_dequeue_suspend (u_long i)
@@ -167,7 +160,6 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_dequeue_suspend (u_long i)
         timeprobe (ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::WORK_SUSPEND);
     }
 }
-
 
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_INLINE void
@@ -185,12 +177,11 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_dequeue_resume (u_long i)
     }
 }
 
-
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_INLINE void
 ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::reset_base_statistics ()
 {
-  this->interval_initialized_ = 0;
+  this->interval_initialized_ = false;
   this->interval_start_.set (0, 0);
   this->interval_end_.set (0, 0);
 
@@ -208,7 +199,6 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::reset_base_statistics ()
     }
 }
 
-
 // Flips the supplier and consumer positions.
 
 template <class ACE_LOCK, class ALLOCATOR>
@@ -222,13 +212,13 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::flip_supplier_and_consumer ()
 
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_INLINE void
-ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::metrics_enabled(int enabled)
+ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::metrics_enabled (bool enabled)
 {
    metrics_enabled_ = enabled;
 }
 
 template <class ACE_LOCK, class ALLOCATOR>
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::metrics_enabled() const
 {
    return metrics_enabled_;

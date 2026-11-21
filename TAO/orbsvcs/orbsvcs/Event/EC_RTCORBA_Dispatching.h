@@ -24,6 +24,8 @@
 #include "orbsvcs/Event/EC_Dispatching_Task.h"
 #include "tao/RTCORBA/RTCORBA.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -34,26 +36,31 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTCORBAEvent_Export TAO_EC_RTCORBA_Dispatching : public TAO_EC_Dispatching
 {
 public:
-  /// Constructor
   TAO_EC_RTCORBA_Dispatching (const RTCORBA::ThreadpoolLanes &lanes,
                               RTCORBA::PriorityMapping *mapping,
                               RTCORBA::Current_ptr current);
 
-  /// Destructor
-  ~TAO_EC_RTCORBA_Dispatching ();
+  ~TAO_EC_RTCORBA_Dispatching () override;
 
-  // = The EC_Dispatching methods.
-  virtual void activate ();
-  virtual void shutdown ();
-  virtual void push (TAO_EC_ProxyPushSupplier* proxy,
+  TAO_EC_RTCORBA_Dispatching (TAO_EC_RTCORBA_Dispatching const &) = delete;
+  TAO_EC_RTCORBA_Dispatching (TAO_EC_RTCORBA_Dispatching &&) = delete;
+  TAO_EC_RTCORBA_Dispatching &operator= (TAO_EC_RTCORBA_Dispatching const &) = delete;
+  TAO_EC_RTCORBA_Dispatching &operator= (TAO_EC_RTCORBA_Dispatching &&) = delete;
+
+  /// @name The EC_Dispatching methods
+  /// @{
+  void activate () override;
+  void shutdown () override;
+  void push (TAO_EC_ProxyPushSupplier* proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet& event,
-                     TAO_EC_QOS_Info& qos_info);
-  virtual void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
+                     TAO_EC_QOS_Info& qos_info) override;
+  void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                             RtecEventComm::PushConsumer_ptr consumer,
                             RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info);
+                            TAO_EC_QOS_Info& qos_info) override;
 
+  /// @}
 private:
   /// The thread pools...
   RTCORBA::ThreadpoolLanes lanes_;
@@ -68,7 +75,7 @@ private:
   ACE_Thread_Manager thread_manager_;
 
   /// The dispatching task(s), one per lane
-  TAO_EC_Dispatching_Task *tasks_;
+  std::unique_ptr<TAO_EC_Dispatching_Task[]> tasks_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

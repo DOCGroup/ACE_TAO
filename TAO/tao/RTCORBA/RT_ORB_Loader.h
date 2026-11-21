@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    RT_ORB_Loader.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Priyanka Gontla <gontla_p@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_RT_ORB_LOADER_H
 #define TAO_RT_ORB_LOADER_H
@@ -33,10 +31,8 @@ class TAO_ORB_Core;
 class TAO_RTCORBA_Export TAO_RT_ORB_Loader : public ACE_Service_Object
 {
 public:
-  /// Constructor.
   TAO_RT_ORB_Loader () = default;
 
-  /// Destructor.
   ~TAO_RT_ORB_Loader () override;
 
   /// Initialize the RT ORB loader hooks.
@@ -44,9 +40,8 @@ public:
 
 private:
   /// Set to true after init is called.
-  bool initialized_ {false};
+  bool initialized_ {};
 };
-
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, TAO_RT_ORB_Loader)
 ACE_FACTORY_DECLARE (TAO_RTCORBA, TAO_RT_ORB_Loader)

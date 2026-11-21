@@ -1,5 +1,6 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/Log_Msg.h"
+#include <memory>
 
 #include "Logging_Acceptor.h"
 #include "Logging_Handler.h"
@@ -7,13 +8,10 @@
 
 // Initialize peer_acceptor object.
 int
-Logging_Acceptor::open (const ACE_INET_Addr &addr)
+Logging_Acceptor::open (ACE_INET_Addr const &addr)
 {
   // Reuse addr if already in use.
-  if (this->peer_acceptor_.open (addr, 1) == -1)
-    return -1;
-  else
-    return 0;
+  return this->peer_acceptor_.open (addr, 1);
 }
 
 // Performs termination activities.
@@ -38,9 +36,10 @@ Logging_Acceptor::get_handle () const
 int
 Logging_Acceptor::handle_input (ACE_HANDLE)
 {
-  Logging_Handler *svc_handler;
+  Logging_Handler *raw_handler {};
 
-  ACE_NEW_RETURN (svc_handler, Logging_Handler, -1);
+  ACE_NEW_RETURN (raw_handler, Logging_Handler, -1);
+  std::unique_ptr<Logging_Handler> svc_handler {raw_handler};
 
   // Accept the connection from a client client daemon.
 
@@ -51,17 +50,19 @@ Logging_Acceptor::handle_input (ACE_HANDLE)
   // associations.
   int const reset_new_handle = this->reactor ()->uses_event_associations ();
 
+  // The unique_ptr owns the handler until registration succeeds.
   if (this->peer_acceptor_.accept (svc_handler->peer (), // stream
-                                   0, // remote address
-                                   0, // timeout
+                                   nullptr, // remote address
+                                   nullptr, // timeout
                                    1, // restart
                                    reset_new_handle  // reset new handler
                                    ) == -1
       || svc_handler->open () == -1)
     {
-      svc_handler->close ();
       ACE_ERROR_RETURN ((LM_ERROR, "%p", "accept/open failed"), -1);
     }
 
+  // The reactor owns the handler after successful registration.
+  svc_handler.release ();
   return 0;
 }

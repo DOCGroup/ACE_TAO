@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_MEM_STREAM_H
 #define ACE_MEM_STREAM_H
 
@@ -57,35 +56,41 @@ public:
   friend class ACE_MEM_Acceptor;
   friend class ACE_MEM_Connector;
 
-  // Initialization and termination methods.
-  /// Constructor.
+  /// @name Initialization and termination
+  /// @{
   ACE_MEM_Stream ();
 
   /// Constructor (sets the underlying ACE_HANDLE with <h>).
-  ACE_MEM_Stream (ACE_HANDLE h);
+  explicit ACE_MEM_Stream (ACE_HANDLE h);
 
-  /// Destructor.
   ~ACE_MEM_Stream ();
+  /// @}
 
-  //= The following two methods use write and read system calls.
+  /// @name send_n and recv_n using write and read system calls
+  /// @{
   /// Send n bytes, keep trying until n are sent.
   /// Recv n bytes, keep trying until n are received.
   ssize_t send_n (const void *buf, size_t n);
   ssize_t recv_n (void *buf, size_t n);
+  /// @}
 
-  // = The following two methods use the send and recv system calls.
+  /// @name send_n and recv_n using send and recv system calls
+  /// @{
   /// Send n bytes, keep trying until n are sent.
   /// Recv n bytes, keep trying until n are received.
   ssize_t send_n (const void *buf, size_t n, int flags);
   ssize_t recv_n (void *buf, size_t n, int flags);
+  /// @}
 
-  // = Selectively close endpoints.
+  /// @name Selectively close endpoints
+  /// @{
 
   /// Close down the reader.
   int close_reader ();
 
   /// Close down the writer.
   int close_writer ();
+  /// @}
 
   /**
    * Close down the socket (we need this to make things work correctly
@@ -94,8 +99,10 @@ public:
    */
   int close ();
 
-  // = Meta-type info
+  /// @name Meta-type traits
+  /// @{
   using PEER_ADDR = ACE_Addr;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

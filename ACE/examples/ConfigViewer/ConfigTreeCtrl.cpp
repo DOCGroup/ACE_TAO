@@ -6,7 +6,6 @@
 
 enum {CFGNEWKEY=100, CFGNEWSTRING, CFGNEWUINT, CFGNEWBINARY, CFGNEWSUBMENU, CFGFIND, CFGDELETE, CFGRENAME, CFGCOPYKEYNAME};
 
-
 BEGIN_EVENT_TABLE(ConfigTreeCtrl, wxTreeCtrl)
   EVT_RIGHT_DOWN(ConfigTreeCtrl::OnRightDown)
   EVT_RIGHT_UP(ConfigTreeCtrl::OnRightUp)
@@ -18,7 +17,6 @@ BEGIN_EVENT_TABLE(ConfigTreeCtrl, wxTreeCtrl)
   EVT_MENU(CFGDELETE, ConfigTreeCtrl::OnDelete)
   EVT_TREE_SEL_CHANGED(FRAME_TREE, ConfigTreeCtrl::OnSelChanged)
 END_EVENT_TABLE()
-
 
 ConfigTreeCtrl::ConfigTreeCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style, const wxValidator& validator, const wxString& name)
 : wxTreeCtrl(parent, id, pos, size, style, validator, name)
@@ -109,7 +107,6 @@ void ConfigTreeCtrl::ResolveKey(wxTreeItemId Item, ACE_Configuration_Section_Key
     Key = m_pConfig->root_section();
   }
 }
-
 
 void ConfigTreeCtrl::OnNewKey(wxCommandEvent& event)
 {

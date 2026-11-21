@@ -4,7 +4,6 @@
 #include "SequencePushConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_Notify_Tests_SequencePushConsumer_Traits::TAO_Notify_Tests_SequencePushConsumer_Traits ()
   :type_ (CosNotifyChannelAdmin::SEQUENCE_EVENT)
 {
@@ -43,8 +42,7 @@ TAO_Notify_Tests_SequencePushConsumer::disconnect_sequence_push_consumer ()
 
 void
 TAO_Notify_Tests_SequencePushConsumer::push_structured_events
-   (const CosNotification::EventBatch &/*notifications*/
-    )
+   (const CosNotification::EventBatch &/*notifications*/)
 {
   // NOP
 }

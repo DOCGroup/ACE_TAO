@@ -1,6 +1,8 @@
 #ifndef EXPLOIT_PUBLISHER_IMPL_H
 #define EXPLOIT_PUBLISHER_IMPL_H
 
+#include <memory>
+
 #include "publisherS.h"
 #include "subscriberC.h"
 
@@ -20,10 +22,10 @@ public:
   void shutdown () override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
   class Worker;
   friend class Worker;
-  Worker *worker;
+  std::unique_ptr<Worker> worker_;
 };
 
 #endif

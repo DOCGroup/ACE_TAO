@@ -6,9 +6,8 @@ valuetype Event
 
 interface Checkpoint
 {
+  /// This operation will shutdown the server.
   void  put_event (in Event e);
-  // This operation will shutdown the server.
   oneway void shutdown ();
 };
-
 

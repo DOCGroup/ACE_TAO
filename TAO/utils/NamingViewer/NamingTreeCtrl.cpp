@@ -143,7 +143,6 @@ void CNamingTreeCtrl::ClearChildren(HTREEITEM hItem)
   }
 }
 
-
 #define LISTQUANTUM 40
 
 void CNamingTreeCtrl::ListContext(HTREEITEM hItem)
@@ -352,7 +351,6 @@ void CNamingTreeCtrl::OnDestroy()
   ClearChildren();
 }
 
-
 void CNamingTreeCtrl::OnContextpopupBindnewcontext()
 {
   // TODO: Add your command handler code here
@@ -471,7 +469,7 @@ void CNamingTreeCtrl::ListBindingList(HTREEITEM hItem, CosNaming::NamingContext_
 {
   try
   {
-    for(unsigned int i=0; i < bl->length(); i++)
+    for(unsigned int i=0; i < bl->length(); ++i)
     {
       // Add each entry into the tree control
       CORBA::Object_var Object = pContext->resolve(bl[i].binding_name);

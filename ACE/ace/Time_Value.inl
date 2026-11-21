@@ -1,6 +1,8 @@
 // -*- C++ -*-
 #include "ace/Truncate.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Returns the value of the object as a timeval.
@@ -19,7 +21,7 @@ ACE_Time_Value::operator timeval () const
 }
 
 ACE_INLINE void
-ACE_Time_Value::set (const timeval &tv)
+ACE_Time_Value::set (timeval const &tv)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::set");
   this->tv_.tv_sec = tv.tv_sec;
@@ -29,23 +31,23 @@ ACE_Time_Value::set (const timeval &tv)
 }
 
 ACE_INLINE
-ACE_Time_Value::ACE_Time_Value (const struct timeval &tv)
+ACE_Time_Value::ACE_Time_Value (struct timeval const &tv)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::ACE_Time_Value");
   this->set (tv);
 }
 
 ACE_INLINE
-ACE_Time_Value::operator const timeval * () const
+ACE_Time_Value::operator timeval const * () const
 {
-  // ACE_OS_TRACE ("ACE_Time_Value::operator const timeval *");
+  // ACE_OS_TRACE ("ACE_Time_Value::operator timeval const *");
 #if defined (ACE_HAS_TIME_T_LONG_MISMATCH)
   // Recall that on some Windows we substitute another type for timeval in tv_
   this->ext_tv_.tv_sec = ACE_Utils::truncate_cast<long> (this->tv_.tv_sec);
   this->ext_tv_.tv_usec = ACE_Utils::truncate_cast<long> (this->tv_.tv_usec);
-  return (const timeval *) &this->ext_tv_;
+  return std::addressof (this->ext_tv_);
 #else
-  return (const timeval *) &this->tv_;
+  return std::addressof (this->tv_);
 #endif /* ACE_HAS_TIME_T_LONG_MISMATCH */
 }
 
@@ -59,7 +61,9 @@ ACE_Time_Value::set (time_t sec, suseconds_t usec)
   if ((__builtin_constant_p(sec) &
        __builtin_constant_p(usec)) &&
       (sec >= 0 && usec >= 0 && usec < ACE_ONE_SECOND_IN_USECS))
-    return;
+    {
+      return;
+    }
 #endif
   this->normalize ();
 }
@@ -68,21 +72,23 @@ ACE_INLINE void
 ACE_Time_Value::set (double d)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::set");
-  if (d < ACE_Numeric_Limits<time_t>::min())
+  if (d < (ACE_Numeric_Limits<time_t>::min) ())
     {
-      this->tv_.tv_sec = ACE_Numeric_Limits<time_t>::min();
+      this->tv_.tv_sec = (ACE_Numeric_Limits<time_t>::min) ();
       this->tv_.tv_usec = -ACE_ONE_SECOND_IN_USECS + 1;
     }
-  else if (d > ACE_Numeric_Limits<time_t>::max())
+  else if (d > (ACE_Numeric_Limits<time_t>::max) ())
     {
-      this->tv_.tv_sec = ACE_Numeric_Limits<time_t>::max();
+      this->tv_.tv_sec = (ACE_Numeric_Limits<time_t>::max) ();
       this->tv_.tv_usec = ACE_ONE_SECOND_IN_USECS - 1;
     }
   else
     {
-      time_t l = (time_t) d;
+      time_t const l = static_cast<time_t> (d);
       this->tv_.tv_sec = l;
-      this->tv_.tv_usec = (suseconds_t) ((d - (double) l) * ACE_ONE_SECOND_IN_USECS + (d < 0 ? -0.5 : 0.5));
+      this->tv_.tv_usec = static_cast<suseconds_t> ((d - static_cast<double> (l)) *
+                                                   ACE_ONE_SECOND_IN_USECS +
+                                                   (d < 0 ? -0.5 : 0.5));
     }
 }
 
@@ -90,20 +96,12 @@ ACE_Time_Value::set (double d)
 /// since it converts the nano-seconds into micro-seconds.  But then
 /// again, do any real systems have nano-second timer precision?!
 ACE_INLINE void
-ACE_Time_Value::set (const timespec_t &tv)
+ACE_Time_Value::set (timespec_t const &tv)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::set");
 
   this->set (tv.tv_sec,
              tv.tv_nsec / 1000); // Convert nanoseconds into microseconds.
-}
-
-ACE_INLINE
-ACE_Time_Value::ACE_Time_Value ()
-  // : tv_ ()
-{
-  // ACE_OS_TRACE ("ACE_Time_Value::ACE_Time_Value");
-  this->set (0, 0);
 }
 
 ACE_INLINE
@@ -163,16 +161,16 @@ ACE_INLINE void
 ACE_Time_Value::msec (ACE_UINT64 &ms) /*const*/
 {
   // ACE_OS_TRACE ("ACE_Time_Value::msec");
-  const ACE_Time_Value *tv = this;
+  ACE_Time_Value const *tv = this;
   tv->msec (ms);
 }
 
 ACE_INLINE void
-ACE_Time_Value::set_msec (const ACE_UINT64 &ms)
+ACE_Time_Value::set_msec (ACE_UINT64 const &ms)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::set_msec");
   // Convert millisecond units to seconds;
-  ACE_UINT64 secs = ms / 1000;
+  ACE_UINT64 const secs = ms / 1000;
   this->tv_.tv_sec = static_cast<long> (secs);
   // Convert remainder to microseconds;
   this->tv_.tv_usec = static_cast<long>((ms - (secs * 1000)) * 1000);
@@ -223,45 +221,57 @@ ACE_Time_Value::to_usec (ACE_UINT64 &usec) const
 }
 
 ACE_INLINE ACE_Time_Value
-operator * (double d, const ACE_Time_Value &tv)
+operator * (double d, ACE_Time_Value const &tv)
 {
   return ACE_Time_Value (tv) *= d;
 }
 
 ACE_INLINE ACE_Time_Value
-operator * (const ACE_Time_Value &tv, double d)
+operator * (ACE_Time_Value const &tv, double d)
 {
   return ACE_Time_Value (tv) *= d;
 }
 
 /// True if tv1 > tv2.
 ACE_INLINE bool
-operator > (const ACE_Time_Value &tv1,
-            const ACE_Time_Value &tv2)
+operator > (ACE_Time_Value const &tv1,
+            ACE_Time_Value const &tv2)
 {
   // ACE_OS_TRACE ("operator >");
   if (tv1.sec () > tv2.sec ())
-    return 1;
+    {
+      return 1;
+    }
   else if (tv1.sec () == tv2.sec ()
            && tv1.usec () > tv2.usec ())
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 /// True if tv1 >= tv2.
 ACE_INLINE bool
-operator >= (const ACE_Time_Value &tv1,
-             const ACE_Time_Value &tv2)
+operator >= (ACE_Time_Value const &tv1,
+             ACE_Time_Value const &tv2)
 {
   // ACE_OS_TRACE ("operator >=");
   if (tv1.sec () > tv2.sec ())
-    return 1;
+    {
+      return 1;
+    }
   else if (tv1.sec () == tv2.sec ()
            && tv1.usec () >= tv2.usec ())
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 /// Returns the value of the object as a timespec_t.
@@ -269,7 +279,7 @@ ACE_INLINE
 ACE_Time_Value::operator timespec_t () const
 {
   // ACE_OS_TRACE ("ACE_Time_Value::operator timespec_t");
-  timespec_t tv;
+  timespec_t tv {};
   tv.tv_sec = this->sec ();
   // Convert microseconds into nanoseconds.
   tv.tv_nsec = this->tv_.tv_usec * 1000;
@@ -278,8 +288,7 @@ ACE_Time_Value::operator timespec_t () const
 
 /// Initializes the ACE_Time_Value object from a timespec_t.
 ACE_INLINE
-ACE_Time_Value::ACE_Time_Value (const timespec_t &tv)
-  // : tv_ ()
+ACE_Time_Value::ACE_Time_Value (timespec_t const &tv)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::ACE_Time_Value");
   this->set (tv);
@@ -287,8 +296,8 @@ ACE_Time_Value::ACE_Time_Value (const timespec_t &tv)
 
 /// True if tv1 < tv2.
 ACE_INLINE bool
-operator < (const ACE_Time_Value &tv1,
-            const ACE_Time_Value &tv2)
+operator < (ACE_Time_Value const &tv1,
+            ACE_Time_Value const &tv2)
 {
   // ACE_OS_TRACE ("operator <");
   return tv2 > tv1;
@@ -296,8 +305,8 @@ operator < (const ACE_Time_Value &tv1,
 
 /// True if tv1 >= tv2.
 ACE_INLINE bool
-operator <= (const ACE_Time_Value &tv1,
-             const ACE_Time_Value &tv2)
+operator <= (ACE_Time_Value const &tv1,
+             ACE_Time_Value const &tv2)
 {
   // ACE_OS_TRACE ("operator <=");
   return tv2 >= tv1;
@@ -305,8 +314,8 @@ operator <= (const ACE_Time_Value &tv1,
 
 /// True if tv1 == tv2.
 ACE_INLINE bool
-operator == (const ACE_Time_Value &tv1,
-             const ACE_Time_Value &tv2)
+operator == (ACE_Time_Value const &tv1,
+             ACE_Time_Value const &tv2)
 {
   // ACE_OS_TRACE ("operator ==");
   return tv1.sec () == tv2.sec ()
@@ -315,8 +324,8 @@ operator == (const ACE_Time_Value &tv1,
 
 /// True if tv1 != tv2.
 ACE_INLINE bool
-operator != (const ACE_Time_Value &tv1,
-             const ACE_Time_Value &tv2)
+operator != (ACE_Time_Value const &tv1,
+             ACE_Time_Value const &tv2)
 {
   // ACE_OS_TRACE ("operator !=");
   return !(tv1 == tv2);
@@ -324,7 +333,7 @@ operator != (const ACE_Time_Value &tv1,
 
 /// Add TV to this.
 ACE_INLINE ACE_Time_Value &
-ACE_Time_Value::operator+= (const ACE_Time_Value &tv)
+ACE_Time_Value::operator+= (ACE_Time_Value const &tv)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::operator+=");
   this->sec (this->sec () + tv.sec ());
@@ -352,7 +361,7 @@ ACE_Time_Value::operator= (time_t tv)
 
 /// Subtract TV to this.
 ACE_INLINE ACE_Time_Value &
-ACE_Time_Value::operator-= (const ACE_Time_Value &tv)
+ACE_Time_Value::operator-= (ACE_Time_Value const &tv)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::operator-=");
   this->sec (this->sec () - tv.sec ());
@@ -371,8 +380,8 @@ ACE_Time_Value::operator-= (time_t tv)
 
 /// Adds two ACE_Time_Value objects together, returns the sum.
 ACE_INLINE ACE_Time_Value
-operator + (const ACE_Time_Value &tv1,
-            const ACE_Time_Value &tv2)
+operator + (ACE_Time_Value const &tv1,
+            ACE_Time_Value const &tv2)
 {
   // ACE_OS_TRACE ("operator +");
   ACE_Time_Value sum (tv1);
@@ -383,8 +392,8 @@ operator + (const ACE_Time_Value &tv1,
 
 /// Subtracts two ACE_Time_Value objects, returns the difference.
 ACE_INLINE ACE_Time_Value
-operator - (const ACE_Time_Value &tv1,
-            const ACE_Time_Value &tv2)
+operator - (ACE_Time_Value const &tv1,
+            ACE_Time_Value const &tv2)
 {
   // ACE_OS_TRACE ("operator -");
   ACE_Time_Value delta (tv1);
@@ -448,7 +457,6 @@ namespace std
       return h;
     }
 
-
     ACE_INLINE nanoseconds&
     operator +=(nanoseconds &ns, ACE_Time_Value const &tv)
     {
@@ -496,7 +504,6 @@ namespace std
         duration_cast<hours>(microseconds{tv.usec()});
       return h;
     }
-
 
     ACE_INLINE nanoseconds&
     operator -=(nanoseconds &ns, ACE_Time_Value const &tv)

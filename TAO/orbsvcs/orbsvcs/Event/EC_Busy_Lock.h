@@ -29,11 +29,11 @@ template<class Adaptee>
 class TAO_EC_Busy_Lock_Adapter
 {
 public:
-  /// Constructor
-  TAO_EC_Busy_Lock_Adapter (Adaptee* adaptee);
+  explicit TAO_EC_Busy_Lock_Adapter (Adaptee* adaptee);
 
-  // = The ACE_Lock methods, please check $ACE_ROOT/ace/Synch.h for
-  // details.
+  /// @name ACE_Lock methods
+  /// @{
+  /// See $ACE_ROOT/ace/Synch.h for details.
 
   int remove ();
   int acquire ();
@@ -44,6 +44,7 @@ public:
   int tryacquire_read ();
   int tryacquire_write ();
 
+  /// @}
 private:
   Adaptee* adaptee_;
 };

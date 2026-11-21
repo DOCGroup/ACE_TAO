@@ -1,6 +1,5 @@
-// -*- IDL -*-
+/// -*- IDL -*-
 
-//=============================================================================
 /**
  *  @file   ATLAS.idl
  *
@@ -8,8 +7,6 @@
  *
  *  @author Object Management Group
  */
-//=============================================================================
-
 
 #ifndef _ATLAS_IDL_
 #define _ATLAS_IDL_
@@ -54,9 +51,9 @@ module ATLAS {
     CosNaming::Name          the_name;
   };
 
-  //
-  // This type specifies a string encoded in UTF-8 form [IETF RFC 2044].
-  //
+  ///
+  /// This type specifies a string encoded in UTF-8 form [IETF RFC 2044].
+  ///
   typedef sequence<octet> UTF8String;
   typedef CosNaming::NamingContextExt::URLString URLocator;
 

@@ -22,7 +22,7 @@ class Client_Task : public ACE_Task_Base
     {
       ACE_Time_Value start = ACE_OS::gettimeofday ();
       ACE_Time_Value elapsed;
-      for (int i = 0; elapsed < ACE_Time_Value (test_duration_sec); i++)
+      for (int i = 0; elapsed < ACE_Time_Value (test_duration_sec); ++i)
       {
         try
         {
@@ -75,13 +75,11 @@ private:
   bool caught_object_not_exist_;
 };
 
-
 int
 parse_args (int argc, ACE_TCHAR* argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "i:t:e:");
   int c;
-
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -135,7 +133,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
 
     Client_Task task (test.in ());
-    task.activate (THR_NEW_LWP | THR_JOINABLE, 1, 1);
+    task.activate (THR_NEW_LWP | THR_JOINABLE, 1, true);
 
     ACE_Time_Value tv(test_duration_sec);
     orb->run (&tv);
@@ -161,5 +159,4 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
 

@@ -39,7 +39,7 @@ class TAO_Log_Serv_Export TAO_LogActivator
 public:
   /// @brief Constructor
   ///
-  TAO_LogActivator (TAO_LogMgr_i & logmgr_i);
+  explicit TAO_LogActivator (TAO_LogMgr_i & logmgr_i);
 
   /// @brief Destructor
   ///

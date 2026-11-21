@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/Hash_Map_Manager.h"
@@ -29,24 +28,26 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int cc;
 
   while ((cc = get_opt ()) != -1)
-    switch (cc)
-      {
-      case 't':
-        table_size = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 'i':
-        iterations = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case '?':
-      case 'h':
-      default:
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("usage: %s ")
-                    ACE_TEXT ("[-i (iterations)] ")
-                    ACE_TEXT ("[-t (table size)] "),
-                    ACE_TEXT ("Hash_Map_Bucket_Iterator_Test")));
-        return -1;
-      }
+    {
+      switch (cc)
+        {
+        case 't':
+          table_size = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'i':
+          iterations = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case '?':
+        case 'h':
+        default:
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("usage: %s ")
+                      ACE_TEXT ("[-i (iterations)] ")
+                      ACE_TEXT ("[-t (table size)] "),
+                      ACE_TEXT ("Hash_Map_Bucket_Iterator_Test")));
+          return -1;
+        }
+    }
 
   return 0;
 }
@@ -61,7 +62,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Validate options.
   int result = parse_args (argc, argv);
   if (result != 0)
+  {
     return result;
+  }
 
   // Start the test only if options are valid.
   ACE_START_TEST (ACE_TEXT ("Hash_Map_Bucket_Iterator_Test"));

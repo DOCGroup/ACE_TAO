@@ -107,7 +107,6 @@ ACE_String_Base<ACE_CHAR_T>::operator > (const ACE_String_Base &s) const
   return compare (s) > 0;
 }
 
-
 // Comparison operator.
 
 template <class ACE_CHAR_T> ACE_INLINE bool
@@ -171,7 +170,7 @@ ACE_String_Base<ACE_CHAR_T>::end () const
 template <class ACE_CHAR_T> ACE_INLINE
 ACE_String_Base_Iterator <ACE_CHAR_T>::
 ACE_String_Base_Iterator (ACE_String_Base <ACE_CHAR_T> & str, int end)
-: str_ (&str),
+: str_ (std::addressof (str)),
   index_ (0 == end ? 0 : str.length ())
 {
   ACE_TRACE ("ACE_String_Base_Iterator<ACE_CHAR_T>::ACE_String_Base_Iterator");
@@ -215,7 +214,9 @@ ACE_String_Base_Iterator <ACE_CHAR_T>::operator ++ ()
   ACE_TRACE ("ACE_String_Base_Iterator<ACE_CHAR_T>::operator ++");
 
   if (0 == this->done ())
-    ++ this->index_;
+    {
+      ++ this->index_;
+    }
 
   return *this;
 }
@@ -229,7 +230,9 @@ ACE_String_Base_Iterator <ACE_CHAR_T>::operator ++ (int)
   ACE_String_Base_Iterator <ACE_CHAR_T> temp (*this);
 
   if (0 == this->done ())
-    ++ this->index_;
+    {
+      ++ this->index_;
+    }
 
   return temp;
 }
@@ -241,7 +244,9 @@ ACE_String_Base_Iterator <ACE_CHAR_T>::operator -- ()
   ACE_TRACE ("ACE_String_Base_Iterator<ACE_CHAR_T>::operator --");
 
   if (0 < this->index_)
-    -- this->index_;
+    {
+      -- this->index_;
+    }
 
   return *this;
 }
@@ -255,7 +260,9 @@ ACE_String_Base_Iterator <ACE_CHAR_T>::operator -- (int)
   ACE_String_Base_Iterator <ACE_CHAR_T> temp (*this);
 
   if (0 < this->index_)
-    -- this->index_;
+    {
+      -- this->index_;
+    }
 
   return temp;
 }
@@ -307,7 +314,7 @@ operator <= (const ACE_String_Base_Iterator <ACE_CHAR_T> & rhs) const
 template <class ACE_CHAR_T> ACE_INLINE
 ACE_String_Base_Const_Iterator <ACE_CHAR_T>::
 ACE_String_Base_Const_Iterator (const ACE_String_Base <ACE_CHAR_T> & str, int end)
-: str_ (&str),
+: str_ (std::addressof (str)),
   index_ (0 == end ? 0 : str.length ())
 {
   ACE_TRACE ("ACE_String_Base_Const_Iterator<ACE_CHAR_T>::ACE_String_Base_Const_Iterator");
@@ -351,7 +358,9 @@ ACE_String_Base_Const_Iterator <ACE_CHAR_T>::operator ++ ()
   ACE_TRACE ("ACE_String_Base_Const_Iterator<ACE_CHAR_T>::operator ++");
 
   if (0 == this->done ())
-    ++ this->index_;
+    {
+      ++ this->index_;
+    }
 
   return *this;
 }
@@ -365,7 +374,9 @@ ACE_String_Base_Const_Iterator <ACE_CHAR_T>::operator ++ (int)
   ACE_String_Base_Const_Iterator <ACE_CHAR_T> temp (*this);
 
   if (0 == this->done ())
-    ++ this->index_;
+    {
+      ++ this->index_;
+    }
 
   return temp;
 }
@@ -377,7 +388,9 @@ ACE_String_Base_Const_Iterator <ACE_CHAR_T>::operator -- ()
   ACE_TRACE ("ACE_String_Base_Const_Iterator<ACE_CHAR_T>::operator --");
 
   if (0 < this->index_)
-    -- this->index_;
+    {
+      -- this->index_;
+    }
 
   return *this;
 }
@@ -391,7 +404,9 @@ ACE_String_Base_Const_Iterator <ACE_CHAR_T>::operator -- (int)
   ACE_String_Base_Const_Iterator <ACE_CHAR_T> temp (*this);
 
   if (0 < this->index_)
-    -- this->index_;
+    {
+      -- this->index_;
+    }
 
   return temp;
 }

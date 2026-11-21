@@ -23,9 +23,25 @@
 #include "ace/Global_Macros.h"
 #include "ace/os_include/os_stdio.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Allocator;
+
+/// Frees memory allocated by ACE_Read_Buffer::read () with its allocator.
+struct ACE_Export ACE_Read_Buffer_Unique_Ptr_Deleter
+{
+  /// Borrowed from ACE_Read_Buffer; null selects the default allocator.
+  /// A supplied allocator must outlive the owned buffer.
+  ACE_Allocator *allocator {};
+
+  void operator() (char *buffer) const;
+};
+
+/// Owns a buffer returned by ACE_Read_Buffer::read ().
+using ACE_Read_Buffer_Unique_Ptr =
+  std::unique_ptr<char, ACE_Read_Buffer_Unique_Ptr_Deleter>;
 
 /**
  * @class ACE_Read_Buffer
@@ -95,16 +111,15 @@ private:
   char *rec_read (int term, int search, int replace);
 
   /// The total number of characters in the buffer.
-  size_t size_;
+  size_t size_ {};
 
   /// The total number of characters replaced.
-  size_t occurrences_;
+  size_t occurrences_ {};
 
   /// The stream we are reading from.
   FILE *stream_;
 
   /// Keeps track of whether we should close the FILE in the
-  /// destructor.
   bool const close_on_delete_;
 
   /// Pointer to the allocator.

@@ -6,13 +6,15 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-const ACE_TCHAR *ior_output_file = 0;
+#include <memory>
+
+ACE_TCHAR const *ior_output_file {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -52,7 +54,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "ORT Test ORB");
 
       if (parse_args (argc, argv) != 0)
+      {
         return -1;
+      }
 
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA");
@@ -63,9 +67,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Check for nil references
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to obtain RootPOA reference.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to obtain RootPOA reference.\n"),
+                            -1);
+        }
 
       // Get poa_manager reference
       PortableServer::POAManager_var poa_manager =
@@ -101,7 +107,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ORT_test_i ort_test_impl (orb.in ());
 
       PortableServer::ObjectId_var oid =
-        fourth_poa->activate_object (&ort_test_impl);
+        fourth_poa->activate_object (std::addressof (ort_test_impl));
 
       obj = fourth_poa->servant_to_reference (&ort_test_impl);
 
@@ -110,16 +116,18 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->object_to_string (obj.in ());
 
       // Dump it to a file.
-      if (ior_output_file != 0)
+      if (ior_output_file != nullptr)
         {
           FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file %s for writing "
-                               "IOR: %C",
-                               ior_output_file,
-                               ior.in ()),
-                              1);
+          if (output_file == nullptr)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Cannot open output file %s for writing "
+                                 "IOR: %C",
+                                 ior_output_file,
+                                 ior.in ()),
+                                1);
+            }
           ACE_OS::fprintf (output_file, "%s", ior.in ());
           ACE_OS::fclose (output_file);
         }
@@ -128,7 +136,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("ORT test server:");
       return -1;

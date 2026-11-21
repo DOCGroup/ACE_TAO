@@ -37,7 +37,7 @@ TAO::TypeCode::Struct<StringType,
   : ::CORBA::TypeCode (kind)
   , RefCountPolicy ()
   , base_attributes_ (id)
-  , nfields_ (0)
+  , nfields_ {}
   , fields_ ()
 {
   // CORBA::tk_except is not allowed in the recursive TypeCode case.

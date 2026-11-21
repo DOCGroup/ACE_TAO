@@ -1,11 +1,11 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 
 // OS primitives
-#include <ace/OS_NS_string.h>
 #include <ace/OS_NS_stdlib.h>
 #include <ace/Synch.h>
 #include <ace/SOCK_Dgram_Mcast.h>
 #include <ace/Refcounted_Auto_Ptr.h>
+#include <cstring>
 
 
 #include "Messaging.hpp"
@@ -23,8 +23,8 @@ namespace ACE_TMCast
               size_t size)
         : size_ (size)
     {
-      ACE_OS::memcpy (&header_, header, sizeof (Protocol::MessageHeader));
-      ACE_OS::memcpy (payload_, payload, size_);
+      std::memcpy (&header_, header, sizeof (Protocol::MessageHeader));
+      std::memcpy (payload_, payload, size_);
     }
 
     Protocol::MessageHeader const&
@@ -51,9 +51,7 @@ namespace ACE_TMCast
     size_t size_;
   };
 
-  typedef
-  ACE_Refcounted_Auto_Ptr<LinkData, ACE_Null_Mutex>
-  LinkDataPtr;
+  using LinkDataPtr = ACE_Refcounted_Auto_Ptr<LinkData, ACE_Null_Mutex>;
 
   class LinkListener
   {
@@ -72,6 +70,11 @@ namespace ACE_TMCast
                               &thread_) != 0) ACE_OS::abort ();
     }
 
+    LinkListener (LinkListener const&) = delete;
+    LinkListener (LinkListener&&) = delete;
+    LinkListener& operator= (LinkListener const&) = delete;
+    LinkListener& operator= (LinkListener&&) = delete;
+
     ~LinkListener ()
     {
       {
@@ -80,7 +83,10 @@ namespace ACE_TMCast
         control_.push (MessagePtr (new Terminate));
       }
 
-      if (ACE_OS::thr_join (thread_, 0) != 0) ACE_OS::abort ();
+      if (ACE_OS::thr_join (thread_, nullptr) != 0)
+        {
+          ACE_OS::abort ();
+        }
 
       // cerr << "Link listener is down." << endl;
     }
@@ -92,14 +98,12 @@ namespace ACE_TMCast
       LinkListener* obj = reinterpret_cast<LinkListener*> (arg);
 
       obj->execute ();
-      return 0;
+      return ACE_THR_FUNC_RETURN_NULL;
     }
 
     void
     execute ()
     {
-      char msg[Protocol::MAX_MESSAGE_SIZE];
-
       ssize_t header_size = sizeof (Protocol::MessageHeader);
 
       // OS::Time timeout (1000000); // one millisecond
@@ -110,12 +114,17 @@ namespace ACE_TMCast
       {
         while (true)
         {
+          char msg[Protocol::MAX_MESSAGE_SIZE];
+
           // Check control message queue
 
           {
             MessageQueueAutoLock lock (control_);
 
-            if (!control_.empty ()) break;
+            if (!control_.empty ())
+              {
+                break;
+              }
           }
 
           ACE_INET_Addr junk;
@@ -127,7 +136,10 @@ namespace ACE_TMCast
 
           if (n != -1)
           {
-            if (n < header_size) throw false;
+            if (n < header_size)
+              {
+                throw false;
+              }
 
             Protocol::MessageHeader* header =
               reinterpret_cast<Protocol::MessageHeader*> (msg);

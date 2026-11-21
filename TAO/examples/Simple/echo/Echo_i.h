@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ECHO_I_H
 #define ECHO_I_H
 
@@ -29,29 +28,30 @@
 class Echo_i : public POA_Echo
 {
 public:
-  /// Constructor.
   Echo_i () = default;
 
-  /// Destructor.
-  virtual ~Echo_i () = default;
+  ~Echo_i () override = default;
 
   /// Return the mesg string back from the server.
-  virtual Echo::List *echo_list (const char *mesg);
+  Echo::List *echo_list (char const *mesg) override;
 
   /// Return the mesg string back from the server.
-  virtual char *echo_string (const char *mesg);
+  char *echo_string (char const *mesg) override;
 
   /// Shutdown the server.
-  virtual void shutdown ();
+  void shutdown () override;
+
+  Echo_i (Echo_i const &) = delete;
+  Echo_i &operator= (Echo_i const &) = delete;
+  Echo_i (Echo_i &&) = delete;
+  Echo_i &operator= (Echo_i &&) = delete;
 
   /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);
 
 private:
   /// ORB pointer.
-  CORBA::ORB_var orb_;
-
-  void operator= (const Echo_i&);
+  CORBA::ORB_var orb_ {};
 };
 
 #endif /* ECHO_I_H */

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Upcall_Wrapper.h
  *
@@ -8,8 +6,6 @@
  *  @author Jeff Parsons
  *  @author Carlos O'Ryan
  */
-//=============================================================================
-
 #ifndef TAO_UPCALL_WRAPPER_H
 #define TAO_UPCALL_WRAPPER_H
 

@@ -3,7 +3,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Return flags currently associated with handle.
+/// Return the flags currently associated with @a handle.
 ACE_INLINE int
 ACE::get_flags (ACE_HANDLE handle)
 {

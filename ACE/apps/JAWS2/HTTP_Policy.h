@@ -9,12 +9,11 @@
 class HTTP_Policy : public JAWS_Dispatch_Policy
 {
 public:
-  HTTP_Policy (JAWS_Concurrency_Base *concurrency);
-  virtual JAWS_Concurrency_Base * update (void *state = 0);
+  explicit HTTP_Policy (JAWS_Concurrency_Base *concurrency);
+  virtual JAWS_Concurrency_Base * update (void *state = nullptr);
 
 private:
   JAWS_Concurrency_Base *concurrency_;
 };
-
 
 #endif /* !defined (HTTP_POLICY_H) */

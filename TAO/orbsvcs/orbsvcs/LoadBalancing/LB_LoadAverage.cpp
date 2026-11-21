@@ -9,7 +9,8 @@
 #include "tao/ORB_Constants.h"
 
 #include "ace/Null_Mutex.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
+#include <new>
 
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/LoadBalancing/LB_LoadAverage.inl"
@@ -28,19 +29,24 @@ TAO_LB_LoadAverage::TAO_LB_LoadAverage (PortableServer::POA_ptr poa)
   // and lock are only needed if dampening is enabled, i.e. non-zero.
   if (!ACE::is_equal (this->dampening_, 0.0f))
     {
-      ACE_NEW (this->load_map_, TAO_LB_LoadMap (TAO_PG_MAX_LOCATIONS));
+      this->load_map_.reset (new (std::nothrow) TAO_LB_LoadMap (TAO_PG_MAX_LOCATIONS));
+      if (!this->load_map_)
+        {
+          errno = ENOMEM;
+          return;
+        }
 
-      ACE_NEW (this->lock_, TAO_SYNCH_MUTEX);
+      this->lock_.reset (new (std::nothrow) TAO_SYNCH_MUTEX);
+      if (!this->lock_)
+        {
+          this->load_map_.reset ();
+          errno = ENOMEM;
+          return;
+        }
     }
 
   // Initialize the random load balancing strategy.
   TAO_LB_Random::init ();
-}
-
-TAO_LB_LoadAverage::~TAO_LB_LoadAverage ()
-{
-  delete this->load_map_;
-  delete this->lock_;
 }
 
 char *
@@ -52,7 +58,7 @@ TAO_LB_LoadAverage::name ()
 CosLoadBalancing::Properties *
 TAO_LB_LoadAverage::get_properties ()
 {
-  CosLoadBalancing::Properties * props = nullptr;
+  CosLoadBalancing::Properties * props {};
   ACE_NEW_THROW_EX (props,
                     CosLoadBalancing::Properties (this->properties_),
                     CORBA::NO_MEMORY (
@@ -71,7 +77,9 @@ TAO_LB_LoadAverage::push_loads (
 {
   // Only the first load is used by this load balancing strategy.
   if (loads.length () == 0)
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   CosLoadBalancing::Load load;  // Unused
 
@@ -87,7 +95,9 @@ TAO_LB_LoadAverage::push_loads (
     CosLoadBalancing::Load & load)
 {
   if (loads.length () == 0)
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   // Only the first load is used by this load balancing strategy.
   CosLoadBalancing::Load const & new_load = loads[0];
@@ -96,13 +106,15 @@ TAO_LB_LoadAverage::push_loads (
     {
       ACE_GUARD (TAO_SYNCH_MUTEX, guard, *this->lock_);
 
-      TAO_LB_LoadMap::ENTRY * entry = nullptr;
+      TAO_LB_LoadMap::ENTRY * entry {};
       if (this->load_map_->find (the_location, entry) == 0)
         {
           CosLoadBalancing::Load & previous_load = entry->int_id_;
 
           if (previous_load.id != new_load.id)
+          {
             throw CORBA::BAD_PARAM ();  // Somebody switched
+          }
                                               // LoadIds on us!
 
           previous_load.value =
@@ -121,9 +133,11 @@ TAO_LB_LoadAverage::push_loads (
           if (this->load_map_->bind (the_location, eff_load) != 0)
             {
               if (TAO_debug_level > 0)
-                ORBSVCS_ERROR ((LM_ERROR,
-                            "ERROR: TAO_LB_LoadAverage - "
-                            "Unable to push loads\n"));
+                {
+                  ORBSVCS_ERROR ((LM_ERROR,
+                                  "ERROR: TAO_LB_LoadAverage - "
+                                  "Unable to push loads\n"));
+                }
 
               throw CORBA::INTERNAL ();
             }
@@ -143,7 +157,9 @@ TAO_LB_LoadAverage::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
                                const PortableGroup::Location & the_location)
 {
   if (CORBA::is_nil (load_manager))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   CosLoadBalancing::LoadList_var loads =
     load_manager->get_loads (the_location);
@@ -155,20 +171,23 @@ TAO_LB_LoadAverage::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
   return loads._retn ();
 }
 
-
 CORBA::Object_ptr
 TAO_LB_LoadAverage::next_member (
     PortableGroup::ObjectGroup_ptr object_group,
     CosLoadBalancing::LoadManager_ptr load_manager)
 {
   if (CORBA::is_nil (load_manager))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   PortableGroup::Locations_var locations =
     load_manager->locations_of_members (object_group);
 
   if (locations->length () == 0)
+  {
     throw CORBA::TRANSIENT ();
+  }
 
   // @note The Random load balancing strategy is used since it is
   //       very lightweight and stateless.
@@ -184,13 +203,17 @@ TAO_LB_LoadAverage::analyze_loads (
     CosLoadBalancing::LoadManager_ptr load_manager)
 {
   if (CORBA::is_nil (load_manager))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   PortableGroup::Locations_var locations =
     load_manager->locations_of_members (object_group);
 
   if (locations->length () == 0)
+  {
     throw CORBA::TRANSIENT ();
+  }
 
   const CORBA::ULong len = locations->length ();
 
@@ -202,7 +225,7 @@ TAO_LB_LoadAverage::analyze_loads (
 
   // Iterate through the entire location list to determine
   // the average load of all the locations
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       try
         {
@@ -247,7 +270,7 @@ TAO_LB_LoadAverage::analyze_loads (
 
   // Iterate through the entire location list to determine
   // the location where the load has to be shed.
-  for (CORBA::ULong j = 0; j < len; ++j)
+  for (CORBA::ULong j {}; j < len; ++j)
     {
       try
         {
@@ -330,10 +353,10 @@ TAO_LB_LoadAverage::init (PortableGroup::Properties const & props)
   CORBA::Float per_balance_load = TAO_LB::LA_DEFAULT_PER_BALANCE_LOAD;
 
   CORBA::ULong const len = props.length ();
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       PortableGroup::Property const & property = props[i];
-      if (ACE_OS::strcmp (property.nam[0].id.in (),
+      if (std::strcmp (property.nam[0].id.in (),
                           "org.omg.CosLoadBalancing.Strategy.LoadAverage.Tolerance") == 0)
         {
           this->extract_float_property (property,
@@ -341,10 +364,12 @@ TAO_LB_LoadAverage::init (PortableGroup::Properties const & props)
 
           // Valid tolerance values are greater than or equal to one.
           if (tolerance < 1)
+          {
             throw PortableGroup::InvalidProperty (property.nam, property.val);
+          }
         }
 
-      else if (ACE_OS::strcmp (property.nam[0].id.in (),
+      else if (std::strcmp (property.nam[0].id.in (),
                                "org.omg.CosLoadBalancing.Strategy.LoadAverage.Dampening") == 0)
         {
           this->extract_float_property (property,
@@ -352,10 +377,12 @@ TAO_LB_LoadAverage::init (PortableGroup::Properties const & props)
 
           // Dampening range is [0,1).
           if (dampening < 0 || dampening >= 1)
+          {
             throw PortableGroup::InvalidProperty (property.nam, property.val);
+          }
         }
 
-      else if (ACE_OS::strcmp (property.nam[0].id.in (),
+      else if (std::strcmp (property.nam[0].id.in (),
                                "org.omg.CosLoadBalancing.Strategy.LoadAverage.PerBalanceLoad") == 0)
         {
           this->extract_float_property (property,
@@ -388,7 +415,9 @@ TAO_LB_LoadAverage::extract_float_property (
   CORBA::Float & value)
 {
   if (!(property.val >>= value))
+  {
     throw PortableGroup::InvalidProperty (property.nam, property.val);
+  }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -64,7 +64,6 @@ TAO_COIOP_Transport::handle_input (TAO_Resume_Handle &,
   return 0;
 }
 
-
 int
 TAO_COIOP_Transport::register_handler ()
 {
@@ -77,7 +76,6 @@ TAO_COIOP_Transport::register_handler ()
   // interested in any network failures, we ignore ICMP messages.
   return 0;
 }
-
 
 int
 TAO_COIOP_Transport::send_request (TAO_Stub *,

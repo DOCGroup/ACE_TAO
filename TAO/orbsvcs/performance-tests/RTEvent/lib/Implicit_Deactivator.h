@@ -17,18 +17,15 @@
 class TAO_RTEC_Perf_Export Implicit_Deactivator
 {
 public:
-  /// Constructor
   /**
    * @param client The client
    */
-  explicit Implicit_Deactivator (PortableServer::Servant servant = 0);
+  explicit Implicit_Deactivator (PortableServer::Servant servant = nullptr);
   Implicit_Deactivator (Implicit_Deactivator& rhs);
   Implicit_Deactivator& operator= (Implicit_Deactivator& rhs);
 
-  /// Destructor
   ~Implicit_Deactivator ();
 
-  /// Assignment operator
   Implicit_Deactivator& operator= (PortableServer::Servant servant);
 
   /// Release the servant, i.e. the destructor does not deactivate anything

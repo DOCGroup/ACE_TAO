@@ -1,29 +1,23 @@
-
-//=============================================================================
 /**
  *  @file    param_test_i.cpp
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #include "param_test_i.h"
 
+#include <string>
+
 #include "tao/debug.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_string.h"
 
 // ********* class Coffee_i ****************
-// Constructor
 
 Coffee_i::Coffee_i (const char *name)
   : name_ (name)
 {
 }
-
-// Destructor
 
 Coffee_i::~Coffee_i ()
 {
@@ -33,23 +27,20 @@ Coffee_i::~Coffee_i ()
 Coffee::Desc *
 Coffee_i::description ()
 {
-  Coffee::Desc *desc = new Coffee::Desc;
+  Coffee::Desc_var desc (new Coffee::Desc);
   desc->name = CORBA::string_dup (this->name_.in ());
-  return desc;
+  return desc._retn ();
 }
 
 // set attribute
 void
-Coffee_i::description (const Coffee::Desc &description
+Coffee_i::description (Coffee::Desc const & description
  /*env*/)
 {
   this->name_ = CORBA::string_dup (description.name);
 }
 
-
 // ********* class Param_Test_i ****************
-
-// Constructor
 
 Param_Test_i::Param_Test_i (const char *coffee_name,
                             CORBA::ORB_ptr orb)
@@ -57,8 +48,6 @@ Param_Test_i::Param_Test_i (const char *coffee_name,
     obj_ (coffee_name)
 {
 }
-
-// Destructor
 
 Param_Test_i::~Param_Test_i ()
 {
@@ -100,13 +89,14 @@ Param_Test_i::test_unbounded_string (const char *s1,
                                      char *&s2,
                                      CORBA::String_out s3)
 {
-  char *retstr = CORBA::string_dup (s1);
+  CORBA::String_var retstr (CORBA::string_dup (s1));
   s3 = CORBA::string_dup (s1);
-  char *tmp = CORBA::string_alloc (2*ACE_OS::strlen (s2));
-  ACE_OS::sprintf (tmp, "%s%s", s2, s2);
+  std::string doubled (s2);
+  doubled += s2;
+  CORBA::String_var tmp (CORBA::string_dup (doubled.c_str ()));
   CORBA::string_free (s2);
-  s2 = tmp;
-  return retstr;
+  s2 = tmp._retn ();
+  return retstr._retn ();
 }
 
 // test bounded strings. For return and out types, we return duplicates of
@@ -117,13 +107,14 @@ Param_Test_i::test_bounded_string (const char *s1,
                                    char *&s2,
                                    CORBA::String_out s3)
 {
-  char *retstr = CORBA::string_dup (s1);
+  CORBA::String_var retstr (CORBA::string_dup (s1));
   s3 = CORBA::string_dup (s1);
-  char *tmp = CORBA::string_alloc (2*ACE_OS::strlen (s2));
-  ACE_OS::sprintf (tmp, "%s%s", s2, s2);
+  std::string doubled (s2);
+  doubled += s2;
+  CORBA::String_var tmp (CORBA::string_dup (doubled.c_str ()));
   CORBA::string_free (s2);
-  s2 = tmp;
-  return retstr;
+  s2 = tmp._retn ();
+  return retstr._retn ();
 }
 
 // test unbounded strings. For return and out types, we return duplicates of
@@ -134,17 +125,21 @@ Param_Test_i::test_unbounded_wstring (const CORBA::WChar *ws1,
                                       CORBA::WChar *&ws2,
                                       CORBA::WString_out ws3)
 {
-  CORBA::WChar *retwstr = CORBA::wstring_dup (ws1);
+  CORBA::WString_var retwstr (CORBA::wstring_dup (ws1));
   ws3 = CORBA::wstring_dup (ws1);
-  CORBA::ULong len = ACE_OS::wslen (ws2);
-  CORBA::WChar *tmp = CORBA::wstring_alloc (2*len);
-  for (CORBA::ULong i = 0; i < 2; i++)
-    for (CORBA::ULong j = 0; j < len; j++)
-      tmp[j + i*len] = ws2[j];
+  CORBA::ULong const len = ACE_OS::wslen (ws2);
+  CORBA::WString_var tmp (CORBA::wstring_alloc (2*len));
+  for (CORBA::ULong i = 0; i < 2; ++i)
+    {
+      for (CORBA::ULong j = 0; j < len; ++j)
+        {
+          tmp[j + i*len] = ws2[j];
+        }
+    }
   tmp[2*len] = 0;
   CORBA::wstring_free (ws2);
-  ws2 = tmp;
-  return retwstr;
+  ws2 = tmp._retn ();
+  return retwstr._retn ();
 }
 
 // test bounded strings. For return and out types, we return duplicates of
@@ -155,17 +150,21 @@ Param_Test_i::test_bounded_wstring (const CORBA::WChar *ws1,
                                     CORBA::WChar *&ws2,
                                     CORBA::WString_out ws3)
 {
-  CORBA::WChar *retwstr = CORBA::wstring_dup (ws1);
+  CORBA::WString_var retwstr (CORBA::wstring_dup (ws1));
   ws3 = CORBA::wstring_dup (ws1);
-  CORBA::ULong len = ACE_OS::wslen (ws2);
-  CORBA::WChar *tmp = CORBA::wstring_alloc (2*len);
-  for (CORBA::ULong i = 0; i < 2; i++)
-    for (CORBA::ULong j = 0; j < len; j++)
-      tmp[j + i*len] = ws2[j];
+  CORBA::ULong const len = ACE_OS::wslen (ws2);
+  CORBA::WString_var tmp (CORBA::wstring_alloc (2*len));
+  for (CORBA::ULong i = 0; i < 2; ++i)
+    {
+      for (CORBA::ULong j = 0; j < len; ++j)
+        {
+          tmp[j + i*len] = ws2[j];
+        }
+    }
   tmp[2*len] = 0;
   CORBA::wstring_free (ws2);
-  ws2 = tmp;
-  return retwstr;
+  ws2 = tmp._retn ();
+  return retwstr._retn ();
 }
 
 // test for fixed structures. Just copy the in parameter into all the others
@@ -179,7 +178,7 @@ Param_Test_i::test_fixed_struct (const Param_Test::Fixed_Struct &s1,
   return s1;
 }
 
-// = Sequences
+// Sequence operations.
 
 CORBA::LongSeq *
 Param_Test_i::test_long_sequence (const CORBA::LongSeq & s1,
@@ -259,16 +258,18 @@ Param_Test_i::test_strseq (const CORBA::StringSeq &s1,
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*SERVER SIDE=*=*=*=*=*=*=\n"));
-      for (CORBA::ULong i=0; (i < s2.length ()); i++)
+      for (CORBA::ULong i=0; (i < s2.length ()); ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Element #%d\n"
+                      "Element #%u\n"
                       "in : %C\n",
                       i,
                       (s2[i]? (const char *)s2[i]:"<nul>")));
         }
       if (s2.length () == 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "\ninout sequence is NUL\n"));
+      }
     }
 
   // now copy all elements of s1 into the others using the assignment operator
@@ -374,7 +375,6 @@ Param_Test_i::test_bounded_struct_sequence (const Param_Test::Bounded_StructSeq 
   return ret;
 }
 
-
 Param_Test::PathSpec *
 Param_Test_i::test_unbounded_struct_sequence (const Param_Test::PathSpec & s1,
                                               Param_Test::PathSpec & s2,
@@ -383,7 +383,6 @@ Param_Test_i::test_unbounded_struct_sequence (const Param_Test::PathSpec & s1,
   Param_Test::PathSpec
     *ret = new Param_Test::PathSpec,
     *out = new Param_Test::PathSpec;
-
 
   Param_Test::PathSpec_var rPathSpec = new Param_Test::PathSpec;
   rPathSpec->length(2);
@@ -403,7 +402,6 @@ Param_Test_i::test_unbounded_struct_sequence (const Param_Test::PathSpec & s1,
 
   return ret;
 }
-
 
 // test for array sequences
 Param_Test::ArraySeq *
@@ -454,8 +452,8 @@ Param_Test_i::test_coffe_mix (const Param_Test::Coffee_Mix & s1,
 
 #if 0
   ACE_DEBUG ((LM_DEBUG,
-              "maximum = %d\n"
-              "length = %d\n",
+              "maximum = %u\n"
+              "length = %u\n",
               s1.maximum (),
               s1.length ()));
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));
@@ -465,17 +463,16 @@ Param_Test_i::test_coffe_mix (const Param_Test::Coffee_Mix & s1,
       if (CORBA::is_nil (c))
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Element #%d is nil\n", i));
+                      "Element #%u is nil\n", i));
           continue;
         }
       ACE_DEBUG ((LM_DEBUG,
-                  "Element #%d\n"
+                  "Element #%u\n"
                   "\ttype = <%s>\n",
                   i,
                   c->_interface_repository_id ()));
     }
 #endif /* 0 */
-
 
   s2 = s1;
   *out = s1;
@@ -495,8 +492,8 @@ Param_Test_i::test_bounded_coffe_mix (const Param_Test::Bounded_Coffee_Mix & s1,
 
 #if 0
   ACE_DEBUG ((LM_DEBUG,
-              "maximum = %d\n"
-              "length = %d\n",
+              "maximum = %u\n"
+              "length = %u\n",
               s1.maximum (),
               s1.length ()));
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));
@@ -506,17 +503,16 @@ Param_Test_i::test_bounded_coffe_mix (const Param_Test::Bounded_Coffee_Mix & s1,
       if (CORBA::is_nil (c))
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Element #%d is nil\n", i));
+                      "Element #%u is nil\n", i));
           continue;
         }
       ACE_DEBUG ((LM_DEBUG,
-                  "Element #%d\n"
+                  "Element #%u\n"
                   "\ttype = <%s>\n",
                   i,
                   c->_interface_repository_id ()));
     }
 #endif /* 0 */
-
 
   s2 = s1;
   *out = s1;
@@ -543,8 +539,6 @@ Param_Test_i::test_anyseq (const CORBA::AnySeq &s1,
   s3 = out;
   return ret;
 }
-
-// = end of sequences...
 
 // test for variable structs
 Param_Test::Var_Struct *
@@ -642,12 +636,14 @@ Param_Test_i::test_objref (Coffee_ptr o1,
 
   try
     {
-      Coffee_var myobj = obj_._this ();
+      Coffee_var const myobj = obj_._this ();
 
       if (!CORBA::is_nil (o2))
+      {
         CORBA::release (o2);
+      }
 
-      CORBA::Boolean equiv = myobj->_is_equivalent (o1);
+      CORBA::Boolean const equiv = myobj->_is_equivalent (o1);
 
       if (equiv)
         {
@@ -708,11 +704,10 @@ Param_Test_i::test_any (const CORBA::Any &a1,
   a3 = new CORBA::Any (a1);
   ret = new CORBA::Any (a1);
 
-
   if (TAO_debug_level > 0)
     {
-      CORBA::TypeCode_var tc = a1.type ();
-      int kind = tc->kind ();
+      CORBA::TypeCode_var const tc = a1.type ();
+      int const kind = tc->kind ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "Received any contents are <%d>\n",
@@ -723,38 +718,54 @@ Param_Test_i::test_any (const CORBA::Any &a1,
   if (a1 >>= short_in)
     {
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "Received short = %d\n", short_in));
+      }
       a2 >>= short_in;
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "inout short = %d\n", short_in));
+      }
       *a3.ptr () >>= short_in;
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "out short = %d\n", short_in));
+      }
       *ret >>= short_in;
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "ret short = %d\n", short_in));
+      }
     }
   else if (a1 >>= str_in)
     {
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "Received unbounded string = %C\n", str_in));
+      }
     }
   else if (a1 >>= coffee)
     {
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "Received Coffee object\n"));
+      }
     }
   else if (a1 >>= array)
     {
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG, "Received Fixed_Array:"));
-          for (CORBA::ULong i = 0; i < Param_Test::DIM1; i++)
+          for (CORBA::ULong i = 0; i < Param_Test::DIM1; ++i)
+          {
             ACE_DEBUG ((LM_DEBUG, " %d", array[i]));
+          }
           ACE_DEBUG ((LM_DEBUG, "\n"));
         }
-      for (CORBA::ULong i = 0; i < Param_Test::DIM1; i++)
+      for (CORBA::ULong i = 0; i < Param_Test::DIM1; ++i)
+      {
         array[i] = i * i;
+      }
       a2 <<= Param_Test::Fixed_Array_forany (array);
       *ret <<= Param_Test::Fixed_Array_forany (array);
     }
@@ -763,13 +774,17 @@ Param_Test_i::test_any (const CORBA::Any &a1,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG, "Received Unbounded Short_Seq:"));
-          for (size_t i = 0; i < ub_short_sequence->length (); i++)
+          for (size_t i = 0; i < ub_short_sequence->length (); ++i)
+          {
             ACE_DEBUG ((LM_DEBUG, " %d", (*ub_short_sequence)[i]));
+          }
           ACE_DEBUG ((LM_DEBUG, "\n"));
         }
       CORBA::ShortSeq newseq (*ub_short_sequence);
-      for (size_t i = 0; i < ub_short_sequence->length (); i++)
+      for (size_t i = 0; i < ub_short_sequence->length (); ++i)
+      {
         newseq[i] = (CORBA::Short) (i * i);
+      }
       a2   <<= newseq;
       *ret <<= newseq;
     }
@@ -778,20 +793,26 @@ Param_Test_i::test_any (const CORBA::Any &a1,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG, "Received Bounded_Short_Seq:"));
-          for (size_t i = 0; i < bd_short_sequence->length (); i++)
+          for (size_t i = 0; i < bd_short_sequence->length (); ++i)
+          {
             ACE_DEBUG ((LM_DEBUG, " %d", (*bd_short_sequence)[i]));
+          }
           ACE_DEBUG ((LM_DEBUG, "\n"));
         }
       Param_Test::Bounded_Short_Seq newseq (*bd_short_sequence);
-      for (size_t i = 0; i < bd_short_sequence->length (); i++)
+      for (size_t i = 0; i < bd_short_sequence->length (); ++i)
+      {
         newseq[i] = (CORBA::Short) (i * i);
+      }
       a2 <<= newseq;
       *ret <<= newseq;
     }
   else if (a1 >>= fixed_structure)
     {
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "Received Fixed_Struct\n"));
+      }
     }
   else if (a1 >>= big_union)
     {
@@ -809,6 +830,7 @@ Param_Test_i::test_any (const CORBA::Any &a1,
       *ret >>= bu_ret;
 
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "Received Big Union\n"
                     "  in %d\n"
                     "  inout %d\n"
@@ -818,6 +840,7 @@ Param_Test_i::test_any (const CORBA::Any &a1,
                     bu_inout->the_long (),
                     bu_out->the_long (),
                     bu_ret->the_long () ));
+      }
     }
   else if (a1 >>= small_union)
     {
@@ -835,6 +858,7 @@ Param_Test_i::test_any (const CORBA::Any &a1,
       *ret >>= bu_ret;
 
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "Received Small Union\n"
                     "  in %d\n"
                     "  inout %d\n"
@@ -844,6 +868,7 @@ Param_Test_i::test_any (const CORBA::Any &a1,
                     bu_inout->the_long (),
                     bu_out->the_long (),
                     bu_ret->the_long () ));
+      }
     }
   else
     {
@@ -886,7 +911,7 @@ Param_Test_i::test_exception (CORBA::ULong s1,
                               CORBA::ULong& s2,
                               CORBA::ULong_out s3)
 {
-  CORBA::ULong d = s1 % 4;
+  CORBA::ULong const d = s1 % 4;
 
   // No exceptions to throw.
   if (d == 0)

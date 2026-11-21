@@ -7,9 +7,7 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * session.h: Deals with virtual sessions
@@ -20,21 +18,16 @@
  * Rob McCool
  */
 
-
 #ifndef SESSION_H
 #define SESSION_H
-
 
 #include "../netsite.h"  /* MALLOC etc */
 #include "net.h"          /* dns-related stuff */
 #include "buffer.h"       /* netbuf */
 
-
 /* ------------------------------ Structures ------------------------------ */
 
-
 #define SESSION_HASHSIZE 5
-
 
 typedef struct {
     /* Client-specific information */
@@ -46,9 +39,7 @@ typedef struct {
     struct in_addr iaddr;
 } Session;
 
-
 /* ------------------------------ Prototypes ------------------------------ */
-
 
 /*
  * session_create creates a new request structure for the client with the

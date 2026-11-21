@@ -17,7 +17,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/OS_NS_unistd.h"
@@ -27,7 +26,6 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Stream.h"
-
 
 // Change to non-zero if test fails
 static int Test_Result = 0;
@@ -44,7 +42,6 @@ static int Test_Result = 0;
 const size_t Test3_Send_Size = 4*1024;
 const size_t Test3_Loops = 10;
 const size_t Test3_Total_Size = Test3_Send_Size * Test3_Loops;
-
 
 void *
 client (void *arg)
@@ -89,16 +86,20 @@ client (void *arg)
   ssize_t len;
 
   if (-1 == cli_stream.enable (ACE_NONBLOCK))
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) %p\n"),
-                ACE_TEXT ("Can't enable test 0 nonblocking")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("Can't enable test 0 nonblocking")));
+    }
 
   len = cli_stream.recv (buffer, sizeof (buffer));
   cli_stream.disable (ACE_NONBLOCK);
   if (len == -1)
     {
       if (errno == EWOULDBLOCK)
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Nonblocking recv ok!\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Nonblocking recv ok!\n")));
+        }
       else
         {
           ACE_ERROR ((LM_ERROR,
@@ -123,23 +124,25 @@ client (void *arg)
   // The server will verify that this data pattern gets there intact.
 
   for (i = 0; i < sizeof buffer; ++i)
-    buffer[i] = static_cast<u_char> (i);
+    {
+      buffer[i] = static_cast<u_char> (i);
+    }
 
   iovec iov[5];
 
-  iov[0].iov_base = reinterpret_cast<char *> (&buffer[0]);
+  iov[0].iov_base = reinterpret_cast<char *> (buffer);
   iov[0].iov_len = 50;
 
-  iov[1].iov_base = reinterpret_cast<char *> (&buffer[50]);
+  iov[1].iov_base = reinterpret_cast<char *> (buffer + 50);
   iov[1].iov_len = 25;
 
-  iov[2].iov_base = reinterpret_cast<char *> (&buffer[75]);
+  iov[2].iov_base = reinterpret_cast<char *> (buffer + 75);
   iov[2].iov_len = 150;
 
-  iov[3].iov_base = reinterpret_cast<char *> (&buffer[225]);
+  iov[3].iov_base = reinterpret_cast<char *> (buffer + 225);
   iov[3].iov_len = 29;
 
-  iov[4].iov_base = reinterpret_cast<char *> (&buffer[254]);
+  iov[4].iov_base = reinterpret_cast<char *> (buffer + 254);
   iov[4].iov_len = 1;
 
   len = cli_stream.sendv (iov, 5);
@@ -151,9 +154,11 @@ client (void *arg)
       Test_Result = 1;
     }
   else if (len != 255)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) test 1 recvd %d; should be 255\n"),
-                static_cast<int> (len)));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) test 1 recvd %d; should be 255\n"),
+                  static_cast<int> (len)));
+    }
 
   //*******************   TEST 2   ******************************
   //
@@ -167,24 +172,26 @@ client (void *arg)
   len = cli_stream.recv (4,
                          buffer2,
                          150,
-                         &buffer2[150],
+                         buffer2 + 150,
                          105);
 #endif
   if (len != 255)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %m; len is %d, but should be 255!\n"),
+                  ACE_TEXT ("(%P|%t) %m; len is %b, but should be 255!\n"),
                   len));
     }
 
-  for (i = 0; i < 255; i++)
-    if (buffer2[i] != buffer[i])
-      {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Test 2, rcvd byte %d is %d, not %d\n"),
-                    i, buffer2[i], buffer[i]));
-        Test_Result = 1;
-      }
+  for (i = 0; i < 255; ++i)
+    {
+      if (buffer2[i] != buffer[i])
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) Test 2, rcvd byte %B is %d, not %d\n"),
+                      i, buffer2[i], buffer[i]));
+          Test_Result = 1;
+        }
+    }
 
   //*******************   TEST 3   ******************************
   //
@@ -196,9 +203,11 @@ client (void *arg)
 
   char buff[Test3_Send_Size];
   if (-1 == cli_stream.enable (ACE_NONBLOCK))
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) %p\n"),
-                ACE_TEXT ("Can't enable test 3 nonblocking")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("Can't enable test 3 nonblocking")));
+    }
   for (i = 0; i < Test3_Loops; ++i)
     {
       errno = 0;
@@ -206,7 +215,7 @@ client (void *arg)
       if (sent != (ssize_t) sizeof (buff) && errno != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) Test 3, pass %d, sent %d, %p\n"),
+                      ACE_TEXT ("(%P|%t) Test 3, pass %B, sent %b, %p\n"),
                       i, sent, ACE_TEXT ("error")));
           Test_Result = 1;   // Fail
         }
@@ -264,13 +273,13 @@ server (void *arg)
   ssize_t len;
   int i;
 
-  iov[0].iov_base = reinterpret_cast<char *> (&buffer[0]);
+  iov[0].iov_base = reinterpret_cast<char *> (buffer);
   iov[0].iov_len = 75;
 
-  iov[1].iov_base = reinterpret_cast<char *> (&buffer[75]);
+  iov[1].iov_base = reinterpret_cast<char *> (buffer + 75);
   iov[1].iov_len = 100;
 
-  iov[2].iov_base = reinterpret_cast<char *> (&buffer[175]);
+  iov[2].iov_base = reinterpret_cast<char *> (buffer + 175);
   iov[2].iov_len = 80;
 
   len = sock_str.recvv_n (iov, 3);
@@ -289,16 +298,18 @@ server (void *arg)
                   static_cast<int> (len)));
       Test_Result = 1;
     }
-  for (i = 0; i < 255; i++)
-    if (buffer[i] != i)
-      {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Test 1, rcvd byte %d is %d, not %d\n"),
-                    i,
-                    buffer[i],
-                    i));
-        Test_Result = 1;
-      }
+  for (i = 0; i < 255; ++i)
+    {
+      if (buffer[i] != i)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) Test 1, rcvd byte %d is %d, not %d\n"),
+                      i,
+                      buffer[i],
+                      i));
+          Test_Result = 1;
+        }
+    }
 
   //*******************   TEST 2   ******************************
   //
@@ -308,9 +319,9 @@ server (void *arg)
   len = sock_str.send (6,
                        buffer,
                        42,
-                       &buffer[42],
+                       buffer + 42,
                        189,
-                       &buffer[231],
+                       buffer + 231,
                        24);
 #endif
 
@@ -337,11 +348,13 @@ server (void *arg)
       errno = 0;
       got = sock_str.recv (buffer, sizeof (buffer));
       if (got < 0)
-          break;
+      {
+        break;
+      }
       total_recv += got;
     }
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Test 3 received %d bytes\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Test 3 received %B bytes\n"),
                 total_recv));
 
   if (total_recv == Test3_Total_Size)
@@ -349,7 +362,7 @@ server (void *arg)
       if (got != 0 || errno != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) Test 3 final recv status %d, expected 0\n"),
+                ACE_TEXT ("(%P|%t) Test 3 final recv status %b, expected 0\n"),
                 got));
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"),
                       ACE_TEXT ("expected errno == 0, instead")));
@@ -358,7 +371,7 @@ server (void *arg)
     }
   else
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) Test 3 expected %d %p\n"),
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) Test 3 expected %B %p\n"),
                   Test3_Total_Size, ACE_TEXT ("bytes")));
       Test_Result = 1;
     }
@@ -382,9 +395,11 @@ spawn ()
   // Bind listener to any port and then find out what the port was.
   if (peer_acceptor.open (ACE_Addr::sap_any) == -1
       || peer_acceptor.get_local_addr (server_addr) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) %p\n"),
-                ACE_TEXT ("open")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("open")));
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG,

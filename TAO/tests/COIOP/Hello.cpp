@@ -6,9 +6,9 @@
 #include "tao/Strategies/advanced_resource.h"
 
 Hello::Hello (CORBA::ORB_ptr orb,
-            ACE_thread_t thrid)
-: orb_ (CORBA::ORB::_duplicate (orb))
-  , thr_id_ (thrid)
+              ACE_thread_t const thr_id)
+  : orb_ (CORBA::ORB::_duplicate (orb))
+  , thr_id_ (thr_id)
 {
 }
 
@@ -19,9 +19,9 @@ Hello::get_string ()
               "(%P|%t) Upcall in process ..\n"));
 
   // Use portable thread IDs
-  ACE_Thread_ID self_ID;
+  ACE_Thread_ID const self_ID {};
   ACE_Thread_ID this_ID;
-  this_ID.id(this->thr_id_);
+  this_ID.id (this->thr_id_);
 
   if (self_ID == this_ID)
     {
@@ -34,12 +34,11 @@ Hello::get_string ()
           ACE_OS::abort ();
         }
       else if (this->orb_->orb_core ()->optimize_collocation_objects () &&
-               this->orb_->orb_core ()->use_global_collocation () == 0)
+               !this->orb_->orb_core ()->use_global_collocation ())
         {
-          TAO::ORB_Table * const orb_table =
-            TAO::ORB_Table::instance ();
+          TAO::ORB_Table *const orb_table {TAO::ORB_Table::instance ()};
 
-          TAO_ORB_Core_Auto_Ptr tmp (orb_table->find ("server_orb"));
+          TAO_ORB_Core_Auto_Ptr const tmp (orb_table->find ("server_orb"));
           if (tmp.get () == nullptr)
             {
               // We are running on a single ORB and this is an error.

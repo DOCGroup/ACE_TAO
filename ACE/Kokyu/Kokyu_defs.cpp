@@ -6,23 +6,11 @@
 
 namespace Kokyu
 {
-   Dispatch_Command::~Dispatch_Command ()
-   {
-   }
+  Dispatch_Command::~Dispatch_Command () = default;
 
-  DSRT_ConfigInfo::DSRT_ConfigInfo ()
-    :sched_policy_ (ACE_SCHED_RR),
-     sched_scope_ (ACE_SCOPE_THREAD)
-  {
-  }
+DSRT_ConfigInfo::DSRT_ConfigInfo () = default;
 
-Dispatcher_Attributes::Dispatcher_Attributes()
-    :immediate_activation_ (0),
-     sched_policy_ (ACE_SCHED_FIFO),
-     sched_scope_ (ACE_SCOPE_THREAD),
-     base_thread_creation_flags_ (THR_NEW_LWP | THR_BOUND | THR_JOINABLE)
-{
-}
+Dispatcher_Attributes::Dispatcher_Attributes () = default;
 
 int Dispatcher_Attributes::thread_creation_flags () const
 {

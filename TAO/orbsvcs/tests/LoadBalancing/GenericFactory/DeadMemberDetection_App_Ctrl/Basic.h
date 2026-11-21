@@ -5,6 +5,7 @@
 #include "TestS.h"
 #include "orbsvcs/CosLoadBalancingC.h"
 #include "orbsvcs/PortableGroupC.h"
+#include <string>
 
 #if defined (_MSC_VER)
 # pragma warning(push)
@@ -18,13 +19,18 @@ class Basic
   : public virtual POA_Test::Basic
 {
 public:
-  Basic (int server_id);
-  /// Constructor
+  explicit Basic (int server_id);
   Basic (CORBA::Object_ptr object_group,
          CosLoadBalancing::LoadManager_ptr lm,
          CORBA::ORB_ptr orb,
-         char const* loc,
-         int server_id);
+         std::string const &location,
+         int server_id,
+         int pong_delay);
+
+  Basic (Basic const &) = delete;
+  Basic &operator= (Basic const &) = delete;
+  Basic (Basic &&) = delete;
+  Basic &operator= (Basic &&) = delete;
 
   /// Default _non_existent: always returns false.
   CORBA::Boolean _non_existent () override;
@@ -47,12 +53,13 @@ private:
   CosLoadBalancing::LoadManager_var lm_;
 
   /// location of the servant
-  CORBA::String_var location_;
+  std::string const location_ {};
 
   /// Object Group reference.
   CORBA::Object_var object_group_;
 
-  int server_id_;
+  int const server_id_ {};
+  int const pong_delay_ {};
 };
 
 #if defined(_MSC_VER)

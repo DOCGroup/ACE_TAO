@@ -37,14 +37,12 @@ public:
   void append_last_header_value (const char *begin, const char *end);
   void reduce_last_header_value ();
 
+  /// Insert the previous header if present, then create a new header with ht.
+  /// If ht is null, discard the previous header without inserting it.
   void create_next_header_value (char *ht);
-  // This will insert last_header_data into the table if it is not
-  // null.  Then, it will create a new header_data node and populate
-  // it.  If ht is null, last_header_data is not inserted.
 
+  /// Insert the completed header into the table if it is present.
   void finish_last_header_value ();
-  // This will insert last_header_data into the table if it is not
-  // null.
 
   int end_of_headers () const;
   void end_of_headers (int flag);
@@ -61,14 +59,11 @@ public:
     STATUS_CODE_TOO_LONG
   };
 
+  /// Maximum permitted header line length, based on the 8 KiB Apache limit.
   enum
   {
     MAX_HEADER_LENGTH = 8192
   };
-  // Note that RFC 822 does not mention the maximum length of a header
-  // line.  So in theory, there is no maximum length.
-  // In Apache, they assume that each header line should not exceed
-  // 8K.  Who am I to disagree?
 
   void dump ();
 
@@ -88,28 +83,23 @@ private:
 class JAWS_Export JAWS_Parse_Headers
 {
 public:
+  /// Parse headers; return 0 when more data is needed and 1 when parsing is
+  /// complete or an error occurs.
   int parse_headers (JAWS_Header_Info *info, ACE_Message_Block &mb);
-  // Return 0 means need more data, and call it again.
-  // Return 1 means all done or error.
 
+  /// Parse the next header name; return 0 to retry on remaining input and 1
+  /// when input ends or there are no more headers.
   int parse_header_name (JAWS_Header_Info *info, ACE_Message_Block &mb);
-  // Return 0 means reiterate on remaining input.
-  // Return 1 means input has ended (either because it ended
-  // prematurely, or that there are no more headers).
 
+  /// Parse the next header value; return 0 to retry on remaining input and 1
+  /// when input ends or an error occurs.
   int parse_header_value (JAWS_Header_Info *info, ACE_Message_Block &mb);
-  // Return 0 means reiterate on remaining input.
-  // Return 1 means input has ended or that an error has occurred.
 
+  /// Return the first character in [start, end) that occurs in set.
   char * skipset (const char *set, char *start, char *end);
-  // Scans from start to end for characters that match skip set.
-  // Returns pointer to first location between start and end of a
-  // character that is in the skip set.
 
+  /// Return the first character in [start, end) that does not occur in set.
   char * skipcset (const char *set, char *start, char *end);
-  // Scans from start to end for characters that match skip set.
-  // Returns pointer to first location between start and end of a
-  // character that is *not* in the skip set.
 };
 
 using JAWS_Parse_Headers_Singleton = ACE_Singleton<JAWS_Parse_Headers, ACE_SYNCH_MUTEX>;

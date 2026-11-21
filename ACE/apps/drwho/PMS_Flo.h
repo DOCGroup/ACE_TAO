@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _PMS_FLO_H
 #define _PMS_FLO_H
 
@@ -25,8 +24,8 @@ public:
   PMS_Flo ();
 
 protected:
-  virtual int encode (char *packet, int &total_bytes);
-  virtual int decode (char *packet, int &total_bytes);
+  int encode (char *packet, int &total_bytes) override;
+  int decode (char *packet, int &total_bytes) override;
 };
 
 #endif /* _PMS_FLO_H */

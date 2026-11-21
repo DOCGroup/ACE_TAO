@@ -10,14 +10,13 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFY_STRUCTUREDPUSHCONSUMER_H
 #define NOTIFY_STRUCTUREDPUSHCONSUMER_H
 #include /**/ "ace/pre.h"
 
 #include "StructuredPushConsumer.h"
 
-typedef TAO_Notify_Tests_StructuredPushConsumer TAO_Notify_StructuredPushConsumer;
+using TAO_Notify_StructuredPushConsumer = TAO_Notify_Tests_StructuredPushConsumer;
 
 #include /**/ "ace/post.h"
 #endif /* NOTIFY_STRUCTUREDPUSHCONSUMER_H */

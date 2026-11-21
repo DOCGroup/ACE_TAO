@@ -4,6 +4,9 @@
 #include "tao/Special_Basic_Argument_T.h"
 #include "tao/CDR.h"
 
+#include <memory>
+#include <utility>
+
 #if !defined (__ACE_INLINE__)
 #include "tao/Special_Basic_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -39,27 +42,14 @@ template<typename S,
          typename to_S,
          typename from_S,
          template <typename> class Insert_Policy>
-TAO::In_Special_Basic_Clonable_Argument_T<S,to_S,from_S,Insert_Policy>::~In_Special_Basic_Clonable_Argument_T ()
-{
-  if (this->is_clone_)
-    {
-      S* tmp = const_cast<S*> (&this->x_);
-      delete tmp;
-    }
-}
-
-template<typename S,
-         typename to_S,
-         typename from_S,
-         template <typename> class Insert_Policy>
 TAO::Argument*
 TAO::In_Special_Basic_Clonable_Argument_T<S,to_S,from_S,Insert_Policy>::clone ()
 {
-  S* clone_x = new S (this->x_);
-  In_Special_Basic_Clonable_Argument_T<S,to_S,from_S,Insert_Policy>* clone_arg
-    = new In_Special_Basic_Clonable_Argument_T<S,to_S,from_S,Insert_Policy> (*clone_x);
-  clone_arg->is_clone_ = true;
-  return clone_arg;
+  std::unique_ptr<S> clone_x = std::make_unique<S> (this->x_);
+  std::unique_ptr<In_Special_Basic_Clonable_Argument_T<S,to_S,from_S,Insert_Policy>> clone_arg
+    = std::make_unique<In_Special_Basic_Clonable_Argument_T<S,to_S,from_S,Insert_Policy>> (*clone_x);
+  clone_arg->clone_value_ = std::move (clone_x);
+  return clone_arg.release ();
 }
 
 // ===========================================================
@@ -81,8 +71,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Inout_Special_Basic_Argument_T<S,to_S,from_S,Insert_Policy>::demarshal (
-    TAO_InputCDR & cdr
-  )
+    TAO_InputCDR & cdr)
 {
   return cdr >> to_S (this->x_);
 }
@@ -110,8 +99,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Out_Special_Basic_Argument_T<S,to_S,from_S,Insert_Policy>::demarshal (
-    TAO_InputCDR & cdr
-  )
+    TAO_InputCDR & cdr)
 {
   return cdr >> to_S (this->x_);
 }
@@ -139,8 +127,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Ret_Special_Basic_Argument_T<S,to_S,from_S,Insert_Policy>::demarshal (
-    TAO_InputCDR & cdr
-  )
+    TAO_InputCDR & cdr)
 {
   return cdr >> to_S (this->x_);
 }

@@ -10,10 +10,6 @@ TAO_Notify_Method_Request_Updates::TAO_Notify_Method_Request_Updates (const TAO_
 {
 }
 
-TAO_Notify_Method_Request_Updates::~TAO_Notify_Method_Request_Updates ()
-{
-}
-
 int
 TAO_Notify_Method_Request_Updates::execute ()
 {
@@ -28,14 +24,10 @@ TAO_Notify_Method_Request_Updates_No_Copy::TAO_Notify_Method_Request_Updates_No_
 {
 }
 
-TAO_Notify_Method_Request_Updates_No_Copy::~TAO_Notify_Method_Request_Updates_No_Copy ()
-{
-}
-
 TAO_Notify_Method_Request_Queueable*
 TAO_Notify_Method_Request_Updates_No_Copy::copy ()
 {
-  TAO_Notify_Method_Request_Queueable* request = nullptr;
+  TAO_Notify_Method_Request_Queueable* request {};
 
   ACE_NEW_THROW_EX (request,
                     TAO_Notify_Method_Request_Updates (this->added_, this->removed_, this->proxy_),

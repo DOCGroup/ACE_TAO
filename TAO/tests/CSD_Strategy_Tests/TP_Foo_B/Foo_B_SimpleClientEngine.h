@@ -19,16 +19,21 @@ class Callback_i;
 class CSD_TP_Foo_B_Export Foo_B_SimpleClientEngine : public ClientEngine
 {
 public:
-  Foo_B_SimpleClientEngine(Foo_B_ptr obj,
-                            Callback_ptr callback,
-                            unsigned client_id = 0);
+  explicit Foo_B_SimpleClientEngine(Foo_B_ptr obj,
+                                    Callback_ptr callback,
+                                    unsigned client_id = 0);
 
-  virtual ~Foo_B_SimpleClientEngine() = default;
+  ~Foo_B_SimpleClientEngine() override = default;
 
-  virtual bool execute();
+  bool execute() override;
 
   static void expected_results(Foo_B_Statistics& stats);
   static unsigned expected_callbacks ();
+
+  Foo_B_SimpleClientEngine (Foo_B_SimpleClientEngine const &) = delete;
+  Foo_B_SimpleClientEngine (Foo_B_SimpleClientEngine &&) = delete;
+  Foo_B_SimpleClientEngine & operator= (Foo_B_SimpleClientEngine const &) = delete;
+  Foo_B_SimpleClientEngine & operator= (Foo_B_SimpleClientEngine &&) = delete;
 
 private:
   Foo_B_var obj_;

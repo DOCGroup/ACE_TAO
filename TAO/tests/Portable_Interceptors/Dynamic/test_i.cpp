@@ -24,7 +24,7 @@ Visual_i::calculate (CORBA::Long one,
 Test_Interceptors::Visual::VarLenStruct *
 Visual_i::the_structure ()
 {
-  Test_Interceptors::Visual::VarLenStruct * s = nullptr;
+  Test_Interceptors::Visual::VarLenStruct * s {};
 
   ACE_NEW_THROW_EX (s,
                     Test_Interceptors::Visual::VarLenStruct,

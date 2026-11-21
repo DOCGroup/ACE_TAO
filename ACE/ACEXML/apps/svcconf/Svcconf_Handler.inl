@@ -1,46 +1,26 @@
 // -*- C++ -*-
 
-ACE_INLINE
-ACE_Parsed_Info::ACE_Parsed_Info ()
-  : name_ (0),
-    service_type_ (ACE_Service_Type::INVALID_TYPE),
-    active_ (1),
-    path_ (0),
-    init_func_ (0),
-    init_params_ (0)
-{
-}
-
-ACE_INLINE
-ACE_Parsed_Info::~ACE_Parsed_Info ()
-{
-  delete[] this->name_;
-  delete[] this->path_;
-  delete[] this->init_func_;
-  delete[] this->init_params_;
-}
-
 ACE_INLINE int
-ACE_Parsed_Info::name (const ACEXML_Char *n)
+ACE_Parsed_Info::name (ACEXML_Char const *n)
 {
-  if (this->name_ == 0)
+  if (!this->name_)
     {
-      this->name_ = ACE::strnew (n);
+      this->name_.reset (ACE::strnew (n));
       return 0;
     }
   return -1;
 }
 
-ACE_INLINE const ACEXML_Char *
-ACE_Parsed_Info::name ()
+ACE_INLINE ACEXML_Char const *
+ACE_Parsed_Info::name () const
 {
-  return this->name_;
+  return this->name_.get ();
 }
 
 ACE_INLINE int
 ACE_Parsed_Info::service_type (int type)
 {
-  if (this->service_type_ == -1)
+  if (this->service_type_ == ACE_Service_Type::INVALID_TYPE)
     {
       this->service_type_ = type;
       return 0;
@@ -49,85 +29,81 @@ ACE_Parsed_Info::service_type (int type)
 }
 
 ACE_INLINE int
-ACE_Parsed_Info::service_type ()
+ACE_Parsed_Info::service_type () const
 {
   return this->service_type_;
 }
 
 ACE_INLINE int
-ACE_Parsed_Info::active (int a)
+ACE_Parsed_Info::active (bool active)
 {
-  this->active_ = a;
+  this->active_ = active;
   return 0;
 }
 
-ACE_INLINE int
-ACE_Parsed_Info::active ()
+ACE_INLINE bool
+ACE_Parsed_Info::active () const
 {
   return this->active_;
 }
 
 ACE_INLINE int
-ACE_Parsed_Info::path (const ACEXML_Char *p)
+ACE_Parsed_Info::path (ACEXML_Char const *p)
 {
-  if (this->path_ == 0)
+  if (!this->path_)
     {
-      this->path_ = ACE::strnew (p);
+      this->path_.reset (ACE::strnew (p));
       return 0;
     }
   return -1;
 }
 
-ACE_INLINE const ACEXML_Char *
-ACE_Parsed_Info::path ()
+ACE_INLINE ACEXML_Char const *
+ACE_Parsed_Info::path () const
 {
-  return this->path_;
+  return this->path_.get ();
 }
 
 ACE_INLINE int
-ACE_Parsed_Info::init_func (const ACEXML_Char *n)
+ACE_Parsed_Info::init_func (ACEXML_Char const *n)
 {
-  if (this->init_func_ == 0)
+  if (!this->init_func_)
     {
-      this->init_func_ = ACE::strnew (n);
+      this->init_func_.reset (ACE::strnew (n));
       return 0;
     }
   return -1;
 }
 
-ACE_INLINE const ACEXML_Char *
-ACE_Parsed_Info::init_func ()
+ACE_INLINE ACEXML_Char const *
+ACE_Parsed_Info::init_func () const
 {
-  return this->init_func_;
+  return this->init_func_.get ();
 }
 
 ACE_INLINE int
-ACE_Parsed_Info::init_params (const ACEXML_Char *n)
+ACE_Parsed_Info::init_params (ACEXML_Char const *n)
 {
-  if (this->init_params_ == 0)
+  if (!this->init_params_)
     {
-      this->init_params_ = ACE::strnew (n);
+      this->init_params_.reset (ACE::strnew (n));
       return 0;
     }
   return -1;
 }
 
-ACE_INLINE const ACEXML_Char *
-ACE_Parsed_Info::init_params ()
+ACE_INLINE ACEXML_Char const *
+ACE_Parsed_Info::init_params () const
 {
-  return this->init_params_;
+  return this->init_params_.get ();
 }
 
 ACE_INLINE void
 ACE_Parsed_Info::reset ()
 {
-  delete[] this->name_;
-  this->name_ = 0;
-  this->service_type_ = -1;
-  delete[] this->path_;
-  this->path_ = 0;
-  delete[] this->init_func_;
-  this->init_func_ = 0;
-  delete[] this->init_params_;
-  this->init_params_ = 0;
+  this->name_.reset ();
+  this->service_type_ = ACE_Service_Type::INVALID_TYPE;
+  this->path_.reset ();
+  this->init_func_.reset ();
+  this->init_params_.reset ();
 }

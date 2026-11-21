@@ -450,8 +450,7 @@ TAO_Repository_i::create_fixed (CORBA::UShort digits,
 
 CORBA::FixedDef_ptr
 TAO_Repository_i::create_fixed_i (CORBA::UShort /* digits */,
-                                  CORBA::Short /* scale */
-                                  )
+                                  CORBA::Short /* scale */)
 {
   throw CORBA::NO_IMPLEMENT ();
 }

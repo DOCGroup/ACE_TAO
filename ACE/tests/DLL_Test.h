@@ -29,7 +29,6 @@
 class Hello
 {
 public:
-  /// Destructor
   virtual ~Hello ()
     {
       ACE_TRACE ("Hello::~Hello");
@@ -41,7 +40,7 @@ public:
    * The test invokes four methods, a non-virtual method and a three virtual
    * methods implemented in the shared library.
    */
-  //@{
+  /// @{
   void say_hello ()
   {
     ACE_DEBUG ((LM_DEBUG,
@@ -53,7 +52,7 @@ public:
   virtual ACE_TCHAR *new_info () = 0;
 
   virtual ACE_TCHAR *malloc_info () = 0;
-  //@}
+  /// @}
 };
 
 // Used to test dynamic_cast<> in shared libraries.
@@ -64,7 +63,7 @@ public:
 
   virtual ~Child ();
 
-  virtual void test ();
+  void test () override;
 };
 
 #endif /* ACE_TESTS_DLL_TEST_H */

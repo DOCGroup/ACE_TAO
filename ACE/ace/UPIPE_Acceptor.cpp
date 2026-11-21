@@ -20,8 +20,6 @@ ACE_UPIPE_Acceptor::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-/* Do nothing routine for constructor. */
-
 ACE_UPIPE_Acceptor::ACE_UPIPE_Acceptor ()
   : mb_ (sizeof (ACE_UPIPE_Stream *))
 {
@@ -57,9 +55,11 @@ ACE_UPIPE_Acceptor::ACE_UPIPE_Acceptor (const ACE_UPIPE_Addr &local_addr,
   ACE_TRACE ("ACE_UPIPE_Acceptor::ACE_UPIPE_Acceptor");
 
   if (this->open (local_addr, reuse_addr) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_UPIPE_Acceptor")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_UPIPE_Acceptor")));
+    }
 }
 
 int
@@ -76,15 +76,17 @@ ACE_UPIPE_Acceptor::accept (ACE_UPIPE_Stream &new_stream,
 
   if (this->ACE_SPIPE_Acceptor::accept (new_io, remote_addr,
                                         timeout, restart) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
-      ACE_UPIPE_Stream *remote_stream = nullptr;
+      ACE_UPIPE_Stream *remote_stream {};
 
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, new_stream.lock_, -1));
 
       new_stream.set_handle (new_io.get_handle ());
-      new_stream.reference_count_++;
+      ++new_stream.reference_count_;
 
       // Transfer address ownership.
       new_io.get_local_addr (new_stream.local_addr_);
@@ -97,18 +99,24 @@ ACE_UPIPE_Acceptor::accept (ACE_UPIPE_Stream &new_stream,
       if (ACE_OS::read (new_stream.get_handle (),
                         (char *) &remote_stream,
                         sizeof remote_stream) == -1)
-        ACELIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("ACE_UPIPE_Acceptor: %p\n"),
-                    ACE_TEXT ("read stream address failed")));
+        {
+          ACELIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("ACE_UPIPE_Acceptor: %p\n"),
+                         ACE_TEXT ("read stream address failed")));
+        }
       else if (new_stream.stream_.link (remote_stream->stream_) == -1)
-        ACELIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("ACE_UPIPE_Acceptor: %p\n"),
-                    ACE_TEXT ("link streams failed")));
+        {
+          ACELIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("ACE_UPIPE_Acceptor: %p\n"),
+                         ACE_TEXT ("link streams failed")));
+        }
       // Send a message over the new streampipe to confirm acceptance.
       else if (new_stream.send (&mb_, nullptr) == -1)
-        ACELIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("ACE_UPIPE_Acceptor: %p\n"),
-                    ACE_TEXT ("linked stream.put failed")));
+        {
+          ACELIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("ACE_UPIPE_Acceptor: %p\n"),
+                         ACE_TEXT ("linked stream.put failed")));
+        }
 
       // Close down the new_stream at this point in order to conserve
       // handles.  Note that we don't need the SPIPE connection

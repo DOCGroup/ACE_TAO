@@ -9,7 +9,7 @@ class ImR_Locator_Shutdown : public Shutdown_Functor
 public:
   ImR_Locator_Shutdown (ImR_Locator_i& imr);
 
-  void operator() (int which_signal);
+  void operator() (int which_signal) override;
 private:
   ImR_Locator_i& imr_;
 };
@@ -57,7 +57,9 @@ run_standalone (Options& opts)
           status = server.fini ();
 
           if (status == -1)
+          {
             return 1;
+          }
         }
       return 0;
     }
@@ -109,7 +111,9 @@ static int
 run_service_command (Options& opts)
 {
   if (opts.service_command () == Options::SC_NONE)
+  {
     return 0;
+  }
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
   SERVICE::instance()->name (IMR_LOCATOR_SERVICE_NAME, IMR_LOCATOR_DISPLAY_NAME);
@@ -173,15 +177,23 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   int result = opts.init (argc, argv);
   if (result < 0)
+  {
     return 1;  // Error
+  }
   else if (result > 0)
+  {
     return 0;  // No error, but we should exit anyway.
+  }
 
   result = run_service_command(opts);
   if (result < 0)
+  {
     return 1;  // Error
+  }
   else if (result > 0)
+  {
     return 0;  // No error, but we should exit anyway.
+  }
 
   if (opts.service ())
   {

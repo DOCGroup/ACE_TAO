@@ -15,8 +15,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_UIOP_Transport::~TAO_UIOP_Transport () = default;
-
 TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core)
   : TAO_Transport (TAO_TAG_UIOP_PROFILE,
@@ -46,7 +44,9 @@ TAO_UIOP_Transport::send (iovec *iov, int iovcnt,
     this->connection_handler_->peer ().sendv (iov, iovcnt, max_wait_time);
 
   if (retval > 0)
+  {
     bytes_transferred = retval;
+  }
 
   return retval;
 }
@@ -56,7 +56,7 @@ TAO_UIOP_Transport::recv (char *buf,
                           size_t len,
                           const ACE_Time_Value *max_wait_time)
 {
-  const ssize_t n = this->connection_handler_->peer ().recv (buf,
+  ssize_t const n = this->connection_handler_->peer ().recv (buf,
                                                              len,
                                                              max_wait_time);
 
@@ -76,7 +76,9 @@ TAO_UIOP_Transport::recv (char *buf,
   if (n == -1)
     {
       if (errno == EWOULDBLOCK)
+      {
         return 0;
+      }
 
       return -1;
     }
@@ -129,7 +131,7 @@ TAO_UIOP_Transport::send_message (TAO_OutputCDR &stream,
   // versions seem to need it though.  Leaving it costs little.
 
   // This guarantees to send all data (bytes) or return an error.
-  const ssize_t n = this->send_message_shared (stub,
+  ssize_t const n = this->send_message_shared (stub,
                                                message_semantics,
                                                stream.begin (),
                                                max_wait_time);
@@ -137,10 +139,12 @@ TAO_UIOP_Transport::send_message (TAO_OutputCDR &stream,
   if (n == -1)
     {
       if (TAO_debug_level)
-        TAOLIB_DEBUG ((LM_DEBUG,
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) closing transport %B after fault %p\n"),
                     this->id (),
                     ACE_TEXT ("send_message ()\n")));
+        }
 
       return -1;
     }

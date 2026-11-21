@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    reopen_include1.idl
  *
@@ -11,21 +10,19 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
  */
-//=============================================================================
-
 
 #ifndef IDL_TEST_REOPEN_INCLUDE1_IDL
 #define IDL_TEST_REOPEN_INCLUDE1_IDL
 
-// First opening of a module included by a chain of
-// inclusions into reopened_modules.idl
+/// First opening of a module included by a chain of
+/// inclusions into reopened_modules.idl
 module frag
 {
   typedef sequence<double> dub_seq;
 };
 
-// These are in each file in the reopened_modules chain,
-// and in reopened_modules.idl, test interface parent lookup.
+/// These are in each file in the reopened_modules chain,
+/// and in reopened_modules.idl, test interface parent lookup.
 module A
 {
   module B

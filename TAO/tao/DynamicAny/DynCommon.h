@@ -1,14 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    DynCommon.h
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
-
-
 #ifndef TAO_DYNCOMMON_H
 #define TAO_DYNCOMMON_H
 #include /**/ "ace/pre.h"
@@ -31,13 +26,17 @@ class TAO_DynamicAny_Export TAO_DynCommon
   : public virtual DynamicAny::DynAny
 {
 public:
-  /// Constructor.
   explicit TAO_DynCommon (CORBA::Boolean allow_truncation);
 
-  /// Destructor.
   ~TAO_DynCommon () override = default;
 
-  // = Some functions common to all Dynamic Any types.
+  TAO_DynCommon (TAO_DynCommon const &) = delete;
+  TAO_DynCommon &operator= (TAO_DynCommon const &) = delete;
+  TAO_DynCommon (TAO_DynCommon &&) = delete;
+  TAO_DynCommon &operator= (TAO_DynCommon &&) = delete;
+
+  /// @name Functions common to all Dynamic Any types
+  /// @{
 
   CORBA::TypeCode_ptr type () override;
 
@@ -198,24 +197,20 @@ public:
   /// destroy() method.
   void set_flag (DynamicAny::DynAny_ptr component, CORBA::Boolean destroying);
 
-  // Utility functions.
-
   DynamicAny::DynAny_ptr check_component (CORBA::Boolean isValueType = false);
 
   void check_type (CORBA::TypeCode_ptr tc);
 
   static bool is_basic_type_seq (CORBA::TypeCode_ptr tc);
 
-  // Accessors
-
   CORBA::Boolean has_components () const;
   CORBA::Boolean destroyed () const;
   CORBA::Any &the_any ();
 
-  // Mutators
-
   void container_is_destroying (CORBA::Boolean val);
   void ref_to_component (CORBA::Boolean val);
+
+  /// @}
 
 protected:
   /// Were we created by current_component()?
@@ -247,11 +242,6 @@ protected:
   CORBA::Boolean allow_truncation_;
 
 private:
-  TAO_DynCommon (TAO_DynCommon const &) = delete;
-  TAO_DynCommon &operator= (TAO_DynCommon const &) = delete;
-  TAO_DynCommon (TAO_DynCommon &&) = delete;
-  TAO_DynCommon &operator= (TAO_DynCommon &&) = delete;
-
   // Utility functions used by insert_* and get_*.
   CORBA::TypeCode_ptr check_type_and_unalias (CORBA::TypeCode_ptr tc);
 };

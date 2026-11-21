@@ -27,15 +27,19 @@ check (const time_t interval, const time_t measured)
   time_t const percentage_difference = difference * 100 / interval;
 
   if (percentage_difference < threshold)
-    return 0;
+    {
+      return 0;
+    }
   else
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("The measured time of %Q differs from ")
-                       ACE_TEXT ("the interval of %Q by %Q percent.\n"),
-                       measured,
-                       interval,
-                       percentage_difference),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("The measured time of %Q differs from ")
+                         ACE_TEXT ("the interval of %Q by %Q percent.\n"),
+                         measured,
+                         interval,
+                         percentage_difference),
+                        1);
+    }
 }
 
 // Does a sanity check of the microseconds vs nanoseconds. They're supposed
@@ -61,14 +65,16 @@ check_micro_nano (ACE_hrtime_t microinterval, ACE_hrtime_t nanointerval)
       return 0;
     }
   else
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("The microseconds * 1000 of %Q ")
-                       ACE_TEXT ("differs from the nanoseconds of %Q ")
-                       ACE_TEXT (" by %Q promille\n"),
-                       microinterval,
-                       nanointerval,
-                       promille_difference),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("The microseconds * 1000 of %Q ")
+                         ACE_TEXT ("differs from the nanoseconds of %Q ")
+                         ACE_TEXT (" by %Q promille\n"),
+                         microinterval,
+                         nanointerval,
+                         promille_difference),
+                        1);
+    }
 }
 
 static
@@ -90,7 +96,6 @@ time_interval (const ACE_Time_Value &interval,
   return measured;
 }
 
-
 static u_int const intervals[] =
   {0, 1, 10, 100, 1000, 10000, 100000, 1000000, 4000000}; /*usec*/
 
@@ -100,9 +105,10 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("High_Res_Timer_Test"));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("The ACE_High_Res_Timer scale factor is %u ")
+              ACE_TEXT ("The ACE_High_Res_Timer scale factor is %Q ")
               ACE_TEXT ("1/microsecond\n"),
-              ACE_High_Res_Timer::global_scale_factor ()));
+              static_cast<ACE_UINT64> (
+                ACE_High_Res_Timer::global_scale_factor ())));
 
   u_int errors = 0;
 

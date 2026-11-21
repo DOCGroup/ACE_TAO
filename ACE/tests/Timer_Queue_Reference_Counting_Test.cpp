@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Get_Opt.h"
 #include "ace/Timer_Queue.h"
@@ -22,7 +21,6 @@
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_unistd.h"
-
 
 static int debug = 0;
 static const char *one_second_timeout = "one second timeout";
@@ -66,21 +64,27 @@ Reference_Counted_Event_Handler::Reference_Counted_Event_Handler (int expected_n
     (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                "Reference count in Reference_Counted_Event_Handler() is %d\n",
-                this->reference_count_.load ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Reference count in Reference_Counted_Event_Handler() is %q\n",
+                  static_cast<ACE_INT64> (this->reference_count_.load ())));
+    }
 }
 
 Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler ()
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                "Reference count in ~Reference_Counted_Event_Handler() is %d\n",
-                this->reference_count_.load ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Reference count in ~Reference_Counted_Event_Handler() is %q\n",
+                  static_cast<ACE_INT64> (this->reference_count_.load ())));
+    }
 
   if (this->expected_number_of_handle_close_calls_ != -1)
-    ACE_TEST_ASSERT (this->number_of_handle_close_calls_ ==
-                this->expected_number_of_handle_close_calls_);
+    {
+      ACE_TEST_ASSERT (this->number_of_handle_close_calls_ ==
+                       this->expected_number_of_handle_close_calls_);
+    }
 }
 
 int
@@ -88,10 +92,12 @@ Reference_Counted_Event_Handler::handle_timeout (const ACE_Time_Value &,
                                                  const void *arg)
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                "Reference count in Reference_Counted_Event_Handler::handle_timeout() for arg = %C is %d\n",
-                (const char *) arg,
-                this->reference_count_.load ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Reference count in Reference_Counted_Event_Handler::handle_timeout() for arg = %C is %q\n",
+                  (const char *) arg,
+                  static_cast<ACE_INT64> (this->reference_count_.load ())));
+    }
 
   return 0;
 }
@@ -101,12 +107,14 @@ Reference_Counted_Event_Handler::handle_close (ACE_HANDLE handle,
                                                ACE_Reactor_Mask masks)
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                "Reference_Counted_Event_Handler::handle_close() called with handle = %d and masks = %d. "
-                "Reference count is %d\n",
-                handle,
-                masks,
-                this->reference_count_.load ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Reference_Counted_Event_Handler::handle_close() called with handle = %H and masks = %Q. "
+                  "Reference count is %q\n",
+                  handle,
+                  static_cast<ACE_UINT64> (masks),
+                  static_cast<ACE_INT64> (this->reference_count_.load ())));
+    }
 
   ++this->number_of_handle_close_calls_;
 
@@ -127,11 +135,17 @@ cancellation (ACE_Timer_Queue &timer_queue,
   if (!dont_call_handle_close)
     {
       if (cancel_handler)
-        expected_number_of_handle_close_calls = 1;
+        {
+          expected_number_of_handle_close_calls = 1;
+        }
       else if (second_timer)
-        expected_number_of_handle_close_calls = 2;
+        {
+          expected_number_of_handle_close_calls = 2;
+        }
       else
+      {
         expected_number_of_handle_close_calls = 1;
+      }
     }
 
   Reference_Counted_Event_Handler *handler =
@@ -177,9 +191,13 @@ cancellation (ACE_Timer_Queue &timer_queue,
                             dont_call_handle_close);
 
       if (second_timer)
-        ACE_TEST_ASSERT (result == 2);
+        {
+          ACE_TEST_ASSERT (result == 2);
+        }
       else
+      {
         ACE_TEST_ASSERT (result == 1);
+      }
     }
   else
     {
@@ -235,7 +253,7 @@ cancellation_test<TIMER_QUEUE>::cancellation_test (const char *timer_queue_type)
 
   for (int i = 0;
        i < (int) (sizeof configs / (sizeof (int) * 5));
-       i++)
+       ++i)
     {
       TIMER_QUEUE timer_queue;
 
@@ -361,15 +379,19 @@ public:
 Simple_Event_Handler::Simple_Event_Handler ()
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                "Simple_Event_Handler()\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Simple_Event_Handler()\n"));
+    }
 }
 
 Simple_Event_Handler::~Simple_Event_Handler ()
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                "~Simple_Event_Handler()\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "~Simple_Event_Handler()\n"));
+    }
 }
 
 int
@@ -377,9 +399,11 @@ Simple_Event_Handler::handle_timeout (const ACE_Time_Value &,
                                       const void *arg)
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                "Simple_Event_Handler::handle_timeout() for arg = %C\n",
-                (const char *) arg));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Simple_Event_Handler::handle_timeout() for arg = %C\n",
+                  (const char *) arg));
+    }
   return 0;
 }
 
@@ -388,10 +412,12 @@ Simple_Event_Handler::handle_close (ACE_HANDLE handle,
                                     ACE_Reactor_Mask masks)
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                "Simple_Event_Handler::handle_close() called with handle = %d and masks = %d.\n",
-                handle,
-                masks));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Simple_Event_Handler::handle_close() called with handle = %H and masks = %Q.\n",
+                  handle,
+                  static_cast<ACE_UINT64> (masks)));
+    }
 
   delete this;
 
@@ -562,18 +588,40 @@ run_main (int argc, ACE_TCHAR *argv[])
   int result =
     parse_args (argc, argv);
   if (result != 0)
+  {
     return result;
+  }
 
   if (test_cancellation)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "\nCancellation test...\n\n"));
 
-      if (heap)  { cancellation_test<ACE_Timer_Heap>  test ("ACE_Timer_Heap");  ACE_UNUSED_ARG (test); }
-      if (list)  { cancellation_test<ACE_Timer_List>  test ("ACE_Timer_List");  ACE_UNUSED_ARG (test); }
-      if (hash)  { cancellation_test<ACE_Timer_Hash>  test ("ACE_Timer_Hash");  ACE_UNUSED_ARG (test); }
-      if (wheel) { cancellation_test<ACE_Timer_Wheel> test ("ACE_Timer_Wheel"); ACE_UNUSED_ARG (test); }
-      if (hashheap) { cancellation_test<ACE_Timer_Hash_Heap> test ("ACE_Timer_Hash_Heap"); ACE_UNUSED_ARG (test); }
+      if (heap)
+        {
+          cancellation_test<ACE_Timer_Heap>  test ("ACE_Timer_Heap");
+          ACE_UNUSED_ARG (test);
+        }
+      if (list)
+        {
+          cancellation_test<ACE_Timer_List>  test ("ACE_Timer_List");
+          ACE_UNUSED_ARG (test);
+        }
+      if (hash)
+        {
+          cancellation_test<ACE_Timer_Hash>  test ("ACE_Timer_Hash");
+          ACE_UNUSED_ARG (test);
+        }
+      if (wheel)
+        {
+          cancellation_test<ACE_Timer_Wheel> test ("ACE_Timer_Wheel");
+          ACE_UNUSED_ARG (test);
+        }
+      if (hashheap)
+        {
+          cancellation_test<ACE_Timer_Hash_Heap> test ("ACE_Timer_Hash_Heap");
+          ACE_UNUSED_ARG (test);
+        }
     }
 
   if (test_expire)
@@ -581,11 +629,31 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "\nExpire test...\n\n"));
 
-      if (heap)  { expire_test<ACE_Timer_Heap>  test ("ACE_Timer_Heap");  ACE_UNUSED_ARG (test); }
-      if (list)  { expire_test<ACE_Timer_List>  test ("ACE_Timer_List");  ACE_UNUSED_ARG (test); }
-      if (hash)  { expire_test<ACE_Timer_Hash>  test ("ACE_Timer_Hash");  ACE_UNUSED_ARG (test); }
-      if (wheel) { expire_test<ACE_Timer_Wheel> test ("ACE_Timer_Wheel"); ACE_UNUSED_ARG (test); }
-      if (hashheap) { expire_test<ACE_Timer_Hash_Heap> test ("ACE_Timer_Hash_Heap"); ACE_UNUSED_ARG (test); }
+      if (heap)
+        {
+          expire_test<ACE_Timer_Heap>  test ("ACE_Timer_Heap");
+          ACE_UNUSED_ARG (test);
+        }
+      if (list)
+        {
+          expire_test<ACE_Timer_List>  test ("ACE_Timer_List");
+          ACE_UNUSED_ARG (test);
+        }
+      if (hash)
+        {
+          expire_test<ACE_Timer_Hash>  test ("ACE_Timer_Hash");
+          ACE_UNUSED_ARG (test);
+        }
+      if (wheel)
+        {
+          expire_test<ACE_Timer_Wheel> test ("ACE_Timer_Wheel");
+          ACE_UNUSED_ARG (test);
+        }
+      if (hashheap)
+        {
+          expire_test<ACE_Timer_Hash_Heap> test ("ACE_Timer_Hash_Heap");
+          ACE_UNUSED_ARG (test);
+        }
     }
 
   if (test_one_upcall)
@@ -593,11 +661,31 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "\nOne upcall at a time test...\n\n"));
 
-      if (heap)  { upcall_test<ACE_Timer_Heap>  test ("ACE_Timer_Heap");  ACE_UNUSED_ARG (test); }
-      if (list)  { upcall_test<ACE_Timer_List>  test ("ACE_Timer_List");  ACE_UNUSED_ARG (test); }
-      if (hash)  { upcall_test<ACE_Timer_Hash>  test ("ACE_Timer_Hash");  ACE_UNUSED_ARG (test); }
-      if (wheel) { upcall_test<ACE_Timer_Wheel> test ("ACE_Timer_Wheel"); ACE_UNUSED_ARG (test); }
-      if (hashheap) { upcall_test<ACE_Timer_Hash_Heap> test ("ACE_Timer_Hash_Heap"); ACE_UNUSED_ARG (test); }
+      if (heap)
+        {
+          upcall_test<ACE_Timer_Heap>  test ("ACE_Timer_Heap");
+          ACE_UNUSED_ARG (test);
+        }
+      if (list)
+        {
+          upcall_test<ACE_Timer_List>  test ("ACE_Timer_List");
+          ACE_UNUSED_ARG (test);
+        }
+      if (hash)
+        {
+          upcall_test<ACE_Timer_Hash>  test ("ACE_Timer_Hash");
+          ACE_UNUSED_ARG (test);
+        }
+      if (wheel)
+        {
+          upcall_test<ACE_Timer_Wheel> test ("ACE_Timer_Wheel");
+          ACE_UNUSED_ARG (test);
+        }
+      if (hashheap)
+        {
+          upcall_test<ACE_Timer_Hash_Heap> test ("ACE_Timer_Hash_Heap");
+          ACE_UNUSED_ARG (test);
+        }
     }
 
   if (test_simple)
@@ -605,11 +693,31 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "\nSimple test...\n\n"));
 
-      if (heap)  { simple_test<ACE_Timer_Heap>  test ("ACE_Timer_Heap");  ACE_UNUSED_ARG (test); }
-      if (list)  { simple_test<ACE_Timer_List>  test ("ACE_Timer_List");  ACE_UNUSED_ARG (test); }
-      if (hash)  { simple_test<ACE_Timer_Hash>  test ("ACE_Timer_Hash");  ACE_UNUSED_ARG (test); }
-      if (wheel) { simple_test<ACE_Timer_Wheel> test ("ACE_Timer_Wheel"); ACE_UNUSED_ARG (test); }
-      if (hashheap) { simple_test<ACE_Timer_Hash_Heap> test ("ACE_Timer_Hash_Heap"); ACE_UNUSED_ARG (test); }
+      if (heap)
+        {
+          simple_test<ACE_Timer_Heap>  test ("ACE_Timer_Heap");
+          ACE_UNUSED_ARG (test);
+        }
+      if (list)
+        {
+          simple_test<ACE_Timer_List>  test ("ACE_Timer_List");
+          ACE_UNUSED_ARG (test);
+        }
+      if (hash)
+        {
+          simple_test<ACE_Timer_Hash>  test ("ACE_Timer_Hash");
+          ACE_UNUSED_ARG (test);
+        }
+      if (wheel)
+        {
+          simple_test<ACE_Timer_Wheel> test ("ACE_Timer_Wheel");
+          ACE_UNUSED_ARG (test);
+        }
+      if (hashheap)
+        {
+          simple_test<ACE_Timer_Hash_Heap> test ("ACE_Timer_Hash_Heap");
+          ACE_UNUSED_ARG (test);
+        }
     }
 
   ACE_END_TEST;

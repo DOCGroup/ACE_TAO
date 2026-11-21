@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "NonBlocking_Conn_Test.h"
 #include "ace/Connector.h"
@@ -23,6 +22,8 @@
 #include "ace/TP_Reactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Get_Opt.h"
+
+#include <vector>
 
 static bool test_select_reactor = true;
 static bool test_tp_reactor = true;
@@ -100,27 +101,22 @@ static const char* hosts[] = {
   "www.presidencymaldives.gov.mv:80"
 };
 
-static int number_of_connections = 0;
 static bool with_ref_counting = false;
 
 void
 test_connect (ACE_Reactor &reactor,
-              ACE_INET_Addr *addresses,
+              std::vector<ACE_INET_Addr> &addresses,
               ACE_Synch_Options &synch_options,
               Svc_Handler::Completion_Status complete_nonblocking_connections)
 {
   CONNECTOR connector (&reactor);
 
-  int i = 0;
-
+  int const number_of_connections = static_cast<int> (addresses.size ());
   int completion_counter = 0;
-  Svc_Handler::Connection_Status *connection_status =
-    new Svc_Handler::Connection_Status[number_of_connections];
+  std::vector<Svc_Handler::Connection_Status> connection_status (number_of_connections);
+  std::vector<Svc_Handler *> svc_handlers (number_of_connections);
 
-  Svc_Handler **svc_handlers =
-    new Svc_Handler *[number_of_connections];
-
-  for (i = 0; i < number_of_connections; ++i)
+  for (int i = 0; i < number_of_connections; ++i)
     {
       svc_handlers[i] =
         new Svc_Handler (with_ref_counting);
@@ -130,13 +126,15 @@ test_connect (ACE_Reactor &reactor,
     }
 
   connector.connect_n (number_of_connections,
-                       svc_handlers,
-                       addresses,
+                       svc_handlers.data (),
+                       addresses.data (),
                        nullptr,
                        synch_options);
 
   if (!synch_options[ACE_Synch_Options::USE_REACTOR])
+  {
     ACE_TEST_ASSERT (completion_counter == number_of_connections);
+  }
 
   if (complete_nonblocking_connections != Svc_Handler::Comp_NO)
     {
@@ -148,7 +146,7 @@ test_connect (ACE_Reactor &reactor,
 
   connector.close ();
 
-  for (i = 0; i < number_of_connections; ++i)
+  for (int i = 0; i < number_of_connections; ++i)
     {
       ACE_TCHAR buffer[1024];
       addresses[i].addr_to_string (buffer,
@@ -172,26 +170,25 @@ test_connect (ACE_Reactor &reactor,
           svc_handlers[i]->close ();
         }
     }
-
-  delete[] svc_handlers;
-  delete[] connection_status;
 }
 
 void
 test (ACE_Reactor_Impl *impl)
 {
   size_t const nr_names = sizeof hosts / sizeof (char *);
-  ACE_INET_Addr *addresses = new ACE_INET_Addr[nr_names];
-  number_of_connections = 0;
+  std::vector<ACE_INET_Addr> addresses;
+  addresses.reserve (nr_names);
 
   for (size_t i = 0; i < nr_names; ++i)
     {
-      if (addresses[number_of_connections].set (hosts[i]) == 0)
-        ++number_of_connections;
-      else
-        ACE_DEBUG ((LM_INFO,
-                    ACE_TEXT ("%p\n"),
-                    ACE_TEXT_CHAR_TO_TCHAR (hosts[i])));
+      addresses.emplace_back ();
+      if (addresses.back ().set (hosts[i]) != 0)
+        {
+          addresses.pop_back ();
+          ACE_DEBUG ((LM_INFO,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT_CHAR_TO_TCHAR (hosts[i])));
+        }
     }
 
   ACE_Reactor reactor (impl, true);
@@ -248,8 +245,6 @@ test (ACE_Reactor_Impl *impl)
                 addresses,
                 nonblocking_connect,
                 Svc_Handler::Comp_YES);
-
-  delete[] addresses;
 }
 
 static int
@@ -299,7 +294,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Validate options.
   result = parse_args (argc, argv);
   if (result != 0)
+  {
     return result;
+  }
 
   if (test_select_reactor)
     {

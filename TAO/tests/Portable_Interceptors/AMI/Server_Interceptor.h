@@ -16,22 +16,26 @@ class Echo_Server_Request_Interceptor
   , public virtual ::CORBA::LocalObject
 {
 public:
-  Echo_Server_Request_Interceptor ();
+  Echo_Server_Request_Interceptor () = default;
+  Echo_Server_Request_Interceptor (Echo_Server_Request_Interceptor const &) = delete;
+  Echo_Server_Request_Interceptor (Echo_Server_Request_Interceptor &&) = delete;
+  Echo_Server_Request_Interceptor &operator= (Echo_Server_Request_Interceptor const &) = delete;
+  Echo_Server_Request_Interceptor &operator= (Echo_Server_Request_Interceptor &&) = delete;
 
-  virtual char * name ();
+  char * name () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void receive_request_service_contexts (
-        PortableInterceptor::ServerRequestInfo_ptr);
+  void receive_request_service_contexts (
+      PortableInterceptor::ServerRequestInfo_ptr) override;
 
-  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr);
+  void send_other (PortableInterceptor::ServerRequestInfo_ptr) override;
 };
 
 #endif /* Server_Interceptor__h_ */

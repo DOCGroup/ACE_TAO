@@ -11,9 +11,9 @@
 #include "tao/Messaging/Messaging.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
-int use_rt_corba = 0;
-int nthreads = 0;
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
+bool use_rt_corba {};
+int nthreads {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -33,7 +33,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 'r':
-        use_rt_corba = 1;
+        use_rt_corba = true;
         break;
 
       case '?':
@@ -61,7 +61,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ORB_Holder orb (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       RTServer_Setup rtserver_setup (use_rt_corba,
                                      orb,
@@ -92,7 +94,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Output the ior to the <ior_output_file>
       FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),

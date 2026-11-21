@@ -10,16 +10,17 @@ class Hello
   : public virtual POA_Test::Hello
 {
 public:
-  /// Constructor
-  Hello (CORBA::ORB_ptr orb);
+  explicit Hello (CORBA::ORB_ptr orb);
 
-  virtual Test::Octet_Seq *get_big_reply (CORBA::ULong size);
-  virtual void big_request (const ::Test::Octet_Seq & octet_in);
+  Test::Octet_Seq *get_big_reply (CORBA::ULong size) override;
+  void big_request (::Test::Octet_Seq const &octet_in) override;
 
-  // = The skeleton methods
-  virtual char * get_string (const char * mystring);
+  /// @name Skeleton methods
+  /// @{
+  char *get_string (char const *mystring) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
+  /// @}
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

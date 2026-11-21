@@ -55,7 +55,8 @@ module CORBA
 
   interface Repository : Container
   {
-    // read interface
+    /// @name Read interface
+    /// @{
     Contained lookup_id (
         in RepositoryId search_id
       );
@@ -65,7 +66,10 @@ module CORBA
     PrimitiveDef get_primitive (
         in PrimitiveKind kind
       );
-    // write interface
+    /// @}
+
+    /// @name Write interface
+    /// @{
     StringDef create_string (
         in unsigned long bound
       );
@@ -84,6 +88,7 @@ module CORBA
         in unsigned short digits,
         in short scale
       );
+    /// @}
   };
 
   interface ModuleDef : Container, Contained
@@ -215,11 +220,16 @@ module CORBA
 
   interface ExtAttributeDef : AttributeDef
   {
-    // read/write interface
+    /// @name Read/write interface
+    /// @{
     attribute ExcDescriptionSeq get_exceptions;
     attribute ExcDescriptionSeq set_exceptions;
-    // read interface
+    /// @}
+
+    /// @name Read interface
+    /// @{
     ExtAttributeDescription describe_attribute ();
+    /// @}
   };
 
   enum OperationMode
@@ -279,9 +289,13 @@ module CORBA
 
   interface InterfaceDef : Container, Contained, IDLType
   {
-    // read/write interface
+    /// @name Read/write interface
+    /// @{
     attribute InterfaceDefSeq base_interfaces;
-    // read interface
+    /// @}
+
+    /// @name Read interface
+    /// @{
     boolean is_a (
         in RepositoryId interface_id
       );
@@ -299,8 +313,10 @@ module CORBA
     };
 
     FullInterfaceDescription describe_interface ();
+    /// @}
 
-    // write interface
+    /// @name Write interface
+    /// @{
     AttributeDef create_attribute ( in RepositoryId id,
                                     in Identifier name,
                                     in VersionSpec version,
@@ -315,6 +331,7 @@ module CORBA
                                     in ParDescriptionSeq params,
                                     in ExceptionDefSeq exceptions,
                                     in ContextIdSeq contexts );
+    /// @}
   };
 
   struct InterfaceDescription
@@ -328,7 +345,8 @@ module CORBA
 
   interface InterfaceAttrExtension
   {
-    // read interface
+    /// @name Read interface
+    /// @{
     struct ExtFullInterfaceDescription
     {
       Identifier name;
@@ -342,8 +360,10 @@ module CORBA
     };
 
     ExtFullInterfaceDescription describe_ext_interface ();
+    /// @}
 
-    // write interface
+    /// @name Write interface
+    /// @{
     ExtAttributeDef create_ext_attribute ( in RepositoryId id,
                                            in Identifier name,
                                            in VersionSpec version,
@@ -351,6 +371,7 @@ module CORBA
                                            in AttributeMode mode,
                                            in ExceptionDefSeq get_exceptions,
                                            in ExceptionDefSeq set_exceptions );
+    /// @}
   };
 
   interface ExtInterfaceDef : InterfaceDef, InterfaceAttrExtension

@@ -41,7 +41,6 @@ public:
 
   void send_other (PortableInterceptor::ServerRequestInfo_ptr) override;
 
-private:
   ForwardCtrlServerInterceptor (ForwardCtrlServerInterceptor const &) = delete;
   ForwardCtrlServerInterceptor &operator= (ForwardCtrlServerInterceptor const &) = delete;
   ForwardCtrlServerInterceptor (ForwardCtrlServerInterceptor &&) = delete;

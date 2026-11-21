@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef MT_CLIENT_TEST_MT_OBJECT_SERVER_H
 #define MT_CLIENT_TEST_MT_OBJECT_SERVER_H
 
@@ -23,6 +22,7 @@
 #include "ace/Log_Msg.h"
 #include "tao/Utils/ORB_Manager.h"
 #include "MT_Object_i.h"
+#include "IOR_File.h"
 
 /**
  * @class MT_Object_Server
@@ -34,11 +34,14 @@
 class MT_Object_Server
 {
 public:
-  /// Default constructor
-  MT_Object_Server ();
+  MT_Object_Server () = default;
 
-  /// Destructor
-  ~MT_Object_Server ();
+  ~MT_Object_Server () = default;
+
+  MT_Object_Server (MT_Object_Server const &) = delete;
+  MT_Object_Server (MT_Object_Server &&) = delete;
+  MT_Object_Server &operator= (MT_Object_Server const &) = delete;
+  MT_Object_Server &operator= (MT_Object_Server &&) = delete;
 
   /// Initialize the NestedUpCalls_Server state - parsing arguments and ...
   int init (int argc,
@@ -52,7 +55,7 @@ private:
   int parse_args ();
 
   /// File to output the IOR of the object A.
-  FILE* ior_output_file_;
+  MT_IOR_File ior_output_file_ { nullptr, &ACE_OS::fclose };
 
   /// The ORB manager
   TAO_ORB_Manager orb_manager_;
@@ -61,12 +64,10 @@ private:
   MT_Object_i mT_Object_i_;
 
   /// Number of commandline arguments.
-  int argc_;
+  int argc_ {};
 
-  /// commandline arguments.
-  ACE_TCHAR **argv_;
-
-  u_char use_mt_object_;
+  /// Command-line arguments borrowed from ACE_TMAIN for this server's lifetime.
+  ACE_TCHAR **argv_ {};
 };
 
 #endif /* MT_CLIENT_TEST_MT_OBJECT_SERVER_H */

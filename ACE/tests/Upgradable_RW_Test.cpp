@@ -12,12 +12,10 @@
  */
 //=============================================================================
 
-
 #include "Upgradable_RW_Test.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Atomic_Op.h"
-
 
 #if defined (ACE_HAS_THREADS)
 
@@ -73,12 +71,12 @@ static Linked_List *linked_list_ptr;
 static int
 find_last ()
 {
-  find_called++;
+  ++find_called;
 
   char search_string[MAX_STRING_SIZE];
   ACE_OS::snprintf (search_string, MAX_STRING_SIZE, "%d", n_entries - 1);
   ACE_CString cString (search_string);
-  Element *element_ptr = nullptr;
+  Element *element_ptr {};
 
   for (ACE_Double_Linked_List_Iterator<Element> iterator (*linked_list_ptr);
        !iterator.done ();
@@ -86,8 +84,12 @@ find_last ()
     {
       element_ptr = iterator.next ();
       if (element_ptr)
-        if (*element_ptr->value () == cString)
-          return 1;
+        {
+          if (*element_ptr->value () == cString)
+            {
+              return 1;
+            }
+        }
     }
 
   return 0;
@@ -112,29 +114,31 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
       {
-      case 'e':
-        n_entries = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 'f':
-        thr_flags = THR_BOUND | THR_SCHED_FIFO;
-        break;
-      case 'r':
-        n_readers = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 'w':
-        n_writers = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 'n':
-        n_iterations = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 'u':
-        use_try_upgrade = 1;
-        break;
-      default:
-        print_usage_and_die ();
-        break;
+      switch (c)
+        {
+        case 'e':
+          n_entries = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'f':
+          thr_flags = THR_BOUND | THR_SCHED_FIFO;
+          break;
+        case 'r':
+          n_readers = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'w':
+          n_writers = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'n':
+          n_iterations = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'u':
+          use_try_upgrade = 1;
+          break;
+        default:
+          print_usage_and_die ();
+          break;
+        }
       }
 }
 
@@ -155,7 +159,7 @@ Reader_Task::svc ()
 
   for (int iterations = 1;
        iterations <= n_iterations;
-       iterations++)
+       ++iterations)
     {
       ACE_Thread::yield ();
 
@@ -179,7 +183,7 @@ Reader_Task::svc ()
           {
             //find_last (); try to find something which is not in
             //there
-            upgraded++;
+            ++upgraded;
             continue;
           }
       }
@@ -193,7 +197,7 @@ Reader_Task::svc ()
           ACE_GUARD_RETURN (ACE_Thread_Mutex, g, mutex, 1);
 #endif /* RW_MUTEX */
 
-          not_upgraded++;
+          ++not_upgraded;
           find_last ();
         }
       else if (result == -1 && errno != EBUSY)
@@ -230,7 +234,7 @@ Writer_Task::svc ()
 
   for (int iterations = 1;
        iterations <= n_iterations;
-       iterations++)
+       ++iterations)
     {
       ACE_Thread::yield ();
 
@@ -242,7 +246,7 @@ Writer_Task::svc ()
 
       find_last ();
 
-      current_writers--;
+      --current_writers;
     }
 
   // Stop the timer.
@@ -263,7 +267,7 @@ Time_Calculation::report_time (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time
   this->times_.user_time += elapsed_time.user_time;
   this->times_.system_time += elapsed_time.system_time;
 
-  this->reported_times_++;
+  ++this->reported_times_;
 }
 
 void
@@ -285,7 +289,9 @@ Time_Calculation ::print_stats ()
       double tmp = 0.0;
 
       if (!ACE::is_equal (elapsed_time.real_time, 0.0))
+      {
         tmp = 1000 / elapsed_time.real_time;
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("\n")
@@ -303,22 +309,24 @@ Time_Calculation ::print_stats ()
                   this->reported_times_));
     }
   else
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("\tNo time stats printed.  Zero iterations or error occurred.\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("\tNo time stats printed.  Zero iterations or error occurred.\n")));
+    }
 }
 
 static int
 init ()
 {
   char entry[MAX_STRING_SIZE];
-  ACE_CString *cString_ptr = nullptr;
-  Element *element_ptr = nullptr;
+  ACE_CString *cString_ptr {};
+  Element *element_ptr {};
 
   ACE_NEW_RETURN (linked_list_ptr,
                   Linked_List,
                   -1);
 
-  for (u_int i = 0; i < n_entries; i++)
+  for (u_int i = 0; i < n_entries; ++i)
     {
       ACE_OS::snprintf (entry, MAX_STRING_SIZE, "%d", i);
       ACE_NEW_RETURN (cString_ptr,
@@ -364,7 +372,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   // for a nice start of all threads (for much contention)
 
   // Initialize the readers.
-  Reader_Task **reader_tasks = nullptr;
+  Reader_Task **reader_tasks {};
 
   ACE_NEW_RETURN (reader_tasks,
                   Reader_Task *[n_readers],
@@ -373,7 +381,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   for (i = 0;
        i < n_readers;
-       i++)
+       ++i)
     {
       ACE_NEW_RETURN (reader_tasks[i],
                       Reader_Task (time_Calculation,
@@ -387,7 +395,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
   // Create all the writers
-  Writer_Task **writer_tasks = nullptr;
+  Writer_Task **writer_tasks {};
 
   ACE_NEW_RETURN (writer_tasks,
                   Writer_Task *[n_writers],
@@ -395,7 +403,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   for (i = 0;
        i < n_writers;
-       i++)
+       ++i)
     {
       ACE_NEW_RETURN (writer_tasks[i],
                       Writer_Task (time_Calculation,
@@ -414,11 +422,15 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (ACE_Thread_Manager::instance ()->wait (&wait_time) == -1)
     {
       if (errno == ETIME)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("maximum wait time of %d msec exceeded\n"),
-                               max_wait.msec ()));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("maximum wait time of %Q msec exceeded\n"),
+                      static_cast<ACE_UINT64> (max_wait.msec ())));
+        }
       else
-        ACE_OS::perror (ACE_TEXT ("wait"));
+        {
+          ACE_OS::perror (ACE_TEXT ("wait"));
+        }
 
       status = -1;
     }
@@ -427,25 +439,26 @@ run_main (int argc, ACE_TCHAR *argv[])
   time_Calculation.print_stats ();
 
   if (not_upgraded != 0 || upgraded != 0)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("upgraded to not upgraded ratio = %f\n"),
-                (float) upgraded / (float) (not_upgraded + upgraded)));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("upgraded to not upgraded ratio = %f\n"),
+                  (float) upgraded / (float) (not_upgraded + upgraded)));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Number of times, that find was called: %d\n"),
               find_called));
 
-
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT (" (%t) exiting main thread\n")));
 
   // Delete the memory of the Double_Linked_List
-  ACE_CString *cString_ptr = nullptr;
-  Element *element_ptr = nullptr;
+  ACE_CString *cString_ptr {};
+  Element *element_ptr {};
 
   for (i = 0;
        i < n_entries;
-       i++)
+       ++i)
     {
       if (nullptr != (element_ptr = linked_list_ptr->delete_head ()))
         {
@@ -459,15 +472,19 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   for (i = 0;
        i < n_writers;
-       i++)
-    delete writer_tasks[i];
+       ++i)
+    {
+      delete writer_tasks[i];
+    }
 
   delete [] writer_tasks;
 
   for (i = 0;
        i < n_readers;
-       i++)
-    delete reader_tasks [i];
+       ++i)
+    {
+      delete reader_tasks [i];
+    }
 
   delete [] reader_tasks;
 #else

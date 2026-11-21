@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 /**
  * @class ACE_RB_Tree_Test
  *
@@ -27,20 +26,19 @@ class ACE_RB_Tree_Test
   //   RB_Tree, simply instantiate the test class template with the
   //   same type parameters, and invoke the run_test method.
 public:
-  // = Traits
-
+  /// @name Red-black tree types
+  /// @{
   using TREE = ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
   using ITERATOR = ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
   using REVERSE_ITERATOR = ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
+  /// @}
 
-  /// Constructor.
   ACE_RB_Tree_Test (int entry_count,
                     EXT_ID key_array [],
                     INT_ID item_array [],
                     int order_index []);
 
-  /// Destructor.
-  ~ACE_RB_Tree_Test ();
+  ~ACE_RB_Tree_Test () = default;
 
   /// Run the individual interface and iteration tests in order.
   void run_test ();

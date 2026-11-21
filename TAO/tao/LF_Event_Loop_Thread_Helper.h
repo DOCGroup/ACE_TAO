@@ -31,12 +31,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_LF_Event_Loop_Thread_Helper
 {
 public:
-  /// Constructor
   TAO_LF_Event_Loop_Thread_Helper (TAO_Leader_Follower &leader_follower,
                                    TAO_LF_Strategy &lf_strategy,
                                    ACE_Time_Value *max_wait_time);
 
-  /// Destructor
   ~TAO_LF_Event_Loop_Thread_Helper ();
 
   /// Calls @c set_event_loop_thread on the leader/followers object.

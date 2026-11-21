@@ -6,16 +6,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Custom_Synch_Request::~TP_Custom_Synch_Request () = default;
-
-
 void
 TAO::CSD::TP_Custom_Synch_Request::dispatch_i()
 {
   this->execute_op();
   this->synch_helper_.dispatched();
 }
-
 
 void
 TAO::CSD::TP_Custom_Synch_Request::cancel_i()

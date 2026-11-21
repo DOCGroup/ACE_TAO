@@ -21,7 +21,7 @@ namespace TAO
     RequestProcessingStrategyServantActivator::strategy_cleanup ()
     {
       {
-        Non_Servant_Upcall non_servant_upcall (*this->poa_);
+        Non_Servant_Upcall const non_servant_upcall (*this->poa_);
         ACE_UNUSED_ARG (non_servant_upcall);
 
         this->servant_activator_ = PortableServer::ServantActivator::_nil ();
@@ -61,9 +61,8 @@ namespace TAO
       const PortableServer::ObjectId &system_id,
       PortableServer::Servant &servant)
     {
-      TAO_Servant_Location location = TAO_Servant_Location::Not_Found;
-
-      location = this->poa_->servant_present (system_id, servant);
+      TAO_Servant_Location location =
+        this->poa_->servant_present (system_id, servant);
 
       if (location == TAO_Servant_Location::Not_Found)
         {
@@ -120,7 +119,7 @@ namespace TAO
       // the POA policy and is considered to be in error. The POA
       // will raise an OBJ_ADAPTER system exception for the
       // request.
-      bool may_activate =
+      bool const may_activate =
         this->poa_->is_servant_activation_allowed (servant, wait_occurred_restart_call);
 
       if (!may_activate)
@@ -156,7 +155,7 @@ namespace TAO
         }
       else
         {
-          CORBA::Boolean cleanup_in_progress = false;
+          CORBA::Boolean const cleanup_in_progress {};
           this->etherealize_servant (poa_current_impl.object_id (),
                                      servant,
                                      cleanup_in_progress);
@@ -181,7 +180,7 @@ namespace TAO
         this->poa_->servant_has_remaining_activations (servant);
 
       // ATTENTION: Trick locking here, see class header for details
-      Non_Servant_Upcall non_servant_upcall (*this->poa_);
+      Non_Servant_Upcall const non_servant_upcall (*this->poa_);
       ACE_UNUSED_ARG (non_servant_upcall);
 
       // @todo This is not according to the spec. According to 11.3.6.2 at the
@@ -198,10 +197,10 @@ namespace TAO
     RequestProcessingStrategyServantActivator::incarnate_servant (
       const PortableServer::ObjectId& object_id)
     {
-      PortableServer::Servant servant = nullptr;
+      PortableServer::Servant servant {};
 
       // ATTENTION: Trick locking here, see class header for details
-      Non_Servant_Upcall non_servant_upcall (*this->poa_);
+      Non_Servant_Upcall const non_servant_upcall (*this->poa_);
       ACE_UNUSED_ARG (non_servant_upcall);
 
       // @@
@@ -262,7 +261,7 @@ namespace TAO
           else
             {
               // ATTENTION: Trick locking here, see class header for details
-              Non_Servant_Upcall non_servant_upcall (*this->poa_);
+              Non_Servant_Upcall const non_servant_upcall (*this->poa_);
               ACE_UNUSED_ARG (non_servant_upcall);
 
               try
@@ -280,7 +279,9 @@ namespace TAO
       // by the oid parameter and its servant to be removed from the
       // Active Object Map.
       if (this->poa_->unbind_using_user_id (user_id) != 0)
+      {
         throw ::CORBA::OBJ_ADAPTER ();
+      }
     }
 
     void

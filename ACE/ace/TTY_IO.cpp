@@ -57,18 +57,27 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
   struct termios devpar;
   speed_t newbaudrate = 0;
   if (tcgetattr (get_handle () , &devpar) == -1)
+    {
+      return -1;
+    }
 #elif defined (TCGETS)
   struct termios devpar;
   unsigned int newbaudrate = 0;
   if (this->ACE_IO_SAP::control (TCGETS, static_cast<void*>(&devpar)) == -1)
+    {
+      return -1;
+    }
 #elif defined (TCGETA)
   struct termio devpar;
   unsigned int newbaudrate = 0;
   if (this->ACE_IO_SAP::control (TCGETA, static_cast<void*>(&devpar)) == -1)
+    {
+      return -1;
+    }
 #else
   errno = ENOSYS;
-#endif /* ACE_HAS_TERMIOS */
   return -1;
+#endif /* ACE_HAS_TERMIOS */
 
   switch (cmd)
     {
@@ -193,9 +202,13 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 #if defined (ACE_HAS_TERMIOS)
       // Can you really have different input and output baud rates?!
       if (cfsetospeed (&devpar, newbaudrate) == -1)
+      {
         return -1;
+      }
       if (cfsetispeed (&devpar, newbaudrate) == -1)
+      {
         return -1;
+      }
 #else
       devpar.c_cflag &= ~CBAUD;
 # if defined (CBAUDEX)
@@ -243,9 +256,13 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
               devpar.c_cflag |=  PARODD;
               devpar.c_iflag &= ~IGNPAR;
               if (arg->inpckenb)
-                devpar.c_iflag |= INPCK | PARMRK;
+                {
+                  devpar.c_iflag |= INPCK | PARMRK;
+                }
               else
+              {
                 devpar.c_iflag &= ~(INPCK | PARMRK);
+              }
             }
           else if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_EVEN) == 0)
             {
@@ -253,9 +270,13 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
               devpar.c_cflag &= ~PARODD;
               devpar.c_iflag &= ~IGNPAR;
               if (arg->inpckenb)
-                devpar.c_iflag |= INPCK | PARMRK;
+                {
+                  devpar.c_iflag |= INPCK | PARMRK;
+                }
               else
+              {
                 devpar.c_iflag &= ~(INPCK | PARMRK);
+              }
             }
           else if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_NONE) == 0)
             {
@@ -273,22 +294,32 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 
 #if defined (CNEW_RTSCTS)
       if ((arg->ctsenb) || (arg->rtsenb)) // Enable RTS/CTS protocol
-        devpar.c_cflag |= CNEW_RTSCTS;
+        {
+          devpar.c_cflag |= CNEW_RTSCTS;
+        }
       else
         devpar.c_cflag &= ~CNEW_RTSCTS;
 #elif defined (CRTSCTS)
       if ((arg->ctsenb) || (arg->rtsenb)) // Enable RTS/CTS protocol
-        devpar.c_cflag |= CRTSCTS;
+        {
+          devpar.c_cflag |= CRTSCTS;
+        }
       else
+      {
         devpar.c_cflag &= ~CRTSCTS;
+      }
 #endif /* NEW_RTSCTS || CRTSCTS */
 
 #if defined (CREAD)
       // Enable/disable receiver
       if (arg->rcvenb)
-        devpar.c_cflag |= CREAD;
+        {
+          devpar.c_cflag |= CREAD;
+        }
       else
+      {
         devpar.c_cflag &= ~CREAD;
+      }
 #endif /* CREAD */
 
 #if defined (HUPCL)
@@ -299,38 +330,58 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 #if defined (CLOCAL)
       // If device is not a modem set to local device.
       if (arg->modem)
-        devpar.c_cflag &= ~CLOCAL;
+        {
+          devpar.c_cflag &= ~CLOCAL;
+        }
       else
+      {
         devpar.c_cflag |= CLOCAL;
+      }
 #endif /* CLOCAL */
 
       if (arg->databits < 8)
-        devpar.c_iflag |= ISTRIP;
+        {
+          devpar.c_iflag |= ISTRIP;
+        }
       else
+      {
         devpar.c_iflag &= ~ISTRIP;
+      }
 
 #if defined (IGNBRK)
       // If device is not a modem set to ignore break points
       if(arg->modem)
-        devpar.c_iflag &= ~IGNBRK;
+        {
+          devpar.c_iflag &= ~IGNBRK;
+        }
       else
+      {
         devpar.c_iflag |= IGNBRK;
+      }
 #endif /* IGNBRK */
 
 #if defined (IXOFF)
       // Enable/disable software flow control on input
       if (arg->xinenb)
-        devpar.c_iflag |= IXOFF;
+        {
+          devpar.c_iflag |= IXOFF;
+        }
       else
+      {
         devpar.c_iflag &= ~IXOFF;
+      }
 #endif /* IXOFF */
 
 #if defined (IXON)
       // Enable/disable software flow control on output
       if (arg->xoutenb)
-        devpar.c_iflag |= IXON;
+        {
+          devpar.c_iflag |= IXON;
+        }
       else
+      {
         devpar.c_iflag &= ~IXON;
+      }
 #endif /* IXON */
 
 #if defined (ICANON)
@@ -379,22 +430,34 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
           devpar.c_cc[VTIME] = 0;
           // In case of infinite timeout [VMIN] must be at least 1.
           if (arg->readmincharacters > UCHAR_MAX)
-            devpar.c_cc[VMIN] = UCHAR_MAX;
+            {
+              devpar.c_cc[VMIN] = UCHAR_MAX;
+            }
           else if (arg->readmincharacters < 1)
-            devpar.c_cc[VMIN] = 1;
+            {
+              devpar.c_cc[VMIN] = 1;
+            }
           else
+          {
             devpar.c_cc[VMIN] = static_cast<unsigned char>(arg->readmincharacters);
+          }
         }
       else
         {
           devpar.c_cc[VTIME] = static_cast<unsigned char>(arg->readtimeoutmsec / 100);
 
           if (arg->readmincharacters > UCHAR_MAX)
-            devpar.c_cc[VMIN] = UCHAR_MAX;
+            {
+              devpar.c_cc[VMIN] = UCHAR_MAX;
+            }
           else if (arg->readmincharacters < 1)
-            devpar.c_cc[VMIN] = 0;
+            {
+              devpar.c_cc[VMIN] = 0;
+            }
           else
+          {
             devpar.c_cc[VMIN] = static_cast<unsigned char>(arg->readmincharacters);
+          }
         }
 
 #if defined (TIOCMGET)
@@ -402,9 +465,13 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
       this->ACE_IO_SAP::control (TIOCMGET, &status);
 
       if (arg->dtrdisable)
-        status &= ~TIOCM_DTR;
+        {
+          status &= ~TIOCM_DTR;
+        }
       else
-        status |=  TIOCM_DTR;
+        {
+          status |=  TIOCM_DTR;
+        }
 
       this->ACE_IO_SAP::control (TIOCMSET, &status);
 #endif /* definded (TIOCMGET) */

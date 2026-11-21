@@ -1,14 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Fixed_Array_SArgument_T.h
  *
  *  @authors Jeff Parsons, Carlos O'Ryan and Ossama Othman
  */
-//=============================================================================
-
-
 #ifndef TAO_FIXED_ARRAY_SARGUMENT_T_H
 #define TAO_FIXED_ARRAY_SARGUMENT_T_H
 
@@ -19,7 +14,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

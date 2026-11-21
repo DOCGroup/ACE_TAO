@@ -1,5 +1,5 @@
-// Listens to multicast address.  After first message received, will
-// listen for 5 more seconds.  Prints Mbits/sec received from client.
+/// Listens to a multicast address. After the first message, it listens for
+/// five more seconds and prints Mbits/sec received from the client.
 
 #include "ace/OS_main.h"
 #include "ace/OS_NS_unistd.h"
@@ -14,36 +14,39 @@
 // Network interface to subscribe to.  This is hardware specific.  use
 // netstat(1M) to find whether your interface is le0 or ie0
 
-static const ACE_TCHAR *INTERFACE = nullptr;
-static const char *MCAST_ADDR = ACE_DEFAULT_MULTICAST_ADDR;
-static const u_short UDP_PORT = ACE_DEFAULT_MULTICAST_PORT;
+static ACE_TCHAR const *INTERFACE {};
+static constexpr char MCAST_ADDR[] = ACE_DEFAULT_MULTICAST_ADDR;
+static constexpr u_short UDP_PORT = ACE_DEFAULT_MULTICAST_PORT;
 
+/// Handles both multicast and stdin events.
 class Handler : public ACE_Event_Handler
 {
-  // = TITLE
-  //     Handle both multicast and stdin events.
 public:
-  Handler (u_short udp_port,
-           const char *ip_addr,
-           const ACE_TCHAR *a_interface,
+  Handler (u_short const udp_port,
+           char const *ip_addr,
+           ACE_TCHAR const *a_interface,
            ACE_Reactor & );
-  // Constructor.
 
   ~Handler () override;
-  // Destructor.
 
-  // Event demuxer hooks.
+  Handler (Handler const &) = delete;
+  Handler (Handler &&) = delete;
+  Handler &operator= (Handler const &) = delete;
+  Handler &operator= (Handler &&) = delete;
+
+  /// @name Event demultiplexer hooks
+  /// @{
   int handle_input (ACE_HANDLE) override;
-  int handle_close (ACE_HANDLE,
-                            ACE_Reactor_Mask) override;
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
   ACE_HANDLE get_handle () const override;
+  /// @}
 
 private:
+  /// Multicast wrapper.
   ACE_SOCK_Dgram_Mcast mcast_;
-  // Multicast wrapper.
 
+  /// Address to multicast to.
   ACE_INET_Addr sockmc_addr_;
-  // Address to multicast to.
 };
 
 ACE_HANDLE
@@ -53,28 +56,32 @@ Handler::get_handle () const
 }
 
 int
-Handler::handle_input (ACE_HANDLE h)
+Handler::handle_input (ACE_HANDLE const h)
 {
   char buf[BUFSIZ];
 
   if (h == ACE_STDIN)
     {
-      ssize_t result = ACE_OS::read (h, buf, BUFSIZ);
+      ssize_t const result = ACE_OS::read (h, buf, BUFSIZ);
 
       if (result > 0)
         {
           if (this->mcast_.send (buf, result) != result)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%p\n",
-                               "send error"),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "%p\n",
+                                 "send error"),
+                                -1);
+            }
           return 0;
         }
       else if (result == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%p\n",
-                               "can't read from STDIN"),
-                              -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%p\n",
+                             "can't read from STDIN"),
+                            -1);
+        }
       else // result == 0
         {
           ACE_Reactor::end_event_loop ();
@@ -86,14 +93,14 @@ Handler::handle_input (ACE_HANDLE h)
       ACE_INET_Addr remote_addr;
 
       // Receive message from multicast group.
-      ssize_t result = this->mcast_.recv (buf,
-                                          sizeof buf,
-                                          remote_addr);
+      ssize_t const result = this->mcast_.recv (buf,
+                                                sizeof buf,
+                                                remote_addr);
 
       if (result != -1)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "received datagram from host %s on port %d bytes = %d\n",
+                      "received datagram from host %s on port %d bytes = %b\n",
                       remote_addr.get_host_name (),
                       remote_addr.get_port_number (),
                       result));
@@ -106,12 +113,12 @@ Handler::handle_input (ACE_HANDLE h)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
                          "something amiss"),
-                              -1);
+                        -1);
     }
 }
 
 int
-Handler::handle_close (ACE_HANDLE h, ACE_Reactor_Mask)
+Handler::handle_close (ACE_HANDLE const h, ACE_Reactor_Mask)
 {
   if (h == ACE_STDIN)
     {
@@ -119,28 +126,34 @@ Handler::handle_close (ACE_HANDLE h, ACE_Reactor_Mask)
                   "STDIN_Events handle removed from reactor.\n"));
       if (ACE_Reactor::instance ()->remove_handler
           (this, ACE_Event_Handler::READ_MASK) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "remove_handler"),
-                           -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%p\n",
+                             "remove_handler"),
+                            -1);
+        }
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                "Mcast_Events handle removed from reactor.\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Mcast_Events handle removed from reactor.\n"));
+    }
   return 0;
 }
 
 Handler::~Handler ()
 {
   if (this->mcast_.leave (sockmc_addr_) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "leave fails"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "leave fails"));
+    }
 }
 
-Handler::Handler (u_short udp_port,
-                  const char *ip_addr,
-                  const ACE_TCHAR *a_interface,
+Handler::Handler (u_short const udp_port,
+                  char const *ip_addr,
+                  ACE_TCHAR const *a_interface,
                   ACE_Reactor &reactor)
 {
   // Create multicast address to listen on.
@@ -150,52 +163,57 @@ Handler::Handler (u_short udp_port,
   // subscribe to multicast group.
 
   if (this->mcast_.join (sockmc_addr_, 1, a_interface) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "can't subscribe to multicast group"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "can't subscribe to multicast group"));
+    }
 
   // Disable loopbacks.
-  // if (this->mcast_.set_option (IP_MULTICAST_LOOP, 0) == -1 )
-  //   ACE_OS::perror (" can't disable loopbacks " ), ACE_OS::exit (1);
-
   // Register callbacks with the ACE_Reactor.
   else if (reactor.register_handler (this->mcast_.get_handle (),
                                      this,
                                      ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "can't register with Reactor\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "can't register with Reactor\n"));
+    }
   // Register the STDIN handler.
   else if (ACE_Event_Handler::register_stdin_handler (this,
                                                       ACE_Reactor::instance (),
                                                       ACE_Thread_Manager::instance ()) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "register_stdin_handler"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "register_stdin_handler"));
+    }
 }
 
 static void
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int const argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("i:u"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("i:u"));
 
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
-      {
-      case 'i':
-        INTERFACE = get_opt.opt_arg ();
-        break;
-      case 'u':
-        // usage same as unknown.
-        ACE_FALLTHROUGH;
-      default:
-        ACE_DEBUG ((LM_DEBUG,
-                    "%s -i interface\n",
-                    argv[0]));
-        ACE_OS::exit (1);
-      }
+    {
+      switch (c)
+        {
+        case 'i':
+          INTERFACE = get_opt.opt_arg ();
+          break;
+        case 'u':
+          // usage same as unknown.
+          ACE_FALLTHROUGH;
+        default:
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s -i interface\n",
+                      argv[0]));
+          ACE_OS::exit (1);
+        }
+    }
 }
 
 int

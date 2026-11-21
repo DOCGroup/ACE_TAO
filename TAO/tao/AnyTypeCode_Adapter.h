@@ -119,10 +119,10 @@ ANYTYPECODE__EXCEPTION_LIST
 
   virtual void insert_into_any (CORBA::Any * any, CORBA::WChar const * mywchar) = 0;
 
-  virtual void insert_into_any (CORBA::Any * any, const std::string & value) = 0;
+  virtual void insert_into_any (CORBA::Any * any, std::string const & value) = 0;
 
 #if !defined(ACE_LACKS_STD_WSTRING)
-  virtual void insert_into_any (CORBA::Any * any, const std::wstring & value) = 0;
+  virtual void insert_into_any (CORBA::Any * any, std::wstring const & value) = 0;
 #endif /* ACE_LACKS_STD_WSTRING */
 
   virtual void insert_into_any (CORBA::Any * any, CORBA::Policy_ptr policy) = 0;
@@ -155,35 +155,35 @@ ANYTYPECODE__EXCEPTION_LIST
 
   virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_boolean value) = 0;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::BooleanSeq & value) = 0;
+  virtual void insert_into_any (CORBA::Any * any, CORBA::BooleanSeq const & value) = 0;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::OctetSeq & value) = 0;
+  virtual void insert_into_any (CORBA::Any * any, CORBA::OctetSeq const & value) = 0;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::CharSeq & value) = 0;
+  virtual void insert_into_any (CORBA::Any * any, CORBA::CharSeq const & value) = 0;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::WCharSeq & value) = 0;
+  virtual void insert_into_any (CORBA::Any * any, CORBA::WCharSeq const & value) = 0;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::ShortSeq & value) = 0;
+  virtual void insert_into_any (CORBA::Any * any, CORBA::ShortSeq const & value) = 0;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::UShortSeq & value) = 0;
+  virtual void insert_into_any (CORBA::Any * any, CORBA::UShortSeq const & value) = 0;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::LongSeq & value) = 0;
+  virtual void insert_into_any (CORBA::Any * any, CORBA::LongSeq const & value) = 0;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::ULongSeq & value) = 0;
+  virtual void insert_into_any (CORBA::Any * any, CORBA::ULongSeq const & value) = 0;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::LongLongSeq & value) = 0;
+  virtual void insert_into_any (CORBA::Any * any, CORBA::LongLongSeq const & value) = 0;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::ULongLongSeq & value) = 0;
+  virtual void insert_into_any (CORBA::Any * any, CORBA::ULongLongSeq const & value) = 0;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::FloatSeq & value) = 0;
+  virtual void insert_into_any (CORBA::Any * any, CORBA::FloatSeq const & value) = 0;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::DoubleSeq & value) = 0;
+  virtual void insert_into_any (CORBA::Any * any, CORBA::DoubleSeq const & value) = 0;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::LongDoubleSeq & value) = 0;
+  virtual void insert_into_any (CORBA::Any * any, CORBA::LongDoubleSeq const & value) = 0;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::StringSeq & value) = 0;
+  virtual void insert_into_any (CORBA::Any * any, CORBA::StringSeq const & value) = 0;
 
-  virtual void insert_into_any (CORBA::Any * any, const CORBA::WStringSeq & value) = 0;
+  virtual void insert_into_any (CORBA::Any * any, CORBA::WStringSeq const & value) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

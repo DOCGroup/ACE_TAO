@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    NVList_Adapter_Impl.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_NVLIST_ADAPTER_IMPL_H
 #define TAO_NVLIST_ADAPTER_IMPL_H

@@ -37,26 +37,29 @@ public:
    * a symbol in the dll. Invoking the function pointer obtained would
    * get a servant.
    */
-  typedef PortableServer::Servant
-           (*SERVANT_FACTORY) (const PortableServer::ObjectId &oid,
-                               PortableServer::POA_ptr poa,
-                               CORBA::ORB_ptr orb);
+  using SERVANT_FACTORY = PortableServer::Servant (*) (PortableServer::ObjectId const &oid,
+                                                       PortableServer::POA_ptr poa,
+                                                       CORBA::ORB_ptr orb);
 
   /**
    * This typedef is used to obtain the garbage_collection_function symbol
    * in the dll. Invoking the function pointer obtained would then destroy
    * the servant.
    */
-  typedef void
-          (*SERVANT_GARBAGE_COLLECTOR) (const PortableServer::ObjectId &oid,
-                                        PortableServer::POA_ptr,
-                                        PortableServer::Servant servant);
+  using SERVANT_GARBAGE_COLLECTOR = void (*) (PortableServer::ObjectId const &oid,
+                                              PortableServer::POA_ptr,
+                                              PortableServer::Servant servant);
 
   /// Initialization.
   ServantActivator (CORBA::ORB_ptr orb,
-                    const ACE_TCHAR *dllname,
-                    const ACE_TCHAR *factory_function,
-                    const ACE_TCHAR *garbage_collection_function);
+                    ACE_TCHAR const *dllname,
+                    ACE_TCHAR const *factory_function,
+                    ACE_TCHAR const *garbage_collection_function);
+
+  ServantActivator (ServantActivator const &) = delete;
+  ServantActivator &operator= (ServantActivator const &) = delete;
+  ServantActivator (ServantActivator &&) = delete;
+  ServantActivator &operator= (ServantActivator &&) = delete;
 
   /**
    * This method is invoked by a POA with USE_SERVANT_MANAGER and
@@ -69,8 +72,8 @@ public:
    * Servant Activator or the Servant Locator interface is invoked
    * respectively.
    */
-  virtual PortableServer::Servant incarnate (const PortableServer::ObjectId &oid,
-                                             PortableServer::POA_ptr poa);
+  PortableServer::Servant incarnate (PortableServer::ObjectId const &oid,
+                                     PortableServer::POA_ptr poa) override;
 
   /**
    * This method is invoked whenever a test object is
@@ -80,11 +83,11 @@ public:
    * the ServantActivator invokes this method which will destroy the
    * servant associated with the object.
    */
-  virtual void etherealize (const PortableServer::ObjectId &oid,
-                            PortableServer::POA_ptr adapter,
-                            PortableServer::Servant servant,
-                            CORBA::Boolean cleanup_in_progress,
-                            CORBA::Boolean remaining_activations);
+  void etherealize (PortableServer::ObjectId const &oid,
+                    PortableServer::POA_ptr adapter,
+                    PortableServer::Servant servant,
+                    CORBA::Boolean cleanup_in_progress,
+                    CORBA::Boolean remaining_activations) override;
 
 private:
   /// The ACE_DLL object which performs the task of loading the dll
@@ -92,10 +95,10 @@ private:
   ACE_DLL dll_;
 
   /// The function pointer of factory_function type.
-  SERVANT_FACTORY servant_supplier_;
+  SERVANT_FACTORY servant_supplier_ {};
 
   /// The function pointer of garbage_collection_function type.
-  SERVANT_GARBAGE_COLLECTOR servant_garbage_collector_;
+  SERVANT_GARBAGE_COLLECTOR servant_garbage_collector_ {};
 
   /// A reference to the ORB.
   CORBA::ORB_var orb_;

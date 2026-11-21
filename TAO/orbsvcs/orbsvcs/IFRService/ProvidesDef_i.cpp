@@ -86,8 +86,7 @@ TAO_ProvidesDef_i::interface_type_i ()
 
 void
 TAO_ProvidesDef_i::interface_type (
-    CORBA::InterfaceDef_ptr interface_type
-  )
+    CORBA::InterfaceDef_ptr interface_type)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -98,8 +97,7 @@ TAO_ProvidesDef_i::interface_type (
 
 void
 TAO_ProvidesDef_i::interface_type_i (
-    CORBA::InterfaceDef_ptr interface_type
-  )
+    CORBA::InterfaceDef_ptr interface_type)
 {
   this->repo_->config ()->remove_value (this->section_key_,
                                         "base_type");

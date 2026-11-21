@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Log_Msg.h"
 #include "ace/Sched_Params.h"
@@ -98,7 +97,6 @@ time_interval (RTIClock *timer,
   RTINtpTime_subtract(duration, finish_time, start_time);
 }
 
-
 static u_int const intervals[] =
   {0, 1, 10, 100, 1000, 10000, 100000, 1000000, 4000000}; /*usec*/
 
@@ -146,7 +144,6 @@ run_main (int argc, ACE_TCHAR *argv[])
             interval.sec () * ACE_ONE_SECOND_IN_USECS + interval.usec ();
           time_t const measured_usec =
             sec * ACE_ONE_SECOND_IN_USECS + microseconds;
-
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("interval: %: usec, measured: %: usec %s\n"),

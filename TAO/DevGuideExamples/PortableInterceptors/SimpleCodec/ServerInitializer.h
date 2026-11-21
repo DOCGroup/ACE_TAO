@@ -8,14 +8,16 @@ class ServerInitializer :
 public virtual PortableInterceptor::ORBInitializer
 {
  public:
-  ServerInitializer ();
+  ServerInitializer (ServerInitializer const &) = delete;
+  ServerInitializer (ServerInitializer &&) = delete;
+  ServerInitializer &operator= (ServerInitializer const &) = delete;
+  ServerInitializer &operator= (ServerInitializer &&) = delete;
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  ServerInitializer () = default;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
- private:
-  int interceptor_type_;
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 };
 
 #endif

@@ -27,4 +27,3 @@ Test_i::get_call_count ()
   return r;
 }
 
-

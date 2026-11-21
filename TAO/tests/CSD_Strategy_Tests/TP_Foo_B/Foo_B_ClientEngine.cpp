@@ -1,3 +1,5 @@
+#include <cstring>
+
 #include "Foo_B_ClientEngine.h"
 #include "Callback_i.h"
 #include "Foo_B_Statistics.h"
@@ -42,7 +44,7 @@ Foo_B_ClientEngine::execute()
       check_validity = false;
     }
 
-  for (CORBA::ULong j = 1; j <= 5; j++)
+  for (CORBA::ULong j = 1; j <= 5; ++j)
     {
       this->obj_->op4(495 + (this->client_id_ * 5) + j);
     }
@@ -84,7 +86,7 @@ Foo_B_ClientEngine::execute()
   ACE_OS::sprintf (buffer, "%d %s %d:%d:%d", this->client_id_, ONEWAY_ARG_TEST_STR,
     t.hour, t.minute, t.second);
 
-  if (ACE_OS::strncmp (message.in (), buffer, ACE_OS::strlen (buffer)) != 0)
+  if (std::strncmp (message.in (), buffer, std::strlen (buffer)) != 0)
     {
       check_validity = false;
     }
@@ -101,7 +103,7 @@ Foo_B_ClientEngine::execute()
 
   Fixed_Array fixed_array;
 
-  for (CORBA::ULong m = 0 ; m < 20; m ++)
+  for (CORBA::ULong m = 0 ; m < 20; ++m)
   {
      fixed_array[m] = this->client_id_ + m;
   }
@@ -110,7 +112,7 @@ Foo_B_ClientEngine::execute()
 
   Var_Array var_array;
 
-  for (CORBA::ULong k = 0; k < 3; k++)
+  for (CORBA::ULong k = 0; k < 3; ++k)
     {
       ACE_OS::sprintf (buffer, "%d %s %d",
                        this->client_id_, ONEWAY_ARG_TEST_STR, k);
@@ -121,13 +123,13 @@ Foo_B_ClientEngine::execute()
 
   Bounded_Var_Size_var bd_var_size_string = new Bounded_Var_Size();
 
-  bd_var_size_string->replace (ACE_OS::strlen (test_str) + 1,
+  bd_var_size_string->replace (std::strlen (test_str) + 1,
                                test_str);
   this->obj_->test_bounded_var_size_arg (bd_var_size_string.in ());
 
   Unbounded_Var_Size_var ub_var_size_string = new Unbounded_Var_Size(100);
   ub_var_size_string->replace (ub_var_size_string->maximum (),
-                               ACE_OS::strlen (test_str) + 1,
+                               std::strlen (test_str) + 1,
                                test_str);
   this->obj_->test_unbounded_var_size_arg (ub_var_size_string.in ());
 
@@ -146,7 +148,6 @@ Foo_B_ClientEngine::execute()
 
   return check_validity;
 }
-
 
 void
 Foo_B_ClientEngine::expected_results(Foo_B_Statistics& stats)
@@ -169,7 +170,6 @@ Foo_B_ClientEngine::expected_results(Foo_B_Statistics& stats)
   stats.expected(16, 1, Foo_B_Statistics::FOO_B_STAT_NONE);
   stats.expected_callbacks (1);
 }
-
 
 unsigned
 Foo_B_ClientEngine::expected_callbacks ()

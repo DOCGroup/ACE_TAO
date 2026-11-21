@@ -22,6 +22,8 @@
 
 #include "Driver_Base.h"
 
+#include <memory>
+
 class TAO_Notify_Tests_Command_Builder;
 class TAO_Notify_Tests_Activation_Manager;
 
@@ -34,21 +36,19 @@ class TAO_Notify_Tests_Worker : public ACE_Task_Base
 {
 public:
   TAO_Notify_Tests_Worker ();
-  // ctor
 
   /// Set the command builder.
   void command_builder (TAO_Notify_Tests_Command_Builder* cmd_builder);
 
-  virtual int svc ();
-  // The thread entry point.
+  /// The thread entry point.
+  int svc () override;
 
   void shutdown ();
 
 private:
-  /// The command builder
-  TAO_Notify_Tests_Command_Builder* cmd_builder_;
+  /// Non-owning pointer to the service-configured command builder.
+  TAO_Notify_Tests_Command_Builder* cmd_builder_ {};
 };
-
 
 /**
  * Run a server thread
@@ -59,15 +59,14 @@ class TAO_Notify_Tests_ORB_Run_Worker : public ACE_Task_Base
 {
 public:
   TAO_Notify_Tests_ORB_Run_Worker ();
-  // ctor
 
   void orb (CORBA::ORB_ptr orb);
 
   /// Srt the run period.
   void run_period (ACE_Time_Value run_period);
 
-  virtual int svc ();
-  // The thread entry point.
+  /// The thread entry point.
+  int svc () override;
 
 private:
   /// The orb
@@ -77,7 +76,6 @@ private:
   ACE_Time_Value run_period_;
 };
 
-
 /**
  * @class TAO_Notify_Tests_Driver
  *
@@ -86,10 +84,8 @@ private:
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Driver : public TAO_Notify_Tests_Driver_Base
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_Driver ();
 
-  /// Destructor
   ~TAO_Notify_Tests_Driver ();
 
   /// Init
@@ -99,17 +95,17 @@ public:
   void run ();
 
   /// Shutdown
-  virtual void shutdown ();
+  void shutdown () override;
 
 protected:
   /// Parse command line parameters.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
-  /// The command builder
-  TAO_Notify_Tests_Command_Builder* cmd_builder_;
+  /// Non-owning pointer to the service-configured command builder.
+  TAO_Notify_Tests_Command_Builder* cmd_builder_ {};
 
-  /// Manage activation of periodic suppliers and consumers.
-  TAO_Notify_Tests_Activation_Manager* activation_manager_;
+  /// The driver-owned activation manager.
+  std::unique_ptr<TAO_Notify_Tests_Activation_Manager> activation_manager_;
 
   /// Thread in which to run commands.
   TAO_Notify_Tests_Worker worker_;

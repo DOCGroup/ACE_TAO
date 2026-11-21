@@ -1,15 +1,10 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Collocated_Arguments_Converter.h
  *
  *  @author  Yan Dai <dai_y@ociweb.com>
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
-
 #ifndef TAO_COLLOCATED_ARGUMENTS_CONVERTER_H
 #define TAO_COLLOCATED_ARGUMENTS_CONVERTER_H
 
@@ -40,7 +35,7 @@ class TAO_PortableServer_Export Collocated_Arguments_Converter :
   public ACE_Service_Object
 {
 public:
-  ~Collocated_Arguments_Converter () override;
+  ~Collocated_Arguments_Converter () override = default;
 
   virtual void convert_request (TAO_ServerRequest & server_request,
                                 TAO::Argument * const args[],

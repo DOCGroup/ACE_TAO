@@ -34,7 +34,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Type-safe, and unsigned.
+/// Type-safe, and unsigned.
 static constexpr ACE_UINT32 ACE_U_ONE_SECOND_IN_MSECS = 1000U;
 static constexpr ACE_UINT32 ACE_U_ONE_SECOND_IN_USECS = 1000000U;
 static constexpr ACE_UINT32 ACE_U_ONE_SECOND_IN_NSECS = 1000000000U;
@@ -161,7 +161,8 @@ namespace ACE_OS
     ACE_HRTIMER_GETTIME = 0xFFFF
   };
 
-  //@{ @name A set of wrappers for operations on time.
+  /// @name A set of wrappers for operations on time.
+  /// @{
 
   ACE_NAMESPACE_INLINE_FUNCTION
   char *asctime (const struct tm *tm);
@@ -227,8 +228,6 @@ namespace ACE_OS
                           struct tm *res);
 #endif
 
-
-  // Get the current time.
   extern ACE_Export
   time_t mktime (struct tm *timeptr);
 
@@ -269,11 +268,11 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   long timezone ();
 
-  // wrapper for time zone information.
+  /// Wrapper for time zone information.
   ACE_NAMESPACE_INLINE_FUNCTION
   void tzset ();
 
-  //@}
+  /// @}
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -286,7 +285,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #else
 #  define ACE_GETHRTIME_NAME ACE_gethrtime
 #endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
-
 
 #if defined (ACE_HAS_INLINED_OSCALLS)
 #  if defined (ACE_INLINE)

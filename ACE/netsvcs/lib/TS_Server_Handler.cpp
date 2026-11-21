@@ -4,6 +4,7 @@
 #include "TS_Server_Handler.h"
 #include "ace/OS_NS_time.h"
 #include "ace/Signal.h"
+#include <memory>
 
 int
 ACE_TS_Server_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
@@ -46,7 +47,7 @@ ACE_TS_Server_Acceptor::init (int argc, ACE_TCHAR *argv[])
   // global Reactor...).
   if (this->open (this->service_addr_, ACE_Reactor::instance (),
                   0, 0, 0,
-                  &this->scheduling_strategy_,
+                  std::addressof (this->scheduling_strategy_),
                   ACE_TEXT ("Time Server"),
                   ACE_TEXT ("ACE time service")) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -70,7 +71,7 @@ ACE_TS_Server_Acceptor::init (int argc, ACE_TCHAR *argv[])
                       -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("starting up Time Server at port %d on handle %d\n"),
+              ACE_TEXT ("starting up Time Server at port %d on handle %H\n"),
               server_addr.get_port_number (),
               this->acceptor ().get_handle ()));
   return 0;
@@ -81,7 +82,6 @@ ACE_TS_Server_Acceptor::init (int argc, ACE_TCHAR *argv[])
 
 ACE_SVC_FACTORY_DEFINE (ACE_TS_Server_Acceptor)
 
-// Default constructor.
 ACE_TS_Server_Handler::ACE_TS_Server_Handler (ACE_Thread_Manager *tm)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> (tm)
 {
@@ -106,7 +106,7 @@ ACE_TS_Server_Handler::open (void *)
                       -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) accepted connection from host %C on fd %d\n"),
+              ACE_TEXT ("(%t) accepted connection from host %C on fd %H\n"),
               client_addr.get_host_name (),
               this->peer ().get_handle ()));
 
@@ -207,7 +207,7 @@ ACE_TS_Server_Handler::recv_request ()
           ACE_FALLTHROUGH;
         default:
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%p got %d bytes, expected %d bytes\n"),
+                      ACE_TEXT ("%p got %b bytes, expected %b bytes\n"),
                       ACE_TEXT ("recv failed"),
                       n,
                       bytes_expected));
@@ -243,15 +243,19 @@ ACE_TS_Server_Handler::handle_input (ACE_HANDLE)
   ACE_TRACE ("ACE_TS_Server_Handler::handle_input");
 
   if (this->recv_request () == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return this->dispatch ();
+    {
+      return this->dispatch ();
+    }
 }
 
 ACE_TS_Server_Handler::~ACE_TS_Server_Handler ()
 {
   ACE_TRACE ("ACE_TS_Server_Handler::~ACE_TS_Server_Handler");
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("closing down Handle %d\n"),
+              ACE_TEXT ("closing down Handle %H\n"),
               this->get_handle ()));
 }

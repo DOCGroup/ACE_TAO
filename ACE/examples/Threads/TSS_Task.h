@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-
 //=============================================================================
 /**
  *  @file    TSS_Task.h
@@ -9,15 +8,13 @@
  */
 //=============================================================================
 
-
 #include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Token.h"
-#include "ace/Atomic_Op.h"
+#include <atomic>
 
 class Test_Task
 {
@@ -25,13 +22,18 @@ public:
   Test_Task ();
   ~Test_Task ();
 
+  Test_Task (Test_Task const &) = delete;
+  Test_Task (Test_Task &&) = delete;
+  Test_Task &operator= (Test_Task const &) = delete;
+  Test_Task &operator= (Test_Task &&) = delete;
+
   int open (void *arg);
 
-  static void *svc (void *arg);
+  static ACE_THR_FUNC_RETURN svc (void *arg);
 
-  static ACE_Atomic_Op<ACE_Token, int> wait_count_;
-  static ACE_Atomic_Op<ACE_Token, int> max_count_;
+  static std::atomic<int> wait_count_;
+  static std::atomic<int> max_count_;
 
 private:
-  static ACE_Atomic_Op<ACE_Token, int> count_;
+  static std::atomic<int> count_;
 };

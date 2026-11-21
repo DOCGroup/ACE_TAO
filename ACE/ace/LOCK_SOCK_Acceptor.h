@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_LOCK_SOCK_ACCEPTOR_H
 #define ACE_LOCK_SOCK_ACCEPTOR_H
 #include /**/ "ace/pre.h"

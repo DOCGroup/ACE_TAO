@@ -22,6 +22,7 @@
 
 #include "ace/String_Base_Const.h"
 #include <iterator>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -84,7 +85,7 @@ public:
     *  @param the_allocator ACE_Allocator associated with string
     *  @return Default ACE_String_Base string.
     */
-  ACE_String_Base (ACE_Allocator *the_allocator = nullptr);
+  explicit ACE_String_Base (ACE_Allocator *the_allocator = nullptr);
 
   /**
    * Constructor that copies @a s into dynamically allocated memory.
@@ -566,23 +567,23 @@ protected:
   /**
    *  Length of the ACE_String_Base data (not counting the trailing '\0').
    */
-  size_type len_;
+  size_type len_ {};
 
   /**
    *  Length of the ACE_String_Base data buffer.  Keeping track of the
    *  length allows to avoid unnecessary dynamic allocations.
    */
-  size_type buf_len_;
+  size_type buf_len_ {};
 
   /**
    *  Pointer to data.
    */
-  ACE_CHAR_T *rep_;
+  ACE_CHAR_T *rep_ {};
 
   /**
    *  Flag that indicates if we own the memory
    */
-  bool release_;
+  bool release_ {};
 
   /**
    *  Represents the "NULL" string to simplify the internal logic.
@@ -605,12 +606,14 @@ template <class ACE_CHAR_T>
 class ACE_String_Base_Iterator
 {
 public:
-  // = std::iterator_traits typedefs/traits.
+  /// @name Iterator traits
+  /// @{
   using iterator_category = std::bidirectional_iterator_tag;
   using value_type = ACE_CHAR_T;
   using reference = ACE_CHAR_T &;
   using pointer = ACE_CHAR_T *;
   using difference_type = ptrdiff_t;
+  /// @}
 
   /**
    * Initializing constructor
@@ -626,7 +629,6 @@ public:
    */
   ACE_String_Base_Iterator (const ACE_String_Base_Iterator <ACE_CHAR_T> & iter);
 
-  /// Destructor.
   ~ACE_String_Base_Iterator ();
 
   /**
@@ -732,12 +734,14 @@ template <class ACE_CHAR_T>
 class ACE_String_Base_Const_Iterator
 {
 public:
-  // = std::iterator_traits typedefs/traits.
+  /// @name Iterator traits
+  /// @{
   using iterator_category = std::bidirectional_iterator_tag;
   using value_type = const ACE_CHAR_T;
   using reference = const ACE_CHAR_T &;
   using pointer = const ACE_CHAR_T *;
   using difference_type = ptrdiff_t;
+  /// @}
 
   /**
    * Initializing constructor
@@ -753,7 +757,6 @@ public:
    */
   ACE_String_Base_Const_Iterator (const ACE_String_Base_Const_Iterator <ACE_CHAR_T> & iter);
 
-  /// Destructor.
   ~ACE_String_Base_Const_Iterator ();
 
   /**

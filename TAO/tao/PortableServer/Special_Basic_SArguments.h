@@ -1,15 +1,10 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Special_Basic_SArguments.h
  *
  *  @author Jeff Parsons
  *  @author Carlos O'Ryan
  */
-//=============================================================================
-
-
 #ifndef TAO_SPECIAL_BASIC_SARGUMENTS_H
 #define TAO_SPECIAL_BASIC_SARGUMENTS_H
 

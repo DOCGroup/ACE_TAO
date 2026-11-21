@@ -107,7 +107,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
           *os << inherited->full_name();
         }  // end of for loop
 
-      if (this->obv_need_ref_counter (node))
+      if (node->obv_need_ref_counter ())
         {
           *os << "," << be_nl;
 
@@ -136,7 +136,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       // If we inherit from CORBA::Object and/or CORBA::AbstractBase
       // (in addition to CORBA::ValueBase) we have to add these
       // to avoid ambiguity.
-      if (node->n_supports () > 0)
+      if (node->obv_has_refcount_overrides ())
         {
           TAO_INSERT_COMMENT (os);
 
@@ -155,7 +155,6 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 
       *os << be_nl;
 
-      // Default constructor.
       if (! node->is_nested ())
         {
           *os << "OBV_";
@@ -182,7 +181,6 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
               << ");" << be_uidt;
         }
 
-      // Virtual destructor.
       *os << be_nl << "~";
       if (! node->is_nested ())
         {
@@ -190,46 +188,43 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
         }
       *os << node->local_name () << " () override;";
 
-      // Virtual _copy_value() only provided in OBV_* class when
-      // ::CORBA::DefaultValueRefCountBase has been included.
-      // The OBV_ class is concrete in this case and so requires
-      // a _copy_value definition.
-      // Otherwise, the end user derives from this abstract
-      // OBV_* class and it is up to them to provide the correct
-      // implimentation of the _copy_value() there.
-      if (this->obv_need_ref_counter (node))
+      // The generated OBV_ class provides _copy_value() when it has the
+      // generated reference counter. Otherwise application code provides it.
+      if (node->generates_obv_copy_value ())
         {
           *os << be_uidt_nl << be_nl << "public:" << be_idt_nl
               << "::CORBA::ValueBase *_copy_value () override;";
         }
+      else if (node->inherits_obv_copy_value ())
+        {
+          *os << be_uidt_nl << be_nl << "public:" << be_idt_nl
+              << "::CORBA::ValueBase *_copy_value () override = 0;";
+        }
 
       // Map fields to private data.
-      if (!node->opt_accessor ())
+      if (be_global->cdr_support ())
         {
-          if (be_global->cdr_support ())
-            {
-              *os << be_nl << be_uidt_nl << "protected:" << be_idt_nl;
+          *os << be_nl << be_uidt_nl << "protected:" << be_idt_nl;
 
-              *os << "::CORBA::Boolean _tao_marshal__" << node->flat_name ()
-                  << " (TAO_OutputCDR &, TAO_ChunkInfo &) const override;" << be_nl_2;
+          *os << "::CORBA::Boolean _tao_marshal__" << node->flat_name ()
+              << " (TAO_OutputCDR &, TAO_ChunkInfo &) const override;" << be_nl_2;
 
-              *os << "::CORBA::Boolean _tao_unmarshal__" << node->flat_name ()
-                  << " (TAO_InputCDR &, TAO_ChunkInfo &) override;" << be_nl_2;
+          *os << "::CORBA::Boolean _tao_unmarshal__" << node->flat_name ()
+              << " (TAO_InputCDR &, TAO_ChunkInfo &) override;" << be_nl_2;
 
-              *os << "::CORBA::Boolean "
-                  << "_tao_marshal_state (TAO_OutputCDR &, TAO_ChunkInfo &) const;"
-                  << be_nl
-                  << "::CORBA::Boolean "
-                  << "_tao_unmarshal_state (TAO_InputCDR &, TAO_ChunkInfo &);"
-                  << be_nl
-                  << "void truncation_hook () override;"
-                  << be_uidt_nl << be_nl;
-            }
-
-          *os << "private:" << be_idt;
-
-          this->gen_pd (node);
+          *os << "::CORBA::Boolean "
+              << "_tao_marshal_state (TAO_OutputCDR &, TAO_ChunkInfo &) const;"
+              << be_nl
+              << "::CORBA::Boolean "
+              << "_tao_unmarshal_state (TAO_InputCDR &, TAO_ChunkInfo &);"
+              << be_nl
+              << "void truncation_hook () override;"
+              << be_uidt_nl << be_nl;
         }
+
+      *os << "private:" << be_idt;
+
+      this->gen_pd (node);
 
       if (be_global->cdr_support ())
         {

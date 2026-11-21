@@ -1,17 +1,13 @@
 // -*- C++ -*-
 
-// ===========================================================================
-// FILENAME
-//   Trading_Loader.h
-//
-// DESCRIPTION
-//   This class loads the Trading Service dynamically
-//   either from svc.conf file or <string_to_object> call.
-//
-// AUTHORS
-//   Priyanka Gontla <pgontla@ece.uci.edu>
-//
-// ==========================================================================
+/**
+ * @file Trading_Loader.h
+ *
+ * @brief Loads the Trading Service dynamically from a @c svc.conf file or
+ * a @c string_to_object call.
+ *
+ * @author Priyanka Gontla <pgontla@ece.uci.edu>
+ */
 
 #ifndef TAO_TRADING_LOADER_H
 #define TAO_TRADING_LOADER_H
@@ -27,15 +23,21 @@
 
 #include "tao/Object_Loader.h"
 #include "tao/Utils/ORB_Manager.h"
+#include "ace/OS_NS_stdio.h"
+
+#include <memory>
 #include <utility>
 
 class TAO_Trading_Serv_Export TAO_Trading_Loader : public TAO_Object_Loader
 {
 public:
-  /// Constructor
+  TAO_Trading_Loader (TAO_Trading_Loader const&) = delete;
+  TAO_Trading_Loader& operator= (TAO_Trading_Loader const&) = delete;
+  TAO_Trading_Loader (TAO_Trading_Loader&&) = delete;
+  TAO_Trading_Loader& operator= (TAO_Trading_Loader&&) = delete;
+
   TAO_Trading_Loader ();
 
-  /// Destructor
   ~TAO_Trading_Loader () = default;
 
   /// Called by the Service Configurator framework to initialize the
@@ -53,7 +55,7 @@ public:
   /// ORB and the command line parameters.
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                    int argc,
-                                   ACE_TCHAR *argv[]);
+                                   ACE_TCHAR *argv[]) override;
 
 protected:
   /// Enable the Trading Service to answer multicast requests for its
@@ -79,10 +81,10 @@ protected:
   CORBA::String_var ior_;
 
   /// Flag indicating whether this trader should join the federation.
-  CORBA::Boolean federate_;
+  CORBA::Boolean federate_ {};
 
   /// File to output the Naming Service IOR.
-  FILE *ior_output_file_;
+  std::unique_ptr<FILE, int (*) (FILE *)> ior_output_file_ {nullptr, ACE_OS::fclose};
 
   /// Name of this trading service: "hostname:pid".
   CORBA::String_var name_;
@@ -92,13 +94,9 @@ protected:
   TAO_IOR_Multicast ior_multicast_;
 
   /// Flag indicating whether we're the trader others are bootstrapping to.
-  CORBA::Boolean bootstrapper_;
+  CORBA::Boolean bootstrapper_ {};
 
 private:
-  TAO_Trading_Loader (TAO_Trading_Loader const&) = delete;
-  TAO_Trading_Loader& operator= (TAO_Trading_Loader const&) = delete;
-  TAO_Trading_Loader (TAO_Trading_Loader&&) = delete;
-  TAO_Trading_Loader& operator= (TAO_Trading_Loader&&) = delete;
 };
 
 ACE_FACTORY_DECLARE (TAO_Trading_Serv, TAO_Trading_Loader)

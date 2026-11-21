@@ -1,14 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    IFR_Client_Adapter_Impl.h
  *
  *  @author  Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
-
-
 #ifndef TAO_IFR_CLIENT_ADAPTER_IMPL_H
 #define TAO_IFR_CLIENT_ADAPTER_IMPL_H
 
@@ -55,7 +51,7 @@ public:
 
   CORBA::InterfaceDef_ptr get_interface (
       CORBA::ORB_ptr orb,
-      const char *repo_id) override;
+      char const *repo_id) override;
 
   CORBA::InterfaceDef_ptr get_interface_remote (
       CORBA::Object_ptr target) override;
@@ -70,7 +66,6 @@ public:
   // Used to force the initialization of the ORB code.
   static int Initializer ();
 
-private:
   TAO_IFR_Client_Adapter_Impl (TAO_IFR_Client_Adapter_Impl const &) = delete;
   TAO_IFR_Client_Adapter_Impl &operator= (TAO_IFR_Client_Adapter_Impl const &) = delete;
   TAO_IFR_Client_Adapter_Impl (TAO_IFR_Client_Adapter_Impl &&) = delete;
@@ -80,7 +75,6 @@ private:
 static int
 TAO_Requires_IFR_Client_Initializer =
   TAO_IFR_Client_Adapter_Impl::Initializer ();
-
 
 ACE_STATIC_SVC_DECLARE (TAO_IFR_Client_Adapter_Impl)
 ACE_FACTORY_DECLARE (TAO_IFR_CLIENT, TAO_IFR_Client_Adapter_Impl)

@@ -8,7 +8,12 @@
 class ACE_Svc_Export Recursive_Lock_Test : public Benchmark_Performance
 {
 public:
-  virtual int svc ();
+  Recursive_Lock_Test () = default;
+  Recursive_Lock_Test (Recursive_Lock_Test const &) = delete;
+  Recursive_Lock_Test (Recursive_Lock_Test &&) = delete;
+  Recursive_Lock_Test &operator= (Recursive_Lock_Test const &) = delete;
+  Recursive_Lock_Test &operator= (Recursive_Lock_Test &&) = delete;
+  int svc () override;
 
 private:
   static ACE_Recursive_Thread_Mutex mutex;
@@ -19,14 +24,14 @@ ACE_Recursive_Thread_Mutex Recursive_Lock_Test::mutex;
 int
 Recursive_Lock_Test::svc ()
 {
-  int ni = this->thr_id ();
+  int const ni = this->thr_id ();
   synch_count = 2;
 
   while (!this->done ())
     {
       this->mutex.acquire ();
-      performance_test_options.thr_work_count[ni]++;
-      buffer++;
+      ++performance_test_options.thr_work_count[ni];
+      ++buffer;
       this->mutex.release ();
     }
   /* NOTREACHED */

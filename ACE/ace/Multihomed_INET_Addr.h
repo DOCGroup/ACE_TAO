@@ -33,7 +33,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Multihomed_INET_Addr : public ACE_INET_Addr
 {
 public:
-  /// Default constructor.
   ACE_Multihomed_INET_Addr ();
 
   /**
@@ -101,10 +100,10 @@ public:
 
   /// Use compiler-generated assignment operator.
 
-  /// Default destructor.
   ~ACE_Multihomed_INET_Addr () override = default;
 
-  // = Direct initialization methods.
+  /// @name Direct initialization methods
+  /// @{
 
   // These methods are useful after the object has been constructed.
 
@@ -150,8 +149,10 @@ public:
    */
   void set_port_number (u_short port_number,
                         int encode = 1);
+  /// @}
 
-  // = Accessor methods.
+  /// @name Accessor methods
+  /// @{
 
   /**
    * Returns the number of secondary addresses.
@@ -177,12 +178,13 @@ public:
   /// IPV6 version of the above.
   void get_addresses(sockaddr_in6 *addrs, size_t size) const;
 #endif /* ACE_HAS_IPV6 */
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_Array<ACE_INET_Addr> secondaries_;
+  ACE_Array<ACE_INET_Addr> secondaries_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

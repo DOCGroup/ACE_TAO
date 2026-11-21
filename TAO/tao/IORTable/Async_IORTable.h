@@ -1,15 +1,10 @@
 // -*- C++ -*-
 
-
-//=============================================================================
 /**
  *  @file    Async_IORTable.h
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
-
-
 #ifndef TAO_ASYNC_IORTABLE_H
 #define TAO_ASYNC_IORTABLE_H
 

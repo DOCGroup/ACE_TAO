@@ -9,13 +9,14 @@ Peer_Handler_i::Peer_Handler_i (Peer_i *peer)
 void
 Peer_Handler_i::request (CORBA::Long retval)
 {
-  static int i = 0;
-  i++;
+  static int i {};
+  ++i;
   if (i % 100 == 0)
+  {
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) %d replies received\n", i));
+  }
   this->peer_->reply (retval);
 }
-
 
 void
 Peer_Handler_i::request_excep (
@@ -35,18 +36,14 @@ Peer_Handler_i::shutdown ()
 }
 
 Peer_i::Peer_i ()
-  :  reply_handler_ (this)
-{
-}
-
-Peer_i::~Peer_i ()
+  : reply_handler_ (this)
 {
 }
 
 void
 Peer_i::init (CORBA::ORB_ptr orb,
               Progress_ptr progress,
-              const ACE_Time_Value &delay)
+              ACE_Time_Value const& delay)
 {
   this->orb_ = CORBA::ORB::_duplicate (orb);
   this->progress_ = Progress::_duplicate (progress);
@@ -67,21 +64,21 @@ Peer_i::reply (CORBA::Long result)
 CORBA::Long
 Peer_i::request (CORBA::Long id)
 {
-  ACE_Time_Value tv  = this->delay_;
+  ACE_Time_Value const tv = this->delay_;
   ACE_OS::sleep (tv);
 
   return id;
 }
 
 void
-Peer_i::start (const PeerSet &the_peers,
+Peer_i::start (PeerSet const& the_peers,
                CORBA::Long iterations)
 {
   AMI_PeerHandler_var handler =
     this->reply_handler_._this ();
 
   // @@ Report errors as exceptions...
-  Peer_Task *task;
+  Peer_Task *task {};
   ACE_NEW (task, Peer_Task (the_peers,
                             iterations,
                             this->progress_.in (),
@@ -96,14 +93,12 @@ Peer_i::shutdown ()
   this->orb_->shutdown (false);
 }
 
-// ****************************************************************
-
-Peer_Task::Peer_Task (const PeerSet& the_peers,
+Peer_Task::Peer_Task (PeerSet const& the_peers,
                       CORBA::Long iterations,
                       Progress_ptr progress,
                       AMI_PeerHandler_ptr handler,
                       CORBA::Long id)
-  :  the_peers_ (the_peers),
+  : the_peers_ (the_peers),
      iterations_ (iterations),
      progress_ (Progress::_duplicate (progress)),
      handler_ (AMI_PeerHandler::_duplicate (handler)),
@@ -114,9 +109,9 @@ Peer_Task::Peer_Task (const PeerSet& the_peers,
 int
 Peer_Task::svc ()
 {
-  for (int i = 0; i != this->iterations_; ++i)
+  for (CORBA::Long i = 0; i != this->iterations_; ++i)
     {
-      CORBA::ULong l = this->the_peers_.length ();
+      CORBA::ULong const l = this->the_peers_.length ();
       for (CORBA::ULong j = 0; j != l; ++j)
         {
           try
@@ -126,13 +121,15 @@ Peer_Task::svc ()
 
               this->progress_->sent_request (this->id_);
             }
-          catch (const CORBA::Exception&)
+          catch (CORBA::Exception const &)
             {
               // Ignore exceptions;
             }
         }
       if (i % 100 == 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) %d requests sent\n", i));
+      }
     }
   return 0;
 }

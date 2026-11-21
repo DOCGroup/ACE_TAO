@@ -2,15 +2,17 @@
 #include "TreeBaseC.h"
 
 Test_impl::Test_impl (CORBA::ORB_ptr orb)
-    : orb_ (CORBA::ORB::_duplicate (orb))
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
-
-void
-reflect_node (BaseNode* bn)
+static void
+reflect_node (BaseNode *bn)
 {
-  if(bn == 0) return;
+  if (bn == nullptr)
+    {
+      return;
+    }
 
   reflect_node (bn->left ());
   reflect_node (bn->right ());
@@ -26,13 +28,13 @@ reflect_node (BaseNode* bn)
 }
 
 TreeController *
-Test_impl::reflect (TreeController * tc)
+Test_impl::reflect (TreeController *tc)
 {
-  if (tc != 0)
-  {
-    reflect_node (tc-> root());
-    tc->_add_ref ();
-  }
+  if (tc != nullptr)
+    {
+      reflect_node (tc->root ());
+      tc->_add_ref ();
+    }
   return tc;
 }
 

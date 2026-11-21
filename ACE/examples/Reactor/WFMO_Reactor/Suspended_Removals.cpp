@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_main.h"
 
 #if defined (ACE_WIN32)
@@ -17,10 +16,18 @@
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
 
+#include <memory>
+
 class Event_Handler : public ACE_Event_Handler
 {
 public:
-  ACE_HANDLE get_handle () const
+  Event_Handler () = default;
+  Event_Handler (Event_Handler const &) = delete;
+  Event_Handler (Event_Handler &&) = delete;
+  Event_Handler &operator= (Event_Handler const &) = delete;
+  Event_Handler &operator= (Event_Handler &&) = delete;
+
+  ACE_HANDLE get_handle () const override
   {
     return this->event_.handle ();
   }
@@ -33,7 +40,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_WFMO_Reactor_Test
 {
 public:
-  static void check_for_valid_state (ACE_WFMO_Reactor &wfmo_reactor,
+  static void check_for_valid_state (ACE_WFMO_Reactor const &wfmo_reactor,
                                      size_t handles_to_be_added,
                                      size_t handles_to_be_suspended,
                                      size_t handles_to_be_resumed,
@@ -53,19 +60,19 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 {
   Event_Handler handler;
   ACE_WFMO_Reactor reactor;
-  ACE_Reactor base_reactor (&reactor);
+  ACE_Reactor base_reactor (std::addressof (reactor));
 
   ACE_Time_Value sleep_time (1);
 
   int result =
-    reactor.register_handler (&handler);
+    reactor.register_handler (std::addressof (handler));
   ACE_TEST_ASSERT (result == 0);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
                                                 1, 0, 0, 0);
 
   result =
-    reactor.remove_handler (&handler,
+    reactor.remove_handler (std::addressof (handler),
                             ACE_Event_Handler::DONT_CALL |
                             ACE_Event_Handler::ALL_EVENTS_MASK);
   ACE_TEST_ASSERT (result == 0);
@@ -80,7 +87,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                                                 0, 0, 0, 0);
 
   result =
-    reactor.register_handler (&handler);
+    reactor.register_handler (std::addressof (handler));
   ACE_TEST_ASSERT (result == 0);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
@@ -93,14 +100,14 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                                                 0, 0, 0, 0);
 
   result =
-    reactor.suspend_handler (&handler);
+    reactor.suspend_handler (std::addressof (handler));
   ACE_TEST_ASSERT (result == 0);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
                                                 0, 1, 0, 0);
 
   result =
-    reactor.remove_handler (&handler,
+    reactor.remove_handler (std::addressof (handler),
                             ACE_Event_Handler::DONT_CALL |
                             ACE_Event_Handler::ALL_EVENTS_MASK);
   ACE_TEST_ASSERT (result == 0);
@@ -115,14 +122,14 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                                                 0, 0, 0, 0);
 
   result =
-    reactor.register_handler (&handler);
+    reactor.register_handler (std::addressof (handler));
   ACE_TEST_ASSERT (result == 0);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
                                                 1, 0, 0, 0);
 
   result =
-    reactor.suspend_handler (&handler);
+    reactor.suspend_handler (std::addressof (handler));
   ACE_TEST_ASSERT (result == 0);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
@@ -135,14 +142,14 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                                                 0, 0, 0, 0);
 
   result =
-    reactor.resume_handler (&handler);
+    reactor.resume_handler (std::addressof (handler));
   ACE_TEST_ASSERT (result == 0);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
                                                 0, 0, 1, 0);
 
   result =
-    reactor.remove_handler (&handler,
+    reactor.remove_handler (std::addressof (handler),
                             ACE_Event_Handler::DONT_CALL |
                             ACE_Event_Handler::ALL_EVENTS_MASK);
   ACE_TEST_ASSERT (result == 0);

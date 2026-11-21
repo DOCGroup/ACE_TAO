@@ -10,12 +10,12 @@ module Test
      */
     oneway void shutdown ();
 
-    // Lets make sure things are working
+    /// Lets make sure things are working
     void ping ();
 
-    // The client calls this method which will generate
-    // a locate forward to the same IOGR on every invocation
-    // until well after the request expiration time when it will then succeed
+    /// The client calls this method which will generate
+    /// a locate forward to the same IOGR on every invocation
+    /// until well after the request expiration time when it will then succeed
     void throw_location_forward ();
   };
 };

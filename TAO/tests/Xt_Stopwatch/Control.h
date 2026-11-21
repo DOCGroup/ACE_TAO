@@ -6,12 +6,9 @@
  *  @author Balachandran  Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
-
-
 #ifndef CONTROL_H
 #define CONTROL_H
 #include "Client.h"
-
 
 #include <Xm/Xm.h>
 #include <Xm/PushB.h>
@@ -19,38 +16,40 @@
 #include <Xm/RowColumn.h>
 #include <Xm/Frame.h>
 
-
 class Control
 {
  public:
   /// Stopwatch constructor
-  Control (Widget &parent);
+  explicit Control (Widget parent);
 
-  /// Destructor
-  virtual ~Control ();
+  virtual ~Control () = default;
+
+  Control (Control const &) = delete;
+  Control &operator= (Control const &) = delete;
+  Control (Control &&) = delete;
+  Control &operator= (Control &&) = delete;
 
   /// Manage the widget
   virtual void manage ();
 
   /// Return the start widget
-  Widget& startwidget ();
+  Widget startwidget () const;
 
   /// Return the stop widget..
-  Widget& stopwidget ();
+  Widget stopwidget () const;
 
  private:
   /// A frame widget...
-  Widget frame_;
+  Widget frame_ {};
 
   /// A row column widget..
-  Widget rowcolumn_;
+  Widget rowcolumn_ {};
 
   /// Pushbutton  Widget that is used to start the  timer..
-  Widget startwidget_;
+  Widget startwidget_ {};
 
   /// Pushbutton widget that is used to stop the timer..
-  Widget stopwidget_;
+  Widget stopwidget_ {};
 };
-
 
 #endif /* CONTROL_H */

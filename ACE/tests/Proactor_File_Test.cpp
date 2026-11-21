@@ -38,7 +38,6 @@
 #include "ace/Asynch_Connector.h"
 #include "ace/Time_Value.h"
 
-
 // How long are our fake serial I/O frames?
 #define FILE_FRAME_SIZE 16
 
@@ -96,18 +95,7 @@ FileIOHandler::~FileIOHandler ()
   }
 }
 
-//***************************************************************************
-//
-//    Method:          Connect
-//
-//    Description:   Establishes connection, primes read process
-//
-// Inputs:        port name, port parameter block
-//
-// Returns:       none
-//
-//***************************************************************************
-
+/// Establishes a connection and primes the read process.
 int FileIOHandler::Connect()
 {
   int result = 0;
@@ -198,17 +186,8 @@ int FileIOHandler::Connect()
   return result;
 }
 
-//***************************************************************************
-//
-//    Method:          handle_read_file
-//
-//    Description:   Callback used when a read completes
-//
-// Inputs:        read file result structure containing message block
-//
-// Returns:       none
-//
-//***************************************************************************
+/// Handles completion of an asynchronous file read.
+/// @param result The read result containing the message block.
 void
 FileIOHandler::handle_read_file(const ACE_Asynch_Read_File::Result &result)
 {
@@ -224,14 +203,18 @@ FileIOHandler::handle_read_file(const ACE_Asynch_Read_File::Result &result)
   else
   {
     // We have a message block with some read data in it. Send it onward
-    ACE_DEBUG((LM_INFO, ACE_TEXT("FileIOHandler received %d bytes of data at offset %d\n"),
-                        result.bytes_transferred(), result.offset ()));
+    ACE_DEBUG ((LM_INFO,
+                ACE_TEXT ("FileIOHandler received %B bytes of data at offset %Q\n"),
+                result.bytes_transferred (),
+                static_cast<ACE_UINT64> (result.offset ())));
 
     // TODO: Process this data in some meaningful way
     if (result.offset () != (unsigned long)*reinterpret_cast<unsigned char*> (mb.rd_ptr ()))
     {
-      ACE_DEBUG((LM_ERROR, ACE_TEXT("FileIOHandler received incorrect data: got [%u] expected [%u]\n"),
-                           *reinterpret_cast<unsigned char*> (mb.rd_ptr ()), result.offset ()));
+      ACE_DEBUG ((LM_ERROR,
+                  ACE_TEXT ("FileIOHandler received incorrect data: got [%d] expected [%Q]\n"),
+                  *reinterpret_cast<unsigned char *> (mb.rd_ptr ()),
+                  static_cast<ACE_UINT64> (result.offset ())));
     }
 
     // Release the message block when we're done with it
@@ -266,17 +249,8 @@ FileIOHandler::handle_read_file(const ACE_Asynch_Read_File::Result &result)
   }
 }
 
-//***************************************************************************
-//
-//    Method:          handle_write_file
-//
-//    Description:   Callback used when a write completes
-//
-// Inputs:        write file result structure containing message block
-//
-// Returns:       none
-//
-//***************************************************************************
+/// Handles completion of an asynchronous file write.
+/// @param result The write result containing the message block.
 void
 FileIOHandler::handle_write_file(const ACE_Asynch_Write_File::Result &result)
 {
@@ -307,18 +281,9 @@ FileIOHandler::handle_write_file(const ACE_Asynch_Write_File::Result &result)
 #endif
 }
 
-//***************************************************************************
-//
-//    Method:          handle_time_out
-//
-//    Description:   Hook method called when a timer expires
-//
-// Inputs:        time value, completion token passed to timer at scheduling
-//                The token tells us which timer we're handling
-//
-// Returns:       none
-//
-//***************************************************************************
+/// Handles timer expiration.
+/// @param tv The time value associated with the timer.
+/// @param act The completion token associated with the timer.
 void
 FileIOHandler::handle_time_out(const ACE_Time_Value & /*tv*/, const void * /*act*/)
 {
@@ -341,8 +306,8 @@ FileIOHandler::handle_time_out(const ACE_Time_Value & /*tv*/, const void * /*act
     if (this->writer_.write(*new_mb, new_mb->length(),
                             this->block_count_ * FILE_FRAME_SIZE) == 0)
     {
-      ACE_DEBUG((LM_INFO, ACE_TEXT("Successfully queued write of %d bytes\n"), new_mb->length ())); // success
-      this->block_count_ ++; // next block
+      ACE_DEBUG((LM_INFO, ACE_TEXT("Successfully queued write of %B bytes\n"), new_mb->length ())); // success
+      ++this->block_count_; // next block
     }
     else
     {
@@ -350,7 +315,6 @@ FileIOHandler::handle_time_out(const ACE_Time_Value & /*tv*/, const void * /*act
     };
   }
 }
-
 
 int
 run_main(int /*argc*/, ACE_TCHAR * /*argv*/[])

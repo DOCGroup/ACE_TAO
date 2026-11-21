@@ -45,7 +45,7 @@ namespace {
   // Extra debug messages
   int opt_debug = 0;
 
-  ACE_Atomic_Op<ACE_Thread_Mutex, int> reactor_thread_nr = 0;
+  ACE_Atomic_Op<ACE_Thread_Mutex, int> reactor_thread_nr {0};
 
   // Class to collect and report on data handling for each test pass.
   struct Result_Set {
@@ -69,28 +69,34 @@ namespace {
     int analyze_reports ()
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Results (%d entries):\n"),
+                  ACE_TEXT ("Results (%B entries):\n"),
                   reports.size()));
       unsigned int max_chunks = 0;
-      unsigned int min_chunks = ACE_Numeric_Limits<unsigned int>::max();
+      unsigned int min_chunks = (ACE_Numeric_Limits<unsigned int>::max) ();
       for (report_map::iterator iter = reports.begin();
            iter != reports.end ();
            ++iter)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("   handle %d: %u\n"),
+                      ACE_TEXT ("   handle %H: %u\n"),
                       (*iter).first, (*iter).second));
           if ((*iter).second > max_chunks)
+          {
             max_chunks = (*iter).second;
+          }
           if ((*iter).second < min_chunks)
+          {
             min_chunks = (*iter).second;
+          }
         }
       if ((max_chunks - min_chunks) > max_chunks / 10)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Too much unfairness (max %u, min %u)\n"),
-                           max_chunks,
-                           min_chunks),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Too much unfairness (max %u, min %u)\n"),
+                             max_chunks,
+                             min_chunks),
+                            1);
+        }
       return 0;
     }
   };
@@ -104,16 +110,18 @@ Read_Handler::handle_input (ACE_HANDLE h)
   char buf[BUFSIZ];
   ssize_t result = this->peer ().recv (buf, ACE_OS::strlen(ACE_ALPHABET));
   if (opt_debug)
-    ACE_DEBUG((LM_DEBUG,
-               ACE_TEXT ("(%t) Read_Handler::handle_input h %d, result %b\n"),
-               h, result));
+    {
+      ACE_DEBUG((LM_DEBUG,
+                 ACE_TEXT ("(%t) Read_Handler::handle_input h %H, result %b\n"),
+                 h, result));
+    }
   if (result > 0)
     {
       if (opt_debug)
         {
           buf[result] = 0;
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) Read_Handler::handle_input: h %d: %C\n"),
+                      ACE_TEXT ("(%t) Read_Handler::handle_input: h %H: %C\n"),
                       h,
                       buf));
         }
@@ -122,12 +130,14 @@ Read_Handler::handle_input (ACE_HANDLE h)
   else if (result < 0)
     {
       if (errno == EWOULDBLOCK)
-        return 0;
+        {
+          return 0;
+        }
       else
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("handle_input: h %d: %p (errno: %d)\n"),
-                      h, ACE_TEXT ("recv"), ACE_ERRNO_GET));
+                      ACE_TEXT ("handle_input: h %H: recv failed %p (errno: %d)\n"),
+                      h, ACE_ERRNO_GET));
 
           // This will cause handle_close to get called.
           return -1;
@@ -136,7 +146,10 @@ Read_Handler::handle_input (ACE_HANDLE h)
   else // result == 0
     {
       if (opt_debug)
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Handle %d closing\n"), h));
+      {
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Handle %H closing\n"),
+                    h));
+      }
       // This will cause handle_close to get called.
       return -1;
     }
@@ -151,7 +164,7 @@ Read_Handler::handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask /*close_mask*/)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Read_Handler handle %d close; %u chunks\n"),
+              ACE_TEXT ("(%t) Read_Handler handle %H close; %u chunks\n"),
               handle, chunks_in));
   results.report (handle, this->chunks_in);
 
@@ -178,7 +191,7 @@ sender (void *arg)
   int i;
 
   // Automagic memory cleanup.
-  ACE_SOCK_Stream *temp_socks = nullptr;
+  ACE_SOCK_Stream *temp_socks {};
   ACE_NEW_RETURN (temp_socks,
                   ACE_SOCK_Stream [opt_nconnections],
                   ACE_THR_FUNC_RETURN_NULL);
@@ -186,7 +199,7 @@ sender (void *arg)
 
   // Connection all <opt_nconnections> connections before sending data.
   ACE_SOCK_Connector c;
-  for (i = 0; i < opt_nconnections; i++)
+  for (i = 0; i < opt_nconnections; ++i)
     {
       if (c.connect (socks[i], *connection_addr) == -1)
         {
@@ -196,40 +209,48 @@ sender (void *arg)
                           ACE_TEXT ("(%t) conn %d %p\n"),
                           ACE_TEXT ("connect")));
               while (--i >= 0)
-                socks[i].close ();
+                {
+                  socks[i].close ();
+                }
               break;
             }
         }
       socks[i].enable (ACE_NONBLOCK);
     }
   if (i < opt_nconnections)
+  {
     return ACE_THR_FUNC_RETURN_NULL;
+  }
 
   // Keep blasting data on all possible connections until this thread
   // is canceled. If we manage to overrun the receiver on all sockets,
   // sleep a bit for the receivers to catch up.
   ACE_thread_t me = ACE_Thread::self ();
   ACE_Thread_Manager *tm = ACE_Thread_Manager::instance ();
-  size_t send_cnt = ACE_OS::strlen (ACE_ALPHABET);
+  const size_t send_cnt = ACE_OS::strlen (ACE_ALPHABET);
   bool fail = false;
   while (!tm->testcancel (me) && !fail)
     {
       bool sent_something = false;
-      for (i = 0; i < opt_nconnections; i++)
+      for (i = 0; i < opt_nconnections; ++i)
         {
           ssize_t cnt = socks[i].send (ACE_ALPHABET, send_cnt);
           if (opt_debug)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%t) h %d sent %b\n"),
-                        socks[i].get_handle(),
-                        cnt));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%t) h %H sent %b\n"),
+                          socks[i].get_handle (),
+                          cnt));
+            }
           if (cnt > 0)
             {
               sent_something = true;
               continue;
             }
           if (errno == EWOULDBLOCK)
+          {
             continue;
+          }
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%t) %p; giving up\n"),
                       ACE_TEXT ("sender")));
@@ -246,8 +267,10 @@ sender (void *arg)
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Done sending.\n")));
-  for (i = 0; i < opt_nconnections; i++)
-    socks[i].close ();
+  for (i = 0; i < opt_nconnections; ++i)
+    {
+      socks[i].close ();
+    }
   return ACE_THR_FUNC_RETURN_NULL;
 }
 
@@ -258,11 +281,17 @@ reactor_loop (void *p)
   int me = reactor_thread_nr++;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Reactor loop %d starting...\n"), me));
   if (me == 0)
+  {
     r->owner (ACE_Thread::self ());
+  }
   if (r->run_reactor_event_loop () == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"), ACE_TEXT ("reactor")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"), ACE_TEXT ("reactor")));
+    }
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) reactor thread %d ending\n"), me));
+  }
   return ACE_THR_FUNC_RETURN_NULL;
 }
 
@@ -271,14 +300,14 @@ run (ACE_Reactor_Impl &ri, const ACE_TCHAR *what, bool tp = true)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting test with %s\n"), what));
 
-  ACE_Reactor r (&ri);
+  ACE_Reactor r (std::addressof (ri));
   ACE_Thread_Manager *tm = ACE_Thread_Manager::instance ();
   ACE_Acceptor<Read_Handler, ACE_SOCK_ACCEPTOR> acceptor;
 
   // Bind acceptor to any port and then find out what the port was.
   ACE_INET_Addr server_addr;
   ACE_INET_Addr local_addr (ACE_sap_any_cast (const ACE_INET_Addr &));
-  if (acceptor.open (local_addr, &r) == -1
+  if (acceptor.open (local_addr, std::addressof (r)) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -292,7 +321,9 @@ run (ACE_Reactor_Impl &ri, const ACE_TCHAR *what, bool tp = true)
               server_addr.get_port_number ()));
 
   reactor_thread_nr = 0;   // Reset for new set
-  if (-1 == tm->spawn_n (tp ? opt_reactor_threads : 1, reactor_loop, &r))
+  if (-1 == tm->spawn_n (tp ? opt_reactor_threads : 1,
+                         reactor_loop,
+                         std::addressof (r)))
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p\n"),
@@ -329,22 +360,24 @@ run_main (int argc, ACE_TCHAR *argv[])
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("c:s:t:d"), 1);
   for (int c; (c = getopt ()) != -1; )
-  //FUZZ: enble check_for_lack_ACE_OS
-    switch (c)
-      {
-      case 'c':
-        opt_nconnections = ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      case 's':
-        opt_secs = ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      case 't':
-        opt_reactor_threads = ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      case 'd':
-        opt_debug = 1;
-        break;
-      }
+    {
+      //FUZZ: enble check_for_lack_ACE_OS
+      switch (c)
+        {
+        case 'c':
+          opt_nconnections = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        case 's':
+          opt_secs = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        case 't':
+          opt_reactor_threads = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        case 'd':
+          opt_debug = 1;
+          break;
+        }
+    }
 
   // Run the test once for each reactor type available.
   int fails = 0;

@@ -5,7 +5,6 @@ Visual_i::Visual_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
-  // ctor
 
 void
 Visual_i::normal (CORBA::Long)
@@ -43,6 +42,6 @@ Visual_i::shutdown ()
   // Give the client thread time to return from the collocated
   // call to this method before shutting down the ORB.  We sleep
   // to avoid BAD_INV_ORDER exceptions on fast dual processor machines.
-  ACE_OS::sleep(1);
+  ACE_OS::sleep (1);
   this->orb_->shutdown ();
 }

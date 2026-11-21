@@ -38,7 +38,9 @@ CORBA::ValueFactoryBase::_remove_ref ()
   CORBA::ULong const new_count = --this->refcount_;
 
   if (new_count == 0)
+  {
     delete this;
+  }
 }
 
 // No-op. This should never be called, but it can't be pure virtual.

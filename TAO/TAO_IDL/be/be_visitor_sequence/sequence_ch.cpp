@@ -17,7 +17,6 @@ be_visitor_sequence_ch::be_visitor_sequence_ch (be_visitor_context *ctx)
 {
 }
 
-
 int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 {
   if (node->defined_in () == nullptr)
@@ -184,8 +183,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
               << "explicit " << node->local_name () << " (::CORBA::ULong max);";
         }
 
-      /// If we are using std::vector, we can't implement this
-      /// constructor.
+      /// The buffer constructor is unavailable when using std::vector.
       if (!be_global->alt_mapping () || !node->unbounded ())
         {
           *os << be_nl
@@ -244,32 +242,28 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
       node->gen_stub_decls (os);
 
-      // TAO provides extensions for octet sequences, first find out if
-      // the base type is an octet (or an alias for octet).
-      be_predefined_type *predef {};
-
+      // Generate the no-copy extension for unbounded octet sequences.
+      be_predefined_type *sequence_element_predef {};
       if (bt->base_node_type () == AST_Type::NT_pre_defined)
         {
           be_typedef * const alias = dynamic_cast<be_typedef*> (bt);
-
           if (alias == nullptr)
             {
-              predef = dynamic_cast<be_predefined_type*> (bt);
+              sequence_element_predef = dynamic_cast<be_predefined_type*> (bt);
             }
           else
             {
-              predef =
-                dynamic_cast<be_predefined_type*> (
-                    alias->primitive_base_type ()
-                  );
+              sequence_element_predef =
+                dynamic_cast<be_predefined_type*> (alias->primitive_base_type ());
             }
         }
+      bool const is_unbounded_octet_sequence =
+        sequence_element_predef != nullptr
+        && sequence_element_predef->pt () == AST_PredefinedType::PT_octet
+        && node->unbounded ()
+        && !be_global->alt_mapping ();
 
-      // Now generate the extension...
-      if (predef != nullptr
-          && predef->pt () == AST_PredefinedType::PT_octet
-          && node->unbounded ()
-          && !be_global->alt_mapping ())
+      if (is_unbounded_octet_sequence)
         {
           *os << be_nl_2
               << "\n#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)" << be_nl

@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    POA_BiDir.cpp
@@ -9,25 +8,18 @@
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
-
-
 #include "tao/PortableServer/PortableServer.h"
-
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
-
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/ORB.h"
-
-#include "ace/SString.h"
 
 void
 print_poa (PortableServer::POA_ptr poa)
 {
-  CORBA::String_var poa_name =
+  CORBA::String_var const poa_name =
     poa->the_name ();
 
-  CORBA::OctetSeq_var poa_id =
+  CORBA::OctetSeq_var const poa_id =
     poa->id ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -37,7 +29,7 @@ print_poa (PortableServer::POA_ptr poa)
   ACE_DEBUG ((LM_DEBUG,
               "POA id = "));
 
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i != poa_id->length ();
        ++i)
     {
@@ -52,7 +44,7 @@ print_poa (PortableServer::POA_ptr poa)
   PortableServer::POAList_var children =
     poa->the_children ();
 
-  for (CORBA::ULong index = 0;
+  for (CORBA::ULong index {};
        index != children->length ();
        ++index)
     {
@@ -66,14 +58,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       // The first step Initialize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       // Obtain the RootPOA.
-      CORBA::Object_var obj =
+      CORBA::Object_var const obj =
         orb->resolve_initial_references ("RootPOA");
 
       // _narrow() the Object to get the POA object, i.e., the root_poa.
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (obj.in ());
 
       // Policies for the new POAs
@@ -89,25 +81,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->create_lifespan_policy (PortableServer::TRANSIENT);
 
       // Creation of the firstPOA
-      ACE_CString name = "firstPOA";
-      PortableServer::POA_var first_poa =
-        root_poa->create_POA (name.c_str (),
+      PortableServer::POA_var const first_poa =
+        root_poa->create_POA ("firstPOA",
                               PortableServer::POAManager::_nil (),
                               policies);
 
       // Creation of the new POA, i.e. firstPOA/secondPOA
-      name = "secondPOA";
-      PortableServer::POA_var second_poa =
-        first_poa->create_POA (name.c_str (),
+      PortableServer::POA_var const second_poa =
+        first_poa->create_POA ("secondPOA",
                                PortableServer::POAManager::_nil (),
                                policies);
 
       // Creation of the new POAs over, so destroy the Policy_ptr's.
-      for (CORBA::ULong i = 0;
+      for (CORBA::ULong i {};
            i < policies.length ();
            ++i)
         {
-          CORBA::Policy_ptr policy = policies[i];
+          CORBA::Policy_ptr const policy = policies[i];
           policy->destroy ();
         }
 
@@ -120,17 +110,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->create_policy (BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE,
                             pol);
 
-
       // Creating thirdPOA.
-      name = "thirdPOA";
-
-      PortableServer::POA_var third_poa =
-        root_poa->create_POA (name.c_str (),
+      PortableServer::POA_var const third_poa =
+        root_poa->create_POA ("thirdPOA",
                               PortableServer::POAManager::_nil (),
                               bidir_policy);
 
       // Creation of childPOA is over. Destroy the Policy objects.
-      for (CORBA::ULong k = 0;
+      for (CORBA::ULong k {};
            k < bidir_policy.length ();
            ++k)
         {
@@ -139,16 +126,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Get the names of all the POAs and print them out.
 
-      CORBA::String_var root_poa_name =
+      CORBA::String_var const root_poa_name =
         root_poa->the_name ();
 
-      CORBA::String_var first_poa_name =
+      CORBA::String_var const first_poa_name =
         first_poa->the_name ();
 
-      CORBA::String_var second_poa_name =
+      CORBA::String_var const second_poa_name =
         second_poa->the_name ();
 
-      CORBA::String_var third_poa_name =
+      CORBA::String_var const third_poa_name =
         third_poa->the_name ();
 
       ACE_DEBUG ((LM_DEBUG,
@@ -162,7 +149,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught in main ");
       return -1;

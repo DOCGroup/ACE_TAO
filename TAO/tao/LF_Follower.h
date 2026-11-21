@@ -25,7 +25,6 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Intrusive_List_Node.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Leader_Follower;
@@ -43,10 +42,8 @@ class TAO_Export TAO_LF_Follower
   : public ACE_Intrusive_List_Node<TAO_LF_Follower>
 {
 public:
-  /// Constructor
-  TAO_LF_Follower (TAO_Leader_Follower &leader_follower);
+  explicit TAO_LF_Follower (TAO_Leader_Follower &leader_follower);
 
-  /// Destructor
   ~TAO_LF_Follower ();
 
   /// Access the leader follower that owns this follower
@@ -59,6 +56,11 @@ public:
   int signal ();
 
 private:
+  TAO_LF_Follower (TAO_LF_Follower const &) = delete;
+  TAO_LF_Follower &operator= (TAO_LF_Follower const &) = delete;
+  TAO_LF_Follower (TAO_LF_Follower &&) = delete;
+  TAO_LF_Follower &operator= (TAO_LF_Follower &&) = delete;
+
   /// The Leader/Follower set this Follower belongs to
   TAO_Leader_Follower &leader_follower_;
 

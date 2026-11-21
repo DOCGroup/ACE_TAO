@@ -1,5 +1,4 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/MonitorControl/MonitorManager.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
@@ -14,13 +13,12 @@
 #include "ace/Service_Config.h"
 #include "ace/Get_Opt.h"
 
+#include <cstdio>
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_MonitorManager::TAO_MonitorManager ()
-  : run_ (false)
-  , initialized_ (false)
-{
-}
+TAO_MonitorManager::TAO_MonitorManager () = default;
 
 int
 TAO_MonitorManager::init (int argc, ACE_TCHAR* argv[])
@@ -37,8 +35,8 @@ TAO_MonitorManager::init (int argc, ACE_TCHAR* argv[])
                     ACE_Get_Opt::PERMUTE_ARGS,
                     1);
 
-  static const ACE_TCHAR* orbarg = ACE_TEXT ("ORBArg");
-  static const ACE_TCHAR* nonamesvc = ACE_TEXT ("NoNameSvc");
+  static constexpr ACE_TCHAR const* orbarg = ACE_TEXT ("ORBArg");
+  static constexpr ACE_TCHAR const* nonamesvc = ACE_TEXT ("NoNameSvc");
   opts.long_option (orbarg, ACE_Get_Opt::ARG_REQUIRED);
   opts.long_option (nonamesvc, ACE_Get_Opt::NO_ARG);
 
@@ -112,7 +110,7 @@ TAO_MonitorManager::fini ()
 int
 TAO_MonitorManager::run ()
 {
-  bool activate = false;
+  bool activate {};
 
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->task_.mutex_, -1);
@@ -132,7 +130,7 @@ TAO_MonitorManager::run ()
       }
   }
 
-  int status = 0;
+  int status {};
 
   if (activate)
     {
@@ -164,16 +162,14 @@ TAO_MonitorManager::shutdown ()
     ACE_Dynamic_Service<TAO_MonitorManager>::instance (
       TAO_NOTIFY_MONITOR_CONTROL_MANAGER);
 
-  if (monitor != 0)
+  if (monitor != nullptr)
     {
       monitor->fini ();
     }
 }
 
 TAO_MonitorManager::ORBTask::ORBTask ()
- : use_name_svc_ (true)
-   , startup_barrier_ (2) // synch the parent with the single child thread
-   , mc_orb_name_ (ACE_TEXT("TAO_MonitorAndControl"))
+  : startup_barrier_ (2) // synch the parent with the single child thread
 {
 }
 
@@ -234,7 +230,7 @@ TAO_MonitorManager::ORBTask::svc ()
                               1);
           }
 
-        iortable->bind(ACE_TEXT_ALWAYS_CHAR(mc_orb_name_.c_str()), ior.in ());
+        iortable->bind (ACE_TEXT_ALWAYS_CHAR (mc_orb_name_.c_str ()), ior.in ());
 
         if (this->use_name_svc_)
           {
@@ -242,15 +238,17 @@ TAO_MonitorManager::ORBTask::svc ()
             nc.init (this->orb_.in ());
             CosNaming::Name name (1);
             name.length (1);
-            name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(mc_orb_name_.c_str()));
+            name[0].id = CORBA::string_dup (
+              ACE_TEXT_ALWAYS_CHAR (mc_orb_name_.c_str ()));
             nc->rebind (name, monitor.in ());
           }
 
         if (this->ior_output_.length () > 0)
           {
-            FILE* fp = ACE_OS::fopen (this->ior_output_.c_str (), "w");
+            std::unique_ptr<FILE, int (*) (FILE *)> fp (
+              ACE_OS::fopen (this->ior_output_.c_str (), "w"), ACE_OS::fclose);
 
-            if (fp == 0)
+            if (!fp)
               {
                 ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("(%P|%t) TAO_MonitorManager: "
@@ -258,11 +256,8 @@ TAO_MonitorManager::ORBTask::svc ()
                                    this->ior_output_.c_str ()),
                                   1);
               }
-            else
-              {
-                ACE_OS::fprintf (fp, "%s", ior.in ());
-                ACE_OS::fclose (fp);
-              }
+
+            std::fprintf (fp.get (), "%s", ior.in ());
           }
       }
 

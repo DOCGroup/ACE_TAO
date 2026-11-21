@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_NETWORK_ADAPTERS_TEST_H
 #define ACE_NETWORK_ADAPTERS_TEST_H
 
@@ -34,10 +33,8 @@
 class Echo_Handler : public ACE_Event_Handler
 {
 public:
-  /// Default constructor
   Echo_Handler ();
 
-  /// Destructor
   virtual ~Echo_Handler ();
 
   /**
@@ -61,7 +58,7 @@ public:
   int open (ACE_Reactor * const    reactor,
             const ACE_Time_Value & reply_wait,
             const ACE_INET_Addr &  remote_addr,
-            ACE_TCHAR *            success_status = 0,
+            ACE_TCHAR *            success_status = nullptr,
             size_t                 max_attempts_num = 1,
             const ACE_Addr &       local_addr = ACE_Addr::sap_any,
             int                    connect_to_remote = 0);
@@ -87,18 +84,18 @@ public:
             ACE_Time_Value const & reply_wait,
             ACE_INET_Addr const    remote_addrs[],
             size_t                 number_remotes,
-            ACE_TCHAR *            success_status = 0,
+            ACE_TCHAR *            success_status = nullptr,
             size_t                 max_attempts_num = 1,
             ACE_Addr const &       local_addr = ACE_Addr::sap_any);
 
   /// Returns reference to the ACE::Ping_Socket. Necessary for ACE_Reactor.
-  virtual ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
   /**
    * Takes care of the input. Reads the incoming ICMP datagrams and
    * calls for process_incoming () of the ping_socket for processing.
    */
-  virtual int handle_input (ACE_HANDLE handle);
+  int handle_input (ACE_HANDLE handle) override;
 
   /*
    * Decides, if we need to continue checks (when at least a single
@@ -106,12 +103,12 @@ public:
    * set in open () not expired).  If yes, calls for dispatch_echo_checks (),
    * if not returns -1 to initiate clean-up.
    */
-  virtual int handle_timeout (ACE_Time_Value const & tv,
-                              void const * arg = 0);
+  int handle_timeout (ACE_Time_Value const & tv,
+                      void const * arg = nullptr) override;
 
   /// Makes clean-up
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  int handle_close (ACE_HANDLE handle,
+                    ACE_Reactor_Mask close_mask) override;
 
   /// Calls send_echo_check() for all remote_addrs_
   int dispatch_echo_checks (int first_call = 0);
@@ -153,11 +150,8 @@ private:
   int connect_to_remote_;
 };
 
-
-/*
- * Class Stop_Handler - the most important class of the process.
- * Knows how to stop all this business.
- */
+/// Class Stop_Handler - the most important class of the process.
+/// Knows how to stop all this business.
 class Stop_Handler : public ACE_Event_Handler
 {
 public:
@@ -167,32 +161,31 @@ public:
   using counter_sig = long;
 #endif
 
-  // Constructor.
   Stop_Handler (ACE_Reactor * const reactor = ACE_Reactor::instance ());
 
-  // Destructor.
   virtual ~Stop_Handler ();
 
-  // Initialization. Registers this for SIGINT, SIGTERM and SIGQUIT.
+  /// Initialization. Registers this for SIGINT, SIGTERM and SIGQUIT.
   virtual int open ();
 
-  // De-registers this from the reactor and stops reactors event_loop.
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  /// De-registers this from the reactor and stops reactors event_loop.
+  int handle_close (ACE_HANDLE handle,
+                    ACE_Reactor_Mask close_mask) override;
 
-  // Called by reactor from the notification queue.
-  virtual int handle_input (ACE_HANDLE);
+  /// Called by reactor from the notification queue.
+  int handle_input (ACE_HANDLE) override;
 
-  // Dispatches handle_input () notification.
-  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  /// Dispatches handle_input () notification.
+  int handle_signal (int signum, siginfo_t * = nullptr,
+                     ucontext_t * = nullptr) override;
 
-  virtual int handle_timeout (ACE_Time_Value const & current_time,
-                              void const * act = 0);
+  int handle_timeout (ACE_Time_Value const & current_time,
+                      void const * act = nullptr) override;
 
-  // Register handler with us for stopping.
+  /// Register handler with us for stopping.
   virtual int register_handler (ACE_Event_Handler * handler);
 
-  // Unregister handler, registered before with us for stopping.
+  /// Unregister handler, registered before with us for stopping.
   virtual int unregister_handler (ACE_Event_Handler * handler);
 
 private:
@@ -201,15 +194,14 @@ private:
       HANDLERS_TO_STOP_TABLE_SIZE = 10
     };
 
-  // Flag to prevent multiple dispatching of handle_input ().
+  /// Flag to prevent multiple dispatching of handle_input ().
   counter_sig counter_;
 
-  // Table to place here pointers to all tasks in the process.
+  /// Table to place here pointers to all tasks in the process.
   ACE_Event_Handler * handlers_to_stop_[HANDLERS_TO_STOP_TABLE_SIZE];
 
   ACE_Sig_Set registered_signals_;
 };
-
 
 /*
  * TODO comment
@@ -217,32 +209,30 @@ private:
 class Repeats_Handler : public ACE_Event_Handler
 {
 public:
-  // Constructor.
   Repeats_Handler ();
 
-  // Destructor.
   virtual ~Repeats_Handler ();
 
-  // Initialization.
+  /// Initialization.
   virtual int open (Echo_Handler *check_handler,
                     ACE_Reactor * const reactor = ACE_Reactor::instance (),
                     unsigned int seconds_timer = 60);
 
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  int handle_close (ACE_HANDLE handle,
+                    ACE_Reactor_Mask close_mask) override;
 
-  // dispatches a new echo-checks series
-  virtual int handle_timeout (ACE_Time_Value const & current_time,
-                              void const * act = 0);
+  /// dispatches a new echo-checks series
+  int handle_timeout (ACE_Time_Value const & current_time,
+                      void const * act = nullptr) override;
 
 private:
-  // an instance of a handler
+  /// an instance of a handler
   Echo_Handler * check_handler_;
 
-  // timer in seconds to repeat the checks
+  /// timer in seconds to repeat the checks
   unsigned int seconds_timer_;
 
-  // counts repeats
+  /// counts repeats
   unsigned long counter_;
 };
 

@@ -70,7 +70,9 @@ ACE_Streambuf_T<STREAM>::recv (char *buf,
   errno = ESUCCESS;
   ssize_t rval = peer_->recv (buf, len, flags, tv);
   if (errno == ETIME)
-    this->timeout_ = 1;
+    {
+      this->timeout_ = 1;
+    }
   return rval;
 }
 
@@ -84,7 +86,9 @@ ACE_Streambuf_T<STREAM>::recv_n (char *buf,
   errno = ESUCCESS;
   ssize_t rval = peer_->recv_n (buf, len, flags, tv);
   if (errno == ETIME)
-    this->timeout_ = 1;
+    {
+      this->timeout_ = 1;
+    }
   return rval;
 }
 
@@ -101,32 +105,33 @@ ACE_Streambuf_T<STREAM>::get_handle ()
 template <class STREAM>
 ACE_IOStream<STREAM>::ACE_IOStream (STREAM &stream,
                                     u_int streambuf_size)
-  : iostream (0),
+  : iostream (nullptr),
     STREAM (stream)
 {
-  ACE_NEW (streambuf_,
-           ACE_Streambuf_T<STREAM> ((STREAM *) this,
-                                    streambuf_size));
-  iostream::init (this->streambuf_);
+  this->streambuf_.reset (
+    new (ACE_nothrow) ACE_Streambuf_T<STREAM> (static_cast<STREAM *> (this),
+                                               streambuf_size));
+  if (this->streambuf_ == nullptr)
+    {
+      errno = ENOMEM;
+      return;
+    }
+  iostream::init (this->streambuf_.get ());
 }
 
 template <class STREAM>
 ACE_IOStream<STREAM>::ACE_IOStream (u_int streambuf_size)
-  : iostream (0)
+  : iostream (nullptr)
 {
-  ACE_NEW (this->streambuf_,
-           ACE_Streambuf_T<STREAM> ((STREAM *) this,
-                                    streambuf_size));
-  iostream::init (this->streambuf_);
-}
-
-// We have to get rid of the streambuf_ ourselves since we gave it to
-// iostream ()
-
-template <class STREAM>
-ACE_IOStream<STREAM>::~ACE_IOStream ()
-{
-  delete this->streambuf_;
+  this->streambuf_.reset (
+    new (ACE_nothrow) ACE_Streambuf_T<STREAM> (static_cast<STREAM *> (this),
+                                               streambuf_size));
+  if (this->streambuf_ == nullptr)
+    {
+      errno = ENOMEM;
+      return;
+    }
+  iostream::init (this->streambuf_.get ());
 }
 
 // The only ambituity in the multiple inheritance is the close ()
@@ -196,23 +201,31 @@ operator>> (STREAM &stream,
   char c;
 
   if (!(stream >> c)) // eat space up to the first char
-    // stream.set (ios::eofbit|ios::failbit);
-    return stream;
+    {
+      // stream.set (ios::eofbit|ios::failbit);
+      return stream;
+    }
 
   str = "";     // Initialize the string
 
   // if we don't have a quote, append until we see space
   if (c != '"')
-    for (str = c; stream.get (c) && !isspace (c); str += c)
-      continue;
+    {
+      for (str = c; stream.get (c) && !isspace (c); str += c)
+        continue;
+    }
   else
-    for (; stream.get (c) && c != '"'; str += c)
-      if (c == '\\')
-        {
-          stream.get (c);
-          if (c != '"')
-            str += '\\';
-        }
+    {
+      for (; stream.get (c) && c != '"'; str += c)
+        if (c == '\\')
+          {
+            stream.get (c);
+            if (c != '"')
+              {
+                str += '\\';
+              }
+          }
+    }
 
   return stream;
 }
@@ -226,7 +239,9 @@ operator<< (STREAM &stream,
   for (u_int i = 0; i < str.length (); ++i)
     {
       if (str[i] == '"')
-        stream.put ('\\');
+        {
+          stream.put ('\\');
+        }
       stream.put (str[i]);
     }
 

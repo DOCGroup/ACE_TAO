@@ -1,8 +1,10 @@
-// This tests the features of the <ACE_SOCK_Connector> and
-// <ACE_SOCK_Stream> classes.  In addition, it can be used to test the
-// oneway and twoway latency and throughput at the socket-level.  This
-// is useful as a baseline to compare against ORB-level performance
-// for the same types of data.
+/**
+ * @file CPP-inclient.cpp
+ *
+ * Tests ACE_SOCK_Connector and ACE_SOCK_Stream. It can also measure
+ * one-way and two-way socket latency and throughput as a baseline for
+ * ORB-level performance with the same data.
+ */
 
 #include "CPP-inclient.h"
 
@@ -14,6 +16,7 @@
 #include "ace/Truncate.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Basic_Types.h"
+#include <cstring>
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
@@ -41,21 +44,22 @@ Options::~Options ()
   delete [] this->message_buf_;
 }
 
-// Options Singleton.
 using OPTIONS = ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX>;
 
 int
 Options::init ()
 {
-  ACE_DEBUG((LM_DEBUG,"Options::init, len = %d\n",this->message_len_));
+  ACE_DEBUG ((LM_DEBUG, "Options::init, len = %B\n", this->message_len_));
 
   // Check for default case.
   if (this->message_len_ == 0)
-    this->message_len_ = ACE_OS::strlen ("TAO");
-  ACE_DEBUG((LM_DEBUG,"Options::init, len = %d\n",this->message_len_));
+  {
+    this->message_len_ = std::strlen ("TAO");
+  }
+  ACE_DEBUG ((LM_DEBUG, "Options::init, len = %B\n", this->message_len_));
 
   this->message_len_ += sizeof (ACE_UINT32);
-  ACE_DEBUG((LM_DEBUG,"Options::init, len = %d\n",this->message_len_));
+  ACE_DEBUG ((LM_DEBUG, "Options::init, len = %B\n", this->message_len_));
 
   ACE_NEW_RETURN (this->message_buf_,
                   char[this->message_len_],
@@ -65,13 +69,11 @@ Options::init ()
   ACE_UINT32 length =
     ACE_NTOHL (ACE_Utils::truncate_cast<ACE_UINT32> (this->message_len_));
 
-  ACE_OS::memcpy ((void *) this->message_buf_,
-                  (void *) &length,
-                  sizeof length);
+  std::memcpy (this->message_buf_, &length, sizeof length);
 
-  ACE_OS::memset ((void *) (this->message_buf_ + sizeof (ACE_UINT32)),
-                  'a',
-                  this->message_len_ - sizeof (ACE_UINT32));
+  std::memset (this->message_buf_ + sizeof (ACE_UINT32),
+               'a',
+               this->message_len_ - sizeof (ACE_UINT32));
 
   // Allocate the barrier with the correct count.
   ACE_MT (ACE_NEW_RETURN (this->barrier_,
@@ -100,15 +102,17 @@ Options::read (void *buf, size_t len, size_t &iteration)
   ACE_UNUSED_ARG (len);
 
   if (this->io_source_ == ACE_STDIN)
-    return ACE_OS::read (ACE_STDIN, buf, len);
+    {
+      return ACE_OS::read (ACE_STDIN, buf, len);
+    }
   else if (iteration >= this->iterations_)
-    return 0;
+    {
+      return 0;
+    }
   else
     {
-      ACE_OS::memcpy (buf,
-                      this->message_buf (),
-                      len);
-      iteration++;
+      std::memcpy (buf, this->message_buf (), len);
+      ++iteration;
       return ACE_Utils::truncate_cast<ssize_t> (len);
     }
 }
@@ -120,41 +124,43 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT("2h:i:m:p:q:st:T:"), 1);
 
   for (int c; (c = getopt ()) != -1; )
-  //FUZZ: enable check_for_lack_ACE_OS
-    switch (c)
-      {
-      case '2': // Disable the oneway client.
-        this->oneway_ = 0;
-        break;
-      case 'h':
-        this->host_ = getopt.opt_arg ();
-        break;
-      case 'i':
-        this->iterations_ = ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      case 'm':
-        this->message_len_ = ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      case 'p':
-        this->port_ = ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      case 'q':
-        this->quit_string_ = getopt.opt_arg ();
-        break;
-      case 's':
-        this->io_source_ = ACE_STDIN;
-        break;
-      case 't':
-        this->threads_ = (size_t) ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      case 'T':
-        this->sleep_time_.set (0, ACE_OS::atoi (getopt.opt_arg ()));
-        break;
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) usage: %n [-2] [-h <host>] [-i iterations] [-m message-size] [-p <port>] [-q <quit string>] [-s] [-t <threads>] [-T <sleep_time>]\n"),
-                          -1);
-      }
+    {
+      //FUZZ: enable check_for_lack_ACE_OS
+      switch (c)
+        {
+        case '2': // Disable the oneway client.
+          this->oneway_ = 0;
+          break;
+        case 'h':
+          this->host_ = getopt.opt_arg ();
+          break;
+        case 'i':
+          this->iterations_ = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        case 'm':
+          this->message_len_ = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        case 'p':
+          this->port_ = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        case 'q':
+          this->quit_string_ = getopt.opt_arg ();
+          break;
+        case 's':
+          this->io_source_ = ACE_STDIN;
+          break;
+        case 't':
+          this->threads_ = (size_t) ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        case 'T':
+          this->sleep_time_.set (0, ACE_OS::atoi (getopt.opt_arg ()));
+          break;
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) usage: %n [-2] [-h <host>] [-i iterations] [-m message-size] [-p <port>] [-q <quit string>] [-s] [-t <threads>] [-T <sleep_time>]\n"),
+                            -1);
+        }
+    }
 
   return this->init ();
 }
@@ -199,23 +205,27 @@ Options::shared_client_test (u_short port,
 
   if (con.connect (cli_stream,
                    remote_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) %p\n",
-                       "connection failed"),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) %p\n",
+                         "connection failed"),
+                        0);
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) connected to %s at port %d\n",
-                remote_addr.get_host_name (),
-                remote_addr.get_port_number ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) connected to %s at port %d\n",
+                  remote_addr.get_host_name (),
+                  remote_addr.get_port_number ()));
+    }
 
   ACE_INT32 len =
     ACE_HTONL (ACE_Utils::truncate_cast<ACE_INT32> (this->message_len ()));
 
   // Allocate the transmit buffer.
   char *buf;
-  ACE_DEBUG((LM_DEBUG,"(%P|%t) allocating buffer, len = %d msglen = %d\n",
-             len, message_len_));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) allocating buffer, len = %d msglen = %B\n",
+              len, message_len_));
 
   ACE_NEW_RETURN (buf,
                   char[this->message_len()],
@@ -228,21 +238,23 @@ Options::shared_client_test (u_short port,
   ACE_MT (this->barrier_->wait ());
   return buf;
 }
-// Static function entry point to the oneway client service.
-
+/// Runs the one-way client service.
 void *
 Options::oneway_client_test (void *)
 {
   Options *options = OPTIONS::instance ();
   ACE_SOCK_Stream cli_stream;
 
-  ACE_DEBUG((LM_DEBUG,"options = %d, len = %d\n",options,options->message_len()));
+  ACE_DEBUG ((LM_DEBUG, "options = %@, len = %B\n",
+              options, options->message_len ()));
 
   // Add 1 to the port to trigger the oneway test!
   char *request = options->shared_client_test (options->port () + 1,
                                                cli_stream);
   if (request == nullptr)
+  {
     return nullptr;
+  }
 
   // This variable is allocated off the stack to obviate the need for
   // locking.
@@ -263,18 +275,22 @@ Options::oneway_client_test (void *)
        (r_bytes = options->read (request, len, iteration)) > 0;
        // Transmit at the proper rate.
        ACE_OS::sleep (options->sleep_time ()))
-    if (ACE_OS::memcmp (request,
-                        options->quit_string (),
-                        ACE_OS::strlen (options->quit_string ())) == 0)
-      break;
-    else if (cli_stream.send_n (request, r_bytes) == -1)
-      {
-        ACE_ERROR ((LM_ERROR,
-                    "(%P|%t) %p\n",
-                    "send_n"));
-        result = -1;
-        break;
-      }
+    {
+      if (std::memcmp (request,
+                       options->quit_string (),
+                       ACE_OS::strlen (options->quit_string ())) == 0)
+        {
+          break;
+        }
+      else if (cli_stream.send_n (request, r_bytes) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) %p\n",
+                      "send_n"));
+          result = -1;
+          break;
+        }
+    }
 
   // Close the connection.
   cli_stream.close ();
@@ -283,8 +299,7 @@ Options::oneway_client_test (void *)
   return reinterpret_cast<void *> (result);
 }
 
-// Static function entry point to the twoway client service.
-
+/// Runs the two-way client service.
 void *
 Options::twoway_client_test (void *)
 {
@@ -295,7 +310,9 @@ Options::twoway_client_test (void *)
   char *request = options->shared_client_test (options->port (),
                                                cli_stream);
   if (request == nullptr)
-    return nullptr;
+    {
+      return nullptr;
+    }
 
   // This variable is allocated off the stack to obviate the need for
   // locking.
@@ -320,41 +337,45 @@ Options::twoway_client_test (void *)
        (r_bytes = options->read (request, len, iteration)) > 0;
        // Transmit at the proper rate.
        ACE_OS::sleep (options->sleep_time ()))
-    if (ACE_OS::memcmp (request,
-                        options->quit_string (),
-                        ACE_OS::strlen (options->quit_string ())) == 0)
-      break;
+    {
+      if (std::memcmp (request,
+                       options->quit_string (),
+                       ACE_OS::strlen (options->quit_string ())) == 0)
+        {
+          break;
+        }
 
-    // Transmit <request> to the server.
-    else
-      {
-        // Note that we use the incremental feature of the
-        // <ACE_High_Res_Timer> so that we don't get "charged" for the
-        // <ACE_OS::sleep> used to control the rate at which requests
-        // are sent.
-        timer.start_incr ();
+      // Transmit <request> to the server.
+      else
+        {
+          // Note that we use the incremental feature of the
+          // <ACE_High_Res_Timer> so that we don't get "charged" for the
+          // <ACE_OS::sleep> used to control the rate at which requests
+          // are sent.
+          timer.start_incr ();
 
-        if (cli_stream.send_n (request, r_bytes) == -1)
-          {
-            ACE_ERROR ((LM_ERROR,
-                        "(%P|%t) %p\n",
-                        "send_n"));
-            result = -1;
-            break;
-          }
-        // Receive the reply from the server.  Normally, it just sends
-        // back 24 bytes, which is typical for an IIOP reply.
-        else if (cli_stream.recv (request, r_bytes) <= 0)
-          {
-            ACE_ERROR ((LM_ERROR,
-                        "(%P|%t) %p\n",
-                        "recv"));
-            result = -1;
-            break;
-          }
+          if (cli_stream.send_n (request, r_bytes) == -1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "(%P|%t) %p\n",
+                          "send_n"));
+              result = -1;
+              break;
+            }
+          // Receive the reply from the server.  Normally, it just sends
+          // back 24 bytes, which is typical for an IIOP reply.
+          else if (cli_stream.recv (request, r_bytes) <= 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "(%P|%t) %p\n",
+                          "recv"));
+              result = -1;
+              break;
+            }
 
-        timer.stop_incr ();
-      }
+          timer.stop_incr ();
+        }
+    }
 
   ACE_Time_Value tv;
 
@@ -363,7 +384,7 @@ Options::twoway_client_test (void *)
   double messages_per_sec = iteration * double (ACE_ONE_SECOND_IN_USECS) / real_time;
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) messages = %d\n(%t) usec-per-message = %f\n(%t) messages-per-second = %0.00f\n"),
+              ACE_TEXT ("(%t) messages = %B\n(%t) usec-per-message = %f\n(%t) messages-per-second = %0.00f\n"),
               iteration,
               real_time / double (iteration),
               messages_per_sec < 0 ? 0 : messages_per_sec));
@@ -378,11 +399,16 @@ Options::twoway_client_test (void *)
 ACE_THR_FUNC
 Options::thr_func ()
 {
-  ACE_DEBUG((LM_DEBUG,"(%P|%t) in thread func, mesg len = %d\n",this->message_len()));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) in thread func, mesg len = %B\n",
+              this->message_len ()));
   if (this->oneway_ == 0)
-    return ACE_THR_FUNC (&Options::twoway_client_test);
+    {
+      return ACE_THR_FUNC (&Options::twoway_client_test);
+    }
   else
-    return ACE_THR_FUNC (&Options::oneway_client_test);
+    {
+      return ACE_THR_FUNC (&Options::oneway_client_test);
+    }
 }
 
 static int
@@ -392,17 +418,21 @@ run_client ()
   ACE::set_handle_limit ();
 
 #if defined (ACE_HAS_THREADS)
-  ACE_DEBUG((LM_DEBUG,"(%P|%t) spawning client test thread options = %d\n",
-  OPTIONS::instance()));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) spawning client test thread options = %@\n",
+              OPTIONS::instance ()));
 
   if (ACE_Thread_Manager::instance ()->spawn_n (OPTIONS::instance ()->threads (),
                                                 OPTIONS::instance ()->thr_func ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) %p\n",
-                       "spawn_n"),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) %p\n",
+                         "spawn_n"),
+                        1);
+    }
   else
-    ACE_Thread_Manager::instance ()->wait ();
+    {
+      ACE_Thread_Manager::instance ()->wait ();
+    }
 #else
   (void) *(OPTIONS::instance ()->thr_func) ();
 #endif /* ACE_HAS_THREADS */
@@ -416,7 +446,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_LOG_MSG->open (argv[0]);
 
   if (OPTIONS::instance ()->parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
 
   // Run the client
   run_client ();

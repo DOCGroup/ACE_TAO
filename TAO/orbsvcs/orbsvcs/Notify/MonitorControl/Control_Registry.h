@@ -16,6 +16,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_MC_Export TAO_Control_Registry
 {
 public:
+  TAO_Control_Registry () = default;
+
   /// Reusing NameList that comes from the TAO Monitor library.
   using NameList = Monitor::NameList;
 
@@ -32,7 +34,7 @@ public:
 
     ErrorReason why_;
 
-    Map_Error (ErrorReason why)
+    explicit Map_Error (ErrorReason why)
       : why_ (why)
     {
     }
@@ -44,11 +46,17 @@ public:
   /// Empty out the map of objects
   ~TAO_Control_Registry ();
 
+  TAO_Control_Registry (TAO_Control_Registry const&) = delete;
+  TAO_Control_Registry (TAO_Control_Registry&&) = delete;
+  TAO_Control_Registry& operator= (TAO_Control_Registry const&) = delete;
+  TAO_Control_Registry& operator= (TAO_Control_Registry&&) = delete;
+
   /// Adds an object to the map.
   /// Throws Map_Error if the object is null or if there
   /// is a fatal error adding it to the map.
   /// Returns true if the object is successfully added to the map.
-  /// Returns false otherwise.
+  /// Returns false otherwise. Ownership transfers to the registry only
+  /// when this method returns true; otherwise the caller retains ownership.
   bool add (TAO_NS_Control* type);
 
   /// Removes an object from the map.

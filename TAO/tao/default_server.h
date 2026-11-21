@@ -36,11 +36,8 @@ public:
   TAO_Default_Server_Strategy_Factory ();
   ~TAO_Default_Server_Strategy_Factory () override;
 
-  // = Service Configurator hooks.
   int init (int argc, ACE_TCHAR *argv[]) override;
 
-  // = The TAO_Server_Strategy_Factory methods, please read the
-  //   documentation in "tao/Server_Strategy_Factory.h"
   int open (TAO_ORB_Core *) override;
   int activate_server_connections () override;
   int thread_per_connection_timeout (ACE_Time_Value &timeout) override;

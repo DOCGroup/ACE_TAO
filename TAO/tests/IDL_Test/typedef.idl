@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    typedef.idl
  *
@@ -11,16 +10,13 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
  */
-//=============================================================================
 
+/// Must keep unaliasing until all levels of typedef
+/// are removed.
 
-
-// Must keep unaliasing until all levels of typedef
-// are removed.
-
-// This is also a test of arrays of arrays. Once
-// upon a time, the generated CDR operators of such
-// animals wouldn't compile on all platforms.
+/// This is also a test of arrays of arrays. Once
+/// upon a time, the generated CDR operators of such
+/// animals wouldn't compile on all platforms.
 
 typedef char TAO_A5[5];
 
@@ -38,8 +34,8 @@ typedef TAO_R5 TAO_V5;
 
 typedef TAO_V5 TAO_Z5[5];
 
-// Need to make sure that the arg traits specializations for each
-// typedef has a unique #ifndef guard.
+/// Need to make sure that the arg traits specializations for each
+/// typedef has a unique #ifndef guard.
 module TestModule
 {
   typedef string<32> typedef_1;
@@ -52,7 +48,7 @@ module TestModule
   };
 };
 
-// Caught failure of arg traits generation for the 2nd typedef.
+/// Caught failure of arg traits generation for the 2nd typedef.
 module bug_2124
 {
    typedef string<10> MyString;
@@ -65,8 +61,8 @@ module bug_2124
    };
 };
 
-// Caught a case where the #ifdef guards were different, but the
-// generated string typename was the same.
+/// Caught a case where the #ifdef guards were different, but the
+/// generated string typename was the same.
 module bug_2122
 {
    module One
@@ -81,7 +77,8 @@ module bug_2122
 
    module Two
    {
-      typedef string<100> MyString; // Same name, different size!
+      /// Same name, different size!
+      typedef string<100> MyString;
 
       interface WhoCares
       {
@@ -91,7 +88,8 @@ module bug_2122
 
    module Three
    {
-      typedef string<100> MyString; // Same name, same size!
+      /// Same name, same size!
+      typedef string<100> MyString;
 
       interface WhoCares
       {
@@ -100,24 +98,20 @@ module bug_2122
    };
 };
 
-// An anonymous string of the same bound will be found in
-// another IDL file not included in this one (anonymous.idl).
-// The typecode for the anonymous string should not give us
-// 'already found' link errors.
+/// An anonymous string of the same bound will be found in
+/// another IDL file not included in this one (anonymous.idl).
+/// The typecode for the anonymous string should not give us
+/// 'already found' link errors.
 module First
 {
   typedef string<32> FirstString;
 };
 
-// The anonymous base type is shared by these typedefs, but it
-// must be destroyed only once.
+/// The anonymous base type is shared by these typedefs, but it
+/// must be destroyed only once.
 module CommaList
 {
   typedef sequence<double> Foo;
   typedef sequence<double> Dubble, Dubbel, Toil, Trouble;
 };
-
-
-
-
 

@@ -46,7 +46,7 @@ namespace ACE_OS {
    *  Since they are often implemented as macros, we don't use the same name
    *  here.  Instead, we change by prepending "ace_".
    */
-  //@{
+  /// @{
   /// Returns true if the character is an alphanumeric character.
   ACE_NAMESPACE_INLINE_FUNCTION
   int ace_isalnum (ACE_TCHAR c);
@@ -122,7 +122,7 @@ namespace ACE_OS {
   /// Tests @a c for the property specified by the @a desc argument
   ACE_NAMESPACE_INLINE_FUNCTION
   int ace_isctype (int c, ctype_t desc);
-  //@}
+  /// @}
 
 } /* namespace ACE_OS */
 

@@ -6,7 +6,6 @@
 #include "ace/OS_NS_poll.h"
 #include "ace/OS_NS_unistd.h"
 
-
 #if defined (ACE_HAS_STREAM_PIPES)
 
 #include "shared.h"
@@ -22,7 +21,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   struct pollfd poll_array[MAX_HANDLES];
   ACE_HANDLE handle;
 
-  for (handle = 0; handle < MAX_HANDLES; handle++)
+  for (handle = 0; handle < MAX_HANDLES; ++handle)
     {
       poll_array[handle].fd = -1;
       poll_array[handle].events = POLLIN;
@@ -50,7 +49,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Handle pending logging messages first (s_handle + 1 is
       // guaranteed to be lowest client descriptor).
 
-      for (handle = s_handle + 1; handle < width; handle++)
+      for (handle = s_handle + 1; handle < width; ++handle)
         if (ACE_BIT_ENABLED (poll_array[handle].revents, POLLIN)
             || ACE_BIT_ENABLED (poll_array[handle].revents, POLLHUP))
           {
@@ -70,7 +69,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 if (handle + 1 == width)
                   {
                     while (poll_array[handle].fd == -1)
-                      handle--;
+                      --handle;
                     width = handle + 1;
                   }
               }
@@ -91,7 +90,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         "get_remote_addr failed"));
 
           ACE_DEBUG ((LM_DEBUG,
-                      "n_handle = %d, uid = %d, gid = %d\n",
+                      "n_handle = %H, uid = %d, gid = %d\n",
                       n_handle,
                       client.user_id (),
                       client.group_id ()));

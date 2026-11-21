@@ -22,7 +22,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 // The default UDP multicast port number for locating the TAO Naming
 // Service.
 #if !defined (TAO_DEFAULT_NAME_SERVER_REQUEST_PORT)

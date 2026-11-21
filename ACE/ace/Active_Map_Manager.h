@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_ACTIVE_MAP_MANAGER_H
 #define ACE_ACTIVE_MAP_MANAGER_H
 #include /**/ "ace/pre.h"
@@ -35,7 +34,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Active_Map_Manager_Key
 {
 public:
-  /// Default constructor.
   ACE_Active_Map_Manager_Key ();
 
   /**
@@ -73,8 +71,8 @@ public:
   bool operator== (const ACE_Active_Map_Manager_Key &rhs) const;
   bool operator!= (const ACE_Active_Map_Manager_Key &rhs) const;
 
-  // = This really should be protected but because of template
-  // friends, they are not.
+  /// These methods are public because the template friend declarations
+  /// require it.
 
   /// Increment the slot_generation number.
   void increment_slot_generation_count ();

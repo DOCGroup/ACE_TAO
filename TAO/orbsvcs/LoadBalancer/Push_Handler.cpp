@@ -13,8 +13,8 @@ TAO_LB_Push_Handler::TAO_LB_Push_Handler (
 
 int
 TAO_LB_Push_Handler::handle_timeout (
-  ACE_Time_Value const & /* current_time */,
-  void const * /* arg */)
+  ACE_Time_Value const &,
+  void const *)
 {
   try
     {
@@ -31,13 +31,15 @@ TAO_LB_Push_Handler::handle_timeout (
       this->manager_->push_loads (this->location_,
                                   loads.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       // Catch the exception and ignore it.
       //  @@ Yah?
 
       if (TAO_debug_level > 0)
+      {
         ex._tao_print_exception ("(%P|%t) Push_Handler::handle_timeout()\n");
+      }
     }
 
   return 0;

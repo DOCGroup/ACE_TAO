@@ -17,7 +17,7 @@
 #include "WUCS4_UTF16_export.h"
 #include "WUCS4_UTF16.h"
 
-typedef TAO_Codeset_Translator_Factory_T<WUCS4_UTF16> WUCS4_UTF16_Factory;
+using WUCS4_UTF16_Factory = TAO_Codeset_Translator_Factory_T<WUCS4_UTF16>;
 
 ACE_STATIC_SVC_DECLARE_EXPORT (UCS4_UTF16, WUCS4_UTF16_Factory)
 ACE_FACTORY_DECLARE (UCS4_UTF16, WUCS4_UTF16_Factory)

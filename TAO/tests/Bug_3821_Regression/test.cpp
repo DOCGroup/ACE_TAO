@@ -1,13 +1,15 @@
 #include "testC.h"
 #include "tao/CDR.h"
 
+#include <string>
+
 namespace
 {
   void
-  start_test (char const *&current_test, char const *name)
+  start_test (std::string &current_test, std::string const &name)
   {
     current_test = name;
-    ACE_DEBUG ((LM_DEBUG, "testing: %C\n", current_test));
+    ACE_DEBUG ((LM_DEBUG, "testing: %C\n", current_test.c_str ()));
   }
 
   template <typename T>
@@ -116,7 +118,7 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   int error {};
-  char const *current_test = "initialization";
+  std::string current_test {"initialization"};
 
   try
     {
@@ -429,7 +431,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: CORBA exception while testing %C\n",
-                  current_test));
+                  current_test.c_str ()));
       ex._tao_print_exception ("Exception caught:");
       error = 1;
     }

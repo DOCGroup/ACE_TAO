@@ -16,23 +16,24 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 class  Messenger_i : public virtual POA_Messenger
 {
 public:
-  //Constructor
-  Messenger_i (unsigned int seconds_to_wait = 0,
-               CORBA::Boolean throw_exception = 0);
+  explicit Messenger_i (unsigned int seconds_to_wait = 0,
+                        CORBA::Boolean throw_exception = false);
 
-  //Destructor
-  virtual ~Messenger_i ();
+  ~Messenger_i () override = default;
 
-virtual CORBA::Boolean send_message (
-    const char * user_name,
-    const char * subject,
-    char *& message,
-    CORBA::Long_out time_sent
-  );
+  CORBA::Boolean send_message (
+    char const *user_name,
+    char const *subject,
+    char *&message,
+    CORBA::Long_out time_sent) override;
+
+  Messenger_i (Messenger_i const &) = delete;
+  Messenger_i (Messenger_i &&) = delete;
+  Messenger_i &operator= (Messenger_i const &) = delete;
+  Messenger_i &operator= (Messenger_i &&) = delete;
 
 private:
   // Specify an amount of time to wait inside
@@ -43,6 +44,5 @@ private:
   // exception handling
   CORBA::Boolean throw_exception_;
 };
-
 
 #endif /* MESSENGER_IMPL_H_  */

@@ -47,7 +47,6 @@ namespace CORBA
 class TAO_Export TAO_Object_Loader : public ACE_Service_Object
 {
 public:
-  /// The destructor
   ~TAO_Object_Loader () override;
 
   /**

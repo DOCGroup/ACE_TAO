@@ -8,14 +8,36 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include <iosfwd>
+#include <memory>
 #include <xercesc/util/XMLString.hpp>
 
-// Utility class that provides a std::string like facade to XMLString.
-// Doesn't implement all of the methods of std::string.
 #include "XML_Utils_Export.h"
 
 namespace XML
 {
+  namespace detail
+  {
+    struct Transcoded_String_Deleter
+    {
+      void operator() (char *str) const noexcept
+      {
+        xercesc::XMLString::release (&str);
+      }
+    };
+
+    struct Xerces_String_Deleter
+    {
+      void operator() (XMLCh *str) const noexcept
+      {
+        xercesc::XMLString::release (&str);
+      }
+    };
+
+    using Transcoded_String = std::unique_ptr<char, Transcoded_String_Deleter>;
+    using Xerces_String = std::unique_ptr<XMLCh, Xerces_String_Deleter>;
+  }
+
+  /// Provides a subset of std::string's interface for Xerces XMLString values.
   class XML_Utils_Export XStr
   {
   public:
@@ -23,28 +45,30 @@ namespace XML
 
 // On unicode windows, ACE_TCHAR == XMLCh
 #if !defined(_MSC_VER) || !defined(ACE_USES_WCHAR)
-    explicit XStr (const ACE_TCHAR *str);
+    explicit XStr (ACE_TCHAR const *str);
 #endif
 
+    /// Adopts a Xerces-allocated string and releases it with XMLString::release.
     explicit XStr (XMLCh *wstr);
 
-    explicit XStr (const XMLCh *wstr);
+    /// Copies the input string into Xerces-managed storage.
+    explicit XStr (XMLCh const *wstr);
 
-    XStr (const XStr &copy);
+    XStr (XStr const &copy);
     XStr (XStr &&other) noexcept;
 
-    XStr &operator= (const XStr &rhs);
+    XStr &operator= (XStr const &rhs);
     XStr &operator= (XStr &&rhs) noexcept;
 
     ~XStr ();
 
-    const XMLCh *begin () const;
+    XMLCh const *begin () const;
 
-    const XMLCh *end () const;
+    XMLCh const *end () const;
 
-    bool append (const XMLCh *tail);
+    bool append (XMLCh const *tail);
 
-    bool erase (const XMLCh *head, const XMLCh *tail);
+    bool erase (XMLCh const *head, XMLCh const *tail);
 
     XMLSize_t size () const;
 
@@ -52,22 +76,25 @@ namespace XML
 
     XMLCh operator[] (XMLSize_t i) const;
 
-    operator const XMLCh * () const
+    /// Returns a borrowed pointer valid until this XStr is modified or destroyed.
+    operator XMLCh const * () const
     {
-      return _wstr;
-    };
+      return _wstr.get ();
+    }
 
+    /// Transfers ownership to the caller, which must release the string with Xerces.
     XMLCh *release ();
 
     /// Release the held string and free its memory.
     void reset ();
 
   private:
-    XMLCh *_wstr{}; // Internal representation
+    /// Owns the Xerces-allocated XML string.
+    detail::Xerces_String _wstr {};
   };
 
-  XML_Utils_Export bool operator== (const XStr &lhs, const XStr &rhs);
-  XML_Utils_Export bool operator!= (const XStr &lhs, const XStr &rhs);
+  XML_Utils_Export bool operator== (XStr const &lhs, XStr const &rhs);
+  XML_Utils_Export bool operator!= (XStr const &lhs, XStr const &rhs);
 
   XML_Utils_Export std::ostream &operator<< (std::ostream &o, XStr const &str);
 }

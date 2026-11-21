@@ -35,7 +35,6 @@ class TAO_Notify_Method_Request_Queueable;
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request
 {
 public:
-  /// Destructor.
   virtual ~TAO_Notify_Method_Request ();
 
   /// Execute the Request
@@ -55,10 +54,10 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Queueable
   , public TAO_Notify_Method_Request
 {
 public:
-  enum {PRIORITY_BASE = 32768};
+  static constexpr int PRIORITY_BASE = 32768;
 
-  TAO_Notify_Method_Request_Queueable();
-  TAO_Notify_Method_Request_Queueable(const TAO_Notify_Event * event);
+  TAO_Notify_Method_Request_Queueable ();
+  explicit TAO_Notify_Method_Request_Queueable(const TAO_Notify_Event * event);
 
   TAO_Notify_Method_Request_Queueable* copy () override;
   void init (const TAO_Notify_Event * event);

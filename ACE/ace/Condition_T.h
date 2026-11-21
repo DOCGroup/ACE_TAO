@@ -50,27 +50,34 @@ template <class MUTEX>
 class ACE_Condition
 {
 public:
+  ACE_Condition (ACE_Condition const &) = delete;
+  ACE_Condition (ACE_Condition &&) = delete;
+  ACE_Condition &operator= (ACE_Condition const &) = delete;
+  ACE_Condition &operator= (ACE_Condition &&) = delete;
+
   /// Initialize the condition variable.
-  ACE_Condition (MUTEX &m, int type = USYNC_THREAD,
-                 const ACE_TCHAR *name = nullptr, void *arg = nullptr);
+  explicit ACE_Condition (MUTEX &m, int type = USYNC_THREAD,
+                          ACE_TCHAR const *name = nullptr, void *arg = nullptr);
 
   /// Initialize the condition variable.
   ACE_Condition (MUTEX &m,
-                 const ACE_Condition_Attributes &attributes,
-                 const ACE_TCHAR *name = nullptr,
+                 ACE_Condition_Attributes const &attributes,
+                 ACE_TCHAR const *name = nullptr,
                  void *arg = nullptr);
 
   /// Implicitly destroy the condition variable.
   ~ACE_Condition ();
 
-  // = Lock accessors.
+  /// @name Condition operations.
+  /// @{
+
   /**
    * Block on condition, or until absolute time-of-day has passed.  If
    * @a abstime == 0 use "blocking" <wait> semantics.  Else, if @a abstime
    * != 0 and the call times out before the condition is signaled
    * wait() returns -1 and sets errno to ETIME.
    */
-  int wait (const ACE_Time_Value *abstime);
+  int wait (ACE_Time_Value const *abstime);
 
   /// Block on condition.
   int wait ();
@@ -83,7 +90,7 @@ public:
    * call times out before the condition is signaled wait() returns -1
    * and sets errno to ETIME.
    */
-  int wait (MUTEX &mutex, const ACE_Time_Value *abstime = nullptr);
+  int wait (MUTEX &mutex, ACE_Time_Value const *abstime = nullptr);
 
   /// Signal one waiting thread.
   int signal ();
@@ -91,7 +98,11 @@ public:
   /// Signal *all* waiting threads.
   int broadcast ();
 
-  // = Utility methods.
+  /// @}
+
+  /// @name Utility methods.
+  /// @{
+
   /// Explicitly destroy the condition variable.
   int remove ();
 
@@ -100,6 +111,7 @@ public:
 
   /// Dump the state of an object.
   void dump () const;
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -110,10 +122,6 @@ protected:
 
   /// Reference to mutex lock.
   MUTEX &mutex_;
-
-private:
-  void operator= (const ACE_Condition<MUTEX> &) = delete;
-  ACE_Condition (const ACE_Condition<MUTEX> &) = delete;
 };
 
 /**
@@ -137,7 +145,7 @@ template <class MUTEX>
 class ACE_Thread_Condition : public ACE_Condition<MUTEX>
 {
 public:
-  ACE_Thread_Condition (MUTEX &m, const ACE_TCHAR *name = nullptr, void *arg = nullptr);
+  explicit ACE_Thread_Condition (MUTEX &m, ACE_TCHAR const *name = nullptr, void *arg = nullptr);
 
   /// Dump the state of an object.
   void dump () const;

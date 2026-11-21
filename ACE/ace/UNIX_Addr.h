@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_UNIX_ADDR_H
 #define ACE_UNIX_ADDR_H
 
@@ -37,13 +36,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_UNIX_Addr : public ACE_Addr
 {
 public:
-  /// Default constructor.
   ACE_UNIX_Addr ();
 
-  /// Copy constructor.
   ACE_UNIX_Addr (const ACE_UNIX_Addr &sa);
 
-  /// Assignment operator
   ACE_UNIX_Addr& operator= (const ACE_UNIX_Addr&) = default;
 
   /// Creates an ACE_UNIX_Addr from a string.

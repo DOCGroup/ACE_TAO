@@ -8,23 +8,42 @@
 #include "ace/Profile_Timer.h"
 #include "ace/Lock_Adapter_T.h"
 #include "../Latency_Stats.h"
+#include <cerrno>
+#include <limits>
 
-static size_t number_of_messages = 100;
-static size_t message_size = 100;
-static size_t number_of_workers = 10;
-static size_t burst_size = 10;
-static size_t timeout_between_bursts = 1;
+static size_t number_of_messages {100};
+static size_t message_size {100};
+static size_t number_of_workers {10};
+static size_t burst_size {10};
+static size_t timeout_between_bursts {1};
 
-enum DEBUGGING_RANGE
+enum class DEBUGGING_RANGE
 {
-  DEBUG_NONE = 0,
-  DEFAULT = 1,
-  PRINT_INDIVIDUAL_LATENCY = 2
+  DEBUG_NONE,
+  DEFAULT,
+  PRINT_INDIVIDUAL_LATENCY
 };
 
-static DEBUGGING_RANGE debug = DEBUG_NONE;
+static DEBUGGING_RANGE debug {DEBUGGING_RANGE::DEBUG_NONE};
 
-static ACE_Data_Block *data_block = 0;
+// Shared refcounted storage stays alive until all queued message blocks drain.
+static ACE_Data_Block *data_block {};
+
+static bool
+parse_size (ACE_TCHAR const *argument, size_t &value)
+{
+  ACE_TCHAR *end {};
+  errno = 0;
+  long const parsed = ACE_OS::strtol (argument, &end, 10);
+  if (argument == end || *end != ACE_TEXT ('\0') || errno == ERANGE || parsed < 0
+      || static_cast<unsigned long> (parsed) > (std::numeric_limits<size_t>::max) ())
+    {
+      return false;
+    }
+
+  value = static_cast<size_t> (parsed);
+  return true;
+}
 
 class Message_Block : public ACE_Message_Block
 {
@@ -33,6 +52,12 @@ public:
                  ACE_hrtime_t start_of_burst);
 
   ACE_hrtime_t start_of_burst_;
+
+private:
+  Message_Block (Message_Block const &) = delete;
+  Message_Block &operator= (Message_Block const &) = delete;
+  Message_Block (Message_Block &&) = delete;
+  Message_Block &operator= (Message_Block &&) = delete;
 };
 
 Message_Block::Message_Block (ACE_Data_Block *data_block,
@@ -42,30 +67,41 @@ Message_Block::Message_Block (ACE_Data_Block *data_block,
 {
 }
 
-
 using TASK = ACE_Task<ACE_SYNCH>;
 
 class Worker_Task : public TASK
 {
 public:
   Worker_Task (ACE_Message_Queue<ACE_SYNCH> *mq);
-  int svc ();
+  int svc () override;
 
   size_t messages_dequeued_;
 
   Latency_Stats latency_stats_;
   Throughput_Stats throughput_stats_;
+
+private:
+  Worker_Task (Worker_Task const &) = delete;
+  Worker_Task &operator= (Worker_Task const &) = delete;
+  Worker_Task (Worker_Task &&) = delete;
+  Worker_Task &operator= (Worker_Task &&) = delete;
 };
 
 class IO_Task : public TASK
 {
 public:
   IO_Task (ACE_Message_Queue<ACE_SYNCH> *mq);
-  int svc ();
+  int svc () override;
+
+private:
+  IO_Task (IO_Task const &) = delete;
+  IO_Task &operator= (IO_Task const &) = delete;
+  IO_Task (IO_Task &&) = delete;
+  IO_Task &operator= (IO_Task &&) = delete;
 };
 
 Worker_Task::Worker_Task (ACE_Message_Queue<ACE_SYNCH> *mq)
-  : TASK (0, mq),
+  : TASK (nullptr, mq),
     messages_dequeued_ (0)
 {
 }
@@ -75,8 +111,8 @@ Worker_Task::svc ()
 {
   for (;;)
     {
-      ACE_Message_Block *mb = 0;
-      int result = this->getq (mb);
+      ACE_Message_Block *mb {};
+      int const result = this->getq (mb);
       if (result == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -85,38 +121,43 @@ Worker_Task::svc ()
                             -1);
         }
 
+      ACE_Message_Block_Unique_Ptr message_owner {mb};
       ACE_Message_Block::ACE_Message_Type message_type =
         mb->msg_type ();
 
       // If STOP message, break loop and end the task.
       if (message_type == ACE_Message_Block::MB_STOP)
         {
-          if (debug)
+          if (debug != DEBUGGING_RANGE::DEBUG_NONE)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "(%t) stop message dequeued after %d data messages\n",
+                          "(%t) stop message dequeued after %B data messages\n",
                           this->messages_dequeued_));
             }
 
-          mb->release ();
           break;
         }
 
-      Message_Block *message_block =
-        dynamic_cast<Message_Block *> (mb);
+      Message_Block *message_block = dynamic_cast<Message_Block *> (mb);
+      if (message_block == nullptr)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Worker_Task::svc (%t): unexpected message block type\n"),
+                            -1);
+        }
 
-      ACE_hrtime_t start_of_burst_for_this_message_block =
+      ACE_hrtime_t const start_of_burst_for_this_message_block =
         message_block->start_of_burst_;
 
-      mb->release ();
+      message_owner.reset ();
 
       // Counter.
       ++this->messages_dequeued_;
 
-      if (debug)
+      if (debug != DEBUGGING_RANGE::DEBUG_NONE)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%t) dequeued its %d message\n",
+                      "(%t) dequeued its %B message\n",
                       this->messages_dequeued_));
         }
 
@@ -128,20 +169,20 @@ Worker_Task::svc ()
         {
           // Eat a little CPU
           /* takes about 40.2 usecs on a 167 MHz Ultra2 */
-          u_long n = 11UL;
+          u_long const n = 11UL;
           ACE::is_prime (n, 2, n / 2);
         }
 
       //
       // Record stats for this message.
       //
-      ACE_hrtime_t latency_from_start_of_burst =
+      ACE_hrtime_t const latency_from_start_of_burst =
         ACE_OS::gethrtime () - start_of_burst_for_this_message_block;
       this->latency_stats_.sample (latency_from_start_of_burst);
 
       this->throughput_stats_.sample ();
 
-      if (debug >= PRINT_INDIVIDUAL_LATENCY)
+      if (debug >= DEBUGGING_RANGE::PRINT_INDIVIDUAL_LATENCY)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%t) latency from start of burst: %Q\n",
@@ -153,42 +194,43 @@ Worker_Task::svc ()
 }
 
 IO_Task::IO_Task (ACE_Message_Queue<ACE_SYNCH> *mq)
-  : TASK (0, mq)
+  : TASK (nullptr, mq)
 {
 }
 
 int
 IO_Task::svc ()
 {
-  size_t i = 0;
-  size_t messages_queued = 1;
-  size_t burst = 1;
+  size_t i {};
+  size_t messages_queued {1};
+  size_t burst {1};
 
   // Data messages.
   while (number_of_messages > 0)
     {
-      ACE_hrtime_t start_of_burst = ACE_OS::gethrtime ();
+      ACE_hrtime_t const start_of_burst = ACE_OS::gethrtime ();
 
       for (i = 1;
            i <= burst_size && number_of_messages > 0;
            ++i, --number_of_messages, ++messages_queued)
         {
-          if (debug)
+          if (debug != DEBUGGING_RANGE::DEBUG_NONE)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "(%t) IO thread -> burst %d: message %d; overall message %d\n",
+                          "(%t) IO thread -> burst %B: message %B; overall message %B\n",
                           burst,
                           i,
                           messages_queued));
             }
 
-          Message_Block *message_block = 0;
+          Message_Block *message_block {};
           ACE_NEW_RETURN (message_block,
                           Message_Block (data_block,
                                          start_of_burst),
                           -1);
 
-          int result = this->putq (message_block);
+          ACE_Message_Block_Unique_Ptr message_owner {message_block};
+          int const result = this->putq (message_owner.get ());
           if (result == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -196,6 +238,7 @@ IO_Task::svc ()
                                  "putq error"),
                                 -1);
             }
+          message_owner.release ();
         }
 
       ++burst;
@@ -206,13 +249,13 @@ IO_Task::svc ()
   // Terminate messages.
   for (i = 0; i < number_of_workers; ++i)
     {
-      ACE_Message_Block *message_block = 0;
+      ACE_Message_Block *message_block {};
       ACE_NEW_RETURN (message_block,
-                      ACE_Message_Block ((size_t)0,
-                                         (int)ACE_Message_Block::MB_STOP),
+                      ACE_Message_Block (0, ACE_Message_Block::MB_STOP),
                       -1);
 
-      int result = this->putq (message_block);
+      ACE_Message_Block_Unique_Ptr message_owner {message_block};
+      int const result = this->putq (message_owner.get ());
       if (result == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -220,6 +263,7 @@ IO_Task::svc ()
                              "putq error"),
                             -1);
         }
+      message_owner.release ();
     }
 
   return 0;
@@ -229,29 +273,54 @@ static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("m:s:w:b:t:d:"));
-  int c;
+  int c {};
 
   while ((c = get_opt ()) != -1)
     {
       switch (c)
         {
         case 'm':
-          number_of_messages = ACE_OS::atoi (get_opt.opt_arg ());
+          if (!parse_size (get_opt.opt_arg (), number_of_messages))
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Invalid message count\n"), -1);
+            }
           break;
         case 's':
-          message_size = ACE_OS::atoi (get_opt.opt_arg ());
+          if (!parse_size (get_opt.opt_arg (), message_size))
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Invalid message size\n"), -1);
+            }
           break;
         case 'w':
-          number_of_workers = ACE_OS::atoi (get_opt.opt_arg ());
+          if (!parse_size (get_opt.opt_arg (), number_of_workers)
+              || number_of_workers == 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Worker count must be positive\n"), -1);
+            }
           break;
         case 'b':
-          burst_size = ACE_OS::atoi (get_opt.opt_arg ());
+          if (!parse_size (get_opt.opt_arg (), burst_size)
+              || burst_size == 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Burst size must be positive\n"), -1);
+            }
           break;
         case 't':
-          timeout_between_bursts = ACE_OS::atoi (get_opt.opt_arg ());
+          if (!parse_size (get_opt.opt_arg (), timeout_between_bursts))
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Invalid timeout\n"), -1);
+            }
           break;
         case 'd':
-          debug = static_cast<DEBUGGING_RANGE> (ACE_OS::atoi (get_opt.opt_arg ()));
+          {
+            size_t parsed_debug {};
+            if (!parse_size (get_opt.opt_arg (), parsed_debug)
+                || parsed_debug > static_cast<size_t> (DEBUGGING_RANGE::PRINT_INDIVIDUAL_LATENCY))
+              {
+                ACE_ERROR_RETURN ((LM_ERROR, "Invalid debug level\n"), -1);
+              }
+            debug = static_cast<DEBUGGING_RANGE> (parsed_debug);
+          }
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -282,7 +351,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   move_to_rt_class ();
   ACE_High_Res_Timer::calibrate ();
 
-  size_t i = 0;
+  size_t i {};
 
   ACE_NEW_RETURN (data_block,
                   ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >,
@@ -296,7 +365,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Message_Queue<ACE_SYNCH> message_queue;
 
   // Workers.
-  Worker_Task **workers = 0;
+  // Keep manual worker ownership: task creation is in the timed section, and
+  // already activated workers still refer to their task on early returns.
+  Worker_Task **workers {};
   ACE_NEW_RETURN (workers,
                   Worker_Task *[number_of_workers],
                   -1);
@@ -379,7 +450,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       latency.accumulate (workers[i]->latency_stats_);
       throughput.accumulate (workers[i]->throughput_stats_);
-      ACE_DEBUG ((LM_DEBUG, "Thread[%d]: ", i));
+      ACE_DEBUG ((LM_DEBUG, "Thread[%B]: ", i));
       workers[i]->throughput_stats_.dump_results (ACE_TEXT(""), ACE_TEXT(""));
     }
 

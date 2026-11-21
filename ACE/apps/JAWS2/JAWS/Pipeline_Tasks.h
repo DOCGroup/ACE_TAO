@@ -19,8 +19,8 @@ class JAWS_Export JAWS_Pipeline_Handler
 public:
   JAWS_Pipeline_Handler ();
   virtual ~JAWS_Pipeline_Handler ();
-  virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
-  virtual int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv) = 0;
+  int put (ACE_Message_Block *mb, ACE_Time_Value *tv = nullptr) override;
+  int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv) override = 0;
 
   virtual JAWS_Dispatch_Policy * policy ();
   virtual void policy (JAWS_Dispatch_Policy *);
@@ -32,8 +32,8 @@ private:
 class JAWS_Pipeline_Accept_Task : public JAWS_Pipeline_Handler
 {
 public:
-  virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
-  virtual int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv);
+  int put (ACE_Message_Block *mb, ACE_Time_Value *tv = nullptr) override;
+  int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv) override;
 
   virtual JAWS_IO_Handler * new_handler (JAWS_Data_Block *data);
 };
@@ -41,8 +41,8 @@ public:
 class JAWS_Pipeline_Done_Task : public JAWS_Pipeline_Handler
 {
 public:
-  virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
-  virtual int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv);
+  int put (ACE_Message_Block *mb, ACE_Time_Value *tv = nullptr) override;
+  int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv) override;
 };
 
 using JAWS_Pipeline_Accept_Task_Singleton = ACE_Singleton<JAWS_Pipeline_Accept_Task, ACE_SYNCH_MUTEX>;

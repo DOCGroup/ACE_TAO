@@ -4,6 +4,7 @@
 #include "ace/Truncate.h"
 #include "ace/os_include/netinet/os_in.h"
 #include "ace/os_include/arpa/os_inet.h"
+#include <memory>
 
 #include "Time_Request_Reply.h"
 
@@ -48,7 +49,7 @@ ACE_Time_Request::size () const
   return sizeof (this->transfer_);
 }
 
-// = Set/get the type of the message.
+/// Set or get the message type.
 ACE_INT32
 ACE_Time_Request::msg_type () const
 {
@@ -63,7 +64,7 @@ ACE_Time_Request::msg_type (ACE_INT32 t)
   this->transfer_.msg_type_ = t;
 }
 
-// = Set/get the blocking semantics.
+/// Set or get whether the request blocks indefinitely.
 ACE_UINT32
 ACE_Time_Request::block_forever () const
 {
@@ -78,7 +79,7 @@ ACE_Time_Request::block_forever (ACE_UINT32 bs)
   this->transfer_.block_forever_ = bs;
 }
 
-// = Set/get the timeout.
+/// Set or get the timeout.
 ACE_Time_Value
 ACE_Time_Request::timeout () const
 {
@@ -95,7 +96,7 @@ ACE_Time_Request::timeout (const ACE_Time_Value& timeout)
   this->transfer_.usec_timeout_ = timeout.usec ();
 }
 
-// = Set/get the time
+/// Set or get the time.
 time_t
 ACE_Time_Request::time () const
 {
@@ -118,15 +119,17 @@ ACE_Time_Request::encode (void *&buf)
   ACE_TRACE ("ACE_Time_Request::encode");
   // Compute the length *before* doing the marshaling.
 
-  buf = (void *) &this->transfer_;
+  buf = std::addressof (this->transfer_);
   this->transfer_.block_forever_ = ACE_HTONL (this->transfer_.block_forever_);
   this->transfer_.usec_timeout_  = ACE_HTONL (this->transfer_.usec_timeout_);
   this->transfer_.msg_type_      = ACE_HTONL (this->transfer_.msg_type_);
 #if defined (ACE_LITTLE_ENDIAN)
   ACE_UINT64 secs = this->transfer_.sec_timeout_;
-  ACE_CDR::swap_8 ((const char *)&secs, (char *)&this->transfer_.sec_timeout_);
+  ACE_CDR::swap_8 (reinterpret_cast<char const *> (std::addressof (secs)),
+                   reinterpret_cast<char *> (std::addressof (this->transfer_.sec_timeout_)));
   secs = this->transfer_.time_;
-  ACE_CDR::swap_8 ((const char *)&secs, (char *)&this->transfer_.time_);
+  ACE_CDR::swap_8 (reinterpret_cast<char const *> (std::addressof (secs)),
+                   reinterpret_cast<char *> (std::addressof (this->transfer_.time_)));
 #endif
 
   return this->size ();  // Always fixed
@@ -144,9 +147,11 @@ ACE_Time_Request::decode ()
   this->transfer_.msg_type_      = ACE_NTOHL (this->transfer_.msg_type_);
 #if defined (ACE_LITTLE_ENDIAN)
   ACE_UINT64 secs = this->transfer_.sec_timeout_;
-  ACE_CDR::swap_8 ((const char *)&secs, (char *)&this->transfer_.sec_timeout_);
+  ACE_CDR::swap_8 (reinterpret_cast<char const *> (std::addressof (secs)),
+                   reinterpret_cast<char *> (std::addressof (this->transfer_.sec_timeout_)));
   secs = this->transfer_.time_;
-  ACE_CDR::swap_8 ((const char *)&secs, (char *)&this->transfer_.time_);
+  ACE_CDR::swap_8 (reinterpret_cast<char const *> (std::addressof (secs)),
+                   reinterpret_cast<char *> (std::addressof (this->transfer_.time_)));
 #endif
 
   this->time_ = ACE_Utils::truncate_cast<time_t> (this->transfer_.time_);
@@ -160,7 +165,7 @@ ACE_Time_Request::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Time_Request::dump");
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("*******\nlength = %d\n"),
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("*******\nlength = %b\n"),
               this->size ()));
   ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("message-type = ")));
 
@@ -175,17 +180,19 @@ ACE_Time_Request::dump () const
     }
 
   if (this->block_forever ())
-    ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("blocking forever\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("blocking forever\n")));
+    }
   else
     {
 #if !defined (ACE_NLOGGING)
       ACE_Time_Value tv = this->timeout ();
 #endif /* ! ACE_NLOGGING */
-      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("waiting for %d secs and %d usecs\n"),
-                  (int)(tv.sec ()), tv.usec ()));
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("waiting for %: secs and %q usecs\n"),
+                  tv.sec (), static_cast<ACE_INT64> (tv.usec ())));
     }
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("*******\ntime = %d\n"),
-              (int)(this->time ())));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("*******\ntime = %:\n"),
+              this->time ()));
   ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("+++++++\n")));
 #endif /* ACE_HAS_DUMP */
 }

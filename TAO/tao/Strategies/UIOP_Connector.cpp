@@ -16,15 +16,14 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-TAO_UIOP_Connector::~TAO_UIOP_Connector () = default;
 
 TAO_UIOP_Connector::TAO_UIOP_Connector ()
   : TAO_Connector (TAO_TAG_UIOP_PROFILE),
     connect_strategy_ (),
-    base_connector_ (0)
+    base_connector_ (nullptr)
 {
 }
 
@@ -35,36 +34,45 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
 
   // Create our connect strategy
   if (this->create_connect_strategy () == -1)
+  {
     return -1;
+  }
 
   // Our connect creation strategy
-  TAO_UIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy = nullptr;
+  TAO_UIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy {};
 
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_UIOP_CONNECT_CREATION_STRATEGY
                       (orb_core->thr_mgr (),
                        orb_core),
                   -1);
+  std::unique_ptr<TAO_UIOP_CONNECT_CREATION_STRATEGY> creation_strategy_owner (
+    connect_creation_strategy);
 
   /// Our activation strategy
-  TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = nullptr;
+  TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy {};
 
   ACE_NEW_RETURN (concurrency_strategy,
                   TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY (orb_core),
                   -1);
+  std::unique_ptr<TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY> concurrency_strategy_owner (
+    concurrency_strategy);
 
-  return this->base_connector_.open (this->orb_core ()->reactor (),
-                                     connect_creation_strategy,
-                                     &this->connect_strategy_,
-                                     concurrency_strategy);
+  int const result = this->base_connector_.open (this->orb_core ()->reactor (),
+                                                 creation_strategy_owner.get (),
+                                                 std::addressof (this->connect_strategy_),
+                                                 concurrency_strategy_owner.get ());
+  this->creation_strategy_.reset (creation_strategy_owner.release ());
+  this->concurrency_strategy_.reset (concurrency_strategy_owner.release ());
+  return result;
 }
 
 int
 TAO_UIOP_Connector::close ()
 {
   // Zap the creation strategy that we created earlier.
-  delete this->base_connector_.creation_strategy ();
-  delete this->base_connector_.concurrency_strategy ();
+  this->creation_strategy_.reset ();
+  this->concurrency_strategy_.reset ();
 
   return this->base_connector_.close ();
 }
@@ -73,22 +81,25 @@ TAO_Profile *
 TAO_UIOP_Connector::corbaloc_scan (const char *str, size_t &len)
 {
   if (this->check_prefix (str) != 0)
+  {
     return 0;
+  }
 
   const char *separator = std::strchr (str,'|');
   if (separator == nullptr)
     {
       if (TAO_debug_level)
-        TAOLIB_DEBUG ((LM_DEBUG,
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - TAO_UIOP_CONNECTOR::corbaloc_scan error: "
                     "explicit terminating charactor '|' is missing from <%C>",
                     str));
+        }
       return 0;
     }
   len = separator - str;
   return this->make_profile ();
 }
-
 
 int
 TAO_UIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
@@ -96,7 +107,9 @@ TAO_UIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
   TAO_UIOP_Endpoint *uiop_endpoint = this->remote_endpoint (endpoint);
 
   if (uiop_endpoint == nullptr)
+  {
     return -1;
+  }
 
    const ACE_UNIX_Addr &remote_address = uiop_endpoint->object_addr ();
 
@@ -127,23 +140,29 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                                      ACE_Time_Value *max_wait_time)
 {
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG,
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - UIUP_Connector::make_connection, ")
                 ACE_TEXT ("looking for UIOP connection.\n")));
+    }
 
   TAO_UIOP_Endpoint *uiop_endpoint =
     this->remote_endpoint (desc.endpoint ());
 
   if (uiop_endpoint == nullptr)
+  {
     return 0;
+  }
 
   const ACE_UNIX_Addr &remote_address =
     uiop_endpoint->object_addr ();
 
   if (TAO_debug_level > 2)
-    TAOLIB_DEBUG ((LM_DEBUG,
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - UIUP_Connector::make_connection, ")
                 ACE_TEXT ("making a new connection\n")));
+    }
 
   // Get the right synch options
   ACE_Synch_Options synch_options;
@@ -155,10 +174,10 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   // polling the reactor for connection completion. However, the side-effect
   // was to cause the connection to timeout immediately.
 
-  TAO_UIOP_Connection_Handler *svc_handler = nullptr;
+  TAO_UIOP_Connection_Handler *svc_handler {};
 
   // Connect.
-  int result =
+  int const result =
     this->base_connector_.connect (svc_handler,
                                    remote_address,
                                    synch_options);
@@ -183,9 +202,11 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                                                      max_wait_time))
             {
               if (TAO_debug_level > 2)
-                TAOLIB_ERROR ((LM_ERROR, "TAO (%P|%t) - UIOP_Connector::"
+                {
+                  TAOLIB_ERROR ((LM_ERROR, "TAO (%P|%t) - UIOP_Connector::"
                                       "make_connection, "
                                       "wait for completion failed\n"));
+                }
             }
         }
       else
@@ -200,11 +221,13 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     {
       // Give users a clue to the problem.
       if (TAO_debug_level > 3)
+        {
           TAOLIB_ERROR ((LM_ERROR,
                       "TAO (%P|%t) - UIOP_Connector::make_connection, "
                       "connection to <%C> failed (%p)\n",
                       uiop_endpoint->rendezvous_point (),
                       ACE_TEXT("errno")));
+        }
 
       return 0;
     }
@@ -224,16 +247,18 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   // At this point, the connection has be successfully created
   // connected or not connected, but we have a connection.
   if (TAO_debug_level > 2)
-    TAOLIB_DEBUG ((LM_DEBUG,
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - UIOP_Connector::make_connection, "
-                "new %C connection to <%C> on Transport[%B]\n",
+                "new %C connection to <%C> on handle [%H]\n",
                 transport->is_connected() ? "connected" : "not connected",
                 uiop_endpoint->rendezvous_point (),
                 svc_handler->peer ().get_handle ()));
+    }
 
   // Add the handler to Cache
-  int retval =
-    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&desc,
+  int const retval =
+    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (std::addressof (desc),
                                                                              transport);
   // Failure in adding to cache.
   if (retval == -1)
@@ -271,11 +296,13 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       (void) transport->close_connection ();
 
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
+        {
+          TAOLIB_ERROR ((LM_ERROR,
                     "TAO (%P|%t) - UIOP_Connector [%B]::make_connection, "
                     "could not register the transport "
                     "in the reactor.\n",
                     transport->id ()));
+        }
 
       return 0;
     }
@@ -284,14 +311,13 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   return transport;
 }
 
-
 TAO_Profile *
 TAO_UIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
   TAO_Profile *pfile;
   ACE_NEW_RETURN (pfile,
                   TAO_UIOP_Profile (this->orb_core ()),
-                  0);
+                  nullptr);
 
   const int r = pfile->decode (cdr);
   if (r == -1)
@@ -306,7 +332,7 @@ TAO_UIOP_Connector::create_profile (TAO_InputCDR& cdr)
 TAO_Profile *
 TAO_UIOP_Connector::make_profile ()
 {
-  TAO_Profile *profile = nullptr;
+  TAO_Profile *profile {};
   ACE_NEW_THROW_EX (profile,
                     TAO_UIOP_Profile (this->orb_core ()),
                     CORBA::NO_MEMORY (
@@ -314,7 +340,6 @@ TAO_UIOP_Connector::make_profile ()
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-
 
   return profile;
 }
@@ -324,7 +349,9 @@ TAO_UIOP_Connector::check_prefix (const char *endpoint)
 {
   // Check for a valid string
   if (!endpoint || !*endpoint)
+  {
     return -1;  // Failure
+  }
 
   static const char *protocol[] = { "uiop", "uioploc" };
 
@@ -339,12 +366,16 @@ TAO_UIOP_Connector::check_prefix (const char *endpoint)
       && ACE_OS::strncasecmp (endpoint,
                               protocol[0],
                               len0) == 0)
-    return 0;
+    {
+      return 0;
+    }
   else if (slot == len1
            && ACE_OS::strncasecmp (endpoint,
                                    protocol[1],
                                    len1) == 0)
-    return 0;
+    {
+      return 0;
+    }
 
   return -1;
   // Failure: not an UIOP IOR DO NOT throw an exception here.
@@ -360,13 +391,17 @@ TAO_UIOP_Endpoint *
 TAO_UIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != TAO_TAG_UIOP_PROFILE)
+  {
     return 0;
+  }
 
   TAO_UIOP_Endpoint *uiop_endpoint =
     dynamic_cast<TAO_UIOP_Endpoint *> (endpoint);
 
   if (uiop_endpoint == nullptr)
+  {
     return 0;
+  }
 
   return uiop_endpoint;
 }
@@ -379,8 +414,10 @@ TAO_UIOP_Connector::cancel_svc_handler (
     dynamic_cast<TAO_UIOP_Connection_Handler*> (svc_handler);
 
   if (handler)
-    // Cancel from the connector
-    return this->base_connector_.cancel (handler);
+    {
+      // Cancel from the connector
+      return this->base_connector_.cancel (handler);
+    }
 
   return -1;
 }

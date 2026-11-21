@@ -25,7 +25,6 @@
 class TAO_RTEC_Perf_Export Loopback_Pair
 {
 public:
-  /// Constructor
   /**
    * We need a default constructor because this class is often used in
    * arrays.
@@ -56,13 +55,13 @@ public:
   /// Disconnect from the event channel
   void disconnect ();
 
-  //@{
+  /// @{
   /** @name Accessors
    */
   Loopback_Supplier *loopback_supplier () const;
 
   Loopback_Consumer *loopback_consumer () const;
-  //@}
+  /// @}
 
 private:
   Servant_var<Loopback_Supplier> loopback_supplier_;

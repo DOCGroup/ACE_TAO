@@ -6,9 +6,8 @@
 #include "ORB_Task.h"
 #include "tao/Environment.h"
 
-
-ORB_Task::ORB_Task(CORBA::ORB_ptr orb)
-  : orb_(CORBA::ORB::_duplicate(orb))
+ORB_Task::ORB_Task (CORBA::ORB_ptr orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -17,9 +16,9 @@ ORB_Task::svc ()
 {
   try
     {
-      this->orb_->run();
+      this->orb_->run ();
     }
-  catch (const CORBA::Exception& )
+  catch (CORBA::Exception const &)
     {
     }
   return 0;

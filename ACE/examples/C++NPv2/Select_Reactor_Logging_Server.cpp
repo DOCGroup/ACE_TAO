@@ -14,30 +14,30 @@
 #else
 #  include <string>
 #endif
+#include <cstring>
+#include <memory>
 
 #include "Reactor_Logging_Server_T.h"
 #include "Logging_Acceptor_Ex.h"
 
 using Server_Logging_Daemon = Reactor_Logging_Server<Logging_Acceptor_Ex>;
 
-
 class Quit_Handler : public ACE_Event_Handler {
 public:
-  Quit_Handler (ACE_Reactor *r) : ACE_Event_Handler (r) {}
+  explicit Quit_Handler (ACE_Reactor *r) : ACE_Event_Handler (r) {}
 
-  virtual int handle_exception (ACE_HANDLE) {
+  int handle_exception (ACE_HANDLE) override {
     reactor ()->end_reactor_event_loop ();
     return -1; // Trigger call to handle_close() method.
   }
 
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask)
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override
   { delete this; return 0; }
 
 protected:
   // Protected destructor ensures dynamic allocation.
-  virtual ~Quit_Handler () = default;
+  ~Quit_Handler () override = default;
 };
-
 
 static ACE_THR_FUNC_RETURN event_loop (void *arg) {
   ACE_Reactor *reactor = static_cast<ACE_Reactor *> (arg);
@@ -47,18 +47,17 @@ static ACE_THR_FUNC_RETURN event_loop (void *arg) {
   return 0;
 }
 
-
 static ACE_THR_FUNC_RETURN controller (void *arg) {
   ACE_Reactor *reactor = static_cast<ACE_Reactor *> (arg);
 
-  Quit_Handler *quit_handler = nullptr;
-  ACE_NEW_RETURN (quit_handler, Quit_Handler (reactor), 0);
+  Quit_Handler *quit_handler {};
+  ACE_NEW_RETURN (quit_handler, Quit_Handler (reactor), ACE_THR_FUNC_RETURN_NULL);
 
 #if defined (ACE_WIN32) && defined (ACE_USES_OLD_IOSTREAMS)
   for (;;) {
     char user_input[80];
     ACE_OS::fgets (user_input, sizeof (user_input), stdin);
-    if (ACE_OS::strcmp (user_input, "quit") == 0) {
+    if (std::strcmp (user_input, "quit") == 0) {
       reactor->notify (quit_handler);
       break;
     }
@@ -77,20 +76,19 @@ static ACE_THR_FUNC_RETURN controller (void *arg) {
   return 0;
 }
 
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Select_Reactor select_reactor;
-  ACE_Reactor reactor (&select_reactor);
+  ACE_Reactor reactor (std::addressof (select_reactor));
 
   Server_Logging_Daemon *server;
   // Ignore argv[0]...
   --argc; ++argv;
   ACE_NEW_RETURN (server,
-                  Server_Logging_Daemon (argc, argv, &reactor),
+                  Server_Logging_Daemon (argc, argv, std::addressof (reactor)),
                   1);
-  ACE_Thread_Manager::instance ()->spawn (event_loop, &reactor);
-  ACE_Thread_Manager::instance ()->spawn (controller, &reactor);
+  ACE_Thread_Manager::instance ()->spawn (event_loop, std::addressof (reactor));
+  ACE_Thread_Manager::instance ()->spawn (controller, std::addressof (reactor));
   return ACE_Thread_Manager::instance ()->wait ();
 }
 

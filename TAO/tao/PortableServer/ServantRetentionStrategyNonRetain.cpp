@@ -1,11 +1,7 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    ServantRetentionStrategyNonRetain.cpp
  */
-//=============================================================================
-
 #include "tao/PortableServer/ServantRetentionStrategyNonRetain.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
 #include "tao/PortableServer/Servant_Upcall.h"
@@ -16,7 +12,9 @@
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Time_Value.h"
-#include "ace/OS_NS_sys_time.h"
+
+#include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -58,7 +56,7 @@ namespace TAO
     {
       // The system id is the id (and no conversion/transformation is
       // needed).
-      PortableServer::ObjectId *id = nullptr;
+      PortableServer::ObjectId *id {};
       ACE_NEW_THROW_EX (id,
                         PortableServer::ObjectId (system_id),
                         CORBA::NO_MEMORY ());
@@ -101,7 +99,7 @@ namespace TAO
       // not own the data.
       poa_current_impl.replace_object_id (system_id);
 
-      servant_upcall.user_id (&system_id);
+      servant_upcall.user_id (std::addressof (system_id));
 
       return nullptr;
     }
@@ -191,20 +189,20 @@ namespace TAO
       // and a timestamp isn't sufficient since multiple IDs may be
       // requested within the same time unit.
 
-      PortableServer::ObjectId *sys_id = nullptr;
+      PortableServer::ObjectId *sys_id {};
       ACE_NEW_THROW_EX (sys_id,
                         PortableServer::ObjectId (8),
                         CORBA::NO_MEMORY ());
 
       sys_id->length(8);
 
-      long count = this->sys_id_count_++;
-      ACE_Time_Value now = ACE_OS::gettimeofday();
-
-      ACE_UINT32 *id_ptr = reinterpret_cast<ACE_UINT32 *>(sys_id->get_buffer());
-
-      *(id_ptr++) = count;
-      *id_ptr = static_cast<ACE_UINT32>(now.sec());
+      // Only uniqueness is needed; this counter does not synchronize other state.
+      std::uint32_t const count =
+        this->sys_id_count_.fetch_add (1, std::memory_order_relaxed);
+      ACE_Time_Value const now = ACE_OS::gettimeofday();
+      std::uint32_t const seconds = static_cast<std::uint32_t> (now.sec ());
+      std::uint32_t const id_components[] {count, seconds};
+      std::memcpy (sys_id->get_buffer (), id_components, sizeof (id_components));
 
       system_id = sys_id;
 
@@ -214,8 +212,8 @@ namespace TAO
       // Remember params for potentially invoking <key_to_object> later.
       this->poa_->key_to_object_params_.set (system_id,
                                              intf,
-                                             0,
-                                             1,
+                                             nullptr,
+                                             true,
                                              priority,
                                              true);
 
@@ -237,12 +235,12 @@ namespace TAO
       // activated if necessary, or the default servant used, depending on
       // the applicable policies.
 
-      PortableServer::Servant servant = nullptr;
+      PortableServer::Servant servant {};
       PortableServer::ObjectId_var system_id;
 
       // Otherwise, it is the NON_RETAIN policy.  Therefore, user id
       // is the same as system id.
-      PortableServer::ObjectId *sys_id = nullptr;
+      PortableServer::ObjectId *sys_id {};
       ACE_NEW_THROW_EX (sys_id,
                         PortableServer::ObjectId (oid),
                         CORBA::NO_MEMORY ());
@@ -253,7 +251,7 @@ namespace TAO
       this->poa_->key_to_object_params_.set (system_id,
                                              intf,
                                              servant,
-                                             1,
+                                             true,
                                              priority,
                                              true);
 

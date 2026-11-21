@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_MCAST_PARSER_H
 #define TAO_MCAST_PARSER_H
 
@@ -39,19 +38,18 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_MCAST_Parser : public TAO_IOR_Parser
 {
 public:
-  /// Constructor
   TAO_MCAST_Parser ();
 
-  /// The destructor
   virtual ~TAO_MCAST_Parser ();
 
-  /// = The IOR_Parser methods, please read the documentation in
-  ///   IOR_Parser.h
-  virtual bool match_prefix (const char *ior_string) const;
+  /// @name IOR_Parser methods
+  /// @{
+  bool match_prefix (const char *ior_string) const override;
 
   /// Parse the ior-string that is passed.
-  virtual CORBA::Object_ptr parse_string (const char *ior,
-                                          CORBA::ORB_ptr orb);
+  CORBA::Object_ptr parse_string (const char *ior,
+                                  CORBA::ORB_ptr orb) override;
+  /// @}
 
 private:
   CORBA::Object_ptr multicast_to_service (const char *service_name,

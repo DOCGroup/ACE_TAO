@@ -29,11 +29,10 @@ namespace TAO_Notify
   class Validate_Worker : public TAO_ESF_Worker<TOPOOBJ>
   {
   public:
-    /// Constructor
     Validate_Worker();
 
     // override virtual ESF_Worker method
-    virtual void work (TOPOOBJ* o);
+    void work (TOPOOBJ* o) override;
   };
 } // namespace TAO_Notify
 
@@ -44,5 +43,4 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 
 #endif /* NOTIFY_VALIDATE_WORKER_H */
-
 

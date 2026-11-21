@@ -1,31 +1,27 @@
 #include "receiver.h"
 #include "ace/Get_Opt.h"
+#include <cstddef>
+#include <memory>
 
-static FILE *output_file = 0;
-// File handle of the file into which received data is written.
+// Borrowed from the receiver's unique_ptr while the ORB processes stream callbacks.
+static FILE *output_file {};
 
-static const ACE_TCHAR *output_file_name = ACE_TEXT ("output");
-// File name of the file into which received data is written.
+static ACE_TString output_file_name {ACE_TEXT ("output")};
 
 int
-Receiver_StreamEndPoint::get_callback (const char *,
+Receiver_StreamEndPoint::get_callback (char const *,
                                        TAO_AV_Callback *&callback)
 {
   // Return the receiver application callback to the AVStreams for
   // future upcalls.
-  callback = &this->callback_;
+  callback = std::addressof (this->callback_);
   return 0;
-}
-
-Receiver_Callback::Receiver_Callback ()
-  : frame_count_ (1)
-{
 }
 
 int
 Receiver_Callback::receive_frame (ACE_Message_Block *frame,
                                   TAO_AV_frame_info *,
-                                  const ACE_Addr &)
+                                  ACE_Addr const &)
 {
   //
   // Upcall from the AVStreams when there is data to be received from
@@ -35,19 +31,21 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
               "Receiver_Callback::receive_frame for frame %d\n",
               this->frame_count_++));
 
-  while (frame != 0)
+  while (frame != nullptr)
     {
       // Write the received data to the file.
-      size_t result =
+      size_t const result =
         ACE_OS::fwrite (frame->rd_ptr (),
-                        frame->length (),
                         1,
+                        frame->length (),
                         output_file);
 
-      if (result == frame->length ())
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Receiver_Callback::fwrite failed\n"),
-                          -1);
+      if (result != frame->length ())
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Receiver_Callback::fwrite failed\n"),
+                            -1);
+        }
 
       frame = frame->cont ();
     }
@@ -64,9 +62,9 @@ Receiver_Callback::handle_destroy ()
 
   try
     {
-      TAO_AV_CORE::instance ()->orb ()->shutdown (0);
+      TAO_AV_CORE::instance ()->orb ()->shutdown (false);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Receiver_Callback::handle_destroy Failed\n");
       return -1;
@@ -75,29 +73,22 @@ Receiver_Callback::handle_destroy ()
   return 0;
 }
 
-Receiver::Receiver ()
-  : mmdevice_ (0)
-{
-}
-
-Receiver::~Receiver ()
-{
-}
-
 int
 Receiver::init (int,
                 ACE_TCHAR *[])
 {
   // Initialize the endpoint strategy with the orb and poa.
-  int result =
+  int const result =
     this->reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                    TAO_AV_CORE::instance ()->poa ());
   if (result != 0)
+  {
     return result;
+  }
 
   // Register the receiver mmdevice object with the ORB
   ACE_NEW_RETURN (this->mmdevice_,
-                  TAO_MMDevice (&this->reactive_strategy_),
+                  TAO_MMDevice (std::addressof (this->reactive_strategy_)),
                   -1);
 
   // Servant Reference Counting to manage lifetime
@@ -115,10 +106,12 @@ Receiver::init (int,
 
   // Initialize the naming services
   if (this->naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to initialize "
-                       "the TAO_Naming_Client\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to initialize "
+                         "the TAO_Naming_Client\n"),
+                        -1);
+    }
 
   // Register the receiver object with the naming server.
   this->naming_client_->rebind (name,
@@ -136,7 +129,7 @@ parse_args (int argc,
                     argv,
                     "f:");
 
-  int c;
+  int c {};
   while ((c = opts ()) != -1)
     {
       switch (c)
@@ -156,7 +149,7 @@ parse_args (int argc,
 
 int
 ACE_TMAIN (int argc,
-      ACE_TCHAR *argv[])
+           ACE_TCHAR *argv[])
 {
   try
     {
@@ -185,20 +178,25 @@ ACE_TMAIN (int argc,
                     argv);
 
       if (result == -1)
+      {
         return -1;
+      }
 
       // Make sure we have a valid <output_file>
-      output_file = ACE_OS::fopen (output_file_name,
-                                   "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "Cannot open output file %s\n",
-                           output_file_name),
-                          -1);
+      std::unique_ptr<FILE, int (*) (FILE *)> output_file_owner (
+        ACE_OS::fopen (output_file_name.c_str (), ACE_TEXT ("wb")), ACE_OS::fclose);
+      // The receive callback borrows the file handle while the ORB is running.
+      output_file = output_file_owner.get ();
+      if (!output_file)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file %s\n"),
+                             output_file_name.c_str ()),
+                            -1);
+        }
 
-      else
-        ACE_DEBUG ((LM_DEBUG,
-                    "File Opened Successfully\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "File Opened Successfully\n"));
 
       Receiver receiver;
       result =
@@ -206,7 +204,9 @@ ACE_TMAIN (int argc,
                        argv);
 
       if (result != 0)
+      {
         return result;
+      }
 
       orb->run ();
 
@@ -215,13 +215,11 @@ ACE_TMAIN (int argc,
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("receiver::init");
       return -1;
     }
-
-  ACE_OS::fclose (output_file);
 
   return 0;
 }

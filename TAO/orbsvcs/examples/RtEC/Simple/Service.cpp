@@ -3,13 +3,14 @@
 #include "ace/Get_Opt.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/SString.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("ec.ior");
+#include <memory>
 
-int parse_args (int argc, ACE_TCHAR *argv[]);
+int parse_args (int argc, ACE_TCHAR *argv[], ACE_TString &ior_output_file);
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
@@ -18,6 +19,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
+
+      ACE_TString ior_output_file {ACE_TEXT ("ec.ior")};
+      if (parse_args (argc, argv, ior_output_file) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Usage: Service [-o <iorfile>]\n")));
+          return 1;
+        }
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA");
@@ -62,16 +71,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->object_to_string (event_channel.in ());
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != 0)
+      if (!ior_output_file.is_empty ())
         {
-          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
+          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+            ACE_OS::fopen (ior_output_file.c_str (), "w"), ACE_OS::fclose);
+          if (output_file == nullptr)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
-                               ior_output_file),
+                               ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                               ior_output_file.c_str ()),
                               1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+          ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 
       // Wait for events, using work_pending()/perform_work() may help
@@ -85,7 +94,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // work_pending()/perform_work() to do more interesting stuff.
       // Check the supplier for the proper way to do cleanup.
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Service");
       return 1;
@@ -95,13 +104,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-int parse_args (int argc, ACE_TCHAR *argv[])
+int
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TString &ior_output_file)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'o':
         ior_output_file = get_opts.opt_arg ();
@@ -109,12 +119,7 @@ int parse_args (int argc, ACE_TCHAR *argv[])
 
       case '?':
       default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
-                           argv [0]),
-                          -1);
+        return -1;
       }
   // Indicates successful parsing of the command line
   return 0;

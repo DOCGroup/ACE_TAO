@@ -58,8 +58,7 @@ class ACE_Export ACE_NS_WString : public ACE_WString
 public:
   using ACE_WString::size_type;
 
-  /// Default constructor.
-  ACE_NS_WString (ACE_Allocator *alloc = nullptr);
+  explicit ACE_NS_WString (ACE_Allocator *alloc = nullptr);
 
   /// Constructor that copies @a s into dynamically allocated memory.
   ACE_NS_WString (const char *s,
@@ -87,7 +86,6 @@ public:
   /// ACE_WSTRING_TYPE characters. The newly created memory is set memset to 0.
   ACE_NS_WString (size_type len, ACE_Allocator *alloc = nullptr);
 
-  /// Copy constructor.
   ACE_NS_WString (const ACE_NS_WString &) = default;
   ACE_NS_WString &operator= (const ACE_NS_WString&) = default;
 
@@ -136,8 +134,7 @@ public:
   /// No position constant
   static const size_type npos;
 
-  /// Default constructor.
-  ACE_SString (ACE_Allocator *alloc = nullptr);
+  explicit ACE_SString (ACE_Allocator *alloc = nullptr);
 
   /// Constructor that copies @a s into dynamically allocated memory.
   ACE_SString (const char *s, ACE_Allocator *alloc = nullptr);
@@ -146,13 +143,11 @@ public:
   /// allocated memory (will NUL terminate the result).
   ACE_SString (const char *s, size_type len, ACE_Allocator *alloc = nullptr);
 
-  /// Copy constructor.
   ACE_SString (const ACE_SString &);
 
   /// Constructor that copies @a c into dynamically allocated memory.
   ACE_SString (char c, ACE_Allocator *alloc = nullptr);
 
-  /// Default destructor.
   ~ACE_SString () = default;
 
   /// Return the slot'th character in the string (doesn't perform
@@ -241,10 +236,10 @@ private:
   ACE_Allocator *allocator_;
 
   /// Length of the ACE_SString (not counting the trailing '\\0').
-  size_type len_;
+  size_type len_ {};
 
   /// Pointer to data.
-  char *rep_;
+  char *rep_ {};
 };
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)

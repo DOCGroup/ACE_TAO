@@ -47,9 +47,9 @@ public:
   ~ACE_NS_Node ();
 
 private:
-  ACE_NS_Node (const T &i, ACE_NS_Node<T> *n);
-  ACE_NS_Node (ACE_NS_Node<T> *n = 0, int = 0);
-  ACE_NS_Node (const ACE_NS_Node<T> &n);
+  ACE_NS_Node (T const &i, ACE_NS_Node<T> *n);
+  ACE_NS_Node (ACE_NS_Node<T> *n = nullptr, int = 0);
+  ACE_NS_Node (ACE_NS_Node<T> const &n);
 
   /// Pointer to next element in the list of <ACE_NS_Node>s.
   ACE_NS_Node<T> *next_;
@@ -68,7 +68,8 @@ class ACE_Unbounded_List_Iterator
 {
 public:
   ACE_Unbounded_List_Iterator (ACE_Unbounded_List<T> &s, int end = 0);
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the <next_item> that hasn't been seen in the List.
   /// Returns 0 when all items have been seen, else 1.
@@ -88,7 +89,9 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  // = STL styled iteration, compare, and reference functions.
+  /// @}
+  /// @name STL styled iteration, compare, and reference functions
+  /// @{
 
   /// Postfix advance.
   ACE_Unbounded_List_Iterator<T> operator++ (int);
@@ -100,12 +103,13 @@ public:
   T& operator* ();
 
   /// Check if two iterators point to the same position
-  bool operator== (const ACE_Unbounded_List_Iterator<T> &) const;
-  bool operator!= (const ACE_Unbounded_List_Iterator<T> &) const;
+  bool operator== (ACE_Unbounded_List_Iterator<T> const &) const;
+  bool operator!= (ACE_Unbounded_List_Iterator<T> const &) const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 private:
   /// Pointer to the current node in the iteration.
   ACE_NS_Node<T> *current_;
@@ -135,40 +139,40 @@ public:
 
   /// Constructor.  Use user specified allocation strategy
   /// if specified.
-  ACE_Unbounded_List (ACE_Allocator *alloc = 0);
+  explicit ACE_Unbounded_List (ACE_Allocator *alloc = nullptr);
 
-  /// Copy constructor.
-  ACE_Unbounded_List (const ACE_Unbounded_List<T> &);
+  ACE_Unbounded_List (ACE_Unbounded_List<T> const &);
 
-  /// Assignment operator.
-  void operator= (const ACE_Unbounded_List<T> &);
+  void operator= (ACE_Unbounded_List<T> const &);
 
-  /// Destructor.
   ~ACE_Unbounded_List ();
 
-  // = Check boundary conditions.
+  /// @name Check boundary conditions
+  /// @{
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
-  int is_empty () const;
+  /// Returns true if the container is empty, otherwise returns false.
+  bool is_empty () const;
 
-  /// Returns 1 if the container is full, otherwise returns 0.
-  int is_full () const;
+  /// Returns true if the container is full, otherwise returns false.
+  bool is_full () const;
 
-  // = Classic unordered set operations.
+  /// @}
+  /// @name Classic unordered set operations
+  /// @{
 
   /**
    * Insert <new_item> into the set (doesn't allow duplicates).
    * Returns -1 if failures occur, 1 if item is already present, else
    * 0.
    */
-  int insert (const T &new_item);
+  int insert (T const &new_item);
 
   /**
    * Remove first occurrence of <item> from the set.  Returns 0 if
    * it removes the item, -1 if it can't find the item, and -1 if a
    * failure occurs.
    */
-  int remove (const T &item);
+  int remove (T const &item);
 
   /// Size of the set.
   size_t size () const;
@@ -179,23 +183,26 @@ public:
   /// Reset the <ACE_Unbounded_List> to be empty.
   void reset ();
 
-  // = STL-styled unidirectional iterator factory.
+  /// @}
+  /// @name STL-styled unidirectional iterator factory
+  /// @{
   ACE_Unbounded_List_Iterator<T> begin ();
   ACE_Unbounded_List_Iterator<T> end ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 private:
   /// Insert <item> at the tail of the set (doesn't check for
   /// duplicates).
-  int insert_tail (const T &item);
+  int insert_tail (T const &item);
 
   /// Delete all the nodes in the List.
   void delete_nodes ();
 
   /// Copy nodes into this set.
-  void copy_nodes (const ACE_Unbounded_List<T> &);
+  void copy_nodes (ACE_Unbounded_List<T> const &);
 
   /// Head of the linked list of NS_Nodes.
   ACE_NS_Node<T> *head_;

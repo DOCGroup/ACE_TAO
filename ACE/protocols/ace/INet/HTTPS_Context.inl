@@ -9,13 +9,13 @@ namespace ACE
     ACE_INLINE
     Context::operator bool () const
       {
-        return this->ssl_ctx_ != 0;
+        return this->ssl_ctx_ != nullptr;
       }
 
     ACE_INLINE
     bool Context::operator ! () const
       {
-        return this->ssl_ctx_ == 0;
+        return this->ssl_ctx_ == nullptr;
       }
 
     ACE_INLINE
@@ -83,7 +83,6 @@ namespace ACE
         Context::ssl_once_ = once;
         Context::ssl_depth_ = depth;
       }
-
 
   }
 }

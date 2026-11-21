@@ -7,6 +7,7 @@
 #include "tao/debug.h"
 
 #include "ace/os_include/os_netdb.h"
+#include <cstring>
 
 #if !defined(__ACE_INLINE__)
 #include "orbsvcs/PortableGroup/UIPMC_Acceptor.inl"
@@ -16,13 +17,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIPMC_Acceptor::TAO_UIPMC_Acceptor (
   bool listen_on_all_ifs,
-  const char *listener_interfaces)
+  char const *listener_interfaces)
   : TAO_Acceptor (IOP::TAG_UIPMC),
-    addrs_ (0),
-    hosts_ (0),
-    endpoint_count_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
-    orb_core_ (0),
     listen_on_all_ (listen_on_all_ifs),
     listener_interfaces_ (listener_interfaces)
 {
@@ -34,17 +31,16 @@ TAO_UIPMC_Acceptor::~TAO_UIPMC_Acceptor ()
   // strategies.
   this->close ();
 
-  delete [] this->addrs_;
-
-  for (size_t i = 0u; i < this->endpoint_count_; ++i)
-    CORBA::string_free (this->hosts_[i]);
-
-  delete [] this->hosts_;
+  if (this->hosts_ != nullptr)
+    {
+      for (size_t i = 0u; i < this->endpoint_count_; ++i)
+        CORBA::string_free (this->hosts_[i]);
+    }
 }
 
 int
 TAO_UIPMC_Acceptor::create_profile (
-  const TAO::ObjectKey &,
+  TAO::ObjectKey const &,
   TAO_MProfile &,
   CORBA::Short)
 {
@@ -58,15 +54,15 @@ TAO_UIPMC_Acceptor::create_profile (
   return 0;
 }
 
-int
-TAO_UIPMC_Acceptor::is_collocated (const TAO_Endpoint *)
+bool
+TAO_UIPMC_Acceptor::is_collocated (TAO_Endpoint const *)
 {
   // @@ Not clear how
   // to best handle collation.  For example, one servant could
   // be collocated, but we still need to send the request out on
   // the network to see if there are any other servants in the
   // group.
-  return 0;  // Not collocated
+  return false;  // Not collocated
 }
 
 int
@@ -81,8 +77,8 @@ TAO_UIPMC_Acceptor::open (
   ACE_Reactor *reactor,
   int major,
   int minor,
-  const char *address,
-  const char *options)
+  char const *address,
+  char const *options)
 {
   this->orb_core_ = orb_core;
 
@@ -97,19 +93,25 @@ TAO_UIPMC_Acceptor::open (
     }
 
   if (address == nullptr)
+  {
     return -1;
+  }
 
   if (major >= 0 && minor >= 0)
-    this->version_.set_version (static_cast<CORBA::Octet> (major),
-                                static_cast<CORBA::Octet> (minor));
+    {
+      this->version_.set_version (static_cast<CORBA::Octet> (major),
+                                  static_cast<CORBA::Octet> (minor));
+    }
   // Parse options
   if (this->parse_options (options) == -1)
+  {
     return -1;
+  }
 
   ACE_INET_Addr addr;
 
-  const char *port_separator_loc = ACE_OS::strchr (address, ':');
-  const char *specified_hostname = nullptr;
+  char const *port_separator_loc = std::strchr (address, ':');
+  char const *specified_hostname {};
   char tmp_host[MAXHOSTNAMELEN + 1];
 
 #if defined (ACE_HAS_IPV6)
@@ -124,7 +126,7 @@ TAO_UIPMC_Acceptor::open (
     {
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
-      const char *cp_pos = ACE_OS::strchr(address, ']');
+      char const *cp_pos = std::strchr(address, ']');
       if (cp_pos == nullptr)
         {
           // No valid IPv6 address specified.
@@ -138,10 +140,10 @@ TAO_UIPMC_Acceptor::open (
           if (cp_pos[1] == ':')    // Look for a port
             port_separator_loc = cp_pos + 1;
           else
-            port_separator_loc = 0;
+            port_separator_loc = nullptr;
           // Extract out just the host part of the address.
-          const size_t len = cp_pos - (address + 1);
-          ACE_OS::memcpy (tmp_host, address + 1, len);
+          size_t const len = cp_pos - (address + 1);
+          std::memcpy (tmp_host, address + 1, len);
           tmp_host[len] = '\0';
         }
     }
@@ -150,7 +152,7 @@ TAO_UIPMC_Acceptor::open (
     {
       // Extract out just the host part of the address.
       size_t len = port_separator_loc - address;
-      ACE_OS::memcpy (tmp_host, address, len);
+      std::memcpy (tmp_host, address, len);
       tmp_host[len] = '\0';
     }
 
@@ -164,7 +166,9 @@ TAO_UIPMC_Acceptor::open (
     }
 
   if (addr.set (address) != 0)
+  {
     return -1;
+  }
 
   specified_hostname = tmp_host;
 
@@ -184,26 +188,34 @@ TAO_UIPMC_Acceptor::open (
 
   this->endpoint_count_ = 1;  // Only one hostname to store
 
-  ACE_NEW_RETURN (this->addrs_,
+  ACE_INET_Addr *addrs {};
+  ACE_NEW_RETURN (addrs,
                   ACE_INET_Addr[this->endpoint_count_],
                   -1);
+  this->addrs_.reset (addrs);
 
-  ACE_NEW_RETURN (this->hosts_,
+  char **hosts {};
+  ACE_NEW_RETURN (hosts,
                   char *[this->endpoint_count_],
                   -1);
+  this->hosts_.reset (hosts);
 
-  this->hosts_[0] = 0;
+  this->hosts_[0] = nullptr;
 
   if (this->hostname (orb_core,
                       addr,
                       this->hosts_[0],
                       specified_hostname) != 0)
+  {
     return -1;
+  }
 
   // Copy the addr.  The port is (re)set in
   // TAO_UIPMC_Acceptor::open_i().
   if (this->addrs_[0].set (addr) != 0)
+  {
     return -1;
+  }
 
   return this->open_i (addr,
                        reactor);
@@ -215,7 +227,7 @@ TAO_UIPMC_Acceptor::open_default (
   ACE_Reactor *,
   int,
   int,
-  const char *)
+  char const *)
 {
   // There is no such thing as a default multicast listen
   // port.  The mechanism for choosing these ports is done
@@ -225,7 +237,7 @@ TAO_UIPMC_Acceptor::open_default (
 
 int
 TAO_UIPMC_Acceptor::open_i (
-  const ACE_INET_Addr &addr,
+  ACE_INET_Addr const &addr,
   ACE_Reactor *reactor)
 {
   // Check for the special "CopyPreferredInterfaces" token(s) stored in the
@@ -242,7 +254,7 @@ TAO_UIPMC_Acceptor::open_i (
         right = this->listener_interfaces_.substr (foundToken +
           static_cast<ACE_CString::size_type> (
             sizeof (CopyPreferredInterfaceToken)-1u ));
-      const char *preferred_interfaces =
+      char const *preferred_interfaces =
         this->orb_core_->orb_params ()->preferred_interfaces ();
       if (preferred_interfaces && preferred_interfaces[0])
         {
@@ -279,7 +291,7 @@ TAO_UIPMC_Acceptor::open_i (
     } // End loop replacing all preferred_interfaces tokens.
 
   // Create our connection handler and pass it our configurtion options.
-  TAO_UIPMC_Mcast_Connection_Handler *connection_handler = nullptr;
+  TAO_UIPMC_Mcast_Connection_Handler *connection_handler {};
   ACE_NEW_RETURN (connection_handler,
                   TAO_UIPMC_Mcast_Connection_Handler (this->orb_core_),
                   -1);
@@ -336,7 +348,7 @@ TAO_UIPMC_Acceptor::hostname (
   TAO_ORB_Core *,
   ACE_INET_Addr &addr,
   char *&host,
-  const char *)
+  char const *)
 {
   // Only have dotted decimal addresses for multicast.
   return this->dotted_decimal_address (addr, host);
@@ -351,10 +363,12 @@ TAO_UIPMC_Acceptor::dotted_decimal_address (
   if (!addr.get_host_addr (tmp, sizeof tmp))
     {
       if (TAO_debug_level)
-        ORBSVCS_DEBUG ((LM_DEBUG,
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - UIPMC_Acceptor::")
                     ACE_TEXT ("dotted_decimal_address, cannot determine ")
                     ACE_TEXT ("hostname (Errno: '%m')\n")));
+        }
       return -1;
     }
 
@@ -378,29 +392,33 @@ TAO_UIPMC_Acceptor::object_key (
 }
 
 int
-TAO_UIPMC_Acceptor::parse_options (const char *str)
+TAO_UIPMC_Acceptor::parse_options (char const *str)
 {
   if (str == nullptr)
+  {
     return 0;  // No options to parse.  Not a problem.
+  }
 
   // Use an option format similar to the one used for CGI scripts in
   // HTTP URLs.
   // e.g.:  option1=foo&option2=bar
 
-  ACE_CString options (str);
+  ACE_CString const options (str);
 
-  size_t len = options.length ();
+  size_t const len = options.length ();
 
-  const char option_delimiter = '&';
+  char const option_delimiter = '&';
 
   // Count the number of options.
   CORBA::ULong option_count = 1;
 
   // Only check for endpoints after the protocol specification and
   // before the object key.
-  for (size_t i = 0; i < len; ++i)
+  for (size_t i {}; i < len; ++i)
     if (options[i] == option_delimiter)
+    {
       ++option_count;
+    }
 
   // The idea behind the following loop is to split the options into
   // (option, name) pairs.
@@ -416,19 +434,25 @@ TAO_UIPMC_Acceptor::parse_options (const char *str)
   for (CORBA::ULong j = 0u; j < option_count;)
     {
       if (j < option_count - 1)
-        end = options.find (option_delimiter, begin);
+        {
+          end = options.find (option_delimiter, begin);
+        }
       else
+      {
         end = len;
+      }
 
       ++j;  // In this way we fight MS VS warning about unreachable code.
 
       if (end == begin)
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("TAO (%P|%t) Zero length UIPMC option.\n")),
                           -1);
+        }
       else if (end != ACE_CString::npos)
         {
-          ACE_CString opt = options.substring (begin, end);
+          ACE_CString const opt = options.substring (begin, end);
 
           ACE_CString::size_type const slot = opt.find ("=");
 
@@ -440,16 +464,18 @@ TAO_UIPMC_Acceptor::parse_options (const char *str)
                                opt.c_str ()),
                               -1);
 
-          ACE_CString name = opt.substring (0, slot);
-          ACE_CString value = opt.substring (slot + 1);
+          ACE_CString const name = opt.substring (0, slot);
+          ACE_CString const value = opt.substring (slot + 1);
 
           begin = end + 1;
 
           if (name.length () == 0)
-            ORBSVCS_ERROR_RETURN ((LM_ERROR,
+            {
+              ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Zero length UIPMC ")
                                ACE_TEXT ("option name.\n")),
                               -1);
+            }
 
           if (name == "priority")
             {
@@ -460,13 +486,17 @@ TAO_UIPMC_Acceptor::parse_options (const char *str)
                                 -1);
             }
           else
-            ORBSVCS_ERROR_RETURN ((LM_ERROR,
+            {
+              ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Invalid UIPMC option: <%s>\n"),
                                name.c_str ()),
                               -1);
+            }
         }
       else
+      {
         break;  // No other options.
+      }
     }
   return 0;
 }

@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #ifndef CACHED_ACCEPT_CONNECTION_TEST
 #define CACHED_ACCEPT_CONNECTION_TEST
 
@@ -32,6 +31,43 @@
 
 int connection_accepted = 0;
 int debug = 0;
+static int caching_strategy_destruction_count = 0;
+
+class Tracking_Null_Caching_Strategy : public NULL_CACHING_STRATEGY
+{
+public:
+  ~Tracking_Null_Caching_Strategy ()
+  {
+    ++caching_strategy_destruction_count;
+  }
+};
+
+using TRACKING_CACHING_STRATEGY_ADAPTER =
+  ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, Tracking_Null_Caching_Strategy>;
+
+void
+test_caching_strategy_ownership ()
+{
+  int const initial_destruction_count = caching_strategy_destruction_count;
+  Tracking_Null_Caching_Strategy borrowed_implementation;
+  {
+    TRACKING_CACHING_STRATEGY_ADAPTER adapter (&borrowed_implementation, false);
+  }
+  ACE_TEST_ASSERT (caching_strategy_destruction_count == initial_destruction_count);
+
+  Tracking_Null_Caching_Strategy *owned_implementation {};
+  ACE_NEW (owned_implementation,
+           Tracking_Null_Caching_Strategy);
+  {
+    TRACKING_CACHING_STRATEGY_ADAPTER adapter (owned_implementation, true);
+  }
+  ACE_TEST_ASSERT (caching_strategy_destruction_count == initial_destruction_count + 1);
+
+  {
+    TRACKING_CACHING_STRATEGY_ADAPTER adapter;
+  }
+  ACE_TEST_ASSERT (caching_strategy_destruction_count == initial_destruction_count + 2);
+}
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::Accept_Strategy (CACHED_CONNECT_STRATEGY &caching_connect_strategy)
@@ -46,14 +82,18 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open (const ACE_PEER_ACCEPTOR
   int result = ACCEPT_STRATEGY_BASE::open (local_addr, restart);
 
   if (result == 0)
+  {
     return result;
+  }
 
   // If the error occurred due to the fact that the file descriptor
   // limit was exhausted, then purge the connection cache of some
   // entries.
   result = this->out_of_sockets_handler ();
   if (result == -1)
+  {
     return -1;
+  }
 
   // If we are able to purge, try again.
   return ACCEPT_STRATEGY_BASE::open (local_addr, restart);
@@ -81,9 +121,11 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDL
   if (result == 0)
     {
       if (debug)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Accept succeeded with handle %d\n"),
-                    svc_handler->get_handle ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Accept succeeded with handle %H\n"),
+                      svc_handler->get_handle ()));
+        }
       return result;
     }
 
@@ -91,9 +133,11 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDL
   // limit was exhausted, then purge the connection cache of some
   // entries.
   if (0 != this->out_of_sockets_handler ())
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("out_of_sockets_handler")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("out_of_sockets_handler")));
+    }
 
   // Close down handler to avoid memory leaks.
   svc_handler->close (0);
@@ -127,10 +171,12 @@ int
 Client_Svc_Handler::open (void *)
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("opening Client_Svc_Handler %@ with handle %d\n"),
-                this,
-                this->peer ().get_handle ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("opening Client_Svc_Handler %@ with handle %H\n"),
+                  static_cast<void *> (this),
+                  this->peer ().get_handle ()));
+    }
   return 0;
 }
 
@@ -138,12 +184,11 @@ int
 Client_Svc_Handler::close (u_long flags)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Closing Client_Svc_Handler %@ with handle %d\n"),
-              this,
+              ACE_TEXT ("Closing Client_Svc_Handler %@ with handle %H\n"),
+              static_cast<void *> (this),
               this->peer ().get_handle ()));
   return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::close (flags);
 }
-
 
 Server_Svc_Handler::Server_Svc_Handler (ACE_Thread_Manager *t)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> (t)
@@ -154,10 +199,12 @@ int
 Server_Svc_Handler::open (void *)
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("opening Server_Svc_Handler %@ with handle %d\n"),
-                this,
-                this->peer ().get_handle ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("opening Server_Svc_Handler %@ with handle %H\n"),
+                  static_cast<void *> (this),
+                  this->peer ().get_handle ()));
+    }
 
   return this->close ();
 }
@@ -186,7 +233,6 @@ static int iterations = 2000;
 static int iterations = 200;
 #endif /* ACE_WIN32 */
 
-
 static int
 cached_connect (STRATEGY_CONNECTOR &con,
                 const ACE_INET_Addr &server_addr)
@@ -197,19 +243,23 @@ cached_connect (STRATEGY_CONNECTOR &con,
 
   // Perform a blocking connect to the server using the Strategy
   // Connector with a connection caching strategy.
-  Client_Svc_Handler *svc_handler = nullptr;
+  Client_Svc_Handler *svc_handler {};
   int result = con.connect (svc_handler,
                             remote_addr);
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("connection failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("connection failed")),
+                        -1);
+    }
   else
     if (debug)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Connection successful to server at port %d!\n"),
-                  remote_addr.get_port_number ()));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("Connection successful to server at port %d!\n"),
+                    remote_addr.get_port_number ()));
+      }
 
   // Reset Svc_Handler state.
   svc_handler->recycle_state (ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE);
@@ -223,7 +273,9 @@ server ()
   int result = 1;
 
   while (connection_accepted == 0)
-    result = ACE_Reactor::instance ()->handle_events ();
+    {
+      result = ACE_Reactor::instance ()->handle_events ();
+    }
 
   connection_accepted = 0;
 
@@ -310,22 +362,28 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
         }
 
       if (debug)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("starting server at port %d\n"),
-                        server_addr.get_port_number ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("starting server at port %d\n"),
+                      server_addr.get_port_number ()));
+        }
 
       // Run the cached blocking test.
       if (-1 == cached_connect (strategy_connector, server_addr))
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("cached_connect")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("cached_connect")));
+        }
       else
-        server ();
+        {
+          server ();
+        }
     }
 }
 
 void
 test_caching_strategy_type ()
 {
-  CACHING_STRATEGY *caching_strategy = nullptr;
+  CACHING_STRATEGY *caching_strategy {};
 
   switch (caching_strategy_type)
     {
@@ -370,51 +428,61 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int cc;
 
   while ((cc = get_opt ()) != -1)
-    switch (cc)
       {
-      case 'd':
-        debug = 1;
-        break;
-      case 'l':
-        listen_once = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 'i':
-        iterations = ACE_OS::atoi (get_opt.opt_arg ());
-        user_has_specified_iterations = 1;
-        break;
-      case 'p':
-        purge_percentage = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 'c':
-        // Note that if null caching strategy is used then this test
-        // will fail if the number of servers exceed number of open
-        // files allowed for the process.
-        if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("null")) == 0)
-          caching_strategy_type = ACE_NULL;
-        if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("lru")) == 0)
-          caching_strategy_type = ACE_LRU;
-        if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("lfu")) == 0)
-          caching_strategy_type = ACE_LFU;
-        if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("fifo")) == 0)
-          caching_strategy_type = ACE_FIFO;
-        break;
-      case 'a':
-        keep_handles_available = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case '?':
-      case 'h':
-      default:
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("usage: %s ")
-                    ACE_TEXT ("[-t (timeout)] ")
-                    ACE_TEXT ("[-c (caching strategy: lru / lfu / fifo / null [default = all])] ")
-                    ACE_TEXT ("[-i (iterations)] ")
-                    ACE_TEXT ("[-l (listen once)] ")
-                    ACE_TEXT ("[-d (addition debugging output)] ")
-                    ACE_TEXT ("[-p (purge percent)] ")
-                    ACE_TEXT ("[-a (keep handles available)] "),
-                    ACE_TEXT ("Cached_Accept_Conn_Test")));
-        return -1;
+      switch (cc)
+        {
+        case 'd':
+          debug = 1;
+          break;
+        case 'l':
+          listen_once = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'i':
+          iterations = ACE_OS::atoi (get_opt.opt_arg ());
+          user_has_specified_iterations = 1;
+          break;
+        case 'p':
+          purge_percentage = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'c':
+          // Note that if null caching strategy is used then this test
+          // will fail if the number of servers exceed number of open
+          // files allowed for the process.
+          if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("null")) == 0)
+            {
+              caching_strategy_type = ACE_NULL;
+            }
+          if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("lru")) == 0)
+            {
+              caching_strategy_type = ACE_LRU;
+            }
+          if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("lfu")) == 0)
+            {
+              caching_strategy_type = ACE_LFU;
+            }
+          if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("fifo")) == 0)
+            {
+              caching_strategy_type = ACE_FIFO;
+            }
+          break;
+        case 'a':
+          keep_handles_available = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case '?':
+        case 'h':
+        default:
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("usage: %s ")
+                      ACE_TEXT ("[-t (timeout)] ")
+                      ACE_TEXT ("[-c (caching strategy: lru / lfu / fifo / null [default = all])] ")
+                      ACE_TEXT ("[-i (iterations)] ")
+                      ACE_TEXT ("[-l (listen once)] ")
+                      ACE_TEXT ("[-d (addition debugging output)] ")
+                      ACE_TEXT ("[-p (purge percent)] ")
+                      ACE_TEXT ("[-a (keep handles available)] "),
+                      ACE_TEXT ("Cached_Accept_Conn_Test")));
+          return -1;
+        }
       }
 
   return 0;
@@ -426,7 +494,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Validate options.
   int result = parse_args (argc, argv);
   if (result != 0)
+  {
     return result;
+  }
 
 #if defined (ACE_WIN32)
   // Somehow, on Win32, the <listen once> option allows us to create
@@ -439,6 +509,8 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Start the test only if options are valid.
   ACE_START_TEST (ACE_TEXT ("Cached_Accept_Conn_Test"));
 
+  test_caching_strategy_ownership ();
+
   // Remove the extra debugging attributes from Log_Msg output.
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
 
@@ -450,7 +522,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   // <keep_handles_available> to play with.
   ACE_Handle_Gobbler handle_gobbler;
   if (0 != handle_gobbler.consume_handles (keep_handles_available))
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("handle_gobbler")));
+  }
 
   // Do we need to test all the strategies.  Note, that the less
   // useful null strategy is ignored in this case.
@@ -462,7 +536,9 @@ run_main (int argc, ACE_TCHAR *argv[])
       // Default iterations are too many; if the user hasn't specified
       // otherwise, we'll shrink the iterations for LFU and FIFO.
       if (!user_has_specified_iterations)
+      {
         iterations /= 100;
+      }
 
       caching_strategy_type = ACE_LFU;
       test_caching_strategy_type ();
@@ -480,6 +556,5 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_END_TEST;
   return 0;
 }
-
 
 #endif /* CACHED_ACCEPT_CONNECTION_TEST */

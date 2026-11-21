@@ -24,7 +24,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       int r = demux_test_client.init (argc, argv);
       if (r == -1)
+      {
         return -1;
+      }
 
       demux_test_client.run ();
     }

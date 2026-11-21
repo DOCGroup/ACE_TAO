@@ -53,7 +53,7 @@ Supplier::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Initialize server daemon.
   Supplier supplier;
@@ -69,7 +69,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Loop forever handling events.
       supplier.run ();
     }
-  catch (const ::CORBA::Exception &e)
+  catch (::CORBA::Exception const &e)
     {
       e._tao_print_exception ("Caught unexpected CORBA exception : ");
       return 1;

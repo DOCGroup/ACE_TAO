@@ -7,9 +7,7 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * sem.h: Attempt to provide multi-process semaphores across platforms
@@ -17,12 +15,10 @@
  * Rob McCool
  */
 
-
 #ifndef SEM_H
 #define SEM_H
 
 #include "systems.h"
-
 
 /* All of the implementations currently use int as the semaphore type */
 #ifdef SEM_WIN32
@@ -63,6 +59,5 @@ int sem_grab(SEMAPHORE id);
  */
 
 int sem_release(SEMAPHORE id);
-
 
 #endif

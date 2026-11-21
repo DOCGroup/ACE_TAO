@@ -1,6 +1,8 @@
 // server.cpp
 // This version uses the Implementation Repository.
 
+#include <string>
+
 #include "Test_i.h"
 
 #include "tao/IORTable/IORTable.h"
@@ -14,8 +16,7 @@ namespace
 {
   ACE_CString toStr(int n)
   {
-    char buf[20];
-    return ACE_OS::itoa(n, buf, 10);
+    return ACE_CString (std::to_string (n).c_str ());
   }
 }
 
@@ -49,7 +50,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try {
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
-    ACE_TCHAR *other_server_ior = 0;
+    ACE_TCHAR *other_server_ior {};
 
     int server_num = 0;
     int reply_delay_secs = 0;
@@ -164,7 +165,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
       }
 
-
     //
     // This server is now ready to run.
     // This version does not create an IOR
@@ -190,7 +190,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     orb->run();
 
-    root_poa->destroy(1,1);
+    root_poa->destroy(true,true);
     orb->destroy();
 
     ACE_DEBUG ((LM_DEBUG,

@@ -52,12 +52,12 @@ private:
 
 // Helpers
 
+/// Static functions to enhance the lives of HTTP programmers everywhere.
 class JAWS_HTTP_10_Helper
-// Static functions to enhance the lives of HTTP programmers everywhere.
 {
 public:
+  /// Decode '%' escape codes in a URI.
   static char *HTTP_decode_string (char *path);
-  // Decode '%' escape codes in a URI
 };
 
 #endif /* !defined (JAWS_HTTP_10_H) */

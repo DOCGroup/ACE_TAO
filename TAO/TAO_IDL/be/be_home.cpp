@@ -26,7 +26,7 @@ be_home::be_home (UTL_ScopedName *n,
                   AST_Type_List const& supports,
                   long n_supports,
                   AST_Interface_List const& supports_flat,
-                  std::size_t n_supports_flat)
+                  size_t n_supports_flat)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_home,

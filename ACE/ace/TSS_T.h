@@ -87,7 +87,7 @@ public:
    *                 threads use the ts_object (TYPE *) method to set
    *                 a specific value.
    */
-  ACE_TSS (TYPE *ts_obj = nullptr);
+  explicit ACE_TSS (TYPE *ts_obj = nullptr);
 
   ACE_TSS (const ACE_TSS &) = delete;
   ACE_TSS (ACE_TSS &&) = delete;
@@ -122,7 +122,7 @@ public:
    * thread's copy of the data has not yet been set. See specific method
    * descriptions for complete details.
    */
-  //@{
+  /// @{
   /**
    * Get the thread-specific object for this object.
    *
@@ -160,12 +160,10 @@ public:
    */
   operator TYPE *() const;
 
-  //@}
+  /// @}
 
   /// Hook for construction parameters.
   virtual TYPE *make_TSS_TYPE () const;
-
-  // = Utility methods.
 
   /// Dump the state of an object.
   void dump () const;
@@ -190,7 +188,7 @@ protected:
   ACE_Thread_Mutex keylock_;
 
   /// "First time in" flag.
-  volatile bool once_;
+  volatile bool once_ {};
 
   /// Key for the thread-specific error data.
   ACE_thread_key_t key_;

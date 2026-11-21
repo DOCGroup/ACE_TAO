@@ -38,7 +38,6 @@ public:
   ACE_RW_Thread_Mutex (const ACE_TCHAR *name = nullptr,
                        void *arg = nullptr);
 
-  /// Default dtor.
   ~ACE_RW_Thread_Mutex ();
 
   /**

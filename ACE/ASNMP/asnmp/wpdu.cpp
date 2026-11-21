@@ -10,11 +10,12 @@
  */
 //=============================================================================
 
-
 #include "asnmp/wpdu.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
+#include <cstring>
+
+#include <memory>
 
 #define DEFINE_TRAP_CONSTANTS_
 #include "asnmp/enttraps.h"
@@ -28,25 +29,14 @@
 #define V1_EGP_NEIGHBOR_LOSS 5
 #define V1_ENT_SPECIFIC 6
 
-inline
-void reset_iov(iovec& iov)
+wpdu::wpdu (Pdu const &pdu, UdpTarget const &target)
+  : valid_flag_(SNMP_CLASS_INVALID)
 {
-  iov.iov_base = 0;
-  iov.iov_len = 0;
-}
-
-wpdu::wpdu(const Pdu& pdu, const UdpTarget& target):
-   valid_flag_(SNMP_CLASS_INVALID ), comm_len(MAX_COMM_STR_LEN)
-{
-   reset_iov(iovec_);
    version_ = target.get_version();
    int status;
    OctetStr comm_str;
 
-   community_name[0] = 0;
-
-   snmp_pdu *raw_pdu;   // create a raw pdu
-   raw_pdu = cmu_snmp::pdu_create( (int) pdu.get_type());
+   snmp_pdu *raw_pdu = cmu_snmp::pdu_create (static_cast<int> (pdu.get_type()));
    if (!raw_pdu) {
      valid_flag_ = SNMP_CLASS_RESOURCE_UNAVAIL;
      return;
@@ -69,7 +59,9 @@ wpdu::wpdu(const Pdu& pdu, const UdpTarget& target):
      case sNMP_PDU_V1TRAP:
        target.get_read_community(comm_str);
        if (set_trap_info(raw_pdu, pdu)) // will free raw_pdu
-          return;
+         {
+           return;
+         }
        break;
      case sNMP_PDU_RESPONSE:
        break;
@@ -87,14 +79,17 @@ wpdu::wpdu(const Pdu& pdu, const UdpTarget& target):
 
    // TODO: determine how big raw_pdu serializes out to
    iovec_.iov_len = target.get_max_pdu_size();
-   ACE_NEW(iovec_.iov_base, char [iovec_.iov_len]);
+   char *buffer {};
+   ACE_NEW (buffer, char [iovec_.iov_len]);
+   buffer_.reset (buffer);
+   iovec_.iov_base = buffer_.get ();
 
    // create raw byte stream
    // The intermediate integer is to avoid type-punned pointer
    // dereferencing.
    int out_length = iovec_.iov_len;
    status = cmu_snmp::build( raw_pdu,
-                            (unsigned char *)iovec_.iov_base,
+                            static_cast<unsigned char *> (iovec_.iov_base),
                             &out_length,
                             target.get_version(),
                             comm_str.data(),
@@ -111,7 +106,7 @@ wpdu::wpdu(const Pdu& pdu, const UdpTarget& target):
    valid_flag_ = SNMP_CLASS_SUCCESS;
 }
 
-int wpdu::set_trap_info(snmp_pdu *raw_pdu, const Pdu& pdu) const
+int wpdu::set_trap_info (snmp_pdu *raw_pdu, Pdu const &pdu) const
 {
   Oid enterprise;
   Oid trapid; // validate caller has set this correctly
@@ -125,17 +120,29 @@ int wpdu::set_trap_info(snmp_pdu *raw_pdu, const Pdu& pdu) const
 
   // TODO: object should emit numeric instead of this kind of mess...
   if ( trapid == coldStart)
-    raw_pdu->trap_type = V1_COLD_START;  // cold start
+    {
+      raw_pdu->trap_type = V1_COLD_START;  // cold start
+    }
   else if ( trapid == warmStart)
-    raw_pdu->trap_type = V1_WARM_START;  // warm start
+    {
+      raw_pdu->trap_type = V1_WARM_START;  // warm start
+    }
   else if( trapid == linkDown)
-    raw_pdu->trap_type = V1_LINK_DOWN;  // link down
+    {
+      raw_pdu->trap_type = V1_LINK_DOWN;  // link down
+    }
   else if ( trapid == linkUp)
-    raw_pdu->trap_type = V1_LINK_UP;  // link up
+    {
+      raw_pdu->trap_type = V1_LINK_UP;  // link up
+    }
   else if ( trapid == authenticationFailure )
-    raw_pdu->trap_type = V1_AUTH_FAILURE;  // authentication failure
+    {
+      raw_pdu->trap_type = V1_AUTH_FAILURE;  // authentication failure
+    }
   else if ( trapid == egpNeighborLoss)
-    raw_pdu->trap_type = V1_EGP_NEIGHBOR_LOSS;  // egp neighbor loss
+    {
+      raw_pdu->trap_type = V1_EGP_NEIGHBOR_LOSS;  // egp neighbor loss
+    }
   else {
     raw_pdu->trap_type = V1_ENT_SPECIFIC;     // enterprise specific
                                // last oid subid is the specific value
@@ -144,12 +151,16 @@ int wpdu::set_trap_info(snmp_pdu *raw_pdu, const Pdu& pdu) const
    raw_pdu->specific_type = (int) trapid[(int) (trapid.length() - 1)];
    trapid.trim(1);
    if ( trapid[(int)(trapid.length() - 1)] == 0 )
+   {
      trapid.trim(1);
+   }
    enterprise = trapid;
   }
 
   if ( raw_pdu->trap_type != V1_ENT_SPECIFIC)
+  {
     pdu.get_notify_enterprise( enterprise);
+  }
   if ( enterprise.length() > 0) {
     // note!!  To the contrary, enterprise OID val is
     // copied here and raw_pdu->enterprise is freed in free_pdu
@@ -164,8 +175,7 @@ int wpdu::set_trap_info(snmp_pdu *raw_pdu, const Pdu& pdu) const
     raw_pdu->enterprise_length = (int) rawOid->len;
     ACE_NEW_RETURN(raw_pdu->enterprise,
                    oid[raw_pdu->enterprise_length],-1);
-    ACE_OS::memcpy((char *)raw_pdu->enterprise,(char *)rawOid->ptr,
-                   raw_pdu->enterprise_length * sizeof(oid));
+    std::memcpy (raw_pdu->enterprise, rawOid->ptr, raw_pdu->enterprise_length * sizeof (oid));
   }
 
   TimeTicks timestamp;
@@ -175,46 +185,41 @@ int wpdu::set_trap_info(snmp_pdu *raw_pdu, const Pdu& pdu) const
   // HDN - set agent addr using the local hostname if possible
   char localHostName[MAXHOSTNAMELEN];
   Snmp::get_host_name(localHostName, MAXHOSTNAMELEN);
-  if (ACE_OS::strlen(localHostName) > 0) {
+  if (std::strlen (localHostName) > 0) {
     GenAddress addr(localHostName);
     OctetStr octet;
     addr.to_octet(octet);
-    ACE_OS::memcpy(&(raw_pdu->agent_addr.sin_addr),
-                   octet.data(),
-                   octet.length());
+    std::memcpy (&raw_pdu->agent_addr.sin_addr, octet.data (), octet.length ());
   }
 
   return 0;
 }
 
-wpdu::wpdu(const iovec& iov): valid_flag_(0),comm_len(MAX_COMM_STR_LEN)
+wpdu::wpdu (iovec const &iov)
 {
-  community_name[0] = 0;
-   reset_iov(iovec_);
-   version_ = version1;         // TODO: figure where this should come from
-   ACE_NEW(iovec_.iov_base, char[iov.iov_len]);
-   if (!iovec_.iov_base) {
+   char *buffer {};
+   ACE_NEW (buffer, char[iov.iov_len]);
+   if (!buffer) {
      valid_flag_ = SNMP_CLASS_RESOURCE_UNAVAIL;
      return;
    }
 
+   buffer_.reset (buffer);
+   iovec_.iov_base = buffer_.get ();
    copy_iovec(iovec_, iov);
    valid_flag_ = SNMP_CLASS_SUCCESS;
 }
 
-wpdu::wpdu(): valid_flag_(0), comm_len(MAX_COMM_STR_LEN)
-{
-  community_name[0] = 0;
-   reset_iov(iovec_);
-   version_ = version1;         // TODO: figure where this should come from
-}
+wpdu::wpdu() = default;
 
-int wpdu::valid() const
+wpdu::~wpdu() = default;
+
+int wpdu::valid () const
 {
   return (valid_flag_ == SNMP_CLASS_SUCCESS);
 }
 
-int wpdu::load_vbs(snmp_pdu *raw_pdu, const Pdu& pdu)
+int wpdu::load_vbs (snmp_pdu *raw_pdu, Pdu const &pdu)
 {
   int status = 0;
 
@@ -228,14 +233,16 @@ int wpdu::load_vbs(snmp_pdu *raw_pdu, const Pdu& pdu)
 
    vb_count = pdu.get_vb_count();
 
-   for (int z = 0; z < vb_count; z++) {
+   for (int z = 0; z < vb_count; ++z) {
       pdu.get_vb( tempvb, z);
       tempvb.get_oid( tempoid);
       smioid = tempoid.oidval();
       // what are we trying to convert here (vb oid part or value part)
       status = convert_vb_to_smival( tempvb, &smival );
       if ( status != SNMP_CLASS_SUCCESS)
-         return status;
+      {
+        return status;
+      }
 
       // add the var to the raw pdu
       cmu_snmp::add_var(raw_pdu, smioid->ptr, (int) smioid->len, &smival);
@@ -247,16 +254,18 @@ int wpdu::load_vbs(snmp_pdu *raw_pdu, const Pdu& pdu)
 
 // supports overlapped copies
 // static
-void wpdu::copy_iovec(iovec& dest, const iovec& src)
+void wpdu::copy_iovec (iovec &dest, iovec const &src)
 {
-  if (&dest == &src)
+  if (std::addressof (dest) == std::addressof (src))
+  {
     return;
+  }
 
-   ACE_OS::memmove( dest.iov_base, src.iov_base, src.iov_len);
+   std::memmove (dest.iov_base, src.iov_base, src.iov_len);
    dest.iov_len = src.iov_len;
 }
 
-int wpdu::convert_vb_to_smival( Vb &tempvb, SmiVALUE *smival )
+int wpdu::convert_vb_to_smival (Vb &tempvb, SmiVALUE *smival)
 {
   smival->syntax = tempvb.get_syntax();
 
@@ -304,8 +313,7 @@ int wpdu::convert_vb_to_smival( Vb &tempvb, SmiVALUE *smival )
       smival->value.oid.len = tmpoid.length();
       ACE_NEW_RETURN(smival->value.oid.ptr,
                 SmiUINT32 [smival->value.oid.len], 1);
-      ACE_OS::memcpy(smival->value.oid.ptr, smi->ptr,
-                     smival->value.oid.len *sizeof(SmiUINT32));
+      std::memcpy (smival->value.oid.ptr, smi->ptr, smival->value.oid.len * sizeof (SmiUINT32));
     }
     break;
 
@@ -315,14 +323,16 @@ int wpdu::convert_vb_to_smival( Vb &tempvb, SmiVALUE *smival )
     {
       OctetStr os;
       tempvb.get_value(os);
-      smival->value.string.ptr = 0;
+      smival->value.string.ptr = nullptr;
       smival->value.string.len = os.length();
       if ( smival->value.string.len > 0 ) {
         ACE_NEW_RETURN(smival->value.string.ptr,
                 SmiBYTE [smival->value.string.len], 1);
         if ( smival->value.string.ptr )  {
-          for (int i=0; i<(int) smival->value.string.len ; i++)
-            smival->value.string.ptr[i] = os[i];
+          for (int i=0; i<(int) smival->value.string.len ; ++i)
+            {
+              smival->value.string.ptr[i] = os[i];
+            }
         }
         else   {
           smival->syntax = sNMP_SYNTAX_NULL;  // invalidate the smival
@@ -341,7 +351,7 @@ int wpdu::convert_vb_to_smival( Vb &tempvb, SmiVALUE *smival )
 }
 
 // free a SMI value
-void wpdu::free_smival_descriptor( SmiVALUE *smival )
+void wpdu::free_smival_descriptor (SmiVALUE *smival)
 {
   switch ( smival->syntax ) {
   case sNMP_SYNTAX_OCTETS:
@@ -358,22 +368,18 @@ void wpdu::free_smival_descriptor( SmiVALUE *smival )
   smival->syntax = sNMP_SYNTAX_NULL;
 }
 
-
-wpdu::~wpdu()
-{
-  delete [] (char*) iovec_.iov_base;
-}
-
-const iovec& wpdu::get_buffer() const
+iovec const &wpdu::get_buffer () const
 {
   return iovec_;
 }
 
 // return a pdu from a buffer
-int wpdu::get_pdu(Pdu& pdu, snmp_version& version)
+int wpdu::get_pdu (Pdu &pdu, snmp_version &version)
 {
   if (iovec_.iov_len == 0)
+  {
     return -1; // NO DATA
+  }
 
   snmp_pdu *raw_pdu = cmu_snmp::pdu_create(0);
   if (!raw_pdu) {
@@ -386,7 +392,9 @@ int wpdu::get_pdu(Pdu& pdu, snmp_version& version)
                      community_name, comm_len,
                      version, iovec_.iov_len);
   if (status != 0)
+  {
     return SNMP_CLASS_INTERNAL_ERROR;
+  }
 
   community_name[comm_len] = 0; // set null based on returned length
   set_request_id( &pdu, raw_pdu->reqid);
@@ -403,7 +411,7 @@ int wpdu::get_pdu(Pdu& pdu, snmp_version& version)
   return 0;
 }
 
-int wpdu::restore_vbs(Pdu& pdu, const snmp_pdu *raw_pdu) const
+int wpdu::restore_vbs (Pdu &pdu, snmp_pdu const *raw_pdu) const
 {
    Vb tempvb;
    Oid tempoid;
@@ -516,7 +524,7 @@ int wpdu::restore_vbs(Pdu& pdu, const snmp_pdu *raw_pdu) const
   return 0;
 }
 
-const unsigned char *wpdu::get_community() const
+unsigned char const *wpdu::get_community () const
 {
   return community_name;
 }

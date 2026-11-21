@@ -1,11 +1,7 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    IdUniquenessStrategy.cpp
  */
-//=============================================================================
-
 #include "tao/PortableServer/IdUniquenessStrategy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

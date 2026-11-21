@@ -3,23 +3,28 @@
 class server_i : public POA_server
 {
 public:
-  server_i (int quiet,
+  server_i (bool quiet,
             CORBA::ORB_ptr orb);
 
-  void ping (CORBA::UShort time_to_live);
+  void ping (CORBA::UShort time_to_live) override;
 
   void start (client_ptr c,
-              CORBA::UShort time_to_live);
+              CORBA::UShort time_to_live) override;
 
-  void shutdown ();
+  void shutdown () override;
+
+  server_i (server_i const &) = delete;
+  server_i (server_i &&) = delete;
+  server_i &operator= (server_i const &) = delete;
+  server_i &operator= (server_i &&) = delete;
 
 private:
-  int quiet_;
-  // Be quiet.
+  /// Be quiet.
+  bool quiet_ {};
 
-  client_var client_;
-  // Pointer to server.
+  /// Pointer to the client.
+  client_var client_ {};
 
-  CORBA::ORB_var orb_;
-  // Pointer to orb.
+  /// Pointer to the ORB.
+  CORBA::ORB_var orb_ {};
 };

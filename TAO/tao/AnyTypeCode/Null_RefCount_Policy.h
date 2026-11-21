@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Null_RefCount_Policy.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_NULL_REFCOUNT_POLICY_H
 #define TAO_NULL_REFCOUNT_POLICY_H

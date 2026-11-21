@@ -12,7 +12,7 @@ CommandModule::CommandModule (const ACE_TCHAR *module_name,
 // Listing 02 code/ch18
 ACE_SOCK_Stream &CommandModule::peer ()
 {
-  ACE_SOCK_Stream *peer = (ACE_SOCK_Stream *)this->arg ();
+  ACE_SOCK_Stream *peer = static_cast<ACE_SOCK_Stream *> (this->arg ());
   return *peer;
 }
 // Listing 02

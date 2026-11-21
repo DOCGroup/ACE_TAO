@@ -2,7 +2,7 @@
 
 #if defined (ACE_HAS_THREADS)
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/UPIPE_Stream.inl"
@@ -13,8 +13,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_UPIPE_Stream)
 
 ACE_UPIPE_Stream::ACE_UPIPE_Stream ()
-  : mb_last_ (nullptr),
-    reference_count_ (0)
 {
   ACE_TRACE ("ACE_UPIPE_Stream::ACE_UPIPE_STREAM");
 }
@@ -34,8 +32,8 @@ ACE_UPIPE_Stream::control (int cmd,
 {
   ACE_TRACE ("ACE_UPIPE_Stream::control");
 
-  return ((ACE_UPIPE_Stream *) this)->stream_.control
-    ((ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds) cmd, val);
+  return const_cast<ACE_UPIPE_Stream *> (this)->stream_.control
+    (static_cast<ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds> (cmd), val);
 }
 
 void
@@ -52,7 +50,7 @@ ACE_UPIPE_Stream::close ()
   ACE_TRACE ("ACE_UPIPE_Stream::close");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  this->reference_count_--;
+  --this->reference_count_;
 
   if (this->reference_count_ == 0)
     {
@@ -60,7 +58,9 @@ ACE_UPIPE_Stream::close ()
       // checking to see if closing it now fails.
 
       if (this->ACE_SPIPE::get_handle () != ACE_INVALID_HANDLE)
+      {
         this->ACE_SPIPE::close ();
+      }
 
       // Close down the ACE_stream.
       return this->stream_.close ();
@@ -122,52 +122,56 @@ ACE_UPIPE_Stream::recv (char *buffer,
   size_t bytes_read = 0;
 
   while (bytes_read < n)
-    if (this->mb_last_ != nullptr)
-      {
-        // We have remaining data in our last read Message_Buffer.
-        size_t this_len = this->mb_last_->length ();
-        if (this_len < n)
-          {
-            // The remaining data is not enough.
+    {
+      if (this->mb_last_ != nullptr)
+        {
+          // We have remaining data in our last read Message_Buffer.
+          size_t const this_len = this->mb_last_->length ();
+          if (this_len < n)
+            {
+              // The remaining data is not enough.
 
-            ACE_OS::memcpy ((void *) &buffer[bytes_read],
-                            this->mb_last_->rd_ptr (),
-                            this_len);
-            bytes_read += this_len;
-            this->mb_last_ = this->mb_last_->release ();   // mb_last_ now 0
-            return static_cast<ssize_t> (bytes_read);
-          }
-        else
-          {
-            // The remaining data is at least enough.  If there's
-            // more, we'll get it the next time through.
-            ACE_OS::memcpy (&buffer[bytes_read],
-                            this->mb_last_->rd_ptr (),
-                            n);
-            bytes_read += n;
-
-            // Advance rd_ptr.
-            this->mb_last_->rd_ptr (n);
-
-            if (this->mb_last_->length () == 0)
-              // Now the Message_Buffer is empty.
-              this->mb_last_ = this->mb_last_->release ();
-          }
-      }
-    else
-      {
-        // We have to get a new Message_Buffer from our stream.
-        int result = this->stream_.get (this->mb_last_, timeout);
-
-        if (result == -1)
-          {
-            if (errno == EWOULDBLOCK && bytes_read > 0)
-              // Return the number of bytes read before we timed out.
+              std::memcpy (buffer + bytes_read, this->mb_last_->rd_ptr (), this_len);
+              bytes_read += this_len;
+              this->mb_last_ = this->mb_last_->release ();   // mb_last_ now 0
               return static_cast<ssize_t> (bytes_read);
-            else
-              return -1;
-          }
-      }
+            }
+          else
+            {
+              // The remaining data is at least enough.  If there's
+              // more, we'll get it the next time through.
+              std::memcpy (buffer + bytes_read, this->mb_last_->rd_ptr (), n);
+              bytes_read += n;
+
+              // Advance rd_ptr.
+              this->mb_last_->rd_ptr (n);
+
+              if (this->mb_last_->length () == 0)
+                {
+                  // Now the Message_Buffer is empty.
+                  this->mb_last_ = this->mb_last_->release ();
+                }
+            }
+        }
+      else
+        {
+          // We have to get a new Message_Buffer from our stream.
+          int result = this->stream_.get (this->mb_last_, timeout);
+
+          if (result == -1)
+            {
+              if (errno == EWOULDBLOCK && bytes_read > 0)
+                {
+                  // Return the number of bytes read before we timed out.
+                  return static_cast<ssize_t> (bytes_read);
+                }
+              else
+                {
+                  return -1;
+                }
+            }
+        }
+    }
 
   return static_cast<ssize_t> (bytes_read);
 }

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    TypeCode_CDR_Extraction.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_TYPECODE_CDR_EXTRACTION_H
 #define TAO_TYPECODE_CDR_EXTRACTION_H

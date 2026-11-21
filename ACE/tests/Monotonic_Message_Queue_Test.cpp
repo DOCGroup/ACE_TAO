@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Reactor.h"
 #include "ace/Timer_Queue.h"
@@ -45,7 +44,7 @@ using SYNCH_QUEUE = ACE_Message_Queue<ACE_MT_SYNCH, ACE_Monotonic_Time_Policy>;
 ACE_Timer_Queue *
 create_timer_queue ()
 {
-  ACE_Timer_Queue * tmq = nullptr;
+  ACE_Timer_Queue * tmq {};
 
   using timer_queue_type = ACE_Timer_Heap_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX, ACE_HR_Time_Policy>;
   ACE_NEW_RETURN (tmq, timer_queue_type (), nullptr);
@@ -93,12 +92,12 @@ MyTask::create_reactor ()
 
   this->my_tq_ = create_timer_queue ();
 
-  ACE_TP_Reactor * pImpl = nullptr;
+  ACE_TP_Reactor * pImpl {};
 
   ACE_NEW_RETURN (pImpl,ACE_TP_Reactor (nullptr, this->my_tq_), -1);
 
   ACE_NEW_RETURN (my_reactor_,
-                   ACE_Reactor (pImpl ,1),
+                   ACE_Reactor (pImpl ,true),
                    -1);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -132,14 +131,15 @@ int
 MyTask::start (int num_threads)
 {
   if (this->activate (THR_NEW_LWP, num_threads) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p.\n"),
-                       ACE_TEXT ("unable to activate thread pool")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p.\n"),
+                         ACE_TEXT ("unable to activate thread pool")),
+                        -1);
+    }
 
   return 0;
 }
-
 
 int
 MyTask::stop ()
@@ -153,14 +153,18 @@ MyTask::stop ()
     }
 
   if (this->wait () == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p.\n"),
-                ACE_TEXT ("unable to stop thread pool")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p.\n"),
+                  ACE_TEXT ("unable to stop thread pool")));
+    }
 
   if (this->delete_reactor () == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p.\n"),
-                ACE_TEXT ("unable to delete reactor")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p.\n"),
+                  ACE_TEXT ("unable to delete reactor")));
+    }
 
   return 0;
 }
@@ -171,7 +175,9 @@ MyTask::svc ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) MyTask started\n")));
 
   while (this->my_reactor_->reactor_event_loop_done () == 0)
-    this->my_reactor_->run_reactor_event_loop ();
+    {
+      this->my_reactor_->run_reactor_event_loop ();
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) MyTask finished\n")));
   return 0;
@@ -268,9 +274,11 @@ timeout_test ()
   // the test should succeed.
 
   if (!test_handler.trigger_in (ACE_Time_Value (5, 0)))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                        "(%P|%t) Unable to schedule trigger.\n"),
-                      false);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) Unable to schedule trigger.\n"),
+                        false);
+    }
 
   if (!mq.is_empty ())
     {
@@ -280,7 +288,7 @@ timeout_test ()
     }
   else
     {
-      ACE_Message_Block *b = nullptr;
+      ACE_Message_Block *b {};
       ACE_Time_Value_T<ACE_Monotonic_Time_Policy> tv;
       tv = (tv.now () + ACE_Time_Value (3,0)); // Now (monotonic time) + 3 sec
 

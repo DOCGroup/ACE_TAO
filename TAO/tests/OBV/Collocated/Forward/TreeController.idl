@@ -1,8 +1,8 @@
 valuetype BaseNode;
 
-// This TreeController is probably a silly idea.
-// All I want from it is a valutype forward declared
-// in one file and fully defined in another.
+/// This TreeController is probably a silly idea.
+/// All I want from it is a valutype forward declared
+/// in one file and fully defined in another.
 
 valuetype TreeController
 {
@@ -11,16 +11,16 @@ valuetype TreeController
 
 interface Test
 {
-  // Returnes the reflected copy of its argument.
+  /// Returnes the reflected copy of its argument.
   TreeController reflect (in TreeController tc);
 
-  // Shutdown the romote ORB
+  /// Shutdown the romote ORB
   oneway void shutdown ();
 };
 
-// HOWEVER it is illegal to not include the full definition of the
-// forward declared BaseNode by the end of the compilation unit.
-// (The code generation of the _copy_value() function for TreeController
-// requires to know how to downcast the "root" member to it's corresponding
-// "BaseNode" type; this requires full knowledge of the enclosed type.)
+/// HOWEVER it is illegal to not include the full definition of the
+/// forward declared BaseNode by the end of the compilation unit.
+/// (The code generation of the _copy_value() function for TreeController
+/// requires to know how to downcast the "root" member to it's corresponding
+/// "BaseNode" type; this requires full knowledge of the enclosed type.)
 #include <TreeBase.idl>

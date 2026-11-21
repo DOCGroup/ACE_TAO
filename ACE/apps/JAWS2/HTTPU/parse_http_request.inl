@@ -13,7 +13,7 @@ Parse_HTTP_Request::method () const
 ACE_INLINE const char *
 Parse_HTTP_Request::method_str () const
 {
-  return (const char *) *this->method_;
+  return *this->method_;
 }
 
 ACE_INLINE int

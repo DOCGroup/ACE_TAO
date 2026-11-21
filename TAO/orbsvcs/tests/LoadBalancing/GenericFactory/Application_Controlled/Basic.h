@@ -6,29 +6,33 @@
 #include "orbsvcs/CosLoadBalancingC.h"
 #include "orbsvcs/PortableGroupC.h"
 
+#include <string>
+
 #if defined (_MSC_VER)
 # pragma warning(push)
 # pragma warning (disable:4250)
 #endif /* _MSC_VER */
-
-class LB_Basic_Test;
 
 /// Implement the Test::Basic interface
 class Basic
   : public virtual POA_Test::Basic
 {
 public:
-  /// Constructor
   Basic (CORBA::Object_ptr object_group,
          CosLoadBalancing::LoadManager_ptr lm,
          CORBA::ORB_ptr orb,
-         char const* loc);
+         std::string const &loc);
 
   char* get_string () override;
 
   void shutdown () override;
 
   void remove_member () override;
+
+  Basic (Basic const &) = delete;
+  Basic (Basic &&) = delete;
+  Basic &operator= (Basic const &) = delete;
+  Basic &operator= (Basic &&) = delete;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
@@ -40,7 +44,7 @@ private:
   CosLoadBalancing::LoadManager_var lm_;
 
   /// location of the servant
-  CORBA::String_var location_;
+  std::string const location_;
 
   /// Object Group reference.
   CORBA::Object_var object_group_;

@@ -43,10 +43,10 @@ test_i::method (CORBA::ULong work,
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "test_i::method: %hd units of work\n",
+                "test_i::method: %u units of work\n",
                 work));
 
-  for (; work != 0; work--)
+  for (; work != 0; ++work)
     ACE::is_prime (prime_number,
                    2,
                    prime_number / 2);
@@ -232,13 +232,13 @@ Task::svc ()
 
       int result = 0;
       CORBA::ULong stacksize = 0;
-      CORBA::Boolean allow_request_buffering = 0;
+      CORBA::Boolean allow_request_buffering = false;
       CORBA::ULong max_buffered_requests = 0;
       CORBA::ULong max_request_buffer_size = 0;
 
       CORBA::PolicyList policies;
 
-      CORBA::Boolean allow_borrowing = 0;
+      CORBA::Boolean allow_borrowing = false;
       if (number_of_lanes != 0)
         {
           get_auto_priority_lanes_and_bands (number_of_lanes,
@@ -270,7 +270,9 @@ Task::svc ()
                                 1);
 
           if (result != 0)
+          {
             return result;
+          }
 
           result =
             get_priority_bands ("server",
@@ -280,7 +282,9 @@ Task::svc ()
                                 1);
 
           if (result != 0)
+          {
             return result;
+          }
         }
       else
         {
@@ -311,7 +315,9 @@ Task::svc ()
                                     1);
 
               if (result != 0)
+              {
                 return result;
+              }
             }
         }
 
@@ -346,7 +352,9 @@ Task::svc ()
                            test.in ());
 
       if (result != 0)
+      {
         return result;
+      }
 
       poa_manager->activate ();
 
@@ -375,7 +383,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       int result =
         parse_args (argc, argv);
       if (result != 0)
+      {
         return result;
+      }
 
       // Make sure we can support multiple priorities that are required
       // for this test.

@@ -16,14 +16,19 @@
 class CSD_TP_Test_Export OrbShutdownTask : public ACE_Task_Base
 {
 public:
-  OrbShutdownTask();
-  virtual ~OrbShutdownTask() = default;
+  OrbShutdownTask () = default;
+  ~OrbShutdownTask () override = default;
 
   void orb(CORBA::ORB_ptr orb);
 
-  virtual int open(void*);
-  virtual int svc();
-  virtual int close(u_long);
+  int open(void* = nullptr) override;
+  int svc() override;
+  int close(u_long) override;
+
+  OrbShutdownTask (OrbShutdownTask const &) = delete;
+  OrbShutdownTask (OrbShutdownTask &&) = delete;
+  OrbShutdownTask & operator= (OrbShutdownTask const &) = delete;
+  OrbShutdownTask & operator= (OrbShutdownTask &&) = delete;
 
 private:
   CORBA::ORB_var orb_;

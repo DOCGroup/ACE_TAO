@@ -98,7 +98,7 @@ protected:
   ACE_Atomic_Op_GCC ();
 
   /// Initialize @c value_ to c.
-  ACE_Atomic_Op_GCC (T c);
+  explicit ACE_Atomic_Op_GCC (T c);
 
   /// Manage copying...
   ACE_Atomic_Op_GCC (const ACE_Atomic_Op_GCC<T> &c);
@@ -111,7 +111,7 @@ private:
 
 private:
   /// Current object decorated by the atomic op.
-  volatile T value_;
+  volatile T value_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

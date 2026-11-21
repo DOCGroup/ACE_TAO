@@ -7,9 +7,7 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * shexp.h: Defines and prototypes for shell exp. match routines
@@ -49,9 +47,7 @@
 #include <ctype.h>  /* isalnum */
 #include <string.h> /* strlen */
 
-
 /* --------------------------- Public routines ---------------------------- */
-
 
 /*
  * shexp_valid takes a shell expression exp as input. It returns:
@@ -76,7 +72,6 @@ int shexp_valid(char *exp);
  */
 
 int shexp_match(char *str, char *exp);
-
 
 /*
  * shexp_cmp

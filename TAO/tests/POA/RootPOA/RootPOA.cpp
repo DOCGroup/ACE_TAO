@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file     RootPOA.cpp
@@ -8,35 +7,30 @@
  *
  *  @author  Irfan Pyarali
  */
-//=============================================================================
-
-
 #include "tao/PortableServer/PortableServer.h"
-
 #include "tao/ORB.h"
-
 #include "ace/Log_Msg.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       // Initilize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       // Resolve the initial references for the name RootPOA thus getting
       // an object of type CORBA::Object.
-      CORBA::Object_var obj =
+      CORBA::Object_var const obj =
         orb->resolve_initial_references ("RootPOA");
 
       // apply _narrow on the object of type CORBA::Object, to make it
       // a POA class Object.
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (obj.in ());
 
       // Get the name of the root POA.
-      CORBA::String_var poa_name =
+      CORBA::String_var const poa_name =
         root_poa->the_name ();
 
       ACE_DEBUG ((LM_DEBUG,
@@ -45,7 +39,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception raised");
     }

@@ -5,8 +5,8 @@
 #include "ace/svc_export.h"
 #include "ace/OS_Memory.h"
 
-// Implementation of the abstract class method which describes the
-// magazine.
+/// Implementation of the abstract class method which describes the
+/// magazine.
 void
 Today::title ()
 {
@@ -20,12 +20,12 @@ Today::operator new (size_t bytes)
   return ::new char[bytes];
 }
 void *
-Today::operator new (size_t bytes, const std::nothrow_t&)
+Today::operator new (size_t bytes, std::nothrow_t const &)
 {
   return ::new (std::nothrow) char[bytes];
 }
 void
-Today::operator delete (void *p, const std::nothrow_t&) noexcept
+Today::operator delete (void *p, std::nothrow_t const &) noexcept
 {
   delete [] static_cast <char *> (p);
 }
@@ -35,14 +35,15 @@ Today::operator delete (void *ptr)
   delete [] static_cast <char *> (ptr);
 }
 
-// Returns the pointer to the Today class.
-// The ACE_BUILD_SVC_DLL and ACE_Svc_Export directives are necessary to
-// take care of exporting the function for Win32 platforms.
+/// Returns the pointer to the Today class.
+/// The ACE_BUILD_SVC_DLL and ACE_Svc_Export directives are necessary to
+/// take care of exporting the function for Win32 platforms.
 extern "C" ACE_Svc_Export Magazine *create_magazine ();
 
-Magazine *create_magazine ()
+Magazine *
+create_magazine ()
 {
-  Magazine *mag = nullptr;
-  ACE_NEW_RETURN (mag, Today, 0);
+  Magazine *mag {};
+  ACE_NEW_RETURN (mag, Today, nullptr);
   return mag;
 }

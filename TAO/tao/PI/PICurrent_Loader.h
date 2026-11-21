@@ -1,14 +1,10 @@
 /* -*- C++ -*- */
 
-
-//=============================================================================
 /**
  *  @file    PICurrent_Loader.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 
 #ifndef TAO_PICURRENT_LOADER_H
 #define TAO_PICURRENT_LOADER_H
@@ -40,7 +36,6 @@ public:
                                    int argc,
                                    ACE_TCHAR *argv []) override;
 };
-
 
 ACE_STATIC_SVC_DECLARE (TAO_PICurrent_Loader)
 ACE_FACTORY_DECLARE (TAO_PI, TAO_PICurrent_Loader)

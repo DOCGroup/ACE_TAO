@@ -1,16 +1,8 @@
-// ============================================================================
-//
-// = FILENAME
-//    PushConsumerFactory.java
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//   This is the administor/factory for a PushConsumer.
-//
-// ============================================================================
-
+/**
+ * @file PushConsumerFactory.java.JDK1.2
+ * @author Michael Kircher (mk1@cs.wustl.edu)
+ * @brief This is the administor/factory for a PushConsumer.
+ */
 
 public class PushConsumerFactory
 {
@@ -20,7 +12,6 @@ public class PushConsumerFactory
   private DataHandler dataHandler_;
   private Navigation navigation_;
   private Weapons weapons_;
-
 
   public PushConsumerFactory (DataHandler dataHandler,
 			      String nameServiceIOR,
@@ -121,7 +112,6 @@ public class PushConsumerFactory
 
 	  System.out.println ("Reference to the Naming Service is ok.");
 
-
 	  // Start the consumer
 	  System.out.println ("Instantiating the Push Consumer.");
 	  PushConsumer pushConsumer = new PushConsumer (orb_, dataHandler_);
@@ -133,7 +123,6 @@ public class PushConsumerFactory
 	  orb_.connect (pushConsumer);
 
 	  System.out.println ("Going into the event dispatching loop.");
-
 
 	  java.lang.Object sync = new java.lang.Object();
 	  synchronized (sync) {
@@ -169,10 +158,4 @@ public class PushConsumerFactory
 	}
     }
 } // public class PushConsumerFactory
-
-
-
-
-
-
 

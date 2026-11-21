@@ -105,9 +105,9 @@ Worker_Task::svc ()
   // Keep looping, reading a message out of the queue, until we get a
   // message with a length == 0, which signals us to quit.
 
-  for (int count = 0; ; count++)
+  for (int count = 0; ; ++count)
     {
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
 
       if (-1 == this->msg_queue ()->dequeue_head (mb))
         ACE_ERROR_BREAK ((LM_ERROR,
@@ -149,7 +149,7 @@ Worker_Task::svc ()
           ACE_Message_Block *dup;
 
           // Enqueue <current_count> duplicates with msg_priority == 1.
-          for (i = current_count; i > 0; i--)
+          for (i = current_count; i > 0; --i)
             {
               ACE_ALLOCATOR_RETURN (dup,
                                     mb->duplicate (),
@@ -179,7 +179,7 @@ Worker_Task::svc ()
                       current_count));
 
           // Dequeue the same <current_count> duplicates.
-          for (i = current_count; i > 0; i--)
+          for (i = current_count; i > 0; --i)
             {
               if (-1 == this->msg_queue ()->dequeue_head (dup))
                 ACE_ERROR_BREAK ((LM_ERROR,
@@ -187,35 +187,41 @@ Worker_Task::svc ()
                                   i,
                                   ACE_TEXT ("Worker_Task dequeue dups")));
               if (count != ACE_OS::atoi ((ACE_TCHAR *)(dup->rd_ptr ())))
-                ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("(%t) line %l, Dup %d, block's count ")
-                            ACE_TEXT ("is %d but should be %d\n"),
-                            i,
-                            ACE_OS::atoi ((ACE_TCHAR *)(dup->rd_ptr ())),
-                            count));
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("(%t) line %l, Dup %d, block's count ")
+                              ACE_TEXT ("is %d but should be %d\n"),
+                              i,
+                              ACE_OS::atoi ((ACE_TCHAR *)(dup->rd_ptr ())),
+                              count));
+                }
               if (0 != ACE_OS::strcmp ((ACE_TCHAR *)mb->rd_ptr (),
                                        (ACE_TCHAR *)dup->rd_ptr ()))
-                ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("(%t) Dup %d text is %s; ")
-                            ACE_TEXT ("should be %s\n"),
-                            i,
-                            dup->rd_ptr (),
-                            mb->rd_ptr ()));
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("(%t) Dup %d text is %s; ")
+                              ACE_TEXT ("should be %s\n"),
+                              i,
+                              dup->rd_ptr (),
+                              mb->rd_ptr ()));
+                }
               if (dup->msg_priority () != ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY + 1)
-                ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("(%t) Dup %d block priority is %u; ")
-                            ACE_TEXT ("should be %u\n"),
-                            i,
-                            (unsigned int)dup->msg_priority (),
-                            (unsigned int)(ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY + 1)));
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("(%t) Dup %d block priority is %u; ")
+                              ACE_TEXT ("should be %u\n"),
+                              i,
+                              (unsigned int)dup->msg_priority (),
+                              (unsigned int)(ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY + 1)));
+                }
               dup->release ();
             }
 
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) in iteration %d, length = %B, prio = %d, text = \"%*s\"\n"),
+                      ACE_TEXT ("(%t) in iteration %d, length = %B, prio = %Q, text = \"%*s\"\n"),
                       count,
                       length,
-                      mb->msg_priority (),
+                      static_cast<ACE_UINT64> (mb->msg_priority ()),
                       (int)(length - 2), // remove the trailing "\n\0"
                       mb->rd_ptr ()));
         }
@@ -243,20 +249,22 @@ Worker_Task::Worker_Task ()
 {
   // Make us an Active Object.
   if (this->activate (THR_NEW_LWP) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("activate failed")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("activate failed")));
+    }
 }
 
 static int
 produce (Worker_Task &worker_task,
          ACE_Allocator *alloc_strategy)
 {
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   int status;
 
   // Send <n_iteration> messages through the pipeline.
-  for (size_t count = 0; count < n_iterations; count++)
+  for (size_t count = 0; count < n_iterations; ++count)
     {
       ACE_TCHAR buf[BUFSIZ];
       ACE_OS::snprintf (buf, BUFSIZ, ACE_SIZE_T_FORMAT_SPECIFIER, count);
@@ -280,11 +288,13 @@ produce (Worker_Task &worker_task,
         {
           status = mb->copy ((char *) buf, n + 1);
           if (status != -1)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT (" (%t) Copy %B bytes into %B byte block ")
-                        ACE_TEXT ("should fail but didn't\n"),
-                        n + 1,
-                        n));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT (" (%t) Copy %B bytes into %B byte block ")
+                          ACE_TEXT ("should fail but didn't\n"),
+                          n + 1,
+                          n));
+            }
           else if (errno != ENOSPC)
             {
               ACE_ERROR ((LM_ERROR,
@@ -293,8 +303,10 @@ produce (Worker_Task &worker_task,
                           ACE_TEXT ("wrong error")));
             }
           else
-            ACE_DEBUG ((LM_INFO,
-                        ACE_TEXT (" (%t) Copy too-long test succeeded\n")));
+            {
+              ACE_DEBUG ((LM_INFO,
+                          ACE_TEXT (" (%t) Copy too-long test succeeded\n")));
+            }
         }
       // Copy buf into the Message_Block and update the wr_ptr ().
       status = mb->copy ((char *) buf, n);
@@ -308,9 +320,11 @@ produce (Worker_Task &worker_task,
       if (worker_task.put (mb,
                            // Don't block indefinitely if we flow control...
                            (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT (" (%t) %p\n"),
-                    ACE_TEXT ("put")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT (" (%t) %p\n"),
+                      ACE_TEXT ("put")));
+        }
     }
 
   // Send a shutdown message to the waiting threads and exit.
@@ -327,9 +341,11 @@ produce (Worker_Task &worker_task,
                   -1);
 
   if (worker_task.put (mb) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT (" (%t) %p\n"),
-                ACE_TEXT ("put")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT (" (%t) %p\n"),
+                  ACE_TEXT ("put")));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT (" (%t) end producer\n")));
@@ -359,7 +375,7 @@ alloc_struct_type alloc_struct[ACE_ALLOC_STRATEGY_NO] =
 static int
 test_message_block_unique_ptr ()
 {
-  ACE_Message_Block *raw_message_block = nullptr;
+  ACE_Message_Block *raw_message_block {};
   ACE_NEW_RETURN (raw_message_block,
                   ACE_Message_Block (16),
                   -1);
@@ -368,21 +384,27 @@ test_message_block_unique_ptr ()
   ACE_Message_Block_Unique_Ptr duplicate {message_block->duplicate ()};
 
   if (!duplicate)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Failed to duplicate ACE_Message_Block.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Failed to duplicate ACE_Message_Block.\n")),
+                        -1);
+    }
 
   if (message_block->reference_count () != 2)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unexpected message block reference count before reset.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Unexpected message block reference count before reset.\n")),
+                        -1);
+    }
 
   message_block.reset ();
 
   if (duplicate->reference_count () != 1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unique pointer did not release its message block reference.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Unique pointer did not release its message block reference.\n")),
+                        -1);
+    }
 
   duplicate.reset ();
   return 0;
@@ -394,12 +416,14 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Message_Block_Test"));
 
   if (test_message_block_unique_ptr () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("ACE_Message_Block_Unique_Ptr test failed.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("ACE_Message_Block_Unique_Ptr test failed.\n")),
+                        -1);
+    }
 
   // A quick user-defined data block test, then the main event
-  User_Data *user_data_block = nullptr;
+  User_Data *user_data_block {};
   ACE_NEW_MALLOC_RETURN (user_data_block,
                          static_cast<User_Data *>(
                            ACE_Allocator::instance()->malloc(sizeof (User_Data))),
@@ -408,7 +432,7 @@ run_main (int, ACE_TCHAR *[])
 
   // Create a new message block referring to the User_Data block and
   // ensure it is released and freed correctly.
-  ACE_Message_Block *wrapper_mb = nullptr;
+  ACE_Message_Block *wrapper_mb {};
   ACE_NEW_RETURN (wrapper_mb,
                   ACE_Message_Block (user_data_block),
                   -1);
@@ -416,7 +440,9 @@ run_main (int, ACE_TCHAR *[])
   wrapper_mb->release ();
   wrapper_mb = nullptr;
   if (!user_data_dtor_called)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("User-defined data block not freed correctly.\n")));
+  }
 
 #if defined (ACE_HAS_THREADS)
   int n_threads = ACE_MAX_THREADS;
@@ -427,7 +453,7 @@ run_main (int, ACE_TCHAR *[])
 
   int i;
 
-  for (i = 0; i < ACE_ALLOC_STRATEGY_NO; i++)
+  for (i = 0; i < ACE_ALLOC_STRATEGY_NO; ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) Start Message_Block_Test using %s allocation strategy\n"),
@@ -437,8 +463,10 @@ run_main (int, ACE_TCHAR *[])
       Worker_Task worker_task[ACE_MAX_THREADS] ;
 
       // Link all the tasks together into a simple pipeline.
-      for (size_t j = 1; j < ACE_MAX_THREADS; j++)
-        worker_task[j - 1].next (&worker_task[j]);
+      for (size_t j = 1; j < ACE_MAX_THREADS; ++j)
+        {
+          worker_task[j - 1].next (&worker_task[j]);
+        }
 
       ptime.start ();
       // Generate messages and pass them through the pipeline.
@@ -457,11 +485,13 @@ run_main (int, ACE_TCHAR *[])
                   ACE_TEXT ("(%t) destroying worker tasks\n")));
     }
 
-  for (i = 0; i < ACE_ALLOC_STRATEGY_NO; i++)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Elapsed time using %s allocation strategy: %f sec\n"),
-                alloc_struct[i].name_,
-                alloc_struct[i].et_.real_time));
+  for (i = 0; i < ACE_ALLOC_STRATEGY_NO; ++i)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Elapsed time using %s allocation strategy: %f sec\n"),
+                  alloc_struct[i].name_,
+                  alloc_struct[i].et_.real_time));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Exiting...\n")));

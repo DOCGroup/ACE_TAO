@@ -71,7 +71,9 @@ ACE_OS::waitpid (pid_t pid,
       result = -1;
     }
   if (handle == 0)
-    ::CloseHandle (phandle);
+    {
+      ::CloseHandle (phandle);
+    }
   return result;
 #else
   ACE_UNUSED_ARG (handle);

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_LOCAL_SOCK_DGRAM_H
 #define ACE_LOCAL_SOCK_DGRAM_H
 #include /**/ "ace/pre.h"
@@ -34,7 +33,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_LSOCK_Dgram : public ACE_SOCK_Dgram, public ACE_LSOCK
 {
 public:
-  /// Default constructor.
   ACE_LSOCK_Dgram ();
 
   /// Initiate a local dgram.

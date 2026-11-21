@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BD_STRING_ARGUMENT_T_H
 #define TAO_BD_STRING_ARGUMENT_T_H
 
@@ -22,6 +21,8 @@
 
 #include "tao/Argument.h"
 #include "tao/Any_Insert_Policy_T.h"
+
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -67,11 +68,11 @@ namespace TAO
   {
   public:
     In_BD_String_Clonable_Argument_T (typename S_var::s_traits::char_type const * x);
-    ~In_BD_String_Clonable_Argument_T () override;
+    ~In_BD_String_Clonable_Argument_T () override = default;
 
     Argument* clone () override;
   private:
-    bool is_clone_ {};
+    std::unique_ptr<typename S_var::s_traits::char_type[]> clone_buffer_;
   };
 
   /**

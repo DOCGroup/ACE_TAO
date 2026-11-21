@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    old_union.idl
  *
@@ -8,8 +7,6 @@
  *
  *  @author Andy Gokhale <gokhale@dre.vanderbilt.edu>
  */
-//=============================================================================
-
 
 module OldUnion
 {
@@ -25,7 +22,6 @@ module OldUnion
     case 2: Bar y;
     default: char z;
   };
-
 
   union Foo2 switch (char)
   {

@@ -37,15 +37,13 @@ class ACE_Time_Value_T : public ACE_Time_Value
 public:
   using time_policy_t = TIME_POLICY;
 
-  /// Default Constructor.
   ACE_Time_Value_T () {}
 
-  /// Constructor.
   explicit ACE_Time_Value_T (time_t sec, suseconds_t usec = 0)
     : ACE_Time_Value (sec, usec) {}
 
-  // = Methods for converting to/from various time formats.
-
+  /// @name Time format conversions
+  /// @{
   /// Construct the ACE_Time_Value from a timeval.
   explicit ACE_Time_Value_T (const struct timeval &t)
     : ACE_Time_Value (t) {}
@@ -53,6 +51,7 @@ public:
   /// Construct the ACE_Time_Value object from a timespec_t.
   explicit ACE_Time_Value_T (const timespec_t &t)
     : ACE_Time_Value (t) {}
+  /// @}
 
   /// Construct from ACE_Time_Value_T<TIME_POLICY>
   ACE_Time_Value_T(const ACE_Time_Value_T<TIME_POLICY>& tv)
@@ -67,7 +66,6 @@ public:
       time_policy_ (tp)
   {}
 
-  /// Destructor
   ~ACE_Time_Value_T () override {}
 
   /// Add @a tv to this.

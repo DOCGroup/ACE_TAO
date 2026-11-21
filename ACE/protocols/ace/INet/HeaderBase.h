@@ -20,6 +20,7 @@
 #include "ace/Containers_T.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/INet/INet_Export.h"
+#include <cstdlib>
 #include <iostream>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -61,7 +62,6 @@ namespace ACE
 
         using TNVMap = ACE_Ordered_MultiSet<NVPair>;
 
-
         /**
         * @class ACE_INet_HeaderBase
         *
@@ -71,10 +71,8 @@ namespace ACE
         class ACE_INET_Export HeaderBase
           {
             public:
-              /// Constructor
               HeaderBase();
 
-              /// Destructor
               virtual ~HeaderBase();
 
               /// Sets the Content-Length header.

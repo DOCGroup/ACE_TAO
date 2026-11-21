@@ -1,9 +1,5 @@
 #include "Reply_Handler.h"
 
-Reply_Handler::Reply_Handler ()
-{
-}
-
 void
 Reply_Handler::receive_data ()
 {
@@ -16,7 +12,7 @@ Reply_Handler::receive_data_excep (::Messaging::ExceptionHolder *holder)
     {
       holder->raise_exception ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("receive_data: ");
     }
@@ -34,7 +30,7 @@ Reply_Handler::sync_excep (::Messaging::ExceptionHolder *holder)
     {
       holder->raise_exception ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("sync: ");
     }
@@ -52,7 +48,7 @@ Reply_Handler::shutdown_excep (::Messaging::ExceptionHolder *holder)
     {
       holder->raise_exception ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("shutdown: ");
     }

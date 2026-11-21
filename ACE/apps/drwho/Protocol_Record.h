@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _PROTOCOL_RECORD_H
 #define _PROTOCOL_RECORD_H
 
@@ -23,10 +22,14 @@ class Protocol_Record
 {
 public:
   Protocol_Record ();
-  Protocol_Record (int use_dummy);
-  Protocol_Record (const char *key_name1,
-                   Protocol_Record *next = 0);
+  explicit Protocol_Record (int use_dummy);
+  explicit Protocol_Record (const char *key_name1,
+                            Protocol_Record *next = nullptr);
   ~Protocol_Record ();
+  Protocol_Record (Protocol_Record const &) = delete;
+  Protocol_Record (Protocol_Record &&) = delete;
+  Protocol_Record &operator= (Protocol_Record const &) = delete;
+  Protocol_Record &operator= (Protocol_Record &&) = delete;
   const char *get_host ();
   const char *set_host (const char *str);
   const char *get_login ();
@@ -36,11 +39,11 @@ public:
   Drwho_Node *get_drwho_list ();
 
   static Drwho_Node drwho_node_;
-  const char *key_name1_;
-  const char *key_name2_;
-  Drwho_Node *drwho_list_;
-  Protocol_Record *next_;
-  int is_active_;
+  const char *key_name1_ {};
+  const char *key_name2_ {};
+  Drwho_Node *drwho_list_ {};
+  Protocol_Record *next_ {};
+  bool is_active_ {};
 };
 
 #endif /* _PROTOCOL_RECORD_H */

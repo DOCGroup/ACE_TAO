@@ -9,31 +9,6 @@
 
 namespace Kokyu
 {
-/*
-//@@VS: This is somehow not being recognized by MSVC, which results
-//in a link error. For now, the definition has been moved to the .h
-//file. Needs further investigation.
-
-template <class DSRT_Scheduler_Traits>
-int Comparator_Adapter_Generator<DSRT_Scheduler_Traits>::MoreEligible::
-operator ()(const DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>& item1,
-            const DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>& item2)
-{
-  int rc = qos_comparator_ (item1->qos (), item2->qos ());
-
-  //more eligible
-  if (rc == 1)
-    return 1;
-
-  //if equally eligible, then resolve tie with the creation time of
-  //the item
-  if (rc == 0 && item1->insertion_time () < item2->insertion_time ())
-    return 1;
-
-  return 0;
-}
-*/
-
 template <class DSRT_Scheduler_Traits>
 DSRT_CV_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 DSRT_CV_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
@@ -45,22 +20,22 @@ DSRT_CV_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
 
 template <class DSRT_Scheduler_Traits> int
 DSRT_CV_Dispatcher_Impl<DSRT_Scheduler_Traits>::
-init_i (const DSRT_ConfigInfo&)
+init_i (DSRT_ConfigInfo const &)
 {
   return 0;
 }
 
 template <class DSRT_Scheduler_Traits>
 int DSRT_CV_Dispatcher_Impl<DSRT_Scheduler_Traits>::
-schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
+schedule_i (Guid_t id, DSRT_QoSDescriptor const &qos)
 {
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
               "(%t|%T):schedule_i enter\n"));
 #endif
 
-  DSRT_Dispatch_Item<DSRT_Scheduler_Traits>* item;
-  ACE_hthread_t thr_handle;
+  DSRT_Dispatch_Item<DSRT_Scheduler_Traits> *item {};
+  ACE_hthread_t thr_handle {};
   ACE_Thread::self (thr_handle);
 
   if (ACE_OS::thr_setprio (thr_handle,
@@ -79,7 +54,9 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
 
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->synch_lock_, -1);
   if (this->ready_queue_.insert (item) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
 #ifdef KOKYU_DSRT_LOGGING
   this->ready_queue_.dump ();
@@ -99,14 +76,14 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T):curr thr handle = %d\n",
-                  thr_handle));
+                  "(%t|%T): current thread is scheduled = %d\n",
+                  this->curr_scheduled_thr_handle_ == thr_handle));
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T):curr scheduled thr handle = %d\n",
-                  this->curr_scheduled_thr_handle_));
+                  "(%t|%T): current thread is most eligible = %d\n",
+                  most_eligible_thr_handle == thr_handle));
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T):most eligible thr handle = %d\n",
-                  most_eligible_thr_handle));
+                  "(%t|%T): a thread is scheduled = %d\n",
+                  this->curr_scheduled_thr_handle_ != 0));
 #endif
 
   if (this->curr_scheduled_thr_handle_ == thr_handle &&
@@ -127,8 +104,7 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
   //if the current thread is most eligible, but some thread is
   //scheduled currently, then wait.
   while (most_eligible_thr_handle != thr_handle ||
-         (most_eligible_thr_handle == thr_handle &&
-          this->curr_scheduled_thr_handle_ != thr_handle &&
+         (this->curr_scheduled_thr_handle_ != thr_handle &&
           this->curr_scheduled_thr_handle_ != 0))
     {
       ACE_Time_Value tv (60,0);
@@ -151,8 +127,7 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T): %d is currently running\n",
-                  thr_handle));
+                  "(%t|%T): current thread is currently running\n"));
 #endif
 
   if (ACE_OS::thr_setprio (thr_handle,
@@ -174,7 +149,7 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
 
 template <class DSRT_Scheduler_Traits>
 int DSRT_CV_Dispatcher_Impl<DSRT_Scheduler_Traits>::
-update_schedule_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
+update_schedule_i (Guid_t guid, DSRT_QoSDescriptor const &qos)
 {
   return this->schedule_i (guid, qos);
 }
@@ -190,17 +165,20 @@ update_schedule_i (Guid_t guid, Block_Flag_t flag)
 #endif
 
   DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> dispatch_item;
-  ACE_hthread_t thr_handle;
+  ACE_hthread_t thr_handle {};
   ACE_Thread::self (thr_handle);
 
-  int found = this->ready_queue_.find (guid, dispatch_item);
+  int const found = this->ready_queue_.find (guid, dispatch_item);
 
 #ifdef KOKYU_DSRT_LOGGING
   if (found == 0)
-      ACE_DEBUG ((LM_DEBUG, "(%t|%T): %d found in ready queue\n", thr_handle));
+    {
+      ACE_DEBUG ((LM_DEBUG, "(%t|%T): current thread is in the ready queue\n"));
+    }
   else
-      ACE_DEBUG ((LM_DEBUG, "(%t|%T): %d not found in ready queue\n",
-                  thr_handle));
+    {
+      ACE_DEBUG ((LM_DEBUG, "(%t|%T): current thread is not in the ready queue\n"));
+    }
 #endif
 
   if (found == 0 && flag == BLOCK)
@@ -208,7 +186,7 @@ update_schedule_i (Guid_t guid, Block_Flag_t flag)
       thr_handle = dispatch_item->thread_handle ();
 
 #ifdef KOKYU_DSRT_LOGGING
-      ACE_DEBUG ((LM_DEBUG, "(%t|%T): update schedule: %d found\n", thr_handle));
+      ACE_DEBUG ((LM_DEBUG, "(%t|%T): updating schedule for blocked thread\n"));
 #endif
 
       if (ACE_OS::thr_setprio (thr_handle,
@@ -220,7 +198,7 @@ update_schedule_i (Guid_t guid, Block_Flag_t flag)
                       ACE_TEXT ("thr_setprio failed")));
         }
 
-      int rc = this->cancel_schedule (guid);
+      int const rc = this->cancel_schedule (guid);
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG, "(%t): update schedule for block done\n"));
@@ -242,7 +220,7 @@ cancel_schedule_i (Guid_t guid)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->synch_lock_, -1);
 
-  ACE_hthread_t thr_handle;
+  ACE_hthread_t thr_handle {};
   ACE_Thread::self (thr_handle);
 
 #ifdef KOKYU_DSRT_LOGGING
@@ -271,7 +249,7 @@ template <class DSRT_Scheduler_Traits> int
 DSRT_CV_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 shutdown_i ()
 {
-  this->shutdown_flagged_ = 1;
+  this->shutdown_flagged_ = true;
   return 0;
 }
 

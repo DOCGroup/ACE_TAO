@@ -5,6 +5,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/PI/PI.h"
+#include "Interceptor_Type.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,15 +26,19 @@ class Server_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor
-  Server_ORBInitializer (int interceptor_type);
+  explicit Server_ORBInitializer (Interceptor_Type interceptor_type);
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  Server_ORBInitializer (Server_ORBInitializer const &) = delete;
+  Server_ORBInitializer (Server_ORBInitializer &&) = delete;
+  Server_ORBInitializer &operator= (Server_ORBInitializer const &) = delete;
+  Server_ORBInitializer &operator= (Server_ORBInitializer &&) = delete;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
+
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
 private:
-  int interceptor_type_;
+  Interceptor_Type const interceptor_type_;
 };
 
 #if defined(_MSC_VER)

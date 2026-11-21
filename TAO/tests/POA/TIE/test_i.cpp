@@ -7,19 +7,10 @@
  *
  *  @author  Irfan Pyarali
  */
-//=============================================================================
-
-
 #include "test_i.h"
 
-// Constructor
 Tie_i::Tie_i (CORBA::Long value)
   : value_ (value)
-{
-}
-
-// Destructor
-Tie_i::~Tie_i ()
 {
 }
 
@@ -30,7 +21,6 @@ Tie_i::doit ()
   return this->value_;
 }
 
-// Constructor
 A_i::A_i (CORBA::Long value,
           PortableServer::POA_ptr poa)
   : value_ (value),
@@ -52,7 +42,6 @@ A_i::_default_POA ()
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
-// Constructor
 Outer_i::B_i::B_i (CORBA::Long value,
                    PortableServer::POA_ptr poa)
   : value_ (value),
@@ -74,7 +63,6 @@ Outer_i::B_i::_default_POA ()
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
-// Constructor
 Outer_i::Inner_i::C_i::C_i (CORBA::Long value,
                             PortableServer::POA_ptr poa)
   : value_ (value),

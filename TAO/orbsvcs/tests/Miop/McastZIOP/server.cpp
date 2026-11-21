@@ -90,7 +90,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Parse our own specific arguments
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       // Create the servant on the group ior
       CORBA::Object_var group1 =
@@ -152,7 +154,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           exit_status = 1;
         }
       else
+      {
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - Success!\n"));
+      }
     }
   catch (const CORBA::Exception& ex)
     {

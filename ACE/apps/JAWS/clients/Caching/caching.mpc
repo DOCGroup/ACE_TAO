@@ -9,3 +9,14 @@ project(http_client) : aceexe {
     http_client.cpp
   }
 }
+
+project(test_URL) : aceexe {
+  exename = test_URL
+  macros += ACE_SVC_HAS_DLL=0
+  Source_Files {
+    test_URL.cpp
+    Locator_Request_Reply.cpp
+    URL_Properties.cpp
+    URL_Locator.cpp
+  }
+}

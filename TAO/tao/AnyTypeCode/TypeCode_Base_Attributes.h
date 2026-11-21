@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    TypeCode_Base_Attributes.h
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_TYPECODE_BASE_ATTRIBUTES_H
 #define TAO_TYPECODE_BASE_ATTRIBUTES_H
@@ -41,7 +39,6 @@ namespace TAO
     class Base_Attributes
     {
     public:
-      /// Constructor.
       Base_Attributes (char const * id,
                        char const * name);
 

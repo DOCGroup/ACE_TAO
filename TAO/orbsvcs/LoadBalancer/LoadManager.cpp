@@ -8,16 +8,30 @@
 
 #include "tao/IORTable/IORTable.h"
 
+#include <memory>
+#include <string>
+
 #if defined (ACE_LINUX) && defined (ACE_HAS_THREADS)
 # include "ace/Signal.h"
 #endif /* ACE_LINUX && ACE_HAS_THREADS */
 
-static ACE_TCHAR const *lm_ior_file = ACE_TEXT("lm.ior");
-static int ping_timeout_milliseconds = 2000;
-static int ping_interval_seconds = 0;
+enum class Default_Strategy
+{
+  round_robin,
+  random,
+  least_loaded
+};
+
+struct LoadManager_Options
+{
+  std::basic_string<ACE_TCHAR> ior_file {ACE_TEXT ("lm.ior")};
+  int ping_timeout_milliseconds {2000};
+  int ping_interval_seconds {};
+  Default_Strategy default_strategy {Default_Strategy::random};
+};
 
 void
-usage (const ACE_TCHAR * cmd)
+usage (ACE_TCHAR const * cmd)
 {
   ORBSVCS_DEBUG ((LM_INFO,
               ACE_TEXT ("Usage:\n")
@@ -35,40 +49,40 @@ usage (const ACE_TCHAR * cmd)
 
 void
 parse_args (int argc,
-            ACE_TCHAR *argv[],
-            int & default_strategy)
+            ACE_TCHAR * argv[],
+            LoadManager_Options & options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:s:i:t:h"));
 
-  int c = 0;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     {
       switch (c)
         {
         case 'o':
-          ::lm_ior_file = get_opts.opt_arg ();
+          options.ior_file = get_opts.opt_arg ();
           break;
 
         case 's':
           if (ACE_OS::strcasecmp (get_opts.opt_arg (),
                                   ACE_TEXT("RoundRobin")) == 0)
-            default_strategy = 0;
+            options.default_strategy = Default_Strategy::round_robin;
           else if (ACE_OS::strcasecmp (get_opts.opt_arg (),
                                        ACE_TEXT("Random")) == 0)
-            default_strategy = 1;
+            options.default_strategy = Default_Strategy::random;
           else if (ACE_OS::strcasecmp (get_opts.opt_arg (),
                                        ACE_TEXT("LeastLoaded")) == 0)
-            default_strategy = 2;
+            options.default_strategy = Default_Strategy::least_loaded;
           else
             ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("Unknown strategy, using RoundRobin\n")));
           break;
         case 'i':
-          ::ping_interval_seconds = ACE_OS::atoi (get_opts.opt_arg ());
+          options.ping_interval_seconds = ACE_OS::atoi (get_opts.opt_arg ());
           break;
         case 't':
-          ::ping_timeout_milliseconds = ACE_OS::atoi (get_opts.opt_arg ());
+          options.ping_timeout_milliseconds = ACE_OS::atoi (get_opts.opt_arg ());
           break;
 
         case 'h':
@@ -102,7 +116,7 @@ TAO_LB_run_load_manager (void * orb_arg)
     {
       orb->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO Load Manager");
 
@@ -114,47 +128,42 @@ TAO_LB_run_load_manager (void * orb_arg)
 #endif  /* linux && ACE_HAS_THREADS */
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
+  LoadManager_Options options {};
   try
     {
       // The usual server side boilerplate code.
 
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var obj =
+      CORBA::Object_var const obj =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (obj.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
 
-      // "built-in" strategies are the following:
-      //   0 = RoundRobin
-      //   1 = Random
-      //   2 = LeastLoaded
-      int default_strategy = 1;
-
       // Check the non-ORB arguments.
       ::parse_args (argc,
                     argv,
-                    default_strategy);
+                    options);
 
-      TAO_LB_LoadManager * lm = nullptr;
+      TAO_LB_LoadManager * lm {};
       ACE_NEW_THROW_EX (lm,
-        TAO_LB_LoadManager(::ping_timeout_milliseconds,
-                           ::ping_interval_seconds),
+        TAO_LB_LoadManager (options.ping_timeout_milliseconds,
+                            options.ping_interval_seconds),
                           CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
 
-      PortableServer::ServantBase_var safe_lm = lm;
+      PortableServer::ServantBase_var const safe_lm = lm;
 
       // Initialize the LoadManager servant.
       lm->initialize (orb->orb_core ()->reactor (),
@@ -169,15 +178,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CosLoadBalancing::StrategyInfo strategy_info;
 
-      switch (default_strategy)
+      switch (options.default_strategy)
         {
-        case 0:
+        case Default_Strategy::round_robin:
           strategy_info.name = CORBA::string_dup ("RoundRobin");
           break;
-        case 1:
+        case Default_Strategy::random:
           strategy_info.name = CORBA::string_dup ("Random");
           break;
-        case 2:
+        case Default_Strategy::least_loaded:
           strategy_info.name = CORBA::string_dup ("LeastLoaded");
           break;
         default:
@@ -191,24 +200,31 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       lm->set_default_properties (props);
 
-      CosLoadBalancing::LoadManager_var load_manager =
+      CosLoadBalancing::LoadManager_var const load_manager =
         lm->_this ();
 
-      CORBA::String_var str =
+      CORBA::String_var const str =
         orb->object_to_string (load_manager.in ());
 
       // to support corbaloc
       // Get a reference to the IOR table.
-      CORBA::Object_var tobj = orb->resolve_initial_references ("IORTable");
+      CORBA::Object_var const tobj = orb->resolve_initial_references ("IORTable");
 
-      IORTable::Table_var table = IORTable::Table::_narrow (tobj.in ());
+      IORTable::Table_var const table = IORTable::Table::_narrow (tobj.in ());
 
       // bind your stringified IOR in the IOR table
       table->bind ("LoadManager", str.in ());
 
-      FILE * lm_ior = ACE_OS::fopen (lm_ior_file, "w");
-      ACE_OS::fprintf (lm_ior, "%s", str.in ());
-      ACE_OS::fclose (lm_ior);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> const lm_ior (
+          ACE_OS::fopen (options.ior_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
+        if (!lm_ior)
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Unable to open IOR output file: %s\n"),
+                                 options.ior_file.c_str ()),
+                                -1);
+        ACE_OS::fprintf (lm_ior.get (), "%s", str.in ());
+      }
 
 #if defined (ACE_LINUX) && defined (ACE_HAS_THREADS)
       if (ACE_Thread_Manager::instance ()->spawn (::TAO_LB_run_load_manager,
@@ -266,7 +282,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 //     {
 //       ORBSVCS_DEBUG ((LM_DEBUG, "Property ----> %s\n", ex.nam[0].id.in ()));
 //     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO Load Manager");
 

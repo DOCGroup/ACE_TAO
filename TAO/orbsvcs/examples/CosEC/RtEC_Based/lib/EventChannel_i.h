@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef EVENTCHANNEL_I_H
 #define EVENTCHANNEL_I_H
 #include /**/ "ace/pre.h"
@@ -21,52 +20,50 @@
 #include "ConsumerAdmin_i.h"
 #include "SupplierAdmin_i.h"
 
+/**
+ * @brief Implements the standard Cos EventChannel interface.
+ *
+ * This implementation delegates its responsibilities to corresponding
+ * objects from TAO's Real-time Event Channel.
+ */
 class TAO_RTEC_COSEC_Export TAO_CosEC_EventChannel_i :
   public virtual POA_CosEventChannelAdmin::EventChannel
 {
-  // = TITLE
-  //   class TAO_CosEC_EventChannel_i implements the standard Cos EventChannel
-  //   interface.
-  //
-  // = DESCRIPTION
-  //   This Cos EventChannel implementation is based on TAO's
-  //   Real-time Event Channel.  This TAO_CosEC_EventChannel_i implementation
-  //   delegates all its responsibility to corresponding objects from
-  //   the real-time implementation.
-  //
 public:
-  /// Constructor.
   TAO_CosEC_EventChannel_i ();
 
-  /// Destructor.
-  ~TAO_CosEC_EventChannel_i () = default;
+  ~TAO_CosEC_EventChannel_i () override = default;
+  TAO_CosEC_EventChannel_i (TAO_CosEC_EventChannel_i const &) = delete;
+  TAO_CosEC_EventChannel_i (TAO_CosEC_EventChannel_i &&) = delete;
+  TAO_CosEC_EventChannel_i &operator= (TAO_CosEC_EventChannel_i const &) = delete;
+  TAO_CosEC_EventChannel_i &operator= (TAO_CosEC_EventChannel_i &&) = delete;
 
   /// Activates the ConsumerAdmin and SupplierAdmin servants.  Returns
   /// -1 on error, 0 on success.
-  int init (const RtecEventChannelAdmin::ConsumerQOS &consumerqos,
-            const RtecEventChannelAdmin::SupplierQOS &supplierqos,
+  int init (RtecEventChannelAdmin::ConsumerQOS const &consumerqos,
+            RtecEventChannelAdmin::SupplierQOS const &supplierqos,
             RtecEventChannelAdmin::EventChannel_ptr rtec);
 
   /// The for_consumers method will return the same ConsumerAdmin_ptr
   /// everytime its called.
-  virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers ();
+  CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers () override;
 
   /// The for_suppliers method will return the same SupplierAdmin_ptr
   /// everytime its called.
-  virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers ();
+  CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers () override;
 
   /// Destroys this Event Channel object.
-  virtual void destroy ();
+  void destroy () override;
 
   /// destroys this Event Channel object and <delete>s this object.
   void shutdown ();
 
 private:
   /// ConsumerAdmin servant object.
-  TAO_CosEC_ConsumerAdmin_i* consumer_admin_;
+  TAO_CosEC_ConsumerAdmin_i *consumer_admin_ {};
 
   /// SupplierAdmin servant object.
-  TAO_CosEC_SupplierAdmin_i* supplier_admin_;
+  TAO_CosEC_SupplierAdmin_i *supplier_admin_ {};
 
   /// The reference to the ConsumerAdmin interface returned after
   /// activating the servant in the ORB.

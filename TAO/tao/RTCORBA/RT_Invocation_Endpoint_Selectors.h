@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   RT_Invocation_Endpoint_Selectors.h
  *
@@ -9,8 +8,6 @@
  *
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_RT_INVOCATION_ENDPOINT_SELECTOR_H
 #define TAO_RT_INVOCATION_ENDPOINT_SELECTOR_H
@@ -22,7 +19,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 

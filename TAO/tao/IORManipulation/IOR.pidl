@@ -123,8 +123,8 @@ module TAO_IOP
                            in Object ior2)
         raises (EmptyProfileList, Duplicate, Invalid_IOR);
 
-      // Any profile in @a ior1 which matches at least one profile in @a ior2
-      // will be removed.  Returns a new object reference
+      /// Any profile in @a ior1 which matches at least one profile in @a ior2
+      /// will be removed. Returns a new object reference.
       Object remove_profiles (in Object ior1,
                               in Object ior2)
         raises (Invalid_IOR, EmptyProfileList, NotFound);
@@ -143,12 +143,11 @@ module TAO_IOP
       // @@ to identify a primary and some other service could use
       // @@ something else. But the actual implementation of the
       // @@ property object would take care of that.
-      // Sets the profile ior1, in the profile ior2 to be a
-      // primary. If ior1 is a multi-profile IOR then the operation
-      // raises the MultiProfileList exception. If ior1 is not found
-      // in ior2, it raises an Invalid_IOR exception. If ior2 has a
-      // primary already defined then it raises a Duplicate
-      // exception.
+      /// Sets the profile ior1 in the profile ior2 to be a primary. If ior1
+      /// is a multi-profile IOR, the operation raises the MultiProfileList
+      /// exception. If ior1 is not found in ior2, it raises an Invalid_IOR
+      /// exception. If ior2 already has a primary, it raises a Duplicate
+      /// exception.
       boolean set_primary (in TAO_IOR_Property prop,
                            in Object ior1,
                            in Object ior2)

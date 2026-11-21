@@ -8,10 +8,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Priority_Mapping_Manager::~TAO_Priority_Mapping_Manager ()
-{
-  delete this->mapping_;
-}
+TAO_Priority_Mapping_Manager::~TAO_Priority_Mapping_Manager () = default;
 
 TAO_Priority_Mapping_Manager_ptr
 TAO_Priority_Mapping_Manager::_narrow (CORBA::Object_ptr obj)
@@ -25,11 +22,13 @@ TAO_Priority_Mapping_Manager_ptr
 TAO_Priority_Mapping_Manager::_duplicate (TAO_Priority_Mapping_Manager_ptr obj)
 {
   if (!CORBA::is_nil (obj))
+  {
     obj->_add_ref ();
+  }
   return obj;
 }
 
-const char*
+char const *
 TAO_Priority_Mapping_Manager::_interface_repository_id () const
 {
   return "IDL:Priority_Mapping_Manager:1.0";

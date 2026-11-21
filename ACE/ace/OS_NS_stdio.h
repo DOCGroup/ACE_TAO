@@ -187,7 +187,8 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   void clearerr (FILE* fp);
 
-  //@{ @name Wrappers to obtain the current user id
+  /// @name Wrappers to obtain the current user id
+  /// @{
   // Legacy as per SUSV3
 # if !defined (ACE_LACKS_CUSERID)
 #   if defined(cuserid)
@@ -204,7 +205,7 @@ namespace ACE_OS {
                     size_t maxlen = ACE_MAX_USERID);
 #   endif /* ACE_HAS_WCHAR */
 # endif /* ACE_LACKS_CUSERID */
-  //@}
+  /// @}
 
   extern ACE_Export
   int asprintf (char **bufp, const char* format, ...)
@@ -241,7 +242,8 @@ namespace ACE_OS {
   wchar_t *fgets (wchar_t *buf, int size, FILE *fp);
 # endif /* ACE_HAS_WCHAR && !ACE_LACKS_FGETWS */
 
-  //@{ @name A set of wrappers for file locks.
+  /// @name A set of wrappers for file locks.
+  /// @{
 
 # if defined (ACE_WIN32)
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -291,8 +293,7 @@ namespace ACE_OS {
                     ACE_OFF_T start = 0,
                     ACE_OFF_T len = 0);
 
-  //@}
-
+  /// @}
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_HANDLE fileno (FILE *stream);
@@ -334,12 +335,10 @@ namespace ACE_OS {
                                              LPSECURITY_ATTRIBUTES,
                                              SECURITY_DESCRIPTOR*);
 
-  // = Win32 OS version determination function.
   /// Return the win32 OSVERSIONINFO structure.
   ACE_NAMESPACE_INLINE_FUNCTION
   const ACE_TEXT_OSVERSIONINFO &get_win32_versioninfo ();
 
-  // = A pair of functions for modifying ACE's Win32 resource usage.
   /// Return the handle of the module containing ACE's resources. By
   /// default, for a DLL build of ACE this is a handle to the ACE DLL
   /// itself, and for a static build it is a handle to the executable.

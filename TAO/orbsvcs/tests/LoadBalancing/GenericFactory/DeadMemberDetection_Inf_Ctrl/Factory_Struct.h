@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 #ifndef FACTORY_STRUCT_H
 #define FACTORY_STRUCT_H
 
@@ -16,7 +15,6 @@
 
 #include "ace/Array_Base.h"
 
-
 struct Factory_Node
 {
   /// FactoryCreationId assigned to the member.
@@ -24,7 +22,6 @@ struct Factory_Node
 };
 
 using Factory_Struct = ACE_Array_Base<Factory_Node>;
-
 
 #include /**/ "ace/post.h"
 

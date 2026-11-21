@@ -8,6 +8,8 @@
 #include "tao/SystemException.h"
 #include "tao/Abstract_Servant_Base.h"
 
+#include <memory>
+
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/PortableInterceptorC.h"
 #endif /*TAO_HAS_INTERCEPTORS */
@@ -40,7 +42,9 @@ namespace TAO
     s = this->send_request_interception ();
 
     if (s != TAO_INVOKE_SUCCESS)
+    {
       return s;
+    }
 #endif /*TAO_HAS_INTERCEPTORS */
 
     try
@@ -75,7 +79,7 @@ namespace TAO
           }
         else
           {
-            bool is_forwarded = false;
+            bool is_forwarded {};
 
             this->effective_target ()->_servant()->_collocated_dispatch (
                            this->effective_target (),
@@ -101,7 +105,9 @@ namespace TAO
             this->response_expected_ == false)
           {
             if (this->reply_status_ == GIOP::LOCATION_FORWARD)
+            {
               this->invoke_status (TAO_INVOKE_RESTART);
+            }
 
             s = this->receive_other_interception ();
           }
@@ -113,22 +119,28 @@ namespace TAO
             s = this->receive_reply_interception ();
           }
         if (s != TAO_INVOKE_SUCCESS)
+        {
           return s;
+        }
 #endif /*TAO_HAS_INTERCEPTORS */
       }
     catch ( ::CORBA::UserException& ex)
       {
         // Ignore CORBA exceptions for oneways
         if (this->response_expected_ == false)
+        {
           return TAO_INVOKE_SUCCESS;
+        }
 
 #if TAO_HAS_INTERCEPTORS == 1
         PortableInterceptor::ReplyStatus const status =
-          this->handle_any_exception (&ex);
+          this->handle_any_exception (std::addressof (ex));
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
             status == PortableInterceptor::TRANSPORT_RETRY)
-          s = TAO_INVOKE_RESTART;
+          {
+            s = TAO_INVOKE_RESTART;
+          }
         else
 #endif /* TAO_HAS_INTERCEPTORS */
           {
@@ -149,18 +161,24 @@ namespace TAO
       {
         // Ignore CORBA exceptions for oneways
         if (this->response_expected_ == false)
+        {
           return TAO_INVOKE_SUCCESS;
+        }
 
 #if TAO_HAS_INTERCEPTORS == 1
         PortableInterceptor::ReplyStatus const status =
-          this->handle_any_exception (&ex);
+          this->handle_any_exception (std::addressof (ex));
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
             status == PortableInterceptor::TRANSPORT_RETRY)
-          s = TAO_INVOKE_RESTART;
+          {
+            s = TAO_INVOKE_RESTART;
+          }
         else
 #endif /* TAO_HAS_INTERCEPTORS */
-          throw;
+          {
+            throw;
+          }
       }
 #if TAO_HAS_INTERCEPTORS == 1
     catch (...)
@@ -172,14 +190,20 @@ namespace TAO
 
         if (st == PortableInterceptor::LOCATION_FORWARD ||
             st == PortableInterceptor::TRANSPORT_RETRY)
-          s = TAO_INVOKE_RESTART;
+          {
+            s = TAO_INVOKE_RESTART;
+          }
         else
+        {
           throw;
+        }
       }
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
     if (this->reply_status_ == GIOP::LOCATION_FORWARD)
+    {
       s =  TAO_INVOKE_RESTART;
+    }
 
     return s;
   }

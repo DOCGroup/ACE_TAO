@@ -1,8 +1,10 @@
 // -*- C++ -*-
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-const char *
+char const *
 CORBA::NamedValue::name () const
 {
   return this->name_;
@@ -12,7 +14,7 @@ ACE_INLINE
 CORBA::Any_ptr
 CORBA::NamedValue::value () const
 {
-  return const_cast<CORBA::Any_ptr> (&this->any_);
+  return const_cast<CORBA::Any_ptr> (std::addressof (this->any_));
 }
 
 ACE_INLINE
@@ -40,8 +42,6 @@ CORBA::NamedValue::_nil ()
 {
   return nullptr;
 }
-
-// *************************************************************
 
 ACE_INLINE
 CORBA::ULong

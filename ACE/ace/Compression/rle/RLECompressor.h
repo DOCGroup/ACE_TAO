@@ -57,16 +57,21 @@ public:
   /**
   * Default constructor. Should use instance() to get global instance.
   */
-  ACE_RLECompressor();
+  ACE_RLECompressor ();
 
-  ~ACE_RLECompressor() override = default;
+  ~ACE_RLECompressor () override = default;
+
+  ACE_RLECompressor (ACE_RLECompressor const &) = delete;
+  ACE_RLECompressor (ACE_RLECompressor &&) = delete;
+  ACE_RLECompressor &operator= (ACE_RLECompressor const &) = delete;
+  ACE_RLECompressor &operator= (ACE_RLECompressor &&) = delete;
 
   /**
   * Compress the @a in_ptr buffer for @a in_len into the
   * @a dest_ptr buffer with a maximum @a max_out_len using
   * the Run Length Ecoding (RLE) algorithm. If the
   * @a max_out_len is exhausted through the compress process
-  * then a value of -1 will be returned from the function,
+  * then the maximum ACE_UINT64 value will be returned from the function,
   * otherwise the return value will indicate the resultant
   * @a out_ptr compressed buffer length.
   *
@@ -75,7 +80,7 @@ public:
   * for the possibility that a reduced compressed length
   * is not possible.
   */
-  ACE_UINT64 compress(const void *in_ptr,
+  ACE_UINT64 compress (void const *in_ptr,
                       ACE_UINT64 in_len,
                       void *out_ptr,
                       ACE_UINT64 max_out_len) override;
@@ -85,11 +90,11 @@ public:
   * @a out_ptr buffer with a maximum @a max_out_len using
   * the Run Length Ecoding (RLE) algorithm. If the
   * @a max_out_len is exhausted during decompression
-  * then a value of -1 will be returned from the function,
+  * then the maximum ACE_UINT64 value will be returned from the function,
   * otherwise the return value will indicate the resultant
   * @a out_ptr decompressed buffer length.
   */
-  ACE_UINT64 decompress(const void *in_ptr,
+  ACE_UINT64 decompress (void const *in_ptr,
                         ACE_UINT64 in_len,
                         void *out_ptr,
                         ACE_UINT64 max_out_len) override;

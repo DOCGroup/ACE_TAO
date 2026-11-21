@@ -1,17 +1,11 @@
+/// @brief Demonstrates smart proxies and caching in TAO.
 interface Test
 {
-  // = TITLE
-  //    A simple test interface
-  //
-  // = DESCRIPTION
-  //    This test demostrates the smart proxy feature in TAO
-  //    and shows how it can improve performace via caching.
-
+  /// Gets the prices for the box seats of the Broadway show.
   short box_prices ();
-  // Get the prices for the box seats of the Broadway show.
 
+  /// Orders the specified number of tickets.
   long tickets (in short number);
-  // Order tickets.
 
   oneway void shutdown ();
 };

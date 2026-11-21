@@ -8,33 +8,25 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 
+/// Runs a server thread with its own ORB.
 class Server : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run the server thread, which will create its own orb.
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run the server threads.
-  //
 public:
-  Server ();
-  // ctor
+  Server () = default;
 
+  /// Sets the server and thread attributes.
   void set (Test_i *server, int priority, int argc, ACE_TCHAR *argv[]);
-  // Set the test attributes.
 
-  // = The ACE_Task_Base methods....
-  virtual int svc ();
+  int svc () override;
 
 private:
-  Test_i *server_;
+  Test_i *server_ {};
 
-  int priority_;
-  // Corba priority at which this thread is running.  (This number is
-  // used for creating the name of the orb.)
+  /// CORBA priority used to create this thread's ORB.
+  int priority_ {};
 
-  int argc_;
-  ACE_TCHAR *argv_[256];
+  int argc_ {};
+  ACE_TCHAR *argv_[256] {};
 };
 
 // ****************************************************************
@@ -61,7 +53,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         if (nthreads < MAX_THREADS)
           {
             priorities[nthreads] = ACE_OS::atoi (get_opts.opt_arg ());
-            nthreads++;
+            ++nthreads;
           }
         break;
       case '?':
@@ -109,7 +101,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   // Create an ORB to obtain Priority Mapping functionality.
   CORBA::ORB_var orb;
-  RTCORBA::PriorityMapping *pm = 0;
+  RTCORBA::PriorityMapping *pm {};
 
   try
     {
@@ -121,7 +113,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Parse the arguments.
       if (parse_args (argc_, argv_) != 0)
+      {
         return 1;
+      }
 
       // Obtain Priority Mapping used by the ORB.
       CORBA::Object_var object =
@@ -167,10 +161,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 }
 
 // ****************************************************************
-
-Server::Server ()
-{
-}
 
 void
 Server::set (Test_i *server,

@@ -5,6 +5,8 @@
 #include "ace/Reactor.h"
 #include "ace/Monitor_Point_Registry.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -16,9 +18,8 @@ namespace ACE
       const ACE_Time_Value& /* current_time */,
       const void* monitor_point)
     {
-      const Monitor_Base* const_mp =
-        reinterpret_cast<const Monitor_Base*> (monitor_point);
-      Monitor_Base* mp = const_cast<Monitor_Base*> (const_mp);
+      Monitor_Base* const mp = const_cast<Monitor_Base*> (
+        static_cast<Monitor_Base const*> (monitor_point));
       mp->update ();
       return 0;
     }
@@ -50,8 +51,14 @@ namespace ACE
     Monitor_Admin::monitor_point (Monitor_Base* monitor_point,
                                   const ACE_Time_Value& time)
     {
-      /// This call checks for a null monitor_point.
-      bool good_reg_add =
+      if (monitor_point == nullptr)
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                                "registration of null monitor failed\n"),
+                               false);
+        }
+
+      bool const good_reg_add =
         Monitor_Point_Registry::instance ()->add (monitor_point);
 
       if (!good_reg_add)
@@ -63,7 +70,7 @@ namespace ACE
         }
       else if (time != ACE_Time_Value::zero)
         {
-          this->reactor_->schedule_timer (&this->auto_updater_,
+          this->reactor_->schedule_timer (std::addressof (this->auto_updater_),
                                           monitor_point,
                                           ACE_Time_Value::zero,
                                           time);

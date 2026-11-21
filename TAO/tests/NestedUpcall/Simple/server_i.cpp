@@ -1,6 +1,6 @@
 #include "server_i.h"
 
-server_i::server_i (int quiet,
+server_i::server_i (bool quiet,
                     CORBA::ORB_ptr orb)
   : quiet_ (quiet),
     orb_ (CORBA::ORB::_duplicate (orb))
@@ -19,9 +19,11 @@ void
 server_i::ping (CORBA::UShort time_to_live)
 {
   if (!this->quiet_)
-    ACE_DEBUG ((LM_DEBUG,
-                "(%t) server_i::ping -> time to live = %d\n",
-                time_to_live));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) server_i::ping -> time to live = %d\n",
+                  time_to_live));
+    }
 
   --time_to_live;
 

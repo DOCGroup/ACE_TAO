@@ -58,13 +58,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class [[deprecated]] ACE_Copy_Disabled
 {
 public:
-  /// Default constructor
   ACE_Copy_Disabled () = default;
 
 private:
-  ACE_Copy_Disabled (const ACE_Copy_Disabled &) = delete;
+  ACE_Copy_Disabled (ACE_Copy_Disabled const &) = delete;
   ACE_Copy_Disabled (ACE_Copy_Disabled &&) = delete;
-  ACE_Copy_Disabled &operator= (const ACE_Copy_Disabled &) = delete;
+  ACE_Copy_Disabled &operator= (ACE_Copy_Disabled const &) = delete;
   ACE_Copy_Disabled &operator= (ACE_Copy_Disabled &&) = delete;
 };
 

@@ -1,6 +1,4 @@
-//=========================================================================
-// Valuebox of unions
-//=========================================================================
+/// Valuebox of unions
 
 union Fixed_Union1 switch(long)
 {
@@ -13,7 +11,6 @@ union Variable_Union1 switch(long)
  case 1: long m1;
  case 2: string m2;
 };
-
 
 valuetype VBfixed_union1 Fixed_Union1;
 

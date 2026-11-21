@@ -58,11 +58,13 @@ namespace TAO
     class HTIOP_Export Transport : public TAO_Transport
     {
     public:
-      /// Constructor.
       Transport (Connection_Handler *handler,
                  TAO_ORB_Core *orb_core);
+      Transport (Transport const&) = delete;
+      Transport (Transport&&) = delete;
+      Transport& operator= (Transport const&) = delete;
+      Transport& operator= (Transport&&) = delete;
 
-      /// Default destructor.
       ~Transport () override;
 
     protected:
@@ -71,7 +73,7 @@ namespace TAO
        * Please check the documentation in "tao/Transport.h" for more
        * details.
        */
-      //@{
+      /// @{
       ACE_Event_Handler * event_handler_i () override;
       virtual TAO_Connection_Handler * invalidate_event_handler_i ();
 
@@ -84,7 +86,6 @@ namespace TAO
                             const ACE_Time_Value *s = nullptr) override;
 
       int register_handler () override;
-
 
     public:
       /// @@TODO: These methods IMHO should have more meaningful
@@ -106,11 +107,11 @@ namespace TAO
 
       TAO_Connection_Handler * connection_handler_i () override;
 
-      //@}
+      /// @}
 
     private:
       /// Set the Bidirectional context info in the service context list
-      void set_bidir_context_info (TAO_Operation_Details &opdetails);
+      void set_bidir_context_info (TAO_Operation_Details &opdetails) override;
 
       /// Add the listen points in <acceptor> to the <listen_point_list>
       /// if this connection is in the same interface as that of the

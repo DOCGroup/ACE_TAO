@@ -11,58 +11,53 @@
 class Crasher : public ACE_Event_Handler
 {
 public:
-  Crasher ();
+  Crasher () = default;
+  Crasher (Crasher const &) = delete;
+  Crasher (Crasher &&) = delete;
+  Crasher &operator= (Crasher const &) = delete;
+  Crasher &operator= (Crasher &&) = delete;
 
-  virtual int handle_timeout (ACE_Time_Value const & current_time,
-                              void const * arg);
+  int handle_timeout (ACE_Time_Value const &current_time,
+                      void const *arg) override;
 };
 
 Client_Peer::Client_Peer (CORBA::ORB_ptr orb)
-  : orb_(CORBA::ORB::_duplicate(orb))
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
 void
-Client_Peer::callme(Test::Peer_ptr callback,
-                    CORBA::ULong max_depth,
-                    Test::Payload const &)
+Client_Peer::callme (Test::Peer_ptr callback,
+                     CORBA::ULong max_depth,
+                     Test::Payload const &)
 {
-  // ACE_DEBUG ((LM_DEBUG, "Received call, depth = %d\n", max_depth));
   if (max_depth > 0)
-  {
-    Test::Peer_var me = this->_this ();
-
-    Test::Payload return_data;
-
-    callback->callme(me.in(), max_depth - 1, return_data);
-  }
+    {
+      Test::Peer_var const me = this->_this ();
+      Test::Payload return_data;
+      callback->callme (me.in (), max_depth - 1, return_data);
+    }
 }
 
 void
-Client_Peer::crash()
+Client_Peer::crash ()
 {
-  Crasher * crasher = new Crasher;
-
-  ACE_Time_Value clk_tck (0, Clock_Ticks::get_usecs_per_tick ());
-  ACE_Reactor * reactor = this->orb_->orb_core()->reactor();
-  reactor->schedule_timer(crasher, 0, clk_tck);
+  // The handler must stay alive until its timer fires and aborts the process.
+  Crasher *const crasher = new Crasher;
+  ACE_Time_Value const clk_tck (0, Clock_Ticks::get_usecs_per_tick ());
+  ACE_Reactor *const reactor = this->orb_->orb_core ()->reactor ();
+  reactor->schedule_timer (crasher, 0, clk_tck);
 }
 
 void
-Client_Peer::noop()
-{
-}
-
-Crasher::Crasher()
+Client_Peer::noop ()
 {
 }
 
 int
-Crasher::handle_timeout (ACE_Time_Value const & ,
-                       void const *)
+Crasher::handle_timeout (ACE_Time_Value const &,
+                         void const *)
 {
-  // ACE_DEBUG ((LM_DEBUG, "(%P|%t) Performing intentional crash
-  // %a\n"));
-  ACE_OS::abort();
+  ACE_OS::abort ();
   return 0;
 }

@@ -41,6 +41,12 @@ class Server_ORBInitializer
     public virtual ::CORBA::LocalObject
 {
 public:
+  Server_ORBInitializer () = default;
+  Server_ORBInitializer (Server_ORBInitializer const &) = delete;
+  Server_ORBInitializer (Server_ORBInitializer &&) = delete;
+  Server_ORBInitializer &operator= (Server_ORBInitializer const &) = delete;
+  Server_ORBInitializer &operator= (Server_ORBInitializer &&) = delete;
+
   /**
    * @name Methods Required by the ORBInitializer Interface
    *
@@ -48,15 +54,15 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all ORB initializers.
    */
-  //@{
+  /// @{
   /// The pre-initialization hook.
-  virtual void pre_init (
-      PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (
+      PortableInterceptor::ORBInitInfo_ptr info) override;
 
   /// The post-initialization hook.
-  virtual void post_init (
-      PortableInterceptor::ORBInitInfo_ptr info);
-  //@}
+  void post_init (
+      PortableInterceptor::ORBInitInfo_ptr info) override;
+  /// @}
 };
 
 #if defined(_MSC_VER)

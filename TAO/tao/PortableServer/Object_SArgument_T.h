@@ -1,14 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Object_SArgument_T.h
  *
  *  @authors Jeff Parsons, Carlos O'Ryan and Ossama Othman
  */
-//=============================================================================
-
-
 #ifndef TAO_OBJECT_SARGUMENT_T_H
 #define TAO_OBJECT_SARGUMENT_T_H
 

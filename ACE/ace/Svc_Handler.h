@@ -82,14 +82,13 @@ public:
                    ACE_Message_Queue<SYNCH_TRAITS> *mq = nullptr,
                    ACE_Reactor *reactor = ACE_Reactor::instance ());
 
-  /// Destructor.
   virtual ~ACE_Svc_Handler ();
 
   /// Activate the client handler.  This is typically called by the
   /// ACE_Acceptor or ACE_Connector, which passes "this" in as the
   /// parameter to open.  If this method returns -1 the Svc_Handler's
   /// close() method is automatically called.
-  virtual int open (void *acceptor_or_connector = nullptr);
+  int open (void *acceptor_or_connector = nullptr) override;
 
   /**
    * Object termination hook -- application-specific cleanup code goes
@@ -100,7 +99,7 @@ public:
    * ACE_Task::close() for further details. The default action of this
    * function is to call handle_close() with the default arguments.
    */
-  virtual int close (u_long flags = 0);
+  int close (u_long flags = 0) override;
 
   /**
    * Call this method if you want to recycling the @c Svc_Handler
@@ -125,20 +124,23 @@ public:
    */
   virtual void cleanup_hint (void **act_holder = nullptr);
 
-  // = Dynamic linking hooks.
+  /// @name Dynamic linking hooks
+  /// @{
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int fini ();
+  int fini () override;
 
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int info (ACE_TCHAR **info_string, size_t length) const;
+  int info (ACE_TCHAR **info_string, size_t length) const override;
+  /// @}
 
-  // = Demultiplexing hooks.
+  /// @name Demultiplexing hooks
+  /// @{
 
   /**
    * Perform termination activities on the SVC_HANDLER.  The default
@@ -146,19 +148,20 @@ public:
    * and to <destroy> this object (to avoid memory leaks)!  If you
    * don't want this behavior make sure you override this method...
    */
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
   /// Default behavior when timeouts occur is to close down the
   /// <Svc_Handler> by calling <handle_close>.
-  virtual int handle_timeout (const ACE_Time_Value &time,
-                              const void *);
+  int handle_timeout (const ACE_Time_Value &time,
+                      const void *) override;
 
   /// Get the underlying handle associated with the <peer_>.
-  virtual ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
   /// Set the underlying handle associated with the <peer_>.
-  virtual void set_handle (ACE_HANDLE);
+  void set_handle (ACE_HANDLE) override;
+  /// @}
 
   /// Returns the underlying PEER_STREAM.  Used by
   /// <ACE_Acceptor::accept> and <ACE_Connector::connect> factories.
@@ -212,12 +215,9 @@ public:
   void dump () const;
 
 public:
-  // = The following methods are not suppose to be public.
-
-  // Because friendship is *not* inherited in C++, these methods have
-  // to be public.
-
-  // = Accessors to set/get the connection recycler.
+  /// These methods remain public because friendship is not inherited in C++.
+  /// @name Connection recycler accessors
+  /// @{
 
   /// Set the recycler and the @a recycling_act that is used during
   /// purging and caching.
@@ -237,6 +237,7 @@ public:
    * failures.
    */
   virtual int recycle (void * = nullptr);
+  /// @}
 
 protected:
   /// Maintain connection with client.
@@ -247,14 +248,14 @@ protected:
 
   /// Keeps track of whether we are in the process of closing (required
   /// to avoid circular calls to <handle_close>).
-  bool closing_;
+  bool closing_ {};
 
   /// Pointer to the connection recycler.
-  ACE_Connection_Recycling_Strategy *recycler_;
+  ACE_Connection_Recycling_Strategy *recycler_ {};
 
   /// Asynchronous Completion Token (ACT) to be used to when talking to
   /// the recycler.
-  const void *recycling_act_;
+  const void *recycling_act_ {};
 };
 
 /**
@@ -297,8 +298,8 @@ public:
    * bytes to exceed the maximum buffer size or if the timeout period
    * has elapsed.
    */
-  virtual int put (ACE_Message_Block *message_block,
-                   ACE_Time_Value *timeout = nullptr);
+  int put (ACE_Message_Block *message_block,
+           ACE_Time_Value *timeout = nullptr) override;
 
   /// Flush the ACE_Message_Queue, which writes all the queued
   /// ACE_Message_Blocks to the <PEER_STREAM>.
@@ -306,8 +307,8 @@ public:
 
   /// This method is not currently implemented -- this is where the
   /// integration with the <Reactor> would occur.
-  virtual int handle_timeout (const ACE_Time_Value &time,
-                              const void *);
+  int handle_timeout (const ACE_Time_Value &time,
+                      const void *) override;
 
   /// Dump the state of an object.
   void dump () const;

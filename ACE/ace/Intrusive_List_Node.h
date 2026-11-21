@@ -43,15 +43,14 @@ public:
   /** @name Accesors and modifiers to the next and previous pointers
    *
    */
-  //@{
+  /// @{
   T *prev () const;
   void prev (T *);
   T *next () const;
   void next (T *);
-  //@}
+  /// @}
 
 protected:
-  /// Constructor
   /**
    * The constructor is protected, because only derived classes should
    * be instantiated.

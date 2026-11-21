@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ub_wstring.h
  *
@@ -7,25 +5,19 @@
  *
  *  @author   Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef PARAM_TEST_UNBOUNDED_WSTRING_H
 #define PARAM_TEST_UNBOUNDED_WSTRING_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test unbounded wide strings
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test unbounded wide strings
 class Test_Unbounded_WString
 {
 public:
-  /// ctor
   Test_Unbounded_WString ();
 
-  /// dtor
-  ~Test_Unbounded_WString ();
+  ~Test_Unbounded_WString () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -53,19 +45,19 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
-  CORBA::WChar *in_;
+  CORBA::WString_var in_;
 
   /// inout parameter
-  CORBA::WChar *inout_;
+  CORBA::WString_var inout_;
 
   /// out parameter
-  CORBA::WChar *out_;
+  CORBA::WString_var out_;
 
   /// return value
-  CORBA::WChar *ret_;
+  CORBA::WString_var ret_;
 };
 
 #endif /* PARAM_TEST_UNBOUNDED_WSTRING_H */

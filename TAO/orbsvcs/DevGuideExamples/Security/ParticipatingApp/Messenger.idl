@@ -1,6 +1,6 @@
 /* -*- C++ -*-  */
 
-// messenger.idl
+/// @file Messenger.idl
 
 interface Messenger
 {

@@ -30,7 +30,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 enum ACE_Log_Priority
 {
-  // = Note, this first argument *must* start at 1!
+  /// The first enumerator must start at 1.
 
   /// Shutdown the logger (decimal 1).
   LM_SHUTDOWN = 01,

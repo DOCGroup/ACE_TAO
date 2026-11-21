@@ -70,9 +70,9 @@ PMS_Usr::decode (char *packet, int &packet_length)
                   "\n"));
     }
 
-  ACE_NEW_RETURN (this->ss,
-                  SL_Server (packet),
-                  -1);
+  Search_Struct *lookup {};
+  ACE_NEW_RETURN (lookup, SL_Server (packet), -1);
+  this->ss.reset (lookup);
   return 1;
 }
 

@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
@@ -23,7 +22,6 @@
 #include "ace/SPIPE_Acceptor.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
-
 
 #if defined (ACE_HAS_STREAM_PIPES) || defined (ACE_HAS_WIN32_NAMED_PIPES)
 # define TEST_HAS_STREAM_PIPES
@@ -48,7 +46,7 @@ client (void *)
   if (con.connect (cli_stream, ACE_SPIPE_Addr (rendezvous)) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), rendezvous, 1));
 
-  for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
+  for (const char *c = ACE_ALPHABET; *c != '\0'; ++c)
     if (cli_stream.send (c, 1) == -1)
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send")));
 
@@ -72,14 +70,13 @@ client (void *)
                    PIPE_READMODE_BYTE) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), rendezvous, 1));
 
-
   // Write out the alphabet all at once.
   if (cli_stream.send_n (ACE_ALPHABET,
                          ACE_OS::strlen (ACE_ALPHABET)) != (ssize_t) ACE_OS::strlen (ACE_ALPHABET))
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send_n")));
 
   // Write out the alphabet one byte at a time
-  for (const char *d = ACE_ALPHABET; *d != '\0'; d++)
+  for (const char *d = ACE_ALPHABET; *d != '\0'; ++d)
     if (cli_stream.send (d, 1) == -1)
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send")));
 
@@ -119,7 +116,7 @@ server (void *)
   while (new_stream.recv (buf, 1) > 0)
     {
       ACE_TEST_ASSERT (*t == buf[0]);
-      t++;
+      ++t;
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("End of connection. Closing handle\n")));
   new_stream.close ();
@@ -144,7 +141,7 @@ server (void *)
 
   // The client will write the entire buffer at once, verify that we
   // can stream it in one byte at a time.
-  for (t = ACE_ALPHABET; *t; t++)
+  for (t = ACE_ALPHABET; *t; ++t)
     {
       if (new_stream.recv (buf, 1) <= 0)
         {

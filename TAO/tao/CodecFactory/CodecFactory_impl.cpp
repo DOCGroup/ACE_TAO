@@ -29,7 +29,7 @@ TAO_CodecFactory::create_codec_with_codesets (IOP::Encoding_1_2 const& enc)
     {
       char_trans = csm->get_char_trans (enc.char_codeset);
       wchar_trans = csm->get_wchar_trans (enc.wchar_codeset);
-      csm->get_ncs (ncsc,ncsw); // pass by reference
+      csm->get_ncs (ncsc, ncsw);
     }
   else
     {

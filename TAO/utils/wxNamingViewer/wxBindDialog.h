@@ -5,7 +5,6 @@
 
 #include "orbsvcs/CosNamingC.h"
 
-
 class WxBindDialog:
   public wxDialog
 {

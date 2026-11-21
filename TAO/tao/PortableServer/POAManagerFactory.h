@@ -1,6 +1,4 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    POAManagerFactory.h
  *
@@ -8,8 +6,6 @@
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_POAMANAGERFACTORY_H
 #define TAO_POAMANAGERFACTORY_H
 #include /**/ "ace/pre.h"
@@ -23,6 +19,7 @@
 #include "tao/PortableServer/POAManagerFactoryC.h"
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/LocalObject.h"
+
 #include "ace/Unbounded_Set.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.

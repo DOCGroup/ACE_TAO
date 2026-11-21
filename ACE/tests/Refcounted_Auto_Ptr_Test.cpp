@@ -70,7 +70,6 @@ class Scheduler : public ACE_Task<ACE_SYNCH>
   friend class Method_Request_print;
   friend class Method_Request_end;
 public:
-  /// Constructor.
   Scheduler ();
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -81,12 +80,13 @@ public:
   int close (u_long flags = 0) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  /// Destructor.
   ~Scheduler () override;
 
-  // = These methods are part of the Active Object Proxy interface.
+  /// @name Active Object proxy methods
+  /// @{
   void print (Printer_var &printer);
   void end ();
+  /// @}
 
 protected:
   /// Runs the Scheduler's event loop, which dequeues <Method_Requests>
@@ -94,8 +94,10 @@ protected:
   int svc () override;
 
 private:
-  // = These are the <Scheduler> implementation details.
+  /// @name Scheduler implementation details
+  /// @{
   ACE_Activation_Queue activation_queue_;
+  /// @}
 };
 
 /**
@@ -122,8 +124,8 @@ Method_Request_print::Method_Request_print (Printer_var &printer)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Method_Request_print created\n")));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Printer reference count: %d\n"),
-              printer_.count ()));
+              ACE_TEXT ("(%t) Printer reference count: %q\n"),
+              static_cast<ACE_INT64> (printer_.count ())));
 }
 
 Method_Request_print::~Method_Request_print ()
@@ -131,8 +133,8 @@ Method_Request_print::~Method_Request_print ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Method_Request_print will be deleted.\n")));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Printer reference count: %d\n"),
-              printer_.count ()));
+              ACE_TEXT ("(%t) Printer reference count: %q\n"),
+              static_cast<ACE_INT64> (printer_.count ())));
 }
 
 int
@@ -182,7 +184,6 @@ Method_Request_end::call ()
   return -1;
 }
 
-// Constructor
 // Associates the activation queue with this task's message queue,
 // allowing easy access to the message queue for shutting it down
 // when it's time to stop this object's service threads.
@@ -192,8 +193,6 @@ Scheduler::Scheduler ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Scheduler created\n")));
 }
-
-// Destructor
 
 Scheduler::~Scheduler ()
 {
@@ -244,7 +243,9 @@ Scheduler::svc ()
                   ACE_TEXT ("(%t) calling method request\n")));
       // Call it.
       if(mo->call () == -1)
+      {
         break;
+      }
 
       // Destructor automatically deletes it.
     }
@@ -272,7 +273,6 @@ static int n_loops = 10;
 
 #endif /* ACE_HAS_THREADS */
 
-
 // This will be used in a single thread to test the reset and release
 // methods. See Bugzilla #1925 for history.
 
@@ -287,19 +287,23 @@ static bool expect (const ACE_TCHAR *name,
   if (ptr.null () != expect_null)
     {
       if (expect_null)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Expecting: %s null:: ")
-                    ACE_TEXT ("Actual: Printer: %u; Count %d\n"),
-                    name,
-                    ptr->which_,
-                    ptr.count ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Expecting: %s null:: ")
+                      ACE_TEXT ("Actual: Printer: %u; Count %d\n"),
+                      name,
+                      ptr->which_,
+                      ptr.count ()));
+        }
       else
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Expecting: %s Printer: %u; Count %d:: ")
-                    ACE_TEXT ("Actual: Null.\n"),
-                    name,
-                    expect_which,
-                    expect_count));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Expecting: %s Printer: %u; Count %d:: ")
+                      ACE_TEXT ("Actual: Null.\n"),
+                      name,
+                      expect_which,
+                      expect_count));
+        }
       return false;
     }
   if (ptr.null ())
@@ -331,52 +335,80 @@ static int test_reset_release ()
   Printer_Ptr bar(new Printer ("1"));
   Printer_Ptr fum = bar;
   if (!expect (ACE_TEXT ("bar"), bar, false, 1, 1))
+  {
     ++errors;
+  }
   if (!expect (ACE_TEXT ("fum"), fum, false, 1, 1))
+  {
     ++errors;
+  }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test reset to a new value\n")));
   bar.reset (new Printer ("2"));
   if (!expect (ACE_TEXT ("bar"), bar, false, 2, 0))
+  {
     ++errors;
+  }
   if (!expect (ACE_TEXT ("fum"), fum, false, 1, 0))
+  {
     ++errors;
+  }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test release\n")));
   Printer_Ptr fie(new Printer ("3"));
   Printer_Ptr foe = fie;
   foe.release();
   if (!expect (ACE_TEXT ("fie"), fie, false, 3, 0))
+  {
     ++errors;
+  }
   if (!expect (ACE_TEXT ("foe"), foe, true, 0, 0))
+  {
     ++errors;
+  }
+  if (foe || foe.get () != nullptr || foe.count () != 0)
+  {
+    ++errors;
+  }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test assignment to null\n")));
   Printer_Ptr fee(new Printer ("4"));
   Printer_Ptr eraser;
   fee = eraser;
   if (!expect (ACE_TEXT ("fee"), fee, true, 0, 0))
+  {
     ++errors;
+  }
   if (!expect (ACE_TEXT ("eraser"), eraser, true, 0, 0))
+  {
     ++errors;
+  }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test assignment to value\n")));
   Printer_Ptr fix(new Printer ("5"));
   Printer_Ptr fax(new Printer ("6"));
   fix = fax;
   if (!expect (ACE_TEXT ("fix"), fix, false, 6, 1))
+  {
     ++errors;
+  }
   if (!expect (ACE_TEXT ("fax"), fax, false, 6, 1))
+  {
     ++errors;
+  }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test reset to null\n")));
   Printer_Ptr fey(new Printer ("7"));
   Printer_Ptr flo = fey;
   flo.reset ();
   if (!expect (ACE_TEXT ("fey"), fey, false, 7, 0))
+  {
     ++errors;
+  }
   if (!expect (ACE_TEXT ("flo"), flo, true, 0, 0))
+  {
     ++errors;
+  }
 
   return errors;
 }
@@ -460,8 +492,10 @@ run_main (int, ACE_TCHAR *[])
     ACE_Refcounted_Auto_Ptr<Printer, ACE_Null_Mutex> r6 = r1;
   }
   if (Printer::instance_count_ == 0)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) Printer instance count is 0; correct\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) Printer instance count is 0; correct\n")));
+    }
   else
     {
       ACE_ERROR ((LM_ERROR,
@@ -479,7 +513,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) performing asynchronous test...\n")));
 
-  Scheduler *scheduler_ptr = nullptr;
+  Scheduler *scheduler_ptr {};
 
   // Create active objects..
   ACE_NEW_RETURN (scheduler_ptr,
@@ -489,10 +523,12 @@ run_main (int, ACE_TCHAR *[])
   std::unique_ptr<Scheduler> scheduler(scheduler_ptr);
 
   if (scheduler->open () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("Error opening scheduler")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("Error opening scheduler")),
+                        1);
+    }
 
   {
     ACE_NEW_RETURN (printer1,
@@ -501,10 +537,12 @@ run_main (int, ACE_TCHAR *[])
 
     Printer_var r (printer1);
 
-    for (int i = 0; i < n_loops; i++)
-      // Spawn off the methods, which run in a separate thread as
-      // active object invocations.
-      scheduler->print (r);
+    for (int i = 0; i < n_loops; ++i)
+      {
+        // Spawn off the methods, which run in a separate thread as
+        // active object invocations.
+        scheduler->print (r);
+      }
   }
 
   // Close things down.
@@ -513,8 +551,10 @@ run_main (int, ACE_TCHAR *[])
   scheduler->wait ();
 
   if (Printer::instance_count_ == 0)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) Printer instance count is 0; correct\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) Printer instance count is 0; correct\n")));
+    }
   else
     {
       ACE_ERROR ((LM_ERROR,

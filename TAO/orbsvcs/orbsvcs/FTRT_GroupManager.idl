@@ -1,12 +1,10 @@
-// -*- IDL -*-
+/// -*- IDL -*-
 
-//=============================================================================
 /**
  *  @file    FTRT_GroupManager.idl
  *
  *  @author Huang-Ming Huang
  */
-//=============================================================================
 
 #ifndef TAO_FTRT_GROUPMANAGER_IDL
 #define TAO_FTRT_GROUPMANAGER_IDL
@@ -47,7 +45,7 @@ module FTRT
       raises(PredecessorUnreachable);
 
     /// called by a newly created replica to the primary
-    //  for requesting for joining a object group
+    /// for requesting for joining a object group
     oneway void join_group(in ManagerInfo info);
 
     /// called by primary to replicas

@@ -13,11 +13,15 @@
 class  Asynch_Middle_i : public virtual POA_AMH_Middle
 {
 public:
-  //Constructor
   Asynch_Middle_i (PortableServer::POA_ptr poa, Inner_ptr inner);
 
-  virtual void get_the_answer (AMH_MiddleResponseHandler_ptr _tao_rh,
-                               const char * question);
+  void get_the_answer (AMH_MiddleResponseHandler_ptr _tao_rh,
+                       char const *question) override;
+
+  Asynch_Middle_i (Asynch_Middle_i const &) = delete;
+  Asynch_Middle_i (Asynch_Middle_i &&) = delete;
+  Asynch_Middle_i &operator= (Asynch_Middle_i const &) = delete;
+  Asynch_Middle_i &operator= (Asynch_Middle_i &&) = delete;
 
 private:
   PortableServer::POA_var poa_;
@@ -30,15 +34,18 @@ private:
 class  Middle_i : public virtual POA_Middle
 {
 public:
-  //Constructor
-  Middle_i (Inner_ptr inner);
+  explicit Middle_i (Inner_ptr inner);
 
-  virtual char * get_the_answer (const char * question);
+  char *get_the_answer (char const *question) override;
+
+  Middle_i (Middle_i const &) = delete;
+  Middle_i (Middle_i &&) = delete;
+  Middle_i &operator= (Middle_i const &) = delete;
+  Middle_i &operator= (Middle_i &&) = delete;
 
 private:
-  PortableServer::POA_var poa_;
+  // The synchronous servant does not create or activate callback servants.
   Inner_var inner_;
 };
-
 
 #endif /* MIDDLE_I_H_  */

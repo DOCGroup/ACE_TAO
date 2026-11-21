@@ -23,7 +23,6 @@ be_visitor_valuebox_any_op_ch::be_visitor_valuebox_any_op_ch (
 {
 }
 
-
 int
 be_visitor_valuebox_any_op_ch::visit_valuebox (be_valuebox *node)
 {

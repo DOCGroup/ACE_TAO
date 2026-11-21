@@ -11,6 +11,8 @@
 #include "LookupManager.h"
 #include "Priority_Mapping.h"
 
+#include <cstring>
+
 int WARMUP_COUNT = 10;
 
 TAO_Notify_Tests_Periodic_Consumer::TAO_Notify_Tests_Periodic_Consumer ()
@@ -18,7 +20,6 @@ TAO_Notify_Tests_Periodic_Consumer::TAO_Notify_Tests_Periodic_Consumer ()
   , warmup_countdown_ (WARMUP_COUNT)
   , max_count_ (-1)
   , load_ (0)
-  , client_ (0)
   , check_priority_ (0)
   , stop_received_ (0)
 {
@@ -39,13 +40,15 @@ TAO_Notify_Tests_Periodic_Consumer::init_state (ACE_Arg_Shifter& arg_shifter)
 {
   // First, let the base class look for options.
   if (TAO_Notify_Tests_StructuredPushConsumer::init_state (arg_shifter) == -1)
+  {
     return -1;
+  }
 
-  const ACE_TCHAR *current_arg = 0;
+  const ACE_TCHAR *current_arg {};
 
   while (arg_shifter.is_anything_left ())
     {
-      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-MaxCount"))))
+      if (nullptr != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-MaxCount"))))
         {
           this->max_count_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
@@ -53,7 +56,9 @@ TAO_Notify_Tests_Periodic_Consumer::init_state (ACE_Arg_Shifter& arg_shifter)
           if (max_count_ == 0)
           {
             if (this->client_)
+            {
               this->client_->done (this);
+            }
           }
         }
        else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Check_Priority")) == 0)
@@ -75,11 +80,13 @@ void
 TAO_Notify_Tests_Periodic_Consumer::handle_start_event (const CosNotification::PropertySeq& prop_seq)
 {
   if (TAO_debug_level > 0)
+  {
     ACE_DEBUG ((LM_DEBUG, "(%P, %t)Consumer %s received inital (-1)th event\n", this->name_.c_str ()));
+  }
 
   for (CORBA::ULong i = 0; i < prop_seq.length (); ++i)
     {
-      if (ACE_OS::strcmp (prop_seq[i].name.in (), "BaseTime") == 0)
+      if (std::strcmp (prop_seq[i].name.in (), "BaseTime") == 0)
         {
           TimeBase::TimeT base_time;
           ACE_hrtime_t base_time_hrtime;
@@ -91,11 +98,11 @@ TAO_Notify_Tests_Periodic_Consumer::handle_start_event (const CosNotification::P
         }
       // if max_count has not been already specified, get it from the supplier.
       else if (this->max_count_ == -1 &&
-               ACE_OS::strcmp (prop_seq[i].name.in (), "MaxCount") == 0)
+               std::strcmp (prop_seq[i].name.in (), "MaxCount") == 0)
         {
           prop_seq[i].value >>= this->max_count_;
         }
-      else if (ACE_OS::strcmp (prop_seq[i].name.in (), "Load") == 0)
+      else if (std::strcmp (prop_seq[i].name.in (), "Load") == 0)
         {
           prop_seq[i].value >>= this->load_;
         }
@@ -117,7 +124,7 @@ TAO_Notify_Tests_Periodic_Consumer::check_priority (const CosNotification::Prope
 
   for (CORBA::ULong i = 0; i < prop_seq.length (); ++i)
     {
-      if (ACE_OS::strcmp (prop_seq[i].name.in (), CosNotification::Priority) == 0)
+      if (std::strcmp (prop_seq[i].name.in (), CosNotification::Priority) == 0)
         {
           prop_seq[i].value >>= event_priority;
 
@@ -175,7 +182,9 @@ TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification
   if (this->count_ == -2)
     {
       if (--warmup_countdown_ == 0)
+      {
         this->count_ = -1;
+      }
 
       return;
     }
@@ -184,7 +193,9 @@ TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification
       this->handle_start_event (prop_seq);
 
       if (this->max_count_ > 0)
+      {
         this->stats_.init (this->max_count_);
+      }
 
       this->count_ = 0;
       return;
@@ -204,7 +215,7 @@ TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification
 
   for (CORBA::ULong i = 0; i < prop_seq.length (); ++i)
     {
-      if (ACE_OS::strcmp (prop_seq[i].name.in (), "Stop") == 0)
+      if (std::strcmp (prop_seq[i].name.in (), "Stop") == 0)
         {
           this->stop_received_ = 1;
         }
@@ -238,15 +249,19 @@ TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification
       stats_.end_time (ACE_OS::gethrtime ());
 
       if (this->client_)
+      {
         this->client_->done (this);
+      }
 
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "(%P, %t)Consumer %s done\n", this->name_.c_str ()));
+      }
     }
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer::dump_stats (ACE_TCHAR* msg, int dump_samples)
+TAO_Notify_Tests_Periodic_Consumer::dump_stats (ACE_TCHAR const *msg, bool dump_samples)
 {
   ACE_TCHAR buf[BUFSIZ];
   ACE_OS::sprintf (buf, ACE_TEXT("%s.dat"), this->name_.c_str ());

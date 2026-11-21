@@ -1,5 +1,5 @@
-//
-// Server interface definition.
+///
+/// Server interface definition.
 
 #include "client.idl"
 

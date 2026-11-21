@@ -4,7 +4,6 @@
 #include "StructuredPushConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_Notify_Tests_StructuredPushConsumer_Traits::TAO_Notify_Tests_StructuredPushConsumer_Traits ()
   :type_ (CosNotifyChannelAdmin::STRUCTURED_EVENT)
 {
@@ -43,8 +42,7 @@ TAO_Notify_Tests_StructuredPushConsumer::disconnect_structured_push_consumer ()
 
 void
 TAO_Notify_Tests_StructuredPushConsumer::push_structured_event
-   (const CosNotification::StructuredEvent &/*notification*/
-    )
+   (const CosNotification::StructuredEvent &/*notification*/)
 {
   // NOP
 }

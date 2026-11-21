@@ -1,6 +1,5 @@
 #include "ace/INet/Response.h"
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -9,7 +8,7 @@ namespace ACE
   {
     Response::Response () {}
 
-    Response::~Response () {}
+    Response::~Response () = default;
 
   }
 }

@@ -1,5 +1,6 @@
 // -*- C++ -*-
 #include "tao/Exception.h"
+#include <memory>
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/ORB_Constants.h"
@@ -10,7 +11,6 @@
 #include "ace/Malloc.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
-
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // Needed for ostream& operator<< (ostream &os, const CORBA::Exception &e)
@@ -48,7 +48,7 @@ CORBA::Exception::Exception (const CORBA::Exception &src)
 CORBA::Exception &
 CORBA::Exception::operator= (const CORBA::Exception &src)
 {
-  if (this != &src)
+  if (this != std::addressof (src))
     {
       this->id_ = CORBA::string_dup (src.id_);
       this->name_ = CORBA::string_dup (src.name_);

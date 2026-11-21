@@ -42,8 +42,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Reactor)
 
 ACE_Reactor::ACE_Reactor (ACE_Reactor_Impl *impl,
                           bool delete_implementation)
-  : implementation_ (nullptr),
-    delete_implementation_ (delete_implementation)
+  : delete_implementation_ (delete_implementation)
 {
   this->implementation (impl);
 
@@ -84,11 +83,13 @@ ACE_Reactor::~ACE_Reactor ()
 {
   this->implementation ()->close ();
   if (this->delete_implementation_)
+  {
     delete this->implementation ();
+  }
 }
 
 // Process-wide ACE_Reactor.
-ACE_Reactor *ACE_Reactor::reactor_ = nullptr;
+ACE_Reactor *ACE_Reactor::reactor_ {};
 
 // Controls whether the Reactor is deleted when we shut down (we can
 // only delete it safely if we created it!)
@@ -133,7 +134,9 @@ ACE_Reactor::instance (ACE_Reactor *r, bool delete_reactor)
   // Therefore we test to see if we had an existing reactor instance, which
   // if so means it must have already been registered.
   if (t == nullptr)
-    ACE_REGISTER_FRAMEWORK_COMPONENT(ACE_Reactor, ACE_Reactor::reactor_);
+    {
+      ACE_REGISTER_FRAMEWORK_COMPONENT(ACE_Reactor, ACE_Reactor::reactor_);
+    }
 
   return t;
 }
@@ -185,18 +188,26 @@ ACE_Reactor::run_reactor_event_loop (REACTOR_EVENT_HOOK eh)
   ACE_TRACE ("ACE_Reactor::run_reactor_event_loop");
 
   if (this->reactor_event_loop_done ())
+  {
     return 0;
+  }
 
-  while (1)
+  while (true)
     {
       int const result = this->implementation_->handle_events ();
 
       if (eh != nullptr && (*eh)(this))
-        continue;
+        {
+          continue;
+        }
       else if (result == -1 && this->implementation_->deactivated ())
-        return 0;
+        {
+          return 0;
+        }
       else if (result == -1)
-        return -1;
+        {
+          return -1;
+        }
     }
 
   ACE_NOTREACHED (return 0;)
@@ -208,18 +219,26 @@ ACE_Reactor::run_alertable_reactor_event_loop (REACTOR_EVENT_HOOK eh)
   ACE_TRACE ("ACE_Reactor::run_alertable_reactor_event_loop");
 
   if (this->reactor_event_loop_done ())
+  {
     return 0;
+  }
 
-  while (1)
+  while (true)
     {
       int const result = this->implementation_->alertable_handle_events ();
 
       if (eh != nullptr && (*eh)(this))
-        continue;
+        {
+          continue;
+        }
       else if (result == -1 && this->implementation_->deactivated ())
-        return 0;
+        {
+          return 0;
+        }
       else if (result == -1)
-        return -1;
+        {
+          return -1;
+        }
     }
 
   ACE_NOTREACHED (return 0;)
@@ -232,18 +251,24 @@ ACE_Reactor::run_reactor_event_loop (ACE_Time_Value &tv,
   ACE_TRACE ("ACE_Reactor::run_reactor_event_loop");
 
   if (this->reactor_event_loop_done ())
+  {
     return 0;
+  }
 
-  while (1)
+  while (true)
     {
       int result = this->implementation_->handle_events (tv);
 
       if (eh != nullptr && (*eh) (this))
-        continue;
+        {
+          continue;
+        }
       else if (result == -1)
         {
           if (this->implementation_->deactivated ())
+          {
             result = 0;
+          }
           return result;
         }
       else if (result == 0)
@@ -258,7 +283,9 @@ ACE_Reactor::run_reactor_event_loop (ACE_Time_Value &tv,
           // way to 0, just return, as the entire time the caller
           // wanted to wait has been used up.
           if (tv.usec () > 0)
+          {
             continue;
+          }
           return 0;
         }
       // Else there were some events dispatched; go around again
@@ -274,18 +301,26 @@ ACE_Reactor::run_alertable_reactor_event_loop (ACE_Time_Value &tv,
   ACE_TRACE ("ACE_Reactor::run_alertable_reactor_event_loop");
 
   if (this->reactor_event_loop_done ())
+  {
     return 0;
+  }
 
   for (;;)
     {
       int result = this->implementation_->alertable_handle_events (tv);
 
       if (eh != nullptr && (*eh)(this))
-        continue;
+        {
+          continue;
+        }
       else if (result == -1 && this->implementation_->deactivated ())
-        return 0;
+        {
+          return 0;
+        }
       else if (result <= 0)
-        return result;
+        {
+          return result;
+        }
     }
 }
 
@@ -301,8 +336,10 @@ ACE_Reactor::register_handler (ACE_Event_Handler *event_handler,
 
   int result = this->implementation ()->register_handler (event_handler, mask);
   if (result == -1)
-    // Reset the old reactor in case of failures.
-    event_handler->reactor (old_reactor);
+    {
+      // Reset the old reactor in case of failures.
+      event_handler->reactor (old_reactor);
+    }
 
   return result;
 }
@@ -322,8 +359,10 @@ ACE_Reactor::register_handler (ACE_HANDLE io_handle,
                                                           event_handler,
                                                           mask);
   if (result == -1)
-    // Reset the old reactor in case of failures.
-    event_handler->reactor (old_reactor);
+    {
+      // Reset the old reactor in case of failures.
+      event_handler->reactor (old_reactor);
+    }
 
   return result;
 }
@@ -343,8 +382,10 @@ ACE_Reactor::register_handler (ACE_Event_Handler *event_handler,
   int result = this->implementation ()->register_handler (event_handler,
                                                           event_handle);
   if (result == -1)
-    // Reset the old reactor in case of failures.
-    event_handler->reactor (old_reactor);
+    {
+      // Reset the old reactor in case of failures.
+      event_handler->reactor (old_reactor);
+    }
 
   return result;
 }
@@ -368,8 +409,10 @@ ACE_Reactor::register_handler (ACE_HANDLE event_handle,
                                                           event_handler,
                                                           mask);
   if (result == -1)
-    // Reset the old reactor in case of failures.
-    event_handler->reactor (old_reactor);
+    {
+      // Reset the old reactor in case of failures.
+      event_handler->reactor (old_reactor);
+    }
 
   return result;
 }
@@ -389,8 +432,10 @@ ACE_Reactor::register_handler (const ACE_Handle_Set &handles,
                                                           event_handler,
                                                           mask);
   if (result == -1)
-    // Reset the old reactor in case of failures.
-    event_handler->reactor (old_reactor);
+    {
+      // Reset the old reactor in case of failures.
+      event_handler->reactor (old_reactor);
+    }
 
   return result;
 }
@@ -412,8 +457,10 @@ ACE_Reactor::schedule_timer (ACE_Event_Handler *event_handler,
                                                          delta,
                                                          interval);
   if (result == -1)
-    // Reset the old reactor in case of failures.
-    event_handler->reactor (old_reactor);
+    {
+      // Reset the old reactor in case of failures.
+      event_handler->reactor (old_reactor);
+    }
 
   return result;
 }
@@ -431,8 +478,10 @@ ACE_Reactor::schedule_wakeup (ACE_Event_Handler *event_handler,
   int result = this->implementation ()->schedule_wakeup (event_handler,
                                                          masks_to_be_added);
   if (result == -1)
-    // Reset the old reactor in case of failures.
-    event_handler->reactor (old_reactor);
+    {
+      // Reset the old reactor in case of failures.
+      event_handler->reactor (old_reactor);
+    }
 
   return result;
 }

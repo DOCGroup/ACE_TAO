@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    recursive_struct.cpp
  *
@@ -8,8 +6,6 @@
  *  @author Aniruddha Gokhale
  *  @author Jeff Parsons
  */
-//=============================================================================
-
 
 #include "recursive_struct.h"
 
@@ -21,16 +17,8 @@ const CORBA::ULong MAX_SEQ_LENGTH = 3;
 // ************************************************************************
 
 Test_Recursive_Struct::Test_Recursive_Struct ()
-  : opname_ (CORBA::string_dup ("test_recursive_struct"))
+  : opname_ ("test_recursive_struct")
 {
-}
-
-Test_Recursive_Struct::~Test_Recursive_Struct ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
-  // the other data members will be freed as they are "_var"s and objects
-  // (rather than pointers to objects)
 }
 
 const char *
@@ -50,7 +38,7 @@ Test_Recursive_Struct::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::Recursive_Struct *tmp = 0;
+  Param_Test::Recursive_Struct const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Recursive_Struct (*tmp);
 
@@ -87,7 +75,7 @@ Test_Recursive_Struct::reset_parameters ()
   Generator *gen = GENERATOR::instance ();
 
   // Set the depth of recursion.
-  CORBA::ULong depth = (CORBA::ULong) (gen->gen_long () % MAX_DEPTH) + 1;
+  CORBA::ULong const depth = (CORBA::ULong) (gen->gen_long () % MAX_DEPTH) + 1;
 
   // No recursion for inout_ until after the call.
   this->inout_->children.length (0);
@@ -108,7 +96,7 @@ Test_Recursive_Struct::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      Param_Test::Recursive_Struct_out out (this->out_.out ());
+      Param_Test::Recursive_Struct_out const out (this->out_.out ());
 
       this->ret_ = objref->test_recursive_struct (this->in_,
                                                   this->inout_.inout (),
@@ -186,12 +174,12 @@ Test_Recursive_Struct::deep_init (Param_Test::Recursive_Struct &rs,
   else
     {
       // Generate a sequence length.
-      CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % MAX_SEQ_LENGTH) + 1;
+      CORBA::ULong const len = (CORBA::ULong) (gen->gen_long () % MAX_SEQ_LENGTH) + 1;
 
       rs.children.length (len);
 
       // We recurse for each element of the member sequence.
-      for (CORBA::ULong i = 0; i < len; i++)
+      for (CORBA::ULong i = 0; i < len; ++i)
         {
           this->deep_init (rs.children[i],
                            gen,
@@ -225,7 +213,7 @@ Test_Recursive_Struct::deep_check (const Param_Test::Recursive_Struct &in_struct
 
   // At the bottom level, the length is 0 and we skip this part.
   // Otherwise recurse.
-  for (CORBA::ULong i = 0; i < in_struct.children.length (); i++)
+  for (CORBA::ULong i = 0; i < in_struct.children.length (); ++i)
     {
       if (!this->deep_check (in_struct.children[i],
                              test_struct.children[i]))

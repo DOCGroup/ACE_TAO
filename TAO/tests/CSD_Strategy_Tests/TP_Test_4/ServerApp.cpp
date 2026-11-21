@@ -50,7 +50,6 @@ ServerApp::run_i(int argc, ACE_TCHAR* argv[])
   return this->check_validity () ? 0 : -1;
 }
 
-
 int
 ServerApp::init(int argc, ACE_TCHAR* argv[])
 {
@@ -74,14 +73,12 @@ ServerApp::init(int argc, ACE_TCHAR* argv[])
   return 0;
 }
 
-
 void
 ServerApp::poa_setup()
 {
   this->poa_ = this->create_poa(this->orb_.in(),
                                 "ChildPoa");
 }
-
 
 void
 ServerApp::csd_setup()
@@ -96,7 +93,6 @@ ServerApp::csd_setup()
     }
 }
 
-
 void
 ServerApp::servant_setup()
 {
@@ -106,7 +102,6 @@ ServerApp::servant_setup()
                                       this->ior_filename_prefix_.c_str());
 }
 
-
 void
 ServerApp::collocated_setup()
 {
@@ -114,7 +109,7 @@ ServerApp::collocated_setup()
 
   unsigned servant_index = 0;
 
-  for (unsigned i = 0; i < this->num_collocated_clients_; i++)
+  for (unsigned i = 0; i < this->num_collocated_clients_; ++i)
     {
       if (i > 0)
         {
@@ -133,7 +128,6 @@ ServerApp::collocated_setup()
     }
 }
 
-
 void
 ServerApp::poa_activate()
 {
@@ -142,7 +136,6 @@ ServerApp::poa_activate()
 
   poa_manager->activate();
 }
-
 
 void
 ServerApp::run_collocated_clients()
@@ -156,7 +149,6 @@ ServerApp::run_collocated_clients()
     }
 }
 
-
 void
 ServerApp::run_orb_event_loop()
 {
@@ -165,11 +157,10 @@ ServerApp::run_orb_event_loop()
   TheAppShutdown->wait ();
 }
 
-
 void
 ServerApp::cleanup()
 {
-  for (unsigned i = 0; i < this->num_servants_; i++)
+  for (unsigned i = 0; i < this->num_servants_; ++i)
     {
       this->servants_.servant(i)->dump();
     }
@@ -180,7 +171,6 @@ ServerApp::cleanup()
       this->collocated_client_task_.wait();
     }
 }
-
 
 int
 ServerApp::parse_args(int argc, ACE_TCHAR* argv[])
@@ -280,14 +270,12 @@ ServerApp::usage_statement()
              this->exe_name_.c_str()));
 }
 
-
 int
 ServerApp::arg_dependency_checks()
 {
   return (this->num_remote_clients_
           + this->num_collocated_clients_) > 0 ? 0 : -1;
 }
-
 
 int
 ServerApp::set_arg(unsigned&   value,
@@ -311,7 +299,6 @@ ServerApp::set_arg(unsigned&   value,
 
   return 0;
 }
-
 
 PortableServer::POA_ptr
 ServerApp::create_poa(CORBA::ORB_ptr orb,
@@ -341,7 +328,6 @@ ServerApp::create_poa(CORBA::ORB_ptr orb,
   return poa._retn();
 }
 
-
 bool
 ServerApp::check_validity ()
 {
@@ -351,7 +337,7 @@ ServerApp::check_validity ()
   Foo_C_ClientEngine::expected_results (stats);
   Foo_C_Custom_ClientEngine::expected_results (stats);
 
-  for (unsigned i = 0; i < this->num_servants_; i++)
+  for (unsigned i = 0; i < this->num_servants_; ++i)
     {
       this->servants_.servant(i)->gather_stats(stats);
     }

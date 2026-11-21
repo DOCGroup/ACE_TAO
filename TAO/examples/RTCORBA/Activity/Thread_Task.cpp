@@ -9,12 +9,9 @@
 #include "Task_Stats.h"
 #include "ace/Barrier.h"
 
-Thread_Task::Thread_Task ()
-{
-}
-
 int
-Thread_Task::activate_task (ACE_Barrier* barrier, RTCORBA::PriorityMapping *priority_mapping)
+Thread_Task::activate_task (ACE_Barrier *barrier,
+                            RTCORBA::PriorityMapping *priority_mapping)
 {
   barrier_ = barrier;
 
@@ -76,7 +73,9 @@ Thread_Task::svc ()
     }
 
   if (TAO_debug_level > 0)
+  {
     ACE_DEBUG ((LM_DEBUG, "Thread_Task (%t) - wait\n"));
+  }
 
   // First, wait for other threads.
   this->barrier_->wait ();
@@ -120,7 +119,10 @@ Thread_Task::svc ()
           sleep_time -= elapsed_microseconds;
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "(%t) sleep time = %d\n", sleep_time));
+          {
+            ACE_DEBUG ((LM_DEBUG, "(%t) sleep time = %q\n",
+                        static_cast<ACE_INT64> (sleep_time)));
+          }
 
           ACE_Time_Value t_sleep (0, sleep_time);
           ACE_OS::sleep (t_sleep);

@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    DynFixed_i.cpp
  *
  *  @author Johnny Willemsen <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
@@ -15,6 +11,7 @@
 #include "tao/DynamicAny/DynAnyFactory.h"
 #include "tao/CDR.h"
 
+#include <array>
 #include <cctype>
 #include <string>
 
@@ -41,7 +38,7 @@ bool
 TAO_DynFixed_i::read_value (TAO_InputCDR& cdr,
                             ACE_CDR::Fixed& value) const
 {
-  CORBA::TypeCode_var tc = TAO_DynAnyFactory::strip_alias (this->type_.in ());
+  CORBA::TypeCode_var const tc = TAO_DynAnyFactory::strip_alias (this->type_.in ());
   CORBA::UShort const digits = tc->fixed_digits ();
   CORBA::UShort const scale = tc->fixed_scale ();
 
@@ -50,8 +47,8 @@ TAO_DynFixed_i::read_value (TAO_InputCDR& cdr,
       return false;
     }
   int const length = (digits + 2) / 2;
-  ACE_CDR::Octet octets[16];
-  for (int i = 0; i < length; ++i)
+  std::array<ACE_CDR::Octet, 16> octets {};
+  for (int i {}; i < length; ++i)
     {
       if (!cdr.read_octet (octets[i]))
         {
@@ -90,7 +87,7 @@ TAO_DynFixed_i::read_value (TAO_InputCDR& cdr,
     {
       decimal += '-';
     }
-  for (int digit = 0; digit < digits; ++digit)
+  for (int digit {}; digit < digits; ++digit)
     {
       if (scale && digit == digits - scale)
         {
@@ -109,7 +106,7 @@ TAO_DynFixed_i::read_value (TAO_InputCDR& cdr,
 void
 TAO_DynFixed_i::init (CORBA::Any const& any)
 {
-  CORBA::TypeCode_var tc = any.type ();
+  CORBA::TypeCode_var const tc = any.type ();
   if (TAO_DynAnyFactory::unalias (tc.in ()) != CORBA::tk_fixed)
     {
       throw DynamicAny::DynAnyFactory::InconsistentTypeCode ();
@@ -120,7 +117,7 @@ TAO_DynFixed_i::init (CORBA::Any const& any)
     {
       throw DynamicAny::DynAny::InvalidValue ();
     }
-  bool decoded = false;
+  bool decoded {};
 
   if (impl->encoded ())
     {
@@ -155,7 +152,7 @@ TAO_DynFixed_i::init (CORBA::TypeCode_ptr tc)
       throw DynamicAny::DynAnyFactory::InconsistentTypeCode ();
     }
   this->type_ = CORBA::TypeCode::_duplicate (tc);
-  CORBA::TypeCode_var unaliased = TAO_DynAnyFactory::strip_alias (tc);
+  CORBA::TypeCode_var const unaliased = TAO_DynAnyFactory::strip_alias (tc);
   CORBA::UShort const digits = unaliased->fixed_digits ();
   CORBA::UShort const scale = unaliased->fixed_scale ();
   if (digits == 0 || digits > ACE_CDR::Fixed::MAX_DIGITS || scale > digits)
@@ -208,11 +205,11 @@ TAO_DynFixed_i::set_value (char const* value)
     {
       throw DynamicAny::DynAny::InvalidValue ();
     }
-  CORBA::TypeCode_var tc = TAO_DynAnyFactory::strip_alias (this->type_.in ());
+  CORBA::TypeCode_var const tc = TAO_DynAnyFactory::strip_alias (this->type_.in ());
   CORBA::UShort const digits = tc->fixed_digits ();
   CORBA::UShort const scale = tc->fixed_scale ();
   std::string text (value);
-  std::string::size_type first = 0;
+  std::string::size_type first {};
   while (first < text.size () &&
          std::isspace (static_cast<unsigned char> (text[first])))
     {
@@ -257,7 +254,7 @@ TAO_DynFixed_i::set_value (char const* value)
     {
       throw DynamicAny::DynAny::TypeMismatch ();
     }
-  CORBA::Boolean truncated = fraction.size () > scale;
+  CORBA::Boolean const truncated = fraction.size () > scale;
   if (truncated)
     {
       fraction.resize (scale);
@@ -298,7 +295,7 @@ TAO_DynFixed_i::set_value (char const* value)
         }
       integer.insert (0, integer_digits - integer.size (), '0');
     }
-  fraction.append (static_cast<std::size_t> (scale - fraction.size ()), '0');
+  fraction.append (static_cast<size_t> (scale - fraction.size ()), '0');
   std::string canonical = sign + integer;
   if (scale)
     {
@@ -316,7 +313,7 @@ TAO_DynFixed_i::from_any (CORBA::Any const& any)
     {
       throw CORBA::OBJECT_NOT_EXIST ();
     }
-  CORBA::TypeCode_var tc = any.type ();
+  CORBA::TypeCode_var const tc = any.type ();
   if (!this->type_->equivalent (tc.in ()))
     {
       throw DynamicAny::DynAny::TypeMismatch ();
@@ -339,10 +336,10 @@ TAO_DynFixed_i::to_any ()
     {
       throw CORBA::MARSHAL ();
     }
-  CORBA::Any *result = nullptr;
+  CORBA::Any *result {};
   ACE_NEW_THROW_EX (result, CORBA::Any, CORBA::NO_MEMORY ());
   TAO_InputCDR input (output);
-  TAO::Unknown_IDL_Type *unknown = nullptr;
+  TAO::Unknown_IDL_Type *unknown {};
   ACE_NEW_THROW_EX (unknown,
                     TAO::Unknown_IDL_Type (this->type_.in (), input),
                     CORBA::NO_MEMORY ());
@@ -357,12 +354,12 @@ TAO_DynFixed_i::equal (DynamicAny::DynAny_ptr dyn_any)
     {
       throw CORBA::OBJECT_NOT_EXIST ();
     }
-  CORBA::TypeCode_var tc = dyn_any->type ();
+  CORBA::TypeCode_var const tc = dyn_any->type ();
   if (!tc->equivalent (this->type_.in ()))
     {
       return false;
     }
-  CORBA::Any_var any = dyn_any->to_any ();
+  CORBA::Any_var const any = dyn_any->to_any ();
   TAO_DynFixed_i temporary (this->allow_truncation_);
   temporary.init (any.in ());
   return this->value_.equal (temporary.value_);

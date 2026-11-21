@@ -19,6 +19,8 @@
 #include "ace/OS_NS_time.h"
 #include "ace/Singleton.h"
 
+#include <memory>
+
 /**
  * @class Base_Time
  *
@@ -31,7 +33,7 @@ class RTSCHEDTESTLIB_Export Base_Time
   ACE_hrtime_t base_time_;
 };
 
-typedef ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX> BASE_TIME;
+using BASE_TIME = ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX>;
 
 /**
  * @class Task_Stats
@@ -41,10 +43,8 @@ typedef ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX> BASE_TIME;
 class RTSCHEDTESTLIB_Export Task_Stats
 {
  public:
-  /// Constructor
   Task_Stats ();
 
-  /// Destructor
   ~Task_Stats ();
 
   /// Init
@@ -74,8 +74,8 @@ class RTSCHEDTESTLIB_Export Task_Stats
   ACE_UINT32 samples_count_;
 
   /// The samples : the time of execution. and the recorded exec. time .
-  time_t *thr_run_time_;
-  int *thr_count_;
+  std::unique_ptr<time_t[]> thr_run_time_;
+  std::unique_ptr<int[]> thr_count_;
 
   /// The minimum value
   ACE_UINT64 exec_time_min_;
@@ -96,7 +96,7 @@ class RTSCHEDTESTLIB_Export Task_Stats
   ACE_UINT64 sum2_;
 };
 
-typedef ACE_Singleton<Task_Stats, TAO_SYNCH_MUTEX> TASK_STATS;
+using TASK_STATS = ACE_Singleton<Task_Stats, TAO_SYNCH_MUTEX>;
 
 #if defined (__ACE_INLINE__)
 #include "Task_Stats.inl"

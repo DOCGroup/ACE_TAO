@@ -7,20 +7,30 @@
 #include "ace/Signal.h"
 #include "ace/Sig_Adapter.h"
 
+#include <memory>
+
+static void
+end_event_loop_handler (int, siginfo_t *, ucontext_t *)
+{
+  ACE_Reactor::end_event_loop ();
+}
+
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (ACE_Service_Config::open (argc,
                                 argv,
                                 ACE_DEFAULT_LOGGER_KEY,
-                                0) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE_Service_Config::open")),
-                      -1);
+                                false) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("ACE_Service_Config::open")),
+                        -1);
+    }
 
   // Create an adapter to end the event loop.
-  ACE_Sig_Adapter sa ((ACE_Sig_Handler_Ex) ACE_Reactor::end_event_loop);
+  ACE_Sig_Adapter sa (end_event_loop_handler);
 
   ACE_Sig_Set sig_set;
   sig_set.sig_add (SIGINT);
@@ -29,10 +39,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Register ourselves to receive signals so we can shut down
   // gracefully.
   if (ACE_Reactor::instance ()->register_handler (sig_set,
-                                                  &sa) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"), ACE_TEXT ("register_handler")),
-                      -1);
+                                                  std::addressof (sa)) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"), ACE_TEXT ("register_handler")),
+                        -1);
+    }
 
   // This makes the README demo even easier (for sighup).
   ACE_DEBUG ((LM_DEBUG,

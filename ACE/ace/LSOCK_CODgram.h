@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_LOCAL_SOCK_CODGRAM_H
 #define ACE_LOCAL_SOCK_CODGRAM_H
 #include /**/ "ace/pre.h"
@@ -53,7 +52,7 @@ public:
   /**
    * @name Initialization methods
    */
-  //@{
+  /// @{
   /**
    * Initialize a fully-specified datagram socket.
    *
@@ -81,7 +80,7 @@ public:
             const ACE_Addr &local_sap = ACE_Addr::sap_any,
             int protocol_family = PF_UNIX,
             int protocol = 0);
-  //@}
+  /// @}
 
   /// Get underlying handle.
   ACE_HANDLE get_handle () const;

@@ -10,12 +10,11 @@
 #  include "ace/OS_NS_unistd.h"
 #endif  // ACE_HAS_STREAM_PIPES
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor ()
 #if defined (ACE_HAS_WIN32_NAMED_PIPES)
-  : sa_ (0), pipe_handle_ (ACE_INVALID_HANDLE)
+  : pipe_handle_ (ACE_INVALID_HANDLE)
 #endif /* ACE_HAS_WIN32_NAMED_PIPES */
 {
   ACE_TRACE ("ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor");
@@ -237,9 +236,11 @@ ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor (const ACE_SPIPE_Addr &local_sap,
   ACE_TRACE ("ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor");
 
   if (this->open (local_sap, reuse_addr, perms, sa, pipe_mode) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_SPIPE_Acceptor")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_SPIPE_Acceptor")));
+    }
 }
 
 // General purpose routine for accepting new connections.

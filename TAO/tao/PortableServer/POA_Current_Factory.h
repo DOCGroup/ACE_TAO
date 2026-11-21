@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    POA_Current_Factory.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_POA_CURRENT_FACTORY_H
 #define TAO_POA_CURRENT_FACTORY_H
 

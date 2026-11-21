@@ -7,9 +7,7 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * servact.h: Define the server's actions, depending on what type of
@@ -17,7 +15,6 @@
  *
  * Rob McCool
  */
-
 
 #if defined(MCC_HTTPD) || defined(MCC_PROXY) || defined(MCC_NEWS)
 #include "httpact.h"

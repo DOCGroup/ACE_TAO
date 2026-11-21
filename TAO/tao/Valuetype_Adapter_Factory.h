@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_VALUETYPE_ADAPTER_FACTORY_H
 #define TAO_VALUETYPE_ADAPTER_FACTORY_H
 

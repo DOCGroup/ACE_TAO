@@ -1,5 +1,6 @@
 // -*- C++ -*-
 #include "tao/debug.h"
+#include <memory>
 #include "ace/Log_Msg.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -118,20 +119,22 @@ namespace TAO
   Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::~Cache_ExtId_T ()
   {
     if (this->is_delete_)
-      delete this->transport_property_;
+      {
+        delete this->transport_property_;
+      }
   }
 
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE
   Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE> &
   Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::operator= (const Cache_ExtId_T &rhs)
   {
-    if (this != &rhs)
+    if (this != std::addressof (rhs))
       {
         // Do a deep copy
         this->transport_property_ =
           rhs.transport_property_->duplicate ();
 
-        if (this->transport_property_ == 0)
+        if (this->transport_property_ == nullptr)
           {
             this->is_delete_ = false;
             this->index_ = 0;
@@ -166,7 +169,9 @@ namespace TAO
   {
     if (this->transport_property_->is_equivalent (rhs.transport_property_) &&
         this->index_ == rhs.index_)
-      return false;
+      {
+        return false;
+      }
 
     return true;
   }
@@ -180,29 +185,31 @@ namespace TAO
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE void
   Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::duplicate ()
   {
-    transport_descriptor_type *prop = nullptr;
+    transport_descriptor_type *prop {};
 
     // Make a deep copy
     prop = this->transport_property_->duplicate ();
 
     if (prop == 0)
-      return;
+      {
+        return;
+      }
 
     // Release memory if there was some allocated in the first place
     if (this->is_delete_)
-      delete this->transport_property_;
+      {
+        delete this->transport_property_;
+      }
 
     this->is_delete_ = true;
     this->transport_property_ = prop;
   }
-
 
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE CORBA::ULong
   Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::index () const
   {
     return this->index_;
   }
-
 
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE void
   Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::index (CORBA::ULong index)

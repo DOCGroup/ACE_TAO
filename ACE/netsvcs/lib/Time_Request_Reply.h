@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TIME_REQUEST_REPLY_H
 #define ACE_TIME_REQUEST_REPLY_H
 #include /**/ "ace/pre.h"
@@ -43,7 +42,6 @@ public:
     MAX_TIME_LEN = MAXPATHLEN + 1
   };
 
-  /// Default constructor.
   ACE_Time_Request ();
 
   /**
@@ -54,9 +52,9 @@ public:
    */
   ACE_Time_Request (ACE_INT32 msg_type,
                     const time_t time,
-                    ACE_Time_Value *timeout = 0);
+                    ACE_Time_Value *timeout = nullptr);
 
-  // Get the fixed size of message
+  /// Get the fixed size of message
   ssize_t size () const;
 
   /// Get the type of the message.
@@ -68,7 +66,7 @@ public:
   /// Get the time
   time_t time () const;
 
-  // Set the time
+  /// Set the time
   void time (time_t t);
 
   /// Get the blocking semantics.
@@ -93,10 +91,8 @@ public:
   void dump () const;
 
 private:
-  // = The 5 fields in the <Transfer> struct are transmitted to the server.
-  // The remaining 2 fields are not tranferred -- they are used only on
-  // the server-side to simplify lookups.
-
+  /// The 5 fields in Transfer are transmitted to the server. The remaining
+  /// 2 fields are used only on the server side to simplify lookups.
   struct Transfer
   {
     /// Type of the request (i.e., <TIME_UPDATE>)

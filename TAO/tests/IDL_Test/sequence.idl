@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    sequence.idl
  *
@@ -11,8 +10,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
  */
-//=============================================================================
-
 
 #include "tao/OctetSeq.pidl"
 
@@ -31,8 +28,8 @@ exception nasty
   myfoostruct rec_info;
 };
 
-// This will produce a link error if a handcraft we have added to
-// tao/OctetSeqC.h is ever removed.
+/// This will produce a link error if a handcraft we have added to
+/// tao/OctetSeqC.h is ever removed.
 typedef sequence<CORBA::OctetSeq> OctetSeqSeq;
 
 local interface seqLocal
@@ -41,7 +38,7 @@ local interface seqLocal
 
 typedef sequence<seqLocal> seqLocalSeq;
 
-// Tests deeply nested recursive type.
+/// Tests deeply nested recursive type.
 module Deployment
 {
   struct ComponentPackageDescription;

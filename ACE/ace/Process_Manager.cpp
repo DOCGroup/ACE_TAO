@@ -19,6 +19,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/os_include/os_typeinfo.h"
 #include "ace/Truncate.h"
+#include <memory>
 
 #if defined (ACE_HAS_SIG_C_FUNC)
 extern "C" void
@@ -50,11 +51,10 @@ sigchld_nop (int, siginfo_t *, ucontext_t *)
 }
 #endif /* ACE_WIN32 */
 
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Process_Manager)
 
 // Singleton instance.
-ACE_Process_Manager *ACE_Process_Manager::instance_ = nullptr;
+ACE_Process_Manager *ACE_Process_Manager::instance_ {};
 
 // Controls whether the Process_Manager is deleted when we shut down
 // (we can only delete it safely if we created it!)
@@ -87,10 +87,10 @@ ACE_Process_Manager::dump () const
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nmax_process_table_size_ = %d"), this->max_process_table_size_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncurrent_count_ = %d"), this->current_count_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nmax_process_table_size_ = %B"), this->max_process_table_size_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncurrent_count_ = %B"), this->current_count_));
 
-  for (size_t i = 0; i < this->current_count_; i++)
+  for (size_t i = 0; i < this->current_count_; ++i)
     this->process_table_[i].dump ();
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -98,8 +98,6 @@ ACE_Process_Manager::dump () const
 }
 
 ACE_Process_Manager::Process_Descriptor::Process_Descriptor ()
-  : process_ (nullptr),
-    exit_notify_ (nullptr)
 {
   ACE_TRACE ("ACE_Process_Manager::Process_Descriptor::Process_Descriptor");
 }
@@ -180,25 +178,28 @@ ACE_Process_Manager::resize (size_t size)
   ACE_TRACE ("ACE_Process_Manager::resize");
 
   if (size <= this->max_process_table_size_)
+  {
     return 0;
+  }
 
-  Process_Descriptor *temp = nullptr;
+  Process_Descriptor *temp {};
 
   ACE_NEW_RETURN (temp,
                   Process_Descriptor[size],
                   -1);
 
+  std::unique_ptr<Process_Descriptor[]> new_table (temp);
+
   for (size_t i = 0;
        i < this->current_count_;
-       i++)
-    // Structure assignment.
-    temp[i] = this->process_table_[i];
+       ++i)
+    {
+      // Structure assignment.
+      new_table[i] = this->process_table_[i];
+    }
 
   this->max_process_table_size_ = size;
-
-  delete [] this->process_table_;
-
-  this->process_table_ = temp;
+  this->process_table_.swap (new_table);
   return 0;
 }
 
@@ -208,31 +209,31 @@ ACE_Process_Manager::open (size_t size, ACE_Reactor *r)
 {
   ACE_TRACE ("ACE_Process_Manager::open");
 
-  if (r)
+  if (r != nullptr)
     {
       this->reactor (r);
 #if !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SIGNALS)
       // Register signal handler object.
       if (r->register_handler (SIGCHLD, this) == -1)
+      {
         return -1;
+      }
 #endif /* !defined(ACE_WIN32) */
     }
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
   if (this->max_process_table_size_ < size)
+  {
     this->resize (size);
+  }
   return 0;
 }
 
 // Initialize the synchronization variables.
 ACE_Process_Manager::ACE_Process_Manager (size_t size,
                                           ACE_Reactor *r)
-  : ACE_Event_Handler (),
-    process_table_ (nullptr),
-    max_process_table_size_ (0),
-    current_count_ (0),
-    default_exit_handler_ (nullptr)
+  : ACE_Event_Handler ()
 #if defined (ACE_HAS_THREADS)
   , lock_ ()
 #endif /* ACE_HAS_THREADS */
@@ -266,16 +267,19 @@ ACE_Process_Manager::close ()
   if (this->process_table_ != nullptr)
     {
       while (this->current_count_ > 0)
-        this->remove_proc (0);
+        {
+          this->remove_proc (0);
+        }
 
-      delete [] this->process_table_;
-      this->process_table_ = nullptr;
+      this->process_table_.reset ();
       this->max_process_table_size_ = 0;
       this->current_count_ = 0;
     }
 
   if (this->default_exit_handler_ != nullptr)
-      this->default_exit_handler_->handle_close (ACE_INVALID_HANDLE,0);
+  {
+    this->default_exit_handler_->handle_close (ACE_INVALID_HANDLE,0);
+  }
   this->default_exit_handler_ = nullptr;
 
   return 0;
@@ -302,7 +306,9 @@ ACE_Process_Manager::handle_input (ACE_HANDLE)
    pid_t pid;
 
    do
-     pid = this->wait (0, ACE_Time_Value::zero);
+     {
+       pid = this->wait (0, ACE_Time_Value::zero);
+     }
    while (pid != 0 && pid != ACE_INVALID_PID);
 
   return 0;
@@ -346,7 +352,9 @@ ACE_Process_Manager::handle_signal (int, siginfo_t *si, ucontext_t *)
 
             ssize_t const i = this->find_proc (proc);
             if (i == -1)
-              return -1;
+              {
+                return -1;
+              }
 #if 0
             pid_t pid = i != -1
               ? process_table_[i].process_->getpid ()
@@ -385,7 +393,9 @@ ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
   if (pid == ACE_INVALID_PID)
     {
       if (this->default_exit_handler_ != nullptr)
+      {
         this->default_exit_handler_->handle_close (ACE_INVALID_HANDLE, 0);
+      }
       this->default_exit_handler_ = eh;
       return 0;
     }
@@ -401,7 +411,9 @@ ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
   Process_Descriptor &proc_desc = this->process_table_[i];
 
   if (proc_desc.exit_notify_ != nullptr)
+  {
     proc_desc.exit_notify_->handle_close (ACE_INVALID_HANDLE, 0);
+  }
   proc_desc.exit_notify_ = eh;
   return 0;
 }
@@ -411,14 +423,17 @@ pid_t
 ACE_Process_Manager::spawn (ACE_Process_Options &options,
                             ACE_Event_Handler *event_handler)
 {
-  ACE_Process *process = nullptr;
+  ACE_Process *process {};
   ACE_NEW_RETURN (process,
                   ACE_Managed_Process,
                   ACE_INVALID_PID);
+  std::unique_ptr<ACE_Process> process_owner (process);
 
-  pid_t const pid = this->spawn (process, options, event_handler);
-  if (pid == ACE_INVALID_PID || pid == 0)
-    delete process;
+  pid_t const pid = this->spawn (process_owner.get (), options, event_handler);
+  if (pid != ACE_INVALID_PID && pid != 0)
+    {
+      process_owner.release ();
+    }
 
   return pid;
 }
@@ -435,14 +450,18 @@ ACE_Process_Manager::spawn (ACE_Process *process,
 
   // Only include the pid in the parent's table.
   if (pid == ACE_INVALID_PID || pid == 0)
+  {
     return pid;
+  }
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex,
                             ace_mon, this->lock_, -1));
 
   if (this->append_proc (process, event_handler) == -1)
-    // bad news: spawned, but not registered in table.
-    return ACE_INVALID_PID;
+    {
+      // bad news: spawned, but not registered in table.
+      return ACE_INVALID_PID;
+    }
 
   return pid;
 }
@@ -457,21 +476,29 @@ ACE_Process_Manager::spawn_n (size_t n,
   ACE_TRACE ("ACE_Process_Manager::spawn_n");
 
   if (child_pids != nullptr)
-    for (size_t i = 0;
-         i < n;
-         ++i)
-      child_pids[i] = ACE_INVALID_PID;
+    {
+      for (size_t i = 0;
+           i < n;
+           ++i)
+        {
+          child_pids[i] = ACE_INVALID_PID;
+        }
+    }
 
   for (size_t i = 0;
        i < n;
-       i++)
+       ++i)
     {
       pid_t const pid = this->spawn (options, event_handler);
       if (pid == ACE_INVALID_PID || pid == 0)
-        // We're in the child or something's gone wrong.
-        return pid;
+        {
+          // We're in the child or something's gone wrong.
+          return pid;
+        }
       else if (child_pids != nullptr)
-        child_pids[i] = pid;
+        {
+          child_pids[i] = pid;
+        }
     }
 
   return 0;
@@ -491,9 +518,13 @@ ACE_Process_Manager::append_proc (ACE_Process *proc,
     {
       size_t new_size = this->max_process_table_size_ * 2;
       if (new_size == 0)
+      {
         new_size = ACE_Process_Manager::DEFAULT_SIZE;
+      }
       if (this->resize (new_size) == -1)
+      {
         return -1;
+      }
     }
 
   Process_Descriptor &proc_desc =
@@ -507,8 +538,10 @@ ACE_Process_Manager::append_proc (ACE_Process *proc,
   // automagically.  Get a handle to this new Process and tell the
   // Reactor we're interested in <handling_input> on it.
   ACE_Reactor * const r = this->reactor ();
-  if (r != 0)
-    r->register_handler (this, proc->gethandle ());
+  if (r != nullptr)
+    {
+      r->register_handler (this, proc->gethandle ());
+    }
 #endif /* ACE_WIN32 */
 
   ++this->current_count_;
@@ -526,7 +559,9 @@ ACE_Process_Manager::insert_proc (ACE_Process *proc,
   // Check for duplicates and bail out if they're already
   // registered...
   if (this->find_proc (proc->getpid ()) != -1)
+  {
     return -1;
+  }
 
   return this->append_proc (proc, event_handler);
 }
@@ -542,7 +577,9 @@ ACE_Process_Manager::remove (pid_t pid)
   ssize_t const i = this->find_proc (pid);
 
   if (i != -1)
+  {
     return this->remove_proc (i);
+  }
 
   // set "process not found" error
   return -1;
@@ -576,13 +613,15 @@ ACE_Process_Manager::remove_proc (size_t i)
 
   this->process_table_[i].process_ = nullptr;
 
-  this->current_count_--;
+  --this->current_count_;
 
   if (this->current_count_ > 0)
-    // Compact the table by moving the last item into the slot vacated
-    // by the index being removed (this is a structure assignment).
-    this->process_table_[i] =
-      this->process_table_[this->current_count_];
+    {
+      // Compact the table by moving the last item into the slot vacated
+      // by the index being removed (this is a structure assignment).
+      this->process_table_[i] =
+        this->process_table_[this->current_count_];
+    }
 
   return 0;
 }
@@ -599,8 +638,10 @@ ACE_Process_Manager::terminate (pid_t pid)
   ssize_t const i = this->find_proc (pid);
 
   if (i == -1)
-    // set "no such process" error
-    return -1;
+    {
+      // set "no such process" error
+      return -1;
+    }
 
   return ACE::terminate_process (pid);
 }
@@ -617,8 +658,10 @@ ACE_Process_Manager::terminate (pid_t pid, int sig)
   ssize_t const i = this->find_proc (pid);
 
   if (i == -1)
-    // set "no such process" error
-    return -1;
+    {
+      // set "no such process" error
+      return -1;
+    }
 
   return ACE_OS::kill (pid, sig);
 }
@@ -637,8 +680,10 @@ ACE_Process_Manager::set_scheduler (const ACE_Sched_Params & params,
   ssize_t const i = this->find_proc (pid);
 
   if (i == -1)
-    // set "no such process" error
-    return ACE_INVALID_PID;
+    {
+      // set "no such process" error
+      return ACE_INVALID_PID;
+    }
 
   return ACE_OS::sched_params (params, pid);
 }
@@ -655,7 +700,9 @@ ACE_Process_Manager::set_scheduler_all (const ACE_Sched_Params & params)
     {
       pid_t const pid = this->process_table_[i].process_->getpid ();
       if (ACE_OS::sched_params (params, pid) != 0)
+      {
         return -1;
+      }
     }
   return 0;
 }
@@ -709,23 +756,31 @@ ACE_Process_Manager::wait (const ACE_Time_Value &timeout)
   ACE_Time_Value remaining = timeout;
 
   if (until < ACE_Time_Value::max_time)
+  {
     until += ACE_OS::gettimeofday ();
+  }
 
   while (this->current_count_ > 0)
     {
       pid_t const pid = this->wait (0, remaining);
 
       if (pid == ACE_INVALID_PID)       // wait() failed
-        return -1;
+        {
+          return -1;
+        }
       else if (pid == 0)     // timeout
-        break;
+        {
+          break;
+        }
 
       remaining = until < ACE_Time_Value::max_time
         ? until - ACE_OS::gettimeofday ()
         : ACE_Time_Value::max_time;
 
       if (remaining <= ACE_Time_Value::zero)
-        break;
+        {
+          break;
+        }
 
       // else Process terminated...wait for more...
     }
@@ -761,12 +816,14 @@ ACE_Process_Manager::wait (pid_t pid,
 
   ACE_exitcode local_stat = 0;
   if (status == nullptr)
+  {
     status = &local_stat;
+  }
 
   *status = 0;
 
   ssize_t idx = -1;
-  ACE_Process *proc = nullptr;
+  ACE_Process *proc {};
 
   {
     // fake context after which the lock is released
@@ -776,42 +833,53 @@ ACE_Process_Manager::wait (pid_t pid,
       {
         idx = this->find_proc (pid);
         if (idx == -1)
-          return ACE_INVALID_PID;
+          {
+            return ACE_INVALID_PID;
+          }
         else
-          proc = process_table_[idx].process_;
+          {
+            proc = process_table_[idx].process_;
+          }
       }
     // release the lock.
   }
   if (proc != nullptr)
-    pid = proc->wait (timeout, status);
+    {
+      pid = proc->wait (timeout, status);
+    }
   else
     {
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
       // Wait for any Process spawned by this Process_Manager.
 #if defined (ACE_WIN32)
-      HANDLE *handles = nullptr;
+      HANDLE *handles {};
 
       ACE_NEW_RETURN (handles,
                       HANDLE[this->current_count_],
                       ACE_INVALID_PID);
+      std::unique_ptr<HANDLE[]> handles_owner (handles);
 
       for (size_t i = 0;
            i < this->current_count_;
            ++i)
-        handles[i] =
+        handles_owner[i] =
           process_table_[i].process_->gethandle ();
 
       DWORD handle_count = static_cast<DWORD> (this->current_count_);
       DWORD result = ::WaitForMultipleObjects (handle_count,
-                                               handles,
+                                               handles_owner.get (),
                                                FALSE,
                                                timeout == ACE_Time_Value::max_time
                                                ? INFINITE
                                                : timeout.msec ());
       if (result == WAIT_FAILED)
-        pid = ACE_INVALID_PID;
+        {
+          pid = ACE_INVALID_PID;
+        }
       else if (result == WAIT_TIMEOUT)
-        pid = 0;
+        {
+          pid = 0;
+        }
       else
         {
           // Green Hills produces a warning that result >=
@@ -825,12 +893,12 @@ ACE_Process_Manager::wait (pid_t pid,
                       && result < WAIT_OBJECT_0 + this->current_count_);
 # endif
 
-          idx = this->find_proc (handles[result - WAIT_OBJECT_0]);
+          idx = this->find_proc (handles_owner[result - WAIT_OBJECT_0]);
 
           if (idx != -1)
             {
               pid = process_table_[idx].process_->getpid ();
-              result = ::GetExitCodeProcess (handles[result - WAIT_OBJECT_0],
+              result = ::GetExitCodeProcess (handles_owner[result - WAIT_OBJECT_0],
                                              status);
               if (result == 0)
                 {
@@ -843,7 +911,6 @@ ACE_Process_Manager::wait (pid_t pid,
             {
               // uh oh...handle removed from process_table_, even though
               // we're holding a lock!
-              delete [] handles;
               ACELIB_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("Process removed")
                                  ACE_TEXT (" -- somebody's ignoring the lock!\n")),
@@ -851,25 +918,32 @@ ACE_Process_Manager::wait (pid_t pid,
             }
         }
 
-      delete [] handles;
 #else /* !defined(ACE_WIN32) */
       if (timeout == ACE_Time_Value::max_time)
-        pid = ACE_OS::waitpid (-1, status, 0);
+        {
+          pid = ACE_OS::waitpid (-1, status, 0);
+        }
       else if (timeout == ACE_Time_Value::zero)
-        pid = ACE_OS::waitpid (-1, status, WNOHANG);
+        {
+          pid = ACE_OS::waitpid (-1, status, WNOHANG);
+        }
       else
         {
 # if defined (ACE_LACKS_UNIX_SIGNALS)
           pid = 0;
           ACE_Time_Value sleeptm (1);    // 1 msec
           if (sleeptm > timeout)         // if sleeptime > waittime
-            sleeptm = timeout;
+            {
+              sleeptm = timeout;
+            }
           ACE_Time_Value tmo (timeout);  // Need one we can change
           for (ACE_Countdown_Time time_left (&tmo); tmo > ACE_Time_Value::zero ; time_left.update ())
             {
               pid = ACE_OS::waitpid (-1, status, WNOHANG);
               if (pid > 0 || pid == ACE_INVALID_PID)
-                break;          // Got a child or an error - all done
+                {
+                  break;          // Got a child or an error - all done
+                }
 
               // pid 0, nothing is ready yet, so wait.
               // Do a (very) short sleep (only this thread sleeps).
@@ -898,7 +972,9 @@ ACE_Process_Manager::wait (pid_t pid,
 #   else
                 if (pid > 0 || pid == ACE_INVALID_PID)
 #   endif
-                  break;          // Got a child or an error - all done
+                  {
+                    break;          // Got a child or an error - all done
+                  }
 
               // pid 0, nothing is ready yet, so wait.
               // Do a sleep (only this thread sleeps) til something
@@ -906,7 +982,9 @@ ACE_Process_Manager::wait (pid_t pid,
               // If SIGCHLD isn't delivered, we'll need to do something
               // with sigaction to force it.
               if (-1 == ACE_OS::sleep (tmo) && errno == EINTR)
+              {
                 continue;
+              }
               // Timed out
               pid = 0;
               break;
@@ -914,7 +992,9 @@ ACE_Process_Manager::wait (pid_t pid,
 
           // Restore the previous SIGCHLD action if it was changed.
           if (this->reactor () == nullptr)
+          {
             old_action.register_action (SIGCHLD);
+          }
 # endif /* !ACE_LACKS_UNIX_SIGNALS */
         }
 #endif /* !defined (ACE_WIN32) */
@@ -934,9 +1014,13 @@ ACE_Process_Manager::wait (pid_t pid,
           return pid;
         }
       else
+      {
         proc = process_table_[idx].process_;
+      }
       if (proc != nullptr)
+      {
         ACE_ASSERT (pid == proc->getpid ());
+      }
 
       this->notify_proc_handler (idx,
                                  *status);
@@ -961,7 +1045,9 @@ ACE_Process_Manager::notify_proc_handler (size_t i,
       proc_desc.process_->exit_code (exit_code);
 
       if (proc_desc.exit_notify_ != nullptr)
-        proc_desc.exit_notify_->handle_exit (proc_desc.process_);
+        {
+          proc_desc.exit_notify_->handle_exit (proc_desc.process_);
+        }
       else if (this->default_exit_handler_ != nullptr
                && this->default_exit_handler_->handle_exit (proc_desc.process_) < 0)
         {

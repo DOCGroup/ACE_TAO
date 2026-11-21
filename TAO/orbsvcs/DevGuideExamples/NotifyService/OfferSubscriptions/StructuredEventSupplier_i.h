@@ -6,8 +6,7 @@
 class StructuredEventSupplier_i : public POA_CosNotifyComm::StructuredPushSupplier
 {
 public:
-    // Constructor
-    StructuredEventSupplier_i(CORBA::ORB_ptr orb);
+    explicit StructuredEventSupplier_i (CORBA::ORB_ptr orb);
     StructuredEventSupplier_i (StructuredEventSupplier_i const &) = delete;
     StructuredEventSupplier_i (StructuredEventSupplier_i &&) = delete;
     StructuredEventSupplier_i &operator= (StructuredEventSupplier_i const &) = delete;

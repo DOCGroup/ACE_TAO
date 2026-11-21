@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef _CONSUMER_HANDLER_H
 #define _CONSUMER_HANDLER_H
 
@@ -31,15 +30,18 @@
 class Consumer_Handler
 {
 public:
-  /// Constructor.
-  Consumer_Handler ();
+  Consumer_Handler () = default;
 
-  /// Destructor.
- virtual ~Consumer_Handler () = default;
+  ~Consumer_Handler () = default;
+
+  Consumer_Handler (Consumer_Handler const &) = delete;
+  Consumer_Handler &operator= (Consumer_Handler const &) = delete;
+  Consumer_Handler (Consumer_Handler &&) = delete;
+  Consumer_Handler &operator= (Consumer_Handler &&) = delete;
 
   /// Initializes the ORB, gets the Notifier reference from the Naming
   /// Service, and starts the servant for the Consumer object.
-  int init (int argc, ACE_TCHAR *argv[], ShutdownCallback *_shutdowncallback);
+  int init (int argc, ACE_TCHAR *argv[], ShutdownCallback *shutdown_callback);
 
   /// runs the ORB.
   int run ();
@@ -50,12 +52,11 @@ public:
   /// called to shutdown the consumer application.
   void shutdown ();
 
-  // = Accessors
-  Event_Comm::Consumer *receiver ();
-  Event_Comm::Notifier *notifier ();
+  Event_Comm::Consumer *receiver () const;
+  Event_Comm::Notifier *notifier () const;
 
   /// returns the ORB's reactor.
-  ACE_Reactor *reactor ();
+  ACE_Reactor *reactor () const;
 
 private:
   /// gets the notifier reference from the naming service.
@@ -63,23 +64,23 @@ private:
   int get_notifier ();
 
   /// Remember our orb.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// The <Consumer> implementation.
   Consumer_i receiver_i_;
 
   /// Pointer to an IDL <Consumer> proxy object.
-  Event_Comm::Consumer_var receiver_;
+  Event_Comm::Consumer_var receiver_ {};
 
   /// Pointer to an IDL <Notifier> proxy object.
-  Event_Comm::Notifier_var notifier_;
+  Event_Comm::Notifier_var notifier_ {};
 
   /// An instance of the name client used for resolving the factory
   /// objects.
   TAO_Naming_Client naming_services_client_;
 
   /// The Shutdown callback used to shutdown the consumer application.
-  ShutdownCallback* shutdowncallback;
+  ShutdownCallback *shutdowncallback_ {};
 };
 
 #define NOTIFIER_BIND_NAME "Notifier"

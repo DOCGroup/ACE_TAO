@@ -34,7 +34,7 @@ public:
   ACE_Date_Time ();
 
   /// Constructor initializes with the given ACE_Time_Value
-  explicit ACE_Date_Time (const ACE_Time_Value& timevalue);
+  explicit ACE_Date_Time (ACE_Time_Value const &timevalue);
 
   /// Constructor with init values, no check for validity
   /// Set/get portions of ACE_Date_Time, no check for validity.
@@ -51,7 +51,7 @@ public:
   void update ();
 
   /// Update to the given ACE_Time_Value
-  void update (const ACE_Time_Value& timevalue);
+  void update (ACE_Time_Value const &timevalue);
 
   /// Get day.
   long day () const;

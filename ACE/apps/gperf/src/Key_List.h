@@ -89,7 +89,7 @@ public:
   int total_duplicates {};
 
 private:
-  // = Make hash table 10 times larger than # of keyword entries.
+  // Make hash table 10 times larger than # of keyword entries.
   enum
   {
     TABLE_MULTIPLE = 10
@@ -112,7 +112,6 @@ private:
   int output_binary_search_function();
   int output_linear_search_function ();
   int output_lookup_array ();
-  void output_strcasecmp ();
   int output_types ();
   void dump ();
   bool array_type (std::string& result);

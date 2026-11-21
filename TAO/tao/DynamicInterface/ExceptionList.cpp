@@ -12,7 +12,7 @@ CORBA::ExceptionList::ExceptionList (CORBA::ULong len,
                                      CORBA::TypeCode_ptr *tc_list)
   : refcount_ (1)
 {
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       this->add (tc_list [i]);
     }
@@ -20,9 +20,9 @@ CORBA::ExceptionList::ExceptionList (CORBA::ULong len,
 
 CORBA::ExceptionList::~ExceptionList ()
 {
-  for (CORBA::ULong i = 0; i < this->count (); ++i)
+  for (CORBA::ULong i {}; i < this->count (); ++i)
     {
-      CORBA::TypeCode_ptr *tc = nullptr;
+      CORBA::TypeCode_ptr *tc {};
 
       if (this->tc_list_.get (tc, i) == -1)
         {
@@ -48,7 +48,7 @@ CORBA::ExceptionList::add_consume (CORBA::TypeCode_ptr tc)
 CORBA::TypeCode_ptr
 CORBA::ExceptionList::item (CORBA::ULong slot)
 {
-  CORBA::TypeCode_ptr *tc = nullptr;
+  CORBA::TypeCode_ptr *tc {};
 
   if (this->tc_list_.get (tc, slot) == -1)
     {

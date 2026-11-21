@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CEC_DISPATCHING_TASK_H
 #define TAO_CEC_DISPATCHING_TASK_H
 
@@ -43,8 +42,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Event_Serv_Export TAO_CEC_Dispatching_Task : public ACE_Task<ACE_SYNCH>
 {
 public:
-  /// Constructor
-  TAO_CEC_Dispatching_Task (ACE_Thread_Manager *thr_manager = nullptr);
+  explicit TAO_CEC_Dispatching_Task (ACE_Thread_Manager *thr_manager = nullptr);
 
   TAO_CEC_Dispatching_Task (TAO_CEC_Dispatching_Task const &) = delete;
   TAO_CEC_Dispatching_Task (TAO_CEC_Dispatching_Task &&) = delete;
@@ -64,7 +62,7 @@ public:
 
 private:
   /// An per-task allocator
-  ACE_Allocator *allocator_;
+  ACE_Allocator *allocator_ {};
 
   /// Helper data structure to minimize memory allocations...
   ACE_Locked_Data_Block<ACE_Lock_Adapter<TAO_SYNCH_MUTEX> > data_block_;
@@ -76,14 +74,13 @@ class TAO_Event_Serv_Export TAO_CEC_Dispatch_Command : public ACE_Message_Block
 {
 public:
   /// Constructor, it will allocate its own data block
-  TAO_CEC_Dispatch_Command (ACE_Allocator *mb_allocator = nullptr);
+  explicit TAO_CEC_Dispatch_Command (ACE_Allocator *mb_allocator = nullptr);
 
   /// Constructor, it assumes ownership of the data block
   TAO_CEC_Dispatch_Command (ACE_Data_Block*,
                            ACE_Allocator *mb_allocator = nullptr);
 
-  /// Destructor
-  ~TAO_CEC_Dispatch_Command () override;
+  ~TAO_CEC_Dispatch_Command () override = default;
 
   TAO_CEC_Dispatch_Command (TAO_CEC_Dispatch_Command const &) = delete;
   TAO_CEC_Dispatch_Command (TAO_CEC_Dispatch_Command &&) = delete;
@@ -99,8 +96,7 @@ public:
 class TAO_Event_Serv_Export TAO_CEC_Shutdown_Task_Command : public TAO_CEC_Dispatch_Command
 {
 public:
-  /// Constructor
-  TAO_CEC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = nullptr);
+  explicit TAO_CEC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = nullptr);
 
   TAO_CEC_Shutdown_Task_Command (TAO_CEC_Shutdown_Task_Command const &) = delete;
   TAO_CEC_Shutdown_Task_Command (TAO_CEC_Shutdown_Task_Command &&) = delete;
@@ -116,13 +112,11 @@ public:
 class TAO_Event_Serv_Export TAO_CEC_Push_Command : public TAO_CEC_Dispatch_Command
 {
 public:
-  /// Constructor
   TAO_CEC_Push_Command (TAO_CEC_ProxyPushSupplier* proxy,
                         CORBA::Any& event,
                         ACE_Data_Block* data_block,
                         ACE_Allocator *mb_allocator);
 
-  /// Destructor
   ~TAO_CEC_Push_Command () override;
 
   TAO_CEC_Push_Command (TAO_CEC_Push_Command const &) = delete;
@@ -147,13 +141,11 @@ private:
 class TAO_Event_Serv_Export TAO_CEC_Invoke_Command : public TAO_CEC_Dispatch_Command
 {
 public:
-  /// Constructor
   TAO_CEC_Invoke_Command (TAO_CEC_ProxyPushSupplier* proxy,
                           TAO_CEC_TypedEvent& typed_event,
                           ACE_Data_Block* data_block,
                           ACE_Allocator *mb_allocator);
 
-  /// Destructor
   ~TAO_CEC_Invoke_Command () override;
 
   TAO_CEC_Invoke_Command (TAO_CEC_Invoke_Command const &) = delete;

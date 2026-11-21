@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _IO_HANDLER_CONNECTOR
 #define _IO_HANDLER_CONNECTOR
 
@@ -31,7 +30,11 @@
 class Connection_Handler_Connector : public ACE_Connector<Connection_Handler, ACE_SOCK_CONNECTOR>
 {
 public:
-  Connection_Handler_Connector ();
+  Connection_Handler_Connector () = default;
+  Connection_Handler_Connector (Connection_Handler_Connector const &) = delete;
+  Connection_Handler_Connector (Connection_Handler_Connector &&) = delete;
+  Connection_Handler_Connector &operator= (Connection_Handler_Connector const &) = delete;
+  Connection_Handler_Connector &operator= (Connection_Handler_Connector &&) = delete;
 
   // Initiate (or reinitiate) a connection on the Connection_Handler.
   int initiate_connection (Connection_Handler *,

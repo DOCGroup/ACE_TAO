@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_TIMEPROBE_H
 #define TAO_TIMEPROBE_H
 #include /**/ "ace/pre.h"
@@ -45,7 +44,6 @@
 // above are defined, code below will undefine this macro.
 // They should not both be defined at the same time.
 //#define TAO_SELECT_MINIMAL_TIMEPROBES
-
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -88,7 +86,6 @@
 # define TAO_MINIMAL_TIMEPROBE(id)
 
 #endif /* ACE_ENABLE_TIMEPROBES */
-
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -88,14 +88,10 @@ namespace PortableInterceptor
     static void _tao_release (PolicyFactory_ptr obj);
 
     static PolicyFactory_ptr _narrow (
-        ::CORBA::Object_ptr obj
-
-      );
+        ::CORBA::Object_ptr obj);
 
     static PolicyFactory_ptr _unchecked_narrow (
-        ::CORBA::Object_ptr obj
-
-      );
+        ::CORBA::Object_ptr obj);
 
     static PolicyFactory_ptr _nil ()
     {
@@ -108,25 +104,19 @@ namespace PortableInterceptor
 
     virtual ::CORBA::Policy_ptr create_policy (
         ::CORBA::PolicyType type,
-        const ::CORBA::Any & value
-      ) = 0;
+        const ::CORBA::Any & value) = 0;
 
     // Hand-crafted addition.
     virtual ::CORBA::Policy_ptr _create_policy (
-        CORBA::PolicyType type
-
-      );
+        CORBA::PolicyType type);
 
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
 
-    virtual ::CORBA::Boolean _is_a (
-        const char *type_id
+    ::CORBA::Boolean _is_a (char const* type_id) override;
 
-      );
-
-    virtual const char* _interface_repository_id () const;
-    virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    char const* _interface_repository_id () const override;
+    ::CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
 
   protected:
     // Abstract or local interface only.
@@ -161,16 +151,13 @@ namespace TAO
   struct TAO_PI_Export Objref_Traits< ::PortableInterceptor::PolicyFactory>
   {
     static ::PortableInterceptor::PolicyFactory_ptr duplicate (
-        ::PortableInterceptor::PolicyFactory_ptr
-      );
+        ::PortableInterceptor::PolicyFactory_ptr);
     static void release (
-        ::PortableInterceptor::PolicyFactory_ptr
-      );
+        ::PortableInterceptor::PolicyFactory_ptr);
     static ::PortableInterceptor::PolicyFactory_ptr nil ();
     static ::CORBA::Boolean marshal (
         ::PortableInterceptor::PolicyFactory_ptr p,
-        TAO_OutputCDR & cdr
-      );
+        TAO_OutputCDR & cdr);
   };
 
 #endif /* end #if !defined */

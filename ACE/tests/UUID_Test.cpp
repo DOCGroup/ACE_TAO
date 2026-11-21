@@ -47,17 +47,21 @@ Tester::test ()
               new_uuid_assign.to_string ()->c_str ()));
 
   if (new_uuid != new_uuid_assign)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error: UUIDs are not the same\n")),
-                       -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Error: UUIDs are not the same\n")),
+                        -1);
+    }
 
   // Check the hash value of the 2 UUIDs
 
   if (new_uuid.hash () != new_uuid_assign.hash ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error: hash value of UUIDs are ")
-                       ACE_TEXT ("not the same")),
-                       -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Error: hash value of UUIDs are ")
+                         ACE_TEXT ("not the same")),
+                        -1);
+    }
 
 #else
   const ACE_Utils::UUID &new_uuid = *uuid;
@@ -71,10 +75,12 @@ Tester::test ()
               new_uuid_copy.to_string ()->c_str ()));
 
   if (new_uuid != new_uuid_copy)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error: UUIDs are not the same ")
-                       ACE_TEXT ("with copy\n")),
-                       -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Error: UUIDs are not the same ")
+                         ACE_TEXT ("with copy\n")),
+                        -1);
+    }
 
 #ifndef ACE_LACKS_SSCANF
   ACE_Utils::UUID nil_uuid (*ACE_Utils::UUID::NIL_UUID.to_string ());
@@ -84,10 +90,12 @@ Tester::test ()
               nil_uuid.to_string ()->c_str ()));
 
   if (nil_uuid != ACE_Utils::UUID::NIL_UUID)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error: UUIDs are not the same with ")
-                       ACE_TEXT ("NIL_UUID string copy\n")),
-                       -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Error: UUIDs are not the same with ")
+                         ACE_TEXT ("NIL_UUID string copy\n")),
+                        -1);
+    }
 #endif
 
   // Construct UUID using the assignment constructor
@@ -99,10 +107,12 @@ Tester::test ()
               new_uuid_assigment.to_string ()->c_str ()));
 
   if (new_uuid != new_uuid_assigment)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error: UUIDs are not the same "
-                       ACE_TEXT ("with assignment\n"))),
-                       -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Error: UUIDs are not the same "
+                         ACE_TEXT ("with assignment\n"))),
+                        -1);
+    }
 
   // Generate UUID with process and thread ids.
   std::unique_ptr <ACE_Utils::UUID>
@@ -113,9 +123,11 @@ Tester::test ()
               uuid_with_tp_id->to_string ()->c_str ()));
 
   if (new_uuid == *uuid_with_tp_id)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error: UUIDs are the same\n")),
-                       -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Error: UUIDs are the same\n")),
+                        -1);
+    }
 
 #ifndef ACE_LACKS_SSCANF
   // Construct UUID from string
@@ -138,11 +150,15 @@ int run_main(int, ACE_TCHAR* [])
   int const result = tester.test();
 
   if (result == 0)
-    ACE_DEBUG((LM_DEBUG,
-               ACE_TEXT ("UUID_Test succeeded\n")));
+    {
+      ACE_DEBUG((LM_DEBUG,
+                 ACE_TEXT ("UUID_Test succeeded\n")));
+    }
   else
-    ACE_ERROR((LM_ERROR,
-               ACE_TEXT ("UUID_Test failed\n")));
+    {
+      ACE_ERROR((LM_ERROR,
+                 ACE_TEXT ("UUID_Test failed\n")));
+    }
 
   ACE_END_TEST;
 

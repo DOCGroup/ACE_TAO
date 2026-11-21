@@ -1,19 +1,9 @@
 %option noyywrap
 
 %{
-// ========================================================================
-//
-// = LIBRARY
-//   orbsvcs/ECTL
-// 
-// = FILENAME
-//   ETCL.ll
-//
-// = AUTHOR
-//   Carlos O'Ryan <coryan@uci.edu> based on previous work by
-//   Seth Widoff <sbw1@cs.wustl.edu>
-//
-// ========================================================================
+/// @file ETCL.ll
+/// @author Carlos O'Ryan <coryan@uci.edu> based on previous work by
+/// Seth Widoff <sbw1@cs.wustl.edu>
 
 #include "ace/ETCL/ETCL_Interpreter.h"
 #include "ace/ETCL/ETCL_y.h"
@@ -82,12 +72,12 @@ in		{ YY_LEX_DEBUG; return ETCL_IN; }
 "]"		{ YY_LEX_DEBUG; return ETCL_RBRA; }
 TRUE		{ 
 		  lvalp->constraint = 
-		    new ETCL_Literal_Constraint ((CORBA::Boolean) 1);
+		    new ETCL_Literal_Constraint ((CORBA::Boolean) true);
 		  YY_LEX_DEBUG; return ETCL_BOOLEAN;
 		}
 FALSE		{ 
 		  lvalp->constraint = 
-		    new ETCL_Literal_Constraint ((CORBA::Boolean) 0);
+		    new ETCL_Literal_Constraint ((CORBA::Boolean) false);
 		  YY_LEX_DEBUG; return ETCL_BOOLEAN;
 		}
 {integer}	{ 
@@ -130,15 +120,25 @@ extract_string(char* str)
         {
           ++i;
           if (*i == 0)
-            return 0;
+            {
+              return 0;
+            }
           else if (*i == 't')
-            *t = '\t';
+            {
+              *t = '\t';
+            }
           else if (*i == 'n')
-            *t = '\n';
+            {
+              *t = '\n';
+            }
           else if (*i == '\\')
-            *t = '\\';
+            {
+              *t = '\\';
+            }
           else
-            *t = *i;
+            {
+              *t = *i;
+            }
           continue;
         }
 

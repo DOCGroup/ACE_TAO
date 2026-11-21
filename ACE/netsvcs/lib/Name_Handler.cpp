@@ -26,7 +26,9 @@ ACE_Name_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
 
   // dont allow to connect to another name serever
   if(this->naming_context()->name_options()->context() == ACE_Naming_Context::NET_LOCAL)
-        this->naming_context()->name_options()->nameserver_host(ACE_TEXT ("localhost"));
+  {
+    this->naming_context()->name_options()->nameserver_host(ACE_TEXT ("localhost"));
+  }
 
   if (this->naming_context()->open( this->naming_context()->name_options()->context() ) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -55,7 +57,7 @@ ACE_Name_Acceptor::init (int argc, ACE_TCHAR *argv[])
   if (this->open (this->service_addr_,
                   ACE_Reactor::instance (),
                   0, 0, 0,
-                  &this->scheduling_strategy_,
+                  std::addressof (this->scheduling_strategy_),
                   ACE_TEXT ("Name Server"),
                   ACE_TEXT ("ACE naming service")) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -79,19 +81,18 @@ ACE_Name_Acceptor::init (int argc, ACE_TCHAR *argv[])
                       -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("starting up Name Server at port %d on handle %d\n"),
+              ACE_TEXT ("starting up Name Server at port %d on handle %H\n"),
               server_addr.get_port_number (),
               this->acceptor ().get_handle ()));
   return 0;
 }
 
-// The following is a "Factory" used by the ACE_Service_Config and
-// svc.conf file to dynamically initialize the state of the Naming
-// Server.
+/// The following is a "Factory" used by the ACE_Service_Config and
+/// svc.conf file to dynamically initialize the state of the Naming
+/// Server.
 
 ACE_SVC_FACTORY_DEFINE (ACE_Name_Acceptor)
 
-// Default constructor.
 ACE_Name_Handler::ACE_Name_Handler (ACE_Thread_Manager *tm)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> (tm)
 {
@@ -130,8 +131,8 @@ ACE_Name_Handler::ACE_Name_Handler (ACE_Thread_Manager *tm)
   list_types_ref.description_ = "request for LIST_TYPES\n";
 }
 
-// Activate this instance of the ACE_Name_Handler (called by the
-// ACE_Name_Acceptor).
+/// Activate this instance of the ACE_Name_Handler (called by the
+/// ACE_Name_Acceptor).
 
 /* VIRTUAL */ int
 ACE_Name_Handler::open (void * v)
@@ -151,7 +152,7 @@ ACE_Name_Handler::open (void * v)
   return 0;
 }
 
-// Create and send a reply to the client.
+/// Create and send a reply to the client.
 
 /* VIRTUAL */ int
 ACE_Name_Handler::send_reply (ACE_INT32 status,
@@ -166,19 +167,23 @@ ACE_Name_Handler::send_reply (ACE_INT32 status,
   int len = this->name_reply_.encode (buf);
 
   if (len == -1)
+  {
     return -1;
+  }
 
   ssize_t n = this->peer ().send (buf, len);
 
   if (n != len)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n, expected len = %d, actual len = %d"),
+                       ACE_TEXT ("%p\n, expected len = %d, actual len = %b"),
                        ACE_TEXT ("send failed"),
                        len,
                        n),
                       -1);
   else
+  {
     return 0;
+  }
 }
 
 /* VIRTUAL */ int
@@ -203,8 +208,8 @@ ACE_Name_Handler::send_request (ACE_Name_Request &request)
   return 0;
 }
 
-// Give up waiting (e.g., when a timeout occurs or a client shuts down
-// unexpectedly).
+/// Give up waiting (e.g., when a timeout occurs or a client shuts down
+/// unexpectedly).
 
 /* VIRTUAL */ int
 ACE_Name_Handler::abandon ()
@@ -213,7 +218,7 @@ ACE_Name_Handler::abandon ()
   return this->send_reply (-1, errno);
 }
 
-// Enable clients to limit the amount of time they'll wait
+/// Enable clients to limit the amount of time they'll wait
 
 /* VIRTUAL */ int
 ACE_Name_Handler::handle_timeout (const ACE_Time_Value &, const void *)
@@ -222,7 +227,7 @@ ACE_Name_Handler::handle_timeout (const ACE_Time_Value &, const void *)
   return this->abandon ();
 }
 
-// Return the underlying ACE_HANDLE.
+/// Return the underlying ACE_HANDLE.
 
 /* VIRTUAL */ ACE_HANDLE
 ACE_Name_Handler::get_handle () const
@@ -231,7 +236,7 @@ ACE_Name_Handler::get_handle () const
   return this->peer ().get_handle ();
 }
 
-// Dispatch the appropriate operation to handle the client request.
+/// Dispatch the appropriate operation to handle the client request.
 
 /* VIRTUAL */ int
 ACE_Name_Handler::dispatch ()
@@ -250,8 +255,8 @@ ACE_Name_Handler::dispatch ()
                                           ACE_Name_Request::OP_TABLE_MASK)]) ();
 }
 
-// Receive, frame, and decode the client's request.  Note, this method
-// should use non-blocking I/O.
+/// Receive, frame, and decode the client's request.  Note, this method
+/// should use non-blocking I/O.
 
 /* VIRTUAL */ int
 ACE_Name_Handler::recv_request ()
@@ -270,7 +275,7 @@ ACE_Name_Handler::recv_request ()
       ACE_FALLTHROUGH;
     default:
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%p got %d bytes, expected %d bytes\n"),
+                  ACE_TEXT ("%p got %b bytes, expected %B bytes\n"),
                   ACE_TEXT ("recv failed"),
                   n,
                   sizeof (ACE_UINT32)));
@@ -289,7 +294,7 @@ ACE_Name_Handler::recv_request ()
         if (length > (ssize_t) sizeof this->name_request_)
           {
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("length %d too long\n"),
+                        ACE_TEXT ("length %b too long\n"),
                         length));
             return this->abandon ();
           }
@@ -303,7 +308,7 @@ ACE_Name_Handler::recv_request ()
         // Subtract off the size of the part we skipped over...
         if (n != (length - (ssize_t) sizeof (ACE_UINT32)))
           {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p expected %d, got %d\n"),
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p expected %b, got %b\n"),
                        ACE_TEXT ("invalid length"), length, n));
             return this->abandon ();
           }
@@ -321,8 +326,8 @@ ACE_Name_Handler::recv_request ()
   return 0;
 }
 
-// Callback method invoked by the ACE_Reactor when events arrive from
-// the client.
+/// Callback method invoked by the ACE_Reactor when events arrive from
+/// the client.
 
 /* VIRTUAL */ int
 ACE_Name_Handler::handle_input (ACE_HANDLE)
@@ -330,9 +335,13 @@ ACE_Name_Handler::handle_input (ACE_HANDLE)
   ACE_TRACE ("ACE_Name_Handler::handle_input");
 
   if (this->recv_request () == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return this->dispatch ();
+    {
+      return this->dispatch ();
+    }
 }
 
 int
@@ -379,12 +388,18 @@ ACE_Name_Handler::shared_bind (int rebind)
                                                     a_value,
                                                     this->name_request_.type ());
       if (result == 1)
-        result = 0;
+        {
+          result = 0;
+        }
     }
   if (result == 0)
-    return this->send_reply (0);
+    {
+      return this->send_reply (0);
+    }
   else
-    return this->send_reply (-1);
+    {
+      return this->send_reply (-1);
+    }
 }
 
 int
@@ -431,9 +446,13 @@ ACE_Name_Handler::unbind ()
                          this->name_request_.name_len () / sizeof (ACE_WCHAR_T));
 
   if (this->naming_context ()->unbind (a_name) == 0)
-    return this->send_reply (0);
+    {
+      return this->send_reply (0);
+    }
   else
-    return this->send_reply (-1);
+    {
+      return this->send_reply (-1);
+    }
 }
 
 ACE_Name_Request
@@ -494,11 +513,13 @@ ACE_Name_Handler::lists ()
       ACE_Name_Request end_rq (ACE_Name_Request::MAX_ENUM, 0, 0, 0, 0, 0, 0);
 
       if (this->send_request (end_rq) == -1)
+      {
         return -1;
+      }
     }
   else
     {
-      ACE_NS_WString *one_entry = 0;
+      ACE_NS_WString *one_entry {};
 
       for (ACE_Unbounded_Set_Iterator<ACE_NS_WString> set_iterator (set);
            set_iterator.next (one_entry) !=0;
@@ -509,7 +530,9 @@ ACE_Name_Handler::lists ()
           // Create a request by calling the appropriate method obtained
           // by accessing into the table. Then send the request across.
           if (this->send_request (nrq) == -1)
+          {
             return -1;
+          }
         }
 
       // Send last message indicator.
@@ -567,11 +590,13 @@ ACE_Name_Handler::lists_entries ()
         ACE_Naming_Context::list_type_entries (set, pattern);
     }
   else
+  {
     return -1;
+  }
 
   if (result == 0)
     {
-      ACE_Name_Binding *one_entry = 0;
+      ACE_Name_Binding *one_entry {};
 
       for (ACE_Unbounded_Set_Iterator<ACE_Name_Binding> set_iterator (set);
            set_iterator.next (one_entry) !=0;
@@ -588,14 +613,18 @@ ACE_Name_Handler::lists_entries ()
                                   ACE_OS::strlen (one_entry->type_));
 
           if (this->send_request (mynrq) == -1)
+          {
             return -1;
+          }
         }
 
       // send last message indicator
       ACE_Name_Request nrq (ACE_Name_Request::MAX_ENUM, 0, 0, 0, 0, 0, 0);
 
       if (this->send_request (nrq) == -1)
+      {
         return -1;
+      }
     }
   else
     {
@@ -603,7 +632,9 @@ ACE_Name_Handler::lists_entries ()
       ACE_Name_Request end_rq (ACE_Name_Request::MAX_ENUM, 0, 0, 0, 0, 0, 0);
 
       if (this->send_request (end_rq) == -1)
+      {
         return -1;
+      }
     }
 
   return 0;
@@ -618,14 +649,14 @@ ACE_Name_Handler::naming_context ()
 ACE_Naming_Context *
 ACE_Name_Acceptor::naming_context ()
 {
-  return &naming_context_;
+  return std::addressof (naming_context_);
 }
 
 ACE_Name_Handler::~ACE_Name_Handler ()
 {
   ACE_TRACE ("ACE_Name_Handler::~ACE_Name_Handler");
 #if 0
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("closing down Handle  %d\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("closing down Handle  %H\n"),
               this->get_handle ()));
 #endif /* 0 */
 }

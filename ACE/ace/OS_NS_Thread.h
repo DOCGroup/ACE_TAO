@@ -50,9 +50,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 # if defined (ACE_WIN32)
 typedef DWORD ACE_thread_t;
 typedef HANDLE ACE_hthread_t;
-// Native TSS key type
+/// Native TSS key type.
 typedef DWORD ACE_OS_thread_key_t;
-// Application TSS key type (use this type except in TSS Emulation)
+/// Application TSS key type (use this type except in TSS emulation).
 #   if defined (ACE_HAS_TSS_EMULATION)
       typedef u_int ACE_thread_key_t;
 #   else  /* ! ACE_HAS_TSS_EMULATION */
@@ -143,8 +143,8 @@ extern "C" {
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef SEM_ID ACE_mutex_t;
-// Implement ACE_thread_mutex_t with ACE_mutex_t because there's just
-// one process . . .
+/// Implement ACE_thread_mutex_t with ACE_mutex_t because VxWorks has
+/// just one process.
 typedef ACE_mutex_t ACE_thread_mutex_t;
 #     if !defined (ACE_HAS_POSIX_SEM)
 // Use VxWorks semaphores, wrapped ...
@@ -159,12 +159,11 @@ typedef struct
 #     endif /* !ACE_HAS_POSIX_SEM */
 typedef ACE_VX_TASK_ID ACE_thread_t;
 typedef ACE_VX_TASK_ID ACE_hthread_t;
-// Key type: the ACE TSS emulation requires the key type be unsigned,
-// for efficiency.  (Current POSIX implementation use u_int, so the
-// ACE TSS emulation is compatible with them.)
-// Native TSS key type
+/// The ACE TSS emulation requires an unsigned key type for efficiency.
+/// The POSIX implementation uses @c u_int, so the types are compatible.
+/// Native TSS key type.
 typedef u_int ACE_OS_thread_key_t;
-// Application TSS key type (use this type except in TSS Emulation)
+/// Application TSS key type (use this type except in TSS emulation).
 #   if defined (ACE_HAS_TSS_EMULATION)
       typedef u_int ACE_thread_key_t;
 #   else  /* ! ACE_HAS_TSS_EMULATION */
@@ -346,8 +345,8 @@ public:
     return my_ti.tss_base;
   }
 
-  // Mark the entry for a thread invalid (e.g. the thread has finished or exited).
-  // Return true if success, false if there is no entry for the thread.
+  /// Mark the entry for a thread invalid (e.g. the thread has finished or exited).
+  /// Return true if success, false if there is no entry for the thread.
   bool erase (ACE_hthread_t id)
   {
     LockGuard guard (lock_);
@@ -699,9 +698,9 @@ typedef int ACE_sema_t;
 typedef int ACE_rwlock_t;
 typedef int ACE_thread_t;
 typedef int ACE_hthread_t;
-// Native TSS key type
+/// Native TSS key type.
 typedef unsigned int ACE_OS_thread_key_t;
-// Application TSS key type (use this type except in TSS Emulation)
+/// Application TSS key type (use this type except in TSS emulation).
 #   if defined (ACE_HAS_TSS_EMULATION)
       typedef u_int ACE_thread_key_t;
 #   else  /* ! ACE_HAS_TSS_EMULATION */
@@ -745,10 +744,8 @@ public:
   /// Initialize the object using calls to ACE_OS::thr_self().
   ACE_Thread_ID ();
 
-  /// Copy constructor.
   ACE_Thread_ID (const ACE_Thread_ID &id);
 
-  /// Assignment operator
   ACE_Thread_ID& operator= (const ACE_Thread_ID &id);
 
   /// Get the thread id.
@@ -763,10 +760,10 @@ public:
   /// Set the thread handle.
   void handle (ACE_hthread_t);
 
-  // Create a string representation of the thread id.
+  /// Create a string representation of the thread id.
   void to_string (char *thr_string, size_t thr_string_len) const;
 
-  // Create a string representation of the thread id.
+  /// Create a string representation of the thread id.
   template <size_t N>
   void to_string (char (&thr_string)[N]) const
   {
@@ -787,9 +784,8 @@ private:
   ACE_hthread_t thread_handle_;
 };
 
-// = The ACE_Sched_Priority type should be used for platform-
-//   independent thread and process priorities, by convention.
-//   int should be used for OS-specific priorities.
+/// Use ACE_Sched_Priority for platform-independent thread and process
+/// priorities; use int for OS-specific priorities.
 using ACE_Sched_Priority = int;
 
 # if !defined (ACE_DEFAULT_SYNCH_TYPE)
@@ -841,7 +837,7 @@ class ACE_TSS_Keys;
 class ACE_Export ACE_TSS_Emulation
 {
 public:
-  typedef void (*ACE_TSS_DESTRUCTOR)(void *value);
+  using ACE_TSS_DESTRUCTOR = void (*)(void *value);
 
   /// Maximum number of TSS keys allowed over the life of the program.
   static constexpr int ACE_TSS_THREAD_KEYS_MAX = ACE_DEFAULT_THREAD_KEYS;
@@ -858,7 +854,7 @@ public:
   static int release_key (ACE_thread_key_t key);
 
   /// Check a key for validity.
-  static int is_key (ACE_thread_key_t key);
+  static bool is_key (ACE_thread_key_t key);
 
   /// Returns the exit hook associated with the key.  Does _not_ check
   /// for a valid key.
@@ -901,15 +897,15 @@ private:
   /// TSS_Keys instance to administrate whether a specific key is in used
   /// or not.
   /// or not.
-  // Static construction in VxWorks 5.4 and later is slightly broken.
-  // If the static object is more complex than an integral type, static
-  // construction will occur twice.  The tss_keys_used_ object is
-  // statically constructed and then modified by ACE_Log_Msg::instance()
-  // when two keys are created and TSS data is stored.  However, at
-  // the end of static construction the tss_keys_used_ object is again
-  // initialized and therefore it will appear to next_key() that no
-  // TSS keys have been handed out.  That is all true unless the
-  // tss_keys_used object is a static pointer instead of a static object.
+  /// Static construction in VxWorks 5.4 and later is slightly broken.
+  /// If the static object is more complex than an integral type, static
+  /// construction will occur twice. The tss_keys_used_ object is
+  /// statically constructed and then modified by ACE_Log_Msg::instance()
+  /// when two keys are created and TSS data is stored. However, at
+  /// the end of static construction the tss_keys_used_ object is again
+  /// initialized and therefore it will appear to next_key() that no
+  /// TSS keys have been handed out. That is all true unless the
+  /// tss_keys_used object is a static pointer instead of a static object.
   static ACE_TSS_Keys* tss_keys_used_;
 
 #   if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
@@ -930,11 +926,11 @@ private:
 #   endif /* ! ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
 #   if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-  // Rely on native thread specific storage for the implementation,
-  // but just use one key.
+  /// Rely on native thread specific storage for the implementation,
+  /// but just use one key.
   static ACE_OS_thread_key_t native_tss_key_;
 
-  // Used to indicate if native tss key has been allocated
+  /// Used to indicate if native tss key has been allocated.
   static bool key_created_;
 #   endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 };
@@ -955,10 +951,8 @@ private:
 class ACE_TSS_Ref
 {
 public:
-  /// Constructor
-  ACE_TSS_Ref (ACE_thread_t id);
+  explicit ACE_TSS_Ref (ACE_thread_t id);
 
-  /// Default constructor
   ACE_TSS_Ref ();
 
   /// Check for equality.
@@ -983,13 +977,11 @@ class ACE_TSS_Info
 {
 public:
   /// Declare pointer to function to destroy tss object.
-  typedef void (*Destructor)(void *);
+  using Destructor = void (*)(void *);
 
-  /// Constructor
   ACE_TSS_Info (ACE_thread_key_t key,
-                Destructor dest = 0);
+                Destructor dest = nullptr);
 
-  /// Default constructor
   ACE_TSS_Info ();
 
   /// Returns 1 if the key is in use, 0 if not.
@@ -1050,8 +1042,7 @@ public:
   int test_and_clear (const ACE_thread_key_t key);
 
   /// Return whether the specific key is marked as in use.
-  /// Returns 1 if the key is been marked, 0 if not.
-  int is_set (const ACE_thread_key_t key) const;
+  bool is_set (const ACE_thread_key_t key) const;
 
 private:
   /// For a given key, find the word and bit number that represent it.
@@ -1103,7 +1094,8 @@ class ACE_event_t;
 class ACE_Base_Thread_Adapter;
 
 namespace ACE_OS {
-  //@{ @name A set of wrappers for threads
+  /// @name A set of wrappers for threads
+  /// @{
 
   /// This is necessary to deal with POSIX pthreads and their use of
   /// structures for thread ids.
@@ -1116,7 +1108,7 @@ namespace ACE_OS {
   /// This is necessary to deal with POSIX pthreads and their use of
   /// structures for TSS keys.
   extern ACE_Export ACE_thread_key_t NULL_key;
-  //@}
+  /// @}
 
   /**
    * Call TSS destructors for the current thread.  If the current
@@ -1126,7 +1118,8 @@ namespace ACE_OS {
   extern ACE_Export
   void cleanup_tss (const u_int main_thread);
 
-  //@{ @name A set of wrappers for condition variables.
+  /// @name A set of wrappers for condition variables.
+  /// @{
   ACE_NAMESPACE_INLINE_FUNCTION
   int condattr_init (ACE_condattr_t &attributes,
                      int type = ACE_DEFAULT_SYNCH_TYPE);
@@ -1228,7 +1221,8 @@ namespace ACE_OS {
                  ACE_thread_mutex_t *m);
 # endif /* ACE_WIN32 && ACE_HAS_WTHREADS */
 
-  //@{ @name A set of wrappers for auto-reset and manual events.
+  /// @name A set of wrappers for auto-reset and manual events.
+  /// @{
 
   extern ACE_Export
   int event_destroy (ACE_event_t *event);
@@ -1290,7 +1284,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int event_wait (ACE_event_t *event);
 
-  //@}
+  /// @}
 
   extern ACE_Export
   int lwp_getparams (ACE_Sched_Params &);
@@ -1298,8 +1292,8 @@ namespace ACE_OS {
   extern ACE_Export
   int lwp_setparams (const ACE_Sched_Params &);
 
-
-  //@{ @name A set of wrappers for mutex locks.
+  /// @name A set of wrappers for mutex locks.
+  /// @{
 
   extern ACE_Export
   int mutex_destroy (ACE_mutex_t *m);
@@ -1382,17 +1376,18 @@ namespace ACE_OS {
   extern ACE_Export
   int mutex_unlock (ACE_mutex_t *m);
 
-  //@}
+  /// @}
 
   /// Low-level interface to @c priocntl(2).
   ACE_NAMESPACE_INLINE_FUNCTION
   long priority_control (ACE_idtype_t, ACE_id_t, int, void *);
 
-  //@{ @name A set of wrappers for recursive mutex locks.
+  /// @name A set of wrappers for recursive mutex locks.
+  /// @{
 
-  // These two methods are primarily in support of
-  // ACE_Condition<ACE_Recursive_Thread_Mutex> and should probably not
-  // be called outside that context.
+  /// These two methods are primarily in support of
+  /// ACE_Condition<ACE_Recursive_Thread_Mutex> and should probably not
+  /// be called outside that context.
   ACE_NAMESPACE_INLINE_FUNCTION
   int recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
                                    ACE_recursive_mutex_state &state);
@@ -1427,10 +1422,10 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m);
 
-  //@}
+  /// @}
 
-
-  //@{ @name A set of wrappers for readers/writer locks.
+  /// @name A set of wrappers for readers/writer locks.
+  /// @{
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int rw_rdlock (ACE_rwlock_t *rw);
@@ -1459,20 +1454,22 @@ namespace ACE_OS {
                    const ACE_TCHAR *name = nullptr,
                    void *arg = nullptr);
 
-  //@}
+  /// @}
 
-  //@{ @name Thread scheduler interface.
+  /// @name Thread scheduler interface.
+  /// @{
   /// Set scheduling parameters.  An id of ACE_SELF indicates, e.g.,
   /// set the parameters on the calling thread.
   extern ACE_Export
   int sched_params (const ACE_Sched_Params &, ACE_id_t id = ACE_SELF);
-  //@}
+  /// @}
 
   /// Find the scheduling class ID that corresponds to the class name.
   extern ACE_Export
   int scheduling_class (const char *class_name, ACE_id_t &);
 
-  //@{ @name A set of wrappers for semaphores.
+  /// @name A set of wrappers for semaphores.
+  /// @{
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int sema_destroy (ACE_sema_t *s);
@@ -1543,9 +1540,10 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int sema_wait (ACE_sema_t *s,
                  ACE_Time_Value *tv);
-  //@}
+  /// @}
 
-  //@{ @name A set of wrappers for System V semaphores.
+  /// @name A set of wrappers for System V semaphores.
+  /// @{
   ACE_NAMESPACE_INLINE_FUNCTION
   int semctl (int int_id,
               int semnum,
@@ -1561,7 +1559,7 @@ namespace ACE_OS {
   int semop (int int_id,
              struct sembuf *sops,
              size_t nsops);
-  //@}
+  /// @}
 
   /// Friendly interface to @c priocntl(2).
   extern ACE_Export
@@ -1588,8 +1586,8 @@ namespace ACE_OS {
   int thr_cmp (ACE_hthread_t t1,
                ACE_hthread_t t2);
 
-  // These are non-portable since they use ACE_thread_t and
-  // ACE_hthread_t and will go away in a future release.
+  /// These are non-portable since they use ACE_thread_t and
+  /// ACE_hthread_t and will go away in a future release.
   ACE_NAMESPACE_INLINE_FUNCTION
   int thr_continue (ACE_hthread_t target_thread);
 
@@ -1640,10 +1638,10 @@ namespace ACE_OS {
                   const char **thr_name = nullptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int thr_equal (ACE_thread_t t1, ACE_thread_t t2);
+  bool thr_equal (ACE_thread_t t1, ACE_thread_t t2);
 
   extern ACE_Export
-  void thr_exit (ACE_THR_FUNC_RETURN status = 0);
+  void thr_exit (ACE_THR_FUNC_RETURN status = ACE_THR_FUNC_RETURN_NULL);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int thr_getconcurrency ();
@@ -1697,7 +1695,6 @@ namespace ACE_OS {
   int thr_get_affinity (ACE_hthread_t thr_id,
                         size_t cpu_set_size,
                         cpu_set_t * cpu_mask);
-
 
   /**
    * Set the thread affinity
@@ -1832,7 +1829,8 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   void thr_yield ();
 
-  //@{ @name A set of wrappers for mutex locks that only work within a single process.
+  /// @name A set of wrappers for mutex locks that only work within a single process.
+  /// @{
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int thread_mutex_destroy (ACE_thread_mutex_t *m);
@@ -1868,7 +1866,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int thread_mutex_unlock (ACE_thread_mutex_t *m);
 
-  //@}
+  /// @}
 
   /**
    * This method uses process id and object pointer to come up with a
@@ -2028,8 +2026,13 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_OS_Thread_Mutex_Guard
 {
 public:
+  ACE_OS_Thread_Mutex_Guard (ACE_OS_Thread_Mutex_Guard const &) = delete;
+  ACE_OS_Thread_Mutex_Guard (ACE_OS_Thread_Mutex_Guard &&) = delete;
+  ACE_OS_Thread_Mutex_Guard &operator= (ACE_OS_Thread_Mutex_Guard const &) = delete;
+  ACE_OS_Thread_Mutex_Guard &operator= (ACE_OS_Thread_Mutex_Guard &&) = delete;
+
   /// Implicitly and automatically acquire the lock.
-  ACE_OS_Thread_Mutex_Guard (ACE_thread_mutex_t &m);
+  explicit ACE_OS_Thread_Mutex_Guard (ACE_thread_mutex_t &m);
 
   /// Implicitly release the lock.
   ~ACE_OS_Thread_Mutex_Guard ();
@@ -2046,9 +2049,6 @@ protected:
 
   /// Keeps track of whether we acquired the lock or failed.
   int owner_;
-
-  ACE_OS_Thread_Mutex_Guard &operator= (const ACE_OS_Thread_Mutex_Guard &) = delete;
-  ACE_OS_Thread_Mutex_Guard (const ACE_OS_Thread_Mutex_Guard &) = delete;
 };
 
 /**
@@ -2072,8 +2072,13 @@ protected:
 class ACE_OS_Recursive_Thread_Mutex_Guard
 {
 public:
+  ACE_OS_Recursive_Thread_Mutex_Guard (ACE_OS_Recursive_Thread_Mutex_Guard const &) = delete;
+  ACE_OS_Recursive_Thread_Mutex_Guard (ACE_OS_Recursive_Thread_Mutex_Guard &&) = delete;
+  ACE_OS_Recursive_Thread_Mutex_Guard &operator= (ACE_OS_Recursive_Thread_Mutex_Guard const &) = delete;
+  ACE_OS_Recursive_Thread_Mutex_Guard &operator= (ACE_OS_Recursive_Thread_Mutex_Guard &&) = delete;
+
   /// Implicitly and automatically acquire the lock.
-  ACE_OS_Recursive_Thread_Mutex_Guard (ACE_recursive_thread_mutex_t &m);
+  explicit ACE_OS_Recursive_Thread_Mutex_Guard (ACE_recursive_thread_mutex_t &m);
 
   /// Implicitly release the lock.
   ~ACE_OS_Recursive_Thread_Mutex_Guard ();
@@ -2090,9 +2095,6 @@ protected:
 
   /// Keeps track of whether we acquired the lock or failed.
   int owner_;
-
-  ACE_OS_Recursive_Thread_Mutex_Guard &operator= (const ACE_OS_Recursive_Thread_Mutex_Guard &) = delete;
-  ACE_OS_Recursive_Thread_Mutex_Guard (const ACE_OS_Recursive_Thread_Mutex_Guard &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

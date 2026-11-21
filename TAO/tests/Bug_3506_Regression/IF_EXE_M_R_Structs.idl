@@ -32,7 +32,6 @@ module IF_EXE_M_R {
     CORBA_LatLongFOOB endPosition;
   };
 
-
   struct CORBA_FOOMControl {
     string ecName;
     ENUM_FOOMMode ecMode;
@@ -70,7 +69,6 @@ module IF_EXE_M_R {
     ENUM_FOOKType FOOKTypeEnd;
   };
 
-
   struct CORBA_BaseCircle {
     ENUM_FOOD FOOD;
     string FOOIID;
@@ -95,7 +93,6 @@ module IF_EXE_M_R {
     ENUM_FOOKType FOOKTypeStart;
     ENUM_FOOKType FOOKTypeEnd;
   };
-
 
   struct CORBA_BaseCross {
     string FOOIID;

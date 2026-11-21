@@ -1026,5 +1026,4 @@ static ACE_Scheduler_Factory::POD_Config_Info runtime_configs_3[] = {
 };
 static int runtime_configs_3_size = sizeof(runtime_configs_3)/sizeof(runtime_configs_3[0]);
 
-
 // EOF

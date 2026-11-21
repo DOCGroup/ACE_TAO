@@ -47,21 +47,23 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
     {
-    case 'd':
-      release_mutex = 0;
-      break;
-    case 'c':
-      child_process = 1;
-      break;
-    case 'n':
-      mutex_name = get_opt.opt_arg ();
-      break;
-    default:
-      print_usage_and_die ();
-      break;
-  }
+      switch (c)
+        {
+        case 'd':
+          release_mutex = 0;
+          break;
+        case 'c':
+          child_process = 1;
+          break;
+        case 'n':
+          mutex_name = get_opt.opt_arg ();
+          break;
+        default:
+          print_usage_and_die ();
+          break;
+        }
+    }
 }
 
 static void
@@ -95,7 +97,9 @@ acquire_release ()
       ACE_TEST_ASSERT (errno != EEXIST);
     }
   else
+  {
     ACE_OS::close (checker_handle);
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P) Working....\n")));
@@ -164,13 +168,13 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       for (i = 0;
            i < n_processes;
-           i++)
+           ++i)
         {
           // Spawn the child process.
           if (children[i].spawn (options) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("spawn of client %d failed\n"),
+                                 ACE_TEXT ("spawn of client %B failed\n"),
                                  i),
                                  -1);
             }
@@ -189,20 +193,24 @@ run_main (int argc, ACE_TCHAR *argv[])
           ACE_OS::sleep (1);
         }
 
-      for (i = 0; i < n_processes; i++)
+      for (i = 0; i < n_processes; ++i)
         {
           ACE_exitcode child_status;
           // Wait for the child processes we created to exit.
           int wait_result = children[i].wait (&child_status);
           ACE_TEST_ASSERT (wait_result != -1);
           if (child_status == 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("Child %d finished ok\n"),
-                        children[i].getpid ()));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("Child %d finished ok\n"),
+                          children[i].getpid ()));
+            }
           else
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("Child %d finished with status %d\n"),
-                        children[i].getpid (), child_status));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("Child %d finished with status %d\n"),
+                          children[i].getpid (), child_status));
+            }
         }
 
 #endif // ACE_HAS_PROCESS_SPAWN

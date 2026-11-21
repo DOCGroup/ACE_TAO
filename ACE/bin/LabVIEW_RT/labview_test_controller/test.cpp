@@ -11,6 +11,9 @@ int main (int, char *[])
   char line[80];
   test_entry();
   puts ("Ok, go... hit return to stop.");
-  gets (line);
+  if (fgets (line, sizeof line, stdin) == nullptr)
+    {
+      return 1;
+    }
   return 0;
 }

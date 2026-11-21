@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    TAO_TIO.h
  *
@@ -8,8 +7,6 @@
  *
  *  @author Vishal Kachroo  <vishal@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_TIO_H
 #define TAO_TIO_H
@@ -34,12 +31,15 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Time_Serv_Export TAO_TIO : public POA_CosTime::TIO
 {
 public:
-  /// Constructor.
   TAO_TIO (TimeBase::TimeT lower,
            TimeBase::TimeT upper);
 
-  /// Destructor.
-  ~TAO_TIO () override;
+  ~TAO_TIO () override = default;
+
+  TAO_TIO (TAO_TIO const &) = delete;
+  TAO_TIO (TAO_TIO &&) = delete;
+  TAO_TIO &operator= (TAO_TIO const &) = delete;
+  TAO_TIO &operator= (TAO_TIO &&) = delete;
 
   /// This is the get method for the attribute time interval.
   TimeBase::IntervalT time_interval () override;
@@ -73,11 +73,6 @@ public:
   CosTime::UTO_ptr time () override;
 
 private:
-  TAO_TIO (TAO_TIO const &) = delete;
-  TAO_TIO (TAO_TIO &&) = delete;
-  TAO_TIO &operator= (TAO_TIO const &) = delete;
-  TAO_TIO &operator= (TAO_TIO &&) = delete;
-
   /// This attribute returns an IntervalT structure with the values of
   /// its fields filled in with the corresponding values from the TIO.
   TimeBase::IntervalT attr_time_interval;

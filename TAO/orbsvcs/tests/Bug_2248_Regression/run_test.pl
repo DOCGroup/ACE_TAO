@@ -96,7 +96,7 @@ if ($server2->WaitForFileTimed ($file2_ior,
     exit 1;
 }
 
-if ($server1->GetFile ($file2_ior) == -1) {
+if ($server2->GetFile ($file2_ior) == -1) {
     print STDERR "ERROR: cannot retrieve file <$server2_file2_ior>\n";
     $SV2->Kill (); $SV2->TimedWait (1);
     $SV1->Kill (); $SV1->TimedWait (1);

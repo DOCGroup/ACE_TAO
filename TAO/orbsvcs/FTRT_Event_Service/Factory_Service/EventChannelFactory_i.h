@@ -15,6 +15,8 @@
 #include "ace/Synch.h"
 #include "ace/Hash_Map_Manager_T.h"
 
+#include <string>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -22,17 +24,15 @@
 class EventChannelFactory_i : public POA_PortableGroup::GenericFactory
 {
 public:
-  EventChannelFactory_i (char const *conf_filename, CORBA::ORB_ptr);
+  EventChannelFactory_i (std::string const &conf_filename, CORBA::ORB_ptr);
 
   CORBA::Object_ptr create_object (
-    const char * type_id,
-    const PortableGroup::Criteria & the_criteria,
-    PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
-    ) override;
+    char const *type_id,
+    PortableGroup::Criteria const &the_criteria,
+    PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id) override;
 
   void delete_object (
-    const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id
-    ) override;
+    PortableGroup::GenericFactory::FactoryCreationId const &factory_creation_id) override;
 
 private:
   EventChannelFactory_i (EventChannelFactory_i const &) = delete;
@@ -41,12 +41,12 @@ private:
   EventChannelFactory_i &operator= (EventChannelFactory_i &&) = delete;
 
   CORBA::Object_ptr create_process (
-    char * process,
-    const PortableGroup::Criteria & the_criteria,
+    std::string const &process,
+    PortableGroup::Criteria const &the_criteria,
     PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id);
 
-  char const *conf_file;
-  int id;
+  std::string conf_file;
+  int id {};
   CORBA::ORB_ptr orb;
   using Objects = ACE_Hash_Map_Manager<int, CORBA::Object_var, ACE_Null_Mutex>;
   Objects objects;

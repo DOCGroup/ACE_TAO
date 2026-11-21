@@ -9,7 +9,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Service_Config::open (argc,
                             argv,
                             ACE_DEFAULT_LOGGER_KEY,
-                            0);
+                            false);
   ACE_Reactor::instance ()->run_reactor_event_loop ();
   return 0;
 }

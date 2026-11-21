@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file   except.h
  *
@@ -7,8 +5,6 @@
  *
  *  @author Carlos O'Ryan
  */
-//=============================================================================
-
 
 #ifndef PARAM_TEST_EXCEPTION_H
 #define PARAM_TEST_EXCEPTION_H
@@ -18,11 +14,9 @@
 class Test_Exception
 {
 public:
-  /// ctor
   Test_Exception ();
 
-  /// dtor
-  ~Test_Exception ();
+  ~Test_Exception () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -50,7 +44,7 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   CORBA::ULong in_;

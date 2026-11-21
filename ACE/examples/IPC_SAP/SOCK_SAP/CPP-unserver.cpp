@@ -7,11 +7,10 @@
 #include "ace/OS_main.h"
 #include "ace/OS_NS_unistd.h"
 
-
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 // Are we running verbosely?
-static int verbose = 1;
+static bool verbose = true;
 
 // Entry point into the server task.
 
@@ -26,15 +25,19 @@ server (void *arg)
 
   // Make sure we're not in non-blocking mode.
   if (new_stream.disable (ACE_NONBLOCK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("disable")),
-                       0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("disable")),
+                        0);
+    }
 
   if (new_stream.get_remote_addr (cli_addr) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("get_remote_addr")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("get_remote_addr")));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) client connected from %C\n"),
@@ -62,20 +65,26 @@ server (void *arg)
           break;
         }
       else if (verbose && ACE::write_n (ACE_STDOUT, buf, r_bytes) != r_bytes)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%p\n"),
-                    ACE_TEXT ("ACE::write_n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("ACE::write_n")));
+        }
       else if (new_stream.send_n (buf, r_bytes) != r_bytes)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%p\n"),
-                    ACE_TEXT ("send_n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("send_n")));
+        }
     }
 
   // Close new endpoint (listening endpoint stays open).
   if (new_stream.close () == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("close")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("close")));
+    }
 
   return nullptr;
 }
@@ -93,15 +102,19 @@ run_event_loop (const ACE_TCHAR rendezvous[])
   // Create a server.
 
   if (peer_acceptor.open (server_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("open")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("open")),
+                        1);
+    }
   else if (peer_acceptor.get_local_addr (server_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("get_local_addr")),
-                       -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("get_local_addr")),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("starting server %C\n"),
@@ -126,13 +139,15 @@ run_event_loop (const ACE_TCHAR rendezvous[])
         }
 
 #if defined (ACE_HAS_THREADS)
-      if (ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) server,
+      if (ACE_Thread_Manager::instance ()->spawn (server,
                                                   reinterpret_cast<void *> (new_stream.get_handle ()),
                                                   THR_DETACHED) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) %p\n"),
-                           ACE_TEXT ("spawn")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) %p\n"),
+                             ACE_TEXT ("spawn")),
+                            1);
+        }
 #else
       server (reinterpret_cast<void *> (new_stream.get_handle ()));
 #endif /* ACE_HAS_THREADS */

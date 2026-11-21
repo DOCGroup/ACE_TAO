@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    Object_B_i.cpp
@@ -9,22 +8,9 @@
  *  @author Michael Kircher
  */
 //=============================================================================
-
-
 #include "tao/Exception.h"
 #include "Object_B_i.h"
 #include "ace/OS_NS_unistd.h"
-
-// CTOR
-Object_B_i::Object_B_i ()
-{
-}
-
-// DTOR
-Object_B_i::~Object_B_i ()
-{
-}
-
 
 void
 Object_B_i::foo (Object_A_ptr theObject_A_ptr)
@@ -38,12 +24,12 @@ Object_B_i::foo (Object_A_ptr theObject_A_ptr)
 
       // Start to wait on this variable, it is set to true
       // by the method finish ()
-      long int usecs = 500000;
-      ACE_Time_Value pause(0, usecs);
+      long int const usecs = 500000;
+      ACE_Time_Value const pause (0, usecs);
 
-      ACE_OS::sleep(pause);
+      ACE_OS::sleep (pause);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("calling the initiator");
     }
@@ -53,8 +39,8 @@ Object_B_i::foo (Object_A_ptr theObject_A_ptr)
 void
 Object_B_i::shutdown ()
 {
-  int argc = 0;
-  ACE_TCHAR **argv = 0;
+  int argc {};
+  ACE_TCHAR **argv {};
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
   orb->shutdown ();

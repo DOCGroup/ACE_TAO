@@ -4,13 +4,11 @@
 #include "orbsvcs/Notify/Sequence/SequencePushConsumer.h"
 #include "orbsvcs/Notify/Properties.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_SequenceProxyPushSupplier::TAO_Notify_SequenceProxyPushSupplier ()
-{
-}
-
-TAO_Notify_SequenceProxyPushSupplier::~TAO_Notify_SequenceProxyPushSupplier ()
 {
 }
 
@@ -25,22 +23,22 @@ void
 TAO_Notify_SequenceProxyPushSupplier::connect_sequence_push_consumer (CosNotifyComm::SequencePushConsumer_ptr push_consumer)
 {
   // Convert Consumer to Base Type
-  TAO_Notify_SequencePushConsumer* consumer;
+  TAO_Notify_SequencePushConsumer *consumer {};
   ACE_NEW_THROW_EX (consumer,
                     TAO_Notify_SequencePushConsumer (this),
                     CORBA::NO_MEMORY ());
 
-  consumer->init (push_consumer);
+  std::unique_ptr<TAO_Notify_SequencePushConsumer> consumer_guard (consumer);
+  consumer_guard->init (push_consumer);
 
-  this->connect (consumer);
+  this->connect (consumer_guard.release ());
   this->self_change ();
 }
 
 void
 TAO_Notify_SequenceProxyPushSupplier::disconnect_sequence_push_supplier ()
-
 {
-  TAO_Notify_SequenceProxyPushSupplier::Ptr guard( this );
+  TAO_Notify_SequenceProxyPushSupplier::Ptr guard (this);
   this->destroy ();
   this->self_change ();
 }
@@ -51,7 +49,7 @@ TAO_Notify_SequenceProxyPushSupplier::MyType ()
   return CosNotifyChannelAdmin::PUSH_SEQUENCE;
 }
 
-const char *
+char const *
 TAO_Notify_SequenceProxyPushSupplier::get_proxy_type_name () const
 {
   return "sequence_proxy_push_supplier";
@@ -60,7 +58,7 @@ TAO_Notify_SequenceProxyPushSupplier::get_proxy_type_name () const
 void
 TAO_Notify_SequenceProxyPushSupplier::validate ()
 {
-  TAO_Notify_Consumer* con = this->consumer ();
+  TAO_Notify_Consumer * const con = this->consumer ();
   if (con != nullptr && ! con->is_alive (true))
   {
     if (TAO_debug_level > 0)
@@ -74,26 +72,27 @@ TAO_Notify_SequenceProxyPushSupplier::validate ()
   }
 }
 
-
 void
-TAO_Notify_SequenceProxyPushSupplier::load_attrs (const TAO_Notify::NVPList& attrs)
+TAO_Notify_SequenceProxyPushSupplier::load_attrs (
+  TAO_Notify::NVPList const &attrs)
 {
   SuperClass::load_attrs(attrs);
   ACE_CString ior;
   if (attrs.load("PeerIOR", ior))
   {
-    CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
+    CORBA::ORB_var const orb = TAO_Notify_PROPERTIES::instance ()->orb ();
     try
     {
-      CosNotifyComm::SequencePushConsumer_var pc = CosNotifyComm::SequencePushConsumer::_nil();
+      CosNotifyComm::SequencePushConsumer_var pc =
+        CosNotifyComm::SequencePushConsumer::_nil ();
       if (ior.length() > 0)
       {
-        CORBA::Object_var obj = orb->string_to_object(ior.c_str());
-        pc = CosNotifyComm::SequencePushConsumer::_unchecked_narrow(obj.in());
+        CORBA::Object_var const obj = orb->string_to_object (ior.c_str ());
+        pc = CosNotifyComm::SequencePushConsumer::_unchecked_narrow (obj.in ());
       }
       this->connect_sequence_push_consumer(pc.in());
     }
-    catch (const CORBA::Exception&)
+    catch (CORBA::Exception const &)
     {
       // if we can't reconnect, tough
     }

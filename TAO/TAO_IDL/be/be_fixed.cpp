@@ -1,7 +1,6 @@
 #include "be_fixed.h"
 #include "be_visitor.h"
 
-
 be_fixed::be_fixed (UTL_ScopedName *name,
                     AST_Expression *digits,
                     AST_Expression *scale)

@@ -10,6 +10,8 @@
 #include "ace/os_include/os_errno.h"
 #include "ace/Truncate.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 size_t
@@ -24,7 +26,7 @@ ACE_Asynch_Result::act () const
   return this->implementation ()->act ();
 }
 
-int
+bool
 ACE_Asynch_Result::success () const
 {
   return this->implementation ()->success ();
@@ -133,7 +135,9 @@ ACE_Asynch_Operation::get_proactor (ACE_Proactor *user_proactor,
       // Grab the singleton proactor if <handler->proactor> is zero
       user_proactor = handler.proactor ();
       if (user_proactor == nullptr)
+      {
         user_proactor = ACE_Proactor::instance ();
+      }
     }
 
   return user_proactor;
@@ -142,7 +146,6 @@ ACE_Asynch_Operation::get_proactor (ACE_Proactor *user_proactor,
 // ************************************************************
 
 ACE_Asynch_Read_Stream::ACE_Asynch_Read_Stream ()
-  : implementation_ (nullptr)
 {
 }
 
@@ -164,7 +167,9 @@ ACE_Asynch_Read_Stream::open (ACE_Handler &handler,
 
   // Now let us get the implementation initialized.
   if ((this->implementation_ = proactor->create_asynch_read_stream ()) == nullptr)
+  {
     return -1;
+  }
 
   // Call the <open> method of the base class.
   return ACE_Asynch_Operation::open (handler,
@@ -260,7 +265,6 @@ ACE_Asynch_Read_Stream::Result::implementation () const
 // ***************************************************
 
 ACE_Asynch_Write_Stream::ACE_Asynch_Write_Stream ()
-  : implementation_ (nullptr)
 {
 }
 
@@ -282,7 +286,9 @@ ACE_Asynch_Write_Stream::open (ACE_Handler &handler,
 
   // Now let us get the implementation initialized.
   if ((this->implementation_ = proactor->create_asynch_write_stream ()) == nullptr)
+  {
     return -1;
+  }
 
   // Call the <open> method of the base class.
   return ACE_Asynch_Operation::open (handler,
@@ -378,7 +384,6 @@ ACE_Asynch_Write_Stream::Result::implementation () const
 // ************************************************************
 
 ACE_Asynch_Read_File::ACE_Asynch_Read_File ()
-  : implementation_ (nullptr)
 {
 }
 
@@ -400,7 +405,9 @@ ACE_Asynch_Read_File::open (ACE_Handler &handler,
 
   // Now let us get the implementation initialized.
   if ((this->implementation_ = proactor->create_asynch_read_file ()) == nullptr)
+  {
     return -1;
+  }
 
   // Call the <open> method of the base class.
   return ACE_Asynch_Operation::open (handler,
@@ -486,7 +493,6 @@ ACE_Asynch_Read_File::Result::implementation () const
 // ************************************************************
 
 ACE_Asynch_Write_File::ACE_Asynch_Write_File ()
-  : implementation_ (nullptr)
 {
 }
 
@@ -508,7 +514,9 @@ ACE_Asynch_Write_File::open (ACE_Handler &handler,
 
   // Now let us get the implementation initialized.
   if ((this->implementation_ = proactor->create_asynch_write_file ()) == nullptr)
+  {
     return -1;
+  }
 
   // Call the <open> method of the base class.
   return ACE_Asynch_Operation::open (handler,
@@ -594,7 +602,6 @@ ACE_Asynch_Write_File::Result::implementation () const
 // *********************************************************************
 
 ACE_Asynch_Accept::ACE_Asynch_Accept ()
-  : implementation_ (nullptr)
 {
 }
 
@@ -616,7 +623,9 @@ ACE_Asynch_Accept::open (ACE_Handler &handler,
 
   // Now let us get the implementation initialized.
   if ((this->implementation_ = proactor->create_asynch_accept ()) == nullptr)
+  {
     return -1;
+  }
 
   // Call the <open> method of the base class.
   return ACE_Asynch_Operation::open (handler,
@@ -698,11 +707,9 @@ ACE_Asynch_Accept::Result::implementation () const
   return this->implementation_;
 }
 
-
 // *********************************************************************
 
 ACE_Asynch_Connect::ACE_Asynch_Connect ()
-  : implementation_ (nullptr)
 {
 }
 
@@ -724,7 +731,9 @@ ACE_Asynch_Connect::open (ACE_Handler &handler,
 
   // Now let us get the implementation initialized.
   if ((this->implementation_ = proactor->create_asynch_connect ()) == nullptr)
+  {
     return -1;
+  }
 
   // Call the <open> method of the base class.
   return ACE_Asynch_Operation::open (handler,
@@ -782,7 +791,6 @@ ACE_Asynch_Connect::Result::connect_handle () const
   return this->implementation ()->connect_handle ();
 }
 
-
 ACE_Asynch_Connect_Result_Impl *
 ACE_Asynch_Connect::Result::implementation () const
 {
@@ -792,7 +800,6 @@ ACE_Asynch_Connect::Result::implementation () const
 // ************************************************************
 
 ACE_Asynch_Transmit_File::ACE_Asynch_Transmit_File ()
-  : implementation_ (nullptr)
 {
 }
 
@@ -814,7 +821,9 @@ ACE_Asynch_Transmit_File::open (ACE_Handler &handler,
 
   // Now let us get the implementation initialized.
   if ((this->implementation_ = proactor->create_asynch_transmit_file ()) == nullptr)
+  {
     return -1;
+  }
 
   // Call the <open> method of the base class.
   return ACE_Asynch_Operation::open (handler,
@@ -1032,14 +1041,14 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::transmit_buffers ()
         }
 
       // Return the transmit buffers
-      return &this->transmit_buffers_;
+      return std::addressof (this->transmit_buffers_);
     }
 }
 
 // *********************************************************************
 
 ACE_Handler::ACE_Handler ()
-  : proactor_ (nullptr), handle_ (ACE_INVALID_HANDLE)
+  : handle_ (ACE_INVALID_HANDLE)
 {
   ACE_Handler::Proxy *p;
   ACE_NEW (p, ACE_Handler::Proxy (this));
@@ -1058,7 +1067,9 @@ ACE_Handler::~ACE_Handler ()
 {
   ACE_Handler::Proxy *p = this->proxy_.get ();
   if (p)
+  {
     p->reset ();
+  }
 }
 
 void
@@ -1170,11 +1181,9 @@ ACE_Service_Handler::open (ACE_HANDLE,
 {
 }
 
-
 // ************************************************************
 
 ACE_Asynch_Read_Dgram::ACE_Asynch_Read_Dgram ()
-  : implementation_ (nullptr)
 {
 }
 
@@ -1196,7 +1205,9 @@ ACE_Asynch_Read_Dgram::open (ACE_Handler &handler,
 
   // Now let us get the implementation initialized.
   if ((this->implementation_ = proactor->create_asynch_read_dgram ()) == nullptr)
+  {
     return -1;
+  }
 
   // Call the <open> method of the base class.
   return ACE_Asynch_Operation::open (handler,
@@ -1282,9 +1293,7 @@ ACE_Asynch_Read_Dgram::Result::implementation () const
 
 // ************************************************************
 
-
 ACE_Asynch_Write_Dgram::ACE_Asynch_Write_Dgram ()
-  : implementation_ (nullptr)
 {
 }
 
@@ -1306,7 +1315,9 @@ ACE_Asynch_Write_Dgram::open (ACE_Handler &handler,
 
   // Now let us get the implementation initialized.
   if ((this->implementation_ = proactor->create_asynch_write_dgram ()) == nullptr)
+  {
     return -1;
+  }
 
   // Call the <open> method of the base class.
   return ACE_Asynch_Operation::open (handler,

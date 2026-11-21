@@ -32,15 +32,14 @@ class TAO_LF_Follower;
 class TAO_Export TAO_LF_Event_Binder
 {
 public:
-  /// Constructor
   TAO_LF_Event_Binder (TAO_LF_Event *event, TAO_LF_Follower *folloer);
 
-  /// Destructor
   ~TAO_LF_Event_Binder ();
 
-private:
-  void operator= (const TAO_LF_Event_Binder &);
-  TAO_LF_Event_Binder (const TAO_LF_Event_Binder &);
+  TAO_LF_Event_Binder (TAO_LF_Event_Binder const &) = delete;
+  TAO_LF_Event_Binder (TAO_LF_Event_Binder &&) = delete;
+  TAO_LF_Event_Binder &operator= (TAO_LF_Event_Binder const &) = delete;
+  TAO_LF_Event_Binder &operator= (TAO_LF_Event_Binder &&) = delete;
 
 private:
   /// Keep a reference to the leader follower

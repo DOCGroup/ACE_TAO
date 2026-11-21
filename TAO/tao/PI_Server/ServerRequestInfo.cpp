@@ -18,6 +18,7 @@
 #include "tao/AnyTypeCode/ExceptionA.h"
 
 #include <cstring>
+#include <memory>
 
 # if !defined (__ACE_INLINE__)
 #   include "tao/PI_Server/ServerRequestInfo.inl"
@@ -45,20 +46,24 @@ TAO::ServerRequestInfo::request_id ()
   // 64-bit platforms.
 
   if (sizeof (this) == 4)       // 32 bit address
-    id = static_cast <CORBA::ULong> (
-                     reinterpret_cast <ptrdiff_t>
-                                      (&(this->server_request_)));
-
+    {
+      id = static_cast <CORBA::ULong> (
+        reinterpret_cast <ptrdiff_t> (
+          std::addressof (this->server_request_)));
+    }
   else if (sizeof (this) == 8)  // 64 bit address -- use lower 32 bits
-    id = static_cast <CORBA::ULong> (
-                     reinterpret_cast <ptrdiff_t>
-                               (&(this->server_request_)) & 0xFFFFFFFFu);
-
+    {
+      id = static_cast <CORBA::ULong> (
+        reinterpret_cast <ptrdiff_t> (
+          std::addressof (this->server_request_)) & 0xFFFFFFFFu);
+    }
   else
-    // @@ Rather than fallback on the GIOP request ID, we should use
-    //    an atomically incremented variable specific to the ORB, or
-    //    perhaps specific to the process.
-    id = this->server_request_.request_id ();  // Fallback
+    {
+      // @@ Rather than fallback on the GIOP request ID, we should use
+      //    an atomically incremented variable specific to the ORB, or
+      //    perhaps specific to the process.
+      id = this->server_request_.request_id ();  // Fallback
+    }
 
   return id;
 }
@@ -86,27 +91,28 @@ TAO::ServerRequestInfo::arguments ()
   // Return value is always generated as first TAO::Argument in
   // skeleton.  It shouldn't be included in the parameter list.
   // Skip it.
-  TAO::Argument * const * const begin = this->args_ + 1;
-  TAO::Argument * const * const end   = this->args_ + this->nargs_;
+  if (this->nargs_ == 0)
+    {
+      throw ::CORBA::INTERNAL ();
+    }
 
-  ACE_ASSERT (end - begin >= 0);
+  size_t const parameter_count = this->nargs_ - 1u;
+  parameter_list->length (static_cast<CORBA::ULong> (parameter_count));
 
-  parameter_list->length (static_cast<CORBA::ULong> (end - begin));
-
-  CORBA::ULong p {};
-  for (TAO::Argument * const * i = begin; i != end; ++i, ++p)
+  for (size_t i {}; i < parameter_count; ++i)
     {
       // Insert the operation parameters into the
       // Dynamic::ParameterList.
-      Dynamic::Parameter& parameter = (*parameter_list)[p];
-      parameter.mode = (*i)->mode ();
+      TAO::Argument * const argument = this->args_[i + 1u];
+      Dynamic::Parameter& parameter = (*parameter_list)[static_cast<CORBA::ULong> (i)];
+      CORBA::ParameterMode const mode = argument->mode ();
+      parameter.mode = mode;
       // When we are in receive_request and have an out argument, then
       // don't copy it, just let the any be empty with typecode tk_null
-      if ((this->server_request_.pi_reply_status () != -1) ||
-          (this->server_request_.pi_reply_status () == -1 &&
-           (*i)->mode () != CORBA::PARAM_OUT))
+      if (this->server_request_.pi_reply_status () != -1 ||
+          mode != CORBA::PARAM_OUT)
         {
-          (*i)->interceptor_value (&parameter.argument);
+          argument->interceptor_value (std::addressof (parameter.argument));
         }
     }
 
@@ -188,9 +194,9 @@ Messaging::SyncScope
 TAO::ServerRequestInfo::sync_scope ()
 {
   if (this->server_request_.sync_with_server ())
-  {
-    return Messaging::SYNC_WITH_SERVER;
-  }
+    {
+      return Messaging::SYNC_WITH_SERVER;
+    }
 
   throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
@@ -199,10 +205,10 @@ PortableInterceptor::ReplyStatus
 TAO::ServerRequestInfo::reply_status ()
 {
   if (this->server_request_.pi_reply_status () == -1)
-  {
-    // A reply hasn't been received yet.
-    throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
-  }
+    {
+      // A reply hasn't been received yet.
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
+    }
 
   return this->server_request_.pi_reply_status ();
 }
@@ -211,9 +217,9 @@ CORBA::Object_ptr
 TAO::ServerRequestInfo::forward_reference ()
 {
   if (this->server_request_.pi_reply_status () != PortableInterceptor::LOCATION_FORWARD)
-  {
-    throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
-  }
+    {
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
+    }
 
   // TAO_ServerRequest::forward_location() already duplicates the
   // object reference.  There is no need to duplicate it here.
@@ -229,10 +235,12 @@ TAO::ServerRequestInfo::get_slot (PortableInterceptor::SlotId id)
     this->server_request_.orb_core ()->pi_current ();
 
   TAO::PICurrent * const pi_current =
-    dynamic_cast <TAO::PICurrent*> (pi_current_obj);
+    dynamic_cast<TAO::PICurrent *> (pi_current_obj);
 
   if (pi_current == nullptr)
-    throw ::CORBA::INTERNAL ();
+    {
+      throw ::CORBA::INTERNAL ();
+    }
 
   pi_current->check_validity (id);
 
@@ -269,14 +277,10 @@ TAO::ServerRequestInfo::get_service_context_i (
 
   if (service_context_list.get_context (id, service_context.out ()) != 0)
     {
-      // Found.
       return service_context._retn ();
     }
-  else
-    {
-      // Not found.
-      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 26, CORBA::COMPLETED_NO);
-    }
+
+  throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 26, CORBA::COMPLETED_NO);
 }
 
 // Use at own risk. There is no way currently of extracting an
@@ -307,9 +311,9 @@ TAO::ServerRequestInfo::sending_exception ()
   CORBA::Any_var caught_exception_var = temp;
 
   if (this->server_request_.caught_exception ())
-  {
-    (*temp) <<= *(this->server_request_.caught_exception ());
-  }
+    {
+      (*temp) <<= *(this->server_request_.caught_exception ());
+    }
 
   return caught_exception_var._retn ();
 }
@@ -318,9 +322,9 @@ char *
 TAO::ServerRequestInfo::server_id ()
 {
   if (this->servant_upcall_ != nullptr)
-  {
-    return CORBA::string_dup (this->server_request_.orb_core ()->server_id ());
-  }
+    {
+      return CORBA::string_dup (this->server_request_.orb_core ()->server_id ());
+    }
 
   throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
@@ -329,9 +333,9 @@ char *
 TAO::ServerRequestInfo::orb_id ()
 {
   if (this->servant_upcall_ != nullptr)
-  {
-    return CORBA::string_dup (this->server_request_.orb_core ()->orbid ());
-  }
+    {
+      return CORBA::string_dup (this->server_request_.orb_core ()->orbid ());
+    }
 
   throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
@@ -345,9 +349,9 @@ TAO::ServerRequestInfo::adapter_name ()
   // to the POA that services the request. The root POA is not named
   // in this sequence.
   if (this->servant_upcall_ != nullptr)
-  {
-    return this->servant_upcall_->poa ().adapter_name ();
-  }
+    {
+      return this->servant_upcall_->poa ().adapter_name ();
+    }
 
   throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
@@ -395,9 +399,9 @@ CORBA::OctetSeq *
 TAO::ServerRequestInfo::adapter_id ()
 {
   if (this->servant_upcall_ != nullptr)
-  {
-    return this->servant_upcall_->poa ().id ();
-  }
+    {
+      return this->servant_upcall_->poa ().id ();
+    }
 
   throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
@@ -406,9 +410,9 @@ char *
 TAO::ServerRequestInfo::target_most_derived_interface ()
 {
   if (this->servant_upcall_ == nullptr)
-  {
-    throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
-  }
+    {
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
+    }
 
   PortableServer::Servant const servant = this->servant_upcall_->servant ();
 
@@ -455,10 +459,12 @@ TAO::ServerRequestInfo::set_slot (PortableInterceptor::SlotId id,
     this->server_request_.orb_core ()->pi_current ();
 
   TAO::PICurrent * const pi_current =
-    dynamic_cast <TAO::PICurrent*> (pi_current_obj);
+    dynamic_cast<TAO::PICurrent *> (pi_current_obj);
 
   if (pi_current == nullptr)
-    throw ::CORBA::INTERNAL ();
+    {
+      throw ::CORBA::INTERNAL ();
+    }
 
   pi_current->check_validity (id);
 
@@ -472,9 +478,9 @@ CORBA::Boolean
 TAO::ServerRequestInfo::target_is_a (char const *id)
 {
   if (this->servant_upcall_ == nullptr)
-  {
-    throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
-  }
+    {
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
+    }
 
   // Implemented in the generated skeleton.
   PortableServer::Servant const servant = this->servant_upcall_->servant ();

@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef EVENT_SUP_H
 #define EVENT_SUP_H
 
@@ -17,6 +16,9 @@
 //#include <stdio.h>
 #include "NavWeapC.h"
 #include "DOVE_Supplier.h"
+
+#include <cstddef>
+#include <vector>
 
 struct Schedule_Viewer_Data
 {
@@ -46,6 +48,11 @@ public:
 
   ~Event_Supplier ();
 
+  Event_Supplier (Event_Supplier const &) = delete;
+  Event_Supplier (Event_Supplier &&) = delete;
+  Event_Supplier &operator= (Event_Supplier const &) = delete;
+  Event_Supplier &operator= (Event_Supplier &&) = delete;
+
   /// connect the DOVE_Supplier
   int init ();
 
@@ -54,13 +61,13 @@ public:
   void start_generating_events ();
 
   /// Load the scheduling information into memory
-  void load_schedule_data (ACE_Unbounded_Queue<Schedule_Viewer_Data *> &schedule_data);
-
+  void load_schedule_data (std::vector<Schedule_Viewer_Data *> &schedule_data);
 
 private:
   /// just a helper to put all the information into the CORBA::Any
   void insert_event_data (CORBA::Any &data,
-                          ACE_Unbounded_Queue_Iterator<Schedule_Viewer_Data *> &schedule_iter);
+                          std::vector<Schedule_Viewer_Data *> const &schedule_data,
+                          size_t &schedule_index);
 
   unsigned int get_options (int argc, ACE_TCHAR *argv []);
 

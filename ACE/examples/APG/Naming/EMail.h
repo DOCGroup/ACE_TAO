@@ -4,22 +4,22 @@
 #include "ace/Log_Msg.h"
 
 class EMail
+{
+public:
+  EMail () = default;
+
+  int send (char const *to,
+            char const *from,
+            char const *subject,
+            char const *message) const
   {
-  public:
-    EMail() = default;
+    ACE_DEBUG ((LM_ERROR, ACE_TEXT ("To:\t%C\n"), to));
+    ACE_DEBUG ((LM_ERROR, ACE_TEXT ("From:\t%C\n"), from));
+    ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Subject:\t%C\n"), subject));
+    ACE_DEBUG ((LM_ERROR, ACE_TEXT ("\n%C\n"), message));
 
-    int send (const char *to,
-              const char *from,
-              const char *subject,
-              const char *message)
-    {
-      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("To:\t%s\n"), to));
-      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("From:\t%s\n"), from));
-      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Subject:\t%s\n"), subject));
-      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("\n%s\n"), message));
-
-      return 0;
-    }
-  };
+    return 0;
+  }
+};
 
 #endif /* EMAIL_H */

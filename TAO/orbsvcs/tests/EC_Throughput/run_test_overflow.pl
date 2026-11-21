@@ -133,14 +133,13 @@ if ($SUP_status != 0) {
     $status = 1;
 }
 
+# The overflow can drop events, including shutdown events, so the consumer
+# may not exit on its own. A timeout is expected in that case.
 $CON_status = $CON->WaitKill ($con->ProcessStopWaitInterval()+285);
-if ($CON_status != 0) {
+if ($CON_status != 0 && $CON_status != -1) {
     print STDERR "ERROR: Consumer returned $CON_status\n";
     $status = 1;
 }
-
-# The consumer will probably fail to get all the messages due to the
-#  EC dropping them.  We dont care if the Consumer fails.
 
 $SUP2_status = $SUP2->SpawnWaitKill ($sup2->ProcessStartWaitInterval()+45);
 if ($SUP2_status != 0) {

@@ -8,10 +8,6 @@ TAO_Notify_StructuredPushSupplier::TAO_Notify_StructuredPushSupplier (TAO_Notify
 {
 }
 
-TAO_Notify_StructuredPushSupplier::~TAO_Notify_StructuredPushSupplier ()
-{
-}
-
 void
 TAO_Notify_StructuredPushSupplier::init (CosNotifyComm::StructuredPushSupplier_ptr push_supplier)
 {
@@ -32,13 +28,13 @@ ACE_CString
 TAO_Notify_StructuredPushSupplier::get_ior () const
 {
   ACE_CString result;
-  CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
+  CORBA::ORB_var const orb = TAO_Notify_PROPERTIES::instance ()->orb ();
   try
   {
-    CORBA::String_var ior = orb->object_to_string(this->push_supplier_.in());
-    result = static_cast<const char*> (ior.in ());
+    CORBA::String_var const ior = orb->object_to_string (this->push_supplier_.in ());
+    result = static_cast<char const *> (ior.in ());
   }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
   {
     result.fast_clear();
   }

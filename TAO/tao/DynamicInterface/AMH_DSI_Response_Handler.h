@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=====================================================================
 /**
  *  @file AMH_DSI_Response_Handler.h
  *
  *  @brief Handle the Response appropriately.
  */
-//=====================================================================
 
 #ifndef TAO_AMH_DSI_RESPONSE_HANDLER_H
 #define TAO_AMH_DSI_RESPONSE_HANDLER_H
@@ -23,6 +21,8 @@
 #include "tao/Messaging/AMH_Response_Handler.h"
 #include "tao/Valuetype/ValueBase.h"
 #include "dynamicinterface_export.h"
+
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -142,9 +142,10 @@ class TAO_DynamicInterface_Export TAO_AMH_DSI_Exception_Holder
 {
 public:
   using _var_type = TAO_AMH_DSI_Exception_Holder_var;
-  TAO_AMH_DSI_Exception_Holder (CORBA::Exception *ex);
+  /// Takes ownership of ex.
+  explicit TAO_AMH_DSI_Exception_Holder (CORBA::Exception *ex);
 
-  ~TAO_AMH_DSI_Exception_Holder () override;
+  ~TAO_AMH_DSI_Exception_Holder () override = default;
   ::CORBA::ValueBase *_copy_value () override;
 
   static TAO_AMH_DSI_Exception_Holder* _downcast (CORBA::ValueBase*);
@@ -171,7 +172,7 @@ protected:
 private:
   TAO_AMH_DSI_Exception_Holder (const TAO_AMH_DSI_Exception_Holder &);
   void operator= (const TAO_AMH_DSI_Exception_Holder &);
-  CORBA::Exception *exception_ {};
+  std::unique_ptr<CORBA::Exception> exception_;
 
 protected:
   virtual CORBA::Boolean _tao_marshal__Test_TAO_AMH_DSI_Exception_Holder (
@@ -207,8 +208,8 @@ public:
   using _ptr_type = TAO_AMH_DSI_Response_Handler_ptr;
   using _var_type = TAO_AMH_DSI_Response_Handler_var;
 
-  TAO_AMH_DSI_Response_Handler (TAO_ServerRequest &sr);
-  ~TAO_AMH_DSI_Response_Handler () override;
+  explicit TAO_AMH_DSI_Response_Handler (TAO_ServerRequest &sr);
+  ~TAO_AMH_DSI_Response_Handler () override = default;
 
   virtual void invoke_reply (CORBA::NVList_ptr args,
                              CORBA::NamedValue_ptr result);

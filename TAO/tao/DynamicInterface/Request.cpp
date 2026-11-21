@@ -14,13 +14,14 @@
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/DynamicInterface/Request.inl"
 #endif /* ! __ACE_INLINE__ */
 
+#include <array>
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -38,7 +39,9 @@ CORBA::Request::_decr_refcount ()
   CORBA::ULong const new_count = --this->refcount_;
 
   if (new_count == 0)
+  {
     delete this;
+  }
 
   return new_count;
 }
@@ -62,7 +65,7 @@ CORBA::Request::Request (CORBA::Object_ptr obj,
 {
   if (this->exceptions_.in () == nullptr)
     {
-      CORBA::ExceptionList *tmp = nullptr;
+      CORBA::ExceptionList *tmp {};
       ACE_NEW (tmp,
                CORBA::ExceptionList);
 
@@ -79,7 +82,7 @@ CORBA::Request::Request (CORBA::Object_ptr obj,
     flags_ (0)
     // env_ (env)
 {
-  CORBA::ExceptionList *tmp = nullptr;
+  CORBA::ExceptionList *tmp {};
   ACE_NEW (tmp,
            CORBA::ExceptionList);
 
@@ -97,7 +100,7 @@ CORBA::Request::~Request ()
   ACE_ASSERT (refcount_ == 0);
 
   ::CORBA::release (this->target_);
-  ::CORBA::string_free ((char*) this->opname_);
+  ::CORBA::string_free (this->opname_);
   this->opname_ = nullptr;
   ::CORBA::release (this->args_);
   ::CORBA::release (this->result_);
@@ -118,15 +121,13 @@ CORBA::Request::invoke ()
   TAO::NVList_Argument _tao_in_list (this->args_,
                                      this->lazy_evaluation_);
 
-  TAO::Argument *_tao_arg_list [] = {
-    &_tao_retval,
-    &_tao_in_list
-  };
+  std::array<TAO::Argument *, 2> _tao_arg_list {
+    std::addressof (_tao_retval), std::addressof (_tao_in_list)};
 
   TAO::DII_Invocation_Adapter _tao_call (
        this->target_,
-       _tao_arg_list,
-       sizeof( _tao_arg_list ) / sizeof( TAO::Argument* ),
+       _tao_arg_list.data (),
+       static_cast<int> (_tao_arg_list.size ()),
        this->opname_,
        static_cast<CORBA::ULong> (std::strlen (this->opname_)),
        this->exceptions_.in (),
@@ -135,7 +136,7 @@ CORBA::Request::invoke ()
   // forward requested byte order
   _tao_call._tao_byte_order (this->_tao_byte_order ());
 
-  _tao_call.invoke (0, 0);
+  _tao_call.invoke (nullptr, 0);
 
   // If we returned without an exception being thrown the response
   // (if any) is assumed to be received.
@@ -156,15 +157,13 @@ CORBA::Request::send_oneway ()
   TAO::NVList_Argument _tao_in_list (this->args_,
                                      this->lazy_evaluation_);
 
-  TAO::Argument *_tao_arg_list [] = {
-    &_tao_retval,
-    &_tao_in_list
-  };
+  std::array<TAO::Argument *, 2> _tao_arg_list {
+    std::addressof (_tao_retval), std::addressof (_tao_in_list)};
 
   TAO::DII_Oneway_Invocation_Adapter _tao_call (
       this->target_,
-      _tao_arg_list,
-      sizeof( _tao_arg_list ) / sizeof( TAO::Argument* ),
+      _tao_arg_list.data (),
+      static_cast<int> (_tao_arg_list.size ()),
       this->opname_,
       static_cast<CORBA::ULong> (std::strlen (this->opname_)),
       TAO::TAO_SYNCHRONOUS_INVOCATION);
@@ -172,7 +171,7 @@ CORBA::Request::send_oneway ()
   // forward requested byte order
   _tao_call._tao_byte_order (this->_tao_byte_order ());
 
-  _tao_call.invoke (0, 0);
+  _tao_call.invoke (nullptr, 0);
 }
 
 void
@@ -185,29 +184,22 @@ CORBA::Request::send_deferred ()
 
     this->response_received_ = false;
   }
-  CORBA::Boolean const argument_flag = this->args_->count () ? true : false;
+  bool const has_arguments = this->args_->count () != 0;
 
   TAO::NamedValue_Argument _tao_retval (this->result_);
 
   TAO::NVList_Argument _tao_in_list (this->args_,
                                      this->lazy_evaluation_);
 
-  TAO::Argument *_tao_arg_list [] = {
-    &_tao_retval,
-    &_tao_in_list
-  };
+  std::array<TAO::Argument *, 2> _tao_arg_list {
+    std::addressof (_tao_retval), std::addressof (_tao_in_list)};
 
-  size_t number_args = 0;
-
-  if (argument_flag)
-    number_args = 2;
-  else
-    number_args = 1;
+  int const number_args = has_arguments ? 2 : 1;
 
   TAO::DII_Deferred_Invocation_Adapter _tao_call (
       this->target_,
-      _tao_arg_list,
-      static_cast<int> (number_args),
+      _tao_arg_list.data (),
+      number_args,
       this->opname_,
       std::strlen (this->opname_),
       0,
@@ -217,7 +209,7 @@ CORBA::Request::send_deferred ()
   // forward requested byte order
   _tao_call._tao_byte_order (this->_tao_byte_order ());
 
-  _tao_call.invoke (0, 0);
+  _tao_call.invoke (nullptr, 0);
 }
 
 #if defined (TAO_HAS_AMI)
@@ -229,16 +221,14 @@ CORBA::Request::sendc (CORBA::Object_ptr handler)
   TAO::NVList_Argument _tao_in_list (this->args_,
                                      this->lazy_evaluation_);
 
-  TAO::Argument *_tao_arg_list [] = {
-    &_tao_retval,
-    &_tao_in_list
-  };
+  std::array<TAO::Argument *, 2> _tao_arg_list {
+    std::addressof (_tao_retval), std::addressof (_tao_in_list)};
 
   TAO::Asynch_Invocation_Adapter _tao_call (
        this->target_,
-       _tao_arg_list,
-       sizeof( _tao_arg_list ) / sizeof( TAO::Argument* ),
-       const_cast<char *> (this->opname_),
+       _tao_arg_list.data (),
+       static_cast<int> (_tao_arg_list.size ()),
+       this->opname_,
        static_cast<CORBA::ULong> (std::strlen (this->opname_)),
        0); // collocation proxy broker
 
@@ -255,7 +245,7 @@ CORBA::Request::_tao_reply_stub (TAO_InputCDR &_tao_in,
                                  CORBA::ULong reply_status)
 {
   // Retrieve Reply Handler object.
-  TAO_DII_Reply_Handler* reply_handler =
+  TAO_DII_Reply_Handler* const reply_handler =
     dynamic_cast<TAO_DII_Reply_Handler*> (rh);
 
   // Exception handling
@@ -300,34 +290,28 @@ CORBA::Request::get_response ()
 CORBA::Boolean
 CORBA::Request::poll_response ()
 {
-  CORBA::Boolean response_received = false;
-
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                       ace_mon,
                       this->lock_,
                       false);
-    response_received = this->response_received_;
+    if (this->response_received_)
+      {
+        return true;
+      }
   }
 
-  if (!response_received)
-    {
-      // If we're single-threaded, the application could starve the ORB,
-      // and the response never gets received, so let the ORB do an
-      // atom of work, if necessary, each time we poll.
-      ACE_Time_Value tv (0, 0);
-      (void) this->orb_->perform_work (&tv);
+  // If we're single-threaded, the application could starve the ORB,
+  // and the response never gets received, so let the ORB do an
+  // atom of work, if necessary, each time we poll.
+  ACE_Time_Value tv {};
+  (void) this->orb_->perform_work (std::addressof (tv));
 
-      {
-        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                          ace_mon,
-                          this->lock_,
-                          false);
-        response_received = this->response_received_;
-      }
-    }
-
-  return response_received;
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                    ace_mon,
+                    this->lock_,
+                    false);
+  return this->response_received_;
 }
 
 void

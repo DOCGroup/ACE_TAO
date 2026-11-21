@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef __CONFIG_TEST_H
 #define __CONFIG_TEST_H
 
@@ -40,7 +39,6 @@ public:
   //  8. Clean-up
   int testRegFormat ();
 
-
 private:
   // change a value for value change test
   int change_one (ACE_Configuration &l, u_int a = 101);
@@ -64,7 +62,8 @@ private:
                             int*                           pVariable);
 
 private:
-  int equality_tested_; // make sure the equality operator works before proceeding.
+  /// Make sure the equality operator works before proceeding.
+  int equality_tested_;
 };
 
 #endif /* __CONFIG_TEST_H */

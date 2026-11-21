@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SL3_SECURITY_MANAGER_H
 #define TAO_SL3_SECURITY_MANAGER_H
 
@@ -34,20 +33,17 @@ namespace TAO
 {
   namespace SL3
   {
-    /**
-     * @class SecurityManager
-     *
-     * @brief
-     *
-     *
-     */
     class SecurityManager
       : public virtual SecurityLevel3::SecurityManager,
         public virtual ::CORBA::LocalObject
     {
     public:
-      /// Constructor
-      SecurityManager (SecurityLevel3::CredentialsCurator_ptr cc);
+      explicit SecurityManager (SecurityLevel3::CredentialsCurator_ptr cc);
+
+      SecurityManager (SecurityManager const &) = delete;
+      SecurityManager (SecurityManager &&) = delete;
+      SecurityManager &operator= (SecurityManager const &) = delete;
+      SecurityManager &operator= (SecurityManager &&) = delete;
 
       /**
        * @name SecurityLevel3::SecurityManager Methods
@@ -55,7 +51,7 @@ namespace TAO
        * Methods required by the SecurityLevel3::SecurityManager
        * interface.
        */
-      //@{
+      /// @{
       SecurityLevel3::CredentialsCurator_ptr credentials_curator () override;
 
       SecurityLevel3::TargetCredentials_ptr get_target_credentials (
@@ -73,22 +69,16 @@ namespace TAO
       SecurityLevel3::ObjectCredentialsPolicy_ptr
       create_object_creds_policy (
           SecurityLevel3::OwnCredentialsList const & cred_list) override;
-      //@}
+      /// @}
 
     protected:
-      /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~SecurityManager () override;
+      ~SecurityManager () override = default;
 
     private:
-      SecurityManager (SecurityManager const &) = delete;
-      SecurityManager (SecurityManager &&) = delete;
-      SecurityManager &operator= (SecurityManager const &) = delete;
-      SecurityManager &operator= (SecurityManager &&) = delete;
-
       /// The ORB-specific SecurityLevel3::CredentialsCurator
       /// reference.
       SecurityLevel3::CredentialsCurator_var credentials_curator_;
@@ -97,7 +87,6 @@ namespace TAO
 }  // End TAO namespace
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

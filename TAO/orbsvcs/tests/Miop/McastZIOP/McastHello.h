@@ -10,11 +10,10 @@ class McastHello
   : public virtual POA_Test::McastHello
 {
 public:
-  /// Constructor
   McastHello (CORBA::ORB_ptr orb,
               int instance);
 
-  // = The skeleton methods
+  /// The skeleton methods
   void send_forty_two (CORBA::Long forty_two) override;
 
   void shutdown () override;

@@ -58,4 +58,3 @@ be_visitor_interface_svts::visit_attribute (be_attribute *node)
   return v.visit_attribute (node);
 }
 
-

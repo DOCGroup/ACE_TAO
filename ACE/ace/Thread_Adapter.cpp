@@ -116,10 +116,14 @@ ACE_Thread_Adapter::invoke_i ()
       int old = 0;
       int val = cancel_flags & (THR_CANCEL_ENABLE | THR_CANCEL_DISABLE);
       if (val == THR_CANCEL_ENABLE || val == THR_CANCEL_DISABLE)
+      {
         ACE_OS::thr_setcancelstate (val, &old);
+      }
       val = cancel_flags & (THR_CANCEL_DEFERRED | THR_CANCEL_ASYNCHRONOUS);
       if (val == THR_CANCEL_DEFERRED || val == THR_CANCEL_ASYNCHRONOUS)
+      {
         ACE_OS::thr_setcanceltype (val, &old);
+      }
     }
 
   ACE_THR_FUNC_RETURN status = ACE_THR_FUNC_RETURN_NULL;
@@ -132,13 +136,17 @@ ACE_Thread_Adapter::invoke_i ()
             ACE_OS_Object_Manager::thread_hook ();
 
           if (hook)
-            // Invoke the start hook to give the user a chance to
-            // perform some initialization processing before the
-            // <func> is invoked.
-            status = hook->start (func, arg);
+            {
+              // Invoke the start hook to give the user a chance to
+              // perform some initialization processing before the
+              // <func> is invoked.
+              status = hook->start (func, arg);
+            }
           else
-            // Call thread entry point.
-            status = (*func) (arg);
+            {
+              // Call thread entry point.
+              status = (*func) (arg);
+            }
         }
 
 #if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
@@ -175,7 +183,9 @@ ACE_Thread_Adapter::invoke_i ()
 # if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
       int using_afx = -1;
       if (thr_desc)
-        using_afx = ACE_BIT_ENABLED (thr_desc->flags (), THR_USE_AFX);
+        {
+          using_afx = ACE_BIT_ENABLED (thr_desc->flags (), THR_USE_AFX);
+        }
 # endif /* ACE_WIN32 && ACE_HAS_MFC && (ACE_HAS_MFC != 0) */
           // Call TSS destructors.
       ACE_OS::cleanup_tss (0 /* not main thread */);
@@ -189,9 +199,13 @@ ACE_Thread_Adapter::invoke_i ()
       if (using_afx != -1)
         {
           if (using_afx)
-            ::AfxEndThread ((DWORD) status);
+            {
+              ::AfxEndThread ((DWORD) status);
+            }
           else
-            ACE_ENDTHREADEX (status);
+            {
+              ACE_ENDTHREADEX (status);
+            }
         }
       else
         {
@@ -202,9 +216,13 @@ ACE_Thread_Adapter::invoke_i ()
           CWinThread *pThread = ::AfxGetThread ();
 
           if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
-            ACE_ENDTHREADEX (status);
+            {
+              ACE_ENDTHREADEX (status);
+            }
           else
-            ::AfxEndThread ((DWORD)status);
+            {
+              ::AfxEndThread ((DWORD)status);
+            }
         }
 #   else
 

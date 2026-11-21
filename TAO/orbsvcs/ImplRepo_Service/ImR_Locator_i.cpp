@@ -18,8 +18,10 @@
 
 #include "ace/ARGV.h"
 #include "ace/OS_NS_sys_time.h"
-#include "ace/Vector_T.h"
 #include "ace/Task.h"
+
+#include <memory>
+#include <vector>
 
 /// We want to give shutdown a little more time to work, so that we
 /// can guarantee to the tao_imr utility that it has shutdown. The tao_imr
@@ -84,14 +86,14 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb)
   ACE_ASSERT (! CORBA::is_nil (this->root_poa_.in ()));
 
   this->dsi_forwarder_.init (orb);
-  this->adapter_.init (& this->dsi_forwarder_);
+  this->adapter_.init (std::addressof (this->dsi_forwarder_));
   this->pinger_.init (orb, this->opts_->ping_interval ());
 
-  this->opts_->pinger (&this->pinger_);
+  this->opts_->pinger (std::addressof (this->pinger_));
 
   // Register the Adapter_Activator reference to be the RootPOA's
   // Adapter Activator.
-  root_poa_->the_activator (&this->adapter_);
+  root_poa_->the_activator (std::addressof (this->adapter_));
 
   // Use a persistent POA so that any IOR
   this->imr_poa_ = createPersistentPOA (this->root_poa_.in (),
@@ -113,27 +115,27 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb)
     {
     case Options::REPO_REGISTRY:
       {
-        repository_.reset(new Registry_Backing_Store(*this->opts_, orb));
+        repository_.reset (new Registry_Backing_Store (*this->opts_, orb));
         break;
       }
     case Options::REPO_HEAP_FILE:
       {
-        repository_.reset(new Heap_Backing_Store(*this->opts_, orb));
+        repository_.reset (new Heap_Backing_Store (*this->opts_, orb));
         break;
       }
     case Options::REPO_XML_FILE:
       {
-        repository_.reset(new XML_Backing_Store(*this->opts_, orb));
+        repository_.reset (new XML_Backing_Store (*this->opts_, orb));
         break;
       }
     case Options::REPO_SHARED_FILES:
       {
-        repository_.reset(new Shared_Backing_Store(*this->opts_, orb, this));
+        repository_.reset (new Shared_Backing_Store (*this->opts_, orb, this));
         break;
       }
     case Options::REPO_NONE:
       {
-        repository_.reset(new No_Backing_Store(*this->opts_, orb));
+        repository_.reset (new No_Backing_Store (*this->opts_, orb));
         break;
       }
     default:
@@ -162,7 +164,7 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb)
       return result;
     }
 
-  Locator_Repository::SIMap::ENTRY* entry = nullptr;
+  Locator_Repository::SIMap::ENTRY* entry {};
   Locator_Repository::SIMap::ITERATOR it (this->repository_->servers ());
 
   for (;it.next (entry) != 0; it.advance ())
@@ -289,8 +291,8 @@ ImR_Locator_i::shutdown
     }
   if (activators != 0 && this->repository_->activators ().current_size () > 0)
     {
-      ACE_Vector<ImplementationRepository::Activator_var> acts;
-      Locator_Repository::AIMap::ENTRY* entry = nullptr;
+      std::vector<ImplementationRepository::Activator_var> acts;
+      Locator_Repository::AIMap::ENTRY* entry {};
       Locator_Repository::AIMap::ITERATOR it (this->repository_->activators ());
       for (;it.next (entry) != 0; it.advance ())
         {
@@ -298,12 +300,14 @@ ImR_Locator_i::shutdown
           ACE_ASSERT (! info.null ());
           this->connect_activator (*info);
           if (! CORBA::is_nil (info->activator.in ()))
+          {
             acts.push_back (info->activator);
+          }
         }
 
       int shutdown_errs = 0;
 
-      for (size_t i = 0; i < acts.size (); ++i)
+      for (size_t i {}; i < acts.size (); ++i)
         {
           try
             {
@@ -342,7 +346,8 @@ ImR_Locator_i::Shutdown_Handler::handle_exception (ACE_HANDLE)
 void
 ImR_Locator_i::signal_shutdown ()
 {
-  this->orb_->orb_core ()->reactor ()->notify (&this->shutdown_handler_);
+  this->orb_->orb_core ()->reactor ()->notify
+    (std::addressof (this->shutdown_handler_));
 }
 
 void
@@ -364,14 +369,18 @@ ImR_Locator_i::fini ()
   try
     {
       if (debug_ > 1)
+      {
         ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Shutting down...\n")));
+      }
 
-      this->root_poa_->destroy (1, 1);
+      this->root_poa_->destroy (true, true);
 
       this->orb_->destroy ();
 
       if (debug_ > 0)
+      {
         ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Shut down successfully.\n")));
+      }
     }
   catch (const CORBA::Exception& ex)
     {
@@ -603,7 +612,7 @@ ImR_Locator_i::activate_server
                       server));
     }
 
-  ImR_ResponseHandler *rh = nullptr;
+  ImR_ResponseHandler *rh {};
   ACE_NEW (rh,
            ImR_Loc_ResponseHandler (ImR_Loc_ResponseHandler::LOC_ACTIVATE_SERVER,
                                     _tao_rh));
@@ -755,13 +764,17 @@ ImR_Locator_i::add_or_update_server
     }
 
   if (debug_ > 0)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Add/Update server <%C>\n"), server));
+  }
 
   UpdateableServerInfo info(this->repository_, server);
   if (info.null ())
     {
       if (debug_ > 1)
+      {
         ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Adding server <%C>\n"), server));
+      }
 
       this->repository_->add_server (server, options);
     }
@@ -792,7 +805,7 @@ ImR_Locator_i::add_or_update_server
                       options.start_limit
                       ));
 
-      for (CORBA::ULong i = 0; i < options.environment.length (); ++i)
+      for (CORBA::ULong i {}; i < options.environment.length (); ++i)
         ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("Environment variable <%C>=<%C>\n"),
                         options.environment[i].name.in (),
                         options.environment[i].value.in ()));
@@ -827,7 +840,7 @@ ImR_Locator_i::link_servers
       return;
     }
 
-  for (CORBA::ULong i = 0; i < peers.length(); i++)
+  for (CORBA::ULong i {}; i < peers.length(); ++i)
     {
       ACE_CString peer(peers[i]);
       Server_Info_Ptr si = this->repository_->get_active_server (peer);
@@ -883,7 +896,7 @@ ImR_Locator_i::kill_server
 (ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr _tao_rh,
  const char * name, CORBA::Short signum)
 {
-  CORBA::Exception *ex = nullptr;
+  CORBA::Exception *ex {};
   Server_Info_Ptr si;
   if (!this->get_info_for_name (name, si))
     {
@@ -1006,7 +1019,7 @@ ImR_Locator_i::force_remove_server
 (ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr _tao_rh,
  const char *name, CORBA::Short signum)
 {
-  CORBA::Exception *ex = nullptr;
+  CORBA::Exception *ex {};
   Server_Info_Ptr si;
   AsyncAccessManager_ptr aam;
   if (this->opts_->readonly ())
@@ -1022,7 +1035,6 @@ ImR_Locator_i::force_remove_server
       _tao_rh->force_remove_server_excep (&h);
       return;
     }
-
 
   if (!this->get_info_for_name (name, si))
     {
@@ -1044,15 +1056,16 @@ ImR_Locator_i::force_remove_server
       return;
     }
 
-  ImR_ResponseHandler *aam_rh =
-    new ImR_Loc_ResponseHandler (ImR_Loc_ResponseHandler::LOC_FORCE_REMOVE_SERVER,
-                                 _tao_rh);
-  if (aam->force_remove_rh (aam_rh))
+  std::unique_ptr<ImR_ResponseHandler> aam_rh =
+    std::make_unique<ImR_Loc_ResponseHandler> (
+      ImR_Loc_ResponseHandler::LOC_FORCE_REMOVE_SERVER,
+      _tao_rh);
+  if (aam->force_remove_rh (aam_rh.get ()))
     {
-      delete aam_rh;
       _tao_rh->force_remove_server ();
       return;
     }
+  aam_rh.release ();
 
   bool active = (signum > 0) ?
     this->kill_server_i (si, signum, ex) :
@@ -1088,7 +1101,6 @@ ImR_Locator_i::destroy_poa (const ACE_CString &poa_name)
       poa->destroy (etherealize, wait);
     }
 }
-
 
 PortableServer::POA_ptr
 ImR_Locator_i::findPOA (const char* name)
@@ -1229,7 +1241,7 @@ ImR_Locator_i::shutdown_server
 (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
  const char* name)
 {
-  CORBA::Exception *ex = nullptr;
+  CORBA::Exception *ex {};
   Server_Info_Ptr si;
 
   if (!this->get_info_for_name (name, si))
@@ -1282,7 +1294,9 @@ ImR_Locator_i::server_is_running
     }
 
   if (this->opts_->unregister_if_address_reused ())
+  {
     this->repository_->unregister_if_address_reused (id, partial_ior, this);
+  }
 
   CORBA::Object_var obj = this->set_timeout_policy (server_object, this->opts_->ping_timeout ());
   ImplementationRepository::ServerObject_var srvobj =
@@ -1437,7 +1451,9 @@ ImR_Locator_i::find
           imr_info = si->createImRServerInfo ();
 
           if (debug_ > 1)
+          {
             ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Found server <%C>\n"), id));
+          }
         }
       else
         {
@@ -1466,13 +1482,13 @@ ImR_Locator_i::list
  CORBA::ULong how_many,
  CORBA::Boolean active)
 {
-  AsyncListManager *l = nullptr;
+  AsyncListManager *l {};
   try
     {
       ACE_NEW_THROW_EX (l,
                         AsyncListManager (this->repository_.get(),
                                           this->root_poa_.in(),
-                                          active ? &this->pinger_ : nullptr),
+                                          active ? std::addressof (this->pinger_) : nullptr),
                         CORBA::NO_MEMORY ());
       AsyncListManager_ptr lister (l);
       l->list (_tao_rh, how_many);
@@ -1500,7 +1516,9 @@ void
 ImR_Locator_i::connect_activator (Activator_Info& info)
 {
   if (! CORBA::is_nil (info.activator.in ()) || info.ior.length () == 0)
+  {
     return;
+  }
 
   try
     {
@@ -1542,7 +1560,9 @@ void
 ImR_Locator_i::auto_start_servers ()
 {
   if (this->repository_->servers ().current_size () == 0)
+  {
     return;
+  }
 
   Locator_Repository::SIMap::ENTRY* server_entry;
   Locator_Repository::SIMap::ITERATOR server_iter (this->repository_->servers ());
@@ -1640,7 +1660,7 @@ bool
 ImR_Locator_i::server_is_alive (UpdateableServerInfo& info)
 {
   this->connect_server (info);
-  SyncListener *listener = nullptr;
+  SyncListener *listener {};
   ACE_NEW_RETURN (listener,
                   SyncListener (info->ping_id(),
                                 this->orb_.in(),

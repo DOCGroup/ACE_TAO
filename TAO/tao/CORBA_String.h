@@ -51,7 +51,6 @@ namespace TAO
     using character_type = charT;
     using s_traits = TAO::details::string_traits_base<character_type>;
 
-    /// Default constructor.
     inline String_var () : ptr_ (0)
     {
     }
@@ -66,18 +65,15 @@ namespace TAO
     {
     }
 
-    /// Copy constructor.
     inline String_var (String_var<charT> const &s) : ptr_(s_traits::duplicate(s.ptr_))
     {
     }
 
-    /// Destructor.
     inline ~String_var ()
     {
       s_traits::release (this->ptr_);
     }
 
-    /// Assignment operator.
     inline String_var &operator= (character_type *p)
     {
       String_var <charT> tmp (p);
@@ -93,7 +89,6 @@ namespace TAO
       return *this;
     }
 
-    /// Assignment operator.
     inline String_var &operator= (String_var<character_type> const &s)
     {
       String_var <charT> tmp (s);
@@ -192,7 +187,6 @@ namespace TAO
     {
     }
 
-    /// Copy constructor.
     inline String_out (const String_out<charT> &s) : ptr_ (s.ptr_)
     {
     }
@@ -261,7 +255,6 @@ namespace CORBA
   using WString_var = TAO::String_var<CORBA::WChar>;
   using WString_out = TAO::String_out<CORBA::WChar>;
 }
-
 
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 

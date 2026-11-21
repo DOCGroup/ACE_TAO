@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    TAO_Time_Service_Server.h
  *
@@ -8,8 +7,6 @@
  *
  *  @author Vishal Kachroo  <vishal@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_TIME_SERVICE_SERVER_H
 #define TAO_TIME_SERVICE_SERVER_H
@@ -35,11 +32,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Time_Serv_Export TAO_Time_Service_Server : public POA_CosTime::TimeService
 {
 public:
-  /// Constructor.
-  TAO_Time_Service_Server ();
+  TAO_Time_Service_Server () = default;
 
-  /// Destructor.
-  ~TAO_Time_Service_Server () override;
+  ~TAO_Time_Service_Server () override = default;
+
+  TAO_Time_Service_Server (TAO_Time_Service_Server const &) = delete;
+  TAO_Time_Service_Server (TAO_Time_Service_Server &&) = delete;
+  TAO_Time_Service_Server &operator= (TAO_Time_Service_Server const &) = delete;
+  TAO_Time_Service_Server &operator= (TAO_Time_Service_Server &&) = delete;
 
   /// This operation returns the current system time and an estimate of
   /// inaccuracy in a UTO.
@@ -63,12 +63,6 @@ public:
   /// This creates a new TIO with the given parameters.
   CosTime::TIO_ptr new_interval (TimeBase::TimeT lower,
                                  TimeBase::TimeT upper) override;
-
-private:
-  TAO_Time_Service_Server (TAO_Time_Service_Server const &) = delete;
-  TAO_Time_Service_Server (TAO_Time_Service_Server &&) = delete;
-  TAO_Time_Service_Server &operator= (TAO_Time_Service_Server const &) = delete;
-  TAO_Time_Service_Server &operator= (TAO_Time_Service_Server &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

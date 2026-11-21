@@ -14,12 +14,10 @@ TAO_Log_Compaction_Handler::TAO_Log_Compaction_Handler (ACE_Reactor * reactor,
 {
 }
 
-
 TAO_Log_Compaction_Handler::~TAO_Log_Compaction_Handler ()
 {
   this->cancel ();
 }
-
 
 void
 TAO_Log_Compaction_Handler::schedule ()
@@ -28,7 +26,6 @@ TAO_Log_Compaction_Handler::schedule ()
   this->timer_id_ =
     this->reactor_->schedule_timer (this, nullptr, this->interval_, this->interval_);
 }
-
 
 void
 TAO_Log_Compaction_Handler::cancel ()
@@ -39,7 +36,6 @@ TAO_Log_Compaction_Handler::cancel ()
       this->timer_id_ = -1;
     }
 }
-
 
 int
 TAO_Log_Compaction_Handler::handle_timeout (ACE_Time_Value const &,

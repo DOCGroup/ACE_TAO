@@ -1,15 +1,8 @@
-//
-// = FILENAME
-//    VisComp.java
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//   This is the interface for Java Beans.
-//
-// ============================================================================
-
+/**
+ * @file VisComp.java
+ * @author Michael Kircher (mk1@cs.wustl.edu)
+ * @brief This is the interface for Java Beans.
+ */
 
 public interface VisComp extends java.util.Observer {
 

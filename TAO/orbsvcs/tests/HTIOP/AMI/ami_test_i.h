@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_AMI_TEST_I_H
 #define TAO_AMI_TEST_I_H
 
@@ -23,8 +22,7 @@
 class AMI_Test_i : public POA_A::AMI_Test
 {
 public:
-  /// ctor
-  AMI_Test_i (CORBA::ORB_ptr orb);
+  explicit AMI_Test_i (CORBA::ORB_ptr orb);
 
   // The AMI_Test methods.
   CORBA::Long foo (CORBA::Long_out out_l,
@@ -44,6 +42,5 @@ private:
 
   CORBA::Long yadda_;
 };
-
 
 #endif /* TAO_AMI_TEST_I_H */

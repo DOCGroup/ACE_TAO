@@ -11,10 +11,8 @@
  */
 //=============================================================================
 
-
 #include "ace/Proactor.h"
 #include "ace/OS_main.h"
-
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 // This only works on Win32 platforms and on Unix platforms supporting
@@ -38,7 +36,7 @@ public:
                                 const void *arg)
     {
       // Print out when timeouts occur.
-      ACE_DEBUG ((LM_DEBUG, "(%t) %d timeout occurred for %s @ %d.\n",
+      ACE_DEBUG ((LM_DEBUG, "(%t) %d timeout occurred for %s @ %:.\n",
                   ++count_,
                   (char *) arg,
                   (tv - this->start_time_).sec ()));
@@ -52,7 +50,6 @@ private:
   ACE_Time_Value start_time_;
 };
 
-
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
@@ -64,7 +61,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                                                  (void *) "Foo",
                                                  ACE_Time_Value::zero,
                                                  foo_tv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
+    }
 
   // Register a 3 second timer.
   ACE_Time_Value bar_tv (3);
@@ -72,7 +71,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                                                  (void *) "Bar",
                                                  ACE_Time_Value::zero,
                                                  bar_tv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
+    }
 
   // Handle events for 13 seconds.
   ACE_Time_Value run_time (13);
@@ -81,9 +82,11 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   // Run the event loop.
   if (ACE_Proactor::run_event_loop(run_time) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%t):%p.\n", "Worker::svc"),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%t):%p.\n", "Worker::svc"),
+                        1);
+    }
 
   ACE_DEBUG ((LM_DEBUG, "Ending event loop\n"));
 

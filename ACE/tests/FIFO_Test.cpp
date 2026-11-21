@@ -25,6 +25,8 @@
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
 
+#include <cstring>
+
 #if !defined (ACE_LACKS_MKFIFO)
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
@@ -39,7 +41,9 @@ client (void *arg)
   ACE_FIFO_Send_Msg fifo;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) client opening %s\n"), fifo_path));
   if (fifo.open (fifo_path) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), fifo_path), 0);
+  }
 
   // Try some transfers - the server part is expecting this data.
   // First, try a nice, easy send.
@@ -53,7 +57,9 @@ client (void *arg)
       // to be sure it finds the start of the next message ok.
       char big[big_size];
       for (size_t i = 0; i < big_size; ++i)
-        big[i] = (i % 2) ? 0x05 : 0x0A;  // Make nice pattern in blown stack
+        {
+          big[i] = (i % 2) ? 0x05 : 0x0A;  // Make nice pattern in blown stack
+        }
       expect = static_cast <ssize_t> (big_size);
       send_count = fifo.send (big, big_size);
       if (send_count == expect)
@@ -61,30 +67,36 @@ client (void *arg)
           expect = static_cast <ssize_t> (ACE_OS::strlen (ACE_ALPHABET));
           send_count = fifo.send (ACE_ALPHABET, ACE_OS::strlen (ACE_ALPHABET));
           if (send_count != expect)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) Final send; sent %d, expected %d")
-                        ACE_TEXT ("%p\n"),
-                        send_count, expect, ACE_TEXT ("send")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) Final send; sent %b, expected %b")
+                          ACE_TEXT ("%p\n"),
+                          send_count, expect, ACE_TEXT ("send")));
+            }
           else
+          {
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) All sends ok\n")));
+          }
         }
       else
         {
           ACE_ERROR
             ((LM_ERROR,
-              ACE_TEXT ("(%P|%t) Second send expected %d; sent %d. %p\n"),
+              ACE_TEXT ("(%P|%t) Second send expected %b; sent %b. %p\n"),
               expect, send_count, ACE_TEXT ("send")));
         }
     }
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) First send expected %d; sent %d. %p\n"),
+                  ACE_TEXT ("(%P|%t) First send expected %b; sent %b. %p\n"),
                   expect, send_count, ACE_TEXT ("send")));
     }
 
   if (fifo.close () != 0)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("fifo close")));
+  }
 
   return nullptr;
 }
@@ -100,9 +112,11 @@ server (void *arg)
   ACE_Time_Value delay (10);
   h.set_bit (fifo->get_handle ());
   if (ACE::select (h.max_set () + 1, h, &delay) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) server %p\n"),
-                       ACE_TEXT ("select")),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) server %p\n"),
+                         ACE_TEXT ("select")),
+                        0);
+    }
 
   // Read the things the client is sending; alphabet, huge overflow, then
   // alphabet.
@@ -111,15 +125,19 @@ server (void *arg)
   ssize_t expect = static_cast <ssize_t> (ACE_OS::strlen (ACE_ALPHABET));
   recv_count = fifo->recv (buf, sizeof (buf));
   if (recv_count != expect)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Recv 1 expected %d, got %d. %p\n"),
-                       expect, recv_count, ACE_TEXT ("recv")),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Recv 1 expected %b, got %b. %p\n"),
+                         expect, recv_count, ACE_TEXT ("recv")),
+                        0);
+    }
   buf[recv_count] = '\0';
-  if (ACE_OS::strcmp (buf, ACE_ALPHABET) != 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) Recv 1 expected alphabet; got %s\n"),
-                buf));
+  if (std::strcmp (buf, ACE_ALPHABET) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) Recv 1 expected alphabet; got %s\n"),
+                  buf));
+    }
 
   // See documented return values for ACE_FIFO_Recv_Msg...
   // We are being sent a message much longer than BUFSIZ.
@@ -145,11 +163,13 @@ server (void *arg)
 #endif /* ACE_HAS_STREAM_PIPES */
       recv_count = fifo->recv (buf, sizeof (buf));
       if (recv_count != expect)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Recv 2 expected %d, ")
-                           ACE_TEXT ("got %d. %p\n"),
-                           expect, recv_count, ACE_TEXT ("recv")),
-                          0);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Recv 2 expected %b, ")
+                             ACE_TEXT ("got %b. %p\n"),
+                             expect, recv_count, ACE_TEXT ("recv")),
+                            0);
+        }
 #if defined (ACE_HAS_STREAM_PIPES)
     }
 #endif /* ACE_HAS_STREAM_PIPES */
@@ -157,17 +177,23 @@ server (void *arg)
   expect = static_cast <ssize_t> (ACE_OS::strlen (ACE_ALPHABET));
   recv_count = fifo->recv (buf, sizeof (buf));
   if (recv_count != expect)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Recv 3 expected %d, got %d. %p\n"),
-                       expect, recv_count, ACE_TEXT ("recv")),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Recv 3 expected %b, got %b. %p\n"),
+                         expect, recv_count, ACE_TEXT ("recv")),
+                        0);
+    }
   buf[recv_count] = '\0';
-  if (ACE_OS::strcmp (buf, ACE_ALPHABET) != 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) Recv 3 expected alphabet; got %s\n"),
-                buf));
+  if (std::strcmp (buf, ACE_ALPHABET) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) Recv 3 expected alphabet; got %s\n"),
+                  buf));
+    }
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) All receives ok\n")));
+  }
   return nullptr;
 }
 
@@ -178,8 +204,10 @@ test_fifo_msg ()
   // platform.
   ACE_TCHAR fifo_path[MAXPATHLEN];
   if (ACE::get_temp_dir (fifo_path, MAXPATHLEN) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("get_temp_dir")), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("get_temp_dir")), 1);
+    }
   ACE_OS::strcat (fifo_path, ACE_TEXT ("FIFO_Test"));
   ACE_FIFO_Recv_Msg read_side;
   // Open read only, not persistent (4th arg is 0)

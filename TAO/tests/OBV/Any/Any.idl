@@ -1,7 +1,7 @@
-//
-// This file contains few valuetypes to show and test basic CORBA any
-// functionality related to valuetypes.
-//
+///
+/// This file contains few valuetypes to show and test basic CORBA any
+/// functionality related to valuetypes.
+///
 
 module OBV_AnyTest
 {
@@ -19,17 +19,17 @@ module OBV_AnyTest
   {
   };
 
-  //
-  // Interface to pass valuetypes.
-  //
+  ///
+  /// Interface to pass valuetypes.
+  ///
   interface Test
   {
-    // Returns VA or VB inserted into any
+    /// Returns VA or VB inserted into any
     any get_something (in boolean need_vb);
 
     VB get_vb ();
 
-    // Shutdown the romote ORB
+    /// Shutdown the romote ORB
     oneway void shutdown ();
   };
 

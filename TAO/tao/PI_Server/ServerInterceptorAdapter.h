@@ -73,7 +73,7 @@ namespace TAO
      * Each of these methods corresponds to a server side interception
      * point.
      */
-    //@{
+    /// @{
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
     /// This method implements the "starting" server side interception
     /// point. It will be used as the first interception point and it is
@@ -141,7 +141,7 @@ namespace TAO
         TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
         CORBA::ULong nexceptions) override;
-    //@}
+    /// @}
 
     /// Register an interceptor.
     void add_interceptor (
@@ -153,8 +153,11 @@ namespace TAO
 
     void destroy_interceptors () override;
 
+    /// Returns a request-owned PICurrent implementation that is released
+    /// through deallocate_pi_current().
     TAO::PICurrent_Impl *allocate_pi_current () override;
 
+    /// Releases the PICurrent implementation returned by allocate_pi_current().
     void deallocate_pi_current (TAO::PICurrent_Impl *picurrent) override;
 
     void execute_command (
@@ -162,9 +165,14 @@ namespace TAO
         TAO::Upcall_Command &command) override;
 
     void popTSC (TAO_ORB_Core *orb_core) override
-      {TAO_RequestInterceptor_Adapter_Impl::popTSC (orb_core);}
+    {
+      TAO_RequestInterceptor_Adapter_Impl::popTSC (orb_core);
+    }
+
     void pushTSC (TAO_ORB_Core *orb_core) override
-      {TAO_RequestInterceptor_Adapter_Impl::pushTSC (orb_core);}
+    {
+      TAO_RequestInterceptor_Adapter_Impl::pushTSC (orb_core);
+    }
 
   private:
     ServerRequestInterceptor_Adapter_Impl (ServerRequestInterceptor_Adapter_Impl const &) = delete;
