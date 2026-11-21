@@ -12,10 +12,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Message_Queue_NT::ACE_Message_Queue_NT (DWORD max_threads)
   : max_cthrs_ (max_threads),
-    cur_thrs_ (0),
-    cur_bytes_ (0),
-    cur_length_ (0),
-    cur_count_ (0),
     completion_port_ (ACE_INVALID_HANDLE)
 {
   ACE_TRACE ("ACE_Message_Queue_NT::ACE_Message_Queue_NT");

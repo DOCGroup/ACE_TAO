@@ -204,16 +204,16 @@ private:
   DWORD max_cthrs_;
 
   /// Current number of threads waiting to dequeue messages.
-  DWORD cur_thrs_;
+  DWORD cur_thrs_ {};
 
   /// Current number of bytes in queue.
-  size_t cur_bytes_;
+  size_t cur_bytes_ {};
 
   /// Current length of messages in queue.
-  size_t cur_length_;
+  size_t cur_length_ {};
 
   /// Current number of messages in the queue.
-  size_t cur_count_;
+  size_t cur_count_ {};
 
   /**
    * Synchronizer.  This should really be an ACE_Recursive_Thread_Mutex
