@@ -516,7 +516,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  // Prevent copying and moving.
+  /// Prevent copying and moving.
   ACE_Service_Type_Factory (ACE_Service_Type_Factory const &) = delete;
   ACE_Service_Type_Factory (ACE_Service_Type_Factory &&) = delete;
   ACE_Service_Type_Factory &operator= (ACE_Service_Type_Factory const &) = delete;

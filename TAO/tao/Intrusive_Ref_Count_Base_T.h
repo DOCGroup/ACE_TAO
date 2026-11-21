@@ -49,7 +49,7 @@ protected:
 private:
   std::atomic<uint32_t> refcount_ {1};
 
-  // Prevent copying/assignment.
+  /// Prevent copying/assignment.
   TAO_Intrusive_Ref_Count_Base (TAO_Intrusive_Ref_Count_Base const &) = delete;
   TAO_Intrusive_Ref_Count_Base &operator= (TAO_Intrusive_Ref_Count_Base const &) = delete;
   TAO_Intrusive_Ref_Count_Base (TAO_Intrusive_Ref_Count_Base &&) = delete;

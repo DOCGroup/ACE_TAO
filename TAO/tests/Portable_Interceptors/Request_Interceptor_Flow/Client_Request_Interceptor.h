@@ -76,8 +76,8 @@ public:
   /// @}
 
 private:
-  // Returns 1 if the client-side test is currently being run, and 0
-  // otherwise.
+  /// Returns 1 if the client-side test is currently being run, and 0
+  /// otherwise.
   CORBA::Boolean client_side_test (
     PortableInterceptor::ClientRequestInfo_ptr info);
 };
