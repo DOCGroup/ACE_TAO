@@ -37,7 +37,6 @@ ACE_Thread_Mutex::~ACE_Thread_Mutex ()
 }
 
 ACE_Thread_Mutex::ACE_Thread_Mutex (const ACE_TCHAR *name, ACE_mutexattr_t *arg)
-  : removed_ (false)
 {
   if (ACE_OS::thread_mutex_init (&this->lock_,
                                  0,

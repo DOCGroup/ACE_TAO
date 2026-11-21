@@ -23,7 +23,6 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Recursive_Thread_Mutex)
 
 ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (const ACE_TCHAR *name,
                                                         ACE_mutexattr_t *arg)
-  : removed_ (false)
 {
   // ACE_TRACE ("ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex");
   if (ACE_OS::recursive_mutex_init (&this->lock_,

@@ -155,7 +155,7 @@ protected:
   /// destructor.  This flag isn't protected by a lock, so make sure
   /// that you don't have multiple threads simultaneously calling
   /// <remove> on the same object, which is a bad idea anyway...
-  bool removed_;
+  bool removed_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
