@@ -1616,8 +1616,7 @@ ACE_WFMO_Reactor_Handler_Repository::handler (ACE_HANDLE handle,
 
   // Otherwise, make sure that the masks that the user is looking for
   // are on.
-  if (found &&
-      ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::READ_MASK))
+  if (ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::READ_MASK))
     {
       if (!ACE_BIT_ENABLED (existing_masks, FD_READ) &&
           !ACE_BIT_ENABLED (existing_masks, FD_CLOSE))
