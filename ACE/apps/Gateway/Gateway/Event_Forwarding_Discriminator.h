@@ -61,7 +61,8 @@ public:
 class Event_Forwarding_Discriminator_Iterator
 {
 public:
-  Event_Forwarding_Discriminator_Iterator (Event_Forwarding_Discriminator &mm);
+  explicit Event_Forwarding_Discriminator_Iterator (
+    Event_Forwarding_Discriminator &mm);
   int next (Consumer_Dispatch_Set *&);
   int advance ();
 
