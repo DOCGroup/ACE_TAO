@@ -7,6 +7,8 @@
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_NS_arpa_inet.h"
 
+#include <memory>
+
 // Creates and binds a UDP socket...
 
 int
@@ -28,20 +30,20 @@ CM_Client::open (short port_number)
 int
 CM_Client::receive (int timeout)
 {
-  FD_ZERO (&this->read_fd_);
-  FD_SET (Comm_Manager::sokfd_, &this->read_fd_);
+  FD_ZERO (std::addressof (this->read_fd_));
+  FD_SET (Comm_Manager::sokfd_, std::addressof (this->read_fd_));
 
   if (timeout > 0)
     {
       this->time_out_.sec (timeout);
       this->time_out_.usec (0);
-      this->top_ = &time_out_;
+      this->top_ = std::addressof (this->time_out_);
     }
 
   while (Multicast_Manager::outstanding_hosts_remain ())
     {
       if (ACE_OS::select (Comm_Manager::sokfd_ + 1,
-                          &this->read_fd_,
+                          std::addressof (this->read_fd_),
                           0,
                           0,
                           this->top_) <= 0)
@@ -53,17 +55,19 @@ CM_Client::receive (int timeout)
                                     this->recv_packet_,
                                     UDP_PACKET_SIZE,
                                     0,
-                                    reinterpret_cast<sockaddr *> (&this->sin_),
-                                    &sin_len);
+                                    reinterpret_cast<sockaddr *> (std::addressof (this->sin_)),
+                                    std::addressof (sin_len));
           if (n < 0)
             return -1;
           else
             {
               if (Options::get_opt (Options::DEBUGGING) != 0)
                 {
-                  hostent *np = ACE_OS::gethostbyaddr ((char *) &this->sin_.sin_addr,
-                                                       sizeof this->sin_.sin_addr,
-                                                       AF_INET);
+                  hostent *np = ACE_OS::gethostbyaddr (
+                    reinterpret_cast<char const *> (
+                      std::addressof (this->sin_.sin_addr)),
+                    sizeof this->sin_.sin_addr,
+                    AF_INET);
 
                   ACE_DEBUG ((LM_DEBUG,
                               "receiving from server host %s (%s)\n",
@@ -106,9 +110,11 @@ CM_Client::send ()
     {
       if (Options::get_opt (Options::DEBUGGING) != 0)
         {
-          hostent *np = ACE_OS::gethostbyaddr ((char *) &this->sin_.sin_addr,
-                                               sizeof this->sin_.sin_addr,
-                                               AF_INET);
+          hostent *np = ACE_OS::gethostbyaddr (
+            reinterpret_cast<char const *> (
+              std::addressof (this->sin_.sin_addr)),
+            sizeof this->sin_.sin_addr,
+            AF_INET);
 
           ACE_DEBUG ((LM_DEBUG,
                       "sending to server host %s (%s)\n",
@@ -120,7 +126,7 @@ CM_Client::send ()
                          this->send_packet_,
                          packet_length,
                          0,
-                         reinterpret_cast<sockaddr *> (&this->sin_),
+                         reinterpret_cast<sockaddr *> (std::addressof (this->sin_)),
                          sizeof this->sin_) < 0)
       {
         return -1;

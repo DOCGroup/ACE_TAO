@@ -6,6 +6,8 @@
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_arpa_inet.h"
 
+#include <memory>
+
 // Creates and binds a UDP socket...
 
 int
@@ -26,7 +28,7 @@ CM_Server::open (short port_number)
 
   // This call fails if an rflo daemon is already running.
   if (ACE_OS::bind (this->sokfd_,
-                    reinterpret_cast<sockaddr *> (&this->sin_),
+                    reinterpret_cast<sockaddr *> (std::addressof (this->sin_)),
                     sizeof this->sin_) < 0)
   {
     return -1;
@@ -58,8 +60,8 @@ CM_Server::receive (int)
                             this->recv_packet_,
                             UDP_PACKET_SIZE,
                             0,
-                            reinterpret_cast<sockaddr *> (&this->sin_),
-                            (int *) &sin_len);
+                            reinterpret_cast<sockaddr *> (std::addressof (this->sin_)),
+                            std::addressof (sin_len));
   if (n == -1)
   {
     return -1;
@@ -98,7 +100,7 @@ CM_Server::send ()
                       this->send_packet_,
                       packet_length,
                       0,
-                      reinterpret_cast<sockaddr *> (&this->sin_),
+                      reinterpret_cast<sockaddr *> (std::addressof (this->sin_)),
                       sizeof this->sin_) < 0)
   {
     return -1;
