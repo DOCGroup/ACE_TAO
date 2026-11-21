@@ -226,7 +226,7 @@ CEC_Counting_Consumer_Task::pull_count () const
 void
 CEC_Counting_Consumer_Task::run ()
 {
-  bool stop {};
+  bool stop_requested {};
   do
     {
       CORBA::Boolean has_event {};
@@ -250,8 +250,8 @@ CEC_Counting_Consumer_Task::run ()
         {
           ++this->pull_count_;
         }
-        stop = this->stop_flag_;
+        stop_requested = this->stop_flag_;
       }
     }
-  while (!stop);
+  while (!stop_requested);
 }

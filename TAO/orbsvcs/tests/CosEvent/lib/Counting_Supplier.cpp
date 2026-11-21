@@ -102,7 +102,7 @@ CEC_Counting_Supplier_Task::run ()
   CORBA::Any event {};
   event <<= CORBA::Long {0};
 
-  bool stop {};
+  bool stop_requested {};
   do
     {
       this->supplier_->push (event);
@@ -121,10 +121,10 @@ CEC_Counting_Supplier_Task::run ()
       {
         ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
         ++this->push_count_;
-        stop = this->stop_flag_;
+        stop_requested = this->stop_flag_;
       }
     }
-  while (!stop);
+  while (!stop_requested);
 }
 
 // ****************************************************************
