@@ -39,8 +39,7 @@ ACE_INLINE
 ACE_Dev_Poll_Handler_Guard::ACE_Dev_Poll_Handler_Guard
   (ACE_Event_Handler *eh,
    bool do_incr)
-  : eh_ (eh),
-    refcounted_ (false)
+  : eh_ (eh)
 {
   if (eh == nullptr)
     {
@@ -101,8 +100,7 @@ ACE_Dev_Poll_Reactor::upcall (ACE_Event_Handler *event_handler,
 ACE_INLINE
 ACE_Dev_Poll_Reactor::Token_Guard::Token_Guard (ACE_Dev_Poll_Reactor_Token &token)
 
-  : token_ (token),
-    owner_ (false)
+  : token_ (token)
 {
 }
 

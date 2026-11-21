@@ -1143,7 +1143,7 @@ protected:
     /// owns the token or not. A value of false indicates that this class
     /// hasn't got the token (and hence the thread) and a value of true
     /// vice-versa.
-    bool owner_;
+    bool owner_ {};
   };
 };
 
@@ -1186,7 +1186,7 @@ private:
   ACE_Event_Handler *eh_;
 
   /// true if eh_ is a reference-counted handler.
-  bool refcounted_;
+  bool refcounted_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
