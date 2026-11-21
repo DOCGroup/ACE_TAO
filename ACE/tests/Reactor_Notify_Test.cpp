@@ -367,7 +367,7 @@ run_test (int disable_notify_pipe,
 
   ACE_Reactor *reactor;
   ACE_NEW_RETURN (reactor,
-                  ACE_Reactor (reactor_impl, 1),    // Delete implementation
+                  ACE_Reactor (reactor_impl, true),    // Delete implementation
                   -1);
 
   // Make sure this stuff gets cleaned up when this function exits.

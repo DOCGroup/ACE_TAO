@@ -66,7 +66,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_NEW_RETURN (impl_raw, ACE_Msg_WFMO_Reactor, 1);
   std::unique_ptr<ACE_Reactor_Impl> impl (impl_raw);
   ACE_Reactor *reactor_raw {};
-  ACE_NEW_RETURN (reactor_raw, ACE_Reactor (impl.get (), 1), 1);
+  ACE_NEW_RETURN (reactor_raw, ACE_Reactor (impl.get (), true), 1);
   impl.release ();
   std::unique_ptr<ACE_Reactor> reactor (reactor_raw);
   ACE_Reactor::instance (reactor.get ());

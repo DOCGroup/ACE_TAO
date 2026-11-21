@@ -12,7 +12,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
   ACE_Select_Reactor *select_reactor;
   ACE_NEW_RETURN (select_reactor, ACE_Select_Reactor, 1);
   ACE_Reactor *reactor;
-  ACE_NEW_RETURN (reactor, ACE_Reactor (select_reactor, 1), 1);
+  ACE_NEW_RETURN (reactor, ACE_Reactor (select_reactor, true), 1);
   ACE_Reactor::close_singleton ();
   ACE_Reactor::instance (reactor, true);
 

@@ -288,7 +288,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       std::unique_ptr<ACE_Select_Reactor> auto_impl (impl_ptr);
 
       ACE_Reactor *reactor_ptr;
-      ACE_NEW_RETURN (reactor_ptr, ACE_Reactor (impl_ptr, 1), -1);
+      ACE_NEW_RETURN (reactor_ptr, ACE_Reactor (impl_ptr, true), -1);
       auto_impl.release ();   // ACE_Reactor dtor will take it from here
       std::unique_ptr<ACE_Reactor> auto_reactor (reactor_ptr);
       reactor = std::move(auto_reactor);

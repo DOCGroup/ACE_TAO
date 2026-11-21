@@ -86,7 +86,7 @@ MyTask::create_reactor ()
   ACE_NEW_RETURN (pImpl,ACE_TP_Reactor (nullptr, this->my_tq_), -1);
 
   ACE_NEW_RETURN (my_reactor_,
-                   ACE_Reactor (pImpl ,1),
+                   ACE_Reactor (pImpl ,true),
                    -1);
 
   ACE_DEBUG ((LM_DEBUG,

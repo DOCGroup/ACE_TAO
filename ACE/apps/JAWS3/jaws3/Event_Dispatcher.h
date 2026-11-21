@@ -25,7 +25,7 @@ using ACE_Select_NULL_LOCK_Reactor = ACE_Select_Reactor_T<ACE_Select_Reactor_Noo
         do { \
         ACE_Select_NULL_LOCK_Reactor *select_reactor; \
         select_reactor = new ACE_Select_NULL_LOCK_Reactor; \
-        ACE_Reactor::instance (new ACE_Reactor (select_reactor, 1), 1); \
+        ACE_Reactor::instance (new ACE_Reactor (select_reactor, true), true); \
         } while (0)
 
 #else
