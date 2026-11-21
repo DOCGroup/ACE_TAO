@@ -47,9 +47,9 @@ public:
 
     if (d == nullptr)
       {
-        ACE_TCHAR * const duplicate = ACE_OS::strdup (s);
-        this->queue_.enqueue_tail (duplicate);
-        d = duplicate;
+        ACE_TCHAR * const duplicate_string = ACE_OS::strdup (s);
+        this->queue_.enqueue_tail (duplicate_string);
+        d = duplicate_string;
       }
 
     return d;
@@ -64,7 +64,7 @@ private:
 class JAWS_Config_File_Impl
 {
 public:
-  JAWS_Config_File_Impl (const ACE_TCHAR *config_file);
+  explicit JAWS_Config_File_Impl (const ACE_TCHAR *config_file);
   ~JAWS_Config_File_Impl ();
   int find (const ACE_TCHAR *key, const ACE_TCHAR *&value);
 
