@@ -141,10 +141,6 @@ HTTP_Helper::HTTP_date (char *s)
   // Return the date-string formatted per HTTP standards.  Time must
   // be in UTC, so using the 'strftime' call (which obeys the locale)
   // isn't correct.
-  static const char* months[] = {"Jan","Feb","Mar","Apr","May","Jun",
-                                 "Jul","Aug","Sep","Oct","Nov","Dec"};
-  static const char* days[] = {"Sun","Mon","Tue","Wed","Thu","Fri","Sat"};
-
   time_t tloc;
   struct tm tms;
   char * date_string = s;
@@ -152,6 +148,10 @@ HTTP_Helper::HTTP_date (char *s)
   if (ACE_OS::time (&tloc) != (time_t) -1
       && ACE_OS::gmtime_r (&tloc, &tms) != nullptr)
   {
+    static const char* months[] = {"Jan","Feb","Mar","Apr","May","Jun",
+                                   "Jul","Aug","Sep","Oct","Nov","Dec"};
+    static const char* days[] = {"Sun","Mon","Tue","Wed","Thu","Fri","Sat"};
+
     ACE_OS::sprintf (date_string,
                      "%s, %2.2d %s %4.4d %2.2d:%2.2d:%2.2d GMT",
                      days[tms.tm_wday], tms.tm_mday, months[tms.tm_mon],

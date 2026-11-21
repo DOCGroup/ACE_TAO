@@ -293,12 +293,11 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
             const char *name = (const char *) disc_val;
             CORBA::ULong count = tc->member_count ();
 
-            const char *member_name {};
             CORBA::ULong i {};
 
             for (i = 0; i < count; ++i)
               {
-                member_name = tc->member_name (i);
+                const char *member_name = tc->member_name (i);
 
                 if (std::strcmp (name, member_name) == 0)
                   {

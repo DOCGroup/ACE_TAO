@@ -124,14 +124,12 @@ HTTP_Headers::value (int index)
 const char *
 HTTP_Headers::value_next (int index)
 {
-  char const *hs {};
   char const *hv {};
-  JAWS_Header_Data *data {};
 
   if (0 <= index && index < NUM_HEADER_STRINGS)
     {
-      hs = this->header (index);
-      data = this->table ()->find_next (hs);
+      char const *hs = this->header (index);
+      JAWS_Header_Data *data = this->table ()->find_next (hs);
       if (data != nullptr)
       {
         hv = data->header_value ();

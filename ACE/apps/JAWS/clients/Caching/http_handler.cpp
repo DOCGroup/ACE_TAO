@@ -142,10 +142,10 @@ HTTP_Handler::svc ()
     }
   while (!done);
 
-  size_t response_size {};
-  bool has_content_length {};
   if (contentlength != nullptr)
     {
+      size_t response_size {};
+      bool has_content_length {};
       char const *value = std::strchr (contentlength, ':');
       if (value != nullptr)
         {

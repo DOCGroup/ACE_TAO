@@ -225,8 +225,6 @@ void Oid::init_value(const unsigned long *raw_oid, size_t oid_len)
 // delete allocated space
 Oid& Oid::operator+=( const char *a)
 {
-  unsigned long n;
-
   if (!a)
   {
     return *this;
@@ -239,7 +237,7 @@ Oid& Oid::operator+=( const char *a)
   size_t sz = std::strlen (a);
 
   if (valid()) {
-    n = (smival.value.oid.len *SNMPCHARSIZE) + smival.value.oid.len + 1 + sz;
+    unsigned long const n = (smival.value.oid.len *SNMPCHARSIZE) + smival.value.oid.len + 1 + sz;
     std::unique_ptr<char[]> ptr (new (std::nothrow) char[n]);
     if (!ptr)
       {
@@ -451,10 +449,10 @@ Oid& Oid::operator+=( const unsigned long i)
       : SNMPCHARSIZE;
   size_t const n = smival.value.oid.len * max_component_size
     + smival.value.oid.len + std::numeric_limits<unsigned long>::digits10 + 2;
-  char buffer[SNMPBUFFSIZE];
 
   // two cases: null oid, existing oid
   if (valid()) {
+    char buffer[SNMPBUFFSIZE];
     // allocate some temporary space
     char *ptr;
     ACE_NEW_RETURN(ptr, char[ n], *this);
@@ -606,7 +604,6 @@ int Oid::suboid(Oid& new_oid, size_t start, size_t how_many)
 int Oid::StrToOid( const char *string, SmiLPOID dstOid, size_t& how_many)
 {
   size_t index = 0;
-  size_t number = 0;
 
   // make a temp buffer to copy the data into first
   size_t nz;
@@ -628,7 +625,7 @@ int Oid::StrToOid( const char *string, SmiLPOID dstOid, size_t& how_many)
     }
   while (*string!=0 && index<nz) {
     // init the number for each token
-    number = 0;
+    size_t number = 0;
     // skip over the dot
     if (*string=='.')
     {
