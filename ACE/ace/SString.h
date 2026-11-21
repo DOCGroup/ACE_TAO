@@ -236,10 +236,10 @@ private:
   ACE_Allocator *allocator_;
 
   /// Length of the ACE_SString (not counting the trailing '\\0').
-  size_type len_;
+  size_type len_ {};
 
   /// Pointer to data.
-  char *rep_;
+  char *rep_ {};
 };
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)

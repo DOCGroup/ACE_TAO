@@ -213,10 +213,7 @@ ACE_SString::ACE_SString (const ACE_SString &s)
 }
 
 ACE_SString::ACE_SString (ACE_Allocator *alloc)
-  : allocator_ (alloc),
-    len_ (0),
-    rep_ (nullptr)
-
+  : allocator_ (alloc)
 {
   ACE_TRACE ("ACE_SString::ACE_SString");
 
@@ -225,7 +222,6 @@ ACE_SString::ACE_SString (ACE_Allocator *alloc)
     this->allocator_ = ACE_Allocator::instance ();
   }
 
-  this->len_ = 0;
   this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
   this->rep_[this->len_] = '\0';
 }
