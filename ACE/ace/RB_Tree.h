@@ -97,13 +97,13 @@ private:
   RB_Tree_Node_Color color_;
 
   /// Pointer to node's parent.
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> *parent_;
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *parent_ {};
 
   /// Pointer to node's left child.
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> *left_;
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *left_ {};
 
   /// Pointer to node's right child.
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> *right_;
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *right_ {};
 };
 
 class ACE_RB_Tree_Base
@@ -569,13 +569,13 @@ private:
   ACE_LOCK lock_;
 
   /// The root of the tree.
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> *root_;
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *root_ {};
 
   /// Comparison functor for comparing nodes in the tree.
   COMPARE_KEYS compare_keys_;
 
   /// The current number of nodes in the tree.
-  size_t current_size_;
+  size_t current_size_ {};
 };
 
 /**
