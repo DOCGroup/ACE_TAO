@@ -119,7 +119,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
   if (ACE_OS::setsockopt (this->get_handle (),
                           SOL_SOCKET,
                           SO_BROADCAST,
-                          (char *) &one,
+                          reinterpret_cast<char const *> (&one),
                           sizeof one) == -1)
     {
       ACELIB_ERROR_RETURN ((LM_ERROR, ACE_TEXT("%p\n"),
@@ -140,7 +140,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
   // techniques.
   if (ACE_OS::ioctl (s,
                      SIOCGIFCONF,
-                     (char *) &ifc) == -1)
+                     &ifc) == -1)
     {
       ACELIB_ERROR_RETURN ((LM_ERROR, ACE_TEXT("%p\n"),
                             ACE_TEXT("ACE_SOCK_Dgram_Bcast::mk_broadcast: ioctl (get interface configuration)")),
@@ -162,11 +162,11 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
         }
       else
         {
-          std::memcpy ((char *) &host_addr.sin_addr.s_addr,
+          std::memcpy (&host_addr.sin_addr.s_addr,
 # ifdef ACE_HOSTENT_H_ADDR
-                       (char *) hp->ACE_HOSTENT_H_ADDR,
+                       hp->ACE_HOSTENT_H_ADDR,
 # else
-                       (char *) hp->h_addr,
+                       hp->h_addr,
 # endif
                        hp->h_length);
         }
@@ -234,7 +234,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
 
       if (ACE_OS::ioctl (s,
                          SIOCGIFFLAGS,
-                         (char *) &flags) == -1)
+                         &flags) == -1)
         {
           ACELIB_ERROR ((LM_ERROR, ACE_TEXT("%p [%C]\n"),
                      ACE_TEXT("ACE_SOCK_Dgram_Bcast::mk_broadcast: ioctl (get interface flags)"),
@@ -262,7 +262,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
         {
           if (ACE_OS::ioctl (s,
                              SIOCGIFBRDADDR,
-                             (char *) &if_req) == -1)
+                             &if_req) == -1)
             {
               ACELIB_ERROR ((LM_ERROR, ACE_TEXT("%p [%C]\n"),
                              ACE_TEXT("ACE_SOCK_Dgram_Bcast::mk_broadcast: ioctl (get broadaddr)"),
