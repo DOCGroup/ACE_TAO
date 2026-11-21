@@ -40,7 +40,7 @@ static u_short port1 {};
 class Dgram_Endpoint : public ACE_Event_Handler
 {
 public:
-  Dgram_Endpoint (ACE_INET_Addr const &local_addr);
+  explicit Dgram_Endpoint (ACE_INET_Addr const &local_addr);
   Dgram_Endpoint (Dgram_Endpoint const &) = delete;
   Dgram_Endpoint (Dgram_Endpoint &&) = delete;
   Dgram_Endpoint &operator= (Dgram_Endpoint const &) = delete;
