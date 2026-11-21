@@ -11,7 +11,6 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Dynamic::ACE_Dynamic ()
-  : is_dynamic_ (false)
 {
   ACE_TRACE ("ACE_Dynamic::ACE_Dynamic");
 }
