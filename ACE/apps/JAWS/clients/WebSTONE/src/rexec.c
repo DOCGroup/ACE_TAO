@@ -237,11 +237,10 @@ static void MyOpenService(const char *remote_host)
 
 static BOOL Send(SOCKET s, const char *buf, size_t nbuf)
 {
-    int cnt;
     size_t sent = 0;
 
     while (sent < nbuf) {
-        cnt = send(s, &buf[sent], nbuf-sent, 0);
+        int cnt = send(s, &buf[sent], nbuf-sent, 0);
         if (cnt == -1) {
             return FALSE;
         }
