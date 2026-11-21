@@ -75,7 +75,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_Reactor_Impl *reactor_;
+  ACE_Reactor_Impl *reactor_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
