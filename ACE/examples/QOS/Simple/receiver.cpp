@@ -20,6 +20,8 @@
 #include "QoS_Signal_Handler.h"
 #include "Receiver_QoS_Event_Handler.h"
 
+#include <memory>
+
 // To open QOS sockets administrative access is required on the
 // machine.  Fill in default values for QoS structure.  The default
 // values were simply chosen from existing QOS templates available
@@ -282,7 +284,7 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
         }
 
       // Register the decorated Event Handler with the Reactor.
-      if (ACE_Reactor::instance ()->register_handler (&qos_decorator,
+      if (ACE_Reactor::instance ()->register_handler (std::addressof (qos_decorator),
                                                       ACE_Event_Handler::QOS_MASK |
                                                       ACE_Event_Handler::READ_MASK) == -1)
         {

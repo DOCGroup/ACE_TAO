@@ -193,7 +193,7 @@ Reactor_Timer_Queue_Test_Driver::init ()
                   -1);
   shutdown_cmd_.reset (raw_shutdown_cmd);
 
-  ACE_Reactor::instance ()->timer_queue (&timer_queue_);
+  ACE_Reactor::instance ()->timer_queue (std::addressof (timer_queue_));
 
   ACE_Event_Handler::register_stdin_handler (&thandler_,
                                              ACE_Reactor::instance (),

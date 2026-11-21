@@ -15,6 +15,8 @@
 
 #include <cstring>
 
+#include <memory>
+
 #if defined (ACE_HAS_IP_MULTICAST)
 class Server_Events : public ACE_Event_Handler
 {
@@ -231,7 +233,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // Instance of the ACE_Reactor.
   ACE_Reactor reactor;
 
-  if (reactor.register_handler (&server_events,
+  if (reactor.register_handler (std::addressof (server_events),
                                 ACE_Event_Handler::READ_MASK) == -1)
   {
     ACE_ERROR ((LM_ERROR,

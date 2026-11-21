@@ -18,6 +18,7 @@
 #include "ace/Reactor.h"
 
 #include <cstdio>
+#include <memory>
 
 //***************************************************************//
 extern "C" void handler (int)
@@ -366,7 +367,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGHUP);
 
   ACE_Timer_Heap timer_queue;
-  ACE_Reactor::instance ()->timer_queue (&timer_queue);
+  ACE_Reactor::instance ()->timer_queue (std::addressof (timer_queue));
 
   int rc = 0;
   try

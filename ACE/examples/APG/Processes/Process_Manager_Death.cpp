@@ -1,4 +1,5 @@
 #include <array>
+#include <memory>
 
 #include "ace/Log_Msg.h"
 #include "ace/Process_Manager.h"
@@ -67,7 +68,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Register handler to be called when these processes exit.
   for (int i {}; i < NCHILDREN; ++i)
     {
-      pm.register_handler (&handler, pids[i]);
+      pm.register_handler (std::addressof (handler), pids[i]);
     }
 
   // Run the reactor event loop waiting for events to occur.
