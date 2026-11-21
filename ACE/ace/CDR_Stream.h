@@ -607,7 +607,7 @@ private:
    * The current_alignment is used to readjust the buffer following
    * the stolen message block.
    */
-  size_t current_alignment_;
+  size_t current_alignment_ {};
 #endif /* ACE_LACKS_CDR_ALIGNMENT */
 
   /**
@@ -616,7 +616,7 @@ private:
    * to write on it, even if it is past the start and end of the
    * buffer.
    */
-  bool current_is_writable_;
+  bool current_is_writable_ {true};
 
   /**
    * If not zero swap bytes at writing so the created CDR stream byte
@@ -631,7 +631,7 @@ private:
   bool do_byte_swap_;
 
   /// Set to false when an error ocurrs.
-  bool good_bit_;
+  bool good_bit_ {true};
 
   /// Break-even point for copying.
   size_t const memcpy_tradeoff_;
@@ -646,8 +646,8 @@ protected:
   ACE_CDR::Octet minor_version_;
 
   /// If not nil, invoke for translation of character and string data.
-  ACE_Char_Codeset_Translator *char_translator_;
-  ACE_WChar_Codeset_Translator *wchar_translator_;
+  ACE_Char_Codeset_Translator *char_translator_ {};
+  ACE_WChar_Codeset_Translator *wchar_translator_ {};
 
   /**
    * Some wide char codesets may be defined with a maximum number

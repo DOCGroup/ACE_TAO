@@ -35,17 +35,10 @@ ACE_OutputCDR::ACE_OutputCDR (size_t size,
              ACE_Time_Value::max_time,
              data_block_allocator,
              message_block_allocator),
-#if !defined (ACE_LACKS_CDR_ALIGNMENT)
-     current_alignment_ (0),
-#endif /* ACE_LACKS_CDR_ALIGNMENT */
-     current_is_writable_ (true),
      do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
-     good_bit_ (true),
      memcpy_tradeoff_ (memcpy_tradeoff),
      major_version_ (major_version),
-     minor_version_ (minor_version),
-     char_translator_ (nullptr),
-     wchar_translator_ (nullptr)
+     minor_version_ (minor_version)
 
 {
   ACE_CDR::mb_align (std::addressof (this->start_));
@@ -78,17 +71,10 @@ ACE_OutputCDR::ACE_OutputCDR (char *data,
              ACE_Time_Value::max_time,
              data_block_allocator,
              message_block_allocator),
-#if !defined (ACE_LACKS_CDR_ALIGNMENT)
-     current_alignment_ (0),
-#endif /* ACE_LACKS_CDR_ALIGNMENT */
-     current_is_writable_ (true),
      do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
-     good_bit_ (true),
      memcpy_tradeoff_ (memcpy_tradeoff),
      major_version_ (major_version),
-     minor_version_ (minor_version),
-     char_translator_ (nullptr),
-     wchar_translator_ (nullptr)
+     minor_version_ (minor_version)
 {
   // We cannot trust the buffer to be properly aligned
   ACE_CDR::mb_align (std::addressof (this->start_));
@@ -110,17 +96,10 @@ ACE_OutputCDR::ACE_OutputCDR (ACE_Data_Block *data_block,
   :  start_ (data_block,
              ACE_Message_Block::DONT_DELETE,
              message_block_allocator),
-#if !defined (ACE_LACKS_CDR_ALIGNMENT)
-     current_alignment_ (0),
-#endif /* ACE_LACKS_CDR_ALIGNMENT */
-     current_is_writable_ (true),
      do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
-     good_bit_ (true),
      memcpy_tradeoff_ (memcpy_tradeoff),
      major_version_ (major_version),
-     minor_version_ (minor_version),
-     char_translator_ (nullptr),
-     wchar_translator_ (nullptr)
+     minor_version_ (minor_version)
 {
   // We cannot trust the buffer to be properly aligned
   ACE_CDR::mb_align (std::addressof (this->start_));
@@ -139,17 +118,10 @@ ACE_OutputCDR::ACE_OutputCDR (ACE_Message_Block *data,
                               ACE_CDR::Octet major_version,
                               ACE_CDR::Octet minor_version)
   :  start_ (data->data_block ()->duplicate ()),
-#if !defined (ACE_LACKS_CDR_ALIGNMENT)
-     current_alignment_ (0),
-#endif /* ACE_LACKS_CDR_ALIGNMENT */
-     current_is_writable_ (true),
      do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
-     good_bit_ (true),
      memcpy_tradeoff_ (memcpy_tradeoff),
      major_version_ (major_version),
-     minor_version_ (minor_version),
-     char_translator_ (nullptr),
-     wchar_translator_ (nullptr)
+     minor_version_ (minor_version)
 {
   // We cannot trust the buffer to be properly aligned
   ACE_CDR::mb_align (std::addressof (this->start_));
