@@ -14,7 +14,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op ()
-  : value_ (0)
 {
 }
 
@@ -198,7 +197,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::value_i ()
 
 ACE_INLINE
 ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op ()
-  : value_ (0)
 {
 }
 

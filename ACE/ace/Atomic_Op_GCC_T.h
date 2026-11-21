@@ -111,7 +111,7 @@ private:
 
 private:
   /// Current object decorated by the atomic op.
-  volatile T value_;
+  volatile T value_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

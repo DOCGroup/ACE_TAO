@@ -6,7 +6,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template <typename T>
 ACE_INLINE
 ACE_Atomic_Op_GCC<T>::ACE_Atomic_Op_GCC ()
-  : value_ (0)
 {
 }
 
