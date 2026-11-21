@@ -20,8 +20,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T, class ACE_LOCK>
 ACE_Cached_Allocator<T, ACE_LOCK>::ACE_Cached_Allocator (size_t n_chunks)
-  : pool_ (nullptr),
-    free_list_ (ACE_PURE_FREE_LIST)
+  : free_list_ (ACE_PURE_FREE_LIST)
 {
   // To maintain alignment requirements, make sure that each element
   // inserted into the free list is aligned properly for the platform.
@@ -119,8 +118,7 @@ ACE_Cached_Allocator<T, ACE_LOCK>::free (void * ptr)
 template <class ACE_LOCK>
 ACE_Dynamic_Cached_Allocator<ACE_LOCK>::ACE_Dynamic_Cached_Allocator
   (size_t n_chunks, size_t chunk_size)
-    : pool_ (nullptr),
-      free_list_ (ACE_PURE_FREE_LIST),
+    : free_list_ (ACE_PURE_FREE_LIST),
       chunk_size_ (chunk_size)
 {
   ACE_ASSERT (chunk_size > 0);

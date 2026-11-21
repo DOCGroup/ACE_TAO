@@ -126,7 +126,7 @@ public:
 private:
   /// Remember how we allocate the memory in the first place so
   /// we can clear things up later.
-  char *pool_;
+  char *pool_ {};
 
   /// Maintain a cached memory free list.
   ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<T>, ACE_LOCK> free_list_;
@@ -191,7 +191,7 @@ public:
 private:
   /// Remember how we allocate the memory in the first place so
   /// we can clear things up later.
-  char *pool_;
+  char *pool_ {};
 
   /// Maintain a cached memory free list. We use @c char as template
   /// parameter, although sizeof(char) is usually less than
