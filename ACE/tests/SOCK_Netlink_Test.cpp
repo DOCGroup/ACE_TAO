@@ -26,6 +26,8 @@
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_time.h"
 
+#include <memory>
+
 #include <linux/rtnetlink.h>
 
 /**
@@ -125,7 +127,7 @@ get_if_index (const char*const interface,
   if_index = -1;
 
   struct ifreq if_req;
-  ACE_OS::memset (&if_req, 0, sizeof (struct ifreq));
+  ACE_OS::memset (std::addressof (if_req), 0, sizeof (struct ifreq));
 
   ACE_OS::strncpy (if_req.ifr_name,
                    static_cast<const char*> (interface),
@@ -144,7 +146,7 @@ get_if_index (const char*const interface,
 
   int result = ACE_OS::ioctl (s,
                               SIOCGIFINDEX,
-                              reinterpret_cast<char*> (&if_req));
+                              reinterpret_cast<char *> (std::addressof (if_req)));
 
   if (result == -1)
     {
@@ -438,7 +440,7 @@ Secondary_Ipaddr_Handler::handle_input (ACE_HANDLE)
   ACE_Netlink_Addr raddr;
   raddr.set (0, 0);
 
-  rval_bytes = this->socket ().recv (&iov, 1, raddr);
+  rval_bytes = this->socket ().recv (std::addressof (iov), 1, raddr);
   switch (rval_bytes)
     {
     case -1: // Complain and leave
@@ -643,7 +645,7 @@ Secondary_Ipaddr_Handler::fill_inet_prefix (
                                             Inet_Prefix &inet_prefix,
                                             const char*const ip_slash_netmask)
 {
-  ACE_OS::memset (&inet_prefix, 0, sizeof inet_prefix);
+  ACE_OS::memset (std::addressof (inet_prefix), 0, sizeof inet_prefix);
   char* slash =  const_cast <char *> (ACE_OS::strchr (ip_slash_netmask,  '/'));
   if (slash)
   {
@@ -680,7 +682,8 @@ Secondary_Ipaddr_Handler::fill_inet_prefix (
         }
       else
       {
-        ((u_char *) &inet_prefix.data)[i] = (u_char)num;
+        reinterpret_cast<u_char *> (std::addressof (inet_prefix.data[0]))[i] =
+          static_cast<u_char> (num);
       }
 
       if (i < 3)
@@ -712,7 +715,8 @@ Secondary_Ipaddr_Handler::fill_rtnetlink_request (
                                                   int data_length)
 {
   // points to the end of the aligned header
-  struct rtattr *rta = reinterpret_cast <struct rtattr*> (((reinterpret_cast <char*>(&hdr)) + NLMSG_ALIGN (hdr.nlmsg_len)));
+  struct rtattr *rta = reinterpret_cast<struct rtattr *> (
+    reinterpret_cast<char *> (std::addressof (hdr)) + NLMSG_ALIGN (hdr.nlmsg_len));
 
   rta->rta_type = type;
   rta->rta_len = RTA_LENGTH (data_length);
@@ -742,7 +746,7 @@ Secondary_Ipaddr_Handler::dispatch_ip_operation (
 
   iovec iov_send =
     {
-      static_cast <void*> (&this->netlink_request_.nhdr_),
+      std::addressof (this->netlink_request_.nhdr_),
       this->netlink_request_.nhdr_.nlmsg_len
     };
 
@@ -804,7 +808,7 @@ Secondary_Ipaddr_Handler::init_netlink_request (
                                                 Netlink_Request& net_req,
                                                 bool action)
 {
-  ACE_OS::memset (&net_req, 0, sizeof(net_req));
+  ACE_OS::memset (std::addressof (net_req), 0, sizeof(net_req));
 
   // fill the request header
   net_req.nhdr_.nlmsg_len =
@@ -833,7 +837,7 @@ Secondary_Ipaddr_Handler::init_netlink_request (
 
   fill_rtnetlink_request (net_req.nhdr_,
                           IFA_LOCAL,
-                          &local_prefix.data,
+                          std::addressof (local_prefix.data),
                           local_prefix.bytelen);
 
   net_req.ifa_.ifa_prefixlen = local_prefix.bitlen; // number of bits in netmask
