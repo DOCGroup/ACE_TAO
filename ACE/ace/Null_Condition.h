@@ -69,9 +69,6 @@ public:
   /// Dump the state of an object.
   void dump () const {}
 
-  // ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
 protected:
   /// Reference to the mutex lock.
   ACE_Null_Mutex &mutex_;

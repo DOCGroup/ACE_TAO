@@ -84,9 +84,6 @@ public:
   /// Explicitly return @c value_ (by reference).
   volatile T &value_i ();
 
-  // ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
 protected:
   /// Atomically assign rhs to @c value_.
   ACE_Atomic_Op_GCC<T> &operator= (T rhs);

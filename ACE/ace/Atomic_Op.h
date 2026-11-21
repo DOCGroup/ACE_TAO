@@ -132,9 +132,6 @@ public:
   /// Explicitly return @c value_ (by reference).
   volatile long &value_i ();
 
-  // ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
   /// Used during ACE object manager initialization to optimize the fast
   /// atomic op implementation according to the number of CPUs.
   static void init_functions ();
@@ -229,9 +226,6 @@ public:
 
   /// Explicitly return @c value_ (by reference).
   volatile unsigned long &value_i ();
-
-  // ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
   /// Used during ACE object manager initialization to optimize the fast
   /// atomic op implementation according to the number of CPUs.
