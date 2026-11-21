@@ -16,6 +16,7 @@
 #include "ace/Log_Msg_Callback.h"
 #include "ace/Log_Record.h"
 #include <cstdio>
+#include <memory>
 
 /**
  * @class Logger
@@ -138,7 +139,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   logger.verbose (true);
 
   // Set the callback object.
-  ACE_LOG_MSG->msg_callback (&logger);
+  ACE_LOG_MSG->msg_callback (std::addressof (logger));
 
   // This message should show up via the Logger callback.
   ACE_DEBUG ((LM_DEBUG,

@@ -14,6 +14,7 @@
 #include <cctype>
 #include <iostream>
 #include <limits>
+#include <memory>
 #include <sstream>
 
 Dump_Restore::Dump_Restore (int argc, ACE_TCHAR *argv[])
@@ -478,7 +479,7 @@ Dump_Restore::dump ()
   ofstream output_file (dump_filename_);
 
   ostream *orig_stream = ACE_Log_Msg::instance ()->msg_ostream ();
-  ACE_Log_Msg::instance ()->msg_ostream (&output_file);
+  ACE_Log_Msg::instance ()->msg_ostream (std::addressof (output_file));
   ACE_Log_Msg::instance ()->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER );
   ACE_Log_Msg::instance ()->set_flags (ACE_Log_Msg::OSTREAM);
 

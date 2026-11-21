@@ -171,7 +171,7 @@ test_callbacks ()
   logger.verbose (true);
 
   // Set the callback object.
-  ACE_LOG_MSG->msg_callback (&logger);
+  ACE_LOG_MSG->msg_callback (std::addressof (logger));
 
   // This message should show up via the Logger callback.
   ACE_DEBUG ((LM_DEBUG,
@@ -402,7 +402,7 @@ test_acelib_category()
 
   Log_Count  counter;
 
-  ACE_LOG_MSG->msg_callback (&counter);
+  ACE_LOG_MSG->msg_callback (std::addressof (counter));
 
   // Disable the LM_DEBUG and LM_INFO messages.
   u_long priority_mask =
@@ -502,7 +502,7 @@ test_ostream ()
 
   OFSTREAM *old_stream = ace_file_stream::instance ()->output_file ();
   // Set the ostream.
-  ACE_LOG_MSG->msg_ostream (&myostream);
+  ACE_LOG_MSG->msg_ostream (std::addressof (myostream));
 
   // This message should show up in the ostream.
   ACE_DEBUG ((LM_DEBUG,
@@ -791,7 +791,7 @@ test_format_specs ()
 
   Log_Spec_Verify  verifier;
 
-  ACE_LOG_MSG->msg_callback (&verifier);
+  ACE_LOG_MSG->msg_callback (std::addressof (verifier));
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE);
   ACE_LOG_MSG->linenum (42);

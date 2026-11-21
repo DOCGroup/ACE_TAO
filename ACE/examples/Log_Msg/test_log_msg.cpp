@@ -19,6 +19,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdlib.h"
 
+#include <memory>
+
 static void
 cleanup ()
 {
@@ -101,7 +103,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
       ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
-      ACE_LOG_MSG->msg_ostream (&cout);
+      ACE_LOG_MSG->msg_ostream (std::addressof (cout));
 
       f = 3.1416 * counter;
       i = 10000 * counter++;
@@ -146,7 +148,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   i));
 
       ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
-      ACE_LOG_MSG->msg_ostream (&cerr);
+      ACE_LOG_MSG->msg_ostream (std::addressof (cerr));
 
       f = 3.1416 * counter;
       i = 10000 * counter++;

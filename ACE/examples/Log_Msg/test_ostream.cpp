@@ -17,6 +17,7 @@
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 #include <fstream>
 #include <iostream>
+#include <memory>
 #endif
 
 int
@@ -51,7 +52,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   }
 
   // Set the ostream.
-  ACE_LOG_MSG->msg_ostream (&outfile);
+  ACE_LOG_MSG->msg_ostream (std::addressof (outfile));
 
   // This message should show up in the ostream.
   ACE_DEBUG ((LM_DEBUG,
