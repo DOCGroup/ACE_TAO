@@ -127,7 +127,7 @@ Test_Aio::do_aio ()
   this->aiocb_write_->aio_sigevent.sigev_notify = SIGEV_NONE;
   //this->this->aiocb_.aio_sigevent.sigev_signo = SIGRTMAX;
   this->aiocb_write_->aio_sigevent.sigev_value.sival_ptr =
-    (void *) this->aiocb_write_;
+    this->aiocb_write_;
 
   // Fire off the aio write.
   if (aio_write (this->aiocb_write_) != 0)
@@ -149,7 +149,7 @@ Test_Aio::do_aio ()
   this->aiocb_read_->aio_sigevent.sigev_notify = SIGEV_NONE;
   //this->this->aiocb_.aio_sigevent.sigev_signo = SIGRTMAX;
   this->aiocb_read_->aio_sigevent.sigev_value.sival_ptr =
-    (void *) this->aiocb_read_;
+    this->aiocb_read_;
 
   // Fire off the aio write. If it doesnt get queued, carry on to get
   // the completion for the first one.
