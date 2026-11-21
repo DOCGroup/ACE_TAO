@@ -53,7 +53,7 @@ stop_tracing_handler (int signum)
 class My_Task : public ACE_Task_Base
 {
 public:
-  My_Task (size_t depth)
+  explicit My_Task (size_t depth)
     : depth_ (depth)
   {
   }

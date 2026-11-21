@@ -29,7 +29,7 @@ static std::atomic<int> amount_of_work {0};
 class Pseudo_Barrier
 {
 public:
-  Pseudo_Barrier (u_long count);
+  explicit Pseudo_Barrier (u_long count);
 
   //FUZZ: disable check_for_lack_ACE_OS
   int wait ();
