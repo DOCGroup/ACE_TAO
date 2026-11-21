@@ -1436,7 +1436,8 @@ ACE_Configuration_Heap::add_section (const ACE_Configuration_Section_Key& base,
   section += sub_section;
 
   // Add it to the base section
-  ACE_TCHAR* pers_name = (ACE_TCHAR *) allocator_->malloc ((ACE_OS::strlen (sub_section) + 1) * sizeof (ACE_TCHAR));
+  ACE_TCHAR* pers_name = static_cast<ACE_TCHAR *> (
+    allocator_->malloc ((ACE_OS::strlen (sub_section) + 1) * sizeof (ACE_TCHAR)));
   ACE_OS::strcpy (pers_name, sub_section);
   ACE_Configuration_ExtId SSExtId (pers_name);
   if (IntId.section_hash_map_->bind (SSExtId, ignored, allocator_.get ()))
@@ -1456,7 +1457,8 @@ ACE_Configuration_Heap::new_section (const ACE_TString& section,
 
   // Allocate memory for items to be stored in the table.
   size_t const section_len = section.length () + 1;
-  ACE_TCHAR *ptr = (ACE_TCHAR*) this->allocator_->malloc (section_len * sizeof (ACE_TCHAR));
+  ACE_TCHAR *ptr = static_cast<ACE_TCHAR *> (
+    this->allocator_->malloc (section_len * sizeof (ACE_TCHAR)));
 
   int return_value = -1;
 
@@ -1504,8 +1506,9 @@ ACE_Configuration_Heap::new_section (const ACE_TString& section,
         }
 
       ACE_Configuration_ExtId name (ptr);
-      ACE_Configuration_Section_IntId entry ((VALUE_MAP*) value_hash_map,
-                                             (SUBSECTION_MAP*) section_hash_map);
+      ACE_Configuration_Section_IntId entry (
+        static_cast<VALUE_MAP *> (value_hash_map),
+        static_cast<SUBSECTION_MAP *> (section_hash_map));
 
       // Do a normal bind.  This will fail if there's already an
       // entry with the same name.
@@ -1701,7 +1704,7 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
   // Now remove subkey from parent key
   ACE_Configuration_ExtId SubSExtId (sub_section);
   SUBSECTION_HASH::ENTRY* subsection_entry {};
-  if (((SUBSECTION_HASH*)ParentIntId.section_hash_map_)->
+  if (static_cast<SUBSECTION_HASH *> (ParentIntId.section_hash_map_)->
       find (SubSExtId, subsection_entry))
   {
     return -1;
@@ -1891,7 +1894,8 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
       entry->int_id_.free (allocator_.get ());
       // Allocate the new value in this heap
       ACE_TCHAR* pers_value =
- (ACE_TCHAR *) allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR));
+        static_cast<ACE_TCHAR *> (
+          allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR)));
       ACE_OS::strcpy (pers_value, value.fast_rep ());
       ACE_Configuration_Value_IntId new_value_int (pers_value);
       entry->int_id_ = new_value_int;
@@ -1900,10 +1904,12 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
     {
       // it doesn't exist, bind it
       ACE_TCHAR* pers_name =
- (ACE_TCHAR *) allocator_->malloc ((ACE_OS::strlen (t_name) + 1) * sizeof (ACE_TCHAR));
+        static_cast<ACE_TCHAR *> (
+          allocator_->malloc ((ACE_OS::strlen (t_name) + 1) * sizeof (ACE_TCHAR)));
       ACE_OS::strcpy (pers_name, t_name);
       ACE_TCHAR* pers_value =
- (ACE_TCHAR *) allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR));
+        static_cast<ACE_TCHAR *> (
+          allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR)));
       ACE_OS::strcpy (pers_value, value.fast_rep ());
       ACE_Configuration_ExtId new_item_name (pers_name);
       ACE_Configuration_Value_IntId item_value (pers_value);
@@ -1959,7 +1965,8 @@ ACE_Configuration_Heap::set_integer_value (const ACE_Configuration_Section_Key& 
     {
       // it doesn't exist, bind it
       ACE_TCHAR* pers_name =
- (ACE_TCHAR *) allocator_->malloc ((ACE_OS::strlen (t_name) + 1) * sizeof (ACE_TCHAR));
+        static_cast<ACE_TCHAR *> (
+          allocator_->malloc ((ACE_OS::strlen (t_name) + 1) * sizeof (ACE_TCHAR)));
       ACE_OS::strcpy (pers_name, t_name);
       ACE_Configuration_ExtId item_name_pers (pers_name);
       ACE_Configuration_Value_IntId item_value (value);
@@ -2011,7 +2018,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
       // Free the old value
       entry->int_id_.free (allocator_.get ());
       // Allocate the new value in this heap
-      ACE_TCHAR* pers_value = (ACE_TCHAR *) allocator_->malloc (length);
+      ACE_TCHAR* pers_value = static_cast<ACE_TCHAR *> (allocator_->malloc (length));
       std::memcpy (pers_value, data, length);
       ACE_Configuration_Value_IntId new_value_int (pers_value, length);
       entry->int_id_ = new_value_int;
@@ -2020,9 +2027,10 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
     {
       // it doesn't exist, bind it
       ACE_TCHAR* pers_name =
- (ACE_TCHAR *) allocator_->malloc ((ACE_OS::strlen (t_name) + 1) * sizeof (ACE_TCHAR));
+        static_cast<ACE_TCHAR *> (
+          allocator_->malloc ((ACE_OS::strlen (t_name) + 1) * sizeof (ACE_TCHAR)));
       ACE_OS::strcpy (pers_name, t_name);
-      ACE_TCHAR* pers_value = (ACE_TCHAR *) allocator_->malloc (length);
+      ACE_TCHAR* pers_value = static_cast<ACE_TCHAR *> (allocator_->malloc (length));
       std::memcpy (pers_value, data, length);
       ACE_Configuration_ExtId item_name_pers (pers_name);
       ACE_Configuration_Value_IntId item_value (pers_value, length);
@@ -2221,7 +2229,7 @@ ACE_Configuration_Heap::find_value (const ACE_Configuration_Section_Key& key,
   // Find it
   ACE_Configuration_ExtId ValueExtId (t_name);
   VALUE_HASH::ENTRY* value_entry {};
-  if (((VALUE_HASH *) IntId.value_hash_map_)->find (ValueExtId, value_entry))
+  if (static_cast<VALUE_HASH *> (IntId.value_hash_map_)->find (ValueExtId, value_entry))
   {
     return -1;  // value does not exist
   }
@@ -2259,7 +2267,7 @@ ACE_Configuration_Heap::remove_value (const ACE_Configuration_Section_Key& key,
   // Find it
   ACE_Configuration_ExtId ValueExtId (t_name);
   VALUE_HASH::ENTRY* value_entry {};
-  if (((VALUE_HASH *) IntId.value_hash_map_)->find (ValueExtId, value_entry))
+  if (static_cast<VALUE_HASH *> (IntId.value_hash_map_)->find (ValueExtId, value_entry))
   {
     return -1;
   }
