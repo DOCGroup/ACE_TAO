@@ -385,19 +385,22 @@ ACE_ATM_Addr::addr_to_string (ACE_TCHAR addr[],
   return 0;
 #elif defined (ACE_HAS_FORE_ATM_WS2)
   ACE_TCHAR buffer[MAXNAMELEN + 1];
-  int i;
+  size_t const required_len = ATM_ADDR_SIZE * 3;
 
-  if (addrlen < ATM_ADDR_SIZE + 1)
+  if (required_len > sizeof (buffer) / sizeof (buffer[0]) ||
+      addrlen < required_len)
     {
       return -1;
     }
 
-  for (i = 0; i < ATM_ADDR_SIZE; ++i) {
-    buffer[ i * 3 ] = '\0';
-          ACE_OS::sprintf (buffer, ACE_TEXT ("%s%02x."),
-                     buffer,
-                     atm_addr_.satm_number.Addr[ i ]);
-  }
+  for (size_t i = 0; i < ATM_ADDR_SIZE; ++i)
+    {
+      ACE_OS::sprintf (buffer + i * 3,
+                       ACE_TEXT ("%02x."),
+                       static_cast<unsigned int> (
+                         static_cast<unsigned char> (
+                           atm_addr_.satm_number.Addr[i])));
+    }
 
   buffer[ ATM_ADDR_SIZE * 3 - 1 ] = '\0';
   ACE_OS::strcpy (addr, buffer);
