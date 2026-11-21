@@ -92,9 +92,7 @@ void *ACE_OS_Object_Manager::preallocated_object[
   ACE_OS_Object_Manager::ACE_OS_PREALLOCATED_OBJECTS] = { nullptr };
 
 ACE_OS_Object_Manager::ACE_OS_Object_Manager ()
-  : default_mask_ (nullptr)
-  , thread_hook_ (nullptr)
-  , exit_info_ ()
+  : exit_info_ ()
 #if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
   , seh_except_selector_ (ACE_SEH_Default_Exception_Selector)
   , seh_except_handler_ (ACE_SEH_Default_Exception_Handler)

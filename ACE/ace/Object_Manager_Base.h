@@ -205,10 +205,10 @@ public:
   static void *preallocated_object[ACE_OS_PREALLOCATED_OBJECTS];
 
   /// Default signal set used, for example, in ACE_Sig_Guard.
-  sigset_t *default_mask_;
+  sigset_t *default_mask_ {};
 
   /// Thread hook that's used by this process.
-  ACE_Thread_Hook *thread_hook_;
+  ACE_Thread_Hook *thread_hook_ {};
 
   /// For at_exit support.
   ACE_OS_Exit_Info exit_info_;
