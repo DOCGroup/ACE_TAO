@@ -117,8 +117,8 @@ ACE_Pagefile_Memory_Pool::acquire (size_t nbytes,
       return result;
     }
 
-  result = (void *)((char *) this->local_cb_.mapped_base_
-                    + this->shared_cb_->sh_.free_offset_);
+  result = static_cast<char *> (this->local_cb_.mapped_base_)
+    + this->shared_cb_->sh_.free_offset_;
   this->shared_cb_->sh_.free_offset_ += rounded_bytes;
   this->shared_cb_->sh_.free_size_ -= rounded_bytes;
   this->local_cb_.sh_ = this->shared_cb_->sh_;
@@ -180,8 +180,9 @@ ACE_Pagefile_Memory_Pool::remap (void *addr)
   // return.
   if (this->shared_cb_ == 0
       || addr < this->local_cb_.mapped_base_
-      || addr >= (void *)((char *) this->local_cb_.mapped_base_
-                          + this->shared_cb_->sh_.mapped_size_))
+      || addr >= static_cast<void *> (
+        static_cast<char *> (this->local_cb_.mapped_base_)
+        + this->shared_cb_->sh_.mapped_size_))
     {
       return -1;
     }
@@ -357,8 +358,8 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
         + ACE_Pagefile_Memory_Pool::round_to_chunk_size
         (append_bytes);
 
-      map_addr = (void *)((char *) this->shared_cb_ +
-                          this->local_cb_.sh_.mapped_size_);
+      map_addr = static_cast<char *> (this->shared_cb_)
+        + this->local_cb_.sh_.mapped_size_;
 
       if (::VirtualAlloc (map_addr,
                           map_size,

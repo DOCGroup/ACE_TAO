@@ -147,8 +147,10 @@ ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
       st[counter].shmid_ = shmid;
       st[counter].used_ = 1;
 
-      void *address = (void *) (((char *) this->shm_addr_table_[0]) + offset);
-      void *shmem = ACE_OS::shmat (st[counter].shmid_, (char *) address, 0);
+      void *address = static_cast<char *> (this->shm_addr_table_[0]) + offset;
+      void *shmem = ACE_OS::shmat (st[counter].shmid_,
+                                   static_cast<char *> (address),
+                                   0);
 
       if (shmem != address)
         {
@@ -216,10 +218,12 @@ ACE_Shared_Memory_Pool::handle_signal (int, siginfo_t *siginfo, ucontext_t *)
                            -1);
     }
 
-  void *address = (void *) (((char *) this->shm_addr_table_[0]) + offset);
+  void *address = static_cast<char *> (this->shm_addr_table_[0]) + offset;
   SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->shm_addr_table_[0]);
 
-  void *shmem = ACE_OS::shmat (st[counter].shmid_, (char *) address, 0);
+  void *shmem = ACE_OS::shmat (st[counter].shmid_,
+                               static_cast<char *> (address),
+                               0);
 
   if (shmem != address)
     {
