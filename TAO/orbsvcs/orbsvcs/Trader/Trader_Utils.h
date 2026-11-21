@@ -460,7 +460,7 @@ public:
 
   /// Designate a trader at which to begin the query.
   /// Copies the trader name.
-  void starting_trader (const CosTrading::TraderName& name); // Copy
+  void starting_trader (const CosTrading::TraderName& name);
   /// Takes ownership of the trader name.
   void starting_trader (CosTrading::TraderName* name);
 

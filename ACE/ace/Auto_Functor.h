@@ -58,42 +58,59 @@ public:
   using element_type = X;
   using functor_type = Functor;
 
+  /// noexcept
   explicit Auto_Functor (X * p = nullptr,
-      Functor functor = Functor()); // noexcept
+      Functor functor = Functor());
 
-  Auto_Functor (Auto_Functor & rhs); // noexcept
+  /// noexcept
+  Auto_Functor (Auto_Functor & rhs);
 
-  Auto_Functor<X,Functor>& operator= (Auto_Functor & rhs); // noexcept
+  /// noexcept
+  Auto_Functor<X,Functor>& operator= (Auto_Functor & rhs);
 
+  /// noexcept
   template<typename Y>
-  Auto_Functor(Auto_Functor<Y,Functor>& rhs); // noexcept
+  Auto_Functor(Auto_Functor<Y,Functor>& rhs);
 
+  /// noexcept
   template<typename Y>
-  Auto_Functor<X,Functor>& operator= (Auto_Functor<Y,Functor>& rhs); // noexcept
+  Auto_Functor<X,Functor>& operator= (Auto_Functor<Y,Functor>& rhs);
 
-  ~Auto_Functor(); // noexcept
+  /// noexcept
+  ~Auto_Functor();
 
-  X & operator*() const; // noexcept
+  /// noexcept
+  X & operator*() const;
 
-  X * operator->() const; // noexcept
+  /// noexcept
+  X * operator->() const;
 
-  X * get(); // noexcept
+  /// noexcept
+  X * get();
 
-  X * release(); // noexcept
+  /// noexcept
+  X * release();
 
-  void reset (X * p = nullptr); // noexcept
+  /// noexcept
+  void reset (X * p = nullptr);
 
-  void reset (X * p, Functor f); // noexcept
+  /// noexcept
+  void reset (X * p, Functor f);
 
-  Functor const & functor() const; // noexcept
+  /// noexcept
+  Functor const & functor() const;
 
-  Auto_Functor(Auto_Functor_Ref<X,Functor> rhs); // noexcept
+  /// noexcept
+  Auto_Functor(Auto_Functor_Ref<X,Functor> rhs);
 
-  Auto_Functor<X,Functor> & operator=(Auto_Functor_Ref<X,Functor> rhs); // noexcept
+  /// noexcept
+  Auto_Functor<X,Functor> & operator=(Auto_Functor_Ref<X,Functor> rhs);
 
-  template<typename Y> operator Auto_Functor_Ref<Y,Functor>(); // noexcept
+  /// noexcept
+  template<typename Y> operator Auto_Functor_Ref<Y,Functor>();
 
-  template<typename Y> operator Auto_Functor<Y,Functor>(); // noexcept
+  /// noexcept
+  template<typename Y> operator Auto_Functor<Y,Functor>();
 
 private:
   X * p_;
