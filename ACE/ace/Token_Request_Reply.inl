@@ -113,8 +113,8 @@ ACE_INLINE void
 ACE_Token_Request::token_name (const ACE_TCHAR *token_name,
                                const ACE_TCHAR *client_id)
 {
-  size_t token_name_length = ACE_OS::strlen (token_name) + 1; // Add 1 for '\0'.
-  size_t client_id_length = ACE_OS::strlen (client_id) + 1; // Add 1 for '\0'.
+  const size_t token_name_length = ACE_OS::strlen (token_name) + 1; // Add 1 for '\0'.
+  const size_t client_id_length = ACE_OS::strlen (client_id) + 1; // Add 1 for '\0'.
 
   // Set up pointers and copy token_name and client_id into request.
   token_name_ = this->transfer_.data_;

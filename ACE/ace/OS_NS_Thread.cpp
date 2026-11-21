@@ -4985,7 +4985,7 @@ add_to_argv (ACE_VX_USR_ARG_T& argc, char** argv, int max_args, char* string)
 {
   char indouble   = 0;
   size_t previous = 0;
-  size_t length   = std::strlen (string);
+  const size_t length = std::strlen (string);
 
   if (length > 0)
     {

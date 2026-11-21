@@ -578,9 +578,9 @@ format_errmsg (unsigned int errcode, const char *prefix)
   static char errmsg[errmsgsize];
 
   sprintf (errmsg, "%s: ", prefix);
-  size_t len = strlen (errmsg);
+  const size_t len = strlen (errmsg);
   char *next = &errmsg[len];
-  size_t max_fmt = errmsgsize - len;
+  const size_t max_fmt = errmsgsize - len;
   if (0 != FormatMessage (FORMAT_MESSAGE_FROM_SYSTEM |
                           FORMAT_MESSAGE_IGNORE_INSERTS,
                           0,

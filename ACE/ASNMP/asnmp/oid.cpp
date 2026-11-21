@@ -234,7 +234,7 @@ Oid& Oid::operator+=( const char *a)
   {
     ++a;
   }
-  size_t sz = std::strlen (a);
+  const size_t sz = std::strlen (a);
 
   if (valid()) {
     unsigned long const n = (smival.value.oid.len *SNMPCHARSIZE) + smival.value.oid.len + 1 + sz;
