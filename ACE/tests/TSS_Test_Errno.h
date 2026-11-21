@@ -82,8 +82,8 @@ public:
 
 private:
   /// errno_ and lineno_ are thread-specific data, so they need no lock.
-  int errno_;
-  int lineno_;
+  int errno_ {};
+  int lineno_ {};
 
   static int flags_;
   static int created_;
