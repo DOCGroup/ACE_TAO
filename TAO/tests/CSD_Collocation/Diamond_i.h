@@ -10,63 +10,63 @@
 class Top_i : public POA_Diamond::Top
 {
 public:
+  /// Constructor and destructor.
   Top_i ();
   ~Top_i () override;
-  // Ctor and dtor.
 
+  /// Returns the shape of this object.
   char * shape () override;
-  // Return the shape of this object (interface.)
 };
 
 class Left_i : public POA_Diamond::Left
 {
 public:
+  /// Constructor and destructor.
   Left_i ();
   ~Left_i () override;
-  // Ctor, dtor.
 
+  /// Returns the shape of this object.
   char * shape () override;
-  // Return the shape of this object (interface.)
 
+  /// Returns the color of this object.
   char * color () override;
-  // Return the color of this object (interface.)
 };
 
 class Right_i : public POA_Diamond::Right
 {
 public:
+  /// Constructor and destructor.
   Right_i ();
   ~Right_i () override;
-  // Ctor, dtor.
 
+  /// Returns the shape of this object.
   char * shape () override;
-  // Return the shape of this object (interface.)
 
+  /// Returns the color of this object.
   virtual char * color ();
-  // Return the color of this object (interface.)
 
+  /// Returns the width of the object.
   CORBA::Long width () override;
-  // Return the width of the stuff.
 };
 
 class Buttom_i : public POA_Diamond::Buttom
 {
 public:
+  /// Constructor and destructor.
   Buttom_i ();
   ~Buttom_i () override;
-  // Ctor, dtor.
 
+  /// Returns the shape of this object.
   char * shape () override;
-  // Return the shape of this object (interface.)
 
+  /// Returns the color of this object.
   char * color () override;
-  // Return the color of this object (interface.)
 
+  /// Returns the width of the object.
   CORBA::Long width () override;
-  // Return the width of the stuff.
 
+  /// Returns the name of the object.
   char * name () override;
-  // Return the name of the object.
 };
 
 #endif /* TAO_DIAMOND_I_H */

@@ -18,8 +18,8 @@ public:
   Top_i &operator= (Top_i const &) = delete;
   Top_i &operator= (Top_i &&) = delete;
 
+  /// Returns the shape of this object.
   char * shape () override;
-  // Return the shape of this object (interface.)
 };
 
 class Diamond_Export Left_i : public POA_Diamond::Left
@@ -33,11 +33,11 @@ public:
   Left_i &operator= (Left_i const &) = delete;
   Left_i &operator= (Left_i &&) = delete;
 
+  /// Returns the shape of this object.
   char * shape () override;
-  // Return the shape of this object (interface.)
 
+  /// Returns the color of this object.
   char * color () override;
-  // Return the color of this object (interface.)
 };
 
 class Diamond_Export Right_i : public POA_Diamond::Right
@@ -51,11 +51,11 @@ public:
   Right_i &operator= (Right_i const &) = delete;
   Right_i &operator= (Right_i &&) = delete;
 
+  /// Returns the shape of this object.
   char * shape () override;
-  // Return the shape of this object (interface.)
 
+  /// Returns the width of the object.
   CORBA::Long width () override;
-  // Return the width of the stuff.
 };
 
 class Diamond_Export Buttom_i : public POA_Diamond::Buttom
@@ -69,17 +69,17 @@ public:
   Buttom_i &operator= (Buttom_i const &) = delete;
   Buttom_i &operator= (Buttom_i &&) = delete;
 
+  /// Returns the shape of this object.
   char * shape () override;
-  // Return the shape of this object (interface.)
 
+  /// Returns the color of this object.
   char * color () override;
-  // Return the color of this object (interface.)
 
+  /// Returns the width of the object.
   CORBA::Long width () override;
-  // Return the width of the stuff.
 
+  /// Returns the name of the object.
   char * name () override;
-  // Return the name of the object.
 };
 
 #endif /* TAO_DIAMOND_I_H */
