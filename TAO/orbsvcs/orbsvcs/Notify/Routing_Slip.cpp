@@ -296,7 +296,7 @@ Routing_Slip::forward (TAO_Notify_ProxySupplier* ps, bool filter)
 
   enter_state_transient (guard);
   guard.acquire();
-  size_t request_id = delivery_requests_.size ();
+  size_t const request_id = delivery_requests_.size ();
 
   if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: add Delivery_Request #%B: Forward %s; completed %B of %B\n"),
@@ -348,7 +348,7 @@ Routing_Slip::dispatch (
   TAO_Notify_ProxySupplier::Ptr psgrd(ps);
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
-  size_t request_id = delivery_requests_.size ();
+  size_t const request_id = delivery_requests_.size ();
 
   if (DEBUG_LEVEL > 8)
   {
@@ -904,7 +904,7 @@ Routing_Slip::enter_state_terminal (Routing_Slip_Guard & guard)
 void
 Routing_Slip::marshal (TAO_OutputCDR & cdr)
 {
-  size_t request_count = this->delivery_requests_.size();
+  size_t const request_count = this->delivery_requests_.size();
   cdr.write_ulong (
     ACE_Utils::truncate_cast<CORBA::ULong> (request_count - this->complete_requests_));
   for (size_t nreq {}; nreq < request_count; ++nreq)

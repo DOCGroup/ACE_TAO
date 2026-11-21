@@ -281,7 +281,7 @@ ACE_Dev_Poll_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
       // Check to see if we've got a short read.
       if (static_cast<size_t> (n) != to_read)
         {
-          size_t remainder = to_read - n;
+          size_t const remainder = to_read - n;
 
           // If so, try to recover by reading the remainder.  If this
           // doesn't work we're in big trouble since the input stream

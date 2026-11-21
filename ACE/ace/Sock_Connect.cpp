@@ -912,7 +912,7 @@ return 0;
   int const num_ifs = MAX_INTERFACES;
 
   struct ifconf ifcfg;
-  size_t ifreq_size = num_ifs * sizeof (struct ifreq);
+  size_t const ifreq_size = num_ifs * sizeof (struct ifreq);
   struct ifreq *p_ifs;
 
 #if defined (ACE_HAS_ALLOC_HOOKS)

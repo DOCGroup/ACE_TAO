@@ -419,7 +419,7 @@ ACE_MEM_IO::send (const ACE_Message_Block *message_block,
       return -1;                  // Something went seriously wrong.
     }
 
-  size_t len = message_block->total_length ();
+  size_t const len = message_block->total_length ();
 
   if (len != 0)
     {

@@ -371,7 +371,7 @@ ACE_ATM_Addr::addr_to_string (ACE_TCHAR addr[],
                    ACE_TEXT ("%s"),
                    atmnsap_ntoa (nsap));
 
-  size_t total_len = ACE_OS::strlen (buffer) + sizeof ('\0');
+  size_t const total_len = ACE_OS::strlen (buffer) + sizeof ('\0');
 
   if (addrlen < total_len)
     {

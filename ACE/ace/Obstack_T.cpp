@@ -42,7 +42,7 @@ ACE_Obstack_T<ACE_CHAR_T>::request (size_t len)
 
   // Check to see if there's room for the requested length, including
   // any part of an existing string, if any.
-  size_t resulting_len = (this->curr_->cur_ - this->curr_->block_) + len;
+  size_t const resulting_len = (this->curr_->cur_ - this->curr_->block_) + len;
 
   // Increase the length of the underlying chunks if the request made is
   // for bigger sized chunks.
@@ -79,7 +79,7 @@ ACE_Obstack_T<ACE_CHAR_T>::request (size_t len)
       // Copy any initial characters to the new chunk.
       if (temp->cur_ != temp->block_)
         {
-          size_t datasize = temp->cur_ - temp->block_;
+          size_t const datasize = temp->cur_ - temp->block_;
           std::memcpy (this->curr_->block_, temp->block_, datasize);
           this->curr_->cur_ = this->curr_->block_ + datasize;
           // Reset the old chunk.
@@ -170,7 +170,7 @@ ACE_Obstack_T<ACE_CHAR_T>::copy (const ACE_CHAR_T *s,
       return 0;
     }
 
-  size_t tsize = len * sizeof (ACE_CHAR_T);
+  size_t const tsize = len * sizeof (ACE_CHAR_T);
   std::memcpy (this->curr_->cur_, s, tsize);
   this->curr_->cur_ += tsize ;
   return this->freeze ();
