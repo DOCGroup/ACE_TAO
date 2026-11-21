@@ -2324,7 +2324,6 @@ ACE_POSIX_Asynch_Read_Dgram_Result::ACE_POSIX_Asynch_Read_Dgram_Result
       (handler_proxy, act, event, 0, 0, priority, signal_number),
     bytes_to_read_ (bytes_to_read),
     message_block_ (message_block),
-    remote_address_ (nullptr),
     addr_len_ (0),
     flags_ (flags),
     handle_ (handle)
