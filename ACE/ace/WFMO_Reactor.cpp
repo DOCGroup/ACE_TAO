@@ -1474,7 +1474,7 @@ ACE_WFMO_Reactor_Handler_Repository::modify_network_events_i (ACE_HANDLE io_hand
                                                               int operation)
 {
   long *modified_network_events = &new_network_events;
-  int found = 0;
+  bool found = false;
   size_t i;
 
   // First go through the current entries
@@ -1485,7 +1485,7 @@ ACE_WFMO_Reactor_Handler_Repository::modify_network_events_i (ACE_HANDLE io_hand
     if (io_handle == this->current_info_[i].io_handle_ &&
         !this->current_info_[i].delete_entry_)
       {
-        found = 1;
+        found = true;
         modified_network_events = &this->current_info_[i].network_events_;
         delete_event = this->current_info_[i].delete_event_;
         event_handle = this->current_handles_[i];
@@ -1499,7 +1499,7 @@ ACE_WFMO_Reactor_Handler_Repository::modify_network_events_i (ACE_HANDLE io_hand
     if (io_handle == this->current_suspended_info_[i].io_handle_ &&
         !this->current_suspended_info_[i].delete_entry_)
       {
-        found = 1;
+        found = true;
         modified_network_events = &this->current_suspended_info_[i].network_events_;
         delete_event = this->current_suspended_info_[i].delete_event_;
         event_handle = this->current_suspended_info_[i].event_handle_;
@@ -1513,7 +1513,7 @@ ACE_WFMO_Reactor_Handler_Repository::modify_network_events_i (ACE_HANDLE io_hand
     if (io_handle == this->to_be_added_info_[i].io_handle_ &&
         !this->to_be_added_info_[i].delete_entry_)
       {
-        found = 1;
+        found = true;
         modified_network_events = &this->to_be_added_info_[i].network_events_;
         delete_event = this->to_be_added_info_[i].delete_event_;
         event_handle = this->to_be_added_info_[i].event_handle_;
@@ -1539,7 +1539,7 @@ ACE_Event_Handler *
 ACE_WFMO_Reactor_Handler_Repository::handler (ACE_HANDLE handle,
                                               long &existing_masks)
 {
-  int found = 0;
+  bool found = false;
   size_t i = 0;
   ACE_Event_Handler *event_handler {};
   existing_masks = 0;
@@ -1555,7 +1555,7 @@ ACE_WFMO_Reactor_Handler_Repository::handler (ACE_HANDLE handle,
          handle == this->current_handles_[i]) &&
         !this->current_info_[i].delete_entry_)
       {
-        found = 1;
+        found = true;
         event_handler = this->current_info_[i].event_handler_;
         existing_masks = this->current_info_[i].network_events_;
       }
@@ -1569,7 +1569,7 @@ ACE_WFMO_Reactor_Handler_Repository::handler (ACE_HANDLE handle,
          handle == this->current_suspended_info_[i].event_handle_) &&
         !this->current_suspended_info_[i].delete_entry_)
       {
-        found = 1;
+        found = true;
         event_handler = this->current_suspended_info_[i].event_handler_;
         existing_masks = this->current_suspended_info_[i].network_events_;
       }
@@ -1583,7 +1583,7 @@ ACE_WFMO_Reactor_Handler_Repository::handler (ACE_HANDLE handle,
          handle == this->to_be_added_info_[i].event_handle_) &&
         !this->to_be_added_info_[i].delete_entry_)
       {
-        found = 1;
+        found = true;
         event_handler = this->to_be_added_info_[i].event_handler_;
         existing_masks = this->to_be_added_info_[i].network_events_;
       }
