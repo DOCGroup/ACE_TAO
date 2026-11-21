@@ -75,9 +75,12 @@ ACE_OS::argv_to_string (int argc,
           if (argv_p == argv)
             {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-              argv_p = (ACE_TCHAR **) ACE_Allocator::instance()->malloc (argc * sizeof (ACE_TCHAR *));
+              argv_p = static_cast<ACE_TCHAR **> (
+                ACE_Allocator::instance ()->malloc (
+                  argc * sizeof (ACE_TCHAR *)));
 #else
-              argv_p = (ACE_TCHAR **) ACE_OS::malloc (argc * sizeof (ACE_TCHAR *));
+              argv_p = static_cast<ACE_TCHAR **> (
+                ACE_OS::malloc (argc * sizeof (ACE_TCHAR *)));
 #endif /* ACE_HAS_ALLOC_HOOKS */
               if (argv_p == nullptr)
                 {
@@ -110,9 +113,12 @@ ACE_OS::argv_to_string (int argc,
           if (argv_p == argv)
             {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-              argv_p = (ACE_TCHAR **) ACE_Allocator::instance()->malloc (argc * sizeof (ACE_TCHAR *));
+              argv_p = static_cast<ACE_TCHAR **> (
+                ACE_Allocator::instance ()->malloc (
+                  argc * sizeof (ACE_TCHAR *)));
 #else
-              argv_p = (ACE_TCHAR **) ACE_OS::malloc (argc * sizeof (ACE_TCHAR *));
+              argv_p = static_cast<ACE_TCHAR **> (
+                ACE_OS::malloc (argc * sizeof (ACE_TCHAR *)));
 #endif /* ACE_HAS_ALLOC_HOOKS */
               if (argv_p == nullptr)
                 {
@@ -501,7 +507,7 @@ ACE_OS::read_n (ACE_HANDLE handle,
        bytes_transferred += n)
     {
       n = ACE_OS::read (handle,
-                        (char *) buf + bytes_transferred,
+                        static_cast<char *> (buf) + bytes_transferred,
                         len - bytes_transferred);
 
       if (n == -1 || n == 0)
@@ -1013,7 +1019,7 @@ ACE_OS::write_n (ACE_HANDLE handle,
        bytes_transferred += n)
     {
       n = ACE_OS::write (handle,
-                         (char *) buf + bytes_transferred,
+                         static_cast<char *> (buf) + bytes_transferred,
                          len - bytes_transferred);
 
       if (n == -1 || n == 0)
