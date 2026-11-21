@@ -38,7 +38,7 @@ public:
 private:
   ThreeTier_var const target_;
 
-  // Number of messages to send (make this configurable)
+  /// Number of messages to send (make this configurable)
   unsigned long const counter_ {5};
 };
 

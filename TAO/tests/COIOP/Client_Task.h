@@ -31,7 +31,7 @@ private:
 
   CORBA::ORB_var corb_;
 
-  // Boolean to indicate whether the invocation should work or not.
+  /// Boolean to indicate whether the invocation should work or not.
   bool const result_;
 };
 

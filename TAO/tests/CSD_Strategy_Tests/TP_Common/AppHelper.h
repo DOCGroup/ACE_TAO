@@ -80,18 +80,18 @@ struct CSD_TP_Test_Export AppHelper
   static CORBA::Object_ptr activate_servant(PortableServer::POA_ptr poa,
                                             PortableServer::Servant servant);
 
-  // This helper method is used because there is a chance that the
-  // initial CORBA request made to the target ORB will fail during
-  // connection establishment with a TRANSIENT CORBA SystemException.
-  // This occurs for some platforms (ie, windows) when several clients
-  // make their initial CORBA request to the same ORB at the same time,
-  // causing the ORB to attempt to handle several connection establishments
-  // at one time.  Apparently, under certain conditions, it will throw the
-  // TRANSIENT exception to tell the client application to "try again later".
-  // The analogy is making a phone call.  Sometimes you get a busy tone.
-  // This means "try again later".
-  // This helper function will retry until the connection establishment
-  // works - or until it decides that enough is enough.
+  /// This helper method is used because there is a chance that the
+  /// initial CORBA request made to the target ORB will fail during
+  /// connection establishment with a TRANSIENT CORBA SystemException.
+  /// This occurs for some platforms (ie, windows) when several clients
+  /// make their initial CORBA request to the same ORB at the same time,
+  /// causing the ORB to attempt to handle several connection establishments
+  /// at one time.  Apparently, under certain conditions, it will throw the
+  /// TRANSIENT exception to tell the client application to "try again later".
+  /// The analogy is making a phone call.  Sometimes you get a busy tone.
+  /// This means "try again later".
+  /// This helper function will retry until the connection establishment
+  /// works - or until it decides that enough is enough.
   static bool validate_connection (CORBA::Object_ptr obj);
 };
 

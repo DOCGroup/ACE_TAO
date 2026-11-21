@@ -5,7 +5,7 @@
 #include "tao/PortableServer/Servant_Base.h"
 #include "ace/Vector_T.h"
 
-// The T type is a concrete servant type.
+/// The T type is a concrete servant type.
 template <class T>
 class ServantList
 {
