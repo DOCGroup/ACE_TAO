@@ -213,7 +213,7 @@ public:
 
   virtual ~Repeats_Handler ();
 
-  // Initialization.
+  /// Initialization.
   virtual int open (Echo_Handler *check_handler,
                     ACE_Reactor * const reactor = ACE_Reactor::instance (),
                     unsigned int seconds_timer = 60);
@@ -221,18 +221,18 @@ public:
   int handle_close (ACE_HANDLE handle,
                     ACE_Reactor_Mask close_mask) override;
 
-  // dispatches a new echo-checks series
+  /// dispatches a new echo-checks series
   int handle_timeout (ACE_Time_Value const & current_time,
                       void const * act = nullptr) override;
 
 private:
-  // an instance of a handler
+  /// an instance of a handler
   Echo_Handler * check_handler_;
 
-  // timer in seconds to repeat the checks
+  /// timer in seconds to repeat the checks
   unsigned int seconds_timer_;
 
-  // counts repeats
+  /// counts repeats
   unsigned long counter_;
 };
 

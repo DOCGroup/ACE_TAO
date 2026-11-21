@@ -105,31 +105,31 @@ private:
   /// Get command line options.
   unsigned int get_options (int argc, ACE_TCHAR *argv []);
 
-  // Time values to pause before notifying the supplier each time.
+  /// Time values to pause before notifying the supplier each time.
   ACE_Time_Value nav_pause_;
   ACE_Time_Value weap_pause_;
 
-  // POA client references.
+  /// POA client references.
   PortableServer::POA_var root_POA_var_;
   PortableServer::POAManager_var poa_manager_;
 
-  // Naming Service client reference and names to use.
+  /// Naming Service client reference and names to use.
   CosNaming::NamingContext_var naming_context_;
   CosNaming::Name channel_hi_name_;
   CosNaming::Name channel_lo_name_;
   CosNaming::Name sched_hi_name_;
   CosNaming::Name sched_lo_name_;
 
-  // Scheduling Service servant implementation pointers.
+  /// Scheduling Service servant implementation pointers.
   POA_RtecScheduler::Scheduler * sched_hi_impl_;
   POA_RtecScheduler::Scheduler * sched_lo_impl_;
 
-  // Scheduling Service client references.
+  /// Scheduling Service client references.
   RtecScheduler::Scheduler_var sched_hi_;
   RtecScheduler::Scheduler_var sched_lo_;
 
-  // Handles for the dummy rt_infos registered with the
-  // schedulers in order to force priority differentiation.
+  /// Handles for the dummy rt_infos registered with the
+  /// schedulers in order to force priority differentiation.
   RtecScheduler::handle_t sched_hi_rt_info_hi_;
   RtecScheduler::handle_t sched_hi_rt_info_lo_;
   RtecScheduler::handle_t sched_lo_rt_info_hi_;
