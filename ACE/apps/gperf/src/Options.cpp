@@ -523,7 +523,6 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         case 'k':
           {
             int const BAD_VALUE = -1;
-            int value;
             Iterator expand (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()),
                              1,
                              MAX_KEY_POS - 1,
@@ -540,28 +539,35 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
               {
                 char *l_key_pos;
 
-                for (l_key_pos = key_positions_.data ();
-                     (value = expand ()) != EOS;
-                     ++l_key_pos)
-                  if (value == BAD_VALUE)
-                    {
-                      ACE_ERROR_RETURN ((LM_ERROR,
-                                         "Illegal key value or range, use 1,2,3-%d,'$' or '*'.\n%r",
-                                         MAX_KEY_POS - 1,
-                                         usage),
-                                        -1);
-                    }
-                  else if (l_key_pos == key_positions_.data () + MAX_KEY_POS - 1)
-                    {
-                      ACE_ERROR_RETURN ((LM_ERROR,
-                                         "Maximum of %d key positions may be specified.\n",
-                                         MAX_KEY_POS - 1),
-                                        -1);
-                    }
-                  else
-                    {
-                      *l_key_pos = static_cast<char> (value);
-                    }
+                for (l_key_pos = key_positions_.data (); ; ++l_key_pos)
+                  {
+                    int const value = expand ();
+
+                    if (value == EOS)
+                      {
+                        break;
+                      }
+
+                    if (value == BAD_VALUE)
+                      {
+                        ACE_ERROR_RETURN ((LM_ERROR,
+                                           "Illegal key value or range, use 1,2,3-%d,'$' or '*'.\n%r",
+                                           MAX_KEY_POS - 1,
+                                           usage),
+                                          -1);
+                      }
+                    else if (l_key_pos == key_positions_.data () + MAX_KEY_POS - 1)
+                      {
+                        ACE_ERROR_RETURN ((LM_ERROR,
+                                           "Maximum of %d key positions may be specified.\n",
+                                           MAX_KEY_POS - 1),
+                                          -1);
+                      }
+                    else
+                      {
+                        *l_key_pos = static_cast<char> (value);
+                      }
+                  }
 
                 *l_key_pos = EOS;
 
