@@ -162,7 +162,7 @@ ACE_TMAIN (int argc, ACE_TCHAR**argv)
   // Print a message when data is recv'd on stdin...
   Stdout stdout_handler (reactor);
   Stdin stdin_handler (stdout_handler);
-  reactor.register_handler (&stdin_handler,
+  reactor.register_handler (std::addressof (stdin_handler),
                             ACE_Event_Handler::READ_MASK);
 
   // Print a message every 10 seconds.
@@ -182,8 +182,8 @@ ACE_TMAIN (int argc, ACE_TCHAR**argv)
   // Demonstrate Reactor/Xt event loop unification.
   XtAppMainLoop (XtWidgetToApplicationContext (top_level));
 
-  reactor.cancel_timer (&stdin_handler);
-  reactor.remove_handler (&stdin_handler, ACE_Event_Handler::READ_MASK);
+  reactor.cancel_timer (std::addressof (stdin_handler));
+  reactor.remove_handler (std::addressof (stdin_handler), ACE_Event_Handler::READ_MASK);
   reactor.remove_handler (&stdout_handler, ACE_Event_Handler::WRITE_MASK);
 
   return 0;

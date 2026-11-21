@@ -269,7 +269,7 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
       ok_to_go = false;
     }
 
-  int nr_cancelled = reactor.cancel_timer (&handler);
+  int nr_cancelled = reactor.cancel_timer (std::addressof (handler));
   if (nr_cancelled > 0)
     {
       ACE_ERROR ((LM_ERROR,

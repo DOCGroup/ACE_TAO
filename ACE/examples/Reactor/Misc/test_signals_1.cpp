@@ -8,6 +8,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
 
+#include <memory>
+
 // Number of times to allow signal to execute until we quit.
 static size_t signal_count = 10;
 
@@ -105,7 +107,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Make sure to remove my_handler before exiting main() since
   // otherwise weird things can happen...
-  if (ACE_Reactor::instance ()->cancel_timer (&my_handler) == -1)
+  if (ACE_Reactor::instance ()->cancel_timer (std::addressof (my_handler)) == -1)
     {
       ACE_ERROR_RETURN ((LM_DEBUG,
                          "%p\n",

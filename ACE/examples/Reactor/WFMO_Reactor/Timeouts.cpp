@@ -18,6 +18,8 @@
 #include "ace/Service_Config.h"
 #include "ace/OS_main.h"
 
+#include <memory>
+
 /**
  * @class Timeout_Handler
  *
@@ -76,7 +78,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "main"), -1);
     }
 
-  ACE_Reactor::instance ()->cancel_timer (&handler);
+  ACE_Reactor::instance ()->cancel_timer (std::addressof (handler));
 
   return 0;
 }

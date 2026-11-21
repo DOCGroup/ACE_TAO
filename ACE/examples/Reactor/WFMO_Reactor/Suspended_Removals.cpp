@@ -65,7 +65,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Time_Value sleep_time (1);
 
   int result =
-    reactor.register_handler (&handler);
+    reactor.register_handler (std::addressof (handler));
   ACE_TEST_ASSERT (result == 0);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
@@ -87,7 +87,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                                                 0, 0, 0, 0);
 
   result =
-    reactor.register_handler (&handler);
+    reactor.register_handler (std::addressof (handler));
   ACE_TEST_ASSERT (result == 0);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
@@ -100,7 +100,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                                                 0, 0, 0, 0);
 
   result =
-    reactor.suspend_handler (&handler);
+    reactor.suspend_handler (std::addressof (handler));
   ACE_TEST_ASSERT (result == 0);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
@@ -122,14 +122,14 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                                                 0, 0, 0, 0);
 
   result =
-    reactor.register_handler (&handler);
+    reactor.register_handler (std::addressof (handler));
   ACE_TEST_ASSERT (result == 0);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
                                                 1, 0, 0, 0);
 
   result =
-    reactor.suspend_handler (&handler);
+    reactor.suspend_handler (std::addressof (handler));
   ACE_TEST_ASSERT (result == 0);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
@@ -142,7 +142,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                                                 0, 0, 0, 0);
 
   result =
-    reactor.resume_handler (&handler);
+    reactor.resume_handler (std::addressof (handler));
   ACE_TEST_ASSERT (result == 0);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,

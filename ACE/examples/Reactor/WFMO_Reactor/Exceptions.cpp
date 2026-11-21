@@ -20,6 +20,8 @@
 
 #include "ace/WFMO_Reactor.h"
 
+#include <memory>
+
 class Event_Handler : public ACE_Event_Handler
 {
 public:
@@ -93,7 +95,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 {
   Event_Handler handler;
   ACE_WFMO_Reactor wfmo_reactor;
-  wfmo_reactor.register_handler (&handler);
+  wfmo_reactor.register_handler (std::addressof (handler));
 
   ACE_WFMO_Reactor_Test::doit (wfmo_reactor);
 

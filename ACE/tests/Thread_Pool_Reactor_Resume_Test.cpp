@@ -234,7 +234,7 @@ svr_worker (void *)
 {
   // Server thread function.
   int result =
-    ACE_Reactor::instance ()->run_reactor_event_loop (&reactor_event_hook);
+    ACE_Reactor::instance ()->run_reactor_event_loop (std::addressof (reactor_event_hook));
 
   if (result == -1)
     {
