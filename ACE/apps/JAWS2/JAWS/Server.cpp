@@ -91,7 +91,7 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol,
                    JAWS_Dispatch_Policy *policy)
 {
   JAWS_Dispatch_Policy * const selected_policy =
-    policy == nullptr ? &this->policy_ : policy;
+    policy == nullptr ? std::addressof (this->policy_) : policy;
 
   std::unique_ptr<JAWS_Data_Block, ACE_Message_Block_Unique_Ptr_Deleter> const db {
     new JAWS_Data_Block
