@@ -96,7 +96,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // Register a 2 second timer.
   ACE_Time_Value foo_tv (2);
   if (proactor.schedule_timer (handler,
-                               (void *) "Proactor",
+                               "Proactor",
                                ACE_Time_Value::zero,
                                foo_tv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
@@ -104,7 +104,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // Register a 3 second timer.
   ACE_Time_Value bar_tv (3);
   if (ACE_Reactor::instance ()->schedule_timer (std::addressof (handler),
-                                                (void *) "Reactor",
+                                                "Reactor",
                                                 ACE_Time_Value::zero,
                                                 bar_tv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);

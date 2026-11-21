@@ -87,7 +87,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // Register a 2 second timer.
   ACE_Time_Value foo_tv (2);
   if (ACE_Proactor::instance ()->schedule_timer (handler,
-                                                 (void *) "Foo",
+                                                 "Foo",
                                                  ACE_Time_Value::zero,
                                                  foo_tv) == -1)
   {
@@ -97,7 +97,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // Register a 3 second timer.
   ACE_Time_Value bar_tv (3);
   if (ACE_Proactor::instance ()->schedule_timer (handler,
-                                                 (void *) "Bar",
+                                                 "Bar",
                                                  ACE_Time_Value::zero,
                                                  bar_tv) == -1)
   {
