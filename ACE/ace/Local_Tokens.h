@@ -872,7 +872,7 @@ protected:
 
   /// Reference to the actual logical token.  Many ACE_Local_Mutex
   /// proxies can reference the same ACE_Mutex_Token.
-  ACE_Tokens *token_;
+  ACE_Tokens *token_ {};
 
   /// Handles cond_var waits.
   int handle_options (ACE_Synch_Options &options,

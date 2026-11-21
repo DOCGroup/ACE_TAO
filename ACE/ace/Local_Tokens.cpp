@@ -1190,8 +1190,7 @@ ACE_Token_Proxy::name () const
 #  pragma warning (disable:4355)  /* Use of 'this' in initializer list */
 #endif
 ACE_Token_Proxy::ACE_Token_Proxy ()
-: token_ (nullptr),
-  waiter_ (this, nullptr)
+  : waiter_ (this, nullptr)
 {
   ACE_TRACE ("ACE_Token_Proxy::ACE_Token_Proxy");
 }
