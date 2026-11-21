@@ -186,7 +186,7 @@ get(char *loc, NETPORT port, char *url, rqst_timer_t *timer)
     }
 
     /* get and check status code from the first line of the header */
-    count = sscanf(headerbuffer, "HTTP/%s %d", version, &status);
+    count = sscanf(headerbuffer, "HTTP/%99s %d", version, &status);
     if (count != 2) {
         returnerr("Bad status line in get(): %s\n", headerbuffer);
         goto error;
