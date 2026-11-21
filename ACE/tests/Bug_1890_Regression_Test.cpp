@@ -299,7 +299,7 @@ Timer::remove_some_handlers()
     ACE_Event_Handler::ALL_EVENTS_MASK | ACE_Event_Handler::DONT_CALL;
   for (int i = 0; i != nhandlers; ++i)
     {
-      if (-1 == reactor()->remove_handler(&handler_[i], mask))
+      if (-1 == reactor()->remove_handler(std::addressof (handler_[i]), mask))
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Cannot remove handler %d in %p\n"),
@@ -308,7 +308,7 @@ Timer::remove_some_handlers()
         }
     }
 
-  if (-1 == reactor()->register_handler(&special_handler(),
+  if (-1 == reactor()->register_handler(std::addressof (special_handler()),
                                         ACE_Event_Handler::ALL_EVENTS_MASK))
     {
       ACE_ERROR ((LM_ERROR,

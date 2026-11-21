@@ -33,6 +33,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
 #include <atomic>
+#include <memory>
 
 // Globals for this test
 std::atomic<bool> stop_test {};
@@ -132,10 +133,10 @@ worker (void *)
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  int result = reactor.register_handler (&simple_handler, simple_handler.event1_.handle ());
+  int result = reactor.register_handler (std::addressof (simple_handler), simple_handler.event1_.handle ());
   ACE_TEST_ASSERT (result == 0);
 
-  result = reactor.register_handler (&simple_handler, simple_handler.event2_.handle ());
+  result = reactor.register_handler (std::addressof (simple_handler), simple_handler.event2_.handle ());
   ACE_TEST_ASSERT (result == 0);
 
   result = ACE_OS::thr_create (worker, nullptr, 0, 0);

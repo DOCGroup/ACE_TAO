@@ -417,7 +417,7 @@ struct Run_Test
 
         ACE_Pipe the_pipe;
         if (the_pipe.open () != 0
-            || register_handler (&reactor,
+            || register_handler (std::addressof (reactor),
                                  the_pipe.read_handle (),
                                  okay_to_close,
                                  suspension_test) != 0

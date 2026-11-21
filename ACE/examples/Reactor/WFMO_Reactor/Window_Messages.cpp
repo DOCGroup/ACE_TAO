@@ -76,7 +76,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   event_handler.iterations_ = 5;
   int const result =
-    ACE_Reactor::instance ()->register_handler (&event_handler,
+    ACE_Reactor::instance ()->register_handler (std::addressof (event_handler),
                                                 event_handler.handle_.handle ());
   ACE_TEST_ASSERT (result == 0);
 

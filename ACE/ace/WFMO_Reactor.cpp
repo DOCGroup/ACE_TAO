@@ -1230,7 +1230,7 @@ ACE_WFMO_Reactor::open (size_t size,
                       -1);
 
   // Register for <wakeup_all_threads> event
-  if (this->register_handler (&this->wakeup_all_threads_handler_,
+  if (this->register_handler (std::addressof (this->wakeup_all_threads_handler_),
                               this->wakeup_all_threads_.handle ()) == -1)
     ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),

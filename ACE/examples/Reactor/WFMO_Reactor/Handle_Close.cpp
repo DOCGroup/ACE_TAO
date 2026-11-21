@@ -307,11 +307,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_Event_Handler::WRITE_MASK |
     ACE_Event_Handler::EXCEPT_MASK;
 
-  result = reactor->register_handler (&handler,
+  result = reactor->register_handler (std::addressof (handler),
                                       handler_mask);
   ACE_TEST_ASSERT (result == 0);
 
-  result = reactor->register_handler (&different_handler,
+  result = reactor->register_handler (std::addressof (different_handler),
                                       different_handler_mask);
   ACE_TEST_ASSERT (result == 0);
 

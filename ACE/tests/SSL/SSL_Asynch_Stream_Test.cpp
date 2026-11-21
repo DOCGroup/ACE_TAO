@@ -38,6 +38,8 @@
 #include "ace/SSL/SSL_SOCK_Acceptor.h"
 #include "ace/SSL/SSL_SOCK_Stream.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_THREADS) && (defined (ACE_WIN32) || (defined (ACE_HAS_AIO_CALLS)))
   // This only works on Win32 platforms and on Unix platforms
   // supporting POSIX aio calls.
@@ -545,7 +547,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   {
     return 1;
   }
-  if (-1 == ACE_Reactor::instance ()->register_handler (&acceptor,
+  if (-1 == ACE_Reactor::instance ()->register_handler (std::addressof (acceptor),
                                                         ACE_Event_Handler::ACCEPT_MASK))
     {
       ACE_ERROR ((LM_ERROR,
