@@ -165,7 +165,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT (" (%t) Allocating chunk 1: %B bytes, should succeed...\n"),
                   requested_size));
 
-      ptr1 = (char *) allocator.malloc (requested_size);
+      ptr1 = static_cast<char *> (allocator.malloc (requested_size));
       if (!ptr1)
         {
           ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT (" (%t) Failed, exiting.\n")), -1);
@@ -184,7 +184,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT (" (%t) Allocating chunk 2: %B bytes, too big, should fail...\n"),
                   requested_size));
 
-      ptr2 = (char *) allocator.malloc (requested_size);
+      ptr2 = static_cast<char *> (allocator.malloc (requested_size));
       if (!ptr2)
         {
           ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) OK, failed.\n")));
@@ -199,7 +199,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT (" (%t) Allocating chunk 3: %B bytes, ")
                   ACE_TEXT ("should succeed...\n"),
                   requested_size));
-      ptr3 = (char *) allocator.malloc (requested_size);
+      ptr3 = static_cast<char *> (allocator.malloc (requested_size));
       if (!ptr3)
         {
           ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT (" (%t) Failed, exiting.\n")), -1);
@@ -220,7 +220,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT (" should fail...\n"),
                   requested_size));
 
-      ptr4 = (char *) allocator.malloc (requested_size);
+      ptr4 = static_cast<char *> (allocator.malloc (requested_size));
       if (!ptr4)
         {
           ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) OK, failed.\n")));
@@ -247,7 +247,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Allocating chunk: %B bytes, ")
                   ACE_TEXT ("should succeed...\n"),
                   requested_size));
-      ptr1 = (char *) allocator.malloc (requested_size);
+      ptr1 = static_cast<char *> (allocator.malloc (requested_size));
       if (!ptr1)
       {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT (" (%t) Failed, exiting.\n")), -1);

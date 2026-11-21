@@ -84,7 +84,7 @@ child (void * = nullptr)
   result = shm_child.open (shm_key);
   ACE_TEST_ASSERT (result != -1);
 
-  char *shm = (char *) shm_child.malloc ();
+  char *shm = static_cast<char *> (shm_child.malloc ());
 
   ACE_TEST_ASSERT (shm != nullptr);
 
@@ -109,7 +109,7 @@ parent (void * = nullptr)
   result = shm_parent.open (shm_key, SHMSZ);
   ACE_TEST_ASSERT (result != -1);
 
-  char *shm = (char *) shm_parent.malloc ();
+  char *shm = static_cast<char *> (shm_parent.malloc ());
 
   ACE_TEST_ASSERT (shm != nullptr);
 

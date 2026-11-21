@@ -124,7 +124,7 @@ initialize (MALLOC *allocator)
 {
   double *temp {};
   ACE_ALLOCATOR_RETURN (temp,
-                        (double *) allocator->malloc (sizeof (double)),
+                        static_cast<double *> (allocator->malloc (sizeof (double))),
                         nullptr);
   // Make sure that doubles work!
   *temp = 5.0;
@@ -242,8 +242,8 @@ parent (Test_Data *data)
   int cntr;
 
   for (cntr = 0 ; cntr < 1024; ++cntr)
-    small_buf[cntr] = (char *) myalloc->malloc (1);
-  char *big_buf = (char *) myalloc->malloc (1024 * 4069);
+    small_buf[cntr] = static_cast<char *> (myalloc->malloc (1));
+  char *big_buf = static_cast<char *> (myalloc->malloc (1024 * 4069));
 #endif /* ACE_TEST_REMAP_ON_FAULT */
 
   int result = myalloc->bind ("bar", data);
