@@ -1,6 +1,8 @@
 #include "Logging_Service_i.h"
 #include "tao/debug.h"
 
+#include <memory>
+
 int
 Logger_Server::parse_args ()
 {
@@ -60,7 +62,7 @@ Logger_Server::init (int argc,
   // Activate the logger_factory.
   CORBA::String_var str =
     this->orb_manager_.activate_under_child_poa ("logger_factory",
-                                                 &this->factory_impl_);
+                                                 std::addressof (this->factory_impl_));
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "The IOR is: <%s>\n",

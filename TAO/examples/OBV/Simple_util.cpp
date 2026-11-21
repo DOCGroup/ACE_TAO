@@ -80,7 +80,7 @@ Server<Servant>::init (char const *servant_name,
     {
       CORBA::String_var str  =
         this->orb_manager_.activate_under_child_poa (servant_name,
-                                                     &this->servant_);
+                                                     std::addressof (this->servant_));
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("The IOR is: <%C>\n"),

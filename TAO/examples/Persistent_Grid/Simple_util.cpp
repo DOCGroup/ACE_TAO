@@ -6,6 +6,8 @@
 # include "ace/OS_NS_unistd.h"
 # include "ace/OS_NS_stdio.h"
 
+# include <memory>
+
 namespace Persistent_Grid_Detail
 {
   class Handle_Guard
@@ -115,7 +117,7 @@ Server<Servant>::init (char const *servant_name,
     {
       CORBA::String_var const str  =
         this->orb_manager_.activate_under_child_poa (servant_name,
-                                                     &this->servant_);
+                                                     std::addressof (this->servant_));
 
       ACE_DEBUG ((LM_DEBUG,
                   "The IOR is: <%C>\n",

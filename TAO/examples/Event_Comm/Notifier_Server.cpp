@@ -3,6 +3,8 @@
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 
+#include <memory>
+
 int
 Notifier_Server::close ()
 {
@@ -91,7 +93,7 @@ Notifier_Server::init (int argc,
  // Activate the servant in the POA.
  CORBA::String_var str =
    this->orb_manager_.activate_under_child_poa (NOTIFIER_BIND_NAME,
-                                                 &this->servant_);
+                                                std::addressof (this->servant_));
 
  return this->init_naming_service ();
 }

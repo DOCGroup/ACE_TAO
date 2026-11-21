@@ -15,6 +15,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_ctype.h"
 
+#include <memory>
+
 Notifier_Input_Handler::~Notifier_Input_Handler ()
 {
    // Make sure to cleanup the STDIN handler.
@@ -156,7 +158,7 @@ Notifier_Input_Handler::init (int argc,
   // Activate the servant in the POA.
   CORBA::String_var str  =
     this->orb_manager_.activate_under_child_poa ("Notifier",
-                                                 &this->notifier_i_);
+                                                 std::addressof (this->notifier_i_));
 
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",

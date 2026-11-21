@@ -123,9 +123,9 @@ namespace ACE
             {
               std::sscanf (arg,
                            "%lu %lu %lu %lu",
-                           &this->user_,
-                           &this->wait_,
-                           &this->kernel_,
+                           std::addressof (this->user_),
+                           std::addressof (this->wait_),
+                           std::addressof (this->kernel_),
                            &which_idle);
               break;
             }

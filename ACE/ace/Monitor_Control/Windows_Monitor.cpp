@@ -4,6 +4,8 @@
 
 #include "ace/Log_Category.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -69,7 +71,7 @@ namespace ACE
         ACE_TEXT_PdhAddCounter (this->query_,
                                 this->path_.c_str (),
                                 0,
-                                &this->counter_);
+                                std::addressof (this->counter_));
 
       if (ERROR_SUCCESS != this->status_)
         {
