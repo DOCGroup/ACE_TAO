@@ -119,7 +119,7 @@ handle_data (size_t &n_handles)
               ACE_OS::close (poll_array[index].fd);
               poll_array[index].fd = poll_array[--n_handles].fd;
 
-              ACE_OS::free ((void *) buffer_array[index].buf_);
+              ACE_OS::free (buffer_array[index].buf_);
               buffer_array[index].buf_ = nullptr;
               buffer_array[index].len_ = 0;
             }
