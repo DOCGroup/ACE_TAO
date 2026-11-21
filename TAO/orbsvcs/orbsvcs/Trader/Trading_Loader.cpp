@@ -26,6 +26,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <memory>
 #include <string>
 
 TAO_Trading_Loader::TAO_Trading_Loader ()
@@ -406,7 +407,7 @@ TAO_Trading_Loader::init_multicast_server ()
     }
 
   // Register event handler for the ior multicast.
-  if (reactor->register_handler (&this->ior_multicast_,
+  if (reactor->register_handler (std::addressof (this->ior_multicast_),
                                  ACE_Event_Handler::READ_MASK) == -1)
     ORBSVCS_DEBUG ((LM_DEBUG,
                 "cannot register Event handler\n"));

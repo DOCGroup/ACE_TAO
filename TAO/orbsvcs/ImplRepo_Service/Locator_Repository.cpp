@@ -245,7 +245,7 @@ Locator_Repository::setup_multicast (ACE_Reactor* reactor, const char* ior)
     }
 
   // Register event handler for the ior multicast.
-  if (reactor->register_handler (&this->ior_multicast_,
+  if (reactor->register_handler (std::addressof (this->ior_multicast_),
                                  ACE_Event_Handler::READ_MASK) == -1)
     {
       if (this->opts_.debug() > 0)
