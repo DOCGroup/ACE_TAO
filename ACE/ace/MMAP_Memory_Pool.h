@@ -271,14 +271,14 @@ protected:
   int use_fixed_addr_ {ACE_MMAP_Memory_Pool_Options::FIRSTCALL_FIXED};
 
   /// Flags passed into ACE_OS::mmap().
-  int flags_;
+  int flags_ {MAP_SHARED};
 
   /// Should we write a byte to each page to forceably allocate memory
   /// for this backing store?
-  bool write_each_page_;
+  bool write_each_page_ {};
 
   /// What the minimum bytes of the initial segment should be.
-  size_t minimum_bytes_;
+  size_t minimum_bytes_ {};
 
   /// Name of the backing store where the shared memory pool is kept.
   ACE_TCHAR backing_store_name_[MAXPATHLEN + 1];
@@ -291,13 +291,13 @@ protected:
   bool guess_on_fault_;
 
   /// Security attributes object, only used on NT.
-  LPSECURITY_ATTRIBUTES sa_;
+  LPSECURITY_ATTRIBUTES sa_ {};
 
   /// Protection mode for mmaped file.
-  mode_t file_mode_;
+  mode_t file_mode_ {ACE_DEFAULT_FILE_PERMS};
 
   /// Should we install a signal handler
-  bool install_signal_handler_;
+  bool install_signal_handler_ {true};
 };
 
 /**

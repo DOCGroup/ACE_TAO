@@ -113,12 +113,6 @@ ACE_MMAP_Memory_Pool::protect (void *addr, size_t len, int prot)
 ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (
   const ACE_TCHAR *backing_store_name,
   const OPTIONS *options)
-  : flags_ (MAP_SHARED),
-    write_each_page_ (false),
-    minimum_bytes_ (0),
-    sa_ (0),
-    file_mode_ (ACE_DEFAULT_FILE_PERMS),
-    install_signal_handler_ (true)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool");
 
