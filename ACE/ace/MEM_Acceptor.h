@@ -162,7 +162,7 @@ protected:
 private:
   /// The filename prefix of the created mmap files.  It should
   /// contains the absolute path name of the file.
-  ACE_TCHAR *mmap_prefix_;
+  ACE_TCHAR *mmap_prefix_ {};
 
   /// A cached MALLOC_OPTIONS.  MEM_Accaptor use it to create the shared
   /// mamory malloc upon every incoming connection.

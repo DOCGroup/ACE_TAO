@@ -27,8 +27,7 @@ ACE_MEM_Acceptor::dump () const
 // Do nothing routine for constructor.
 
 ACE_MEM_Acceptor::ACE_MEM_Acceptor ()
-  : mmap_prefix_ (nullptr),
-    malloc_options_ (ACE_DEFAULT_BASE_ADDR, 0),
+  : malloc_options_ (ACE_DEFAULT_BASE_ADDR, 0),
     preferred_strategy_ (ACE_MEM_IO::Reactive)
 {
   ACE_TRACE ("ACE_MEM_Acceptor::ACE_MEM_Acceptor");
@@ -50,8 +49,7 @@ ACE_MEM_Acceptor::ACE_MEM_Acceptor (const ACE_MEM_Addr &remote_sap,
                                     int reuse_addr,
                                     int backlog,
                                     int protocol)
-  : mmap_prefix_ (nullptr),
-    malloc_options_ (ACE_DEFAULT_BASE_ADDR, 0),
+  : malloc_options_ (ACE_DEFAULT_BASE_ADDR, 0),
     preferred_strategy_ (ACE_MEM_IO::Reactive)
 {
   ACE_TRACE ("ACE_MEM_Acceptor::ACE_MEM_Acceptor");
