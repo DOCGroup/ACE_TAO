@@ -178,7 +178,6 @@ ACE_Stream_Node::~ACE_Stream_Node ()
 }
 
 ACE_Parse_Node::ACE_Parse_Node ()
-  : name_ (nullptr)
 {
   ACE_TRACE ("ACE_Parse_Node::ACE_Parse_Node");
 }
@@ -461,10 +460,7 @@ ACE_Location_Node::dump () const
 }
 
 ACE_Location_Node::ACE_Location_Node ()
-  : pathname_ (nullptr),
-    must_delete_ (0),
-    dll_ (),
-    symbol_ (nullptr)
+  : dll_ ()
 {
   ACE_TRACE ("ACE_Location_Node::ACE_Location_Node");
 }
