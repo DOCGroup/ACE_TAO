@@ -32,7 +32,7 @@ public:
   long get_total_w   () { return this->total_w_; }
   long get_total_r   () { return this->total_r_; }
 
-  // This is called to pass the new connection's addresses.
+  /// This is called to pass the new connection's addresses.
   void addresses (const ACE_INET_Addr& peer,
                   const ACE_INET_Addr& local) override;
 
