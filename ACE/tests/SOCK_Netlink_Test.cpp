@@ -451,7 +451,7 @@ Secondary_Ipaddr_Handler::handle_input (ACE_HANDLE)
 
     case 0: // Complain and leave
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT("(%P) Secondary_Ipaddr_Handler::handle_input - "),
+                         ACE_TEXT("(%P) Secondary_Ipaddr_Handler::handle_input - ")
                          ACE_TEXT("eof, closing daemon (fd = %H)\n"),
                          this->get_handle ()),
                         -1);
