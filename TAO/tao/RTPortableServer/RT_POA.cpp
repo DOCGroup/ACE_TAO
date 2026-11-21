@@ -24,6 +24,7 @@
 
 #include <algorithm>
 #include <memory>
+#include <numeric>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/RTPortableServer/RT_POA.inl"
@@ -273,16 +274,21 @@ TAO_RT_POA::key_to_stub_i (TAO::ObjectKey const &object_key,
   if (this->cached_policies_.priority_model () ==
       TAO::Portable_Server::Cached_Policies::SERVER_DECLARED)
     {
-      for (std::unique_ptr<TAO_Thread_Lane> const &lane : this->thread_pool_->lanes ())
+      TAO_Thread_Lanes const &lanes = this->thread_pool_->lanes ();
+      auto const lane = std::find_if (lanes.begin (),
+                                      lanes.end (),
+                                      [priority] (std::unique_ptr<TAO_Thread_Lane> const &candidate)
+                                      {
+                                        return candidate->lane_priority () == priority;
+                                      });
+
+      if (lane != lanes.end ())
         {
-          if (lane->lane_priority () == priority)
-            {
-              return this->TAO_Regular_POA::create_stub_object (object_key,
-                                                                type_id,
-                                                                client_exposed_policies._retn (),
-                                                                &filter,
-                                                                lane->resources ().acceptor_registry ());
-            }
+          return this->TAO_Regular_POA::create_stub_object (object_key,
+                                                            type_id,
+                                                            client_exposed_policies._retn (),
+                                                            &filter,
+                                                            (*lane)->resources ().acceptor_registry ());
         }
 
       ACE_ASSERT (false);
@@ -397,13 +403,15 @@ TAO_RT_POA::create_stub_object (TAO::ObjectKey const &object_key,
 size_t
 TAO_RT_POA::endpoint_count ()
 {
-  size_t profile_count {};
-
-  for (std::unique_ptr<TAO_Thread_Lane> const &lane : this->thread_pool_->lanes ())
-    profile_count +=
-      lane->resources ().acceptor_registry ().endpoint_count ();
-
-  return profile_count;
+  TAO_Thread_Lanes const &lanes = this->thread_pool_->lanes ();
+  return std::accumulate (lanes.begin (),
+                          lanes.end (),
+                          size_t {},
+                          [] (size_t count, std::unique_ptr<TAO_Thread_Lane> const &lane)
+                          {
+                            return count +
+                              lane->resources ().acceptor_registry ().endpoint_count ();
+                          });
 }
 
 bool
