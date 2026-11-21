@@ -7,6 +7,8 @@
 #include "ace/Task.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 
+#include <memory>
+
 int
 parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
 {
@@ -131,7 +133,7 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       Client client_impl;
 
       PortableServer::ObjectId_var const id =
-        root_poa->activate_object (&client_impl);
+        root_poa->activate_object (std::addressof (client_impl));
 
       CORBA::Object_var const client_object = root_poa->id_to_reference (id.in ());
 

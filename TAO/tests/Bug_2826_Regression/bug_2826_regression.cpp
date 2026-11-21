@@ -2,6 +2,8 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "fooS.h"
 
+#include <memory>
+
 namespace
 {
 class Foo_i : public virtual POA_foo
@@ -104,7 +106,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // The POA borrows this stack servant until it is explicitly deactivated.
       Foo_i servant;
-      PortableServer::ObjectId_var const oid = fooPoa->activate_object (&servant);
+      PortableServer::ObjectId_var const oid =
+        fooPoa->activate_object (std::addressof (servant));
 
       CORBA::Object_var const obj = fooPoa->id_to_reference (oid.in ());
 

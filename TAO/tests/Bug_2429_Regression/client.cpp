@@ -2,6 +2,8 @@
 #include "tao/Messaging/Messaging.h"
 #include "ChildS.h"
 
+#include <memory>
+
 class Reply_Handler
   : public POA_AMI_ChildHandler
 {
@@ -114,7 +116,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Reply_Handler reply_handler_servant;
 
       PortableServer::ObjectId_var const id =
-        root_poa->activate_object (&reply_handler_servant);
+        root_poa->activate_object (std::addressof (reply_handler_servant));
 
       CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 

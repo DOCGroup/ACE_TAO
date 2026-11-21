@@ -9,6 +9,8 @@
 #include "ace/Task.h"
 
 #include "ami_testS.h"
+
+#include <memory>
 #include "tao/Codeset/Codeset.h"
 
 int
@@ -148,7 +150,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Instantiate the ReplyHandler and register that with the POA.
       Handler handler;
       PortableServer::ObjectId_var const id =
-        poa_var->activate_object (&handler);
+        poa_var->activate_object (std::addressof (handler));
 
       CORBA::Object_var const object = poa_var->id_to_reference (id.in ());
 

@@ -1,4 +1,5 @@
 #include <cstring>
+#include <memory>
 
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
@@ -76,7 +77,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       NonRelatedChildHandler non_related_child_handler;
 
       PortableServer::ObjectId_var id =
-        poa_var->activate_object (&child_handler);
+        poa_var->activate_object (std::addressof (child_handler));
 
       CORBA::Object_var object = poa_var->id_to_reference (id.in ());
 
@@ -93,7 +94,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       // This handler has no relationship with the above in IDL.
-      id = poa_var->activate_object (&non_related_child_handler);
+      id = poa_var->activate_object (std::addressof (non_related_child_handler));
 
       object = poa_var->id_to_reference (id.in ());
 
