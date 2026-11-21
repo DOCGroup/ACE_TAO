@@ -601,11 +601,11 @@ void TAO::FT_FaultNotifier_i::disconnect_consumer (
       }
       else
       {
-        ::CosNotifyChannelAdmin::SequenceProxyPushSupplier_var proxySupplier
+        ::CosNotifyChannelAdmin::SequenceProxyPushSupplier_var sequence_proxy_supplier
           = ::CosNotifyChannelAdmin::SequenceProxyPushSupplier::_narrow(info.proxyVar_.in ());
-        if (! CORBA::is_nil (proxySupplier.in ()))
+        if (! CORBA::is_nil (sequence_proxy_supplier.in ()))
         {
-          proxySupplier->disconnect_sequence_push_supplier ();
+          sequence_proxy_supplier->disconnect_sequence_push_supplier ();
           info.proxyVar_ = ::CosNotifyChannelAdmin::ProxySupplier::_nil();
         }
         else
