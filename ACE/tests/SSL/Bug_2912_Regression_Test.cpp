@@ -1170,7 +1170,7 @@ run_main (int, ACE_TCHAR *[])
 
   if (0 == ret)
   {
-    ret = CONNECTOR->open (0, CLIENT_PROACTOR, 1);
+    ret = CONNECTOR->open (false, CLIENT_PROACTOR, true);
 
     if (-1 == ret)
     {
