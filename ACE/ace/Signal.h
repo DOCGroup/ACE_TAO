@@ -224,7 +224,7 @@ public:
   /// This is kind of conditional Guard, needed when guard should be
   /// activated only when a specific condition met. When condition ==
   /// true (default), Guard is activated
-  ACE_Sig_Guard (ACE_Sig_Set *mask = nullptr, bool condition = true);
+  explicit ACE_Sig_Guard (ACE_Sig_Set *mask = nullptr, bool condition = true);
 
   /// Restore blocked signals.
   ~ACE_Sig_Guard ();
