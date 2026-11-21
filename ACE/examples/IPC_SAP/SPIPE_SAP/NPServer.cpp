@@ -16,7 +16,6 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   ACE_SPIPE_Acceptor acceptor;
   ACE_SPIPE_Stream new_stream;
   char buf[BUFSIZ];
-  int  n;
   const ACE_TCHAR *rendezvous = MAKE_PIPE_NAME ("acepipe");
 
   // Initialize named pipe listener.
@@ -45,6 +44,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Accepted connection\n")));
 
+      int n {};
       while ((n = new_stream.recv (buf, sizeof buf)) > 0)
         {
           ACE_OS::fprintf (stderr,
