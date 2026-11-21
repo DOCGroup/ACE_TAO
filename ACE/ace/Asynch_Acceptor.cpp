@@ -20,6 +20,8 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Sock_Connect.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class HANDLER>
@@ -256,7 +258,8 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
       ACE_OS::setsockopt (result.accept_handle (),
                           SOL_SOCKET,
                           SO_UPDATE_ACCEPT_CONTEXT,
-                          (char *) &this->listen_handle_,
+                          reinterpret_cast<char *> (
+                            std::addressof (this->listen_handle_)),
                           sizeof (this->listen_handle_)) == -1)
     {
       error = true;
