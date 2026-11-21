@@ -110,9 +110,11 @@ parse_file_list (const char *url_list_file, page_list_t *page_list,
   FILE        *fp;
   int         loadnum;
   char        a_line[BUFSIZ];
-  char        tempbuf[BUFSIZ];
+  char        tempbuf[URL_SIZE + 1];
+  char        hostbuf[URL_SIZE + 1];
+  char        pathbuf[URL_SIZE + 1];
+  char        serverbuf[URL_SIZE + 1];
   int         numfiles = 1, numpages = 0;
-  int         maxpages = *num_of_pages;
   page_list_t *pp;
 
   extern int haveproxyserver;
@@ -141,9 +143,15 @@ parse_file_list (const char *url_list_file, page_list_t *page_list,
               /* throw out anything after a '#' */
               D_PRINTF( "Stripping comment from line: %s\n", textvalue );
               returnval = strcspn(textvalue, "#");
+              textvalue[returnval] = '\0';
               D_PRINTF( "Found first # at %d\n", returnval );
               if (returnval == 0)
                 continue;
+            }
+
+          if (strchr(a_line, '\n') == 0 && fgetc(fp) != EOF)
+            {
+              errexit("Filelist line exceeds maximum length\n");
             }
 
           if (numpages >= *num_of_pages)
@@ -159,7 +167,11 @@ parse_file_list (const char *url_list_file, page_list_t *page_list,
               /* is there more? */
               /* check for weighting factor */
               D_PRINTF( "Setting page values from: %s\n", textvalue );
-              returnval = sscanf(textvalue, "%s%d", tempbuf, &loadnum);
+              returnval = sscanf(textvalue, "%1024s%d", tempbuf, &loadnum);
+              if (returnval < 1)
+                continue;
+              if (strlen(tempbuf) >= URL_SIZE)
+                errexit("Filelist URL exceeds maximum length\n");
               D_PRINTF("Scan for weighting returns %d, %d\n",
                        returnval, loadnum);
               if (returnval == EOF || loadnum <= 0)
@@ -197,33 +209,39 @@ parse_file_list (const char *url_list_file, page_list_t *page_list,
                 {
                   /* try http://server(:port)/file */
                   D_PRINTF( "Trying http://server(:port)/filename\n" );
-                  returnval = sscanf(textvalue, "http://%[^/]%s",
-                                     tempbuf,
-                                     a_line);
+                  returnval = sscanf(textvalue,
+                                     "http://%1024[^/]%1024s",
+                                     hostbuf, pathbuf);
                   /* check server string for :port */
-                  if (returnval != 0 && returnval != EOF)
+                  if (returnval == 2)
                     {
-                      D_PRINTF( "Setting filename %s\n", a_line );
-                      strcpy(pp->filename[filenum], a_line);
+                      if (strlen(hostbuf) >= URL_SIZE ||
+                          strlen(pathbuf) >= URL_SIZE)
+                        errexit("Filelist URL component exceeds maximum length\n");
 
-                      D_PRINTF( "Checking %s for :portnumber\n", tempbuf );
-                      returnval = sscanf(tempbuf, "%[^:]:%d", a_line,
-                      &pp->port_number[filenum]);
+                      D_PRINTF( "Setting filename %s\n", pathbuf );
+                      strcpy(pp->filename[filenum], pathbuf);
+
+                      D_PRINTF( "Checking %s for :portnumber\n", hostbuf );
+                      returnval = sscanf(hostbuf, "%1024[^:]:%d", serverbuf,
+                                         &pp->port_number[filenum]);
 
                       if (returnval < 2)
                         {
                           pp->port_number[filenum] = 80;
                         }
-                      if (returnval == EOF)
+                      if (returnval < 1)
                         {
-                          pp->servername[filenum] = 0;
+                          errexit("Invalid server in filelist URL\n");
                         }
                       else
                         {
                           D_PRINTF("Port number %d, setting server %s\n",
-                                   pp->port_number[filenum], a_line);
+                                   pp->port_number[filenum], serverbuf);
 
-                          strcpy(pp->servername[filenum], a_line);
+                          if (strlen(serverbuf) >= URL_SIZE)
+                            errexit("Filelist server exceeds maximum length\n");
+                          strcpy(pp->servername[filenum], serverbuf);
                         }
 
                       D_PRINTF("Server %s, port number %d\n",
@@ -237,10 +255,10 @@ parse_file_list (const char *url_list_file, page_list_t *page_list,
                       pp->servername[filenum] = 0;
                       D_PRINTF("Server %s, port number %d\n",
                                pp->servername[filenum], pp->port_number[filenum]);
-                      returnval = sscanf(textvalue, "%s", a_line);
-                      D_PRINTF( "Scan returned filename %s\n", a_line );
+                      strcpy(pathbuf, textvalue);
+                      D_PRINTF( "Scan returned filename %s\n", pathbuf );
 
-                      strcpy(pp->filename[filenum], a_line);
+                      strcpy(pp->filename[filenum], pathbuf);
                     } /* end of parsing */
                 } /* end if haveproxyserver */
 
