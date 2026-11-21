@@ -333,7 +333,7 @@ ACE_ATM_Addr::string_to_addr (const ACE_TCHAR sap[])
      return -1;
    }
 
-   if (text2atm ((ACE_TCHAR *)sap,
+   if (text2atm (ACE_TEXT_ALWAYS_CHAR (sap),
  (struct sockaddr *)& (atm_addr_.sockaddratmsvc),
                  sizeof (atm_addr_.sockaddratmsvc),
                  T2A_SVC | T2A_NAME) < 0) {
