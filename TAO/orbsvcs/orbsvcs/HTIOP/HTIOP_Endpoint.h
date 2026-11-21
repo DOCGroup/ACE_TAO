@@ -114,9 +114,6 @@ namespace TAO
       const char *htid (const char *h);
       /// @}
 
-      //Connection_Handler *&hint ();
-      // Access to our <hint_>.
-
     private:
       /// Helper method for setting INET_Addr.
       int set (const ACE::HTBP::Addr &addr,
