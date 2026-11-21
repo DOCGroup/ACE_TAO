@@ -10,7 +10,7 @@ class Hello
   : public virtual POA_Test::Hello
 {
 public:
-  Hello (CORBA::ORB_ptr orb);
+  explicit Hello (CORBA::ORB_ptr orb);
 
   Test::Octet_Seq *get_big_reply (CORBA::ULong size) override;
   void big_request (::Test::Octet_Seq const &octet_in) override;

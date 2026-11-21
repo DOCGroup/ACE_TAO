@@ -12,7 +12,7 @@
 class Starter
 {
  public:
-  Starter (CORBA::ORB_ptr orb);
+  explicit Starter (CORBA::ORB_ptr orb);
 
   void init ();
 

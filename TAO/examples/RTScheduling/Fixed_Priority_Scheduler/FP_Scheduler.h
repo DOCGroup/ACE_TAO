@@ -29,7 +29,7 @@ public FP_Scheduling::FP_Scheduler,
 public ::CORBA::LocalObject
 {
  public:
-  Fixed_Priority_Scheduler (CORBA::ORB_ptr orb);
+  explicit Fixed_Priority_Scheduler (CORBA::ORB_ptr orb);
 
   ~Fixed_Priority_Scheduler ();
 
