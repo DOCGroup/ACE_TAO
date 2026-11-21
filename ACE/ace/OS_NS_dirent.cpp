@@ -222,8 +222,8 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
               ACE_OS::memcpy (newv, vector, arena_size * sizeof (ACE_DIRENT *));
             }
 #else
-          newv = (ACE_DIRENT **) ACE_OS::realloc (vector,
-                                              new_arena_size * sizeof (ACE_DIRENT *));
+          newv = static_cast<ACE_DIRENT **> (
+            ACE_OS::realloc (vector, new_arena_size * sizeof (ACE_DIRENT *)));
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
           arena_size = new_arena_size;
@@ -238,18 +238,21 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
 
 #if defined (ACE_LACKS_STRUCT_DIR)
 #if defined (ACE_HAS_ALLOC_HOOKS)
-      ACE_DIRENT *newdp = (ACE_DIRENT *) ACE_Allocator::instance()->malloc (sizeof (ACE_DIRENT));
+      ACE_DIRENT *newdp = static_cast<ACE_DIRENT *> (
+        ACE_Allocator::instance ()->malloc (sizeof (ACE_DIRENT)));
 #else
-      ACE_DIRENT *newdp = (ACE_DIRENT *) ACE_OS::malloc (sizeof (ACE_DIRENT));
+      ACE_DIRENT *newdp = static_cast<ACE_DIRENT *> (
+        ACE_OS::malloc (sizeof (ACE_DIRENT)));
 #endif /* ACE_HAS_ALLOC_HOOKS */
 #else
       size_t dsize =
         sizeof (ACE_DIRENT) +
         ((ACE_OS::strlen (dp->d_name) + 1) * sizeof (ACE_TCHAR));
 #if defined (ACE_HAS_ALLOC_HOOKS)
-      ACE_DIRENT *newdp = (ACE_DIRENT *) ACE_Allocator::instance()->malloc (dsize);
+      ACE_DIRENT *newdp = static_cast<ACE_DIRENT *> (
+        ACE_Allocator::instance ()->malloc (dsize));
 #else
-      ACE_DIRENT *newdp = (ACE_DIRENT *) ACE_OS::malloc (dsize);
+      ACE_DIRENT *newdp = static_cast<ACE_DIRENT *> (ACE_OS::malloc (dsize));
 #endif /* ACE_HAS_ALLOC_HOOKS */
 #endif /* ACE_LACKS_STRUCT_DIR */
 
@@ -261,9 +264,12 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
 
 #if defined (ACE_LACKS_STRUCT_DIR)
 #if defined (ACE_HAS_ALLOC_HOOKS)
-      newdp->d_name = (ACE_TCHAR*) ACE_Allocator::instance()->malloc ((ACE_OS::strlen (dp->d_name) + 1) * sizeof (ACE_TCHAR));
+      newdp->d_name = static_cast<ACE_TCHAR *> (
+        ACE_Allocator::instance ()->malloc (
+          (ACE_OS::strlen (dp->d_name) + 1) * sizeof (ACE_TCHAR)));
 #else
-      newdp->d_name = (ACE_TCHAR*) ACE_OS::malloc ((ACE_OS::strlen (dp->d_name) + 1) * sizeof (ACE_TCHAR));
+      newdp->d_name = static_cast<ACE_TCHAR *> (
+        ACE_OS::malloc ((ACE_OS::strlen (dp->d_name) + 1) * sizeof (ACE_TCHAR)));
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
       if (newdp->d_name == 0)
@@ -284,7 +290,8 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
       ACE_OS::strcpy (newdp->d_name, dp->d_name);
       vector[nfiles++] = newdp;
 #else
-      vector[nfiles++] = (ACE_DIRENT *) ACE_OS::memcpy (newdp, dp, dsize);
+      vector[nfiles++] = static_cast<ACE_DIRENT *> (
+        ACE_OS::memcpy (newdp, dp, dsize));
 #endif /* ACE_LACKS_STRUCT_DIR */
     }
 
