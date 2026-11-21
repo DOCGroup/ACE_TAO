@@ -24,7 +24,6 @@ ACE_TLI_Stream::dump () const
 }
 
 ACE_TLI_Stream::ACE_TLI_Stream ()
-  : rwflag_ (0)
 {
   ACE_TRACE ("ACE_TLI_Stream::ACE_TLI_Stream");
 }

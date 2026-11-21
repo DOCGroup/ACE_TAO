@@ -122,7 +122,7 @@ public:
 
 private:
   /// Indicates whether the tirdwr module should be pushed
-  int rwflag_;
+  int rwflag_ {};
 
   /// Get rwflag
   int get_rwflag () const;
