@@ -209,7 +209,7 @@ namespace XML
       e_handler_->resetErrors ();
       this->parser_->parse (ACE_TEXT_ALWAYS_CHAR (url));
 
-      if (e_handler_ && e_handler_->getErrors ())
+      if (e_handler_->getErrors ())
         {
           return nullptr;
         }
