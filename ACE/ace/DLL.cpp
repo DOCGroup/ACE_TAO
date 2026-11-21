@@ -15,21 +15,13 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // before it is destroyed.
 
 ACE_DLL::ACE_DLL (bool close_handle_on_destruction)
-  : open_mode_ (0),
-    dll_name_ (nullptr),
-    close_handle_on_destruction_ (close_handle_on_destruction),
-    dll_handle_ (nullptr),
-    error_ (false)
+  : close_handle_on_destruction_ (close_handle_on_destruction)
 {
   ACE_TRACE ("ACE_DLL::ACE_DLL (int)");
 }
 
 ACE_DLL::ACE_DLL (const ACE_DLL &rhs)
-  : open_mode_ (0),
-    dll_name_ (nullptr),
-    close_handle_on_destruction_ (false),
-    dll_handle_ (nullptr),
-    error_ (false)
+  : close_handle_on_destruction_ (false)
 {
   ACE_TRACE ("ACE_DLL::ACE_DLL (const ACE_DLL &)");
 
@@ -70,10 +62,7 @@ ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
                   int open_mode,
                   bool close_handle_on_destruction)
   : open_mode_ (open_mode),
-    dll_name_ (nullptr),
-    close_handle_on_destruction_ (close_handle_on_destruction),
-    dll_handle_ (nullptr),
-    error_ (false)
+    close_handle_on_destruction_ (close_handle_on_destruction)
 {
   ACE_TRACE ("ACE_DLL::ACE_DLL");
 
