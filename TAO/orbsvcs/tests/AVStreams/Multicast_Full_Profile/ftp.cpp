@@ -3,6 +3,8 @@
 #include "ftp.h"
 #include "tao/debug.h"
 
+#include <memory>
+
 int
 FTP_Client_Callback::handle_end_stream ()
 {
@@ -14,7 +16,7 @@ void
 FTP_Client_Callback::get_timeout (ACE_Time_Value *&tv,
                                   void *&)
 {
-  tv = &this->timeout_;
+  tv = std::addressof (this->timeout_);
 }
 
 int
@@ -160,7 +162,7 @@ Client::format ()
 TAO_StreamCtrl *
 Client::streamctrl ()
 {
-  return &this->streamctrl_;
+  return std::addressof (this->streamctrl_);
 }
 
 Client::Client ()

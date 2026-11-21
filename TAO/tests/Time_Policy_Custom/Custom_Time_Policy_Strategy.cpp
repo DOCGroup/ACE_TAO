@@ -4,6 +4,8 @@
 #include "ace/Event_Handler_Handle_Timeout_Upcall.h"
 #include "ace/High_Res_Timer.h"
 
+#include <memory>
+
 #if (TAO_HAS_TIME_POLICY == 1)
 
 class TPTEST_Export Custom_Time_Policy
@@ -41,7 +43,7 @@ Custom_Time_Policy_Strategy::destroy_timer_queue (ACE_Timer_Queue *tmq)
 
 ACE_Dynamic_Time_Policy_Base * Custom_Time_Policy_Strategy::get_time_policy ()
 {
-  return &custom_time_policy_;
+  return std::addressof (custom_time_policy_);
 }
 
 ACE_STATIC_SVC_DEFINE (Custom_Time_Policy_Strategy,

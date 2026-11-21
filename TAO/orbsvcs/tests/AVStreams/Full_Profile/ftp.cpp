@@ -1,11 +1,13 @@
 #include "ftp.h"
 #include <cstdio>
 
+#include <memory>
+
 void
 FTP_Client_Callback::get_timeout (ACE_Time_Value *&tv,
                                   void *&)
 {
-  tv = &this->timeout_;
+  tv = std::addressof (this->timeout_);
 }
 
 int
@@ -159,7 +161,7 @@ Client::format () const
 TAO_StreamCtrl *
 Client::streamctrl ()
 {
-  return &this->streamctrl_;
+  return std::addressof (this->streamctrl_);
 }
 
 Client::Client ()

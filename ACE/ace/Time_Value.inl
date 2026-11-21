@@ -1,6 +1,8 @@
 // -*- C++ -*-
 #include "ace/Truncate.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Returns the value of the object as a timeval.
@@ -43,9 +45,9 @@ ACE_Time_Value::operator timeval const * () const
   // Recall that on some Windows we substitute another type for timeval in tv_
   this->ext_tv_.tv_sec = ACE_Utils::truncate_cast<long> (this->tv_.tv_sec);
   this->ext_tv_.tv_usec = ACE_Utils::truncate_cast<long> (this->tv_.tv_usec);
-  return &this->ext_tv_;
+  return std::addressof (this->ext_tv_);
 #else
-  return &this->tv_;
+  return std::addressof (this->tv_);
 #endif /* ACE_HAS_TIME_T_LONG_MISMATCH */
 }
 

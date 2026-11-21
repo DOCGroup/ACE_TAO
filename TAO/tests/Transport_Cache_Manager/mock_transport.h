@@ -2,6 +2,8 @@
 
 #include "tao/GIOP_Message_Version.h"
 
+#include <memory>
+
 class mock_transport;
 
 class mock_output_cdr
@@ -36,7 +38,10 @@ public:
   void close_connection () { purged_count_ = ++global_purged_count;}
   TAO::Connection_Role opened_as () const { return TAO::TAO_CLIENT_ROLE; }
   mock_output_cdr &out_stream () { return this->out_stream_; }
-  mock_messaging_object *messaging_object () { return &this->messaging_object_; }
+  mock_messaging_object *messaging_object ()
+  {
+    return std::addressof (this->messaging_object_);
+  }
   int purged_count () const { return this->purged_count_;}
   bool can_be_purged () const { return true;}
 
