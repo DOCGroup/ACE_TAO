@@ -7,6 +7,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
 #include <new>
 
 CORBA::Boolean
@@ -20,7 +21,7 @@ int
 Sender_StreamEndPoint::get_callback (char const *,
                                      TAO_AV_Callback *&callback)
 {
-  callback = &this->callback_;
+  callback = std::addressof (this->callback_);
 
   TAO_Negotiator * const negotiator = new (std::nothrow) TAO_Negotiator;
   if (negotiator == nullptr)
@@ -227,7 +228,7 @@ Sender::init (int argc,
                                     "",
                                     this->options_.protocol.c_str (),
                                     &local_address);
-  entry.set_peer_addr (&peer_address);
+  entry.set_peer_addr (std::addressof (peer_address));
 
   AVStreams::flowSpec flow_spec (1);
   flow_spec.length (1);

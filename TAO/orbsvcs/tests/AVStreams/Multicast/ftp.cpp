@@ -2,6 +2,8 @@
 
 #include "ftp.h"
 
+#include <memory>
+
 int
 FTP_Client_Callback::handle_end_stream ()
 {
@@ -65,7 +67,7 @@ FTP_Client_Callback::handle_timeout (void *)
   {
     ACE_ERROR_RETURN ((LM_ERROR,"No protocol object is configured\n"),-1);
   }
-  int const result = this->protocol_object_->send_frame (&mb);
+  int const result = this->protocol_object_->send_frame (std::addressof (mb));
   if (result < 0)
   {
     ACE_ERROR_RETURN ((LM_ERROR,"send failed:%p","FTP_Client_Flow_Handler::send\n"),-1);
@@ -78,7 +80,7 @@ int
 FTP_Client_StreamEndPoint::get_callback (char const *,
                                          TAO_AV_Callback *&callback)
 {
-  callback = &this->callback_;
+  callback = std::addressof (this->callback_);
   return 0;
 }
 
@@ -151,7 +153,7 @@ Client::streamctrl ()
 Client::Client ()
   : endpoint_strategy_ (TAO_AV_CORE::instance ()->orb (),
                         TAO_AV_CORE::instance ()->poa ()),
-    client_mmdevice_ (&endpoint_strategy_)
+    client_mmdevice_ (std::addressof (endpoint_strategy_))
 {
 }
 

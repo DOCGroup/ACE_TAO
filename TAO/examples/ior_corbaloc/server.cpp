@@ -2,6 +2,7 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/CosNamingC.h"
 
+#include <memory>
 #include <string>
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -45,7 +46,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       status_i.set_name (server_name);
       // Activate it to obtain the reference
       PortableServer::ObjectId_var const id =
-        poa->activate_object (&status_i);
+        poa->activate_object (std::addressof (status_i));
 
       CORBA::Object_var const object = poa->id_to_reference (id.in ());
 

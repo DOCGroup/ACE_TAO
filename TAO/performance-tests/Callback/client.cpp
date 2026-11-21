@@ -13,6 +13,8 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_errno.h"
 
+#include <memory>
+
 struct Client_Options
 {
   int iterations = 1000;
@@ -180,7 +182,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       server->shutdown ();
 
       PortableServer::ObjectId_var id =
-        root_poa->servant_to_id (&callback_i);
+        root_poa->servant_to_id (std::addressof (callback_i));
       root_poa->deactivate_object (id.in ());
       orb->destroy ();
     }

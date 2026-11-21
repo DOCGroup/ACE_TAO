@@ -62,7 +62,7 @@ FTP_Client_Callback::handle_timeout (void *)
       }
     }
   mb.wr_ptr (n);
-  int const result = this->protocol_object_->send_frame (&mb);
+  int const result = this->protocol_object_->send_frame (std::addressof (mb));
   if (result < 0)
   {
     ACE_ERROR_RETURN ((LM_ERROR,"send failed:%p","FTP_Client_Flow_Handler::send\n"),-1);
@@ -166,7 +166,7 @@ Client::streamctrl ()
 }
 
 Client::Client ()
-  : client_mmdevice_ (&endpoint_strategy_)
+  : client_mmdevice_ (std::addressof (endpoint_strategy_))
 {
   this->endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                  TAO_AV_CORE::instance ()->poa ());

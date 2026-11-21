@@ -3,6 +3,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 
+#include <memory>
+
 // Create a singleton instance of the Sender.
 
 // An Unmanaged_Singleton is used to avoid static object destruction
@@ -17,7 +19,7 @@ Sender_StreamEndPoint::get_callback (char const *,
 {
   // Create and return the sender application callback to AVStreams
   // for further upcalls.
-  callback = &this->callback_;
+  callback = std::addressof (this->callback_);
   return 0;
 }
 
@@ -252,7 +254,7 @@ Sender::init (int argc,
                      buf);
     }
 
-  entry.set_peer_addr (&peer_addr);
+  entry.set_peer_addr (std::addressof (peer_addr));
 
   entry.set_local_sec_addrs (this->options_.local_sec_addrs);
   entry.set_peer_sec_addrs (this->options_.peer_sec_addrs);

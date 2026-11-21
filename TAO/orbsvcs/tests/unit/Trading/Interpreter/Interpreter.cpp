@@ -2,6 +2,7 @@
 #include "orbsvcs/Trader/Constraint_Visitors.h"
 
 #include <cstring>
+#include <memory>
 
 template<class T> class Literal_Interpreter;
 
@@ -108,7 +109,7 @@ Literal_Interpreter<T>::test (char const *str,
     }
 
   Literal_Visitor<T> visitor (this);
-  this->root_->accept (&visitor);
+  this->root_->accept (std::addressof (visitor));
 
   return this->compare (expected);
 }
