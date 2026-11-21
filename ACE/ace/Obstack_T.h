@@ -102,10 +102,10 @@ protected:
 
   // Don't change the order of the following two fields.
   /// Head of the Obchunk chain.
-  class ACE_Obchunk *head_;
+  class ACE_Obchunk *head_ {};
 
   /// Pointer to the current Obchunk.
-  class ACE_Obchunk *curr_;
+  class ACE_Obchunk *curr_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
