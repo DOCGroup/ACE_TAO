@@ -83,12 +83,12 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
         }
 
       this->process_lock_ =
-        (ACE_mutex_t *) ACE_OS::mmap (nullptr,
-                                      sizeof (ACE_mutex_t),
-                                      PROT_RDWR,
-                                      MAP_SHARED,
-                                      fd,
-                                      0);
+        static_cast<ACE_mutex_t *> (ACE_OS::mmap (nullptr,
+                                                 sizeof (ACE_mutex_t),
+                                                 PROT_RDWR,
+                                                 MAP_SHARED,
+                                                 fd,
+                                                 0));
       ACE_OS::close (fd);
       if (this->process_lock_ == MAP_FAILED)
       {
