@@ -1008,7 +1008,7 @@ protected:
 
 protected:
   /// Has the reactor been initialized.
-  bool initialized_;
+  bool initialized_ {};
 
   /// The file descriptor associated with the open `/dev/poll' or
   /// `/dev/epoll' device.
@@ -1016,7 +1016,7 @@ protected:
    * All interactions with the `/dev/poll' or `/dev/epoll' device are
    * done through this file descriptor.
    */
-  ACE_HANDLE poll_fd_;
+  ACE_HANDLE poll_fd_ {ACE_INVALID_HANDLE};
 
 #if defined (ACE_HAS_EVENT_POLL)
   /// Event structure to be filled by epoll_wait. epoll_wait() only gets
@@ -1028,18 +1028,18 @@ protected:
 
 #else
   /// The pollfd array that `/dev/poll' will feed its results to.
-  struct pollfd *dp_fds_;
+  struct pollfd *dp_fds_ {};
 
   /// Pointer to the next pollfd array element that contains the next
   /// event to be dispatched.
-  struct pollfd *start_pfds_;
+  struct pollfd *start_pfds_ {};
 
   /// The last element in the pollfd array plus one.
   /**
    * The loop that dispatches IO events stops when this->start_pfds ==
    * this->end_pfds_.
    */
-  struct pollfd *end_pfds_;
+  struct pollfd *end_pfds_ {};
 #endif  /* ACE_HAS_EVENT_POLL */
 
   /// Token serializing event waiter threads.
@@ -1050,7 +1050,7 @@ protected:
 
   /// This flag is used to keep track of whether we are actively handling
   /// events or not.
-  sig_atomic_t deactivated_;
+  sig_atomic_t deactivated_ {};
 
   /// Token used to protect manipulation of the handler repository.
   /// No need to hold the waiter token to change the repo.
@@ -1061,26 +1061,26 @@ protected:
   Handler_Repository handler_rep_;
 
   /// Defined as a pointer to allow overriding by derived classes...
-  ACE_Timer_Queue *timer_queue_;
+  ACE_Timer_Queue *timer_queue_ {};
 
   /// Keeps track of whether we should delete the timer queue (if we
   /// didn't create it, then we don't delete it).
-  bool delete_timer_queue_;
+  bool delete_timer_queue_ {};
 
   /// Handle signals without requiring global/static variables.
-  ACE_Sig_Handler *signal_handler_;
+  ACE_Sig_Handler *signal_handler_ {};
 
   /// Keeps track of whether we should delete the signal handler (if we
   /// didn't create it, then we don't delete it).
-  bool delete_signal_handler_;
+  bool delete_signal_handler_ {};
 
   /// Callback object that unblocks the <ACE_Select_Reactor> if it's
   /// sleeping.
-  ACE_Reactor_Notify *notify_handler_;
+  ACE_Reactor_Notify *notify_handler_ {};
 
   /// Keeps track of whether we need to delete the notify handler (if
   /// we didn't create it, then we don't delete it).
-  bool delete_notify_handler_;
+  bool delete_notify_handler_ {};
 
   /// Flag that determines if signals are masked during event
   /// dispatching.
@@ -1095,7 +1095,7 @@ protected:
   /// Restart the handle_events event loop method automatically when
   /// polling function in use (ioctl() in this case) is interrupted
   /// via an EINTR signal.
-  bool restart_;
+  bool restart_ {};
 
 protected:
   /**

@@ -625,25 +625,9 @@ ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (ACE_Sig_Handler *sh,
                                             ACE_Reactor_Notify *notify,
                                             int mask_signals,
                                             int s_queue)
-  : initialized_ (false)
-  , poll_fd_ (ACE_INVALID_HANDLE)
-  // , ready_set_ ()
-#if defined (ACE_HAS_DEV_POLL)
-  , dp_fds_ (0)
-  , start_pfds_ (0)
-  , end_pfds_ (0)
-#endif  /* ACE_HAS_DEV_POLL */
-  , token_ (*this, s_queue)
+  : token_ (*this, s_queue)
   , lock_adapter_ (token_)
-  , deactivated_ (0)
-  , timer_queue_ (nullptr)
-  , delete_timer_queue_ (false)
-  , signal_handler_ (nullptr)
-  , delete_signal_handler_ (false)
-  , notify_handler_ (nullptr)
-  , delete_notify_handler_ (false)
   , mask_signals_ (mask_signals)
-  , restart_ (false)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor");
 
@@ -670,25 +654,9 @@ ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (size_t size,
                                             ACE_Reactor_Notify *notify,
                                             int mask_signals,
                                             int s_queue)
-  : initialized_ (false)
-  , poll_fd_ (ACE_INVALID_HANDLE)
-  // , ready_set_ ()
-#if defined (ACE_HAS_DEV_POLL)
-  , dp_fds_ (0)
-  , start_pfds_ (0)
-  , end_pfds_ (0)
-#endif  /* ACE_HAS_DEV_POLL */
-  , token_ (*this, s_queue)
+  : token_ (*this, s_queue)
   , lock_adapter_ (token_)
-  , deactivated_ (0)
-  , timer_queue_ (nullptr)
-  , delete_timer_queue_ (false)
-  , signal_handler_ (nullptr)
-  , delete_signal_handler_ (false)
-  , notify_handler_ (nullptr)
-  , delete_notify_handler_ (false)
   , mask_signals_ (mask_signals)
-  , restart_ (false)
 {
   if (this->open (size,
                   rs,
