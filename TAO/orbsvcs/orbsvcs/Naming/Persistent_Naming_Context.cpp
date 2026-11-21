@@ -24,7 +24,7 @@ TAO_Persistent_Bindings_Map::unbind (char const *id, char const *kind)
       // this assumes that the "ref" pointer comes first and that
       // the ref, id and kind are contiguously allocated (see
       // shared_bind() for details).
-      this->allocator_->free ((void *) (entry.ref_));
+      this->allocator_->free (entry.ref_);
       return 0;
     }
 }
@@ -194,7 +194,7 @@ TAO_Persistent_Bindings_Map::shared_bind (char const *id,
             {
               // Entry already existed so bind failed. Free our
               // dynamically allocated  memory.
-              this->allocator_->free ((void *) ptr);
+              this->allocator_->free (ptr);
               return result;
             }
         }
@@ -226,7 +226,7 @@ TAO_Persistent_Bindings_Map::shared_bind (char const *id,
               // Note, this assumes that the "ref" pointer comes
               // first, and that the id, kind, and ref are contiguously
               // allocated (see beginning of this method for details).
-              this->allocator_->free ((void *) old_entry.ref_);
+              this->allocator_->free (old_entry.ref_);
             }
         }
 
@@ -234,7 +234,7 @@ TAO_Persistent_Bindings_Map::shared_bind (char const *id,
       // if necessary.
       if (result < 0)
         {
-          this->allocator_->free ((void *) ptr);
+          this->allocator_->free (ptr);
         }
 
       else

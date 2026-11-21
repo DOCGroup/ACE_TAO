@@ -25,7 +25,7 @@ TAO_Persistent_Context_Index::unbind (char const *poa_id)
   else
     {
       // Free up the memory we allocated in bind().
-      this->allocator_->free ((void *) (entry.counter_));
+      this->allocator_->free (entry.counter_);
       return 0;
     }
 }
@@ -67,14 +67,14 @@ TAO_Persistent_Context_Index::bind (char const *poa_id,
         {
           // Entry already existed so bind failed. Free our dynamically
           // allocated memory.
-          this->allocator_->free ((void *) ptr);
+          this->allocator_->free (ptr);
           return result;
         }
 
       if (result == -1)
         {
           // Free our dynamically allocated memory.
-          this->allocator_->free ((void *) ptr);
+          this->allocator_->free (ptr);
         }
       else
         {
