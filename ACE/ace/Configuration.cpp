@@ -1862,7 +1862,7 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
                                           const ACE_TString& value)
 {
   ACE_ASSERT (this->allocator_);
-  const ACE_TCHAR *t_name = name ? name : &this->NULL_String_;
+  const ACE_TCHAR *t_name = name ? name : std::addressof (this->NULL_String_);
   if (validate_value_name (t_name))
   {
     return -1;
@@ -1925,7 +1925,7 @@ ACE_Configuration_Heap::set_integer_value (const ACE_Configuration_Section_Key& 
                                            u_int value)
 {
   ACE_ASSERT (this->allocator_);
-  const ACE_TCHAR *t_name = name ? name : &this->NULL_String_;
+  const ACE_TCHAR *t_name = name ? name : std::addressof (this->NULL_String_);
   if (validate_value_name (t_name))
   {
     return -1;
@@ -1981,7 +1981,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
                                           size_t length)
 {
   ACE_ASSERT (this->allocator_);
-  const ACE_TCHAR *t_name = name ? name : &this->NULL_String_;
+  const ACE_TCHAR *t_name = name ? name : std::addressof (this->NULL_String_);
   if (validate_value_name (t_name))
   {
     return -1;
@@ -2044,7 +2044,7 @@ ACE_Configuration_Heap::get_string_value (const ACE_Configuration_Section_Key& k
                                           ACE_TString& value)
 {
   ACE_ASSERT (this->allocator_);
-  const ACE_TCHAR *t_name = name ? name : &this->NULL_String_;
+  const ACE_TCHAR *t_name = name ? name : std::addressof (this->NULL_String_);
   if (validate_value_name (t_name))
   {
     return -1;
@@ -2092,7 +2092,7 @@ ACE_Configuration_Heap::get_integer_value (const ACE_Configuration_Section_Key& 
 {
   ACE_ASSERT (this->allocator_);
 
-  const ACE_TCHAR *t_name = name ? name : &this->NULL_String_;
+  const ACE_TCHAR *t_name = name ? name : std::addressof (this->NULL_String_);
   if (validate_value_name (t_name))
   {
     return -1;
@@ -2144,7 +2144,7 @@ ACE_Configuration_Heap::get_binary_value (
   size_t& length)
 {
   ACE_ASSERT (this->allocator_);
-  const ACE_TCHAR *t_name = name ? name : &this->NULL_String_;
+  const ACE_TCHAR *t_name = name ? name : std::addressof (this->NULL_String_);
   if (validate_value_name (t_name))
   {
     return -1;
@@ -2197,7 +2197,7 @@ ACE_Configuration_Heap::find_value (const ACE_Configuration_Section_Key& key,
                                     VALUETYPE& type_out)
 {
   ACE_ASSERT (this->allocator_);
-  const ACE_TCHAR *t_name = name ? name : &this->NULL_String_;
+  const ACE_TCHAR *t_name = name ? name : std::addressof (this->NULL_String_);
   if (validate_value_name (t_name))
   {
     return -1;
@@ -2235,7 +2235,7 @@ ACE_Configuration_Heap::remove_value (const ACE_Configuration_Section_Key& key,
                                       const ACE_TCHAR* name)
 {
   ACE_ASSERT (this->allocator_);
-  const ACE_TCHAR *t_name = name ? name : &this->NULL_String_;
+  const ACE_TCHAR *t_name = name ? name : std::addressof (this->NULL_String_);
   if (validate_value_name (t_name))
   {
     return -1;
