@@ -408,7 +408,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
         CORBA::TypeCode_ptr lhs_v;
         this->any_ >>= lhs_v;
         // See CORBA 2.4.2 - must use equal() here.
-        return lhs_v->equal (lhs_v);
+        return lhs_v->equal (rhs_v);
       }
     case CORBA::tk_objref:
       {
@@ -416,7 +416,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
         rhs_n->any_ >>= CORBA::Any::to_object (rhs_v);
         CORBA::Object_ptr lhs_v;
         this->any_ >>= CORBA::Any::to_object (lhs_v);
-        return lhs_v->_is_equivalent (lhs_v);
+        return lhs_v->_is_equivalent (rhs_v);
       }
     case CORBA::tk_string:
       {
