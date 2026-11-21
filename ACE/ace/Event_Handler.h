@@ -350,7 +350,7 @@ public:
 
 private:
   /// Handler.
-  ACE_Event_Handler *ptr_;
+  ACE_Event_Handler *ptr_ {};
 };
 
 /// Define that we can use in user code to check if this
@@ -396,7 +396,7 @@ public:
 
   /// Pointer to the Event_Handler that will be dispatched
   /// by the main event loop.
-  ACE_Event_Handler *eh_;
+  ACE_Event_Handler *eh_ {};
 
   /// Mask that indicates which method to call.
   ACE_Reactor_Mask mask_;

@@ -279,7 +279,6 @@ ACE_Event_Handler::remove_stdin_handler (ACE_Reactor *reactor,
 // ---------------------------------------------------------------------
 
 ACE_Event_Handler_var::ACE_Event_Handler_var ()
-  : ptr_ (nullptr)
 {
 }
 
@@ -373,8 +372,7 @@ ACE_Event_Handler_var::operator !=(std::nullptr_t) const
 // ---------------------------------------------------------------------
 
 ACE_Notification_Buffer::ACE_Notification_Buffer ()
-  : eh_ (nullptr),
-    mask_ (ACE_Event_Handler::NULL_MASK)
+  : mask_ (ACE_Event_Handler::NULL_MASK)
 {
   ACE_TRACE ("ACE_Notification_Buffer::ACE_Notification_Buffer");
 }
