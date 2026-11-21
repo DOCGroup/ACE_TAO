@@ -69,10 +69,10 @@ namespace
         return false;
       }
 
-    TAO::TypeCodeFactory::TC_Info & info = infos[old_size];
-
     try
       {
+        TAO::TypeCodeFactory::TC_Info & info = infos[old_size];
+
         // Append the new TC to the list.
         info.id = tc->id (); // Should never throw, but just incase!
         info.type = tc;
