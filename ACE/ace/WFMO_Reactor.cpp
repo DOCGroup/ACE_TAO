@@ -2479,7 +2479,7 @@ ACE_WFMO_Reactor_Notify::notify (ACE_Event_Handler *event_handler,
                       -1);
 
       ACE_Notification_Buffer *buffer =
-        (ACE_Notification_Buffer *) mb->base ();
+        reinterpret_cast<ACE_Notification_Buffer *> (mb->base ());
       buffer->eh_ = event_handler;
       buffer->mask_ = mask;
 
