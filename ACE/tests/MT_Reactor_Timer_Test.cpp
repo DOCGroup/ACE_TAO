@@ -17,6 +17,7 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <algorithm>
 #include <memory>
 
 #if defined (ACE_HAS_THREADS)
@@ -35,12 +36,9 @@
 
 Time_Handler::Time_Handler ()
 {
-  for (int i = 0;
-       i < Time_Handler::TIMER_SLOTS;
-       this->timer_id_[i++] = Time_Handler::TIMER_NOTSET)
-    {
-      continue;
-    }
+  std::fill_n (this->timer_id_,
+               Time_Handler::TIMER_SLOTS,
+               Time_Handler::TIMER_NOTSET);
 
   this->prev_timer_ = -1;
 }
