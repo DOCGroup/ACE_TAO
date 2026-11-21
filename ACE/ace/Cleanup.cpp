@@ -33,10 +33,6 @@ ACE_CLEANUP_DESTROYER_NAME (ACE_Cleanup *object, void *param)
 /*****************************************************************************/
 
 ACE_Cleanup_Info_Node::ACE_Cleanup_Info_Node ()
-  : object_ (nullptr),
-    cleanup_hook_ (nullptr),
-    param_ (nullptr),
-    name_ (nullptr)
 {
 }
 

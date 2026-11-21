@@ -89,16 +89,16 @@ public:
 
 private:
   /// Point to object that gets passed into the <cleanup_hook_>.
-  void *object_;
+  void *object_ {};
 
   /// Cleanup hook that gets called back.
-  ACE_CLEANUP_FUNC cleanup_hook_;
+  ACE_CLEANUP_FUNC cleanup_hook_ {};
 
   /// Parameter passed to the <cleanup_hook_>.
-  void *param_;
+  void *param_ {};
 
   /// Name of the cleanup object
-  const char *name_;
+  const char *name_ {};
 };
 
 using ACE_Cleanup_Info_Node_List = ACE_Intrusive_List<ACE_Cleanup_Info_Node>;
