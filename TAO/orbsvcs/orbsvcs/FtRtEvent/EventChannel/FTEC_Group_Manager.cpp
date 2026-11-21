@@ -115,7 +115,7 @@ void TAO_FTEC_Group_Manager::add_member (
     std::make_unique<TAO_FTEC_Group_Manager_Impl> ();
 
   new_impl->my_position = impl_->my_position;
-  size_t pos = impl_->info_list.length();
+  const size_t pos = impl_->info_list.length();
   new_impl->info_list.length(pos+1);
   for (size_t i {}; i < pos; ++i) {
     new_impl->info_list[i] = impl_->info_list[i];

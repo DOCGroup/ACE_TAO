@@ -132,7 +132,7 @@ Receiver::open (ACE_HANDLE handle,
                                                                      0,
                                                                      0);
 
-      size_t bytes_transferred = message_block.length ();
+      const size_t bytes_transferred = message_block.length ();
 
       // <complete> for Accept would have already moved the <wr_ptr>
       // forward. Update it to the beginning position.
