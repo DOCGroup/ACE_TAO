@@ -134,16 +134,16 @@ protected:
   const void *act_;
 
   /// Bytes transferred by this operation.
-  size_t bytes_transferred_;
+  size_t bytes_transferred_ {};
 
   /// Success indicator.
-  bool success_;
+  bool success_ {};
 
   /// ACT associated with handle.
-  const void *completion_key_;
+  const void *completion_key_ {};
 
   /// Error if operation failed.
-  u_long error_;
+  u_long error_ {};
 };
 
 /**

@@ -115,11 +115,7 @@ ACE_POSIX_Asynch_Result::ACE_POSIX_Asynch_Result
    int priority,
    int signal_number)
   : handler_proxy_ (handler_proxy),
-    act_ (act),
-    bytes_transferred_ (0),
-    success_ (false),
-    completion_key_ (nullptr),
-    error_ (0)
+    act_ (act)
 {
   aio_offset = offset;
   aio_reqprio = priority;
