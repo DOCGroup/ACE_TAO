@@ -57,7 +57,7 @@ public:
   using PARENT = ACE_Acceptor<TPC_Logging_Handler, ACE_SOCK_ACCEPTOR>;
   using PEER_ADDR = ACE_SOCK_Acceptor::PEER_ADDR;
 
-  TPC_Logging_Acceptor (ACE_Reactor *r)
+  explicit TPC_Logging_Acceptor (ACE_Reactor *r)
     : PARENT (r), ssl_ctx_ (nullptr), ssl_ (nullptr) {}
 
   /// Destructor frees the SSL resources.

@@ -69,7 +69,7 @@ public:
 class Logging_Event_Handler_WFMO : public Logging_Event_Handler_Ex
 {
 public:
-  Logging_Event_Handler_WFMO (ACE_Reactor *r)
+  explicit Logging_Event_Handler_WFMO (ACE_Reactor *r)
     : Logging_Event_Handler_Ex (r) {}
 
 protected:
@@ -85,7 +85,7 @@ class Logging_Acceptor_WFMO : public Logging_Acceptor_Ex
 {
 public:
   // Simple constructor to pass ACE_Reactor to base class.
-  Logging_Acceptor_WFMO (ACE_Reactor *r = ACE_Reactor::instance ())
+  explicit Logging_Acceptor_WFMO (ACE_Reactor *r = ACE_Reactor::instance ())
     : Logging_Acceptor_Ex (r) {};
 
 protected:

@@ -34,8 +34,8 @@ public:
    * also keep track of the containing page, if any, which is used to
    * print out more meaningful messages.
    */
-  HTTP_URL (const ACE_URL_Addr &url_addr,
-            HTTP_URL *containing_page = nullptr);
+  explicit HTTP_URL (const ACE_URL_Addr &url_addr,
+                     HTTP_URL *containing_page = nullptr);
 
   /**
    * Accept the visitor, which will then perform a particular
