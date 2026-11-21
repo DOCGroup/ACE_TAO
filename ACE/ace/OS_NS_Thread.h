@@ -897,15 +897,15 @@ private:
   /// TSS_Keys instance to administrate whether a specific key is in used
   /// or not.
   /// or not.
-  // Static construction in VxWorks 5.4 and later is slightly broken.
-  // If the static object is more complex than an integral type, static
-  // construction will occur twice.  The tss_keys_used_ object is
-  // statically constructed and then modified by ACE_Log_Msg::instance()
-  // when two keys are created and TSS data is stored.  However, at
-  // the end of static construction the tss_keys_used_ object is again
-  // initialized and therefore it will appear to next_key() that no
-  // TSS keys have been handed out.  That is all true unless the
-  // tss_keys_used object is a static pointer instead of a static object.
+  /// Static construction in VxWorks 5.4 and later is slightly broken.
+  /// If the static object is more complex than an integral type, static
+  /// construction will occur twice. The tss_keys_used_ object is
+  /// statically constructed and then modified by ACE_Log_Msg::instance()
+  /// when two keys are created and TSS data is stored. However, at
+  /// the end of static construction the tss_keys_used_ object is again
+  /// initialized and therefore it will appear to next_key() that no
+  /// TSS keys have been handed out. That is all true unless the
+  /// tss_keys_used object is a static pointer instead of a static object.
   static ACE_TSS_Keys* tss_keys_used_;
 
 #   if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
@@ -926,11 +926,11 @@ private:
 #   endif /* ! ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
 #   if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-  // Rely on native thread specific storage for the implementation,
-  // but just use one key.
+  /// Rely on native thread specific storage for the implementation,
+  /// but just use one key.
   static ACE_OS_thread_key_t native_tss_key_;
 
-  // Used to indicate if native tss key has been allocated
+  /// Used to indicate if native tss key has been allocated.
   static bool key_created_;
 #   endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 };

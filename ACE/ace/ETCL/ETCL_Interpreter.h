@@ -67,7 +67,7 @@ private:
   static ACE_SYNCH_MUTEX parserMutex__;
 };
 
-// Functions we need for parsing.
+/// Functions we need for parsing.
 extern int yyparse ();
 extern void yyrestart (FILE*);
 extern int yylex ();
