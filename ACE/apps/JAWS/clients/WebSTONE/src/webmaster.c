@@ -444,7 +444,15 @@ extern int  optind;
       * GET THE UILS TO RETRIEVE.
       */
 
-      sscanf(argv[currarg],"%s",filelist[number_of_pages]);
+      if (number_of_pages >= sizeof(filelist) / sizeof(filelist[0]))
+      {
+        errexit("Too many URL resources specified\n");
+      }
+      if (strlen(argv[currarg]) >= sizeof(filelist[0]))
+      {
+        errexit("URL resource exceeds maximum length\n");
+      }
+      strcpy(filelist[number_of_pages], argv[currarg]);
       ++number_of_pages;
       ++currarg;
   }
@@ -679,8 +687,8 @@ struct sockaddr_in  *serveraddr;
 
   if (0 == fgets(linebuf, sizeof(linebuf), fp))
       break;
-  num = sscanf(linebuf,"%s %s %s %d %s",clienthostname[cnt],login,password,
-              &numclients, webserver2);
+  num = sscanf(linebuf, "%63s %24s %19s %d %63s",
+               clienthostname[cnt], login, password, &numclients, webserver2);
   if (num < 4)
       break;
   if (servaddrin_config) {
