@@ -96,7 +96,7 @@ Command *CommandStream::execute (Command *command)
     }
 
   this->get (mb);
-  command = (Command *)mb->data_block ();
+  command = static_cast<Command *> (mb->data_block ());
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Command (%d) returns (%d)\n"),
               command->command_,
