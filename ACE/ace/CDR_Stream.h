@@ -1109,8 +1109,8 @@ protected:
   ACE_CDR::Octet minor_version_;
 
   /// If not nil, invoke for translation of character and string data.
-  ACE_Char_Codeset_Translator *char_translator_;
-  ACE_WChar_Codeset_Translator *wchar_translator_;
+  ACE_Char_Codeset_Translator *char_translator_ {};
+  ACE_WChar_Codeset_Translator *wchar_translator_ {};
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE::Monitor_Control::Size_Monitor *monitor_;

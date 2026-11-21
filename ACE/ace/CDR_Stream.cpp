@@ -1136,9 +1136,7 @@ ACE_InputCDR::ACE_InputCDR (const char *buf,
   : start_ (buf, bufsiz),
     do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
     major_version_ (major_version),
-    minor_version_ (minor_version),
-    char_translator_ (nullptr),
-    wchar_translator_ (nullptr)
+    minor_version_ (minor_version)
 {
   this->start_.wr_ptr (bufsiz);
 
@@ -1156,9 +1154,7 @@ ACE_InputCDR::ACE_InputCDR (size_t bufsiz,
   : start_ (bufsiz),
     do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
     major_version_ (major_version),
-    minor_version_ (minor_version),
-    char_translator_ (nullptr),
-    wchar_translator_ (nullptr)
+    minor_version_ (minor_version)
 {
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,
@@ -1174,9 +1170,7 @@ ACE_InputCDR::ACE_InputCDR (const ACE_Message_Block *data,
                             ACE_Lock* lock)
   : start_ (0, ACE_Message_Block::MB_DATA, nullptr, nullptr, nullptr, lock),
     major_version_ (major_version),
-    minor_version_ (minor_version),
-    char_translator_ (nullptr),
-    wchar_translator_ (nullptr)
+    minor_version_ (minor_version)
 {
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,
@@ -1195,9 +1189,7 @@ ACE_InputCDR::ACE_InputCDR (ACE_Data_Block *data,
   : start_ (data, flag),
     do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
     major_version_ (major_version),
-    minor_version_ (minor_version),
-    char_translator_ (nullptr),
-    wchar_translator_ (nullptr)
+    minor_version_ (minor_version)
 {
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,
@@ -1216,9 +1208,7 @@ ACE_InputCDR::ACE_InputCDR (ACE_Data_Block *data,
   : start_ (data, flag),
     do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
     major_version_ (major_version),
-    minor_version_ (minor_version),
-    char_translator_ (nullptr),
-    wchar_translator_ (nullptr)
+    minor_version_ (minor_version)
 {
   // Set the read pointer
   this->start_.rd_ptr (rd_pos);
