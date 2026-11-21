@@ -56,7 +56,9 @@ addtime(struct timeval *OrigTime, struct timeval *NewTime)
 
 
 void
-compdifftime(struct timeval *EndTime, struct timeval *StartTime, struct timeval *DiffTime)
+compdifftime(const struct timeval *EndTime,
+             const struct timeval *StartTime,
+             struct timeval *DiffTime)
 {
     struct timeval endtime = *EndTime;
 

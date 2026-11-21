@@ -508,7 +508,10 @@ char *commandline;
 {
     char tmpcommandline[NCCARGS];
     char hostname[MAXHOSTNAMELEN];
-    char *webclient_path, *temp;
+    char *webclient_path;
+#ifndef WIN32
+    char *temp;
+#endif
     int  cnt;
     struct hostent  *master_phe_tmp; /* temp. variable added by - Rajesh Shah*/
 
@@ -553,8 +556,6 @@ char *commandline;
       strcat(webclient_path, "/webclient");
 
     } else
-#else
-    temp = temp;
 #endif /* WIN32 */
       webclient_path = PROGPATH;
 
@@ -801,8 +802,6 @@ int sock;
   {
       fd_set readfds;
       struct timeval timeout;
-      int rv;
-
       timeout.tv_sec = MAX_ACCEPT_SECS;
       timeout.tv_usec = 0;
       FD_ZERO(&readfds);
@@ -810,7 +809,8 @@ int sock;
 
       /* if we're hung, quit */
       D_PRINTF("Before select() on listen() socket\n");
-      if (!(rv = select(FD_SETSIZE, &readfds, 0, 0, &timeout)))  {
+      if (select(FD_SETSIZE, &readfds, 0, 0, &timeout) == 0)
+      {
     fprintf(stdout,
         "Listen timeout after %d seconds (%d clients so far)\n",
         MAX_ACCEPT_SECS, cnt);
@@ -935,7 +935,7 @@ int *socknum;
 
 void GetResults(fdset, page_stats, endtime, timestr, totalnumclients,
     statarray)
-fd_set *fdset;
+const fd_set *fdset;
 page_stats_t **page_stats;
 time_t *endtime;
 char *timestr;
@@ -956,7 +956,6 @@ stats_t statarray[MAXCLIENTS];
    * COPY THE FILE DESCRIPTORS TO A TMP LIST,
    * ALLOCATE MEMORY FOR STATS, PAGESTATS IN TEXT FORM
    */
-  leftfdset = *fdset;
   stats_as_text = (char *)mymalloc(SIZEOF_STATSTEXT+1);
   page_stats_as_text = (char *)mymalloc(SIZEOF_PAGESTATSTEXT+1);
 
