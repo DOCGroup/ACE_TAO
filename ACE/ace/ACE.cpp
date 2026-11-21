@@ -981,12 +981,12 @@ ACE::recv (ACE_HANDLE handle, size_t n, ...)
   int const total_tuples = static_cast<int> (n / 2);
   iovec *iovp {};
 #if defined (ACE_HAS_ALLOCA)
-  iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
+  iovp = static_cast<iovec *> (alloca (total_tuples * sizeof (iovec)));
 #else
 # ifdef ACE_HAS_ALLOC_HOOKS
-  ACE_ALLOCATOR_RETURN (iovp, (iovec *)
+  ACE_ALLOCATOR_RETURN (iovp, static_cast<iovec *> (
                         ACE_Allocator::instance ()->malloc (total_tuples *
-                                                            sizeof (iovec)),
+                                                            sizeof (iovec))),
                         -1);
 # else
   ACE_NEW_RETURN (iovp,
@@ -1806,12 +1806,12 @@ ACE::send (ACE_HANDLE handle, size_t n, ...)
   int total_tuples = static_cast<int> (n / 2);
   iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
-  iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
+  iovp = static_cast<iovec *> (alloca (total_tuples * sizeof (iovec)));
 #else
 # ifdef ACE_HAS_ALLOC_HOOKS
-  ACE_ALLOCATOR_RETURN (iovp, (iovec *)
+  ACE_ALLOCATOR_RETURN (iovp, static_cast<iovec *> (
                         ACE_Allocator::instance ()->malloc (total_tuples *
-                                                            sizeof (iovec)),
+                                                            sizeof (iovec))),
                         -1);
 # else
   ACE_NEW_RETURN (iovp,
@@ -3400,11 +3400,11 @@ ACE::strndup (const char *str, size_t n)
   char *s;
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (s,
-                        (char *) ACE_Allocator::instance()->malloc (len + 1),
+                        static_cast<char *> (ACE_Allocator::instance()->malloc (len + 1)),
                         0);
 #else
   ACE_ALLOCATOR_RETURN (s,
-                        (char *) ACE_OS::malloc (len + 1),
+                        static_cast<char *> (ACE_OS::malloc (len + 1)),
                         nullptr);
 #endif /* ACE_HAS_ALLOC_HOOKS */
   return ACE_OS::strsncpy (s, str, len + 1);
