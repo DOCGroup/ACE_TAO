@@ -50,7 +50,7 @@ ACE_ATM_Addr::ACE_ATM_Addr (u_char selector)
               sizeof this->atm_addr_)
 {
   // ACE_TRACE ("ACE_ATM_Addr::ACE_ATM_Addr");
- (void) ACE_OS::memset ((void *) &this->atm_addr_,
+  (void) ACE_OS::memset (&this->atm_addr_,
                          0,
                          sizeof this->atm_addr_);
   this->init (selector);
@@ -142,7 +142,7 @@ ACE_ATM_Addr::init (u_char selector)
 
   ACE_OS::memcpy (atm_addr_.sap.t_atm_sap_appl.ID.user_defined_ID, BHLI_MAGIC, sizeof atm_addr_.sap.t_atm_sap_appl.ID);
 #elif defined (ACE_HAS_FORE_ATM_WS2)
-  ACE_OS::memset ((void *)&atm_addr_, 0, sizeof atm_addr_);
+  ACE_OS::memset (&atm_addr_, 0, sizeof atm_addr_);
   atm_addr_.satm_number.Addr[ ATM_ADDR_SIZE - 1 ] = (char)selector;
   atm_addr_.satm_family = AF_ATM;
   atm_addr_.satm_number.AddressType = ATM_NSAP;
@@ -185,8 +185,8 @@ ACE_ATM_Addr::set (const ACE_ATM_Addr &sap,
   ACE_ASSERT (sap.get_type () == PF_ATMSVC);
 #endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 */
 
-  (void) ACE_OS::memcpy ((void *) &this->atm_addr_,
-                         (void *) &sap.atm_addr_,
+  (void) ACE_OS::memcpy (&this->atm_addr_,
+                         &sap.atm_addr_,
                          sizeof this->atm_addr_);
   return 0;
 }
@@ -208,8 +208,8 @@ ACE_ATM_Addr::set (const ATM_Addr *sap,
 #endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 */
                             sizeof (*sap));
 
-  (void) ACE_OS::memcpy ((void *) &this->atm_addr_,
-                         (void *) sap,
+  (void) ACE_OS::memcpy (&this->atm_addr_,
+                         sap,
                          sizeof this->atm_addr_);
   return 0;
 }

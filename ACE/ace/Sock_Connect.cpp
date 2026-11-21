@@ -195,19 +195,19 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
         }
       else
         {
-          std::memcpy ((char *) &ip_addr.sin_addr.s_addr,
+          std::memcpy (&ip_addr.sin_addr.s_addr,
 # ifdef ACE_HOSTENT_H_ADDR
-                       (char *) hp->ACE_HOSTENT_H_ADDR,
+                       hp->ACE_HOSTENT_H_ADDR,
 # else
-                       (char *) hp->h_addr,
+                       hp->h_addr,
 # endif
                        hp->h_length);
         }
     }
   else
     {
-      std::memset ((void *) &ip_addr, 0, sizeof ip_addr);
-      std::memcpy ((void *) &ip_addr.sin_addr, (void*) &host_addr, sizeof ip_addr.sin_addr);
+      std::memset (&ip_addr, 0, sizeof ip_addr);
+      std::memcpy (&ip_addr.sin_addr, &host_addr, sizeof ip_addr.sin_addr);
     }
 
 #if !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (__Lynx__)
@@ -285,7 +285,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
             {
               std::memcpy (&ip_addr, &if_req.ifr_broadaddr, sizeof if_req.ifr_broadaddr);
 
-              std::memcpy ((void *) &host_addr, (void *) &ip_addr.sin_addr, sizeof host_addr);
+              std::memcpy (&host_addr, &ip_addr.sin_addr, sizeof host_addr);
 
               if (handle == ACE_INVALID_HANDLE)
                 {
