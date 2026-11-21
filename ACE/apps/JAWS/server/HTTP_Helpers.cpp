@@ -90,7 +90,6 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
                     &tms.tm_mday, month, &tms.tm_year,
                     &tms.tm_hour, &tms.tm_min, &tms.tm_sec) == 7)
     {
-      weekday[3] = '\0';
       parsed = true;
     }
   else if (::sscanf(buf, "%3s;%3s;%2d;%2d:%2d:%2d;%4d", // ASCTIME date format.
