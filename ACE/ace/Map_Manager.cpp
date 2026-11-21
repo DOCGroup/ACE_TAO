@@ -538,7 +538,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::resize_i (ACE_UINT32 new_size)
 
   // Allocate new memory.
   ACE_ALLOCATOR_RETURN (temp,
-                        (ENTRY *) this->allocator_->malloc (new_size * sizeof (ENTRY)),
+                        static_cast<ENTRY *> (
+                          this->allocator_->malloc (new_size * sizeof (ENTRY))),
                         -1);
 
   // Copy over the occupied entires.
