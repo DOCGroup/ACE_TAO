@@ -164,14 +164,14 @@ private:
   ACE_Mem_Map mem_map_;
 
   /// Pointer to the address where the next <recv> method will start.
-  char *recv_pos_;
+  char *recv_pos_ {};
 
   /// Pointer to the address where the next <get_char> method will
   /// start.
-  char *get_pos_;
+  char *get_pos_ {};
 
   /// Address at the end of the file mapping.
-  char *end_of_mapping_plus1_;
+  char *end_of_mapping_plus1_ {};
 };
 
 #include /**/ "ace/post.h"
