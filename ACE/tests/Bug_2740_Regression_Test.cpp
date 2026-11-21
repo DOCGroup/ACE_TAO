@@ -58,9 +58,9 @@ protected:
   // get into record-marking, short-reads/writes, etc. so just count the number
   // of bytes it takes to echo the data. Don't care about verifying the
   // content - this is mostly a stress test for multithreaded reactor.
-  size_t echo_cnt_;
-  size_t iter_;
-  unsigned long timer_;
+  size_t echo_cnt_ {};
+  size_t iter_ {};
+  long timer_ {-1};
 };
 
 const char *ClientSvcHandler::send_str =
