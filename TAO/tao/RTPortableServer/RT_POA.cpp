@@ -22,6 +22,7 @@
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
 #include "tao/RTPortableServer/RT_Policy_Validator.h"
 
+#include <algorithm>
 #include <memory>
 
 #if !defined (__ACE_INLINE__)
@@ -127,12 +128,17 @@ TAO_RT_POA::validate_priority (RTCORBA::Priority priority)
   // when the POA was created, the bands had to match the lanes.
   if (this->thread_pool_ != nullptr && this->thread_pool_->with_lanes ())
     {
-      for (std::unique_ptr<TAO_Thread_Lane> const &lane : this->thread_pool_->lanes ())
+      bool const priority_found =
+        std::any_of (this->thread_pool_->lanes ().begin (),
+                     this->thread_pool_->lanes ().end (),
+                     [priority] (std::unique_ptr<TAO_Thread_Lane> const &lane)
+                     {
+                       return lane->lane_priority () == priority;
+                     });
+
+      if (priority_found)
         {
-          if (lane->lane_priority () == priority)
-            {
-            return;
-          }
+          return;
         }
 
       throw ::CORBA::BAD_PARAM ();
