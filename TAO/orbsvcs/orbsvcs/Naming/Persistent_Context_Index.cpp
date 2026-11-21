@@ -40,7 +40,8 @@ TAO_Persistent_Context_Index::bind (char const *poa_id,
   // Allocate memory for items to be stored in the table.
   const size_t poa_id_len = std::strlen (poa_id) + 1;
   const size_t counter_len = sizeof (ACE_UINT32);
-  char *ptr = (char *) this->allocator_->malloc (poa_id_len + counter_len);
+  char *ptr = static_cast<char *> (
+    this->allocator_->malloc (poa_id_len + counter_len));
 
   if (ptr == nullptr)
     {

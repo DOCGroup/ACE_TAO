@@ -159,7 +159,7 @@ TAO_Persistent_Bindings_Map::shared_bind (char const *id,
   const size_t kind_len = std::strlen (kind) + 1;
   const size_t ref_len = std::strlen (ref.in ()) + 1;
   const size_t total_len = id_len + kind_len + ref_len;
-  char *ptr = (char *) this->allocator_->malloc (total_len);
+  char *ptr = static_cast<char *> (this->allocator_->malloc (total_len));
 
   // Allocation failed - bail out.
   if (ptr == nullptr)
