@@ -279,7 +279,7 @@ void Snmp::override_host_name (char const *name)
   if (name != nullptr)
     {
       size_t const copy_length =
-        std::min (std::strlen (name), sizeof host_name_ - 1);
+        (std::min) (std::strlen (name), sizeof host_name_ - 1);
       std::memcpy (host_name_, name, copy_length);
       host_name_[copy_length] = '\0';
     }
@@ -298,7 +298,7 @@ void Snmp::get_host_name (char *name, int len)
       if (host_name_[0] != '\0')
         {
           size_t const copy_length =
-            std::min (std::strlen (host_name_), max_name_length);
+            (std::min) (std::strlen (host_name_), max_name_length);
           std::memcpy (name, host_name_, copy_length);
           name[copy_length] = '\0';
         }
