@@ -44,7 +44,6 @@ run_main (int, ACE_TCHAR *[])
 {
   int r;
   int retval = 0;
-  unsigned k;
   MyNode node (1);
 
   ACE_START_TEST (ACE_TEXT ("Unbounded_Set_Test"));
@@ -113,7 +112,7 @@ run_main (int, ACE_TCHAR *[])
   {
     MySet::ITERATOR it1 (ubs);
     MySet::iterator it2 (ubs2);
-    for (k = 1; k <= 5; ++k)
+    for (unsigned k = 1; k <= 5; ++k)
       {
         if (it1.done ())
           {

@@ -18,13 +18,12 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
   ACE_DEBUG ((LM_DEBUG,
         "Init POA\n"));
 
-  ACE_TCHAR const *current_arg {};
-
   POA_name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()); // Read the name of the POA
   arg_shifter.consume_arg ();
 
   while (arg_shifter.is_anything_left ())
     {
+      ACE_TCHAR const *current_arg {};
       if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-PriorityModel"))))
         {
           if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("CLIENT")) == 0)

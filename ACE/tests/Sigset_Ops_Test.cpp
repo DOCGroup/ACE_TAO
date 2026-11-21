@@ -19,11 +19,10 @@ void
 siglistset (sigset_t x, int *sigset, int can_miss = 0)
 {
   bool empty = true;
-  int result = 0;
 
   for (int i = 1; i < ACE_NSIG; ++i)
     {
-      result = ACE_OS::sigismember (&x, i);
+      int result = ACE_OS::sigismember (&x, i);
 
       if (result > 0)
         {

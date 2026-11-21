@@ -101,10 +101,10 @@ int run_receiver ()
 
   ACE_SOCK_Dgram socket;
   ACE_INET_Addr  remote ;
-  static char    dgram_buffer[BUFSIZ];
 
   if (socket.open (ACE_INET_Addr (dgram_port)) != -1)
     {
+      static char dgram_buffer[BUFSIZ];
       if (socket.recv (dgram_buffer, sizeof (dgram_buffer),
                        remote, 0, &dgram_recv_timeout) > 0)
         {

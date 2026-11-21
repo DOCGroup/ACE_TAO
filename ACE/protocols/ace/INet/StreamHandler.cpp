@@ -144,10 +144,10 @@ namespace ACE
 
         ACE_Message_Block *raw_mb {};
         ACE_Time_Value nowait (ACE_OS::gettimeofday ());
-        size_t bytes_out = 0;
         if (-1 != this->getq (raw_mb, &nowait))
           {
             ACE_Message_Block_Unique_Ptr mb (raw_mb);
+            size_t bytes_out = 0;
             ssize_t send_cnt =
               this->peer ().send_n (mb->rd_ptr (), mb->length (), timeout, std::addressof (bytes_out));
             if (bytes_out > 0)
