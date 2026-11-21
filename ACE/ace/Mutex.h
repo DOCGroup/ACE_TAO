@@ -174,14 +174,14 @@ public:
 
 #ifdef ACE_MUTEX_USE_PROCESS_LOCK
   /// This lock resides in shared memory.
-  Process_Lock *process_lock_;
+  Process_Lock *process_lock_ {};
 
   /**
    * Remember the name of the mutex if we created it so we can unlink
    * it when we go away (only the actor that initialized the memory
    * can destroy it).
    */
-  const ACE_TCHAR *lockname_;
+  const ACE_TCHAR *lockname_ {};
 #endif /* ACE_MUTEX_USE_PROCESS_LOCK */
 
   /// Mutex type supported by the OS.
@@ -192,7 +192,7 @@ public:
   /// destructor.  This flag isn't protected by a lock, so make sure
   /// that you don't have multiple threads simultaneously calling
   /// @c remove on the same object, which is a bad idea anyway.
-  bool removed_;
+  bool removed_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

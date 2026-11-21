@@ -45,12 +45,6 @@ ACE_Mutex::unlink (const ACE_TCHAR *name)
 
 ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
                       ACE_mutexattr_t *arg, mode_t mode)
-  :
-#ifdef ACE_MUTEX_USE_PROCESS_LOCK
-    process_lock_ (nullptr),
-    lockname_ (nullptr),
-#endif /* ACE_MUTEX_USE_PROCESS_LOCK */
-    removed_ (false)
 {
   // ACE_TRACE ("ACE_Mutex::ACE_Mutex");
 
