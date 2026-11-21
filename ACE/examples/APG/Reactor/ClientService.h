@@ -29,13 +29,13 @@ public:
 
   int open (void * = nullptr) override;
 
-  // Called when input is available from the client.
+  /// Called when input is available from the client.
   int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
 
-  // Called when output is possible.
+  /// Called when output is possible.
   int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
 
-  // Called when this handler is removed from the ACE_Reactor.
+  /// Called when this handler is removed from the ACE_Reactor.
   int handle_close (ACE_HANDLE handle,
                     ACE_Reactor_Mask close_mask) override;
 };

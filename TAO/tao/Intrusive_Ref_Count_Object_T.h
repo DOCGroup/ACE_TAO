@@ -44,10 +44,10 @@ public:
   OBJ *get () const;
 
 private:
-  // Prevent default constructor used.
+  /// Prevent default constructor used.
   TAO_Intrusive_Ref_Count_Object () = delete;
 
-  // Prevent copying/assignment.
+  /// Prevent copying/assignment.
   TAO_Intrusive_Ref_Count_Object (TAO_Intrusive_Ref_Count_Object const &) = delete;
   TAO_Intrusive_Ref_Count_Object &operator= (TAO_Intrusive_Ref_Count_Object const &) = delete;
   TAO_Intrusive_Ref_Count_Object (TAO_Intrusive_Ref_Count_Object &&) = delete;

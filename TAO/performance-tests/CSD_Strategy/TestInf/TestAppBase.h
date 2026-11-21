@@ -15,7 +15,7 @@ class CSD_PT_TestInf_Export TestAppBase
     TestAppBase &operator= (TestAppBase &&) = delete;
     virtual ~TestAppBase ();
 
-    // Returns 0 for success, and -1 for failure.
+    /// Returns 0 for success, and -1 for failure.
     int run (int argc, ACE_TCHAR *argv[]);
 
     char const *name () const;
@@ -23,7 +23,7 @@ class CSD_PT_TestInf_Export TestAppBase
   protected:
     explicit TestAppBase (char const *name);
 
-    // Returns -1 for failure, 0 for success
+    /// Returns -1 for failure, 0 for success
     virtual int run_i (int argc, ACE_TCHAR *argv[]) = 0;
 
   private:
