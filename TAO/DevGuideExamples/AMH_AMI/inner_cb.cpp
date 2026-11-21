@@ -2,6 +2,8 @@
 #include "inner_cb.h"
 #include <iostream>
 
+#include <memory>
+
 Inner_callback_i::Inner_callback_i (PortableServer::POA_ptr p,
                                     AMH_MiddleResponseHandler_ptr rh)
   : poa_ (PortableServer::POA::_duplicate (p)),
@@ -39,7 +41,7 @@ Inner_callback_i::answer_excep (Messaging::ExceptionHolder *excep_holder)
     {
       CORBA::Exception * const local_ex = ex._tao_duplicate ();
       AMH_MiddleExceptionHolder amh_excep_holder (local_ex);
-      this->response_handler_->get_the_answer_excep (&amh_excep_holder);
+      this->response_handler_->get_the_answer_excep (std::addressof (amh_excep_holder));
     }
   catch(...)
     {
@@ -49,7 +51,7 @@ Inner_callback_i::answer_excep (Messaging::ExceptionHolder *excep_holder)
 
       CORBA::Exception * const unknown_ex = new CORBA::UNKNOWN;
       AMH_MiddleExceptionHolder amh_excep_holder (unknown_ex);
-      this->response_handler_->get_the_answer_excep (&amh_excep_holder);
+      this->response_handler_->get_the_answer_excep (std::addressof (amh_excep_holder));
     }
 
   std::cout << "inner_callback_i deactivating self" << std::endl;

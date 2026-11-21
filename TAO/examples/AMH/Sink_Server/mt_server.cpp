@@ -3,6 +3,8 @@
 
 #include "ace/OS_NS_stdlib.h"
 
+#include <memory>
+
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -24,7 +26,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_OS::exit (1);
     }
 
-  amh_server.register_servant (&servant);
+  amh_server.register_servant (std::addressof (servant));
   amh_server.start_threads ();
   amh_server.shutdown_orb_and_poa ();
 

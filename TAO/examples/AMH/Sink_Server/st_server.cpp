@@ -3,6 +3,8 @@
 
 #include "ace/OS_NS_stdlib.h"
 
+#include <memory>
+
 void
 usage (char const *message)
 {
@@ -39,7 +41,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_OS::exit (1);
     }
 
-  amh_server.register_servant (&servant);
+  amh_server.register_servant (std::addressof (servant));
   amh_server.run_event_loop ();
   amh_server.shutdown_orb_and_poa ();
 

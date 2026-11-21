@@ -14,6 +14,7 @@
 #include <cstring>
 #include <fstream>
 #include <iostream>
+#include <memory>
 #include <sstream>
 #include <string>
 
@@ -679,7 +680,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         // Create a controller and set static m_ctrl member
         // for thermostats and thermometers.
         Controller_impl ctrl_servant (dev_poa.in (), "/tmp/CCS_assets");
-        Thermometer_impl::m_ctrl = &ctrl_servant;
+        Thermometer_impl::m_ctrl = std::addressof (ctrl_servant);
 
         obj = ctrl_servant._this ();
 
@@ -689,7 +690,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         // Instantiate the servant locator for devices.
         PortableServer::ServantManager_var locator =
-          new DeviceLocator_impl (&ctrl_servant);
+          new DeviceLocator_impl (std::addressof (ctrl_servant));
 
         // Set servant locator.
         dev_poa->set_servant_manager (locator.in ());

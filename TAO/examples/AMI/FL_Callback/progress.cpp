@@ -77,7 +77,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           10,
                           window.w () - 20,
                           window.h () - 20);
-      window.resizable (&sw);
+      window.resizable (std::addressof (sw));
 
       window.end ();
 
@@ -104,7 +104,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-      Progress_i server_impl (&sw);
+      Progress_i server_impl (std::addressof (sw));
 
       Progress_var server =
         server_impl._this ();

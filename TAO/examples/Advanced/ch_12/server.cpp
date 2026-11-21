@@ -681,7 +681,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       char const * const asset_file = std::getenv ("CCS_ASSETS");
       Controller_impl ctrl_servant (ccs_poa.in (),
                                     asset_file == nullptr ? "/tmp/CCS_assets" : asset_file);
-      Thermometer_impl::m_ctrl = &ctrl_servant;
+      Thermometer_impl::m_ctrl = std::addressof (ctrl_servant);
 
       // Create a reference for the controller and
       // create the corresponding CORBA object.
@@ -704,7 +704,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Instantiate the servant locator for devices.
       PortableServer::ServantManager_var locator =
-        new DeviceLocator_impl (&ctrl_servant);
+        new DeviceLocator_impl (std::addressof (ctrl_servant));
 
       // Set servant locator.
       ccs_poa->set_servant_manager (locator.in ());

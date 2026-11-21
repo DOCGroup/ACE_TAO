@@ -84,7 +84,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       mgr->activate ();
 
       interop_WChar_Passer_i servant (orb.in (), verbose);
-      obj = poa->servant_to_reference (&servant);
+      obj = poa->servant_to_reference (std::addressof (servant));
       CORBA::String_var const str = orb->object_to_string (obj.in ());
 
       {
