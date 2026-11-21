@@ -33,7 +33,7 @@ class ACE_PushConsumer_Adapter : public POA_RtecEventComm::PushConsumer
 {
 public:
   /// Forwards all calls to @a target.
-  ACE_PushConsumer_Adapter (TARGET *target);
+  explicit ACE_PushConsumer_Adapter (TARGET *target);
 
   /// Forwards to target_.
   void push (const RtecEventComm::EventSet& events) override;
@@ -59,7 +59,7 @@ class ACE_PushSupplier_Adapter : public POA_RtecEventComm::PushSupplier
 {
 public:
   /// Forwards all calls to <owner>.
-  ACE_PushSupplier_Adapter (TARGET *target);
+  explicit ACE_PushSupplier_Adapter (TARGET *target);
 
   /// Forwards to target_.
   void disconnect_push_supplier () override;

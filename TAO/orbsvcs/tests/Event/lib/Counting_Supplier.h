@@ -86,7 +86,7 @@ class EC_Test_Export EC_Counting_Supplier_Task : public ACE_Task_Base
 {
 public:
   /// Create the task...
-  EC_Counting_Supplier_Task (EC_Counting_Supplier *supplier);
+  explicit EC_Counting_Supplier_Task (EC_Counting_Supplier *supplier);
 
   int svc () override;
 

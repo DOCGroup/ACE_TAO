@@ -15,7 +15,7 @@ class Terminator;
 class  Test_i : public virtual POA_Messenger
 {
 public:
-  Test_i (Terminator &terminator);
+  explicit Test_i (Terminator &terminator);
 
   ~Test_i () override;
 

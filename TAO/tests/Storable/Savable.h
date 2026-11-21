@@ -23,7 +23,7 @@ class Savable_Exception
 class Savable
 {
  public:
-  Savable (TAO::Storable_Factory & storable_factory);
+  explicit Savable (TAO::Storable_Factory & storable_factory);
 
   ~Savable ();
 

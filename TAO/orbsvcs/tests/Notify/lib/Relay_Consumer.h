@@ -25,7 +25,7 @@
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Relay_Consumer : public TAO_Notify_Tests_Direct_Consumer
 {
 public:
-  TAO_Notify_Tests_Relay_Consumer (ACE_CString& destination);
+  explicit TAO_Notify_Tests_Relay_Consumer (ACE_CString& destination);
 
   ~TAO_Notify_Tests_Relay_Consumer ();
 
