@@ -187,7 +187,8 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   void clearerr (FILE* fp);
 
-  //@{ @name Wrappers to obtain the current user id
+  /// @name Wrappers to obtain the current user id
+  /// @{
   // Legacy as per SUSV3
 # if !defined (ACE_LACKS_CUSERID)
 #   if defined(cuserid)
@@ -241,7 +242,8 @@ namespace ACE_OS {
   wchar_t *fgets (wchar_t *buf, int size, FILE *fp);
 # endif /* ACE_HAS_WCHAR && !ACE_LACKS_FGETWS */
 
-  //@{ @name A set of wrappers for file locks.
+  /// @name A set of wrappers for file locks.
+  /// @{
 
 # if defined (ACE_WIN32)
   ACE_NAMESPACE_INLINE_FUNCTION

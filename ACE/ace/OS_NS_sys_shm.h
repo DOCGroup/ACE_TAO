@@ -33,7 +33,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS
 {
-  //@{ @name A set of wrappers for System V shared memory.
+  /// @name A set of wrappers for System V shared memory.
+  /// @{
   ACE_NAMESPACE_INLINE_FUNCTION
   void *shmat (int int_id,
                const void *shmaddr,

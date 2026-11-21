@@ -33,7 +33,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE_OS
 {
   // non=standard..
-  //@{ @name A set of wrappers for regular expressions.
+  /// @name A set of wrappers for regular expressions.
+  /// @{
   ACE_NAMESPACE_INLINE_FUNCTION
   char *compile (const char *instring,
                  char *expbuf,

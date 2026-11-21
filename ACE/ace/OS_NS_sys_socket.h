@@ -80,7 +80,8 @@ namespace ACE_OS
   extern ACE_Export int socket_initialized_;
 # endif /* ACE_WIN32 */
 
-  //@{ @name A set of wrappers for sockets.
+  /// @name A set of wrappers for sockets.
+  /// @{
   /// BSD-style @c accept (no QoS).
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_HANDLE accept (ACE_HANDLE handle,

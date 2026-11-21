@@ -230,7 +230,7 @@ namespace CORBA
     using _var_type = Object_var;
     using _out_type = Object_out;
 
-    //@} End of CORBA specific methods
+    /// @} End of CORBA specific methods
 
   public:
     /// Marshalling operator used by the stub code. A long story why
@@ -307,7 +307,7 @@ namespace CORBA
 
     IOP::IOR const &ior () const;
 
-    //@} End of TAO-specific methods..
+    /// @} End of TAO-specific methods..
 
     /// Can this object be stringified?
     virtual bool can_convert_to_ior () const;

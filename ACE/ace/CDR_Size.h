@@ -52,8 +52,9 @@ public:
   /// Return current size.
   size_t total_length () const;
 
-  // Return 0 on failure and 1 on success.
-  //@{ @name Size-calculating pseudo-write operations
+  /// Return 0 on failure and 1 on success.
+  /// @name Size-calculating pseudo-write operations
+  /// @{
   ACE_CDR::Boolean write_boolean (ACE_CDR::Boolean x);
   ACE_CDR::Boolean write_char (ACE_CDR::Char x);
   ACE_CDR::Boolean write_wchar (ACE_CDR::WChar x);
@@ -90,7 +91,8 @@ public:
   /// @note the portion written starts at <x> and ends
   ///    at <x + length>.
   /// The length is *NOT* stored into the CDR stream.
-  //@{ @name Array write operations
+  /// @name Array write operations
+  /// @{
   ACE_CDR::Boolean write_boolean_array (const ACE_CDR::Boolean *x,
                                         ACE_CDR::ULong length);
   ACE_CDR::Boolean write_char_array (const ACE_CDR::Char *x,

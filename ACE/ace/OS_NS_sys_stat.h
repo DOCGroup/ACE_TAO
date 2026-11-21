@@ -69,7 +69,8 @@ namespace ACE_OS
   ACE_HANDLE creat (const ACE_TCHAR *filename,
                     mode_t mode);
 
-  //@{ @name A set of wrappers for low-level file operations.
+  /// @name A set of wrappers for low-level file operations.
+  /// @{
 
   // non-standard
   ACE_NAMESPACE_INLINE_FUNCTION

@@ -174,7 +174,8 @@ public:
    * Disambiguate overload when inserting booleans, octets, chars, and
    * bounded strings.
    */
-  //@{ @name Helper classes
+  /// @name Helper classes
+  /// @{
 
   struct ACE_Export from_boolean
   {
@@ -299,7 +300,8 @@ public:
   /// @note the portion written starts at @a x and ends
   ///    at @a x + @a length.
   /// The length is *NOT* stored into the CDR stream.
-  //@{ @name Array write operations
+  /// @name Array write operations
+  /// @{
   ACE_CDR::Boolean write_boolean_array (const ACE_CDR::Boolean *x,
                                         ACE_CDR::ULong length);
   ACE_CDR::Boolean write_char_array (const ACE_CDR::Char *x,
@@ -401,7 +403,8 @@ public:
   /**
    * Return 0 on failure and 1 on success.
    */
-  //@{ @name Append contents of own CDR stream to another
+  /// @name Append contents of own CDR stream to another
+  /// @{
   ACE_CDR::Boolean append_boolean (ACE_InputCDR &);
   ACE_CDR::Boolean append_char (ACE_InputCDR &);
   ACE_CDR::Boolean append_wchar (ACE_InputCDR &);
@@ -783,7 +786,8 @@ public:
 
   /// Disambiguate overloading when extracting octets, chars,
   /// booleans, and bounded strings
-  //@{ @name Helper classes
+  /// @name Helper classes
+  /// @{
 
   struct ACE_Export to_boolean
   {
@@ -872,7 +876,8 @@ public:
   /**
    * Return @c false on failure and @c true on success.
    */
-  //@{ @name Read basic IDL types
+  /// @name Read basic IDL types
+  /// @{
   ACE_CDR::Boolean read_boolean (ACE_CDR::Boolean& x);
   ACE_CDR::Boolean read_char (ACE_CDR::Char &x);
   ACE_CDR::Boolean read_wchar (ACE_CDR::WChar& x);
@@ -904,7 +909,8 @@ public:
    * elements.
    * Return @c false on failure and @c true on success.
    */
-  //@{ @name Read basic IDL types arrays
+  /// @name Read basic IDL types arrays
+  /// @{
   ACE_CDR::Boolean read_boolean_array (ACE_CDR::Boolean* x,
                                        ACE_CDR::ULong length);
   ACE_CDR::Boolean read_char_array (ACE_CDR::Char *x,
@@ -938,7 +944,8 @@ public:
   /**
    * Return @c false on failure and @c true on success.
    */
-  //@{ @name Skip elements
+  /// @name Skip elements
+  /// @{
   ACE_CDR::Boolean skip_boolean ();
   ACE_CDR::Boolean skip_char ();
   ACE_CDR::Boolean skip_wchar ();

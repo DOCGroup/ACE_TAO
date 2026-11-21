@@ -35,7 +35,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS
 {
-  //@{ @name A set of wrappers for memory mapped files.
+  /// @name A set of wrappers for memory mapped files.
+  /// @{
   ACE_NAMESPACE_INLINE_FUNCTION
   int madvise (caddr_t addr,
                size_t len,

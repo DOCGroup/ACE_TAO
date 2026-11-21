@@ -161,7 +161,8 @@ namespace ACE_OS
     ACE_HRTIMER_GETTIME = 0xFFFF
   };
 
-  //@{ @name A set of wrappers for operations on time.
+  /// @name A set of wrappers for operations on time.
+  /// @{
 
   ACE_NAMESPACE_INLINE_FUNCTION
   char *asctime (const struct tm *tm);

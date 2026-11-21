@@ -1094,7 +1094,8 @@ class ACE_event_t;
 class ACE_Base_Thread_Adapter;
 
 namespace ACE_OS {
-  //@{ @name A set of wrappers for threads
+  /// @name A set of wrappers for threads
+  /// @{
 
   /// This is necessary to deal with POSIX pthreads and their use of
   /// structures for thread ids.
@@ -1117,7 +1118,8 @@ namespace ACE_OS {
   extern ACE_Export
   void cleanup_tss (const u_int main_thread);
 
-  //@{ @name A set of wrappers for condition variables.
+  /// @name A set of wrappers for condition variables.
+  /// @{
   ACE_NAMESPACE_INLINE_FUNCTION
   int condattr_init (ACE_condattr_t &attributes,
                      int type = ACE_DEFAULT_SYNCH_TYPE);
@@ -1219,7 +1221,8 @@ namespace ACE_OS {
                  ACE_thread_mutex_t *m);
 # endif /* ACE_WIN32 && ACE_HAS_WTHREADS */
 
-  //@{ @name A set of wrappers for auto-reset and manual events.
+  /// @name A set of wrappers for auto-reset and manual events.
+  /// @{
 
   extern ACE_Export
   int event_destroy (ACE_event_t *event);
@@ -1289,7 +1292,8 @@ namespace ACE_OS {
   extern ACE_Export
   int lwp_setparams (const ACE_Sched_Params &);
 
-  //@{ @name A set of wrappers for mutex locks.
+  /// @name A set of wrappers for mutex locks.
+  /// @{
 
   extern ACE_Export
   int mutex_destroy (ACE_mutex_t *m);
@@ -1378,7 +1382,8 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   long priority_control (ACE_idtype_t, ACE_id_t, int, void *);
 
-  //@{ @name A set of wrappers for recursive mutex locks.
+  /// @name A set of wrappers for recursive mutex locks.
+  /// @{
 
   // These two methods are primarily in support of
   // ACE_Condition<ACE_Recursive_Thread_Mutex> and should probably not
@@ -1419,7 +1424,8 @@ namespace ACE_OS {
 
   /// @}
 
-  //@{ @name A set of wrappers for readers/writer locks.
+  /// @name A set of wrappers for readers/writer locks.
+  /// @{
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int rw_rdlock (ACE_rwlock_t *rw);
@@ -1450,7 +1456,8 @@ namespace ACE_OS {
 
   /// @}
 
-  //@{ @name Thread scheduler interface.
+  /// @name Thread scheduler interface.
+  /// @{
   /// Set scheduling parameters.  An id of ACE_SELF indicates, e.g.,
   /// set the parameters on the calling thread.
   extern ACE_Export
@@ -1461,7 +1468,8 @@ namespace ACE_OS {
   extern ACE_Export
   int scheduling_class (const char *class_name, ACE_id_t &);
 
-  //@{ @name A set of wrappers for semaphores.
+  /// @name A set of wrappers for semaphores.
+  /// @{
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int sema_destroy (ACE_sema_t *s);
@@ -1534,7 +1542,8 @@ namespace ACE_OS {
                  ACE_Time_Value *tv);
   /// @}
 
-  //@{ @name A set of wrappers for System V semaphores.
+  /// @name A set of wrappers for System V semaphores.
+  /// @{
   ACE_NAMESPACE_INLINE_FUNCTION
   int semctl (int int_id,
               int semnum,
@@ -1820,7 +1829,8 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   void thr_yield ();
 
-  //@{ @name A set of wrappers for mutex locks that only work within a single process.
+  /// @name A set of wrappers for mutex locks that only work within a single process.
+  /// @{
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int thread_mutex_destroy (ACE_thread_mutex_t *m);
