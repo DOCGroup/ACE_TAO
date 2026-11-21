@@ -463,6 +463,10 @@ extern int  optind;
   /* have filelist; take a stab at the number of valid URLs */
   D_PRINTF( "About to parse filelist %s\n", uil_filelist );
   number_of_pages = count_file_list(uil_filelist);
+  if (number_of_pages < 0)
+  {
+      errexit("Could not count pages in filelist %s\n", uil_filelist);
+  }
     }
     if (number_of_pages == 0)
     {

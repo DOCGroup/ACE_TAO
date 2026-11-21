@@ -50,52 +50,72 @@ count_file_list(const char *url_list_file)
 {
   FILE *fp;
   char a_line[BUFSIZ];
+  long int num_of_pages = 0;
 
   fp = fopen(url_list_file, "r");
 
   if (fp == 0)
     {
       D_PRINTF("Error %d opening filelist %s: %s\n",
-               errno, url_list_file, strerror(errno) );;
+               errno, url_list_file, strerror(errno) );
       return(returnerr("Error %d opening filelist %s: %s\n",
              errno, url_list_file, strerror(errno)));
     }
-  else
+
+  D_PRINTF( "Opened file, about to count\n" );
+  /* Count non-empty URLs after stripping comments. */
+  while (fgets(a_line, sizeof(a_line), fp) != 0)
     {
-      long int num_of_pages = 0;
+      char *textvalue = a_line;
+      char *comment = strchr(textvalue, '#');
 
-      D_PRINTF( "Opened file, about to count\n" );
-      /*
-       * parse through the file line-by-line
-       * strip out comments, but don't check for URL consistency
-       */
-      while (fgets(a_line, BUFSIZ, fp) != 0)
+      if (strchr(a_line, '\n') == 0 && fgetc(fp) != EOF)
         {
-          char *textvalue = a_line;
-
-          /* check for comments */
-          if (strchr(textvalue, '#') != 0)
-            {
-              int returnval = strcspn(textvalue, "#");
-
-              /* throw out anything after any '#' */
-              D_PRINTF( "Stripping comment from line: %s\n", textvalue );
-              D_PRINTF( "Found first # at %d\n", returnval );
-              if (returnval == 0)
-                {
-                  textvalue = 0;
-                }
-            }
-          /* is there more? */
-          if (textvalue != 0)
-            {
-              ++num_of_pages;
-              D_PRINTF( "Found %ld pages\n", num_of_pages );
-            }
+          fclose(fp);
+          errexit("Filelist line exceeds maximum length\n");
         }
-      return(num_of_pages);
+
+      if (comment != 0)
+        {
+          *comment = '\0';
+        }
+
+      while (isspace((unsigned char)*textvalue))
+        {
+          ++textvalue;
+        }
+
+      if (*textvalue == '\0')
+        {
+          continue;
+        }
+
+      if (num_of_pages >= MAXNUMOFPAGES)
+        {
+          fclose(fp);
+          errexit("Filelist exceeds the maximum of %d pages\n",
+                  MAXNUMOFPAGES);
+        }
+
+      ++num_of_pages;
+      D_PRINTF( "Found %ld pages\n", num_of_pages );
     }
-  fclose(fp);
+
+  if (ferror(fp))
+    {
+      int error = errno;
+      fclose(fp);
+      return returnerr("Error reading filelist %s: %s\n",
+                       url_list_file, strerror(error));
+    }
+
+  if (fclose(fp) != 0)
+    {
+      return returnerr("Error closing filelist %s: %s\n",
+                       url_list_file, strerror(errno));
+    }
+
+  return (int)num_of_pages;
 } /* end count_file_list() */
 
 /*

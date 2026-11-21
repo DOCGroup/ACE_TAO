@@ -815,6 +815,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       /* take a guess at the number of URLs in the file */
       D_PRINTF( "About to parse filelist %s\n", uil_filelist );
       number_of_pages = count_file_list(uil_filelist);
+      if (number_of_pages <= 0)
+      {
+          errexit("No URL resources found in filelist %s\n", uil_filelist);
+      }
       numfiles = 1;
 
       /* IF WE HAVE A FILELIST, PARSE IT */
