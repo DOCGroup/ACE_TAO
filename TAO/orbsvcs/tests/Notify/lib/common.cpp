@@ -15,7 +15,7 @@ Any_String (const CORBA::Any& any)
   CORBA::Long l;
   CORBA::ULong ul;
   CORBA::ULongLong ull;
-  const char* str;
+  const char* str {};
 
   if (any >>= s)
     {
@@ -35,7 +35,7 @@ Any_String (const CORBA::Any& any)
     }
   else if (any >>= str)
     {
-      std::snprintf (out, sizeof out, "%s", str);
+      std::snprintf (out, sizeof out, "%s", str == nullptr ? "" : str);
     }
   else if (any >>= ull)
     {
