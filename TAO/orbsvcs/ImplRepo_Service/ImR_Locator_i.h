@@ -44,7 +44,7 @@ public:
   int init (Options& opts);
 
   /// Same as above, but use the given orb
-  int init_with_orb (CORBA::ORB_ptr orb); //, Options& opts);
+  int init_with_orb (CORBA::ORB_ptr orb);
 
   /// Cleans up any state created by init*.
   int fini ();
