@@ -135,11 +135,13 @@ ACE_OS::argv_to_string (int argc,
             }
           argv_p[i] =
 #if defined (ACE_HAS_ALLOC_HOOKS)
-            (ACE_TCHAR *) ACE_Allocator::instance()->malloc ((ACE_OS::strlen (temp) + quotes + 3)
-                                                             * sizeof (ACE_TCHAR));
+            static_cast<ACE_TCHAR *> (
+              ACE_Allocator::instance ()->malloc (
+                (ACE_OS::strlen (temp) + quotes + 3) * sizeof (ACE_TCHAR)));
 #else
-            (ACE_TCHAR *) ACE_OS::malloc ((ACE_OS::strlen (temp) + quotes + 3)
-                                          * sizeof (ACE_TCHAR));
+            static_cast<ACE_TCHAR *> (
+              ACE_OS::malloc (
+                (ACE_OS::strlen (temp) + quotes + 3) * sizeof (ACE_TCHAR)));
 #endif /* ACE_HAS_ALLOC_HOOKS */
           if (argv_p[i] == nullptr)
             {
