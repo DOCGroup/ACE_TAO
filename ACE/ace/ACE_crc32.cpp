@@ -120,8 +120,8 @@ ACE::crc32 (const void *buffer, size_t len, ACE_UINT32 crc)
 {
   crc = ~crc;
 
-  for (const char *p = (const char *) buffer,
-                  *e = (const char *) buffer + len;
+  for (const char *p = static_cast<const char *> (buffer),
+                  *e = static_cast<const char *> (buffer) + len;
        p != e;
        ++p)
     {
@@ -138,8 +138,8 @@ ACE::crc32 (const iovec *iov, int len, ACE_UINT32 crc)
 
   for (int i = 0; i < len; ++i)
     {
-      for (const char *p = (const char *) iov[i].iov_base,
-                      *e = (const char *) iov[i].iov_base + iov[i].iov_len;
+      for (const char *p = static_cast<const char *> (iov[i].iov_base),
+                      *e = static_cast<const char *> (iov[i].iov_base) + iov[i].iov_len;
            p != e;
            ++p)
         {
