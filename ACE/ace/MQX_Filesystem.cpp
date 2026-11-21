@@ -124,7 +124,8 @@ MQX_Filesystem::open (const char *path, int mode)
 
   /// Get Absolute Path
   char cwd[FS_FILENAME_SIZE];
-  int mqx_error = _io_ioctl (current_fs_, IO_IOCTL_GET_CURRENT_DIR, (uint32_t*) cwd);
+  int mqx_error = _io_ioctl (current_fs_, IO_IOCTL_GET_CURRENT_DIR,
+                             reinterpret_cast<uint32_t *> (cwd));
   if (mqx_error != MQX_OK)
     {
       errno = ACE_OS::mqx_error_to_errno (mqx_error);
@@ -249,7 +250,8 @@ MQX_Filesystem::getcwd (char *buf, size_t size)
     }
 
   char curdirtmp[FS_FILENAME_SIZE];
-  int mqx_error = _io_ioctl (current_fs_, IO_IOCTL_GET_CURRENT_DIR, (uint32_t*) curdirtmp);
+  int mqx_error = _io_ioctl (current_fs_, IO_IOCTL_GET_CURRENT_DIR,
+                             reinterpret_cast<uint32_t *> (curdirtmp));
   if (mqx_error != MFS_NO_ERROR)
     {
       errno = ACE_OS::mqx_error_to_errno (mqx_error);
@@ -310,7 +312,8 @@ MQX_Filesystem::mkdir (const char *path)
       return -1;
     }
   int mqx_error = _io_ioctl (
-    fs, IO_IOCTL_CREATE_SUBDIR, (uint32_t*) (path + fs_name_len));
+    fs, IO_IOCTL_CREATE_SUBDIR,
+    reinterpret_cast<uint32_t *> (path + fs_name_len));
   if (mqx_error != MQX_OK)
     {
       errno = ACE_OS::mqx_error_to_errno (mqx_error);
@@ -333,7 +336,7 @@ MQX_Filesystem::chdir (const char *path)
       update_fs(fs);
     }
   int mqx_error = _io_ioctl (fs, IO_IOCTL_CHANGE_CURRENT_DIR,
-    (uint32_t*) (path + fs_name_len));
+    reinterpret_cast<uint32_t *> (path + fs_name_len));
   if (mqx_error != MQX_OK)
     {
       errno = ACE_OS::mqx_error_to_errno (mqx_error);
@@ -352,7 +355,7 @@ MQX_Filesystem::rmdir (const char *path)
       return -1;
     }
   int mqx_error = _io_ioctl (fs, IO_IOCTL_REMOVE_SUBDIR,
-    (uint32_t*) (path + fs_name_len));
+    reinterpret_cast<uint32_t *> (path + fs_name_len));
   if (mqx_error != MQX_OK)
     {
       errno = ACE_OS::mqx_error_to_errno (mqx_error);
@@ -371,7 +374,7 @@ MQX_Filesystem::unlink (const char *path)
       return -1;
     }
   int mqx_error = _io_ioctl (fs, IO_IOCTL_DELETE_FILE,
-    (uint32_t*) (path + fs_name_len));
+    reinterpret_cast<uint32_t *> (path + fs_name_len));
   if (mqx_error != MQX_OK)
     {
       errno = ACE_OS::mqx_error_to_errno (mqx_error);
