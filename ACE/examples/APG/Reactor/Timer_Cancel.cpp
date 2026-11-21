@@ -100,9 +100,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   // Listing 3 code/ch07
   SignalHandler mutateTimer {timerId, 5};
   ACE_Reactor::instance ()->register_handler (SIGINT,
-                                              &mutateTimer);
+                                              std::addressof (mutateTimer));
   ACE_Reactor::instance ()->register_handler (SIGTSTP,
-                                              &mutateTimer);
+                                              std::addressof (mutateTimer));
   // Listing 3
 
 #else

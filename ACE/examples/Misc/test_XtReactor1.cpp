@@ -184,7 +184,7 @@ ACE_TMAIN (int argc, ACE_TCHAR**argv)
 
   reactor.cancel_timer (std::addressof (stdin_handler));
   reactor.remove_handler (std::addressof (stdin_handler), ACE_Event_Handler::READ_MASK);
-  reactor.remove_handler (&stdout_handler, ACE_Event_Handler::WRITE_MASK);
+  reactor.remove_handler (std::addressof (stdout_handler), ACE_Event_Handler::WRITE_MASK);
 
   return 0;
 }

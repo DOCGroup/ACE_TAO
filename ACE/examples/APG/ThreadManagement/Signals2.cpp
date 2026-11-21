@@ -6,6 +6,8 @@
 #include "ace/Task.h"
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
+
+#include <memory>
 #include "ace/Sig_Handler.h"
 
 class SignalableTask : public ACE_Task<ACE_MT_SYNCH>
@@ -79,7 +81,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   handler.activate (THR_NEW_LWP | THR_JOINABLE, 5);
 
   ACE_Sig_Handler sh;
-  sh.register_handler (SIGUSR1, &handler);
+  sh.register_handler (SIGUSR1, std::addressof (handler));
 
   ACE_OS::sleep (1);      // Allow threads to start
 

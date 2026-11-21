@@ -4,6 +4,7 @@
 #include "ace/TP_Reactor.h"
 #include "ace/Reactor.h"
 #include <array>
+#include <memory>
 #include <string>
 
 constexpr int iteration_count {55};
@@ -103,7 +104,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            i),
                           -1);
       if (singleton->register_handler (streams[i].get_handle (),
-                                       &handlers[i],
+                                       std::addressof (handlers[i]),
                                        ACE_Event_Handler::READ_MASK) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Registration failed\n"),

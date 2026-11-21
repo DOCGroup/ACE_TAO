@@ -82,7 +82,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   // Listing 3 code/ch07
   SigintHandler handleSigint {timerId, 5};
   ACE_Reactor::instance ()->register_handler (SIGINT,
-                                              &handleSigint);
+                                              std::addressof (handleSigint));
   // Listing 3
 
   ACE_Reactor::instance ()->run_reactor_event_loop ();

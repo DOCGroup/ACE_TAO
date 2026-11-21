@@ -117,7 +117,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Thread_Manager::instance ()->wait ();
 
   // Remove from reactor
-  ACE_Reactor::instance ()->remove_handler (&proactor,
+  ACE_Reactor::instance ()->remove_handler (std::addressof (proactor),
                                             ACE_Event_Handler::DONT_CALL);
 
   return 0;

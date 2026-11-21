@@ -1,6 +1,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
+
+#include <memory>
 #include "ace/Sig_Handler.h"
 
 // Listing 1
@@ -26,7 +28,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   MySignalHandler sighandler;
   ACE_Sig_Handler sh;
-  sh.register_handler (SIGUSR1, &sighandler);
+  sh.register_handler (SIGUSR1, std::addressof (sighandler));
 
   ACE_Sig_Set ss;
   ss.sig_add (SIGUSR1);

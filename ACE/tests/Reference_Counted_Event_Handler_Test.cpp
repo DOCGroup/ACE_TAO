@@ -677,7 +677,7 @@ simple_event_handler (ACE_Reactor *reactor)
 
       result =
         reactor->register_handler (handler.pipe_.read_handle (),
-                                   &handler,
+                                   std::addressof (handler),
                                    ACE_Event_Handler::READ_MASK);
       if (result != 0)
         {

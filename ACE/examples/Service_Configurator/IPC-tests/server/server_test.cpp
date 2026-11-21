@@ -7,6 +7,8 @@
 #include "ace/Signal.h"
 #include "ace/Sig_Adapter.h"
 
+#include <memory>
+
 static void
 end_event_loop_handler (int, siginfo_t *, ucontext_t *)
 {
@@ -37,7 +39,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Register ourselves to receive signals so we can shut down
   // gracefully.
   if (ACE_Reactor::instance ()->register_handler (sig_set,
-                                                  &sa) == -1)
+                                                  std::addressof (sa)) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"), ACE_TEXT ("register_handler")),

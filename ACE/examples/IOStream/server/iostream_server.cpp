@@ -11,6 +11,8 @@
 #include "iostream_server.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
 static void
@@ -92,7 +94,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   // Register ourselves to receive SIGINT and SIGQUIT so we can shut
   // down gracefully via signals.
   if (ACE_Reactor::instance ()->register_handler (sig_set,
-                                                  &sa) == -1)
+                                                  std::addressof (sa)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n"), -1);
 
   IOStream_Acceptor peer_acceptor;

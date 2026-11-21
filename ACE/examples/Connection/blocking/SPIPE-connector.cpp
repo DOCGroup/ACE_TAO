@@ -10,6 +10,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "SPIPE-connector.h"
 
+#include <memory>
+
 static void
 end_reactor_event_loop (int, siginfo_t *, ucontext_t *)
 {
@@ -146,7 +148,7 @@ IPC_Client::init (int argc, ACE_TCHAR *argv[])
   }
   else if (ACE_Reactor::instance ()->register_handler
            (SIGINT,
-            &this->done_handler_) == -1)
+            std::addressof (this->done_handler_)) == -1)
   {
     return -1;
   }

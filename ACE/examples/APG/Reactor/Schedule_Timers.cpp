@@ -70,7 +70,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   // Exclude 1
   SigintHandler handleExit {};
   ACE_Reactor::instance()->register_handler (SIGINT,
-                                             &handleExit);
+                                             std::addressof (handleExit));
   // Exclude 1
   ACE_Reactor::instance ()->run_reactor_event_loop ();
   ACE_Reactor::instance ()->cancel_timer (timer_id);

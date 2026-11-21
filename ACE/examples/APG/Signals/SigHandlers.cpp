@@ -3,6 +3,8 @@
 #include "ace/Signal.h"
 #include "ace/Sig_Handler.h"
 
+#include <memory>
+
 class MySignalHandler : public ACE_Event_Handler
 {
 public:
@@ -35,8 +37,8 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   MySignalHandler h1 (SIGUSR1), h2 (SIGUSR1);
   ACE_Sig_Handlers handler;
-  handler.register_handler (SIGUSR1, &h1);
-  handler.register_handler (SIGUSR1, &h2);
+  handler.register_handler (SIGUSR1, std::addressof (h1));
+  handler.register_handler (SIGUSR1, std::addressof (h2));
 
   ACE_OS::kill (ACE_OS::getpid (), SIGUSR1);
 

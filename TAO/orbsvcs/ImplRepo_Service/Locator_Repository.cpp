@@ -266,7 +266,7 @@ Locator_Repository::teardown_multicast ()
 {
   ACE_Reactor* r = ior_multicast_.reactor ();
   if (r != nullptr) {
-    r->remove_handler (&ior_multicast_, ACE_Event_Handler::READ_MASK);
+    r->remove_handler (std::addressof (ior_multicast_), ACE_Event_Handler::READ_MASK);
     ior_multicast_.reactor (nullptr);
   }
 }
