@@ -248,14 +248,14 @@ protected:
 
   /// Keeps track of whether we are in the process of closing (required
   /// to avoid circular calls to <handle_close>).
-  bool closing_;
+  bool closing_ {};
 
   /// Pointer to the connection recycler.
-  ACE_Connection_Recycling_Strategy *recycler_;
+  ACE_Connection_Recycling_Strategy *recycler_ {};
 
   /// Asynchronous Completion Token (ACT) to be used to when talking to
   /// the recycler.
-  const void *recycling_act_;
+  const void *recycling_act_ {};
 };
 
 /**

@@ -120,10 +120,7 @@ template <typename PEER_STREAM, typename SYNCH_TRAITS>
 ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::ACE_Svc_Handler (ACE_Thread_Manager *tm,
                                                           ACE_Message_Queue<SYNCH_TRAITS> *mq,
                                                           ACE_Reactor *reactor)
-  : ACE_Task<SYNCH_TRAITS> (tm, mq),
-    closing_ (false),
-    recycler_ (nullptr),
-    recycling_act_ (nullptr)
+  : ACE_Task<SYNCH_TRAITS> (tm, mq)
 {
   ACE_TRACE ("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::ACE_Svc_Handler");
 
