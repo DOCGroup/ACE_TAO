@@ -38,7 +38,7 @@ ACE_Log_Msg_NT_Event_Log::open (const ACE_TCHAR *logger_key)
   ACE_TCHAR reg_key [MAXPATHLEN];
   ACE_OS::strcpy (reg_key,
                   ACE_TEXT ("SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\"));
-  size_t reg_key_length = ACE_OS::strlen(reg_key);
+  const size_t reg_key_length = ACE_OS::strlen(reg_key);
   ACE_OS::strncat (reg_key,
                    event_source_name,
                    MAXPATHLEN - reg_key_length);

@@ -445,7 +445,7 @@ ACE_String_Base<ACE_CHAR_T>::operator== (const ACE_String_Base<ACE_CHAR_T> &s) c
 template <class ACE_CHAR_T> bool
 ACE_String_Base<ACE_CHAR_T>::operator== (const ACE_CHAR_T *s) const
 {
-  size_t len = ACE_OS::strlen (s);
+  const size_t len = ACE_OS::strlen (s);
   return this->len_ == len &&
          std::memcmp (this->rep_,
                          s,
@@ -458,7 +458,7 @@ ACE_String_Base<ACE_CHAR_T>::find (
   typename ACE_String_Base<ACE_CHAR_T>::size_type pos) const
 {
   ACE_CHAR_T *substr = this->rep_ + pos;
-  size_t len = ACE_OS::strlen (s);
+  const size_t len = ACE_OS::strlen (s);
   ACE_CHAR_T *pointer = ACE_OS::strnstr (substr, s, len);
   if (pointer == nullptr)
     {

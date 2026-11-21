@@ -298,7 +298,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
               numArgs = 0;
             }
 
-          size_t len = std::strlen (this->buf_);
+          const size_t len = std::strlen (this->buf_);
           size_t space = SYMBUFSIZ - len - 1;
           char *cursor = this->buf_ + len;
           size_t written = ACE_OS::snprintf (cursor, space, "%p %s",

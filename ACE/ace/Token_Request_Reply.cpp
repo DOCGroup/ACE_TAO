@@ -52,7 +52,7 @@ ACE_Token_Request::decode ()
                 reinterpret_cast<void *> (transfer_.arg_));
 
   // Decode the variable-sized portion.
-  size_t token_len = ACE_OS::strlen (this->token_name_);
+  const size_t token_len = ACE_OS::strlen (this->token_name_);
 
   // Check to make sure this->tokenName_ isn't too long!
   if (token_len >= ACE_MAXTOKENNAMELEN)
@@ -68,10 +68,10 @@ ACE_Token_Request::decode ()
   // token_name_ plus '\0'
   // ':'
   // client_id_ plus '\0'
-  size_t data_size = ACE_TOKEN_REQUEST_HEADER_SIZE
-                     + ACE_OS::strlen (this->token_name_) + 1
-                     + ACE_OS::strlen (this->client_id_) + 1
-                     + 1;
+  const size_t data_size = ACE_TOKEN_REQUEST_HEADER_SIZE
+                           + ACE_OS::strlen (this->token_name_) + 1
+                           + ACE_OS::strlen (this->client_id_) + 1
+                           + 1;
 
   // Make sure the message was correctly received and framed.
   return this->length () == data_size ? 0 : -1;
