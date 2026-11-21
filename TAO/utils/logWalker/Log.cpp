@@ -32,7 +32,7 @@ Log::process_file (const ACE_TCHAR *filename, const char *alias)
     return false;
   }
 
-  size_t mapsize = mapped_file.size();
+  size_t const mapsize = mapped_file.size();
   char *base = reinterpret_cast<char *>(mapped_file.addr());
   if (mapsize == 0 || base == nullptr)
     {

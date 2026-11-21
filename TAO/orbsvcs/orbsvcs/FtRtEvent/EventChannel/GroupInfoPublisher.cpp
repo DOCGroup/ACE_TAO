@@ -59,7 +59,7 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
   result->primary = (my_position == 0);
 
   /// create the object group
-  size_t len = info_list.length();
+  size_t const len = info_list.length();
 
   TAO_IOP::TAO_IOR_Manipulation::IORList iors;
   iors.length(len);
@@ -78,7 +78,7 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
   //log_obj_endpoints(result->iogr.in());
 
   /// check if sucessor changed
-  size_t successors_length = info_list.length() - my_position -1;
+  size_t const successors_length = info_list.length() - my_position -1;
 
   if (successors_length /*!= info_->backups.length() */)  {
     // successor changed, update successor

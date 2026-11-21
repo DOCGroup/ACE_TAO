@@ -17,7 +17,7 @@ ACEXML_String ACEXML_escape_string(const ACEXML_String& str)
 
 void ACEXML_escape_string(const ACEXML_String& in, ACEXML_String& out)
 {
-  size_t len = in.length ();
+  size_t const len = in.length ();
   out.clear();
   for (size_t stridx = 0; stridx < len; ++stridx)
   {

@@ -22,7 +22,7 @@ ClientTask::add_engine(ClientEngine* engine)
 int
 ClientTask::open(void*)
 {
-  size_t num_threads = this->engines_.size();
+  size_t const num_threads = this->engines_.size();
 
   if (num_threads == 0)
     {

@@ -465,7 +465,7 @@ Routing_Slip_Persistence_Manager::update_i(
   const ACE_Message_Block& routing_slip)
 {
   bool result = true;
-  size_t routing_slip_size = routing_slip.total_length();
+  size_t const routing_slip_size = routing_slip.total_length();
   if (routing_slip_size != 0)
   {
     result = this->build_chain(this->first_routing_slip_block_,
@@ -486,7 +486,7 @@ Routing_Slip_Persistence_Manager::store_event(
   const ACE_Message_Block& event)
 {
   bool result = true;
-  size_t event_size = event.total_length();
+  size_t const event_size = event.total_length();
   if (event_size != 0)
   {
     if (this->first_event_block_ == nullptr)
@@ -543,7 +543,7 @@ Routing_Slip_Persistence_Manager::build_chain(
     ACE_Unbounded_Stack<size_t>& allocated_blocks,
     const ACE_Message_Block& data)
 {
-  size_t data_size = data.total_length();
+  size_t const data_size = data.total_length();
   size_t remainder = data_size;
   bool result = true;
   // Save the number of items currently on the allocation list for

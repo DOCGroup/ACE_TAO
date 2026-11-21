@@ -375,7 +375,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::find_description_i (u_long i)
 template <class ACE_LOCK, class ALLOCATOR> void
 ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::sort_event_descriptions_i ()
 {
-  size_t total_elements = this->event_descriptions_.size ();
+  size_t const total_elements = this->event_descriptions_.size ();
 
   for (size_t i = 0;
        i < total_elements;

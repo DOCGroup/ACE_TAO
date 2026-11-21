@@ -1366,7 +1366,7 @@ TAO_MonitorEventChannel::remove_list_name (
   Monitor_Control_Types::NameList& list,
   ACE_CString const &name)
 {
-  size_t size = list.size ();
+  size_t const size = list.size ();
 
   for (size_t i {}; i < size; ++i)
     {

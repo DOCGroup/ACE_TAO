@@ -60,7 +60,7 @@ ACE_Registry_Name_Space::bind (const ACE_NS_WString &name,
   const ACE_WSTRING_TYPE *data = value.fast_rep ();
 
   // Size
-  size_t size = value.length () * sizeof (ACE_WSTRING_TYPE);
+  size_t const size = value.length () * sizeof (ACE_WSTRING_TYPE);
 
   // Represent value as an ACE_Registry::Object
   ACE_Registry::Object object ((void *) data,
@@ -87,7 +87,7 @@ ACE_Registry_Name_Space::rebind (const ACE_NS_WString &name,
   const ACE_WSTRING_TYPE *data = value.fast_rep ();
 
   // Size
-  size_t size = value.length () * sizeof (ACE_WSTRING_TYPE);
+  size_t const size = value.length () * sizeof (ACE_WSTRING_TYPE);
 
   // Represent value as an ACE_Registry::Object
   ACE_Registry::Object object ((void *) data,

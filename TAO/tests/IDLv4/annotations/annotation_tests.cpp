@@ -558,7 +558,7 @@ annotation_tests ()
 
     // Annotation On Discriminator
     AST_Annotation_Appls &annotations = test_union->disc_annotations ();
-    size_t count = annotations.size ();
+    size_t const count = annotations.size ();
     if (count != 1)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
@@ -749,7 +749,7 @@ annotation_tests ()
     // Verify Annotation on Base Type
     AST_Annotation_Appls &annotations =
       struct12Array->base_type_annotations ();
-    size_t count = annotations.size ();
+    size_t const count = annotations.size ();
     if (count != 1)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")

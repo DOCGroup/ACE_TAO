@@ -808,7 +808,7 @@ Writer::initiate_write_file ()
   // update the remainders of the chains
   this->odd_chain_  = new_odd_chain_head;
   this->even_chain_ = new_even_chain_head;
-  size_t increment_writing_file_offset = united_mb->total_length ();
+  size_t const increment_writing_file_offset = united_mb->total_length ();
 
   // Reconstruct the file
   // Write the size, not the length, because we must write in chunks

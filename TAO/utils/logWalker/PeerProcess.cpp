@@ -355,7 +355,7 @@ PeerProcess::owner ()
 void
 PeerProcess::dump_summary (ostream &strm)
 {
-  size_t num_transports = this->transports_.size();
+  size_t const num_transports = this->transports_.size();
 
   if (this->remote_)
     {

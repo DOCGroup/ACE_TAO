@@ -805,7 +805,7 @@ ACE_WIN32_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
                                       int priority,
                                       int signal_number)
 {
-  size_t len = message_block.length();
+  size_t const len = message_block.length();
 
   if (bytes_to_write > len)
      bytes_to_write = len ;
@@ -1641,7 +1641,7 @@ ACE_WIN32_Asynch_Write_File::write (ACE_Message_Block &message_block,
                                     int priority,
                                     int signal_number)
 {
-  size_t len = message_block.length ();
+  size_t const len = message_block.length ();
   if ( bytes_to_write > len )
      bytes_to_write = len;
 

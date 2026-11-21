@@ -34,7 +34,7 @@ void echo_dgram ()
   ACE_INET_Addr your_addr {};
   ACE_SOCK_Dgram udp {my_addr};
   std::array<char, BUFSIZ> buff {};
-  size_t buflen = buff.size ();
+  size_t const buflen = buff.size ();
   ssize_t const recv_cnt = udp.recv (buff.data (), buflen, your_addr);
   if (recv_cnt > 0)
   {
