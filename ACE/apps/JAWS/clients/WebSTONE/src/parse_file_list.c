@@ -131,9 +131,6 @@ parse_file_list (const char *url_list_file, page_list_t *page_list,
   int         loadnum;
   char        a_line[BUFSIZ];
   char        tempbuf[URL_SIZE + 1];
-  char        hostbuf[URL_SIZE + 1];
-  char        pathbuf[URL_SIZE + 1];
-  char        serverbuf[URL_SIZE + 1];
   int         numfiles = 1, numpages = 0;
   page_list_t *pp;
 
@@ -227,6 +224,9 @@ parse_file_list (const char *url_list_file, page_list_t *page_list,
                 }
               else /* no proxy server, so we have to parse it out... */
                 {
+                  char hostbuf[URL_SIZE + 1];
+                  char pathbuf[URL_SIZE + 1];
+
                   /* try http://server(:port)/file */
                   D_PRINTF( "Trying http://server(:port)/filename\n" );
                   returnval = sscanf(textvalue,
@@ -235,6 +235,8 @@ parse_file_list (const char *url_list_file, page_list_t *page_list,
                   /* check server string for :port */
                   if (returnval == 2)
                     {
+                      char serverbuf[URL_SIZE + 1];
+
                       if (strlen(hostbuf) >= URL_SIZE ||
                           strlen(pathbuf) >= URL_SIZE)
                         errexit("Filelist URL component exceeds maximum length\n");
