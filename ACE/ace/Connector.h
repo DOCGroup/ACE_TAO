@@ -548,25 +548,25 @@ protected:
   /// @{
 
   /// Creation strategy for an Connector.
-  CREATION_STRATEGY *creation_strategy_;
+  CREATION_STRATEGY *creation_strategy_ {};
 
   /// True if Connector created the creation strategy and thus should
   /// delete it, else false.
-  bool delete_creation_strategy_;
+  bool delete_creation_strategy_ {};
 
   /// Connect strategy for a Connector.
-  CONNECT_STRATEGY *connect_strategy_;
+  CONNECT_STRATEGY *connect_strategy_ {};
 
   /// True if Connector created the connect strategy and thus should
   /// delete it, else false.
-  bool delete_connect_strategy_;
+  bool delete_connect_strategy_ {};
 
   /// Concurrency strategy for a Connector.
-  CONCURRENCY_STRATEGY *concurrency_strategy_;
+  CONCURRENCY_STRATEGY *concurrency_strategy_ {};
 
   /// True if Connector created the concurrency strategy and thus should
   /// delete it, else false.
-  bool delete_concurrency_strategy_;
+  bool delete_concurrency_strategy_ {};
   /// @}
 };
 

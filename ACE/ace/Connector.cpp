@@ -960,13 +960,7 @@ ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::ACE_Strategy_Connector
  ACE_Connect_Strategy<SVC_HANDLER, PEER_CONNECTOR> *conn_s,
  ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
  int flags)
-  : base_type (reactor),
-    creation_strategy_ (0),
-    delete_creation_strategy_ (false),
-    connect_strategy_ (0),
-    delete_connect_strategy_ (false),
-    concurrency_strategy_ (0),
-    delete_concurrency_strategy_ (false)
+  : base_type (reactor)
 {
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::ACE_Strategy_Connector");
 
