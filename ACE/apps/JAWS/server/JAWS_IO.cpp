@@ -86,7 +86,7 @@ JAWS_Synch_IO::receive_file (const char *filename,
 
       int bytes_to_read = entire_length - bytes_to_memcpy;
 
-      int bytes = stream.recv_n ((char *) cache_handle.address () + initial_data_length,
+      int bytes = stream.recv_n (static_cast<char *> (cache_handle.address ()) + initial_data_length,
                                  bytes_to_read);
       if (bytes == bytes_to_read)
         {
@@ -251,7 +251,7 @@ JAWS_Asynch_IO::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result
         this->handler_->receive_file_error (code);
 
       delete &result.message_block ();
-      delete (ACE_Filecache_Handle *) result.act ();
+      delete static_cast<ACE_Filecache_Handle *> (result.act ());
     }
   else
     {
@@ -283,7 +283,7 @@ JAWS_Asynch_IO::receive_file (const char *filename,
 
       int bytes_to_read = entire_length - initial_data_length;
 
-      ACE_NEW (mb, ACE_Message_Block ((char *)cache_handle->address ()
+      ACE_NEW (mb, ACE_Message_Block (static_cast<char *> (cache_handle->address ())
                                       + initial_data_length, bytes_to_read));
 
       if (mb == nullptr)
@@ -362,7 +362,7 @@ JAWS_Asynch_IO::handle_transmit_file (const ACE_Asynch_Transmit_File::Result &re
     this->handler_->transmit_file_error (-1);
 
   delete result.header_and_trailer ();
-  delete (ACE_Filecache_Handle *) result.act ();
+  delete static_cast<ACE_Filecache_Handle *> (result.act ());
 }
 
 void
@@ -395,7 +395,7 @@ JAWS_Asynch_IO::send_message (const char *buffer,
 
   ACE_Asynch_Write_Stream aw;
   if (aw.open (*this, this->handle_) == -1
-      || aw.write (*mb, length, (void *) static_cast<intptr_t> (act)) == -1)
+      || aw.write (*mb, length, reinterpret_cast<void *> (static_cast<intptr_t> (act))) == -1)
     {
       mb->release ();
 
@@ -411,7 +411,7 @@ JAWS_Asynch_IO::handle_write_stream (const ACE_Asynch_Write_Stream::Result &resu
 {
   result.message_block ().release ();
 
-  if (result.act () == (void *) CONFORMATION)
+  if (result.act () == reinterpret_cast<void *> (static_cast<intptr_t> (CONFORMATION)))
     this->handler_->confirmation_message_complete ();
   else
     this->handler_->error_message_complete ();

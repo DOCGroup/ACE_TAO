@@ -220,7 +220,7 @@ HTTP_Helper::HTTP_decode_string (char *path)
           percentcode[0] = path[++i];
           percentcode[1] = path[++i];
           percentcode[2] = '\0';
-          path[j] = (char) ACE_OS::strtol (percentcode, (char **) 0, 16);
+          path[j] = static_cast<char> (ACE_OS::strtol (percentcode, nullptr, 16));
         }
       else
       {

@@ -172,8 +172,8 @@ Headers_Map_Item::Headers_Map_Item () = default;
 
 Headers_Map_Item::~Headers_Map_Item ()
 {
-  ACE_OS::free ((void *) this->header_);
-  ACE_OS::free ((void *) this->value_);
+  ACE_OS::free (const_cast<char *> (this->header_));
+  ACE_OS::free (const_cast<char *> (this->value_));
   this->header_ = this->value_ = nullptr;
 }
 
@@ -185,7 +185,7 @@ Headers_Map_Item::~Headers_Map_Item ()
 Headers_Map_Item &
 Headers_Map_Item::operator= (char * value)
 {
-  ACE_OS::free ((void *) this->value_);
+  ACE_OS::free (const_cast<char *> (this->value_));
   this->value_ = ACE_OS::strdup (value);
   return *this;
 }
@@ -193,7 +193,7 @@ Headers_Map_Item::operator= (char * value)
 Headers_Map_Item &
 Headers_Map_Item::operator= (const char * value)
 {
-  ACE_OS::free ((void *) this->value_);
+  ACE_OS::free (const_cast<char *> (this->value_));
   this->value_ = ACE_OS::strdup (value);
   return *this;
 }
@@ -201,8 +201,8 @@ Headers_Map_Item::operator= (const char * value)
 Headers_Map_Item &
 Headers_Map_Item::operator= (const Headers_Map_Item & mi)
 {
-  ACE_OS::free ((void *) this->value_);
-  ACE_OS::free ((void *) this->header_);
+  ACE_OS::free (const_cast<char *> (this->value_));
+  ACE_OS::free (const_cast<char *> (this->header_));
   this->header_ = ACE_OS::strdup (mi.header_);
   this->value_ = (mi.value_ ? ACE_OS::strdup (mi.value_) : nullptr);
   return *this;
@@ -239,7 +239,7 @@ const Headers_Map_Item &
 Headers_Map::operator[] (const char * const header) const
 {
   Headers_Map_Item *item_ptr;
-  Headers_Map *mutable_this = (Headers_Map *)this;
+  Headers_Map *mutable_this = const_cast<Headers_Map *> (this);
 
   item_ptr = this->find (header);
 
@@ -262,16 +262,16 @@ Headers_Map::mapped (const char * const header) const
 Headers_Map_Item *
 Headers_Map::find (const char * const header) const
 {
-  Headers_Map *const mutable_this = (Headers_Map *) this;
+  Headers_Map *const mutable_this = const_cast<Headers_Map *> (this);
 
   mutable_this->garbage_.header_ = header;
 #if 0
-  Headers_Map_Item *mi_ptr = (Headers_Map_Item *)
+  Headers_Map_Item *mi_ptr = static_cast<Headers_Map_Item *> (
     ACE_OS::bsearch (std::addressof (this->garbage_),
                      this->map_,
                      this->num_headers_,
                      sizeof (Headers_Map_Item),
-                     Headers_Map::compare);
+                     Headers_Map::compare));
 #else
   int i = 0;
   int j = this->num_headers_;
@@ -307,8 +307,8 @@ Headers_Map::place (const char *const header)
   this->garbage_.header_ = ACE_OS::strdup (header);
 
   int i = this->num_headers_++;
-  ACE_OS::free ((void *) this->map_[i].header_);
-  ACE_OS::free ((void *) this->map_[i].value_);
+  ACE_OS::free (const_cast<char *> (this->map_[i].header_));
+  ACE_OS::free (const_cast<char *> (this->map_[i].value_));
   this->map_[i].header_ = nullptr;
   this->map_[i].value_ = nullptr;
   Headers_Map_Item temp_item;
@@ -341,11 +341,11 @@ int
 Headers_Map::compare (const void *item1,
                       const void *item2)
 {
-  Headers_Map_Item *a, *b;
+  Headers_Map_Item const *a, *b;
   int result;
 
-  a = (Headers_Map_Item *) item1;
-  b = (Headers_Map_Item *) item2;
+  a = static_cast<Headers_Map_Item const *> (item1);
+  b = static_cast<Headers_Map_Item const *> (item2);
 
   if (a->header_ == nullptr || b->header_ == nullptr)
     {
