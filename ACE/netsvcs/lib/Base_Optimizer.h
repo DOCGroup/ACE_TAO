@@ -28,7 +28,7 @@ class Base_Optimizer : public Base
 {
 public:
   Base_Optimizer ();
-  Base_Optimizer (const Base &base);
+  explicit Base_Optimizer (const Base &base);
   Base_Optimizer (const Base &base,
                   const Member &member);
 
