@@ -221,7 +221,6 @@ ACE_OS::send_partial_i (ACE_HANDLE handle,
   // the divide and conquer logic should remain consistent
   // with sendv_partial_i
 #if !defined (ACE_LACKS_SEND) && defined (ACE_WIN32)
-  DWORD bytes_sent = 0;
   ssize_t result = 1;
   // keep dividing the current buffer_size in half and then
   // attempt to send the modified buffer until some data is
@@ -240,11 +239,8 @@ ACE_OS::send_partial_i (ACE_HANDLE handle,
         }
 
       ACE_OS::set_errno_to_wsa_last_error ();
-      // if ENOBUFS is received, we apply a divide and
-      // conquer strategy, but if bytes are sent we
-      // cannot guarantee this is the same behavior
-      if ((errno != ENOBUFS) ||
-          (bytes_sent != 0))
+      // If ENOBUFS is received, retry with a smaller buffer.
+      if (errno != ENOBUFS)
         {
           return -1;
         }
