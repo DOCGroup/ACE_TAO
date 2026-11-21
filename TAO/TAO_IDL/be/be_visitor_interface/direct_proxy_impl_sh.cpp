@@ -19,10 +19,10 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
   *os << be_nl_2 << "class " << be_global->skel_export_macro ()
       << " " << node->direct_proxy_impl_name ();
 
+  bool first_concrete = true;
+
   if (node->n_inherits () > 0)
     {
-      bool first_concrete = true;
-
       for (int i = 0; i < node->n_inherits (); ++i)
         {
           AST_Type * const parent = node->inherits ()[i];

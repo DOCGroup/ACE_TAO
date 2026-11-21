@@ -293,7 +293,7 @@ project(allchars_duplicate_inset): gperf_test {
 
   GPERF_Files {
     gendir = allchars_duplicate_gen
-    commandflags += -D -k"*"
+    commandflags += -D -k'*'
     allchars_duplicates.gperf
   }
 
