@@ -3,6 +3,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 AppShutdown::~AppShutdown () = default;
 
 void
@@ -63,5 +65,5 @@ AppShutdown *
 AppShutdown::instance ()
 {
   static AppShutdown app_shutdown;
-  return &app_shutdown;
+  return std::addressof (app_shutdown);
 }

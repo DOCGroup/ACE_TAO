@@ -7,6 +7,8 @@
 #include "tao/ORB_Core.h"
 #include "tao/Profile.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -212,7 +214,7 @@ TAO::Collocated_Object_Proxy_Broker *
 the_tao_collocated_object_proxy_broker ()
 {
   static TAO::Collocated_Object_Proxy_Broker the_broker;
-  return &the_broker;
+  return std::addressof (the_broker);
 }
 
 TAO::Object_Proxy_Broker * _TAO_collocation_Object_Proxy_Broker_Factory ()

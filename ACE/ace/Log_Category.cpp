@@ -2,7 +2,9 @@
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_Thread.h"
 #include "ace/Guard_T.h"
+
 #include <atomic>
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Log_Category.inl"
@@ -125,7 +127,7 @@ ACE_Log_Category::per_thr_obj()
       id_ = log_category_id_assigner++;
       per_thr_obj_.logger_ = ACE_Log_Msg::instance();
     }
-  return &per_thr_obj_;
+  return std::addressof (per_thr_obj_);
 #endif // defined (ACE_HAS_THREADS)
 }
 

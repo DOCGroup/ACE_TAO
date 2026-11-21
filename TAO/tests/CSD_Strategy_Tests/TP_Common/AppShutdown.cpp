@@ -3,6 +3,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 AppShutdown::AppShutdown()
   : num_clients_(0),
     num_clients_shutdown_(0)
@@ -66,5 +68,5 @@ AppShutdown*
 AppShutdown::instance ()
 {
   static AppShutdown app_shutdown;
-  return &app_shutdown;
+  return std::addressof (app_shutdown);
 }

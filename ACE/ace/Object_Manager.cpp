@@ -958,7 +958,7 @@ ACE_Static_Object_Lock::instance ()
       // declaration is visible to the ACE_Object_Manager destructor,
       // so it will clean it up as a special case.
 
-      return &ACE_Static_Object_Lock_lock->object ();
+      return std::addressof (ACE_Static_Object_Lock_lock->object ());
     }
   else
     {
