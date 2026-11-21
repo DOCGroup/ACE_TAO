@@ -50,9 +50,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 # if defined (ACE_WIN32)
 typedef DWORD ACE_thread_t;
 typedef HANDLE ACE_hthread_t;
-// Native TSS key type
+/// Native TSS key type.
 typedef DWORD ACE_OS_thread_key_t;
-// Application TSS key type (use this type except in TSS Emulation)
+/// Application TSS key type (use this type except in TSS emulation).
 #   if defined (ACE_HAS_TSS_EMULATION)
       typedef u_int ACE_thread_key_t;
 #   else  /* ! ACE_HAS_TSS_EMULATION */
@@ -143,8 +143,8 @@ extern "C" {
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef SEM_ID ACE_mutex_t;
-// Implement ACE_thread_mutex_t with ACE_mutex_t because there's just
-// one process . . .
+/// Implement ACE_thread_mutex_t with ACE_mutex_t because VxWorks has
+/// just one process.
 typedef ACE_mutex_t ACE_thread_mutex_t;
 #     if !defined (ACE_HAS_POSIX_SEM)
 // Use VxWorks semaphores, wrapped ...
@@ -159,12 +159,11 @@ typedef struct
 #     endif /* !ACE_HAS_POSIX_SEM */
 typedef ACE_VX_TASK_ID ACE_thread_t;
 typedef ACE_VX_TASK_ID ACE_hthread_t;
-// Key type: the ACE TSS emulation requires the key type be unsigned,
-// for efficiency.  (Current POSIX implementation use u_int, so the
-// ACE TSS emulation is compatible with them.)
-// Native TSS key type
+/// The ACE TSS emulation requires an unsigned key type for efficiency.
+/// The POSIX implementation uses @c u_int, so the types are compatible.
+/// Native TSS key type.
 typedef u_int ACE_OS_thread_key_t;
-// Application TSS key type (use this type except in TSS Emulation)
+/// Application TSS key type (use this type except in TSS emulation).
 #   if defined (ACE_HAS_TSS_EMULATION)
       typedef u_int ACE_thread_key_t;
 #   else  /* ! ACE_HAS_TSS_EMULATION */
@@ -699,9 +698,9 @@ typedef int ACE_sema_t;
 typedef int ACE_rwlock_t;
 typedef int ACE_thread_t;
 typedef int ACE_hthread_t;
-// Native TSS key type
+/// Native TSS key type.
 typedef unsigned int ACE_OS_thread_key_t;
-// Application TSS key type (use this type except in TSS Emulation)
+/// Application TSS key type (use this type except in TSS emulation).
 #   if defined (ACE_HAS_TSS_EMULATION)
       typedef u_int ACE_thread_key_t;
 #   else  /* ! ACE_HAS_TSS_EMULATION */
