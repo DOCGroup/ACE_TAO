@@ -86,8 +86,8 @@ namespace Test
     CORBA::Long interceptions ();
 
   private:
-    // Implementation method, every inteception point will have to
-    // call it, supplying a name.
+    /// Implementation method, every interception point will have to
+    /// call it, supplying a name.
     void test_transport_current (const ACE_TCHAR* amethod);
 
   private:

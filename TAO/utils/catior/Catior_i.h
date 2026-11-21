@@ -31,7 +31,7 @@ public:
   CORBA::Boolean decode (const ACE_CString& input, ACE_CString& output);
 
 private:
-  // These methods used to be functions in catior.cpp
+  /// These methods used to be functions in catior.cpp
   CORBA::Boolean catiiop (char const *string);
 
   CORBA::Boolean catior (char const *str);
