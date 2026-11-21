@@ -149,7 +149,6 @@ RTP_Packet::RTP_Packet(unsigned char padding,
   index = 0;
   this->packet_[index] = ((RTP_VERSION & 0x3) << 6) |
                           ((padding & 0x1) << 5) |
-                          ((0 & 0x1) << 4) |  // extension bit
                           ((csrc_count & 0xf));
 
   ++index;

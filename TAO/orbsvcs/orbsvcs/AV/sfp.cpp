@@ -683,7 +683,7 @@ TAO_SFP_Base::send_message (TAO_AV_Transport *transport,
         total_len += static_cast<CORBA::ULong> (temp->length ());
         }
 
-      char *buf = (char *) stream.buffer ();
+      char *buf = const_cast<char *> (stream.buffer ());
       size_t offset = TAO_SFP_MESSAGE_SIZE_OFFSET;
       // second character distinguished =SFP and FRAG.
       if (*(buf) == 'F')
@@ -702,11 +702,11 @@ TAO_SFP_Base::send_message (TAO_AV_Transport *transport,
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
     }
   // we join the data block with the cdr block.
-  ACE_Message_Block *end = (ACE_Message_Block *)stream.end ();
+  ACE_Message_Block *end = const_cast<ACE_Message_Block *> (stream.end ());
   if (end == nullptr)
     {
       // There is only one message block.
-      end = (ACE_Message_Block *)stream.begin ();
+      end = const_cast<ACE_Message_Block *> (stream.begin ());
       //      TAO_SFP_Base::dump_buf (end->rd_ptr (),end->length ());
     }
   end->cont (mb);

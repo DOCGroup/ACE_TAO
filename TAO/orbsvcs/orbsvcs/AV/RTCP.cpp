@@ -219,27 +219,23 @@ TAO_AV_RTCP::alloc_srcid (ACE_UINT32 addr)
   s.uid = ACE_OS::getuid();
   s.gid = ACE_OS::getgid();
 
-  unsigned char *string_val = (unsigned char *) &s;
+  unsigned char *string_val =
+    reinterpret_cast<unsigned char *> (std::addressof (s));
   int length = sizeof(s);
 
   MD5_CTX context;
-  union
-    {
-      char c[16];
-      u_long x[4];
-    } digest;
+  ACE_UINT32 digest[4] {};
   ACE_UINT32 r;
-  int i;
 
   MD5Init (std::addressof (context));
   MD5Update (std::addressof (context), string_val, length);
-  MD5Final (reinterpret_cast<unsigned char *> (std::addressof (digest)),
+  MD5Final (reinterpret_cast<unsigned char *> (digest),
             std::addressof (context));
-  r=0;
-  for (i = 0; i < 3; ++i)
-      {
-      r ^= digest.x[i];
-      }
+  r = 0;
+  for (size_t i {}; i < 3; ++i)
+    {
+      r ^= digest[i];
+    }
 
   return r;
 
