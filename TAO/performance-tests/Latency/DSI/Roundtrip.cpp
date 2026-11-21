@@ -34,8 +34,16 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request)
 
       CORBA::NamedValue_ptr nv = list->item (0);
 
-      const char *arg;
-      *(nv->value ()) >>= arg;
+      char const *arg {};
+      if (!(*(nv->value ()) >>= arg) || arg == nullptr)
+        {
+          CORBA::Any bad_param;
+          CORBA::BAD_PARAM exception;
+          bad_param <<= exception;
+          request->set_exception (bad_param);
+
+          return;
+        }
 
       CORBA::Boolean type_matches = false;
       if (std::strcmp (arg, "IDL:Test/Roundtrip:1.0") == 0
