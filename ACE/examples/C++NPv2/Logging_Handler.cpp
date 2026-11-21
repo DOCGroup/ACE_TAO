@@ -95,10 +95,10 @@ int Logging_Handler::write_log_record (ACE_Message_Block const &mblk)
           ACE_CDR::ULong length {};
           if (cdr >> length)
             {
-              ACE_Log_Record log_record;
-              if (cdr >> log_record)
+              ACE_Log_Record log_entry;
+              if (cdr >> log_entry)
                 {
-                  log_record.print (mblk.rd_ptr (), 1, cerr);
+                  log_entry.print (mblk.rd_ptr (), 1, cerr);
                 }
             }
         }

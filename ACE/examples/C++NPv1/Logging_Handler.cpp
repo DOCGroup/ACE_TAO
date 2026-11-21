@@ -102,9 +102,9 @@ Logging_Handler::write_log_record (ACE_Message_Block const &mblk)
     cdr >> ACE_InputCDR::to_boolean (byte_order);
     cdr.reset_byte_order (byte_order);
     cdr >> length;
-    ACE_Log_Record log_record;
-    cdr >> log_record;  // Finally extract the <ACE_log_record>.
-    log_record.print (mblk.rd_ptr (), 1, cerr);
+    ACE_Log_Record log_entry;
+    cdr >> log_entry;  // Finally extract the <ACE_log_record>.
+    log_entry.print (mblk.rd_ptr (), 1, cerr);
   }
   return ACE_Utils::truncate_cast<int> (mblk.total_length ());
 }
