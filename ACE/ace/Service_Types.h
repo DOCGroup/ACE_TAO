@@ -176,7 +176,7 @@ public:
 
 private:
   /// Pointer to the next ACE_Module_Type in an ACE_Stream_Type.
-  ACE_Module_Type *link_;
+  ACE_Module_Type *link_ {};
 };
 
 /**
@@ -221,7 +221,7 @@ public:
 
 private:
   /// Pointer to the head of the ACE_Module list.
-  ACE_Module_Type *head_;
+  ACE_Module_Type *head_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

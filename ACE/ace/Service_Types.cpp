@@ -188,7 +188,6 @@ ACE_Module_Type::ACE_Module_Type (void *m,
                                   u_int f,
                                   int stype)
   : ACE_Service_Type_Impl (m, m_name, f, nullptr, stype)
-  , link_ (nullptr)
 {
   ACE_TRACE ("ACE_Module_Type::ACE_Module_Type");
 }
@@ -381,8 +380,7 @@ ACE_Stream_Type::ACE_Stream_Type (void *s,
                                   const ACE_TCHAR *s_name,
                                   u_int f,
                                   int stype)
-  : ACE_Service_Type_Impl (s, s_name, f, nullptr, stype),
-    head_ (nullptr)
+  : ACE_Service_Type_Impl (s, s_name, f, nullptr, stype)
 {
   ACE_TRACE ("ACE_Stream_Type::ACE_Stream_Type");
 }
