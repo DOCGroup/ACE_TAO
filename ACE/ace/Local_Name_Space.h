@@ -79,14 +79,14 @@ public:
 
 private:
   /// Length of the string.
-  size_t len_;
+  size_t len_ {};
 
   /// This actually points into shared/persistent memory.
-  ACE_WCHAR_T *rep_;
+  ACE_WCHAR_T *rep_ {};
 
   /// Should rep_ be deleted when destructed (only used
   /// for WString conversions)
-  bool delete_rep_;
+  bool delete_rep_ {false};
 };
 
 /**
@@ -117,7 +117,7 @@ private:
   ACE_NS_String value_;
 
   /// Contains the type of the string.
-  const char *type_;
+  const char *type_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
