@@ -44,8 +44,8 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::new_cachebucket (size_t hash_idx)
     {
       size_t const alloc_size = sizeof (CACHE_BUCKET_MANAGER);
       ACE_NEW_MALLOC_RETURN (this->hashtable_[hash_idx],
-                             (CACHE_BUCKET_MANAGER *)
-                             this->allocator_->malloc (alloc_size),
+                             static_cast<CACHE_BUCKET_MANAGER *> (
+                               this->allocator_->malloc (alloc_size)),
                              CACHE_BUCKET_MANAGER (this->allocator_), -1);
     }
 
@@ -69,7 +69,7 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::JAWS_Cache_Hash (ACE_Allocator *alloc
   size_t const memsize = this->size_ * sizeof (CACHE_BUCKET_MANAGER *);
 
   this->hashtable_
-    = (CACHE_BUCKET_MANAGER **) this->allocator_->malloc (memsize);
+    = static_cast<CACHE_BUCKET_MANAGER **> (this->allocator_->malloc (memsize));
 
   if (this->hashtable_)
     {

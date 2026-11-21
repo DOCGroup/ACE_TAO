@@ -64,8 +64,8 @@ push (const EXT_ID &ext_id, const INT_ID &int_id)
   size_t const malloc_size = sizeof (JAWS_HASH_BUCKET_ITEM);
   JAWS_HASH_BUCKET_ITEM *item;
   ACE_NEW_MALLOC_RETURN (item,
-                         (JAWS_HASH_BUCKET_ITEM *)
-                         this->allocator_->malloc (malloc_size),
+                         static_cast<JAWS_HASH_BUCKET_ITEM *> (
+                           this->allocator_->malloc (malloc_size)),
                          JAWS_HASH_BUCKET_ITEM (ext_id, int_id), nullptr);
 
   if (item != nullptr)

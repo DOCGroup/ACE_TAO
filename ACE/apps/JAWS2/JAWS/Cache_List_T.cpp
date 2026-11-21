@@ -86,8 +86,8 @@ JAWS_Cache_List<EXT_ID,FACT,H_FN,E_FN>::insert (const EXT_ID &ext_id,
 
   Cache_List_Item *item {};
   ACE_NEW_MALLOC_RETURN (item,
-                         (Cache_List_Item *)
-                         this->allocator_->malloc (sizeof (Cache_List_Item)),
+                         static_cast<Cache_List_Item *> (
+                           this->allocator_->malloc (sizeof (Cache_List_Item))),
                          Cache_List_Item (ext_id, int_id), -1);
 
   this->insert_i (item);
@@ -169,7 +169,7 @@ JAWS_Cache_List<EXT_ID,FACT,H_FN,E_FN>::remove (void *item)
   if (item == nullptr)
     return 0;
 
-  this->remove_i ((Cache_List_Item *) item);
+  this->remove_i (static_cast<Cache_List_Item *> (item));
   this->item_->int_id_->heap_item (nullptr);
 
   ACE_DES_FREE_TEMPLATE4(this->item_, this->allocator_->free,
@@ -187,7 +187,7 @@ JAWS_Cache_List<EXT_ID,FACT,H_FN,E_FN>::adjust (void *item)
   if (item == nullptr)
     return 0;
 
-  Cache_List_Item *real_item = (Cache_List_Item *) item;
+  Cache_List_Item *real_item = static_cast<Cache_List_Item *> (item);
 
   this->remove_i (real_item);
   this->insert_i (real_item);

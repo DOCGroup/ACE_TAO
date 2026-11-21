@@ -17,7 +17,7 @@ JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::JAWS_Cache_Heap (ACE_Allocator *alloc,
   size_t const memsize
     = this->maxsize_ * sizeof (Cache_Heap_Item *);
 
-  this->heap_ = (Cache_Heap_Item **) this->allocator_->malloc (memsize);
+  this->heap_ = static_cast<Cache_Heap_Item **> (this->allocator_->malloc (memsize));
   if (this->heap_)
     {
       for (size_t i = 0; i < this->maxsize_; ++i)
@@ -87,7 +87,7 @@ JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::maxsize (Cache_Manager *cm,
     = new_maxsize * sizeof (Cache_Heap_Item *);
 
   Cache_Heap_Item **new_heap
-    = (Cache_Heap_Item **) this->allocator_->malloc (memsize);
+    = static_cast<Cache_Heap_Item **> (this->allocator_->malloc (memsize));
   if (new_heap)
     {
       while (new_maxsize < this->size_)
@@ -139,8 +139,8 @@ JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::insert (const EXT_ID &ext_id,
 
   Cache_Heap_Item *item;
   ACE_NEW_MALLOC_RETURN (item,
-                         (Cache_Heap_Item *)
-                         this->allocator_->malloc (sizeof (Cache_Heap_Item)),
+                         static_cast<Cache_Heap_Item *> (
+                           this->allocator_->malloc (sizeof (Cache_Heap_Item))),
                          Cache_Heap_Item (ext_id, int_id), -1);
 
   this->insert_i (item);
@@ -230,7 +230,7 @@ JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::remove (void *item)
   if (item == nullptr)
     return 0;
 
-  Cache_Heap_Item * const real_item = (Cache_Heap_Item *) item;
+  Cache_Heap_Item * const real_item = static_cast<Cache_Heap_Item *> (item);
 
   // Make sure the item is where it thinks it is.
   if (this->heap_[real_item->heap_idx_] != real_item)
@@ -252,7 +252,7 @@ JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::adjust (void *item)
   if (item == nullptr)
     return 0;
 
-  Cache_Heap_Item * const real_item = (Cache_Heap_Item *) item;
+  Cache_Heap_Item * const real_item = static_cast<Cache_Heap_Item *> (item);
 
   // Make sure the item is where it thinks it is.
   if (this->heap_[real_item->heap_idx_] != real_item)
