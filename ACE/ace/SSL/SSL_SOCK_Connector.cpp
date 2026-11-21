@@ -27,22 +27,22 @@ int
 ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
                                      const ACE_Time_Value *timeout)
 {
-  SSL *ssl = new_stream.ssl ();
-  if (ssl == nullptr)
+  SSL *ssl_session = new_stream.ssl ();
+  if (ssl_session == nullptr)
   {
     return -1;
   }
 
-  if (SSL_is_init_finished (ssl))
+  if (SSL_is_init_finished (ssl_session))
   {
     return 0;
   }
 
   // Check if a connection is already pending for the given SSL
   // structure.
-  if (!SSL_in_connect_init (ssl))
+  if (!SSL_in_connect_init (ssl_session))
   {
-    ::SSL_set_connect_state (ssl);
+    ::SSL_set_connect_state (ssl_session);
   }
 
   ACE_HANDLE const handle = new_stream.get_handle ();
@@ -88,8 +88,8 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
       ACE_Handle_Set rd_handle;
       ACE_Handle_Set wr_handle;
 
-      status = ::SSL_connect (ssl);
-      switch (::SSL_get_error (ssl, status))
+      status = ::SSL_connect (ssl_session);
+      switch (::SSL_get_error (ssl_session, status))
         {
         case SSL_ERROR_NONE:
           // Start out with non-blocking disabled on the SSL stream.
@@ -130,11 +130,11 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
               // set correctly, the read/write state should be valid.
               // Use that to decide what to do.
               status = 1;               // Wait for more activity
-              if (SSL_want_write (ssl))
+              if (SSL_want_write (ssl_session))
                 {
                   wr_handle.set_bit (handle);
                 }
-              else if (SSL_want_read (ssl))
+              else if (SSL_want_read (ssl_session))
                 {
                   rd_handle.set_bit (handle);
                 }
@@ -187,7 +187,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
             }
         }
 
-    } while (status == 1 && !SSL_is_init_finished (ssl));
+    } while (status == 1 && !SSL_is_init_finished (ssl_session));
 
   if (reset_blocking_mode)
     {

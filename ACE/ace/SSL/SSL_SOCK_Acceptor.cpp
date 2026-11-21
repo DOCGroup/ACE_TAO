@@ -27,16 +27,16 @@ int
 ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
                                    ACE_Time_Value *timeout) const
 {
-  SSL *ssl = new_stream.ssl ();
+  SSL *ssl_session = new_stream.ssl ();
 
-  if (SSL_is_init_finished (ssl))
+  if (SSL_is_init_finished (ssl_session))
   {
     return 0;
   }
 
-  if (!SSL_in_accept_init (ssl))
+  if (!SSL_in_accept_init (ssl_session))
   {
-    ::SSL_set_accept_state (ssl);
+    ::SSL_set_accept_state (ssl_session);
   }
 
   ACE_HANDLE const handle = new_stream.get_handle ();
@@ -75,8 +75,8 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
       ACE_Handle_Set rd_handle;
       ACE_Handle_Set wr_handle;
 
-      status = ::SSL_accept (ssl);
-      switch (::SSL_get_error (ssl, status))
+      status = ::SSL_accept (ssl_session);
+      switch (::SSL_get_error (ssl_session, status))
         {
         case SSL_ERROR_NONE:
           status = 0;               // To tell caller about success
@@ -115,11 +115,11 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
               // set correctly, the read/write state should be valid.
               // Use that to decide what to do.
               status = 1;               // Wait for more activity
-              if (SSL_want_write (ssl))
+              if (SSL_want_write (ssl_session))
                 {
                   wr_handle.set_bit (handle);
                 }
-              else if (SSL_want_read (ssl))
+              else if (SSL_want_read (ssl_session))
                 {
                   rd_handle.set_bit (handle);
                 }
@@ -170,7 +170,7 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
             }
         }
 
-    } while (status == 1 && !SSL_is_init_finished (ssl));
+    } while (status == 1 && !SSL_is_init_finished (ssl_session));
 
   if (reset_blocking_mode)
     {
