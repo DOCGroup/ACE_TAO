@@ -159,7 +159,7 @@ template<class LOG_MESSAGE_RECEIVER>
 class ACE_Server_Logging_Handler : public ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, LOG_MESSAGE_RECEIVER>
 {
 public:
-  ACE_Server_Logging_Handler (ACE_Thread_Manager * = nullptr);
+  explicit ACE_Server_Logging_Handler (ACE_Thread_Manager * = nullptr);
   ACE_Server_Logging_Handler (ACE_Thread_Manager *,
                               const LOG_MESSAGE_RECEIVER &receiver);
 
@@ -188,7 +188,7 @@ template<class LOG_MESSAGE_RECEIVER>
 class ACE_Thr_Server_Logging_Handler : public ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_LOGGER_SYNCH, LOG_MESSAGE_RECEIVER>
 {
 public:
-  ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager * = nullptr);
+  explicit ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager * = nullptr);
   ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager *,
                                   const LOG_MESSAGE_RECEIVER &receiver);
   int open (void * = nullptr) override;
