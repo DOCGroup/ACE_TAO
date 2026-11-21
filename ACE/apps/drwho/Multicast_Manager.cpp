@@ -6,6 +6,7 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_ctype.h"
 #include <cstring>
+#include <memory>
 
 // Initialize all the static member vars.
 int Multicast_Manager::received_host_count {};
@@ -123,9 +124,10 @@ Multicast_Manager::get_host_entry (const char *host)
         }
       else
         {
-          hp = ACE_OS::gethostbyaddr ((char *) &ia,
-                                      sizeof ia,
-                                      AF_INET);
+          hp = ACE_OS::gethostbyaddr (
+            reinterpret_cast<char const *> (std::addressof (ia)),
+            sizeof ia,
+            AF_INET);
         }
     }
   else
@@ -135,7 +137,9 @@ Multicast_Manager::get_host_entry (const char *host)
     }
 
   return hp == nullptr ? nullptr
-    : static_cast<hostent *> (std::memcpy (&host_entry, hp, sizeof *hp));
+    : static_cast<hostent *> (std::memcpy (std::addressof (host_entry),
+                                           hp,
+                                           sizeof *hp));
 }
 
 // Adds an additional new host to the list of host machines.

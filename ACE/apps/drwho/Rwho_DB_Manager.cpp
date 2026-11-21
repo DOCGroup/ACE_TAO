@@ -6,6 +6,8 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_fcntl.h"
 
+#include <memory>
+
 // Change to the RWHO directory to speed up and simplify later
 // processing.  This requires opening the directory for reading with
 // the directory iterator abstraction and then skipping the first two
@@ -91,7 +93,7 @@ RWho_DB_Manager::get_next_host ()
 
       int host_data_length =
         ACE_OS::read (user_file,
-                      (char *) &this->host_data,
+                      std::addressof (this->host_data),
                       sizeof this->host_data);
 
       if (host_data_length > WHOD_HEADER_SIZE

@@ -21,6 +21,8 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_sys_socket.h"
 
+#include <memory>
+
 static char *
 time_stamp ()
 {
@@ -54,8 +56,8 @@ started_by_inetd ()
   int size = sizeof sin;
 
   return ACE_OS::getsockname (0,
-                              reinterpret_cast<sockaddr *> (&sin),
-                              &size) == 0;
+                              reinterpret_cast<sockaddr *> (std::addressof (sin)),
+                              std::addressof (size)) == 0;
 }
 
 // Does the drwho service.
