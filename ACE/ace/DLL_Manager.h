@@ -289,13 +289,13 @@ private:
 
 private:
   /// Vector containing all loaded handle objects.
-  ACE_DLL_Handle **handle_vector_;
+  ACE_DLL_Handle **handle_vector_ {};
 
   /// Current number of handles.
-  int current_size_;
+  int current_size_ {};
 
   /// Maximum number of handles.
-  int total_size_;
+  int total_size_ {};
 
   /// Unload strategy.
   u_long unload_policy_;

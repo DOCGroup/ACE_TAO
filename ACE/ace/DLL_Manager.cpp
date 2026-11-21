@@ -522,10 +522,7 @@ ACE_DLL_Manager::close_singleton ()
 }
 
 ACE_DLL_Manager::ACE_DLL_Manager (int size)
-  : handle_vector_ (nullptr),
-    current_size_ (0),
-    total_size_ (0),
-    unload_policy_ (ACE_DLL_UNLOAD_POLICY_PER_DLL)
+  : unload_policy_ (ACE_DLL_UNLOAD_POLICY_PER_DLL)
 {
   ACE_TRACE ("ACE_DLL_Manager::ACE_DLL_Manager");
 
