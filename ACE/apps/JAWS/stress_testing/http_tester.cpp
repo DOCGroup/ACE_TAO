@@ -51,12 +51,11 @@ client_thread (void *data)
     }
 
   char buffer[BUFSIZ];
-  ssize_t num_read {};
   ssize_t total_read {};
   bool first_time = true;
   for (;;)
     {
-      num_read = webserver.read (buffer, sizeof buffer);
+      ssize_t const num_read = webserver.read (buffer, sizeof buffer);
       if (first_time)
         {
           ACE_Profile_Timer::ACE_Elapsed_Time et;

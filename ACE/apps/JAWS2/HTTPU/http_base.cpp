@@ -193,14 +193,12 @@ HTTP_Base::payload_size ()
 int
 HTTP_Base::build_headers (JAWS_Headers *new_headers)
 {
-  JAWS_Header_Data *data {};
-  JAWS_Header_Data *data2 {};
   JAWS_Header_Table_Iterator iter (*new_headers);
 
   iter.first ();
   while (! iter.done ())
     {
-      data = iter.next ();
+      JAWS_Header_Data *data = iter.next ();
       if (data == nullptr)
         {
           iter.advance ();
@@ -214,7 +212,7 @@ HTTP_Base::build_headers (JAWS_Headers *new_headers)
       else if (data->header_type () == HTTP_HCodes::INSERT_HEADER
                || data->header_type () == HTTP_HCodes::APPENDTO_HEADER)
         {
-          data2 = this->headers ()->find (data->header_name ());
+          JAWS_Header_Data *data2 = this->headers ()->find (data->header_name ());
           if (data2 != nullptr)
             {
               if (data->header_type () == HTTP_HCodes::APPENDTO_HEADER)

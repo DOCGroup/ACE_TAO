@@ -237,12 +237,11 @@ TAO_Log_Constraint_Visitor::visit_union_pos (
                 CORBA::ULong const count =
                   tc->member_count ();
 
-                char const *member_name {};
                 CORBA::ULong i {};
 
                 for (i = 0; i < count; ++i)
                   {
-                    member_name = tc->member_name (i);
+                    char const *member_name = tc->member_name (i);
 
                     if (std::strcmp (name, member_name) == 0)
                       {

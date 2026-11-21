@@ -34,8 +34,6 @@ Parse_HTTP_Request::dump ()
 void
 Parse_HTTP_Request::init (const char *request)
 {
-  char *method;
-
   this->request_ = ACE_OS::strdup (request);
   if (this->request_ == nullptr)
     {
@@ -58,7 +56,7 @@ Parse_HTTP_Request::init (const char *request)
           ++p;
         }
 
-      method = p++;
+      char *method = p++;
 
       while (*p != ' ' && *p != '\t')
         {
