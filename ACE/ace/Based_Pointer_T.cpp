@@ -60,14 +60,16 @@ ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic ()
   // the address is not in memory-mapped virtual address space.
   ACE_BASED_POINTER_REPOSITORY::instance ()->find (this,
                                                    base_addr);
-  this->base_offset_ = (char *) this - (char *) base_addr;
+  this->base_offset_ = static_cast<char *> (static_cast<void *> (this))
+    - static_cast<char *> (base_addr);
 }
 
 template <class CONCRETE>
 ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic (const void *base_addr, int)
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic");
-  this->base_offset_ = (const char *) this - (const char *) base_addr;
+  this->base_offset_ = static_cast<char const *> (this)
+    - static_cast<char const *> (base_addr);
 }
 
 template <class CONCRETE>
@@ -75,7 +77,7 @@ ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic (CONCRETE *rhs)
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic");
 
-  if (rhs == 0)
+  if (rhs == nullptr)
     {
       // Store a value of <target_> that indicate "NULL" pointer.
       this->target_ = -1;
@@ -90,8 +92,10 @@ ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic (CONCRETE *rhs)
       // address space.
       ACE_BASED_POINTER_REPOSITORY::instance ()->find (this,
                                                        base_addr);
-      this->base_offset_ = (char *) this - (char *) base_addr;
-      this->target_ = ((char *) rhs - (char *) base_addr);
+      this->base_offset_ = static_cast<char *> (static_cast<void *> (this))
+        - static_cast<char *> (base_addr);
+      this->target_ = static_cast<char *> (static_cast<void *> (rhs))
+        - static_cast<char *> (base_addr);
     }
 }
 
