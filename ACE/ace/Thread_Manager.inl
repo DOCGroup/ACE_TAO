@@ -3,10 +3,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_At_Thread_Exit::ACE_At_Thread_Exit ()
-  : next_ (0),
-    td_ (0),
-    was_applied_ (false),
-    is_owner_ (true)
 {
 }
 
@@ -64,11 +60,7 @@ ACE_Thread_Descriptor_Base::ACE_Thread_Descriptor_Base ()
   : ACE_OS_Thread_Descriptor (),
     thr_id_ (ACE_OS::NULL_thread),
     thr_handle_ (ACE_OS::NULL_hthread),
-    grp_id_ (0),
-    thr_state_ (ACE_Thread_Manager::ACE_THR_IDLE),
-    task_ (0),
-    next_ (0),
-    prev_ (0)
+    thr_state_ (ACE_Thread_Manager::ACE_THR_IDLE)
 {
 }
 

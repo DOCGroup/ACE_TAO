@@ -107,7 +107,7 @@ public:
 
 protected:
   /// The next At_Thread_Exit hook in the list.
-  ACE_At_Thread_Exit *next_;
+  ACE_At_Thread_Exit *next_ {};
 
   /// Do the apply if necessary
   void do_apply ();
@@ -116,13 +116,13 @@ protected:
   virtual void apply () = 0;
 
   /// The Thread_Descriptor where this at is registered.
-  ACE_Thread_Descriptor* td_;
+  ACE_Thread_Descriptor* td_ {};
 
   /// The at was applied?
-  bool was_applied_;
+  bool was_applied_ {false};
 
   /// The at has the ownership of this?
-  bool is_owner_;
+  bool is_owner_ {true};
 };
 
 class ACE_Export ACE_At_Thread_Exit_Func : public ACE_At_Thread_Exit
@@ -203,19 +203,19 @@ protected:
   ACE_hthread_t thr_handle_;
 
   /// Group ID.
-  int grp_id_;
+  int grp_id_ {};
 
   /// Current state of the thread.
   ACE_UINT32 thr_state_;
 
   /// Pointer to an ACE_Task_Base or NULL if there's no
   /// ACE_Task_Base.
-  ACE_Task_Base *task_;
+  ACE_Task_Base *task_ {};
 
   /// We need these pointers to maintain the double-linked list in a
   /// thread managers.
-  ACE_Thread_Descriptor_Base *next_;
-  ACE_Thread_Descriptor_Base *prev_;
+  ACE_Thread_Descriptor_Base *next_ {};
+  ACE_Thread_Descriptor_Base *prev_ {};
 };
 
 /**
