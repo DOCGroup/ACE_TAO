@@ -605,12 +605,9 @@ namespace { // helpers for vsnprintf_emulation
 
   struct Snprintf_Flags
   {
-    Snprintf_Flags ()
-      : val_ (SNPRINTF_NONE)
-    {}
+    Snprintf_Flags () = default;
 
     explicit Snprintf_Flags (const char *&fmt)
-      : val_ (SNPRINTF_NONE)
     {
       this->parse_flags (fmt);
       if (this->has (SNPRINTF_LEFT))
@@ -726,7 +723,7 @@ namespace { // helpers for vsnprintf_emulation
     void remove (Flag f) { this->val_ &= ~f; }
     bool has (Flag f) const { return (this->val_ & f) == f; }
     bool has_some (Flag f) const { return this->val_ & f; }
-    int val_;
+    int val_ {SNPRINTF_NONE};
   };
 
   struct Snprintf_Digit_Grouping
@@ -795,7 +792,6 @@ namespace { // helpers for vsnprintf_emulation
     Snprintf_Buffer (char *buf, size_t max)
       : buf_ (buf)
       , avail_ (max - 1) // last byte is not available for writes, must be null
-      , written_ (0)
     {}
 
     void out (const char *s, size_t n)
@@ -1201,7 +1197,8 @@ namespace { // helpers for vsnprintf_emulation
     }
 
     char *buf_;
-    size_t avail_, written_;
+    size_t avail_;
+    size_t written_ {};
   };
 
 #ifdef EOVERFLOW
@@ -1239,7 +1236,6 @@ namespace { // helpers for vsnprintf_emulation
   {
     Snprintf_Positional_Args ()
       : pos_arg_ (this->pos_storage_)
-      , scanned_ (false)
     {}
 
     ~Snprintf_Positional_Args ()
@@ -1252,10 +1248,6 @@ namespace { // helpers for vsnprintf_emulation
 
     struct Positional_Arg
     {
-      Positional_Arg ()
-        : type_ (PA_UNUSED)
-      {}
-
       enum {
         PA_UNUSED,
         PA_INT, PA_LONG, PA_LONGLONG, PA_INTMAX, PA_PTRDIFF, PA_SSIZE,
@@ -1264,7 +1256,7 @@ namespace { // helpers for vsnprintf_emulation
         PA_PCHAR, PA_PWCHAR, PA_PVOID,
         PA_PINT, PA_PINTMAX, PA_PLONG, PA_PLONGLONG, PA_PPTRDIFF, PA_PSHORT,
         PA_PSCHAR, PA_PSSIZE
-      } type_;
+      } type_ {PA_UNUSED};
 
       union
       {
@@ -1579,7 +1571,7 @@ namespace { // helpers for vsnprintf_emulation
     }
 
     Positional_Arg pos_storage_[10], *pos_arg_;
-    bool scanned_;
+    bool scanned_ {};
 
   private:
     Snprintf_Positional_Args (const Snprintf_Positional_Args&);
