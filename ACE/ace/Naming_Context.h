@@ -343,13 +343,13 @@ public:
 
 private:
   /// Extra debugging info
-  bool debugging_;
+  bool debugging_ {false};
 
   /// Extra verbose messages
-  bool verbosity_;
+  bool verbosity_ {false};
 
   /// Use Win32 Registry
-  bool use_registry_;
+  bool use_registry_ {false};
 
   /// Port to connect to nameserver process.
   int nameserver_port_;
@@ -361,7 +361,7 @@ private:
   ACE_TCHAR *namespace_dir_;
 
   /// Name of this process.
-  const ACE_TCHAR *process_name_;
+  const ACE_TCHAR *process_name_ {};
 
   /// Name of the database that stores the name/value/type bindings.
   const ACE_TCHAR *database_;
@@ -370,7 +370,8 @@ private:
   char *base_address_;
 
   /// The context in which the naming database will be created.
-  ACE_Naming_Context::Context_Scope_Type context_;
+  ACE_Naming_Context::Context_Scope_Type context_
+    {ACE_Naming_Context::PROC_LOCAL};
 };
 
 ACE_FACTORY_DECLARE (ACE, ACE_Naming_Context)

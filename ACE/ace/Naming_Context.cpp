@@ -427,12 +427,8 @@ ACE_Naming_Context::fini ()
 }
 
 ACE_Name_Options::ACE_Name_Options ()
-  : debugging_ (false),
-    verbosity_ (false),
-    use_registry_ (false),
-    nameserver_port_ (ACE_DEFAULT_SERVER_PORT),
+  : nameserver_port_ (ACE_DEFAULT_SERVER_PORT),
     nameserver_host_ (ACE_OS::strdup (ACE_DEFAULT_SERVER_HOST)),
-    process_name_ (nullptr),
     database_ (ACE_OS::strdup (ACE_DEFAULT_LOCALNAME)),
     base_address_ (ACE_DEFAULT_BASE_ADDR)
 {
