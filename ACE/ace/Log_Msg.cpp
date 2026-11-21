@@ -18,6 +18,8 @@
 #include "ace/OS_NS_signal.h"
 #include "ace/os_include/os_typeinfo.h"
 
+#include <memory>
+
 #if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE != 0)
 # include "ace/Object_Manager.h"
 #endif /* ! ACE_MT_SAFE */
@@ -410,7 +412,7 @@ ACE_Log_Msg::instance ()
                                    typeid (*log_msg_cleanup).name ());
     }
 
-  return &log_msg_cleanup->object ();
+  return std::addressof (log_msg_cleanup->object ());
 #endif /* ! ACE_MT_SAFE */
 }
 
