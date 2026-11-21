@@ -42,6 +42,7 @@
 #include "ace/OS_NS_unistd.h"
 
 #include <cstring>
+#include <memory>
 #if defined (ACE_WIN32)
 #  include "ace/Barrier.h"
 #  include "ace/Thread.h"
@@ -83,8 +84,10 @@ Ping_Pong::Ping_Pong (char const *b, ACE_HANDLE f)
     pid_ (static_cast<int> (ACE_OS::getpid ())),
     handle_ (f)
 {
-  std::memcpy (this->buf_, &this->pid_, sizeof (this->pid_));
-  std::memcpy (this->buf_ + sizeof (this->pid_), &this->count_, sizeof (this->count_));
+  std::memcpy (this->buf_, std::addressof (this->pid_), sizeof (this->pid_));
+  std::memcpy (this->buf_ + sizeof (this->pid_),
+               std::addressof (this->count_),
+               sizeof (this->count_));
   std::memcpy (this->buf_ + (2 * sizeof (int)), b, std::strlen (b) + 1);
   this->buf_[this->buflen_ - 1] = '\n';
   this->buf_[this->buflen_] = '\0';
@@ -160,8 +163,10 @@ Ping_Pong::handle_output (ACE_HANDLE)
   // We can rely on record-oriented reads...
 
   ++this->count_;
-  std::memcpy (this->buf_, &this->pid_, sizeof (this->pid_));
-  std::memcpy (this->buf_ + sizeof (this->pid_), &this->count_, sizeof (this->count_));
+  std::memcpy (this->buf_, std::addressof (this->pid_), sizeof (this->pid_));
+  std::memcpy (this->buf_ + sizeof (this->pid_),
+               std::addressof (this->count_),
+               sizeof (this->count_));
   if (ACE::send (this->handle_,
                  this->buf_,
                  this->buflen_) == -1)
