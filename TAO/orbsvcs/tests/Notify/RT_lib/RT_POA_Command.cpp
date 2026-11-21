@@ -24,8 +24,6 @@ TAO_Notify_Tests_RT_POA_Command::name ()
 void
 TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
 {
-  ACE_TCHAR const* current_arg {};
-
   if (arg_shifter.is_anything_left ())
     {
       if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Create")) == 0)
@@ -40,6 +38,7 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
 
           while (arg_shifter.is_anything_left ())
             {
+              ACE_TCHAR const *current_arg {};
               if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-PriorityModel"))) != nullptr)
                 {
                   if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("CLIENT")) == 0)

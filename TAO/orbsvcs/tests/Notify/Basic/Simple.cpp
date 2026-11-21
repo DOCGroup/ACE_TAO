@@ -103,10 +103,9 @@ Simple_Test::parse_args (int argc,
     ACE_Arg_Shifter arg_shifter (argc,
                                  argv);
 
-    ACE_TCHAR const *current_arg {};
-
     while (arg_shifter.is_anything_left ())
     {
+      ACE_TCHAR const *current_arg {};
       if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-events"))))
         {
           this->event_count_ = ACE_OS::atoi (current_arg);

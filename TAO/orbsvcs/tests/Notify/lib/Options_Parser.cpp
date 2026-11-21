@@ -14,11 +14,9 @@ TAO_Notify_Tests_Options_Parser::~TAO_Notify_Tests_Options_Parser ()
 void
 TAO_Notify_Tests_Options_Parser::execute (CosNotification::EventTypeSeq& added, CosNotification::EventTypeSeq& removed, ACE_Arg_Shifter& arg_shifter)
 {
-  const ACE_TCHAR* current_arg {};
-
   while (arg_shifter.is_anything_left ())
     {
-      current_arg = arg_shifter.get_current ();
+      ACE_TCHAR const *current_arg = arg_shifter.get_current ();
       arg_shifter.consume_arg ();
 
       if (current_arg[0] == '+')

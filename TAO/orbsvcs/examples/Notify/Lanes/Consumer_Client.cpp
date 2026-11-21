@@ -17,10 +17,9 @@ TAO_Notify_Lanes_Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  ACE_TCHAR const *current_arg {};
-
   while (arg_shifter.is_anything_left ())
     {
+      ACE_TCHAR const *current_arg {};
       if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-LanePriority"))) != nullptr)
         {
           this->lane_priority_ = ACE_OS::atoi (current_arg);

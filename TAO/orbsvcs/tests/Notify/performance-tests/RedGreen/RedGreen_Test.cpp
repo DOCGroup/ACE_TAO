@@ -19,10 +19,9 @@ RedGreen_Test::parse_args (int argc,
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  ACE_TCHAR const* current_arg {};
-
   while (arg_shifter.is_anything_left ())
     {
+      ACE_TCHAR const *current_arg {};
       if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-burst_size"))) != nullptr)
         {
           this->burst_size_ = ACE_OS::atoi (current_arg);

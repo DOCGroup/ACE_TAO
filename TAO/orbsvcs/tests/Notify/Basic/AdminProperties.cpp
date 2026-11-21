@@ -146,10 +146,9 @@ AdminProperties::parse_args(int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  ACE_TCHAR const *current_arg {};
-
   while (arg_shifter.is_anything_left ())
     {
+      ACE_TCHAR const *current_arg {};
       if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-max_queue_length"))))
         {
           this->max_queue_length_ = ACE_OS::atoi (current_arg);
@@ -367,13 +366,11 @@ AdminProperties::create_suppliers ()
   // @@ CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
   // @@   CosNotifyChannelAdmin::OR_OP;
 
-  int index {};
-
   try
     {
       TAO_Notify_Tests_StructuredPushSupplier *supplier;
 
-      for (index = 0; index < this->suppliers_; ++index)
+      for (int index {}; index < this->suppliers_; ++index)
         {
           ACE_NEW (supplier,
                    TAO_Notify_Tests_StructuredPushSupplier ());
@@ -405,13 +402,11 @@ AdminProperties::create_consumers ()
   // @@ CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
   // @@   CosNotifyChannelAdmin::OR_OP;
 
-  int index {};
-
   try
     {
       TAO_Notify_Tests_StructuredPushConsumer *consumer;
 
-      for (index = 0; index < this->consumers_; ++index)
+      for (int index {}; index < this->consumers_; ++index)
         {
           ACE_NEW (consumer, TAO_Notify_Tests_StructuredPushConsumer ());
           consumer->init (root_poa_.in ());
