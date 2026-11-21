@@ -161,7 +161,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       //  ObjectId activate_object(in Servant p_servant)
       //    raises (ServantAlreadyActive, WrongPolicy);
       PortableServer::ObjectId_var first_oid =
-        root_poa->activate_object (&first_servant);
+        root_poa->activate_object (std::addressof (first_servant));
 
       // Get Object Reference for the first_servant object.
       test_var first_test =

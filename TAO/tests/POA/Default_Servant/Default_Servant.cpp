@@ -110,7 +110,7 @@ test_reference_to_servant_active_object (PortableServer::POA_ptr root_poa)
   CORBA::ULong expected_refcount {1};
 
   PortableServer::ObjectId_var const id =
-    root_poa->activate_object (&test);
+    root_poa->activate_object (std::addressof (test));
   ++expected_refcount;
 
   CORBA::Object_var const object =

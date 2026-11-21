@@ -17,6 +17,8 @@
 #include "ace/Auto_Event.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 static int debug {1};
 
 static int
@@ -248,13 +250,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       test_i servant2 (event2);
 
       PortableServer::ObjectId_var id_act =
-        root_poa->activate_object (&servant1);
+        root_poa->activate_object (std::addressof (servant1));
 
       CORBA::Object_var object_act = root_poa->id_to_reference (id_act.in ());
 
       test_var test_object1 = test::_narrow (object_act.in ());
 
-      id_act = root_poa->activate_object (&servant2);
+      id_act = root_poa->activate_object (std::addressof (servant2));
 
       object_act = root_poa->id_to_reference (id_act.in ());
 

@@ -95,7 +95,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POA_var const first_poa (
         root_poa->create_POA ("first POA", poa_manager.in (), policies));
 
-      PortableServer::ObjectId_var const oid1 (first_poa->activate_object (&servant1));
+      PortableServer::ObjectId_var const oid1 (first_poa->activate_object (std::addressof (servant1)));
 
       CORBA::Object_var const obj1 (first_poa->servant_to_reference (&servant1));
 
@@ -111,7 +111,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POA_var const second_poa (
         root_poa->create_POA ("second POA", poa_manager.in (), policies));
 
-      PortableServer::ObjectId_var const oid2 (second_poa->activate_object (&servant2));
+      PortableServer::ObjectId_var const oid2 (second_poa->activate_object (std::addressof (servant2)));
 
       CORBA::Object_var const obj2 (second_poa->servant_to_reference (&servant2));
 

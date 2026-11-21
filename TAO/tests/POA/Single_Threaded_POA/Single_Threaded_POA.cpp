@@ -15,6 +15,8 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 class test_i : public virtual POA_test
 {
 public:
@@ -160,13 +162,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       test_i servant2 (child_poa.in ());
 
       PortableServer::ObjectId_var id =
-        root_poa->activate_object (&servant1);
+        root_poa->activate_object (std::addressof (servant1));
 
       CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
 
       test_var object1 = test::_narrow (object_act.in ());
 
-      id = root_poa->activate_object (&servant2);
+      id = root_poa->activate_object (std::addressof (servant2));
 
       object_act = root_poa->id_to_reference (id.in ());
 

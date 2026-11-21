@@ -20,6 +20,8 @@
 #include "structC.h"
 #include "valuetypeC.h"
 #include "valuetype_opt_accessorC.h"
+
+#include <memory>
 #include "fixedA.h"
 
 #include "ace/Log_Msg.h"
@@ -1100,7 +1102,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var obj;
 
       hello_i h;
-      PortableServer::ObjectId_var id = root_poa->activate_object (&h);
+      PortableServer::ObjectId_var id = root_poa->activate_object (std::addressof (h));
       obj = root_poa->id_to_reference (id.in ());
       obj = hello::_narrow (obj.in ());
 
@@ -1113,7 +1115,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       goodbye_i g;
-      id = root_poa->activate_object (&g);
+      id = root_poa->activate_object (std::addressof (g));
       obj = root_poa->id_to_reference (id.in ());
       obj = goodbye::_narrow (obj.in ());
 
@@ -1126,7 +1128,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       sayonara_i s;
-      id = root_poa->activate_object (&s);
+      id = root_poa->activate_object (std::addressof (s));
       obj = root_poa->id_to_reference (id.in ());
       obj = salutation::sayonara::_narrow (obj.in ());
 
@@ -1145,7 +1147,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       toi.length (4);
 
       ciao_i c;
-      id = root_poa->activate_object (&c);
+      id = root_poa->activate_object (std::addressof (c));
       obj = root_poa->id_to_reference (id.in ());
       obj = ciao::_narrow (obj.in ());
 
@@ -1158,7 +1160,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       aloha_i a;
-      id = root_poa->activate_object (&a);
+      id = root_poa->activate_object (std::addressof (a));
       obj = root_poa->id_to_reference (id.in ());
       obj = aloha::_narrow (obj.in ());
 
