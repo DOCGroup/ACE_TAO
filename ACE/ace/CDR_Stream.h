@@ -1102,7 +1102,7 @@ protected:
   bool do_byte_swap_;
 
   /// set to @c false when an error occurs.
-  bool good_bit_;
+  bool good_bit_ {true};
 
   /// The GIOP versions for this stream
   ACE_CDR::Octet major_version_;
