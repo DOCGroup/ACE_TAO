@@ -73,6 +73,10 @@ Test_Aio::Test_Aio ()
 
 Test_Aio::~Test_Aio ()
 {
+  if (this->out_fd_ != -1)
+    {
+      close (this->out_fd_);
+    }
   delete aiocb_write_;
   delete aiocb_read_;
   std::free (buffer_write_);
