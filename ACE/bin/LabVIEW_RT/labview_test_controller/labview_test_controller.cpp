@@ -88,10 +88,10 @@ private:
   bool running_;
   int status_;
   enum { CMDLINE_LEN = 1024, ARGV_SIZE = 100 };
-  char name_[CMDLINE_LEN];
-  char cmdline_[CMDLINE_LEN];
-  int argc_;
-  char *argv_[ARGV_SIZE];
+  char name_[CMDLINE_LEN] {};
+  char cmdline_[CMDLINE_LEN] {};
+  int argc_ {};
+  char *argv_[ARGV_SIZE] {};
 };
 
 class Peer
