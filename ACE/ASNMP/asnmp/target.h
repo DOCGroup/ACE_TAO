@@ -101,7 +101,8 @@ public:
   /// change class default
   void set_default_version (snmp_version v);
 
-  // *** get methods ***
+  /// @name Get methods.
+  /// @{
 
   /// get the retry value
   int get_default_retry () const;
@@ -122,6 +123,7 @@ public:
 
   /// return send retry number for this instancd
   int get_retry () const;
+  /// @}
 
   /**
     * virtual clone operation for creating a new SnmpTarget from an existing
@@ -157,7 +159,8 @@ protected:
   /// instance value the snmp version
   snmp_version version_;
 
-  // class wide default values
+  /// @name Class-wide default values.
+  /// @{
   /// xmit timeout in secs
   static unsigned long default_timeout_;
 
@@ -167,6 +170,7 @@ protected:
   /// snmp protocol version
   static unsigned long default_max_pdu_size_;
   static snmp_version default_version_;
+  /// @}
 };
 
 //----[  UdpTarget class ]----------------------------------------------
@@ -198,7 +202,8 @@ public:
 
   ~UdpTarget () override;
 
-  // ** set ***
+  /// @name Set methods.
+  /// @{
 
   /// set the read community using an OctetStr
   void set_read_community (OctetStr const &new_read_community);
@@ -209,7 +214,9 @@ public:
   /// set the address
   int set_address (UdpAddress &udp_address);
 
-  // ** get ***
+  /// @}
+  /// @name Get methods.
+  /// @{
 
   /// get the read community as an Octet Str object
   void get_read_community (OctetStr &read_community_oct) const;
@@ -219,6 +226,7 @@ public:
 
   /// get the address
   void get_address (UdpAddress &address) const;
+  /// @}
 
   /// all classes constructed will have this read community string
   void set_default_read_community (OctetStr const &rd_community);
