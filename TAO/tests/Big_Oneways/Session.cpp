@@ -120,7 +120,7 @@ Session::start (const Test::Session_List &other_sessions)
       {
         try
           {
-            if (this->task_.activate (THR_NEW_LWP | THR_JOINABLE, 1, 1) != -1)
+            if (this->task_.activate (THR_NEW_LWP | THR_JOINABLE, 1, true) != -1)
               {
                 this->running_ = true;
                 ++this->active_thread_count_;

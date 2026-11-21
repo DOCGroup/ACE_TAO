@@ -77,7 +77,7 @@ run_main (int, ACE_TCHAR *[])
                 ACE_TEXT ("ACE_Task_Base::activate should have failed to add new thread.")));
   }
   // force addition of new thread
-  if (waiter_task.activate (THR_NEW_LWP | THR_DETACHED, 1, 1) != 0)
+  if (waiter_task.activate (THR_NEW_LWP | THR_DETACHED, 1, true) != 0)
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("ACE_Task_Base::activate should have succeeded to force addition of new thread.")));
@@ -116,7 +116,7 @@ run_main (int, ACE_TCHAR *[])
                 ACE_TEXT ("ACE_Task_Base::activate should have failed to add new thread.")));
   }
   // force addition of new thread
-  if (waiter_task.activate (THR_NEW_LWP | THR_DETACHED, 1, 1) != 0)
+  if (waiter_task.activate (THR_NEW_LWP | THR_DETACHED, 1, true) != 0)
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("ACE_Task_Base::activate should have succeeded to force addition of new thread.")));
@@ -173,7 +173,7 @@ run_main (int, ACE_TCHAR *[])
                 ACE_TEXT ("ACE_Task_Base::activate should have failed to add new thread.")));
   }
   // force addition of new thread
-  if (waiter_task.activate (THR_NEW_LWP | THR_DETACHED, 1, 1) != 0)
+  if (waiter_task.activate (THR_NEW_LWP | THR_DETACHED, 1, true) != 0)
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("ACE_Task_Base::activate should have succeeded to force addition of new thread.")));

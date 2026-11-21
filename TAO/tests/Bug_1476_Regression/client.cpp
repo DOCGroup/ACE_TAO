@@ -162,7 +162,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) Found not connected transport with a queue\n"));
         }
 
-      if (server_task.activate (THR_NEW_LWP | THR_JOINABLE, 2, 1) == -1)
+      if (server_task.activate (THR_NEW_LWP | THR_JOINABLE, 2, true) == -1)
         {
           ACE_ERROR ((LM_ERROR, "Error activating server task\n"));
         }

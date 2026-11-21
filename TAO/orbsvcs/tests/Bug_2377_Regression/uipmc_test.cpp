@@ -221,7 +221,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       {
         ACE_Manual_Event me;
         ORBThread orb_thr (orb.in (), me, ACE_Thread_Manager::instance ());
-        orb_thr.activate (THR_NEW_LWP | THR_JOINABLE, 1, 1);
+        orb_thr.activate (THR_NEW_LWP | THR_JOINABLE, 1, true);
         me.wait ();
 
         ClientThread cln_thr (hello.in (), logger, hello_call_number);

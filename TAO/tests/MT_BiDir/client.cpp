@@ -128,7 +128,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Client_Task client_task (orb.in (),
                                ACE_Thread_Manager::instance ());
 
-      if (client_task.activate (THR_NEW_LWP | THR_JOINABLE, 4, 1) == -1)
+      if (client_task.activate (THR_NEW_LWP | THR_JOINABLE, 4, true) == -1)
         {
           ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
         }

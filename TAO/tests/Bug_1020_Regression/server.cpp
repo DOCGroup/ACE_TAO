@@ -78,7 +78,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       ORB_Task task (orb.in ());
-      task.activate (THR_NEW_LWP | THR_JOINABLE, 4, 1);
+      task.activate (THR_NEW_LWP | THR_JOINABLE, 4, true);
 
       task.wait();
 

@@ -114,7 +114,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Worker_Thread worker (orb.in ());
 
-      worker.activate (THR_NEW_LWP | THR_JOINABLE, 4, 1);
+      worker.activate (THR_NEW_LWP | THR_JOINABLE, 4, true);
       worker.thr_mgr ()->wait ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));

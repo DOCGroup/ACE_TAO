@@ -101,7 +101,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                orb.in (),
                                ACE_Time_Value (240));
 
-      if (server_task.activate (THR_NEW_LWP | THR_JOINABLE, 8, 1) == -1)
+      if (server_task.activate (THR_NEW_LWP | THR_JOINABLE, 8, true) == -1)
         {
           ACE_ERROR ((LM_ERROR, "Error activating server task\n"));
         }

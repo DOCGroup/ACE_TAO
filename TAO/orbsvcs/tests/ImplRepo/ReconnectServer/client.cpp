@@ -133,7 +133,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
 
     Client_Task task (test.in ());
-    task.activate (THR_NEW_LWP | THR_JOINABLE, 1, 1);
+    task.activate (THR_NEW_LWP | THR_JOINABLE, 1, true);
 
     ACE_Time_Value tv(test_duration_sec);
     orb->run (&tv);

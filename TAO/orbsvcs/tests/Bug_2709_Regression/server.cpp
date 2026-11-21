@@ -51,7 +51,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                  me,
                                  ACE_Thread_Manager::instance ());
 
-        if (server_task.activate (THR_NEW_LWP | THR_JOINABLE, 1, 1) == -1)
+        if (server_task.activate (THR_NEW_LWP | THR_JOINABLE, 1, true) == -1)
           {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error activating server task\n")));
           }

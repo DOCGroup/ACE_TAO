@@ -95,15 +95,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       ACE_DEBUG ((LM_DEBUG, "(%P) Client: Activating threads\n"));
     }
-    if (task0.activate (THR_NEW_LWP | THR_JOINABLE, NUM_THRDS, 1) == -1)
+    if (task0.activate (THR_NEW_LWP | THR_JOINABLE, NUM_THRDS, true) == -1)
     {
       ACE_ERROR ((LM_ERROR, "(%P) Client: Error activating %s task\n", task0.ID ()));
     }
-    if (task1.activate (THR_NEW_LWP | THR_JOINABLE, NUM_THRDS, 1) == -1)
+    if (task1.activate (THR_NEW_LWP | THR_JOINABLE, NUM_THRDS, true) == -1)
     {
       ACE_ERROR ((LM_ERROR, "(%P) Client: Error activating %s task\n", task1.ID ()));
     }
-    if (task2.activate (THR_NEW_LWP | THR_JOINABLE, NUM_THRDS, 1) == -1)
+    if (task2.activate (THR_NEW_LWP | THR_JOINABLE, NUM_THRDS, true) == -1)
     {
       ACE_ERROR ((LM_ERROR, "(%P) Client: Error activating %s task\n", task2.ID ()));
     }

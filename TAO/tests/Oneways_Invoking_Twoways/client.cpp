@@ -104,12 +104,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // will have two threads that would make invocations..
       sender->active_objects ((CORBA::Short) 2);
 
-      if (server_task.activate (THR_NEW_LWP | THR_JOINABLE, 2,1) == -1)
+      if (server_task.activate (THR_NEW_LWP | THR_JOINABLE, 2, true) == -1)
         {
           ACE_ERROR ((LM_ERROR, "Error activating server task\n"));
         }
 
-      if (client_task.activate (THR_NEW_LWP | THR_JOINABLE, 2, 1) == -1)
+      if (client_task.activate (THR_NEW_LWP | THR_JOINABLE, 2, true) == -1)
         {
           ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
         }

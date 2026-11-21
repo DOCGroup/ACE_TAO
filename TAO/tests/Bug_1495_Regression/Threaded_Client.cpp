@@ -78,7 +78,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                me,
                                ACE_Thread_Manager::instance ());
 
-      if (server_task.activate (THR_JOINABLE, 1, 1) == -1)
+      if (server_task.activate (THR_JOINABLE, 1, true) == -1)
         {
           ACE_ERROR ((LM_ERROR, "Error activating the server task."));
           return -1;
@@ -99,7 +99,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                  corb.in (),
                                  ACE_Thread_Manager::instance ());
 
-        if (client_task.activate (THR_JOINABLE, 1, 1) == -1)
+        if (client_task.activate (THR_JOINABLE, 1, true) == -1)
           {
             ACE_ERROR ((LM_ERROR, "Error activating client thread.\n"));
             return -1;

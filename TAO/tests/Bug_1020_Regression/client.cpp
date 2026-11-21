@@ -120,7 +120,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       reactor->schedule_timer (&crasher, nullptr, interval, interval);
 
       ORB_Task task (orb.in ());
-      task.activate (THR_NEW_LWP | THR_JOINABLE, 4, 1);
+      task.activate (THR_NEW_LWP | THR_JOINABLE, 4, true);
 
       Test::Payload payload (16);
       payload.length (16);
