@@ -2288,7 +2288,7 @@ ACE_POSIX_Asynch_Read_Dgram_Result::remote_address (ACE_Addr& addr) const
 sockaddr *
 ACE_POSIX_Asynch_Read_Dgram_Result::saddr () const
 {
-  return (sockaddr *) this->remote_address_->get_addr ();
+  return static_cast<sockaddr *> (this->remote_address_->get_addr ());
 }
 
 int
