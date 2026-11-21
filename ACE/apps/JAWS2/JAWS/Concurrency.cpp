@@ -140,7 +140,10 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
           }
           handler = nullptr;
           JAWS_IO_Handler ** const ioh = waiter->find_by_index (waiter_index);
-          *ioh = nullptr;
+          if (ioh != nullptr)
+            {
+              *ioh = nullptr;
+            }
           break;
         }
 
@@ -190,7 +193,10 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
           if (result == -2)
             {
               JAWS_IO_Handler ** const ioh = waiter->find_by_index (waiter_index);
-              *ioh = nullptr;
+              if (ioh != nullptr)
+                {
+                  *ioh = nullptr;
+                }
               result = 0;
             }
           break;
