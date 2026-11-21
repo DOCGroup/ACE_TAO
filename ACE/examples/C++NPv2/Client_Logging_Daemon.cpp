@@ -90,7 +90,7 @@ public:
 
 private:
   // Pointer to the <CLD_Handler> that we're connecting.
-  CLD_Handler *handler_;
+  CLD_Handler *handler_ {};
 
   // Address at which the logging server is listening
   // for connections.

@@ -81,7 +81,7 @@ public:
   }
 
 private:
-  ACE_Reactor *reactor_;
+  ACE_Reactor *reactor_ {};
 };
 
 ACE_FACTORY_DEFINE (SLDEX, Server_Shutdown)
