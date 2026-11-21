@@ -93,22 +93,22 @@ public:
 
 private:
   /// Network "device" we are using.
-  const char *device_;
+  const char *device_ {};
 
   /// Number of connections to queue.
-  int backlog_;
+  int backlog_ {};
 
   /// Are we using "tirdwr" mod?
-  int rwflag_;
+  int rwflag_ {};
 
   /// Handle TLI accept insanity...
   int handle_async_event (bool restart, int rwflag);
 
   /// Used for queueing up pending requests.
-  ACE_TLI_Request_Queue *queue_;
+  ACE_TLI_Request_Queue *queue_ {};
 
   /// Used for handling disconnects
-  struct t_discon *disp_;
+  struct t_discon *disp_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

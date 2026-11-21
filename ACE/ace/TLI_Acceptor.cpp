@@ -107,7 +107,6 @@ ACE_TLI_Acceptor::dump () const
 }
 
 ACE_TLI_Acceptor::ACE_TLI_Acceptor ()
-  : queue_ (0)
 {
   ACE_TRACE ("ACE_TLI_Acceptor::ACE_TLI_Acceptor");
 }
