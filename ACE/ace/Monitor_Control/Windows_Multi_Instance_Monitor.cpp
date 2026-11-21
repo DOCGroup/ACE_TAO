@@ -71,8 +71,7 @@ namespace ACE
       while (*path != ACE_TEXT ('\0'))
         {
           std::unique_ptr<Windows_Monitor> instance {
-            new Windows_Monitor (path)
-          };
+            new Windows_Monitor (path)};
 
           if (this->instances_.enqueue_tail (instance.get ()) == -1)
             {
