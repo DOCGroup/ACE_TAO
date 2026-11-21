@@ -699,8 +699,7 @@ int Oid::left_comparison( const unsigned long n, const Oid &o) const
     return 0;  // equal
   }
 
-  // verify that n is valid, must be >= 0
-  if ( len <=0)
+  if (len == 0)
   {
     return 1;                         // ! equal
   }
