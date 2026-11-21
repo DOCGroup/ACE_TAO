@@ -590,11 +590,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     extern int  optind;
     int   i, j;
     char  *tempch;
-    int   err;
-
 #define SLEEP_USEC  100
 #ifdef WIN32
     WSADATA   WSAData;
+    int       err;
 #else
 
     struct timeval sleeptime;

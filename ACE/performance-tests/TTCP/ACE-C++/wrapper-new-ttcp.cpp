@@ -768,7 +768,9 @@ prusage (struct rusage const &r0, struct rusage const &r1,
   struct timeval tdiff;
   time_t t;
   char const *cp;
+#if !defined (SYSV)
   int i;
+#endif /* !SYSV */
   int ms;
 
   t = (r1.ru_utime.tv_sec - r0.ru_utime.tv_sec) * 1000 +

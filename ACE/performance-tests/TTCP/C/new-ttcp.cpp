@@ -217,7 +217,6 @@ int
 main (int argc, char *argv[])
 {
   ACE_SOCK_Stream connection_stream;
-  unsigned long addr_tmp;
   int c;
 
   if (argc < 2)
@@ -763,7 +762,9 @@ prusage (struct rusage *r0, struct rusage *r1,
   struct timeval tdiff;
   time_t t;
   char *cp;
+#if !defined (SYSV)
   int i;
+#endif /* !SYSV */
   int ms;
 
   t = (r1->ru_utime.tv_sec - r0->ru_utime.tv_sec) * 100 +

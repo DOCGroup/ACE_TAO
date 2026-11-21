@@ -89,8 +89,6 @@ count_file_list(const char *url_list_file)
           /* is there more? */
           if (textvalue != 0)
             {
-              int filenum;
-
               ++num_of_pages;
               D_PRINTF( "Found %ld pages\n", num_of_pages );
             }
