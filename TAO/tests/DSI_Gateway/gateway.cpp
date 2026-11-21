@@ -87,7 +87,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                      object.in (),
                                      root_poa.in ());
       PortableServer::ObjectId_var const oid =
-        root_poa->activate_object (&server_impl);
+        root_poa->activate_object (std::addressof (server_impl));
 
       CORBA::Object_var const server =
         root_poa->id_to_reference (oid.in ());

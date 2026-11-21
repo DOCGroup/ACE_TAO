@@ -117,7 +117,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       PortableServer::ObjectId_var id =
-        root_poa->activate_object (&servant);
+        root_poa->activate_object (std::addressof (servant));
 
       CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
 
