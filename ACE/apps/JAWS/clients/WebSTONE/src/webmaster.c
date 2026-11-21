@@ -81,7 +81,8 @@ THREAD FILE *debugfile = stderr;
 struct hostent  *master_phe;   /* IP addresses for webmaster */
 struct timeval sumedh_start, sumedh_end;
 
-void HostEntCpy(struct hostent *dest, struct hostent *src);
+int HostEntCpy(struct hostent *dest, struct hostent *src);
+void HostEntFree(struct hostent *host);
 
 static void
 usage(const char *progname)
@@ -549,8 +550,18 @@ char *commandline;
 
   /* master_phe = gethostbyname(hostname); */
   master_phe_tmp = gethostbyname(hostname);
-  master_phe = (struct hostent *)malloc(sizeof(struct hostent));
-  HostEntCpy(master_phe, master_phe_tmp);
+  if (master_phe_tmp == 0)
+  {
+      errexit("Could not resolve local host name %s\n", hostname);
+  }
+  master_phe = (struct hostent *)calloc(1, sizeof(struct hostent));
+  if (master_phe == 0 || HostEntCpy(master_phe, master_phe_tmp) != 0)
+  {
+      HostEntFree(master_phe);
+      free(master_phe);
+      master_phe = 0;
+      errexit("Could not copy local host address information\n");
+  }
     }
 
     /* set up executable pathname */
@@ -1408,19 +1419,83 @@ main(const int argc, char *argv[])
     free(page_stats);
     free(page_stats_total);
 
+    HostEntFree(master_phe);
+    free(master_phe);
+    master_phe = 0;
     exit(0);
 }
 
 /* Added by Rajesh Shah 5/18/96 */
-void
+int
 HostEntCpy(struct hostent *dest, struct hostent *src)
 {
+  size_t address_count = 0;
+  size_t i;
 
-  dest->h_name = (char *)malloc(strlen(src->h_name)+1);
+  if (dest == 0 || src == 0 || src->h_name == 0 ||
+      src->h_addr_list == 0 || src->h_length <= 0)
+  {
+      return -1;
+  }
+
+  dest->h_name = (char *)malloc(strlen(src->h_name) + 1);
+  if (dest->h_name == 0)
+  {
+      return -1;
+  }
   strcpy(dest->h_name, src->h_name);
   printf("WebMaster name = %s\n", dest->h_name);
-  dest->h_aliases = src->h_aliases;
+  dest->h_aliases = 0;
   dest->h_addrtype = src->h_addrtype;
   dest->h_length = src->h_length;
-  dest->h_addr_list = src->h_addr_list;
+
+  while (src->h_addr_list[address_count] != 0)
+  {
+      ++address_count;
+  }
+  if (address_count == 0)
+  {
+      return -1;
+  }
+
+  dest->h_addr_list = (char **)calloc(address_count + 1,
+                                      sizeof(*dest->h_addr_list));
+  if (dest->h_addr_list == 0)
+  {
+      return -1;
+  }
+
+  for (i = 0; i < address_count; ++i)
+  {
+      dest->h_addr_list[i] = (char *)malloc((size_t)src->h_length);
+      if (dest->h_addr_list[i] == 0)
+      {
+          return -1;
+      }
+      memcpy(dest->h_addr_list[i], src->h_addr_list[i],
+             (size_t)src->h_length);
+  }
+
+  return 0;
+}
+
+void
+HostEntFree(struct hostent *host)
+{
+  size_t i;
+
+  if (host == 0)
+  {
+      return;
+  }
+
+  free(host->h_name);
+  if (host->h_addr_list != 0)
+  {
+      for (i = 0; host->h_addr_list[i] != 0; ++i)
+      {
+          free(host->h_addr_list[i]);
+      }
+      free(host->h_addr_list);
+  }
 }
