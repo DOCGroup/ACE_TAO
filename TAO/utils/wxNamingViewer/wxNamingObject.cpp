@@ -15,7 +15,8 @@ WxNamingObject::WxNamingObject(
 }
 
 WxNamingObject::WxNamingObject( CORBA::Object_ptr pObject):
-  m_Object(CORBA::Object::_duplicate(pObject))
+  m_Object(CORBA::Object::_duplicate(pObject)),
+  m_Context(true)
 {
   // Empty
 }
