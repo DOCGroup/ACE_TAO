@@ -99,8 +99,6 @@ ACE_Ping_Socket::ACE_Ping_Socket ()
 ACE_Ping_Socket::ACE_Ping_Socket (ACE_Addr const & local,
                                   int protocol,
                                   int reuse_addr)
-  : sequence_number_ (0),
-    connected_socket_ (false)
 {
   ACE_TRACE ("ACE_Ping_Socket::ACE_Ping_Socket");
 

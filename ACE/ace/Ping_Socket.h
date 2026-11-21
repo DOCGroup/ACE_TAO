@@ -87,9 +87,9 @@ private:
   char icmp_send_buff_[PING_BUFFER_SIZE];
   char icmp_recv_buff_[PING_BUFFER_SIZE];
 
-  ACE_UINT16 sequence_number_;
+  ACE_UINT16 sequence_number_ {};
 
-  bool connected_socket_;
+  bool connected_socket_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
