@@ -643,7 +643,7 @@ protected:
   void dump_i () const;
 
   /// Remember where we are.
-  T *current_;
+  T *current_ {};
 
   const ACE_Double_Linked_List<T> *dllist_;
   /// @}
