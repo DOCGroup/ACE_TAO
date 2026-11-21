@@ -474,42 +474,42 @@ protected:
   /// @{
 
   /// Creation strategy for an Acceptor.
-  CREATION_STRATEGY *creation_strategy_;
+  CREATION_STRATEGY *creation_strategy_ {};
 
   /// true if {Acceptor} created the creation strategy and thus should
   /// delete it, else false.
-  bool delete_creation_strategy_;
+  bool delete_creation_strategy_ {};
 
   /// Accept strategy for an {Acceptor}.
-  ACCEPT_STRATEGY *accept_strategy_;
+  ACCEPT_STRATEGY *accept_strategy_ {};
 
   /// true if {Acceptor} created the accept strategy and thus should delete
   /// it, else false.
-  bool delete_accept_strategy_;
+  bool delete_accept_strategy_ {};
 
   /// Concurrency strategy for an {Acceptor}.
-  CONCURRENCY_STRATEGY *concurrency_strategy_;
+  CONCURRENCY_STRATEGY *concurrency_strategy_ {};
 
   /// true if {Acceptor} created the concurrency strategy and thus should
   /// delete it, else false.
-  bool delete_concurrency_strategy_;
+  bool delete_concurrency_strategy_ {};
 
   /// Scheduling strategy for an {Acceptor}.
-  SCHEDULING_STRATEGY *scheduling_strategy_;
+  SCHEDULING_STRATEGY *scheduling_strategy_ {};
 
   /// true if {Acceptor} created the scheduling strategy and thus should
   /// delete it, else false.
-  bool delete_scheduling_strategy_;
+  bool delete_scheduling_strategy_ {};
   /// @}
 
   /// @name Service information
   /// @{
 
   /// Name of the service.
-  ACE_TCHAR *service_name_;
+  ACE_TCHAR *service_name_ {};
 
   /// Description of the service.
-  ACE_TCHAR *service_description_;
+  ACE_TCHAR *service_description_ {};
 
   /// Address that the {Strategy_Acceptor} uses to listen for
   /// connections.

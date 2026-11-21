@@ -696,16 +696,6 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Strategy_Acceptor
    const ACE_TCHAR service_description[],
    int use_select,
    int reuse_addr)
-    : creation_strategy_ (0),
-      delete_creation_strategy_ (false),
-      accept_strategy_ (0),
-      delete_accept_strategy_ (false),
-      concurrency_strategy_ (0),
-      delete_concurrency_strategy_ (false),
-      scheduling_strategy_ (0),
-      delete_scheduling_strategy_ (false),
-      service_name_ (nullptr),
-      service_description_ (nullptr)
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Strategy_Acceptor");
 
@@ -735,16 +725,6 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Strategy_Acceptor
    const ACE_TCHAR service_description[],
    int use_select,
    int reuse_addr)
-    : creation_strategy_ (0),
-      delete_creation_strategy_ (false),
-      accept_strategy_ (0),
-      delete_accept_strategy_ (false),
-      concurrency_strategy_ (0),
-      delete_concurrency_strategy_ (false),
-      scheduling_strategy_ (0),
-      delete_scheduling_strategy_ (false),
-      service_name_ (nullptr),
-      service_description_ (nullptr)
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Strategy_Acceptor");
 
