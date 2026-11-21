@@ -44,12 +44,12 @@ namespace ACE_RMCast
       //
       Descr () = default;
 
-      Descr (unsigned long timer)
+      explicit Descr (unsigned long timer)
           : timer_ (timer)
       {
       }
 
-      Descr (Message_ptr m)
+      explicit Descr (Message_ptr m)
           : m_ (m)
       {
       }
@@ -118,7 +118,7 @@ namespace ACE_RMCast
       {
       }
 
-      Queue (u64 sn)
+      explicit Queue (u64 sn)
         : Base (ACE_RMCAST_DEFAULT_MAP_SIZE), sn_ (sn), max_sn_ (sn)
       {
       }

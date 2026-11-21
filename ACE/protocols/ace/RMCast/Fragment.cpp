@@ -42,7 +42,7 @@ namespace ACE_RMCast
 
       // Need fragmentation.
       //
-      u32 packets (size / max_payload_size + (size % max_payload_size ? 1 : 0));
+      u32 packets (size / max_payload_size + ((size % max_payload_size) ? 1 : 0));
 
       // cerr << "size : " << size << endl
       //      << "packs: " << packets << endl;

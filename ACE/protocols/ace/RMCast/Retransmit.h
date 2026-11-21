@@ -36,7 +36,7 @@ namespace ACE_RMCast
       {
       }
 
-      Descr (Message_ptr msg)
+      explicit Descr (Message_ptr msg)
           : msg_ (msg), count_ (0)
       {
       }

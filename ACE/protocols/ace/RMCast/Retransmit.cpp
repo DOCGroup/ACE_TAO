@@ -67,7 +67,7 @@ namespace ACE_RMCast
           u64* psn;
           j.next (psn);
 
-          Message_ptr m;
+          Message_ptr retransmit_message;
 
           Queue::ENTRY* pair;
 
@@ -75,7 +75,7 @@ namespace ACE_RMCast
           {
             //cerr << 5 << "PRTM " << to << " " << pair->ext_id_ << endl;
 
-            m = pair->int_id_.message ();
+            retransmit_message = pair->int_id_.message ();
 
             pair->int_id_.reset ();
           }
@@ -83,12 +83,12 @@ namespace ACE_RMCast
           {
             //cerr << 4 << "message " << *psn << " not available" << endl;
 
-            m = Message_ptr (new Message);
-            m->add (Profile_ptr (new SN (*psn)));
-            m->add (Profile_ptr (new NoData));
+            retransmit_message = Message_ptr (new Message);
+            retransmit_message->add (Profile_ptr (new SN (*psn)));
+            retransmit_message->add (Profile_ptr (new NoData));
           }
 
-          out_->send (m);
+          out_->send (retransmit_message);
         }
       }
     }

@@ -93,7 +93,7 @@ namespace ACE_RMCast
       {
       }
 
-      Header (istream& is)
+      explicit Header (istream& is)
       {
         (void) (is >> id_ >> size_);
       }
