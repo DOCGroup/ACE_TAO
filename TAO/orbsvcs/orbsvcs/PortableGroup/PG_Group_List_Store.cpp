@@ -73,7 +73,16 @@ TAO::PG_Group_List_Store_File_Guard::PG_Group_List_Store_File_Guard (
 
 TAO::PG_Group_List_Store_File_Guard::~PG_Group_List_Store_File_Guard () noexcept(false)
 {
-  this->release ();
+  try
+    {
+      this->release ();
+    }
+  catch (...)
+    {
+      list_store_.lock_.release ();
+      throw;
+    }
+
   if (list_store_.lock_.release() == -1)
     {
       throw CORBA::INTERNAL ();
