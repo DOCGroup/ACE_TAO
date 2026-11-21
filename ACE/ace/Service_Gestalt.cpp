@@ -226,7 +226,6 @@ ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
                                           bool no_static_svcs)
   : svc_repo_is_owned_ (svc_repo_is_owned)
   , svc_repo_size_ (size)
-  , is_opened_ (0)
   , logger_key_ (ACE_DEFAULT_LOGGER_KEY)
   , no_static_svcs_ (no_static_svcs)
 {

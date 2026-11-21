@@ -422,7 +422,7 @@ protected:
   /// to be the case anymore. This variable is incremented by the
   /// <ACE_Service_Gestalt::open> method and decremented by the
   /// <ACE_Service_Gestalt::close> method.
-  int is_opened_;
+  int is_opened_ {};
 
   /// Indicates where to write the logging output.  This is typically
   /// either a STREAM pipe or a socket
