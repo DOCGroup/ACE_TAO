@@ -95,15 +95,18 @@ public:
   /// equivlence operator overloaded
   friend ASNMP_Export bool operator== (Vb const &lhs, Vb const &rhs);
 
-  //-----[ set oid / get oid part]------------------------------------------
+  /// @name OID accessors.
+  /// @{
 
   /// set value oid only with another oid
   void set_oid (Oid const &oid);
 
   /// get oid portion
   void get_oid (Oid &oid) const;
+  /// @}
 
-  //-----[ set value part]--------------------------------------------------
+  /// @name Value setters.
+  /// @{
 
   /// set a Vb null, if its not already
   void set_null ();
@@ -131,8 +134,10 @@ public:
 
   /// get an octet string object
   void set_value (OctetStr const &oct_str);
+  /// @}
 
-  //----[ get value ]------------------------------------------------
+  /// @name Value getters.
+  /// @{
 
   /// returns 0 on success and a value
   int get_value (TimeTicks &ticks);
@@ -157,13 +162,17 @@ public:
 
   /// get an octet string object
   int get_value (OctetStr &oct_str);
+  /// @}
 
-  // escape hatch
+  /// @name Generic value accessors.
+  /// @{
+
   /// for other derived types  that can be casted
   void set_value (SnmpSyntax const &val);
 
   /// gets a general value
   int get_value (SnmpSyntax &val);
+  /// @}
 
   /// return the current syntax
   /// Or.. if a V2 VB exception is present then return the exception value
