@@ -145,7 +145,6 @@ ACE_Ping_Socket::receive_echo_reply (ACE_Time_Value const * timeout)
   ACE_TRACE ("ACE_Ping_Socket::receive_echo_reply");
 
   ACE_Time_Value const before {ACE_OS::gettimeofday ()};
-  ACE_Time_Value after;
   ACE_Time_Value time_left;
   ACE_Time_Value *wait_time {const_cast<ACE_Time_Value *> (timeout)};
   ACE_Time_Value const half_millisec (0, 500);
@@ -162,7 +161,7 @@ ACE_Ping_Socket::receive_echo_reply (ACE_Time_Value const * timeout)
         {
           if (errno == EINTR)
             {
-              after = ACE_OS::gettimeofday ();
+              ACE_Time_Value const after {ACE_OS::gettimeofday ()};
               time_left = *timeout - after + before;
 
               // If more than .5 ms left, wait on select()
@@ -184,7 +183,7 @@ ACE_Ping_Socket::receive_echo_reply (ACE_Time_Value const * timeout)
         }
       else
         {
-          after = ACE_OS::gettimeofday ();
+          ACE_Time_Value const after {ACE_OS::gettimeofday ()};
           if ((after - before) >= *timeout)
             {
               errno = ETIMEDOUT;
