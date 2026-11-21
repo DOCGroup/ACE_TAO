@@ -411,7 +411,7 @@ testUnloadingACELoggingStrategy (int, ACE_TCHAR *[])
   }
 }
 
-// @brief The size of a repository is unlimited and can be exceeded
+/// @brief The size of a repository is unlimited and can be exceeded
 void
 testLimits (int , ACE_TCHAR *[])
 {
@@ -592,7 +592,6 @@ testrepository (int, ACE_TCHAR *[])
     }
 }
 
-// @brief ??
 void
 testOrderlyInstantiation (int , ACE_TCHAR *[])
 {

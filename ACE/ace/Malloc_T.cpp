@@ -990,14 +990,14 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::find (const char *name,
   return 0;
 }
 
-// Returns a count of the number of available chunks that can hold
-// <size> byte allocations.  Function can be used to determine if you
-// have reached a water mark. This implies a fixed amount of allocated
-// memory.
-//
-// @param size - the chunk size of that you would like a count of
-// @return function returns the number of chunks of the given size
-//          that would fit in the currently allocated memory
+/// Returns a count of the number of available chunks that can hold
+/// <size> byte allocations.  Function can be used to determine if you
+/// have reached a water mark. This implies a fixed amount of allocated
+/// memory.
+///
+/// @param size - the chunk size of that you would like a count of
+/// @return function returns the number of chunks of the given size
+///          that would fit in the currently allocated memory
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ssize_t
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::avail_chunks (size_t size) const
