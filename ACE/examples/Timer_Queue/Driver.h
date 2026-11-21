@@ -123,7 +123,7 @@ public:
 
 protected:
   /// timer queue
-  TQ timer_queue_;
+  TQ timer_queue_ {};
 
   /// @name Commands to be executed
   /// @{
