@@ -480,7 +480,7 @@ Oid& Oid::operator+=( const unsigned long i)
     }
   }
   else {
-    init_value((const unsigned long *)&i, (size_t)1);
+    init_value (std::addressof (i), 1);
   }
 
   return *this;
