@@ -190,7 +190,6 @@ Client::run ()
 {
   int i {};
   int j {};
-  int n {};
   int maxindx {};
   int minindx {};
   char *const sbuf = SendBuf.data ();
@@ -199,7 +198,6 @@ Client::run ()
   ACE_High_Res_Timer timer;
   ACE_hrtime_t sample {};
 
-  int d {};
   double std_dev {};
   double std_err {};
   double sample_mean {};
@@ -235,6 +233,7 @@ Client::run ()
        i < nsamples;
        ++seq, ++i, ++j, timer.reset ())
     {
+      int n {};
       std::memcpy (sbuf + sizeof pid, std::addressof (seq), sizeof seq);
       if (i >= 0 && usdelay > 0)
         {
@@ -380,7 +379,7 @@ Client::run ()
     {
       double const difference {static_cast<double> (samples[i]) - sample_mean};
       std_dev += difference * difference;
-      d = static_cast<int> ((samples[i] - min) / window_ns);
+      int const d = static_cast<int> ((samples[i] - min) / window_ns);
 
       if (d < 0 || d >= ndist)
         {
