@@ -555,15 +555,15 @@ private:
    * ACE_Hash_Map_Entry that serves as the beginning of a linked
    * list of <EXT_ID>s that hash to that bucket.
    */
-  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *table_;
+  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *table_ {};
 
   /// Total size of the hash table.
-  size_t total_size_;
+  size_t total_size_ {};
 
   /// Current number of entries in the table
   /// @note That this can be larger than <total_size_> due to the
   /// bucket chaining).
-  size_t cur_size_;
+  size_t cur_size_ {};
 };
 
 /**
