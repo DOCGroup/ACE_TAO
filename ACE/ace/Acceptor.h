@@ -260,7 +260,7 @@ protected:
    * processed is {ACE_NONBLOCK}, which enabled non-blocking I/O on
    * the {SVC_HANDLER} when it is opened.
    */
-  int flags_;
+  int flags_ {};
 
   /// Flag that indicates whether it shall use {select} in the
   /// {accept}-loop.
@@ -688,20 +688,20 @@ private:
                         bool restart);
 
   /// Hold the svc_handler_ across asynchrony boundaries.
-  SVC_HANDLER *svc_handler_;
+  SVC_HANDLER *svc_handler_ {};
 
   /// Hold the restart flag across asynchrony boundaries.
-  bool restart_;
+  bool restart_ {};
 
   /// Factory that establishes connections passively.
   PEER_ACCEPTOR peer_acceptor_;
 
   /// Concurrency strategy for an Acceptor.
-  ACE_Concurrency_Strategy<SVC_HANDLER> *concurrency_strategy_;
+  ACE_Concurrency_Strategy<SVC_HANDLER> *concurrency_strategy_ {};
 
   /// true if Acceptor created the concurrency strategy and thus should
   /// delete it, else false.
-  bool delete_concurrency_strategy_;
+  bool delete_concurrency_strategy_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -112,8 +112,7 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
 ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Acceptor (ACE_Reactor *reactor,
                                                               int use_select)
-  :flags_ (0),
-   use_select_ (use_select),
+  : use_select_ (use_select),
    reuse_addr_ (1)
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Acceptor");
@@ -965,10 +964,6 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
 ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Oneshot_Acceptor ()
-  : svc_handler_ (0),
-    restart_ (false),
-    concurrency_strategy_ (0),
-    delete_concurrency_strategy_ (false)
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Oneshot_Acceptor");
   this->reactor (0);
@@ -979,10 +974,6 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Oneshot_Acceptor
   (const typename PEER_ACCEPTOR::PEER_ADDR &local_addr,
    ACE_Reactor *reactor,
    ACE_Concurrency_Strategy<SVC_HANDLER> *cs)
-    : svc_handler_ (0),
-      restart_ (false),
-      concurrency_strategy_ (0),
-      delete_concurrency_strategy_ (false)
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Oneshot_Acceptor");
   if (this->open (local_addr, reactor, cs) == -1)
