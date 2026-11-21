@@ -14,6 +14,7 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 #include <cstring>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -1146,7 +1147,7 @@ ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_LIFO_It
   // Cheap trick to make code simple.
   // @@ Doug, this looks like trouble...
   NAME_NODE temp;
-  this->curr_ = &temp;
+  this->curr_ = std::addressof (temp);
   this->curr_->next_ = malloc_.cb_ptr_->name_head_;
 
   this->advance ();
@@ -1247,7 +1248,7 @@ ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_FIFO_It
   // Cheap trick to make code simple.
   // @@ Doug, this looks like trouble...
   NAME_NODE temp;
-  this->curr_ = &temp;
+  this->curr_ = std::addressof (temp);
   this->curr_->next_ = malloc_.cb_ptr_->name_head_;
   this->curr_->prev_ = 0;
 
