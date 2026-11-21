@@ -11,6 +11,8 @@
 #include <fcntl.h>
 #include <io.h>
 #include <memory.h>
+#include <memory>
+#include <new>
 #include <process.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -515,7 +517,7 @@ test_control (void * /* param */)
       SOCKET peer;
       while ((peer = accept (acceptor, nullptr, nullptr)) != INVALID_SOCKET)
         {
-          Peer *p = new Peer (peer);
+          std::unique_ptr<Peer> p (new (std::nothrow) Peer (peer));
           if (p == nullptr)
             {
               perror ("Out of memory");
@@ -526,15 +528,17 @@ test_control (void * /* param */)
           if (0 == _beginthreadex (0,            // security
                                    64 * 1024,    // stack size
                                    peer_svc,     // entrypoint
-                                   (void *)p,    // param
+                                   p.get (),     // param
                                    0,            // creation flags
                                    0))           // ptr to thread id
             {
               perror ("beginthreadex peer");
               closesocket (peer);
-              delete p;
             }
-          p = 0;
+          else
+            {
+              p.release ();
+            }
           peer = INVALID_SOCKET;
         }
       perror ("accept");
