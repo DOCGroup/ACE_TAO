@@ -100,7 +100,7 @@ ACE_New_Allocator::malloc (size_t nbytes)
   {
     ACE_NEW_RETURN (ptr, char[nbytes], nullptr);
   }
-  return (void *) ptr;
+  return ptr;
 }
 
 void *
@@ -227,7 +227,7 @@ ACE_Static_Allocator_Base::malloc (size_t nbytes)
       // of bytes requested, and return the original offset.
       char *ptr = &this->buffer_[this->offset_];
       this->offset_ += nbytes;
-      return (void *) ptr;
+      return ptr;
     }
 }
 
@@ -238,7 +238,7 @@ ACE_Static_Allocator_Base::calloc (size_t nbytes,
   void *ptr = this->malloc (nbytes);
 
   std::memset (ptr, initial_value, nbytes);
-  return (void *) ptr;
+  return ptr;
 }
 
 void *
