@@ -87,9 +87,9 @@ ACE_Name_Acceptor::init (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-// The following is a "Factory" used by the ACE_Service_Config and
-// svc.conf file to dynamically initialize the state of the Naming
-// Server.
+/// The following is a "Factory" used by the ACE_Service_Config and
+/// svc.conf file to dynamically initialize the state of the Naming
+/// Server.
 
 ACE_SVC_FACTORY_DEFINE (ACE_Name_Acceptor)
 
@@ -131,8 +131,8 @@ ACE_Name_Handler::ACE_Name_Handler (ACE_Thread_Manager *tm)
   list_types_ref.description_ = "request for LIST_TYPES\n";
 }
 
-// Activate this instance of the ACE_Name_Handler (called by the
-// ACE_Name_Acceptor).
+/// Activate this instance of the ACE_Name_Handler (called by the
+/// ACE_Name_Acceptor).
 
 /* VIRTUAL */ int
 ACE_Name_Handler::open (void * v)
@@ -152,7 +152,7 @@ ACE_Name_Handler::open (void * v)
   return 0;
 }
 
-// Create and send a reply to the client.
+/// Create and send a reply to the client.
 
 /* VIRTUAL */ int
 ACE_Name_Handler::send_reply (ACE_INT32 status,
@@ -208,8 +208,8 @@ ACE_Name_Handler::send_request (ACE_Name_Request &request)
   return 0;
 }
 
-// Give up waiting (e.g., when a timeout occurs or a client shuts down
-// unexpectedly).
+/// Give up waiting (e.g., when a timeout occurs or a client shuts down
+/// unexpectedly).
 
 /* VIRTUAL */ int
 ACE_Name_Handler::abandon ()
@@ -218,7 +218,7 @@ ACE_Name_Handler::abandon ()
   return this->send_reply (-1, errno);
 }
 
-// Enable clients to limit the amount of time they'll wait
+/// Enable clients to limit the amount of time they'll wait
 
 /* VIRTUAL */ int
 ACE_Name_Handler::handle_timeout (const ACE_Time_Value &, const void *)
@@ -227,7 +227,7 @@ ACE_Name_Handler::handle_timeout (const ACE_Time_Value &, const void *)
   return this->abandon ();
 }
 
-// Return the underlying ACE_HANDLE.
+/// Return the underlying ACE_HANDLE.
 
 /* VIRTUAL */ ACE_HANDLE
 ACE_Name_Handler::get_handle () const
@@ -236,7 +236,7 @@ ACE_Name_Handler::get_handle () const
   return this->peer ().get_handle ();
 }
 
-// Dispatch the appropriate operation to handle the client request.
+/// Dispatch the appropriate operation to handle the client request.
 
 /* VIRTUAL */ int
 ACE_Name_Handler::dispatch ()
@@ -255,8 +255,8 @@ ACE_Name_Handler::dispatch ()
                                           ACE_Name_Request::OP_TABLE_MASK)]) ();
 }
 
-// Receive, frame, and decode the client's request.  Note, this method
-// should use non-blocking I/O.
+/// Receive, frame, and decode the client's request.  Note, this method
+/// should use non-blocking I/O.
 
 /* VIRTUAL */ int
 ACE_Name_Handler::recv_request ()
@@ -326,8 +326,8 @@ ACE_Name_Handler::recv_request ()
   return 0;
 }
 
-// Callback method invoked by the ACE_Reactor when events arrive from
-// the client.
+/// Callback method invoked by the ACE_Reactor when events arrive from
+/// the client.
 
 /* VIRTUAL */ int
 ACE_Name_Handler::handle_input (ACE_HANDLE)
