@@ -3,6 +3,8 @@
 #include "test_i.h"
 #include "ace/OS_NS_stdlib.h"
 
+#include <memory>
+
 #if TAO_HAS_INTERCEPTORS
 
 #include "Server_ORBInitializer.h"
@@ -90,9 +92,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       test_i servant1 (1);
       test_i servant2 (2);
 
-      PortableServer::ObjectId_var const oid1 {root_poa->activate_object (&servant1)};
+      PortableServer::ObjectId_var const oid1 {root_poa->activate_object (std::addressof (servant1))};
 
-      PortableServer::ObjectId_var const oid2 {root_poa->activate_object (&servant2)};
+      PortableServer::ObjectId_var const oid2 {root_poa->activate_object (std::addressof (servant2))};
 
       CORBA::Object_var const obj1 {root_poa->servant_to_reference (&servant1)};
 

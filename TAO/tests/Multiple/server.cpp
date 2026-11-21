@@ -56,14 +56,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Create the delegated servant and intialize it
       // with the "real" servant.
-      PortableServer::ObjectId_var id = poa->activate_object (&servant);
+      PortableServer::ObjectId_var id = poa->activate_object (std::addressof (servant));
       CORBA::Object_var object_act = poa->id_to_reference (id.in ());
       Delegated_Bottom_Impl delegated_servant (
         Multiple::Bottom::_narrow (object_act.in ()));
 
       // Create the CORBA Object that is incarnated by the
       // delegated servant.
-      id = poa->activate_object (&delegated_servant);
+      id = poa->activate_object (std::addressof (delegated_servant));
       object_act = poa->id_to_reference (id.in ());
 
       Multiple::Bottom_var const bottom =

@@ -112,7 +112,7 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
       }
 
       PortableServer::ObjectId_var const id =
-        this->poa_->activate_object (&servant_);
+        this->poa_->activate_object (std::addressof (servant_));
 
       CORBA::Object_var const obj = this->poa_->id_to_reference (id.in ());
 
