@@ -3,11 +3,13 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdlib.h"
 
+#include <memory>
+
 Options *
 Options::instance ()
 {
   static Options instance;
-  return &instance;
+  return std::addressof (instance);
 }
 
 std::string const &

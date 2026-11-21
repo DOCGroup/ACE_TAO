@@ -1368,9 +1368,9 @@ TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_request_id_stem (const CosTrading::Admin::OctetSeq& stem)
 {
   ACE_GUARD_RETURN (TRADER_LOCK_TYPE, trader_mon, this->lock_,
-                    &this->stem_id_);
+                    std::addressof (this->stem_id_));
   this->stem_id_ = stem;
-  return &this->stem_id_;
+  return std::addressof (this->stem_id_);
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>

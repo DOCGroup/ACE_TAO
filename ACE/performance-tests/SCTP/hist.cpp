@@ -24,6 +24,7 @@
 */
 
 #include <list>
+#include <memory>
 #include <string>
 #include <utility>
 
@@ -47,7 +48,7 @@ hist_t *histogram (std::string name,
   hist.last = last;
   hist.hs.resize (num_bins + 2);
   histograms.emplace_back (std::move (hist));
-  return &histograms.back ();
+  return std::addressof (histograms.back ());
 }
 
 void set_outer (unsigned int max_num_outer, hist_t *hist)

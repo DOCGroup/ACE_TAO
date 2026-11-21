@@ -6,6 +6,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_ctype.h"
 #include <cstring>
+#include <memory>
 
 // Implementation of class Headers
 
@@ -334,7 +335,7 @@ Headers_Map::place (const char *const header)
 
   this->garbage_.header_ = nullptr;
 
-  return &this->map_[i];
+  return std::addressof (this->map_[i]);
 }
 
 int

@@ -10,6 +10,8 @@
 #include "ace/os_include/os_errno.h"
 #include "ace/Truncate.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 size_t
@@ -1046,7 +1048,7 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::transmit_buffers ()
         }
 
       // Return the transmit buffers
-      return &this->transmit_buffers_;
+      return std::addressof (this->transmit_buffers_);
     }
 }
 

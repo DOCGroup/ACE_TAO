@@ -49,7 +49,7 @@ Async_Timer_Queue::instance ()
       return result;
     } ();
   static Async_Timer_Queue instance (&signal_mask);
-  return &instance;
+  return std::addressof (instance);
 }
 
 // Sets the signal set to mask, for the timer queue.
