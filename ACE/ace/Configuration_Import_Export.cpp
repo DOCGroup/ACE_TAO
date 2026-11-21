@@ -496,7 +496,7 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
 #endif
       // Now find the start of the value
       ACE_TCHAR *value = this->squish (end);
-      size_t value_len = ACE_OS::strlen (value);
+      size_t const value_len = ACE_OS::strlen (value);
       if (value_len > 0)
         {
           // ACE 5.2 (and maybe earlier) exported strings may be enclosed

@@ -2401,8 +2401,8 @@ ACE_InputCDR::clone_from (ACE_InputCDR &cdr)
   // the stream.
 
   // Actual bytes traversed
-  size_t rd_bytes = rd_ptr - nrd_ptr;
-  size_t wr_bytes = wr_ptr - nwr_ptr;
+  size_t const rd_bytes = rd_ptr - nrd_ptr;
+  size_t const wr_bytes = wr_ptr - nwr_ptr;
 
   ACE_CDR::mb_align (std::addressof (this->start_));
 

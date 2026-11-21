@@ -46,7 +46,7 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_cac
     }
 
   // Get the number of entries in the container.
-  size_t current_map_size = container.current_size ();
+  size_t const current_map_size = container.current_size ();
 
   // Also whether the number of entries in the cache!
   // Oops! then there is no way out but exiting. So return an error.
@@ -150,7 +150,7 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
     }
 
   // Get the number of entries in the container.
-  size_t current_map_size = container.current_size ();
+  size_t const current_map_size = container.current_size ();
 
   // Also whether the number of entries in the cache is just one!
   // Oops! then there is no way out but exiting. So return an error.

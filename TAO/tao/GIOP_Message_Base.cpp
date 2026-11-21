@@ -649,7 +649,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
 
   // Get the read and write positions and header before we steal data.
   size_t rd_pos = qd->msg_block ()->rd_ptr () - qd->msg_block ()->base ();
-  size_t wr_pos = qd->msg_block ()->wr_ptr () - qd->msg_block ()->base ();
+  size_t const wr_pos = qd->msg_block ()->wr_ptr () - qd->msg_block ()->base ();
   rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
 
   // Create a input CDR stream. We do the following
@@ -787,7 +787,7 @@ TAO_GIOP_Message_Base::process_reply_message (
 
   // Get the read and write positions before we steal data.
   size_t rd_pos = qd->msg_block ()->rd_ptr () - qd->msg_block ()->base ();
-  size_t wr_pos = qd->msg_block ()->wr_ptr () - qd->msg_block ()->base ();
+  size_t const wr_pos = qd->msg_block ()->wr_ptr () - qd->msg_block ()->base ();
   rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
 
   ACE_Data_Block *db {};
@@ -1732,7 +1732,7 @@ TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd,
 {
   // Get the read and write positions before we steal data.
   size_t rd_pos = qd->msg_block ()->rd_ptr () - qd->msg_block ()->base ();
-  size_t wr_pos = qd->msg_block ()->wr_ptr () - qd->msg_block ()->base ();
+  size_t const wr_pos = qd->msg_block ()->wr_ptr () - qd->msg_block ()->base ();
   rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
 
   // Create a input CDR stream. We do the following
