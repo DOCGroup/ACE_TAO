@@ -377,7 +377,7 @@ Heartbeat_Application::handle_timeout (ACE_Time_Value const &,
                                           MAXHOSTNAMELEN + 11,
                                           reinterpret_cast<u_char *> (
                                             this->hostname_and_pid_.data ()),
-                                          0);
+                                          false);
 
           this->consumer_->push (events);
         }
