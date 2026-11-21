@@ -8,6 +8,8 @@
  */
 #include "testS.h"
 
+#include <memory>
+
 class test_i : public POA_test
 {
 public:
@@ -89,7 +91,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       test_i servant;
       PortableServer::ObjectId_var const id =
-        first_poa->activate_object (&servant);
+        first_poa->activate_object (std::addressof (servant));
 
       CORBA::Object_var const object_act = first_poa->id_to_reference (id.in ());
 

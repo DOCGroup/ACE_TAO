@@ -17,6 +17,8 @@
 #include "ace/OS_NS_fcntl.h"
 #include "tao/Utils/ORB_Manager.h"
 
+#include <memory>
+
 MT_Server_Task::MT_Server_Task (ACE_Thread_Manager *thr_mgr_ptr,
                                 int argc,
                                 ACE_TCHAR **argv,
@@ -233,7 +235,7 @@ MT_Server::run_ORB_briefly ()
           // a separate servant for the nested upcall on the root POA.
           MT_Object_i nested_servant;
           PortableServer::ObjectId_var id =
-            root_poa->activate_object (&nested_servant);
+            root_poa->activate_object (std::addressof (nested_servant));
 
           try
             {

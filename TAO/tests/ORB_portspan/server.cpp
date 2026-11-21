@@ -1,5 +1,7 @@
 #include "simpleI.h"
 
+#include <memory>
+
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -18,7 +20,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Keep the stack servant alive while the ORB is running.
       simple_i simp;
 
-      PortableServer::ObjectId_var const obj_id = poa->activate_object (&simp);
+      PortableServer::ObjectId_var const obj_id = poa->activate_object (std::addressof (simp));
 
       orb->run ();
     }
