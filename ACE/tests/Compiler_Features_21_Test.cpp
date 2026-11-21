@@ -16,6 +16,10 @@ struct B
 {
   B() : b(new A<int>[0]) {}
   ~B() { delete [] b; }
+
+  B (B const &) = delete;
+  B &operator= (B const &) = delete;
+
   A<int> *b;
 };
 
