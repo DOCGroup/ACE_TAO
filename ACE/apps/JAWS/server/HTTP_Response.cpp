@@ -234,7 +234,8 @@ HTTP_Response::normal_response ()
           ACE_Mem_Map mmapfile;
           const char *hvv = hv + 6;
           // Skip past the string "Basic "
-          std::unique_ptr<char[]> buf (new char[std::strlen (hvv) + 1]);
+          std::unique_ptr<char[]> buf =
+            std::make_unique<char[]> (std::strlen (hvv) + 1);
           char *auth = HTTP_Helper::HTTP_decode_base64 (
             std::strcpy (buf.get (), hvv));
 

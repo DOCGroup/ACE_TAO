@@ -415,7 +415,7 @@ ACE_OS::getcwd (wchar_t *buf, size_t size)
 #  if defined (ACE_WIN32)
   return ::_wgetcwd (buf, static_cast<int> (size));
 #  else
-  std::unique_ptr<char[]> narrow_buf (new char[size]);
+  std::unique_ptr<char[]> narrow_buf = std::make_unique<char[]> (size);
   char *result {ACE_OS::getcwd (narrow_buf.get (), size)};
   if (result == nullptr)
     {

@@ -817,7 +817,7 @@ ACE_Process::convert_env_buffer (const char* env) const
   // Copy each string into the buffer leaving a nul terminator between
   // each string and adding a second nul terminator at the end
   start = 0;
-  std::unique_ptr<wchar_t[]> wenv (new wchar_t[total]);
+  std::unique_ptr<wchar_t[]> wenv = std::make_unique<wchar_t[]> (total);
   for (i = 0; i < buffer.size (); ++i)
     {
       std::wcscpy (wenv.get () + start, buffer[i].get ());

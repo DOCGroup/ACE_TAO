@@ -58,7 +58,8 @@ Control::join (Federated_Test::Peer_ptr peer)
   /// Automatically shutdown the peers
   using Peer_Shutdown = ACE_Utils::Auto_Functor<Federated_Test::Peer,
                                                 Shutdown<Federated_Test::Peer>>;
-  std::unique_ptr<Peer_Shutdown[]> peer_shutdown (new Peer_Shutdown[this->peers_count_]);
+  std::unique_ptr<Peer_Shutdown[]> peer_shutdown =
+    std::make_unique<Peer_Shutdown[]> (this->peers_count_);
 
   size_t i;
   for (i = 0; i != this->peers_count_; ++i)
