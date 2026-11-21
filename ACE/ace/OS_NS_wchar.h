@@ -156,7 +156,7 @@ namespace ACE_OS
                              const wchar_t *charset);
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSSTR */
 
-  // these are named wrong.  should be wcslen, etc... dhinton
+  /// These are named wrong; they should be wcslen, etc. (dhinton).
   ACE_NAMESPACE_INLINE_FUNCTION
   u_int wslen (const WChar *);
 

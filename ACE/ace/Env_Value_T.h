@@ -140,11 +140,11 @@ ACE_Convert (ACE_TCHAR const *s, double &d)
   d = ACE_OS::strtod (s, nullptr);
 }
 
-// Default calls a CTOR on type T of the form 'T::T(const char*)', but
-// users can feel free to create their own specialized conversion
-// functions if necessary, as shown above.  Note that for 'char*' the
-// default is used because a simple cast will be performed and no
-// conversion will be necessary.
+/// Default calls a CTOR on type T of the form 'T::T(const char*)', but
+/// users can feel free to create their own specialized conversion
+/// functions if necessary, as shown above. Note that for 'char*' the
+/// default is used because a simple cast will be performed and no
+/// conversion will be necessary.
 template <class T> inline void
 ACE_Convert (ACE_TCHAR const *s, T &t)
 {

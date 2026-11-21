@@ -34,7 +34,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Type-safe, and unsigned.
+/// Type-safe, and unsigned.
 static constexpr ACE_UINT32 ACE_U_ONE_SECOND_IN_MSECS = 1000U;
 static constexpr ACE_UINT32 ACE_U_ONE_SECOND_IN_USECS = 1000000U;
 static constexpr ACE_UINT32 ACE_U_ONE_SECOND_IN_NSECS = 1000000000U;

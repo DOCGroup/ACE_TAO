@@ -247,7 +247,7 @@ private:
   /// Current object decorated by the atomic op.
   volatile unsigned long value_ {};
 
-  // Pointers to selected atomic op implementations.
+  /// Pointers to selected atomic op implementations.
   static long (*increment_fn_) (volatile long *);
   static long (*decrement_fn_) (volatile long *);
   static long (*exchange_fn_) (volatile long *, long);

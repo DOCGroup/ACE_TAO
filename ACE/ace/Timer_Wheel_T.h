@@ -141,9 +141,9 @@ public:
   int cancel (TYPE const &type,
               int dont_call_handle_close = 1) override;
 
-  // Cancel a timer, storing the magic cookie in act (if nonzero).
-  // Calls the functor if dont_call_handle_close is 0 and returns 1
-  // on success
+  /// Cancel a timer, storing the magic cookie in act (if nonzero).
+  /// Calls the functor if dont_call_handle_close is 0 and returns 1
+  /// on success.
   int cancel (long timer_id,
               void const **act = nullptr,
               int dont_call_handle_close = 1) override;

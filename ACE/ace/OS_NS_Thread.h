@@ -345,8 +345,8 @@ public:
     return my_ti.tss_base;
   }
 
-  // Mark the entry for a thread invalid (e.g. the thread has finished or exited).
-  // Return true if success, false if there is no entry for the thread.
+  /// Mark the entry for a thread invalid (e.g. the thread has finished or exited).
+  /// Return true if success, false if there is no entry for the thread.
   bool erase (ACE_hthread_t id)
   {
     LockGuard guard (lock_);
@@ -1385,9 +1385,9 @@ namespace ACE_OS {
   /// @name A set of wrappers for recursive mutex locks.
   /// @{
 
-  // These two methods are primarily in support of
-  // ACE_Condition<ACE_Recursive_Thread_Mutex> and should probably not
-  // be called outside that context.
+  /// These two methods are primarily in support of
+  /// ACE_Condition<ACE_Recursive_Thread_Mutex> and should probably not
+  /// be called outside that context.
   ACE_NAMESPACE_INLINE_FUNCTION
   int recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
                                    ACE_recursive_mutex_state &state);
@@ -1586,8 +1586,8 @@ namespace ACE_OS {
   int thr_cmp (ACE_hthread_t t1,
                ACE_hthread_t t2);
 
-  // These are non-portable since they use ACE_thread_t and
-  // ACE_hthread_t and will go away in a future release.
+  /// These are non-portable since they use ACE_thread_t and
+  /// ACE_hthread_t and will go away in a future release.
   ACE_NAMESPACE_INLINE_FUNCTION
   int thr_continue (ACE_hthread_t target_thread);
 

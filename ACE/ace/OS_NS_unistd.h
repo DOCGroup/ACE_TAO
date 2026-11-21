@@ -124,7 +124,7 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   pid_t fork ();
 
-  // not in susv3
+  /// Not in SUSv3.
   extern ACE_Export
   pid_t fork (const ACE_TCHAR *program_name);
 

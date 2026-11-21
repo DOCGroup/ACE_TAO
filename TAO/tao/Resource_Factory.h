@@ -160,7 +160,7 @@ public:
   virtual ACE_Allocator* input_cdr_msgblock_allocator ();
   /// @}
 
-  // Return 1 when the input CDR allocator uses a lock else 0.
+  /// Return 1 when the input CDR allocator uses a lock else 0.
   virtual int input_cdr_allocator_type_locked ();
 
   /// @name Access the output CDR allocators.

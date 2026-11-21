@@ -118,8 +118,8 @@ public:
   virtual ACE_Asynch_Connect_Impl *create_asynch_connect ();
   virtual ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file ();
 
-  // Methods used to create Asynch_IO_Result objects. We create the right
-  // objects here in these methods.
+  /// Methods used to create Asynch_IO_Result objects. We create the right
+  /// objects here in these methods.
 
   virtual ACE_Asynch_Read_Stream_Result_Impl *create_asynch_read_stream_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                                                                 ACE_HANDLE handle,

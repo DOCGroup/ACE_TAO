@@ -53,7 +53,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // only used by ACE_OS_Object_Manager::ctor
 # if defined (ACE_WIN32)
-// Default WIN32 structured exception handler.
+/// Default WIN32 structured exception handler.
 int ACE_SEH_Default_Exception_Selector (void *);
 int ACE_SEH_Default_Exception_Handler (void *);
 # endif /* ACE_WIN32 */
@@ -308,7 +308,7 @@ public:
 #endif
 #endif /* ACE_MT_SAFE */
 
-      // Hook for preallocated objects provided by application.
+      /// Hook for preallocated objects provided by application.
       ACE_APPLICATION_PREALLOCATED_OBJECT_DECLARATIONS
 
       ACE_PREALLOCATED_OBJECTS  // This enum value must be last!
