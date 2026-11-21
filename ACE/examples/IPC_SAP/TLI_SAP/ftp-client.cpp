@@ -26,7 +26,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   char buf[BUFSIZ];
 
   if (con.connect (client, ACE_INET_Addr (port, host_name)) == -1)
-    ACE_OS::t_error ((char *) host_name), ACE_OS::exit (1);
+    ACE_OS::t_error (ACE_TEXT_ALWAYS_CHAR (host_name)), ACE_OS::exit (1);
 
   if ((fd = ACE_OS::open (filename, O_RDONLY)) == -1)
     ACE_OS::perror (filename), ACE_OS::exit (1);

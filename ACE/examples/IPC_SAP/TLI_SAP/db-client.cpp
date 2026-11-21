@@ -25,7 +25,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_TLI_Connector con;
 
   if (con.connect (client, ACE_INET_Addr (port, host_name)) == -1)
-    ACE_OS::t_error ((char *) host_name), ACE_OS::exit (1);
+    ACE_OS::t_error (ACE_TEXT_ALWAYS_CHAR (host_name)), ACE_OS::exit (1);
 
   std::strcpy (buf, ACE_TEXT_ALWAYS_CHAR (emp_num));
   n = std::strlen (buf);
@@ -37,7 +37,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_OS::t_error ("client.recv error");
 
   if (std::strcmp (buf, "ERROR") == 0)
-    ACE_OS::printf ("Employee ID %s not in database\n", emp_num);
+    ACE_OS::printf ("Employee ID %s not in database\n",
+                    ACE_TEXT_ALWAYS_CHAR (emp_num));
   else
     ACE_OS::printf ("Employee name requested is: %s\n", buf);
 
