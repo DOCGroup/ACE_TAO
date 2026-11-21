@@ -6,6 +6,7 @@
 #include "tao/ORB_Core.h"
 #include <iostream>
 #include <fstream>
+#include <memory>
 
 MessengerServer::MessengerServer (CORBA::ORB_ptr orb)
   : orb_(CORBA::ORB::_duplicate(orb))
@@ -162,7 +163,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Register the servant with the RootPOA, obtain its object
     // reference, stringify it, and write it to a file.
     PortableServer::ObjectId_var const oid =
-      poa->activate_object (&messenger_servant);
+      poa->activate_object (std::addressof (messenger_servant));
     CORBA::Object_var const messenger_obj = poa->id_to_reference (oid.in ());
     CORBA::String_var const str = orb->object_to_string (messenger_obj.in ());
     std::ofstream ior_file (ACE_TEXT_ALWAYS_CHAR (options.ior_output_file.c_str ()));

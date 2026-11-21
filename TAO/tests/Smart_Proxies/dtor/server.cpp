@@ -94,7 +94,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Create a servant.
       Test_i servant (orb.in ());
 
-      PortableServer::ObjectId_var oid = root_poa->activate_object (&servant);
+      PortableServer::ObjectId_var oid = root_poa->activate_object (std::addressof (servant));
 
       obj = root_poa->id_to_reference (oid.in ());
 

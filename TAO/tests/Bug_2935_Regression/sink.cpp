@@ -78,7 +78,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // The POA borrows this stack servant until orb->run() returns.
       Sink_i sink (orb.in ());
       PortableServer::ObjectId_var const id =
-        root_poa->activate_object (&sink);
+        root_poa->activate_object (std::addressof (sink));
 
       CORBA::Object_var const servant_object = root_poa->id_to_reference (id.in ());
 

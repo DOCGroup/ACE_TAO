@@ -113,7 +113,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Write its stringified reference to stdout.
       PortableServer::ObjectId_var const id =
-        poa->activate_object (&time_servant);
+        poa->activate_object (std::addressof (time_servant));
 
       CORBA::Object_var const object = poa->id_to_reference (id.in ());
 

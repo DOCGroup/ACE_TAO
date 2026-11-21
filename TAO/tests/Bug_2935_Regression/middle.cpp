@@ -150,7 +150,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       /////////////////////////////////
       // Activate server side mechanism
       PortableServer::ObjectId_var const id =
-        root_poa->activate_object (&middle);
+        root_poa->activate_object (std::addressof (middle));
 
       CORBA::Object_var const servant_object = root_poa->id_to_reference (id.in ());
 

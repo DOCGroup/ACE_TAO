@@ -20,6 +20,8 @@
 #include "ace/Task.h"
 #include "ace/SString.h"
 
+#include <memory>
+
 // The following include file forces DIOP to be linked into the
 // executable and initialized for static builds.
 #include "tao/Strategies/advanced_resource.h"
@@ -112,7 +114,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       UDP_i udp_i (orb.in ());
 
       PortableServer::ObjectId_var const id =
-        root_poa->activate_object (&udp_i);
+        root_poa->activate_object (std::addressof (udp_i));
 
       CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 

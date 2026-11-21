@@ -13,6 +13,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_string.h"
 
+#include <memory>
+
 // The servant
 
 class Test_i : public POA_Test
@@ -113,7 +115,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       PortableServer::ObjectId_var id =
-        root_poa->activate_object (&servant);
+        root_poa->activate_object (std::addressof (servant));
 
       CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
 
