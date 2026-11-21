@@ -19,10 +19,10 @@ ACE_OS::accept (ACE_HANDLE handle,
                 const ACE_Accept_QoS_Params &qos_params)
 {
 # if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  ACE_SOCKCALL_RETURN (::WSAAccept ((ACE_SOCKET) handle,
+  ACE_SOCKCALL_RETURN (::WSAAccept (reinterpret_cast<ACE_SOCKET> (handle),
                                     addr,
-                                    (ACE_SOCKET_LEN *) addrlen,
-                                    (LPCONDITIONPROC) qos_params.qos_condition_callback (),
+                                    addrlen,
+                                    reinterpret_cast<LPCONDITIONPROC> (qos_params.qos_condition_callback ()),
                                     qos_params.callback_data ()),
                        ACE_HANDLE,
                        ACE_INVALID_HANDLE);
@@ -42,13 +42,13 @@ ACE_OS::connect (ACE_HANDLE handle,
 {
   ACE_OS_TRACE ("ACE_OS::connect");
 # if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  ACE_SOCKCALL_RETURN (::WSAConnect ((ACE_SOCKET) handle,
+  ACE_SOCKCALL_RETURN (::WSAConnect (reinterpret_cast<ACE_SOCKET> (handle),
                                      addr,
-                                     (ACE_SOCKET_LEN) addrlen,
-                                     (WSABUF *) qos_params.caller_data (),
-                                     (WSABUF *) qos_params.callee_data (),
-                                     (QOS *) qos_params.socket_qos (),
-                                     (QOS *) qos_params.group_socket_qos ()),
+                                     static_cast<ACE_SOCKET_LEN> (addrlen),
+                                     reinterpret_cast<WSABUF *> (qos_params.caller_data ()),
+                                     reinterpret_cast<WSABUF *> (qos_params.callee_data ()),
+                                     qos_params.socket_qos (),
+                                     qos_params.group_socket_qos ()),
                        int, -1);
 # else
   ACE_UNUSED_ARG (qos_params);
@@ -73,13 +73,13 @@ ACE_OS::join_leaf (ACE_HANDLE socket,
   qos.ReceivingFlowspec = *(qos_params.socket_qos ()->receiving_flowspec ());
   qos.ProviderSpecific = (WSABUF) qos_params.socket_qos ()->provider_specific ();
 
-  ACE_SOCKCALL_RETURN (::WSAJoinLeaf ((ACE_SOCKET) socket,
+  ACE_SOCKCALL_RETURN (::WSAJoinLeaf (reinterpret_cast<ACE_SOCKET> (socket),
                                       name,
                                       namelen,
-                                      (WSABUF *) qos_params.caller_data (),
-                                      (WSABUF *) qos_params.callee_data (),
+                                      reinterpret_cast<WSABUF *> (qos_params.caller_data ()),
+                                      reinterpret_cast<WSABUF *> (qos_params.callee_data ()),
                                       &qos,
-                                      (QOS *) qos_params.group_socket_qos (),
+                                      qos_params.group_socket_qos (),
                                       qos_params.flags ()),
                        ACE_HANDLE,
                        ACE_INVALID_HANDLE);
