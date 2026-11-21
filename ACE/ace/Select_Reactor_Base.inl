@@ -116,19 +116,9 @@ ACE_Event_Tuple::operator!= (const ACE_Event_Tuple &rhs) const
 ACE_INLINE
 ACE_Select_Reactor_Impl::ACE_Select_Reactor_Impl (bool ms)
   : handler_rep_ (*this)
-  , timer_queue_ (0)
-  , signal_handler_ (0)
-  , notify_handler_ (0)
-  , delete_timer_queue_ (false)
-  , delete_signal_handler_ (false)
-  , delete_notify_handler_ (false)
-  , initialized_ (false)
-  , restart_ (false)
   , requeue_position_ (-1) // Requeue at end of waiters by default.
   , owner_ (ACE_OS::NULL_thread)
-  , state_changed_ (false)
   , mask_signals_ (ms)
-  , supress_renew_ (0)
 {
 }
 #if defined (_MSC_VER)

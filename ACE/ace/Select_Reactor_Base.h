@@ -523,33 +523,33 @@ protected:
   ACE_Select_Reactor_Handle_Set ready_set_;
 
   /// Defined as a pointer to allow overriding by derived classes...
-  ACE_Timer_Queue *timer_queue_;
+  ACE_Timer_Queue *timer_queue_ {};
 
   /// Handle signals without requiring global/static variables.
-  ACE_Sig_Handler *signal_handler_;
+  ACE_Sig_Handler *signal_handler_ {};
 
   /// Callback object that unblocks the ACE_Select_Reactor if it's
   /// sleeping.
-  ACE_Reactor_Notify *notify_handler_;
+  ACE_Reactor_Notify *notify_handler_ {};
 
   /// Keeps track of whether we should delete the timer queue (if we
   /// didn't create it, then we don't delete it).
-  bool delete_timer_queue_;
+  bool delete_timer_queue_ {};
 
   /// Keeps track of whether we should delete the signal handler (if we
   /// didn't create it, then we don't delete it).
-  bool delete_signal_handler_;
+  bool delete_signal_handler_ {};
 
   /// Keeps track of whether we need to delete the notify handler (if
   /// we didn't create it, then we don't delete it).
-  bool delete_notify_handler_;
+  bool delete_notify_handler_ {};
 
   /// True if we've been initialized yet...
-  bool initialized_;
+  bool initialized_ {};
 
   /// Restart the <handle_events> event-loop method automatically when
   /// <select> is interrupted via <EINTR>.
-  bool restart_;
+  bool restart_ {};
 
   /**
    * Position that the main ACE_Select_Reactor thread is requeued in
@@ -569,7 +569,7 @@ protected:
    * whether we need to make another trip through the
    * <Select_Reactor>'s <wait_for_multiple_events> loop.
    */
-  bool state_changed_;
+  bool state_changed_ {};
 
   /**
    * If false then the Reactor will not mask the signals during the event
@@ -587,7 +587,7 @@ protected:
 private:
   /// Determine whether we should renew Select_Reactor's token after handling
   /// the notification message.
-  bool supress_renew_;
+  bool supress_renew_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
