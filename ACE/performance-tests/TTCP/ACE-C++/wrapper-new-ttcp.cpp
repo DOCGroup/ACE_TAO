@@ -162,7 +162,7 @@ char *outfmt (double b);
 void prep_timer ();
 double read_timer (char *str, int len);
 static void prusage (struct rusage const &r0, struct rusage const &r1,
-                     struct timeval const &e, struct timeval const &b, char *outp);
+                     struct timeval const &b, struct timeval const &e, char *outp);
 static void tvadd (struct timeval &tsum, struct timeval const &t0, struct timeval const &t1);
 static void tvsub (struct timeval &tdiff, struct timeval const &t1, struct timeval const &t0);
 static void psecs (long l, char *cp);
