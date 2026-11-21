@@ -94,7 +94,7 @@ protected:
   static constexpr int ALIGN_WORDB = 8;
 
   /// Internal identifier.
-  ACE_HANDLE internal_id_;
+  ACE_HANDLE internal_id_ {};
 
   /// Size of the mapped segment.
   size_t size_ {};
