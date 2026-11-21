@@ -319,7 +319,7 @@ public:
   {
     Processed_Static_Svc (const ACE_Static_Svc_Descriptor *);
     ~Processed_Static_Svc ();
-    ACE_TCHAR * name_;
+    ACE_TCHAR * name_ {};
     const ACE_Static_Svc_Descriptor *assd_;
     ACE_ALLOC_HOOK_DECLARE;
   };

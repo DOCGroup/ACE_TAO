@@ -131,8 +131,7 @@ ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard ()
 
 ACE_Service_Gestalt::Processed_Static_Svc::
 Processed_Static_Svc (const ACE_Static_Svc_Descriptor *assd)
-  :name_(nullptr),
-   assd_(assd)
+  : assd_ (assd)
 {
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_NORETURN (name_, static_cast<ACE_TCHAR*>(ACE_Allocator::instance()->malloc (sizeof(ACE_TCHAR) * (ACE_OS::strlen(assd->name_)+1))));
