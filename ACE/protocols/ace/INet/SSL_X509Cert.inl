@@ -21,6 +21,7 @@ namespace ACE
 
     ACE_INLINE
     SSL_X509Cert::SSL_X509Cert (const SSL_X509Cert& cert)
+      : ssl_cert_ (nullptr)
       {
         *this = cert;
       }
@@ -51,7 +52,12 @@ namespace ACE
     ACE_INLINE
     SSL_X509Cert& SSL_X509Cert::operator= (SSL_X509Cert const& ssl_cert)
       {
-        return (*this = ssl_cert.ssl_cert_);
+        if (this != std::addressof (ssl_cert))
+          {
+            *this = ssl_cert.ssl_cert_;
+          }
+
+        return *this;
       }
 
     ACE_INLINE

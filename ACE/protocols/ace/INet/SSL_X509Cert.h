@@ -11,6 +11,7 @@
 
 #include <openssl/x509.h>
 #include <openssl/crypto.h>
+#include <memory>
 #include "ace/INet/INet_SSL_Export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
