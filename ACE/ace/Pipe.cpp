@@ -63,14 +63,18 @@ ACE_Pipe::open (int buffer_size)
   ACE_OS::snprintf (addr.sun_path, sizeof addr.sun_path, "/tmp/ACE-Pipe-%d-%p",
                     ACE_OS::rand_r (&seed), this);
 
-  if (ACE_OS::bind (this->handles_[0], (sockaddr*) &addr, sizeof addr) == -1)
+  if (ACE_OS::bind (this->handles_[0],
+                    reinterpret_cast<sockaddr *> (&addr),
+                    sizeof addr) == -1)
     {
       this->close ();
       return -1;
     }
 
   if ((this->handles_[1] = ACE_OS::socket (AF_LOCAL, SOCK_DGRAM, 0)) == -1 ||
-      ACE_OS::connect (this->handles_[1], (sockaddr*) &addr, sizeof addr) == -1)
+      ACE_OS::connect (this->handles_[1],
+                       reinterpret_cast<sockaddr *> (&addr),
+                       sizeof addr) == -1)
     {
       ACE_OS::unlink (addr.sun_path);
       this->close ();
