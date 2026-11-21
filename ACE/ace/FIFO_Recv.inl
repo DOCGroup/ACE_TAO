@@ -8,7 +8,7 @@ ACE_INLINE ssize_t
 ACE_FIFO_Recv::recv (void *buf, size_t len)
 {
   ACE_TRACE ("ACE_FIFO_Recv::recv");
-  return ACE_OS::read (this->get_handle (), (char *) buf, len);
+  return ACE_OS::read (this->get_handle (), buf, len);
 }
 
 ACE_INLINE ssize_t
