@@ -1059,11 +1059,7 @@ ACE_WFMO_Reactor::work_pending (const ACE_Time_Value &)
 ACE_WFMO_Reactor::ACE_WFMO_Reactor (ACE_Sig_Handler *sh,
                                     ACE_Timer_Queue *tq,
                                     ACE_Reactor_Notify *notify)
-  : delete_signal_handler_ (false),
-    delete_timer_queue_ (false),
-    delete_handler_rep_ (false),
-    delete_notify_handler_ (false),
-    lock_adapter_ (lock_),
+  : lock_adapter_ (lock_),
     handler_rep_ (*this),
     // this event is initially signaled
     ok_to_wait_ (1),
@@ -1088,11 +1084,7 @@ ACE_WFMO_Reactor::ACE_WFMO_Reactor (size_t size,
                                     ACE_Sig_Handler *sh,
                                     ACE_Timer_Queue *tq,
                                     ACE_Reactor_Notify *notify)
-  : delete_signal_handler_ (false),
-    delete_timer_queue_ (false),
-    delete_handler_rep_ (false),
-    delete_notify_handler_ (false),
-    lock_adapter_ (lock_),
+  : lock_adapter_ (lock_),
     handler_rep_ (*this),
     // this event is initially signaled
     ok_to_wait_ (1),

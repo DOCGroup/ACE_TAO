@@ -1275,23 +1275,23 @@ protected:
 
   /// Keeps track of whether we should delete the signal handler (if we
   /// didn't create it, then we don't delete it).
-  bool delete_signal_handler_;
+  bool delete_signal_handler_ {};
 
   /// Defined as a pointer to allow overriding by derived classes...
   ACE_Timer_Queue *timer_queue_ {};
 
   /// Keeps track of whether we should delete the timer queue (if we
   /// didn't create it, then we don't delete it).
-  bool delete_timer_queue_;
+  bool delete_timer_queue_ {};
 
   /// Keeps track of whether we should delete the handler repository
-  bool delete_handler_rep_;
+  bool delete_handler_rep_ {};
 
   /// Used when <notify> is called.
   ACE_Reactor_Notify *notify_handler_ {};
 
   /// Keeps track of whether we should delete the notify handler.
-  bool delete_notify_handler_;
+  bool delete_notify_handler_ {};
 
   /**
    * Synchronization for the ACE_WFMO_Reactor.
