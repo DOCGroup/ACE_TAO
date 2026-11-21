@@ -28,7 +28,7 @@ class Cubit_i;
 class Cubit_i : public POA_Cubit
 {
 public:
-  Cubit_i (CORBA::ORB_ptr orb);
+  explicit Cubit_i (CORBA::ORB_ptr orb);
 
   ~Cubit_i () override;
 
@@ -104,7 +104,7 @@ protected:
 class Cubit_Factory_i: public POA_Cubit_Factory
 {
 public:
-  Cubit_Factory_i (CORBA::ORB_ptr orb);
+  explicit Cubit_Factory_i (CORBA::ORB_ptr orb);
 
   ~Cubit_Factory_i () override;
 

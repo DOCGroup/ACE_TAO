@@ -17,7 +17,7 @@ class Roundtrip
   : public virtual PortableServer::DynamicImplementation
 {
 public:
-  Roundtrip (CORBA::ORB_ptr orb);
+  explicit Roundtrip (CORBA::ORB_ptr orb);
 
   /// The DSI methods
   virtual void invoke (CORBA::ServerRequest_ptr request);

@@ -22,7 +22,7 @@
 class Test_i : public POA_Test
 {
 public:
-  Test_i (CORBA::ORB_ptr orb);
+  explicit Test_i (CORBA::ORB_ptr orb);
 
   /// @name Test methods
   /// @{

@@ -15,7 +15,7 @@ class Roundtrip
   : public virtual POA_Test::Roundtrip
 {
 public:
-  Roundtrip (CORBA::ORB_ptr orb);
+  explicit Roundtrip (CORBA::ORB_ptr orb);
 
   /// The skeleton methods
   virtual Test::Timestamp test_method (Test::Timestamp send_time);

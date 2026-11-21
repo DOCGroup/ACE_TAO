@@ -14,7 +14,7 @@ class Memory_Growth
   : public virtual POA_Test::Memory_Growth
 {
 public:
-  Memory_Growth (CORBA::ORB_ptr orb);
+  explicit Memory_Growth (CORBA::ORB_ptr orb);
 
   /// The skeleton methods
   virtual void send_objref (const Test::PayLoad &p);

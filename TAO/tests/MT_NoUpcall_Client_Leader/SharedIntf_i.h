@@ -10,7 +10,7 @@
 class Test_Idl_SharedIntf_i : public virtual POA_Test_Idl::SharedIntf
 {
 public:
-  Test_Idl_SharedIntf_i (CORBA::ORB_ptr orb);
+  explicit Test_Idl_SharedIntf_i (CORBA::ORB_ptr orb);
   ~Test_Idl_SharedIntf_i () override = default;
 
   Test_Idl_SharedIntf_i (Test_Idl_SharedIntf_i const&) = delete;

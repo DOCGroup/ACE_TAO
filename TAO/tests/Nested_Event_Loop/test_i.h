@@ -3,7 +3,7 @@
 class server_i : public POA_server
 {
 public:
-  server_i (CORBA::ORB_ptr orb);
+  explicit server_i (CORBA::ORB_ptr orb);
 
   void loop (client_ptr remote_partner,
              CORBA::ULong event_loop_depth,

@@ -18,7 +18,7 @@
 class AMI_Test_i : public POA_A::AMI_Test
 {
 public:
-  AMI_Test_i (CORBA::ORB_ptr orb);
+  explicit AMI_Test_i (CORBA::ORB_ptr orb);
 
   /// @name AMI_Test methods
   /// @{

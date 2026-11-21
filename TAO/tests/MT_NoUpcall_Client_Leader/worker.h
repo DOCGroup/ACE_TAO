@@ -9,7 +9,7 @@
 class Worker : public ACE_Task_Base
 {
 public:
-  Worker (CORBA::ORB_ptr orb);
+  explicit Worker (CORBA::ORB_ptr orb);
 
   Worker (Worker const&) = delete;
   Worker (Worker&&) = delete;

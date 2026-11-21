@@ -28,7 +28,7 @@ class LCD_Display_imp : public QObject,
    */
   Q_OBJECT
 public:
-  LCD_Display_imp (CORBA::ORB_ptr);
+  explicit LCD_Display_imp (CORBA::ORB_ptr);
 
   void shutdown ();
 

@@ -15,7 +15,7 @@ class Hello
   : public virtual POA_Test::Hello
 {
 public:
-  Hello (CORBA::ORB_ptr orb);
+  explicit Hello (CORBA::ORB_ptr orb);
 
   /// The skeleton methods
   char* get_string () override;

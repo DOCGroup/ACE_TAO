@@ -13,7 +13,7 @@
 class Messenger_i : public virtual POA_Messenger
 {
 public:
-  Messenger_i (CORBA::ORB_var orb);
+  explicit Messenger_i (CORBA::ORB_var orb);
 
   Messenger_i (Messenger_i const &) = delete;
   Messenger_i (Messenger_i &&) = delete;

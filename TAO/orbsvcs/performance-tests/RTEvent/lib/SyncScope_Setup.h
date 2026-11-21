@@ -22,7 +22,7 @@
 class TAO_RTEC_Perf_Export SyncScope_Setup
 {
 public:
-  SyncScope_Setup (CORBA::ORB_ptr orb);
+  explicit SyncScope_Setup (CORBA::ORB_ptr orb);
 
   SyncScope_Setup (CORBA::ORB_ptr orb,
                    Messaging::SyncScope value);

@@ -10,7 +10,7 @@ class Hello
   : public virtual POA_Test::Hello
 {
 public:
-  Hello (CORBA::ORB_ptr orb);
+  explicit Hello (CORBA::ORB_ptr orb);
 
   Hello (Hello const &) = delete;
   Hello (Hello &&) = delete;

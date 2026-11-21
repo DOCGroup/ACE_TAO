@@ -32,7 +32,7 @@
 class UDP_i: public POA_UDP
 {
 public:
-  UDP_i (CORBA::ORB_ptr o);
+  explicit UDP_i (CORBA::ORB_ptr o);
 
   ~UDP_i () override = default;
   UDP_i (UDP_i const &) = delete;

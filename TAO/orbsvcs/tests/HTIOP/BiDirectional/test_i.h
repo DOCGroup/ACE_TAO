@@ -23,7 +23,7 @@
 class Callback_i : public POA_Callback
 {
 public:
-  Callback_i (CORBA::ORB_ptr orb);
+  explicit Callback_i (CORBA::ORB_ptr orb);
 
   /// Safe way to shutdown
   void shutdown () override;
