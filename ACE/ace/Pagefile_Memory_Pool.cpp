@@ -91,7 +91,6 @@ ACE_Pagefile_Memory_Pool::acquire (size_t nbytes,
 {
   rounded_bytes = round_to_page_size (nbytes);
   void *result {};
-  int first_time = 0;
 
   // Check local_cb_ for consistency.  Remap, if extra space is too
   // small and/or we didn't map the whole shared memory section
@@ -105,6 +104,7 @@ ACE_Pagefile_Memory_Pool::acquire (size_t nbytes,
           append = rounded_bytes - this->shared_cb_->sh_.free_size_;
         }
 
+      int first_time = 0;
       if (this->map (first_time, append) < 0)
         {
           return result;

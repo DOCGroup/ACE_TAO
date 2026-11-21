@@ -341,12 +341,11 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::push_module (ACE_Module<ACE_SYNCH_USE, T
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::push_module");
   ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *nt_reader = new_top->reader ();
   ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *nt_writer = new_top->writer ();
-  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *ct_reader {};
   ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *ct_writer {};
 
   if (current_top)
     {
-      ct_reader = current_top->reader ();
+      ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *ct_reader = current_top->reader ();
       ct_writer = current_top->writer ();
       ct_reader->next (nt_reader);
     }

@@ -737,11 +737,10 @@ ACE_Registry::Naming_Context::list (Binding_List &list)
   // Start iterations from the objects
   iterator.current_enumeration (iterator.object_iteration_);
 
-  long result = 0;
   while (true)
     {
       ACE_Registry::Binding binding;
-      result = iterator.next_one (binding);
+      long const result = iterator.next_one (binding);
       if (result == 0)
         {
           list.insert (binding);

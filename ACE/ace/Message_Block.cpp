@@ -899,13 +899,11 @@ ACE_Message_Block::release ()
   // This flag is set to 1 when we have to destroy the data_block
   int destroy_dblock {};
 
-  ACE_Lock *lock {};
-
   // Do we have a valid data block
   if (this->data_block ())
     {
       // Grab the lock that belongs to my data block
-      lock = this->data_block ()->locking_strategy ();
+      ACE_Lock *lock = this->data_block ()->locking_strategy ();
 
       // if we have a lock
       if (lock != nullptr)

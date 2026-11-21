@@ -498,7 +498,6 @@ TAO_DynStruct_i::to_any ()
       out_cdr << this->type_->id ();
     }
 
-  TAO::Any_Impl *field_impl {};
   TAO::Unknown_IDL_Type *field_unk {};
   TAO_InputCDR field_in_cdr (static_cast<ACE_Message_Block *> (nullptr));
 
@@ -512,7 +511,7 @@ TAO_DynStruct_i::to_any ()
         this->da_members_[i]->to_any ();
 
       TAO_OutputCDR field_out_cdr;
-      field_impl = field_any->impl ();
+      TAO::Any_Impl *field_impl = field_any->impl ();
 
       if (field_impl->encoded ())
         {

@@ -111,11 +111,10 @@ TAO_DynEnum_i::set_as_string (char const* value_as_string)
   CORBA::ULong const count = ct.in ()->member_count ();
 
   CORBA::ULong i {};
-  char const* temp {};
 
   for (; i < count; ++i)
     {
-      temp = ct.in ()->member_name (i);
+      char const* temp = ct.in ()->member_name (i);
 
       if (!std::strcmp (value_as_string, temp))
         {

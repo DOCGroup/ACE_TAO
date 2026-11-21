@@ -606,7 +606,6 @@ ACE_NT_Service::wait_for_service_state (DWORD desired_state,
   DWORD last_state = 0;
   DWORD last_check_point = 0;
   int first_time = 1;
-  int service_ok;
 
   ACE_Time_Value time_out = ACE_OS::gettimeofday ();
   if (wait_time != 0)
@@ -617,8 +616,8 @@ ACE_NT_Service::wait_for_service_state (DWORD desired_state,
   // Poll until the service reaches the desired state.
   for (;;)
     {
-      service_ok = 0 != QueryServiceStatus (this->svc_sc_handle_,
-                                            &this->svc_status_);
+      int service_ok = 0 != QueryServiceStatus (this->svc_sc_handle_,
+                                                &this->svc_status_);
 
       // If we cannot query the service, we are done.
       if (!service_ok)

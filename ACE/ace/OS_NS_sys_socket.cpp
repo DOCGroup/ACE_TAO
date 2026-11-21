@@ -149,7 +149,6 @@ ACE_OS::sendv_partial_i (ACE_HANDLE handle,
   // with send_partial_i
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   DWORD bytes_sent = 0;
-  int result = 1;
   int simulated_n = n;
   ACE_UINT64 buffer_size = 0;
   ACE_Array<iovec> iovec_array(simulated_n);
@@ -181,13 +180,13 @@ ACE_OS::sendv_partial_i (ACE_HANDLE handle,
 
       simulated_n = i + 1;
 
-      result = ::WSASend ((SOCKET) handle,
-                          (WSABUF *) &(iovec_array[0]),
-                          simulated_n,
-                          &bytes_sent,
-                          0,
-                          0,
-                          0);
+      int const result = ::WSASend ((SOCKET) handle,
+                                    (WSABUF *) &(iovec_array[0]),
+                                    simulated_n,
+                                    &bytes_sent,
+                                    0,
+                                    0,
+                                    0);
       if (result != SOCKET_ERROR)
         {
           break;
