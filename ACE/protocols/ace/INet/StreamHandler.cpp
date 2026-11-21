@@ -189,7 +189,7 @@ namespace ACE
         INET_TRACE ("ACE_IOS_StreamHandler::read_from_stream");
 
         size_t recv_char_count = 0;
-        char* wptr = (char*)buf;
+        char* wptr = static_cast<char *> (buf);
         size_t char_length = length * char_size;
         ACE_Time_Value max_wait_time = this->sync_opt_.timeout ();
         int result = 0;
@@ -465,7 +465,7 @@ namespace ACE
         ACE_Message_Block *raw_mb {};
         ACE_NEW_RETURN (raw_mb, ACE_Message_Block (datasz), -1);
         ACE_Message_Block_Unique_Ptr mb (raw_mb);
-        mb->copy ((const char*)buf, datasz);
+        mb->copy (static_cast<char const *> (buf), datasz);
         ACE_Time_Value nowait (ACE_OS::gettimeofday ());
         if (this->putq (mb.get (), &nowait) == -1)
           {

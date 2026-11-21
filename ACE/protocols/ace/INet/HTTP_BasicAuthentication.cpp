@@ -34,9 +34,10 @@ namespace ACE
           if (scheme == SCHEME)
             {
               size_t out_len = 0;
-              std::unique_ptr<ACE_Byte[]> safe_buf (ACE_Base64::decode ((const ACE_Byte*)info.c_str (),
-                                                                         std::addressof (out_len)));
-              ACE_CString credentials ((char*)safe_buf.get (), out_len);
+              std::unique_ptr<ACE_Byte[]> safe_buf (ACE_Base64::decode (
+                reinterpret_cast<ACE_Byte const *> (info.c_str ()),
+                std::addressof (out_len)));
+              ACE_CString credentials (reinterpret_cast<char *> (safe_buf.get ()), out_len);
               ACE_CString::size_type pos = credentials.find (':');
               if (pos != ACE_CString::npos)
                 {
