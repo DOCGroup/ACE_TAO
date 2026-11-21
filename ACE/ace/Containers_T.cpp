@@ -1403,7 +1403,6 @@ ACE_Bounded_Set<T>::remove (const T &item)
             {
               while (i > 0 && this->search_structure_[--i].is_free_)
                 {
-                  continue;
                 }
 
               if (i == 0 && this->search_structure_[i].is_free_)
@@ -1451,7 +1450,6 @@ ACE_Bounded_Set_Iterator<T>::advance ()
          && this->s_.search_structure_[this->next_].is_free_;
        ++this->next_)
     {
-      continue;
     }
 
   return static_cast<size_t> (this->next_) < this->s_.cur_size_;

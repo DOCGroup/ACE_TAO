@@ -61,7 +61,6 @@ ACE_OS::strecpy (char *s, const char *t)
 
   while ((*dscan++ = *sscan++) != '\0')
     {
-      continue;
     }
 
   return dscan;
@@ -76,7 +75,6 @@ ACE_OS::strecpy (wchar_t *s, const wchar_t *t)
 
   while ((*dscan++ = *sscan++) != ACE_TEXT_WIDE ('\0'))
     {
-      continue;
     }
 
   return dscan;

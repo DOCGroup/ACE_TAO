@@ -39,7 +39,6 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
   int argc;
   for (argc = 0; argv[argc] != nullptr; ++argc)
     {
-      continue;
     }
 
   return argv_to_string (argc,
@@ -850,7 +849,6 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
               for (++cp; *cp != ACE_TEXT ('\0')
                    && (*cp != quote || cp[-1] == ACE_TEXT ('\\')); ++cp)
                 {
-                  continue;
                 }
 
               // '\0' implies unmatched quote..

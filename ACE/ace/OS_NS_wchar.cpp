@@ -169,7 +169,8 @@ ACE_OS::wcslen_emulation (const ACE_WCHAR_T *string)
   const ACE_WCHAR_T *s {};
 
   for (s = string; *s; ++s)
-    continue;
+    {
+    }
 
   return s - string;
 }
