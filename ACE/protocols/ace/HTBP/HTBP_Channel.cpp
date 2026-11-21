@@ -452,7 +452,7 @@ ACE::HTBP::Channel::recvv (iovec iov[],
   if (this->leftovers_.length())
     {
       int ndx = 0;
-      std::unique_ptr<iovec[]> iov2 (new iovec[iovcnt]);
+      std::unique_ptr<iovec[]> iov2 = std::make_unique<iovec[]> (iovcnt);
       for (int i = 0; i < iovcnt; ++i)
         {
           size_t n = (std::min) ((size_t) iov[i].iov_len ,

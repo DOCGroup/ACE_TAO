@@ -91,7 +91,7 @@ ssize_t
 ACE::HTBP::Inside_Squid_Filter::send_data_header (ssize_t data_len,
                                                 ACE::HTBP::Channel *ch)
 {
-  std::unique_ptr<char[]> buffer (new char[BUFSIZ]);
+  std::unique_ptr<char[]> buffer = std::make_unique<char[]> (BUFSIZ);
   ssize_t result = -1;
   if (this->make_request_header (ch,"POST ",buffer.get (),BUFSIZ) != -1)
     {
@@ -174,7 +174,7 @@ ACE::HTBP::Inside_Squid_Filter::recv_data_trailer (ACE::HTBP::Channel *ch)
 int
 ACE::HTBP::Inside_Squid_Filter::send_ack (ACE::HTBP::Channel *ch)
 {
-  std::unique_ptr<char[]> buffer (new char[BUFSIZ]);
+  std::unique_ptr<char[]> buffer = std::make_unique<char[]> (BUFSIZ);
   ssize_t result = -1;
   if (ch->state() == ACE::HTBP::Channel::Ack_Sent)
     {
