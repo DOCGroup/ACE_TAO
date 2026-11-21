@@ -2304,8 +2304,7 @@ ACE_WFMO_Reactor_Notify::close ()
 }
 
 ACE_WFMO_Reactor_Notify::ACE_WFMO_Reactor_Notify (size_t max_notifies)
-  : timer_queue_ (0),
-    message_queue_ (max_notifies * sizeof (ACE_Notification_Buffer),
+  : message_queue_ (max_notifies * sizeof (ACE_Notification_Buffer),
                     max_notifies * sizeof (ACE_Notification_Buffer)),
     max_notify_iterations_ (-1)
 {

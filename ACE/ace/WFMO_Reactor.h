@@ -572,7 +572,7 @@ public:
 
 private:
   /// Pointer to the wfmo_reactor's timer queue.
-  ACE_Timer_Queue *timer_queue_;
+  ACE_Timer_Queue *timer_queue_ {};
 
   /**
    * Called when the notification event waited on by
