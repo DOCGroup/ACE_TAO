@@ -243,7 +243,8 @@ ACE_Registry::Naming_Context::bind (const ACE_TString &name,
                                         name.c_str (),
                                         0,
                                         object.type (),
-                                        (const BYTE *) object.data (),
+                                        static_cast<BYTE const *> (
+                                          object.data ()),
                                         object.size ());
   ACE_REGISTRY_CALL_RETURN (result);
 }
@@ -296,7 +297,7 @@ ACE_Registry::Naming_Context::resolve (const ACE_TString &name,
                                           name.c_str (),
                                           0,
                                           &type,
-                                          (BYTE *)data,
+                                          static_cast<BYTE *> (data),
                                           &size);
   if (result == ERROR_SUCCESS)
     {
