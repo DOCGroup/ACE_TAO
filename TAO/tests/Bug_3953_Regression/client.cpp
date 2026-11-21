@@ -2,6 +2,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
+#include <memory>
 #include <string>
 
 static std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://test.ior")};
@@ -137,7 +138,7 @@ ACE_TMAIN (int argc,
                                server.in ());
 
       PortableServer::ObjectId_var const id =
-        root_poa->activate_object (&client_servant);
+        root_poa->activate_object (std::addressof (client_servant));
 
       CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 

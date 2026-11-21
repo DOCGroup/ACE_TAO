@@ -9,6 +9,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ami_test_i.h"
 
+#include <memory>
+
 #include <atomic>
 #include <string>
   struct Client_Options
@@ -261,7 +263,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Let the client perform the test in a separate thread
       state.replies.store (options.thread_count * options.iterations);
       Handler handler (state, options.debug);
-      PortableServer::ObjectId_var const id = root_poa->activate_object (&handler);
+      PortableServer::ObjectId_var const id =
+        root_poa->activate_object (std::addressof (handler));
 
       CORBA::Object_var const hnd_object = root_poa->id_to_reference (id.in ());
 

@@ -69,7 +69,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
 
       Publisher_impl publisher (orb.in ());
-      PortableServer::ObjectId_var const id = root_poa->activate_object (&publisher);
+      PortableServer::ObjectId_var const id =
+        root_poa->activate_object (std::addressof (publisher));
 
       CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 

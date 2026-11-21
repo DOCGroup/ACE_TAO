@@ -3,6 +3,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
+#include <memory>
+
 int
 parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
 {
@@ -74,7 +76,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Subscriber_impl subscriber (orb.in ());
       PortableServer::ObjectId_var const id =
-        root_poa->activate_object (&subscriber);
+        root_poa->activate_object (std::addressof (subscriber));
 
       CORBA::Object_var object = root_poa->id_to_reference (id.in ());
 
