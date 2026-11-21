@@ -42,8 +42,8 @@ public:
   void _dispatch (TAO_ServerRequest &request,
                   TAO::Portable_Server::Servant_Upcall *context) override;
 
-  // we need this because it is a pure virtual method in
-  // its parent class
+  /// we need this because it is a pure virtual method in
+  /// its parent class
   void invoke (CORBA::ServerRequest_ptr request) override;
   void invoke (CORBA::ServerRequest_ptr request,
                TAO_AMH_DSI_Response_Handler_ptr rh);

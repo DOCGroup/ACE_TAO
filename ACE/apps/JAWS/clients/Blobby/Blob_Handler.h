@@ -77,9 +77,9 @@ protected:
   int bytecount_ {};
   enum
   {
+    /// The handler assumes that the first 2048 bytes of a server response
+    /// contains the header
     MAX_HEADER_SIZE = 2048
-    // The handler assumes that the first 2048 bytes of a server response
-    // contains the header
   };
 };
 

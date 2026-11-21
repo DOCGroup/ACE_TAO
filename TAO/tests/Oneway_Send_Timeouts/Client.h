@@ -45,8 +45,8 @@ class Client
   Test_var test_obj_server_timeout_;
   Test_var test_obj_target_timeout_;
 
-  // flood up connection for 'tv' time.
-  //  if tv is 0, remember to unsleep server.
+  /// flood up connection for 'tv' time.
+  ///  if tv is 0, remember to unsleep server.
   bool flood_connection (ACE_Time_Value& tv);
   bool unplug_transport ();
   bool test_oneway_timeout (bool flood);
