@@ -226,7 +226,7 @@ ACE_Message_Queue_NT::dump () const
               ACE_TEXT ("cur_bytes = %B\n")
               ACE_TEXT ("cur_length = %B\n")
               ACE_TEXT ("cur_count = %B\n")
-              ACE_TEXT ("completion_port_ = %@\n"),
+              ACE_TEXT ("completion_port_ = %H\n"),
               static_cast<unsigned int> (this->max_cthrs_),
               static_cast<unsigned int> (this->cur_thrs_),
               this->cur_bytes_,

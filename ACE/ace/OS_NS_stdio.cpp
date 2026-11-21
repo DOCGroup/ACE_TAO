@@ -61,7 +61,7 @@ ace_flock_t::dump () const
 
 # if 0
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("handle_ = %u"), this->handle_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("handle_ = %H"), this->handle_));
 #   if defined (ACE_WIN32)
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nInternal = %d"),
               this->overlapped_.Internal));
