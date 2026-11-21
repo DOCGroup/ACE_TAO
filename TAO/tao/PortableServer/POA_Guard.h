@@ -34,7 +34,7 @@ namespace TAO
     class TAO_PortableServer_Export POA_Guard
     {
     public:
-      POA_Guard (::TAO_Root_POA &poa, bool check_for_destruction = true);
+      explicit POA_Guard (::TAO_Root_POA &poa, bool check_for_destruction = true);
 
       POA_Guard (POA_Guard const &) = delete;
       POA_Guard &operator= (POA_Guard const &) = delete;

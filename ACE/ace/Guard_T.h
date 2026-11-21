@@ -64,7 +64,7 @@ template <class ACE_LOCK>
 class ACE_Guard
 {
 public:
-  ACE_Guard (ACE_LOCK &l);
+  explicit ACE_Guard (ACE_LOCK &l);
 
   /// Implicitly and automatically acquire (or try to acquire) the
   /// lock.  If @a block is non-0 then acquire() the ACE_LOCK, else
@@ -146,7 +146,7 @@ class ACE_Write_Guard : public ACE_Guard<ACE_LOCK>
 {
 public:
   /// Implicitly and automatically acquire a write lock.
-  ACE_Write_Guard (ACE_LOCK &m);
+  explicit ACE_Write_Guard (ACE_LOCK &m);
 
   /// Implicitly and automatically acquire (or try to acquire) a write
   /// lock.
@@ -252,7 +252,7 @@ class ACE_TSS_Guard
 {
 public:
   /// Implicitly and automatically acquire the thread-specific lock.
-  ACE_TSS_Guard (ACE_LOCK &lock, bool block = true);
+  explicit ACE_TSS_Guard (ACE_LOCK &lock, bool block = true);
 
   /// Implicitly release the thread-specific lock.
   ~ACE_TSS_Guard ();
@@ -321,7 +321,7 @@ class ACE_TSS_Write_Guard : public ACE_TSS_Guard<ACE_LOCK>
 {
 public:
   /// Implicitly and automatically acquire the thread-specific write lock.
-  ACE_TSS_Write_Guard (ACE_LOCK &lock, bool block = true);
+  explicit ACE_TSS_Write_Guard (ACE_LOCK &lock, bool block = true);
 
   /// @name Lock operations
   /// @{
@@ -369,7 +369,7 @@ class ACE_TSS_Read_Guard : public ACE_TSS_Guard<ACE_LOCK>
 {
 public:
   /// Implicitly and automatically acquire the thread-specific read lock.
-  ACE_TSS_Read_Guard (ACE_LOCK &lock, bool block = true);
+  explicit ACE_TSS_Read_Guard (ACE_LOCK &lock, bool block = true);
 
   /// @name Lock operations
   /// @{

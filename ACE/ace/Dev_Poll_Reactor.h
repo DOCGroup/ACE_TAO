@@ -1169,7 +1169,7 @@ public:
    * independently of this guard, for example, on a notify handler since
    * the reference count is incremented when the notify is queued.
    */
-  ACE_Dev_Poll_Handler_Guard (ACE_Event_Handler *eh, bool do_incr = true);
+  explicit ACE_Dev_Poll_Handler_Guard (ACE_Event_Handler *eh, bool do_incr = true);
 
   /**
    * The destructor decrements the reference count on the event
