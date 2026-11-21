@@ -3,7 +3,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE ACE_Notification_Queue_Node::
 ACE_Notification_Queue_Node()
   : ACE_Intrusive_List_Node<ACE_Notification_Queue_Node>()
-  , contents_ (nullptr, ACE_Event_Handler::NULL_MASK)
 {
 }
 

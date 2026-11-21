@@ -63,7 +63,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_Notification_Buffer contents_;
+  ACE_Notification_Buffer contents_ {nullptr, ACE_Event_Handler::NULL_MASK};
 };
 
 /**
