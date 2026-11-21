@@ -807,21 +807,21 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 #   define ACE_MEM_POOL _ACE_MEM_POOL
 #   define ACE_MEM_POOL_OPTIONS typename _ACE_MEM_POOL::OPTIONS
 
-// @deprecated These macros are not longer used in ACE_Svc_Handler.
+/// @deprecated These macros are no longer used in ACE_Svc_Handler.
 // Handle ACE_Svc_Handler
 #   define ACE_PEER_STREAM_1 typename _ACE_PEER_STREAM
 #   define ACE_PEER_STREAM_2 _ACE_PEER_STREAM
 #   define ACE_PEER_STREAM _ACE_PEER_STREAM
 #   define ACE_PEER_STREAM_ADDR typename _ACE_PEER_STREAM::PEER_ADDR
 
-// @deprecated These macros are not longer used in ACE_Acceptor.
+/// @deprecated These macros are no longer used in ACE_Acceptor.
 // Handle ACE_Acceptor
 #   define ACE_PEER_ACCEPTOR_1 typename _ACE_PEER_ACCEPTOR
 #   define ACE_PEER_ACCEPTOR_2 _ACE_PEER_ACCEPTOR
 #   define ACE_PEER_ACCEPTOR _ACE_PEER_ACCEPTOR
 #   define ACE_PEER_ACCEPTOR_ADDR typename _ACE_PEER_ACCEPTOR::PEER_ADDR
 
-// @deprecated These macros are not longer used in ACE_Connector.
+/// @deprecated These macros are no longer used in ACE_Connector.
 // Handle ACE_Connector
 #   define ACE_PEER_CONNECTOR_1 typename _ACE_PEER_CONNECTOR
 #   define ACE_PEER_CONNECTOR_2 _ACE_PEER_CONNECTOR
