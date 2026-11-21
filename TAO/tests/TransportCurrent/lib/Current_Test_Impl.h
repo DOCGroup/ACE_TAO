@@ -49,7 +49,7 @@ public:
   /// Shutdown the ORB.
   void shutdown () override;
 
-  // A self-test for coherency
+  /// A self-test for coherency
   ::CORBA::Long self_test () override;
 
 public:
