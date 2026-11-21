@@ -18,12 +18,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe_Ex (u_long size)
-  : timeprobes_ (0),
-    lock_ (),
-    max_size_ (size),
-    current_size_ (0),
-    report_buffer_full_ (0),
-    allocator_ (0)
+  : lock_ (),
+    max_size_ (size)
 {
   ACE_timeprobe_t *temp;
   //FUZZ: disable check_for_lack_ACE_OS
@@ -40,11 +36,8 @@ template <class ACE_LOCK, class ALLOCATOR>
 ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::
 ACE_Timeprobe_Ex (ALLOCATOR *allocator,
                u_long size)
-  : timeprobes_ (0),
-    lock_ (),
+  : lock_ (),
     max_size_ (size),
-    current_size_ (0),
-    report_buffer_full_ (0),
     allocator_ (allocator)
 {
   ACE_timeprobe_t *temp {};

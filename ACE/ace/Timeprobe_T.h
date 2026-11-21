@@ -141,25 +141,25 @@ protected:
   EVENT_DESCRIPTIONS sorted_event_descriptions_;
 
   /// Time probe slots
-  ACE_timeprobe_t *timeprobes_;
+  ACE_timeprobe_t *timeprobes_ {};
 
   /// Synchronization variable.
   ACE_LOCK lock_;
 
   /// Max size of timestamp table
-  u_long max_size_;
+  u_long max_size_ {};
 
   /// Current size of timestamp table
-  u_long current_size_;
+  u_long current_size_ {};
 
   /// Flag indicating the report buffer has filled up, and is now
   /// acting as a ring-buffer using modulus arithmetic: this saves the
   /// max_size_ most recent time stamps and loses earlier ones until
   /// drained.
-  u_short report_buffer_full_;
+  u_short report_buffer_full_ {};
 
 private:
-   ALLOCATOR *   allocator_;
+   ALLOCATOR *   allocator_ {};
 };
 
 // template <class ACE_LOCK>
