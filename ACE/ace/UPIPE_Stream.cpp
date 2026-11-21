@@ -126,7 +126,7 @@ ACE_UPIPE_Stream::recv (char *buffer,
       if (this->mb_last_ != nullptr)
         {
           // We have remaining data in our last read Message_Buffer.
-          size_t this_len = this->mb_last_->length ();
+          size_t const this_len = this->mb_last_->length ();
           if (this_len < n)
             {
               // The remaining data is not enough.

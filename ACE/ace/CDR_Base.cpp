@@ -516,7 +516,7 @@ ACE_CDR::grow (ACE_Message_Block *mb, size_t minsize)
   // Do the equivalent of ACE_CDR::mb_align() here to avoid having
   // to allocate an ACE_Message_Block on the stack thereby avoiding
   // the manipulation of the data blocks reference count
-  size_t mb_len = mb->length ();
+  size_t const mb_len = mb->length ();
   char *start = ACE_ptr_align_binary (db->base (),
                                       ACE_CDR::MAX_ALIGNMENT);
 

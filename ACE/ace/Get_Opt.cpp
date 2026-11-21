@@ -166,7 +166,7 @@ ACE_Get_Opt::~ACE_Get_Opt ()
   ACE_TRACE ("ACE_Get_Opt::~ACE_Get_Opt");
 
   size_t i {};
-  size_t size = this->long_opts_.size ();
+  size_t const size = this->long_opts_.size ();
   ACE_Get_Opt_Long_Option *option {};
   for (i = 0; i < size; ++i)
     {
@@ -264,7 +264,7 @@ ACE_Get_Opt::long_option_i ()
   // set last_option_ to nextchar_, up to the '='.
   this->last_option (ACE_TString (this->nextchar_, len));
 
-  size_t size = this->long_opts_.size ();
+  size_t const size = this->long_opts_.size ();
   u_int option_index {};
   for (; option_index < size; ++option_index)
     {
@@ -607,7 +607,7 @@ ACE_Get_Opt::long_option (ACE_TCHAR const *name,
   std::unique_ptr<ACE_Get_Opt_Long_Option> option (new_option);
 
   // Add to array
-  size_t size = this->long_opts_.size ();
+  size_t const size = this->long_opts_.size ();
   if (this->long_opts_.size (size + 1) != 0
       || this->long_opts_.set (option.get (), size) != 0)
     {
@@ -666,7 +666,7 @@ ACE_Get_Opt::dump () const
               this->ordering_));
 
   // now loop through the
-  size_t size = this->long_opts_.size ();
+  size_t const size = this->long_opts_.size ();
   for (u_int i = 0; i < size ; ++i)
     {
       ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")
