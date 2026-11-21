@@ -119,7 +119,7 @@ template<ACE_SYNCH_DECL>
 class Log_Message_Receiver_Impl
 {
 public:
-  // Methods for handling reference count and instance lifetime
+  /// Methods for handling reference count and instance lifetime
   static Log_Message_Receiver_Impl *create ();
   static Log_Message_Receiver_Impl *attach (Log_Message_Receiver_Impl<ACE_SYNCH_USE> *body);
   static void detach (Log_Message_Receiver_Impl<ACE_SYNCH_USE> *body);

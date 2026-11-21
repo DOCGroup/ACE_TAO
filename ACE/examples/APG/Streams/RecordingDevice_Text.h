@@ -1,7 +1,5 @@
 /* -*- C++ -*- */
-/*
- * A RecordingDevice that listens to a socket and collects text.
- */
+/// A RecordingDevice that listens to a socket and collects text.
 
 #ifndef RECORDING_DEVICE_TEXT_H
 #define RECORDING_DEVICE_TEXT_H
@@ -34,7 +32,7 @@ public:
 
   // RecordingDevice interface
 
-  // Open a listening socket on the port specified by argv.
+  /// Open a listening socket on the port specified by argv.
   int init (int argc, ACE_TCHAR *argv[]) override;
 
   ACE_Event_Handler *get_handler () const override;

@@ -21,7 +21,7 @@ protected:
   ACE_SOCK_Stream logging_peer_;
 
 public:
-  // Initialization and termination methods.
+  /// Initialization and termination methods.
   explicit Logging_Handler (ACE_HANDLE handle)
     : log_file_ {}
   {

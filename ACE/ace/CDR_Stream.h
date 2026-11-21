@@ -546,8 +546,8 @@ public:
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 
 private:
-  // Find the message block in the chain of message blocks
-  // that the provide location locates.
+  /// Find the message block in the chain of message blocks
+  /// that the provide location locates.
   ACE_Message_Block* find (char* loc);
 
   ACE_OutputCDR (ACE_OutputCDR const &) = delete;
