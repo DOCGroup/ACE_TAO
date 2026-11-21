@@ -154,7 +154,7 @@ void Oid::set_data( const char *dotted_oid_string)
 
   // assign the new value
   size_t byte_counter;
-  if (StrToOid( (char *) dotted_oid_string, &smival.value.oid, byte_counter) <0)
+  if (StrToOid (dotted_oid_string, &smival.value.oid, byte_counter) < 0)
   {
     set_invalid();
   }
@@ -265,7 +265,7 @@ Oid& Oid::operator+=( const char *a)
   }
   else {
     size_t byte_counter;
-    if (StrToOid( (char *) a, &smival.value.oid, byte_counter) < 0) {
+    if (StrToOid (a, &smival.value.oid, byte_counter) < 0) {
       set_invalid();
     }
   }
@@ -473,7 +473,7 @@ Oid& Oid::operator+=( const unsigned long i)
        if ( smival.value.oid.ptr ) {
          set_invalid();
        }
-       if (StrToOid( (char *) ptr, &smival.value.oid, byte_counter) < 0) {
+       if (StrToOid (ptr, &smival.value.oid, byte_counter) < 0) {
          set_invalid();
        }
        delete [] ptr;
