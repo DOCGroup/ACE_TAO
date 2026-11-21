@@ -277,11 +277,11 @@ RND_Driver::timer (const RtecEventComm::Event &e)
         // ACE_DEBUG ((LM_DEBUG, "Pushing an event\n"));
         if (e.header.source < this->max_recursion_)
           {
-            RtecEventComm::EventSet event (1);
-            event.length (1);
-            event[0] = e;
-            ++event[0].header.source;
-            this->supplier_.push (event);
+            RtecEventComm::EventSet event_set (1);
+            event_set.length (1);
+            event_set[0] = e;
+            ++event_set[0].header.source;
+            this->supplier_.push (event_set);
           }
       }
       break;

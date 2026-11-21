@@ -44,13 +44,13 @@ publish ()
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) publish ...\n")));
 
   DllORB* const orb_service = ACE_Dynamic_Service<DllORB>::instance ("testDllOrb");
-  CORBA::ORB_var const orb = orb_service->orb ();
+  CORBA::ORB_var const orb_reference = orb_service->orb ();
 
   TestBroadcaster broadcaster;
-  broadcaster.connect (orb.in (), "corbaname:rir:#Channel1");
+  broadcaster.connect (orb_reference.in (), "corbaname:rir:#Channel1");
 
   TestListener listener (
-    orb.in (),
+    orb_reference.in (),
     "corbaname:rir:#Channel1",
     "$data == 1 or $data == 2 or $data == 4");
 
@@ -76,10 +76,10 @@ load_unload_cycle ()
               result));
 
   DllORB* const orb_service = ACE_Dynamic_Service<DllORB>::instance ("testDllOrb");
-  CORBA::ORB_var const orb = orb_service->orb ();
+  CORBA::ORB_var const orb_reference = orb_service->orb ();
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) loadunloadcycle - v_orb OK\n")));
 
-  CORBA::Object_var const poa_object = orb->resolve_initial_references ("RootPOA");
+  CORBA::Object_var const poa_object = orb_reference->resolve_initial_references ("RootPOA");
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) loadunloadcycle - v_poa OK\n")));
 
   PortableServer::POA_var const root_poa = PortableServer::POA::_narrow (poa_object.in ());

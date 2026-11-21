@@ -588,13 +588,13 @@ void
 ECM_Federation::open (TAO_ECG_UDP_Out_Endpoint *endpoint,
                       RtecEventChannelAdmin::EventChannel_ptr ec)
 {
-  RtecUDPAdmin::AddrServer_var addr_server =
+  RtecUDPAdmin::AddrServer_var address_server =
     this->addr_server ();
 
   TAO_ECG_Refcounted_Endpoint ref_endpoint (endpoint);
 
   this->sender_->init (ec,
-                       addr_server.in (),
+                       address_server.in (),
                        ref_endpoint);
 
   // @@ TODO Make this a parameter....
@@ -860,13 +860,13 @@ ECM_Local_Federation::open (int event_count,
 {
   this->event_count_ = event_count;
 
-  std::string name (this->federation_->name ());
-  name += "/supplier";
-  this->supplier_.open (name.c_str (), ec);
+  std::string local_name (this->federation_->name ());
+  local_name += "/supplier";
+  this->supplier_.open (local_name.c_str (), ec);
 
-  name = this->federation_->name ();
-  name += "/consumer";
-  this->consumer_.open (name.c_str (), ec, &this->seed_);
+  local_name = this->federation_->name ();
+  local_name += "/consumer";
+  this->consumer_.open (local_name.c_str (), ec, &this->seed_);
 
   this->last_subscription_change_ = ACE_OS::gettimeofday ();
 }
@@ -971,19 +971,19 @@ void
 ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
                                      TAO_ECG_Refcounted_Endpoint ignore_from)
 {
-  RtecUDPAdmin::AddrServer_var addr_server =
+  RtecUDPAdmin::AddrServer_var address_server =
     this->federation_->addr_server ();
 
   ACE_Reactor* reactor = TAO_ORB_Core_instance ()->reactor ();
 
   this->receiver_->init (ec,
                          ignore_from,
-                         addr_server.in ());
+                         address_server.in ());
 
-  std::string name (this->name ());
-  name += "/receiver";
+  std::string receiver_name (this->name ());
+  receiver_name += "/receiver";
 
-  RtecEventComm::EventSourceID source = ACE::crc32 (name.c_str ());
+  RtecEventComm::EventSourceID source = ACE::crc32 (receiver_name.c_str ());
 
   this->mcast_eh_->reactor (reactor);
 

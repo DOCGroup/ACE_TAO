@@ -114,10 +114,10 @@ TAO_Notify_Tests_EventChannel_Command::create_collocated_ecf ()
     notify_service->create (poa.in ());
 
   // Register with the Naming Service
-  CosNaming::Name_var name =
+  CosNaming::Name_var factory_name =
     naming->to_name (TAO_Notify_Tests_Name::event_channel_factory);
 
-  naming->rebind (name.in (),
+  naming->rebind (factory_name.in (),
                   notify_factory.in ());
 }
 
