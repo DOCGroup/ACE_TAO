@@ -134,7 +134,7 @@ protected:
 
   /// Either 0 or 1, depending on whether we are the first generation
   /// of waiters or the next generation of waiters.
-  int current_generation_;
+  int current_generation_ {};
 
   /// Total number of threads that can be waiting at any one time.
   int count_;

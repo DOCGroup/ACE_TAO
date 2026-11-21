@@ -63,7 +63,6 @@ ACE_Barrier::ACE_Barrier (unsigned int count,
                           const ACE_TCHAR *name,
                           void *arg)
   : lock_ (name, (ACE_mutexattr_t *) arg),
-    current_generation_ (0),
     count_ (count),
     sub_barrier_1_ (count, lock_, name, arg),
     sub_barrier_2_ (count, lock_, name, arg)
