@@ -291,8 +291,8 @@ public:
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 #else
 private:
-  ACE_Flow_Spec *sending_flowspec_;
-  ACE_Flow_Spec *receiving_flowspec_;
+  ACE_Flow_Spec *sending_flowspec_ {};
+  ACE_Flow_Spec *receiving_flowspec_ {};
 #endif
 };
 
