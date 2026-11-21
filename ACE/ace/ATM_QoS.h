@@ -62,11 +62,11 @@ public:
   static const int DEFAULT_SELECTOR;
   static const int DEFAULT_PKT_SIZE;
 
-  ACE_ATM_QoS(int = DEFAULT_PKT_SIZE);
+  explicit ACE_ATM_QoS(int = DEFAULT_PKT_SIZE);
 
   /// Constructor with a CBR rate.
-  ACE_ATM_QoS(int,
-              int = DEFAULT_PKT_SIZE);
+  explicit ACE_ATM_QoS(int,
+                       int = DEFAULT_PKT_SIZE);
 
   ~ACE_ATM_QoS ();
 
