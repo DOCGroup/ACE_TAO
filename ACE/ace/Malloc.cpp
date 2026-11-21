@@ -93,10 +93,6 @@ ACE_Control_Block::dump () const
 }
 
 ACE_Control_Block::ACE_Name_Node::ACE_Name_Node ()
-  : name_ (nullptr),
-    pointer_ (nullptr),
-    next_ (nullptr),
-    prev_ (nullptr)
 {
   ACE_TRACE ("ACE_Control_Block::ACE_Name_Node::ACE_Name_Node");
 }
@@ -107,8 +103,7 @@ ACE_Control_Block::ACE_Name_Node::ACE_Name_Node (const char *name,
                                                  ACE_Name_Node *next)
   : name_ (name_ptr),
     pointer_ (pointer),
-    next_ (next),
-    prev_ (nullptr)
+    next_ (next)
 {
   ACE_TRACE ("ACE_Control_Block::ACE_Name_Node::ACE_Name_Node");
   char *n = this->name_;

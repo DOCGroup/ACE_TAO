@@ -319,16 +319,16 @@ public:
     const char *name () const;
 
     /// Name of the Node.
-    char *name_;
+    char *name_ {};
 
     /// Pointer to the contents.
-    char *pointer_;
+    char *pointer_ {};
 
     /// Pointer to the next node in the doubly-linked list.
-    ACE_Name_Node *next_;
+    ACE_Name_Node *next_ {};
 
     /// Pointer to the previous node in the doubly-linked list.
-    ACE_Name_Node *prev_;
+    ACE_Name_Node *prev_ {};
 
     /// Dump the state of the object.
     void dump () const;
