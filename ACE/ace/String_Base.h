@@ -567,23 +567,23 @@ protected:
   /**
    *  Length of the ACE_String_Base data (not counting the trailing '\0').
    */
-  size_type len_;
+  size_type len_ {};
 
   /**
    *  Length of the ACE_String_Base data buffer.  Keeping track of the
    *  length allows to avoid unnecessary dynamic allocations.
    */
-  size_type buf_len_;
+  size_type buf_len_ {};
 
   /**
    *  Pointer to data.
    */
-  ACE_CHAR_T *rep_;
+  ACE_CHAR_T *rep_ {};
 
   /**
    *  Flag that indicates if we own the memory
    */
-  bool release_;
+  bool release_ {};
 
   /**
    *  Represents the "NULL" string to simplify the internal logic.

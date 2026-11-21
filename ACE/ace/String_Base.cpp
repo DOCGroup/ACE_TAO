@@ -24,10 +24,7 @@ ACE_CHAR_T ACE_String_Base<ACE_CHAR_T>::NULL_String_ = 0;
 template <class ACE_CHAR_T>
 ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (ACE_Allocator *the_allocator)
   : allocator_ (the_allocator ? the_allocator : ACE_Allocator::instance ()),
-    len_ (0),
-    buf_len_ (0),
-    rep_ (&ACE_String_Base<ACE_CHAR_T>::NULL_String_),
-    release_ (false)
+    rep_ (&ACE_String_Base<ACE_CHAR_T>::NULL_String_)
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::ACE_String_Base");
 }
@@ -38,11 +35,7 @@ template <class ACE_CHAR_T>
 ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (const ACE_CHAR_T *s,
                                         ACE_Allocator *the_allocator,
                                         bool release)
-  : allocator_ (the_allocator ? the_allocator : ACE_Allocator::instance ()),
-    len_ (0),
-    buf_len_ (0),
-    rep_ (nullptr),
-    release_ (false)
+  : allocator_ (the_allocator ? the_allocator : ACE_Allocator::instance ())
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::ACE_String_Base");
   this->set (s, release);
@@ -51,11 +44,7 @@ ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (const ACE_CHAR_T *s,
 template <class ACE_CHAR_T>
 ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (ACE_CHAR_T c,
                                         ACE_Allocator *the_allocator)
-  : allocator_ (the_allocator ? the_allocator : ACE_Allocator::instance ()),
-    len_ (0),
-    buf_len_ (0),
-    rep_ (nullptr),
-    release_ (false)
+  : allocator_ (the_allocator ? the_allocator : ACE_Allocator::instance ())
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::ACE_String_Base");
 
@@ -70,11 +59,7 @@ ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (
   typename ACE_String_Base<ACE_CHAR_T>::size_type len,
   ACE_Allocator *the_allocator,
   bool release)
-  : allocator_ (the_allocator ? the_allocator : ACE_Allocator::instance ()),
-    len_ (0),
-    buf_len_ (0),
-    rep_ (nullptr),
-    release_ (false)
+  : allocator_ (the_allocator ? the_allocator : ACE_Allocator::instance ())
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::ACE_String_Base");
 
@@ -83,11 +68,7 @@ ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (
 
 template <class ACE_CHAR_T>
 ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (const ACE_String_Base<ACE_CHAR_T> &s)
-  : allocator_ (s.allocator_ ? s.allocator_ : ACE_Allocator::instance ()),
-    len_ (0),
-    buf_len_ (0),
-    rep_ (nullptr),
-    release_ (false)
+  : allocator_ (s.allocator_ ? s.allocator_ : ACE_Allocator::instance ())
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::ACE_String_Base");
 
@@ -99,11 +80,7 @@ ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (
   typename ACE_String_Base<ACE_CHAR_T>::size_type len,
   ACE_CHAR_T c,
   ACE_Allocator *the_allocator)
-  : allocator_ (the_allocator ? the_allocator : ACE_Allocator::instance ()),
-    len_ (0),
-    buf_len_ (0),
-    rep_ (nullptr),
-    release_ (false)
+  : allocator_ (the_allocator ? the_allocator : ACE_Allocator::instance ())
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::ACE_String_Base");
 
