@@ -157,7 +157,7 @@ Task::svc ()
         get_implicit_thread_CORBA_priority (this->orb_.in ());
 
       test_i servant (this->orb_.in (), root_poa.in (), this->options_.nap_time);
-      PortableServer::ObjectId_var const id = root_poa->activate_object (&servant);
+      PortableServer::ObjectId_var const id = root_poa->activate_object (std::addressof (servant));
       CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
       test_var const test = test::_narrow (object_act.in ());
 

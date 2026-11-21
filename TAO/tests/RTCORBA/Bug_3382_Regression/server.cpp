@@ -179,7 +179,7 @@ Task::svc ()
       Test_i server_impl (this->orb_.in ());
 
       PortableServer::ObjectId_var const id =
-        child_poa->activate_object (&server_impl);
+        child_poa->activate_object (std::addressof (server_impl));
 
       CORBA::Object_var const server =
         child_poa->id_to_reference (id.in ());

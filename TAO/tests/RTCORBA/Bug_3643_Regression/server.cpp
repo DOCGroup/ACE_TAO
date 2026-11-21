@@ -206,7 +206,7 @@ Task::svc ()
 
       test_i servant (this->orb_.in (), root_poa.in (), this->options_.nap_time);
       PortableServer::ObjectId_var const id =
-        root_poa->activate_object (&servant);
+        root_poa->activate_object (std::addressof (servant));
 
       CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 

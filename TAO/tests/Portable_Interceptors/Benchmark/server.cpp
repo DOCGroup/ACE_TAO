@@ -85,7 +85,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Secure_Vault_i server_impl (orb.in ());
 
       PortableServer::ObjectId_var const id =
-        root_poa->activate_object (&server_impl);
+        root_poa->activate_object (std::addressof (server_impl));
 
       CORBA::Object_var const test_obj =
         root_poa->id_to_reference (id.in ());

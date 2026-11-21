@@ -83,13 +83,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Visual_i server_impl (orb.in ());
 
       PortableServer::ObjectId_var id =
-        root_poa->activate_object (&server_impl);
+        root_poa->activate_object (std::addressof (server_impl));
 
       // Create a second object to receive forwarded requests
       Visual_i forward_server_impl (orb.in ());
 
       PortableServer::ObjectId_var forward_id =
-        root_poa->activate_object (&forward_server_impl);
+        root_poa->activate_object (std::addressof (forward_server_impl));
 
       CORBA::Object_var forward_test_obj =
         root_poa->id_to_reference (forward_id.in ());

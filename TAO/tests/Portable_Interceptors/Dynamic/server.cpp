@@ -4,6 +4,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "tao/ORBInitializer_Registry.h"
 
+#include <memory>
+
 ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
 
 int
@@ -77,7 +79,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Visual_i server_impl (orb.in ());
 
       PortableServer::ObjectId_var id =
-        root_poa->activate_object (&server_impl);
+        root_poa->activate_object (std::addressof (server_impl));
 
       CORBA::Object_var test_obj =
         root_poa->id_to_reference (id.in ());
