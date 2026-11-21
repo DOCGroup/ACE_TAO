@@ -643,13 +643,13 @@ protected:
   /// @}
 
   /// Pointer to beginning of next read.
-  size_t rd_ptr_;
+  size_t rd_ptr_ {};
 
   /// Pointer to beginning of next write.
-  size_t wr_ptr_;
+  size_t wr_ptr_ {};
 
   /// Priority of message.
-  unsigned long priority_;
+  unsigned long priority_ {};
 
 #if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
   /// Execution time associated with the message.
@@ -662,13 +662,13 @@ protected:
   /// @name Message block links
   /// @{
   /// Pointer to next message block in the chain.
-  ACE_Message_Block *cont_;
+  ACE_Message_Block *cont_ {};
 
   /// Pointer to next message in the list.
-  ACE_Message_Block *next_;
+  ACE_Message_Block *next_ {};
 
   /// Pointer to previous message in the list.
-  ACE_Message_Block *prev_;
+  ACE_Message_Block *prev_ {};
   /// @}
 
   /// Misc flags (e.g., DONT_DELETE and USER_FLAGS).
@@ -680,7 +680,7 @@ protected:
 
   /// The allocator used to destroy ourselves when release is called
   /// and create new message blocks on duplicate.
-  ACE_Allocator *message_block_allocator_;
+  ACE_Allocator *message_block_allocator_ {};
 };
 
 /**
