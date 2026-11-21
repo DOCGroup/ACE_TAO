@@ -43,9 +43,9 @@ ACE_ATM_Acceptor::get_local_addr (ACE_ATM_Addr &local_addr)
 
   if (::WSAIoctl (acceptor_.get_handle (),
                 SIO_GET_ATM_ADDRESS,
- (LPVOID) &deviceID,
+                static_cast<LPVOID> (&deviceID),
                 sizeof (DWORD),
- (LPVOID)&addr,
+                static_cast<LPVOID> (&addr),
                 sizeof (ATM_ADDRESS),
                 &ret,
                 0,
@@ -55,7 +55,7 @@ ACE_ATM_Acceptor::get_local_addr (ACE_ATM_Addr &local_addr)
     return -1;
   }
 
-  laddr = (struct sockaddr_atm *)local_addr.get_addr ();
+  laddr = static_cast<struct sockaddr_atm *> (local_addr.get_addr ());
   std::memcpy (&laddr->satm_number, &addr, ATM_ADDR_SIZE - 1);
 
   return 0;
@@ -64,11 +64,11 @@ ACE_ATM_Acceptor::get_local_addr (ACE_ATM_Addr &local_addr)
 
   return 0;
 #elif defined (ACE_HAS_LINUX_ATM)
-  ATM_Addr *myaddr = (ATM_Addr *)local_addr.get_addr ();
+  ATM_Addr *myaddr = static_cast<ATM_Addr *> (local_addr.get_addr ());
   int addrlen = sizeof (myaddr->sockaddratmsvc);
 
   if (ACE_OS::getsockname (acceptor_.get_handle (),
- (struct sockaddr *) & (myaddr->sockaddratmsvc),
+                    reinterpret_cast<struct sockaddr *> (&myaddr->sockaddratmsvc),
                           &addrlen) < 0) {
     ACELIB_DEBUG ((LM_DEBUG,
                ACE_TEXT ("ATM_Acceptor (get_local_addr): ioctl: %d\n"),
@@ -123,11 +123,11 @@ ACE_ATM_Acceptor::open (const ACE_Addr &remote_sap,
   acceptor_.set_handle (ret);
 
   /* Set up the address information to become a server */
-  ACE_OS::memset ((void *) &local_atm_addr, 0, sizeof local_atm_addr);
+  ACE_OS::memset (&local_atm_addr, 0, sizeof local_atm_addr);
   local_atm_addr.satm_family = AF_ATM;
   local_atm_addr.satm_number.AddressType = SAP_FIELD_ANY_AESA_REST;
   local_atm_addr.satm_number.Addr[ ATM_ADDR_SIZE - 1 ]
-    = ((ACE_ATM_Addr *)&remote_sap) -> get_selector ();
+    = static_cast<ACE_ATM_Addr const &> (remote_sap).get_selector ();
   local_atm_addr.satm_blli.Layer2Protocol = SAP_FIELD_ANY;
   local_atm_addr.satm_blli.Layer3Protocol = SAP_FIELD_ABSENT;
   local_atm_addr.satm_bhli.HighLayerInfoType = SAP_FIELD_ABSENT;
@@ -154,7 +154,7 @@ ACE_ATM_Acceptor::open (const ACE_Addr &remote_sap,
   //use remote_sap as local_sap
 
   ACE_ATM_Addr local_sap;
-  ATM_Addr *local_sap_addr = (ATM_Addr*)local_sap.get_addr ();
+  ATM_Addr *local_sap_addr = static_cast<ATM_Addr *> (local_sap.get_addr ());
   ACE_ATM_QoS def_qos;
   ATM_QoS qos = def_qos.get_qos ();
 
@@ -197,7 +197,7 @@ ACE_ATM_Acceptor::open (const ACE_Addr &remote_sap,
   else {
     local_sap_addr->sockaddratmsvc = aux_addr[0];
   }
-  local_sap.set_selector (( (ACE_ATM_Addr*)&remote_sap)->get_selector ());
+  local_sap.set_selector (static_cast<ACE_ATM_Addr const &> (remote_sap).get_selector ());
 
   if (ACE_OS::bind (handle,
                     reinterpret_cast<struct sockaddr *> (
