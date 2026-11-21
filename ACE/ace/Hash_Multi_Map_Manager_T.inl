@@ -9,10 +9,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::AC
                                                                                                           ACE_Allocator *table_alloc,
                                                                                                           ACE_Allocator *entry_alloc)
   : table_allocator_ (table_alloc),
-    entry_allocator_ (entry_alloc),
-    table_ (0),
-    total_size_ (0),
-    cur_size_ (0)
+    entry_allocator_ (entry_alloc)
 {
   if (this->open (size, table_alloc, entry_alloc) == -1)
     {
@@ -24,10 +21,7 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::ACE_Hash_Multi_Map_Manager (ACE_Allocator *table_alloc,
                                                                                                           ACE_Allocator *entry_alloc)
   : table_allocator_ (table_alloc),
-    entry_allocator_ (entry_alloc),
-    table_ (0),
-    total_size_ (0),
-    cur_size_ (0)
+    entry_allocator_ (entry_alloc)
 {
   if (this->open (ACE_DEFAULT_MAP_SIZE, table_alloc, entry_alloc) == -1)
     {
