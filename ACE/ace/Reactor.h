@@ -884,7 +884,7 @@ protected:
 
   /// Delegation/implementation class that all methods will be
   /// forwarded to.
-  ACE_Reactor_Impl *implementation_;
+  ACE_Reactor_Impl *implementation_ {};
 
   /// Flag used to indicate whether we are responsible for cleaning up
   /// the implementation instance

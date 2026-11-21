@@ -42,8 +42,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Reactor)
 
 ACE_Reactor::ACE_Reactor (ACE_Reactor_Impl *impl,
                           bool delete_implementation)
-  : implementation_ (nullptr),
-    delete_implementation_ (delete_implementation)
+  : delete_implementation_ (delete_implementation)
 {
   this->implementation (impl);
 
