@@ -61,7 +61,13 @@ TAO::PG_Group_List_Store_File_Guard::PG_Group_List_Store_File_Guard (
     }
   catch (TAO::Storable_Exception const &)
     {
+      list_store_.lock_.release ();
       throw CORBA::INTERNAL ();
+    }
+  catch (...)
+    {
+      list_store_.lock_.release ();
+      throw;
     }
 }
 
