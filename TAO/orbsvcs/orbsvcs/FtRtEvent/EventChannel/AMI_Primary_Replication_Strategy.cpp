@@ -100,7 +100,7 @@ AMI_Primary_Replication_Strategy::replicate_request(
    const FtRtecEventChannelAdmin::EventChannelList& backups =
      GroupInfoPublisher::instance()->backups();
 
-   size_t num_backups = backups.length();
+   size_t const num_backups = backups.length();
 
    if ((size_t)transaction_depth > num_backups) {
      TAO_FTRTEC::Log(3, ACE_TEXT("Throwing FTRT::TransactionDepthTooHigh\n"));
@@ -159,7 +159,7 @@ AMI_Primary_Replication_Strategy::add_member(FTRT::ManagerInfo const &info,
   const FtRtecEventChannelAdmin::EventChannelList& backups =
      GroupInfoPublisher::instance()->backups();
 
-  size_t num_backups = backups.length();
+  size_t const num_backups = backups.length();
   ObjectGroupManagerHandler add_member_handler(event, num_backups+1);
   // The extra one is to prevent the event been signaled prematurely.
 

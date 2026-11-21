@@ -157,7 +157,7 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
 TAO_MonitorEventChannelFactory::~TAO_MonitorEventChannelFactory ()
 {
   Monitor_Point_Registry* instance = Monitor_Point_Registry::instance ();
-  size_t size = this->stat_names_.size ();
+  size_t const size = this->stat_names_.size ();
 
   for (size_t i {}; i < size; ++i)
     {

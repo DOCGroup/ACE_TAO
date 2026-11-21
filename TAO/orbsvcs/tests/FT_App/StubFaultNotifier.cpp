@@ -183,7 +183,7 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb)
   {
     ////////////////////////////////////
     // resolve references to replicas
-    size_t replicaCount = this->iorReplicaFiles_.size();
+    size_t const replicaCount = this->iorReplicaFiles_.size();
     for(size_t nRep = 0; result == 0 && nRep < replicaCount; ++nRep)
     {
       const char * iorName = this->iorReplicaFiles_[nRep];
@@ -338,7 +338,7 @@ void StubFaultNotifier::push_structured_fault (
     ));
   const CosNotification::FilterableEventBody & filterable = event.filterable_data;
 
-  size_t propertyCount = filterable.length ();
+  size_t const propertyCount = filterable.length ();
   for (size_t nProp = 0; nProp < propertyCount; ++nProp)
   {
     const CosNotification::Property & property = filterable[nProp];

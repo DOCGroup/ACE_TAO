@@ -246,7 +246,7 @@ const ACE_TCHAR * FT_ReplicaFactory_i::identity () const
 int FT_ReplicaFactory_i::idle (int & result)
 {
   result = 0;
-  size_t replicaCount = this->replicas_.size();
+  size_t const replicaCount = this->replicas_.size();
   if (replicaCount != this->empty_slots_)
   {
     for (size_t nReplica = 0; result == 0 && nReplica < replicaCount; ++nReplica)
@@ -387,7 +387,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb)
 
   if ( ! CORBA::is_nil (this->factory_registry_.in ()))
   {
-    size_t roleCount = roles_.size();
+    size_t const roleCount = roles_.size();
     for (size_t nRole = 0; nRole < roleCount; ++nRole)
     {
       const char * roleName = this->roles_[nRole].c_str();
@@ -527,7 +527,7 @@ int FT_ReplicaFactory_i::fini ()
     }
     else
     {
-      size_t roleCount = roles_.size();
+      size_t const roleCount = roles_.size();
       for (size_t nRole = 0; nRole < roleCount; ++nRole)
       {
         const char * roleName = this->roles_[nRole].c_str();

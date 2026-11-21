@@ -141,7 +141,7 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
         }
       if (pem_passwd_.find (key_prompt) == 0)
         {
-          size_t ofs = key_prompt.length();
+          size_t const ofs = key_prompt.length();
           // do prompt
           char const *prompt = pem_passwd_.length() == ofs ?
             "Enter password" : pem_passwd_.c_str() + ofs;
@@ -155,7 +155,7 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
        }
       else if (pem_passwd_.find (key_file) == 0)
         {
-          size_t ofs = key_file.length();
+          size_t const ofs = key_file.length();
           char const *fname = pem_passwd_.c_str() + ofs;
           // do file
           FILE* file = ACE_OS::fopen (fname,ACE_TEXT("r"));
@@ -195,7 +195,7 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
         }
       else if (pem_passwd_.find (key_env) == 0)
         {
-          size_t ofs = key_env.length();
+          size_t const ofs = key_env.length();
           // do env
           char const *env = pem_passwd_.length() == ofs ?
             "TAO_PEM_PASSWORD" : pem_passwd_.c_str() + ofs;

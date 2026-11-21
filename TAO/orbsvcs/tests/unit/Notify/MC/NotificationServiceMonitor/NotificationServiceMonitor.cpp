@@ -26,7 +26,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       // portable we get the starting size here and make sure that
       // the monitors we add subsequently are recognized.
       Monitor_Control_Types::NameList start_names = reg->names ();
-      size_t start_size = start_names.size ();
+      size_t const start_size = start_names.size ();
 
       // Test registry addition.
       Monitor_Base *s {};

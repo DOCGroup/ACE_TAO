@@ -400,7 +400,7 @@ TAO_UIPMC_Profile::parse_string_i (char const *string)
       string = pos + 1;
     }
 
-  size_t mcast_addr_len = mcast_addr.length ();
+  size_t const mcast_addr_len = mcast_addr.length ();
   if (std::strspn (mcast_addr.c_str (),
                       ".:0123456789ABCDEFabcdef") != mcast_addr_len)
     {

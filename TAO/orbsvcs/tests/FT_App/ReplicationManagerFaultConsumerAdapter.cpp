@@ -230,7 +230,7 @@ int ReplicationManagerFaultConsumerAdapter::init (
     ////////////////////////////////////
     // resolve references to replicas
     // create a fault detector for each replica
-    size_t replicaCount = this->replica_iors_.size();
+    size_t const replicaCount = this->replica_iors_.size();
     ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("Number of replicas being monitored: (%B)\n"),
       replicaCount

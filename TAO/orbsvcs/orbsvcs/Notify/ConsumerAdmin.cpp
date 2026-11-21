@@ -344,7 +344,7 @@ TAO_Notify_ConsumerAdmin::find_proxy_supplier (
     size_t position)
 {
   TAO_Notify_ProxySupplier * result {};
-  size_t path_size = id_path.size ();
+  size_t const path_size = id_path.size ();
   if (position < path_size)
   {
     TAO_Notify_ProxySupplier_Find_Worker find_worker;

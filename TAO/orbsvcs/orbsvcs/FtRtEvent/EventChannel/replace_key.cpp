@@ -15,7 +15,7 @@ void replace_key(char* ior, char* end_ior,
                  const TAO::ObjectKey& oldkey,
                  const TAO::ObjectKey& newkey)
 {
-  size_t keylen = oldkey.length();
+  size_t const keylen = oldkey.length();
   ACE_ASSERT(keylen == newkey.length());
 
   char* pos = ior;

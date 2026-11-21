@@ -245,7 +245,7 @@ void StubFaultConsumer::push_structured_event(
     ));
   const CosNotification::FilterableEventBody & filterable = notification.filterable_data;
 
-  size_t propertyCount = filterable.length ();
+  size_t const propertyCount = filterable.length ();
   for (size_t nProp = 0; nProp < propertyCount; ++nProp)
   {
     const CosNotification::Property & property = filterable[nProp];

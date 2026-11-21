@@ -446,7 +446,7 @@ TAO_Notify_ProxyConsumer *
 TAO_Notify_EventChannelFactory::find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position)
 {
   TAO_Notify_ProxyConsumer * result {};
-  size_t path_size = id_path.size ();
+  size_t const path_size = id_path.size ();
 
   // EventChannelFactory only:  The first id is proably for the ECF itself
   // if so, silently consume it.
@@ -472,7 +472,7 @@ TAO_Notify_ProxySupplier *
 TAO_Notify_EventChannelFactory::find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position)
 {
   TAO_Notify_ProxySupplier * result {};
-  size_t path_size = id_path.size ();
+  size_t const path_size = id_path.size ();
 
   // EventChannelFactory only:  The first id is proably for the ECF itself
   // if so, silently consume it.

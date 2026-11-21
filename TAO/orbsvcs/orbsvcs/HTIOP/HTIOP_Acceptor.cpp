@@ -897,7 +897,7 @@ TAO::HTIOP::Acceptor::parse_options (const char *str)
   // e.g.:  option1=foo&option2=bar
 
   ACE_CString options (str);
-  size_t len = options.length ();
+  size_t const len = options.length ();
   constexpr char option_delimiter = '&';
 
   // Count the number of options.

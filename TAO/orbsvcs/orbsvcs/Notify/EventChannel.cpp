@@ -558,7 +558,7 @@ TAO_Notify_ProxyConsumer *
 TAO_Notify_EventChannel::find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position)
 {
   TAO_Notify_ProxyConsumer * result {};
-  size_t path_size = id_path.size ();
+  size_t const path_size = id_path.size ();
   if (position < path_size)
   {
     TAO_Notify_SupplierAdmin_Find_Worker find_worker;
@@ -576,7 +576,7 @@ TAO_Notify_ProxySupplier *
 TAO_Notify_EventChannel::find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position)
 {
   TAO_Notify_ProxySupplier * result {};
-  size_t path_size = id_path.size ();
+  size_t const path_size = id_path.size ();
   if (position < path_size)
   {
     TAO_Notify_ConsumerAdmin_Find_Worker find_worker;
