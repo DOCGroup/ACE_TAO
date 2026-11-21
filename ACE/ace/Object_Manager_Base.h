@@ -94,7 +94,7 @@ protected:
   bool shutting_down_i ();
 
   /// State of the Object_Manager;
-  Object_Manager_State object_manager_state_;
+  Object_Manager_State object_manager_state_ {OBJ_MAN_UNINITIALIZED};
 
   /**
    * Flag indicating whether the ACE_Object_Manager was dynamically
@@ -102,10 +102,10 @@ protected:
    * application, then the application is responsible for destroying
    * it.)
    */
-  bool dynamically_allocated_;
+  bool dynamically_allocated_ {};
 
   /// Link to next Object_Manager, for chaining.
-  ACE_Object_Manager_Base *next_;
+  ACE_Object_Manager_Base *next_ {};
 private:
   ACE_Object_Manager_Base (const ACE_Object_Manager_Base &) = delete;
   ACE_Object_Manager_Base &operator= (const ACE_Object_Manager_Base &) = delete;
