@@ -203,7 +203,6 @@ TAO_SFP_Base::read_frame (TAO_AV_Transport *transport,
                           TAO_AV_frame_info *&frame_info)
 {
   ACE_Message_Block *message_block {};
-  int result = -1;
 
   if (TAO_debug_level > 0)
   {
@@ -241,6 +240,7 @@ TAO_SFP_Base::read_frame (TAO_AV_Transport *transport,
   TAO_SFP_Fragment_Table_Entry *fragment_entry {};
   if (frame_header.flags & 0x2)
     {
+      int result {};
       if (TAO_debug_level > 0)
       {
         ORBSVCS_DEBUG ((LM_DEBUG,"fragmented frame:0th fragment\n"));

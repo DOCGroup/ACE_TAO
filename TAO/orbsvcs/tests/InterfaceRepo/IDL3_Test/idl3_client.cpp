@@ -668,10 +668,9 @@ IDL3_Client::component_attribute_test (
       return -1;
     }
 
-  char const* tmp {};
-
   for (CORBA::ULong i = 0; i < ATTRS_LEN; ++i)
     {
+      char const* tmp {};
       tmp = desc->attributes[i].name.in ();
 
       if (tmp == nullptr || std::strcmp (tmp, ATTR_LOCAL_NAMES[i]) != 0)
@@ -893,10 +892,9 @@ IDL3_Client::provides_test (CORBA::ComponentIR::ProvidesDescriptionSeq const& pd
       return -1;
     }
 
-  char const* tmp {};
-
   for (CORBA::ULong i = 0; i < PROVIDES_LEN; ++i)
     {
+      char const* tmp {};
       tmp = pds[i].name.in ();
 
       if (tmp == nullptr || std::strcmp (tmp, PROVIDES_NAMES[i]) != 0)
@@ -946,11 +944,11 @@ IDL3_Client::uses_test (CORBA::ComponentIR::UsesDescriptionSeq const& uds)
       return -1;
     }
 
-  char const* tmp {};
   CORBA::Boolean mult {};
 
   for (CORBA::ULong i = 0; i < USES_LEN; ++i)
     {
+      char const* tmp {};
       tmp = uds[i].name.in ();
 
       if (tmp == nullptr || std::strcmp (tmp, USES_NAMES[i]) != 0)
@@ -1020,10 +1018,9 @@ IDL3_Client::event_port_test (CORBA::ComponentIR::EventPortDescriptionSeq const&
       return -1;
     }
 
-  char const* tmp {};
-
   for (CORBA::ULong i = 0; i < seq_length; ++i)
     {
+      char const* tmp {};
       tmp = eds[i].name.in ();
 
       if (tmp == nullptr || std::strcmp (tmp, names[i]) != 0)
@@ -1152,10 +1149,9 @@ IDL3_Client::valuetype_attribute_test (
       return -1;
     }
 
-  char const* tmp {};
-
   for (CORBA::ULong i = 0; i < ATTRS_LEN; ++i)
     {
+      char const* tmp {};
       tmp = desc->attributes[i].name.in ();
 
       if (tmp == nullptr || std::strcmp (tmp, ATTR_LOCAL_NAMES[i]) != 0)
@@ -1243,12 +1239,12 @@ IDL3_Client::valuetype_operation_test (
       return -1;
     }
 
-  char const* tmp {};
   CORBA::ULong j {};
   CORBA::ULong length {};
 
   for (CORBA::ULong i = 0; i < ops_length; ++i)
     {
+      char const* tmp {};
       tmp = desc->operations[i].name.in ();
 
       if (tmp == nullptr || std::strcmp (tmp, OP_NAMES[i]) != 0)
@@ -1358,10 +1354,9 @@ IDL3_Client::valuetype_member_test (
       return -1;
     }
 
-  char const* tmp {};
-
   for (CORBA::ULong i = 0; i < length; ++i)
     {
+      char const* tmp {};
       if (desc->members[i].access != MEM_VIS[i])
         {
           if (this->debug_)
