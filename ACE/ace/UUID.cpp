@@ -174,7 +174,17 @@ namespace ACE_Utils
     unsigned int clock_seq_hi_and_reserved;
     unsigned int clock_seq_low;
     unsigned int node [UUID_Node::NODE_ID_SIZE];
-    char thr_pid_buf [BUFSIZ];
+    size_t const uuid_length = NIL_UUID.to_string ()->length ();
+
+    if (uuid_string.length () > uuid_length &&
+        (uuid_string.length () <= uuid_length + 1 ||
+         uuid_string.c_str ()[uuid_length] != '-'))
+      {
+        ACELIB_DEBUG ((LM_DEBUG,
+                    "ACE_UUID::from_string_i - "
+                    "IllegalArgument (invalid thread/process suffix)\n"));
+        return;
+      }
 
     if (uuid_string.length () == NIL_UUID.to_string ()->length ())
       {
@@ -231,7 +241,7 @@ namespace ACE_Utils
         const int nScanned =
 #if defined (ACE_HAS_TR24731_2005_CRT)
           sscanf_s (uuid_string.c_str (),
-                    "%8x-%4x-%4x-%2x%2x-%2x%2x%2x%2x%2x%2x-%s",
+                    "%8x-%4x-%4x-%2x%2x-%2x%2x%2x%2x%2x%2x",
                     &time_low,
                     &time_mid,
                     &time_hi_and_version,
@@ -242,13 +252,11 @@ namespace ACE_Utils
                     std::addressof (node[2]),
                     std::addressof (node[3]),
                     std::addressof (node[4]),
-                    std::addressof (node[5]),
-                    thr_pid_buf,
-                    BUFSIZ
+                    std::addressof (node[5])
                     );
 #else
           ::sscanf (uuid_string.c_str (),
-                    "%8x-%4x-%4x-%2x%2x-%2x%2x%2x%2x%2x%2x-%s",
+                    "%8x-%4x-%4x-%2x%2x-%2x%2x%2x%2x%2x%2x",
                     &time_low,
                     &time_mid,
                     &time_hi_and_version,
@@ -259,12 +267,11 @@ namespace ACE_Utils
                     std::addressof (node[2]),
                     std::addressof (node[3]),
                     std::addressof (node[4]),
-                    std::addressof (node[5]),
-                    thr_pid_buf
+                    std::addressof (node[5])
                     );
 #endif /* ACE_HAS_TR24731_2005_CRT */
 
-        if (nScanned != 12)
+        if (nScanned != 11)
           {
             ACELIB_DEBUG ((LM_DEBUG,
                         "ACE_UUID::from_string_i - "
@@ -309,20 +316,21 @@ namespace ACE_Utils
 
     if ((this->uuid_.clock_seq_hi_and_reserved_ & 0xc0) == 0xc0)
       {
-        if (uuid_string.length () == NIL_UUID.to_string ()->length ())
+        if (uuid_string.length () == uuid_length)
           {
             ACELIB_DEBUG ((LM_DEBUG,
                       "ACE_UUID::from_string_i - "
                         "IllegalArgument (Missing Thread and Process Id)\n"));
             return;
           }
-        ACE_CString thr_pid_str (thr_pid_buf);
+        ACE_CString thr_pid_str (uuid_string.c_str () + uuid_length + 1);
         ssize_t pos = static_cast<ssize_t> (thr_pid_str.find ('-'));
-        if (pos == -1)
+        if (pos <= 0 || static_cast<size_t> (pos) + 1 >= thr_pid_str.length ())
           {
             ACELIB_DEBUG ((LM_DEBUG,
                         "ACE_UUID::from_string_i - "
                         "IllegalArgument (Thread and Process Id format incorrect)\n"));
+            return;
           }
 
         this->thr_id_ = thr_pid_str.substr (0, pos);
