@@ -87,7 +87,7 @@ private:
 class ACE_Suspend_Node : public ACE_Parse_Node
 {
 public:
-  ACE_Suspend_Node (const ACE_TCHAR *name);
+  explicit ACE_Suspend_Node (const ACE_TCHAR *name);
   ~ACE_Suspend_Node () override;
 
   void apply (ACE_Service_Gestalt *cfg, int &yyerrno) override;
@@ -117,7 +117,7 @@ private:
 class ACE_Resume_Node : public ACE_Parse_Node
 {
 public:
-  ACE_Resume_Node (const ACE_TCHAR *name);
+  explicit ACE_Resume_Node (const ACE_TCHAR *name);
   ~ACE_Resume_Node () override;
 
   void apply (ACE_Service_Gestalt *cfg, int &yyerrno) override;
@@ -147,7 +147,7 @@ private:
 class ACE_Remove_Node : public ACE_Parse_Node
 {
 public:
-  ACE_Remove_Node (const ACE_TCHAR *name);
+  explicit ACE_Remove_Node (const ACE_TCHAR *name);
   ~ACE_Remove_Node () override;
 
   void apply (ACE_Service_Gestalt *cfg, int &yyerrno) override;
@@ -177,7 +177,7 @@ private:
 class ACE_Static_Node : public ACE_Parse_Node
 {
 public:
-  ACE_Static_Node (const ACE_TCHAR *name, ACE_TCHAR *params = nullptr);
+  explicit ACE_Static_Node (const ACE_TCHAR *name, ACE_TCHAR *params = nullptr);
   ~ACE_Static_Node () override;
 
   void apply (ACE_Service_Gestalt *cfg, int &yyerrno) override;
