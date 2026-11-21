@@ -43,7 +43,7 @@ ACE_OS::connect (ACE_HANDLE handle,
   ACE_OS_TRACE ("ACE_OS::connect");
 # if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   ACE_SOCKCALL_RETURN (::WSAConnect ((ACE_SOCKET) handle,
-                                     (const sockaddr *) addr,
+                                     addr,
                                      (ACE_SOCKET_LEN) addrlen,
                                      (WSABUF *) qos_params.caller_data (),
                                      (WSABUF *) qos_params.callee_data (),
