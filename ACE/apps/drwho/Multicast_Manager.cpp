@@ -97,9 +97,7 @@ Multicast_Manager::get_next_host_addr (in_addr &host_addr)
 
       ++Multicast_Manager::received_host_count;
       std::memcpy (std::addressof (host_addr), hp->h_addr, sizeof host_addr);
-      std::memcpy (std::addressof (Multicast_Manager::current_ptr->host_addr),
-                   hp->h_addr,
-                   sizeof host_addr);
+      std::memcpy (std::addressof (Multicast_Manager::current_ptr->host_addr), hp->h_addr, sizeof host_addr);
       return 1;
     }
 
@@ -139,9 +137,7 @@ Multicast_Manager::get_host_entry (const char *host)
     }
 
   return hp == nullptr ? nullptr
-    : static_cast<hostent *> (std::memcpy (std::addressof (host_entry),
-                                           hp,
-                                           sizeof *hp));
+    : static_cast<hostent *> (std::memcpy (std::addressof (host_entry), hp, sizeof *hp));
 }
 
 // Adds an additional new host to the list of host machines.

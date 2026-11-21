@@ -85,9 +85,7 @@ Ping_Pong::Ping_Pong (char const *b, ACE_HANDLE f)
     handle_ (f)
 {
   std::memcpy (this->buf_, std::addressof (this->pid_), sizeof (this->pid_));
-  std::memcpy (this->buf_ + sizeof (this->pid_),
-               std::addressof (this->count_),
-               sizeof (this->count_));
+  std::memcpy (this->buf_ + sizeof (this->pid_), std::addressof (this->count_), sizeof (this->count_));
   std::memcpy (this->buf_ + (2 * sizeof (int)), b, std::strlen (b) + 1);
   this->buf_[this->buflen_ - 1] = '\n';
   this->buf_[this->buflen_] = '\0';
@@ -164,9 +162,7 @@ Ping_Pong::handle_output (ACE_HANDLE)
 
   ++this->count_;
   std::memcpy (this->buf_, std::addressof (this->pid_), sizeof (this->pid_));
-  std::memcpy (this->buf_ + sizeof (this->pid_),
-               std::addressof (this->count_),
-               sizeof (this->count_));
+  std::memcpy (this->buf_ + sizeof (this->pid_), std::addressof (this->count_), sizeof (this->count_));
   if (ACE::send (this->handle_,
                  this->buf_,
                  this->buflen_) == -1)

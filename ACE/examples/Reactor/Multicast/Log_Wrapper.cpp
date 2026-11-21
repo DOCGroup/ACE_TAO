@@ -29,9 +29,7 @@ Log_Wrapper::open (int port, char const *mcast_addr)
     return -1;
   }
 
-  std::memcpy (std::addressof (this->log_msg_.host),
-               host_info->h_addr,
-               host_info->h_length);
+  std::memcpy (std::addressof (this->log_msg_.host), host_info->h_addr, host_info->h_length);
   this->log_msg_.app_id = ACE_OS::getpid ();
 
   // This starts out initialized to all zeros!

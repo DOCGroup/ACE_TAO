@@ -531,8 +531,8 @@ ACE_SOCK_Dgram::recv (iovec iov[],
 
       for (i = 0; i < n && copyn > 0; ++i)
         {
+          // iov_len is int on some platforms, size_t on others.
           std::memcpy (iov[i].iov_base, ptr,
-                       // iov_len is int on some platforms, size_t on others
                        copyn > (int) iov[i].iov_len
                          ? (size_t) iov[i].iov_len
                          : (size_t) copyn);
