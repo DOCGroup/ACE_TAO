@@ -31,7 +31,7 @@ public:
   EC_Inversion& operator= (EC_Inversion&&) = delete;
 
   /// @name EC_Driver operations
-  //@{
+  /// @{
   /**
    * Parse the arguments, but override the number of consumers.
    * The options controlling the event types are ignored, and only two
@@ -50,7 +50,7 @@ public:
 
   /// Activate the suppliers at different priorities
   void activate_tasks () override;
-  //@}
+  /// @}
 
 private:
   /// If set then both low priority and high priority suppliers

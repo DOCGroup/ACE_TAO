@@ -85,9 +85,11 @@ Thread_Task::activate_task (int thr_count)
                       thr_count) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Insufficient privilege to run this test.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Insufficient privilege to run this test.\n")),
+                            -1);
+        }
     }
   return 0;
 }

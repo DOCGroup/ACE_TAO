@@ -12,9 +12,11 @@ write_iors_to_file (ACE_TCHAR const *output_file_name,
   std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
     ACE_OS::fopen (output_file_name, "w"), ACE_OS::fclose);
   if (!output_file)
-    ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IORs: %Cn",
-                       output_file_name),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IORs: %Cn",
+                         output_file_name),
+                        -1);
+    }
 
   int const result = ACE_OS::fprintf (output_file.get (), "%s", first_ior);
 
@@ -52,9 +54,11 @@ Server_Task::svc ()
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil RootPOA\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Panic: nil RootPOA\n"),
+                            1);
+        }
 
       PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();

@@ -86,9 +86,11 @@ namespace CORBA
     /// return the parameter mode flag
     Flags flags () const;
 
-    // The pseudo object static methods..
+    /// @name Pseudo-object static methods
+    /// @{
     static NamedValue * _duplicate (NamedValue *);
     static NamedValue * _nil ();
+    /// @}
 
     NamedValue (NamedValue const &) = delete;
     NamedValue (NamedValue &&) = delete;
@@ -103,7 +105,7 @@ namespace CORBA
 
     /// @}
 
-    // Useful for template programming.
+    /// Type aliases for template programming.
     using _ptr_type = NamedValue_ptr;
     using _var_type = NamedValue_var;
     using _out_type = NamedValue_out;
@@ -183,13 +185,14 @@ namespace CORBA
     /// retrieve the item at the nth location. Raises Bounds
     NamedValue_ptr item (ULong n);
 
-    //  CORBA::Status
     /// remove element at index n. Raises Bounds
     void remove (ULong n);
 
-    // The pseudo object static methods..
+    /// @name Pseudo-object static methods
+    /// @{
     static NVList * _duplicate (NVList *);
     static NVList * _nil ();
+    /// @}
 
     /// @name Reference counting
     /// @{
@@ -240,7 +243,7 @@ namespace CORBA
 
     /// @}
 
-    // Useful for template programming.
+    /// Type aliases for template programming.
     using _ptr_type = NVList_ptr;
     using _var_type = NVList_var;
     using _out_type = NVList_out;

@@ -215,9 +215,11 @@ Worker::svc ()
             {
               CORBA::Boolean const result = server->test_is_a ("IDL:Foo:1.0");
               if (result)
-                ACE_DEBUG ((LM_DEBUG,
-                            "(%P|%t) unexpected result = %d\n",
-                            result));
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "(%P|%t) unexpected result = %d\n",
+                              result));
+                }
             }
           catch (CORBA::OBJECT_NOT_EXIST const &)
           {

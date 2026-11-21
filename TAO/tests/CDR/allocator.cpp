@@ -200,8 +200,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             static_cast<double> (ACE_HRTIME_CONVERSION(usecs)) / repeat;
 
           if (!quiet)
-            ACE_OS::printf ("AVE: %d %f\n",
-                            i, average);
+            {
+              ACE_OS::printf ("AVE: %d %f\n",
+                              i, average);
+            }
         }
     }
   catch (CORBA::Exception const &ex)

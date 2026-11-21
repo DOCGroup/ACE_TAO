@@ -26,7 +26,7 @@ public:
 
   /** @name Return the test scheduling parameters
    */
-  //@{
+  /// @{
   /// Return the process scheduling class selected for the test
   int prc_sched_class () const;
 
@@ -44,7 +44,7 @@ public:
   /// task(s) in the test
   int priority_low () const;
 
-  //@}
+  /// @}
 
 private:
   /// The process scheduling class

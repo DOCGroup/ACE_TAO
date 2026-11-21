@@ -18,6 +18,8 @@
 #include "ace/Auto_Event.h"
 #include "ace/Log_Msg.h"
 
+#include <memory>
+
 class Event_Handler : public ACE_Event_Handler
 {
 public:
@@ -87,14 +89,14 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 {
   Event_Handler event_handler;
   event_handler.iterations_ = 5;
-  global_event_handler = &event_handler;
+  global_event_handler = std::addressof (event_handler);
 
-  int result = ACE_Reactor::instance ()->register_handler (&event_handler,
+  int result = ACE_Reactor::instance ()->register_handler (std::addressof (event_handler),
                                                            event_handler.handle_.handle ());
   ACE_TEST_ASSERT (result == 0);
 
   ACE_Time_Value timeout (2);
-  result = ACE_Reactor::instance ()->schedule_timer (&event_handler,
+  result = ACE_Reactor::instance ()->schedule_timer (std::addressof (event_handler),
                                                      0,
                                                      timeout,
                                                      timeout);
@@ -102,7 +104,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   ACE_Reactor::run_alertable_event_loop ();
 
-  ACE_Reactor::instance ()->cancel_timer(&event_handler);
+  ACE_Reactor::instance ()->cancel_timer (std::addressof (event_handler));
 
   return 0;
 }

@@ -81,7 +81,7 @@ public:
   /**
    * @name Resource Retrieval
    */
-  //@{
+  /// @{
   int init_protocol_factories () override;
   ACE_Allocator* input_cdr_dblock_allocator () override;
   ACE_Allocator* input_cdr_buffer_allocator () override;
@@ -90,7 +90,7 @@ public:
   ACE_Allocator* ami_response_handler_allocator () override;
   int input_cdr_allocator_type_locked () override;
   TAO_ProtocolFactorySet *get_protocol_factories () override;
-  //@}
+  /// @}
 
   TAO_Connection_Purging_Strategy *create_purging_strategy () override;
   TAO_LF_Strategy *create_lf_strategy () override;

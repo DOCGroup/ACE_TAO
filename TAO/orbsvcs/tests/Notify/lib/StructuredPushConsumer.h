@@ -75,13 +75,13 @@ protected:
   void disconnect_from_proxy () override;
 
   /// @name StructuredPushConsumer operations
-  //@{
+  /// @{
   void disconnect_structured_push_consumer () override;
 
  /// Default does nothing.
   void push_structured_event (
         CosNotification::StructuredEvent const &notification) override;
-  //@}
+  /// @}
 };
 
 #if defined (__ACE_INLINE__)

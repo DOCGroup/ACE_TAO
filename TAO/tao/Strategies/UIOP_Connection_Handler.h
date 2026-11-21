@@ -47,18 +47,18 @@ public:
 
   ~TAO_UIOP_Connection_Handler ();
 
-  //@{
+  /// @{
   /**
    * Connection_Handler overloads
    */
   int open_handler (void *) override;
-  //@}
+  /// @}
 
   /// Close called by the Acceptor or Connector when connection
   /// establishment fails.
   int close (u_long = 0) override;
 
-  //@{
+  /// @{
   /** @name Event Handler overloads
    */
   int open (void *) override;
@@ -69,19 +69,19 @@ public:
   int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
   int handle_timeout (ACE_Time_Value const &current_time,
                       void const *act = nullptr) override;
-  //@}
+  /// @}
 
   /// Add ourselves to Cache.
   int add_transport_to_cache ();
 
 protected:
-  //@{
+  /// @{
   /**
    * @name TAO_Connection Handler overloads
    */
   int release_os_resources () override;
   int handle_write_ready (ACE_Time_Value const *timeout) override;
-  //@}
+  /// @}
 
 private:
   TAO_UIOP_Connection_Handler (TAO_UIOP_Connection_Handler const &) = delete;

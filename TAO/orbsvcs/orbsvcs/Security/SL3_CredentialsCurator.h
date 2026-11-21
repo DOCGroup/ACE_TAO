@@ -94,7 +94,7 @@ namespace TAO
        * Methods required by the SecurityLevel3::CredentialsCurator
        * interface.
        */
-      //@{
+      /// @{
       SecurityLevel3::AcquisitionMethodList * supported_methods () override;
 
       SecurityLevel3::CredentialsAcquirer_ptr acquire_credentials (
@@ -109,7 +109,7 @@ namespace TAO
           char const * credentials_id) override;
 
       void release_own_credentials (char const * credentials_id) override;
-      //@}
+      /// @}
 
       /// Register CredentialsAcquirer factory.
       /**

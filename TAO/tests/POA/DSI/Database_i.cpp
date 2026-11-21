@@ -110,7 +110,7 @@ DatabaseImpl::Agent::Agent (CORBA::ORB_ptr orb,
     common_servant_ (orb,
                      poa)
 {
-  this->poa_->set_servant (&this->common_servant_);
+  this->poa_->set_servant (std::addressof (this->common_servant_));
 }
 
 Database::Entry_ptr

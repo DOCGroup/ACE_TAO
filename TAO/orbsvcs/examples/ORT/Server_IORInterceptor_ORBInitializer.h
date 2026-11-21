@@ -26,13 +26,13 @@ class Server_IORInterceptor_ORBInitializer
   Server_IORInterceptor_ORBInitializer &operator= (Server_IORInterceptor_ORBInitializer const &) = delete;
   Server_IORInterceptor_ORBInitializer &operator= (Server_IORInterceptor_ORBInitializer &&) = delete;
 
-  //@{
+  /// @{
   /// The pre-initialization hook.
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   /// The post-initialization hook.
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
-  //@}
+  /// @}
 };
 
 #if defined(_MSC_VER)

@@ -60,12 +60,12 @@ public:
    * These methods are founds in the SecurityLevel1::Current
    * interface.
    */
-  //@{
+  /// @{
   /// Return the security attributes corresponding to the types in the
   /// given attribute type list associated with the current request.
   Security::AttributeList * get_attributes (
       Security::AttributeTypeList const & attributes) override;
-  //@}
+  /// @}
 
   /**
    * @name SecurityLevel2::Current Methods
@@ -73,11 +73,11 @@ public:
    * These methods are founds in the SecurityLevel2::Current
    * interface.
    */
-  //@{
+  /// @{
   /// Return the Credentials received from the client associate with
   /// the current request.
   SecurityLevel2::ReceivedCredentials_ptr received_credentials () override;
-  //@}
+  /// @}
 
   /// Return the TSS slot ID assigned to the "SecurityCurrent" object.
   /**

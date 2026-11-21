@@ -375,8 +375,10 @@ public:
   int execute (Worker *) override
   {
     if (debug)
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Executing TSS_Assert(%d,%d,%d) cmd\n"),
-                  elt_count_, clt_count_, leader_available_));
+      {
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Executing TSS_Assert(%d,%d,%d) cmd\n"),
+                    elt_count_, clt_count_, leader_available_));
+      }
     TAO_Leader_Follower &leader_follower = orb_core_->leader_follower ();
     TAO_ORB_Core_TSS_Resources *const tss = orb_core_->get_tss_resources ();
     TSS_ASSERT (tss, leader_follower,

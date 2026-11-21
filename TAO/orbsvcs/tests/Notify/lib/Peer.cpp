@@ -69,7 +69,7 @@ TAO_Notify_Tests_Peer::init_state (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
-TAO_Notify_Tests_Peer::set_name (ACE_CString& name)
+TAO_Notify_Tests_Peer::set_name (ACE_CString const & name)
 {
   this->name_ = name;
 }

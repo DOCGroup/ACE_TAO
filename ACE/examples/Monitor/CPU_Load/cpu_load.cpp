@@ -69,7 +69,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   {
     ACE_ERROR_RETURN ((LM_ERROR, "Monitor service is unavailable\n"), 1);
   }
-  mgr->admin ().reactor (&new_reactor);
+  mgr->admin ().reactor (std::addressof (new_reactor));
 
   /// Set the timer for CPU load check at 2 sec.
   ACE::Monitor_Control::Monitor_Base_Unique_Ptr const cpu_monitor (

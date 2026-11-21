@@ -58,7 +58,7 @@ protected:
    *
    * These are implementations of template methods declared by TAO_Transport.
    */
-  //@{
+  /// @{
   ACE_Event_Handler *event_handler_i () override;
   TAO_Connection_Handler *connection_handler_i () override;
 
@@ -74,7 +74,7 @@ protected:
 
   int handle_input (TAO_Resume_Handle &rh,
                     ACE_Time_Value *max_wait_time) override;
-  //@}
+  /// @}
 
 public:
   /// @todo These methods IMHO should have more meaningful names.

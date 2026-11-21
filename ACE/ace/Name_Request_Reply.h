@@ -68,14 +68,16 @@ public:
   ACE_Name_Request ();
 
   /// Create a ACE_Name_Request message.
-  ACE_Name_Request (ACE_INT32 msg_type, // Type of request.
-                    const ACE_WCHAR_T name[], //
+  /// @param msg_type Type of request.
+  /// @param timeout Maximum time willing to wait for the request.
+  ACE_Name_Request (ACE_INT32 msg_type,
+                    const ACE_WCHAR_T name[],
                     const ACE_UINT32 name_length,
                     const ACE_WCHAR_T value[],
                     const ACE_UINT32 value_length,
                     const char type[],
                     const ACE_UINT32 type_length,
-                    ACE_Time_Value *timeout = nullptr); // Max time willing to wait for request.
+                    ACE_Time_Value *timeout = nullptr);
 
   /// Initialize length_ in order to ensure correct byte ordering
   /// before a request is sent.
@@ -193,7 +195,8 @@ public:
   ACE_Name_Reply ();
 
   /// Create a ACE_Name_Reply message.
-  ACE_Name_Reply (ACE_UINT32 type, ACE_UINT32 err); // Type of reply.
+  /// @param type Type of reply.
+  ACE_Name_Reply (ACE_UINT32 type, ACE_UINT32 err);
 
   /// Initialize length_ in order to ensure correct byte ordering
   /// before a reply is sent.

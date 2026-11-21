@@ -93,18 +93,22 @@ Task::svc ()
         RTCORBA::PriorityModelPolicy::_narrow (policy.in ());
 
       if (CORBA::is_nil (priority_policy.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "ERROR: Priority Model Policy not exposed!\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "ERROR: Priority Model Policy not exposed!\n"),
+                            -1);
+        }
 
       RTCORBA::PriorityModel const priority_model =
         priority_policy->priority_model ();
 
       if (priority_model != RTCORBA::CLIENT_PROPAGATED)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "ERROR: priority_model != "
-                           "RTCORBA::CLIENT_PROPAGATED!\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "ERROR: priority_model != "
+                             "RTCORBA::CLIENT_PROPAGATED!\n"),
+                            -1);
+        }
 
       // Make several invocations, changing the priority of this thread
       // for each.
@@ -246,11 +250,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                 2);
             }
           else
-            // Unexpected error.
-            ACE_ERROR_RETURN ((LM_ERROR,
-                                 "ERROR: Cannot create thread. errno = %d\n",
-                                 ACE_ERRNO_GET),
-                                -1);
+            {
+              // Unexpected error.
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                   "ERROR: Cannot create thread. errno = %d\n",
+                                   ACE_ERRNO_GET),
+                                  -1);
+            }
         }
 
       // Wait for task to exit.

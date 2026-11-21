@@ -75,7 +75,7 @@ namespace TAO
        * These are implementations of template methods declared by
        * TAO_Transport.
        */
-      //@{
+      /// @{
       ACE_Event_Handler * event_handler_i () override;
       TAO_Connection_Handler *connection_handler_i () override;
 
@@ -107,7 +107,7 @@ namespace TAO
 
       /// Open the service context list and process it.
       int tear_listen_point_list (TAO_InputCDR &cdr) override;
-      //@}
+      /// @}
 
     private:
       /// Set the Bidirectional context info in the service context

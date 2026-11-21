@@ -62,7 +62,9 @@ Policy_Verifier::init (int argc, ACE_TCHAR *argv[])
     this->base_object_ref_.c_str ());
 
   if (!Policy_Verifier::check_reference (object.in (), "Invalid IOR file!\n"))
-    return false;
+    {
+      return false;
+    }
 
   this->base_object_ = Counter::_narrow (object.in ());
 
@@ -74,7 +76,9 @@ Policy_Verifier::init (int argc, ACE_TCHAR *argv[])
     this->overridden_object_ref_.c_str ());
 
   if (!Policy_Verifier::check_reference (object.in (), "Invalid IOR file!\n"))
-    return false;
+    {
+      return false;
+    }
 
   this->overridden_object_ = Counter::_narrow (object.in ());
 
@@ -116,9 +120,11 @@ Policy_Verifier::verify_reference (Counter_ptr object,
             priority_policy->server_priority ();
 
           if (priority_model == RTCORBA::SERVER_DECLARED)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("\n\nPriority Model: RTCORBA::SERVER_DECLARED\n")
-                        ));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("\n\nPriority Model: RTCORBA::SERVER_DECLARED\n")
+                          ));
+            }
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Priority Model: %d\nCORBA Priority: %d\n\n"),
@@ -127,8 +133,10 @@ Policy_Verifier::verify_reference (Counter_ptr object,
                       ));
 
           if (priority != rt_properties.priority ())
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("Priority Value Mismatch.\n")));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("Priority Value Mismatch.\n")));
+            }
         }
 
       policy_var = object->_get_policy (RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE);
@@ -148,8 +156,10 @@ Policy_Verifier::verify_reference (Counter_ptr object,
                 priority_banded_policy->priority_bands ();
               CORBA::ULong const band_num = pb->length ();
               if (band_num != this->priority_bands_)
-                ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("Mismatching Number of Priority Bands!\n")));
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("Mismatching Number of Priority Bands!\n")));
+                }
 
               for (CORBA::ULong i {}; i < band_num; ++i)
                 {

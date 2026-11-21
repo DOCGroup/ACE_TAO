@@ -64,13 +64,13 @@ namespace TAO
      * Methods required by the
      * PortableInterceptor::ObjectReferenceTemplate ValueType.
      */
-    //@{
+    /// @{
     char * server_id () override;
 
     char * orb_id () override;
 
     PortableInterceptor::AdapterName * adapter_name () override;
-    //@}
+    /// @}
 
     /**
      * @name PortableInterceptor::ObjectReferenceFactory Methods
@@ -78,11 +78,11 @@ namespace TAO
      * Methods required by the
      * PortableInterceptor::ObjectReferenceFactory ValueType.
      */
-    //@{
+    /// @{
     CORBA::Object_ptr make_object (
       char const *repository_id,
       PortableInterceptor::ObjectId const &id) override;
-    //@}
+    /// @}
 
     ObjectReferenceTemplate (ObjectReferenceTemplate const &) = delete;
     ObjectReferenceTemplate &operator= (ObjectReferenceTemplate const &) = delete;

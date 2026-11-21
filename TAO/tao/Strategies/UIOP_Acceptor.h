@@ -56,7 +56,7 @@ public:
    *
    * Please check the documentation in Transport_Acceptor.h for details.
    */
-  //@{
+  /// @{
   int open (TAO_ORB_Core *orb_core,
             ACE_Reactor *reactor,
             int version_major,
@@ -78,7 +78,7 @@ public:
 
   int object_key (IOP::TaggedProfile &profile,
                   TAO::ObjectKey &key) override;
-  //@}
+  /// @}
 
 private:
   /// Implement the common part of the open*() methods
@@ -115,10 +115,12 @@ private:
   /// The concrete acceptor, as a pointer to its base class.
   TAO_UIOP_BASE_ACCEPTOR base_acceptor_;
 
-  // Acceptor strategies.
+  /// @name Acceptor strategies
+  /// @{
   std::unique_ptr<TAO_UIOP_CREATION_STRATEGY> creation_strategy_;
   std::unique_ptr<TAO_UIOP_CONCURRENCY_STRATEGY> concurrency_strategy_;
   std::unique_ptr<TAO_UIOP_ACCEPT_STRATEGY> accept_strategy_;
+  /// @}
 
   /// The GIOP version for this endpoint
   TAO_GIOP_Message_Version version_;

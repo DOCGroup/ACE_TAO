@@ -48,7 +48,7 @@ public:
    * Please read the documentation in the TAO_Transport_Mux_Strategy class
    * for details.
    */
-  //@{
+  /// @{
   CORBA::ULong request_id () override;
   int bind_dispatcher (CORBA::ULong request_id,
                        ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd) override;
@@ -61,7 +61,7 @@ public:
   bool idle_after_reply () override;
   void connection_closed () override;
   bool has_request () override;
-  //@}
+  /// @}
 
 private:
   TAO_Exclusive_TMS (TAO_Exclusive_TMS const &) = delete;

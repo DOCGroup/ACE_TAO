@@ -144,12 +144,7 @@ File_Manager::open_friends_file (const char *filename)
 
   // See if we've got a filename or a pathname (i.e., directory/filename).
 
-  if (std::strrchr (filename, '/') != nullptr)
-    {
-      // We've got a complete pathname.
-      pathname = filename;
-    }
-  else
+  if (std::strrchr (filename, '/') == nullptr)
     {
       char const * const home = std::getenv ("HOME");
       if (home != nullptr)

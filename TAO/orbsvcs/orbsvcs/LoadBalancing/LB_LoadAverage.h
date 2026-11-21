@@ -35,13 +35,13 @@ namespace TAO_LB
    *
    * Defaults defined by the Load Balancing specification.
    */
-  //@{
+  /// @{
   constexpr CORBA::Float LA_DEFAULT_TOLERANCE = 1;
   constexpr CORBA::Float LA_DEFAULT_DAMPENING = 0;
   constexpr CORBA::Float LA_DEFAULT_PER_BALANCE_LOAD = 0;
 
   constexpr CORBA::Float LA_DEFAULT_DIFF_AVERAGE_CUTOFF = 0.8f;
-  //@}
+  /// @}
 
 }
 
@@ -64,7 +64,7 @@ public:
    *
    * Methods required by the CosLoadBalancing::Strategy interface.
    */
-  //@{
+  /// @{
   char * name () override;
 
   CosLoadBalancing::Properties * get_properties () override;
@@ -84,7 +84,7 @@ public:
   void analyze_loads (
       PortableGroup::ObjectGroup_ptr object_group,
       CosLoadBalancing::LoadManager_ptr load_manager) override;
-  //@}
+  /// @}
 
   /// Returns the default POA for this servant.
   PortableServer::POA_ptr _default_POA () override;
@@ -135,7 +135,7 @@ private:
    *
    * Cached LoadAverage load balancing strategy property values.
    */
-  //@{
+  /// @{
   ///
   CORBA::Float tolerance_;
 
@@ -145,7 +145,7 @@ private:
   ///
   CORBA::Float per_balance_load_;
 
-  //@}
+  /// @}
 
   CosLoadBalancing::LoadList current_loads_;
 };

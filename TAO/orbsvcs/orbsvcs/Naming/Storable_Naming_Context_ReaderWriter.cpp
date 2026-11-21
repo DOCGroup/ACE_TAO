@@ -182,11 +182,13 @@ TAO_Storable_Naming_Context_ReaderWriter::read (TAO_Storable_Naming_Context & co
   context.storable_context_ = bindings_map;
   context.context_ = context.storable_context_;
   if (stream_.good ())
-    return 0;
+    {
+      return 0;
+    }
   else
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 }
 
 void

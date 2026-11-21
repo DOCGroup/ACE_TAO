@@ -185,9 +185,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           try
             {
               if (hello->_non_existent ())
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   ACE_TEXT ("Client: non_existent returns true\n")),
-                                  -1);
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     ACE_TEXT ("Client: non_existent returns true\n")),
+                                    -1);
+                }
               break;
             }
           catch (CORBA::TRANSIENT const &)
@@ -199,7 +201,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       if (options.is_shutdown)
-        hello->shutdown ();
+        {
+          hello->shutdown ();
+        }
       else
         {
           ClientTask ct (hello.in (), options.client_num);

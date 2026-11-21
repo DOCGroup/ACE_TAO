@@ -298,7 +298,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG,
               " (%t) suspending invoker task\n"));
 
-  if (invoker_manager.suspend_task (&invoker) == -1)
+  if (invoker_manager.suspend_task (std::addressof (invoker)) == -1)
     {
       ACE_ERROR ((LM_DEBUG,
                   " (%t) %p\n",
@@ -311,7 +311,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG,
               " (%t) resuming invoker task\n"));
 
-  if (invoker_manager.resume_task (&invoker) == -1)
+  if (invoker_manager.resume_task (std::addressof (invoker)) == -1)
     {
       ACE_ERROR ((LM_DEBUG,
                   " (%t) %p\n",

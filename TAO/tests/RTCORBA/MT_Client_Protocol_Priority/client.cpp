@@ -84,36 +84,44 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
                               "%hd",
                               &options.priority1);
         if (result == 0 || result == EOF)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to process <-a> option"),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Unable to process <-a> option"),
+                              -1);
+          }
         break;
       case 'b':
         result = std::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
                               "%hd",
                               &options.priority2);
         if (result == 0 || result == EOF)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to process <-b> option"),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Unable to process <-b> option"),
+                              -1);
+          }
         break;
       case 'e':
         result = std::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
                               "%u",
                               &options.protocol1);
         if (result == 0 || result == EOF)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to process <-e> option"),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Unable to process <-e> option"),
+                              -1);
+          }
         break;
       case 'f':
         result = std::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
                               "%u",
                               &options.protocol2);
         if (result == 0 || result == EOF)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to process <-f> option"),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Unable to process <-f> option"),
+                              -1);
+          }
         break;
       case '?':
       default:
@@ -143,10 +151,12 @@ int
 check_for_nil (CORBA::Object_ptr obj, char const *msg)
 {
   if (CORBA::is_nil (obj))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ERROR: Object reference <%C> is nil\n",
-                       msg),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ERROR: Object reference <%C> is nil\n",
+                         msg),
+                        -1);
+    }
 
   return 0;
 }
@@ -232,10 +242,12 @@ Task::svc ()
       RTCORBA::PriorityModel const priority_model =
         priority_policy->priority_model ();
       if (priority_model != RTCORBA::CLIENT_PROPAGATED)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "ERROR: priority_model != "
-                           "RTCORBA::CLIENT_PROPAGATED!\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "ERROR: priority_model != "
+                             "RTCORBA::CLIENT_PROPAGATED!\n"),
+                            -1);
+        }
 
       // Spawn two worker threads.
       ACE_Barrier thread_barrier (2);
@@ -253,10 +265,12 @@ Task::svc ()
 
       CORBA::Short native_priority1 {};
       if (pm->to_native (this->options_.priority1, native_priority1) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot convert corba priority %d to native priority\n",
-                           this->options_.priority1),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot convert corba priority %d to native priority\n",
+                             this->options_.priority1),
+                            -1);
+        }
 
       if (worker1.activate (flags,
                             1, 0,
@@ -274,10 +288,12 @@ Task::svc ()
 
       CORBA::Short native_priority2 {};
       if (pm->to_native (this->options_.priority2, native_priority2) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot convert corba priority %d to native priority\n",
-                           this->options_.priority2),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot convert corba priority %d to native priority\n",
+                             this->options_.priority2),
+                            -1);
+        }
 
       if (worker2.activate (flags,
                             1, 0,
@@ -359,8 +375,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                 2);
             }
           else
-            // Unexpected error.
-            ACE_ASSERT (0);
+            {
+              // Unexpected error.
+              ACE_ASSERT (0);
+            }
         }
 
       // Wait for task to exit.

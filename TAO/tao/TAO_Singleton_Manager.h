@@ -118,10 +118,10 @@ public:
 
 protected:
   /// Force allocation on the heap.
-  //@{
+  /// @{
   TAO_Singleton_Manager ();
   ~TAO_Singleton_Manager ();
-  //@}
+  /// @}
 
 private:
   TAO_Singleton_Manager (const TAO_Singleton_Manager &) = delete;

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    CSD_Strategy_Base.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_CSD_FW_CUSTOM_SERVANT_DISPATCHING_STRATEGY_H
 #define TAO_CSD_FW_CUSTOM_SERVANT_DISPATCHING_STRATEGY_H
@@ -58,13 +56,13 @@ namespace TAO
       /// Result Type for dispatching method(s).
       enum DispatchResult
       {
-        // The request dispatching has been handled.
+        /// The request dispatching has been handled.
         DISPATCH_HANDLED,
 
-        // The request dispatching has been rejected.
+        /// The request dispatching has been rejected.
         DISPATCH_REJECTED,
 
-        // Defer to "default" dispatching strategy (use the caller's thread).
+        /// Defer to "default" dispatching strategy (use the caller's thread).
         DISPATCH_DEFERRED
       };
 

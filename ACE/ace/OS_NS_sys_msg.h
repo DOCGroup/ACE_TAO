@@ -54,7 +54,7 @@ namespace ACE_OS {
               const void *buf,
               size_t len,
               int flags);
-  //@}
+  /// @}
 
 } /* namespace ACE_OS */
 

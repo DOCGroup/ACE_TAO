@@ -52,12 +52,12 @@ public:
 
   ~TAO_LF_CH_Event () override;
 
-  //@{
+  /// @{
 protected:
   /// Check whether we have reached the final state..
   bool is_state_final () const override;
 
-  //@}
+  /// @}
 private:
   /// Validate and change the state
   /*

@@ -56,11 +56,11 @@ public:
    *
    * Check Protocol_Factory.h for a description of these methods.
    */
-  //@{
+  /// @{
   TAO_Acceptor  *make_acceptor () override;
   TAO_Connector *make_connector () override;
   int requires_explicit_endpoint () const override;
-  //@}
+  /// @}
 
   /// Set mmap file prefix
   void mmap_file_prefix (const ACE_TCHAR *prefix);
@@ -83,7 +83,8 @@ private:
   std::unique_ptr<ACE_TCHAR, ACE_TCHAR_String_Deleter> mmap_prefix_;
 
   /// Minimum bytes of the mmap files.
-  ACE_OFF_T min_bytes_ {10 * 1024}; // @@ Nanbor, remove this magic number!!
+  /// TODO: Replace this magic number with a named configuration value.
+  ACE_OFF_T min_bytes_ {10 * 1024};
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_SHMIOP_Protocol_Factory)

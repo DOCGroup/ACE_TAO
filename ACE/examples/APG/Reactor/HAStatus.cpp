@@ -8,6 +8,8 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Reactor.h"
 
+#include <memory>
+
 class ClientAcceptor : public ACE_Event_Handler
 {
 public:
@@ -204,7 +206,8 @@ ClientService::handle_input (ACE_HANDLE)
   message_block->copy (&buffer[send_cnt], remaining);
   int const output_off = this->output_queue_.is_empty ();
   ACE_Time_Value nowait {ACE_OS::gettimeofday ()};
-  if (this->output_queue_.enqueue_tail (message_block.get (), &nowait) == -1)
+  if (this->output_queue_.enqueue_tail (message_block.get (),
+                                        std::addressof (nowait)) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p; discarding data\n"),

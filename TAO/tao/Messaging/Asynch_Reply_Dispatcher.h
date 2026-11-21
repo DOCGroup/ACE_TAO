@@ -45,11 +45,11 @@ public:
   TAO_Asynch_Reply_Dispatcher &operator= (TAO_Asynch_Reply_Dispatcher &&) = delete;
 
   /// @name The Reply Dispatcher methods
-  //@{
+  /// @{
   int dispatch_reply (TAO_Pluggable_Reply_Params &params) override;
 
   void connection_closed () override;
-  //@}
+  /// @}
 
   /// Inform that the reply timed out
   void reply_timed_out () override;

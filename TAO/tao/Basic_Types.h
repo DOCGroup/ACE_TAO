@@ -35,7 +35,7 @@ namespace CORBA
    *
    * Declarations of all CORBA primitive types.
    */
-  //@{
+  /// @{
   using Boolean = ACE_CDR::Boolean;
   using Boolean_out = Boolean &;
 
@@ -92,7 +92,7 @@ namespace CORBA
 
   using UInt64 = ACE_CDR::UInt64;
   using UInt64_out = UInt64 &;
-  //@}
+  /// @}
 
   using String_var = TAO::String_var<CORBA::Char>;
   using String_out = TAO::String_out<CORBA::Char>;

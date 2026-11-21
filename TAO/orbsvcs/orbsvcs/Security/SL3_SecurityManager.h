@@ -51,7 +51,7 @@ namespace TAO
        * Methods required by the SecurityLevel3::SecurityManager
        * interface.
        */
-      //@{
+      /// @{
       SecurityLevel3::CredentialsCurator_ptr credentials_curator () override;
 
       SecurityLevel3::TargetCredentials_ptr get_target_credentials (
@@ -69,7 +69,7 @@ namespace TAO
       SecurityLevel3::ObjectCredentialsPolicy_ptr
       create_object_creds_policy (
           SecurityLevel3::OwnCredentialsList const & cred_list) override;
-      //@}
+      /// @}
 
     protected:
       /**

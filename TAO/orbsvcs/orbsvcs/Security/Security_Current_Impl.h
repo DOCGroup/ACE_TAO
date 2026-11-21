@@ -58,13 +58,13 @@ namespace TAO
        * These methods are founds in the SecurityLevel1::Current
        * interface.
        */
-      //@{
+      /// @{
       /// Return the security attributes corresponding to the types in
       /// the given attribute type list associated with the current
       /// request.
       virtual ::Security::AttributeList * get_attributes (
           ::Security::AttributeTypeList const & attributes) = 0;
-      //@}
+      /// @}
 
       /**
        * @name SecurityLevel2::Current Methods
@@ -72,11 +72,11 @@ namespace TAO
        * These methods are founds in the SecurityLevel2::Current
        * interface.
        */
-      //@{
+      /// @{
       /// Return the Credentials received from the client associate with
       /// the current request.
       virtual SecurityLevel2::ReceivedCredentials_ptr received_credentials () = 0;
-      //@}
+      /// @}
 
       /// Return the unique tag that identifies the concrete subclass.
       virtual CORBA::ULong tag () const = 0;

@@ -68,14 +68,14 @@ namespace TAO
       /// connected. Argument is unused.
       int open (void *) override;
 
-      //@{
+      /// @{
       /** @name Event Handler overloads
        */
       int handle_input (ACE_HANDLE) override;
 
       int resume_handler () override;
       int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
-      //@}
+      /// @}
 
     private:
       TAO_ORB_Core *orb_core_;

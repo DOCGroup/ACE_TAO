@@ -20,7 +20,9 @@ HelloAgain::get_string_again ()
 
   // A collocated servant runs in the calling thread.
   if (self_ID == this_ID)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: A remote call has been made\n"));
+    {
+      ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: A remote call has been made\n"));
+    }
   else if (this->orb_->orb_core ()->optimize_collocation_objects () &&
            this->orb_->orb_core ()->use_global_collocation ())
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) OK: An expected collocated call has been made\n"));
@@ -40,7 +42,9 @@ HelloAgain::get_string ()
 
   // A collocated servant runs in the calling thread.
   if (self_ID == this_ID)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: A remote call has been made\n"));
+    {
+      ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: A remote call has been made\n"));
+    }
   else if (this->orb_->orb_core ()->optimize_collocation_objects () &&
            this->orb_->orb_core ()->use_global_collocation ())
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) OK: An expected collocated call has been made\n"));

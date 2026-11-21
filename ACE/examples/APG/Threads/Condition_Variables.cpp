@@ -18,7 +18,7 @@ public:
   bool is_free () const
     { return this->owner_ == nullptr; }
 
-  bool is_owner (ACE_Task_Base *tb) const
+  bool is_owner (ACE_Task_Base const *tb) const
     { return this->owner_ == tb; }
 
   ACE_Task_Base *get_owner () const

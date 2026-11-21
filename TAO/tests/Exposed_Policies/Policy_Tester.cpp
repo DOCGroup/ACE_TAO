@@ -191,10 +191,12 @@ Policy_Tester::create_objects ()
       ACE_OS::fopen (this->rt_poa_properties_->ior_source ().c_str (), ACE_TEXT ("w")),
       ACE_OS::fclose);
     if (!output_file)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
-                         this->rt_poa_properties_->ior_source ().c_str ()),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
+                           this->rt_poa_properties_->ior_source ().c_str ()),
+                          -1);
+      }
     ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
   }
 
@@ -233,10 +235,12 @@ Policy_Tester::create_objects ()
       ACE_OS::fopen (this->rt_object_properties_->ior_source ().c_str (), ACE_TEXT ("w")),
       ACE_OS::fclose);
     if (!output_file)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
-                         this->rt_object_properties_->ior_source ().c_str ()),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
+                           this->rt_object_properties_->ior_source ().c_str ()),
+                          -1);
+      }
     ACE_OS::fprintf (output_file.get (), "%s", o_ior.in ());
   }
   return 0;

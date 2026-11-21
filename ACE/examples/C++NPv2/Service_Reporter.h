@@ -28,7 +28,8 @@ protected:
   { return acceptor_.get_handle (); }
 
 private:
-  ACE_SOCK_Acceptor acceptor_; // Acceptor instance.
+  /// Acceptor instance.
+  ACE_SOCK_Acceptor acceptor_;
   enum { DEFAULT_PORT = 9411 };
 };
 

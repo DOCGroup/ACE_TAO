@@ -55,7 +55,8 @@ protected:
 
   int handle_data (ACE_SOCK_Stream *) override {
     while (logging_handler_.log_record () != -1)
-      continue;
+      {
+      }
 
     logging_handler_.close (); // Close the socket handle.
     return 0;

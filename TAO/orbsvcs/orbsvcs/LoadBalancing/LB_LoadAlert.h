@@ -34,7 +34,7 @@ public:
    *
    * Methods required by the CosLoadBalancing::LoadAlert interface.
    */
-  //@{
+  /// @{
   /// Forward requests back to the load manager via the object group
   /// reference.
   void enable_alert () override;
@@ -42,7 +42,7 @@ public:
   /// Stop forwarding requests, and begin accepting them again.
   void disable_alert () override;
 
-  //@}
+  /// @}
 
   /// Has this LoadAlert servant been alerted of a high load condition
   /// by the LoadManager.

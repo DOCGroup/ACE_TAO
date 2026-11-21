@@ -31,10 +31,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // initialize the driver
       if (driver.init (argc, argv) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                          "(%N:%l) driver.cpp - "
-                          "Driver initialization failed\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "(%N:%l) driver.cpp - "
+                            "Driver initialization failed\n"),
+                            -1);
+        }
 
       // run the tests
       error_count = driver.run ();
@@ -76,10 +78,12 @@ Driver::init (int argc, ACE_TCHAR *argv[])
 
       // Parse command line and verify parameters.
       if (this->parse_args (argc, argv) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                          "(%N:%l) driver.cpp - "
-                          "parse_args failed\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "(%N:%l) driver.cpp - "
+                            "parse_args failed\n"),
+                            -1);
+        }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -94,12 +98,14 @@ int
 Driver::parse_args (int argc, ACE_TCHAR *argv[])
 {
   if (argc == 1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "usage:  %s\n"
-                       " -t [dynany|dynarray|dynenum|dynsequence|dynstruct|dynunion]\n"
-                       " -d\n",
-                       argv [0]),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "usage:  %s\n"
+                         " -t [dynany|dynarray|dynenum|dynsequence|dynstruct|dynunion]\n"
+                         " -d\n",
+                         argv [0]),
+                        -1);
+    }
 
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("t:d"));
   int c {};
@@ -112,22 +118,36 @@ Driver::parse_args (int argc, ACE_TCHAR *argv[])
         test_str = get_opts.opt_arg ();
 
         if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynany")))
-          this->test_type_ = Test_Type::dynany;
+          {
+            this->test_type_ = Test_Type::dynany;
+          }
         else if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynarray")))
-          this->test_type_ = Test_Type::dynarray;
+          {
+            this->test_type_ = Test_Type::dynarray;
+          }
         else if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynenum")))
-          this->test_type_ = Test_Type::dynenum;
+          {
+            this->test_type_ = Test_Type::dynenum;
+          }
         else if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynsequence")))
-          this->test_type_ = Test_Type::dynsequence;
+          {
+            this->test_type_ = Test_Type::dynsequence;
+          }
         else if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynstruct")))
-          this->test_type_ = Test_Type::dynstruct;
+          {
+            this->test_type_ = Test_Type::dynstruct;
+          }
         else if (!ACE_OS::strcmp (test_str, ACE_TEXT ("dynunion")))
-          this->test_type_ = Test_Type::dynunion;
+          {
+            this->test_type_ = Test_Type::dynunion;
+          }
         else
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Unrecognized test type: %s\n"),
-                             test_str),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Unrecognized test type: %s\n"),
+                               test_str),
+                              -1);
+          }
         break;
 
       case 'd':
@@ -146,9 +166,11 @@ Driver::parse_args (int argc, ACE_TCHAR *argv[])
       }
 
   if (this->test_type_ == Test_Type::none)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("A test type must be selected with -t\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("A test type must be selected with -t\n")),
+                        -1);
+    }
 
   // Indicates successful parsing of command line.
   return 0;

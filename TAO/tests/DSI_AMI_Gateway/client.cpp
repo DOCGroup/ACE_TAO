@@ -157,9 +157,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (test_exception const &ex)
     {
       if (options.test_user_exception)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Client: caught expected user exception: %C\n",
-                    ex._name()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Client: caught expected user exception: %C\n",
+                      ex._name()));
+        }
       else
       {
         ex._tao_print_exception ("Client: exception caught - ");
@@ -178,9 +180,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (CORBA::NO_PERMISSION const &ex)
     {
       if (options.test_system_exception)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Client: caught expected system exception: %C\n",
-                    ex._name()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Client: caught expected system exception: %C\n",
+                      ex._name()));
+        }
       else
       {
         ex._tao_print_exception ("Client: exception caught - ");

@@ -32,13 +32,13 @@ public:
   /// Access the history of samples
   ACE_Sample_History &sample_history ();
 
-  //@{
+  /// @{
   /** @name The RtecEventComm::PushCallback methods
    */
   void sample (Test::Timestamp the_timestamp) override;
 
   PortableServer::POA_ptr _default_POA () override;
-  //@}
+  /// @}
 
 private:
   /// Synchronize access to the internal data

@@ -75,10 +75,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         Test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Object reference <%s> is nil.\n",
-                           ior),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Object reference <%s> is nil.\n",
+                             ior),
+                            1);
+        }
 
       try
         {

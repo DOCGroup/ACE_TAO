@@ -37,8 +37,8 @@ public:
   Server_Task & operator= (Server_Task &&) = delete;
 
 private:
-  /// The sender object
-  Sender_i * const sender_; // Non-owning; the POA servant outlives this task.
+  /// Sender object, borrowed because the POA servant outlives this task.
+  Sender_i * const sender_;
 
   /// The synchronizer
   ACE_Manual_Event &event_;

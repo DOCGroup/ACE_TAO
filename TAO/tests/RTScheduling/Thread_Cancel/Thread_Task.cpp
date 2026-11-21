@@ -33,9 +33,11 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb)
                                             4) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Insufficient privilege to run this test.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Insufficient privilege to run this test.\n")),
+                            -1);
+        }
     }
   active_thread_count_ = 4;
 

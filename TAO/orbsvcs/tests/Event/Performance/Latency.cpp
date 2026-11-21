@@ -11,6 +11,8 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 
+#include <memory>
+
 static int iterations {1000};
 static bool do_dump_history {};
 static ACE_TCHAR const* ec_ior = ACE_TEXT("file://ec.ior");
@@ -216,10 +218,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       PortableServer::ObjectId_var id;
 
-      id = root_poa->servant_to_id (&consumer);
+      id = root_poa->servant_to_id (std::addressof (consumer));
       root_poa->deactivate_object (id.in ());
 
-      id = root_poa->servant_to_id (&supplier);
+      id = root_poa->servant_to_id (std::addressof (supplier));
       root_poa->deactivate_object (id.in ());
 
       orb->destroy ();

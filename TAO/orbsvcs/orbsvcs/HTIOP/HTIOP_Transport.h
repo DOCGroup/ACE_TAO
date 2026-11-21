@@ -73,7 +73,7 @@ namespace TAO
        * Please check the documentation in "tao/Transport.h" for more
        * details.
        */
-      //@{
+      /// @{
       ACE_Event_Handler * event_handler_i () override;
       virtual TAO_Connection_Handler * invalidate_event_handler_i ();
 
@@ -107,7 +107,7 @@ namespace TAO
 
       TAO_Connection_Handler * connection_handler_i () override;
 
-      //@}
+      /// @}
 
     private:
       /// Set the Bidirectional context info in the service context list

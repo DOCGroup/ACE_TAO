@@ -153,7 +153,7 @@ public:
   /// Get this interface's repository id (TAO specific).
   const char *_interface_repository_id () const override = 0;
 
-  //@{
+  /// @{
   /**
    * @name Reference Counting Operations
    */
@@ -171,7 +171,7 @@ public:
    * Returns the current reference count value.
    */
   CORBA::ULong _refcount_value () const override;
-  //@}
+  /// @}
 
   void _collocated_dispatch (::CORBA::Object_ptr obj,
                                      ::CORBA::Object_out forward_obj,

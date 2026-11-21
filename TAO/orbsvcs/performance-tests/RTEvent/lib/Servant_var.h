@@ -41,7 +41,7 @@ public:
   /// Helper method to increase the reference count on a servant.
   static SERVANT *duplicate (SERVANT *servart);
 
-  //@{
+  /// @{
   /** @name Smart pointer operations
    */
   const SERVANT * operator->() const;
@@ -49,15 +49,15 @@ public:
 
   operator SERVANT *();
   operator const SERVANT * () const;
-  //@}
+  /// @}
 
-  //@{
+  /// @{
   /** @name Canonical CORBA T_var methods
    */
   SERVANT *in () const;
   SERVANT *&out ();
   SERVANT *&inout ();
-  //@}
+  /// @}
 
 private:
   /// The owned object

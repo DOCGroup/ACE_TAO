@@ -65,7 +65,7 @@ protected:
    * Please check the documentation in "tao/Transport.h" for more
    * details.
    */
-  //@{
+  /// @{
   ACE_Event_Handler * event_handler_i () override;
 
   ssize_t send (iovec *iov, int iovcnt,
@@ -106,7 +106,7 @@ public:
   int tear_listen_point_list (TAO_InputCDR &cdr) override;
 
   TAO_Connection_Handler * connection_handler_i () override;
-  //@}
+  /// @}
 
 private:
   /// Set the Bidirectional context info in the service context list

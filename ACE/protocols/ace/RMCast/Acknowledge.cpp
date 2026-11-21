@@ -373,7 +373,7 @@ namespace ACE_RMCast
       for (Map::iterator i (hold_.begin ()), e (hold_.end ()); i != e; ++i)
       {
         Address addr ((*i).ext_id_);
-        Queue& q = (*i).int_id_;
+        Queue const & q = (*i).int_id_;
 
         //@@ Should look for the highest known number.
         //

@@ -175,9 +175,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P|%t) Panic: nil RootPOA\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT (" (%P|%t) Panic: nil RootPOA\n")),
+                            1);
+        }
 
       if (parse_args (argc, argv, options) != 0)
       {
@@ -205,11 +207,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")),
           ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Cannot open output file %s for writing IOR: %C\n"),
-                             options.ior_output_file.c_str (),
-                             ior.in ()),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Cannot open output file %s for writing IOR: %C\n"),
+                               options.ior_output_file.c_str (),
+                               ior.in ()),
+                              1);
+          }
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
 

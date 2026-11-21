@@ -16,10 +16,12 @@ Test_impl::op1 (
     char *&desc)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG((LM_DEBUG,
-               ACE_TEXT("(%P|%t)Test_impl::op1")
-               ACE_TEXT(" id=%s basic_data=%u desc=%s\n"),
-               id, iv->basic_data (), desc));
+    {
+      ACE_DEBUG((LM_DEBUG,
+                 ACE_TEXT("(%P|%t)Test_impl::op1")
+                 ACE_TEXT(" id=%s basic_data=%u desc=%s\n"),
+                 id, iv->basic_data (), desc));
+    }
 
    char *tmp = CORBA::string_alloc (
      static_cast<CORBA::ULong> (std::strlen (id) + std::strlen (desc) + 2));
@@ -39,10 +41,12 @@ Test_impl::op2 (
     char *&desc)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG((LM_DEBUG,
-               ACE_TEXT("(%P|%t)Test_impl::op2")
-               ACE_TEXT(" id=%s basic_data=%u data1=%u desc=%s\n"),
-               id, iv->basic_data (), iv->data1 (), desc));
+    {
+      ACE_DEBUG((LM_DEBUG,
+                 ACE_TEXT("(%P|%t)Test_impl::op2")
+                 ACE_TEXT(" id=%s basic_data=%u data1=%u desc=%s\n"),
+                 id, iv->basic_data (), iv->data1 (), desc));
+    }
   char *tmp = CORBA::string_alloc (
     static_cast<CORBA::ULong> (std::strlen (id) + std::strlen (desc) + 2));
   std::sprintf (tmp, "%s: %s", id, desc);
@@ -62,10 +66,12 @@ Test_impl::op3 (
   char *&desc)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG((LM_DEBUG,
-               ACE_TEXT("(%P|%t)Test_impl::op3")
-               ACE_TEXT(" id=%s basic_data=%u data=%u data4=%u desc=%s\n"),
-               id, iv->basic_data (), iv->nv4()->data (), iv->data4 (), desc));
+    {
+      ACE_DEBUG((LM_DEBUG,
+                 ACE_TEXT("(%P|%t)Test_impl::op3")
+                 ACE_TEXT(" id=%s basic_data=%u data=%u data4=%u desc=%s\n"),
+                 id, iv->basic_data (), iv->nv4()->data (), iv->data4 (), desc));
+    }
 
   char *tmp = CORBA::string_alloc (
     static_cast<CORBA::ULong> (std::strlen (id) + std::strlen (desc) + 2));
@@ -152,10 +158,12 @@ Test_impl::op5 (CORBA::Any const &val,
     {
       iv = ::OBV_TruncatableTest::TValue1::_downcast(target._retn());
       if (TAO_debug_level > 0)
-        ACE_DEBUG((LM_DEBUG,
-                   ACE_TEXT("(%P|%t)Test_impl::op5")
-                   ACE_TEXT(" id=%s basic_data=%u data1=%u desc=%s\n"),
-                   id, iv->basic_data (), iv->data1 (), desc));
+        {
+          ACE_DEBUG((LM_DEBUG,
+                     ACE_TEXT("(%P|%t)Test_impl::op5")
+                     ACE_TEXT(" id=%s basic_data=%u data1=%u desc=%s\n"),
+                     id, iv->basic_data (), iv->data1 (), desc));
+        }
       char *tmp = CORBA::string_alloc (
         static_cast<CORBA::ULong> (std::strlen (id) + std::strlen (desc) + 2));
       std::sprintf (tmp, "%s: %s", id, desc);

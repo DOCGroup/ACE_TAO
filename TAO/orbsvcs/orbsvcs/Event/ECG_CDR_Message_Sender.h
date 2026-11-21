@@ -79,7 +79,7 @@ public:
   static constexpr size_t ECG_DEFAULT_MTU = 1024;
 
   /// Initialization and termination methods.
-  //@{
+  /// @{
   explicit TAO_ECG_CDR_Message_Sender (CORBA::Boolean crc = false);
 
   /// Set the endpoint for sending messages.
@@ -92,10 +92,10 @@ public:
 
   // Shutdown this component.  Frees up the endpoint.
   void shutdown ();
-  //@}
+  /// @}
 
   /// Setters/getters.
-  //@{
+  /// @{
   /// Get the local endpoint used to send the events.
   int get_local_addr (ACE_INET_Addr& addr);
 
@@ -107,7 +107,7 @@ public:
    */
   int mtu (CORBA::ULong mtu);
   CORBA::ULong mtu () const;
-  //@}
+  /// @}
 
   /// The main method - send a CDR message.
   /**

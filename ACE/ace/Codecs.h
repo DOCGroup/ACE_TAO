@@ -43,7 +43,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Base64
 {
 public:
-  //@{
+  /// @{
   /**
    * Encodes a stream of bytes to Base64 data
    *
@@ -78,7 +78,7 @@ public:
    */
   static size_t length (ACE_Byte const *input);
 
-  //@}
+  /// @}
 
 protected:
   // Prevent default construction.

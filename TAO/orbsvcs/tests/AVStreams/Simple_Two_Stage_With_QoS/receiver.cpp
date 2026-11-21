@@ -82,7 +82,7 @@ Receiver::init (int argc,
     return -1;
   }
 
-  TAO_MMDevice * const mmdevice = new (std::nothrow) TAO_MMDevice (&this->reactive_strategy_);
+  TAO_MMDevice * const mmdevice = new (std::nothrow) TAO_MMDevice (std::addressof (this->reactive_strategy_));
   if (mmdevice == nullptr)
   {
     ACE_ERROR_RETURN ((LM_ERROR, "Unable to allocate receiver MMDevice\n"), -1);

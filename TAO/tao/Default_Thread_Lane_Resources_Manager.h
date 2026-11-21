@@ -56,12 +56,12 @@ public:
   bool is_collocated (TAO_MProfile const &mprofile) override;
 
   /// @name Accessors
-  // @{
+  /// @{
   TAO_Thread_Lane_Resources &lane_resources () override;
 
   TAO_Thread_Lane_Resources &default_lane_resources () override;
 
-  // @}
+  /// @}
 
 private:
   TAO_Default_Thread_Lane_Resources_Manager (

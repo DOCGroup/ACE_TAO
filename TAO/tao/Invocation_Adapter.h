@@ -157,7 +157,7 @@ namespace TAO
      * SII, AMI, DII and DSI. All the subclasses implement these
      * methods to get the right behavior at their level.
      */
-    //@{
+    /// @{
     /// Helper method that prepares the necessary stuff for a remote
     /// invocation.
 
@@ -223,7 +223,7 @@ namespace TAO
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time);
-    //@}
+    /// @}
 
     /// Helper function that extracts the roundtrip timeout policies
     /// set in the ORB.
@@ -257,7 +257,7 @@ namespace TAO
     * No-Collocation is a special case of collocation.
     */
     TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object);
-    //@}
+    /// @}
 
   protected:
     /// The target object on which this invocation is carried out.

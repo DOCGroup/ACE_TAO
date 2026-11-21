@@ -153,7 +153,7 @@ namespace TAO
        * Methods required by the SecurityLevel2::SecurityManager
        * interface.
        */
-      //@{
+      /// @{
       ::Security::MechandOptionsList * supported_mechanisms () override;
       SecurityLevel2::CredentialsList * own_credentials () override;
       SecurityLevel2::RequiredRights_ptr required_rights_object () override;
@@ -163,7 +163,7 @@ namespace TAO
       SecurityLevel2::TargetCredentials_ptr get_target_credentials (CORBA::Object_ptr o) override;
       void remove_own_credentials (SecurityLevel2::Credentials_ptr creds) override;
       CORBA::Policy_ptr get_security_policy (CORBA::PolicyType policy_type) override;
-      //@}
+      /// @}
 
     protected:
       /**

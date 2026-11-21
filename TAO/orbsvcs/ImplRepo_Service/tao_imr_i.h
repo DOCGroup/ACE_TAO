@@ -101,10 +101,10 @@ protected:
   TAO_IMR_Op () : imr_ (nullptr), quiet_ (false) {}
 
   /// @name Helper methods
-  //@{
+  /// @{
   /// Prints out the information contained in a ServerInformation structure.
   void display_server_information (const ImplementationRepository::ServerInformation &info);
-  //@}
+  /// @}
 
   /// Reference to our implementation repository.
   ImplementationRepository::Administration_ptr imr_;

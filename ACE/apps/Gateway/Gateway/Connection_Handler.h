@@ -67,11 +67,11 @@ public:
   State state () const;
 
   /// Get or set the remote INET address.
-  void remote_addr (ACE_INET_Addr &);
+  void remote_addr (ACE_INET_Addr const &);
   ACE_INET_Addr const &remote_addr () const;
 
   /// Get or set the local INET address.
-  void local_addr (ACE_INET_Addr &);
+  void local_addr (ACE_INET_Addr const &);
   ACE_INET_Addr const &local_addr () const;
 
   /// Get or set the connection ID.

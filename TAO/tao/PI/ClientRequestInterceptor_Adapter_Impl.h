@@ -71,7 +71,7 @@ namespace TAO
      * client side, only "starting" and "ending" interception points.
      *
      */
-    //@{
+    /// @{
     /// This method implements one of the "starting" client side
     /// interception points.
     void send_request (Invocation_Base &invocation) override;
@@ -87,7 +87,7 @@ namespace TAO
     /// This method implements one of the "ending" client side
     /// interception point.
     void receive_other (Invocation_Base &invocation) override;
-    //@}
+    /// @}
 
     /// Register an interceptor.
     void add_interceptor (

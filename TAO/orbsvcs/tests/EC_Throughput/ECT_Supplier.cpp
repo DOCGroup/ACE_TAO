@@ -11,6 +11,8 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 Test_Supplier::Test_Supplier ()
   : supplier_ (this),
     type_start_ (ACE_ES_EVENT_UNDEFINED),
@@ -111,7 +113,7 @@ Test_Supplier::disconnect ()
   PortableServer::POA_var poa =
     this->supplier_._default_POA ();
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (&this->supplier_);
+    poa->servant_to_id (std::addressof (this->supplier_));
   poa->deactivate_object (id.in ());
 }
 

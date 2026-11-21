@@ -201,7 +201,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       if (options.is_shutdown)
-        hello->shutdown ();
+        {
+          hello->shutdown ();
+        }
       else
         {
           ClientTask ct (hello.in (), options.client_num);

@@ -110,7 +110,7 @@ run_main (int, ACE_TCHAR *[])
       ACE_TEST_ASSERT (iter.done () == 0);
 
       // make sure the current element is what we expect
-      int& l = *iter;
+      int const & l = *iter;
       ACE_TEST_ASSERT (l == i);
 
       // move to the next element in the set

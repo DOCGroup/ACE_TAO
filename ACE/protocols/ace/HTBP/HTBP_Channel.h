@@ -222,7 +222,7 @@ namespace ACE
        * which is passed as the <value>.
        */
       int disable (int value) const;
-      //@}
+      /// @}
 
       // buffer related methods.
       ACE_Message_Block &leftovers ();

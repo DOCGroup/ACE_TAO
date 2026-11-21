@@ -123,10 +123,12 @@ server_main (int argc,
         PortableServer::POA::_narrow (obj.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Server (%P|%t) Unable to obtain")
-                           ACE_TEXT (" RootPOA reference.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Server (%P|%t) Unable to obtain")
+                             ACE_TEXT (" RootPOA reference.\n")),
+                            -1);
+        }
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -149,10 +151,12 @@ server_main (int argc,
         Test::Transport::CurrentTest::_narrow (obj.in ());
 
       if (CORBA::is_nil (server.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Server (%P|%t) Unable to obtain ")
-                           ACE_TEXT ("reference to CurrentTest object.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Server (%P|%t) Unable to obtain ")
+                             ACE_TEXT ("reference to CurrentTest object.\n")),
+                            -1);
+        }
 
       CORBA::String_var ior =
         orb->object_to_string (server.in ());
@@ -163,12 +167,14 @@ server_main (int argc,
           std::unique_ptr<FILE, int (*) (FILE *)> output_file (
             ACE_OS::fopen (options.ior_output_file, "w"), ACE_OS::fclose);
           if (!output_file)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Server (%P|%t) Cannot write file %s "
-                               "IOR: %C - %m",
-                               options.ior_output_file,
-                               ior.in ()),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Server (%P|%t) Cannot write file %s "
+                                 "IOR: %C - %m",
+                                 options.ior_output_file,
+                                 ior.in ()),
+                                -1);
+            }
           ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 
@@ -198,8 +204,10 @@ server_main (int argc,
       }
 
       if (!cri->self_test ())
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Server (%P|%t) ERROR: Interceptor self_test failed\n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Server (%P|%t) ERROR: Interceptor self_test failed\n")));
+        }
 
       server->shutdown ();
 

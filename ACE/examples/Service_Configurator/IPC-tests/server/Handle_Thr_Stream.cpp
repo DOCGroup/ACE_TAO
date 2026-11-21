@@ -10,6 +10,7 @@
 #include "Handle_Thr_Stream.h"
 
 #include <cstring>
+#include <memory>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -76,7 +77,7 @@ Handle_Thr_Acceptor<SVH, PR_AC_2>::init (int argc, ACE_TCHAR *argv[])
     }
 
   // Initialize the threading strategy.
-  if (this->thr_strategy_.open (&this->thr_mgr_,
+  if (this->thr_strategy_.open (std::addressof (this->thr_mgr_),
                                 this->thr_flags_,
                                 n_threads) == -1)
     {
@@ -89,7 +90,7 @@ Handle_Thr_Acceptor<SVH, PR_AC_2>::init (int argc, ACE_TCHAR *argv[])
                        ACE_Reactor::instance (),
                        nullptr,
                        nullptr,
-                       &this->thr_strategy_) == -1)
+                       std::addressof (this->thr_strategy_)) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
     }

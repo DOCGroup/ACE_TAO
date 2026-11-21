@@ -42,7 +42,7 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   int step (const char *str,
             char *expbuf);
-  //@}
+  /// @}
 
 } /* namespace ACE_OS */
 

@@ -55,13 +55,13 @@ public:
   /// Disconnect from the event channel
   void disconnect ();
 
-  //@{
+  /// @{
   /** @name Accessors
    */
   Loopback_Supplier *loopback_supplier () const;
 
   Loopback_Consumer *loopback_consumer () const;
-  //@}
+  /// @}
 
 private:
   Servant_var<Loopback_Supplier> loopback_supplier_;

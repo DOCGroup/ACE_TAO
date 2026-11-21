@@ -79,7 +79,8 @@ public:
   CORBA::UShort port () const;
 
   /// Set the port number.
-  CORBA::UShort port (CORBA::UShort p); //@@ Frank - deprecate this.
+  /// TODO: Deprecate this method.
+  CORBA::UShort port (CORBA::UShort p);
 
   //TAO_UIPMC_Connection_Handler *&hint ();
   // Access to our <hint_>.

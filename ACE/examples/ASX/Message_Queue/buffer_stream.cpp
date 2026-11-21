@@ -9,6 +9,7 @@
 #include "ace/OS_main.h"
 #include "ace/OS_NS_stdio.h"
 #include <cstring>
+#include <memory>
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Service_Config.h"
@@ -235,7 +236,7 @@ Consumer::svc ()
       // Wait for upto 4 seconds.
       this->timeout_.sec (ACE_OS::time (0) + 4);
 
-      result = this->getq (mb, &this->timeout_);
+      result = this->getq (mb, std::addressof (this->timeout_));
 
       if (result == -1)
       {

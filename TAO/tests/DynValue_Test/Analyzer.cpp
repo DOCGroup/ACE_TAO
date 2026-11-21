@@ -238,33 +238,36 @@ DynAnyAnalyzer::analyze (
           {
             CORBA::ULong member_number = 0u;
             ++level_;
-            if (da->seek (0)) do
+            if (da->seek (0))
               {
-                DynamicAny::DynAny_var const
-                  cc (dvt->current_component ());
-                DynamicAny::FieldName_var const
-                  fn (dvt->current_member_name ());
-                CORBA::ULong sub_member_number = member_number;
-                CORBA::TypeCode_ptr const
-                  base = get_correct_base_type (
-                           base_types,
-                           sub_member_number);
-                char const * const visibility =
-                  ((CORBA::PRIVATE_MEMBER ==
-                    base->member_visibility (sub_member_number)) ?
-                    "Private" : "Public ");
-                tab ("[");
-                ACE_DEBUG ((LM_DEBUG, "%03u] %C \"%C\": ",
-                  ++member_number, visibility, fn.in () ));
-                if (CORBA::is_nil (cc.in ()))
-                  {
-                    ACE_DEBUG ((LM_DEBUG, " {Null}\n"));
-                  }
+                do
+                {
+                  DynamicAny::DynAny_var const
+                    cc (dvt->current_component ());
+                  DynamicAny::FieldName_var const
+                    fn (dvt->current_member_name ());
+                  CORBA::ULong sub_member_number = member_number;
+                  CORBA::TypeCode_ptr const
+                    base = get_correct_base_type (
+                             base_types,
+                             sub_member_number);
+                  char const * const visibility =
+                    ((CORBA::PRIVATE_MEMBER ==
+                      base->member_visibility (sub_member_number)) ?
+                      "Private" : "Public ");
+                  tab ("[");
+                  ACE_DEBUG ((LM_DEBUG, "%03u] %C \"%C\": ",
+                    ++member_number, visibility, fn.in () ));
+                  if (CORBA::is_nil (cc.in ()))
+                    {
+                      ACE_DEBUG ((LM_DEBUG, " {Null}\n"));
+                    }
                 else
-                  {
-                    this->analyze (cc.in (), true);
-                  }
-              } while (da->next ());
+                    {
+                      this->analyze (cc.in (), true);
+                    }
+                } while (da->next ());
+              }
             else
               {
                 tab("{Has No Members}\n");

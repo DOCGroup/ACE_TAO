@@ -49,17 +49,21 @@ public:
       {
         CORBA::Object_var const obj = orb->string_to_object (ior);
         if (CORBA::is_nil (obj.in ()))
-          ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::Hello reference <%s>\n",
-                             ior),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_DEBUG,
+                               "Nil Test::Hello reference <%s>\n",
+                               ior),
+                              1);
+          }
 
         ACE_DEBUG ((LM_DEBUG, "RepositoryID: %s\n", obj->_interface_repository_id ()));
         client = IF_EXE_M_R::IF_ExeCtrlData::_narrow (obj.in ());
         if (CORBA::is_nil (client.in ()))
-          ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Reference is not of type IF_EXE_M_R::IF_ExeCtrlData\n"),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_DEBUG,
+                               "Reference is not of type IF_EXE_M_R::IF_ExeCtrlData\n"),
+                              1);
+          }
 
         client->foo (ts);
         if (shutdown)

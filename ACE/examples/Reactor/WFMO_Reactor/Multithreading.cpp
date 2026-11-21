@@ -227,7 +227,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
                                                     ACE_Time_Value::zero) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
 
-      for (int i = 0; i < number_of_handles_to_signal; ++i)
+      for (int signal_index = 0; signal_index < number_of_handles_to_signal; ++signal_index)
         // Randomly select a handle to signal.
         task.signal (ACE_OS::rand() % number_of_handles);
     }

@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    CSD_Framework_Loader.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Yan Dai (dai_y@ociweb.com)
  */
-//=============================================================================
 
 #ifndef TAO_CSD_FRAMEWORK_LOADER_H
 #define TAO_CSD_FRAMEWORK_LOADER_H

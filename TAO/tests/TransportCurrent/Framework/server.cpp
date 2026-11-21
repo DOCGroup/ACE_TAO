@@ -124,10 +124,12 @@ server_main (int argc,
         PortableServer::POA::_narrow (obj.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Server (%P|%t) Unable to obtain")
-                           ACE_TEXT (" RootPOA reference.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Server (%P|%t) Unable to obtain")
+                             ACE_TEXT (" RootPOA reference.\n")),
+                            -1);
+        }
 
       PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
@@ -150,10 +152,12 @@ server_main (int argc,
         Test::Transport::CurrentTest::_narrow (obj.in ());
 
       if (CORBA::is_nil (server.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Server (%P|%t) Unable to obtain ")
-                           ACE_TEXT ("reference to CurrentTest object.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Server (%P|%t) Unable to obtain ")
+                             ACE_TEXT ("reference to CurrentTest object.\n")),
+                            -1);
+        }
 
       CORBA::String_var const ior =
         orb->object_to_string (server.in ());
@@ -163,10 +167,12 @@ server_main (int argc,
         {
           std::ofstream output_file (ACE_TEXT_ALWAYS_CHAR (options.ior_output_file));
           if (!output_file)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Server (%P|%t) Cannot write %s IOR\n"),
-                               options.ior_output_file),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Server (%P|%t) Cannot write %s IOR\n"),
+                                 options.ior_output_file),
+                                -1);
+            }
           output_file << ior.in ();
         }
 
@@ -183,10 +189,12 @@ server_main (int argc,
                           -1);
       //FUZZ: disable check_for_lack_ACE_OS
       if(worker.thr_mgr ()->wait () != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Server (%P|%t) wait() Cannot wait for all %d threads\n"),
-                           options.nthreads),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Server (%P|%t) wait() Cannot wait for all %d threads\n"),
+                             options.nthreads),
+                            -1);
+        }
       //FUZZ: enable check_for_lack_ACE_OS
 #else
       if (options.nthreads > 1)
@@ -202,8 +210,10 @@ server_main (int argc,
       }
 
       if (!cri->self_test ())
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Server (%P|%t) ERROR: Interceptor self_test failed\n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Server (%P|%t) ERROR: Interceptor self_test failed\n")));
+        }
 
       root_poa->destroy (true, true);
 

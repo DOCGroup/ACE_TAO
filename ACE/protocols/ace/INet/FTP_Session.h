@@ -109,7 +109,8 @@ namespace ACE
               std::unique_ptr<sock_stream_type> sock_stream_ {};
               ACE_Time_Value ftp_timeout_;
               bool cannot_reconnect_;
-              bool has_ftp_ext_; // RFC 2428 - IPv6 and NAT
+              /// Whether the server supports RFC 2428 IPv6/NAT extensions.
+              bool has_ftp_ext_;
               bool new_connect_;
           };
 

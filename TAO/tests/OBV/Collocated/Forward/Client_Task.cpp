@@ -199,9 +199,11 @@ Client_Task::is_equal_node (BaseNode *node1, BaseNode *node2)
       StringNode * const sn1 = StringNode::_downcast (node1);
       StringNode * const sn2 = StringNode::_downcast (node2);
       if (sn1 && sn2)
-        if (!std::strcmp (sn1->name (), sn2->name ()))
         {
-          ret_val = true;
+          if (!std::strcmp (sn1->name (), sn2->name ()))
+          {
+            ret_val = true;
+          }
         }
       if (!(sn1 || sn2))
       {

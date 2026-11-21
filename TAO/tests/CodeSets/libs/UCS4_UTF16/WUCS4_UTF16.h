@@ -44,7 +44,7 @@ public:
   ~WUCS4_UTF16 () override;
 
   /// @name Methods documented in $ACE_ROOT/ace/CDR_Stream.h
-  //@{
+  /// @{
   ACE_CDR::Boolean read_wchar (ACE_InputCDR &,
                               ACE_CDR::WChar &) override;
   ACE_CDR::Boolean read_wstring (ACE_InputCDR &,
@@ -62,7 +62,7 @@ public:
                                       ACE_CDR::ULong) override;
   ACE_CDR::ULong ncs () override { return 0x00010104; }
   ACE_CDR::ULong tcs () override { return 0x00010109; }
-  //@}
+  /// @}
 
 private:
   ACE_CDR::Boolean read_wchar_array_i (ACE_InputCDR &,

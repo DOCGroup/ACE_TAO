@@ -68,11 +68,11 @@ protected:
                                  CosNotification::QoSProperties &qos) override;
 
   /// @name NotifySubscribe operations
-  //@{
+  /// @{
   void subscription_change (
       CosNotification::EventTypeSeq const &added,
       CosNotification::EventTypeSeq const &removed) override;
-  //@}
+  /// @}
 };
 
 #include "Supplier_T.cpp"

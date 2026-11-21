@@ -62,7 +62,8 @@ ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::sleep_hook ()
 {
   ACE_TRACE ("ACE_Reactor_Token_T::sleep_hook");
   ACE_Time_Value ping (ACE_Time_Value::zero);
-  if (this->reactor_->notify (0, ACE_Event_Handler::EXCEPT_MASK, &ping) == -1)
+  if (this->reactor_->notify (0, ACE_Event_Handler::EXCEPT_MASK,
+                              std::addressof (ping)) == -1)
     {
       if (errno == ETIME)
         {

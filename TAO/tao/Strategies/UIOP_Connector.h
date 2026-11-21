@@ -58,7 +58,7 @@ public:
    *
    * Please check the documentation in Transport_Connector.h for details.
    */
-  //@{
+  /// @{
   int open (TAO_ORB_Core *orb_core) override;
   int close () override;
 
@@ -72,7 +72,7 @@ public:
 
   /// Cancel the passed cvs handler from the connector
   int cancel_svc_handler (TAO_Connection_Handler *svc_handler) override;
-  //@}
+  /// @}
 
 public:
   using TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY =
@@ -93,7 +93,7 @@ protected:
    *
    * Please check the documentation in Transport_Connector.h.
    */
-  //@{
+  /// @{
   int set_validate_endpoint (TAO_Endpoint *endpoint) override;
 
   TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
@@ -102,7 +102,7 @@ protected:
 
   TAO_Profile *make_profile () override;
 
-  //@}
+  /// @}
 
 private:
   TAO_UIOP_Connector (TAO_UIOP_Connector const &) = delete;

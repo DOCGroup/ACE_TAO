@@ -17,9 +17,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Server_i server;
 
   if (server.init (argc, argv) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Failure during Initialisation: init ()\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Failure during Initialisation: init ()\n"),
+                        -1);
+    }
 
   // This POA is used to test the Servant Activator interface and
   // hence has an RETAIN policy.
@@ -27,9 +29,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     server.create_poa ("firstPOA", true);
 
   if (first_poa.in () == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Failure during first POA creation: create_poa ()\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Failure during first POA creation: create_poa ()\n"),
+                        -1);
+    }
 
   // This poa is used to test the Servant Activator interface and
   // hence has an NONRETAIN policy.
@@ -37,26 +41,34 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     server.create_poa ("secondPOA", false);
 
   if (second_poa.in () == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Failure during second POA creation: create_poa ()\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Failure during second POA creation: create_poa ()\n"),
+                        -1);
+    }
 
   // The Servant Activator interface is created and initialised.
   if (server.create_activator (first_poa) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Failure during first Servant Activator creation: create_activator()\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Failure during first Servant Activator creation: create_activator()\n"),
+                        -1);
+    }
 
   // The Servant Locator interface is created and initialised.
   if (server.create_locator (second_poa) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Failure during first Servant Locator creation: create_activator()\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Failure during first Servant Locator creation: create_activator()\n"),
+                        -1);
+    }
 
   // The server begins processing requests.
   if (server.run () != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Failure during request processing: run ()\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Failure during request processing: run ()\n"),
+                        -1);
+    }
   return 0;
 }

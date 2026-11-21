@@ -18,7 +18,7 @@ Receiver_StreamEndPoint::get_callback (char const *,
 {
   // Return the receiver application callback to the AVStreams for
   // future upcalls.
-  callback = &this->callback_;
+  callback = std::addressof (this->callback_);
   return 0;
 }
 
@@ -83,7 +83,7 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
 
       // Send frame.
       int const result =
-        RECEIVER::instance ()->protocol_object ()->send_frame (&this->mb_);
+        RECEIVER::instance ()->protocol_object ()->send_frame (std::addressof (this->mb_));
 
       if (result < 0)
         {
@@ -199,7 +199,7 @@ Receiver::init (int argc,
   // Register the receiver mmdevice object with the ORB
   TAO_MMDevice *mmdevice_servant {};
   ACE_NEW_RETURN (mmdevice_servant,
-                  TAO_MMDevice (&this->reactive_strategy_),
+                  TAO_MMDevice (std::addressof (this->reactive_strategy_)),
                   -1);
 
   // Servant Reference Counting to manage lifetime

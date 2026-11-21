@@ -68,10 +68,10 @@ protected:
                                  CosNotification::QoSProperties &qos) override;
 
   /// @name NotifyPublish operations
-  //@{
+  /// @{
   void offer_change (CosNotification::EventTypeSeq const &added,
                      CosNotification::EventTypeSeq const &removed) override;
-  //@}
+  /// @}
 };
 
 #include "Consumer_T.cpp"

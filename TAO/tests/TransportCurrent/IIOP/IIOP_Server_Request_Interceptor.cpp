@@ -54,18 +54,22 @@ namespace Test {
         endPoints_[requestID] = ep;
 
         if (TAO_debug_level > 1)
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("%C (%P|%t) ")
-                      ACE_TEXT ("push_request_info: %B ...\n"),
-                      name.in (),
-                      requestID));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("%C (%P|%t) ")
+                        ACE_TEXT ("push_request_info: %B ...\n"),
+                        name.in (),
+                        requestID));
+          }
       }
     else
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%C (%P|%t) ")
-                  ACE_TEXT ("push_request_info: Can't track that many requests %B\n"),
-                  name.in (),
-                  requestID));
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("%C (%P|%t) ")
+                    ACE_TEXT ("push_request_info: Can't track that many requests %B\n"),
+                    name.in (),
+                    requestID));
+      }
   }
 
   void
@@ -75,11 +79,13 @@ namespace Test {
     CORBA::String_var name (this->name ());
 
     if (TAO_debug_level > 1)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%C (%P|%t) ")
-                  ACE_TEXT ("pop_request_info: %B ...\n"),
-                  name.in (),
-                  requestID));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("%C (%P|%t) ")
+                    ACE_TEXT ("pop_request_info: %B ...\n"),
+                    name.in (),
+                    requestID));
+      }
 
     if (requestID >= this->endPoints_.size ())
       {
@@ -154,10 +160,12 @@ namespace Test {
     CORBA::String_var op (ri->operation());
 
     if (TAO_debug_level >=1)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("%C (%P|%t) Intercepted operation %C ()\n"),
-                  name.in (),
-                  op.in ()));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT("%C (%P|%t) Intercepted operation %C ()\n"),
+                    name.in (),
+                    op.in ()));
+      }
 
     try
       {

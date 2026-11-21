@@ -128,9 +128,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Worker worker (argc, argv, options);
       if (worker.activate (THR_NEW_LWP | THR_JOINABLE, options.n_threads) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot activate ORB thread(s)\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot activate ORB thread(s)\n"),
+                            1);
+        }
 
       worker.thr_mgr ()->wait ();
       ACE_DEBUG ((LM_DEBUG, "Event loop finished\n"));

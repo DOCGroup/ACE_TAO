@@ -20,8 +20,10 @@ MT_Object_i::yadda (CORBA::Long hop_count,
   if (hop_count < max_hop_count)
     {
       if (partner != nullptr)
-        return partner->yadda (hop_count + 1,
-                               this->_this ()) + 1;
+        {
+          return partner->yadda (hop_count + 1,
+                                 this->_this ()) + 1;
+        }
     }
 
   return 0;

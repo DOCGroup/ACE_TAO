@@ -76,10 +76,12 @@ write_ior_to_file (CORBA::ORB_ptr orb,
     std::fopen (filename.c_str (), "w"), std::fclose);
 
   if (output_file == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cannot open output file for writing IOR: %s",
-                       filename.c_str ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Cannot open output file for writing IOR: %s",
+                         filename.c_str ()),
+                        -1);
+    }
 
   std::fprintf (output_file.get (), "%s", ior.in ());
 
@@ -335,8 +337,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                 2);
             }
           else
-            // Unexpected error.
-            ACE_ASSERT (false);
+            {
+              // Unexpected error.
+              ACE_ASSERT (false);
+            }
         }
 
       // Wait for task to exit.

@@ -592,7 +592,9 @@ TAO_UIPMC_Mcast_Transport::handle_input (
             }
         }
       else // Process the message.
-        (void) this->process_parsed_messages (&qd, rh);
+        {
+          (void) this->process_parsed_messages (&qd, rh);
+        }
     }
 
   return 0;

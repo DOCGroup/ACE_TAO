@@ -80,7 +80,7 @@ worker (void *c)
       ACE_NEW_RETURN (ip,
                       int,
                       0);
-      std::unique_ptr<int> owned_ip {ip};
+      std::unique_ptr<int> thread_owned_ip {ip};
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) in worker 1, key = %d, ip = %@\n",
@@ -113,7 +113,7 @@ worker (void *c)
           }
         else
         {
-          owned_ip.reset ();
+          thread_owned_ip.reset ();
         }
       }
 

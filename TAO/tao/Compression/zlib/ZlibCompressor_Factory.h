@@ -43,7 +43,7 @@ namespace TAO
     Zlib_CompressorFactory &operator= (Zlib_CompressorFactory &&) = delete;
 
   private:
-    // Ensure we can lock with imutability (i.e. const)
+    /// Allows const methods to lock the mutex.
     mutable TAO_SYNCH_MUTEX mutex_;
     ZlibCompressorMap       compressors_;
   };

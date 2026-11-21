@@ -58,7 +58,7 @@ public:
   /**
    * @name TAO_LoadBalancer::GenericFactory methods
    */
-  //@{
+  /// @{
   /**
    * Create an object of the specified type that adheres to the
    * restrictions defined by the provided Criteria.  The out
@@ -80,7 +80,7 @@ public:
   void delete_object (
       PortableGroup::GenericFactory::FactoryCreationId const &factory_creation_id) override;
 
-  //@}
+  /// @}
 
   /// Set the POA to use when creating object references.
   void poa (PortableServer::POA_ptr p);

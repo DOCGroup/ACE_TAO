@@ -127,7 +127,8 @@ protected:
 
   std::unique_ptr<ACEXML_Element_Tree_Node> head_ {};
 
-  ACEXML_Element_Tree_Node *tail_ {}; // Non-owning alias into the child node chain.
+  /// Non-owning alias into the child node chain.
+  ACEXML_Element_Tree_Node *tail_ {};
 
   /// Non-owning stack link.
   ACEXML_Element_Tree_List_Node *pop_next_ {};

@@ -41,8 +41,10 @@ UTF16_UCS2_Translator::UTF16_UCS2_Translator (CONV_FRAME::CodeSetId tcs)
   : tcs_ (tcs)
 {
   if (TAO_debug_level > 1)
-    ACE_DEBUG((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - UTF16_UCS2_Translator: tcs=0x%x\n"),
-         this->tcs_));
+    {
+      ACE_DEBUG((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - UTF16_UCS2_Translator: tcs=0x%x\n"),
+           this->tcs_));
+    }
 }
 
 UTF16_UCS2_Translator::~UTF16_UCS2_Translator () = default;
@@ -242,7 +244,9 @@ UTF16_UCS2_Translator::write_wchar_i (ACE_OutputCDR &cdr, ACE_CDR::WChar x)
       unsigned char const tcsize = static_cast<unsigned char> (
         len * ACE_UTF16_CODEPOINT_SIZE);
       if (this->write_1 (cdr, &tcsize))
-        return this->write_array(cdr, &buffer, tcsize, 1, 1);
+        {
+          return this->write_array(cdr, &buffer, tcsize, 1, 1);
+        }
       else
       {
         return false;
@@ -271,9 +275,12 @@ UTF16_UCS2_Translator::write_wstring (ACE_OutputCDR & cdr,
   if (static_cast<ACE_CDR::Short> (this->major_version(cdr)) == 1
       && static_cast<ACE_CDR::Short> (this->minor_version(cdr)) == 2)
     {
-      if (len == 0) // for zero length strings, only write a length of
-                    // zero.
-        return this->write_4(cdr, &len);
+      if (len == 0)
+        {
+          // for zero length strings, only write a length of
+                      // zero.
+          return this->write_4(cdr, &len);
+        }
 
       ACE_CDR::ULong const l = len * ACE_UTF16_CODEPOINT_SIZE;
       if (this->write_4 (cdr, &l) && x != nullptr)

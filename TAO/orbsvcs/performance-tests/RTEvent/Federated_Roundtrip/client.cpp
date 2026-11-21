@@ -45,13 +45,13 @@ public:
   {
   }
 
-  //@{
+  /// @{
   /** @name The Federated_Test::Peer methods
    */
   Federated_Test::Experiment_Results *
       run_experiment (CORBA::Long experiment_id,
                       CORBA::Long iterations) override;
-  //@}
+  /// @}
 
 private:
   RT_Class *rt_class_;

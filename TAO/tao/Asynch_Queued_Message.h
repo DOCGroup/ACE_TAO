@@ -65,7 +65,7 @@ public:
   /**
    * @name Implement the Template Methods from TAO_Queued_Message
    */
-  //@{
+  /// @{
   size_t message_length () const override;
   int all_data_sent () const override;
   void fill_iov (int iovcnt_max, int &iovcnt, iovec iov[]) const override;
@@ -76,7 +76,7 @@ public:
   void destroy () override;
   bool is_expired (ACE_Time_Value const &now) const override;
   void copy_if_necessary (ACE_Message_Block const *chain) override;
-  //@}
+  /// @}
 
 protected:
   /**

@@ -87,7 +87,7 @@ namespace TAO
     * Methods required by the POA_CosNotifyComm::StructuredPushConsumer
     * interface.
     */
-    //@{
+    /// @{
     ////////////////
     // CORBA methods
     void push_structured_event (
@@ -99,7 +99,7 @@ namespace TAO
 
    void disconnect_structured_push_consumer () override;
 
-    //@}
+    /// @}
 
     ////////////////////
     // Forbidden methods

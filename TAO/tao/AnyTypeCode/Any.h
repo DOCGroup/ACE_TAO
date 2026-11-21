@@ -112,8 +112,8 @@ namespace CORBA
 
     struct TAO_AnyTypeCode_Export to_object
     {
-      // This signature reflects the change set out in
-      // issue 154 of the 1.3 RTF.
+      /// This signature reflects the change set out in
+      /// issue 154 of the 1.3 RTF.
       explicit to_object (Object_out obj);
       Object_ptr &ref_;
     };
@@ -165,7 +165,7 @@ namespace CORBA
     CORBA::Boolean checked_to_value (CORBA::ValueBase *&) const;
     CORBA::Boolean checked_to_abstract_base (CORBA::AbstractBase_ptr &) const;
 
-    // Unimplemented - hides unsigned char insert/extract.
+    /// Unimplemented; hides unsigned char insertion and extraction.
     void operator<<= (unsigned char);
     CORBA::Boolean operator>>= (unsigned char&) const;
 
@@ -280,7 +280,7 @@ operator>> (TAO_InputCDR &, CORBA::Any &);
 
 #if defined (GEN_OSTREAM_OPS)
 
-// Used in optionally generated ostream operators (for debugging).
+/// Used in optionally generated ostream operators for debugging.
 TAO_AnyTypeCode_Export std::ostream &
 operator<< (std::ostream &, CORBA::Any const &);
 

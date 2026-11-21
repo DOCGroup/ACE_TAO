@@ -133,20 +133,26 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
                   std::string const & str_read = savable.string_get(read_index);
                   if (str_read != str_write_value)
-                    ACE_ERROR ((LM_ERROR,
-                                ACE_TEXT ("String read != num written.\n")));
+                    {
+                      ACE_ERROR ((LM_ERROR,
+                                  ACE_TEXT ("String read != num written.\n")));
+                    }
 
                   unsigned int unsigned_int_read =
                     savable.unsigned_int_get (read_index);
                   if (unsigned_int_read != unsigned_int_write_value)
-                    ACE_ERROR ((LM_ERROR,
-                                ACE_TEXT ("Int read != num written.\n")));
+                    {
+                      ACE_ERROR ((LM_ERROR,
+                                  ACE_TEXT ("Int read != num written.\n")));
+                    }
 
                   int bytes_read_size =
                     savable.bytes_get (read_index, bytes_read);
                   if (bytes_read_size != bytes_size)
-                    ACE_ERROR ((LM_ERROR,
-                                ACE_TEXT ("Bytes read != num written.\n")));
+                    {
+                      ACE_ERROR ((LM_ERROR,
+                                  ACE_TEXT ("Bytes read != num written.\n")));
+                    }
 
                   for (int k = 0; k < bytes_size; ++k)
                     {

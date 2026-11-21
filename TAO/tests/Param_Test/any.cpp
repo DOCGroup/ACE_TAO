@@ -103,8 +103,10 @@ Test_Any::reset_parameters ()
     case Test_Any::ANY_SHORT:
       {
         if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG,
-                      "Param_Test: ANY_SHORT subtest\n"));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "Param_Test: ANY_SHORT subtest\n"));
+          }
         CORBA::Short s;
         s = gen->gen_short ();
 
@@ -120,8 +122,10 @@ Test_Any::reset_parameters ()
     case Test_Any::ANY_STRING:
       {
         if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG,
-                      "Param_Test: ANY_STRING subtest\n"));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "Param_Test: ANY_STRING subtest\n"));
+          }
         char *str = gen->gen_string ();
 
         if (TAO_debug_level > 0)
@@ -137,8 +141,10 @@ Test_Any::reset_parameters ()
     case Test_Any::ANY_OBJREF:
       {
         if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG,
-                      "Param_Test: ANY_OBJREF subtest\n"));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "Param_Test: ANY_OBJREF subtest\n"));
+          }
 
         // insert the coffee object into the Any
         this->in_ <<= this->cobj_.in ();
@@ -149,8 +155,10 @@ Test_Any::reset_parameters ()
     case Test_Any::ANY_ARRAY:
       {
         if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG,
-                      "Param_Test: ANY_ARRAY subtest\n"));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "Param_Test: ANY_ARRAY subtest\n"));
+          }
 
         Param_Test::Fixed_Array array;
         for (size_t i = 0; i < Param_Test::DIM1; ++i)
@@ -167,8 +175,10 @@ Test_Any::reset_parameters ()
     case Test_Any::ANY_SHORT_SEQ:
       {
         if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG,
-                      "Param_Test: ANY_SHORT_SEQ subtest\n"));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "Param_Test: ANY_SHORT_SEQ subtest\n"));
+          }
         CORBA::ShortSeq seq;
         seq.length (gen->gen_short () % 16);
         for (size_t i = 0; i < seq.length (); ++i)
@@ -181,8 +191,10 @@ Test_Any::reset_parameters ()
     case Test_Any::ANY_BD_SHORT_SEQ:
       {
         if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG,
-                      "Param_Test: ANY_BD_SHORT_SEQ subtest\n"));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "Param_Test: ANY_BD_SHORT_SEQ subtest\n"));
+          }
         Param_Test::Bounded_Short_Seq seq;
         seq.length (gen->gen_short () % seq.maximum ());
         for (size_t i = 0; i < seq.length (); ++i)
@@ -195,8 +207,10 @@ Test_Any::reset_parameters ()
     case Test_Any::ANY_STRUCT:
       {
         if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG,
-                      "Param_Test: ANY_STRUCT subtest\n"));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "Param_Test: ANY_STRUCT subtest\n"));
+          }
         Param_Test::Fixed_Struct structure;
         structure = gen->gen_fixed_struct ();
         this->in_ <<= structure;

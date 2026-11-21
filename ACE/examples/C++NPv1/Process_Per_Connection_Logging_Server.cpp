@@ -90,7 +90,7 @@ Process_Per_Connection_Logging_Server::handle_connections ()
   // logging records, then exit.
   if (pid == 0) {
     acceptor().close ();
-    handle_data (&logging_peer);
+    handle_data (std::addressof (logging_peer));
     logger.reset ();
     ACE_OS::exit (0);
   }
@@ -191,7 +191,7 @@ Process_Per_Connection_Logging_Server::run_worker (int, char *argv[])
 #endif /* ACE_WIN32 */
   ACE_SOCK_Stream client (client_handle);
 
-  handle_data (&client);
+  handle_data (std::addressof (client));
   client.close ();
   return 0;
 }

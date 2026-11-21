@@ -105,12 +105,16 @@ Test_i::test_method (CORBA::Boolean client_propagated,
                   server_priority));
 
       if (index == 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "ERROR: object and thread priorities do not "
-                    "match the same band.\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "ERROR: object and thread priorities do not "
+                      "match the same band.\n"));
+        }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "Band %u was used for this invocation\n", index));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Band %u was used for this invocation\n", index));
+        }
     }
 }
 
@@ -225,7 +229,9 @@ get_priority_bands (RTCORBA::PriorityBands &bands,
     }
 
   if (result == 0 || result == EOF)
-    return -1;
+    {
+      return -1;
+    }
   else
   {
     return 0;
@@ -256,10 +262,12 @@ create_object (PortableServer::POA_ptr poa,
       std::unique_ptr<FILE, int (*) (FILE *)> output_file (
         ACE_OS::fopen (filename, "w"), ACE_OS::fclose);
       if (!output_file)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           filename),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s",
+                             filename),
+                            -1);
+        }
       ACE_OS::fprintf (output_file.get (),
                        "%s",
                        ior.in ());
@@ -380,9 +388,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       RTCORBA::PriorityBands bands;
       result = get_priority_bands (bands, options.bands_file);
       if (result != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Error reading priority bands from file\n"),
-                          result);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error reading priority bands from file\n"),
+                            result);
+        }
 
       // Create a thread-pool.
       CORBA::ULong const stacksize {};

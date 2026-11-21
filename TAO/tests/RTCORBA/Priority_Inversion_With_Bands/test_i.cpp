@@ -39,9 +39,13 @@ test_i::method (CORBA::ULong work,
 
   char const *priority_string {"unknown"};
   if (current_priority == this->low_priority_)
-    priority_string = "low";
+    {
+      priority_string = "low";
+    }
   else if (current_priority == this->high_priority_)
-    priority_string = "high";
+    {
+      priority_string = "high";
+    }
   else
     {
       ACE_ERROR ((LM_ERROR, "ERROR: %d != %d and %d != %d\n",

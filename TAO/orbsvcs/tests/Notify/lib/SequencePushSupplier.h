@@ -77,9 +77,9 @@ protected:
   void disconnect_from_proxy () override;
 
   /// @name SequencePushSupplier operations
-  //@{
+  /// @{
   void disconnect_sequence_push_supplier () override;
-  //@}
+  /// @}
 };
 
 #if defined (__ACE_INLINE__)

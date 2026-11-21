@@ -124,8 +124,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ULongLong const freq = run_test (server.in ());
 
       if (freq != 919263)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) ERROR in the test\n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) ERROR in the test\n")));
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) Shutting server down\n")));

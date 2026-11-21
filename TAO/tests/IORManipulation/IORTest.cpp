@@ -70,9 +70,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ULong count = iorm->get_profile_count (merged.in ());
 
       if (count != (count1 + count2))
-        ACE_DEBUG ((LM_ERROR,
-                    "**ERROR (merge_profiles): "
-                    "Merged profile count incorrect!\n"));
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "**ERROR (merge_profiles): "
+                      "Merged profile count incorrect!\n"));
+        }
 
       ACE_DEBUG ((LM_DEBUG, "\tMerged IOR(%u) = %C\n",
                   count,
@@ -83,19 +85,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ULong in_count = iorm->is_in_ior (merged.in (), name1.in ());
 
       if (count1 != in_count)
-        ACE_DEBUG ((LM_ERROR,
-                    "**ERROR (merge_iors): name1 is_in_ior returned profile "
-                    "count bad (%u)!\n",
-                    in_count));
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "**ERROR (merge_iors): name1 is_in_ior returned profile "
+                      "count bad (%u)!\n",
+                      in_count));
+        }
 
       in_count = iorm->is_in_ior (merged.in (),
                                   name2.in ());
 
       if (count2 != in_count)
-        ACE_DEBUG ((LM_ERROR,
-                    "**ERROR (merge_iors): name2 is_in_ior returned profile "
-                    "count bad (%u)!\n",
-                    in_count));
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "**ERROR (merge_iors): name2 is_in_ior returned profile "
+                      "count bad (%u)!\n",
+                      in_count));
+        }
 
       // **********************************************************************
 
@@ -108,9 +114,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       count = iorm->get_profile_count (just1.in ());
 
       if (count1 != count)
-        ACE_DEBUG ((LM_ERROR,
-                    "**ERROR (merge_profiles): "
-                    "removing last IOR after a merge_iors ()\n"));
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "**ERROR (merge_profiles): "
+                      "removing last IOR after a merge_iors ()\n"));
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   "\tJust 1 IOR(%u) = %C\n",
@@ -120,11 +128,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       in_count = iorm->is_in_ior (just1.in (), name1.in ());
 
       if (count1 != in_count)
-        ACE_DEBUG ((LM_ERROR,
-                    "**ERROR (merge_profiles): incorrect count returned for "
-                    "is_in_ior"
-                    "\nafter removal (%u)\n",
-                    in_count));
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "**ERROR (merge_profiles): incorrect count returned for "
+                      "is_in_ior"
+                      "\nafter removal (%u)\n",
+                      in_count));
+        }
       // **********************************************************************
 
       // Now try the add_profiles interface.
@@ -133,8 +143,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       count = iorm->get_profile_count (merged2.in ());
 
       if (count != (count1 + count2))
-        ACE_DEBUG ((LM_ERROR,
-                    "**ERROR: add_profile failed profile count test!\n"));
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "**ERROR: add_profile failed profile count test!\n"));
+        }
 
       CORBA::String_var const merged2_ior = orb->object_to_string (merged2.in ());
 
@@ -148,17 +160,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       in_count = iorm->is_in_ior (merged2.in (), name1.in ());
 
       if (count1 != in_count)
-        ACE_DEBUG ((LM_ERROR,
-                    "**ERROR (add_profiles): is_in_ior returned profile "
-                    "count bad (%u)!\n",
-                    in_count));
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "**ERROR (add_profiles): is_in_ior returned profile "
+                      "count bad (%u)!\n",
+                      in_count));
+        }
 
       in_count = iorm->is_in_ior (merged2.in (), name2.in ());
 
       if (count2 != in_count)
-        ACE_DEBUG ((LM_ERROR,
-                    "**ERROR (add_profiles): is_in_ior returned "
-                    "profile count bad!\n"));
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "**ERROR (add_profiles): is_in_ior returned "
+                      "profile count bad!\n"));
+        }
 
       // **********************************************************************
 
@@ -169,8 +185,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       count = iorm->get_profile_count (just2.in ());
 
       if (count2 != count)
-        ACE_DEBUG ((LM_ERROR,
-                    "ERROR removing last IOR after a merge_iors ()\n"));
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "ERROR removing last IOR after a merge_iors ()\n"));
+        }
 
       ACE_DEBUG ((LM_DEBUG, "\tJust 2 IOR(%u) = %C\n",
                   count,
@@ -179,10 +197,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       in_count = iorm->is_in_ior (just2.in (), name2.in ());
 
       if (count2 != in_count)
-        ACE_DEBUG ((LM_ERROR,
-                    "**ERROR (add_profiles): incorrect count (%d) "
-                    "returned for is_in_ior after removal\n",
-                    in_count));
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "**ERROR (add_profiles): incorrect count (%d) "
+                      "returned for is_in_ior after removal\n",
+                      in_count));
+        }
 
       // all the primary tests worked, set status to 1
       status = 1;

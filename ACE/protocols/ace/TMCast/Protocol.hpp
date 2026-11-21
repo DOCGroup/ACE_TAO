@@ -63,10 +63,13 @@ namespace ACE_TMCast
     //
     //
 
-    constexpr unsigned long SYNC_PERIOD = 30000;    // in mks
+    /// Synchronization period in microseconds.
+    constexpr unsigned long SYNC_PERIOD = 30000;
 
-    constexpr unsigned short VOTING_FRAME = 4;      // in SYNC_PERIOD's
-    constexpr unsigned short SEPARATION_FRAME = 5;  // in SYNC_PERIOD's
+    /// Voting frame in synchronization periods.
+    constexpr unsigned short VOTING_FRAME = 4;
+    /// Separation frame in synchronization periods.
+    constexpr unsigned short SEPARATION_FRAME = 5;
 
     // FATAL_SILENCE_FRAME in SYNC_PERIOD's
     // Generally it's a good idea to set it to < VOTING_FRAME + SEPARATION_FRAME

@@ -14,10 +14,13 @@ struct Options
 int
 parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
-  if (argc != 5)  // foo -p IOR_1 -s IOR_2
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Wrong number of arguments.\n")),
-                      -1);
+  if (argc != 5)
+    {
+      // foo -p IOR_1 -s IOR_2
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Wrong number of arguments.\n")),
+                        -1);
+    }
 
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("p:s:"));
   int c {};

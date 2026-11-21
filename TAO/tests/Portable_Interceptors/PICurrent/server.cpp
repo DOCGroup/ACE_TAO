@@ -29,7 +29,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
               case 'o':
               ++i;
               if (i < argc)
-                ior_output_file = argv[i];
+                {
+                  ior_output_file = argv[i];
+                }
               else
               {
                 error = true;
@@ -42,13 +44,15 @@ parse_args (int argc, ACE_TCHAR *argv[])
 #endif /* ACE_HAS_THREADS */
               ++i;
               if (i < argc)
-#if defined (ACE_HAS_THREADS)
-                argv[i] = const_cast<ACE_TCHAR*> (ACE_TEXT("static Server_Strategy_Factory "
-                                                            "\"-ORBConcurrency thread-per-connection\""));
-#else
-                ACE_DEBUG ((LM_DEBUG, "NOTE: Non-threaded build.  "
-                                      "Defaulting to single threaded.\n"));
-#endif /* ACE_HAS_THREADS */
+                {
+  #if defined (ACE_HAS_THREADS)
+                  argv[i] = const_cast<ACE_TCHAR*> (ACE_TEXT("static Server_Strategy_Factory "
+                                                              "\"-ORBConcurrency thread-per-connection\""));
+  #else
+                  ACE_DEBUG ((LM_DEBUG, "NOTE: Non-threaded build.  "
+                                        "Defaulting to single threaded.\n"));
+  #endif /* ACE_HAS_THREADS */
+                }
               else
               {
                 error = true;
@@ -62,13 +66,15 @@ parse_args (int argc, ACE_TCHAR *argv[])
     }
 
   if (error)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Usage: %s "
-                       "-o <iorfile> "
-                       "-t <1> "
-                       "\n",
-                       argv[0]),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Usage: %s "
+                         "-o <iorfile> "
+                         "-t <1> "
+                         "\n",
+                         argv[0]),
+                        -1);
+    }
 
   // Indicates successful parsing of the command line
   return 0;
@@ -105,9 +111,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (obj.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to obtain RootPOA reference.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to obtain RootPOA reference.\n"),
+                            -1);
+        }
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -120,9 +128,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableInterceptor::Current::_narrow (obj.in ());
 
       if (CORBA::is_nil (pi_current.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to obtain PICurrent reference.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to obtain PICurrent reference.\n"),
+                            -1);
+        }
 
       test_i server_impl (pi_current.in (),
                           ::slot_id,
@@ -134,10 +144,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PICurrentTest::test::_narrow (obj.in ());
 
       if (CORBA::is_nil (server.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to obtain reference to "
-                           "PICurrentTest::test object.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to obtain reference to "
+                             "PICurrentTest::test object.\n"),
+                            -1);
+        }
 
       CORBA::String_var ior =
         orb->object_to_string (server.in ());
@@ -150,11 +162,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           std::unique_ptr<FILE, int (*) (FILE *)> output_file (
             ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
           if (!output_file)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing "
-                               "IOR: %s",
-                               ior_output_file),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Cannot open output file for writing "
+                                 "IOR: %s",
+                                 ior_output_file),
+                                1);
+            }
           ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 

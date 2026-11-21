@@ -2,8 +2,8 @@
 #ifndef TAO_IIOP_PIDL
 #define TAO_IIOP_PIDL
 
-// This is a OMG specified IDL. When IIOP modules start getting
-// complicated we may want to have them here.
+/// This is an OMG-specified IDL. When IIOP modules start getting more
+/// complicated, they may belong here.
 #pragma prefix "omg.org"
 
 #if !defined (TAO_LACKS_IIOP)

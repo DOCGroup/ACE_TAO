@@ -16,10 +16,13 @@ ACE_TCHAR const *ior2_file {};
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  if (argc != 5)  // foo -o IOR_1 -o IOR_2
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Wrong number of arguments.\n"),
-                      -1);
+  if (argc != 5)
+    {
+      // foo -o IOR_1 -o IOR_2
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Wrong number of arguments.\n"),
+                        -1);
+    }
 
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
@@ -74,9 +77,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::Object_var const poa_object (orb->resolve_initial_references ("RootPOA"));
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var const root_poa (PortableServer::POA::_narrow (poa_object.in ()));
 
@@ -132,10 +137,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ForwardRequestTest::ServerRequestInterceptor::_narrow (server_interceptor.in ()));
 
       if (CORBA::is_nil (interceptor.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) Could not obtain reference to "
-                           "server request interceptor.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) Could not obtain reference to "
+                             "server request interceptor.\n"),
+                            -1);
+        }
 
       interceptor->forward_references (obj1.in (),
                                        obj2.in ());
@@ -148,12 +155,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
           ACE_OS::fopen (ior1_file, "w"), ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file <%s> for writing "
-                             "IOR: %s",
-                             ior1_file,
-                             ior1.in ()),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot open output file <%s> for writing "
+                               "IOR: %s",
+                               ior1_file,
+                               ior1.in ()),
+                              1);
+          }
         ACE_OS::fprintf (output_file.get (), "%s", ior1.in ());
       }
 
@@ -162,10 +171,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
           ACE_OS::fopen (ior2_file, "w"), ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file for writing IOR: %s",
-                             ior2.in ()),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot open output file for writing IOR: %s",
+                               ior2.in ()),
+                              1);
+          }
         ACE_OS::fprintf (output_file.get (), "%s", ior2.in ());
       }
 

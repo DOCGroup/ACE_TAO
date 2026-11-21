@@ -57,7 +57,7 @@ public:
    *
    * Please check the IORTable.pidl file for details.
    */
-  //@{
+  /// @{
   void bind (char const *object_key, char const *IOR) override;
 
   void rebind (char const *object_key, char const *IOR) override;
@@ -65,7 +65,7 @@ public:
   void unbind (char const *object_key) override;
 
   void set_locator (IORTable::Locator_ptr the_locator) override;
-  //@}
+  /// @}
 
   TAO_IOR_Table_Impl (TAO_IOR_Table_Impl const &) = delete;
   TAO_IOR_Table_Impl &operator= (TAO_IOR_Table_Impl const &) = delete;

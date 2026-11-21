@@ -73,11 +73,11 @@ public:
     ACE_High_Res_Timer::global_scale_factor_type global_scale_factor);
 
   /// @name RtecEventComm::PushConsumer operations
-  //@{
+  /// @{
   /// The skeleton methods.
   void push (const RtecEventComm::EventSet& events) override;
   void disconnect_push_consumer () override;
-  //@}
+  /// @}
 
 private:
   /// The main driver for the test.

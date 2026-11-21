@@ -30,13 +30,13 @@ public:
 
   ~Control () override;
 
-  //@{
+  /// @{
   /** @name The Federated_Test::Control methods
    */
   void join (Federated_Test::Peer_ptr peer) override;
 
   PortableServer::POA_ptr _default_POA () override;
-  //@}
+  /// @}
 
 private:
   /// Synchronize access to the internal data

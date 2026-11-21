@@ -39,15 +39,17 @@ TAO_Trading_Loader::TAO_Trading_Loader ()
     {
       char const * const host_address = localhost.get_host_addr ();
       if (host_address == nullptr)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("\n\nTAO Trading Service (%P|%t) ")
-                        ACE_TEXT ("TAO_Trading_Loader ")
-                        ACE_TEXT ("- %p\n\n"),
-                        ACE_TEXT ("cannot determine hostname")));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("\n\nTAO Trading Service (%P|%t) ")
+                          ACE_TEXT ("TAO_Trading_Loader ")
+                          ACE_TEXT ("- %p\n\n"),
+                          ACE_TEXT ("cannot determine hostname")));
+        }
       else
-      {
-        std::snprintf (host_name.data (), host_name.size (), "%s", host_address);
-      }
+        {
+          std::snprintf (host_name.data (), host_name.size (), "%s", host_address);
+        }
     }
 
   std::string trader_name (host_name.data ());
@@ -272,10 +274,12 @@ TAO_Trading_Loader::bootstrap_to_federation ()
     orb->resolve_initial_references ("TradingService");
 
   if (CORBA::is_nil (trading_obj.in ()))
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       "We're all alone. "
-                       "Unable to link to other traders.\n"),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             "We're all alone. "
+                             "Unable to link to other traders.\n"),
+                            -1);
+    }
 
   ORBSVCS_DEBUG ((LM_DEBUG,
               "*** Narrowing the lookup interface.\n"));
@@ -378,11 +382,13 @@ TAO_Trading_Loader::init_multicast_server ()
         ACE_OS::getenv ("TradingServicePort");
 
       if (port_number != nullptr)
-        port = static_cast<u_short> (std::atoi (port_number));
+        {
+          port = static_cast<u_short> (std::atoi (port_number));
+        }
       else
-      {
-        port = TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT;
-      }
+        {
+          port = TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT;
+        }
     }
 
   // Instantiate a server that will receive requests for an ior
@@ -401,19 +407,25 @@ TAO_Trading_Loader::init_multicast_server ()
                                      port,
                                      ACE_DEFAULT_MULTICAST_ADDR,
                                      TAO_SERVICEID_TRADINGSERVICE) == -1)
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           "Failed to init IOR multicast.\n"),
-                          -1);
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 "Failed to init IOR multicast.\n"),
+                                -1);
+        }
     }
 
   // Register event handler for the ior multicast.
   if (reactor->register_handler (std::addressof (this->ior_multicast_),
                                  ACE_Event_Handler::READ_MASK) == -1)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "cannot register Event handler\n"));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      "cannot register Event handler\n"));
+    }
   else
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "The multicast server setup is done.\n"));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      "The multicast server setup is done.\n"));
+    }
 
   // Other trader instances will bootstrap to us.
   this->bootstrapper_ = true;
@@ -449,15 +461,19 @@ TAO_Trading_Loader::parse_args (int &argc, ACE_TCHAR *argv [])
                 ACE_OS::fopen (file_name, ACE_TEXT("w")));
 
               if (this->ior_output_file_ == nullptr)
-                ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                                   "Unable to open %s for writing: %p\n",
-                                   file_name), -1);
+                {
+                  ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                        "Unable to open %s for writing: %p\n",
+                                        file_name), -1);
+                }
               arg_shifter.consume_arg ();
             }
           else
-            this->ior_output_file_.reset (
-              ACE_OS::fdopen (ACE_STDOUT,
-                              ACE_TEXT("w")));
+            {
+              this->ior_output_file_.reset (
+                ACE_OS::fdopen (ACE_STDOUT,
+                                ACE_TEXT("w")));
+            }
         }
 
       else

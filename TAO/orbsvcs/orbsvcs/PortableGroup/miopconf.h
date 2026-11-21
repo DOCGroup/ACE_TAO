@@ -91,20 +91,24 @@ static u_long const TAO_DEFAULT_MIOP_FRAGMENT_SIZE     = MIOP_MAX_DGRAM_SIZE;
 #endif
 
 #if !defined (TAO_DEFAULT_MIOP_MAX_FRAGMENTS)
-static u_long const TAO_DEFAULT_MIOP_MAX_FRAGMENTS = 0u; // Zero is unlimited
+/// Zero means unlimited fragments.
+static u_long const TAO_DEFAULT_MIOP_MAX_FRAGMENTS = 0u;
 #endif
 
 #if !defined (TAO_DEFAULT_MIOP_SEND_THROTTLING)
-static bool const TAO_DEFAULT_MIOP_SEND_THROTTLING = true; // Enabled
+/// Enabled by default.
+static bool const TAO_DEFAULT_MIOP_SEND_THROTTLING = true;
 #endif
 
 #if !defined (TAO_DEFAULT_MIOP_EAGER_DEQUEUEING)
-static bool const TAO_DEFAULT_MIOP_EAGER_DEQUEUEING = true; // Enabled
+/// Enabled by default.
+static bool const TAO_DEFAULT_MIOP_EAGER_DEQUEUEING = true;
 #endif
 
+/// Magic value spells 'M', 'I', 'O', 'P' in ASCII.
 static CORBA::Octet const miop_magic[4] = {
   0x4d, 0x49, 0x4f, 0x50
-}; // in ASCII this is 'M', 'I', 'O', 'P'
+};
 
 #include /**/ "ace/post.h"
 #endif /*TAO_MIOPCONF_H*/

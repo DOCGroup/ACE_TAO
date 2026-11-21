@@ -79,10 +79,12 @@ write_ior_to_file (CORBA::ORB_ptr orb,
     ACE_OS::fclose);
 
   if (!output_file)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                       filename),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                         filename),
+                        -1);
+    }
 
   ACE_OS::fprintf (output_file.get (),
                    "%s",
@@ -346,8 +348,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                 2);
             }
           else
-            // Unexpected error.
-            ACE_ASSERT (0);
+            {
+              // Unexpected error.
+              ACE_ASSERT (0);
+            }
         }
 
       // Wait for task to exit.

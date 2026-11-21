@@ -43,9 +43,11 @@ public:
                     ACE_TEXT ("waiting for work\n" )));
 
         if (this->getq (message) == -1)
-          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                             ACE_TEXT ("getq")),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                               ACE_TEXT ("getq")),
+                              -1);
+          }
         // Listing 1020
 
         // Listing 1021 code/ch18

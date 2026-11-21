@@ -32,8 +32,10 @@ TAO_UIPMC_Acceptor::~TAO_UIPMC_Acceptor ()
   this->close ();
 
   if (this->hosts_ != nullptr)
-    for (size_t i = 0u; i < this->endpoint_count_; ++i)
-      CORBA::string_free (this->hosts_[i]);
+    {
+      for (size_t i = 0u; i < this->endpoint_count_; ++i)
+        CORBA::string_free (this->hosts_[i]);
+    }
 }
 
 int
@@ -96,8 +98,10 @@ TAO_UIPMC_Acceptor::open (
   }
 
   if (major >= 0 && minor >= 0)
-    this->version_.set_version (static_cast<CORBA::Octet> (major),
-                                static_cast<CORBA::Octet> (minor));
+    {
+      this->version_.set_version (static_cast<CORBA::Octet> (major),
+                                  static_cast<CORBA::Octet> (minor));
+    }
   // Parse options
   if (this->parse_options (options) == -1)
   {
@@ -359,10 +363,12 @@ TAO_UIPMC_Acceptor::dotted_decimal_address (
   if (!addr.get_host_addr (tmp, sizeof tmp))
     {
       if (TAO_debug_level)
-        ORBSVCS_DEBUG ((LM_DEBUG,
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - UIPMC_Acceptor::")
                     ACE_TEXT ("dotted_decimal_address, cannot determine ")
                     ACE_TEXT ("hostname (Errno: '%m')\n")));
+        }
       return -1;
     }
 
@@ -428,7 +434,9 @@ TAO_UIPMC_Acceptor::parse_options (char const *str)
   for (CORBA::ULong j = 0u; j < option_count;)
     {
       if (j < option_count - 1)
-        end = options.find (option_delimiter, begin);
+        {
+          end = options.find (option_delimiter, begin);
+        }
       else
       {
         end = len;
@@ -437,9 +445,11 @@ TAO_UIPMC_Acceptor::parse_options (char const *str)
       ++j;  // In this way we fight MS VS warning about unreachable code.
 
       if (end == begin)
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("TAO (%P|%t) Zero length UIPMC option.\n")),
                           -1);
+        }
       else if (end != ACE_CString::npos)
         {
           ACE_CString const opt = options.substring (begin, end);
@@ -460,10 +470,12 @@ TAO_UIPMC_Acceptor::parse_options (char const *str)
           begin = end + 1;
 
           if (name.length () == 0)
-            ORBSVCS_ERROR_RETURN ((LM_ERROR,
+            {
+              ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Zero length UIPMC ")
                                ACE_TEXT ("option name.\n")),
                               -1);
+            }
 
           if (name == "priority")
             {
@@ -474,10 +486,12 @@ TAO_UIPMC_Acceptor::parse_options (char const *str)
                                 -1);
             }
           else
-            ORBSVCS_ERROR_RETURN ((LM_ERROR,
+            {
+              ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Invalid UIPMC option: <%s>\n"),
                                name.c_str ()),
                               -1);
+            }
         }
       else
       {

@@ -138,18 +138,18 @@ public:
    * https://github.com/DOCGroup/bugzilla/issues/296
    *
    */
-  //@{
+  /// @{
   /// Allocate a new follower to the caller.
   TAO_LF_Follower *allocate_follower ();
 
   /// The caller has finished using a follower.
   void release_follower (TAO_LF_Follower *);
-  //@}
+  /// @}
 
   /** @name Follower Set Operations
    *
    */
-  //@{
+  /// @{
   /// Add a new follower to the set
   void add_follower (TAO_LF_Follower *follower);
 
@@ -162,7 +162,7 @@ public:
    */
   bool follower_available () const;
 
-  //@}
+  /// @}
 
   /// Get a reference to the underlying mutex
   TAO_SYNCH_MUTEX &lock ();
@@ -215,7 +215,7 @@ private:
   /** @name Follower Set Operations
    *
    */
-  //@{
+  /// @{
   /// Remove a follower from the Followers set and promote it to the
   /// leader role.
   /**
@@ -225,7 +225,7 @@ private:
    */
   int elect_new_leader_i ();
 
-  //@}
+  /// @}
 
   /// Method to allow the Leader_Follower to resume deferred events
   /// when it is opportune to do so.

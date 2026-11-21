@@ -22,7 +22,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Forward references.
 class TAO_Priority_Mapping_Manager;
 class TAO_Priority_Mapping_Manager_var;
 class TAO_Priority_Mapping_Manager_out;
@@ -34,7 +33,8 @@ class TAO_Network_Priority_Mapping;
 
 namespace RTCORBA
 {
-  // TAO-specific aliases
+  /// @name TAO-specific aliases
+  /// @{
   using PriorityMappingManager = TAO_Priority_Mapping_Manager;
   using PriorityMappingManager_ptr = TAO_Priority_Mapping_Manager *;
   using PriorityMappingManager_var = TAO_Priority_Mapping_Manager_var;
@@ -49,7 +49,7 @@ namespace RTCORBA
 
   using PriorityMapping = TAO_Priority_Mapping;
   using NetworkPriorityMapping = TAO_Network_Priority_Mapping;
-  // End TAO-specific aliases
+  /// @}
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

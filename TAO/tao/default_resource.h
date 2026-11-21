@@ -129,18 +129,18 @@ public:
   /**
    * @name Service Configurator Hooks
    */
-  //@{
+  /// @{
   /// Dynamic linking hook
   int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Parse svc.conf arguments
   int parse_args (int argc, ACE_TCHAR* argv[]);
-  //@}
+  /// @}
 
   /**
    * @name Member Accessors
    */
-  //@{
+  /// @{
   int get_parser_names (char **&names,
                         int &number_of_names) override;
   enum
@@ -188,7 +188,7 @@ public:
   bool drop_replies_during_shutdown () const override;
   int transport_idle_timeout () const override;
   int transport_idle_scan_interval () const override;
- //@}
+ /// @}
 
 protected:
   friend class TAO_RSF_Timer_Queue_Ptr;

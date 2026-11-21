@@ -59,10 +59,12 @@ Middle_i::call_delay (CORBA::Short sec)
       ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
       int const result = this->threads_.remove (thr);
       if (result == -1)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) Middle_i::call_delay, ")
-                    ACE_TEXT ("unable to remove thr = %d\n"),
-                    thr));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) Middle_i::call_delay, ")
+                      ACE_TEXT ("unable to remove thr = %d\n"),
+                      thr));
+        }
       ACE_ASSERT (result != -1);
     }
 

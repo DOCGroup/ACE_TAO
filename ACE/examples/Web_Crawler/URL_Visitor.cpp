@@ -339,7 +339,7 @@ URL_Validation_Visitor::make_visitation_strategy_factory (URL &url)
     {
       URL_Visitation_Strategy_Factory *vs {};
       ACE_NEW_RETURN (vs,
-                      URL_Validation_Visitation_Strategy_Factory (&url,
+                      URL_Validation_Visitation_Strategy_Factory (std::addressof (url),
                                                                   *this),
                       nullptr);
       return vs;
@@ -531,7 +531,7 @@ URL_Download_Visitor::make_visitation_strategy_factory (URL &url)
   // HTTP URL.
   URL_Visitation_Strategy_Factory *vs {};
   ACE_NEW_RETURN (vs,
-                  URL_Download_Visitation_Strategy_Factory (&url),
+                  URL_Download_Visitation_Strategy_Factory (std::addressof (url)),
                   nullptr);
   return vs;
 }

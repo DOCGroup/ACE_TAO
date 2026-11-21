@@ -37,10 +37,12 @@ public:
     Thermometer_impl (CCS::AssetType anum, char const *location);
     ~Thermometer_impl () override;
 
-    static Controller_impl *    m_ctrl; // My controller
+    /// Controller for this example.
+    static Controller_impl *    m_ctrl;
 
 protected:
-    CCS::AssetType const m_anum; // My asset number
+    /// Asset number.
+    CCS::AssetType const m_anum;
 
 private:
     // Helper functions

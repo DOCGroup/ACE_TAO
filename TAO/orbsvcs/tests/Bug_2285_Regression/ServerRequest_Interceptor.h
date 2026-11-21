@@ -36,7 +36,7 @@ public:
    * These methods implement the pure virtual ServerRequestInterceptor
    * operations.
    */
-  //@{
+  /// @{
   /// Return the name of this server request interceptor.
   char * name () override;
 
@@ -56,7 +56,7 @@ public:
 
   void send_other (
     PortableInterceptor::ServerRequestInfo_ptr ri) override;
-  //@}
+  /// @}
 
 private:
   CORBA::Long client_id_ {};

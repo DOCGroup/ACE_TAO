@@ -30,8 +30,6 @@
 #include <memory>
 #include <string>
 
-// TAO SHMIOP_Acceptor concrete call definitions
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -56,7 +54,7 @@ public:
    *
    * Please check the documentation in Transport_Acceptor.h for details.
    */
-  //@{
+  /// @{
   int open (TAO_ORB_Core *orb_core,
                     ACE_Reactor *reactor,
                     int version_major,
@@ -78,7 +76,7 @@ public:
 
   int object_key (IOP::TaggedProfile &profile,
                   TAO::ObjectKey &key) override;
-  //@}
+  /// @}
 
   /// Set the MMAP options the MEM_Stream this acceptor creates will
   /// use.

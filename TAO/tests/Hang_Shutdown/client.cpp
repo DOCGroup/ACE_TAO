@@ -205,9 +205,11 @@ namespace Test
         Client_Task ct (test.in ());
 
         if (ct.activate (THR_NEW_LWP | THR_JOINABLE, 1) != 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot activate client threads\n"),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot activate client threads\n"),
+                              1);
+          }
 
         ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t) Activating shutdown thread\n"));
@@ -215,9 +217,11 @@ namespace Test
         Shutdown_Task st (orb.in (), options.blocked);
 
         if (st.activate (THR_NEW_LWP | THR_JOINABLE, 1) != 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot activate shutdown threads\n"),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot activate shutdown threads\n"),
+                              1);
+          }
 
         ACE_Thread_Manager::instance ()->wait ();
 

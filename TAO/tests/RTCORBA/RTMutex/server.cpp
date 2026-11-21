@@ -48,10 +48,12 @@ static int
 check_for_nil (CORBA::Object_ptr const obj, char const *msg)
 {
   if (CORBA::is_nil (obj))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ERROR: Object reference <%C> is nil\n",
-                       msg),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ERROR: Object reference <%C> is nil\n",
+                         msg),
+                        -1);
+    }
   else
   {
     return 0;
@@ -417,9 +419,11 @@ test_mutex_try_lock (RTCORBA::RTORB_ptr rt_orb)
       // can test out try_lock failure cases
       result = mutex->try_lock (0u);
       if (!result)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "try_lock failed\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "try_lock failed\n"),
+                            -1);
+        }
 
       test_data.mutex = mutex.in ();
       test_data.shared_var = &shared_var;
@@ -479,9 +483,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   "Running RTCORBA Mutex unit tests\n"));
 
       if (test_mutex_simple (rt_orb.in ()) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "test_mutex_simple failed\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "test_mutex_simple failed\n"),
+                            -1);
+        }
 
 #if (TAO_HAS_NAMED_RT_MUTEXES == 1)
       if (test_named_mutex_simple (rt_orb.in ()) != 0)
@@ -502,13 +508,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #if defined (ACE_HAS_THREADS)
 
       if (test_mutex_threads (rt_orb.in ()) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "test_mutex_threads failed\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "test_mutex_threads failed\n"),
+                            -1);
+        }
       else if (test_mutex_try_lock (rt_orb.in ()) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "test_mutex_try_lock failed\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "test_mutex_try_lock failed\n"),
+                            -1);
+        }
 
 #endif /* ACE_HAS_THREADS */
 

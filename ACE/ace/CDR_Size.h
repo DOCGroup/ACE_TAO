@@ -85,7 +85,7 @@ public:
 #if !defined(ACE_LACKS_STD_WSTRING)
   ACE_CDR::Boolean write_wstring (const std::wstring &x);
 #endif
-  //@}
+  /// @}
 
   /// @note the portion written starts at <x> and ends
   ///    at <x + length>.

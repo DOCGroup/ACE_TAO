@@ -179,7 +179,7 @@ public:
   bool new_dynamic_thread ();
 
   /// @name Accessors
-  // @{
+  /// @{
   TAO_Thread_Pool &pool () const;
   CORBA::ULong id () const;
 
@@ -196,7 +196,7 @@ public:
   TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan () const;
 
   ACE_Time_Value const &dynamic_thread_time () const;
-  // @}
+  /// @}
 
 private:
   /// Validate lane's priority and map it to a native value.
@@ -319,7 +319,7 @@ public:
   bool with_lanes () const;
 
   /// @name Accessors
-  // @{
+  /// @{
   TAO_Thread_Pool_Manager &manager () const;
   CORBA::ULong id () const;
 
@@ -331,7 +331,7 @@ public:
 
   TAO_Thread_Lanes const &lanes () const;
   CORBA::ULong number_of_lanes () const;
-  // @}
+  /// @}
 
 private:
   TAO_Thread_Pool_Manager &manager_;
@@ -409,13 +409,13 @@ public:
   using THREAD_POOLS = ACE_Hash_Map_Manager<RTCORBA::ThreadpoolId, TAO_Thread_Pool *, ACE_Null_Mutex>;
 
   /// @name Accessors
-  // @{
+  /// @{
   TAO_ORB_Core &orb_core () const;
-  // @}
+  /// @}
 
 private:
   /// @name Helpers
-  // @{
+  /// @{
   RTCORBA::ThreadpoolId
   create_threadpool_i (CORBA::ULong stacksize,
                        CORBA::ULong static_threads,
@@ -439,7 +439,7 @@ private:
 
   RTCORBA::ThreadpoolId
   create_threadpool_helper (TAO_Thread_Pool *thread_pool);
-  // @}
+  /// @}
 
 private:
   TAO_ORB_Core &orb_core_;

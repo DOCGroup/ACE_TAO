@@ -63,10 +63,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         Test::Blocking_Sync_None::_narrow (tmp.in ());
 
       if (CORBA::is_nil (blocking_sync_none.in ()))
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           ACE_TEXT ("ERROR: Nil reference in Blocking_Sync_None reference <%s>\n"),
-                           options.ior.c_str ()),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             ACE_TEXT ("ERROR: Nil reference in Blocking_Sync_None reference <%s>\n"),
+                             options.ior.c_str ()),
+                            1);
+        }
 
       CORBA::Object_var const object =
         orb->resolve_initial_references ("PolicyCurrent");

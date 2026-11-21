@@ -34,7 +34,8 @@ namespace ACE_TMCast
     }
 
   private:
-    bool alone_ {true}; // true if we haven't heard from any members yet.
+    /// True until a message has been received from another member.
+    bool alone_ {true};
     short silence_period_ {-1};
   };
 }

@@ -73,9 +73,13 @@ Client_Task::svc ()
           int const retval = this->one_iteration ();
 
           if (retval == 1)
-            ++successful_calls;
+            {
+              ++successful_calls;
+            }
           else if (retval == 0)
-            ++timed_out_calls;
+            {
+              ++timed_out_calls;
+            }
         }
     }
   catch (CORBA::Exception const& ex)

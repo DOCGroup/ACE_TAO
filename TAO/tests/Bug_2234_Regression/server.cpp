@@ -571,7 +571,9 @@ public:
     {
       ACE_DEBUG( (LM_INFO, "MyVarStruct (") );
       if (vS)
-        ACE_DEBUG( (LM_INFO, vS->val.in()) );
+        {
+          ACE_DEBUG( (LM_INFO, vS->val.in()) );
+        }
       else
       {
         ACE_DEBUG( (LM_INFO, "*Null*") );
@@ -581,7 +583,9 @@ public:
     {
       ACE_DEBUG( (LM_INFO, "MyNonVarStruct (") );
       if (fS)
-        ACE_DEBUG( (LM_INFO, "%d", fS->val) );
+        {
+          ACE_DEBUG( (LM_INFO, "%d", fS->val) );
+        }
       else
       {
         ACE_DEBUG( (LM_INFO, "*Null*") );
@@ -591,30 +595,37 @@ public:
     {
       ACE_DEBUG( (LM_INFO, "String (") );
       if (pString)
-        ACE_DEBUG( (LM_INFO, pString) );
+        {
+          ACE_DEBUG( (LM_INFO, pString) );
+        }
       else
       {
         ACE_DEBUG( (LM_INFO, "*Null*") );
       }
     }
     else if (arg >>= theLong)
-      ACE_DEBUG( (LM_INFO, "Long (%d", theLong) );
+      {
+        ACE_DEBUG( (LM_INFO, "Long (%d", theLong) );
+      }
     else if (arg >>= fU)
     {
       ACE_DEBUG( (LM_INFO, "MyNonVarUnion (") );
-      if (fU) switch (fU->_d())
-      {
-      case 1:
-        ACE_DEBUG( (LM_INFO, "Long %d", fU->valLong()) );
-        break;
+      if (fU)
+        {
+          switch (fU->_d())
+        {
+        case 1:
+          ACE_DEBUG( (LM_INFO, "Long %d", fU->valLong()) );
+          break;
 
-      case 2:
-        ACE_DEBUG( (LM_INFO, "Short %d", fU->valShort()) );
-        break;
+        case 2:
+          ACE_DEBUG( (LM_INFO, "Short %d", fU->valShort()) );
+          break;
 
-      default:
-        ACE_DEBUG( (LM_INFO, "*Unknown*") );
-      }
+        default:
+          ACE_DEBUG( (LM_INFO, "*Unknown*") );
+        }
+        }
       else
       {
         ACE_DEBUG( (LM_INFO, "*Null*") );
@@ -623,19 +634,22 @@ public:
     else if (arg >>= vU)
     {
       ACE_DEBUG( (LM_INFO, "MyVarUnion (") );
-      if (vU) switch (vU->_d())
-      {
-      case 1:
-        ACE_DEBUG( (LM_INFO, "Long %d", vU->valLong()) );
-        break;
+      if (vU)
+        {
+          switch (vU->_d())
+        {
+        case 1:
+          ACE_DEBUG( (LM_INFO, "Long %d", vU->valLong()) );
+          break;
 
-      case 2:
-        ACE_DEBUG( (LM_INFO, "String %C", vU->valString()));
-        break;
+        case 2:
+          ACE_DEBUG( (LM_INFO, "String %C", vU->valString()));
+          break;
 
-      default:
-        ACE_DEBUG( (LM_INFO, "*Unknown*") );
-      }
+        default:
+          ACE_DEBUG( (LM_INFO, "*Unknown*") );
+        }
+        }
       else
       {
         ACE_DEBUG( (LM_INFO, "*Null*") );
@@ -668,7 +682,9 @@ public:
       if (holding)
       {
         if (*holding >>= theLong)
-          ACE_DEBUG( (LM_INFO, "Long %d", theLong) );
+          {
+            ACE_DEBUG( (LM_INFO, "Long %d", theLong) );
+          }
         else
         {
           ACE_DEBUG( (LM_INFO, "*Not Long*") );

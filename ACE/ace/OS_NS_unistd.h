@@ -118,7 +118,7 @@ namespace ACE_OS
   int execvp (const char *file,
               char *const argv[]);
 
-  //@{
+  /// @{
   /// Forks and exec's a process in a manner that works Windows.
   /// argv[0] must be the full path name to the executable.
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -130,7 +130,7 @@ namespace ACE_OS
 
   extern ACE_Export
   pid_t fork_exec (ACE_TCHAR *argv[]);
-  //@}
+  /// @}
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int fsync (ACE_HANDLE handle);

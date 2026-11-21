@@ -51,7 +51,7 @@ class AcceptHandler : public ACE_Event_Handler {
         /**
          * @name Overridden methods from the ACE_Event_Handler
          */
-        // @{
+        /// @{
         /**
          * Provides the handle of mAcceptor.
          */
@@ -67,7 +67,7 @@ class AcceptHandler : public ACE_Event_Handler {
          * Close the listening socket.
          */
         int handle_close(ACE_HANDLE, ACE_Reactor_Mask) override;
-        // @}
+        /// @}
 };
 
 #endif /* __ACCEPTHANDLER_H__ */

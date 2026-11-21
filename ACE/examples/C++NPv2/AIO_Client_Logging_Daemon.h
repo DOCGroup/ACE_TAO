@@ -35,10 +35,14 @@ public:
              ACE_Message_Block &message_block) override;
 
 protected:
-  enum { LOG_HEADER_SIZE = 8 };   // Length of CDR header
-  AIO_CLD_Acceptor *acceptor_;    // Our creator
-  ACE_Message_Block_Unique_Ptr mblk_ {}; // Block to receive log record
-  ACE_Asynch_Read_Stream reader_; // Async read factory
+  /// Length of the CDR header.
+  enum { LOG_HEADER_SIZE = 8 };
+  /// Acceptor that created this handler.
+  AIO_CLD_Acceptor *acceptor_;
+  /// Block to receive a log record.
+  ACE_Message_Block_Unique_Ptr mblk_ {};
+  /// Asynchronous read factory.
+  ACE_Asynch_Read_Stream reader_;
 
   // Handle input from logging clients.
   void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
@@ -72,9 +76,12 @@ public:
   }
 
 protected:
-  ACE_Asynch_Read_Stream  reader_;   // Detects connection loss
-  ACE_Asynch_Write_Stream writer_;   // Sends to server
-  bool can_write_;   // Safe to begin send a log record?
+  /// Detects connection loss.
+  ACE_Asynch_Read_Stream  reader_;
+  /// Sends to the server.
+  ACE_Asynch_Write_Stream writer_;
+  /// Safe to begin sending a log record?
+  bool can_write_;
 
   // Initiate the send of a log record
   void start_write (ACE_Message_Block *mblk = nullptr);

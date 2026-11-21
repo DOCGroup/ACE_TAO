@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    CSD_Default_Servant_Dispatcher.h
  *
  *  @author Yan Dai (dai_y@ociweb.com)
  */
-//=============================================================================
 
 #ifndef TAO_CSD_DEFAULT_SERVANT_DISPATCHER_H
 #define TAO_CSD_DEFAULT_SERVANT_DISPATCHER_H

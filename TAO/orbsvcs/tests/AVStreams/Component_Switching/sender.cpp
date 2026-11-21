@@ -5,6 +5,8 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
+#include <memory>
+
 // An Unmanaged_Singleton is used to avoid static object destruction
 // order related problems since the underlying singleton object
 // contains references to static TypeCodes.
@@ -40,7 +42,7 @@ Sender_StreamEndPoint::get_callback (char const *flowname,
 {
   // Create and return the client application callback and return to the AVStreams
   // for further upcalls.
-  callback = &this->callback_;
+  callback = std::addressof (this->callback_);
 
   ACE_CString const flow_name (flowname);
   this->callback_.flowname (flow_name);
@@ -205,7 +207,7 @@ Sender::init (int argc,
 
   // Register the sender mmdevice object with the ORB
   ACE_NEW_RETURN (this->sender_mmdevice_,
-                  TAO_MMDevice (&this->endpoint_strategy_),
+                  TAO_MMDevice (std::addressof (this->endpoint_strategy_)),
                   -1);
 
   // Servant Reference Counting to manage lifetime
@@ -329,7 +331,7 @@ Sender::pace_data ()
                ++iterator)
             {
               int const result =
-                (*iterator).int_id_->send_frame (&this->mb_);
+                (*iterator).int_id_->send_frame (std::addressof (this->mb_));
 
               if (result < 0)
                 {

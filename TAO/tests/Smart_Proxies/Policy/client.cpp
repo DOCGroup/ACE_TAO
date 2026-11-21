@@ -63,9 +63,11 @@ run_test (CORBA::ORB_ptr orb_ptr,
         Test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Object reference is nil\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Object reference is nil\n"),
+                            1);
+        }
 
       server->method (0);
 

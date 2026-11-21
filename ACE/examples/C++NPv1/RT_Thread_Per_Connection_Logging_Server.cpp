@@ -63,7 +63,7 @@ ACE_THR_FUNC_RETURN Thread_Per_Connection_Logging_Server::run_svc (void *arg)
 {
   std::unique_ptr<Thread_Args> thread_args (static_cast<Thread_Args *> (arg));
 
-  thread_args->server_->handle_data (&thread_args->logging_peer_);
+  thread_args->server_->handle_data (std::addressof (thread_args->logging_peer_));
   thread_args->logging_peer_.close ();
   return ACE_THR_FUNC_RETURN_NULL; // Return value is ignored
 }

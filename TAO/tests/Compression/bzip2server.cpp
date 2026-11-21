@@ -144,9 +144,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         Compression::CompressionManager::_narrow (compression_manager.in ());
 
       if (CORBA::is_nil (manager.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P|%t) Panic: nil compression manager\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT (" (%P|%t) Panic: nil compression manager\n")),
+                            1);
+        }
 
       Compression::CompressorFactory_var const compr_fact =
         new TAO::Bzip2_CompressorFactory ();

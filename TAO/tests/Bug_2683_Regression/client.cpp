@@ -38,10 +38,12 @@ public:
             Test::IORTable_Shutdown_Race_var const target =
               Test::IORTable_Shutdown_Race::_narrow (tmp.in ());
             if (CORBA::is_nil (target.in ()))
-                ACE_ERROR_RETURN ((LM_DEBUG,
-                                   "(%P|%t) Nil target reference <%s>\n",
-                                   this->ior_.c_str ()),
-                                  1);
+              {
+                  ACE_ERROR_RETURN ((LM_DEBUG,
+                                     "(%P|%t) Nil target reference <%s>\n",
+                                     this->ior_.c_str ()),
+                                    1);
+              }
             target->ping ();
             if (this->do_shutdown_.exchange (false))
               {

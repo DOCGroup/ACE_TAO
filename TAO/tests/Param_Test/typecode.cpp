@@ -129,7 +129,9 @@ Test_TypeCode::check_validity ()
       three = this->in_.in ()->equal (this->ret_.in ());
 
       if (one && two && three)
-        return 1;
+        {
+          return 1;
+        }
       else
       {
         return 0;

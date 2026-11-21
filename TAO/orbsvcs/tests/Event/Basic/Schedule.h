@@ -47,13 +47,13 @@ public:
   EC_Schedule &operator= (EC_Schedule &&) = delete;
 
   /// @name EC_Driver command-line operations
-  //@{
+  /// @{
   /// add some command line args to change the scheduling service to
   /// use.
   int parse_args (int& argc, ACE_TCHAR* argv[]) override;
   void print_args () const override;
   void print_usage () override;
-  //@}
+  /// @}
 
   /// Set the scheduling service attribute
   void initialize_ec_impl ();

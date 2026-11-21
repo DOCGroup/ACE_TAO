@@ -69,7 +69,7 @@ class ReadHandler : public ACE_Event_Handler {
         /**
          * @name Overridden methods from the ACE_Event_Handler
          */
-        // @{
+        /// @{
         /**
          * Provides the handle of mStream;
          */
@@ -86,7 +86,7 @@ class ReadHandler : public ACE_Event_Handler {
          * Deletes this instance of the read handler.
          */
         int handle_close(ACE_HANDLE, ACE_Reactor_Mask) override;
-        // @}
+        /// @}
 };
 
 #endif /* __READHANDLER_H__ */

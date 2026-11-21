@@ -1028,7 +1028,8 @@ Shared_Backing_Store::updates_available
     return;
   }
   this->notified_ = true;
-  this->orb_->orb_core ()->reactor ()->notify (&this->update_handler_);
+  this->orb_->orb_core ()->reactor ()->notify
+    (std::addressof (this->update_handler_));
 }
 
 int

@@ -99,10 +99,12 @@ Vault_Client_Request_Interceptor::receive_exception (
     ri->received_exception_id ();
 
   if (std::strcmp (id, exception_id.in ()) != 0)
-    ACE_ERROR ((LM_ERROR,
-                "Mismatched exception IDs: %s != %s\n",
-                id,
-                exception_id.in ()));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Mismatched exception IDs: %s != %s\n",
+                  id,
+                  exception_id.in ()));
+    }
 }
 
 //////////////////////////////////  Context /////////////////////////
@@ -173,10 +175,12 @@ Vault_Client_Request_Context_Interceptor::receive_exception (
     ri->received_exception_id ();
 
   if (std::strcmp (id, exception_id.in ()) != 0)
-    ACE_ERROR ((LM_ERROR,
-                "Mismatched exception IDs %s != %s\n",
-                id,
-                exception_id.in ()));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Mismatched exception IDs %s != %s\n",
+                  id,
+                  exception_id.in ()));
+    }
 }
 
 ///////////////////////////////////Dynamic ////////////////////////////////////
@@ -276,10 +280,12 @@ Vault_Client_Request_Dynamic_Interceptor::receive_exception (
     ri->received_exception_id ();
 
   if (std::strcmp (id, exception_id.in ()) != 0)
-    ACE_ERROR ((LM_ERROR,
-                "Mismatched exception IDs %s != %s\n",
-                id,
-                exception_id.in ()));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Mismatched exception IDs %s != %s\n",
+                  id,
+                  exception_id.in ()));
+    }
 }
 
 //////////////////////////////NOOP///////////////////////////////////////
@@ -335,9 +341,11 @@ Vault_Client_Request_NOOP_Interceptor::receive_exception (
     ri->received_exception_id ();
 
   if (std::strcmp (id, exception_id.in ()) != 0)
-    ACE_ERROR ((LM_ERROR,
-                "Mismatched exception IDs %s != %s\n",
-                id,
-                exception_id.in ()));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Mismatched exception IDs %s != %s\n",
+                  id,
+                  exception_id.in ()));
+    }
 }
 

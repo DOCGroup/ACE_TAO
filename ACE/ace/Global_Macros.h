@@ -421,7 +421,7 @@ using ACE_Service_Object_Exterminator = void (*)(void *);
  * Notice that in all the macros the SERVICE_CLASS parameter must be
  * the name of a class derived from ACE_Service_Object.
  */
-//@{
+/// @{
 /// Declare a the data structure required to register a statically
 /// linked service into the service configurator.
 /**
@@ -651,17 +651,17 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 /// method.
 #define ACE_SVC_INVOKE(SERVICE_CLASS) ACE_SVC_NAME(SERVICE_CLASS) (0)
 
-//@}
+/// @}
 
 /** @name Helper macros for services defined in the netsvcs library.
  *
  * The ACE services defined in netsvcs use this helper macros for
  * simplicity.
  */
-//@{
+/// @{
 # define ACE_SVC_FACTORY_DECLARE(X) ACE_FACTORY_DECLARE (ACE_Svc, X)
 # define ACE_SVC_FACTORY_DEFINE(X) ACE_FACTORY_DEFINE (ACE_Svc, X)
-//@}
+/// @}
 
 #if !defined (ACE_WIN32)
 // Add some typedefs and macros to enhance Win32 conformance...

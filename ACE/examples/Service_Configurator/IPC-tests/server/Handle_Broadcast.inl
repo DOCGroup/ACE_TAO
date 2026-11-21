@@ -19,11 +19,17 @@ ACE_INLINE int
 Handle_Broadcast::open (const ACE_INET_Addr &r, int async)
 {
   if (this->ACE_SOCK_Dgram::open (r) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (async && ACE_SOCK_Dgram::enable (ACE_SIGIO) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 ACE_INLINE int
@@ -69,11 +75,15 @@ Handle_Broadcast::init (int argc, ACE_TCHAR *argv[])
        }
 
   if (this->open (sba) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
+    }
   else if (ACE_Reactor::instance ()->register_handler
            (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("registering service with ACE_Reactor")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("registering service with ACE_Reactor")), -1);
+    }
   return 0;
 }
 
@@ -98,17 +108,23 @@ Handle_Broadcast::handle_input (ACE_HANDLE)
   ssize_t n = this->recv (buf, sizeof buf, sa);
 
   if (n== -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    ACE_DEBUG ((LM_INFO,
-                ACE_TEXT ("received broadcast datagram from host %C\n"),
-                sa.get_host_name ()));
+    {
+      ACE_DEBUG ((LM_INFO,
+                  ACE_TEXT ("received broadcast datagram from host %C\n"),
+                  sa.get_host_name ()));
+    }
 
   ACE_OS::puts (ACE_TEXT ("----------------------------------------"));
   ACE_OS::write (ACE_STDOUT, buf, n);
 
   if (n > 0 && buf[n - 1] != '\n')
-    putchar ('\n');
+    {
+      putchar ('\n');
+    }
 
   ACE_OS::puts (ACE_TEXT ("----------------------------------------"));
 

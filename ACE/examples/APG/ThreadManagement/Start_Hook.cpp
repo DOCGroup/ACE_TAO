@@ -26,12 +26,12 @@ public:
     return (*func) (arg);
   }
 
-  void add_sec_context_thr (ACE_TSS<SecurityContext> &secCtx);
+  void add_sec_context_thr (ACE_TSS<SecurityContext> const &secCtx);
 };
 // Listing 1
 
 void
-HA_ThreadHook::add_sec_context_thr (ACE_TSS<SecurityContext> &secCtx)
+HA_ThreadHook::add_sec_context_thr (ACE_TSS<SecurityContext> const &secCtx)
 {
   secCtx->user = nullptr;
 }

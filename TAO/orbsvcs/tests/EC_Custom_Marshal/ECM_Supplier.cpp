@@ -502,7 +502,7 @@ Test_Supplier::disconnect ()
     }
 
   PortableServer::POA_var poa = this->supplier_._default_POA ();
-  PortableServer::ObjectId_var id = poa->servant_to_id (&this->supplier_);
+  PortableServer::ObjectId_var id = poa->servant_to_id (std::addressof (this->supplier_));
   poa->deactivate_object (id.in ());
 }
 

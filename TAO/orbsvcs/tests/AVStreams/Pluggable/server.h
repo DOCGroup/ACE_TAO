@@ -30,7 +30,7 @@ using FTP_Server_File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
 class Server;
 using FTP_SERVER = ACE_Unmanaged_Singleton<Server, ACE_Null_Mutex>;
 
-/** Server callback receiving AVStreams frames. */
+/// Server callback receiving AVStreams frames.
 class FTP_Server_Callback : public TAO_AV_Callback
 {
 public:
@@ -46,7 +46,7 @@ public:
   int handle_destroy () override;
 };
 
-/** Server stream endpoint providing the application callback. */
+/// Server stream endpoint providing the application callback.
 class FTP_Server_StreamEndPoint : public TAO_Server_StreamEndPoint
 {
 public:
@@ -63,7 +63,7 @@ private:
   FTP_Server_Callback callback_;
 };
 
-/** Server application receiving the streamed file. */
+/// Server application receiving the streamed file.
 class Server
 {
 public:

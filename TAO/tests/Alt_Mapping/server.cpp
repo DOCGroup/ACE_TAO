@@ -63,9 +63,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       temp = orb_ptr->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (temp.in()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) Unable to get root poa reference.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) Unable to get root poa reference.\n"),
+                            1);
+        }
 
       oa_ptr = PortableServer::POA::_narrow (temp.in());
 

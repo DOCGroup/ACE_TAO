@@ -1107,7 +1107,7 @@ namespace ACE_OS {
   /// This is necessary to deal with POSIX pthreads and their use of
   /// structures for TSS keys.
   extern ACE_Export ACE_thread_key_t NULL_key;
-  //@}
+  /// @}
 
   /**
    * Call TSS destructors for the current thread.  If the current
@@ -1281,7 +1281,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int event_wait (ACE_event_t *event);
 
-  //@}
+  /// @}
 
   extern ACE_Export
   int lwp_getparams (ACE_Sched_Params &);
@@ -1372,7 +1372,7 @@ namespace ACE_OS {
   extern ACE_Export
   int mutex_unlock (ACE_mutex_t *m);
 
-  //@}
+  /// @}
 
   /// Low-level interface to @c priocntl(2).
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -1417,7 +1417,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m);
 
-  //@}
+  /// @}
 
   //@{ @name A set of wrappers for readers/writer locks.
 
@@ -1448,14 +1448,14 @@ namespace ACE_OS {
                    const ACE_TCHAR *name = nullptr,
                    void *arg = nullptr);
 
-  //@}
+  /// @}
 
   //@{ @name Thread scheduler interface.
   /// Set scheduling parameters.  An id of ACE_SELF indicates, e.g.,
   /// set the parameters on the calling thread.
   extern ACE_Export
   int sched_params (const ACE_Sched_Params &, ACE_id_t id = ACE_SELF);
-  //@}
+  /// @}
 
   /// Find the scheduling class ID that corresponds to the class name.
   extern ACE_Export
@@ -1532,7 +1532,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int sema_wait (ACE_sema_t *s,
                  ACE_Time_Value *tv);
-  //@}
+  /// @}
 
   //@{ @name A set of wrappers for System V semaphores.
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -1550,7 +1550,7 @@ namespace ACE_OS {
   int semop (int int_id,
              struct sembuf *sops,
              size_t nsops);
-  //@}
+  /// @}
 
   /// Friendly interface to @c priocntl(2).
   extern ACE_Export
@@ -1856,7 +1856,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int thread_mutex_unlock (ACE_thread_mutex_t *m);
 
-  //@}
+  /// @}
 
   /**
    * This method uses process id and object pointer to come up with a

@@ -284,11 +284,13 @@ TAO_Import_Attributes_i::def_search_card (CORBA::ULong new_value)
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
 
   if (new_value > this->max_search_card_)
-    this->def_search_card_ = this->max_search_card_;
+    {
+      this->def_search_card_ = this->max_search_card_;
+    }
   else
-  {
-    this->def_search_card_ = new_value;
-  }
+    {
+      this->def_search_card_ = new_value;
+    }
 }
 
 CORBA::ULong
@@ -324,11 +326,13 @@ TAO_Import_Attributes_i::def_match_card (CORBA::ULong new_value)
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
 
   if (new_value > this->max_match_card_)
-    this->def_match_card_ = this->max_match_card_;
+    {
+      this->def_match_card_ = this->max_match_card_;
+    }
   else
-  {
-    this->def_match_card_ = new_value;
-  }
+    {
+      this->def_match_card_ = new_value;
+    }
 }
 
 CORBA::ULong
@@ -363,11 +367,13 @@ TAO_Import_Attributes_i::def_return_card (CORBA::ULong new_value)
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
 
   if (new_value > this->max_return_card_)
-    this->def_return_card_ = this->max_return_card_;
+    {
+      this->def_return_card_ = this->max_return_card_;
+    }
   else
-  {
-    this->def_return_card_ = new_value;
-  }
+    {
+      this->def_return_card_ = new_value;
+    }
 }
 
 CORBA::ULong
@@ -416,11 +422,13 @@ TAO_Import_Attributes_i::def_hop_count (CORBA::ULong new_value)
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
 
   if (new_value > this->max_hop_count_)
-    this->def_hop_count_ = this->max_hop_count_;
+    {
+      this->def_hop_count_ = this->max_hop_count_;
+    }
   else
-  {
-    this->def_hop_count_ = new_value;
-  }
+    {
+      this->def_hop_count_ = new_value;
+    }
 }
 
 CORBA::ULong
@@ -455,11 +463,13 @@ TAO_Import_Attributes_i::def_follow_policy (CosTrading::FollowOption new_value)
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
 
   if (new_value > this->max_follow_policy_)
-    this->def_follow_policy_ = this->max_follow_policy_;
+    {
+      this->def_follow_policy_ = this->max_follow_policy_;
+    }
   else
-  {
-    this->def_follow_policy_ = new_value;
-  }
+    {
+      this->def_follow_policy_ = new_value;
+    }
 }
 
 CosTrading::FollowOption
@@ -596,13 +606,17 @@ operator< (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
            const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &r)
 {
   if (l.high < r.high)
-    return true;
+    {
+      return true;
+    }
   else if (l.high == r.high)
-    return (l.low < r.low);
+    {
+      return (l.low < r.low);
+    }
   else
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 }
 
 bool
@@ -687,13 +701,17 @@ TAO_Trader_Factory::manufacture_trader ()
   }
 
   if (this->threadsafe_)
-    ACE_NEW_RETURN (return_value,
-                    MT_TRADER (static_cast<TAO_Trader_Base::Trader_Components> (components)),
-                    nullptr);
+    {
+      ACE_NEW_RETURN (return_value,
+                      MT_TRADER (static_cast<TAO_Trader_Base::Trader_Components> (components)),
+                      nullptr);
+    }
   else
-    ACE_NEW_RETURN (return_value,
-                    TRADER (static_cast<TAO_Trader_Base::Trader_Components> (components)),
-                    nullptr);
+    {
+      ACE_NEW_RETURN (return_value,
+                      TRADER (static_cast<TAO_Trader_Base::Trader_Components> (components)),
+                      nullptr);
+    }
 
   TAO_Import_Attributes_i &import_attributes =
     return_value->import_attributes ();
@@ -738,13 +756,21 @@ TAO_Trader_Factory::parse_args (int& argc, ACE_TCHAR** argv)
               const ACE_TCHAR* conformance_str = arg_shifter.get_current ();
 
               if (ACE_OS::strcasecmp (conformance_str, ACE_TEXT("Linked")) == 0)
-                this->conformance_ = TAO_TRADER_LINKED;
+                {
+                  this->conformance_ = TAO_TRADER_LINKED;
+                }
               else if (ACE_OS::strcasecmp (conformance_str, ACE_TEXT("Query")) == 0)
-                this->conformance_ = TAO_TRADER_QUERY;
+                {
+                  this->conformance_ = TAO_TRADER_QUERY;
+                }
               else if (ACE_OS::strcasecmp (conformance_str, ACE_TEXT("Simple")) == 0)
-                this->conformance_ = TAO_TRADER_SIMPLE;
+                {
+                  this->conformance_ = TAO_TRADER_SIMPLE;
+                }
               else if (ACE_OS::strcasecmp (conformance_str, ACE_TEXT("Standalone")) == 0)
-                this->conformance_ = TAO_TRADER_STANDALONE;
+                {
+                  this->conformance_ = TAO_TRADER_STANDALONE;
+                }
 
               arg_shifter.consume_arg ();
             }
@@ -757,9 +783,13 @@ TAO_Trader_Factory::parse_args (int& argc, ACE_TCHAR** argv)
               const ACE_TCHAR* arg_str = arg_shifter.get_current ();
 
               if (ACE_OS::strcasecmp (arg_str, ACE_TEXT("true")) == 0)
-                this->supports_dynamic_properties_ = true;
+                {
+                  this->supports_dynamic_properties_ = true;
+                }
               else if (ACE_OS::strcasecmp (arg_str, ACE_TEXT("false")) == 0)
-                this->supports_dynamic_properties_ = false;
+                {
+                  this->supports_dynamic_properties_ = false;
+                }
 
               arg_shifter.consume_arg ();
             }
@@ -773,9 +803,13 @@ TAO_Trader_Factory::parse_args (int& argc, ACE_TCHAR** argv)
               const ACE_TCHAR* arg_str = arg_shifter.get_current ();
 
               if (ACE_OS::strcasecmp (arg_str, ACE_TEXT("true")) == 0)
-                this->supports_modifiable_properties_ = true;
+                {
+                  this->supports_modifiable_properties_ = true;
+                }
               else if (ACE_OS::strcasecmp (arg_str, ACE_TEXT("false")) == 0)
-                this->supports_modifiable_properties_ = false;
+                {
+                  this->supports_modifiable_properties_ = false;
+                }
 
               arg_shifter.consume_arg ();
             }
@@ -801,9 +835,13 @@ TAO_Trader_Factory::parse_args (int& argc, ACE_TCHAR** argv)
                   if (ACE_OS::strstr (current_arg, ACE_TEXT("max")))
                     {
                       if (ACE_OS::strstr (current_arg, ACE_TEXT("search")))
-                        this->max_search_card_ = value;
+                        {
+                          this->max_search_card_ = value;
+                        }
                       else if (ACE_OS::strstr (current_arg, ACE_TEXT("match")))
-                        this->max_match_card_ = value;
+                        {
+                          this->max_match_card_ = value;
+                        }
                       else
                       {
                         this->max_return_card_ = value;
@@ -812,9 +850,13 @@ TAO_Trader_Factory::parse_args (int& argc, ACE_TCHAR** argv)
                   else
                     {
                       if (ACE_OS::strstr (current_arg, ACE_TEXT("search")))
-                        this->def_search_card_ = value;
+                        {
+                          this->def_search_card_ = value;
+                        }
                       else if (ACE_OS::strstr (current_arg, ACE_TEXT("match")))
-                        this->def_match_card_ = value;
+                        {
+                          this->def_match_card_ = value;
+                        }
                       else
                       {
                         this->def_return_card_ = value;
@@ -824,7 +866,9 @@ TAO_Trader_Factory::parse_args (int& argc, ACE_TCHAR** argv)
               else
                 {
                   if (ACE_OS::strstr (current_arg, ACE_TEXT("max")))
-                    this->max_hop_count_ = value;
+                    {
+                      this->max_hop_count_ = value;
+                    }
                   else
                   {
                     this->def_hop_count_ = value;
@@ -842,20 +886,30 @@ TAO_Trader_Factory::parse_args (int& argc, ACE_TCHAR** argv)
               CosTrading::FollowOption follow_option;
 
               if (ACE_OS::strcasecmp (arg_str, ACE_TEXT("always")) == 0)
-                follow_option = CosTrading::always;
+                {
+                  follow_option = CosTrading::always;
+                }
               else if (ACE_OS::strcasecmp (arg_str, ACE_TEXT("if_no_local")) == 0)
-                follow_option = CosTrading::if_no_local;
+                {
+                  follow_option = CosTrading::if_no_local;
+                }
               else if (ACE_OS::strcasecmp (arg_str, ACE_TEXT("local_only")) == 0)
-                follow_option = CosTrading::local_only;
+                {
+                  follow_option = CosTrading::local_only;
+                }
               else if (ACE_OS::strstr (current_arg, ACE_TEXT("def")))
-                follow_option = this->def_follow_policy_;
+                {
+                  follow_option = this->def_follow_policy_;
+                }
               else
               {
                 follow_option = this->max_follow_policy_;
               }
 
               if (ACE_OS::strstr (current_arg, ACE_TEXT("def")))
-                this->def_follow_policy_ = follow_option;
+                {
+                  this->def_follow_policy_ = follow_option;
+                }
               else
               {
                 this->max_follow_policy_ = follow_option;

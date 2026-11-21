@@ -16,11 +16,13 @@ Server_Request_Interceptor::forward (
   CORBA::Object_ptr to)
 {
   if (CORBA::is_nil (to))
-    throw CORBA::INV_OBJREF (
-      CORBA::SystemException::_tao_minor_code (
-        TAO::VMCID,
-        EINVAL),
-      CORBA::COMPLETED_NO);
+    {
+      throw CORBA::INV_OBJREF (
+        CORBA::SystemException::_tao_minor_code (
+          TAO::VMCID,
+          EINVAL),
+        CORBA::COMPLETED_NO);
+    }
 
   ACE_TCHAR *argv[1] {};
   int argc {};

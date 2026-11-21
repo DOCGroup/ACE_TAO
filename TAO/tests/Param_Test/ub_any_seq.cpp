@@ -80,8 +80,10 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref)
             CORBA::Short s;
             s = gen->gen_short ();
                   if (TAO_debug_level > 0)
-              ACE_DEBUG ((LM_DEBUG,
-                          "setting short = %d\n", s));
+                    {
+                ACE_DEBUG ((LM_DEBUG,
+                            "setting short = %d\n", s));
+                    }
             this->in_[i] <<= s;
             this->inout_[i] <<= 0; // different from in_
           }
@@ -90,8 +92,10 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref)
           {
             CORBA::String_var const str = gen->gen_string ();
             if (TAO_debug_level > 0)
-              ACE_DEBUG ((LM_DEBUG,
-                          "setting string = %C\n", str.in ()));
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                            "setting string = %C\n", str.in ()));
+              }
             this->in_[i] <<= str.in ();
             this->inout_[i] <<= 0; // different from in_
           }
@@ -99,8 +103,10 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref)
         case 2:
           {
                   if (TAO_debug_level > 0)
-                    ACE_DEBUG ((LM_DEBUG,
-                          "setting coffee object\n" ));
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                            "setting coffee object\n" ));
+                    }
             try
               {
                 // get access to a Coffee Object
@@ -120,8 +126,10 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref)
           break;
         case 3:
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "setting constant string\n" ));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "setting constant string\n" ));
+            }
           this->in_[i] <<= "Const string";
           this->inout_[i] <<= 0; // different from in_
           break;

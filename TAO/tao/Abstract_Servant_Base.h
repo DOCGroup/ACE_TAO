@@ -88,7 +88,7 @@ public:
   virtual char * _repository_id () = 0;
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-  //@{
+  /// @{
   /**
    * @name Reference Counting Operations
    */
@@ -104,7 +104,7 @@ public:
 
   /// Returns the current reference count value.
   virtual CORBA::ULong _refcount_value () const = 0;
-  //@}
+  /// @}
 
   /// This is an auxiliary method for _this() and _narrow().
   virtual TAO_Stub *_create_stub () = 0;

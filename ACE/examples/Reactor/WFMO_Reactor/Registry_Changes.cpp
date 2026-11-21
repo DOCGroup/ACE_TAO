@@ -18,6 +18,7 @@
 #include "ace/Auto_Event.h"
 #include "ace/OS_NS_unistd.h"
 #include <atomic>
+#include <memory>
 
 static std::atomic<bool> stop_test {};
 static HKEY context_to_monitor = HKEY_CURRENT_USER;
@@ -45,7 +46,7 @@ private:
 Event_Handler::Event_Handler (ACE_Reactor &reactor)
   : context_ (context_to_monitor)
 {
-  this->reactor (&reactor);
+  this->reactor (std::addressof (reactor));
 
   if (::RegNotifyChangeKeyValue (this->context_.key (), // handle of key to watch
                                  FALSE, // flag for subkey notification

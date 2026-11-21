@@ -42,13 +42,13 @@ namespace TAO
      *
      * @see @c TAO::Argument.
      */
-    //@{
+    /// @{
     CORBA::Boolean demarshal (TAO_InputCDR &cdr) override;
 
 #if TAO_HAS_INTERCEPTORS == 1
     void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    //@}
+    /// @}
 
     /// Retrieve underlying argument.
     S const & arg () const;
@@ -77,13 +77,13 @@ namespace TAO
      *
      * @see @c TAO::Argument.
      */
-    //@{
+    /// @{
     CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
     CORBA::Boolean demarshal (TAO_InputCDR &) override;
 #if TAO_HAS_INTERCEPTORS == 1
     void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    //@}
+    /// @}
 
     S & arg ();
 
@@ -110,12 +110,12 @@ namespace TAO
      *
      * @see @c TAO::Argument.
      */
-    //@{
+    /// @{
     CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
 #if TAO_HAS_INTERCEPTORS == 1
     void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    //@}
+    /// @}
 
     S & arg ();
 
@@ -142,12 +142,12 @@ namespace TAO
      *
      * @see @c TAO::Argument.
      */
-    //@{
+    /// @{
     CORBA::Boolean marshal (TAO_OutputCDR &cdr) override;
 #if TAO_HAS_INTERCEPTORS == 1
     void interceptor_value (CORBA::Any *any) const override;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    //@}
+    /// @}
 
     S & arg ();
 

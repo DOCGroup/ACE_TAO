@@ -119,7 +119,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb->run ();
 
       PortableServer::ObjectId_var id =
-        root_poa->servant_to_id (&ec_impl);
+        root_poa->servant_to_id (std::addressof (ec_impl));
       root_poa->deactivate_object (id.in ());
 
       orb->destroy ();

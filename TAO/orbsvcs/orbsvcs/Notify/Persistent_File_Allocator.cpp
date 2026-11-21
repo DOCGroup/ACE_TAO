@@ -124,7 +124,9 @@ Persistent_Storage_Block::reassign_data(unsigned char* newptr,
   }
 
   if (delete_old)
-    this->data_.reset ();
+    {
+      this->data_.reset ();
+    }
   else
   {
     this->data_.release ();
@@ -201,10 +203,13 @@ Persistent_File_Allocator::allocate()
     // why not.  What if the disk is full?  Oh, I see we
     // allocate non-existent blocks.  FIX this
   }
-  if (DEBUG_LEVEL > 0) ORBSVCS_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("(%P|%t) Persistent_File_Allocator::allocate: %B\n"),
-    block_number
-    ));
+  if (DEBUG_LEVEL > 0)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+        ACE_TEXT ("(%P|%t) Persistent_File_Allocator::allocate: %B\n"),
+        block_number
+        ));
+    }
   result = this->allocate_at(block_number);
   return result;
 }
@@ -214,10 +219,13 @@ Persistent_File_Allocator::allocate_at(size_t block_number)
 {
   Persistent_Storage_Block* result {};
   this->used(block_number);
-  if (DEBUG_LEVEL > 0) ORBSVCS_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("(%P|%t) Persistent_File_Allocator::allocate at : %B\n"),
-    block_number
-    ));
+  if (DEBUG_LEVEL > 0)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+        ACE_TEXT ("(%P|%t) Persistent_File_Allocator::allocate at : %B\n"),
+        block_number
+        ));
+    }
   ACE_NEW_RETURN(result, Persistent_Storage_Block(
     block_number,
     this->block_size()),
@@ -241,10 +249,13 @@ void
 Persistent_File_Allocator::used(size_t block_number)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->free_blocks_lock_);
-  if (DEBUG_LEVEL > 0) ORBSVCS_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("(%P|%t) Persistent_File_Allocator::used: %B\n"),
-    block_number
-    ));
+  if (DEBUG_LEVEL > 0)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+        ACE_TEXT ("(%P|%t) Persistent_File_Allocator::used: %B\n"),
+        block_number
+        ));
+    }
   ACE_ASSERT (!this->free_blocks_.is_set (block_number));
   this->free_blocks_.set_bit(block_number, true);
 }
@@ -252,10 +263,13 @@ Persistent_File_Allocator::used(size_t block_number)
 void
 Persistent_File_Allocator::free(size_t block_number)
 {
-  if (DEBUG_LEVEL > 0) ORBSVCS_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("(%P|%t) Persistent_File_Allocator::free: %B\n"),
-    block_number
-    ));
+  if (DEBUG_LEVEL > 0)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+        ACE_TEXT ("(%P|%t) Persistent_File_Allocator::free: %B\n"),
+        block_number
+        ));
+    }
   ACE_ASSERT (this->free_blocks_.is_set (block_number));
   this->free_block(block_number);
 }
@@ -308,18 +322,24 @@ Persistent_File_Allocator::write(Persistent_Storage_Block* psb)
     Persistent_Storage_Block* ourpsb = psb;
     if (!psb->get_allocator_owns())
     {
-      if (DEBUG_LEVEL) ORBSVCS_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("(%P|%t) Copy PSB %B\n")
-        , psb->block_number ()
-        ));
+      if (DEBUG_LEVEL)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("(%P|%t) Copy PSB %B\n")
+            , psb->block_number ()
+            ));
+        }
       ACE_NEW_RETURN(ourpsb, Persistent_Storage_Block(*psb), false);
       ourpsb->set_allocator_owns(true);
     }
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->queue_lock_, false);
-    if (DEBUG_LEVEL) ORBSVCS_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) Queueing PSB to write block %B\n")
-      , psb->block_number ()
-      ));
+    if (DEBUG_LEVEL)
+      {
+        ORBSVCS_DEBUG ((LM_DEBUG,
+          ACE_TEXT ("(%P|%t) Queueing PSB to write block %B\n")
+          , psb->block_number ()
+          ));
+      }
     try
       {
         this->block_queue_.push_back (ourpsb);

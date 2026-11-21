@@ -3,6 +3,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 
+#include <memory>
+
 // Create a singleton instance of the Sender.
 
 // An Unmanaged_Singleton is used to avoid static object destruction
@@ -16,7 +18,7 @@ Sender_StreamEndPoint::get_callback (char const *,
 {
   // Create and return the client application callback and return to the AVStreams
   // for further upcalls.
-  callback = &this->callback_;
+  callback = std::addressof (this->callback_);
   return 0;
 }
 
@@ -122,7 +124,7 @@ Sender::init (int argc, ACE_TCHAR *argv[])
   // Register the sender mmdevice object with the ORB
   TAO_MMDevice *sender_mmdevice {};
   ACE_NEW_RETURN (sender_mmdevice,
-                  TAO_MMDevice (&this->endpoint_strategy_),
+                  TAO_MMDevice (std::addressof (this->endpoint_strategy_)),
                   -1);
 
   // Servant Reference Counting to manage lifetime
@@ -241,7 +243,7 @@ Sender::pace_data ()
                ++iterator)
             {
               int result =
-                (*iterator).int_id_->send_frame (&this->mb_);
+                (*iterator).int_id_->send_frame (std::addressof (this->mb_));
 
               if (result < 0)
                 {

@@ -74,12 +74,12 @@ namespace TAO
        *
        * Constructors.
        */
-      //@{
+      /// @{
       OpenSSL_st_var ();
       OpenSSL_st_var (T * st);
       OpenSSL_st_var (OpenSSL_st_var<T> const & v);
       OpenSSL_st_var (T const & st);
-      //@}
+      /// @}
 
       ~OpenSSL_st_var ();
 
@@ -88,11 +88,11 @@ namespace TAO
        *
        * Assignment operators.
        */
-      //@{
+      /// @{
       OpenSSL_st_var<T> & operator= (T* st);
       OpenSSL_st_var<T> & operator= (OpenSSL_st_var<T> const & v);
       OpenSSL_st_var<T> & operator= (T const & st);
-      //@}
+      /// @}
 
       T const * operator-> () const;
       T* operator-> ();

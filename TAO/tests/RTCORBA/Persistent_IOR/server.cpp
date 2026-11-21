@@ -135,10 +135,12 @@ write_iors_to_file (CORBA::Object_ptr object,
     orb->object_to_string (object);
 
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                "%s: %C\n",
-                filename,
-                ior.in ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s: %C\n",
+                  filename,
+                  ior.in ()));
+    }
 
   int const result = ACE_OS::fprintf (file.get (),
                                       "%s",

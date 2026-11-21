@@ -93,9 +93,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           CORBA::String_var const str = client_orb->object_to_string (callee.in ());
           std::unique_ptr<FILE, int (*) (FILE *)> output_file (ACE_OS::fopen ("ior", "w"), ACE_OS::fclose);
           if (!output_file)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                              "Cannot open output file for writing IOR: ior\n"),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                "Cannot open output file for writing IOR: ior\n"),
+                                1);
+            }
           ACE_OS::fprintf (output_file.get (), "%s", str.in ());
         }
 

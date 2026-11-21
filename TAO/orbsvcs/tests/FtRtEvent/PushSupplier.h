@@ -44,8 +44,10 @@ private:
 
     int svc () override;
 
-    ACE_Reactor *reactor_ {}; // Borrowed from svc() while its event loop runs.
-    ACE_Event_Handler *handler_ {}; // Borrowed from the owning PushSupplier_impl.
+    /// Borrowed from svc() while its event loop runs.
+    ACE_Reactor *reactor_ {};
+    /// Borrowed from the owning PushSupplier_impl.
+    ACE_Event_Handler *handler_ {};
   };
 
   int handle_timeout (ACE_Time_Value const &current_time,

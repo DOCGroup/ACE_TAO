@@ -44,7 +44,7 @@ class TAO_RTEvent_Serv_Export TAO_ECG_UDP_EH :
 {
 public:
   /// Initialization and termination methods.
-  //@{
+  /// @{
   /// Messages received by this EH will be forwarded to the @a recv.
   /*
    * See comments for <receiver_> data member on why raw pointer is
@@ -64,7 +64,7 @@ public:
   /// TAO_ECG_Handler_Shutdown method.
   /// Unsubscribe from the reactor and close the datagram.
   int shutdown () override;
-  //@}
+  /// @}
 
   /// Main method - reactor callback.  Notify <receiver_> that
   /// <dgram_> is ready for reading.

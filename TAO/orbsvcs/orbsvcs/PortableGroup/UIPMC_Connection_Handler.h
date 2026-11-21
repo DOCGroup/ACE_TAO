@@ -56,17 +56,17 @@ public:
 
   ~TAO_UIPMC_Connection_Handler () override;
 
-  //@{
+  /// @{
   /** @name Connection Handler overloads
    */
   int open_handler (void *v) override;
-  //@}
+  /// @}
 
   /// Close called by the Acceptor or Connector when connection
   /// establishment fails.
   int close (u_long = 0) override;
 
-  //@{
+  /// @{
   /** @name Event Handler overloads
    */
   int resume_handler () override;
@@ -77,7 +77,7 @@ public:
   int handle_timeout (ACE_Time_Value const &current_time,
                       void const *act = nullptr) override;
   int open (void *) override;
-  //@}
+  /// @}
 
   /// Add ourselves to Cache.
   int add_transport_to_cache ();
@@ -109,13 +109,13 @@ protected:
 
   // UIPMC Additions - End
 
-  //@{
+  /// @{
   /**
    * @name TAO_Connection Handler overloads
    */
   int release_os_resources () override;
   int handle_write_ready (ACE_Time_Value const *timeout) override;
-  //@}
+  /// @}
 
   // helper function used by the set_dscp_codepoint () methods to
   // set the TOS field in the IP packets.

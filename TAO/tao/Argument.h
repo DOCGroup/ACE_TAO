@@ -76,7 +76,7 @@ namespace TAO
      * appropriate operation-specific parameter list and return
      * value, if either or both exist.
      */
-    //@{
+    /// @{
     /// Populate the given @a CORBA::Any result argument.
     /**
      * @note The default implementation is a no-op.
@@ -85,7 +85,7 @@ namespace TAO
 
     /// Get the parameter mode of this argument
     virtual CORBA::ParameterMode mode () const = 0;
-    //@}
+    /// @}
 
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
   };

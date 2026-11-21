@@ -21,11 +21,10 @@ Headers::recognize (const char * const header)
 void
 Headers::parse_header_line (char * const header_line)
 {
-  char *ptr = header_line;
   char *buf = header_line;
   int offset = 1;
 
-  ptr = std::strchr (header_line, '\n');
+  char *ptr = std::strchr (header_line, '\n');
 
   if (ptr > header_line && ptr[-1] == '\r')
     {
@@ -268,7 +267,7 @@ Headers_Map::find (const char * const header) const
   mutable_this->garbage_.header_ = header;
 #if 0
   Headers_Map_Item *mi_ptr = (Headers_Map_Item *)
-    ACE_OS::bsearch (&this->garbage_,
+    ACE_OS::bsearch (std::addressof (this->garbage_),
                      this->map_,
                      this->num_headers_,
                      sizeof (Headers_Map_Item),
@@ -280,7 +279,7 @@ Headers_Map::find (const char * const header) const
   while (i < j-1)
     {
       int k = (i+j)/2;
-      if (Headers_Map::compare (&this->garbage_, this->map_+k) < 0)
+      if (Headers_Map::compare (std::addressof (this->garbage_), this->map_+k) < 0)
         {
           j = k;
         }
@@ -291,7 +290,7 @@ Headers_Map::find (const char * const header) const
     }
 
   Headers_Map_Item *mi_ptr = mutable_this->map_ + i;
-  if (Headers_Map::compare (&this->garbage_, mi_ptr) != 0)
+  if (Headers_Map::compare (std::addressof (this->garbage_), mi_ptr) != 0)
   {
     mi_ptr = nullptr;
   }
@@ -316,8 +315,8 @@ Headers_Map::place (const char *const header)
 
   while (i > 0)
     {
-      if (Headers_Map::compare (&this->garbage_,
-                                &this->map_[i - 1]) > 0)
+      if (Headers_Map::compare (std::addressof (this->garbage_),
+                                std::addressof (this->map_[i - 1])) > 0)
       {
         break;
       }

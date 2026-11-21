@@ -184,6 +184,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       else
        {
            if (TAO_debug_level > 3)
+             {
                 ORBSVCS_ERROR ((LM_ERROR,
                             "TAO (%P|%t) - UIPMC_Connector::make_connection, "
                             "connection to <%C:%u> from interface <%s> failed (%p)\n",
@@ -191,6 +192,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                              uipmc_endpoint->port (),
                              uipmc_endpoint->is_preferred_network () ? uipmc_endpoint->preferred_network () : "ANY",
                              ACE_TEXT ("errno")));
+             }
        }
       uipmc_endpoint = dynamic_cast<TAO_UIPMC_Endpoint *> (uipmc_endpoint->next());
     }
@@ -243,6 +245,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
       // Give users a clue to the problem.
       if (TAO_debug_level)
+        {
           ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - UIPMC_Connector:")
                       ACE_TEXT (":make_connection, connection to ")
@@ -250,6 +253,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                       uipmc_endpoint->host (),
                       uipmc_endpoint->port (),
                       ACE_TEXT ("errno")));
+        }
 
       return nullptr;
     }
@@ -322,7 +326,9 @@ TAO_UIPMC_Connector::check_prefix (char const *endpoint)
 {
   // Check for a valid string
   if (endpoint == nullptr || *endpoint == '\0')
-    return -1;  // Failure
+    {
+      return -1;  // Failure
+    }
 
   static constexpr char protocol[] = "miop";
   size_t const len = sizeof (protocol) - 1;

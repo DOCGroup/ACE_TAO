@@ -93,9 +93,9 @@ public:
                    RtecEventComm::Event& event);
 
   /// @name PushSupplier operations
-  //@{
+  /// @{
   void disconnect_push_supplier () override;
-  //@}
+  /// @}
 
 private:
   /// Class we forward to.

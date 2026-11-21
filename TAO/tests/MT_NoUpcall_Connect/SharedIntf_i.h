@@ -26,7 +26,8 @@ public:
 
 private:
   std::string upper_ior_;
-  CORBA::ORB_ptr const orb_; // Borrowed; the ORB outlives its servant.
+  /// Borrowed; the ORB outlives its servant.
+  CORBA::ORB_ptr const orb_;
 };
 
 #endif /* SHAREDINTF_I_H_  */

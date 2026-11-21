@@ -72,9 +72,9 @@ public:
   Throughput_StructuredPushConsumer& operator= (Throughput_StructuredPushConsumer&&) = delete;
 
   /// @name StructuredPushConsumer operations
-  //@{
+  /// @{
   void push_structured_event (CosNotification::StructuredEvent const& notification) override;
-  //@}
+  /// @}
 
   /// Accumulate the throughput statistics into <throughput>
   void accumulate_into (ACE_Throughput_Stats& throughput) const;
@@ -117,9 +117,9 @@ public:
   Throughput_StructuredPushSupplier& operator= (Throughput_StructuredPushSupplier&&) = delete;
 
   /// @name ACE_Task_Base operations
-  //@{
+  /// @{
   int svc () override;
-  //@}
+  /// @}
 
   /// Accumulate the throughput statistics into <throughput>
   void accumulate_into (ACE_Throughput_Stats& throughput) const;
@@ -212,7 +212,7 @@ protected:
   std::string payload_;
 
   /// @name Completion state
-  //@{
+  /// @{
   /// how many peers are done.
   int peer_done_count_ {};
 
@@ -221,7 +221,7 @@ protected:
 
   /// exit wait condition
   TAO_SYNCH_CONDITION condition_;
-  //@}
+  /// @}
 private:
   friend class Throughput_StructuredPushSupplier;
   friend class Throughput_StructuredPushConsumer;

@@ -113,10 +113,10 @@ public:
    * Maximum size of a GIOP message before outgoing fragmentation
    * kicks in.
    */
-  //@{
+  /// @{
   ACE_CDR::ULong max_message_size () const;
   void max_message_size (ACE_CDR::ULong size);
-  //@}
+  /// @}
 
   /// The ORB will use the dotted decimal notation for addresses. By
   /// default we use the full ascii names.

@@ -63,23 +63,10 @@ namespace TAO
     CORBA::Boolean to_abstract_base (CORBA::AbstractBase_ptr &) const override;
 
   private:
-    // We make the lock global, so that it won't be deleted when shared.
-    // For instance, see Any_Basic_Impl::extract() which copies the insides
-    // from an Unknown_IDL_Type to an Any_Basic_Impl.
-
-    // [Iliyan] However, having a global static makes this a subject
-    // to the whim of the specific compiler implentation. It is the
-    // one deciding the order in which our instance is initialized and
-    // destroyed and that is boundto be a problem
-    // somewhere. Typically, it becomes a problem when a code that
-    // depends on that instance finds that the runtime has already
-    // destroyed it. The scenario plays almost always in the process
-    // shutdown code, after main() exits, having to debug which is a
-    // lot of fun :) ...  Bottom line, use a static function, which
-    // encapsulates a local static initializer, guaranteed to be
-    // initialized at the first invocation. Using ACE_Refcounted_Auto_Ptr
-    // ensures that the ref count will not drop to zero until the library
-    // is unloaded *and* all Unknown_IDL_Type instances have been destroyed.
+    /// A shared lock protects copies of the CDR state held by Any values.
+    /// The function-local static avoids initialization-order problems, and
+    /// the reference-counted pointer keeps the lock alive while instances
+    /// use it.
     using LOCK = ACE_Refcounted_Auto_Ptr<ACE_Lock,
                                          ACE_Lock_Adapter<TAO_SYNCH_MUTEX> >;
     static LOCK const lock_i ();

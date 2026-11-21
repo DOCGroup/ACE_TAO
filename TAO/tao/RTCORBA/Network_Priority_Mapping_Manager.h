@@ -55,7 +55,8 @@ public:
   using _ptr_type = TAO_Network_Priority_Mapping_Manager_ptr;
   using _var_type = TAO_Network_Priority_Mapping_Manager_var;
 
-  // the static operations
+  /// @name Static operations
+  /// @{
   static TAO_Network_Priority_Mapping_Manager_ptr _duplicate (
       TAO_Network_Priority_Mapping_Manager_ptr obj);
   static TAO_Network_Priority_Mapping_Manager_ptr _narrow (
@@ -65,6 +66,7 @@ public:
     {
       return nullptr;
     }
+  /// @}
 
   char const * _interface_repository_id () const override;
 
@@ -107,8 +109,8 @@ public:
   TAO_Network_Priority_Mapping_Manager_ptr _retn ();
   TAO_Network_Priority_Mapping_Manager_ptr ptr () const;
 
-  // Hooks used by template sequence and object manager classes
-  // for non-defined forward declared interfaces.
+  /// Hooks used by template sequence and object manager classes for
+  /// forward-declared interfaces.
   static TAO_Network_Priority_Mapping_Manager_ptr duplicate (TAO_Network_Priority_Mapping_Manager_ptr);
   static void release (TAO_Network_Priority_Mapping_Manager_ptr);
   static TAO_Network_Priority_Mapping_Manager_ptr nil ();

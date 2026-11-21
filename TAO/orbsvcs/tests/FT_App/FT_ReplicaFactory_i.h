@@ -202,9 +202,9 @@ private:
   PortableGroup::FactoryRegistry_var factory_registry_;
 
   /**
-   * true if registered with FactoryRegistry
+   * True if registered with FactoryRegistry.
    */
-  int registered_; // bool
+  int registered_;
 
   /**
    * A file to which the test replica's IOR will be written

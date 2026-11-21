@@ -31,8 +31,9 @@ namespace ACE_RMCast
   // Protocol parameters
   //
   //
-  unsigned short const max_service_size = 60;  // service profiles (Part, SN,
-                                               // etc), sizes plus message size.
+  /// Maximum size of service profiles (Part, SN, etc.), including size fields
+  /// and the message size.
+  unsigned short const max_service_size = 60;
 
   //
   //

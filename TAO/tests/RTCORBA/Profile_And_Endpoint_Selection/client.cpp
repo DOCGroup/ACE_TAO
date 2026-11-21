@@ -541,8 +541,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                 2);
             }
           else
-            // Unexpected error.
-            ACE_ASSERT (0);
+            {
+              // Unexpected error.
+              ACE_ASSERT (0);
+            }
         }
 
       // Wait for task to exit.

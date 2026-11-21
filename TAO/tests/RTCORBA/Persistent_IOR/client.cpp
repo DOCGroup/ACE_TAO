@@ -42,9 +42,11 @@ parse_args (int argc, ACE_TCHAR **argv, Client_Options &options)
       }
 
   if (options.ior == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error: No IOR specified\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error: No IOR specified\n"),
+                        -1);
+    }
 
   return 0;
 }

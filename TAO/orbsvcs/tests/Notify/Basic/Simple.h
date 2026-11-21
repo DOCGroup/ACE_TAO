@@ -33,9 +33,9 @@ public:
   explicit Event_AnyPushConsumer (Simple_Test *test_client);
 
   /// @name PushConsumer operations
-  //@{
+  /// @{
   void push (CORBA::Any const &data) override;
-  //@}
+  /// @}
 
 protected:
   Simple_Test * test_client_;

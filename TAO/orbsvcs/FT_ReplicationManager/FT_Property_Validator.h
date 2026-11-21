@@ -66,14 +66,14 @@ namespace TAO
     *   FaultMonitoringInterval
     *   CheckpointInterval
     */
-    //@{
+    /// @{
     PortableGroup::Name replication_style_;
     PortableGroup::Name membership_style_;
     PortableGroup::Name consistency_style_;
     PortableGroup::Name fault_monitoring_style_;
     PortableGroup::Name fault_monitoring_granularity_;
     PortableGroup::Name factories_;
-    //@}
+    /// @}
 
   };
 } // namespace TAO

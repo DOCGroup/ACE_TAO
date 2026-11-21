@@ -20,6 +20,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TQ, class TYPE> TQ &
@@ -115,7 +117,8 @@ ACE_Async_Timer_Queue_Adapter<TQ, TYPE>::ACE_Async_Timer_Queue_Adapter (ACE_Sig_
                      this->mask_,
                      SA_RESTART);
 
-  if (this->sig_handler_.register_handler (SIGALRM, this, &sa) == -1)
+  if (this->sig_handler_.register_handler (SIGALRM, this,
+                                           std::addressof (sa)) == -1)
     {
       ACELIB_ERROR ((LM_ERROR,
                      ACE_TEXT ("%p\n"),

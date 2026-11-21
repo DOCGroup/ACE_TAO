@@ -85,10 +85,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Ignore argv[0]...
   --argc; ++argv;
   ACE_NEW_RETURN (server,
-                  Server_Logging_Daemon (argc, argv, &reactor),
+                  Server_Logging_Daemon (argc, argv, std::addressof (reactor)),
                   1);
-  ACE_Thread_Manager::instance ()->spawn (event_loop, &reactor);
-  ACE_Thread_Manager::instance ()->spawn (controller, &reactor);
+  ACE_Thread_Manager::instance ()->spawn (event_loop, std::addressof (reactor));
+  ACE_Thread_Manager::instance ()->spawn (controller, std::addressof (reactor));
   return ACE_Thread_Manager::instance ()->wait ();
 }
 

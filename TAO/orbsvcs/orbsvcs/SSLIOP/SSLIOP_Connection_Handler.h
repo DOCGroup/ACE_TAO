@@ -60,15 +60,15 @@ namespace TAO
        *
        * Connection Handler overloads.
        */
-      //@{
+      /// @{
       int open_handler (void *) override;
-      //@}
+      /// @}
 
       /// Close called by the Acceptor or Connector when connection
       /// establishment fails.
       int close (u_long = 0) override;
 
-      //@{
+      /// @{
       /** @name Event Handler overloads
        */
       int resume_handler () override;
@@ -79,7 +79,7 @@ namespace TAO
       int handle_timeout (ACE_Time_Value const &current_time,
                           void const *act = nullptr) override;
       int open (void *) override;
-      //@}
+      /// @}
 
       /// Add ourselves to cache.
       int add_transport_to_cache ();
@@ -103,14 +103,14 @@ namespace TAO
       bool check_host ();
 
     protected:
-      //@{
+      /// @{
       /**
        * @name TAO_Connection Handler overloads
        */
       int release_os_resources () override;
       void pos_io_hook (int & return_value) override;
       int handle_write_ready (ACE_Time_Value const *timeout) override;
-      //@}
+      /// @}
 
     protected:
       /// Reference to the SSLIOP::Current object (downcast to gain

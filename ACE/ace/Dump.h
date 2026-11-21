@@ -128,7 +128,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_ODB (); // Ensure we have a Singleton...
+  /// Ensures that instances are created through instance().
+  ACE_ODB ();
 
   struct Tuple
   {

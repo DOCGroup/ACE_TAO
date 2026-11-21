@@ -42,7 +42,7 @@ public:
    *
    * Data transfer routines.
    */
-  //@{
+  /// @{
   /// Send an @a n byte @a buf to the datagram socket (uses
   /// @c sendto(3) ).
   ssize_t send (void const * buf,
@@ -63,7 +63,7 @@ public:
                 int flags,
                 ACE_Time_Value const * timeout) const;
 
-  //@}
+  /// @}
 
   /// Wrapper around the BSD-style @c socket system call (no QoS).
   int open (ACE_Addr const & local = ACE_Addr::sap_any,

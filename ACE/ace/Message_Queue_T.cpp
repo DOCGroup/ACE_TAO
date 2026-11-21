@@ -19,6 +19,8 @@
 #include "ace/Notification_Strategy.h"
 #include "ace/Condition_Attributes.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
@@ -2248,7 +2250,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::ACE_Dynamic_Message_Queue
 template <ACE_SYNCH_DECL, class TIME_POLICY>
 ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::~ACE_Dynamic_Message_Queue ()
 {
-  delete &this->message_strategy_;
+  delete std::addressof (this->message_strategy_);
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> int

@@ -213,7 +213,7 @@ Connection_Handler::remote_addr () const
 }
 
 void
-Connection_Handler::remote_addr (ACE_INET_Addr &ra)
+Connection_Handler::remote_addr (ACE_INET_Addr const &ra)
 {
   this->remote_addr_ = ra;
 }
@@ -225,7 +225,7 @@ Connection_Handler::local_addr () const
 }
 
 void
-Connection_Handler::local_addr (ACE_INET_Addr &la)
+Connection_Handler::local_addr (ACE_INET_Addr const &la)
 {
   this->local_addr_ = la;
 }

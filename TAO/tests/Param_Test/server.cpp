@@ -65,9 +65,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       temp = orb_ptr->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (temp.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) Unable to get root poa reference.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) Unable to get root poa reference.\n"),
+                            1);
+        }
 
       PortableServer::POA_var const oa_ptr = PortableServer::POA::_narrow (temp.in ());
 
@@ -130,10 +132,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_OS::fopen (options.ior_output_filename.c_str (), ACE_TEXT ("w")),
           ACE_OS::fclose);
         if (!ior_output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Unable to open %s for writing: %p\n"),
-                             options.ior_output_filename.c_str ()),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Unable to open %s for writing: %p\n"),
+                               options.ior_output_filename.c_str ()),
+                              -1);
+          }
 
         ACE_OS::fprintf (ior_output_file.get (), "%s", str.in ());
       }

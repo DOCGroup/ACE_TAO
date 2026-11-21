@@ -29,11 +29,11 @@ public:
   Simple_Server_i &operator= (Simple_Server_i &&) = delete;
 
   /// @name Simple_Server operations
-  //@{
+  /// @{
   CORBA::Long test_method (CORBA::Long x) override;
 
   void shutdown () override;
-  //@}
+  /// @}
 
 private:
   /// The ORB
@@ -57,9 +57,9 @@ public:
   Another_One_i &operator= (Another_One_i &&) = delete;
 
   /// @name Simple_Server operations
-  //@{
+  /// @{
   CORBA::Long test_method (CORBA::Long x) override;
-  //@}
+  /// @}
 
 private:
   /// The ORB

@@ -56,10 +56,10 @@ private:
    * no restrictions imposed by TAO's PortableGroup implementation
    * regarding the number of such members.
    */
-  //@{
+  /// @{
   PortableGroup::Name membership_;
   PortableGroup::Name factories_;
-  //@}
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

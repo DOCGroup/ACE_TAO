@@ -31,7 +31,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * The @c errno encoding is located in the bottom 7 bits.
  */
-//@{
+/// @{
 const CORBA::ULong TAO_UNSPECIFIED_MINOR_CODE        = 0x0U;
 const CORBA::ULong TAO_ETIMEDOUT_MINOR_CODE          = 0x1U;
 const CORBA::ULong TAO_ENFILE_MINOR_CODE             = 0x2U;
@@ -54,7 +54,7 @@ const CORBA::ULong TAO_ECOMM_MINOR_CODE              = 0x12U;
 const CORBA::ULong TAO_ECONNRESET_MINOR_CODE         = 0x13U;
 const CORBA::ULong TAO_ENOTSUP_MINOR_CODE            = 0x14U;
 // *Don't* use TAO_<errno>_MINOR_CODE greater than 0x7FU!
-//@}
+/// @}
 
 // ****************************************************************
 

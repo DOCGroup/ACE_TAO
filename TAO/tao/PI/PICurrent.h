@@ -63,7 +63,7 @@ namespace TAO
      * These are methods exposed by the PortableInterceptor::Current
      * interface.
      */
-    //@{
+    /// @{
     /// Retrieve information stored in the slot table at the given
     /// SlotId.
     CORBA::Any *get_slot (PortableInterceptor::SlotId id) override;
@@ -71,7 +71,7 @@ namespace TAO
     /// Set information in the slot table at the given SlotId.
     void set_slot (PortableInterceptor::SlotId identifier,
                    CORBA::Any const &data) override;
-    //@}
+    /// @}
 
     CORBA::ORB_ptr _get_orb () override;
 

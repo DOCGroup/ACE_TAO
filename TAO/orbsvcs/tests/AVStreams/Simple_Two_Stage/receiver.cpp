@@ -163,7 +163,7 @@ Receiver::init (int,
 
   // Register the receiver mmdevice object with the ORB
   ACE_NEW_RETURN (this->mmdevice_,
-                  TAO_MMDevice (&this->reactive_strategy_),
+                  TAO_MMDevice (std::addressof (this->reactive_strategy_)),
                   -1);
 
   // Servant Reference Counting to manage lifetime

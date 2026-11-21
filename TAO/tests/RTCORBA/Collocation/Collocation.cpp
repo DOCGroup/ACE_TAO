@@ -340,7 +340,9 @@ setup_test_parameters (Test_Object_And_Servant *test,
       test->servant_->in_lane ())
     {
       if (current_thread_priority == default_thread_priority)
-        test->servant_->invocation_lane (0);
+        {
+          test->servant_->invocation_lane (0);
+        }
       else
       {
         test->servant_->invocation_lane (1);
@@ -850,8 +852,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                 2);
             }
           else
-            // Unexpected error.
-            ACE_ASSERT (0);
+            {
+              // Unexpected error.
+              ACE_ASSERT (0);
+            }
         }
 
       // Wait for task to exit.

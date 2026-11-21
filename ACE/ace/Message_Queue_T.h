@@ -945,24 +945,32 @@ public:
                                  ACE_Notification_Strategy * = nullptr);
 
   /// Factory method for a dynamically prioritized (by time to deadline) ACE_Dynamic_Message_Queue
+  /// @param static_bit_field_mask Default mask for 10 low-order static bits.
+  /// @param static_bit_field_shift Number of low-order bits (10).
+  /// @param dynamic_priority_max Maximum value for 22 dynamic bits.
+  /// @param dynamic_priority_offset Boundary at 2^(22-1).
   static ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *
     create_deadline_message_queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
                                    size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
                                    ACE_Notification_Strategy * = nullptr,
-                                   u_long static_bit_field_mask = 0x3FFUL,        // 2^(10) - 1
-                                   u_long static_bit_field_shift = 10,            // 10 low order bits
-                                   u_long dynamic_priority_max = 0x3FFFFFUL,      // 2^(22)-1
-                                   u_long dynamic_priority_offset =  0x200000UL); // 2^(22-1)
+                                   u_long static_bit_field_mask = 0x3FFUL,
+                                   u_long static_bit_field_shift = 10,
+                                   u_long dynamic_priority_max = 0x3FFFFFUL,
+                                   u_long dynamic_priority_offset =  0x200000UL);
 
   /// Factory method for a dynamically prioritized (by laxity) ACE_Dynamic_Message_Queue
+  /// @param static_bit_field_mask Default mask for 10 low-order static bits.
+  /// @param static_bit_field_shift Number of low-order bits (10).
+  /// @param dynamic_priority_max Maximum value for 22 dynamic bits.
+  /// @param dynamic_priority_offset Boundary at 2^(22-1).
   static ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *
     create_laxity_message_queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
                                  size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
                                  ACE_Notification_Strategy * = nullptr,
-                                 u_long static_bit_field_mask = 0x3FFUL,        // 2^(10) - 1
-                                 u_long static_bit_field_shift = 10,            // 10 low order bits
-                                 u_long dynamic_priority_max = 0x3FFFFFUL,      // 2^(22)-1
-                                 u_long dynamic_priority_offset =  0x200000UL); // 2^(22-1)
+                                 u_long static_bit_field_mask = 0x3FFUL,
+                                 u_long static_bit_field_shift = 10,
+                                 u_long dynamic_priority_max = 0x3FFFFFUL,
+                                 u_long dynamic_priority_offset =  0x200000UL);
 
 #if defined (ACE_VXWORKS)
 

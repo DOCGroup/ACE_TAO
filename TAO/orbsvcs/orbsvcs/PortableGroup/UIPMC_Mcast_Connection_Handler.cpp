@@ -137,22 +137,26 @@ TAO_UIPMC_Mcast_Connection_Handler::open (void *)
             success= true; // At least one perferred listener interface join succeeded
 #endif // TAO_ALLOW_UNICAST_MIOP
             if (TAO_debug_level > 5)
-              ORBSVCS_DEBUG ((LM_DEBUG,
+              {
+                ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT("TAO (%P|%t) - UIPMC_Mcast_Connection_Handler::open, ")
                               ACE_TEXT("listening for multicast %C:%u on %C\n"),
                               target_multicast_group,
                               this->local_addr_.get_port_number (),
                               preferred[i].c_str ()
                             ));
+              }
           }
         else if (TAO_debug_level)
-          ORBSVCS_DEBUG ((LM_ERROR,
+          {
+            ORBSVCS_DEBUG ((LM_ERROR,
                           ACE_TEXT("TAO (%P|%t) - UIPMC_Mcast_Connection_Handler::open, ")
                           ACE_TEXT("failed to join multicast %C:%u on %C (Errno: '%m')\n"),
                           target_multicast_group,
                           this->local_addr_.get_port_number (),
                           preferred[i].c_str ()
                         ));
+          }
 
 #ifndef TAO_ALLOW_UNICAST_MIOP
       if (!success)
@@ -174,24 +178,28 @@ TAO_UIPMC_Mcast_Connection_Handler::open (void *)
       if (0 == this->peer ().join (this->local_addr_))
         {
           if (TAO_debug_level > 5)
-            ORBSVCS_DEBUG ((LM_DEBUG,
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
                             ACE_TEXT("TAO (%P|%t) - UIPMC_Mcast_Connection_Handler::open, ")
                             ACE_TEXT("listening for multicast %C:%u on %C\n"),
                             target_multicast_group,
                             this->local_addr_.get_port_number (),
                             ((this->listen_on_all_) ? "All" : "Default")
                           ));
+            }
         }
       else
         {
           if (TAO_debug_level)
-            ORBSVCS_DEBUG ((LM_ERROR,
+            {
+              ORBSVCS_DEBUG ((LM_ERROR,
                             ACE_TEXT("TAO (%P|%t) - UIPMC_Mcast_Connection_Handler::open, ")
                             ACE_TEXT("failed to join multicast %C:%u on %C (Errno: '%m')\n"),
                             target_multicast_group,
                             this->local_addr_.get_port_number (),
                             ((this->listen_on_all_) ? "All" : "Default")
                           ));
+            }
 
 #ifndef TAO_ALLOW_UNICAST_MIOP
           return -1; // No joins worked, we are not listening.

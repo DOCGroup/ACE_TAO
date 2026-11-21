@@ -75,10 +75,12 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       Test::Server_var const test_server = Test::Server::_narrow (server_object.in ());
 
       if (CORBA::is_nil (test_server.in ()))
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "ERROR: Nil reference in Test::Server reference <%s>\n",
-                           ior),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "ERROR: Nil reference in Test::Server reference <%s>\n",
+                             ior),
+                            1);
+        }
 
       CORBA::Object_var object_with_policy;
       {
@@ -99,18 +101,22 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
         Test::Server::_narrow (object_with_policy.in ());
 
       if (CORBA::is_nil (test_server_no_sync.in ()))
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "ERROR: Nil reference in Test::Server reference <%s>\n",
-                           ior),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "ERROR: Nil reference in Test::Server reference <%s>\n",
+                             ior),
+                            1);
+        }
 
       CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());

@@ -79,9 +79,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var const poa_object = orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -113,10 +115,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           File_Handle output_file (ACE_OS::fopen (ior_output_file.c_str (), "w"),
                                    &ACE_OS::fclose);
           if (!output_file)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
-                               ior_output_file.c_str ()),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Cannot open output file for writing IOR: %s",
+                                 ior_output_file.c_str ()),
+                                1);
+            }
           ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 
@@ -124,9 +128,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Worker worker (orb.in ());
       if (worker.activate (THR_NEW_LWP | THR_JOINABLE, nthreads) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot activate client threads\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot activate client threads\n"),
+                            1);
+        }
 
       worker.thr_mgr ()->wait ();
 

@@ -39,9 +39,11 @@ namespace
       if (data >>= actual)
         {
           if (correct == actual)
-            ACE_DEBUG ((LM_DEBUG,
-                        ". %s retrieved CORRECT long (%d) from the TSC.\n",
-                        ID, actual));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ". %s retrieved CORRECT long (%d) from the TSC.\n",
+                          ID, actual));
+            }
           else
             {
               ACE_DEBUG ((LM_DEBUG,
@@ -343,14 +345,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var const root_object = state.orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var const root_poa = PortableServer::POA::_narrow (root_object.in ());
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to obtain RootPOA reference.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to obtain RootPOA reference.\n"),
+                            -1);
+        }
       PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
       if (CORBA::is_nil (poa_manager.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to obtain POAManager reference.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to obtain POAManager reference.\n"),
+                            -1);
+        }
       poa_manager->activate ();
 
       // OK now start our collocated client/server and activate it on the default POA
@@ -367,9 +373,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var const object = test_int->_this ();
       state.server = testInterface::_narrow (object.in ());
       if (CORBA::is_nil (state.server.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to obtain reference to testInterface object.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to obtain reference to testInterface object.\n"),
+                            -1);
+        }
 
       ACE_DEBUG ((LM_DEBUG, "Start of actual regression test...\n"));
       // Insert some data into the allocated PICurrent slot BEFORE we start.

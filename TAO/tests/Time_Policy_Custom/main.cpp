@@ -107,9 +107,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -123,9 +125,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // trigger in 2 seconds
       if (!test_handler.trigger_in (ACE_Time_Value (2)))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to schedule trigger.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to schedule trigger.\n"),
+                            1);
+        }
 
       // run for max. 4 seconds
       ACE_Time_Value timeout (4);

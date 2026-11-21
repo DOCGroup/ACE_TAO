@@ -52,9 +52,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil RootPOA\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Panic: nil RootPOA\n"),
+                            1);
+        }
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -67,9 +69,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           CORBA::PolicyManager::_narrow(manager_object.in());
 
         if (CORBA::is_nil (policy_manager.in ()))
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             " (%P|%t) Panic: nil PolicyManager\n"),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               " (%P|%t) Panic: nil PolicyManager\n"),
+                              1);
+          }
         CORBA::Any policy_value;
         policy_value <<= Messaging::SYNC_WITH_SERVER;
         CORBA::PolicyList policies(1);
@@ -107,10 +111,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
           ACE_OS::fopen (ior_output_file.c_str (), "w"), ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file for writing IOR: %s",
-                             ior_output_file.c_str ()),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot open output file for writing IOR: %s",
+                               ior_output_file.c_str ()),
+                              1);
+          }
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
 

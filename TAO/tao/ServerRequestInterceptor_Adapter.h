@@ -74,7 +74,7 @@ namespace TAO
      * Each of these methods corresponds to a client side interception
      * point.
      */
-    //@{
+    /// @{
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
     /// This method implements the "starting" server side interception
     /// point. It will be used as the first interception point and it is
@@ -142,7 +142,7 @@ namespace TAO
         TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
         CORBA::ULong nexceptions) = 0;
-    //@}
+    /// @}
 
     /// Register an interceptor.
     virtual void add_interceptor (

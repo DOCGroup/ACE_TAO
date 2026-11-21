@@ -25,7 +25,9 @@ public:
     ACE_FILE_Connector connector;
     std::unique_ptr<ACE_FILE_IO> file (new (std::nothrow) ACE_FILE_IO);
     if (!file)
-      return {};
+      {
+        return {};
+      }
     if (connector.connect (*file, dest) == -1)
       {
         ACE_ERROR ((LM_ERROR,
@@ -45,7 +47,9 @@ public:
     ACE_FILE_Connector connector;
     std::unique_ptr<ACE_FILE_IO> file (new (std::nothrow) ACE_FILE_IO);
     if (!file)
-      return {};
+      {
+        return {};
+      }
     if (connector.connect (*file, dest) == -1)
       {
         ACE_ERROR ((LM_ERROR,
@@ -63,16 +67,20 @@ public:
     ACE_FILE_Connector connector;
     ACE_FILE_IO input;
     if (connector.connect (input, src) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("read file")),
-                        0);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("read file")),
+                          0);
+      }
     ACE_FILE_IO output;
     if (connector.connect (output, dest) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("create file")),
-                        0);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("create file")),
+                          0);
+      }
 
     char rwbuf[512];
     ssize_t rwbytes;

@@ -5,6 +5,7 @@
 #include "ace/Acceptor.h"
 #include "Message_Receiver.h"
 #include <cstring>
+#include <memory>
 
 // Listing 5 code/ch12
 int
@@ -167,7 +168,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_ASSERT (handler.activate () == 0);
   //start up the handler.
 
-  Acceptor acceptor (&handler);
+  Acceptor acceptor (std::addressof (handler));
   ACE_INET_Addr addr (port);
   if (acceptor.open (addr) == -1)
   {

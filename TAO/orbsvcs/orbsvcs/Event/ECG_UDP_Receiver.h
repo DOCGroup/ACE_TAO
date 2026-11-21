@@ -104,7 +104,7 @@ class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Receiver :
 {
 public:
   /// Initialization and termination methods.
-  //@{
+  /// @{
   /// Create a new TAO_ECG_UDP_Receiver object.
   /// (Constructor access is restricted to insure that all
   /// TAO_ECG_UDP_Receiver objects are heap-allocated.)
@@ -155,7 +155,7 @@ public:
    * deactivation) and deletion of the object.
    */
   void shutdown ();
-  //@}
+  /// @}
 
   /// Accessor.
   /// Call the RtecUDPAdmin::AddrServer::get_addr.  Throws exception
@@ -189,13 +189,13 @@ protected:
 
 private:
   /// Helpers for the connect() method.
-  //@{
+  /// @{
   // Establishes connection to the Event Channel for the first time.
   void new_connect (RtecEventChannelAdmin::SupplierQOS const &pub);
 
   // Updates existing connection to the Event Channel.
   void reconnect (RtecEventChannelAdmin::SupplierQOS const &pub);
-  //@}
+  /// @}
 
   /// Event Channel to which we act as a supplier.
   RtecEventChannelAdmin::EventChannel_var lcl_ec_;

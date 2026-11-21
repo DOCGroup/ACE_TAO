@@ -35,7 +35,9 @@ Hello::method (CORBA::Short count)
       mgr->hold_requests (false);
       CORBA::ORB_var orb = CORBA::ORB::_duplicate (this->orb_.in ());
       if (ACE_Thread_Manager::instance ()->spawn_n (1, killer, orb.in ()) == -1)
-        ACE_ERROR ((LM_ERROR, "Unable to start server shutdown thread\n"));
+        {
+          ACE_ERROR ((LM_ERROR, "Unable to start server shutdown thread\n"));
+        }
       else
       {
         (void) orb._retn ();

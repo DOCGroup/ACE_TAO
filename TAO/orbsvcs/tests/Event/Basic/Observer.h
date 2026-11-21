@@ -90,7 +90,7 @@ public:
   ~EC_Observer () override;
 
   /// @name EC_Driver operations
-  //@{
+  /// @{
   /// add some command line args to enable/disable observerions
   void initialize_orb_and_poa (int& argc, ACE_TCHAR* argv[]) override;
   int parse_args (int& argc, ACE_TCHAR* argv[]) override;
@@ -107,7 +107,7 @@ public:
     int i) override;
   void consumer_push (void*,
                       const RtecEventComm::EventSet&) override;
-  //@}
+  /// @}
 
 private:
   EC_Master *master_;

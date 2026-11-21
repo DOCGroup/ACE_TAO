@@ -58,11 +58,11 @@ namespace TAO
        * Methods required by the PortableInterceptor::ORBInitializer
        * interface.
        */
-      //@{
+      /// @{
       void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
       void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
-      //@}
+      /// @}
 
     private:
       /// Register Security policy factories.

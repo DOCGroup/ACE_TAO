@@ -1,4 +1,5 @@
 #include <cstring>
+#include <memory>
 
 #include "sender.h"
 #include "tao/debug.h"
@@ -18,7 +19,7 @@ Sender_StreamEndPoint::get_callback (char const *,
 {
   // Create and return the sender application callback to AVStreams
   // for further upcalls.
-  callback = &this->callback_;
+  callback = std::addressof (this->callback_);
   return 0;
 }
 
@@ -191,7 +192,7 @@ Sender::init (int argc,
 
   // Register the sender mmdevice object with the ORB
   ACE_NEW_RETURN (this->sender_mmdevice_,
-                  TAO_MMDevice (&this->endpoint_strategy_),
+                  TAO_MMDevice (std::addressof (this->endpoint_strategy_)),
                   -1);
 
   // Servant Reference Counting to manage lifetime
@@ -325,7 +326,7 @@ Sender::pace_data ()
             {
               // Send frame.
               int const result =
-                (*begin)->send_frame (&this->mb_);
+                (*begin)->send_frame (std::addressof (this->mb_));
 
               if (result < 0)
                 {

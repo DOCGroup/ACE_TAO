@@ -34,7 +34,7 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all client request interceptors.
    */
-  //@{
+  /// @{
   /// Return the name of this ClientRequestinterceptor.
   char *name () override;
 
@@ -49,7 +49,7 @@ public:
   void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
   void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri) override;
-  //@}
+  /// @}
 
 private:
   ///The ID of the ORB this interceptor is registered with.

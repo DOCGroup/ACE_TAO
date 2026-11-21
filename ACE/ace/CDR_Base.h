@@ -178,7 +178,7 @@ public:
    * These types are for use in the CDR classes.  The cleanest way to
    * avoid complaints from all compilers is to define them all.
    */
-  //@{
+  /// @{
   using Boolean = bool;
   using Octet = ACE_Byte;
   using Char = char;
@@ -472,7 +472,7 @@ public:
          void ltrim ();
        };
 
-  //@}
+  /// @}
 
 #if !defined (ACE_CDR_GIOP_MAJOR_VERSION)
 #   define ACE_CDR_GIOP_MAJOR_VERSION 1

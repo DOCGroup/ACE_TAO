@@ -11,9 +11,11 @@ void
 client_i::ping (CORBA::UShort time_to_live)
 {
   if (!this->quiet_)
-    ACE_DEBUG ((LM_DEBUG,
-                "(%t) client_i::ping -> time to live = %d\n",
-                time_to_live));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) client_i::ping -> time to live = %d\n",
+                  time_to_live));
+    }
 
   --time_to_live;
 

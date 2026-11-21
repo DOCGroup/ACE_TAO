@@ -11,9 +11,9 @@ public:
   /// New Value Ctor
   ValueDlg(wxWindow* pParent, bool String);
   /// Edit String Ctor
-  ValueDlg(wxWindow* pParent, wxString& Name, wxString& Value);
+  ValueDlg(wxWindow* pParent, wxString const &Name, wxString& Value);
   /// Edit UINT Ctor
-  ValueDlg(wxWindow* pParent, wxString& Name, u_int Value);
+  ValueDlg(wxWindow* pParent, wxString const &Name, u_int Value);
   virtual ~ValueDlg();
 
   ///////////////////////////////////////////

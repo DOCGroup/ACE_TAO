@@ -253,7 +253,7 @@ Client::pace_data ()
             }
 
           last_frame_sent_time.start ();
-          if (this->protocol_object_->send_frame (&this->mb_) < 0)
+          if (this->protocol_object_->send_frame (std::addressof (this->mb_)) < 0)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "send failed:%p",

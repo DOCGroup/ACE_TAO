@@ -18,11 +18,17 @@ ACE_INLINE int
 Handle_L_Pipe::open (const ACE_UNIX_Addr &suap, int async)
 {
   if (this->ACE_LSOCK_Acceptor::open (suap) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (async && this->ACE_LSOCK_Acceptor::enable (ACE_SIGIO) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 ACE_INLINE int
@@ -32,15 +38,21 @@ Handle_L_Pipe::info (ACE_TCHAR **strp, size_t length) const
   ACE_UNIX_Addr sa;
 
   if (ACE_LSOCK_Acceptor::get_local_addr (sa) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   ACE_OS::strcpy (buf, ACE_TEXT_CHAR_TO_TCHAR (sa.get_path_name ()));
   ACE_OS::strcat (buf, ACE_TEXT (" # tests local pipe\n"));
 
   if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
-    return -1;
+    {
+      return -1;
+    }
   else
-    ACE_OS::strncpy (*strp, buf, length);
+    {
+      ACE_OS::strncpy (*strp, buf, length);
+    }
   return ACE_OS::strlen (buf);
 }
 
@@ -65,10 +77,14 @@ Handle_L_Pipe::init (int argc, ACE_TCHAR *argv[])
   ACE_OS::unlink (this->rendezvous);
   sup.set (this->rendezvous);
   if (this->open (sup) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
+    }
   else if (ACE_Reactor::instance ()->register_handler (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("registering service with ACE_Reactor")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("registering service with ACE_Reactor")), -1);
+    }
   return 0;
 }
 

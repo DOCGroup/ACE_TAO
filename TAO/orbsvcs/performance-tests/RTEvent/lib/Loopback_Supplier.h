@@ -40,12 +40,12 @@ public:
 
   void push (const RtecEventComm::EventSet &events);
 
-  //@{
+  /// @{
   /** @name The RtecEventComm::PushSupplier methods
    */
   void disconnect_push_supplier () override;
   PortableServer::POA_ptr _default_POA () override;
-  //@}
+  /// @}
 
 private:
   /// The experiment id

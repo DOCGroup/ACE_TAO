@@ -63,7 +63,7 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all IOR interceptors.
    */
-  //@{
+  /// @{
   /// Return the name of this IORInterceptor.
   char * name () override;
 
@@ -87,7 +87,7 @@ public:
   TAO_LB_IORInterceptor & operator= (TAO_LB_IORInterceptor const &) = delete;
   TAO_LB_IORInterceptor & operator= (TAO_LB_IORInterceptor &&) = delete;
 
-  //@}
+  /// @}
 
 private:
   /// Create and register the LoadAlert object with the LoadManager.

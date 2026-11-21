@@ -54,13 +54,13 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all ORB initializers.
    */
-  //@{
+  /// @{
   /// The pre-initialization hook.
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   /// The post-initialization hook.
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
-  //@}
+  /// @}
 };
 
 #if defined(_MSC_VER)

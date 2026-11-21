@@ -158,7 +158,7 @@ public:
    * Factory methods that has no corresponding TypeCodeFactory IDL,
    * i.e. they are specific to TAO.
    */
-  //@{
+  /// @{
   /// Create an enumeration TypeCode.
   virtual CORBA::TypeCode_ptr create_enum_tc (
     char const * id,
@@ -199,7 +199,7 @@ public:
       TAO::TypeCode::Value_Field<CORBA::String_var,
                                  CORBA::TypeCode_var> > const & fields,
     CORBA::ULong nfields) = 0;
-  //@}
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

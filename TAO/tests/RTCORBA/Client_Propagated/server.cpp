@@ -60,9 +60,11 @@ Test_i::test_method (CORBA::Short priority)
 
   // Print out the info.
   if (servant_thread_priority != priority)
-    ACE_DEBUG ((LM_DEBUG,
-                "ERROR: servant thread priority is not equal "
-                "to method argument.\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "ERROR: servant thread priority is not equal "
+                  "to method argument.\n"));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "Client priority: %d  "
@@ -149,9 +151,11 @@ Task::svc ()
         PortableServer::POA::_narrow (object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "ERROR: Panic <RootPOA> is nil\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "ERROR: Panic <RootPOA> is nil\n"),
+                            -1);
+        }
 
       PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
@@ -196,10 +200,12 @@ Task::svc ()
           std::unique_ptr<FILE, int (*) (FILE *)> output_file (
             ACE_OS::fopen (this->options_.ior_output_file, "w"), ACE_OS::fclose);
           if (!output_file)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
-                               this->options_.ior_output_file),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Cannot open output file for writing IOR: %s",
+                                 this->options_.ior_output_file),
+                                -1);
+            }
           ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 
@@ -222,15 +228,19 @@ Task::svc ()
         current->the_priority ();
 
       if (final_thread_priority != initial_thread_priority)
-        ACE_DEBUG ((LM_DEBUG,
-                    "ERROR: Priority of the servant thread "
-                    "has been permanently changed!\n"
-                    "Initial priority: %d  Final priority: %d\n",
-                    initial_thread_priority, final_thread_priority));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "ERROR: Priority of the servant thread "
+                      "has been permanently changed!\n"
+                      "Initial priority: %d  Final priority: %d\n",
+                      initial_thread_priority, final_thread_priority));
+        }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "Final priority of the servant thread"
-                    " = its initial priority\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Final priority of the servant thread"
+                      " = its initial priority\n"));
+        }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -292,8 +302,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                 2);
             }
           else
-            // Unexpected error.
-            ACE_ASSERT (0);
+            {
+              // Unexpected error.
+              ACE_ASSERT (0);
+            }
         }
 
       // Wait for task to exit.

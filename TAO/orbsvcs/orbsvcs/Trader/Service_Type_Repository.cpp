@@ -312,11 +312,13 @@ mask_type (const char *name)
     type_entry->int_id_->type_struct_.masked;
 
   if (mask)
-    throw CosTradingRepos::ServiceTypeRepository::AlreadyMasked (name);
+    {
+      throw CosTradingRepos::ServiceTypeRepository::AlreadyMasked (name);
+    }
   else
-  {
-    mask = true;
-  }
+    {
+      mask = true;
+    }
 }
 
 void
@@ -342,11 +344,13 @@ TAO_Service_Type_Repository::unmask_type (const char *name)
   CORBA::Boolean &mask = type_entry->int_id_->type_struct_.masked;
 
   if (!mask)
-    throw CosTradingRepos::ServiceTypeRepository::NotMasked (name);
+    {
+      throw CosTradingRepos::ServiceTypeRepository::NotMasked (name);
+    }
   else
-  {
-    mask = false;
-  }
+    {
+      mask = false;
+    }
 }
 
 void
@@ -452,7 +456,9 @@ validate_properties (Prop_Map &prop_map,
     {
       const char *n = props[i].name;
       if (! TAO_Trader_Base::is_valid_property_name (n))
-        throw CosTrading::IllegalPropertyName (n);
+        {
+          throw CosTrading::IllegalPropertyName (n);
+        }
       else
         {
           CORBA::String_var prop_name (n);
@@ -478,7 +484,9 @@ validate_supertypes (Service_Type_Map &super_map,
         super_types[i];
 
       if (! TAO_Trader_Base::is_valid_identifier_name (type))
-        throw CosTrading::IllegalServiceType (type);
+        {
+          throw CosTrading::IllegalServiceType (type);
+        }
       else
         {
           CORBA::String_var hash_type (type);
@@ -486,13 +494,17 @@ validate_supertypes (Service_Type_Map &super_map,
 
           if (this->type_map_.find (hash_type,
                                     type_entry) == -1)
-            throw CosTrading::UnknownServiceType (type);
+            {
+              throw CosTrading::UnknownServiceType (type);
+            }
           else
             {
               if (super_map.bind (hash_type,
                                   type_entry->int_id_) == 1)
-                throw CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName (
-                  type);
+                {
+                  throw CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName (
+                    type);
+                }
             }
         }
     }
@@ -518,13 +530,15 @@ validate_inheritance (Prop_Map &prop_map,
 
       // Super_type_entry should never be zero.
       if (super_type_entry != nullptr)
-        this->fully_describe_type_i (super_type_entry->int_id_->type_struct_,
-                                     super_props,
-                                     place_holder);
+        {
+          this->fully_describe_type_i (super_type_entry->int_id_->type_struct_,
+                                       super_props,
+                                       place_holder);
+        }
       else
-      {
-        continue;
-      }
+        {
+          continue;
+        }
 
       CORBA::ULong const num_props = super_props.length ();
 
@@ -563,11 +577,13 @@ validate_inheritance (Prop_Map &prop_map,
 
               if (compare == 0
                   || super_props[j].mode > property_in_map.mode)
-                throw CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition(
-                  super_props[j].name,
-                  super_props[j],
-                  property_in_map.name,
-                  property_in_map);
+                {
+                  throw CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition(
+                    super_props[j].name,
+                    super_props[j],
+                    property_in_map.name,
+                    property_in_map);
+                }
             }
         }
     }
@@ -611,9 +627,13 @@ update_type_map (const char *name,
   CORBA::String_var type_name (name);
   int const bind_result = this->type_map_.bind (type_name, type_owner.get ());
   if (bind_result == -1)
-    throw CORBA::NO_MEMORY ();
+    {
+      throw CORBA::NO_MEMORY ();
+    }
   else if (bind_result != 0)
-    throw CORBA::INTERNAL ();
+    {
+      throw CORBA::INTERNAL ();
+    }
 
   type_owner.release ();
 }

@@ -91,7 +91,8 @@ private:
   TAO_SYNCH_MUTEX lock_;
 
   // Service object information
-  TAO_EC_Queue_Full_Service_Object* queue_full_service_object_;  // @@ who will release?
+  /// TODO: Determine who releases this service object.
+  TAO_EC_Queue_Full_Service_Object* queue_full_service_object_;
                                 // @@ check to see how the factory gets released...
 };
 

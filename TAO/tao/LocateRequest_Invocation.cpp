@@ -144,6 +144,11 @@ namespace TAO
 
     s = this->wait_for_reply (max_wait_time, *rd.get (), dispatch_guard);
 
+    if (s != TAO_INVOKE_SUCCESS)
+      {
+        return s;
+      }
+
     s = this->check_reply (*rd.get ());
 
     // For some strategies one may want to release the transport

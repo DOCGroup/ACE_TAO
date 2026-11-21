@@ -220,10 +220,10 @@ public:
 
 private:
   /// @name Naming context failure tests
-  //@{
+  /// @{
   void not_empty_test (CosNaming::NamingContext_var &ref);
   void not_exist_test (CosNaming::NamingContext_var &ref);
-  //@}
+  /// @}
 };
 
 /**

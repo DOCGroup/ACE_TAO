@@ -61,10 +61,12 @@ write_priority_mapping (RTCORBA::PriorityMapping *mapping,
   std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
     ACE_OS::fopen (mapping_file, ACE_TEXT ("w")), ACE_OS::fclose);
   if (!output_file)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Cannot open output file for mapping %C\n"),
-                       mapping_name),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Cannot open output file for mapping %C\n"),
+                         mapping_name),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Sending mapped priorities to %s...\n"),
@@ -79,14 +81,18 @@ write_priority_mapping (RTCORBA::PriorityMapping *mapping,
       bool const status = mapping->to_native (rt_corba_priority, native_priority);
 
       if (!status)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Could not map rtCorba priority %d "
-                              "to a native priority.\n"),
-                    rt_corba_priority));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Could not map rtCorba priority %d "
+                                "to a native priority.\n"),
+                      rt_corba_priority));
+        }
       else
-        ACE_OS::fprintf (output_file.get (), "%d %d\n",
-                         rt_corba_priority,
-                         native_priority);
+        {
+          ACE_OS::fprintf (output_file.get (), "%d %d\n",
+                           rt_corba_priority,
+                           native_priority);
+        }
     }
 
   return 0;
@@ -100,9 +106,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Server_Options options;
 
       if (parse_args (argc, argv, options) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot process args\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot process args\n")),
+                            1);
+        }
 
       ACE_ARGV orb1_argv {options.orb1_args.c_str ()};
       int orb1_argc = orb1_argv.argc ();

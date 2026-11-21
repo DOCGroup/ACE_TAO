@@ -62,9 +62,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -109,12 +111,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
           ACE_OS::fopen (ior_file, "w"), ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file <%s> for writing "
-                             "IOR:\n%s\n",
-                             ior_file,
-                             ior.in ()),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot open output file <%s> for writing "
+                               "IOR:\n%s\n",
+                               ior_file,
+                               ior.in ()),
+                              1);
+          }
         int const result = std::fprintf (output_file.get (), "%s", ior.in ());
         if (result < 0 || static_cast<size_t> (result) != std::strlen (ior.in ()))
         {

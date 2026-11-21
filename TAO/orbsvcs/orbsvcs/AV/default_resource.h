@@ -47,7 +47,7 @@ public:
   /**
    * @name Service Configurator Hooks
    */
-  //@{
+  /// @{
   /// Dynamic linking hook
   int init (int argc, ACE_TCHAR *argv[]) override;
 };

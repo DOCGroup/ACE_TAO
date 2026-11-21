@@ -41,9 +41,11 @@ Custom_Network_Priority_Mapping::to_network (
   RTCORBA::NetworkPriority &network_priority)
 {
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "Custom_Network_Priority_Mapping::to_network corba_priority %d\n",
-                this->corba_priority_));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Custom_Network_Priority_Mapping::to_network corba_priority %d\n",
+                  this->corba_priority_));
+    }
 
   constexpr int total_slots = static_cast<int> (dscp.size ());
   int array_slot = static_cast<int> (
@@ -58,9 +60,11 @@ Custom_Network_Priority_Mapping::to_network (
   network_priority = dscp[array_slot];
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "Custom_Network_Priority_Mapping::to_network = %x\n",
-                network_priority));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Custom_Network_Priority_Mapping::to_network = %x\n",
+                  network_priority));
+    }
 
   return 1;
 }

@@ -43,10 +43,12 @@ int
 check_for_nil (CORBA::Object_ptr const object, char const *message)
 {
   if (CORBA::is_nil (object))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ERROR: Object reference <%C> is nil\n",
-                       message),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ERROR: Object reference <%C> is nil\n",
+                         message),
+                        -1);
+    }
 
   return 0;
 }
@@ -64,9 +66,11 @@ check_policy (Test_ptr server)
 
   RTCORBA::PriorityModel const priority_model = priority_policy->priority_model ();
   if (priority_model != RTCORBA::SERVER_DECLARED)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ERROR: priority_model != RTCORBA::SERVER_DECLARED!\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ERROR: priority_model != RTCORBA::SERVER_DECLARED!\n"),
+                        -1);
+    }
 
   return priority_policy->server_priority ();
 }

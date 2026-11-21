@@ -61,7 +61,7 @@ public:
   /**
    * @name Non virtual methods for the profile classes.
   */
-  //@{
+  /// @{
   /// The tag, each concrete class will have a specific tag value.
   CORBA::ULong tag () const;
 
@@ -105,14 +105,14 @@ public:
   /// Obtain the object key, return nullptr if the profile cannot be parsed.
   /// The memory is owned by the caller!
   TAO::ObjectKey *_key () const;
-  //@}
+  /// @}
 
   /**
    * @name Template methods that need to be implemented by the
    * concrete classes. Some of the methods may be overridden only
    * under specila circumstances.
    */
-  //@{
+  /// @{
   /// Encode this profile in a stream, i.e. marshal it.
   virtual int encode (TAO_OutputCDR &stream) const;
 
@@ -267,7 +267,7 @@ public:
 
   /// Return a hash value for this object.
   virtual CORBA::ULong hash (CORBA::ULong max) = 0;
-  //@}
+  /// @}
 
 protected:
   /// If you have a virtual method you need a virtual dtor.
@@ -276,7 +276,7 @@ protected:
   /**
    * @name Protected template methods.
    */
-  //@{
+  /// @{
   /// Decode the protocol specific profile details.
   virtual int decode_profile (TAO_InputCDR &cdr) = 0;
 
@@ -294,7 +294,7 @@ protected:
 
   /// Protocol specific implementation of parse_string ()
   virtual void parse_string_i (char const *string) = 0;
-  //@}
+  /// @}
 
   /// To be used by inherited classes
   TAO_Profile (CORBA::ULong tag,

@@ -9,8 +9,10 @@ CORBA::Boolean
 Simple_Server_i::print_status ()
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "%N:%l:(%P:%t):Simple_Server_i::print_status called\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%N:%l:(%P:%t):Simple_Server_i::print_status called\n"));
+    }
   return 0;
 }
 

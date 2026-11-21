@@ -30,8 +30,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// TAO DIOP_Acceptor concrete call definition
-
 /**
  * @class TAO_DIOP_Acceptor
  *
@@ -64,7 +62,7 @@ public:
    *
    * Please check the documentation in Transport_Acceptor.h for details.
    */
-  //@{
+  /// @{
   int open (TAO_ORB_Core *orb_core,
             ACE_Reactor *reactor,
             int version_major,
@@ -86,7 +84,7 @@ public:
 
   int object_key (IOP::TaggedProfile &profile,
                   TAO::ObjectKey &key) override;
-  //@}
+  /// @}
 
   /**
    * Set the host name for the given addr.
@@ -211,7 +209,6 @@ private:
   TAO_DIOP_Acceptor (TAO_DIOP_Acceptor &&) = delete;
   TAO_DIOP_Acceptor &operator= (TAO_DIOP_Acceptor &&) = delete;
 
-  // @@ Frank: From DIOP_Acceptor.h
   TAO_DIOP_Connection_Handler *connection_handler_ {};
 };
 

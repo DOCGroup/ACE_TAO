@@ -28,8 +28,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Forward decls.
-
 class TAO_ORB_Core;
 class TAO_UIOP_Connection_Handler;
 
@@ -55,7 +53,7 @@ protected:
    *
    * These are implementations of template methods declared by TAO_Transport.
    */
-  //@{
+  /// @{
   ACE_Event_Handler *event_handler_i () override;
   TAO_Connection_Handler *connection_handler_i () override;
 
@@ -83,7 +81,7 @@ public:
                     TAO_ServerRequest *request = nullptr,
                     TAO_Message_Semantics message_semantics = TAO_Message_Semantics (),
                     ACE_Time_Value *max_time_wait = nullptr) override;
-  //@}
+  /// @}
 
 private:
   TAO_UIOP_Transport (TAO_UIOP_Transport const &) = delete;

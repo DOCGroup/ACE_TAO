@@ -102,11 +102,15 @@ test_server (void *arg)
   catch (CORBA::TRANSIENT const &exception)
     {
       if (server_number == 2)
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%D Expected exception for server %d: %C\n"),
-                    server_number, exception._info ().c_str ()));
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%D Expected exception for server %d: %C\n"),
+                      server_number, exception._info ().c_str ()));
+        }
       else
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%D Unexpected exception for server %d: %C\n"),
-                    server_number, exception._info ().c_str ()));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("%D Unexpected exception for server %d: %C\n"),
+                      server_number, exception._info ().c_str ()));
+        }
     }
   catch (...)
     {

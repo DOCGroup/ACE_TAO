@@ -1116,9 +1116,9 @@ Catior_i::cat_octet_seq (char const *object_name,
   buffer_ += buf;
   indent ();
 
-  for (CORBA::ULong i {}; i < length; ++i)
+  for (CORBA::ULong char_index {}; char_index < length; ++char_index)
     {
-      char c = objKey[i];
+      char c = objKey[char_index];
       int tmp = (unsigned char) c; // isprint doesn't work with negative vals.(except EOF)
       if (ACE_OS::ace_isprint (static_cast<ACE_TCHAR> (tmp)))
         {
@@ -1147,7 +1147,7 @@ ACE_CString
 Catior_i::_find_info (CORBA::ULong id)
 {
   ACE_CString locale = "";
-  ACE_Codeset_Registry::registry_to_locale (id, locale, 0, 0);
+  ACE_Codeset_Registry::registry_to_locale (id, locale, nullptr, nullptr);
   return locale;
 }
 

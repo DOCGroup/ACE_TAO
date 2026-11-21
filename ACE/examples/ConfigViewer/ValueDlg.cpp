@@ -12,7 +12,7 @@ ValueDlg::ValueDlg(wxWindow* pParent, bool String)
   m_pCancel = new wxButton(this, wxID_CANCEL, "Cancel", wxPoint(160, 80));
 }
 
-ValueDlg::ValueDlg(wxWindow* pParent, wxString& Name, wxString& Value)
+ValueDlg::ValueDlg(wxWindow* pParent, wxString const &Name, wxString& Value)
 : wxDialog(pParent, -1, "Edit String", wxDefaultPosition, wxSize(300,140))
 {
   m_Name = Name;
@@ -26,7 +26,7 @@ ValueDlg::ValueDlg(wxWindow* pParent, wxString& Name, wxString& Value)
   m_pCancel = new wxButton(this, wxID_CANCEL, "Cancel", wxPoint(160, 80));
 }
 
-ValueDlg::ValueDlg(wxWindow* pParent, wxString& Name, u_int Value)
+ValueDlg::ValueDlg(wxWindow* pParent, wxString const &Name, u_int Value)
 : wxDialog(pParent, -1, "Edit String", wxDefaultPosition, wxSize(300,140))
 {
   m_Name = Name;

@@ -48,8 +48,8 @@ public:
   /// Underlying handle.
   ACE_HANDLE handle_ {};
 
-  /// Pointer to next node in the linked list.
-  ACE_TkReactorID *next_ {}; // Non-owning link; ACE_TkReactor deletes the list nodes.
+  /// Non-owning link to the next node; ACE_TkReactor deletes list nodes.
+  ACE_TkReactorID *next_ {};
 
   /// Owns the Tcl callback record registered for this handle.
   std::unique_ptr<ACE_TkReactor_Input_Callback> callback_;
@@ -139,7 +139,8 @@ protected:
                                       ACE_Time_Value *);
   /// @}
 
-  ACE_TkReactorID *ids_ {}; // Head of the manually managed linked list.
+  /// Head of the manually managed linked list.
+  ACE_TkReactorID *ids_ {};
   Tk_TimerToken timeout_ {};
 
 private:

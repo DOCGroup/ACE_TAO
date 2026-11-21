@@ -57,9 +57,11 @@ register_factories (CORBA::ORB_ptr orb)
             compression_manager_obj.in ());
 
   if (CORBA::is_nil(compression_manager.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) Panic: nil compression manager\n"),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         " (%P|%t) Panic: nil compression manager\n"),
+                        1);
+    }
   ::Compression::CompressorFactory_ptr compressor_factory;
   ::Compression::CompressorFactory_var compr_fact;
 
@@ -89,7 +91,9 @@ create_compressor_id_level_list_policy (CORBA::ORB_ptr orb, bool add_zlib_for_te
     {
     case 1:
       if (add_zlib_for_test_1)
-        compressor_id_list.length(2);
+        {
+          compressor_id_list.length(2);
+        }
       else
       {
         compressor_id_list.length(1);
@@ -238,10 +242,12 @@ check_results (CORBA::ORB_ptr orb)
         if (!CORBA::is_nil (compressor))
           {
             if (compressor->compressed_bytes () == 0)
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("ERROR : check_results, no compression used ")
-                                 ACE_TEXT ("during test 1a\n")),
-                                1);
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("ERROR : check_results, no compression used ")
+                                   ACE_TEXT ("during test 1a\n")),
+                                  1);
+              }
             else
             {
               return 0;
@@ -269,10 +275,12 @@ check_results (CORBA::ORB_ptr orb)
         if (!CORBA::is_nil (compressor))
           {
             if (compressor->compressed_bytes () != 0)
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("ERROR : check_results, compression used ")
-                                 ACE_TEXT ("during test %d\n"), test),
-                                1);
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("ERROR : check_results, compression used ")
+                                   ACE_TEXT ("during test %d\n"), test),
+                                  1);
+              }
             else
             {
               return 0;

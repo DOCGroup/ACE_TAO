@@ -43,10 +43,12 @@ int
 check_for_nil (CORBA::Object_ptr obj, char const *msg)
 {
   if (CORBA::is_nil (obj))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ERROR: Object reference <%C> is nil\n",
-                       msg),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ERROR: Object reference <%C> is nil\n",
+                         msg),
+                        -1);
+    }
   else
   {
     return 0;

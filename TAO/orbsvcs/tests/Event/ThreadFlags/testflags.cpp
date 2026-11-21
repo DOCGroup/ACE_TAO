@@ -43,7 +43,7 @@ struct ThreadFlagsTest
     BOTH = 0x3
   };
 
-  constexpr ThreadFlagsTest (char const *sym, How assign, ExpectedValues ev)
+  constexpr ThreadFlagsTest (char const *sym, How assign, ExpectedValues const &ev)
     : sym_ (sym),
       assign_ (assign),
       expected_values_ (ev)

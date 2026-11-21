@@ -31,7 +31,7 @@ public:
   EC_BCast &operator= (EC_BCast &&) = delete;
 
   /// @name EC_Driver operations
-  //@{
+  /// @{
   /// add some command line args to enable/disable bcastions
   int parse_args (int& argc, ACE_TCHAR* argv[]) override;
   void print_args () const override;
@@ -45,7 +45,7 @@ public:
 
   /// Don't dump the EC_Driver results, they are meaningless.
   void dump_results () override;
-  //@}
+  /// @}
 
 private:
   /// The IP address used to broadcast

@@ -68,7 +68,7 @@ namespace TAO
        *
        * See Endpoint.h for their documentation.
        */
-      //@{
+      /// @{
       TAO_Endpoint *next () override;
       int addr_to_string (char *buffer, size_t length) override;
 
@@ -95,12 +95,12 @@ namespace TAO
       /// qualified endpoint. (which were  used earlier to cache a
       /// particular transport)
       CORBA::ULong hash () override;
-      //@}
+      /// @}
 
       /**
        * @name SSLIOP_Endpoint-specific Methods
        */
-      //@{
+      /// @{
       /// Return SSL component corresponding to this endpoint.
       ::SSLIOP::SSL const &ssl_component () const;
 
@@ -141,7 +141,7 @@ namespace TAO
        *       transport cache.
        */
       TAO::SSLIOP::OwnCredentials * credentials () const;
-      //@}
+      /// @}
 
       /// Credentials are not supplied by the constructor, and it is
       /// valid to have a nil credential, for instance if the

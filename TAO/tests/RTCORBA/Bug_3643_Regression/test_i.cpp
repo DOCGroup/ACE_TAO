@@ -27,22 +27,28 @@ test_i::method (CORBA::Long client_id,
     static_cast <TAO_Thread_Lane *> (tss->lane_);
 
   if (lane)
-    ACE_DEBUG ((LM_DEBUG,
-                "Request in thread %t (pool id = %d; lane id = %d) for client %d iteration %d\n",
-                lane->pool ().id (),
-                lane->id (),
-                client_id,
-                iteration));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Request in thread %t (pool id = %d; lane id = %d) for client %d iteration %d\n",
+                  lane->pool ().id (),
+                  lane->id (),
+                  client_id,
+                  iteration));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                "Request in thread %t (default thread pool) for client %d iteration %d\n",
-                client_id,
-                iteration));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Request in thread %t (default thread pool) for client %d iteration %d\n",
+                  client_id,
+                  iteration));
+    }
 
   ACE_OS::sleep (this->nap_time_);
 
   if (lane)
-    thread_count = lane->current_threads ();
+    {
+      thread_count = lane->current_threads ();
+    }
   else
   {
     thread_count = 0;

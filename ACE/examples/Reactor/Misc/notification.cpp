@@ -230,7 +230,7 @@ Thread_Handler::handle_input (ACE_HANDLE handle)
       ACE_Time_Value timeout (0,
                               10 * 1000);
 
-      if (this->notify (&timeout) == -1)
+      if (this->notify (std::addressof (timeout)) == -1)
         {
           ACE_ERROR ((LM_DEBUG,
                       "(%t), %p\n",
@@ -267,7 +267,7 @@ Thread_Handler::svc ()
       // Wait up to 10 milliseconds to notify the Reactor.
       ACE_Time_Value timeout (0,
                               10 * 1000);
-      if (this->notify (&timeout) == -1)
+      if (this->notify (std::addressof (timeout)) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%t) %p\n",

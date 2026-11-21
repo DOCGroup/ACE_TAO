@@ -103,7 +103,7 @@ public:
                  ACE_Time_Value const &future_time,
                  ACE_Time_Value const &interval = ACE_Time_Value::zero) override;
 
-  //@{
+  /// @{
   /**
    * Implement ACE_Abstract_Timer_Queue<TYPE>::expire () with the right
    * locking strategy.
@@ -111,7 +111,7 @@ public:
   int expire (ACE_Time_Value const &current_time) override;
   int expire () override;
   int expire_single(ACE_Command_Base & pre_dispatch_command) override;
-  //@}
+  /// @}
 
   /**
    * Get the dispatch information for a timer whose value is <= @a current_time.
@@ -121,12 +121,12 @@ public:
    */
   virtual int dispatch_info (ACE_Time_Value const &current_time,
                              ACE_Timer_Node_Dispatch_Info_T<TYPE> &info);
-  //@{
+  /// @{
   /**
    * Implement the gettimeofday() virtual function
    */
   ACE_Time_Value gettimeofday () override;
-  //@}
+  /// @}
 
   /**
    * Allows applications to control how the timer queue gets the time
@@ -150,7 +150,7 @@ public:
   /// Determine the next event to timeout.  Returns @a max if there are
   /// no pending timers or if all pending timers are longer than max.
   /// This method acquires a lock internally since it modifies internal state.
-  //@{
+  /// @{
   /**
    * Implement calculate_timeout() using the right locking policy
    */
@@ -158,7 +158,7 @@ public:
   ACE_Time_Value *calculate_timeout (ACE_Time_Value *max,
                                      ACE_Time_Value *the_timeout) override;
   ACE_Time_Value current_time() override;
-  //@}
+  /// @}
 
   /// Set the timer skew for the Timer_Queue.
   void timer_skew (ACE_Time_Value const &skew);

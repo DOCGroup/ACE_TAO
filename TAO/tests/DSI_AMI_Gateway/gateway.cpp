@@ -98,9 +98,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Gateway_Options options;
   if (test_exception_holder_copy () != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "DSI exception holder copy test failed\n"),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "DSI exception holder copy test failed\n"),
+                        1);
+    }
 
   try
     {
@@ -151,10 +153,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
           ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Cannot open output file <%s> for writing IOR\n"),
-                             options.ior_output_file.c_str ()),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Cannot open output file <%s> for writing IOR\n"),
+                               options.ior_output_file.c_str ()),
+                              1);
+          }
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
 

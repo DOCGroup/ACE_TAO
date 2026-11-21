@@ -22,7 +22,7 @@ using Sender_File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
 class Sender;
 using SENDER = ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex>;
 
-/** Client stream endpoint for the timestamped flow. */
+/// Client stream endpoint for the timestamped flow.
 class Sender_StreamEndPoint : public TAO_Client_StreamEndPoint
 {
 public:
@@ -44,7 +44,7 @@ protected:
 using SENDER_ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_A<
   Sender_StreamEndPoint, TAO_VDev, AV_Null_MediaCtrl>;
 
-/** Sends a file as timestamped AVStreams frames. */
+/// Sends a file as timestamped AVStreams frames.
 class Sender
 {
 public:

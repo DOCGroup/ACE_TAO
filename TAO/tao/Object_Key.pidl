@@ -1,5 +1,5 @@
-// TAO specific IDL definition of an octet sequence that we use to represent
-// Object keys inside the POA.
+/// TAO-specific IDL definition of an octet sequence used to represent
+/// object keys inside the POA.
 
 #ifndef TAO_OBJECTKEY_PIDL
 #define TAO_OBJECTKEY_PIDL

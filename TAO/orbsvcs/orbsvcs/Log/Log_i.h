@@ -62,7 +62,7 @@ public:
    *
    * DsLogAdmin::Log methods.
    */
-  //@{
+  /// @{
   /// Return the factory of the log.
   DsLogAdmin::LogMgr_ptr my_factory () override;
 
@@ -192,7 +192,7 @@ public:
   /// Causes all pending events to be written to storage. Raises
   /// DsLogAdmin::UnsupportedQos
   void flush () override;
-  //@}
+  /// @}
 
   /// Remove records that have exceeded max_record_life_.
   void remove_old_records ();

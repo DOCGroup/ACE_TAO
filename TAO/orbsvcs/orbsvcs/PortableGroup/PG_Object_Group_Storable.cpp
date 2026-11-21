@@ -494,11 +494,13 @@ TAO::PG_Object_Group_Storable::read (TAO::Storable_Base & stream)
   stream >> num_members;
 
   if (num_members == 0)
-    this->empty_ = true;
+    {
+      this->empty_ = true;
+    }
   else
-  {
-    this->empty_ = false;
-  }
+    {
+      this->empty_ = false;
+    }
 
   this->clear_members_map ();
 

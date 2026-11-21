@@ -59,9 +59,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P|%t) Middle panic: nil RootPOA\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT (" (%P|%t) Middle panic: nil RootPOA\n")),
+                            1);
+        }
 
       PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
@@ -70,9 +72,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Test::Sleeper_var const sleeper = Test::Sleeper::_narrow (obj.in ());
 
       if (CORBA::is_nil (sleeper.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P|%t) Middle panic: nil sleeper reference\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT (" (%P|%t) Middle panic: nil sleeper reference\n")),
+                            1);
+        }
 
       std::unique_ptr<Middle_i> test_impl =
         std::make_unique<Middle_i> (orb.in (), sleeper.in ());
@@ -91,11 +95,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
           ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Cannot open output file %s for writing IOR: %C"),
-                             options.ior_output_file.c_str (),
-                             ior.in ()),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Cannot open output file %s for writing IOR: %C"),
+                               options.ior_output_file.c_str (),
+                               ior.in ()),
+                              1);
+          }
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
 

@@ -53,11 +53,11 @@ public:
    *
    * Check Protocol_Factory.h for a description of these methods.
    */
-  //@{
+  /// @{
   TAO_Acceptor  *make_acceptor () override;
   TAO_Connector *make_connector () override;
   int requires_explicit_endpoint () const override;
-  //@}
+  /// @}
 
 private:
   TAO_UIOP_Protocol_Factory (TAO_UIOP_Protocol_Factory const &) = delete;

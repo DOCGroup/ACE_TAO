@@ -161,8 +161,10 @@ Worker::run_test ()
       CORBA::Boolean const is_simple_server =
         object->_is_a ("IDL:Simple_Server:1.0");
       if (!is_simple_server)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) unexpected result from _is_a()\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) unexpected result from _is_a()\n"));
+        }
     }
 
   CORBA::Object_var const object =
@@ -185,8 +187,10 @@ Worker::run_test ()
         server->test_is_a ("IDL:Foo:1.0");
 
       if (r)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) unexpected result = %d\n",
-                    r));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) unexpected result = %d\n",
+                      r));
+        }
     }
 }

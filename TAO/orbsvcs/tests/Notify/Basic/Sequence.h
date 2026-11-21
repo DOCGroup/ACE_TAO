@@ -32,10 +32,10 @@ public:
   explicit SequencePushConsumer (Sequence *client);
 
   /// @name SequencePushConsumer operations
-  //@{
+  /// @{
   void push_structured_events (
         CosNotification::EventBatch const &notifications) override;
-  //@}
+  /// @}
 
 protected:
   Sequence* test_client_;

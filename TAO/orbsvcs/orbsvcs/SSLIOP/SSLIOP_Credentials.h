@@ -69,7 +69,7 @@ namespace TAO
        * Methods required by the SecurityLevel3::Credentials
        * interface.
        */
-      //@{
+      /// @{
       char * creds_id () override;
 
       SecurityLevel3::CredentialsType creds_type () override = 0;
@@ -84,16 +84,16 @@ namespace TAO
           SecurityLevel3::RelinquishedCredentialsListener_ptr listener) override;
 
       void remove_relinquished_listener (char const * id) override;
-      //@}
+      /// @}
 
-      //@{
+      /// @{
       /// Return a pointer to the underlying X.509 certificate.
       /**
        * @note Caller owns the returned object.  Use a
        *       TAO::SSLIOP::X509_var.
        */
       ::X509 *x509 () const;
-      //@}
+      /// @}
 
       /// Return a pointer to the underlying private key.
       /**
@@ -103,7 +103,7 @@ namespace TAO
        *       TAO::SSLIOP::EVP_PKEY_var.
        */
       ::EVP_PKEY *evp () const;
-      //@}
+      /// @}
 
       bool operator== (SSLIOP_Credentials const &rhs);
 
@@ -119,7 +119,7 @@ namespace TAO
         return nullptr;
       }
 
-      //@}
+      /// @}
 
     protected:
       /**

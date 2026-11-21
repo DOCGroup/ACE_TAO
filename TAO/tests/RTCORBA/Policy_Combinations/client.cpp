@@ -47,9 +47,11 @@ parse_args (int argc, ACE_TCHAR **argv, Client_Options &options)
       }
 
   if (options.ior == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "An IOR must be specified\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "An IOR must be specified\n"),
+                        -1);
+    }
 
   return 0;
 }
@@ -190,8 +192,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                 2);
             }
           else
-            // Unexpected error.
-            ACE_ASSERT (0);
+            {
+              // Unexpected error.
+              ACE_ASSERT (0);
+            }
         }
 
       // Wait for task to exit.

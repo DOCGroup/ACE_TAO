@@ -31,11 +31,15 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 struct TAO_Dynamic_TP_Export TAO_DTP_Definition
 {
-  int min_threads_ {-1};  // a default of -1 implies Lifespan of INFINITE, > 0 implies IDLE
-  int init_threads_ {5}; // default to 5
-  int max_threads_ {-1};  // a default of -1 implies no limit.
+  /// -1 means infinite lifespan; a positive value means idle lifespan.
+  int min_threads_ {-1};
+  /// Default thread count.
+  int init_threads_ {5};
+  /// -1 means no limit.
+  int max_threads_ {-1};
   size_t stack_size_ {ACE_DEFAULT_THREAD_STACKSIZE};
-  ACE_Time_Value timeout_ {60, 0};   // default to 60 seconds
+  /// Default timeout is 60 seconds.
+  ACE_Time_Value timeout_ {60, 0};
   int queue_depth_ {};
 };
 

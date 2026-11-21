@@ -130,7 +130,7 @@ public:
     void qapplication (QApplication *qapp);
 
     /// @name Timer operations
-    //@{
+    /// @{
     long schedule_timer (ACE_Event_Handler *handler,
         void const *arg,
         ACE_Time_Value const &delay_time,
@@ -142,7 +142,7 @@ public:
     int cancel_timer (long timer_id,
         void const **arg = nullptr,
         int dont_call_handle_close = 1) override;
-    //@}
+    /// @}
 
 protected:
     /// Register a single @a handler.

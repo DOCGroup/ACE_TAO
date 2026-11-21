@@ -40,7 +40,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_WFMO_Reactor_Test
 {
 public:
-  static void check_for_valid_state (ACE_WFMO_Reactor &wfmo_reactor,
+  static void check_for_valid_state (ACE_WFMO_Reactor const &wfmo_reactor,
                                      size_t handles_to_be_added,
                                      size_t handles_to_be_suspended,
                                      size_t handles_to_be_resumed,

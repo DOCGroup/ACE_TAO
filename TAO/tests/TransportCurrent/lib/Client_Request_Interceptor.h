@@ -65,7 +65,7 @@ namespace Test
      * virtual in the abstract base class.  They are the canonical
      * methods required for all client request interceptors.
      */
-    //@{
+    /// @{
     /// Return the name of this ClientRequestinterceptor.
     char * name () override;
 
@@ -80,7 +80,7 @@ namespace Test
     void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
     void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri) override;
-    //@}
+    /// @}
 
     // Number of interceptions
     CORBA::Long interceptions ();

@@ -21,7 +21,8 @@ class AC_Output_Handler
 public:
   enum { QUEUE_MAX = sizeof (ACE_Log_Record) * ACE_IOV_MAX };
 
-  int open (void *) override; // Initialization hook method.
+  /// Initialization hook method.
+  int open (void *) override;
 
   // Entry point into the <AC_Output_Handler>.
   int put (ACE_Message_Block *, ACE_Time_Value * = nullptr) override;
@@ -46,8 +47,10 @@ class AC_Input_Handler
 public:
   explicit AC_Input_Handler (AC_Output_Handler *handler = nullptr)
     : output_handler_ (handler) {}
-  int open (void *) override; // Initialization hook method.
-  int close (u_long = 0) override; // Shutdown hook method.
+  /// Initialization hook method.
+  int open (void *) override;
+  /// Shutdown hook method.
+  int close (u_long = 0) override;
 
 protected:
   // Reactor hook methods.

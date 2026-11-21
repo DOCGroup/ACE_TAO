@@ -50,7 +50,7 @@ public:
    *
    * Please check the documentation in Transport_Connector.h for details.
    */
-  //@{
+  /// @{
   int open (TAO_ORB_Core *orb_core) override;
   int close () override;
 
@@ -59,7 +59,7 @@ public:
   int check_prefix (char const *endpoint) override;
 
   char object_key_delimiter () const override;
-  //@}
+  /// @}
 
 protected:
   /**
@@ -67,7 +67,7 @@ protected:
    *
    * Please check the documentation in Transport_Connector.h for details.
    */
-  //@{
+  /// @{
   int set_validate_endpoint (TAO_Endpoint *ep) override;
 
   TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
@@ -75,7 +75,7 @@ protected:
                                   ACE_Time_Value *timeout = nullptr) override;
 
   TAO_Profile *make_profile () override;
-  //@}
+  /// @}
 
   /// Cancel the passed cvs handler from the connector
   int cancel_svc_handler (TAO_Connection_Handler *svc_handler) override;

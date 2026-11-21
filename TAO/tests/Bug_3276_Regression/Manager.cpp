@@ -62,10 +62,12 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
           std::unique_ptr<FILE, int (*) (FILE *)> output_file (
             ACE_OS::fopen (proxy_ior, "w"), ACE_OS::fclose);
           if (!output_file)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
-                               proxy_ior),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Cannot open output file for writing IOR: %s",
+                                 proxy_ior),
+                                1);
+            }
           ACE_OS::fprintf (output_file.get (), "%s", proxy_ref_ior.in ());
         }
 
@@ -88,10 +90,12 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
           std::unique_ptr<FILE, int (*) (FILE *)> output_file (
             ACE_OS::fopen (control_ior, "w"), ACE_OS::fclose);
           if (!output_file)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
-                               control_ior),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Cannot open output file for writing IOR: %s",
+                                 control_ior),
+                                1);
+            }
           ACE_OS::fprintf (output_file.get (), "%s", control_ref_ior.in ());
         }
 

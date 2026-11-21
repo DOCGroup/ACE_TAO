@@ -52,9 +52,13 @@ Handle_Timeout::init (int argc, ACE_TCHAR *argv[])
                                                 reinterpret_cast<void *> (arg),
                                                 delta,
                                                 interval) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 ACE_INLINE int
@@ -74,7 +78,9 @@ Handle_Timeout::handle_timeout (const ACE_Time_Value &tv,
                                 const void *arg)
 {
   if (this->count >= 10)
-    return -1; // Automatically cancel periodic timer...
+    {
+      return -1; // Automatically cancel periodic timer...
+    }
   ++this->count;
 
   ACE_DEBUG ((LM_INFO,

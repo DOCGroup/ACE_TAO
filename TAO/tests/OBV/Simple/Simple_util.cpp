@@ -9,6 +9,7 @@
 # include "ace/OS_NS_fcntl.h"
 # include "ace/OS_NS_unistd.h"
 # include "ace/OS_NS_string.h"
+# include <memory>
 # include <utility>
 
 /// Parses command-line arguments and sets the options.
@@ -85,7 +86,7 @@ Server<Servant>::init (char const *servant_name,
     {
       CORBA::String_var const str =
         this->orb_manager_.activate_under_child_poa (servant_name,
-                                                     &this->servant_);
+                                                     std::addressof (this->servant_));
 
       ACE_DEBUG ((LM_DEBUG,
                   "The IOR is: <%C>\n",

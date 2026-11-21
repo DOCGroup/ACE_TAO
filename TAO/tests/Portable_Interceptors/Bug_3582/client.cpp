@@ -16,10 +16,13 @@ struct Options
 int
 parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
-  if (argc != 3)  // foo -p IOR_1
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Wrong number of arguments.\n"),
-                      -1);
+  if (argc != 3)
+    {
+      // foo -p IOR_1
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Wrong number of arguments.\n"),
+                        -1);
+    }
 
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("p:"));
   int c {};
@@ -112,8 +115,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   if (status != -1)
-    ACE_DEBUG ((LM_INFO,
-                "PortableInterceptor::Redirection test passed.\n"));
+    {
+      ACE_DEBUG ((LM_INFO,
+                  "PortableInterceptor::Redirection test passed.\n"));
+    }
 
   return status;
 }

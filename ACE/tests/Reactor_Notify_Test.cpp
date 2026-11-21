@@ -479,9 +479,9 @@ run_notify_purge_test ()
 
     // First test:
     // Notify EXCEPT, and purge ALL
-    r->notify (&n1); // the mask is EXCEPT_MASK
+    r->notify (std::addressof (n1)); // the mask is EXCEPT_MASK
 
-    status = r->purge_pending_notifications (&n1);
+    status = r->purge_pending_notifications (std::addressof (n1));
     if (status == -1 && errno == ENOTSUP)
     {
       return 0;         // Select Reactor w/o ACE_HAS_REACTOR_NOTIFICATION_QUEUE
@@ -494,11 +494,11 @@ run_notify_purge_test ()
       }
     // Second test:
     // Notify READ twice, and WRITE once, and purge READ and WRITE - should purge 3 times.
-    r->notify (&n1, ACE_Event_Handler::READ_MASK);
-    r->notify (&n1, ACE_Event_Handler::READ_MASK);
-    r->notify (&n1, ACE_Event_Handler::WRITE_MASK);
+    r->notify (std::addressof (n1), ACE_Event_Handler::READ_MASK);
+    r->notify (std::addressof (n1), ACE_Event_Handler::READ_MASK);
+    r->notify (std::addressof (n1), ACE_Event_Handler::WRITE_MASK);
     status = r->purge_pending_notifications
-      (&n1, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::WRITE_MASK);
+      (std::addressof (n1), ACE_Event_Handler::READ_MASK | ACE_Event_Handler::WRITE_MASK);
     if (status != 3)
       {
         ACE_ERROR ((LM_ERROR,
@@ -507,7 +507,7 @@ run_notify_purge_test ()
       }
     // Third test:
     // Notify READ on 2 handlers, and purge READ|WRITE on all handlers. Should purge 2
-    r->notify (&n1, ACE_Event_Handler::READ_MASK);
+    r->notify (std::addressof (n1), ACE_Event_Handler::READ_MASK);
     r->notify (n2, ACE_Event_Handler::READ_MASK);
     status = r->purge_pending_notifications
       (nullptr, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::WRITE_MASK);
@@ -519,10 +519,10 @@ run_notify_purge_test ()
       }
     // Forth test:
     // Notify EXCEPT and WRITE, purge READ. Should not purge
-    r->notify (&n1); // the mask is EXCEPT_MASK
-    r->notify (&n1, ACE_Event_Handler::WRITE_MASK);
+    r->notify (std::addressof (n1)); // the mask is EXCEPT_MASK
+    r->notify (std::addressof (n1), ACE_Event_Handler::WRITE_MASK);
     status = r->purge_pending_notifications
-      (&n1, ACE_Event_Handler::READ_MASK);
+      (std::addressof (n1), ACE_Event_Handler::READ_MASK);
     if (status != 0)
       {
         ACE_ERROR ((LM_ERROR,
@@ -537,7 +537,7 @@ run_notify_purge_test ()
     // so.
     r->purge_pending_notifications(n2,
                                    ACE_Event_Handler::ALL_EVENTS_MASK);
-    r->purge_pending_notifications(&n1,
+    r->purge_pending_notifications (std::addressof (n1),
                                    ACE_Event_Handler::ALL_EVENTS_MASK);
   }
 

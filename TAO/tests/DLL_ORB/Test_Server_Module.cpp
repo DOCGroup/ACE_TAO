@@ -93,9 +93,11 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
         this->orb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       this->poa_ =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -127,10 +129,12 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
       std::unique_ptr<FILE, int (*) (FILE *)> output_file (
         ACE_OS::fopen (ior_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
       if (!output_file)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot open output file <%s> for writing IOR\n"),
-                           ior_file.c_str ()),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file <%s> for writing IOR\n"),
+                             ior_file.c_str ()),
+                            1);
+        }
       ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
 
       this->servant_.orb (this->orb_.in ());
@@ -165,10 +169,12 @@ Test_Server_Module::fini ()
   // Explicitly clean up singletons created by TAO before
   // unloading this module.
   if (TAO_Singleton_Manager::instance ()->fini () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Test_Server_Module::fini -- ORB pre-termination "
-                       "failed."),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Test_Server_Module::fini -- ORB pre-termination "
+                         "failed."),
+                        -1);
+    }
 
   return 0;
 }

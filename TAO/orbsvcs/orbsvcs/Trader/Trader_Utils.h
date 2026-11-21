@@ -459,8 +459,10 @@ public:
   void use_proxy_offers (CORBA::Boolean prox_offs);
 
   /// Designate a trader at which to begin the query.
+  /// Copies the trader name.
   void starting_trader (const CosTrading::TraderName& name); // Copy
-  void starting_trader (CosTrading::TraderName* name); // Own
+  /// Takes ownership of the trader name.
+  void starting_trader (CosTrading::TraderName* name);
 
   /// Specify under what conditions a federated query is appropriate.
   void link_follow_rule (CosTrading::FollowOption follow_option);

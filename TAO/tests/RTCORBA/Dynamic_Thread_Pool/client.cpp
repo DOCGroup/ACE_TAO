@@ -130,9 +130,11 @@ Task::svc ()
       ACE_UNUSED_ARG (result);
 
       if (final_thread_count != 0)
-        ACE_ERROR ((LM_ERROR,
-                    "Dynamic thread count should be 0, not %d\n",
-                    final_thread_count));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Dynamic thread count should be 0, not %d\n",
+                      final_thread_count));
+        }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -180,13 +182,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           if (result == -1)
             {
               if (errno == EPERM)
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   "Cannot create thread with scheduling policy %s\n"
-                                   "because the user does not have the appropriate privileges, "
-                                   "terminating program....\n"
-                                   "Check svc.conf options and/or run as root\n",
-                                   sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
-                                  2);
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "Cannot create thread with scheduling policy %s\n"
+                                     "because the user does not have the appropriate privileges, "
+                                     "terminating program....\n"
+                                     "Check svc.conf options and/or run as root\n",
+                                     sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
+                                    2);
+                }
               else
               {
                 ACE_ASSERT (0);

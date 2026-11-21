@@ -1383,8 +1383,7 @@ ACE_WFMO_Reactor::register_handler_i (ACE_HANDLE event_handle,
   // need to create one
   if (event_handle == ACE_INVALID_HANDLE)
     {
-      std::unique_ptr<ACE_Auto_Event> tmp (new ACE_Auto_Event);
-      event = std::move(tmp);
+      event = std::make_unique<ACE_Auto_Event> ();
       event_handle = event->handle ();
       delete_event = true;
     }

@@ -122,7 +122,7 @@ public:
    * thread's copy of the data has not yet been set. See specific method
    * descriptions for complete details.
    */
-  //@{
+  /// @{
   /**
    * Get the thread-specific object for this object.
    *
@@ -160,7 +160,7 @@ public:
    */
   operator TYPE *() const;
 
-  //@}
+  /// @}
 
   /// Hook for construction parameters.
   virtual TYPE *make_TSS_TYPE () const;

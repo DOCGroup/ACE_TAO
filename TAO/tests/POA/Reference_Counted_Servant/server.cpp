@@ -78,18 +78,22 @@ write_iors_to_file (ACE_TCHAR const *filename, char const *ior)
     ACE_OS::fopen (filename, "w"), ACE_OS::fclose);
 
   if (!output_file)
-    ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IORs: %s\n",
-                       filename),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IORs: %s\n",
+                         filename),
+                        -1);
+    }
 
   int const result = ACE_OS::fprintf (output_file.get (), "%s", ior);
 
   if (result < 0 || static_cast<size_t> (result) != std::strlen (ior))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_OS::fprintf failed while writing %C to %s\n",
-                       ior,
-                       filename),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ACE_OS::fprintf failed while writing %C to %s\n",
+                         ior,
+                         filename),
+                        -1);
+    }
 
   return 0;
 }

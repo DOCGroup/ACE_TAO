@@ -134,7 +134,7 @@ protected:
   /// Set options on the socket
   int set_socket_option (ACE_SOCK &sock, int snd_size, int rcv_size);
 
-  //@{
+  /// @{
   /**
    * @name Helper methods for Event_Handler-based derived classes.
    *
@@ -173,7 +173,7 @@ protected:
    * See the SSLIOP protocol for an interesting use-case
    */
   virtual void pos_io_hook (int & return_value);
-  //@}
+  /// @}
 
 private:
   TAO_Connection_Handler (const TAO_Connection_Handler &) = delete;

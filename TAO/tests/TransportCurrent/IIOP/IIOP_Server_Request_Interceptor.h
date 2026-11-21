@@ -55,7 +55,7 @@ namespace Test
      * virtual in the abstract base class.  They are the canonical
      * methods required for all server request interceptors.
      */
-    //@{
+    /// @{
     /// Return the name of this ServerRequestinterceptor.
     char * name () override;
 
@@ -70,7 +70,7 @@ namespace Test
 
     /// outgoing interception point
     void send_other (PortableInterceptor::ServerRequestInfo_ptr ri) override;
-    //@}
+    /// @}
 
   protected:
     /// process incoming requests context

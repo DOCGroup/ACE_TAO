@@ -52,10 +52,12 @@ Server_i::add_IOR_to_table (char const *ior, std::string const &ins)
   try
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Adding (KEY:IOR) %C:%C\n"),
-                    ins.c_str (),
-                    ior));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Adding (KEY:IOR) %C:%C\n"),
+                      ins.c_str (),
+                      ior));
+        }
 
       CORBA::Object_var const table_object (
         this->orb_manager_.orb ()->resolve_initial_references ("IORTable"));
@@ -94,7 +96,7 @@ Server_i::init (int argc, ACE_TCHAR *argv[])
   try
     {
       CORBA::String_var const ior (
-        this->orb_manager_.activate_under_child_poa ("INS_servant", &this->servant_));
+        this->orb_manager_.activate_under_child_poa ("INS_servant", std::addressof (this->servant_)));
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The IOR is: <%C>\n"), ior.in ()));
 
@@ -109,15 +111,19 @@ Server_i::init (int argc, ACE_TCHAR *argv[])
             ACE_OS::fopen (options.ior_output_file, ACE_TEXT ("w")),
             ACE_OS::fclose);
           if (!ior_file)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Unable to open %s for writing: %p\n"),
-                               options.ior_output_file),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Unable to open %s for writing: %p\n"),
+                                 options.ior_output_file),
+                                -1);
+            }
           if (ACE_OS::fprintf (ior_file.get (), "%s", ior.in ()) < 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Unable to write %s: %p\n"),
-                               options.ior_output_file),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Unable to write %s: %p\n"),
+                                 options.ior_output_file),
+                                -1);
+            }
         }
     }
   catch (CORBA::Exception const &ex)

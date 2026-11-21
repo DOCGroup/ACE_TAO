@@ -197,7 +197,8 @@ public:
    *       usec() methods.  There is no analogous "millisecond"
    *       component in an ACE_Time_Value.
    */
-  void msec (int);  // converted to long then calls above.
+  /// Converts the value to long and calls the overload above.
+  void msec (int);
 
   /// Returns the value of the object as a timespec_t.
   operator timespec_t () const;
@@ -360,14 +361,14 @@ public:
   friend ACE_Export bool operator != (ACE_Time_Value const &tv1,
                                       ACE_Time_Value const &tv2);
 
-  //@{
+  /// @{
   /// Multiplies the time value by @a d
   friend ACE_Export ACE_Time_Value operator * (double d,
                                                ACE_Time_Value const &tv);
 
   friend ACE_Export ACE_Time_Value operator * (ACE_Time_Value const &tv,
                                                double d);
-  //@}
+  /// @}
 
   /// @}
 
@@ -474,14 +475,14 @@ namespace std
     * microseconds, milliseconds, seconds, minutes, or hours).
     *
     */
-    //@{
+    /// @{
     ACE_Export nanoseconds& operator <<(nanoseconds &ns, ACE_Time_Value const &tv);
     ACE_Export microseconds& operator <<(microseconds &us, ACE_Time_Value const &tv);
     ACE_Export milliseconds& operator <<(milliseconds &ms, ACE_Time_Value const &tv);
     ACE_Export seconds& operator <<(seconds &s, ACE_Time_Value const &tv);
     ACE_Export minutes& operator <<(minutes &m, ACE_Time_Value const &tv);
     ACE_Export hours& operator <<(hours &h, ACE_Time_Value const &tv);
-    //@}
+    /// @}
 
     /**
     * @name Adding ACE_Time_Value to chrono
@@ -490,14 +491,14 @@ namespace std
     * microseconds, milliseconds, seconds, minutes, or hours).
     *
     */
-    //@{
+    /// @{
     ACE_Export nanoseconds& operator +=(nanoseconds &ns, ACE_Time_Value const &tv);
     ACE_Export microseconds& operator +=(microseconds &us, ACE_Time_Value const &tv);
     ACE_Export milliseconds& operator +=(milliseconds &ms, ACE_Time_Value const &tv);
     ACE_Export seconds& operator +=(seconds &s, ACE_Time_Value const &tv);
     ACE_Export minutes& operator +=(minutes &m, ACE_Time_Value const &tv);
     ACE_Export hours& operator +=(hours &h, ACE_Time_Value const &tv);
-    //@}
+    /// @}
 
     /**
     * @name Substracting ACE_Time_Value from chrono
@@ -506,14 +507,14 @@ namespace std
     * microseconds, milliseconds, seconds, minutes, or hours).
     *
     */
-    //@{
+    /// @{
     ACE_Export nanoseconds& operator -=(nanoseconds &ns, ACE_Time_Value const &tv);
     ACE_Export microseconds& operator -=(microseconds &us, ACE_Time_Value const &tv);
     ACE_Export milliseconds& operator -=(milliseconds &ms, ACE_Time_Value const &tv);
     ACE_Export seconds& operator -=(seconds &s, ACE_Time_Value const &tv);
     ACE_Export minutes& operator -=(minutes &m, ACE_Time_Value const &tv);
     ACE_Export hours& operator -=(hours &h, ACE_Time_Value const &tv);
-    //@}
+    /// @}
   }
 }
 

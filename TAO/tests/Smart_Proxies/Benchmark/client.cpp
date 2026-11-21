@@ -101,8 +101,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       "test runs in time-shared class\n"));
         }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "client (%P|%t): sched_params failed\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "client (%P|%t): sched_params failed\n"));
+        }
     }
 
   try
@@ -141,10 +143,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         Test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Object reference <%s> is nil.\n",
-                           options.ior),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Object reference <%s> is nil.\n",
+                             options.ior),
+                            1);
+        }
       Marker marker;
       ACE_DEBUG ((LM_DEBUG, "High res. timer calibration...."));
       ACE_High_Res_Timer::global_scale_factor_type const gsf =
@@ -164,8 +168,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_hrtime_t const now = ACE_OS::gethrtime ();
           marker.sample (now - throughput_base, now - latency_base);
           if (TAO_debug_level > 0 && i % 100 == 0)
-            ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration <%d> - price <%d> - cost <%d>\n",
-                        i, price, cost));
+            {
+              ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration <%d> - price <%d> - cost <%d>\n",
+                          i, price, cost));
+            }
         }
       marker.dump_stats (ACE_TEXT("buying tickets "), gsf);
       server->shutdown ();

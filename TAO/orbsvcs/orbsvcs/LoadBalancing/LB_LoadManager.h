@@ -50,7 +50,7 @@ public:
    *
    * Methods required by the CosLoadBalancing::LoadManager interface.
    */
-  //@{
+  /// @{
   /// For the PUSH load monitoring style.
   void push_loads (PortableGroup::Location const & the_location,
                    CosLoadBalancing::LoadList const & loads) override;
@@ -95,14 +95,14 @@ public:
   void remove_load_monitor (
       PortableGroup::Location const & the_location) override;
 
-  //@}
+  /// @}
 
   /**
    * @name PortableGroup::PropertyManager Methods
    *
    * Methods required by the PortableGroup::PropertyManager interface.
    */
-  //@{
+  /// @{
   /// Set the default properties to be used by all object groups.
   void set_default_properties (
       PortableGroup::Properties const & props) override;
@@ -153,7 +153,7 @@ public:
   PortableGroup::Properties * get_properties (
       PortableGroup::ObjectGroup_ptr object_group) override;
 
-  //@}
+  /// @}
 
   /**
    * @name PortableGroup::ObjectGroupManager methods
@@ -161,7 +161,7 @@ public:
    * Methods required by the PortableGroup::ObjectGroupManager
    * interface.
    */
-  //@{
+  /// @{
   /// Create a member using the load balancer ObjectGroupManager, and
   /// add the created object to the ObjectGroup.
   PortableGroup::ObjectGroup_ptr create_member (
@@ -213,14 +213,14 @@ public:
       PortableGroup::ObjectGroup_ptr object_group,
       PortableGroup::Location const & loc) override;
 
-  //@}
+  /// @}
 
   /**
    * @name PortableGroup::GenericFactory methods
    *
    * Methods required by the PortableGroup::GenericFactory interface.
    */
-  //@{
+  /// @{
   /**
    * Create an object of the specified type that adheres to the
    * restrictions defined by the provided Criteria.  The out
@@ -243,7 +243,7 @@ public:
       PortableGroup::GenericFactory::FactoryCreationId const &
         factory_creation_id) override;
 
-  //@}
+  /// @}
 
   /// Return the next member to which client requests will be
   /// forwarded.
@@ -374,7 +374,7 @@ private:
    * "Built-in" load balancing strategies defined by the load
    * balancing specification.
    */
-  //@{
+  /// @{
   /// The "RoundRobin" load balancing strategy.
   CosLoadBalancing::Strategy_var round_robin_;
 
@@ -389,7 +389,7 @@ private:
 
   /// The "LoadAverage" load balancing strategy.
   CosLoadBalancing::Strategy_var load_average_;
-  //@}
+  /// @}
 
   /// Cached instance of the Property name
   /// "org.omg.CosLoadBalancing.StrategyInfo".

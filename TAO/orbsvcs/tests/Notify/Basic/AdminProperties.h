@@ -29,9 +29,9 @@ public:
   explicit AdminProperties_StructuredPushConsumer (AdminProperties *client);
 
   /// @name StructuredPushConsumer operations
-  //@{
+  /// @{
   void push_structured_event (CosNotification::StructuredEvent const &notification) override;
-  //@}
+  /// @}
 
 protected:
   AdminProperties* client_;

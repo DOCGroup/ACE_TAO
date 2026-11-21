@@ -55,7 +55,7 @@ public:
    * Methods required by the PortableGroup::PropertyManager
    * interface.
    */
-  //@{
+  /// @{
   /// Set the default properties to be used by all object groups.
   void set_default_properties (
       PortableGroup::Properties const & props) override;
@@ -106,7 +106,7 @@ public:
   PortableGroup::Properties * get_properties (
       PortableGroup::ObjectGroup_ptr object_group) override;
 
-  //@}
+  /// @}
 
   /// Type-specific property hash map.
   using Type_Prop_Table = ACE_Hash_Map_Manager_Ex<

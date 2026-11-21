@@ -26,7 +26,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// TAO DIOP_Profile concrete Profile definitions
 /**
  * @class TAO_DIOP_Profile
  *

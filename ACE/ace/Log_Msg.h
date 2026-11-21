@@ -651,7 +651,8 @@ private:
   /// The log message, which resides in thread-specific storage.  Note
   /// that only the current log message is stored here -- it will be
   /// overwritten by the subsequent call to log().
-  ACE_TCHAR* msg_ {}; // Add one for NUL-terminator.
+  /// An extra character is allocated for the NUL terminator.
+  ACE_TCHAR* msg_ {};
 
   /// Indicates whether we should restart system calls that are
   /// interrupted.

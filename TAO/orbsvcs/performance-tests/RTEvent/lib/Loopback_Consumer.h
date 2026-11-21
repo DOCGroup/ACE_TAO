@@ -34,13 +34,13 @@ public:
   /// Disconnect from the event channel
   void disconnect ();
 
-  //@{
+  /// @{
   /** @name The RtecEventComm::PushConsumer methods
    */
   void push (const RtecEventComm::EventSet& events) override;
   void disconnect_push_consumer () override;
   PortableServer::POA_ptr _default_POA () override;
-  //@}
+  /// @}
 
 private:
   /// Synchronize access to the internal data

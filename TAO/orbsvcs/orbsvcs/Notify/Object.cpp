@@ -277,8 +277,10 @@ TAO_Notify_Object::set_qos (const CosNotification::QoSProperties & qos)
       }
   }
   else if (new_qos_properties.thread_pool_lane ().is_valid ())
-    TAO_Notify_PROPERTIES::instance()->builder()->
-    apply_lane_concurrency (*this, new_qos_properties.thread_pool_lane ().value ());
+    {
+      TAO_Notify_PROPERTIES::instance()->builder()->
+      apply_lane_concurrency (*this, new_qos_properties.thread_pool_lane ().value ());
+    }
 
   // Update the Thread Task's QoS properties..
   this->worker_task_->update_qos_properties (new_qos_properties);
@@ -293,7 +295,9 @@ TAO_Notify_Object::set_qos (const CosNotification::QoSProperties & qos)
   }
 
   if (err_seq.length () > 0) // Unsupported Property
-    throw CosNotification::UnsupportedQoS (err_seq);
+    {
+      throw CosNotification::UnsupportedQoS (err_seq);
+    }
 }
 
 CosNotification::QoSProperties*

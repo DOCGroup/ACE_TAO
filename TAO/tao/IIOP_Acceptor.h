@@ -242,7 +242,8 @@ protected:
   TAO_GIOP_Message_Version version_;
 
   /// ORB Core.
-  TAO_ORB_Core *orb_core_ {}; // Borrowed from the owning ORB.
+  /// Borrowed from the owning ORB.
+  TAO_ORB_Core *orb_core_ {};
 
   /// Enable socket option SO_REUSEADDR to be set
   int reuse_addr_ {1};

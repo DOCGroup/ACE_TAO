@@ -77,7 +77,7 @@ namespace TAO
       }
     };
 
-    // Traits based on TypeCode type template parameters.
+    /// Traits based on TypeCode type template parameters.
 
     template<>
     struct Traits<Traits<STATIC_TYPECODE>::typecode_type>

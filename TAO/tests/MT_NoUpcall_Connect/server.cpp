@@ -67,10 +67,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
           ACE_OS::fopen (ior_output_file.c_str (), "w"), ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file for writing IOR: %s\n",
-                             ior_output_file.c_str ()),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot open output file for writing IOR: %s\n",
+                               ior_output_file.c_str ()),
+                              1);
+          }
         ACE_OS::fprintf (output_file.get (), "%s", intfString_var.in ());
       }
 
@@ -79,9 +81,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Running ORB in separate thread
       Worker worker;
       if (worker.activate () != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) %p\n", "Cannot activate server thread(s)"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) %p\n", "Cannot activate server thread(s)"),
+                            -1);
+        }
 
       worker.thr_mgr()->wait ();
       orb_->destroy ();

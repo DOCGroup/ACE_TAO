@@ -16,6 +16,8 @@
 #include "ace/OS_main.h"
 #include "ace/Log_Msg.h"
 
+#include <memory>
+
 class Event_Handler : public ACE_Event_Handler
 {
 public:
@@ -31,7 +33,7 @@ public:
 
 Event_Handler::Event_Handler (ACE_Reactor &reactor)
 {
-  this->reactor (&reactor);
+  this->reactor (std::addressof (reactor));
 
   if (this->reactor ()->register_handler (this,
                                           ACE_STDIN) != 0)

@@ -87,10 +87,12 @@ int
 check_for_nil (CORBA::Object_ptr obj, char const *msg)
 {
   if (CORBA::is_nil (obj))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ERROR: Object reference <%C> is nil\n",
-                       msg),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ERROR: Object reference <%C> is nil\n",
+                         msg),
+                        -1);
+    }
 
   return 0;
 }
@@ -118,10 +120,12 @@ create_object (PortableServer::POA_ptr poa,
   std::unique_ptr<FILE, int (*) (FILE *)> output_file (
     ACE_OS::fopen (filename, "w"), ACE_OS::fclose);
   if (!output_file)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cannot open output file for writing IOR: %s",
-                       filename),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Cannot open output file for writing IOR: %s",
+                         filename),
+                        -1);
+    }
   ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
 
   return 0;

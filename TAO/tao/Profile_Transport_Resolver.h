@@ -88,7 +88,7 @@ namespace TAO
      */
     void resolve (ACE_Time_Value *val);
 
-    //@{
+    /// @{
     /**
      * @name Accessors and mutators for this class. The following methods
      * are used by the clients of this class to access strategies and
@@ -120,7 +120,7 @@ namespace TAO
     /// Accessor to indicate whether we should block while
     /// establishing a connection.
     bool blocked_connect () const;
-    //@}
+    /// @}
 
     /// Signal to let the resolver know that the transport has been
     /// released back to the cache.

@@ -269,7 +269,7 @@ protected:
    * These attributes are only used when fragmenting outgoing GIOP
    * requests and replies.
    */
-  //@{
+  /// @{
   /// Strategy that sends data currently marshaled into this
   /// TAO_OutputCDR stream if necessary.
   std::unique_ptr<TAO_GIOP_Fragmentation_Strategy> fragmentation_strategy_;

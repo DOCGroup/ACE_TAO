@@ -274,7 +274,7 @@ namespace ACE
        */
       int get_local_addr (Addr &) const;
 
-      //@}
+      /// @}
 
     private:
       /// The session_ is a reference to the persistent session this stream is

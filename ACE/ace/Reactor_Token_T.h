@@ -54,7 +54,7 @@ public:
   ACE_Reactor_Token_T (ACE_Reactor_Impl &r,
                        int s_queue = ACE_TOKEN_TYPE::FIFO);
   ACE_Reactor_Token_T (int s_queue = ACE_TOKEN_TYPE::FIFO);
-  // ACE_TOKEN_TYPE may be ACE_Noop_Token, which has no virtual base destructor.
+  /// ACE_TOKEN_TYPE may be ACE_Noop_Token, which has no virtual base destructor.
   virtual ~ACE_Reactor_Token_T ();
 
   /// Called just before a token waiter goes to sleep.

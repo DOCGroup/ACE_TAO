@@ -77,7 +77,7 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_OFF_T filesize (const ACE_TCHAR *handle);
-  //@}
+  /// @}
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int fstat (ACE_HANDLE,

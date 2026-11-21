@@ -10,9 +10,8 @@ static void
 putline (char const *s)
 {
   while (putchar (*s++) != '\n')
-  {
-    continue;
-  }
+    {
+    }
 }
 
 static void

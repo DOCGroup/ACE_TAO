@@ -36,7 +36,8 @@ public:
 
   ~Logging_Event_Handler_Ex () override = default;
 
-  int open () override; // Activate the event handler.
+  /// Activate the event handler.
+  int open () override;
 
   // Called by a reactor when logging events arrive.
   int handle_input (ACE_HANDLE) override;

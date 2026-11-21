@@ -22,6 +22,8 @@
 #include "ace/Signal.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Thread_Manager.h"
+
+#include <memory>
 #include "ace/os_include/os_netdb.h"
 #include "Logging_Handler.h"
 #include "AC_CLD_export.h"
@@ -120,8 +122,8 @@ protected:
 
 public:
   AC_Client_Logging_Daemon ()
-    : acceptor_ (&output_handler_),
-      connector_ (&output_handler_) {}
+    : acceptor_ (std::addressof (output_handler_)),
+      connector_ (std::addressof (output_handler_)) {}
 
   // Service Configurator hook methods.
   int init (int argc, ACE_TCHAR *argv[]) override;

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    CSD_Strategy_Proxy.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_SERVANT_DISPATCHING_STRATEGY_PROXY_H
 #define TAO_SERVANT_DISPATCHING_STRATEGY_PROXY_H

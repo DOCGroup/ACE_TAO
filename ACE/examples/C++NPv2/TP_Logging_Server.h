@@ -85,7 +85,9 @@ public:
       delete peer_handler;
       return -1;
     } else if (peer_handler->open () == -1)
-      peer_handler->handle_close (ACE_INVALID_HANDLE, 0);
+      {
+        peer_handler->handle_close (ACE_INVALID_HANDLE, 0);
+      }
     return 0;
   }
 };

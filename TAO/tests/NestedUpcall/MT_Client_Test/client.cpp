@@ -47,18 +47,22 @@ MT_Client::read_ior (ACE_TCHAR const *filename)
   ACE_HANDLE const f_handle = ACE_OS::open (filename, 0);
 
   if (f_handle == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open %s for reading\n",
-                       filename),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to open %s for reading\n",
+                         filename),
+                        -1);
+    }
 
   ACE_Read_Buffer ior_buffer (f_handle, true);
   ACE_Read_Buffer_Unique_Ptr ior_buffer_data (
     ior_buffer.read (), {ior_buffer.alloc ()});
   if (!ior_buffer_data)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to allocate memory to read ior.\n"),
-                       -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to allocate memory to read ior.\n"),
+                         -1);
+    }
 
   this->object_key_.assign (ior_buffer_data.get ());
   return 0;
@@ -80,20 +84,24 @@ MT_Client::parse_args ()
         if ((this->client_number_ % 2) == 0)
           {
             if (this->read_ior (get_opts.opt_arg ()) < 0)
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Unable to read ior from %s\n",
-                                 get_opts.opt_arg ()),
-                                -1);
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "Unable to read ior from %s\n",
+                                   get_opts.opt_arg ()),
+                                  -1);
+              }
           }
         break;
       case 'g': // read the IOR from the file.
         if ((this->client_number_ % 2) == 1)
           {
             if (this->read_ior (get_opts.opt_arg ()) < 0)
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Unable to read ior from %s\n",
-                                 get_opts.opt_arg ()),
-                                -1);
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "Unable to read ior from %s\n",
+                                   get_opts.opt_arg ()),
+                                  -1);
+              }
           }
         break;
       case 'i':
@@ -169,17 +177,21 @@ MT_Client::init (int argc, ACE_TCHAR **argv,
       }
 
       if (this->object_key_.empty ())
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "The IOR is nil, not able to get the object.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "The IOR is nil, not able to get the object.\n"),
+                            -1);
+        }
 
       CORBA::Object_var object_var =
         this->orb_var_->string_to_object (this->object_key_.c_str ());
 
       if (CORBA::is_nil (object_var.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "No proper object has been returned.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "No proper object has been returned.\n"),
+                            -1);
+        }
 
       this->mT_Object_var_ = MT_Object::_narrow (object_var.in ());
 
@@ -199,9 +211,11 @@ MT_Client::init (int argc, ACE_TCHAR **argv,
         this->orb_var_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -230,9 +244,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int const result = orb_manager.init (argc, argv);
 
       if (result != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "ERROR: ORB_Manager initialization failed.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "ERROR: ORB_Manager initialization failed.\n"),
+                            -1);
+        }
 
       ACE_DEBUG ((LM_DEBUG, "\n\tMT_Client: client\n\n"));
 
@@ -255,9 +271,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       std::unique_ptr<MT_Server_Task> server =
         std::make_unique<MT_Server_Task> (&server_thr_mgr, argc, argv, &orb_manager);
       if (server->activate () != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "CLIENT ERROR: Unable to activate MT_Server_Task.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "CLIENT ERROR: Unable to activate MT_Server_Task.\n"),
+                            -1);
+        }
 
       // starting the client threads
       std::vector<std::unique_ptr<MT_Client_Task>> clients;

@@ -47,9 +47,11 @@ void
 Hello::test_unbounded_string_arg (char const *message)
 {
   if (debug)
-    ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_unbounded_string_arg ")
-                        ACE_TEXT("got unbounded string: %s\n"),
-                        message));
+    {
+      ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_unbounded_string_arg ")
+                          ACE_TEXT("got unbounded string: %s\n"),
+                          message));
+    }
   if (std::strcmp (message, TEST_STR) != 0)
   {
     ERROR_COUNT ("Hello::test_unbounded_string_arg")
@@ -60,9 +62,11 @@ void
 Hello::test_bounded_string_arg (char const *message)
 {
   if (debug)
-    ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_bounded_string_arg ")
-                        ACE_TEXT("got bounded string: %s\n"),
-                        message));
+    {
+      ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_bounded_string_arg ")
+                          ACE_TEXT("got bounded string: %s\n"),
+                          message));
+    }
   if (std::strncmp (message, TEST_STR, ::Test::BOUNDED_STRING_SIZE) != 0)
   {
     ERROR_COUNT ("Hello::test_bounded_string_arg")
@@ -75,9 +79,11 @@ Hello::test_fixed_array_arg (::Test::Fixed_Array const message)
   for (CORBA::ULong i = 0; i < ::Test::FIX_ARRAY_SIZE; ++i)
   {
     if (debug)
-      ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_fixed_array_arg ")
-        ACE_TEXT("got fixed array: %d\n"),
-        message[i]));
+      {
+        ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_fixed_array_arg ")
+          ACE_TEXT("got fixed array: %d\n"),
+          message[i]));
+      }
     if (message[i] != static_cast<CORBA::Long> (i + 999))
       ERROR_COUNT ("Hello::test_fixed_array_arg")
   }
@@ -87,8 +93,10 @@ void
 Hello::test_bounded_var_size_arg (::Test::Bounded_Var_Size_Arg const &message)
 {
   if (debug)
-    ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_bounded_var_size_arg ")
-      ACE_TEXT("got bounded var size arg\n")));
+    {
+      ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_bounded_var_size_arg ")
+        ACE_TEXT("got bounded var size arg\n")));
+    }
   if (std::strncmp (message.get_buffer (), TEST_STR, ::Test::BOUNDED_VAR_SIZE) != 0)
     ERROR_COUNT ("Hello::test_bounded_var_size_arg")
 }
@@ -97,8 +105,10 @@ void
 Hello::test_unbounded_var_size_arg (::Test::Unbounded_Var_Size_Arg const &message)
 {
   if (debug)
-    ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_unbounded_var_size_arg ")
-                        ACE_TEXT("got unbounded var size arg.\n")));
+    {
+      ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_unbounded_var_size_arg ")
+                          ACE_TEXT("got unbounded var size arg.\n")));
+    }
   if (message.length () != std::strlen (TEST_STR)
       || std::memcmp (message.get_buffer (), TEST_STR, message.length ()) != 0)
     ERROR_COUNT ("Hello::test_unbounded_var_size_arg")
@@ -108,9 +118,11 @@ void
 Hello::test_fixed_size_arg (::Test::TimeOfDay const &t)
 {
   if (debug)
-    ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_fixed_size_arg ")
-                        ACE_TEXT("got timeofday: %d:%d:%d\n"),
-                        t.hour, t.minute, t.second));
+    {
+      ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_fixed_size_arg ")
+                          ACE_TEXT("got timeofday: %d:%d:%d\n"),
+                          t.hour, t.minute, t.second));
+    }
 
   if (t.hour != TEST_HOUR
       || t.minute != TEST_MINUTE
@@ -124,8 +136,10 @@ Hello::test_var_array_arg (Test::Var_Array const messages)
   for (CORBA::ULong i = 0; i != ::Test::VAR_ARRAY_SIZE; ++i)
   {
     if (debug)
-      ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_var_array_arg ")
-                        ACE_TEXT("messages[%d] = %s\n"), i, messages[i].in ()));
+      {
+        ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_var_array_arg ")
+                          ACE_TEXT("messages[%d] = %s\n"), i, messages[i].in ()));
+      }
     if (std::strcmp (messages[i].in (), TEST_STR) != 0)
       ERROR_COUNT ("Hello::test_var_array_arg")
   }
@@ -135,8 +149,10 @@ void
 Hello::test_special_basic_arg (CORBA::Char value)
 {
   if (debug)
-    ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_special_basic_arg ")
-                          ACE_TEXT(" got special basic arg: %c\n"), value));
+    {
+      ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_special_basic_arg ")
+                            ACE_TEXT(" got special basic arg: %c\n"), value));
+    }
   if (value != TEST_SPECIAL_VALUE)
     ERROR_COUNT ("Hello::test_special_basic_arg")
 }
@@ -261,8 +277,10 @@ char *
 Hello::get_string ()
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) Upcall in process ..\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) Upcall in process ..\n"));
+    }
 
   if (ACE_Thread::self () == this->thr_id_)
     {

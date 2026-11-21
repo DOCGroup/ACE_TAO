@@ -109,13 +109,11 @@ HTTP_Request::parse_request (ACE_Message_Block &mb)
 void
 HTTP_Request::parse_request_line (char *const request_line)
 {
-  char *ptr = request_line;
-  char *buf = request_line;
-  int offset = 1;
-
   this->status_ = HTTP_Status_Code::STATUS_OK;
 
-  ptr = std::strchr (request_line, '\n');
+  char *ptr = std::strchr (request_line, '\n');
+  char *buf = request_line;
+  int offset = 1;
 
   if (ptr > request_line && ptr[-1] == '\r')
     {

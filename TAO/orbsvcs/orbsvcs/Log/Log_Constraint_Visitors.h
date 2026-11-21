@@ -58,7 +58,7 @@ public:
   CORBA::Boolean evaluate_constraint (ETCL_Constraint *root);
 
   /// @name Overridden visitor methods
-  //@{
+  /// @{
   int visit_literal (ETCL_Literal_Constraint *) override;
   int visit_identifier (ETCL_Identifier *) override;
   int visit_union_value (ETCL_Union_Value *) override;
@@ -75,21 +75,21 @@ public:
   int visit_unary_expr (ETCL_Unary_Expr *) override;
   int visit_binary_expr (ETCL_Binary_Expr *) override;
   int visit_preference (ETCL_Preference *) override;
-  //@}
+  /// @}
 
 private:
   /// @name Helpers for visit_binary_expr
-  //@{
+  /// @{
   int visit_or (ETCL_Binary_Expr *);
   int visit_and (ETCL_Binary_Expr *);
   int visit_twiddle (ETCL_Binary_Expr *);
   int visit_in (ETCL_Binary_Expr *);
   int visit_binary_op (ETCL_Binary_Expr *binary_expr,
                        int op_type);
-  //@}
+  /// @}
 
   /// @name Searches through dynamic Any values
-  //@{
+  /// @{
   CORBA::Boolean sequence_does_contain (CORBA::Any const * any,
                                         TAO_ETCL_Literal_Constraint &item);
   CORBA::Boolean array_does_contain (CORBA::Any const * any,
@@ -100,7 +100,7 @@ private:
                                      TAO_ETCL_Literal_Constraint &item);
   CORBA::Boolean any_does_contain (CORBA::Any const * any,
                                    TAO_ETCL_Literal_Constraint &item);
-  //@}
+  /// @}
 
   /// Utility function to compare a ETCL_Literal_Constraint type
   /// and a type code.

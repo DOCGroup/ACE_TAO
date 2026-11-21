@@ -15,7 +15,9 @@ TAO_Persistent_Bindings_Map::unbind (char const *id, char const *kind)
   TAO_Persistent_ExtId name (id, kind);
   TAO_Persistent_IntId entry;
   if (this->map_->unbind (name, entry, this->allocator_) != 0)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       // Free up the memory we allocated in shared_bind().  Note that
@@ -55,7 +57,9 @@ TAO_Persistent_Bindings_Map::find (char const *id,
   TAO_Persistent_IntId entry;
 
   if (this->map_->find (name, entry, this->allocator_) != 0)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       obj = orb_->string_to_object (entry.ref_);
@@ -159,7 +163,9 @@ TAO_Persistent_Bindings_Map::shared_bind (char const *id,
 
   // Allocation failed - bail out.
   if (ptr == nullptr)
-    return -1;
+    {
+      return -1;
+    }
 
   // Allocation succeded - place the data into the allocated memory
   // and procceed.
@@ -203,13 +209,17 @@ TAO_Persistent_Bindings_Map::shared_bind (char const *id,
                                 old_entry,
                                 this->allocator_) == 0
               && type != old_entry.type_)
-            result = -2;
+            {
+              result = -2;
+            }
 
           // If types match, perform rebind.
           else
-            result = this->map_->rebind (new_name, new_entry,
-                                         old_name, old_entry,
-                                         this->allocator_);
+            {
+              result = this->map_->rebind (new_name, new_entry,
+                                           old_name, old_entry,
+                                           this->allocator_);
+            }
           if (result == 1)
             {
               // Free up the old binding's memory, if it was replaced.
@@ -223,13 +233,17 @@ TAO_Persistent_Bindings_Map::shared_bind (char const *id,
       // Check for failures, and clean up dynamically allocated memory
       // if necessary.
       if (result < 0)
-        this->allocator_->free ((void *) ptr);
+        {
+          this->allocator_->free ((void *) ptr);
+        }
 
       else
-        // If bind() or rebind() succeeded, they will automatically sync
-        // up the map manager entry.  However, we must sync up our
-        // name/value memory.
-        this->allocator_->sync (ptr, total_len);
+        {
+          // If bind() or rebind() succeeded, they will automatically sync
+          // up the map manager entry.  However, we must sync up our
+          // name/value memory.
+          this->allocator_->sync (ptr, total_len);
+        }
 
       return result;
     }
@@ -278,8 +292,10 @@ TAO_Persistent_Naming_Context::~TAO_Persistent_Naming_Context ()
       persistent_context_->destroy ();
     }
   else if (this->destroyed_ == 1)
-    // Remove the underlying data structure from persistent storage.
-    persistent_context_->destroy ();
+    {
+      // Remove the underlying data structure from persistent storage.
+      persistent_context_->destroy ();
+    }
 }
 
 void
@@ -434,11 +450,13 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
 
   // Calculate number of bindings that will go into bl.
   if (this->context_->current_size () > how_many)
-    n = how_many;
+    {
+      n = how_many;
+    }
   else
-  {
-    n = static_cast<CORBA::ULong> (this->context_->current_size ());
-  }
+    {
+      n = static_cast<CORBA::ULong> (this->context_->current_size ());
+    }
 
   // Use hash iterator to populate a BindingList with bindings.
   bl->length (n);
@@ -467,7 +485,9 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
 
   // If we do not need to pass back BindingIterator.
   if (this->context_->current_size () <= how_many)
-    return;
+    {
+      return;
+    }
   else
     {
       // Create a BindingIterator for return.

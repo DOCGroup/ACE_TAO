@@ -75,7 +75,7 @@ public:
   /// establishment fails.
   int close (u_long = 0) override;
 
-  //@{
+  /// @{
   /** @name Event Handler overloads
    */
   int resume_handler () override;
@@ -85,7 +85,7 @@ public:
   int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
   int handle_timeout (ACE_Time_Value const &current_time,
                       void const *act = nullptr) override;
-  //@}
+  /// @}
 
   /// Add ourselves to Cache.
   int add_transport_to_cache ();
@@ -108,12 +108,12 @@ public:
   void abort ();
 
 protected:
-  //@{
+  /// @{
   /**
    * @name TAO_Connection Handler overloads
    */
   int release_os_resources () override;
-  //@}
+  /// @}
 
   int handle_write_ready (ACE_Time_Value const *timeout) override;
 

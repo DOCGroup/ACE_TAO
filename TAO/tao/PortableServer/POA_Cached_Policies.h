@@ -60,7 +60,7 @@ namespace TAO
       /**
        * @name Accessor methods to cached values.
        */
-      //@{
+      /// @{
       ::PortableServer::ThreadPolicyValue thread () const;
       ::PortableServer::LifespanPolicyValue lifespan () const;
       ::PortableServer::IdUniquenessPolicyValue id_uniqueness () const;
@@ -105,7 +105,7 @@ namespace TAO
       void priority_model (PriorityModel priority_model);
       void server_priority (CORBA::Short priority);
       void implicit_activation (::PortableServer::ImplicitActivationPolicyValue value);
-      //@}
+      /// @}
 
     protected:
       /// Helper method to update a particular policy.

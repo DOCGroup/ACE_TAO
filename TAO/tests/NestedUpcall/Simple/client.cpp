@@ -46,9 +46,11 @@ Client_Task::svc ()
   try
     {
       if (!quiet)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%t) Client_Task::svc calling start -> time to live = %d\n",
-                    call_count));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) Client_Task::svc calling start -> time to live = %d\n",
+                      call_count));
+        }
 
       // Now, we can invoke an operation on the remote side.
       this->server_->start (this->client_.in (),
@@ -102,10 +104,12 @@ parse_args (int argc,
       }
 
   if (ior == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%s: no nested up calls server ior specified\n",
-                       argv[0]),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%s: no nested up calls server ior specified\n",
+                         argv[0]),
+                        -1);
+    }
 
   // Indicates successful parsing of command line.
   return 0;

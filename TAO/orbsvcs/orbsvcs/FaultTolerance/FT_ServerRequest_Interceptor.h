@@ -62,7 +62,7 @@ namespace TAO
      * virtual in the abstract base class.  They are the canonical
      * methods required for all server request interceptors.
      */
-    //@{
+    /// @{
     /// Return the name of this ServerRequestinterceptor.
     char * name () override;
 
@@ -82,7 +82,7 @@ namespace TAO
 
     void send_other (
         PortableInterceptor::ServerRequestInfo_ptr ri) override;
-    //@}
+    /// @}
 
     FT_ServerRequest_Interceptor (FT_ServerRequest_Interceptor const&) = delete;
     FT_ServerRequest_Interceptor& operator= (FT_ServerRequest_Interceptor const&) = delete;

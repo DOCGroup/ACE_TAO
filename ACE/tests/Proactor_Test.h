@@ -67,12 +67,17 @@ private:
   ACE_HANDLE handle_;
   ACE_SYNCH_MUTEX lock_;
 
-  int io_count_;             // Number of currently outstanding I/O requests
+  /// Number of currently outstanding I/O requests.
+  int io_count_;
   int flg_cancel_;
-  size_t total_snd_;         // Number of bytes successfully sent
-  size_t total_rcv_;         // Number of bytes successfully received
-  int total_w_;              // Number of write operations
-  int total_r_;              // Number of read operations
+  /// Number of bytes successfully sent.
+  size_t total_snd_;
+  /// Number of bytes successfully received.
+  size_t total_rcv_;
+  /// Number of write operations.
+  int total_w_;
+  /// Number of read operations.
+  int total_r_;
 };
 
 // *******************************************
@@ -96,7 +101,7 @@ public:
   int    get_total_w   () { return this->total_w_; }
   int    get_total_r   () { return this->total_r_; }
 
-  // This is called to pass the new connection's addresses.
+  /// This is called to pass the new connection's addresses.
   void addresses (const ACE_INET_Addr& peer,
                   const ACE_INET_Addr& local) override;
 
@@ -123,7 +128,8 @@ private:
   ACE_SYNCH_MUTEX lock_;
 
   int io_count_;
-  int stop_writing_;           // Writes are shut down; just read.
+  /// Writes are shut down; just read.
+  int stop_writing_;
   int flg_cancel_;
   size_t total_snd_;
   size_t total_rcv_;

@@ -61,12 +61,16 @@ parse_args (int argc, ACE_TCHAR *argv[], Options &options)
       }
 
   if (options.ior_output_file.empty ())
-    options.ior_output_file = options.mode == A::RM_MASTER
-      ? ACE_TEXT ("master.ior") : ACE_TEXT ("slave.ior");
+    {
+      options.ior_output_file = options.mode == A::RM_MASTER
+        ? ACE_TEXT ("master.ior") : ACE_TEXT ("slave.ior");
+    }
 
   if (options.input_ior.empty ())
-    options.input_ior = options.mode == A::RM_SLAVE
-      ? ACE_TEXT ("file://master.ior") : ACE_TEXT ("file://slave.ior");
+    {
+      options.input_ior = options.mode == A::RM_SLAVE
+        ? ACE_TEXT ("file://master.ior") : ACE_TEXT ("file://slave.ior");
+    }
 
   // Indicates successful parsing of the command line
   return 0;
@@ -83,9 +87,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var const poa_object = orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -128,10 +134,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")),
           ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                             options.ior_output_file.c_str ()),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                               options.ior_output_file.c_str ()),
+                              1);
+          }
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
 
@@ -153,10 +161,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       while (options.mode == A::RM_SLAVE && CORBA::is_nil (opponent.in ()));
 
       if (CORBA::is_nil (opponent.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot resolve opponent IOR: %s"),
-                           options.input_ior.c_str ()),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot resolve opponent IOR: %s"),
+                             options.input_ior.c_str ()),
+                            1);
+        }
 
       // register opponent
       test_i_srv.set_opponent (opponent.in ());

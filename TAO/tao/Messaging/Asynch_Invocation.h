@@ -53,8 +53,7 @@ namespace TAO
     Invocation_Status remote_invocation (ACE_Time_Value *value);
 
   protected:
-    // To prevent leaking memory from the reply dispatcher that we
-    // are given
+    /// Prevents leaking memory from the reply dispatcher that was given.
     ACE_Utils::Auto_Functor <TAO_Asynch_Reply_Dispatcher_Base,
                              ARDB_Refcount_Functor> safe_rd_;
   };

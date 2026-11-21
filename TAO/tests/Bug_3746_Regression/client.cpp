@@ -170,9 +170,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               error = true;
             }
           else
-            ACE_DEBUG ((LM_DEBUG,
-                        "Client - **SUCCESS** Sent and Server got %u longs\n",
-                        result));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Client - **SUCCESS** Sent and Server got %u longs\n",
+                          result));
+            }
         }
       catch (::CORBA::Exception const &ex)
         {

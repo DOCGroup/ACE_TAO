@@ -91,7 +91,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   if (result)
-    ACE_DEBUG ((LM_DEBUG, "Mixed Endian CDR decoding is NOT working\nTest Failed!\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG, "Mixed Endian CDR decoding is NOT working\nTest Failed!\n"));
+    }
   else
   {
     ACE_DEBUG ((LM_DEBUG, "Mixed Endian CDR decoding is working\nTest Passed!\n"));

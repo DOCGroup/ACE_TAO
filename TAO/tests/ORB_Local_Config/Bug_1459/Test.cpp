@@ -45,9 +45,11 @@ testBug1459 (int, ACE_TCHAR *[])
         CORBA::ORB_init (argcM, argM.argv ());
 
       if (CORBA::is_nil (ORBM.in ()))
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           ACE_TEXT("Expected to get an ORB\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             ACE_TEXT("Expected to get an ORB\n")),
+                            -1);
+        }
 
 #if TAO_HAS_UIOP == 1
       // UIOP
@@ -57,9 +59,11 @@ testBug1459 (int, ACE_TCHAR *[])
         CORBA::ORB_init (argcA, argA.argv ());
 
       if (CORBA::is_nil (ORBA.in ()))
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           ACE_TEXT("Expected to get an ORB\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             ACE_TEXT("Expected to get an ORB\n")),
+                            -1);
+        }
 #endif /* TAO_HAS_UIOP */
 
 #if defined (DO_1459_SSLIOP_TEST)
@@ -82,9 +86,11 @@ testBug1459 (int, ACE_TCHAR *[])
         CORBA::ORB_init (argcC, argC.argv ());
 
       if (CORBA::is_nil (ORBC.in ()))
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           ACE_TEXT("Expected to get an ORB\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             ACE_TEXT("Expected to get an ORB\n")),
+                            -1);
+        }
 
       // DIOP
       ACE_ARGV argD (argStrD);
@@ -93,9 +99,11 @@ testBug1459 (int, ACE_TCHAR *[])
         CORBA::ORB_init (argcD, argD.argv ());
 
       if (CORBA::is_nil (ORBD.in ()))
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           ACE_TEXT("Expected to get an ORB\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             ACE_TEXT("Expected to get an ORB\n")),
+                            -1);
+        }
 
       if (
 // SSLIOP

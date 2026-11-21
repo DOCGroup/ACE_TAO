@@ -258,7 +258,8 @@ public:
   void to_octet(OctetStr& octet) const override;
 
 protected:
-  char output_buffer[MAX_DISPLAY_SZ] {};        // output buffer
+  /// Output buffer.
+  char output_buffer[MAX_DISPLAY_SZ] {};
 
   /// friendly name storage
   char iv_friendly_name_[MAX_DISPLAY_SZ] {};

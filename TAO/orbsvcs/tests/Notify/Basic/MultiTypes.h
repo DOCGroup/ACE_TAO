@@ -50,9 +50,9 @@ public:
   explicit MultiTypes_StructuredPushConsumer (MultiTypes *client);
 
   /// @name StructuredPushConsumer operations
-  //@{
+  /// @{
   void push_structured_event (CosNotification::StructuredEvent const &notification) override;
-  //@}
+  /// @}
 
 protected:
   MultiTypes* client_;
@@ -64,10 +64,10 @@ public:
   explicit MultiTypes_SequencePushConsumer (MultiTypes *client);
 
   /// @name SequencePushConsumer operations
-  //@{
+  /// @{
   void push_structured_events (
         CosNotification::EventBatch const &notifications) override;
-  //@}
+  /// @}
 
 protected:
   MultiTypes* client_;

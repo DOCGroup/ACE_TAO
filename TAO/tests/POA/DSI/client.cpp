@@ -57,9 +57,11 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
       }
 
   if (options.ior.empty () && options.ior_file == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Please specify the IOR or IOR_file for the servant\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Please specify the IOR or IOR_file for the servant\n"),
+                        -1);
+    }
 
   return 0;
 }
@@ -69,10 +71,12 @@ read_IOR_from_file (ACE_TCHAR const *ior_file, std::string &ior)
 {
   ACE_HANDLE const f_handle = ACE_OS::open (ior_file, 0);
   if (f_handle == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unable to open %s for reading\n"),
-                       ior_file),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Unable to open %s for reading\n"),
+                         ior_file),
+                        -1);
+    }
 
   ACE_Read_Buffer ior_buffer (f_handle, true);
   ACE_Read_Buffer_Unique_Ptr const data (

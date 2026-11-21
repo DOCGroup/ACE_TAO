@@ -62,7 +62,7 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all server request interceptors.
    */
-  //@{
+  /// @{
   /// Return the name of this ServerRequestinterceptor.
   char *name () override;
 
@@ -79,7 +79,7 @@ public:
   void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
   void send_other (PortableInterceptor::ServerRequestInfo_ptr ri) override;
-  //@}
+  /// @}
 
 private:
   /// The ORBid of the ORB with which this interceptor is registered.

@@ -90,7 +90,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           int const result = single_iteration (oneway_receiver.in ());
           if (result)
-            ++exception_count;
+            {
+              ++exception_count;
+            }
           else
           {
             ++normal_count;

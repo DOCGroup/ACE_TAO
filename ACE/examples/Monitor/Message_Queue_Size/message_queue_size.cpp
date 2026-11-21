@@ -7,6 +7,7 @@
 
 #include <cstddef>
 #include <cstring>
+#include <memory>
 #include <sstream>
 #include <string>
 
@@ -91,7 +92,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   char const * const msg = "Hidely Ho!";
 
   /// Run the monitor checker in a separate thread.
-  Monitor_Checker monitor_checker (&monitored_queue);
+  Monitor_Checker monitor_checker (std::addressof (monitored_queue));
   monitor_checker.activate ();
 
   for (size_t i {}; i < iterations; ++i)

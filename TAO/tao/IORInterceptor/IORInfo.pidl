@@ -15,7 +15,6 @@
  * PortableInterceptor.
  */
 
-// File: IORInfo.idl
 #ifndef _IORINFO_IDL_
 #define _IORINFO_IDL_
 

@@ -18,6 +18,7 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/Log_Msg.h"
 #include <atomic>
+#include <memory>
 
 static std::atomic<bool> stop_test {};
 static ACE_TCHAR const directory[] = ACE_TEXT (".");
@@ -43,7 +44,7 @@ private:
 Event_Handler::Event_Handler (ACE_Reactor &reactor)
   : handle_ (ACE_INVALID_HANDLE)
 {
-  this->reactor (&reactor);
+  this->reactor (std::addressof (reactor));
 
   int const change_notification_flags = FILE_NOTIFY_CHANGE_FILE_NAME;
 
@@ -107,7 +108,8 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_TEST_ASSERT (thread_result == 0);
 
   for (int result = 0; result != -1; result = reactor.handle_events ())
-    continue;
+    {
+    }
 
   return 0;
 }

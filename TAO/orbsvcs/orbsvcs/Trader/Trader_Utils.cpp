@@ -273,9 +273,13 @@ TAO_Property_Evaluator::property_value (int index)
   bool const dynamic = this->is_dynamic_property (index);
 
   if (!dynamic)
-    prop_val = std::addressof (this->props_[index].value);
+    {
+      prop_val = std::addressof (this->props_[index].value);
+    }
   else if (this->supports_dp_ && in_cache)
-    prop_val = this->dp_cache_[index].get ();
+    {
+      prop_val = this->dp_cache_[index].get ();
+    }
   else if (this->supports_dp_)
     {
       // Property is defined at this point.
@@ -336,8 +340,10 @@ TAO_Property_Evaluator::property_type (int index)
       prop_type = CORBA::TypeCode::_duplicate (dp_struct->returned_type.in ());
     }
   else
-    // TypeCode is self-evident at this point.
-    prop_type = this->props_[index].value.type ();
+    {
+      // TypeCode is self-evident at this point.
+      prop_type = this->props_[index].value.type ();
+    }
 
   return prop_type;
 }
@@ -545,15 +551,23 @@ TAO_Policies::TAO_Policies (TAO_Trader_Base& trader,
           break;
         case 'r':
           if (pol_name[2] == 't')
-            index = RETURN_CARD;
+            {
+              index = RETURN_CARD;
+            }
           else if (pol_name[2] == 'q')
-            index = REQUEST_ID;
+            {
+              index = REQUEST_ID;
+            }
           break;
         case 's':
           if (pol_name[1] == 't')
-            index = STARTING_TRADER;
+            {
+              index = STARTING_TRADER;
+            }
           else if (pol_name[1] == 'e')
-            index = SEARCH_CARD;
+            {
+              index = SEARCH_CARD;
+            }
           break;
         case 'u':
           if (pol_name[4] == 'd')
@@ -573,13 +587,17 @@ TAO_Policies::TAO_Policies (TAO_Trader_Base& trader,
       // Match the name of the policy, and insert its value into the
       // vector.
       if (index == -1 || std::strcmp (POLICY_NAMES[index], pol_name) != 0)
-        throw CosTrading::Lookup::IllegalPolicyName (pol_name);
+        {
+          throw CosTrading::Lookup::IllegalPolicyName (pol_name);
+        }
       else if (this->policies_[index] != nullptr)
-        throw CosTrading::DuplicatePolicyName (pol_name);
+        {
+          throw CosTrading::DuplicatePolicyName (pol_name);
+        }
       else
-      {
-        this->policies_[index] = std::addressof (policies[j]);
-      }
+        {
+          this->policies_[index] = std::addressof (policies[j]);
+        }
     }
 }
 
@@ -626,11 +644,13 @@ TAO_Policies::ulong_prop (POLICY_TYPE pol) const
       CORBA::Boolean const equal_ulong = type->equal (CORBA::_tc_ulong);
 
       if (!equal_ulong)
-        throw CosTrading::Lookup::PolicyTypeMismatch (*policy);
+        {
+          throw CosTrading::Lookup::PolicyTypeMismatch (*policy);
+        }
       else
-      {
-        value >>= return_value;
-      }
+        {
+          value >>= return_value;
+        }
 
       if (max_value < return_value)
       {
@@ -694,11 +714,13 @@ TAO_Policies::boolean_prop (POLICY_TYPE pol) const
         type->equal (CORBA::_tc_boolean);
 
       if (!equal_boolean)
-        throw CosTrading::Lookup::PolicyTypeMismatch (*policy);
+        {
+          throw CosTrading::Lookup::PolicyTypeMismatch (*policy);
+        }
       else
-      {
-        value >>= CORBA::Any::to_boolean (return_value);
-      }
+        {
+          value >>= CORBA::Any::to_boolean (return_value);
+        }
 
       if (!def_value &&
           pol != EXACT_TYPE_MATCH)
@@ -757,11 +779,13 @@ TAO_Policies::starting_trader () const
 
       if (!equal_tradername ||
           !equal_linknameseq)
-        throw CosTrading::Lookup::PolicyTypeMismatch (*policy);
+        {
+          throw CosTrading::Lookup::PolicyTypeMismatch (*policy);
+        }
       else
-      {
-        value >>= trader_name;
-      }
+        {
+          value >>= trader_name;
+        }
     }
 
   return trader_name;
@@ -787,11 +811,13 @@ TAO_Policies::link_follow_rule () const
         type->equal (CosTrading::_tc_FollowOption);
 
       if (!type_equal)
-        throw CosTrading::Lookup::PolicyTypeMismatch (*policy);
+        {
+          throw CosTrading::Lookup::PolicyTypeMismatch (*policy);
+        }
       else
-      {
-        value >>= return_value;
-      }
+        {
+          value >>= return_value;
+        }
 
       if (return_value > max_follow_policy)
       {
@@ -844,11 +870,13 @@ TAO_Policies::request_id () const
         type->equal (CosTrading::Admin::_tc_OctetSeq);
 
       if (!equal_octetseq)
-        throw CosTrading::Lookup::PolicyTypeMismatch (*policy);
+        {
+          throw CosTrading::Lookup::PolicyTypeMismatch (*policy);
+        }
       else
-      {
-        value >>= request_id;
-      }
+        {
+          value >>= request_id;
+        }
     }
 
   return request_id;
@@ -878,15 +906,17 @@ copy_in_follow_option (CosTrading::PolicySeq& policy_seq,
             : query_link_follow_rule));
     }
   else
-    follow_option = (CosTrading::FollowOption)
-      (link_info.def_pass_on_follow_rule < trader_max_follow_policy
-       ? link_info.def_pass_on_follow_rule
-       : trader_max_follow_policy);
+    {
+      follow_option = (CosTrading::FollowOption)
+        (link_info.def_pass_on_follow_rule < trader_max_follow_policy
+         ? link_info.def_pass_on_follow_rule
+         : trader_max_follow_policy);
+    }
 
   CORBA::ULong i {};
   for (; i < policy_seq.length (); ++i)
     if (std::strcmp (policy_seq[i].name,
-                        POLICY_NAMES[LINK_FOLLOW_RULE]) == 0)
+                     POLICY_NAMES[LINK_FOLLOW_RULE]) == 0)
       {
         policy_seq[i].value <<= follow_option;
         break;
@@ -1096,16 +1126,24 @@ delete_properties (const CosTrading::PropertyNameSeq& deletes)
     {
       char const* dname = static_cast<char const*> (deletes[i]);
       if (! TAO_Trader_Base::is_valid_property_name (dname))
-        throw CosTrading::IllegalPropertyName (dname);
+        {
+          throw CosTrading::IllegalPropertyName (dname);
+        }
       else
         {
           CORBA::String_var prop_name (dname);
           if (find_string (this->mandatory_, prop_name) == 0)
-            throw CosTrading::Register::MandatoryProperty (this->type_, dname);
+            {
+              throw CosTrading::Register::MandatoryProperty (this->type_, dname);
+            }
           else if (insert_string (delete_me, prop_name) == 1)
-            throw CosTrading::DuplicatePropertyName (dname);
+            {
+              throw CosTrading::DuplicatePropertyName (dname);
+            }
           else if (this->props_.find (prop_name) == -1)
-            throw CosTrading::Register::UnknownPropertyName (dname);
+            {
+              throw CosTrading::Register::UnknownPropertyName (dname);
+            }
         }
     }
 
@@ -1139,11 +1177,15 @@ merge_properties (const CosTrading::PropertySeq& modifies)
               // Can't assign a dynamic property to a property with
               // readonly mode, and can't reassign a readonly property.
               if (prop_eval.is_dynamic_property (i))
-                throw CosTrading::ReadonlyDynamicProperty (this->type_, mname);
+                {
+                  throw CosTrading::ReadonlyDynamicProperty (this->type_, mname);
+                }
               else if (this->props_.find (prop_name) == 0)
-                throw CosTrading::Register::ReadonlyProperty (
-                  this->type_,
-                  mname);
+                {
+                  throw CosTrading::Register::ReadonlyProperty (
+                    this->type_,
+                    mname);
+                }
             }
 
           // Validate the property type if the property is defined in
@@ -1201,8 +1243,10 @@ TAO_Offer_Modifier::affect_change (const CosTrading::PropertySeq& modifies)
 
       CosTrading::Property const* prop = std::addressof (modifies[i]);
       if (this->props_.bind (prop_name, prop, entry) == 1)
-        // We need to rebind here.
-        entry->int_id_ = prop;
+        {
+          // We need to rebind here.
+          entry->int_id_ = prop;
+        }
     }
 
   CORBA::ULong num_modified = 0,
@@ -1465,7 +1509,9 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer const* source,
       for (CORBA::ULong i {}; i < length; ++i)
         {
           if (this->policy_ == CosTrading::Lookup::all)
-            prop_queue.push_back (std::addressof (s_props[i]));
+            {
+              prop_queue.push_back (std::addressof (s_props[i]));
+            }
           else
             {
               const char* p_name = s_props[i].name;
@@ -1489,9 +1535,11 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer const* source,
         }
     }
   else if (this->policy_ == CosTrading::Lookup::all)
-    //      CosTrading::Property* props = s_props.get_buffer (0);
-    //      d_props.replace (length, length, props, 0);
-    d_props = s_props;
+    {
+      //      CosTrading::Property* props = s_props.get_buffer (0);
+      //      d_props.replace (length, length, props, 0);
+      d_props = s_props;
+    }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -78,7 +78,7 @@ namespace TAO
                     PortableInterceptor::SlotId slotid) override;
 
   private:
-    // Prevent copying
+    /// Copying and assignment are disabled.
     ORBInitializer_Registry (ORBInitializer_Registry const &) = delete;
     ORBInitializer_Registry &operator= (ORBInitializer_Registry const &) = delete;
     ORBInitializer_Registry (ORBInitializer_Registry &&) = delete;

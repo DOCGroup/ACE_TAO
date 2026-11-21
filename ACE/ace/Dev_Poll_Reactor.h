@@ -325,7 +325,7 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
      *
      * Methods used to search and modify the handler repository.
      */
-    //@{
+    /// @{
     /// Return a pointer to the Event_Tuple associated with @a handle.
     /// If there is none associated, returns 0 and sets errno.
     Event_Tuple *find (ACE_HANDLE handle);
@@ -343,7 +343,7 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
     /// Remove all the registered tuples.
     int unbind_all ();
 
-    //@}
+    /// @}
 
     /**
      * @name Sanity Checking
@@ -351,7 +351,7 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
      * Methods used to prevent "out-of-range" errors when indexing the
      * underlying handler array.
      */
-    //@{
+    /// @{
     // Check the @a handle to make sure it's a valid @c ACE_HANDLE that
     // within the range of legal handles (i.e., greater than or equal to
     // zero and less than @c max_size_).
@@ -362,7 +362,7 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
     // than or equal to zero and less than @c max_handlep1_).
     bool handle_in_range (ACE_HANDLE handle) const;
 
-    //@}
+    /// @}
 
     /// Returns the current table size.
     size_t size () const;
@@ -876,7 +876,7 @@ public:
    * The "interest set," i.e. the wait set, can be directly
    * manipulated with these methods.
    */
-  //@{
+  /// @{
   /// GET/SET/ADD/CLR the dispatch mask "bit" bound with the
   /// event_handler and mask.
   /**
@@ -895,14 +895,14 @@ public:
                         ACE_Reactor_Mask mask,
                         int ops) override;
 
-  //@}
+  /// @}
 
   /**
    * @name Low-level ready_set mask manipulation methods
    *
    * These methods are unimplemented.
    */
-  //@{
+  /// @{
   /// GET/SET/ADD/CLR the ready "bit" bound with the event_handler
   /// and mask.
   int ready_ops (ACE_Event_Handler *event_handler,
@@ -914,7 +914,7 @@ public:
                          ACE_Reactor_Mask,
                          int ops) override;
 
-  //@}
+  /// @}
 
   /// Dump the state of an object.
   void dump () const override;

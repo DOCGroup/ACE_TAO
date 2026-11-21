@@ -52,18 +52,22 @@ write_iors_to_file (ACE_TCHAR const *ior_output_file, char const *ior)
   std::unique_ptr<FILE, int (*) (FILE *)> output_file (
     ACE_OS::fopen (ior_output_file, ACE_TEXT ("w")), ACE_OS::fclose);
   if (!output_file)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
-                       ior_output_file),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
+                         ior_output_file),
+                        -1);
+    }
 
   int const result = ACE_OS::fprintf (output_file.get (), "%s", ior);
   if (result < 0 || static_cast<size_t> (result) != std::strlen (ior))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_OS::fprintf failed while writing %C to %s\n",
-                       ior,
-                       ior_output_file),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ACE_OS::fprintf failed while writing %C to %s\n",
+                         ior,
+                         ior_output_file),
+                        -1);
+    }
 
   return 0;
 }

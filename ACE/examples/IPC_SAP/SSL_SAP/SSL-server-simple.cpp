@@ -38,9 +38,6 @@ twoway_server (ACE_SSL_SOCK_Stream &stream)
               cli_addr.get_host_name (),
               cli_addr.get_port_number ()));
 
-  size_t total_bytes = 0;
-  size_t message_count = 0;
-
   char *request {};
 
   // Read data from client (terminate on error).
@@ -111,9 +108,6 @@ twoway_server (ACE_SSL_SOCK_Stream &stream)
                       "%p\n",
                       "send_n"));
         }
-
-      total_bytes += size_t (r_bytes);
-      ++message_count;
 
       delete [] request;
       request = nullptr;

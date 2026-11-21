@@ -166,9 +166,11 @@ int ST_AMH_Server::start_orb_and_poa (CORBA::ORB_ptr orb)
         this->orb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
 
@@ -244,10 +246,12 @@ ST_AMH_Server::write_ior_to_file (CORBA::String_var const &ior,
   std::unique_ptr<FILE, int (*) (FILE *)> output_file (
     ACE_OS::fopen (ior_file, "w"), ACE_OS::fclose);
   if (!output_file)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cannot open output file for writing IOR: %s",
-                       ior_file),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Cannot open output file for writing IOR: %s",
+                         ior_file),
+                        -1);
+    }
 
   ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
   return 0;
@@ -320,10 +324,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     Test::Roundtrip_var const roundtrip = Test::Roundtrip::_narrow (object.in ());
 
     if (CORBA::is_nil (roundtrip.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Nil Test::Roundtrip reference <%s>\n",
-                         ior),
-                        1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Nil Test::Roundtrip reference <%s>\n",
+                           ior),
+                          1);
+      }
 
     Client_Thread_Args client_args {roundtrip.in (), num_calls};
     ACE_thread_t server_thread {};

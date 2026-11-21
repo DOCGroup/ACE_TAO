@@ -179,8 +179,8 @@ Receiver_QoS_Event_Handler::handle_qos (ACE_HANDLE fd)
 
   // Set the QoS for the session. Replaces the ioctl () call that
   // was being made previously.
-  if (this->qos_session_->qos (&this->dgram_mcast_qos_,
-                               &qos_manager,
+  if (this->qos_session_->qos (std::addressof (this->dgram_mcast_qos_),
+                               std::addressof (qos_manager),
                                another_qos_receiver) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

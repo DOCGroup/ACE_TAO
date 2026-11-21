@@ -162,11 +162,16 @@ protected:
   int supplier_lock_;
 
   /// Flags used by thread-based dispatching strategies.
-  int dispatching_threads_;     //! number of threads; may be ignored depending on strategy; default: TAO_EC_DEFAULT_DISPATCHING_THREADS
-  int dispatching_threads_flags_; //! flags for thread creation; default: TAO_EC_DEFAULT_DISPATCHING_THREADS_FLAGS
-  int dispatching_threads_priority_; //! dispatching thread priority; default: TAO_EC_DEFAULT_DISPATCHING_THREADS_PRIORITY
-  int dispatching_threads_force_active_; //! create threads with innocuous default values if creation with requested values fails
-  ACE_TString queue_full_service_object_name_; //! name of ACE_Service_Object which should be invoked when output queue becomes full
+  /// Number of threads; may be ignored depending on strategy. Default: TAO_EC_DEFAULT_DISPATCHING_THREADS.
+  int dispatching_threads_;
+  /// Flags for thread creation. Default: TAO_EC_DEFAULT_DISPATCHING_THREADS_FLAGS.
+  int dispatching_threads_flags_;
+  /// Dispatching thread priority. Default: TAO_EC_DEFAULT_DISPATCHING_THREADS_PRIORITY.
+  int dispatching_threads_priority_;
+  /// Create threads with innocuous defaults if requested values fail.
+  int dispatching_threads_force_active_;
+  /// ACE_Service_Object invoked when the output queue becomes full.
+  ACE_TString queue_full_service_object_name_;
   TAO_EC_Queue_Full_Service_Object* find_service_object (ACE_TCHAR const *wanted,
                                                          ACE_TCHAR const *fallback);
 

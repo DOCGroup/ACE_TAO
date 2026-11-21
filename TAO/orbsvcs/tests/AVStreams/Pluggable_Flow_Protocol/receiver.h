@@ -20,7 +20,7 @@ using Receiver_File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
 class Receiver;
 using RECEIVER = ACE_Unmanaged_Singleton<Receiver, ACE_Null_Mutex>;
 
-/** Application callback for incoming timestamped frames. */
+/// Application callback for incoming timestamped frames.
 class Receiver_Callback : public TAO_AV_Callback
 {
 public:
@@ -36,7 +36,7 @@ public:
   int handle_destroy () override;
 };
 
-/** Server stream endpoint providing the application callback. */
+/// Server stream endpoint providing the application callback.
 class Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
 {
 public:
@@ -56,7 +56,7 @@ private:
 using RECEIVER_ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_B<
   Receiver_StreamEndPoint, TAO_VDev, AV_Null_MediaCtrl>;
 
-/** Receives timestamped frames and writes their payload to a file. */
+/// Receives timestamped frames and writes their payload to a file.
 class Receiver
 {
 public:

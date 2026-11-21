@@ -7,7 +7,8 @@
 RecordingDevice *RecordingDeviceFactory::instantiate (int argc,
                                                       ACE_TCHAR *argv[])
 {
-  std::unique_ptr<RecordingDevice> device (new TextListenerAcceptor ());
+  std::unique_ptr<RecordingDevice> device =
+    std::make_unique<TextListenerAcceptor> ();
 
   // Determine the implementation based on the values of argv
   // Exclude 2

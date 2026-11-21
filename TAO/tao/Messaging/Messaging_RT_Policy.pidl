@@ -18,12 +18,12 @@ module Messaging
   /// Synchronization Policy (default = WITH_TRANSPORT)
   typedef TimeBase::TimeT Timeout;
 
-  //
-  // Locally-Constrained Policy Objects
-  //
+  /// @name Locally-Constrained Policy Objects
+  /// @{
   local interface RelativeRoundtripTimeoutPolicy : CORBA::Policy {
     readonly attribute TimeBase::TimeT relative_expiry;
   };
+  /// @}
 };
 
 #endif /*TAO_MESSAGING_RT_POLICY_PIDL*/

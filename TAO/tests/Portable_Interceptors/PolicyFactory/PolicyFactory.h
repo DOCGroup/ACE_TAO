@@ -53,12 +53,12 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all PolicyFactory sub-classes.
    */
-  //@{
+  /// @{
   /// Construct a Test::Policy object as a test.
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                    CORBA::Any const &value) override;
 
-  //@}
+  /// @}
 };
 
 #if defined(_MSC_VER)

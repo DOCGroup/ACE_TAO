@@ -32,8 +32,11 @@ Client_Request_Interceptor::send_request (
   CORBA::Boolean const response_expected =
     ri->response_expected ();
 
-  if (!response_expected)   // A one-way request.
-    return;
+  if (!response_expected)
+    {
+      // A one-way request.
+      return;
+    }
 
   // Request 1 -- non-forwarded
   // Request 2 -- forwarded by this interception point.

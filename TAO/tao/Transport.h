@@ -534,7 +534,7 @@ public:
    * These methods are routed through the TMS object. The TMS
    * strategies implement them correctly.
    */
-  //@{
+  /// @{
   /// Request has been just sent, but the reply is not received. Idle
   /// the transport now.
   bool idle_after_send ();
@@ -545,7 +545,7 @@ public:
 
   /// Call the implementation method after obtaining the lock.
   virtual void close_connection ();
-  //@}
+  /// @}
 
   /** @name Template methods
    *
@@ -598,7 +598,7 @@ public:
    * Implementors of a pluggable protocol should override the
    * following methods with the semantics documented below.
    */
-  //@{
+  /// @{
   /// Return the event handler used to receive notifications from the
   /// Reactor.
   /**

@@ -48,9 +48,13 @@ parse_args (int argc, ACE_TCHAR *argv[], Options &options)
         {
           ACE_TCHAR const *level = get_opts.opt_arg ();
           if (ACE_OS::strcmp (level, ACE_TEXT("orb")) == 0)
-            options.policy_level = Policy_Level::orb;
+            {
+              options.policy_level = Policy_Level::orb;
+            }
           else if (ACE_OS::strcmp (level, ACE_TEXT("thread")) == 0)
-            options.policy_level = Policy_Level::thread;
+            {
+              options.policy_level = Policy_Level::thread;
+            }
           else
           {
             options.policy_level = Policy_Level::object;
@@ -61,7 +65,9 @@ parse_args (int argc, ACE_TCHAR *argv[], Options &options)
         {
           ACE_TCHAR const *synch = get_opts.opt_arg ();
           if (ACE_OS::strcmp (synch, ACE_TEXT("delayed")) == 0)
-            options.synchronization = Synchronization::delayed;
+            {
+              options.synchronization = Synchronization::delayed;
+            }
           else
           {
             options.synchronization = Synchronization::none;

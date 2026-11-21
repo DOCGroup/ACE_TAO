@@ -44,7 +44,7 @@ private:
   bool default_supplier_admin_test (CosNotifyChannelAdmin::ChannelID channel_id);
 
   /// @name Data members
-  //@{
+  /// @{
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
 
   /// Number of iterations for the test.
@@ -58,7 +58,7 @@ private:
 
   /// Number of consumer admins to create per ec.
   int supplier_admin_count_;
-  //@}
+  /// @}
 };
 
 #endif /* IDASSIGNMENT_H */

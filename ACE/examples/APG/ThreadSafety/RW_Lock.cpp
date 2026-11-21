@@ -34,7 +34,7 @@ public:
     list_add_item_i (device);
   }
 
-  void remove_device (Device *device)
+  void remove_device (Device const *device)
   {
     ACE_WRITE_GUARD (ACE_RW_Thread_Mutex, mon, rwmutex_);
     list_remove_item_i (device);
@@ -50,7 +50,7 @@ public:
 private:
   void list_add_item_i (Device *device);
   int list_contains_item_i (Device const *device);
-  void list_remove_item_i (Device *device);
+  void list_remove_item_i (Device const *device);
 
 private:
   DeviceList deviceList_;
@@ -81,7 +81,7 @@ HA_DiscoveryAgent::list_contains_item_i (Device const *device)
 }
 
 void
-HA_DiscoveryAgent::list_remove_item_i (Device *device)
+HA_DiscoveryAgent::list_remove_item_i (Device const *device)
 {
   DeviceListIterator iter (deviceList_);
   while (!iter.done ())

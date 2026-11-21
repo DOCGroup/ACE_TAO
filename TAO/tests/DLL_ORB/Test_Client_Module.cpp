@@ -139,10 +139,12 @@ Test_Client_Module::fini ()
   // Explicitly clean up singletons and other objects created by TAO
   // before unloading this module.
   if (TAO_Singleton_Manager::instance ()->fini () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Test_Client_Module::fini -- ORB pre-termination "
-                       "failed."),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Test_Client_Module::fini -- ORB pre-termination "
+                         "failed."),
+                        -1);
+    }
 
   return 0;
 }

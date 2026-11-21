@@ -151,18 +151,26 @@ class Supplier_Main
   // Data members
  private:
   // set by command line parameters
-  bool verbose_ {};          // -v make a glorious noise
+  /// Set by -v to enable verbose output.
+  bool verbose_ {};
   enum Mode_T {
     MODE_ANY,
     MODE_STRUCTURED,
-    MODE_SEQUENCE} mode_ {MODE_ANY}; // -any, -structured, or -sequence
-  ACE_TString channel_file_ {}; // -channel filename
-  size_t send_ {10};         // -send n
-  bool use_naming_service_ {true}; // -nonamesvc
-  size_t serial_number_ {};  // -serial_number
-  bool disconnect_on_exit_ {}; // -disconnect
-  ACE_TString id_file_ {ACE_TEXT ("supplier.ids")}; // -ids
-  size_t pause_ {};          // -pause n (pause after sending n messages)
+    MODE_SEQUENCE} mode_ {MODE_ANY};
+  /// Channel file specified by -channel.
+  ACE_TString channel_file_ {};
+  /// Number of events specified by -send.
+  size_t send_ {10};
+  /// Whether to use the naming service, controlled by -nonamesvc.
+  bool use_naming_service_ {true};
+  /// Serial number specified by -serial_number.
+  size_t serial_number_ {};
+  /// Disconnect on exit, controlled by -disconnect.
+  bool disconnect_on_exit_ {};
+  /// ID file specified by -ids.
+  ACE_TString id_file_ {ACE_TEXT ("supplier.ids")};
+  /// Pause after sending this many messages, specified by -pause.
+  size_t pause_ {};
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
   CosNaming::NamingContext_var naming_context_;

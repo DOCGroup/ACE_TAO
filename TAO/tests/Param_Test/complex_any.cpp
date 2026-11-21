@@ -96,9 +96,11 @@ Test_Complex_Any::reset_parameters ()
           char *l5_str = gen->gen_string ();
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "setting level 5 string = %C\n",
-                        l5_str));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "setting level 5 string = %C\n",
+                          l5_str));
+            }
 
           level4_struct.level5_string = l5_str;
 
@@ -109,27 +111,33 @@ Test_Complex_Any::reset_parameters ()
           char *l9_str = gen->gen_string ();
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "setting level 9 string = %C\n",
-                        l9_str));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "setting level 9 string = %C\n",
+                          l9_str));
+            }
 
           level8_struct.level9_string = l9_str;
 
           CORBA::Short const l9_bool = std::rand () % 2;
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "setting level 9 boolean = %d\n",
-                        l9_bool));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "setting level 9 boolean = %d\n",
+                          l9_bool));
+            }
 
           level8_struct.level9_boolean = (CORBA::Boolean) l9_bool;
 
           CORBA::Short const l9_short = gen->gen_short ();
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "setting level 9 short = %d\n",
-                        l9_short));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "setting level 9 short = %d\n",
+                          l9_short));
+            }
 
           level8_struct.level9_short = l9_short;
 

@@ -258,8 +258,8 @@ ACE_Registry_Name_Space::list_name_entries (ACE_BINDING_SET &set,
             }
 
           // Complete binding
-          ACE_Name_Binding binding (key, value, type);
-          set.insert (binding);
+          ACE_Name_Binding name_binding (key, value, type);
+          set.insert (name_binding);
         }
     }
   return 0;

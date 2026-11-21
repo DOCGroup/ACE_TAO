@@ -15,6 +15,7 @@
 #include "Logging_Handler.h"
 #include "ace/os_include/os_netdb.h"
 #include <cstring>
+#include <memory>
 
 int Logging_Handler::recv_log_record (ACE_Message_Block_Unique_Ptr &mblk)
 {
@@ -75,7 +76,7 @@ int Logging_Handler::write_log_record (ACE_Message_Block const &mblk)
 {
   // Peer hostname is in the <mblk> and the log record data
   // is in its continuation.
-  if (log_file_ == nullptr || log_file_->send_n (&mblk) == -1)
+  if (log_file_ == nullptr || log_file_->send_n (std::addressof (mblk)) == -1)
     {
       return -1;
     }

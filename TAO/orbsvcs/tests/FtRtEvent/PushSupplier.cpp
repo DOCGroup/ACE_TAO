@@ -7,13 +7,15 @@
 #include "tao/Stub.h"
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
 
+#include <memory>
+
 int
 PushSupplier_impl::ReactorTask::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "Reactor Thread started\n"));
   ACE_Select_Reactor implementation;
-  ACE_Reactor reactor (&implementation);
-  reactor_ = &reactor;
+  ACE_Reactor reactor (std::addressof (implementation));
+  reactor_ = std::addressof (reactor);
 
   extern ACE_Time_Value timer_interval;
 

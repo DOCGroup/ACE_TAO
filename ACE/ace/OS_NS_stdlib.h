@@ -96,7 +96,7 @@ namespace ACE_OS {
    *  These functions aren't in the standard.
    *
    */
-  //@{
+  /// @{
   ACE_NAMESPACE_INLINE_FUNCTION
   void _exit [[noreturn]] (int status = 0);
 

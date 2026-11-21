@@ -62,7 +62,8 @@ private:
                             int*                           pVariable);
 
 private:
-  int equality_tested_; // make sure the equality operator works before proceeding.
+  /// Make sure the equality operator works before proceeding.
+  int equality_tested_;
 };
 
 #endif /* __CONFIG_TEST_H */

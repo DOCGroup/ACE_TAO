@@ -29,7 +29,7 @@
 
 using FTP_File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
 
-/** Client callback for application-specific AVStreams processing. */
+/// Client callback for application-specific AVStreams processing.
 class FTP_Client_Callback : public TAO_AV_Callback
 {
 public:
@@ -40,7 +40,7 @@ public:
   FTP_Client_Callback &operator= (FTP_Client_Callback &&) = delete;
 };
 
-/** Client stream endpoint providing the application callback and protocol object. */
+/// Client stream endpoint providing the application callback and protocol object.
 class FTP_Client_StreamEndPoint : public TAO_Client_StreamEndPoint
 {
 public:
@@ -62,7 +62,7 @@ protected:
 using ENDPOINT_STRATEGY = TAO_AV_Endpoint_Reactive_Strategy_A<
   FTP_Client_StreamEndPoint, TAO_VDev, AV_Null_MediaCtrl>;
 
-/** Client application that streams file data to the server. */
+/// Client application that streams file data to the server.
 class Client
 {
 public:

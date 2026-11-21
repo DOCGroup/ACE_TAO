@@ -66,7 +66,9 @@ int
 TAO_FTNS_Notifier::handle_exception (ACE_HANDLE )
 {
   if (this->iors_)
-    owner_.update_iors_i();
+    {
+      owner_.update_iors_i();
+    }
   else
   {
     owner_.update_info_i();
@@ -407,9 +409,11 @@ TAO_FT_Naming_Server::init_replication_pairing ()
   if (this->server_role_ == STANDALONE)
     {
       if (TAO_debug_level > 3)
-        ORBSVCS_DEBUG ((LM_DEBUG,
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%P|%t) - FT_Naming_Server:Is ")
                         ACE_TEXT ("Standalone\n")));
+        }
     }
 
   if (this->replicator_->init_peer ())
@@ -505,10 +509,12 @@ TAO_FT_Naming_Server::parse_args (int argc,
 #endif /* ACE_SIZEOF_VOID_P */
                            &address);
         if (result == 0 || result == EOF)
-          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+          {
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("(%P|%t) ERROR: Unable to ")
                              ACE_TEXT ("process <-b> option")),
                             -1);
+          }
         this->base_address_ = (void *) address;
         break;
       case 'f':
@@ -604,10 +610,12 @@ TAO_FT_Naming_Server::parse_args (int argc,
       }
 
   if ((f_opt_used && (u_opt_used || r_opt_used)) || (u_opt_used && r_opt_used))
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("ERROR: Only one persistence option ")
                        ACE_TEXT ("can be provided.\n\n")),
                       -1);
+    }
 
   // If naming context or object group persistence is being used then
   // enable backup/restore compatibility of persistent files.

@@ -13,8 +13,10 @@
 #define _ICP_H
 
 extern "C" {
-    int ICP_online (unsigned long id);   // Add device
-    int ICP_offline (unsigned long id);  // Remove device
+    /// Adds a device.
+    int ICP_online (unsigned long id);
+    /// Removes a device.
+    int ICP_offline (unsigned long id);
     int ICP_get (                        // Get attribute
             unsigned long   id,
             char const *    attr,

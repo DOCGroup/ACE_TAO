@@ -27,11 +27,11 @@ public:
             PortableServer::POA_ptr consumer_poa,
             RtecEventChannelAdmin::EventChannel_ptr ec);
 
-  //@{
+  /// @{
   /** @name The Federated_Test::Loopback methods
    */
   void disconnect () override;
-  //@}
+  /// @}
 
 private:
   Loopback_Pair loopback_pair_;

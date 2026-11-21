@@ -76,13 +76,13 @@ public:
   /// Disconnect from the event channel
   void disconnect ();
 
-  //@{
+  /// @{
   /** @name Accessors
    */
   Supplier *supplier () const;
 
   Consumer *consumer () const;
-  //@}
+  /// @}
 
 private:
   Servant_var<Supplier> supplier_;

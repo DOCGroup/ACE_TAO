@@ -73,7 +73,7 @@ public:
   /// Disconnect from the event channel
   void disconnect ();
 
-  //@{
+  /// @{
   /** @name Accessors
    */
   Supplier *supplier () const;
@@ -83,7 +83,7 @@ public:
   Loopback_Supplier *loopback_supplier () const;
 
   Loopback_Consumer *loopback_consumer () const;
-  //@}
+  /// @}
 
 private:
   Client_Pair client_pair_;

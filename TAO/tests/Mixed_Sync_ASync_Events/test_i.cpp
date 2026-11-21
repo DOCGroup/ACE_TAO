@@ -108,8 +108,10 @@ Test_Reply_i::request (
   ::A::FollowUp follow_up)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "%N:%l:(%P:%t):Test_Reply_i::request\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%N:%l:(%P:%t):Test_Reply_i::request\n"));
+    }
 
   this->evh_.handle_followup (follow_up, counter);
 }
@@ -135,8 +137,10 @@ Test_Reply_i::report (
   void)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "%N:%l:(%P:%t):Test_Reply_i::report\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%N:%l:(%P:%t):Test_Reply_i::report\n"));
+    }
 }
 
 void

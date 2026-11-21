@@ -54,11 +54,11 @@ class ObjectReferenceFactory
    * Methods required by the
    * PortableInterceptor::ObjectReferenceFactory interface.
    */
-  //@{
+  /// @{
   CORBA::Object_ptr make_object (
       char const *repository_id,
       PortableInterceptor::ObjectId const &id) override;
-  //@}
+  /// @}
 
 protected:
   /**

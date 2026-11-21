@@ -54,8 +54,10 @@ Test_i::test_method (CORBA::Short priority)
 
   CORBA::Short const servant_thread_priority = current->the_priority ();
   if (servant_thread_priority != priority)
-    ACE_DEBUG ((LM_DEBUG,
-                "ERROR: servant thread priority is not equal to method argument.\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "ERROR: servant thread priority is not equal to method argument.\n"));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "Server_Declared priority: %d  Servant thread priority: %d\n",
@@ -121,10 +123,12 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
       }
 
   if (options.poa_priority < 0 || options.object_priority < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Valid poa and object priorities must be specified.\n"
-                       "See README file for more info\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Valid poa and object priorities must be specified.\n"
+                         "See README file for more info\n"),
+                        -1);
+    }
 
   return 0;
 }
@@ -133,10 +137,12 @@ int
 check_for_nil (CORBA::Object_ptr const object, char const *message)
 {
   if (CORBA::is_nil (object))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ERROR: Object reference <%C> is nil\n",
-                       message),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ERROR: Object reference <%C> is nil\n",
+                         message),
+                        -1);
+    }
 
   return 0;
 }
@@ -150,7 +156,9 @@ create_object (RTPortableServer::POA_ptr poa,
 {
   PortableServer::ObjectId_var id;
   if (priority > -1)
-    id = poa->activate_object_with_priority (server_impl, priority);
+    {
+      id = poa->activate_object_with_priority (server_impl, priority);
+    }
   else
   {
     id = poa->activate_object (server_impl);
@@ -165,10 +173,12 @@ create_object (RTPortableServer::POA_ptr poa,
       std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
         ACE_OS::fopen (filename, ACE_TEXT ("w")), ACE_OS::fclose);
       if (!output_file)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                           filename),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                             filename),
+                            -1);
+        }
 
       ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
     }
@@ -301,13 +311,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (result == -1)
         {
           if (errno == EPERM)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot create thread with scheduling policy %s\n"
-                               "because the user does not have the appropriate privileges, "
-                               "terminating program....\n"
-                               "Check svc.conf options and/or run as root\n",
-                               sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
-                              2);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Cannot create thread with scheduling policy %s\n"
+                                 "because the user does not have the appropriate privileges, "
+                                 "terminating program....\n"
+                                 "Check svc.conf options and/or run as root\n",
+                                 sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
+                                2);
+            }
           else
           {
             ACE_ASSERT (0);

@@ -17,6 +17,8 @@
 #include "ace/Truncate.h"
 #include "tao/PortableServer/PortableServer.h"
 
+#include <memory>
+
 // IDL File::System constructor
 FileImpl::System::System (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
   : orb_ (CORBA::ORB::_duplicate (orb)),
@@ -25,7 +27,7 @@ FileImpl::System::System (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
     fd_servant_ (poa)
 {
   // set the default servant of the POA
-  poa->set_servant (&this->fd_servant_);
+  poa->set_servant (std::addressof (this->fd_servant_));
 }
 
 PortableServer::POA_ptr
@@ -167,10 +169,12 @@ FileImpl::Descriptor::read (CORBA::Long num_bytes)
   int length = ACE_OS::read (file_descriptor, buffer, num_bytes);
 
   if (length > 0)
-    return new File::Descriptor::DataBuffer (length,
-                                             length,
-                                             buffer,
-                                             1);
+    {
+      return new File::Descriptor::DataBuffer (length,
+                                               length,
+                                               buffer,
+                                               1);
+    }
 
   File::Descriptor::DataBuffer::freebuf (buffer);
   throw File::IOError ();

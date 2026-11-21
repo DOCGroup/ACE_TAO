@@ -37,7 +37,7 @@ public:
    * These methods implement the pure virtual ServerRequestInterceptor
    * operations.
    */
-  //@{
+  /// @{
   /// Return the name of this ServerRequestInterceptor.
   char * name () override;
 
@@ -57,7 +57,7 @@ public:
 
   void send_other (
     PortableInterceptor::ServerRequestInfo_ptr ri) override;
-  //@}
+  /// @}
 
   static std::atomic<bool> has_ft_request_sc_;
 };

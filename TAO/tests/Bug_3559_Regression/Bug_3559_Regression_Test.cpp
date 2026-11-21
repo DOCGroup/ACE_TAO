@@ -186,11 +186,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   result += check_logging (log_file);
 
   if (result == 0)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Test passed!")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Test passed!")));
+    }
   else
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Test failed. Result: %d\n"),
-                result));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Test failed. Result: %d\n"),
+                  result));
+    }
   return result;
 }

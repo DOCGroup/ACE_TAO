@@ -29,7 +29,8 @@ public:
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CLog_Msg_MFCDlg)
   protected:
-  void DoDataExchange (CDataExchange *pDX) override; // DDX/DDV support
+  /// DDX/DDV support.
+  void DoDataExchange (CDataExchange *pDX) override;
   //}}AFX_VIRTUAL
 
   // Implementation

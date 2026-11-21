@@ -11,11 +11,13 @@ Server_Request_Interceptor::forward_references (
   CORBA::Object_ptr obj2)
 {
   if (CORBA::is_nil (obj1) || CORBA::is_nil (obj2))
-    throw CORBA::INV_OBJREF (
-      CORBA::SystemException::_tao_minor_code (
-        TAO::VMCID,
-        EINVAL),
-      CORBA::COMPLETED_NO);
+    {
+      throw CORBA::INV_OBJREF (
+        CORBA::SystemException::_tao_minor_code (
+          TAO::VMCID,
+          EINVAL),
+        CORBA::COMPLETED_NO);
+    }
 
   this->obj_[0] = CORBA::Object::_duplicate (obj1);
   this->obj_[1] = CORBA::Object::_duplicate (obj2);
@@ -43,8 +45,11 @@ Server_Request_Interceptor::receive_request_service_contexts (
   CORBA::Boolean const response_expected =
     ri->response_expected ();
 
-  if (!response_expected)   // A one-way request.
-    return;
+  if (!response_expected)
+    {
+      // A one-way request.
+      return;
+    }
 
   // Request 1 -- non-forwarded
   // Request 2 -- forwarded by client request interceptor
@@ -74,8 +79,11 @@ Server_Request_Interceptor::receive_request (
   CORBA::Boolean const response_expected =
     ri->response_expected ();
 
-  if (!response_expected)   // A one-way request.
-    return;
+  if (!response_expected)
+    {
+      // A one-way request.
+      return;
+    }
 
   // Request 1 -- non-forwarded
   // Request 2 -- forwarded by client request interceptor
@@ -154,8 +162,11 @@ Server_Request_Interceptor::send_other (
   CORBA::Boolean const response_expected =
     ri->response_expected ();
 
-  if (!response_expected)   // A one-way request.
-    return;
+  if (!response_expected)
+    {
+      // A one-way request.
+      return;
+    }
 
   // If we get this far then we should have received a
   // LOCATION_FORWARD reply.

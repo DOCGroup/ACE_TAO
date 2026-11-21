@@ -50,8 +50,10 @@ Collocation_Tester::test_top () const
   failure += this->match_answer (Quote::top, msg.in (), "top_quote");
 
   if (failure)
-    ACE_ERROR ((LM_DEBUG,
-                ACE_TEXT ("The test had %d/%d Failure\n"), failure, call_num));
+    {
+      ACE_ERROR ((LM_DEBUG,
+                  ACE_TEXT ("The test had %d/%d Failure\n"), failure, call_num));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("\n------------------------<TOP>-------------------------------\n")));
@@ -88,8 +90,10 @@ Collocation_Tester::test_right () const
   failure += this->match_answer (Quote::right, right_msg.in (), "right_quote");
 
   if (failure)
-    ACE_ERROR ((LM_DEBUG,
-                ACE_TEXT ("The test had %d/%d Failure"), failure, call_num));
+    {
+      ACE_ERROR ((LM_DEBUG,
+                  ACE_TEXT ("The test had %d/%d Failure"), failure, call_num));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("\n------------------------<RIGHT>-------------------------------\n")));
@@ -127,8 +131,10 @@ Collocation_Tester::test_left () const
   failure += this->match_answer (Quote::left, left_msg.in (), "left_quote");
 
   if (failure)
-    ACE_ERROR ((LM_DEBUG,
-                ACE_TEXT ("The test had %d/%d Failure"), failure, call_num));
+    {
+      ACE_ERROR ((LM_DEBUG,
+                  ACE_TEXT ("The test had %d/%d Failure"), failure, call_num));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("\n------------------------<LEFT>-------------------------------\n")));
@@ -174,8 +180,10 @@ Collocation_Tester::test_bottom () const
   failure += this->match_answer (Quote::bottom, bottom_msg.in (), "bottom_quote");
 
   if (failure)
-    ACE_ERROR ((LM_DEBUG,
-                ACE_TEXT ("The test had %d/%d Failure"), failure, call_num));
+    {
+      ACE_ERROR ((LM_DEBUG,
+                  ACE_TEXT ("The test had %d/%d Failure"), failure, call_num));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("\n-----------------------<BOTTOM>-------------------------------\n")));
@@ -214,11 +222,15 @@ Collocation_Tester::run () const
   failure_num += this->test_bottom ();
 
   if (failure_num)
-    ACE_ERROR ((LM_DEBUG,
-                ACE_TEXT ("\n\nThe Test failed in %d cases."), failure_num));
+    {
+      ACE_ERROR ((LM_DEBUG,
+                  ACE_TEXT ("\n\nThe Test failed in %d cases."), failure_num));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("\n\nThe Test Completed Successfully. Congratulations! ")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("\n\nThe Test Completed Successfully. Congratulations! ")));
+    }
 
   this->shutdown ();
 }

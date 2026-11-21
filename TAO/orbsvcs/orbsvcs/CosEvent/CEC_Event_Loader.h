@@ -48,22 +48,22 @@ public:
   TAO_CEC_Event_Loader (TAO_CEC_Event_Loader &&) = delete;
   TAO_CEC_Event_Loader &operator= (TAO_CEC_Event_Loader &&) = delete;
 
-  //@{
+  /// @{
   /**
    * @name Derived from ACE_Service_Object
    */
   int init (int argc, ACE_TCHAR *argv[]) override;
   int fini () override;
-  //@}
+  /// @}
 
-  //@{
+  /// @{
   /**
    * @name Derived from TAO_Object_Loader
    */
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                    int argc,
                                    ACE_TCHAR *argv[]) override;
-  //@}
+  /// @}
 
 protected:
   /// Keep a pointer to the underlying ORB.

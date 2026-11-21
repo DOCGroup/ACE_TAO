@@ -60,7 +60,7 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all server request interceptors.
    */
-  //@{
+  /// @{
   void receive_request_service_contexts (
       PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
@@ -75,7 +75,7 @@ public:
 
   void send_other (
       PortableInterceptor::ServerRequestInfo_ptr ri) override;
-  //@}
+  /// @}
 
 private:
   /// Returns 1 if the server-side test is currently being run, and 0

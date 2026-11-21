@@ -56,10 +56,12 @@ get_server_priority (Test_ptr server)
   RTCORBA::PriorityModel const priority_model =
     priority_policy->priority_model ();
   if (priority_model != RTCORBA::SERVER_DECLARED)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ERROR: priority_model != "
-                       "RTCORBA::SERVER_DECLARED!\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ERROR: priority_model != "
+                         "RTCORBA::SERVER_DECLARED!\n"),
+                        -1);
+    }
 
   // Return the server priority.
   return priority_policy->server_priority ();
@@ -323,8 +325,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                 2);
             }
           else
-            // Unexpected error.
-            ACE_ASSERT (0);
+            {
+              // Unexpected error.
+              ACE_ASSERT (0);
+            }
         }
 
       // Wait for task to exit.

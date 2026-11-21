@@ -145,7 +145,9 @@ TAO_Notify_QoSProperties::init (const CosNotification::PropertySeq& prop_seq, Co
           err_seq[err_index].name = CORBA::string_dup (prop_seq[i].name);
         }
       else if (this->property_map_.rebind (prop_seq[i].name.in (), prop_seq[i].value) == -1)
-        return -1;
+        {
+          return -1;
+        }
       // Note call to rebind. This allows to call <init> to set updates.
     }
 

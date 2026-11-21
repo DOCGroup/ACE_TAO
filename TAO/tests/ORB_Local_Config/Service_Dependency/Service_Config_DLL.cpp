@@ -10,11 +10,13 @@ invoke_service_config (void *arg)
 
   // Process a Service Configurator directive in the current thread.
   if (ACE_Service_Config::process_directive (directive) != 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) Service_Config_DLL::svc() - ")
-                ACE_TEXT ("process_directive() failed for:\n")
-                ACE_TEXT ("\"%s\"\n"),
-                directive));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) Service_Config_DLL::svc() - ")
+                  ACE_TEXT ("process_directive() failed for:\n")
+                  ACE_TEXT ("\"%s\"\n"),
+                  directive));
+    }
 
   return ACE_THR_FUNC_RETURN_NULL;
 }
@@ -77,12 +79,14 @@ Service_Config_DLL::init (int argc, ACE_TCHAR *argv[])
                           -1);
 
       if (ACE_Service_Config::process_directive (this->directive_[0]) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Service_Config_DLL::init() - ")
-                           ACE_TEXT ("process_directive() failed for:\n")
-                           ACE_TEXT ("\"%s\"\n"),
-                           this->directive_[0]),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Service_Config_DLL::init() - ")
+                             ACE_TEXT ("process_directive() failed for:\n")
+                             ACE_TEXT ("\"%s\"\n"),
+                             this->directive_[0]),
+                            -1);
+        }
 
 #if defined (ACE_HAS_THREADS)
 

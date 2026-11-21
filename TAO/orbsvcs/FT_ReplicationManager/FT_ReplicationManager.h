@@ -145,7 +145,7 @@ namespace TAO
     *
     * Methods required by the POA_FT::ReplicationManager interface.
     */
-    //@{
+    /// @{
     /// Registers the Fault Notifier with the Replication Manager.
     void register_fault_notifier (
         FT::FaultNotifier_ptr fault_notifier) override;
@@ -160,14 +160,14 @@ namespace TAO
     /// TAO-specific shutdown operation.
     void shutdown () override;
 
-    //@}
+    /// @}
 
     /**
     * @name PortableGroup::PropertyManager Methods
     *
     * Methods required by the PortableGroup::PropertyManager interface.
     */
-    //@{
+    /// @{
     /// Set the default properties to be used by all object groups.
     void set_default_properties (
         PortableGroup::Properties const & props) override;
@@ -220,7 +220,7 @@ namespace TAO
     PortableGroup::Properties * get_properties (
         PortableGroup::ObjectGroup_ptr object_group) override;
 
-    //@}
+    /// @}
 
     /**
      * @name FT::FTObjectGroupManager methods
@@ -228,7 +228,7 @@ namespace TAO
      * Methods required by the FT::FTObjectGroupManager
      * interface.
      */
-    //@{
+    /// @{
     /// Create a member in an object group.
     PortableGroup::ObjectGroup_ptr create_member (
         PortableGroup::ObjectGroup_ptr object_group,
@@ -297,14 +297,14 @@ namespace TAO
         PortableGroup::ObjectGroup_ptr object_group,
         PortableGroup::Location const & the_location) override;
 
-    //@}
+    /// @}
 
     /**
      * @name PortableGroup::GenericFactory methods
      *
      * Methods required by the PortableGroup::GenericFactory interface.
      */
-    //@{
+    /// @{
     /**
      * Create an object of the specified type that adheres to the
      * restrictions defined by the provided Criteria.  The out
@@ -331,7 +331,7 @@ namespace TAO
         PortableGroup::GenericFactory::FactoryCreationId const &
           factory_creation_id) override;
 
-    //@}
+    /// @}
 
     /////////////////////////
     // Implementation methods

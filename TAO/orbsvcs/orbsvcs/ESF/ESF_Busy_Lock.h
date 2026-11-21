@@ -52,7 +52,7 @@ public:
    *
    * Check the documentation in ace/Synch.h for details.
    */
-  //@{
+  /// @{
   int remove ();
   int acquire ();
   int tryacquire ();
@@ -61,7 +61,7 @@ public:
   int acquire_write ();
   int tryacquire_read ();
   int tryacquire_write ();
-  //@}
+  /// @}
 
 private:
   Adaptee *adaptee_;

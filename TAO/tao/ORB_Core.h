@@ -186,9 +186,9 @@ public:
    * other components transparently.
    */
   /// Accessor to the POA current.
-  //@{
+  /// @{
   CORBA::Object_ptr poa_current();
-  //@}
+  /// @}
 
   /// Get the connector registry
   TAO_Connector_Registry *connector_registry ();
@@ -229,7 +229,7 @@ public:
   TAO_Adapter_Registry &adapter_registry ();
 
   /// @name Collocation Strategies as configured by the user
-  //@{
+  /// @{
   enum
   {
     /// Indicate object should refer to ORB for either one of the
@@ -249,7 +249,7 @@ public:
   };
 
   /// Set/get the collocation flags
-  //@{
+  /// @{
   void optimize_collocation_objects (bool opt);
   bool optimize_collocation_objects () const;
 
@@ -257,7 +257,7 @@ public:
   CORBA::Boolean use_global_collocation () const;
 
   CORBA::ULong get_collocation_strategy () const;
-  //@}
+  /// @}
 
   /// Get the adapter named "RootPOA" and cache the result, this is an
   /// optimization for the POA.
@@ -271,7 +271,7 @@ public:
    * instances to which the return pointers are stored in the Service
    * Repository.
    */
-  //@{
+  /// @{
   /// Returns pointer to the resource factory.
   TAO_Resource_Factory *resource_factory ();
 
@@ -299,7 +299,7 @@ public:
   /// Returns a pointer to the endpoint selector factory.
   TAO_Endpoint_Selector_Factory *endpoint_selector_factory ();
 
-  //@}
+  /// @}
 
   /// Sets the value of TAO_ORB_Core::resource_factory_
   static void set_resource_factory (const char *resource_factory_name);
@@ -437,10 +437,10 @@ public:
    * on the heap and/or as class members; we need to investigate the
    * tradeoffs and take a decision.
    */
-  //@{
+  /// @{
   CORBA::Environment *default_environment () const;
   void default_environment (CORBA::Environment*);
-  //@}
+  /// @}
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
@@ -632,10 +632,10 @@ public:
   const char *orbid () const;
 
   /// Set/Get the IOR of the Implementation Repository service.
-  //@{
+  /// @{
   CORBA::Object_ptr implrepo_service ();
   void implrepo_service (const CORBA::Object_ptr ir);
-  //@}
+  /// @}
 
   /// Do we attempt to register with the Implementation Repository
   CORBA::Boolean use_implrepo ();
@@ -715,7 +715,7 @@ public:
    * hooks would be used to call back on the services or other
    * features that are dynamically loaded.
    */
-  //@{
+  /// @{
   /**
    * The loaded service in the ORB_Core would determine if the profile
    * selection is going to be made by the services or not. If the
@@ -770,7 +770,7 @@ public:
       IOP::ServiceContextList &clist,
       TAO_Profile *profile);
 
-  //@}
+  /// @}
 
   /**
    * @name Portable Interceptor Related Methods
@@ -779,7 +779,7 @@ public:
    * interceptor set (an array) access, in addition to PICurrent
    * access.
    */
-  //@{
+  /// @{
 #if TAO_HAS_INTERCEPTORS == 1
 
   /// Return a pointer to the cached TAO::PICurrent object.
@@ -818,7 +818,7 @@ public:
 
   /// Register an IOR interceptor.
   void add_interceptor (PortableInterceptor::IORInterceptor_ptr interceptor);
-  //@}
+  /// @}
 
   /// Return the valuetype adapter
   TAO_Valuetype_Adapter *valuetype_adapter ();
@@ -1110,11 +1110,11 @@ protected:
   /**
    * @name Service Level Hooks
    */
-  //@{
+  /// @{
   /// Fault Tolerant service hook.
   TAO_Fault_Tolerance_Service ft_service_;
 
-  //@}
+  /// @}
 
   /// TRUE transmits a full TAG_FT_GROUP component in place of the FT_GROUP_VERSION
   /// context on FT requests. This is contrary to the spec but enables more effective
@@ -1176,10 +1176,10 @@ protected:
   bool has_shutdown_;
 
   /// The value of the timeout if the flag above is not zero.
-  //@{
+  /// @{
   int thread_per_connection_use_timeout_;
   ACE_Time_Value thread_per_connection_timeout_;
-  //@}
+  /// @}
 
   /// Mutual exclusion for calling open.
   TAO_SYNCH_MUTEX open_lock_;

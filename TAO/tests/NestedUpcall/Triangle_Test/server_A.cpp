@@ -12,6 +12,8 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <memory>
+
 int
 Object_A_Server::parse_args ()
 {
@@ -27,9 +29,11 @@ Object_A_Server::parse_args ()
       case 'o': // output the IOR to a file.
         this->ior_output_file_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
         if (!this->ior_output_file_)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing: %p\n",
-                             get_opts.opt_arg ()), -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Unable to open %s for writing: %p\n",
+                               get_opts.opt_arg ()), -1);
+          }
         break;
       case '?':
       default:
@@ -66,7 +70,7 @@ Object_A_Server::init (int argc,
 
   CORBA::String_var const str =
     this->orb_manager_.activate_under_child_poa ("object_A",
-                                                 &this->object_A_i_);
+                                                 std::addressof (this->object_A_i_));
 
   if (this->ior_output_file_)
     {
@@ -84,9 +88,11 @@ Object_A_Server::run ()
   int const r = this->orb_manager_.run ();
 
   if (r == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "NestedUpCalls_Server::run"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "NestedUpCalls_Server::run"),
+                        -1);
+    }
   return 0;
 }
 

@@ -26,11 +26,17 @@ ACE_INLINE int
 Handle_R_Stream::open (const ACE_INET_Addr &sia, int async)
 {
   if (this->ACE_SOCK_Acceptor::open (sia) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (async && this->ACE_SOCK_Acceptor::enable (ACE_SIGIO) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 ACE_INLINE int
@@ -79,13 +85,16 @@ Handle_R_Stream::init (int argc, ACE_TCHAR *argv[])
        }
 
   if (this->open (sis) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
-
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+    }
   else if (ACE_Reactor::instance ()->register_handler
            (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "registering service with ACE_Reactor\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "registering service with ACE_Reactor\n"),
+                        -1);
+    }
   return 0;
 }
 
@@ -122,15 +131,21 @@ Handle_R_Stream::handle_input (ACE_HANDLE)
                     1, // restart
                     reset_new_handle  // reset new handler
                     ) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    ACE_DEBUG ((LM_INFO, "new_remote_stream fd = %H\n",
-                this->new_remote_stream.get_handle ()));
+    {
+      ACE_DEBUG ((LM_INFO, "new_remote_stream fd = %H\n",
+                  this->new_remote_stream.get_handle ()));
+    }
 
   ACE_INET_Addr sa;
 
   if (this->new_remote_stream.get_remote_addr (sa) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   ACE_DEBUG ((LM_INFO,
               "accepted from host %s at port %d\n",
@@ -152,10 +167,14 @@ Handle_R_Stream::handle_input (ACE_HANDLE)
                                     ACE_OS::strlen (Handle_R_Stream::login_name),
                                     cs,
                                     ACE_OS::strlen (cs)) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (this->new_remote_stream.close () == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   return 0;
 }

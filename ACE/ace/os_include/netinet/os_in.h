@@ -67,10 +67,14 @@ extern "C"
 # if defined (ACE_LACKS_SOCKADDR_IN)
   struct sockaddr_in
   {
-    short            sin_family;   // e.g. AF_INET
-    unsigned short   sin_port;     // e.g. htons(3490)
-    struct in_addr   sin_addr;     // see struct in_addr, below
-    char             sin_zero[8];  // zero this if you want to
+    /// Address family, for example AF_INET.
+    short            sin_family;
+    /// Port number, for example htons(3490).
+    unsigned short   sin_port;
+    /// Internet address.
+    struct in_addr   sin_addr;
+    /// Padding; zero this field if needed.
+    char             sin_zero[8];
   };
 # endif /* ACE_LACKS_SOCKADDR_IN */
 

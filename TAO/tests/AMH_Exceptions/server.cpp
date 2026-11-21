@@ -184,9 +184,11 @@ ST_AMH_Server::start_orb_and_poa ()
         this->orb_->resolve_initial_references ("RootPOA"));
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
+                            1);
+        }
 
       this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
 

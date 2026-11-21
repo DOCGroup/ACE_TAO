@@ -46,7 +46,7 @@ public:
             PortableServer::POA_ptr poa);
 
   /// RtecEventChannelAdmin::Event_Channel methods.
-  //@{
+  /// @{
   RtecEventChannelAdmin::ConsumerAdmin_ptr
     for_consumers () override;
   RtecEventChannelAdmin::SupplierAdmin_ptr
@@ -59,7 +59,7 @@ public:
   RtecEventChannelAdmin::Observer_Handle
     append_observer (RtecEventChannelAdmin::Observer_ptr observer) override;
   void remove_observer (RtecEventChannelAdmin::Observer_Handle) override;
-  //@}
+  /// @}
 
 protected:
   /// Constructor (protected).  Clients can create new

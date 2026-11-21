@@ -67,9 +67,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Check for nil references
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to obtain RootPOA reference.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to obtain RootPOA reference.\n"),
+                            -1);
+        }
 
       // Get poa_manager reference
       PortableServer::POAManager_var poa_manager =
@@ -118,12 +120,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
           if (output_file == nullptr)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file %s for writing "
-                               "IOR: %C",
-                               ior_output_file,
-                               ior.in ()),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Cannot open output file %s for writing "
+                                 "IOR: %C",
+                                 ior_output_file,
+                                 ior.in ()),
+                                1);
+            }
           ACE_OS::fprintf (output_file, "%s", ior.in ());
           ACE_OS::fclose (output_file);
         }

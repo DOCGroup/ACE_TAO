@@ -202,10 +202,10 @@ public:
    *
    * The usual equality operators.
    */
-  //@{
+  /// @{
   bool operator== (const ACE_Reverse_Iterator<T> &rhs) const;
   bool operator!= (const ACE_Reverse_Iterator<T> &rhs) const;
-  //@}
+  /// @}
 
   /// Dereference operator.
   T operator *() const;

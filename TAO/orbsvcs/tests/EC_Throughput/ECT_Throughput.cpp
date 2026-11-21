@@ -248,7 +248,7 @@ ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
         PortableServer::POA_var poa =
           scheduler_impl._default_POA ();
         PortableServer::ObjectId_var id =
-          poa->servant_to_id (&scheduler_impl);
+          poa->servant_to_id (std::addressof (scheduler_impl));
         poa->deactivate_object (id.in ());
 
         ACE_DEBUG ((LM_DEBUG, "scheduler deactivated\n"));

@@ -204,7 +204,7 @@ namespace ACE_OS {
                     size_t maxlen = ACE_MAX_USERID);
 #   endif /* ACE_HAS_WCHAR */
 # endif /* ACE_LACKS_CUSERID */
-  //@}
+  /// @}
 
   extern ACE_Export
   int asprintf (char **bufp, const char* format, ...)
@@ -291,7 +291,7 @@ namespace ACE_OS {
                     ACE_OFF_T start = 0,
                     ACE_OFF_T len = 0);
 
-  //@}
+  /// @}
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_HANDLE fileno (FILE *stream);

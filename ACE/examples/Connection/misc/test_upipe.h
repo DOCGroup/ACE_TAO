@@ -42,7 +42,9 @@ public:
         {
           ssize_t const n = this->peer ().recv (buf, sizeof buf);
           if (n <= 0)
-            break;
+            {
+              break;
+            }
 
           ACE_OS::write (ACE_STDOUT, buf, n);
         }
@@ -83,7 +85,9 @@ public:
         {
           ssize_t const n = ACE_OS::read (ACE_STDIN, buf, sizeof buf);
           if (n <= 0)
-            break;
+            {
+              break;
+            }
 
           this->peer ().send (buf, n);
         }

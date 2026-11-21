@@ -84,10 +84,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     // Output the IOR to the <ior_output_file>
     FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
     if (output_file == nullptr)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                          "Cannot open output file for writing IOR: %s\n",
-                          ior_output_file),
-                          1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                            "Cannot open output file for writing IOR: %s\n",
+                            ior_output_file),
+                            1);
+      }
     ACE_OS::fprintf (output_file, "%s", intfString_var.in ());
     ACE_OS::fclose (output_file);
 
@@ -96,8 +98,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     // Running ORB in separate thread
     Worker worker (orb_.in ());
     if (worker.activate (THR_NEW_LWP | THR_JOINABLE, nr_threads) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n",
-        "Cannot activate client threads"), -1);
+      {
+          ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n",
+          "Cannot activate client threads"), -1);
+      }
 
     ACE_DEBUG((LM_INFO,"(%P|%t) Await server initialization\n"));
     poll ("./server.ior");
@@ -112,8 +116,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Chatter worker2 (orb_.in (), serverior, stop_condition);
 
       if (worker2.activate (THR_NEW_LWP | THR_JOINABLE, 2) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n",
-        "Cannot activate chatty client threads"), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n",
+          "Cannot activate chatty client threads"), -1);
+        }
 
       do {
         stop_condition.wait ();

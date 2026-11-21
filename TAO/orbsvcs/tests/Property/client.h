@@ -55,7 +55,7 @@ protected:
                                ACE_TCHAR *argv[]);
 
   /// @name Property tests
-  //@{
+  /// @{
   /// Testing the define property method.
   int test_define_property ();
 
@@ -85,7 +85,7 @@ protected:
 
   /// Defines properties with various modes.
   int test_define_property_with_mode ();
-  //@}
+  /// @}
 
   /// The ORB manager, handles ORB initialization etc.
   TAO_ORB_Manager manager_;

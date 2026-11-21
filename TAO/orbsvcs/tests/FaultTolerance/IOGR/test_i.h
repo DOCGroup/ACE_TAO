@@ -29,11 +29,11 @@ public:
   Simple_Server_i& operator= (Simple_Server_i&&) = delete;
 
   /// @name Simple_Server operations
-  //@{
+  /// @{
   void remote_call () override;
 
   void shutdown () override;
-  //@}
+  /// @}
 
 private:
   CORBA::ORB_var orb_ {};

@@ -83,9 +83,9 @@ public:
                      TAO_AMH_BUFFER_ALLOCATOR* allocator);
 
   /// @name Mutators for refcount
-  //@{
+  /// @{
   void _remove_ref () override;
-  //@}
+  /// @}
 
 protected:
   /// Sets up the various parameters in anticipation of returning a reply
@@ -133,13 +133,7 @@ private:
   /// The reply service context
   TAO_Service_Context reply_service_context_;
 
-  /// Alwyas set to true (we always have something to return to the
-  /// client
-  // @@ Mayur: I think not!  This is used to generate padding in GIOP
-  //    1.2 messages (where the payload must start on an 8-byte
-  //    boundary.  But some replys have no payload (only header), in
-  //    those cases you cannot insert the padding.  We need the
-  //    ResponseHandler to set this field correctly!
+  /// Controls 8-byte alignment of the GIOP 1.2 reply body.
   CORBA::Boolean argument_flag_ {true};
 
   /**
@@ -157,13 +151,6 @@ private:
       TAO_RS_SENT
     };
   RH_Reply_Status rh_reply_status_ {TAO_RS_UNINITIALIZED};
-
-  // I would use the "state pattern"..
-  // Carlos, Isn't that an overkill?
-  // @@ Mayur: it depends on what form of the "State Pattern" you
-  //    use.  The more generic form, as described in GoF, uses a class
-  //    for each state, super-elegant but indeed a bit heavy handed.
-  //    The lighter-weight form (using a state variable
 
   /// Mutex to ensure the AMH-RH method call is thread-safe.
   TAO_SYNCH_MUTEX mutex_;

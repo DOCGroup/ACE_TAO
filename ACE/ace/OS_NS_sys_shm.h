@@ -51,7 +51,7 @@ namespace ACE_OS
   int shmget (key_t key,
               size_t size,
               int flags);
-  //@}
+  /// @}
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

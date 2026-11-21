@@ -80,7 +80,7 @@ public:
    * implement the RTCORBA::Current interface, but it is faster for
    * some critical components.
    */
-  //@{
+  /// @{
   int get_thread_CORBA_priority (CORBA::Short &priority) override;
 
   int get_thread_native_priority (CORBA::Short &) override;
@@ -94,7 +94,7 @@ public:
   int restore_thread_CORBA_and_native_priority (CORBA::Short,
                                                 CORBA::Short) override;
 
-  //@}
+  /// @}
 
 private:
   CORBA::ULong failure_count_ {};

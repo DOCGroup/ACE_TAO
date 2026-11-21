@@ -67,9 +67,9 @@ namespace TAO
        * Methods required by the SecurityLevel3::Credentials
        * interface.
        */
-      //@{
+      /// @{
       SecurityLevel3::CredentialsType creds_type () override;
-      //@}
+      /// @}
 
       /**
        * @name SecurityLevel3::OwnCredentials Methods
@@ -77,13 +77,13 @@ namespace TAO
        * Methods required by the SecurityLevel3::OwnCredentials
        * interface.
        */
-      //@{
+      /// @{
       SecurityLevel3::CredsInitiator_ptr creds_initiator () override;
 
       SecurityLevel3::CredsAcceptor_ptr creds_acceptor () override;
 
       void release_credentials () override;
-      //@}
+      /// @}
 
     protected:
       /**

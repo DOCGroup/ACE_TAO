@@ -77,7 +77,7 @@ namespace TAO
     /**
      * @name The canonical ACE_Map methods.
      */
-    //@{
+    /// @{
     iterator begin ();
     iterator end ();
     int bind (char const *orb_id, ::TAO_ORB_Core *orb_core);
@@ -91,7 +91,7 @@ namespace TAO
     ::TAO_ORB_Core *find (char const *orb_id);
 
     int unbind (char const *orb_id);
-    //@}
+    /// @}
 
     /// Obtain the first ORB for the @c ORB_Core_instance()
     /// implementation.

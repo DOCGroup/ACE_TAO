@@ -62,7 +62,7 @@ public:
    * These methods are exported by the
    * PortableInterceptor::ORBInitInfo interface.
    */
-  //@{
+  /// @{
   /// Return the argument vector for the ORB currently being
   /// initialized as a string sequence.
   CORBA::StringSeq * arguments () override;
@@ -135,7 +135,7 @@ public:
       PortableInterceptor::PolicyFactory_ptr policy_factory) override;
 
   CORBA::ORB_ptr _get_orb () override;
-  //@}
+  /// @}
 
   /**
    * @name TAO Extensions
@@ -143,7 +143,7 @@ public:
    * These methods are not part of the PortableInterceptor
    * specification, and are TAO-specific extensions.
    */
-  //@{
+  /// @{
   /// Allocate a slot in the ORB's TSS resources.
   /**
    * TAO uses a single TSS key for these resources, so it is useful to
@@ -177,14 +177,14 @@ public:
   /// Return the number of allocated slots in for the PICurrent
   /// object.
   PortableInterceptor::SlotId slot_count () const;
-  //@}
+  /// @}
 
   /**
    * @name Reference Related Methods
    *
    * TAO_ORBInitInfo-specific methods and types.
    */
-  //@{
+  /// @{
   using _ptr_type = TAO_ORBInitInfo_ptr;
   using _var_type = TAO_ORBInitInfo_var;
 
@@ -198,7 +198,7 @@ public:
     {
       return nullptr;
     }
-  //@}
+  /// @}
 
   char const *_interface_repository_id () const override;
 
@@ -237,10 +237,10 @@ private:
   PortableInterceptor::SlotId slot_count_;
 };
 
-// Traits specializations.
+/// Traits specializations.
 namespace TAO
 {
-  // Hand crafted. Not forward declared, but used by PortableServer.
+  /// Handcrafted. Not forward declared, but used by PortableServer.
   template<>
   struct TAO_PI_Export Objref_Traits<TAO_ORBInitInfo>
   {

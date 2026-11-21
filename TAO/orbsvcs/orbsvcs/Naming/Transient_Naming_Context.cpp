@@ -96,8 +96,10 @@ TAO_Transient_Bindings_Map::shared_bind (char const *id,
   TAO_IntId old_entry;
 
   if (rebind == 0)
-    // Do a normal bind.
-    return this->map_.bind (new_name, new_entry);
+    {
+      // Do a normal bind.
+      return this->map_.bind (new_name, new_entry);
+    }
 
   else
     // Rebind.
@@ -246,11 +248,13 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
 
   // Calculate number of bindings that will go into <bl>.
   if (this->context_->current_size () > how_many)
-    n = how_many;
+    {
+      n = how_many;
+    }
   else
-  {
-    n = static_cast<CORBA::ULong> (this->context_->current_size ());
-  }
+    {
+      n = static_cast<CORBA::ULong> (this->context_->current_size ());
+    }
 
   // Use the hash map iterator to populate <bl> with bindings.
   bl->length (n);
@@ -273,7 +277,9 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
 
   // If we do not need to pass back BindingIterator.
   if (this->context_->current_size () <= how_many)
-    return;
+    {
+      return;
+    }
   else
     {
       // Create a BindingIterator for return.

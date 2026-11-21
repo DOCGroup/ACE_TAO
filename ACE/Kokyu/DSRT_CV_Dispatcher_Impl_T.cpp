@@ -104,8 +104,7 @@ schedule_i (Guid_t id, DSRT_QoSDescriptor const &qos)
   //if the current thread is most eligible, but some thread is
   //scheduled currently, then wait.
   while (most_eligible_thr_handle != thr_handle ||
-         (most_eligible_thr_handle == thr_handle &&
-          this->curr_scheduled_thr_handle_ != thr_handle &&
+         (this->curr_scheduled_thr_handle_ != thr_handle &&
           this->curr_scheduled_thr_handle_ != 0))
     {
       ACE_Time_Value tv (60,0);

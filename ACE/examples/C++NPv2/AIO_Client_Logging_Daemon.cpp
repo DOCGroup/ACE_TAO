@@ -24,6 +24,8 @@
 #include "ace/Singleton.h"
 #include "ace/Task.h"
 #include "ace/Thread_Manager.h"
+
+#include <memory>
 #include "ace/Unbounded_Set.h"
 #include "ace/os_include/os_netdb.h"
 #include "AIO_CLD_export.h"
@@ -131,7 +133,7 @@ void AIO_Output_Handler::handle_write_stream
   ACE_Message_Block &mblk = result.message_block ();
   if (!result.success ()) {
     mblk.rd_ptr (mblk.base ());
-    ungetq (&mblk);
+    ungetq (std::addressof (mblk));
   }
   else {
     can_write_ = handle () == result.handle ();
@@ -144,12 +146,12 @@ void AIO_Output_Handler::handle_write_stream
     }
     else if (can_write_)
       {
-        start_write (&mblk);
+        start_write (std::addressof (mblk));
       }
     else
       {
         mblk.rd_ptr (mblk.base ());
-        ungetq (&mblk);
+        ungetq (std::addressof (mblk));
       }
   }
 }

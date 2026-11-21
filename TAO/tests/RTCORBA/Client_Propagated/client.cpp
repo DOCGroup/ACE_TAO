@@ -93,18 +93,22 @@ Task::svc ()
         RTCORBA::PriorityModelPolicy::_narrow (policy.in ());
 
       if (CORBA::is_nil (priority_policy.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "ERROR: Priority Model Policy not exposed!\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "ERROR: Priority Model Policy not exposed!\n"),
+                            -1);
+        }
 
       RTCORBA::PriorityModel const priority_model =
         priority_policy->priority_model ();
 
       if (priority_model != RTCORBA::CLIENT_PROPAGATED)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "ERROR: priority_model != "
-                           "RTCORBA::CLIENT_PROPAGATED!\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "ERROR: priority_model != "
+                             "RTCORBA::CLIENT_PROPAGATED!\n"),
+                            -1);
+        }
 
       // Make several invocation, changing the priority of this thread
       // for each.
@@ -135,10 +139,12 @@ Task::svc ()
       CORBA::Short desired_priority {};
 
       if (pm->to_CORBA (native_priority, desired_priority) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot convert native priority %d to corba priority\n",
-                           native_priority),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot convert native priority %d to corba priority\n",
+                             native_priority),
+                            -1);
+        }
 
       for (int i = 0; i < 3; ++i)
         {
@@ -148,10 +154,12 @@ Task::svc ()
             current->the_priority ();
 
           if (desired_priority != priority)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "ERROR: Unable to set thread "
-                               "priority to %d\n", desired_priority),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "ERROR: Unable to set thread "
+                                 "priority to %d\n", desired_priority),
+                                -1);
+            }
 
           server->test_method (priority);
 
@@ -237,8 +245,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                 2);
             }
           else
-            // Unexpected error.
-            ACE_ASSERT (0);
+            {
+              // Unexpected error.
+              ACE_ASSERT (0);
+            }
         }
 
       // Wait for task to exit.

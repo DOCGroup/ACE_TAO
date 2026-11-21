@@ -663,7 +663,6 @@ ACE_NT_Service::wait_for_service_state (DWORD desired_state,
               else
                 {
                   // Service control failure, we are done.
-                  service_ok = 0;
                   break;
                 }
             }

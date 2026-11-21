@@ -48,7 +48,7 @@ class Timer_imp
   virtual void report_time (CORBA::Float);
 
   /// Borrowed display object. The server keeps it alive until after the timer.
-  Stopwatch_display *stopwatch_ {}; // Non-owning; the display outlives the timer.
+  Stopwatch_display *stopwatch_ {};
 
   /// Current number of ticks
   CORBA::Long counter_ {};

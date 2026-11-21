@@ -16,6 +16,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Truncate.h"
 
+#include <memory>
+
 // IDL File::System constructor
 FileImpl::System::System (PortableServer::POA_ptr poa)
   : poa_ (PortableServer::POA::_duplicate (poa)),
@@ -23,7 +25,7 @@ FileImpl::System::System (PortableServer::POA_ptr poa)
     fd_servant_ (poa)
 {
   // set the default servant of the POA
-  poa->set_servant (&this->fd_servant_);
+  poa->set_servant (std::addressof (this->fd_servant_));
 }
 
 PortableServer::POA_ptr

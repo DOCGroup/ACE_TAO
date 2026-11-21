@@ -25,15 +25,19 @@ test_transport_current (CORBA::ORB_ptr orb)
     orb->resolve_initial_references ("TAO::Transport::IIOP::Current");
 
   if (TAO_debug_level >= 1)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Tester (%P|%t) Resolved initial reference for IIOP::Current\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Tester (%P|%t) Resolved initial reference for IIOP::Current\n")));
+    }
 
   Transport::IIOP::Current_var tc =
     Transport::IIOP::Current::_narrow (tcobject.in ());
 
   if (TAO_debug_level >= 1)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Tester (%P|%t) Narowed the IIOP Transport Current\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Tester (%P|%t) Narowed the IIOP Transport Current\n")));
+    }
 
   if (CORBA::is_nil (tc.in ()))
     {

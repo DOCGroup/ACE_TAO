@@ -96,9 +96,13 @@ TAO_Notify_Constraint_Interpreter::build_tree (
     exp_str += "))";
   }
   else if (has_et_exp)
-    exp_str = et_exp;
+    {
+      exp_str = et_exp;
+    }
   else if (valid_constraint)
-    exp_str = exp.constraint_expr.in ();
+    {
+      exp_str = exp.constraint_expr.in ();
+    }
 
   if (TAO_debug_level > 0)
     {

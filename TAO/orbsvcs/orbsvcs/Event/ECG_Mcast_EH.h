@@ -57,7 +57,7 @@ class TAO_RTEvent_Serv_Export TAO_ECG_Mcast_EH :
 {
 public:
   /// Initialization and termination methods.
-  //@{
+  /// @{
   /**
    * Constructor.  Messages received by this EH will be forwarded to
    * the \a recv.  \a net_if can be used to specify NIC where multicast
@@ -93,7 +93,7 @@ public:
    * reactor.
    */
   int shutdown () override;
-  //@}
+  /// @}
 
   /// Reactor callback.  Notify receiver_ that a dgram corresponding
   /// to \a fd is ready for reading.
@@ -120,7 +120,7 @@ private:
     void shutdown ();
 
     /// Event Channel Observer methods
-    //@{
+    /// @{
     void update_consumer (
         RtecEventChannelAdmin::ConsumerQOS const &sub) override;
     void update_supplier (
@@ -147,7 +147,7 @@ private:
 
   /// Helpers for updating multicast subscriptions based on changes in
   /// consumer subscriptions.
-  //@{
+  /// @{
   /// Compute the list of multicast addresses that we need to be
   /// subscribed to, in order to receive the events described in the
   /// ConsumerQOS parameter.
@@ -187,7 +187,7 @@ private:
    */
   void add_new_subscriptions (
               Address_Set& multicast_addresses);
-  //@}
+  /// @}
 
   /**
    * @class Observer_Disconnect_Command

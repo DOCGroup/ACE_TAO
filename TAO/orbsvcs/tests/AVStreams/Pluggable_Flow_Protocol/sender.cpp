@@ -6,13 +6,14 @@
 
 #include <cstddef>
 #include <cstdio>
+#include <memory>
 #include <new>
 
 int
 Sender_StreamEndPoint::get_callback (char const *,
                                      TAO_AV_Callback *&callback)
 {
-  callback = &this->callback_;
+  callback = std::addressof (this->callback_);
   return 0;
 }
 
@@ -123,7 +124,7 @@ Sender::init (int argc,
   flow_spec[0] = CORBA::string_dup (entry.entry_to_string ());
 
   TAO_MMDevice * const sender_mmdevice =
-    new (std::nothrow) TAO_MMDevice (&this->endpoint_strategy_);
+    new (std::nothrow) TAO_MMDevice (std::addressof (this->endpoint_strategy_));
   if (sender_mmdevice == nullptr)
   {
     ACE_ERROR_RETURN ((LM_ERROR, "Unable to allocate sender MMDevice\n"), -1);
@@ -201,7 +202,7 @@ Sender::pace_data ()
             }
 
           elapsed_timer.start ();
-          if (this->protocol_object_->send_frame (&this->mb_) < 0)
+          if (this->protocol_object_->send_frame (std::addressof (this->mb_)) < 0)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "send failed:%p",

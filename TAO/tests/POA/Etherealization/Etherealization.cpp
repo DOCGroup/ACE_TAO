@@ -81,11 +81,15 @@ Servant_Activator::incarnate (PortableServer::ObjectId const &id,
               object_name.in ()));
 
   if (std::strcmp (object_name.in (), "without reference counting") == 0)
-    // The POA assumes ownership of the non-reference-counted servant.
-    return new test_i;
+    {
+      // The POA assumes ownership of the non-reference-counted servant.
+      return new test_i;
+    }
   else
-    // The POA and etherealize callback manage this servant's reference count.
-    return new test_i_with_reference_counting;
+    {
+      // The POA and etherealize callback manage this servant's reference count.
+      return new test_i_with_reference_counting;
+    }
 }
 
 void
@@ -103,7 +107,9 @@ Servant_Activator::etherealize (PortableServer::ObjectId const &id,
               object_name.in ()));
 
   if (std::strcmp (object_name.in (), "without reference counting") == 0)
-    delete servant;
+    {
+      delete servant;
+    }
   else
     {
       servant->_remove_ref ();

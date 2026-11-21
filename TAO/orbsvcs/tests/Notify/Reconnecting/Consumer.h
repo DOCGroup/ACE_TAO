@@ -209,22 +209,30 @@ class Consumer_Main
   // Data members
  private:
   // set by command line parameters
-  bool verbose_ {};         // -v make a glorious noise
+  /// Set by -v to enable verbose output.
+  bool verbose_ {};
   enum Mode_T{
     MODE_ANY,
     MODE_STRUCTURED,
-    MODE_SEQUENCE} mode_ {MODE_ANY}; // -any, -structured, or -sequence
-  ACE_TString channel_file_ {}; // -channel filename
-  size_t expect_ {10};      // -expect n
-  size_t fail_ {};          // -fail n
-  bool use_naming_service_ {true}; // -nonamesvc
-  size_t serial_number_ {}; // -serial_number
-  bool disconnect_on_exit_ {}; // -disconnect
+    MODE_SEQUENCE} mode_ {MODE_ANY};
+  /// Channel file specified by -channel.
+  ACE_TString channel_file_ {};
+  /// Expected number of events specified by -expect.
+  size_t expect_ {10};
+  /// Number of events to fail, specified by -fail.
+  size_t fail_ {};
+  /// Whether to use the naming service, controlled by -nonamesvc.
+  bool use_naming_service_ {true};
+  /// Serial number specified by -serial_number.
+  size_t serial_number_ {};
+  /// Disconnect on exit, controlled by -disconnect.
+  bool disconnect_on_exit_ {};
   size_t structured_count_ {};
   size_t sequence_count_ {};
   size_t any_count_ {};
 
-  ACE_CString id_file_ {"consumer.ids"}; // -ids
+  /// ID file specified by -ids.
+  ACE_CString id_file_ {"consumer.ids"};
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
   CosNaming::NamingContext_var naming_context_;

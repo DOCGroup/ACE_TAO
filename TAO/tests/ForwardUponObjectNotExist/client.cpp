@@ -195,9 +195,11 @@ Worker::run_test ()
     server->test_is_a ("IDL:Foo:1.0");
 
   if (r)
-    ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) unexpected result = %d\n",
-                r));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) unexpected result = %d\n",
+                  r));
+    }
 }
 
 bool

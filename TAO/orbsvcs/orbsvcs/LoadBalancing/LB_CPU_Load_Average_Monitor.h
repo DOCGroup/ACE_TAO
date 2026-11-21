@@ -52,7 +52,7 @@ public:
    *
    * Methods required by the CosLoadBalancing::LoadMonitor interface.
    */
-  //@{
+  /// @{
   /// Return the location at which the LoadMonitor resides.
   /**
    * The returned "Location" is a sequence of length 1.
@@ -73,7 +73,7 @@ public:
   TAO_LB_CPU_Load_Average_Monitor & operator= (TAO_LB_CPU_Load_Average_Monitor const &) = delete;
   TAO_LB_CPU_Load_Average_Monitor & operator= (TAO_LB_CPU_Load_Average_Monitor &&) = delete;
 
-  //@}
+  /// @}
 
 protected:
   /**

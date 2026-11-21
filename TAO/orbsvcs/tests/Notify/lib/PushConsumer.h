@@ -74,12 +74,12 @@ protected:
   void disconnect_from_proxy () override;
 
   /// @name PushConsumer operations
-  //@{
+  /// @{
   void disconnect_push_consumer () override;
 
   /// Default does nothing.
   void push (CORBA::Any const &data) override;
-  //@}
+  /// @}
 };
 
 #if defined (__ACE_INLINE__)

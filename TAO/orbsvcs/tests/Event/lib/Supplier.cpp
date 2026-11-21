@@ -95,7 +95,7 @@ EC_Supplier::event_type (int event_number,
         i = 0;
       }
 
-      RtecEventComm::EventHeader& header =
+      RtecEventComm::EventHeader const & header =
         this->qos_.publications[i].event.header;
 
       event.header.source = header.source;

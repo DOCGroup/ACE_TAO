@@ -144,7 +144,7 @@ class TAO_RTEvent_Serv_Export TAO_ECG_CDR_Message_Receiver
 {
 public:
   /// Initialization and termination methods.
-  //@{
+  /// @{
   explicit TAO_ECG_CDR_Message_Receiver (CORBA::Boolean check_crc);
   ~TAO_ECG_CDR_Message_Receiver ();
 
@@ -157,7 +157,7 @@ public:
 
   // Shutdown the component: close down the request map, etc.
   void shutdown ();
-  //@}
+  /// @}
 
   /// Main method: read the data from @a dgram and either pass ready data
   /// to @a cdr_processor or update the <request_map_> if the request
@@ -294,10 +294,10 @@ private:
 
   /// The range of request ids, currently represented in
   /// <fragmented_requests>.
-  //@{
+  /// @{
   CORBA::ULong id_range_low_ {};
   CORBA::ULong id_range_high_ {};
-  //@}
+  /// @}
 
   /// Minimum range shifting amount.
   size_t min_purge_count_ {};

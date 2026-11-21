@@ -63,9 +63,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_INFO, "(%P|%t) - Get response...\n"));
       req->get_response ();
       if (!(req->return_value () >>= the_string))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) - Could not extract the string return value\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) - Could not extract the string return value\n"),
+                            1);
+        }
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
                   the_string));
@@ -83,9 +85,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       while (!req->poll_response ());
       if (!(req->return_value () >>= the_string))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) - Could not extract the polled string result\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) - Could not extract the polled string result\n"),
+                            1);
+        }
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
                   the_string));

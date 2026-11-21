@@ -87,10 +87,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         UDP::_narrow (object.in ());
 
       if (CORBA::is_nil (udp_var.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Object reference <%s> is nil.\n",
-                           options.ior.c_str ()),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Object reference <%s> is nil.\n",
+                             options.ior.c_str ()),
+                            1);
+        }
 
       // Activate POA to handle the call back.
 
@@ -98,9 +100,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());

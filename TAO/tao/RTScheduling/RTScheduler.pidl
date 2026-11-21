@@ -12,21 +12,19 @@
 
 module CORBA
 {
-    // Extensions by this proposal:
+    /// Extensions by this proposal:
+    /// Ada: System.Address
+    /// C: void*
+    /// C++: void*
+    /// Java: Object
     native VoidData;
-
-    // Ada:  System.Address
-    // C:    void*
-    // C++:  void*
-    // Java: Object
 
 };
 
 module RTScheduling
 {
-    // ------------------------------------------------------------------
-    // Interfaces that are useful to dynamically schedule applications
-    // ------------------------------------------------------------------
+    /// @name Interfaces useful to dynamically schedule applications
+    /// @{
 
     local interface ThreadAction
     {
@@ -41,16 +39,16 @@ module RTScheduling
           CANCELLED
         };
 
+        /// Raises CORBA::OBJECT_NOT_FOUND if this thread is not known to the
+        /// scheduler.
         void cancel();
-            // raises CORBA::OBJECT_NOT_FOUND if
-            // the distributable thread is
-            // not known to the scheduler
         readonly attribute DT_State state;
     };
 
     local interface Current
         : RTCORBA::Current
     {
+        /// A zero stack_size selects the operating system default.
         DistributableThread
             spawn
                 (in ThreadAction      start,
@@ -59,12 +57,11 @@ module RTScheduling
                 in CORBA::Policy sched_param,
                 in CORBA::Policy implicit_sched_param,
                 in unsigned long     stack_size,
-                    // zero means use the O/S default
                 in RTCORBA::Priority base_priority);
 
+        /// The scheduling_parameter argument did not match the active
+        /// scheduling policy.
         exception UNSUPPORTED_SCHEDULING_DISCIPLINE {};
-    // The scheduling_parameter argument didn't match the
-    // active scheduling policy.
 
         void begin_scheduling_segment
             (in string        name,
@@ -82,25 +79,20 @@ module RTScheduling
 
         typedef sequence<octet> IdType;
 
+        /// A globally unique identifier.
         readonly attribute IdType id;
-            // a globally unique id
 
-        //IdType get_current_id();
-            // returns id of thread that is running
-
+        /// Returns a null reference if the distributable thread is not known
+        /// to the local scheduler.
         DistributableThread lookup(in IdType id);
-            // returns a null reference if
-            // the distributable thread is
-            // not known to the local scheduler
 
         readonly attribute CORBA::Policy scheduling_parameter;
         readonly attribute CORBA::Policy implicit_scheduling_parameter;
 
         typedef sequence<string> NameList;
 
+        /// Names ordered from innermost to outermost scheduling segment.
         readonly attribute NameList      current_scheduling_segment_names;
-            // Ordered from innermost segment name
-            // to outmost segment name
     };
 
     local interface ResourceManager
@@ -184,6 +176,7 @@ module RTScheduling
 
         void cancel (in Current::IdType guid);
     };
+    /// @}
 
 };
 

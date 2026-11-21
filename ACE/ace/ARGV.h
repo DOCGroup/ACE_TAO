@@ -204,7 +204,7 @@ public:
    *
    * These methods access the argument vector contained in this object.
    */
-  //@{
+  /// @{
   /**
    * Returns the specified element of the current argument vector.
    *
@@ -232,7 +232,7 @@ public:
    */
   CHAR_TYPE const *buf ();
 
-  //@}
+  /// @}
 
   /// Dump the state of this object.
   void dump () const;

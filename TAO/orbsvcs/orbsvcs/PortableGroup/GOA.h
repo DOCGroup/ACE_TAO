@@ -48,7 +48,7 @@ class TAO_PortableGroup_Export TAO_GOA :
 public:
   // Methods added by the
   /// @name MIOP specification methods
-  //@{
+  /// @{
   PortableServer::ObjectId * create_id_for_reference (
       CORBA::Object_ptr the_ref) override;
 
@@ -62,7 +62,7 @@ public:
   void disassociate_reference_with_id (
       CORBA::Object_ptr ref,
       PortableServer::ObjectId const & oid) override;
-  //@}
+  /// @}
 
   // Standard POA interface methods
   PortableServer::POA_ptr create_POA (char const *adapter_name,

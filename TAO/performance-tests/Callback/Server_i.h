@@ -17,7 +17,7 @@ public:
   bool done () const;
 
   /// Implement the CORBA methods
-  //@{
+  /// @{
   void set_callback (Test::Callback_ptr callback) override;
 
   void request (Test::TimeStamp,
@@ -25,7 +25,7 @@ public:
 
   void shutdown () override;
 
-  //@}
+  /// @}
 
 private:
   /// A flag to terminate the event loop

@@ -40,10 +40,12 @@ int
 check_for_nil (CORBA::Object_ptr obj, char const *msg)
 {
   if (CORBA::is_nil (obj))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ERROR: Object reference <%C> is nil\n",
-                       msg),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ERROR: Object reference <%C> is nil\n",
+                         msg),
+                        -1);
+    }
 
   return 0;
 }
@@ -123,8 +125,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::Boolean status = server->_validate_connection (pols.out ());
 
       if (!status)
-        ACE_DEBUG ((LM_DEBUG,
-                    "ERROR: <validate_connection> returned FALSE\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "ERROR: <validate_connection> returned FALSE\n"));
+        }
 
       // Test 2: Check that connection established with
       // <validate_connection> is used for subsequent invocations.
@@ -154,8 +158,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       status = server->_validate_connection (pols.out ());
 
       if (status)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("<validate_connection> returned TRUE\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("<validate_connection> returned TRUE\n")));
+        }
 
       //
       // This portion of code has been temporarily disabled.

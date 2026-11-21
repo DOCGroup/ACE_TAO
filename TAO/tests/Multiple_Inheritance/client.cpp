@@ -46,15 +46,19 @@ parse_args (int argc, ACE_TCHAR **argv, Client_Options &options)
       }
 
   if (options.ior == nullptr && options.ior_input_file == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "\nPlease specify the IOR or IOR input file"
-                       " for the servant"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "\nPlease specify the IOR or IOR input file"
+                         " for the servant"),
+                        -1);
+    }
   if (options.ior != nullptr && options.ior_input_file != nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "\nPlease specify only an IOR or only an IOR"
-                       " input file but not both"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "\nPlease specify only an IOR or only an IOR"
+                         " input file but not both"),
+                        -1);
+    }
 
   // Indicates successful parsing of the command line.
   return 0;
@@ -87,17 +91,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           std::unique_ptr<FILE, int (*) (FILE *)> input_file (
             ACE_OS::fopen (options.ior_input_file, ACE_TEXT ("r")), ACE_OS::fclose);
           if (!input_file)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Cannot open input file for reading IOR: %s\n"),
-                               options.ior_input_file),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Cannot open input file for reading IOR: %s\n"),
+                                 options.ior_input_file),
+                                -1);
+            }
           ACE_Read_Buffer ior_buffer (input_file.get ());
           ACE_Read_Buffer_Unique_Ptr const data (
             ior_buffer.read (), {ior_buffer.alloc ()});
           if (data == nullptr)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Unable to read ior\n")),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Unable to read ior\n")),
+                                -1);
+            }
           ior = ACE_TEXT_CHAR_TO_TCHAR (data.get ());
         }
 

@@ -56,8 +56,10 @@ namespace ACE
               explicit URLStream (ClientRequestHandler& rh);
               explicit URLStream (ClientRequestHandler* rh);
 
-              std::shared_ptr<ClientRequestHandler> request_handler_ref_; // Owns handlers created by open().
-              ClientRequestHandler* request_handler_; // May observe a caller-owned handler.
+              /// Owns handlers created by open().
+              std::shared_ptr<ClientRequestHandler> request_handler_ref_;
+              /// May observe a caller-owned handler.
+              ClientRequestHandler* request_handler_;
           };
 
         /**

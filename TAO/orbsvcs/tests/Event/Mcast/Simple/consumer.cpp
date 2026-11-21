@@ -17,12 +17,12 @@ public:
   EC_Consumer &operator= (EC_Consumer &&) = delete;
 
   /// PushConsumer methods.
-  //@{
+  /// @{
   /// Logs each event.  Initiates shutdown after receiving 100 events.
   void push (RtecEventComm::EventSet const &events) override;
   /// No-op.
   void disconnect_push_consumer () override;
-  //@}
+  /// @}
 
 private:
   /// Helper - destroys EC, shutdowns the ORB and prints number of

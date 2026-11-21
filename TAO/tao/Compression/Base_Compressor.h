@@ -64,7 +64,8 @@ namespace TAO
 
     TAO_SYNCH_MUTEX mutex_;
     ::Compression::CompressionLevel const compression_level_;
-    // Non-owning back-reference; the compressor factory retains the compressor.
+    /// Non-owning back-reference. The compressor factory retains the
+    /// compressor.
     ::Compression::CompressorFactory * const compressor_factory_;
     ::CORBA::ULongLong compressed_bytes_ {};
     ::CORBA::ULongLong uncompressed_bytes_ {};

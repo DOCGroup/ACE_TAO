@@ -60,8 +60,10 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
       }
 
   if (options.ior_file == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Please specify the IOR for the servant"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Please specify the IOR for the servant"), -1);
+    }
 
   // Indicates successful parsing of command line.
   return 0;
@@ -85,17 +87,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Read the file, and get the IOR
       ACE_HANDLE const input_file = ACE_OS::open (options.ior_file, 0);
       if (input_file == ACE_INVALID_HANDLE)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open input file %s for reading IOR\n",
-                           options.ior_file),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open input file %s for reading IOR\n",
+                             options.ior_file),
+                            -1);
+        }
       ACE_Read_Buffer ior_buffer (input_file, true);
       ACE_Read_Buffer_Unique_Ptr const data (
         ior_buffer.read (), {ior_buffer.alloc ()});
       if (data == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to read ior\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to read ior\n"),
+                            -1);
+        }
 
       ACE_CString const ior = data.get ();
 

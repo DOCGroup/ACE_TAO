@@ -52,7 +52,7 @@ namespace TAO
       IIOP_Current_Impl &operator= (IIOP_Current_Impl const &) = delete;
       IIOP_Current_Impl &operator= (IIOP_Current_Impl &&) = delete;
 
-      //@{
+      /// @{
       ::CORBA::Long id () override;
 
       ::SSLIOP::Current_ptr ssliop_current () override;
@@ -64,7 +64,7 @@ namespace TAO
       ::CORBA::Long local_port () override;
 
       char* local_host () override;
-      //@}
+      /// @}
 
     protected:
       /// Protected because instances are reference counted.

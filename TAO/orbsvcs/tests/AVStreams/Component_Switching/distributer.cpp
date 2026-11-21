@@ -32,7 +32,7 @@ Distributer_Sender_StreamEndPoint::get_callback (char const *flow_name,
 {
   // Create and return the sender application callback to AVStreams
   // for further upcalls.
-  callback = &this->callback_;
+  callback = std::addressof (this->callback_);
 
   ACE_CString const fname = flow_name;
 
@@ -63,7 +63,7 @@ Distributer_Receiver_StreamEndPoint::get_callback (char const *flow_name,
 {
   // Create and return the receiver application callback to AVStreams
   // for further upcalls.
-  callback = &this->callback_;
+  callback = std::addressof (this->callback_);
 
   ACE_CString const flowname (flow_name);
   this->callback_.flowname (flowname);
@@ -318,7 +318,7 @@ Distributer::init (int argc,
   // Register the signal handler for clean termination of the process.
 
   ACE_NEW_RETURN (this->distributer_sender_mmdevice_,
-                  TAO_MMDevice (&this->sender_endpoint_strategy_),
+                  TAO_MMDevice (std::addressof (this->sender_endpoint_strategy_)),
                   -1);
 
   // Servant Reference Counting to manage lifetime
@@ -329,7 +329,7 @@ Distributer::init (int argc,
     this->distributer_sender_mmdevice_->_this ();
 
   ACE_NEW_RETURN (this->distributer_receiver_mmdevice_,
-                  TAO_MMDevice (&this->receiver_endpoint_strategy_),
+                  TAO_MMDevice (std::addressof (this->receiver_endpoint_strategy_)),
                   -1);
 
   // Servant Reference Counting to manage lifetime

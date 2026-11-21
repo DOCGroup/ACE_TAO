@@ -74,8 +74,10 @@ protected:
   ~sagent() override;
 
 private:
-  Pdu pdu_;                     // current input pdu
-  UdpTarget tgt_;               //  addr & com strs
+  /// Current input PDU.
+  Pdu pdu_;
+  /// Address and community strings.
+  UdpTarget tgt_;
 };
 
 #endif //SAGENT_CLS_

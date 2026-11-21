@@ -12,9 +12,11 @@
 class Logging_Handler
 {
 protected:
-  ACE_FILE_IO &log_file_; // Reference to a log file.
+  /// Reference to a log file.
+  ACE_FILE_IO &log_file_;
 
-  ACE_SOCK_Stream logging_peer_; // Connected to the client.
+  /// Connection to the client.
+  ACE_SOCK_Stream logging_peer_;
 
 public:
   // Initialization and termination methods.

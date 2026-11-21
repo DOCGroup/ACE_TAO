@@ -35,8 +35,10 @@ Server_ORBInitializer::pre_init (
     }
 
   if (!invalid_name)
-    ACE_ERROR ((LM_ERROR, "ERROR: Registering with an empty string doesn't "
-                          "throw an exception\n"));
+    {
+      ACE_ERROR ((LM_ERROR, "ERROR: Registering with an empty string doesn't "
+                            "throw an exception\n"));
+    }
 
   bool duplicate_name {};
   try
@@ -54,8 +56,10 @@ Server_ORBInitializer::pre_init (
     }
 
   if (!duplicate_name)
-    ACE_ERROR ((LM_ERROR, "ERROR: Registering with a duplicate with ORBInitInfo "
-                          "doesn't throw the expected exception\n"));
+    {
+      ACE_ERROR ((LM_ERROR, "ERROR: Registering with a duplicate with ORBInitInfo "
+                            "doesn't throw the expected exception\n"));
+    }
 
   bool invalid_object {};
   try
@@ -76,8 +80,10 @@ Server_ORBInitializer::pre_init (
     }
 
   if (!invalid_object)
-    ACE_ERROR ((LM_ERROR, "ERROR: Registering with a nil object to ORBInitInfo "
-                          "doesn't throw bad param with OMG minor code 27\n"));
+    {
+      ACE_ERROR ((LM_ERROR, "ERROR: Registering with a nil object to ORBInitInfo "
+                            "doesn't throw bad param with OMG minor code 27\n"));
+    }
 }
 
 void

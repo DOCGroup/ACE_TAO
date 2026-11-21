@@ -51,9 +51,11 @@ register_factories (CORBA::ORB_ptr orb)
     ::Compression::CompressionManager::_narrow (compression_manager.in ());
 
   if (CORBA::is_nil(manager.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) Panic: nil compression manager\n"),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         " (%P|%t) Panic: nil compression manager\n"),
+                        1);
+    }
   ::Compression::CompressorFactory_ptr compressor_factory;
   ::Compression::CompressorFactory_var compr_fact;
 
@@ -214,9 +216,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil RootPOA\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Panic: nil RootPOA\n"),
+                            1);
+        }
 
       if (parse_args (argc, argv) != 0)
       {
@@ -230,10 +234,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Output the IOR to the <ior_output_file>
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
       if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s\n",
-                           ior_output_file),
-                           1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s\n",
+                             ior_output_file),
+                             1);
+        }
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 

@@ -62,13 +62,13 @@ namespace TAO
      * @name Adapter methods for PortableInterceptor::ObjectReferenceTemplate
      * Methods
      */
-    //@{
+    /// @{
     virtual char * tao_server_id ();
 
     virtual char * tao_orb_id ();
 
     virtual PortableInterceptor::AdapterName * tao_adapter_name ();
-    //@}
+    /// @}
 
     /**
      * @name PortableInterceptor::ObjectReferenceFactory Methods
@@ -76,11 +76,11 @@ namespace TAO
      * Methods required by the
      * PortableInterceptor::ObjectReferenceFactory ValueType.
      */
-    //@{
+    /// @{
     CORBA::Object_ptr make_object (
         char const *repository_id,
         PortableInterceptor::ObjectId const &id) override;
-    //@}
+    /// @}
 
     ORT_Adapter_Impl (ORT_Adapter_Impl const &) = delete;
     ORT_Adapter_Impl &operator= (ORT_Adapter_Impl const &) = delete;

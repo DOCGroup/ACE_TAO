@@ -16,10 +16,9 @@
 
 module EndpointPolicy
 {
+  /// protocol_tag is set to TAG_Internet_IOP.
   local interface IIOPEndpointValue : EndpointValueBase
   {
-    // protocol_tag set to TAG_Internet_IOP;
-
     attribute string host;
     attribute unsigned short _port;
   };

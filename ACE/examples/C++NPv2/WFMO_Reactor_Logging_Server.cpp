@@ -126,11 +126,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Ignore argv[0]...
   --argc; ++argv;
   ACE_NEW_RETURN (server,
-                  Server_Logging_Daemon (argc, argv, &reactor),
+                  Server_Logging_Daemon (argc, argv, std::addressof (reactor)),
                   1);
-  Quit_Handler quit_handler (&reactor);
+  Quit_Handler quit_handler (std::addressof (reactor));
   ACE_Thread_Manager::instance ()->spawn_n
-    (N_THREADS, event_loop, &reactor);
+    (N_THREADS, event_loop, std::addressof (reactor));
   return ACE_Thread_Manager::instance ()->wait ();
 }
 

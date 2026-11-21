@@ -52,7 +52,7 @@ protected:
    *
    * These are implementations of template methods declared by TAO_Transport.
    */
-  //@{
+  /// @{
   ACE_Event_Handler *event_handler_i () override;
   TAO_Connection_Handler *connection_handler_i () override;
 
@@ -83,7 +83,7 @@ public:
                             TAO_Message_Semantics message_semantics =
                               TAO_Message_Semantics (),
                             ACE_Time_Value *max_time_wait = nullptr) override;
-  //@}
+  /// @}
 
 private:
   /// Construct and write a unique ID to the MIOP header.

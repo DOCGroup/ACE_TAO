@@ -51,7 +51,6 @@ Peer_Handler<PEER_STREAM>::open (void *)
     {
       while (this->connected () != -1)
         {
-          continue;
         }
 
       this->handle_close (ACE_INVALID_HANDLE,

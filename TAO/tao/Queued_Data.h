@@ -120,12 +120,12 @@ private:
     The \a missing_data_ member contains the number of bytes of
     data missing from \a msg_block_.
    */
-  //@{
+  /// @{
   /*! Data missing in the above message that hasn't been read or processed yet,
       the value TAO_MISSING_DATA_UNDEFINED indicates it hasn't been processed yet,
       otherwise greater or equal zero. */
   size_t missing_data_ {};
-  //@}
+  /// @}
 
   /// State of this queued data
   TAO_GIOP_Message_State state_;

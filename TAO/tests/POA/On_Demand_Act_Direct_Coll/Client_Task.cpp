@@ -26,10 +26,12 @@ Client_Task::svc ()
       // Try to narrow the object reference to a test reference.
       test_var const test = test::_narrow (tmp.in ());
       if (CORBA::is_nil (test.in ()))
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "Nil Test::Hello reference <%s>\n",
-                           this->input_),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "Nil Test::Hello reference <%s>\n",
+                             this->input_),
+                            1);
+        }
 
       CORBA::String_var const ior =
         this->corb_->object_to_string (test.in ());
@@ -39,20 +41,26 @@ Client_Task::svc ()
         {
           CORBA::String_var const the_string = test->get_string ();
           if (std::strcmp (the_string.in (), "Hello there!") != 0)
-            ACE_ERROR ((LM_ERROR,
-                        "(%P|%t) - Error, incorrect string returned <%C>\n",
-                        the_string.in ()));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "(%P|%t) - Error, incorrect string returned <%C>\n",
+                          the_string.in ()));
+            }
           else
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) - OK, correct string returned <%C>\n",
-                        the_string.in ()));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) - OK, correct string returned <%C>\n",
+                          the_string.in ()));
+            }
         }
       catch (CORBA::INTERNAL const &)
         {
           if (this->except_)
-            ACE_DEBUG ((LM_DEBUG,
-                        "OK: Client_Task expected exception with "
-                        "direct collocation received\n"));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "OK: Client_Task expected exception with "
+                          "direct collocation received\n"));
+            }
           else
             {
               ACE_ERROR ((LM_ERROR,

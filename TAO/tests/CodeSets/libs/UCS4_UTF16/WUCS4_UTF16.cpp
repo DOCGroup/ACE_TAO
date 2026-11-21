@@ -430,7 +430,9 @@ WUCS4_UTF16::write_wchar (ACE_OutputCDR &cdr,
       return false;
     }
   else if (static_cast<ACE_CDR::Short> (this->minor_version(cdr)) == 1)
-    encode_len = false;
+    {
+      encode_len = false;
+    }
 
   return this->write_wchar_i (cdr, x, true, encode_len);
 }
@@ -464,8 +466,10 @@ WUCS4_UTF16::write_wchar_i (ACE_OutputCDR &cdr,
     {
       len = 1;
       if (cdr.byte_order())
-        ACE_CDR::swap_2 (reinterpret_cast<char const *> (&x),
-                         reinterpret_cast<char *> (buffer));
+        {
+          ACE_CDR::swap_2 (reinterpret_cast<char const *> (&x),
+                           reinterpret_cast<char *> (buffer));
+        }
       else
       {
         buffer[0] = static_cast<ACE_CDR::Short> (x);
@@ -476,7 +480,9 @@ WUCS4_UTF16::write_wchar_i (ACE_OutputCDR &cdr,
     {
       unsigned char const tcsize = static_cast<unsigned char> (len * ACE_UTF16_CODEPOINT_SIZE);
       if (this->write_1 (cdr, &tcsize))
-        return this->write_array (cdr, &buffer, tcsize, 1, 1);
+        {
+          return this->write_array (cdr, &buffer, tcsize, 1, 1);
+        }
       else
       {
         return false;
@@ -550,7 +556,9 @@ WUCS4_UTF16::write_wchar_array (ACE_OutputCDR & cdr,
       return false;
     }
   else if (static_cast<ACE_CDR::Short> (this->minor_version(cdr)) == 1)
-    encode_len = false;
+    {
+      encode_len = false;
+    }
 
   for (size_t i = 0; i < length; ++i)
     if (!this->write_wchar_i (cdr, x[i], false, encode_len))

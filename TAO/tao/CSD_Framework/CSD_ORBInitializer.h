@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file CSD_ORBInitializer.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_CSD_ORB_INITIALIZER_H
 #define TAO_CSD_ORB_INITIALIZER_H

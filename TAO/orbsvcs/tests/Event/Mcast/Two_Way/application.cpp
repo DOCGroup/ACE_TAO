@@ -76,13 +76,13 @@ public:
                       void const *act);
 
   /// PushConsumer methods.
-  //@{
+  /// @{
   /// Update our <heartbeats_> database to reflect newly received heartbeats.
   void push (RtecEventComm::EventSet const &events) override;
 
   /// Initiate shutdown().
   void disconnect_push_consumer () override;
-  //@}
+  /// @}
 
 private:
   /**
@@ -109,7 +109,7 @@ private:
   };
 
   /// Helpers.
-  //@{
+  /// @{
   /// Verify that arguments are not nil and store their values.
   int check_args (CORBA::ORB_var orb,
                   RtecEventChannelAdmin::EventChannel_var ec);
@@ -124,7 +124,7 @@ private:
   int register_for_timeouts ();
   /// Deregister from reactor.
   void stop_timeouts ();
-  //@}
+  /// @}
 
   /// Flag indicating whether this object has been fully initialized.
   bool initialized_ {};
@@ -290,7 +290,7 @@ Heartbeat_Application::stop_timeouts ()
 {
   ACE_Reactor * const reactor = this->orb_->orb_core ()->reactor ();
   if (!reactor
-      || reactor->cancel_timer (&this->timeout_handler_) == -1)
+      || reactor->cancel_timer (std::addressof (this->timeout_handler_)) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "Heartbeat_Application::stop_timeouts - "

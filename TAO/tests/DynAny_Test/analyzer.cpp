@@ -164,8 +164,10 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da)
                     tab(level_);
 
                     if (debug_)
-                      ACE_DEBUG ((LM_DEBUG,
-                                  "[%d]\n", i));
+                      {
+                        ACE_DEBUG ((LM_DEBUG,
+                                    "[%d]\n", i));
+                      }
 
                     DynamicAny::DynAny_var cc (ds->current_component ());
 

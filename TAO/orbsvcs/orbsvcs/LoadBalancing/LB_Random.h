@@ -43,7 +43,7 @@ public:
    *
    * Methods required by the CosLoadBalancing::Strategy interface.
    */
-  //@{
+  /// @{
   char * name () override;
 
   CosLoadBalancing::Properties * get_properties () override;
@@ -63,7 +63,7 @@ public:
   void analyze_loads (
       PortableGroup::ObjectGroup_ptr object_group,
       CosLoadBalancing::LoadManager_ptr load_manager) override;
-  //@}
+  /// @}
 
   /// Returns the default POA for this servant.
   PortableServer::POA_ptr _default_POA () override;

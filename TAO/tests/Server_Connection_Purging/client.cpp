@@ -59,9 +59,11 @@ Purging_Handler::handle_close (ACE_HANDLE h,
                                ACE_Reactor_Mask )
 {
   if (purged_handles % 10 == 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) purging handle [%H]\n",
-                h));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) purging handle [%H]\n",
+                  h));
+    }
 
   ++purged_handles;
 
@@ -93,16 +95,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   for (int i {}; i != iteration_count; ++i)
     {
       if (connectors[i].connect (streams[i], addr) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Error while connecting: %p\n",
-                           "client"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error while connecting: %p\n",
+                             "client"),
+                            -1);
+        }
 
       if (streams[i].get_handle () == ACE_INVALID_HANDLE)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Got invalid handles after connecting the [%d] time\n",
-                           i),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Got invalid handles after connecting the [%d] time\n",
+                             i),
+                            -1);
+        }
       if (singleton->register_handler (streams[i].get_handle (),
                                        std::addressof (handlers[i]),
                                        ACE_Event_Handler::READ_MASK) == -1)

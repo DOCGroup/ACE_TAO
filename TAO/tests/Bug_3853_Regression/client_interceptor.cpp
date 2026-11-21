@@ -59,10 +59,12 @@ Echo_Client_Request_Interceptor::send_request (
         orb->string_to_object (server2_ior.c_str ());
       Demo::HelloWorld_var const hello = Demo::HelloWorld::_narrow (hello_obj.in ());
       if (CORBA::is_nil (hello.in ()))
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Echo_Client_Request_Interceptor::send_request(%d) ")
-                    ACE_TEXT ("hello reference is nil.\n"),
-                    recursive_call_count));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) Echo_Client_Request_Interceptor::send_request(%d) ")
+                      ACE_TEXT ("hello reference is nil.\n"),
+                      recursive_call_count));
+        }
       else
         {
           ACE_DEBUG ((LM_DEBUG,

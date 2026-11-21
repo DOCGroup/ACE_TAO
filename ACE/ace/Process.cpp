@@ -241,7 +241,8 @@ ACE_Process::spawn (ACE_Process_Options &options)
   size_t vcount, i;
   for (vcount = 0; wargv[vcount] != 0; ++vcount)
     ;
-  std::unique_ptr<char *[]> procargv_owner {new char *[vcount + 1]};
+  std::unique_ptr<char *[]> procargv_owner =
+    std::make_unique<char *[]> (vcount + 1);
   char **procargv = procargv_owner.get ();
   std::vector<std::unique_ptr<char[]>> procargv_strings;
   procargv_strings.reserve (vcount);
@@ -261,7 +262,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
       wargv = options.env_argv ();
       for (vcount = 0; wargv[vcount] != 0; ++vcount)
         ;
-      procenv_owner.reset (new char *[vcount + 1]);
+      procenv_owner = std::make_unique<char *[]> (vcount + 1);
       procenv = procenv_owner.get ();
       procenv_strings.reserve (vcount);
       for (i = 0; i < vcount; ++i)
@@ -475,7 +476,8 @@ ACE_Process::spawn (ACE_Process_Options &options)
         size_t vcount, i;
         for (vcount = 0; wargv[vcount] != 0; ++vcount)
           ;
-        std::unique_ptr<char *[]> procargv_owner {new char *[vcount + 1]};
+        std::unique_ptr<char *[]> procargv_owner =
+          std::make_unique<char *[]> (vcount + 1);
         char **procargv = procargv_owner.get ();
         std::vector<std::unique_ptr<char[]>> procargv_strings;
         procargv_strings.reserve (vcount);
@@ -490,7 +492,8 @@ ACE_Process::spawn (ACE_Process_Options &options)
         wargv = options.env_argv ();
         for (vcount = 0; wargv[vcount] != 0; ++vcount)
           ;
-        std::unique_ptr<char *[]> procenv_owner {new char *[vcount + 1]};
+        std::unique_ptr<char *[]> procenv_owner =
+          std::make_unique<char *[]> (vcount + 1);
         char **procenv = procenv_owner.get ();
         std::vector<std::unique_ptr<char[]>> procenv_strings;
         procenv_strings.reserve (vcount);

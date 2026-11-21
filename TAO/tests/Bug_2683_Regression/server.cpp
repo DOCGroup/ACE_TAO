@@ -80,9 +80,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       if (!endpoint_found)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "ERROR: %s requires an explicit endpoint!\n",
-                           argv[0]), 1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "ERROR: %s requires an explicit endpoint!\n",
+                             argv[0]), 1);
+        }
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server started\n"));
       CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
@@ -101,18 +103,22 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil RootPOA\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Panic: nil RootPOA\n"),
+                            1);
+        }
 
       CORBA::Object_var const ior_table_object = orb->resolve_initial_references ("IORTable");
 
       IORTable::Table_var const iortable = IORTable::Table::_narrow (ior_table_object.in ());
 
       if (CORBA::is_nil (iortable.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil IORTable\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Panic: nil IORTable\n"),
+                            1);
+        }
 
       ORB_Killer killer (orb.in ());
       test_i *servant {};
@@ -152,10 +158,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
           ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file for writing IOR: %s\n",
-                             ior_output_file),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot open output file for writing IOR: %s\n",
+                               ior_output_file),
+                              1);
+          }
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
 

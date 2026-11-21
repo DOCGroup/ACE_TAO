@@ -61,7 +61,7 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all client request interceptors.
    */
-  //@{
+  /// @{
   /// Return the name of this ClientRequestInterceptor.
   char * name () override;
 
@@ -76,7 +76,7 @@ public:
   void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
   void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri) override;
-  //@}
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

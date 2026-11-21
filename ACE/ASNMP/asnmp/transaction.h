@@ -34,7 +34,8 @@
 class ASNMP_Export transaction : public ACE_Event_Handler
 {
   int retry_counter_ {};
-  transaction_result *result_ {}; // borrowed callback
+  /// Borrowed callback.
+  transaction_result *result_ {};
 
 public:
   transaction (Pdu const &pdu, UdpTarget const &target, ACE_SOCK_Dgram &io);
@@ -47,7 +48,8 @@ public:
 
   /// begin polling for values
   int run ();
-  int run (transaction_result *r); // Async interface, with callback object
+  /// Async interface with callback object.
+  int run (transaction_result *r);
 
   /// return pdu with result from agent after run() is completed rc = 0
   /// optionally get community str
@@ -84,13 +86,19 @@ private:
     }
   };
 
-  wpdu wp_;                     // wire pdu
-  UdpTarget params_;            // params
-  ACE_INET_Addr addr_;          // to address
-  ACE_SOCK_Dgram session_;      // io object
+  /// Wire PDU.
+  wpdu wp_;
+  /// Target parameters.
+  UdpTarget params_;
+  /// Destination address.
+  ACE_INET_Addr addr_;
+  /// I/O object.
+  ACE_SOCK_Dgram session_;
   std::unique_ptr<char[], Receive_Buffer_Deleter> receive_buffer_ {};
-  iovec receive_iovec_ {};      // non-owning view; recv() allocates receive_buffer_
-  ACE_INET_Addr receive_addr_;  // from address
+  /// Non-owning view; recv() allocates receive_buffer_.
+  iovec receive_iovec_ {};
+  /// Source address.
+  ACE_INET_Addr receive_addr_;
 };
 
 #endif // TRANSACTION_

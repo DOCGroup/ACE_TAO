@@ -117,9 +117,11 @@ Server_Request_Interceptor::send_reply (
             }
         }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "\nERROR: send_reply - Could not extract "
-                    "arguments.\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "\nERROR: send_reply - Could not extract "
+                      "arguments.\n"));
+        }
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -194,9 +196,11 @@ Server_Request_Interceptor::send_exception (
             }
         }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "\nERROR: send_exception - Could not extract "
-                    "arguments.\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "\nERROR: send_exception - Could not extract "
+                      "arguments.\n"));
+        }
     }
 
   ACE_DEBUG ((LM_DEBUG,

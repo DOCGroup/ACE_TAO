@@ -29,7 +29,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Forward declarations.
 class TAO_ORB_Core;
 
 /// Policy factory for the endpoint policies.
@@ -49,7 +48,7 @@ public:
                                    CORBA::Any const& value) override;
 
 private:
-  // Non-owning: the ORB core outlives the registered policy factory.
+  /// Non-owning pointer; the ORB core outlives the registered policy factory.
   TAO_ORB_Core * orb_core_;
 };
 

@@ -58,7 +58,7 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all client request interceptors.
    */
-  //@{
+  /// @{
   void send_request (
       PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
@@ -73,7 +73,7 @@ public:
 
   void receive_other (
       PortableInterceptor::ClientRequestInfo_ptr ri) override;
-  //@}
+  /// @}
 
 private:
   // Returns 1 if the client-side test is currently being run, and 0

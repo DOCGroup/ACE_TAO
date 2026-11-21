@@ -67,11 +67,11 @@ class TAO_LB_ObjectReferenceFactory
    * Methods required by the
    * PortableInterceptor::ObjectReferenceFactory interface.
    */
-  //@{
+  /// @{
   CORBA::Object_ptr make_object (
       char const * repository_id,
       PortableInterceptor::ObjectId const & id) override;
-  //@}
+  /// @}
 
   using Table = ACE_Hash_Map_Manager_Ex<
     ACE_CString,

@@ -70,7 +70,9 @@ namespace Test
 
     // Oneway?
     if (response_expected)
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("CRI    (%P|%t) Sending a two-way\n")));
+      {
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT("CRI    (%P|%t) Sending a two-way\n")));
+      }
     else
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT("CRI    (%P|%t) Sending a one-way\n")));

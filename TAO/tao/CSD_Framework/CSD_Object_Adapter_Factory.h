@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file CSD_Object_Adapter_Factory.h
  *
  *  @author Yan Dai (dai_y@ociweb.com)
  */
-//=============================================================================
 
 #ifndef TAO_CSD_OBJECT_ADAPTER_FACTORY_H
 #define TAO_CSD_OBJECT_ADAPTER_FACTORY_H

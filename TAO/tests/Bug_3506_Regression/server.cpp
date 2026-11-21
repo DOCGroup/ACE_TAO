@@ -65,13 +65,17 @@ public:
       {
         ACE_ERROR ((LM_ERROR, "ERROR Any not successfully marshalled\nAny is %@\n", &ts.whatEver));
         if (ts.whatEver._tao_get_typecode ()->kind () != CORBA::tk_null)
-          ACE_ERROR ((LM_ERROR, "ID: %C\nNAME: %C\nKIND: %d\n",
-                      ts.whatEver._tao_get_typecode ()->id (),
-                      ts.whatEver._tao_get_typecode ()->name (),
-                      ts.whatEver._tao_get_typecode ()->kind ()));
+          {
+            ACE_ERROR ((LM_ERROR, "ID: %C\nNAME: %C\nKIND: %d\n",
+                        ts.whatEver._tao_get_typecode ()->id (),
+                        ts.whatEver._tao_get_typecode ()->name (),
+                        ts.whatEver._tao_get_typecode ()->kind ()));
+          }
         else
-          ACE_ERROR ((LM_ERROR, "Typecode is NULL\nKIND: %d\n",
-                      ts.whatEver._tao_get_typecode ()->kind ()));
+          {
+            ACE_ERROR ((LM_ERROR, "Typecode is NULL\nKIND: %d\n",
+                        ts.whatEver._tao_get_typecode ()->kind ()));
+          }
       }
   }
 
@@ -117,10 +121,12 @@ Main_C::Create (CORBA::ORB_ptr orb, int argc, ACE_TCHAR *argv[]) const
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
           ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file for writing IOR: %s\n",
-                             ior_output_file),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot open output file for writing IOR: %s\n",
+                               ior_output_file),
+                              1);
+          }
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
 

@@ -2,6 +2,8 @@
 #include "ace/Get_Opt.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 
+#include <memory>
+
 using DISTRIBUTER = ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex>;
 
 int
@@ -10,7 +12,7 @@ Distributer_Sender_StreamEndPoint::get_callback (char const *,
 {
   // Create and return the sender application callback to AVStreams
   // for further upcalls.
-  callback = &this->callback_;
+  callback = std::addressof (this->callback_);
   return 0;
 }
 
@@ -37,7 +39,7 @@ Distributer_Receiver_StreamEndPoint::get_callback (char const *,
 {
   // Create and return the receiver application callback to AVStreams
   // for further upcalls.
-  callback = &this->callback_;
+  callback = std::addressof (this->callback_);
   return 0;
 }
 
@@ -162,7 +164,7 @@ Distributer::init (int argc, ACE_TCHAR *argv[])
 
   TAO_MMDevice *sender_mmdevice_servant {};
   ACE_NEW_RETURN (sender_mmdevice_servant,
-                  TAO_MMDevice (&this->sender_endpoint_strategy_),
+                  TAO_MMDevice (std::addressof (this->sender_endpoint_strategy_)),
                   -1);
 
   // Servant Reference Counting to manage lifetime
@@ -174,7 +176,7 @@ Distributer::init (int argc, ACE_TCHAR *argv[])
 
   TAO_MMDevice *receiver_mmdevice_servant {};
   ACE_NEW_RETURN (receiver_mmdevice_servant,
-                  TAO_MMDevice (&this->receiver_endpoint_strategy_),
+                  TAO_MMDevice (std::addressof (this->receiver_endpoint_strategy_)),
                   -1);
 
   PortableServer::ServantBase_var safe_receiver_mmdevice =

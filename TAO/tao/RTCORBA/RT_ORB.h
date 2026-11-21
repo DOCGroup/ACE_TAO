@@ -33,7 +33,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Forward reference for TAO_Named_RT_Mutex_Manager
 class TAO_RT_Mutex;
 class TAO_Thread_Pool_Manager;
 

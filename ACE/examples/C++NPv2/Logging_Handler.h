@@ -9,6 +9,8 @@
 #include "ace/Message_Block.h"
 #include "ace/SOCK_Stream.h"
 
+#include <memory>
+
 class Logging_Handler
 {
 protected:
@@ -26,16 +28,16 @@ public:
     logging_peer_.set_handle (handle);
   }
   explicit Logging_Handler (ACE_FILE_IO &log_file)
-    : log_file_ (&log_file) {}
+    : log_file_ (std::addressof (log_file)) {}
   Logging_Handler (ACE_FILE_IO &log_file,
                    ACE_HANDLE handle)
-    : log_file_ (&log_file)
+    : log_file_ (std::addressof (log_file))
   {
     logging_peer_.set_handle (handle);
   }
   Logging_Handler (ACE_FILE_IO &log_file,
                    ACE_SOCK_Stream const &logging_peer)
-    : log_file_ (&log_file), logging_peer_ (logging_peer) {}
+    : log_file_ (std::addressof (log_file)), logging_peer_ (logging_peer) {}
   explicit Logging_Handler (ACE_SOCK_Stream const &logging_peer)
     : log_file_ {}, logging_peer_ (logging_peer) {}
 

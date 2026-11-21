@@ -193,7 +193,6 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       while (ACE_OS::poll (poll_array, n_handles) == -1
              && errno == EINTR)
         {
-          continue;
         }
 
       handle_data (n_handles);

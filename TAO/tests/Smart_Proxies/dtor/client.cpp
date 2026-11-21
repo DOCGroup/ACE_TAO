@@ -60,10 +60,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         Test_var server = Test::_narrow (obj.in ());
 
         if (CORBA::is_nil (server.in ()))
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil.\n",
-                             options.ior),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Object reference <%s> is nil.\n",
+                               options.ior),
+                              1);
+          }
 
         server->hello (3);
 
@@ -72,9 +74,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_DEBUG ((LM_DEBUG, "Testing _non_existent()\n"));
         CORBA::Boolean const ne = server->_non_existent ();
         if (ne)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Not a Messenger object reference\n"),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Not a Messenger object reference\n"),
+                              1);
+          }
         else
         {
           ACE_DEBUG ((LM_DEBUG, "Successfully called _non_existent()\n"));
@@ -89,9 +93,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
       // Leaving the scope above should destroy the smart proxy.
       if (!dtor_called)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "The Smart proxy is not deleted\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "The Smart proxy is not deleted\n"),
+                            1);
+        }
 
       orb->destroy ();
     }

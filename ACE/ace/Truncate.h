@@ -55,8 +55,6 @@ namespace ACE_Utils
 # endif  /* __GNUC__ */
   template<> struct Sign_Check<signed long long> { static bool const is_signed = true; };
 
-  // -----------------------------------------------------
-
   /**
    * @struct To_Unsigned
    *

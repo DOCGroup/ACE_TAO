@@ -1043,7 +1043,7 @@ public:
   /**
    * @name Queue-like insert and delete methods
    */
-  //@{
+  /// @{
   /**
    * Insert pointer for a new item at the tail of the list.
    *
@@ -1073,7 +1073,7 @@ public:
    *         an error occurred, or the original pointer inserted was 0.
    */
   T *delete_tail ();
-  //@}
+  /// @}
 
   /**
    * Provide random access to any item in the list.

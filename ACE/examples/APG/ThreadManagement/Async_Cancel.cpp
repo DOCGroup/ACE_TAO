@@ -2,6 +2,8 @@
 #include "ace/Task.h"
 #include "ace/Log_Msg.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CANCEL)
 // Only works on Pthreads...
 
@@ -54,7 +56,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   CanceledTask task;
   task.activate ();
   ACE_OS::sleep (1);
-  ACE_Thread_Manager::instance ()->cancel_task (&task, 1);
+  ACE_Thread_Manager::instance ()->cancel_task (std::addressof (task), 1);
   task.wait ();
 
   return 0;

@@ -63,11 +63,11 @@ namespace TAO
        * Methods required by the SecurityLevel3::SecurityCurrent
        * interface.
        */
-      //@{
+      /// @{
       SecurityLevel3::ClientCredentials_ptr client_credentials () override;
 
       CORBA::Boolean request_is_local () override;
-      //@}
+      /// @}
 
       /// Return the TSS slot ID assigned to the "SecurityCurrent"
       /// object.
@@ -106,12 +106,12 @@ namespace TAO
        * Prevent copying through the copy constructor and the
        * assignment operator.
        */
-      //@{
+      /// @{
       SecurityCurrent (SecurityCurrent const &) = delete;
       SecurityCurrent (SecurityCurrent &&) = delete;
       SecurityCurrent &operator= (SecurityCurrent const &) = delete;
       SecurityCurrent &operator= (SecurityCurrent &&) = delete;
-      //@}
+      /// @}
 
     private:
       /// Thread-specific storage slot assigned to this object.

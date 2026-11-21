@@ -27,9 +27,11 @@ namespace Test
     ++this->request_count_;
 
      if (TAO_debug_level >=1)
-       ACE_DEBUG ((LM_DEBUG,
-                   ACE_TEXT ("%s (%P|%t) Getting the ORB\n"),
-                   name.in ()));
+       {
+         ACE_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("%s (%P|%t) Getting the ORB\n"),
+                     name.in ()));
+       }
 
     int tmpargc = 0;
     ACE_TCHAR **argv {};
@@ -37,9 +39,11 @@ namespace Test
                                           argv,
                                           this->orb_id_.in ());
     if (TAO_debug_level >=1)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%s (%P|%t) Resolving the TC\n"),
-                  name.in ()));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("%s (%P|%t) Resolving the TC\n"),
+                    name.in ()));
+      }
 
    CORBA::Object_var tcobject =
      orb->resolve_initial_references ("TAO::Transport::Current");

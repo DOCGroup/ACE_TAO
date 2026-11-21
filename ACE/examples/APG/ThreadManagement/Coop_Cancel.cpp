@@ -6,6 +6,8 @@
 #include "ace/Task.h"
 #include "ace/Log_Msg.h"
 
+#include <memory>
+
 // Listing 1 code/ch13
 class CanceledTask : public ACE_Task<ACE_MT_SYNCH>
 {
@@ -56,7 +58,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
   ACE_OS::sleep (1);
 
-  ACE_Thread_Manager::instance ()->cancel_task (&task);
+  ACE_Thread_Manager::instance ()->cancel_task (std::addressof (task));
   task.wait ();
   return 0;
 }

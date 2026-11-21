@@ -8,9 +8,11 @@ Test_Smart_Factory::create_proxy (Test_ptr proxy)
               "create a smart_proxy\n"));
 
   if (!CORBA::is_nil (proxy))
-    ACE_NEW_RETURN (proxy,
-                    Test_Smart_Proxy (proxy),
-                    nullptr);
+    {
+      ACE_NEW_RETURN (proxy,
+                      Test_Smart_Proxy (proxy),
+                      nullptr);
+    }
 
   return proxy;
 }

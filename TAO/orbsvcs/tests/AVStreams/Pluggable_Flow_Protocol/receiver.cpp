@@ -5,13 +5,14 @@
 
 #include <cstddef>
 #include <cstring>
+#include <memory>
 #include <new>
 
 int
 Receiver_StreamEndPoint::get_callback (char const *,
                                        TAO_AV_Callback *&callback)
 {
-  callback = &this->callback_;
+  callback = std::addressof (this->callback_);
   return 0;
 }
 
@@ -74,7 +75,7 @@ Receiver::init (int argc,
     return -1;
   }
 
-  TAO_MMDevice * const mmdevice = new (std::nothrow) TAO_MMDevice (&this->reactive_strategy_);
+  TAO_MMDevice * const mmdevice = new (std::nothrow) TAO_MMDevice (std::addressof (this->reactive_strategy_));
   if (mmdevice == nullptr)
   {
     ACE_ERROR_RETURN ((LM_ERROR, "Unable to allocate receiver MMDevice\n"), -1);

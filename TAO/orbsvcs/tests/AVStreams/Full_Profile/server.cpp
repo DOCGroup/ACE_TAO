@@ -1,5 +1,6 @@
 #include "server.h"
 #include <cstddef>
+#include <memory>
 
 FTP_Server_FlowEndPoint::FTP_Server_FlowEndPoint ()
   : TAO_FlowConsumer ("Data", FTP_SERVER::instance ()->protocols (), FTP_SERVER::instance ()->format ())
@@ -24,7 +25,7 @@ int
 FTP_Server_FlowEndPoint::get_callback (char const *,
                                        TAO_AV_Callback *&callback)
 {
-  callback = &this->callback_;
+  callback = std::addressof (this->callback_);
   return 0;
 }
 

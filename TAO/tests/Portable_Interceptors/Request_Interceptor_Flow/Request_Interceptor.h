@@ -57,12 +57,12 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all client request interceptors.
    */
-  //@{
+  /// @{
   /// Return the name of this Requestinterceptor.
   char * name () override;
 
   void destroy () override;
-  //@}
+  /// @}
 
 protected:
   /// The name of this interceptor.

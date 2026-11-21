@@ -95,11 +95,15 @@ TimeoutClient::send (bool async,
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Invoking "));
   if (async)
-    ACE_DEBUG ((LM_DEBUG,
-                "asynch "));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "asynch "));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                "synch "));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "synch "));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "local: %Qms remote: %Qms  ... ",
@@ -175,12 +179,16 @@ TimeoutClient::send (bool async,
   ACE_Time_Value elapsed_time = timeoutHandler_i_.elapsed_time ();
 
   if (async)
-    ACE_DEBUG ((LM_DEBUG,
-                " .. needed %Qms\n",
-                static_cast<ACE_UINT64> (elapsed_time.msec ())));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  " .. needed %Qms\n",
+                  static_cast<ACE_UINT64> (elapsed_time.msec ())));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                " .. done\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  " .. done\n"));
+    }
 }
 
 int

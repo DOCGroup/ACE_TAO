@@ -45,8 +45,10 @@ public:
     explicit Thermometer_impl (CCS::AssetType anum);
     ~Thermometer_impl () override;
 
-    static Controller_impl *m_ctrl; // My controller
-    CCS::AssetType const m_anum; // My asset number
+    /// Controller for this example.
+    static Controller_impl *m_ctrl;
+    /// Asset number.
+    CCS::AssetType const m_anum;
 
     void _add_ref () override;
     void _remove_ref () override;

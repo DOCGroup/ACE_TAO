@@ -9,7 +9,8 @@
 
 class Init_Fini_t {
 public:
-  int type {}; // 0 is start, 1 is end
+  /// 0 for start, 1 for end.
+  int type {};
   ACE_Time_Value timestamp;
 };
 
@@ -27,7 +28,8 @@ public:
 private:
   std::vector<float> throughput_;
   std::vector<float> latency_;
-  std::vector<Init_Fini_t> init_fini_; // Two entries per thread for peak activity.
+  /// Two entries per thread for peak activity.
+  std::vector<Init_Fini_t> init_fini_;
   int thread_count_ {};
 };
 #endif

@@ -83,7 +83,7 @@ public:
    * implement the RTCORBA::Current interface, but it is faster for
    * some critical components.
    */
-  //@{
+  /// @{
   int get_thread_CORBA_priority (CORBA::Short &priority) override;
 
   int get_thread_native_priority (CORBA::Short &) override;
@@ -95,7 +95,7 @@ public:
   int set_thread_CORBA_priority (CORBA::Short) override;
 
   int restore_thread_CORBA_and_native_priority (CORBA::Short, CORBA::Short) override;
-  //@}
+  /// @}
 
 protected:
   int set_thread_native_priority (CORBA::Short);
@@ -134,7 +134,7 @@ protected:
 protected:
   TAO_ORB_Core *orb_core_ {};
 
-  // Save a reference to the priority mapping manager.
+  /// Holds a reference to the priority mapping manager.
   TAO_Priority_Mapping_Manager_var mapping_manager_;
   TAO_Network_Priority_Mapping_Manager_var network_mapping_manager_;
 

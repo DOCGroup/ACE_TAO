@@ -108,7 +108,7 @@ map_test ()
          iter != map.end ();
          ++iter)
     {
-      LAZY_MAP::ENTRY &entry = *iter;
+      LAZY_MAP::ENTRY const &entry = *iter;
       if (entry.int_id_ == 1)
         map.unbind (1);
     }
@@ -123,7 +123,7 @@ map_test ()
          iter != map.end ();
          ++iter)
       {
-        LAZY_MAP::ENTRY &entry = *iter;
+        LAZY_MAP::ENTRY const &entry = *iter;
         if (entry.int_id_ == 0)
           map.unbind (0);
       }
@@ -138,7 +138,7 @@ map_test ()
          iter != map.end ();
          ++iter)
       {
-        LAZY_MAP::ENTRY &entry = *iter;
+        LAZY_MAP::ENTRY const &entry = *iter;
         if (entry.int_id_ == 2)
           map.unbind (2);
       }
@@ -260,7 +260,7 @@ active_map_test ()
          iter != map.end ();
          ++iter)
     {
-      ACTIVE_MAP::ENTRY &entry = *iter;
+      ACTIVE_MAP::ENTRY const &entry = *iter;
       if (entry.int_id_ == 1)
         map.unbind (keys[1]);
     }
@@ -275,7 +275,7 @@ active_map_test ()
          iter != map.end ();
          ++iter)
       {
-        ACTIVE_MAP::ENTRY &entry = *iter;
+        ACTIVE_MAP::ENTRY const &entry = *iter;
         if (entry.int_id_ == 0)
           map.unbind (keys[0]);
       }
@@ -290,7 +290,7 @@ active_map_test ()
          iter != map.end ();
          ++iter)
       {
-        ACTIVE_MAP::ENTRY &entry = *iter;
+        ACTIVE_MAP::ENTRY const &entry = *iter;
         if (entry.int_id_ == 2)
           map.unbind (keys[2]);
       }

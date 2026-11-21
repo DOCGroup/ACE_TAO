@@ -141,7 +141,7 @@ Log::get_preamble ()
       this->hostproc_ = new HostProcess (this->origin_, pid);
       this->procs_.insert_tail(this->hostproc_);
       this->hostproc_->start_time (this->time_);
-      ACE_CString &procname = this->alias_.length() > 0 ?
+      ACE_CString const &procname = this->alias_.length() > 0 ?
         this->alias_ : this->origin_;
       switch (numprocs)
         {
@@ -227,9 +227,6 @@ Log::handle_msg_octets ()
 void
 Log::parse_HEXDUMP_i ()
 {
-  char *pos = std::strstr (this->line_, "HEXDUMP");
-  pos += 8;
-
   if (this->dump_target_ != nullptr)
     {
       ACE_ERROR ((LM_ERROR,

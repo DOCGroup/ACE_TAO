@@ -171,8 +171,10 @@ Manager::make_iors_register (Manager_Options const &options)
     this->orb_->string_to_object (options.second_ior.c_str ());
 
   if (options.third_ior.empty ())
-    ACE_DEBUG ((LM_DEBUG,
-                "Here is the culprit\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Here is the culprit\n"));
+    }
   // Third Server
   CORBA::Object_var const object_tertiary =
     this->orb_->string_to_object (options.third_ior.c_str ());
@@ -196,12 +198,16 @@ Manager::make_iors_register (Manager_Options const &options)
   CORBA::Object_var const merged_set1 = iorm->merge_iors (iors);
 
   if (object_secondary.in () == nullptr)
-    ACE_DEBUG ((LM_DEBUG,
-                " There is a problem 1 "));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  " There is a problem 1 "));
+    }
 
   if (object_tertiary.in () == nullptr)
-    ACE_DEBUG ((LM_DEBUG,
-                " There is a problem\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  " There is a problem\n"));
+    }
 
   TAO_IOP::TAO_IOR_Manipulation::IORList iors_again (3);
   iors_again.length (3);
@@ -220,10 +226,12 @@ Manager::make_iors_register (Manager_Options const &options)
         ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")),
         ACE_OS::fclose);
       if (!output_file)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                           options.ior_output_file.c_str ()),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                             options.ior_output_file.c_str ()),
+                            1);
+        }
       ACE_OS::fprintf (output_file.get (), "%s", iorref1.in ());
     }
 

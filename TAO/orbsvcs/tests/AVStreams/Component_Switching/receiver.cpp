@@ -38,7 +38,7 @@ Receiver_StreamEndPoint::get_callback (char const *flow_name,
 {
   // Return the receiver application callback to the AVStreams for
   // future upcalls.
-  callback = &this->callback_;
+  callback = std::addressof (this->callback_);
 
   ACE_CString const fname = flow_name;
   this->callback_.flowname (fname);
@@ -154,7 +154,7 @@ Receiver::init (int,
     return result;
   }
 
-  connection_manager = &this->connection_manager_;
+  connection_manager = std::addressof (this->connection_manager_);
 
   ACE_Reactor *reactor =
     TAO_AV_CORE::instance ()->reactor ();
@@ -170,7 +170,7 @@ Receiver::init (int,
 
   // Register the receiver mmdevice object with the ORB
   ACE_NEW_RETURN (this->mmdevice_,
-                  TAO_MMDevice (&this->reactive_strategy_),
+                  TAO_MMDevice (std::addressof (this->reactive_strategy_)),
                   -1);
 
   // Servant Reference Counting to manage lifetime

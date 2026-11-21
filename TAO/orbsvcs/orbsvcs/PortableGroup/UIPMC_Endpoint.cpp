@@ -178,10 +178,12 @@ TAO_UIPMC_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
           latest->preferred_path_.host = CORBA::string_dup (preferred[i].c_str());
 
           if (TAO_debug_level > 3)
-            ORBSVCS_DEBUG ((LM_DEBUG,
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - TAO_UIPMC_Endpoint::preferred_interfaces, adding path [%C]"
                       " as preferred local address for [%C] \n",
                       latest->preferred_path_.host.in(), this->host_.in ()));
+            }
         }
 
       ++i;

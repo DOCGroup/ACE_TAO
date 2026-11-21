@@ -50,10 +50,12 @@ Options::parse_args (int argc, ACE_TCHAR **argv)
         result = this->read_ior (get_opts.opt_arg ());
 
         if (result < 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to read ior from %s : %p\n",
-                             get_opts.opt_arg ()),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Unable to read ior from %s : %p\n",
+                               get_opts.opt_arg ()),
+                              -1);
+          }
 
         break;
 
@@ -70,9 +72,13 @@ Options::parse_args (int argc, ACE_TCHAR **argv)
 
       case 't': // data type
         if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("ubstring")))
-          this->test_type_ = Options::Test_Type::Unbounded_String;
+          {
+            this->test_type_ = Options::Test_Type::Unbounded_String;
+          }
         else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("ub_struct_seq")))
-          this->test_type_ = Options::Test_Type::Unbounded_Struct_Sequence;
+          {
+            this->test_type_ = Options::Test_Type::Unbounded_Struct_Sequence;
+          }
         break;
 
       case '?':
@@ -101,18 +107,22 @@ Options::read_ior (ACE_TCHAR const* filename)
   ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
 
   if (f_handle == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open %s for writing: %p\n",
-                       filename),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to open %s for writing: %p\n",
+                         filename),
+                        -1);
+    }
   ACE_Read_Buffer ior_buffer (f_handle, true);
   ACE_Read_Buffer_Unique_Ptr const data (
     ior_buffer.read (), {ior_buffer.alloc ()});
 
   if (data == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to allocate memory to read ior: %p\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to allocate memory to read ior: %p\n"),
+                        -1);
+    }
   this->ior_ = CORBA::string_dup (data.get ());
   return 0;
 }

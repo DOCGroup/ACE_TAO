@@ -69,7 +69,8 @@ protected:
   virtual int send_request ();
   virtual int receive_reply ();
 
-  ACE_Message_Block *mb_ {}; // Borrowed from the caller.
+  /// Borrowed from the caller.
+  ACE_Message_Block *mb_ {};
   size_t length_ {};
   size_t offset_ {};
   std::basic_string<ACE_TCHAR> filename_;

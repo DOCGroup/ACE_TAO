@@ -97,21 +97,32 @@ public:
   std::vector<size_t> thr_work_count = std::vector<size_t> (10000);
 
 private:
-  ACE_Profile_Timer _itimer;            // Keep track of time.
-  std::basic_string<ACE_TCHAR> _service_entry; // Name of the shared object file and shared object.
-  std::basic_string<ACE_TCHAR> _mapped_file;   // Name of the mapped file.
-  std::basic_string<ACE_TCHAR> _pipe_addr {ACE_DEFAULT_RENDEZVOUS}; // Name of the STREAM pipe.
-  size_t _sleep_time {100}; // Time to sleep.
+  /// Keep track of time.
+  ACE_Profile_Timer _itimer;
+  /// Name of the shared object file and shared object.
+  std::basic_string<ACE_TCHAR> _service_entry;
+  /// Name of the mapped file.
+  std::basic_string<ACE_TCHAR> _mapped_file;
+  /// Name of the STREAM pipe.
+  std::basic_string<ACE_TCHAR> _pipe_addr {ACE_DEFAULT_RENDEZVOUS};
+  /// Time to sleep.
+  size_t _sleep_time {100};
   size_t _n_lwps {};
-  size_t _thr_count {4}; // Number of threads to spawn.
-  long _t_flags {}; // Flags to thr_create().
-  size_t _high_water_mark {8 * 1024}; // ACE_Queue high water mark.
-  size_t _low_water_mark {1024}; // ACE_Queue low water mark.
-  size_t _msg_size {128}; // Size of a message.
+  /// Number of threads to spawn.
+  size_t _thr_count {4};
+  /// Flags to thr_create().
+  long _t_flags {};
+  /// ACE_Queue high water mark.
+  size_t _high_water_mark {8 * 1024};
+  /// ACE_Queue low water mark.
+  size_t _low_water_mark {1024};
+  /// Size of a message.
+  size_t _msg_size {128};
   size_t _initial_queue_length {};
   size_t _logical_connections {1};
   size_t _physical_connections {1};
-  size_t _iterations {100000}; // Number of iterations to run the test program.
+  /// Number of iterations to run the test program.
+  size_t _iterations {100000};
   bool _generate {};
   bool _udp {};
   bool _debugging {};

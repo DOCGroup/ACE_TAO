@@ -83,10 +83,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Simple_Server_var const server (Simple_Server::_narrow (object.in ()));
 
       if (CORBA::is_nil (server.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Object reference <%s> is nil.\n"),
-                           options.ior),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Object reference <%s> is nil.\n"),
+                             options.ior),
+                            1);
+        }
 
       if (options.shutdown)
       {
@@ -125,9 +127,11 @@ Client::svc ()
           this->server_->test_method ();
 
           if (TAO_debug_level > 0 && i % 100 == 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) iteration = %d\n"),
-                        i));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) iteration = %d\n"),
+                          i));
+            }
         }
     }
   catch (CORBA::Exception const &)

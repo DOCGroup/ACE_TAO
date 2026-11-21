@@ -60,13 +60,13 @@ namespace TAO
       /**
        * @name CORBA::Policy Methods
        */
-      //@{
+      /// @{
       CORBA::PolicyType policy_type () override;
 
       CORBA::Policy_ptr copy () override;
 
       void destroy () override;
-      //@}
+      /// @}
 
       /// Return the Quality-of-Protection value associated with this
       /// policy.

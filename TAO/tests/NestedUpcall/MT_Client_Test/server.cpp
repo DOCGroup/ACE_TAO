@@ -73,9 +73,11 @@ MT_Object_Server::parse_args ()
       case 'o': // output the IOR to a file.
         this->ior_output_file_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
         if (!this->ior_output_file_)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing\n",
-                             get_opts.opt_arg ()), -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Unable to open %s for writing\n",
+                               get_opts.opt_arg ()), -1);
+          }
         break;
       case '?':
       default:
@@ -131,9 +133,11 @@ MT_Object_Server::run ()
   int result = this->orb_manager_.run ();
 
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "NestedUpCalls_Server::run"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "NestedUpCalls_Server::run"),
+                        -1);
+    }
   return 0;
 }
 

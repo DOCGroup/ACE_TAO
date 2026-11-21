@@ -107,11 +107,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             ACE_OS::fopen (options.ior_output_file, "w"), ACE_OS::fclose);
 
           if (!output_file)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file %s for writing IOR: %C",
-                               options.ior_output_file,
-                               ior.in ()),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Cannot open output file %s for writing IOR: %C",
+                                 options.ior_output_file,
+                                 ior.in ()),
+                                1);
+            }
 
           ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }

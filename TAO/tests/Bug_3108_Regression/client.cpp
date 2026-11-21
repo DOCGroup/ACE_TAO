@@ -96,9 +96,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Client client (server.in ());
       if (client.activate (THR_NEW_LWP | THR_JOINABLE, options.task_count) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                            "Cannot activate client threads\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                              "Cannot activate client threads\n"),
+                            1);
+        }
 
       client.thr_mgr ()->wait ();
 

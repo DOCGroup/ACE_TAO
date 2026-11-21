@@ -68,8 +68,8 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
         result = -1;
       else
         {
-          int one = 1;
 #if !defined (ACE_HAS_FORE_ATM_XTI)
+          int one = 1;
           // Reusing the address causes problems with FORE's API. The
           // issue may be that t_optmgmt isn't fully supported by
           // FORE. t_errno is TBADOPT after the t_optmgmt call so

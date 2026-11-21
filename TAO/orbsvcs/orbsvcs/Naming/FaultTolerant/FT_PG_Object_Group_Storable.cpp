@@ -71,8 +71,10 @@ TAO::FT_PG_Object_Group_Storable::propagate_update_notification
   (FT_Naming::ChangeType change_type)
 {
     if (this->replicator_)
-      this->replicator_->send_objgrp_update (this->get_object_group_id(),
-                                            change_type);
+      {
+        this->replicator_->send_objgrp_update (this->get_object_group_id(),
+                                              change_type);
+      }
     return 0;
 }
 
@@ -86,11 +88,13 @@ TAO::FT_PG_Object_Group_Storable::state_written ()
       this->file_created_ = true;
     }
   else if (this->destroyed_)
-    change_type = FT_Naming::DELETED;
+    {
+      change_type = FT_Naming::DELETED;
+    }
   else
-  {
-    change_type = FT_Naming::UPDATED;
-  }
+    {
+      change_type = FT_Naming::UPDATED;
+    }
 
   // If peer is available notify that state has changed.
   // Otherwise, rely on file time stamps exclusively

@@ -89,7 +89,8 @@ private:
 
 /// Constant value indicating that the correct value is unknown yet,
 /// probably parsing the header failed due to insufficient data in buffer.
-constexpr size_t TAO_MISSING_DATA_UNDEFINED = ~static_cast<size_t> (0); // MAX_SIZE_T
+/// Equivalent to MAX_SIZE_T.
+constexpr size_t TAO_MISSING_DATA_UNDEFINED = ~static_cast<size_t> (0);
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

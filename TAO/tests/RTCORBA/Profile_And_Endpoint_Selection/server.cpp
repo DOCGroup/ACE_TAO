@@ -76,13 +76,17 @@ test_i::method ()
   if (this->debug_)
     {
       if (lane)
-        ACE_DEBUG ((LM_DEBUG,
-                    "test_i::method request in thread %t (pool id = %d; lane id = %d)\n",
-                    lane->pool ().id (),
-                    lane->id ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "test_i::method request in thread %t (pool id = %d; lane id = %d)\n",
+                      lane->pool ().id (),
+                      lane->id ()));
+        }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "test_i::method request in thread %t (default thread pool)\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "test_i::method request in thread %t (default thread pool)\n"));
+        }
     }
 }
 
@@ -90,8 +94,10 @@ void
 test_i::shutdown ()
 {
   if (this->debug_)
-    ACE_DEBUG ((LM_DEBUG,
-                "test_i::shutdown\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "test_i::shutdown\n"));
+    }
 
   this->orb_->shutdown (false);
 }
@@ -426,8 +432,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                 2);
             }
           else
-            // Unexpected error.
-            ACE_ASSERT (0);
+            {
+              // Unexpected error.
+              ACE_ASSERT (0);
+            }
         }
 
       // Wait for task to exit.

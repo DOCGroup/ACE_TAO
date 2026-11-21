@@ -68,7 +68,7 @@ Connection_Handler::svc ()
   // Each <ACE_Svc_Handler> has its own <ACE_Reactor *>.  By default,
   // this points to the <Acceptor's> Reactor.  However, we can point
   // it to our local Reactor, which is what we do in this case.
-  this->reactor (&reactor);
+  this->reactor (std::addressof (reactor));
 
   // Register ourselves to handle input in this thread without
   // blocking.

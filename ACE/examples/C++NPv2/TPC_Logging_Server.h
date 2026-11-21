@@ -20,7 +20,8 @@
 class TPC_Logging_Handler
   : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> {
 protected:
-  ACE_FILE_IO log_file_; // File of log records.
+  /// File of log records.
+  ACE_FILE_IO log_file_;
 
   // Connection to peer service handler.
   Logging_Handler logging_handler_;

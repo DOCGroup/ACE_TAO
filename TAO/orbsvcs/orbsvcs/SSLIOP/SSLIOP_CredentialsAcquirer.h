@@ -67,7 +67,7 @@ namespace TAO
        * Methods required by the SecurityLevel3::CredentialsAcquirer
        * interface.
        */
-      //@{
+      /// @{
       char * acquisition_method () override;
 
       SecurityLevel3::AcquisitionStatus current_status () override;
@@ -83,7 +83,7 @@ namespace TAO
           CORBA::Boolean on_list) override;
 
       void destroy () override;
-      //@}
+      /// @}
 
     protected:
       /**

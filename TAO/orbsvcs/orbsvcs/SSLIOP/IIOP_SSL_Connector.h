@@ -64,7 +64,7 @@ namespace TAO
      *
      * Check the documentation in tao/Transport_Connector.h for details.
      */
-    //@{
+    /// @{
     int set_validate_endpoint (TAO_Endpoint *ep) override;
 
     TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
@@ -72,7 +72,7 @@ namespace TAO
                                     ACE_Time_Value *timeout = nullptr) override;
 
     int cancel_svc_handler (TAO_Connection_Handler * svc_handler) override;
-    //@}
+    /// @}
 
   private:
     /// Our connect strategy

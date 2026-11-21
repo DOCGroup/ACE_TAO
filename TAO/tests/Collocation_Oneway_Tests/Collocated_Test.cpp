@@ -42,13 +42,21 @@ parse_args (int argc,
                       ACE_TEXT ("(%P|%t) - mode set to <%s> for collocated oneway test\n"),
                       mode));
           if (ACE_OS::strcmp (ACE_TEXT ("none"), mode) == 0)
-            sync_mode = Client_Task::SyncMode::none;
+            {
+              sync_mode = Client_Task::SyncMode::none;
+            }
           else if (ACE_OS::strcmp (ACE_TEXT ("transport"), mode) == 0)
-            sync_mode = Client_Task::SyncMode::transport;
+            {
+              sync_mode = Client_Task::SyncMode::transport;
+            }
           else if (ACE_OS::strcmp (ACE_TEXT ("server"), mode) == 0)
-            sync_mode = Client_Task::SyncMode::server;
+            {
+              sync_mode = Client_Task::SyncMode::server;
+            }
           else if (ACE_OS::strcmp (ACE_TEXT ("target"), mode) == 0)
-            sync_mode = Client_Task::SyncMode::target;
+            {
+              sync_mode = Client_Task::SyncMode::target;
+            }
         }
         break;
       case '?':

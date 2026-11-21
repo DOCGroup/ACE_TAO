@@ -72,10 +72,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Test::Peer_var const peer = Test::Peer::_narrow (tmp.in ());
 
       if (CORBA::is_nil (peer.in ()))
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "Nil Test::Peer reference <%s>\n",
-                           options.ior.c_str ()),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "Nil Test::Peer reference <%s>\n",
+                             options.ior.c_str ()),
+                            1);
+        }
 
       for (;;)
         peer->noop ();

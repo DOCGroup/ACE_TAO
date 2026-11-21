@@ -70,7 +70,7 @@ protected:
    *
    * These are implementations of template methods declared by TAO_Transport.
    */
-  //@{
+  /// @{
   ACE_Event_Handler *event_handler_i () override;
   TAO_Connection_Handler *connection_handler_i () override;
 
@@ -104,7 +104,7 @@ public:
                             TAO_ServerRequest * = nullptr,
                             TAO_Message_Semantics = TAO_Message_Semantics (),
                             ACE_Time_Value * = nullptr) override;
-  //@}
+  /// @}
 
 private:
   /// Receive a UDP message and extract all necessary info from the MIOP

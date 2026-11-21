@@ -18,7 +18,7 @@ public:
   EC_Consumer &operator= (EC_Consumer &&) = delete;
 
   /// PushConsumer methods.
-  //@{
+  /// @{
   /// Logs each event.  Initiates shutdown after receiving 100 events
   /// of each type.
   void push (RtecEventComm::EventSet const &events) override;
@@ -32,11 +32,11 @@ private:
   void disconnect ();
 
   /// Number of events of different types pushed to us by EC.
-  //@{
+  /// @{
   size_t a_events_ {};
   size_t b_events_ {};
   size_t c_events_ {};
-  //@}
+  /// @}
 
   /// Cache these pointers for cleanup.
   CORBA::ORB_var orb_;

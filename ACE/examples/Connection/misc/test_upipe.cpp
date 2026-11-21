@@ -4,6 +4,7 @@
 // ACE_UPIPEs.
 
 #include <chrono>
+#include <memory>
 #include <thread>
 #include "ace/Acceptor.h"
 #include "ace/UPIPE_Acceptor.h"
@@ -43,7 +44,7 @@ public:
           return -1;
         }
       else if (this->open (local_addr, this->reactor_,
-                           nullptr, nullptr, &this->thr_strategy_) == -1)
+                           nullptr, nullptr, std::addressof (this->thr_strategy_)) == -1)
         {
           return -1;
         }

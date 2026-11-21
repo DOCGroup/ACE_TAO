@@ -86,7 +86,7 @@ TAO_EC_Thread_Flags::parse_symbols (const char* syms)
                   // Can't use a switch for this b/c for some
                   // platforms the THR_* constants end up with
                   // the same values, and compiles get upset.
-                  long &sf = supported_flags_[i].v;
+                  long const &sf = supported_flags_[i].v;
                   if (sf == THR_SCHED_FIFO ||
                       sf == THR_SCHED_RR ||
                       sf == THR_SCHED_DEFAULT)

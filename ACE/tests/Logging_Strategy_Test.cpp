@@ -487,7 +487,8 @@ int run_main (int argc, ACE_TCHAR *argv [])
       // statically
   ACE_Logging_Strategy logging_strategy;
   unsigned char ls_argc = argc - 1;
-  std::unique_ptr<ACE_TCHAR *> ls_argv (new ACE_TCHAR *[ls_argc]);
+  std::unique_ptr<ACE_TCHAR *[]> ls_argv =
+    std::make_unique<ACE_TCHAR *[]> (ls_argc);
 
   for (unsigned char c = 0; c < ls_argc; ++c)
     (ls_argv.get ())[c] = argv[c+1];

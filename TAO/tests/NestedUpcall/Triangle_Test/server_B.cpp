@@ -12,6 +12,8 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <memory>
+
 int
 Object_B_Server::parse_args ()
 {
@@ -27,9 +29,11 @@ Object_B_Server::parse_args ()
       case 'o': // output the IOR to a file.
         this->ior_output_file_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
         if (!this->ior_output_file_)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing: %p\n",
-                             get_opts.opt_arg ()), -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Unable to open %s for writing: %p\n",
+                               get_opts.opt_arg ()), -1);
+          }
         break;
       case '?':
       default:
@@ -66,7 +70,7 @@ Object_B_Server::init (int argc,
 
   CORBA::String_var const str =
     this->orb_manager_.activate_under_child_poa ("object_B",
-                                                 &this->object_B_i_);
+                                                 std::addressof (this->object_B_i_));
 
   if (this->ior_output_file_)
     {
@@ -85,9 +89,11 @@ Object_B_Server::run ()
   int const result = this->orb_manager_.run ();
 
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Object_B_Server::run"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Object_B_Server::run"),
+                        -1);
+    }
 
   return 0;
 }

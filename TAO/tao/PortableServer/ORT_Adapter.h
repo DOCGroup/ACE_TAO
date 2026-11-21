@@ -81,11 +81,11 @@ namespace TAO
      * Methods required by the
      * PortableInterceptor::ObjectReferenceFactory ValueType.
      */
-    //@{
+    /// @{
     virtual CORBA::Object_ptr make_object (
       const char * repository_id,
       const PortableInterceptor::ObjectId & id) = 0;
-    //@}
+    /// @}
   };
 
   using ORT_Array = std::vector<PortableInterceptor::ObjectReferenceTemplate*>;

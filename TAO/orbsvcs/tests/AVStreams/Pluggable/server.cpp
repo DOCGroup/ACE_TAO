@@ -3,13 +3,14 @@
 #include "ace/OS_NS_stdio.h"
 
 #include <cstddef>
+#include <memory>
 #include <new>
 
 int
 FTP_Server_StreamEndPoint::get_callback (char const *,
                                          TAO_AV_Callback *&callback)
 {
-  callback = &this->callback_;
+  callback = std::addressof (this->callback_);
   return 0;
 }
 
@@ -74,7 +75,7 @@ Server::init (int argc,
 
   try
     {
-      this->mmdevice_ = std::make_unique<TAO_MMDevice> (&this->reactive_strategy_);
+      this->mmdevice_ = std::make_unique<TAO_MMDevice> (std::addressof (this->reactive_strategy_));
     }
   catch (std::bad_alloc const &)
     {

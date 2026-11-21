@@ -27,7 +27,7 @@ public:
   Counter_Servant &operator= (Counter_Servant &&) = delete;
 
   /// @name Counter interface operations
-  //@{
+  /// @{
   void increment () override;
 
   CORBA::Long get_count () override;
@@ -35,7 +35,7 @@ public:
   void reset () override;
 
   void shutdown () override;
-  //@}
+  /// @}
 
 protected:
   CORBA::Long count_ {};

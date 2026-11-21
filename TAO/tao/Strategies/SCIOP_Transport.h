@@ -26,7 +26,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Forward decls.
 class TAO_SCIOP_Connection_Handler;
 class TAO_ORB_Core;
 class TAO_Operation_Details;
@@ -59,7 +58,7 @@ protected:
    * Please check the documentation in "tao/Transport.h" for more
    * details.
    */
-  //@{
+  /// @{
   ACE_Event_Handler *event_handler_i () override;
 
   ssize_t send (iovec *iov, int iovcnt,
@@ -92,7 +91,7 @@ public:
 
   TAO_Connection_Handler *connection_handler_i () override;
 
-  //@}
+  /// @}
 
 private:
   TAO_SCIOP_Transport (TAO_SCIOP_Transport const &) = delete;

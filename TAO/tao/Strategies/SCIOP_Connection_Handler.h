@@ -35,7 +35,7 @@ template class TAO_Strategies_Export ACE_Svc_Handler<ACE_SOCK_SEQPACK_ASSOCIATIO
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Service Handler for this transport
+/// Service handler type for the SCIOP transport.
 using TAO_SCIOP_SVC_HANDLER =
   ACE_Svc_Handler<ACE_SOCK_SEQPACK_ASSOCIATION, ACE_NULL_SYNCH>;
 
@@ -59,12 +59,12 @@ public:
 
   ~TAO_SCIOP_Connection_Handler ();
 
-  //@{
+  /// @{
   /**
    * Connection_Handler overloads
    */
   int open_handler (void *) override;
-  //@}
+  /// @}
 
   /// Called by the <Strategy_Acceptor> when the handler is completely
   /// connected.  Argument is unused.
@@ -74,7 +74,7 @@ public:
   /// establishment fails.
   int close (u_long = 0) override;
 
-  //@{
+  /// @{
   /** @name Event Handler overloads
    */
   int resume_handler () override;
@@ -84,7 +84,7 @@ public:
   int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
   int handle_timeout (ACE_Time_Value const &current_time,
                       void const *act = nullptr) override;
-  //@}
+  /// @}
 
   /// Add ourselves to Cache.
   int add_transport_to_cache ();
@@ -100,13 +100,13 @@ protected:
   /// Helper method needed by the set_dscp_codepoint () methods
   int set_tos (int tos);
 
-  //@{
+  /// @{
   /**
    * @name TAO_Connection Handler overloads
    */
   int release_os_resources () override;
   int handle_write_ready (ACE_Time_Value const *timeout) override;
-  //@}
+  /// @}
 
 private:
   TAO_SCIOP_Connection_Handler (TAO_SCIOP_Connection_Handler const &) = delete;

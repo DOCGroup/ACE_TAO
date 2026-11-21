@@ -79,7 +79,7 @@ public:
   void close_all_transports ();
 
   /// @name Accessors
-  //@{
+  /// @{
   TAO_Acceptor_Registry &acceptor_registry ();
 
   /**
@@ -147,7 +147,7 @@ public:
    * This allocator is global.
    */
   ACE_Allocator *ami_response_handler_allocator ();
-  //@}
+  /// @}
 
 private:
   struct Allocator_Deleter
@@ -188,33 +188,33 @@ private:
   TAO_New_Leader_Generator *new_leader_generator_;
 
   /// @name The allocators for the input CDR streams.
-  //@{
+  /// @{
   Allocator_Ptr input_cdr_dblock_allocator_ {};
   Allocator_Ptr input_cdr_buffer_allocator_ {};
   Allocator_Ptr input_cdr_msgblock_allocator_ {};
-  //@}
+  /// @}
 
   /// @name The allocators for the buffering messages in the transport.
-  //@{
+  /// @{
   Allocator_Ptr transport_message_buffer_allocator_ {};
-  //@}
+  /// @}
 
   /// @name The allocators for the output CDR streams.
-  //@{
+  /// @{
   Allocator_Ptr output_cdr_dblock_allocator_ {};
   Allocator_Ptr output_cdr_buffer_allocator_ {};
   Allocator_Ptr output_cdr_msgblock_allocator_ {};
-  //@}
+  /// @}
 
   /// @name The allocators for AMH.
-  //@{
+  /// @{
   Allocator_Ptr amh_response_handler_allocator_ {};
-  //@}
+  /// @}
 
   /// @name The allocators for AMI.
-  //@{
+  /// @{
   Allocator_Ptr ami_response_handler_allocator_ {};
-  //@}
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

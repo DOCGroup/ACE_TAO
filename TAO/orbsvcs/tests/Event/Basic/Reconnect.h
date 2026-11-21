@@ -42,7 +42,7 @@ public:
   EC_Reconnect &operator= (EC_Reconnect &&) = delete;
 
   /// @name EC_Driver operations
-  //@{
+  /// @{
   /// add some command line args to enable/disable reconnections
   int parse_args (int& argc, ACE_TCHAR* argv[]) override;
   void print_args () const override;
@@ -56,7 +56,7 @@ public:
 
   /// Don't dump the EC_Driver results, they are meaningless.
   void dump_results () override;
-  //@}
+  /// @}
 
   /// Separate the suppliers and consumers.
   void execute_consumer_test ();

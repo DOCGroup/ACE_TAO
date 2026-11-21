@@ -69,9 +69,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil RootPOA\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Panic: nil RootPOA\n"),
+                            1);
+        }
 
       PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
       CORBA::Object_var const object =
@@ -110,10 +112,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Test::Peer_var const peer = Test::Peer::_narrow (tmp.in ());
 
       if (CORBA::is_nil (peer.in ()))
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "Nil Test::Peer reference <%s>\n",
-                           options.ior.c_str ()),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "Nil Test::Peer reference <%s>\n",
+                             options.ior.c_str ()),
+                            1);
+        }
 
       poa_manager->activate ();
       Timer timer (local_peer.in (), peer.in ());

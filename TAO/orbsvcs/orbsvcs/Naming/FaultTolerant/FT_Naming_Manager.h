@@ -108,7 +108,7 @@ public:
    *
    * Methods required by the PortableGroup::PropertyManager interface.
    */
-  //@{
+  /// @{
   /// Set the default properties to be used by all object groups.
   void set_default_properties (
       PortableGroup::Properties const & props) override;
@@ -159,7 +159,7 @@ public:
   PortableGroup::Properties * get_properties (
       PortableGroup::ObjectGroup_ptr object_group) override;
 
-  //@}
+  /// @}
 
   /**
    * @name PortableGroup::ObjectGroupManager methods
@@ -167,7 +167,7 @@ public:
    * Methods required by the PortableGroup::ObjectGroupManager
    * interface.
    */
-  //@{
+  /// @{
   /// Create a member using the load balancer ObjectGroupManager, and
   /// add the created object to the ObjectGroup.
   PortableGroup::ObjectGroup_ptr create_member (
@@ -222,14 +222,14 @@ public:
       PortableGroup::ObjectGroup_ptr object_group,
       PortableGroup::Location const & loc) override;
 
-  //@}
+  /// @}
 
   /**
    * @name PortableGroup::GenericFactory methods
    *
    * Methods required by the PortableGroup::GenericFactory interface.
    */
-  //@{
+  /// @{
   /**
    * Create an object of the specified type that adheres to the
    * restrictions defined by the provided Criteria.  The out
@@ -255,7 +255,7 @@ public:
       PortableGroup::GenericFactory::FactoryCreationId const &
         factory_creation_id);
 
-  //@}
+  /// @}
 
   /// Initialize the naming manager. This will provide the poa to
   /// the naming manager and underlying components for use in
@@ -317,7 +317,7 @@ private:
    * "Built-in" load balancing strategies. Currently RoundRobin
    * and Random are supported.
    */
-  //@{
+  /// @{
   /// The "RoundRobin" load balancing strategy.
   TAO_FT_Round_Robin round_robin_;
   /// The "Random" load balancing strategy.
@@ -327,7 +327,7 @@ private:
   bool use_global_;
   /// The global strategy
   ::FT_Naming::LoadBalancingStrategyValue global_strategy_;
-  //@}
+  /// @}
 
   /// Cached instance of the Property name
   /// "org.omg.CosLoadBalancing.Strategy".

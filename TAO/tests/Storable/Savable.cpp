@@ -68,7 +68,9 @@ Savable_File_Guard::load_from_stream ()
   savable_.loaded_from_stream_ = true;
   this->peer ().rewind ();
   if (this->peer ().good ())
-    return 0;
+    {
+      return 0;
+    }
   else
   {
     return -1;

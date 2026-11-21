@@ -109,9 +109,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           Client client (orb.in ());
           if (client.activate (THR_NEW_LWP | THR_JOINABLE, 1) != 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                              "Cannot activate client threads\n"),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                "Cannot activate client threads\n"),
+                                1);
+            }
 
           CORBA::String_var the_string {};
           try

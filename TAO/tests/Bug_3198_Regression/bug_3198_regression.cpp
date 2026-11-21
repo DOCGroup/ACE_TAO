@@ -45,9 +45,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::PolicyList_var policies;
       CORBA::Boolean const result = obj->_validate_connection (policies.out ());
       if (result)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) got true from _validate_connection\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) got true from _validate_connection\n"),
+                            1);
+        }
     }
   catch (CORBA::TRANSIENT const &)
     {

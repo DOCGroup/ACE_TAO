@@ -21,9 +21,12 @@ public:
   Logger_i &operator= (Logger_i &&) = delete;
 
 private:
-  std::ofstream log_file_; // Output file stream to which messages are logged.
-  time_t log_time;        // Needed for creating a time stamp.
-  ACE_TString log_time_string;  // The time stamp string.
+  /// Output file stream to which messages are logged.
+  std::ofstream log_file_;
+  /// Needed for creating a time stamp.
+  time_t log_time;
+  /// The time stamp string.
+  ACE_TString log_time_string;
 
   CORBA::Boolean log_message (char const *message) override;
 };

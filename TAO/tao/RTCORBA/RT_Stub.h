@@ -28,7 +28,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Forward references.
 class TAO_PriorityModelPolicy;
 class TAO_PriorityBandedConnectionPolicy;
 class TAO_ClientProtocolPolicy;
@@ -101,10 +100,8 @@ private:
   CORBA::Policy_ptr effective_priority_banded_connection ();
   CORBA::Policy_ptr effective_client_protocol ();
 
-  // The following attribute are used to cache
-  // the different kind of policies and avoid to
-  // parse the MProfile's policy list each time we
-  // are asked about a given policy.
+  /// These attributes cache policies and avoid reparsing the MProfile policy
+  /// list for each policy query.
 
   CORBA::Policy_var priority_model_policy_;
 

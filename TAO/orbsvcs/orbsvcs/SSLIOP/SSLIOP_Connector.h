@@ -61,7 +61,7 @@ namespace TAO
        *
        * Please check the documentation in Transport_Connector.h
        */
-      //@{
+      /// @{
       int open (TAO_ORB_Core *orb_core) override;
       int close () override;
       TAO_Transport *connect (TAO::Profile_Transport_Resolver *r,
@@ -71,7 +71,7 @@ namespace TAO
       TAO_Profile *create_profile (TAO_InputCDR& cdr) override;
       int check_prefix (char const *endpoint) override;
       TAO_Profile * corbaloc_scan (char const *ior, size_t &len) override;
-      //@}
+      /// @}
 
     protected:
       /**
@@ -81,10 +81,10 @@ namespace TAO
        *
        * @see @c TAO_Connector
        */
-      //@{
+      /// @{
       TAO_Profile * make_profile () override;
       int cancel_svc_handler (TAO_Connection_Handler * svc_handler) override;
-      //@}
+      /// @}
 
       /// SSL-specific profile
       TAO_Profile * make_secure_profile ();

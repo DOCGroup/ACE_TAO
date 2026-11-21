@@ -50,7 +50,7 @@ Multicast_Manager::insert_hosts_from_file (const char *filename)
     }
   else
     {
-      for (char *end_ptr = host_ptr + mmap.size ();
+      for (char const *end_ptr = host_ptr + mmap.size ();
            host_ptr < end_ptr;
            )
         {

@@ -70,9 +70,11 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
                               "%u",
                               &options.protocol_type);
         if (result == 0 || result == EOF)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to process <-p> option"),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Unable to process <-p> option"),
+                              -1);
+          }
 
         options.protocol_chosen = true;
         break;
@@ -109,10 +111,12 @@ check_server_protocol_at_root_poa (PortableServer::POA_ptr poa)
     RTCORBA::ServerProtocolPolicy::_narrow (server_protocol.in ());
 
   if (CORBA::is_nil (policy.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "\nERROR: ORB default for ServerProtocolPolicy "
-                       "is missing\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "\nERROR: ORB default for ServerProtocolPolicy "
+                         "is missing\n"),
+                        -1);
+    }
 
   RTCORBA::ProtocolList_var const protocols = policy->protocols ();
 
@@ -136,20 +140,22 @@ check_server_protocol_at_root_poa (PortableServer::POA_ptr poa)
             RTCORBA::TCPProtocolProperties::_narrow (properties.in ());
 
           if (!CORBA::is_nil (tcp_properties.in ()))
-            ACE_DEBUG ((LM_DEBUG,
-                        "     Properties:\n"
-                        "      send_buffer_size = %d\n"
-                        "      receive_buffer_size = %d\n"
-                        "      keep_alive = %d\n"
-                        "      dont_route = %d\n"
-                        "      no_delay = %d\n"
-                        "      enable_network_priority = %d\n",
-                        tcp_properties->send_buffer_size (),
-                        tcp_properties->recv_buffer_size (),
-                        tcp_properties->keep_alive (),
-                        tcp_properties->dont_route (),
-                        tcp_properties->no_delay (),
-                        tcp_properties->enable_network_priority ()));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "     Properties:\n"
+                          "      send_buffer_size = %d\n"
+                          "      receive_buffer_size = %d\n"
+                          "      keep_alive = %d\n"
+                          "      dont_route = %d\n"
+                          "      no_delay = %d\n"
+                          "      enable_network_priority = %d\n",
+                          tcp_properties->send_buffer_size (),
+                          tcp_properties->recv_buffer_size (),
+                          tcp_properties->keep_alive (),
+                          tcp_properties->dont_route (),
+                          tcp_properties->no_delay (),
+                          tcp_properties->enable_network_priority ()));
+            }
         }
       else if (protocol_type == TAO_TAG_UIOP_PROFILE)
         {
@@ -157,12 +163,14 @@ check_server_protocol_at_root_poa (PortableServer::POA_ptr poa)
             RTCORBA::UnixDomainProtocolProperties::_narrow (properties.in ());
 
           if (!CORBA::is_nil (uiop_properties.in ()))
-            ACE_DEBUG ((LM_DEBUG,
-                        "     Properties:\n"
-                        "      send_buffer_size = %d\n"
-                        "      receive_buffer_size = %d\n",
-                        uiop_properties->send_buffer_size (),
-                        uiop_properties->recv_buffer_size ()));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "     Properties:\n"
+                          "      send_buffer_size = %d\n"
+                          "      receive_buffer_size = %d\n",
+                          uiop_properties->send_buffer_size (),
+                          uiop_properties->recv_buffer_size ()));
+            }
         }
       else if (protocol_type == TAO_TAG_SHMEM_PROFILE)
         {
@@ -170,24 +178,26 @@ check_server_protocol_at_root_poa (PortableServer::POA_ptr poa)
             RTCORBA::SharedMemoryProtocolProperties::_narrow (properties.in ());
 
           if (!CORBA::is_nil (shmem_properties.in ()))
-            ACE_DEBUG ((LM_DEBUG,
-                        "     Properties:\n"
-                        "      send_buffer_size = %d\n"
-                        "      receive_buffer_size = %d\n"
-                        "      keep_alive = %d\n"
-                        "      dont_route = %d\n"
-                        "      no_delay = %d\n"
-                        "      preallocate_buffer_size = %d\n"
-                        "      mmap_filename = %s\n"
-                        "      mmap_lockname = %s\n",
-                        shmem_properties->send_buffer_size (),
-                        shmem_properties->recv_buffer_size (),
-                        shmem_properties->keep_alive (),
-                        shmem_properties->dont_route (),
-                        shmem_properties->no_delay (),
-                        shmem_properties->preallocate_buffer_size (),
-                        shmem_properties->mmap_filename (),
-                        shmem_properties->mmap_lockname ()));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "     Properties:\n"
+                          "      send_buffer_size = %d\n"
+                          "      receive_buffer_size = %d\n"
+                          "      keep_alive = %d\n"
+                          "      dont_route = %d\n"
+                          "      no_delay = %d\n"
+                          "      preallocate_buffer_size = %d\n"
+                          "      mmap_filename = %s\n"
+                          "      mmap_lockname = %s\n",
+                          shmem_properties->send_buffer_size (),
+                          shmem_properties->recv_buffer_size (),
+                          shmem_properties->keep_alive (),
+                          shmem_properties->dont_route (),
+                          shmem_properties->no_delay (),
+                          shmem_properties->preallocate_buffer_size (),
+                          shmem_properties->mmap_filename (),
+                          shmem_properties->mmap_lockname ()));
+            }
         }
       else if (protocol_type == TAO_TAG_DIOP_PROFILE)
         {
@@ -195,10 +205,12 @@ check_server_protocol_at_root_poa (PortableServer::POA_ptr poa)
             RTCORBA::UserDatagramProtocolProperties::_narrow (properties.in ());
 
           if (!CORBA::is_nil (diop_properties.in ()))
-            ACE_DEBUG ((LM_DEBUG,
-                        "     Properties:\n"
-                        "      enable_network_priority = %d\n",
-                        diop_properties->enable_network_priority ()));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "     Properties:\n"
+                          "      enable_network_priority = %d\n",
+                          diop_properties->enable_network_priority ()));
+            }
         }
       else if (protocol_type == TAO_TAG_SCIOP_PROFILE)
         {
@@ -206,20 +218,22 @@ check_server_protocol_at_root_poa (PortableServer::POA_ptr poa)
             RTCORBA::StreamControlProtocolProperties::_narrow (properties.in ());
 
           if (!CORBA::is_nil (sciop_properties.in ()))
-            ACE_DEBUG ((LM_DEBUG,
-                        "     Properties:\n"
-                        "      send_buffer_size = %d\n"
-                        "      receive_buffer_size = %d\n"
-                        "      keep_alive = %d\n"
-                        "      dont_route = %d\n"
-                        "      no_delay = %d\n"
-                        "      enable_network_priority = %d\n",
-                        sciop_properties->send_buffer_size (),
-                        sciop_properties->recv_buffer_size (),
-                        sciop_properties->keep_alive (),
-                        sciop_properties->dont_route (),
-                        sciop_properties->no_delay (),
-                        sciop_properties->enable_network_priority ()));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "     Properties:\n"
+                          "      send_buffer_size = %d\n"
+                          "      receive_buffer_size = %d\n"
+                          "      keep_alive = %d\n"
+                          "      dont_route = %d\n"
+                          "      no_delay = %d\n"
+                          "      enable_network_priority = %d\n",
+                          sciop_properties->send_buffer_size (),
+                          sciop_properties->recv_buffer_size (),
+                          sciop_properties->keep_alive (),
+                          sciop_properties->dont_route (),
+                          sciop_properties->no_delay (),
+                          sciop_properties->enable_network_priority ()));
+            }
         }
     }
 
@@ -247,9 +261,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "ERROR: Panic <RootPOA> is nil\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "ERROR: Panic <RootPOA> is nil\n"),
+                            -1);
+        }
 
       PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
@@ -315,10 +331,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
           ACE_OS::fopen (options.ior_output_file, "w"), ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file for writing IOR: %s",
-                             options.ior_output_file),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot open output file for writing IOR: %s",
+                               options.ior_output_file),
+                              -1);
+          }
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
 

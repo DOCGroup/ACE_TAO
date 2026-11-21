@@ -24,7 +24,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Forward references
 class TAO_Optimized_Connection_Endpoint_Selector;
 
 /**

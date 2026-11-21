@@ -29,8 +29,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// TAO COIOP_Acceptor concrete call definition
-
 /**
  * @class TAO_COIOP_Acceptor
  *
@@ -50,7 +48,7 @@ public:
    *
    * Please check the documentation in Transport_Acceptor.h for details.
    */
-  //@{
+  /// @{
   int open (TAO_ORB_Core *orb_core,
                     ACE_Reactor *reactor,
                     int version_major,
@@ -72,7 +70,7 @@ public:
 
   int object_key (IOP::TaggedProfile &profile,
                   TAO::ObjectKey &key) override;
-  //@}
+  /// @}
 
 protected:
   /// Parse protocol specific options.

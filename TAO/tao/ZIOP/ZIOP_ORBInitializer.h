@@ -50,11 +50,11 @@ public:
    * The following methods are required by the
    * PortableInterceptor::ORBInitializer interface.
    */
-  //@{
+  /// @{
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
-  //@}
+  /// @}
 
   TAO_ZIOP_ORBInitializer (TAO_ZIOP_ORBInitializer const &) = delete;
   TAO_ZIOP_ORBInitializer &operator= (TAO_ZIOP_ORBInitializer const &) = delete;

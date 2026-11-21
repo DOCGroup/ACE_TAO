@@ -42,7 +42,8 @@ protected:
   ACE_SOCK_Acceptor &acceptor () { return acceptor_; }
 
 private:
-  ACE_SOCK_Acceptor acceptor_; // Socket acceptor endpoint.
+  /// Socket acceptor endpoint.
+  ACE_SOCK_Acceptor acceptor_;
 };
 
 #endif /* _LOGGING_SERVER_H */

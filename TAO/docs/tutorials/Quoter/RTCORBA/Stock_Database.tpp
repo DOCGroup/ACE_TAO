@@ -199,7 +199,7 @@ struct Stock_Updater
       item.second.high_ = item.second.last_;
   }
 
-  void operator () (typename Stock_Database<CALLBACK_TYPE>::Callback_Map::value_type &item)
+  void operator () (typename Stock_Database<CALLBACK_TYPE>::Callback_Map::value_type const &item)
   {
     (*item.second)  (changed_);
   }

@@ -65,9 +65,11 @@ test_i::invoke_me ()
 
   CORBA::Long retrieved {};
   if (retrieved_any.in() >>= retrieved)
-    ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) Retrieved number <%d> from TSC.\n",
-                retrieved));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) Retrieved number <%d> from TSC.\n",
+                  retrieved));
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG,

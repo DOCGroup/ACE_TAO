@@ -63,18 +63,28 @@ parse_args (int argc, ACE_TCHAR *argv[])
       {
         ++c;
         if (c == argc)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "host form option requires an argument\n"),-1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "host form option requires an argument\n"),-1);
+          }
         form_arg = argv[c];
         if (ACE_OS::strcasecmp (form_arg, ACE_TEXT ("local")) == 0)
-          host_form = HostNameForm::use_localhost;
+          {
+            host_form = HostNameForm::use_localhost;
+          }
         else if (ACE_OS::strcasecmp (form_arg, ACE_TEXT ("default")) == 0)
-          host_form = HostNameForm::use_defaulted;
+          {
+            host_form = HostNameForm::use_defaulted;
+          }
         else if (ACE_OS::strcasecmp (form_arg, ACE_TEXT ("multi")) == 0)
-          host_form = HostNameForm::multi_protocol;
+          {
+            host_form = HostNameForm::multi_protocol;
+          }
         else
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "invalid host form arg, '%s'\n", form_arg), -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "invalid host form arg, '%s'\n", form_arg), -1);
+          }
       }
     else if (ACE_OS::strstr (argv[c], ACE_TEXT ("-ORB")) == argv[c])
       {
@@ -82,16 +92,18 @@ parse_args (int argc, ACE_TCHAR *argv[])
         continue;
       }
     else
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "usage:  %s "
-                         "-g <goodiorfile> "
-                         "-b <badiorfile> "
-                         "-c <svc_conf_file>"
-                         "-p <port> "
-                         "-v "
-                         "\n",
-                         argv [0]),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-g <goodiorfile> "
+                           "-b <badiorfile> "
+                           "-c <svc_conf_file>"
+                           "-p <port> "
+                           "-v "
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
   }
   // Indicates successful parsing of the command line
   return 0;
@@ -116,11 +128,13 @@ make_ior (CORBA::ORB_ptr orb,
 
       FILE *output_file = ACE_OS::fopen (ior_file, "w");
       if (output_file == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file %s for writing IOR: %C",
-                           ior_file,
-                           ior.in ()),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file %s for writing IOR: %C",
+                             ior_file,
+                             ior.in ()),
+                            1);
+        }
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
     }
@@ -210,9 +224,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (obj.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil RootPOA\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Panic: nil RootPOA\n"),
+                            1);
+        }
 
       poa_manager_factory
         = root_poa->the_POAManagerFactory ();

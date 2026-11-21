@@ -8,6 +8,8 @@
 #include "ace/OS_NS_sys_time.h"
 #include "Client.h"
 
+#include <memory>
+
 // Listing 2 code/ch07
 int Client::open (void *p)
 {
@@ -17,7 +19,7 @@ int Client::open (void *p)
     return -1;
   }
   this->notifier_.reactor (this->reactor ());
-  this->msg_queue ()->notification_strategy (&this->notifier_);
+  this->msg_queue ()->notification_strategy (std::addressof (this->notifier_));
   return this->reactor ()->schedule_timer
     (this, nullptr, ACE_Time_Value::zero, iter_delay);
 }

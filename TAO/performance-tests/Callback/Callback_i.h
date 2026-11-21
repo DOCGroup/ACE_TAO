@@ -21,10 +21,10 @@ public:
   ACE_Sample_History &sample_history ();
 
   /// Implement the CORBA methods
-  //@{
+  /// @{
   void response (Test::TimeStamp,
                  Test::Payload const &) override;
-  //@}
+  /// @}
 
 private:
   /// Synchronize access to the history data during testing

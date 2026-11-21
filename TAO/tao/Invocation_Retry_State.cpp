@@ -8,8 +8,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace
 {
   void retry_limit_calc (int ex,
-                         TAO::Invocation_Retry_Params &command_line_params,
-                         TAO::Invocation_Retry_Params &client_factory_params,
+                         TAO::Invocation_Retry_Params const &command_line_params,
+                         TAO::Invocation_Retry_Params const &client_factory_params,
                          TAO::Invocation_Retry_Params &result)
   {
 #define FOEL forward_on_exception_limit_
@@ -27,8 +27,8 @@ namespace
   /// Calculate the retry parameters by giving a command line parameter
   /// precedence over the corresponding client strategy factory parameter.
   /// result is assumed to be passed with default values
-  void retry_params_calc (TAO::Invocation_Retry_Params &command_line_params,
-                          TAO::Invocation_Retry_Params &client_factory_params,
+  void retry_params_calc (TAO::Invocation_Retry_Params const &command_line_params,
+                          TAO::Invocation_Retry_Params const &client_factory_params,
                           TAO::Invocation_Retry_Params &result)
   {
   // Retry delay

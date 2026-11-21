@@ -31,7 +31,7 @@ public:
 
   ~Peer_Base () override;
 
-  //@{
+  /// @{
   /** @name The Federated_Test::Peer methods
    */
   void shutdown () override;
@@ -44,7 +44,7 @@ public:
                                                CORBA::Long base_event_type) override;
 
   PortableServer::POA_ptr _default_POA () override;
-  //@}
+  /// @}
 
 protected:
   /// Keep a reference to the ORB, used in shutdown

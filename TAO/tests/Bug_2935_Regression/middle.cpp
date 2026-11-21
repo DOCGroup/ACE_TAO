@@ -122,10 +122,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Prepare to be a CORBA client
       std::string input_ior;
       if (!read_ior (ior_input_file, input_ior))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot read input IOR file: %s",
-                           ior_input_file),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot read input IOR file: %s",
+                             ior_input_file),
+                            -1);
+        }
 
       // Convert the IOR to an object reference.
       CORBA::Object_var const object = orb->string_to_object (input_ior.c_str ());
@@ -164,10 +166,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
           ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file for writing IOR: %s",
-                             ior_output_file),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot open output file for writing IOR: %s",
+                               ior_output_file),
+                              -1);
+          }
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
 

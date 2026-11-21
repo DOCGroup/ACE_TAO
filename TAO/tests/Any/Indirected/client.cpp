@@ -63,19 +63,25 @@ recursive_union_test ()
     TAO_InputCDR in (out);
 
     if (TAO_debug_level >= 1)
-      ACE_DEBUG ((LM_INFO,
-                  ACE_TEXT ("> Extracting any\n")));
+      {
+        ACE_DEBUG ((LM_INFO,
+                    ACE_TEXT ("> Extracting any\n")));
+      }
 
     in >> the_out_any;
 
     if (TAO_debug_level >= 1)
-      ACE_DEBUG ((LM_INFO,
-                  ACE_TEXT ("> Extracted any\n")));
+      {
+        ACE_DEBUG ((LM_INFO,
+                    ACE_TEXT ("> Extracted any\n")));
+      }
   }
   // Any's typecode out of scope
   if (TAO_debug_level >= 1)
-    ACE_DEBUG ((LM_INFO,
-                ACE_TEXT ("> Any destructed\n")));
+    {
+      ACE_DEBUG ((LM_INFO,
+                  ACE_TEXT ("> Any destructed\n")));
+    }
 
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("* Marshaling -> demarshaling with external reference\n")));
@@ -105,8 +111,10 @@ recursive_union_test ()
       TAO_InputCDR in (out);
 
       if (TAO_debug_level >= 1)
-        ACE_DEBUG ((LM_INFO,
-                    ACE_TEXT ("> Extracting any\n")));
+        {
+          ACE_DEBUG ((LM_INFO,
+                      ACE_TEXT ("> Extracting any\n")));
+        }
 
       in >> the_out_any;
 
@@ -119,19 +127,25 @@ recursive_union_test ()
       tc = tc->content_type (); // sequence content type -> indirected struct
 
       if (TAO_debug_level >= 1)
-        ACE_DEBUG ((LM_INFO,
-                    ACE_TEXT ("> Extracted any and stored external reference to Indirected_Type typecode\n")));
+        {
+          ACE_DEBUG ((LM_INFO,
+                      ACE_TEXT ("> Extracted any and stored external reference to Indirected_Type typecode\n")));
+        }
     }
     // Any's typecode out of scope
     if (TAO_debug_level >= 1)
-      ACE_DEBUG ((LM_INFO,
-                  ACE_TEXT ("> Any destructed\n")));
+      {
+        ACE_DEBUG ((LM_INFO,
+                    ACE_TEXT ("> Any destructed\n")));
+      }
   }
   // referenced recursive typecode out of scope
   // Any's typecode out of scope
   if (TAO_debug_level >= 1)
-    ACE_DEBUG ((LM_INFO,
-                ACE_TEXT ("> External Indirected_Type typecode reference destructed\n")));
+    {
+      ACE_DEBUG ((LM_INFO,
+                  ACE_TEXT ("> External Indirected_Type typecode reference destructed\n")));
+    }
 
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("* Marshaling -> demarshaling -> marshaling -> demarshaling\n")));
@@ -157,14 +171,18 @@ recursive_union_test ()
     TAO_InputCDR in (out);
 
     if (TAO_debug_level >= 1)
-      ACE_DEBUG ((LM_INFO,
-                  ACE_TEXT ("> Extracting any\n")));
+      {
+        ACE_DEBUG ((LM_INFO,
+                    ACE_TEXT ("> Extracting any\n")));
+      }
 
     in >> the_out_any;
 
     if (TAO_debug_level >= 1)
-      ACE_DEBUG ((LM_INFO,
-                  ACE_TEXT ("> Extracted any\n")));
+      {
+        ACE_DEBUG ((LM_INFO,
+                    ACE_TEXT ("> Extracted any\n")));
+      }
 
     TAO_OutputCDR out2 {};
 
@@ -181,14 +199,18 @@ recursive_union_test ()
     TAO_InputCDR in2 (out2);
 
     if (TAO_debug_level >= 1)
-      ACE_DEBUG ((LM_INFO,
-                  ACE_TEXT ("> Re-extracting any\n")));
+      {
+        ACE_DEBUG ((LM_INFO,
+                    ACE_TEXT ("> Re-extracting any\n")));
+      }
 
     in2 >> the_out_any2;
 
     if (TAO_debug_level >= 1)
-      ACE_DEBUG ((LM_INFO,
-                  ACE_TEXT ("> Re-extracted any\n")));
+      {
+        ACE_DEBUG ((LM_INFO,
+                    ACE_TEXT ("> Re-extracted any\n")));
+      }
 
     if (!the_out_any._tao_get_typecode ()->equal (the_out_any2._tao_get_typecode ()))
       {
@@ -199,8 +221,10 @@ recursive_union_test ()
   }
   // Any's typecodes out of scope
   if (TAO_debug_level >= 1)
-    ACE_DEBUG ((LM_INFO,
-                ACE_TEXT ("> Anys destructed\n")));
+    {
+      ACE_DEBUG ((LM_INFO,
+                  ACE_TEXT ("> Anys destructed\n")));
+    }
 
   return rc;
 }

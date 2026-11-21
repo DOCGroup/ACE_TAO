@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ExceptionHolder_i.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_MESSAGING_EXCEPTIONHOLDER_I_H
 #define TAO_MESSAGING_EXCEPTIONHOLDER_I_H

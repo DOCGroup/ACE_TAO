@@ -239,8 +239,10 @@ private:
 
   struct System_Time
     {
-      time_t *delta_time_;       // Diff between system time and local time
-      time_t *last_local_time_;  // Last local time
+      /// Difference between system time and local time.
+      time_t *delta_time_;
+      /// Last local time.
+      time_t *last_local_time_;
     };
 
   /// Clerk system time containing pointers to entries in shared memory

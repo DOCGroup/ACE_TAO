@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <memory>
 
 #include "server.h"
 
@@ -135,7 +136,7 @@ Server::init (int argc, ACE_TCHAR *argv[])
       // Register the video mmdevice object with the ORB
       TAO_MMDevice *mmdevice {};
       ACE_NEW_RETURN (mmdevice,
-                      TAO_MMDevice (&this->reactive_strategy_),
+                      TAO_MMDevice (std::addressof (this->reactive_strategy_)),
                       -1);
       PortableServer::ServantBase_var safe_mmdevice = mmdevice;
 

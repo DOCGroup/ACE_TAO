@@ -259,7 +259,9 @@ namespace
       {
         Any a;
         if (make_request_queued)
-          a <<= Messaging::SYNC_NONE;
+          {
+            a <<= Messaging::SYNC_NONE;
+          }
         else
         {
           a <<= sync_scope;
@@ -402,7 +404,9 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
                           "Transient exception during test () invocation %d\n",
                           i));
               if (retry_transients)
-                ACE_DEBUG ((LM_DEBUG,"retrying\n"));
+                {
+                  ACE_DEBUG ((LM_DEBUG,"retrying\n"));
+                }
               else
               {
                 throw;
@@ -421,7 +425,9 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
               // because the exception should not occur because these are
               // oneways.
               if (retry_timeouts)
-                ACE_DEBUG ((LM_DEBUG,"retrying\n"));
+                {
+                  ACE_DEBUG ((LM_DEBUG,"retrying\n"));
+                }
               else
               {
                 throw;

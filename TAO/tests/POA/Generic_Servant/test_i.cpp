@@ -94,10 +94,12 @@ supply_servant (const PortableServer::ObjectId &oid,
   CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
 
   if (std::strstr (s.in (), "test") != nullptr)
-    ACE_NEW_RETURN (servant,
-                    test_i (orb,
-                            poa),
-                    0);
+    {
+      ACE_NEW_RETURN (servant,
+                      test_i (orb,
+                              poa),
+                      0);
+    }
   return servant;
 }
 

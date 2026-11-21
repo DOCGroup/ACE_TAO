@@ -50,7 +50,7 @@ public:
   ~IBM1047_ISO8859 () override;
 
   /// @name Methods documented in $ACE_ROOT/ace/CDR_Stream.h
-  //@{
+  /// @{
   ACE_CDR::Boolean read_char (ACE_InputCDR &, ACE_CDR::Char &) override;
   ACE_CDR::Boolean read_string (ACE_InputCDR &, ACE_CDR::Char *&) override;
   ACE_CDR::Boolean read_char_array (ACE_InputCDR &,
@@ -65,7 +65,7 @@ public:
                                      ACE_CDR::ULong) override;
   ACE_CDR::ULong ncs () override {return 0x10020417;}
   ACE_CDR::ULong tcs () override {return 0x00010001;}
-  //@}
+  /// @}
 };
 
 #include /**/ "ace/post.h"

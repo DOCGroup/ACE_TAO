@@ -83,7 +83,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
    } while (0)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-//@{
+/// @{
 /**
  * @name Efficiently compute aligned pointers to powers of 2 boundaries.
  */
@@ -146,7 +146,7 @@ ACE_ptr_align_binary (unsigned char const * ptr, uintptr_t alignment)
   return
     ACE_ptr_align_binary (reinterpret_cast<char const *> (ptr), alignment);
 }
-//@}
+/// @}
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include "ace/OS_NS_stdlib.h"

@@ -54,7 +54,7 @@ public:
    *
    * Please check the documentation in Endpoint.h for details.
    */
-  //@{
+  /// @{
   TAO_Endpoint *next () override;
   int addr_to_string (char *buffer, size_t length) override;
   TAO_Endpoint *duplicate () override;
@@ -65,7 +65,7 @@ public:
 
   /// Return a hash value for this object.
   CORBA::ULong hash () override;
-  //@}
+  /// @}
 
   /// Return a pointer to the host string.  This object maintains
   /// ownership of this string.

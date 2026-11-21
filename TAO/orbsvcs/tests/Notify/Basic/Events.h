@@ -32,10 +32,10 @@ public:
   explicit Event_StructuredPushConsumer (Events *test_client);
 
   /// @name StructuredPushConsumer operations
-  //@{
+  /// @{
   void push_structured_event (
       CosNotification::StructuredEvent const &notification) override;
-  //@}
+  /// @}
 
 protected:
   Events * test_client_;

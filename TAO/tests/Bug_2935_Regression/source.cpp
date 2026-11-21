@@ -90,10 +90,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       std::string input_ior;
       if (!read_ior (ior_input_file, input_ior))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot read input IOR file: %s",
-                           ior_input_file),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot read input IOR file: %s",
+                             ior_input_file),
+                            -1);
+        }
 
       // Convert the IOR to an object reference.
       CORBA::Object_var const object = orb->string_to_object (input_ior.c_str ());

@@ -30,13 +30,12 @@ template class TAO_Strategies_Export ACE_Svc_Handler<ACE_SOCK_DGRAM, ACE_NULL_SY
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Forward decls.
 class TAO_DIOP_Connection_Handler;
 class TAO_ORB_Core;
 class TAO_Operation_Details;
 class TAO_Acceptor;
 
-// Service Handler for this transport
+/// Service handler type for the DIOP transport.
 using TAO_DIOP_SVC_HANDLER = ACE_Svc_Handler<ACE_SOCK_DGRAM, ACE_NULL_SYNCH>;
 
 /**
@@ -61,7 +60,7 @@ protected:
    *
    * These are implementations of template methods declared by TAO_Transport.
    */
-  //@{
+  /// @{
   ACE_Event_Handler *event_handler_i () override;
   TAO_Connection_Handler *connection_handler_i () override;
 
@@ -77,7 +76,7 @@ protected:
 
   int register_handler () override;
 
-  ///@}
+  /// @}
 public:
   /// @todo These methods IMHO should have more meaningful names.
   /// The names seem to indicate nothing.

@@ -56,7 +56,7 @@ public:
    * Methods required by the PortableGroup::ObjectGroupManager
    * interface.
    */
-  //@{
+  /// @{
   /// Create a member and add it to the given object group.
   PortableGroup::ObjectGroup_ptr create_member (
       PortableGroup::ObjectGroup_ptr object_group,
@@ -110,7 +110,7 @@ public:
   PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
     PortableGroup::ObjectGroupId group_id) override;
 
-  //@}
+  /// @}
 
   /// TAO-specific member addition method.
   /**

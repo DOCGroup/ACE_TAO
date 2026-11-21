@@ -60,8 +60,10 @@ parse_args (int argc, ACE_TCHAR **argv)
       }
 
   if (IOR == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Please specify the IOR for the servant\n"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Please specify the IOR for the servant\n"), -1);
+    }
 
   // Indicates successful parsing of command line.
   return 0;
@@ -96,8 +98,10 @@ print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time,
                   tmp < 0.0 ? 0.0 : tmp));
     }
   else
-    ACE_ERROR ((LM_ERROR,
-                "\tNo time stats printed.  Zero iterations or error occurred.\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "\tNo time stats printed.  Zero iterations or error occurred.\n"));
+    }
 }
 
 int

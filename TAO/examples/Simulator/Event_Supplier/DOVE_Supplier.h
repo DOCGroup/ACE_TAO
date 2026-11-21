@@ -57,7 +57,7 @@ public:
   void disconnect ();
 
   /// Notify the consumer proxy that we have events
-  void notify (CORBA::Any& message);
+  void notify (CORBA::Any const &message);
 
   /// Use the next connection in the list of established connections.
   void use_next_connection ();

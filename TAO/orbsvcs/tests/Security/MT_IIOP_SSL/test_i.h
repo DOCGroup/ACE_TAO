@@ -29,7 +29,7 @@ public:
   Simple_Server_i &operator= (Simple_Server_i &&) = delete;
 
   /// @name Simple_Server operations
-  //@{
+  /// @{
   void ping () override;
 
   void validate_protocol () override;
@@ -37,7 +37,7 @@ public:
   CORBA::Long test_method (CORBA::Long x) override;
 
   void shutdown () override;
-  //@}
+  /// @}
 
 private:
   /// The ORB

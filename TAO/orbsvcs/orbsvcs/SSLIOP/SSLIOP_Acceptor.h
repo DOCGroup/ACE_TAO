@@ -62,7 +62,7 @@ namespace TAO
        *
        * Check the documentation in tao/Pluggable.h for details.
        */
-      //@{
+      /// @{
       int open (TAO_ORB_Core *orb_core,
                 ACE_Reactor *reactor,
                 int version_major,
@@ -79,7 +79,7 @@ namespace TAO
                           TAO_MProfile &mprofile,
                           CORBA::Short priority) override;
       bool is_collocated (TAO_Endpoint const* endpoint) override;
-      //@}
+      /// @}
 
       /// Retrieve the CSIv1 SSLIOP::SSL component associated with the
       /// endpoints set up by this acceptor.
@@ -121,12 +121,12 @@ namespace TAO
        *
        * Strategies used when accepting an incoming connection.
        */
-      //@{
+      /// @{
       /// Owned here; ssl_acceptor_ borrows these strategy pointers.
       std::unique_ptr<CREATION_STRATEGY> creation_strategy_ {};
       std::unique_ptr<CONCURRENCY_STRATEGY> concurrency_strategy_ {};
       std::unique_ptr<ACCEPT_STRATEGY> accept_strategy_ {};
-      //@}
+      /// @}
 
       /// The CSIv1 SSL component.
       /**

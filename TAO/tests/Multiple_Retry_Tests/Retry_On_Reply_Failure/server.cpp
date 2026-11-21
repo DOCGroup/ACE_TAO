@@ -58,9 +58,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
@@ -90,9 +92,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       IORTable::Table_var const table =
         IORTable::Table::_narrow (table_object.in ());
       if (CORBA::is_nil (table.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the IORTable.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the IORTable.\n"),
+                            1);
+        }
       table->bind ("Simple_Server", ior.in ());
 
       //ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
@@ -101,10 +105,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
           ACE_OS::fopen (options.ior_output_file.c_str (), "w"), ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file for writing IOR: %s",
-                             options.ior_output_file.c_str ()),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot open output file for writing IOR: %s",
+                               options.ior_output_file.c_str ()),
+                              1);
+          }
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
 

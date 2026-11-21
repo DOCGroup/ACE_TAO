@@ -44,9 +44,11 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (this->parse_args (argc, argv) != 0)
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           ACE_TEXT ("(%P|%t) Could not parse the arguments\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             ACE_TEXT ("(%P|%t) Could not parse the arguments\n")),
+                            1);
+        }
 
       // Retry while the server is starting or has not published its IOR.
       bool success {};
@@ -120,9 +122,11 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[])
         }
 
       if (!success)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Client failed to contact the server\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Client failed to contact the server\n")),
+                            1);
+        }
 
       orb->shutdown (false);
 

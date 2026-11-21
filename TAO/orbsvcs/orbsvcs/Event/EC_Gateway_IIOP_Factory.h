@@ -49,10 +49,10 @@ public:
   TAO_EC_Gateway_IIOP_Factory &operator= (TAO_EC_Gateway_IIOP_Factory &&) = delete;
 
   /// The Service_Object entry points.
-  //@{
+  /// @{
   int init (int argc, ACE_TCHAR* argv[]) override;
   int fini () override;
-  //@}
+  /// @}
 
   /// Helper function to register the Gateway into the service
   /// configurator.

@@ -185,7 +185,7 @@ public:
 
 protected:
   /// Helpers.
-  //@{
+  /// @{
   /// Recompute EC consumer subscriptions and send them out to all observers.
   virtual void consumer_qos_update (TAO_EC_ProxyPushSupplier *supplier);
 
@@ -200,7 +200,7 @@ protected:
   /// Copies all current observers into an array and passes it
   /// back to the caller through @a lst.  Returns the size of the array.
   int create_observer_list (RtecEventChannelAdmin::Observer_var *&lst);
-  //@}
+  /// @}
 
 protected:
   /// The event channel.
@@ -246,7 +246,7 @@ public:
 
 protected:
   /// Helpers.
-  //@{
+  /// @{
   /// Recompute EC consumer subscriptions and send them out to all observers.
   void consumer_qos_update (TAO_EC_ProxyPushSupplier *supplier) override;
 
@@ -262,7 +262,7 @@ protected:
 
   /// The observer doesn't exist anymore
   void observer_not_exists (Observer_Entry& observer);
-  //@}
+  /// @}
 };
 
 // ****************************************************************

@@ -214,8 +214,10 @@ Client::svc ()
           this->server_->test_method (i);
 
           if (TAO_debug_level > 0 && i % 100 == 0)
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) iteration = %d\n"),
-                        i));
+            {
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) iteration = %d\n"),
+                          i));
+            }
         }
     }
   catch (CORBA::Exception const &ex)

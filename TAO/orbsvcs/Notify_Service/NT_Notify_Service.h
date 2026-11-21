@@ -65,7 +65,7 @@ private:
                      LONG result);
 
   /// @name Command-line arguments
-  //@{
+  /// @{
   /// Argument count.
   int argc_ {};
   int argc_save_ {};
@@ -73,7 +73,7 @@ private:
   /// Argument list.
   ACE_TCHAR **argv_ {};
   ACE_TCHAR **argv_save_ {};
-  //@}
+  /// @}
 
   friend class ACE_Singleton<TAO_NT_Notify_Service, MUTEX>;
 };

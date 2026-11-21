@@ -10,6 +10,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 static ACE_TCHAR const* udp_mcast_address =
     ACE_TEXT (ACE_DEFAULT_MULTICAST_ADDR) ACE_TEXT(":10001");
 
@@ -219,7 +221,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ec_impl._default_POA ();
         // Get the Object Id used for the servant..
         PortableServer::ObjectId_var oid =
-          poa->servant_to_id (&ec_impl);
+          poa->servant_to_id (std::addressof (ec_impl));
         // Deactivate the object
         poa->deactivate_object (oid.in ());
       }

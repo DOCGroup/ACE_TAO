@@ -60,7 +60,7 @@ namespace TAO
     virtual ~Invocation_Base ();
 
     /// Accessor and mutator methods
-    //@{
+    /// @{
     TAO_Stub *stub () const;
 
     /// Accessor and mutator methods for forwarded object
@@ -105,7 +105,7 @@ namespace TAO
 
     /// The operaton details of the invocation
     TAO_Operation_Details &operation_details ();
-    //@}
+    /// @}
 
   protected:
     /**
@@ -147,7 +147,7 @@ namespace TAO
     Invocation_Base &operator= (Invocation_Base &&) = delete;
 
   private:
-    //@{
+    /// @{
     /**
      * The following object reference pointers are *not*
      * duplicated. They are cached for portable interceptors, and they
@@ -159,14 +159,14 @@ namespace TAO
 
     /// The effective target on which the invocation is on.
     CORBA::Object_ptr target_;
-    //@}
+    /// @}
 
     TAO_Stub *stub_;
 
     /// Operations invoked by the
     /// PortableInterceptor::ClientRequestInfo object to get details
     /// about the operation and related stuff.
-    //@{
+    /// @{
 #if TAO_HAS_INTERCEPTORS == 1
   public:
     /// Return a reference to the number of interceptors pushed on to
@@ -232,7 +232,7 @@ namespace TAO
     /// (thru-poa) invocation.
     bool const is_remote_request_;
 #endif /*TAO_HAS_INTERCEPTORS*/
-    //@}
+    /// @}
   };
 }
 

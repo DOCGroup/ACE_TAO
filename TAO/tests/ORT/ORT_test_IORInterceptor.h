@@ -41,7 +41,7 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all IOR interceptors.
    */
-  //@{
+  /// @{
   /// Return the name of this IORInterceptor.
   ORT_test_IORInterceptor (ORT_test_IORInterceptor const &) = delete;
   ORT_test_IORInterceptor &operator= (ORT_test_IORInterceptor const &) = delete;
@@ -66,7 +66,7 @@ public:
       PortableInterceptor::ObjectReferenceTemplateSeq const &templates,
       PortableInterceptor::AdapterState state) override;
 
-  //@}
+  /// @}
 
 private:
   CORBA::Long establish_count_;

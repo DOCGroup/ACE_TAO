@@ -23,7 +23,7 @@
 #ifndef _HTIOP_ENDPOINTS_IDL_
 #define _HTIOP_ENDPOINTS_IDL_
 
-// Stores information for a single HTIOP endpoint.
+/// Stores information for a single HTIOP endpoint.
 struct HTIOP_Endpoint_Info
 {
   string host;
@@ -31,7 +31,7 @@ struct HTIOP_Endpoint_Info
   string htid;
 };
 
-// Stores information for a collection of HTIOP endpoints.
+/// Stores information for a collection of HTIOP endpoints.
 typedef sequence <HTIOP_Endpoint_Info> HTIOPEndpointSequence;
 
 #pragma prefix ""

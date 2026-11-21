@@ -57,7 +57,7 @@ public:
    * These are the canonical methods required for all
    * ServerRequestInterceptors.
    */
-  //@{
+  /// @{
   char * name () override;
 
   void destroy () override;
@@ -72,7 +72,7 @@ public:
   void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
   void send_other (PortableInterceptor::ServerRequestInfo_ptr ri) override;
-  //@}
+  /// @}
 
 protected:
   /**

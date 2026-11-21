@@ -132,7 +132,9 @@ public:
     state_get >>= n;
 
     if (n == 5)
-      ACE_DEBUG ((LM_DEBUG, "State value is correctly %d.\n", n));
+      {
+        ACE_DEBUG ((LM_DEBUG, "State value is correctly %d.\n", n));
+      }
     else
     {
       ACE_ERROR ((LM_ERROR, "ERROR: State value is incorrectly %d.\n", n));
@@ -153,7 +155,9 @@ public:
     state >>= n;
 
     if (n == 5)
-      ACE_DEBUG ((LM_DEBUG, "State value is correctly %d.\n", n));
+      {
+        ACE_DEBUG ((LM_DEBUG, "State value is correctly %d.\n", n));
+      }
     else
     {
       ACE_ERROR ((LM_ERROR, "ERROR: State value is incorrectly %d.\n", n));
@@ -242,12 +246,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
           ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file <%s> for writing "
-                             "IOR: %s",
-                             ior_output_file,
-                             ior.in ()),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot open output file <%s> for writing "
+                               "IOR: %s",
+                               ior_output_file,
+                               ior.in ()),
+                              1);
+          }
 
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }

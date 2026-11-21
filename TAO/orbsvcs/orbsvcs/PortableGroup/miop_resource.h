@@ -59,15 +59,15 @@ public:
   /**
    * @name Service Configurator Hooks
    */
-  //@{
+  /// @{
   /// Dynamic linking hook
   int init (int argc, ACE_TCHAR *argv[]) override;
-  //@}
+  /// @}
 
   /**
    * @name Member Accessors
    */
-  //@{
+  /// @{
   TAO_PG::Fragments_Cleanup_Strategy *fragments_cleanup_strategy () const;
 
   /// Get Maximum number of fragments allowed.
@@ -87,7 +87,7 @@ public:
 
   /// Get the desired socket receive buffer's size in bytes (Zero is unspecified).
   u_long receive_buffer_size () const;
-  //@}
+  /// @}
 
   /// Get the client-side transmission rate throttling enable flag.
   bool enable_throttling () const;

@@ -109,14 +109,15 @@ protected:
   TAO_Notify_Tests_StructuredPushSupplier** structured_supplier_;
   TAO_Notify_Tests_SequencePushSupplier** sequence_supplier_;
 
-  /// Count of clients destroyed. for c consumers, s suppliers and for t times.
-  /// this should be (s+c)*t.
+  /// Count of clients destroyed for c consumers, s suppliers, and t iterations.
+  /// This should be (s + c) * t.
   std::atomic<int> result_count_ {0};
 
-  int expected_count_; // (s+c)*t
+  /// Expected count, (s + c) * t.
+  int expected_count_;
 
   /// @name Command-line parameters
-  //@{
+  /// @{
   /// The number of iterations to connect disconnect.
   int count_;
 
@@ -125,7 +126,7 @@ protected:
 
   /// The number of suppliers to create.
   int suppliers_;
-  //@}
+  /// @}
 };
 
 /***************************************************************************/

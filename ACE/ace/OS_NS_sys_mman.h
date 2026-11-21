@@ -65,7 +65,7 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   int munmap (void *addr,
               size_t len);
-  //@}
+  /// @}
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_HANDLE shm_open (const ACE_TCHAR *filename,

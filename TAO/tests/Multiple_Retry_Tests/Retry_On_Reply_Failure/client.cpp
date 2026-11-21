@@ -210,9 +210,11 @@ Worker::svc ()
           this->invocation_completed_ = true;
 
           if (result != 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) unexpected result = %d\n",
-                        result));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) unexpected result = %d\n",
+                          result));
+            }
         }
       catch (CORBA::OBJECT_NOT_EXIST const &)
         {

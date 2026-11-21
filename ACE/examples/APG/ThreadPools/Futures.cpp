@@ -224,7 +224,7 @@ public:
       (ACE_Thread_Mutex, worker_mon, this->workers_lock_, -1);
     ACE_DEBUG
       ((LM_DEBUG, ACE_TEXT ("(%t) Worker returning to work.\n")));
-    this->workers_.enqueue_tail (&worker);
+        this->workers_.enqueue_tail (std::addressof (worker));
     this->workers_cond_.signal ();
 
     return 0;
@@ -325,7 +325,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   std::array<LongWork, OUTSTANDING_REQUESTS> work_array {};
   for (int i = 0; i < OUTSTANDING_REQUESTS; ++i)
     {
-      work_array[i].attach (&cb);
+      work_array[i].attach (std::addressof (cb));
       std::this_thread::sleep_for (std::chrono::milliseconds (100));
       tp.perform (&work_array[i]);
     }

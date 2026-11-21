@@ -46,9 +46,11 @@ Client_Task::svc ()
   try
     {
       if (!quiet)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%t) Client_Task::svc calling start -> time to live = %d\n",
-                    call_count));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) Client_Task::svc calling start -> time to live = %d\n",
+                      call_count));
+        }
 
       // Now, we can invoke an operation on the remote side.
       this->server_->start (this->client_.in (),

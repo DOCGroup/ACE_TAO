@@ -12,10 +12,13 @@ ACE_TCHAR const *ior2 {};
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  if (argc != 5)  // foo -k IOR_1 -k IOR_2
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Wrong number of arguments.\n"),
-                      -1);
+  if (argc != 5)
+    {
+      // foo -k IOR_1 -k IOR_2
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Wrong number of arguments.\n"),
+                        -1);
+    }
 
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
@@ -26,9 +29,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'k':
 
         if (ior1 == nullptr)
-          ior1 = get_opts.opt_arg ();
+          {
+            ior1 = get_opts.opt_arg ();
+          }
         else if (ior2 == nullptr)
-          ior2 = get_opts.opt_arg ();
+          {
+            ior2 = get_opts.opt_arg ();
+          }
 
         break;
       default:
@@ -139,8 +146,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
 
   if (status != -1)
-    ACE_DEBUG ((LM_INFO,
-                "PortableInterceptor::ForwardRequest test passed.\n"));
+    {
+      ACE_DEBUG ((LM_INFO,
+                  "PortableInterceptor::ForwardRequest test passed.\n"));
+    }
 
   return status;
 }

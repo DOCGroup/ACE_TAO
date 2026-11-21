@@ -124,24 +124,24 @@ public:
    *
    * Forward iterator accessors.
    */
-  //@{
+  /// @{
   iterator begin ();
   iterator end   ();
   const_iterator begin () const;
   const_iterator end   () const;
-  //@}
+  /// @}
 
   /**
    * @name Reverse Iterator Accessors
    *
    * Reverse iterator accessors.
    */
-  //@{
+  /// @{
   reverse_iterator rbegin ();
   reverse_iterator rend   ();
   const_reverse_iterator rbegin () const;
   const_reverse_iterator rend   () const;
-  //@}
+  /// @}
 
   /// Return current size of map.
   /**
@@ -153,14 +153,16 @@ public:
   size_type max_size () const;
 
   /// Return @c true if the map is empty, else @c false.
-  bool is_empty () const;  // ACE style
+  /// ACE-style empty check.
+  bool is_empty () const;
 
   /**
    * Return @c true if the map is empty, else @c false.  We recommend
    * using @c is_empty() instead since it's more consistent with the
    * ACE container naming conventions.
    */
-  bool empty () const;  // STL style
+  /// STL-style empty check.
+  bool empty () const;
 
   /// Swap the contents of this map with the given @a map in an
   /// exception-safe manner.
@@ -207,7 +209,7 @@ public:
    *
    * Search the map for data corresponding to key @a k.
    */
-  //@{
+  /// @{
   /**
    * @return @c end() if data corresponding to key @a k is not in the
    *         map.
@@ -219,7 +221,7 @@ public:
    *         map.
    */
   const_iterator find (key_type const & k) const;
-  //@}
+  /// @}
 
   /// Count the number of elements corresponding to key @a k.
   /**

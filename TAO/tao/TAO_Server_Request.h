@@ -126,7 +126,7 @@ public:
   /**
    * @name Request attributes.
    */
-  //@{
+  /// @{
   /// Return the operation name.
   char const *operation () const;
 
@@ -135,7 +135,7 @@ public:
 
   /// Return the length of the operation.
   size_t operation_length () const;
-  //@}
+  /// @}
 
   /// Return the underlying ORB.
   CORBA::ORB_ptr orb ();
@@ -200,10 +200,10 @@ public:
 
   /// To handle System Exceptions at the lowest level, a method
   /// returning the request_id_ is needed.
-  //@{
+  /// @{
   CORBA::ULong request_id ();
   void request_id (CORBA::ULong req);
-  //@}
+  /// @}
 
   /**
    * Set the reference to the object the request should be forwarded

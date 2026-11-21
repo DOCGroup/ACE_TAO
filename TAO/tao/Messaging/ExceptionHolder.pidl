@@ -1,6 +1,5 @@
 // -*- IDL -*-
 
-//=============================================================================
 /**
  *  @file   ExceptionHolder.pidl
  *
@@ -12,7 +11,6 @@
  *        -Wb,post_include="ace/post.h" -I$(TAO_ROOT)
  *        ExceptionHolder.pidl
  */
-//=============================================================================
 
 #ifndef TAO_MESSAGING_EXCEPTIONHOLDER_PIDL
 #define TAO_MESSAGING_EXCEPTIONHOLDER_PIDL

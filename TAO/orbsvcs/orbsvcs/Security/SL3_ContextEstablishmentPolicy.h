@@ -57,7 +57,7 @@ namespace TAO
        * Methods required by the
        * SecurityLevel3::ContextEstablishmentPolicy interface.
        */
-      //@{
+      /// @{
       SecurityLevel3::CredsDirective creds_directive () override;
 
       SecurityLevel3::OwnCredentialsList * creds_list () override;
@@ -75,7 +75,7 @@ namespace TAO
       CORBA::Policy_ptr copy () override;
 
       void destroy () override;
-      //@}
+      /// @}
 
     protected:
       /**

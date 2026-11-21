@@ -99,7 +99,7 @@ namespace CORBA
      * These methods are defined here since they are required by the
      * CORBA spec in a form specified by the C++ mapping.
      */
-    //@{
+    /// @{
     /// Increment the ref count.
     static CORBA::Object_ptr _duplicate (CORBA::Object_ptr obj);
 
@@ -214,7 +214,7 @@ namespace CORBA
      * These are the standard CORBA object reference count manipulations
      * methods.
      */
-    //@{
+    /// @{
     /// Increment the reference count.
     virtual void _add_ref ();
 
@@ -223,7 +223,7 @@ namespace CORBA
 
     /// Get the refcount
     virtual CORBA::ULong _refcount_value () const;
-    //@}
+    /// @}
 
     // Useful for template programming.
     using _ptr_type = Object_ptr;

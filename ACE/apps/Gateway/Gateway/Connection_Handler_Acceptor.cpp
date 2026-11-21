@@ -3,6 +3,8 @@
 #include "Event_Channel.h"
 #include "Connection_Handler_Acceptor.h"
 
+#include <memory>
+
 int
 Connection_Handler_Acceptor::make_svc_handler (Connection_Handler *&ch)
 {
@@ -33,7 +35,7 @@ Connection_Handler_Acceptor::accept_svc_handler (Connection_Handler *ch)
       ch->remote_addr (remote_addr);
 
       // Set the Event_Channel pointer.
-      ch->event_channel (&this->event_channel_);
+      ch->event_channel (std::addressof (this->event_channel_));
 
       // Increment the connection ID by one.
       ++Options::instance ()->connection_id ();

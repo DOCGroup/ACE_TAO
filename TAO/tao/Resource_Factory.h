@@ -154,21 +154,21 @@ public:
   virtual void use_local_memory_pool (bool);
 
   /// @name Access the input CDR allocators.
-  //@{
+  /// @{
   virtual ACE_Allocator* input_cdr_dblock_allocator ();
   virtual ACE_Allocator* input_cdr_buffer_allocator ();
   virtual ACE_Allocator* input_cdr_msgblock_allocator ();
-  //@}
+  /// @}
 
   // Return 1 when the input CDR allocator uses a lock else 0.
   virtual int input_cdr_allocator_type_locked ();
 
   /// @name Access the output CDR allocators.
-  //@{
+  /// @{
   virtual ACE_Allocator* output_cdr_dblock_allocator ();
   virtual ACE_Allocator* output_cdr_buffer_allocator ();
   virtual ACE_Allocator* output_cdr_msgblock_allocator ();
-  //@}
+  /// @}
 
   /// Access the AMH response handler allocator
   virtual ACE_Allocator* amh_response_handler_allocator ();

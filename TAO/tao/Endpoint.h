@@ -64,7 +64,7 @@ public:
    *
    * Abstract methods to be implemented by concrete subclasses.
    */
-  //@{
+  /// @{
   /**
    * @return true if this endpoint is equivalent to @a other_endpoint.
    */

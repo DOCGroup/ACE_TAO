@@ -165,7 +165,8 @@ TAO_Notify_Constraint_Visitor::visit_identifier (ETCL_Identifier *ident)
     {
       if (any.impl () != nullptr)
         {
-          this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (&any));
+          this->queue_.enqueue_head
+            (TAO_ETCL_Literal_Constraint (std::addressof (any)));
           return_value = 0;
         }
     }

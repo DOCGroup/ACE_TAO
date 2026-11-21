@@ -115,7 +115,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_Reactor reactor (new ACE_TP_Reactor, true);
 
   Deadlock deadlock;
-  deadlock.reactor (&reactor);
+  deadlock.reactor (std::addressof (reactor));
 
   Event_Handler handler (deadlock);
 

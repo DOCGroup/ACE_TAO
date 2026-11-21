@@ -35,12 +35,12 @@ public:
 
 private:
   /// Helpers.
-  //@{
+  /// @{
   int parse_args (int argc, ACE_TCHAR *argv[]);
   int check_for_nil (CORBA::Object_ptr obj, char const* message);
   void write_ior_file (CORBA::ORB_ptr orb,
                        RtecEventChannelAdmin::EventChannel_ptr ec);
-  //@}
+  /// @}
 
   /// Event Channel ior is written to this file.
   /// Default is "gateway-ec.ior", which can be overridden with the "-i"

@@ -1215,11 +1215,13 @@ TAO_Log_i::validate_capacity_alarm_thresholds (
   // normalizing the sequence.
 
   if (threshs.length () > 1)
-    for (CORBA::ULong i {}; i < threshs.length () - 1; ++i)
-      if (threshs[i] >= threshs[i + 1])
-      {
-        return false;
-      }
+    {
+      for (CORBA::ULong i {}; i < threshs.length () - 1; ++i)
+        if (threshs[i] >= threshs[i + 1])
+          {
+            return false;
+          }
+    }
 
   return true;
 }

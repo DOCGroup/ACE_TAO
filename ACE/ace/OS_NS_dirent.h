@@ -96,7 +96,8 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   long telldir (ACE_DIR *);
 
-  // Win32 emulation functions
+  /// @name Win32 emulation functions
+  /// @{
 #if defined (ACE_LACKS_OPENDIR)
   extern ACE_Export
   ACE_DIR *opendir_emulation (const ACE_TCHAR *filename);
@@ -119,6 +120,7 @@ namespace ACE_OS {
   extern ACE_Export
   struct ACE_DIRENT *readdir_emulation (ACE_DIR *);
 #endif /* ACE_LACKS_READDIR */
+  /// @}
 
 } /* namespace ACE_OS */
 

@@ -57,7 +57,7 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all IOR interceptors.
    */
-  //@{
+  /// @{
   /// Return the name of this IORInterceptor.
   char * name () override;
 
@@ -77,7 +77,7 @@ public:
       PortableInterceptor::ObjectReferenceTemplateSeq const &templates,
       PortableInterceptor::AdapterState state) override;
 
-  //@}
+  /// @}
 
 private:
   /// The CDR encapsulation coder/decoder used to encapsulate data

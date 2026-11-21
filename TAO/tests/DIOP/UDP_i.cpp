@@ -22,11 +22,13 @@ UDP_i::invoke (char const *client_name,
                                   last_request_id) != -1)
         {
           if (last_request_id + 1 != request_id)
-            ACE_ERROR ((LM_ERROR,
-                        "UDP_i::invoke: failure on %C expected id = %d, got %d\n",
-                        client_name,
-                        last_request_id+1,
-                        request_id));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "UDP_i::invoke: failure on %C expected id = %d, got %d\n",
+                          client_name,
+                          last_request_id+1,
+                          request_id));
+            }
         }
 
       request_id_table_.rebind (client_name,

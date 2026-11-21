@@ -465,7 +465,7 @@ namespace CORBA
     /// @}
 
   private:
-    // Prevent copying and assignment.
+    /// Copying and assignment are disabled.
     TypeCode () = delete;
     TypeCode (TypeCode const &) = delete;
     TypeCode &operator= (TypeCode const &) = delete;
@@ -486,7 +486,7 @@ operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc);
 
 #if defined (GEN_OSTREAM_OPS)
 
-// Used in optionally generated ostream operators (for debugging).
+/// Used in optionally generated ostream operators for debugging.
 TAO_AnyTypeCode_Export std::ostream &
 operator<< (std::ostream &, const CORBA::TypeCode_ptr tc);
 
@@ -524,8 +524,8 @@ namespace TAO
   TAO_AnyTypeCode_Export
   CORBA::TCKind unaliased_kind (CORBA::TypeCode_ptr tc);
 
-  // Used in generated code if CORBA::TypeCode is an argument or
-  // return type.
+  /// Used in generated code if CORBA::TypeCode is an argument or
+  /// return type.
   template<>
   class TAO_AnyTypeCode_Export Arg_Traits<CORBA::TypeCode>
     : public Object_Arg_Traits_T<CORBA::TypeCode_ptr,

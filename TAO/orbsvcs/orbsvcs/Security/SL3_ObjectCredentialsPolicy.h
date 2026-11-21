@@ -63,7 +63,7 @@ namespace TAO
        * Methods required by the
        * SecurityLevel3::ObjectCredentialsPolicy interface.
        */
-      //@{
+      /// @{
       SecurityLevel3::OwnCredentialsList * creds_list () override;
 
       CORBA::PolicyType policy_type () override;
@@ -71,7 +71,7 @@ namespace TAO
       CORBA::Policy_ptr copy () override;
 
       void destroy () override;
-      //@}
+      /// @}
 
     protected:
       /**

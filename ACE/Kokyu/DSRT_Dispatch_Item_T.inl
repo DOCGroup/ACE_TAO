@@ -43,7 +43,7 @@ thread_handle () const
 template <class DSRT_Scheduler_Traits>
 ACE_INLINE void
 DSRT_Dispatch_Item<DSRT_Scheduler_Traits>::
-thread_handle (ACE_hthread_t &handle)
+thread_handle (ACE_hthread_t const &handle)
 {
   thr_handle_ = handle;
 }

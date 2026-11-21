@@ -21,11 +21,13 @@ ForwardTest_Request_Interceptor::forward_reference (
   CORBA::Object_ptr forward_location)
 {
   if (CORBA::is_nil (forward_location))
-    throw CORBA::INV_OBJREF (
-      CORBA::SystemException::_tao_minor_code (
-        TAO::VMCID,
-        EINVAL),
-      CORBA::COMPLETED_NO);
+    {
+      throw CORBA::INV_OBJREF (
+        CORBA::SystemException::_tao_minor_code (
+          TAO::VMCID,
+          EINVAL),
+        CORBA::COMPLETED_NO);
+    }
   this->forward_location_ = CORBA::Object::_duplicate (forward_location);
 }
 

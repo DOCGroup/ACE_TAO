@@ -27,10 +27,12 @@ test_write (TAO_OutputCDR &cdr, int const n)
   for (int i = 0; i < n; ++i)
     {
       if (cdr.write_long (l) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "write_long[%d] failed\n",
-                           i),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "write_long[%d] failed\n",
+                             i),
+                            1);
+        }
     }
 
   return 0;
@@ -44,10 +46,12 @@ test_read (TAO_InputCDR &cdr, int const n)
   for (int i = 0; i < n; ++i)
     {
       if (cdr.read_long (xl) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "read_long[%d] failed\n",
-                           i),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "read_long[%d] failed\n",
+                             i),
+                            1);
+        }
     }
 
   return 0;
@@ -152,8 +156,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       double const write_average = ACE_HRTIME_CONVERSION(wusecs) / m;
       double const read_average = ACE_HRTIME_CONVERSION(rusecs) / m;
       if (!quiet)
-        ACE_OS::printf ("AVE: %d %f %f\n",
-                        x, write_average, read_average);
+        {
+          ACE_OS::printf ("AVE: %d %f %f\n",
+                          x, write_average, read_average);
+        }
     }
   return 0;
 }

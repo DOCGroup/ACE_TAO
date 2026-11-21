@@ -130,7 +130,7 @@ protected:
   int parse_args (int argc, ACE_TCHAR * argv []);
 
   /// @name Data members
-  //@{
+  /// @{
   /// true: this service is bootstrappable
   bool bootstrap_ {};
 
@@ -188,7 +188,7 @@ protected:
 
   /// Shutdown the dispatching ORB?
   bool shutdown_dispatching_orb_ {true};
-  //@}
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -55,7 +55,7 @@ namespace Kokyu
     ACE_hthread_t thread_handle () const;
 
     /// Set the thread handle.
-    void thread_handle (ACE_hthread_t &handle);
+    void thread_handle (ACE_hthread_t const &handle);
 
     /// Get the insertion time.
     ACE_Time_Value const &insertion_time () const;

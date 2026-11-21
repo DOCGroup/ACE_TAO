@@ -15,7 +15,7 @@ void
 FTP_Client_Callback::get_timeout (ACE_Time_Value *&tv,
                                   void *&)
 {
-  tv = &this->timeout_;
+  tv = std::addressof (this->timeout_);
 }
 
 int

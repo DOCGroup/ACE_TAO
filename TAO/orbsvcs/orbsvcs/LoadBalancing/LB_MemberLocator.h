@@ -48,7 +48,7 @@ public:
    * Methods required by the PortableServer::ServantLocator
    * interface.
    */
-  //@{
+  /// @{
   /// Clients requests are forwarded via the
   /// PortableServer::ForwardRequest exception thrown in this method.
   PortableServer::Servant preinvoke (
@@ -70,7 +70,7 @@ public:
   TAO_LB_MemberLocator & operator= (TAO_LB_MemberLocator const &) = delete;
   TAO_LB_MemberLocator & operator= (TAO_LB_MemberLocator &&) = delete;
 
-  //@}
+  /// @}
 
 private:
   /// Borrowed manager; its lifetime must exceed that of this POA-owned locator.

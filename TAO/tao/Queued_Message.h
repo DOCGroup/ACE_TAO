@@ -107,7 +107,7 @@ public:
    * };<BR>
    *
    */
-  //@{
+  /// @{
   /// Set/get the next element in the list
   TAO_Queued_Message *next () const;
 
@@ -125,11 +125,11 @@ public:
   /// Insert the current element at the head of the queue.
   void push_front (TAO_Queued_Message *&head,
                    TAO_Queued_Message *&tail);
-  //@}
+  /// @}
 
   /** @name Template Methods
    */
-  //@{
+  /// @{
   /// Return the length of the message
   /**
    * If the message has been partially sent it returns the number of
@@ -211,7 +211,7 @@ public:
    * This parameter must not be modified (through const_cast).
    */
   virtual void copy_if_necessary (ACE_Message_Block const *chain) = 0;
-  //@}
+  /// @}
 
 protected:
   /*

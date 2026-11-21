@@ -48,10 +48,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       BlobServer_var const blob_server (BlobServer::_narrow (object.in ()));
       if (CORBA::is_nil (blob_server.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Nil BlobServer reference <%s>\n"),
-                           options.ior),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Nil BlobServer reference <%s>\n"),
+                             options.ior),
+                            1);
+        }
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test\n"));
 

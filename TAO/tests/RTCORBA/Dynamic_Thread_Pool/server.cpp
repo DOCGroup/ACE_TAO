@@ -74,10 +74,12 @@ write_ior_to_file (CORBA::ORB_ptr orb,
   std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
     ACE_OS::fopen (filename, ACE_TEXT ("w")), ACE_OS::fclose);
   if (!output_file)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                       filename),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                         filename),
+                        -1);
+    }
 
   ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
   return 0;
@@ -269,12 +271,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (result == -1)
         {
           if (errno == EPERM)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot create thread with scheduling policy %s\n"
-                               "because the user does not have the appropriate privileges, terminating program....\n"
-                               "Check svc.conf options and/or run as root\n",
-                               sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
-                              2);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Cannot create thread with scheduling policy %s\n"
+                                 "because the user does not have the appropriate privileges, terminating program....\n"
+                                 "Check svc.conf options and/or run as root\n",
+                                 sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
+                                2);
+            }
           else
           {
             ACE_ASSERT (0);

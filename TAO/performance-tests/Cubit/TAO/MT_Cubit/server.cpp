@@ -27,6 +27,8 @@
 
 #include "ace/Barrier.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_QUANTIFY)
 # include "quantify.h"
 #endif /* ACE_HAS_QUANTIFY */
@@ -192,7 +194,7 @@ Server::activate_high_servant ()
                   Cubit_Task (this->high_argv_->buf (),
                               "internet",
                               1,
-                              &this->servant_manager_,
+                              std::addressof (this->servant_manager_),
                               0), //task id 0.
                   -1);
 
@@ -286,7 +288,7 @@ Server::activate_low_servants ()
                       Cubit_Task (this->low_argv_->buf (),
                                   "internet",
                                   1,
-                                  &this->servant_manager_,
+                                  std::addressof (this->servant_manager_),
                                   i),
                       -1);
 

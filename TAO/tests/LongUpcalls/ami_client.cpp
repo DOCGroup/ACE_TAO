@@ -48,9 +48,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -80,9 +82,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         Test::Manager::_narrow (manager_object.in ());
 
       if (CORBA::is_nil (manager.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Manager is nil\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Manager is nil\n"),
+                            1);
+        }
 
       Manager_Handler handler_impl (manager.in (), controller.in ());
 

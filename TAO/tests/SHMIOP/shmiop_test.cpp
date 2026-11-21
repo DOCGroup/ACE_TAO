@@ -137,15 +137,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             ACE_OS::fopen (options.server_ior_file, ACE_TEXT ("w")),
             ACE_OS::fclose);
           if (!ior_file)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Cannot open server IOR file %s: %p\n"),
-                               options.server_ior_file),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Cannot open server IOR file %s: %p\n"),
+                                 options.server_ior_file),
+                                1);
+            }
           if (ACE_OS::fputs (ior.in (), ior_file.get ()) == EOF)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Cannot write server IOR file %s: %p\n"),
-                               options.server_ior_file),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Cannot write server IOR file %s: %p\n"),
+                                 options.server_ior_file),
+                                1);
+            }
 
           if (options.client_ior_file == nullptr &&
               task.activate (THR_NEW_LWP | THR_JOINABLE) != 0)

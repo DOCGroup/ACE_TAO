@@ -35,7 +35,7 @@
 class ACEXML_Export ACEXML_Base64 : public ACE_Base64
 {
 public:
-  //@{
+  /// @{
   /**
    * Encodes a stream of octets to Base64 data
    *
@@ -58,7 +58,7 @@ public:
   static ACEXML_Char* decode (const ACEXML_Char* input,
                               size_t* output_len);
 
-  //@}
+  /// @}
 };
 
 #include /**/ "ace/post.h"

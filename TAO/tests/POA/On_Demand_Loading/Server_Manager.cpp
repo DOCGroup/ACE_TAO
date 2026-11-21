@@ -62,11 +62,13 @@ Server_i::write_iors_to_file (char const *first_ior,
   std::unique_ptr<FILE, int (*) (FILE *)> output_file_2 (
     ACE_OS::fopen (ior_output_file_2.c_str (), "w"), ACE_OS::fclose);
   if (!output_file_1 || !output_file_2)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cannot open output files for writing IORs: %s, %s\n",
-                       ior_output_file_1.c_str (),
-                       ior_output_file_2.c_str ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Cannot open output files for writing IORs: %s, %s\n",
+                         ior_output_file_1.c_str (),
+                         ior_output_file_2.c_str ()),
+                        -1);
+    }
 
   int result = ACE_OS::fprintf (output_file_1.get (),
                                 "%s",
@@ -157,13 +159,17 @@ Server_i::create_poa (char const *name,
 
       // Servant Retention Policy.
       if (retain_servants)
-        policies_[3] =
-          root_poa_->create_servant_retention_policy
-          (PortableServer::RETAIN);
+        {
+          policies_[3] =
+            root_poa_->create_servant_retention_policy
+            (PortableServer::RETAIN);
+        }
       else
-        policies_[3] =
-          root_poa_->create_servant_retention_policy
-          (PortableServer::NON_RETAIN);
+        {
+          policies_[3] =
+            root_poa_->create_servant_retention_policy
+            (PortableServer::NON_RETAIN);
+        }
 
       // Create myPOA as the child of RootPOA with the above
       // policies_. myPOA will use SERVANT_ACTIVATOR or

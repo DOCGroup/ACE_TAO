@@ -81,7 +81,7 @@ namespace TAO
        * Methods required by the
        * PortableInterceptor::ServerRequestInterceptor interface.
        */
-      //@{
+      /// @{
       char * name () override;
 
       void destroy () override;
@@ -100,7 +100,7 @@ namespace TAO
 
       void send_other (
           PortableInterceptor::ServerRequestInfo_ptr ri) override;
-      //@}
+      /// @}
 
     protected:
       /**

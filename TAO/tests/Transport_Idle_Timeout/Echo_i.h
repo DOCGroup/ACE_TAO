@@ -23,7 +23,8 @@ public:
   Echo_i & operator= (Echo_i const &) = delete;
   Echo_i & operator= (Echo_i &&) = delete;
 
-  // Test::Echo operations
+  /// @name Test::Echo operations
+  /// @{
   bool ping (::CORBA::Long sleep_time,
              ::CORBA::Long cache_size_expected,
              ::Test::Echo_ptr server,
@@ -32,6 +33,7 @@ public:
              ::CORBA::Long cache_size_expected_in_server2) override;
 
   void shutdown () override;
+  /// @}
 
 private:
   CORBA::ORB_var orb_;

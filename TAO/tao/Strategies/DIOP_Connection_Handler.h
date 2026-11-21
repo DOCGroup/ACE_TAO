@@ -52,21 +52,21 @@ public:
   /// connected.  Argument is unused.
   int open (void *) override;
 
-  // @@ Frank: Similar to open, but called on server
+  /// Called on the server, similar to open ().
   virtual int open_server ();
 
-  //@{
+  /// @{
   /**
    * Connection_Handler overloads
    */
   int open_handler (void *) override;
-  //@}
+  /// @}
 
   /// Close called by the Acceptor or Connector when connection
   /// establishment fails.
   int close (u_long = 0) override;
 
-  //@{
+  /// @{
   /** @name Event Handler overloads
    */
   int resume_handler () override;
@@ -76,23 +76,15 @@ public:
   int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
   int handle_timeout (ACE_Time_Value const &current_time,
                       void const *act = nullptr) override;
-  //@}
+  /// @}
 
   /// Add ourselves to Cache.
   int add_transport_to_cache ();
 
-  // @@ Frank: Not needed
-  /*
-  /// Process the <listen_list>
-  int process_listen_point_list (DIOP::ListenPointList &listen_list);
-  */
-
-  // DIOP Additions - Begin
   /**
    * @name The DIOP Additions
-   *
    */
-  //@{
+  /// @{
   ACE_INET_Addr const &addr ();
 
   void addr (ACE_INET_Addr const &addr);
@@ -100,38 +92,34 @@ public:
   ACE_INET_Addr const &local_addr ();
 
   void local_addr (ACE_INET_Addr const &addr);
-  //@}
-  // DIOP Additions - End
+  /// @}
 
   /// Set Diff-Serv codepoint on outgoing packets.
   int set_dscp_codepoint (CORBA::Boolean set_network_priority) override;
   int set_dscp_codepoint (CORBA::Long dscp_codepoint) override;
 
 protected:
-  //@{
+  /// @{
   /**
    * @name TAO_Connection Handler overloads
    */
   int release_os_resources () override;
   int handle_write_ready (ACE_Time_Value const *timeout) override;
-  //@}
+  /// @}
 
   /// Helper method used by the set_dscp_codepoint () methods
   int set_tos (int tos);
 
-  // DIOP Additions - Begin
   /**
    * @name The DIOP Additions
-   *
    */
-  //@{
+  /// @{
   /// This is always the remote address
   ACE_INET_Addr addr_;
 
   /// This is always the local address for the connector
   ACE_INET_Addr local_addr_;
-  //@}
-  // DIOP Additions - End
+  /// @}
 
 private:
   TAO_DIOP_Connection_Handler (TAO_DIOP_Connection_Handler const &) = delete;

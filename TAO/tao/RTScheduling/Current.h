@@ -132,7 +132,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
   /**
    * @name Reference Related Methods
    */
-  //@{
+  /// @{
   using _ptr_type = TAO_RTScheduler_Current_ptr;
   using _var_type = TAO_RTScheduler_Current_var;
 
@@ -146,7 +146,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
     }
 
   const char* _interface_repository_id () const override;
-  //@}
+  /// @}
 
 private:
   RTCORBA::Current_var rt_current_;

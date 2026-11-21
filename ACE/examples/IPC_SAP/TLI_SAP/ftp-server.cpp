@@ -24,7 +24,8 @@ read_file (void *fd)
               stream.get_handle ()));
 
   while ((n = stream.recv (buf, sizeof buf, &flags)) > 0)
-    continue;
+    {
+    }
 
   ACE_UNUSED_ARG (n);
 

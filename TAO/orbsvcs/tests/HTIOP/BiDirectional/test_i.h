@@ -49,13 +49,13 @@ public:
   Simple_Server_i (CORBA::ORB_ptr orb, int no_iterations);
 
   /// @name Simple_Server operations
-  //@{
+  /// @{
   CORBA::Long test_method (CORBA::Boolean do_callback) override;
 
   void callback_object (Callback_ptr callback) override;
 
   void shutdown () override;
-  //@}
+  /// @}
 
   int call_client ();
 

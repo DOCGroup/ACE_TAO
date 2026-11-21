@@ -193,7 +193,7 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int raise (const int signum);
-  //@}
+  /// @}
 
 } /* namespace ACE_OS */
 

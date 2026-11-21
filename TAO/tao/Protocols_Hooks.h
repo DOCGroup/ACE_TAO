@@ -165,7 +165,7 @@ public:
    * some critical components.  If the RTCORBA library isn't used,
    * these operations are no-ops.
    */
-  //@{
+  /// @{
   virtual int get_thread_CORBA_priority (CORBA::Short &) = 0;
 
   virtual int get_thread_native_priority (CORBA::Short &) = 0;
@@ -180,7 +180,7 @@ public:
 
   virtual int restore_thread_CORBA_and_native_priority (CORBA::Short,
                                                         CORBA::Short) = 0;
-  //@}
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

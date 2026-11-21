@@ -73,7 +73,8 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-  ACE_Null_Mutex &mutex_; // Reference to mutex lock.
+  /// Reference to the mutex lock.
+  ACE_Null_Mutex &mutex_;
 
 private:
   ACE_Condition (ACE_Condition const &) = delete;

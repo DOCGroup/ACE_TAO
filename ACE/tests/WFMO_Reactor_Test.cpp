@@ -16,6 +16,7 @@
 #include "ace/Pipe.h"
 
 #include <array>
+#include <memory>
 
 #if defined (ACE_WIN32)
 
@@ -41,7 +42,7 @@ Event_Handler::Event_Handler (ACE_Reactor &reactor)
               "Reference count in Event_Handler() is %d\n",
               this->reference_count_.load ()));
 
-  this->reactor (&reactor);
+  this->reactor (std::addressof (reactor));
 
   int result =
     this->pipe_.open ();

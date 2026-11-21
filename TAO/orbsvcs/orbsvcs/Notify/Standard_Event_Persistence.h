@@ -125,8 +125,10 @@ namespace TAO_Notify
     // release the current factory so a new one can be created
     void reset () override;
 
-    ACE_TString filename_;  // set via -file_path
-    ACE_UINT32 block_size_ {512}; // set via -block_size
+    /// File path specified by -file_path.
+    ACE_TString filename_;
+    /// Block size specified by -block_size.
+    ACE_UINT32 block_size_ {512};
     std::unique_ptr<Standard_Event_Persistence_Factory> factory_;
   };
 }

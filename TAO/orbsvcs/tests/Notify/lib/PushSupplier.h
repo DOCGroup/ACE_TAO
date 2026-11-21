@@ -76,9 +76,9 @@ protected:
   void disconnect_from_proxy () override;
 
   /// @name PushSupplier operations
-  //@{
+  /// @{
   void disconnect_push_supplier () override;
-  //@}
+  /// @}
 };
 
 #if defined (__ACE_INLINE__)

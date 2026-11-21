@@ -57,7 +57,7 @@ public:
    * each subclass, we factor the common code in to this utility
    * class.
    */
-  //@{
+  /// @{
   static Dynamic::ParameterList * make_parameter_list ();
 
   static Dynamic::ExceptionList * make_exception_list ();
@@ -67,7 +67,7 @@ public:
   static Dynamic::RequestContext * make_request_context ();
 
   static CORBA::Any * make_any (CORBA::Boolean tk_void_any);
-  //@}
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

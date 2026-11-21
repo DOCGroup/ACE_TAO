@@ -87,7 +87,8 @@ namespace ACE
               std::streamsize bufsize_;
               std::unique_ptr<char_type[]> buffer_;
               typename std::basic_ios<ACE_CHAR_T, TR>::openmode mode_;
-              interceptor_type* interceptor_; // Non-owning; configured by set_interceptor().
+              /// Non-owning interceptor configured by set_interceptor().
+              interceptor_type* interceptor_;
           };
 
         /// char specialization

@@ -34,13 +34,13 @@ namespace TAO_LB
    *
    * Defaults defined by the Load Balancing specification.
    */
-  //@{
+  /// @{
   constexpr CORBA::Float LL_DEFAULT_CRITICAL_THRESHOLD = 0;
   constexpr CORBA::Float LL_DEFAULT_REJECT_THRESHOLD = 0;
   constexpr CORBA::Float LL_DEFAULT_TOLERANCE = 1;
   constexpr CORBA::Float LL_DEFAULT_DAMPENING = 0;
   constexpr CORBA::Float LL_DEFAULT_PER_BALANCE_LOAD = 0;
-  //@}
+  /// @}
 
   /**
    * @name TAO-specific LeastLoaded strategy parameters.
@@ -48,7 +48,7 @@ namespace TAO_LB
    * Parameters internal to TAO's LeastLoaded strategy
    * implementation.
    */
-  //@{
+  /// @{
   /// Percentage difference between two load values that determines
   /// whether the loads are considered equivalent.
   /**
@@ -59,8 +59,9 @@ namespace TAO_LB
    * residing at the location corresponding to one of the two loads
    * will be selected at random.
    */
-  constexpr CORBA::Float LL_DEFAULT_LOAD_PERCENT_DIFF_CUTOFF = 0.01f;  // 1%
-  //@}
+  /// Default load difference cutoff is 1%.
+  constexpr CORBA::Float LL_DEFAULT_LOAD_PERCENT_DIFF_CUTOFF = 0.01f;
+  /// @}
 }
 
 /**
@@ -82,7 +83,7 @@ public:
    *
    * Methods required by the CosLoadBalancing::Strategy interface.
    */
-  //@{
+  /// @{
   char * name () override;
 
   CosLoadBalancing::Properties * get_properties () override;
@@ -102,7 +103,7 @@ public:
   void analyze_loads (
       PortableGroup::ObjectGroup_ptr object_group,
       CosLoadBalancing::LoadManager_ptr load_manager) override;
-  //@}
+  /// @}
 
   /// Returns the default POA for this servant.
   PortableServer::POA_ptr _default_POA () override;
@@ -159,7 +160,7 @@ private:
    *
    * Cached LeastLoaded load balancing strategy property values.
    */
-  //@{
+  /// @{
   /// The critical load threshold.
   /**
    * Load rebalancing/shedding will occur if loads at a given location
@@ -190,7 +191,7 @@ private:
   ///
   CORBA::Float per_balance_load_;
 
-  //@}
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

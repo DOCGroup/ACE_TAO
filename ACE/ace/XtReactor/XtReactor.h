@@ -48,8 +48,8 @@ public:
   /// Underlying handle.
   ACE_HANDLE handle_ {};
 
-  /// Pointer to next node in the linked list.
-  ACE_XtReactorID *next_ {}; // Non-owning link; ACE_XtReactor deletes the list nodes.
+  /// Non-owning link to the next node; ACE_XtReactor deletes list nodes.
+  ACE_XtReactorID *next_ {};
 };
 
 /**
@@ -135,8 +135,10 @@ protected:
                                       ACE_Time_Value *);
   /// @}
 
-  XtAppContext context_ {}; // Borrowed from the X toolkit application.
-  ACE_XtReactorID *ids_ {}; // Head of the manually managed linked list.
+  /// Context borrowed from the X toolkit application.
+  XtAppContext context_ {};
+  /// Head of the manually managed linked list.
+  ACE_XtReactorID *ids_ {};
   XtIntervalId timeout_ {};
 
 private:

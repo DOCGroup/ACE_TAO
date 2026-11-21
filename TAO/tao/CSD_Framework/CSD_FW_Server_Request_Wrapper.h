@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    CSD_FW_Server_Request_Wrapper.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_CSD_FW_SERVER_REQUEST_WRAPPER_H
 #define TAO_CSD_FW_SERVER_REQUEST_WRAPPER_H

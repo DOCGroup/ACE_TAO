@@ -46,7 +46,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   void *dlsym (ACE_SHLIB_HANDLE handle,
                const ACE_TCHAR *symbol);
-  //@}
+  /// @}
 
 } /* namespace ACE_OS */
 

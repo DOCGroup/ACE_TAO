@@ -64,7 +64,8 @@ protected:
   /// @todo These sizes should be taken from the appropriate
   /// POSIX/system header files and/or defined dynamically.
   static constexpr int MAX_COMMAND_LINE_OPTIONS = 128;
-  static constexpr int ENVIRONMENT_BUFFER = 16 * 1024; // 16K
+  /// Default environment buffer size (16K).
+  static constexpr int ENVIRONMENT_BUFFER = 16 * 1024;
   static constexpr int MAX_ENVIRONMENT_ARGS = 512;
   /// @}
 

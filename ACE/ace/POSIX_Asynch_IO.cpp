@@ -1981,7 +1981,7 @@ ACE_POSIX_Asynch_Transmit_Handler::transmit ()
   // Transmit the header.
   if (this->ws_.write (*this->result_->header_and_trailer ()->header (),
                        this->result_->header_and_trailer ()->header_bytes (),
-                       reinterpret_cast<void *> (&this->header_act_),
+                       reinterpret_cast<void *> (std::addressof (this->header_act_)),
                        0) == -1)
     {
       ACELIB_ERROR_RETURN ((LM_ERROR,

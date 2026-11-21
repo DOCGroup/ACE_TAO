@@ -129,8 +129,10 @@ Worker::svc ()
           this->server_->invoked_by_client ();
 
           if (TAO_debug_level > 0 && i % 100 == 0)
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client (%P|%t) Iteration = %d\n"),
-                        i));
+            {
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client (%P|%t) Iteration = %d\n"),
+                          i));
+            }
         }
     }
   catch (CORBA::Exception const &ex)
@@ -169,10 +171,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                          CLIENT_ORB_ID);
 
       if (parse_args (argc, argv) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Client (%P|%t) Failure to parse the command line.\n"),
-                           ior),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Client (%P|%t) Failure to parse the command line.\n"),
+                             ior),
+                            -1);
+        }
 
       try
         {
@@ -200,10 +204,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         Test::Transport::CurrentTest::_narrow (obj.in ());
 
       if (CORBA::is_nil (server.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Client (%P|%t) The server object reference <%s> is nil.\n"),
-                           ior),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Client (%P|%t) The server object reference <%s> is nil.\n"),
+                             ior),
+                            -1);
+        }
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client (%P|%t) Spawning %d threads\n"), nthreads));
 
@@ -250,8 +256,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           result = server->self_test ();
 
           if (result != 0)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("Client (%P|%t) Server self-test reported failure\n")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("Client (%P|%t) Server self-test reported failure\n")));
+            }
         }
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client (%P|%t) Invoking oneway server->shutdown()\n")));

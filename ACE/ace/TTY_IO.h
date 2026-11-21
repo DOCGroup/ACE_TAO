@@ -46,7 +46,7 @@ public:
   {
     Serial_Params ();
 
-    /** Specifies the baudrate at which the communication port operates. */
+    /// Specifies the baudrate at which the communication port operates.
     int baudrate;
     /** Specifies the minimum number of bytes in input buffer before XON char
         is sent. Negative value indicates that default value should
@@ -82,27 +82,27 @@ public:
         - 3 = Specifies that RTS line will be high if bytes are available
               for transmission. After transmission RTS will be low (Win32). */
     unsigned char rtsenb;
-    /** Enable/disable software flow control on input. */
+    /// Enable/disable software flow control on input.
     bool xinenb;
-    /** Enable/disable software flow control on output. */
+    /// Enable/disable software flow control on output.
     bool xoutenb;
     /** Specifies if device is a modem (POSIX). If not set modem status
         lines are ignored. */
     bool modem;
-    /** Enable/disable receiver (POSIX). */
+    /// Enable/disable receiver (POSIX).
     bool rcvenb;
-    /** Controls whether DSR is disabled or enabled (Win32). */
+    /// Controls whether DSR is disabled or enabled (Win32).
     bool dsrenb;
-    /** Controls whether DTR is disabled or enabled. */
+    /// Controls whether DTR is disabled or enabled.
     bool dtrdisable;
     /** Data bits. Valid values 5, 6, 7 and 8 data bits.
         Additionally Win32 supports 4 data bits. */
     unsigned char databits;
-    /** Stop bits. Valid values are 1 and 2. */
+    /// Stop bits. Valid values are 1 and 2.
     unsigned char stopbits;
   };
 
-  /** Interface for reading/writing serial device parameters. */
+  /// Interface for reading/writing serial device parameters.
   int control (Control_Mode cmd, Serial_Params *arg) const;
 };
 

@@ -16,7 +16,7 @@ Receiver_StreamEndPoint::get_callback (const char *,
 {
   // Return the receiver application callback to the AVStreams for
   // future upcalls.
-  callback = &this->callback_;
+  callback = std::addressof (this->callback_);
   // Get the stream controller for this stream.
   try
     {
@@ -158,7 +158,7 @@ Receiver::init (int,
 
   // Register the receiver mmdevice object with the ORB
   ACE_NEW_RETURN (this->mmdevice_,
-                  TAO_MMDevice (&this->reactive_strategy_),
+                  TAO_MMDevice (std::addressof (this->reactive_strategy_)),
                   -1);
 
   // Servant Reference Counting to manage lifetime

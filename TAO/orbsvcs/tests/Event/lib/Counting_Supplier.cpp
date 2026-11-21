@@ -2,6 +2,8 @@
 #include "orbsvcs/Event_Utilities.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 EC_Counting_Supplier::EC_Counting_Supplier ()
   :  event_count (0),
      disconnect_count (0),
@@ -45,7 +47,7 @@ EC_Counting_Supplier::deactivate ()
   PortableServer::POA_var consumer_poa =
     this->consumer_adapter_._default_POA ();
   PortableServer::ObjectId_var consumer_id =
-    consumer_poa->servant_to_id (&this->consumer_adapter_);
+    consumer_poa->servant_to_id (std::addressof (this->consumer_adapter_));
   consumer_poa->deactivate_object (consumer_id.in ());
 }
 

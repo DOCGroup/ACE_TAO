@@ -81,10 +81,10 @@ public:
   /**
    * @name Forward Iterators
    */
-  //@{
+  /// @{
   iterator begin ();
   iterator end ();
-  //@}
+  /// @}
 
   /// Return the current size of the underlying table.
   size_t current_size () const;
@@ -93,11 +93,12 @@ private:
   /**
    * @name The canonical ACE_Map methods
    */
-  //@{
+  /// @{
   int bind_i (char const *orb_id, CORBA::Object_ptr obj);
-  CORBA::Object_ptr find_i (char const *orb_id); // Returns a duplicate.
+  /// Returns a duplicate.
+  CORBA::Object_ptr find_i (char const *orb_id);
   int unbind_i (char const *orb_id);
-  //@}
+  /// @}
 
 private:
   TAO_Object_Ref_Table (TAO_Object_Ref_Table const &) = delete;

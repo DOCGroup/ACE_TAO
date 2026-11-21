@@ -201,7 +201,7 @@ public:
    * These methods are only used when fragmenting outgoing GIOP
    * requests and replies.
    */
-  //@{
+  /// @{
   /// Fragment this output CDR stream if necessary.
   /**
    * Fragmentation will done through GIOP fragments when the length of
@@ -233,7 +233,7 @@ public:
 
   /// Maximum time to wait for outgoing message to be sent.
   ACE_Time_Value * timeout () const;
-  //@}
+  /// @}
 
   /// @name Valuetype indirection support
   /// @{
@@ -272,7 +272,7 @@ private:
    * These attributes are only used when fragmenting outgoing GIOP
    * requests and replies.
    */
-  //@{
+  /// @{
   /// Strategy that sends data currently marshaled into this
   /// TAO_OutputCDR stream if necessary.
   TAO_GIOP_Fragmentation_Strategy * const fragmentation_strategy_;
@@ -294,7 +294,7 @@ private:
 
   /// Request/reply send timeout.
   ACE_Time_Value * timeout_;
-  //@}
+  /// @}
 
   /// These maps are used by valuetype indirection support.
   Repo_Id_Map_Handle repo_id_map_;

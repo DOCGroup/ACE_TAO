@@ -67,11 +67,13 @@ write_iors_to_file (ACE_TCHAR const *ior_output_file,
     ACE_OS::fopen (ior_output_file_2.c_str (), "w"), ACE_OS::fclose);
 
   if (!output_file_1 || !output_file_2)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cannot open output files for writing IORs: %C, %C\n",
-                       ACE_TEXT_ALWAYS_CHAR (ior_output_file_1.c_str ()),
-                       ACE_TEXT_ALWAYS_CHAR (ior_output_file_2.c_str ())),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Cannot open output files for writing IORs: %C, %C\n",
+                         ACE_TEXT_ALWAYS_CHAR (ior_output_file_1.c_str ()),
+                         ACE_TEXT_ALWAYS_CHAR (ior_output_file_2.c_str ())),
+                        -1);
+    }
 
   int result = ACE_OS::fprintf (output_file_1.get (), "%s", first_ior);
   if (result <= 0

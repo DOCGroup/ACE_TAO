@@ -267,10 +267,10 @@ protected:
 
   /// Helpers.  Deactivate admins from their POAs, ignoring any CORBA
   /// exceptions.
-  //@{
+  /// @{
   void deactivate_supplier_admin ();
   void deactivate_consumer_admin ();
-  //@}
+  /// @}
 
   /// The POAs used to activate "supplier-side" and "consumer-side"
   /// objects.

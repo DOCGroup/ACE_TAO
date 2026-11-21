@@ -255,7 +255,7 @@ public:
     ACE_CDR::ULong bound_;
   };
 #endif
-  //@}
+  /// @}
 
   /**
    * @{ @name Write operations
@@ -294,7 +294,7 @@ public:
   ACE_CDR::Boolean write_wstring (const std::wstring &x);
 #endif
 
-  //@}
+  /// @}
 
   /// @note the portion written starts at @a x and ends
   ///    at @a x + @a length.
@@ -332,7 +332,7 @@ public:
   /// Write an octet array contained inside a MB, this can be optimized
   /// to minimize copies.
   ACE_CDR::Boolean write_octet_array_mb (const ACE_Message_Block* mb);
-  //@}
+  /// @}
 
   /**
    * @{ @name Placeholder/replace operations
@@ -396,7 +396,7 @@ public:
   ACE_CDR::Boolean replace (ACE_CDR::Octet x, char* loc);
   ACE_CDR::Boolean replace (ACE_CDR::Float x, char* loc);
   ACE_CDR::Boolean replace (ACE_CDR::Double x, char* loc);
-  //@}
+  /// @}
 
   /**
    * Return 0 on failure and 1 on success.
@@ -419,7 +419,7 @@ public:
 
   ACE_CDR::Boolean append_wstring (ACE_InputCDR &);
   ACE_CDR::Boolean append_string (ACE_InputCDR &);
-  //@}
+  /// @}
 
   /// Returns @c false if an error has occurred.
   /**
@@ -867,7 +867,7 @@ public:
     ACE_CDR::ULong bound_;
   };
 #endif /* ACE_LACKS_STD_WSTRING */
-  //@}
+  /// @}
 
   /**
    * Return @c false on failure and @c true on success.
@@ -897,7 +897,7 @@ public:
 #if !defined(ACE_LACKS_STD_WSTRING)
   ACE_CDR::Boolean read_wstring (std::wstring& x);
 #endif
-  //@}
+  /// @}
 
   /**
    * The buffer @a x must be large enough to contain @a length
@@ -933,7 +933,7 @@ public:
                                           ACE_CDR::ULong length);
   ACE_CDR::Boolean read_int8_array (ACE_CDR::Int8 *x, ACE_CDR::ULong length);
   ACE_CDR::Boolean read_uint8_array (ACE_CDR::UInt8 *x, ACE_CDR::ULong length);
-  //@}
+  /// @}
 
   /**
    * Return @c false on failure and @c true on success.
@@ -953,7 +953,7 @@ public:
   ACE_CDR::Boolean skip_double ();
   ACE_CDR::Boolean skip_longdouble ();
   ACE_CDR::Boolean skip_fixed ();
-  //@}
+  /// @}
 
   /**
    * The next field must be a string, this method skips it. It is

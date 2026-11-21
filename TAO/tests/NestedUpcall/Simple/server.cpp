@@ -56,9 +56,11 @@ write_ior_to_file (char const *ior)
     ACE_OS::fopen (ior_file, "w"), &std::fclose);
 
   if (!output_file)
-    ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IOR: %s\n",
-                       ior_file),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IOR: %s\n",
+                         ior_file),
+                        -1);
+    }
 
   int const result = std::fprintf (output_file.get (), "%s", ior);
   if (result < 0 ||

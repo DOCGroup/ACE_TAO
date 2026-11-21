@@ -3,6 +3,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
+#include <algorithm>
 #include <vector>
 
 #include "ace/RMCast/Socket.h"
@@ -95,31 +96,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       }
     }
 
-    unsigned long lost_count (0), damaged_count (0), duplicate_count (0);
-
-    for (unsigned char const e : received)
-    {
-      if (e == 0)
-      {
-        ++lost_count;
-      }
-    }
-
-    for (unsigned char const e : damaged)
-    {
-      if (e == 1)
-      {
-        ++damaged_count;
-      }
-    }
-
-    for (unsigned char const e : duplicate)
-    {
-      if (e == 1)
-      {
-        ++duplicate_count;
-      }
-    }
+    auto const lost_count = std::count (received.begin (), received.end (), 0);
+    auto const damaged_count = std::count (damaged.begin (), damaged.end (), 1);
+    auto const duplicate_count = std::count (duplicate.begin (), duplicate.end (), 1);
 
     ACE_DEBUG ((LM_DEBUG,
                 "lost      : %Q\n"

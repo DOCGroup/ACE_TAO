@@ -56,7 +56,7 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all IOR interceptors.
    */
-  //@{
+  /// @{
   /// Return the name of this IORInterceptor.
   char * name () override;
 
@@ -66,7 +66,7 @@ public:
   /// Add the tagged components to the IOR.
   void establish_components (
       PortableInterceptor::IORInfo_ptr info) override;
-  //@}
+  /// @}
 
 protected:
   /**

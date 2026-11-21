@@ -60,13 +60,13 @@ public:
   virtual bool is_collocated (TAO_MProfile const &mprofile) = 0;
 
   /// @name Accessors
-  // @{
+  /// @{
   virtual TAO_Thread_Lane_Resources &lane_resources () = 0;
 
   virtual TAO_Thread_Lane_Resources &default_lane_resources () = 0;
 
   TAO_LF_Strategy &lf_strategy ();
-  // @}
+  /// @}
 
 private:
   TAO_Thread_Lane_Resources_Manager (TAO_Thread_Lane_Resources_Manager const &) = delete;

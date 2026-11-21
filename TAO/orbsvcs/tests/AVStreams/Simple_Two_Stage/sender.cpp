@@ -265,7 +265,7 @@ Sender::init (int argc,
 
   // Register the sender mmdevice object with the ORB
   ACE_NEW_RETURN (this->sender_mmdevice_,
-                  TAO_MMDevice (&this->endpoint_strategy_),
+                  TAO_MMDevice (std::addressof (this->endpoint_strategy_)),
                   -1);
 
   // Servant Reference Counting to manage lifetime
@@ -397,7 +397,7 @@ Sender::pace_data ()
 
           // Send frame.
           int const result =
-            this->protocol_object_->send_frame (&this->mb_);
+            this->protocol_object_->send_frame (std::addressof (this->mb_));
 
           if (result < 0)
           {

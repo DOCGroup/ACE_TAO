@@ -118,9 +118,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       if (Echo_Client_Request_Interceptor::client_interceptor_check_ != 10)
-        ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) ERROR:Client Interceptors not called"
-                  " properly\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                    "(%P|%t) ERROR:Client Interceptors not called"
+                    " properly\n"));
+        }
 
       corb->destroy ();
     }

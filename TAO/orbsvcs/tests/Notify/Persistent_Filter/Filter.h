@@ -94,7 +94,7 @@ class FilterClient
                       const char* mod_constraint_expr);
 
   /// @name Data members
-  //@{
+  /// @{
   /// Reference to the root poa.
   PortableServer::POA_var root_poa_;
 
@@ -149,7 +149,7 @@ class FilterClient
 
   // Set this flag to exit the run loop.
   CORBA::Boolean done_;
-  //@}
+  /// @}
 };
 
 /*****************************************************************/
@@ -174,7 +174,7 @@ public:
 
 protected:
   /// @name Data members
-  //@{
+  /// @{
 
   /// The callback for <done>
   FilterClient* filter_;
@@ -187,24 +187,24 @@ protected:
 
   /// The proxy_supplier id.
   CosNotifyChannelAdmin::ProxyID proxy_supplier_id_;
-  //@}
+  /// @}
 
   virtual ~Filter_StructuredPushConsumer ();
 
   /// @name NotifyPublish operations
-  //@{
+  /// @{
   void offer_change (
       const CosNotification::EventTypeSeq & added,
       const CosNotification::EventTypeSeq & removed) override;
-  //@}
+  /// @}
 
   /// @name StructuredPushConsumer operations
-  //@{
+  /// @{
   void push_structured_event (
         const CosNotification::StructuredEvent & notification) override;
 
   void disconnect_structured_push_consumer () override;
-  //@}
+  /// @}
 };
 
 /*****************************************************************/
@@ -233,7 +233,7 @@ public:
 
 protected:
   /// @name Data members
-  //@{
+  /// @{
   /// The name of this consumer.
   ACE_CString my_name_;
 
@@ -242,21 +242,21 @@ protected:
 
   /// This supplier's id.
   CosNotifyChannelAdmin::ProxyID proxy_consumer_id_;
-  //@}
+  /// @}
 
   virtual ~Filter_StructuredPushSupplier ();
 
   /// @name NotifySubscribe operations
-  //@{
+  /// @{
   void subscription_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed) override;
-  //@}
+  /// @}
 
   /// @name StructuredPushSupplier operations
-  //@{
+  /// @{
   void disconnect_structured_push_supplier () override;
-  //@}
+  /// @}
 };
 
 /***************************************************************************/

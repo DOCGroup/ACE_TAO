@@ -169,7 +169,7 @@ public:
 
   int shut_down ();
 
-  ACE_Thread_ID const &thread_id (Worker &worker) const;
+  ACE_Thread_ID const &thread_id (Worker const &worker) const;
 
   int return_to_work (Worker &worker) override
   {
@@ -177,7 +177,7 @@ public:
                       worker_mon, this->workers_lock_, -1);
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Worker %t returning to work.\n")));
-    this->workers_.enqueue_tail (&worker);
+    this->workers_.enqueue_tail (std::addressof (worker));
     this->workers_cond_.signal ();
 
     return 0;
@@ -269,7 +269,7 @@ Manager::shut_down ()
 }
 
 ACE_Thread_ID const &
-Manager::thread_id (Worker &worker) const
+Manager::thread_id (Worker const &worker) const
 {
   return worker.thread_id ();
 }

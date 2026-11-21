@@ -40,13 +40,17 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
       }
 
   if (options.ior.empty ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Please specify the IOR for the servant\n")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Please specify the IOR for the servant\n")), -1);
+    }
 
   if (options.data_bytes < 10)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Please specify a value of at least 10 bytes\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Please specify a value of at least 10 bytes\n")),
+                        -1);
+    }
 
   return 0;
 }

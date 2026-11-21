@@ -2,6 +2,7 @@
 #include "tao/PI_Server/ServerRequestInfoA.h"
 #include "tao/OctetSeqC.h"
 
+#include <algorithm>
 #include <array>
 #include <iostream>
 
@@ -70,13 +71,12 @@ ServerInterceptor::receive_request (
       CORBA::Long gid;
       if (gid_as_any >>= gid)
         {
-          for (CORBA::Long const allowed_gid : allowed_gids)
-            {
-              if (gid == allowed_gid)
-                {
-                  permission_granted = true;
-                }
-            }
+          permission_granted = std::any_of (allowed_gids.begin (),
+                                            allowed_gids.end (),
+                                            [gid] (CORBA::Long const allowed_gid)
+                                            {
+                                              return gid == allowed_gid;
+                                            });
         }
       else
         {

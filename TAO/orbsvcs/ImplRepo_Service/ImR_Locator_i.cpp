@@ -86,14 +86,14 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb)
   ACE_ASSERT (! CORBA::is_nil (this->root_poa_.in ()));
 
   this->dsi_forwarder_.init (orb);
-  this->adapter_.init (& this->dsi_forwarder_);
+  this->adapter_.init (std::addressof (this->dsi_forwarder_));
   this->pinger_.init (orb, this->opts_->ping_interval ());
 
-  this->opts_->pinger (&this->pinger_);
+  this->opts_->pinger (std::addressof (this->pinger_));
 
   // Register the Adapter_Activator reference to be the RootPOA's
   // Adapter Activator.
-  root_poa_->the_activator (&this->adapter_);
+  root_poa_->the_activator (std::addressof (this->adapter_));
 
   // Use a persistent POA so that any IOR
   this->imr_poa_ = createPersistentPOA (this->root_poa_.in (),
@@ -346,7 +346,8 @@ ImR_Locator_i::Shutdown_Handler::handle_exception (ACE_HANDLE)
 void
 ImR_Locator_i::signal_shutdown ()
 {
-  this->orb_->orb_core ()->reactor ()->notify (&this->shutdown_handler_);
+  this->orb_->orb_core ()->reactor ()->notify
+    (std::addressof (this->shutdown_handler_));
 }
 
 void
@@ -1487,7 +1488,7 @@ ImR_Locator_i::list
       ACE_NEW_THROW_EX (l,
                         AsyncListManager (this->repository_.get(),
                                           this->root_poa_.in(),
-                                          active ? &this->pinger_ : nullptr),
+                                          active ? std::addressof (this->pinger_) : nullptr),
                         CORBA::NO_MEMORY ());
       AsyncListManager_ptr lister (l);
       l->list (_tao_rh, how_many);

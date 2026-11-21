@@ -185,7 +185,7 @@ DOVE_Supplier::disconnect ()
 }
 
 void
-DOVE_Supplier::notify (CORBA::Any &message)
+DOVE_Supplier::notify (CORBA::Any const &message)
 {
   // Finalize connection establishment no later than the first event notification
   if (! connected_)

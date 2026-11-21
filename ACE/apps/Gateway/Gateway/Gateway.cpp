@@ -236,7 +236,7 @@ Gateway::parse_connection_config_file ()
                     pci.local_port_,
                     pci.priority_));
 
-      pci.event_channel_ = &this->event_channel_;
+      pci.event_channel_ = std::addressof (this->event_channel_);
 
       // Create the appropriate type of Proxy.
       Connection_Handler *connection_handler;
