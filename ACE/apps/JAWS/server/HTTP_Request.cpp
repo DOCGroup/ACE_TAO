@@ -271,7 +271,6 @@ HTTP_Request::header_strings (int index) const
 const char *
 HTTP_Request::header_values (int index) const
 {
-  char const *hs {};
   char const *hv {};
 
   if (0 <= index && index < NUM_HEADER_STRINGS)

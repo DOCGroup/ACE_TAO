@@ -177,7 +177,8 @@ File_Parser<ENTRY>::skipline ()
   int c {};
 
   while ((c = ACE_OS::getc (this->infile_.get ())) != '\n' && c != EOF)
-    continue;
+    {
+    }
 
   return c;
 }

@@ -1486,8 +1486,6 @@ HostEntCpy(struct hostent *dest, struct hostent *src)
 void
 HostEntFree(struct hostent *host)
 {
-  size_t i;
-
   if (host == 0)
   {
       return;
@@ -1496,6 +1494,8 @@ HostEntFree(struct hostent *host)
   free(host->h_name);
   if (host->h_addr_list != 0)
   {
+      size_t i;
+
       for (i = 0; host->h_addr_list[i] != 0; ++i)
       {
           free(host->h_addr_list[i]);
