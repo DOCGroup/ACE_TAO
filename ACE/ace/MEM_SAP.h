@@ -60,7 +60,7 @@ public:
   size_t capacity_;
 
   /// The actualy size used.
-  size_t size_;
+  size_t size_ {};
 
   ACE_MEM_SAP_NODE_PTR next_;
 };
