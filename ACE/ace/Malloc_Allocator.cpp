@@ -112,7 +112,7 @@ ACE_New_Allocator::calloc (size_t nbytes,
   ACE_NEW_RETURN (ptr, char[nbytes], nullptr);
 
   std::memset (ptr, initial_value, nbytes);
-  return (void *) ptr;
+  return ptr;
 }
 
 void *
@@ -127,7 +127,7 @@ ACE_New_Allocator::free (void *ptr)
 #ifdef ACE_FACE_SAFETY_BASE
   ACE_UNUSED_ARG (ptr);
 #else
-  delete [] (char *) ptr;
+  delete [] static_cast<char *> (ptr);
 #endif
 }
 

@@ -29,8 +29,8 @@ ACE_FIFO_Send_Msg::send (const ACE_Str_Buf &send_msg)
   // ACE_TRACE ("ACE_FIFO_Send_Msg::send");
 #if defined (ACE_HAS_STREAM_PIPES)
   if (ACE_OS::putmsg (this->get_handle (),
-                      (strbuf *) 0,
-                      (strbuf *) &send_msg,
+                      nullptr,
+                      &send_msg,
                       0) == -1)
     {
       return -1;
@@ -42,10 +42,10 @@ ACE_FIFO_Send_Msg::send (const ACE_Str_Buf &send_msg)
 #else
   iovec iov[2];
 
-  iov[0].iov_base = (char *) &send_msg.len;
+  iov[0].iov_base = const_cast<int *> (&send_msg.len);
   iov[0].iov_len  = sizeof send_msg.len;
 
-  iov[1].iov_base = (char *) send_msg.buf;
+  iov[1].iov_base = send_msg.buf;
   iov[1].iov_len  =  static_cast<u_long> (send_msg.len);
 
   ssize_t sent = ACE_OS::writev (this->get_handle (), iov, 2);
