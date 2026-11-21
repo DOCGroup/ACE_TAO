@@ -81,8 +81,7 @@ ACE_Service_Type_Impl::fini () const
         }
       else
         {
-          // Cast to remove const-ness.
-          operator delete ((void *) this->object ());
+          operator delete (this->object ());
         }
     }
 
