@@ -1653,7 +1653,7 @@ public:
 
 protected:
   /// The proactor associated with this handler.
-  ACE_Proactor *proactor_;
+  ACE_Proactor *proactor_ {};
 
   /// The ACE_HANDLE in use with this handler.
   ACE_HANDLE    handle_;

@@ -1048,7 +1048,7 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::transmit_buffers ()
 // *********************************************************************
 
 ACE_Handler::ACE_Handler ()
-  : proactor_ (nullptr), handle_ (ACE_INVALID_HANDLE)
+  : handle_ (ACE_INVALID_HANDLE)
 {
   ACE_Handler::Proxy *p;
   ACE_NEW (p, ACE_Handler::Proxy (this));
