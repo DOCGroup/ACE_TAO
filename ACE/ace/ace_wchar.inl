@@ -149,8 +149,7 @@ ACE_Ascii_To_Wide::convert (const char *str)
   if((hr==size_t(-1))||(lenwi==ACE_MAX_ICONV_BUFFER)){
   wchar_t *wstr=new wchar_t[len*sizeof(wchar_t)];
   for (size_t i = 0; i < len; ++i){
-    char *t = const_cast<char *> (str);
-    wstr[i] = static_cast<wchar_t> (*((unsigned char*)t + i));
+    wstr[i] = static_cast<wchar_t> (static_cast<unsigned char> (str[i]));
   }
 
   return wstr;
@@ -160,8 +159,7 @@ ACE_Ascii_To_Wide::convert (const char *str)
 # else /* ACE_HAS_ICONV */
   for (size_t i = 0; i < len; ++i)
     {
-      char *t = const_cast<char *> (str);
-      wstr[i] = static_cast<wchar_t> (*((unsigned char*)(t + i)));
+      wstr[i] = static_cast<wchar_t> (static_cast<unsigned char> (str[i]));
     }
 # endif /* ACE_WIN32 */
   return wstr;
