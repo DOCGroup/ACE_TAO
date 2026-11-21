@@ -16,13 +16,6 @@ namespace ACE
       : timestamp_ (ACE_Time_Value::zero)
       , value_ (0.0)
       , type_ (type)
-      , index_ (0UL)
-      , minimum_set_ (false)
-      , minimum_ (0.0)
-      , maximum_ (0.0)
-      , sum_ (0.0)
-      , sum_of_squares_ (0.0)
-      , last_ (0.0)
     {}
 
     //=============================================================

@@ -59,13 +59,13 @@ namespace ACE
 
         Information_Type type_;
 
-        size_t index_;
-        bool minimum_set_;
-        double minimum_;
-        double maximum_;
-        double sum_;
-        double sum_of_squares_;
-        double last_;
+        size_t index_ {};
+        bool minimum_set_ {};
+        double minimum_ {};
+        double maximum_ {};
+        double sum_ {};
+        double sum_of_squares_ {};
+        double last_ {};
       };
 
       /**
