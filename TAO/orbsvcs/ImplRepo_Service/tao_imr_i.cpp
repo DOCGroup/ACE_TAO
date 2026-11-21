@@ -1330,10 +1330,10 @@ TAO_IMR_Op_Register::run ()
 
   ImplementationRepository::ServerInformation_var server_information;
   ImplementationRepository::StartupOptions  local;
-  ImplementationRepository::StartupOptions* options {};
 
   try
     {
+      ImplementationRepository::StartupOptions* options {};
       this->imr_->find (this->server_name_.c_str (),
         server_information.out ());
 

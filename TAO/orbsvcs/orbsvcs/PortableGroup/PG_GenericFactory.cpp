@@ -30,10 +30,9 @@ TAO_PG_GenericFactory::~TAO_PG_GenericFactory ()
        i != end;
        ++i)
     {
-      TAO_PG_Factory_Set &factory_set = (*i).int_id_;
-
       try
         {
+          TAO_PG_Factory_Set &factory_set = (*i).int_id_;
           this->delete_object_i (factory_set,
                                  1 /* Ignore exceptions */);
         }
@@ -573,8 +572,6 @@ TAO_PG_GenericFactory::check_minimum_number_members (
     return;
   }
 
-  TAO_PG_Factory_Set & factory_set = entry->int_id_;
-
   PortableGroup::Properties_var props =
     this->property_manager_.get_properties (object_group);
 
@@ -591,6 +588,7 @@ TAO_PG_GenericFactory::check_minimum_number_members (
 
   if (TAO_PG::get_property_value (name, props.in (), value))
     {
+      TAO_PG_Factory_Set & factory_set = entry->int_id_;
       if (!(value >>= minimum_number_members))
         {
           // This only occurs if extraction of the actual value from

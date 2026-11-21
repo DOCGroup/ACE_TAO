@@ -104,8 +104,6 @@ namespace ACE_TMCast
     void
     execute ()
     {
-      char msg[Protocol::MAX_MESSAGE_SIZE];
-
       ssize_t header_size = sizeof (Protocol::MessageHeader);
 
       // OS::Time timeout (1000000); // one millisecond
@@ -116,6 +114,8 @@ namespace ACE_TMCast
       {
         while (true)
         {
+          char msg[Protocol::MAX_MESSAGE_SIZE];
+
           // Check control message queue
 
           {
