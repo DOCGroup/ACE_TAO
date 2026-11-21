@@ -2236,12 +2236,6 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::ACE_Dynamic_Message_Queue
                                                                      size_t lwm,
                                                                      ACE_Notification_Strategy *ns)
   : ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> (hwm, lwm, ns),
-    pending_head_ (nullptr),
-    pending_tail_ (nullptr),
-    late_head_ (nullptr),
-    late_tail_ (nullptr),
-    beyond_late_head_ (nullptr),
-    beyond_late_tail_ (nullptr),
     message_strategy_ (message_strategy)
 {
   // Note, the ACE_Dynamic_Message_Queue assumes full responsibility

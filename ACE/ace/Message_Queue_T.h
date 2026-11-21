@@ -891,22 +891,22 @@ protected:
   virtual int refresh_late_queue (const ACE_Time_Value & current_time);
 
   /// Pointer to head of the pending messages
-  ACE_Message_Block *pending_head_;
+  ACE_Message_Block *pending_head_ {};
 
   /// Pointer to tail of the pending messages
-  ACE_Message_Block *pending_tail_;
+  ACE_Message_Block *pending_tail_ {};
 
   /// Pointer to head of the late messages
-  ACE_Message_Block *late_head_;
+  ACE_Message_Block *late_head_ {};
 
   /// Pointer to tail of the late messages
-  ACE_Message_Block *late_tail_;
+  ACE_Message_Block *late_tail_ {};
 
   /// Pointer to head of the beyond late messages
-  ACE_Message_Block *beyond_late_head_;
+  ACE_Message_Block *beyond_late_head_ {};
 
   /// Pointer to tail of the beyond late messages
-  ACE_Message_Block *beyond_late_tail_;
+  ACE_Message_Block *beyond_late_tail_ {};
 
   /// Pointer to a dynamic priority evaluation function.
   ACE_Dynamic_Message_Strategy &message_strategy_;
