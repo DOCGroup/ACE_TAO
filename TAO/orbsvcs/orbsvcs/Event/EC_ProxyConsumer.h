@@ -119,8 +119,8 @@ protected:
   void supplier_i (RtecEventComm::PushSupplier_ptr supplier);
 
   friend class TAO_EC_ProxyPushConsumer_Guard;
-  // The guard needs access to the following protected methods.
 
+  /// The guard needs access to the following protected methods.
   /// The private version (without locking) of is_connected().
   CORBA::Boolean is_connected_i () const;
 

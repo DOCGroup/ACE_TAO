@@ -78,13 +78,15 @@ namespace ACE
     {
     public:
       friend class Notifier;
-      // Initialization and termination methods.
+      /// @name Initialization and termination methods
+      /// @{
       explicit Channel (Session *s = nullptr);
 
       explicit Channel (ACE_SOCK_Stream &s);
       explicit Channel (ACE_HANDLE h);
 
       ~Channel ();
+      /// @}
 
       Channel (Channel const&) = delete;
       Channel& operator= (Channel const&) = delete;

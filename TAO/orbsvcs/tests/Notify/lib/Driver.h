@@ -40,8 +40,8 @@ public:
   /// Set the command builder.
   void command_builder (TAO_Notify_Tests_Command_Builder* cmd_builder);
 
+  /// The thread entry point.
   int svc () override;
-  // The thread entry point.
 
   void shutdown ();
 
@@ -65,8 +65,8 @@ public:
   /// Srt the run period.
   void run_period (ACE_Time_Value run_period);
 
+  /// The thread entry point.
   int svc () override;
-  // The thread entry point.
 
 private:
   /// The orb

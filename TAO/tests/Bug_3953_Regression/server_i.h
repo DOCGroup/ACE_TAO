@@ -19,14 +19,14 @@ public:
 
   bool exception () const;
 private:
+  /// Be quiet.
   bool quiet_ {};
-  // Be quiet.
 
+  /// Pointer to the client.
   client_var client_ {};
-  // Pointer to server.
 
+  /// Pointer to the ORB.
   CORBA::ORB_var orb_ {};
-  // Pointer to orb.
 
   bool exception_ {};
 };

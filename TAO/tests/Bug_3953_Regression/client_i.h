@@ -13,9 +13,9 @@ public:
   void ping (CORBA::UShort time_to_live) override;
 
 private:
+  /// Be quiet.
   bool quiet_ {};
-  // Be quiet.
 
+  /// Pointer to the server.
   server_var server_ {};
-  // Pointer to server.
 };

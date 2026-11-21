@@ -107,8 +107,8 @@ protected:
   void supplier_i (CosEventComm::PushSupplier_ptr supplier);
 
   friend class TAO_CEC_ProxyPushConsumer_Guard;
-  // The guard needs access to the following protected methods.
 
+  /// The guard needs access to the following protected methods.
   /// The private version (without locking) of is_connected().
   CORBA::Boolean is_connected_i () const;
 

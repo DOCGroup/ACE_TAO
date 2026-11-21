@@ -32,8 +32,8 @@ public:
                       void const *act = nullptr) override;
 
 private:
+  /// The ORB.
   CORBA::ORB_var orb_;
-  // The ORB
   TAO_SYNCH_MUTEX lock_;
   TAO_SYNCH_CONDITION cond_;
   bool timer_registed_ {};

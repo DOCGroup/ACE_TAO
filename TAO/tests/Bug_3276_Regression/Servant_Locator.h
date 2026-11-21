@@ -16,19 +16,18 @@ public:
   Servant_Locator (Servant_Locator &&) = delete;
   Servant_Locator &operator= (Servant_Locator &&) = delete;
 
+  /// This method is invoked by a POA whenever it receives a request.
   PortableServer::Servant preinvoke (PortableServer::ObjectId const &oid,
                                      PortableServer::POA_ptr adapter,
                                      char const *operation,
                                      PortableServer::ServantLocator::Cookie &the_cookie) override;
-  // This method is invoked by a POA whenever it receives a request.
 
+  /// This method is invoked whenever a servant completes a request.
   void postinvoke (PortableServer::ObjectId const &oid,
                    PortableServer::POA_ptr adapter,
                    char const *operation,
                    PortableServer::ServantLocator::Cookie the_cookie,
                    PortableServer::Servant the_servant) override;
-  // This method is invoked whenever a servant completes a
-  // request.
 };
 
 #endif /* _SERVANT_LOCATOR_H_ */

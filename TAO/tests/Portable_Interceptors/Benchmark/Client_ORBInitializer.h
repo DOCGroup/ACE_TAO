@@ -38,8 +38,8 @@ public:
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
 private:
+  /// The type of interceptor that this initializer will create.
   Interceptor_Type const interceptor_type_;
-  // The type of interceptor that this initializer will create
 };
 
 #if defined(_MSC_VER)

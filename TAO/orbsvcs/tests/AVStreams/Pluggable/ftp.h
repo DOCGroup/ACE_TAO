@@ -97,8 +97,8 @@ private:
   TAO_Naming_Client my_naming_client_;
   Options options_;
   FTP_File_Ptr fp_ {nullptr, std::fclose};
+  /// The AVStreams framework owns the protocol object.
   ACE_Message_Block mb_ {BUFSIZ};
-  // The AVStreams framework owns the protocol object.
   TAO_AV_Protocol_Object *protocol_object_ {};
   int count_ {};
 };
