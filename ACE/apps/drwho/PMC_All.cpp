@@ -22,9 +22,9 @@ PMC_All::encode (char *packet, int &packet_length)
   ACE_NEW_RETURN (lookup, HT_Client, -1);
   this->ss.reset (lookup);
 
-  SET_PACKET_TYPE (packet, Options::PROTO_ALL);
+  drwho_set_packet_type (packet, Options::PROTO_ALL);
 
-  char *buf_ptr = SKIP_PACKET_TYPE (packet);
+  char *buf_ptr = drwho_skip_packet_type (packet);
 
   packet_length = buf_ptr - packet;
   return 1;

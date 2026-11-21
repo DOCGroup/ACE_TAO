@@ -18,9 +18,9 @@ PMC_Usr::encode (char *packet, int &packet_length)
   ACE_NEW_RETURN (lookup, SL_Client (this->usr_name), -1);
   this->ss.reset (lookup);
 
-  SET_PACKET_TYPE (packet, Options::PROTO_USR);
+  drwho_set_packet_type (packet, Options::PROTO_USR);
 
-  char *buf_ptr = SKIP_PACKET_TYPE (packet);
+  char *buf_ptr = drwho_skip_packet_type (packet);
 
   buf_ptr = ACE_OS::strecpy (buf_ptr,
                              this->get_next_friend ()->get_login ());

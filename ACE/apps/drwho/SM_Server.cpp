@@ -12,7 +12,7 @@ SM_Server::demux (char *packet, int &packet_length)
 {
   PM_Server *manager {};
 
-  switch (GET_PACKET_TYPE (packet))
+  switch (drwho_get_packet_type (packet))
     {
     case Options::PROTO_USR:
       ACE_NEW_RETURN (manager, PMS_Usr, -1);
@@ -34,9 +34,9 @@ SM_Server::demux (char *packet, int &packet_length)
     }
 
   this->pm_server_.reset (manager);
-  packet_length = SUBTRACT_PACKET_TYPE (packet_length);
+  packet_length = drwho_subtract_packet_type (packet_length);
 
-  if (pm_server_->decode (SKIP_PACKET_TYPE (packet), packet_length) < 0)
+  if (pm_server_->decode (drwho_skip_packet_type (packet), packet_length) < 0)
   {
     return -1;
   }

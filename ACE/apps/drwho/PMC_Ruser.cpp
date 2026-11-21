@@ -26,9 +26,9 @@ PMC_Ruser::encode (char *packet, int &packet_length)
   ACE_NEW_RETURN (lookup, HT_Client, -1);
   this->ss.reset (lookup);
 
-  SET_PACKET_TYPE (packet, Options::PROTO_RUSER);
+  drwho_set_packet_type (packet, Options::PROTO_RUSER);
 
-  char *buf_ptr = SKIP_PACKET_TYPE (packet);
+  char *buf_ptr = drwho_skip_packet_type (packet);
 
   *buf_ptr++ = static_cast<char> (Options::get_opt (Options::PRINT_LOGIN_NAME));
 

@@ -30,8 +30,8 @@ PMC_Flo::encode (char *packet, int &packet_length)
   ACE_NEW_RETURN (lookup, BS_Client, -1);
   this->ss.reset (lookup);
 
-  SET_PACKET_TYPE (packet, Options::PROTO_FLO);
-  char *buf_ptr = SKIP_PACKET_TYPE (packet);
+  drwho_set_packet_type (packet, Options::PROTO_FLO);
+  char *buf_ptr = drwho_skip_packet_type (packet);
 
   std::sprintf (buf_ptr,
                    "%d",
