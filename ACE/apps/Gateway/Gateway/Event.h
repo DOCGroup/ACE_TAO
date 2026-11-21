@@ -76,9 +76,9 @@ enum
 class Event_Key
 {
 public:
-  Event_Key (CONNECTION_ID cid = -1,
-             ACE_INT32 type = 0,
-             ACE_INT32 priority = 0)
+  explicit Event_Key (CONNECTION_ID cid = -1,
+                      ACE_INT32 type = 0,
+                      ACE_INT32 priority = 0)
     : connection_id_ (cid),
       type_ (type),
       priority_ (priority)
