@@ -45,9 +45,7 @@ ACE_Priority_Reactor::init_bucket ()
 
 ACE_Priority_Reactor::ACE_Priority_Reactor (ACE_Sig_Handler *sh,
                                             ACE_Timer_Queue *tq)
-  : ACE_Select_Reactor(sh, tq),
-    bucket_ (nullptr),
-    tuple_allocator_ (nullptr)
+  : ACE_Select_Reactor(sh, tq)
 {
   ACE_TRACE ("ACE_Priority_Reactor::ACE_Priority_Reactor");
   this->init_bucket ();
@@ -57,9 +55,7 @@ ACE_Priority_Reactor::ACE_Priority_Reactor (size_t size,
                                             bool restart,
                                             ACE_Sig_Handler *sh,
                                             ACE_Timer_Queue *tq)
-  : ACE_Select_Reactor (size, restart, sh, tq),
-    bucket_ (nullptr),
-    tuple_allocator_ (nullptr)
+  : ACE_Select_Reactor (size, restart, sh, tq)
 {
   ACE_TRACE ("ACE_Priority_Reactor::ACE_Priority_Reactor");
   this->init_bucket ();

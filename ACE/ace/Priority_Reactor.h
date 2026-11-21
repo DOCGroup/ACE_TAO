@@ -81,11 +81,11 @@ private:
   /// There is a queue per-priority, which simply holds the
   /// Event_Handlers until we know who goes first.
   using QUEUE = ACE_Unbounded_Queue<ACE_Event_Tuple>;
-  QUEUE** bucket_;
+  QUEUE** bucket_ {};
 
   /// The queues themselves use this allocator to minimize dynamic
   /// memory usage.
-  ACE_Allocator* tuple_allocator_;
+  ACE_Allocator* tuple_allocator_ {};
 
   /// Deny access since member-wise won't work...
   ACE_Priority_Reactor (const ACE_Priority_Reactor &);
