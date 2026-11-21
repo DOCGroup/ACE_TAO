@@ -32,9 +32,9 @@
 /**
  * @class Quoter_Server
  *
- * Defines a Quoter Server class that implements the functionality
+ * @brief Defines a Quoter Server class that implements the functionality
  * of a server process as an object.
- * =DESCRIPTION
+ *
  * The interface is quite simple. A server program has to call
  * init to initialize the quoter_server's state and then call run
  * to run the orb.

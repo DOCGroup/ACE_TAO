@@ -23,7 +23,7 @@
 
 /**
  * @class Identity_Client
- =TITLE
+ *
  * Contacts the <Object_Group_Factory> in th Load Balancing Server
  * to obtain a reference to the type of the <Object_Group>
  * specified on the command line.  Then, queries the
@@ -51,7 +51,6 @@ public:
   /// Initializes <orb_manager_>, and parses commandline arguments.
   int init (int argc, ACE_TCHAR *argv[]);
 
-  /// See TITLE.
   int run ();
 
 private:

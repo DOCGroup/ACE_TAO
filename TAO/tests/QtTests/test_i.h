@@ -14,18 +14,14 @@
 #include <QtGui/qapplication.h>
 #include <QtCore/qobject.h>
 
+/**
+ * @brief LCD_Display implementation class.
+ *
+ * Implements the LCD_Display interface in test.idl.
+ */
 class LCD_Display_imp : public QObject,
                         public POA_LCD_Display
-
 {
-  /**
-   * = TITLE
-   *   LCD_Display implementation class
-   *
-   * = DESCRIPTION
-   *   Implements the LCD_Display interface in test.idl
-   *
-   */
   Q_OBJECT
 public:
   explicit LCD_Display_imp (CORBA::ORB_ptr);

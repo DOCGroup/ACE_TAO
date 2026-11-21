@@ -23,7 +23,7 @@
 
 /**
  * @class Identity_Server
- =TITLE
+ *
  * Contacts the <Object_Group_Factory> in the Load Balancing Server
  * to create two <Object_Group>s, one round robin and one random.
  * Then, creates a number of <Identity> objects and registers them with
