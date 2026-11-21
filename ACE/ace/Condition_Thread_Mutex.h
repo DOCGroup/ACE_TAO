@@ -125,7 +125,7 @@ protected:
   /// destructor.  This flag isn't protected by a lock, so make sure
   /// that you don't have multiple threads simultaneously calling
   /// remove() on the same object, which is a bad idea anyway...
-  bool removed_;
+  bool removed_ {};
 };
 
 using ACE_Condition_Thread_Mutex = ACE_Condition<ACE_Thread_Mutex>;

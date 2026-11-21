@@ -39,8 +39,7 @@ ACE_Condition<ACE_Thread_Mutex>::dump () const
 ACE_Condition<ACE_Thread_Mutex>::ACE_Condition (ACE_Thread_Mutex &m,
                                                 ACE_TCHAR const *name,
                                                 void *arg)
-  : mutex_ (m),
-    removed_ (false)
+  : mutex_ (m)
 {
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::ACE_Condition<ACE_Thread_Mutex>");
   if (ACE_OS::cond_init (&this->cond_,
@@ -58,8 +57,7 @@ ACE_Condition<ACE_Thread_Mutex>::ACE_Condition (ACE_Thread_Mutex &m,
                                                 ACE_Condition_Attributes const &attributes,
                                                 ACE_TCHAR const *name,
                                                 void *arg)
-  : mutex_ (m),
-    removed_ (false)
+  : mutex_ (m)
 {
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::ACE_Condition<ACE_Thread_Mutex>");
   if (ACE_OS::cond_init (&this->cond_,
