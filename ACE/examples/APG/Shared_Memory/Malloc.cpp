@@ -20,7 +20,7 @@ public:
   Record (int id1, int id2, char *name)
     : id1_(id1), id2_(id2), name_ {}
   {
-    size_t len = std::strlen (name) + 1;
+    const size_t len = std::strlen (name) + 1;
     this->name_ =
       reinterpret_cast<char *> (g_allocator->malloc (len));
     std::strcpy (this->name_, name);

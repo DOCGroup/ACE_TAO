@@ -339,7 +339,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (
   // ACE_WCHAR_T
   const char *temp = ns_internal.type ();
 
-  size_t len = ACE_OS::strlen (ns_internal.type ());
+  const size_t len = ACE_OS::strlen (ns_internal.type ());
   // Makes a copy here. Caller needs to call delete to free up
   // memory.
   char *new_type {};

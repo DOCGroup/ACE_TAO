@@ -370,7 +370,7 @@ ACE::ldname (const ACE_TCHAR *entry_point)
   ACE_TRACE ("ACE::ldname");
 
 #if defined(ACE_NEEDS_DL_UNDERSCORE)
-  size_t size =
+  const size_t size =
     1 // leading '_'
     + ACE_OS::strlen (entry_point)
     + 1;
@@ -385,7 +385,7 @@ ACE::ldname (const ACE_TCHAR *entry_point)
 
   return new_name;
 #else /* ACE_NEEDS_DL_UNDERSCORE */
-  size_t size =
+  const size_t size =
     ACE_OS::strlen (entry_point)
     + 1;
 
