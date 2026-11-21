@@ -52,7 +52,7 @@ public:
   char *cur_;
 
   /// Next chunk in the chain.
-  ACE_Obchunk *next_;
+  ACE_Obchunk *next_ {};
 
   /**
    * Pointer to the beginning contents of this chunk.  This field is
