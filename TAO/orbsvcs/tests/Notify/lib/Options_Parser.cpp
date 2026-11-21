@@ -70,15 +70,15 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, A
           const int priority= ACE_OS::atoi (current_arg);
           if (priority < NotifyExt::minPriority)
             {
-              NotifyExt::Priority default_priority = NotifyExt::minPriority;
+              NotifyExt::Priority fallback_priority = NotifyExt::minPriority;
               ACE_DEBUG ((LM_DEBUG, "-Priority %d is too small (min priority %d used)\n",
-                          priority, static_cast<int> (default_priority)));
+                          priority, static_cast<int> (fallback_priority)));
             }
           else if (NotifyExt::maxPriority < priority)
             {
-              NotifyExt::Priority default_priority = NotifyExt::maxPriority;
+              NotifyExt::Priority fallback_priority = NotifyExt::maxPriority;
               ACE_DEBUG ((LM_DEBUG, "-Priority %d is too large (max priority %d used)\n",
-                          priority, static_cast<int> (default_priority)));
+                          priority, static_cast<int> (fallback_priority)));
             }
           else
           {

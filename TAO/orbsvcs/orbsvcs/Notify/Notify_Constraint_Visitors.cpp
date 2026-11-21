@@ -676,11 +676,11 @@ TAO_Notify_Constraint_Visitor::visit_component (
         }
       else
         {
-          int result = identifier->accept (this);
+          int nested_result = identifier->accept (this);
 
-          if (result != 0)
+          if (nested_result != 0)
             {
-              return result;
+              return nested_result;
             }
 
           TAO_ETCL_Literal_Constraint id;
@@ -884,8 +884,8 @@ TAO_Notify_Constraint_Visitor::visit_unary_expr (
         // unary minus operator, and put it back.
         this->queue_.dequeue_head (subexpr_result);
         {
-          TAO_ETCL_Literal_Constraint result = -subexpr_result;
-          this->queue_.enqueue_head (result);
+          TAO_ETCL_Literal_Constraint negated_result = -subexpr_result;
+          this->queue_.enqueue_head (negated_result);
         }
         return 0;
       case ETCL_PLUS:
@@ -1065,26 +1065,26 @@ TAO_Notify_Constraint_Visitor::visit_binary_op (ETCL_Binary_Expr *binary,
             break;
           case ETCL_PLUS:
             {
-              TAO_ETCL_Literal_Constraint result = left_operand + right_operand;
-              this->queue_.enqueue_head (result);
+              TAO_ETCL_Literal_Constraint literal_result = left_operand + right_operand;
+              this->queue_.enqueue_head (literal_result);
             }
             break;
           case ETCL_MINUS:
             {
-              TAO_ETCL_Literal_Constraint result = left_operand - right_operand;
-              this->queue_.enqueue_head (result);
+              TAO_ETCL_Literal_Constraint literal_result = left_operand - right_operand;
+              this->queue_.enqueue_head (literal_result);
             }
             break;
           case ETCL_MULT:
             {
-              TAO_ETCL_Literal_Constraint result = left_operand * right_operand;
-              this->queue_.enqueue_head (result);
+              TAO_ETCL_Literal_Constraint literal_result = left_operand * right_operand;
+              this->queue_.enqueue_head (literal_result);
             }
             break;
           case ETCL_DIV:
             {
-              TAO_ETCL_Literal_Constraint result = left_operand / right_operand;
-              this->queue_.enqueue_head (result);
+              TAO_ETCL_Literal_Constraint literal_result = left_operand / right_operand;
+              this->queue_.enqueue_head (literal_result);
             }
             break;
           default:

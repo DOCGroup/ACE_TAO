@@ -500,19 +500,19 @@ FilterClient::verify_filter (CosNotifyFilter::FilterAdmin_var& admin,
 
   if (modify_constraint_)
   {
-    CosNotifyFilter::ConstraintIDSeq_var ids = new CosNotifyFilter::ConstraintIDSeq (2);
-    ids->length (2);
+    CosNotifyFilter::ConstraintIDSeq_var constraint_ids = new CosNotifyFilter::ConstraintIDSeq (2);
+    constraint_ids->length (2);
     for (index = 0; index < infos->length (); ++ index)
     {
-      ids[index] = infos[index].constraint_id;
+      constraint_ids[index] = infos[index].constraint_id;
       ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t)modify constraint %d \n"), ids[index]));
+      ACE_TEXT ("(%P|%t)modify constraint %d \n"), constraint_ids[index]));
 
       infos[index].constraint_expression.constraint_expr
         = CORBA::string_dup (mod_constraint_expr);
     }
 
-    filter->modify_constraints (ids.in (), infos.in());
+    filter->modify_constraints (constraint_ids.in (), infos.in());
   }
 }
 

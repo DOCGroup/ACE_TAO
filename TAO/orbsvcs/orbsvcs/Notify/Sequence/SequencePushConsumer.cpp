@@ -148,11 +148,11 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
     {
     case DISPATCH_SUCCESS:
       {
-        TAO_Notify_Method_Request_Event_Queueable * request {};
-        while (completed.dequeue_head (request) == 0)
+        TAO_Notify_Method_Request_Event_Queueable * completed_request {};
+        while (completed.dequeue_head (completed_request) == 0)
         {
-          request->complete ();
-          request->release ();
+          completed_request->complete ();
+          completed_request->release ();
         }
         result = true;
         break;
@@ -162,18 +162,18 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
       // Fall through
     case DISPATCH_FAIL:
       {
-        TAO_Notify_Method_Request_Event_Queueable * request {};
-        while (completed.dequeue_head (request) == 0)
+        TAO_Notify_Method_Request_Event_Queueable * completed_request {};
+        while (completed.dequeue_head (completed_request) == 0)
         {
-          if (request->should_retry ())
+          if (completed_request->should_retry ())
           {
             if (DEBUG_LEVEL > 0)
               {
                 ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Will retry %d\n"),
                                 static_cast <int> (this->proxy ()->id ()),
-                                request->sequence ()));
+                                completed_request->sequence ()));
               }
-            requests.enqueue_head (request);
+            requests.enqueue_head (completed_request);
             result = false;
           }
           else
@@ -182,10 +182,10 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
               {
                 ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Discarding %d\n"),
                                 static_cast<int> (this->proxy ()->id ()),
-                                request->sequence ()));
+                                completed_request->sequence ()));
               }
-            request->complete ();
-            request->release ();
+            completed_request->complete ();
+            completed_request->release ();
           }
         }
         while (requests.dequeue_head (request) == 0)
@@ -229,18 +229,18 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
     case DISPATCH_RETRY:
     case DISPATCH_DISCARD:
       {
-        TAO_Notify_Method_Request_Event_Queueable * request {};
-        while (completed.dequeue_head (request) == 0)
+        TAO_Notify_Method_Request_Event_Queueable * completed_request {};
+        while (completed.dequeue_head (completed_request) == 0)
         {
-          if (request->should_retry ())
+          if (completed_request->should_retry ())
           {
             if (DEBUG_LEVEL > 0)
               {
                 ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Will retry %d\n"),
                                 static_cast<int> (this->proxy ()->id ()),
-                                request->sequence ()));
+                                completed_request->sequence ()));
               }
-            requests.enqueue_head (request);
+            requests.enqueue_head (completed_request);
             result = false;
           }
           else
@@ -249,10 +249,10 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
               {
                 ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Discarding %d\n"),
                                 static_cast<int> (this->proxy ()->id ()),
-                                request->sequence ()));
+                                completed_request->sequence ()));
               }
-            request->complete ();
-            request->release ();
+            completed_request->complete ();
+            completed_request->release ();
           }
         }
         break;

@@ -285,20 +285,20 @@ TAO_Notify_ETCL_FilterFactory::find_filter (const TAO_Notify_Object::ID& id)
                     this->mtx_,
                     CosNotifyFilter::Filter::_nil ());
 
-  TAO_Notify_ETCL_Filter* filter {};
-  if (filters_.find (id, filter) == -1)
+  TAO_Notify_ETCL_Filter* filter_servant {};
+  if (filters_.find (id, filter_servant) == -1)
     {
       return CosNotifyFilter::Filter::_nil ();
     }
   else
   {
     CORBA::Object_var obj =
-      this->filter_poa_->servant_to_reference (filter);
+      this->filter_poa_->servant_to_reference (filter_servant);
 
-    CosNotifyFilter::Filter_var filter
+    CosNotifyFilter::Filter_var filter_ref
       = CosNotifyFilter::Filter::_narrow (obj.in ());
 
-    return filter._retn ();
+    return filter_ref._retn ();
   }
 }
 
