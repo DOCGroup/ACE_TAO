@@ -190,7 +190,7 @@ project(switch_comp_inset): gperf_test {
     switch.gperf
   }
 
-  defines += GPERF_SWITCH_TEST
+  macros += GPERF_SWITCH_TEST
 
   Source_Files {
     switch_comp_gen/switch.cpp
@@ -217,7 +217,7 @@ project(switch_ci_comp_inset): gperf_test {
     switch.gperf
   }
 
-  defines += GPERF_SWITCH_TEST
+  macros += GPERF_SWITCH_TEST
 
   Source_Files {
     switch_ci_comp_gen/switch.cpp
