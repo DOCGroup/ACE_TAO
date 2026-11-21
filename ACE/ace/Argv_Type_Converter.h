@@ -81,11 +81,11 @@ private:
   int &saved_argc_;
 
   /// Borrows the original char argv or owns its converted copy, depending on original_type_.
-  char** char_argv_;
+  char** char_argv_ {};
 
 #if defined (ACE_USES_WCHAR)
   /// Borrows the original wide argv or owns its converted copy, depending on original_type_.
-  wchar_t** wchar_argv_;
+  wchar_t** wchar_argv_ {};
 
   /// argc value before any argv has been passed.
   int before_pass_argc_;
@@ -95,10 +95,10 @@ private:
   bool const original_type_;
 
   /// true indicates wchar_t type argv has been passed.
-  bool wchar_passed_;
+  bool wchar_passed_ {};
 
   /// true indicates char type argv has been passed.
-  bool char_passed_;
+  bool char_passed_ {};
 #endif  /* ACE_USES_WCHAR */
 };
 

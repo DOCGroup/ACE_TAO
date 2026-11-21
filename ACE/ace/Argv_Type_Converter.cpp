@@ -14,12 +14,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #if defined (ACE_USES_WCHAR)
 ACE_Argv_Type_Converter::ACE_Argv_Type_Converter (int &argc, wchar_t** argv)
   : saved_argc_ (argc),
-    char_argv_ (nullptr),
     wchar_argv_ (argv),
     before_pass_argc_ (argc),
-    original_type_ (true),
-    wchar_passed_ (false),
-    char_passed_ (false)
+    original_type_ (true)
 {
   this->initialize ();
 
@@ -32,11 +29,8 @@ ACE_Argv_Type_Converter::ACE_Argv_Type_Converter (int &argc, char **argv)
   : saved_argc_(argc),
     char_argv_(argv)
 #if defined (ACE_USES_WCHAR)
-    , wchar_argv_(nullptr),
-    before_pass_argc_(argc),
-    original_type_(false),
-    wchar_passed_(false),
-    char_passed_(false)
+    , before_pass_argc_(argc),
+    original_type_(false)
 {
   this->initialize();
 
