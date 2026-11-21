@@ -103,7 +103,7 @@ ACE_High_Res_Timer::get_cpuinfo ()
           char arg[128];
 
           // CPU type?
-          if (::sscanf (buf, "cpu : %s\n", arg) == 1)
+          if (::sscanf (buf, "cpu : %127s\n", arg) == 1)
             {
               // If this is an Alpha chip, then the BogoMips rating is
               // usable...
@@ -116,7 +116,7 @@ ACE_High_Res_Timer::get_cpuinfo ()
             }
           // Pentium CPU model?
           else if (!supported
-                   && ::sscanf (buf, "model name : Pentium %s\n", arg) == 1)
+                   && ::sscanf (buf, "model name : Pentium %127s\n", arg) == 1)
             {
               // But if we don't have the right kind of Intel chip,
               // just quit.
