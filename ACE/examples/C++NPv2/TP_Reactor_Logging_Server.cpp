@@ -81,9 +81,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   const size_t N_THREADS = 4;
   ACE_TP_Reactor tp_reactor;
-  ACE_Reactor reactor (&tp_reactor);
+  ACE_Reactor reactor (std::addressof (tp_reactor));
   std::unique_ptr<ACE_Reactor> delete_instance
-    (ACE_Reactor::instance (&reactor));
+    (ACE_Reactor::instance (std::addressof (reactor)));
 
   Server_Logging_Daemon *server;
   // Ignore argv[0]...

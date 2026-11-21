@@ -17,6 +17,8 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/ACE.h"
 
+#include <memory>
+
 static const char message[] = "abcdefghijklmnopqrstuvwxyz";
 static constexpr size_t message_size = 26;
 static int iteration = 1;
@@ -153,7 +155,7 @@ test (ACE_Reactor_Impl &reactor_impl,
               ACE_TEXT ("\nTesting with %C\n\n"),
               reactor_type));
 
-  ACE_Reactor reactor (&reactor_impl,
+  ACE_Reactor reactor (std::addressof (reactor_impl),
                        false);
 
   Event_Handler *e = new Event_Handler (reactor,

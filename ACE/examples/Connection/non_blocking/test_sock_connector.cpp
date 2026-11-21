@@ -4,6 +4,8 @@
 #include "ace/WFMO_Reactor.h"
 #include "CPP-connector.h"
 
+#include <memory>
+
 using PEER_HANDLER = Peer_Handler<ACE_SOCK_STREAM>;
 using IPC_CLIENT = IPC_Client<PEER_HANDLER, ACE_SOCK_CONNECTOR>;
 
@@ -19,8 +21,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #if defined (ACE_WIN32)
 # if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   ACE_WFMO_Reactor wfmo_reactor;
-  ACE_Reactor reactor (&wfmo_reactor);
-  ACE_Reactor::instance (&reactor);
+  ACE_Reactor reactor (std::addressof (wfmo_reactor));
+  ACE_Reactor::instance (std::addressof (reactor));
 # else
   ACE_ERROR_RETURN ((LM_ERROR,
                      ACE_TEXT ("Non-NT platform (Win95/98?) without Winsock2 ")

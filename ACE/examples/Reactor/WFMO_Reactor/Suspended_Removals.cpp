@@ -16,6 +16,8 @@
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
 
+#include <memory>
+
 class Event_Handler : public ACE_Event_Handler
 {
 public:
@@ -58,7 +60,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 {
   Event_Handler handler;
   ACE_WFMO_Reactor reactor;
-  ACE_Reactor base_reactor (&reactor);
+  ACE_Reactor base_reactor (std::addressof (reactor));
 
   ACE_Time_Value sleep_time (1);
 

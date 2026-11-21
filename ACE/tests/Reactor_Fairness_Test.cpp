@@ -300,7 +300,7 @@ run (ACE_Reactor_Impl &ri, const ACE_TCHAR *what, bool tp = true)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting test with %s\n"), what));
 
-  ACE_Reactor r (&ri);
+  ACE_Reactor r (std::addressof (ri));
   ACE_Thread_Manager *tm = ACE_Thread_Manager::instance ();
   ACE_Acceptor<Read_Handler, ACE_SOCK_ACCEPTOR> acceptor;
 

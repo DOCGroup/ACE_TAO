@@ -15,6 +15,7 @@
 #  include <string>
 #endif
 #include <cstring>
+#include <memory>
 
 #include "Reactor_Logging_Server_T.h"
 #include "Logging_Acceptor_Ex.h"
@@ -78,7 +79,7 @@ static ACE_THR_FUNC_RETURN controller (void *arg) {
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Select_Reactor select_reactor;
-  ACE_Reactor reactor (&select_reactor);
+  ACE_Reactor reactor (std::addressof (select_reactor));
 
   Server_Logging_Daemon *server;
   // Ignore argv[0]...

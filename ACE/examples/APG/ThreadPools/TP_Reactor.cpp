@@ -18,6 +18,7 @@
 #include <array>
 #include <chrono>
 #include <thread>
+#include <memory>
 
 #include "Request_Handler.h"
 
@@ -250,8 +251,8 @@ private:
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_TP_Reactor sr;
-  ACE_Reactor new_reactor (&sr);
-  ACE_Reactor::instance (&new_reactor);
+  ACE_Reactor new_reactor (std::addressof (sr));
+  ACE_Reactor::instance (std::addressof (new_reactor));
 
   ACCEPTOR acceptor;
   ACE_INET_Addr accept_addr (rendezvous);

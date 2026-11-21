@@ -30,6 +30,7 @@
 #include "ace/WIN32_Proactor.h"
 #include "ace/POSIX_Proactor.h"
 #include <atomic>
+#include <memory>
 
 // Keep track of how many completions are still expected.
 static std::atomic<size_t> Completions_To_Go {0};
@@ -206,7 +207,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Make the POSIX Proactor.
   ACE_POSIX_SIG_Proactor posix_proactor (signal_set);
   // Get the Proactor interface out of it.
-  ACE_Proactor proactor2 (&posix_proactor);
+  ACE_Proactor proactor2 (std::addressof (posix_proactor));
 #else /* ACE_HAS_AIO_CALLS && ACE_HAS_POSIX_REALTIME_SIGNALS */
   ACE_Proactor proactor2;
 #endif /* ACE_HAS_AIO_CALLS && ACE_HAS_POSIX_REALTIME_SIGNALS */

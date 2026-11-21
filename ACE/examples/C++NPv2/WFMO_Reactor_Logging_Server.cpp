@@ -10,6 +10,7 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/Thread_Manager.h"
 #include <cstring>
+#include <memory>
 
 #include "Reactor_Logging_Server_T.h"
 #include "Logging_Acceptor_Ex.h"
@@ -119,7 +120,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   const size_t N_THREADS = 4;
   ACE_WFMO_Reactor wfmo_reactor;
-  ACE_Reactor reactor (&wfmo_reactor);
+  ACE_Reactor reactor (std::addressof (wfmo_reactor));
 
   Server_Logging_Daemon *server;
   // Ignore argv[0]...

@@ -16,6 +16,7 @@
 #include "ace/WIN32_Proactor.h"
 #include "ace/OS_NS_unistd.h"
 #include <atomic>
+#include <memory>
 #include <cstring>
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
@@ -88,7 +89,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 {
   Timeout_Handler handler;
   ACE_WIN32_Proactor win32_proactor (0, 1);
-  ACE_Proactor proactor (&win32_proactor, 0, 0);
+  ACE_Proactor proactor (std::addressof (win32_proactor), 0, 0);
 
   ACE_Reactor::instance ()->register_handler (proactor.implementation ());
 
