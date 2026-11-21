@@ -3,6 +3,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 struct Pong_Options
 {
   int iterations {60};
@@ -166,7 +168,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PingObject_i callback_impl (orb.in (), persistent_poa.in ());
 
       PortableServer::ObjectId_var const id =
-        root_poa->activate_object (&callback_impl);
+        root_poa->activate_object (std::addressof (callback_impl));
 
       CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 

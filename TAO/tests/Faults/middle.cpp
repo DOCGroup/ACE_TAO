@@ -93,7 +93,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Middle_i middle_impl (orb.in (), server.in ());
 
       PortableServer::ObjectId_var const id =
-        root_poa->activate_object (&middle_impl);
+        root_poa->activate_object (std::addressof (middle_impl));
 
       CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 
