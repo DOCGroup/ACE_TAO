@@ -63,7 +63,6 @@ ACE_SOCK_Dgram_Bcast::close ()
 // Here's the simple-minded constructor.
 
 ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast ()
-  : if_list_ (nullptr)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast");
 }
@@ -76,8 +75,7 @@ ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast (const ACE_Addr &local,
                                             int protocol,
                                             int reuse_addr,
                                             const ACE_TCHAR *host_name)
-  : ACE_SOCK_Dgram (local, protocol_family, protocol, reuse_addr),
-    if_list_ (nullptr)
+  : ACE_SOCK_Dgram (local, protocol_family, protocol, reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast");
 

@@ -118,7 +118,7 @@ private:
   int mk_broadcast (const ACE_TCHAR *host_name);
 
   /// Points to the head of the list of broadcast interfaces.
-  ACE_Bcast_Node *if_list_;
+  ACE_Bcast_Node *if_list_ {};
 
   /// Do not allow this function to percolate up to this interface...
   int get_remote_addr (ACE_Addr &) const;
