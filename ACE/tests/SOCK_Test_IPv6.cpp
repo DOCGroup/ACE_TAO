@@ -175,15 +175,14 @@ server (void *arg)
       handle_set.set_bit (new_stream.get_handle ());
 
       // Read data from client (terminate on error).
-      int select_width;
       for (ssize_t r_bytes; ;)
         {
 #  if defined (ACE_WIN64)
           // This arg is ignored on Windows and causes pointer truncation
           // warnings on 64-bit compiles.
-          select_width = 0;
+          int const select_width = 0;
 #  else
-          select_width = int (new_stream.get_handle ()) + 1;
+          int const select_width = int (new_stream.get_handle ()) + 1;
 #  endif /* ACE_WIN64 */
           if (ACE_OS::select (select_width,
                               handle_set,

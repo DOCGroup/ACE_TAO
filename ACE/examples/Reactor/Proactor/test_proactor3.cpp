@@ -795,7 +795,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   int rc = -1;
   int i;
-  char c;
 
   if (host == 0) // Acceptor
     {
@@ -823,6 +822,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (rc > 0)
     {
+      char c;
       cout << "Press any key to stop=>" << flush;
       cin.clear ();
       cin >> c;

@@ -762,7 +762,6 @@ int PrintSigMask ()
 #ifndef ACE_WIN32
 
   sigset_t  mask ;
-  int member = 0;
 
   COUT ( "\n=============Signal Mask==========" )
 
@@ -776,7 +775,7 @@ int PrintSigMask ()
       {
         for (int i = 1 ; i < 1000; ++i)
           {
-            member = ACE_OS::sigismember (&mask,i);
+            int const member = ACE_OS::sigismember (&mask,i);
 
             COUT ( "\nSig " )
               COUT ( i )

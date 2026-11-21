@@ -285,11 +285,10 @@ JAWS_Header_Info::JAWS_Header_Info ()
 JAWS_Header_Info::~JAWS_Header_Info ()
 {
   JAWS_Header_Table_Iterator iter (this->table_);
-  JAWS_Header_Data *data_ptr;
 
   for (iter.first (); !iter.done (); iter.advance ())
     {
-      data_ptr = iter.next ();
+      JAWS_Header_Data *data_ptr = iter.next ();
       if (data_ptr)
       {
         delete data_ptr;
