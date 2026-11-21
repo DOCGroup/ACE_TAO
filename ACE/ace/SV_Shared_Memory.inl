@@ -62,7 +62,9 @@ ACE_SV_Shared_Memory::control (int cmd, void *buf)
   ACE_UNUSED_ARG(buf);
   ACE_NOTSUP_RETURN (-1);
 #else
-  return ACE_OS::shmctl (this->internal_id_, cmd, (struct shmid_ds *) buf);
+  return ACE_OS::shmctl (this->internal_id_,
+                         cmd,
+                         static_cast<struct shmid_ds *> (buf));
 #endif /* ACE_WIN32 */
 }
 
