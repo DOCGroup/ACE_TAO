@@ -638,7 +638,7 @@ public:
     void *     ptr_;
     u_int      int_;
   }                             data_;
-  size_t                        length_;
+  size_t                        length_ {};
   /// @}
 };
 

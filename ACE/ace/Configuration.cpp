@@ -1112,22 +1112,19 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
 ///////////////////////////////////////////////////////////////
 
 ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId ()
-  : type_ (ACE_Configuration::INVALID),
-    length_ (0)
+  : type_ (ACE_Configuration::INVALID)
 {
   this->data_.ptr_ = nullptr;
 }
 
 ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (ACE_TCHAR* string)
-  : type_ (ACE_Configuration::STRING),
-    length_ (0)
+  : type_ (ACE_Configuration::STRING)
 {
   this->data_.ptr_ = string;
 }
 
 ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (u_int integer)
-  : type_ (ACE_Configuration::INTEGER),
-    length_ (0)
+  : type_ (ACE_Configuration::INTEGER)
 {
   this->data_.int_ = integer;
 }
