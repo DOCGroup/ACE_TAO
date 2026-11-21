@@ -174,7 +174,7 @@ public:
 
 private:
   /// This client is waiting for a token.
-  int waiting_;
+  int waiting_ {};
 
   /// Proxy.
   ACE_Token_Proxy *proxy_ {};
@@ -183,10 +183,10 @@ private:
   int nesting_level_ {};
 
   /// Arg.
-  void *arg_;
+  void *arg_ {};
 
   /// Client id.
-  ACE_TCHAR client_id_[ACE_MAXCLIENTIDLEN];
+  ACE_TCHAR client_id_[ACE_MAXCLIENTIDLEN] {};
 
   /// Sleep hook.
   void (*sleep_hook_)(void *) {};
