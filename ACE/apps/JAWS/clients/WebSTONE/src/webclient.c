@@ -730,11 +730,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
        /*
         * GET THE URLS TO RETRIEVE.
         */
-       if (numfiles == MAXNUMOFFILES) {
-     returnerr("Maximum of %d files on the command line.\n");
+       if (numfiles == MAXNUMOFFILES)
+       {
+     returnerr("Maximum of %d files on the command line.\n",
+               MAXNUMOFFILES);
      usage(argv[0]);
        }
-       sscanf(argv[currarg],"%s",filelist[numfiles]);
+       if (strlen(argv[currarg]) >= sizeof(filelist[0]))
+       {
+     returnerr("URL resource exceeds maximum length of %lu characters.\n",
+               (unsigned long)(sizeof(filelist[0]) - 1));
+     usage(argv[0]);
+       }
+       strcpy(filelist[numfiles], argv[currarg]);
        ++numfiles;
        ++currarg;
     }
