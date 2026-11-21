@@ -90,7 +90,7 @@ public:
 
 private:
   /// Private constructor enforces the Singleton.
-  Async_Timer_Queue (ACE_Sig_Set *);
+  explicit Async_Timer_Queue (ACE_Sig_Set *);
 
   /// The adapter is instantiated by an <ACE_Timer_Heap>.
   ACE_Async_Timer_Queue_Adapter<ACE_Timer_Heap> tq_;
