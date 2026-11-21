@@ -436,8 +436,6 @@ namespace ACE_TMCast
           Recv* data = dynamic_cast<Recv*> (m.get ());
           if (data)
           {
-            Recv* data = dynamic_cast<Recv*> (m.get ());
-
             if (size < data->size ())
             {
               throw Group::InsufficienSpace ();
