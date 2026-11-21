@@ -493,9 +493,9 @@ ACE_TLI_Acceptor::accept (ACE_TLI_Stream &new_tli_sap,
     res = this->queue_->dequeue (req);
 
   if (udata != 0)
-    ACE_OS::memcpy ((void *) &req->callp_->udata, (void *) udata, sizeof *udata);
+    ACE_OS::memcpy (&req->callp_->udata, udata, sizeof *udata);
   if (opt != 0)
-    ACE_OS::memcpy ((void *) &req->callp_->opt, (void *) opt, sizeof *opt);
+    ACE_OS::memcpy (&req->callp_->opt, opt, sizeof *opt);
 
   while (res != -1)
     {
@@ -524,7 +524,7 @@ ACE_TLI_Acceptor::accept (ACE_TLI_Stream &new_tli_sap,
       new_tli_sap.set_handle (req->handle_);
 
       if (remote_addr != 0)
-        remote_addr->set_addr ((void *) req->callp_->addr.buf,
+        remote_addr->set_addr (req->callp_->addr.buf,
                                req->callp_->addr.len);
     }
 

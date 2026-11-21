@@ -126,9 +126,9 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
   //callptr->addr.buf = (char *) remote_sap.get_addr ();
 
   if (udata != 0)
-    ACE_OS::memcpy ((void *) &callptr->udata, (void *) udata, sizeof *udata);
+    ACE_OS::memcpy (&callptr->udata, udata, sizeof *udata);
   if (opt != 0)
-    ACE_OS::memcpy ((void *) &callptr->opt, (void *) opt, sizeof *opt);
+    ACE_OS::memcpy (&callptr->opt, opt, sizeof *opt);
 
   // Connect to remote endpoint.
 #if defined (ACE_HAS_FORE_ATM_XTI)
