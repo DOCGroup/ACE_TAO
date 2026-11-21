@@ -124,7 +124,7 @@ ACE_SOCK_SEQPACK_Acceptor::accept (ACE_SOCK_SEQPACK_Association &new_association
         {
           len = remote_addr->get_size ();
           len_ptr = &len;
-          addr = (sockaddr *) remote_addr->get_addr ();
+          addr = static_cast<sockaddr *> (remote_addr->get_addr ());
         }
 
       do
@@ -232,7 +232,7 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Addr &local_sap,
         }
     }
   else if (ACE_OS::bind (this->get_handle (),
-                         (sockaddr *) local_sap.get_addr (),
+                         static_cast<sockaddr *> (local_sap.get_addr ()),
                          local_sap.get_size ()) == -1)
     {
       error = 1;
@@ -433,7 +433,7 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
         }
     }
   else if (ACE_OS::bind (this->get_handle (),
-                         (sockaddr *) local_sap.get_addr (),
+                         static_cast<sockaddr *> (local_sap.get_addr ()),
                          local_sap.get_size ()) == -1)
     {
       error = 1;
