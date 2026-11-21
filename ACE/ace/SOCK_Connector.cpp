@@ -226,7 +226,7 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
     ACE_OS::setsockopt(new_stream.get_handle(),
       IPPROTO_IPV6,
       IPV6_V6ONLY,
-      (char *)&zero,
+      reinterpret_cast<char const *> (&zero),
       sizeof(zero));
   }
 #endif
@@ -277,7 +277,7 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
     ACE_OS::setsockopt(new_stream.get_handle(),
       IPPROTO_IPV6,
       IPV6_V6ONLY,
-      (char *)&zero,
+      reinterpret_cast<char const *> (&zero),
       sizeof(zero));
   }
 #endif

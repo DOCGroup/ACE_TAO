@@ -131,7 +131,7 @@ ACE_SOCK_Dgram::shared_open (const ACE_Addr &local,
       -1 == ACE_OS::setsockopt (this->get_handle (),
                                 IPPROTO_IPV6,
                                 IPV6_V6ONLY,
-                                (char *)&setting,
+                                reinterpret_cast<char const *> (&setting),
                                 sizeof (setting)))
     {
       this->close();
