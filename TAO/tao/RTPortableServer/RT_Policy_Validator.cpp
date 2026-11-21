@@ -14,6 +14,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Policy_Set.h"
 #include "tao/Transport_Acceptor.h"
+#include <algorithm>
 #include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -81,28 +82,27 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies)
 
   for (CORBA::ULong j {}; j < protocols.length (); ++j)
     {
-      bool found {};
       CORBA::ULong const protocol_type = protocols[j].protocol_type;
+      bool found {};
 
       if (this->thread_pool_ != nullptr)
         {
-          for (std::unique_ptr<TAO_Thread_Lane> const &lane : this->thread_pool_->lanes ())
-            {
-              TAO_Thread_Lane_Resources &resources =
-                lane->resources ();
-
-              TAO_Acceptor_Registry const &acceptor_registry =
-                resources.acceptor_registry ();
-
-              for (std::unique_ptr<TAO_Acceptor> const &acceptor : acceptor_registry.acceptors ())
-                {
-                  if (acceptor->tag () == protocol_type)
-                    {
-                      found = true;
-                      break;
-                    }
-                }
-            }
+          TAO_Thread_Lanes const &lanes = this->thread_pool_->lanes ();
+          found = std::any_of (lanes.begin (),
+                               lanes.end (),
+                               [protocol_type] (std::unique_ptr<TAO_Thread_Lane> const &lane)
+                               {
+                                 TAO_Acceptor_Registry const &acceptor_registry =
+                                   lane->resources ().acceptor_registry ();
+                                 TAO_AcceptorSet const &acceptors =
+                                   acceptor_registry.acceptors ();
+                                 return std::any_of (acceptors.begin (),
+                                                     acceptors.end (),
+                                                     [protocol_type] (std::unique_ptr<TAO_Acceptor> const &acceptor)
+                                                     {
+                                                       return acceptor->tag () == protocol_type;
+                                                     });
+                               });
         }
       else
         {
@@ -115,14 +115,13 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies)
           TAO_Acceptor_Registry const &acceptor_registry =
             resources.acceptor_registry ();
 
-          for (std::unique_ptr<TAO_Acceptor> const &acceptor : acceptor_registry.acceptors ())
-            {
-              if (acceptor->tag () == protocol_type)
-                {
-                  found = true;
-                  break;
-                }
-            }
+          TAO_AcceptorSet const &acceptors = acceptor_registry.acceptors ();
+          found = std::any_of (acceptors.begin (),
+                               acceptors.end (),
+                               [protocol_type] (std::unique_ptr<TAO_Acceptor> const &acceptor)
+                               {
+                                 return acceptor->tag () == protocol_type;
+                               });
         }
 
       if (!found)
