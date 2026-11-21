@@ -29,6 +29,7 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Thread_Mutex.h"
 
+#include <memory>
 #include <vector>
 
 #if defined (ACE_HAS_THREADS)
@@ -139,8 +140,10 @@ public:
     , threads_ (number_of_threads)
   {
     // Open the connector.
-    this->base_connector_.open (&this->reactor_,
-                                &this->cns_, &this->cts_, &this->cys_);
+    this->base_connector_.open (std::addressof (this->reactor_),
+                                std::addressof (this->cns_),
+                                std::addressof (this->cts_),
+                                std::addressof (this->cys_));
   }
 
   int svc () override;

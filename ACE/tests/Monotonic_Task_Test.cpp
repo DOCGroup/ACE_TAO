@@ -34,6 +34,8 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_MONOTONIC_TIME_POLICY) && defined (ACE_HAS_MONOTONIC_CONDITIONS)
 
 #  if defined (ACE_WIN32)
@@ -76,7 +78,7 @@ public:
       status_ (0)
   {
     // set monotonic timer aware thread manager for this task
-    this->thr_mgr (&this->tm_);
+    this->thr_mgr (std::addressof (this->tm_));
   }
 
   ~MyTask () override { stop (); }

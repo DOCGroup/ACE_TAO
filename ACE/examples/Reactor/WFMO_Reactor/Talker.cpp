@@ -136,6 +136,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
+#include <memory>
 
 using MT_TASK = ACE_Task<ACE_MT_SYNCH>;
 
@@ -286,7 +287,8 @@ Peer_Handler::Peer_Handler (int argc, ACE_TCHAR *argv[])
   // This code sets up the message to notify us when a new message is
   // added to the queue.  Actually, the queue notifies Reactor which
   // then notifies us.
-  this->msg_queue ()->notification_strategy (&this->strategy_);
+  this->msg_queue ()->notification_strategy (
+    std::addressof (this->strategy_));
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("h:p:"));
   int c;

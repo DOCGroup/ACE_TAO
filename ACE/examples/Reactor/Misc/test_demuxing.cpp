@@ -15,6 +15,8 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 // Default is to have a 2 second timeout.
 static int timeout {2};
 
@@ -307,7 +309,8 @@ Message_Handler::Message_Handler ()
                             ACE_Event_Handler::READ_MASK)
 {
   // Set this to the Reactor notification strategy.
-  this->msg_queue ()->notification_strategy (&this->notification_strategy_);
+  this->msg_queue ()->notification_strategy (
+    std::addressof (this->notification_strategy_));
 
   if (this->activate ())
     {

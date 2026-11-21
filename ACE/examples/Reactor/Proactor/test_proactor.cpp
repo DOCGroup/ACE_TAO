@@ -30,6 +30,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 #include <cstring>
+#include <memory>
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms supporting
@@ -462,14 +463,16 @@ Sender::transmit_file ()
 
   // Header and trailer data for the file.
   // @@ What happens if header and trailer are the same?
-  this->header_and_trailer_.header_and_trailer (&this->welcome_message_,
+  this->header_and_trailer_.header_and_trailer (
+                                                std::addressof (this->welcome_message_),
                                                 this->welcome_message_.length (),
-                                                &this->welcome_message_,
+                                                std::addressof (this->welcome_message_),
                                                 this->welcome_message_.length ());
 
   // Send the entire file in one fell swoop!
-  if (this->tf_.transmit_file (file_handle,
-                               &this->header_and_trailer_) == -1)
+  if (this->tf_.transmit_file (
+        file_handle,
+        std::addressof (this->header_and_trailer_)) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",

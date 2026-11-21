@@ -39,6 +39,7 @@
 #include "ace/OS_NS_unistd.h"
 
 #include <cstring>
+#include <memory>
 
 static int iterations = 10;
 
@@ -108,7 +109,8 @@ Message_Handler::Message_Handler (ACE_Reactor &reactor)
                             this,
                             ACE_Event_Handler::READ_MASK)
 {
-  this->msg_queue ()->notification_strategy (&this->notification_strategy_);
+  this->msg_queue ()->notification_strategy (
+    std::addressof (this->notification_strategy_));
   this->make_message ();
 }
 
