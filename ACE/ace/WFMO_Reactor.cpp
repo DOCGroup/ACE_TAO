@@ -1605,56 +1605,95 @@ ACE_WFMO_Reactor_Handler_Repository::handler (ACE_HANDLE handle,
   ACE_Event_Handler_var safe_event_handler = this->handler (handle, existing_masks);
 
   if (safe_event_handler.handler ())
-    found = true;
+    {
+      found = true;
+    }
 
   if (!found)
-    return -1;
+    {
+      return -1;
+    }
 
   // Otherwise, make sure that the masks that the user is looking for
   // are on.
   if (found &&
       ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::READ_MASK))
-    if (!ACE_BIT_ENABLED (existing_masks, FD_READ) &&
-        !ACE_BIT_ENABLED (existing_masks, FD_CLOSE))
-      found = false;
+    {
+      if (!ACE_BIT_ENABLED (existing_masks, FD_READ) &&
+          !ACE_BIT_ENABLED (existing_masks, FD_CLOSE))
+        {
+          found = false;
+        }
+    }
 
   if (found &&
       ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::WRITE_MASK))
-    if (!ACE_BIT_ENABLED (existing_masks, FD_WRITE))
-      found = false;
+    {
+      if (!ACE_BIT_ENABLED (existing_masks, FD_WRITE))
+        {
+          found = false;
+        }
+    }
 
   if (found &&
       ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::EXCEPT_MASK))
-    if (!ACE_BIT_ENABLED (existing_masks, FD_OOB))
-      found = false;
+    {
+      if (!ACE_BIT_ENABLED (existing_masks, FD_OOB))
+        {
+          found = false;
+        }
+    }
 
   if (found &&
       ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::ACCEPT_MASK))
-    if (!ACE_BIT_ENABLED (existing_masks, FD_ACCEPT))
-      found = false;
+    {
+      if (!ACE_BIT_ENABLED (existing_masks, FD_ACCEPT))
+        {
+          found = false;
+        }
+    }
 
   if (found &&
       ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::CONNECT_MASK))
-    if (!ACE_BIT_ENABLED (existing_masks, FD_CONNECT))
-      found = false;
+    {
+      if (!ACE_BIT_ENABLED (existing_masks, FD_CONNECT))
+        {
+          found = false;
+        }
+    }
 
   if (found &&
       ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::QOS_MASK))
-    if (!ACE_BIT_ENABLED (existing_masks, FD_QOS))
-      found = false;
+    {
+      if (!ACE_BIT_ENABLED (existing_masks, FD_QOS))
+        {
+          found = false;
+        }
+    }
+
   if (found &&
       ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::GROUP_QOS_MASK))
-    if (!ACE_BIT_ENABLED (existing_masks, FD_GROUP_QOS))
-      found = false;
+    {
+      if (!ACE_BIT_ENABLED (existing_masks, FD_GROUP_QOS))
+        {
+          found = false;
+        }
+    }
 
   if (found &&
       user_event_handler)
-    *user_event_handler = safe_event_handler.release ();
+    {
+      *user_event_handler = safe_event_handler.release ();
+    }
 
   if (found)
-    return 0;
+    {
+      return 0;
+    }
   else
-    return -1;
+    {
+      return -1;
+    }
 }
 
 // Waits for and dispatches all events.  Returns -1 on error, 0 if
