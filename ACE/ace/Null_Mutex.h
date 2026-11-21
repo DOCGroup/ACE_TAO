@@ -35,7 +35,8 @@ class ACE_Export ACE_Null_Mutex
 {
 public:
   ACE_Null_Mutex (const ACE_TCHAR * = nullptr)
-    : lock_ (0) {}
+  {
+  }
   ~ACE_Null_Mutex () = default;
   /// Return 0.
   int remove () {return 0;}
@@ -76,7 +77,8 @@ public:
   /// Declare the dynamic allocation hooks.
   //ACE_ALLOC_HOOK_DECLARE;
 
-  int lock_; // A dummy lock.
+  /// A dummy lock.
+  int lock_ {};
 
   ACE_ALLOC_HOOK_DECLARE;
 };
