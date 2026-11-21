@@ -127,10 +127,10 @@ private:
   ACE_OFF_T     size_ {};
   FILE*         infile_ {};
   bool          close_infile_ {true};
-  // This is needed to ensure that we can implement a peek operation on a
-  // UTF-16 encoded file. It is a bit hackish, but there is no other way of
-  // implementing a peek() as the standard I/O FILE* guarantees only one
-  // pushback.
+  /// This is needed to ensure that we can implement a peek operation on a
+  /// UTF-16 encoded file. It is a bit hackish, but there is no other way of
+  /// implementing a peek() as the standard I/O FILE* guarantees only one
+  /// pushback.
   ACEXML_Char   peek_ {};
 };
 

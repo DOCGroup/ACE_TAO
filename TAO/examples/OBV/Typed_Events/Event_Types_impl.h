@@ -169,13 +169,13 @@ public:
   ~Position_impl () override = default;
   ::CORBA::ValueBase *_copy_value () override;
 
+  /// These are the attributes.
   CORBA::Float x () override;
   void x (CORBA::Float) override;
   CORBA::Float y () override;
   void y (CORBA::Float) override;
   CORBA::Float z () override;
   void z (CORBA::Float) override;
-  //These are the attributes
 
   void do_print () override;
 };

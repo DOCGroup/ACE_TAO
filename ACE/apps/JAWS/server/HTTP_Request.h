@@ -172,8 +172,8 @@ private:
   char *path_ {};
 
   bool cgi_ {};
-  // Environment strings borrow storage from uri_; the vector owns only the
-  // pointer table passed to the CGI environment builder.
+  /// Environment strings borrow storage from uri_; the vector owns only the
+  /// pointer table passed to the CGI environment builder.
   std::vector<char *> cgi_env_;
   char *cgi_args_ {};
 

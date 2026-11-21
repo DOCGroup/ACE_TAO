@@ -311,6 +311,7 @@ public:
   /// Private copy method.
   void copy (TAO_Literal_Constraint const& co);
 
+  /// Union of the possible literal types.
   union
   {
     char* str_;
@@ -320,7 +321,6 @@ public:
     CORBA::Boolean bool_;
     CORBA::Double double_;
   } op_;
-  // Union of the possible literal types.
 
   /// The actual types of the TAO_Literal_Constraint.
   TAO_Expression_Type type_;

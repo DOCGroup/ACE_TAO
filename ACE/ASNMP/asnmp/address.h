@@ -322,7 +322,7 @@ private:
   bool valid_ {};
   int count_ {};
   int entry_index_ {};
-  // Resolver results point into buffer_; both stay alive during iteration.
+  /// Resolver results point into buffer_; both stay alive during iteration.
   struct hostent lookupResult_;
   ACE_HOSTENT_DATA buffer_;
   int query_dns (char const *hostname);

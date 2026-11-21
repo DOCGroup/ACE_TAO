@@ -133,8 +133,8 @@ private:
 
   LOCK_TYPE db_lock_;
 
+  /// The protected data structure.
   Offer_Database offer_db_;
-  // The protected data structure.
 };
 
 /**

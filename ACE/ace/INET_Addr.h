@@ -412,8 +412,8 @@ private:
     sockaddr_in6 in6_;
 #endif /* ACE_HAS_IPV6 */
   } inet_addr_;
-  // If there is more than one address assigned to a given name, this
-  // holds all of them; one is always copied to inet_addr_.
+  /// If there is more than one address assigned to a given name, this
+  /// holds all of them; one is always copied to inet_addr_.
   std::vector<union ip46> inet_addrs_;
   std::vector<union ip46>::iterator inet_addrs_iter_;
 };

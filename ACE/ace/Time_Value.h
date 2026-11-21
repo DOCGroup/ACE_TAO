@@ -448,9 +448,9 @@ private:
     time_t tv_sec;
     suseconds_t tv_usec;
   } tv_ {};
-  // Must be mutable as the zero and max static members are const, but are modified
-  // in the timeval operations, having it not mutable will cause an access violation
-  // with some compilers as they put these in the const section.
+  /// Must be mutable as the zero and max static members are const, but are
+  /// modified in the timeval operations. Without mutable, some compilers place
+  /// these in the const section and cause an access violation.
   mutable timeval ext_tv_ {};
 #else
   timeval tv_ {};

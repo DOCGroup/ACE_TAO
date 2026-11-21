@@ -44,14 +44,13 @@ public:
   struct ACE_Export Name_Component
   {
     ACE_TString id_;
+    /// The id_ field is used, but the kind_ field is currently ignored.
     ACE_TString kind_;
 
+    /// Comparison operators.
     bool operator== (const Name_Component &rhs) const;
     bool operator!= (const Name_Component &rhs) const;
-    // Comparison
   };
-  // The <id_> field is used,
-  // but the <kind_> field is currently ignored
 
   /// A Name is an ordered collections of components (ids)
   using Name = ACE_Unbounded_Set<Name_Component>;
@@ -81,9 +80,9 @@ public:
     Binding (const ACE_TString &binding_name,
              Binding_Type binding_type);
 
+    /// Comparison operators.
     bool operator== (const Binding &rhs) const;
     bool operator!= (const Binding &rhs) const;
-    // Comparison
 
     /// Name accessor
     /// (Name version)
