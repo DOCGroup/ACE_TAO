@@ -1,6 +1,6 @@
 // -*- C++ -*-
-// This file defines the Options class for SSL-client-simple. IBM C++
-// compiler's template auto-instantiator needs this in a separate file.
+/// This file defines the Options class for SSL-client-simple. IBM C++
+/// compiler's template auto-instantiator needs this in a separate file.
 
 #ifndef ACE_SSL_CLIENT_SIMPLE_H
 #define ACE_SSL_CLIENT_SIMPLE_H

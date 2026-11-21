@@ -54,7 +54,7 @@ public:
                     const time_t time,
                     ACE_Time_Value *timeout = nullptr);
 
-  // Get the fixed size of message
+  /// Get the fixed size of message
   ssize_t size () const;
 
   /// Get the type of the message.
@@ -66,7 +66,7 @@ public:
   /// Get the time
   time_t time () const;
 
-  // Set the time
+  /// Set the time
   void time (time_t t);
 
   /// Get the blocking semantics.

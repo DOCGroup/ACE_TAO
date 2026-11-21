@@ -1,6 +1,6 @@
 // -*- C++ -*-
-// This file defines the Options class for SSL-client. IBM C++ compiler'd
-// template auto-instantiator needs this in a separate file.
+/// This file defines the Options class for SSL-client. IBM C++ compiler'd
+/// template auto-instantiator needs this in a separate file.
 
 #ifndef __ACE_SSL_CLIENT_H
 #define __ACE_SSL_CLIENT_H
@@ -18,20 +18,20 @@ public:
 
   ~Options ();
 
-  // Parse the command-line arguments.
+  /// Parse the command-line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
-  // Return the amount of time to sleep in order to implement the
-  // proper transmission rates.
+  /// Return the amount of time to sleep in order to implement the
+  /// proper transmission rates.
   const ACE_Time_Value &sleep_time () const;
 
-  // Port of the server.
+  /// Port of the server.
   u_short port () const;
 
-  // Host of the server.
+  /// Host of the server.
   const ACE_TCHAR *host () const;
 
-  // Number of threads.
+  /// Number of threads.
   size_t threads () const;
 
   /// String that shuts down the client/server.
