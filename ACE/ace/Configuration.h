@@ -393,7 +393,7 @@ protected:
    * valid.  The path separator is allowed, except for the first character,
    * if @a allow_path is true.
    */
-  int validate_name (const ACE_TCHAR* name, int allow_path = 0);
+  int validate_name (const ACE_TCHAR* name, int allow_path = false);
 
   /**
    * Test to see if @a name is valid.  The default value for a key can be

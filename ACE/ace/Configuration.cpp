@@ -493,7 +493,7 @@ ACE_Configuration_Win32Registry::open_section (const ACE_Configuration_Section_K
                                                bool create,
                                                ACE_Configuration_Section_Key& result)
 {
-  if (validate_name (sub_section, 1))
+  if (validate_name (sub_section, true))
   {
     return -1;
   }
@@ -1571,7 +1571,7 @@ ACE_Configuration_Heap::open_section (const ACE_Configuration_Section_Key& base,
                                       ACE_Configuration_Section_Key& result)
 {
   ACE_ASSERT (this->allocator_);
-  if (validate_name (sub_section, 1))    // 1 == allow_path
+  if (validate_name (sub_section, true))
     {
       return -1;
     }
