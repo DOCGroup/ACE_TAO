@@ -240,6 +240,8 @@ public:
   ACE_HANDLE handle () const override;
 
 protected:
+  /// Constructor is protected since creation is limited to
+  /// ACE_Asynch_Read_Stream factory.
   ACE_POSIX_Asynch_Read_Stream_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                        ACE_HANDLE handle,
                                        ACE_Message_Block &message_block,
@@ -248,8 +250,6 @@ protected:
                                        ACE_HANDLE event,
                                        int priority,
                                        int signal_number);
-  // Constructor is protected since creation is limited to
-  // ACE_Asynch_Read_Stream factory.
 
   /// Get the data copied to this class, before calling application
   /// handler.
@@ -909,6 +909,8 @@ public:
   u_long flags () const override;
 
 protected:
+  /// Constructor is protected since creation is limited to
+  /// ACE_Asynch_Transmit_File factory.
   ACE_POSIX_Asynch_Transmit_File_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                          ACE_HANDLE socket,
                                          ACE_HANDLE file,
@@ -922,8 +924,6 @@ protected:
                                          ACE_HANDLE event,
                                          int priority,
                                          int signal_number);
-  // Constructor is protected since creation is limited to
-  // ACE_Asynch_Transmit_File factory.
 
   /// ACE_Proactor will call this method when the write completes.
   void complete (size_t bytes_transferred,

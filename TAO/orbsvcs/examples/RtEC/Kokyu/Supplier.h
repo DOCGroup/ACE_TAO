@@ -50,7 +50,7 @@ public:
 
 private:
   RtecEventComm::EventSourceID id_;
-  // Borrowed from the active ProxyPushConsumer_var in Service::ACE_TMAIN.
+  /// Borrowed from the active ProxyPushConsumer_var in Service::ACE_TMAIN.
   RtecEventChannelAdmin::ProxyPushConsumer_ptr const consumer_proxy_;
 };
 

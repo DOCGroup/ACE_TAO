@@ -49,9 +49,9 @@ public:
 private:
   char const *const myname_ { "Echo_Client_Interceptor" };
 
+  /// The ID of the ORB where this interceptor was created, usually
+  /// obtained from the ORBInitInfo.
   CORBA::String_var orb_id_;
-  // The ID of the ORB where this interceptor was created, usually
-  // obtained from the ORBInitInfo
 
   CORBA::ORB_var orb_;
 };

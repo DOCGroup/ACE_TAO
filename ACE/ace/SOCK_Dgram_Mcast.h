@@ -393,9 +393,9 @@ private:
  using subscription_list_iter_t = ACE_DLList_Iterator<ip_mreq>;
  /// List of currently subscribed addr/iface pairs (and assc. types).
  mutable subscription_list_t  subscription_list_;
- /// Lock used to protect subscription list.
+ /// Lock used to protect subscription list. The lock type need not
+ /// support recursive locking.
  mutable ACE_SDM_LOCK subscription_list_lock_;
-     // (Lock type does not need to support recursive locking.)
 #endif /* ACE_SOCK_DGRAM_MCAST_DUMPABLE */
 };
 

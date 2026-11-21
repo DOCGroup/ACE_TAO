@@ -96,7 +96,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  /// Contains security attributes.
+  /// Contains the security attributes and rendezvous pathname.
   struct SPIPE_Addr
   {
     /// Group id.
@@ -108,7 +108,6 @@ private:
     /// Pathname in the file system.
     ACE_TCHAR rendezvous_[MAXPATHLEN + 1];
   } SPIPE_addr_;
-  // Contents of an SPIPE address.
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
