@@ -694,8 +694,8 @@ TAO_Log_Constraint_Visitor::visit_unary_expr (
           // unary minus operator, and put it back.
           pop_queue_front (this->queue_, subexpr_result);
           {
-            TAO_ETCL_Literal_Constraint result = -subexpr_result;
-            this->queue_.push_front (result);
+            TAO_ETCL_Literal_Constraint negated_result = -subexpr_result;
+            this->queue_.push_front (negated_result);
           }
           return 0;
         case ETCL_PLUS:
@@ -880,30 +880,30 @@ TAO_Log_Constraint_Visitor::visit_binary_op (
               break;
             case ETCL_PLUS:
               {
-                TAO_ETCL_Literal_Constraint result =
+                TAO_ETCL_Literal_Constraint literal_result =
                   left_operand + right_operand;
-                this->queue_.push_front (result);
+                this->queue_.push_front (literal_result);
               }
               break;
             case ETCL_MINUS:
               {
-                TAO_ETCL_Literal_Constraint result =
+                TAO_ETCL_Literal_Constraint literal_result =
                   left_operand - right_operand;
-                this->queue_.push_front (result);
+                this->queue_.push_front (literal_result);
               }
               break;
             case ETCL_MULT:
               {
-                TAO_ETCL_Literal_Constraint result =
+                TAO_ETCL_Literal_Constraint literal_result =
                   left_operand * right_operand;
-                this->queue_.push_front (result);
+                this->queue_.push_front (literal_result);
               }
               break;
             case ETCL_DIV:
               {
-                TAO_ETCL_Literal_Constraint result =
+                TAO_ETCL_Literal_Constraint literal_result =
                   left_operand / right_operand;
-                this->queue_.push_front (result);
+                this->queue_.push_front (literal_result);
               }
               break;
             default:

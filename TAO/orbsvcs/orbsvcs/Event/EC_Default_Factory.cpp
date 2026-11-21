@@ -116,10 +116,10 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               TAO_EC_Thread_Flags tf(ACE_TEXT_ALWAYS_CHAR (flags)); // parse and set up
               this->dispatching_threads_flags_ = tf.flags ();
 
-              ACE_TCHAR* arg = ACE_OS::strtok_r (nullptr, ACE_TEXT(":"), &aux);
-              if (arg)
+              ACE_TCHAR* priority_arg = ACE_OS::strtok_r (nullptr, ACE_TEXT(":"), &aux);
+              if (priority_arg)
                 {
-                  long prio = ACE_OS::strtol (arg, nullptr, 0);
+                  long prio = ACE_OS::strtol (priority_arg, nullptr, 0);
 
                   this->dispatching_threads_priority_ = prio;
                 }
@@ -278,39 +278,39 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               int iteration_type {};
 
               ACE_TCHAR* aux {};
-              for (ACE_TCHAR* arg = ACE_OS::strtok_r (opt.data (), ACE_TEXT(":"), &aux);
-                   arg != nullptr;
-                   arg = ACE_OS::strtok_r (nullptr, ACE_TEXT(":"), &aux))
+              for (ACE_TCHAR* option_arg = ACE_OS::strtok_r (opt.data (), ACE_TEXT(":"), &aux);
+                   option_arg != nullptr;
+                   option_arg = ACE_OS::strtok_r (nullptr, ACE_TEXT(":"), &aux))
                 {
-                  if (ACE_OS::strcasecmp (arg, ACE_TEXT("mt")) == 0)
+                  if (ACE_OS::strcasecmp (option_arg, ACE_TEXT("mt")) == 0)
                   {
                     synch_type = 0;
                   }
-                  else if (ACE_OS::strcasecmp (arg, ACE_TEXT("st")) == 0)
+                  else if (ACE_OS::strcasecmp (option_arg, ACE_TEXT("st")) == 0)
                   {
                     synch_type = 1;
                   }
-                  else if (ACE_OS::strcasecmp (arg, ACE_TEXT("list")) == 0)
+                  else if (ACE_OS::strcasecmp (option_arg, ACE_TEXT("list")) == 0)
                   {
                     collection_type = 0;
                   }
-                  else if (ACE_OS::strcasecmp (arg, ACE_TEXT("rb_tree")) == 0)
+                  else if (ACE_OS::strcasecmp (option_arg, ACE_TEXT("rb_tree")) == 0)
                   {
                     collection_type = 1;
                   }
-                  else if (ACE_OS::strcasecmp (arg, ACE_TEXT("immediate")) == 0)
+                  else if (ACE_OS::strcasecmp (option_arg, ACE_TEXT("immediate")) == 0)
                   {
                     iteration_type = 0;
                   }
-                  else if (ACE_OS::strcasecmp (arg, ACE_TEXT("copy_on_read")) == 0)
+                  else if (ACE_OS::strcasecmp (option_arg, ACE_TEXT("copy_on_read")) == 0)
                   {
                     iteration_type = 1;
                   }
-                  else if (ACE_OS::strcasecmp (arg, ACE_TEXT("copy_on_write")) == 0)
+                  else if (ACE_OS::strcasecmp (option_arg, ACE_TEXT("copy_on_write")) == 0)
                   {
                     iteration_type = 2;
                   }
-                  else if (ACE_OS::strcasecmp (arg, ACE_TEXT("delayed")) == 0)
+                  else if (ACE_OS::strcasecmp (option_arg, ACE_TEXT("delayed")) == 0)
                   {
                     iteration_type = 3;
                   }
@@ -340,39 +340,39 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               int iteration_type {};
 
               ACE_TCHAR* aux {};
-              for (ACE_TCHAR* arg = ACE_OS::strtok_r (opt.data (), ACE_TEXT(":"), &aux);
-                   arg != nullptr;
-                   arg = ACE_OS::strtok_r (nullptr, ACE_TEXT(":"), &aux))
+              for (ACE_TCHAR* option_arg = ACE_OS::strtok_r (opt.data (), ACE_TEXT(":"), &aux);
+                   option_arg != nullptr;
+                   option_arg = ACE_OS::strtok_r (nullptr, ACE_TEXT(":"), &aux))
                 {
-                  if (ACE_OS::strcasecmp (arg, ACE_TEXT("mt")) == 0)
+                  if (ACE_OS::strcasecmp (option_arg, ACE_TEXT("mt")) == 0)
                   {
                     synch_type = 0;
                   }
-                  else if (ACE_OS::strcasecmp (arg, ACE_TEXT("st")) == 0)
+                  else if (ACE_OS::strcasecmp (option_arg, ACE_TEXT("st")) == 0)
                   {
                     synch_type = 1;
                   }
-                  else if (ACE_OS::strcasecmp (arg, ACE_TEXT("list")) == 0)
+                  else if (ACE_OS::strcasecmp (option_arg, ACE_TEXT("list")) == 0)
                   {
                     collection_type = 0;
                   }
-                  else if (ACE_OS::strcasecmp (arg, ACE_TEXT("rb_tree")) == 0)
+                  else if (ACE_OS::strcasecmp (option_arg, ACE_TEXT("rb_tree")) == 0)
                   {
                     collection_type = 1;
                   }
-                  else if (ACE_OS::strcasecmp (arg, ACE_TEXT("immediate")) == 0)
+                  else if (ACE_OS::strcasecmp (option_arg, ACE_TEXT("immediate")) == 0)
                   {
                     iteration_type = 0;
                   }
-                  else if (ACE_OS::strcasecmp (arg, ACE_TEXT("copy_on_read")) == 0)
+                  else if (ACE_OS::strcasecmp (option_arg, ACE_TEXT("copy_on_read")) == 0)
                   {
                     iteration_type = 1;
                   }
-                  else if (ACE_OS::strcasecmp (arg, ACE_TEXT("copy_on_write")) == 0)
+                  else if (ACE_OS::strcasecmp (option_arg, ACE_TEXT("copy_on_write")) == 0)
                   {
                     iteration_type = 2;
                   }
-                  else if (ACE_OS::strcasecmp (arg, ACE_TEXT("delayed")) == 0)
+                  else if (ACE_OS::strcasecmp (option_arg, ACE_TEXT("delayed")) == 0)
                   {
                     iteration_type = 3;
                   }
