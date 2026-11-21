@@ -17,66 +17,65 @@ public:
   Client_Test &operator= (Client_Test const &) = delete;
   Client_Test &operator= (Client_Test &&) = delete;
 
+  /// Caches the reactor and registers this object with it.
   int open ();
-  // Cache reactor and then register self with reactor
 
+  /// Closes things down and frees resources.
   int close ();
-  // Close things down and free up resources.
 
+  /// Handles user-entered commands.
   int handle_input (ACE_HANDLE handle) override;
-  // Handle user entered commands
 
+  /// Prints the available name options.
   void list_options ();
-  // Print name options
 
+  /// Binds a key to a value.
   int bind (std::string const &key,
             std::string const &value,
             std::string const &type = {});
-  // Bind a key to a value
 
+  /// Removes a name binding.
   int unbind (std::string const &key);
-  // Unbind a name binding
 
+  /// Rebinds a name to a value.
   int rebind (std::string const &key,
               std::string const &value,
               std::string const &type = {});
-  // Rebind a name binding
 
+  /// Finds the value associated with a key.
   int find (std::string const &key);
-  // Find the value associated with a key
 
+  /// Lists names that match a pattern.
   int list_names (std::string const &pattern);
-  // Find all names that match pattern
 
+  /// Lists values that match a pattern.
   int list_values (std::string const &pattern);
-  // Find all values that match pattern
 
+  /// Lists types that match a pattern.
   int list_types (std::string const &pattern);
-  // Find all types that match pattern
 
+  /// Lists names that match a pattern.
   int list_name_entries (std::string const &pattern);
-  // Find all names that match pattern
 
+  /// Lists values that match a pattern.
   int list_value_entries (std::string const &pattern);
-  // Find all values that match pattern
 
+  /// Lists types that match a pattern.
   int list_type_entries (std::string const &pattern);
-  // Find all types that match pattern
 
 private:
+  /// Borrowed from the dynamically loaded ACE_Naming_Context.
   ACE_Name_Options *name_options_ {};
-  // Borrowed from the dynamically loaded ACE_Naming_Context.
 
+  /// Displays the user menu.
   void display_menu ();
-  // Display user menu
 
+  /// Selects the PROC_LOCAL naming context.
   int set_proc_local ();
-  // Set options to use PROC_LOCAL naming context
 
+  /// Selects the NODE_LOCAL naming context.
   int set_node_local ();
-  // Set options to use NODE_LOCAL naming context
 
+  /// Selects the NET_LOCAL naming context for a host and port.
   int set_host (std::string const &hostname, int port);
-  // Set options to use NET_LOCAL naming context specifying host name
-  // and port number
 };

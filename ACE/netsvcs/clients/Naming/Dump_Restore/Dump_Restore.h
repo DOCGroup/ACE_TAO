@@ -20,13 +20,13 @@ public:
       UNBIND,
       REBIND
     };
+  /// Initializes name options and the naming context.
   Dump_Restore (int argc, ACE_TCHAR *argv[]);
-  // Initialize name options and naming context
 
   ~Dump_Restore ();
 
+  /// Handles user-entered commands.
   int handle_input (ACE_HANDLE handle) override;
-  // Handle user entered commands
 
   Dump_Restore (Dump_Restore const &) = delete;
   Dump_Restore (Dump_Restore &&) = delete;
@@ -36,25 +36,24 @@ public:
   void dump ();
 
 private:
+  /// Cached hostname for the remote naming context.
   std::basic_string<ACE_TCHAR> hostname_;
-  // Cache the hostname and port number for remote case
 
+  /// Displays the user menu.
   void display_menu ();
-  // Display user menu.
 
+  /// Selects the PROC_LOCAL naming context.
   int set_proc_local ();
-  // Set options to use PROC_LOCAL naming context.
 
+  /// Selects the NODE_LOCAL naming context.
   int set_node_local ();
-  // Set options to use NODE_LOCAL naming context.
 
+  /// Selects the NET_LOCAL naming context for a host and port.
   int set_host (ACE_TCHAR const *hostname,
                 int port);
-  // Set options to use NET_LOCAL naming context specifying host name
-  // and port number.
 
+  /// Exits the application gracefully.
   int quit ();
-  // Gracefully exit.
 
   int populate (Dump_Restore::Operation_Type op);
 
@@ -73,18 +72,18 @@ private:
   std::string filename_;
   std::string dump_filename_;
 
+  /// Port on which the server listens.
   u_short port_ {};
-  // port server is listening on
 
+  /// Current naming context.
   std::unique_ptr<ACE_Naming_Context> ns_context_;
-  // Current naming context
 
+  /// Scope of the naming context.
   ACE_Naming_Context::Context_Scope_Type ns_scope_ {ACE_Naming_Context::PROC_LOCAL};
-  // Defines the scope of the naming context
 
+  /// Input file.
   std::unique_ptr<FILE, int (*) (FILE *)> infile_ {nullptr, ACE_OS::fclose};
-  // input file
 
+  /// Borrowed from ns_context_.
   ACE_Name_Options *name_options_ {};
-  // Borrowed from ns_context_.
 };

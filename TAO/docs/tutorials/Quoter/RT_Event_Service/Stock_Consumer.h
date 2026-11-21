@@ -14,20 +14,19 @@ public:
   Stock_Consumer &operator= (Stock_Consumer const &) = delete;
   Stock_Consumer &operator= (Stock_Consumer &&) = delete;
 
+  /// Connects to the event channel using consumer_admin and subscriptions.
   void connect (RtecEventChannelAdmin::EventChannel_ptr event_channel,
                 RtecEventChannelAdmin::ConsumerQOS const &subscriptions);
-  // Connect to the event channel, using <consumer_admin> and
-  // <subscriptions>
 
+  /// Disconnects from the event channel.
   void disconnect ();
-  // Disconnect from the event channel.
 
   void push (RtecEventComm::EventSet const &data) override;
   void disconnect_push_consumer () override;
 
 private:
+  /// Proxy supplier used to receive events.
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_ {};
-  // The supplier proxy.
 };
 
 #endif /* TAO_TUTORIALS_QUOTER_RT_EVENT_SERVICE_STOCK_CONSUMER_H */
