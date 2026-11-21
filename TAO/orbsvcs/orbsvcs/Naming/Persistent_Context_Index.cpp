@@ -288,7 +288,7 @@ TAO_Persistent_Context_Index::create_index ()
   // memory-mapped file we know it's already initialized.
   if (this->allocator_->find (TAO_NAMING_CONTEXT_INDEX, context_index) == 0)
     {
-      this->index_ = (CONTEXT_INDEX *) context_index;
+      this->index_ = static_cast<CONTEXT_INDEX *> (context_index);
     }
 
   // Create a new <index_> (because we've just created a new

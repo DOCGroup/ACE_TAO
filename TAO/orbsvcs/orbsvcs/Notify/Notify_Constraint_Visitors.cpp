@@ -291,7 +291,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
           }
         case ETCL_STRING:
           {
-            const char *name = (const char *) disc_val;
+            const char *name = static_cast<const char *> (disc_val);
             CORBA::ULong count = tc->member_count ();
 
             CORBA::ULong i {};
@@ -1114,8 +1114,8 @@ TAO_Notify_Constraint_Visitor::visit_twiddle (ETCL_Binary_Expr *binary)
           TAO_ETCL_Literal_Constraint right;
           this->queue_.dequeue_head (right);
           CORBA::Boolean result =
-            (std::strstr ((const char *) right,
-                             (const char *) left) != nullptr);
+            (std::strstr (static_cast<const char *> (right),
+                          static_cast<const char *> (left)) != nullptr);
           this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
           return_value = 0;
         }

@@ -19,7 +19,8 @@ void replace_key(char* ior, char* end_ior,
   ACE_ASSERT(keylen == newkey.length());
 
   char* pos = ior;
-  const char* oldkey_begin = (const char*)oldkey.get_buffer();
+  const char *oldkey_begin =
+    reinterpret_cast<const char *> (oldkey.get_buffer ());
   const char* oldkey_end = oldkey_begin + keylen;
 
   while ((pos = std::search(pos, end_ior,oldkey_begin, oldkey_end)) != end_ior) {
