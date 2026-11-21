@@ -377,7 +377,7 @@ public:
    * write code that relies on this member being public; use the
    * @c opt_arg() accessor method instead.
    */
-  ACE_TCHAR *optarg;
+  ACE_TCHAR *optarg {};
 
 private:
   /**
@@ -443,7 +443,7 @@ private:
   /// Keeps track of whether or not a colon was passed in <optstring>.
   /// This is used to determine the return value when required
   /// arguments are missing.
-  bool has_colon_;
+  bool has_colon_ {};
 
   /// This is the last option, short or long, that was processed.  This
   /// is handy to have in cases where the option passed was invalid.
@@ -456,10 +456,10 @@ private:
    * If this is zero, or a null string, it means resume the scan
    * by advancing to the next <argv>-element.
    */
-  ACE_TCHAR *nextchar_;
+  ACE_TCHAR *nextchar_ {};
 
   /// Most recently matched short option character.
-  int optopt_;
+  int optopt_ {};
 
   /// Keeps track of ordering mode (default <PERMUTE_ARGS>).
   int ordering_;
@@ -473,7 +473,7 @@ private:
   int nonopt_end_;
 
   /// Points to the long_option found on last call to <operator()>.
-  ACE_Get_Opt_Long_Option *long_option_;
+  ACE_Get_Opt_Long_Option *long_option_ {};
 
   /// Array of long options.
   /// Owns each option object; ACE_Array retains raw pointers to preserve its allocation behavior.

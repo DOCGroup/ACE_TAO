@@ -99,15 +99,10 @@ ACE_Get_Opt::ACE_Get_Opt (int argc,
     argv_ (argv),
     optind (skip),
     opterr (report_errors),
-    optarg (nullptr),
     long_only_ (long_only != 0),
-    has_colon_ (false),
-    nextchar_ (nullptr),
-    optopt_ {},
     ordering_ (ordering),
     nonopt_start_ (optind),
-    nonopt_end_ (optind),
-    long_option_ (nullptr)
+    nonopt_end_ (optind)
 #endif
 {
   ACE_TRACE ("ACE_Get_Opt::ACE_Get_Opt");

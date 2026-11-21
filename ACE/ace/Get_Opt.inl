@@ -49,15 +49,10 @@ ACE_INLINE  ACE_Get_Opt::ACE_Get_Opt (int argc,
     argv_ (argv),
     optind (skip_args),
     opterr (report_errors),
-    optarg {},
     long_only_ (long_only != 0),
-    has_colon_ (false),
-    nextchar_ {},
-    optopt_ {},
     ordering_ (ordering),
     nonopt_start_ (optind),
-    nonopt_end_ (optind),
-    long_option_ {}
+    nonopt_end_ (optind)
 {
   ACE_Get_Opt_Init (optstring);
 }
@@ -73,15 +68,10 @@ ACE_INLINE  ACE_Get_Opt::ACE_Get_Opt (int argc,
     argv_ (argv),
     optind (skip_args),
     opterr (report_errors),
-    optarg {},
     long_only_ (long_only != 0),
-    has_colon_ (false),
-    nextchar_ {},
-    optopt_ {},
     ordering_ (ordering),
     nonopt_start_ (optind),
-    nonopt_end_ (optind),
-    long_option_ {}
+    nonopt_end_ (optind)
 {
   ACE_Get_Opt_Init (ACE_TEXT_CHAR_TO_TCHAR (optstring));
 }
