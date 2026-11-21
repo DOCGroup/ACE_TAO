@@ -14,9 +14,9 @@ public:
   client_i &operator= (client_i &&) = delete;
 
 private:
+  /// Be quiet.
   bool quiet_ {};
-  // Be quiet.
 
+  /// Pointer to the server.
   server_var server_;
-  // Pointer to server.
 };
