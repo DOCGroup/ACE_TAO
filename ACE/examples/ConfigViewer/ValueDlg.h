@@ -8,12 +8,12 @@ public:
   ///////////////////////////////////////////
   // Initializers
   ///////////////////////////////////////////
+  /// New Value Ctor
   ValueDlg(wxWindow* pParent, bool String);
-  // New Value Ctor
+  /// Edit String Ctor
   ValueDlg(wxWindow* pParent, wxString& Name, wxString& Value);
-  // Edit String Ctor
+  /// Edit UINT Ctor
   ValueDlg(wxWindow* pParent, wxString& Name, u_int Value);
-  // Edit UINT Ctor
   virtual ~ValueDlg();
 
   ///////////////////////////////////////////

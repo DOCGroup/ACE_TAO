@@ -53,8 +53,8 @@ public:
   TimeStamp_Protocol_Factory (TimeStamp_Protocol_Factory &&) = delete;
   TimeStamp_Protocol_Factory &operator= (TimeStamp_Protocol_Factory &&) = delete;
   int init (int argc, ACE_TCHAR *argv[]) override;
+  /// Note : Some platforms still don't support Covariant returns
   int match_protocol (char const *flow_string) override;
-  // Note : Some platforms still don't support Covariant returns
   TAO_AV_Protocol_Object *make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                  TAO_Base_StreamEndPoint *endpoint,
                                                  TAO_AV_Flow_Handler *handler,

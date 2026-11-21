@@ -20,67 +20,67 @@ public:
   IFR_DII_Client& operator= (IFR_DII_Client const&) = delete;
   IFR_DII_Client& operator= (IFR_DII_Client&&) = delete;
 
+  /// Initialize the client.
   int init (int argc,
             ACE_TCHAR *argv[]);
-  // Initialize the client.
 
+  /// Run the client.
   int run ();
-  // Run the client.
 
 private:
+  /// Process the command line arguments.
   int parse_args (int argc,
                   ACE_TCHAR *argv[]);
-  // Process the command line arguments.
 
+  /// Query the object reference to get its InterfaceDef in the IFR.
   int find_interface_def ();
-  // Query the object reference to get its InterfaceDef in the IFR.
 
+  /// Look up the InterfaceDef by name in the IFR.
   int lookup_interface_def ();
-  // Look up the InterfaceDef by name in the IFR.
 
+  /// Find the desired operation in the interface definition.
   void get_operation_def ();
-  // Find the desired operation in the interface definition.
 
+  /// Query the interface definition to get the info needed
+  /// to construct a CORBA::Request.
   void create_dii_request ();
-  // Query the interface definition to get the info needed
-  // to construct a CORBA::Request.
 
+  /// Do the invocation and display the results.
   void invoke_and_display ();
-  // Do the invocation and display the results.
 
+  /// Reference to our ORB.
   CORBA::ORB_var orb_ {};
-  // Reference to our ORB.
 
+  /// Reference to the Interface Repository.
   CORBA::Repository_var repo_ {};
-  // Reference to the Interface Repository.
 
+  /// Reference to the target object.
   CORBA::Object_var target_ {};
-  // Reference to the target object.
 
+  /// Repository entry corresponding to target_.
   CORBA::InterfaceDef_var target_def_ {};
-  // Repository entry corresponding to target_.
 
+  /// Reference to the discovered operation.
   CORBA::OperationDef_var op_ {};
-  // Reference to the discovered operation.
 
+  /// Type of the return value, if any.
   CORBA::TypeCode_var result_ {};
-  // Type of the return value, if any.
 
+  /// DII request holder.
   CORBA::Request_var req_ {};
-  // DII request holder.
 
+  /// Things that we will be searching for in the repository.
   CORBA::String_var namespace_name {CORBA::string_dup ("warehouse")};
   CORBA::String_var interface_name {CORBA::string_dup ("inventory")};
   CORBA::String_var op_name {CORBA::string_dup ("getCDinfo")};
-  // Things that we will be searching for in the repository.
 
+  /// Are we looking up info on the target object by querying the
+  /// IFR directly with the target's name, or indirectly
+  /// by calling _get_interface() on the target object?
   bool lookup_by_name_ {};
-  // Are we looking up info on the target object by querying the
-  // IFR directly with the target's name, or indirectly
-  // by calling _get_interface() on the target object?
 
+  /// Display results and debugging info?
   bool debug_ {};
-  // Display results and debugging info?
 
   ACE_TCHAR const *ior_output_file_ {ACE_TEXT ("file://iorfile")};
 };

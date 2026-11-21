@@ -55,9 +55,9 @@ class Event_impl : public virtual OBV_Event,
   ~Event_impl () override = default;
   ::CORBA::ValueBase *_copy_value () override;
 
+  /// Implementation of the do_print () operation the valuetype should have.
+  /// All operations in valuetypes are virtual.
   void do_print () override;
-  // Implementation of the do_print () operation the valuetype should have.
-  // All operations in valuetypes are virtual.
 
   // The state member for the event time is yet implemented in OBV_Event
   // (or in the Event class, if -Wb,obv_opt_accessor is given to tao_idl).
@@ -122,16 +122,16 @@ public:
   Temperature_impl& operator= (Temperature_impl const&) = delete;
   Temperature_impl& operator= (Temperature_impl&&) = delete;
 
+  /// Constructor, should regularly be a factory create () method.
+  /// But it is more simple to do so here.
   explicit Temperature_impl (CORBA::Float temp);
-  // Constructor, should regularly be a factory create () method.
-  // But it is more simple to do so here.
 
   ~Temperature_impl () override = default;
   ::CORBA::ValueBase *_copy_value () override;
 
+  /// Overrides Event_impl::do_print (). Note that a new declaration
+  /// in IDL in a derived class is not allowed.
   void do_print () override;
-  // Overrides Event_impl::do_print (). Note that a new declaration
-  // in IDL in a derived class is not allowed.
 };
 
 class Temperature_factory : public CORBA::ValueFactoryBase
@@ -265,8 +265,8 @@ class Event_List_Link_impl : public virtual OBV_Event_List_Link,
  private:
   Event_List_Link *get_next_link () override;
 
+  /// Attach a chain at the end.
   void attach_next_link (Event_List_Link *chain) override;
-  // Attach a chain at the end.
 };
 
 class Event_List_Link_factory : public CORBA::ValueFactoryBase
@@ -306,20 +306,20 @@ class Event_List_impl : public virtual OBV_Event_List,
 
   void store_event (Event *e) override;
 
+  /// The iterator needs it.
   Event_List_Link *get_first_link ();
-  // The iterator needs it.
 
  private:
+  /// For fast attachment. Need not to be a _var cause we hold at least one
+  /// reference through my_first_event_list_link which is a state member and
+  /// is mapped to a _var.
+  ///
+  /// And it isn't a state member of valuetype.
+  /// Currently we can't yet do this, because sharing of valuetypes is not
+  /// yet impl ...%!.
+  /// Without the availability to share we would get two different instances
+  /// of the last list link at the receiving end of an invocation.
   Event_List_Link *last_link_cache_ {};
-  // For fast attachment. Need not to be a _var cause we hold at least one
-  // reference through my_first_event_list_link which is a state member and
-  // is mapped to a _var.
-
-  // And it isn't a state member of valuetype.
-  // Currently we can't yet do this, because sharing of valuetypes is not
-  // yet impl ...%!.
-  // Without the availability to share we would get two different instances
-  // of the last list link at the receiving end of an invocation.
 };
 
 class Event_List_factory : public CORBA::ValueFactoryBase
@@ -348,23 +348,23 @@ class Event_List_Iterator
   Event_List_Iterator (Event_List_Iterator&&) = delete;
   Event_List_Iterator& operator= (Event_List_Iterator const&) = delete;
   Event_List_Iterator& operator= (Event_List_Iterator&&) = delete;
+  /// Construct it to point to the first list link.
   explicit Event_List_Iterator (Event_List *list);
-  // Construct it to point to the first list link.
 
   virtual ~Event_List_Iterator () = default;
 
   void init (Event_List *list);
 
+  /// Get pointer to the current event.
   Event *next ();
-  // Get pointer to the current event.
 
+  /// Sets the Event_var argument to the current event.
+  /// This forces proper memory management in the user code, as the Event_var
+  /// could be stored beyond the life time of the iterator.
   CORBA::Boolean next (Event_var &event);
-  // Sets the Event_var argument to the current event.
-  // This forces proper memory management in the user code, as the Event_var
-  // could be stored beyond the life time of the iterator.
 
+  /// Walks one event ahead.
   void advance ();
-  // Walks one event ahead.
 
  private:
   Event_List_Link_var current_;
@@ -520,18 +520,18 @@ class Criterion_List_Iterator
   Criterion_List_Iterator (Criterion_List_Iterator&&) = delete;
   Criterion_List_Iterator& operator= (Criterion_List_Iterator const&) = delete;
   Criterion_List_Iterator& operator= (Criterion_List_Iterator&&) = delete;
+  /// Construct it to point to the first list link.
   explicit Criterion_List_Iterator (Criterion_List *list);
-  // Construct it to point to the first list link.
 
   virtual ~Criterion_List_Iterator () = default;
 
   void init (Criterion_List *list);
 
+  /// Get pointer to the current Criterion.
   Criterion *next ();
-  // Get pointer to the current Criterion.
 
+  /// Walks one Criterion ahead.
   void advance ();
-  // Walks one Criterion ahead.
 
  private:
   Event_List_Iterator iterator_;

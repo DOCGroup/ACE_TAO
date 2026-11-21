@@ -9,8 +9,8 @@ public:
   Smart_Test_Proxy &operator= (Smart_Test_Proxy const &) = delete;
   Smart_Test_Proxy &operator= (Smart_Test_Proxy &&) = delete;
 
+  /// "Smartify" the method call!
   CORBA::Short method (CORBA::Short boo) override;
-  // "Smartify" the method call!
 
   // Don't need to add any extra functionality into <shutdown>, hence
   // we don't define it.

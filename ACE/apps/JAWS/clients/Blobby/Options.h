@@ -58,8 +58,8 @@ public:
   bool debug_ {};
 
 protected:
+  /// protected constructor, singleton
   Options () = default;
-  // protected constructor, singleton
 };
 
 #endif /* ACE_BLOBBY_OPTIONS_H */

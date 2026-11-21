@@ -78,9 +78,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Sequence_Extracter_Base
 {
 public:
+  /// Return the sequence element type for the sequence whose typecode
+  /// is <code>.
   static CORBA::TCKind sequence_type (CORBA::TypeCode* code);
-  // Return the sequence element type for the sequence whose typecode
-  // is <code>.
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

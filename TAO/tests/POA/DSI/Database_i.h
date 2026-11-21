@@ -39,32 +39,32 @@ public:
     Entry (Entry &&) = delete;
     Entry &operator= (Entry &&) = delete;
 
+    /// The invoke() method receives requests issued to any CORBA
+    /// object incarnated by the DSI servant and performs the
+    /// processing necessary to execute the request.
     void invoke (CORBA::ServerRequest_ptr request) override;
-    // The invoke() method receives requests issued to any CORBA
-    // object incarnated by the DSI servant and performs the
-    // processing necessary to execute the request.
 
+    /// The _primary_interface() method receives an ObjectId value and
+    /// a POA_ptr as input parameters and returns a valid RepositoryId
+    /// representing the most-derived interface for that oid.
     CORBA::RepositoryId _primary_interface (PortableServer::ObjectId const &oid,
                                             PortableServer::POA_ptr poa) override;
-    // The _primary_interface() method receives an ObjectId value and
-    // a POA_ptr as input parameters and returns a valid RepositoryId
-    // representing the most-derived interface for that oid.
 
+    /// Returns the default POA for this servant.
     PortableServer::POA_ptr _default_POA () override;
-    // Returns the default POA for this servant.
 
+    /// Handles the _is_a call
     void is_a (CORBA::ServerRequest_ptr request);
-    // Handles the _is_a call
 
   protected:
+    /// ORB (auto) pointer
     CORBA::ORB_var orb_;
-    // ORB (auto) pointer
 
+    /// Default POA
     PortableServer::POA_var poa_;
-    // Default POA
 
+    /// POA Current.
     PortableServer::Current_var poa_current_;
-    // POA Current.
   };
 
   class Agent : public POA_Database::Agent
@@ -86,8 +86,8 @@ public:
 
     void shutdown () override;
 
+    /// Returns the default POA for this servant.
     PortableServer::POA_ptr _default_POA () override;
-    // Returns the default POA for this servant.
 
     Agent (Agent const &) = delete;
     Agent &operator= (Agent const &) = delete;
@@ -95,11 +95,11 @@ public:
     Agent &operator= (Agent &&) = delete;
 
   protected:
+    /// ORB (auto) pointer
     CORBA::ORB_var orb_;
-    // ORB (auto) pointer
 
+    /// Default POA
     PortableServer::POA_var poa_;
-    // Default POA
 
     Entry common_servant_;
   };
@@ -129,11 +129,11 @@ public:
     void operator delete (void *pointer);
 
   private:
-    // Employee ID.
+    /// Employee ID.
     CORBA::Long const id_;
 
-    // Employee name.
-    // Allocated from the database memory pool, so std::string cannot own it.
+    /// Employee name. Allocated from the database memory pool, so std::string
+    /// cannot own it.
     char *name_ {};
   };
 };
