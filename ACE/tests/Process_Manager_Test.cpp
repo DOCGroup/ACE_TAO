@@ -244,7 +244,7 @@ command_line_test ()
               ACE_TEXT ("Testing for last character of command line\n")));
   int result = 0;
   const ACE_TCHAR *command = ACE_TEXT ("test Hello");
-  size_t command_len = ACE_OS::strlen (command);
+  const size_t command_len = ACE_OS::strlen (command);
   ACE_Process_Options options (true, command_len + 1);
 
 #ifndef ACE_LACKS_VA_FUNCTIONS

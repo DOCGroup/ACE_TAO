@@ -225,7 +225,7 @@ run_order_test (ACE_Message_Queue<ACE_SYNCH>* msg_queue,
                 const char *receipt_order)
 {
   size_t i;
-  size_t array_size = std::strlen (send_order);
+  const size_t array_size = std::strlen (send_order);
 
   ACE_TEST_ASSERT (msg_queue != 0);
   ACE_TEST_ASSERT (send_order != 0);

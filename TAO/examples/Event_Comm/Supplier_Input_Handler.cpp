@@ -70,7 +70,7 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE)
     }
   else
     {
-      size_t n = std::strlen (buf);
+      const size_t n = std::strlen (buf);
 
       // Null terminate the buffer, replacing the '\n' with '\0'.
       if (buf[n - 1] == '\n')

@@ -386,7 +386,7 @@ Server_Handler::handle_read_stream
   // initiated, we left the last byte empty to facilitate this.
   ACE_Message_Block &b = result.message_block ();
   *(b.wr_ptr ()) = '\0';
-  size_t test_string_len = ACE_OS::strlen (test_string);
+  const size_t test_string_len = ACE_OS::strlen (test_string);
   while (b.length () >= test_string_len)
     {
       if (0 != std::strncmp (b.rd_ptr (), test_string, test_string_len))

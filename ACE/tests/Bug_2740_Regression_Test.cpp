@@ -104,7 +104,7 @@ ClientSvcHandler::open (void* factory)
                                                        nullptr,
                                                        MAX_CLIENT_TIMEOUT);
 
-      size_t send_len = ACE_OS::strlen (ClientSvcHandler::send_str);
+      const size_t send_len = ACE_OS::strlen (ClientSvcHandler::send_str);
       if (-1 == this->peer().send_n (ClientSvcHandler::send_str, send_len))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -154,7 +154,7 @@ ClientSvcHandler::handle_input (ACE_HANDLE handle)
           }
 
         // Not done yet; send more data and resched timer.
-        size_t send_len = ACE_OS::strlen (ClientSvcHandler::send_str);
+        const size_t send_len = ACE_OS::strlen (ClientSvcHandler::send_str);
         if (-1 == this->peer().send_n (ClientSvcHandler::send_str, send_len))
           {
             ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%t: client h %d: %p\n"),
