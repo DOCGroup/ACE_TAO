@@ -315,9 +315,6 @@ public:
   /// Top of the queue.
   const ACE_TPQ_Entry* head ();
 
-//  int member (const ACE_TCHAR *id);
-  // Is this id in the waiter list?
-
   /// Remove the top waiter.
   void dequeue ();
 

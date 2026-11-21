@@ -365,24 +365,6 @@ ACE_Token_Proxy_Queue::dequeue ()
                 this->size_));
 }
 
-/*
-int
-ACE_Token_Proxy_Queue::member (const ACE_TCHAR *id)
-{
-  ACE_TRACE ("ACE_Token_Proxy_Queue::member");
-
-  for (ACE_TPQ_Entry *temp = this->head_;
-       temp != nullptr;
-       temp = temp->next_)
-    if (ACE_OS::strcmp (temp->client_id (), id) == 0)
-      // We found it!
-      return 1;
-
-  // We didn't find it :-(
-  return 0;
-}
-*/
-
 void
 ACE_Token_Proxy_Queue::remove (const ACE_TPQ_Entry *remove_me)
 {
