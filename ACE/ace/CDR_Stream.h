@@ -1391,10 +1391,11 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Not used by CORBA or TAO
+/// Not used by CORBA or TAO.
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                ACE_CDR::Char x);
-// CDR output operators for primitive types
+/// @name CDR output operators for primitive types
+/// @{
 
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                ACE_CDR::Short x);
@@ -1416,8 +1417,10 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                ACE_CDR::Double x);
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                const ACE_CDR::Fixed &x);
+/// @}
 
-// CDR output operator from helper classes
+/// @name CDR output operators from helper classes
+/// @{
 
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                ACE_OutputCDR::from_boolean x);
@@ -1451,11 +1454,13 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
 #endif
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_uint8 x);
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_int8 x);
+/// @}
 
-// Not used by CORBA or TAO
+/// Not used by CORBA or TAO.
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Char &x);
-// CDR input operators for primitive types
+/// @name CDR input operators for primitive types
+/// @{
 
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Short &x);
@@ -1477,8 +1482,10 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Double &x);
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Fixed &x);
+/// @}
 
-// CDR input operator from helper classes
+/// @name CDR input operators from helper classes
+/// @{
 
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_InputCDR::to_boolean x);
@@ -1508,6 +1515,7 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
 #endif
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &os, ACE_InputCDR::to_uint8 x);
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &os, ACE_InputCDR::to_int8 x);
+/// @}
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
