@@ -360,7 +360,7 @@ public:
 
 protected:
   /// Implementation class that all methods will be forwarded to.
-  ACE_Asynch_Read_Stream_Impl *implementation_;
+  ACE_Asynch_Read_Stream_Impl *implementation_ {};
 
 public:
 /**
@@ -513,7 +513,7 @@ public:
 
 protected:
   /// Implementation class that all methods will be forwarded to.
-  ACE_Asynch_Write_Stream_Impl *implementation_;
+  ACE_Asynch_Write_Stream_Impl *implementation_ {};
 
 public:
 /**
@@ -660,7 +660,7 @@ public:
 protected:
   /// Delegation/implementation class that all methods will be
   /// forwarded to.
-  ACE_Asynch_Read_File_Impl *implementation_;
+  ACE_Asynch_Read_File_Impl *implementation_ {};
 
 public:
 /**
@@ -794,7 +794,7 @@ public:
 
 protected:
   /// Implementation object.
-  ACE_Asynch_Write_File_Impl *implementation_;
+  ACE_Asynch_Write_File_Impl *implementation_ {};
 
 public:
 /**
@@ -931,7 +931,7 @@ public:
 protected:
   /// Delegation/implementation class that all methods will be
   /// forwarded to.
-  ACE_Asynch_Accept_Impl *implementation_;
+  ACE_Asynch_Accept_Impl *implementation_ {};
 
 public:
 /**
@@ -1035,7 +1035,7 @@ public:
 protected:
   /// Delegation/implementation class that all methods will be
   /// forwarded to.
-  ACE_Asynch_Connect_Impl *implementation_;
+  ACE_Asynch_Connect_Impl *implementation_ {};
 
 public:
 /**
@@ -1158,7 +1158,7 @@ public:
 
 protected:
   /// The implementation class.
-  ACE_Asynch_Transmit_File_Impl *implementation_;
+  ACE_Asynch_Transmit_File_Impl *implementation_ {};
 
 public:
 /**
@@ -1363,7 +1363,7 @@ public:
 
 protected:
   /// Implementation class that all methods will be forwarded to.
-  ACE_Asynch_Read_Dgram_Impl *implementation_;
+  ACE_Asynch_Read_Dgram_Impl *implementation_ {};
 
 public:
 /**
@@ -1495,7 +1495,7 @@ public:
 
 protected:
   /// Implementation class that all methods will be forwarded to.
-  ACE_Asynch_Write_Dgram_Impl *implementation_;
+  ACE_Asynch_Write_Dgram_Impl *implementation_ {};
 
 public:
 /**
