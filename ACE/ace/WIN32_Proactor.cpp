@@ -22,11 +22,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_WIN32_Wakeup_Completion : public ACE_WIN32_Asynch_Result
 {
 public:
-  ACE_WIN32_Wakeup_Completion (ACE_Handler::Proxy_Ptr &handler_proxy,
-                               const void *act = nullptr,
-                               ACE_HANDLE event = ACE_INVALID_HANDLE,
-                               int priority = 0,
-                               int signal_number = ACE_SIGRTMIN);
+  explicit ACE_WIN32_Wakeup_Completion (
+    ACE_Handler::Proxy_Ptr &handler_proxy,
+    const void *act = nullptr,
+    ACE_HANDLE event = ACE_INVALID_HANDLE,
+    int priority = 0,
+    int signal_number = ACE_SIGRTMIN);
 
   virtual ~ACE_WIN32_Wakeup_Completion ();
 
