@@ -20,13 +20,13 @@ public:
   int svc () override;
 
 private:
-  Test_i *server_;
+  Test_i *server_ {};
 
   /// CORBA priority used to create this thread's ORB.
-  int priority_;
+  int priority_ {};
 
-  int argc_;
-  ACE_TCHAR *argv_[256];
+  int argc_ {};
+  ACE_TCHAR *argv_[256] {};
 };
 
 // ****************************************************************

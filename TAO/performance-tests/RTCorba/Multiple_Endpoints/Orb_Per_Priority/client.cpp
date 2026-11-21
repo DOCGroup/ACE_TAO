@@ -35,23 +35,23 @@ public:
   int svc () override;
 
 private:
-  CORBA::ORB_ptr orb_;
+  CORBA::ORB_ptr orb_ {};
 
   /// Server reference used for invocations.
   Test_var server_;
 
   /// Number of iterations for each client thread.
-  int niterations_;
+  int niterations_ {};
 
   /// Identifier for this client thread.
-  int id_;
+  int id_ {};
 
   /// Per-thread throughput statistics.
   ACE_Throughput_Stats throughput_;
 
   /// Barriers for coordinating connection setup.
-  ACE_Barrier *before_connection_;
-  ACE_Barrier *after_connection_;
+  ACE_Barrier *before_connection_ {};
+  ACE_Barrier *after_connection_ {};
 };
 
 // ****************************************************************
