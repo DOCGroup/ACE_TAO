@@ -86,7 +86,8 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
       if (ACE_OS::setsockopt (this->listen_handle_,
                               SOL_SOCKET,
                               SO_REUSEADDR,
-                              (const char*) &one,
+                              reinterpret_cast<char const *> (
+                                std::addressof (one)),
                               sizeof one) == -1)
         {
           ACE_Errno_Guard g (errno);
