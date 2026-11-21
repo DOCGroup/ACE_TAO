@@ -677,9 +677,9 @@ public:
 
   /// @name Section maps
   /// @{
-  VALUE_MAP* value_hash_map_;
+  VALUE_MAP* value_hash_map_ {};
 
-  SUBSECTION_MAP* section_hash_map_;
+  SUBSECTION_MAP* section_hash_map_ {};
   /// @}
 };
 
@@ -713,10 +713,10 @@ public:
   std::unique_ptr<ACE_TCHAR, ACE_Configuration_Path_Deleter> path_;
 
   /// The value iterator
-  std::unique_ptr<VALUE_HASH::ITERATOR> value_iter_;
+  std::unique_ptr<VALUE_HASH::ITERATOR> value_iter_ {};
 
   /// The sub section iterator
-  std::unique_ptr<SUBSECTION_HASH::ITERATOR> section_iter_;
+  std::unique_ptr<SUBSECTION_HASH::ITERATOR> section_iter_ {};
 
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -864,9 +864,9 @@ private:
   ACE_Configuration_Heap (const ACE_Configuration_Heap& rhs);
   ACE_Configuration_Heap& operator= (const ACE_Configuration_Heap& rhs);
 
-  std::unique_ptr<ACE_Allocator> allocator_;
-  SECTION_MAP *index_;
-  size_t default_map_size_;
+  std::unique_ptr<ACE_Allocator> allocator_ {};
+  SECTION_MAP *index_ {};
+  size_t default_map_size_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

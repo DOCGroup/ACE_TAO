@@ -1207,11 +1207,7 @@ ACE_Configuration_ExtId::free (ACE_Allocator *alloc)
 
 ///////////////////////////////////////////////////////////////////////
 
-ACE_Configuration_Section_IntId::ACE_Configuration_Section_IntId ()
-  : value_hash_map_ (nullptr),
-    section_hash_map_ (nullptr)
-{
-}
+ACE_Configuration_Section_IntId::ACE_Configuration_Section_IntId () = default;
 
 ACE_Configuration_Section_IntId::ACE_Configuration_Section_IntId (VALUE_MAP* value_hash_map, SUBSECTION_MAP* section_hash_map)
   : value_hash_map_ (value_hash_map),
@@ -1250,9 +1246,7 @@ ACE_Configuration_Path_Deleter::operator() (ACE_TCHAR* path) const
 }
 
 ACE_Configuration_Section_Key_Heap::ACE_Configuration_Section_Key_Heap (const ACE_TCHAR* path)
-  : path_ (ACE_OS::strdup (path)),
-    value_iter_ (nullptr),
-    section_iter_ (nullptr)
+  : path_ (ACE_OS::strdup (path))
 {
 }
 
@@ -1261,9 +1255,6 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Configuration_Section_Key_Heap)
 //////////////////////////////////////////////////////////////////////////////
 
 ACE_Configuration_Heap::ACE_Configuration_Heap ()
-  : allocator_ (nullptr),
-    index_ (nullptr),
-    default_map_size_ (0)
 {
   ACE_Configuration_Section_Key_Heap *temp {};
 
