@@ -478,7 +478,6 @@ namespace ACE
         mb.release ();
 
         ACE_Time_Value max_wait_time = this->sync_opt_.timeout ();
-        int result = 0;
 
         if (use_reactor)
           {
@@ -493,8 +492,8 @@ namespace ACE
             while (this->connected_)
               {
                 // Run the event loop.
-                result = this->reactor ()->handle_events (this->use_timeout () ?
-                                                              std::addressof (max_wait_time) : nullptr);
+                int const result = this->reactor ()->handle_events (this->use_timeout () ?
+                                                                        std::addressof (max_wait_time) : nullptr);
 
                 if (result == -1)
                   {
@@ -536,8 +535,8 @@ namespace ACE
           {
             while (this->connected_)
               {
-                result = this->handle_output_i (this->use_timeout () ?
-                                                    std::addressof (max_wait_time) : nullptr);
+                int const result = this->handle_output_i (this->use_timeout () ?
+                                                              std::addressof (max_wait_time) : nullptr);
 
                 // If we got our message out, no need to run the event loop any
                 // further.
