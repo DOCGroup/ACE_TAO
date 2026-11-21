@@ -61,13 +61,13 @@ PMC_Ruser::decode (char *packet, int &packet_length)
 
   this->increment_total_users (remote_users);
 
-  for (cp = (char *) ACE::strend (cp);
+  for (cp = const_cast<char *> (ACE::strend (cp));
        *cp != '\n';
        ++cp)
     {
       char *host_name = cp;
 
-      for (cp = (char *) ACE::strend (cp);
+      for (cp = const_cast<char *> (ACE::strend (cp));
            *(cp = this->handle_protocol_entries (cp, host_name)) != '\t'; )
         {
         }

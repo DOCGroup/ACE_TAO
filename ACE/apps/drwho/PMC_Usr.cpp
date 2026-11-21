@@ -61,7 +61,7 @@ PMC_Usr::decode (char *packet, int &packet_length)
     {
       char *login_name = cp;
 
-      for (cp = (char *) ACE::strend (cp);
+      for (cp = const_cast<char *> (ACE::strend (cp));
            *(cp = this->handle_protocol_entries (cp, login_name)) != '\t';
            )
         {
