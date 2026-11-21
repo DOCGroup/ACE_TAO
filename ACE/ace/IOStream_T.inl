@@ -80,9 +80,9 @@ ACE_SOCK_Dgram_SC<STREAM>::recv (char *buf,
       handle_set.set_bit (handle);
 
       switch (ACE_OS::select (int (handle) + 1,
-                              (fd_set *) handle_set, // read_fds.
-                              (fd_set *) 0,          // write_fds.
-                              (fd_set *) 0,          // exception_fds.
+                              handle_set.fdset (), // read_fds.
+                              nullptr,             // write_fds.
+                              nullptr,             // exception_fds.
                               tv))
         {
         case 0:

@@ -352,7 +352,7 @@ run_event_loop (u_short port)
 #if !defined (ACE_WIN32)
       select_width = oneway_acceptor.get_handle () + 1;
 #endif /* ACE_WIN32 */
-      int const result = ACE_OS::select (select_width, (fd_set *) temp, nullptr, nullptr, timeout);
+      int const result = ACE_OS::select (select_width, temp.fdset (), nullptr, nullptr, timeout);
       if (result == -1)
         {
           ACE_ERROR ((LM_ERROR,

@@ -340,7 +340,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
     // simultaneously. In this test we could just call accept on the
     // one socket.
     int result = ACE_OS::select(ACE_Utils::truncate_cast<int> ((intptr_t)acceptor_socket.get_handle()) +1,
-                                (fd_set *) temp,
+                                temp.fdset (),
                                 0,
                                 0,
                                 timeout);

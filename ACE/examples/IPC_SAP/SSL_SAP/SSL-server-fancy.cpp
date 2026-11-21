@@ -567,7 +567,7 @@ Handler_Factory::handle_events ()
 #endif /* ACE_WIN32 */
       int result =
         ACE_OS::select (select_width,
-                        (fd_set *) &temp,
+                        &temp,
                         0,
                         0,
                         timeout);

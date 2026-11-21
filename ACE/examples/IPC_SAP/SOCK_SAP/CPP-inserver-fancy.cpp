@@ -554,7 +554,7 @@ Handler_Factory::handle_events ()
       fd_set temp = handles;
 
       int result = ACE_OS::select (int (this->oneway_acceptor_.get_handle ()) + 1,
-                                   (fd_set *) &temp,
+                                   &temp,
                                    0,
                                    0,
                                    timeout);

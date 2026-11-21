@@ -340,7 +340,7 @@ run_event_loop (u_short port)
       ACE_Handle_Set temp = handle_set;
 
       int result = ACE_OS::select (ACE_Utils::truncate_cast<int> ((intptr_t)oneway_acceptor.get_handle ()) + 1,
-                                   (fd_set *) temp,
+                                   temp.fdset (),
                                    nullptr,
                                    nullptr,
                                    timeout);
