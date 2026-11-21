@@ -412,19 +412,19 @@ protected:
   /// @}
 
   /// Pointer to a memory allocator.
-  ACE_Allocator *allocator_;
+  ACE_Allocator *allocator_ {};
 
   /// Synchronization variable for the MT_SAFE ACE_Map_Manager.
   mutable ACE_LOCK lock_;
 
   /// Implement the Map as a resizeable array of ACE_Map_Entry.
-  ACE_Map_Entry<EXT_ID, INT_ID> *search_structure_;
+  ACE_Map_Entry<EXT_ID, INT_ID> *search_structure_ {};
 
   /// Total number of elements in this->search_structure_.
-  ACE_UINT32 total_size_;
+  ACE_UINT32 total_size_ {};
 
   /// Current size of the map.
-  ACE_UINT32 cur_size_;
+  ACE_UINT32 cur_size_ {};
 
   /// Free list.
   ACE_Map_Entry<EXT_ID, INT_ID> free_list_;

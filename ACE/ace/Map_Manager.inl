@@ -32,10 +32,6 @@ ACE_Map_Entry<EXT_ID, INT_ID>::prev (ACE_UINT32 p)
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Manager (size_t size,
                                                             ACE_Allocator *alloc)
-  : allocator_ (0),
-    search_structure_ (0),
-    total_size_ (0),
-    cur_size_ (0)
 {
   if (this->open (size, alloc) == -1)
     {
@@ -45,10 +41,6 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Manager (size_t size,
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Manager (ACE_Allocator *alloc)
-  : allocator_ (0),
-    search_structure_ (0),
-    total_size_ (0),
-    cur_size_ (0)
 {
   if (this->open (ACE_DEFAULT_MAP_SIZE, alloc) == -1)
     {
