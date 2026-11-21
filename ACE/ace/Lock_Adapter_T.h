@@ -42,7 +42,7 @@ public:
   /// @{
 
   /// Constructor. All locking requests will be forwarded to @a lock.
-  ACE_Lock_Adapter (ACE_LOCKING_MECHANISM &lock);
+  explicit ACE_Lock_Adapter (ACE_LOCKING_MECHANISM &lock);
 
   /// Constructor. Since no lock is provided by the user, one will be
   /// created internally.

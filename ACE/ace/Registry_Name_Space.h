@@ -46,7 +46,7 @@ public:
   ACE_Registry_Name_Space () = default;
 
   /// Contacts and opens the registry on the specified server
-  ACE_Registry_Name_Space (ACE_Name_Options *name_options);
+  explicit ACE_Registry_Name_Space (ACE_Name_Options *name_options);
 
   ~ACE_Registry_Name_Space () = default;
 

@@ -55,7 +55,7 @@ public:
                    int error);
 
   ///  Initialize the @c errno_ptr_ to the address of @a errno_ref.
-  ACE_Errno_Guard (ACE_ERRNO_TYPE &errno_ref);
+  explicit ACE_Errno_Guard (ACE_ERRNO_TYPE &errno_ref);
 
   /// Reset the value of @c errno to <error>.
   ~ACE_Errno_Guard ();

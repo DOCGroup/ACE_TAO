@@ -36,7 +36,7 @@ template <class Concrete>
 class ACE_Framework_Component_T : public ACE_Framework_Component
 {
 public:
-  ACE_Framework_Component_T (Concrete *concrete);
+  explicit ACE_Framework_Component_T (Concrete *concrete);
 
   ~ACE_Framework_Component_T () override;
 

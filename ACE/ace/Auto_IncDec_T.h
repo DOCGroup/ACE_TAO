@@ -44,7 +44,7 @@ public:
   ACE_Auto_IncDec &operator= (ACE_Auto_IncDec &&) = delete;
 
   /// Implicitly increment the counter.
-  ACE_Auto_IncDec (ACE_SAFELY_INCREMENTABLE_DECREMENTABLE &counter);
+  explicit ACE_Auto_IncDec (ACE_SAFELY_INCREMENTABLE_DECREMENTABLE &counter);
 
   /// Implicitly decrement the counter.
   ~ACE_Auto_IncDec ();
