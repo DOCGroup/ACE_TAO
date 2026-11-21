@@ -379,17 +379,6 @@ ACE_Object_Manager::ACE_Object_Manager ()
   // With ACE_HAS_TSS_EMULATION, ts_storage_ is initialized by the call to
   // ACE_OS::tss_open () in the function body.
   : exit_info_ ()
-#if !defined (ACE_LACKS_ACE_SVCCONF)
-  , preallocations_ (nullptr)
-  , ace_service_config_sig_handler_ (nullptr)
-#endif /* ! ACE_LACKS_ACE_SVCCONF */
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  , singleton_null_lock_ (nullptr)
-  , singleton_recursive_lock_ (nullptr)
-#endif /* ACE_MT_SAFE */
-#if defined (ACE_HAS_TSS_EMULATION)
-  , ts_storage_initialized_ (false)
-#endif
 {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_NEW (internal_lock_, ACE_Recursive_Thread_Mutex);

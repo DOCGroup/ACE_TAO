@@ -345,10 +345,10 @@ private:
 
 #if !defined (ACE_LACKS_ACE_SVCCONF)
   /// Preallocated objects collection.
-  ACE_Object_Manager_Preallocations *preallocations_;
+  ACE_Object_Manager_Preallocations *preallocations_ {};
 
   /// ACE_Service_Config signal handler.
-  ACE_Sig_Adapter *ace_service_config_sig_handler_;
+  ACE_Sig_Adapter *ace_service_config_sig_handler_ {};
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
 
   /// Register an object or array for deletion at program termination.
@@ -432,20 +432,20 @@ private:
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   /// Lock that is used to guard internal structures.
-  ACE_Recursive_Thread_Mutex *internal_lock_;
+  ACE_Recursive_Thread_Mutex *internal_lock_ {};
 
   /// Null lock for guarding singleton creation.
-  ACE_Cleanup_Adapter<ACE_Null_Mutex> *singleton_null_lock_;
+  ACE_Cleanup_Adapter<ACE_Null_Mutex> *singleton_null_lock_ {};
 
   /// Lock for guarding singleton creation, when Object_Manager
   /// hasn't been started up, or has already been shut down.
-  ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex> *singleton_recursive_lock_;
+  ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex> *singleton_recursive_lock_ {};
 #endif /* ACE_MT_SAFE */
 
 #if defined (ACE_HAS_TSS_EMULATION)
   /// Main thread's thread-specific storage array.
   void *ts_storage_[ACE_TSS_Emulation::ACE_TSS_THREAD_KEYS_MAX];
-  bool ts_storage_initialized_;
+  bool ts_storage_initialized_ {};
 #endif /* ACE_HAS_TSS_EMULATION */
 
 #if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
