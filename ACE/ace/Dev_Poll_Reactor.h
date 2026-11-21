@@ -170,7 +170,7 @@ protected:
    * if NULL then the ACE_Dev_Poll_Reactor has been initialized with
    * disable_notify_pipe.
    */
-  ACE_Dev_Poll_Reactor *dp_reactor_;
+  ACE_Dev_Poll_Reactor *dp_reactor_ {};
 
   /**
    * Contains the ACE_HANDLE the ACE_Dev_Poll_Reactor is listening
