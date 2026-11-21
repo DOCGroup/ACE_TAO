@@ -663,16 +663,16 @@ private:
 
   /// Pointer to the control block that is stored in memory controlled
   /// by <MEMORY_POOL>.
-  ACE_CB *cb_ptr_;
+  ACE_CB *cb_ptr_ {};
 
   /// Pool of memory used by ACE_Malloc to manage its freestore.
   MEMORY_POOL memory_pool_;
 
   /// Lock that ensures mutual exclusion for the memory pool.
-  ACE_LOCK *lock_;
+  ACE_LOCK *lock_ {};
 
   /// True if destructor should delete the lock
-  bool delete_lock_;
+  bool delete_lock_ {};
 
   /// Keep track of failure in constructor.
   int bad_flag_;
