@@ -599,14 +599,14 @@ signed_int_helper (TAO_OutStream &os, IntType value, IntType min, const char *sp
    */
   const bool min_value = value == min;
   if (min_value)
-  {
-    ++value;
-  }
+    {
+      ++value;
+    }
   os.print (specifier, value);
   if (min_value)
-  {
-    os.print (" - 1");
-  }
+    {
+      os.print (" - 1");
+    }
 }
 
 TAO_OutStream&
@@ -663,14 +663,20 @@ TAO_OutStream::print (AST_Expression *expr)
       // isprint() sees \ and ' as printable characters
       // so we have to test for them first.
       if (ev->u.cval == '\\')
-        this->TAO_OutStream::print ("'\\\\'");
+        {
+          this->TAO_OutStream::print ("'\\\\'");
+        }
       else if (ev->u.cval == '\'')
-        this->TAO_OutStream::print ("'\\''");
+        {
+          this->TAO_OutStream::print ("'\\''");
+        }
 
       // This handles hex and octal escape sequences
       // that would print out as weird characters.
       else if (std::isprint (static_cast<unsigned char> (ev->u.cval)))
-        this->TAO_OutStream::print ("'%c'", ev->u.cval);
+        {
+          this->TAO_OutStream::print ("'%c'", ev->u.cval);
+        }
       else if (std::iscntrl (static_cast<unsigned char> (ev->u.cval)))
         switch (ev->u.cval)
           {
@@ -702,9 +708,9 @@ TAO_OutStream::print (AST_Expression *expr)
             this->TAO_OutStream::print ("'\\x%x'", ev->u.oval);
           }
        else
-       {
-         this->TAO_OutStream::print ("'\\x%x'", ev->u.oval);
-       }
+         {
+           this->TAO_OutStream::print ("'\\x%x'", ev->u.oval);
+         }
       break;
     case AST_Expression::EV_wchar:
       this->TAO_OutStream::print ("L'%lc'", ev->u.wcval);

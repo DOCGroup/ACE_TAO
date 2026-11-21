@@ -21,31 +21,6 @@ be_visitor_valuetype::be_visitor_valuetype (be_visitor_context *ctx)
 be_visitor_valuetype::~be_visitor_valuetype () = default;
 
 void
-be_visitor_valuetype::for_each_valuetype_field (
-  be_valuetype *node,
-  std::function<void (be_field *)> const& visitor)
-{
-  be_valuetype *parent =
-    dynamic_cast<be_valuetype *> (node->inherits_concrete ());
-  if (parent != nullptr)
-    {
-      this->for_each_valuetype_field (parent, visitor);
-    }
-
-  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
-       !si.is_done ();
-       si.next ())
-    {
-      AST_Decl * const decl = si.item ();
-      be_field * const field = dynamic_cast<be_field *> (decl);
-      if (field != nullptr && dynamic_cast<be_attribute *> (decl) == nullptr)
-        {
-          visitor (field);
-        }
-    }
-}
-
-void
 be_visitor_valuetype::gen_valuetype_field_copy_expression (
   be_field *field,
   char const *accessor_prefix,
@@ -59,40 +34,33 @@ be_visitor_valuetype::gen_valuetype_field_copy_expression (
       field_type = field_typedef->primitive_base_type ();
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
   if (dynamic_cast<be_valuetype_fwd *> (field_type) == nullptr
       && dynamic_cast<be_valuetype *> (field_type) == nullptr
       && dynamic_cast<be_valuebox *> (field_type) == nullptr)
     {
+      TAO_OutStream *os = this->ctx_->stream ();
       *os << accessor_prefix << field->local_name () << " ()";
       return;
     }
 
-  *os << "(" << accessor_prefix << field->local_name () << " () ?";
+  TAO_OutStream *os = this->ctx_->stream ();
   if (multiline)
     {
-      *os << be_idt_nl;
+      *os << "(" << accessor_prefix << field->local_name () << " () ?"
+          << be_idt_nl
+          << field_type->full_name ()
+          << "::_downcast (::CORBA::ValueBase_var ("
+          << accessor_prefix << field->local_name ()
+          << " ()->_copy_value ()).in ())" << be_nl
+          << ": " << null_pointer << ")" << be_uidt;
     }
   else
     {
-      *os << " ";
-    }
-  *os << field_type->full_name ()
-      << "::_downcast (::CORBA::ValueBase_var ("
-      << accessor_prefix << field->local_name ()
-      << " ()->_copy_value ()).in ())";
-  if (multiline)
-    {
-      *os << be_nl;
-    }
-  else
-    {
-      *os << " ";
-    }
-  *os << ": " << null_pointer << ")";
-  if (multiline)
-    {
-      *os << be_uidt;
+      *os << accessor_prefix << field->local_name () << " () ? "
+          << field_type->full_name ()
+          << "::_downcast (::CORBA::ValueBase_var ("
+          << accessor_prefix << field->local_name ()
+          << " ()->_copy_value ()).in ()) : " << null_pointer;
     }
 }
 

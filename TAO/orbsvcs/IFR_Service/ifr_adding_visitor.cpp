@@ -3734,38 +3734,38 @@ void
 ifr_adding_visitor::get_referenced_type (AST_Type *node)
 {
   switch (node->node_type ())
-    {
-      // For anonymous types, a new IR object is be created each
-      // time, so we just visit the node, which get the object and
-      // updates ir_current_.
-      case AST_Decl::NT_pre_defined:
-      case AST_Decl::NT_string:
-      case AST_Decl::NT_wstring:
-      case AST_Decl::NT_array:
-      case AST_Decl::NT_sequence:
-        if (node->ast_accept (this) == -1)
-          {
-            ORBSVCS_ERROR ((
-                LM_ERROR,
-                ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
-                ACE_TEXT ("get_scope_member -")
-                ACE_TEXT (" failed to accept visitor\n")
-              ));
-          }
-
-        break;
-      // For names types, we can just look up the entry and update
-      // ir_current_.
-      default:
+  {
+    // For anonymous types, a new IR object is be created each
+    // time, so we just visit the node, which get the object and
+    // updates ir_current_.
+    case AST_Decl::NT_pre_defined:
+    case AST_Decl::NT_string:
+    case AST_Decl::NT_wstring:
+    case AST_Decl::NT_array:
+    case AST_Decl::NT_sequence:
+      if (node->ast_accept (this) == -1)
         {
-          CORBA::Contained_var prev_def =
-            be_global->repository ()->lookup_id (node->repoID ().c_str ());
-
-          this->ir_current_ =
-            CORBA::IDLType::_narrow (prev_def.in ());
-          break;
+          ORBSVCS_ERROR ((
+              LM_ERROR,
+              ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+              ACE_TEXT ("get_scope_member -")
+              ACE_TEXT (" failed to accept visitor\n")
+            ));
         }
-    }
+
+      break;
+    // For names types, we can just look up the entry and update
+    // ir_current_.
+    default:
+      {
+        CORBA::Contained_var prev_def =
+          be_global->repository ()->lookup_id (node->repoID ().c_str ());
+
+        this->ir_current_ =
+          CORBA::IDLType::_narrow (prev_def.in ());
+        break;
+      }
+  }
 }
 
 void
@@ -4033,7 +4033,6 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
   result.length (n_factories);
   CORBA::ULong n_args = 0;
   AST_Argument *arg {};
-  CORBA::ULong index = 0;
   AST_Exception *excp {};
   CORBA::Contained_var holder;
 
@@ -4043,17 +4042,18 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
         CORBA::string_dup (factories[i]->local_name ()->get_string ().c_str ());
       n_args = static_cast<CORBA::ULong> (factories[i]->argument_count ());
       result[i].members.length (n_args);
+      CORBA::ULong member_index = 0;
 
       // The factory should have nothing in its scope but args.
       for (UTL_ScopeActiveIterator f_iter (factories[i],
                                            UTL_Scope::IK_decls);
            !f_iter.is_done ();
-           f_iter.next (), ++index)
+           f_iter.next (), ++member_index)
         {
           arg = dynamic_cast<AST_Argument*> (f_iter.item ());
-          result[i].members[index].name =
+          result[i].members[member_index].name =
             CORBA::string_dup (arg->local_name ()->get_string ().c_str ());
-          result[i].members[index].type =
+          result[i].members[member_index].type =
             CORBA::TypeCode::_duplicate (CORBA::_tc_void);
 
           /// This will put the field type in ir_current_, and also add it
@@ -4068,30 +4068,30 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
                 ));
             }
 
-          result[i].members[index].type_def =
+          result[i].members[member_index].type_def =
             CORBA::IDLType::_duplicate (this->ir_current_.in ());
         }
 
       CORBA::ULong n_exceptions =
         static_cast<CORBA::ULong> (factories[i]->n_exceptions ());
       result[i].exceptions.length (n_exceptions);
-      index = 0;
+      CORBA::ULong exception_index = 0;
 
       for (UTL_ExceptlistActiveIterator ei (factories[i]->exceptions ());
            !ei.is_done ();
            ei.next ())
         {
           excp = dynamic_cast<AST_Exception*> (ei.item ());
-          result[i].exceptions[index].name =
+          result[i].exceptions[exception_index].name =
             CORBA::string_dup (excp->local_name ()->get_string ().c_str ());
-          result[i].exceptions[index].id =
+          result[i].exceptions[exception_index].id =
             CORBA::string_dup (excp->repoID ().c_str ());
-          result[i].exceptions[index].defined_in =
+          result[i].exceptions[exception_index].defined_in =
             CORBA::string_dup (
               ScopeAsDecl (excp->defined_in ())->repoID ().c_str ());
-          result[i].exceptions[index].version =
+          result[i].exceptions[exception_index].version =
             CORBA::string_dup (excp->version ().c_str ());
-          result[i].exceptions[index++].type =
+          result[i].exceptions[exception_index++].type =
             CORBA::TypeCode::_duplicate (CORBA::_tc_void);
         }
     }

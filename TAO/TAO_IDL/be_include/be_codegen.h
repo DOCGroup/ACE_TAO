@@ -442,8 +442,6 @@ private:
   void gen_conn_ts_includes (std::vector<std::string> const &ts_files);
 
 private:
-  int reset_out_stream (std::unique_ptr<TAO_OutStream> &stream);
-
   /// Client header stream.
   std::unique_ptr<TAO_OutStream> client_header_;
 

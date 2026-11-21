@@ -24,6 +24,8 @@ be_visitor_context::operator= (be_visitor_context const&) = default;
 
 be_visitor_context::~be_visitor_context () = default;
 
+//= helpers
+
 void
 be_visitor_context::reset ()
 {

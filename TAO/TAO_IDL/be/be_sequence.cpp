@@ -127,9 +127,9 @@ be_sequence::primitive_base_type () const
     {
       be_typedef *const typedef_node = dynamic_cast<be_typedef *> (type_node);
       if (!typedef_node)
-      {
-        return nullptr;
-      }
+        {
+          return nullptr;
+        }
       type_node = typedef_node->primitive_base_type ();
     }
   return type_node;
@@ -762,9 +762,9 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
                 << "::TAO::" << (unbounded () ? "un" : "") << "bounded_value_sequence<"
                 << elem->nested_type_name (ctx_scope);
               if (!unbounded ())
-              {
-                *os << "," << this->max_size ()->ev ()->u.ulval;
-              }
+                {
+                  *os << "," << this->max_size ()->ev ()->u.ulval;
+                }
               *os << tag << ">";
             }
             break;

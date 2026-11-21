@@ -1027,9 +1027,9 @@ be_util::overwrite_ciao_exec_files ()
           src_exist = true;
         }
       if (hdr_exist && src_exist)
-      {
-        overwrite = false;
-      }
+        {
+          overwrite = false;
+        }
     }
   return overwrite;
 }

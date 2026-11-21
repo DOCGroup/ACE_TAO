@@ -24,9 +24,9 @@ int
 TAO::be_visitor_objref_typecode::visit_interface (be_interface * node)
 {
   if (!node->is_defined ())
-  {
-    return this->gen_forward_declared_typecode (node);
-  }
+    {
+      return this->gen_forward_declared_typecode (node);
+    }
 
   static constexpr char abstract_interface[] = "abstract_interface";
   static constexpr char component[]          = "component";
@@ -37,17 +37,25 @@ TAO::be_visitor_objref_typecode::visit_interface (be_interface * node)
   std::string kind;
 
   if (dynamic_cast<be_component *> (node))
-    kind = component;
+    {
+      kind = component;
+    }
   else if (node->home_equiv ())
-    kind = home;
+    {
+      kind = home;
+    }
   else if (node->is_abstract ())
-    kind = abstract_interface;
+    {
+      kind = abstract_interface;
+    }
   else if (node->is_local ())
-    kind = local_interface;
+    {
+      kind = local_interface;
+    }
   else
-  {
-    kind = objref;
-  }
+    {
+      kind = objref;
+    }
 
   return this->visit_i (kind,
                         node->flat_name (),
@@ -85,9 +93,9 @@ TAO::be_visitor_objref_typecode::visit_i (std::string const& kind,
     << be_uidt_nl;
 
   if (this->gen_typecode_ptr (node) != 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   return 0;
 }

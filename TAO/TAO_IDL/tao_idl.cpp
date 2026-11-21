@@ -69,7 +69,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 
 #include "fe_extern.h"
-#include "fe_utils.h"
 
 #include "ast_root.h"
 #include "ast_generator.h"
@@ -77,6 +76,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_string.h"
 #include "utl_identifier.h"
+#include "fe_utils.h"
 
 #include <cstdio>
 #include <memory>
@@ -396,7 +396,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       std::string const big_file_name = idl_global->big_file_name ();
       FE_Utils::Temp_File_Guard big_file_guard;
-      FE_Utils::File_Handle output_file (nullptr, ACE_OS::fclose);
+      FE_Utils::File_Handle output_file (
+        nullptr, ACE_OS::fclose);
 
       if (idl_global->multi_file_input ())
         {

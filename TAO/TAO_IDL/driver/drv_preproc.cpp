@@ -150,9 +150,9 @@ DRV_cpp_putarg (std::string const& str)
   if (DRV_arglist.size () >= DRV_MAX_ARGCOUNT)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%C: More than %B arguments to preprocessor\n",
+                  "%C: More than %d arguments to preprocessor\n",
                   idl_global->prog_name ().c_str (),
-                  static_cast<size_t> (DRV_MAX_ARGCOUNT)));
+                  DRV_MAX_ARGCOUNT ));
 
       throw Bailout ();
     }
@@ -1136,11 +1136,11 @@ DRV_pre_proc (std::string const& myfile)
       ti_file.reset (ACE_OS::fdopen (ti_fd, ACE_TEXT ("w")));
       if (!ti_file)
         {
-          ACE_OS::close (ti_fd);
           ACE_ERROR ((LM_ERROR,
                       "%C: cannot open temp file \"%C\" for writing: %m\n",
                       idl_global->prog_name ().c_str (),
                       tmp_ifile.c_str ()));
+          ACE_OS::close (ti_fd);
           throw Bailout ();
         }
 

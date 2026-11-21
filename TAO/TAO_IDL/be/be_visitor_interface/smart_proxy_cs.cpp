@@ -57,9 +57,9 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 
       // Only if there exists any nesting "::" is needed!
       if (node->is_nested ())
-      {
-        *os << "::";
-      }
+        {
+          *os << "::";
+        }
 
       *os << "TAO_" << node->flat_name ()
           << "_Default_Proxy_Factory::create_proxy (::" << node->full_name ()
@@ -131,9 +131,9 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 
       // Only if there exists any nesting "::" is needed!
       if (node->is_nested ())
-      {
-        *os << "::";
-      }
+        {
+          *os << "::";
+        }
 
       *os << "TAO_"<< node->flat_name ()
           << "_Proxy_Factory_Adapter::unregister_proxy_factory ()" << be_nl
@@ -157,9 +157,9 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 
       // Only if there exists any nesting "::" is needed!
       if (node->is_nested ())
-      {
-        *os << "::";
-      }
+        {
+          *os << "::";
+        }
 
       *os << "TAO_"<< node->flat_name ()
           << "_Proxy_Factory_Adapter::create_proxy (::" << node->full_name ()
@@ -218,9 +218,9 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 
       // Only if there exists any nesting "::" is needed!
       if (node->is_nested ())
-      {
-        *os << "::";
-      }
+        {
+          *os << "::";
+        }
 
       *os <<  "TAO_" << node->flat_name () << "_Smart_Proxy_Base::";
       *os << "_stubobj () const"<<be_nl
@@ -235,9 +235,9 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 
       // Only if there exists any nesting "::" is needed!
       if (node->is_nested ())
-      {
-        *os << "::";
-      }
+        {
+          *os << "::";
+        }
       *os <<  "TAO_" << node->flat_name () << "_Smart_Proxy_Base::";
       *os << "_stubobj ()"<<be_nl
           << "{" << be_idt_nl
@@ -260,9 +260,9 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 
       // Only if there exists any nesting "::" is needed!
       if (node->is_nested ())
-      {
-        *os << "::";
-      }
+        {
+          *os << "::";
+        }
 
       *os <<  "TAO_" << node->flat_name () << "_Smart_Proxy_Base::"
           << "get_proxy ()" << be_nl;

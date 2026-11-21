@@ -93,11 +93,17 @@ List_Node::List_Node (char const *input, int len)
         {
           char ch;
           if (i == WORD_END) // Special notation for last KEY position, i.e. '$'.
-            ch = this->key[len - 1];
+            {
+              ch = this->key[len - 1];
+            }
           else if (i <= len) // Within range of KEY length, so we'll keep it.
-            ch = this->key[i - 1];
+            {
+              ch = this->key[i - 1];
+            }
           else // Out of range of KEY length, so we'll just skip it.
-            continue;
+            {
+              continue;
+            }
           this->keysig.push_back (ch);
           ++Vectors::occurrences[Vectors::character_index (ch)];
         }

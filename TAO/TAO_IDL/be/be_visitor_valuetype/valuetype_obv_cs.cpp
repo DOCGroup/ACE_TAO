@@ -261,21 +261,37 @@ be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
   unsigned long &index)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  this->for_each_valuetype_field (node,
-    [this, os, &index] (be_field *field)
+
+  // Generate for inherited members first.
+  AST_Type *parent = node->inherits_concrete ();
+  if (parent != nullptr)
     {
-      if (index++) // comma before 2nd onwards
+      be_valuetype *be_parent =
+        dynamic_cast<be_valuetype*> (parent);
+      this->gen_obv_call_base_constructor_args (be_parent, index);
+    }
+
+  // Now generate for each "derived" added members
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next())
+    {
+      // be_attribute inherits from be_field
+      // so we have to also screen out attributes
+      be_field *f = dynamic_cast<be_field*> (si.item ());
+      if (f && !dynamic_cast<be_attribute*> (si.item ()))
         {
-          *os << ",";
+          if (index++) // comma before 2nd onwards
+            *os << ",";
+
+          // output each accessor on new line
+          *os << be_nl;
+
+          // Check the member type for nested valuetypes
+          this->gen_valuetype_field_copy_expression (f,
+                                                    "",
+                                                    "0",
+                                                    true);
         }
-
-      // Output each accessor on a new line.
-      *os << be_nl;
-
-      // Check the member type for nested valuetypes.
-      this->gen_valuetype_field_copy_expression (field,
-                                                 "",
-                                                 "0",
-                                                 true);
-    });
+    }
 }

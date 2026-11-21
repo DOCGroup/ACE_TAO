@@ -258,11 +258,20 @@ be_valuetype::generates_obv_copy_value ()
 bool
 be_valuetype::inherits_obv_copy_value ()
 {
+  be_valuetype * const concrete_base =
+    dynamic_cast<be_valuetype *> (this->inherits_concrete ());
+  if (concrete_base != nullptr
+      && (concrete_base->generates_obv_copy_value ()
+          || concrete_base->inherits_obv_copy_value ()))
+    {
+      return true;
+    }
+
   for (int i = 0; i < this->n_inherits (); ++i)
     {
       be_valuetype * const vt =
         dynamic_cast<be_valuetype *> (this->inherits ()[i]);
-      if (vt != nullptr
+      if (vt != nullptr && vt != concrete_base
           && (vt->generates_obv_copy_value ()
               || vt->inherits_obv_copy_value ()))
         {
@@ -271,30 +280,6 @@ be_valuetype::inherits_obv_copy_value ()
     }
 
   return false;
-}
-
-bool
-be_valuetype::opt_accessor_generates_copy_value ()
-{
-  return this->opt_accessor ()
-    && this->generates_obv_copy_value ()
-    && !this->is_amh_excep_holder ();
-}
-
-bool
-be_valuetype::opt_accessor_inherits_copy_value ()
-{
-  return this->opt_accessor ()
-    && this->inherits_obv_copy_value ()
-    && !this->is_amh_excep_holder ();
-}
-
-bool
-be_valuetype::opt_accessor_needs_ref_counter ()
-{
-  return this->opt_accessor ()
-    && this->obv_need_ref_counter ()
-    && !this->is_amh_excep_holder ();
 }
 
 bool
@@ -364,19 +349,19 @@ be_valuetype::have_operation ()
 
   if (! have_operation)
     {
-      // Only concrete supported interfaces contribute operations here.
-      // Abstract-interface operations have generated default implementations
-      // in TAO and do not make the OBV_ class abstract.
-      AST_Type_List const& supports = this->supports ();
-      for (size_t i = 0; i < supports.size (); ++i)
-        {
-          be_interface *intf = dynamic_cast<be_interface*> (supports[i]);
+      // Operations of the concretely supported interface must be
+      // implemented by the valuetype implementation.
+      AST_Type * supported = this->supports_concrete ();
 
-          if (intf != nullptr && !intf->is_abstract ()
-              && be_valuetype::have_supported_op (intf))
+      if (supported != nullptr)
+        {
+          be_interface *intf =
+            dynamic_cast<be_interface*> (supported);
+
+          if (intf != nullptr)
             {
-              have_operation = true;
-              break;
+              have_operation =
+                be_valuetype::have_supported_op (intf);
             }
         }
     }
@@ -481,6 +466,11 @@ be_valuetype::have_supported_op (be_interface * node)
 {
   bool have_supported_op {};
 
+  if (node->nmembers () == 0)
+    {
+      return false;
+    }
+
   // Initialize an iterator for supported interface elements
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
@@ -517,7 +507,7 @@ be_valuetype::have_supported_op (be_interface * node)
           be_interface * intf =
             dynamic_cast<be_interface*> (inherits[i]);
 
-          if (intf != nullptr && !intf->is_abstract ())
+          if (intf != nullptr)
             {
               have_supported_op =
                 be_valuetype::have_supported_op (intf);

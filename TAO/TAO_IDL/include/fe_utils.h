@@ -7,6 +7,7 @@
 #include "utl_strlist.h"
 
 #include <cstddef>
+#include <cstdio>
 #include <memory>
 #include <string>
 #include <vector>
@@ -34,7 +35,7 @@ struct TAO_IDL_FE_Export FE_Utils
   };
 
   using T_PARAMLIST_INFO = std::vector<T_Param_Info>;
-  using File_Handle = std::unique_ptr<FILE, int (*) (FILE *)>;
+  using File_Handle = std::unique_ptr<std::FILE, int (*) (std::FILE *)>;
 
   class TAO_IDL_FE_Export Temp_File_Guard
   {

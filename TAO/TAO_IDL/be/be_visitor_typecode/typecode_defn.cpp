@@ -102,9 +102,9 @@ be_visitor_typecode_defn::gen_base_typecode_name (be_type * base)
       be_fixed * const fixed = dynamic_cast<be_fixed *> (base);
 
       if (fixed == nullptr)
-      {
-        return -1;
-      }
+        {
+          return -1;
+        }
 
       os << "_tao_tc_fixed_"
          << fixed->digits ()->ev ()->u.ulval << "_"

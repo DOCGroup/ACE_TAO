@@ -28,14 +28,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       size_t len = ACE_OS::strlen (buf) - 1;
       buf[len] = '\0';
       if (Perfect_Hash::in_word_set (buf, len) && verbose)
-        ACE_OS::printf ("in word set %s\n", buf);
+        {
+          ACE_OS::printf ("in word set %s\n", buf);
+        }
       else if (verbose)
         ACE_OS::printf ("NOT in word set %s\n", buf);
     }
 
 #if defined (GPERF_SWITCH_TEST)
-  char const bounded_prefix[] = {'i', 'f', 'x'};
-  if (Perfect_Hash::in_word_set (bounded_prefix, 2) == nullptr)
+  char const bounded_prefix[] = {'g', 'o', 't'};
+  if (Perfect_Hash::in_word_set (bounded_prefix, 2) != nullptr)
+    {
+      return 1;
+    }
+#endif
+
+#if defined (GPERF_DUPLICATE_PREFIX_TEST)
+  char const duplicate_prefix[] = {'a', 'l'};
+  if (Perfect_Hash::in_word_set (duplicate_prefix, sizeof duplicate_prefix) != nullptr)
     {
       return 1;
     }

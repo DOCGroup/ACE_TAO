@@ -116,7 +116,9 @@ Options::print_options ()
   ACE_OS::printf ("/* Command-line: ");
 
   if (argv_ != nullptr && argc_ > 0 && argv_[0] != nullptr)
-    print_option (ACE::basename (argv_[0]));
+    {
+      print_option (ACE::basename (argv_[0]));
+    }
   else
     {
       print_option (nullptr);
@@ -257,7 +259,9 @@ Options::~Options ()
 
       for (ptr = key_positions_.data (); *ptr != EOS; ++ptr)
         if (*ptr == WORD_END)
-          ACE_OS::fprintf (stderr, "$\n");
+          {
+            ACE_OS::fprintf (stderr, "$\n");
+          }
         else
           {
             ACE_OS::fprintf (stderr, "%d\n", *ptr);
@@ -529,7 +533,9 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 
             // Use all the characters for hashing!!!!
             if (*get_opt.opt_arg () == '*')
-              option_word_ = (option_word_ & ~DEFAULTCHARS) | ALLCHARS;
+              {
+                option_word_ = (option_word_ & ~DEFAULTCHARS) | ALLCHARS;
+              }
             else
               {
                 char *l_key_pos;

@@ -254,9 +254,9 @@ AST_Sequence::primitive_base_type () const
     {
       AST_Typedef * const typedef_node = dynamic_cast<AST_Typedef *> (type_node);
       if (typedef_node == nullptr)
-      {
-        return nullptr;
-      }
+        {
+          return nullptr;
+        }
       type_node = typedef_node->primitive_base_type ();
     }
   return type_node;
