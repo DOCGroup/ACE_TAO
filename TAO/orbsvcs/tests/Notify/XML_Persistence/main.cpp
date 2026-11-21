@@ -246,13 +246,15 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
           // Connect a PushConsumer and PushSupplier.
           TestSupplier test_supplier_svt;
-          PortableServer::ObjectId_var const supplier_oid = persistent_poa->activate_object (&test_supplier_svt);
+          PortableServer::ObjectId_var const supplier_oid =
+            persistent_poa->activate_object (std::addressof (test_supplier_svt));
           CORBA::Object_var const supplier_object = persistent_poa->id_to_reference (supplier_oid.in ());
           CosNotifyComm::StructuredPushSupplier_var const push_supplier =
             CosNotifyComm::StructuredPushSupplier::_narrow (supplier_object.in ());
 
           TestConsumer test_consumer_svt;
-          PortableServer::ObjectId_var const consumer_oid = persistent_poa->activate_object (&test_consumer_svt);
+          PortableServer::ObjectId_var const consumer_oid =
+            persistent_poa->activate_object (std::addressof (test_consumer_svt));
           CORBA::Object_var const consumer_object = persistent_poa->id_to_reference (consumer_oid.in ());
           CosNotifyComm::StructuredPushConsumer_var const push_consumer =
             CosNotifyComm::StructuredPushConsumer::_narrow (consumer_object.in ());

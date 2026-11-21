@@ -45,7 +45,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       TestAddrServer_i impl (addr, addr6);
 
-      PortableServer::ObjectId_var oid = poa->activate_object (&impl);
+      PortableServer::ObjectId_var oid = poa->activate_object (std::addressof (impl));
       tmpobj = poa->id_to_reference (oid.in ());
 
       CORBA::String_var ior = orb->object_to_string (tmpobj.in ());

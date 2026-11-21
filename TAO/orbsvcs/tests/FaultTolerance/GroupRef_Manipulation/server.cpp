@@ -177,10 +177,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                               policies);
 
       PortableServer::ObjectId_var const oid1 =
-        first_poa->activate_object (&servant1);
+        first_poa->activate_object (std::addressof (servant1));
 
       PortableServer::ObjectId_var const oid2 =
-        first_poa->activate_object (&servant2);
+        first_poa->activate_object (std::addressof (servant2));
 
       CORBA::Object_var const obj1 =
         first_poa->servant_to_reference (&servant1);

@@ -110,7 +110,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     TAO_EC_Event_Channel_Attributes attributes (poa.in (), poa.in ());
     TAO_EC_Event_Channel ec_impl (attributes);
     ec_impl.activate ();
-    PortableServer::ObjectId_var oid = poa->activate_object (&ec_impl);
+    PortableServer::ObjectId_var oid = poa->activate_object (std::addressof (ec_impl));
     tmpobj = poa->id_to_reference (oid.in ());
     RtecEventChannelAdmin::EventChannel_var ec =
       RtecEventChannelAdmin::EventChannel::_narrow (tmpobj.in ());
@@ -134,7 +134,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     EchoEventSupplier_i servant (orb.in ());
 
     // Register it with the RootPOA.
-    oid = poa->activate_object (&servant);
+    oid = poa->activate_object (std::addressof (servant));
     tmpobj = poa->id_to_reference (oid.in ());
     RtecEventComm::PushSupplier_var supplier =
       RtecEventComm::PushSupplier::_narrow (tmpobj.in ());
@@ -153,7 +153,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Create an instance of the addr server for local use
 
     PortableServer::ObjectId_var addr_srv_oid =
-      poa->activate_object (&addr_srv_impl);
+      poa->activate_object (std::addressof (addr_srv_impl));
     tmpobj = poa->id_to_reference (addr_srv_oid.in ());
 
     RtecUDPAdmin::AddrServer_var addr_srv =

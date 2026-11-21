@@ -3,6 +3,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
+#include <memory>
+
 ACE_TCHAR const* ior_output_file = ACE_TEXT ("test.ior");
 
 class TestTask : public ACE_Task_Base
@@ -100,7 +102,7 @@ int TestTask::svc()
 
     // Create an object
     Hello servant (orb_.in ());
-    PortableServer::ObjectId_var oid = poa->activate_object (&servant);
+    PortableServer::ObjectId_var oid = poa->activate_object (std::addressof (servant));
     obj = poa->id_to_reference (oid.in ());
     rootB->rebind (name, obj.in ());
 

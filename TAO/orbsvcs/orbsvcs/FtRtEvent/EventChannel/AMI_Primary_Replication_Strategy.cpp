@@ -10,6 +10,8 @@
 #include "../Utils/ScopeGuard.h"
 #include "../Utils/Log.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 AMI_Primary_Replication_Strategy::AMI_Primary_Replication_Strategy (bool mt)
@@ -164,7 +166,7 @@ AMI_Primary_Replication_Strategy::add_member(FTRT::ManagerInfo const &info,
   // The extra one is to prevent the event been signaled prematurely.
 
   PortableServer::ObjectId_var oid =
-    root_poa_->activate_object(&add_member_handler);
+    root_poa_->activate_object (std::addressof (add_member_handler));
 
   TAO::Utils::Implicit_Deactivator deactivator(&add_member_handler);
 
