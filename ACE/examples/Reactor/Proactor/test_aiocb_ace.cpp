@@ -168,12 +168,11 @@ Test_Aio::do_aio ()
 
   // Do suspend till all the aiocbs in the list are done.
   int to_finish = 2;
-  int return_val = 0;
   while (to_finish > 0)
     {
-      return_val = aio_suspend (list_aiocb,
-                                to_finish,
-                                0);
+      int const return_val = aio_suspend (list_aiocb,
+                                          to_finish,
+                                          0);
       ACE_DEBUG ((LM_DEBUG,
                   "Result of <aio_suspend> : %d\n",
                   return_val));

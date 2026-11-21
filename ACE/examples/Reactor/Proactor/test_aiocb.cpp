@@ -147,12 +147,11 @@ Test_Aio::do_aio ()
 
   // Do suspend till all the aiocbs in the list are done.
   int done = 0;
-  int return_val = 0;
   while (!done)
     {
-      return_val = aio_suspend (list_aiocb,
-                                2,
-                                0);
+      int const return_val = aio_suspend (list_aiocb,
+                                          2,
+                                          0);
       cerr << "Return value :" << return_val << endl;
 
       // Analyze return and error values.

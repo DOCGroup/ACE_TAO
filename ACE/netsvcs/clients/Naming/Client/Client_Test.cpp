@@ -118,9 +118,9 @@ Client_Test::handle_input (ACE_HANDLE)
       {
         std::string key;
         std::string value;
-        std::string type;
         if (input >> key >> value)
           {
+            std::string type;
             input >> type;
             result = this->bind (key, value, type);
           }
@@ -145,9 +145,9 @@ Client_Test::handle_input (ACE_HANDLE)
       {
         std::string key;
         std::string value;
-        std::string type;
         if (input >> key >> value)
           {
+            std::string type;
             input >> type;
             result = this->rebind (key, value, type);
           }

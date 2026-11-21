@@ -87,15 +87,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
       new Event_Handler (static_cast<int> (i), close_down);
     }
 
-  int result = 0;
-
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_Time_Value time (1);
   //FUZZ: enable check_for_lack_ACE_OS
 
   while (true)
     {
-      result = ACE_Reactor::instance ()->handle_events (time);
+      int const result = ACE_Reactor::instance ()->handle_events (time);
       if (result == 0 && errno == ETIME)
         {
           ACE_DEBUG ((LM_DEBUG, "No more work left: timing out\n"));
