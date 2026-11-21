@@ -17,8 +17,8 @@ ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf &recv_msg)
 #if defined (ACE_HAS_STREAM_PIPES)
   int i = 0;
   if (ACE_OS::getmsg (this->get_handle (),
-                      (strbuf *) 0,
-                      (strbuf *) &recv_msg,
+                      nullptr,
+                      &recv_msg,
                       &i) == -1)
     {
       return -1;
@@ -29,7 +29,7 @@ ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf &recv_msg)
     }
 #else /* Do the ol' 2-read trick... */
   if (ACE_OS::read (this->get_handle (),
-                    (char *) &recv_msg.len,
+                    &recv_msg.len,
                     sizeof recv_msg.len) != (ssize_t) sizeof recv_msg.len)
     {
       return -1;
@@ -39,7 +39,7 @@ ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf &recv_msg)
       size_t remaining = static_cast<size_t> (recv_msg.len);
       size_t const requested = static_cast<size_t> (recv_msg.maxlen);
       ssize_t recv_len = ACE_OS::read (this->get_handle (),
-                                       (char *) recv_msg.buf,
+                                       recv_msg.buf,
                                        (std::min) (remaining, requested));
 
       if (recv_len == -1)
@@ -84,7 +84,7 @@ ACE_INLINE ssize_t
 ACE_FIFO_Recv_Msg::recv (void *buf, size_t max_len)
 {
   ACE_TRACE ("ACE_FIFO_Recv_Msg::recv");
-  ACE_Str_Buf recv_msg ((char *) buf, 0, static_cast<int> (max_len));
+  ACE_Str_Buf recv_msg (buf, 0, static_cast<int> (max_len));
 
   return this->recv (recv_msg);
 }
@@ -97,8 +97,8 @@ ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf *data,
 {
   ACE_TRACE ("ACE_FIFO_Recv_Msg::recv");
   if (ACE_OS::getmsg (this->get_handle (),
-                      (strbuf *) cntl,
-                      (strbuf *) data,
+                      cntl,
+                      data,
                       flags) == -1)
     {
       return -1;
@@ -118,8 +118,8 @@ ACE_FIFO_Recv_Msg::recv (int *band,
   ACE_TRACE ("ACE_FIFO_Recv_Msg::recv");
 
   if (ACE_OS::getpmsg (this->get_handle (),
-                       (strbuf *) cntl,
-                       (strbuf *) data,
+                       cntl,
+                       data,
                        band,
                        flags) == -1)
     {
