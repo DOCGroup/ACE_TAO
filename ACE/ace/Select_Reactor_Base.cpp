@@ -577,8 +577,7 @@ ACE_Select_Reactor_Handler_Repository::dump () const
 }
 
 ACE_Select_Reactor_Notify::ACE_Select_Reactor_Notify ()
-  : select_reactor_ (nullptr)
-  , max_notify_iterations_ (-1)
+  : max_notify_iterations_ (-1)
 {
 }
 

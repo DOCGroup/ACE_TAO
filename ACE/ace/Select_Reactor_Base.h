@@ -227,7 +227,7 @@ protected:
    * if NULL then the ACE_Select_Reactor has been initialized with
    * disable_notify_pipe.
    */
-  ACE_Select_Reactor_Impl *select_reactor_;
+  ACE_Select_Reactor_Impl *select_reactor_ {};
 
   /**
    * Contains the ACE_HANDLE the ACE_Select_Reactor is listening
