@@ -167,8 +167,8 @@ Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
 
   // If we get this far then we didn't find a duplicate, so add the
   // new entry!
-  std::unique_ptr<Consumer_Entry> nr_entry {
-    new Consumer_Entry (consumer_ref, filtering_criteria)};
+  std::unique_ptr<Consumer_Entry> nr_entry =
+    std::make_unique<Consumer_Entry> (consumer_ref, filtering_criteria);
 
   // Try to add new <Consumer_Entry> to the map.
   if (this->map_.bind (nr_entry->consumer (), nr_entry.get ()) == -1)
