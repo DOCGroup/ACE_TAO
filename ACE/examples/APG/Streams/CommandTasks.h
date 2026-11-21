@@ -15,7 +15,7 @@
 class AnswerCallModule : public CommandModule
 {
 public:
-  AnswerCallModule (ACE_SOCK_Stream * peer);
+  explicit AnswerCallModule (ACE_SOCK_Stream * peer);
 };
 // Listing 011
 // Listing 012 code/ch18
@@ -41,7 +41,7 @@ protected:
 class RetrieveCallerIdModule : public CommandModule
 {
 public:
-  RetrieveCallerIdModule (ACE_SOCK_Stream *peer);
+  explicit RetrieveCallerIdModule (ACE_SOCK_Stream *peer);
 };
 class RetrieveCallerIdDownstreamTask : public CommandTask
 {
@@ -63,7 +63,7 @@ protected:
 class PlayMessageModule : public CommandModule
 {
 public:
-  PlayMessageModule (ACE_SOCK_Stream *peer);
+  explicit PlayMessageModule (ACE_SOCK_Stream *peer);
 };
 class PlayMessageDownstreamTask : public CommandTask
 {
@@ -85,7 +85,7 @@ protected:
 class RecordMessageModule : public CommandModule
 {
 public:
-  RecordMessageModule (ACE_SOCK_Stream *peer);
+  explicit RecordMessageModule (ACE_SOCK_Stream *peer);
 };
 class RecordMessageDownstreamTask : public CommandTask
 {
