@@ -30,7 +30,7 @@ int ACE_SEH_Default_Exception_Handler (void *)
     {\
       TYPE *obj_p {};\
       ACE_ALLOCATOR_RETURN (obj_p, static_cast<TYPE *>(ACE_Allocator::instance()->malloc(sizeof(TYPE))), -1); \
-      preallocated_object[ID] = (void *) obj_p;\
+      preallocated_object[ID] = obj_p;\
     }
 # define ACE_OS_DELETE_PREALLOCATED_OBJECT(TYPE, ID)\
     ACE_Allocator::instance()->free (preallocated_object[ID]);     \
@@ -40,10 +40,10 @@ int ACE_SEH_Default_Exception_Handler (void *)
     {\
       TYPE *obj_p {};\
       ACE_NEW_RETURN (obj_p, TYPE, -1);\
-      preallocated_object[ID] = (void *) obj_p;\
+      preallocated_object[ID] = obj_p;\
     }
 # define ACE_OS_DELETE_PREALLOCATED_OBJECT(TYPE, ID)\
-    delete (TYPE *) preallocated_object[ID];\
+    delete static_cast<TYPE *> (preallocated_object[ID]);\
     preallocated_object[ID] = nullptr;
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
