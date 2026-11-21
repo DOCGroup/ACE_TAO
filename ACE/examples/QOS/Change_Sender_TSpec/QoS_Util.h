@@ -31,7 +31,7 @@ public:
 
   ~QoS_Util () = default;
 
-  // Parse command-line arguments.
+  /// Parse command-line arguments.
   int parse_args ();
 
   ACE_INET_Addr const &mult_session_addr () const;
@@ -45,23 +45,23 @@ public:
   bool multicast_flag () const;
 
 private:
-  // Command line arguments.
+  /// Command line arguments.
   int const argc_;
   ACE_TCHAR ** const argv_;
 
-  // Multicast session address.
+  /// Multicast session address.
   ACE_INET_Addr mult_session_addr_;
 
-  // Unicast destination address of the receiver.
+  /// Unicast destination address of the receiver.
   ACE_INET_Addr dest_addr_;
 
-  // Source port for the sender.
+  /// Source port for the sender.
   u_short source_port_;
 
-  // Protocol.
+  /// Protocol.
   ACE_Protocol_ID protocol_ {IPPROTO_UDP};
 
-  // Multicast Flag.
+  /// Multicast Flag.
   bool multicast_flag_ {};
 };
 

@@ -148,9 +148,9 @@ namespace Kokyu
     DSRT_Dispatcher_Impl &operator= (DSRT_Dispatcher_Impl &&) = delete;
 
   private:
-    //following an idiom to avoid public virtual functions.
-    //instead make them private and use the template method
-    //pattern - "Virtually Yours" article in CUJ Experts Forum
+    /// Following an idiom to avoid public virtual functions.
+    /// Instead make them private and use the template method
+    /// pattern - "Virtually Yours" article in CUJ Experts Forum.
 
     virtual int init_i (DSRT_ConfigInfo const &) = 0;
     virtual int schedule_i (Guid_t guid,

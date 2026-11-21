@@ -35,7 +35,7 @@ extern int A,BB,C,D,E,F;
 # define DO_SOMETHING
 #endif /* ACE_HAS_OPTIMIZED_NULL_FUNCTIONS */
 
-// An external (global) function.
+/// An external (global) function.
 void func ();
 
 // A class with no virtual functions.

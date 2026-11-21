@@ -54,9 +54,9 @@ namespace Kokyu
     Dispatcher_Impl &operator= (Dispatcher_Impl &&) = delete;
 
   private:
-    //following an idiom to avoid public virtual functions.
-    //instead make them private and use the template method
-    //pattern - "Virtually Yours" article in CUJ Experts Forum
+    /// Following an idiom to avoid public virtual functions.
+    /// Instead make them private and use the template method
+    /// pattern - "Virtually Yours" article in CUJ Experts Forum.
 
     virtual int init_i (Dispatcher_Attributes const &) = 0;
     virtual int dispatch_i (Dispatch_Command const *,

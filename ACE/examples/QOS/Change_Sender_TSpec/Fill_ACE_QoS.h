@@ -61,11 +61,11 @@ private:
   using FLOW_SPEC_HASH_MAP =
     ACE_Hash_Map_Manager<ACE_CString, ACE_Flow_Spec *, ACE_Null_Mutex>;
 
-  // The Service Provider is currently set to NULL for all ACE_QoS.
+  /// The Service Provider is currently set to NULL for all ACE_QoS.
   static iovec const iov_;
 
-  // A NO_TRAFFIC flow spec. Senders set the receiving qos to this
-  // while the receivers set the sending qos to this.
+  /// A NO_TRAFFIC flow spec. Senders set the receiving qos to this
+  /// while the receivers set the sending qos to this.
   std::unique_ptr<ACE_Flow_Spec> default_traffic_;
 
   // The map and ACE_QoS objects borrow pointers; retain owners until teardown.
