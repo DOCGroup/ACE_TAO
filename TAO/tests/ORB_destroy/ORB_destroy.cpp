@@ -8,6 +8,7 @@
  */
 //=============================================================================
 
+#include <algorithm>
 #include <array>
 
 #include "tao/ORB.h"
@@ -76,8 +77,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {"destroy_poa_and_orb_without_poa_manager", true, true, false}
   }};
 
-  for (Destroy_Options const &options : test_cases)
-    if (run_destroy_case (argc, argv, options) != 0)
+  if (std::any_of (test_cases.begin (),
+                   test_cases.end (),
+                   [argc, argv] (Destroy_Options const &options)
+                   {
+                     return run_destroy_case (argc, argv, options) != 0;
+                   }))
     {
       return 1;
     }
