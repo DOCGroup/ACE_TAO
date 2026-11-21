@@ -17,6 +17,7 @@
 #include "tao/CDR.h"
 
 #include <cstring>
+#include <memory>
 
 class test_i :
   public virtual POA_test
@@ -138,7 +139,7 @@ Servant_Locator::preinvoke (PortableServer::ObjectId const &oid,
               "(%t) Ending Servant_Locator::preinvoke for %C servant\n",
               name.in ()));
 
-  return &this->servant_;
+  return std::addressof (this->servant_);
 }
 
 void

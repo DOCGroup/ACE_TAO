@@ -12,6 +12,7 @@
 #include "testS.h"
 #include "tao/PortableServer/ServantLocatorC.h"
 #include <cstring>
+#include <memory>
 
 static int errorCount {};
 
@@ -102,7 +103,7 @@ Servant_Locator::preinvoke (PortableServer::ObjectId const &oid,
   if (std::strcmp (op, "normal") == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "returning servant\n"));
-      return &this->servant_;
+      return std::addressof (this->servant_);
     }
   else if (std::strcmp (op, "exceptional") == 0)
     {

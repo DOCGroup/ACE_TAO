@@ -3,11 +3,13 @@
 #include "ace/OS_NS_stdlib.h"
 #include "HTTP_Config.h"
 
+#include <memory>
+
 HTTP_Config_Info *
 HTTP_Config::instance ()
 {
   static HTTP_Config_Info config_info;
-  return &config_info;
+  return std::addressof (config_info);
 }
 
 HTTP_Config_Info::HTTP_Config_Info ()

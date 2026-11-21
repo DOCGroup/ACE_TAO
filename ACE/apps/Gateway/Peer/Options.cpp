@@ -1,6 +1,7 @@
 #define ACE_BUILD_SVC_DLL
 
 #include <cstdlib>
+#include <memory>
 
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
@@ -32,7 +33,7 @@ Options *
 Options::instance ()
 {
   static Options options {};
-  return &options;
+  return std::addressof (options);
 }
 
 long
