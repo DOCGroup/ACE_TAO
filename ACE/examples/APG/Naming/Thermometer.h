@@ -38,7 +38,7 @@ public:
   {
     this->threshold_ = 4;
     ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Resetting thermometer %C\n"),
-                this->address ()));
+                this->address ().c_str ()));
   }
 
 private:
