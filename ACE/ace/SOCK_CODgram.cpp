@@ -120,7 +120,7 @@ ACE_SOCK_CODgram::open (const ACE_Addr &remote, const ACE_Addr &local,
       else if (local != ACE_Addr::sap_any && remote == ACE_Addr::sap_any)
         {
           if (ACE_OS::bind (this->get_handle (),
-                            (sockaddr *) local.get_addr (),
+                            static_cast<sockaddr *> (local.get_addr ()),
                             local.get_size ()) == -1)
           {
             error = true;
@@ -130,7 +130,7 @@ ACE_SOCK_CODgram::open (const ACE_Addr &remote, const ACE_Addr &local,
       else if (local == ACE_Addr::sap_any && remote != ACE_Addr::sap_any)
         {
           if (ACE_OS::connect (this->get_handle (),
-                               (sockaddr *) remote.get_addr (),
+                               static_cast<sockaddr *> (remote.get_addr ()),
                                remote.get_size ()) == -1)
           {
             error = true;
@@ -141,10 +141,10 @@ ACE_SOCK_CODgram::open (const ACE_Addr &remote, const ACE_Addr &local,
       else
         {
           if (ACE_OS::bind (this->get_handle (),
-                            (sockaddr *) local.get_addr (),
+                            static_cast<sockaddr *> (local.get_addr ()),
                             local.get_size ()) == -1
               || ACE_OS::connect (this->get_handle (),
-                                  (sockaddr *) remote.get_addr (),
+                                  static_cast<sockaddr *> (remote.get_addr ()),
                                   remote.get_size ()) == -1)
           {
             error = true;

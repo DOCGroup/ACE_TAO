@@ -104,7 +104,7 @@ ACE_LSOCK_Acceptor::accept (ACE_LSOCK_Stream &new_stream,
       if (remote_addr != nullptr)
         {
           len = remote_addr->get_size ();
-          addr = (sockaddr *) remote_addr->get_addr ();
+          addr = static_cast<sockaddr *> (remote_addr->get_addr ());
         }
 
       do
