@@ -55,7 +55,7 @@ public:
    */
   enum Sync_Mode { Jump, Adjust };
 
-  ACE_System_Time (ACE_TCHAR const *poolname = nullptr);
+  explicit ACE_System_Time (ACE_TCHAR const *poolname = nullptr);
 
   ~ACE_System_Time ();
   ACE_System_Time (ACE_System_Time const &) = delete;

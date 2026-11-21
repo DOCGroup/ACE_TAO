@@ -92,7 +92,7 @@ protected:
   ~ACE_TLI ();
 
   /// Initialize a TLI endpoint.
-  ACE_TLI (const char device[], int oflag = O_RDWR, struct t_info *info = nullptr);
+  explicit ACE_TLI (const char device[], int oflag = O_RDWR, struct t_info *info = nullptr);
   /// @}
 };
 
