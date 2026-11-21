@@ -350,7 +350,7 @@ ACE_OS::getaddrinfo_emulation (const char *name, addrinfo **result)
   int herr = 0;
   const hostent *host = ACE_OS::gethostbyname_r (name, &entry, buffer, &herr);
 
-  if (host == 0)
+  if (host == nullptr)
     {
       switch (herr)
         {
@@ -366,9 +366,10 @@ ACE_OS::getaddrinfo_emulation (const char *name, addrinfo **result)
             {
               host = &entry;
               entry.h_length = sizeof (in_addr);
-              entry.h_addr_list = (char **) (buffer + sizeof (in_addr));
+              entry.h_addr_list = reinterpret_cast<char **> (
+                buffer + sizeof (in_addr));
               entry.h_addr_list[0] = buffer;
-              entry.h_addr_list[1] = 0;
+              entry.h_addr_list[1] = nullptr;
               break;
             }
           // fall-through
@@ -389,11 +390,12 @@ ACE_OS::getaddrinfo_emulation (const char *name, addrinfo **result)
 # endif
 
   ACE_ALLOCATOR_RETURN (*result,
-                        (addrinfo *) ACE_ALLOC calloc (n, sizeof (addrinfo)),
+                        static_cast<addrinfo *> (
+                          ACE_ALLOC calloc (n, sizeof (addrinfo))),
                         EAI_MEMORY);
 
   sockaddr_in *const addr_storage =
-    (sockaddr_in *) ACE_ALLOC calloc (n, sizeof (sockaddr_in));
+    static_cast<sockaddr_in *> (ACE_ALLOC calloc (n, sizeof (sockaddr_in)));
 
   if (!addr_storage)
     {
@@ -406,7 +408,7 @@ ACE_OS::getaddrinfo_emulation (const char *name, addrinfo **result)
     {
       (*result)[i].ai_family = AF_INET;
       (*result)[i].ai_addrlen = sizeof (sockaddr_in);
-      (*result)[i].ai_addr = (sockaddr *) addr_storage + i;
+      (*result)[i].ai_addr = reinterpret_cast<sockaddr *> (addr_storage) + i;
       (*result)[i].ai_addr->sa_family = AF_INET;
       std::memcpy (std::addressof (addr_storage[i].sin_addr), host->h_addr_list[i],
                    (std::min) (size_t (host->h_length), sizeof (in_addr)));
@@ -443,7 +445,9 @@ ACE_OS::getnameinfo_emulation (const sockaddr *saddr, ACE_SOCKET_LEN saddr_len,
       return EAI_FAMILY; // IPv6 support requries actual OS-provided getnameinfo
     }
 
-  const void *addr = &((const sockaddr_in *) saddr)->sin_addr;
+  sockaddr_in const *const sin
+    = reinterpret_cast<sockaddr_in const *> (saddr);
+  const void *addr = &sin->sin_addr;
   int h_error;
   hostent hentry;
   ACE_HOSTENT_DATA buf;
@@ -487,17 +491,17 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 int
 ACE_OS::netdb_acquire ()
 {
-  return ACE_OS::thread_mutex_lock ((ACE_thread_mutex_t *)
+  return ACE_OS::thread_mutex_lock (static_cast<ACE_thread_mutex_t *> (
     ACE_OS_Object_Manager::preallocated_object[
-      ACE_OS_Object_Manager::ACE_OS_MONITOR_LOCK]);
+      ACE_OS_Object_Manager::ACE_OS_MONITOR_LOCK]));
 }
 
 int
 ACE_OS::netdb_release ()
 {
-  return ACE_OS::thread_mutex_unlock ((ACE_thread_mutex_t *)
+  return ACE_OS::thread_mutex_unlock (static_cast<ACE_thread_mutex_t *> (
     ACE_OS_Object_Manager::preallocated_object[
-      ACE_OS_Object_Manager::ACE_OS_MONITOR_LOCK]);
+      ACE_OS_Object_Manager::ACE_OS_MONITOR_LOCK]));
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

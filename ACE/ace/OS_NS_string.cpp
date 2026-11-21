@@ -20,14 +20,15 @@ char *
 ACE_OS::strdup_emulation (const char *s)
 {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  char *t = (char *) ACE_Allocator::instance()->malloc (ACE_OS::strlen (s) + 1);
+  char *t = static_cast<char *> (
+    ACE_Allocator::instance()->malloc (ACE_OS::strlen (s) + 1));
 #else
-  char *t = (char *) ACE_OS::malloc (ACE_OS::strlen (s) + 1);
+  char *t = static_cast<char *> (ACE_OS::malloc (ACE_OS::strlen (s) + 1));
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-  if (t == 0)
+  if (t == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   return ACE_OS::strcpy (t, s);
@@ -40,9 +41,8 @@ ACE_OS::strdup_emulation (const char *s)
 wchar_t *
 ACE_OS::strdup_emulation (const wchar_t *s)
 {
-  wchar_t *buffer =
-    (wchar_t *) ACE_OS::malloc ((ACE_OS::strlen (s) + 1)
-                                * sizeof (wchar_t));
+  wchar_t *buffer = static_cast<wchar_t *> (
+    ACE_OS::malloc ((ACE_OS::strlen (s) + 1) * sizeof (wchar_t)));
   if (buffer == nullptr)
   {
     return nullptr;
