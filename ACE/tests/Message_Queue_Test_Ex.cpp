@@ -106,10 +106,20 @@ struct Send_Messages
 
   int create_messages (const char test_message[])
   {
+    if (this->number_of_messages_ < 0 || this->chain_limit_ <= 0)
+      {
+        return -1;
+      }
+
     int limit = this->number_of_messages_ / this->chain_limit_;
     ACE_NEW_RETURN (this->send_block_,
                     User_Class *[limit],
                     -1);
+
+    for (int i {}; i < limit; ++i)
+      {
+        this->send_block_[i] = nullptr;
+      }
 
     int i, j;
     for (i = 0; i < limit; ++i)
@@ -129,29 +139,34 @@ struct Send_Messages
             tail = temp2;
           }
       }
-    this->head_send_block_ = this->send_block_[0];
+    if (limit > 0)
+      {
+        this->head_send_block_ = this->send_block_[0];
+      }
     return 0;
   }
 
   ~Send_Messages ()
   {
-    int j, i = 0;
-    int limit = this->number_of_messages_ / this->chain_limit_;
-    for (; i < limit; ++i)
+    if (this->send_block_ != nullptr)
       {
-        User_Class *&temp1 = this->send_block_[i];
-        for (j = 0; j < this->chain_limit_; ++j)
+        int const limit = this->number_of_messages_ / this->chain_limit_;
+        for (int i {}; i < limit; ++i)
           {
-            User_Class *temp2 = temp1->next ();
-            delete temp1;
-            temp1 = temp2;
+            User_Class *temp = this->send_block_[i];
+            while (temp != nullptr)
+              {
+                User_Class *const next = temp->next ();
+                delete temp;
+                temp = next;
+              }
           }
+        delete [] this->send_block_;
       }
-    delete [] this->send_block_;
   }
 
-  User_Class *  head_send_block_;
-  User_Class ** send_block_;
+  User_Class *head_send_block_ {};
+  User_Class **send_block_ {};
   int           number_of_messages_;
   int           chain_limit_;
 };
