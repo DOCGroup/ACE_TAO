@@ -27,7 +27,13 @@ namespace ACE
       }
 
     ACE_INLINE
-    SSL_X509Cert::~SSL_X509Cert () = default;
+    SSL_X509Cert::~SSL_X509Cert ()
+      {
+        if (this->ssl_cert_ != nullptr)
+          {
+            ::X509_free (this->ssl_cert_);
+          }
+      }
 
     ACE_INLINE
     SSL_X509Cert& SSL_X509Cert::operator= (::X509* ssl_cert)
