@@ -147,9 +147,9 @@ ACE_Pagefile_Memory_Pool::init_acquire (size_t nbytes,
   else
     {
       // We just mapped the memory and return the base address
-      return (void *)((char *) this->local_cb_.mapped_base_
-                      + ACE_Pagefile_Memory_Pool::round_to_page_size
-                      ((int) sizeof (Control_Block)));
+      return static_cast<char *> (this->local_cb_.mapped_base_)
+        + ACE_Pagefile_Memory_Pool::round_to_page_size
+          (static_cast<int> (sizeof (Control_Block)));
     }
 }
 

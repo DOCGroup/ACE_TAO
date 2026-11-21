@@ -361,7 +361,8 @@ ACE_MMAP_Memory_Pool::acquire (size_t nbytes,
   // rounded_bytes = %B, map_size = %B\n", nbytes, rounded_bytes,
   // map_size));
 
-  return (void *) ((char *) this->mmap_.addr () + (this->mmap_.size () - rounded_bytes));
+  return static_cast<char *> (this->mmap_.addr ())
+    + (this->mmap_.size () - rounded_bytes);
 }
 
 // Ask system for initial chunk of shared memory.

@@ -408,7 +408,7 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
         }
     }
 
-  return (void *) (((char *) this->shm_addr_table_[0]) + shm_table_offset);
+  return static_cast<char *> (this->shm_addr_table_[0]) + shm_table_offset;
 }
 
 /// Instruct the memory pool to release all of its resources.
