@@ -5,6 +5,7 @@
 #include "ace/OS_NS_stdio.h"
 
 #include <cstddef>
+#include <memory>
 
 FTP_Client_StreamEndPoint::FTP_Client_StreamEndPoint () = default;
 
@@ -12,7 +13,7 @@ int
 FTP_Client_StreamEndPoint::get_callback (char const *,
                                          TAO_AV_Callback *&callback)
 {
-  callback = &this->callback_;
+  callback = std::addressof (this->callback_);
   return 0;
 }
 
@@ -25,7 +26,7 @@ FTP_Client_StreamEndPoint::set_protocol_object (char const *,
 }
 
 Client::Client ()
-  : client_mmdevice_ (&this->endpoint_strategy_)
+  : client_mmdevice_ (std::addressof (this->endpoint_strategy_))
 {
 }
 
@@ -176,7 +177,7 @@ Client::init (int argc,
         ACE_ERROR_RETURN ((LM_ERROR, "Unable to determine peer address\n"), -1);
       }
     }
-  entry.set_peer_addr (&peer_addr);
+  entry.set_peer_addr (std::addressof (peer_addr));
 
   AVStreams::flowSpec flow_spec (1);
   flow_spec.length (1);

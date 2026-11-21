@@ -2,11 +2,13 @@
 
 #include "ace/Get_Opt.h"
 
+#include <memory>
+
 int
 Receiver_StreamEndPoint::get_callback (char const *,
                                        TAO_AV_Callback *&callback)
 {
-  callback = &this->callback_;
+  callback = std::addressof (this->callback_);
   return 0;
 }
 

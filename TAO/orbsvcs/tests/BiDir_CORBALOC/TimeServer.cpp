@@ -7,6 +7,7 @@
 
 #include <cstdlib>
 #include <ctime>
+#include <memory>
 
 class Time_impl :
   public POA_TimeModule::Time
@@ -104,7 +105,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       naming_context->rebind (service_name, time_ref.in ());
 
       ACE_Time_Value tv (3, 0);
-      orb->run (&tv);
+      orb->run (std::addressof (tv));
       root_poa->destroy (false, false);
       orb->destroy ();
     }

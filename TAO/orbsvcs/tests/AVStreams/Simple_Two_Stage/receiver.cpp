@@ -21,7 +21,7 @@ Receiver_StreamEndPoint::get_callback (char const *,
 {
   // Return the receiver application callback to the AVStreams for
   // future upcalls.
-  callback = &this->callback_;
+  callback = std::addressof (this->callback_);
   return 0;
 }
 
