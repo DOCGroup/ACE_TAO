@@ -120,9 +120,9 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
           const size_t un_len = (ACE_UNIQUE_NAME_LEN + 1) * sizeof (ACE_TCHAR);
           ACE_TCHAR *const un =
 # ifdef ACE_HAS_ALLOC_HOOKS
-            (ACE_TCHAR *) ACE_Allocator::instance ()->malloc (un_len);
+            static_cast<ACE_TCHAR *> (ACE_Allocator::instance ()->malloc (un_len));
 # else
-            (ACE_TCHAR *) ACE_OS::malloc (un_len);
+            static_cast<ACE_TCHAR *> (ACE_OS::malloc (un_len));
 # endif /* ACE_HAS_ALLOC_HOOKS */
           un[0] = ACE_TEXT ('/');
           ACE_OS::unique_name (this, un + 1, ACE_UNIQUE_NAME_LEN);
