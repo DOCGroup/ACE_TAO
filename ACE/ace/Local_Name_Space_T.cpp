@@ -370,7 +370,6 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::open (
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Local_Name_Space ()
-  : name_options_ (nullptr)
 {
   ACE_TRACE ("ACE_Local_Name_Space::ACE_Local_Name_Space");
 }

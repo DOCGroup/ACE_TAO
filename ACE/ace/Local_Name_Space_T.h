@@ -248,7 +248,7 @@ private:
   ACE_Naming_Context::Context_Scope_Type ns_scope_ {};
 
   /// Keep track of the options such as database name etc
-  ACE_Name_Options *name_options_;
+  ACE_Name_Options *name_options_ {};
 
   /// Name of the file used as the backing store.
   ACE_TCHAR context_file_[MAXPATHLEN + MAXNAMELEN];
