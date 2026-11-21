@@ -3,7 +3,7 @@
 
 #include "Stock_QuoterS.h"
 
-// This class provides the implementation for Stock_Quoter interface.
+/// This class provides the implementation for Stock_Quoter interface.
 class Stock_Quoter_i : public virtual POA_Stock_Quoter
 {
 public:

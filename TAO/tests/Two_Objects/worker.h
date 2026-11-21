@@ -6,13 +6,13 @@
 #include "tao/ORB.h"
 #include "ace/Task.h"
 
-//   Use the ACE_Task_Base class to run server threads
+///   Use the ACE_Task_Base class to run server threads
 class Worker : public ACE_Task_Base
 {
 public:
   explicit Worker (CORBA::ORB_ptr const orb);
 
-  // The thread entry point.
+  /// The thread entry point.
   int svc () override;
 
   Worker (Worker const &) = delete;
@@ -21,7 +21,7 @@ public:
   Worker & operator= (Worker &&) = delete;
 
 private:
-  // The orb
+  /// The orb
   CORBA::ORB_var const orb_;
 };
 

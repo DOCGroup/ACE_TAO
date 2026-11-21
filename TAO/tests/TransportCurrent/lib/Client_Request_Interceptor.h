@@ -82,7 +82,7 @@ namespace Test
     void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri) override;
     /// @}
 
-    // Number of interceptions
+    /// Number of interceptions
     CORBA::Long interceptions ();
 
   private:

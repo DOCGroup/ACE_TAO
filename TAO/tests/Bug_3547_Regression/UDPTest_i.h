@@ -4,7 +4,7 @@
 #include "UDPTestS.h"
 #include <atomic>
 
-// This class provides the implementation for Stock_Quoter interface.
+/// This class provides the implementation for Stock_Quoter interface.
 class UDPTest_i : public virtual POA_UDPTestI
 {
 public:
