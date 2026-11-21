@@ -92,7 +92,7 @@ Input_Handler::cancel_timer (void *argument)
 {
   long const id = *static_cast<long const *> (argument);
   void const *act {};
-  int const canceled = this->reactor ()->cancel_timer (id, &act);
+  int const canceled = this->reactor ()->cancel_timer (id, std::addressof (act));
   if (canceled > 0)
     {
       std::unique_ptr<Reactor_Timer_Handler> handler (

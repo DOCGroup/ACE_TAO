@@ -20,6 +20,8 @@
 
 #include "Connection_Handler.h"
 
+#include <memory>
+
 static void
 end_reactor_event_loop (int, siginfo_t *, ucontext_t *)
 {
@@ -210,7 +212,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Sig_Adapter sa (end_reactor_event_loop);
 
   // Register the signal handler adapter.
-  if (ACE_Reactor::instance ()->register_handler (SIGINT, &sa) == -1)
+  if (ACE_Reactor::instance ()->register_handler (SIGINT, std::addressof (sa)) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),

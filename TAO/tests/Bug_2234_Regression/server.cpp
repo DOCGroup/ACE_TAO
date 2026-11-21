@@ -20,6 +20,7 @@
 #include "tao/LocalObject.h"
 
 #include <cstring>
+#include <memory>
 
 int
 parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file)
@@ -827,7 +828,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     FooImpl phooey (orb.in ());
     PortableServer::ObjectId_var
-      phooeyId= rootPOA->activate_object( &phooey );
+      phooeyId= rootPOA->activate_object( std::addressof (phooey) );
     CORBA::Object_var
       phooeyObj= rootPOA->id_to_reference( phooeyId.in() );
     CORBA::String_var

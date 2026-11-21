@@ -189,7 +189,7 @@ test_registering_all_handlers ()
       which[i] = i;
       t_id[i] =
         ACE_Proactor::instance ()->schedule_timer
-            (rt[i], &which[i], ACE_Time_Value (2 * secs + 1));
+            (rt[i], std::addressof (which[i]), ACE_Time_Value (2 * secs + 1));
       if (t_id[i] == -1)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("schedule_timer")));
@@ -222,7 +222,7 @@ test_registering_one_handler ()
       which[i] = i;
       t_id[i] =
         ACE_Proactor::instance ()->schedule_timer
-          (rt[0], &which[i], ACE_Time_Value (2 * secs + 1));
+          (rt[0], std::addressof (which[i]), ACE_Time_Value (2 * secs + 1));
       if (t_id[i] == -1)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("schedule_timer")));
@@ -254,7 +254,7 @@ test_canceling_odd_timers ()
     {
       which[i] = i;
       t_id[i] = ACE_Proactor::instance ()->schedule_timer
-        (rt[i], &which[i], ACE_Time_Value (2 * secs + 1));
+        (rt[i], std::addressof (which[i]), ACE_Time_Value (2 * secs + 1));
       if (t_id[i] == -1)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("schedule_timer")));
