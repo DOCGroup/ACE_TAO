@@ -1,8 +1,9 @@
 #include "Manager_i.h"
 
 #include <ace/Get_Opt.h>
-#include <iostream>
 #include <fstream>
+#include <iostream>
+#include <memory>
 
 struct Manager_Options
 {
@@ -44,7 +45,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var mgr = poa->the_POAManager ();
 
       Manager_i servant (options.retry_count);
-      PortableServer::ObjectId_var oid = poa->activate_object (&servant);
+      PortableServer::ObjectId_var oid = poa->activate_object (std::addressof (servant));
       obj = poa->id_to_reference (oid.in ());
       {
         CORBA::String_var ior = orb->object_to_string (obj.in ());

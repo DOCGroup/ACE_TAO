@@ -6,6 +6,7 @@
 
 #include <cstring>
 #include <fstream>
+#include <memory>
 
 #include "ace/Service_Config.h"
 #include "ace/Log_Msg.h"
@@ -55,7 +56,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     SvcConf svt (config);
 
-    ObjectId_var id = poa->activate_object (&svt);
+    ObjectId_var id = poa->activate_object (std::addressof (svt));
     obj = poa->id_to_reference (id.in ());
     ACE_ASSERT (!is_nil (obj.in ()));
     String_var ior = orb->object_to_string (obj.in ());

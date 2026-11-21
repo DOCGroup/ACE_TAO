@@ -7,6 +7,8 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Dynamic_Service.h"
 
+#include <memory>
+
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
@@ -91,7 +93,7 @@ Gateway::run (int argc, ACE_TCHAR* argv[])
       gateway.init (supplier_event_channel.in (), consumer_event_channel.in ());
 
       PortableServer::ObjectId_var gateway_oid =
-         poa->activate_object (&gateway);
+         poa->activate_object (std::addressof (gateway));
 
       CORBA::Object_var gateway_obj =
          poa->id_to_reference (gateway_oid.in ());
