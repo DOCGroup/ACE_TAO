@@ -300,6 +300,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Demux_Stats demux_stats;
 
-  demux_stats.parse_args (argc, argv);
-  demux_stats.calculate_avg_latency ();
+  int const parse_status = demux_stats.parse_args (argc, argv);
+  if (parse_status != 0)
+    {
+      return parse_status;
+    }
+
+  return demux_stats.calculate_avg_latency ();
 }
