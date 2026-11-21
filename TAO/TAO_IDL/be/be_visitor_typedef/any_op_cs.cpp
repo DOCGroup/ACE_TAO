@@ -22,12 +22,13 @@ be_visitor_typedef_any_op_cs::be_visitor_typedef_any_op_cs (
 {
 }
 
-
 int
 be_visitor_typedef_any_op_cs::visit_typedef (be_typedef *node)
 {
   if (node->cli_stub_any_op_gen () || node->imported ())
-    return 0;
+    {
+      return 0;
+    }
 
   TAO_OutStream * const os = this->ctx_->stream ();
 
@@ -132,9 +133,13 @@ be_visitor_typedef_any_op_cs::visit_array (be_array *node)
   be_type *bt {};
 
   if (this->ctx_->alias ()) // typedef of a typedef
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   if (!bt->imported () &&
       bt->node_type () == AST_Decl::NT_array) // direct typedef of a base node
@@ -160,9 +165,13 @@ be_visitor_typedef_any_op_cs::visit_enum (be_enum *node)
   be_type *bt {};
 
   if (this->ctx_->alias ()) // typedef of a typedef
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   if (bt->node_type () == AST_Decl::NT_enum) // direct typedef of a base node
                                               // type
@@ -187,9 +196,13 @@ be_visitor_typedef_any_op_cs::visit_sequence (be_sequence *node)
   be_type *bt {};
 
   if (this->ctx_->alias ()) // typedef of a typedef
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   if (bt->node_type () == AST_Decl::NT_sequence) // direct typedef of a base node
                                               // type
@@ -214,9 +227,13 @@ be_visitor_typedef_any_op_cs::visit_structure (be_structure *node)
   be_type *bt {};
 
   if (this->ctx_->alias ()) // typedef of a typedef
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   if (bt->node_type () == AST_Decl::NT_struct) // direct typedef of a base node
                                               // type
@@ -241,9 +258,13 @@ be_visitor_typedef_any_op_cs::visit_union (be_union *node)
   be_type *bt {};
 
   if (this->ctx_->alias ()) // typedef of a typedef
-    bt = this->ctx_->alias ();
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
 
   if (bt->node_type () == AST_Decl::NT_union) // direct typedef of a base node
                                               // type

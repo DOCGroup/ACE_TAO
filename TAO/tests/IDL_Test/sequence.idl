@@ -16,6 +16,8 @@
 
 #include "tao/OctetSeq.pidl"
 
+typedef sequence<octet> OctetSequenceTest;
+
 struct myfoostruct;
 typedef sequence<myfoostruct> myfoostructseq;
 

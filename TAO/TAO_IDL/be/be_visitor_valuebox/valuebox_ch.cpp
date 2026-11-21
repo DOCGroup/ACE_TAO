@@ -21,7 +21,6 @@ be_visitor_valuebox_ch::be_visitor_valuebox_ch (be_visitor_context *ctx)
 {
 }
 
-
 int
 be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
 {
@@ -151,7 +150,6 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
   return 0;
 }
 
-
 int
 be_visitor_valuebox_ch::visit_array (be_array *node)
 {
@@ -164,10 +162,7 @@ be_visitor_valuebox_ch::visit_array (be_array *node)
   // Public constructor that takes a const array argument
   this->emit_constructor_one_arg (node, "", "const ", "");
 
-  // Public copy constructor
   this->emit_copy_constructor ();
-
-  *os << be_nl << "// assignment operator" << be_nl;
 
   // Public assignment operator that takes a const array argument
   this->emit_assignment (node, "", "const ", "");
@@ -207,20 +202,17 @@ be_visitor_valuebox_ch::visit_array (be_array *node)
   return 0;
 }
 
-
 int
 be_visitor_valuebox_ch::visit_enum (be_enum *node)
 {
   return this->emit_for_predef_enum (node, "", false);
 }
 
-
 int
 be_visitor_valuebox_ch::visit_interface (be_interface *node)
 {
   return this->emit_for_predef_enum (node, "_ptr", false);
 }
-
 
 int
 be_visitor_valuebox_ch::visit_predefined_type (be_predefined_type *node)
@@ -230,7 +222,6 @@ be_visitor_valuebox_ch::visit_predefined_type (be_predefined_type *node)
     "",
     node->pt () == AST_PredefinedType::PT_any);
 }
-
 
 int
 be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
@@ -314,10 +305,7 @@ be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
   // Public constructor with single argument of type const T&
   this->emit_constructor_one_arg (node, "", "const ", "&");
 
-  // Public copy constructor
   this->emit_copy_constructor ();
-
-  *os << be_nl << "// assignment operator" << be_nl;
 
   // Public assignment operator with one argument of type const T&
   this->emit_assignment (node, "", "const ", "&");
@@ -362,7 +350,6 @@ be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
   return 0;
 }
 
-
 int
 be_visitor_valuebox_ch::visit_string (be_string *node)
 {
@@ -404,19 +391,12 @@ be_visitor_valuebox_ch::visit_string (be_string *node)
   *os << vb_node->local_name () << " (::CORBA::" << string_type
       << "_var const &var);" << be_nl;
 
-  // Public copy constructor
   this->emit_copy_constructor ();
 
-  *os << "// assignment operators" << be_nl;
-
-  // Public assignment operator with one argument of type char *
   this->emit_assignment (node, "", "", "");
 
-  // Public assignment operator with one argument of type const char *
   this->emit_assignment (node, "", "const ", "");
 
-  // Public assignment operator with one argument of type
-  // const CORBA::String_var&
   *os << vb_node->local_name () << "& operator= (::CORBA::"
       << string_type << "_var const &var);" << be_nl_2;
 
@@ -459,7 +439,6 @@ be_visitor_valuebox_ch::visit_string (be_string *node)
   return 0;
 }
 
-
 int
 be_visitor_valuebox_ch::visit_structure (be_structure *node)
 {
@@ -472,10 +451,7 @@ be_visitor_valuebox_ch::visit_structure (be_structure *node)
   // Public constructor with one argument of const T&
   this->emit_constructor_one_arg (node, "", "const ", "&");
 
-  // Public copy constructor
   this->emit_copy_constructor ();
-
-  *os << be_nl << "// Assignment operator" << be_nl;
 
   // Public assignment operator with one argument of type const T&
   this->emit_assignment (node, "", "const ", "&");
@@ -538,7 +514,6 @@ be_visitor_valuebox_ch::visit_structure (be_structure *node)
   return 0;
 }
 
-
 int
 be_visitor_valuebox_ch::visit_typedef (be_typedef *node)
 {
@@ -557,7 +532,6 @@ be_visitor_valuebox_ch::visit_typedef (be_typedef *node)
   return 0;
 }
 
-
 int
 be_visitor_valuebox_ch::visit_union (be_union *node)
 {
@@ -570,10 +544,7 @@ be_visitor_valuebox_ch::visit_union (be_union *node)
   // Public constructor with single argument of type const T&
   this->emit_constructor_one_arg (node, "", "const ", "&");
 
-  // Public copy constructor
   this->emit_copy_constructor ();
-
-  *os << be_nl << "// Assignment operator" << be_nl;
 
   // Public assignment operator with one argument of type const T&
   this->emit_assignment (node, "", "const ", "&");
@@ -660,7 +631,6 @@ be_visitor_valuebox_ch::visit_union (be_union *node)
   return 0;
 }
 
-
 int
 be_visitor_valuebox_ch::emit_for_predef_enum (be_type *node,
                                               std::string const& type_suffix,
@@ -681,10 +651,7 @@ be_visitor_valuebox_ch::emit_for_predef_enum (be_type *node,
       this->emit_constructor_one_arg (node, type_suffix, "", "");
     }
 
-  // Public copy constructor
   this->emit_copy_constructor ();
-
-  *os << be_nl << "// Assignment operator" << be_nl;
 
   if (is_any)
     { // Public assignment operator with one argument of type const T&
@@ -729,10 +696,7 @@ be_visitor_valuebox_ch::emit_default_constructor () const
   // Retrieve the node being visited by this be_visitor_valuebox_ch.
   be_decl * const vb_node = this->ctx_->node ();
 
-  *os << be_nl_2 << "// Constructors" << be_nl;
-
-  // Public default constructor
-  *os << vb_node->local_name () << " ();" << be_nl;
+  *os << be_nl_2 << vb_node->local_name () << " ();" << be_nl;
 }
 
 void
@@ -760,7 +724,6 @@ be_visitor_valuebox_ch::emit_copy_constructor () const
   // Retrieve the node being visited by this be_visitor_valuebox_ch.
   be_decl * const vb_node = this->ctx_->node ();
 
-  // Public Copy constructor
   *os << vb_node->local_name ()
       << " (" << vb_node->local_name () << " const &val);" << be_nl;
 }
@@ -820,7 +783,6 @@ be_visitor_valuebox_ch::emit_accessor_modifier (be_decl *node) const
   *os << "void" << " _value (" << node->full_name () << " const &val);"
       << be_nl_2;
 }
-
 
 void
 be_visitor_valuebox_ch::emit_boxed_member_var (be_decl *node,

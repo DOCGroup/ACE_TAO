@@ -82,7 +82,7 @@ public:
   AST_String (AST_Decl::NodeType nt,
               UTL_ScopedName *n,
               AST_Expression *max_size,
-              std::size_t wide = 1);
+              size_t wide = 1);
 
   ~AST_String () override;
   AST_String (AST_String const &) = delete;
@@ -92,7 +92,7 @@ public:
 
   // Data Accessors.
   AST_Expression *max_size () const;
-  std::size_t width () const;
+  size_t width () const;
 
   // AST Dumping.
   void dump (ACE_OSTREAM_TYPE &o) override;
@@ -111,7 +111,7 @@ private:
   std::unique_ptr<AST_Expression> pd_max_size;
   // String maximum size.
 
-  std::size_t pd_width;
+  size_t pd_width;
   // Width of string.
 };
 

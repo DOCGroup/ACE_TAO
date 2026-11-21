@@ -14,21 +14,13 @@
 #ifndef _BE_INTERFACE_INTERFACE_H_
 #define _BE_INTERFACE_INTERFACE_H_
 
-// = DESCRIPTION
-//   Interface code generation is complex, the client stubs require
-//   two different class and the server also require other two.
-//   Only one of them includes whatever nested typedefs, exceptions
-//   and or structures are defined in the interface.
-//   To break this complexity a different visitor is used for each
-//   case.
-//
-// = NOTE
-//   Visitors were added recently into the compiler, so some
-//   code is still generated using the old "state oriented" approach;
-//   notably only the _collocated class is actually generated using
-//   the visitor, in the other cases (the interface class and the
-//   skeleton class) we still call back the old code generation
-//   methods.
+/// @note Interface code generation uses different visitors for client stub
+/// and server classes. Only one of these classes includes nested typedefs,
+/// exceptions, and structures declared in the interface.
+///
+/// Some code is still generated using the older state-oriented approach.
+/// In particular, the interface and skeleton classes use the older code
+/// generation methods, while the collocated class uses a visitor.
 //
 
 class AST_Operation;

@@ -77,7 +77,6 @@ be_visitor_root_ch::visit_root (be_root *node)
                         -1);
     }
 
-
   if (this->gen_template_exports (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -96,7 +95,6 @@ be_visitor_root_ch::visit_root (be_root *node)
                         -1);
     }
 
-
   if (this->gen_cdr_ops (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -105,7 +103,6 @@ be_visitor_root_ch::visit_root (be_root *node)
                          ACE_TEXT ("generate CDR operators\n")),
                         -1);
     }
-
 
   (void) tao_cg->end_client_header ();
 
@@ -172,14 +169,14 @@ be_visitor_root_ch::gen_fwd_decls ()
 void
 be_visitor_root_ch::gen_ref_counting_overrides ()
 {
-  std::size_t const size = be_global->non_defined_interfaces.size ();
+  size_t const size = be_global->non_defined_interfaces.size ();
 
   if (size == 0)
     {
       return;
     }
 
-  std::size_t index {};
+  size_t index {};
   be_interface_fwd *ifwd {};
 
   TAO_INSERT_COMMENT (o_);
@@ -217,14 +214,14 @@ be_visitor_root_ch::gen_ref_counting_overrides ()
 void
 be_visitor_root_ch::gen_static_corba_overrides ()
 {
-  std::size_t const size = idl_global->mixed_parentage_interfaces ().size ();
+  size_t const size = idl_global->mixed_parentage_interfaces ().size ();
 
   if (size == 0)
     {
       return;
     }
 
-  std::size_t index {};
+  size_t index {};
   AST_Interface *i {};
 
   TAO_INSERT_COMMENT (o_);

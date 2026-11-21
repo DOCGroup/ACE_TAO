@@ -55,8 +55,10 @@
  */
 
 #include "tao/Range_Checking_T.h"
+#include <memory>
 
 #include <algorithm>
+#include <utility>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -136,6 +138,40 @@ public:
     generic_sequence tmp(rhs);
     swap(tmp);
     return * this;
+  }
+
+  generic_sequence (generic_sequence &&rhs)
+    : maximum_ (allocation_traits::default_maximum ())
+    , length_ (0)
+    , buffer_ (nullptr)
+    , release_ (false)
+  {
+    if (rhs.release_)
+      {
+        maximum_ = rhs.maximum_;
+        length_ = rhs.length_;
+        buffer_ = rhs.buffer_;
+        release_ = true;
+        rhs.maximum_ = allocation_traits::default_maximum ();
+        rhs.length_ = 0;
+        rhs.buffer_ = nullptr;
+        rhs.release_ = false;
+      }
+    else
+      {
+        generic_sequence tmp (static_cast<generic_sequence const &> (rhs));
+        this->swap (tmp);
+      }
+  }
+
+  generic_sequence &operator= (generic_sequence &&rhs)
+  {
+    if (this != std::addressof (rhs))
+      {
+        generic_sequence tmp (std::move (rhs));
+        this->swap (tmp);
+      }
+    return *this;
   }
 
   /// Destructor.

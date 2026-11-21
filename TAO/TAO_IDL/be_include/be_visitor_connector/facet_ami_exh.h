@@ -15,18 +15,10 @@
 
 #include <string>
 
+/// Generates AMI connector implementation headers for facets.
 class be_visitor_facet_ami_exh
   : public be_visitor_component_scope
 {
-  //
-  // = TITLE
-  //   be_visitor_facet_ami_exh
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate
-  //   the AMI connector implementation header for facets.
-  //
-  //
 public:
   explicit be_visitor_facet_ami_exh (be_visitor_context *ctx);
 

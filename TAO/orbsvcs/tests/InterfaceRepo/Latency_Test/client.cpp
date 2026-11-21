@@ -6,14 +6,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Latency_Query_Client client;
 
-  int retval = client.init (argc, argv);
-
-  if (retval == -1)
+  if (client.init (argc, argv) == -1)
     {
       return 1;
     }
 
-  retval = client.run ();
-
-  return retval;
+  return client.run ();
 }

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_VALUETYPE_FWD_CH_H_
 #define _BE_VISITOR_VALUETYPE_FWD_CH_H_
 

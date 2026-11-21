@@ -71,7 +71,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include <string>
 
-
 class AST_Decl;
 class AST_Interface;
 class AST_Enum;

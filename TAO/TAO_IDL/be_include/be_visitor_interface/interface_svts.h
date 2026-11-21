@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_INTERFACE_INTERFACE_SVTS_H_
 #define _BE_INTERFACE_INTERFACE_SVTS_H_
 

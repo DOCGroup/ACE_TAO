@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_CONSTANT_CONSTANT_CH_H_
 #define _BE_VISITOR_CONSTANT_CONSTANT_CH_H_
 

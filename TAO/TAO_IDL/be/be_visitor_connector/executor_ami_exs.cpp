@@ -77,7 +77,7 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
       << class_name << "::~"
       << class_name << " ()" << be_nl
       << "{" << be_idt_nl;
-  for (int i = 0; i < port_nr; i ++)
+  for (int i = 0; i < port_nr; ++i)
     {
       os_ << "::CORBA::release (this->facet_exec_" << i <<"_);" << be_nl;
     }
@@ -102,7 +102,7 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
       << "Context_ptr ctx)"
       << be_uidt_nl
       << "{" << be_idt_nl;
-   for (int i = 0; i < port_nr; i ++)
+   for (int i = 0; i < port_nr; ++i)
     {
       os_ << "this->facet_exec_" << i << "_->set_"
       << tao_cg->downcase (be_global->ciao_container_type ())
@@ -115,7 +115,7 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
       << "void" << be_nl
       << class_name << "::configuration_complete ()" << be_nl
       << "{" << be_idt_nl;
-   for (int i = 0; i < port_nr; i ++)
+   for (int i = 0; i < port_nr; ++i)
     {
       os_ << "this->facet_exec_" << i << "_->_set_component (this);" << be_nl;
     }
@@ -142,7 +142,7 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
       << "void" << be_nl
       << class_name << "::ccm_remove ()" << be_nl
       << "{" << be_idt_nl;
-   for (int i = 0; i < port_nr; i ++)
+   for (int i = 0; i < port_nr; ++i)
     {
       os_ << "this->facet_exec_" << i <<"_->_set_component (" << be_idt_nl
       << "::" << s->name () << smart_scope

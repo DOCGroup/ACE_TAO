@@ -103,7 +103,6 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
   TAO_INSERT_COMMENT (os);
 
-  // Default constructor.
   *os << node->name () << "::" << node->local_name ()
       << " ()" << be_idt_nl;
   if (base_initializer.length () + 2 <= be_global->max_line_length ())
@@ -120,7 +119,6 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   *os << "{" << be_nl;
   *os << "}" << be_nl_2;
 
-  // Copy constructor.
   *os << node->name () << "::" << node->local_name () << " (const ::"
       << node->name () << " &_tao_excp)" << be_idt_nl;
   *os << ": ::CORBA::UserException (_tao_excp._rep_id (), _tao_excp._name ())"
@@ -149,7 +147,6 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   *os << be_uidt_nl
       << "}" << be_nl_2;
 
-  // Assignment operator.
   *os << node->name () << "&" << be_nl;
   *os << node->name () << "::operator= (const ::"
       << node->name () << " &_tao_excp)" << be_nl

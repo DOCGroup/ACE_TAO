@@ -152,15 +152,73 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   // Make sure we are generating to *C.cpp regardless of the above.
   os = tao_cg->client_stubs ();
 
-  // Generate destructor.
-  //
-  // @@ Do not inline this destructor.  It is virtual.  Inlining
+  // Do not inline this destructor. It is virtual. Inlining
   //    virtual functions, including virtual destructors, wreaks havoc
   //    with g++ >= 4.0 RTTI support when the
   //    "-fvisibility-inlines-hidden" command line option is used.
   *os << node->name () << "::~" << node->local_name () << " ()"
       << be_nl
       << "{}" << be_nl_2;
+
+  if (node->opt_accessor ()
+      && node->generates_obv_copy_value ()
+      && !this->is_amh_exception_holder (node))
+    {
+      *os << "::CORBA::ValueBase *" << be_nl
+          << node->name () << "::_copy_value ()" << be_nl
+          << "{" << be_idt_nl
+          << node->local_name () << " *ret_val {};" << be_nl
+          << "ACE_NEW_THROW_EX (" << be_idt_nl
+          << "ret_val," << be_nl
+          << node->local_name () << " ()," << be_nl
+          << "::CORBA::NO_MEMORY ());" << be_uidt_nl
+          << "::CORBA::ValueBase_var ret_val_guard (ret_val);" << be_nl;
+
+      for (be_valuetype *current = node;
+           current != nullptr;
+           current = dynamic_cast<be_valuetype *> (
+             current->inherits_concrete ()))
+        {
+          for (UTL_ScopeActiveIterator si (current,
+                                           UTL_Scope::IK_decls);
+               !si.is_done ();
+               si.next ())
+            {
+              AST_Decl * const decl = si.item ();
+              if (decl != nullptr && decl->node_type () == AST_Decl::NT_field)
+                {
+                  be_field * const field = dynamic_cast<be_field *> (decl);
+                  if (field != nullptr)
+                    {
+                      *os << "ret_val->" << decl->local_name ()
+                          << " (";
+                      this->gen_valuetype_field_copy_expression (field,
+                                                                 "this->",
+                                                                 "nullptr",
+                                                                 false);
+                      *os << ");" << be_nl;
+                    }
+                }
+            }
+        }
+
+      *os << "return ret_val_guard._retn ();" << be_uidt_nl
+          << "}" << be_nl_2;
+    }
+
+  if (node->opt_accessor () && node->obv_has_refcount_overrides ())
+    {
+      *os << "void" << be_nl
+          << node->name () << "::_add_ref ()" << be_nl
+          << "{" << be_idt_nl
+          << "this->::CORBA::DefaultValueRefCountBase::_add_ref ();"
+          << be_uidt_nl << "}" << be_nl_2
+          << "void" << be_nl
+          << node->name () << "::_remove_ref ()" << be_nl
+          << "{" << be_idt_nl
+          << "this->::CORBA::DefaultValueRefCountBase::_remove_ref ();"
+          << be_uidt_nl << "}" << be_nl_2;
+    }
 
   bool const is_an_amh_exception_holder =
     this->is_amh_exception_holder (node);
@@ -224,7 +282,6 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "return false;"<< be_uidt_nl
           << "}" << be_nl_2;
 
-
       if (!node->opt_accessor () && !node->is_abstract ())
         {
           *os << "::CORBA::Boolean" << be_nl
@@ -281,19 +338,29 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "is_indirected" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl << be_nl
       << "::CORBA::ValueBase_var owner (base);" << be_nl_2
-      << "if (!retval)" << be_idt_nl
-      << "return false;" << be_uidt_nl << be_nl
-      << "if (is_null_object)" << be_idt_nl
-      << "return true;" << be_uidt_nl << be_nl
-      << "if (!is_indirected && !base->_tao_unmarshal_v (strm))" << be_idt_nl
-      << "return false;" << be_uidt_nl << be_nl
+      << "if (!retval)" << be_nl
+      << "{" << be_idt_nl
+      << "return false;" << be_uidt_nl
+      << "}" << be_nl_2
+      << "if (is_null_object)" << be_nl
+      << "{" << be_idt_nl
+      << "return true;" << be_uidt_nl
+      << "}" << be_nl_2
+      << "if (!is_indirected && !base->_tao_unmarshal_v (strm))" << be_nl
+      << "{" << be_idt_nl
+      << "return false;" << be_uidt_nl
+      << "}" << be_nl_2
       << "// Now base must point to the unmarshaled object." << be_nl
       << "// Align the pointer to the right subobject." << be_nl
       << "new_object = " << node->local_name () << "::_downcast (base);" << be_nl
-      << "if (nullptr == new_object)" << be_idt_nl
-      << "return false;" << be_uidt_nl << be_nl
-      << "if (is_indirected)" << be_idt_nl
-      << "new_object->_add_ref ();" << be_uidt_nl << be_nl
+      << "if (nullptr == new_object)" << be_nl
+      << "{" << be_idt_nl
+      << "return false;" << be_uidt_nl
+      << "}" << be_nl_2
+      << "if (is_indirected)" << be_nl
+      << "{" << be_idt_nl
+      << "new_object->_add_ref ();" << be_uidt_nl
+      << "}" << be_nl_2
       << "owner._retn ();" << be_nl
       << "return true;" << be_uidt_nl
       << "}";

@@ -53,6 +53,25 @@ vt_graph_impl::print ()
     nodes_ ()[i]->print ();
 }
 
+CORBA::ValueBase *
+vt_graph_impl::_copy_value ()
+{
+  vt_graph_impl *copy {};
+  ACE_NEW_THROW_EX (copy, vt_graph_impl, CORBA::NO_MEMORY ());
+  CORBA::ValueBase_var owner (copy);
+  Node_Copy_Map copies;
+  Supports_Test::Node_List const& source_nodes = this->nodes_ ();
+  Supports_Test::Node_List nodes;
+  nodes.length (source_nodes.length ());
+  for (CORBA::ULong i {}; i < nodes.length (); ++i)
+    {
+      node_impl const * const node =
+        dynamic_cast<node_impl const *> (source_nodes[i]);
+      nodes[i] = node_impl::copy_node (node, copies);
+    }
+  copy->nodes_ (nodes);
+  return owner._retn ();
+}
 
 /* vt_graph_init_impl - factory operations */
 
@@ -210,6 +229,48 @@ node_impl::print ()
   cout << "    Neighbors: " << endl;
   for (size_t i = 0; i < neighbors_ ().length (); i++)
     cout << "      " << neighbors_ ()[i]->name_ () << endl;
+}
+
+CORBA::ValueBase *
+node_impl::_copy_value ()
+{
+  Node_Copy_Map copies;
+  return node_impl::copy_node (this, copies);
+}
+
+node_impl *
+node_impl::copy_node (node_impl const *node, Node_Copy_Map& copies)
+{
+  if (node == nullptr)
+    {
+      throw CORBA::BAD_PARAM ();
+    }
+
+  Node_Copy_Map::const_iterator const found = copies.find (node);
+  if (found != copies.end ())
+    {
+      found->second->_add_ref ();
+      return found->second;
+    }
+
+  node_impl *copy {};
+  ACE_NEW_THROW_EX (copy, node_impl, CORBA::NO_MEMORY ());
+  CORBA::ValueBase_var owner (copy);
+  copies.emplace (node, copy);
+  copy->name_ (node->name_ ());
+  copy->weight_ (node->weight_ ());
+  copy->degree_ (node->degree_ ());
+
+  Supports_Test::Node_List neighbors;
+  neighbors.length (node->neighbors_ ().length ());
+  for (CORBA::ULong i {}; i < neighbors.length (); ++i)
+    {
+      node_impl const * const neighbor =
+        dynamic_cast<node_impl const *> (node->neighbors_ ()[i]);
+      neighbors[i] = node_impl::copy_node (neighbor, copies);
+    }
+  copy->neighbors_ (neighbors);
+  return dynamic_cast<node_impl *> (owner._retn ());
 }
 
 /* node_init_impl - factory operations */

@@ -37,7 +37,9 @@ namespace
   print_option (ACE_TCHAR const *option)
   {
     if (option == nullptr)
-      option = ACE_TEXT ("");
+      {
+        option = ACE_TEXT ("");
+      }
 
 #if defined (ACE_USES_WCHAR)
     ACE_Wide_To_Ascii narrow_option (option);
@@ -114,9 +116,13 @@ Options::print_options ()
   ACE_OS::printf ("/* Command-line: ");
 
   if (argv_ != nullptr && argc_ > 0 && argv_[0] != nullptr)
-    print_option (ACE::basename (argv_[0]));
+    {
+      print_option (ACE::basename (argv_[0]));
+    }
   else
-    print_option (nullptr);
+    {
+      print_option (nullptr);
+    }
 
   for (int i = 1; argv_ != nullptr && i < argc_; ++i)
     print_option (argv_[i]);
@@ -253,9 +259,13 @@ Options::~Options ()
 
       for (ptr = key_positions_.data (); *ptr != EOS; ++ptr)
         if (*ptr == WORD_END)
-          ACE_OS::fprintf (stderr, "$\n");
+          {
+            ACE_OS::fprintf (stderr, "$\n");
+          }
         else
-          ACE_OS::fprintf (stderr, "%d\n", *ptr);
+          {
+            ACE_OS::fprintf (stderr, "%d\n", *ptr);
+          }
 
       ACE_OS::fprintf (stderr, "finished dumping Options\n");
     }
@@ -267,7 +277,9 @@ int
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   if (ACE_LOG_MSG->open (argv[0]) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("bBcCdDe:Ef:F:gGhH:i:IJj:k:K:lmMnN:oOprs:S:tTvVZ:QR"));
 
@@ -521,7 +533,9 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 
             // Use all the characters for hashing!!!!
             if (*get_opt.opt_arg () == '*')
-              option_word_ = (option_word_ & ~DEFAULTCHARS) | ALLCHARS;
+              {
+                option_word_ = (option_word_ & ~DEFAULTCHARS) | ALLCHARS;
+              }
             else
               {
                 char *l_key_pos;
@@ -530,13 +544,24 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                      (value = expand ()) != EOS;
                      ++l_key_pos)
                   if (value == BAD_VALUE)
-                    ACE_ERROR_RETURN ((LM_ERROR,
-                                       "Illegal key value or range, use 1,2,3-%d,'$' or '*'.\n%r",
-                                       MAX_KEY_POS - 1,
-                                       usage),
-                                      -1);
+                    {
+                      ACE_ERROR_RETURN ((LM_ERROR,
+                                         "Illegal key value or range, use 1,2,3-%d,'$' or '*'.\n%r",
+                                         MAX_KEY_POS - 1,
+                                         usage),
+                                        -1);
+                    }
+                  else if (l_key_pos == key_positions_.data () + MAX_KEY_POS - 1)
+                    {
+                      ACE_ERROR_RETURN ((LM_ERROR,
+                                         "Maximum of %d key positions may be specified.\n",
+                                         MAX_KEY_POS - 1),
+                                        -1);
+                    }
                   else
-                    *l_key_pos = static_cast<char> (value);
+                    {
+                      *l_key_pos = static_cast<char> (value);
+                    }
 
                 *l_key_pos = EOS;
 
@@ -547,14 +572,18 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                                      &Options::usage),
                                     -1);
                 else if (key_sort (key_positions_.data (), total_keysig_size_) == 0)
-                  ACE_ERROR_RETURN ((LM_ERROR,
-                                     "Duplicate keys selected\n%r",
-                                     &Options::usage),
-                                    -1);
+                  {
+                    ACE_ERROR_RETURN ((LM_ERROR,
+                                       "Duplicate keys selected\n%r",
+                                       &Options::usage),
+                                      -1);
+                  }
                 if (total_keysig_size_ != 2
                     || (key_positions_[0] != 1
                         || key_positions_[1] != WORD_END))
-                  ACE_CLR_BITS (option_word_, DEFAULTCHARS);
+                  {
+                    ACE_CLR_BITS (option_word_, DEFAULTCHARS);
+                  }
               }
             break;
           }

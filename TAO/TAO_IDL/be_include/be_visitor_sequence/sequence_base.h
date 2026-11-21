@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_SEQUENCE_SEQUENCE_BASE_H_
 #define _BE_VISITOR_SEQUENCE_SEQUENCE_BASE_H_
 
@@ -41,7 +40,6 @@ public:
   be_visitor_sequence_base &operator= (const be_visitor_sequence_base &) = delete;
   be_visitor_sequence_base &operator= (be_visitor_sequence_base &&) = delete;
 
-  // = Visitor methods.
   int visit_predefined_type (be_predefined_type *node) override;
   int visit_interface (be_interface *node) override;
   int visit_interface_fwd (be_interface_fwd *node) override;
@@ -81,7 +79,6 @@ public:
   be_visitor_sequence_base_template_args (be_visitor_context *ctx,
                                           be_sequence *node);
 
-  ///Dtor
   ~be_visitor_sequence_base_template_args () override;
 
   be_visitor_sequence_base_template_args (const be_visitor_sequence_base_template_args &) = delete;
@@ -91,7 +88,6 @@ public:
   be_visitor_sequence_base_template_args &operator= (
     be_visitor_sequence_base_template_args &&) = delete;
 
-  //= Visit methods
   int visit_interface (be_interface *node) override;
 
   int visit_interface_fwd (be_interface_fwd *node) override;

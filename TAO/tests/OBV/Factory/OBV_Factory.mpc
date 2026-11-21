@@ -3,6 +3,10 @@ project(*idl): taoidldefaults, valuetype {
   IDL_Files {
     Factory.idl
   }
+  IDL_Files {
+    idlflags += -Wb,obv_opt_accessor
+    Opt_Accessor.idl
+  }
   custom_only = 1
 }
 
@@ -16,6 +20,8 @@ project(*Server): taoserver, valuetype {
   Source_Files {
     FactoryC.cpp
     FactoryS.cpp
+    Opt_AccessorC.cpp
+    Opt_AccessorS.cpp
   }
   IDL_Files {
   }
@@ -29,6 +35,7 @@ project(*Client): taoclient, valuetype {
   }
   Source_Files {
     FactoryC.cpp
+    Opt_AccessorC.cpp
   }
   IDL_Files {
   }

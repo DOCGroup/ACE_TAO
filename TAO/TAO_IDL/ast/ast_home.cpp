@@ -21,7 +21,7 @@ AST_Home::AST_Home (UTL_ScopedName *n,
                     AST_Type_List const& supports,
                     long n_supports,
                     AST_Interface_List const& supports_flat,
-                    std::size_t n_supports_flat)
+                    size_t n_supports_flat)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_home,
@@ -41,7 +41,7 @@ AST_Home::AST_Home (UTL_ScopedName *n,
     pd_primary_key (primary_key)
 {
   AST_Type_List const& inherited = this->inherits ();
-  std::size_t const first_support = this->pd_base_home == nullptr ? 0 : 1;
+  size_t const first_support = this->pd_base_home == nullptr ? 0 : 1;
   if (first_support < inherited.size ())
     {
       this->pd_supports.assign (inherited.begin () + first_support, inherited.end ());
@@ -100,7 +100,7 @@ AST_Home::look_in_supported (UTL_ScopedName *e,
   // (Don't leave the inheritance hierarchy, no module or global ...)
   // Find all and report ambiguous results as error.
 
-  for (std::size_t j {}; j < supported.size (); ++j)
+  for (size_t j {}; j < supported.size (); ++j)
     {
       if (supported[j]->node_type () == AST_Decl::NT_param_holder)
         {

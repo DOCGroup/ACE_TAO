@@ -178,7 +178,7 @@ static UTL_ScopedName *
 munge_name_for_enumval (UTL_ScopedName *n,
                         Identifier *last_component)
 {
-  std::size_t len = n->length ();
+  size_t len = n->length ();
   UTL_ScopedName *hold = n;
 
   // Last three components are:

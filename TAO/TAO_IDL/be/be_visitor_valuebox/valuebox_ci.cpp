@@ -17,7 +17,6 @@ be_visitor_valuebox_ci::be_visitor_valuebox_ci (be_visitor_context *ctx)
 {
 }
 
-
 int
 be_visitor_valuebox_ci::visit_valuebox (be_valuebox *node)
 {
@@ -67,7 +66,6 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
 
   TAO_INSERT_COMMENT (os);
 
-  // Public default constructor
   *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " ()"
       << be_nl << "{" << be_idt_nl
@@ -83,7 +81,6 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
       << be_uidt_nl
       << "}" << be_nl_2;
 
-  // Public copy constructor
   *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " ("
       << vb_node->local_name () << " const &val)" << be_idt_nl
@@ -265,7 +262,6 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
       << "{" << be_idt_nl
       << "this->_pd_value = val;" << be_uidt_nl
       << "}" << be_nl_2;
-
 
   // Public constructor with one argument of type const CORBA::String_var&
   *os << "ACE_INLINE" << be_nl
@@ -504,7 +500,6 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
       ctx.node (vb_node);
     }
 
-
   // Retrieve the disriminant type.
   be_type * const bt = dynamic_cast<be_type*> (node->disc_type ());
 
@@ -515,7 +510,6 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
                          "bad disciminant type\n"),
                         -1);
     }
-
 
   // Generate modifier and accessor for discriminant
   *os << "ACE_INLINE void" << be_nl
@@ -533,7 +527,6 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
 
   return 0;
 }
-
 
 int
 be_visitor_valuebox_ci::emit_for_predef_enum (be_type *node,
@@ -610,7 +603,6 @@ be_visitor_valuebox_ci::emit_default_constructor () const
   // Retrieve the node being visited by this be_visitor_valuebox_ci.
   be_decl * const vb_node = this->ctx_->node ();
 
-  // Public default constructor
   *os << "ACE_INLINE" << be_nl;
   *os << vb_node->name () << "::" << vb_node->local_name ()
       << " ()" << be_nl;
@@ -627,7 +619,6 @@ be_visitor_valuebox_ci::emit_default_constructor_alloc (be_decl *node) const
   bool const node_not_pod =
     dynamic_cast<be_type*> (node)->size_type () == AST_Type::VARIABLE;
 
-  // Public default constructor
   *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " ()"
       << be_nl << "{" << be_idt_nl
@@ -687,7 +678,6 @@ be_visitor_valuebox_ci::emit_copy_constructor () const
   // Retrieve the node being visited by this be_visitor_valuebox_ci.
   be_decl * const vb_node = this->ctx_->node ();
 
-  // Public Copy constructor
   *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name ()
       << " (" << vb_node->full_name () << " const &val)" << be_idt_nl
@@ -707,7 +697,6 @@ be_visitor_valuebox_ci::emit_copy_constructor_alloc (be_decl *node) const
   // Retrieve the node being visited by this be_visitor_valuebox_ci.
   be_decl * const vb_node = this->ctx_->node ();
 
-  // Public copy constructor
   *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " ("
       << vb_node->full_name () << " const &val)" << be_idt_nl
@@ -722,7 +711,6 @@ be_visitor_valuebox_ci::emit_copy_constructor_alloc (be_decl *node) const
       << "this->_pd_value = p;" << be_uidt_nl
       << "}" << be_nl_2;
 }
-
 
 void
 be_visitor_valuebox_ci::emit_assignment (be_decl *node,
@@ -765,7 +753,6 @@ be_visitor_valuebox_ci::emit_assignment_alloc (be_decl *node) const
       << "return *this;" << be_uidt_nl
       << "}" << be_nl_2;
 }
-
 
 void
 be_visitor_valuebox_ci::emit_accessor_modifier (be_decl *node) const

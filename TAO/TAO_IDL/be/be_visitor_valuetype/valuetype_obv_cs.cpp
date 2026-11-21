@@ -31,7 +31,7 @@ int
 be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
 {
   // only visit non-abstract non-imported valuetype
-  if (node->is_abstract () || node->imported ())
+  if (node->is_abstract () || node->imported () || node->opt_accessor ())
     {
       return 0;
     }
@@ -64,7 +64,6 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
           << "}" << be_nl_2;
     }
 
-  // Destructor.
   *os << node->full_obv_skel_name () << "::~";
   if (! node->is_nested ())
     {
@@ -73,14 +72,13 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
   *os << node->local_name () << " ()" << be_nl
       << "{}";
 
-  // Virtual _copy_value() only provided in OBV_* class when
-  // ::CORBA::DefaultValueRefCountBase has been included.
-  // The OBV_ class is concrete in this case and so requires
-  // a _copy_value definition.
-  // Otherwise, the end user must derive from this abstract
-  // OBV_* class and it is up to them to provide the correct
-  // implimentation of the _copy_value() there.
-  if (this->obv_need_ref_counter (node))
+  // Generate _copy_value() when this OBV_ class has the generated reference
+  // counter. Otherwise application code provides the copy operation.
+  // Direct valuetype members are copied recursively, without identity
+  // preservation or cycle detection. Valuetypes nested in aggregates or
+  // held through CORBA::ValueBase use normal member-copy semantics and remain
+  // shared.
+  if (node->generates_obv_copy_value ())
     {
       *os << be_nl_2
           << "::CORBA::ValueBase *" << be_nl
@@ -108,59 +106,54 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
           << "}";
     }
 
-  // OBV_ class has no accessors or modifiers if we are optimizing
-  // or the valuetype is abstract.
-  if (!node->opt_accessor ())
+  if (be_global->cdr_support ())
     {
-      if (be_global->cdr_support ())
-        {
-          *os << be_nl_2 << "::CORBA::Boolean" << be_nl
-              << node->full_obv_skel_name()
-              << "::_tao_marshal__" << node->flat_name()
-              << " (TAO_OutputCDR &strm, TAO_ChunkInfo& ci) const" << be_nl
-              << "{" << be_idt_nl
-              << "return _tao_marshal_state (strm, ci);" << be_uidt_nl
-              << "}" << be_nl_2;
+      *os << be_nl_2 << "::CORBA::Boolean" << be_nl
+          << node->full_obv_skel_name()
+          << "::_tao_marshal__" << node->flat_name()
+          << " (TAO_OutputCDR &strm, TAO_ChunkInfo& ci) const" << be_nl
+          << "{" << be_idt_nl
+          << "return _tao_marshal_state (strm, ci);" << be_uidt_nl
+          << "}" << be_nl_2;
 
-          *os << "::CORBA::Boolean" << be_nl
-              << node->full_obv_skel_name()
-              << "::_tao_unmarshal__" << node->flat_name()
-              << " (TAO_InputCDR &strm, TAO_ChunkInfo& ci)" << be_nl
-              << "{" << be_idt_nl
-              << "return _tao_unmarshal_state (strm, ci);" << be_uidt_nl
-              << "}";
-        }
+      *os << "::CORBA::Boolean" << be_nl
+          << node->full_obv_skel_name()
+          << "::_tao_unmarshal__" << node->flat_name()
+          << " (TAO_InputCDR &strm, TAO_ChunkInfo& ci)" << be_nl
+          << "{" << be_idt_nl
+          << "return _tao_unmarshal_state (strm, ci);" << be_uidt_nl
+          << "}";
+    }
 
-      if (this->visit_scope (node) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_valuetype_obv_cs::"
-                             "visit_valuetype - "
-                             "visit_scope failed\n"),
-                            -1);
-        }
+  if (this->visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuetype_obv_cs::"
+                         "visit_valuetype - "
+                         "visit_scope failed\n"),
+                        -1);
+    }
 
-      // If we inherit from CORBA::Object and/or CORBA::AbstractBase
-      // (in addition to CORBA::ValueBase) we have to add these
-      // to avoid ambiguity.
-      if (node->n_supports () > 0)
-        {
-          *os << be_nl_2 << "void" << be_nl
-              << node->full_obv_skel_name ()
-              << "::_add_ref ()" << be_nl
-              << "{" << be_idt_nl
-              << "this->::CORBA::DefaultValueRefCountBase::_add_ref ();"
-              << be_uidt_nl
-              << "}" << be_nl;
+  // If we inherit from CORBA::Object and/or CORBA::AbstractBase
+  // (in addition to CORBA::ValueBase) we have to add these
+  // to avoid ambiguity.
+  if (node->obv_has_refcount_overrides ())
+    {
+      *os << be_nl_2 << "void" << be_nl
+          << node->full_obv_skel_name ()
+          << "::_add_ref ()" << be_nl
+          << "{" << be_idt_nl
+          << "this->::CORBA::DefaultValueRefCountBase::_add_ref ();"
+          << be_uidt_nl
+          << "}" << be_nl;
 
-          *os << be_nl << "void" << be_nl
-              << node->full_obv_skel_name ()
-              << "::_remove_ref ()" << be_nl
-              << "{" << be_idt_nl
-              << "this->::CORBA::DefaultValueRefCountBase::_remove_ref ();"
-              << be_uidt_nl
-              << "}";
-        }
+      *os << be_nl << "void" << be_nl
+          << node->full_obv_skel_name ()
+          << "::_remove_ref ()" << be_nl
+          << "{" << be_idt_nl
+          << "this->::CORBA::DefaultValueRefCountBase::_remove_ref ();"
+          << be_uidt_nl
+          << "}";
     }
 
   return 0;
@@ -194,8 +187,7 @@ be_visitor_valuetype_obv_cs::visit_field (be_field *node)
 void
 be_visitor_valuetype_obv_cs::gen_obv_init_base_constructor_args (
     be_valuetype *node,
-    unsigned long &index
-  )
+    unsigned long &index)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   AST_Type *parent = node->inherits_concrete ();
@@ -230,8 +222,7 @@ be_visitor_valuetype_obv_cs::gen_obv_init_base_constructor_args (
 
 void
 be_visitor_valuetype_obv_cs::gen_obv_init_constructor_inits (
-    be_valuetype *node
-  )
+    be_valuetype *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   AST_Type *parent = node->inherits_concrete ();
@@ -267,8 +258,7 @@ be_visitor_valuetype_obv_cs::gen_obv_init_constructor_inits (
 void
 be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
   be_valuetype *node,
-  unsigned long &index
-  )
+  unsigned long &index)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -298,19 +288,10 @@ be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
           *os << be_nl;
 
           // Check the member type for nested valuetypes
-          be_type *t = dynamic_cast<be_type*> (f->field_type ());
-          if (dynamic_cast<be_valuetype_fwd*> (t) ||
-              dynamic_cast<be_valuetype*> (t) ||
-              dynamic_cast<be_valuebox*> (t) )
-            {
-              // Nested valuetypes/boxes need to be deep copied also
-              *os << "(" << f->local_name () << " () ?" << be_idt_nl
-                  << t->full_name () << "::_downcast (" << f->local_name ()
-                  << " ()->_copy_value ())" << be_nl
-                  << ": 0)" << be_uidt;
-            }
-          else // Simple non-nested type
-            *os << f->local_name () << " ()";
+          this->gen_valuetype_field_copy_expression (f,
+                                                    "",
+                                                    "0",
+                                                    true);
         }
     }
 }
