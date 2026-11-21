@@ -158,7 +158,8 @@ ACE_INET_Addr::hash () const
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == PF_INET6)
     {
-      const unsigned int *addr = (const unsigned int*)this->ip_addr_pointer();
+      const unsigned int *addr
+        = static_cast<const unsigned int *> (this->ip_addr_pointer ());
       return addr[0] + addr[1] + addr[2] + addr[3] + this->get_port_number();
     }
   else
@@ -1192,7 +1193,8 @@ ACE_INET_Addr::get_ip_address () const
         {
           ACE_UINT32 addr;
           // Return the last 32 bits of the address
-          char *thisaddrptr = (char*)this->ip_addr_pointer ();
+          char *thisaddrptr
+            = static_cast<char *> (this->ip_addr_pointer ());
           thisaddrptr += 128/8 - 32/8;
           std::memcpy (&addr, thisaddrptr, sizeof (addr));
           return ACE_NTOHL (addr);
