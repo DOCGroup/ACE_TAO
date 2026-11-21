@@ -199,7 +199,7 @@ void Oid::init_value(const SmiLPOID srcOid, size_t len)
   // allocate some memory for the oid
   ACE_NEW(smival.value.oid.ptr, SmiUINT32[ len]);
   size_t byte_counter;
-  OidCopy( srcOid, (SmiLPOID) &smival.value.oid, byte_counter);
+  OidCopy (srcOid, std::addressof (smival.value.oid), byte_counter);
 }
 
 void Oid::init_value(const unsigned long *raw_oid, size_t oid_len)
@@ -377,7 +377,7 @@ bool operator>=( const Oid &x,const Oid &y)
 // return the WinSnmp oid part
 SmiLPOID Oid::oidval()
 {
-  return (SmiLPOID) &smival.value.oid;
+  return std::addressof (smival.value.oid);
 }
 
 //===============[Oid::set_data ]==---=====================================
