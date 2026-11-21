@@ -12,14 +12,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_Multihomed_INET_Addr)
 
 ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr ()
-  : secondaries_ (0)
 {
   ACE_TRACE ("ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr");
 }
 
 ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr (const char address[])
- : ACE_INET_Addr (address),
-   secondaries_ (0)
+ : ACE_INET_Addr (address)
 {
 }
 

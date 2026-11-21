@@ -184,7 +184,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_Array<ACE_INET_Addr> secondaries_;
+  ACE_Array<ACE_INET_Addr> secondaries_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
