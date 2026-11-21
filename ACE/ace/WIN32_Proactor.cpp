@@ -39,9 +39,7 @@ public:
 
 ACE_WIN32_Proactor::ACE_WIN32_Proactor (size_t number_of_threads,
                                         bool used_with_reactor_event_loop)
-  : completion_port_ (nullptr),
-    // This *MUST* be nullptr, *NOT* ACE_INVALID_HANDLE !!!
-    number_of_threads_ (static_cast<DWORD> (number_of_threads)),
+  : number_of_threads_ (static_cast<DWORD> (number_of_threads)),
     used_with_reactor_event_loop_ (used_with_reactor_event_loop)
 {
   // Create the completion port.

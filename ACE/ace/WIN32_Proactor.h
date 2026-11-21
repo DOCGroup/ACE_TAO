@@ -258,8 +258,8 @@ protected:
   virtual int post_wakeup_completions (int how_many);
 
   /// Handle for the completion port. Unix doesnt have completion
-  /// ports.
-  ACE_HANDLE completion_port_;
+  /// ports. This must start as nullptr, not ACE_INVALID_HANDLE.
+  ACE_HANDLE completion_port_ {};
 
   /// This number is passed to the @c CreateIOCompletionPort system
   /// call.
