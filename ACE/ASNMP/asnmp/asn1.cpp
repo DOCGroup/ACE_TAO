@@ -1207,7 +1207,7 @@ u_char *cmu_snmp::auth_build( u_char *data,
     return 0;
   }
 
-  return (u_char *)data;
+  return data;
 }
 
 // build a variable binding
@@ -1531,7 +1531,7 @@ u_char *cmu_snmp::auth_parse(u_char *data,
     return 0;
   }
 
-  return (u_char *)data;
+  return data;
 }
 
 /* u_char *data,  // IN - pointer to the start of object
