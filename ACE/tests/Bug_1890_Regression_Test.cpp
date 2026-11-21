@@ -229,7 +229,7 @@ Timer::close()
 {
   for (int i = 0; i != nhandlers; ++i)
     {
-      this->reactor ()->remove_handler (&handler_[i],
+      this->reactor ()->remove_handler (std::addressof (handler_[i]),
                                         ACE_Event_Handler::ALL_EVENTS_MASK |
                                         ACE_Event_Handler::DONT_CALL);
     }

@@ -369,7 +369,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_Time_Value tv (opt_max_duration);
 
   ACE_Reactor::instance()->register_handler
-    (&acceptor, ACE_Event_Handler::READ_MASK);
+    (std::addressof (acceptor), ACE_Event_Handler::READ_MASK);
   ACE_Reactor::instance()->run_reactor_event_loop (tv);
 
   if (Read_Handler::get_countdown () != 0)

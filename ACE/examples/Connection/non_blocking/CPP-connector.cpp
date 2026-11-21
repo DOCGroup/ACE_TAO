@@ -6,6 +6,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Signal.h"
 
+#include <memory>
+
 [[maybe_unused]] static void
 end_client_reactor_event_loop (int, siginfo_t *, ucontext_t *)
 {
@@ -258,7 +260,7 @@ IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::init (int argc, ACE_TCHAR *argv[])
   // Handle signals through the ACE_Reactor.
   if (ACE_Reactor::instance ()->register_handler
       (SIGINT,
-       &this->done_handler_) == -1)
+       std::addressof (this->done_handler_)) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),

@@ -72,7 +72,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                                                 1, 0, 0, 0);
 
   result =
-    reactor.remove_handler (&handler,
+    reactor.remove_handler (std::addressof (handler),
                             ACE_Event_Handler::DONT_CALL |
                             ACE_Event_Handler::ALL_EVENTS_MASK);
   ACE_TEST_ASSERT (result == 0);
@@ -107,7 +107,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                                                 0, 1, 0, 0);
 
   result =
-    reactor.remove_handler (&handler,
+    reactor.remove_handler (std::addressof (handler),
                             ACE_Event_Handler::DONT_CALL |
                             ACE_Event_Handler::ALL_EVENTS_MASK);
   ACE_TEST_ASSERT (result == 0);
@@ -149,7 +149,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                                                 0, 0, 1, 0);
 
   result =
-    reactor.remove_handler (&handler,
+    reactor.remove_handler (std::addressof (handler),
                             ACE_Event_Handler::DONT_CALL |
                             ACE_Event_Handler::ALL_EVENTS_MASK);
   ACE_TEST_ASSERT (result == 0);

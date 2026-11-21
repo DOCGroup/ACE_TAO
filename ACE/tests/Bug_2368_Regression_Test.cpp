@@ -13,6 +13,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
 
+#include <memory>
+
 static bool handleA_close_called = false;
 static bool handleB_close_called = false;
 
@@ -69,7 +71,7 @@ run_main (int, ACE_TCHAR *[])
   // Set up an ACE signal handler.
   if (ACE_Reactor::instance ()->register_handler
       (SIGINT,
-       &my_handlerA) == -1)
+       std::addressof (my_handlerA)) == -1)
     {
       ACE_ERROR ((LM_DEBUG,
                   ACE_TEXT ("%p\n"),
@@ -78,7 +80,7 @@ run_main (int, ACE_TCHAR *[])
 
   if (ACE_Reactor::instance ()->register_handler
       (SIGTERM,
-       &my_handlerB) == -1)
+       std::addressof (my_handlerB)) == -1)
     {
       ACE_ERROR ((LM_DEBUG,
                   ACE_TEXT ("%p\n"),
