@@ -209,12 +209,12 @@ private:
 
   /// Index of the bit we're examining in the current word_num_() word.
 #if defined (ACE_HANDLE_SET_USES_FD_ARRAY)
-  u_int handle_index_;
+  u_int handle_index_ {};
 #elif !defined (ACE_HAS_BIG_FD_SET)
-  int handle_index_;
+  int handle_index_ {};
 #elif defined (ACE_HAS_BIG_FD_SET)
-  int handle_index_;
-  u_long oldlsb_;
+  int handle_index_ {};
+  u_long oldlsb_ {};
 #endif /* ACE_HANDLE_SET_USES_FD_ARRAY */
 
   /// Number of the word we're iterating over (typically between 0..7).

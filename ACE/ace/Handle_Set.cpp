@@ -422,11 +422,8 @@ ACE_Handle_Set_Iterator::operator () ()
 ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (ACE_Handle_Set const &hs)
   : handles_ (hs),
 #if !defined (ACE_HAS_BIG_FD_SET) || defined (ACE_HANDLE_SET_USES_FD_ARRAY)
-    handle_index_ (0),
     word_num_ (-1)
 #elif defined (ACE_HAS_BIG_FD_SET)
-    handle_index_ (0),
-    oldlsb_ (0),
     word_max_ (hs.max_handle_ == ACE_INVALID_HANDLE
                ? 0
                : ((ACE_DIV_BY_WORDSIZE (hs.max_handle_)) + 1))
