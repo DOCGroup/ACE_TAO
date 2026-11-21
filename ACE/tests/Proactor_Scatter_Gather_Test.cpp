@@ -1390,7 +1390,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (!client_only)
     {
       // Simplify, initial read with zero size
-      if (-1 == acceptor.open (addr, 0, 1))
+      if (-1 == acceptor.open (addr, 0, true))
         {
           ACE_TEST_ASSERT (0);
           return -1;

@@ -694,7 +694,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if ( host == 0 ) // Acceptor
     {
       // Simplify , initial read with  zero size
-      Rc = acceptor.open (ACE_INET_Addr (port),0,1);
+      Rc = acceptor.open (ACE_INET_Addr (port),0,true);
     }
   else
     {

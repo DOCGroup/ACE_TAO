@@ -299,7 +299,7 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
 
   // Only one thread will do recv at the same time.
   // FUZZ: disable check_for_ACE_Guard
-  ACE_Guard<TAO_SYNCH_MUTEX> recv_guard (this->recv_lock_, 0); // tryacquire
+  ACE_Guard<TAO_SYNCH_MUTEX> recv_guard (this->recv_lock_, false); // tryacquire
   // FUZZ: enable check_for_ACE_Guard
   if (recv_guard.locked ())
     {
