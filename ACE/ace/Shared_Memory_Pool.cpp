@@ -194,8 +194,8 @@ ACE_Shared_Memory_Pool::handle_signal (int, siginfo_t *siginfo, ucontext_t *)
                   ACE_TEXT ("in_use")));
     }
   else if (!(siginfo->si_code == SEGV_MAPERR
-        && siginfo->si_addr < (((char *) this->shm_addr_table_[0]) + offset)
-        && siginfo->si_addr >= ((char *) this->shm_addr_table_[0])))
+        && siginfo->si_addr < (static_cast<char *> (this->shm_addr_table_[0]) + offset)
+        && siginfo->si_addr >= static_cast<char *> (this->shm_addr_table_[0])))
     {
       ACELIB_ERROR_RETURN ((LM_ERROR,
                           "(%P|%t) ACE_Shared_Memory_Pool::handle_signal, address %u out of range, base = %u, offset = %u\n",
@@ -325,7 +325,7 @@ ACE_Shared_Memory_Pool::acquire (size_t nbytes, size_t &rounded_bytes)
   }
 
   // ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) ACE_Shared_Memory_Pool::acquire, acquired more chunks, nbytes = %d, rounded_bytes = %d\n"), nbytes, rounded_bytes));
-  return ((char *) this->shm_addr_table_[0]) + offset;
+  return static_cast<char *> (this->shm_addr_table_[0]) + offset;
 }
 
 /// Ask system for initial chunk of shared memory.
