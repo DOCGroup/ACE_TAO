@@ -113,9 +113,6 @@ ACE_Select_Reactor_Handler_Repository::open (size_type size)
 
 ACE_Select_Reactor_Handler_Repository::ACE_Select_Reactor_Handler_Repository (ACE_Select_Reactor_Impl &select_reactor)
   : select_reactor_ (select_reactor)
-#ifndef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
-  , max_handlep1_ (0)
-#endif  /* !ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
 {
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository::ACE_Select_Reactor_Handler_Repository");
 }

@@ -398,7 +398,7 @@ private:
 #ifndef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
   /// The highest currently active handle, plus 1 (ranges between 0 and
   /// @c max_size_.
-  max_handlep1_type max_handlep1_;
+  max_handlep1_type max_handlep1_ {};
 #endif  /* !ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
 
   /// Underlying table of event handlers.
