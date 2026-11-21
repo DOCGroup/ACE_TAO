@@ -206,10 +206,10 @@ protected:
 
 protected:
   /// Saved pointers used to manipulate the read/write areas.
-  char *eback_saved_;
+  char *eback_saved_ {};
   char *gptr_saved_;
   char *egptr_saved_;
-  char *pbase_saved_;
+  char *pbase_saved_ {};
   char *pptr_saved_;
   char *epptr_saved_;
 
