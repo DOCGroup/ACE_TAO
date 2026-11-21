@@ -147,14 +147,10 @@ ACE_Log_Record::msg_data (const ACE_TCHAR *data)
 ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
                                 time_t ts_sec,
                                 long p)
-  : length_ (0),
-    type_ (ACE_UINT32 (lp)),
+  : type_ (ACE_UINT32 (lp)),
     secs_ (ts_sec),
     usecs_ (0),
-    pid_ (ACE_UINT32 (p)),
-    msg_data_ (nullptr),
-    msg_data_size_ (0),
-    category_(nullptr)
+    pid_ (ACE_UINT32 (p))
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -172,14 +168,10 @@ ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
 ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
                                 const ACE_Time_Value &ts,
                                 long p)
-  : length_ (0),
-    type_ (ACE_UINT32 (lp)),
+  : type_ (ACE_UINT32 (lp)),
     secs_ (ts.sec ()),
     usecs_ ((ACE_UINT32) ts.usec ()),
-    pid_ (ACE_UINT32 (p)),
-    msg_data_ (nullptr),
-    msg_data_size_ (0),
-    category_(nullptr)
+    pid_ (ACE_UINT32 (p))
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -208,14 +200,10 @@ ACE_Log_Record::round_up ()
 }
 
 ACE_Log_Record::ACE_Log_Record ()
-  : length_ (0),
-    type_ (0),
+  : type_ (0),
     secs_ (0),
     usecs_ (0),
-    pid_ (0),
-    msg_data_ (nullptr),
-    msg_data_size_ (0),
-    category_(nullptr)
+    pid_ (0)
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
 #if defined (ACE_HAS_ALLOC_HOOKS)

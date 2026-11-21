@@ -170,7 +170,7 @@ private:
    * correctly.  In addition, the field must be an ACE_INT32 in order
    * to be passed portable across platforms.
    */
-  ACE_INT32 length_;
+  ACE_INT32 length_ {};
 
   /// Type of logging record.
   ACE_UINT32 type_;
@@ -182,14 +182,13 @@ private:
   /// Id of process that generated the logging record.
   ACE_UINT32 pid_;
 
-  /// Logging record data
-  ACE_TCHAR *msg_data_;   // Heap-allocated text message area
+  /// Heap-allocated logging record data.
+  ACE_TCHAR *msg_data_ {};
 
   /// Allocated size of msg_data_ in ACE_TCHARs
-  size_t msg_data_size_;
+  size_t msg_data_size_ {};
 
-  ///
-  ACE_Log_Category_TSS* category_;
+  ACE_Log_Category_TSS* category_ {};
 
   ACE_Log_Record (ACE_Log_Record const &) = delete;
   ACE_Log_Record &operator= (ACE_Log_Record const &) = delete;
