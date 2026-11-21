@@ -99,7 +99,7 @@ ACEXML_Svcconf_Handler::endElement (ACEXML_Char const *,
 //                       this->stream_info_.name ()));
           if (active_info->service_type () == ACE_Service_Type::STREAM)
             {
-              this->stream_ = (ACE_Stream_Type *) stp;
+              this->stream_ = static_cast<ACE_Stream_Type *> (stp);
             }
           else
             {
@@ -127,10 +127,10 @@ ACEXML_Svcconf_Handler::endElement (ACEXML_Char const *,
             {
               ACE_ARGV args (active_info->init_params ());
 
-              ACE_Module_Type * const mt = (ACE_Module_Type *) stp;
+              ACE_Module_Type * const mt = static_cast<ACE_Module_Type *> (stp);
 
               ACE_Module<ACE_SYNCH> * const mp =
-                (ACE_Module<ACE_SYNCH> *) mt->object ();
+                static_cast<ACE_Module<ACE_SYNCH> *> (mt->object ());
 
               if (ACE_OS::strcmp (mp->name (), active_info->name ()) != 0)
                 {
