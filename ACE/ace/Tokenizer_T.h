@@ -45,7 +45,7 @@ public:
    * \sa preserve_designators
    * \sa preserve_designators
    */
-  ACE_Tokenizer_T (ACE_CHAR_T *buffer);
+  explicit ACE_Tokenizer_T (ACE_CHAR_T *buffer);
 
   /**
    * \a d is a delimiter.

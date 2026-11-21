@@ -1562,7 +1562,7 @@ public:
   ACE_Handler ();
 
   /// A do nothing constructor which allows proactor to be set to @a p.
-  ACE_Handler (ACE_Proactor *p);
+  explicit ACE_Handler (ACE_Proactor *p);
 
   /// Virtual destruction.
   virtual ~ACE_Handler ();
