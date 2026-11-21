@@ -17,6 +17,8 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_THREADS)
 
 // This test exercises the setting and cancelling of timers from a
@@ -302,7 +304,7 @@ run_main (int, ACE_TCHAR *[])
   for (int i = ACE_MAX_TIMERS; i > 0; --i)
     {
       // Schedule a timeout to expire immediately.
-      if (r->schedule_timer (&callback,
+      if (r->schedule_timer (std::addressof (callback),
                              reinterpret_cast <const void *> (static_cast <size_t> (i)),
                              ACE_Time_Value (0)) == -1)
         {

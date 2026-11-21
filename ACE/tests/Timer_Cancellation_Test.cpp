@@ -14,6 +14,8 @@
 #include "ace/TP_Reactor.h"
 #include "ace/Task.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_THREADS)
 
 class Deadlock : public ACE_Task_Base
@@ -118,7 +120,7 @@ run_main (int, ACE_TCHAR *[])
   Event_Handler handler (deadlock);
 
   // Scheduler a timer to kick things off.
-  reactor.schedule_timer (&handler,
+  reactor.schedule_timer (std::addressof (handler),
                           nullptr,
                           ACE_Time_Value (1));
 

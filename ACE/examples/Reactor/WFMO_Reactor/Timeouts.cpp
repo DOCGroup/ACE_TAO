@@ -59,7 +59,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // Register a 3 second timer.
   ACE_Time_Value bar_tv (3);
   static char bar[] = "Bar";
-  ACE_Reactor::instance ()->schedule_timer (&handler,
+  ACE_Reactor::instance ()->schedule_timer (std::addressof (handler),
                                             bar,
                                             bar_tv,
                                             bar_tv);
@@ -67,7 +67,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // Register a 2 second timer.
   ACE_Time_Value foo_tv (2);
   static char foo[] = "Foo";
-  ACE_Reactor::instance ()->schedule_timer (&handler,
+  ACE_Reactor::instance ()->schedule_timer (std::addressof (handler),
                                             foo,
                                             foo_tv,
                                             foo_tv);

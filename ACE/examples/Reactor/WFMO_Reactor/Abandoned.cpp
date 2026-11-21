@@ -118,7 +118,7 @@ ACE_TMAIN (int , ACE_TCHAR *[])
   ACE_TEST_ASSERT (result == 0);
 
   ACE_Time_Value timeout (2);
-  result = ACE_Reactor::instance ()->schedule_timer (&event_handler,
+  result = ACE_Reactor::instance ()->schedule_timer (std::addressof (event_handler),
                                                      0,
                                                      timeout,
                                                      timeout);
