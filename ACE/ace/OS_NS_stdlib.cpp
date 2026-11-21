@@ -131,9 +131,10 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
       }
       ACE_TCHAR * buf_p =
 #if defined (ACE_HAS_ALLOC_HOOKS)
-        (ACE_TCHAR *) ACE_Allocator::instance()->malloc (buf_len * sizeof (ACE_TCHAR));
+        static_cast<ACE_TCHAR *> (
+          ACE_Allocator::instance ()->malloc (buf_len * sizeof (ACE_TCHAR)));
 #else
-        (ACE_TCHAR *) ACE_OS::malloc (buf_len * sizeof (ACE_TCHAR));
+        static_cast<ACE_TCHAR *> (ACE_OS::malloc (buf_len * sizeof (ACE_TCHAR)));
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
       if (buf_p == nullptr)
