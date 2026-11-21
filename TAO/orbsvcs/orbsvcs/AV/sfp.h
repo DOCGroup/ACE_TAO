@@ -208,8 +208,8 @@ public:
   static ACE_Message_Block* check_all_fragments (TAO_SFP_Fragment_Table_Entry *fragment_entry);
 
 protected:
+  /// Dumps the buffer to the screen.
   static void dump_buf (char *buf,int n);
-  // dumps the buffer to the screen.
 };
 
 /**
@@ -296,8 +296,8 @@ public:
   TAO_AV_SFP_Factory &operator= (TAO_AV_SFP_Factory const &) = delete;
   TAO_AV_SFP_Factory &operator= (TAO_AV_SFP_Factory &&) = delete;
   ~TAO_AV_SFP_Factory () override;
+  /// Initialization hook.
   int init (int argc, ACE_TCHAR *argv[]) override;
-  // Initialization hook.
   int match_protocol (char const *flow_string) override;
   TAO_AV_Protocol_Object *make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                 TAO_Base_StreamEndPoint *endpoint,

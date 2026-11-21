@@ -62,9 +62,9 @@ public:
   const Options *opts () const;
 
   static int debug ();
-  // Note : See the IDL for descriptions of the operations.
+  /// See the IDL for descriptions of the operations.
 
-  // Activator->Locator
+  /// Activator->Locator
 
   void register_activator
     (ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,

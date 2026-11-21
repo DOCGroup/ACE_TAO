@@ -25,7 +25,7 @@ extern "C"
                char const *attr,
                void *value,
                size_t len);
-  // Set attribute
+  /// Set attribute.
   int ICP_set (unsigned long id,
                char const *attr,
                void const *value);
