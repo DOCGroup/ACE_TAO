@@ -952,7 +952,7 @@ copy_to_pass (CosTrading::PolicySeq& policy_seq,
   policy_seq.replace (REQUEST_ID + 1,
                       counter,
                       policy_buffer,
-                      1);
+                      true);
 }
 
 void
@@ -1018,7 +1018,7 @@ TAO_Policies::copy_to_forward (CosTrading::PolicySeq& policy_seq,
   // Create the new sequence
   policy_seq.replace (REQUEST_ID + 1,
                       counter,
-                      policy_buffer, 1);
+                      policy_buffer, true);
 }
 
 TAO_Offer_Modifier::

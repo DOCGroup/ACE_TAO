@@ -323,7 +323,7 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
     }
 
   request_info->add_request_service_context (srv_con,
-                                             0);
+                                             false);
 
   lock_.acquire ();
   if (ready_que_.message_count () > 0)

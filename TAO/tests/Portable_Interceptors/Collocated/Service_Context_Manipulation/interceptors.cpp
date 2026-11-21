@@ -67,10 +67,10 @@ Echo_Client_Request_Interceptor::send_request (
   CORBA::Octet *buf = CORBA::OctetSeq::allocbuf (string_len);
   std::strcpy (reinterpret_cast<char *> (buf), request_msg);
 
-  sc.context_data.replace (string_len, string_len, buf, 1);
+  sc.context_data.replace (string_len, string_len, buf, true);
 
   // Add this context to the service context list.
-  ri->add_request_service_context (sc, 0);
+  ri->add_request_service_context (sc, false);
 
   // Check that the request service context can be retrieved.
   IOP::ServiceContext_var sc2 =
@@ -293,10 +293,10 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
 
   std::strcpy (reinterpret_cast<char *> (buff), reply_msg);
 
-  scc.context_data.replace (string_len, string_len, buff, 1);
+  scc.context_data.replace (string_len, string_len, buff, true);
 
   // Add this context to the service context list.
-  ri->add_reply_service_context (scc, 0);
+  ri->add_reply_service_context (scc, false);
 }
 
 void

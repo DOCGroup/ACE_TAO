@@ -57,7 +57,7 @@ namespace TAO
       object_id_.replace (system_id.maximum (),
                           system_id.length (),
                           const_cast <CORBA::Octet *> (system_id.get_buffer ()),
-                          0);
+                          false);
     }
 
     ACE_INLINE void

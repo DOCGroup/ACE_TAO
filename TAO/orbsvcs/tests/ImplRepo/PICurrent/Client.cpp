@@ -130,7 +130,7 @@ public:
         IOP::ServiceContext sc;
         sc.context_id = ::service_id;
 
-        ri->add_request_service_context (sc, 0);
+        ri->add_request_service_context (sc, false);
       }
     else
       {

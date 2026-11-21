@@ -630,7 +630,7 @@ order_merged_sequence (TAO_Preference_Interpreter& pref_inter,
   CORBA::ULong length = offers.length ();
 
   // Grab ownership of the offers already in the target sequence.
-  CosTrading::Offer* target_buf = offers.get_buffer (1);
+  CosTrading::Offer* target_buf = offers.get_buffer (true);
 
   // Order the sequence.
   for (j = 0; j < length; ++j)

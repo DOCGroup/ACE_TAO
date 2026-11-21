@@ -96,7 +96,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_request_header (
       req_principal.replace (username_size + 1,
                              username_size + 1,
                              buffer,
-                             1);
+                             true);
     }
 
 #else

@@ -95,7 +95,7 @@ TAO_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
   RTScheduling::Current::IdType_var id = this->current_->id ();
   std::memcpy (srv_con.context_data.get_buffer (), id->get_buffer (), sizeof (size_t));
   request_info->add_request_service_context (srv_con,
-                                             0);
+                                             false);
 }
 
 void

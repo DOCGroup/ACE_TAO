@@ -185,7 +185,7 @@ void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerReques
         }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-      ri->add_reply_service_context (sc, 0);
+      ri->add_reply_service_context (sc, false);
 
       ORBSVCS_DEBUG((LM_DEBUG, "reply_service_context added\n"));
     }

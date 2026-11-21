@@ -71,10 +71,10 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
 
   std::strcpy (reinterpret_cast<char *> (buff), reply_msg);
 
-  scc.context_data.replace (string_len, string_len, buff, 1);
+  scc.context_data.replace (string_len, string_len, buff, true);
 
   // Add this context to the service context list.
-  ri->add_reply_service_context (scc, 0);
+  ri->add_reply_service_context (scc, false);
 }
 
 void

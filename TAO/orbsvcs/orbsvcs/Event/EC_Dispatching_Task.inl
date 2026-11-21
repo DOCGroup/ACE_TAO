@@ -94,8 +94,8 @@ TAO_EC_Push_Command::TAO_EC_Push_Command (
   //
   CORBA::ULong maximum = event.maximum ();
   CORBA::ULong length = event.length ();
-  RtecEventComm::Event* buffer = event.get_buffer (1);
-  event_.replace (maximum, length, buffer, 1);
+  RtecEventComm::Event* buffer = event.get_buffer (true);
+  event_.replace (maximum, length, buffer, true);
 
   this->proxy_->_incr_refcnt ();
 }

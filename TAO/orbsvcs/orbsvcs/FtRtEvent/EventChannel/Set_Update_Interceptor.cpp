@@ -51,7 +51,7 @@ TAO_Set_Update_Interceptor::send_request (
       }
 
       IOP::ServiceContext sc = *scp;
-      ri->add_request_service_context (sc, 0);
+      ri->add_request_service_context (sc, false);
 
       FTRT::TransactionDepth transaction_depth =
         Request_Context_Repository().get_transaction_depth(ri);
@@ -88,7 +88,7 @@ TAO_Set_Update_Interceptor::send_request (
           }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-        ri->add_request_service_context (sc, 0);
+        ri->add_request_service_context (sc, false);
 
         cdr.reset();
       }
@@ -127,7 +127,7 @@ TAO_Set_Update_Interceptor::send_request (
           }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-        ri->add_request_service_context (sc, 0);
+        ri->add_request_service_context (sc, false);
       }
     }
 }
