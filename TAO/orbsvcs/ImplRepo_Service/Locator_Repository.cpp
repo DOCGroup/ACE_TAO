@@ -428,8 +428,8 @@ Locator_Repository::add_activator (const ACE_CString& name,
       return err;
     }
 
-  std::unique_ptr<Activator_Info> info_owner (
-    new Activator_Info (name, token, ior, act));
+  std::unique_ptr<Activator_Info> info_owner =
+    std::make_unique<Activator_Info> (name, token, ior, act);
   Activator_Info_Ptr info (info_owner.get ());
   info_owner.release ();
 
