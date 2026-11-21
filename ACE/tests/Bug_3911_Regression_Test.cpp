@@ -63,6 +63,9 @@ protected:
   };
 
 public:
+  ShmemMan (ShmemMan const &) = delete;
+  ShmemMan &operator= (ShmemMan const &) = delete;
+
   ~ShmemMan()
   {
     c_memory_pool->release();
