@@ -776,7 +776,7 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *event_handler,
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
   ssize_t const n = ACE::send (this->notification_pipe_.write_handle (),
-                               (char *) &buffer,
+                               &buffer,
                                sizeof buffer,
                                timeout);
   if (n == -1)
@@ -872,7 +872,7 @@ ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
   if(more_messages_queued)
     {
       (void) ACE::send(this->notification_pipe_.write_handle(),
-            (char *)&next, sizeof(ACE_Notification_Buffer));
+                       &next, sizeof(ACE_Notification_Buffer));
     }
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
@@ -954,7 +954,7 @@ ACE_Select_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
   // 0: nothing read at all
   // 1: complete buffer read
 
-  ssize_t const n = ACE::recv (handle, (char *) &buffer, sizeof buffer);
+  ssize_t const n = ACE::recv (handle, &buffer, sizeof buffer);
 
   if (n > 0)
     {
@@ -968,7 +968,7 @@ ACE_Select_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
           // won't be aligned correctly.  I'm not sure quite what to
           // do at this point.  It's probably best just to return -1.
           if (ACE::recv_n (handle,
-                           ((char *) &buffer) + n,
+                           reinterpret_cast<char *> (&buffer) + n,
                            remainder) != remainder)
           {
             return -1;

@@ -164,7 +164,7 @@ ACE_Dev_Poll_Reactor_Notify::notify (ACE_Event_Handler *eh,
   // Note that we don't need a timeout since the pipe is already in
   // nonblocking mode and all we want is one attempt.
   ssize_t n = ACE::send (this->notification_pipe_.write_handle (),
-                         (char *) &buffer,
+                         &buffer,
                          1);             // Only need one byte to pop the pipe
   if (n == -1 && (errno != EAGAIN))
   {
@@ -177,7 +177,7 @@ ACE_Dev_Poll_Reactor_Notify::notify (ACE_Event_Handler *eh,
   ACE_Dev_Poll_Handler_Guard eh_guard (eh);
 
   ssize_t n = ACE::send (this->notification_pipe_.write_handle (),
-                         (char *) &buffer,
+                         &buffer,
                          sizeof buffer,
                          timeout);
   if (n == -1)
@@ -265,13 +265,13 @@ ACE_Dev_Poll_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
   if (more_messages_queued)
     {
       (void) ACE::send (this->notification_pipe_.write_handle (),
-                        (char *)&next,
+                        &next,
                         1); /* one byte is enough */
     }
   return 1;
 #else
   to_read = sizeof buffer;
-  read_p = (char *)&buffer;
+  read_p = reinterpret_cast<char *> (&buffer);
 
   ssize_t n = ACE::recv (handle, read_p, to_read);
 
