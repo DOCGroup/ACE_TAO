@@ -251,18 +251,36 @@ ACE_ATM_Acceptor::accept (ACE_ATM_Stream &new_sap,
 #elif defined (ACE_HAS_FORE_ATM_WS2)
   ACE_HANDLE n_handle;
   ACE_HANDLE s_handle = acceptor_.get_handle ();
-  struct sockaddr_atm *cli_addr
-    = (struct sockaddr_atm *)remote_addr -> get_addr ();
-  int caddr_len = sizeof (struct sockaddr_atm);
+  struct sockaddr_atm *cli_addr {};
+  int caddr_len {};
+  int *caddr_len_ptr {};
 
-  do {
-    n_handle = ACE_OS::accept (s_handle,
-                               reinterpret_cast<struct sockaddr *> (cli_addr),
-                              &caddr_len);
-  } while (n_handle == ACE_INVALID_HANDLE && errno == EINTR);
+  if (remote_addr != nullptr)
+    {
+      cli_addr = static_cast<struct sockaddr_atm *> (remote_addr->get_addr ());
+      caddr_len = sizeof (struct sockaddr_atm);
+      caddr_len_ptr = &caddr_len;
+    }
 
- ((ACE_ATM_Addr *)remote_addr) -> set (cli_addr,
- ((ACE_ATM_Addr *)remote_addr) -> get_selector ());
+  do
+    {
+      n_handle = ACE_OS::accept (s_handle,
+                                 reinterpret_cast<struct sockaddr *> (cli_addr),
+                                 caddr_len_ptr);
+    }
+  while (n_handle == ACE_INVALID_HANDLE && errno == EINTR);
+
+  if (n_handle == ACE_INVALID_HANDLE)
+    {
+      return -1;
+    }
+
+  if (remote_addr != nullptr)
+    {
+      ACE_ATM_Addr *atm_remote_addr = static_cast<ACE_ATM_Addr *> (remote_addr);
+      atm_remote_addr->set (cli_addr, atm_remote_addr->get_selector ());
+    }
+
   new_sap.get_stream ().set_handle (n_handle);
 
   return 0;
