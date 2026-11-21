@@ -35,7 +35,7 @@ ACE_TLI_Stream::get_remote_addr (ACE_Addr &sa) const
 
   struct netbuf name;
   name.maxlen = sa.get_size ();
-  name.buf = (char *) sa.get_addr ();
+  name.buf = static_cast<char *> (sa.get_addr ());
 
   if (ACE_OS::t_getname (this->get_handle (), &name, REMOTENAME) == -1)
     return -1;
