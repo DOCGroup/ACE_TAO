@@ -32,6 +32,11 @@ namespace ACE
     ACE_INLINE
     SSL_X509Cert& SSL_X509Cert::operator= (::X509* ssl_cert)
       {
+        if (this->ssl_cert_ == ssl_cert)
+          {
+            return *this;
+          }
+
         if (this->ssl_cert_ != nullptr)
           ::X509_free (this->ssl_cert_);
 
