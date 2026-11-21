@@ -113,8 +113,7 @@ ACE_MMAP_Memory_Pool::protect (void *addr, size_t len, int prot)
 ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (
   const ACE_TCHAR *backing_store_name,
   const OPTIONS *options)
-  : base_addr_ (nullptr),
-    use_fixed_addr_(0),
+  : use_fixed_addr_(0),
     flags_ (MAP_SHARED),
     write_each_page_ (false),
     minimum_bytes_ (0),

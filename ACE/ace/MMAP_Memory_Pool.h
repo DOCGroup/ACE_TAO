@@ -265,7 +265,7 @@ protected:
    * free to select any address to map the file, otherwise this value
    * is what the OS must try to use to mmap the file.
    */
-  void *base_addr_;
+  void *base_addr_ {};
 
   /// Must we use the @c base_addr_ or can we let mmap(2) select it?
   int use_fixed_addr_;
