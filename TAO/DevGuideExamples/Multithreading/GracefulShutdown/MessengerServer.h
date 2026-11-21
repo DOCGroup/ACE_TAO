@@ -41,13 +41,13 @@ public:
 
   static int parse_args (int argc, ACE_TCHAR *argv[], Options &options);
 
-  // run the ORB's event loop continuously
+  /// run the ORB's event loop continuously
   void run ();
 
-  // run the ORB's event loop for some number of seconds
+  /// run the ORB's event loop for some number of seconds
   void run (int seconds);
 
-  // handle ORB events in a polling loop for some number of iterations
+  /// handle ORB events in a polling loop for some number of iterations
   void poll (int iterations);
 
   // schedule a shutdown timer with the ORB's reactor to timeout

@@ -36,7 +36,7 @@ private:
 
   RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_ {};
 
-  // The CORBA tie manages its own lifetime through _add_ref/_remove_ref.
+  /// The CORBA tie manages its own lifetime through _add_ref/_remove_ref.
   POA_RtecEventComm::PushSupplier_tie<Quoter_Stock_i> &supplier_personality_;
 };
 
