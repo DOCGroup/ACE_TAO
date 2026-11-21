@@ -103,11 +103,11 @@ PMS_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
   else
     {
       passwd *pwent = ACE_OS::getpwnam (np->get_login_name ());
-      char *cp =
-        (char *) std::strchr (np->set_real_name (pwent == nullptr
-                                                    ? np->get_login_name ()
-                                                    : ACE::strnew (pwent->pw_gecos)),
-                                 ',');
+      char *cp = const_cast<char *> (
+        std::strchr (np->set_real_name (pwent == nullptr
+                                         ? np->get_login_name ()
+                                         : ACE::strnew (pwent->pw_gecos)),
+                     ','));
       if (cp != nullptr)
       {
         *cp = '\0';

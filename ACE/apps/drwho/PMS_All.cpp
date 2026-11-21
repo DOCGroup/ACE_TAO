@@ -88,11 +88,11 @@ PMS_All::insert_protocol_info (Protocol_Record &protocol_record)
 {
   Protocol_Record *prp = PM_Server::insert_protocol_info (protocol_record);
   passwd *pwent = ACE_OS::getpwnam (prp->get_login ());
-  char *cp = (char *) std::strchr (prp->set_real
-                                      (pwent == nullptr
-                                       ? prp->get_login () :
-                                       ACE::strnew (pwent->pw_gecos)),
-                                      ',');
+  char *cp = const_cast<char *> (std::strchr (prp->set_real
+                                               (pwent == nullptr
+                                                ? prp->get_login () :
+                                                ACE::strnew (pwent->pw_gecos)),
+                                               ','));
   if (cp != nullptr)
   {
     *cp = '\0';
