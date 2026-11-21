@@ -25,7 +25,7 @@ class agent_impl;
 class snmp_agent
 {
 public:
-  snmp_agent (); // uses port 161, public, private
+  snmp_agent ();
   ~snmp_agent ();
   snmp_agent (snmp_agent const &) = delete;
   snmp_agent (snmp_agent &&) = delete;
