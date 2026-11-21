@@ -31,8 +31,8 @@ public:
   Echo_Client_Request_Interceptor &operator= (Echo_Client_Request_Interceptor const &) = delete;
   Echo_Client_Request_Interceptor &operator= (Echo_Client_Request_Interceptor &&) = delete;
 
+  /// Canonical name of the interceptor.
   char * name () override;
-  // Canonical name of the interceptor.
 
   void destroy () override;
 
@@ -65,8 +65,8 @@ public:
   Echo_Server_Request_Interceptor &operator= (Echo_Server_Request_Interceptor const &) = delete;
   Echo_Server_Request_Interceptor &operator= (Echo_Server_Request_Interceptor &&) = delete;
 
+  /// Canonical name of the interceptor.
   char * name () override;
-  // Canonical name of the interceptor.
 
   void destroy () override;
 

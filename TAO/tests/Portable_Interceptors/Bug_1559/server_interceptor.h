@@ -23,17 +23,15 @@ class Echo_Server_Request_Interceptor
 {
 public:
   Echo_Server_Request_Interceptor () = default;
-  // cotr.
 
   explicit Echo_Server_Request_Interceptor (CORBA::Object_ptr forward_location);
 
   ~Echo_Server_Request_Interceptor () override = default;
-  // dotr.
 
   void forward_reference (CORBA::Object_ptr forward_location);
 
+  /// Canonical name of the interceptor.
   char * name () override;
-  // Canonical name of the interceptor.
 
   void destroy () override;
 

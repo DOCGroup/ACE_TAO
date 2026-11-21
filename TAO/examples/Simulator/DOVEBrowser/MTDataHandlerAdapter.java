@@ -11,7 +11,6 @@ public class  MTDataHandlerAdapter extends Thread
   private DataHandler dataHandler_ = null;
   private boolean use_queueing_ = false;
 
-  // Constructor.
   MTDataHandlerAdapter (DataHandler dh, boolean use_queueing)
     {
       dataHandler_ = dh;

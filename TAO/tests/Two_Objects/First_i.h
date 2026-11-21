@@ -14,7 +14,6 @@ class First_i
   : public virtual POA_Two_Objects_Test::First
 {
 public:
-  // Ctor..
   explicit First_i (ACE_Auto_Event &two_way_done);
 
   /// Interface methods..

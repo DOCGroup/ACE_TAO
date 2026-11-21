@@ -42,8 +42,8 @@ public:
 
   ~TAO_Set_Update_Interceptor () override = default;
 
+  /// Canonical name of the interceptor.
   char * name () override;
-  // Canonical name of the interceptor.
 
   void destroy () override;
 

@@ -30,10 +30,9 @@ public:
   Echo_Server_Request_Interceptor &operator= (Echo_Server_Request_Interceptor &&) = delete;
 
   ~Echo_Server_Request_Interceptor () override = default;
-  // dotr.
 
+  /// Canonical name of the interceptor.
   char * name () override;
-  // Canonical name of the interceptor.
 
   void destroy () override;
 

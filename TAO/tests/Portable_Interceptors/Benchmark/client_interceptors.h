@@ -30,8 +30,8 @@ public:
   Vault_Client_Request_Interceptor &operator= (Vault_Client_Request_Interceptor const &) = delete;
   Vault_Client_Request_Interceptor &operator= (Vault_Client_Request_Interceptor &&) = delete;
 
+  /// Canonical name of the interceptor.
   char * name () override;
-  // Canonical name of the interceptor.
 
   void destroy () override;
 
@@ -62,8 +62,8 @@ public:
   Vault_Client_Request_Context_Interceptor &operator= (Vault_Client_Request_Context_Interceptor const &) = delete;
   Vault_Client_Request_Context_Interceptor &operator= (Vault_Client_Request_Context_Interceptor &&) = delete;
 
+  /// Canonical name of the interceptor.
   char * name () override;
-  // Canonical name of the interceptor.
 
   void destroy () override;
 
@@ -94,8 +94,8 @@ public:
   Vault_Client_Request_Dynamic_Interceptor &operator= (Vault_Client_Request_Dynamic_Interceptor const &) = delete;
   Vault_Client_Request_Dynamic_Interceptor &operator= (Vault_Client_Request_Dynamic_Interceptor &&) = delete;
 
+  /// Canonical name of the interceptor.
   char * name () override;
-  // Canonical name of the interceptor.
 
   void destroy () override;
 
@@ -126,8 +126,8 @@ public:
   Vault_Client_Request_NOOP_Interceptor &operator= (Vault_Client_Request_NOOP_Interceptor const &) = delete;
   Vault_Client_Request_NOOP_Interceptor &operator= (Vault_Client_Request_NOOP_Interceptor &&) = delete;
 
+  /// Canonical name of the interceptor.
   char * name () override;
-  // Canonical name of the interceptor.
 
   void destroy () override;
 

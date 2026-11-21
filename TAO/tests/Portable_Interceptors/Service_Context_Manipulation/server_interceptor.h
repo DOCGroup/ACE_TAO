@@ -23,13 +23,11 @@ class Echo_Server_Request_Interceptor
 {
 public:
   Echo_Server_Request_Interceptor ();
-  // cotr.
 
   ~Echo_Server_Request_Interceptor () override;
-  // dotr.
 
+  /// Canonical name of the interceptor.
   char * name () override;
-  // Canonical name of the interceptor.
 
   void destroy () override;
 

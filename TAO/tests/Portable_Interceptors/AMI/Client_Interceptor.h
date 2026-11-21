@@ -27,8 +27,8 @@ public:
   static unsigned long other_count;
   static unsigned long exception_count;
 
+  /// Canonical name of the interceptor.
   char * name () override;
-  // Canonical name of the interceptor.
 
   void destroy () override;
 
