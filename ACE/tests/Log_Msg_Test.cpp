@@ -59,7 +59,7 @@ public:
 
 private:
   /// Flag for testing verbose logging.
-  bool verbose_logging_;
+  bool verbose_logging_ {};
 
   /// Flag for testing recursive callback logging.
   bool recursive_;
