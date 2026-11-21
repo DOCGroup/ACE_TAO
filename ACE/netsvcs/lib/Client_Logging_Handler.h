@@ -53,7 +53,7 @@ class ACE_Svc_Export ACE_Client_Logging_Handler :
 {
 public:
   /// Default constructor. @a handle is where the output is sent.
-  ACE_Client_Logging_Handler (ACE_HANDLE handle = ACE_STDERR);
+  explicit ACE_Client_Logging_Handler (ACE_HANDLE handle = ACE_STDERR);
 
   /// Activate this instance of the ACE_Client_Logging_Handler
   /// (called by the ACE_Client_Logging_Acceptor).

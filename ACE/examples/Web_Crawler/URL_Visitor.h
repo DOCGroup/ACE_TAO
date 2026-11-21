@@ -124,7 +124,7 @@ public:
 class URL_Visitation_Strategy_Factory
 {
 public:
-  URL_Visitation_Strategy_Factory (URL *);
+  explicit URL_Visitation_Strategy_Factory (URL *);
 
   virtual ~URL_Visitation_Strategy_Factory ();
 
@@ -161,7 +161,7 @@ protected:
 class URL_Download_Visitation_Strategy_Factory : public URL_Visitation_Strategy_Factory
 {
 public:
-  URL_Download_Visitation_Strategy_Factory (URL *);
+  explicit URL_Download_Visitation_Strategy_Factory (URL *);
 
   /// @name Factory methods
   /// @{
