@@ -81,7 +81,7 @@ public:
     : maximum_(allocation_traits::default_maximum())
     , length_(0)
     , buffer_(allocation_traits::default_buffer_allocation())
-    , release_(buffer_ != 0)
+    , release_(buffer_ != nullptr)
   {
   }
 
@@ -109,10 +109,10 @@ public:
   generic_sequence(generic_sequence const & rhs)
     : maximum_(0)
     , length_(0)
-    , buffer_(0)
+    , buffer_(nullptr)
     , release_(false)
   {
-    if (rhs.maximum_ == 0 || rhs.buffer_ == 0)
+    if (rhs.maximum_ == 0 || rhs.buffer_ == nullptr)
     {
       maximum_ = rhs.maximum_;
       length_ = rhs.length_;
@@ -204,7 +204,7 @@ public:
   {
     if (length <= maximum_)
     {
-      if (buffer_ == 0)
+      if (buffer_ == nullptr)
         {
           buffer_ = allocbuf(maximum_);
           release_ = true;
@@ -289,7 +289,7 @@ public:
    */
   value_type const * get_buffer() const
   {
-    if (buffer_ == 0)
+    if (buffer_ == nullptr)
     {
       buffer_ = allocbuf(maximum_);
       release_ = true;
@@ -329,9 +329,9 @@ public:
   {
     if (orphan && !release_)
     {
-      return 0;
+      return nullptr;
     }
-    if (buffer_ == 0)
+    if (buffer_ == nullptr)
     {
       buffer_ = allocbuf(maximum_);
       if (!orphan)
