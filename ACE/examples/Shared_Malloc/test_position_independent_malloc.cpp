@@ -60,7 +60,7 @@ initialize (TEST_MALLOC *allocator)
 
   void *gap {};
   ACE_ALLOCATOR_RETURN (gap,
-                        allocator->malloc (sizeof (256)),
+                        allocator->malloc (256),
                         nullptr);
 
   allocator->free (gap);
