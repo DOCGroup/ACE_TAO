@@ -146,13 +146,13 @@ TAO_SFP_Base::handle_input (TAO_AV_Transport *transport,
         {
           return result;
         }
-        int result =TAO_SFP_Base::read_frame (transport,
-                                              state.frame_header_,
-                                              state,
-                                              frame_info);
-        if (result < 0)
+        int const frame_result = TAO_SFP_Base::read_frame (transport,
+                                                           state.frame_header_,
+                                                           state,
+                                                           frame_info);
+        if (frame_result < 0)
         {
-          return result;
+          return frame_result;
         }
         break;
       }

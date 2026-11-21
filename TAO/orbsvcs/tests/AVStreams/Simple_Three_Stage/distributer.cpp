@@ -212,11 +212,18 @@ Distributer::init (int /*argc*/,
     this->receiver_streamctrl_;
 
   // Bind/Connect the distributer and receiver MMDevices.
-  result =
+  CORBA::Boolean const bind_result =
     this->receiver_streamctrl_->bind_devs (distributer_sender_mmdevice.in (),
                                            this->receiver_mmdevice_.in (),
                                            the_qos.inout (),
                                            flow_spec);
+
+  if (!bind_result)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Streamctrl::bind_devs failed\n"),
+                        -1);
+    }
 
   // Create the forward flow specification to describe the flow.
   TAO_Forward_FlowSpec_Entry sender_entry ("Data_Sender",

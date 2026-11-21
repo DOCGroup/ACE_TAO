@@ -60,7 +60,7 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
   int more = length;
   char *buf_ptr = data->rd_ptr ();
   bool first_rtcp_packet = true;
-  RTCP_Channel_In *c;
+  RTCP_Channel_In *channel;
 
   // This code performs the RTCP Header validity checks detailed in RFC 1889
   // Appendix A.2
@@ -82,12 +82,12 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
                                 "warning invalid rtcp packet\n"));
               }
 
-            if (this->inputs_.find (sr.ssrc (), c) == -1 &&
-                this->add_input_channel (sr.ssrc (), std::addressof (peer_address), c) < 0)
+            if (this->inputs_.find (sr.ssrc (), channel) == -1 &&
+                this->add_input_channel (sr.ssrc (), std::addressof (peer_address), channel) < 0)
             {
               return -1;
             }
-            c->updateStatistics (std::addressof (sr));
+            channel->updateStatistics (std::addressof (sr));
 
             if (TAO_debug_level > 0)
             {
@@ -107,13 +107,13 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
                               "warning invalid rtcp packet\n"));
             }
 
-            if (this->inputs_.find (rr.ssrc (), c) == -1 &&
-                this->add_input_channel (rr.ssrc (), std::addressof (peer_address), c) < 0)
+            if (this->inputs_.find (rr.ssrc (), channel) == -1 &&
+                this->add_input_channel (rr.ssrc (), std::addressof (peer_address), channel) < 0)
             {
               return -1;
             }
 
-            c->updateStatistics (std::addressof (rr));
+            channel->updateStatistics (std::addressof (rr));
 
             if (TAO_debug_level > 0)
             {
@@ -153,20 +153,20 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
 
             // Inform the listener that a source(s) has left the session
             ACE_UINT32 *ssrc_list;
-            unsigned char length;
+            unsigned char ssrc_count;
 
-            bye.ssrc_list (std::addressof (ssrc_list), length);
+            bye.ssrc_list (std::addressof (ssrc_list), ssrc_count);
 
-            for (int i {}; i < length; ++i)
+            for (int i {}; i < ssrc_count; ++i)
               {
-                RTCP_Channel_In *c {};
+                RTCP_Channel_In *channel_to_remove {};
 
                 // remove the channel from the list
-                this->inputs_.unbind(ssrc_list[i], c);
+                this->inputs_.unbind(ssrc_list[i], channel_to_remove);
 
-                if (c != nullptr)
+                if (channel_to_remove != nullptr)
                 {
-                  delete c;
+                  delete channel_to_remove;
                 }
               }
 
