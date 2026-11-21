@@ -54,7 +54,7 @@ namespace ACE
       {
         explicit Data (Monitor_Control_Types::Information_Type type);
         ACE_Time_Value timestamp_;
-        double value_;
+        double value_ {};
         ACE_Array_Base<char *> list_;
 
         Information_Type type_;

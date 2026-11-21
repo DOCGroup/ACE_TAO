@@ -14,7 +14,6 @@ namespace ACE
     Monitor_Control_Types::Data::Data (
       Monitor_Control_Types::Information_Type type)
       : timestamp_ (ACE_Time_Value::zero)
-      , value_ (0.0)
       , type_ (type)
     {}
 
