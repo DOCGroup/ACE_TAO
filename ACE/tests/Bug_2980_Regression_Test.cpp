@@ -60,7 +60,7 @@ void* loadDll(void*)
   if (subdir_env)
     {
       char *dllFile =
-        (char *) malloc (2 + strlen (subdir_env) + strlen (DllTestName));
+        static_cast<char *> (malloc (2 + strlen (subdir_env) + strlen (DllTestName)));
       strcpy (dllFile, subdir_env);
       strcat (dllFile, "/");
       strcat (dllFile, DllTestName);
