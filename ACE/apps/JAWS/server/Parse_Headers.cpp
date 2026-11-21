@@ -57,7 +57,7 @@ Headers::parse_header_line (char * const header_line)
       this->map_[header] = value;
 
       ACE_DEBUG((LM_DEBUG, " (%t) Headers::parse_header_line <%s>\n",
-                 value ? value : "<empty>"));
+                 value));
     }
 
   // Write back the unused portion of the input.
