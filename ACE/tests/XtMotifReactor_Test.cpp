@@ -290,7 +290,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   // It will perform X Main Loop
   ACE_XtReactor reactor (app_context);
 
-  ACE_Reactor r (&reactor);
+  ACE_Reactor r (std::addressof (reactor));
 
   //Event Handler for ACE Timer.
   EV_handler evh;

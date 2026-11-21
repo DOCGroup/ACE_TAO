@@ -279,7 +279,7 @@ run_main (int, ACE_TCHAR *[])
 
   // It will perform Tk Main Loop
   ACE_TkReactor reactor;
-  ACE_Reactor r (&reactor);
+  ACE_Reactor r (std::addressof (reactor));
 
   //Event Handler for ACE Timer.
   EV_handler evh;

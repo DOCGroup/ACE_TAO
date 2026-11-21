@@ -21,6 +21,8 @@
 #include "ace/Assert.h"
 #include "ace/SString.h"
 
+#include <memory>
+
 class Test_SIGINT_Handler : public ACE_Event_Handler
 {
 public:
@@ -92,8 +94,8 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_Sig_Handlers multi_handlers;
   ACE_Select_Reactor reactor_impl (&multi_handlers);
-  ACE_Reactor reactor (&reactor_impl);
-  ACE_Reactor::instance (&reactor);
+  ACE_Reactor reactor (std::addressof (reactor_impl));
+  ACE_Reactor::instance (std::addressof (reactor));
 
   // Create a bevy of handlers.
 

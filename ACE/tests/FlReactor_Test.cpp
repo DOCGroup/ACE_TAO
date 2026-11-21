@@ -234,7 +234,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
   slider.bounds (3, 10);
 
   ACE_FlReactor reactor;
-  ACE_Reactor r (&reactor);
+  ACE_Reactor r (std::addressof (reactor));
 
   Fl_Box *box = new Fl_Box (FL_UP_BOX, 10, 40,
                             window.w () - 20, 30,

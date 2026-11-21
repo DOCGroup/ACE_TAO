@@ -21,6 +21,8 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 #include <cstring>
 
 static const char *message =
@@ -226,7 +228,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Bug_2653_Regression_Test"));
 
   ACE_TP_Reactor tp_reactor_impl;
-  ACE_Reactor tp_reactor (&tp_reactor_impl);
+  ACE_Reactor tp_reactor (std::addressof (tp_reactor_impl));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing for crash\n")));
   test_for_crash (tp_reactor);
   // if that passes, start the watchdog. We don't need to wait

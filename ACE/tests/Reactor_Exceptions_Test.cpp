@@ -16,6 +16,8 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Select_Reactor.h"
 
+#include <memory>
+
 // Just need a simple exception class.
 class Except {};
 
@@ -137,7 +139,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_INET_Addr remote_addr (port, ACE_LOCALHOST, PF_INET);
   ACE_Reactor reactor (new My_Reactor, true);
 
-  ACE_Reactor::instance (&reactor);
+    ACE_Reactor::instance (std::addressof (reactor));
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
   {

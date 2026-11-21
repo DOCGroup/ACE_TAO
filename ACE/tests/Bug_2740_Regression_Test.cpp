@@ -23,6 +23,8 @@
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_string.h"
 
+#include <memory>
+
 const ACE_Time_Value MAX_CLIENT_TIMEOUT(30);  // 30 secs
 
 // The number of clients we'll run. When the ClientsLeft gets back to 0 (it's
@@ -351,7 +353,7 @@ int run_main(int, ACE_TCHAR *[])
 
   ACE_Dev_Poll_Reactor dp_reactor;
   dp_reactor.restart (true);          // Restart on EINTR
-  ACE_Reactor reactor (&dp_reactor);
+  ACE_Reactor reactor (std::addressof (dp_reactor));
 
   // Bind acceptor to any port and then find out what the port was.
   ACE_Acceptor<ServerSvcHandler, ACE_SOCK_Acceptor> acceptor (&reactor,

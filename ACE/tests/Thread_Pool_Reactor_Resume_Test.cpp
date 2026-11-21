@@ -37,6 +37,8 @@
 #include "ace/Thread_Manager.h"
 #include "ace/TP_Reactor.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
 
 #include "Thread_Pool_Reactor_Resume_Test.h"
@@ -349,8 +351,8 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Changed the default
   ACE_TP_Reactor sr;
 
-  ACE_Reactor new_reactor (&sr);
-  ACE_Reactor::instance (&new_reactor);
+  ACE_Reactor new_reactor (std::addressof (sr));
+  ACE_Reactor::instance (std::addressof (new_reactor));
 
   ACCEPTOR acceptor;
   ACE_INET_Addr accept_addr (rendezvous);
