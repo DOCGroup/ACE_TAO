@@ -27,15 +27,13 @@ Client_ORBInitializer::post_init (
 
   // Extract the last forward reference from the argument list.
   CORBA::ULong const args_len = args->length ();
-  for (CORBA::ULong i {}; i < args_len; ++i)
+  for (CORBA::ULong i {}; i + 1 < args_len; ++i)
     {
-      if (std::strcmp ("-f", args[i]) == 0
-          && i < (args_len - 1))
+      if (std::strcmp ("-f", args[i]) == 0)
         {
           first_forward_str = args[i + 1];
         }
-      if (std::strcmp ("-s", args[i]) == 0
-          && i < (args_len - 1))
+      if (std::strcmp ("-s", args[i]) == 0)
         {
           second_forward_str = args[i + 1];
         }

@@ -27,11 +27,12 @@ Client_ORBInitializer::post_init (
 
   // Extract the last forward reference from the argument list.
   CORBA::ULong const args_len = args->length ();
-  for (CORBA::ULong i = 0; i < args_len; ++i)
-    if (std::strcmp ("-k", args[i]) == 0
-        && i < (args_len - 1))
+  for (CORBA::ULong i {}; i + 1 < args_len; ++i)
     {
-      forward_str = args[i + 1];
+      if (std::strcmp ("-k", args[i]) == 0)
+        {
+          forward_str = args[i + 1];
+        }
     }
 
   PortableInterceptor::ClientRequestInterceptor_ptr interceptor {};
