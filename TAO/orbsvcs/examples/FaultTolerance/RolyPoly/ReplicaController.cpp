@@ -257,8 +257,8 @@ ReplicaController::send_reply (
   CORBA::Any_var result =
     ri->result ();
 
-  TAO_OutputCDR cdr;
-  result->impl ()->marshal_value (cdr);
+  TAO_OutputCDR reply_cdr;
+  result->impl ()->marshal_value (reply_cdr);
 
   Dynamic::ParameterList_var pl =
     ri->arguments ();
@@ -270,26 +270,26 @@ ReplicaController::send_reply (
     //@@ No chance for PARAM_OUT
     if ((*pl)[index].mode == CORBA::PARAM_INOUT)
     {
-      (*pl)[index].argument.impl ()->marshal_value (cdr);
+      (*pl)[index].argument.impl ()->marshal_value (reply_cdr);
     }
   }
 
   CORBA::OctetSeq_var reply {};
 
-  ACE_NEW (reply.out (), CORBA::OctetSeq (cdr.total_length ()));
+  ACE_NEW (reply.out (), CORBA::OctetSeq (reply_cdr.total_length ()));
 
-  reply->length (cdr.total_length ());
+  reply->length (reply_cdr.total_length ());
 
-  CORBA::Octet* buf = reply->get_buffer ();
+  CORBA::Octet* reply_buffer = reply->get_buffer ();
 
   // @@ What if this throws an exception??  We don't have any way to
   // check whether this succeeded
-  for (ACE_Message_Block const *mb = cdr.begin ();
+  for (ACE_Message_Block const *mb = reply_cdr.begin ();
        mb != nullptr;
        mb = mb->cont ())
   {
-    std::memcpy (buf, mb->rd_ptr (), mb->length ());
-    buf += mb->length ();
+    std::memcpy (reply_buffer, mb->rd_ptr (), mb->length ());
+    reply_buffer += mb->length ();
   }
 
   // Logging the reply and state update.
@@ -330,16 +330,16 @@ ReplicaController::send_reply (
         }
       }
 
-    TAO_OutputCDR cdr;
+    TAO_OutputCDR log_cdr;
 
-    cdr << oid.in ();
-    cdr << an.in ();
-    cdr << ftr->client_id.in ();
-    cdr << ftr->retention_id;
-    cdr << reply.in ();
-    cdr << state.in ();
+    log_cdr << oid.in ();
+    log_cdr << an.in ();
+    log_cdr << ftr->client_id.in ();
+    log_cdr << ftr->retention_id;
+    log_cdr << reply.in ();
+    log_cdr << state.in ();
 
-    size_t const size = cdr.total_length ();
+    size_t const size = log_cdr.total_length ();
 
     CORBA::OctetSeq_var msg {};
 
@@ -348,18 +348,18 @@ ReplicaController::send_reply (
     msg->length (size);
 
     {
-      CORBA::Octet* buf = msg->get_buffer ();
+      CORBA::Octet* log_buffer = msg->get_buffer ();
 
-      for (ACE_Message_Block const *mb = cdr.begin ();
+      for (ACE_Message_Block const *mb = log_cdr.begin ();
            mb != nullptr;
            mb = mb->cont ())
       {
-        std::memcpy (buf, mb->rd_ptr (), mb->length ());
-        buf += mb->length ();
+        std::memcpy (log_buffer, mb->rd_ptr (), mb->length ());
+        log_buffer += mb->length ();
       }
     }
 
-    CORBA::Octet* buf = msg->get_buffer ();
+    CORBA::Octet* message_buffer = msg->get_buffer ();
 
     // Crash point 1.
     //
@@ -374,7 +374,7 @@ ReplicaController::send_reply (
       {
         try
         {
-          group_->send (buf, size);
+          group_->send (message_buffer, size);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Sent log record of length %B\n"), size));
           break;
