@@ -127,13 +127,13 @@ TAO_Notify_ThreadPool_Supplier_Client::create_ec ()
       tp_params.static_threads =
         static_cast<CORBA::ULong> (this->options_.event_channel_thread_count);
 
-      CosNotification::QoSProperties qos (1);
-      qos.length (1);
-      qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
-      qos[0].value <<= tp_params;
+      CosNotification::QoSProperties thread_pool_qos (1);
+      thread_pool_qos.length (1);
+      thread_pool_qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
+      thread_pool_qos[0].value <<= tp_params;
 
       // Note that instead of <set_qos>, the <qos> can also be passed while creating the channel.
-      ec->set_qos (qos);
+      ec->set_qos (thread_pool_qos);
     }
 
   ACE_DEBUG ((LM_DEBUG,

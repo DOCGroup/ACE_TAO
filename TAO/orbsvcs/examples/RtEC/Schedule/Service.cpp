@@ -255,9 +255,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (config_run)
         {
           ACE_DEBUG ((LM_DEBUG, "Computing schedule\n"));
-          RtecScheduler::RT_Info_Set_var infos;
+          RtecScheduler::RT_Info_Set_var computed_infos;
           RtecScheduler::Dependency_Set_var deps;
-          RtecScheduler::Config_Info_Set_var configs;
+          RtecScheduler::Config_Info_Set_var computed_configs;
           RtecScheduler::Scheduling_Anomaly_Set_var anomalies;
 
           // Obtain the range of valid priorities in the current
@@ -273,15 +273,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                             ACE_SCOPE_THREAD);
           scheduler->compute_scheduling (min_os_priority,
                                          max_os_priority,
-                                         infos.out (),
+                                         computed_infos.out (),
                                          deps.out (),
-                                         configs.out (),
+                                         computed_configs.out (),
                                          anomalies.out ());
 
           // Dump the schedule to a file..
-          ACE_Scheduler_Factory::dump_schedule (infos.in (),
+          ACE_Scheduler_Factory::dump_schedule (computed_infos.in (),
                                                 deps.in (),
-                                                configs.in (),
+                                                computed_configs.in (),
                                                 anomalies.in (),
                                                 ACE_TEXT("schedule.out"));
         }

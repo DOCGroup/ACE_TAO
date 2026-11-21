@@ -296,50 +296,50 @@ RND_Driver::timer (const RtecEventComm::Event &e)
 
     case 6:
       {
-        int const n = ACE_OS::rand () % this->nsuppliers_;
+        int const supplier_index = ACE_OS::rand () % this->nsuppliers_;
 
-        // ACE_DEBUG ((LM_DEBUG, "Connecting supplier %d\n", n));
+        // ACE_DEBUG ((LM_DEBUG, "Connecting supplier %d\n", supplier_index));
 
         ACE_SupplierQOS_Factory qos;
         qos.insert (0, base_type, 0, 1);
 
-        this->suppliers_[n]->connect (this->supplier_admin_.in (),
+        this->suppliers_[supplier_index]->connect (this->supplier_admin_.in (),
                                       qos.get_SupplierQOS ());
       }
       break;
 
     case 7:
       {
-        int const n = ACE_OS::rand () % this->nconsumers_;
+        int const consumer_index = ACE_OS::rand () % this->nconsumers_;
 
-        // ACE_DEBUG ((LM_DEBUG, "Connecting consumer %d\n", n));
+        // ACE_DEBUG ((LM_DEBUG, "Connecting consumer %d\n", consumer_index));
 
         ACE_ConsumerQOS_Factory qos;
         qos.start_disjunction_group ();
         qos.insert_type (base_type, 0);
 
-        this->consumers_[n]->connect (this->consumer_admin_.in (),
+        this->consumers_[consumer_index]->connect (this->consumer_admin_.in (),
                                       qos.get_ConsumerQOS ());
       }
       break;
 
     case 8:
       {
-        int const n = ACE_OS::rand () % this->nsuppliers_;
+        int const supplier_index = ACE_OS::rand () % this->nsuppliers_;
 
-        // ACE_DEBUG ((LM_DEBUG, "Disconnecting supplier %d\n", n));
+        // ACE_DEBUG ((LM_DEBUG, "Disconnecting supplier %d\n", supplier_index));
 
-        this->suppliers_[n]->disconnect ();
+        this->suppliers_[supplier_index]->disconnect ();
       }
       break;
 
     case 9:
       {
-        int const n = ACE_OS::rand () % this->nconsumers_;
+        int const consumer_index = ACE_OS::rand () % this->nconsumers_;
 
-        // ACE_DEBUG ((LM_DEBUG, "Disconnecting consumer %d\n", n));
+        // ACE_DEBUG ((LM_DEBUG, "Disconnecting consumer %d\n", consumer_index));
 
-        this->consumers_[n]->disconnect ();
+        this->consumers_[consumer_index]->disconnect ();
       }
       break;
     }

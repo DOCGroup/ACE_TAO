@@ -227,33 +227,33 @@ RND_Driver::timer (CORBA::Any const & e)
 
     case 6:
       {
-        int const n = ACE_OS::rand () % this->nsuppliers_;
+        int const supplier_index = ACE_OS::rand () % this->nsuppliers_;
 
-        this->suppliers_[n]->connect (this->supplier_admin_.in ());
+        this->suppliers_[supplier_index]->connect (this->supplier_admin_.in ());
       }
       break;
 
     case 7:
       {
-        int const n = ACE_OS::rand () % this->nconsumers_;
+        int const consumer_index = ACE_OS::rand () % this->nconsumers_;
 
-        this->consumers_[n]->connect (this->consumer_admin_.in ());
+        this->consumers_[consumer_index]->connect (this->consumer_admin_.in ());
       }
       break;
 
     case 8:
       {
-        int const n = ACE_OS::rand () % this->nsuppliers_;
+        int const supplier_index = ACE_OS::rand () % this->nsuppliers_;
 
-        this->suppliers_[n]->disconnect ();
+        this->suppliers_[supplier_index]->disconnect ();
       }
       break;
 
     case 9:
       {
-        int const n = ACE_OS::rand () % this->nconsumers_;
+        int const consumer_index = ACE_OS::rand () % this->nconsumers_;
 
-        this->consumers_[n]->disconnect ();
+        this->consumers_[consumer_index]->disconnect ();
       }
       break;
     }
