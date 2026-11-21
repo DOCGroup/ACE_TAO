@@ -102,10 +102,10 @@ protected:
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
 
   /// Consumer.
-  TAO_Notify_Tests_PushConsumer* consumer_;
+  TAO_Notify_Tests_PushConsumer* consumer_ {};
 
   /// Supplier.
-  TAO_Notify_Tests_PushSupplier* supplier_;
+  TAO_Notify_Tests_PushSupplier* supplier_ {};
 
 private:
   friend class Event_AnyPushSupplier;

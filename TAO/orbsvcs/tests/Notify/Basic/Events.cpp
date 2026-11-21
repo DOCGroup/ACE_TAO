@@ -14,7 +14,7 @@ void
 Event_StructuredPushConsumer::push_structured_event (
     const CosNotification::StructuredEvent & notification)
 {
-  int event_num;
+  int event_num {};
   notification.filterable_data[0].value >>= event_num;
 
   if (TAO_debug_level)

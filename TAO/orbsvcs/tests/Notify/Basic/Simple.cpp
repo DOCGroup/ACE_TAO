@@ -13,7 +13,7 @@ Event_AnyPushConsumer::Event_AnyPushConsumer (Simple_Test *test_client)
 void
 Event_AnyPushConsumer::push (const CORBA::Any & data)
 {
-  int event_num;
+  int event_num {};
   data >>= event_num;
 
   if (TAO_debug_level)
