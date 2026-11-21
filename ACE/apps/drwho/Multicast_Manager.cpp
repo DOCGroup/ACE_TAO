@@ -96,8 +96,10 @@ Multicast_Manager::get_next_host_addr (in_addr &host_addr)
         }
 
       ++Multicast_Manager::received_host_count;
-      std::memcpy (&host_addr, hp->h_addr, sizeof host_addr);
-      std::memcpy (&Multicast_Manager::current_ptr->host_addr, hp->h_addr, sizeof host_addr);
+      std::memcpy (std::addressof (host_addr), hp->h_addr, sizeof host_addr);
+      std::memcpy (std::addressof (Multicast_Manager::current_ptr->host_addr),
+                   hp->h_addr,
+                   sizeof host_addr);
       return 1;
     }
 
@@ -159,8 +161,8 @@ Multicast_Manager::checkoff_host (in_addr host_addr)
        tmp != nullptr;
        tmp = tmp->next)
       {
-        if (std::memcmp (&tmp->host_addr.s_addr,
-                         &host_addr.s_addr,
+        if (std::memcmp (std::addressof (tmp->host_addr.s_addr),
+                         std::addressof (host_addr.s_addr),
                          sizeof host_addr.s_addr) == 0)
           {
             tmp->checked_off = true;

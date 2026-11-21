@@ -30,7 +30,7 @@ time_stamp ()
   char *temp;
 
   time_now = ACE_OS::time (nullptr);
-  temp = ACE_OS::asctime (ACE_OS::localtime (&time_now));
+  temp = ACE_OS::asctime (ACE_OS::localtime (std::addressof (time_now)));
   temp[12] = 0;
   return temp;
 }
