@@ -197,15 +197,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   {
     Connection_Config_Info entry;
-    Connection_Config_File_Parser connection_config_file;
+    Connection_Config_File_Parser connection_parser;
 
-    connection_config_file.open (argc > 1 ? argv[1] : "connection_config");
+    connection_parser.open (argc > 1 ? argv[1] : "connection_config");
 
     ACE_DEBUG ((LM_DEBUG,
                 "ConnID\tHost\t\tRPort\tRole\tRetry\tLPort\tPriority\n"));
 
     // Read config file line at a time.
-    while ((result = connection_config_file.read_entry (entry, line_number)) != FPRT::RT_EOFILE)
+    while ((result = connection_parser.read_entry (entry, line_number)) != FPRT::RT_EOFILE)
       {
         if (result == FPRT::RT_PARSE_ERROR)
           {
@@ -227,14 +227,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
       }
 
-    connection_config_file.close ();
+    connection_parser.close ();
   }
 
   {
     Consumer_Config_Info entry;
-    Consumer_Config_File_Parser consumer_config_file;
+    Consumer_Config_File_Parser consumer_parser;
 
-    consumer_config_file.open (argc > 2 ? argv[2] : "consumer_config");
+    consumer_parser.open (argc > 2 ? argv[2] : "consumer_config");
 
     line_number = 0;
 
@@ -242,7 +242,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 "\nConnID\tLogic\tPayload\tDestinations\n"));
 
     // Read config file line at a time.
-    while ((result = consumer_config_file.read_entry (entry, line_number)) != FPRT::RT_EOFILE)
+    while ((result = consumer_parser.read_entry (entry, line_number)) != FPRT::RT_EOFILE)
         {
           if (result == FPRT::RT_PARSE_ERROR)
             {
@@ -270,7 +270,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
         }
 
-    consumer_config_file.close ();
+    consumer_parser.close ();
   }
 
   return 0;

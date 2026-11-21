@@ -21,11 +21,11 @@ Options::print_usage_and_die ()
 
 Options::Options ()
 {
-  char const * const timeout = std::getenv ("TIMEOUT");
+  char const * const timeout_env = std::getenv ("TIMEOUT");
 
-  if (timeout != nullptr)
+  if (timeout_env != nullptr)
     {
-      this->timeout_ = std::atoi (timeout);
+      this->timeout_ = std::atoi (timeout_env);
     }
 }
 

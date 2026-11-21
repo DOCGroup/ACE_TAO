@@ -43,12 +43,12 @@ Peer_Handler::open (void *a)
                         -1);
     }
 
-  ACE_Time_Value const timeout (Options::instance ()->timeout ());
+  ACE_Time_Value const disconnect_timeout (Options::instance ()->timeout ());
 
   // Schedule the time between disconnects.  This should really be a
   // "tunable" parameter.
   if (ACE_Reactor::instance ()->schedule_timer
-      (this, nullptr, timeout) == -1)
+      (this, nullptr, disconnect_timeout) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p\n"),
@@ -204,8 +204,8 @@ Peer_Handler::nonblk_put (ACE_Message_Block *mb)
                   this->connection_id_));
 
       // Re-queue in *front* of the list to preserve order.
-      ACE_Time_Value timeout (ACE_Time_Value::zero);
-      if (this->msg_queue ()->enqueue_head (mb, std::addressof (timeout)) == -1)
+      ACE_Time_Value wait_time (ACE_Time_Value::zero);
+      if (this->msg_queue ()->enqueue_head (mb, std::addressof (wait_time)) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("%p\n"),
@@ -237,8 +237,8 @@ Peer_Handler::handle_output (ACE_HANDLE)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("in handle_output\n")));
 
-  ACE_Time_Value timeout (ACE_Time_Value::zero);
-  if (this->msg_queue ()->dequeue_head (mb, std::addressof (timeout)) != -1)
+  ACE_Time_Value wait_time (ACE_Time_Value::zero);
+  if (this->msg_queue ()->dequeue_head (mb, std::addressof (wait_time)) != -1)
     {
       switch (this->nonblk_put (mb))
         {
@@ -303,8 +303,8 @@ Peer_Handler::put (ACE_Message_Block *mb, ACE_Time_Value *)
 
   // If we have queued up events due to flow control then just enqueue
   // and return.
-  ACE_Time_Value timeout (ACE_Time_Value::zero);
-  return this->msg_queue ()->enqueue_tail (mb, std::addressof (timeout));
+  ACE_Time_Value wait_time (ACE_Time_Value::zero);
+  return this->msg_queue ()->enqueue_tail (mb, std::addressof (wait_time));
 }
 
 // Send an Peer event to gatewayd.
