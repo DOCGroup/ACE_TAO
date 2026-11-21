@@ -687,6 +687,10 @@ struct sockaddr_in  *serveraddr;
 
   if (0 == fgets(linebuf, sizeof(linebuf), fp))
       break;
+  if (cnt >= MAXCLIENTS || cnt >= FD_SETSIZE)
+  {
+    errexit("Number of Clients can't exceed %d\n", MAXCLIENTS);
+  }
   num = sscanf(linebuf, "%63s %24s %19s %d %63s",
                clienthostname[cnt], login, password, &numclients, webserver2);
   if (num < 4)
@@ -747,10 +751,6 @@ struct sockaddr_in  *serveraddr;
 
 
   ++cnt;
-  if (cnt > MAXCLIENTS || cnt > FD_SETSIZE)
-  {
-      errexit("Number of Clients can't exceed %d\n", MAXCLIENTS);
-  }
     }
 
     num_rexecs = cnt;
