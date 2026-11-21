@@ -157,7 +157,7 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
       return -1;
     }
 
-  char *buf_req = (char *) ACE_OS::malloc (info.options);
+  char *buf_req = static_cast<char *> (ACE_OS::malloc (info.options));
   if (buf_req == 0)
     {
       ACE_OS::fprintf (stderr,
@@ -166,7 +166,7 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
       return -1;
     }
 
-  char *buf_ret = (char *) ACE_OS::malloc (info.options);
+  char *buf_ret = static_cast<char *> (ACE_OS::malloc (info.options));
   if (buf_ret == 0)
     {
       ACE_OS::fprintf (stderr,
