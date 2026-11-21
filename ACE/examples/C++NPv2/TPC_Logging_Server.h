@@ -23,7 +23,7 @@ protected:
   /// File of log records.
   ACE_FILE_IO log_file_;
 
-  // Connection to peer service handler.
+  /// Connection to peer service handler.
   Logging_Handler logging_handler_;
 
 public:
@@ -46,11 +46,11 @@ public:
 class TPC_Logging_Acceptor
   : public ACE_Acceptor<TPC_Logging_Handler, ACE_SOCK_ACCEPTOR> {
 protected:
-  // The SSL ``context'' data structure.
+  /// The SSL ``context'' data structure.
   SSL_CTX *ssl_ctx_;
 
-  // The SSL data structure corresponding to authenticated
-  // SSL connections.
+  /// The SSL data structure corresponding to authenticated
+  /// SSL connections.
   SSL *ssl_;
 
 public:
@@ -60,13 +60,13 @@ public:
   TPC_Logging_Acceptor (ACE_Reactor *r)
     : PARENT (r), ssl_ctx_ (nullptr), ssl_ (nullptr) {}
 
-  // Destructor frees the SSL resources.
+  /// Destructor frees the SSL resources.
   ~TPC_Logging_Acceptor () override {
     SSL_free (this->ssl_);
     SSL_CTX_free (this->ssl_ctx_);
   }
 
-  // Initialize the acceptor instance.
+  /// Initialize the acceptor instance.
   int open
     (const ACE_SOCK_Acceptor::PEER_ADDR &local_addr,
      ACE_Reactor *reactor = ACE_Reactor::instance (),
@@ -76,7 +76,7 @@ public:
     (ACE_HANDLE = ACE_INVALID_HANDLE,
      ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
-  // Connection establishment and authentication hook method.
+  /// Connection establishment and authentication hook method.
   int accept_svc_handler (TPC_Logging_Handler *sh) override;
 };
 

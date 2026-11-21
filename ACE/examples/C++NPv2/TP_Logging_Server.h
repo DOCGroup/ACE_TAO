@@ -40,15 +40,15 @@ class TP_Logging_Handler : public Logging_Event_Handler {
 protected:
   ~TP_Logging_Handler () override = default;
 
-  // Number of pointers to this class instance that currently
-  // reside in the <TP_LOGGING_TASK> singleton's message queue.
+  /// Number of pointers to this class instance that currently
+  /// reside in the <TP_LOGGING_TASK> singleton's message queue.
   int queued_count_;
 
-  // Indicates whether <Logging_Event_Handler::handle_close()>
-  // must be called to cleanup and delete this object.
+  /// Indicates whether <Logging_Event_Handler::handle_close()>
+  /// must be called to cleanup and delete this object.
   bool deferred_close_;
 
-  // Serialize access to <queued_count_> and <deferred_close_>.
+  /// Serialize access to <queued_count_> and <deferred_close_>.
   ACE_SYNCH_MUTEX lock_;
 
 public:
@@ -62,11 +62,11 @@ public:
   TP_Logging_Handler &operator= (const TP_Logging_Handler &) = delete;
   TP_Logging_Handler &operator= (TP_Logging_Handler &&) = delete;
 
-  // Called when input events occur, e.g., connection or data.
+  /// Called when input events occur, e.g., connection or data.
   int handle_input (ACE_HANDLE) override;
 
-  // Called when this object is destroyed, e.g., when it's
-  // removed from a reactor.
+  /// Called when this object is destroyed, e.g., when it's
+  /// removed from a reactor.
   int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
 };
 
@@ -96,7 +96,7 @@ public:
 
 class TP_Logging_Server : public ACE_Service_Object {
 protected:
-  // Contains the reactor, acceptor, and handlers.
+  /// Contains the reactor, acceptor, and handlers.
   using LOGGING_DISPATCHER = Reactor_Logging_Server<TP_Logging_Acceptor>;
   std::unique_ptr<LOGGING_DISPATCHER> logging_dispatcher_;
 

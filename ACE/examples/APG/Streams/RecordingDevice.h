@@ -28,28 +28,28 @@ public:
     return 0;
   }
 
-  // Answer the incoming call
+  /// Answer the incoming call
   virtual int answer_call () = 0;
 
-  // Fetch some form of caller identification at the hardware level.
+  /// Fetch some form of caller identification at the hardware level.
   virtual CallerId *retrieve_callerId () = 0;
 
-  // Fetch the message at the location specified by 'addr' and play
-  // it for the caller.
+  /// Fetch the message at the location specified by 'addr' and play
+  /// it for the caller.
   virtual int play_message (ACE_FILE_Addr &addr) = 0;
 
-  // Record data from our physical device into the file at the
-  // specified address. Return the number of bytes recorded.
+  /// Record data from our physical device into the file at the
+  /// specified address. Return the number of bytes recorded.
   virtual MessageType *record_message (ACE_FILE_Addr &addr) = 0;
 
-  // Release the RecordingDevice to accept another incoming call
+  /// Release the RecordingDevice to accept another incoming call
   virtual void release ()
   {
     this->release_semaphore ();
   }
 
-  // Get the handler of the device so that wait_for_activity() can
-  // wait for data to arrive.
+  /// Get the handler of the device so that wait_for_activity() can
+  /// wait for data to arrive.
   virtual ACE_Event_Handler *get_handler () const
   {
     return nullptr;
