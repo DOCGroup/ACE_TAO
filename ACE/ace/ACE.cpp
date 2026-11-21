@@ -470,7 +470,7 @@ ACE::recv (ACE_HANDLE handle,
 {
   if (timeout == nullptr)
     {
-      return ACE_OS::recv (handle, (char *) buf, len, flags);
+      return ACE_OS::recv (handle, static_cast<char *> (buf), len, flags);
     }
   else
     {
@@ -482,7 +482,7 @@ ACE::recv (ACE_HANDLE handle,
       else
         {
           ssize_t bytes_transferred =
-            ACE_OS::recv (handle, (char *) buf, len, flags);
+            ACE_OS::recv (handle, static_cast<char *> (buf), len, flags);
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
@@ -500,7 +500,7 @@ ACE::t_rcv (ACE_HANDLE handle,
 {
   if (timeout == 0)
     {
-      return ACE_OS::t_rcv (handle, (char *) buf, len, flags);
+      return ACE_OS::t_rcv (handle, static_cast<char *> (buf), len, flags);
     }
   else
     {
@@ -512,7 +512,7 @@ ACE::t_rcv (ACE_HANDLE handle,
       else
         {
           ssize_t bytes_transferred =
-            ACE_OS::t_rcv (handle, (char *) buf, len, flags);
+            ACE_OS::t_rcv (handle, static_cast<char *> (buf), len, flags);
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
@@ -744,7 +744,7 @@ ACE::t_rcv_n_i (ACE_HANDLE handle,
     {
       // Try to transfer as much of the remaining data as possible.
       n = ACE_OS::t_rcv (handle,
-                         (char *) buf + bytes_transferred,
+                         static_cast<char *> (buf) + bytes_transferred,
                          len - bytes_transferred,
                          flags);
       // Check EOF.
@@ -804,7 +804,7 @@ ACE::t_rcv_n_i (ACE_HANDLE handle,
       // Since the socket is in non-blocking mode, this call will not
       // block.
       n = ACE_OS::t_rcv (handle,
-                         (char *) buf + bytes_transferred,
+                         static_cast<char *> (buf) + bytes_transferred,
                          len - bytes_transferred,
                          flags);
 
@@ -1291,7 +1291,7 @@ ACE::send (ACE_HANDLE handle,
 {
   if (timeout == nullptr)
     {
-      return ACE_OS::send (handle, (const char *) buf, n, flags);
+      return ACE_OS::send (handle, static_cast<char const *> (buf), n, flags);
     }
   else
     {
@@ -1303,7 +1303,7 @@ ACE::send (ACE_HANDLE handle,
       else
         {
           ssize_t const bytes_transferred =
-            ACE_OS::send (handle, (const char *) buf, n, flags);
+            ACE_OS::send (handle, static_cast<char const *> (buf), n, flags);
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
@@ -1321,7 +1321,7 @@ ACE::t_snd (ACE_HANDLE handle,
 {
   if (timeout == 0)
     {
-      return ACE_OS::t_snd (handle, (const char *) buf, n, flags);
+      return ACE_OS::t_snd (handle, static_cast<char const *> (buf), n, flags);
     }
   else
     {
@@ -1333,7 +1333,7 @@ ACE::t_snd (ACE_HANDLE handle,
       else
         {
           ssize_t const bytes_transferred =
-            ACE_OS::t_snd (handle, (const char *) buf, n, flags);
+            ACE_OS::t_snd (handle, static_cast<char const *> (buf), n, flags);
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
@@ -1442,7 +1442,7 @@ ACE::send_n_i (ACE_HANDLE handle,
     {
       // Try to transfer as much of the remaining data as possible.
       n = ACE_OS::send (handle,
-                        (char *) buf + bytes_transferred,
+                        static_cast<char const *> (buf) + bytes_transferred,
                         len - bytes_transferred,
                         flags);
       // Check EOF.
@@ -1506,7 +1506,7 @@ ACE::send_n_i (ACE_HANDLE handle,
       // Since the socket is in non-blocking mode, this call will not
       // block.
       n = ACE_OS::send (handle,
-                        (char *) buf + bytes_transferred,
+                        static_cast<char const *> (buf) + bytes_transferred,
                         len - bytes_transferred,
                         flags);
 
@@ -1569,7 +1569,7 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
     {
       // Try to transfer as much of the remaining data as possible.
       n = ACE_OS::t_snd (handle,
-                         (char *) buf + bytes_transferred,
+                         static_cast<char const *> (buf) + bytes_transferred,
                          len - bytes_transferred,
                          flags);
       // Check EOF.
@@ -1629,7 +1629,7 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
       // Since the socket is in non-blocking mode, this call will not
       // block.
       n = ACE_OS::t_snd (handle,
-                         (char *) buf + bytes_transferred,
+                         static_cast<char const *> (buf) + bytes_transferred,
                          len - bytes_transferred,
                          flags);
 
@@ -1692,7 +1692,7 @@ ACE::send_n_i (ACE_HANDLE handle,
     {
       // Try to transfer as much of the remaining data as possible.
       n = ACE::send_i (handle,
-                       (char *) buf + bytes_transferred,
+                       static_cast<char const *> (buf) + bytes_transferred,
                        len - bytes_transferred);
       // Check EOF.
       if (n == 0)
@@ -1750,7 +1750,7 @@ ACE::send_n_i (ACE_HANDLE handle,
       // Since the socket is in non-blocking mode, this call will not
       // block.
       n = ACE::send_i (handle,
-                       (char *) buf + bytes_transferred,
+                       static_cast<char const *> (buf) + bytes_transferred,
                        len - bytes_transferred);
 
       // Check for errors.
