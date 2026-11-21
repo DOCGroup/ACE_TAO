@@ -173,14 +173,14 @@ private:
   ACE_INT32 length_ {};
 
   /// Type of logging record.
-  ACE_UINT32 type_;
+  ACE_UINT32 type_ {};
 
   /// Time that the logging record was generated.
-  time_t secs_;
-  ACE_UINT32 usecs_;
+  time_t secs_ {};
+  ACE_UINT32 usecs_ {};
 
   /// Id of process that generated the logging record.
-  ACE_UINT32 pid_;
+  ACE_UINT32 pid_ {};
 
   /// Heap-allocated logging record data.
   ACE_TCHAR *msg_data_ {};

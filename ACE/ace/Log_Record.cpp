@@ -200,10 +200,6 @@ ACE_Log_Record::round_up ()
 }
 
 ACE_Log_Record::ACE_Log_Record ()
-  : type_ (0),
-    secs_ (0),
-    usecs_ (0),
-    pid_ (0)
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
 #if defined (ACE_HAS_ALLOC_HOOKS)
