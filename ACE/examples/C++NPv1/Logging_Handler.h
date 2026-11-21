@@ -19,7 +19,7 @@ protected:
   ACE_SOCK_Stream logging_peer_;
 
 public:
-  // Initialization and termination methods.
+  /// Initialization and termination methods.
   explicit Logging_Handler (ACE_FILE_IO &log_file): log_file_ (log_file) {}
   Logging_Handler (Logging_Handler const &) = delete;
   Logging_Handler (Logging_Handler &&) = delete;
@@ -34,23 +34,23 @@ public:
     : log_file_ (log_file), logging_peer_ (logging_peer) {}
   int close () { return logging_peer_.close (); }
 
-  // Receive one log record from a connected client.   Returns
-  // length of record on success and <mblk> contains the
-  // hostname, <mblk->cont()> contains the log record header
-  // (the byte order and the length) and the data.  Returns -1 on
-  // failure or connection close.
+  /// Receive one log record from a connected client.   Returns
+  /// length of record on success and <mblk> contains the
+  /// hostname, <mblk->cont()> contains the log record header
+  /// (the byte order and the length) and the data.  Returns -1 on
+  /// failure or connection close.
   int recv_log_record (ACE_Message_Block_Unique_Ptr &log_record);
 
-  // Write one record to the log file.  The <mblk> contains the
-  // hostname and the <mblk->cont> contains the log record.
-  // Returns length of record written on success, or -1 on failure.
+  /// Write one record to the log file.  The <mblk> contains the
+  /// hostname and the <mblk->cont> contains the log record.
+  /// Returns length of record written on success, or -1 on failure.
   int write_log_record (ACE_Message_Block const &log_record);
 
-  // Log one record by calling <recv_log_record> and
-  // <write_log_record>.  Returns 0 on success and -1 on failure.
+  /// Log one record by calling <recv_log_record> and
+  /// <write_log_record>.  Returns 0 on success and -1 on failure.
   int log_record ();
 
-  // Accessor method.
+  /// Accessor method.
   ACE_SOCK_Stream &peer () { return logging_peer_; }
 };
 

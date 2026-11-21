@@ -23,7 +23,7 @@ private:
     ACE_SOCK_Stream logging_peer_;
   };
 
-  // Passed as a parameter to <ACE_Thread_Manager::spawn>.
+  /// Passed as a parameter to <ACE_Thread_Manager::spawn>.
   static ACE_THR_FUNC_RETURN run_svc (void *arg);
 
 protected:
@@ -37,9 +37,9 @@ public:
   Thread_Per_Connection_Logging_Server &operator= (Thread_Per_Connection_Logging_Server const &) = delete;
   Thread_Per_Connection_Logging_Server &operator= (Thread_Per_Connection_Logging_Server &&) = delete;
 
-  // Template Method that runs logging server's event loop. Need to
-  // reimplement this here because the threads spawned from handle_connections
-  // call handle_data; therefore, this method must not.
+  /// Template Method that runs logging server's event loop. Need to
+  /// reimplement this here because the threads spawned from handle_connections
+  /// call handle_data; therefore, this method must not.
   int run (int argc, char *argv[]) override {
     if (open (argc > 1 ? atoi (argv[1]) : 0) == -1)
       return -1;
