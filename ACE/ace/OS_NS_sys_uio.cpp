@@ -49,7 +49,7 @@ ACE_OS::readv_emulation (ACE_HANDLE handle,
   char *buf;
 # ifdef ACE_HAS_ALLOC_HOOKS
   ACE_ALLOCATOR_RETURN (buf,
-                        (char *) ACE_Allocator::instance ()->malloc (length),
+                        static_cast<char *> (ACE_Allocator::instance ()->malloc (length)),
                         -1);
 # else
   ACE_NEW_RETURN (buf,
@@ -112,7 +112,7 @@ ACE_OS::writev_emulation (ACE_HANDLE handle, const iovec *iov, int n)
   char *buf;
 # ifdef ACE_HAS_ALLOC_HOOKS
   ACE_ALLOCATOR_RETURN (buf,
-                        (char *) ACE_Allocator::instance ()->malloc (length),
+                        static_cast<char *> (ACE_Allocator::instance ()->malloc (length)),
                         -1);
 # else
   ACE_NEW_RETURN (buf, char[length], -1);
