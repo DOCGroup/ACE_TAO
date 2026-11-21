@@ -51,8 +51,6 @@ namespace ACE_RMCast
             ACE_OS::abort ();
           }
 
-          Data const* data = static_cast<Data const*> (m->find (Data::id));
-
           Data_ptr& new_data = e->int_id_;
 
           std::memcpy (new_data->buf () + new_data->size (), data->buf (), data->size ());

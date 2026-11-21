@@ -274,17 +274,17 @@ namespace ACE_RMCast
 
       while (true)
       {
-        u16 id, size;
+        u16 id, profile_size;
 
-        if (!((is >> id) && (is >> size)))
+        if (!((is >> id) && (is >> profile_size)))
         {
           break;
         }
 
         //cerr << 6 << "reading profile with id " << id << " "
-        //     << size << " bytes long" << endl;
+        //     << profile_size << " bytes long" << endl;
 
-        Profile::Header hdr (id, size);
+        Profile::Header hdr (id, profile_size);
 
         if (id == SN::id)
           {
