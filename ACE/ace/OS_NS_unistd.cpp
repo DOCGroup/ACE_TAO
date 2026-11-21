@@ -490,7 +490,7 @@ ACE_OS::read_n (ACE_HANDLE handle,
                 size_t len,
                 size_t *bt)
 {
-  size_t temp;
+  size_t temp {};
   size_t &bytes_transferred = bt == nullptr ? temp : *bt;
   ssize_t n = 0;
 
@@ -1002,7 +1002,7 @@ ACE_OS::write_n (ACE_HANDLE handle,
                  size_t len,
                  size_t *bt)
 {
-  size_t temp;
+  size_t temp {};
   size_t &bytes_transferred = bt == nullptr ? temp : *bt;
   ssize_t n;
 
