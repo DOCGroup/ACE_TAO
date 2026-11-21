@@ -121,7 +121,6 @@ static void TestOctet()
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Octet:o6(\"str\") [%s]\n",
     o6.to_string()));
 
-  o6 += o3;
   o6 = "";
   o6 += str;
   o6 += '#';

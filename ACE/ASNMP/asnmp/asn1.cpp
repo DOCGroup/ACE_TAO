@@ -1245,7 +1245,8 @@ u_char * cmu_snmp::build_var_op(u_char *data, oid * var_name,
   // based on the type...
   switch(var_val_type) {
   case ASN_INTEGER:
-    data = asn1::build_int( data, listlength, var_val_type, (long *)var_val,
+    data = asn1::build_int( data, listlength, var_val_type,
+                         reinterpret_cast<long *> (var_val),
                          var_val_len);
     break;
 
@@ -1256,7 +1257,7 @@ u_char * cmu_snmp::build_var_op(u_char *data, oid * var_name,
     data = asn1::build_unsigned_int( data,
                                   listlength,
                                   var_val_type,
-                                  (u_long *)var_val,
+                                  reinterpret_cast<u_long *> (var_val),
                                   var_val_len);
     break;
 
@@ -1264,7 +1265,7 @@ u_char * cmu_snmp::build_var_op(u_char *data, oid * var_name,
     data = asn1::build_unsigned_int64(data,
                                     listlength,
                                     var_val_type,
-                                    (struct counter64 *)var_val,
+                                    reinterpret_cast<counter64 *> (var_val),
                                     var_val_len);
     break;
 
@@ -1278,7 +1279,8 @@ u_char * cmu_snmp::build_var_op(u_char *data, oid * var_name,
 
   case ASN_OBJECT_ID:
     data = asn1::build_objid(data, listlength, var_val_type,
-                           (oid *)var_val, var_val_len / sizeof(oid));
+                           reinterpret_cast<oid *> (var_val),
+                           var_val_len / sizeof(oid));
     break;
 
   case ASN_NULL:
@@ -1329,7 +1331,7 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
   for(vp = pdu->variables; vp; vp = vp->next_variable) {
     cp = cmu_snmp::build_var_op( cp, vp->name,
                            &vp->name_length, vp->type,
-                           vp->val_len, (u_char *)vp->val.string,
+                           vp->val_len, vp->val.string,
                            &length);
     if (cp == nullptr)
     {
@@ -1390,7 +1392,7 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
     cp = asn1::build_objid( packet,
                          &length,
                  (u_char)(ASN_UNIVERSAL | ASN_PRIMITIVE | ASN_OBJECT_ID),
-                         (oid *)pdu->enterprise,
+                         pdu->enterprise,
                          pdu->enterprise_length);
     if (cp == nullptr)
     {
@@ -1773,13 +1775,14 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
     case SMI_UINTEGER:
       ACE_NEW_RETURN(vp->val.integer,long, -1);
       vp->val_len = sizeof(long);
-      asn1::parse_int(var_val, &len, &vp->type, (long *)vp->val.integer, sizeof(vp->val.integer));
+      asn1::parse_int(var_val, &len, &vp->type, vp->val.integer,
+                      sizeof(vp->val.integer));
       break;
     case SMI_COUNTER64:
       ACE_NEW_RETURN(vp->val.counter64, counter64, -1);
       vp->val_len = sizeof(struct counter64);
       asn1::parse_unsigned_int64(var_val, &len, &vp->type,
-                               (struct counter64 *)vp->val.counter64,
+                               vp->val.counter64,
                                sizeof(*vp->val.counter64));
       break;
 
