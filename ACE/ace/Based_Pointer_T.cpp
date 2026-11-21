@@ -51,8 +51,6 @@ ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer (const void *base_addr, int)
 
 template <class CONCRETE>
 ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic ()
-  : target_ (0),
-    base_offset_ (0)
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic");
   void *base_addr {};
@@ -67,8 +65,6 @@ ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic ()
 
 template <class CONCRETE>
 ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic (const void *base_addr, int)
-  : target_ (0),
-    base_offset_ (0)
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic");
   this->base_offset_ = (const char *) this - (const char *) base_addr;
@@ -76,8 +72,6 @@ ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic (const void *base_add
 
 template <class CONCRETE>
 ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic (CONCRETE *rhs)
-  : target_ (0),
-    base_offset_ (0)
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic");
 
