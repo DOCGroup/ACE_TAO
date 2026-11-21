@@ -41,7 +41,7 @@ ACE_ATM_Acceptor::get_local_addr (ACE_ATM_Addr &local_addr)
   ATM_ADDRESS addr;
   struct sockaddr_atm *laddr;
 
-  if (::WSAIoctl ((int) ((ACE_SOCK_Acceptor *)this) -> get_handle (),
+  if (::WSAIoctl (acceptor_.get_handle (),
                 SIO_GET_ATM_ADDRESS,
  (LPVOID) &deviceID,
                 sizeof (DWORD),
@@ -120,7 +120,7 @@ ACE_ATM_Acceptor::open (const ACE_Addr &remote_sap,
     return (ret);
   }
 
- ((ACE_SOCK_Acceptor *)this) -> set_handle (ret);
+  acceptor_.set_handle (ret);
 
   /* Set up the address information to become a server */
   ACE_OS::memset ((void *) &local_atm_addr, 0, sizeof local_atm_addr);
@@ -133,7 +133,7 @@ ACE_ATM_Acceptor::open (const ACE_Addr &remote_sap,
   local_atm_addr.satm_bhli.HighLayerInfoType = SAP_FIELD_ABSENT;
 
   /* Associate address with endpoint */
-  if (ACE_OS::bind (((ACE_SOCK_Acceptor *)this) -> get_handle (),
+  if (ACE_OS::bind (acceptor_.get_handle (),
                     reinterpret_cast<struct sockaddr *> (&local_atm_addr),
                     sizeof local_atm_addr) == -1) {
     ACE_OS::printf ("Acceptor (open): bind %d\n", ::WSAGetLastError ());
@@ -141,7 +141,7 @@ ACE_ATM_Acceptor::open (const ACE_Addr &remote_sap,
   }
 
   /* Make endpoint listen for service requests */
-  if (ACE_OS::listen (( (ACE_SOCK_Acceptor *)this) -> get_handle (),
+  if (ACE_OS::listen (acceptor_.get_handle (),
                       backlog)
                     == -1) {
     ACE_OS::printf ("Acceptor (open): listen %d\n", ::WSAGetLastError ());
@@ -173,7 +173,7 @@ ACE_ATM_Acceptor::open (const ACE_Addr &remote_sap,
     return (ACE_INVALID_HANDLE);
   }
 
- ((ACE_SOCK_Acceptor *)this) -> set_handle (handle);
+  acceptor_.set_handle (handle);
   if (ACE_OS::setsockopt (handle,
                          SOL_ATM,
                          SO_ATMQOS,
@@ -250,7 +250,7 @@ ACE_ATM_Acceptor::accept (ACE_ATM_Stream &new_sap,
                            &optbuf));
 #elif defined (ACE_HAS_FORE_ATM_WS2)
   ACE_HANDLE n_handle;
-  ACE_HANDLE s_handle = ((ACE_SOCK_Acceptor *) this) -> get_handle ();
+  ACE_HANDLE s_handle = acceptor_.get_handle ();
   struct sockaddr_atm *cli_addr
     = (struct sockaddr_atm *)remote_addr -> get_addr ();
   int caddr_len = sizeof (struct sockaddr_atm);
@@ -263,13 +263,13 @@ ACE_ATM_Acceptor::accept (ACE_ATM_Stream &new_sap,
 
  ((ACE_ATM_Addr *)remote_addr) -> set (cli_addr,
  ((ACE_ATM_Addr *)remote_addr) -> get_selector ());
- ((ACE_IPC_SAP *)&new_sap) -> set_handle (n_handle);
+  new_sap.get_stream ().set_handle (n_handle);
 
   return 0;
 #elif defined (ACE_HAS_LINUX_ATM)
   ACE_UNUSED_ARG (params);
 
-  ACE_HANDLE s_handle = ((ACE_SOCK_Acceptor *) this) -> get_handle ();
+  ACE_HANDLE s_handle = acceptor_.get_handle ();
   struct atm_qos accept_qos = qos.get_qos ();
 
   if (ACE_OS::setsockopt (s_handle,
