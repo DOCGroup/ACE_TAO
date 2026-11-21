@@ -429,7 +429,7 @@ TAO_UIPMC_Profile::parse_string_i (char const *string)
   // Port can have name thus letters and '-' are allowed.
   static const char port_chars[] =
     "-0123456789ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-  size_t port_len = std::strlen (string);
+  const size_t port_len = std::strlen (string);
   if (std::strspn (string, port_chars) != port_len)
     {
       // Throw an exception if it's not a proper port

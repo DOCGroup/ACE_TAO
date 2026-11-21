@@ -47,7 +47,7 @@ int StubFaultConsumer::parse_args (int argc, ACE_TCHAR * argv[])
         if (this->replicaIorBuffer_ == nullptr)
         {
           const char * repNames = get_opts.opt_arg ();
-          size_t repNameLen = std::strlen (repNames);
+          const size_t repNameLen = std::strlen (repNames);
 
           // make a working copy of the string
           ACE_NEW_NORETURN(this->replicaIorBuffer_,
