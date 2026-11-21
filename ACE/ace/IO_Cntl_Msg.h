@@ -90,13 +90,13 @@ private:
   ACE_IO_Cntl_Cmds cmd_;
 
   /// Count.
-  size_t count_;
+  size_t count_ {};
 
   /// Error.
-  int error_;
+  int error_ {};
 
   /// Return value
-  int rval_;
+  int rval_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
