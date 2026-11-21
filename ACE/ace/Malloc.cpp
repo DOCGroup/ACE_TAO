@@ -23,7 +23,7 @@ ACE_Control_Block::ACE_Malloc_Header::dump () const
   ACE_TRACE ("ACE_Control_Block::ACE_Malloc_Header::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nnext_block = %@"), (ACE_Malloc_Header *) this->next_block_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nnext_block = %@"), this->next_block_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nsize = %B\n"), this->size_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -78,11 +78,11 @@ ACE_Control_Block::dump () const
        nextn = nextn->next_)
     nextn->dump ();
 
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("freep_ = %@"), (ACE_Malloc_Header *) this->freep_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("freep_ = %@"), this->freep_));
   this->base_.dump ();
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nMalloc Header:\n")));
-  for (ACE_Malloc_Header *nexth = ((ACE_Malloc_Header *)this->freep_)->next_block_;
+  for (ACE_Malloc_Header *nexth = this->freep_->next_block_;
        nexth != 0 && nexth != std::addressof (this->base_);
        nexth = nexth->next_block_)
     nexth->dump ();
@@ -131,8 +131,8 @@ ACE_Control_Block::ACE_Name_Node::dump () const
   ACE_TRACE ("ACE_Control_Block::ACE_Name_Node::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("pointer = %@"), (const char *) this->pointer_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nnext_ = %@"), (ACE_Name_Node *) this->next_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("pointer = %@"), this->pointer_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nnext_ = %@"), this->next_));
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\nname_ = (%@, %C)\n"),
               (const char *) this->name_,
