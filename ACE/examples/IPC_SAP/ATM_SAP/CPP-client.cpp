@@ -142,15 +142,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Send data to server (correctly handles "incomplete writes").
 
   int s_bytes;
-  int total;
   int xmit = 0;
   ACE_High_Res_Timer timer;
   ACE_Time_Value elapsed;
-  double real_time;
-  double actual_rate;
 
   for ( ;; ) {
-    total = 0;
+    int total = 0;
 
     timer.start_incr();
 
@@ -170,9 +167,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     timer.stop_incr();
     timer.elapsed_time_incr( elapsed );
-    real_time = elapsed.sec() * ACE_ONE_SECOND_IN_USECS + elapsed.usec();
+    double const real_time = elapsed.sec() * ACE_ONE_SECOND_IN_USECS + elapsed.usec();
     xmit += total;
-    actual_rate = ( double )xmit * ( double )8 / real_time;
+    double const actual_rate = ( double )xmit * ( double )8 / real_time;
 
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) bytes = %d, usec = %f, rate = %0.00f Mbps\n"),

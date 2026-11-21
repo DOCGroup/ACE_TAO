@@ -60,8 +60,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  bool user_prompt {};
-
   parse_args (argc,argv);
 
   ACE_DEBUG ((LM_DEBUG, "max buffer size = %d\n", max_message_size));
@@ -99,14 +97,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   else
     {
       // If a file has been redirected, don't activate user prompts.
-      if (ACE_OS::isatty (0))
-        {
-          user_prompt = true;
-        }
-      else
-      {
-        user_prompt = false;
-      }
+      bool const user_prompt = ACE_OS::isatty (0);
 
       // Continually read messages from stdin and log them.
 

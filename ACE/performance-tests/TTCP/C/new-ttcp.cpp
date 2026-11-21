@@ -456,10 +456,9 @@ main (int argc, char *argv[])
                           -1);
 
       long ack;
-      int send_result;
       while (nbuf--)
         {
-          send_result = send_n ((char *) message_buf, total_msg_len);
+          int const send_result = send_n ((char *) message_buf, total_msg_len);
           if (send_result != total_msg_len)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%p only sent %d of %d bytes on call %d\n",
@@ -954,11 +953,10 @@ int
 mread (int fd, char *bufp, unsigned n)
 {
   unsigned count = 0;
-  int nread;
 
   do
     {
-      nread = read (fd, bufp, n - count);
+      int const nread = read (fd, bufp, n - count);
       ++numCalls;
       if (nread < 0)
       {

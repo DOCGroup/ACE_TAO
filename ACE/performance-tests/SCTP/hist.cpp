@@ -120,7 +120,7 @@ void record (double point, hist_t *hist)
 void report_to (std::FILE *strm, hist_t const *hist)
 {
   unsigned int sofar, i;
-  double p1, p2, d, mean;
+  double p2, d, mean;
   double variance;
 
   if (hist->num_points == 0) {
@@ -171,7 +171,7 @@ void report_to (std::FILE *strm, hist_t const *hist)
   p2 = hist->first;
   d = (hist->last - hist->first)/hist->num_bins;
   for (i = 1; i <= hist->num_bins; ++i) {
-    p1 = p2;
+    double const p1 = p2;
     p2 = i*d+hist->first;
     sofar += hist->hs[i];
     ACE_OS::fprintf(strm, "\t%12.3f  -  %12.3f  :  %5u    %0.3f    %0.3f\n", p1, p2, hist->hs[i],
@@ -252,12 +252,12 @@ void set_variance (hist_t *hist, double variance)
 void add_histogram (hist_t *dest, hist_t const *source)
 {
   unsigned int i,j;
-  double d,midpoint;
+  double d;
 
    d = (source->last - source->first)/source->num_bins;
 
    for (i = 1; i <= source->num_bins; ++i) {
-      midpoint = source->first + ((i - 0.5) * d);
+      double const midpoint = source->first + ((i - 0.5) * d);
       for (j = 0; j < source->hs[i]; ++j) {
          record(midpoint,dest);
       }
