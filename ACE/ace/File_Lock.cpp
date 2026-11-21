@@ -26,8 +26,7 @@ ACE_File_Lock::dump () const
 
 ACE_File_Lock::ACE_File_Lock (ACE_HANDLE h,
                               bool unlink_in_destructor)
-  : removed_ (false),
-    unlink_in_destructor_ (unlink_in_destructor)
+  : unlink_in_destructor_ (unlink_in_destructor)
 {
 // ACE_TRACE ("ACE_File_Lock::ACE_File_Lock");
   if (ACE_OS::flock_init (&this->lock_) == -1)

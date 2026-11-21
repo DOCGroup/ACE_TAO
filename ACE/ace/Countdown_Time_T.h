@@ -81,7 +81,7 @@ private:
   ACE_Time_Value start_time_;
 
   /// Keeps track of whether we've already been stopped.
-  bool stopped_;
+  bool stopped_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

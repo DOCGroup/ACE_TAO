@@ -15,8 +15,7 @@ ACE_Countdown_Time_T<TIME_POLICY>::ACE_Countdown_Time_T (
   TIME_POLICY const & time_policy)
   : time_policy_ (time_policy),
     max_wait_time_ (max_wait_time),
-    max_wait_value_ (ACE_Time_Value::zero),
-    stopped_ (false)
+    max_wait_value_ (ACE_Time_Value::zero)
 {
   this->start ();
 }
