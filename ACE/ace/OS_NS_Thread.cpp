@@ -620,8 +620,8 @@ private:
   static ACE_Condition_Thread_Mutex* condition_;
 
 private:
-  ACE_TSS_Cleanup * ptr_;
-  unsigned short flags_;
+  ACE_TSS_Cleanup * ptr_ {};
+  unsigned short flags_ {};
   enum
   {
     FLAG_DELETING = 1,
@@ -630,8 +630,6 @@ private:
 };
 
 TSS_Cleanup_Instance::TSS_Cleanup_Instance (Purpose purpose)
-  : ptr_(0)
-  , flags_(0)
 {
   // During static construction or construction of the ACE_Object_Manager,
   // there can be only one thread in this constructor at any one time, so
