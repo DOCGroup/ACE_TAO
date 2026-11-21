@@ -275,7 +275,7 @@ ACE_SV_Semaphore_Simple::remove () const
   ACE_TRACE ("ACE_SV_Semaphore_Simple::remove");
   int const result = this->control (IPC_RMID);
 #ifdef ACE_HAS_SYSV_IPC
-  ((ACE_SV_Semaphore_Simple *) this)->init ();
+  const_cast<ACE_SV_Semaphore_Simple *> (this)->init ();
 #endif
   return result;
 }

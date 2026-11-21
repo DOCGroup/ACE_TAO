@@ -32,8 +32,8 @@ ACE_UPIPE_Stream::control (int cmd,
 {
   ACE_TRACE ("ACE_UPIPE_Stream::control");
 
-  return ((ACE_UPIPE_Stream *) this)->stream_.control
-    ((ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds) cmd, val);
+  return const_cast<ACE_UPIPE_Stream *> (this)->stream_.control
+    (static_cast<ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds> (cmd), val);
 }
 
 void
