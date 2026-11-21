@@ -281,9 +281,6 @@ ACE_Token_Proxy_Queue::dump () const
 }
 
 ACE_Token_Proxy_Queue::ACE_Token_Proxy_Queue ()
-  : head_ (nullptr),
-    tail_ (nullptr),
-    size_ (0)
 {
   ACE_TRACE ("ACE_Token_Proxy_Queue::ACE_Token_Proxy_Queue");
 }

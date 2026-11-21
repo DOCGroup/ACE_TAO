@@ -332,13 +332,13 @@ public:
 
 protected:
   /// Head.
-  ACE_TPQ_Entry *head_;
+  ACE_TPQ_Entry *head_ {};
 
   /// Tail.
-  ACE_TPQ_Entry *tail_;
+  ACE_TPQ_Entry *tail_ {};
 
   /// Size.
-  int size_;
+  int size_ {};
 };
 
 // 5..
