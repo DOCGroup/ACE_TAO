@@ -116,7 +116,6 @@ TAO_Notify_ETCL_FilterFactory::create_filter (
     if (filters_.bind (id, filter) == -1)
     {
       throw CORBA::INTERNAL ();
-      return nullptr;
     }
   }
 
@@ -134,7 +133,6 @@ TAO_Notify_ETCL_FilterFactory::create_filter (
       catch (const CORBA::Exception& )
         {
           throw CORBA::INTERNAL ();
-          return nullptr;
         }
     }
   CORBA::Object_var obj =
@@ -323,7 +321,6 @@ TAO_Notify_ETCL_FilterFactory::find_filter_id (CosNotifyFilter::Filter_ptr filte
   }
 
   throw CORBA::INTERNAL ();
-  return 0;
 }
 
 ACE_FACTORY_DEFINE (TAO_Notify_Serv, TAO_Notify_ETCL_FilterFactory)
