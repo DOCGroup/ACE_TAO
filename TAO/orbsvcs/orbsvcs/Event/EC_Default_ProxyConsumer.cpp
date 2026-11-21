@@ -96,7 +96,6 @@ void
 TAO_EC_Default_ProxyPushConsumer::disconnect_push_consumer ()
 {
   RtecEventComm::PushSupplier_var supplier;
-  int connected {};
 
   {
     ACE_GUARD_THROW_EX (
@@ -104,7 +103,7 @@ TAO_EC_Default_ProxyPushConsumer::disconnect_push_consumer ()
         CORBA::INTERNAL ());
     // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
-    connected = this->is_connected_i ();
+    int const connected = this->is_connected_i ();
     supplier = this->supplier_._retn ();
     this->connected_ = false;
 
