@@ -43,7 +43,8 @@ ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::ACE_Metrics_Timeprobe (u_int id,
 
   char * name_tmp {};
   ACE_NEW_MALLOC_ARRAY (name_tmp,
-                        (char *) this->allocator ()->malloc (std::strlen (name) + 1),
+                        static_cast<char *> (
+                          this->allocator ()->malloc (std::strlen (name) + 1)),
                         char,
                         std::strlen (name) + 1);
   std::memcpy (name_tmp, name, std::strlen (name) + 1);
@@ -69,7 +70,8 @@ ACE_Metrics_Timeprobe (ALLOCATOR *alloc,
 
   char * name_tmp {};
   ACE_NEW_MALLOC_ARRAY (name_tmp,
-                        (char *) alloc->malloc (std::strlen (name) + 1),
+                        static_cast<char *> (
+                          alloc->malloc (std::strlen (name) + 1)),
                         char,
                         std::strlen (name) + 1);
   std::memcpy (name_tmp, name, std::strlen (name) + 1);
@@ -115,7 +117,8 @@ ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::probe_name (const char *name)
 {
   char * name_tmp {};
   ACE_NEW_MALLOC_ARRAY (name_tmp,
-                        (char *) this->allocator ()->malloc (std::strlen (name) + 1),
+                        static_cast<char *> (
+                          this->allocator ()->malloc (std::strlen (name) + 1)),
                         char,
                         std::strlen (name) + 1);
   std::memcpy (name_tmp, name, std::strlen (name) + 1);

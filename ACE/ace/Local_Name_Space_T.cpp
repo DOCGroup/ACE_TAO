@@ -147,7 +147,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
   const size_t value_len = (value.length () + 1) * sizeof (ACE_WCHAR_T);
   const size_t type_len = ACE_OS::strlen (type) + 1;
   const size_t total_len = name_len + value_len + type_len;
-  char *ptr = (char *) this->allocator_->malloc (total_len);
+  char *ptr = static_cast<char *> (this->allocator_->malloc (total_len));
 
   if (ptr == nullptr)
     {
