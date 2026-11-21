@@ -156,12 +156,15 @@ ACE_Pagefile_Memory_Pool::init_acquire (size_t nbytes,
 int
 ACE_Pagefile_Memory_Pool::seh_selector (void *ep)
 {
-  DWORD ecode = ((EXCEPTION_POINTERS *) ep)->ExceptionRecord->ExceptionCode;
+  DWORD ecode =
+    static_cast<EXCEPTION_POINTERS *> (ep)->ExceptionRecord->ExceptionCode;
 
   if (ecode == EXCEPTION_ACCESS_VIOLATION)
     {
-      void * fault_addr = (void *)
-        ((EXCEPTION_POINTERS *) ep)->ExceptionRecord->ExceptionInformation[1];
+      void * fault_addr =
+        reinterpret_cast<void *> (
+          static_cast<EXCEPTION_POINTERS *> (ep)->ExceptionRecord
+            ->ExceptionInformation[1]);
 
       if (this->remap (fault_addr) == 0)
         {
@@ -305,7 +308,7 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
              ((int) sizeof(Control_Block))
              + append_bytes);
 
-          if (::VirtualAlloc ((void *) this->shared_cb_,
+          if (::VirtualAlloc (this->shared_cb_,
                               map_size,
                               MEM_COMMIT,
                               PAGE_READWRITE) == 0)
@@ -334,7 +337,7 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
             ACE_Pagefile_Memory_Pool::round_to_chunk_size
             ((int) sizeof (Control_Block));
 
-          if (::VirtualAlloc ((void *) this->shared_cb_,
+          if (::VirtualAlloc (this->shared_cb_,
                               map_size,
                               MEM_COMMIT,
                               PAGE_READWRITE) == 0)
