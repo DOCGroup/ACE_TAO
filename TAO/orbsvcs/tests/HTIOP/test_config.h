@@ -139,6 +139,8 @@ class ACE_Test_Output
 public:
   ACE_Test_Output ();
   ~ACE_Test_Output ();
+  ACE_Test_Output (ACE_Test_Output const &) = delete;
+  ACE_Test_Output &operator= (ACE_Test_Output const &) = delete;
   static ACE_Test_Output *instance ();
   int set_output (const ACE_TCHAR *filename, int append = 0);
   OFSTREAM *output_file ();
