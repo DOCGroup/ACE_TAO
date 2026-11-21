@@ -45,10 +45,10 @@ public:
 
 private:
   /// A push button
-  QPushButton *push_button_;
+  QPushButton *push_button_ {};
 
   /// A slider widget
-  QSlider *slider_;
+  QSlider *slider_ {};
 
   /// The ORB
   CORBA::ORB_var orb_;

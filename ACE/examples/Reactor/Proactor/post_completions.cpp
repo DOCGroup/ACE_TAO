@@ -160,7 +160,7 @@ public:
 
 private:
   /// Proactor for this task.
-  ACE_Proactor *proactor_;
+  ACE_Proactor *proactor_ {};
 };
 
 int
