@@ -79,7 +79,7 @@ issue_aio_calls ()
   aiocb1.aio_reqprio = 0;
   aiocb1.aio_sigevent.sigev_notify = SIGEV_SIGNAL;
   aiocb1.aio_sigevent.sigev_signo = SIGRTMIN;
-  aiocb1.aio_sigevent.sigev_value.sival_ptr = (void *) &aiocb1;
+  aiocb1.aio_sigevent.sigev_value.sival_ptr = &aiocb1;
 
   // Fire off the aio write.
   if (aio_read (&aiocb1) == -1)
@@ -97,7 +97,7 @@ issue_aio_calls ()
   aiocb2.aio_reqprio = 0;
   aiocb2.aio_sigevent.sigev_notify = SIGEV_SIGNAL;
   aiocb2.aio_sigevent.sigev_signo = SIGRTMIN;
-  aiocb2.aio_sigevent.sigev_value.sival_ptr = (void *) &aiocb2;
+  aiocb2.aio_sigevent.sigev_value.sival_ptr = &aiocb2;
 
   // Fire off the aio write.
   if (aio_read (&aiocb2) == -1)
@@ -175,7 +175,7 @@ query_aio_completions ()
         }
 
       // Retrive the aiocb.
-      aiocb* aiocb_ptr = (aiocb *) sig_info.si_value.sival_ptr;
+      aiocb *aiocb_ptr = static_cast<aiocb *> (sig_info.si_value.sival_ptr);
 
       // Analyze error and return values. Return values are
       // actually <errno>'s associated with the <aio_> call

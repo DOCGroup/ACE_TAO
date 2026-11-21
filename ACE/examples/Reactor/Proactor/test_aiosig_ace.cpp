@@ -137,7 +137,7 @@ issue_aio_calls ()
   aiocb1.aio_reqprio = 0;
   aiocb1.aio_sigevent.sigev_notify = SIGEV_SIGNAL;
   aiocb1.aio_sigevent.sigev_signo = SIGRTMIN;
-  aiocb1.aio_sigevent.sigev_value.sival_ptr = (void *) &aiocb1;
+  aiocb1.aio_sigevent.sigev_value.sival_ptr = &aiocb1;
 
   // Fire off the aio read.
   if (aio_read (&aiocb1) == -1)
@@ -156,7 +156,7 @@ issue_aio_calls ()
   aiocb2.aio_reqprio = 0;
   aiocb2.aio_sigevent.sigev_notify = SIGEV_SIGNAL;
   aiocb2.aio_sigevent.sigev_signo = SIGRTMIN;
-  aiocb2.aio_sigevent.sigev_value.sival_ptr = (void *) &aiocb2;
+  aiocb2.aio_sigevent.sigev_value.sival_ptr = &aiocb2;
 
   // Fire off the aio read.
   if (aio_read (&aiocb2) == -1)
@@ -175,9 +175,9 @@ issue_aio_calls ()
   aiocb3.aio_reqprio = 0;
   aiocb3.aio_sigevent.sigev_notify = SIGEV_SIGNAL;
   aiocb3.aio_sigevent.sigev_signo = SIGRTMIN;
-  aiocb3.aio_sigevent.sigev_value.sival_ptr = (void *) &aiocb3;
+  aiocb3.aio_sigevent.sigev_value.sival_ptr = &aiocb3;
   sigval value;
-  value.sival_ptr = reinterpret_cast<void *> (&aiocb3);
+  value.sival_ptr = &aiocb3;
   // Queue this one for completion right now.
   if (sigqueue (ACE_OS::getpid (), SIGRTMIN, value) == -1)
     {
@@ -259,7 +259,7 @@ query_aio_completions ()
         }
 
       // Retrive the aiocb.
-      aiocb* aiocb_ptr = (aiocb *) sig_info.si_value.sival_ptr;
+      aiocb *aiocb_ptr = static_cast<aiocb *> (sig_info.si_value.sival_ptr);
       if (aiocb_ptr == std::addressof (aiocb3))
         {
           ACE_ASSERT (sig_info.si_code == SI_QUEUE);
