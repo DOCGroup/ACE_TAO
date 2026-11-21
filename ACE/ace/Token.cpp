@@ -41,8 +41,7 @@ ACE_Token::dump () const
 
 ACE_Token::ACE_Token_Queue_Entry::ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
                                                          ACE_thread_t t_id)
-  : next_ (nullptr),
-    thread_id_ (t_id),
+  : thread_id_ (t_id),
 #if defined (ACE_TOKEN_USES_SEMAPHORE)
     cv_ (0),
 #else
@@ -60,8 +59,7 @@ ACE_Token::ACE_Token_Queue_Entry::ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
 ACE_Token::ACE_Token_Queue_Entry::ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
                                                          ACE_thread_t t_id,
                                                          ACE_Condition_Attributes &attributes)
-  : next_ (nullptr),
-    thread_id_ (t_id),
+  : thread_id_ (t_id),
 #if defined (ACE_TOKEN_USES_SEMAPHORE)
     cv_ (0),
 #else
@@ -78,8 +76,6 @@ ACE_Token::ACE_Token_Queue_Entry::ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
 }
 
 ACE_Token::ACE_Token_Queue::ACE_Token_Queue ()
-  : head_ (nullptr),
-    tail_ (nullptr)
 {
   ACE_TRACE ("ACE_Token::ACE_Token_Queue::ACE_Token_Queue");
 }

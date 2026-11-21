@@ -234,7 +234,7 @@ public:
     int signal ();
 
     /// Pointer to next waiter.
-    ACE_Token_Queue_Entry *next_;
+    ACE_Token_Queue_Entry *next_ {};
 
     /// ACE_Thread id of this waiter.
     ACE_thread_t thread_id_;
@@ -270,10 +270,10 @@ private:
                        int requeue_position = -1);
 
     /// Head of the list of waiting threads.
-    ACE_Token_Queue_Entry *head_;
+    ACE_Token_Queue_Entry *head_ {};
 
     /// Tail of the list of waiting threads.
-    ACE_Token_Queue_Entry *tail_;
+    ACE_Token_Queue_Entry *tail_ {};
   };
 
   /// Implements the <acquire> and <tryacquire> methods above.
