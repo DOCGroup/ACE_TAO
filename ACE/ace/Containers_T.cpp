@@ -688,7 +688,7 @@ ACE_Double_Linked_List<T>:: ACE_Double_Linked_List (ACE_Allocator *alloc)
     }
 
   ACE_NEW_MALLOC (this->head_,
-                  (T *) this->allocator_->malloc (sizeof (T)),
+                  static_cast<T *> (this->allocator_->malloc (sizeof (T))),
                   T);
   this->init_head ();
 }
@@ -703,7 +703,7 @@ ACE_Double_Linked_List<T>::ACE_Double_Linked_List (const ACE_Double_Linked_List<
     }
 
   ACE_NEW_MALLOC (this->head_,
-                  (T *) this->allocator_->malloc (sizeof (T)),
+                  static_cast<T *> (this->allocator_->malloc (sizeof (T))),
                   T);
   this->init_head ();
   this->copy_nodes (cx);
@@ -851,7 +851,7 @@ ACE_Double_Linked_List<T>::copy_nodes (const ACE_Double_Linked_List<T> &c)
     {
       T* temp {};
       ACE_NEW_MALLOC (temp,
-                      (T *)this->allocator_->malloc (sizeof (T)),
+                      static_cast<T *> (this->allocator_->malloc (sizeof (T))),
                       T (*iter.next ()));
       this->insert_tail (temp);
     }
@@ -1929,7 +1929,7 @@ ACE_DLList<T>::insert_tail (T *new_item)
                          ACE_DLList_Node (new_item),
                          0);
   ACE_DLList_Node *temp2 = ACE_DLList_Base::insert_tail (temp1);
-  return (T *) (temp2 ? temp2->item_ : nullptr);
+  return static_cast<T *> (temp2 ? temp2->item_ : nullptr);
 }
 
 template <class T> T *
@@ -1937,17 +1937,18 @@ ACE_DLList<T>::insert_head (T *new_item)
 {
   ACE_DLList_Node *temp1 {};
   ACE_NEW_MALLOC_RETURN (temp1,
-                         (ACE_DLList_Node *) this->allocator_->malloc (sizeof (ACE_DLList_Node)),
+                         static_cast<ACE_DLList_Node *> (
+                           this->allocator_->malloc (sizeof (ACE_DLList_Node))),
                          ACE_DLList_Node (new_item), 0);
   ACE_DLList_Node *temp2 = ACE_DLList_Base::insert_head (temp1);
-  return (T *) (temp2 ? temp2->item_ : nullptr);
+  return static_cast<T *> (temp2 ? temp2->item_ : nullptr);
 }
 
 template <class T> T *
 ACE_DLList<T>::delete_head ()
 {
   ACE_DLList_Node *temp1 = ACE_DLList_Base::delete_head ();
-  T *temp2 = (T *) (temp1 ? temp1->item_ : nullptr);
+  T *temp2 = static_cast<T *> (temp1 ? temp1->item_ : nullptr);
   ACE_DES_FREE (temp1,
                 this->allocator_->free,
                 ACE_DLList_Node);
@@ -1959,7 +1960,7 @@ template <class T> T *
 ACE_DLList<T>::delete_tail ()
 {
   ACE_DLList_Node *temp1 = ACE_DLList_Base::delete_tail ();
-  T *temp2 = (T *) (temp1 ? temp1->item_ : nullptr);
+  T *temp2 = static_cast<T *> (temp1 ? temp1->item_ : nullptr);
   ACE_DES_FREE (temp1,
                 this->allocator_->free,
                 ACE_DLList_Node);
