@@ -11,6 +11,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "ace/Truncate.h"
+#include <string>
 
 // Name of the program.
 static ACE_TCHAR const * program_name {};
@@ -79,13 +80,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // First send the name of the file as a datagram.
 
+  std::string file_name_bytes (ACE_TEXT_ALWAYS_CHAR (file_name));
+  char file_name_prefix[] = "filename: ";
   iovec iov[2] {};
 
-  iov[0].iov_base = (char *) "filename: ";
+  iov[0].iov_base = file_name_prefix;
   iov[0].iov_len  = 11;
-  iov[1].iov_base = (char *) file_name;
+  iov[1].iov_base = file_name_bytes.data ();
   iov[1].iov_len  =
-    ACE_Utils::truncate_cast<u_long> (ACE_OS::strlen (file_name));
+    ACE_Utils::truncate_cast<u_long> (file_name_bytes.size ());
 
   if (dc.send (iov, 2) == -1)
     {
