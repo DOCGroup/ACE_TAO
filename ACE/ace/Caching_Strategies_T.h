@@ -281,7 +281,7 @@ private:
   ATTRIBUTES timer_;
 
   /// The level about which the purging will happen automagically.
-  double purge_percent_;
+  double purge_percent_ {10};
 
   /// This is the helper class which will decide and expunge entries
   /// from the cache.
@@ -384,7 +384,7 @@ public:
 
 private:
   /// The level about which the purging will happen automagically.
-  double purge_percent_;
+  double purge_percent_ {10};
 
   /// This is the helper class which will decide and expunge entries
   /// from the cache.
@@ -485,7 +485,7 @@ private:
   ATTRIBUTES order_;
 
   /// The level about which the purging will happen automagically.
-  double purge_percent_;
+  double purge_percent_ {10};
 
   /// This is the helper class which will decide and expunge entries
   /// from the cache.

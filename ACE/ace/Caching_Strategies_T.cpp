@@ -21,25 +21,20 @@ ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::~ACE_Caching_Strategy () = de
 
 template<class ATTRIBUTES, class CACHING_UTILITY>
 ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::ACE_LRU_Caching_Strategy ()
-  : timer_ (0),
-    purge_percent_ (10)
+  : timer_ (0)
 {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 template<class ATTRIBUTES, class CACHING_UTILITY>
-ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::ACE_LFU_Caching_Strategy ()
-  : purge_percent_ (10)
-{
-}
+ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::ACE_LFU_Caching_Strategy () = default;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 template<class ATTRIBUTES, class CACHING_UTILITY>
 ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::ACE_FIFO_Caching_Strategy ()
-  : order_ (0),
-    purge_percent_ (10)
+  : order_ (0)
 {
 }
 
