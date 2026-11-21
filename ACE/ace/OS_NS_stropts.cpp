@@ -25,7 +25,8 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                                    out_buffer_p,
                                    out_buffer,
                                    bytes_returned,
-                                   (WSAOVERLAPPED *) overlapped,
+                                   reinterpret_cast<WSAOVERLAPPED *> (
+                                     overlapped),
                                    func),
                        int,
                        SOCKET_ERROR);
@@ -72,7 +73,8 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                                        buffer_p,
                                        buffer,
                                        bytes_returned,
-                                       (WSAOVERLAPPED *) overlapped,
+                                       reinterpret_cast<WSAOVERLAPPED *> (
+                                         overlapped),
                                        func),
                            int,
                            SOCKET_ERROR);
