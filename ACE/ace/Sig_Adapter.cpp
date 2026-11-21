@@ -3,16 +3,14 @@
 ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Sig_Action &sa, int sigkey)
   : sigkey_ (sigkey),
     type_ (SIG_ACTION),
-    sa_ (sa),
-    sig_func_ (nullptr)
+    sa_ (sa)
 {
 }
 
 ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Event_Handler *eh, int sigkey)
   : sigkey_ (sigkey),
     type_ (ACE_HANDLER),
-    eh_ (eh),
-    sig_func_ (nullptr)
+    eh_ (eh)
 {
 }
 

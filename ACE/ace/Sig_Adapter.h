@@ -71,7 +71,7 @@ private:
   ACE_Event_Handler *eh_ {};
 
   /// This is a normal C function.
-  ACE_Sig_Handler_Ex sig_func_;
+  ACE_Sig_Handler_Ex sig_func_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
