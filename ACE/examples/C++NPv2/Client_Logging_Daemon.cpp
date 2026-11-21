@@ -310,13 +310,18 @@ int CLD_Connector::connect
     {
       return -1;
     }
-  else if (handler->open (this) == -1)
+
+  // The handler's worker thread can call reconnect() as soon as open()
+  // starts it, so publish the connection state before starting that thread.
+  handler_ = handler;
+  remote_addr_ = remote_addr;
+  if (handler->open (this) == -1)
     {
+      handler_ = nullptr;
       handler->handle_close ();
       return -1;
     }
-  handler_ = handler;
-  remote_addr_ = remote_addr;
+
   return 0;
 }
 
