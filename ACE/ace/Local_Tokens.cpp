@@ -728,7 +728,6 @@ ACE_RW_Token::dump () const
 }
 
 ACE_RW_Token::ACE_RW_Token (const ACE_TCHAR *name)
-: num_writers_ (0)
 {
   ACE_TRACE ("ACE_RW_Token::ACE_RW_Token");
 

@@ -659,7 +659,7 @@ public:
 
 protected:
   /// The number of waiting writers.
-  int num_writers_;
+  int num_writers_ {};
 
   /// ACE_Mutex_Token used to lock internal data structures.
   ACE_TOKEN_CONST::MUTEX lock_;
