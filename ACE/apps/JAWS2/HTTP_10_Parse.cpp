@@ -22,13 +22,13 @@ JAWS_HTTP_10_Parse_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
 {
   JAWS_TRACE ("JAWS_HTTP_10_Parse_Task::handle_put");
 
-  JAWS_IO_Handler *handler = data->io_handler ();
-  JAWS_Dispatch_Policy *policy = this->policy ();
-  if (policy == 0)
+  JAWS_IO_Handler *handler_ptr = data->io_handler ();
+  JAWS_Dispatch_Policy *dispatch_policy = this->policy ();
+  if (dispatch_policy == 0)
     {
-      policy = data->policy ();
+      dispatch_policy = data->policy ();
     }
-  JAWS_IO *io = policy->io ();
+  JAWS_IO *io_ptr = dispatch_policy->io ();
 
   JAWS_HTTP_10_Request *info;
 
@@ -47,7 +47,7 @@ JAWS_HTTP_10_Parse_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
       data->payload (static_cast<void *> (info));
     }
 
-  while (info->receive (*(ACE_Message_Block *)data) == 0)
+  while (info->receive (*static_cast<ACE_Message_Block *> (data)) == 0)
     {
       int next_read_size = data->space ();
 
@@ -57,8 +57,8 @@ JAWS_HTTP_10_Parse_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
           break;
         }
 
-      io->read (handler, data, next_read_size);
-      switch (handler->status ())
+      io_ptr->read (handler_ptr, data, next_read_size);
+      switch (handler_ptr->status ())
         {
         case JAWS_IO_Handler::READ_OK:
           // Behaved synchronously, reiterate

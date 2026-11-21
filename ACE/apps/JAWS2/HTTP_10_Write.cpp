@@ -23,15 +23,15 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
 {
   JAWS_TRACE ("JAWS_HTTP_10_Write_Task::handle_put");
 
-  JAWS_IO_Handler *handler = data->io_handler ();
+  JAWS_IO_Handler *handler_ptr = data->io_handler ();
 
-  JAWS_Dispatch_Policy *policy = this->policy ();
-  if (policy == 0)
+  JAWS_Dispatch_Policy *dispatch_policy = this->policy ();
+  if (dispatch_policy == 0)
     {
-      policy = data->policy ();
+      dispatch_policy = data->policy ();
     }
 
-  JAWS_IO *io = policy->io ();
+  JAWS_IO *io_ptr = dispatch_policy->io ();
 
   JAWS_HTTP_10_Request *info = static_cast<JAWS_HTTP_10_Request *> (data->payload ());
 
@@ -68,8 +68,8 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
         "<body><h1>Server Error</h1>HTTP/1.0 500 Internal Server Error"
         "</body></html>";
 
-      io->send_error_message (handler, msg, sizeof (msg));
-      switch (handler->status ())
+      io_ptr->send_error_message (handler_ptr, msg, sizeof (msg));
+      switch (handler_ptr->status ())
         {
         case JAWS_IO_Handler::WRITE_OK:
         case JAWS_IO_Handler::WRITE_OK_A:
@@ -100,7 +100,7 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
     {
       if (std::strcmp (info->version (), "HTTP/0.9") == 0)
         {
-          io->transmit_file (handler,
+          io_ptr->transmit_file (handler_ptr,
                              info->path (),
                              "",
                              0,
@@ -109,7 +109,7 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
         }
       else
         {
-          io->transmit_file (handler,
+          io_ptr->transmit_file (handler_ptr,
                              info->path (),
                              "HTTP/1.0 200 Ok\r\n\r\n",
                              19,
@@ -117,7 +117,7 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
                              0);
         }
 
-      switch (handler->status ())
+      switch (handler_ptr->status ())
         {
         case JAWS_IO_Handler::TRANSMIT_OK_A:
           {
