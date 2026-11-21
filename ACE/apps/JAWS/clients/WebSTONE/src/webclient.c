@@ -1042,22 +1042,6 @@ void ClientThread(void *dummy)
     WaitForSingleObject(hSemaphore, INFINITE);
     ReleaseSemaphore(hSemaphore, 1, 0);
 #endif /* WIN32 */
-    if (testtime != 0)
-    {
-       /*
-        * IF RUNNING A TIMED TEST, WE WILL LOOP
-  * UNTIL THE ALARM GOES OFF.
-        * WE'LL ALSO NEED TO SET THE SIGNAL HANDLER
-        */
-#ifndef WIN32
-      /*signal(SIGALRM, alarmhandler);*/
-       /*
-        * SEND SIGALRM IN testtime SECONDS
-        */
-      /*alarm(testtime);*/
-#endif /* WIN32 */
-    }
-
     /*
      * AND THEY'RE OFF...
      */
