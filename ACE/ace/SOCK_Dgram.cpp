@@ -57,7 +57,7 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
       return -1;
     }
 
-  sockaddr *saddr = (sockaddr *) addr.get_addr ();
+  sockaddr *saddr = static_cast<sockaddr *> (addr.get_addr ());
   int addr_len = addr.get_size ();
   int inlen;
 
@@ -80,17 +80,17 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
       ssize_t rcv_len = ACE_OS::recvfrom (this->get_handle (),
-                                          (char *) io_vec->iov_base,
+                                          static_cast<char *> (io_vec->iov_base),
                                           inlen,
                                           flags,
-                                          (sockaddr *) saddr,
+                                          saddr,
                                           &addr_len);
       if (rcv_len < 0)
         {
 #if defined (ACE_HAS_ALLOC_HOOKS)
           ACE_Allocator::instance()->free(io_vec->iov_base);
 #else
-          delete [] (char *)io_vec->iov_base;
+          delete [] static_cast<char *> (io_vec->iov_base);
 #endif /* ACE_HAS_ALLOC_HOOKS */
           io_vec->iov_base = nullptr;
         }
@@ -296,9 +296,9 @@ ACE_SOCK_Dgram::send (const iovec iov[],
   send_msg.msg_iov = (iovec *) iov;
   send_msg.msg_iovlen = n;
 #if defined (ACE_HAS_SOCKADDR_MSG_NAME)
-  send_msg.msg_name = (struct sockaddr *) addr.get_addr ();
+  send_msg.msg_name = static_cast<struct sockaddr *> (addr.get_addr ());
 #else
-  send_msg.msg_name = (char *) addr.get_addr ();
+  send_msg.msg_name = static_cast<char *> (addr.get_addr ());
 #endif /* ACE_HAS_SOCKADDR_MSG_NAME */
   send_msg.msg_namelen = addr.get_size ();
 
@@ -351,9 +351,9 @@ ACE_SOCK_Dgram::recv (iovec iov[],
   recv_msg.msg_iov = (iovec *) iov;
   recv_msg.msg_iovlen = n;
 #if defined (ACE_HAS_SOCKADDR_MSG_NAME)
-  recv_msg.msg_name = (struct sockaddr *) addr.get_addr ();
+  recv_msg.msg_name = static_cast<struct sockaddr *> (addr.get_addr ());
 #else
-  recv_msg.msg_name = (char *) addr.get_addr ();
+  recv_msg.msg_name = static_cast<char *> (addr.get_addr ());
 #endif /* ACE_HAS_SOCKADDR_MSG_NAME */
   recv_msg.msg_namelen = addr.get_size ();
 
