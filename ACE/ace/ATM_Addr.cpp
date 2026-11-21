@@ -112,7 +112,7 @@ void *
 ACE_ATM_Addr::get_addr () const
 {
   ACE_TRACE ("ACE_ATM_Addr::get_addr");
-  return (void *) &this->atm_addr_;
+  return &this->atm_addr_;
 }
 
 void

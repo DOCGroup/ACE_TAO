@@ -33,7 +33,7 @@ ACE_UNIX_Addr::set_addr (const void *addr, int len)
 void *
 ACE_UNIX_Addr::get_addr () const
 {
-  return (void *) &this->unix_addr_;
+  return &this->unix_addr_;
 }
 
 // Transform the string into the current addressing format.
