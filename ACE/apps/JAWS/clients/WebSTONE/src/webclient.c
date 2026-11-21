@@ -417,7 +417,7 @@ static int
 makeload(int maxcount, int pageval, THREAD rqst_timer_t *timerarray, THREAD stats_t *timestat, THREAD SOCKET mastersock, THREAD page_stats_t *page_stats)
 {
     int cnt;
-    int returnval;
+    int returnval = -1;
     page_stats_t page_stats_tmp;
     char server[MAXHOSTNAMELEN];
 
