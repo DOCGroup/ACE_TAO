@@ -621,9 +621,6 @@ protected:
 
   /// I/O handle used for accepting new connections.
   ACE_HANDLE listen_handle_;
-
-  // aiocb::aio_filedes
-  // I/O handle for the new connection.
 };
 
 /**
@@ -762,8 +759,8 @@ protected:
 
   ~ACE_POSIX_Asynch_Connect_Result () override;
 
-  // aiocb::aio_filedes
-  // I/O handle for the new connection.
+  /// aiocb::aio_filedes
+  /// I/O handle for the new connection.
   void connect_handle (ACE_HANDLE handle);
 };
 

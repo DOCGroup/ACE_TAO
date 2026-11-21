@@ -42,8 +42,8 @@ public:
   /// be started at the same time.
   ACE_POSIX_CB_Proactor (size_t max_aio_operations = ACE_AIO_DEFAULT_SIZE);
 
-  // This only public so the "extern C" completion function can see it
-  // when needed.
+  /// This only public so the "extern C" completion function can see it
+  /// when needed.
   static void aio_completion_func (sigval cb_data);
 
 protected:

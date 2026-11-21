@@ -72,7 +72,7 @@ namespace ACE_OS
   /// @name A set of wrappers for low-level file operations.
   /// @{
 
-  // non-standard
+  /// Non-standard.
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_OFF_T filesize (ACE_HANDLE handle);
 

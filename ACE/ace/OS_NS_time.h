@@ -268,7 +268,7 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   long timezone ();
 
-  // wrapper for time zone information.
+  /// Wrapper for time zone information.
   ACE_NAMESPACE_INLINE_FUNCTION
   void tzset ();
 

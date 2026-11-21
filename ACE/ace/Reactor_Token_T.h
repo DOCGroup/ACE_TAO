@@ -59,7 +59,7 @@ public:
 
   /// Called just before a token waiter goes to sleep.
   /// @see ACE_Token::sleep_hook
-  // ACE_TOKEN_TYPE may be ACE_Noop_Token, which has no virtual sleep_hook.
+  /// ACE_TOKEN_TYPE may be ACE_Noop_Token, which has no virtual sleep_hook.
   virtual void sleep_hook ();
 
   /// Get the reactor implementation

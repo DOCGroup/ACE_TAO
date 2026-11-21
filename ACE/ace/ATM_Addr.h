@@ -57,7 +57,7 @@ using ATM_Addr = int;
 class ACE_Export ACE_ATM_Addr : public ACE_Addr
 {
 public:
-  // Constants used for ATM options
+  /// Constants used for ATM options.
   static const long LINE_RATE;
   static const int OPT_FLAGS_CPID;
   static const int OPT_FLAGS_PMP;

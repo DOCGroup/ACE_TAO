@@ -71,7 +71,7 @@ public:
   using _retn_type = _slice_type *;
   using _retn_arg_type = _slice_type *&;
 
-  // in, inout, out, _retn
+  /// in, inout, out, _retn
   _in_type      in () const;
   _inout_type   inout ();
   _out_type     out ();
@@ -113,13 +113,13 @@ public:
   using _retn_type = _slice_type *;
   using _retn_arg_type = _slice_type *&;
 
-  // in, inout, out, _retn
+  /// in, inout, out, _retn
   _in_type      in () const;
   _inout_type   inout ();
   _retn_type    _retn ();
   _retn_arg_type  _retn_arg ();
 
-  // TAO extension.
+  /// TAO extension.
   _retn_type    ptr () const;
 protected:
   using FORANY = TAO_Array_Forany_T<T, T_slice, TAG>;

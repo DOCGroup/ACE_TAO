@@ -175,7 +175,7 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   uid_t geteuid ();
 
-  // should call gethostname()
+  /// Should call gethostname().
   ACE_NAMESPACE_INLINE_FUNCTION
   int hostname (char name[],
                 size_t maxnamelen);

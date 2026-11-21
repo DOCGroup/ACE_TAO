@@ -142,13 +142,13 @@ private:
   // either a bytestream-oriented mode or a message-oriented mode.
   DWORD pipe_mode_;
 
-  // On Windows, the handle maintained in the ACE_IPC_SAP class is the
-  // event handle from event. The pipe handle is useless for telling
-  // when a pipe connect is done/ready, and it changes on each pipe
-  // acceptance, quite unlike other acceptor-type classes in ACE.
-  // This allows the get_handle()-obtained handle to be used for
-  // registering with the reactor (albeit for signal, not input)
-  // to tell when a pipe accept is done.
+  /// On Windows, the handle maintained in the ACE_IPC_SAP class is the
+  /// event handle from event. The pipe handle is useless for telling
+  /// when a pipe connect is done/ready, and it changes on each pipe
+  /// acceptance, quite unlike other acceptor-type classes in ACE.
+  /// This allows the get_handle()-obtained handle to be used for
+  /// registering with the reactor (albeit for signal, not input)
+  /// to tell when a pipe accept is done.
   ACE_OVERLAPPED   overlapped_;
   ACE_Manual_Event event_;
   ACE_HANDLE       pipe_handle_;
