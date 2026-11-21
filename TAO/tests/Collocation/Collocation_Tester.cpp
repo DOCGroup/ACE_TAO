@@ -6,6 +6,8 @@
 
 #include "Collocation_Tester.h"
 
+#include <memory>
+
 void
 Collocation_Test::shutdown ()
 {
@@ -37,19 +39,20 @@ Collocation_Test::init (int argc, ACE_TCHAR *argv[])
     this->root_poa_->the_POAManager ();
 
   // Activate the diamond servant and its base classes under RootPOA.
-  PortableServer::ObjectId_var id {this->root_poa_->activate_object (&this->top_servant_)};
+  PortableServer::ObjectId_var id {
+    this->root_poa_->activate_object (std::addressof (this->top_servant_))};
 
   id =
-    this->root_poa_->activate_object (&this->diamond_servant_);
+    this->root_poa_->activate_object (std::addressof (this->diamond_servant_));
 
   // We only care about the most derived class here.
   this->diamond_obj_ = this->root_poa_->id_to_reference (id.in ());
 
   id =
-    this->root_poa_->activate_object (&this->left_servant_);
+    this->root_poa_->activate_object (std::addressof (this->left_servant_));
 
   id =
-    this->root_poa_->activate_object (&this->right_servant_);
+    this->root_poa_->activate_object (std::addressof (this->right_servant_));
 
   CORBA::String_var const str =
     this->orb_->object_to_string (this->diamond_obj_.in ());
