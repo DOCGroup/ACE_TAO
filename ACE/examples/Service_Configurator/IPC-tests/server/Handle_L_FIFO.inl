@@ -103,7 +103,7 @@ Handle_L_FIFO::handle_input (ACE_HANDLE)
     }
   else
     {
-    ACE_OS::write (ACE_STDOUT, (const char *) msg.buf, (int) msg.len);
+      ACE_OS::write (ACE_STDOUT, msg.buf, (int) msg.len);
     }
   return 0;
 }

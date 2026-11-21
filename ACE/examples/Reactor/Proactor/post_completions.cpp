@@ -134,7 +134,7 @@ public:
     {
   //FUZZ: enable check_for_lack_ACE_OS
       // Store the proactor.
-      this->proactor_ = (ACE_Proactor *) proactor;
+      this->proactor_ = static_cast<ACE_Proactor *> (proactor);
 
       // Activate the Task.
       this->activate (THR_NEW_LWP, 5);

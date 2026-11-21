@@ -110,7 +110,7 @@ Handle_L_SPIPE::handle_input (int)
 
   while (new_spipe.recv (nullptr, &msg, &flags) >= 0)
     if (msg.len != 0)
-      ACE_OS::write (ACE_STDOUT, (const char *) msg.buf, (int) msg.len);
+      ACE_OS::write (ACE_STDOUT, msg.buf, (int) msg.len);
     else
       break;
 
