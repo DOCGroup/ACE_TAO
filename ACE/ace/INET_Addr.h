@@ -393,8 +393,8 @@ private:
   /// Insure that @a hostname is properly null-terminated.
   int get_host_name_i (char hostname[], size_t hostnamelen) const;
 
-  // Methods to gain access to the actual address of
-  // the underlying internet address structure.
+  /// Methods to gain access to the actual address of
+  /// the underlying internet address structure.
   void *ip_addr_pointer () const;
   int ip_addr_size () const;
   int determine_type () const;

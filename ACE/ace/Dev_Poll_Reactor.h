@@ -352,14 +352,14 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
      * underlying handler array.
      */
     /// @{
-    // Check the @a handle to make sure it's a valid @c ACE_HANDLE that
-    // within the range of legal handles (i.e., greater than or equal to
-    // zero and less than @c max_size_).
+    /// Check the @a handle to make sure it's a valid @c ACE_HANDLE that
+    /// within the range of legal handles (i.e., greater than or equal to
+    /// zero and less than @c max_size_).
     bool invalid_handle (ACE_HANDLE handle) const;
 
-    // Check the handle to make sure it's a valid @c ACE_HANDLE that is
-    // within the range of currently registered handles (i.e., greater
-    // than or equal to zero and less than @c max_handlep1_).
+    /// Check the handle to make sure it's a valid @c ACE_HANDLE that is
+    /// within the range of currently registered handles (i.e., greater
+    /// than or equal to zero and less than @c max_handlep1_).
     bool handle_in_range (ACE_HANDLE handle) const;
 
     /// @}

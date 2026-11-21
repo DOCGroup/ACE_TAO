@@ -760,10 +760,10 @@ public:
   /// Set the thread handle.
   void handle (ACE_hthread_t);
 
-  // Create a string representation of the thread id.
+  /// Create a string representation of the thread id.
   void to_string (char *thr_string, size_t thr_string_len) const;
 
-  // Create a string representation of the thread id.
+  /// Create a string representation of the thread id.
   template <size_t N>
   void to_string (char (&thr_string)[N]) const
   {
