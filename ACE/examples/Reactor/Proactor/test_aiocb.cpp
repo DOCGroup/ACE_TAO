@@ -34,6 +34,10 @@ class Test_Aio
 {
 public:
   Test_Aio ();
+  Test_Aio (Test_Aio const &) = delete;
+  Test_Aio (Test_Aio &&) = delete;
+  Test_Aio &operator= (Test_Aio const &) = delete;
+  Test_Aio &operator= (Test_Aio &&) = delete;
 
   /// Initting the output file and the buffer.
   int init ();
