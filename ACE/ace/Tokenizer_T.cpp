@@ -10,10 +10,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_CHAR_T>
 ACE_Tokenizer_T<ACE_CHAR_T>::ACE_Tokenizer_T (ACE_CHAR_T *buffer)
-  : buffer_ (buffer),
-    index_ (0),
-    preserves_index_ (0),
-    delimiter_index_ (0)
+  : buffer_ (buffer)
 {
 }
 
