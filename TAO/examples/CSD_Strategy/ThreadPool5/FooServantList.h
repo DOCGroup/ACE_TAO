@@ -43,10 +43,10 @@ class FooServantList
     unsigned num_clients_;
     unsigned init_num_clients_;
     bool     collocated_test_;
-    // The servant_to_be_deactivate_ should be an integer greater than -2.
-    // -1  => defatult value, DONT deactivate servant.
-    // 0   => deactivate all servants.
-    // > 0 => the index of the servant to be deactivated.
+    /// The value of servant_to_deactivate_ should be greater than -2.
+    /// -1 means the default: do not deactivate a servant.
+    /// 0 means deactivate all servants.
+    /// > 0 is the index of the servant to deactivate.
     int      servant_to_deactivate_;
 
     std::unique_ptr<ClientTask> collocated_client_;

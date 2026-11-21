@@ -36,9 +36,9 @@ public:
 protected:
   static constexpr int HASH_TABLE_SIZE = 500;
 
-  // Each bucket owns its linked Protocol_Record chain.
+  /// Each bucket owns its linked Protocol_Record chain.
   std::array<Protocol_Record *, HASH_TABLE_SIZE> hash_table {};
-  // Non-owning iterator into one of the bucket chains.
+  /// Non-owning iterator into one of the bucket chains.
   Protocol_Record *current_ptr {};
   int current_index {};
 };

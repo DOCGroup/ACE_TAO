@@ -40,14 +40,13 @@ public:
   Newsweek &operator= (Newsweek const &) = delete;
   Newsweek &operator= (Newsweek &&) = delete;
 
-  // This is the abstract class method which describes the magazine.
+  /// This is the abstract class method which describes the magazine.
   void title () override;
 
-  // Overload the new/delete opertors so the object will be
-  // created/deleted using the memory allocator associated with the
-  // DLL/SO.
+  /// Overload new and delete so the object uses the memory allocator
+  /// associated with the DLL/SO.
   void *operator new (size_t bytes);
-  // Overloaded new operator, nothrow_t variant.
+  /// Nothrow variant of the overloaded new operator.
   void *operator new (size_t bytes, std::nothrow_t const &);
   void operator delete (void *p, std::nothrow_t const &) noexcept;
   void operator delete (void *ptr);

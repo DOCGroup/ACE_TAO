@@ -36,10 +36,9 @@ public:
                                , JAWS_Event_Completer *completer
                                , void *act = nullptr) override;
 
+  /// Cancelling the timer causes handle_close to be called, but not
+  /// handle_timeout on the ACE_Event_Handler used as the timer helper.
   void cancel_timer (long timer_id) override;
-  // NOTE: Cancelling the timer causes handle_close to be called, but
-  // not handle_timeout (of couse, I mean in the ACE_Event_Handler that
-  // is being used as the timer helper).
 
 private:
   ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Wheel> timer_queue_;

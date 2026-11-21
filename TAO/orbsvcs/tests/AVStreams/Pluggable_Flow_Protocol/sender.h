@@ -71,7 +71,7 @@ private:
 
   SENDER_ENDPOINT_STRATEGY endpoint_strategy_;
   AVStreams::MMDevice_var receiver_mmdevice_;
-  // Borrowed from streamctrl_servant_, which owns the servant reference.
+  /// Borrowed from streamctrl_servant_, which owns the servant reference.
   TAO_StreamCtrl *streamctrl_ {};
   PortableServer::ServantBase_var streamctrl_servant_;
   TAO_Naming_Client naming_client_;

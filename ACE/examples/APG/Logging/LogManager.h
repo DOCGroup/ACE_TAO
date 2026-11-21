@@ -32,7 +32,7 @@ public:
   // Exclude 1
 private:
   std::unique_ptr<ofstream> log_stream_ {};
-  // ACE_Log_Msg retains this borrowed stream pointer while OSTREAM logging is active.
+  /// ACE_Log_Msg retains this borrowed stream pointer while OSTREAM logging is active.
   ACE_OSTREAM_TYPE *output_stream_ {};
   // Exclude 1
 };

@@ -41,7 +41,7 @@ class Foo_i : public virtual POA_Foo
     std::atomic<unsigned> count_op5_ {};
 
     ACE_TString const servant_name_;
-    // Non-owning back-pointer; FooServantList owns this servant and outlives it.
+    /// Non-owning back-pointer; FooServantList owns this servant and outlives it.
     FooServantList *const mgr_;
 };
 
