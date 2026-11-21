@@ -221,11 +221,11 @@ TAO_DynUnion_i::set_from_any (CORBA::Any const& any)
       CORBA::TypeCode_var const member_tc = tc->member_type (i);
 
       CORBA::Any member_any;
-      TAO::Unknown_IDL_Type *unk {};
-      ACE_NEW (unk,
+      TAO::Unknown_IDL_Type *member_unk {};
+      ACE_NEW (member_unk,
                TAO::Unknown_IDL_Type (member_tc.in (),
                                       in));
-      member_any.replace (unk);
+      member_any.replace (member_unk);
 
       this->member_ =
         TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::Any const&> (
@@ -259,11 +259,11 @@ TAO_DynUnion_i::set_from_any (CORBA::Any const& any)
             tc->member_type (index);
 
           CORBA::Any default_any;
-          TAO::Unknown_IDL_Type *unk {};
-          ACE_NEW (unk,
+          TAO::Unknown_IDL_Type *default_member_unk {};
+          ACE_NEW (default_member_unk,
                    TAO::Unknown_IDL_Type (default_tc.in (),
                                           in));
-          default_any.replace (unk);
+          default_any.replace (default_member_unk);
 
           this->member_ =
             TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::Any const&> (
@@ -389,9 +389,6 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value)
   else
     {
       // default_index() does not work with aliased type codes.
-      CORBA::TypeCode_var const unaliased_tc =
-        TAO_DynAnyFactory::strip_alias (this->type_.in ());
-
       // If no match, either the default member or no member is active.
       CORBA::Long const default_index =
         unaliased_tc->default_index ();
@@ -862,8 +859,9 @@ TAO_DynUnion_i::label_match (CORBA::Any const& my_any,
         // check whether the discriminator is possibly an enum type
         // since these get stored as ulong label values as well
         CORBA::TypeCode_var const other_tc = other_any.type ();
-        CORBA::TCKind const kind = TAO_DynAnyFactory::unalias (other_tc.in ());
-        if (kind == CORBA::tk_enum)
+        CORBA::TCKind const other_kind =
+          TAO_DynAnyFactory::unalias (other_tc.in ());
+        if (other_kind == CORBA::tk_enum)
           {
             TAO::Any_Impl *other_impl = other_any.impl ();
 

@@ -156,15 +156,15 @@ TAO_RT_POA::validate_priority (RTCORBA::Priority priority)
         {
           // If we do have bands, make sure that the priority is
           // matching one of the bands.
-          RTCORBA::PriorityBands &bands =
+          RTCORBA::PriorityBands &priority_bands_rep =
             priority_bands_i->priority_bands_rep ();
 
           for (CORBA::ULong i {};
-               i < bands.length ();
+               i < priority_bands_rep.length ();
                ++i)
             {
-              if (bands[i].low <= priority &&
-                  bands[i].high >= priority)
+              if (priority_bands_rep[i].low <= priority &&
+                  priority_bands_rep[i].high >= priority)
                 {
                 return;
               }
