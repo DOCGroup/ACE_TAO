@@ -61,9 +61,8 @@ namespace TAO
       const PortableServer::ObjectId &system_id,
       PortableServer::Servant &servant)
     {
-      TAO_Servant_Location location = TAO_Servant_Location::Not_Found;
-
-      location = this->poa_->servant_present (system_id, servant);
+      TAO_Servant_Location location =
+        this->poa_->servant_present (system_id, servant);
 
       if (location == TAO_Servant_Location::Not_Found)
         {
