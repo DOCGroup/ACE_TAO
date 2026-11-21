@@ -525,12 +525,13 @@ test_control (void * /* param */)
               peer = INVALID_SOCKET;
               continue;
             }
-          if (0 == _beginthreadex (0,            // security
-                                   64 * 1024,    // stack size
-                                   peer_svc,     // entrypoint
-                                   p.get (),     // param
-                                   0,            // creation flags
-                                   0))           // ptr to thread id
+          auto const thread_handle = _beginthreadex (0,            // security
+                                                     64 * 1024,    // stack size
+                                                     peer_svc,     // entrypoint
+                                                     p.get (),     // param
+                                                     0,            // creation flags
+                                                     0);           // ptr to thread id
+          if (thread_handle == 0)
             {
               perror ("beginthreadex peer");
               closesocket (peer);
@@ -538,6 +539,7 @@ test_control (void * /* param */)
           else
             {
               p.release ();
+              ::CloseHandle (reinterpret_cast<HANDLE> (thread_handle));
             }
           peer = INVALID_SOCKET;
         }
