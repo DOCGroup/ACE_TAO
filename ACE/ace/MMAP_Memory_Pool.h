@@ -268,7 +268,7 @@ protected:
   void *base_addr_ {};
 
   /// Must we use the @c base_addr_ or can we let mmap(2) select it?
-  int use_fixed_addr_;
+  int use_fixed_addr_ {ACE_MMAP_Memory_Pool_Options::FIRSTCALL_FIXED};
 
   /// Flags passed into ACE_OS::mmap().
   int flags_;
