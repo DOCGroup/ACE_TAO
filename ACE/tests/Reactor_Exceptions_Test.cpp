@@ -148,7 +148,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     My_Handler handler (local_addr);
 
     if (ACE_Reactor::instance ()->register_handler
-        (&handler,
+        (std::addressof (handler),
          ACE_Event_Handler::READ_MASK) == -1)
       {
         ACE_ERROR_RETURN ((LM_ERROR,

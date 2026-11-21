@@ -8,6 +8,8 @@
 #include "ace/Reactor.h"
 #include "ace/Sig_Adapter.h"
 
+#include <memory>
+
 static void end_reactor_event_loop (int, siginfo_t *, ucontext_t *)
 {
   ACE_Reactor::end_event_loop ();
@@ -92,7 +94,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   1));
     }
   else if (ACE_Reactor::instance ()->register_handler
-    (SIGINT, &shutdown_handler) == -1)
+    (SIGINT, std::addressof (shutdown_handler)) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p\n%a"),

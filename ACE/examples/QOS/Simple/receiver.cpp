@@ -260,7 +260,7 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       // the application to gracefully release the QoS session and
       // shutdown.
       if (ACE_Reactor::instance ()->register_handler
-          (SIGINT, &qos_signal_handler) == -1)
+          (SIGINT, std::addressof (qos_signal_handler)) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Error in registering the Signal Handler.\n"),

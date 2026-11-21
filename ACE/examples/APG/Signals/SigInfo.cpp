@@ -5,6 +5,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
 
 // Listing 1 code/ch11
@@ -140,7 +142,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   signalSet.fill_set ();
 
   MySignalHandler h1;
-  ACE_Reactor::instance ()->register_handler (signalSet, &h1);
+  ACE_Reactor::instance ()->register_handler (signalSet, std::addressof (h1));
   pid_t const childPid = ACE_OS::fork ();
   if (childPid == 0)      // This is the parent process.
     {

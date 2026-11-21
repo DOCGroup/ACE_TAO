@@ -82,7 +82,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (ACE_Reactor::instance ()->register_handler
       (SIGINT,
-       &my_handler) == -1)
+       std::addressof (my_handler)) == -1)
     {
       ACE_ERROR_RETURN ((LM_DEBUG,
                          "%p\n",

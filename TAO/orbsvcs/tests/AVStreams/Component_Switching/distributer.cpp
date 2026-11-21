@@ -6,6 +6,8 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
+#include <memory>
+
 using DISTRIBUTER = ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex>;
 
 int
@@ -307,7 +309,7 @@ Distributer::init (int argc,
     TAO_AV_CORE::instance ()->reactor ();
 
   if (reactor->register_handler (SIGINT,
-                                 &this->signal_handler_) == -1)
+                                 std::addressof (this->signal_handler_)) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Error in handler register\n"),

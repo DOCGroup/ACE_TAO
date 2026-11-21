@@ -32,6 +32,8 @@
 #include "ace/Process.h"
 #include "ace/Log_Msg.h"
 
+#include <memory>
+
 /// Port used to receive datagrams.
 static u_short port1 {};
 
@@ -142,7 +144,7 @@ run_test (u_short localport,
 
   // Read data from other side.
   if (ACE_Reactor::instance ()->register_handler
-      (&endpoint,
+      (std::addressof (endpoint),
        ACE_Event_Handler::READ_MASK) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -188,7 +190,7 @@ run_test (u_short localport,
     }
 
   if (ACE_Reactor::instance ()->remove_handler
-      (&endpoint,
+      (std::addressof (endpoint),
        ACE_Event_Handler::READ_MASK) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

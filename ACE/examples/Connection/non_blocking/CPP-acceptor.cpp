@@ -7,6 +7,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Signal.h"
 
+#include <memory>
+
 [[maybe_unused]] static void
 end_server_reactor_event_loop (int, siginfo_t *, ucontext_t *)
 {
@@ -148,7 +150,7 @@ IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::init (int argc, ACE_TCHAR *argv[])
   // Handle the SIGINT signal through the <ACE_Reactor>.
   else if (ACE_Reactor::instance ()->register_handler
            (SIGINT,
-            &this->done_handler_) == -1)
+            std::addressof (this->done_handler_)) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
@@ -159,7 +161,7 @@ IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::init (int argc, ACE_TCHAR *argv[])
   // Handle the SIGPIPE signal through the <ACE_Reactor>.
   else if (ACE_Reactor::instance ()->register_handler
            (SIGPIPE,
-            &this->done_handler_) == -1)
+            std::addressof (this->done_handler_)) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),

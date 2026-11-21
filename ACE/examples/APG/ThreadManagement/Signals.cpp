@@ -8,6 +8,8 @@
 #include "ace/Signal.h"
 #include "ace/Sig_Handler.h"
 
+#include <memory>
+
 // Listing 1 code/ch13
 class SignalableTask : public ACE_Task<ACE_MT_SYNCH>
 {
@@ -75,7 +77,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   handler.activate (THR_NEW_LWP | THR_JOINABLE , 5);
 
   ACE_Sig_Handler sh;
-  sh.register_handler (SIGUSR1, &handler);
+  sh.register_handler (SIGUSR1, std::addressof (handler));
 
   ACE_OS::sleep (1);
 
