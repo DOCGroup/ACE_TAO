@@ -1932,13 +1932,13 @@ private:
   void copy_nodes (const ACE_Ordered_MultiSet<T> &);
 
   /// Head of the bilinked list of Nodes.
-  ACE_DNode<T> *head_;
+  ACE_DNode<T> *head_ {};
 
   /// Head of the bilinked list of Nodes.
-  ACE_DNode<T> *tail_;
+  ACE_DNode<T> *tail_ {};
 
   /// Current size of the set.
-  size_t cur_size_;
+  size_t cur_size_ {};
 
   /// Allocation strategy of the set.
   ACE_Allocator *allocator_;

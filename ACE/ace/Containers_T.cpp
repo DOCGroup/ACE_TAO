@@ -1559,10 +1559,7 @@ ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Ordered_MultiSet)
 
   template <class T>
 ACE_Ordered_MultiSet<T>::ACE_Ordered_MultiSet (ACE_Allocator *alloc)
-  : head_ (0)
-  , tail_ (0)
-  , cur_size_ (0)
-  , allocator_ (alloc)
+  : allocator_ (alloc)
 {
   // ACE_TRACE ("ACE_Ordered_MultiSet<T>::ACE_Ordered_MultiSet");
 
@@ -1574,10 +1571,7 @@ ACE_Ordered_MultiSet<T>::ACE_Ordered_MultiSet (ACE_Allocator *alloc)
 
 template <class T>
 ACE_Ordered_MultiSet<T>::ACE_Ordered_MultiSet (const ACE_Ordered_MultiSet<T> &us)
-  : head_ (0)
-  , tail_ (0)
-  , cur_size_ (0)
-  , allocator_ (us.allocator_)
+  : allocator_ (us.allocator_)
 {
   ACE_TRACE ("ACE_Ordered_MultiSet<T>::ACE_Ordered_MultiSet");
 
