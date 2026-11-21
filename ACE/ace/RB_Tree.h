@@ -666,10 +666,10 @@ protected:
   /// @}
 
   /// Reference to the ACE_RB_Tree over which we're iterating.
-  const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> *tree_;
+  const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> *tree_ {};
 
   /// Pointer to the node currently under the iterator.
-  ACE_RB_Tree_Node <EXT_ID, INT_ID> *node_;
+  ACE_RB_Tree_Node <EXT_ID, INT_ID> *node_ {};
 };
 
 /**
