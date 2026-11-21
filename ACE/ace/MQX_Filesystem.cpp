@@ -23,13 +23,9 @@
 MQX_Filesystem MQX_Filesystem::instance_;
 
 MQX_Filesystem::MQX_Filesystem ()
-  : current_fs_ (0)
-  , current_fs_name_len_ (0)
-  , max_fd_ (255)
+  : max_fd_ (255)
   , last_fd_ (-1)
 {
-  current_fs_name_[0] = '\0';
-
   // Initialize files_
   for (unsigned i = 0; i < FOPEN_MAX; ++i)
     {
