@@ -291,10 +291,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 #if defined (ACE_WIN32)
   if (ACE_Thread::spawn (ACE_THR_FUNC (worker),
-                         (void *) handles[0],
+                         reinterpret_cast<void *> (handles[0]),
                          THR_DETACHED) == -1
       || ACE_Thread::spawn (ACE_THR_FUNC (worker),
-                            (void *) handles[1],
+                            reinterpret_cast<void *> (handles[1]),
                             THR_DETACHED) == -1)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p\n%a"),
