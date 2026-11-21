@@ -100,7 +100,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // create, activate and initialize AMI reply handler
       Test_Reply_i test_i_rh_srv (orb.in (), options.max_count, options.mode);
       PortableServer::ObjectId_var const handler_id =
-        root_poa->activate_object (&test_i_rh_srv);
+        root_poa->activate_object (std::addressof (test_i_rh_srv));
 
       CORBA::Object_var const handler_object = root_poa->id_to_reference (handler_id.in ());
 
@@ -111,7 +111,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // create and activate test servant
       Test_i test_i_srv (orb.in (), rh.in (), options.mode);
 
-      PortableServer::ObjectId_var const test_id = root_poa->activate_object (&test_i_srv);
+      PortableServer::ObjectId_var const test_id =
+        root_poa->activate_object (std::addressof (test_i_srv));
 
       CORBA::Object_var const test_object = root_poa->id_to_reference (test_id.in ());
 

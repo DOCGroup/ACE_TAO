@@ -85,7 +85,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Timeout_i timeout_i (orb.in ());
 
       PortableServer::ObjectId_var const id =
-        root_poa->activate_object (&timeout_i);
+        root_poa->activate_object (std::addressof (timeout_i));
 
       CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 

@@ -12,6 +12,7 @@
 #include "ami_testS.h"
 #include <atomic>
 #include <cstring>
+#include <memory>
 
 struct Client_Options
 {
@@ -214,7 +215,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Instantiate the ReplyHandler and register that with the POA.
       Handler handler (options, state);
-      PortableServer::ObjectId_var const id (poa_var->activate_object (&handler));
+      PortableServer::ObjectId_var const id (
+        poa_var->activate_object (std::addressof (handler)));
 
       CORBA::Object_var const handler_object (poa_var->id_to_reference (id.in ()));
 

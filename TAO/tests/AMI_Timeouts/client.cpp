@@ -15,6 +15,8 @@
 
 #include "ace/Get_Opt.h"
 
+#include <memory>
+
 struct Options
 {
   ACE_TCHAR const *ior {ACE_TEXT ("file://test.ior")};
@@ -110,7 +112,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       TimeoutHandler_i timeoutHandler_i;
 
       PortableServer::ObjectId_var const id =
-        root_poa->activate_object (&timeoutHandler_i);
+        root_poa->activate_object (std::addressof (timeoutHandler_i));
 
       CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 
