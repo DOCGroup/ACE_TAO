@@ -35,7 +35,7 @@ ACE_Array_Base<T>::ACE_Array_Base (typename ACE_Array_Base<T>::size_type size,
   if (size != 0)
     {
       ACE_ALLOCATOR (this->array_,
-                     (T *) this->allocator_->malloc (size * sizeof (T)));
+                     static_cast<T *> (this->allocator_->malloc (size * sizeof (T))));
       for (size_type i = 0; i < size; ++i)
         {
           new (std::addressof (array_[i])) T;
@@ -59,7 +59,7 @@ ACE_Array_Base<T>::ACE_Array_Base (typename ACE_Array_Base<T>::size_type size,
   if (size != 0)
     {
       ACE_ALLOCATOR (this->array_,
-                     (T *) this->allocator_->malloc (size * sizeof (T)));
+                     static_cast<T *> (this->allocator_->malloc (size * sizeof (T))));
       for (size_type i = 0; i < size; ++i)
         {
           new (std::addressof (array_[i])) T (default_value);
@@ -81,7 +81,7 @@ ACE_Array_Base<T>::ACE_Array_Base (ACE_Array_Base<T> const &s)
     }
 
   ACE_ALLOCATOR (this->array_,
-                 (T *) this->allocator_->malloc (s.size () * sizeof (T)));
+                 static_cast<T *> (this->allocator_->malloc (s.size () * sizeof (T))));
   for (size_type i = 0; i < this->size (); ++i)
     {
       new (std::addressof (this->array_[i])) T (s.array_[i]);
@@ -181,7 +181,7 @@ ACE_Array_Base<T>::max_size (typename ACE_Array_Base<T>::size_type new_size)
       T *tmp {};
 
       ACE_ALLOCATOR_RETURN (tmp,
-                            (T *) this->allocator_->malloc (new_size * sizeof (T)),
+                            static_cast<T *> (this->allocator_->malloc (new_size * sizeof (T))),
                             -1);
       for (size_type i = 0; i < this->cur_size_; ++i)
         {
