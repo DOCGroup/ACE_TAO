@@ -165,7 +165,7 @@ run_main (int, ACE_TCHAR *[])
                            current iterator position, is below.  */
         if (n.k % 2 == 1)
           {
-            r = ubs2.remove (n);
+            ubs2.remove (n);
             ++deleted;
           }
       }
