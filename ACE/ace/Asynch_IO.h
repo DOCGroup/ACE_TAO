@@ -168,7 +168,7 @@ public:
 protected:
   /// Constructor. This implementation will not be deleted.  The
   /// implementation will be deleted by the Proactor.
-  ACE_Asynch_Result (ACE_Asynch_Result_Impl *implementation);
+  explicit ACE_Asynch_Result (ACE_Asynch_Result_Impl *implementation);
 
   /// Get the implementation class.
   ACE_Asynch_Result_Impl *implementation () const;
