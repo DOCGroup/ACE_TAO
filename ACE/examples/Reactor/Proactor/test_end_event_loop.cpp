@@ -136,7 +136,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     }
 
   // Test the indefinite run event loop. Just pass a non-zero.
-  if (task2.open ((void *)&task2) == -1)
+  if (task2.open (&task2) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%N:%l:(%P | %t):Failed to <open> the task\n"),
