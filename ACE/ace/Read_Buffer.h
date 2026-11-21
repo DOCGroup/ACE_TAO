@@ -111,10 +111,10 @@ private:
   char *rec_read (int term, int search, int replace);
 
   /// The total number of characters in the buffer.
-  size_t size_;
+  size_t size_ {};
 
   /// The total number of characters replaced.
-  size_t occurrences_;
+  size_t occurrences_ {};
 
   /// The stream we are reading from.
   FILE *stream_;

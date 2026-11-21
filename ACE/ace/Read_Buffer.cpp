@@ -43,9 +43,7 @@ ACE_Read_Buffer::dump () const
 ACE_Read_Buffer::ACE_Read_Buffer (FILE *fp,
                                   bool close_on_delete,
                                   ACE_Allocator *alloc)
-  : size_ (0),
-    occurrences_ (0),
-    stream_ (fp),
+  : stream_ (fp),
     close_on_delete_ (close_on_delete),
     allocator_ (alloc)
 {
@@ -59,9 +57,7 @@ ACE_Read_Buffer::ACE_Read_Buffer (FILE *fp,
 ACE_Read_Buffer::ACE_Read_Buffer (ACE_HANDLE handle,
                                   bool close_on_delete,
                                   ACE_Allocator *alloc)
-  : size_ (0),
-    occurrences_ (0),
-    stream_ (ACE_OS::fdopen (handle, ACE_TEXT ("r"))),
+  : stream_ (ACE_OS::fdopen (handle, ACE_TEXT ("r"))),
     close_on_delete_ (close_on_delete),
     allocator_ (alloc)
 {
