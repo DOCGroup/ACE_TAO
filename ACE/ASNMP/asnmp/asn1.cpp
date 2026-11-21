@@ -1019,7 +1019,7 @@ struct snmp_pdu * cmu_snmp::pdu_create( int command)
 void cmu_snmp::free_pdu( struct snmp_pdu *pdu)
 {
   ACE_TRACE("cmu_snmp::free_pdu");
-  struct variable_list *vp, *ovp;
+  struct variable_list *vp;
 
   vp = pdu->variables;
   while(vp){
@@ -1033,7 +1033,7 @@ void cmu_snmp::free_pdu( struct snmp_pdu *pdu)
     {
       delete [] vp->val.string;
     }
-    ovp = vp;
+    struct variable_list *ovp = vp;
     // go to the next one
     vp = vp->next_variable;
     // release up vb itself

@@ -9,8 +9,6 @@ JAWS_Concurrency_Base::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 int
 JAWS_Concurrency_Base::svc ()
 {
-  int result = 0;
-
   for (;;)
     {
       ACE_Message_Block *mb {};
@@ -20,7 +18,7 @@ JAWS_Concurrency_Base::svc ()
       // do.  Carefully think how to implement it so you don't leave
       // yourself with 0 threads.
 
-      result = this->getq (mb);
+      int const result = this->getq (mb);
       if (result == -1 || mb == nullptr)
       {
         break;

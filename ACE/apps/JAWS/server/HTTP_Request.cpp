@@ -262,14 +262,12 @@ HTTP_Request::headers () const
 const char *
 HTTP_Request::header_strings (int index) const
 {
-  char const *hs {};
-
   if (0 <= index && index < NUM_HEADER_STRINGS)
   {
-    hs = this->header_strings_[index];
+    return this->header_strings_[index];
   }
 
-  return hs;
+  return nullptr;
 }
 
 const char *
@@ -280,7 +278,7 @@ HTTP_Request::header_values (int index) const
 
   if (0 <= index && index < NUM_HEADER_STRINGS)
     {
-      hs = this->header_strings_[index];
+      char const *hs = this->header_strings_[index];
       hv = this->headers_[hs].value ();
     }
 

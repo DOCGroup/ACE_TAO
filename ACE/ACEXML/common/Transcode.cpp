@@ -316,14 +316,14 @@ ACEXML_Transcoder::utf8s2utf16s (const ACEXML_UTF8 *src,
   size_t src_len = std::strlen (src) + 1;
 
   size_t total_len = 0;
-  int forward;
   ACEXML_UCS4 temp;
 
   while (src_len > 0)
     {
-      if ((forward = ACEXML_Transcoder::utf82ucs4 (src,
-                                                   src_len,
-                                                   temp)) <= 0)
+      int forward = ACEXML_Transcoder::utf82ucs4 (src,
+                                                  src_len,
+                                                  temp);
+      if (forward <= 0)
       {
         return forward;
       }
@@ -331,9 +331,10 @@ ACEXML_Transcoder::utf8s2utf16s (const ACEXML_UTF8 *src,
       src += forward;
       src_len -= forward;
 
-      if ((forward = ACEXML_Transcoder::ucs42utf16 (temp,
-                                                    dst,
-                                                    len)) <= 0)
+      forward = ACEXML_Transcoder::ucs42utf16 (temp,
+                                               dst,
+                                               len);
+      if (forward <= 0)
       {
         return forward;
       }
@@ -363,14 +364,14 @@ ACEXML_Transcoder::utf16s2utf8s (const ACEXML_UTF16 *src,
     }
 
   size_t total_len = 0;
-  int forward;
   ACEXML_UCS4 temp;
 
   while (src_len > 0)
     {
-      if ((forward = ACEXML_Transcoder::utf162ucs4 (src,
-                                                    src_len,
-                                                    temp)) <= 0)
+      int forward = ACEXML_Transcoder::utf162ucs4 (src,
+                                                   src_len,
+                                                   temp);
+      if (forward <= 0)
       {
         return forward;
       }
@@ -378,9 +379,10 @@ ACEXML_Transcoder::utf16s2utf8s (const ACEXML_UTF16 *src,
       src += forward;
       src_len -= forward;
 
-      if ((forward = ACEXML_Transcoder::ucs42utf8 (temp,
-                                                   dst,
-                                                   len)) <= 0)
+      forward = ACEXML_Transcoder::ucs42utf8 (temp,
+                                              dst,
+                                              len);
+      if (forward <= 0)
       {
         return forward;
       }

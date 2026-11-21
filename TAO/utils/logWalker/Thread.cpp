@@ -420,10 +420,9 @@ Thread::count_nesting ()
     {
       Invocation *inv {};
       i.next(inv);
-      size_t level {};
       while (!nested.empty ())
         {
-          level = nested.size();
+          size_t const level = nested.size();
           if (level > this->nested_)
           {
             this->nested_ = level;

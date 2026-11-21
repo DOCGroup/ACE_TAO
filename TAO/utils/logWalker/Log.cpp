@@ -41,14 +41,13 @@ Log::process_file (const ACE_TCHAR *filename, const char *alias)
     }
 
   size_t remainder = mapsize;
-  size_t linelen {};
   char *text;
   size_t maxline = 1000;
   std::unique_ptr<char[]> buffer = std::make_unique<char[]> (maxline);
   this->offset_ = 1;
   while ((text = std::strchr (base, '\n')) != nullptr)
     {
-      linelen = text - base;
+      size_t const linelen = text - base;
       if (linelen >= maxline)
         {
           maxline = linelen + 100;
