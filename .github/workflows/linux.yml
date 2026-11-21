@@ -127,6 +127,14 @@ jobs:
             os: ubuntu-24.04
             optional_feature: uses_wchar=1
             optional_macros: inline=0
+          - feature: wxwidgets
+            CC: gcc-10
+            CXX: g++-10
+            PackageDeps: g++-10 libwxgtk3.0-gtk3-0v5 libwxgtk3.0-gtk3-dev
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            os: ubuntu-20.04
+            optional_feature: wxWindows=1
+            optional_macros: wxWindows=1
           - feature: CodeQL
             CC: gcc-10
             CXX: g++-10
