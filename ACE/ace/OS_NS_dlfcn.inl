@@ -32,7 +32,7 @@ ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
 
   ACE_OSCALL (::dlsym (handle, ACE_TEXT ("_fini")), void *, ptr);
 
-  if (ptr != 0)
+  if (ptr != nullptr)
     {
       (*((int (*)(void)) ptr)) (); // Call _fini hook explicitly.
     }
@@ -53,9 +53,9 @@ ACE_OS::dlerror ()
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
   const char *err {};
   ACE_OSCALL (::dlerror (), const char *, err);
-  if (err == 0)
+  if (err == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 #   if defined (ACE_USES_WCHAR)
   const size_t BufLen = 256;
@@ -72,15 +72,15 @@ ACE_OS::dlerror ()
 # elif defined (ACE_WIN32)
   static ACE_TCHAR buf[128];
   ACE_TEXT_FormatMessage (FORMAT_MESSAGE_FROM_SYSTEM,
-                          0,
+                          nullptr,
                           ::GetLastError (),
                           0,
                           buf,
                           sizeof buf / sizeof buf[0],
-                          0);
+                          nullptr);
   return buf;
 # else
-  ACE_NOTSUP_RETURN (0);
+  ACE_NOTSUP_RETURN (nullptr);
 # endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 }
 
@@ -94,7 +94,7 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
   void *handle;
   ACE_OSCALL (::dlopen (ACE_TEXT_ALWAYS_CHAR (fname), mode), void *, handle);
 #   if !defined (ACE_HAS_AUTOMATIC_INIT_FINI)
-  if (handle != 0)
+  if (handle != nullptr)
     {
       void *ptr;
       // Some systems (e.g., SunOS4) do not automatically call _init(), so
@@ -102,11 +102,11 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
 
       ACE_OSCALL (::dlsym (handle, ACE_TEXT ("_init")), void *, ptr);
 
-      if (ptr != 0 && (*((int (*)(void)) ptr)) () == -1) // Call _init hook explicitly.
+      if (ptr != nullptr && (*((int (*)(void)) ptr)) () == -1) // Call _init hook explicitly.
         {
           // Close down the handle to prevent leaks.
           ::dlclose (handle);
-          return 0;
+          return nullptr;
         }
     }
 #   endif /* ACE_HAS_AUTOMATIC_INIT_FINI */
@@ -114,7 +114,7 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
 # elif defined (ACE_WIN32)
   ACE_UNUSED_ARG (mode);
 
-  ACE_WIN32CALL_RETURN (ACE_TEXT_LoadLibrary (fname), ACE_SHLIB_HANDLE, 0);
+  ACE_WIN32CALL_RETURN (ACE_TEXT_LoadLibrary (fname), ACE_SHLIB_HANDLE, nullptr);
 # elif defined (ACE_VXWORKS) && !defined (__RTP__)
   ACE_UNUSED_ARG (mode);
   MODULE* handle {};
@@ -130,26 +130,26 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
       int loaderror = ACE_OS::last_error();
       ACE_OS::close (filehandle);
 
-      if ( (loaderror != 0) && (handle != 0) )
+      if ( (loaderror != 0) && (handle != nullptr) )
         {
           // ouch something went wrong most likely unresolved externals
           if (handle)
             {
               ::unldByModuleId ( handle, 0 );
             }
-          handle = 0;
+          handle = nullptr;
         }
     }
   else
     {
       // couldn't open file
-      handle = 0;
+      handle = nullptr;
     }
   return handle;
 # else
   ACE_UNUSED_ARG (fname);
   ACE_UNUSED_ARG (mode);
-  ACE_NOTSUP_RETURN (0);
+  ACE_NOTSUP_RETURN (nullptr);
 # endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 }
 
