@@ -441,18 +441,18 @@ protected:
 
   /// This class takes care of doing <accept> when we use
   /// AIO_CONTROL_BLOCKS strategy.
-  ACE_AIOCB_Notify_Pipe_Manager *aiocb_notify_pipe_manager_;
+  ACE_AIOCB_Notify_Pipe_Manager *aiocb_notify_pipe_manager_ {};
 
   /// Use a dynamically allocated array to keep track of all the aio's
   /// issued currently.
-  aiocb **aiocb_list_;
-  ACE_POSIX_Asynch_Result **result_list_;
+  aiocb **aiocb_list_ {};
+  ACE_POSIX_Asynch_Result **result_list_ {};
 
   /// To maintain the maximum size of the array (list).
   size_t aiocb_list_max_size_;
 
   /// To maintain the current size of the array (list).
-  size_t aiocb_list_cur_size_;
+  size_t aiocb_list_cur_size_ {};
 
   /// Mutex to protect work with lists.
   ACE_SYNCH_MUTEX mutex_;
@@ -464,10 +464,10 @@ protected:
 
   /// Number of ACE_POSIX_Asynch_Result's waiting for start
   /// i.e. deferred AIOs
-  size_t num_deferred_aiocb_ ;
+  size_t num_deferred_aiocb_ {};
 
   /// Number active,i.e. running requests
-  size_t num_started_aio_ ;
+  size_t num_started_aio_ {};
 
   /// Queue which keeps "post_completed" ACE_POSIX_Asynch_Result's
   ACE_Unbounded_Queue<ACE_POSIX_Asynch_Result *> result_queue_;

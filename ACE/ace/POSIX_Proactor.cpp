@@ -716,14 +716,8 @@ ACE_AIOCB_Notify_Pipe_Manager::handle_read_stream
 
 // Public constructor for common use.
 ACE_POSIX_AIOCB_Proactor::ACE_POSIX_AIOCB_Proactor (size_t max_aio_operations)
-  : aiocb_notify_pipe_manager_ (nullptr),
-    aiocb_list_ (nullptr),
-    result_list_ (nullptr),
-    aiocb_list_max_size_ (max_aio_operations),
-    aiocb_list_cur_size_ (0),
-    notify_pipe_read_handle_ (ACE_INVALID_HANDLE),
-    num_deferred_aiocb_ (0),
-    num_started_aio_ (0)
+  : aiocb_list_max_size_ (max_aio_operations),
+    notify_pipe_read_handle_ (ACE_INVALID_HANDLE)
 {
   // Check for correct value for max_aio_operations
   check_max_aio_num ();
@@ -740,14 +734,8 @@ ACE_POSIX_AIOCB_Proactor::ACE_POSIX_AIOCB_Proactor (size_t max_aio_operations)
 // Special protected constructor for ACE_SUN_Proactor
 ACE_POSIX_AIOCB_Proactor::ACE_POSIX_AIOCB_Proactor (size_t max_aio_operations,
                                                     ACE_POSIX_Proactor::Proactor_Type)
-  : aiocb_notify_pipe_manager_ (nullptr),
-    aiocb_list_ (nullptr),
-    result_list_ (nullptr),
-    aiocb_list_max_size_ (max_aio_operations),
-    aiocb_list_cur_size_ (0),
-    notify_pipe_read_handle_ (ACE_INVALID_HANDLE),
-    num_deferred_aiocb_ (0),
-    num_started_aio_ (0)
+  : aiocb_list_max_size_ (max_aio_operations),
+    notify_pipe_read_handle_ (ACE_INVALID_HANDLE)
 {
   //check for correct value for max_aio_operations
   this->check_max_aio_num ();
