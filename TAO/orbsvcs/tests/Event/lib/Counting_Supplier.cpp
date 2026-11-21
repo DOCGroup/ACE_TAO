@@ -179,7 +179,7 @@ EC_Counting_Supplier_Task::run ()
 {
   this->event_.length (1);
 
-  int stop = 0;
+  int stop_requested = 0;
   do {
     this->supplier_->push (this->event_);
 
@@ -190,6 +190,6 @@ EC_Counting_Supplier_Task::run ()
 
     ++this->push_count_;
 
-    stop = this->stop_flag_;
-  } while (stop == 0);
+    stop_requested = this->stop_flag_;
+  } while (stop_requested == 0);
 }
