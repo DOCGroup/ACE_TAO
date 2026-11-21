@@ -379,7 +379,7 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::activate_svc_handler
       result = -1;
     }
 
-  if (result == 0 && svc_handler->open ((void *) this) == -1)
+  if (result == 0 && svc_handler->open (this) == -1)
     {
       result = -1;
     }
@@ -840,16 +840,15 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::activate_svc_handler
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::activate_svc_handler");
   return this->concurrency_strategy_->activate_svc_handler
-    (svc_handler,
-     (void *) this);
+    (svc_handler, this);
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
 ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::~ACE_Strategy_Acceptor ()
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::~ACE_Strategy_Acceptor");
-  ACE_OS::free ((void *) this->service_name_);
-  ACE_OS::free ((void *) this->service_description_);
+  ACE_OS::free (this->service_name_);
+  ACE_OS::free (this->service_description_);
   this->handle_close ();
 }
 
@@ -1077,7 +1076,8 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::register_handler
     {
       this->svc_handler_ = svc_handler;
       this->restart_ = restart;
-      ACE_Time_Value *tv = (ACE_Time_Value *) synch_options.time_value ();
+      ACE_Time_Value *tv = const_cast<ACE_Time_Value *> (
+        synch_options.time_value ());
 
       if (tv != nullptr
           && this->reactor ()->schedule_timer (this,
@@ -1109,8 +1109,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::activate_svc_handler
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::activate_svc_handler");
   return this->concurrency_strategy_->activate_svc_handler
-    (svc_handler,
-     (void *) this);
+    (svc_handler, this);
 }
 
 // Factors out the code shared between the <accept> and <handle_input>
@@ -1180,11 +1179,11 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::accept
 
   if (use_reactor)
     {
-      timeout = (ACE_Time_Value *) &ACE_Time_Value::zero;
+      timeout = const_cast<ACE_Time_Value *> (&ACE_Time_Value::zero);
     }
   else
     {
-      timeout = (ACE_Time_Value *) synch_options.time_value ();
+      timeout = const_cast<ACE_Time_Value *> (synch_options.time_value ());
     }
 
   if (this->shared_accept (svc_handler, // stream
