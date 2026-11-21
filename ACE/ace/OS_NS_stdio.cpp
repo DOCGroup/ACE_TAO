@@ -69,7 +69,7 @@ ace_flock_t::dump () const
               this->overlapped_.InternalHigh));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nOffsetHigh = %d"),
               this->overlapped_.OffsetHigh));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nhEvent = %d"),
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nhEvent = %H"),
               this->overlapped_.hEvent));
 #   else
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nl_whence = %d"),
