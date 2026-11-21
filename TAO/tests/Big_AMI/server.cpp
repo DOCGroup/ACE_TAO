@@ -85,7 +85,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       AMI_Test_i ami_test_i (orb.in ());
 
       PortableServer::ObjectId_var id =
-        root_poa->activate_object (&ami_test_i);
+        root_poa->activate_object (std::addressof (ami_test_i));
 
       CORBA::Object_var object = root_poa->id_to_reference (id.in ());
 

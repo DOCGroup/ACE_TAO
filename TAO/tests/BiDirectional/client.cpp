@@ -3,6 +3,8 @@
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/AnyTypeCode/Any.h"
 
+#include <memory>
+
 struct Options
 {
   ACE_TCHAR const *ior {ACE_TEXT ("file://test.ior")};
@@ -107,7 +109,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Callback_i callback_impl (orb.in ());
 
       PortableServer::ObjectId_var id =
-        root_poa->activate_object (&callback_impl);
+        root_poa->activate_object (std::addressof (callback_impl));
 
       CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 

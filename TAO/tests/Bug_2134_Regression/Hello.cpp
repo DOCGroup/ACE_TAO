@@ -7,6 +7,8 @@
 
 #include "HelloS.h"
 
+#include <memory>
+
 namespace Test
 {
 class Hello_impl : virtual public POA_Test::Hello
@@ -40,7 +42,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POA_var const rootPOA = PortableServer::POA::_narrow (obj_root.in ());
 
       PortableServer::ObjectId_var const id =
-        rootPOA->activate_object (&hello_i);
+      rootPOA->activate_object (std::addressof (hello_i));
 
       CORBA::Object_var const object = rootPOA->id_to_reference (id.in ());
 
