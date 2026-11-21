@@ -291,10 +291,10 @@ idl_error_header (UTL_Error::ErrorCode c, long lineno, std::string const& filena
   long const line_number = lineno == -1 ? idl_global->lineno () : lineno;
   idl_global->err ()->last_error_lineno = line_number;
   ACE_ERROR ((LM_ERROR,
-              "Error - %C: \"%C\", line %d: %C",
+              "Error - %C: \"%C\", line %q: %C",
               idl_global->prog_name ().c_str (),
               filename.c_str (),
-              line_number,
+              static_cast<ACE_INT64> (line_number),
               message.c_str ()));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
@@ -317,10 +317,10 @@ idl_warning_header (UTL_Error::ErrorCode c, long lineno, std::string const& file
   long const line_number = lineno == -1 ? idl_global->lineno () : lineno;
   idl_global->err ()->last_warning_lineno = lineno;
   ACE_ERROR ((LM_WARNING,
-              "Warning - %C: \"%C\", line %d: %C",
+              "Warning - %C: \"%C\", line %q: %C",
               idl_global->prog_name ().c_str (),
               filename.c_str (),
-              line_number,
+              static_cast<ACE_INT64> (line_number),
               message.c_str ()));
 }
 static void
@@ -1379,8 +1379,8 @@ UTL_Error::scope_masking_error (AST_Decl *masked,
     }
 
   ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("line %d but hidden by local \""),
-              masked->line ()));
+              ACE_TEXT ("line %q but hidden by local \""),
+              static_cast<ACE_INT64> (masked->line ())));
 
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("::%C\""),
@@ -1404,8 +1404,8 @@ UTL_Error::scope_masking_error (AST_Decl *masked,
     }
 
   ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("line %d ?\n"),
-              masking->line () ));
+              ACE_TEXT ("line %q ?\n"),
+              static_cast<ACE_INT64> (masking->line ())));
 }
 
 void
@@ -1502,8 +1502,8 @@ UTL_Error::invalid_annotation_param_error (
   decl->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   if (!is_builtin)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT (" declared in \"%C\" on line %d"),
-        filename.c_str (), get_lineno (decl)));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT (" declared in \"%C\" on line %q"),
+        filename.c_str (), static_cast<ACE_INT64> (get_lineno (decl))));
     }
   ACE_ERROR ((LM_ERROR, ACE_TEXT ("\n")));
 }
@@ -1525,8 +1525,8 @@ UTL_Error::invalid_annotation_param_type (
   if (!is_builtin)
     {
       ACE_ERROR ((LM_ERROR,
-        ACE_TEXT (" declared in \"%C\" on line %d"),
-        filename.c_str (), get_lineno (member)));
+        ACE_TEXT (" declared in \"%C\" on line %q"),
+        filename.c_str (), static_cast<ACE_INT64> (get_lineno (member))));
     }
   ACE_ERROR ((LM_ERROR, ACE_TEXT (" can not be set to ")));
   offending_value->dump (*ACE_DEFAULT_LOG_STREAM);

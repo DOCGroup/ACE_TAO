@@ -150,9 +150,9 @@ DRV_cpp_putarg (std::string const& str)
   if (DRV_arglist.size () >= DRV_MAX_ARGCOUNT)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%C: More than %d arguments to preprocessor\n",
+                  "%C: More than %B arguments to preprocessor\n",
                   idl_global->prog_name ().c_str (),
-                  DRV_MAX_ARGCOUNT ));
+                  static_cast<size_t> (DRV_MAX_ARGCOUNT)));
 
       throw Bailout ();
     }
