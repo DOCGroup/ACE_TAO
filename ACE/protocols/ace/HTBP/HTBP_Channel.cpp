@@ -202,7 +202,7 @@ ACE::HTBP::Channel::load_buffer ()
           this->state_ = Closed;
 #if 0
           ACE_ERROR ((LM_ERROR,
-                      "load_buffer[%d] %p\n",
+                      "load_buffer[%H] %p\n",
                       this->ace_stream_.get_handle(),"recv"));
 #endif
         }
