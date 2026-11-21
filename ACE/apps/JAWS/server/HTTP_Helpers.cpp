@@ -27,6 +27,11 @@ const char *HTTP_Status_Code::Reason[HTTP_Status_Code::MAX_STATUS_CODE + 1];
 time_t
 HTTP_Helper::HTTP_mktime (const char *httpdate)
 {
+  if (httpdate == nullptr)
+    {
+      return (time_t) -1;
+    }
+
   char *buf;
 
   ACE_NEW_RETURN (buf, char[std::strlen (httpdate) + 1], (time_t) -1);
@@ -63,9 +68,11 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
   // Should also support other versions (such as from NNTP and SMTP)
   // for robustness, but it should be clear how to extend this.
 
-  struct tm tms;
-  char month[4];
-  char weekday[10];
+  struct tm tms {};
+  tms.tm_isdst = -1;
+  char month[4] {};
+  char weekday[10] {};
+  bool parsed = false;
 
   if (::sscanf(buf, "%3s,;%2d;%3s;%4d;%2d:%2d:%2d;GMT", // RFC-1123 date format
                weekday,
@@ -76,13 +83,15 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
                &tms.tm_min,
                &tms.tm_sec) == 7)
     {
+      parsed = true;
     }
-  else if (::sscanf(buf, "%s,;%2d-%3s-%2d;%2d:%2d:%2d;GMT", // RFC-850 date format
+  else if (::sscanf(buf, "%9s,;%2d-%3s-%2d;%2d:%2d:%2d;GMT", // RFC-850 date format
                     weekday,
                     &tms.tm_mday, month, &tms.tm_year,
                     &tms.tm_hour, &tms.tm_min, &tms.tm_sec) == 7)
     {
       weekday[3] = '\0';
+      parsed = true;
     }
   else if (::sscanf(buf, "%3s;%3s;%2d;%2d:%2d:%2d;%4d", // ASCTIME date format.
                     weekday,
@@ -90,9 +99,15 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
                     &tms.tm_hour, &tms.tm_min, &tms.tm_sec,
                     &tms.tm_year) == 7)
     {
+      parsed = true;
     }
 
   delete [] buf;
+
+  if (!parsed)
+    {
+      return (time_t) -1;
+    }
 
   tms.tm_year = HTTP_Helper::fixyear (tms.tm_year);
   tms.tm_mon = HTTP_Helper::HTTP_month (month);
