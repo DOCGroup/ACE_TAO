@@ -51,7 +51,8 @@ ACE_ATM_Connector::connect (ACE_ATM_Stream &new_stream,
             ACE_TEXT ("ATM_Connector(connect): set QoS parameters\n" ));
 
   ACE_HANDLE s = new_stream.get_handle();
-  struct sockaddr_atm *saddr = ( struct sockaddr_atm *)remote_sap.get_addr();
+  struct sockaddr_atm *saddr =
+    static_cast<struct sockaddr_atm *> (remote_sap.get_addr ());
   ACE_QoS cqos = options.get_qos();
 
   ACE_QoS_Params qos_params = ACE_QoS_Params(0,
@@ -64,7 +65,7 @@ ACE_ATM_Connector::connect (ACE_ATM_Stream &new_stream,
             ACE_TEXT ("ATM_Connector(connect): connecting...\n"));
 
   int result = ACE_OS::connect( s,
-                                ( struct sockaddr *)saddr,
+                                reinterpret_cast<struct sockaddr *> (saddr),
                                 sizeof( struct sockaddr_atm ),
                                 qos_params);
 
@@ -84,8 +85,10 @@ ACE_ATM_Connector::connect (ACE_ATM_Stream &new_stream,
 
   ACE_HANDLE handle = new_stream.get_handle();
   ATM_QoS qos =options.get_qos();
-  ATM_Addr *local_addr=(ATM_Addr*)local_sap.get_addr(),
-    *remote_addr=(ATM_Addr*)remote_sap.get_addr();
+  ATM_Addr *local_addr =
+    static_cast<ATM_Addr *> (local_sap.get_addr ());
+  ATM_Addr *remote_addr =
+    static_cast<ATM_Addr *> (remote_sap.get_addr ());
 
   if (ACE_OS::setsockopt(handle,
                          SOL_ATM,
@@ -106,7 +109,8 @@ ACE_ATM_Connector::connect (ACE_ATM_Stream &new_stream,
   }
 
   int result = ACE_OS::connect(handle,
-                               (struct sockaddr *)&(remote_addr->sockaddratmsvc),
+                               reinterpret_cast<struct sockaddr *> (
+                                 &remote_addr->sockaddratmsvc),
                                sizeof( remote_addr->sockaddratmsvc));
 
   if ( result != 0 )
