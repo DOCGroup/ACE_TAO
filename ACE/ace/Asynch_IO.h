@@ -396,7 +396,7 @@ public:
     ACE_Asynch_Read_Stream_Result_Impl *implementation () const;
 
   protected:
-    Result (ACE_Asynch_Read_Stream_Result_Impl *implementation);
+    explicit Result (ACE_Asynch_Read_Stream_Result_Impl *implementation);
 
     ~Result () override;
 
@@ -549,7 +549,7 @@ public:
     ACE_Asynch_Write_Stream_Result_Impl *implementation () const;
 
   protected:
-    Result (ACE_Asynch_Write_Stream_Result_Impl *implementation);
+    explicit Result (ACE_Asynch_Write_Stream_Result_Impl *implementation);
 
     ~Result () override;
 
@@ -693,7 +693,7 @@ public:
 
   protected:
     /// Constructor. This implementation will not be deleted.
-    Result (ACE_Asynch_Read_File_Result_Impl *implementation);
+    explicit Result (ACE_Asynch_Read_File_Result_Impl *implementation);
 
     ~Result () override;
 
@@ -827,7 +827,7 @@ public:
 
   protected:
     /// Constructor. This implementation will not be deleted.
-    Result (ACE_Asynch_Write_File_Result_Impl *implementation);
+    explicit Result (ACE_Asynch_Write_File_Result_Impl *implementation);
 
     ~Result () override;
 
@@ -970,7 +970,7 @@ public:
 
   protected:
     /// Constructor. Implementation will not be deleted.
-    Result (ACE_Asynch_Accept_Result_Impl *implementation);
+    explicit Result (ACE_Asynch_Accept_Result_Impl *implementation);
 
     ~Result () override;
 
@@ -1063,7 +1063,7 @@ public:
 
   protected:
     /// Constructor. Implementation will not be deleted.
-    Result (ACE_Asynch_Connect_Result_Impl *implementation);
+    explicit Result (ACE_Asynch_Connect_Result_Impl *implementation);
 
     ~Result () override;
 
@@ -1202,7 +1202,7 @@ public:
     ACE_Asynch_Transmit_File_Result_Impl *implementation () const;
 
   protected:
-    Result (ACE_Asynch_Transmit_File_Result_Impl *implementation);
+    explicit Result (ACE_Asynch_Transmit_File_Result_Impl *implementation);
 
     ~Result () override;
 
@@ -1404,7 +1404,7 @@ public:
     ACE_Asynch_Read_Dgram_Result_Impl *implementation () const;
 
   protected:
-    Result (ACE_Asynch_Read_Dgram_Result_Impl *implementation);
+    explicit Result (ACE_Asynch_Read_Dgram_Result_Impl *implementation);
 
     ~Result () override;
 
@@ -1533,7 +1533,7 @@ public:
     ACE_Asynch_Write_Dgram_Result_Impl *implementation () const;
 
   protected:
-    Result (ACE_Asynch_Write_Dgram_Result_Impl *implementation);
+    explicit Result (ACE_Asynch_Write_Dgram_Result_Impl *implementation);
 
     ~Result () override;
 
