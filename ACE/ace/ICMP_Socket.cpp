@@ -35,10 +35,10 @@ ACE_ICMP_Socket::send (void const * buf,
   ACE_TRACE ("ACE_ICMP_Socket::send");
 
   return ACE_OS::sendto (this->get_handle (),
-                         (char const *) buf,
+                         static_cast<char const *> (buf),
                          n,
                          flags,
-                         (sockaddr const *) addr.get_addr (),
+                         static_cast<sockaddr const *> (addr.get_addr ()),
                          addr.get_size ());
 }
 
@@ -52,11 +52,11 @@ ACE_ICMP_Socket::recv (void * buf,
 
   int addr_len = addr.get_size ();
   ssize_t status = ACE_OS::recvfrom (this->get_handle (),
-                                     (char *) buf,
+                                     static_cast<char *> (buf),
                                      n,
                                      flags,
-                                     (sockaddr *) addr.get_addr (),
-                                     (int*) &addr_len);
+                                     static_cast<sockaddr *> (addr.get_addr ()),
+                                     &addr_len);
   addr.set_size (addr_len);
 
   return status;

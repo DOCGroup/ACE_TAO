@@ -677,7 +677,7 @@ void *
 ACE_INET_Addr::get_addr () const
 {
   ACE_TRACE ("ACE_INET_Addr::get_addr");
-  return (void*)&this->inet_addr_;
+  return &this->inet_addr_;
 }
 
 void
@@ -967,7 +967,7 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
 #endif
     sizeof (sockaddr_in);
 
-  const int res = ACE_OS::getnameinfo ((const sockaddr *) this->get_addr (),
+  const int res = ACE_OS::getnameinfo (static_cast<sockaddr const *> (this->get_addr ()),
                                        addr_size, hostname,
                                        static_cast<ACE_SOCKET_LEN> (len),
                                        nullptr, 0, 0);
