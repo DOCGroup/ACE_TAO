@@ -195,7 +195,7 @@ ACE_OutputCDR::grow_and_adjust (size_t size,
       // Message block initialization may fail while the construction
       // succeds.  Since as a matter of policy, ACE may throw no
       // exceptions, we have to do a separate check like this.
-      if (tmp != nullptr && tmp->size () < newsize)
+      if (tmp->size () < newsize)
         {
           delete tmp;
           errno = ENOMEM;
