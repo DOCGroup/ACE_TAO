@@ -40,8 +40,7 @@ ACE_Pagefile_Memory_Pool::release (int)
 
 ACE_Pagefile_Memory_Pool::ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_store_name,
                                                     const OPTIONS *options)
-  : shared_cb_ (0),
-    object_handle_ (0),
+  : object_handle_ (0),
     page_size_ (ACE_Pagefile_Memory_Pool::round_to_page_size (1))
 {
   // Initialize local copy of pool statistics.

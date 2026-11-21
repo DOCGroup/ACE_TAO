@@ -174,7 +174,7 @@ private:
   Control_Block local_cb_;
 
   /// Shared memory pool statistics.
-  Control_Block *shared_cb_;
+  Control_Block *shared_cb_ {};
 
   /// File mapping handle.
   ACE_HANDLE object_handle_;
