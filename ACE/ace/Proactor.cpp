@@ -119,8 +119,6 @@ ACE_Proactor_Timer_Handler::signal ()
 int
 ACE_Proactor_Timer_Handler::svc ()
 {
-  ACE_Time_Value absolute_time;
-  ACE_Time_Value relative_time;
   int result = 0;
 
   while (!this->shutting_down_)
@@ -129,15 +127,17 @@ ACE_Proactor_Timer_Handler::svc ()
       if (this->proactor_.timer_queue ()->is_empty () == 0)
         {
           // Get the earliest absolute time.
-          absolute_time = this->proactor_.timer_queue ()->earliest_time ();
+          ACE_Time_Value const absolute_time =
+            this->proactor_.timer_queue ()->earliest_time ();
 
           // Get current time from timer queue since we don't know
           // which <gettimeofday> was used.
-          ACE_Time_Value cur_time =
+          ACE_Time_Value const cur_time =
             this->proactor_.timer_queue ()->gettimeofday ();
 
           // Compare absolute time with curent time received from the
           // timer queue.
+          ACE_Time_Value relative_time;
           if (absolute_time > cur_time)
             {
               relative_time = absolute_time - cur_time;
