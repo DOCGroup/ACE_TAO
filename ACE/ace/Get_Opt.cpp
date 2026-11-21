@@ -260,7 +260,7 @@ ACE_Get_Opt::long_option_i ()
       ++s;
     }
 
-  size_t len = s - this->nextchar_;
+  size_t const len = s - this->nextchar_;
   // set last_option_ to nextchar_, up to the '='.
   this->last_option (ACE_TString (this->nextchar_, len));
 

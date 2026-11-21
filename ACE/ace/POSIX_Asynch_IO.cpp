@@ -291,7 +291,7 @@ ACE_POSIX_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
                                     int priority,
                                     int signal_number)
 {
-  size_t space = message_block.space ();
+  size_t const space = message_block.space ();
   if (bytes_to_read > space)
   {
     bytes_to_read=space;
@@ -412,7 +412,7 @@ ACE_POSIX_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
                                       int priority,
                                       int signal_number)
 {
-  size_t len = message_block.length ();
+  size_t const len = message_block.length ();
   if (bytes_to_write > len)
     {
       bytes_to_write = len;
@@ -528,7 +528,7 @@ ACE_POSIX_Asynch_Read_File::read (ACE_Message_Block &message_block,
                                   int priority,
                                   int signal_number)
 {
-  size_t space = message_block.space ();
+  size_t const space = message_block.space ();
   if ( bytes_to_read > space )
     {
       bytes_to_read=space;
@@ -660,7 +660,7 @@ ACE_POSIX_Asynch_Write_File::write (ACE_Message_Block &message_block,
                                     int priority,
                                     int signal_number)
 {
-  size_t len = message_block.length ();
+  size_t const len = message_block.length ();
   if (bytes_to_write > len)
     {
       bytes_to_write = len;
@@ -891,8 +891,8 @@ ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
 #else
   ACE_UNUSED_ARG (addr_family);
 #endif
-  size_t available_space = message_block.space ();
-  size_t space_needed = bytes_to_read + 2 * address_size;
+  size_t const available_space = message_block.space ();
+  size_t const space_needed = bytes_to_read + 2 * address_size;
 
   if (available_space < space_needed)
     {
@@ -1500,7 +1500,7 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
   if (local_sap != ACE_Addr::sap_any)
     {
       sockaddr * laddr = reinterpret_cast<sockaddr *> (local_sap.get_addr ());
-      size_t size = local_sap.get_size ();
+      size_t const size = local_sap.get_size ();
 
       if (ACE_OS::bind (handle, laddr, size) == -1)
         {
@@ -2015,7 +2015,7 @@ ACE_POSIX_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_S
   // Write stream successful.
 
   // Partial write to socket.
-  size_t unsent_data = result.bytes_to_write () - result.bytes_transferred ();
+  size_t const unsent_data = result.bytes_to_write () - result.bytes_transferred ();
   if (unsent_data != 0)
     {
       ACELIB_DEBUG ((LM_DEBUG,
@@ -2466,7 +2466,7 @@ ACE_POSIX_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
                                    int priority,
                                    int signal_number)
 {
-  size_t space = message_block->space ();
+  size_t const space = message_block->space ();
   // Create the Asynch_Result.
   ACE_POSIX_Asynch_Read_Dgram_Result *result {};
   ACE_POSIX_Proactor *proactor = this->posix_proactor ();
@@ -2511,7 +2511,7 @@ ACE_POSIX_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
                                     int priority,
                                     int signal_number)
 {
-  size_t len = message_block->length ();
+  size_t const len = message_block->length ();
   if (len == 0)
     {
       ACELIB_ERROR_RETURN

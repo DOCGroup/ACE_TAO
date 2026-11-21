@@ -139,7 +139,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
   while (true)
     {
       size_t len {};
-      size_t ndx = endpoints.size();
+      size_t const ndx = endpoints.size();
       endpoints.size(ndx+1);
       bool uiop_compatible {};
       for (std::unique_ptr<TAO_Connector> const& connector : *conn_reg)

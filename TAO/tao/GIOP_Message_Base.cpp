@@ -434,7 +434,7 @@ TAO_GIOP_Message_Base::extract_next_message (ACE_Message_Block &incoming,
       return -1;
     }
 
-  size_t copying_len = state.message_size ();
+  size_t const copying_len = state.message_size ();
 
   qd = this->make_queued_data (copying_len);
 

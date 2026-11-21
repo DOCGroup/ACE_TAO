@@ -700,7 +700,7 @@ TAO_LB_LoadManager::next_member (const PortableServer::ObjectId & oid)
       // to avoid synchnorize between ORB and validate thread.
       this->object_group_manager_.remove_inactive_members ();
 
-      size_t n_members = this->object_group_manager_.member_count (oid, true);
+      size_t const n_members = this->object_group_manager_.member_count (oid, true);
 
       size_t count {};
 

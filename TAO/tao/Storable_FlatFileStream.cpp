@@ -790,7 +790,7 @@ TAO::Storable_FlatFileFactory::is_nfs (std::string const &directory)
             }
           return ret;
         }
-      size_t rootlen = std::strlen(rpath);
+      size_t const rootlen = std::strlen(rpath);
       if ((rootlen + directory.length() +1) > PATH_MAX)
         {
           if (TAO_debug_level > 0)
@@ -808,7 +808,7 @@ TAO::Storable_FlatFileFactory::is_nfs (std::string const &directory)
       dir = rpath;
     }
   size_t match {};
-  size_t dirlen = std::strlen(dir);
+  size_t const dirlen = std::strlen(dir);
   struct mntent *ent {};
   const char *fname = "/etc/mtab";
   FILE *mt = ::setmntent(fname,"r");
@@ -825,7 +825,7 @@ TAO::Storable_FlatFileFactory::is_nfs (std::string const &directory)
     }
   while ((ent = ::getmntent(mt)) != nullptr)
     {
-      size_t len = std::strlen(ent->mnt_dir);
+      size_t const len = std::strlen(ent->mnt_dir);
 
       if (len > dirlen || len < match)
         {
