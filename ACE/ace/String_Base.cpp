@@ -110,7 +110,8 @@ ACE_String_Base<ACE_CHAR_T>::set (const ACE_CHAR_T *s,
     {
       ACE_CHAR_T *temp {};
       ACE_ALLOCATOR (temp,
-                     (ACE_CHAR_T *) this->allocator_->malloc (new_buf_len * sizeof (ACE_CHAR_T)));
+                     static_cast<ACE_CHAR_T *> (
+                       this->allocator_->malloc (new_buf_len * sizeof (ACE_CHAR_T))));
 
       if (this->buf_len_ != 0 && this->release_)
         {
@@ -214,7 +215,9 @@ ACE_String_Base<ACE_CHAR_T>::append (const ACE_CHAR_T* s,
       ACE_CHAR_T *t {};
 
       ACE_ALLOCATOR_RETURN (t,
-        (ACE_CHAR_T *) this->allocator_->malloc (new_buf_len * sizeof (ACE_CHAR_T)), *this);
+                            static_cast<ACE_CHAR_T *> (
+                              this->allocator_->malloc (new_buf_len * sizeof (ACE_CHAR_T))),
+                            *this);
 
       // Copy memory from old string into new string.
       std::memcpy (t, this->rep_, this->len_ * sizeof (ACE_CHAR_T));

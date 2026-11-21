@@ -207,7 +207,7 @@ ACE_SString::ACE_SString (const ACE_SString &s)
     this->allocator_ = ACE_Allocator::instance ();
   }
 
-  this->rep_ = (char *) this->allocator_->malloc (s.len_ + 1);
+  this->rep_ = static_cast<char *> (this->allocator_->malloc (s.len_ + 1));
   std::memcpy (this->rep_, s.rep_, this->len_);
   this->rep_[this->len_] = '\0';
 }
@@ -222,7 +222,7 @@ ACE_SString::ACE_SString (ACE_Allocator *alloc)
     this->allocator_ = ACE_Allocator::instance ();
   }
 
-  this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
+  this->rep_ = static_cast<char *> (this->allocator_->malloc (this->len_ + 1));
   this->rep_[this->len_] = '\0';
 }
 
@@ -260,13 +260,13 @@ ACE_SString::ACE_SString (const char *s,
   if (s == nullptr)
     {
       this->len_ = 0;
-      this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
+      this->rep_ = static_cast<char *> (this->allocator_->malloc (this->len_ + 1));
       this->rep_[this->len_] = '\0';
     }
   else
     {
       this->len_ = std::strlen (s);
-      this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
+      this->rep_ = static_cast<char *> (this->allocator_->malloc (this->len_ + 1));
       std::strcpy (this->rep_, s);
     }
 }
@@ -283,7 +283,7 @@ ACE_SString::ACE_SString (char c,
   }
 
   this->len_ = 1;
-  this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
+  this->rep_ = static_cast<char *> (this->allocator_->malloc (this->len_ + 1));
   this->rep_[0] = c;
   this->rep_[this->len_] = '\0';
 }
@@ -305,13 +305,13 @@ ACE_SString::ACE_SString (const char *s,
   if (s == nullptr)
     {
       this->len_ = 0;
-      this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
+      this->rep_ = static_cast<char *> (this->allocator_->malloc (this->len_ + 1));
       this->rep_[this->len_] = '\0';
     }
   else
     {
       this->len_ = len;
-      this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
+      this->rep_ = static_cast<char *> (this->allocator_->malloc (this->len_ + 1));
       std::memcpy (this->rep_, s, len);
       this->rep_[len] = '\0'; // Make sure to NUL terminate this!
     }
@@ -331,7 +331,7 @@ ACE_SString::operator= (const ACE_SString &s)
       if (this->len_ < s.len_)
         {
           this->allocator_->free (this->rep_);
-          this->rep_ = (char *) this->allocator_->malloc (s.len_ + 1);
+          this->rep_ = static_cast<char *> (this->allocator_->malloc (s.len_ + 1));
         }
       this->len_ = s.len_;
       std::strcpy (this->rep_, s.rep_);
