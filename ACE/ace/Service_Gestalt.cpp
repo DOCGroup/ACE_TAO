@@ -230,11 +230,6 @@ ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
   , is_opened_ (0)
   , logger_key_ (ACE_DEFAULT_LOGGER_KEY)
   , no_static_svcs_ (no_static_svcs)
-  , svc_queue_ (nullptr)
-  , svc_conf_file_queue_ (nullptr)
-  , repo_ (nullptr)
-  , static_svcs_ (nullptr)
-  , processed_static_svcs_ (nullptr)
 {
   (void)this->init_i ();
 

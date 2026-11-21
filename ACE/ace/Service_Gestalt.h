@@ -432,24 +432,24 @@ protected:
   bool no_static_svcs_;
 
   /// Queue of services specified on the command-line.
-  ACE_SVC_QUEUE* svc_queue_;
+  ACE_SVC_QUEUE* svc_queue_ {};
 
   /**
    * Queue of svc.conf files specified on the command-line.
    * @@ This should probably be made to handle unicode filenames...
    */
-  ACE_SVC_QUEUE* svc_conf_file_queue_;
+  ACE_SVC_QUEUE* svc_conf_file_queue_ {};
 
   /// The service repository to hold the services.
-  ACE_Service_Repository* repo_;
+  ACE_Service_Repository* repo_ {};
 
   /// Repository of statically linked services.
-  ACE_STATIC_SVCS* static_svcs_;
+  ACE_STATIC_SVCS* static_svcs_ {};
 
   /// Repository of statically linked services for which process
   /// directive was called, but the service is not already a member of
   /// the static_svcs_ list.
-  ACE_PROCESSED_STATIC_SVCS* processed_static_svcs_;
+  ACE_PROCESSED_STATIC_SVCS* processed_static_svcs_ {};
 
   /// Support for intrusive reference counting
   std::atomic<long> refcnt_ {0};
