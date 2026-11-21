@@ -3,6 +3,8 @@
 #include "Controller.h"
 #include "Manager_Handler.h"
 
+#include <memory>
+
 struct Client_Options
 {
   ACE_TString ior {ACE_TEXT ("file://test.ior")};
@@ -64,7 +66,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Controller controller_impl;
 
       PortableServer::ObjectId_var const id =
-        root_poa->activate_object (&controller_impl);
+        root_poa->activate_object (std::addressof (controller_impl));
 
       CORBA::Object_var const controller_object = root_poa->id_to_reference (id.in ());
 
@@ -84,7 +86,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Manager_Handler handler_impl (manager.in (), controller.in ());
 
-      PortableServer::ObjectId_var const handler_id = root_poa->activate_object (&handler_impl);
+      PortableServer::ObjectId_var const handler_id =
+        root_poa->activate_object (std::addressof (handler_impl));
 
       CORBA::Object_var const handler_object = root_poa->id_to_reference (handler_id.in ());
 

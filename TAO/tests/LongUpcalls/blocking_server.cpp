@@ -68,7 +68,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Manager manager_impl (orb.in ());
 
       PortableServer::ObjectId_var const id =
-        root_poa->activate_object (&manager_impl);
+        root_poa->activate_object (std::addressof (manager_impl));
 
       CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 

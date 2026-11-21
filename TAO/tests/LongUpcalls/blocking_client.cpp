@@ -2,6 +2,8 @@
 #include "ace/SString.h"
 #include "Controller.h"
 
+#include <memory>
+
 struct Client_Options
 {
   ACE_TString ior {ACE_TEXT ("file://test.ior")};
@@ -63,7 +65,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Controller controller_impl;
 
       PortableServer::ObjectId_var const id =
-        root_poa->activate_object (&controller_impl);
+        root_poa->activate_object (std::addressof (controller_impl));
 
       CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 
