@@ -188,7 +188,7 @@ protected:
   ACE_Thread_Mutex keylock_;
 
   /// "First time in" flag.
-  volatile bool once_;
+  volatile bool once_ {};
 
   /// Key for the thread-specific error data.
   ACE_thread_key_t key_;

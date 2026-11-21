@@ -142,8 +142,7 @@ ACE_TSS<TYPE>::ts_init ()
 
 template <class TYPE>
 ACE_TSS<TYPE>::ACE_TSS (TYPE *ts_obj)
-  : once_ (false),
-    key_ (ACE_OS::NULL_key)
+  : key_ (ACE_OS::NULL_key)
 {
   // If caller has passed us a non-NULL TYPE *, then we'll just use
   // this to initialize the thread-specific value.  Thus, subsequent
