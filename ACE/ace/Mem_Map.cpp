@@ -251,10 +251,8 @@ ACE_Mem_Map::map (const ACE_TCHAR *file_name,
 
 ACE_Mem_Map::ACE_Mem_Map ()
   : base_addr_ (MAP_FAILED),
-    length_ (0),
     handle_ (ACE_INVALID_HANDLE),
-    file_mapping_ (ACE_INVALID_HANDLE),
-    close_handle_ (false)
+    file_mapping_ (ACE_INVALID_HANDLE)
 {
   ACE_TRACE ("ACE_Mem_Map::ACE_Mem_Map");
   std::memset (this->filename_, 0, sizeof this->filename_);
@@ -271,10 +269,8 @@ ACE_Mem_Map::ACE_Mem_Map (const ACE_TCHAR *file_name,
                           ACE_OFF_T offset,
                           LPSECURITY_ATTRIBUTES sa)
   : base_addr_ (MAP_FAILED),
-    length_ (0),
     handle_ (ACE_INVALID_HANDLE),
-    file_mapping_ (ACE_INVALID_HANDLE),
-    close_handle_ (false)
+    file_mapping_ (ACE_INVALID_HANDLE)
 {
   ACE_TRACE ("ACE_Mem_Map::ACE_Mem_Map");
   if (this->map (file_name,
@@ -303,10 +299,8 @@ ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle,
                           ACE_OFF_T offset,
                           LPSECURITY_ATTRIBUTES sa)
   : base_addr_ (MAP_FAILED),
-    length_ (0),
     handle_ (ACE_INVALID_HANDLE),
-    file_mapping_ (ACE_INVALID_HANDLE),
-    close_handle_ (false)
+    file_mapping_ (ACE_INVALID_HANDLE)
 {
   ACE_TRACE ("ACE_Mem_Map::ACE_Mem_Map");
 
