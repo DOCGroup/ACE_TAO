@@ -35,7 +35,8 @@ BS_Server::BS_Server (char const *packet)
       // Skip forward to the start of the next login name.
 
       while (*buf_ptr++ != '\0')
-        continue;
+        {
+        }
     }
 
 }

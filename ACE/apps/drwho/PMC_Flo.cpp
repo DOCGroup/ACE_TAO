@@ -95,7 +95,8 @@ PMC_Flo::decode (char *packet, int &packet_length)
       for (cp = (char *) ACE::strend (cp);
            *(cp = this->handle_protocol_entries (cp, login_name)) != '\t';
           )
-        continue;
+        {
+        }
     }
 
   return 1;

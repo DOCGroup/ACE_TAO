@@ -52,7 +52,6 @@ File_Manager::get_login_and_real_name (const char *&login_name, const char *&rea
 
   while (*buf_ptr++ != '\n')
     {
-      continue;
     }
 
   // Clear the trailing blanks and junk.

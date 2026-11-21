@@ -20,7 +20,6 @@ HT_Server::insert (const char *key_name, int max_len)
        *prpp != nullptr && std::strncmp ((*prpp)->get_login (), key_name, max_len) != 0;
        prpp = std::addressof ((*prpp)->next_))
     {
-      continue;
     }
 
   if (*prpp == nullptr)

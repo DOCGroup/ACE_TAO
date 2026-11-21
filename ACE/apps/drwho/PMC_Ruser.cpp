@@ -70,7 +70,6 @@ PMC_Ruser::decode (char *packet, int &packet_length)
       for (cp = (char *) ACE::strend (cp);
            *(cp = this->handle_protocol_entries (cp, host_name)) != '\t'; )
         {
-          continue;
         }
     }
 
