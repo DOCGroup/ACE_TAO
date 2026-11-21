@@ -305,7 +305,7 @@ ACE::execname (const ACE_TCHAR *old_name)
     {
       ACE_TCHAR *new_name {};
 
-      size_t size =
+      size_t const size =
         ACE_OS::strlen (old_name)
         + ACE_OS::strlen (ACE_TEXT (".exe"))
         + 1;
@@ -2440,7 +2440,7 @@ ACE::format_hexdump (const char *buffer,
   ACE_TCHAR textver[bytes_per_line + 1];
 
   // Format up to bytes_per_line input bytes per output line.
-  size_t max_input_bytes = (obuf_sz / output_chars_per_line) * bytes_per_line;
+  size_t const max_input_bytes = (obuf_sz / output_chars_per_line) * bytes_per_line;
   const ACE_TCHAR *const obuf_start = obuf;
 
   if (size > max_input_bytes)
