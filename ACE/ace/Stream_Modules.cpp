@@ -59,14 +59,15 @@ template <ACE_SYNCH_DECL, class TIME_POLICY> int
 ACE_Stream_Head<ACE_SYNCH_USE, TIME_POLICY>::control (ACE_Message_Block *mb)
 {
   ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_USE, TIME_POLICY>::control");
-  ACE_IO_Cntl_Msg *ioc = (ACE_IO_Cntl_Msg *) mb->rd_ptr ();
+  ACE_IO_Cntl_Msg *ioc = reinterpret_cast<ACE_IO_Cntl_Msg *> (mb->rd_ptr ());
   ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd;
 
   switch (cmd = ioc->cmd ())
     {
     case ACE_IO_Cntl_Msg::SET_LWM:
     case ACE_IO_Cntl_Msg::SET_HWM:
-      this->water_marks (cmd, *(size_t *) mb->cont ()->rd_ptr ());
+      this->water_marks (cmd,
+                         *reinterpret_cast<size_t *> (mb->cont ()->rd_ptr ()));
       ioc->rval (0);
       break;
     default:
@@ -209,7 +210,7 @@ template <ACE_SYNCH_DECL, class TIME_POLICY> int
 ACE_Stream_Tail<ACE_SYNCH_USE, TIME_POLICY>::control (ACE_Message_Block *mb)
 {
   ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_USE, TIME_POLICY>::control");
-  ACE_IO_Cntl_Msg *ioc = (ACE_IO_Cntl_Msg *) mb->rd_ptr ();
+  ACE_IO_Cntl_Msg *ioc = reinterpret_cast<ACE_IO_Cntl_Msg *> (mb->rd_ptr ());
   ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd;
 
   switch (cmd = ioc->cmd ())
@@ -217,7 +218,7 @@ ACE_Stream_Tail<ACE_SYNCH_USE, TIME_POLICY>::control (ACE_Message_Block *mb)
     case ACE_IO_Cntl_Msg::SET_LWM:
     case ACE_IO_Cntl_Msg::SET_HWM:
       {
-        size_t wm_size = *(size_t *) mb->cont ()->rd_ptr ();
+        size_t wm_size = *reinterpret_cast<size_t *> (mb->cont ()->rd_ptr ());
 
         this->water_marks (cmd, wm_size);
         this->sibling ()->water_marks (cmd, wm_size);

@@ -512,7 +512,7 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cm
                   ACE_Message_Block (sizeof (int),
                                      ACE_Message_Block::MB_IOCTL,
                                      nullptr,
-                                     (char *) a),
+                                     static_cast<char *> (a)),
                   -1);
   // Try to create a control block <cb> that contains the control
   // field and a pointer to the data block <db> in <cb>'s continuation
@@ -523,7 +523,7 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cm
                     ACE_Message_Block (sizeof ioc,
                                        ACE_Message_Block::MB_IOCTL,
                                        db,
-                                       (char *) &ioc));
+                                       reinterpret_cast<char *> (&ioc)));
   // @@ Michael: The old semantic assumed that cb returns == 0
   //             if no memory was available. We will now return immediately
   //             without release (errno is set to ENOMEM by the macro).
@@ -549,7 +549,7 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cm
     }
   else
     {
-      result = ((ACE_IO_Cntl_Msg *) cb->rd_ptr ())->rval ();
+      result = reinterpret_cast<ACE_IO_Cntl_Msg *> (cb->rd_ptr ())->rval ();
     }
 
   // This will also release db if it's reference count == 0.
