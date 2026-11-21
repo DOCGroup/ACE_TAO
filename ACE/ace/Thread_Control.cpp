@@ -37,8 +37,7 @@ ACE_Thread_Control::insert (ACE_Thread_Manager *tm, bool insert)
 // Initialize the thread controller.
 ACE_Thread_Control::ACE_Thread_Control (ACE_Thread_Manager *t,
                                         int insert)
-  : tm_ (t),
-    status_ (ACE_THR_FUNC_RETURN_NULL)
+  : tm_ (t)
 {
   ACE_OS_TRACE ("ACE_Thread_Control::ACE_Thread_Control");
 
