@@ -30,18 +30,18 @@ static ACE_NS_WString
 ace_url_wstring_from_buffer (char const *buffer)
 {
   ACE_NS_WString result;
-  ACE_UINT16 value {};
+  ACE_UINT16 code_unit {};
   size_t offset {};
   do
     {
-      std::memcpy (std::addressof (value), buffer + offset, sizeof (value));
-      if (value != 0)
+      std::memcpy (std::addressof (code_unit), buffer + offset, sizeof (code_unit));
+      if (code_unit != 0)
         {
-          result += static_cast<ACE_WSTRING_TYPE> (value);
+          result += static_cast<ACE_WSTRING_TYPE> (code_unit);
         }
-      offset += sizeof (value);
+      offset += sizeof (code_unit);
     }
-  while (value != 0);
+  while (code_unit != 0);
   return result;
 }
 
@@ -132,9 +132,9 @@ ACE_URL_Property::dump () const
 
   if (this->name_.length () > 0)
     {
-      std::unique_ptr<char[]> name (this->name_.char_rep ());
+      std::unique_ptr<char[]> name_text (this->name_.char_rep ());
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n    name_:  \"%C\"\n"),
-                  name.get ()));
+                  name_text.get ()));
     }
   else
     {
@@ -143,9 +143,9 @@ ACE_URL_Property::dump () const
 
   if (this->value_.length () > 0)
     {
-      std::unique_ptr<char[]> value (this->value_.char_rep ());
+      std::unique_ptr<char[]> value_text (this->value_.char_rep ());
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("   value_:  \"%C\"\n"),
-                  value.get ()));
+                  value_text.get ()));
     }
   else
     {
@@ -206,9 +206,9 @@ ACE_URL_Offer::dump () const
 
   if (this->url_.length () > 0)
     {
-      std::unique_ptr<char[]> url (this->url_.char_rep ());
+      std::unique_ptr<char[]> url_text (this->url_.char_rep ());
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n url_:  \"%C\"\n"),
-                  url.get ()));
+                  url_text.get ()));
     }
   else
     {

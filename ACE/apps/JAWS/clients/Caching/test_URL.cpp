@@ -44,17 +44,17 @@ int ACE_TMAIN (int , ACE_TCHAR *[])
   ACE_TEST_ASSERT (decoded_offer_size == encoded_offer_size);
   ACE_TEST_ASSERT (derived_offer == original_offer);
 
-  ACE_URL_Offer_Seq offers (1);
-  offers[0] = original_offer;
+  ACE_URL_Offer_Seq offer_sequence (1);
+  offer_sequence[0] = original_offer;
   ACE_URL_Locator_Reply original_reply, derived_reply;
-  ACE_TEST_ASSERT (original_reply.query_reply (0, offers.size (), offers) == 0);
+  ACE_TEST_ASSERT (original_reply.query_reply (0, offer_sequence.size (), offer_sequence) == 0);
   size_t const encoded_reply_size = original_reply.encode ();
   std::vector<char> reply_buffer (encoded_reply_size + 1);
   std::memcpy (reply_buffer.data () + 1, original_reply.buffer (), encoded_reply_size);
   size_t const decoded_reply_size = derived_reply.decode (reply_buffer.data () + 1);
   ACE_TEST_ASSERT (decoded_reply_size == encoded_reply_size);
   ACE_TEST_ASSERT (derived_reply.offers () != nullptr);
-  ACE_TEST_ASSERT (derived_reply.offers ()->size () == offers.size ());
+  ACE_TEST_ASSERT (derived_reply.offers ()->size () == offer_sequence.size ());
   ACE_TEST_ASSERT ((*derived_reply.offers ())[0] == original_offer);
 
   derived.dump ();
