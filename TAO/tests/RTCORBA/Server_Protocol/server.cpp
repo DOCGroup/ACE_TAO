@@ -300,7 +300,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Test_i server_impl (orb.in ());
 
       PortableServer::ObjectId_var const id =
-        poa->activate_object (&server_impl);
+        poa->activate_object (std::addressof (server_impl));
 
       CORBA::Object_var const server =
         poa->id_to_reference (id.in ());

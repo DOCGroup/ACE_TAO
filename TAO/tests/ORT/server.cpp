@@ -6,6 +6,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <memory>
+
 ACE_TCHAR const *ior_output_file {};
 
 int
@@ -103,7 +105,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ORT_test_i ort_test_impl (orb.in ());
 
       PortableServer::ObjectId_var oid =
-        fourth_poa->activate_object (&ort_test_impl);
+        fourth_poa->activate_object (std::addressof (ort_test_impl));
 
       obj = fourth_poa->servant_to_reference (&ort_test_impl);
 
