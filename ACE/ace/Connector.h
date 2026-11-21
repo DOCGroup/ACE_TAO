@@ -127,7 +127,7 @@ private:
   SVC_HANDLER *svc_handler_;
 
   /// Same as svc_handler_ if svc_handler_ is reference counted.
-  SVC_HANDLER *cleanup_svc_handler_;
+  SVC_HANDLER *cleanup_svc_handler_ {};
 
   /// Associated timer id.
   long timer_id_;

@@ -23,7 +23,6 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::ACE_NonBlocking_Connect_Handler (A
                                                                                long id)
   : connector_ (connector),
     svc_handler_ (sh),
-    cleanup_svc_handler_ (nullptr),
     timer_id_ (id)
 {
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::ACE_NonBlocking_Connect_Handler");
