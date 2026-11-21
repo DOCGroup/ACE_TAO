@@ -146,7 +146,6 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da)
             DynamicAny::DynSequence_var ds =
               DynamicAny::DynSequence::_narrow (da);
 
-            int i = 0;
             tab(level_);
 
             if (debug_)
@@ -157,6 +156,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da)
 
             if (ds->seek (0UL))
               {
+                int i = 0;
                 ++level_;
 
                 do

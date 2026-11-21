@@ -88,9 +88,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_TCHAR orb_name[] = ACE_TEXT ("ORB_Manager_fini");
   ACE_TCHAR *manager_argv[] = {orb_name, nullptr};
-  int manager_argc = 1;
   try
     {
+      int manager_argc = 1;
       if (orb_manager.fini () != 0 || orb_manager.fini () != 0
           || orb_manager.init (manager_argc, manager_argv,
                                "ORB_Manager_fini") != 0

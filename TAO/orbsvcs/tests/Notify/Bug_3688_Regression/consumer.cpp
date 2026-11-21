@@ -72,10 +72,9 @@ parse_args (int argc, ACE_TCHAR* argv[], int& runtime)
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
-  int runtime { 5 };
-
   try
     {
+      int runtime { 5 };
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
       CORBA::Object_var const poa_object = orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var const root_poa = PortableServer::POA::_narrow (poa_object.in ());

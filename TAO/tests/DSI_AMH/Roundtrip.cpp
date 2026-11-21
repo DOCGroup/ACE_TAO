@@ -38,10 +38,10 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request,
       // The request owns the list and its item; this pointer is borrowed.
       CORBA::NamedValue_ptr const nv = arguments->item (0);
 
-      char const *arg {};
       CORBA::Boolean type_matches {};
       if (nv != nullptr && nv->value () != nullptr)
         {
+          char const *arg {};
           *(nv->value ()) >>= arg;
           if (arg != nullptr
               && (std::strcmp (arg, "IDL:Test/Roundtrip:1.0") == 0

@@ -13,14 +13,13 @@
 void
 Results::print_stats ()
 {
-  double
-    avg_real_time {},
-    avg_user_time {},
-    avg_system_time {},
-    cps {}; // calls per sec
-
   if (TAO_debug_level > 0 && this->error_count_ == 0)
     {
+      double avg_real_time {};
+      double avg_user_time {};
+      double avg_system_time {};
+      double cps {}; // calls per sec
+
       //FUZZ: disable check_for_lack_ACE_OS
       ACE_DEBUG ((LM_DEBUG,
                   "Iteration\tReal time (msec)\tUser time (msec)"
