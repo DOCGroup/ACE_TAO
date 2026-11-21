@@ -14,7 +14,8 @@
 class CBindDialog : public CDialog
 {
 public:
-  CBindDialog(bool Context, CORBA::ORB_ptr pORB, CWnd* pParent = nullptr);   // standard constructor
+  /// standard constructor
+  CBindDialog(bool Context, CORBA::ORB_ptr pORB, CWnd* pParent = nullptr);
 
 // Dialog Data
   //{{AFX_DATA(CBindDialog)
@@ -31,7 +32,8 @@ public:
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CBindDialog)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  /// DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX);
   //}}AFX_VIRTUAL
 
 // Implementation

@@ -13,7 +13,8 @@
 class CAddNameServerDlg : public CDialog
 {
 public:
-  CAddNameServerDlg(CWnd* pParent = nullptr);   // standard constructor
+  /// standard constructor
+  CAddNameServerDlg(CWnd* pParent = nullptr);
 
 // Dialog Data
   //{{AFX_DATA(CAddNameServerDlg)
@@ -26,7 +27,8 @@ public:
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CAddNameServerDlg)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  /// DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX);
   //}}AFX_VIRTUAL
 
 // Implementation

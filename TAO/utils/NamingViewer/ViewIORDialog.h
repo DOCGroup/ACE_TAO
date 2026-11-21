@@ -13,7 +13,8 @@
 class ViewIORDialog : public CDialog
 {
 public:
-  ViewIORDialog(CORBA::ORB_ptr pORB, CORBA::Object_ptr pObject, CWnd* pParent = nullptr);   // standard constructor
+  /// standard constructor
+  ViewIORDialog(CORBA::ORB_ptr pORB, CORBA::Object_ptr pObject, CWnd* pParent = nullptr);
 
 // Dialog Data
   //{{AFX_DATA(ViewIORDialog)
@@ -27,7 +28,8 @@ public:
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(ViewIORDialog)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  /// DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX);
   //}}AFX_VIRTUAL
 
 // Implementation

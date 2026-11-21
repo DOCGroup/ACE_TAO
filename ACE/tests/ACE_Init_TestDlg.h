@@ -8,7 +8,8 @@
 class CACE_Init_TestDlg : public CDialog
 {
 public:
-  CACE_Init_TestDlg(CWnd* pParent = nullptr);  // standard constructor
+  /// standard constructor
+  CACE_Init_TestDlg(CWnd* pParent = nullptr);
 
 // Dialog Data
   //{{AFX_DATA(CACE_Init_TestDlg)
@@ -19,7 +20,8 @@ public:
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CACE_Init_TestDlg)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
+  /// DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX);
   //}}AFX_VIRTUAL
 
 // Implementation
