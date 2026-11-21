@@ -376,10 +376,12 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
       }
     case CORBA::tk_any:
       {
-        CORBA::Any const* rhs_v;
-        rhs_n->any_ >>= rhs_v;
-        CORBA::Any const* lhs_v;
-        this->any_ >>= lhs_v;
+        CORBA::Any const* rhs_v {};
+        CORBA::Any const* lhs_v {};
+        if (!(rhs_n->any_ >>= rhs_v) || !(this->any_ >>= lhs_v))
+          {
+            return false;
+          }
 
         DynamicAny::DynAny_var const rhs_dyn =
           TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::Any const&> (
@@ -426,7 +428,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
         CORBA::ULong const bound =
           unaliased_tc->length ();
 
-        char const* rhs_v, *lhs_v;
+        char const* rhs_v {}, *lhs_v {};
         CORBA::Boolean rstatus, lstatus;
 
         if (bound == 0)
@@ -460,7 +462,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
         CORBA::ULong const bound =
           unaliased_tc->length ();
 
-        CORBA::WChar const* rhs_v, *lhs_v;
+        CORBA::WChar const* rhs_v {}, *lhs_v {};
         CORBA::Boolean rstatus, lstatus;
 
         if (bound == 0)
