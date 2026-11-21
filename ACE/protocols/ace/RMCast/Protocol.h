@@ -61,6 +61,18 @@ namespace ACE_RMCast
   using sstream = ACE_SizeCDR;
   using istream = ACE_InputCDR;
 
+  inline Address
+  decode_address (istream& is)
+  {
+    u32 addr {};
+    u16 port {};
+
+    is >> addr;
+    is >> port;
+
+    return Address (port, addr);
+  }
+
   struct Profile;
 
   using Profile_ptr = ACE_Strong_Bound_Ptr<Profile, Mutex>;
@@ -372,15 +384,8 @@ namespace ACE_RMCast
 
   public:
     From (Header const& h, istream& is)
-        : Profile (h)
+        : Profile (h), address_ (decode_address (is))
     {
-      u32 addr;
-      u16 port;
-
-      is >> addr;
-      is >> port;
-
-      address_ = Address (port, addr);
     }
 
     explicit From (Address const& addr)
@@ -451,15 +456,8 @@ namespace ACE_RMCast
 
   public:
     To (Header const& h, istream& is)
-        : Profile (h)
+        : Profile (h), address_ (decode_address (is))
     {
-      u32 addr;
-      u16 port;
-
-      is >> addr;
-      is >> port;
-
-      address_ = Address (port, addr);
     }
 
     explicit To (Address const& addr)
