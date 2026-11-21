@@ -1108,7 +1108,7 @@ protected:
   {
   public:
     /// Constructor that will grab the token for us
-    Token_Guard (ACE_Dev_Poll_Reactor_Token &token);
+    explicit Token_Guard (ACE_Dev_Poll_Reactor_Token &token);
 
     /// Destructor. This will release the token if it hasn't been
     /// released till this point

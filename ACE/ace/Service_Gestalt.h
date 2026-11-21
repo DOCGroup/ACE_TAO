@@ -317,7 +317,7 @@ public:
 
   struct Processed_Static_Svc
   {
-    Processed_Static_Svc (const ACE_Static_Svc_Descriptor *);
+    explicit Processed_Static_Svc (const ACE_Static_Svc_Descriptor *);
     ~Processed_Static_Svc ();
     ACE_TCHAR * name_ {};
     const ACE_Static_Svc_Descriptor *assd_;

@@ -86,7 +86,7 @@ class ACE_TP_Token_Guard
 {
 public:
   /// Constructor that will grab the token for us
-  ACE_TP_Token_Guard (ACE_Select_Reactor_Token &token);
+  explicit ACE_TP_Token_Guard (ACE_Select_Reactor_Token &token);
 
   /// Destructor. This will release the token if it hasnt been
   /// released till this point

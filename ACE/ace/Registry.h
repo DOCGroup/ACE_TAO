@@ -183,7 +183,7 @@ public:
     Naming_Context ();
 
     /// Constructor: key_ will be set to @a key
-    Naming_Context (const HKEY &key);
+    explicit Naming_Context (const HKEY &key);
 
     /// Destructor will call <Naming_Context::close>.
     ~Naming_Context ();

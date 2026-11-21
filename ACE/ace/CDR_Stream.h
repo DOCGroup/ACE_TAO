@@ -772,7 +772,7 @@ public:
   /// copies or too many temporaries.
   struct ACE_Export Transfer_Contents
   {
-    Transfer_Contents (ACE_InputCDR &rhs);
+    explicit Transfer_Contents (ACE_InputCDR &rhs);
 
     ACE_InputCDR &rhs_;
   };
