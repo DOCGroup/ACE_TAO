@@ -89,7 +89,7 @@ private:
 class ACE_Export ACE_Dumpable_Ptr
 {
 public:
-  ACE_Dumpable_Ptr (const ACE_Dumpable *dumper = nullptr);
+  explicit ACE_Dumpable_Ptr (const ACE_Dumpable *dumper = nullptr);
   const ACE_Dumpable *operator->() const;
   void operator= (const ACE_Dumpable *dumper) const;
 
