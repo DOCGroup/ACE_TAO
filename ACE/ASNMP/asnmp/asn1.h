@@ -111,7 +111,7 @@ typedef unsigned char   oid;
 
 typedef struct sockaddr_in  ipaddr;
 
-// pdu
+/// Protocol data unit fields.
 struct snmp_pdu {
     /// PDU type.
     int     command;
@@ -122,7 +122,8 @@ struct snmp_pdu {
     /// Error index.
     unsigned long  errindex;
 
-    // Trap information
+    /// @name Trap information.
+    /// @{
     /// System OID.
     oid     *enterprise;
     int     enterprise_length;
@@ -134,12 +135,13 @@ struct snmp_pdu {
     int     specific_type;
     /// Uptime.
     unsigned long  time;
+    /// @}
 
-        // vb list
+    /// Variable bindings.
     struct variable_list *variables;
 };
 
-// vb list
+/// One variable binding in a PDU.
 struct variable_list {
     /// Null for the last variable.
     struct variable_list *next_variable;
