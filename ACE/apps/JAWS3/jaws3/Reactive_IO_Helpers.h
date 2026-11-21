@@ -7,6 +7,8 @@
 #include "ace/Singleton.h"
 #include "ace/Time_Value.h"
 
+#include <memory>
+
 #include "jaws3/Export.h"
 #include "jaws3/Jaws_IO.h"
 #include "jaws3/Event_Result.h"
@@ -262,7 +264,7 @@ private:
     : JAWS_IO_Reactive_Handler (handle, completer, tv, act, mask)
     , source_ (source)
     , source_mb_ (8 * 1024)
-    , source_buf_ (& this->source_mb_)
+    , source_buf_ (std::addressof (this->source_mb_))
     , header_ (header)
     , trailer_ (trailer)
   {

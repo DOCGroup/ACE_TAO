@@ -7,8 +7,11 @@
 #include "HTTP_Service_Handler.h"
 #include "HTTP_States.h"
 
+#include <memory>
+
 JAWS_HTTP_Service_Handler::JAWS_HTTP_Service_Handler ()
-  : JAWS_Protocol_Handler (JAWS_HTTP_Read_Request::instance (), & this->data_)
+  : JAWS_Protocol_Handler (JAWS_HTTP_Read_Request::instance (),
+                           std::addressof (this->data_))
   , data_ (this)
 {
 }

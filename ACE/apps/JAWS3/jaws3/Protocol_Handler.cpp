@@ -5,6 +5,8 @@
 #include "jaws3/Protocol_Handler.h"
 #include "jaws3/Concurrency.h"
 
+#include <memory>
+
 JAWS_Protocol_State::~JAWS_Protocol_State () = default;
 
 JAWS_Protocol_Handler::JAWS_Protocol_Handler ( JAWS_Protocol_State *state
@@ -12,7 +14,7 @@ JAWS_Protocol_Handler::JAWS_Protocol_Handler ( JAWS_Protocol_State *state
                                              )
   : state_ (state)
   , data_ (data)
-  , mb_ (& this->db_)
+  , mb_ (std::addressof (this->db_))
 {
   this->db_.base (reinterpret_cast<char *> (this), 0 /* an infinite queue */);
 }
