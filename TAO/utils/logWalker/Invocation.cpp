@@ -232,7 +232,7 @@ Invocation::new_line (ostream &strm, size_t indent, int offset, bool add_nl, boo
       strm << "\n";
     }
 
-  size_t steps = indent / 20;
+  size_t const steps = indent / 20;
   size_t extra = indent % 20;
 
   if (steps > 1)

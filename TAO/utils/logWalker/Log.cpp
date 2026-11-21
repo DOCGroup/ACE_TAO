@@ -137,7 +137,7 @@ Log::get_preamble ()
 
   if (this->hostproc_ == nullptr)
     {
-      size_t numprocs = this->procs_.size();
+      size_t const numprocs = this->procs_.size();
       this->hostproc_ = new HostProcess (this->origin_, pid);
       this->procs_.insert_tail(this->hostproc_);
       this->hostproc_->start_time (this->time_);

@@ -23,7 +23,7 @@ Foo_A_Statistics::actual(unsigned op_num, unsigned count)
 void
 Foo_A_Statistics::actual_in_values(unsigned op_num, LongVector lv)
 {
-  size_t sz = lv.size();
+  size_t const sz = lv.size();
   for (size_t i = 0; i < sz; ++i)
     {
       this->actual_in_values_[op_num-1].push_back (lv[i]);

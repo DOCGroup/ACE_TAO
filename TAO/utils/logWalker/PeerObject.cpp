@@ -39,7 +39,7 @@ PeerObject::num_invocations ()
 void
 PeerObject::dump_detail (ostream &strm)
 {
-  size_t s = this->invocations_.size();
+  size_t const s = this->invocations_.size();
   strm  << "  " << this->name_ << " has "
         << s << " invocation"
         << (s > 1 ? "s" : "")

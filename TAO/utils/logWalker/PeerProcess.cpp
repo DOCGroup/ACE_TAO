@@ -37,7 +37,7 @@ Endpoint::assign (const char *addr, EndpointRole role)
 {
   this->addr_ = addr;
   this->role_ = role;
-  size_t p = addr_.rfind (':');
+  size_t const p = addr_.rfind (':');
   this->port_ = addr_.substring(p+1);
   this->host_ = addr_.substring(0,p);
 

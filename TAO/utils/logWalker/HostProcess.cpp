@@ -244,7 +244,7 @@ void
 HostProcess::dump_summary (ostream &strm)
 {
   strm << "Host process " << this->proc_name_ << " pid(" << this->pid_ << ") from logfile " << this->logfile_name_ <<  endl;
-  size_t num = this->listen_endpoints_.size();
+  size_t const num = this->listen_endpoints_.size();
   if (num > 0)
     {
       strm << "  listening on ";

@@ -432,7 +432,7 @@ annotation_tests ()
 
     // Verify Annotation on Base Type
     AST_Annotation_Appls &annotations = seq->base_type_annotations ();
-    size_t count = annotations.size ();
+    size_t const count = annotations.size ();
     if (count != 1)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
