@@ -47,10 +47,10 @@
 
 /* compare two strings with max length, ignoring case */
 int mystrincmp(const char *str1, const char *str2, int len) {
-    int diff;
-
     while (*str1 && *str2 && len--) {
-        if (diff = UPPER(*str1) - UPPER(*str2))
+        int diff = UPPER(*str1) - UPPER(*str2);
+
+        if (diff)
             return diff < 0 ? -1 : 1;
         ++str1;
         ++str2;

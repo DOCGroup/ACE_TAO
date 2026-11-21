@@ -204,7 +204,7 @@ void echo_client(void *stream)
     FILE *outfile;
     int which_stream = (int) stream;
     char buf[BUFSIZ];
-    int i, len, rv;
+    int i, len;
     fd_set readfds;
 
     /* This code which handles the timeout may need
@@ -227,6 +227,8 @@ void echo_client(void *stream)
          for SIGINT */
 
     while (1) {
+  int rv;
+
   FD_ZERO(&readfds);
   for (i = 0; i < num_rexecs; ++i)
       if (sockarr[i] != BADSOCKET_VALUE)
@@ -269,12 +271,12 @@ echo_client(char *hostname, const int fd)
    * WRITE TEXT FROM FILE DESCRIPTOR INTO STDOUT
    */
   char buf[BUFSIZ];
-  int  cc;
   D_PRINTF( "echo_client running\n" );
 
   while (getppid() != 1)
     {
-      cc = NETREAD(fd, buf, sizeof(buf));
+      int cc = NETREAD(fd, buf, sizeof(buf));
+
       if (cc > 0)
       {
     write(STDOUT_FILENO, buf, cc);
@@ -327,7 +329,6 @@ gotit:
 void ParseCmdLine(int argc, char **argv )
 {
 char    getoptch;
-int   currarg;
 extern char *optarg;
 extern int  optind;
 
@@ -435,7 +436,7 @@ extern int  optind;
      */
     if (uil_filelist_f == 0)
     {
-  currarg = optind;
+  int currarg = optind;
   number_of_pages = 0;
   while(currarg != argc)
   {

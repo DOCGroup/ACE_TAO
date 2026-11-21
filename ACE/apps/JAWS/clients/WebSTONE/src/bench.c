@@ -49,11 +49,13 @@ void *ptr;
 int
 recvdata(SOCKET sock, char *ptr, int nbytes) {
 
-  int nleft, nread;
+  int nleft;
 
   nleft = nbytes;
   while (nleft > 0)
     {
+      int nread;
+
       D_PRINTF( "In recvdata(%d, %d)\n", sock, nleft );
       nread = NETREAD(sock, ptr, nleft);
       D_PRINTF( "NETREAD() returned %d\n", nread );
@@ -80,12 +82,14 @@ recvdata(SOCKET sock, char *ptr, int nbytes) {
  */
 int
 senddata(SOCKET sock, char *ptr, int nbytes) {
-  int nleft, nwritten;
+  int nleft;
 
   D_PRINTF( "In senddata(%d, \"%.*s\", %d)\n", sock, nbytes, ptr, nbytes );
   nleft = nbytes;
   while (nleft > 0)
     {
+      int nwritten;
+
       nwritten = NETWRITE(sock, ptr, nleft);
       D_PRINTF( "senddata() returned %d\n", nwritten );
       if (BADSOCKET(nwritten))

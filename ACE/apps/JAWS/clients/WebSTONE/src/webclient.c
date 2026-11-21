@@ -146,7 +146,6 @@ childhandler(void)
 
 int resolve_addrs(char *host, char *protocol, struct hostent *host_phe, struct protoent *proto_ppe, unsigned long *addr,
   short *type) {
-struct hostent *phe;
 struct protoent *ppe;
 
     /* if IP address given, convert to internal form */
@@ -157,7 +156,7 @@ struct protoent *ppe;
 
     } else {
   /* look up by name */
-  phe = gethostbyname(host);
+  struct hostent *phe = gethostbyname(host);
   if (phe == 0)
   {
       D_PRINTF( "Gethostbyname failed: %s", neterrstr() );
@@ -422,8 +421,6 @@ makeload(int maxcount, int pageval, THREAD rqst_timer_t *timerarray, THREAD stat
     page_stats_t page_stats_tmp;
     char server[MAXHOSTNAMELEN];
 
-    NETPORT loc_portnum;
-
     D_PRINTF( "Starting makeload(maxcount %d, pageval %d)\n",
   maxcount, pageval );
 
@@ -434,6 +431,8 @@ makeload(int maxcount, int pageval, THREAD rqst_timer_t *timerarray, THREAD stat
 
     for (cnt = 0; cnt < maxcount; ++cnt)
     {
+        NETPORT loc_portnum;
+
   D_PRINTF( "Loop count %d in makeload()\n", cnt );
   if (pageval == -1)
   {
@@ -1216,11 +1215,10 @@ void ClientThread(void *dummy)
   if (uil_filelist_f)
     /* write pagestats */
     {
-      char *page_stats_as_text;
       for (i = 0; i < number_of_pages; ++i)
         {
+    char *page_stats_as_text = page_stats_to_text(&page_stats[i]);
     D_PRINTF( "On page_stats[%d]\n", i );
-    page_stats_as_text = page_stats_to_text(&page_stats[i]);
     returnval = strlen(page_stats_as_text);
     D_PRINTF( "page_stats_to_text[%d] returned %d\n",
       i, returnval );

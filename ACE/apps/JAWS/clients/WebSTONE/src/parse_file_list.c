@@ -49,10 +49,7 @@ int
 count_file_list(const char *url_list_file)
 {
   FILE *fp;
-  long int num_of_pages;
   char a_line[BUFSIZ];
-  char *textvalue;
-  int returnval;
 
   fp = fopen(url_list_file, "r");
 
@@ -65,7 +62,8 @@ count_file_list(const char *url_list_file)
     }
   else
     {
-      num_of_pages = 0;
+      long int num_of_pages = 0;
+
       D_PRINTF( "Opened file, about to count\n" );
       /*
        * parse through the file line-by-line
@@ -73,13 +71,15 @@ count_file_list(const char *url_list_file)
        */
       while (fgets(a_line, BUFSIZ, fp) != 0)
         {
-          textvalue = a_line;
+          char *textvalue = a_line;
+
           /* check for comments */
           if (strchr(textvalue, '#') != 0)
             {
+              int returnval = strcspn(textvalue, "#");
+
               /* throw out anything after any '#' */
               D_PRINTF( "Stripping comment from line: %s\n", textvalue );
-              returnval = strcspn(textvalue, "#");
               D_PRINTF( "Found first # at %d\n", returnval );
               if (returnval == 0)
                 {
@@ -89,6 +89,8 @@ count_file_list(const char *url_list_file)
           /* is there more? */
           if (textvalue != 0)
             {
+              int filenum;
+
               ++num_of_pages;
               D_PRINTF( "Found %ld pages\n", num_of_pages );
             }
@@ -108,12 +110,9 @@ parse_file_list (const char *url_list_file, page_list_t *page_list,
                  long int *num_of_pages, long int *num_of_files)
 {
   FILE        *fp;
-  int         filenum;
-  int         returnval;
   int         loadnum;
   char        a_line[BUFSIZ];
   char        tempbuf[BUFSIZ];
-  char        *textvalue;
   int         numfiles = 1, numpages = 0;
   int         maxpages = *num_of_pages;
   page_list_t *pp;
@@ -135,7 +134,9 @@ parse_file_list (const char *url_list_file, page_list_t *page_list,
       D_PRINTF( "File is open.\n" );
       while(fgets(a_line, BUFSIZ, fp) != 0)
         {
-          textvalue = a_line;
+          char *textvalue = a_line;
+          int returnval;
+
           /* check for comments */
           if (strchr(textvalue, '#') != 0)
             {
