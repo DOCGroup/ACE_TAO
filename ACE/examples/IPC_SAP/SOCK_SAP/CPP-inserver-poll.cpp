@@ -52,7 +52,7 @@ init_buffer (size_t index)
   ACE_INT32 len;
 
  if (ACE::recv_n (poll_array[index].fd,
-                  (void *) &len,
+                  &len,
                   sizeof (ACE_INT32)) != sizeof (ACE_INT32))
     {
       ACE_ERROR_RETURN ((LM_ERROR,

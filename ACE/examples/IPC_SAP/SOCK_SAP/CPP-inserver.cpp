@@ -75,7 +75,7 @@ twoway_server (void *arg)
     {
       ACE_INT32 len;
 
-      ssize_t r_bytes = new_stream.recv_n ((void *) &len,
+      ssize_t r_bytes = new_stream.recv_n (&len,
                                            sizeof (ACE_INT32));
       if (r_bytes == -1)
         {
@@ -196,7 +196,7 @@ oneway_server (void *arg)
     {
       ACE_INT32 len;
 
-      ssize_t r_bytes = new_stream.recv_n ((void *) &len,
+      ssize_t r_bytes = new_stream.recv_n (&len,
                                            sizeof (ACE_INT32));
       if (r_bytes == -1)
         {
