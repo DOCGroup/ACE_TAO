@@ -56,7 +56,7 @@ private:
 int
 Quiet_Notify_Tester::open (void *)
 {
-  this->reactor (&this->r_);
+  this->reactor (std::addressof (this->r_));
   return this->activate ();
 }
 

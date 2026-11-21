@@ -38,6 +38,7 @@
 #include "ace/Signal.h"
 #include <algorithm>
 #include <cstring>
+#include <memory>
 #include <vector>
 
 #if defined (ACE_HAS_IP_MULTICAST) && defined (ACE_HAS_THREADS)
@@ -530,7 +531,7 @@ MCT_Event_Handler::~MCT_Event_Handler ()
 ACE_SOCK_Dgram_Mcast *
 MCT_Event_Handler::mcast ()
 {
-  return &this->mcast_;
+  return std::addressof (this->mcast_);
 }
 
 int

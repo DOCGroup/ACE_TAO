@@ -4,6 +4,7 @@
 #include "TS_Server_Handler.h"
 #include "ace/OS_NS_time.h"
 #include "ace/Signal.h"
+#include <memory>
 
 int
 ACE_TS_Server_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
@@ -46,7 +47,7 @@ ACE_TS_Server_Acceptor::init (int argc, ACE_TCHAR *argv[])
   // global Reactor...).
   if (this->open (this->service_addr_, ACE_Reactor::instance (),
                   0, 0, 0,
-                  &this->scheduling_strategy_,
+                  std::addressof (this->scheduling_strategy_),
                   ACE_TEXT ("Time Server"),
                   ACE_TEXT ("ACE time service")) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

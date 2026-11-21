@@ -26,6 +26,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 // Number of iterations to run the test.
 static size_t n_iterations = 100;
 
@@ -220,7 +222,7 @@ Thread_Pool::test_queue_deactivation_shutdown ()
                                          nullptr,
                                          nullptr,
                                          nullptr,
-                                         &this->lock_adapter_),
+                                         std::addressof (this->lock_adapter_)),
                       -1);
 
       if (manual)
@@ -317,7 +319,7 @@ Thread_Pool::test_empty_message_shutdown ()
                                          nullptr,
                                          nullptr,
                                          nullptr,
-                                         &this->lock_adapter_),
+                                         std::addressof (this->lock_adapter_)),
                       -1);
 
       if (manual)

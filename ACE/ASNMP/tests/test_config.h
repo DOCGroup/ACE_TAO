@@ -14,6 +14,7 @@
 #define ACE_TEST_CONFIG_H
 
 #include <fstream>
+#include <memory>
 #include <string>
 
 #include "ace/ACE.h"
@@ -114,7 +115,7 @@ ACE_Test_Output::set_output (ACE_TCHAR const *filename, bool append)
 std::ofstream *
 ACE_Test_Output::output_file ()
 {
-  return &this->output_file_;
+  return std::addressof (this->output_file_);
 }
 
 void

@@ -533,7 +533,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   PortableGroup::Location const * object_location {};
   if (! ::TAO::find (decoder, ::FT::FT_LOCATION, object_location) )
   {
-      object_location = & this->location_;
+      object_location = std::addressof (this->location_);
 
 //    ORBSVCS_ERROR ((LM_ERROR,
 //      "FaultDetectorFactory::create_object: Missing parameter %s\n",

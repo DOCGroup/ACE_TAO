@@ -21,6 +21,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_time.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_THREADS)
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
@@ -180,7 +182,7 @@ Consumer::svc ()
     {
       this->timeout_.set (ACE_OS::time (nullptr) + 4, 0); // Wait for upto 4 seconds
 
-      result = this->getq (mb, &this->timeout_);
+      result = this->getq (mb, std::addressof (this->timeout_));
 
       if (result == -1)
       {

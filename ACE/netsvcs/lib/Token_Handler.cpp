@@ -4,6 +4,7 @@
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
 #include "ace/Signal.h"
+#include <memory>
 
 int
 ACE_Token_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
@@ -47,7 +48,7 @@ ACE_Token_Acceptor::init (int argc, ACE_TCHAR *argv[])
   // global Reactor...).
   if (this->open (this->service_addr_, ACE_Reactor::instance (),
                   0, 0, 0,
-                  &this->scheduling_strategy_,
+                  std::addressof (this->scheduling_strategy_),
                   ACE_TEXT ("Token Server"),
                   ACE_TEXT ("ACE token service")) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%n: %p on port %d\n"),

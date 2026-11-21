@@ -57,7 +57,7 @@ ACE_Name_Acceptor::init (int argc, ACE_TCHAR *argv[])
   if (this->open (this->service_addr_,
                   ACE_Reactor::instance (),
                   0, 0, 0,
-                  &this->scheduling_strategy_,
+                  std::addressof (this->scheduling_strategy_),
                   ACE_TEXT ("Name Server"),
                   ACE_TEXT ("ACE naming service")) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
