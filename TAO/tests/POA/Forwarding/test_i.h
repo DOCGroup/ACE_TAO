@@ -28,7 +28,7 @@ public:
 
   CORBA::Long doit () override;
 
-  // Setup forwarding
+  /// Setup forwarding
   void forward () override;
 
   void shutdown () override;

@@ -2,12 +2,11 @@
 #include "tao/DynamicInterface/DII_Reply_Handler.h"
 #include "tao/DynamicInterface/AMH_DSI_Response_Handler.h"
 
+/// Used to handle replies from the server and to complete the
+/// call back to the client.
 class My_DII_Reply_Handler : public virtual TAO_DII_Reply_Handler,
                              public virtual Messaging::ReplyHandler
 {
-  //    Used to handle replies from the server and to complete the
-  //    call back to the client.
-  //
 public:
   My_DII_Reply_Handler (TAO_AMH_DSI_Response_Handler_ptr rph,
                         CORBA::ORB_var orb);
@@ -17,7 +16,7 @@ public:
   My_DII_Reply_Handler &operator= (My_DII_Reply_Handler const &) = delete;
   My_DII_Reply_Handler &operator= (My_DII_Reply_Handler &&) = delete;
 
-  // Callback method for deferred synchronous requests.
+  /// Callback method for deferred synchronous requests.
   void handle_response (TAO_InputCDR &incoming) override;
   void handle_excep (TAO_InputCDR &incoming,
                      CORBA::ULong reply_status) override;
