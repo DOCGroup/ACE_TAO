@@ -599,9 +599,9 @@ u_char *asn1::parse_objid( u_char *data,
   while (length > 0 && (*objidlength)-- > 0){
     subidentifier = 0;
     do {        /* shift and add in low order 7 bits */
-      subidentifier = (subidentifier << 7) + (*(u_char *)bufp & ~ASN_BIT8);
+      subidentifier = (subidentifier << 7) + (*bufp & ~ASN_BIT8);
       --length;
-    } while (*(u_char *)bufp++ & ASN_BIT8);     /* last byte has high bit clear */
+    } while (*bufp++ & ASN_BIT8);     /* last byte has high bit clear */
     if (subidentifier > (u_long)MAX_SUBID){
       ASNERROR("subidentifier too long");
       return 0;
