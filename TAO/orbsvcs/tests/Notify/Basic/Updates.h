@@ -115,10 +115,10 @@ protected:
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
 
   /// Consumer
-  TAO_Notify_Tests_StructuredPushConsumer* consumer_;
+  TAO_Notify_Tests_StructuredPushConsumer* consumer_ {};
 
   /// Supplier
-  TAO_Notify_Tests_StructuredPushSupplier* supplier_;
+  TAO_Notify_Tests_StructuredPushSupplier* supplier_ {};
 
 private:
   friend class Updates_StructuredPushSupplier;

@@ -114,7 +114,7 @@ protected:
   std::atomic<int> result_count_ {0};
 
   /// Expected count, (s + c) * t.
-  int expected_count_;
+  int expected_count_ {};
 
   /// @name Command-line parameters
   /// @{

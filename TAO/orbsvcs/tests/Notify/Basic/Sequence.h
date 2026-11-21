@@ -114,10 +114,10 @@ protected:
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
 
   /// Consumer
-  TAO_Notify_Tests_SequencePushConsumer* consumer_;
+  TAO_Notify_Tests_SequencePushConsumer* consumer_ {};
 
   /// Supplier
-  TAO_Notify_Tests_SequencePushSupplier* supplier_;
+  TAO_Notify_Tests_SequencePushSupplier* supplier_ {};
 
 private:
   friend class SequencePushSupplier;
