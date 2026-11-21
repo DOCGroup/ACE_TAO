@@ -44,7 +44,7 @@ public:
   /// Access second.
   T2 &second () const;
 
-  // Compare pairs.
+  /// Compare pairs.
   bool operator== (const ACE_Reference_Pair<T1, T2> &rhs) const;
 
 protected:

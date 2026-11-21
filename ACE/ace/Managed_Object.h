@@ -136,7 +136,7 @@ public:
   }
 
 protected:
-  // Disallow instantiation of this class.
+  /// Disallow instantiation of this class.
   ACE_Managed_Object () = delete;
 
 private:

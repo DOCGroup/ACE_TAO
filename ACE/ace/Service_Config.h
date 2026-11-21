@@ -627,9 +627,9 @@ private:
   /// Become a daemon.
   static int start_daemon ();
 
-  // @deprecated
-  // Add the default statically-linked services to the
-  // ACE_Service_Repository.
+  /// @deprecated
+  /// Add the default statically-linked services to the
+  /// ACE_Service_Repository.
   static int load_static_svcs ();
 
 protected:
