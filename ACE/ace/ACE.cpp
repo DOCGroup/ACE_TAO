@@ -2729,7 +2729,8 @@ ACE::handle_timed_complete (ACE_HANDLE h,
       int sock_err = 0;
       int sock_err_len = sizeof (sock_err);
       int sockopt_ret = ACE_OS::getsockopt (h, SOL_SOCKET, SO_ERROR,
-                                            (char *)&sock_err, &sock_err_len);
+                                            reinterpret_cast<char *> (&sock_err),
+                                            &sock_err_len);
       if (sockopt_ret < 0)
         {
           h = ACE_INVALID_HANDLE;

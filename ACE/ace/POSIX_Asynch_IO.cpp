@@ -1481,7 +1481,7 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
           ACE_OS::setsockopt (handle,
                               SOL_SOCKET,
                               SO_REUSEADDR,
-                              (const char*) &one,
+                              reinterpret_cast<char const *> (&one),
                               sizeof one) == -1 )
         {
           result->set_error (errno);
@@ -1675,7 +1675,7 @@ ACE_POSIX_Asynch_Connect::handle_output (ACE_HANDLE fd)
   ACE_OS::getsockopt (fd,
                       SOL_SOCKET,
                       SO_ERROR,
-                      (char*) &sockerror,
+                      reinterpret_cast<char *> (&sockerror),
                       &lsockerror);
 
   result->set_bytes_transferred (0);
