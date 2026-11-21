@@ -5,8 +5,8 @@
 #include "ace/svc_export.h"
 #include "ace/OS_Memory.h"
 
-// Implementation of the abstract class method which describes the
-// magazine.
+/// Implementation of the abstract class method which describes the
+/// magazine.
 void
 Today::title ()
 {
@@ -35,9 +35,9 @@ Today::operator delete (void *ptr)
   delete [] static_cast <char *> (ptr);
 }
 
-// Returns the pointer to the Today class.
-// The ACE_BUILD_SVC_DLL and ACE_Svc_Export directives are necessary to
-// take care of exporting the function for Win32 platforms.
+/// Returns the pointer to the Today class.
+/// The ACE_BUILD_SVC_DLL and ACE_Svc_Export directives are necessary to
+/// take care of exporting the function for Win32 platforms.
 extern "C" ACE_Svc_Export Magazine *create_magazine ();
 
 Magazine *

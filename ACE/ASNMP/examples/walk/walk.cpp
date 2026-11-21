@@ -189,7 +189,7 @@ MibIter::MibIter (Snmp &snmp, Pdu &pdu, UdpTarget &target)
   this->valid_ = oid.valid ();
 }
 
-// Return 1 for the next OID, 0 on an SNMP error, or -1 for an invalid iterator.
+/// Return 1 for the next OID, 0 on an SNMP error, or -1 for an invalid iterator.
 int MibIter::next (Vb &vb, char const *&reason)
 {
   int rc {};
