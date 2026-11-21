@@ -93,7 +93,7 @@ public:
   ACE_Registry_ImpExp &operator= (ACE_Registry_ImpExp const &) = delete;
   ACE_Registry_ImpExp &operator= (ACE_Registry_ImpExp &&) = delete;
 
-  ACE_Registry_ImpExp (ACE_Configuration&);
+  explicit ACE_Registry_ImpExp (ACE_Configuration&);
 
   ~ACE_Registry_ImpExp () override = default;
 
@@ -161,7 +161,7 @@ public:
   ACE_Ini_ImpExp &operator= (ACE_Ini_ImpExp const &) = delete;
   ACE_Ini_ImpExp &operator= (ACE_Ini_ImpExp &&) = delete;
 
-  ACE_Ini_ImpExp (ACE_Configuration&);
+  explicit ACE_Ini_ImpExp (ACE_Configuration&);
 
   ~ACE_Ini_ImpExp () override = default;
 
