@@ -220,14 +220,15 @@ ACE_Data_Block::size (size_t length)
       // We need to resize!
       char *buf {};
       ACE_ALLOCATOR_RETURN (buf,
-                            (char *) this->allocator_strategy_->malloc (length),
+                            static_cast<char *> (
+                              this->allocator_strategy_->malloc (length)),
                             -1);
 
       std::memcpy (buf, this->base_, this->cur_size_);
       if (ACE_BIT_DISABLED (this->flags_,
                             ACE_Message_Block::DONT_DELETE))
         {
-          this->allocator_strategy_->free ((void *) this->base_);
+          this->allocator_strategy_->free (this->base_);
         }
       else
         {
@@ -378,7 +379,8 @@ ACE_Data_Block::ACE_Data_Block (size_t size,
   if (msg_data == nullptr)
     {
       ACE_ALLOCATOR (this->base_,
-                     (char *) this->allocator_strategy_->malloc (size));
+                     static_cast<char *> (
+                       this->allocator_strategy_->malloc (size)));
 #if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
       (void) std::memset (this->base_,
                           '\0',
@@ -777,7 +779,7 @@ ACE_Data_Block::~ACE_Data_Block ()
   if (ACE_BIT_DISABLED (this->flags_,
                         ACE_Message_Block::DONT_DELETE))
     {
-      this->allocator_strategy_->free ((void *) this->base_);
+      this->allocator_strategy_->free (this->base_);
       this->base_ = nullptr;
     }
 }
