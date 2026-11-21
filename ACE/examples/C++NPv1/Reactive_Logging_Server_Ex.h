@@ -33,14 +33,14 @@ public:
   Reactive_Logging_Server_Ex &operator= (Reactive_Logging_Server_Ex &&) = delete;
 
 protected:
-  // ACE_FILE_IO values are manually owned by the map after a successful bind.
+  /// ACE_FILE_IO values are manually owned by the map after a successful bind.
   LOG_MAP log_map_;
 
-  // Keep track of acceptor socket and all the connected
-  // stream socket handles.
+  /// Keep track of acceptor socket and all the connected
+  /// stream socket handles.
   ACE_Handle_Set master_handle_set_;
 
-  // Keep track of read handles marked as active by <select>.
+  /// Keep track of read handles marked as active by <select>.
   ACE_Handle_Set active_read_handles_;
 
   int open (u_short port) override {

@@ -30,7 +30,7 @@ public:
 
   ~AIO_Input_Handler () override;
 
-  // Called by ACE_Asynch_Acceptor when a client connects.
+  /// Called by ACE_Asynch_Acceptor when a client connects.
   void open (ACE_HANDLE new_handle,
              ACE_Message_Block &message_block) override;
 
@@ -109,41 +109,41 @@ public:
   AIO_CLD_Connector &operator= (const AIO_CLD_Connector &) = delete;
   AIO_CLD_Connector &operator= (AIO_CLD_Connector &&) = delete;
 
-  // Destructor frees the SSL resources.
+  /// Destructor frees the SSL resources.
   ~AIO_CLD_Connector () override {
     SSL_free (ssl_);
     SSL_CTX_free (ssl_ctx_);
     proactor ()->cancel_timer (*this);
   }
 
-  // Hook method to detect failure and validate peer before
-  // opening handler.
+  /// Hook method to detect failure and validate peer before
+  /// opening handler.
   int validate_connection
     (const ACE_Asynch_Connect::Result& result,
      const ACE_INET_Addr &remote, const ACE_INET_Addr& local) override;
 
-  // Re-establish a connection to the logging server.
+  /// Re-establish a connection to the logging server.
   int reconnect () { return connect (remote_addr_); }
 
 protected:
-  // Hook method called on timer expiration - retry connect
+  /// Hook method called on timer expiration - retry connect
   void handle_time_out (const ACE_Time_Value&, const void *) override;
 
-  // Template method to create a new handler
+  /// Template method to create a new handler
   AIO_Output_Handler *make_handler () override
     { return OUTPUT_HANDLER::instance (); }
 
-  // Address at which logging server listens for connections.
+  /// Address at which logging server listens for connections.
   ACE_INET_Addr remote_addr_;
 
-  // Seconds to wait before trying the next connect
+  /// Seconds to wait before trying the next connect
   int retry_delay_;
 
-  // The SSL "context" data structure.
+  /// The SSL "context" data structure.
   SSL_CTX *ssl_ctx_;
 
-  // The SSL data structure corresponding to authenticated SSL
-  // connections.
+  /// The SSL data structure corresponding to authenticated SSL
+  /// connections.
   SSL *ssl_;
 };
 

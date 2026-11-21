@@ -15,14 +15,14 @@ public:
     : ACE_Service_Object (r) {}
 
 protected:
-  // Hook methods inherited from <ACE_Service_Object>.
+  /// Hook methods inherited from <ACE_Service_Object>.
   int init (int argc, ACE_TCHAR *argv[]) override;
   int fini () override;
   int info (ACE_TCHAR **, size_t) const override;
   int suspend () override;
   int resume () override;
 
-  // Reactor hook methods.
+  /// Reactor hook methods.
   int handle_input (ACE_HANDLE) override;
   ACE_HANDLE get_handle () const override
   { return acceptor_.get_handle (); }

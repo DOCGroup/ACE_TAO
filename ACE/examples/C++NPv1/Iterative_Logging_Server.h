@@ -34,7 +34,7 @@ public:
   Logging_Handler &logging_handler () { return logging_handler_; }
 
 protected:
-  // Override inherited open() from Logging_Server
+  /// Override inherited open() from Logging_Server
   int open (u_short port) override {
     if (make_log_file (log_file_) == -1)
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "make_log_file()"), -1);

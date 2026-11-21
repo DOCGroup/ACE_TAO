@@ -34,13 +34,13 @@ public:
 
   void open (ACE_HANDLE h, ACE_Message_Block &) override;
 
-  // This method will be called when an asynchronous read
-  // completes on a stream.
+  /// This method will be called when an asynchronous read
+  /// completes on a stream.
   void handle_read_stream
     (ACE_Asynch_Read_Stream::Result const &result) override;
 
-  // This method will be called when an asynchronous write
-  // completes on a stream.
+  /// This method will be called when an asynchronous write
+  /// completes on a stream.
   void handle_write_stream
     (ACE_Asynch_Write_Stream::Result const &result) override;
 
@@ -89,10 +89,10 @@ protected:
 class HA_Proactive_Status : public ACE_Service_Object
 {
 public:
-  // Initializes object when dynamic linking occurs.
+  /// Initializes object when dynamic linking occurs.
   int init (int argc, ACE_TCHAR *argv[]) override;
 
-  // Terminates object when dynamic unlinking occurs.
+  /// Terminates object when dynamic unlinking occurs.
   int fini () override;
 };
 
