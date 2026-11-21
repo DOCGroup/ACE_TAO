@@ -10,6 +10,7 @@
 #include "ace/OS_NS_stdlib.h"
 
 #include <cstring>
+#include <memory>
 
 /// Sets the host address in the log record.
 int
@@ -28,7 +29,9 @@ Log_Wrapper::open (int port, char const *mcast_addr)
     return -1;
   }
 
-  std::memcpy (&this->log_msg_.host, host_info->h_addr, host_info->h_length);
+  std::memcpy (std::addressof (this->log_msg_.host),
+               host_info->h_addr,
+               host_info->h_length);
   this->log_msg_.app_id = ACE_OS::getpid ();
 
   // This starts out initialized to all zeros!
@@ -59,7 +62,8 @@ Log_Wrapper::log_message (Log_Priority type, char *message)
   this->log_msg_.sequence_number = ACE_HTONL(sequence_number_);
 
   iovec iovp[2];
-  iovp[0].iov_base = reinterpret_cast<char*> (&log_msg_);
+  iovp[0].iov_base =
+    reinterpret_cast<char *> (std::addressof (this->log_msg_));
   iovp[0].iov_len  = sizeof (log_msg_);
   iovp[1].iov_base = message;
   iovp[1].iov_len  = log_msg_.msg_length;
