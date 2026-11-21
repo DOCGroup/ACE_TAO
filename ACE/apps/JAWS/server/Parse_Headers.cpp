@@ -47,7 +47,7 @@ Headers::parse_header_line (char * const header_line)
   ACE_DEBUG((LM_DEBUG, " (%t) Headers::parse_header_line [%s]\n",
              header ? header : "<empty>"));
 
-  if (header != nullptr && this->map_.mapped (header))
+  if (header != nullptr && value != nullptr && this->map_.mapped (header))
     {
       while (ACE_OS::ace_isspace (*value))
         {
