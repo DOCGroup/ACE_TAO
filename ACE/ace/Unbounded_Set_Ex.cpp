@@ -143,7 +143,7 @@ ACE_Unbounded_Set_Ex<T, C>::ACE_Unbounded_Set_Ex (ACE_Allocator *alloc)
     }
 
   ACE_NEW_MALLOC (this->head_,
-                  (NODE*) this->allocator_->malloc (sizeof (NODE)),
+                  static_cast<NODE *> (this->allocator_->malloc (sizeof (NODE))),
                   NODE);
   // Make the list circular by pointing it back to itself.
   this->head_->next_ = this->head_;
@@ -163,7 +163,7 @@ ACE_Unbounded_Set_Ex<T, C>::ACE_Unbounded_Set_Ex (C const &comp,
     }
 
   ACE_NEW_MALLOC (this->head_,
-                  (NODE*) this->allocator_->malloc (sizeof (NODE)),
+                  static_cast<NODE *> (this->allocator_->malloc (sizeof (NODE))),
                   NODE);
   // Make the list circular by pointing it back to itself.
   this->head_->next_ = this->head_;
@@ -182,7 +182,7 @@ ACE_Unbounded_Set_Ex<T, C>::ACE_Unbounded_Set_Ex (ACE_Unbounded_Set_Ex<T, C> con
     }
 
   ACE_NEW_MALLOC (this->head_,
-                  (NODE*) this->allocator_->malloc (sizeof (NODE)),
+                  static_cast<NODE *> (this->allocator_->malloc (sizeof (NODE))),
                   NODE);
   this->head_->next_ = this->head_;
   this->copy_nodes (us);
