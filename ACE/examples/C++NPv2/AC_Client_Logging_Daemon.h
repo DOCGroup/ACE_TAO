@@ -28,7 +28,7 @@ public:
   int put (ACE_Message_Block *, ACE_Time_Value * = nullptr) override;
 
 protected:
-  AC_CLD_Connector *connector_;
+  AC_CLD_Connector *connector_ {};
 
   /// Handle disconnects from the logging server.
   int handle_input (ACE_HANDLE handle) override;
