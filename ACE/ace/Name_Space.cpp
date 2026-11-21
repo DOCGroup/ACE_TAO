@@ -20,9 +20,9 @@ ACE_Name_Binding::~ACE_Name_Binding ()
 {
   ACE_TRACE ("ACE_Name_Binding::~ACE_Name_Binding");
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_Allocator::instance()->free ((void *) this->type_);
+  ACE_Allocator::instance()->free (this->type_);
 #else
-  ACE_OS::free ((void *) this->type_);
+  ACE_OS::free (this->type_);
 #endif /* ACE_HAS_ALLOC_HOOKS */
 }
 
@@ -52,9 +52,9 @@ ACE_Name_Binding::operator = (const ACE_Name_Binding &s)
   if (this != std::addressof (s))
     {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-      ACE_Allocator::instance()->free ((void *) this->type_);
+      ACE_Allocator::instance()->free (this->type_);
 #else
-      ACE_OS::free ((void *) this->type_);
+      ACE_OS::free (this->type_);
 #endif /* ACE_HAS_ALLOC_HOOKS */
       this->name_ = s.name_;
       this->value_ = s.value_;

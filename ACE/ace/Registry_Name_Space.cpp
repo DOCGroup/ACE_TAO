@@ -63,7 +63,7 @@ ACE_Registry_Name_Space::bind (const ACE_NS_WString &name,
   size_t const size = value.length () * sizeof (ACE_WSTRING_TYPE);
 
   // Represent value as an ACE_Registry::Object
-  ACE_Registry::Object object ((void *) data,
+  ACE_Registry::Object object (const_cast<ACE_WSTRING_TYPE *> (data),
                                static_cast<u_long> (size),
                                REG_SZ);
   // Add new <key>/<value> pair
@@ -90,7 +90,7 @@ ACE_Registry_Name_Space::rebind (const ACE_NS_WString &name,
   size_t const size = value.length () * sizeof (ACE_WSTRING_TYPE);
 
   // Represent value as an ACE_Registry::Object
-  ACE_Registry::Object object ((void *) data,
+  ACE_Registry::Object object (const_cast<ACE_WSTRING_TYPE *> (data),
                                static_cast<u_long> (size),
                                REG_SZ);
   // Add new <key>/<value> pair
@@ -139,7 +139,7 @@ ACE_Registry_Name_Space::resolve (const ACE_NS_WString &name,
   value.resize ((query_object.size () - 1) / sizeof (ACE_WSTRING_TYPE));
 
   // Represent new space as an ACE_Registry::Object
-  ACE_Registry::Object object ((void *) value.fast_rep (),
+  ACE_Registry::Object object (value.fast_rep (),
                                query_object.size (),
                                REG_SZ);
 
