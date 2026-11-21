@@ -97,10 +97,10 @@ protected:
   ACE_HANDLE internal_id_;
 
   /// Size of the mapped segment.
-  size_t size_;
+  size_t size_ {};
 
   /// Pointer to the beginning of the segment.
-  void *segment_ptr_;
+  void *segment_ptr_ {};
 
   /// Round up to an appropriate page size.
   size_t round_up (size_t len);
