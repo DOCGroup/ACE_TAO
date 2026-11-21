@@ -216,7 +216,9 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
             }
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-          newv = (ACE_DIRENT **) ACE_Allocator::instance()->malloc (new_arena_size * sizeof (ACE_DIRENT *));
+          newv = static_cast<ACE_DIRENT **> (
+            ACE_Allocator::instance ()->malloc (
+              new_arena_size * sizeof (ACE_DIRENT *)));
           if (newv && vector)
             {
               ACE_OS::memcpy (newv, vector, arena_size * sizeof (ACE_DIRENT *));
