@@ -114,7 +114,7 @@ TestTask::svc ()
       name[1].id = CORBA::string_dup ("Hello");
 
       Hello servant (this->orb_.in ());
-      PortableServer::ObjectId_var const oid = poa->activate_object (&servant);
+      PortableServer::ObjectId_var const oid = poa->activate_object (std::addressof (servant));
       obj = poa->id_to_reference (oid.in ());
       root->rebind (name, obj.in ());
 
@@ -136,7 +136,7 @@ TestTask::svc ()
         }
 
       NsShutdown shutdown_servant (this->orb_.in ());
-      PortableServer::ObjectId_var const shutdown_oid = poa->activate_object (&shutdown_servant);
+      PortableServer::ObjectId_var const shutdown_oid = poa->activate_object (std::addressof (shutdown_servant));
       obj = poa->id_to_reference (shutdown_oid.in ());
       CORBA::String_var const ior = this->orb_->object_to_string (obj.in ());
 

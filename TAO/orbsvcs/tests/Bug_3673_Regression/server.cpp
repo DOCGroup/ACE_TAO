@@ -87,7 +87,7 @@ TestTask::svc ()
       name[1].id = CORBA::string_dup ("Hello");
 
       Hello servant (this->orb_.in ());
-      PortableServer::ObjectId_var const oid = poa->activate_object (&servant);
+      PortableServer::ObjectId_var const oid = poa->activate_object (std::addressof (servant));
       obj = poa->id_to_reference (oid.in ());
       root->rebind (name, obj.in ());
 

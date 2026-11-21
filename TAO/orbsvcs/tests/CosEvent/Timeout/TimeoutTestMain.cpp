@@ -125,7 +125,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           obj = orb->resolve_initial_references ("RootPOA");
           PortableServer::POA_var const poa =
             PortableServer::POA::_narrow (obj.in ());
-          PortableServer::ObjectId_var const oid = poa->activate_object (&servant);
+          PortableServer::ObjectId_var const oid = poa->activate_object (std::addressof (servant));
           CORBA::Object_var const consumer_obj = poa->id_to_reference (oid.in ());
           CosEventComm::PushConsumer_var const consumer =
             CosEventComm::PushConsumer::_narrow (consumer_obj.in ());

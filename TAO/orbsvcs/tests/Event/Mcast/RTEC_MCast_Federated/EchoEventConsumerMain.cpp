@@ -10,6 +10,8 @@
 #include <orbsvcs/CosNamingC.h>
 #include "ace/OS_NS_string.h"
 
+#include <memory>
+
 constexpr RtecEventComm::EventSourceID MY_SOURCE_ID {ACE_ES_EVENT_SOURCE_ANY + 1};
 constexpr RtecEventComm::EventType MY_EVENT_TYPE {ACE_ES_EVENT_UNDEFINED + 1};
 
@@ -68,7 +70,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     EchoEventConsumer_i servant (orb.in (), EVENT_LIMIT);
 
     // Register it with the RootPOA.
-    PortableServer::ObjectId_var oid = poa->activate_object (&servant);
+    PortableServer::ObjectId_var oid = poa->activate_object (std::addressof (servant));
     CORBA::Object_var consumer_obj = poa->id_to_reference (oid.in ());
     RtecEventComm::PushConsumer_var consumer =
       RtecEventComm::PushConsumer::_narrow (consumer_obj.in ());

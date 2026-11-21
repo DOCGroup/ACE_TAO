@@ -113,7 +113,7 @@ ECM_Driver::run (int argc, ACE_TCHAR* argv[])
 
       // Register Event_Service with the Naming Service.
       PortableServer::ObjectId_var id =
-        root_poa->activate_object (&ec_impl);
+        root_poa->activate_object (std::addressof (ec_impl));
 
       CORBA::Object_var object = root_poa->id_to_reference (id.in ());
 

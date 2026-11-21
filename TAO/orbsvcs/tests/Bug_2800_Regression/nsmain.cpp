@@ -119,7 +119,7 @@ TestTask::svc ()
       name[1].id = CORBA::string_dup ("Hello");
       // The POA borrows this stack servant, which remains alive through orb_->run().
       Hello servant (orb_.in ());
-      PortableServer::ObjectId_var const oid = poa->activate_object (&servant);
+      PortableServer::ObjectId_var const oid = poa->activate_object (std::addressof (servant));
       obj = poa->id_to_reference (oid.in ());
       root->rebind (name, obj.in ());
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("Hello object bound in Naming Service B\n")));
@@ -139,7 +139,7 @@ TestTask::svc ()
 
       // This servant also remains alive until orb_->run() returns.
       NsShutdown shutdown_servant (orb_.in ());
-      PortableServer::ObjectId_var const shutdown_oid = poa->activate_object (&shutdown_servant);
+      PortableServer::ObjectId_var const shutdown_oid = poa->activate_object (std::addressof (shutdown_servant));
       obj = poa->id_to_reference (shutdown_oid.in ());
       CORBA::String_var const ior = orb_->object_to_string (obj.in ());
       {

@@ -5,6 +5,7 @@
 #include "StructuredEventConsumer_i.h"
 #include <cstdio>
 #include <iostream>
+#include <memory>
 
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
@@ -94,7 +95,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       StructuredEventConsumer_i servant (consumer_state.orb.in ());
 
-      PortableServer::ObjectId_var const object_id = poa->activate_object (&servant);
+      PortableServer::ObjectId_var const object_id = poa->activate_object (std::addressof (servant));
 
       CORBA::Object_var const consumer_object = poa->id_to_reference (object_id.in ());
 

@@ -4,6 +4,7 @@
 #include "ace/SString.h"
 #include <fstream>
 #include <iostream>
+#include <memory>
 
 struct Server_Options
 {
@@ -52,7 +53,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       mgr->activate ();
 
       Messenger_i messenger_servant (orb.in ());
-      PortableServer::ObjectId_var const oid = poa->activate_object (&messenger_servant);
+      PortableServer::ObjectId_var const oid = poa->activate_object (std::addressof (messenger_servant));
       CORBA::Object_var const messenger_obj = poa->id_to_reference (oid.in ());
       CORBA::String_var const str = orb->object_to_string (messenger_obj.in ());
 
