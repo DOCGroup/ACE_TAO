@@ -740,7 +740,8 @@ class ACE_Export ACE_Token_Proxy
 {
 public:
   friend class ACE_Token_Manager;
-  friend class ACE_Token_Invariant_Manager; // For testing.
+  /// Grants the invariant test access to private members.
+  friend class ACE_Token_Invariant_Manager;
 
   // Initialization and termination methods.
   ACE_Token_Proxy ();
