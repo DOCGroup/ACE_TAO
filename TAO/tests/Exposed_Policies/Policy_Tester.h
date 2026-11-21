@@ -39,7 +39,7 @@ public:
   void shutdown () const;
 
 private:
-  // Helper method used internally.
+  /// Helper method used internally.
   int create_objects ();
 
   static CORBA::Boolean check_reference (CORBA::Object_ptr object,

@@ -2,7 +2,7 @@
 #include "tao/ORB.h"
 #include "MessengerC.h"
 
-// The ORB runtime assumes ownership of values returned by these factories.
+/// The ORB runtime assumes ownership of values returned by these factories.
 class NodeFactory : public CORBA::ValueFactoryBase
 {
 public:
