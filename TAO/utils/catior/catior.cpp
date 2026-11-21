@@ -226,14 +226,13 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
                 while (!feof (ifstr.get ()))
                   {
-                    int ch {};
                     ACE_CString aString;
 
                     have_some_input = false;
 
                     while (!feof (ifstr.get ()))
                       {
-                        ch = ACE_OS::fgetc (ifstr.get ());
+                        int const ch = ACE_OS::fgetc (ifstr.get ());
                         if (ch == EOF || ch == '\n' || ch == '\r')
                           {
                             break;
@@ -351,14 +350,13 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
                 while (!feof (ifstr))
                   {
-                    int ch {};
                     ACE_CString aString;
 
                     have_some_input = false;
 
                     while (!feof (ifstr))
                       {
-                        ch = ACE_OS::fgetc (ifstr);
+                        int const ch = ACE_OS::fgetc (ifstr);
                         if (ch == EOF || ch == '\n' || ch == '\r')
                           {
                             break;

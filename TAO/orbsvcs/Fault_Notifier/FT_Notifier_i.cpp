@@ -63,10 +63,10 @@ TAO::FT_FaultNotifier_i::~FT_FaultNotifier_i ()
 
 int TAO::FT_FaultNotifier_i::idle (int & result)
 {
-  static unsigned long linger {};
   ACE_UNUSED_ARG (result);
   if (this->gone_)
   {
+    static unsigned long linger {};
     if (linger == 0)
     {
       ORBSVCS_ERROR ((LM_ERROR,

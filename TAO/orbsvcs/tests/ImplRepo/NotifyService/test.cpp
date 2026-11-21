@@ -6,10 +6,10 @@
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   bool success = false;
-  int retries = 5;
 
   try
     {
+      int retries = 5;
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var obj =

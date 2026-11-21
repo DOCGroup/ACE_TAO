@@ -20,7 +20,6 @@ int
 Timer_Helper::handle_timeout (ACE_Time_Value const &,
                               void const *)
 {
-  size_t no_of_servers {};
   CORBA::ULongLong sum {};
 
   // The following are used to keep a track of the inaccuracy
@@ -30,6 +29,7 @@ Timer_Helper::handle_timeout (ACE_Time_Value const &,
 
   try
     {
+      size_t no_of_servers {};
       for (CosTime::TimeService_var const & server : this->clerk_->server_)
         {
           // This is a remote call.
