@@ -29,6 +29,8 @@
 #include "ace/Barrier.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_TOKENS_LIBRARY)
 
 using TOKEN_INVARIANTS = ACE_Token_Invariant_Manager;
@@ -40,7 +42,7 @@ static constexpr int server_port = 23456;
 // has a chance to finish and clean up the TSS objects.  To avoid
 // creating a static object, it is dynamically allocated, before
 // spawning any threads.
-static ACE_Barrier *thread_start;
+static std::unique_ptr<ACE_Barrier> thread_start;
 
 struct Test_Params
 {
@@ -197,25 +199,35 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Tokens_Test"));
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_TOKENS_LIBRARY)
-  ACE_Token_Proxy *A {}, *B {}, *R {}, *W {};
+  ACE_Token_Proxy *token {};
+  std::unique_ptr<ACE_Token_Proxy> A;
+  std::unique_ptr<ACE_Token_Proxy> B;
+  std::unique_ptr<ACE_Token_Proxy> R;
+  std::unique_ptr<ACE_Token_Proxy> W;
 
-  ACE_NEW_RETURN (A,
+  ACE_NEW_RETURN (token,
                   ACE_Local_Mutex (ACE_TEXT ("L Mutex A"), 0, 0),
                   -1);
-  ACE_NEW_RETURN (B,
+  A.reset (token);
+  ACE_NEW_RETURN (token,
                   ACE_Local_Mutex (ACE_TEXT ("L Mutex B"), 0, 0),
                   -1);
-  ACE_NEW_RETURN (R,
+  B.reset (token);
+  ACE_NEW_RETURN (token,
                   ACE_Local_RLock (ACE_TEXT ("L Reader Lock"), 0, 0),
                   -1);
-  ACE_NEW_RETURN (W,
+  R.reset (token);
+  ACE_NEW_RETURN (token,
                   ACE_Local_WLock (ACE_TEXT ("L Writer Lock"), 0, 0),
                   -1);
-  ACE_NEW_RETURN (thread_start,
+  W.reset (token);
+  ACE_Barrier *barrier {};
+  ACE_NEW_RETURN (barrier,
                   ACE_Barrier (3),
                   -1);
+  thread_start.reset (barrier);
 
-  run_test (A, B, R, W);
+  run_test (A.get (), B.get (), R.get (), W.get ());
 
   const ACE_TCHAR *token_exe =
     ACE_TEXT ("..") ACE_DIRECTORY_SEPARATOR_STR
@@ -267,25 +279,24 @@ run_main (int, ACE_TCHAR *[])
           ACE_Remote_Mutex::set_server_address (ACE_INET_Addr (server_port,
                                                                server_host));
 
-          delete A;
-          delete B;
-          delete R;
-          delete W;
-
-          ACE_NEW_RETURN (A,
+          ACE_NEW_RETURN (token,
                           ACE_Remote_Mutex (ACE_TEXT ("R Mutex A"), 0, 1),
                           -1);
-          ACE_NEW_RETURN (B,
+          A.reset (token);
+          ACE_NEW_RETURN (token,
                           ACE_Remote_Mutex (ACE_TEXT ("R Mutex B"), 0, 1),
                           -1);
-          ACE_NEW_RETURN (R,
+          B.reset (token);
+          ACE_NEW_RETURN (token,
                           ACE_Remote_RLock (ACE_TEXT ("R Reader Lock"), 0, 1),
                           -1);
-          ACE_NEW_RETURN (W,
+          R.reset (token);
+          ACE_NEW_RETURN (token,
                           ACE_Remote_WLock (ACE_TEXT ("R Writer Lock"), 0, 1),
                           -1);
+          W.reset (token);
 
-          run_test (A, B, R, W);
+          run_test (A.get (), B.get (), R.get (), W.get ());
 
           // Wait for the server to finish.
           ACE_OS::sleep (3);
@@ -297,12 +308,7 @@ run_main (int, ACE_TCHAR *[])
                               -1);
         }
 
-      delete thread_start;
-      thread_start = 0;
-      delete A;
-      delete B;
-      delete R;
-      delete W;
+      thread_start.reset ();
     }
 
   ACE_DEBUG ((LM_DEBUG,
