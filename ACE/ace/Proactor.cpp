@@ -318,13 +318,7 @@ ACE_Proactor_Handle_Timeout_Upcall::proactor (ACE_Proactor &proactor)
 ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
                             bool delete_implementation,
                             ACE_Proactor_Timer_Queue *tq)
-  : implementation_ (nullptr),
-    delete_implementation_ (delete_implementation),
-    timer_handler_ (nullptr),
-    timer_queue_ (nullptr),
-    delete_timer_queue_ (0),
-    end_event_loop_ (0),
-    event_loop_thread_count_ (0)
+  : delete_implementation_ (delete_implementation)
 {
   this->implementation (implementation);
 

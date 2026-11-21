@@ -568,7 +568,7 @@ protected:
 
   /// Delegation/implementation class that all methods will be
   /// forwarded to.
-  ACE_Proactor_Impl *implementation_;
+  ACE_Proactor_Impl *implementation_ {};
 
   /// Flag used to indicate whether we are responsible for cleaning up
   /// the implementation instance.
@@ -581,22 +581,22 @@ protected:
   static bool delete_proactor_;
 
   /// Handles timeout events.
-  ACE_Proactor_Timer_Handler *timer_handler_;
+  ACE_Proactor_Timer_Handler *timer_handler_ {};
 
   /// This will manage the thread in the Timer_Handler.
   ACE_Thread_Manager thr_mgr_;
 
   /// Timer Queue.
-  ACE_Proactor_Timer_Queue *timer_queue_;
+  ACE_Proactor_Timer_Queue *timer_queue_ {};
 
   /// Flag on whether to delete the timer queue.
-  int delete_timer_queue_;
+  int delete_timer_queue_ {};
 
   /// Terminate the proactor event loop.
-  sig_atomic_t end_event_loop_;
+  sig_atomic_t end_event_loop_ {};
 
   /// Number of threads in the event loop.
-  sig_atomic_t event_loop_thread_count_;
+  sig_atomic_t event_loop_thread_count_ {};
 
   /// Mutex to protect work with lists.
   ACE_SYNCH_MUTEX mutex_;
