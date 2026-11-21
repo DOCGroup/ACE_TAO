@@ -188,13 +188,13 @@ struct ACE_Export ACE_Malloc_Stats
   void dump () const;
 
   /// Coarse-grained unit of allocation.
-  ACE_INT nchunks_;
+  ACE_INT nchunks_ {};
 
   /// Fine-grained unit of allocation.
-  ACE_INT nblocks_;
+  ACE_INT nblocks_ {};
 
   /// Number of blocks in use
-  ACE_INT ninuse_;
+  ACE_INT ninuse_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
