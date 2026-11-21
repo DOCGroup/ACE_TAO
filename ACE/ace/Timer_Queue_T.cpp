@@ -15,6 +15,8 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Functor.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Timer_Queue_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -91,7 +93,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::calculate_timeout (ACE_
           this->timeout_ = this->earliest_time () - cur_time;
           if (max_wait_time == nullptr || *max_wait_time > timeout_)
             {
-              return &this->timeout_;
+              return std::addressof (this->timeout_);
             }
           else
             {
@@ -104,7 +106,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::calculate_timeout (ACE_
           // Therefore, we've got to "poll" the Reactor, i.e., it must
           // just check the descriptors and then dispatch timers, etc.
           this->timeout_ = ACE_Time_Value::zero;
-          return &this->timeout_;
+          return std::addressof (this->timeout_);
         }
     }
 }
