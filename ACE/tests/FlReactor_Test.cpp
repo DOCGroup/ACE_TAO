@@ -26,6 +26,8 @@
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
 
+#include <memory>
+
 #include /**/ <FL/Fl.H>
 #include /**/ <FL/Fl_Window.H>
 #include /**/ <FL/Fl_Hor_Slider.H>
@@ -243,7 +245,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   ACE_INET_Addr address;
 
-  if (acceptor.open (address, &r) == -1)
+  if (acceptor.open (address, std::addressof (r)) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",

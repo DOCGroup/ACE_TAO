@@ -29,6 +29,8 @@
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
 
+#include <memory>
+
 #include "ace/OS_NS_unistd.h"
 
 #include /**/ <X11/Intrinsic.h>
@@ -296,7 +298,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_Acceptor <Connection_Handler, ACE_SOCK_ACCEPTOR> acceptor;
 
   if (acceptor.open (ACE_INET_Addr ((u_short) SERV_TCP_PORT),
-                     &r) == -1)
+                     std::addressof (r)) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",

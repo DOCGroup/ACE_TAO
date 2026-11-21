@@ -307,7 +307,7 @@ run (ACE_Reactor_Impl &ri, const ACE_TCHAR *what, bool tp = true)
   // Bind acceptor to any port and then find out what the port was.
   ACE_INET_Addr server_addr;
   ACE_INET_Addr local_addr (ACE_sap_any_cast (const ACE_INET_Addr &));
-  if (acceptor.open (local_addr, &r) == -1
+  if (acceptor.open (local_addr, std::addressof (r)) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -321,7 +321,9 @@ run (ACE_Reactor_Impl &ri, const ACE_TCHAR *what, bool tp = true)
               server_addr.get_port_number ()));
 
   reactor_thread_nr = 0;   // Reset for new set
-  if (-1 == tm->spawn_n (tp ? opt_reactor_threads : 1, reactor_loop, &r))
+  if (-1 == tm->spawn_n (tp ? opt_reactor_threads : 1,
+                         reactor_loop,
+                         std::addressof (r)))
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p\n"),
