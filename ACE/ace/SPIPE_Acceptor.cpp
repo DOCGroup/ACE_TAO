@@ -14,7 +14,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor ()
 #if defined (ACE_HAS_WIN32_NAMED_PIPES)
-  : sa_ (0), pipe_handle_ (ACE_INVALID_HANDLE)
+  : pipe_handle_ (ACE_INVALID_HANDLE)
 #endif /* ACE_HAS_WIN32_NAMED_PIPES */
 {
   ACE_TRACE ("ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor");

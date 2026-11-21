@@ -136,7 +136,7 @@ private:
 #if defined (ACE_HAS_WIN32_NAMED_PIPES)
   // On Windows, the SECURITY_ATTRIBUTES specified for the initial accept
   // operation is reused on all subsequent pipe instances as well.
-  LPSECURITY_ATTRIBUTES sa_;
+  LPSECURITY_ATTRIBUTES sa_ {};
 
   // On Windows, the pipe mode to create the pipe in.  This can be in
   // either a bytestream-oriented mode or a message-oriented mode.
