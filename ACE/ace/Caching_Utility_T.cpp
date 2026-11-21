@@ -251,8 +251,7 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<
 ACE_Refcounted_Recyclable_Handler_Caching_Utility (
   ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy,
   bool delete_cleanup_strategy)
-  : cleanup_strategy_ (cleanup_strategy),
-    marked_as_closed_entries_ (0)
+  : cleanup_strategy_ (cleanup_strategy)
 {
   if (cleanup_strategy == nullptr)
     {

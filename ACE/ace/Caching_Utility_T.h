@@ -193,7 +193,7 @@ protected:
    * container which have been marked as closed already but might
    * not have been unbound from the container.
    */
-  size_t marked_as_closed_entries_;
+  size_t marked_as_closed_entries_ {};
 };
 
 /**
