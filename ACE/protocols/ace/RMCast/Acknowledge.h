@@ -42,13 +42,10 @@ namespace ACE_RMCast
     {
       //@@ There should be no default c-tor.
       //
-      Descr ()
-          : nak_count_ (0), timer_ (1)
-      {
-      }
+      Descr () = default;
 
       Descr (unsigned long timer)
-          : nak_count_ (0), timer_ (timer)
+          : timer_ (timer)
       {
       }
 
@@ -105,8 +102,8 @@ namespace ACE_RMCast
     private:
       Message_ptr m_;
 
-      unsigned long nak_count_;
-      unsigned long timer_;
+      unsigned long nak_count_ {};
+      unsigned long timer_ {1};
     };
 
   private:
