@@ -166,9 +166,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       break;
     }
 
-  size_t hostname_len = ACE_OS::strlen (hostname);
-  size_t e1_len = ACE_OS::strlen (e1_format) + 5; // 5 for the port#
-  size_t e2_len = ACE_OS::strlen (e2_format) + 5;
+  const size_t hostname_len = ACE_OS::strlen (hostname);
+  const size_t e1_len = ACE_OS::strlen (e1_format) + 5; // 5 for the port#
+  const size_t e2_len = ACE_OS::strlen (e2_format) + 5;
   std::vector<std::basic_string<ACE_TCHAR>> extra;
   extra.reserve (num_extra);
   extra.emplace_back (ACE_TEXT ("-ORBEndpoint"));

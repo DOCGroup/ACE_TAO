@@ -483,7 +483,7 @@ ACE_HTTP_Addr::create_relative_address (const ACE_TCHAR *url) const
     {
       const ACE_TCHAR *path = this->get_path ();
       ACE_TCHAR *raw_buffer {};
-      size_t n = ACE_OS::strlen (url)
+      const size_t n = ACE_OS::strlen (url)
         + ACE_OS::strlen (path)
         + 2;
       ACE_NEW_RETURN (raw_buffer,

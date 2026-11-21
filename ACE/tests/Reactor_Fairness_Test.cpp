@@ -227,7 +227,7 @@ sender (void *arg)
   // sleep a bit for the receivers to catch up.
   ACE_thread_t me = ACE_Thread::self ();
   ACE_Thread_Manager *tm = ACE_Thread_Manager::instance ();
-  size_t send_cnt = ACE_OS::strlen (ACE_ALPHABET);
+  const size_t send_cnt = ACE_OS::strlen (ACE_ALPHABET);
   bool fail = false;
   while (!tm->testcancel (me) && !fail)
     {
