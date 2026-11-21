@@ -1824,7 +1824,7 @@ TAO_Root_POA::is_poa_generated_id (const PortableServer::ObjectId &id)
 #if defined (POA_NAME_IN_POA_GENERATED_ID)
 
   // Grab the buffer
-  const char *id_buffer = (const char *) id.get_buffer ();
+  char const *id_buffer = reinterpret_cast<char const *> (id.get_buffer ());
 
   // Check to see if the POA name is the first part of the id
   return
