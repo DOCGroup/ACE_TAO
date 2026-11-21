@@ -12,19 +12,22 @@ public:
     return "serial:// s0/0x3e52";
   }
 
+  /// every 10 seconds
   int poll_interval () const
   {
-    return 10; // every 10 seconds
+    return 10;
   }
 
+  /// sixty seconds
   int reset_interval () const
   {
-    return 60; // sixty seconds
+    return 60;
   }
 
+  /// no response in 5 minutes
   int excessive_resets () const
   {
-    return 5; // no response in 5 minutes
+    return 5;
   }
 
   char const *admin_email () const

@@ -10,9 +10,10 @@ public:
     ACE_UNUSED_ARG (argv);
   }
 
+  /// every 20 seconds
   int poll_interval () const
   {
-    return 20; // every 20 seconds
+    return 20;
   }
 };
 
