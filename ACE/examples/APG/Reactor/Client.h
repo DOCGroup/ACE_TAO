@@ -36,13 +36,13 @@ public:
 
   int open (void * = nullptr) override;
 
-  // Called when input is available from the client.
+  /// Called when input is available from the client.
   int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
 
-  // Called when output is possible.
+  /// Called when output is possible.
   int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
 
-  // Called when a timer expires.
+  /// Called when a timer expires.
   int handle_timeout (ACE_Time_Value const &current_time,
                       void const *act = nullptr) override;
 

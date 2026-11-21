@@ -13,11 +13,11 @@ public:
   PCB &operator= (PCB &&) = delete;
   virtual ~PCB () = default;
 
-  // Set/get the timer id that is being handled by this instance.
+  /// Set/get the timer id that is being handled by this instance.
   void setID (long timerID);
   long getID () const;
 
-  // Handle a timeout event, cancel, and close.
+  /// Handle a timeout event, cancel, and close.
   virtual int handleEvent (void const *arg);
   virtual int handleCancel ();
   virtual int handleClose ();

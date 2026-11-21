@@ -16,13 +16,13 @@ public:
   CB &operator= (CB const &) = delete;
   CB &operator= (CB &&) = delete;
 
-  // Set the timer id that is being handled by this instance.
+  /// Set the timer id that is being handled by this instance.
   void setID (long timerID);
 
-  // Get the timer id.
+  /// Get the timer id.
   long getID () const;
 
-  // Handle the timeout.
+  /// Handle the timeout.
   int handle_timeout (ACE_Time_Value const &tv,
                       void const *arg = nullptr) override;
 
