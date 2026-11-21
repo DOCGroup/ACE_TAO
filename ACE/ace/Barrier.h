@@ -164,7 +164,7 @@ class ACE_Export ACE_Thread_Barrier : public ACE_Barrier
 {
 public:
   /// Create a Thread_Barrier, passing in the optional @a name.
-  ACE_Thread_Barrier (unsigned int count, const ACE_TCHAR *name = nullptr);
+  explicit ACE_Thread_Barrier (unsigned int count, const ACE_TCHAR *name = nullptr);
 
   ~ACE_Thread_Barrier () = default;
 
