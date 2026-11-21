@@ -529,7 +529,7 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
   if (siginfo != nullptr)
     {
       // ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) si_signo = %d, si_code = %d, addr = %@\n"), siginfo->si_signo, siginfo->si_code, siginfo->si_addr));
-      if (this->remap ((void *) siginfo->si_addr) == -1)
+      if (this->remap (siginfo->si_addr) == -1)
       {
         return -1;
       }

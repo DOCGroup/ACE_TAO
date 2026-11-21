@@ -91,7 +91,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::remap (EXCEPTION_POINTERS *ep)
 {
   ACE_TRACE ("ACE_Local_Name_Space::remap");
 
-  void *addr = (void *) ep->ExceptionRecord->ExceptionInformation[1];
+  void *addr = reinterpret_cast<void *> (
+    ep->ExceptionRecord->ExceptionInformation[1]);
 
   // The following requires Memory Pool to have ::remap()
   // defined. Thus currently this will only work for
