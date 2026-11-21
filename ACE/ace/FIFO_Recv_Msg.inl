@@ -37,7 +37,7 @@ ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf &recv_msg)
   else
     {
       size_t remaining = static_cast<size_t> (recv_msg.len);
-      size_t requested = static_cast<size_t> (recv_msg.maxlen);
+      size_t const requested = static_cast<size_t> (recv_msg.maxlen);
       ssize_t recv_len = ACE_OS::read (this->get_handle (),
                                        (char *) recv_msg.buf,
                                        (std::min) (remaining, requested));
@@ -56,7 +56,7 @@ ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf &recv_msg)
       // Since the ACE_HAS_STREAM_PIPES version of this method doesn't
       // return getmsg()'s indication of "data remaining", don't worry about
       // saving the indication here either to read the remainder later.
-      size_t total_msg_size = remaining;
+      size_t const total_msg_size = remaining;
       remaining -= recv_len;
 
       while (remaining > 0)
