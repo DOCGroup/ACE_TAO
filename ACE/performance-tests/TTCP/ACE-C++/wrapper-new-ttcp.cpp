@@ -566,7 +566,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       std::sprintf (filename, "%s.results", title);
       fd = std::fopen(filename,"a+");
       if (new_line)
-        std::fprintf(fd,"\n  -l %ldk \t", data_buf_len/1024);
+        std::fprintf(fd,"\n  -l %dk \t", data_buf_len/1024);
       tmp = ((double) nbytes) / realt;
       std::fprintf(fd,"%.2f ", tmp * 8.0 / 1024.0 / 1024.0);
       std::fclose(fd);

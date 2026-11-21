@@ -917,9 +917,9 @@ Log::parse_notify_poa_helper_i ()
   long poaid = std::strtol (idpos + 10, nullptr, 10);
 
   char buffer[100];
-  std::sprintf (buffer, "Notify object %s, object id %ld, POA %ld on line %ld",
+  std::sprintf (buffer, "Notify object %s, object id %ld, POA %ld on line %zu",
                    (activate ? "activation" : "deactivation"), objid, poaid,
-                   (unsigned long)this->offset_);
+                   this->offset_);
   ACE_CString text (buffer);
 
   inv->add_notify_incident (text, this->offset_);

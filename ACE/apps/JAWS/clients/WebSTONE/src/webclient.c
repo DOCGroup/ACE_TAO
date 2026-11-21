@@ -1162,8 +1162,8 @@ void ClientThread(void *dummy)
            " afterheader \t%d.%d\n"
            " afterbody \t%d.%d\n"
            " exittime \t%d.%d\n"
-           " total bytes \t%d\n"
-           " body bytes\t%d\n",
+           " total bytes \t%lu\n"
+           " body bytes\t%lu\n",
     timerarray[loop].entertime.tv_sec,
     timerarray[loop].entertime.tv_usec,
     timerarray[loop].beforeconnect.tv_sec,
@@ -1254,7 +1254,7 @@ void ClientThread(void *dummy)
     &(runningtime));
   printf("Total time of test (sec) %d.%d\n", runningtime.tv_sec,
     runningtime.tv_usec);
-  printf("Files retrieved per iteration: %d\n",numfiles);  /* 'per iteration' */
+  printf("Files retrieved per iteration: %ld\n",numfiles);  /* 'per iteration' */
   printf("----------------------------------\n");
   printf("Totals:\n\n");
   rqstat_print(&(timestat.rs));
@@ -1272,10 +1272,10 @@ void ClientThread(void *dummy)
     {
         printf ("===============================================================================\n");
         printf ("Page # %d\n\n", loop);
-        printf ("Total number of times page was hit %d\n",
+        printf ("Total number of times page was hit %lu\n",
           page_stats[loop].totalpages);
         rqstat_print(&(page_stats[loop].rs));
-        printf ("Page size %d \n", page_stats[loop].page_size);
+        printf ("Page size %u \n", page_stats[loop].page_size);
         printf ("===============================================================================\n\n");
     } /* END if timestat */
       } /* END for loop */

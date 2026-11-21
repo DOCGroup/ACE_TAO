@@ -551,7 +551,7 @@ main (int argc, char *argv[])
       ACE_OS::sprintf (filename, "%s.results", title);
       fd = fopen(filename, "a+");
       if (new_line)
-        fprintf(fd, "\n  -l %ldk \t", data_buf_len/1024);
+        fprintf(fd, "\n  -l %dk \t", data_buf_len/1024);
       tmp = ((double) nbytes) / realt;
       fprintf(fd, "%.2f ", tmp * 8.0 / 1024.0 / 1024.0);
       fclose(fd);
@@ -559,18 +559,18 @@ main (int argc, char *argv[])
 #endif
 
   fprintf (stdout,
-           "ttcp%s: %ld bytes in %.2f real seconds = %s/sec +++\n",
+           "ttcp%s: %lu bytes in %.2f real seconds = %s/sec +++\n",
            trans ? "-t" : "-r",
            nbytes, realt, outfmt (((double) nbytes) / realt));
   if (verbose)
     {
       fprintf (stdout,
-               "ttcp%s: %ld bytes in %.2f CPU seconds = %s/cpu sec\n",
+               "ttcp%s: %lu bytes in %.2f CPU seconds = %s/cpu sec\n",
                trans ? "-t" : "-r",
                nbytes, cput, outfmt (((double) nbytes) / cput));
     }
   fprintf (stdout,
-           "ttcp%s: %d I/O calls, msec/call = %.2f, calls/sec = %.2f\n",
+           "ttcp%s: %lu I/O calls, msec/call = %.2f, calls/sec = %.2f\n",
            trans ? "-t" : "-r",
            numCalls,
            1024.0 * realt / ((double) numCalls),
@@ -579,9 +579,9 @@ main (int argc, char *argv[])
   if (verbose)
     {
       fprintf (stdout,
-        "ttcp%s: buffer address %#x\n",
+        "ttcp%s: buffer address %p\n",
         trans ? "-t" : "-r",
-        message_buf);
+        static_cast<void *> (message_buf));
     }
   exit (0);
 

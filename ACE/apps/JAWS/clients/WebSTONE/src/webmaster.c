@@ -1112,7 +1112,7 @@ page_stats_t *page_stats_total;
         {
             fprintf(stdout,"----------------------------------\n");
             /* fprintf(stdout,"Test for host: %s\n",statarray[cnt].hostname); */
-            fprintf(stdout,"Total number of pages retrieved from server: %u\n",
+            fprintf(stdout,"Total number of pages retrieved from server: %lu\n",
         statarray[cnt].totalpages);
 
       rqstat_fprint(stdout, &(statarray[cnt].rs));
@@ -1175,7 +1175,7 @@ page_stats_t *page_stats_total;
 
     printf ("===============================================================================\n");
     printf ("Page # %d\n\n", i);
-    printf ("Total number of times page was hit %u\n",
+    printf ("Total number of times page was hit %lu\n",
           pst->totalpages);
 
     rqstat_print(&(pst->rs));
@@ -1248,7 +1248,7 @@ page_stats_t *page_stats_total;
       masterstat.rs.totalresponsetime.tv_sec,
       masterstat.rs.totalresponsetime.tv_usec);
 
-    fprintf(stdout,"Total number of pages read:\t%u\n\n",
+    fprintf(stdout,"Total number of pages read:\t%lu\n\n",
         masterstat.totalpages);
 
     /* Remaining stats are the same as usual */

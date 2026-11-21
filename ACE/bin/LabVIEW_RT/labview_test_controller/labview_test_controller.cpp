@@ -596,7 +596,7 @@ format_errmsg (unsigned int errcode, const char *prefix)
 
   errno = errcode;
   char *msg = _strerror (prefix);
-  sprintf (errmsg, "err %d: %s", errcode, msg);
+  sprintf (errmsg, "err %u: %s", errcode, msg);
   return errmsg;
 }
 

@@ -558,7 +558,7 @@ rqstat_fprint(FILE *f, rqst_stats_t *stats)
 {
     struct timeval meantime, /*vartime,*/ stdtime;
 
-    fprintf(f, "%d connection(s) to server, %d errors\n",
+    fprintf(f, "%lu connection(s) to server, %lu errors\n",
             stats->totalconnects, stats->totalerrs);
 
     if (stats->totalconnects == 0) {
