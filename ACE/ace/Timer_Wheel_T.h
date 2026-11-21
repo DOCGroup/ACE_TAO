@@ -158,9 +158,9 @@ public:
   /// the number of timers canceled.
   int expire () override;
 
-  // Run the <functor> for all timers whose values are <= @a current_time.
-  // This does not account for <timer_skew>.  Returns the number of
-  // timers canceled.
+  /// Run the <functor> for all timers whose values are <= @a current_time.
+  /// This does not account for <timer_skew>.  Returns the number of
+  /// timers canceled.
   int expire (ACE_Time_Value const &current_time) override;
 
   /// Returns a pointer to this <ACE_Timer_Queue_T>'s iterator.

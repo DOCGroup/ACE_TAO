@@ -73,10 +73,10 @@ public:
   /// This method reads the object state from a CDR representation.
   CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
-  // Return the cached policy type for this policy.
+  /// Return the cached policy type for this policy.
   TAO_Cached_Policy_Type _tao_cached_type () const override;
 
-  // Returns the scope at which this policy can be applied. See orbconf.h.
+  /// Returns the scope at which this policy can be applied. See orbconf.h.
   TAO_Policy_Scope _tao_scope () const override;
 
   /// Helper method for the implementation of
@@ -123,10 +123,10 @@ public:
 
   void destroy () override;
 
-  // Return the cached policy type for this policy.
+  /// Return the cached policy type for this policy.
   TAO_Cached_Policy_Type _tao_cached_type () const override;
 
-  // Returns the scope at which this policy can be applied. See orbconf.h.
+  /// Returns the scope at which this policy can be applied. See orbconf.h.
   TAO_Policy_Scope _tao_scope () const override;
 
   /// Helper method for the implementation of
@@ -167,10 +167,10 @@ public:
 
   void destroy () override;
 
-  // Return the cached policy type for this policy.
+  /// Return the cached policy type for this policy.
   TAO_Cached_Policy_Type _tao_cached_type () const override;
 
-  // Returns the scope at which this policy can be applied. See orbconf.h.
+  /// Returns the scope at which this policy can be applied. See orbconf.h.
   TAO_Policy_Scope _tao_scope () const override;
 
   /// Helper method for the implementation of
@@ -227,10 +227,10 @@ public:
   CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
   /// @}
 
-  // Return the cached policy type for this policy.
+  /// Return the cached policy type for this policy.
   TAO_Cached_Policy_Type _tao_cached_type () const override;
 
-  // Returns the scope at which this policy can be applied. See orbconf.h.
+  /// Returns the scope at which this policy can be applied. See orbconf.h.
   TAO_Policy_Scope _tao_scope () const override;
 
   /// Helper method for the implementation of
@@ -284,10 +284,10 @@ public:
 
   void destroy () override;
 
-  // Return the cached policy type for this policy.
+  /// Return the cached policy type for this policy.
   TAO_Cached_Policy_Type _tao_cached_type () const override;
 
-  // Returns the scope at which this policy can be applied. See orbconf.h.
+  /// Returns the scope at which this policy can be applied. See orbconf.h.
   TAO_Policy_Scope _tao_scope () const override;
 
   /// Helper method for the implementation of
@@ -342,10 +342,10 @@ public:
   /// This method reads the object state from a CDR representation.
   CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
-  // Return the cached policy type for this policy.
+  /// Return the cached policy type for this policy.
   TAO_Cached_Policy_Type _tao_cached_type () const override;
 
-  // Returns the scope at which this policy can be applied. See orbconf.h.
+  /// Returns the scope at which this policy can be applied. See orbconf.h.
   TAO_Policy_Scope _tao_scope () const override;
 
   /// Helper method for the implementation of

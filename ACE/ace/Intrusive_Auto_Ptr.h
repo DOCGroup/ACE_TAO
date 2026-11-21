@@ -61,7 +61,7 @@ public:
   ACE_Intrusive_Auto_Ptr (ACE_Intrusive_Auto_Ptr<X> const &r);
   ACE_Intrusive_Auto_Ptr (ACE_Intrusive_Auto_Ptr<X> &&) = delete;
 
-  // Derived class copy ctor
+  /// Derived class copy ctor
   template<class U>
   ACE_Intrusive_Auto_Ptr (ACE_Intrusive_Auto_Ptr<U> const &rhs);
 

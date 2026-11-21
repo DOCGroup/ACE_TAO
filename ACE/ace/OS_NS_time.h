@@ -227,7 +227,6 @@ namespace ACE_OS
                           struct tm *res);
 #endif
 
-  // Get the current time.
   extern ACE_Export
   time_t mktime (struct tm *timeptr);
 

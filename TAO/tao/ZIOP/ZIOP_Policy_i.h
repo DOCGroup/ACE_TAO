@@ -58,7 +58,7 @@ public:
 
   TAO_Cached_Policy_Type _tao_cached_type () const override;
 
-  // Returns the scope at which this policy can be applied. See orbconf.h.
+  /// Returns the scope at which this policy can be applied. See orbconf.h.
   TAO_Policy_Scope _tao_scope () const override;
 
   /// This method writes a CDR representation of the current object.
@@ -102,7 +102,7 @@ public:
 
   TAO_Cached_Policy_Type _tao_cached_type () const override;
 
-  // Returns the scope at which this policy can be applied. See orbconf.h.
+  /// Returns the scope at which this policy can be applied. See orbconf.h.
   TAO_Policy_Scope _tao_scope () const override;
 
   /// This method writes a CDR representation of the current object.
