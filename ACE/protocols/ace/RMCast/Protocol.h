@@ -127,12 +127,12 @@ namespace ACE_RMCast
     }
 
   protected:
-    Profile (u16 id)
+    explicit Profile (u16 id)
         : header_ (id, 0)
     {
     }
 
-    Profile (Header const& h)
+    explicit Profile (Header const& h)
         : header_ (h)
     {
     }
@@ -383,7 +383,7 @@ namespace ACE_RMCast
       address_ = Address (port, addr);
     }
 
-    From (Address const& addr)
+    explicit From (Address const& addr)
         : Profile (id), address_ (addr)
     {
       size (calculate_size ());
@@ -462,7 +462,7 @@ namespace ACE_RMCast
       address_ = Address (port, addr);
     }
 
-    To (Address const& addr)
+    explicit To (Address const& addr)
         : Profile (id), address_ (addr)
     {
       size (calculate_size ());
@@ -674,7 +674,7 @@ namespace ACE_RMCast
       is >> n_;
     }
 
-    SN (u64 n)
+    explicit SN (u64 n)
         : Profile (id), n_ (n)
     {
       size (calculate_size ());
@@ -769,7 +769,7 @@ namespace ACE_RMCast
       address_ = Address (port, addr);
     }
 
-    NAK (Address const& src)
+    explicit NAK (Address const& src)
         : Profile (id), address_ (src)
     {
       size (calculate_size ());
