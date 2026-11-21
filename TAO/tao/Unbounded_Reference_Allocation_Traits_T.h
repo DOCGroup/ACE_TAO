@@ -37,7 +37,7 @@ struct unbounded_reference_allocation_traits
   {
     if (maximum == ACE_UINT32_MAX)
       {
-        return 0;
+        return nullptr;
       }
     value_type * buffer = new value_type[maximum + 1];
     reinterpret_cast<value_type**>(buffer)[0] = buffer + maximum + 1;
@@ -52,7 +52,7 @@ struct unbounded_reference_allocation_traits
   {
     if (maximum == ACE_UINT32_MAX)
       {
-        return 0;
+        return nullptr;
       }
     value_type * buffer = new value_type[maximum + 1];
     reinterpret_cast<value_type**>(buffer)[0] = buffer + maximum + 1;
@@ -65,7 +65,7 @@ struct unbounded_reference_allocation_traits
 
   inline static void freebuf(value_type * buffer)
   {
-    if(buffer != 0)
+    if(buffer != nullptr)
     {
       value_type * begin = buffer - 1;
       value_type * end = reinterpret_cast<value_type*>(*begin);

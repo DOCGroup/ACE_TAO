@@ -487,8 +487,8 @@ ACE_INLINE TAO::PolicyFactory_Registry_Adapter *
 TAO_ORB_Core::policy_factory_registry ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
-                    0);
-  if (policy_factory_registry_ == 0)
+                    nullptr);
+  if (policy_factory_registry_ == nullptr)
     {
       return this->policy_factory_registry_i ();
     }

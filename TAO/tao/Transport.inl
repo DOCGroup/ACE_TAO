@@ -4,7 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE bool
 TAO_Transport::queue_is_empty_i () const
 {
-  return (this->head_ == 0);
+  return (this->head_ == nullptr);
 }
 
 ACE_INLINE CORBA::ULong

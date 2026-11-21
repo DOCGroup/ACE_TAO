@@ -448,7 +448,7 @@ namespace TAO {
         }
       else
         {
-          if (string.in () != 0 &&
+          if (string.in () != nullptr &&
               ACE_OS::strlen (string.in ()) > tmp.bd_string_maximum ())
             {
               throw ::CORBA::BAD_PARAM ();
@@ -681,7 +681,7 @@ namespace TAO {
         return false;
       }
     for(CORBA::ULong i {}; i < length; ++i) {
-      if (source[i].in () != 0 &&
+      if (source[i].in () != nullptr &&
           ACE_OS::strlen (source[i]) > source.bd_string_maximum ()) {
         throw ::CORBA::BAD_PARAM ();
       }

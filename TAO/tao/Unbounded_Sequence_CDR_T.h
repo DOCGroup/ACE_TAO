@@ -128,7 +128,7 @@ namespace TAO {
     if (ACE_BIT_DISABLED (strm.start ()->flags (), ACE_Message_Block::DONT_DELETE))
     {
       TAO_ORB_Core* orb_core = strm.orb_core ();
-      if (orb_core != 0 && strm.orb_core ()->resource_factory ()->
+      if (orb_core != nullptr && strm.orb_core ()->resource_factory ()->
         input_cdr_allocator_type_locked () == 1)
       {
         tmp.replace (new_length, strm.start ());
@@ -487,7 +487,7 @@ namespace TAO {
         }
       else
         {
-          if (string.in () != 0 &&
+          if (string.in () != nullptr &&
               ACE_OS::strlen (string.in ()) > tmp.bd_string_maximum ())
             {
               throw ::CORBA::BAD_PARAM ();
@@ -736,7 +736,7 @@ namespace TAO {
         return false;
       }
     for(CORBA::ULong i {}; i < length; ++i) {
-      if (source[i].in () != 0 &&
+      if (source[i].in () != nullptr &&
           ACE_OS::strlen (source[i]) > source.bd_string_maximum ()) {
         throw ::CORBA::BAD_PARAM ();
       }
