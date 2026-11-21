@@ -1704,108 +1704,100 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
 #define GET_ARG(MEMBER, TYPE) \
       (posn ? static_cast<TYPE> (pos_arg[posn].MEMBER) : va_arg (ap, TYPE))
 
-      ACE_UINT64 val;
-      ACE_INT64 sval;
-      long double fval;
-      wchar_t tmp_wstr[2] {};
-
       // Parse conversion specifier (diouxXfFeEgGaAcCsSpn) and convert arg
       char spec = *fmt++;
       flags.conv_spec (spec);
       switch (spec)
         {
         case 'd': case 'i':
-          if (posn)
-            {
-              sval = flags.has_some (SNPRINTF_LARGE_INT)
-                ? pos_arg[posn].i64 : pos_arg[posn].i;
-            }
-          else if (flags.has (SNPRINTF_LONGLONG))
-            {
-              sval = va_arg (ap, long long);
-            }
-          else if (flags.has (SNPRINTF_LONG))
-            {
-              sval = va_arg (ap, long);
-            }
+          {
+            ACE_INT64 sval;
+            if (posn)
+              {
+                sval = flags.has_some (SNPRINTF_LARGE_INT)
+                  ? pos_arg[posn].i64 : pos_arg[posn].i;
+              }
+            else if (flags.has (SNPRINTF_LONGLONG))
+              {
+                sval = va_arg (ap, long long);
+              }
+            else if (flags.has (SNPRINTF_LONG))
+              {
+                sval = va_arg (ap, long);
+              }
 #ifndef ACE_LACKS_STDINT_H
-          else if (flags.has (SNPRINTF_INTMAX))
-            {
-              sval = va_arg (ap, intmax_t);
-            }
+            else if (flags.has (SNPRINTF_INTMAX))
+              {
+                sval = va_arg (ap, intmax_t);
+              }
 #endif
-          else if (flags.has (SNPRINTF_SIZET))
-            {
-              sval = va_arg (ap, ssize_t);
-            }
-          else if (flags.has (SNPRINTF_PTRDIFF))
-            {
-              sval = va_arg (ap, ptrdiff_t);
-            }
-          else
-            {
-              sval = va_arg (ap, int);
-            }
+            else if (flags.has (SNPRINTF_SIZET))
+              {
+                sval = va_arg (ap, ssize_t);
+              }
+            else if (flags.has (SNPRINTF_PTRDIFF))
+              {
+                sval = va_arg (ap, ptrdiff_t);
+              }
+            else
+              {
+                sval = va_arg (ap, int);
+              }
 
-          if (flags.has (SNPRINTF_SHORT))
-            {
-              sval = static_cast<short> (sval);
-            }
-          else if (flags.has (SNPRINTF_CHAR))
-            {
-              sval = static_cast<signed char> (sval);
-            }
+            if (flags.has (SNPRINTF_SHORT))
+              {
+                sval = static_cast<short> (sval);
+              }
+            else if (flags.has (SNPRINTF_CHAR))
+              {
+                sval = static_cast<signed char> (sval);
+              }
 
-          flags.value (sval);
-          sb.conv_int (sval, flags, width, precision);
-          break;
+            flags.value (sval);
+            sb.conv_int (sval, flags, width, precision);
+            break;
+          }
 
         case 'o':
-          GET_UNSIGNED_VA;
-          sb.conv_int (val, flags, width, precision, 8);
-          break;
+          {
+            ACE_UINT64 val;
+            GET_UNSIGNED_VA;
+            sb.conv_int (val, flags, width, precision, 8);
+            break;
+          }
 
         case 'u':
-          GET_UNSIGNED_VA;
-          sb.conv_int (val, flags, width, precision);
-          break;
+          {
+            ACE_UINT64 val;
+            GET_UNSIGNED_VA;
+            sb.conv_int (val, flags, width, precision);
+            break;
+          }
 
         case 'x':
-          GET_UNSIGNED_VA;
-          sb.conv_int (val, flags, width, precision, 16);
-          break;
+          {
+            ACE_UINT64 val;
+            GET_UNSIGNED_VA;
+            sb.conv_int (val, flags, width, precision, 16);
+            break;
+          }
 
         case 'f':
-          fval = posn ? pos_arg[posn].f :
-            (flags.has (SNPRINTF_LONGDOUBLE) ? va_arg (ap, long double)
-             : va_arg (ap, double));
-          sb.conv_float (fval, flags, width, precision);
-          break;
-
         case 'e':
-          fval = posn ? pos_arg[posn].f :
-            (flags.has (SNPRINTF_LONGDOUBLE) ? va_arg (ap, long double)
-             : va_arg (ap, double));
-          sb.conv_float (fval, flags, width, precision);
-          break;
-
         case 'g':
-          fval = posn ? pos_arg[posn].f :
-            (flags.has (SNPRINTF_LONGDOUBLE) ? va_arg (ap, long double)
-             : va_arg (ap, double));
-          sb.conv_float (fval, flags, width, precision);
-          break;
-
         case 'a':
-          fval = posn ? pos_arg[posn].f :
-            (flags.has (SNPRINTF_LONGDOUBLE) ? va_arg (ap, long double)
-             : va_arg (ap, double));
-          sb.conv_float (fval, flags, width, precision);
-          break;
+          {
+            long double fval = posn ? pos_arg[posn].f :
+              (flags.has (SNPRINTF_LONGDOUBLE) ? va_arg (ap, long double)
+               : va_arg (ap, double));
+            sb.conv_float (fval, flags, width, precision);
+            break;
+          }
 
         case 'c':
           if (flags.has (SNPRINTF_LONG))
             {
+              wchar_t tmp_wstr[2] {};
               *tmp_wstr = static_cast<wchar_t> (
                 posn ? pos_arg[posn].ui64 : va_arg (ap, ACE_WINT_T_VA_ARG));
               sb.conv_str (tmp_wstr, flags, width, precision);
@@ -1829,9 +1821,11 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
           break;
 
         case 'p':
-          val = reinterpret_cast<ACE_UINT64> (GET_ARG (p, void *));
-          sb.conv_int (val, flags, width, precision, 16);
-          break;
+          {
+            ACE_UINT64 val = reinterpret_cast<ACE_UINT64> (GET_ARG (p, void *));
+            sb.conv_int (val, flags, width, precision, 16);
+            break;
+          }
 
         case 'n':
           if (flags.has (SNPRINTF_LONGLONG))
