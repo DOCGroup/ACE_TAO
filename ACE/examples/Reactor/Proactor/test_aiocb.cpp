@@ -23,6 +23,7 @@
 #include <sys/stat.h>
 #include <signal.h>
 #include <string.h>
+#include <cstdlib>
 #include <errno.h>
 #include <stdio.h>
 #include <iostream.h>
@@ -43,7 +44,7 @@ public:
   ~Test_Aio ();
 private:
   /// Output file descriptor.
-  int out_fd_;
+  int out_fd_ {-1};
 
   /// For writing to the file.
   struct aiocb *aiocb_write_;
@@ -59,10 +60,10 @@ private:
 };
 
 Test_Aio::Test_Aio ()
-  : aiocb_write_ (new struct aiocb),
-    aiocb_read_ (new struct aiocb),
-    buffer_write_ (0),
-    buffer_read_ (0)
+  : aiocb_write_ (new struct aiocb {}),
+    aiocb_read_ (new struct aiocb {}),
+    buffer_write_ (nullptr),
+    buffer_read_ (nullptr)
 {
 }
 
@@ -70,7 +71,7 @@ Test_Aio::~Test_Aio ()
 {
   delete aiocb_write_;
   delete aiocb_read_;
-  delete buffer_write_;
+  std::free (buffer_write_);
   delete [] buffer_read_;
 }
 
@@ -80,7 +81,7 @@ Test_Aio::init ()
 {
   // Open the output file.
   this->out_fd_ = open ("test_aio.log", O_RDWR | O_CREAT | O_TRUNC, 0666);
-  if (this->out_fd_ == 0)
+  if (this->out_fd_ == -1)
     {
       cout << "Error : Opening file" << endl;
       return -1;
