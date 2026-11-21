@@ -119,14 +119,10 @@ static float
 poidev (float xm)
 {
   constexpr double PI = 3.141592654;
-  static float sq {};
-  static float alxm {};
   static float g {};
   static float oldm {-1.0f};
   float em {};
   float t {};
-  float y {};
-  float fem {};
 
   if (xm < 2.0)
     {
@@ -146,6 +142,9 @@ poidev (float xm)
     }
   else
     {
+      static float sq {};
+      static float alxm {};
+
       if (xm != oldm)
         {
           oldm = xm;
@@ -155,13 +154,14 @@ poidev (float xm)
         }
       do
         {
+          float y {};
           do
             {
               y = std::tan (PI * (1.0 + std::rand ())/RAND_MAX);
               em = sq * y + xm;
             }
           while (em < 0.0);
-          fem = std::floor (em);
+          float const fem = std::floor (em);
           t = 0.9 * (1.0 + y * y) * std::exp (fem * alxm - gammln (fem + 1.0) - g);
         }
       while ((1.0 + std::rand ())/RAND_MAX > t);

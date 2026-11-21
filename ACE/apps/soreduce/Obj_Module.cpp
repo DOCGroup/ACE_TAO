@@ -130,8 +130,6 @@ Obj_Module::add_source(char const *p, bool imports_only)
   char dummy;
   int eoln = 1;
   //  ACE_Time_Value timeout (1,0);
-  bool is_import = true;
-  bool is_export = true;
 
   while (eoln == 1) {
     for (int i = 0; i < 10; ++i) {
@@ -144,8 +142,8 @@ Obj_Module::add_source(char const *p, bool imports_only)
     {
       break;
     }
-    is_import = dummy == 'U';
-    is_export = !imports_only && std::strchr ("BCDRTVW", dummy) != nullptr;
+    bool const is_import = dummy == 'U';
+    bool const is_export = !imports_only && std::strchr ("BCDRTVW", dummy) != nullptr;
 
     //    if (ACE::recv(pipe[0],&dummy,1,&timeout) != 1)
     if (ACE_OS::read(pipe[0],&dummy,1) != 1)
