@@ -44,11 +44,11 @@ public:
 
 private:
   ACE_HANDLE handle_;
-  int size_;
-  int current_count_;
-  ACE_TLI_Request *base_;
-  ACE_TLI_Request *tail_;
-  ACE_TLI_Request *free_list_;
+  int size_ {};
+  int current_count_ {};
+  ACE_TLI_Request *base_ {};
+  ACE_TLI_Request *tail_ {};
+  ACE_TLI_Request *free_list_ {};
 };
 
 ACE_ALLOC_HOOK_DEFINE(ACE_TLI_Request_Queue)
@@ -219,11 +219,6 @@ ACE_TLI_Request_Queue::open (ACE_HANDLE f, int sz)
 }
 
 ACE_TLI_Request_Queue::ACE_TLI_Request_Queue ()
-  : size_ (0),
-    current_count_ (0),
-    base_ (0),
-    tail_ (0),
-    free_list_ (0)
 {
   ACE_TRACE ("ACE_TLI_Request_Queue::ACE_TLI_Request_Queue");
 }
