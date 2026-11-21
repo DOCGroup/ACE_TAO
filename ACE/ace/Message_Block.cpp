@@ -401,8 +401,6 @@ ACE_Data_Block::ACE_Data_Block (size_t size,
 ACE_Message_Block::ACE_Message_Block (char const *data,
                                       size_t size,
                                       unsigned long priority)
-  : flags_ (0),
-    data_block_ (nullptr)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
@@ -426,8 +424,6 @@ ACE_Message_Block::ACE_Message_Block (char const *data,
 }
 
 ACE_Message_Block::ACE_Message_Block (ACE_Allocator *message_block_allocator)
-  : flags_ (0),
-    data_block_ (nullptr)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
@@ -461,8 +457,6 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                                       ACE_Time_Value const &deadline_time,
                                       ACE_Allocator *data_block_allocator,
                                       ACE_Allocator *message_block_allocator)
-  :flags_ (0),
-   data_block_ (nullptr)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
@@ -549,8 +543,6 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                                       ACE_Data_Block *db,
                                       ACE_Allocator *data_block_allocator,
                                       ACE_Allocator *message_block_allocator)
-  : flags_ (0),
-    data_block_ (nullptr)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
@@ -576,8 +568,7 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
 ACE_Message_Block::ACE_Message_Block (ACE_Data_Block *data_block,
                                       ACE_Message_Block::Message_Flags flags,
                                       ACE_Allocator *message_block_allocator)
-  : flags_ (flags),
-    data_block_ (nullptr)
+  : flags_ (flags)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
@@ -602,8 +593,6 @@ ACE_Message_Block::ACE_Message_Block (ACE_Data_Block *data_block,
 
 ACE_Message_Block::ACE_Message_Block (ACE_Message_Block const &mb,
                                       size_t align)
-  :flags_ (0),
-   data_block_ (nullptr)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 

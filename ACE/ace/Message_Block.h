@@ -672,11 +672,11 @@ protected:
   /// @}
 
   /// Misc flags (e.g., DONT_DELETE and USER_FLAGS).
-  ACE_Message_Block::Message_Flags flags_;
+  ACE_Message_Block::Message_Flags flags_ {};
 
   /// Pointer to the reference counted data structure that contains the
   /// actual memory buffer.
-  ACE_Data_Block *data_block_;
+  ACE_Data_Block *data_block_ {};
 
   /// The allocator used to destroy ourselves when release is called
   /// and create new message blocks on duplicate.
