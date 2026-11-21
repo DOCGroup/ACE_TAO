@@ -11,13 +11,13 @@ class Quoter_Stock_Factory_Locator_i : public PortableServer::ServantLocator
  public:
   explicit Quoter_Stock_Factory_Locator_i (CORBA::ORB_ptr orb);
 
-  // Preinvoke function
+  /// Preinvoke function
   PortableServer::Servant preinvoke (PortableServer::ObjectId const &oid,
                                      PortableServer::POA_ptr poa,
                                      char const *operation,
                                      void *&cookie) override;
 
-  // Postinvoke function
+  /// Postinvoke function
   void postinvoke (PortableServer::ObjectId const &oid,
                    PortableServer::POA_ptr poa,
                    char const *operation,

@@ -150,10 +150,8 @@ private:
   int connect_to_remote_;
 };
 
-/*
- * Class Stop_Handler - the most important class of the process.
- * Knows how to stop all this business.
- */
+/// Class Stop_Handler - the most important class of the process.
+/// Knows how to stop all this business.
 class Stop_Handler : public ACE_Event_Handler
 {
 public:
@@ -167,27 +165,27 @@ public:
 
   virtual ~Stop_Handler ();
 
-  // Initialization. Registers this for SIGINT, SIGTERM and SIGQUIT.
+  /// Initialization. Registers this for SIGINT, SIGTERM and SIGQUIT.
   virtual int open ();
 
-  // De-registers this from the reactor and stops reactors event_loop.
+  /// De-registers this from the reactor and stops reactors event_loop.
   int handle_close (ACE_HANDLE handle,
                     ACE_Reactor_Mask close_mask) override;
 
-  // Called by reactor from the notification queue.
+  /// Called by reactor from the notification queue.
   int handle_input (ACE_HANDLE) override;
 
-  // Dispatches handle_input () notification.
+  /// Dispatches handle_input () notification.
   int handle_signal (int signum, siginfo_t * = nullptr,
                      ucontext_t * = nullptr) override;
 
   int handle_timeout (ACE_Time_Value const & current_time,
                       void const * act = nullptr) override;
 
-  // Register handler with us for stopping.
+  /// Register handler with us for stopping.
   virtual int register_handler (ACE_Event_Handler * handler);
 
-  // Unregister handler, registered before with us for stopping.
+  /// Unregister handler, registered before with us for stopping.
   virtual int unregister_handler (ACE_Event_Handler * handler);
 
 private:
@@ -196,10 +194,10 @@ private:
       HANDLERS_TO_STOP_TABLE_SIZE = 10
     };
 
-  // Flag to prevent multiple dispatching of handle_input ().
+  /// Flag to prevent multiple dispatching of handle_input ().
   counter_sig counter_;
 
-  // Table to place here pointers to all tasks in the process.
+  /// Table to place here pointers to all tasks in the process.
   ACE_Event_Handler * handlers_to_stop_[HANDLERS_TO_STOP_TABLE_SIZE];
 
   ACE_Sig_Set registered_signals_;

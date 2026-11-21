@@ -25,8 +25,8 @@ public:
   Hello (Hello &&) = delete;
   Hello &operator= (Hello &&) = delete;
 
-  // Return the any provide as an "in" argument.
-  // The returned Any transfers ownership to the caller.
+  /// Return the any provide as an "in" argument.
+  /// The returned Any transfers ownership to the caller.
   CORBA::Any *get_any (CORBA::Any const &the_any) override;
 
   void shutdown () override;
