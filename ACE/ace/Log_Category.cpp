@@ -22,7 +22,6 @@ ACE_Log_Category_tss_destroy(void * p)
 
 ACE_Log_Category::ACE_Log_Category(const char* name)
   : name_(name)
-  , id_(0)
 /// Default per-process priority mask
 /// By default, all priorities are enabled.
   , priority_mask_(LM_SHUTDOWN
@@ -69,7 +68,6 @@ ACE_Log_Category::~ACE_Log_Category()
 ACE_Log_Category_TSS::ACE_Log_Category_TSS(ACE_Log_Category* category, ACE_Log_Msg* logger)
   : category_(category)
   , logger_(logger)
-  , priority_mask_(0)
 {
 }
 

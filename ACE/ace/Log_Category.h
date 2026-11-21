@@ -211,7 +211,7 @@ private:
   friend class ACE_Log_Category;
   ACE_Log_Category* category_;
   ACE_Log_Msg* logger_;
-  u_long priority_mask_;
+  u_long priority_mask_ {};
 };
 
 /**
@@ -289,7 +289,7 @@ private:
   friend class ACE_Log_Category_TSS;
 
   const char* name_;
-  unsigned int id_;
+  unsigned int id_ {};
   u_long priority_mask_;
 
   /// we couldn't directly use ACE_TSS because it would
