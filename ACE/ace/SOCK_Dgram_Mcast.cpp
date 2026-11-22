@@ -124,9 +124,11 @@ ACE_SOCK_Dgram_Mcast::dump () const
       ACE_SDM_helpers::addr_to_string (if_addr, iface_string,
                                        sizeof iface_string, 1);
       if (ACE_OS::strcmp (iface_string, ACE_TEXT ("0.0.0.0")) == 0)
-        // Receives on system default iface. (Note that null_iface_opt_
-        // option processing has already occurred.)
-        ACE_OS::strcpy (iface_string, ACE_TEXT ("<default>"));
+        {
+          // Receives on system default iface. (Note that null_iface_opt_
+          // option processing has already occurred.)
+          ACE_OS::strcpy (iface_string, ACE_TEXT ("<default>"));
+        }
 
       // Dump info.
       ACELIB_DEBUG ((LM_DEBUG,
@@ -404,7 +406,9 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
       for (; pAddrs; pAddrs = pAddrs->Next)
         {
           if (pAddrs->OperStatus != IfOperStatusUp)
-            continue;
+            {
+              continue;
+            }
 
           // The ACE_SOCK_Dgram::make_multicast_ifaddr (IPv4), called by join(),
           // can only deal with a dotted-decimal address, not an interface name.
@@ -435,7 +439,9 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
       size_t if_cnt {};
 
       if (ACE::get_ip_interfaces (if_cnt, if_addrs) != 0)
-        return -1;
+        {
+          return -1;
+        }
       std::unique_ptr<ACE_INET_Addr[]> safe_if_addrs (if_addrs);
 
       if (if_cnt < 2)
@@ -455,7 +461,9 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
 
               // Convert to 0-based for indexing, next loop check.
               if (if_addrs[if_cnt].get_type () != family || if_addrs[if_cnt].is_loopback ())
-                continue;
+                {
+                  continue;
+                }
               char addr_buf[INET6_ADDRSTRLEN];
               if (this->join (mcast_addr,
                               reuse_addr,
@@ -718,7 +726,9 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
           while (pAddrs)
             {
               if (this->leave (mcast_addr, ACE_TEXT_CHAR_TO_TCHAR(pAddrs->AdapterName)) == 0)
-                ++nr_unsubscribed;
+                {
+                  ++nr_unsubscribed;
+                }
 
               pAddrs = pAddrs->Next;
             }
