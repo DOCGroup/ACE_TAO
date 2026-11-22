@@ -33,8 +33,8 @@ ACE_SV_Semaphore_Simple::control (int cmd,
     -1 : ACE_OS::semctl (this->internal_id_, n, cmd, arg);
 }
 
-// Close a ACE_SV_Semaphore, marking it as invalid for subsequent
-// operations...
+/// Close a ACE_SV_Semaphore, marking it as invalid for subsequent
+/// operations...
 
 ACE_INLINE int
 ACE_SV_Semaphore_Simple::close ()

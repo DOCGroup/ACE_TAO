@@ -303,9 +303,9 @@ private:
   typedef TaskInfo TSS_Table[ACE_MAX_NUM_THREADS];
 
 public:
-  // Return a reference to the TSS base address of a given thread.
-  // If there exists an entry for the thread, just return the reference.
-  // If not, set an entry for it and return the reference.
+  /// Return a reference to the TSS base address of a given thread.
+  /// If there exists an entry for the thread, just return the reference.
+  /// If not, set an entry for it and return the reference.
   void **&get (ACE_hthread_t id)
   {
     LockGuard guard (lock_);

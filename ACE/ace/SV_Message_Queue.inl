@@ -4,7 +4,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Open a message queue using the <external_id>.
+/// Open a message queue using the <external_id>.
 
 ACE_INLINE int
 ACE_SV_Message_Queue::open (key_t external_id, int create, int perms)
