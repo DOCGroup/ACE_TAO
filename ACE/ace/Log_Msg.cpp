@@ -1438,29 +1438,37 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                               ACE::sock_error (errno);
                             ACE_OS::strcpy (fp, ACE_TEXT ("s: %s"));
                             if (can_check)
-                              this_len = ACE_OS::snprintf
-                                (bp, bspace, format,
-                                 str ? str : ACE_TEXT ("(null)"),
-                                 message);
+                              {
+                                this_len = ACE_OS::snprintf
+                                  (bp, bspace, format,
+                                   str ? str : ACE_TEXT ("(null)"),
+                                   message);
+                              }
                             else
-                              this_len = ACE_OS::sprintf
-                                (bp, format,
-                                 str ? str : ACE_TEXT ("(null)"),
-                                 message);
+                              {
+                                this_len = ACE_OS::sprintf
+                                  (bp, format,
+                                   str ? str : ACE_TEXT ("(null)"),
+                                   message);
+                              }
                           }
                         else
                           {
                             ACE_OS::strcpy (fp, ACE_TEXT ("s: %s"));
                             if (can_check)
-                              this_len = ACE_OS::snprintf
-                                (bp, bspace, format,
-                                 str ? str : ACE_TEXT ("(null)"),
-                                 lpMsgBuf);
+                              {
+                                this_len = ACE_OS::snprintf
+                                  (bp, bspace, format,
+                                   str ? str : ACE_TEXT ("(null)"),
+                                   lpMsgBuf);
+                              }
                             else
-                              this_len = ACE_OS::sprintf
-                                (bp, format,
-                                 str ? str : ACE_TEXT ("(null)"),
-                                 lpMsgBuf);
+                              {
+                                this_len = ACE_OS::sprintf
+                                  (bp, format,
+                                   str ? str : ACE_TEXT ("(null)"),
+                                   lpMsgBuf);
+                              }
                             // Free the buffer.
                             ::LocalFree (lpMsgBuf);
                           }
@@ -1648,20 +1656,28 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                               ACE::sock_error (errno);
                             ACE_OS::strcpy (fp, ACE_TEXT ("s"));
                             if (can_check)
-                              this_len = ACE_OS::snprintf
-                                (bp, bspace, format, message);
+                              {
+                                this_len = ACE_OS::snprintf
+                                  (bp, bspace, format, message);
+                              }
                             else
-                              this_len = ACE_OS::sprintf (bp, format, message);
+                              {
+                                this_len = ACE_OS::sprintf (bp, format, message);
+                              }
                           }
                         else
                           {
                             ACE_OS::strcpy (fp, ACE_TEXT ("s"));
                             if (can_check)
-                              this_len = ACE_OS::snprintf
-                                (bp, bspace, format, lpMsgBuf);
+                              {
+                                this_len = ACE_OS::snprintf
+                                  (bp, bspace, format, lpMsgBuf);
+                              }
                             else
-                              this_len = ACE_OS::sprintf
-                                (bp, format, lpMsgBuf);
+                              {
+                                this_len = ACE_OS::sprintf
+                                  (bp, format, lpMsgBuf);
+                              }
                             // Free the buffer.
                             ::LocalFree (lpMsgBuf);
                           }
@@ -1866,14 +1882,18 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #if defined (ACE_WIN32)
                   ACE_OS::strcpy (fp, ACE_TEXT ("u"));
                   if (can_check)
-                    this_len = ACE_OS::snprintf
-                      (bp, bspace, format,
-                       static_cast<unsigned> (ACE_Thread::self ()));
+                    {
+                      this_len = ACE_OS::snprintf
+                        (bp, bspace, format,
+                         static_cast<unsigned> (ACE_Thread::self ()));
+                    }
                   else
-                    this_len =
-                      ACE_OS::sprintf (bp,
-                                       format,
-                                       static_cast <unsigned> (ACE_Thread::self ()));
+                    {
+                      this_len =
+                        ACE_OS::sprintf (bp,
+                                         format,
+                                         static_cast <unsigned> (ACE_Thread::self ()));
+                    }
 #else
 
 #  ifdef ACE_HAS_GETTID
@@ -2414,13 +2434,15 @@ ACE_Log_Formatter::ACE_Log_Formatter (ACE_Log_Priority prio, const char *fmt)
     }
 
   if (conditional_values)
-    this->logger_->set (this->logger_->conditional_values_.file_,
-                        this->logger_->conditional_values_.line_,
-                        this->logger_->conditional_values_.op_status_,
-                        this->logger_->conditional_values_.errnum_,
-                        this->logger_->restart (),
-                        this->logger_->msg_ostream (),
-                        this->logger_->msg_callback ());
+    {
+      this->logger_->set (this->logger_->conditional_values_.file_,
+                          this->logger_->conditional_values_.line_,
+                          this->logger_->conditional_values_.op_status_,
+                          this->logger_->conditional_values_.errnum_,
+                          this->logger_->restart (),
+                          this->logger_->msg_ostream (),
+                          this->logger_->msg_callback ());
+    }
   this->bp_ = this->logger_->msg_ + ACE_Log_Msg::msg_off_;
   this->bspace_ = ACE_Log_Record::MAXLOGMSGLEN;
   if (ACE_Log_Msg::msg_off_ <= ACE_Log_Record::MAXLOGMSGLEN)
@@ -2741,7 +2763,9 @@ bool ACE_Log_Formatter::process_conversion ()
     case 'r':
       this->offset_ = ACE_Log_Msg::msg_off_;
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::SILENT))
-        this->copy_trunc ("{", 1);
+        {
+          this->copy_trunc ("{", 1);
+        }
       ACE_Log_Msg::msg_off_ = this->bp_ - this->logger_->msg_;
       return false;
 
@@ -3319,8 +3343,10 @@ ACE_Log_Msg::dump () const
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\npriority_mask_ = 0x%Q\n"),
               static_cast<ACE_UINT64> (this->priority_mask_)));
   if (this->thr_desc_ != 0 && this->thr_desc_->state () != 0)
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nthr_state_ = %d\n"),
-                this->thr_desc_->state ()));
+    {
+      ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nthr_state_ = %d\n"),
+                     this->thr_desc_->state ()));
+    }
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmsg_off_ = %d\n"), this->msg_off_));
 
   // Be sure that there is a message_queue_, with multiple threads.
