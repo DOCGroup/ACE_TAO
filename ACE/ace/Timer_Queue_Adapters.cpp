@@ -377,7 +377,9 @@ ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::dispatch_commands ()
     {
       std::unique_ptr<ACE_Command_Base> command (cmd);
       if (command)
-        command->execute ();
+        {
+          command->execute ();
+        }
     }
 
   return 0;

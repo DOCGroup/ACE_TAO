@@ -232,14 +232,18 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::~ACE_Timer_Heap_T ()
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
   if (this->heap_ != nullptr)
-    (ACE_Allocator::instance ()->free (this->heap_));
+    {
+      (ACE_Allocator::instance ()->free (this->heap_));
+    }
 #else
   delete [] this->heap_;
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
   if (this->timer_ids_ != nullptr)
+    {
       (ACE_Allocator::instance ()->free (this->timer_ids_));
+    }
 #else
   delete [] this->timer_ids_;
 #endif /* ACE_HAS_ALLOC_HOOKS */

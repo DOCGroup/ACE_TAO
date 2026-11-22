@@ -503,7 +503,9 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::schedule_i (
   // an issue, I'll look at it again then.
   intptr_t const hi = reinterpret_cast<intptr_t> (h);
   if (this->pointer_base_ == 0)
-    this->pointer_base_ = hi & 0xffffffff00000000;
+    {
+      this->pointer_base_ = hi & 0xffffffff00000000;
+    }
   return static_cast<long> (hi & 0xffffffff);
 #else
   return reinterpret_cast<long> (h);
