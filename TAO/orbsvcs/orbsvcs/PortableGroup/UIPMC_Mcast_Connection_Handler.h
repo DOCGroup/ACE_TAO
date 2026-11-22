@@ -117,7 +117,7 @@ protected:
   /// Should we listen on all interfaces?
   bool listen_on_all_ {};
 
-  // Which interfaces are to be listening for the group address
+  /// Which interfaces are to be listening for the group address
   ACE_CString listener_interfaces_;
   // UIPMC Additions - End
 

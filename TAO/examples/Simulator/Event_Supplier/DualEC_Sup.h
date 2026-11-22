@@ -168,7 +168,7 @@ private:
   RtecScheduler::Config_Info_Set_var configs_lo_;
   RtecScheduler::Scheduling_Anomaly_Set_var anomalies_lo_;
 
-  // Queues to store event carried data structures.
+  /// Queues to store event carried data structures.
   std::vector<Navigation *> navigation_data_;
   std::vector<Weapons *> weapons_data_;
 

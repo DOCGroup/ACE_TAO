@@ -68,7 +68,7 @@ private:
   /// while the receivers set the sending qos to this.
   std::unique_ptr<ACE_Flow_Spec> default_traffic_;
 
-  // The map and ACE_QoS objects borrow pointers; retain owners until teardown.
+  /// The map and ACE_QoS objects borrow pointers; retain owners until teardown.
   std::vector<std::unique_ptr<ACE_Flow_Spec>> flow_specs_;
   FLOW_SPEC_HASH_MAP flow_spec_map_;
 };
