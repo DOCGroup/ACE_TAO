@@ -84,7 +84,7 @@ ACE_INET_Addr::ip_addr_size () const
 #endif /* ACE_HAS_IPV6 */
 }
 
-// Return the port number, converting it into host byte order...
+/// Return the port number, converting it into host byte order...
 
 ACE_INLINE u_short
 ACE_INET_Addr::get_port_number () const
@@ -196,7 +196,7 @@ ACE_INET_Addr::set (const wchar_t addr[], int address_family)
 
 #endif /* ACE_HAS_WCHAR */
 
-// Return @c true if the IP address is INADDR_ANY or IN6ADDR_ANY.
+/// Return @c true if the IP address is INADDR_ANY or IN6ADDR_ANY.
 ACE_INLINE bool
 ACE_INET_Addr::is_any () const
 {
@@ -210,7 +210,7 @@ ACE_INET_Addr::is_any () const
   return (this->inet_addr_.in4_.sin_addr.s_addr == INADDR_ANY);
 }
 
-// Return @c true if the IP address is IPv4/IPv6 loopback address.
+/// Return @c true if the IP address is IPv4/IPv6 loopback address.
 ACE_INLINE bool
 ACE_INET_Addr::is_loopback () const
 {
@@ -225,7 +225,7 @@ ACE_INET_Addr::is_loopback () const
   return ((this->get_ip_address () & 0XFF000000) == (INADDR_LOOPBACK & 0XFF000000));
 }
 
-// Return @c true if the IP address is IPv4/IPv6 multicast address.
+/// Return @c true if the IP address is IPv4/IPv6 multicast address.
 ACE_INLINE bool
 ACE_INET_Addr::is_multicast () const
 {
@@ -241,7 +241,7 @@ ACE_INET_Addr::is_multicast () const
 }
 
 #if defined (ACE_HAS_IPV6)
-// Return @c true if the IP address is IPv6 linklocal address.
+/// Return @c true if the IP address is IPv6 linklocal address.
 ACE_INLINE bool
 ACE_INET_Addr::is_linklocal () const
 {
@@ -253,7 +253,7 @@ ACE_INET_Addr::is_linklocal () const
   return false;
 }
 
-// Return @c true if the IP address is IPv6 sitelocal address.
+/// Return @c true if the IP address is IPv6 sitelocal address.
 ACE_INLINE bool
 ACE_INET_Addr::is_sitelocal () const
 {
@@ -265,7 +265,7 @@ ACE_INET_Addr::is_sitelocal () const
   return false;
 }
 
-// Return @c true if the IP address is IPv4 mapped IPv6 address.
+/// Return @c true if the IP address is IPv4 mapped IPv6 address.
 ACE_INLINE bool
 ACE_INET_Addr::is_ipv4_mapped_ipv6 () const
 {
@@ -277,7 +277,7 @@ ACE_INET_Addr::is_ipv4_mapped_ipv6 () const
   return false;
 }
 
-// Return @c true if the IP address is IPv4-compatible IPv6 address.
+/// Return @c true if the IP address is IPv4-compatible IPv6 address.
 ACE_INLINE bool
 ACE_INET_Addr::is_ipv4_compat_ipv6 () const
 {
