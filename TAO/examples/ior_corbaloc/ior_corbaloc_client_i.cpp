@@ -89,17 +89,21 @@ IOR_corbaloc_Client_i::init (int &argc,
         orb->string_to_object (this->corbaloc_url_.c_str ());
 
       if (CORBA::is_nil (naming_context_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot resolve Naming Service\n : client")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot resolve Naming Service\n : client")),
+                            -1);
+        }
 
       this->naming_context_ =
         CosNaming::NamingContextExt::_narrow (naming_context_object.in ());
 
       if (CORBA::is_nil (this->naming_context_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot narrow Naming Service\n :client")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot narrow Naming Service\n :client")),
+                            -1);
+        }
     }
   catch (CORBA::SystemException const &ex)
     {

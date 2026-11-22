@@ -67,9 +67,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CosNaming::NamingContext::_narrow (naming_context_object.in ());
 
       if (CORBA::is_nil (naming_context.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot narrow Naming Service\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot narrow Naming Service\n")),
+                            1);
+        }
 
       // Bind Iterator_Factory to the Naming Context
       CosNaming::Name name (1);

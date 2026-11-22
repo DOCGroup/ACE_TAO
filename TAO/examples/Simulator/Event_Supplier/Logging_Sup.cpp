@@ -88,17 +88,23 @@ Logging_Supplier::start_generating_events ()
     dOVE_Supplier_.notify (any);
 
     if (total_sent < 5)
-      ACE_DEBUG ((LM_DEBUG,
-                  "Pushing event data.\n"));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "Pushing event data.\n"));
+      }
     else if (total_sent == 5)
-      ACE_DEBUG ((LM_DEBUG,
-                  "Everything is running. Going to be mute.\n"));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "Everything is running. Going to be mute.\n"));
+      }
   }
   while (++total_sent < this->total_messages_);
 
   // clean up the scheduling data
   for (Schedule_Viewer_Data * const data : schedule_data)
-    delete data;
+    {
+      delete data;
+    }
 }
 
 void
@@ -449,13 +455,15 @@ Logging_Supplier::get_options (int argc, ACE_TCHAR *argv [])
     }
 
   if (argc != get_opt.opt_ind ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%s: too many arguments\n"
-                       "Usage: %s %s\n",
-                       argv[0],
-                       argv[0],
-                       usage),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%s: too many arguments\n"
+                         "Usage: %s %s\n",
+                         argv[0],
+                         argv[0],
+                         usage),
+                        1);
+    }
 
   return 0;
 }
