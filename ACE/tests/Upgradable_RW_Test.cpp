@@ -17,6 +17,8 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Atomic_Op.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_THREADS)
 
 // Default number of iterations.
@@ -419,7 +421,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Wait a maximum of 1 second per iteration.
   const ACE_Time_Value max_wait (n_iterations * 1);
   const ACE_Time_Value wait_time (ACE_OS::gettimeofday () + max_wait);
-  if (ACE_Thread_Manager::instance ()->wait (&wait_time) == -1)
+  if (ACE_Thread_Manager::instance ()->wait (std::addressof (wait_time)) == -1)
     {
       if (errno == ETIME)
         {

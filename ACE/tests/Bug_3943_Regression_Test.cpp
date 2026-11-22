@@ -1119,7 +1119,7 @@ spawn_threads (ACCEPTOR *acceptor,
   // But, wait for a limited time because sometimes the test hangs on Irix.
   ACE_Time_Value const max_wait (400 /* seconds */);
   ACE_Time_Value const wait_time (ACE_OS::gettimeofday () + max_wait);
-  if (ACE_Thread_Manager::instance ()->wait (&wait_time) == -1)
+  if (ACE_Thread_Manager::instance ()->wait (std::addressof (wait_time)) == -1)
     {
       if (errno == ETIME)
         {

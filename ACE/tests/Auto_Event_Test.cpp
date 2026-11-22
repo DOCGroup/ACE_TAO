@@ -20,6 +20,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Atomic_Op.h"
 
+#include <memory>
+
 // msec that times are allowed to differ before test fails.
 #if defined (ACE_HAS_HI_RES_TIMER) || \
     defined (ACE_HAS_PENTIUM) || \
@@ -151,7 +153,7 @@ worker (void *)
       //FUZZ: enable check_for_lack_ACE_OS
 
       ACE_Time_Value tv = ACE_OS::gettimeofday () + wait;
-      if (evt.wait (&tv) == -1)
+      if (evt.wait (std::addressof (tv)) == -1)
       {
           // verify that we have ETIME
           if (ACE_OS::last_error() != ETIME)

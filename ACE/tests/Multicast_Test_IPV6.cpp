@@ -1083,7 +1083,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_Time_Value max_wait ( config.wait ()/* seconds */);
       ACE_Time_Value wait_time (ACE_OS::gettimeofday () + max_wait);
       ACE_Time_Value *ptime = ACE_BIT_ENABLED (role, MCT_Config::PRODUCER)
-                                ? &wait_time : nullptr;
+                                ? std::addressof (wait_time) : nullptr;
       if (ACE_Thread_Manager::instance ()->wait (ptime) == -1)
         {
           if (errno == ETIME)

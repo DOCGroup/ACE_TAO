@@ -20,6 +20,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Atomic_Op.h"
 
+#include <memory>
+
 // Test results, 'success' is 0
 static int test_result = 0;
 
@@ -91,7 +93,7 @@ worker (void *)
 
       ACE_Time_Value tv = ACE_OS::gettimeofday () + wait;
 
-      if (evt.wait (&tv) == -1)
+      if (evt.wait (std::addressof (tv)) == -1)
         {
           // verify that we have ETIME
           if (ACE_OS::last_error () == ETIME)

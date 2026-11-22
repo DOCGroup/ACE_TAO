@@ -12,6 +12,8 @@
 #include "ace/Condition_T.h"
 #include "test_config.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_THREADS)
 
 class Worker;
@@ -112,7 +114,7 @@ public:
         tv += ACE_OS::time (nullptr);
 
         // Get a message request.
-        if (this->getq (mb, &tv) < 0)
+        if (this->getq (mb, std::addressof (tv)) < 0)
           {
             shut_down ();
             break;

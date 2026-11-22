@@ -127,7 +127,7 @@ Test_Task::svc ()
 
       if (this->reactor ()->notify (this,
                                     ACE_Event_Handler::READ_MASK,
-                                    &timeout) == -1)
+                                    std::addressof (timeout)) == -1)
         {
           if (errno == ETIME)
             {

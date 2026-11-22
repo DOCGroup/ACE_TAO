@@ -293,7 +293,7 @@ send_data (ACE_HANDLE write_handle)
     ACE::send_n (write_handle,
                  foo,
                  len,
-                 &timeout, // timeout
+                 std::addressof (timeout), // timeout
                  &bytes_transferred);
 
   if (result == -1
@@ -317,7 +317,7 @@ handle_events (ACE_Reactor & reactor,
   ACE_Time_Value timeout (2);
 
   // Only one event handler should have been dispatched.
-  if (reactor.handle_events (&timeout) != 1)
+  if (reactor.handle_events (std::addressof (timeout)) != 1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Initial event dispatch failed\n")));
@@ -330,7 +330,7 @@ handle_events (ACE_Reactor & reactor,
       // dispatch the newly registered event handler.  No events
       // should be dispatched.
       timeout.sec (2);
-      int const result = reactor.handle_events (&timeout);
+      int const result = reactor.handle_events (std::addressof (timeout));
 
       if (result > 0)
         {

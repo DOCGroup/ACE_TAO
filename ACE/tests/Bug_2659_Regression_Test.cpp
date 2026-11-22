@@ -18,6 +18,8 @@
 #include "ace/Thread_Manager.h"
 #include "ace/TP_Reactor.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
 
 bool reactor_task_ready = false;
@@ -156,7 +158,7 @@ run_main (int, ACE_TCHAR *[])
   // Wait 5 seconds for the other thread to exit, if it didn't exit the
   // wait return -1 and we return with an error
   ACE_Time_Value timeout (5);
-  if (thread_manager->wait (&timeout, false, false) == -1)
+  if (thread_manager->wait (std::addressof (timeout), false, false) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) Error, task wait failed.\n")),
