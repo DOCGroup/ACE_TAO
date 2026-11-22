@@ -87,7 +87,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
             any <<= param_test.in ();
 
-            Param_Test_ptr o;
+            Param_Test_ptr o {};
 
             if (!(any >>= o))
               {
@@ -116,7 +116,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             CORBA::Short const i = 123;
             any <<= i;
 
-            CORBA::Short o;
+            CORBA::Short o {};
 
             if (!(any >>= o)
                 || i != o)
@@ -131,7 +131,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             CORBA::Long const i = 123;
             any <<= i;
 
-            CORBA::Long o;
+            CORBA::Long o {};
 
             if (!(any >>= o)
                 || i != o)
@@ -146,7 +146,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             CORBA::ULongLong const i = 123;
             any <<= i;
 
-            CORBA::ULongLong o;
+            CORBA::ULongLong o {};
 
             if (!(any >>= o)
                 || i != o)
@@ -161,7 +161,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             CORBA::Double const i = 123;
             any <<= i;
 
-            CORBA::Double o;
+            CORBA::Double o {};
 
             if (!(any >>= o) || !ACE::is_equal (i, o))
               {
@@ -180,8 +180,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             *i <<= CORBA::Short (123);
             nested_any <<= *i;
 
-            const CORBA::Any *o;
-            CORBA::Short oo;
+            const CORBA::Any *o {};
+            CORBA::Short oo {};
 
             if (!(nested_any >>= o)
                 || !(*o >>= oo)
@@ -210,7 +210,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             const char i[] = "123";
             any <<= i;
 
-            const char *o;
+            const char *o {};
 
             if (!(any >>= o)
                 || std::strcmp (i, o) != 0)
