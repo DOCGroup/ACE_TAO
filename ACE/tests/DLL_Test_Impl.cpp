@@ -50,7 +50,7 @@ void *
 Hello_Impl::operator new (size_t bytes)
 {
   ACE_DEBUG ((LM_INFO, "Hello_Impl::new\n"));
-  return ::new char[bytes];
+  return ::operator new (bytes);
 }
 
 /// Overloaded new operator, nothrow_t variant.
@@ -58,21 +58,21 @@ void *
 Hello_Impl::operator new (size_t bytes, const std::nothrow_t &nt)
 {
   ACE_DEBUG ((LM_INFO, "Hello_Impl::new\n"));
-  return ::new (nt) char[bytes];
+  return ::operator new (bytes, nt);
 }
 
 void
 Hello_Impl::operator delete (void *ptr, const std::nothrow_t&) noexcept
 {
   ACE_DEBUG ((LM_INFO, "Hello_Impl::delete\n"));
-  ::delete [] static_cast<char *> (ptr);
+  ::operator delete (ptr);
 }
 
 void
 Hello_Impl::operator delete (void *ptr)
 {
   ACE_DEBUG ((LM_INFO, "Hello_Impl::delete\n"));
-  ::delete [] static_cast<char *> (ptr);
+  ::operator delete (ptr);
 }
 
 extern "C" ACE_Svc_Export Hello *
