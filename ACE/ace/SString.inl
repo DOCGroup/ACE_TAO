@@ -61,7 +61,7 @@ ACE_SString::substr (size_type offset,
   return this->substring (offset, length);
 }
 
-// Return the <slot'th> character in the string.
+/// Return the <slot'th> character in the string.
 
 ACE_INLINE char
 ACE_SString::operator[] (size_type slot) const
@@ -70,7 +70,7 @@ ACE_SString::operator[] (size_type slot) const
   return this->rep_[slot];
 }
 
-// Return the <slot'th> character in the string by reference.
+/// Return the <slot'th> character in the string by reference.
 
 ACE_INLINE char &
 ACE_SString::operator[] (size_type slot)
@@ -79,7 +79,7 @@ ACE_SString::operator[] (size_type slot)
   return this->rep_[slot];
 }
 
-// Get the underlying pointer (does not make a copy, so beware!).
+/// Get the underlying pointer (does not make a copy, so beware!).
 
 ACE_INLINE const char *
 ACE_SString::rep () const
@@ -88,7 +88,7 @@ ACE_SString::rep () const
   return this->rep_;
 }
 
-// Get the underlying pointer (does not make a copy, so beware!).
+/// Get the underlying pointer (does not make a copy, so beware!).
 
 ACE_INLINE const char *
 ACE_SString::fast_rep () const
@@ -97,7 +97,7 @@ ACE_SString::fast_rep () const
   return this->rep_;
 }
 
-// Get the underlying pointer (does not make a copy, so beware!).
+/// Get the underlying pointer (does not make a copy, so beware!).
 
 ACE_INLINE const char *
 ACE_SString::c_str () const
@@ -106,7 +106,7 @@ ACE_SString::c_str () const
   return this->rep_;
 }
 
-// Comparison operator.
+/// Comparison operator.
 
 ACE_INLINE bool
 ACE_SString::operator== (const ACE_SString &s) const

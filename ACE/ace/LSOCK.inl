@@ -1,7 +1,7 @@
 // -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Simple-minded constructor.
+/// Simple-minded constructor.
 
 ACE_INLINE
 ACE_LSOCK::ACE_LSOCK ()
@@ -10,7 +10,7 @@ ACE_LSOCK::ACE_LSOCK ()
   ACE_TRACE ("ACE_LSOCK::ACE_LSOCK");
 }
 
-// Sets the underlying file descriptor.
+/// Sets the underlying file descriptor.
 
 ACE_INLINE void
 ACE_LSOCK::set_handle (ACE_HANDLE handle)
@@ -19,7 +19,7 @@ ACE_LSOCK::set_handle (ACE_HANDLE handle)
   this->aux_handle_ = handle;
 }
 
-// Gets the underlying file descriptor.
+/// Gets the underlying file descriptor.
 
 ACE_INLINE ACE_HANDLE
 ACE_LSOCK::get_handle () const
@@ -28,7 +28,7 @@ ACE_LSOCK::get_handle () const
   return this->aux_handle_;
 }
 
-// Sets the underlying file descriptor.
+/// Sets the underlying file descriptor.
 
 ACE_INLINE
 ACE_LSOCK::ACE_LSOCK (ACE_HANDLE handle)

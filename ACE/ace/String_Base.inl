@@ -59,7 +59,7 @@ ACE_String_Base<ACE_CHAR_T>::substr (
   return this->substring (offset, length);
 }
 
-// Return the <slot'th> character in the string.
+/// Return the <slot'th> character in the string.
 
 template <class ACE_CHAR_T> ACE_INLINE const ACE_CHAR_T &
 ACE_String_Base<ACE_CHAR_T>::operator[] (
@@ -69,7 +69,7 @@ ACE_String_Base<ACE_CHAR_T>::operator[] (
   return this->rep_[slot];
 }
 
-// Return the <slot'th> character in the string by reference.
+/// Return the <slot'th> character in the string by reference.
 
 template <class ACE_CHAR_T> ACE_INLINE ACE_CHAR_T &
 ACE_String_Base<ACE_CHAR_T>::operator[] (
@@ -91,7 +91,7 @@ ACE_String_Base<ACE_CHAR_T>::c_str () const
   return this->rep_;
 }
 
-// Less than comparison operator.
+/// Less than comparison operator.
 
 template <class ACE_CHAR_T> ACE_INLINE bool
 ACE_String_Base<ACE_CHAR_T>::operator < (const ACE_String_Base<ACE_CHAR_T> &s) const
