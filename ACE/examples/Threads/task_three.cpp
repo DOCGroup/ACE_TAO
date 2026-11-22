@@ -164,7 +164,7 @@ dispatch (void *arg)
 
   r->owner (ACE_OS::thr_self ());
 
-  while (1)
+  while (true)
     {
       int const result = r->handle_events ();
 

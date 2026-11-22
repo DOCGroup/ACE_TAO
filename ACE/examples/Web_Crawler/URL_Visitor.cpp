@@ -518,7 +518,7 @@ URL_Download_Visitor::make_visitation_strategy_factory (URL &url)
 {
   // See if we can get connected and send the GET request via the
   // <HTTP_URL>.
-  while (1)
+  while (true)
     {
       int retval = url.send_request ();
       if (retval != -1)
