@@ -162,12 +162,12 @@ void purge_with_no_matches(char const * test_name)
   Event_Handler eh1(1);
   Event_Handler eh2(2);
 
-  int result = queue.push_new_notification(
+  queue.push_new_notification(
       ACE_Notification_Buffer(std::addressof (eh1),
                               ACE_Event_Handler::READ_MASK));
 
-  result = queue.purge_pending_notifications(std::addressof (eh2),
-                                             ACE_Event_Handler::READ_MASK);
+  int result = queue.purge_pending_notifications(std::addressof (eh2),
+                                                  ACE_Event_Handler::READ_MASK);
   TEST_ASSERT(result == 0, "purge of eh2 should return 0");
 
   result = queue.purge_pending_notifications(std::addressof (eh1),
@@ -182,28 +182,28 @@ void purge_with_single_match(char const * test_name)
   Event_Handler eh1(1);
   Event_Handler eh2(2);
 
-  int result = queue.push_new_notification(
+  queue.push_new_notification(
       ACE_Notification_Buffer(std::addressof (eh1),
                               ACE_Event_Handler::READ_MASK |
                               ACE_Event_Handler::WRITE_MASK));
-  result = queue.push_new_notification(
+  queue.push_new_notification(
       ACE_Notification_Buffer(std::addressof (eh1),
                               ACE_Event_Handler::WRITE_MASK));
-  result = queue.push_new_notification(
+  queue.push_new_notification(
       ACE_Notification_Buffer(std::addressof (eh2),
                               ACE_Event_Handler::READ_MASK));
-  result = queue.push_new_notification(
+  queue.push_new_notification(
       ACE_Notification_Buffer(std::addressof (eh2),
                               ACE_Event_Handler::WRITE_MASK));
-  result = queue.push_new_notification(
+  queue.push_new_notification(
       ACE_Notification_Buffer(std::addressof (eh2),
                               ACE_Event_Handler::WRITE_MASK));
-  result = queue.push_new_notification(
+  queue.push_new_notification(
       ACE_Notification_Buffer(std::addressof (eh2),
                               ACE_Event_Handler::WRITE_MASK));
 
-  result = queue.purge_pending_notifications(std::addressof (eh2),
-                                             ACE_Event_Handler::READ_MASK);
+  int result = queue.purge_pending_notifications(std::addressof (eh2),
+                                                  ACE_Event_Handler::READ_MASK);
   TEST_EQUAL(result, 1, "purge of eh2/READ should return 1");
 
   result = queue.purge_pending_notifications(std::addressof (eh1),
@@ -218,28 +218,28 @@ void purge_with_multiple_matches(char const * test_name)
   Event_Handler eh1(1);
   Event_Handler eh2(2);
 
-  int result = queue.push_new_notification(
+  queue.push_new_notification(
       ACE_Notification_Buffer(std::addressof (eh1),
                               ACE_Event_Handler::READ_MASK |
                               ACE_Event_Handler::WRITE_MASK));
-  result = queue.push_new_notification(
+  queue.push_new_notification(
       ACE_Notification_Buffer(std::addressof (eh1),
                               ACE_Event_Handler::WRITE_MASK));
-  result = queue.push_new_notification(
+  queue.push_new_notification(
       ACE_Notification_Buffer(std::addressof (eh2),
                               ACE_Event_Handler::READ_MASK));
-  result = queue.push_new_notification(
+  queue.push_new_notification(
       ACE_Notification_Buffer(std::addressof (eh2),
                               ACE_Event_Handler::WRITE_MASK));
-  result = queue.push_new_notification(
+  queue.push_new_notification(
       ACE_Notification_Buffer(std::addressof (eh2),
                               ACE_Event_Handler::WRITE_MASK));
-  result = queue.push_new_notification(
+  queue.push_new_notification(
       ACE_Notification_Buffer(std::addressof (eh2),
                               ACE_Event_Handler::WRITE_MASK));
 
-  result = queue.purge_pending_notifications(std::addressof (eh2),
-                                             ACE_Event_Handler::WRITE_MASK);
+  int result = queue.purge_pending_notifications(std::addressof (eh2),
+                                                  ACE_Event_Handler::WRITE_MASK);
   TEST_EQUAL(result, 3, "purge of eh2/WRITE should return 3");
 
   result = queue.purge_pending_notifications(std::addressof (eh1),
