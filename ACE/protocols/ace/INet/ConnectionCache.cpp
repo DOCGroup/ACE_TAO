@@ -201,7 +201,7 @@ namespace ACE
                                              ACE_TEXT ("awoken and retrying to claim connection\n")));
                   }
               }
-            while (0);
+            while (false);
 
             if (create_connection)
               {
