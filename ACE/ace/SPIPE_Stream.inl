@@ -149,7 +149,9 @@ ACE_SPIPE_Stream::recv_handle (ACE_HANDLE &handle) const
   strrecvfd recvfd;
 
   if (ACE_OS::ioctl (this->get_handle (), I_RECVFD, &recvfd) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       handle = recvfd.fd;

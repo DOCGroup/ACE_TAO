@@ -196,8 +196,10 @@ ACE_Thread_Manager::thread_desc_self ()
       // Thread descriptor adapter might not have been put into the
       // list yet.
       if (desc != 0)
-        // Update the TSS cache.
-        ACE_LOG_MSG->thr_desc (desc);
+        {
+          // Update the TSS cache.
+          ACE_LOG_MSG->thr_desc (desc);
+        }
     }
 #endif
   return desc;

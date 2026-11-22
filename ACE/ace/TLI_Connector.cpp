@@ -53,7 +53,9 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
 
   if (new_stream.get_handle () == ACE_INVALID_HANDLE
       && new_stream.open (device, flags, info) == ACE_INVALID_HANDLE)
-    return -1;
+    {
+      return -1;
+    }
 
   if (local_sap != ACE_Addr::sap_any)
     {
@@ -65,7 +67,9 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
         ACE_OS::t_alloc (new_stream.get_handle (), T_BIND, T_ADDR));
 
       if (localaddr == 0)
-        result = -1;
+        {
+          result = -1;
+        }
       else
         {
 #if !defined (ACE_HAS_FORE_ATM_XTI)
@@ -81,7 +85,9 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
                                         SO_REUSEADDR,
                                         &one,
                                         sizeof one) == -1)
-            result = -1;
+            {
+              result = -1;
+            }
           else
 #endif /* ACE_HAS_FORE_ATM_XTI */
             {
@@ -92,7 +98,9 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
               if (ACE_OS::t_bind (new_stream.get_handle (),
                                   localaddr,
                                   localaddr) == -1)
-                result = -1;
+                {
+                  result = -1;
+                }
 
               ACE_OS::t_free (reinterpret_cast<char *> (localaddr),
                               T_BIND);
@@ -107,7 +115,9 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
     }
   // Let TLI select the local endpoint addr.
   else if (ACE_OS::t_bind (new_stream.get_handle (), 0, 0) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   struct t_call *callptr {};
 
@@ -144,7 +154,9 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
   if (timeout != 0)   // Enable non-blocking, if required.
     {
       if (new_stream.enable (ACE_NONBLOCK) == -1)
-        result = -1;
+        {
+          result = -1;
+        }
 
       // Do a non-blocking connect.
       if (ACE_OS::t_connect (new_stream.get_handle (), callptr, 0) == -1)
@@ -181,9 +193,11 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
       new_stream.set_rwflag (rwf);
 #if defined (I_PUSH) && !defined (ACE_HAS_FORE_ATM_XTI)
       if (new_stream.get_rwflag ())
-        result = ACE_OS::ioctl (new_stream.get_handle (),
-                                I_PUSH,
-                                const_cast<char *> ("tirdwr"));
+        {
+          result = ACE_OS::ioctl (new_stream.get_handle (),
+                                  I_PUSH,
+                                  const_cast<char *> ("tirdwr"));
+        }
 #endif /* I_PUSH */
     }
   else if (!(errno == EWOULDBLOCK || errno == ETIME))
