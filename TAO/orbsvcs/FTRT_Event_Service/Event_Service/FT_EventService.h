@@ -45,7 +45,7 @@ private:
   FT_EventService (FT_EventService &&) = delete;
   FT_EventService &operator= (FT_EventService &&) = delete;
 
-  // Should we use a global scheduler or a local one?
+  /// Should we use a global scheduler or a local one?
   bool global_scheduler_ {};
   std::unique_ptr<POA_RtecScheduler::Scheduler> sched_impl_ {};
   TAO_FTEC_Event_Channel::MEMBERSHIP membership_ { TAO_FTEC_Event_Channel::UNSPECIFIED };

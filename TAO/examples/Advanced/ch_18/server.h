@@ -105,19 +105,19 @@ public:
     bool exists (CCS::AssetType anum) const;
 
 private:
-    // Map of existing assets. The servant pointer is null
-    // the corresponding servant is not in memory.
+    /// Map of existing assets. The servant pointer is null when
+    /// the corresponding servant is not in memory.
     using AssetMap = std::map<CCS::AssetType, Thermometer_impl *>;
     AssetMap m_assets;
 
-    // POA for thermometers and thermostats
+    /// POA for thermometers and thermostats.
     PortableServer::POA_var m_poa;
 
-    // Name of asset number file
+    /// Name of asset number file.
     CORBA::String_var m_asset_file;
 
-    // Function object for the find_if algorithm to search for
-    // devices by location and model string.
+    /// Function object for the find_if algorithm to search for
+    /// devices by location and model string.
     class StrFinder {
     public:
         StrFinder(

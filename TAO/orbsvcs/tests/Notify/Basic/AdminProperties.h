@@ -138,7 +138,7 @@ private:
   /// Count of consumers successfully connect to the EC.
   int consumers_connected_count_;
 
-  // Number of supplier pushes that resulted in an IMP_LIMIT exception
+  /// Number of supplier pushes that resulted in an IMP_LIMIT exception.
   int rejections_;
 };
 

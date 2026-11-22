@@ -135,22 +135,22 @@ private:
   RtecScheduler::handle_t sched_lo_rt_info_hi_;
   RtecScheduler::handle_t sched_lo_rt_info_lo_;
 
-  // Termination servant implementation and client reference
+  /// Termination servant implementation and client reference.
   Terminator terminator_impl_;
   NavWeapTerminator_var terminator_;
 
-  // Event Service servant implementation pointers.
+  /// Event Service servant implementation pointers.
   POA_RtecEventChannelAdmin::EventChannel *ec_hi_impl_;
   POA_RtecEventChannelAdmin::EventChannel *ec_lo_impl_;
 
-  // Event Service client references.
+  /// Event Service client references.
   RtecEventChannelAdmin::EventChannel_var ec_hi_;
   RtecEventChannelAdmin::EventChannel_var ec_lo_;
 
   DOVE_Supplier weapons_Supplier_;
   DOVE_Supplier navigation_Supplier_;
 
-  // Data for registering RT_Infos
+  /// Data for registering RT_Infos.
   ACE_Scheduler_Factory::POD_RT_Info rt_info_nav_hi_;
   ACE_Scheduler_Factory::POD_RT_Info rt_info_nav_lo_;
   ACE_Scheduler_Factory::POD_RT_Info rt_info_weap_hi_;
@@ -158,7 +158,7 @@ private:
   ACE_Scheduler_Factory::POD_RT_Info rt_info_dummy_hi_;
   ACE_Scheduler_Factory::POD_RT_Info rt_info_dummy_lo_;
 
-  // References for CORBA RtecScheduler data structures
+  /// References for CORBA RtecScheduler data structures.
   RtecScheduler::RT_Info_Set_var infos_hi_;
   RtecScheduler::Dependency_Set_var deps_hi_;
   RtecScheduler::Config_Info_Set_var configs_hi_;

@@ -54,7 +54,7 @@ private:
   /// Value for high priority.
   RTCORBA::Priority const high_priority_;
 
-  // RTCORBA Current.
+  /// RTCORBA Current.
   RTCORBA::Current_var rt_current_;
 
   /// Number of work iterations that can be performed in one second.

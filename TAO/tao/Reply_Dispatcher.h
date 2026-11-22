@@ -94,7 +94,7 @@ protected:
   /// LocateReply status.
   GIOP::LocateStatusType locate_reply_status_;
 
-  // RequestReply status
+  /// RequestReply status.
   GIOP::ReplyStatusType reply_status_;
 
 private:

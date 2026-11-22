@@ -82,7 +82,7 @@ private:
 
   CORBA::ORB_var orb_;
   int argc_;
-  // Borrowed from main for ORB_init.
+  /// Borrowed from main for ORB_init.
   ACE_TCHAR **argv_;
   PortableServer::POA_var root_poa_;
   LB_Server_Options options_;

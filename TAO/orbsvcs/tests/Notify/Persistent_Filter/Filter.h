@@ -147,7 +147,7 @@ class FilterClient
 
   bool modify_constraint_;
 
-  // Set this flag to exit the run loop.
+  /// Set this flag to exit the run loop.
   CORBA::Boolean done_;
   /// @}
 };

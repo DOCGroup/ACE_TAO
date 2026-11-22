@@ -101,10 +101,10 @@ public:
 protected:
   // UIPMC Additions - Begin
 
-  // This is always the remote address
+  /// This is always the remote address.
   ACE_INET_Addr addr_;
 
-  // This is always the local address for the connector
+  /// This is always the local address for the connector.
   ACE_INET_Addr local_addr_;
 
   // UIPMC Additions - End

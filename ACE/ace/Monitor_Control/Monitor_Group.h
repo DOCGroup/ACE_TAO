@@ -59,7 +59,7 @@ namespace ACE
       using MEMBERS = ACE_Unbounded_Queue<Monitor_Base *>;
       using MEMBERS_ITERATOR = ACE_Unbounded_Queue_Const_Iterator<Monitor_Base *>;
 
-      // The group borrows these pointers; their owners must keep them alive.
+      /// The group borrows these pointers; their owners must keep them alive.
       MEMBERS members_;
     };
   }

@@ -350,7 +350,7 @@ namespace TAO
     // was initially created.  To be used to create new members.
     TAO::PG_Property_Set properties_;
 
-    // Cached property information
+    /// Cached property information.
 
     PortableGroup::InitialNumberMembersValue initial_number_members_ {};
     PortableGroup::MinimumNumberMembersValue minimum_number_members_ {};

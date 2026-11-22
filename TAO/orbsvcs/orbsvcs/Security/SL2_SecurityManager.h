@@ -117,7 +117,7 @@ namespace TAO
 
       ACCESS_MAP_TYPE access_map_;
 
-      // Protects access_map_.
+      /// Protects access_map_.
       TAO_SYNCH_MUTEX map_lock_;
 
     private:
@@ -178,7 +178,7 @@ namespace TAO
       // Except we're not going to have one of these right now
       SecurityLevel2::PrincipalAuthenticator_var principal_authenticator_;
 
-      // AccessDecision instance
+      /// AccessDecision instance.
       SecurityLevel2::AccessDecision_var access_decision_;
     };
   } // End SL3 namespace

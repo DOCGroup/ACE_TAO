@@ -25,34 +25,34 @@ __published:  // IDE-managed Components
   void __fastcall InputMemoKeyPress (TObject *Sender, char& Key);
 
 private:
-  // Function to read the server ior from a file.
+  /// Function to read the server ior from a file.
   void __fastcall ReadIOR (String filename);
 
-  // IOR of the obj ref of the server.
+  /// IOR of the obj ref of the server.
   String ior_;
 
-  // The filename that stores the ior of the server
+  /// The filename that stores the ior of the server
   String ior_file_name_;
 
-  // Nickname of the user chatting.
+  /// Nickname of the user chatting.
   String nickname_;
 
-  // We run the orb's main loop in a separate thread.
+  /// We run the orb's main loop in a separate thread.
   std::unique_ptr<TORBThread> orb_thread_ {};
 
-  // Our orb. Order is important! The orb must have a longer lifetime than
-  // any of the servants or stub vars/ptrs. Therefore we declare the orb var
-  // first. There is probably a better way to do this, maybe by using a
-  // singleton.
+  /// Our orb. Order is important! The orb must have a longer lifetime than
+  /// any of the servants or stub vars/ptrs. Therefore we declare the orb var
+  /// first. There is probably a better way to do this, maybe by using a
+  /// singleton.
   CORBA::ORB_var orb_ {};
 
-  // Server object ptr.
+  /// Server object ptr.
   Broadcaster_var server_ {};
 
-  // The receiver object.
+  /// The receiver object.
   TReceiverImplementation receiver_i_;
 
-  // Pointer to the receiver object registered with the ORB.
+  /// Pointer to the receiver object registered with the ORB.
   Receiver_var receiver_var_ {};
 
 public:    // User declarations

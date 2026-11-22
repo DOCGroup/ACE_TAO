@@ -84,7 +84,7 @@ protected:
   ACE_DLList<PeerProcess> conn_waiters_;
   IncidentList history_;
 
-  // parsed for every line
+  /// Parsed for every line.
   ACE_CString timestamp_;
   ACE_Time_Value time_;
   char *line_ {};

@@ -111,7 +111,7 @@ private:
 
   static ACE_Scheduler_Factory::POD_RT_Info * pod_rt_info_instance_;
 
-  // Object initialization flags
+  /// Object initialization flags.
   bool initialized_ {};
   bool connected_ {};
 

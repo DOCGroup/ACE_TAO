@@ -213,7 +213,7 @@ private:
 private:
   static int debug_;
 
-  // The class that handles the forwarding.
+  /// The class that handles the forwarding.
   ImR_DSI_Forwarder dsi_forwarder_;
 
   // Used for the forwarding of any type of POA.

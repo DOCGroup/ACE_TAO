@@ -104,8 +104,8 @@ private:
     using AssetMap = std::map<CCS::AssetType, Thermometer_impl *>;
     AssetMap m_assets;
 
-    // Function object for the find_if algorithm to search for
-    // devices by location and model string.
+    /// Function object for the find_if algorithm to search for
+    /// devices by location and model string.
     class StrFinder {
     public:
         StrFinder(
