@@ -306,7 +306,9 @@ ACE_SPIPE_Acceptor::accept (ACE_SPIPE_Stream &new_io,
 
   // Check to see if we have a valid pipe
   if (this->pipe_handle_ == ACE_INVALID_HANDLE)
-    return -1;
+    {
+      return -1;
+    }
 
   // open () started the Connect in asynchronous mode.  Wait for the event
   // in the OVERLAPPED structure to be signalled, then grab the status.
@@ -316,11 +318,15 @@ ACE_SPIPE_Acceptor::accept (ACE_SPIPE_Stream &new_io,
         {
           ACE_Time_Value abstime (ACE_OS::gettimeofday () + *timeout);
           if (this->event_.wait (&abstime) == -1)
-            return -1;
+            {
+              return -1;
+            }
         }
       else
         if (this->event_.wait () == -1)
-          return -1;
+          {
+            return -1;
+          }
 
       // Should be here with the ConnectNamedPipe operation complete.
       // Steal the already_connected_ flag to record the results.

@@ -140,9 +140,13 @@ ACE_OS_Thread_Adapter::invoke ()
       CWinThread *pThread = ::AfxGetThread ();
 
       if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
-        ACE_ENDTHREADEX (status);
+        {
+          ACE_ENDTHREADEX (status);
+        }
       else
-        ::AfxEndThread (status);
+        {
+          ::AfxEndThread (status);
+        }
 #   else
       ACE_ENDTHREADEX (status);
 #   endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
