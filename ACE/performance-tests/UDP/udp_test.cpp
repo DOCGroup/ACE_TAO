@@ -707,7 +707,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (server)
     {
-      Server server (addr);
+      Server server_instance (addr);
 
       if (use_reactor)
         {
@@ -717,9 +717,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           // Handle input in the current thread.
           int result {};
-          while ((result = server.handle_input (0)) == 0)
+          while ((result = server_instance.handle_input (0)) == 0)
             {
-              continue;
             }
           if (result == -1)
           {
@@ -747,7 +746,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       ++getopt.opt_ind ();
 
-      Client client (addr, remote_addr);
+      Client client_instance (addr, remote_addr);
 
       ACE_DEBUG ((LM_DEBUG,
                   "\nSending %d byte packets to %s:%d "
@@ -757,8 +756,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   dstport,
                   so_bufsz));
 
-      int const run_status = client.run ();
-      int const shutdown_status = client.shutdown ();
+      int const run_status = client_instance.run ();
+      int const shutdown_status = client_instance.shutdown ();
       if (run_status == -1 || shutdown_status == -1)
       {
         return 1;

@@ -505,15 +505,14 @@ run_server (ACE_INET_Addr const &addr)
       ACE_Reactor::instance (new_reactor.release (), true);
     }
 
-  Server server (addr);
+  Server server_instance (addr);
 
   if (use_reactor == Reactor_Type::NONE)
     {
       // Handle input in the current thread.
       // This is actually equivalent to thread-per-connection model.
-      while (server.handle_input (0) != 1)
+      while (server_instance.handle_input (0) != 1)
         {
-          continue;
         }
     }
   else
@@ -737,7 +736,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               remote_addr.get_host_name (),
               remote_addr.get_port_number ()));
 
-  Client client (remote_addr);
+  Client client_instance (remote_addr);
 
   ACE_DEBUG ((LM_DEBUG,
               "\nSending %d byte packets to %s:%d "
@@ -747,8 +746,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               dstport,
               so_bufsz));
 
-  client.run ();
-  client.shutdown ();
+  client_instance.run ();
+  client_instance.shutdown ();
 
   return 0;
 }
