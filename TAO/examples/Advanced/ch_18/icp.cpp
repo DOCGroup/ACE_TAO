@@ -124,16 +124,26 @@ vary_temp (long temp)
     int const r = std::rand () % 50;
     long delta {};
     if  (r < 5)
-        delta = 3;
+        {
+            delta = 3;
+        }
     else if  (r < 15)
-        delta = 2;
+        {
+            delta = 2;
+        }
     else if  (r < 30)
-        delta = 1;
+        {
+            delta = 1;
+        }
     else
-        delta = 0;
+        {
+            delta = 0;
+        }
 
     if (std::rand () % 2)
-      delta = -delta;
+        {
+            delta = -delta;
+        }
   return temp + delta;
 }
 
@@ -336,7 +346,9 @@ ICP_Persist (char const *file) : m_filename (file)
         db.getline (loc, sizeof (loc));   // Read location
         ds.location = loc;
         if (ds.type == DeviceType::thermostat)
-            db >> ds.nominal_temp;      // Read temperature
+            {
+                db >> ds.nominal_temp;      // Read temperature
+            }
         dstate[id] = ds;                // Add entry to map
     }
 
@@ -365,7 +377,9 @@ ICP_Persist::
         db << static_cast<unsigned long> (i->second.type) << std::endl;
         db << i->second.location << std::endl;
         if (i->second.type == DeviceType::thermostat)
-            db << i->second.nominal_temp << std::endl;
+            {
+                db << i->second.nominal_temp << std::endl;
+            }
     }
     if (!db) {
         std::cerr << "Error writing " << m_filename << std::endl;

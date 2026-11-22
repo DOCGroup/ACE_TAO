@@ -44,12 +44,16 @@ parse_args (int argc, ACE_TCHAR *argv[], Options &options)
   while ((option = get_opts ()) != -1)
     {
       if (option == 'o')
-        options.ior_output_file = get_opts.opt_arg ();
+        {
+          options.ior_output_file = get_opts.opt_arg ();
+        }
       else
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage: %s [-o <iorfile>]\n"),
-                           argv[0]),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage: %s [-o <iorfile>]\n"),
+                             argv[0]),
+                            -1);
+        }
     }
   return 0;
 }
@@ -58,7 +62,9 @@ static void
 check_icp_status (int status)
 {
   if (status != 0)
-    throw CORBA::INTERNAL ();
+    {
+      throw CORBA::INTERNAL ();
+    }
 }
 
 // Generic ostream inserter for exceptions. Inserts the exception
@@ -163,7 +169,9 @@ Thermometer_impl::
 ~Thermometer_impl ()
 {
   if  (m_ctrl->exists (m_anum))
-    m_ctrl->add_impl (m_anum, nullptr);  // Clear servant pointer
+    {
+      m_ctrl->add_impl (m_anum, nullptr);  // Clear servant pointer
+    }
 }
 
 // IDL model attribute.
@@ -362,9 +370,13 @@ Controller_impl::
  create_thermometer (CCS::AssetType anum, char const *loc)
 {
   if  (anum % 2 == 0)
-    throw CORBA::BAD_PARAM ();  // Thermometers have odd numbers
+    {
+      throw CORBA::BAD_PARAM ();  // Thermometers have odd numbers
+    }
   if  (exists (anum))
-    throw CCS::Controller::DuplicateAsset ();
+    {
+      throw CCS::Controller::DuplicateAsset ();
+    }
 
   check_icp_status (ICP_online (anum));
   try
@@ -388,9 +400,13 @@ create_thermostat (CCS::AssetType anum,
                    CCS::TempType temp)
 {
   if  (anum % 2 != 0)
-    throw CORBA::BAD_PARAM ();   // Thermostats have even numbers
+    {
+      throw CORBA::BAD_PARAM ();   // Thermostats have even numbers
+    }
   if  (exists (anum))
-    throw CCS::Controller::DuplicateAsset ();
+    {
+      throw CCS::Controller::DuplicateAsset ();
+    }
 
   check_icp_status (ICP_online (anum));
   try
@@ -414,7 +430,9 @@ create_thermostat (CCS::AssetType anum,
       CORBA::Object_var const obj = make_dref (m_poa.in (), anum);
       CCS::Thermostat_var result = CCS::Thermostat::_narrow (obj.in ());
       if (CORBA::is_nil (result.in ()))
-        throw CORBA::INTERNAL ();
+        {
+          throw CORBA::INTERNAL ();
+        }
       return result._retn ();
     }
   catch (...)
@@ -488,7 +506,9 @@ change (CCS::Controller::ThermostatSeq const& tlist,
   // If we encountered errors in the above loop, we will have added
   // elements to the errors sequence.
   if  (ec.errors.length () != 0)
-    throw ec;
+    {
+      throw ec;
+    }
 }
 
 // IDL find operation
@@ -515,7 +535,9 @@ find (CCS::Controller::SearchSeq & slist)
           // Search for matching asset number.
           where = m_assets.find (slist[i].key.asset_num ());
           if  (where != m_assets.end ())
-            slist[i].device = make_dref (m_poa.in (), where->first);
+            {
+              slist[i].device = make_dref (m_poa.in (), where->first);
+            }
         }
       else
         {
@@ -589,11 +611,15 @@ preinvoke (PortableServer::ObjectId const& oid,
   CCS::AssetType anum {};
   istr >> anum;
   if  (istr.fail ())
-    throw CORBA::OBJECT_NOT_EXIST ();
+    {
+      throw CORBA::OBJECT_NOT_EXIST ();
+    }
 
   // Check whether the device is known.
   if  (!m_ctrl->exists (anum))
-    throw CORBA::OBJECT_NOT_EXIST ();
+    {
+      throw CORBA::OBJECT_NOT_EXIST ();
+    }
 
   // Look at the object map to find out whether
   // we have a servant in memory.
@@ -614,9 +640,13 @@ preinvoke (PortableServer::ObjectId const& oid,
       char buf[32] {};
       check_icp_status (ICP_get (anum, "model", buf, sizeof (buf)));
       if  (std::strcmp (buf, "Sens-A-Temp") == 0)
-        servant = new Thermometer_impl (anum);
+        {
+          servant = new Thermometer_impl (anum);
+        }
       else
-        servant = new Thermostat_impl (anum);
+        {
+          servant = new Thermostat_impl (anum);
+        }
     }
   else
     {
@@ -627,7 +657,9 @@ preinvoke (PortableServer::ObjectId const& oid,
       // If operation is "remove", also remove entry from
       // active object map -- the object is about to be deleted.
       if (std::strcmp (operation, "remove") == 0)
-        m_aom.erase (servant_pos);
+        {
+          m_aom.erase (servant_pos);
+        }
     }
 
   // We found a servant, or just instantiated it.  If the operation is

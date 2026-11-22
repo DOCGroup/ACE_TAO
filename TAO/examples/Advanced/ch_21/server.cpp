@@ -131,7 +131,9 @@ Thermometer_impl::
 ~Thermometer_impl ()
 {
     if (m_removed)
-        assert (ICP_offline (m_anum) == 0);
+        {
+            assert (ICP_offline (m_anum) == 0);
+        }
 }
 
 void
