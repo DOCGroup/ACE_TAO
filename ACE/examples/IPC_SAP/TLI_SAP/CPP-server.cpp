@@ -21,10 +21,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Not sure why but reuse_addr set to true/1 causes problems for
   // FORE/XTI/ATM - this is now handled in ACE_TLI_Acceptor::open()
   if (peer_acceptor.open (addr, 1) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "open"),
+                        -1);
+    }
 
   ACE_TLI_Stream new_stream;
 
@@ -43,12 +45,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (peer_acceptor.accept (new_stream,
                                 &addr,
                                 &timeout) == -1)
-      {
-        ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "accept"));
-        continue;
-      }
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "accept"));
+          continue;
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   "client %s connected\n",
@@ -57,18 +59,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Read data from client (terminate on error).
 
       for (int r_bytes; (r_bytes = new_stream.recv (buf, sizeof buf)) > 0; )
-        if (ACE_OS::write (ACE_STDOUT,
-                           buf,
-                           r_bytes) != r_bytes)
+        {
+          if (ACE_OS::write (ACE_STDOUT,
+                             buf,
+                             r_bytes) != r_bytes)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "%p\n",
+                          "ACE::send_n"));
+            }
+        }
+
+      // Close new endpoint (listening endpoint stays open).
+      if (new_stream.close () == -1)
+        {
           ACE_ERROR ((LM_ERROR,
                       "%p\n",
-                      "ACE::send_n"));
-
-       // Close new endpoint (listening endpoint stays open).
-      if (new_stream.close () == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "close"));
+                      "close"));
+        }
     }
   /* NOTREACHED */
   return 0;
