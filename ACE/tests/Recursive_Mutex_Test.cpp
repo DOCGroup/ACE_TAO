@@ -319,28 +319,26 @@ test_timed_wait (int nesting_level,
     }
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 recursion_worker (void *arg)
 {
-  ACE_TEST_MUTEX *rm =
-    reinterpret_cast<ACE_TEST_MUTEX *> (arg);
+  ACE_TEST_MUTEX *rm = static_cast<ACE_TEST_MUTEX *> (arg);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%P|%t) Starting test of recursion depth\n")));
   test_recursion_depth (0, rm);
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 timed_worker (void *arg)
 {
-  ACE_TEST_MUTEX *rm =
-    reinterpret_cast<ACE_TEST_MUTEX *> (arg);
+  ACE_TEST_MUTEX *rm = static_cast<ACE_TEST_MUTEX *> (arg);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%P|%t) Starting test of timed wait\n")));
   test_timed_wait (0, rm);
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 #endif /* ACE_HAS_THREADS */
@@ -366,13 +364,13 @@ run_main (int argc, ACE_TCHAR *argv[])
 #endif  /* !ACE_HAS_WTHREADS */
 
   ACE_Thread_Manager::instance ()->spawn_n (n_threads,
-                                            ACE_THR_FUNC (recursion_worker),
-                                            (void *) &rm);
+                                            recursion_worker,
+                                            &rm);
   ACE_Thread_Manager::instance ()->wait ();
 
   ACE_Thread_Manager::instance ()->spawn_n (n_threads,
-                                            ACE_THR_FUNC (timed_worker),
-                                            (void *) &rm);
+                                            timed_worker,
+                                            &rm);
   ACE_Thread_Manager::instance ()->wait ();
 #else
   ACE_UNUSED_ARG (argc);

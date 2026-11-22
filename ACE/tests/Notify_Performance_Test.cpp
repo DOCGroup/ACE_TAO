@@ -61,7 +61,7 @@ Handler::handle_exception (ACE_HANDLE handle)
 
 // Execute the client tests.
 
-static void *
+static ACE_THR_FUNC_RETURN
 client (void *arg)
 {
   // Number of client (user) threads
@@ -89,7 +89,7 @@ client (void *arg)
     ACE_Reactor::instance()->end_reactor_event_loop ();
   }
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // Sets up the correct reactor (based on platform and options)
@@ -218,8 +218,8 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Spawn worker threads
   if (ACE_Thread_Manager::instance ()->spawn_n
       (opt_nthreads,
-       ACE_THR_FUNC (client),
-       (void *) &handler,
+       client,
+       &handler,
        THR_NEW_LWP | THR_DETACHED) == -1)
   {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n%a"), ACE_TEXT ("thread create failed")));

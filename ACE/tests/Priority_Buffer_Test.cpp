@@ -35,7 +35,7 @@ static void *
 consumer (void *args)
 {
   ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue =
-    reinterpret_cast<ACE_Message_Queue<ACE_MT_SYNCH> *> (args);
+    static_cast<ACE_Message_Queue<ACE_MT_SYNCH> *> (args);
 
   u_long cur_priority = 27;
   ACE_UNUSED_ARG (cur_priority);
@@ -92,11 +92,11 @@ consumer (void *args)
 // there is no more data to read.  The consumer uses this as a flag to
 // know when to exit.
 
-static void *
+static ACE_THR_FUNC_RETURN
 producer (void *args)
 {
   ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue =
-    reinterpret_cast<ACE_Message_Queue<ACE_MT_SYNCH> *> (args);
+    static_cast<ACE_Message_Queue<ACE_MT_SYNCH> *> (args);
 
   ACE_Message_Block *mb {};
 
@@ -108,7 +108,7 @@ producer (void *args)
 
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (1),
-                      nullptr);
+                      ACE_THR_FUNC_RETURN_NULL);
       *mb->wr_ptr () = *c;
 
       // Set the priority.
@@ -121,14 +121,14 @@ producer (void *args)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("(%t) %p\n"),
                              ACE_TEXT ("put_next")),
-                            0);
+                            ACE_THR_FUNC_RETURN_NULL);
         }
     }
 
   // Now send a 0-sized shutdown message to the other thread
   ACE_NEW_RETURN (mb,
-                  ACE_Message_Block ((size_t) 0),
-                  nullptr);
+                  ACE_Message_Block (size_t {0}),
+                  ACE_THR_FUNC_RETURN_NULL);
 
   if (msg_queue->enqueue_tail (mb) == -1)
     {
@@ -143,7 +143,7 @@ producer (void *args)
   // the size of the lines!).
   consumer (msg_queue);
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 #endif /* ACE_HAS_THREADS */
@@ -161,8 +161,8 @@ run_main (int, ACE_TCHAR *[])
   ACE_Message_Queue<ACE_MT_SYNCH> msg_queue (max_queue);
 
   if (ACE_Thread_Manager::instance ()->spawn
-      (ACE_THR_FUNC (producer),
-       (void *) &msg_queue,
+      (producer,
+       &msg_queue,
        THR_NEW_LWP | THR_DETACHED) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
