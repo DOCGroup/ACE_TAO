@@ -16,11 +16,13 @@ JAWS_TPOOL_Concurrency::JAWS_TPOOL_Concurrency ()
 {
   char const *value = JAWS_Options::instance ()->getenv ("JAWS_TPOOL_THREADS");
   if (value != nullptr)
-    this->number_of_threads_ = std::atoi (value);
+    {
+      this->number_of_threads_ = std::atoi (value);
+    }
   else
-  {
-    this->number_of_threads_ = std::atoi (JAWS_DEFAULT_TPOOL_THREADS);
-  }
+    {
+      this->number_of_threads_ = std::atoi (JAWS_DEFAULT_TPOOL_THREADS);
+    }
 
   if (this->number_of_threads_ <= 0)
   {

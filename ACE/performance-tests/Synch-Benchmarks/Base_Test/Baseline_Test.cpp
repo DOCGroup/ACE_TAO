@@ -79,7 +79,9 @@ void
 Baseline_Test_Base::yield () const
 {
   if (this->yield_method_ == Baseline_Yield_Method::sleep_zero)
-    ACE_OS::sleep (0);
+    {
+      ACE_OS::sleep (0);
+    }
   else
   {
     ACE_OS::thr_yield ();

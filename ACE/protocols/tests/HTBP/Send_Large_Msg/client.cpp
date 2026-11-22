@@ -130,7 +130,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   while (n == -1)
     {
       if (errno == EWOULDBLOCK)
-        n = stream->recv (buffer,1000);
+        {
+          n = stream->recv (buffer,1000);
+        }
       else
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("(%P|%t) Client: ")

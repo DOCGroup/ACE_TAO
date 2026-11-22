@@ -198,11 +198,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 ACE_TEXT("(%P) Test 2: want %b bytes, got %b\n"),
                 145 - total,len));
     if (len == -1 || errno == EWOULDBLOCK)
-      ACE_OS::sleep (1);
+      {
+        ACE_OS::sleep (1);
+      }
     else
-    {
-      total += len;
-    }
+      {
+        total += len;
+      }
   } while ((len == -1 &&  errno == EWOULDBLOCK) || total < 145);
 
     if (total != 145)

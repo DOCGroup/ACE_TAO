@@ -63,10 +63,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (i == number - 1)
         {
           if (!seen_max)
-            size = maximum * 1024;
+            {
+              size = maximum * 1024;
+            }
         }
       else
-        seen_max = (size == (maximum * 1024));
+        {
+          seen_max = (size == (maximum * 1024));
+        }
 
       int const filename_length = std::snprintf (
         filename.data (), filename.size (), "file%011ld.html", i);

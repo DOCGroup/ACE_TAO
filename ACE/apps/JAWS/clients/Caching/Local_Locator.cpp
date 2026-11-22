@@ -229,7 +229,9 @@ ACE_URL_Local_Locator::modify_offer (const ACE_WString &offer_id,
                   // No matching property name were found,
                   // We want to add this property into the list.
                   if (j == sz)
-                    working[sz++] = (*modify)[i];
+                    {
+                      working[sz++] = (*modify)[i];
+                    }
                 }
             }
         }

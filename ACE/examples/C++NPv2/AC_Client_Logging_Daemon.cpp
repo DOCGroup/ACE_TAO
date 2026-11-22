@@ -477,12 +477,15 @@ int AC_Client_Logging_Daemon::init
   ACE_INET_Addr sld_addr (sld_port, sld_host);
 
   if (acceptor_.open (cld_addr) == -1)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
   AC_Output_Handler *oh = &output_handler_;
   if (connector_.connect (oh, sld_addr) == -1)
-  { acceptor_.close (); return -1; }
+    {
+      acceptor_.close ();
+      return -1;
+    }
   return 0;
 }
 

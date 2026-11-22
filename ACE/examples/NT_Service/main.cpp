@@ -246,7 +246,9 @@ Process::run (int argc, ACE_TCHAR* argv[])
                       ACE_TEXT ("Couldn't start service")));
         }
       else
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%T (%t): Service stopped.\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%T (%t): Service stopped.\n")));
+        }
     }
 
   return 0;

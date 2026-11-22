@@ -691,7 +691,9 @@ Svc_Handler::send (IovecGuard& iovec_array,
           return -1;
         }
       else
-        return sent_bytes;
+        {
+          return sent_bytes;
+        }
 #else
       ACE_UNUSED_ARG (test_message);
       return sent_bytes;

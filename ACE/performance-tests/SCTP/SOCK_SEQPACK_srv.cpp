@@ -148,9 +148,13 @@ static void run_server (ACE_HANDLE handle)
   // NO NAGLING
   ACE_CDR::Long nagle;
   if (Options_Manager::test_enable_nagle)
-    nagle=0;
+    {
+      nagle=0;
+    }
   else
-    nagle=1;
+    {
+      nagle=1;
+    }
 
   if (-1 == dataModeStream->set_option(IPPROTO_SCTP, SCTP_NODELAY, &nagle, sizeof nagle)){
     // can't ise ACE_ERROR_RETURN b/c function has void return value
@@ -233,7 +237,9 @@ static void run_server (ACE_HANDLE handle)
                 ACE_TEXT ("(%P|%t) %p\n"),
                 ACE_TEXT ("spawn")));
   else
-    args.release ();
+    {
+      args.release ();
+    }
 #else
   (*unmarshalledOctetServer) (args.release ());
 #endif /* ACE_HAS_THREADS */
