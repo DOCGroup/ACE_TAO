@@ -14,7 +14,9 @@ ACE_Handle_Gobbler::close_remaining_handles ()
 {
   ACE_Handle_Set_Iterator iter (this->handle_set_);
   for (ACE_HANDLE h = iter (); h != ACE_INVALID_HANDLE; h = iter ())
-    ACE_OS::close (h);
+    {
+      ACE_OS::close (h);
+    }
 }
 
 inline

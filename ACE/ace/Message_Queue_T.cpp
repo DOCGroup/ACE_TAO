@@ -1783,11 +1783,13 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_deadline_i (ACE_Message_B
   ACE_Message_Block* chosen {};
   ACE_Time_Value deadline = ACE_Time_Value::max_time;
   for (ACE_Message_Block *temp = this->head_; temp != nullptr; temp = temp->next ())
-    if (temp->msg_deadline_time () < deadline)
-      {
-        deadline = temp->msg_deadline_time ();
-        chosen = temp;
-      }
+    {
+      if (temp->msg_deadline_time () < deadline)
+        {
+          deadline = temp->msg_deadline_time ();
+          chosen = temp;
+        }
+    }
 
   // If every message block is the same deadline time,
   // pass back the first one
