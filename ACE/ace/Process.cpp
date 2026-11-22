@@ -1415,6 +1415,14 @@ ACE_Process_Options::command_line_argv ()
 int
 ACE_Process_Options::pass_handle (ACE_HANDLE h)
 {
+#if !defined (ACE_WIN32)
+  if (h < 0 || h >= ACE_FD_SETSIZE)
+    {
+      errno = EINVAL;
+      return -1;
+    }
+#endif /* ! ACE_WIN32 */
+
   this->handles_passed_.set_bit (h);
   return 0;
 }

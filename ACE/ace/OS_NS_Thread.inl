@@ -2294,6 +2294,12 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   int rc;
   ACE_Time_Value timeout = tv.to_relative_time ();
 
+  if (s->fd_[0] < 0 || s->fd_[0] >= ACE_FD_SETSIZE)
+    {
+      errno = EINVAL;
+      return -1;
+    }
+
   while (timeout > ACE_Time_Value::zero)
     {
       ACE_Handle_Set  fds_;
