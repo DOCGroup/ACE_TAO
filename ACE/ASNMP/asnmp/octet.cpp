@@ -34,7 +34,6 @@
 #include <new>
 #include <utility>
 
-//============[ syntax type ]=========================================
 SmiUINT32 OctetStr::get_syntax()
 {
   return sNMP_SYNTAX_OCTETS;
@@ -98,7 +97,6 @@ OctetStr::OctetStr (char const *string, long size)
   copy_octet_smi (smival, static_cast<SmiUINT32> (size), string, validity);
 }
 
-//============[ set the data on an already constructed Octet ]============
 // TODO: should return status since it can fail in so many places
 void OctetStr::set_data (SmiBYTE const *string, long size)
 {
@@ -159,7 +157,6 @@ OctetStr::~OctetStr ()
   reset_octet_smi (smival);
 }
 
-//=============[ assignment to a string operator overloaded ]=========
 OctetStr &OctetStr::operator= (char const *string)
 {
    // get the string size
@@ -182,7 +179,6 @@ OctetStr &OctetStr::operator= (char const *string)
    return *this;
 }
 
-//=============[ assignment to another oid object overloaded ]========
 OctetStr &OctetStr::operator= (OctetStr const &octet)
 {
    // protect against assignment from self
@@ -213,7 +209,6 @@ OctetStr &OctetStr::operator= (OctetStr const &octet)
    return *this;                       // return self reference
 }
 
-//==============[ equivlence operator overloaded ]====================
 bool operator== (OctetStr const &lhs, OctetStr const &rhs)
 {
    if( lhs.left_comparison( rhs.smival.value.string.len, rhs)==0)
@@ -226,7 +221,6 @@ bool operator== (OctetStr const &lhs, OctetStr const &rhs)
    }
 }
 
-//==============[ not equivlence operator overloaded ]================
 bool operator!= (OctetStr const &lhs, OctetStr const &rhs)
 {
    if( lhs.left_comparison( rhs.smival.value.string.len, rhs)!=0)
@@ -239,7 +233,6 @@ bool operator!= (OctetStr const &lhs, OctetStr const &rhs)
    }
 }
 
-//==============[ less than < overloaded ]============================
 bool operator< (OctetStr const &lhs, OctetStr const &rhs)
 {
    if( lhs.left_comparison( rhs.smival.value.string.len, rhs)<0)
@@ -252,7 +245,6 @@ bool operator< (OctetStr const &lhs, OctetStr const &rhs)
    }
 }
 
-//==============[ less than <= overloaded ]===========================
 bool operator<= (OctetStr const &lhs, OctetStr const &rhs)
 {
    if(( lhs.left_comparison( rhs.smival.value.string.len, rhs)<0) ||
@@ -266,7 +258,6 @@ bool operator<= (OctetStr const &lhs, OctetStr const &rhs)
    }
 }
 
-//===============[ greater than > overloaded ]========================
 bool operator> (OctetStr const &lhs, OctetStr const &rhs)
 {
   if( lhs.left_comparison( rhs.smival.value.string.len, rhs)>0)
@@ -279,7 +270,6 @@ bool operator> (OctetStr const &lhs, OctetStr const &rhs)
   }
 }
 
-//===============[ greater than >= overloaded ]=======================
 bool operator>= (OctetStr const &lhs, OctetStr const &rhs)
 {
   if(( lhs.left_comparison( rhs.smival.value.string.len, rhs)>0) ||
@@ -293,7 +283,6 @@ bool operator>= (OctetStr const &lhs, OctetStr const &rhs)
   }
 }
 
-//===============[ equivlence operator overloaded ]===================
 bool operator== (OctetStr const &lhs, char const *rhs)
 {
    OctetStr to( rhs);
@@ -307,7 +296,6 @@ bool operator== (OctetStr const &lhs, char const *rhs)
    }
 }
 
-//===============[ not equivlence operator overloaded ]===============
 bool operator!= (OctetStr const &lhs, char const *rhs)
 {
    OctetStr to( rhs);
@@ -321,7 +309,6 @@ bool operator!= (OctetStr const &lhs, char const *rhs)
    }
 }
 
-//===============[ less than < operator overloaded ]==================
 bool operator< (OctetStr const &lhs, char const *rhs)
 {
    OctetStr to( rhs);
@@ -335,7 +322,6 @@ bool operator< (OctetStr const &lhs, char const *rhs)
    }
 }
 
-//===============[ less than <= operator overloaded ]=================
 bool operator<= (OctetStr const &lhs, char *rhs)
 {
    OctetStr to( rhs);
@@ -350,7 +336,6 @@ bool operator<= (OctetStr const &lhs, char *rhs)
    }
 }
 
-//===============[ greater than > operator overloaded ]===============
 bool operator> (OctetStr const &lhs, char const *rhs)
 {
    OctetStr to( rhs);
@@ -364,7 +349,6 @@ bool operator> (OctetStr const &lhs, char const *rhs)
    }
 }
 
-//===============[ greater than >= operator overloaded ]==============
 bool operator>= (OctetStr const &lhs, char const *rhs)
 {
    OctetStr to( rhs);
@@ -379,7 +363,6 @@ bool operator>= (OctetStr const &lhs, char const *rhs)
    }
 }
 
-//===============[ append operator, appends a string ]================
 OctetStr &OctetStr::operator+= (char const *a)
 {
   size_t slen {};
@@ -414,7 +397,6 @@ OctetStr &OctetStr::operator+= (char const *a)
   return *this;
 }
 
-//================[ append one OctetStr to another ]==================
 OctetStr &OctetStr::operator+= (OctetStr const &octetstr)
 {
   size_t slen {};
@@ -449,7 +431,6 @@ OctetStr &OctetStr::operator+= (OctetStr const &octetstr)
   return *this;
 }
 
-//================[ appends an int ]==================================
 OctetStr &OctetStr::operator+= (char c)
 {
     size_t const new_size = smival.value.string.len + 1;
@@ -475,7 +456,6 @@ OctetStr &OctetStr::operator+= (char c)
     return *this;
 }
 
-//================[ compare n elements of an Octet ]==================
 int OctetStr::left_comparison (long n, OctetStr const &o) const
 {
    long z {};
@@ -551,37 +531,31 @@ int OctetStr::left_comparison (long n, OctetStr const &o) const
    return 0;
 }
 
-//================[ return the length of the oid ]=======================
 size_t OctetStr::length () const
 {
    return (size_t) smival.value.string.len;
 }
 
-//================[ operator[]: access as if array ]==================
 SmiBYTE& OctetStr::operator[]( int position)
 {
     return  smival.value.string.ptr[position];
 }
 
-//===============[ reuturns pointer to internal data ]===============
 SmiBYTE *OctetStr::data () const
 {
    return smival.value.string.ptr;
 }
 
-//================[ returns validity ]================================
 int OctetStr::valid() const
 {
    return validity;
 }
 
-//================[ clone() ]=========================================
 SnmpSyntax *OctetStr::clone () const
 {
   return new OctetStr (*this);
 }
 
-//================[ ASCII format return ]=============================
 char const *OctetStr::to_string ()
 {
   for ( unsigned long i=0; i < smival.value.string.len; ++i) {
@@ -608,7 +582,6 @@ char const *OctetStr::to_string ()
   return output_buffer.get ();
 }
 
-//================[ general Value = operator ]========================
 SnmpSyntax &OctetStr::operator= (SnmpSyntax &val)
 {
    // protect against assignment from self
@@ -635,7 +608,6 @@ SnmpSyntax &OctetStr::operator= (SnmpSyntax &val)
   return *this;
 }
 
-//================[ format the output into hex ]========================
 char const *OctetStr::to_string_hex ()
 {
   int cnt {};
