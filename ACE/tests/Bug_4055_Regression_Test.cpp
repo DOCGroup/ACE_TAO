@@ -176,7 +176,7 @@ class TestHandler
   : public ACE_Event_Handler
 {
 public:
-  TestHandler (ACE_Reactor* reactor)
+  explicit TestHandler (ACE_Reactor* reactor)
     : reactor_ (reactor),
       timeout_triggered_ (false)
   {}
