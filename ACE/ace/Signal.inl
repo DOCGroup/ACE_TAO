@@ -88,14 +88,14 @@ ACE_INLINE int
 ACE_Sig_Set::is_member (int signo) const
 {
   ACE_TRACE ("ACE_Sig_Set::is_member");
-  return ACE_OS::sigismember (const_cast<sigset_t *> (&this->sigset_), signo);
+  return ACE_OS::sigismember (const_cast<sigset_t *> (std::addressof (this->sigset_)), signo);
 }
 
 ACE_INLINE
 ACE_Sig_Set::operator sigset_t *()
 {
   ACE_TRACE ("ACE_Sig_Set::operator sigset_t *");
-  return &this->sigset_;
+  return std::addressof (this->sigset_);
 }
 
 ACE_INLINE sigset_t
@@ -168,14 +168,14 @@ ACE_INLINE struct sigaction *
 ACE_Sig_Action::get ()
 {
   ACE_TRACE ("ACE_Sig_Action::get");
-  return &this->sa_;
+  return std::addressof (this->sa_);
 }
 
 ACE_INLINE
 ACE_Sig_Action::operator struct sigaction * ()
 {
   ACE_TRACE ("ACE_Sig_Action::operator struct sigaction *");
-  return &this->sa_;
+  return std::addressof (this->sa_);
 }
 
 ACE_INLINE int

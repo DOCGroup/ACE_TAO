@@ -126,7 +126,7 @@ namespace ACE_Utils
   ACE_INLINE ACE_CString*
   UUID::thr_id ()
   {
-    return &this->thr_id_;
+    return std::addressof (this->thr_id_);
   }
 
   ACE_INLINE void
@@ -138,7 +138,7 @@ namespace ACE_Utils
   ACE_INLINE ACE_CString*
   UUID::pid ()
   {
-    return &this->pid_;
+    return std::addressof (this->pid_);
   }
 
   ACE_INLINE void

@@ -26,6 +26,8 @@
 
 #include "ace/OS_NS_signal.h"
 
+#include <memory>
+
 /// Type of the extended signal handler.
 using ACE_Sig_Handler_Ex = void (*) (int, siginfo_t *siginfo, ucontext_t *ucontext);
 
