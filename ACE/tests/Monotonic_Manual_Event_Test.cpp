@@ -19,6 +19,7 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Atomic_Op.h"
+#include <memory>
 
 #if defined (ACE_HAS_MONOTONIC_TIME_POLICY) && defined (ACE_HAS_MONOTONIC_CONDITIONS)
 #  include "ace/Monotonic_Time_Policy.h"
@@ -124,7 +125,7 @@ worker (void *)
           ACE_Time_Value tm_now = initial_timeout->now ();
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT (" (%P|%t) Timed out waiting for start pulse at %#T\n"),
-                      &tm_now));
+                      std::addressof (tm_now)));
           return ACE_THR_FUNC_RETURN_NULL;
         }
       else
@@ -138,7 +139,7 @@ worker (void *)
 
   ACE_Time_Value tm_now = initial_timeout->now ();
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT (" (%P|%t) awake at %#T\n"), &tm_now));
+              ACE_TEXT (" (%P|%t) awake at %#T\n"), std::addressof (tm_now)));
 
   if (++n_awoken < n_workers)
     {
