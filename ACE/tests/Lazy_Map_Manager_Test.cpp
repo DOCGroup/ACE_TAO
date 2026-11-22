@@ -110,7 +110,9 @@ map_test ()
     {
       LAZY_MAP::ENTRY const &entry = *iter;
       if (entry.int_id_ == 1)
-        map.unbind (1);
+        {
+          map.unbind (1);
+        }
     }
 
     display_map (map);
@@ -125,7 +127,9 @@ map_test ()
       {
         LAZY_MAP::ENTRY const &entry = *iter;
         if (entry.int_id_ == 0)
-          map.unbind (0);
+          {
+            map.unbind (0);
+          }
       }
 
     display_map (map);
@@ -140,7 +144,9 @@ map_test ()
       {
         LAZY_MAP::ENTRY const &entry = *iter;
         if (entry.int_id_ == 2)
-          map.unbind (2);
+          {
+            map.unbind (2);
+          }
       }
 
     display_map (map);
@@ -262,7 +268,9 @@ active_map_test ()
     {
       ACTIVE_MAP::ENTRY const &entry = *iter;
       if (entry.int_id_ == 1)
-        map.unbind (keys[1]);
+        {
+          map.unbind (keys[1]);
+        }
     }
 
     display_map (map);
@@ -277,7 +285,9 @@ active_map_test ()
       {
         ACTIVE_MAP::ENTRY const &entry = *iter;
         if (entry.int_id_ == 0)
-          map.unbind (keys[0]);
+          {
+            map.unbind (keys[0]);
+          }
       }
 
     display_map (map);
@@ -292,7 +302,9 @@ active_map_test ()
       {
         ACTIVE_MAP::ENTRY const &entry = *iter;
         if (entry.int_id_ == 2)
-          map.unbind (keys[2]);
+          {
+            map.unbind (keys[2]);
+          }
       }
 
     display_map (map);

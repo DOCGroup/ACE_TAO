@@ -158,7 +158,9 @@ order_consumer (void *args)
     int result = msg_queue->dequeue_head (mb);
 
     if (result == -1)
-      break;
+      {
+        break;
+      }
 
     ++local_count;
 
@@ -211,7 +213,9 @@ order_producer (void *args)
 
       // Enqueue the message block in priority order.
       if (msg_queue->enqueue_prio (mb) == -1)
-        break;
+        {
+          break;
+        }
     }
 
   ACE_TEST_ASSERT (local_count == expected_count);
@@ -354,7 +358,9 @@ performance_consumer (void * args)
   // expected number of messages have been dequeued.
   for (local_count = 0; local_count < expected_count; ++local_count)
     if (msg_queue->dequeue_head (mb) == -1)
-      break;
+      {
+        break;
+      }
 
   // Stop timer, obtain and report its elapsed time.x
   timer.stop ();
@@ -415,7 +421,9 @@ performance_producer (void *args)
 
       // Enqueue the message block in priority order.
       if (msg_queue->enqueue_prio (mb) == -1)
-        break;
+        {
+          break;
+        }
     }
 
   // Stop timer, obtain and report its elapsed time.
