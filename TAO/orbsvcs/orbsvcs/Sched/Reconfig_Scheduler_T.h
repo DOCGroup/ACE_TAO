@@ -313,6 +313,7 @@ protected:
   //           these flags.  Do these still correctly reflect the phases
   //           of the computation?
 
+  /// Flags indicating stability conditions of schedule.
   enum Stability_Flags
   {
     // This should always be zero.
@@ -337,8 +338,6 @@ protected:
       SCHED_PRIORITY_NOT_STABLE |
       SCHED_PROPAGATION_NOT_STABLE
   };
-  // Flags indicating stability conditions of schedule.
-
   /**
    * Internal method to create an RT_Info.  If it does not exist, a
    * new RT_Info is created and inserted into the schedule, and the
