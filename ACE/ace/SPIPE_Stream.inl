@@ -109,7 +109,9 @@ ACE_SPIPE_Stream::send_handle (ACE_HANDLE handle) const
   if (res != static_cast <ssize_t> (sizeof(procID)))
   {
     if(res != -1)
+      {
         errno = ENXIO;
+      }
     return -1;
   }
   if (::WSADuplicateSocket ((SOCKET)handle, procID, &protInfo) == -1)
@@ -121,7 +123,9 @@ ACE_SPIPE_Stream::send_handle (ACE_HANDLE handle) const
   if (res != static_cast <ssize_t> (sizeof(protInfo)))
   {
     if(res != -1)
+      {
         errno = ENXIO;
+      }
     return -1;
   }
   // This is just for synchronization, we will ignore the data
@@ -129,7 +133,9 @@ ACE_SPIPE_Stream::send_handle (ACE_HANDLE handle) const
   if (res != static_cast <ssize_t> (sizeof(procID)))
   {
     if(res != -1)
+      {
         errno = ENXIO;
+      }
     return -1;
   }
   return 0;
@@ -165,14 +171,18 @@ ACE_SPIPE_Stream::recv_handle (ACE_HANDLE &handle) const
   if (res != static_cast <ssize_t> (sizeof(procID)))
   {
     if(res != -1)
+      {
         errno = ENXIO;
+      }
     return -1;
   }
   res = this->recv(&protInfo, sizeof(protInfo));
   if (res != static_cast <ssize_t> (sizeof(protInfo)))
   {
     if(res != -1)
+      {
         errno = ENXIO;
+      }
      return -1;
   }
   handle = ACE_OS::socket (FROM_PROTOCOL_INFO, FROM_PROTOCOL_INFO, FROM_PROTOCOL_INFO,
@@ -187,7 +197,9 @@ ACE_SPIPE_Stream::recv_handle (ACE_HANDLE &handle) const
   if (res != static_cast <ssize_t> (sizeof(procID)))
   {
     if(res != -1)
+      {
         errno = ENXIO;
+      }
     return -1;
   }
   return 0;

@@ -166,7 +166,9 @@ ACE_TLI_Stream::recv (void *buf,
   int f = 0;
 
   if (flags == 0)
-    flags = &f;
+    {
+      flags = &f;
+    }
 
   return ACE::t_rcv (this->get_handle (),
                      buf,
