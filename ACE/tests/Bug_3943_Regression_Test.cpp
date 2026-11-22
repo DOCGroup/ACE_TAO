@@ -342,22 +342,26 @@ Svc_Handler::send_data ()
       if (thresholdActualSend != static_cast<ssize_t>(tryThreshold)/2 + 1)
         {
           if (static_cast<ssize_t>(tryThreshold) == MAX)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) was not able to identify a point ")
-                        ACE_TEXT ("where ACE_OS::sendv does not send a ")
-                        ACE_TEXT ("complete buffer so the Bug #3943 ENOBUFS ")
-                        ACE_TEXT ("condition does not occur on this ")
-                        ACE_TEXT ("platform.\n")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) was not able to identify a point ")
+                          ACE_TEXT ("where ACE_OS::sendv does not send a ")
+                          ACE_TEXT ("complete buffer so the Bug #3943 ENOBUFS ")
+                          ACE_TEXT ("condition does not occur on this ")
+                          ACE_TEXT ("platform.\n")));
+            }
           else
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) was not able to identify a point ")
-                        ACE_TEXT ("where ACE_OS::sendv sent a partial buffer ")
-                        ACE_TEXT ("that was consistent with Bug #3943 ")
-                        ACE_TEXT ("ENOBUFS condition logic, so this test ")
-                        ACE_TEXT ("probably running into other socket ")
-                        ACE_TEXT ("limitations and needs to be redesigned. ")
-                        ACE_TEXT ("Stuck sending %b.\n"),
-                        thresholdActualSend));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) was not able to identify a point ")
+                          ACE_TEXT ("where ACE_OS::sendv sent a partial buffer ")
+                          ACE_TEXT ("that was consistent with Bug #3943 ")
+                          ACE_TEXT ("ENOBUFS condition logic, so this test ")
+                          ACE_TEXT ("probably running into other socket ")
+                          ACE_TEXT ("limitations and needs to be redesigned. ")
+                          ACE_TEXT ("Stuck sending %b.\n"),
+                          thresholdActualSend));
+            }
           close ();
           return;
         }

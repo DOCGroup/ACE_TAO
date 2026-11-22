@@ -38,8 +38,10 @@ public:
       {
         ACE_Message_Block *mb {};
         if (this->getq (mb) == -1)
-          ACE_ERROR_BREAK
-            ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("getq")));
+          {
+            ACE_ERROR_BREAK
+              ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("getq")));
+          }
         if (mb->msg_type () == ACE_Message_Block::MB_HANGUP)
           {
             ACE_DEBUG ((LM_INFO,

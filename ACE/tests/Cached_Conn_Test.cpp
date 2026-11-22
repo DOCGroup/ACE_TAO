@@ -423,7 +423,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Somehow, on Win32, the <listen once> option allows us to create
   // more handles.
   if (!user_has_specified_iterations && listen_once)
-    iterations *= 2;
+    {
+      iterations *= 2;
+    }
 #endif /* ACE_WIN32 */
 
   // Start the test only if options are valid.

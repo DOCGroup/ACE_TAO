@@ -651,34 +651,42 @@ run_tests ()
     ACE_Configuration_Win32Registry RegConfig (HKEY_CURRENT_USER);
     int const result = test_subkey_path (std::addressof (RegConfig));
     if (result)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Win32Registry test HKEY_CURRENT_USER")
-                         ACE_TEXT (" failed (%d)\n"), result),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Win32Registry test HKEY_CURRENT_USER")
+                           ACE_TEXT (" failed (%d)\n"), result),
+                          -1);
+      }
   }
   // test win32 registry implementation.
   HKEY const root = ACE_Configuration_Win32Registry::resolve_key (HKEY_CURRENT_USER,
                                                   ACE_TEXT ("Software\\ACETEST\\test"));
   if (!root)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("resolve_key is broken\n")), -2);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("resolve_key is broken\n")), -2);
+    }
 
   // test resolving of forward slashes
   HKEY const root_fs = ACE_Configuration_Win32Registry::resolve_key (HKEY_CURRENT_USER,
                                                   ACE_TEXT ("Software/ACETEST/test"), 0);
   if (!root_fs)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("resolve_key resolving slashes is broken\n")),
-                      -2);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("resolve_key resolving slashes is broken\n")),
+                        -2);
+    }
 
   ACE_Configuration_Win32Registry RegConfig (root);
   {
     int const result = test (std::addressof (RegConfig));
     if (result)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Win32 registry test root failed (%d)\n"),
-                         result),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Win32 registry test root failed (%d)\n"),
+                           result),
+                          -1);
+      }
   }
 
 #endif /* ACE_WIN32 && !ACE_LACKS_WIN32_REGISTRY */
