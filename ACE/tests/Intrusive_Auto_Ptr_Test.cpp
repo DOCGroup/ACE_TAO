@@ -74,7 +74,7 @@ int run_main (int, ACE_TCHAR *[])
       ACE_TEST_ASSERT (theone->has_refs (1));
       ACE_TEST_ASSERT (!One::was_released ());
 
-      ACE_Intrusive_Auto_Ptr<One> ip2(theone);
+      ACE_Intrusive_Auto_Ptr<One> nested_ptr(theone);
       ACE_TEST_ASSERT (theone->has_refs (2));
       ACE_TEST_ASSERT (!One::was_released ());
     }

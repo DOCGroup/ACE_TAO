@@ -87,10 +87,10 @@ run_main (int, ACE_TCHAR *[])
       ACE_TEST_ASSERT (iter.done () == 0);
 
       // Make sure the current element is what we expect.
-      int *ptr {};
-      iter.next (ptr);
-      ACE_TEST_ASSERT (ptr != nullptr);
-      ACE_TEST_ASSERT (*ptr == i);
+      int *reverse_ptr {};
+      iter.next (reverse_ptr);
+      ACE_TEST_ASSERT (reverse_ptr != nullptr);
+      ACE_TEST_ASSERT (*reverse_ptr == i);
 
       // Move to the previous element in the set.
       iter.retreat ();

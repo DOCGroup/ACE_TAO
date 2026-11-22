@@ -182,27 +182,26 @@ int run_main (int, ACE_TCHAR *[])
 
   // Assert that vector standard iterators work
   {
-    VECTOR vector;
+    VECTOR standard_vector;
     const size_t size = 200;
     const size_t offset = 5;
 
-    ACE_TEST_ASSERT (vector.begin () == vector.end ());
+    ACE_TEST_ASSERT (standard_vector.begin () == standard_vector.end ());
 
-    size_t i;
     for (i = 0; i < size; ++i)
       {
-        vector.push_back (i + offset);
+        standard_vector.push_back (i + offset);
       }
 
     i = 0;
-    for (VECTOR::iterator it = vector.begin (); it != vector.end (); ++it)
+    for (VECTOR::iterator it = standard_vector.begin (); it != standard_vector.end (); ++it)
       {
         ACE_TEST_ASSERT (*it == i++ + offset);
       }
 
-    std::reverse (vector.begin (), vector.end());
+    std::reverse (standard_vector.begin (), standard_vector.end());
     i = size - 1;
-    for (VECTOR::iterator it = vector.begin (); it != vector.end (); ++it)
+    for (VECTOR::iterator it = standard_vector.begin (); it != standard_vector.end (); ++it)
       {
         ACE_TEST_ASSERT (*it == i-- + offset);
       }
