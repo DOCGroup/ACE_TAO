@@ -314,7 +314,8 @@ public:
        {
        public:
          static constexpr int MAX_DIGITS = 31;
-         static constexpr int MAX_STRING_SIZE = 4 + MAX_DIGITS; // includes -, 0, ., terminator
+         /// Includes -, 0, ., terminator.
+         static constexpr int MAX_STRING_SIZE = 4 + MAX_DIGITS;
 
          static constexpr Octet POSITIVE = 0xc;
          static constexpr Octet NEGATIVE = 0xd;
