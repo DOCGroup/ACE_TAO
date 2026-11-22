@@ -11,7 +11,7 @@ ACE_ARGV_Queue_Entry_T<CHAR_TYPE>::ACE_ARGV_Queue_Entry_T (CHAR_TYPE const *arg,
     quote_arg_(quote_arg)
 {}
 
-// Return the number of args
+/// Return the number of args
 template <typename CHAR_TYPE>
 ACE_INLINE int
 ACE_ARGV_T<CHAR_TYPE>::argc () const
@@ -24,7 +24,7 @@ ACE_ARGV_T<CHAR_TYPE>::argc () const
   return this->argc_;
 }
 
-// Return the arguments in a space-separated string
+/// Return the arguments in a space-separated string
 template <typename CHAR_TYPE>
 ACE_INLINE CHAR_TYPE const *
 ACE_ARGV_T<CHAR_TYPE>::buf ()
@@ -39,7 +39,7 @@ ACE_ARGV_T<CHAR_TYPE>::buf ()
   return this->buf_;
 }
 
-// Return the arguments in an entry-per-argument array
+/// Return the arguments in an entry-per-argument array
 
 template <typename CHAR_TYPE>
 ACE_INLINE CHAR_TYPE **
@@ -65,7 +65,7 @@ ACE_ARGV_T<CHAR_TYPE>::argv ()
   return this->argv_;
 }
 
-// Subscript operator.
+/// Subscript operator.
 
 template <typename CHAR_TYPE>
 ACE_INLINE CHAR_TYPE const *
