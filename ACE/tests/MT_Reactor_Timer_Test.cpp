@@ -53,13 +53,13 @@ Time_Handler::setup ()
   ACE_Reactor *r = ACE_Reactor::instance ();
 
   this->timer_id_[2] = r->schedule_timer (this,
-                                          (const void *) 2,
+                                          reinterpret_cast<void const *> (2),
                                           ACE_Time_Value (3));
   this->timer_id_[3] = r->schedule_timer (this,
-                                          (const void *) 3,
+                                          reinterpret_cast<void const *> (3),
                                           ACE_Time_Value (4));
   this->timer_id_[4] = r->schedule_timer (this,
-                                          (const void *) 4,
+                                          reinterpret_cast<void const *> (4),
                                           ACE_Time_Value (5));
   return;
 }
@@ -92,21 +92,21 @@ Time_Handler::svc ()
   this->timer_id_[2] = Time_Handler::TIMER_CANCELLED;
 
   this->timer_id_[1] = r->schedule_timer(this,
-                                         (const void *) 1,
+                                         reinterpret_cast<void const *> (1),
                                          ACE_Time_Value (2));
   // This one may get the callback before we return, so serialize.
   this->lock_.acquire ();
   this->timer_id_[0] = r->schedule_timer(this,
-                                         (const void *) nullptr,
+                                         nullptr,
                                          ACE_Time_Value (0, -5));
   this->lock_.release ();
   ACE_OS::sleep(3);
 
   this->timer_id_[5] = r->schedule_timer(this,
-                                         (const void *)5,
+                                         reinterpret_cast<void const *> (5),
                                          ACE_Time_Value (10));
   this->timer_id_[6] = r->schedule_timer(this,
-                                         (const void *)6,
+                                         reinterpret_cast<void const *> (6),
                                          ACE_Time_Value (12));
 
   ACE_TEST_ASSERT (r->cancel_timer (this->timer_id_[4]) == 1);
