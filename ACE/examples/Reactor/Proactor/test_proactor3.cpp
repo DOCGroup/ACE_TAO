@@ -916,7 +916,9 @@ print_sigmask ()
         COUT (member)
 
         if (member == -1)
-          break;
+          {
+            break;
+          }
     }
 
 #endif /* ACE_WIN32 */

@@ -127,16 +127,20 @@ FT_EventService::parse_args (int argc, ACE_TCHAR *argv [])
   if (member != nullptr)
     {
       if (ACE_OS::strcasecmp (member, "PRIMARY") == 0)
-        this->membership_ = TAO_FTEC_Event_Channel::PRIMARY;
+        {
+          this->membership_ = TAO_FTEC_Event_Channel::PRIMARY;
+        }
       else if (ACE_OS::strcasecmp (member, "BACKUP") == 0)
-        this->membership_ = TAO_FTEC_Event_Channel::BACKUP;
+        {
+          this->membership_ = TAO_FTEC_Event_Channel::BACKUP;
+        }
     }
 
   char const * const n_threads = std::getenv ("FTEC_NUM_THREAD");
   if (n_threads != nullptr)
-  {
-    this->num_threads_ = std::atoi (n_threads);
-  }
+    {
+      this->num_threads_ = std::atoi (n_threads);
+    }
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("d:jn:ps:"));
   int opt {};
@@ -159,9 +163,13 @@ FT_EventService::parse_args (int argc, ACE_TCHAR *argv [])
           break;
         case 's':
           if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT ("global")) == 0)
-            this->global_scheduler_ = true;
+            {
+              this->global_scheduler_ = true;
+            }
           else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT ("local")) == 0)
-            this->global_scheduler_ = false;
+            {
+              this->global_scheduler_ = false;
+            }
           else
             {
               ORBSVCS_DEBUG ((LM_DEBUG,

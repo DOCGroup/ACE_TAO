@@ -35,7 +35,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
     }
   if (use_thread_per_consumer)
-    TAO_EC_TPC_Factory::init_svcs ();
+    {
+      TAO_EC_TPC_Factory::init_svcs ();
+    }
   else
   {
     TAO_EC_Default_Factory::init_svcs ();
