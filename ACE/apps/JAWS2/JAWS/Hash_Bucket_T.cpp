@@ -328,7 +328,9 @@ JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>
       {
         iter.next (item);
         if (item && EQ_FUNC (item->ext_id_, ext_id))
-          break;
+          {
+            break;
+          }
         iter.advance ();
       }
 

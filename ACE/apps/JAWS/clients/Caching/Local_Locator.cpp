@@ -103,7 +103,9 @@ ACE_URL_Local_Locator::withdraw_offer (const ACE_WString &offer_id)
       if (offer_id == *item->id_)
         {
           if (this->repository_.remove (*item) == 0)
-            return 0
+            {
+              return 0;
+            }
           else
             {
               errno = ACE_URL_Locator::UNKNOWN;

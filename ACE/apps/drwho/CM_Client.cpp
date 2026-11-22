@@ -58,7 +58,9 @@ CM_Client::receive (int timeout)
                                     reinterpret_cast<sockaddr *> (std::addressof (this->sin_)),
                                     std::addressof (sin_len));
           if (n < 0)
-            return -1;
+            {
+              return -1;
+            }
           else
             {
               if (Options::get_opt (Options::DEBUGGING) != 0)

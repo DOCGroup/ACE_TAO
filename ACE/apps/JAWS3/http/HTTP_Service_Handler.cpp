@@ -21,7 +21,9 @@ JAWS_HTTP_Service_Handler::open (void *)
 {
   int const result = JAWS_Concurrency::instance ()->putq (this);
   if (result < 0)
-    return -1;
+    {
+      return -1;
+    }
 
   return 0;
 }

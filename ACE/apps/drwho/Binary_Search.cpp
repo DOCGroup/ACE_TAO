@@ -22,7 +22,9 @@ Binary_Search::get_next_entry ()
   // things up for the next round!
 
   if (this->current_ptr_ < this->sorted_record_.get () + this->count_)
-    return *this->current_ptr_++;
+    {
+      return *this->current_ptr_++;
+    }
   else
     {
       this->current_ptr_ = nullptr;
