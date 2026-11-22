@@ -111,26 +111,26 @@ namespace TAO
      */
     static ACE_THR_FUNC_RETURN thr_func (void * arg);
 
-    ////////////////////
-    // Forbidden methods
   private:
+    /// @name Disabled operations
+    /// @{
     Fault_Detector_i () = delete;
     Fault_Detector_i (Fault_Detector_i const &) = delete;
     Fault_Detector_i (Fault_Detector_i &&) = delete;
     Fault_Detector_i & operator= (Fault_Detector_i const &) = delete;
     Fault_Detector_i & operator= (Fault_Detector_i &&) = delete;
+    /// @}
 
-    ///////////////
-    // Static data
-  private:
+    /// @name Static data
+    /// @{
     /**
      * Time between polls for all fault detectors in this process.
      */
     static ACE_Time_Value sleep_time_;
+    /// @}
 
-    ///////////////
-    // Data members
-  private:
+    /// @name Data members
+    /// @{
     /**
      * The factory that "owns" us."
      */
@@ -170,6 +170,7 @@ namespace TAO
      * An atomic flag.  If true, this fault detector should leave.
      */
     std::atomic<bool> quit_requested_ {};
+    /// @}
   };
 }   // namespace TAO
 

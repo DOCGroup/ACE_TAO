@@ -262,9 +262,9 @@ namespace TAO
 
     virtual char const * get_name ();
 
-    /////////////////////////
-    // Implementation methods
   private:
+    /// @name Implementation methods
+    /// @{
     int increment_version ();
 
     void distribute_iogr ();
@@ -275,20 +275,16 @@ namespace TAO
     virtual PortableGroup::ObjectGroup_ptr add_member_to_iogr(CORBA::Object_ptr member);
 
     void clear_members_map ();
+    /// @}
 
-    /////////////////////////
-    // Forbidden methods
   private:
+    /// @name Disabled operations
+    /// @{
     PG_Object_Group ();
-    /////////////////
-    // Static Methods
-  public:
-    ///////////////
-    // Static Data
-  private:
-    ///////////////
-    // Data Members
-  private:
+    /// @}
+
+    /// @name Data members
+    /// @{
     /**
      * Protect internal state.
      */
@@ -352,10 +348,10 @@ namespace TAO
     TAO::PG_Property_Set properties_;
 
     /// Cached property information.
-
     PortableGroup::InitialNumberMembersValue initial_number_members_ {};
     PortableGroup::MinimumNumberMembersValue minimum_number_members_ {};
     PortableGroup::FactoryInfos group_specific_factories_;
+    /// @}
   };
 } // namespace TAO
 

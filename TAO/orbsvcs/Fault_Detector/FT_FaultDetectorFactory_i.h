@@ -163,9 +163,9 @@ namespace TAO
 
     CORBA::Boolean is_alive () override;
 
-    /////////////////////////
-    // Implementation methods
   private:
+    /// @name Implementation methods
+    /// @{
     FT_FaultDetectorFactory_i (FT_FaultDetectorFactory_i const &) = delete;
     FT_FaultDetectorFactory_i (FT_FaultDetectorFactory_i &&) = delete;
     FT_FaultDetectorFactory_i & operator= (FT_FaultDetectorFactory_i const &) = delete;
@@ -185,10 +185,10 @@ namespace TAO
      * Clean house for factory shut down.
      */
     void shutdown_i ();
+    /// @}
 
-    ///////////////
-    // Data Members
-  private:
+    /// @name Data members
+    /// @{
     /**
      * Protect internal state.
      * Mutex should be locked by corba methods, or by
@@ -298,6 +298,7 @@ namespace TAO
      * boolean: starts false.  Set to true when it's time to quit.
      */
     bool quit_requested_ {};
+    /// @}
   };
 }   // namespace TAO
 

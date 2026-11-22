@@ -331,9 +331,9 @@ namespace TAO
 
     /// @}
 
-    /////////////////////////
-    // Implementation methods
   private:
+    /// @name Implementation methods
+    /// @{
     /**
      * Write this factory's IOR to a file
      */
@@ -342,17 +342,19 @@ namespace TAO
     /// Registers the Fault Notifier with the Replication Manager.
     void register_fault_notifier_i (
         FT::FaultNotifier_ptr fault_notifier);
+    /// @}
 
-    ////////////////
-    // Forbidden methods
+    /// @name Disabled operations
+    /// @{
     FT_ReplicationManager (FT_ReplicationManager const &) = delete;
     FT_ReplicationManager (FT_ReplicationManager &&) = delete;
     FT_ReplicationManager & operator= (FT_ReplicationManager const &) = delete;
     FT_ReplicationManager & operator= (FT_ReplicationManager &&) = delete;
+    /// @}
 
-    ///////////////
-    // Data Members
   private:
+    /// @name Data members
+    /// @{
     /// The orb
     CORBA::ORB_var orb_;
 
@@ -392,6 +394,7 @@ namespace TAO
 
     /// Quit flag.
     bool quit_ {};
+    /// @}
   };
 } // namespace TAO
 
