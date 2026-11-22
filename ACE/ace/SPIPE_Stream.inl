@@ -18,8 +18,8 @@ ACE_SPIPE_Stream::get_remote_addr (ACE_SPIPE_Addr &remote_sap) const
   return 0;
 }
 
-// Send exactly N bytes from BUF to this socket.  Keeping trying until
-// this many bytes are sent.
+/// Send exactly N bytes from BUF to this socket.  Keeping trying until
+/// this many bytes are sent.
 
 ACE_INLINE ssize_t
 ACE_SPIPE_Stream::send_n (const void *buf, size_t n) const
@@ -28,8 +28,8 @@ ACE_SPIPE_Stream::send_n (const void *buf, size_t n) const
   return ACE::write_n (this->get_handle (), buf, n);
 }
 
-// Receive exactly N bytes from this socket into BUF.  Keep trying
-// until this many bytes are received.
+/// Receive exactly N bytes from this socket into BUF.  Keep trying
+/// until this many bytes are received.
 
 ACE_INLINE ssize_t
 ACE_SPIPE_Stream::recv_n (void *buf, size_t n) const
@@ -254,7 +254,7 @@ ACE_SPIPE_Stream::sendv_n (const iovec iov[],
                         n);
 }
 
-// Recv an n byte message from the Stream.
+/// Recv an n byte message from the Stream.
 
 ACE_INLINE ssize_t
 ACE_SPIPE_Stream::recvv_n (iovec iov[],
@@ -268,7 +268,7 @@ ACE_SPIPE_Stream::recvv_n (iovec iov[],
                         n);
 }
 
-// Send an <iovec> of size <n> to the Stream.
+/// Send an <iovec> of size <n> to the Stream.
 
 ACE_INLINE ssize_t
 ACE_SPIPE_Stream::sendv (const iovec iov[],

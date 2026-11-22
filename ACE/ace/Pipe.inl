@@ -59,7 +59,7 @@ ACE_Pipe::send_n (const ACE_Message_Block *message_block,
 #endif /* ACE_WIN32 */
 }
 
-// Recv an n byte message from the file.
+/// Recv an n byte message from the file.
 
 ACE_INLINE ssize_t
 ACE_Pipe::recvv_n (iovec iov[], int n) const
@@ -78,7 +78,7 @@ ACE_Pipe::recvv_n (iovec iov[], int n) const
 #endif /* ACE_WIN32 */
 }
 
-// Send an <iovec> of size <n> to the file.
+/// Send an <iovec> of size <n> to the file.
 
 ACE_INLINE ssize_t
 ACE_Pipe::sendv (const iovec iov[], int n) const
@@ -91,8 +91,8 @@ ACE_Pipe::sendv (const iovec iov[], int n) const
 #endif /* ACE_WIN32 */
 }
 
-// Send exactly N bytes from BUF to this file.  Keeping trying until
-// this many bytes are sent.
+/// Send exactly N bytes from BUF to this file.  Keeping trying until
+/// this many bytes are sent.
 
 ACE_INLINE ssize_t
 ACE_Pipe::send_n (const void *buf, size_t n) const
@@ -105,8 +105,8 @@ ACE_Pipe::send_n (const void *buf, size_t n) const
 #endif /* ACE_WIN32 */
 }
 
-// Receive exactly N bytes from this file into BUF.  Keep trying until
-// this many bytes are received.
+/// Receive exactly N bytes from this file into BUF.  Keep trying until
+/// this many bytes are received.
 
 ACE_INLINE ssize_t
 ACE_Pipe::recv_n (void *buf, size_t n) const
