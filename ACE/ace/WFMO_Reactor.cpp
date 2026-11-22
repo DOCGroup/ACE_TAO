@@ -1130,9 +1130,11 @@ ACE_WFMO_Reactor::ACE_WFMO_Reactor (ACE_Sig_Handler *sh,
     deactivated_ (0)
 {
   if (this->open (ACE_WFMO_Reactor::DEFAULT_SIZE, 0, sh, tq, 0, notify) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("WFMO_Reactor")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("WFMO_Reactor")));
+    }
 }
 
 ACE_WFMO_Reactor::ACE_WFMO_Reactor (size_t size,
@@ -1157,9 +1159,11 @@ ACE_WFMO_Reactor::ACE_WFMO_Reactor (size_t size,
   ACE_UNUSED_ARG (unused);
 
   if (this->open (size, 0, sh, tq, 0, notify) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("WFMO_Reactor")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("WFMO_Reactor")));
+    }
 }
 #if defined (_MSC_VER)
 #  pragma warning (pop)
@@ -1184,13 +1188,19 @@ ACE_WFMO_Reactor::open (size_t size,
 
   // If we are already open, return -1
   if (this->open_for_business_)
-    return -1;
+    {
+      return -1;
+    }
 
   // Timer Queue
   if (this->delete_timer_queue_)
-    delete this->timer_queue_;
+    {
+      delete this->timer_queue_;
+    }
   else if (this->timer_queue_)
-    this->timer_queue_->close ();
+    {
+      this->timer_queue_->close ();
+    }
 
   if (tq == nullptr)
     {
@@ -1207,7 +1217,9 @@ ACE_WFMO_Reactor::open (size_t size,
 
   // Signal Handler
   if (this->delete_signal_handler_)
-    delete this->signal_handler_;
+    {
+      delete this->signal_handler_;
+    }
 
   if (sh == nullptr)
     {
@@ -1244,14 +1256,20 @@ ACE_WFMO_Reactor::open (size_t size,
   // Open the handle repository.  Two additional handles for internal
   // purposes
   if (this->handler_rep_.open (size + 2) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("opening handler repository")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("opening handler repository")),
+                           -1);
+    }
   else
-    this->delete_handler_rep_ = true;
+    {
+      this->delete_handler_rep_ = true;
+    }
 
   if (this->notify_handler_ != 0 && this->delete_notify_handler_)
-    delete this->notify_handler_;
+    {
+      delete this->notify_handler_;
+    }
 
   this->notify_handler_ = notify;
 
@@ -1262,9 +1280,13 @@ ACE_WFMO_Reactor::open (size_t size,
                       -1);
 
       if (this->notify_handler_ == nullptr)
-        return -1;
+        {
+          return -1;
+        }
       else
-        this->delete_notify_handler_ = true;
+        {
+          this->delete_notify_handler_ = true;
+        }
     }
 
   /* NOTE */
@@ -1272,18 +1294,22 @@ ACE_WFMO_Reactor::open (size_t size,
 
   // Open the notification handler
   if (this->notify_handler_->open (this, this->timer_queue_) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("opening notify handler ")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("opening notify handler ")),
+                           -1);
+    }
 
   // Register for <wakeup_all_threads> event
   if (this->register_handler (std::addressof (this->wakeup_all_threads_handler_),
                               this->wakeup_all_threads_.handle ()) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("registering thread wakeup handler")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("registering thread wakeup handler")),
+                           -1);
+    }
 
   // Since we have added two handles into the handler repository,
   // update the <handler_repository_>
@@ -1306,7 +1332,9 @@ int
 ACE_WFMO_Reactor::set_sig_handler (ACE_Sig_Handler *signal_handler)
 {
   if (this->signal_handler_ != nullptr && this->delete_signal_handler_)
-    delete this->signal_handler_;
+    {
+      delete this->signal_handler_;
+    }
   this->signal_handler_ = signal_handler;
   this->delete_signal_handler_ = false;
   return 0;
@@ -1412,7 +1440,9 @@ ACE_WFMO_Reactor::register_handler_i (ACE_HANDLE event_handle,
 
   // Make sure that the <handle> is valid
   if (io_handle == ACE_INVALID_HANDLE)
-    io_handle = event_handler->get_handle ();
+    {
+      io_handle = event_handler->get_handle ();
+    }
 
   if (this->handler_rep_.invalid_handle (io_handle))
     {
