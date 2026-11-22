@@ -47,15 +47,21 @@ ACE_XTI_ATM_Mcast::add_leaf (ACE_TLI_Stream &current_stream,
         {
           int const event = ACE_OS::t_look(current_stream.get_handle());
           if (event != TNODATA && event != T_DATA)
-            return -1;
+            {
+              return -1;
+            }
           else
-            // If this doesn't work for asynchronous calls we need to call
-            // the XTI/ATM t_rcvleafchange() function to check for t_addleaf
-            // completion.
-            return complete (current_stream, 0, timeout);
+            {
+              // If this doesn't work for asynchronous calls we need to call
+              // the XTI/ATM t_rcvleafchange() function to check for t_addleaf
+              // completion.
+              return complete (current_stream, 0, timeout);
+            }
         }
       else
-        return -1;
+        {
+          return -1;
+        }
     }
 
   return 0;

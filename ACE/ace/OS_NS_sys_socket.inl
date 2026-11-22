@@ -399,9 +399,13 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
       ACE_OS::set_errno_to_wsa_last_error ();
       if (errno == WSAEMSGSIZE &&
           ACE_BIT_ENABLED (flags, MSG_PEEK))
-        return shortened_len;
+        {
+          return shortened_len;
+        }
       else
-        return -1;
+        {
+          return -1;
+        }
     }
   else
     {
@@ -488,7 +492,9 @@ ACE_OS::recvmsg (ACE_HANDLE handle, struct msghdr *msg, int flags)
       return -1;
     }
   else
-    return bytes_received;
+    {
+      return bytes_received;
+    }
 # else /* ACE_HAS_WINSOCK2 */
   ACE_SOCKCALL_RETURN (::recvmsg (handle, msg, flags), ssize_t, -1);
 # endif /* ACE_HAS_WINSOCK2 */
@@ -549,7 +555,9 @@ ACE_OS::recvv (ACE_HANDLE handle,
       return -1;
     }
   else
-    return (ssize_t) bytes_received;
+    {
+      return (ssize_t) bytes_received;
+    }
 #else
   return ACE_OS::readv (handle, buffers, n);
 #endif /* ACE_HAS_WINSOCK2 */
@@ -649,7 +657,9 @@ ACE_OS::sendmsg (ACE_HANDLE handle,
       return -1;
     }
   else
-    return (ssize_t) bytes_sent;
+    {
+      return (ssize_t) bytes_sent;
+    }
 # elif defined (ACE_HAS_NONCONST_SENDMSG)
   ACE_SOCKCALL_RETURN (::sendmsg (handle,
                                   const_cast<struct msghdr *>(msg),
