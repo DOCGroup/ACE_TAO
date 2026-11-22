@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Codeset_Manager_Factory.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_CODESET_MANAGER_FACTORY_H
 #define TAO_CODESET_MANAGER_FACTORY_H

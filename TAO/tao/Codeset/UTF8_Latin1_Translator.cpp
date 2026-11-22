@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    UTF8_Latin1_Translator.cpp
  *
@@ -9,7 +8,6 @@
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
 
 #include "tao/Codeset/UTF8_Latin1_Translator.h"
 #include "tao/debug.h"

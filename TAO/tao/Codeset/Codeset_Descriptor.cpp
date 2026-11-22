@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Codeset_Descriptor.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author   Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
 
 #include "tao/Codeset/Codeset_Descriptor.h"
 #include "tao/Codeset/Codeset_Translator_Factory.h"

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    UTF8_Latin1_Translator.h
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
 
 #ifndef UTF8_LATIN1_TRANSLATOR_H
 #define UTF8_LATIN1_TRANSLATOR_H

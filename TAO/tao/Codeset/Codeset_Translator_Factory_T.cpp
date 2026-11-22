@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Codeset_Translator_Factory_T.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_CODESET_TRANSLATOR_FACTORY_T_CPP
 #define TAO_CODESET_TRANSLATOR_FACTORY_T_CPP

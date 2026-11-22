@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   Codeset_Translator_Factory.h
  *
  *  @author   Phil Mesnier <mesnier_p@ociweb.com>
  */
-// ===================================================================
 
 #ifndef TAO_CODESET_TRANSLATOR_FACTORY_H
 #define TAO_CODESET_TRANSLATOR_FACTORY_H

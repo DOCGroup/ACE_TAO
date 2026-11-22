@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file  UTF16_BOM_Translator.h
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
 
 #ifndef UTF16_BOM_TRANSLATOR_H
 #define UTF16_BOM_TRANSLATOR_H

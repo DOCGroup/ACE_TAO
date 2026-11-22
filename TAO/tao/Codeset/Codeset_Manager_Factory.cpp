@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-// =================================================================
 /**
  * @file Codeset_Manager_Factory.cpp
  *
  * @author Phil Mesnier <mesnier_p@ociweb.com>
  */
-// =================================================================
 
 #include "tao/Codeset/Codeset_Manager_Factory.h"
 #include "ace/Service_Config.h"

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Codeset_Descriptor.h
  *
  *  @author Phil Mesnier
  */
-//=============================================================================
 
 #ifndef TAO_CODESET_DESCRIPTOR_H
 #define TAO_CODESET_DESCRIPTOR_H

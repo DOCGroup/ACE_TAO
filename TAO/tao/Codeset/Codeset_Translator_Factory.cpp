@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Codeset_Translator_Factory.cpp
  *
@@ -9,7 +8,6 @@
  *
  *  @author   Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
 
 #include "tao/Codeset/Codeset_Translator_Factory.h"
 #include "tao/CDR.h"

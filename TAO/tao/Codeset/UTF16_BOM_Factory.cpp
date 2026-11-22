@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    UTF16_BOM_Factory.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
 
 #include "tao/debug.h"
 #include "tao/Codeset/UTF16_BOM_Factory.h"
