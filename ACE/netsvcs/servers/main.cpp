@@ -100,10 +100,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_Service_Object_Ptr sp_4 (ACE_SVC_INVOKE (ACE_Token_Acceptor));
 
           if (sp_4->init (1, l_argv.data ()) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("%p\n"),
-                               ACE_TEXT ("Token Service")),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("%p\n"),
+                                 ACE_TEXT ("Token Service")),
+                                1);
+            }
 #endif /* ACE_HAS_TOKENS_LIBRARY */
 
           ACE_TCHAR thr_logging_port[] =

@@ -75,7 +75,9 @@ ACE_FlReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
         }
 
       while (t > 0)
-        t = Fl::wait (t);
+        {
+          t = Fl::wait (t);
+        }
 
       // Reset the width, in case it changed during the upcalls.
       size_t const updated_width = this->handler_rep_.max_handlep1 ();

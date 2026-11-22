@@ -150,7 +150,9 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
 
   // Send the log record to the log message receiver for processing.
   if (ACE_BIT_ENABLED (ACE_Log_Msg::instance ()->flags (), ACE_Log_Msg::STDERR))
-    receiver ().log_record (this->host_name (), log_record);
+    {
+      receiver ().log_record (this->host_name (), log_record);
+    }
 
   ostream *orig_ostream = ACE_Log_Msg::instance ()->msg_ostream ();
   receiver ().log_output (this->host_name (),
@@ -248,18 +250,22 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::op
 {
   // Shut off non-blocking IO if it was enabled...
   if (this->peer ().disable (ACE_NONBLOCK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("disable")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("disable")),
+                        -1);
+    }
   ACE_PEER_STREAM_ADDR client_addr;
 
   // Determine the address of the client and display it.
   if (this->peer ().get_remote_addr (client_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("get_remote_addr")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("get_remote_addr")),
+                        -1);
+    }
 
 #if !defined (__GNUG__)
   this->receiver_.m_ =
@@ -329,10 +335,12 @@ ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::init (int argc, ACE_TCHAR *argv[])
 
   // Figure out what port we're really bound to.
   if (this->acceptor ().get_local_addr (server_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("get_local_addr")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("get_local_addr")),
+                        -1);
+    }
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("starting up Logging Server at port %d on handle %H\n"),
               server_addr.get_port_number (),
@@ -401,13 +409,17 @@ ACE_Server_Logging_Handler<LOG_MESSAGE_RECEIVER>::open (void *)
 {
   // call base class open_common
   if (this->open_common () != 0)
-    return -1;
+    {
+      return -1;
+    }
 
   // Register ourselves with the Reactor to enable subsequent
   // dispatching.
   if (ACE_Reactor::instance ()->register_handler
       (this, ACE_Event_Handler::READ_MASK) == -1)
-    return -1;
+    {
+      return -1;
+    }
   return 0;
 }
 
@@ -428,17 +440,21 @@ ACE_Thr_Server_Logging_Handler<LOG_MESSAGE_RECEIVER>::open (void *)
 {
   // call base class open_common
   if (this->open_common () != 0)
-    return -1;
+    {
+      return -1;
+    }
 
   // Spawn a new thread of control to handle logging records with the
   // client using a thread-per-connection concurrency model.  Note
   // that this implicitly uses the <ACE_Thread_Manager::instance> to
   // control all the threads.
   if (this->activate (THR_BOUND | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawn")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawn")),
+                        -1);
+    }
   return 0;
 }
 
@@ -452,7 +468,9 @@ ACE_Thr_Server_Logging_Handler<LOG_MESSAGE_RECEIVER>::svc ()
   // Loop until the client terminates the connection or an error occurs.
 
   while ((result = this->handle_input ()) == 0)
-    continue;
+    {
+      continue;
+    }
 
   return result;
 }
