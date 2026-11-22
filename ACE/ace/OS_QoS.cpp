@@ -1,14 +1,8 @@
-//=============================================================================
-///**
-// *  @file   OS_QoS.cpp
-// *
-// *
-// *
-// *  @brief  Contains OS specific data structures for QoS networking.
-// *
-// *  @author Craig Rodrigues  <crodrigu@bbn.com>
-// */
-//=============================================================================
+/**
+ * @file OS_QoS.cpp
+ * @brief Contains OS specific data structures for QoS networking.
+ * @author Craig Rodrigues <crodrigu@bbn.com>
+ */
 
 #include "ace/OS_QoS.h"
 #include "ace/OS_NS_errno.h"
