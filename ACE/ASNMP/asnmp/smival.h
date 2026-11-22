@@ -25,12 +25,9 @@
   derivatives based upon this software code base.
 =====================================================================*/
 
-//----[ includes ]-----------------------------------------------------
 #include "asnmp/smi.h"
 #include "asnmp/ASNMP_Export.h"
 #include "ace/os_include/os_stddef.h"
-
-//----[ macros ]-------------------------------------------------------
 
 /// SMI value structure conforming with the SMI RFC.
 ///

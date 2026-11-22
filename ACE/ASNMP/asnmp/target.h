@@ -24,7 +24,6 @@
   derivatives based upon this software code base.
 =====================================================================*/
 
-//----[ includes ]------------------------------------------------
 #include "ace/INET_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -35,14 +34,13 @@
 #include "asnmp/oid.h"
 #include "asnmp/octet.h"
 
-//----[ enumerated types for SNMP versions ]-------------------------
 enum snmp_version {
    version1,       // 0
    version2c,       // 1 (Cisco IOS does not have IOS v2c agent available yet)
    version3        // 2 (IETF working on this version)
 };
 
-// targets contain the following default properties
+/// Default properties for SNMP targets.
 enum ASNMP_Defs {
   DEF_TIMEOUT = 1,              // unit: seconds
   DEF_RETRIES = 1,              // no retry default
@@ -58,8 +56,6 @@ enum ASNMP_Defs {
 #define READ_COMM_STR "public"
 #define WRITE_COMM_STR "private"
 
-// Abstract class used to provide a virtual interface into Targets
-//
 /**
  * @class SnmpTarget
  *
@@ -171,9 +167,6 @@ protected:
   /// @}
 };
 
-//----[  UdpTarget class ]----------------------------------------------
-// UDP/IP transport using "community string" based agents  (targets)
-//
 /**
  * @class UdpTarget
  *
