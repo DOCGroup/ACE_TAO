@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    nslist.cpp
  *
@@ -8,7 +7,6 @@
  *  @date 1999-06-03
  *  Enhanced 21 Jun, 2006 Simon Massey <sma@prismtech.com>
  */
-//=============================================================================
 
 #include "ace/SString.h"
 #include "orbsvcs/CosNamingC.h"
@@ -30,7 +28,6 @@
 #include <cstdio>
 #include <cstring>
 
-//============================================================================
 namespace
 {
   CORBA::ORB_var orb;
@@ -62,7 +59,6 @@ namespace
   CORBA::Object_ptr set_rtt (CORBA::Object_ptr obj,
                              ACE_Time_Value const &relative_roundtrip_timeout);
 
-  //==========================================================================
   class NestedNamingContexts
   {
   public:
@@ -106,7 +102,6 @@ namespace
   };
   NestedNamingContexts const *NestedNamingContexts::pBottom {};
 
-  //==========================================================================
   void
   get_tag_name (CORBA::ULong tag, ACE_CString& tag_string)
   {
@@ -142,7 +137,6 @@ namespace
       }
   }
 
-  //==========================================================================
   void
   display_endpoint_info (CORBA::Object_ptr obj,
                          size_t const level,
@@ -203,7 +197,6 @@ namespace
     ACE_DEBUG ((LM_DEBUG, " Endpoint: %C\n", buf));
   }
 
-  //==========================================================================
   // Display NS entries from a finite list.
   void
   show_chunk (const CosNaming::NamingContext_ptr nc,
@@ -341,7 +334,6 @@ namespace
       }
   }
 
-  //==========================================================================
   void
   list_context (const CosNaming::NamingContext_ptr nc,
                 size_t level,
@@ -369,7 +361,6 @@ namespace
       }
   }
 
-  //==========================================================================
   CORBA::Object_ptr
   set_rtt (CORBA::Object_ptr obj,
            ACE_Time_Value const &relative_roundtrip_timeout)
@@ -400,7 +391,6 @@ namespace
   }
 } // end of local unnamed namespace
 
-//============================================================================
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
