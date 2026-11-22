@@ -173,7 +173,7 @@ Test_Task::handle_input (ACE_HANDLE)
 static void *
 worker (void *args)
 {
-  ACE_Reactor *reactor = reinterpret_cast<ACE_Reactor *> (args);
+  ACE_Reactor *reactor = static_cast<ACE_Reactor *> (args);
 
   // Make this thread the owner of the Reactor's event loop.
   reactor->owner (ACE_Thread::self ());
@@ -230,7 +230,7 @@ run_main (int, ACE_TCHAR *[])
 
   if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (worker),
-       (void *) ACE_Reactor::instance (),
+       ACE_Reactor::instance (),
        THR_BOUND | THR_DETACHED) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -240,7 +240,7 @@ run_main (int, ACE_TCHAR *[])
     }
 
   else if (ACE_Thread_Manager::instance ()->spawn
-      (ACE_THR_FUNC (worker), (void *) &reactor,
+      (ACE_THR_FUNC (worker), &reactor,
        THR_BOUND | THR_DETACHED) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

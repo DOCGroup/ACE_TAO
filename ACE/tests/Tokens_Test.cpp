@@ -55,7 +55,7 @@ public:
 static void *
 run_thread (void *vp)
 {
-  Test_Params *tp = (Test_Params *) vp;
+  Test_Params *tp = static_cast<Test_Params *> (vp);
   ACE_Token_Collection collection (1, tp->collection_name_);
   collection.insert (*(tp->token1_));
   collection.insert (*(tp->token2_));
@@ -162,7 +162,7 @@ run_test (ACE_Token_Proxy *A,
   ACE_Thread_Manager *mgr = ACE_Thread_Manager::instance ();
 
   if (mgr->spawn (ACE_THR_FUNC (run_thread),
-                 (void *) &tp1,
+                  &tp1,
                   THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        ACE_TEXT ("%p\n"),
@@ -170,7 +170,7 @@ run_test (ACE_Token_Proxy *A,
                       -1);
 
   if (mgr->spawn (ACE_THR_FUNC (run_thread),
-                 (void *) &tp2,
+                  &tp2,
                   THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        ACE_TEXT ("%p\n"),
@@ -178,7 +178,7 @@ run_test (ACE_Token_Proxy *A,
                       -1);
 
   if (mgr->spawn (ACE_THR_FUNC (run_thread),
-                 (void *) &tp3,
+                  &tp3,
                   THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        ACE_TEXT ("%p\n"),
