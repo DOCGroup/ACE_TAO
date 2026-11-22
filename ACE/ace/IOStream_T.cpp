@@ -3,6 +3,7 @@
 
 #include "ace/IOStream_T.h"
 #include "ace/OS_Memory.h"
+#include "ace/OS_NS_ctype.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -163,7 +164,7 @@ ACE_IOStream<STREAM>::operator>> (ACE_IOStream_String &v)
       this->get (c);
 
       for (v = c;
-           this->get (c) && !isspace (c);
+           this->get (c) && !ACE_OS::ace_isspace (c);
            v += c)
         continue;
     }
@@ -211,7 +212,7 @@ operator>> (STREAM &stream,
   // if we don't have a quote, append until we see space
   if (c != '"')
     {
-      for (str = c; stream.get (c) && !isspace (c); str += c)
+      for (str = c; stream.get (c) && !ACE_OS::ace_isspace (c); str += c)
         {
           continue;
         }
