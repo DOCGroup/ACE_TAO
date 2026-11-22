@@ -51,10 +51,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       float p {static_cast<float> (
         std::floor (std::pow (2, poidev (std::log (2 * median) / std::log (2)) - 1)))};
       if (p > maximum)
-        p = maximum;
+        {
+          p = maximum;
+        }
       p *= 1024;
       if (p < 1.0)
-        p = 1.0;
+        {
+          p = 1.0;
+        }
       long size = static_cast<long> (p);
       if (i == number - 1)
         {
@@ -73,7 +77,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       std::unique_ptr<FILE, int (*) (FILE *)> fp (
         std::fopen (filename.data (), "w+b"), std::fclose);
       if (!fp)
-        ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output file %s\n", filename.data ()), 1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output file %s\n", filename.data ()), 1);
+        }
 
       while (size > 75)
         {

@@ -160,7 +160,9 @@ ACE_URL_Local_Locator::modify_offer (const ACE_WString &offer_id,
           return -1;
         }
       if (offer_id == *item->id_)
-        target = item;
+        {
+          target = item;
+        }
     }
 
   if (target != nullptr)  // Aha, we found a target to work on
@@ -238,7 +240,9 @@ ACE_URL_Local_Locator::modify_offer (const ACE_WString &offer_id,
         item->offer_->url_properties ()[i] = working[i];
 
       if (url != nullptr)
-        item->offer_->url (url->fast_rep ()); // replace URL location.
+        {
+          item->offer_->url (url->fast_rep ()); // replace URL location.
+        }
       return 0;
     }
   errno = ACE_URL_Locator::NO_SUCH_OFFER;

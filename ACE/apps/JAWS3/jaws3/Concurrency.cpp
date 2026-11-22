@@ -54,15 +54,21 @@ JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>
       }
 
       if (ACE_OS::strcasecmp (concurrency, "TPR") == 0)
-        this->impl_ = JAWS_TPR_Concurrency::instance ();
+        {
+          this->impl_ = JAWS_TPR_Concurrency::instance ();
+        }
       else if (ACE_OS::strcasecmp (concurrency, "TPOOL") == 0)
-        this->impl_ = JAWS_TPOOL_Concurrency::instance ();
+        {
+          this->impl_ = JAWS_TPOOL_Concurrency::instance ();
+        }
       else if (ACE_OS::strcasecmp (concurrency, "THYBRID") == 0)
-        this->impl_ = JAWS_THYBRID_Concurrency::instance ();
+        {
+          this->impl_ = JAWS_THYBRID_Concurrency::instance ();
+        }
       else
-      {
-        this->impl_ = JAWS_THYBRID_Concurrency::instance ();
-      }
+        {
+          this->impl_ = JAWS_THYBRID_Concurrency::instance ();
+        }
         // Since synchronous IO is the default IO, need an aggressive
         // default concurrency mechanism.
     }

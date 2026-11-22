@@ -193,9 +193,13 @@ Peer::command ()
       // start() pulls apart the rest of the command line...
       const char *errmsg = this->test_.start (test);
       if (errmsg == nullptr)
-        this->reply ("OK\n");
+        {
+          this->reply ("OK\n");
+        }
       else
-        this->reply (errmsg);
+        {
+          this->reply (errmsg);
+        }
     }
   else if (strcmp ("status", cmd) == 0)
     {
@@ -207,7 +211,9 @@ Peer::command ()
           this->reply (retvalmsg);
         }
       else
-        this->reply ("RUNNING\n");
+        {
+          this->reply ("RUNNING\n");
+        }
     }
   else if (strcmp ("wait", cmd) == 0)
     {
@@ -263,11 +269,17 @@ Peer::command ()
           --secs;
         }
       if (found)
-        this->reply ("OK\n");
+        {
+          this->reply ("OK\n");
+        }
       else if (secs == 0)
-        this->reply ("TIMEOUT\n");
+        {
+          this->reply ("TIMEOUT\n");
+        }
       else
-        this->reply (msg);
+        {
+          this->reply (msg);
+        }
     }
   else if (strcmp ("snaplog", cmd) == 0)
     {
@@ -442,7 +454,9 @@ Test::wait ()
 {
   WaitForSingleObject (this->thr_handle_, INFINITE);
   if (!this->running_)
-    this->cleanup ();
+    {
+      this->cleanup ();
+    }
   return this->status_;
 }
 
@@ -490,7 +504,9 @@ test_control (void * /* param */)
                      FILE_ATTRIBUTE_NORMAL,
                      0);
   if (logf == INVALID_HANDLE_VALUE)
-    perror (LogName);
+    {
+      perror (LogName);
+    }
   else
     {
       SetFilePointer (logf, 0, 0, FILE_END);   // Append new content

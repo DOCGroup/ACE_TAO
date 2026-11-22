@@ -55,7 +55,9 @@ JAWS_HTTP_Acceptor::init (int argc, ACE_TCHAR *argv[])
       }
 
   if (p == 0)
-    p = 8000;
+    {
+      p = 8000;
+    }
 
   if (this->open (ACE_INET_Addr (p)) == -1)
     {

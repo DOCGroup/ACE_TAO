@@ -26,11 +26,17 @@ JAWS_IO::JAWS_IO (JAWS_IO_Impl *impl)
       }
 
       if (ACE_OS::strcasecmp (io_type, "SYNCH") == 0)
-        this->impl_ = JAWS_Synch_IO::instance ();
+        {
+          this->impl_ = JAWS_Synch_IO::instance ();
+        }
       else if (ACE_OS::strcasecmp (io_type, "ASYNCH") == 0)
-        this->impl_ = JAWS_Asynch_IO::instance ();
+        {
+          this->impl_ = JAWS_Asynch_IO::instance ();
+        }
       else if (ACE_OS::strcasecmp (io_type, "REACTIVE") == 0)
-        this->impl_ = JAWS_Reactive_IO::instance ();
+        {
+          this->impl_ = JAWS_Reactive_IO::instance ();
+        }
       else
       {
         this->impl_ = JAWS_Synch_IO::instance ();

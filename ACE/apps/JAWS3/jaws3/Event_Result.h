@@ -73,7 +73,9 @@ public:
     , data_ (data)
   {
     if (this->error_number_ == -1)
-      this->error_number_ = errno;
+      {
+        this->error_number_ = errno;
+      }
   }
 
   size_t bytes () const { return this->bytes_; }

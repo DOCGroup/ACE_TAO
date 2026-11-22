@@ -64,7 +64,9 @@ public: // needed for destructor due to "aCC: HP ANSI C++ B3910B A.03.39" compil
   ~JAWS_IO_Reactive_Handler () override
   {
     if (this->timer_id_ != -1)
-      ACE_Reactor::instance ()->cancel_timer (this->timer_id_);
+      {
+        ACE_Reactor::instance ()->cancel_timer (this->timer_id_);
+      }
   }
   JAWS_IO_Reactive_Handler (JAWS_IO_Reactive_Handler const &) = delete;
   JAWS_IO_Reactive_Handler (JAWS_IO_Reactive_Handler &&) = delete;
