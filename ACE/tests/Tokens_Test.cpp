@@ -237,9 +237,11 @@ run_main (int, ACE_TCHAR *[])
 
   int status = ACE_OS::access (token_exe, F_OK);
   if (status == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                token_exe));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  token_exe));
+    }
   else
     {
       const ACE_TCHAR *cl =
@@ -259,10 +261,12 @@ run_main (int, ACE_TCHAR *[])
       // Start up the token server for the remote test.
       ACE_Process new_process;
       if (new_process.spawn (options) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%n; %p (%s), will not run remote test.\n"),
-                    ACE_TEXT ("Server fork failed"),
-                    cl));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%n; %p (%s), will not run remote test.\n"),
+                      ACE_TEXT ("Server fork failed"),
+                      cl));
+        }
       else
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -303,9 +307,11 @@ run_main (int, ACE_TCHAR *[])
 
           // Kill the token server.
           if (new_process.terminate () == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Kill failed.\n")),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Kill failed.\n")),
+                                -1);
+            }
         }
 
       thread_start.reset ();

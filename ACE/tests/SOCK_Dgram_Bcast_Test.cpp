@@ -161,9 +161,11 @@ int run_auto_test (const ACE_TCHAR *prog_name)
   ACE_UNUSED_ARG (prog_name);
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Running auto_tests in thread mode\n")));
   if (ACE_Thread_Manager::instance ()->spawn (run_thread_receiver) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawn_n ()")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawn_n ()")), -1);
+    }
 #else
   ACE_ERROR_RETURN ((LM_ERROR,
                      ACE_TEXT ("Cannot run in auto_test mode without fork or threads.\n")),
@@ -188,14 +190,16 @@ int run_auto_test (const ACE_TCHAR *prog_name)
           if (ACE_Process_Manager::instance ()->wait (child_pid,
                                                       child_timeout,
                                                       &receiver_exit_code) == child_pid)
-          {
-            break;
-          }
+            {
+              break;
+            }
 #else /* ACE_HAS_THREADS */
           // sleep 1 second or wait for child thread
           child_timeout += ACE_OS::gettimeofday () ;
           if (ACE_Thread_Manager::instance ()->wait (&child_timeout) == 0)
-            break;
+            {
+              break;
+            }
 #endif
         }
       socket.close ();

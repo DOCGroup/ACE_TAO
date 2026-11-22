@@ -301,7 +301,9 @@ run_main (int, ACE_TCHAR *[])
   ACE_Reactor wfmo_reactor (std::addressof (wfmo_reactor_impl));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing ACE_WFMO_Reactor\n")));
   if (!test_reactor_dispatch_order (wfmo_reactor))
-    ++result;
+    {
+      ++result;
+    }
 
 #endif /* ACE_WIN32 && ACE_HAS_WINSOCK2 */
 
