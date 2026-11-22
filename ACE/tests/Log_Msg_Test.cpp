@@ -50,7 +50,7 @@ class Logger : public ACE_Log_Msg_Callback
 public:
   /// Constructor sets whether we're testing "recursive" callback
   /// logging!
-  Logger (bool be_recursive = true);
+  explicit Logger (bool be_recursive = true);
 
   /// Logging callback
   void log (ACE_Log_Record &log_record) override;
@@ -601,7 +601,7 @@ test_ostream ()
 class Log_Spec_Verify : public ACE_Log_Msg_Callback
 {
 public:
-  Log_Spec_Verify (bool be_recursive = true) : fail_ (0), tests_ (0), recursive_ (be_recursive) {};
+  explicit Log_Spec_Verify (bool be_recursive = true) : fail_ (0), tests_ (0), recursive_ (be_recursive) {};
 
   void expected_handles (const ACE_TCHAR *handle,
                          const ACE_TCHAR *invalid_handle)
