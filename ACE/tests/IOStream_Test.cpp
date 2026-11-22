@@ -93,22 +93,34 @@ operator>> (ACE_SOCK_IOStream & stream, qchar *buf)
   stream.get (c);
 
   if (!stream) // eat space up to the first char
-    return stream;
+    {
+      return stream;
+    }
 
   // if we don't have a quote, append until we see space
   if (c != '"')
-    for (*buf++ = c;
-         stream.get (c) && !ACE_OS::ace_isspace (c);
-         *buf++ = c)
-      continue;
-  else
-    for (; stream.get (c) && c != '"'; *buf++ = c)
-      if (c == '\\')
+    {
+      for (*buf++ = c;
+           stream.get (c) && !ACE_OS::ace_isspace (c);
+           *buf++ = c)
         {
-          stream.get (c);
-          if (c != '"')
-            *buf++ = '\\';
+          continue;
         }
+    }
+  else
+    {
+      for (; stream.get (c) && c != '"'; *buf++ = c)
+        {
+          if (c == '\\')
+            {
+              stream.get (c);
+              if (c != '"')
+                {
+                  *buf++ = '\\';
+                }
+            }
+        }
+    }
 
   *buf = '\0';
 
@@ -123,7 +135,9 @@ operator<< (ACE_SOCK_IOStream &stream, qchar *buf)
   while (*buf)
     {
       if (*buf == '"')
-        stream.put ('\\');
+        {
+          stream.put ('\\');
+        }
 
       stream.put ((char) *buf++);
     }
@@ -160,10 +174,12 @@ client (void *arg)
   ACE_SOCK_Connector connector;
 
   if (connector.connect (server, addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT (" (%t) %p\n"),
-                       ACE_TEXT ("Failed to connect to server thread")),
-                      ACE_THR_FUNC_RETURN_NULL);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT (" (%t) %p\n"),
+                         ACE_TEXT ("Failed to connect to server thread")),
+                        ACE_THR_FUNC_RETURN_NULL);
+    }
 
   // Send a string to the server which it can interpret as a qchar[]
   const char *str = "\"This is a test     string.\"";
@@ -273,25 +289,31 @@ server (void *arg)
   ACE_SOCK_Acceptor *acceptor = static_cast<ACE_SOCK_Acceptor *> (arg);
 
   if (acceptor->get_local_addr (server_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("get_local_addr")),
-                      ACE_THR_FUNC_RETURN_NULL);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("get_local_addr")),
+                        ACE_THR_FUNC_RETURN_NULL);
+    }
 
 #if defined (ACE_HAS_THREADS)
   if (ACE_Thread_Manager::instance ()->spawn (client,
                                               &server_addr,
                                               THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT (" (%t) %p\n"),
-                       ACE_TEXT ("spawing client thread")),
-                      ACE_THR_FUNC_RETURN_NULL);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT (" (%t) %p\n"),
+                         ACE_TEXT ("spawing client thread")),
+                        ACE_THR_FUNC_RETURN_NULL);
+    }
 #endif /* ACE_HAS_THREADS */
 
   if (acceptor->accept (client_handler) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT (" (%P|%t) Failed to accept new client_handler")),
-                      ACE_THR_FUNC_RETURN_NULL);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT (" (%P|%t) Failed to accept new client_handler")),
+                        ACE_THR_FUNC_RETURN_NULL);
+    }
 
   // Read a qbuf[] from the client.  Notice that all of the client's
   // whitespace is preserved.
@@ -318,12 +340,16 @@ server (void *arg)
  (buf.length () == 0 || buf[buf.length () - 1] != '"'))
     {
       if (! (client_handler >> buf))
-        break;
+        {
+          break;
+        }
 
       if (buf.length () > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "%s ",
-                    buf.c_str ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s ",
+                      buf.c_str ()));
+        }
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -383,18 +409,22 @@ spawn ()
   ACE_SOCK_Acceptor acceptor;
 
   if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT (" (%P|%t) %p\n"),
-                       ACE_TEXT ("open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT (" (%P|%t) %p\n"),
+                         ACE_TEXT ("open")),
+                        -1);
+    }
 #if defined (ACE_HAS_THREADS)
   else if (ACE_Thread_Manager::instance ()->spawn (server,
                                                   &acceptor,
                                                   THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawning server thread")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawning server thread")),
+                        -1);
+    }
 
   // Wait for the client and server thread to exit.
   ACE_Thread_Manager::instance ()->wait ();
