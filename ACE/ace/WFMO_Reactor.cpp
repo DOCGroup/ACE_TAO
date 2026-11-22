@@ -113,22 +113,34 @@ ACE_WFMO_Reactor_Handler_Repository::bit_ops (long &existing_masks,
         }
 
       if (ACE_BIT_ENABLED (change_masks, ACE_Event_Handler::WRITE_MASK))
-        ACE_CLR_BITS (existing_masks, FD_WRITE);
+        {
+          ACE_CLR_BITS (existing_masks, FD_WRITE);
+        }
 
       if (ACE_BIT_ENABLED (change_masks, ACE_Event_Handler::EXCEPT_MASK))
-        ACE_CLR_BITS (existing_masks, FD_OOB);
+        {
+          ACE_CLR_BITS (existing_masks, FD_OOB);
+        }
 
       if (ACE_BIT_ENABLED (change_masks, ACE_Event_Handler::ACCEPT_MASK))
-        ACE_CLR_BITS (existing_masks, FD_ACCEPT);
+        {
+          ACE_CLR_BITS (existing_masks, FD_ACCEPT);
+        }
 
       if (ACE_BIT_ENABLED (change_masks, ACE_Event_Handler::CONNECT_MASK))
-        ACE_CLR_BITS (existing_masks, FD_CONNECT);
+        {
+          ACE_CLR_BITS (existing_masks, FD_CONNECT);
+        }
 
       if (ACE_BIT_ENABLED (change_masks, ACE_Event_Handler::QOS_MASK))
-        ACE_CLR_BITS (existing_masks, FD_QOS);
+        {
+          ACE_CLR_BITS (existing_masks, FD_QOS);
+        }
 
       if (ACE_BIT_ENABLED (change_masks, ACE_Event_Handler::GROUP_QOS_MASK))
-        ACE_CLR_BITS (existing_masks, FD_GROUP_QOS);
+        {
+          ACE_CLR_BITS (existing_masks, FD_GROUP_QOS);
+        }
 
       break;
 
@@ -149,22 +161,34 @@ ACE_WFMO_Reactor_Handler_Repository::bit_ops (long &existing_masks,
         }
 
       if (ACE_BIT_ENABLED (change_masks, ACE_Event_Handler::WRITE_MASK))
-        ACE_SET_BITS (existing_masks, FD_WRITE);
+        {
+          ACE_SET_BITS (existing_masks, FD_WRITE);
+        }
 
       if (ACE_BIT_ENABLED (change_masks, ACE_Event_Handler::EXCEPT_MASK))
-        ACE_SET_BITS (existing_masks, FD_OOB);
+        {
+          ACE_SET_BITS (existing_masks, FD_OOB);
+        }
 
       if (ACE_BIT_ENABLED (change_masks, ACE_Event_Handler::ACCEPT_MASK))
-        ACE_SET_BITS (existing_masks, FD_ACCEPT);
+        {
+          ACE_SET_BITS (existing_masks, FD_ACCEPT);
+        }
 
       if (ACE_BIT_ENABLED (change_masks, ACE_Event_Handler::CONNECT_MASK))
-        ACE_SET_BITS (existing_masks, FD_CONNECT);
+        {
+          ACE_SET_BITS (existing_masks, FD_CONNECT);
+        }
 
       if (ACE_BIT_ENABLED (change_masks, ACE_Event_Handler::QOS_MASK))
-        ACE_SET_BITS (existing_masks, FD_QOS);
+        {
+          ACE_SET_BITS (existing_masks, FD_QOS);
+        }
 
       if (ACE_BIT_ENABLED (change_masks, ACE_Event_Handler::GROUP_QOS_MASK))
-        ACE_SET_BITS (existing_masks, FD_GROUP_QOS);
+        {
+          ACE_SET_BITS (existing_masks, FD_GROUP_QOS);
+        }
 
       break;
 
@@ -620,13 +644,19 @@ ACE_WFMO_Reactor_Handler_Repository::bind_i (bool io_entry,
                                              bool delete_event)
 {
   if (event_handler == nullptr)
-    return -1;
+    {
+      return -1;
+    }
 
   // Make sure that the <handle> is valid
   if (event_handle == ACE_INVALID_HANDLE)
-    event_handle = event_handler->get_handle ();
+    {
+      event_handle = event_handler->get_handle ();
+    }
   if (this->invalid_handle (event_handle))
-    return -1;
+    {
+      return -1;
+    }
 
   size_t const current_size = this->max_handlep1_ +
     this->handles_to_be_added_ -
@@ -708,7 +738,9 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_current_infos ()
 
               // If <WFMO_Reactor> created the event, we need to clean it up
               if (this->current_info_[i].delete_event_)
-                ACE_OS::event_destroy (&this->current_handles_[i]);
+                {
+                  ACE_OS::event_destroy (&this->current_handles_[i]);
+                }
 
               // Reduce count by one
               --this->handles_to_be_deleted_;
