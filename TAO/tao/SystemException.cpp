@@ -983,7 +983,9 @@ CORBA::name ::_tao_type () const \
     ACE_Dynamic_Service<TAO_AnyTypeCode_Adapter>::instance ( \
         "AnyTypeCode_Adapter"); \
   if (adapter != nullptr) \
-    return adapter->_tao_type_ ## name (); \
+    { \
+      return adapter->_tao_type_ ## name (); \
+    } \
   else \
     { \
       TAOLIB_ERROR ((LM_ERROR, \
