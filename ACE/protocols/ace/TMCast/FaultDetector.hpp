@@ -17,7 +17,9 @@ namespace ACE_TMCast
     insync ()
     {
       if (alone_)
-        alone_ = false;
+        {
+          alone_ = false;
+        }
 
       silence_period_ = 0;
     }

@@ -244,7 +244,9 @@ remove_empty_chunks (ACE_Message_Block *&chunks_chain)
   if (0 == first_empty->length ())
     {
       if (pre_mb) // might be 0, in case it's the entire chain
-        pre_mb->cont (0);
+        {
+          pre_mb->cont (0);
+        }
 
       if (first_empty == chunks_chain)
         {
@@ -1423,7 +1425,9 @@ static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   if (argc == 1) // no arguments , so one button test
-    return 0;
+    {
+      return 0;
+    }
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("f:csh:p:u"));
   int c;

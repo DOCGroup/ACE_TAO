@@ -71,7 +71,9 @@ Performance_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
               this->physical_connections (size_t (-connections));
             }
           else if (connections > 0)
-            this->logical_connections (size_t (connections));
+            {
+              this->logical_connections (size_t (connections));
+            }
           else
           {
             ACE_DEBUG ((LM_WARNING, "warning, 0 connections!\n"));

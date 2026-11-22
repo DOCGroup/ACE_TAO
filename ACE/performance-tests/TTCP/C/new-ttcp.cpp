@@ -640,9 +640,13 @@ recv_n (void *buf, int len)
     if ((n = read (connection_descriptor,
                    static_cast<char *> (buf) + bytes_read,
                    len - bytes_read)) == -1)
-      return -1;
+      {
+        return -1;
+      }
     else if (n == 0)
-      break;
+      {
+        break;
+      }
 
   return bytes_read;
 }
