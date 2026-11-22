@@ -346,8 +346,10 @@ ACE_Handle_Set_Iterator::operator () ()
               return result;
             }
           else
-            // Load the bits of the next word.
-            this->word_val_ = maskp[this->word_num_];
+            {
+              // Load the bits of the next word.
+              this->word_val_ = maskp[this->word_num_];
+            }
         }
 
       // Loop until we get <word_val_> to have its least significant
@@ -457,14 +459,16 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (ACE_Handle_Set const &hs)
       this->handle_index_ = maxhandlep1;
     }
   else
-    // Loop until we get <word_val_> to have its least significant bit
-    // enabled, keeping track of which <handle_index> this represents
-    // (this information is used by <operator()>).
-    for (this->word_val_ = maskp[this->word_num_];
-         ACE_BIT_DISABLED (this->word_val_, 1)
-           && this->handle_index_ < maxhandlep1;
-               ++this->handle_index_)
-      this->word_val_ = (this->word_val_ >> 1) & ACE_MSB_MASK;
+    {
+      // Loop until we get <word_val_> to have its least significant bit
+      // enabled, keeping track of which <handle_index> this represents
+      // (this information is used by <operator()>).
+      for (this->word_val_ = maskp[this->word_num_];
+           ACE_BIT_DISABLED (this->word_val_, 1)
+             && this->handle_index_ < maxhandlep1;
+           ++this->handle_index_)
+        this->word_val_ = (this->word_val_ >> 1) & ACE_MSB_MASK;
+    }
 #elif !defined (ACE_HANDLE_SET_USES_FD_ARRAY) && defined (ACE_HAS_BIG_FD_SET)
     if (this->word_max_==0)
       {
@@ -515,14 +519,16 @@ ACE_Handle_Set_Iterator::reset_state ()
       this->handle_index_ = maxhandlep1;
     }
   else
-    // Loop until we get <word_val_> to have its least significant bit
-    // enabled, keeping track of which <handle_index> this represents
-    // (this information is used by <operator()>).
-    for (this->word_val_ = maskp[this->word_num_];
-         ACE_BIT_DISABLED (this->word_val_, 1)
-           && this->handle_index_ < maxhandlep1;
-         ++this->handle_index_)
-      this->word_val_ = (this->word_val_ >> 1) & ACE_MSB_MASK;
+    {
+      // Loop until we get <word_val_> to have its least significant bit
+      // enabled, keeping track of which <handle_index> this represents
+      // (this information is used by <operator()>).
+      for (this->word_val_ = maskp[this->word_num_];
+           ACE_BIT_DISABLED (this->word_val_, 1)
+             && this->handle_index_ < maxhandlep1;
+           ++this->handle_index_)
+        this->word_val_ = (this->word_val_ >> 1) & ACE_MSB_MASK;
+    }
 #elif !defined (ACE_HANDLE_SET_USES_FD_ARRAY) && defined (ACE_HAS_BIG_FD_SET)
     if (this->word_max_==0)
       {
