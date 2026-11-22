@@ -25,11 +25,13 @@ int
 ACE_WFMO_Reactor_Handler_Repository::open (size_t size)
 {
   if (size > MAXIMUM_WAIT_OBJECTS)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%B exceeds MAXIMUM_WAIT_OBJECTS (%d)\n"),
-                       size,
-                       MAXIMUM_WAIT_OBJECTS),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%B exceeds MAXIMUM_WAIT_OBJECTS (%d)\n"),
+                            size,
+                            MAXIMUM_WAIT_OBJECTS),
+                           -1);
+    }
 
   // Dynamic allocation
   ACE_NEW_RETURN (this->current_handles_,
@@ -81,25 +83,39 @@ ACE_WFMO_Reactor_Handler_Repository::bit_ops (long &existing_masks,
 
   if (ACE_BIT_ENABLED (existing_masks, FD_READ)
       || ACE_BIT_ENABLED (existing_masks, FD_CLOSE))
-    ACE_SET_BITS (old_masks, ACE_Event_Handler::READ_MASK);
+    {
+      ACE_SET_BITS (old_masks, ACE_Event_Handler::READ_MASK);
+    }
 
   if (ACE_BIT_ENABLED (existing_masks, FD_WRITE))
-    ACE_SET_BITS (old_masks, ACE_Event_Handler::WRITE_MASK);
+    {
+      ACE_SET_BITS (old_masks, ACE_Event_Handler::WRITE_MASK);
+    }
 
   if (ACE_BIT_ENABLED (existing_masks, FD_OOB))
-    ACE_SET_BITS (old_masks, ACE_Event_Handler::EXCEPT_MASK);
+    {
+      ACE_SET_BITS (old_masks, ACE_Event_Handler::EXCEPT_MASK);
+    }
 
   if (ACE_BIT_ENABLED (existing_masks, FD_ACCEPT))
-    ACE_SET_BITS (old_masks, ACE_Event_Handler::ACCEPT_MASK);
+    {
+      ACE_SET_BITS (old_masks, ACE_Event_Handler::ACCEPT_MASK);
+    }
 
   if (ACE_BIT_ENABLED (existing_masks, FD_CONNECT))
-    ACE_SET_BITS (old_masks, ACE_Event_Handler::CONNECT_MASK);
+    {
+      ACE_SET_BITS (old_masks, ACE_Event_Handler::CONNECT_MASK);
+    }
 
   if (ACE_BIT_ENABLED (existing_masks, FD_QOS))
-    ACE_SET_BITS (old_masks, ACE_Event_Handler::QOS_MASK);
+    {
+      ACE_SET_BITS (old_masks, ACE_Event_Handler::QOS_MASK);
+    }
 
   if (ACE_BIT_ENABLED (existing_masks, FD_GROUP_QOS))
-    ACE_SET_BITS (old_masks, ACE_Event_Handler::GROUP_QOS_MASK);
+    {
+      ACE_SET_BITS (old_masks, ACE_Event_Handler::GROUP_QOS_MASK);
+    }
 
   switch (operation)
     {
@@ -231,7 +247,9 @@ ACE_WFMO_Reactor_Handler_Repository::unbind_i (ACE_HANDLE handle,
         !this->current_info_[i].delete_entry_)
       {
         if (this->remove_handler_i (i, mask) == -1)
-          error = true;
+          {
+            error = true;
+          }
       }
 
   // Then check the suspended entries
@@ -245,7 +263,9 @@ ACE_WFMO_Reactor_Handler_Repository::unbind_i (ACE_HANDLE handle,
         !this->current_suspended_info_[i].delete_entry_)
       {
         if (this->remove_suspended_handler_i (i, mask) == -1)
-          error = true;
+          {
+            error = true;
+          }
       }
 
   // Then check the to_be_added entries
@@ -259,13 +279,17 @@ ACE_WFMO_Reactor_Handler_Repository::unbind_i (ACE_HANDLE handle,
         !this->to_be_added_info_[i].delete_entry_)
       {
         if (this->remove_to_be_added_handler_i (i, mask) == -1)
-          error = true;
+          {
+            error = true;
+          }
       }
 
   // Only if the number of handlers to be deleted changes do we need
   // to wakeup the other threads
   if (original_handle_count < this->handles_to_be_deleted_)
-    changes_required = true;
+    {
+      changes_required = true;
+    }
 
   return error ? -1 : 0;
 }
