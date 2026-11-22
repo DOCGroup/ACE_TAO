@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     default_ports.h
  *
@@ -10,7 +9,6 @@
  *  @author  Chris Cleeland
  *  @author  Douglas C. Schmidt
  */
-//=============================================================================
 
 #ifndef TAO_DEFAULT_PORTS_H
 #define TAO_DEFAULT_PORTS_H

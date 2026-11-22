@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file    Versioned_Namespace.h
  *
@@ -10,7 +9,6 @@
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_VERSIONED_NAMESPACE_H
 #define TAO_VERSIONED_NAMESPACE_H

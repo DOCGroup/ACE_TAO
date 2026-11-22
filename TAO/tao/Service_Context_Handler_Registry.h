@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   Service_Context_Handler_Registry.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_SERVICE_CONTEXT_HANDLER_REGISTRY_H
 #define TAO_SERVICE_CONTEXT_HANDLER_REGISTRY_H

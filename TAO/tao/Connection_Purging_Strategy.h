@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ================================================================
 /**
  *  @file   Connection_Purging_Strategy.h
  *
  *  @author Chad Elliott (elliott_c@ociweb.com)
  */
-// ================================================================
 
 #ifndef TAO_PURGING_STRATEGY_H
 #define TAO_PURGING_STRATEGY_H

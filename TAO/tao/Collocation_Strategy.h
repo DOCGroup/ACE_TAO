@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Collocation_Strategy.h
  *
  *  @author  DOC Group - Wash U and UCI
  */
-//=============================================================================
 
 #ifndef TAO_COLLOCATION_STRATEGY_H
 #define TAO_COLLOCATION_STRATEGY_H

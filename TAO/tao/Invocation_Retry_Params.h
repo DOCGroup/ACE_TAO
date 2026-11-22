@@ -1,11 +1,9 @@
 /* -*- C++ -*-  */
-//=============================================================================
 /**
  *  @file   Invocation_Retry_Params.h
  *
  *  @author Byron Harris (harrisb@ociweb.com)
  */
-//=============================================================================
 
 #ifndef TAO_INVOCATION_RETRY_PARAMS_H
 #define TAO_INVOCATION_RETRY_PARAMS_H

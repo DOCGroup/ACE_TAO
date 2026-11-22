@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Null_Fragmentation_Strategy.h
  *
  *  @author  Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_NULL_FRAGMENTATION_STRATEGY_H
 #define TAO_NULL_FRAGMENTATION_STRATEGY_H

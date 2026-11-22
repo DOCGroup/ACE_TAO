@@ -1,6 +1,5 @@
 //-*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Fault_Tolerance_Service.h
  *
@@ -10,7 +9,6 @@
  *
  *  @author Bala Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef TAO_FAULT_TOLERANCE_SERVICE_H
 #define TAO_FAULT_TOLERANCE_SERVICE_H
 

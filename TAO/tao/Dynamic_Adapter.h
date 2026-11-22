@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Dynamic_Adapter.h
  *
  *  @author  Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_DYNAMIC_ADAPTER_H
 #define TAO_DYNAMIC_ADAPTER_H

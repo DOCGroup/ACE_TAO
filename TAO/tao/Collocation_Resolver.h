@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Collocation_Resolver.h
  *
  *  @author  Irfan Pyarali
  */
-// ===================================================================
 
 #ifndef TAO_COLLOCATION_RESOLVER_H
 #define TAO_COLLOCATION_RESOLVER_H

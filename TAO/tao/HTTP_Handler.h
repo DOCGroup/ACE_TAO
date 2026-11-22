@@ -1,7 +1,6 @@
 
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    HTTP_Handler.h
  *
@@ -9,7 +8,6 @@
  *   HTTP_Writer which are created in response to calls to
  *   read/write, as appropriate
  */
-//=============================================================================
 
 #ifndef TAO_HTTP_HANDLER_H
 #define TAO_HTTP_HANDLER_H

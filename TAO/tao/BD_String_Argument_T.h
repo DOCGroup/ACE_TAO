@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    BD_String_Argument_T.h
  *
  *  @authors Jeff Parsons and Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef TAO_BD_STRING_ARGUMENT_T_H
 #define TAO_BD_STRING_ARGUMENT_T_H

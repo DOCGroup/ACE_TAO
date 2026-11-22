@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   Transport_Descriptor_Interface.h
  *
  *  @author Bala Natarajan <bala@cs.wustl.edu>
  */
-// ===================================================================
 
 #ifndef TAO_CONNECTION_DESCRIPTOR_INTERFACE_H
 #define TAO_CONNECTION_DESCRIPTOR_INTERFACE_H

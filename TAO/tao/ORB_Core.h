@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   ORB_Core.h
  *
  *  @author DOC Center - Washington University at St. Louis
  *  @author DOC Laboratory - University of California at Irvine
  */
-// ===================================================================
 
 #ifndef TAO_ORB_CORE_H
 #define TAO_ORB_CORE_H

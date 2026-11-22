@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Collocated_Invocation.h
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_COLLOCATED_INVOCATION_H
 #define TAO_COLLOCATED_INVOCATION_H

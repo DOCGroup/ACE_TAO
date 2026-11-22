@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Wait_Strategy.h
  *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_WAIT_STRATEGY_H
 #define TAO_WAIT_STRATEGY_H

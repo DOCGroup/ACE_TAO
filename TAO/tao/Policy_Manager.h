@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Policy_Manager.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef TAO_POLICY_MANAGER_H
 #define TAO_POLICY_MANAGER_H

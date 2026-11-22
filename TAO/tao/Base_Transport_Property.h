@@ -1,11 +1,9 @@
 // -*- C++ -*-
-// ===================================================================
 /**
  *  @file  Base_Transport_Property.h
  *
  *  @author Bala Natarajan <bala@cs.wustl.edu>
  */
-// ===================================================================
 
 #ifndef TAO_BASE_CONNECTION_PROPERTY_H
 #define TAO_BASE_CONNECTION_PROPERTY_H

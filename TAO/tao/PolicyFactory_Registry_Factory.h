@@ -1,10 +1,8 @@
-// ================================================================
 /**
  *  @file   PolicyFactory_Registry_Factory.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-// ================================================================
 
 #ifndef TAO_POLICYFACTORY_REGISTRY_FACTORY_H
 #define TAO_POLICYFACTORY_REGISTRY_FACTORY_H

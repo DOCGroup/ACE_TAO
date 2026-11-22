@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file LF_Event_Binder.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LF_EVENT_BINDER_H
 #define TAO_LF_EVENT_BINDER_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file Flushing_Strategy.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_FLUSHING_STRATEGY_H
 #define TAO_FLUSHING_STRATEGY_H

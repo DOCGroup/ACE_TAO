@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     Acceptor_Registry.h
  *
@@ -9,7 +8,6 @@
  *  @author Fred Kuhns <fredk@cs.wustl.edu>
  *  @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_ACCEPTOR_REGISTRY_H
 #define TAO_ACCEPTOR_REGISTRY_H

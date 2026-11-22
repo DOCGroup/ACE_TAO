@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    UB_String_Arguments.h
  *
  *  @authors Jeff Parsons and Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef TAO_UB_STRING_ARGUMENTS_H
 #define TAO_UB_STRING_ARGUMENTS_H

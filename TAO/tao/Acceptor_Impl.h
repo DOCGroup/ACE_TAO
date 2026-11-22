@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Acceptor_Impl.h
  *
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
  *  @author Ossama Othman <othman@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_ACCEPTOR_IMPL_H
 #define TAO_ACCEPTOR_IMPL_H

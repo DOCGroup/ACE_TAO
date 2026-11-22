@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Stub.h
  *
  *  @author  Portions Copyright 1994-1995 by Sun Microsystems Inc.
  *  @author  Portions Copyright 1997-2002 by Washington University
  */
-//=============================================================================
 
 #ifndef TAO_STUB_H
 #define TAO_STUB_H

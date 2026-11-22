@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   Connector_Impl.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-// ===================================================================
 
 #ifndef TAO_CONNECTOR_IMPL_H
 #define TAO_CONNECTOR_IMPL_H

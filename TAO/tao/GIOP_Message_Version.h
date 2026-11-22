@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     GIOP_Message_Version.h
  *
@@ -9,7 +8,6 @@
  *  @author  Chris Cleeland <cleeland@cs.wustl.edu>
  *  @author  Carlos O' Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_GIOP_MESSAGE_VERSION_H
 #define TAO_GIOP_MESSAGE_VERSION_H

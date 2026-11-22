@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file  ORB_Constants.h
  *
@@ -9,7 +8,6 @@
  *  @author  Jeff Parsons
  *  @author  Ossama Othman
  */
-//=============================================================================
 
 #ifndef TAO_ORB_CONSTANTS_H
 #define TAO_ORB_CONSTANTS_H

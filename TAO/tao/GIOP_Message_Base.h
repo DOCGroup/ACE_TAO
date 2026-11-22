@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file GIOP_Message_Base.h
  *
  *  @author Initially Copyrighted by Sun Microsystems Inc., 1994-1995,
  *  @author modified by Balachandran Natarajan <bala@cs.wustl.edu>
  */
-// ===================================================================
 
 #ifndef TAO_GIOP_MESSAGE_BASE_H
 #define TAO_GIOP_MESSAGE_BASE_H

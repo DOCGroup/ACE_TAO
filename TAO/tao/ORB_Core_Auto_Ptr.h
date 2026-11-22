@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   ORB_Core_Auto_Ptr.h
  *
  *  @author DOC Center - Washington University at St. Louis
  *  @author DOC Laboratory - University of California at Irvine
  */
-// ===================================================================
 
 #ifndef TAO_ORB_CORE_AUTO_PTR_H
 #define TAO_ORB_CORE_AUTO_PTR_H

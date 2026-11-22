@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file LF_Follower_Auto_Ptr.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LF_FOLLOWER_AUTO_PTR_H
 #define TAO_LF_FOLLOWER_AUTO_PTR_H

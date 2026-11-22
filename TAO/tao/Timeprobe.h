@@ -1,11 +1,9 @@
 
-//=============================================================================
 /**
  *  @file    Timeprobe.h
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_TIMEPROBE_H
 #define TAO_TIMEPROBE_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     IIOP_Endpoint.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_IIOP_ENDPOINT_H
 #define TAO_IIOP_ENDPOINT_H

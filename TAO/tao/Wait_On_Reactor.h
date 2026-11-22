@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Wait_On_Reactor.h
  *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_WAIT_ON_REACTOR_H
 #define TAO_WAIT_ON_REACTOR_H

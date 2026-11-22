@@ -1,12 +1,10 @@
 // -*- C -*-
 
-//=============================================================================
 /**
  *  @file ZIOP_ORBInitializer.h
  *
 *  @author  Johnny Willemsen
  */
-//=============================================================================
 
 #ifndef TAO_ZIOP_ORB_INITIALIZER_H
 #define TAO_ZIOP_ORB_INITIALIZER_H

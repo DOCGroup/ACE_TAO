@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    BiDir_Adapter.h
  *
  *  @author  Balachandran Natarajan <parsons@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef TAO_BIDIR_ADAPTER_H
 #define TAO_BIDIR_ADAPTER_H
 

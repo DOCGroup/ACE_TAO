@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     Client_Strategy_Factory.h
  *
  *  @author  Chris Cleeland <cleeland@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_CLIENT_STRATEGY_FACTORY_H
 #define TAO_CLIENT_STRATEGY_FACTORY_H

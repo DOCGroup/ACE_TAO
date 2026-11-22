@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ZIOP_Adapter.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 #ifndef TAO_ZIOP_ADAPTER_H
 #define TAO_ZIOP_ADAPTER_H
 

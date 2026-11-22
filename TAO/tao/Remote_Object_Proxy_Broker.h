@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Remote_Object_Proxy_Broker.h
  *
@@ -10,7 +9,6 @@
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  *  @author  Balachandran Natarajan (modified the implementation)
  */
-//=============================================================================
 
 #ifndef TAO_REMOTE_OBJECT_PROXY_BROKER_H
 #define TAO_REMOTE_OBJECT_PROXY_BROKER_H

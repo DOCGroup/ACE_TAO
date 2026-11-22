@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Object_Argument_T.h
  *
  *  @authors Jeff Parsons and Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef TAO_OBJECT_ARGUMENT_T_H
 #define TAO_OBJECT_ARGUMENT_T_H

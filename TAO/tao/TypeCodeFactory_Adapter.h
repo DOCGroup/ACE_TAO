@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    TypeCodeFactory_Adapter.h
  *
  *  @author  Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_TYPECODEFACTORY_ADAPTER_H
 #define TAO_TYPECODEFACTORY_ADAPTER_H

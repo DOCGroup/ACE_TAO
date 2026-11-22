@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    SystemException.h
  *
@@ -9,7 +8,6 @@
  *  @author DOC Group at Vanderbilt U, Wash U, and UCI
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SYSTEM_EXCEPTION_H
 #define TAO_SYSTEM_EXCEPTION_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file  Storable_Factory.h
  *
  * @author Byron Harris <harrisb@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_STORABLE_FACTORY_H
 #define TAO_STORABLE_FACTORY_H

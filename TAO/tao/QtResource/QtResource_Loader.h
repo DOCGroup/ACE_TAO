@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   QtResource_Loader.h
  *
  *  @author Marek Brudka <mbrudka@aster.pl>
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_QTRESOURCE_LOADER_H
 #define TAO_QTRESOURCE_LOADER_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file LF_Connect_Strategy.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LF_CONNECT_STRATEGY_H
 #define TAO_LF_CONNECT_STRATEGY_H

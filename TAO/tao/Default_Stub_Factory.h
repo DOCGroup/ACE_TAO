@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Default_Stub_Factory.h
  *
@@ -10,7 +9,6 @@
  *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_DEFAULT_STUB_FACTORY_H_
 #define TAO_DEFAULT_STUB_FACTORY_H_

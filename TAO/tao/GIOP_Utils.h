@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     GIOP_Utils.h
  *
@@ -9,7 +8,6 @@
  *  @author  Chris Cleeland <cleeland@cs.wustl.edu>
  *  @author  Carlos O' Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_GIOP_UTILS_H
 #define TAO_GIOP_UTILS_H

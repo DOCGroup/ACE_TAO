@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Transport_Mux_Strategy.h
  *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_TRANSPORT_MUX_STRATEGY_H
 #define TAO_TRANSPORT_MUX_STRATEGY_H

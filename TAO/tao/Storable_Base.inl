@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Storable_Base.inl
  *
@@ -8,7 +7,6 @@
  *  @author Chanaka Liyanaarachchi <chanaka@ociweb.com>
  *  @author Byron Harris <harrisb@ociweb.com>
  */
-//=============================================================================
 
 #include "tao/Storable_Base.h"
 

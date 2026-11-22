@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    Wait_On_Read.h
  *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_WAIT_ON_READ_H
 #define TAO_WAIT_ON_READ_H

@@ -1,6 +1,5 @@
 //x -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file Thread_Per_Connection_Handler.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author  Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_THREAD_PER_CONNECTION_HANDLER_H
 #define TAO_THREAD_PER_CONNECTION_HANDLER_H

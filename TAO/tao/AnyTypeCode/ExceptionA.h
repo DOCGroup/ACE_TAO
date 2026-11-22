@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ExceptionA.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author DOC Group at Vanderbilt U., Wash U, and UCI
  */
-//=============================================================================
 
 #ifndef TAO_EXCEPTIONA_H
 #define TAO_EXCEPTIONA_H

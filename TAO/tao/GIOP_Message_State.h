@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     GIOP_Message_State.h
  *
@@ -11,7 +10,6 @@
  *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
-//=============================================================================
 #ifndef TAO_GIOP_MESSAGE_STATE_H
 #define TAO_GIOP_MESSAGE_STATE_H
 

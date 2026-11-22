@@ -1,11 +1,9 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file    Synch_Invocation.h
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 #ifndef TAO_SYNCH_INVOCATION_H
 #define TAO_SYNCH_INVOCATION_H
 #include /**/ "ace/pre.h"

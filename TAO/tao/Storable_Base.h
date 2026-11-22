@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Storable_Base.h
  *
@@ -8,7 +7,6 @@
  *  @author Chanaka Liyanaarachchi <chanaka@ociweb.com>
  *  @author Byron Harris <harrisb@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_STORABLE_BASE_H
 #define TAO_STORABLE_BASE_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Invocation_Endpoint_Selectors.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_INVOCATION_ENDPOINT_SELECTOR_H
 #define TAO_INVOCATION_ENDPOINT_SELECTOR_H

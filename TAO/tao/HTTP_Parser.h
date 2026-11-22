@@ -1,13 +1,11 @@
 
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file   HTTP_Parser.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_HTTP_PARSER_H
 #define TAO_HTTP_PARSER_H

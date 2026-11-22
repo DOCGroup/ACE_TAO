@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Policy_Validator.h
  *
@@ -10,7 +9,6 @@
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  *  @author  Frank Hunleth  <fhuntleth@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_POLICY_VALIDATOR_H
 #define TAO_POLICY_VALIDATOR_H

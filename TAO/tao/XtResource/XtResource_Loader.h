@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   XtResource_Loader.h
  *
  *  @author Marek Brudka <mbrudka@aster.pl>
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_XTRESOURCE_LOADER_H
 #define TAO_XTRESOURCE_LOADER_H

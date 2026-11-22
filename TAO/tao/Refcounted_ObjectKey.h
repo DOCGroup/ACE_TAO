@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file Refcounted_ObjectKey.h
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_REFCOUNTED_OBJECTKEY_H
 #define TAO_REFCOUNTED_OBJECTKEY_H

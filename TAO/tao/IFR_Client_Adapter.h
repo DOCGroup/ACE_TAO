@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    IFR_Client_Adapter.h
  *
  *  @author  Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_IFR_CLIENT_ADAPTER_H
 #define TAO_IFR_CLIENT_ADAPTER_H

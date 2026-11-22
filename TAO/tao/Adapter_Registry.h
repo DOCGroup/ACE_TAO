@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Adapter_Registry.h
  *
  *  @author Carlos O'Ryan (coryan@uci.edu)
  */
-//=============================================================================
 
 #ifndef TAO_ADAPTER_REGISTRY_H
 #define TAO_ADAPTER_REGISTRY_H

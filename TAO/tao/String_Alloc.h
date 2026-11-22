@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file    String_Alloc.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author DOC Group at Wash U, UCI, and Vanderbilt U.
  */
-//=============================================================================
 
 #ifndef TAO_STRING_ALLOC_H
 #define TAO_STRING_ALLOC_H

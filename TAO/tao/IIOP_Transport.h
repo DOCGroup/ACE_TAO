@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   IIOP_Transport.h
  *
  *  @author Originally by Fred Kuhns <fredk@cs.wustl.edu>
  *  @author Modified by Balachandran Natarajan <bala@cs.wustl.edu>
  */
-// ===================================================================
 
 #ifndef TAO_IIOP_TRANSPORT_H
 #define TAO_IIOP_TRANSPORT_H

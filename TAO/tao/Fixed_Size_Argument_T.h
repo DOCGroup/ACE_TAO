@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Fixed_Size_Argument_T.h
  *
  *  @authors Jeff Parsons and Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef TAO_FIXED_SIZE_ARGUMENT_T_H
 #define TAO_FIXED_SIZE_ARGUMENT_T_H

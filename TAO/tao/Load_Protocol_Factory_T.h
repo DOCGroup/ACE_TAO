@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file Load_Protocol_Factory_T.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Johnny Willemsen
  */
-//=============================================================================
 
 #ifndef TAO_LOAD_PROTOCOL_FACTORY_T_H
 #define TAO_LOAD_PROTOCOL_FACTORY_T_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   ORBInitializer_Registry.h
  *
  *  @author Ossama Othman <ossama@uci.edu>
  */
-// ===================================================================
 
 #ifndef TAO_ORB_INITIALIZER_REGISTRY_H
 #define TAO_ORB_INITIALIZER_REGISTRY_H

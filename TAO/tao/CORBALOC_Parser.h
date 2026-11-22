@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   CORBALOC_Parser.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *  @author Priyanka Gontla (pgontla@uci.edu)
  */
-//=============================================================================
 
 #ifndef TAO_CORBALOC_PARSER_H
 #define TAO_CORBALOC_PARSER_H

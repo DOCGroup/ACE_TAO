@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Nested_Upcall_Guard.h
  *
  *  @author  Chris Cleeland <cleeland@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_NESTED_UPCALL_GUARD_H
 #define TAO_NESTED_UPCALL_GUARD_H

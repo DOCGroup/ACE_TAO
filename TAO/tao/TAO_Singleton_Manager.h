@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    TAO_Singleton_Manager.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SINGLETON_MANAGER_H
 #define TAO_SINGLETON_MANAGER_H

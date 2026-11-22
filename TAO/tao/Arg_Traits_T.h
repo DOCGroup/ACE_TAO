@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    Arg_Traits_T.h
  *
  *  @authors Jeff Parsons and Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef TAO_ARG_TRAITS_T_H
 #define TAO_ARG_TRAITS_T_H

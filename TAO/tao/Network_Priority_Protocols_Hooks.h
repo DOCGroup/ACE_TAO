@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   Network_Priority_Protocols_Hooks.h
  *
  *  @author Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  *          Johnny Willemsen <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_NETWORK_PRIORITY_PROTOCOLS_HOOKS_H
 #define TAO_NETWORK_PRIORITY_PROTOCOLS_HOOKS_H

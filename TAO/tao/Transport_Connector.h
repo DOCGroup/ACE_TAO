@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file Transport_Connector.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_CONNECTOR_H
 #define TAO_CONNECTOR_H

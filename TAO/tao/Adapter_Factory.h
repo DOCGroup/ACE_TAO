@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Adapter_Factory.h
  *
  *  @author Carlos O'Ryan (coryan@uci.edu)
  */
-//=============================================================================
 
 #ifndef TAO_ADAPTER_FACTORY_H
 #define TAO_ADAPTER_FACTORY_H

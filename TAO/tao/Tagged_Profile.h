@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Tagged_Profile.h
  *
  *  @author Bala Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_TAGGED_PROFILE_H
 #define TAO_TAGGED_PROFILE_H

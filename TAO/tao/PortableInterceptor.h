@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    PortableInterceptor.h
  *
@@ -12,7 +11,6 @@
  *  @author  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_PORTABLE_INTERCEPTOR_H
 #define TAO_PORTABLE_INTERCEPTOR_H

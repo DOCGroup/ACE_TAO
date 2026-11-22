@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   FoxResource_Factory.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  *  @author Marek Brudka <mbrudka@aster.pl>
  */
-//=============================================================================
 #ifndef TAO_TOXRESOURCE_FACTORY_H
 #define TAO_TOXRESOURCE_FACTORY_H
 #include /**/ "ace/pre.h"

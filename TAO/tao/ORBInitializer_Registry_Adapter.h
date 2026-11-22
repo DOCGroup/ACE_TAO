@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   ORBInitializer_Registry_Adapter.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_ORB_INITIALIZER_REGISTRY_ADAPTER_H
 #define TAO_ORB_INITIALIZER_REGISTRY_ADAPTER_H

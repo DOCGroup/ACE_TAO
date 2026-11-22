@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Valuetype_Adapter.h
  *
  *  @author  Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_VALUETYPE_ADAPTER_H
 #define TAO_VALUETYPE_ADAPTER_H

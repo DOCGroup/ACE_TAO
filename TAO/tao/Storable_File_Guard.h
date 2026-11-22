@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Storable_File_Guard.h
  *
  *  @author Rich Seibel (seibelr@ociweb.com)
  *  @author Byron Harris (harrisb@ociweb.com)
  */
-//=============================================================================
 
 #ifndef TAO_STORABLE_FILE_GUARD_H
 #define TAO_STORABLE_FILE_GUARD_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    AnyTypeCode_Adapter.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_ANYTYPECODE_ADAPTER
 #define TAO_ANYTYPECODE_ADAPTER

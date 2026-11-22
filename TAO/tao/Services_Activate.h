@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Services_Activate.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Bala Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SERVICES_ACTIVATE_H
 #define TAO_SERVICES_ACTIVATE_H

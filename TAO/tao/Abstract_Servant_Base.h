@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Abstract_Servant_Base.h
  *
@@ -11,7 +10,6 @@
  *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_ABSTRACT_SERVANT_BASE_H_
 #define TAO_ABSTRACT_SERVANT_BASE_H_

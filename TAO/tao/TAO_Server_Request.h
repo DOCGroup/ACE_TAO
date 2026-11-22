@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
 *  @file    TAO_Server_Request.h
 *
@@ -12,7 +11,6 @@
 * @author Chris Cleeland
 * @author Aniruddha Gokhale
 */
-//=============================================================================
 
 #ifndef TAO_SERVER_REQUEST_H
 #define TAO_SERVER_REQUEST_H

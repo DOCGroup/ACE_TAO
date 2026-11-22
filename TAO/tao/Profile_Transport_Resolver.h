@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Profile_Transport_Resolver.h
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_PROFILE_TRANSPORT_RESOLVER_H
 #define TAO_PROFILE_TRANSPORT_RESOLVER_H

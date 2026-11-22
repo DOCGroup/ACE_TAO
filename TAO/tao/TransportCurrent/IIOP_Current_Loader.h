@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    IIOP_Current_Loader.h
  *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_TRANSPORT_IIOP_TRAITS_LOADER_H
 #define TAO_TRANSPORT_IIOP_TRAITS_LOADER_H

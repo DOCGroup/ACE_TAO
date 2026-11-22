@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Invocation_Adapter.h
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 #ifndef TAO_INVOCATION_ADAPTER_H
 #define TAO_INVOCATION_ADAPTER_H
 

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Intrusive_Ref_Count_Handle_T.h
  *
  *  @authors Tim Bradley  <bradley_t@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_INTRUSIVE_REF_COUNT_HANDLE_T_H
 #define TAO_INTRUSIVE_REF_COUNT_HANDLE_T_H

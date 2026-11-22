@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file     default_server.h
  *
  *  @author  Chris Cleeland
  */
-//=============================================================================
 
 #ifndef TAO_DEFAULT_SERVER_FACTORY_H
 #define TAO_DEFAULT_SERVER_FACTORY_H

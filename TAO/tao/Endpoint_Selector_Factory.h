@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Endpoint_Selector_Factory.h
  *
@@ -10,7 +9,6 @@
  *  @author Marina Spivak <marina@cs.wustl.edu>
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_ENDPOINT_SELECTOR_FACTORY_H
 #define TAO_ENDPOINT_SELECTOR_FACTORY_H

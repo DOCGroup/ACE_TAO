@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     Object_Ref_Table.h
  *
  *  @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_OBJECT_REF_TABLE_H
 #define TAO_OBJECT_REF_TABLE_H

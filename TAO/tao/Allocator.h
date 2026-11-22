@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Allocator.h
  *
  *  @author Johnny Willemsen (jwillemsen@remedy.nl)
  */
-//=============================================================================
 
 #ifndef TAO_ALLOCATOR_H
 #define TAO_ALLOCATOR_H

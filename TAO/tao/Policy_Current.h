@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Policy_Current.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef TAO_POLICY_CURRENT_H
 #define TAO_POLICY_CURRENT_H

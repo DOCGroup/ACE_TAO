@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file Blocked_Connect_Strategy.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_BLOCKED_CONNECT_STRATEGY_H
 #define TAO_BLOCKED_CONNECT_STRATEGY_H

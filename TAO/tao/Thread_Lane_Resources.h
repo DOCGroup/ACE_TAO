@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Thread_Lane_Resources.h
  *
  *  @author  Irfan Pyarali
  */
-// ===================================================================
 
 #ifndef TAO_THREAD_LANE_RESOURCES_H
 #define TAO_THREAD_LANE_RESOURCES_H

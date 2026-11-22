@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ServerRequestInterceptor_Adapter.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_SERVER_REQUEST_INTERCEPTOR_ADAPTER_H
 #define TAO_SERVER_REQUEST_INTERCEPTOR_ADAPTER_H

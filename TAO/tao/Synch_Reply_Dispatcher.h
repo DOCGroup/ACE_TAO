@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Synch_Reply_Dispatcher.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SYNCH_REPLY_DISPATCHER_H
 #define TAO_SYNCH_REPLY_DISPATCHER_H

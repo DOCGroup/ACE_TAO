@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file Leader_Follower_Flushing_Strategy.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LEADER_FOLLOWER_FLUSHING_STRATEGY_H
 #define TAO_LEADER_FOLLOWER_FLUSHING_STRATEGY_H

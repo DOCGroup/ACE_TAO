@@ -1,11 +1,9 @@
-//=============================================================================
 /**
  *  @file   Storable_File_Guard.cpp
  *
  *  @author Rich Seibel (seibelr@ociweb.com)
  *  @author Byron Harris (harrisb@ociweb.com)
  */
-//=============================================================================
 
 #include "tao/Storable_File_Guard.h"
 #include "tao/Storable_Base.h"

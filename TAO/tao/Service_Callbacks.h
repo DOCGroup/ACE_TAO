@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Service_Callbacks.h
  *
@@ -10,7 +9,6 @@
  *
  *  @author Bala Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SERVICE_CALLBACK_H
 #define TAO_SERVICE_CALLBACK_H

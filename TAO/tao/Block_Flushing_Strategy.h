@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file Block_Flushing_Strategy.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_BLOCK_FLUSHING_STRATEGY_H
 #define TAO_BLOCK_FLUSHING_STRATEGY_H

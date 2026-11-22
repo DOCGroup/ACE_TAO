@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   Transport_Selection_Guard.h
  *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
-// ===================================================================
 
 #ifndef TAO_TRANSPORT_SELECTION_GUARD_H
 #define TAO_TRANSPORT_SELECTION_GUARD_H

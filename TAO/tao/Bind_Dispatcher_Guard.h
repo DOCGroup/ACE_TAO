@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     Bind_Dispatcher_Guard.h
  *
  *  @author  Carlos O'Ryan <coryan@uci.edu>
  *  @author  Chad Elliott <elliott_c@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_BIND_DISPATCHER_GUARD_H
 #define TAO_BIND_DISPATCHER_GUARD_H

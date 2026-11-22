@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Wait_On_LF_No_Upcall.h
  *
  *  @author  Chris Cleeland <cleeland@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_WAIT_ON_LF_NO_UPCALL_H
 #define TAO_WAIT_ON_LF_NO_UPCALL_H

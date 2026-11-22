@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Policy_Set.h
  *
@@ -11,7 +10,6 @@
  *  @author Frank Hunleth (fhunleth@cs.wustl.edu)
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef TAO_POLICY_SET_H
 #define TAO_POLICY_SET_H

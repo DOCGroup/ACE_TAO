@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file Synch_Queued_Message.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SYNCH_QUEUED_MESSAGE_H
 #define TAO_SYNCH_QUEUED_MESSAGE_H

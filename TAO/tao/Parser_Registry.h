@@ -1,11 +1,9 @@
-//=============================================================================
 /**
  *  @file    Parser_Registry.h
  *
  *  @author  Priyanka Gontla <pgontla@uci.edu>
  *  @author  Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_PARSER_REGISTRY_H
 #define TAO_PARSER_REGISTRY_H

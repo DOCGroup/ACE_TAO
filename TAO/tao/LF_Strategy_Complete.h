@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file LF_Strategy_Complete.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LF_STRATEGY_COMPLETE_H
 #define TAO_LF_STRATEGY_COMPLETE_H

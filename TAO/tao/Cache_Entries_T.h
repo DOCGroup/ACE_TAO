@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Cache_Entries_T.h
  *
  *  @author Bala Natarajan  <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_CACHE_ENTRIES_T_H
 #define TAO_CACHE_ENTRIES_T_H

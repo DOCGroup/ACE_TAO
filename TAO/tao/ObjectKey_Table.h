@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file ObjectKey_Table.h
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_OBJECTKEY_TABLE_H
 #define TAO_OBJECTKEY_TABLE_H

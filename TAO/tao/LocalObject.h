@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file LocalObject.h
  *
@@ -12,7 +11,6 @@
  *
  * @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_CORBA_LOCALOBJECT_H
 #define TAO_CORBA_LOCALOBJECT_H

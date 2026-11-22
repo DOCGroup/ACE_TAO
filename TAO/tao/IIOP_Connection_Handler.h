@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   IIOP_Connection_Handler.h
  *
  *  @author Originally by Chris Cleeland as IIOP_Connect.h
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-// ===================================================================
 
 #ifndef TAO_IIOP_CONNECTION_HANDLER_H
 #define TAO_IIOP_CONNECTION_HANDLER_H

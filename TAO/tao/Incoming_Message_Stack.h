@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file Incoming_Message_Stack.h
  *
  *  @author Frank Rehberger <frehberg@prismtech.com>
  */
-//=============================================================================
 
 #ifndef TAO_INCOMING_MESSAGE_STACK_H
 #define TAO_INCOMING_MESSAGE_STACK_H

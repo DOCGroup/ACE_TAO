@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   GIOP_Message_Generator_Parser.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-// ===================================================================
 
 #ifndef TAO_GIOP_MESSAGE_GENERATOR_PARSER_H
 #define TAO_GIOP_MESSAGE_GENERATOR_PARSER_H

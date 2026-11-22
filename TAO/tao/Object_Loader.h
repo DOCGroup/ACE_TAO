@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ================================================================
 /**
  *  @file   Object_Loader.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-// ================================================================
 
 #ifndef TAO_OBJECT_LOADER_H
 #define TAO_OBJECT_LOADER_H

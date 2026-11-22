@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file    CORBA_String.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author DOC Group at Wash U, UCI, and Vanderbilt U.
  */
-//=============================================================================
 
 #ifndef TAO_CORBA_STRING_H
 #define TAO_CORBA_STRING_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    IIOP_Acceptor.h
  *
@@ -9,7 +8,6 @@
  *  @author Fred Kuhns <fredk@cs.wustl.edu>
  *  @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_IIOP_ACCEPTOR_H
 #define TAO_IIOP_ACCEPTOR_H

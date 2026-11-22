@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Transport_Cache_Manager_T.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_CONNECTION_CACHE_MANAGER_T_H
 #define TAO_CONNECTION_CACHE_MANAGER_T_H

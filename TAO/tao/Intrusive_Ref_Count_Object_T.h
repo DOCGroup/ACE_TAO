@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Intrusive_Ref_Count_Object_T.h
  *
  *  @authors Yan Dai  <dai_y@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_INTRUSIVE_REF_COUNT_OBJECT_T_H
 #define TAO_INTRUSIVE_REF_COUNT_OBJECT_T_H

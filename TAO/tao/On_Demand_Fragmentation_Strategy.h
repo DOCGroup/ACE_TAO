@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    On_Demand_Fragmentation_Strategy.h
  *
  *  @author  Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_ONDEMAND_FRAGMENTATION_STRATEGY_H
 #define TAO_ONDEMAND_FRAGMENTATION_STRATEGY_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    IORManipulation.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_IOR_MANIPULATION_H
 #define TAO_IOR_MANIPULATION_H

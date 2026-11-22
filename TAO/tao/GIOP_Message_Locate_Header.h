@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     GIOP_Message_Locate_Header.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_GIOP_MESSAGE_LOCATE_HEADER_H
 #define TAO_GIOP_MESSAGE_LOCATE_HEADER_H

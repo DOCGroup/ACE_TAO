@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file  Storable_FlatFileStream.h
  *
  * @author Marina Spivak <marina@cs.wustl.edu>
  * @author Byron Harris <harrisb@ociweb.com>
  */
-//=============================================================================
 
 #ifndef STORABLE_FLATFILESTREAM_H
 #define STORABLE_FLATFILESTREAM_H

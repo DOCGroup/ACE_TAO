@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   MCAST_Parser.h
  *
  *  @author Priyanka Gontla (gontla_p@ociweb.com)
  */
-//=============================================================================
 
 #ifndef TAO_MCAST_PARSER_H
 #define TAO_MCAST_PARSER_H

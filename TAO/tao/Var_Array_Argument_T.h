@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Var_Array_Argument_T.h
  *
  *  @authors Jeff Parsons and Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef TAO_VAR_ARRAY_ARGUMENT_T_H
 #define TAO_VAR_ARRAY_ARGUMENT_T_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   ORB_Time_Policy.h
  *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
-//=============================================================================
 
 #ifndef ORB_TIME_POLICY_H
 #define ORB_TIME_POLICY_H

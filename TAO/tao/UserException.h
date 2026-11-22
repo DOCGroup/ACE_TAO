@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    UserException.h
  *
@@ -9,7 +8,6 @@
  *  @author DOC Group at Vanderbilt U, Wash U, and UCI
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_USER_EXCEPTION_H
 #define TAO_USER_EXCEPTION_H

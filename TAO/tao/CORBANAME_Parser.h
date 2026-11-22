@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   CORBANAME_Parser.h
  *
  *  @author Priyanka Gontla (pgontla@uci.edu)
  */
-//=============================================================================
 
 #ifndef TAO_CORBANAME_PARSER_H
 #define TAO_CORBANAME_PARSER_H

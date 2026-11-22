@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Connector_Registry.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_CONNECTOR_REGISTRY_H
 #define TAO_CONNECTOR_REGISTRY_H

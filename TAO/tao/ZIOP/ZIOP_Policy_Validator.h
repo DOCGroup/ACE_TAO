@@ -1,6 +1,5 @@
 // -*- C -*-
 
-//=============================================================================
 /**
  *  @file    ZIOP_Policy_Validator.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_ZIOP_POLICY_VALIDATOR_H_
 #define TAO_ZIOP_POLICY_VALIDATOR_H_

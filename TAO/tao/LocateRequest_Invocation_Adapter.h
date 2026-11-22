@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    LocateRequest_Invocation_Adapter.h
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 #ifndef TAO_LOCATEREQUEST_INVOCATION_ADAPTER_H
 #define TAO_LOCATEREQUEST_INVOCATION_ADAPTER_H
 

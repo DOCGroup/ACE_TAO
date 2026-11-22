@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ImR_Client.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_IMR_CLIENT_ADAPTER_IMPL_H
 #define TAO_IMR_CLIENT_ADAPTER_IMPL_H

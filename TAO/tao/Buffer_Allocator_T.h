@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Buffer_Allocator_T.h
  *
  *  @author Johnny Willemsen (jwillemsen@remedy.nl)
  */
-//=============================================================================
 
 #ifndef TAO_BUFFER_ALLOCATOR_T_H
 #define TAO_BUFFER_ALLOCATOR_T_H

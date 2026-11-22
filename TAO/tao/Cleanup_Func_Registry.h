@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   Cleanup_Func_Registry.h
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-// ===================================================================
 
 #ifndef TAO_CLEANUP_FUNC_REGISTRY_H
 #define TAO_CLEANUP_FUNC_REGISTRY_H

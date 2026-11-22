@@ -1,12 +1,10 @@
 // -*- C -*-
 //
-// ===================================================================
 /**
  *  @file ZIOP_PolicyFactory.h
  *
  *  @author Johnny Willemsen <jwillemsen@remedy.nl>
  */
-// ===================================================================
 #ifndef TAO_ZIOP_POLICY_FACTORY_H
 #define TAO_ZIOP_POLICY_FACTORY_H
 

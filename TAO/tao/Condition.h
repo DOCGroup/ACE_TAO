@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Condition.h
  *
  *  @author From ACE to TAO by Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_CONDITION_H
 #define TAO_CONDITION_H

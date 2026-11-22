@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    New_Leader_Generator.h
  *
  *  @author Irfan Pyarali
  */
-// ===================================================================
 
 #ifndef TAO_NEW_LEADER_GENERATOR_H
 #define TAO_NEW_LEADER_GENERATOR_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file LF_Event_Loop_Thread_Helper.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LF_EVENT_LOOP_THREAD_HELPER_H
 #define TAO_LF_EVENT_LOOP_THREAD_HELPER_H

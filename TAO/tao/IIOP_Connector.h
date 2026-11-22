@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    IIOP_Connector.h
  *
@@ -10,7 +9,6 @@
  *  @author Ossama Othman <ossama@uci.edu>
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_IIOP_CONNECTOR_H
 #define TAO_IIOP_CONNECTOR_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Request_Dispatcher.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_REQUEST_DISPATCHER_H
 #define TAO_REQUEST_DISPATCHER_H

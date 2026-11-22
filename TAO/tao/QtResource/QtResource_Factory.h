@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   QtResource_Factory.h
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  *  @author Marek Brudka <mbrudka@aster.pl>
  */
-//=============================================================================
 #ifndef TAO_QTRESOURCE_FACTORY_H
 #define TAO_QTRESOURCE_FACTORY_H
 #include /**/ "ace/pre.h"

@@ -1,11 +1,9 @@
 
-//=============================================================================
 /**
  *  @file    IORManip_Filter.h
  *
  *  @author Chad Elliott <elliott_c@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_IORMANIP_FILTER_H
 #define TAO_IORMANIP_FILTER_H

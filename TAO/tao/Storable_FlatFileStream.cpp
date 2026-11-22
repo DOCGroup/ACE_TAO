@@ -1,14 +1,12 @@
 
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file  Storable_FlatFileStream.cpp
  *
  * @author Marina Spivak <marina@cs.wustl.edu>
  * @author Byron Harris <harrisb@ociweb.com>
  */
-//=============================================================================
 
 #include "tao/Storable_FlatFileStream.h"
 

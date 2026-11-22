@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file   Storable_Base.cpp
  *
@@ -6,7 +5,6 @@
  *  @author Chanaka Liyanaarachchi <chanaka@ociweb.com>
  *  @author Byron Harris <harrisb@ociweb.com>
  */
-//=============================================================================
 
 #include "tao/Storable_Base.h"
 

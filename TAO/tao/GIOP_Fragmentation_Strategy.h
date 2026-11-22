@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    GIOP_Fragmentation_Strategy.h
  *
  *  @author  Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_GIOP_FRAGMENTATION_STRATEGY_H
 #define TAO_GIOP_FRAGMENTATION_STRATEGY_H

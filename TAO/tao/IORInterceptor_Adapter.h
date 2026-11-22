@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    IORInterceptor_Adapter.h
  *
  *  @author  Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_IORINTERCEPTOR_ADAPTER_H
 #define TAO_IORINTERCEPTOR_ADAPTER_H

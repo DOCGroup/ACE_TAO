@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   PolicyFactory_Registry_Adapter.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_POLICY_FACTORY_REGISTRY_ADAPTER_H
 #define TAO_POLICY_FACTORY_REGISTRY_ADAPTER_H

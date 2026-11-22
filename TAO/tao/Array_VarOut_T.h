@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Array_VarOut_T.h
  *
  *  @author Jeff Parsons
  *  @author Johnny Willemsen
  */
-//=============================================================================
 
 #ifndef TAO_ARRAY_VAROUT_T_H
 #define TAO_ARRAY_VAROUT_T_H

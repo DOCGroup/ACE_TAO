@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    target_specification.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Balachandran  Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_TARGET_SPECIFICATION_H
 #define TAO_TARGET_SPECIFICATION_H

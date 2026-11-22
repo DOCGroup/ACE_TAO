@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file Incoming_Message_Queue.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_INCOMING_MESSAGE_QUEUE_H
 #define TAO_INCOMING_MESSAGE_QUEUE_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Transport_Queueing_Strategies.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Irfan Pyarali
  */
-//=============================================================================
 
 #ifndef TAO_TRANSPORT_QUEUEING_STRATEGIES_H
 #define TAO_TRANSPORT_QUEUEING_STRATEGIES_H

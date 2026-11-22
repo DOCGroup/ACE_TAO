@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   Service_Context.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-// ===================================================================
 
 #ifndef TAO_SERVICE_CONTEXT_H
 #define TAO_SERVICE_CONTEXT_H

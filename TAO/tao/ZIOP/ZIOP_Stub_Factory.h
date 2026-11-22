@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ZIOP_Stub_Factory.h
  *
@@ -10,7 +9,6 @@
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_ZIOP_STUB_FACTORY_H_
 #define TAO_ZIOP_STUB_FACTORY_H_

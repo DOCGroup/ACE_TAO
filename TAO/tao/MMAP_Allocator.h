@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    MMAP_Allocator.h
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_MMAP_ALLOCATOR_H
 #define TAO_MMAP_ALLOCATOR_H

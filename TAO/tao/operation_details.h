@@ -1,11 +1,9 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file    operation_details.h
  *
  *  @author Bala Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_OPERATION_DETAILS_H
 #define TAO_OPERATION_DETAILS_H

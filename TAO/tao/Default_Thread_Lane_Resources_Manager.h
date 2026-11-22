@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Default_Thread_Lane_Resources_Manager.h
  *
  *  @author  Irfan Pyarali
  */
-// ===================================================================
 
 #ifndef TAO_DEFAULT_THREAD_LANE_RESOURCES_MANAGER_H
 #define TAO_DEFAULT_THREAD_LANE_RESOURCES_MANAGER_H

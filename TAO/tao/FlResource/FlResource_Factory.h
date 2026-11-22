@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   FlResource_Factory.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  *  @author Marek Brudka <mbrudka@aster.pl>
  */
-//=============================================================================
 #ifndef TAO_FLRESOURCE_FACTORY_H
 #define TAO_FLRESOURCE_FACTORY_H
 #include /**/ "ace/pre.h"

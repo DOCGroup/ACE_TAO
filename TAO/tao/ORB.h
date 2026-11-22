@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ORB.h
  *
@@ -10,7 +9,6 @@
  *  @author DOC Group - Vanderbilt University
  *  @author DOC Laboratory - University of California at Irvine
  */
-//=============================================================================
 
 #ifndef TAO_ORB_H
 #define TAO_ORB_H

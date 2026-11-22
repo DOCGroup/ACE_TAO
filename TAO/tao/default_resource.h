@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   default_resource.h
  *
  *  @author Chris Cleeland
  *  @author Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef TAO_DEFAULT_RESOURCE_H
 #define TAO_DEFAULT_RESOURCE_H

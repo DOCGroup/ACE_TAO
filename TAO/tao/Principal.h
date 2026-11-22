@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Principal.h
  *
@@ -9,7 +8,6 @@
  *  @author  Copyright 1994-1995 by Sun Microsystems Inc.
  *  @author  DOC group at Wash U and UCI.
  */
-//=============================================================================
 
 #ifndef TAO_PRINCIPAL_H
 #define TAO_PRINCIPAL_H

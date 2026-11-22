@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Resource_Factory.h
  *
  *  @author Chris Cleeland
  *  @author Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef TAO_RESOURCE_FACTORY_H
 #define TAO_RESOURCE_FACTORY_H
