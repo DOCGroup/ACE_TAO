@@ -55,7 +55,6 @@ ACE_Reactive_MEM_IO::get_buf_len (const ACE_OFF_T off, ACE_MEM_SAP_Node *&buf)
   return retv;
 }
 
-// Send an n byte message to the connected socket.
 ACE_INLINE ssize_t
 ACE_MEM_IO::fetch_recv_buf (int flag, const ACE_Time_Value *timeout)
 {
@@ -168,7 +167,7 @@ ACE_MEM_IO::send (const void *buf, size_t n, int flags)
   return this->send (buf, n, flags, 0);
 }
 
-// Recv an n byte message from the connected socket.
+/// Recv an n byte message from the connected socket.
 
 ACE_INLINE ssize_t
 ACE_MEM_IO::recv (void *buf, size_t n, int flags)
@@ -177,7 +176,7 @@ ACE_MEM_IO::recv (void *buf, size_t n, int flags)
   return this->recv (buf, n, flags, 0);
 }
 
-// Send an n byte message to the connected socket.
+/// Send an n byte message to the connected socket.
 
 ACE_INLINE ssize_t
 ACE_MEM_IO::send (const void *buf, size_t n)
@@ -186,7 +185,7 @@ ACE_MEM_IO::send (const void *buf, size_t n)
   return this->send (buf, n, 0);
 }
 
-// Recv an n byte message from the connected socket.
+/// Recv an n byte message from the connected socket.
 
 ACE_INLINE ssize_t
 ACE_MEM_IO::recv (void *buf, size_t n)

@@ -36,7 +36,7 @@ ACE_ATM_Connector::ACE_ATM_Connector (ACE_ATM_Stream &new_stream,
                 ACE_TEXT ("ACE_ATM_Stream::ACE_ATM_Stream")));
 }
 
-// Try to complete a non-blocking connection.
+/// Try to complete a non-blocking connection.
 
 ACE_INLINE
 int

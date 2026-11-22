@@ -3,8 +3,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Send an n byte message to the connected socket.
-
 ACE_INLINE
 ACE_SOCK_IO::ACE_SOCK_IO ()
 {
@@ -67,6 +65,7 @@ ACE_SOCK_IO::recv (void *buf,
                        overlapped);
 }
 
+/// Send an n byte message to the connected socket.
 ACE_INLINE ssize_t
 ACE_SOCK_IO::send (const void *buf,
                    size_t len,

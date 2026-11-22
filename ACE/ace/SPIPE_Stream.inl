@@ -92,7 +92,7 @@ ACE_SPIPE_Stream::recv (iovec iov[], int n) const
   return ACE_OS::readv (this->get_handle (), iov, n);
 }
 
-// This routine sends an open file descriptor to this socket.
+/// This routine sends an open file descriptor to this socket.
 
 ACE_INLINE int
 ACE_SPIPE_Stream::send_handle (ACE_HANDLE handle) const
@@ -143,7 +143,7 @@ ACE_SPIPE_Stream::send_handle (ACE_HANDLE handle) const
 #endif /* ACE_HAS_STREAM_PIPES */
 }
 
-// This file receives an open file descriptor from this socket.
+/// This routine receives an open file descriptor from this socket.
 
 ACE_INLINE int
 ACE_SPIPE_Stream::recv_handle (ACE_HANDLE &handle) const
@@ -207,8 +207,8 @@ ACE_SPIPE_Stream::recv_handle (ACE_HANDLE &handle) const
 #endif /* ACE_HAS_STREAM_PIPES */
 }
 
-// This file receives an open file descriptor from this socket and
-// also passes back the information about the address...
+/// This routine receives an open file descriptor from this socket and
+/// also passes back the address information.
 
 ACE_INLINE int
 ACE_SPIPE_Stream::recv_handle (strrecvfd &recvfd) const

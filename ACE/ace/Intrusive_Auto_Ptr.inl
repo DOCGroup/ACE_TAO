@@ -110,7 +110,7 @@ ACE_Intrusive_Auto_Ptr<X>::operator = (ACE_Intrusive_Auto_Ptr<X> const &rhs)
   X::intrusive_remove_ref (old_rep);
 }
 
-// Copy derived class constructor
+/// Copy constructor from a derived class.
 template<class X> template <class U> ACE_INLINE
 ACE_Intrusive_Auto_Ptr<X>::ACE_Intrusive_Auto_Ptr (
   ACE_Intrusive_Auto_Ptr<U> const &rhs)

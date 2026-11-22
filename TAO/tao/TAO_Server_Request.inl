@@ -3,7 +3,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// This constructor is used by the CSD clone.
+/// This constructor is used by the CSD clone.
 ACE_INLINE
 TAO_ServerRequest::TAO_ServerRequest ()
   : profile_ (nullptr),
