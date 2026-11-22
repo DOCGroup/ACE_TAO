@@ -229,7 +229,7 @@ Persistent_File_Allocator::allocate_at(size_t block_number)
   ACE_NEW_RETURN(result, Persistent_Storage_Block(
     block_number,
     this->block_size()),
-    0);
+    nullptr);
   return result;
 }
 
@@ -239,7 +239,7 @@ Persistent_File_Allocator::allocate_nowrite()
   Persistent_Storage_Block* result {};
   ACE_NEW_RETURN (result,
                   Persistent_Storage_Block (static_cast<size_t> (~0), 0),
-                  0);
+                  nullptr);
   result->set_no_write();
 
   return result;

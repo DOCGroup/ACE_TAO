@@ -339,7 +339,7 @@ TAO_MIOP_Resource_Factory::fragments_cleanup_strategy () const
           ACE_NEW_RETURN (strategy,
                           TAO_PG::Time_Bound_Fragments_Cleanup_Strategy (
                             bound),
-                          0);
+                          nullptr);
           this->fragments_cleanup_strategy_.reset (strategy);
         }
       else if (this->fragments_cleanup_strategy_type_ ==
@@ -355,7 +355,7 @@ TAO_MIOP_Resource_Factory::fragments_cleanup_strategy () const
           ACE_NEW_RETURN (strategy,
                           TAO_PG::Number_Bound_Fragments_Cleanup_Strategy (
                             bound),
-                          0);
+                          nullptr);
           this->fragments_cleanup_strategy_.reset (strategy);
         }
       else if (this->fragments_cleanup_strategy_type_ ==
@@ -371,7 +371,7 @@ TAO_MIOP_Resource_Factory::fragments_cleanup_strategy () const
           ACE_NEW_RETURN (strategy,
                           TAO_PG::Memory_Bound_Fragments_Cleanup_Strategy (
                             bound),
-                          0);
+                          nullptr);
           this->fragments_cleanup_strategy_.reset (strategy);
         }
     }
