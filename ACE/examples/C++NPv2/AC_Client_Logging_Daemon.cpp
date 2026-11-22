@@ -17,6 +17,7 @@
 #include "ace/Log_Record.h"
 #include "ace/Truncate.h"
 #include "ace/Message_Block.h"
+#include "ace/OS_NS_errno.h"
 #include "ace/Reactor.h"
 #include "ace/Service_Object.h"
 #include "ace/Signal.h"
@@ -273,7 +274,15 @@ int AC_Output_Handler::send (
 /******************************************************/
 
 int AC_Input_Handler::open (void *) {
-  ACE_HANDLE handle = peer ().get_handle ();
+  ACE_HANDLE const handle = peer ().get_handle ();
+#if !defined (ACE_WIN32)
+  if (handle < 0 || handle >= ACE_FD_SETSIZE)
+    {
+      errno = EINVAL;
+      return -1;
+    }
+#endif /* ! ACE_WIN32 */
+
   if (reactor ()->register_handler
         (handle, this, ACE_Event_Handler::READ_MASK) == -1)
   {
