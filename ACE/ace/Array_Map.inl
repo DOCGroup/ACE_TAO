@@ -100,7 +100,7 @@ ACE_Array_Map<Key, Value, EqualTo, Alloc>::is_empty () const
   return this->size_ == 0;
 }
 
-// The following method is deprecated.
+/// The following method is deprecated.
 
 template<typename Key, typename Value, class EqualTo, class Alloc>
 ACE_INLINE bool

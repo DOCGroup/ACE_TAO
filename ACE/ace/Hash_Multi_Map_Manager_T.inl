@@ -542,8 +542,8 @@ ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOC
   return retv;
 }
 
-// Returns the reference to the Hash_Multi_Map_manager_ex that is being
-// iterated over.
+/// Returns the reference to the Hash_Multi_Map_manager_ex that is being
+/// iterated over.
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE
 ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>&
 ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::map ()
@@ -644,8 +644,8 @@ ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, A
   return retv;
 }
 
-// Returns the reference to the Hash_Multi_Map_manager_ex that is being
-// iterated over.
+/// Returns the reference to the Hash_Multi_Map_manager_ex that is being
+/// iterated over.
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE
 const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>&
 ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::map ()
