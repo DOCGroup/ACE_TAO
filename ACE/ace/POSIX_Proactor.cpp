@@ -1626,7 +1626,7 @@ ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (const sigset_t signal_set,
   // up the process signal actions.
 
   // Empty the signal set first.
-  if (sigemptyset (&this->RT_completion_signals_) == -1)
+  if (ACE_OS::sigemptyset (&this->RT_completion_signals_) == -1)
     {
       ACELIB_ERROR ((LM_ERROR,
                      ACE_TEXT("Error:(%P | %t):%p\n"),
@@ -1639,8 +1639,8 @@ ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (const sigset_t signal_set,
   int member = 0;
   for (int si = ACE_SIGRTMIN; si <= ACE_SIGRTMAX; ++si)
     {
-      member = sigismember (&signal_set,
-                            si);
+      member = ACE_OS::sigismember (&signal_set,
+                                    si);
       if (member == -1)
         {
           ACELIB_ERROR ((LM_ERROR,
@@ -1650,7 +1650,7 @@ ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (const sigset_t signal_set,
         }
       else if (member == 1)
         {
-          sigaddset (&this->RT_completion_signals_, si);
+          ACE_OS::sigaddset (&this->RT_completion_signals_, si);
           this->setup_signal_handler (si);
         }
     }
@@ -1749,8 +1749,8 @@ ACE_POSIX_SIG_Proactor::create_asynch_timer
            (is_member == 0) && (si >= ACE_SIGRTMIN);
            --si)
         {
-          is_member = sigismember (&this->RT_completion_signals_,
-                                   si);
+          is_member = ACE_OS::sigismember (&this->RT_completion_signals_,
+                                           si);
           if (is_member == -1)
             {
               ACELIB_ERROR_RETURN ((LM_ERROR,
@@ -1814,7 +1814,7 @@ ACE_POSIX_SIG_Proactor::setup_signal_handler (int signal_number) const
   // At least all SunOS have such behavior
 #if 0
   struct sigaction reaction;
-  sigemptyset (&reaction.sa_mask);   // Nothing else to mask.
+  ACE_OS::sigemptyset (&reaction.sa_mask);   // Nothing else to mask.
   reaction.sa_flags = SA_SIGINFO;    // Realtime flag.
   reaction.sa_sigaction = ACE_SIGNAL_C_FUNC (sig_handler); // (SIG_DFL);
   int sigaction_return = ACE_OS::sigaction (signal_number,
