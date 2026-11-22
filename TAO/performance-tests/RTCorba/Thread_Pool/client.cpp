@@ -494,14 +494,14 @@ Paced_Worker::reset_priority ()
 ACE_hrtime_t
 Paced_Worker::deadline_for_current_call (CORBA::ULong i)
 {
-  ACE_hrtime_t deadline_for_current_call =
+  ACE_hrtime_t deadline =
     this->interval_between_calls_;
 
-  deadline_for_current_call *= i;
+  deadline *= i;
 
-  deadline_for_current_call += test_start;
+  deadline += test_start;
 
-  return deadline_for_current_call;
+  return deadline;
 }
 
 void
@@ -655,13 +655,13 @@ Paced_Worker::svc ()
            i != this->history_.max_samples ();
            ++i)
         {
-          ACE_hrtime_t deadline_for_current_call =
+          ACE_hrtime_t call_deadline =
             this->deadline_for_current_call (i);
 
           ACE_hrtime_t time_before_call =
             ACE_OS::gethrtime ();
 
-          if (time_before_call > deadline_for_current_call)
+          if (time_before_call > call_deadline)
             {
               this->missed_start_deadline (i + 1);
               continue;
@@ -674,14 +674,14 @@ Paced_Worker::svc ()
             ACE_OS::gethrtime ();
           this->history_.sample (time_after_call - time_before_call);
 
-          if (time_after_call > deadline_for_current_call)
+          if (time_after_call > call_deadline)
             {
               this->missed_end_deadline (i + 1);
               continue;
             }
 
           ACE_hrtime_t sleep_time =
-            deadline_for_current_call - time_after_call;
+            call_deadline - time_after_call;
 
           ACE_OS::sleep (ACE_Time_Value (0,
                                          long (to_seconds (sleep_time, gsf) *

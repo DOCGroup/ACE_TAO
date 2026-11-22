@@ -596,7 +596,7 @@ Worker::run ()
        ++i)
     {
       ACE_hrtime_t time_before_call {};
-      ACE_hrtime_t deadline_for_current_call {};
+      ACE_hrtime_t call_deadline {};
 
       // For PACED and LATENCY, each sender call is individually
       // noted.
@@ -609,10 +609,10 @@ Worker::run ()
           // Pacing code.
           if (options.test_type == Test_Type::paced)
             {
-              deadline_for_current_call =
+              call_deadline =
                 this->deadline_for_current_call (i);
 
-              if (time_before_call > deadline_for_current_call)
+              if (time_before_call > call_deadline)
                 {
                   this->missed_start_deadline (i);
                   continue;
@@ -655,14 +655,14 @@ Worker::run ()
 
           if (options.test_type == Test_Type::paced)
             {
-              if (time_after_call > deadline_for_current_call)
+              if (time_after_call > call_deadline)
                 {
                   this->missed_end_deadline (i);
                   continue;
                 }
 
               ACE_hrtime_t sleep_time =
-                deadline_for_current_call - time_after_call;
+                call_deadline - time_after_call;
 
               ACE_OS::sleep (ACE_Time_Value (0,
                                              long (to_seconds (sleep_time, options.gsf) *

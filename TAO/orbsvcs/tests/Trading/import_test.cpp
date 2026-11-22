@@ -31,10 +31,10 @@ int failure = 0;
       // Initialize the ORB and bootstrap to the Lookup interface.
       CORBA::ORB_var orb = orb_manager.orb ();
       ACE_DEBUG ((LM_DEBUG, "*** Bootstrap to the Lookup interface.\n"));
-      char* ior = parse_args.ior ();
-      CORBA::Object_var trading_obj = (ior == 0) ?
+      char* service_ior = parse_args.ior ();
+      CORBA::Object_var trading_obj = (service_ior == 0) ?
         orb->resolve_initial_references ("TradingService") :
-        orb->string_to_object (ior);
+        orb->string_to_object (service_ior);
 
       if (CORBA::is_nil (trading_obj.in ()))
         {
