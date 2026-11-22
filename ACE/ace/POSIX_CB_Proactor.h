@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    POSIX_CB_Proactor.h
  *
  *  @author Alexander Libman <alibman@ihug.com.au>
  */
-//=============================================================================
 
 #ifndef ACE_POSIX_CB_PROACTOR_H
 #define ACE_POSIX_CB_PROACTOR_H

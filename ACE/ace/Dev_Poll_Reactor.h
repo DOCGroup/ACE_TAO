@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-// =========================================================================
 /**
  *  @file    Dev_Poll_Reactor.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-// =========================================================================
 
 #ifndef ACE_DEV_POLL_REACTOR_H
 #define ACE_DEV_POLL_REACTOR_H

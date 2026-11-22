@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    SOCK_Dgram_Mcast.h
  *
@@ -10,7 +9,6 @@
  *  @author Bill Fulton <bill_a_fulton@raytheon.com>
  *  @author Don Hinton <dhinton@objectsciences.com>
  */
-//=============================================================================
 
 #ifndef ACE_SOCK_DGRAM_MCAST_H
 #define ACE_SOCK_DGRAM_MCAST_H

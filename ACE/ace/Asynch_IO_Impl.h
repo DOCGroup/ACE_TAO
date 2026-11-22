@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Asynch_IO_Impl.h
  *
@@ -14,7 +13,6 @@
  *  @author Roger Tragin <r.tragin@computer.org>
  *  @author Alexander Libman <alibman@ihug.com.au>
  */
-//=============================================================================
 
 #ifndef ACE_ASYNCH_IO_IMPL_H
 #define ACE_ASYNCH_IO_IMPL_H

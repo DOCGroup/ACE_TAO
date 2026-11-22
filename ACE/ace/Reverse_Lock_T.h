@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file    Reverse_Lock_T.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_REVERSE_LOCK_T_H
 #define ACE_REVERSE_LOCK_T_H

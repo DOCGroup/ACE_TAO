@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    SPIPE_Acceptor.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SPIPE_ACCEPTOR_H
 #define ACE_SPIPE_ACCEPTOR_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   SSL_Asynch_Stream.h
  *
  *  @author Alexander Libman <alibman@baltimore.com>
  */
-//=============================================================================
 
 #ifndef ACE_SSL_ASYNCH_STREAM_H
 #define ACE_SSL_ASYNCH_STREAM_H

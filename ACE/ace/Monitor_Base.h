@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file Monitor_Base.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef MONITOR_BASE_H
 #define MONITOR_BASE_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   OS_NS_ctype.h
  *
@@ -8,7 +7,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_CTYPE_H
 # define ACE_OS_NS_CTYPE_H

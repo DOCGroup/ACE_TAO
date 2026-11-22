@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Countdown_Time.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_COUNTDOWN_TIME_H
 #define ACE_COUNTDOWN_TIME_H

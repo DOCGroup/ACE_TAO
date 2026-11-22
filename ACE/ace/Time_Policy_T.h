@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Time_Policy_T.h
  *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
-//=============================================================================
 
 #ifndef ACE_TIME_POLICY_T_H
 #define ACE_TIME_POLICY_T_H

@@ -1,12 +1,10 @@
 // // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Hash_Map_Manager_T.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_HASH_MAP_MANAGER_T_H
 #define ACE_HASH_MAP_MANAGER_T_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Codecs.h
  *
@@ -11,7 +10,6 @@
  *  specified by RFC 2045, Multipurpose Internet Mail Extensions (MIME) Part
  *  One: Format of Internet Message Bodies.
  */
-//=============================================================================
 
 #ifndef ACE_CODECS_H
 #define ACE_CODECS_H

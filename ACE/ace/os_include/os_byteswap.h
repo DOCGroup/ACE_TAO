@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    os_byteswap.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef ACE_OS_INCLUDE_OS_BYTESWAP_H
 #define ACE_OS_INCLUDE_OS_BYTESWAP_H

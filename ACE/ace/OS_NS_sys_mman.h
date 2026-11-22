@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   OS_NS_sys_mman.h
  *
@@ -8,7 +7,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_SYS_MMAN_H
 # define ACE_OS_NS_SYS_MMAN_H

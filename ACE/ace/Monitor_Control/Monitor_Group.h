@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file Monitor_Group.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef MONITOR_GROUP_H
 #define MONITOR_GROUP_H

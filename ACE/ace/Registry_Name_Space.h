@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Registry_Name_Space.h
  *
  *  @author Irfan Pyarali (irfan@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef ACE_REGISTRY_NAME_SPACE_H
 #define ACE_REGISTRY_NAME_SPACE_H

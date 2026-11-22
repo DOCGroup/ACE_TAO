@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Dynamic_Service_Dependency.h
  *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
-//=============================================================================
 
 #ifndef ACE_DYNAMIC_SERVICE_DEPENDENCY_H
 #define ACE_DYNAMIC_SERVICE_DEPENDENCY_H

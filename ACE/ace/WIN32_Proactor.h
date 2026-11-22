@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    WIN32_Proactor.h
  *
@@ -10,7 +9,6 @@
  *  @author Roger Tragin <r.tragin@computer.org>
  *  @author Alexander Libman <alibman@ihug.com.au>
  */
-//=============================================================================
 
 #ifndef ACE_WIN32_PROACTOR_H
 #define ACE_WIN32_PROACTOR_H

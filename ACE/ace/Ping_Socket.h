@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Ping_Socket.h
  *
  *  @author Robert S. Iakobashvili <coroberti@gmail.com> <coroberti@walla.co.il>
  *  @author Gonzalo A. Diethelm <gonzalo.diethelm@aditiva.com>
  */
-//=============================================================================
 
 #ifndef ACE_PING_SOCKET_H
 #define ACE_PING_SOCKET_H

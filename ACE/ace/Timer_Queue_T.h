@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Timer_Queue_T.h
  *
@@ -8,7 +7,6 @@
  *  @author Irfan Pyarali <irfan@cs.wustl.edu> and
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_TIMER_QUEUE_T_H
 #define ACE_TIMER_QUEUE_T_H

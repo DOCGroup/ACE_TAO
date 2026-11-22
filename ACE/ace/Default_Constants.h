@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Default_Constants.h
  *
@@ -10,7 +9,6 @@
  *
  *  This one is split from the famous OS.h
  */
-//=============================================================================
 
 #ifndef ACE_DEFAULT_CONSTANTS_H
 #define ACE_DEFAULT_CONSTANTS_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Reactor_Notification_Strategy.h
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
 #ifndef ACE_REACTOR_NOTIFICATION_STRATEGY_H
 #define ACE_REACTOR_NOTIFICATION_STRATEGY_H
 

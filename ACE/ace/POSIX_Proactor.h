@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    POSIX_Proactor.h
  *
@@ -10,7 +9,6 @@
  *  @author Roger Tragin <r.tragin@computer.org>
  *  @author Alexander Libman <alibman@baltimore.com>
  */
-//=============================================================================
 
 #ifndef ACE_POSIX_PROACTOR_H
 #define ACE_POSIX_PROACTOR_H

@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file  UUID.h
  *
  *  @author Andrew T. Finnel <andrew@activesol.net>
  *  @author Yamuna Krishnmaurthy <yamuna@oomworks.com>
  */
-//=============================================================================
 
 #ifndef ACE_UUID_H
 #define ACE_UUID_H

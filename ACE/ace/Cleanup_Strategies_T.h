@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Cleanup_Strategies_T.h
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef CLEANUP_STRATEGIES_H
 #define CLEANUP_STRATEGIES_H

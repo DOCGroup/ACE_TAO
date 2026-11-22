@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Dirent_Selector.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Rich Newman <RNewman@directv.com>
  */
-//=============================================================================
 
 #ifndef ACE_DIRENT_SELECTOR_H
 #define ACE_DIRENT_SELECTOR_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   CDR_Stream.h
  *
@@ -32,7 +31,6 @@
  *  @author Istvan Buki <istvan.buki@euronet.be>
  *  @author Codeset translation by Jim Rogers <jrogers@viasoft.com>
  */
-//=============================================================================
 
 #ifndef ACE_CDR_STREAM_H
 #define ACE_CDR_STREAM_H

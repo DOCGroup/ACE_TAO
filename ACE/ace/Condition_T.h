@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file    Condition_T.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_CONDITION_T_H
 #define ACE_CONDITION_T_H

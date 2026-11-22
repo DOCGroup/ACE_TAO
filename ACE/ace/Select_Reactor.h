@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Select_Reactor.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SELECT_REACTOR_H
 #define ACE_SELECT_REACTOR_H

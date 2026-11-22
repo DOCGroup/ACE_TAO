@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    FILE_Connector.h
  *
  *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_FILE_CONNECTOR_H
 #define ACE_FILE_CONNECTOR_H

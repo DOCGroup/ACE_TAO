@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    LSOCK_Acceptor.h
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
 
 #ifndef ACE_LOCAL_SOCK_ACCEPTOR_H
 #define ACE_LOCAL_SOCK_ACCEPTOR_H

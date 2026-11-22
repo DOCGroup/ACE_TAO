@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Token_Request_Reply.h
  *
@@ -10,7 +9,6 @@
  *  @author Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
  *  @author Tim Harrison (harrison@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef ACE_TOKEN_REQUEST_REPLY_H
 #define ACE_TOKEN_REQUEST_REPLY_H

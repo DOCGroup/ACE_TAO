@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Tokenizer_T.h
  *
  *  @author Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_TOKENIZER_T_H
 #define ACE_TOKENIZER_T_H

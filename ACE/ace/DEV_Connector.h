@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    DEV_Connector.h
  *
  *  @author Gerhard Lenzer and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_DEV_CONNECTOR_H
 #define ACE_DEV_CONNECTOR_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Log_Category.h
  *
  *  @author Huang-Ming Huang <huangh@ociweb.com>
  */
-//=============================================================================
 
 #ifndef ACE_LOG_CATEGORY_H
 #define ACE_LOG_CATEGORY_H

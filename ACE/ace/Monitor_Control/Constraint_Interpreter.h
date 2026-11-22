@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Constraint_Interpreter.h
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef CONSTRAINT_INTERPRETER_H
 #define CONSTRAINT_INTERPRETER_H

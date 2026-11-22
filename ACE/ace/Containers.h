@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Containers.h
  *
  *  @author Douglas C.  Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_CONTAINERS_H
 #define ACE_CONTAINERS_H

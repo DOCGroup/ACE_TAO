@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Capabilities.h
  *
  *  @author Arturo Montes <mitosys@colomsat.net.co>
  */
-//=============================================================================
 
 #ifndef ACE_CAPABILITIES_H
 #define ACE_CAPABILITIES_H

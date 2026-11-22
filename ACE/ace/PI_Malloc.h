@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file   PI_Malloc.h
  *
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  *  @author Based on code that existed in other ACE files.
  */
-//==========================================================================
 
 #ifndef ACE_PI_MALLOC_H
 #define ACE_PI_MALLOC_H

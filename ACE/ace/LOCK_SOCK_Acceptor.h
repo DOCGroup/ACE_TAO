@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    LOCK_SOCK_Acceptor.h
  *
  *  @author James Hu and Irfan Pyarali
  */
-//=============================================================================
 
 #ifndef ACE_LOCK_SOCK_ACCEPTOR_H
 #define ACE_LOCK_SOCK_ACCEPTOR_H

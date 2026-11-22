@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file    Manual_Event.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_MANUAL_EVENT_H
 #define ACE_MANUAL_EVENT_H

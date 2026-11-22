@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Intrusive_Auto_Ptr.h
  *
@@ -8,7 +7,6 @@
  *
  *  @note Modeled on http://www.boost.org/boost/intrusive_ptr.hpp
  */
-//=============================================================================
 
 #ifndef ACE_INTRUSIVE_AUTO_PTR_H
 #define ACE_INTRUSIVE_AUTO_PTR_H

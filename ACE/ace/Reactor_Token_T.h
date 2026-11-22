@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Reactor_Token_T.h
  *
  *  @author Steve Huston <shuston@riverace.com>
  */
-//=============================================================================
 
 #ifndef ACE_REACTOR_TOKEN_T_H
 #define ACE_REACTOR_TOKEN_T_H

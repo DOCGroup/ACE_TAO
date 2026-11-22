@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file    Null_Semaphore.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_NULL_SEMAPHORE_H
 #define ACE_NULL_SEMAPHORE_H

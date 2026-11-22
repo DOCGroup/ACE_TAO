@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    TP_Reactor.h
  *
@@ -21,7 +20,6 @@
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_TP_REACTOR_H
 #define ACE_TP_REACTOR_H

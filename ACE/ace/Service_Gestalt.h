@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//====================================================================
 /**
  *  @file    Service_Gestalt.h
  *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
-//====================================================================
 
 #ifndef ACE_SERVICE_GESTALT_H
 #define ACE_SERVICE_GESTALT_H

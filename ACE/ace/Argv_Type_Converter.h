@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Argv_Type_Converter.h
  *
  *  @author Si Mong Park <spark@ociweb.com>
  */
-//=============================================================================
 
 #ifndef ACE_ARGV_TYPE_CONVERTER_H
 #define ACE_ARGV_TYPE_CONVERTER_H

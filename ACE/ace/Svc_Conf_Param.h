@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Svc_Conf_Param.h
  *
@@ -8,7 +7,6 @@
  *  @author Based on code originally found in Svc_Conf.h by Doug
             Schmidt and Ossama Othman.
  */
-//=============================================================================
 
 #ifndef ACE_SVC_CONF_PARAM_H
 #define ACE_SVC_CONF_PARAM_H

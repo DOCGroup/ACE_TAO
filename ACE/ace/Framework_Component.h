@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Framework_Component.h
  *
@@ -29,7 +28,6 @@
  *
  *  @author Don Hinton <dhinton@ieee.org>.
  */
-//=============================================================================
 
 #ifndef ACE_FRAMEWORK_COMPONENT_H
 #define ACE_FRAMEWORK_COMPONENT_H

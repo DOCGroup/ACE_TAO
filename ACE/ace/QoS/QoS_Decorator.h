@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    QoS_Decorator.h
  *
  *  @author Vishal Kachroo <vishal@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef QOS_DECORATOR_H
 #define QOS_DECORATOR_H

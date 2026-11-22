@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file    Thread_Mutex.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_THREAD_MUTEX_H
 #define ACE_THREAD_MUTEX_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Token_Collection.h
  *
@@ -15,7 +14,6 @@
  *  @author Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
  *  @author Tim Harrison (harrison@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef ACE_TOKEN_COLLECTION_H
 #define ACE_TOKEN_COLLECTION_H

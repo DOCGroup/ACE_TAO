@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Managed_Object.h
  *
  *  @author David L. Levine <levine@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_MANAGED_OBJECT_H
 #define ACE_MANAGED_OBJECT_H

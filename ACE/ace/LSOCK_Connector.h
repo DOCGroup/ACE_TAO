@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    LSOCK_Connector.h
  *
  *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_LOCAL_SOCK_CONNECTOR_H
 #define ACE_LOCAL_SOCK_CONNECTOR_H

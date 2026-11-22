@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file    Versioned_Namespace.h
  *
@@ -10,7 +9,6 @@
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_VERSIONED_NAMESPACE_H
 #define ACE_VERSIONED_NAMESPACE_H

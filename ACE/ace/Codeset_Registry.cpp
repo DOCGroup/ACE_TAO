@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file   Codeset_Registry.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
 
 #include "ace/Codeset_Registry.h"
 #include "ace/OS_Memory.h"

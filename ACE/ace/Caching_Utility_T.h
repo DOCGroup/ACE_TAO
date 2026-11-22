@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Caching_Utility_T.h
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_CACHING_UTILITY_H
 #define ACE_CACHING_UTILITY_H

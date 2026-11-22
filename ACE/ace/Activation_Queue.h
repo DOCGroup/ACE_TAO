@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Activation_Queue.h
  *
  *  @author Andres Kruse <Andres.Kruse@cern.ch>
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_ACTIVATION_QUEUE_H
 #define ACE_ACTIVATION_QUEUE_H

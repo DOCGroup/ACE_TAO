@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file   Stack_Trace.cpp
  *
@@ -18,7 +17,6 @@
  *  If you add support for a new platform, please add a bullet to the
  *  above list with durable references to the origins of your code.
  */
-//=============================================================================
 
 #include "ace/Stack_Trace.h"
 #include "ace/OS_NS_string.h"

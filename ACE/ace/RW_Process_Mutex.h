@@ -1,12 +1,10 @@
 // -*- C++ -*-
 //
-//=============================================================================
 /**
  *  @file    RW_Process_Mutex.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_RW_PROCESS_MUTEX_H
 #define ACE_RW_PROCESS_MUTEX_H

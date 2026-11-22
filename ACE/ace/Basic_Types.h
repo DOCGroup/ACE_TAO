@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Basic_Types.h
  *
@@ -35,7 +34,6 @@
  *  Byte-order (endian-ness) determination:
  *    ACE_BYTE_ORDER, to either ACE_BIG_ENDIAN or ACE_LITTLE_ENDIAN
  */
-//=============================================================================
 
 #include /**/ "ace/config-lite.h"
 

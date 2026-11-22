@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    ATM_Connector.h
  *
  *  @author Joe Hoffert <joeh@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_ATM_CONNECTOR_H
 #define ACE_ATM_CONNECTOR_H

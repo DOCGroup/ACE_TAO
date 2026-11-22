@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Multihomed_INET_Addr.h
  *
  *  @author Edward R. Mulholland <emulholl@atl.lmco.com>
  */
-//=============================================================================
 
 #ifndef ACE_MULTIHOMED_INET_ADDR_H
 #define ACE_MULTIHOMED_INET_ADDR_H

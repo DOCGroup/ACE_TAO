@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    TkReactor.h
  *
  *  @author Nagarajan Surendran <naga@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_TKREACTOR_H
 #define ACE_TKREACTOR_H

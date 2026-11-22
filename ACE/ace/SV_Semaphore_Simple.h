@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file    SV_Semaphore_Simple.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_SV_SEMAPHORE_SIMPLE_H
 #define ACE_SV_SEMAPHORE_SIMPLE_H

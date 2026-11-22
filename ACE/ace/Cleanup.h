@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Cleanup.h
  *
@@ -8,7 +7,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_CLEANUP_H
 # define ACE_CLEANUP_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Message_Queue_Vx.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_MESSAGE_QUEUE_VX_H
 #define ACE_MESSAGE_QUEUE_VX_H

@@ -1,11 +1,9 @@
 
-//=============================================================================
 /**
  *  @file    Hash_Map_Manager_T.cpp
  *
  *  @author Douglas C. Schmidt <schmidt@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_HASH_MAP_MANAGER_T_CPP
 #define ACE_HASH_MAP_MANAGER_T_CPP

@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  * @file Configuration_Import_Export.h
  *
@@ -17,7 +16,6 @@
  *  - Provide ability to read file in one format and write in another.
  *  - See todo's in each class
  */
-//=============================================================================
 
 #ifndef ACE_CONFIGURATION_IMPORT_EXPORT_H
 #define ACE_CONFIGURATION_IMPORT_EXPORT_H

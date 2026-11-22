@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file Packets_Sent_Monitor.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef PACKETS_SENT_MONITOR_H
 #define PACKETS_SENT_MONITOR_H

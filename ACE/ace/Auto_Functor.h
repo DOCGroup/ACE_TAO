@@ -1,11 +1,9 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  * @file Auto_Functor.h
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
-//=============================================================================
 #ifndef ACE_AUTO_FUNCTOR_H
 #define ACE_AUTO_FUNCTOR_H
 #include /**/ "ace/pre.h"

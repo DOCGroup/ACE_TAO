@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-// ============================================================================
 /**
  * @file CORBA_macros.h
  *
@@ -13,7 +12,6 @@
  *  @author Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
  *  @author Carlos O'Ryan  <coryan@uci.edu>, et al.
  */
-// ============================================================================
 
 #ifndef ACE_CORBA_MACROS_H
 #define ACE_CORBA_MACROS_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    SOCK_SEQPACK_Acceptor.h
  *
@@ -9,7 +8,6 @@
  *  @author  based on SOCK_STREAM_Acceptor
  *            by Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SOCK_SEQ_ACCEPTOR_H
 #define ACE_SOCK_SEQ_ACCEPTOR_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    iosfwd.h
  *
@@ -15,7 +14,6 @@
  *  for streams uses templates, simple forward declaration will not
  *  work.
  */
-//=============================================================================
 
 #ifndef ACE_IOSFWD_H
 #define ACE_IOSFWD_H

@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Functor_T.h
  *
@@ -20,7 +19,6 @@
  *  @author and on STL-style functor implementations originally done by
  *  @author Irfan Pyarali  <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_FUNCTOR_T_H
 #define ACE_FUNCTOR_T_H

@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file    Recursive_Thread_Mutex.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and
  *          Abdullah Sowayan <abdullah.sowayan@lmco.com>
  */
-//==========================================================================
 
 #ifndef ACE_RECURSIVE_THREAD_MUTEX_H
 #define ACE_RECURSIVE_THREAD_MUTEX_H

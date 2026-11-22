@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file    Condition_Thread_Mutex.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_CONDITION_THREAD_MUTEX_H
 #define ACE_CONDITION_THREAD_MUTEX_H

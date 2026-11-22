@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Hash_Map_With_Allocator_T.h
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_HASH_MAP_WITH_ALLOCATOR_T_H
 #define ACE_HASH_MAP_WITH_ALLOCATOR_T_H

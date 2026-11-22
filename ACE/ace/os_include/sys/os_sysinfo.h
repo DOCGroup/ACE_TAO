@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    os_sysinfo.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef ACE_OS_INCLUDE_SYS_OS_SYSINFO_H
 #define ACE_OS_INCLUDE_SYS_OS_SYSINFO_H

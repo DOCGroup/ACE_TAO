@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Svc_Handler.h
  *
  *  @author Douglas Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SVC_HANDLER_H
 #define ACE_SVC_HANDLER_H

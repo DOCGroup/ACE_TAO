@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    POSIX_Asynch_IO.h
  *
@@ -13,7 +12,6 @@
  *  @author Roger Tragin <r.tragin@computer.org>
  *  @author Alexander Libman <alibman@baltimore.com>
  */
-//=============================================================================
 
 #ifndef ACE_POSIX_ASYNCH_IO_H
 #define ACE_POSIX_ASYNCH_IO_H

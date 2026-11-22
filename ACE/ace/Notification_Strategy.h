@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Notification_Strategy.h
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
 #ifndef ACE_NOTIFICATION_STRATEGY_H
 #define ACE_NOTIFICATION_STRATEGY_H
 #include /**/ "ace/pre.h"

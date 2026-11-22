@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file    Dynamic_Message_Strategy.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_DYNAMIC_MESSAGE_STRATEGY_H
 #define ACE_DYNAMIC_MESSAGE_STRATEGY_H

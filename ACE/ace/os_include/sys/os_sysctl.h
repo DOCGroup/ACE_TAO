@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    os_sysctl.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef ACE_OS_INCLUDE_SYS_OS_SYSCTL_H
 #define ACE_OS_INCLUDE_SYS_OS_SYSCTL_H

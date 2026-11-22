@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    SSL_SOCK_Connector.h
  *
@@ -9,7 +8,6 @@
  *  @author John Heitmann
  *  @author Chris Zimman
  */
-//=============================================================================
 
 #ifndef ACE_SSL_SOCK_CONNECTOR_H
 #define ACE_SSL_SOCK_CONNECTOR_H

@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Configuration.h
  *
@@ -22,7 +21,6 @@
  *
  *  @todo Templatize this class with an ACE_LOCK to provide thread safety
  */
-//=============================================================================
 
 #ifndef ACE_CONFIGURATION_H
 #define ACE_CONFIGURATION_H

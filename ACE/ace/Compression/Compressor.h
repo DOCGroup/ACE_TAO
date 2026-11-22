@@ -1,12 +1,10 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file   Compressor.h
  *
  *  @author ACE version by
  *  @author Derek Dominish <derek.dominish@dsto.defence.gov.au>
  */
-//=============================================================================
 
 #ifndef ACE_COMPRESSOR_H
 #define ACE_COMPRESSOR_H

@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    UPIPE_Acceptor.h
  *
  *  @author Gerhard Lenzer
  *  @author Douglas C. Schmidt
  */
-//=============================================================================
 
 #ifndef ACE_UPIPE_ACCEPTOR_H
 #define ACE_UPIPE_ACCEPTOR_H

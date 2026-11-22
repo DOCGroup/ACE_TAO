@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file Num_Threads_Monitor.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef NUM_THREADS_MONITOR_H
 #define NUM_THREADS_MONITOR_H

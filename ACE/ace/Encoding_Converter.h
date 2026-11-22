@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=========================================================================
 /**
  * @file Encoding_Converter.h
  *
@@ -9,7 +8,6 @@
  *
  * @author Chad Elliott <elliott_c@ociweb.com>
  */
-//=========================================================================
 
 #ifndef ACE_ENCODING_CONVERTER_H
 #define ACE_ENCODING_CONVERTER_H

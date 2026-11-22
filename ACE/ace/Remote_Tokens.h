@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Remote_Tokens.h
  *
  *  @author Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
  *  @author Tim Harrison (harrison@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef ACE_REMOTE_MUTEX_H
 #define ACE_REMOTE_MUTEX_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Cache_Map_Manager_T.h
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_CACHE_MAP_MANAGER_T_H
 #define ACE_CACHE_MAP_MANAGER_T_H

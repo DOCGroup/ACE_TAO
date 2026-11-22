@@ -1,12 +1,10 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file    SSL_Context.h
  *
  *  @author Carlos O'Ryan <coryan@ece.uci.edu>
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SSL_CONTEXT_H
 #define ACE_SSL_CONTEXT_H

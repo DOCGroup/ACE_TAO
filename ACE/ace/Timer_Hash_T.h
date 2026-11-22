@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Timer_Hash_T.h
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_TIMER_HASH_T_H
 #define ACE_TIMER_HASH_T_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    WFMO_Reactor.h
  *
@@ -8,7 +7,6 @@
  *  @author Tim Harrison <harrison@cs.wustl.edu>
  *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_WFMO_REACTOR_H
 #define ACE_WFMO_REACTOR_H

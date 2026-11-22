@@ -1,12 +1,10 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  * @file ETCL_Constraint_Visitor.h
  *
  * @author Carlos O'Ryan <coryan@cs.wustl.edu>
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_ETCL_CONSTRAINT_VISITOR_H
 #define ACE_ETCL_CONSTRAINT_VISITOR_H

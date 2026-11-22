@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Priority_Reactor.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef ACE_PRIORITY_REACTOR_H
 #define ACE_PRIORITY_REACTOR_H

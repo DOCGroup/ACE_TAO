@@ -1,11 +1,9 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file   Stack_Trace.h
  *
  *  @author Chris Cleeland (cleeland.ociweb.com)
  */
-//=============================================================================
 
 #ifndef ACE_STACK_TRACE_H
 #define ACE_STACK_TRACE_H

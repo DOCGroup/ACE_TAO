@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file    Hash_Multi_Map_Manager_T.h
  *
@@ -18,7 +17,6 @@
  *
  * @author Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_HASH_MULTI_MAP_MANAGER_T_H
 #define ACE_HASH_MULTI_MAP_MANAGER_T_H

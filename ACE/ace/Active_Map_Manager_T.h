@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Active_Map_Manager_T.h
  *
  *  @author Irfan Pyarali
  */
-//=============================================================================
 
 #ifndef ACE_ACTIVE_MAP_MANAGER_T_H
 #define ACE_ACTIVE_MAP_MANAGER_T_H

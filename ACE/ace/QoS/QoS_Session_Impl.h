@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    QoS_Session_Impl.h
  *
  *  @author Vishal Kachroo <vishal@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_QOS_SESSION_IMPL_H
 #define ACE_QOS_SESSION_IMPL_H

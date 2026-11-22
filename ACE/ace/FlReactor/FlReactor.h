@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file   FlReactor.h
  *
@@ -10,7 +9,6 @@
  *  @author Kirill Rybaltchenko <Kirill.Rybaltchenko@cern.ch>
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_FLREACTOR_H
 #define ACE_FLREACTOR_H

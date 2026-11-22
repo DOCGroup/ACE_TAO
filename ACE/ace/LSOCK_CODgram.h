@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    LSOCK_CODgram.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_LOCAL_SOCK_CODGRAM_H
 #define ACE_LOCAL_SOCK_CODGRAM_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file Windows_Multi_Instance_Monitor.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef WINDOWS_MULTI_INSTANCE_MONITOR_H
 #define WINDOWS_MULTI_INSTANCE_MONITOR_H

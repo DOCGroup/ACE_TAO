@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Object_Manager.h
  *
@@ -8,7 +7,6 @@
  *  @author Matthias Kerkhoff
  *  @author Per Andersson
  */
-//=============================================================================
 
 #ifndef ACE_OBJECT_MANAGER_H
 #define ACE_OBJECT_MANAGER_H

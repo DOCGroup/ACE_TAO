@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    System_Time.h
  *
@@ -8,7 +7,6 @@
  *  @author Tim H. Harrison
  *  @author Douglas C. Schmidt
  */
-//=============================================================================
 
 #ifndef ACE_SYSTEM_TIME_H
 #define ACE_SYSTEM_TIME_H

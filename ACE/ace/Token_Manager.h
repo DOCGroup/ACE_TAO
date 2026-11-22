@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Token_Manager.h
  *
  *  @author Tim Harrison (harrison@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef ACE_TOKEN_MANAGER_H
 #define ACE_TOKEN_MANAGER_H

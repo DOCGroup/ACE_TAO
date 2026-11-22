@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file Constraint_Visitor.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef CONSTRAINT_VISITOR_H
 #define CONSTRAINT_VISITOR_H

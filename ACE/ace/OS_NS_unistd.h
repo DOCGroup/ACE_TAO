@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   OS_NS_unistd.h
  *
@@ -8,7 +7,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_UNISTD_H
 # define ACE_OS_NS_UNISTD_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    SStringfwd.h
  *
@@ -10,7 +9,6 @@
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  *  @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SSTRINGFWD_H
 #define ACE_SSTRINGFWD_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   CDR_Base.h
  *
@@ -19,7 +18,6 @@
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  *  @author Istvan Buki <istvan.buki@euronet.be>
  */
-//=============================================================================
 
 #ifndef ACE_CDR_BASE_H
 #define ACE_CDR_BASE_H

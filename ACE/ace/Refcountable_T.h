@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Refcountable_T.h
  *
  * @author Doug Schmidt
  * @author Johnny Willemsen
  */
-//=============================================================================
 #ifndef ACE_REFCOUNTABLE_T_H
 #define ACE_REFCOUNTABLE_T_H
 #include /**/ "ace/pre.h"

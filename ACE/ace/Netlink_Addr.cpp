@@ -1,11 +1,9 @@
-//=============================================================================
 /**
  *  @file    Netlink_Addr.cpp
  *
  *  @author Robert Iakobashvilli <coroberti@gmail.com>
  *  @author Raz Ben Yehuda <raziebe@gmail.com>
  */
-//=============================================================================
 
 #include "ace/Netlink_Addr.h"
 

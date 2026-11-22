@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    os_pdhmsg.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef ACE_OS_INCLUDE_OS_PDHMSG_H
 #define ACE_OS_INCLUDE_OS_PDHMSG_H

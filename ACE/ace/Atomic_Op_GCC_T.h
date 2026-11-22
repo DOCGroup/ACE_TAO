@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Atomic_Op_GCC_T.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl
  */
-//=============================================================================
 
 #ifndef ACE_ATOMIC_OP_GCC_T_H
 #define ACE_ATOMIC_OP_GCC_T_H

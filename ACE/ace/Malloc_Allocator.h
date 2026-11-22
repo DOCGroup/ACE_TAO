@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file   Malloc_Allocator.h
  *
  *  @author Based on code that formerly existed in another ACE file.
  */
-//==========================================================================
 
 #ifndef ACE_MALLOC_ALLOCATOR_H
 #define ACE_MALLOC_ALLOCATOR_H

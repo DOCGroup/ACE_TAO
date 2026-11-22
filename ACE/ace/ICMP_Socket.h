@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ICMP_Socket.h
  *
  *  @author Robert S. Iakobashvili <coroberti@gmail.com> <coroberti@walla.co.il>
  *  @author Gonzalo A. Diethelm <gonzalo.diethelm@aditiva.com>
  */
-//=============================================================================
 
 #ifndef ACE_ICMP_SOCKET_H
 #define ACE_ICMP_SOCKET_H

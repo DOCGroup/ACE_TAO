@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Lib_Find.h
  *
  *  All the static function calls needed to search and open shared
  *  libraries.
  */
-//=============================================================================
 
 #ifndef ACE_LIB_FIND_H
 #define ACE_LIB_FIND_H

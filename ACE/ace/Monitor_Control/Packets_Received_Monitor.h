@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file Packets_Received_Monitor.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef PACKETS_RECEIVED_MONITOR_H
 #define PACKETS_RECEIVED_MONITOR_H

@@ -1,11 +1,9 @@
-//=============================================================================
 /**
  *  @file    SOCK_Netlink.h
  *
  *  @author Robert Iakobashvilli <coroberti@gmail.com>
  *  @author Raz Ben Yehuda <raziebe@013.net.il>
  */
-//=============================================================================
 
 #ifndef ACE_SOCK_NETLINK_H
 #define ACE_SOCK_NETLINK_H

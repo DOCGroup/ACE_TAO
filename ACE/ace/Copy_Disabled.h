@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//===========================================================================
 /**
  * @file Copy_Disabled.h
  *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
-//===========================================================================
 
 #ifndef ACE_COPY_DISABLED_H
 #define ACE_COPY_DISABLED_H

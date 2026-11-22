@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     Sbrk_Memory_Pool.h
  *
  *  @author Dougls C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SBRK_MEMORY_POOL_H
 #define ACE_SBRK_MEMORY_POOL_H

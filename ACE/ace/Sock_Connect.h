@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file   Sock_Connect.h
  *
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  *  @author Based on code that existed formerly in ACE.h.
  */
-//==========================================================================
 
 #ifndef ACE_SOCK_CONNECT_H
 #define ACE_SOCK_CONNECT_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   OS_NS_wctype.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_WCTYPE_H
 # define ACE_OS_NS_WCTYPE_H

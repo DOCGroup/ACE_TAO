@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Log_Msg_Callback.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_LOG_MSG_CALLBACK_H
 #define ACE_LOG_MSG_CALLBACK_H

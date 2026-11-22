@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//====================================================================
 /**
  *  @file    Service_Config.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//====================================================================
 
 #ifndef ACE_SERVICE_CONFIG_H
 #define ACE_SERVICE_CONFIG_H

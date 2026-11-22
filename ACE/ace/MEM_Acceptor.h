@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    MEM_Acceptor.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_MEM_ACCEPTOR_H
 #define ACE_MEM_ACCEPTOR_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *
  *  @file    SOCK_SEQPACK_Association.h
@@ -10,7 +9,6 @@
  *  @author  based on SOCK_Stream
  *            by Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SOCK_SEQPACK_ASSOCIATION_H
 #define ACE_SOCK_SEQPACK_ASSOCIATION_H

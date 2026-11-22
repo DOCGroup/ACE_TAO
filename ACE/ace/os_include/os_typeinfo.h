@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    os_typeinfo.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Don Hinton Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef ACE_OS_INCLUDE_OS_TYPEINFO_H
 #define ACE_OS_INCLUDE_OS_TYPEINFO_H

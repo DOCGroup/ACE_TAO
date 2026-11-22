@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file    Get_Opt.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Don Hinton <dhinton@gmx.net> (added long option support)
  */
-//==========================================================================
 
 #ifndef ACE_GET_OPT_H
 #define ACE_GET_OPT_H

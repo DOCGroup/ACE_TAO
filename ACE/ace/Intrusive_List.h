@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file Intrusive_List.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef ACE_INTRUSIVE_LIST_H
 #define ACE_INTRUSIVE_LIST_H

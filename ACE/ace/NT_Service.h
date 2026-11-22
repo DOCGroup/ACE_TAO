@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file    NT_Service.h
  *
  *  @author Steve Huston <shuston@riverace.com>
  */
-//==========================================================================
 
 #ifndef ACE_NT_SERVICE_H
 #define ACE_NT_SERVICE_H

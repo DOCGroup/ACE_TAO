@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Token.h
  *
@@ -9,7 +8,6 @@
  *  @author Ported to ACE by
  *  @author Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
  */
-//=============================================================================
 
 #ifndef ACE_TOKEN_H
 #define ACE_TOKEN_H

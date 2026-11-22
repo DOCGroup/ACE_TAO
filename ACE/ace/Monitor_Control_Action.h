@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file Monitor_Control_Action.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef MONITOR_CONTROL_ACTION_H
 #define MONITOR_CONTROL_ACTION_H

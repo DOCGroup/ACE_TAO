@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Obstack_T.h
  *
  *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_OBSTACK_T_H
 #define ACE_OBSTACK_T_H

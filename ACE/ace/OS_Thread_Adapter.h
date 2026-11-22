@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file OS_Thread_Adapter.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef ACE_OS_THREAD_ADAPTER_H
 #define ACE_OS_THREAD_ADAPTER_H

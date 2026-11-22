@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Timeprobe.h
  *
@@ -31,7 +30,6 @@
  * compiling ACE. ACE_ENABLE_TIMEPROBES means that the
  * ACE_TIMEPROBE_* macros should spring to life.
  */
-//=============================================================================
 
 #ifndef ACE_TIMEPROBE_H
 #define ACE_TIMEPROBE_H

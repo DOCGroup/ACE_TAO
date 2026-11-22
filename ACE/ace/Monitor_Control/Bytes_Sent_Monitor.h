@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file Bytes_Sent_Monitor.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef BYTES_SENT_MONITOR_H
 #define BYTES_SENT_MONITOR_H

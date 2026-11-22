@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    IOStream.h
  *
  *  @author James CE Johnson <jcej@lads.com>
  *  @author Jim Crossley <jim@lads.com>
  */
-//=============================================================================
 
 #ifndef ACE_IOSTREAM_H
 #define ACE_IOSTREAM_H

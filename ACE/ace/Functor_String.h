@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file    Functor_String.h
  *
@@ -10,7 +9,6 @@
  *   types to the rest of ACE+TAO. Hence they are placed in a separate
  *   file.
  */
-//==========================================================================
 #ifndef ACE_FUNCTOR_STRING_H
 #define ACE_FUNCTOR_STRING_H
 #include /**/ "ace/pre.h"

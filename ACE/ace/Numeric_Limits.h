@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file    Numeric_Limits.h
  *
@@ -18,7 +17,6 @@
  *
  * @author  Ossama Othman <ossama_othman at symantec dot com>
  */
-//=============================================================================
 
 #ifndef ACE_NUMERIC_LIMITS_H
 #define ACE_NUMERIC_LIMITS_H

@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    SPIPE_Connector.h
  *
  *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SPIPE_CONNECTOR_H
 #define ACE_SPIPE_CONNECTOR_H

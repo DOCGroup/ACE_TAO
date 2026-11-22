@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Framework_Component_T.h
  *
  *  @author Don Hinton <dhinton@ieee.org>
  */
-//=============================================================================
 
 #ifndef ACE_FRAMEWORK_COMPONENT_T_H
 #define ACE_FRAMEWORK_COMPONENT_T_H

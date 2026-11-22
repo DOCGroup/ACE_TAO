@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Env_Value_T.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Chris Cleeland (derived from work by Carlos O'Ryan)
  */
-//=============================================================================
 
 #ifndef ACE_ENV_VALUE_T_H
 #define ACE_ENV_VALUE_T_H

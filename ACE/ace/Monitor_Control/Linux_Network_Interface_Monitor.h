@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file Linux_Network_Interface_Monitor.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef LINUX_NETWORK_INTERFACE_MONITOR_H
 #define LINUX_NETWORK_INTERFACE_MONITOR_H

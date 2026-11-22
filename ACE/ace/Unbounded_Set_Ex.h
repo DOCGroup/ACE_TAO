@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file Unbounded_Set_Ex.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_UNBOUNDED_SET_EX_H
 #define ACE_UNBOUNDED_SET_EX_H

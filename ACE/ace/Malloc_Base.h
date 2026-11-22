@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Malloc_Base.h
  *
  *  @author Doug Schmidt and Irfan Pyarali
  */
-//=============================================================================
 
 #ifndef ACE_MALLOC_BASE_H
 #define ACE_MALLOC_BASE_H

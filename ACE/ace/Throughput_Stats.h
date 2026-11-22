@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file    Throughput_Stats.h
  *
  *  @author David L. Levine
  */
-//==========================================================================
 
 #ifndef ACE_THROUGHPUT_STATS_H
 #define ACE_THROUGHPUT_STATS_H

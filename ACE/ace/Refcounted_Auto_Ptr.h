@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Refcounted_Auto_Ptr.h
  *
  *  @author John Tucker <JTucker@infoglide.com>
  */
-//=============================================================================
 
 #ifndef ACE_REFCOUNTED_AUTO_PTR_H
 #define ACE_REFCOUNTED_AUTO_PTR_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file Bytes_Received_Monitor.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef BYTES_RECEIVED_MONITOR_H
 #define BYTES_RECEIVED_MONITOR_H

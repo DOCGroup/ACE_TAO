@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    SSL_SOCK_Acceptor.h
  *
@@ -8,7 +7,6 @@
  *  @author Chris Zimman
  *  @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SSL_SOCK_ACCEPTOR_H
 #define ACE_SSL_SOCK_ACCEPTOR_H

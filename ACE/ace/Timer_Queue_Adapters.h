@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Timer_Queue_Adapters.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and
  *          Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef ACE_TIMER_QUEUE_ADAPTERS_H
 #define ACE_TIMER_QUEUE_ADAPTERS_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file    Condition_Attributes.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_CONDITION_ATTRIBUTES_H
 #define ACE_CONDITION_ATTRIBUTES_H

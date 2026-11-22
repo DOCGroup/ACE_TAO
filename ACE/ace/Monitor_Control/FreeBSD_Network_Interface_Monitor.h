@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file FreeBSD_Network_Interface_Monitor.h
  *
  * @author Boyan Kasarov
  */
-//=============================================================================
 
 #ifndef FREEBSD_NETWORK_INTERFACE_MONITOR_H
 #define FREEBSD_NETWORK_INTERFACE_MONITOR_H

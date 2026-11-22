@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Singleton.h
  *
@@ -12,7 +11,6 @@
  *  @author Rich Christy
  *  @author David Levine <levine@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SINGLETON_H
 #define ACE_SINGLETON_H

@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//==========================================================================
 /**
  *  @file    Event_Handler.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_EVENT_HANDLER_H
 #define ACE_EVENT_HANDLER_H

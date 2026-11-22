@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file Metrics_Cache_T.h
  *
  * @author Chris Gill <cdgill@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_METRICS_CACHE_T_H
 #define ACE_METRICS_CACHE_T_H

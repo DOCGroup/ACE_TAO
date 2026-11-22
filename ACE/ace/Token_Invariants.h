@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Token_Invariants.h
  *
@@ -10,7 +9,6 @@
  *   satisfied.  Can test mutexes and readers/writer locks.  Does
  *   not test recursive acquisition.
  */
-//=============================================================================
 
 #ifndef ACE_TOKEN_INVARIANTS_H
 #define ACE_TOKEN_INVARIANTS_H

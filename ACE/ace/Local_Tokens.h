@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Local_Tokens.h
  *
@@ -35,7 +34,6 @@
  *  $ACE_ROOT/ace/Synch.h or the
  *  ACE_Token that's defined in $ACE_ROOT/ace/Token.h.
  */
-//=============================================================================
 
 #ifndef ACE_LOCAL_MUTEX_H
 #define ACE_LOCAL_MUTEX_H

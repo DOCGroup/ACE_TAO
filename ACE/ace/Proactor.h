@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Proactor.h
  *
@@ -9,7 +8,6 @@
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  *  @author Alexander Libman <alibman@ihug.com.au>
  */
-//=============================================================================
 
 #ifndef ACE_PROACTOR_H
 #define ACE_PROACTOR_H

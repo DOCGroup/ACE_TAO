@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    WIN32_Asynch_IO.h
  *
@@ -16,7 +15,6 @@
  *  @author Roger Tragin <r.tragin@computer.org>
  *  @author Alexander Libman <alibman@ihug.com.au>
  */
-//=============================================================================
 
 #ifndef ACE_WIN32_ASYNCH_IO_H
 #define ACE_WIN32_ASYNCH_IO_H

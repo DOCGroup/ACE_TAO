@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file    Naming_Context.h
  *
@@ -8,7 +7,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Prashant Jain <pjain@uci.edu>
  */
-//==========================================================================
 
 #ifndef ACE_NAMING_CONTEXT_H
 #define ACE_NAMING_CONTEXT_H

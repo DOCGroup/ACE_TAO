@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   SSL_Asynch_BIO.h
  *
  *  @author Alexander Libman <alibman@baltimore.com>
  *  @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SSL_ASYNCH_BIO_H
 #define ACE_SSL_ASYNCH_BIO_H

@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file    Malloc_T.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and
  *          Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//==========================================================================
 
 #ifndef ACE_MALLOC_T_H
 #define ACE_MALLOC_T_H

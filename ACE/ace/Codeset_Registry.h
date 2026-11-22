@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file   Codeset_Registry.h
  *
@@ -17,7 +16,6 @@
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
 
 #ifndef ACE_CODESET_REGISTRY_H
 #define ACE_CODESET_REGISTRY_H

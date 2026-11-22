@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Asynch_Connector.h
  *
  *  @author Alexander Libman <alibman@ihug.com.au>
  */
-//=============================================================================
 
 #ifndef ACE_ASYNCH_CONNECTOR_H
 #define ACE_ASYNCH_CONNECTOR_H

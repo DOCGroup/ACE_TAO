@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Logging_Strategy.h
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  *  @author Orlando Ribeiro <oribeiro@inescporto.pt>
  */
-//=============================================================================
 
 #ifndef ACE_LOGGING_STRATEGY_H
 #define ACE_LOGGING_STRATEGY_H

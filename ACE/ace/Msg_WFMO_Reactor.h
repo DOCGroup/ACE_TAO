@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Msg_WFMO_Reactor.h
  *
  *  @author Beskrovny Evgeny <evgeny_beskrovny@icomverse.com>
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_MSG_WFMO_REACTOR_H
 #define ACE_MSG_WFMO_REACTOR_H

@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file    Read_Buffer.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Seth Widoff
  */
-//==========================================================================
 
 #ifndef ACE_READ_BUFFER_H
 #define ACE_READ_BUFFER_H

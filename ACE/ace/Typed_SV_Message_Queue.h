@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Typed_SV_Message_Queue.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_TYPED_MESSAGE_QUEUE_H
 #define ACE_TYPED_MESSAGE_QUEUE_H

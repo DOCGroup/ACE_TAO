@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ETCL_Interpreter.h
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu> based on previous work by
  *  @author Seth Widoff <sbw1@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ETCL_INTERPRETER_H
 #define ETCL_INTERPRETER_H

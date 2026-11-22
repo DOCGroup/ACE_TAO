@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Local_Name_Space.h
  *
@@ -8,7 +7,6 @@
  *  @author Irfan Pyarali (irfan@wuerl.wustl.edu)
  *  @author Douglas C. Schmidt (d.schmidt@vanderbilt.edu).
  */
-//=============================================================================
 
 #ifndef ACE_LOCAL_NAME_SPACE_H
 #define ACE_LOCAL_NAME_SPACE_H

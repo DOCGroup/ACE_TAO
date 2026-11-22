@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    os_socket.h
  *
@@ -9,7 +8,6 @@
  *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
-//=============================================================================
 
 #ifndef ACE_OS_INCLUDE_SYS_OS_SOCKET_H
 #define ACE_OS_INCLUDE_SYS_OS_SOCKET_H

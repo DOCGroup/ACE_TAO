@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file    Remote_Name_Space.h
  *
  *  @author Prashant Jain
  */
-//==========================================================================
 
 #ifndef ACE_REMOTE_NAME_SPACE_H
 #define ACE_REMOTE_NAME_SPACE_H

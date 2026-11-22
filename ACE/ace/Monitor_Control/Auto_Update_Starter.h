@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file Auto_Update_Starter.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef AUTO_UPDATE_STARTER_H
 #define AUTO_UPDATE_STARTER_H

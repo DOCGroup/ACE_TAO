@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Hash_Map_Manager.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_HASH_MAP_MANAGER_H
 #define ACE_HASH_MAP_MANAGER_H

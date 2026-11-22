@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Sched_Params.h
  *
  *  @author David Levine <levine@cs.wustl.edu>
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SCHED_PARAMS_H
 #define ACE_SCHED_PARAMS_H

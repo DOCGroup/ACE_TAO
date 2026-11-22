@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    SOCK_SEQPACK_Connector.h
  *
@@ -9,7 +8,6 @@
  *  @author  based on SOCK_STREAM_Connector
  *            by Douglas C. Schmidt <schmidt@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SOCK_SEQPACK_CONNECTOR_H
 #define ACE_SOCK_SEQPACK_CONNECTOR_H

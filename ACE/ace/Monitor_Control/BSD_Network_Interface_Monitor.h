@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file BSD_Network_Interface_Monitor.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef BSD_NETWORK_INTERFACE_MONITOR_H
 #define BSD_NETWORK_INTERFACE_MONITOR_H

@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file   Connection_Recycling_Strategy.h
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
 #ifndef ACE_CONNECTION_RECYCLING_STRATEGY_H
 #define ACE_CONNECTION_RECYCLING_STRATEGY_H
 #include /**/ "ace/pre.h"

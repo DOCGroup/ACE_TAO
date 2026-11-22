@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Caching_Strategies_T.h
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_CACHING_STRATEGIES_H
 #define ACE_CACHING_STRATEGIES_H

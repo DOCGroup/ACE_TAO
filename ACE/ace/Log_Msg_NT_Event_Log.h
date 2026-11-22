@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Log_Msg_NT_Event_Log.h
  *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  */
-//=============================================================================
 
 #ifndef ACE_LOG_MSG_NT_EVENT_LOG_H
 #define ACE_LOG_MSG_NT_EVENT_LOG_H

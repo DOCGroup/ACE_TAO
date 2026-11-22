@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file Truncate.h
  *
@@ -8,7 +7,6 @@
  * @author Ossama Othman <ossama_othman@symantec.com>
  * @author Russell Mora  <russell_mora@symantec.com>
  */
-//=============================================================================
 
 #ifndef ACE_TRUNCATE_H
 #define ACE_TRUNCATE_H

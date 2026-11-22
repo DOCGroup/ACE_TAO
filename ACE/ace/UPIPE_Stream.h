@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    UPIPE_Stream.h
  *
  *  @author Gerhard Lenzer
  *  @author Douglas C. Schmidt
  */
-//=============================================================================
 
 #ifndef ACE_UPIPE_STREAM_H
 #define ACE_UPIPE_STREAM_H

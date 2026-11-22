@@ -3,7 +3,6 @@
 #include <cstring>
 #include <cwchar>
 
-//=============================================================================
 /**
  *  @file    Functor.inl
  *
@@ -22,7 +21,6 @@
  * and on STL-style functor implementations originally done by
  * Irfan Pyarali  <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"

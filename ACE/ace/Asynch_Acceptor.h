@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Asynch_Acceptor.h
  *
  *  @author Irfan Pyarali (irfan@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef ACE_ASYNCH_ACCEPTOR_H
 #define ACE_ASYNCH_ACCEPTOR_H

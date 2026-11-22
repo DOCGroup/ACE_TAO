@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Cached_Connect_Strategy_T.h
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef CACHED_CONNECT_STRATEGY_T_H
 #define CACHED_CONNECT_STRATEGY_T_H

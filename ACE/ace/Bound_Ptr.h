@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Bound_Ptr.h
  *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  *  @author Boris Kolpackov <boris@codesynthesis.com>
  */
-//=============================================================================
 
 #ifndef ACE_BOUND_PTR_H
 #define ACE_BOUND_PTR_H

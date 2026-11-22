@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Future.h
  *
@@ -9,7 +8,6 @@
  *  @author Per Andersson <Per.Andersson@hfera.ericsson.se> and
  *  @author John Tucker <johnny_tucker@yahoo.com>
  */
-//=============================================================================
 
 #ifndef ACE_FUTURE_H
 #define ACE_FUTURE_H

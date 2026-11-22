@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    IOStream_T.h
  *
@@ -11,7 +10,6 @@
  * code. Instead, it should include "ace/IOStream.h".  That's because
  * we only put some conditional compilations in that file.
  */
-//=============================================================================
 
 #ifndef ACE_IOSTREAM_T_H
 #define ACE_IOSTREAM_T_H

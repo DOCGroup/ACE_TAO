@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ETCL_Constraint.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *  @author Jeff Parsons (j.parsons@vanderbilt.edu)
  */
-//=============================================================================
 
 #ifndef ACE_ETCL_CONSTRAINT_H
 #define ACE_ETCL_CONSTRAINT_H

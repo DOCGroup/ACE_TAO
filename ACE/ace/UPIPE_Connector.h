@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    UPIPE_Connector.h
  *
  *  @author Gerhard Lenzer and Douglas C. Schmidt
  */
-//=============================================================================
 
 #ifndef ACE_UPIPE_CONNECTOR_H
 #define ACE_UPIPE_CONNECTOR_H

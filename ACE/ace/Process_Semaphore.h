@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Process_Semaphore.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_PROCESS_SEMAPHORE_H
 #define ACE_PROCESS_SEMAPHORE_H

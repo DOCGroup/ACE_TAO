@@ -1,11 +1,9 @@
 
-//=============================================================================
 /**
  *  @file    Hash_Multi_Map_Manager_T.cpp
  *
  *  @author Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_Hash_Multi_Map_Manager_T_CPP
 #define ACE_Hash_Multi_Map_Manager_T_CPP

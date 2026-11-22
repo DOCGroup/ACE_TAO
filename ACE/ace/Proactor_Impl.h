@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Proactor_Impl.h
  *
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  *  @author Alexander Libman <alibman@ihug.com.au>
  */
-//=============================================================================
 
 #ifndef ACE_PROACTOR_IMPL_H
 #define ACE_PROACTOR_IMPL_H

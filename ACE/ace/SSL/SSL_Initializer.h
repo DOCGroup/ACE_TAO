@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    SSL_Initializer.h
  *
  *  @author Vladimir Zykov <vz@prismtech.com>
  */
-//=============================================================================
 
 #ifndef ACE_SSL_INITIALIZER_H
 #define ACE_SSL_INITIALIZER_H

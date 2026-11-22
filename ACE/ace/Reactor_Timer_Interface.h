@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Reactor_Timer_Interface.h
  *
  *  @author Irfan Pyarali <irfan@oomworks.com>
  */
-//=============================================================================
 
 #ifndef ACE_REACTOR_TIMER_INTERFACE_H
 #define ACE_REACTOR_TIMER_INTERFACE_H

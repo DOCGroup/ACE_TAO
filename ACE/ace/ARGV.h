@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file    ARGV.h
  *
  *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Everett Anderson <eea1@cs.wustl.edu>
  */
-//==========================================================================
 
 #ifndef ACE_ARGUMENT_VECTOR_H
 #define ACE_ARGUMENT_VECTOR_H

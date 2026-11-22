@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    QtReactor.h
  *
  *  @author Hamish Friedlander <ullexco@wave.co.nz>
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_QTREACTOR_H
 #define ACE_QTREACTOR_H

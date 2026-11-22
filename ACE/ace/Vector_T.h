@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file    Vector_T.h
  *
  *  @author Craig L. Ching <cching@mqsoftware.com>
  *  @author Gonzalo Diethelm <gonzalo.diethelm@aditiva.com>
  */
-//==========================================================================
 
 #ifndef ACE_VECTOR_T_H
 #define ACE_VECTOR_T_H

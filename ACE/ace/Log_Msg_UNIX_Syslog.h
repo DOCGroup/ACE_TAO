@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Log_Msg_UNIX_Syslog.h
  *
  *  @author Jerry D. De Master <jdemaster@rite-solutions.com>
  */
-//=============================================================================
 
 #ifndef ACE_LOG_MSG_UNIX_SYSLOG_H
 #define ACE_LOG_MSG_UNIX_SYSLOG_H
