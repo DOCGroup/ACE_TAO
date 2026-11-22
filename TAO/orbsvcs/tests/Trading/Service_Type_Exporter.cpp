@@ -285,7 +285,7 @@ dump_typestruct (const char* type_name,
   for (i = type_struct.super_types.length () - 1; i >= 0; --i)
     {
       ACE_DEBUG ((LM_DEBUG, "Super Type: %C\n",
-                  (const char *) type_struct.super_types[i]));
+                  type_struct.super_types[i].in ()));
     }
 
   for (i = type_struct.props.length () - 1; i >= 0; --i)
