@@ -55,7 +55,8 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
           return 0;
         }
       if (!*dot)
-        switch (part)
+        {
+          switch (part)
           {
           case 0:
 #    if ACE_SIZEOF_LONG > 4
@@ -83,6 +84,7 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
             ip |= n;
             continue;
           }
+        }
       if (n > 0xff)
         {
           return 0;

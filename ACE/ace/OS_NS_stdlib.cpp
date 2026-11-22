@@ -319,13 +319,17 @@ ACE_OS::mktemp (ACE_TCHAR *s)
 {
   ACE_OS_TRACE ("ACE_OS::mktemp");
   if (s == 0)
-    // check for null template string failed!
-    return 0;
+    {
+      // check for null template string failed!
+      return 0;
+    }
 
   ACE_TCHAR *xxxxxx = ACE_OS::strstr (s, ACE_TEXT ("XXXXXX"));
   if (xxxxxx == 0)
-    // the template string doesn't contain "XXXXXX"!
-    return s;
+    {
+      // the template string doesn't contain "XXXXXX"!
+      return s;
+    }
 
   // Find an unused filename for this process.  It is assumed
   // that the user will open the file immediately after
@@ -350,8 +354,10 @@ ACE_OS::mktemp (ACE_TCHAR *s)
         }
     }
   if (!found)
-    // maximum of 26 unique files per template, per process
-    xxxxxx[0] = ACE_TEXT ('\0');
+    {
+      // maximum of 26 unique files per template, per process
+      xxxxxx[0] = ACE_TEXT ('\0');
+    }
   return s;
 }
 #endif /* ACE_LACKS_MKTEMP && !ACE_DISABLE_MKTEMP */
