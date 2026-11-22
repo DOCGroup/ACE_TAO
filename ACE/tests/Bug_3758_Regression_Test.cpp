@@ -89,9 +89,8 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Bug_3758_Regression_Test"));
 
   int status = 0;
-  int result;
 
-  if ((result = fileno_test ()) != 0)
+  if (fileno_test () != 0)
   {
     status = -1;
   }
