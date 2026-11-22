@@ -569,12 +569,11 @@ ACE_OS::priority_control (ACE_idtype_t /*idtype*/, ACE_id_t /*identifier*/, int 
   ACE_NOTSUP_RETURN (-1);
 }
 
-// This method is used to prepare the recursive mutex for releasing
-// when waiting on a condition variable. If the platform doesn't have
-// native recursive mutex and condition variable support, then ACE needs
-// to save the recursion state around the wait and also ensure that the
-// wait and lock release are atomic. recursive_mutex_cond_relock()
-// is the inverse of this method.
+/// This method prepares the recursive mutex for release while waiting
+/// on a condition variable. If the platform lacks native recursive
+/// mutex and condition variable support, ACE saves the recursion state
+/// around the wait and ensures the wait and lock release are atomic.
+/// recursive_mutex_cond_relock() is the inverse of this method.
 ACE_INLINE int
 ACE_OS::recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
                                      ACE_recursive_mutex_state &state)
@@ -667,10 +666,10 @@ ACE_OS::recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
 #endif /* ACE_HAS_THREADS */
 }
 
-// This method is called after waiting on a condition variable when a
-// recursive mutex must be reacquired. If the platform doesn't natively
-// integrate recursive mutexes and condition variables, it's taken care
-// of here (inverse of ACE_OS::recursive_mutex_cond_unlock).
+/// This method reacquires a recursive mutex after waiting on a condition
+/// variable. If the platform doesn't natively integrate recursive
+/// mutexes and condition variables, this method handles that work. It is
+/// the inverse of ACE_OS::recursive_mutex_cond_unlock.
 ACE_INLINE void
 ACE_OS::recursive_mutex_cond_relock (ACE_recursive_thread_mutex_t *m,
                                      ACE_recursive_mutex_state &state)

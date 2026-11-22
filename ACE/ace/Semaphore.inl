@@ -103,10 +103,10 @@ ACE_Semaphore::tryacquire_write ()
   return this->tryacquire ();
 }
 
-// This is only here to make the <ACE_Semaphore> interface consistent
-// with the other synchronization APIs.  Assumes the caller has
-// already acquired the semaphore using one of the above calls, and
-// returns 0 (success) always.
+/// This is only here to make the <ACE_Semaphore> interface consistent
+/// with the other synchronization APIs. Assumes the caller has already
+/// acquired the semaphore using one of the above calls, and always
+/// returns 0 (success).
 ACE_INLINE int
 ACE_Semaphore::tryacquire_write_upgrade ()
 {

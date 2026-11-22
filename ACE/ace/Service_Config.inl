@@ -3,8 +3,8 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// This is the primary entry point into the ACE_Service_Config (the
-// constructor just handles simple initializations).
+/// This is the primary entry point into the ACE_Service_Config (the
+/// constructor just handles simple initializations).
 ACE_INLINE int
 ACE_Service_Config::open (const ACE_TCHAR program_name[],
                           const ACE_TCHAR *logger_key,
