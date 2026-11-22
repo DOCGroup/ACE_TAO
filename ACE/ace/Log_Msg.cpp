@@ -79,7 +79,7 @@ public:
   virtual ~ACE_Msg_Log_Cleanup () {
     if (this == log_msg_cleanup)
       {
-        log_msg_cleanup = 0;
+        log_msg_cleanup = nullptr;
       }
   }
 };
@@ -405,17 +405,17 @@ ACE_Log_Msg::instance ()
   // callback, so instead we do it here.
   if (ACE_Log_Msg_Manager::init_backend () == -1)
     {
-      return 0;
+      return nullptr;
     }
 
   // Singleton implementation.
 
-  if (log_msg_cleanup == 0)
+  if (log_msg_cleanup == nullptr)
     {
-      ACE_NEW_RETURN (log_msg_cleanup, ACE_Msg_Log_Cleanup, 0);
+      ACE_NEW_RETURN (log_msg_cleanup, ACE_Msg_Log_Cleanup, nullptr);
       // Register the instance for destruction at program termination.
       ACE_Object_Manager::at_exit (log_msg_cleanup,
-                                   0,
+                                   nullptr,
                                    typeid (*log_msg_cleanup).name ());
     }
 
