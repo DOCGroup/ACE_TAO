@@ -320,7 +320,8 @@ ACE_Ping_Socket::send_echo_check (ACE_INET_Addr &remote_addr,
 #if defined (ACE_WIN32)
   icmp_header->icmp_data = GetTickCount ();
 #else  /* #if defined (ACE_WIN32) */
-  gettimeofday (reinterpret_cast<struct timeval *> (&icmp_header->icmp_data), nullptr);
+  *reinterpret_cast<struct timeval *> (&icmp_header->icmp_data) =
+    ACE_OS::gettimeofday ();
 #endif  /* #if defined (ACE_WIN32) */
 
   int const length_icmp {ICMP_MIN + datalen}; // checksum ICMP header and data.
