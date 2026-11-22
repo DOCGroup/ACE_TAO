@@ -320,9 +320,9 @@ Connection_Manager::connect_to_receivers (AVStreams::MMDevice_ptr sender)
                                                "USER_DEFINED",
                                                "",
                                                "UDP",
-                                               &sender_addr);
+                                               std::addressof (sender_addr));
 
-      sender_entry.set_peer_addr (&receiver_addr);
+      sender_entry.set_peer_addr (std::addressof (receiver_addr));
 
       // Set the flow specification for the stream between receiver
       // and distributer
@@ -503,9 +503,9 @@ Connection_Manager::connect_to_sender ()
                                            "USER_DEFINED",
                                            "",
                                            "UDP",
-                                           &sender_addr);
+                                           std::addressof (sender_addr));
 
-  sender_entry.set_peer_addr (&receiver_addr);
+  sender_entry.set_peer_addr (std::addressof (receiver_addr));
 
   // Set the flow specification for the stream between sender and
   // receiver.

@@ -238,10 +238,10 @@ Client::run ()
                                         "USER_DEFINED",
                                         flow_protocol,
                                         this->options_.protocol.c_str (),
-                                        &addr);
+                                        std::addressof (addr));
 
       ACE_INET_Addr peer_addr (this->options_.peer_addr.c_str ());
-      entry.set_peer_addr (&peer_addr);
+      entry.set_peer_addr (std::addressof (peer_addr));
 
       flow_spec [0] = CORBA::string_dup (entry.entry_to_string ());
 

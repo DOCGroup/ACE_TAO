@@ -868,8 +868,8 @@ prio_test ()
   ACE_Message_Block mb1 (S1, sizeof S1, PRIORITY);
   ACE_Message_Block mb2 (S2, sizeof S2, PRIORITY);
 
-  mq.enqueue_prio (&mb1);
-  mq.enqueue_prio (&mb2);
+  mq.enqueue_prio (std::addressof (mb1));
+  mq.enqueue_prio (std::addressof (mb2));
 
   ACE_Message_Block *mb1p {};
   ACE_Message_Block *mb2p {};

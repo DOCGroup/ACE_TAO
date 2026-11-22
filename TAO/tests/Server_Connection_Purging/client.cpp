@@ -81,9 +81,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_Select_Reactor sr;
 
-  ACE_Reactor reac (&sr);
+  ACE_Reactor reac (std::addressof (sr));
 
-  ACE_Reactor::instance (&reac);
+  ACE_Reactor::instance (std::addressof (reac));
 
   std::array<ACE_SOCK_Stream, iteration_count> streams {};
   std::array<ACE_SOCK_Connector, iteration_count> connectors {};
