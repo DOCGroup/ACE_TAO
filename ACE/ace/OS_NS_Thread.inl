@@ -51,7 +51,9 @@ ACE_TSS_Emulation::tss_base ()
 #    if defined (ACE_HAS_VXTHREADS)
 #      if (!defined (_WRS_CONFIG_SMP) && !defined (INCLUDE_AMP_CPU))
   if (taskVarGet(0, reinterpret_cast<int*>(&ace_tss_keys)) == ERROR)
-    taskVarAdd(0, reinterpret_cast<int*>(&ace_tss_keys));
+    {
+      taskVarAdd(0, reinterpret_cast<int*>(&ace_tss_keys));
+    }
 #      endif
   return reinterpret_cast <void **&> (ace_tss_keys);
 #    elif defined (ACE_INTEGRITY)
@@ -427,7 +429,9 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
       // Watchout for situations where a context switch has caused the
       // current time to be > the timeout.
       if (relative_time > ACE_Time_Value::zero)
-        msec_timeout = relative_time.msec ();
+        {
+          msec_timeout = relative_time.msec ();
+        }
     }
 
   ACE_OSCALL (ACE_ADAPT_RETVAL (::SleepConditionVariableCS (cv, &external_mutex->thr_mutex_, msec_timeout),
@@ -498,7 +502,9 @@ ACE_OS::event_init (ACE_event_t *event,
   initial_state,
   name);
   if (*event == 0)
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
 
   // Make sure to set errno to ERROR_ALREADY_EXISTS if necessary.
   ACE_OS::set_errno_to_last_error ();
@@ -536,7 +542,9 @@ ACE_OS::event_init (ACE_event_t *event,
   initial_state,
   name);
   if (*event == 0)
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
 
   // Make sure to set errno to ERROR_ALREADY_EXISTS if necessary.
   ACE_OS::set_errno_to_last_error ();
@@ -969,7 +977,9 @@ ACE_OS::recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m)
   int result = 0;
 
   if (ACE_OS::thread_mutex_lock (&m->nesting_mutex_) == -1)
-    result = -1;
+    {
+      result = -1;
+    }
   else
   {
 #    if !defined (ACE_NDEBUG)
@@ -991,7 +1001,9 @@ ACE_OS::recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m)
 
               // Inform a waiter that the lock is free.
     if (ACE_OS::cond_signal (&m->lock_available_) == -1)
-      result = -1;
+      {
+        result = -1;
+      }
   }
 }
   }
@@ -1582,7 +1594,9 @@ ACE_OS::sema_init (ACE_sema_t *s,
                                    O_RDWR | O_CREAT,
                                    ACE_DEFAULT_FILE_PERMS);
           else
-            return -1;
+            {
+              return -1;
+            }
         }
       else
         {
@@ -1590,13 +1604,19 @@ ACE_OS::sema_init (ACE_sema_t *s,
           // size.
           if (ACE_OS::ftruncate (fd,
                                  sizeof (ACE_sema_t)) == -1)
-            return -1;
+            {
+              return -1;
+            }
           s->name_ = ACE_OS::strdup (name);
           if (s->name_ == 0)
-            return -1;
+            {
+              return -1;
+            }
         }
       if (fd == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       s->sema_ = (sem_t *)
         ACE_OS::mmap (0,
@@ -1607,7 +1627,9 @@ ACE_OS::sema_init (ACE_sema_t *s,
                       0);
       ACE_OS::close (fd);
       if (s->sema_ == (sem_t *) MAP_FAILED)
-        return -1;
+        {
+          return -1;
+        }
       if (s->name_
           // @@ According UNIX Network Programming V2 by Stevens,
           //    sem_init() is currently not required to return zero on
@@ -1940,7 +1962,9 @@ ACE_OS::sema_post (ACE_sema_t *s)
 # elif defined (ACE_USES_FIFO_SEM)
   char    c = 1;
   if (ACE_OS::write (s->fd_[1], &c, sizeof (char)) == sizeof (char))
-    return 0;
+    {
+      return 0;
+    }
   return -1;
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_PTHREADS)
@@ -2011,10 +2035,14 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
 
   /* turn on nonblocking for s->fd_[0] */
   if ((flags = ACE_OS::fcntl (s->fd_[0], F_GETFL, 0)) < 0)
-    return -1;
+    {
+      return -1;
+    }
   flags |= O_NONBLOCK;
   if (ACE_OS::fcntl (s->fd_[0], F_SETFL, flags) < 0)
-    return -1;
+    {
+      return -1;
+    }
 
   // read sets errno to EAGAIN if no input
   rc = ACE_OS::read (s->fd_[0], &c, sizeof (char));
@@ -2048,13 +2076,19 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
   DWORD result = ::WaitForSingleObject (*s, 0);
 
   if (result == WAIT_OBJECT_0)
-    return 0;
+    {
+      return 0;
+    }
   else
     {
       if (result == WAIT_TIMEOUT)
-        errno = EBUSY;
+        {
+          errno = EBUSY;
+        }
       else
-        ACE_OS::set_errno_to_last_error ();
+        {
+          ACE_OS::set_errno_to_last_error ();
+        }
       // This is a hack, we need to find an appropriate mapping...
       return -1;
     }
@@ -2090,7 +2124,9 @@ ACE_OS::sema_wait (ACE_sema_t *s)
 # elif defined (ACE_USES_FIFO_SEM)
   char c;
   if (ACE_OS::read (s->fd_[0], &c, sizeof (char)) == 1)
-    return 0;
+    {
+      return 0;
+    }
   return -1;
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_PTHREADS)
@@ -2099,7 +2135,9 @@ ACE_OS::sema_wait (ACE_sema_t *s)
   ACE_PTHREAD_CLEANUP_PUSH (&s->lock_);
 
   if (ACE_OS::mutex_lock (&s->lock_) != 0)
-    result = -1;
+    {
+      result = -1;
+    }
   else
     {
       // Keep track of the number of waiters so that we can signal
@@ -2119,10 +2157,14 @@ ACE_OS::sema_wait (ACE_sema_t *s)
     }
 
   if (result == 0)
-    --s->count_;
+    {
+      --s->count_;
+    }
 
   if (result != -1)
-    ACE_OS::mutex_unlock (&s->lock_);
+    {
+      ACE_OS::mutex_unlock (&s->lock_);
+    }
   ACE_PTHREAD_CLEANUP_POP (0);
   return result < 0 ? -1 : result;
 
@@ -2179,9 +2221,13 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
       {
         result = ACE_OS::sema_trywait (s);
         if (result == -1 && errno == EAGAIN)
-          expired = (tv.to_relative_time () <= ACE_Time_Value::zero);
+          {
+            expired = (tv.to_relative_time () <= ACE_Time_Value::zero);
+          }
         else
-          expired = false;
+          {
+            expired = false;
+          }
 
         finished = result != -1 || expired ||
                    (result == -1 && errno != EAGAIN);
@@ -2199,11 +2245,15 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
       } while (!finished);
 
       if (expired)
-        error = ETIME;
+        {
+          error = ETIME;
+        }
     }
 
   if (result != -2)
-    ACE_OS::mutex_unlock (&s->lock_);
+    {
+      ACE_OS::mutex_unlock (&s->lock_);
+    }
   ACE_PTHREAD_CLEANUP_POP (0);
   return result < 0 ? -1 : result;
 #   else /* No native sem_timedwait(), and emulation disabled */
@@ -2285,7 +2335,9 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   int msec_timeout;
 
   if (tv == ACE_Time_Value::zero)
-    msec_timeout = 0; // Do a "poll."
+    {
+      msec_timeout = 0; // Do a "poll."
+    }
   else
     {
       // Note that we must convert between absolute time (which is
@@ -2296,9 +2348,13 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
       // Watchout for situations where a context switch has caused the
       // current time to be > the timeout.
       if (relative_time < ACE_Time_Value::zero)
-        msec_timeout = 0;
+        {
+          msec_timeout = 0;
+        }
       else
-        msec_timeout = relative_time.msec ();
+        {
+          msec_timeout = relative_time.msec ();
+        }
     }
 
   switch (::WaitForSingleObject (*s, msec_timeout))
@@ -2553,9 +2609,13 @@ ACE_OS::thr_continue (ACE_hthread_t target_thread)
 # elif defined (ACE_HAS_WTHREADS)
   DWORD result = ::ResumeThread (target_thread);
   if (result == ACE_SYSCALL_FAILED)
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 # elif defined (ACE_HAS_VXTHREADS)
   return ::taskResume (target_thread);
 # elif defined (ACE_INTEGRITY)
@@ -2605,7 +2665,9 @@ ACE_OS::thr_getprio (ACE_hthread_t ht_id, int &priority, int &policy)
   priority = ::GetThreadPriority (ht_id);
   DWORD const priority_class = ::GetPriorityClass (::GetCurrentProcess ());
   if (priority_class == 0 && (error = ::GetLastError ()) != NO_ERROR)
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
 
   policy = (priority_class == REALTIME_PRIORITY_CLASS) ? ACE_SCHED_FIFO : ACE_SCHED_OTHER;
   return 0;
@@ -2732,7 +2794,9 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
 
   // Make sure that status is non-NULL.
   if (status == 0)
-    status = &local_status;
+    {
+      status = &local_status;
+    }
 
   if (::WaitForSingleObject (thr_handle, INFINITE) == WAIT_OBJECT_0
       && ::GetExitCodeThread (thr_handle, status) != FALSE)
@@ -3180,13 +3244,17 @@ ACE_OS::thr_sigsetmask (int how,
         // which it is on VxWorks 5.2, so bit operations are done simply . . .
         ::sigsetmask (how == SIG_BLOCK ? (old_mask |= *nsm) : (old_mask &= ~*nsm));
         if (osm)
-          *osm = old_mask;
+          {
+            *osm = old_mask;
+          }
         break;
       }
     case SIG_SETMASK:
       old_mask = ::sigsetmask (*nsm);
       if (osm)
-        *osm = old_mask;
+        {
+          *osm = old_mask;
+        }
       break;
     default:
       return -1;
@@ -3225,9 +3293,13 @@ ACE_OS::thr_suspend (ACE_hthread_t target_thread)
 #  endif /* ACE_HAS_PTHREAD_SUSPEND */
 # elif defined (ACE_HAS_WTHREADS)
   if (::SuspendThread (target_thread) != ACE_SYSCALL_FAILED)
-    return 0;
+    {
+      return 0;
+    }
   else
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
   /* NOTREACHED */
 # elif defined (ACE_HAS_VXTHREADS)
   return ::taskSuspend (target_thread);
