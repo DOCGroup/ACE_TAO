@@ -618,7 +618,7 @@ TAO_AV_SCTP_SEQ_Factory::make_acceptor ()
   TAO_AV_Acceptor *acceptor {};
   ACE_NEW_RETURN (acceptor,
                   TAO_AV_SCTP_SEQ_Acceptor,
-                  0);
+                  nullptr);
   return acceptor;
 }
 
@@ -632,7 +632,7 @@ TAO_AV_SCTP_SEQ_Factory::make_connector ()
   TAO_AV_Connector *connector {};
   ACE_NEW_RETURN (connector,
                   TAO_AV_SCTP_SEQ_Connector,
-                  0);
+                  nullptr);
   return connector;
 }
 
@@ -900,14 +900,14 @@ TAO_AV_SCTP_SEQ_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
   TAO_AV_Callback *callback {};
   if (endpoint->get_callback (entry->flowname (), callback))
     {
-      ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%N,%l) Invalid callback\n"), 0);
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%N,%l) Invalid callback\n"), nullptr);
     }
 
   TAO_AV_SCTP_SEQ_Object *object {};
   ACE_NEW_RETURN (object,
                   TAO_AV_SCTP_SEQ_Object (callback,
                                           transport),
-                  0);
+                  nullptr);
   callback->open (object,
                   handler);
   endpoint->set_protocol_object (entry->flowname (),

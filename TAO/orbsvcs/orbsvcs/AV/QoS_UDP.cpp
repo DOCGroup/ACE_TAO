@@ -1333,7 +1333,7 @@ TAO_AV_UDP_QoS_Factory::make_acceptor ()
   TAO_AV_Acceptor *acceptor {};
   ACE_NEW_RETURN (acceptor,
                   TAO_AV_UDP_QoS_Acceptor,
-                  0);
+                  nullptr);
   return acceptor;
 }
 
@@ -1347,7 +1347,7 @@ TAO_AV_UDP_QoS_Factory::make_connector ()
   TAO_AV_Connector *connector {};
   ACE_NEW_RETURN (connector,
                   TAO_AV_UDP_QoS_Connector,
-                  0);
+                  nullptr);
   return connector;
 }
 
@@ -1399,7 +1399,7 @@ TAO_AV_UDP_QoS_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
   ACE_NEW_RETURN (object,
                   TAO_AV_UDP_Object (callback,
                                      transport),
-                  0);
+                  nullptr);
   callback->open (object,
                   handler);
   endpoint->set_protocol_object (entry->flowname (),
