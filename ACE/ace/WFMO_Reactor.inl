@@ -308,36 +308,52 @@ ACE_WFMO_Reactor_Handler_Repository::handles () const
   // <owner_> thread get to expire timers and handle event on the
   // notify pipe.
   if (ACE_Thread::self () == this->wfmo_reactor_.owner_i ())
-    return this->current_handles_;
+    {
+      return this->current_handles_;
+    }
   else
-    return this->current_handles_ + 1;
+    {
+      return this->current_handles_ + 1;
+    }
 }
 
 ACE_INLINE ACE_WFMO_Reactor_Handler_Repository::Current_Info *
 ACE_WFMO_Reactor_Handler_Repository::current_info () const
 {
   if (ACE_Thread::self () == this->wfmo_reactor_.owner_i ())
-    return this->current_info_;
+    {
+      return this->current_info_;
+    }
   else
-    return this->current_info_ + 1;
+    {
+      return this->current_info_ + 1;
+    }
 }
 
 ACE_INLINE DWORD
 ACE_WFMO_Reactor_Handler_Repository::max_handlep1 () const
 {
   if (ACE_Thread::self () == this->wfmo_reactor_.owner_i ())
-    return this->max_handlep1_;
+    {
+      return this->max_handlep1_;
+    }
   else
-    return this->max_handlep1_ - 1;
+    {
+      return this->max_handlep1_ - 1;
+    }
 }
 
 ACE_INLINE int
 ACE_WFMO_Reactor_Handler_Repository::scheduled_for_deletion (size_t slot) const
 {
   if (ACE_Thread::self () == this->wfmo_reactor_.owner_i ())
-    return this->current_info_[slot].delete_entry_;
+    {
+      return this->current_info_[slot].delete_entry_;
+    }
   else
-    return this->current_info_[slot + 1].delete_entry_;
+    {
+      return this->current_info_[slot + 1].delete_entry_;
+    }
 }
 
 ACE_INLINE int
@@ -352,7 +368,9 @@ ACE_WFMO_Reactor_Handler_Repository::invalid_handle (ACE_HANDLE handle) const
       return 1;
     }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 ACE_INLINE bool
@@ -391,7 +409,9 @@ ACE_WFMO_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
                                              ACE_Reactor_Mask mask)
 {
   if (this->invalid_handle (handle))
-    return -1;
+    {
+      return -1;
+    }
 
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->wfmo_reactor_.lock_, -1);
 
@@ -401,9 +421,11 @@ ACE_WFMO_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
                                      changes_required);
 
   if (changes_required)
-    // Wake up all threads in WaitForMultipleObjects so that they can
-    // reconsult the handle set
-    this->wfmo_reactor_.wakeup_all_threads ();
+    {
+      // Wake up all threads in WaitForMultipleObjects so that they can
+      // reconsult the handle set
+      this->wfmo_reactor_.wakeup_all_threads ();
+    }
 
   return result;
 }
@@ -463,7 +485,9 @@ ACE_WFMO_Reactor::cancel_timer (ACE_Event_Handler *handler,
 {
   ACE_TRACE ("ACE_WFMO_Reactor::cancel_timer");
   if ((0 != this->timer_queue_) && (0 != handler))
-    return this->timer_queue_->cancel (handler, dont_call_handle_close);
+    {
+      return this->timer_queue_->cancel (handler, dont_call_handle_close);
+    }
   return 0;
 }
 
@@ -474,7 +498,9 @@ ACE_WFMO_Reactor::cancel_timer (long timer_id,
 {
   ACE_TRACE ("ACE_WFMO_Reactor::cancel_timer");
   if (0 != this->timer_queue_)
-    return this->timer_queue_->cancel (timer_id, arg, dont_call_handle_close);
+    {
+      return this->timer_queue_->cancel (timer_id, arg, dont_call_handle_close);
+    }
   return 0;
 }
 
