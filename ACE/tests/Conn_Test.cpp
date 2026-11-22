@@ -366,7 +366,7 @@ cached_connect (STRAT_CONNECTOR &con,
 void *
 client_connections (void *arg)
 {
-  Client_Info *info = (Client_Info *) arg;
+  Client_Info *info = static_cast<Client_Info *> (arg);
 
   // Run the timed-blocking test.
   ACE_DEBUG ((LM_DEBUG,
@@ -568,7 +568,7 @@ spawn_processes (ACCEPTOR *acceptor,
             ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGTERM);
             ACE_UNUSED_ARG (sa);
 
-            server ((void *) acceptor);
+            server (static_cast<void *> (acceptor));
             return 0;
             /* NOTREACHED */
           }
@@ -578,7 +578,7 @@ spawn_processes (ACCEPTOR *acceptor,
         }
     }
 
-  client ((void *) server_addr);
+  client (static_cast<void *> (server_addr));
 
   for (i = 0; i < n_servers; ++i)
     {
