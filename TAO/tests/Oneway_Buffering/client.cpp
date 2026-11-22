@@ -532,7 +532,7 @@ run_message_count (CORBA::ORB_ptr orb,
                       i, initial_receive_count, send_count));
         }
 
-      while (1)
+      while (true)
         {
           receive_data (oneway_buffering, payload);
           ++send_count;
@@ -640,7 +640,7 @@ run_timeout (CORBA::ORB_ptr orb,
         }
 
       ACE_Time_Value start = ACE_OS::gettimeofday ();
-      while (1)
+      while (true)
         {
           receive_data (oneway_buffering, payload);
           ++send_count;
@@ -747,7 +747,7 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
       ACE_Time_Value tv (0, 1000);
       orb->run (tv);
 
-      while (1)
+      while (true)
         {
           CORBA::ULong receive_count =
             request_count (oneway_buffering_admin);
@@ -846,7 +846,7 @@ run_buffer_size (CORBA::ORB_ptr orb,
                       i, initial_bytes_received, bytes_sent));
         }
 
-      while (1)
+      while (true)
         {
           receive_data (oneway_buffering, payload);
           bytes_sent += PAYLOAD_LENGTH;

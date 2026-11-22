@@ -261,7 +261,7 @@ Sender::pace_data ()
       ACE_High_Res_Timer elapsed_timer;
 
       // Continue to send data till the file is read to the end.
-      while (1)
+      while (true)
         {
           // Read from the file into a message block.
           size_t const n = std::fread (this->mb_.wr_ptr (),

@@ -88,7 +88,7 @@ Svc_Handler::handle_input(ACE_HANDLE h)
   size_t const bufsize = BUFSIZ;
   char buf[bufsize];
 
-  while(1)
+  while (true)
     {
       ssize_t n = this->peer().recv(buf, bufsize);
       if (n == 0) {

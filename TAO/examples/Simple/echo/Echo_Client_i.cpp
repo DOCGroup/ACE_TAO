@@ -18,7 +18,7 @@ Echo_Client_i::run (char const *name,
 
   try
     {
-      while (1)
+      while (true)
         {
           char buf[BUFSIZ];
 

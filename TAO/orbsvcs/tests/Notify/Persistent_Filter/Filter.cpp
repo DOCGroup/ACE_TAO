@@ -136,7 +136,7 @@ FilterClient::init_consumer (int argc, ACE_TCHAR *argv [])
 void
 FilterClient::wait_ready ()
 {
-  while ( 1 )
+  while (true)
   {
     CosNotifyChannelAdmin::AdminIDSeq_var cons_ids
       = ec_->get_all_consumeradmins ();

@@ -150,7 +150,7 @@ Updates::add_type (CosNotification::EventTypeSeq &type_seq, char const *type)
 void
 Updates::wait_for_updates (int expected_added, int expected_removed)
 {
-  while (1)
+  while (true)
     {
       if (added_count_ == expected_added &&
           removed_count_ == expected_removed)

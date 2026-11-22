@@ -81,7 +81,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR * argv[])
     event.filterable_data[2].value <<= message;
 
     // Push events.
-    while (1) {
+    while (true) {
       std::cout << "pushing " << std::endl;
       consumer_proxy->push_structured_event (event);
       ACE_OS::sleep (1);

@@ -208,7 +208,7 @@ TAO_Container_i::lookup_i (char const *search_name)
       iter_key = this->section_key_;
     }
 
-  while (1)
+  while (true)
     {
       pos = work_string.find ("::");
       so_far_so_good = 0;

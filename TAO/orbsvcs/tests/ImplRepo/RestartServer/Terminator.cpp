@@ -21,7 +21,7 @@ Terminator::open(void*)
 int
 Terminator::svc()
 {
-  while (1)
+  while (true)
     {
       ACE_Message_Block* mb {};
       if (this->getq(mb) == -1)

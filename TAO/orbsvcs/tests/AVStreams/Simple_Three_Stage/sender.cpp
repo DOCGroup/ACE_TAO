@@ -206,7 +206,7 @@ Sender::pace_data ()
         }
 
       // Continue to send data till the file is read to the end.
-      while (1)
+      while (true)
         {
           // Read from the file into a message block.
           size_t const n = ACE_OS::fread (this->mb_.wr_ptr (),

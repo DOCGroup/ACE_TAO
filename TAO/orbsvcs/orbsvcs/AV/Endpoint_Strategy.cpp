@@ -97,7 +97,7 @@ TAO_AV_Endpoint_Process_Strategy::activate ()
                                    sem_str);
 
   // wait until the child finishes booting
-  while (1)
+  while (true)
     {
       if (semaphore.acquire () == -1)
         {
