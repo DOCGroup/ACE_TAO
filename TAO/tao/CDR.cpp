@@ -77,9 +77,11 @@ TAO_OutputCDR::TAO_OutputCDR (size_t size,
 #if defined (TAO_ZERO_TAO_OUTPUTCDR_ALLOCATED_BUFFERS)
   // Zero out the buffer if we allocated the buffer.
   if (size == 0)
-    (void) std::memset (this->current()->wr_ptr(),
-                        0,
-                        this->current()->space());
+    {
+      (void) std::memset (this->current()->wr_ptr(),
+                          0,
+                          this->current()->space());
+    }
 #endif /* TAO_ZERO_TAO_OUTPUTCDR_ALLOCATED_BUFFERS */
 }
 
