@@ -129,8 +129,8 @@ run_main (int, ACE_TCHAR *[])
     }
 
   int result=ACE_Thread_Manager::instance()->spawn_n (PRODUCER_THREADS_NO,
-                                                      ACE_THR_FUNC(producer),
-                                                      static_cast<void*> (&c));
+                                                      producer,
+                                                      &c);
   if (result==-1)
   {
     ACE_ERROR_RETURN((LM_ERROR,
