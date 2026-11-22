@@ -580,11 +580,11 @@ ACE_Streambuf::reset_get_buffer (char *newBuffer,
   // the variables below.  Initially, they all point to the beginning
   // of our read-dedicated buffer.
   //
-  if (newBuffer)
+  if (newBuffer != nullptr)
     {
       if (streambuf_size_ != _streambuf_size)
         {
-          return 0;
+          return nullptr;
         }
       this->eback_saved_ = newBuffer;
     }
@@ -600,7 +600,7 @@ ACE_Streambuf::reset_get_buffer (char *newBuffer,
 
   // Disable the get area initially.  This will cause underflow to be
   // invoked on the first get operation.
-  setg (0, 0, 0);
+  setg (nullptr, nullptr, nullptr);
 
   reset_base ();
 
@@ -633,11 +633,11 @@ ACE_Streambuf::reset_put_buffer (char *newBuffer,
   // Again to switch quickly between modes, we keep copies of
   // these three pointers.
   //
-  if (newBuffer)
+  if (newBuffer != nullptr)
     {
       if (streambuf_size_ != _streambuf_size)
         {
-          return 0;
+          return nullptr;
         }
       this->pbase_saved_ = newBuffer;
     }
@@ -653,7 +653,7 @@ ACE_Streambuf::reset_put_buffer (char *newBuffer,
 
   // Disable the put area.  Overflow will be called by the first call
   // to any put operator.
-  setp (0, 0);
+  setp (nullptr, nullptr);
 
   reset_base ();
 
