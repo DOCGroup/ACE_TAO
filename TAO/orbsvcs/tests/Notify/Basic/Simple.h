@@ -57,9 +57,11 @@ protected:
 class Simple_Test : public Notify_Test_Client
 {
 public:
-  // Initialization and termination code
+  /// @name Initialization and termination
+  /// @{
   Simple_Test ();
   ~Simple_Test () override;
+  /// @}
 
   int parse_args (int argc,
                   ACE_TCHAR *argv[]) override;

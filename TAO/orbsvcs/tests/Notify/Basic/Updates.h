@@ -58,9 +58,11 @@ protected:
 class Updates : public Notify_Test_Client
 {
 public:
-  // Initialization and termination code
+  /// @name Initialization and termination
+  /// @{
   Updates ();
   ~Updates () override;
+  /// @}
 
   /// initialization.
   int init (int argc, ACE_TCHAR *argv []) override;

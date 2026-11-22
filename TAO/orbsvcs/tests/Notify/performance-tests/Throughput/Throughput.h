@@ -145,9 +145,11 @@ protected:
 class Notify_Throughput : public Notify_Test_Client
 {
 public:
-  // Initialization and termination code
+  /// @name Initialization and termination
+  /// @{
   Notify_Throughput ();
   ~Notify_Throughput () override;
+  /// @}
 
   Notify_Throughput (Notify_Throughput const&) = delete;
   Notify_Throughput (Notify_Throughput&&) = delete;

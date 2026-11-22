@@ -76,9 +76,11 @@ protected:
 class MultiTypes : public Notify_Test_Client
 {
 public:
-  // Initialization and termination code.
+  /// @name Initialization and termination
+  /// @{
   MultiTypes ();
   ~MultiTypes () override;
+  /// @}
 
   void on_received_event (MultiTypes_PushConsumer* consumer);
   void on_received_event (MultiTypes_StructuredPushConsumer* consumer);

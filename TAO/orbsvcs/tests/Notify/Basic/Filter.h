@@ -26,9 +26,11 @@ class Filter;
 class Filter : public Notify_Test_Client
 {
 public:
-  // Initialization and termination code
+  /// @name Initialization and termination
+  /// @{
   Filter ();
   ~Filter () override;
+  /// @}
 
   /// initialization.
   int init (int argc,

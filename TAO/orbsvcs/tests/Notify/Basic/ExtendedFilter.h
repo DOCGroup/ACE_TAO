@@ -24,9 +24,11 @@
 class ExtendedFilter : public Notify_Test_Client
 {
 public:
-  // Initialization and termination code
+  /// @name Initialization and termination
+  /// @{
   ExtendedFilter ();
   ~ExtendedFilter () override;
+  /// @}
 
   /// initialization.
   int init (int argc,

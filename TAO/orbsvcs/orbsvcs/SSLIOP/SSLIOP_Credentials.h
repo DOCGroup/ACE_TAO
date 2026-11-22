@@ -107,7 +107,8 @@ namespace TAO
 
       CORBA::ULong hash () const;
 
-      // The static operations.
+      /// @name Static operations
+      /// @{
       static SSLIOP::Credentials_ptr _duplicate (SSLIOP::Credentials_ptr obj);
 
       static SSLIOP::Credentials_ptr _narrow (CORBA::Object_ptr obj);

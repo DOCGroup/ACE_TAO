@@ -57,9 +57,11 @@ protected:
 class Events : public Notify_Test_Client
 {
 public:
-  // Initialization and termination code.
+  /// @name Initialization and termination
+  /// @{
   Events ();
   ~Events () override;
+  /// @}
 
   int parse_args (int argc,
                   ACE_TCHAR *argv[]) override;

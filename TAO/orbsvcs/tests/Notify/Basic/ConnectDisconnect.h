@@ -61,9 +61,11 @@ CD_DECLARE_ENTITY(SequencePushSupplier)
 class ConnectDisconnect : public Notify_Test_Client
 {
 public:
-  // Initialization and termination code.
+  /// @name Initialization and termination
+  /// @{
   ConnectDisconnect ();
   ~ConnectDisconnect () override;
+  /// @}
 
   /// Keeps track of how many objects were destroyed.
   void on_entity_destroyed ();
