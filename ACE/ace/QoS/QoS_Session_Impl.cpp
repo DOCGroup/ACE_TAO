@@ -45,9 +45,11 @@ rsvp_callback (rapi_sid_t /* sid */,
                void *args)
 {
   if (args == nullptr)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                          "Argument in the call back function is null\n"),
-                         -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            "Argument in the call back function is null\n"),
+                           -1);
+    }
 
   ACE_QoS_Session *qos_session = static_cast<ACE_QoS_Session *> (args);
 
@@ -80,9 +82,11 @@ rsvp_callback (rapi_sid_t /* sid */,
         if (flow_spec_no != 0)
           {
             if (csxp == nullptr)
-              ACELIB_ERROR_RETURN ((LM_ERROR,
-                                    "(%N|%l) Missing flow specification\n"),
-                                   -1);
+              {
+                ACELIB_ERROR_RETURN ((LM_ERROR,
+                                      "(%N|%l) Missing flow specification\n"),
+                                     -1);
+              }
 
             ACE_NEW_RETURN (receiving_fs,
                             ACE_Flow_Spec ((u_long)csxp->xspec_r,
@@ -134,9 +138,11 @@ rsvp_callback (rapi_sid_t /* sid */,
         if (flow_spec_no != 0)
           {
             if (csxp == nullptr)
-              ACELIB_ERROR_RETURN ((LM_ERROR,
-                                    "(%N|%l) Missing flow specification\n"),
-                                   -1);
+              {
+                ACELIB_ERROR_RETURN ((LM_ERROR,
+                                      "(%N|%l) Missing flow specification\n"),
+                                     -1);
+              }
 
             ACE_NEW_RETURN (sending_flow,
                             ACE_Flow_Spec,
@@ -280,14 +286,18 @@ ACE_RAPI_Session::close ()
   this->rsvp_error = rapi_release(this->session_id_);
 
   if (rsvp_error == 0)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       "Can't release RSVP session:\n\t%s\n",
-                       rapi_errlist[rsvp_error]),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            "Can't release RSVP session:\n\t%s\n",
+                            rapi_errlist[rsvp_error]),
+                           -1);
+    }
   else
-    ACELIB_DEBUG ((LM_DEBUG,
-                "rapi session with id %d released successfully.\n",
-                this->session_id_));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     "rapi session with id %d released successfully.\n",
+                     this->session_id_));
+    }
   return 0;
 }
 
@@ -476,10 +486,12 @@ ACE_RAPI_Session::receiving_qos (ACE_QoS const &ace_qos)
   rapi_flowspec_t *flow_spec = init_flowspec_simplified (*receiving_flowspec);
 
   if (flow_spec == nullptr)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       "(%N|%l) Error in translating from ACE Flow Spec to"
-                       " RAPI FlowSpec\n"),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            "(%N|%l) Error in translating from ACE Flow Spec to"
+                            " RAPI FlowSpec\n"),
+                           -1);
+    }
 
   char buffer[BUFSIZ];
 
@@ -545,10 +557,12 @@ ACE_RAPI_Session::update_qos ()
 {
   // Update the session QoS Parameters based on the RSVP Event Received.
   if ((rsvp_error = rapi_dispatch ()) != 0)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       "Error in rapi_dispatch () : %s\n",
-                       rapi_errlist[rsvp_error]),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            "Error in rapi_dispatch () : %s\n",
+                            rapi_errlist[rsvp_error]),
+                           -1);
+    }
   return 0;
 }
 
