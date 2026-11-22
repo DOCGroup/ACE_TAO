@@ -45,7 +45,7 @@ run_iterate (STRLIST &list)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("iterating (%B): [%s]\n"),
                   i,
-                  (ACE_TCHAR *) *entry));
+                  *entry));
     }
 }
 
@@ -61,7 +61,7 @@ run_reverse_iterate (STRLIST &list)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("iterating (%B): [%s]\n"),
                   i,
-                  (ACE_TCHAR *) *entry));
+                  *entry));
     }
 }
 
@@ -75,7 +75,7 @@ run_test ()
   for (i = 0; string_table[i] != nullptr; ++i)
     {
       if (ACE_EVEN (i)
-          && list.insert_tail ((ACE_STRING *) &string_table[i]) == nullptr)
+          && list.insert_tail (&string_table[i]) == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("%p failed for %s\n"),
@@ -83,7 +83,7 @@ run_test ()
                              string_table[i]),
                             -1);
         }
-      else if (list.insert_head ((ACE_STRING *) &string_table[i]) == nullptr)
+      else if (list.insert_head (&string_table[i]) == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("%p failed for %s\n"),

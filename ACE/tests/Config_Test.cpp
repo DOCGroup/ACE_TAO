@@ -1341,7 +1341,8 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                             {
                               ACE_TCHAR bin_value[3];
 
-                              unsigned char* ptr = (unsigned char*)binary_data;
+                              unsigned char *ptr =
+                                static_cast<unsigned char *> (binary_data);
                               while (binary_length)
                                 {
                                   if (ptr != binary_data)
@@ -1356,7 +1357,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                                   --binary_length;
                                   ++ptr;
                                 }
-                              delete [] (char *)binary_data;
+                              delete [] static_cast<char *> (binary_data);
                             }// end successful binary read
                         }// end if originalType was binary
                       else

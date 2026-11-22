@@ -622,7 +622,9 @@ extern "C" ACE_THR_FUNC_RETURN
 #  endif
 nonacethreadentry (void *args)
 {
-  ACE_Log_Msg::inherit_hook (nullptr, *(ACE_OS_Log_Msg_Attributes *)args);
+  ACE_Log_Msg::inherit_hook (
+    nullptr,
+    *static_cast<ACE_OS_Log_Msg_Attributes *> (args));
 
   if (ACE_Service_Config::instance()->find(ACE_TEXT("Test_Object_1_Thr")) != 0)
     {
