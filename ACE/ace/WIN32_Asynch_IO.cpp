@@ -147,15 +147,21 @@ ACE_WIN32_Asynch_Operation::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
     {
       ACE_Handler *handler = handler_proxy.get ()->handler ();
       if (handler != nullptr)
-        this->handle_ = handler->handle ();
+        {
+          this->handle_ = handler->handle ();
+        }
     }
   if (this->handle_ == ACE_INVALID_HANDLE)
-    return -1;
+    {
+      return -1;
+    }
 
   if (this->proactor_ != nullptr)
-    // update implementation.
-    this->win32_proactor_ =
-      dynamic_cast <ACE_WIN32_Proactor *>(this->proactor_->implementation ());
+    {
+      // update implementation.
+      this->win32_proactor_ =
+        dynamic_cast <ACE_WIN32_Proactor *>(this->proactor_->implementation ());
+    }
 
   // Register with the <proactor>.
   return this->win32_proactor_->register_handle (this->handle_,
@@ -176,8 +182,10 @@ ACE_WIN32_Asynch_Operation::cancel ()
   int const result = (int) ::CancelIoEx (this->handle_, nullptr);
 #endif // < _WIN32_WINNT_VISTA
   if (result == 0)
-    // Couldn't cancel the operations.
-    return 2;
+    {
+      // Couldn't cancel the operations.
+      return 2;
+    }
 
   // result is non-zero. All the operations are cancelled then.
   return 0;
@@ -262,7 +270,9 @@ ACE_WIN32_Asynch_Read_Stream_Result::complete (size_t bytes_transferred,
 
   // Appropriately move the pointers in the message block.
   if (!this->scatter_enabled ())
-    this->message_block_.wr_ptr (bytes_transferred);
+    {
+      this->message_block_.wr_ptr (bytes_transferred);
+    }
   else
   {
     for (ACE_Message_Block* mb = &this->message_block_;
@@ -272,7 +282,9 @@ ACE_WIN32_Asynch_Read_Stream_Result::complete (size_t bytes_transferred,
       size_t len_part = mb->space ();
 
       if (len_part > bytes_transferred)
-        len_part = bytes_transferred;
+        {
+          len_part = bytes_transferred;
+        }
 
       mb->wr_ptr (len_part);
 
@@ -286,7 +298,9 @@ ACE_WIN32_Asynch_Read_Stream_Result::complete (size_t bytes_transferred,
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
-    handler->handle_read_stream (result);
+    {
+      handler->handle_read_stream (result);
+    }
 }
 
 ACE_WIN32_Asynch_Read_Stream_Result::~ACE_WIN32_Asynch_Read_Stream_Result () = default;
@@ -382,7 +396,9 @@ ACE_WIN32_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
 {
   size_t space = message_block.space ();
   if (bytes_to_read > space)
-    bytes_to_read = space;
+    {
+      bytes_to_read = space;
+    }
 
   if (bytes_to_read == 0)
     {
@@ -408,7 +424,9 @@ ACE_WIN32_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
 
   // Upon errors
   if (return_val == -1)
-    delete result;
+    {
+      delete result;
+    }
 
   return return_val;
 }
@@ -441,7 +459,9 @@ ACE_WIN32_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
     //                     -1);
 
     if (msg_space > bytes_to_read)
-      msg_space = bytes_to_read;
+      {
+        msg_space = bytes_to_read;
+      }
     bytes_to_read -= msg_space;
 
     // Make as many iovec as needed to fit all of msg_space.
@@ -451,9 +471,13 @@ ACE_WIN32_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
       {
         u_long this_chunk_length;
         if (msg_space > ULONG_MAX)
-          this_chunk_length = ULONG_MAX;
+          {
+            this_chunk_length = ULONG_MAX;
+          }
         else
-          this_chunk_length = static_cast<u_long> (msg_space);
+          {
+            this_chunk_length = static_cast<u_long> (msg_space);
+          }
         // Collect the data in the iovec.
         iov[iovcnt].iov_base = msg->wr_ptr () + wr_ptr_offset;
         iov[iovcnt].iov_len  = this_chunk_length;
@@ -462,7 +486,9 @@ ACE_WIN32_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
 
         // Increment iovec counter if there's more to do.
         if (msg_space > 0)
-          ++iovcnt;
+          {
+            ++iovcnt;
+          }
       }
     if (msg_space > 0)       // Ran out of iovecs before msg_space exhausted
       {
@@ -513,8 +539,10 @@ ACE_WIN32_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
                                    0);
 
   if (0 == initiate_result)
-    // Immediate success: the OVERLAPPED will still get queued.
-    return 1;
+    {
+      // Immediate success: the OVERLAPPED will still get queued.
+      return 1;
+    }
 
   ACE_ASSERT (initiate_result == SOCKET_ERROR);
 
@@ -577,8 +605,10 @@ ACE_WIN32_Asynch_Read_Stream::shared_read (ACE_WIN32_Asynch_Read_Stream_Result *
                                     0,
                                     result);
   if (initiate_result == 1)
-    // Immediate success: the OVERLAPPED will still get queued.
-    return 0;
+    {
+      // Immediate success: the OVERLAPPED will still get queued.
+      return 0;
+    }
 
   // If initiate failed, check for a bad error.
   ACE_OS::set_errno_to_last_error ();
@@ -687,7 +717,9 @@ ACE_WIN32_Asynch_Write_Stream_Result::complete (size_t bytes_transferred,
 
   // Appropriately move the pointers in the message block.
   if (!this->gather_enabled ())
-    this->message_block_.rd_ptr (bytes_transferred);
+    {
+      this->message_block_.rd_ptr (bytes_transferred);
+    }
   else
   {
     for (ACE_Message_Block* mb = &this->message_block_;
@@ -697,7 +729,9 @@ ACE_WIN32_Asynch_Write_Stream_Result::complete (size_t bytes_transferred,
       size_t len_part = mb->length ();
 
       if ( len_part > bytes_transferred)
-        len_part = bytes_transferred;
+        {
+          len_part = bytes_transferred;
+        }
 
       mb->rd_ptr (len_part);
 
@@ -711,7 +745,9 @@ ACE_WIN32_Asynch_Write_Stream_Result::complete (size_t bytes_transferred,
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
-    handler->handle_write_stream (result);
+    {
+      handler->handle_write_stream (result);
+    }
 }
 
 ACE_WIN32_Asynch_Write_Stream_Result::~ACE_WIN32_Asynch_Write_Stream_Result () = default;
@@ -808,14 +844,18 @@ ACE_WIN32_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
   size_t const len = message_block.length();
 
   if (bytes_to_write > len)
-     bytes_to_write = len ;
+    {
+      bytes_to_write = len ;
+    }
 
   if (bytes_to_write == 0)
-    ACELIB_ERROR_RETURN
-      ((LM_ERROR,
-        ACE_TEXT ("ACE_WIN32_Asynch_Write_Stream::write:")
-        ACE_TEXT ("Attempt to write 0 bytes\n")),
-       -1);
+    {
+      ACELIB_ERROR_RETURN
+        ((LM_ERROR,
+          ACE_TEXT ("ACE_WIN32_Asynch_Write_Stream::write:")
+          ACE_TEXT ("Attempt to write 0 bytes\n")),
+         -1);
+    }
 
   if (bytes_to_write > MAXDWORD)
     {
@@ -882,9 +922,11 @@ ACE_WIN32_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
       // queued.
 
       if (ACE::debug ())
-        ACELIB_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("%p\n"),
-                    ACE_TEXT ("Initiating write")));
+        {
+          ACELIB_DEBUG ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("Initiating write")));
+        }
       delete result;
       initiate_result = -1;
     }
@@ -914,9 +956,13 @@ ACE_WIN32_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
 
     // Skip 0-length blocks.
     if (msg_len == 0)
-      continue;
+      {
+        continue;
+      }
     if (msg_len > bytes_to_write)
-      msg_len = bytes_to_write;
+      {
+        msg_len = bytes_to_write;
+      }
     bytes_to_write -= msg_len;
 
     // Make as many iovec as needed to fit all of msg_len.
@@ -926,9 +972,13 @@ ACE_WIN32_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
       {
         u_long this_chunk_length;
         if (msg_len > ULONG_MAX)
-          this_chunk_length = ULONG_MAX;
+          {
+            this_chunk_length = ULONG_MAX;
+          }
         else
-          this_chunk_length = static_cast<u_long> (msg_len);
+          {
+            this_chunk_length = static_cast<u_long> (msg_len);
+          }
         // Collect the data in the iovec.
         iov[iovcnt].iov_base = msg->rd_ptr () + rd_ptr_offset;
         iov[iovcnt].iov_len  = this_chunk_length;
@@ -937,7 +987,9 @@ ACE_WIN32_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
 
         // Increment iovec counter if there's more to do.
         if (msg_len > 0)
-          ++iovcnt;
+          {
+            ++iovcnt;
+          }
       }
     if (msg_len > 0)       // Ran out of iovecs before msg_space exhausted
       {
@@ -985,8 +1037,10 @@ ACE_WIN32_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
                                    0);
 
   if (0 == initiate_result)
-    // Immediate success: the OVERLAPPED will still get queued.
-    return 1;
+    {
+      // Immediate success: the OVERLAPPED will still get queued.
+      return 1;
+    }
 
   ACE_ASSERT (initiate_result == SOCKET_ERROR);
 
@@ -1100,7 +1154,9 @@ ACE_WIN32_Asynch_Read_File_Result::complete (size_t bytes_transferred,
 
   // Appropriately move the pointers in the message block.
   if (!this->scatter_enabled ())
-    this->message_block_.wr_ptr (bytes_transferred);
+    {
+      this->message_block_.wr_ptr (bytes_transferred);
+    }
   else
   {
     static const size_t page_size = ACE_OS::getpagesize();
@@ -1116,7 +1172,9 @@ ACE_WIN32_Asynch_Read_File_Result::complete (size_t bytes_transferred,
       size_t len_part = page_size ;
 
       if ( len_part > bytes_transferred)
-        len_part = bytes_transferred;
+        {
+          len_part = bytes_transferred;
+        }
 
       mb->wr_ptr (len_part);
 
@@ -1130,7 +1188,9 @@ ACE_WIN32_Asynch_Read_File_Result::complete (size_t bytes_transferred,
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
-    handler->handle_read_file (result);
+    {
+      handler->handle_read_file (result);
+    }
 }
 
 ACE_WIN32_Asynch_Read_File_Result::~ACE_WIN32_Asynch_Read_File_Result () = default;
@@ -1248,14 +1308,18 @@ ACE_WIN32_Asynch_Read_File::read (ACE_Message_Block &message_block,
 {
   size_t space = message_block.space ();
   if ( bytes_to_read > space )
-    bytes_to_read = space;
+    {
+      bytes_to_read = space;
+    }
 
   if ( bytes_to_read == 0 )
-    ACELIB_ERROR_RETURN
-      ((LM_ERROR,
-        ACE_TEXT ("ACE_WIN32_Asynch_Read_File::read:")
-        ACE_TEXT ("Attempt to read 0 bytes or no space in the message block\n")),
-       -1);
+    {
+      ACELIB_ERROR_RETURN
+        ((LM_ERROR,
+          ACE_TEXT ("ACE_WIN32_Asynch_Read_File::read:")
+          ACE_TEXT ("Attempt to read 0 bytes or no space in the message block\n")),
+         -1);
+    }
 
   ACE_WIN32_Asynch_Read_File_Result *result {};
   ACE_NEW_RETURN (result,
@@ -1276,7 +1340,9 @@ ACE_WIN32_Asynch_Read_File::read (ACE_Message_Block &message_block,
 
   // Upon errors
   if (return_val == -1)
-    delete result;
+    {
+      delete result;
+    }
 
   return return_val;
 }
@@ -1311,10 +1377,12 @@ ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
     size_t msg_space = msg->space ();
 
     if (msg_space < page_size)
-      ACELIB_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("ACE_WIN32_Asynch_Read_File::readv:")
-                         ACE_TEXT ("Invalid message block size\n")),
-                        -1);
+      {
+        ACELIB_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("ACE_WIN32_Asynch_Read_File::readv:")
+                             ACE_TEXT ("Invalid message block size\n")),
+                            -1);
+      }
 
     buffer_pointers[buffer_pointers_count].Buffer = msg->wr_ptr ();
     total_space += page_size;
@@ -1322,7 +1390,9 @@ ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
 
   // not read more than buffers space
   if (bytes_to_read > total_space)
-    bytes_to_read = total_space;
+    {
+      bytes_to_read = total_space;
+    }
 
   // ReadFileScatter API limits us to DWORD range.
   if (bytes_to_read > MAXDWORD)
@@ -1360,8 +1430,10 @@ ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
                                            result);
 
   if (0 != initiate_result)
-    // Immediate success: the OVERLAPPED will still get queued.
-    return 1;
+    {
+      // Immediate success: the OVERLAPPED will still get queued.
+      return 1;
+    }
 
   // If initiate failed, check for a bad error.
   ACE_OS::set_errno_to_last_error ();
@@ -1496,7 +1568,9 @@ ACE_WIN32_Asynch_Write_File_Result::complete (size_t bytes_transferred,
 
   // Appropriately move the pointers in the message block.
   if (!this->gather_enabled ())
-    this->message_block_.rd_ptr (bytes_transferred);
+    {
+      this->message_block_.rd_ptr (bytes_transferred);
+    }
   else
   {
     static const size_t page_size = ACE_OS::getpagesize();
@@ -1512,7 +1586,9 @@ ACE_WIN32_Asynch_Write_File_Result::complete (size_t bytes_transferred,
       size_t len_part = page_size;
 
       if ( len_part > bytes_transferred)
-        len_part = bytes_transferred;
+        {
+          len_part = bytes_transferred;
+        }
 
       mb->rd_ptr (len_part);
 
@@ -1527,7 +1603,9 @@ ACE_WIN32_Asynch_Write_File_Result::complete (size_t bytes_transferred,
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
-    handler->handle_write_file (result);
+    {
+      handler->handle_write_file (result);
+    }
 }
 
 ACE_WIN32_Asynch_Write_File_Result::~ACE_WIN32_Asynch_Write_File_Result () = default;
@@ -1643,14 +1721,18 @@ ACE_WIN32_Asynch_Write_File::write (ACE_Message_Block &message_block,
 {
   size_t const len = message_block.length ();
   if ( bytes_to_write > len )
-     bytes_to_write = len;
+    {
+      bytes_to_write = len;
+    }
 
   if ( bytes_to_write == 0 )
-    ACELIB_ERROR_RETURN
-      ((LM_ERROR,
-        ACE_TEXT ("ACE_WIN32_Asynch_Write_File::write:")
-        ACE_TEXT ("Attempt to write 0 bytes\n")),
-       -1);
+    {
+      ACELIB_ERROR_RETURN
+        ((LM_ERROR,
+          ACE_TEXT ("ACE_WIN32_Asynch_Write_File::write:")
+          ACE_TEXT ("Attempt to write 0 bytes\n")),
+         -1);
+    }
 
   if (bytes_to_write > MAXDWORD)
     {
@@ -2075,7 +2157,9 @@ ACE_WIN32_Asynch_Accept::accept (ACE_Message_Block &message_block,
   size_t available_space = message_block.space ();
   size_t space_needed = bytes_to_read + 2 * address_size;
   if (available_space < space_needed)
-    ACELIB_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Buffer too small\n")), -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Buffer too small\n")), -1);
+    }
 
   // WIN Specific.
 
@@ -2105,8 +2189,10 @@ ACE_WIN32_Asynch_Accept::accept (ACE_Message_Block &message_block,
           return -1;
         }
       else
-        // Remember to close the socket down if failures occur.
-        close_accept_handle = 1;
+        {
+          // Remember to close the socket down if failures occur.
+          close_accept_handle = 1;
+        }
     }
 
   // Common code for both WIN and POSIX.
