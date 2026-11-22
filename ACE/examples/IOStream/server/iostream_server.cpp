@@ -51,18 +51,24 @@ Handler::handle_input (ACE_HANDLE)
 
   // Check to see if the socket is closed down.
   if (this->peer ().eof ())
-    ACE_ERROR_RETURN ((LM_ERROR, "(%P) connection closed\n"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "(%P) connection closed\n"), -1);
+    }
 
   ACE_IOStream_String s;
 
   if (!(this->peer () >> i >> f >> s))
-    ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "error getting data"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "error getting data"), -1);
+    }
 
   cerr << "(" << ACE_OS::getpid () << ") Client sent:\n\t";
   cerr << "(" << i << ") (" << f << ") (" << s << ")" << endl;
 
   if (!(this->peer () << "Received: " << i << " " << f << " " << s << endl))
-    ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "error sending data"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "error sending data"), -1);
+    }
 
   // In order to flush the output to the peer, we have to use the sync
   // () function.  Some iostreams implementations let us use a 'flush'
@@ -95,17 +101,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   // down gracefully via signals.
   if (ACE_Reactor::instance ()->register_handler (sig_set,
                                                   std::addressof (sa)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n"), -1);
+    }
 
   IOStream_Acceptor peer_acceptor;
 
   ACE_INET_Addr const addr (argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT);
 
   if (peer_acceptor.open (addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "open"),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P) starting up daemon\n"));

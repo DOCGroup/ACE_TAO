@@ -20,10 +20,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             server_host);
 
   if (connector.connect (server, addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "open"),
+                        -1);
+    }
 
   // Buffer up some things to send to the server.
   server << "1 2.3 testing" << endl;
@@ -42,10 +44,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   cerr << s2 << endl;
 
   if (server.close () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "close"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "close"),
+                        -1);
+    }
 #else
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
