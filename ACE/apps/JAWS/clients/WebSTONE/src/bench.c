@@ -39,7 +39,9 @@ void *ptr;
 
     ptr = malloc(size);
     if (ptr == 0)
-      errexit("Call to malloc() failed\n");
+      {
+        errexit("Call to malloc() failed\n");
+      }
     return ptr;
 }
 

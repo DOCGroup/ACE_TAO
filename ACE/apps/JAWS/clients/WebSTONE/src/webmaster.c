@@ -232,15 +232,25 @@ void echo_client(void *stream)
 
   FD_ZERO(&readfds);
   for (i = 0; i < num_rexecs; ++i)
+    {
       if (sockarr[i] != BADSOCKET_VALUE)
-    FD_SET(sockarr[i], &readfds);
+        {
+          FD_SET(sockarr[i], &readfds);
+        }
+    }
   rv = select(num_rexecs, &readfds, 0, 0, &timeout);
   if ( rv == 0)
-    continue;
+    {
+      continue;
+    }
   if (rv < 0 && WSAGetLastError() == WSANOTINITIALISED)
+    {
       return;
+    }
   if (rv < 0)
+    {
       errexit("Error in echo_client(): select() returns %d: %s\n", rv, neterrstr());
+    }
 
   /* loop over the sockets that are ready with data */
   for (i = 0; i < num_rexecs; ++i) {
@@ -250,9 +260,13 @@ void echo_client(void *stream)
         /* mark connection closed */
         sockarr[i] = BADSOCKET_VALUE;
         if (len < 0 && WSAGetLastError() == WSANOTINITIALISED)
-      return;
+          {
+            return;
+          }
         if (len < 0)
-      fprintf(stderr, "Error in echo_client() after NETREAD(): %s\n", neterrstr());
+          {
+            fprintf(stderr, "Error in echo_client() after NETREAD(): %s\n", neterrstr());
+          }
         continue;
     }
 
@@ -304,7 +318,9 @@ int i;
   /* we have an IP address */
   client_addr = inet_addr(client_hostname);
   if (client_addr == INADDR_NONE)
+    {
       return 0;
+    }
     } else {
   /* we have a hostname, use the webserver hostname */
   return master_phe->h_name;
@@ -397,7 +413,9 @@ extern int  optind;
       } /* end while */
 
     if (numloops && testtime)
-  errexit("Can't have both -l and -t\n");
+      {
+        errexit("Can't have both -l and -t\n");
+      }
 
     if(!havewebserver && !servaddrin_config)
     {
@@ -701,7 +719,9 @@ struct sockaddr_in  *serveraddr;
   char *primename;
 
   if (0 == fgets(linebuf, sizeof(linebuf), fp))
+    {
       break;
+    }
   if (cnt >= MAXCLIENTS || cnt >= FD_SETSIZE)
   {
     errexit("Number of Clients can't exceed %d\n", MAXCLIENTS);
@@ -709,7 +729,9 @@ struct sockaddr_in  *serveraddr;
   num = sscanf(linebuf, "%63s %24s %19s %d %63s",
                clienthostname[cnt], login, password, &numclients, webserver2);
   if (num < 4)
+    {
       break;
+    }
   if (servaddrin_config) {
       if (num == 4) {
     errexit("No webserver specified in config file for %s\n", clienthostname[cnt]);
@@ -718,7 +740,9 @@ struct sockaddr_in  *serveraddr;
   }
 
   if (numclients <= 0)
+    {
       errexit("Number of clients must be >= 0\n");
+    }
   if (numclients > MAXPROCSPERNODE)
   {
       errexit("Number of clients per node can't exceed %d\n", MAXPROCSPERNODE);

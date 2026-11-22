@@ -34,7 +34,9 @@ Timer_imp::stop ()
 {
     // Remove the current timeout function, if any
   if (this->id_)
-    XtRemoveTimeOut (this->id_);
+    {
+      XtRemoveTimeOut (this->id_);
+    }
 
     this->id_ = 0;
 }

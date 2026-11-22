@@ -47,7 +47,9 @@ char **argv, *opts;
     }
     if(*++cp == ':') {
         if(argv[optind][sp+1] != '\0')
-            optarg = &argv[optind++][sp+1];
+            {
+                optarg = &argv[optind++][sp+1];
+            }
         else if(++optind >= argc) {
             ERR(": argument missing for -", c);
             sp = 1;

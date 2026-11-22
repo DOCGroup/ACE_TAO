@@ -83,7 +83,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         Transport_Idle_Timeout_Long_Request_Test::Test::_narrow (object.in ());
 
       if (CORBA::is_nil (test.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR, "nil Test reference\n"), 1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "nil Test reference\n"), 1);
+        }
 
       // Y=1, X=1. The three-second request must remain protected even
       // though multiple idle scans fire while it is being dispatched.

@@ -164,7 +164,11 @@ thruputpersec(const double n, struct timeval *t)
 
     tv = timevaldouble(t);
     if (tv != 0)
-        return n / timevaldouble(t);
+        {
+            return n / timevaldouble(t);
+        }
     else
-        return 0;
+        {
+            return 0;
+        }
 }

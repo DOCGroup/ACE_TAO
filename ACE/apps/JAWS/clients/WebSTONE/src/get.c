@@ -51,7 +51,9 @@ int mystrincmp(const char *str1, const char *str2, int len) {
         int diff = UPPER(*str1) - UPPER(*str2);
 
         if (diff)
-            return diff < 0 ? -1 : 1;
+            {
+                return diff < 0 ? -1 : 1;
+            }
         ++str1;
         ++str2;
     }
@@ -200,7 +202,9 @@ get(char *loc, NETPORT port, char *url, rqst_timer_t *timer)
     offset = headerbuffer;
     while (offset < headerbuffer+headerlen && *offset) {
         if (*offset++ != '\n')
-            continue;
+            {
+                continue;
+            }
 
         if (mystrincmp(offset, CONTENT_LENGTH_STRING, strlen( CONTENT_LENGTH_STRING)) == 0) {
             sscanf(offset+strlen(CONTENT_LENGTH_STRING), "%d", &contentlength);
@@ -304,9 +308,13 @@ get(char *loc, NETPORT port, char *url, rqst_timer_t *timer)
 
 error:
     if (!BADSOCKET(sock))
-        NETCLOSE(sock);
+        {
+            NETCLOSE(sock);
+        }
     if (outputfile != -1)
-        close(outputfile);
+        {
+            close(outputfile);
+        }
     GETTIMEOFDAY(&timer->exittime, &timer->exittimezone);   /* needed? */
     return -1;
 }

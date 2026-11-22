@@ -152,7 +152,9 @@ struct protoent *ppe;
     if (host[0] >= '0' && host[0] <= '9') {
   *addr = inet_addr(host);
   if (*addr == INADDR_NONE)
+    {
       return(returnerr("Invalid IP address %s\n", host));
+    }
 
     } else {
   /* look up by name */
@@ -231,7 +233,9 @@ connectsock(char *host, NETPORT portnum, char *protocol)
       short     host_type;       /* socket type */
 
       if (resolve_addrs(host, "tcp", &host_phe, &host_ppe, &host_addr, &host_type))
-    return returnerr("Can't resolve hostname %s in get()\n", host);
+        {
+          return returnerr("Can't resolve hostname %s in get()\n", host);
+        }
       sin.sin_addr.S_ADDR = host_addr;
       sin.sin_family = PF_INET;
       proto = host_ppe.p_proto;
@@ -315,7 +319,9 @@ connecttomaster(char *str)
         sock = connectsock(ConnectStr,(NETPORT)atoi(tempch),"tcp");
 
   if (!BADSOCKET(sock))
+    {
       break;
+    }
 
   sleep(TRYDELAY_SEC);
     }
@@ -790,7 +796,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       strncpy(webmaster, connectstr, tempch-connectstr);
   }
   if(resolve_addrs(webmaster, "tcp", &webmast_phe, &webmast_ppe, &webmast_addr, &webmast_type))
+    {
       exit(1);
+    }
     }
 
     if (haveproxyserver)
@@ -800,7 +808,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
 
     if (resolve_addrs(webserver, "tcp", &webserv_phe, &webserv_ppe, &webserv_addr, &webserv_type))
-  exit(1);
+      {
+        exit(1);
+      }
 
     /*
      * INITIALIZE DATA
@@ -982,7 +992,9 @@ void ClientThread(void *dummy)
   sprintf(file_name, "%s.%d", DEBUG_FILE, (int)getpid());
   debugfile = fopen(file_name, "w+");
   if (debugfile == 0)
+    {
       errexit("Can't open debug file\n");
+    }
   D_PRINTF( "Running in debug mode, %d\n",amclient );
     }
 
@@ -1047,7 +1059,9 @@ void ClientThread(void *dummy)
      */
 
     if (testtime)
-  numloops = INFINITY;
+      {
+        numloops = INFINITY;
+      }
     GETTIMEOFDAY(&(timestat.starttime), &(timestat.starttimezone));
 
     /* LOOP UNTIL WE HIT numloops, OR WE RUN OUT OF TIME */
@@ -1123,7 +1137,9 @@ void ClientThread(void *dummy)
   } /* END if HAVE FILELIST */
 
   if (filecnt > 0)
+    {
       file_count += filecnt;
+    }
 
     } /* END while loopcnt */
 
@@ -1232,7 +1248,9 @@ void ClientThread(void *dummy)
 
   D_PRINTF( "About to close socket\n" );
         if (NETCLOSE(mastersock))
-      D_PRINTF( "Close socket error: %s\n", neterrstr() );
+          {
+            D_PRINTF( "Close socket error: %s\n", neterrstr() );
+          }
     }
     else /* NOT A CLIENT TO A WEBMASTER */
     {
@@ -1254,7 +1272,9 @@ void ClientThread(void *dummy)
   rqstat_print(&(timestat.rs));
 
   if (timestat.rs.totalconnects == 0)
+    {
       goto end;
+    }
   printf("Thruput = %5.2lf Kbytes/sec\n",
          thruputpersec(timestat.rs.totalbytes, &runningtime) / 1000);
 
@@ -1278,7 +1298,9 @@ void ClientThread(void *dummy)
 
 end:
     if(record_all_transactions)
-      fclose(logfile);
+      {
+        fclose(logfile);
+      }
     if(debug)
     {
   D_PRINTF( "Client exiting.\n" );

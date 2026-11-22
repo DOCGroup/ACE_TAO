@@ -163,7 +163,9 @@ parse_file_list (const char *url_list_file, page_list_t *page_list,
               textvalue[returnval] = '\0';
               D_PRINTF( "Found first # at %d\n", returnval );
               if (returnval == 0)
-                continue;
+                {
+                  continue;
+                }
             }
 
           if (strchr(a_line, '\n') == 0 && fgetc(fp) != EOF)
@@ -172,7 +174,9 @@ parse_file_list (const char *url_list_file, page_list_t *page_list,
             }
 
           if (numpages >= *num_of_pages)
-          errexit("Out of space in parse_file_list()\n");
+            {
+              errexit("Out of space in parse_file_list()\n");
+            }
 
           pp = &page_list[numpages];
 
@@ -186,9 +190,13 @@ parse_file_list (const char *url_list_file, page_list_t *page_list,
               D_PRINTF( "Setting page values from: %s\n", textvalue );
               returnval = sscanf(textvalue, "%1024s%d", tempbuf, &loadnum);
               if (returnval < 1)
-                continue;
+                {
+                  continue;
+                }
               if (strlen(tempbuf) >= URL_SIZE)
-                errexit("Filelist URL exceeds maximum length\n");
+                {
+                  errexit("Filelist URL exceeds maximum length\n");
+                }
               D_PRINTF("Scan for weighting returns %d, %d\n",
                        returnval, loadnum);
               if (returnval == EOF || loadnum <= 0)
@@ -262,7 +270,9 @@ parse_file_list (const char *url_list_file, page_list_t *page_list,
                                    pp->port_number[filenum], serverbuf);
 
                           if (strlen(serverbuf) >= URL_SIZE)
-                            errexit("Filelist server exceeds maximum length\n");
+                            {
+                              errexit("Filelist server exceeds maximum length\n");
+                            }
                           strcpy(pp->servername[filenum], serverbuf);
                         }
 
