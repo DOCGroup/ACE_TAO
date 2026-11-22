@@ -84,18 +84,26 @@ namespace ACE
     std::ostream& ClientRequestHandler::request_stream ()
       {
         if (this->session_)
-          return this->out_data_stream_;
+          {
+            return this->out_data_stream_;
+          }
         else
-          return ACE::IOS::Null::out_stream_;
+          {
+            return ACE::IOS::Null::out_stream_;
+          }
       }
 
     ACE_INLINE
     std::istream& ClientRequestHandler::response_stream ()
       {
         if (this->session_)
-          return this->in_data_stream_;
+          {
+            return this->in_data_stream_;
+          }
         else
-          return ACE::IOS::Null::in_stream_;
+          {
+            return ACE::IOS::Null::in_stream_;
+          }
       }
   }
 }

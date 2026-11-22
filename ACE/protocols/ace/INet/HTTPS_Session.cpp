@@ -211,7 +211,9 @@ namespace ACE
         INET_TRACE ("ACE_HTTPS_Session::attach_connection");
 
         if (!connection->is_connected ())
-          return false;
+          {
+            return false;
+          }
 
         this->close ();
 

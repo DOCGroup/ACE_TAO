@@ -92,7 +92,9 @@ namespace ACE
     bool SessionBase::reconnect_needed ()
       {
         if (this->cannot_reconnect_)
-          return false;
+          {
+            return false;
+          }
         if (!this->needs_reconnect_)
           {
             this->reconnect_countdown_.update ();

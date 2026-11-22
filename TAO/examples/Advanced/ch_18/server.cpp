@@ -464,7 +464,9 @@ change (
     // it back again.
     for (CORBA::ULong i {}; i < tlist.length (); ++i) {
         if (CORBA::is_nil (tlist[i]))
-            continue;                       // Skip nil references
+            {
+                continue;                       // Skip nil references
+            }
 
         // Read nominal temp and update it.
         CCS::TempType tnom = tlist[i]->get_nominal ();
@@ -574,7 +576,9 @@ preinvoke (
     }
 
     if (std::strcmp (oid_string.in (), Controller_oid) == 0)
-        return m_ctrl;
+        {
+            return m_ctrl;
+        }
 
     std::istringstream istr (oid_string.in ());
     CCS::AssetType anum {};

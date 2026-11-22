@@ -293,7 +293,9 @@ change (
     // it back again.
     for (CORBA::ULong i {}; i < tlist.length (); ++i) {
         if (CORBA::is_nil (tlist[i]))
-            continue;                       // Skip nil references
+            {
+                continue;                       // Skip nil references
+            }
 
         // Read nominal temp and update it.
         CCS::TempType tnom = tlist[i]->get_nominal ();

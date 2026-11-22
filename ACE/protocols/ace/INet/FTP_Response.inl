@@ -53,12 +53,18 @@ namespace ACE
     Response::StatusType Response::status_type (int status)
       {
         if (status == NORESPONSE)
-          return NORESPONSE;
+          {
+            return NORESPONSE;
+          }
         int st = status / 100;
         if (st >= PRELIM_OK && st <= PERMANENT_FAIL)
-          return static_cast<StatusType> (st);
+          {
+            return static_cast<StatusType> (st);
+          }
         else
-          return NOSTATE;
+          {
+            return NOSTATE;
+          }
       }
 
     ACE_INLINE
@@ -75,7 +81,9 @@ namespace ACE
           {
             int sst = (this->status_ - (st * 100)) / 10;
             if (sst >= SYNTAX && sst <= FILESYSTEM)
-              return static_cast<StatusSubtype> (sst);
+              {
+                return static_cast<StatusSubtype> (sst);
+              }
           }
         return NOSUBTYPE;
       }

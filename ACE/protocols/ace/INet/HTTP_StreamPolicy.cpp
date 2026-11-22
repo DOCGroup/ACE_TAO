@@ -79,7 +79,9 @@ namespace ACE
 
         char_type chbuf[1];
         if (this->read_from_stream_i (chbuf, 1) <= 0)
-          return eof_;
+          {
+            return eof_;
+          }
         else
           return chbuf[0];
       }
@@ -111,7 +113,9 @@ namespace ACE
           ACE::IOS::String_IStreamBase<char_type> chunk_len_is (chunk_len_str);
           unsigned chunk_len;
           if (!(chunk_len_is >> chunk_len))
-            return eof_;
+            {
+              return eof_;
+            }
           this->chunk_cnt_ = (std::streamsize) chunk_len;
         }
         if (this->chunk_cnt_ > 0)

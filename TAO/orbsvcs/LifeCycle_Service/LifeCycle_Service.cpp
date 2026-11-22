@@ -178,7 +178,9 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv [])
                                                   argv);
 
       if (check)
-        return 1;
+        {
+          return 1;
+        }
       else
         {
           life_Cycle_Service_Server.run ();
