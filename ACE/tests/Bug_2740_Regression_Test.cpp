@@ -357,10 +357,11 @@ int run_main(int, ACE_TCHAR *[])
   ACE_Reactor reactor (std::addressof (dp_reactor));
 
   // Bind acceptor to any port and then find out what the port was.
-  ACE_Acceptor<ServerSvcHandler, ACE_SOCK_Acceptor> acceptor (&reactor,
-                                                              ACE_NONBLOCK);
+  ACE_Acceptor<ServerSvcHandler, ACE_SOCK_Acceptor> acceptor (
+    std::addressof (reactor), ACE_NONBLOCK);
   ACE_SOCK_Acceptor::PEER_ADDR server_addr;
-  if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &), &reactor) == -1
+  if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &),
+                     std::addressof (reactor)) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -375,10 +376,10 @@ int run_main(int, ACE_TCHAR *[])
 
   ACE_Thread_Manager::instance ()->spawn_n (ACE_MAX_THREADS,
                                             event_loop,
-                                            &reactor);
+                                            std::addressof (reactor));
 
-  ACE_Connector<ClientSvcHandler, ACE_SOCK_CONNECTOR> connector (&reactor,
-                                                                 ACE_NONBLOCK);
+  ACE_Connector<ClientSvcHandler, ACE_SOCK_CONNECTOR> connector (
+    std::addressof (reactor), ACE_NONBLOCK);
   // Spin up clients to connect and iterate
   long i;
   for (i = 0; i < NrClients; ++i)

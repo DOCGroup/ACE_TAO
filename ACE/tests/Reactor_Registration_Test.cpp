@@ -44,7 +44,7 @@ public:
 Event_Handler::Event_Handler (ACE_Reactor &reactor,
                               ACE_HANDLE read,
                               ACE_HANDLE write)
-  : ACE_Event_Handler (&reactor),
+  : ACE_Event_Handler (std::addressof (reactor)),
     pipe_ (read, write),
     ok_ (false)
 {

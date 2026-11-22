@@ -23,6 +23,7 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/Get_Opt.h"
 
+#include <memory>
 #include <vector>
 
 static bool test_select_reactor = true;
@@ -109,7 +110,7 @@ test_connect (ACE_Reactor &reactor,
               ACE_Synch_Options &synch_options,
               Svc_Handler::Completion_Status complete_nonblocking_connections)
 {
-  CONNECTOR connector (&reactor);
+  CONNECTOR connector (std::addressof (reactor));
 
   int const number_of_connections = static_cast<int> (addresses.size ());
   int completion_counter = 0;

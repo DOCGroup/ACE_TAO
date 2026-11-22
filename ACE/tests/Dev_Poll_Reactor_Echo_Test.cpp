@@ -539,7 +539,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_SET_BITS (flags, ACE_NONBLOCK);  // Enable non-blocking in the
                                        // Svc_Handlers.
 
-  if (client.open (&reactor, flags) != 0)
+  if (client.open (std::addressof (reactor), flags) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%t) %p\n"),
@@ -561,7 +561,7 @@ run_main (int, ACE_TCHAR *[])
 
   TestAcceptor server;
 
-  if (server.open (addr, &reactor, flags) != 0)
+  if (server.open (addr, std::addressof (reactor), flags) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%t) %p\n"),

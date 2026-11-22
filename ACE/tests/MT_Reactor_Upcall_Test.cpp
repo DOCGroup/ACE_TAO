@@ -81,7 +81,7 @@ public:
 };
 
 Handler::Handler (ACE_Reactor &reactor)
-  : ACE_Event_Handler (&reactor),
+  : ACE_Event_Handler (std::addressof (reactor)),
     number_of_messages_read_ (0),
     shutdown_ (1)
 {

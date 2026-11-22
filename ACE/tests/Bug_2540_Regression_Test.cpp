@@ -113,7 +113,7 @@ run_main (int, ACE_TCHAR *[])
   Timer * timer = new Timer;
 
   // Initialize the timer and register with the reactor
-  if (-1 == timer->open (&reactor))
+  if (-1 == timer->open (std::addressof (reactor)))
     {
       ACE_ERROR_RETURN ((LM_ERROR, "Cannot initialize timer\n"), -1);
     }

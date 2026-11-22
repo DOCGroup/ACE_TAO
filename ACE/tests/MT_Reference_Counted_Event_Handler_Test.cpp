@@ -35,6 +35,7 @@
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
 #include <vector>
 
 #if defined (ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
@@ -1379,7 +1380,7 @@ test<REACTOR_IMPL>::test (int ignore_nested_upcalls,
 
           ACE_Reactor reactor (new REACTOR_IMPL, true);
 
-          testing (&reactor,
+          testing (std::addressof (reactor),
                    test_configs[i][0],
                    test_configs[i][1],
                    test_configs[i][2],

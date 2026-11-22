@@ -65,7 +65,7 @@ public:
 };
 
 Handler::Handler (ACE_Reactor &reactor, bool close_other)
-  : ACE_Event_Handler (&reactor)
+  : ACE_Event_Handler (std::addressof (reactor))
 {
   // Create the pipe.
   if (0 != this->other_pipe_.open () || 0 != this->pipe_.open())

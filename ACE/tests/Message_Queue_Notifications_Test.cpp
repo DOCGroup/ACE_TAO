@@ -105,7 +105,7 @@ private:
 
 Message_Handler::Message_Handler (ACE_Reactor &reactor)
   // First time handle_input will be called
-  : notification_strategy_ (&reactor,
+  : notification_strategy_ (std::addressof (reactor),
                             this,
                             ACE_Event_Handler::READ_MASK)
 {

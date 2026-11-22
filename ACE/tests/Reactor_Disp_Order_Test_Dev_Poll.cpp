@@ -60,7 +60,7 @@ public:
 };
 
 Handler::Handler (ACE_Reactor &reactor)
-  : ACE_Event_Handler (&reactor),
+  : ACE_Event_Handler (std::addressof (reactor)),
     dispatch_order_ (1),
     ok_ (false)
 {

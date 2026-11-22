@@ -18,6 +18,8 @@
 #include "ace/Atomic_Op.h"
 #include "ace/Recursive_Thread_Mutex.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_THREADS)
 
 ACE_Thread_Manager *thr_mgr;
@@ -223,7 +225,7 @@ run_main (int, ACE_TCHAR *[])
   for (int i = 0; i < MAX_TASKS; ++i)
     {
       tt1[i].open (ACE_Reactor::instance ());
-      tt2[i].open (&reactor);
+      tt2[i].open (std::addressof (reactor));
     }
 
   // Spawn two threads each running a different reactor.
@@ -240,7 +242,7 @@ run_main (int, ACE_TCHAR *[])
     }
 
   else if (ACE_Thread_Manager::instance ()->spawn
-      (worker, &reactor,
+      (worker, std::addressof (reactor),
        THR_BOUND | THR_DETACHED) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
