@@ -75,7 +75,7 @@ namespace ACE
               int verify_certificate_callback (SSL_CertificateCallbackArg& arg);
               void passwd_callback (ACE_CString& pwd);
 
-              ACE_SSL_Context* ssl_ctx_;
+              ACE_SSL_Context* ssl_ctx_ {};
 
               using TCertificateCallback =
                 ACE_Refcounted_Auto_Ptr<ACE::INet::SSL_CertificateCallback,

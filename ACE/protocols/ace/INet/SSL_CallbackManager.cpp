@@ -19,9 +19,7 @@ namespace ACE
   {
     int SSL_CallbackManager::ssl_ctx_mngr_index_ = (-2);
 
-    SSL_CallbackManager::SSL_CallbackManager ()
-      {
-      }
+    SSL_CallbackManager::SSL_CallbackManager () = default;
 
     SSL_CallbackManager::~SSL_CallbackManager () = default;
 
@@ -42,8 +40,8 @@ namespace ACE
         this->ssl_ctx_ = ssl_ctx == nullptr ? ACE_SSL_Context::instance () : ssl_ctx;
         ::SSL_CTX_set_ex_data (this->ssl_ctx_->context (), ssl_ctx_mngr_index_, this);
         this->ssl_ctx_->default_verify_callback (extern_C_verify_certificate_callback);
-        ::SSL_CTX_set_default_passwd_cb (ssl_ctx->context(), extern_C_passwd_callback);
-        ::SSL_CTX_set_default_passwd_cb_userdata (ssl_ctx->context(), this);
+        ::SSL_CTX_set_default_passwd_cb (this->ssl_ctx_->context (), extern_C_passwd_callback);
+        ::SSL_CTX_set_default_passwd_cb_userdata (this->ssl_ctx_->context (), this);
       }
 
     SSL_CallbackManager* SSL_CallbackManager::instance ()
