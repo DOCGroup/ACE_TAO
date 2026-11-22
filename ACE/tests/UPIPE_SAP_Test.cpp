@@ -27,7 +27,7 @@ static ACE_UPIPE_Addr addr (ACE_TEXT ("pattern"));
 
 // connector thread.
 
-static void *
+static ACE_THR_FUNC_RETURN
 connector (void *)
 {
   ACE_UPIPE_Stream c_stream;
@@ -44,7 +44,9 @@ connector (void *)
 
   ACE_Message_Block *mb {};
 
-  ACE_NEW_RETURN (mb, ACE_Message_Block (sizeof ("hello thanks") * sizeof (char)), 0);
+  ACE_NEW_RETURN (mb,
+                  ACE_Message_Block (sizeof ("hello thanks") * sizeof (char)),
+                  ACE_THR_FUNC_RETURN_NULL);
 
   mb->copy ("hello");
 
@@ -96,10 +98,10 @@ connector (void *)
 
   c_stream.close ();
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) exiting thread\n")));
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 acceptor (void *args)
 {
   ACE_UPIPE_Acceptor *acceptor = static_cast<ACE_UPIPE_Acceptor *> (args);
@@ -151,7 +153,7 @@ acceptor (void *args)
 
   s_stream.close ();
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) exiting thread\n")));
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 #endif /* ACE_HAS_THREADS && (ACE_HAS_STREAM_PIPES || ACE_HAS_WIN32_NAMED_PIPES) */
 
@@ -166,15 +168,15 @@ run_main (int, ACE_TCHAR *[])
   ACE_UPIPE_Acceptor acc (addr);
 
   // Spawn a acceptor thread.
-  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (acceptor),
-                                              (void *) &acc,
+  if (ACE_Thread_Manager::instance ()->spawn (acceptor,
+                                              &acc,
                                               THR_NEW_LWP,
                                               0) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")), 1);
 
   // Spawn a connector thread.
-  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (connector),
-                                              (void *) 0,
+  if (ACE_Thread_Manager::instance ()->spawn (connector,
+                                              nullptr,
                                               THR_NEW_LWP,
                                               0) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")), 1);
