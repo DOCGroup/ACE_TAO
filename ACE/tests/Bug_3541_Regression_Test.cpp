@@ -96,16 +96,16 @@ run_main (int, ACE_TCHAR *[])
 
     lastError = ACE_OS::last_error();
 
-    const ACE_sema_t &semaphoreLock = semaphore1.lock();
+    const ACE_sema_t &semaphore1Lock = semaphore1.lock();
 
-    if ((semaphoreLock == ACE_INVALID_HANDLE) ||
+    if ((semaphore1Lock == ACE_INVALID_HANDLE) ||
         (lastError != ERROR_ALREADY_EXISTS))
     {
       ret = -1;
 
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("ACE_Semaphore(%s) failed - lock %@ lastError %d\n"),
-                  semaphoreName, reinterpret_cast<void *> (semaphoreLock), lastError));
+                  semaphoreName, reinterpret_cast<void *> (semaphore1Lock), lastError));
     }
   }
 
@@ -136,16 +136,16 @@ run_main (int, ACE_TCHAR *[])
 
     lastError = ACE_OS::last_error();
 
-    const ACE_mutex_t &mutexLock = mutex1.lock();
+    const ACE_mutex_t &mutex1Lock = mutex1.lock();
 
-    if ((mutexLock.proc_mutex_ == ACE_INVALID_HANDLE) ||
+    if ((mutex1Lock.proc_mutex_ == ACE_INVALID_HANDLE) ||
         (lastError != ERROR_ALREADY_EXISTS))
     {
       ret = -1;
 
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("ACE_Mutex(%s) failed - lock %@ lastError %d\n"),
-                  mutexName, reinterpret_cast<void *> (mutexLock.proc_mutex_), lastError));
+                  mutexName, reinterpret_cast<void *> (mutex1Lock.proc_mutex_), lastError));
     }
   }
 
