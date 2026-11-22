@@ -16,9 +16,11 @@ ACE_TMAIN (int, ACE_TCHAR **)
       CORBA::ORB_var orb_m = CORBA::ORB_init (argc_m, arg_m.argv ());
 
       if (CORBA::is_nil (orb_m.in ()))
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           ACE_TEXT ("Expected to get an ORB\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             ACE_TEXT ("Expected to get an ORB\n")),
+                            -1);
+        }
 
       // This service configuration loads SSLIOP only into this ORB's service space.
       ACE_TCHAR const arg_str_b[] = ACE_TEXT ("BBB -ORBGestalt LOCAL -ORBId ORB-B -ORBSvcConf b.conf");
@@ -27,9 +29,11 @@ ACE_TMAIN (int, ACE_TCHAR **)
       CORBA::ORB_var orb_b = CORBA::ORB_init (argc_b, arg_b.argv ());
 
       if (CORBA::is_nil (orb_b.in ()))
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           ACE_TEXT ("Expected to get an ORB\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             ACE_TEXT ("Expected to get an ORB\n")),
+                            -1);
+        }
 
       // Since each svc conf file causes the ORB to load the services in
       // its own service space no services are reachable through the

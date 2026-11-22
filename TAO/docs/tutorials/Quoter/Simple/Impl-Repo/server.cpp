@@ -45,7 +45,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var table_object (orb->resolve_initial_references ("IORTable"));
       IORTable::Table_var adapter (IORTable::Table::_narrow (table_object.in ()));
       if (CORBA::is_nil (adapter.in ()))
-        ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
+        {
+          ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
+        }
       else
         {
           CORBA::String_var const ior (orb->object_to_string (stock_factory.in ()));
