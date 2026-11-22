@@ -786,19 +786,19 @@ class ACE_Export ACE_Log_Formatter
 public:
   ACE_Log_Formatter (ACE_Log_Priority prio, const char *fmt);
 
-  // Notes:
-  // - ACE_OS::snprintf() is assumed to work.  The fallback to ACE_OS::sprintf()
-  ///  is not implemented.
-  // - Other than special cases (listed below), the names of the parameters
-  //   indicate which formatters they are used for (pct_c => %c).
-  // - size_t (%B), ssize_t (%b), and time_t (%:) will use one of the
-  //   other overloads (int, INT64, UINT64) depending on the platform.
-  // - ACE_HANDLE (%H) is formatted as a pointer on Windows and as an int on
-  //   other platforms.
-  // - %*s (etc) uses the int or uint overloads for the size argument.
-  // - No support for ACE_USES_WCHAR has been attempted.
-  // - Not all platform-specific features from the varargs implementation have
-  //   been ported over to this implementation.
+  /// Notes:
+  /// - ACE_OS::snprintf() is assumed to work.  The fallback to ACE_OS::sprintf()
+  ///   is not implemented.
+  /// - Other than special cases (listed below), the names of the parameters
+  ///   indicate which formatters they are used for (pct_c => %c).
+  /// - size_t (%B), ssize_t (%b), and time_t (%:) will use one of the
+  ///   other overloads (int, INT64, UINT64) depending on the platform.
+  /// - ACE_HANDLE (%H) is formatted as a pointer on Windows and as an int on
+  ///   other platforms.
+  /// - %*s (etc) uses the int or uint overloads for the size argument.
+  /// - No support for ACE_USES_WCHAR has been attempted.
+  /// - Not all platform-specific features from the varargs implementation have
+  ///   been ported over to this implementation.
 
   ACE_Log_Formatter &operator, (int pct_adiRS);
 
