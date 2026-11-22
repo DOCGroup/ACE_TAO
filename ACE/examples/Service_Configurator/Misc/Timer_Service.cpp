@@ -51,9 +51,13 @@ Timer_Service_1::init (int argc, ACE_TCHAR *argv[])
   // enable tracing.
 #if defined (ACE_HAS_TRACE)
   if (argc > 3)
-    ACE_Trace::start_tracing ();
+    {
+      ACE_Trace::start_tracing ();
+    }
   else
-    ACE_Trace::stop_tracing ();
+    {
+      ACE_Trace::stop_tracing ();
+    }
 #endif /* ACE_HAS_TRACE */
 
   // Register the timer to go off in 1 second, and then to go off

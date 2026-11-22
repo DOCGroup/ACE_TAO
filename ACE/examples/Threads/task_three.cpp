@@ -200,7 +200,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
       out_stream = owned_out_stream.get ();
 #else
       if ((out_stream = ACE_OS::fopen ("test_task_three.out", "w")) == nullptr)
-        return -1;
+        {
+          return -1;
+        }
 #endif
       ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
       ACE_LOG_MSG->msg_ostream (out_stream);

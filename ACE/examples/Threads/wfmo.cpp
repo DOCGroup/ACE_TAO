@@ -97,7 +97,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   int thread_count = THREAD_COUNT;
 
   if (argc > 1)
-    thread_count = ACE_OS::atoi (argv[1]);
+    {
+      thread_count = ACE_OS::atoi (argv[1]);
+    }
 
   // Initialize the semaphores.
   int result = ACE_OS::sema_init (&wfmo_test.sema_handles_[0], thread_count + 5);
