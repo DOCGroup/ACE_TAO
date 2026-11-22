@@ -1,6 +1,8 @@
 /* -*- C++ -*- */
 #include "ace/Guard_T.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_LOCK> inline ACE_Bound_Ptr_Counter<ACE_LOCK> *

@@ -1,6 +1,8 @@
 // -*- C++ -*-
 #include "ace/OS_Memory.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_LOCKING_MECHANISM>

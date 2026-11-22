@@ -3,6 +3,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_CHAR_T> ACE_INLINE void

@@ -5,6 +5,8 @@
 
 #include "tao/TSS_Resources.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/PortableServer/POA_Current_Impl.inl"
 #endif /* __ACE_INLINE__ */

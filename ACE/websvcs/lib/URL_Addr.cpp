@@ -9,6 +9,7 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <memory>
 #include <utility>
 
 constexpr ACE_TCHAR http[] = ACE_TEXT ("http:");

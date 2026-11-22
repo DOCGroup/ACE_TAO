@@ -3,6 +3,8 @@
 #include "ace/Malloc_Base.h"
 #include "ace/Log_Category.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /////////////////////////////////////////////////////

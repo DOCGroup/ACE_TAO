@@ -1,4 +1,6 @@
 // -*- C++ -*-
+#include <memory>
+
 ACE_INLINE
 ACE_URL_Record::ACE_URL_Record ()
   : id_ (nullptr),

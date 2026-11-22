@@ -2,6 +2,8 @@
 #include "Binary_Search.h"
 #include "ace/Log_Msg.h"
 
+#include <memory>
+
 // Returns the next friend in the sequence of sorted friends.  Note
 // that this function would be simplified if we expanded the iterator
 // interface to include an "initialize" and "next" function!

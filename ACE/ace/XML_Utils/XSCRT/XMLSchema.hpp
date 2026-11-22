@@ -3,6 +3,7 @@
 #ifndef XSCRT_XMLSCHEMA_HPP
 #define XSCRT_XMLSCHEMA_HPP
 
+#include <memory>
 #include <string>
 
 #include "ace/XML_Utils/XSCRT/Elements.hpp"

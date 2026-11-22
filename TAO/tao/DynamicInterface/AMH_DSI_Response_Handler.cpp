@@ -14,6 +14,8 @@
 
 #include "ace/Truncate.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 # include "AMH_DSI_Response_Handler.inl"
 #endif /* ! __ACE_INLINE__ */

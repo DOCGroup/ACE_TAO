@@ -3,6 +3,8 @@
 
 #include "ace/RW_Thread_Mutex.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_LOCK> ACE_INLINE int

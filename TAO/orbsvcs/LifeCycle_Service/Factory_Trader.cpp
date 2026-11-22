@@ -17,6 +17,8 @@
 #include "Factory_Trader.h"
 #include "orbsvcs/CosTradingC.h"
 
+#include <memory>
+
 Factory_Trader::Factory_Trader (int debug_level)
   : debug_level_ (debug_level)
 {

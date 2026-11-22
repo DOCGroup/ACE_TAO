@@ -20,6 +20,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
+#include <memory>
 #include <utility>
 
 static int

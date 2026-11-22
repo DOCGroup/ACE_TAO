@@ -4,6 +4,7 @@
 #include "ace/Numeric_Limits.h"
 
 #include <cstring>
+#include <memory>
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // FUZZ: disable check_for_streams_include

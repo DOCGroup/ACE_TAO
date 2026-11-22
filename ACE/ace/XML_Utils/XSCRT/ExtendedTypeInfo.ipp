@@ -1,6 +1,8 @@
 /// @file XSCRT/ExtendedTypeInfo.ipp
 /// @author Boris Kolpackov <boris@dre.vanderbilt.edu>
 
+#include <memory>
+
 namespace XSCRT
 {
   inline TypeId::TypeId (std::type_info const &tid)

@@ -1,5 +1,7 @@
 #include "ace/Event_Handler.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int

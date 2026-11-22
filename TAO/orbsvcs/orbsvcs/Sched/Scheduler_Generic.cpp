@@ -8,6 +8,7 @@
 
 #include "orbsvcs/Sched/Scheduler_Generic.h"
 #include <cstdio>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

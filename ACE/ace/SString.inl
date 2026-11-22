@@ -6,6 +6,8 @@
 
 #include "ace/OS_NS_stdlib.h"
 
+#include <memory>
+
 #include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
