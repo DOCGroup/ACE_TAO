@@ -32,7 +32,7 @@ transaction::~transaction ()
   ACE_Reactor::instance ()->cancel_timer (this);
 }
 
-// implement state machine, send, wait (timeout/results) return
+/// Run the blocking request, wait, retry, and timeout state machine.
 int transaction::run ()
 {
   int retry_counter {};
@@ -77,7 +77,7 @@ int transaction::run ()
     }
 }
 
-// implement state machine, send, wait (timeout/results) return
+/// Start an asynchronous request and arrange for its result callback.
 int transaction::run (transaction_result *r)
 {
     result_ = r;
@@ -108,7 +108,7 @@ int transaction::run (transaction_result *r)
     return 0;
 }
 
-// got back response from SNMPv1 agent - process it
+/// Process a response received from an SNMPv1 agent.
 int transaction::handle_input (ACE_HANDLE)
 {
   receive_buffer_.reset ();
@@ -154,7 +154,7 @@ ACE_INET_Addr const &transaction::get_from_addr () const
   return receive_addr_;
 }
 
-// return pdu to caller
+/// Decode the received PDU and return its community and source address.
 int transaction::result (Pdu &pdu, char *comm_str, ACE_INET_Addr *from)
 {
   // TODO: check to see the sender matches the receiver address..
