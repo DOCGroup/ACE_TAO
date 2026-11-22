@@ -8,6 +8,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
 
+#include <memory>
+
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("messenger.ior");
 
 int
@@ -96,7 +98,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::ObjectId_var object_id =
         PortableServer::string_to_ObjectId ("object");
 
-      poa->activate_object_with_id (object_id.in (), &servant);
+      poa->activate_object_with_id (object_id.in (), std::addressof (servant));
       obj = poa->id_to_reference (object_id.in ());
       CORBA::String_var ior = orb->object_to_string (obj.in ());
 

@@ -113,7 +113,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       DatabaseImpl::Agent database_agent_impl (orb.in (), first_poa.in ());
       PortableServer::ObjectId_var database_agent_oid =
         PortableServer::string_to_ObjectId ("DatabaseAgent");
-      first_poa->activate_object_with_id (database_agent_oid.in (), &database_agent_impl);
+      first_poa->activate_object_with_id (
+        database_agent_oid.in (), std::addressof (database_agent_impl));
 
       CORBA::Object_var database_agent = first_poa->id_to_reference (database_agent_oid.in ());
       CORBA::String_var database_agent_ior = orb->object_to_string (database_agent.in ());

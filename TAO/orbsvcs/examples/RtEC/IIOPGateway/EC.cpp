@@ -7,6 +7,8 @@
 #include "orbsvcs/Event/EC_Gateway.h"
 #include "ace/Arg_Shifter.h"
 
+#include <memory>
+
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
@@ -70,7 +72,7 @@ EC::run (int argc, ACE_TCHAR* argv[])
       PortableServer::ObjectId_var ecId =
         PortableServer::string_to_ObjectId (ACE_TEXT_ALWAYS_CHAR (this->event_channel_name_.c_str ()));
 
-      child_poa_->activate_object_with_id (ecId.in (), &ec_impl);
+      child_poa_->activate_object_with_id (ecId.in (), std::addressof (ec_impl));
 
       CORBA::Object_var ec_obj = child_poa_->id_to_reference (ecId.in ());
 

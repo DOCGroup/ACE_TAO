@@ -9,6 +9,8 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Reactor.h"
 
+#include <memory>
+
 int activate_delay = 0000;
 int run_delay = 00;
 int request_delay = 00;
@@ -288,7 +290,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
 
       ObjectId_var id = string_to_ObjectId ("tester");
 
-      poa->activate_object_with_id (id.in (), &svt);
+      poa->activate_object_with_id (id.in (), std::addressof (svt));
       Object_var obj = poa->id_to_reference (id.in ());
       String_var ior = orb->object_to_string (obj.in ());
       WriteIOR (ior.in ());

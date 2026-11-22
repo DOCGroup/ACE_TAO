@@ -15,6 +15,8 @@
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "ace/Log_Msg.h"
 
+#include <memory>
+
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
@@ -39,7 +41,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Quoter_Stock_Factory_i stock_factory_i;
       PortableServer::ObjectId_var oid (
         PortableServer::string_to_ObjectId ("Stock_Factory"));
-      child_poa->activate_object_with_id (oid.in (), &stock_factory_i);
+      child_poa->activate_object_with_id (oid.in (), std::addressof (stock_factory_i));
 
       CORBA::Object_var stock_factory (child_poa->id_to_reference (oid.in ()));
       CORBA::Object_var table_object (orb->resolve_initial_references ("IORTable"));

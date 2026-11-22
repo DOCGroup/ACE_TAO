@@ -123,7 +123,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ORB_Killer killer (orb.in ());
       test_i *servant {};
       ACE_NEW_RETURN (servant,
-                      test_i (&killer),
+                      test_i (std::addressof (killer)),
                       1);
       // The ServantBase_var takes ownership of the allocated servant.
       PortableServer::ServantBase_var owner_transfer (servant);

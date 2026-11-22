@@ -53,7 +53,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         // and fails?), but I'm not in the mood to fight for a more
         // reasonable way to handle allocation errors in ACE.
         ACE_NEW_RETURN (tmp,
-                        Echo_Caller (&callback_pool),
+                        Echo_Caller (std::addressof (callback_pool)),
                         1);
         impl = tmp;
       }

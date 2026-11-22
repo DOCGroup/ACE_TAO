@@ -107,7 +107,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::ObjectId_var const id =
         PortableServer::string_to_ObjectId ("IOGR_OID");
 
-      poa->activate_object_with_id (id.in (), &display_impl);
+      poa->activate_object_with_id (id.in (), std::addressof (display_impl));
 
       CORBA::Object_var const server =
           poa->id_to_reference (id.in ());

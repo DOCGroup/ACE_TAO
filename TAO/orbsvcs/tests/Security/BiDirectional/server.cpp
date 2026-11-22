@@ -88,7 +88,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Simple_Server_i server_impl (orb.in (), options.iterations);
       PortableServer::ObjectId_var const id =
         PortableServer::string_to_ObjectId ("simple_server");
-      child_poa->activate_object_with_id (id.in (), &server_impl);
+      child_poa->activate_object_with_id (id.in (), std::addressof (server_impl));
 
       CORBA::Object_var const object = child_poa->id_to_reference (id.in ());
       CORBA::String_var const ior = orb->object_to_string (object.in ());

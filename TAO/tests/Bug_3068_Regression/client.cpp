@@ -7,6 +7,8 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 
+#include <memory>
+
 int
 parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
 {
@@ -94,7 +96,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::ObjectId_var const id =
         PortableServer::string_to_ObjectId ("client_callback");
 
-      child_poa->activate_object_with_id (id.in (), &callback_impl);
+      child_poa->activate_object_with_id (id.in (), std::addressof (callback_impl));
 
       CORBA::Object_var const callback_object =
         child_poa->id_to_reference (id.in ());

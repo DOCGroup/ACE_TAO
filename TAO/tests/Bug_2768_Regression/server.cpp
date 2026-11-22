@@ -62,7 +62,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // The POA borrows this stack servant for the lifetime of the event loop.
       Messenger_i messenger (orb.in ());
-      poa->activate_object_with_id (oid.in (), &messenger);
+      poa->activate_object_with_id (oid.in (), std::addressof (messenger));
       CORBA::Object_var const messenger_obj = poa->id_to_reference (oid.in ());
 
       // Bind the IOR string to the name.
