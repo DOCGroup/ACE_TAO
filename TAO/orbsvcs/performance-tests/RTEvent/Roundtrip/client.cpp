@@ -110,7 +110,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (options.funky_supplier_publication)
         {
           if (options.unique_low_priority_event)
-            event_range = 1 + options.low_priority_consumers;
+            {
+              event_range = 1 + options.low_priority_consumers;
+            }
           else
             {
               event_range = 2;
