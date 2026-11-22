@@ -104,75 +104,85 @@ parse_args (int argc, ACE_TCHAR **argv, Client_Options &options)
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'k':
-        options.ior = get_opts.opt_arg ();
-        break;
-
-      case 'm':
+    {
+      switch (c)
         {
-          int const message_count = ACE_OS::atoi (get_opts.opt_arg ());
-          if (message_count <= 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Message count must be greater than zero.\n")),
-                              -1);
-          options.message_count = message_count;
+        case 'k':
+          options.ior = get_opts.opt_arg ();
+          break;
+
+        case 'm':
+          {
+            int const message_count = ACE_OS::atoi (get_opts.opt_arg ());
+            if (message_count <= 0)
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("Message count must be greater than zero.\n")),
+                                  -1);
+              }
+            options.message_count = message_count;
+          }
+          break;
+
+        case 'a':
+          options.invoke_ami_style = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
+          break;
+
+        case 'b':
+          options.setup_buffering = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
+          break;
+
+        case 'i':
+          {
+            int const iterations = ACE_OS::atoi (get_opts.opt_arg ());
+            if (iterations <= 0)
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("Iterations must be greater than zero.\n")),
+                                  -1);
+              }
+            options.iterations = static_cast<CORBA::ULong> (iterations);
+          }
+          break;
+
+        case 't':
+          {
+            int const interval = ACE_OS::atoi (get_opts.opt_arg ());
+            if (interval < 0 || interval > (std::numeric_limits<long>::max) () / 1000)
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("Interval must be nonnegative and fit in microseconds.\n")),
+                                  -1);
+              }
+            options.interval = interval;
+          }
+          break;
+
+        case 'x':
+          options.shutdown_server = true;
+          break;
+
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage:  %s ")
+                             ACE_TEXT ("-k IOR ")
+                             ACE_TEXT ("-m message count ")
+                             ACE_TEXT ("-a invoke AMI style [0/1] ")
+                             ACE_TEXT ("-b setup buffering [0/1] ")
+                             ACE_TEXT ("-i iterations ")
+                             ACE_TEXT ("-t interval between calls ")
+                             ACE_TEXT ("-x shutdown server\n"),
+                             argv [0]),
+                            -1);
         }
-        break;
-
-      case 'a':
-        options.invoke_ami_style = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
-        break;
-
-      case 'b':
-        options.setup_buffering = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
-        break;
-
-      case 'i':
-        {
-          int const iterations = ACE_OS::atoi (get_opts.opt_arg ());
-          if (iterations <= 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Iterations must be greater than zero.\n")),
-                              -1);
-          options.iterations = static_cast<CORBA::ULong> (iterations);
-        }
-        break;
-
-      case 't':
-        {
-          int const interval = ACE_OS::atoi (get_opts.opt_arg ());
-          if (interval < 0 || interval > (std::numeric_limits<long>::max) () / 1000)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Interval must be nonnegative and fit in microseconds.\n")),
-                              -1);
-          options.interval = interval;
-        }
-        break;
-
-      case 'x':
-        options.shutdown_server = true;
-        break;
-
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage:  %s ")
-                           ACE_TEXT ("-k IOR ")
-                           ACE_TEXT ("-m message count ")
-                           ACE_TEXT ("-a invoke AMI style [0/1] ")
-                           ACE_TEXT ("-b setup buffering [0/1] ")
-                           ACE_TEXT ("-i iterations ")
-                           ACE_TEXT ("-t interval between calls ")
-                           ACE_TEXT ("-x shutdown server\n"),
-                           argv [0]),
-                          -1);
-      }
+    }
 
   if (options.ior.empty ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Please specify the IOR for the servant\n")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Please specify the IOR for the servant\n")), -1);
+    }
 
   // Iterations must be a multiple of message count; otherwise we'll
   // have some unsent messages left in the buffered queue.  Even
