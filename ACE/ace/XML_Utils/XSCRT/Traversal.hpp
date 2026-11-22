@@ -86,7 +86,7 @@ namespace XSCRT
     public:
       Dispatcher () = default;
 
-      void traverser (DispatcherBase<B> &d)
+      void traverser (DispatcherBase<B> const &d)
       {
         for (typename DispatcherBase<B>::TraversalMap::value_type const &entry : d)
         {

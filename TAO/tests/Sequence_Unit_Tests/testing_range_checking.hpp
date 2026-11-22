@@ -38,7 +38,7 @@ struct testing_range_checking
   }
 
   inline static void check_length(
-      CORBA::ULong & new_length,
+      CORBA::ULong const & new_length,
       CORBA::ULong maximum)
   {
     if (maximum < new_length)

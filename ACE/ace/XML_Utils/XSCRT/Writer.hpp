@@ -14,7 +14,7 @@ namespace XSCRT
   class Writer
   {
   public:
-    explicit Writer (XML::Element<C> &e)
+    explicit Writer (XML::Element<C> const &e)
     {
       push_ (e);
     }
