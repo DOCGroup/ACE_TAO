@@ -102,7 +102,7 @@ struct Send_Messages
   {
   }
 
-  int create_messages (const char test_message[])
+  int create_messages (const char message_text[])
   {
     if (this->number_of_messages_ < 0 || this->chain_limit_ <= 0)
       {
@@ -124,14 +124,14 @@ struct Send_Messages
       {
         User_Class *&temp1 = this->send_block_[i];
         ACE_NEW_RETURN (temp1,
-                        User_Class (test_message),
+                        User_Class (message_text),
                         -1);
         User_Class *tail = temp1;
         for (j = 1; j < this->chain_limit_; ++j)
           {
             User_Class *temp2 {};
             ACE_NEW_RETURN (temp2,
-                            User_Class (test_message),
+                            User_Class (message_text),
                             -1);
             tail->next (temp2);
             tail = temp2;
@@ -198,8 +198,6 @@ struct Receive_Messages
 static int
 single_thread_performance_test ()
 {
-  const char test_message[] =
-    "ACE_Message_Queue_Ex Test Message";
   const ACE_TCHAR *message =
     ACE_TEXT ("ACE_Message_Queue_Ex<ACE_NULL_SYNCH>, single thread");
 
