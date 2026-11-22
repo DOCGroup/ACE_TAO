@@ -104,10 +104,10 @@ client (void *)
     }
 
   if (stream.send (4,
-                   (void *) &mes_len,
-                   sizeof (size_t),
-                   (void *)buf,
-                   ACE_OS::strlen (buf) + 1) == -1)
+                   reinterpret_cast<char *> (&mes_len),
+                   static_cast<int> (sizeof mes_len),
+                   buf,
+                   static_cast<int> (ACE_OS::strlen (buf) + 1)) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%P) %p\n",
