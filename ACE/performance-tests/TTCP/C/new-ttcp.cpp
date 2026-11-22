@@ -384,7 +384,7 @@ main (int argc, char *argv[])
 
               if (p && connection_stream.set_option (p->p_proto,
                                                     TCP_NODELAY,
-                                                    (char *)& one,
+                                                    &one,
                                                     sizeof (one)))
                 err ("setsockopt: nodelay");
               mes ("nodelay");
@@ -393,7 +393,7 @@ main (int argc, char *argv[])
             {
               if (connection_stream.set_option (SOL_SOCKET,
                                                 SO_SNDBUF,
-                                                (char *) &sockbufsize,
+                                                &sockbufsize,
                                                 sizeof sockbufsize) == -1)
                 err ("acceptor_factory.set_option");
               mes ("sndbuf");
@@ -409,7 +409,7 @@ main (int argc, char *argv[])
           ACE_INET_Addr remote_address;
 
           if (acceptor_factory.accept (connection_stream,
-                                      (ACE_Addr *) &remote_address) == -1)
+                                      &remote_address) == -1)
             perror ("acceptor accept"), exit (1);
 
           // set the window size
@@ -417,7 +417,7 @@ main (int argc, char *argv[])
             {
               if (connection_stream.set_option (SOL_SOCKET,
                                                 SO_RCVBUF,
-                                                (char *) &sockbufsize,
+                                                &sockbufsize,
                                                 sizeof sockbufsize) == -1)
                 err ("acceptor_factory.set_option");
               mes ("rcvbuf");
