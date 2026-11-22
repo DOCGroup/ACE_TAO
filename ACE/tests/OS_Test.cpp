@@ -1663,10 +1663,14 @@ run_main (int, ACE_TCHAR *[])
 
 #if defined (ACE_HAS_VSNPRINTF_EMULATION)
   if ((result = snprintf_test (snprintf_emulation)) != 0)
-    status = result;
+    {
+      status = result;
+    }
 
   if ((result = snprintf_emulation_test ()) != 0)
-    status = result;
+    {
+      status = result;
+    }
 #endif
 
   if ((result = getpwnam_r_test ()) != 0)

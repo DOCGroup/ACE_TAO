@@ -144,8 +144,10 @@ worker (void *c)
 
 #if defined (ACE_HAS_TSS_EMULATION)
       if (ACE_Thread::keyfree (key) == -1)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("ACE_Thread::keyfree")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("ACE_Thread::keyfree")));
+        }
 #endif /* ACE_HAS_TSS_EMULATION */
 
       // Cause an error.
@@ -207,16 +209,22 @@ worker (void *c)
       void *v_ip2 (reinterpret_cast <void *> (ip));
 
       if (ACE_Thread::setspecific (key, v_ip2) == -1)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("ACE_Thread::setspecific")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("ACE_Thread::setspecific")));
+        }
 
       if (ACE_Thread::getspecific (key, &v_ip2) == -1)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("ACE_Thread::getspecific")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("ACE_Thread::getspecific")));
+        }
 
       if (ACE_Thread::setspecific (key, (void *) 0) == -1)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("ACE_Thread::setspecific")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("ACE_Thread::setspecific")));
+        }
 
       // See comment in cleanup () above.
       delete ip;
@@ -224,8 +232,10 @@ worker (void *c)
       // ACE_HAS_TSS_EMULATION is turned on, then it should work.
 #  if defined (ACE_HAS_TSS_EMULATION)
       if (ACE_Thread::keyfree (key) == -1)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("ACE_Thread::keyfree")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("ACE_Thread::keyfree")));
+        }
 #  endif /* defined (ACE_HAS_TSS_EMULATION) */
 #endif /* ACE_HAS_TSS_EMULATION */
     }

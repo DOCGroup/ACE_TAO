@@ -992,7 +992,9 @@ run_main (int argc, ACE_TCHAR *argv[])
 # if defined (ACE_VXWORKS) || defined (ACE_HAS_WIN32_OVERLAPPED_IO)
   // Test ACE_Message_Queue_Vx. or ACE_Message_Queue_NT
   if (status == 0)
-    status = single_thread_performance_test (1);
+    {
+      status = single_thread_performance_test (1);
+    }
 # endif /* ACE_VXWORKS */
 
   if (status == 0)
@@ -1003,7 +1005,9 @@ run_main (int argc, ACE_TCHAR *argv[])
 # if defined (ACE_VXWORKS) || defined (ACE_HAS_WIN32_OVERLAPPED_IO)
   // Test ACE_Message_Queue_Vx or ACE_Message_Queue_NT
   if (status == 0)
-    status = performance_test (1);
+    {
+      status = performance_test (1);
+    }
 # endif /* ACE_VXWORKS */
 
   if (counting_test () != 0)
