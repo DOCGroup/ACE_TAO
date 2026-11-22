@@ -49,7 +49,7 @@ void MessengerServer::poll (int iterations)
     ACE_Time_Value tv (1,0);
     orb_->perform_work (tv);
   }
-  while ((--x > 0) && (orb_->orb_core ()->has_shutdown() == 0));
+  while ((--x > 0) && !orb_->orb_core ()->has_shutdown ());
   std::cout << "Finished running the ORB." << std::endl;
 }
 

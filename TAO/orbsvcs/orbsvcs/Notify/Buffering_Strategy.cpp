@@ -331,7 +331,7 @@ TAO_Notify_Buffering_Strategy::discard (TAO_Notify_Method_Request_Queueable* met
   ACE_Message_Block* mb {};
   int result = -1;
 
-  if (this->discard_policy_.is_valid() == 0 ||
+  if (!this->discard_policy_.is_valid() ||
       this->discard_policy_ == CosNotification::AnyOrder ||
       this->discard_policy_ == CosNotification::FifoOrder)
     {

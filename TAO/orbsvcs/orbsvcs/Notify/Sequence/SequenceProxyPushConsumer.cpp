@@ -54,7 +54,7 @@ TAO_Notify_SequenceProxyPushConsumer::push_structured_events (
     throw CORBA::IMP_LIMIT ();
   }
 
-  if (this->is_connected () == 0)
+  if (!this->is_connected ())
     {
       throw CosEventComm::Disconnected ();
     }

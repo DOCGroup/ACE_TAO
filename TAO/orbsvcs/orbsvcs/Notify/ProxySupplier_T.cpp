@@ -94,10 +94,10 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::suspend_connection ()
   {
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_, CORBA::INTERNAL ());
 
-    if (this->is_connected () == 0)
+    if (!this->is_connected ())
       throw CosNotifyChannelAdmin::NotConnected ();
 
-    if (this->consumer()->is_suspended () == 1)
+    if (this->consumer()->is_suspended ())
       throw CosNotifyChannelAdmin::ConnectionAlreadyInactive ();
   }
 
@@ -111,10 +111,10 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::resume_connection ()
   {
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_, CORBA::INTERNAL ());
 
-    if (this->is_connected () == 0)
+    if (!this->is_connected ())
       throw CosNotifyChannelAdmin::NotConnected ();
 
-    if (this->consumer()->is_suspended () == 0)
+    if (!this->consumer()->is_suspended ())
       throw CosNotifyChannelAdmin::ConnectionAlreadyActive ();
   }
 

@@ -367,7 +367,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
     {
       ACE_Reactor *eh_reactor = eh->reactor ();
 
-      if (this->orb_core_->has_shutdown () == 0)
+      if (!this->orb_core_->has_shutdown ())
         {
           // If the ORB is nil, get the reactor from orb_core which gets it
           // from LF.

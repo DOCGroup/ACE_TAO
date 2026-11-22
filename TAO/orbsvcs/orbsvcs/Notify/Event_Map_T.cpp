@@ -54,7 +54,7 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::insert (PROXY* proxy, const TAO_Notify_
 
   int result = -1;
 
-  if (event_type.is_special () == 1)
+  if (event_type.is_special ())
     {
       entry = std::addressof (this->broadcast_entry_);
 
@@ -104,7 +104,7 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::remove (PROXY* proxy, const TAO_Notify_
 {
   ENTRY* entry {};
 
-  if (event_type.is_special () == 1)
+  if (event_type.is_special ())
     {
       entry = std::addressof (this->broadcast_entry_);
 

@@ -638,7 +638,7 @@ TAO_EC_Gateway_IIOP::consumer_ec_non_existent (
         CORBA::INTERNAL ());
 
     disconnected = false;
-    if (this->is_consumer_ec_connected_i () == 0)
+    if (!this->is_consumer_ec_connected_i ())
       {
         disconnected = true;
         return false;

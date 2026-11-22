@@ -342,7 +342,7 @@ TAO_PropertySet::define_property (char const *property_name,
   }
 
   // Is this property allowed?
-  if (is_property_allowed (property_name) != 1)
+  if (!is_property_allowed (property_name))
   {
     throw CosPropertyService::UnsupportedProperty();
   }
@@ -1061,7 +1061,7 @@ TAO_PropertySetDef::define_property_with_mode (char const *property_name,
   }
 
   // Is this property allowed?
-  if (is_property_allowed (property_name) != 1)
+  if (!is_property_allowed (property_name))
   {
     throw CosPropertyService::UnsupportedProperty();
   }

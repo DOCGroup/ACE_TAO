@@ -31,7 +31,7 @@ TAO_Notify_CosEC_ProxyPushConsumer::push (CORBA::Any const &any)
     throw CORBA::IMP_LIMIT ();
   }
 
-  if (this->is_connected () == 0)
+  if (!this->is_connected ())
     {
       throw CosEventComm::Disconnected ();
     }

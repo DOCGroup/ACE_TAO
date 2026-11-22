@@ -384,11 +384,11 @@ void TestServer::run ()
     {
       ACE_Time_Value tv (options_.use_it_lose_it_secs);
       orb_->run (tv);
-    } while (orb_->orb_core ()->has_shutdown () == 0
+    } while (!orb_->orb_core ()->has_shutdown ()
              && servant_->acknowledgeHit ());
   }
 
-  if (orb_->orb_core ()->has_shutdown () != 0)
+  if (orb_->orb_core ()->has_shutdown ())
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("* Server (%d.%d) ended.\n"),
                 options_.server_id, options_.server_instance_id));

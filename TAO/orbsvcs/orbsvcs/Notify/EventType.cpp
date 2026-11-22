@@ -31,7 +31,7 @@ TAO_Notify_EventType::init_i (const char* domain_name, const char* type_name)
   this->event_type_.domain_name = domain_name;
   this->event_type_.type_name = type_name;
 
-  if (this->is_special () == 1)
+  if (this->is_special ())
     {
       this->event_type_.domain_name = CORBA::string_dup ("*");
       this->event_type_.type_name = CORBA::string_dup ("%ALL");

@@ -139,7 +139,7 @@ TAO_Notify_EventTypeSeq::populate_no_special (CosNotification::EventTypeSeq& eve
   CORBA::ULong i {};
   for (TAO_Notify_EventType const & event_type : this->event_types_)
     {
-      if (event_type.is_special () == 0) // if its not the special event type.
+      if (!event_type.is_special ()) // if its not the special event type.
       {
         event_type_seq[i++] = event_type.native ();
       }

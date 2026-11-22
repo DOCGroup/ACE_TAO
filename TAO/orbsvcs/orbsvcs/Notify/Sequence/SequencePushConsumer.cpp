@@ -279,7 +279,7 @@ TAO_Notify_SequencePushConsumer::enqueue_if_necessary (
 
   size_t const mbs = static_cast<size_t> (this->max_batch_size_.value ());
 
-  if (this->pending_events().size() >= mbs || this->pacing_.is_valid () == 0)
+  if (this->pending_events().size() >= mbs || !this->pacing_.is_valid ())
   {
     this->dispatch_pending ();
   }
