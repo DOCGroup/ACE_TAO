@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    SOCK_Dgram_Mcast_QoS.h
  *
  *  @author Vishal Kachroo <vishal@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SOCK_DGRAM_MCAST_QOS_H
 #define ACE_SOCK_DGRAM_MCAST_QOS_H

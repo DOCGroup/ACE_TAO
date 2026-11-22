@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Aio_Platform_Test_C.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Programming for the Real World. Bill O. GallMeister. Modified by Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
-//=============================================================================
 
 
 #include <unistd.h>
