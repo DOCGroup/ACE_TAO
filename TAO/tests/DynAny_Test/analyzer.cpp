@@ -301,12 +301,12 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da)
 
         if (debug_)
           {
-            CORBA::TCKind const kind =
+            CORBA::TCKind const value_typecode_kind =
               da->get_typecode ()->kind ();
 
             ACE_DEBUG ((LM_DEBUG,
                         "  Value (TypeCode) = %d\n",
-                        static_cast<int> (kind)));
+                        static_cast<int> (value_typecode_kind)));
           }
       }
       break;
@@ -317,12 +317,12 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da)
 
         if (debug_)
           {
-            CORBA::TCKind const kind =
+            CORBA::TCKind const unhandled_typecode_kind =
               tc->kind ();
 
             ACE_DEBUG ((LM_DEBUG,
                         "  unhandled typecode = %d\n",
-                        static_cast<int> (kind)));
+                        static_cast<int> (unhandled_typecode_kind)));
           }
       }
       break;

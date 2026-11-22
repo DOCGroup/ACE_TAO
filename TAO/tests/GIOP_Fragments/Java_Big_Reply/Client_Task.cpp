@@ -24,13 +24,17 @@ Client_Task::svc ()
           Test::Octet_Seq_var seq =
               this->reply_gen_->get_big_reply ();
 
-          CORBA::ULong length = seq->length ();
-          for(CORBA::ULong i = 0; i < length; ++i)
+          CORBA::ULong const length = seq->length ();
+          for (CORBA::ULong sequence_index = 0;
+               sequence_index < length;
+               ++sequence_index)
             {
-              if (seq[i] != 'A')
+              if (seq[sequence_index] != 'A')
                 {
                   ACE_ERROR_RETURN ((LM_ERROR,
-                                     "Invalid data '%c' at %d\n", seq[i], i),
+                                     "Invalid data '%c' at %u\n",
+                                     seq[sequence_index],
+                                     sequence_index),
                                     -1);
                 }
             }
