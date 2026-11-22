@@ -19,7 +19,7 @@ Client_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
 
-  int successful_calls {};
+  int successful_call_count {};
 
   try
     {
@@ -31,7 +31,7 @@ Client_Task::svc ()
 
           if (retval != 0)
           {
-            ++successful_calls;
+            ++successful_call_count;
           }
 
           if (i % 10 == 0)
@@ -50,7 +50,7 @@ Client_Task::svc ()
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client task finished\n"));
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
-  this->successful_calls_ += successful_calls;
+  this->successful_calls_ += successful_call_count;
 
   return 0;
 }

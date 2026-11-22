@@ -31,10 +31,10 @@ FOO_IORInterceptor::establish_components (
   // does the right thing, and ignores any IOR interceptors that throw
   // an exception.
 
-  CORBA::String_var name = this->name ();
+  CORBA::String_var component_name = this->name ();
 
   CORBA::Any data;
-  data <<= name.in ();
+  data <<= component_name.in ();
 
   CORBA::OctetSeq_var encoded_data =
     this->codec_->encode_value (data);
@@ -58,7 +58,7 @@ FOO_IORInterceptor::establish_components (
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Added tagged component containing the\n"
               "(%P|%t)   string \"%C\" to all profiles.\n",
-              name.in ()));
+              component_name.in ()));
 
   // Add the tagged component to all IIOP profiles.
   info->add_ior_component_to_profile (component,
@@ -67,7 +67,7 @@ FOO_IORInterceptor::establish_components (
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Added tagged component containing the\n"
               "(%P|%t)   string \"%C\" to all IIOP profiles.\n",
-              name.in ()));
+              component_name.in ()));
 
   try
     {

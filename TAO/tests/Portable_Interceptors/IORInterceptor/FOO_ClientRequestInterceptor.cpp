@@ -59,9 +59,9 @@ FOO_ClientRequestInterceptor::send_request (
     this->codec_->decode_value (data,
                                 CORBA::_tc_string);
 
-  char const *name {};
+  char const *component_name {};
 
-  if (!(decoded_data.in () >>= name))
+  if (!(decoded_data.in () >>= component_name))
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Unable to extract tagged component "
@@ -73,7 +73,7 @@ FOO_ClientRequestInterceptor::send_request (
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) String extracted from tagged component "
               "data: %C\n",
-              name));
+              component_name));
 }
 
 void

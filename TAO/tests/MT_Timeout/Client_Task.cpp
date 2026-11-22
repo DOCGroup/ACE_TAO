@@ -42,8 +42,8 @@ Client_Task::too_big_difference_calls () const
 int
 Client_Task::svc ()
 {
-  int successful_calls {};
-  int timed_out_calls {};
+  int successful_call_count {};
+  int timed_out_call_count {};
 
   try
     {
@@ -74,11 +74,11 @@ Client_Task::svc ()
 
           if (retval == 1)
             {
-              ++successful_calls;
+              ++successful_call_count;
             }
           else if (retval == 0)
             {
-              ++timed_out_calls;
+              ++timed_out_call_count;
             }
         }
     }
@@ -89,8 +89,8 @@ Client_Task::svc ()
     }
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
-  this->successful_calls_ += successful_calls;
-  this->timed_out_calls_  += timed_out_calls;
+  this->successful_calls_ += successful_call_count;
+  this->timed_out_calls_  += timed_out_call_count;
 
   return 0;
 }
