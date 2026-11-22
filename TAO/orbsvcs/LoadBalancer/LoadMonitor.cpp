@@ -332,10 +332,14 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       CosLoadBalancing::LoadManager_ptr tmp;
 
       if (timer_id == -1)
-        tmp = load_manager.in ();   // PULL monitoring
+        {
+          tmp = load_manager.in ();   // PULL monitoring
+        }
       else
-        tmp = CosLoadBalancing::LoadManager::_nil ();  // PUSH
-                                                       // monitoring
+        {
+          tmp = CosLoadBalancing::LoadManager::_nil ();  // PUSH
+                                                         // monitoring
+        }
       TAO_LB_Monitor_Signal_Handler signal_handler (
          orb.in (),
          root_poa.in (),
@@ -343,7 +347,9 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
          location.in ());
 
       if (signal_handler.activate () != 0)
-        return -1;
+        {
+          return -1;
+        }
 
       // @@ There is a subtle race condition here.  If the signal
       //    handler thread shuts down the ORB before it is run, the

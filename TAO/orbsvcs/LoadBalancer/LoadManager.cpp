@@ -67,16 +67,24 @@ parse_args (int argc,
         case 's':
           if (ACE_OS::strcasecmp (get_opts.opt_arg (),
                                   ACE_TEXT("RoundRobin")) == 0)
-            options.default_strategy = Default_Strategy::round_robin;
+            {
+              options.default_strategy = Default_Strategy::round_robin;
+            }
           else if (ACE_OS::strcasecmp (get_opts.opt_arg (),
                                        ACE_TEXT("Random")) == 0)
-            options.default_strategy = Default_Strategy::random;
+            {
+              options.default_strategy = Default_Strategy::random;
+            }
           else if (ACE_OS::strcasecmp (get_opts.opt_arg (),
                                        ACE_TEXT("LeastLoaded")) == 0)
-            options.default_strategy = Default_Strategy::least_loaded;
+            {
+              options.default_strategy = Default_Strategy::least_loaded;
+            }
           else
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("Unknown strategy, using RoundRobin\n")));
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("Unknown strategy, using RoundRobin\n")));
+            }
           break;
         case 'i':
           options.ping_interval_seconds = ACE_OS::atoi (get_opts.opt_arg ());
@@ -219,10 +227,12 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
         std::unique_ptr<FILE, int (*) (FILE *)> const lm_ior (
           ACE_OS::fopen (options.ior_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
         if (!lm_ior)
-          ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("Unable to open IOR output file: %s\n"),
-                                 options.ior_file.c_str ()),
-                                -1);
+          {
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("Unable to open IOR output file: %s\n"),
+                                   options.ior_file.c_str ()),
+                                  -1);
+          }
         ACE_OS::fprintf (lm_ior.get (), "%s", str.in ());
       }
 
