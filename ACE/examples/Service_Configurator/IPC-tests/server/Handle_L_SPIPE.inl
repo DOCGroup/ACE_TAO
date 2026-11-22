@@ -19,9 +19,13 @@ ACE_INLINE int
 Handle_L_SPIPE::open (const ACE_SPIPE_Addr &rendezvous_spipe)
 {
   if (this->ACE_SPIPE_Acceptor::open (rendezvous_spipe) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 ACE_INLINE int
@@ -31,15 +35,21 @@ Handle_L_SPIPE::info (ACE_TCHAR **strp, size_t length) const
   ACE_SPIPE_Addr sa;
 
   if (ACE_SPIPE_Acceptor::get_local_addr (sa) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   ACE_OS::strcpy (buf, sa.get_path_name ());
   ACE_OS::strcat (buf, ACE_TEXT (" # tests local STREAM pipe\n"));
 
   if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
-    return -1;
+    {
+      return -1;
+    }
   else
-    ACE_OS::strncpy (*strp, buf, length);
+    {
+      ACE_OS::strncpy (*strp, buf, length);
+    }
   return ACE_OS::strlen (buf);
 }
 
@@ -51,25 +61,31 @@ Handle_L_SPIPE::init (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt    get_opt (argc, argv, ACE_TEXT ("r:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
-     switch (c)
-       {
-       case 'r':
-         rendezvous = get_opt.opt_arg ();
-         break;
-       default:
-         break;
-       }
+    {
+      switch (c)
+        {
+        case 'r':
+          rendezvous = get_opt.opt_arg ();
+          break;
+        default:
+          break;
+        }
+    }
 
   ACE_OS::unlink (rendezvous);
   susp.set (rendezvous);
   if (this->open (susp) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
+    }
   else if (ACE_Reactor::instance ()->register_handler
            (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("registering service with ACE_Reactor")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("registering service with ACE_Reactor")),
+                        -1);
+    }
   return 0;
 }
 
@@ -96,7 +112,9 @@ Handle_L_SPIPE::handle_input (int)
 
   /* Accept communication requests */
   if (this->ACE_SPIPE_Acceptor::accept (new_spipe) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       ACE_SPIPE_Addr sa;
@@ -109,13 +127,21 @@ Handle_L_SPIPE::handle_input (int)
     }
 
   while (new_spipe.recv (nullptr, &msg, &flags) >= 0)
-    if (msg.len != 0)
-      ACE_OS::write (ACE_STDOUT, msg.buf, (int) msg.len);
-    else
-      break;
+    {
+      if (msg.len != 0)
+        {
+          ACE_OS::write (ACE_STDOUT, msg.buf, (int) msg.len);
+        }
+      else
+        {
+          break;
+        }
+    }
 
   if (new_spipe.close () == -1)
-    return -1;
+    {
+      return -1;
+    }
   return 0;
 }
 
