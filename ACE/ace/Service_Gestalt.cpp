@@ -859,10 +859,12 @@ ACE_XML_Svc_Conf *
 ACE_Service_Gestalt::get_xml_svc_conf (ACE_DLL &xmldll)
 {
   if (xmldll.open (ACE_TEXT ("ACEXML_XML_Svc_Conf_Parser")) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("ACE (%P|%t) Failure to open ACEXML_XML_Svc_Conf_Parser: %p\n"),
-                       ACE_TEXT("ACE_Service_Config::get_xml_svc_conf")),
-                      0);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("ACE (%P|%t) Failure to open ACEXML_XML_Svc_Conf_Parser: %p\n"),
+                            ACE_TEXT("ACE_Service_Config::get_xml_svc_conf")),
+                           0);
+    }
 
   void * const foo = xmldll.symbol (ACE_TEXT ("_ACEXML_create_XML_Svc_Conf_Object"));
   intptr_t const temp_p = reinterpret_cast<intptr_t> (foo);
@@ -870,10 +872,12 @@ ACE_Service_Gestalt::get_xml_svc_conf (ACE_DLL &xmldll)
   ACE_XML_Svc_Conf::Factory const factory = reinterpret_cast<ACE_XML_Svc_Conf::Factory> (temp_p);
 
   if (factory == nullptr)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("ACE (%P|%t) Unable to resolve factory: %p\n"),
-                       xmldll.error ()),
-                      0);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("ACE (%P|%t) Unable to resolve factory: %p\n"),
+                            xmldll.error ()),
+                           0);
+    }
 
   return factory ();
 }

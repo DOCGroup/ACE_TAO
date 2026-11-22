@@ -280,12 +280,14 @@ ACE_Sig_Handler::dispatch (int signum, siginfo_t *siginfo, ucontext_t *ucontext)
       }
 #if defined (ACE_WIN32)
       else
-        // Win32 is weird in the sense that it resets the signal
-        // disposition to SIG_DFL after a signal handler is
-        // dispatched.  Therefore, to workaround this "feature" we
-        // must re-register the <ACE_Event_Handler> with <signum>
-        // explicitly.
-        ACE_Sig_Handler::register_handler_i (signum, eh);
+        {
+          // Win32 is weird in the sense that it resets the signal
+          // disposition to SIG_DFL after a signal handler is
+          // dispatched.  Therefore, to workaround this "feature" we
+          // must re-register the <ACE_Event_Handler> with <signum>
+          // explicitly.
+          ACE_Sig_Handler::register_handler_i (signum, eh);
+        }
 #endif /* ACE_WIN32*/
     }
 }

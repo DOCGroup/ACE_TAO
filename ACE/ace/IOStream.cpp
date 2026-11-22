@@ -203,10 +203,12 @@ ACE_Streambuf::underflow ()
       // mode before reading everything.  In that case, we take this
       // opportunity to feed it back to the iostream.
       if (in_avail ())
-        // Remember that we return an int so that we can give back
-        // EOF.  The explicit cast prevents us from returning a signed
-        // char when we're not returning EOF.
-        return (u_char) *gptr ();
+        {
+          // Remember that we return an int so that we can give back
+          // EOF.  The explicit cast prevents us from returning a signed
+          // char when we're not returning EOF.
+          return (u_char) *gptr ();
+        }
     }
 
   // We really shouldn't be here unless there is a lack of data in the
