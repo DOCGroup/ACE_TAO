@@ -25,7 +25,7 @@
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
-void *
+ACE_THR_FUNC_RETURN
 client (void *arg)
 {
   ACE_INET_Addr *remote_addr = static_cast<ACE_INET_Addr *> (arg);
@@ -54,7 +54,10 @@ client (void *arg)
 
       if (con.complete (cli_stream, &server_addr, &tv) == -1)
         {
-          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("connection failed")), 0);
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) %p\n"),
+                             ACE_TEXT ("connection failed")),
+                            ACE_THR_FUNC_RETURN_NULL);
         }
       else
         {
@@ -78,7 +81,7 @@ client (void *arg)
   // we expect the handle to be at least write_ready since it is freshly connected.
   if (result == -1)
   {
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("ACE::handle_ready")), 0);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("ACE::handle_ready")), ACE_THR_FUNC_RETURN_NULL);
   }
 
   // Send data to server (correctly handles "incomplete writes").
@@ -110,10 +113,10 @@ client (void *arg)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("close")));
   }
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-void *
+ACE_THR_FUNC_RETURN
 server (void *arg)
 {
   ACE_SOCK_Acceptor *peer_acceptor = static_cast<ACE_SOCK_Acceptor *> (arg);
@@ -139,7 +142,7 @@ server (void *arg)
 
   if (result == -1)
   {
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("handle_read_ready")), 0);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("handle_read_ready")), ACE_THR_FUNC_RETURN_NULL);
   }
 
   // Create a new ACE_SOCK_Stream endpoint (note automatic restart
@@ -153,7 +156,7 @@ server (void *arg)
       // Enable non-blocking I/O.
       if (new_stream.enable (ACE_NONBLOCK) == -1)
       {
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("enable")), 0);
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("enable")), ACE_THR_FUNC_RETURN_NULL);
       }
 
       // Read data from client (terminate on error).
@@ -161,7 +164,10 @@ server (void *arg)
         {
           if (ACE::handle_read_ready (new_stream.get_handle (), nullptr) == -1)
           {
-            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("handle_read_ready")), 0);
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("(%P|%t) %p\n"),
+                               ACE_TEXT ("handle_read_ready")),
+                              ACE_THR_FUNC_RETURN_NULL);
           }
 
           while ((r_bytes = new_stream.recv (buf, 1)) > 0)
@@ -186,7 +192,7 @@ server (void *arg)
               {
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("close")));
               }
-              return nullptr;
+              return ACE_THR_FUNC_RETURN_NULL;
             }
           else if (r_bytes == -1)
             {
@@ -196,7 +202,7 @@ server (void *arg)
                 }
               else
               {
-                ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("recv_n")), 0);
+                ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("recv_n")), ACE_THR_FUNC_RETURN_NULL);
               }
             }
         }
@@ -214,7 +220,7 @@ server (void *arg)
       }
     }
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 void
@@ -256,7 +262,7 @@ spawn ()
         }
 #elif defined (ACE_HAS_THREADS)
       if (ACE_Thread_Manager::instance ()->spawn
-          (ACE_THR_FUNC (server),
+          (server,
            &peer_acceptor,
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
@@ -265,7 +271,7 @@ spawn ()
                     1));
 
       if (ACE_Thread_Manager::instance ()->spawn
-          (ACE_THR_FUNC (client),
+          (client,
            &server_addr,
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,

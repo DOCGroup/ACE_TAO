@@ -24,7 +24,7 @@
 #define SERVER_PORT 20000
 #define TEST_DATA ACE_TEXT ("UDP Open Test")
 
-static void *
+static ACE_THR_FUNC_RETURN
 client (void *arg)
 {
   ACE_INET_Addr *remote_addr = static_cast<ACE_INET_Addr *> (arg);
@@ -63,7 +63,7 @@ client (void *arg)
                  ACE_TEXT("(%P|%t) protocol %d, %p\n"),
                  server_addr.get_type (),
                  ACE_TEXT ("SOCK_Dgram open")));
-      return nullptr;
+      return ACE_THR_FUNC_RETURN_NULL;
     }
 
   {
@@ -73,7 +73,7 @@ client (void *arg)
       if (cli_dgram.set_option(IPPROTO_IP, ACE_RECVPKTINFO, &sockopt, sizeof sockopt) == -1) {
         ACE_ERROR((LM_ERROR,
                    ACE_TEXT("(%P|%t) setsockopt failed\n")));
-        return nullptr;
+        return ACE_THR_FUNC_RETURN_NULL;
       } else {
         ACE_DEBUG((LM_DEBUG,
                    ACE_TEXT("(%P|%t) setsockopt succeeded\n")));
@@ -87,7 +87,7 @@ client (void *arg)
       if (cli_dgram.set_option(IPPROTO_IPV6, ACE_RECVPKTINFO6, &sockopt, sizeof sockopt) == -1) {
         ACE_ERROR((LM_ERROR,
                    ACE_TEXT("(%P|%t) setsockopt failed\n")));
-        return nullptr;
+        return ACE_THR_FUNC_RETURN_NULL;
       } else {
         ACE_DEBUG((LM_DEBUG,
                    ACE_TEXT("(%P|%t) setsockopt succeeded\n")));
@@ -103,7 +103,7 @@ client (void *arg)
                  ACE_TEXT("(%P|%t) UDP send to %s %p\n"),
                  hostname_string,
                  ACE_TEXT ("failed")));
-      return nullptr;
+      return ACE_THR_FUNC_RETURN_NULL;
     }
 
     {
@@ -212,10 +212,10 @@ client (void *arg)
 
   cli_dgram.close();
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 server (void *arg)
 {
   ACE_SOCK_Dgram *server_dgram = static_cast<ACE_SOCK_Dgram *> (arg);
@@ -275,7 +275,7 @@ server (void *arg)
     }
   server_dgram->close ();
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 static int
@@ -337,7 +337,7 @@ spawn (int proto)
             }
 #elif defined (ACE_HAS_THREADS)
           if (ACE_Thread_Manager::instance ()->spawn
-              (ACE_THR_FUNC (server),
+              (server,
                &server_dgram,
                THR_NEW_LWP | THR_DETACHED) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -346,7 +346,7 @@ spawn (int proto)
                                1);
 
           if (ACE_Thread_Manager::instance ()->spawn
-              (ACE_THR_FUNC (client),
+              (client,
                &server_addr,
                THR_NEW_LWP | THR_DETACHED) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
