@@ -64,7 +64,11 @@ testCurrentLoader (int, char *[])
         }
     }
 
-  //  ACE_ASSERT (factory != nullptr);
+  if (factory == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Unable to find TAO_Transport_Current_Loader\n")),
+                      -1);
+
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("testCurrentLoader: OK\n")));
   return 0;
 }
