@@ -91,46 +91,52 @@ Process::parse_args (int argc, ACE_TCHAR* argv[])
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
     {
-    case 'i':
-      opt_install = true;
-      opt_startup = ACE_OS::atoi (get_opt.opt_arg ());
-      if (opt_startup <= 0)
-         print_usage_and_die ();
-      break;
-    case 'r':
-      opt_remove = true;
-      break;
-    case 's':
-      opt_start = true;
-      break;
-    case 'k':
-      opt_kill = true;
-      break;
-    case 't':
-      opt_type = true;
-      opt_startup = ACE_OS::atoi (get_opt.opt_arg ());
-      if (opt_startup <= 0)
-         print_usage_and_die ();
-      break;
-    case 'd':
-      opt_debug = true;
-      break;
-    default:
-      // -i can also be given without a value - if so, it defaults
-      // to defined value.
-      if (ACE_OS::strcmp (get_opt.argv ()[get_opt.opt_ind () - 1], ACE_TEXT ("-i")) == 0)
-      {
-        opt_install = true;
-        opt_startup = DEFAULT_SERVICE_INIT_STARTUP;
-      }
-      else
-      {
-        print_usage_and_die ();
-      }
-      break;
-  }
+      switch (c)
+        {
+        case 'i':
+          opt_install = true;
+          opt_startup = ACE_OS::atoi (get_opt.opt_arg ());
+          if (opt_startup <= 0)
+            {
+              print_usage_and_die ();
+            }
+          break;
+        case 'r':
+          opt_remove = true;
+          break;
+        case 's':
+          opt_start = true;
+          break;
+        case 'k':
+          opt_kill = true;
+          break;
+        case 't':
+          opt_type = true;
+          opt_startup = ACE_OS::atoi (get_opt.opt_arg ());
+          if (opt_startup <= 0)
+            {
+              print_usage_and_die ();
+            }
+          break;
+        case 'd':
+          opt_debug = true;
+          break;
+        default:
+          // -i can also be given without a value - if so, it defaults
+          // to defined value.
+          if (ACE_OS::strcmp (get_opt.argv ()[get_opt.opt_ind () - 1], ACE_TEXT ("-i")) == 0)
+            {
+              opt_install = true;
+              opt_startup = DEFAULT_SERVICE_INIT_STARTUP;
+            }
+          else
+            {
+              print_usage_and_die ();
+            }
+          break;
+        }
+    }
 }
 
 // Define a function to handle Ctrl+C to cleanly shut this down.
@@ -175,7 +181,9 @@ Process::run (int argc, ACE_TCHAR* argv[])
     }
 
   if (opt_start && opt_kill)
-    print_usage_and_die ();
+    {
+      print_usage_and_die ();
+    }
 
   if (opt_start)
     {

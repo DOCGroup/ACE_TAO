@@ -24,8 +24,10 @@ Service::Service ()
 Service::~Service ()
 {
   if (ACE_Reactor::instance ()->cancel_timer(this) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "Service::~Service failed to cancel_timer.\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Service::~Service failed to cancel_timer.\n"));
+    }
 }
 
 // This method is called when the service gets a control request.  It
@@ -47,7 +49,9 @@ Service::handle_control (DWORD control_code)
                           ACE_Event_Handler::EXCEPT_MASK);
     }
   else
-    inherited::handle_control (control_code);
+    {
+      inherited::handle_control (control_code);
+    }
 }
 
 // This is just here to be the target of the notify from above... it
@@ -87,7 +91,9 @@ Service::svc ()
   // need to own the reactor. If we are not a service, report_status
   // will return -1.
   if (report_status (SERVICE_RUNNING) == 0)
-    reactor ()->owner (ACE_Thread::self ());
+    {
+      reactor ()->owner (ACE_Thread::self ());
+    }
 
   this->stop_ = false;
 
@@ -96,7 +102,9 @@ Service::svc ()
   ACE_Reactor::instance ()->schedule_timer (this, 0, tv, tv);
 
   while (!this->stop_)
-    reactor ()->handle_events ();
+    {
+      reactor ()->handle_events ();
+    }
 
   // Cleanly terminate connections, terminate threads.
   ACE_DEBUG ((LM_DEBUG,
