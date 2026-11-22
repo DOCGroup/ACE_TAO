@@ -205,13 +205,11 @@ static void MyOpenService(const char *remote_host)
              (struct sockaddr *)&my_err_addr, sizeof my_err_addr) == SOCKET_ERROR) {
         errexit("Rexec: Error socket bind failed: %s.\n",
                 neterrstr());
-        (void) closesocket(sTmp);
     }
 
     if (listen(sTmp, 1) == SOCKET_ERROR) {
         errexit("Rexec: Error socket listen failed: %s.\n",
                 neterrstr());
-        (void) closesocket(sTmp);
     }
 
     addr_len = sizeof my_err_addr;
@@ -219,7 +217,6 @@ static void MyOpenService(const char *remote_host)
                     (struct sockaddr *)&my_err_addr, &addr_len) == SOCKET_ERROR) {
         errexit("Rexec: Error socket bind failed: %s.\n",
                 neterrstr());
-        (void) closesocket(sTmp);
     }
 
     sprintf(portbuf, "%hu", ntohs(my_err_addr.sin_port));
@@ -229,7 +226,6 @@ static void MyOpenService(const char *remote_host)
     if ((sErr = accept(sTmp, (struct sockaddr *)&junk_addr, &addr_len)) == INVALID_SOCKET) {
         errexit("Rexec: Error socket accept failed: %s.\n",
                 neterrstr());
-        (void) closesocket(sTmp);
     }
 
     (void) closesocket(sTmp);

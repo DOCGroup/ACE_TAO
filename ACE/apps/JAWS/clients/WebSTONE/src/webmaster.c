@@ -905,7 +905,6 @@ int sock;
             abort_clients();
             errexit("Error accepting from one of the clients: %s\n",
       neterrstr());
-            break;
         }
 #else
     /* I don't see why a select is needed at all--all clients must respond
