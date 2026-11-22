@@ -760,7 +760,7 @@ ACE::t_rcv_n_i (ACE_HANDLE handle,
           if (errno == EWOULDBLOCK)
             {
               // Wait for the blocking to subside.
-              int const result = ACE::handle_read_ready (handle, 0);
+              int const result = ACE::handle_read_ready (handle, nullptr);
 
               // Did select() succeed?
               if (result != -1)
@@ -1585,7 +1585,7 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
           if (errno == EWOULDBLOCK || errno == ENOBUFS)
             {
               // Wait for the blocking to subside.
-              int const result = ACE::handle_write_ready (handle, 0);
+              int const result = ACE::handle_write_ready (handle, nullptr);
 
               // Did select() succeed?
               if (result != -1)
