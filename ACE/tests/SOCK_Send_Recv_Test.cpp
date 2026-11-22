@@ -43,10 +43,10 @@ const size_t Test3_Send_Size = 4*1024;
 const size_t Test3_Loops = 10;
 const size_t Test3_Total_Size = Test3_Send_Size * Test3_Loops;
 
-void *
+ACE_THR_FUNC_RETURN
 client (void *arg)
 {
-  ACE_INET_Addr *remote_addr = reinterpret_cast<ACE_INET_Addr *> (arg);
+  ACE_INET_Addr *remote_addr = static_cast<ACE_INET_Addr *> (arg);
   ACE_INET_Addr server_addr (remote_addr->get_port_number (),
                              ACE_LOCALHOST);
   ACE_SOCK_Stream cli_stream;
@@ -66,7 +66,7 @@ client (void *arg)
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("connection failed")));
       Test_Result = 1;
-      return nullptr;
+      return ACE_THR_FUNC_RETURN_NULL;
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -223,10 +223,10 @@ client (void *arg)
 
   cli_stream.close ();
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-void *
+ACE_THR_FUNC_RETURN
 server (void *arg)
 {
   ACE_SOCK_Acceptor *peer_acceptor = static_cast<ACE_SOCK_Acceptor *> (arg);
@@ -244,7 +244,7 @@ server (void *arg)
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("accept")));
       Test_Result = 1;
-      return nullptr;
+      return ACE_THR_FUNC_RETURN_NULL;
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -378,7 +378,7 @@ server (void *arg)
 
   sock_str.close();
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 #endif /* !ACE_LACKS_FORK || ACE_HAS_THREADS */
@@ -421,13 +421,13 @@ spawn ()
           ACE_OS::exit (0);
           /* NOTREACHED */
         default:
-          server (reinterpret_cast<void *> (&peer_acceptor));
+          server (&peer_acceptor);
           ACE_OS::waitpid (0, nullptr, 0);
         }
 #elif defined (ACE_HAS_THREADS)
       if (ACE_Thread_Manager::instance ()->spawn
-          (ACE_THR_FUNC (server),
-           reinterpret_cast<void *> (&peer_acceptor),
+          (server,
+           &peer_acceptor,
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n%a"),
@@ -435,8 +435,8 @@ spawn ()
                     1));
 
       if (ACE_Thread_Manager::instance ()->spawn
-          (ACE_THR_FUNC (client),
-           reinterpret_cast<void *> (&server_addr),
+          (client,
+           &server_addr,
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n%a"),
