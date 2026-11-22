@@ -78,7 +78,9 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   ACE_TCHAR tempenv[MAXPATHLEN];
   char *test_dir_n = ACE_OS::getenv ("ACE_TEST_DIR");
   if (test_dir_n == 0)
-    test_dir = 0;
+    {
+      test_dir = 0;
+    }
   else
     {
       ACE_OS::strcpy (tempenv, ACE_TEXT_CHAR_TO_TCHAR (test_dir_n));
@@ -87,7 +89,9 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 #  endif /* ACE_WIN32 || !ACE_USES_WCHAR */
 
   if (test_dir == 0)
-    test_dir = ACE_TEXT ("");
+    {
+      test_dir = ACE_TEXT ("");
+    }
 
   // This could be done with ACE_OS::sprintf() but it requires different
   // format strings for wide-char POSIX vs. narrow-char POSIX and Windows.
@@ -129,9 +133,13 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 #else /* when ACE_LACKS_IOSTREAM_TOTALLY */
   ACE_TCHAR *fmode {};
   if (append)
-    fmode = ACE_TEXT ("a");
+    {
+      fmode = ACE_TEXT ("a");
+    }
   else
-    fmode = ACE_TEXT ("w");
+    {
+      fmode = ACE_TEXT ("w");
+    }
   this->output_file_ = ACE_OS::fopen (temp, fmode);
 # endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
