@@ -66,9 +66,11 @@ ACE_Date_Time::ACE_Date_Time (long day,
   ACE_TRACE ("ACE_Date_Time::ACE_Date_Time");
 }
 
-// set/get portions of ACE_Date_Time, no check for validy
+/// @name Date/time components
+/// Setters do not check for validity.
+/// @{
 
-// get day
+/// Get day.
 ACE_INLINE long
 ACE_Date_Time::day () const
 {
@@ -76,7 +78,7 @@ ACE_Date_Time::day () const
   return day_;
 }
 
-// set day
+/// Set day.
 ACE_INLINE void
 ACE_Date_Time::day (long day)
 {
@@ -84,7 +86,7 @@ ACE_Date_Time::day (long day)
   day_ = day;
 }
 
-// get month
+/// Get month.
 ACE_INLINE long
 ACE_Date_Time::month () const
 {
@@ -92,7 +94,7 @@ ACE_Date_Time::month () const
   return month_;
 }
 
-// set month
+/// Set month.
 ACE_INLINE void
 ACE_Date_Time::month (long month)
 {
@@ -100,7 +102,7 @@ ACE_Date_Time::month (long month)
   month_ = month;
 }
 
-// get year
+/// Get year.
 ACE_INLINE long
 ACE_Date_Time::year () const
 {
@@ -108,7 +110,7 @@ ACE_Date_Time::year () const
   return year_;
 }
 
-// set year
+/// Set year.
 ACE_INLINE void
 ACE_Date_Time::year (long year)
 {
@@ -116,7 +118,7 @@ ACE_Date_Time::year (long year)
   year_ = year;
 }
 
-// get hour
+/// Get hour.
 ACE_INLINE long
 ACE_Date_Time::hour () const
 {
@@ -124,7 +126,7 @@ ACE_Date_Time::hour () const
   return hour_;
 }
 
-// set hour
+/// Set hour.
 ACE_INLINE void
 ACE_Date_Time::hour (long hour)
 {
@@ -132,7 +134,7 @@ ACE_Date_Time::hour (long hour)
   hour_ = hour;
 }
 
-// get minute
+/// Get minute.
 ACE_INLINE long
 ACE_Date_Time::minute () const
 {
@@ -140,7 +142,7 @@ ACE_Date_Time::minute () const
   return minute_;
 }
 
-// set minute
+/// Set minute.
 ACE_INLINE void
 ACE_Date_Time::minute (long minute)
 {
@@ -148,7 +150,7 @@ ACE_Date_Time::minute (long minute)
   minute_ = minute;
 }
 
-// get second
+/// Get second.
 ACE_INLINE long
 ACE_Date_Time::second () const
 {
@@ -156,7 +158,7 @@ ACE_Date_Time::second () const
   return second_;
 }
 
-// set second
+/// Set second.
 ACE_INLINE void
 ACE_Date_Time::second (long second)
 {
@@ -164,7 +166,7 @@ ACE_Date_Time::second (long second)
   second_ = second;
 }
 
-// get microsec
+/// Get microsec.
 ACE_INLINE long
 ACE_Date_Time::microsec () const
 {
@@ -172,7 +174,7 @@ ACE_Date_Time::microsec () const
   return microsec_;
 }
 
-// set microsec
+/// Set microsec.
 ACE_INLINE void
 ACE_Date_Time::microsec (long microsec)
 {
@@ -180,7 +182,7 @@ ACE_Date_Time::microsec (long microsec)
   microsec_ = microsec;
 }
 
-// get wday
+/// Get weekday.
 ACE_INLINE long
 ACE_Date_Time::weekday () const
 {
@@ -188,12 +190,13 @@ ACE_Date_Time::weekday () const
   return wday_;
 }
 
-// set wday
+/// Set weekday.
 ACE_INLINE void
 ACE_Date_Time::weekday (long wday)
 {
   ACE_TRACE ("ACE_Date_Time::weekday");
   wday_ = wday;
 }
+/// @}
 
 ACE_END_VERSIONED_NAMESPACE_DECL

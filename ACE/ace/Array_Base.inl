@@ -1,7 +1,7 @@
 // -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Clean up the array (e.g., delete dynamically allocated memory).
+/// Clean up the array (e.g., delete dynamically allocated memory).
 template <class T> ACE_INLINE
 ACE_Array_Base<T>::~ACE_Array_Base ()
 {

@@ -77,7 +77,7 @@ public:
 
   static ACEXML_Char const *predef_val_[];
 
-  // Enum describing the position in a document when a reference occurs.
+  /// Enum describing the position in a document when a reference occurs.
   enum ReferenceState {
     IN_CONTENT,
     IN_ATT_VALUE,
