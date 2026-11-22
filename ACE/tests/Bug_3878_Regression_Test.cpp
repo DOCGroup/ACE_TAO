@@ -28,7 +28,7 @@ public:
 class Worker : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  Worker (IManager *manager) : manager_(manager) { }
+  explicit Worker (IManager *manager) : manager_(manager) { }
 
   int svc () override
   {
