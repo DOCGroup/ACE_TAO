@@ -117,7 +117,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     {
       // It is ok to lose some number of messages at the beginning.
       //
-      decltype (lost_count) count {};
+      decltype (std::count (received.begin (), received.end (), 0)) count {};
 
       for (unsigned char const e : received)
       {
