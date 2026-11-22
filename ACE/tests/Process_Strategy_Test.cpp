@@ -504,7 +504,7 @@ Counting_Service::open (void *)
 
 // Execute the client tests.
 
-void *
+ACE_THR_FUNC_RETURN
 client (void *arg)
 {
   ACE_INET_Addr *remote_addr = static_cast<ACE_INET_Addr *> (arg);
@@ -641,7 +641,7 @@ client (void *arg)
   // Remove the filename.
   ACE_OS::unlink (OPTIONS::instance ()->filename ());
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // Performs the server activities.
@@ -654,7 +654,7 @@ done ()
   return connections == ACE_MAX_ITERATIONS + 1;
 }
 
-void *
+ACE_THR_FUNC_RETURN
 server (void *)
 {
   int result = 0;
@@ -666,7 +666,7 @@ server (void *)
       result = ACE_Reactor::instance ()->handle_events ();
     }
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 #endif /* !ACE_LACKS_FORK || ACE_HAS_THREADS */
@@ -734,7 +734,7 @@ run_main (int argc, ACE_TCHAR *argv[])
         }
 #elif defined (ACE_HAS_THREADS)
       if (ACE_Thread_Manager::instance ()->spawn
-          (ACE_THR_FUNC (server),
+          (server,
            nullptr,
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
@@ -742,7 +742,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                     ACE_TEXT ("thread create failed")));
 
       if (ACE_Thread_Manager::instance ()->spawn
-          (ACE_THR_FUNC (client),
+          (client,
            &server_addr,
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
