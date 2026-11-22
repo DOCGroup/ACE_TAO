@@ -57,7 +57,9 @@ ACE_URL_Local_Locator::url_query (const ACE_URL_Locator::ACE_Selection_Criteria 
               shouldn't happen, internal error
 
       if (num_query == how_many)
-        break;
+        {
+          break;
+        }
     }
 
   return 0;
