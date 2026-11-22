@@ -218,8 +218,7 @@ private:
 
   CosNaming::Name this_name_;
 
-  /////////////////
-  // The roles used to register types
+  /// The roles used to register types.
   StringVec roles_;
 
   /**

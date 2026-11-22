@@ -577,52 +577,30 @@ public:
 
   ~TAO_Link ();
 
-  /**
-   * BEGIN SPEC
-   * The add_link operation allows a trader subsequently to use the
-   * service of another trader in the performance of its own trading
-   * service operations.
-   */
+  /// The add_link operation allows a trader subsequently to use the
+  /// service of another trader in the performance of its own trading
+  /// service operations.
+  ///
+  /// @param name Identifies the link in subsequent link management operations.
+  /// If it is not legally formed, the operation raises IllegalLinkName. If
+  /// the name already exists, it raises DuplicateLinkName. The name also
+  /// forms part of the sequence used to resolve or forward operations to a
+  /// trader.
+  /// @param target Identifies the Lookup interface providing the target
+  /// trader's service. A nil interface raises InvalidLookupRef. The interface
+  /// is used to obtain the associated Register interface for describe_link
+  /// and resolve operations.
+  /// @param def_pass_on_follow_rule Sets the default link behavior when an
+  /// importer's query request specifies none. If it exceeds
+  /// @a limiting_follow_rule, the operation raises DefaultFollowTooPermissive.
+  /// @param limiting_follow_rule Sets the most permissive link follow
+  /// behavior. If it exceeds the trader's max_link_follow_policy when the
+  /// link is created, the operation raises LimitingFollowTooPermissive. The
+  /// limit can later be changed to be more restrictive.
   void add_link (char const* name,
                  CosTrading::Lookup_ptr target,
                  CosTrading::FollowOption def_pass_on_follow_rule,
                  CosTrading::FollowOption limiting_follow_rule) override;
-
-  // The "name" parameter is used in subsequent link management
-  // operations to identify the intended link. If the parameter is not
-  // legally formed, then the IllegalLinkName exception is raised. An
-  // exception of DuplicateLinkName is raised if the link name already
-  // exists. The link name is also used as a component in a sequence
-  // of name components in naming a trader for resolving or forwarding
-  // operations. The sequence of context relative link names provides
-  // a path to a trader.
-
-  // The "target" parameter identifies the Lookup interface at which
-  // the trading service provided by the target trader can be
-  // accessed. Should the Lookup interface parameter be nil, then an
-  // exception of InvalidLookupRef is raised. The target interface is
-  // used to obtain the associated Register interface, which will be
-  // subsequently returned as part of a describe_link operation and
-  // invoked as part of a resolve operation.
-
-  // The "def_pass_on_follow_rule" parameter specifies the default
-  // link behavior for the link if no link behavior is specified on an
-  // importer's query request. If the "def_pass_on_follow_rule"
-  // exceeds the "limiting_follow_rule" specified in the next
-  // parameter, then a DefaultFollowTooPermissive exception is
-  // raised.
-
-  // The "limiting_follow_rule" parameter specifies the most
-  // permissive link follow behavior that the link is willing to
-  // tolerate. The exception LimitingFollowTooPermissive is raised if
-  // this parameter exceeds the trader's attribute of
-  // "max_link_follow_policy" at the time of the link's creation. Note
-  // it is possible for a link's "limiting_follow_rule" to exceed the
-  // trader's "max_link_follow_policy" later in the life of a link, as
-  // it is possible that the trader could set its
-  // "max_link_follow_policy" to a more restrictive value after the
-  // creation of the link.
-  // END SPEC
 
   /// The remove_link operation removes all knowledge of the target
   /// trader. The target trader cannot be used subsequently to resolve,
