@@ -323,7 +323,9 @@ test_reactive (const ACE_TCHAR *prog,
 
 #if defined (_TEST_USES_THREADS)
   if (ACE_Thread_Manager::instance ()->wait () == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("wait ()")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("wait ()")));
+    }
 #else
   if (ACE_Process_Manager::instance ()->wait () == -1)
   {
@@ -419,7 +421,9 @@ test_concurrent (const ACE_TCHAR *prog,
 
 #if defined (_TEST_USES_THREADS)
   if (ACE_Thread_Manager::instance ()->wait () == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("wait ()")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("wait ()")));
+    }
 #else
   if (ACE_Process_Manager::instance ()->wait () == -1)
   {
