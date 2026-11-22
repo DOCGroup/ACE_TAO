@@ -41,13 +41,13 @@ namespace TAO
 
     ~Wait_On_LF_No_Upcall () override = default;
 
-    /*! @copydoc TAO_Wait_Strategy::wait() */
+    /// @copydoc TAO_Wait_Strategy::wait()
     int wait (ACE_Time_Value *max_wait_time, TAO_Synch_Reply_Dispatcher &rd) override;
 
-    /*! @copydoc TAO_Wait_Strategy::can_process_upcalls() */
+    /// @copydoc TAO_Wait_Strategy::can_process_upcalls()
     bool can_process_upcalls () const override;
 
-    /*! @copydoc TAO_Wait_Strategy::defer_upcall() */
+    /// @copydoc TAO_Wait_Strategy::defer_upcall()
     int defer_upcall (ACE_Event_Handler *) override;
 
     Wait_On_LF_No_Upcall (Wait_On_LF_No_Upcall const &) = delete;

@@ -31,16 +31,16 @@ public:
 
   ~TAO_Wait_On_Reactor () override = default;
 
-  /*! @copydoc TAO_Wait_Strategy::wait() */
+  /// @copydoc TAO_Wait_Strategy::wait()
   int wait (ACE_Time_Value *max_wait_time, TAO_Synch_Reply_Dispatcher &rd) override;
 
-  /*! @copydoc TAO_Wait_Strategy::register_handler() */
+  /// @copydoc TAO_Wait_Strategy::register_handler()
   int register_handler () override;
 
-  /*! @copydoc TAO_Wait_Strategy::non_blocking() */
+  /// @copydoc TAO_Wait_Strategy::non_blocking()
   bool non_blocking () const override;
 
-  /*! @copydoc TAO_Wait_Strategy::can_process_upcalls() */
+  /// @copydoc TAO_Wait_Strategy::can_process_upcalls()
   bool can_process_upcalls () const override;
 
 private:
