@@ -11,6 +11,7 @@
 #include "results.h"
 #include "tests.h"
 #include "ace/Get_Opt.h"
+#include <memory>
 
 // This function runs the test (main program)
 int

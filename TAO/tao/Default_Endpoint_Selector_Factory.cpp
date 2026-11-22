@@ -2,6 +2,7 @@
 #include "tao/Invocation_Endpoint_Selectors.h"
 
 #include "ace/Log_Msg.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

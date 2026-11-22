@@ -3,6 +3,7 @@
 
 #include <new>
 #include <utility>
+#include <memory>
 
 Grid_i::Grid_i (CORBA::Short x,
                 CORBA::Short y,

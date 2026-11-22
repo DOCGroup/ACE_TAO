@@ -21,6 +21,7 @@
 #include <cstring>
 
 #include <utility>
+#include <memory>
 
 CC_Command::~CC_Command() = default;
 

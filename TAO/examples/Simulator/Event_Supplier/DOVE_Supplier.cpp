@@ -15,6 +15,7 @@
 
 #include <new>
 #include <utility>
+#include <memory>
 
 // Static pointer member initialization for Singleton.
 

@@ -2,6 +2,7 @@
 #include "Locator_Loader.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Task.h"
+#include <memory>
 
 class ImR_Locator_ORB_Runner : public ACE_Task_Base
 {

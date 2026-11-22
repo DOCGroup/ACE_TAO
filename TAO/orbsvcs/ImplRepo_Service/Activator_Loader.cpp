@@ -2,6 +2,7 @@
 #include "Activator_Loader.h"
 #include "Activator_ORB_Runner.h"
 #include "ace/Dynamic_Service.h"
+#include <memory>
 
 ImR_Activator_Loader::~ImR_Activator_Loader () = default;
 

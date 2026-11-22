@@ -5,6 +5,7 @@
 
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.inl"
+#include <memory>
 #endif /* __ACE_INLINE__ */
 
 //FUZZ: disable check_for_lack_ACE_OS/

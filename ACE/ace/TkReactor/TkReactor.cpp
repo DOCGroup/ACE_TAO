@@ -2,6 +2,7 @@
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

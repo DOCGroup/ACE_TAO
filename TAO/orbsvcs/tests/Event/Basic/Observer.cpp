@@ -5,6 +5,7 @@
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/High_Res_Timer.h"
+#include <memory>
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

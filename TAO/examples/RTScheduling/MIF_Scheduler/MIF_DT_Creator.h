@@ -3,6 +3,7 @@
 
 #include "../DT_Creator.h"
 #include "mif_dt_creator_export.h"
+#include <memory>
 
 class MIF_DT_Creator: public DT_Creator
 {

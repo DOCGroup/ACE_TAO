@@ -1,5 +1,6 @@
 #include "orbsvcs/Trader/Service_Type_Repository.h"
 #include "ace/Lock_Adapter_T.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

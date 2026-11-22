@@ -4,6 +4,7 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_unistd.h"
 #include "tao/TAO_Singleton_Manager.h"
+#include <memory>
 
 DllORB::DllORB () = default;
 

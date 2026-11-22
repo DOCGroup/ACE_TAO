@@ -1,6 +1,7 @@
 #include "ace/INet/HTTPS_SessionFactory.h"
 
 #include "ace/INet/INet_Log.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

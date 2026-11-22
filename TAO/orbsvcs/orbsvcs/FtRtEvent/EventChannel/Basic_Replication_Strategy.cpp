@@ -3,6 +3,7 @@
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
 #include "../Utils/Log.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

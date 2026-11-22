@@ -3,6 +3,7 @@
 
 #include "../DT_Creator.h"
 #include "fp_dt_creator_export.h"
+#include <memory>
 
 class FP_DT_Creator: public DT_Creator
 {

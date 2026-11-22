@@ -24,6 +24,7 @@
 #include "Link.h"
 
 #include "Socket.h"
+#include <memory>
 
 /*
 #include <iostream>

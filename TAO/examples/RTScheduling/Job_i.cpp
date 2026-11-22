@@ -8,6 +8,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Countdown_Time.h"
+#include <memory>
 
 Job_i::Job_i (DT_Creator* dt_creator)
   : dt_creator_ (dt_creator),

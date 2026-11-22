@@ -22,6 +22,7 @@
 #include "LinkListener.hpp"
 #include "FaultDetector.hpp"
 #include "TransactionController.hpp"
+#include <memory>
 
 namespace ACE_TMCast
 {

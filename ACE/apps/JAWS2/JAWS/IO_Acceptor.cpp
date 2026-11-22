@@ -2,6 +2,7 @@
 #include "JAWS/IO_Acceptor.h"
 
 #include "ace/OS_NS_sys_socket.h"
+#include <memory>
 
 JAWS_IO_Acceptor::JAWS_IO_Acceptor () = default;
 

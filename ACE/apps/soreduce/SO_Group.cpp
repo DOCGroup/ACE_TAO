@@ -10,6 +10,7 @@
 #include "Library.h"
 #include "SO_Group.h"
 #include <cstring>
+#include <memory>
 
 SO_Group::SO_Group ()
   : undef_wrapper_ ("nothing"),

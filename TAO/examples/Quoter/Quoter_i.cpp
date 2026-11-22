@@ -13,6 +13,7 @@
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
+#include <memory>
 
 // Constructor.  Create all the quoter factories.
 

@@ -3,6 +3,7 @@
 #include "ace/Log_Category.h"
 
 #if !defined (ACE_LACKS_SYSV_SHMEM)
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

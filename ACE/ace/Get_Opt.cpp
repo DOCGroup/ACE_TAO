@@ -11,6 +11,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_stdlib.h"
+#include <memory>
 
 /*
  * Copyright (c) 1987, 1993, 1994

@@ -6,6 +6,7 @@
 #include "Name.h"
 
 #include <utility>
+#include <memory>
 
 TAO_Notify_Tests_Command_Builder::TAO_Notify_Tests_Command_Builder ()
 {

@@ -4,6 +4,7 @@
 #include "ace/Lock_Adapter_T.h"
 
 #if defined (ACE_HAS_THREADS)
+#include <memory>
 
 class ACE_Svc_Export Adaptive_Sema_Test : public Adaptive_Lock_Performance_Test_Base
 {

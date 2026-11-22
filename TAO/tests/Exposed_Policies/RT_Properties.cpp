@@ -6,6 +6,7 @@
 #include <cstdio>
 #include <cstring>
 #include <new>
+#include <memory>
 
 std::unique_ptr<RT_Properties>
 RT_Properties::create ()

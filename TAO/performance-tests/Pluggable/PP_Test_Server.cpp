@@ -2,6 +2,7 @@
 #include "tao/TAO_Internal.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
+#include <memory>
 
 int
 PP_Test_Server::parse_args (int argc, ACE_TCHAR **argv)

@@ -5,6 +5,7 @@
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Task.h"
+#include <memory>
 
 using namespace CORBA;
 using namespace PortableServer;

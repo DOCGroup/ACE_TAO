@@ -1,6 +1,7 @@
 #include "ACEXML/common/SAXExceptions.h"
 #include "ACEXML/parser/debug_validator/Debug_Element_Builder.h"
 #include "ace/streams.h"
+#include <memory>
 
 ACEXML_Debug_Element_Builder::~ACEXML_Debug_Element_Builder () = default;
 

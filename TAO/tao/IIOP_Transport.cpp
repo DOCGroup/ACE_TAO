@@ -18,6 +18,7 @@
 #include "ace/OS_NS_sys_sendfile.h"
 
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

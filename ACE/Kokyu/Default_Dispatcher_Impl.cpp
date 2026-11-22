@@ -5,6 +5,7 @@
 #include <utility>
 #if ! defined (__ACE_INLINE__)
 #include "Default_Dispatcher_Impl.inl"
+#include <memory>
 #endif /* __ACE_INLINE__ */
 
 namespace Kokyu

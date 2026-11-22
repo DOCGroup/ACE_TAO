@@ -35,6 +35,7 @@
 #include "test_singleton.h"
 
 #if defined (ACE_HAS_THREADS)
+#include <memory>
 
 static constexpr int DEFAULT_ITERATIONS = 100000000;
 

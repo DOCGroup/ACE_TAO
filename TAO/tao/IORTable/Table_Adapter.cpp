@@ -14,6 +14,7 @@
 #include "tao/ORB.h"
 #include "tao/Profile.h"
 #include "tao/TAO_Server_Request.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

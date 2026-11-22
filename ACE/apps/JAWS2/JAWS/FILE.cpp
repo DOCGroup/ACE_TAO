@@ -1,6 +1,7 @@
 #include "ace/Guard_T.h"
 
 #include "JAWS/FILE.h"
+#include <memory>
 
 JAWS_FILE::JAWS_FILE ()
   : map_ ()

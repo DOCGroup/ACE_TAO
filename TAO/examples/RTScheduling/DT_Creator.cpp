@@ -13,6 +13,7 @@
 
 #include "ace/High_Res_Timer.h"
 #include "ace/Lock_Adapter_T.h"
+#include <memory>
 
 int
 DT_Creator::dt_task_init (ACE_Arg_Shifter& arg_shifter)

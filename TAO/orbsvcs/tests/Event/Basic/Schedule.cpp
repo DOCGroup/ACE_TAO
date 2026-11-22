@@ -8,6 +8,7 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
+#include <memory>
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

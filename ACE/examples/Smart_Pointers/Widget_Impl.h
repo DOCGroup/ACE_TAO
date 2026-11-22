@@ -15,6 +15,7 @@
 #include "Widget_Part.h"
 
 #include "ace/Unbounded_Queue.h"
+#include <memory>
 
 /**
  * @class Widget_Impl

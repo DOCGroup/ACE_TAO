@@ -7,6 +7,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_fcntl.h"
+#include <memory>
 
 template <class Servant>
 Server<Servant>::Server ()

@@ -18,6 +18,7 @@
 #include <utility>
 
 #include "Library.h"
+#include <memory>
 
 MPC_Generator::MPC_Generator (ACE_CString const &libname)
   : libname_ (libname)

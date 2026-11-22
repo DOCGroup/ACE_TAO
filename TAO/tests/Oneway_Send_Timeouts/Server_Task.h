@@ -7,6 +7,7 @@
 #include "ace/Task.h"
 
 #include <string>
+#include <memory>
 
 class Server_Task : public ACE_Task_Base
 {

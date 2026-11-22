@@ -3,6 +3,7 @@
 #include "Options.h"
 #include "URL_Visitor_Factory.h"
 #include "Web_Crawler.h"
+#include <memory>
 
 Web_Crawler::~Web_Crawler () = default;
 

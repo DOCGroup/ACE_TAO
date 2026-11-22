@@ -6,6 +6,7 @@
 
 #if !defined (__ACE_INLINE__)
 #include "Task_Stats.inl"
+#include <memory>
 #endif /* __ACE_INLINE__ */
 
 Base_Time::Base_Time ()

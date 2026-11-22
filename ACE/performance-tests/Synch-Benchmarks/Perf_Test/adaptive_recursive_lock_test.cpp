@@ -4,6 +4,7 @@
 #include "ace/Recursive_Thread_Mutex.h"
 
 #if defined (ACE_HAS_THREADS)
+#include <memory>
 
 class ACE_Svc_Export Adaptive_Recursive_Lock_Test : public Adaptive_Lock_Performance_Test_Base
 {

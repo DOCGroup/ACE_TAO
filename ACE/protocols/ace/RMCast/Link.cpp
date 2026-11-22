@@ -6,6 +6,7 @@
 #include "ace/OS_NS_sys_socket.h"
 
 #include "Link.h"
+#include <memory>
 
 namespace ACE_RMCast
 {

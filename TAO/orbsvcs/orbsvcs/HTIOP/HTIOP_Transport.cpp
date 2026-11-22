@@ -20,6 +20,7 @@
 #include "tao/GIOP_Message_Base.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/Adapter.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,6 +1,7 @@
 #include "EC_Wrapper.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include <utility>
+#include <memory>
 
 EC_Wrapper::EC_Wrapper ()
   = default;

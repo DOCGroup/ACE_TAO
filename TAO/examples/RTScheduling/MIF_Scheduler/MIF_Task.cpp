@@ -4,6 +4,7 @@
 
 #include "ace/OS_NS_errno.h"
 #include "ace/Countdown_Time.h"
+#include <memory>
 
 MIF_Task::MIF_Task (int importance,
                     time_t start_time,

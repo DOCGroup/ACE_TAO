@@ -10,6 +10,7 @@
 
 #if !defined(__ACE_INLINE__)
 #include "test_i.inl"
+#include <memory>
 #endif /* __ACE_INLINE__ */
 
 void

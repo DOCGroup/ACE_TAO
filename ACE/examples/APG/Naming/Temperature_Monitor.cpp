@@ -7,6 +7,7 @@
 #include "Thermometer.h"
 #include "Temperature_Monitor.h"
 #include "EMail.h"
+#include <memory>
 
 // Listing 1 code/ch21
 Temperature_Monitor::Temperature_Monitor

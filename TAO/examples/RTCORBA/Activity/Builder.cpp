@@ -8,6 +8,7 @@
 
 #include <cstddef>
 #include <utility>
+#include <memory>
 
 Builder::Builder ()
   : poa_count_ {},

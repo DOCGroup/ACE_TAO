@@ -7,6 +7,7 @@
 #include "Thermometer.h"
 #include "Temperature_Monitor2.h"
 #include "EMail.h"
+#include <memory>
 
 // Listing 1 code/ch21
 void Temperature_Monitor2::record_temperature (float temp)

@@ -20,6 +20,7 @@
 #include "orbsvcs/Notify/EventTypeSeq.h"
 #include "orbsvcs/Notify/Topology_Object.h"
 #include "orbsvcs/Notify/EventChannel.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

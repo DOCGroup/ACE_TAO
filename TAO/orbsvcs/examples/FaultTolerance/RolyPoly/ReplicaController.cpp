@@ -19,6 +19,7 @@
 #include "CrashPoint.h"
 #include "StateUpdate.h"
 #include "ReplicaController.h"
+#include <memory>
 
 // State slot.
 //

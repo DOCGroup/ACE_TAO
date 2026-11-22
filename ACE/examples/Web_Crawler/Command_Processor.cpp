@@ -6,6 +6,7 @@
 #include "URL_Visitor.h"
 
 #include <utility>
+#include <memory>
 
 Command::~Command () = default;
 

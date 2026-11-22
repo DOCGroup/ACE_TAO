@@ -16,6 +16,7 @@
 #include "ace/Guard_T.h"
 #include <new>
 #include <utility>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

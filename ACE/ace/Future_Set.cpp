@@ -8,6 +8,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_THREADS)
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

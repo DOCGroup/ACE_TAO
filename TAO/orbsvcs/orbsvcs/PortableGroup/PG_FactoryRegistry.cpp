@@ -10,6 +10,7 @@
 #include "tao/PortableServer/POAManagerC.h"
 #include "orbsvcs/PortableGroup/PG_Operators.h" // operator == on CosNaming::Name
 #include <vector>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

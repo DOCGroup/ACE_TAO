@@ -3,6 +3,7 @@
 #include "tao/Transport_Acceptor.h"
 #include "tao/MProfile.h"
 #include "tao/Profile.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

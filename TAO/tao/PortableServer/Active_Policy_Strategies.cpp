@@ -21,6 +21,7 @@
 
 #if !defined (__ACE_INLINE__)
 # include "tao/PortableServer/Active_Policy_Strategies.inl"
+#include <memory>
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

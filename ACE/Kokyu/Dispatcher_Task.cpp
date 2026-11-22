@@ -6,6 +6,7 @@
 
 #if ! defined (__ACE_INLINE__)
 #include "Dispatcher_Task.inl"
+#include <memory>
 #endif /* __ACE_INLINE__ */
 
 namespace Kokyu

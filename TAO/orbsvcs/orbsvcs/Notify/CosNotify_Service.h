@@ -18,6 +18,7 @@
 #include "orbsvcs/Notify/Service.h"
 #include "orbsvcs/Notify/Builder.h"
 #include "orbsvcs/Notify/Factory.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

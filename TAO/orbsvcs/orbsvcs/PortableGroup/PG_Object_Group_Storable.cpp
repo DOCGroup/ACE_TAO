@@ -7,6 +7,7 @@
 
 #include <cstdio>
 #include <string>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -22,6 +22,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_fcntl.h"
 #include <cstring>
+#include <memory>
 
 CC_Client::~CC_Client ()
 {

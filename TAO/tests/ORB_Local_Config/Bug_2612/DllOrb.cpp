@@ -8,6 +8,7 @@
 #include "tao/TAO_Singleton_Manager.h"
 
 #include "DllOrb.h"
+#include <memory>
 
 DllOrb::DllOrb (int nthreads)
   : m_nthreads_ (nthreads)

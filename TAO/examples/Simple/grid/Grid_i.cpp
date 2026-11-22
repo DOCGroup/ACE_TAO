@@ -4,6 +4,7 @@
 #include <cstring>
 #include <new>
 #include <utility>
+#include <memory>
 
 // Some Windows compilers don't have min in std namespaces
 // moreover on Windows 'min' is a macro, so we have to avoid using it literally.

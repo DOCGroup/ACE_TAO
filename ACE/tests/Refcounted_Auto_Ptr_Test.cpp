@@ -20,6 +20,7 @@
 #include "ace/Activation_Queue.h"
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "Refcounted_Auto_Ptr_Test.h"
+#include <memory>
 
 ACE_Atomic_Op<ACE_SYNCH_MUTEX, unsigned int> Printer::current_instance_ (0);
 ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> Printer::instance_count_ (0);

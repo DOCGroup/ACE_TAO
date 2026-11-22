@@ -13,6 +13,7 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Transport_Acceptor.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -12,6 +12,7 @@
 #include "Custom_Handler.h"
 #include <atomic>
 #include <cstdio>
+#include <memory>
 
 Custom_Handler::Custom_Handler (
   ACE_Time_Value const &expiration_time,

@@ -9,6 +9,7 @@
 
 #if !defined (__ACE_INLINE__)
 # include "tao/AnyTypeCode/Any_Special_Impl_T.inl"
+#include <memory>
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

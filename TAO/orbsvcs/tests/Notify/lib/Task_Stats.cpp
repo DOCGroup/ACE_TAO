@@ -4,6 +4,7 @@
 
 #include <new>
 #include <utility>
+#include <memory>
 
 using File_Handle = std::unique_ptr<FILE, int (*) (FILE *)>;
 

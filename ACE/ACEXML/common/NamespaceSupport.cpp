@@ -4,6 +4,7 @@
 #include "ace/OS_NS_string.h"
 #include <new>
 #include <utility>
+#include <memory>
 
 constexpr ACEXML_Char ACEXML_XMLNS_PREFIX_name[] = ACE_TEXT ("xmlns");
 

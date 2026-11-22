@@ -3,6 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
 #include "ace/OS_NS_strings.h"
+#include <memory>
 
 void replace (ACE_TCHAR **a, ACE_TCHAR **b)
 {

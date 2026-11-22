@@ -11,6 +11,7 @@
 #include "Command_Builder.h"
 #include "Name.h"
 #include "Activation_Manager.h"
+#include <memory>
 
 const char *
 sched_policy_name (int sched_policy)

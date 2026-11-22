@@ -10,6 +10,7 @@
 #include "orbsvcs/PortableGroup/PG_Operators.h"
 
 #include <utility>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

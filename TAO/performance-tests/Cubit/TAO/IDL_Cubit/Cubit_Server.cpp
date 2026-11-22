@@ -2,6 +2,7 @@
 #include "tao/TAO_Internal.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
+#include <memory>
 
 int
 Cubit_Server::parse_args ()

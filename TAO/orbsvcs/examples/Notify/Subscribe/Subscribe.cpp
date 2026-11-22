@@ -1,6 +1,7 @@
 /* -*- C++ -*-  */
 #include "Subscribe.h"
 #include <cstring>
+#include <memory>
 
 constexpr char notify_factory_name[] = "NotifyEventChannelFactory";
 constexpr char naming_service_name[] = "NameService";

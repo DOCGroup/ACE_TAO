@@ -11,6 +11,7 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Reverse_Lock_T.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

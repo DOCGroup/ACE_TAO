@@ -13,6 +13,7 @@
 #include "Widget_Part.h"
 #include "Widget.h"
 #include <string>
+#include <memory>
 
 /**
  * @class Widget_Part_Impl

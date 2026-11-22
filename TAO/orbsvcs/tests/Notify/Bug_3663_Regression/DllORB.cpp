@@ -3,6 +3,7 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/OS_NS_unistd.h"
 #include "tao/TAO_Singleton_Manager.h"
+#include <memory>
 
 DllORB::DllORB () = default;
 

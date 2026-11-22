@@ -6,6 +6,7 @@
 #include "Activation_Manager.h"
 #include "Driver_Base.h"
 #include "Priority_Mapping.h"
+#include <memory>
 
 TAO_Notify_Tests_Application_Command::TAO_Notify_Tests_Application_Command () = default;
 

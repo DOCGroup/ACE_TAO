@@ -9,6 +9,7 @@
 #include "tao/Dynamic_TP/DTP_Thread_Pool.h"
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

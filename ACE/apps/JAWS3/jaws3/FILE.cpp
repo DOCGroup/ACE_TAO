@@ -8,6 +8,7 @@
 #endif
 
 #include "jaws3/FILE.h"
+#include <memory>
 
 JAWS_FILE::JAWS_FILE ()
   : map_ ()

@@ -4,6 +4,7 @@
 #include "Event_Channel.h"
 #include "ace/OS_NS_sys_select.h"
 #include "ace/Signal.h"
+#include <memory>
 
 Event_Channel::~Event_Channel () = default;
 

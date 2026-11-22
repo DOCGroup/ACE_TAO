@@ -15,6 +15,7 @@
 #include "orbsvcs/LifeCycleServiceC.h"
 
 #include "LifeCycle_Service_i.h"
+#include <memory>
 
 Life_Cycle_Service_i::Life_Cycle_Service_i (int debug_level)
   : debug_level_ (debug_level)

@@ -49,6 +49,7 @@
 //  if (cave_is_closing) METHOD_RETURN(Plugh::pirate) aarrggh;
 // Moral:  Always use braces.
 #define METHOD_RETURN(name)   \
+#include <memory>
   if (TAO_debug_level > 6)    \
   {                           \
     ORBSVCS_DEBUG (( LM_DEBUG,    \

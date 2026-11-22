@@ -13,6 +13,7 @@
 
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/PortableGroup/UIPMC_Endpoint.inl"
+#include <memory>
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

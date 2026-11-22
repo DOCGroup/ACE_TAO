@@ -4,6 +4,7 @@
 
 #include <cerrno>
 #include <new>
+#include <memory>
 
 FP_DT_Creator::FP_DT_Creator ()
 {

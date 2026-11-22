@@ -9,6 +9,7 @@
 #include <cstring>
 #include <iostream>
 #include <utility>
+#include <memory>
 
 long
 Session::tao_version_ = 220;

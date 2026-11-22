@@ -19,6 +19,7 @@
 #define PAD PEER_ADDR
 #define PK  PEER_KEY
 #define PM  PEER_MAP
+#include <memory>
 
 template <class PH, class PK> int
 Acceptor_Factory<PH, PK>::init (int argc, ACE_TCHAR *argv[])

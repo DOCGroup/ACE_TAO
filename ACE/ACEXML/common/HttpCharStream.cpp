@@ -9,6 +9,7 @@
 
 #include "ACEXML/common/HttpCharStream.h"
 #include "ACEXML/common/Encoding.h"
+#include <memory>
 
 /* Header FSM states. */
 constexpr int HDST_LINE1_PROTOCOL = 0;

@@ -4,6 +4,7 @@
 #include "ace/OS_NS_unistd.h"
 #include <atomic>
 #include <vector>
+#include <memory>
 
 struct Subscriber_Entry
 {

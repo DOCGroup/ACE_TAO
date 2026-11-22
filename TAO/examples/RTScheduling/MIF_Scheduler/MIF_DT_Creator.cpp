@@ -4,6 +4,7 @@
 
 #include <cerrno>
 #include <new>
+#include <memory>
 
 MIF_DT_Creator::MIF_DT_Creator ()
 {

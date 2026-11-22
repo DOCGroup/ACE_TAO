@@ -13,6 +13,7 @@
 #include "ace/OS_NS_unistd.h"
 
 #include <cstring>
+#include <memory>
 
 TAO_IMR_i::TAO_IMR_i ()
   : argc_ (0),

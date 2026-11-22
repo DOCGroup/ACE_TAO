@@ -4,6 +4,7 @@
 #include "agent_impl.h"  // actual implementation
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Get_Opt.h"
+#include <memory>
 
 constexpr unsigned short SNMP_AGENT_PORT = 161;
 ACE_TCHAR const RD_COM[] = ACE_TEXT ("public");

@@ -29,6 +29,7 @@
 #include "ace/streams.h"
 
 #include "ace/os_include/os_limits.h"
+#include <memory>
 
 constexpr char usage [] =
 "[-? |\n"

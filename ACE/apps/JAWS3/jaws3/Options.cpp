@@ -5,6 +5,7 @@
 #endif /*JAWS_BUILD_DLL*/
 
 #include "jaws3/Options.h"
+#include <memory>
 
 JAWS_Options::JAWS_Options ()
 {

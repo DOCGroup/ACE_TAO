@@ -4,6 +4,7 @@
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"
 #include "ace/Log_Msg.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

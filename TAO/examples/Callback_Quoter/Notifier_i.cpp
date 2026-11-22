@@ -11,6 +11,7 @@
 //=============================================================================
 
 #include "Notifier_i.h"
+#include <memory>
 
 Notifier_i::~Notifier_i ()
 {

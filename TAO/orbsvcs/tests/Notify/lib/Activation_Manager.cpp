@@ -5,6 +5,7 @@
 #include "Command_Builder.h"
 #include "Name.h"
 #include "ace/Barrier.h"
+#include <memory>
 
 void
 TAO_Notify_Tests_Activation_Manager::File_Closer::operator() (FILE *file) const noexcept

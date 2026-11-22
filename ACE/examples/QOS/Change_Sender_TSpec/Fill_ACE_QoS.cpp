@@ -2,6 +2,7 @@
 #include "Fill_ACE_QoS.h"
 
 #include <utility>
+#include <memory>
 
 iovec const Fill_ACE_QoS::iov_ {};
 

@@ -14,6 +14,7 @@
 #include "results.h"
 #include "client.h"
 #include <utility>
+#include <memory>
 
 template <class T>
 Alt_Mapping_Client<T>::Alt_Mapping_Client (CORBA::ORB_ptr orb,

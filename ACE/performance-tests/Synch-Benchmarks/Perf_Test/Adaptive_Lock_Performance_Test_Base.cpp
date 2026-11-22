@@ -5,6 +5,7 @@
 #include <utility>
 
 #if defined (ACE_HAS_THREADS)
+#include <memory>
 
 std::unique_ptr<ACE_Lock> Adaptive_Lock_Performance_Test_Base::lock_;
 

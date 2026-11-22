@@ -5,6 +5,7 @@
 #include "JAWS/Assoc_Array.h"
 
 #include <utility>
+#include <memory>
 
 template <class KEY, class DATA>
 JAWS_Assoc_Array<KEY,DATA>::JAWS_Assoc_Array (int maxsize)

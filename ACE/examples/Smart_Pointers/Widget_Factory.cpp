@@ -9,6 +9,7 @@
 
 #include "Widget_Factory.h"
 #include "Widget_Impl.h"
+#include <memory>
 
 std::unique_ptr<Widget> Widget_Factory::create_widget ()
 {
