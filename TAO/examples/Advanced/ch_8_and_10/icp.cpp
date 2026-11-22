@@ -121,15 +121,25 @@ vary_temp (long temp)
     int const r = std::rand () % 50;
     long delta {};
     if (r < 5)
-        delta = 3;
+        {
+            delta = 3;
+        }
     else if (r < 15)
-        delta = 2;
+        {
+            delta = 2;
+        }
     else if (r < 30)
-        delta = 1;
+        {
+            delta = 1;
+        }
     else
-        delta = 0;
+        {
+            delta = 0;
+        }
     if (std::rand () % 2)
-        delta = -delta;
+        {
+            delta = -delta;
+        }
     return temp + delta;
 }
 

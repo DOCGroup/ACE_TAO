@@ -117,7 +117,9 @@ static void
 set_temp (CCS::Thermostat_ptr tmstat, CCS::TempType new_temp)
 {
     if (CORBA::is_nil(tmstat))  // Don't call via nil reference
-        return;
+        {
+            return;
+        }
 
     CCS::AssetType const anum = tmstat->asset_num ();
     try {

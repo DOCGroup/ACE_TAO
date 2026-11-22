@@ -172,7 +172,9 @@ Thermometer_impl::
 ~Thermometer_impl ()
 {
   if (m_ctrl->exists (m_anum))
-    m_ctrl->add_impl (m_anum, nullptr);    // Clear servant pointer
+    {
+      m_ctrl->add_impl (m_anum, nullptr);    // Clear servant pointer
+    }
 }
 
 // IDL model attribute.
@@ -378,9 +380,13 @@ CCS::Thermometer_ptr
 Controller_impl::create_thermometer (CCS::AssetType anum, char const *loc)
 {
     if (anum % 2 == 0)
-        throw CORBA::BAD_PARAM ();   // Thermometers have odd numbers
+        {
+            throw CORBA::BAD_PARAM ();   // Thermometers have odd numbers
+        }
     if (exists (anum))
-        throw CCS::Controller::DuplicateAsset ();
+        {
+            throw CCS::Controller::DuplicateAsset ();
+        }
 
     assert (ICP_online (anum) == 0);
     assert (ICP_set (anum, "location", loc) == 0);
@@ -396,9 +402,13 @@ create_thermostat (
     CCS::TempType       temp)
 {
     if (anum % 2 != 0)
-        throw CORBA::BAD_PARAM ();   // Thermostats have even numbers
+        {
+            throw CORBA::BAD_PARAM ();   // Thermostats have even numbers
+        }
     if (exists (anum))
-        throw CCS::Controller::DuplicateAsset ();
+        {
+            throw CCS::Controller::DuplicateAsset ();
+        }
 
     assert (ICP_online (anum) == 0);
     assert (ICP_set (anum, "location", loc) == 0);
@@ -488,7 +498,9 @@ change (
     // If we encountered errors in the above loop,
     // we will have added elements to the errors sequence.
     if (ec.errors.length () != 0)
-        throw ec;
+        {
+            throw ec;
+        }
 }
 
 // IDL find operation
@@ -512,7 +524,9 @@ Controller_impl::find (CCS::Controller::SearchSeq& slist)
             // Search for matching asset number.
             where = m_assets.find (slist[i].key.asset_num ());
             if (where != m_assets.cend ())
-                slist[i].device = make_dref (m_poa.in (), where->first);
+                {
+                    slist[i].device = make_dref (m_poa.in (), where->first);
+                }
         } else {
             // Search for model or location string.
             char const *const search_str = sc == CCS::Controller::LOCATION
@@ -584,11 +598,15 @@ preinvoke (
     CCS::AssetType anum {};
     istr >> anum;
     if (istr.fail ())
-        throw CORBA::OBJECT_NOT_EXIST ();
+        {
+            throw CORBA::OBJECT_NOT_EXIST ();
+        }
 
     // Check whether the device is known.
     if (!m_ctrl->exists (anum))
-        throw CORBA::OBJECT_NOT_EXIST ();
+        {
+            throw CORBA::OBJECT_NOT_EXIST ();
+        }
 
     // Look at the object map to find out whether
     // we have a servant in memory.
@@ -607,9 +625,13 @@ preinvoke (
         char buf[32] {};
         assert (ICP_get (anum, "model", buf, sizeof (buf)) == 0);
         if (std::strcmp (buf, "Sens-A-Temp") == 0)
-            servant = new Thermometer_impl (anum);
+            {
+                servant = new Thermometer_impl (anum);
+            }
         else
-            servant = new Thermostat_impl (anum);
+            {
+                servant = new Thermostat_impl (anum);
+            }
     } else {
         // Servant already in memory.
         servant = *(servant_pos->second);   // Remember servant
@@ -618,7 +640,9 @@ preinvoke (
         // If operation is "remove", also remove entry from
         // active object map -- the object is about to be deleted.
         if (std::strcmp (operation, "remove") == 0)
-            m_aom.erase (servant_pos);
+            {
+                m_aom.erase (servant_pos);
+            }
     }
 
     // We found a servant, or just instantiated it.

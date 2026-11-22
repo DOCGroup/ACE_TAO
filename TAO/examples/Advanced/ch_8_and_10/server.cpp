@@ -317,7 +317,9 @@ change (
     // If we encountered errors in the above loop,
     // we will have added elements to the errors sequence.
     if (ec.errors.length () != 0)
-        throw ec;
+        {
+            throw ec;
+        }
 }
 
 // IDL find operation
@@ -342,7 +344,9 @@ find (CCS::Controller::SearchSeq & slist)
             // Search for matching asset number.
             where = m_assets.find (slist[i].key.asset_num ());
             if (where != m_assets.end ())
-                slist[i].device = where->second->_this ();
+                {
+                    slist[i].device = where->second->_this ();
+                }
         } else {
             // Search for model or location string.
             char const *const search_str = sc == CCS::Controller::LOCATION
