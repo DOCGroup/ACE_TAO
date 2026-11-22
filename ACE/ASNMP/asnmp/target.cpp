@@ -27,7 +27,6 @@
 #include <cstdio>
 #include <memory>
 
-//--------[ Class default values ]----------------------
 u_long SnmpTarget::default_timeout_ = DEF_TIMEOUT;
 int SnmpTarget::default_retries_ = DEF_RETRIES;
 u_long SnmpTarget::default_max_pdu_size_ = DEF_MAX_SNMP_PACKET;
@@ -36,41 +35,40 @@ snmp_version SnmpTarget::default_version_ = version1;
 OctetStr UdpTarget::default_rd_community_(READ_COMM_STR);
 OctetStr UdpTarget::default_wr_community_(WRITE_COMM_STR);
 
-//--------[ Abstract SnmpTarget Member Functions ]----------------------
 SnmpTarget::SnmpTarget ()
   : timeout_ (default_timeout_), retries_ (default_retries_),
     max_pdu_size_ (default_max_pdu_size_), version_ (default_version_)
 {
 }
 
-// return validity of target
+/// Return the target's validity.
 int SnmpTarget::valid () const
 {
   return validity_;
 }
 
-// allow destruction of derived classes
+/// Allow destruction of derived classes.
 SnmpTarget::~SnmpTarget() = default;
 
-// set the timeout
+/// Set the timeout.
 void SnmpTarget::set_timeout (u_long t)
 {
   timeout_ = t;
 }
 
-// change the default timeout
+/// Set the class-wide default timeout.
 void SnmpTarget::set_default_timeout (u_long t)
 {
   default_timeout_ = t;
 }
 
-// set the retry value
+/// Set the retry value.
 void SnmpTarget::set_retry (int r)
 {
   retries_ = r;
 }
 
-// change the default retries
+/// Set the class-wide default retry count.
 void SnmpTarget::set_default_retry (int r)
 {
   default_retries_ = r;
@@ -111,19 +109,19 @@ u_long SnmpTarget::get_max_pdu_size () const
   return max_pdu_size_;
 }
 
-// get the retry value
+/// Return the retry value.
 int SnmpTarget::get_retry () const
 {
   return retries_;
 }
 
-// get the retry value
+/// Return the class-wide default retry count.
 int SnmpTarget::get_default_retry () const
 {
   return default_retries_;
 }
 
-// get the timeout
+/// Return the timeout.
 u_long SnmpTarget::get_timeout () const
 {
   return timeout_;
@@ -169,9 +167,6 @@ bool operator== (SnmpTarget const &lhs, SnmpTarget const &rhs)
   return true;
 }
 
-//--------[ IpTarget Member Functions ]----------------------------------
-//---------[ UdpTarget::UdpTarget() ]----------------------------------
-
 UdpTarget::UdpTarget ()
   : read_community_ (default_rd_community_),
     write_community_ (default_wr_community_)
@@ -188,10 +183,8 @@ UdpTarget::UdpTarget (UdpAddress const &udp)
 
 // - copy constructor can be synthesised by compiler
 
-//-----------[ UdpTarget::~UdpTarget() ]--------------------------------
 UdpTarget::~UdpTarget() = default;
 
-//-----------[ UdpTarget::clone() ]--------------------------------
 SnmpTarget *UdpTarget::clone () const
 {
   return new UdpTarget (*this);
@@ -206,42 +199,37 @@ void UdpTarget::set_default_write_community (OctetStr const &wr_community)
 {
    default_wr_community_ = wr_community;
 }
-// get the read community name as an u_char and len
+/// Return the read community string and its length.
 void UdpTarget::get_read_community (OctetStr &read_community_oct) const
 {
   read_community_oct = read_community_;
 }
 
-//---------[ UdpTarget::set_getcommunity ]---------------------------------
-// set the read community name
+/// Set the read community string.
 void UdpTarget::set_read_community (OctetStr const &new_read_community)
 {
   read_community_ = new_read_community;
 }
 
-//---------[ UdpTarget::get_writecommunity ]----------------------------
-// get the write community
+/// Return the write community string.
 void UdpTarget::get_write_community (OctetStr &write_community_oct) const
 {
   write_community_oct = write_community_;
 }
 
-//-----------[ UdpTarget::set_writecommunity ]---------------------------
-// set the write community
+/// Set the write community string.
 void UdpTarget::set_write_community (OctetStr const &write_community_oct)
 {
   write_community_ = write_community_oct;
 }
 
-//------------[ Address& UdpTarget::get_address() ]---------------------
-// get the address
+/// Return the address.
 void UdpTarget::get_address (UdpAddress &address) const
 {
   address = udp_address_;
 }
 
-//-------------[ UdpTarget::set_address ]--------------------------------
-// set the address
+/// Set the address.
 int UdpTarget::set_address (UdpAddress &udp_address)
 {
   udp_address_ = udp_address;
@@ -250,7 +238,7 @@ int UdpTarget::set_address (UdpAddress &udp_address)
   return validity_;
 }
 
-// overloaded assignment
+/// Assign from another UDP target.
 UdpTarget &UdpTarget::operator= (UdpTarget const &lhs)
 {
   if (this == std::addressof (lhs))
@@ -280,7 +268,7 @@ char const *UdpTarget::to_string ()
   return output_buffer_;
 }
 
-// equivlence operator overloaded
+/// Compare UDP targets for equivalence.
 bool operator== (UdpTarget const &lhs, UdpTarget const &rhs)
 {
   // need to compare all the members of a UdpTarget
