@@ -84,11 +84,11 @@ Quoter_Stock_i::set_price (CORBA::Double new_price)
   RtecEventComm::Event &e = event[0];
 
   // Initialize the header
-  char const *symbol = this->data_.symbol;
-  e.header.type = static_cast<CORBA::ULong> (static_cast<unsigned char> (symbol[0])) << 24;
-  e.header.type |= static_cast<CORBA::ULong> (static_cast<unsigned char> (symbol[1])) << 16;
-  e.header.type |= static_cast<CORBA::ULong> (static_cast<unsigned char> (symbol[2])) << 8;
-  e.header.type |= static_cast<CORBA::ULong> (static_cast<unsigned char> (symbol[3]));
+  char const *stock_symbol = this->data_.symbol;
+  e.header.type = static_cast<CORBA::ULong> (static_cast<unsigned char> (stock_symbol[0])) << 24;
+  e.header.type |= static_cast<CORBA::ULong> (static_cast<unsigned char> (stock_symbol[1])) << 16;
+  e.header.type |= static_cast<CORBA::ULong> (static_cast<unsigned char> (stock_symbol[2])) << 8;
+  e.header.type |= static_cast<CORBA::ULong> (static_cast<unsigned char> (stock_symbol[3]));
   e.header.source = 1;
 
   // Initialize the payload
@@ -111,12 +111,12 @@ Quoter_Stock_i::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin
   this->consumer_proxy_ = supplier_admin->obtain_push_consumer ();
   RtecEventComm::PushSupplier_var supplier (this->supplier_personality_._this ());
 
-  char const *symbol = this->data_.symbol;
+  char const *stock_symbol = this->data_.symbol;
   CORBA::ULong const type =
-    static_cast<CORBA::ULong> (static_cast<unsigned char> (symbol[0])) << 24 |
-    static_cast<CORBA::ULong> (static_cast<unsigned char> (symbol[1])) << 16 |
-    static_cast<CORBA::ULong> (static_cast<unsigned char> (symbol[2])) << 8 |
-    static_cast<CORBA::ULong> (static_cast<unsigned char> (symbol[3]));
+    static_cast<CORBA::ULong> (static_cast<unsigned char> (stock_symbol[0])) << 24 |
+    static_cast<CORBA::ULong> (static_cast<unsigned char> (stock_symbol[1])) << 16 |
+    static_cast<CORBA::ULong> (static_cast<unsigned char> (stock_symbol[2])) << 8 |
+    static_cast<CORBA::ULong> (static_cast<unsigned char> (stock_symbol[3]));
 
   ACE_SupplierQOS_Factory publications;
   publications.insert (1, type, 0, 1);
