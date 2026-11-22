@@ -1,7 +1,7 @@
 // -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Creates a Local ACE_UPIPE.
+/// Creates a local ACE_UPIPE.
 ACE_INLINE
 ACE_UPIPE_Connector::ACE_UPIPE_Connector (ACE_UPIPE_Stream &new_stream,
                                           const ACE_UPIPE_Addr &addr,

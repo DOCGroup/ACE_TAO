@@ -1,8 +1,8 @@
 // -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Sets both the file descriptors... Overrides handle from the base
-// classes.
+/// Sets both the file descriptors... Overrides handle from the base
+/// classes.
 
 ACE_INLINE void
 ACE_LSOCK_Stream::set_handle (ACE_HANDLE fd)

@@ -39,8 +39,8 @@ ACE_Codeset_Registry::registry_to_locale(ACE_CDR::ULong codeset_id,
                                                      char_sets);
 }
 
-// Tell if two codesets are compatible. This wraps the
-// rpc_cs_char_set_compat_check function.
+/// Tell if two codesets are compatible. This wraps the
+/// rpc_cs_char_set_compat_check function.
 ACE_INLINE
 bool
 ACE_Codeset_Registry::is_compatible (ACE_CDR::ULong codeset_id,
@@ -49,8 +49,8 @@ ACE_Codeset_Registry::is_compatible (ACE_CDR::ULong codeset_id,
   return ACE_Codeset_Registry::is_compatible_i (codeset_id,other);
 }
 
-// Return the max number of bytes required to represent a single character.
-// This wraps the rpc_rgy_get_max_bytes function.
+/// Return the max number of bytes required to represent a single character.
+/// This wraps the rpc_rgy_get_max_bytes function.
 ACE_INLINE
 ACE_CDR::Short
 ACE_Codeset_Registry::get_max_bytes (ACE_CDR::ULong codeset_id)

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// Return the address of the address.
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE bool

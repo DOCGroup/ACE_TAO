@@ -16,7 +16,7 @@ ACE_Shared_Memory_SV::open (key_t id,
                                          perms, addr, flags);
 }
 
-// The "do-nothing" constructor.
+/// The "do-nothing" constructor.
 ACE_INLINE
 ACE_Shared_Memory_SV::ACE_Shared_Memory_SV ()
 {

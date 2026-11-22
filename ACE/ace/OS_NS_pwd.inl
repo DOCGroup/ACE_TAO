@@ -3,7 +3,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Accessors to PWD file.
+/// Accessors to PWD file.
 
 ACE_INLINE void
 ACE_OS::endpwent ()
