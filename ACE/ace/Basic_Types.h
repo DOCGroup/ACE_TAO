@@ -132,7 +132,7 @@ using uintptr_t = ACE::If_Then_Else<
 #   endif /* !ACE_SIZEOF_WCHAR */
 # endif /* ACE_HAS_WCHAR */
 
-// The number of bytes in a short.
+/// The number of bytes in a short.
 # if !defined (ACE_SIZEOF_SHORT)
 #   if (USHRT_MAX) == 255U
 #     define ACE_SIZEOF_SHORT 1
@@ -147,7 +147,7 @@ using uintptr_t = ACE::If_Then_Else<
 #   endif /* USHRT_MAX */
 # endif /* !defined (ACE_SIZEOF_SHORT) */
 
-// The number of bytes in an int.
+/// The number of bytes in an int.
 # if !defined (ACE_SIZEOF_INT)
 #   if (UINT_MAX) == 65535U
 #     define ACE_SIZEOF_INT 2
@@ -160,7 +160,7 @@ using uintptr_t = ACE::If_Then_Else<
 #   endif /* UINT_MAX */
 # endif /* !defined (ACE_SIZEOF_INT) */
 
-// The number of bytes in a long.
+/// The number of bytes in a long.
 # if !defined (ACE_SIZEOF_LONG)
 #   if (ULONG_MAX) == 65535UL
 #     define ACE_SIZEOF_LONG 2
@@ -173,7 +173,7 @@ using uintptr_t = ACE::If_Then_Else<
 #   endif /* ULONG_MAX */
 # endif /* !defined (ACE_SIZEOF_LONG) */
 
-// The number of bytes in a long long.
+/// The number of bytes in a long long.
 # if !defined (ACE_SIZEOF_LONG_LONG)
 #   if defined (ULLONG_MAX)
 #     if ((ULLONG_MAX) == 4294967295ULL)
@@ -223,7 +223,7 @@ using ACE_Byte = unsigned char;
 #  define ACE_WCHAR_T ACE_UINT16
 #endif /* ACE_HAS_WCHAR */
 
-// The number of bytes in a void *.
+/// The number of bytes in a void *.
 #ifndef ACE_SIZEOF_VOID_P
 #  define ACE_SIZEOF_VOID_P ACE_SIZEOF_LONG
 #endif /* ACE_SIZEOF_VOID_P */
@@ -513,7 +513,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #  define ACE_UINT64_DBLCAST_ADAPTER(n) (n)
 #endif /* ! ACE_WIN32 && */
 
-// The number of bytes in a float.
+/// The number of bytes in a float.
 # ifndef ACE_SIZEOF_FLOAT
 #   if FLT_MAX_EXP == 128
 #     define ACE_SIZEOF_FLOAT 4
@@ -524,7 +524,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #   endif /* FLT_MAX_EXP */
 # endif /* ACE_SIZEOF_FLOAT */
 
-// The number of bytes in a double.
+/// The number of bytes in a double.
 # ifndef ACE_SIZEOF_DOUBLE
 #   if DBL_MAX_EXP == 128
 #     define ACE_SIZEOF_DOUBLE 4
@@ -535,7 +535,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #   endif /* DBL_MAX_EXP */
 # endif /* ACE_SIZEOF_DOUBLE */
 
-// The number of bytes in a long double.
+/// The number of bytes in a long double.
 # ifndef ACE_SIZEOF_LONG_DOUBLE
 #   if LDBL_MAX_EXP == 128
 #     define ACE_SIZEOF_LONG_DOUBLE 4

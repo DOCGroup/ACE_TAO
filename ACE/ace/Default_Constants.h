@@ -32,7 +32,7 @@
 #   define ACE_DEFAULT_CLOSE_ALL_HANDLES true
 # endif /* ACE_DEFAULT_CLOSE_ALL_HANDLES */
 
-// The maximum length for a fully qualified Internet name.
+/// The maximum length for a fully qualified Internet name.
 # if !defined(ACE_MAX_FULLY_QUALIFIED_NAME_LEN)
 #   define ACE_MAX_FULLY_QUALIFIED_NAME_LEN 256
 # endif /* ACE_MAX_FULLY_QUALIFIED_NAME_LEN */
