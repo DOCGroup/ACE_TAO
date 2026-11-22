@@ -87,7 +87,7 @@ private:
 
   CORBA::ORB_var orb_;
   bool object_group_created_ {};
-  // ORB_init consumes and updates the caller's argument vector.
+  /// ORB_init consumes and updates the caller's argument vector.
   int &argc_;
   ACE_TCHAR **&argv_;
   LB_Server_Options &options_;

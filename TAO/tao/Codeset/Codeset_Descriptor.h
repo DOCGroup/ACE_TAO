@@ -38,7 +38,7 @@ public:
   struct Translator_Node
   {
     std::basic_string<ACE_TCHAR> name_ {};
-    // Borrowed; the ACE service registry owns the factory.
+    /// Borrowed; the ACE service registry owns the factory.
     TAO_Codeset_Translator_Factory *translator_factory_ {};
   };
 
