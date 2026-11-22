@@ -72,13 +72,13 @@ int ACE_TMAIN(int argc, ACE_TCHAR * argv[])
     event.header.fixed_header.event_name = CORBA::string_dup("myevent");
     event.filterable_data.length (1);
     event.filterable_data[0].name = CORBA::string_dup("Message from:");
-    event.filterable_data[0].value <<= (const char *)user_name;
+    event.filterable_data[0].value <<= user_name;
     event.filterable_data.length (2);
     event.filterable_data[1].name = CORBA::string_dup("Subject:");
-    event.filterable_data[1].value <<= (const char *)subject;
+    event.filterable_data[1].value <<= subject;
     event.filterable_data.length (3);
     event.filterable_data[2].name = CORBA::string_dup("Message:");
-    event.filterable_data[2].value <<= (const char *)message;
+    event.filterable_data[2].value <<= message;
 
     // Push events.
     while (1) {
