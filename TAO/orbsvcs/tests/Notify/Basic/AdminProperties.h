@@ -105,7 +105,8 @@ private:
   /// Test MaxQueueLength properties
   void test_max_queue_length (bool reject);
 
-  // Data Members
+  /// @name Data members
+  /// @{
   /// The one channel that we create using the factory.
   CosNotifyChannelAdmin::EventChannel_var ec_;
 
@@ -138,6 +139,7 @@ private:
 
   /// Number of supplier pushes that resulted in an IMP_LIMIT exception.
   int rejections_;
+  /// @}
 };
 
 #endif /* ADMINPROPERTIES */

@@ -109,9 +109,9 @@ namespace TAO
 
     void _remove_ref () override;
 
-    /////////////////////////
-    // Implementation methods
   private:
+    /// @name Implementation methods
+    /// @{
     FT_FaultNotifier_i (FT_FaultNotifier_i const &) = delete;
     FT_FaultNotifier_i (FT_FaultNotifier_i &&) = delete;
     FT_FaultNotifier_i & operator= (FT_FaultNotifier_i const &) = delete;
@@ -121,10 +121,11 @@ namespace TAO
      * Write this notifier's IOR to a file
      */
     int write_ior ();
+    /// @}
 
-    ///////////////
-    // Data Members
   private:
+    /// @name Data members
+    /// @{
     /**
      * The orb
      */
@@ -222,6 +223,7 @@ namespace TAO
      * boolean: set true when CORBA is done with this object.
      */
     bool gone_ {};
+    /// @}
   };
 } // namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL

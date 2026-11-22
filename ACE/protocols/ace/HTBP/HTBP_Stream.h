@@ -83,10 +83,12 @@ namespace ACE
     class HTBP_Export Stream
     {
     public:
-      // Initialization and termination methods.
+      /// @name Initialization and termination
+      /// @{
       explicit Stream (Session* s = nullptr);
 
       ~Stream ();
+      /// @}
 
       /// @name I/O functions
       /// @{
