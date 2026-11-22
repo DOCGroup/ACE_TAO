@@ -7,7 +7,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Token_Invariant_Manager *ACE_Token_Invariant_Manager::instance_ = 0;
+ACE_Token_Invariant_Manager *ACE_Token_Invariant_Manager::instance_ = nullptr;
 
 ACE_Token_Invariant_Manager *
 ACE_Token_Invariant_Manager::instance ()
@@ -15,20 +15,20 @@ ACE_Token_Invariant_Manager::instance ()
   ACE_TRACE ("ACE_Token_Invariant_Manager::instance");
 
   // Perform the Double-Check pattern...
-  if (instance_ == 0)
+  if (instance_ == nullptr)
     {
       ACE_MT (ACE_TOKEN_CONST::MUTEX *lock =
         ACE_Managed_Object<ACE_TOKEN_CONST::MUTEX>::get_preallocated_object
           (ACE_Object_Manager::ACE_TOKEN_INVARIANTS_CREATION_LOCK);
-        ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon, *lock, 0));
+        ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon, *lock, nullptr));
 
-      if (instance_ == 0)
+      if (instance_ == nullptr)
         {
           ACE_NEW_RETURN (instance_,
                           ACE_Token_Invariant_Manager,
-                          0);
+                          nullptr);
           // Register for destruction with ACE_Object_Manager.
-          ACE_Object_Manager::at_exit (instance_, 0, typeid (instance_).name ());
+          ACE_Object_Manager::at_exit (instance_, nullptr, typeid (instance_).name ());
         }
     }
 

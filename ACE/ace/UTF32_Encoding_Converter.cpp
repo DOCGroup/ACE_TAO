@@ -227,7 +227,7 @@ ACE_UTF32_Encoding_Converter::encoded (const ACE_Byte* source,
   ACE_UTF32_Encoding_Converter* converter {};
   ACE_NEW_RETURN (converter,
                   ACE_UTF32_Encoding_Converter (false),
-                  0);
+                  nullptr);
 
   if (converter->to_utf8 (source,
                           (std::min) (begin, source_size),

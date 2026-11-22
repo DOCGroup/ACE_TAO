@@ -473,7 +473,7 @@ ACE_Service_Config::create_service_type  (const ACE_TCHAR *n,
   ACE_Service_Type *sp {};
   ACE_NEW_RETURN (sp,
                   ACE_Service_Type (n, o, dll, active),
-                  0);
+                  nullptr);
   return sp;
 }
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 0 */
