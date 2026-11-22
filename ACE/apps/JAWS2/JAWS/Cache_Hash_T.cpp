@@ -117,7 +117,9 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::find (const EXT_ID &ext_id) const
   unsigned long const hash_idx = this->hash (ext_id);
 
   if (this->hashtable_[hash_idx] == nullptr)
-    return -1;
+    {
+      return -1;
+    }
 
   return this->hashtable_[hash_idx]->find (ext_id);
 }
@@ -129,7 +131,9 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::find (const EXT_ID &ext_id,
   unsigned long const hash_idx = this->hash (ext_id);
 
   if (this->hashtable_[hash_idx] == nullptr)
-    return -1;
+    {
+      return -1;
+    }
 
   return this->hashtable_[hash_idx]->find (ext_id, int_id);
 }
@@ -146,7 +150,9 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::bind (const EXT_ID &ext_id,
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g, this->lock_, -1);
 
       if (this->new_cachebucket (hash_idx) == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       result = this->hashtable_[hash_idx]->bind (ext_id, int_id);
     }
@@ -168,7 +174,9 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::trybind (const EXT_ID &ext_id,
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g, this->lock_, -1);
 
       if (this->new_cachebucket (hash_idx) == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       result = this->hashtable_[hash_idx]->trybind (ext_id, int_id);
     }
@@ -192,7 +200,9 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::rebind (const EXT_ID &ext_id,
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g, this->lock_, -1);
 
       if (this->new_cachebucket (hash_idx) == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       result = this->hashtable_[hash_idx]->rebind (ext_id, int_id,
                                                    old_ext_id, old_int_id);
@@ -210,7 +220,9 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::unbind (const EXT_ID &ext_id)
   unsigned long const hash_idx = this->hash (ext_id);
 
   if (this->hashtable_[hash_idx] == nullptr)
-    return -1;
+    {
+      return -1;
+    }
 
   return this->hashtable_[hash_idx]->unbind (ext_id);
 }
@@ -222,7 +234,9 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::unbind (const EXT_ID &ext_id,
   unsigned long const hash_idx = this->hash (ext_id);
 
   if (this->hashtable_[hash_idx] == nullptr)
-    return -1;
+    {
+      return -1;
+    }
 
   return this->hashtable_[hash_idx]->unbind (ext_id, int_id);
 }

@@ -47,7 +47,9 @@ JAWS_Assoc_Array<KEY,DATA>::insert (const KEY &k, const DATA &d)
   int const i = this->find_i (k);
 
   if (i == this->maxsize_)
-    return nullptr;
+    {
+      return nullptr;
+    }
 
   if (!this->k_array_[i])
     {
@@ -66,7 +68,9 @@ JAWS_Assoc_Array<KEY,DATA>::remove (const KEY &k)
   int const i = this->find_i (k);
 
   if (i == this->maxsize_)
-    return 0;
+    {
+      return 0;
+    }
 
   if (this->k_array_[i])
     {
@@ -102,10 +106,14 @@ JAWS_Assoc_Array<KEY,DATA>::find_i (const KEY &k)
       if (kk)
         {
           if (*kk == k)
-            return i;
+            {
+              return i;
+            }
         }
       else if (j == this->maxsize_)
-        j = i;
+        {
+          j = i;
+        }
     }
   return j;
 }
@@ -138,7 +146,9 @@ JAWS_Assoc_Array_Iterator<KEY,DATA>::first ()
   for (this->j_ = 0; this->j_ < this->aa_.maxsize_; ++this->j_)
     {
       if (this->aa_.k_array_[this->j_])
-        break;
+        {
+          break;
+        }
     }
   return this->next ();
 }
@@ -150,7 +160,9 @@ JAWS_Assoc_Array_Iterator<KEY,DATA>::last ()
   for (this->i_ = this->aa_.maxsize_; this->i_ > 0; --this->i_)
     {
       if (this->aa_.k_array_[this->i_ - 1])
-        break;
+        {
+          break;
+        }
     }
 
   int const previous_index = this->i_;
@@ -167,7 +179,9 @@ JAWS_Assoc_Array_Iterator<KEY,DATA>::next ()
       for (++this->j_; this->j_ < this->aa_.maxsize_; ++this->j_)
         {
           if (this->aa_.k_array_[this->j_])
-            break;
+            {
+              break;
+            }
         }
     }
 
@@ -182,12 +196,16 @@ JAWS_Assoc_Array_Iterator<KEY,DATA>::previous ()
       for (this->j_ = this->i_; this->i_ > 0; --this->i_)
         {
           if (this->aa_.k_array_[this->i_ - 1])
-            break;
+            {
+              break;
+            }
         }
     }
 
   if (this->i_ == 0)
-    this->first ();
+    {
+      this->first ();
+    }
   else
     --this->i_;
 

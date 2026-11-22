@@ -97,7 +97,9 @@ JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::maxsize (Cache_Manager *cm,
 
       for (size_t i = 0; i < new_maxsize; ++i)
         if (i < this->size_)
-          new_heap[i] = this->heap_[i];
+          {
+            new_heap[i] = this->heap_[i];
+          }
         else
           new_heap[i] = nullptr;
 
@@ -121,7 +123,9 @@ JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::insert_i (Cache_Heap_Item *item)
   for (i = this->size_ + 1; i > 1; i /= 2)
     {
       if (item->priority () > this->heap_[i/2 - 1]->priority ())
-        break;
+        {
+          break;
+        }
 
       this->heap_[i-1] = this->heap_[i/2 - 1];
       this->heap_[i-1]->heap_idx_ = i-1;
@@ -137,7 +141,9 @@ JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::insert (const EXT_ID &ext_id,
                                                JAWS_Cache_Object *const &int_id)
 {
   if (this->is_full ())
-    return -1;
+    {
+      return -1;
+    }
 
   Cache_Heap_Item *item;
   ACE_NEW_MALLOC_RETURN (item,
@@ -168,7 +174,9 @@ JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::remove_i ()
         child = 2*i + 1;
 
       if (temp->priority () < this->heap_[child-1]->priority ())
-        break;
+        {
+          break;
+        }
 
       this->heap_[i-1] = this->heap_[child-1];
       this->heap_[i-1]->heap_idx_ = i-1;
@@ -209,7 +217,9 @@ JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::remove (EXT_ID &ext_id,
                                                JAWS_Cache_Object *&int_id)
 {
   if (this->is_empty ())
-    return -1;
+    {
+      return -1;
+    }
 
   Cache_Heap_Item * const item = this->heap_[0];
   item->int_id_->heap_item (nullptr);
@@ -230,13 +240,17 @@ template <class EXT_ID, class FACT, class H_FN, class E_FN> int
 JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::remove (void *item)
 {
   if (item == nullptr)
-    return 0;
+    {
+      return 0;
+    }
 
   Cache_Heap_Item * const real_item = static_cast<Cache_Heap_Item *> (item);
 
   // Make sure the item is where it thinks it is.
   if (this->heap_[real_item->heap_idx_] != real_item)
-    return -1;
+    {
+      return -1;
+    }
 
   real_item->int_id_->heap_item (nullptr);
   this->remove_i (real_item->heap_idx_);
@@ -252,13 +266,17 @@ template <class EXT_ID, class FACT, class H_FN, class E_FN> int
 JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::adjust (void *item)
 {
   if (item == nullptr)
-    return 0;
+    {
+      return 0;
+    }
 
   Cache_Heap_Item * const real_item = static_cast<Cache_Heap_Item *> (item);
 
   // Make sure the item is where it thinks it is.
   if (this->heap_[real_item->heap_idx_] != real_item)
-    return -1;
+    {
+      return -1;
+    }
 
   this->remove_i (real_item->heap_idx_);
   this->insert_i (real_item);

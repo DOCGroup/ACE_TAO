@@ -70,7 +70,9 @@ JAWS_Cache_List<EXT_ID,FACT,H_FN,E_FN>::insert_i (Cache_List_Item *item)
 
   ++this->size_;
   if (this->size_ == 1)
-    this->head_ = this->tail_ = item;
+    {
+      this->head_ = this->tail_ = item;
+    }
   else
     {
       this->tail_->next_ = item;
@@ -84,7 +86,9 @@ JAWS_Cache_List<EXT_ID,FACT,H_FN,E_FN>::insert (const EXT_ID &ext_id,
                                                JAWS_Cache_Object *const &int_id)
 {
   if (this->is_full ())
-    return -1;
+    {
+      return -1;
+    }
 
   Cache_List_Item *item {};
   ACE_NEW_MALLOC_RETURN (item,
@@ -149,7 +153,9 @@ JAWS_Cache_List<EXT_ID,FACT,H_FN,E_FN>::remove (EXT_ID &ext_id,
                                                JAWS_Cache_Object *&int_id)
 {
   if (this->is_empty ())
-    return -1;
+    {
+      return -1;
+    }
 
   this->remove_i ();
 
@@ -169,7 +175,9 @@ template <class EXT_ID, class FACT, class H_FN, class E_FN> int
 JAWS_Cache_List<EXT_ID,FACT,H_FN,E_FN>::remove (void *item)
 {
   if (item == nullptr)
-    return 0;
+    {
+      return 0;
+    }
 
   this->remove_i (static_cast<Cache_List_Item *> (item));
   this->item_->int_id_->heap_item (nullptr);
@@ -187,7 +195,9 @@ template <class EXT_ID, class FACT, class H_FN, class E_FN> int
 JAWS_Cache_List<EXT_ID,FACT,H_FN,E_FN>::adjust (void *item)
 {
   if (item == nullptr)
-    return 0;
+    {
+      return 0;
+    }
 
   Cache_List_Item *real_item = static_cast<Cache_List_Item *> (item);
 
