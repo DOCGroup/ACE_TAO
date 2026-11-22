@@ -51,7 +51,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
         }
 
-      for (int i = 0; i != n; ++i)
+      for (int iteration = 0; iteration != n; ++iteration)
         {
           CORBA::Any any;
 
@@ -173,18 +173,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
 
           {
-            CORBA::Any any;
+            CORBA::Any nested_any;
             CORBA::Any *i {};
             ACE_NEW_RETURN (i,
                             CORBA::Any,
                             -1);
             *i <<= CORBA::Short (123);
-            any <<= *i;
+            nested_any <<= *i;
 
             const CORBA::Any *o;
             CORBA::Short oo;
 
-            if (!(any >>= o)
+            if (!(nested_any >>= o)
                 || !(*o >>= oo)
                 || 123 != oo)
               {
@@ -194,9 +194,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             oo));
               }
 
-            any <<= i;
+            nested_any <<= i;
 
-            if (!(any >>= o)
+            if (!(nested_any >>= o)
                 || !(*o >>= oo)
                 || 123 != oo)
               {
@@ -224,7 +224,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
 
           {
-            CORBA::Any any;
+            CORBA::Any nested_any;
             Param_Test::Fixed_Struct *i {};
             ACE_NEW_RETURN (i,
                             Param_Test::Fixed_Struct,
@@ -237,10 +237,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             i->b = false;
             i->d = 3.1416;
 
-            any <<= *i;
+            nested_any <<= *i;
             Param_Test::Fixed_Struct const *o {};
 
-            if (!(any >>= o)
+            if (!(nested_any >>= o)
                 || o->l != i->l
                 || o->c != i->c
                 || o->s != i->s
@@ -254,9 +254,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             "(copying insertion)\n"));
               }
 
-            any <<= i;
+            nested_any <<= i;
 
-            if (!(any >>= o)
+            if (!(nested_any >>= o)
                 || o->l != i->l
                 || o->c != i->c
                 || o->s != i->s
@@ -273,7 +273,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           {
             CORBA::ULong const len = 3;
-            CORBA::Any any;
+            CORBA::Any nested_any;
             CORBA::LongSeq *i {};
             ACE_NEW_RETURN (i,
                             CORBA::LongSeq (len),
@@ -285,10 +285,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 (*i)[k] = k;
               }
 
-            any <<= *i;
+            nested_any <<= *i;
             CORBA::LongSeq const *o {};
 
-            if (!(any >>= o)
+            if (!(nested_any >>= o)
                 || (*i)[0] != (*o)[0]
                 || (*i)[1] != (*o)[1]
                 || (*i)[2] != (*o)[2])
@@ -298,9 +298,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             "(copying insertion)\n"));
               }
 
-            any <<= i;
+            nested_any <<= i;
 
-            if (!(any >>= o)
+            if (!(nested_any >>= o)
                 || (*i)[0] != (*o)[0]
                 || (*i)[1] != (*o)[1]
                 || (*i)[2] != (*o)[2])
