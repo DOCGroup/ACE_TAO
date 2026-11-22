@@ -423,7 +423,7 @@ ACE_Token_Handler::recv_request ()
   // Read the first 4 bytes to get the length of the message
   // This implementation assumes that the first 4 bytes are
   // the length of the message.
-  n = this->peer ().recv ((void *) &this->token_request_,
+  n = this->peer ().recv (std::addressof (this->token_request_),
                           sizeof (ACE_UINT32));
 
   switch (n)
@@ -453,8 +453,9 @@ ACE_Token_Handler::recv_request ()
 
         // Receive the rest of the request message.
         // @@ beware of blocking read!!!.
-        n = this->peer ().recv ((void *) (((char *) &this->token_request_)
-                                          + sizeof (ACE_UINT32)),
+        n = this->peer ().recv (reinterpret_cast<char *> (
+                                  std::addressof (this->token_request_))
+                                + sizeof (ACE_UINT32),
                                 length - sizeof (ACE_UINT32));
 
         // Subtract off the size of the part we skipped over...

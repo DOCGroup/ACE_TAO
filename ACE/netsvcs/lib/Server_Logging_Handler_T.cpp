@@ -8,6 +8,8 @@
 #include "Server_Logging_Handler_T.h"
 #include "ace/Signal.h"
 
+#include <memory>
+
 // Track number of requests.
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR>
 COUNTER ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::request_count_ {};
@@ -320,7 +322,7 @@ ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::init (int argc, ACE_TCHAR *argv[])
   if (this->open (this->service_addr_,
                   ACE_Reactor::instance (),
                   0, 0, 0,
-                  &this->scheduling_strategy(),
+                  std::addressof (this->scheduling_strategy ()),
                   ACE_TEXT ("Logging Server"),
                   ACE_TEXT ("ACE logging service")) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

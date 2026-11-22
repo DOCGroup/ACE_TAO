@@ -208,7 +208,8 @@ ACE_TS_Server_Handler::recv_request ()
 
   // Since Time_Request messages are fixed size, read the entire
   // message in one go.
-  ssize_t const n = this->peer ().recv ((void *) &this->time_request_, bytes_expected);
+  ssize_t const n = this->peer ().recv (
+    std::addressof (this->time_request_), bytes_expected);
   if (n != bytes_expected)
     {
       switch (n)

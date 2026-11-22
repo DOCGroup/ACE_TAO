@@ -1,6 +1,8 @@
 #include "Consumer_Handler.h"
 #include "Consumer_Input_Handler.h"
 
+#include <memory>
+
 /**
  * Consumer driver for the Publish/Subscribe example.
  *
@@ -86,7 +88,7 @@ Consumer::initialize (int argc, ACE_TCHAR *argv[])
                          -1);
      // Initialize the <Consumer_Input_Handler>.
     }
-  else if (this->ih_.initialize (&this->ch_) == -1)
+  else if (this->ih_.initialize (std::addressof (this->ch_)) == -1)
     {
        ACE_ERROR_RETURN ((LM_ERROR,
                           "%p\n",
