@@ -170,7 +170,7 @@ Test_Task::handle_input (ACE_HANDLE)
   return -1;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 worker (void *args)
 {
   ACE_Reactor *reactor = static_cast<ACE_Reactor *> (args);
@@ -193,11 +193,11 @@ worker (void *args)
         /* NOTREACHED */
       case 0:
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Reactor shutdown\n")));
-        return nullptr;
+        return ACE_THR_FUNC_RETURN_NULL;
       }
     }
 
-  ACE_NOTREACHED (return nullptr);
+  ACE_NOTREACHED (return ACE_THR_FUNC_RETURN_NULL);
 }
 
 #endif /* ACE_HAS_THREADS */
@@ -229,7 +229,7 @@ run_main (int, ACE_TCHAR *[])
   // Spawn two threads each running a different reactor.
 
   if (ACE_Thread_Manager::instance ()->spawn
-      (ACE_THR_FUNC (worker),
+      (worker,
        ACE_Reactor::instance (),
        THR_BOUND | THR_DETACHED) == -1)
     {
@@ -240,7 +240,7 @@ run_main (int, ACE_TCHAR *[])
     }
 
   else if (ACE_Thread_Manager::instance ()->spawn
-      (ACE_THR_FUNC (worker), &reactor,
+      (worker, &reactor,
        THR_BOUND | THR_DETACHED) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
