@@ -22,7 +22,7 @@ ACE_UNIX_Addr::set (const wchar_t rendezvous_point[])
 }
 #endif /* ACE_HAS_WCHAR */
 
-// Compare two addresses for equality.
+/// Compare two addresses for equality.
 
 ACE_INLINE bool
 ACE_UNIX_Addr::operator == (const ACE_UNIX_Addr &sap) const
@@ -39,7 +39,7 @@ ACE_UNIX_Addr::operator == (const ACE_UNIX_Addr &sap) const
                        sizeof (this->unix_addr_.sun_path) - 1) == 0;
 }
 
-// Compare two addresses for inequality.
+/// Compare two addresses for inequality.
 
 ACE_INLINE bool
 ACE_UNIX_Addr::operator != (const ACE_UNIX_Addr &sap) const
@@ -47,7 +47,7 @@ ACE_UNIX_Addr::operator != (const ACE_UNIX_Addr &sap) const
   return !((*this) == sap);     // This is lazy, of course... ;-)
 }
 
-// Return the path name used for the rendezvous point.
+/// Return the path name used for the rendezvous point.
 
 ACE_INLINE const char *
 ACE_UNIX_Addr::get_path_name () const
