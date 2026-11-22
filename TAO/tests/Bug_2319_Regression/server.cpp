@@ -317,7 +317,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-    amh_server.register_servant (&servant);
+    amh_server.register_servant (std::addressof (servant));
 
     CORBA::Object_var const object = orb->string_to_object (ior);
 

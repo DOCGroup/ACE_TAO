@@ -269,7 +269,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ST_AMH_Servant servant (amh_server.orb ());
 
-  if (amh_server.register_servant (&servant, options.ior_output_file) != 0)
+  if (amh_server.register_servant (std::addressof (servant),
+                                   options.ior_output_file) != 0)
     {
       amh_server.cleanup ();
       return 1;

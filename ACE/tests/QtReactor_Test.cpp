@@ -920,7 +920,7 @@ void testNativeReactor (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Testing autotest using native reactor\n")));
 
   ACE_Reactor      reactor;
-  HandlersRegister handlersRegister (&reactor);
+  HandlersRegister handlersRegister (std::addressof (reactor));
   ACE_Time_Value   testTime (TotalTestTime / 1000, (TotalTestTime % 1000) * 1000);
 
   if (0 <= handlersRegister.scheduleTimers (testTime)  &&

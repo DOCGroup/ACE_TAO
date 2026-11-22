@@ -55,7 +55,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::String_var ior =
         orb_manager.activate_under_child_poa ("my_object",
-                                              &servant);
+                                              std::addressof (servant));
 
       ACE_DEBUG ((LM_DEBUG, "%C\n",
                   ior.in ()));

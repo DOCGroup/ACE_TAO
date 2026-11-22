@@ -1,6 +1,8 @@
 #include "AMIS.h"
 #include "tao/IORTable/IORTable.h"
 
+#include <memory>
+
 class AdderServant
   : public POA_AMI_test::adder
 {
@@ -55,7 +57,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableServer::string_to_ObjectId ("Adder");
 
       // The POA borrows this stack servant; it remains alive throughout ORB::run.
-      persistent_poa->activate_object_with_id (oid.in (), &servant);
+      persistent_poa->activate_object_with_id (oid.in (), std::addressof (servant));
 
       CORBA::Object_var const reference = persistent_poa->id_to_reference (oid.in ());
       CORBA::String_var const ior = orb->object_to_string (reference.in ());
