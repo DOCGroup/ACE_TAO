@@ -413,7 +413,7 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
 
       if (this->rmt_name_.length () != 0)
         {
-          orb->run (&tv);
+          orb->run (std::addressof (tv));
         }
 
       ACE_DEBUG ((LM_DEBUG, "starting....\n"));
@@ -440,7 +440,7 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
       if (this->rmt_name_.length () != 0)
         {
           tv.set (5, 0);
-          orb->run (&tv);
+          orb->run (std::addressof (tv));
 
           RtecEventChannelAdmin::EventChannel_var remote_ec =
             this->get_ec (naming_context.in (),
@@ -469,7 +469,7 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
           ACE_DEBUG ((LM_DEBUG, "connected proxy\n"));
 
           tv.set (5, 0);
-          orb->run (&tv);
+          orb->run (std::addressof (tv));
 
           RtecEventChannelAdmin::Observer_ptr observer =
             this->ecg_._this ();
@@ -556,7 +556,7 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
 
       ACE_DEBUG ((LM_DEBUG, "shutdown grace period\n"));
       tv.set (5, 0);
-      orb->run (&tv);
+      orb->run (std::addressof (tv));
     }
   catch (CORBA::SystemException const& sys_ex)
     {

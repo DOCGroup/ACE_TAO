@@ -4,6 +4,8 @@
 #include <ace/Task.h>
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 const ACE_TCHAR *ior_input_file = ACE_TEXT ("file://serverA.ior");
 int test_duration_sec = 15;
 bool expect_object_not_exist = false;
@@ -136,7 +138,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     task.activate (THR_NEW_LWP | THR_JOINABLE, 1, true);
 
     ACE_Time_Value tv(test_duration_sec);
-    orb->run (&tv);
+    orb->run (std::addressof (tv));
 
     task.wait ();
 

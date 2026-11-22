@@ -218,7 +218,7 @@ ST_AMH_Server::run_event_loop (int expected_calls)
       while (true)
         {
           ACE_Time_Value period (0, 11000);
-          this->orb_->perform_work (&period);
+          this->orb_->perform_work (std::addressof (period));
 
           // when all calls from client have been received, exit
           if (calls_received.load () == expected_calls)

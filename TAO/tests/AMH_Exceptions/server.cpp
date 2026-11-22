@@ -237,7 +237,7 @@ ST_AMH_Server::run_event_loop ()
       ACE_Time_Value period (0, 11000);
       while (!this->orb_->orb_core ()->has_shutdown ())
         {
-          this->orb_->perform_work (&period);
+          this->orb_->perform_work (std::addressof (period));
         }
     }
   catch (CORBA::Exception const &)

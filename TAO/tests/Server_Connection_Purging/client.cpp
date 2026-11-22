@@ -125,7 +125,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // of a minute
   ACE_Time_Value tv (3);
 
-  while (singleton->handle_events (&tv) >= 1)
+  while (singleton->handle_events (std::addressof (tv)) >= 1)
     {
       // No action.
     }

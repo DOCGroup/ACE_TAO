@@ -104,7 +104,7 @@ namespace Test
 
         ACE_Time_Value tv (10);
 
-        orb->run (&tv);
+        orb->run (std::addressof (tv));
 
         ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t) server - event loop finished\n"));

@@ -524,7 +524,7 @@ void synch_with_worker (Worker &worker)
     worker.put (cond);
     ACE_Time_Value tv (1, 0);
     tv += ACE_OS::gettimeofday ();
-    TEST_ASSERT ((cond->cond ().wait (&tv) == 0));
+    TEST_ASSERT ((cond->cond ().wait (std::addressof (tv)) == 0));
   }
 }
 

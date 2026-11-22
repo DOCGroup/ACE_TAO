@@ -8,6 +8,7 @@
 #include "ace/Thread.h"
 #include "ace/Get_Opt.h"
 
+#include <memory>
 #include <string>
 
 TAO_SYNCH_MUTEX test_lock;
@@ -42,7 +43,7 @@ ACE_THR_FUNC_RETURN failsafe (void *)
 {
   test_lock.acquire ();
   ACE_Time_Value const timeout = ACE_OS::gettimeofday () + ACE_Time_Value (10, 0);
-  cond.wait (&timeout);
+  cond.wait (std::addressof (timeout));
   test_lock.release ();
   if (!is_ok)
     {

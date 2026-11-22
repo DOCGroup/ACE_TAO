@@ -153,7 +153,8 @@ Servant_Activator::incarnate (PortableServer::ObjectId const &,
   ACE_Time_Value timeout (5);
 
   result =
-    global_object_activator->object_activated_.wait (&timeout, 0);
+    global_object_activator->object_activated_.wait (
+      std::addressof (timeout), 0);
 
   if (result == 0)
     {

@@ -130,7 +130,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       ACE_Time_Value run_time (12);
-      consumer_state.orb->run (&run_time);
+      consumer_state.orb->run (std::addressof (run_time));
 
       if (servant.nummsgs () > 0)
         {

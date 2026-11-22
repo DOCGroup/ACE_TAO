@@ -22,7 +22,7 @@ LB_server::run ()
       ACE_Time_Value period (0, 10);
       while (true)
         {
-          this->orb_->perform_work (&period);
+          this->orb_->perform_work (std::addressof (period));
         }
     }
   catch (const CORBA::Exception& ex)

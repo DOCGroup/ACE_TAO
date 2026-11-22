@@ -222,7 +222,7 @@ void ST_AMH_Server::run_event_loop ()
       ACE_Time_Value period (1, 0);
       while (true)
         {
-          this->orb_->perform_work (&period);
+          this->orb_->perform_work (std::addressof (period));
 
           // when all calls from client have been received, exit
           if (this->servant_->calls_received () == this->num_calls_)
