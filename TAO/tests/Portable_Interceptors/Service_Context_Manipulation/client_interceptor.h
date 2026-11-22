@@ -22,7 +22,7 @@ class Echo_Client_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  Echo_Client_Request_Interceptor (const char *orb_id);
+  explicit Echo_Client_Request_Interceptor (const char *orb_id);
   ~Echo_Client_Request_Interceptor () override;
 
   /// Canonical name of the interceptor.

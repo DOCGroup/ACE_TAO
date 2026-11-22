@@ -44,7 +44,7 @@ class Server_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  Server_Request_Interceptor (bool & destroy_called);
+  explicit Server_Request_Interceptor (bool & destroy_called);
 
   Server_Request_Interceptor (Server_Request_Interceptor const &) = delete;
   Server_Request_Interceptor (Server_Request_Interceptor &&) = delete;
