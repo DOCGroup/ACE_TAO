@@ -68,7 +68,9 @@ insert_offer (const char* type, CosTrading::Offer* offer)
       new_offer_map_entry->counter_ = 1;
 
       if (this->db_lock_.release () == -1)
-        return 0;
+        {
+          return 0;
+        }
       else
         {
           // Add the new entry; upgrade lock.
@@ -77,13 +79,19 @@ insert_offer (const char* type, CosTrading::Offer* offer)
                                                         new_offer_map_entry,
                                                         database_entry);
           if (bind_result == 0)
-            new_offer_map_entry_owner.release ();
+            {
+              new_offer_map_entry_owner.release ();
+            }
           else if (bind_result == -1)
-            return 0;
+            {
+              return 0;
+            }
         }
 
       if (this->db_lock_.acquire_read () == -1)
-        return 0;
+        {
+          return 0;
+        }
     }
 
   Offer_Map_Entry* offer_map_entry =
@@ -119,7 +127,9 @@ remove_offer (const char* type, CORBA::ULong id)
       Offer_Map_Entry* offer_map_entry = db_entry->int_id_;
 
       if (offer_map_entry->lock_.acquire_write () == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       return_value = offer_map_entry->offer_map_->unbind (id, offer);
       std::unique_ptr<CosTrading::Offer> offer_owner (offer);
@@ -129,13 +139,17 @@ remove_offer (const char* type, CORBA::ULong id)
       if (offer_map_entry->offer_map_->current_size () == 0)
         {
           if (this->db_lock_.release () == -1)
-            return -1;
+            {
+              return -1;
+            }
           else
             {
               // Promote the database lock. Will be released by
               // guard.
               if (this->db_lock_.acquire_write () == -1)
-                return -1;
+                {
+                  return -1;
+                }
 
               // Unbind the service type from the database.
               if (this->offer_db_.unbind (service_type) != 0)
@@ -156,7 +170,9 @@ remove_offer (const char* type, CORBA::ULong id)
             }
         }
       else if (offer_map_entry->lock_.release () == -1)
-        return -1;
+        {
+          return -1;
+        }
     }
 
   return return_value;
@@ -190,7 +206,9 @@ lookup_offer (char const* offer_id,
   this->parse_offer_id (offer_id, type_name, index);
 
   if ((offer = this->lookup_offer (type_name, index)) == nullptr)
-    throw CosTrading::UnknownOfferId (offer_id);
+    {
+      throw CosTrading::UnknownOfferId (offer_id);
+    }
 
   return offer;
 }
@@ -206,7 +224,9 @@ lookup_offer (char const* offer_id)
   this->parse_offer_id (offer_id, type_name, index);
 
   if ((offer = this->lookup_offer (type_name, index)) == nullptr)
-    throw CosTrading::UnknownOfferId (offer_id);
+    {
+      throw CosTrading::UnknownOfferId (offer_id);
+    }
 
   return offer;
 }
@@ -228,7 +248,9 @@ lookup_offer (const char* type, CORBA::ULong id)
 
       TAO_Offer_Map::ENTRY* offer_entry_ptr {};
       if (offer_map_entry->offer_map_->find (id, offer_entry_ptr) == 0)
-        return_value = offer_entry_ptr->int_id_;
+        {
+          return_value = offer_entry_ptr->int_id_;
+        }
     }
 
   return return_value;
@@ -286,7 +308,9 @@ parse_offer_id (char const* offer_id,
   id = std::atoi (id_string.c_str ());
 
   if (! TAO_Trader_Base::is_valid_identifier_name (service_type))
-    throw CosTrading::IllegalOfferId (offer_id);
+    {
+      throw CosTrading::IllegalOfferId (offer_id);
+    }
 }
 
 template <class LOCK_TYPE> CosTrading::OfferId
@@ -311,16 +335,22 @@ TAO_Service_Offer_Iterator (const char* type,
   CORBA::String_var service_type (type);
 
   if (this->stm_.db_lock_.acquire_read () == -1)
-    return;
+    {
+      return;
+    }
 
   typename TAO_Offer_Database<LOCK_TYPE>::Offer_Map_Entry* entry {};
   if (this->stm_.offer_db_.find (service_type, entry) == -1)
-    return;
+    {
+      return;
+    }
   else
     {
       this->lock_ = &entry->lock_;
       if (this->lock_->acquire_read () == -1)
-        return;
+        {
+          return;
+        }
 
       TAO_Offer_Map::iterator* offer_iter {};
       ACE_NEW (offer_iter,
@@ -364,7 +394,9 @@ template <class LOCK_TYPE> void
 TAO_Service_Offer_Iterator<LOCK_TYPE>::next_offer ()
 {
   if (this->offer_iter_ != nullptr)
-    this->offer_iter_->advance ();
+    {
+      this->offer_iter_->advance ();
+    }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
