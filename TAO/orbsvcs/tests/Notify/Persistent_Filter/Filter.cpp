@@ -24,7 +24,8 @@ int EVENTS_EXPECTED_TO_RECEIVE = 9*4;  // 2 consumers get the same events from 2
 std::atomic<int> g_result_count {0};
 
 FilterClient::FilterClient ()
-  :consumer_1 (0),
+  : ifgop_ (CosNotifyChannelAdmin::AND_OP),
+  consumer_1 (0),
   consumer_2 (0),
   supplier_1 (0),
   supplier_2 (0),
@@ -36,8 +37,6 @@ FilterClient::FilterClient ()
   done_ (0)
 {
   g_result_count = 0;
-  // No-Op.
-  ifgop_ = CosNotifyChannelAdmin::AND_OP;
 }
 
 FilterClient::~FilterClient ()

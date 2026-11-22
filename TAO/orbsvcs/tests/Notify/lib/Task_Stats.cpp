@@ -15,8 +15,8 @@ ACE_High_Res_Timer::global_scale_factor_type Task_Stats::gsf_ =
   ACE_High_Res_Timer::global_scale_factor ();
 
 Base_Time::Base_Time ()
+  : base_time_ (ACE_OS::gethrtime ())
 {
-  base_time_ = ACE_OS::gethrtime ();
 }
 
 Task_Stats::Task_Stats () = default;

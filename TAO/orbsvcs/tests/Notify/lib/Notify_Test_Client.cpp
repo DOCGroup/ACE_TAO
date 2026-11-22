@@ -3,9 +3,9 @@
 #define NAMING_SERVICE_NAME "NameService"
 
 Notify_Test_Client::Notify_Test_Client ()
+  : ifgop_ (CosNotifyChannelAdmin::OR_OP)
 {
   // @@ Later: accept the inter filter operator as a param.
-  ifgop_ = CosNotifyChannelAdmin::OR_OP;
 }
 
 Notify_Test_Client::~Notify_Test_Client ()
