@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Connection_Handler_Acceptor.h
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
 
 #ifndef _CONNECTION_HANDLER_ACCEPTOR
 #define _CONNECTION_HANDLER_ACCEPTOR

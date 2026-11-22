@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Locator_Request_Reply.h
  *
  *  @author Nanbor Wang
  */
-//=============================================================================
 
 #ifndef ACE_LOCATOR_REQUEST_REPLY_H
 #define ACE_LOCATOR_REQUEST_REPLY_H

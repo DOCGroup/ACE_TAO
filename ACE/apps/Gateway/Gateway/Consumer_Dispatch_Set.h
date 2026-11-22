@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Consumer_Dispatch_Set.h
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
 
 #ifndef CONSUMER_DISPATCH_SET
 #define CONSUMER_DISPATCH_SET

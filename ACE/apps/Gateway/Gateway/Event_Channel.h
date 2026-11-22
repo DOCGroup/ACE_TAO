@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Event_Channel.h
  *
  *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_EVENT_CHANNEL
 #define ACE_EVENT_CHANNEL

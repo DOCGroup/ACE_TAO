@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Connection_Handler_Connector.h
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
 
 #ifndef _IO_HANDLER_CONNECTOR
 #define _IO_HANDLER_CONNECTOR

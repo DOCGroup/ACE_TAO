@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Concrete_Connection_Handlers.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef CONCRETE_CONNECTION_HANDLER
 #define CONCRETE_CONNECTION_HANDLER
