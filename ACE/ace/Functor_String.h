@@ -25,9 +25,8 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-////////////////////////////////////////////////////////////
-// STL-style Functor Classes and Template Specializations //
-////////////////////////////////////////////////////////////
+/// @name STL-style functor classes and template specializations
+/// @{
 
 // Forward declaration since we are going to specialize that template
 // here. The template itself requires this file so every user of the
@@ -147,6 +146,7 @@ public:
 };
 
 #endif /*ACE_USES_WCHAR*/
+/// @}
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
