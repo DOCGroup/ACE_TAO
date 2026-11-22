@@ -42,7 +42,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
   ACE_OS_TRACE ("ACE_OS::getmacaddress");
 
 #if defined (ACE_WIN32)
-    /** Define a structure for use with the netbios routine */
+    /// Define a structure for use with the netbios routine
     struct ADAPTERSTAT
     {
       ADAPTER_STATUS adapt;
@@ -66,7 +66,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
         ncb.ncb_command  = NCBRESET;
         ncb.ncb_lana_num = lenum.lana [i];
 
-        /** Reset the netbios */
+        /// Reset the netbios
         result = Netbios (&ncb);
 
         if (ncb.ncb_retcode != NRC_GOODRET)
