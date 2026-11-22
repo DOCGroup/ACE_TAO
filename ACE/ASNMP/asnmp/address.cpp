@@ -42,7 +42,6 @@
 #include <memory>
 #include <new>
 
-
 // allow destruction of derived classes
 Address::~Address()
 = default;
@@ -193,7 +192,6 @@ bool operator<=( const Address &lhs,const char *rhs)
   }
   return std::strcmp (static_cast<char const *> (lhs), rhs) <= 0;
 }
-
 
 //-----------[ syntax type ]----------------------------------------------
 SmiUINT32 IpAddress::get_syntax()
@@ -639,7 +637,6 @@ void IpAddress::mask( const IpAddress& ipaddr)
 
 }
 
-
 Address_Iter::Address_Iter (char const *hostname)
 {
   std::memset (&buffer_, 0, sizeof (ACE_HOSTENT_DATA));
@@ -721,7 +718,6 @@ int Address_Iter::query_dns (char const *hostname)
   }
   return loc_errno;
 }
-
 
 //-----------[ syntax type ]----------------------------------------------
 SmiUINT32 UdpAddress::get_syntax()
@@ -970,7 +966,6 @@ void UdpAddress::format_output()
   }
 }
 
-
 void NetbiosAddress::format_output()
 {
   if ( valid_flag)
@@ -1167,7 +1162,6 @@ addr_type NetbiosAddress::get_type() const
 {
   return type_nb;
 }
-
 
 //-----------[ syntax type ]----------------------------------------------
 SmiUINT32 IpxAddress::get_syntax()
@@ -1554,7 +1548,6 @@ void IpxAddress::to_octet(OctetStr& octet) const
    octet.set_data( smival.value.string.ptr, smival.value.string.len);
 }
 
-
 //-----------[ syntax type ]----------------------------------------------
 SmiUINT32 IpxSockAddress::get_syntax()
 {
@@ -1793,7 +1786,6 @@ addr_type IpxSockAddress::get_type() const
 {
   return type_ipxsock;
 }
-
 
 //-----------[ syntax type ]----------------------------------------------
 SmiUINT32 MacAddress::get_syntax()
@@ -2062,7 +2054,6 @@ void MacAddress::to_octet(OctetStr& octet) const
 {
    octet.set_data( smival.value.string.ptr, smival.value.string.len);
 }
-
 
 //-----------[ get the syntax]----------------------------------------------
 SmiUINT32 GenAddress::get_syntax()
