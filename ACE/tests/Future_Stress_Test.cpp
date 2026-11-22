@@ -33,16 +33,16 @@ struct Worker_Config
   ACE_Future<int> result;
 };
 
-void* worker (void* args)
+ACE_THR_FUNC_RETURN worker (void* args)
 {
   Worker_Config* config = static_cast<Worker_Config*>(args);
   int r = config->a + config->b * config->c;
   config->result.set(r);
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-void* runner (void* args)
+ACE_THR_FUNC_RETURN runner (void* args)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) runner start\n")));
 
@@ -69,7 +69,7 @@ void* runner (void* args)
     ACE_hthread_t thread_id;
     int expected_res = config.a+config.b*config.c;
     int actual_res = -1;
-    if (ACE_Thread::spawn((ACE_THR_FUNC)worker,
+    if (ACE_Thread::spawn(worker,
                         static_cast<void*>(&config), THR_NEW_LWP | THR_JOINABLE, nullptr,
                         &thread_id) == -1)
     {
@@ -90,7 +90,7 @@ void* runner (void* args)
   } while( *duration != ACE_Time_Value::zero );
    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) runner done\n"), runNum));
 
-   return nullptr;
+   return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int
@@ -127,7 +127,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (valid)
   {
     ACE_Thread_Manager::instance ()->spawn_n (n_threads,
-      ACE_THR_FUNC (runner),
+      runner,
       static_cast<void*>(&duration),
       THR_NEW_LWP | THR_DETACHED);
 
