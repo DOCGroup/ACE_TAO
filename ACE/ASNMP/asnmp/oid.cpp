@@ -45,7 +45,6 @@ enum Defs {SNMPBUFFSIZE=300,
 
 #define NO_MEM_STR "ERROR: Oid::to_string: memory allocation failure"
 
-//=============[Oid::get_syntax()]====================================
 SmiUINT32 Oid::get_syntax()
 {
   return sNMP_SYNTAX_OID;
@@ -129,7 +128,6 @@ Oid::Oid(const unsigned long *raw_oid, size_t oid_len)
   }
 }
 
-//=============[Oid::~Oid]==============================================
 //
 // free up the descriptor space
 Oid::~Oid()
@@ -137,7 +135,6 @@ Oid::~Oid()
   set_invalid ();
 }
 
-//=============[Oid::operator = const char * dotted_string ]==============
 // assignment to a string operator overloaded
 //
 // free the existing oid
@@ -158,7 +155,6 @@ void Oid::set_data( const char *dotted_oid_string)
   }
 }
 
-//=============[Oid:: operator = const Oid &oid ]==========================
 // assignment to another oid object overloaded
 //
 // free the existing oid
@@ -212,7 +208,6 @@ void Oid::init_value(const unsigned long *raw_oid, size_t oid_len)
   smival.value.oid.len = oid_len;
 }
 
-//==============[Oid:: operator += const char *a ]=========================
 // append operator, appends a string
 //
 // allocate some space for a max oid string
@@ -271,7 +266,6 @@ Oid& Oid::operator+=( const char *a)
   return *this;
 }
 
-//=============[ bool operator == oid,oid ]=================================
 // equivlence operator overloaded
 bool operator==( const Oid &lhs, const Oid &rhs)
 {
@@ -290,14 +284,12 @@ bool operator==( const Oid &lhs, const Oid &rhs)
   }
 }
 
-//==============[ bool operator!=( Oid &x,Oid &y) ]=======================
 //not equivlence operator overloaded
 bool operator!=( const Oid &lhs,const Oid &rhs)
 {
   return (!(lhs == rhs));
 }
 
-//==============[ bool operator<( Oid &x,Oid &y) ]========================
 // less than < overloaded
 bool operator<( const Oid &lhs,const Oid &rhs)
 {
@@ -327,7 +319,6 @@ bool operator<( const Oid &lhs,const Oid &rhs)
   }
 }
 
-//==============[ bool operator<=( Oid &x,Oid &y) ]=======================
 // less than <= overloaded
 bool operator<=( const Oid &x,const Oid &y)
 {
@@ -341,7 +332,6 @@ bool operator<=( const Oid &x,const Oid &y)
   }
 }
 
-//==============[ bool operator>( Oid &x,Oid &y) ]========================
 // greater than > overloaded
 bool operator>( const Oid &x,const Oid &y)
 {
@@ -356,7 +346,6 @@ bool operator>( const Oid &x,const Oid &y)
   }
 }
 
-//==============[ bool operator>=( Oid &x,Oid &y) ]=======================
 // greater than >= overloaded
 bool operator>=( const Oid &x,const Oid &y)
 {
@@ -371,14 +360,12 @@ bool operator>=( const Oid &x,const Oid &y)
   }
 }
 
-//===============[Oid::oidval ]=============================================
 // return the WinSnmp oid part
 SmiLPOID Oid::oidval()
 {
   return std::addressof (smival.value.oid);
 }
 
-//===============[Oid::set_data ]==---=====================================
 // copy data from raw form...
 void Oid::set_data( const unsigned long *raw_oid, const size_t oid_len)
 {
@@ -390,14 +377,12 @@ void Oid::set_data( const unsigned long *raw_oid, const size_t oid_len)
   init_value(raw_oid, oid_len);
 }
 
-//===============[Oid::len ]================================================
 // return the len of the oid
 size_t Oid::length() const
 {
   return smival.value.oid.len;
 }
 
-//===============[Oid::trim( unsigned int) ]============================
 // trim off the n leftmost values of an oid
 // Note!, does not adjust actual space for
 // speed
@@ -413,7 +398,6 @@ void Oid::trim( const size_t n)
   }
 }
 
-//===============[Oid::set_invalid() ]====================
 // make this object invalid by resetting all values
 void Oid::set_invalid() {
   delete [] smival.value.oid.ptr;
@@ -422,7 +406,6 @@ void Oid::set_invalid() {
   iv_str.reset ();
 }
 
-//===============[Oid::set_null() ]====================
 void Oid::set_null() {
   smival.syntax = sNMP_SYNTAX_OID;
   smival.value.oid.ptr = nullptr;
@@ -430,7 +413,6 @@ void Oid::set_null() {
   iv_str.reset ();
 }
 
-//===============[Oid::operator += const unsigned int) ]====================
 // append operator, appends an int
 //
 // allocate some space for a max oid string
@@ -484,7 +466,6 @@ Oid& Oid::operator+=( const unsigned long i)
   return *this;
 }
 
-//===============[Oid::operator += const Oid) ]========================
 // append operator, appends an Oid
 //
 // allocate some space for a max oid string
@@ -563,7 +544,6 @@ const char * Oid::to_string()
   return iv_str.get ();
 }
 
-//==============[Oid::suboid( unsigned int start, n) ]=============
 int Oid::suboid(Oid& new_oid, size_t start, size_t how_many)
 {
   if (how_many == 0)
@@ -597,7 +577,6 @@ int Oid::suboid(Oid& new_oid, size_t start, size_t how_many)
   return 0;
 }
 
-//=============[Oid::StrToOid( char *string, SmiLPOID dst) ]==============
 // convert a string to an oid
 int Oid::StrToOid( const char *string, SmiLPOID dstOid, size_t& how_many)
 {
@@ -659,7 +638,6 @@ int Oid::StrToOid( const char *string, SmiLPOID dstOid, size_t& how_many)
   return 0;
 }
 
-//===============[Oid::OidCopy( source, destination) ]====================
 // Copy an oid, return bytes copied
 int Oid::OidCopy( SmiLPOID srcOid, SmiLPOID dstOid, size_t& how_many_bytes)
 {
@@ -679,7 +657,6 @@ int Oid::OidCopy( SmiLPOID srcOid, SmiLPOID dstOid, size_t& how_many_bytes)
   return 0;
 }
 
-//===============[Oid::left_comparison( n, Oid) ]=================================
 // compare the n leftmost values of two oids ( left-to_right )
 //
 // self == Oid then return 0, they are equal
@@ -740,7 +717,6 @@ int Oid::left_comparison( const unsigned long n, const Oid &o) const
 
 }
 
-//===============[Oid::left_comparison( n, Oid) ]=================================
 // compare the n rightmost bytes (right-to-left)
 // returns 0, equal
 // returns -1, <
@@ -782,7 +758,6 @@ int Oid::right_comparison( const unsigned long n, const Oid &o) const
 
 }
 
-//================[ Oid::valid() ]========================================
 // is the Oid object valid
 // returns validity
 int Oid::valid() const
@@ -790,7 +765,6 @@ int Oid::valid() const
    return ( smival.value.oid.ptr ? 1 : 0 );
 }
 
-//================[Oid::OidToStr ]=========================================
 // convert an oid to a string
 int Oid::OidToStr( SmiLPOID srcOid, unsigned long size,
                   char *string, size_t& how_many_bytes)
@@ -839,7 +813,6 @@ int Oid::OidToStr( SmiLPOID srcOid, unsigned long size,
   return 0;
 }
 
-//================[ general Value = operator ]========================
 SnmpSyntax& Oid::operator=( SnmpSyntax &val)
 {
   // protect against assignment from self
@@ -866,13 +839,11 @@ SnmpSyntax& Oid::operator=( SnmpSyntax &val)
   return *this;
 }
 
-//================[ [] operator ]=====================================
 unsigned long& Oid::operator[](size_t position)
 {
   return smival.value.oid.ptr[position];
 }
 
-//================[ clone ]===========================================
 SnmpSyntax *Oid::clone() const
 {
   return new Oid(*this);

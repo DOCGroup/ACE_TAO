@@ -76,7 +76,6 @@ Pdu::Pdu (Pdu const &pdu)
 
 Pdu::~Pdu() = default;
 
-//=====================[ assignment to another Pdu object overloaded ]===
 Pdu &Pdu::operator= (Pdu const &pdu)
 {
    if (this == std::addressof (pdu))
@@ -181,7 +180,6 @@ char const *Pdu::to_string ()
   return output_.get ();
 }
 
-//=====================[ extract Vbs from Pdu ]==========================
 // how do you know that the caler has enough memory???
 // should I self allocate this in here and require the
 // caller then to free it up at soem later time
@@ -202,7 +200,6 @@ int Pdu::get_vblist (Vb *pvbs, int pvb_count)
    return 1;
 }
 
-//=====================[ deposit Vbs ]===================================
 int Pdu::set_vblist (Vb *pvbs, int pvb_count)
 {
    // if invalid then don't destroy
@@ -246,7 +243,6 @@ int Pdu::set_vblist (Vb *pvbs, int pvb_count)
    return 1;
 }
 
-//===================[ get a particular vb ]=============================
 // here the caller has already instantiated a vb object
 // index is zero based
 int Pdu::get_vb (Vb &vb, int index) const
@@ -269,7 +265,6 @@ int Pdu::get_vb (Vb &vb, int index) const
    return 1;
 }
 
-//===================[ set a particular vb ]=============================
 int Pdu::set_vb (Vb &vb, int index)
 {
    // can't set a vb at index less than 0
@@ -296,13 +291,11 @@ int Pdu::set_vb (Vb &vb, int index)
    return 1;
 }
 
-//=====================[ return number of vbs_ ]==========================
 int Pdu::get_vb_count () const
 {
    return vb_count_;
 }
 
-//=====================[ return the error status ]=======================
 int Pdu::get_error_status () const
 {
    return error_status_;
@@ -342,7 +335,6 @@ char const *Pdu::agent_error_reason ()
     return output_.get ();
 }
 
-//=====================[ set the error status ]==========================
 // friend
 void set_error_status (Pdu *pdu, int status)
 {
@@ -352,13 +344,11 @@ void set_error_status (Pdu *pdu, int status)
    }
 }
 
-//=====================[ return the error index ]========================
 int Pdu::get_error_index () const
 {
    return error_index_;
 }
 
-//=====================[ set the error index ]===========================
 // friend
 void set_error_index (Pdu *pdu, int index)
 {
@@ -368,7 +358,6 @@ void set_error_index (Pdu *pdu, int index)
    }
 }
 
-//=====================[ clear error status ]=============================
 void clear_error_status (Pdu *pdu)
 {
    if (pdu != nullptr)
@@ -377,7 +366,6 @@ void clear_error_status (Pdu *pdu)
    }
 }
 
-//=====================[ clear error index ]==============================
 void clear_error_index (Pdu *pdu)
 {
    if (pdu != nullptr)
@@ -386,13 +374,11 @@ void clear_error_index (Pdu *pdu)
    }
 }
 
-//=====================[ return the request id ]==========================
 unsigned long Pdu::get_request_id () const
 {
    return request_id_;
 }
 
-//=====================[ set the request id ]=============================
 // friend function
 void set_request_id (Pdu *pdu, unsigned long rid)
 {
@@ -402,13 +388,11 @@ void set_request_id (Pdu *pdu, unsigned long rid)
    }
 }
 
-//=====================[ returns validity_ of Pdu instance ]===============
 int Pdu::valid () const
 {
    return validity_;
 }
 
-//=====================[ get the pdu type ]===============================
 unsigned short Pdu::get_type () const
 {
    return pdu_type_;

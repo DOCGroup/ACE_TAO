@@ -280,7 +280,6 @@ char const *UdpTarget::to_string ()
   return output_buffer_;
 }
 
-//=============[ int operator == UdpTarget, UdpTarget ]===============
 // equivlence operator overloaded
 bool operator== (UdpTarget const &lhs, UdpTarget const &rhs)
 {

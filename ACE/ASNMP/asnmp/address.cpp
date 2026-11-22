@@ -42,7 +42,6 @@
 #include <memory>
 #include <new>
 
-//======== Abstract Address Class Implementation ==================
 
 // allow destruction of derived classes
 Address::~Address()
@@ -195,7 +194,6 @@ bool operator<=( const Address &lhs,const char *rhs)
   return std::strcmp (static_cast<char const *> (lhs), rhs) <= 0;
 }
 
-//============ IPAddress Implementation ===============================
 
 //-----------[ syntax type ]----------------------------------------------
 SmiUINT32 IpAddress::get_syntax()
@@ -641,7 +639,6 @@ void IpAddress::mask( const IpAddress& ipaddr)
 
 }
 
-//========== DNS Iterator Implementation ================================
 
 Address_Iter::Address_Iter (char const *hostname)
 {
@@ -725,7 +722,6 @@ int Address_Iter::query_dns (char const *hostname)
   return loc_errno;
 }
 
-//========== Udp Address Implementation =================================
 
 //-----------[ syntax type ]----------------------------------------------
 SmiUINT32 UdpAddress::get_syntax()
@@ -974,7 +970,6 @@ void UdpAddress::format_output()
   }
 }
 
-//=========== Netbios Address Implementation ============================
 
 void NetbiosAddress::format_output()
 {
@@ -1173,7 +1168,6 @@ addr_type NetbiosAddress::get_type() const
   return type_nb;
 }
 
-//=========== IPX Address Implementation ================================
 
 //-----------[ syntax type ]----------------------------------------------
 SmiUINT32 IpxAddress::get_syntax()
@@ -1560,7 +1554,6 @@ void IpxAddress::to_octet(OctetStr& octet) const
    octet.set_data( smival.value.string.ptr, smival.value.string.len);
 }
 
-//======== IpxSockAddress Implementation =================================
 
 //-----------[ syntax type ]----------------------------------------------
 SmiUINT32 IpxSockAddress::get_syntax()
@@ -1801,7 +1794,6 @@ addr_type IpxSockAddress::get_type() const
   return type_ipxsock;
 }
 
-//======== MACAddress Implementation =====================================
 
 //-----------[ syntax type ]----------------------------------------------
 SmiUINT32 MacAddress::get_syntax()
@@ -2071,7 +2063,6 @@ void MacAddress::to_octet(OctetStr& octet) const
    octet.set_data( smival.value.string.ptr, smival.value.string.len);
 }
 
-//========== Generic Address Implementation ==============================
 
 //-----------[ get the syntax]----------------------------------------------
 SmiUINT32 GenAddress::get_syntax()
