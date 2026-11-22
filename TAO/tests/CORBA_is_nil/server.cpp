@@ -45,14 +45,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil RootPOA\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Panic: nil RootPOA\n"),
+                            1);
+        }
 
       PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
-        return 1;
+        {
+          return 1;
+        }
 
       Hello *hello_impl {};
       ACE_NEW_RETURN (hello_impl,
