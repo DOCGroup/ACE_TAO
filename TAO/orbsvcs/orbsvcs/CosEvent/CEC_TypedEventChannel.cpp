@@ -83,7 +83,7 @@ namespace
 {
   struct ShutdownHandler : ACE_Event_Handler
   {
-    ShutdownHandler (CORBA::ORB_ptr orb)
+    explicit ShutdownHandler (CORBA::ORB_ptr orb)
       : orb_ (CORBA::ORB::_duplicate (orb)) {}
     CORBA::ORB_var orb_;
 
