@@ -4,6 +4,7 @@
 #include "ace/ACE.h"
 #include "ace/os_include/net/os_if.h"
 #include "ace/OS_NS_netdb.h"
+#include "ace/OS_NS_stropts.h"
 #include "ace/OS_Memory.h"
 
 #include <cstring>
