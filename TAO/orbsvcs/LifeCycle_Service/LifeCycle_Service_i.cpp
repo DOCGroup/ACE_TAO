@@ -44,10 +44,6 @@ Life_Cycle_Service_i::create_object (CosLifeCycle::Key const & factory_key,
       if (this->debug_level_ >= 2)
       {
         ORBSVCS_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: new evaluator.\n"));
-      }
-
-      if (this->debug_level_ >= 2)
-      {
         ORBSVCS_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: getFilter will be called.\n"));
       }
 

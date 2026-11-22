@@ -10,7 +10,7 @@
 //FUZZ: disable check_for_lack_ACE_OS/
 inline unsigned ceil(unsigned numerator, unsigned denominator)
 {
-  return numerator/denominator+ (numerator%denominator ? 1 : 0);
+  return numerator / denominator + (numerator % denominator != 0);
 }
 //FUZZ: enable check_for_lack_ACE_OS/
 

@@ -55,7 +55,7 @@ Demux_Stats::calculate_avg_latency ()
   long ignored, time;
   char str1[50], str2[50], str3[50];
 
-  double mean_poa, mean_servant, mean_dispatch, mean_perfect, mean_dynamic, mean_binary, mean_linear, mean_parse;
+  double mean_poa, mean_servant, mean_dispatch, mean_perfect, mean_dynamic, mean_binary, mean_linear;
   double items;
   long sum_poa, sum_servant, sum_dispatch, last_poa_time = 0, last_servant_time = 0;
   long last_dispatch_time = 0, sum_linear, sum_dynamic, sum_binary, sum_perfect, sum_parse;
@@ -278,11 +278,7 @@ Demux_Stats::calculate_avg_latency ()
       mean_linear = sum_linear/items;
       mean_binary = sum_binary/items;
       mean_perfect = sum_perfect/items;
-      mean_parse = sum_parse/items;
-    }
-
-  if (iterations == 0)
-    {
+      double const mean_parse = sum_parse/items;
       ACE_OS::printf("Average response times = POA = %lf SERVANT = %lf DISPATCH = %lf PERFECT = %lf DYNAMIC = %lf BINARY = %lf LINEAR = %lf PARSE = %lf microsec\n", mean_poa, mean_servant,
                      mean_dispatch,
                      mean_perfect,
