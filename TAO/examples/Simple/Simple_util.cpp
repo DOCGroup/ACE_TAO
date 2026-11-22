@@ -199,7 +199,9 @@ Server<Servant>::register_name (char const *name)
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
   if (this->naming_client_.init (orb.in ()) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   // create the name for the naming service
   CosNaming::Name bindName;

@@ -18,11 +18,13 @@ int
 Quoter_Task::svc ()
 {
   if (this->quoter_client.init (this->argc_, this->argv_) == -1)
-    return 1;
+    {
+      return 1;
+    }
   else
-  {
-    return this->quoter_client.run ();
-  }
+    {
+      return this->quoter_client.run ();
+    }
 }
 
 // Parses the command line arguments and returns an error status.
