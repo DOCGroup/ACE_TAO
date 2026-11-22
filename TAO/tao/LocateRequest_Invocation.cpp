@@ -34,7 +34,7 @@ namespace TAO
   class First_Request_Guard
   {
   public:
-    First_Request_Guard (TAO_Transport &transport);
+    explicit First_Request_Guard (TAO_Transport &transport);
 
     ~First_Request_Guard ();
 
