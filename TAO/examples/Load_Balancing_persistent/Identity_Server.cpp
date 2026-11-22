@@ -252,9 +252,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
 
   if (result == -1)
-    return 1;
+    {
+      return 1;
+    }
   else
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 }

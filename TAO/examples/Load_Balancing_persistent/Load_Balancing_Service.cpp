@@ -108,11 +108,15 @@ Load_Balancing_Service::init (int argc, ACE_TCHAR* argv[])
       ior = this->orb_manager_.orb ()->object_to_string (objref.in ());
 
       if (ior.in () == nullptr)
-        return -1;
+        {
+          return -1;
+        }
       else if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Object Group Factory ior: %s\n",
-                    ior.in ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Object Group Factory ior: %s\n",
+                      ior.in ()));
+        }
     }
   catch (const CORBA::Exception& ex)
     {
@@ -162,9 +166,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
 
   if (result == -1)
-    return 1;
+    {
+      return 1;
+    }
   else
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 }
