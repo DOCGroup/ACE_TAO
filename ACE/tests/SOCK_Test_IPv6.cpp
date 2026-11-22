@@ -138,7 +138,16 @@ server (void *arg)
   const char *t = ACE_ALPHABET;
 
   handle_set.reset ();
-  handle_set.set_bit (peer_acceptor->get_handle ());
+  ACE_HANDLE const acceptor_handle = peer_acceptor->get_handle ();
+#if !defined (ACE_WIN32)
+  if (acceptor_handle < 0 || acceptor_handle >= ACE_FD_SETSIZE)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) acceptor handle exceeds FD_SETSIZE\n")));
+      return ACE_THR_FUNC_RETURN_NULL;
+    }
+#endif /* ! ACE_WIN32 */
+  handle_set.set_bit (acceptor_handle);
 
   int select_width;
 #  if defined (ACE_WIN64)
@@ -146,7 +155,7 @@ server (void *arg)
   // warnings on 64-bit compiles.
   select_width = 0;
 #  else
-  select_width = int (peer_acceptor->get_handle ()) + 1;
+  select_width = int (acceptor_handle) + 1;
 #  endif /* ACE_WIN64 */
   int result = ACE_OS::select (select_width,
                                handle_set,
@@ -180,7 +189,17 @@ server (void *arg)
         }
 
       handle_set.reset ();
-      handle_set.set_bit (new_stream.get_handle ());
+      ACE_HANDLE const stream_handle = new_stream.get_handle ();
+#if !defined (ACE_WIN32)
+      if (stream_handle < 0 || stream_handle >= ACE_FD_SETSIZE)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) stream handle exceeds FD_SETSIZE\n")));
+          new_stream.close ();
+          return ACE_THR_FUNC_RETURN_NULL;
+        }
+#endif /* ! ACE_WIN32 */
+      handle_set.set_bit (stream_handle);
 
       // Read data from client (terminate on error).
       for (ssize_t r_bytes; ;)
@@ -190,7 +209,7 @@ server (void *arg)
           // warnings on 64-bit compiles.
           int const select_width = 0;
 #  else
-          int const select_width = int (new_stream.get_handle ()) + 1;
+          int const select_width = int (stream_handle) + 1;
 #  endif /* ACE_WIN64 */
           if (ACE_OS::select (select_width,
                               handle_set,

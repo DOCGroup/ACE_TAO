@@ -112,7 +112,16 @@ server (void *arg)
   errno = 0;
   ACE_Handle_Set h;
   ACE_Time_Value delay (10);
-  h.set_bit (fifo->get_handle ());
+  ACE_HANDLE const handle = fifo->get_handle ();
+#if !defined (ACE_WIN32)
+  if (handle < 0 || handle >= ACE_FD_SETSIZE)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) FIFO handle exceeds FD_SETSIZE\n")),
+                        0);
+    }
+#endif /* ! ACE_WIN32 */
+  h.set_bit (handle);
   if (ACE::select (h.max_set () + 1, h, &delay) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) server %p\n"),

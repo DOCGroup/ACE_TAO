@@ -58,12 +58,19 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   int result = dummy_pipe.open ();
   ACE_ASSERT (result == 0);
   ACE_UNUSED_ARG (result); // To avoid compile warning with ACE_NDEBUG.
+  ACE_HANDLE const read_handle = dummy_pipe.read_handle ();
+#if !defined (ACE_WIN32)
+  if (read_handle < 0 || read_handle >= ACE_FD_SETSIZE)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("pipe handle exceeds FD_SETSIZE\n")),
+                        1);
+    }
+#endif /* ! ACE_WIN32 */
+  dummy_handle_set.set_bit (read_handle);
 
   for (int i = 1; i <= iterations; ++i)
     {
-      // Add dummy handle to dummy set
-      dummy_handle_set.set_bit (dummy_pipe.read_handle ());
-
       // Note the time before select
       starting_time_of_day = ACE_OS::gettimeofday ();
 
@@ -72,7 +79,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       int const width = 0;
 #else
       int const width = ACE_Utils::truncate_cast<int> (
-        static_cast<intptr_t> (dummy_pipe.read_handle ()));
+        static_cast<intptr_t> (read_handle));
 #endif
       result = ACE_OS::select (
         width,
