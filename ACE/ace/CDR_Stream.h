@@ -682,8 +682,8 @@ protected:
 class ACE_Export ACE_InputCDR
 {
 public:
-  // The translators need privileged access to efficiently demarshal
-  // arrays and such.
+  /// The translators need privileged access to efficiently demarshal
+  /// arrays and such.
   friend class ACE_Char_Codeset_Translator;
   friend class ACE_WChar_Codeset_Translator;
 

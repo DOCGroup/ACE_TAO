@@ -116,10 +116,10 @@ private:
   int init_ccs (TAO_Codeset_Descriptor&,
                 CONV_FRAME::CodeSetComponent&);
 
-  // get the translator between our ncs_c and the supplied tcs_c
+  /// Get the translator between our ncs_c and the supplied tcs_c.
   TAO_Codeset_Translator_Base *get_char_trans (CONV_FRAME::CodeSetId) override;
 
-  // get the translator between our ncs_w and the supplied tcs_w
+  /// Get the translator between our ncs_w and the supplied tcs_w.
   TAO_Codeset_Translator_Base *get_wchar_trans (CONV_FRAME::CodeSetId) override;
 
   TAO_Codeset_Translator_Base *get_translator_i (TAO_Codeset_Descriptor const &,
@@ -127,9 +127,9 @@ private:
 
   void get_ncs (CONV_FRAME::CodeSetId &ncsc, CONV_FRAME::CodeSetId& ncsw) override;
 
-  // The CodeSetComponentInfo struct contains all of the information
-  // regarding the code sets this application recognizes. This is
-  // where the native code set for both char and wchar are stored.
+  /// The CodeSetComponentInfo struct contains all of the information
+  /// regarding the code sets this application recognizes. This is
+  /// where the native code set for both char and wchar are stored.
   CONV_FRAME::CodeSetComponentInfo codeset_info_;
 
   TAO_Codeset_Descriptor char_descriptor_;

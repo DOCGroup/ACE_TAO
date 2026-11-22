@@ -51,8 +51,8 @@ public:
    */
   virtual int sending_request (TAO_ORB_Core *orb_core, TAO_Message_Semantics msg_semantics);
 
-  // The ORB finished handling the request; either the reply was received
-  // and dispatched, the request timed out or the connection was closed.
+  /// The ORB finished handling the request; either the reply was received
+  /// and dispatched, the request timed out or the connection was closed.
   virtual void finished_request ();
 
   /// Base class virtual method. Wait till the @c reply_received flag is

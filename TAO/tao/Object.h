@@ -153,12 +153,10 @@ namespace CORBA
     virtual char * _repository_id ();
 
 #if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO)
-    // DII operations to create a request.
-    //
-    // The mapping for create_request is split into two forms,
-    // corresponding to the two usage styles described in CORBA
-    // section 6.2.1.
-
+    /// @name DII operations to create a request
+    /// The mapping has two forms, corresponding to the two usage styles
+    /// described in CORBA section 6.2.1.
+    /// @{
     virtual void _create_request (CORBA::Context_ptr ctx,
                                   char const *operation,
                                   CORBA::NVList_ptr arg_list,
@@ -174,11 +172,10 @@ namespace CORBA
                                   CORBA::ContextList_ptr ctxtlist,
                                   CORBA::Request_ptr &request,
                                   CORBA::Flags req_flags);
+    /// @}
 
-    // The default implementation of this method uses the same simple,
-    // multi-protocol remote invocation interface as is assumed by the
-    // calls above ... that's how it can have a default
-    // implementation.
+    /// The default implementation uses the same simple, multi-protocol
+    /// remote invocation interface as the calls above.
 
     /// DII operation to create a request.
     virtual CORBA::Request_ptr _request (char const *operation);
