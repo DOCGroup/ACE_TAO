@@ -576,10 +576,12 @@ test_ostream ()
 #if !defined (TEST_CAN_UNLINK_IN_ADVANCE)
   file.close ();
   if (file.unlink () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("unlink failed for %p\n"),
-                       file_addr.get_path_name ()),
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("unlink failed for %p\n"),
+                         file_addr.get_path_name ()),
                        1);
+    }
 #endif
 
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */

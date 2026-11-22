@@ -301,7 +301,9 @@ get_base_addrs ()
   OSVERSIONINFO vinfo;
   vinfo.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
   if (::GetVersionEx(&vinfo) == 0)
-    return;
+    {
+      return;
+    }
 #   if defined(__clang__)
 #     pragma clang diagnostic pop
 #   endif /* __clang__ */

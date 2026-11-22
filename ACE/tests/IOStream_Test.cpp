@@ -444,11 +444,15 @@ spawn ()
         ACE_INET_Addr server_addr;
 
         if (acceptor.get_local_addr (server_addr) == -1)
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%p\n"),
-                      ACE_TEXT ("get_local_addr")));
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("%p\n"),
+                        ACE_TEXT ("get_local_addr")));
+          }
         else
-          client (&server_addr);
+          {
+            client (&server_addr);
+          }
         ACE_END_LOG;
         break;
       }

@@ -55,8 +55,10 @@ disable_signal (int sigmin, int sigmax)
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
   sigset_t signal_set;
   if (ACE_OS::sigemptyset (&signal_set) == - 1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Error: (%P|%t): sigemptyset failed: %p\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Error: (%P|%t): sigemptyset failed: %p\n")));
+    }
 
   for (int i = sigmin; i <= sigmax; ++i)
     ACE_OS::sigaddset (&signal_set, i);
@@ -69,9 +71,11 @@ disable_signal (int sigmin, int sigmax)
 # else
   if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, nullptr) != 0)
 # endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error: (%P|%t): SIG_BLOCK failed: %p\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Error: (%P|%t): SIG_BLOCK failed: %p\n")),
+                        -1);
+    }
 #else
   ACE_UNUSED_ARG (sigmin);
   ACE_UNUSED_ARG (sigmax);
@@ -164,7 +168,9 @@ get_dh1024 ()
   DH *dh;
 
   if ((dh = DH_new ()) == nullptr)
-    return nullptr;
+    {
+      return nullptr;
+    }
 
   BIGNUM* p = BN_bin2bn(dh1024_p,sizeof(dh1024_p),0);
   BIGNUM* g = BN_bin2bn(dh1024_g,sizeof(dh1024_g),0);
@@ -643,13 +649,17 @@ Acceptor::accept (size_t bytes_to_read, const void *act)
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, -1);
 
   if  (this->cancel_flag_!= 0)
-    return -1;
+    {
+      return -1;
+    }
 
   ++this->accept_cnt_;
   int rc = this->ACE_Asynch_Acceptor<Server_Service_Handler>::accept (
     bytes_to_read, act);
   if (rc != 0)
-    --this->accept_cnt_;
+    {
+      --this->accept_cnt_;
+    }
 
   return rc;
 }
