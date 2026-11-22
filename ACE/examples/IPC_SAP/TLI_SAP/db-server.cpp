@@ -56,30 +56,42 @@ lookup_name (void *arg)
   ssize_t n = stream.recv (recvline, MAXLINE, &flags);
 
   if (n == -1)
-    ACE_OS::t_error ("stream.recv error");
+    {
+      ACE_OS::t_error ("stream.recv error");
+    }
 
   employee_id = ACE_OS::atoi (recvline);
   found = 0;
 
   for (index = 0; found == 0 && employee_db[index].emp_id; ++index)
-    if (employee_id == employee_db[index].emp_id)
+    {
+      if (employee_id == employee_db[index].emp_id)
       {
         found = 1;
         n = ACE_OS::sprintf (sendline,
                              "%s", employee_db[index].emp_name);
       }
+    }
 
   if (found == 0)
-    n = ACE_OS::sprintf (sendline, "%s", "ERROR");
+    {
+      n = ACE_OS::sprintf (sendline, "%s", "ERROR");
+    }
 
   if (stream.send (sendline, n + 1, 0) == -1)
-    ACE_OS::t_error ("stream.send error");
+    {
+      ACE_OS::t_error ("stream.send error");
+    }
 
   if (stream.sndrel () == -1)
-    ACE_OS::t_error ("stream.send error");
+    {
+      ACE_OS::t_error ("stream.send error");
+    }
 
   if (stream.close () == -1)
-    ACE_OS::t_error ("stream.close error");
+    {
+      ACE_OS::t_error ("stream.close error");
+    }
 
   return ACE_THR_FUNC_RETURN_NULL;
 }
@@ -98,14 +110,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   for (;;)
     {
       if (server.accept (new_stream) == -1)
-        ACE_OS::t_error ("server.accept error");
+        {
+          ACE_OS::t_error ("server.accept error");
+          continue;
+        }
 
       if (thr_mgr.spawn (lookup_name,
                          reinterpret_cast<void *> (
                            static_cast<std::intptr_t> (new_stream.get_handle ())),
                          THR_DETACHED) == -1)
-        ACE_DEBUG ((LM_ERROR,
-                    "server: can't create worker thread %d\n"));
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "server: can't create worker thread\n"));
+        }
     }
 
   ACE_NOTREACHED (return 0);

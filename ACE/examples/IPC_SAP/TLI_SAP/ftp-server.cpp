@@ -48,7 +48,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Open the server and reuse the address if in use...
   if (server.open (ACE_INET_Addr (port), 1) == -1)
-    ACE_OS::t_error ("server.open"), ACE_OS::exit (1);
+    {
+      ACE_OS::t_error ("server.open");
+      ACE_OS::exit (1);
+    }
 
   // Wait for a connection from a client.  This is an example of a
   // concurrent server.
@@ -60,14 +63,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   count));
 
       if (server.accept (new_stream) == -1)
-        ACE_OS::t_error ("server.accept error");
+        {
+          ACE_OS::t_error ("server.accept error");
+        }
 
       else if (thr_mgr.spawn (read_file,
                               reinterpret_cast<void *> (
                                 static_cast<std::intptr_t> (
                                   new_stream.get_handle ())),
                               THR_DETACHED | THR_BOUND) == -1)
-        ACE_OS::perror ("can't create worker thread\n");
+        {
+          ACE_OS::perror ("can't create worker thread\n");
+        }
     }
 
   ACE_NOTREACHED (return 0);
