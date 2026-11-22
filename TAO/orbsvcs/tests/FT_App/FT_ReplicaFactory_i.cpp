@@ -594,7 +594,6 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
 
   // boolean, becomes true if a required parameter is missing
   int missingParameter = 0;
-  char const *missingParameterName {};
 
   CORBA::Long initialValue = 0;
   if (! ::TAO::find (decoder, criterion_initial_value, initialValue) )
@@ -617,6 +616,7 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
 
   if (missingParameter)
   {
+    char const *missingParameterName {};
     ACE_ERROR ((LM_ERROR,
       "Throwing 'InvalidCriteria' due to missing %s\n",
       missingParameterName

@@ -64,10 +64,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
   ORB_Runner *runner = new ORB_Runner (orb);
-  int poa_delay = 10;
-
   try
     {
+      int poa_delay = 10;
       ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("p:?"));
       int c;
 

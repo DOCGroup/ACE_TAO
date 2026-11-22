@@ -62,13 +62,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
   ORB_Runner *runner = new ORB_Runner (orb.in ());
-  int poa_delay = 10;
   int shutdown_delay = 0;
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Start server main\n"));
 
   try
     {
+      int poa_delay = 10;
       ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("p:s:?"));
       int c;
 

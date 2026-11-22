@@ -49,14 +49,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb1 =
         CORBA::ORB_init (one, argv1, "orb1");
 
-      int three { 3 };
-      char OPTION[] = "-ORBFTSendFullGroupTC";
-      char VALUE[] = "1";
-      char *argv2[] = { CLIENT, OPTION, VALUE, nullptr };
       CORBA::ORB_var orb2;
 
       try
         {
+          int three { 3 };
+          char OPTION[] = "-ORBFTSendFullGroupTC";
+          char VALUE[] = "1";
+          char *argv2[] = { CLIENT, OPTION, VALUE, nullptr };
           orb2 =
             CORBA::ORB_init (three, argv2, "orb2");
         }

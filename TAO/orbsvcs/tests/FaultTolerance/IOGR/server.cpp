@@ -32,9 +32,9 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const*& output_file)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_TCHAR const* output_file {};
   try
     {
+      ACE_TCHAR const* output_file {};
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
