@@ -201,7 +201,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   std::printf("HZ = %d\n", HZ);
   if (argc < 2)
-    goto usage;
+    {
+      goto usage;
+    }
 
   while ((c = getopt (argc, argv, "drstU:uvBDTb:f:l:n:p:A:O:L:xh:")) != -1)
     {
@@ -238,11 +240,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           break;
         case 'n':
           if (!parse_int_option (optarg, nbuf) || nbuf <= 0)
-            goto usage;
+            {
+              goto usage;
+            }
           break;
         case 'l':
           if (!parse_int_option (optarg, data_buf_len) || data_buf_len <= 0)
-            goto usage;
+            {
+              goto usage;
+            }
           break;
         case 's':
           sinkmode = !sinkmode;
@@ -253,7 +259,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             if (!parse_int_option (optarg, parsed_port)
                 || parsed_port <= 0
                 || parsed_port > (std::numeric_limits<unsigned short>::max) ())
-              goto usage;
+              {
+                goto usage;
+              }
             port = static_cast<unsigned short> (parsed_port);
           }
           break;
@@ -269,16 +277,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           break;
         case 'A':
           if (!parse_int_option (optarg, bufalign) || bufalign <= 0)
-            goto usage;
+            {
+              goto usage;
+            }
           break;
         case 'O':
           if (!parse_int_option (optarg, bufoffset))
-            goto usage;
+            {
+              goto usage;
+            }
           break;
         case 'b':
         #if defined(SO_SNDBUF) || defined(SO_RCVBUF)
           if (!parse_int_option (optarg, sockbufsize) || sockbufsize <= 0)
-            goto usage;
+            {
+              goto usage;
+            }
         #else
           std::fprintf (stderr,
                    "ttcp: -b option ignored: SO_SNDBUF/SO_RCVBUF socket options not supported\n");
@@ -297,7 +311,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
 
   if (trans && host == nullptr && optind < argc)
-    host = argv[optind];
+    {
+      host = argv[optind];
+    }
   if ((trans && domain == PF_INET && host == nullptr)
       || (domain == PF_UNIX && domainname == nullptr))
     goto usage;
@@ -307,7 +323,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   if (trans)
     {
       if (address.set (port, host) == -1)
-        std::perror ("address.set"), std::exit (1);
+        {
+          std::perror ("address.set"), std::exit (1);
+        }
     }
 
   /* else, receiver create address to listen on */
@@ -317,7 +335,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
 
   if (data_buf_len > LONG_MAX - static_cast<long> (sizeof (long)))
-    goto usage;
+    {
+      goto usage;
+    }
   total_msg_len = static_cast<long> (sizeof (long)) + data_buf_len;
   message_payload_len = data_buf_len;
 
@@ -325,7 +345,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   message_buf.reset (static_cast<char *> (
                        std::malloc (static_cast<size_t> (total_msg_len))));
   if (!message_buf)
-    err ("malloc");
+    {
+      err ("malloc");
+    }
 
 //  if (bufalign != 0)
 //    message_buf += (bufalign - ((int) message_buf % bufalign) + bufoffset) % bufalign;
@@ -346,7 +368,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                "ttcp-t: data_buf_len=%d, nbuf=%d, align=%d/%d, port=%hu",
                data_buf_len, nbuf, bufalign, bufoffset, port);
       if (sockbufsize)
-        std::fprintf (stdout, ", sockbufsize=%d", sockbufsize);
+        {
+          std::fprintf (stdout, ", sockbufsize=%d", sockbufsize);
+        }
       std::fprintf (stdout, "  %s  -> %s\n",
                domain == PF_INET ? (udp ? "udp" : "tcp") : "unix",
                host == nullptr ? domainname : host);
@@ -357,7 +381,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                "ttcp-r: data_buf_len=%d, nbuf=%d, align=%d/%d, port=%hu",
                data_buf_len, nbuf, bufalign, bufoffset, port);
       if (sockbufsize)
-        std::fprintf (stdout, ", sockbufsize=%d", sockbufsize);
+        {
+          std::fprintf (stdout, ", sockbufsize=%d", sockbufsize);
+        }
       std::fprintf (stdout, "  %s\n", domain == PF_INET ? (udp ? "udp" : "tcp") : "unix");
     }
 
@@ -387,7 +413,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               mes ("nodelay");
             }
           if (connector_factory.connect (connection_stream, address) == -1)
-            std::perror ("connection failed"), std::exit (1);
+            {
+              std::perror ("connection failed"), std::exit (1);
+            }
           std::fprintf (stdout,
                   "ttcp-t: data_buf_len=%d, nbuf=%d, align=%d/%d, port=%hu",
                   data_buf_len, nbuf, bufalign, bufoffset, port);
@@ -407,7 +435,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       else
         {
           if (acceptor_factory.open (address, 1) == -1)
-            std::perror ("acceptor open"), std::exit (1);
+            {
+              std::perror ("acceptor open"), std::exit (1);
+            }
 
           if (sockbufsize)
             {
@@ -470,7 +500,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           nbytes += data_buf_len;
 
           if (connection_stream.recv_n (std::addressof (ack), sizeof ack) != sizeof ack)
-            ACE_ERROR_RETURN ((LM_ERROR, "%p recv of ack failed\n", "ttcp"), -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "%p recv of ack failed\n", "ttcp"), -1);
+            }
 
           if (ack != data_buf_len)
             ACE_DEBUG ((LM_DEBUG, "received ack for only %q bytes\n",
@@ -485,10 +517,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (connection_stream.recv_n (std::addressof (session_control_buf),
                                     sizeof (Session_Control_Message))
           != sizeof (Session_Control_Message))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p recv session control failed\n",
-                           "ttcp"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%p recv session control failed\n",
+                             "ttcp"),
+                            -1);
+        }
 
       ACE_DEBUG ((LM_DEBUG, "received session control message"
                   " nbuf %d, size %d\n",
@@ -499,7 +533,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           || session_control_buf.nbuf_ > (std::numeric_limits<int>::max) ()
           || session_control_buf.size_ <= 0
           || session_control_buf.size_ > data_buf_len)
-        ACE_ERROR_RETURN ((LM_ERROR, "invalid session control message\n"), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "invalid session control message\n"), -1);
+        }
 
       nbuf = session_control_buf.nbuf_;
 
@@ -515,13 +551,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           long payload_length {};
           std::memcpy (&payload_length, message_buf.get (), sizeof (payload_length));
           if (payload_length <= 0 || payload_length > session_control_buf.size_)
-            ACE_ERROR_RETURN ((LM_ERROR, "invalid data control message\n"), -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "invalid data control message\n"), -1);
+            }
 
           ssize_t const count =
             connection_stream.recv_n (message_buf.get () + sizeof (long),
                                       static_cast<size_t> (payload_length));
           if (count != payload_length)
-            ACE_ERROR_RETURN ((LM_ERROR, "recv data failed\n"), -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "recv data failed\n"), -1);
+            }
 
           ++numCalls;
           nbytes += count;
@@ -553,9 +593,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       (void) Nwrite (connection_stream, message_buf.get (), 4); /* rcvr end */
     }
   if (cput <= 0.0)
-    cput = 0.001;
+    {
+      cput = 0.001;
+    }
   if (realt <= 0.0)
-    realt = 0.001;
+    {
+      realt = 0.001;
+    }
 
 #if defined (LM_RESULTS)
   if (trans && title != nullptr)
@@ -566,7 +610,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       std::sprintf (filename, "%s.results", title);
       fd = std::fopen(filename,"a+");
       if (new_line)
-        std::fprintf(fd,"\n  -l %dk \t", data_buf_len/1024);
+        {
+          std::fprintf(fd,"\n  -l %dk \t", data_buf_len/1024);
+        }
       tmp = ((double) nbytes) / realt;
       std::fprintf(fd,"%.2f ", tmp * 8.0 / 1024.0 / 1024.0);
       std::fclose(fd);
@@ -745,7 +791,9 @@ read_timer (char *str, int len)
            static_cast<long long> (itimedol.it_value.tv_usec));
   prusage (ru0, ru1, itime0.it_value, itimedol.it_value, line);
   if (len > 0)
-    std::snprintf (str, static_cast<size_t> (len), "%s", line);
+    {
+      std::snprintf (str, static_cast<size_t> (len), "%s", line);
+    }
 
   /* Get real time */
   tvsub (td, itime0.it_value, itimedol.it_value);
@@ -757,7 +805,9 @@ read_timer (char *str, int len)
   tvsub (td, tend, tstart);
   cput = td.tv_sec + ((double) td.tv_usec) / 1000000;
   if (cput < 0.00001)
-    cput = 0.00001;
+    {
+      cput = 0.00001;
+    }
   return (cput);
 }
 
@@ -887,7 +937,9 @@ tvadd (struct timeval &tsum, struct timeval const &t0, struct timeval const &t1)
   tsum.tv_sec = t0.tv_sec + t1.tv_sec;
   tsum.tv_usec = t0.tv_usec + t1.tv_usec;
   if (tsum.tv_usec > 1000000)
-    ++tsum.tv_sec, tsum.tv_usec -= 1000000;
+    {
+      ++tsum.tv_sec, tsum.tv_usec -= 1000000;
+    }
 }
 
 static void
@@ -896,7 +948,9 @@ tvsub (struct timeval &tdiff, struct timeval const &t1, struct timeval const &t0
   tdiff.tv_sec = t1.tv_sec - t0.tv_sec;
   tdiff.tv_usec = t1.tv_usec - t0.tv_usec;
   if (tdiff.tv_usec < 0)
-    --tdiff.tv_sec, tdiff.tv_usec += 1000000;
+    {
+      --tdiff.tv_sec, tdiff.tv_usec += 1000000;
+    }
 }
 
 static void
