@@ -62,7 +62,9 @@ get_implicit_thread_CORBA_priority (CORBA::ORB_ptr orb)
     TAO_Priority_Mapping_Manager::_narrow (obj.in ());
 
   if (CORBA::is_nil (mapping_manager.in ()))
-    throw CORBA::INTERNAL ();
+    {
+      throw CORBA::INTERNAL ();
+    }
 
   RTCORBA::PriorityMapping *pm =
     mapping_manager.in ()->mapping ();

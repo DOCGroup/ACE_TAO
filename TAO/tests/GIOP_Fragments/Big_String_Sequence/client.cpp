@@ -63,7 +63,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   "Received list of length %u\n",
                   list->length ()));
       if (list->length () != 2)
-        ACE_ERROR_RETURN ((LM_ERROR, "Expected length 2\n"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Expected length 2\n"), -1);
+    }
 
       char const *value = (*list)[0].in ();
       size_t length = std::strlen (value);
@@ -86,7 +88,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   length,
                   value));
       if (std::strcmp (value, "Hello World") != 0)
-        ACE_ERROR_RETURN ((LM_ERROR, "Expected \"Hello World\""), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Expected \"Hello World\""), -1);
+    }
 
       Echo::WList_var const wlist = echo->return_wlist ();
 
@@ -94,7 +98,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   "Received wide list of length %u\n",
                   wlist->length ()));
       if (wlist->length () != 2)
-        ACE_ERROR_RETURN ((LM_ERROR, "Expected length 2\n"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Expected length 2\n"), -1);
+    }
 
       echo->shutdown ();
       orb->destroy ();

@@ -102,7 +102,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       if (Fl::run () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Fl::run"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Fl::run"), -1);
+    }
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
     }
   catch (CORBA::Exception const &ex)

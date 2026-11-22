@@ -173,6 +173,8 @@ Client::parse_args (int argc, ACE_TCHAR *argv[])
 
   this->server_ = Simple_Server::_narrow (object.in ());
   if (CORBA::is_nil (this->server_.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Object reference <%s> is nil.\n"), ior), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Object reference <%s> is nil.\n"), ior), -1);
+    }
   return 0;
 }

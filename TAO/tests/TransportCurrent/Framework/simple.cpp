@@ -11,7 +11,9 @@ testCurrentORBInitializer (int argc, ACE_TCHAR *argv[])
   CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
   if (orb.in () == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Unable to create orb\n")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Unable to create orb\n")), -1);
+    }
 
   CORBA::Object_var const obj =
     orb->resolve_initial_references ("TAO::Transport::Current");

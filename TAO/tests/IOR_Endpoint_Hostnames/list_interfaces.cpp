@@ -97,9 +97,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   //    orb_core->orb_params ()->connect_ipv6_only ();
 #if defined (ACE_WIN32)
   if (default_address.get_type () == AF_INET)
-    ipv4_only = true;
+    {
+      ipv4_only = true;
+    }
   else
-    ipv6_only = true;
+    {
+      ipv6_only = true;
+    }
 #endif /* ACE_WIN32 */
   // If the loopback interface is the only interface then include it
   // in the list of interfaces to query for a hostname, otherwise
@@ -109,9 +113,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     // only exclude loopback if non-local if exists
     ignore_lo = ipv6_non_ll;
   else if (ipv4_only)
-    ignore_lo = ipv4_cnt != ipv4_lo_cnt;
+    {
+      ignore_lo = ipv4_cnt != ipv4_lo_cnt;
+    }
   else
-    ignore_lo = if_cnt != lo_cnt;
+    {
+      ignore_lo = if_cnt != lo_cnt;
+    }
 
   // Adjust counts for IPv6 only if required
   if (ipv6_only)
@@ -129,7 +137,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   // IPv6 loopback will be needed to successfully connect IPv6 clients
   // in a localhost environment.
   if (!ipv4_only && !ipv6_non_ll)
-    lo_cnt = ipv4_lo_cnt;
+    {
+      lo_cnt = ipv4_lo_cnt;
+    }
 #else /* ACE_HAS_IPV6 */
   // If the loopback interface is the only interface then include it
   // in the list of interfaces to query for a hostname, otherwise

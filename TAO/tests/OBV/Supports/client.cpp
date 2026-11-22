@@ -62,7 +62,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR," (%P|%t) Nil RootPOA\n"), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR," (%P|%t) Nil RootPOA\n"), 1);
+    }
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -133,7 +135,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           Supports_Test::graph_var test_graph =
             the_vt_graph->_this ();
           if (CORBA::is_nil (test_graph.in ()))
-            ACE_ERROR_RETURN ((LM_DEBUG, "Nil Supports_Test::graph obj ref\n"), 1);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG, "Nil Supports_Test::graph obj ref\n"), 1);
+    }
           the_vt_graph->DefaultValueRefCountBase::_add_ref ();
 
           // At this point, test_vt_graph and test_graph refer to the same object.

@@ -248,7 +248,9 @@ template <class ServerInterface>
 Client<ServerInterface>::~Client ()
 {
   if (!CORBA::is_nil (this->orb_.in ()))
-    this->orb_->destroy ();
+    {
+      this->orb_->destroy ();
+    }
 }
 
 template <class ServerInterface> int
