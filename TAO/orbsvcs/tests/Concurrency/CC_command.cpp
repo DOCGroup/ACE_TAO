@@ -20,6 +20,8 @@
 #include "ace/OS_NS_string.h"
 #include <cstring>
 
+#include <utility>
+
 CC_Command::~CC_Command() = default;
 
 int CC_Command::execute()

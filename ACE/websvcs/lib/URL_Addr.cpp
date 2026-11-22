@@ -9,6 +9,8 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <utility>
+
 constexpr ACE_TCHAR http[] = ACE_TEXT ("http:");
 constexpr size_t http_size = sizeof (http) / sizeof (http[0]) - 1;
 constexpr ACE_TCHAR ftp[] = ACE_TEXT ("ftp:");

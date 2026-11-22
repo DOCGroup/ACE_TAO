@@ -19,6 +19,8 @@
 #include "orbsvcs/Notify/EventChannel.h"
 #include "orbsvcs/Notify/Routing_Slip.h"
 
+#include <utility>
+
 //#define DEBUG_LEVEL 10
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level

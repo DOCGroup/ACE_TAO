@@ -6,6 +6,8 @@
 #include "ace/Reactor.h"
 #include "ace/os_include/os_fcntl.h"
 
+#include <utility>
+
 #if !defined(__ACE_INLINE__)
 #include "orbsvcs/Event/ECG_Mcast_EH.inl"
 #endif /* __ACE_INLINE__ */

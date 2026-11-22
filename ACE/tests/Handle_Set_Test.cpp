@@ -17,6 +17,8 @@
 #include "ace/Handle_Set.h"
 #include "ace/Containers.h"
 
+#include <utility>
+
 static void
 test_duplicates (size_t count)
 {

@@ -4,6 +4,8 @@
 #include "ace/config-all.h"
 #include "JAWS/Assoc_Array.h"
 
+#include <utility>
+
 template <class KEY, class DATA>
 JAWS_Assoc_Array<KEY,DATA>::JAWS_Assoc_Array (int maxsize)
   : k_array_ (maxsize),

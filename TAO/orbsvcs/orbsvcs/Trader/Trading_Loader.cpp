@@ -28,6 +28,7 @@
 #include <cstring>
 #include <memory>
 #include <string>
+#include <utility>
 
 TAO_Trading_Loader::TAO_Trading_Loader ()
 {

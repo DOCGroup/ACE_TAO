@@ -17,6 +17,7 @@
 #include "orbsvcs/PortableGroup/PG_Property_Set.h"
 
 #include <memory>
+#include <utility>
 
 // Use this macro at the beginning of CORBA methods
 // to aid in debugging.

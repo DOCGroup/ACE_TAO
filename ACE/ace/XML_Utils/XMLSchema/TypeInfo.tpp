@@ -3,6 +3,8 @@
  * @author Boris Kolpackov <boris@dre.vanderbilt.edu>
  */
 
+#include <utility>
+
 namespace XMLSchema
 {
   template <typename T, typename Base = XSCRT::Type>

@@ -8,6 +8,7 @@
 
 #include <cstring>
 #include <iostream>
+#include <utility>
 
 long
 Session::tao_version_ = 220;

@@ -23,6 +23,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 #include <memory>
+#include <utility>
 #include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

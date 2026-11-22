@@ -6,6 +6,7 @@
 #include "test_config.h"
 
 #include <string>
+#include <utility>
 
 class Foo
 {

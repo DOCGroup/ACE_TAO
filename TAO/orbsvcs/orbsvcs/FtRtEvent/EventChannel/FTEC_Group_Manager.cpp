@@ -9,6 +9,8 @@
 #include "tao/CDR.h"
 #include "orbsvcs/PortableGroup/PG_Operators.h"
 
+#include <utility>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int find_by_location(const FTRT::ManagerInfoList& list,

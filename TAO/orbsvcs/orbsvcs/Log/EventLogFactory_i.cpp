@@ -3,6 +3,9 @@
 #include "orbsvcs/Log/EventLogNotification.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <memory>
+#include <utility>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EventLogFactory_i::TAO_EventLogFactory_i ()

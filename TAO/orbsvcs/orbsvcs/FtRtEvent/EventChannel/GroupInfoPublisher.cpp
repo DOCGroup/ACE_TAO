@@ -6,6 +6,8 @@
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Become_Primary_Listener.h"
 #include "../Utils/Log.h"
 
+#include <utility>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 GroupInfoPublisherBase::GroupInfoPublisherBase()

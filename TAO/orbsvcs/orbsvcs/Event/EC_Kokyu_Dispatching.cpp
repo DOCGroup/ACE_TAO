@@ -12,6 +12,8 @@
 
 #include "Kokyu/Kokyu.h"
 
+#include <utility>
+
 #if     ! defined (__ACE_INLINE__)
 #include "orbsvcs/Event/EC_Kokyu_Dispatching.inl"
 #endif /* __ACE_INLINE__ */
