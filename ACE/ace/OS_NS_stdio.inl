@@ -463,7 +463,7 @@ ACE_OS::cuserid (wchar_t *user, size_t maxlen)
   BOOL const result = GetUserNameW (user, (u_long *) &maxlen);
   if (result == FALSE)
     {
-      ACE_FAIL_RETURN (0);
+      ACE_FAIL_RETURN (nullptr);
     }
   else
     {
@@ -473,7 +473,7 @@ ACE_OS::cuserid (wchar_t *user, size_t maxlen)
   char *char_user;
   wchar_t *result {};
 
-  ACE_NEW_RETURN (char_user, char[maxlen + 1], 0);
+  ACE_NEW_RETURN (char_user, char[maxlen + 1], nullptr);
 
   if (ACE_OS::cuserid (char_user, maxlen))
     {

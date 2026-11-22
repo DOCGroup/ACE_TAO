@@ -588,7 +588,7 @@ ACE_RAPI_Session::init_tspec_simplified (ACE_Flow_Spec const &flow_spec)
 
   ACE_NEW_RETURN (t_spec,
                   rapi_tspec_t,
-                  0);
+                  nullptr);
 
   qos_tspecx_t *ctxp = &(t_spec->tspecbody_qosx);
 
@@ -616,7 +616,7 @@ ACE_RAPI_Session::init_flowspec_simplified (ACE_Flow_Spec const &flow_spec)
   rapi_flowspec_t *flowsp;
   ACE_NEW_RETURN (flowsp,
                   rapi_flowspec_t,
-                  0);
+                  nullptr);
 
   // Extended Legacy format.
   qos_flowspecx_t *csxp = &flowsp->specbody_qosx;

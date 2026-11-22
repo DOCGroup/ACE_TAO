@@ -1102,13 +1102,13 @@ ACE_Malloc_Lock_Adapter_T<ACE_LOCK>::operator () (const ACE_TCHAR *name)
   ACE_LOCK *p {};
   if (name == nullptr)
     {
-      ACE_NEW_RETURN (p, ACE_LOCK (name), 0);
+      ACE_NEW_RETURN (p, ACE_LOCK (name), nullptr);
     }
   else
     {
       ACE_NEW_RETURN (p, ACE_LOCK (ACE::basename (name,
                                                   ACE_DIRECTORY_SEPARATOR_CHAR)),
-                      0);
+                      nullptr);
     }
   return p;
 }

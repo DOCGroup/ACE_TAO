@@ -1050,20 +1050,20 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
                                               bool create,
                                               u_long security_access)
 {
-  HKEY result = 0;
+  HKEY result = nullptr;
   // Make a copy of hKey
   int errnum;
-  if ((errnum = RegOpenKey (hKey, 0, &result)) != ERROR_SUCCESS)
+  if ((errnum = RegOpenKey (hKey, nullptr, &result)) != ERROR_SUCCESS)
     {
       errno = errnum;
-      return 0;
+      return nullptr;
     }
 
   // recurse through the path
   ACE_TCHAR* temp_path {};
   ACE_NEW_RETURN (temp_path,
                   ACE_TCHAR[ACE_OS::strlen (path) + 1],
-                  0);
+                  nullptr);
   std::unique_ptr<ACE_TCHAR[]> pData (temp_path);
   ACE_OS::strcpy (pData.get (), path);
   ACE_Tokenizer parser (pData.get ());
