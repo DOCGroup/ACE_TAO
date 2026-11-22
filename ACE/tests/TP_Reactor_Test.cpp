@@ -183,7 +183,7 @@ MyTask::delete_reactor ()
               ACE_TEXT (" (%t) Delete TP_Reactor\n")));
 
   delete this->my_reactor_;
-  ACE_Reactor::instance ((ACE_Reactor *) nullptr);
+  ACE_Reactor::instance (nullptr);
   this->my_reactor_ = nullptr;
   this->reactor (nullptr);
 
@@ -267,7 +267,7 @@ MyTask::svc ()
 // *************************************************************
 
 Acceptor::Acceptor ()
-  : ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR> ((ACE_Reactor *) nullptr),
+  : ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR> (nullptr),
     sessions_ (0),
     total_snd_(0),
     total_rcv_(0),
@@ -676,7 +676,7 @@ Receiver::handle_output (ACE_HANDLE h)
 // *************************************************************
 
 Connector::Connector ()
-  : ACE_Connector<Sender,ACE_SOCK_CONNECTOR> ((ACE_Reactor *) nullptr),
+  : ACE_Connector<Sender,ACE_SOCK_CONNECTOR> (nullptr),
     sessions_ (0),
     total_snd_(0),
     total_rcv_(0),
