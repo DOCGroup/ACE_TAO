@@ -3,7 +3,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Set the exit status.
+/// Set the exit status.
 
 ACE_INLINE ACE_THR_FUNC_RETURN
 ACE_Thread_Control::status (ACE_THR_FUNC_RETURN s)
@@ -12,7 +12,7 @@ ACE_Thread_Control::status (ACE_THR_FUNC_RETURN s)
   return this->status_ = s;
 }
 
-// Get the exit status.
+/// Get the exit status.
 
 ACE_INLINE ACE_THR_FUNC_RETURN
 ACE_Thread_Control::status ()
@@ -21,7 +21,7 @@ ACE_Thread_Control::status ()
   return this->status_;
 }
 
-// Returns the current <Thread_Manager>.
+/// Returns the current <Thread_Manager>.
 
 ACE_INLINE ACE_Thread_Manager *
 ACE_Thread_Control::thr_mgr ()
@@ -30,8 +30,8 @@ ACE_Thread_Control::thr_mgr ()
   return this->tm_;
 }
 
-// Atomically set a new <Thread_Manager> and return the old
-// <Thread_Manager>.
+/// Atomically set a new <Thread_Manager> and return the old
+/// <Thread_Manager>.
 
 ACE_INLINE ACE_Thread_Manager *
 ACE_Thread_Control::thr_mgr (ACE_Thread_Manager *tm)
