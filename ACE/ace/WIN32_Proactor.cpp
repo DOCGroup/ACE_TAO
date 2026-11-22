@@ -150,7 +150,7 @@ ACE_WIN32_Proactor::create_asynch_read_stream ()
   ACE_Asynch_Read_Stream_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Read_Stream (this),
-                  0);
+                  nullptr);
   return implementation;
 }
 
@@ -160,7 +160,7 @@ ACE_WIN32_Proactor::create_asynch_write_stream ()
   ACE_Asynch_Write_Stream_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Write_Stream (this),
-                  0);
+                  nullptr);
   return implementation;
 }
 
@@ -170,7 +170,7 @@ ACE_WIN32_Proactor::create_asynch_read_dgram ()
   ACE_Asynch_Read_Dgram_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Read_Dgram (this),
-                  0);
+                  nullptr);
   return implementation;
 }
 
@@ -180,7 +180,7 @@ ACE_WIN32_Proactor::create_asynch_write_dgram ()
   ACE_Asynch_Write_Dgram_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Write_Dgram (this),
-                  0);
+                  nullptr);
   return implementation;
 }
 
@@ -190,7 +190,7 @@ ACE_WIN32_Proactor::create_asynch_read_file ()
   ACE_Asynch_Read_File_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Read_File (this),
-                  0);
+                  nullptr);
   return  implementation;
 }
 
@@ -200,7 +200,7 @@ ACE_WIN32_Proactor::create_asynch_write_file ()
   ACE_Asynch_Write_File_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Write_File (this),
-                  0);
+                  nullptr);
   return  implementation;
 }
 
@@ -210,7 +210,7 @@ ACE_WIN32_Proactor::create_asynch_accept ()
   ACE_Asynch_Accept_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Accept (this),
-                  0);
+                  nullptr);
   return implementation;
 }
 
@@ -220,7 +220,7 @@ ACE_WIN32_Proactor::create_asynch_connect ()
   ACE_Asynch_Connect_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Connect (this),
-                  0);
+                  nullptr);
   return implementation;
 }
 
@@ -230,7 +230,7 @@ ACE_WIN32_Proactor::create_asynch_transmit_file ()
   ACE_Asynch_Transmit_File_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Transmit_File (this),
-                  0);
+                  nullptr);
   return  implementation;
 }
 
@@ -255,7 +255,7 @@ ACE_WIN32_Proactor::create_asynch_read_stream_result
                                                        event,
                                                        priority,
                                                        signal_number),
-                  0);
+                  nullptr);
   return implementation;
 }
 
@@ -280,7 +280,7 @@ ACE_WIN32_Proactor::create_asynch_write_stream_result
                                                         event,
                                                         priority,
                                                         signal_number),
-                  0);
+                  nullptr);
   return implementation;
 }
 
@@ -309,7 +309,7 @@ ACE_WIN32_Proactor::create_asynch_read_file_result
                                                      event,
                                                      priority,
                                                      signal_number),
-                  0);
+                  nullptr);
   return implementation;
 }
 
@@ -338,7 +338,7 @@ ACE_WIN32_Proactor::create_asynch_write_file_result
                                                       event,
                                                       priority,
                                                       signal_number),
-                  0);
+                  nullptr);
   return implementation;
 }
 
@@ -367,7 +367,7 @@ ACE_WIN32_Proactor::create_asynch_read_dgram_result
                                                       event,
                                                       priority,
                                                       signal_number),
-                  0);
+                  nullptr);
   return implementation;
 }
 
@@ -394,7 +394,7 @@ ACE_WIN32_Proactor::create_asynch_write_dgram_result
                                                       event,
                                                       priority,
                                                       signal_number),
-                 0);
+                  nullptr);
   return implementation;
 }
 
@@ -421,7 +421,7 @@ ACE_WIN32_Proactor::create_asynch_accept_result
                                                   event,
                                                   priority,
                                                   signal_number),
-                  0);
+                  nullptr);
   return implementation;
 }
 
@@ -442,7 +442,7 @@ ACE_WIN32_Proactor::create_asynch_connect_result
                                                    event,
                                                    priority,
                                                    signal_number),
-                  0);
+                  nullptr);
   return implementation;
 }
 
@@ -477,7 +477,7 @@ ACE_WIN32_Proactor::create_asynch_transmit_file_result
                                                          event,
                                                          priority,
                                                          signal_number),
-                  0);
+                  nullptr);
   return implementation;
 }
 
@@ -497,7 +497,7 @@ ACE_WIN32_Proactor::create_asynch_timer (const ACE_Handler::Proxy_Ptr &handler_p
                                           event,
                                           priority,
                                           signal_number),
-                  0);
+                  nullptr);
   return implementation;
 }
 
