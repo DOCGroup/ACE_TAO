@@ -108,12 +108,12 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 // (The obtaining of the repository id is currently not yet like the OMG way. %!)
 //
-// Macro for on the fly registration of a factory (with type Factory).
-// The repository id is taken from the static repository id of the
-// valuetype via tao_repository_id () of the specialized factory.
-// It forgets the pre-registered factory (if any) and the reference
-// to the newly created one. (A new reference could be obtained with
-// orb->lookup_value_factory (char * repo_id) .)
+/// Macro for on the fly registration of a factory (with type Factory).
+/// The repository id is taken from the static repository id of the
+/// valuetype via tao_repository_id () of the specialized factory.
+/// It forgets the pre-registered factory (if any) and the reference
+/// to the newly created one. (A new reference could be obtained with
+/// orb->lookup_value_factory (char * repo_id) .)
 
 #define TAO_OBV_REGISTER_FACTORY(FACTORY, VALUETYPE) \
   { \
