@@ -497,7 +497,9 @@ retrieve_links (TAO_Policies& policies,
             {
               // Add the link to the list of links to follow.
               if (i > j)
-                links[j] = links[i];
+                {
+                  links[j] = links[i];
+                }
 
               ++j;
             }
@@ -587,7 +589,9 @@ federated_query (const CosTrading::LinkNameSeq& links,
 
           // Add another iterator to the collection.
           if (! CORBA::is_nil (out_offer_iter))
-            offer_iter_collection->add_offer_iterator (out_offer_iter);
+            {
+              offer_iter_collection->add_offer_iterator (out_offer_iter);
+            }
 
           // Concatenate the limits applied.
           CORBA::ULong source_length = out_limits->length (),
@@ -804,7 +808,9 @@ _cxx_export (CORBA::Object_ptr reference,
 {
   // For robustness purposes --
   if (CORBA::is_nil (reference))
-    throw CosTrading::Register::InvalidObjectRef ();
+    {
+      throw CosTrading::Register::InvalidObjectRef ();
+    }
 
   // Get service type map
   TAO_Offer_Database<MAP_LOCK_TYPE> &offer_database = this->trader_.offer_database ();
@@ -823,13 +829,17 @@ _cxx_export (CORBA::Object_ptr reference,
   // Oops the type is masked, we shouldn't let exporters know the type
   // exists.
   if (type_struct->masked)
-    throw CosTrading::UnknownServiceType (type);
+    {
+      throw CosTrading::UnknownServiceType (type);
+    }
 
   // TAO-specific way to determine if an object is derived from or is
   // an interface type.
   int check = (! reference->_is_a (type_struct->if_name));
   if (check)
-    throw CosTrading::Register::InterfaceTypeMismatch (type, reference);
+    {
+      throw CosTrading::Register::InterfaceTypeMismatch (type, reference);
+    }
 
   // Validate that the properties defined for this offer are correct
   // to their types and strength.
@@ -896,7 +906,9 @@ modify (const char *id,
   int check =  (! this->supports_modifiable_properties ());
 
   if (check)
-    throw CosTrading::NotImplemented ();
+    {
+      throw CosTrading::NotImplemented ();
+    }
 
   char const* type {};
   TAO_Support_Attributes_i& support_attrs =
@@ -998,7 +1010,9 @@ resolve (const CosTrading::TraderName &name)
 {
   // Determine if the first link is a legal link name.
   if (! TAO_Trader_Base::is_valid_link_name (name[0]))
-    throw CosTrading::Register::IllegalTraderName (name);
+    {
+      throw CosTrading::Register::IllegalTraderName (name);
+    }
 
   // Grab a reference to the link interface, and get a link description.
   CosTrading::Link_ptr link_if =
@@ -1006,7 +1020,9 @@ resolve (const CosTrading::TraderName &name)
 
   // Ensure that the link interface is supported.
   if (CORBA::is_nil (link_if))
-    return CosTrading::Register::_nil ();
+    {
+      return CosTrading::Register::_nil ();
+    }
 
   CosTrading::Link::LinkInfo_var link_info;
   CosTrading::Register_var remote_reg;
@@ -1026,7 +1042,9 @@ resolve (const CosTrading::TraderName &name)
 
   // Ensure that the register pointer isn't nil.
   if (CORBA::is_nil (remote_reg.in ()))
-    throw CosTrading::Register::RegisterNotSupported (name);
+    {
+      throw CosTrading::Register::RegisterNotSupported (name);
+    }
 
   CosTrading::Register_ptr return_value = remote_reg.in ();
 
@@ -1384,7 +1402,9 @@ list_offers (CORBA::ULong how_many,
 {
   // This method only applies when the register interface is implemented
   if (CORBA::is_nil (this->trader_.trading_components().register_if()))
-    throw CosTrading::NotImplemented();
+    {
+      throw CosTrading::NotImplemented();
+    }
 
   TAO_Offer_Database<MAP_LOCK_TYPE>& type_map = this->trader_.offer_database ();
   TAO_Offer_Id_Iterator* offer_id_iter = type_map.retrieve_all_offer_ids ();
@@ -1436,16 +1456,22 @@ add_link (const char *name,
 {
   // Ensure the link name is valid.
   if (! TAO_Trader_Base::is_valid_link_name (name))
-    throw CosTrading::Link::IllegalLinkName (name);
+    {
+      throw CosTrading::Link::IllegalLinkName (name);
+    }
 
   // Ensure this isn't a duplicate link name.
   CORBA::String_var link_name (name);
   if (this->links_.find (link_name) == 0)
-    throw CosTrading::Link::DuplicateLinkName (name);
+    {
+      throw CosTrading::Link::DuplicateLinkName (name);
+    }
 
   // Ensure the lookup_ptr isn't nil.
   if (CORBA::is_nil (target))
-    throw CosTrading::InvalidLookupRef (target);
+    {
+      throw CosTrading::InvalidLookupRef (target);
+    }
 
   // Ensure that the default link behavior isn't stronger than the
   // limiting link behavior.
@@ -1482,12 +1508,16 @@ remove_link (const char *name)
 {
   // Ensure the link name is valid.
   if (! TAO_Trader_Base::is_valid_link_name (name))
-    throw CosTrading::Link::IllegalLinkName (name);
+    {
+      throw CosTrading::Link::IllegalLinkName (name);
+    }
 
   // Ensure this isn't a duplicate link name.
   CORBA::String_var link_name (name);
   if (this->links_.find (link_name) == -1)
-    throw CosTrading::Link::UnknownLinkName (name);
+    {
+      throw CosTrading::Link::UnknownLinkName (name);
+    }
 
   // Erase the link state from the map.
   this->links_.unbind (link_name);
@@ -1499,13 +1529,17 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::describe_link (const char *name)
 {
   // Ensure the link name is valid.
   if (! TAO_Trader_Base::is_valid_link_name (name))
-    throw CosTrading::Link::IllegalLinkName (name);
+    {
+      throw CosTrading::Link::IllegalLinkName (name);
+    }
 
   // Ensure this isn't a duplicate link name.
   typename Links::ENTRY* link_entry {};
   CORBA::String_var link_name (name);
   if (this->links_.find (link_name, link_entry) == -1)
-    throw CosTrading::Link::UnknownLinkName (name);
+    {
+      throw CosTrading::Link::UnknownLinkName (name);
+    }
 
   // Build a new Link Info structure.
   CosTrading::Link::LinkInfo* new_link_info {};
@@ -1559,13 +1593,17 @@ modify_link (const char *name,
 {
   // Ensure the link name is valid.
   if (! TAO_Trader_Base::is_valid_link_name (name))
-    throw CosTrading::Link::IllegalLinkName (name);
+    {
+      throw CosTrading::Link::IllegalLinkName (name);
+    }
 
   // Ensure this isn't a duplicate link name.
   typename Links::ENTRY* link_entry {};
   CORBA::String_var link_name (name);
   if (this->links_.find (link_name, link_entry) == -1)
-    throw CosTrading::Link::UnknownLinkName (name);
+    {
+      throw CosTrading::Link::UnknownLinkName (name);
+    }
 
   // Ensure that the default link behavior isn't stronger than the
   // limiting link behavior.
