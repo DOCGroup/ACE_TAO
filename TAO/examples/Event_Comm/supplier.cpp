@@ -2,6 +2,8 @@
 #include "Supplier_Input_Handler.h"
 #include "supplier.h"
 
+#include <memory>
+
 int
 Supplier::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
@@ -41,7 +43,7 @@ Supplier::init (int argc, ACE_TCHAR *argv[])
                          "Notifier_Handler did not init\n"),
                         -1);
     }
-  else if (this->ih_.initialize (&nh_) == -1)
+  else if (this->ih_.initialize (std::addressof (this->nh_)) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
