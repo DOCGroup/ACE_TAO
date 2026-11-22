@@ -576,8 +576,8 @@ class ACE_Export ACE_POSIX_Asynch_Accept_Result : public virtual ACE_Asynch_Acce
   friend class ACE_POSIX_Proactor;
 
 public:
-  /// The number of bytes which were requested at the start of the
-  /// asynchronous accept.
+  /// Number of bytes requested for initial data at the start of the
+  /// asynchronous accept. POSIX does not read initial data.
   size_t bytes_to_read () const override;
 
   /// Message block which contains the read data.
@@ -609,10 +609,6 @@ protected:
                          u_long error) override;
 
   ~ACE_POSIX_Asynch_Accept_Result () override;
-
-  // aiocb::aio_nbytes
-  // Bytes requested when the asynchronous read was initiated.
-  // Actually, on POSIX implementation, we dont read any intial data.
 
   /// Message block for reading the data into.
   ACE_Message_Block &message_block_;
