@@ -89,13 +89,19 @@ ACE_Token_Manager::get_token (ACE_Token_Proxy *proxy,
 
       // Put it in the collection.
       if (collection_.bind (name, proxy->token_) == -1)
-        proxy->token_ = nullptr;
+        {
+          proxy->token_ = nullptr;
+        }
       else
-        token.release ();
+        {
+          token.release ();
+        }
     }
 
   if (proxy->token_ != nullptr)
-    proxy->token_->inc_reference ();
+    {
+      proxy->token_->inc_reference ();
+    }
 
   // The caller must check proxy->token_ because creation or insertion may fail.
 }
@@ -135,7 +141,9 @@ ACE_Token_Manager::check_deadlock (ACE_Tokens *token, ACE_Token_Proxy *proxy)
   ACE_TRACE ("ACE_Token_Manager::check_deadlock");
 
   if (token->visited ())
-    return 0;
+    {
+      return 0;
+    }
 
   token->visit (1);
 

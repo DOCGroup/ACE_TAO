@@ -605,8 +605,10 @@ ACE_Process_Manager::remove_proc (size_t i)
 #if defined (ACE_WIN32)
   ACE_Reactor * const r = this->reactor ();
   if (r != 0)
-    r->remove_handler (this->process_table_[i].process_->gethandle (),
-                       ACE_Event_Handler::DONT_CALL);
+    {
+      r->remove_handler (this->process_table_[i].process_->gethandle (),
+                         ACE_Event_Handler::DONT_CALL);
+    }
 #endif /* ACE_WIN32 */
 
   this->process_table_[i].process_->unmanage ();
