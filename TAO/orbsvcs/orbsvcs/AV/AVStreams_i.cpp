@@ -209,7 +209,7 @@ CORBA::Boolean
 TAO_Basic_StreamCtrl::modify_QoS (AVStreams::streamQoS & /*new_qos*/,
                                   AVStreams::flowSpec const &/*flowspec*/)
 {
-  return 1;
+  return true;
 }
 
 // Used by StreamEndPoint and VDev to inform StreamCtrl of events.
@@ -297,7 +297,7 @@ TAO_Negotiator::negotiate (AVStreams::Negotiator_ptr /* remote_negotiator */,
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
               "TAO_Negotiator::negotiate\n"));
-  return 0;
+  return false;
 }
 
 // MMDevice_Map_Hash_Key
@@ -579,7 +579,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
                     ORBSVCS_DEBUG ((LM_DEBUG, "mmdevice a_party is already bound\n"));
                   }
                 }
-              return 1;
+              return true;
             }
           else
             {
@@ -648,7 +648,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
               {
                 ORBSVCS_DEBUG ((LM_DEBUG, "mmdevice b_party is already bound\n"));
               }
-              return 1;
+              return true;
             }
           else
             {
@@ -901,9 +901,9 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO_StreamCtrl::bind_devs");
-      return 0;
+      return false;
     }
-  return 1;
+  return true;
 }
 
 // Used to establish a connection between two endpoints
@@ -1170,7 +1170,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
       catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("TAO_StreamCtrl::bind:flow_connect block");
-          return 0;
+          return false;
         }
     }
   catch (CORBA::Exception const &)
@@ -1181,7 +1181,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                              stream_qos,
                              flow_spec);
     }
-  return 1;
+  return true;
 }
 
 void
@@ -1331,11 +1331,11 @@ TAO_StreamCtrl::modify_QoS (AVStreams::streamQoS &new_qos,
       catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("TAO_StreamCtrl::modify_QoS");
-          return 0;
+          return false;
         }
 
     }
-  return 1;
+  return true;
 }
 
 // TAO_MCastConfigIf
@@ -1370,9 +1370,9 @@ TAO_MCastConfigIf::set_peer (CORBA::Object_ptr peer,
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO_MCastConfigIf::set_peer");
-      return 0;
+      return false;
     }
-  return 1;
+  return true;
 }
 
 // In future this should be a multicast message instead of point-to-point unicasts.
@@ -1510,7 +1510,7 @@ TAO_Base_StreamEndPoint::handle_destroy (AVStreams::flowSpec const &)
 CORBA::Boolean
 TAO_Base_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &)
 {
-  return 1;
+  return true;
 }
 
 // The following function is for backward compatibility.
@@ -1521,14 +1521,14 @@ TAO_Base_StreamEndPoint::handle_postconnect (AVStreams::flowSpec &)
     {
       TAO_AV_CORE::instance ()->orb ()->perform_work ();
     }
-  return 1;
+  return true;
 }
 
 // The following function is for backward compatibility.
 CORBA::Boolean
 TAO_Base_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &)
 {
-  return 1;
+  return true;
 }
 
 int
@@ -1722,7 +1722,7 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
 
           if (entry->parse (flow_spec[i]) == -1)
           {
-            return 0;
+            return false;
           }
 
           if (TAO_debug_level > 0)
@@ -1733,7 +1733,7 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
           int const insert_result = this->forward_flow_spec_set.insert (entry.get ());
           if (insert_result < 0)
           {
-            return 0;
+            return false;
           }
           if (insert_result == 0)
           {
@@ -1787,7 +1787,7 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
           int const insert_result = this->reverse_flow_spec_set.insert (entry.get ());
           if (insert_result < 0)
           {
-            return 0;
+            return false;
           }
           if (insert_result == 0)
           {
@@ -1810,7 +1810,7 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO_StreamEndPoint::connect");
-      return 0;
+      return false;
     }
   return retv;
 }
@@ -2176,7 +2176,7 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
                                   "%N:%l Error parsing flow_spec: [%C]\n",
                                   string_entry.in ()));
                 }
-              return 0;
+              return false;
             }
           if (TAO_debug_level > 0)
             {
@@ -2188,7 +2188,7 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
           int const insert_result = this->forward_flow_spec_set.insert (entry.get ());
           if (insert_result < 0)
           {
-            return 0;
+            return false;
           }
           if (insert_result == 0)
           {
@@ -2203,7 +2203,7 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
 
       if (result < 0)
         {
-          return 0;
+          return false;
         }
 
       // Make the upcall to the app
@@ -2212,7 +2212,7 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO_StreamEndpoint::request_connection");
-      return 0;
+      return false;
     }
   return result;
 }
@@ -2266,10 +2266,10 @@ TAO_StreamEndPoint::modify_QoS (AVStreams::streamQoS &new_qos,
 
   if (result != 0)
   {
-    return 0;
+    return false;
   }
 
-  return 1;
+  return true;
 }
 
 // Sets the list of protocols this streamendpoint can understand.
@@ -2290,9 +2290,9 @@ TAO_StreamEndPoint::set_protocol_restriction (AVStreams::protocolSpec const &pro
     {
       ex._tao_print_exception (
         "TAO_StreamEndPoint::set_protocol_restriction");
-      return 0;
+      return false;
     }
-  return 1;
+  return true;
 }
 
 void
@@ -2505,7 +2505,7 @@ TAO_StreamEndPoint::multiconnect (AVStreams::streamQoS &/*the_qos*/,
   {
     ORBSVCS_DEBUG ((LM_DEBUG, "TAO_StreamEndPoint::multiconnect\n"));
   }
-  return 0;
+  return false;
 }
 
 TAO_StreamEndPoint::~TAO_StreamEndPoint ()
@@ -2720,9 +2720,9 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
     {
       ex._tao_print_exception (
         "TAO_StreamEndPoint_A::multiconnect");
-      return 0;
+      return false;
     }
-  return 1;
+  return true;
 }
 
 // ATM style Multicast is not supported yet.
@@ -2818,7 +2818,7 @@ TAO_StreamEndPoint_B::multiconnect (AVStreams::streamQoS &stream_qos,
                 {
                   ex._tao_print_exception (
                     "TAO_StreamEndPoint_B::multiconnect::get_flow_connection");
-                  return 0;
+                  return false;
                 }
               result = flow_connection->add_consumer (consumer.in (),
                                                       flow_qos);
@@ -2888,9 +2888,9 @@ TAO_StreamEndPoint_B::multiconnect (AVStreams::streamQoS &stream_qos,
     {
       ex._tao_print_exception (
         "TAO_StreamEndPoint_B::multiconnect");
-      return 0;
+      return false;
     }
-  return 1;
+  return true;
 }
 
 TAO_StreamEndPoint_B::~TAO_StreamEndPoint_B () = default;
@@ -2944,7 +2944,7 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO_VDev::set_peer");
-      return 0;
+      return false;
     }
   return result;
 }
@@ -2957,7 +2957,7 @@ TAO_VDev::set_media_ctrl (CORBA::Object_ptr media_ctrl)
 
   CORBA::release( media_ctrl);
 
-  return 1;
+  return true;
 }
 
 // Sets the multicast VDev peer.
@@ -2968,7 +2968,7 @@ TAO_VDev::set_Mcast_peer (AVStreams::StreamCtrl_ptr /* the_ctrl */,
                           AVStreams::flowSpec const &/* the_spec */)
 {
   this->mcast_peer_ = AVStreams::MCastConfigIf::_duplicate (mcast_peer);
-  return 1;
+  return true;
 }
 
 // applications should override this to handle configuration changes.
@@ -3071,7 +3071,7 @@ TAO_VDev::modify_QoS (AVStreams::streamQoS &the_qos,
           sep_b->modify_QoS (the_qos, flowspec);
         }
   }
-  return 1;
+  return true;
 }
 
 TAO_VDev::~TAO_VDev () = default;
@@ -3658,7 +3658,7 @@ CORBA::Boolean
 TAO_FlowConnection::modify_QoS (AVStreams::QoS & new_qos)
 {
   ACE_UNUSED_ARG (new_qos);
-  return 0;
+  return false;
 }
 
 // use the specified flow protocol for this flow.
@@ -3686,7 +3686,7 @@ TAO_FlowConnection::use_flow_protocol (char const *fp_name,
       (*consumer_begin)->use_flow_protocol
         (fp_name, fp_settings);
     }
-  return 1;
+  return true;
 }
 
 void
@@ -3724,7 +3724,7 @@ TAO_FlowConnection::connect_devs (AVStreams::FDev_ptr a_party,
     {
       ex._tao_print_exception (
         "TAO_FlowConnection::connect_devs");
-      return 0;
+      return false;
     }
   return result;
 }
@@ -3789,13 +3789,13 @@ TAO_FlowConnection::connect (AVStreams::FlowProducer_ptr producer,
     {
       ex._tao_print_exception ("TAO_FlowConnection::connect");
     }
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
 TAO_FlowConnection::disconnect ()
 {
-  return  0;
+  return false;
 }
 
 CORBA::Boolean
@@ -3887,9 +3887,9 @@ TAO_FlowConnection::add_producer (AVStreams::FlowProducer_ptr producer,
     {
       ex._tao_print_exception (
         "TAO_FlowConnection::add_producer");
-      return 0;
+      return false;
     }
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -3977,16 +3977,16 @@ TAO_FlowConnection::add_consumer (AVStreams::FlowConsumer_ptr consumer,
     {
       ex._tao_print_exception (
         "TAO_FlowConnection::add_consumer");
-      return 0;
+      return false;
     }
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
 TAO_FlowConnection::drop (AVStreams::FlowEndPoint_ptr target)
 {
   ACE_UNUSED_ARG (target);
-  return 0;
+  return false;
 }
 
 // TAO_FlowEndPoint
@@ -4068,10 +4068,10 @@ TAO_FlowEndPoint::lock ()
 
   if (this->lock_)
   {
-    return 0;
+    return false;
   }
   this->lock_ = true;
-  return 1;
+  return true;
 }
 
 // unlocks the flowendpoint , becomes free to be used in another flow.
@@ -4146,9 +4146,9 @@ TAO_FlowEndPoint::use_flow_protocol (char const *fp_name,
     {
       ex._tao_print_exception (
         "TAO_FlowEndPoint::use_flow_protocol");
-      return 0;
+      return false;
     }
-  return 1;
+  return true;
 }
 
 void
@@ -4260,7 +4260,7 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep)
       if (std::strcmp (my_format.in (),
                           peer_format.in ()) != 0)
       {
-        return 0;
+        return false;
       }
 
       // since formats are same, check for a common protocol
@@ -4302,7 +4302,7 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep)
         }
       if (!protocol_match)
       {
-        return 0;
+        return false;
       }
     }
   catch (CosPropertyService::PropertyNotFound const &nf)
@@ -4312,9 +4312,9 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep)
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO_FlowEndPoint::is_fep_compatible");
-      return 0;
+      return false;
     }
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -4324,7 +4324,7 @@ TAO_FlowEndPoint::set_peer (AVStreams::FlowConnection_ptr /* the_fc */,
 {
   this->peer_fep_ =
     AVStreams::FlowEndPoint::_duplicate (the_peer_fep);
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -4333,7 +4333,7 @@ TAO_FlowEndPoint::set_Mcast_peer (AVStreams::FlowConnection_ptr /* the_fc */,
                                   AVStreams::QoS & /* the_qos */)
 {
   this->mcast_peer_ = AVStreams::MCastConfigIf::_duplicate (mcast_peer);
-  return 0;
+  return false;
 }
 
 char *
@@ -4468,7 +4468,7 @@ TAO_FlowEndPoint::connect_to_peer_i (TAO_FlowSpec_Entry::Role role,
     ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_FlowEndPoint::connector_registry::open failed\n"), 0);
   }
   this->reverse_channel_ = entry->get_local_addr_str ();
-  return 1;
+  return true;
 }
 
 int

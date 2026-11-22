@@ -15,11 +15,11 @@ TAO_PG::get_property_value (PortableGroup::Name const & property_name,
       if (property.nam == property_name)
         {
           property_value = property.val;
-          return 1;
+          return true;
         }
     }
 
-  return 0;
+  return false;
 }
 
 void
