@@ -145,7 +145,7 @@ public:
   static ACE_THR_FUNC_RETURN hold_lock (void *arg);
 
 private:
-  // The service repository owns the test object; this pointer is non-owning.
+  /// The service repository owns the test object; this pointer is non-owning.
   Baseline_Test_Base *current_test_ {};
   ACE_Barrier get_lock_;
   ACE_Barrier let_go_lock_;
