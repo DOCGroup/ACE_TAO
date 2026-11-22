@@ -211,7 +211,7 @@ void ConfigTreeCtrl::OnDelete(wxCommandEvent& event)
     return;
   }
   wxString Text = GetItemText(ItemID);
-  m_pConfig->remove_section(Key, Text, 1);
+  m_pConfig->remove_section(Key, Text, true);
   // Reload parent
   Delete(ItemID);
 }

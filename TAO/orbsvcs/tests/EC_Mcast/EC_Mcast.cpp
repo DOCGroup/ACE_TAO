@@ -779,14 +779,14 @@ ECM_Consumer::connect (unsigned int *seed)
                       "Federation %s leaves group %s\n",
                       federation->name (),
                       federation->consumer_name (i)));
-          this->federation_->subscribed_bit (i, 0);
+          this->federation_->subscribed_bit (i, false);
           continue;
         }
       ACE_DEBUG ((LM_DEBUG,
                   "Federation %s joins group %s\n",
                   federation->name (),
                   federation->consumer_name (i)));
-      this->federation_->subscribed_bit (i, 1);
+      this->federation_->subscribed_bit (i, true);
       qos.insert_type (federation->consumer_ipaddr (i), 0);
     }
 

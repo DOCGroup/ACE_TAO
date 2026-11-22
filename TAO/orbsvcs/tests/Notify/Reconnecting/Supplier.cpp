@@ -603,7 +603,7 @@ Supplier_Main::init_event_channel ()
     qosprops[i].name = CORBA::string_dup(CosNotification::Timeout);
     qosprops[i++].value <<= (TimeBase::TimeT) 42 * 1000000; // 4.2s
     qosprops[i].name = CORBA::string_dup(CosNotification::StopTimeSupported);
-    qosprops[i++].value <<= CORBA::Any::from_boolean(1);
+    qosprops[i++].value <<= CORBA::Any::from_boolean (true);
     qosprops[i].name = CORBA::string_dup(CosNotification::MaximumBatchSize);
     qosprops[i++].value <<= (CORBA::Long) 2;
     qosprops[i].name = CORBA::string_dup(CosNotification::PacingInterval);
@@ -619,7 +619,7 @@ Supplier_Main::init_event_channel ()
     adminprops[i].name = CORBA::string_dup(CosNotification::MaxSuppliers);
     adminprops[i++].value <<= (CORBA::Long) 1000;
     adminprops[i].name = CORBA::string_dup(CosNotification::RejectNewEvents);
-    adminprops[i++].value <<= CORBA::Any::from_boolean(1);
+    adminprops[i++].value <<= CORBA::Any::from_boolean (true);
 
     ec_ = this->ecf_->create_channel (
           qosprops,

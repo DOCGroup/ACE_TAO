@@ -69,7 +69,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poaManager->activate ();
 
       // try and access the object with its friendly name
-      ACE_CString const full_corbaloc (ior_string.in (), 0, 1);
+      ACE_CString const full_corbaloc (ior_string.in (), nullptr, true);
 
       CORBA::ULong const first_slash = full_corbaloc.find ("/", 0);
 

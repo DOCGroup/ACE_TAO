@@ -69,7 +69,7 @@ void Config_Backing_Store::loadActivators ()
 {
   ACE_Configuration_Section_Key root;
   int err =
-    config_.open_section (config_.root_section (), ACTIVATORS_ROOT_KEY, 0, root);
+    config_.open_section (config_.root_section (), ACTIVATORS_ROOT_KEY, false, root);
   if (err == 0)
     {
       int index = 0;
@@ -82,7 +82,7 @@ void Config_Backing_Store::loadActivators ()
           ACE_Configuration_Section_Key key;
 
           // Can't fail, because we're enumerating
-          config_.open_section (root, name.c_str(), 0, key);
+          config_.open_section (root, name.c_str(), false, key);
 
           get_cstring_value (this->config_, key, IOR, ior);
           config_.get_integer_value (key, TOKEN, token);
@@ -106,7 +106,7 @@ Config_Backing_Store::loadServers ()
 {
   ACE_Configuration_Section_Key root;
   int err =
-    config_.open_section (config_.root_section (), SERVERS_ROOT_KEY, 0, root);
+    config_.open_section (config_.root_section (), SERVERS_ROOT_KEY, false, root);
   if (err == 0)
     {
       int index = 0;
@@ -131,7 +131,7 @@ Config_Backing_Store::loadServers ()
           ACE_Configuration_Section_Key key;
 
           // Can't fail, because we're enumerating
-          config_.open_section (root, name.c_str(), 0, key);
+          config_.open_section (root, name.c_str(), false, key);
           if (!get_cstring_value (this->config_, key, POA, si->poa_name))
             {
               si->poa_name = si->key_name_;
@@ -191,7 +191,7 @@ int
 Config_Backing_Store::remove (const ACE_CString& name, const ACE_TCHAR* key)
 {
   ACE_Configuration_Section_Key root;
-  int err = config_.open_section (config_.root_section (), key, 0, root);
+  int err = config_.open_section (config_.root_section (), key, false, root);
   if (err != 0)
     {
       if (this->opts_.debug () > 9)
@@ -201,7 +201,7 @@ Config_Backing_Store::remove (const ACE_CString& name, const ACE_TCHAR* key)
         }
       return 0; // Already gone.
     }
-  return config_.remove_section (root, ACE_TEXT_CHAR_TO_TCHAR (name.c_str ()), 1);
+  return config_.remove_section (root, ACE_TEXT_CHAR_TO_TCHAR (name.c_str ()), true);
 }
 
 static int get_key (ACE_Configuration& cfg, const ACE_CString& name,
@@ -209,14 +209,14 @@ static int get_key (ACE_Configuration& cfg, const ACE_CString& name,
                     ACE_Configuration_Section_Key& key)
 {
   ACE_Configuration_Section_Key root;
-  int err = cfg.open_section (cfg.root_section(), sub_section, 1, root);
+  int err = cfg.open_section (cfg.root_section(), sub_section, true, root);
   if (err != 0)
     {
       ORBSVCS_ERROR ((LM_ERROR, ACE_TEXT ("Unable to open config section:%s\n"),
         sub_section));
       return err;
     }
-  err = cfg.open_section (root, ACE_TEXT_CHAR_TO_TCHAR (name.c_str ()), 1, key);
+  err = cfg.open_section (root, ACE_TEXT_CHAR_TO_TCHAR (name.c_str ()), true, key);
   if (err != 0)
     {
       ORBSVCS_ERROR((LM_ERROR, ACE_TEXT ("Unable to open config section:%C\n"),
@@ -339,8 +339,8 @@ static HKEY setup_registry (const bool start_clean)
     {
       ACE_Configuration_Win32Registry config ( HKEY_LOCAL_MACHINE );
       ACE_Configuration_Section_Key root;
-      config.open_section (config.root_section(), ACE_TEXT ("Software\\TAO"), 0, root);
-      config.remove_section (root, ACE_TEXT ("ImplementationRepository"), 1);
+      config.open_section (config.root_section(), ACE_TEXT ("Software\\TAO"), false, root);
+      config.remove_section (root, ACE_TEXT ("ImplementationRepository"), true);
     }
 
   return ACE_Configuration_Win32Registry::

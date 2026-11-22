@@ -76,7 +76,7 @@ invocation_exception_test (Test_ptr obj,
   try
     {
       // Invoke method on test object.
-      obj->test_method (1,
+      obj->test_method (true,
                         priority);
 
       // This next line of code should not run because an exception
@@ -247,7 +247,7 @@ Task::svc ()
           current->the_priority (client_priority);
 
           // Invoke test method on server.
-          client_propagated_obj->test_method (1, // CLIENT_PROPAGATED
+          client_propagated_obj->test_method (true, // CLIENT_PROPAGATED
                                               client_priority);
         }
 
@@ -261,7 +261,7 @@ Task::svc ()
         get_server_priority (server_declared_obj.in ());
 
       // Invoke test method on server.
-      server_declared_obj->test_method (0, // SERVER_DECLARED
+      server_declared_obj->test_method (false, // SERVER_DECLARED
                                         server_priority);
 
       // Testing over. Shut down Server ORB.

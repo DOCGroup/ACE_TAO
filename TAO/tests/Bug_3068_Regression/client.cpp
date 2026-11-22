@@ -115,7 +115,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->orb_core ()->lane_resources ().transport_cache ().current_size ();
 
       // A method to kickstart callbacks from the server
-      CORBA::Long const result = server->test_method (1);
+      CORBA::Long const result = server->test_method (true);
 
       if (result != 0)
         {

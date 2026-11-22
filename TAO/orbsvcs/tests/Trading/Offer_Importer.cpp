@@ -16,7 +16,7 @@ TAO_Offer_Importer::perform_queries ()
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Importer::Federated Query.\n"));
 
   TAO_Policy_Creator policies;
-  policies.exact_type_match (0);
+  policies.exact_type_match (false);
   policies.search_card (16*NUM_OFFERS);
   policies.match_card (16*NUM_OFFERS);
   policies.return_card (16*NUM_OFFERS);
@@ -30,7 +30,7 @@ TAO_Offer_Importer::perform_directed_queries ()
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Importer::Directed Query.\n"));
 
   TAO_Policy_Creator policies;
-  policies.exact_type_match (0);
+  policies.exact_type_match (false);
   policies.search_card (16*NUM_OFFERS);
   policies.match_card (16*NUM_OFFERS);
   policies.return_card (16*NUM_OFFERS);
@@ -232,7 +232,7 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
 
           remote_output->confirm ();
 
-          TT_Info::dump_properties (offer_seq[i].properties, 1);
+          TT_Info::dump_properties (offer_seq[i].properties, true);
           ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
         }
 
@@ -262,7 +262,7 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
                   remote_output->confirm ();
 
                   CosTrading::PropertySeq& props = (*offers)[i].properties;
-                  TT_Info::dump_properties (props, 1);
+                  TT_Info::dump_properties (props, true);
 
                   ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
                 }

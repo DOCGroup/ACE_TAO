@@ -34,7 +34,7 @@ TAO_PG_GenericFactory::~TAO_PG_GenericFactory ()
         {
           TAO_PG_Factory_Set &factory_set = (*i).int_id_;
           this->delete_object_i (factory_set,
-                                 1 /* Ignore exceptions */);
+                                 true /* Ignore exceptions */);
         }
       catch (CORBA::Exception const &)
         {

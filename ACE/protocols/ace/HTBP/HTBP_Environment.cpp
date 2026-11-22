@@ -32,7 +32,7 @@ ACE::HTBP::Environment::clear ()
     {
       this->config_->remove_section (config_->root_section (),
                                      ACE_TEXT("htbp"),
-                                     1);
+                                     true);
     }
 }
 
@@ -68,7 +68,7 @@ ACE::HTBP::Environment::initialize (bool use_registry,
   this->imp_exp_.reset (imp_exp);
 
   if (this->config_->open_section (config_->root_section (),
-                                   ACE_TEXT("htbp"), 1,
+                                   ACE_TEXT("htbp"), true,
                                    this->htbp_key_) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

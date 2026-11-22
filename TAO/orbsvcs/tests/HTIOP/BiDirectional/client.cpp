@@ -119,7 +119,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // A  method to kickstart callbacks from the server
       CORBA::Long r =
-        server->test_method (1);
+        server->test_method (true);
 
       if (r != 0)
         {

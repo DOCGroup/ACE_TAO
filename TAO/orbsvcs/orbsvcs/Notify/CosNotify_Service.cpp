@@ -93,7 +93,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
         {
           arg_shifter.consume_arg ();
 
-          properties->asynch_updates (1);
+          properties->asynch_updates (true);
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-NoUpdates")) == 0)
         {

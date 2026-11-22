@@ -181,7 +181,7 @@ TAO_Service_Type_Exporter::list_all_types ()
       ACE_DEBUG ((LM_DEBUG, "*** TAO_Service_Type_Exporter::"
                   "listing all types in the Repository.\n"));
 
-      sst.all_ (1);
+      sst.all_ (true);
       CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq_var type_names =
         this->repos_->list_types (sst);
 

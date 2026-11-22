@@ -60,7 +60,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       while (!feof (stdin))
         {
-          ACE_Read_Buffer buf (stdin, 0);
+          ACE_Read_Buffer buf (stdin, false);
           ACE_Read_Buffer_Unique_Ptr line (
             buf.read ('\n'), {buf.alloc ()});
           if (!line)

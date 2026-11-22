@@ -24,7 +24,7 @@ TAO_PG_Group_Guard::~TAO_PG_Group_Guard ()
       try
         {
           this->generic_factory_.delete_object_i (this->factory_set_,
-                                                  1  // Ignore exceptions
+                                                  true  // Ignore exceptions
                                                   );
 
           // This should never throw an exception if this Guard is

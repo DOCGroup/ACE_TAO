@@ -129,7 +129,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Call the client that will make remote calls
 
       CORBA::Long const r =
-        server->test_method (1);
+        server->test_method (true);
 
       if (r != 0)
         {

@@ -173,7 +173,7 @@ FileImpl::Descriptor::read (CORBA::Long num_bytes)
       return new File::Descriptor::DataBuffer (length,
                                                length,
                                                buffer,
-                                               1);
+                                               true);
     }
 
   File::Descriptor::DataBuffer::freebuf (buffer);

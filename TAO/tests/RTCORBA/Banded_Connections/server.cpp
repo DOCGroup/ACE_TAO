@@ -185,7 +185,7 @@ get_priority_bands (RTCORBA::PriorityBands &bands,
     return -1;
   }
 
-  ACE_Read_Buffer reader (file, 1);
+  ACE_Read_Buffer reader (file, true);
 
   ACE_Read_Buffer_Unique_Ptr string (
     reader.read (EOF, ' ', '\0'), {reader.alloc ()});

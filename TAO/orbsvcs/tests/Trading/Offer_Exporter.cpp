@@ -203,7 +203,7 @@ TAO_Offer_Exporter::describe_offers ()
                   ACE_DEBUG ((LM_DEBUG, "Offer Id: %C\n",
                               static_cast<char const *> (offer_id_seq[i])));
                   ACE_DEBUG ((LM_DEBUG, "Service Type: %C\n", offer_info->type.in ()));
-                  TT_Info::dump_properties (offer_info->properties, 0);
+                  TT_Info::dump_properties (offer_info->properties, false);
                   ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
                 }
             }

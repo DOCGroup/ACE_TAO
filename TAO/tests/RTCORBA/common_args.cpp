@@ -27,7 +27,7 @@ get_priority_bands (const char *test_type,
                        bands_file),
                       -1);
 
-  ACE_Read_Buffer reader (file, 1);
+  ACE_Read_Buffer reader (file, true);
 
   ACE_Read_Buffer_Unique_Ptr string (
     reader.read (EOF, ' ', '\0'), {reader.alloc ()});
@@ -126,7 +126,7 @@ get_values (const char *test_type,
                        file_name),
                       -1);
 
-  ACE_Read_Buffer reader (file, 1);
+  ACE_Read_Buffer reader (file, true);
 
   ACE_Read_Buffer_Unique_Ptr string (
     reader.read (EOF, ' ', '\0'), {reader.alloc ()});
