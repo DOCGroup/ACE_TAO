@@ -296,7 +296,7 @@ run_main (int, ACE_TCHAR *[])
     }
 
   if (reactor.schedule_timer (std::addressof (evh),
-                              (const void *) "label_var",
+                              "label_var",
                               ACE_Time_Value (2),
                               ACE_Time_Value (2))==-1)
     {

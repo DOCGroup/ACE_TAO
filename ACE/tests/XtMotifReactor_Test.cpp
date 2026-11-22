@@ -307,7 +307,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
   if (reactor.schedule_timer (std::addressof (evh),
-                              (const void *) lbl,
+                              lbl,
                               ACE_Time_Value (2),
                               ACE_Time_Value (2))==-1)
     {
