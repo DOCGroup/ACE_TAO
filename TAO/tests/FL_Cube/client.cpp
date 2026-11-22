@@ -65,7 +65,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       client.show ();
 
       if (client.parse_args (argc, argv) != 0)
-        return 1;
+        {
+          return 1;
+        }
 
       Fl::run ();
     }

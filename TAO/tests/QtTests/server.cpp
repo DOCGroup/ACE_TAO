@@ -49,7 +49,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   // We do the command line parsing first
   if (parse_args (argc, argv) != 0)
-    return 1;
+    {
+      return 1;
+    }
 
   // Qt specific stuff for running with TAO...
   ACE_Argv_Type_Converter ct (argc, argv);

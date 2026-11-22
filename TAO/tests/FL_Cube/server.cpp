@@ -48,7 +48,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, ior_output_file) != 0)
-        return 1;
+        {
+          return 1;
+        }
 
       char *targv[] = { ACE_TEXT_ALWAYS_CHAR (argv [0]) };
       window.show (1, targv);

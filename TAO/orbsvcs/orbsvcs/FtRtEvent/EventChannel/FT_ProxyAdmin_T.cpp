@@ -46,7 +46,9 @@ FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::obtain_proxy ()
 
   CORBA::Object_var obj;
   if (any >>= CORBA::Any::to_object(obj))
-    return ProxyInterface::_narrow(obj.in());
+    {
+      return ProxyInterface::_narrow(obj.in());
+    }
 
   FtRtecEventChannelAdmin::ObjectId oid;
   Request_Context_Repository().generate_object_id(oid);

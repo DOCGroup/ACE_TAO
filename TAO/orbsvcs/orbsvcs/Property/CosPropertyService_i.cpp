@@ -972,11 +972,13 @@ TAO_PropertySet::is_property_defined (char const *property_name)
   CosProperty_Hash_Key hash_key (property_name);
 
   if (this->hash_table_.find (hash_key) == 0)
-    return true;
+    {
+      return true;
+    }
   else
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 }
 
 // Makes default sized hash_table_.

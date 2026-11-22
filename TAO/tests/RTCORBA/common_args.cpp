@@ -62,7 +62,9 @@ get_priority_bands (const char *test_type,
                          "%hd",
                          &bands[i].low);
       if (result == 0 || result == EOF)
-        break;
+        {
+          break;
+        }
 
       working_string += std::strlen (working_string);
       working_string += 1;
@@ -71,7 +73,9 @@ get_priority_bands (const char *test_type,
                          "%hd",
                          &bands[i].high);
       if (result == 0 || result == EOF)
-        break;
+        {
+          break;
+        }
 
       working_string += std::strlen (working_string);
       working_string += 1;

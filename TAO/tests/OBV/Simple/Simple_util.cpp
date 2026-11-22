@@ -71,7 +71,9 @@ Server<Servant>::init (char const *servant_name,
   int const retval = this->parse_args ();
 
   if (retval != 0)
-    return retval;
+    {
+      return retval;
+    }
 
   CORBA::ORB_var const orb = this->orb_manager_.orb ();
 
@@ -204,7 +206,9 @@ Client<InterfaceObj, Var>::init (char const *name,
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       if (!this->ior_.is_empty ())
         {

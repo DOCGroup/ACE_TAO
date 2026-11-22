@@ -325,7 +325,9 @@ u_int
 Cubit_Client::opt_to_mask (const ACE_TCHAR *test_type)
 {
   if (ACE_OS::strcasecmp (test_type, ACE_TEXT("void")) == 0)
-    return TAO_ENABLE_CUBIT_VOID;
+    {
+      return TAO_ENABLE_CUBIT_VOID;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("octet")) == 0)
     return TAO_ENABLE_CUBIT_OCTET;
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("short")) == 0)
