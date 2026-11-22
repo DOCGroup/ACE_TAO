@@ -149,7 +149,7 @@ insertion_removal_test ()
                         false);
     }
 
-  // ==== Removal tests ====
+  /// Removal tests.
 
   // Remove two elements from map.
   Map::iterator letter_A = A.find ('A');

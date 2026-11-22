@@ -84,7 +84,7 @@ run_main (int, ACE_TCHAR *[])
   str_int_test.run_test ();
   str_str_test.run_test ();
 
-// ======= Stress Test contributed by Klaus H. Wolf <hw@cyland.com> =========
+/// Stress test contributed by Klaus H. Wolf <hw@cyland.com>.
 
   ACE_RB_Tree<ACE_CString, int, ACE_Less_Than<ACE_CString>, ACE_Null_Mutex> tree;
 
@@ -759,8 +759,6 @@ run_main (int, ACE_TCHAR *[])
   {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invariant failure at line %l\n")));
   }
-
-// ======== End Stress Test ===================
 
   ACE_END_TEST;
   return 0;
