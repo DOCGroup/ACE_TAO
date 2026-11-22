@@ -413,8 +413,10 @@ ImR_Locator_i::register_activator
   ACE_UNUSED_ARG (err);
 
   if (debug_ > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Activator registered for %C.\n"),
-                    aname));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Activator registered for %C.\n"),
+                      aname));
+    }
 
   _tao_rh->register_activator (token);
 }
@@ -443,17 +445,21 @@ ImR_Locator_i::unregister_activator
       this->unregister_activator_i (aname);
 
       if (debug_ > 0)
-        ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Activator %C unregistered.\n"),
-                        aname));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Activator %C unregistered.\n"),
+                          aname));
+        }
     }
   else
     {
       if (debug_ > 0)
-        ORBSVCS_DEBUG ((
-                        LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) ImR: Ignoring unregister activator: %C. ")
-                        ACE_TEXT ("Unknown activator.\n"),
-                        aname));
+        {
+          ORBSVCS_DEBUG ((
+                          LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) ImR: Ignoring unregister activator: %C. ")
+                          ACE_TEXT ("Unknown activator.\n"),
+                          aname));
+        }
     }
   _tao_rh->unregister_activator ();
 }
@@ -477,10 +483,12 @@ ImR_Locator_i::remote_access_update (const char *name,
       if (info.null ())
         {
           if (debug_ > 0)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("(%P|%t) ImR: remote_acccess")
-                            ACE_TEXT (" <%C> unregistered.\n"),
-                            name));
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%P|%t) ImR: remote_acccess")
+                              ACE_TEXT (" <%C> unregistered.\n"),
+                              name));
+            }
           return;
         }
       aam = this->create_aam (info);
@@ -781,8 +789,10 @@ ImR_Locator_i::add_or_update_server
   else
     {
       if (debug_ > 1)
-        ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Updating server <%C>\n"),
-                        server));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Updating server <%C>\n"),
+                          server));
+        }
 
       info.edit ()->update_options (options);
       info.update_repo();
@@ -806,9 +816,11 @@ ImR_Locator_i::add_or_update_server
                       ));
 
       for (CORBA::ULong i {}; i < options.environment.length (); ++i)
-        ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("Environment variable <%C>=<%C>\n"),
-                        options.environment[i].name.in (),
-                        options.environment[i].value.in ()));
+    {
+          ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("Environment variable <%C>=<%C>\n"),
+                          options.environment[i].name.in (),
+                          options.environment[i].value.in ()));
+    }
     }
 
   _tao_rh->add_or_update_server ();
@@ -989,9 +1001,11 @@ ImR_Locator_i::remove_server
       if (!aam.is_nil())
         {
           if (debug_ > 0)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("(%P|%t) ImR: Can't remove active server <%C>.\n"),
-                            info->key_name_.c_str()));
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%P|%t) ImR: Can't remove active server <%C>.\n"),
+                              info->key_name_.c_str()));
+            }
           CORBA::Exception *ex =
             new CORBA::NO_PERMISSION (CORBA::SystemException::_tao_minor_code
                                       (TAO_IMPLREPO_MINOR_CODE, EBUSY),
@@ -1124,9 +1138,11 @@ ImR_Locator_i::shutdown_server_i (const Server_Info_Ptr &si,
   const CORBA::ULong TAO_MINOR_MASK = 0x00000f80;
   const char *id = si->key_name_.c_str();
   if (debug_ > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) ImR: Shutting down server <%C>.\n"),
-                    id));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) ImR: Shutting down server <%C>.\n"),
+                      id));
+    }
 
   UpdateableServerInfo info (this->repository_, si);
   if (info.null ())
@@ -1462,9 +1478,11 @@ ImR_Locator_i::find
                             CORBA::NO_MEMORY ());
           imr_info->startup.activation= ImplementationRepository::NORMAL;
           if (debug_ > 1)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("(%P|%t) ImR: Cannot find server <%C>\n"),
-                            id));
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%P|%t) ImR: Cannot find server <%C>\n"),
+                              id));
+            }
         }
     }
   catch (const CORBA::Exception &ex)
@@ -1546,9 +1564,11 @@ ImR_Locator_i::connect_activator (Activator_Info& info)
         }
 
       if (debug_ > 1)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) ImR: Connected to activator <%C>\n"),
-                        info.name.c_str ()));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) ImR: Connected to activator <%C>\n"),
+                          info.name.c_str ()));
+        }
     }
   catch (const CORBA::Exception& )
     {
@@ -1642,9 +1662,11 @@ ImR_Locator_i::connect_server (UpdateableServerInfo& info)
         }
 
       if (debug_ > 1)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) ImR: Connected to server <%C>\n"),
-                        sip->key_name_.c_str ()));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) ImR: Connected to server <%C>\n"),
+                          sip->key_name_.c_str ()));
+        }
       this->pinger_.add_server (sip->key_name_.c_str(),
                                 this->opts_->ping_external (),
                                 sip->server.in(),

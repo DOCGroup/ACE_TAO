@@ -48,9 +48,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
+                            1);
+        }
 
       PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -85,10 +87,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Simple_Server_var const server = Simple_Server::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Object reference <%s> is nil\n",
-                           options.ior),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Object reference <%s> is nil\n",
+                             options.ior),
+                            1);
+        }
 
       Callback_i *callback_impl {};
       ACE_NEW_RETURN (callback_impl, Callback_i (orb.in ()), 1);
@@ -114,9 +118,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Long const result = server->test_method (true);
 
       if (result != 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) unexpected result = %d "),
-                    result));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) unexpected result = %d "),
+                      result));
+        }
 
       orb->run ();
 

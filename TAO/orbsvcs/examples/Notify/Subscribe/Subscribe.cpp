@@ -44,10 +44,12 @@ Subscribe::run ()
   if (result_count.load () != event_count)
     {
       while (!this->done_.load ())
-        if (this->orb_->work_pending ())
-        {
-          this->orb_->perform_work ();
-        }
+    {
+          if (this->orb_->work_pending ())
+          {
+            this->orb_->perform_work ();
+          }
+    }
     }
 }
 
@@ -305,20 +307,26 @@ Subscribe_StructuredPushConsumer::push_structured_event (
   bool found {};
 
   for (CORBA::ULong i {}; i < this->expected_subscription_.length (); ++i)
-    if (std::strcmp (this->expected_subscription_[i].domain_name, domain_name) == 0)
     {
-      found = true;
+      if (std::strcmp (this->expected_subscription_[i].domain_name, domain_name) == 0)
+      {
+        found = true;
+      }
     }
 
   if (found)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Structured Subscribe Consumer %d received subscribed event, domain = %C, type = %C\n"),
-                this->proxy_supplier_id_, domain_name, type_name));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Structured Subscribe Consumer %d received subscribed event, domain = %C, type = %C\n"),
+                  this->proxy_supplier_id_, domain_name, type_name));
+    }
   else
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Error: Structured Subscribe Consumer %d received not subscribed event, "
-                          "domain = %C, type = %C\n"),
-                this->proxy_supplier_id_, domain_name, type_name));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Error: Structured Subscribe Consumer %d received not subscribed event, "
+                            "domain = %C, type = %C\n"),
+                  this->proxy_supplier_id_, domain_name, type_name));
+    }
 
   if (++result_count == event_count)
   {

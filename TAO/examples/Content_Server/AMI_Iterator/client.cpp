@@ -23,10 +23,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       if (argc < 2)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Usage: client filename ")
-                           ACE_TEXT ("[filename ...]\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Usage: client filename ")
+                             ACE_TEXT ("[filename ...]\n")),
+                            -1);
+        }
       // Initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
@@ -48,11 +50,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ::get_iterator (orb.in ());
 
       if (CORBA::is_nil (factory.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Object pointed to by:\n  %s\n")
-                           ACE_TEXT ("is not an Iterator_Factory object.\n"),
-                           argv[1]),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Object pointed to by:\n  %s\n")
+                             ACE_TEXT ("is not an Iterator_Factory object.\n"),
+                             argv[1]),
+                            -1);
+        }
 
       // 1 millisecond delay to reduce "busy waiting" in ORB event
       // loop.  (simulating "work")

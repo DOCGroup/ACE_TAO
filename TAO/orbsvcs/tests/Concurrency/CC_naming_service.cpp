@@ -125,10 +125,12 @@ CC_naming_service::init_naming_service ()
     {
       // Initialize the naming services
       if (this->my_name_client_.init (this->orb_.in ()) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P|%t) Unable to initialize "
-                                    "the TAO_Naming_Client.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT (" (%P|%t) Unable to initialize "
+                                      "the TAO_Naming_Client.\n")),
+                            -1);
+        }
 
       CORBA::Object_var const factory_obj =
         this->get_obj_from_name ("CosConcurrency", "LockSetFactory");
@@ -138,9 +140,11 @@ CC_naming_service::init_naming_service ()
         (factory_obj.in ());
 
       if (CORBA::is_nil (this->factory_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" could not resolve lock set factory in Naming service\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT (" could not resolve lock set factory in Naming service\n")),
+                            -1);
+        }
     }
   catch (CORBA::Exception const &ex)
     {

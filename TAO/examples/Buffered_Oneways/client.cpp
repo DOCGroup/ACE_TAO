@@ -89,8 +89,10 @@ parse_args (int argc, ACE_TCHAR **argv, Client_Options &options)
       }
 
   if (options.ior.empty ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Please specify the IOR for the servant\n"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Please specify the IOR for the servant\n"), -1);
+    }
 
   // Indicates successful parsing of command line.
   return 0;

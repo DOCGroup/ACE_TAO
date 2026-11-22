@@ -52,9 +52,11 @@ Driver::run (int argc, ACE_TCHAR* argv[])
         orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -104,12 +106,16 @@ Driver::run (int argc, ACE_TCHAR* argv[])
                                                   ACE_SCOPE_PROCESS)) != 0)
         {
           if (ACE_OS::last_error () == EPERM)
-            ACE_DEBUG ((LM_DEBUG,
-                        "%s: user is not superuser, "
-                        "so remain in time-sharing class\n", argv[0]));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "%s: user is not superuser, "
+                          "so remain in time-sharing class\n", argv[0]));
+            }
           else
-            ACE_ERROR ((LM_ERROR,
-                        "%s: ACE_OS::sched_params failed\n", argv[0]));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "%s: ACE_OS::sched_params failed\n", argv[0]));
+            }
         }
 
       if (ACE_OS::thr_setprio (min_priority) == -1)
@@ -122,9 +128,11 @@ Driver::run (int argc, ACE_TCHAR* argv[])
         orb->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to get the Naming Service.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to get the Naming Service.\n"),
+                            1);
+        }
 
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
@@ -307,9 +315,11 @@ Driver::parse_args (int argc, ACE_TCHAR *argv [])
             char* second = ACE_OS::strtok_r (nullptr, ",", &state);
             char* extra = ACE_OS::strtok_r (nullptr, ",", &state);
             if (first == nullptr || second == nullptr || extra != nullptr)
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Expected two comma-separated event types\n"),
-                                -1);
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "Expected two comma-separated event types\n"),
+                                  -1);
+              }
 
             this->event_a_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (first);
             this->event_b_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (second);

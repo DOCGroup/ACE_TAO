@@ -120,9 +120,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                               ACE_SCOPE_PROCESS)) != 0)
     {
       if (ACE_OS::last_error () == EPERM)
-        ACE_DEBUG ((LM_DEBUG,
-                    "client (%P|%t): user is not superuser, "
-                    "test runs in time-shared class\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "client (%P|%t): user is not superuser, "
+                      "test runs in time-shared class\n"));
+        }
       else
       {
         ACE_ERROR ((LM_ERROR, "client (%P|%t): sched_params failed\n"));
@@ -141,10 +143,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var object = orb->string_to_object (options.ior);
       Test::Roundtrip_var roundtrip = Test::Roundtrip::_narrow (object.in ());
       if (CORBA::is_nil (roundtrip.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("Nil Test::Roundtrip reference <%s>\n"),
-                           options.ior),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("Nil Test::Roundtrip reference <%s>\n"),
+                             options.ior),
+                            1);
+        }
 
       Test::octet_load initial_load;
       for (int i = 0; i < 100; ++i)
@@ -154,23 +158,35 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       if (ACE_OS::strcmp (options.data_type, ACE_TEXT("octet")) == 0)
-        test_sequence<Test::octet_load> (roundtrip.in (), options,
-                                         &Test::Roundtrip::test_octet_method);
+        {
+          test_sequence<Test::octet_load> (roundtrip.in (), options,
+                                           &Test::Roundtrip::test_octet_method);
+        }
       else if (ACE_OS::strcmp (options.data_type, ACE_TEXT("char")) == 0)
-        test_sequence<Test::char_load> (roundtrip.in (), options,
-                                        &Test::Roundtrip::test_char_method);
+        {
+          test_sequence<Test::char_load> (roundtrip.in (), options,
+                                          &Test::Roundtrip::test_char_method);
+        }
       else if (ACE_OS::strcmp (options.data_type, ACE_TEXT("long")) == 0)
-        test_sequence<Test::long_load> (roundtrip.in (), options,
-                                        &Test::Roundtrip::test_long_method);
+        {
+          test_sequence<Test::long_load> (roundtrip.in (), options,
+                                          &Test::Roundtrip::test_long_method);
+        }
       else if (ACE_OS::strcmp (options.data_type, ACE_TEXT("short")) == 0)
-        test_sequence<Test::short_load> (roundtrip.in (), options,
-                                         &Test::Roundtrip::test_short_method);
+        {
+          test_sequence<Test::short_load> (roundtrip.in (), options,
+                                           &Test::Roundtrip::test_short_method);
+        }
       else if (ACE_OS::strcmp (options.data_type, ACE_TEXT("double")) == 0)
-        test_sequence<Test::double_load> (roundtrip.in (), options,
-                                          &Test::Roundtrip::test_double_method);
+        {
+          test_sequence<Test::double_load> (roundtrip.in (), options,
+                                            &Test::Roundtrip::test_double_method);
+        }
       else if (ACE_OS::strcmp (options.data_type, ACE_TEXT("longlong")) == 0)
-        test_sequence<Test::longlong_load> (roundtrip.in (), options,
-                                            &Test::Roundtrip::test_longlong_method);
+        {
+          test_sequence<Test::longlong_load> (roundtrip.in (), options,
+                                              &Test::Roundtrip::test_longlong_method);
+        }
 
       if (options.shutdown)
       {

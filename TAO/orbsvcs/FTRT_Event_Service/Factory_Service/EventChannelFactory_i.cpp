@@ -124,9 +124,12 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
           char const *val {};
           char const *id_str = name[0].id.in ();
           the_criteria[i].val >>= val;
-          if (id_str[0] != '-') // environment variable
-            options.setenv (ACE_TEXT_CHAR_TO_TCHAR (id_str),
-                            ACE_TEXT("%") ACE_TEXT_PRIs, val);
+          if (id_str[0] != '-')
+            {
+              // environment variable
+              options.setenv (ACE_TEXT_CHAR_TO_TCHAR (id_str),
+                              ACE_TEXT("%") ACE_TEXT_PRIs, val);
+            }
           else // command line option
             {
               ACE_OS::sprintf (buf, ACE_TEXT(" %s %s"), id_str, val);
@@ -173,7 +176,9 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   int byte_read {};
   while (byte_read < IOR_BUFFER_SIZE &&
          (n = stream.recv (ior + byte_read, IOR_BUFFER_SIZE - byte_read)) > 0)
-    byte_read += n;
+    {
+      byte_read += n;
+    }
 
   if (n < 0 || byte_read == 0)
   {

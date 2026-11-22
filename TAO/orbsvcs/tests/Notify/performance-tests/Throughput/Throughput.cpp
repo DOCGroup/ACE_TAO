@@ -371,8 +371,10 @@ Notify_Throughput::parse_args (int argc, ACE_TCHAR *argv [])
     }
   // Recalculate.
   if (!this->options_.expected_count_set)
-    this->perconsumer_count_ = this->options_.burst_size * this->options_.burst_count *
-      this->options_.supplier_count;
+    {
+      this->perconsumer_count_ = this->options_.burst_size * this->options_.burst_count *
+        this->options_.supplier_count;
+    }
   this->peer_done_count_ = this->options_.consumer_count + this->options_.supplier_count;
   if (this->options_.payload_size < 0)
   {

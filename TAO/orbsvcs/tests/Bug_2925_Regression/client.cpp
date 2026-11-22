@@ -52,10 +52,12 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
     }
 
   if (options.ior_file.length () == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("usage: %s -k <iorfile>\n"),
-                       argv [0]),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("usage: %s -k <iorfile>\n"),
+                         argv [0]),
+                        -1);
+    }
 
   return 0;
 }
@@ -183,7 +185,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // shutdown the server, after 10 invocations of shutdown() we can be
       // more or less sure that server actually received that call
       for (int i = 0; i < 10; ++i)
-        hello->shutdown ();
+        {
+          hello->shutdown ();
+        }
 
       orb->destroy ();
     }

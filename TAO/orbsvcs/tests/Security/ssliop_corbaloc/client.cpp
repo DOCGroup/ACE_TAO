@@ -75,118 +75,122 @@ CosNaming_Client::parse_args ()
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'd':  // debug flag
-        ++TAO_debug_level;
-        break;
-      case 's':
-        if (!this->test_)
-          {
-            this->test_.reset (new (std::nothrow) Simple_Test);
-            if (!this->test_)
+  {
+      switch (c)
+        {
+        case 'd':  // debug flag
+          ++TAO_debug_level;
+          break;
+        case 's':
+          if (!this->test_)
             {
-              return -1;
-            }
-          }
-        break;
-      case 'm':
-        if (!this->test_)
-          {
-            int size = ACE_OS::atoi (get_opts.opt_arg ());
-            if (size <= 0)
-            {
-              size = 10;
-            }
-
-            this->test_.reset (new (std::nothrow) MT_Test (this->orbmgr_.orb (), size));
-            if (!this->test_)
-            {
-              return -1;
-            }
-          }
-
-        break;
-      case 't':
-        if (!this->test_)
-          {
-            this->test_.reset (new (std::nothrow) Tree_Test);
-            if (!this->test_)
-            {
-              return -1;
-            }
-          }
-        break;
-      case 'i':
-        if (!this->test_)
-          {
-            this->test_.reset (new (std::nothrow) Iterator_Test);
-            if (!this->test_)
-            {
-              return -1;
-            }
-          }
-        break;
-      case 'e':
-        if (!this->test_)
-          {
-            this->test_.reset (new (std::nothrow) Exceptions_Test);
-            if (!this->test_)
-            {
-              return -1;
-            }
-          }
-        break;
-      case 'y':
-        if (!this->test_)
-          {
-            this->test_.reset (new (std::nothrow) Destroy_Test);
-            if (!this->test_)
-            {
-              return -1;
-            }
-          }
-        break;
-      case 'p':
-        if (!this->test_)
-          {
-            FILE *ior_output_file = ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT ("w"));
-
-            if (ior_output_file == nullptr)
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("Unable to open %s for writing: %p\n"),
-                                 get_opts.opt_arg ()), -1);
-
-            this->test_.reset (new (std::nothrow) Persistent_Test_Begin (
-              this->orbmgr_.orb (), ior_output_file));
-            if (!this->test_)
+              this->test_.reset (new (std::nothrow) Simple_Test);
+              if (!this->test_)
               {
-                ACE_OS::fclose (ior_output_file);
                 return -1;
               }
-          }
-        break;
-      case 'c':
-        if (!this->test_)
-          {
-            this->test_.reset (new (std::nothrow) Persistent_Test_End (
-              this->orbmgr_.orb (), get_opts.opt_arg ()));
-            if (!this->test_)
-            {
-              return -1;
             }
-          }
-        break;
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Argument %c \n usage:  %s"
-                           " [-d]"
-                           " [-s or -e or -t or -i or -y or -p or -c<ior> or -m<size>]"
-                           "\n",
-                           c,
-                           this->argv_ [0]),
-                          -1);
-      }
+          break;
+        case 'm':
+          if (!this->test_)
+            {
+              int size = ACE_OS::atoi (get_opts.opt_arg ());
+              if (size <= 0)
+              {
+                size = 10;
+              }
+
+              this->test_.reset (new (std::nothrow) MT_Test (this->orbmgr_.orb (), size));
+              if (!this->test_)
+              {
+                return -1;
+              }
+            }
+
+          break;
+        case 't':
+          if (!this->test_)
+            {
+              this->test_.reset (new (std::nothrow) Tree_Test);
+              if (!this->test_)
+              {
+                return -1;
+              }
+            }
+          break;
+        case 'i':
+          if (!this->test_)
+            {
+              this->test_.reset (new (std::nothrow) Iterator_Test);
+              if (!this->test_)
+              {
+                return -1;
+              }
+            }
+          break;
+        case 'e':
+          if (!this->test_)
+            {
+              this->test_.reset (new (std::nothrow) Exceptions_Test);
+              if (!this->test_)
+              {
+                return -1;
+              }
+            }
+          break;
+        case 'y':
+          if (!this->test_)
+            {
+              this->test_.reset (new (std::nothrow) Destroy_Test);
+              if (!this->test_)
+              {
+                return -1;
+              }
+            }
+          break;
+        case 'p':
+          if (!this->test_)
+            {
+              FILE *ior_output_file = ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT ("w"));
+
+              if (ior_output_file == nullptr)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     ACE_TEXT ("Unable to open %s for writing: %p\n"),
+                                     get_opts.opt_arg ()), -1);
+                }
+
+              this->test_.reset (new (std::nothrow) Persistent_Test_Begin (
+                this->orbmgr_.orb (), ior_output_file));
+              if (!this->test_)
+                {
+                  ACE_OS::fclose (ior_output_file);
+                  return -1;
+                }
+            }
+          break;
+        case 'c':
+          if (!this->test_)
+            {
+              this->test_.reset (new (std::nothrow) Persistent_Test_End (
+                this->orbmgr_.orb (), get_opts.opt_arg ()));
+              if (!this->test_)
+              {
+                return -1;
+              }
+            }
+          break;
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Argument %c \n usage:  %s"
+                             " [-d]"
+                             " [-s or -e or -t or -i or -y or -p or -c<ior> or -m<size>]"
+                             "\n",
+                             c,
+                             this->argv_ [0]),
+                            -1);
+        }
+  }
 
   if (!this->test_)
     {
@@ -331,8 +335,10 @@ MT_Test::svc ()
           CORBA::Short id = result_object->id ();
 
           if (id == CosNaming_Client::OBJ1_ID)
-            ACE_DEBUG ((LM_DEBUG,
-                        "Resolved name OK in thread %t\n"));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Resolved name OK in thread %t\n"));
+            }
         }
     }
   catch (CosNaming::NamingContext::NotFound const &)
@@ -509,16 +515,20 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
         Test_Object::_narrow (result_obj_ref.in ());
 
       if (CORBA::is_nil (result_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Problems with resolving foo in Tree Test - nil object ref.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Problems with resolving foo in Tree Test - nil object ref.\n"),
+                            -1);
+        }
 
       CORBA::Short id = result_object->id ();
 
       if (id != CosNaming_Client::OBJ1_ID)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Problems with resolving foo in Tree Test - wrong id.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Problems with resolving foo in Tree Test - wrong id.\n"),
+                            -1);
+        }
 
       // Unbind the object from the Naming Context and bind it back
       // in.
@@ -543,9 +553,11 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
 
       if (CORBA::is_nil (result_object.in ())
           || !(obj_id == CosNaming_Client::OBJ1_ID))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Problems in the Tree Test\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Problems in the Tree Test\n"),
+                            -1);
+        }
 
       Test_Object_var obj2 = create_test_object (CosNaming_Client::OBJ2_ID);
 
@@ -558,9 +570,11 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
 
       if (CORBA::is_nil (result_object.in ())
           || !( obj_id == CosNaming_Client::OBJ2_ID))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Problems with rebind in Tree Test\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Problems with rebind in Tree Test\n"),
+                            -1);
+        }
     }
 
   catch (CORBA::Exception const &ex)
@@ -720,12 +734,16 @@ Exceptions_Test::not_found_test (TAO_Naming_Client &root_context)
           ex.rest_of_name.length () == 1
           && std::strcmp (ex.rest_of_name[0].id.in (),
                              "bar") == 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "NotFound  exception (case 1) works properly\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "NotFound  exception (case 1) works properly\n"));
+        }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "NotFound  exception (case 1)"
-                    " - parameters aren't set correctly\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "NotFound  exception (case 1)"
+                      " - parameters aren't set correctly\n"));
+        }
     }
   catch (CORBA::Exception const &)
     {
@@ -756,12 +774,16 @@ Exceptions_Test::not_found_test2 (TAO_Naming_Client &root_context)
                              "level3_context") == 0
           && std::strcmp (ex.rest_of_name[1].id.in (),
                              "foo") == 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "NotFound  exception (case 2) works properly\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "NotFound  exception (case 2) works properly\n"));
+        }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "NotFound  exception (case 2)"
-                    " - parameters aren't set correctly\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "NotFound  exception (case 2)"
+                      " - parameters aren't set correctly\n"));
+        }
     }
   catch (CORBA::Exception const &)
     {
@@ -793,12 +815,16 @@ Exceptions_Test::not_found_test3 (TAO_Naming_Client &root_context)
                              "foo") == 0
           && std::strcmp (ex.rest_of_name[1].id.in (),
                              "foo") == 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "NotFound  exception (case 3) works properly\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "NotFound  exception (case 3) works properly\n"));
+        }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "NotFound  exception (case 3)"
-                    " - parameters aren't set correctly\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "NotFound  exception (case 3)"
+                      " - parameters aren't set correctly\n"));
+        }
     }
   catch (CORBA::Exception const &)
     {
@@ -846,9 +872,11 @@ Iterator_Test::execute (TAO_Naming_Client &root_context)
       if (CORBA::is_nil (iter.in ())
           || bindings_list->length () != 1
           || bindings_list[0u].binding_type != CosNaming::nobject)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "CosNaming::list does not function properly\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "CosNaming::list does not function properly\n"),
+                            -1);
+        }
       ACE_DEBUG ((LM_DEBUG,
                   "First binding: %s\n",
                   bindings_list[0u].binding_name[0u].id.in ()));
@@ -857,9 +885,11 @@ Iterator_Test::execute (TAO_Naming_Client &root_context)
       CosNaming::Binding_var binding;
       iter->next_one (binding.out ());
       if (binding->binding_type != CosNaming::nobject)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "CosNaming::next_one does not function properly\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "CosNaming::next_one does not function properly\n"),
+                            -1);
+        }
       ACE_DEBUG ((LM_DEBUG,
                   "Second binding: %s\n",
                   binding->binding_name[0].id.in ()));
@@ -868,9 +898,11 @@ Iterator_Test::execute (TAO_Naming_Client &root_context)
       if (bindings_list->length () != 2
           || bindings_list[0u].binding_type != CosNaming::nobject
           || bindings_list[1u].binding_type != CosNaming::nobject)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "CosNaming::BindingIterator does not function properly\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "CosNaming::BindingIterator does not function properly\n"),
+                            -1);
+        }
       ACE_DEBUG ((LM_DEBUG,
                   "Third binding: %s\n"
                   "Fourth binding: %s\n",
@@ -881,9 +913,11 @@ Iterator_Test::execute (TAO_Naming_Client &root_context)
       // should return false.
       CORBA::Boolean result = iter->next_one (binding.out ());
       if (result)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "CosNaming::BindingIterator does not function properly\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "CosNaming::BindingIterator does not function properly\n"),
+                            -1);
+        }
       iter->destroy ();
     }
   catch (CORBA::Exception const &ex)
@@ -1035,9 +1069,11 @@ Persistent_Test_End::execute (TAO_Naming_Client &root_context)
         CosNaming::NamingContext::_narrow (obj.in ());
 
       if (CORBA::is_nil (level1_context.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot narrow object to Naming Context\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot narrow object to Naming Context\n"),
+                            -1);
+        }
 
       //  Resolve for <level2> context through the persistent ior we
       // got from part 1 of this test.

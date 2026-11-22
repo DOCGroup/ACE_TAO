@@ -60,8 +60,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       "test runs in time-shared class\n"));
         }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "client (%P|%t): sched_params failed\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "client (%P|%t): sched_params failed\n"));
+        }
     }
 
   try
@@ -72,9 +74,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::Object_var poa_object = orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -92,10 +96,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Test::Roundtrip_var roundtrip = Test::Roundtrip::_narrow (object.in ());
 
       if (CORBA::is_nil (roundtrip.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("Nil Test::Roundtrip reference <%s>\n"),
-                           options.ior),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("Nil Test::Roundtrip reference <%s>\n"),
+                             options.ior),
+                            1);
+        }
 
       for (int i = 0; i < 100; ++i)
         {
@@ -129,7 +135,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_Time_Value tv (0, 2000);
 
       while (roundtrip_handler_impl->pending_callbacks ())
-        orb->perform_work (tv);
+            {
+          orb->perform_work (tv);
+            }
 
       ACE_hrtime_t const test_end = ACE_OS::gethrtime ();
 

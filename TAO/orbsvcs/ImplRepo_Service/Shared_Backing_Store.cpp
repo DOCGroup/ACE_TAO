@@ -565,11 +565,13 @@ Shared_Backing_Store::connect_replicas ()
           // Verify that we recovered the IOR successfully. If we did not
           // then fail startup of the backup IMR Locator.
           if (this->recover_ior () == -1)
-            ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                                   ACE_TEXT("Error: Unable to retrieve IOR from combined IOR ")
-                                   ACE_TEXT ("file: %C\n"),
-                                   replica_ior_file.c_str()),
-                                  -1);
+            {
+              ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                     ACE_TEXT("Error: Unable to retrieve IOR from combined IOR ")
+                                     ACE_TEXT ("file: %C\n"),
+                                     replica_ior_file.c_str()),
+                                    -1);
+            }
         }
       else
         { // There has been a startup error. The backup can only be started

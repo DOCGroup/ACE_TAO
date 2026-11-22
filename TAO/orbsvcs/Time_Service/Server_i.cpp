@@ -28,9 +28,11 @@ Server_i::parse_args (int argc,
           ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT ("a")));
 
         if (!this->ior_output_file_)
-          ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %p\n"),
-                             get_opts.opt_arg ()), -1);
+          {
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %p\n"),
+                               get_opts.opt_arg ()), -1);
+          }
         break;
       case '?':  // display help for use of the server.
       default:
@@ -189,10 +191,12 @@ Server_i::init (int argc,
                                            "time_server");
 
       if (retval == -1)
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("%p\n"),
-                           ACE_TEXT("init_child_poa")),
-                           -1);
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("%p\n"),
+                             ACE_TEXT("init_child_poa")),
+                             -1);
+        }
 
       // Activate the POA Manager.
       this->orb_manager_.activate_poa_manager ();
@@ -244,8 +248,10 @@ Server_i::run ()
   int const retval = this->orb_manager_.run ();
 
   if (retval == -1)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t) Server_i::run")),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t) Server_i::run")),
+                        -1);
+    }
   return 0;
 }

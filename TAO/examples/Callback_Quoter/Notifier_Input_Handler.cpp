@@ -23,9 +23,11 @@ Notifier_Input_Handler::~Notifier_Input_Handler ()
   if (ACE_Event_Handler::remove_stdin_handler
       (this->notifier_i_.orb_->orb_core ()->reactor (),
        this->notifier_i_.orb_->orb_core ()->thr_mgr ()) == -1)
-     ACE_ERROR ((LM_ERROR,
-               "%p\n",
-               "remove_stdin_handler"));
+    {
+       ACE_ERROR ((LM_ERROR,
+                 "%p\n",
+                 "remove_stdin_handler"));
+    }
 }
 
 // The naming service is initialized and the naming context as well as
@@ -74,36 +76,40 @@ Notifier_Input_Handler::parse_args ()
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'd':  // debug flag.
-        ++TAO_debug_level;  ///*****
-        break;
+    {
+      switch (c)
+        {
+        case 'd':  // debug flag.
+          ++TAO_debug_level;  ///*****
+          break;
 
-      case 'f':  // output the IOR toi a file.
-        this->ior_output_file_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
-        if (!this->ior_output_file_)
+        case 'f':  // output the IOR toi a file.
+          this->ior_output_file_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
+          if (!this->ior_output_file_)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Unable to open %s for writing: %p\n",
+                                 get_opts.opt_arg ()),
+                                -1);
+            }
+          break;
+
+        case 's': // don't use the naming service
+          this->using_naming_service_ = false;
+          break;
+
+        case '?':  // display help for use of the server.
+        default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing: %p\n",
-                             get_opts.opt_arg ()),
-                            -1);
-        break;
-
-      case 's': // don't use the naming service
-        this->using_naming_service_ = false;
-        break;
-
-      case '?':  // display help for use of the server.
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " [-d]"
-                           " [-f] <ior_output_file>"
-                           " [-s]"
-                           "\n",
-                           this->argv_[0]),
-                          1);
-      }
+                             "usage:  %s"
+                             " [-d]"
+                             " [-f] <ior_output_file>"
+                             " [-s]"
+                             "\n",
+                             this->argv_[0]),
+                            1);
+        }
+    }
 
   // Indicates successful parsing of command line.
   return 0;
@@ -121,15 +127,19 @@ Notifier_Input_Handler::init (int argc,
   ACE_NEW_RETURN (argv_copy, ACE_TCHAR *[argc], -1);
   this->argv_.reset (argv_copy);
   for (int i = 0; i < argc; ++i)
-    this->argv_[i] = argv[i];
+            {
+      this->argv_[i] = argv[i];
+            }
 
   if (this->orb_manager_.init_child_poa (this->argc_,
                                          this->argv_.get (),
                                          "child_poa") == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "init_child_poa"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "init_child_poa"),
+                        -1);
+    }
 
   int retval = this->parse_args ();
 
@@ -147,10 +157,12 @@ Notifier_Input_Handler::init (int argc,
       (this,
        orb->orb_core ()->reactor (),
        orb->orb_core ()->thr_mgr ()) == -1)
-       ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "register_stdin_handler"),
-                      -1);
+    {
+         ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "register_stdin_handler"),
+                        -1);
+    }
 
   // Stash our ORB pointer for later reference.
   this->notifier_i_.orb (orb.in ());

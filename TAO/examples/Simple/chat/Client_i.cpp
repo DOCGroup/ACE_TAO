@@ -86,19 +86,23 @@ Client_i::init (int argc, ACE_TCHAR *argv[])
 
       // read the ior from file
       if (this->read_ior (this->ior_file_name_) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("could not read the ior from the file: <%s>\n"),
-                           this->ior_file_name_),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("could not read the ior from the file: <%s>\n"),
+                             this->ior_file_name_),
+                            -1);
+        }
 
       CORBA::Object_var server_object =
         orb->string_to_object (this->ior_.c_str ());
 
       if (CORBA::is_nil (server_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("invalid ior <%C>\n"),
-                           this->ior_.c_str ()),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("invalid ior <%C>\n"),
+                             this->ior_.c_str ()),
+                            -1);
+        }
 
       this->server_ = Broadcaster::_narrow (server_object.in ());
       if (CORBA::is_nil (this->server_.in ()))
@@ -143,10 +147,12 @@ Client_i::run ()
           (this,
            TAO_ORB_Core_instance ()->reactor (),
            TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("register_stdin_handler")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("register_stdin_handler")),
+                            -1);
+        }
 
       // Run the ORB.
       this->orb_manager_.run ();
@@ -212,27 +218,33 @@ Client_i::read_ior (ACE_TCHAR const *filename)
   ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
 
   if (f_handle == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unable to open %s for writing (%p)\n"),
-                       filename,
-                       ACE_TEXT ("open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Unable to open %s for writing (%p)\n"),
+                         filename,
+                         ACE_TEXT ("open")),
+                        -1);
+    }
 
   ACE_Read_Buffer ior_buffer (f_handle, true);
   ACE_Read_Buffer_Unique_Ptr data (
     ior_buffer.read (), {ior_buffer.alloc ()});
 
   if (!data)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unable to read ior (%p)\n"),
-                       ACE_TEXT ("read")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Unable to read ior (%p)\n"),
+                         ACE_TEXT ("read")),
+                        -1);
+    }
 
   this->ior_ = data.get ();
 
   if (this->ior_.length () == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("failed to read ior from file\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("failed to read ior from file\n")),
+                        -1);
+    }
   return 0;
 }

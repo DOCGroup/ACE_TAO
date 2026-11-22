@@ -24,12 +24,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               }
             }
           else
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "usage:  %s "
-                               "-k <ior> "
-                               "\n",
-                               argv [0]),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "usage:  %s "
+                                 "-k <ior> "
+                                 "\n",
+                                 argv [0]),
+                                1);
+            }
         }
 
       CORBA::Object_var tmp =

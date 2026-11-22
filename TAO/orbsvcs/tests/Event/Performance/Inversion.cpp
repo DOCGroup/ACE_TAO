@@ -38,9 +38,11 @@ EC_Inversion::parse_args (int &argc, ACE_TCHAR *argv [])
 
   int r = this->EC_Driver::parse_args (argc, argv);
   if (this->verbose ())
-    ACE_DEBUG ((LM_DEBUG,
-                "EC_Inversion (%P|%t) "
-                "adjusting number of consumers (2)\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "EC_Inversion (%P|%t) "
+                  "adjusting number of consumers (2)\n"));
+    }
   return r;
 }
 

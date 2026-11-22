@@ -85,26 +85,28 @@ parse_args (int argc, ACE_TCHAR **argv, Registration_Options &options)
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'i':
-        options.iterations = static_cast<u_long> (ACE_OS::atoi (get_opts.opt_arg ()));
-        break;
+  {
+      switch (c)
+        {
+        case 'i':
+          options.iterations = static_cast<u_long> (ACE_OS::atoi (get_opts.opt_arg ()));
+          break;
 
-      case 'r':
-        options.measure_reverse_map_effectiveness = true;
-        break;
+        case 'r':
+          options.measure_reverse_map_effectiveness = true;
+          break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "[-r [measure reverse map effectiveness]] "
-                           "[-i iterations] "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "[-r [measure reverse map effectiveness]] "
+                             "[-i iterations] "
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+  }
 
   // Indicates successful parsing of command line.
   return 0;
@@ -142,8 +144,10 @@ print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time,
                   tmp < 0.0 ? 0.0 : tmp));
     }
   else
-    ACE_ERROR ((LM_ERROR,
-                "\tNo time stats printed.  Zero iterations or error occurred.\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "\tNo time stats printed.  Zero iterations or error occurred.\n"));
+    }
 }
 
 //

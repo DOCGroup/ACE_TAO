@@ -21,8 +21,10 @@ int
 PMS_All::encode (char *packet, int &packet_length)
 {
   if (Options::get_opt (Options::DEBUGGING) != 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "in PMS_All::encode"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "in PMS_All::encode"));
+    }
 
   char *buf_ptr = packet;
 
@@ -69,9 +71,11 @@ int
 PMS_All::decode (char *, int &packet_length)
 {
   if (Options::get_opt (Options::DEBUGGING) != 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "in PMS_All::decode, packet_length = %d\n",
-                packet_length));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "in PMS_All::decode, packet_length = %d\n",
+                  packet_length));
+    }
 
   Search_Struct *lookup {};
   ACE_NEW_RETURN (lookup, HT_Server, -1);

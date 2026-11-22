@@ -46,8 +46,10 @@ Basic::init_ORB (int argc, ACE_TCHAR *argv[])
     this->orb_->resolve_initial_references ("RootPOA");
 
   if (CORBA::is_nil (poa_object.in ()))
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")));
+    }
 
   this->root_poa_ =
     PortableServer::POA::_narrow (poa_object.in ());

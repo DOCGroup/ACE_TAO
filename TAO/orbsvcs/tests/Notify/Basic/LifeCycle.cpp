@@ -126,8 +126,10 @@ LifeCycle::create_ec ()
   }
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "created event channel\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "created event channel\n"));
+    }
 }
 
 void
@@ -148,8 +150,10 @@ LifeCycle::create_supplier_admin ()
     }
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "created supplier admin\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "created supplier admin\n"));
+    }
 }
 
 void
@@ -169,8 +173,10 @@ LifeCycle::create_consumer_admin ()
     }
 
   if (TAO_debug_level)
-   ACE_DEBUG ((LM_DEBUG,
-               "created consumer admin\n"));
+    {
+     ACE_DEBUG ((LM_DEBUG,
+                 "created consumer admin\n"));
+    }
 }
 
 void
@@ -179,8 +185,10 @@ LifeCycle::destroy_supplier_admin ()
   this->supplier_admin_->destroy ();
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "destroyed supplier admin\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "destroyed supplier admin\n"));
+    }
 }
 
 void
@@ -189,8 +197,10 @@ LifeCycle::destroy_consumer_admin ()
   this->consumer_admin_->destroy ();
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "destroyed consumer admin\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "destroyed consumer admin\n"));
+    }
 }
 
 void
@@ -199,8 +209,10 @@ LifeCycle::destroy_ec ()
   this->ec_->destroy ();
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "destroyed event channel\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "destroyed event channel\n"));
+    }
 }
 
 int

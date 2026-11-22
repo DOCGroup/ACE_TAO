@@ -53,10 +53,12 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
     }
 
   if (!has_uipmc_url || !has_client_uipmc_url)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("usage:  %s -u <url> -c <client_url>\n"),
-                       argv [0]),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("usage:  %s -u <url> -c <client_url>\n"),
+                         argv [0]),
+                        -1);
+    }
 
   return 0;
 }
@@ -173,9 +175,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableGroup::GOA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P|%t) Panic: nil RootPOA\n")),
-                           1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT (" (%P|%t) Panic: nil RootPOA\n")),
+                             1);
+        }
 
       PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
@@ -231,14 +235,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         // shutdown the server, after 10 invocations of shutdown() we can be
         // more or less sure that server actually received that call
         for (int i = 0; i < 10; ++i)
-          hello->shutdown ();
+        {
+            hello->shutdown ();
+        }
         orb_thr.wait ();
       }
 
       if (logger.report_statistics () == hello_call_number)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("\n (%P|%t) No single call got through to the server\n")),
-                          3);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("\n (%P|%t) No single call got through to the server\n")),
+                            3);
+        }
 
       root_poa->destroy (true, true);
 

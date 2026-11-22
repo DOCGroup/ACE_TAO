@@ -464,7 +464,9 @@ Virtual_Member_Call_Test::run ()
   this->start_timing ();
 
   for (u_int i = 0; i < iterations; ++i)
-    fv->v_func ();
+    {
+      fv->v_func ();
+    }
 
   this->stop_timing ();
 
@@ -544,8 +546,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_utsname name {};
 
   if (ACE_OS::uname (std::addressof (name)) != -1)
-    ACE_DEBUG ((LM_INFO, "%s (%s), %s %s at %T\n",
-                name.nodename, name.machine, name.sysname, name.release));
+    {
+      ACE_DEBUG ((LM_INFO, "%s (%s), %s %s at %T\n",
+                  name.nodename, name.machine, name.sysname, name.release));
+    }
 
   ACE_DEBUG ((LM_INFO, "%u iterations\n", iterations));
 

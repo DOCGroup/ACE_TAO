@@ -252,10 +252,12 @@ CosEC_ServantBase::init_SupplierQOS (RtecBase::handle_t supp_handle,
 
  // if nothing was specified on the command line use defaults..
   if (source_type_pairs == nullptr)
-    supplier_qos.insert (1,
-                         ACE_ES_EVENT_ANY,
-                         supp_handle,
-                         1);
+    {
+      supplier_qos.insert (1,
+                           ACE_ES_EVENT_ANY,
+                           supp_handle,
+                           1);
+    }
   else // parse the event types..
     {
       tok = ACE_OS::strtok (source_type_pairs, c);
@@ -333,24 +335,28 @@ CosEC_ServantBase::init_ConsumerQOS (RtecBase::handle_t cons_handle,
                                     cons_handle);
         }
       else
-        do
-          {
-            int const type_val = ACE_OS::atoi (tok);
-            ACE_DEBUG ((LM_DEBUG, "consumer_qos::insert_type (%d)\n",
-                        type_val));
-            consumer_qos.insert_type (type_val,
-                                      cons_handle);
-            tok = ACE_OS::strtok (nullptr, c);
-          }
-        while (tok != nullptr);
+        {
+          do
+            {
+              int const type_val = ACE_OS::atoi (tok);
+              ACE_DEBUG ((LM_DEBUG, "consumer_qos::insert_type (%d)\n",
+                          type_val));
+              consumer_qos.insert_type (type_val,
+                                        cons_handle);
+              tok = ACE_OS::strtok (nullptr, c);
+            }
+          while (tok != nullptr);
+        }
     }
 
   // repeat for source ids..
 
   // if nothing was specified on the command line use defaults..
   if (eventSourceIds == nullptr)
-    consumer_qos.insert_source (1, // default = 1
-                                cons_handle);
+    {
+      consumer_qos.insert_source (1, // default = 1
+                                  cons_handle);
+    }
   else // parse the event types..
     {
       tok = ACE_OS::strtok (eventSourceIds, c);
@@ -361,16 +367,18 @@ CosEC_ServantBase::init_ConsumerQOS (RtecBase::handle_t cons_handle,
                                       cons_handle);
         }
       else
-        do
-          {
-            int const source_val = ACE_OS::atoi (tok);
-            ACE_DEBUG ((LM_DEBUG, "consumer_qos::insert_source (%d)\n",
-                        source_val));
-            consumer_qos.insert_type (source_val,
-                                      cons_handle);
-            tok = ACE_OS::strtok (nullptr, c);
-          }
-        while (tok != nullptr);
+        {
+          do
+            {
+              int const source_val = ACE_OS::atoi (tok);
+              ACE_DEBUG ((LM_DEBUG, "consumer_qos::insert_source (%d)\n",
+                          source_val));
+              consumer_qos.insert_type (source_val,
+                                        cons_handle);
+              tok = ACE_OS::strtok (nullptr, c);
+            }
+          while (tok != nullptr);
+        }
     }
 }
 

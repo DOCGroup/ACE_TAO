@@ -41,10 +41,12 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
     }
 
   if (options.uipmc_url.length () == 0 || options.ior_output_file.length () == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("usage: %s -u <url> -o <iorfile>\n"),
-                       argv [0]),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("usage: %s -u <url> -o <iorfile>\n"),
+                         argv [0]),
+                        -1);
+    }
 
   return 0;
 }
@@ -66,9 +68,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableGroup::GOA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P|%t) Panic: nil RootPOA\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT (" (%P|%t) Panic: nil RootPOA\n")),
+                            1);
+        }
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -106,16 +110,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
 
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                             options.ior_output_file.c_str ()),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                               options.ior_output_file.c_str ()),
+                              1);
+          }
 
         if (ACE_OS::fprintf (output_file.get (), "%s", ior.in ()) < 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Cannot write output file for IOR: %s"),
-                             options.ior_output_file.c_str ()),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Cannot write output file for IOR: %s"),
+                               options.ior_output_file.c_str ()),
+                              1);
+          }
       }
 
       poa_manager->activate ();
@@ -127,9 +135,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb->destroy ();
 
       if (logger.report_statistics () <= 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("\n (%P|%t) ERROR: No single call got through to the server\n")),
-                          3);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("\n (%P|%t) ERROR: No single call got through to the server\n")),
+                            3);
+        }
     }
   catch (CORBA::Exception const &ex)
     {

@@ -22,10 +22,12 @@ write_ior (ACE_TCHAR const *filename, char const *ior)
   std::unique_ptr<FILE, int (*) (FILE *)> output_file (
     ACE_OS::fopen (filename, ACE_TEXT ("w")), ACE_OS::fclose);
   if (!output_file)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                       filename),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                         filename),
+                        -1);
+    }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Wrote IOR to %s\n"), filename));
   ACE_OS::fprintf (output_file.get (), "%s", ior);
   return 0;
@@ -38,39 +40,41 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'i':
+    {
+      switch (c)
         {
-          options.ior_table_name = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
-          options.another_table_name = options.ior_table_name;
-          if (!options.another_table_name.empty ())
+        case 'i':
           {
-            options.another_table_name.back () = '1';
+            options.ior_table_name = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
+            options.another_table_name = options.ior_table_name;
+            if (!options.another_table_name.empty ())
+            {
+              options.another_table_name.back () = '1';
+            }
+            break;
           }
-          break;
-        }
-      case 'o':
-        {
-          options.ior_output_file = get_opts.opt_arg ();
-          options.another_output_file = options.ior_output_file;
-          if (!options.another_output_file.empty ())
+        case 'o':
           {
-            options.another_output_file[options.another_output_file.length () - 1] = '1';
+            options.ior_output_file = get_opts.opt_arg ();
+            options.another_output_file = options.ior_output_file;
+            if (!options.another_output_file.empty ())
+            {
+              options.another_output_file[options.another_output_file.length () - 1] = '1';
+            }
+            break;
           }
+        case 'n':
+          options.nthreads = ACE_OS::atoi (get_opts.opt_arg ());
           break;
-        }
-      case 'n':
-        options.nthreads = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage: %s [-i <iortable name>] -o <iorfile> -n <nthreads>\n"),
-                           argv [0]),
-                          -1);
-      }
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage: %s [-i <iortable name>] -o <iorfile> -n <nthreads>\n"),
+                             argv [0]),
+                            -1);
+        }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -89,9 +93,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                           1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                             1);
+        }
 
       // Get a Root POA reference
       PortableServer::POA_var root_poa =
@@ -158,9 +164,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Server_Worker worker (orb.in ());
       if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
                            options.nthreads) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot activate client threads\n"),
-                           1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot activate client threads\n"),
+                             1);
+        }
 
       worker.thr_mgr ()->wait ();
 

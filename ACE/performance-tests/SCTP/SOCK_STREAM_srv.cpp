@@ -80,10 +80,12 @@ static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
     ACE_CDR::ULong msgBufSize {};
     // read the size of the buffer to follow
     if ((dataModeStream->recv_n(&msgBufSize, ACE_CDR::LONG_SIZE, 0, &bt)) == -1)
-      ACE_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("recv_n")),
-                       0);
+      {
+        ACE_ERROR_RETURN((LM_ERROR,
+                          ACE_TEXT ("%p\n"),
+                          ACE_TEXT ("recv_n")),
+                         0);
+      }
     msgBufSize = ACE_NTOHL(msgBufSize);
 
     // allocate the buffer for the message payload
@@ -97,20 +99,24 @@ static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
 
     // read the buffer
     if ((dataModeStream->recv_n(msgBuf.get (), msgBufSize, 0, &bt)) == -1)
-      ACE_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("recv_n")),
-                       0);
+      {
+        ACE_ERROR_RETURN((LM_ERROR,
+                          ACE_TEXT ("%p\n"),
+                          ACE_TEXT ("recv_n")),
+                         0);
+      }
 
     // SEND A REPLY TO THE CLIENT
 
     // send back a 2 byte reply
     ACE_CDR::Short reply {};
     if ((dataModeStream->send_n(&reply, ACE_CDR::SHORT_SIZE, 0, &bt)) == -1)
-      ACE_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("send_n")),
-                       0);
+      {
+        ACE_ERROR_RETURN((LM_ERROR,
+                          ACE_TEXT ("%p\n"),
+                          ACE_TEXT ("send_n")),
+                         0);
+      }
   } while (--numIterations);
 
   return 0;
@@ -240,9 +246,11 @@ static void run_server (ACE_HANDLE handle)
   if (ACE_Thread_Manager::instance ()->spawn (unmarshalledOctetServer,
                                               args.get (),
                                               THR_DETACHED) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) %p\n"),
-                ACE_TEXT ("spawn")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("spawn")));
+    }
   else
   {
     args.release ();
@@ -266,11 +274,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
   // was specified.
 #ifndef ACE_HAS_SCTP
   if (optsMgr.test_transport_protocol == IPPROTO_SCTP)
-    ACE_ERROR_RETURN((LM_ERROR,
-                      ACE_TEXT ("SCTP was NOT installed when this binary was compiled.\n")
-                      ACE_TEXT ("SOCK_STREAM_srv may still be run using TCP ")
-                      ACE_TEXT ("via the '-t tcp' option.\n")),
-                     1);
+    {
+      ACE_ERROR_RETURN((LM_ERROR,
+                        ACE_TEXT ("SCTP was NOT installed when this binary was compiled.\n")
+                        ACE_TEXT ("SOCK_STREAM_srv may still be run using TCP ")
+                        ACE_TEXT ("via the '-t tcp' option.\n")),
+                       1);
+    }
 #endif
 
   // check that valid options were specified
@@ -303,20 +313,24 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
                            AF_INET,
                            ACE_DEFAULT_BACKLOG,
                            optsMgr.test_transport_protocol) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("open")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("open")),
+                        1);
 
-  // this function checks that the port that was actually bound was
-  // the port we asked for. Apparently some operating systems will
-  // automatically select new ports if the specified port is currently
-  // used.
+    // this function checks that the port that was actually bound was
+    // the port we asked for. Apparently some operating systems will
+    // automatically select new ports if the specified port is currently
+    // used.
+    }
   else if (acceptor_socket.get_local_addr(serverAddr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("get_local_addr")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("get_local_addr")),
+                        1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) starting server at port %d\n"),
@@ -349,10 +363,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
 
     // check that select did not end with an error.
     if (result == -1)
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("select")));
-    // check to see if select timed out.
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) %p\n"),
+                    ACE_TEXT ("select")));
+      // check to see if select timed out.
+      }
     else if (result == 0){
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) select timed out\n")));

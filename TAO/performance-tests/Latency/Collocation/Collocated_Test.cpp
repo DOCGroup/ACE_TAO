@@ -53,8 +53,10 @@ set_priority ()
                       "test runs in time-shared class\n"));
         }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "server (%P|%t): sched_params failed\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "server (%P|%t): sched_params failed\n"));
+        }
     }
 }
 

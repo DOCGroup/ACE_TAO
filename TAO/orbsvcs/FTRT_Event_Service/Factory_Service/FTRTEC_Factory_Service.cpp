@@ -115,10 +115,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       std::unique_ptr<FILE, int (*) (FILE *)> output_file (
         ACE_OS::fopen (options.output.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
       if (!output_file)
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                               options.output.c_str ()),
-                              1);
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                                 options.output.c_str ()),
+                                1);
+        }
       ACE_OS::fprintf (output_file.get (), "%s", str.in ());
     }
 

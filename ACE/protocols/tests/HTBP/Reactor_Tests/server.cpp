@@ -113,17 +113,21 @@ Accept_Handler::handle_input (ACE_HANDLE h)
       return 0;
     }
   for (int i {}; i < 2; ++i)
-    if (channels_[i] != nullptr && channels_[i]->get_handle() == h)
-      {
-        ch = std::addressof (channels_[i]);
-        break;
-      }
+    {
+      if (channels_[i] != nullptr && channels_[i]->get_handle() == h)
+        {
+          ch = std::addressof (channels_[i]);
+          break;
+        }
+    }
   if (ch == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Server Accept_Handler::handle_input, ")
-                       ACE_TEXT ("unknown handle %H\n"),
-                       h),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Server Accept_Handler::handle_input, ")
+                         ACE_TEXT ("unknown handle %H\n"),
+                         h),
+                        -1);
+    }
   int result = (*ch)->pre_recv();
   if (result == 0)
     {
@@ -148,10 +152,12 @@ Accept_Handler::handle_input (ACE_HANDLE h)
           session->handler (sh);
         }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) Server Accept_Handler::handle_input ")
-                    ACE_TEXT ("There is already a handler for %H\n"),
-                    stream->get_handle ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) Server Accept_Handler::handle_input ")
+                      ACE_TEXT ("There is already a handler for %H\n"),
+                      stream->get_handle ()));
+        }
 
       if ((*ch)->state() == ACE::HTBP::Channel::Data_Queued)
         {
@@ -180,10 +186,12 @@ Stream_Handler::handle_input (ACE_HANDLE h)
   char buffer[1000];
   ssize_t n = this->stream_.recv (buffer,1000);
   if (n == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Server Stream_Handler::handle_input %p\n"),
-                       ACE_TEXT ("recv")),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Server Stream_Handler::handle_input %p\n"),
+                         ACE_TEXT ("recv")),
+                        0);
+    }
   buffer[n] = 0;
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Server Stream_Handler::handle_input ")
@@ -199,14 +207,18 @@ Stream_Handler::handle_input (ACE_HANDLE h)
     {
       ACE::HTBP::Channel * const ch = stream_.session()->outbound();
       if (ch != nullptr)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) Server Stream_Handler::handle_input ")
-                    ACE_TEXT ("Sending reply on %H\n"),
-                    ch->ace_stream().get_handle()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) Server Stream_Handler::handle_input ")
+                      ACE_TEXT ("Sending reply on %H\n"),
+                      ch->ace_stream().get_handle()));
+        }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) Server Stream_Handler::handle_input ")
-                    ACE_TEXT ("Can't send reply on nul channel\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) Server Stream_Handler::handle_input ")
+                      ACE_TEXT ("Can't send reply on nul channel\n")));
+        }
       this->stream_.send ("Back atcha!",11);
     }
   return 0;
@@ -227,10 +239,12 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 
   ACE_TCHAR host[MAXHOSTNAMELEN+1];
   if (ACE_OS::hostname (host, MAXHOSTNAMELEN) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Server failure: %p\n"),
-                       ACE_TEXT ("hostname")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Server failure: %p\n"),
+                         ACE_TEXT ("hostname")),
+                        1);
+    }
 
   ACE_INET_Addr local (port, host);
   local.addr_to_string (host, MAXHOSTNAMELEN);
@@ -254,9 +268,11 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       std::unique_ptr<FILE, int (*) (FILE *)> file (
         ACE_OS::fopen (notifier_file, ACE_TEXT ("w+")), ACE_OS::fclose);
       if (!file)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot open notifier file '%s'\n"),
-                           notifier_file), 1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open notifier file '%s'\n"),
+                             notifier_file), 1);
+        }
       char const * const msg = "server ready";
       ACE_OS::fwrite (msg, ACE_OS::strlen (msg), 1, file.get ());
     }

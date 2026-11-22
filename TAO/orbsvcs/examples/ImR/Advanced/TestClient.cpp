@@ -253,12 +253,16 @@ int TestClient::svc ()
         }
 
       if (holding_count > 0)
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client thread %d received %d holding error(s).\n"),
-                    thread_num, holding_count));
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client thread %d received %d holding error(s).\n"),
+                      thread_num, holding_count));
+        }
 
       if (no_profile_count > 0)
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client thread %d received %d no profile error(s).\n"),
-                    thread_num, no_profile_count));
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client thread %d received %d no profile error(s).\n"),
+                      thread_num, no_profile_count));
+        }
 
       return 0;
     }

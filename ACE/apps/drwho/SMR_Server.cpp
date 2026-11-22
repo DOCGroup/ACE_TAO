@@ -5,8 +5,10 @@
 SMR_Server::SMR_Server (short port_number)
 {
   if (CM_Server::open (port_number) < 0)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n%a",
-                Options::program_name,
-                1));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n%a",
+                  Options::program_name,
+                  1));
+    }
 }

@@ -136,12 +136,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if ((ftc.object_group_ref_version != 5) &&
           (ftc.object_group_id != 10))
-        ACE_ERROR ((LM_ERROR,
-                    "%P|%t) Not working right\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%P|%t) Not working right\n"));
+        }
 
       if (retval)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("\tWe have set the property\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("\tWe have set the property\n")));
+        }
 
       orb->destroy ();
     }

@@ -98,8 +98,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     Terminator terminator;
     if (terminator.open (0) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                        ACE_TEXT ("main Error opening terminator\n")),-1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                          ACE_TEXT ("main Error opening terminator\n")),-1);
+      }
 
     PortableServer::Servant_var<Test_i> test_servant =
       new Test_i (server_num, terminator, root_poa.in (), root_poa.in ());

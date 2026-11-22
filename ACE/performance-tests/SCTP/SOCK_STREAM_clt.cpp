@@ -61,9 +61,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
   // was specified.
 #ifndef ACE_HAS_SCTP
   if (optsMgr.test_transport_protocol == IPPROTO_SCTP)
-    ACE_ERROR_RETURN((LM_ERROR,
-                      ACE_TEXT ("SCTP was NOT installed when this binary was compiled.\nSOCK_STREAM_clt may still be run using TCP via the '-t tcp' option.\n")),
-                     1);
+    {
+      ACE_ERROR_RETURN((LM_ERROR,
+                        ACE_TEXT ("SCTP was NOT installed when this binary was compiled.\nSOCK_STREAM_clt may still be run using TCP via the '-t tcp' option.\n")),
+                       1);
+    }
 #endif
 
   // check that valid options were specified
@@ -91,10 +93,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
                          serverAddr,
                          0,clientAddr, 0, 0, 0, // ALL DEFAULT ARGUMENTS
                          Options_Manager::test_transport_protocol) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) %p\n"),
-                       ACE_TEXT ("connection failed")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) %p\n"),
+                         ACE_TEXT ("connection failed")),
+                        1);
+    }
 
   // run the test
   ACE_SCTP::HIST testResultsHistogram {};
@@ -176,17 +180,21 @@ ACE_SCTP::HIST runUnmarshalledOctetTest (
   if (Options_Manager::test_transport_protocol == IPPROTO_SCTP){
     // default - sctp case
     if (-1 == stream.set_option(IPPROTO_SCTP, SCTP_NODELAY, &nagle, sizeof nagle))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n",
-                         "set_option"),
-                        0);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "set_option"),
+                          0);
+      }
   } else {
     // tcp case
     if (-1 == stream.set_option(IPPROTO_TCP, TCP_NODELAY, &nagle, sizeof nagle))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n",
-                         "set_option"),
-                        0);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "set_option"),
+                          0);
+      }
   }
 
   // prime the client and server before starting the test
@@ -195,35 +203,43 @@ ACE_SCTP::HIST runUnmarshalledOctetTest (
     // TODO : The message length should be CDR encoded
     ACE_CDR::ULong msgLenExpressed = ACE_HTONL (msgLen);
     if (-1 == stream.send_n (&msgLenExpressed, ACE_CDR::LONG_SIZE, 0, &bt))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n",
-                         "send_n"),
-                        0);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "send_n"),
+                          0);
+      }
 
     // send a message
     if (-1 == stream.send_n (buf.get (), msgLen, 0, &bt))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n",
-                         "send_n"),
-                        0);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "send_n"),
+                          0);
+      }
 
     // block for a Short reply
     ACE_CDR::Short reply;
     if ((stream.recv_n(&reply, ACE_CDR::SHORT_SIZE, 0, &bt)) == -1)
-      ACE_ERROR_RETURN((LM_ERROR,
-                        "%p\n",
-                        "recv_n"),
-                       0);
+      {
+        ACE_ERROR_RETURN((LM_ERROR,
+                          "%p\n",
+                          "recv_n"),
+                         0);
+      }
   }
 
   // AFTER PRIMING THE PUMP CREATE THE HISTOGRAM
   ACE_SCTP::HIST aceStream_hist {};
   aceStream_hist = createHistogram(msgLen);
   if (aceStream_hist == nullptr)
-    ACE_ERROR_RETURN((LM_ERROR,
-                      "%p\n",
-                      "histogram create failed"),
-                     0);
+    {
+      ACE_ERROR_RETURN((LM_ERROR,
+                        "%p\n",
+                        "histogram create failed"),
+                       0);
+    }
 
   iovec iov[2];
   // PERFORMANCE TEST LOOP
@@ -231,10 +247,12 @@ ACE_SCTP::HIST runUnmarshalledOctetTest (
     // get the start time
     startTime = ACE_OS::gethrtime();
     if (!startTime)
-      ACE_ERROR_RETURN((LM_ERROR,
-                        "%p\n",
-                        "ACE_OS::gethrtime()"),
-                       0);
+      {
+        ACE_ERROR_RETURN((LM_ERROR,
+                          "%p\n",
+                          "ACE_OS::gethrtime()"),
+                         0);
+      }
 
     ACE_CDR::ULong msgLenExpressed = ACE_HTONL (msgLen);
     iov[0].iov_base = reinterpret_cast<char *> (&msgLenExpressed);
@@ -243,26 +261,32 @@ ACE_SCTP::HIST runUnmarshalledOctetTest (
     iov[1].iov_len = msgLen;
 
     if (-1 == stream.sendv_n (iov, 2))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n",
-                         "send_n"),
-                        0);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "send_n"),
+                          0);
+      }
 
     // block for a Short reply
     ACE_CDR::Short reply;
     if ((stream.recv_n(&reply, ACE_CDR::SHORT_SIZE, 0, &bt)) == -1)
-      ACE_ERROR_RETURN((LM_ERROR,
-                        "%p\n",
-                        "recv_n"),
-                       0);
+      {
+        ACE_ERROR_RETURN((LM_ERROR,
+                          "%p\n",
+                          "recv_n"),
+                         0);
+      }
 
     // get the end time
     endTime = ACE_OS::gethrtime();
     if (!endTime)
-      ACE_ERROR_RETURN((LM_ERROR,
-                        "%p\n",
-                        "ACE_OS::gethrtime()"),
-                       0);
+      {
+        ACE_ERROR_RETURN((LM_ERROR,
+                          "%p\n",
+                          "ACE_OS::gethrtime()"),
+                         0);
+      }
 
     // compute the message latency in micro-seconds
     messageLatency_usec =
@@ -291,13 +315,17 @@ ACE_SCTP::HIST runTest(ACE_SOCK_Stream & stream)
 {
   size_t msgLen = 1;
   for (int i = 1; i <= Options_Manager::payload_size_power_of_2; ++i)
-    msgLen *= 2;
+      {
+      msgLen *= 2;
+      }
 
   // send a header to the server that contains test parameters
   if (sendHeader(stream) < 0)
-    ACE_ERROR_RETURN((LM_ERROR,
-                      "Could NOT Send CDR Encoded Header"),
-                     0);
+    {
+      ACE_ERROR_RETURN((LM_ERROR,
+                        "Could NOT Send CDR Encoded Header"),
+                       0);
+    }
 
   // create the forward message buffer
 

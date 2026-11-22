@@ -16,9 +16,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references ("NotifyService");
 
       if (CORBA::is_nil (obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Could not resolve Notify Service")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Could not resolve Notify Service")),
+                            1);
+        }
 
       for (int i = 0; !success && i < retries; ++i)
         {

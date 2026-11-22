@@ -39,8 +39,10 @@ Consumer_Input_Handler::close ()
           // Notifier's internal map.
 
           if (notifier != nullptr)
-            notifier->unsubscribe (receiver,
-                                   "");
+            {
+              notifier->unsubscribe (receiver,
+                                     "");
+            }
         }
       catch (CORBA::Exception const &ex)
         {
@@ -52,9 +54,11 @@ Consumer_Input_Handler::close ()
   if (ACE_Event_Handler::remove_stdin_handler
       (TAO_ORB_Core_instance ()->reactor (),
        TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "remove_stdin_handler"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "remove_stdin_handler"));
+    }
 
   return 0;
 }
@@ -67,10 +71,12 @@ int Consumer_Input_Handler::initialize (Consumer_Handler *ch)
       (this,
        TAO_ORB_Core_instance ()->reactor (),
        TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "register_stdin_handler"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "register_stdin_handler"),
+                        -1);
+    }
   return 0;
 }
 

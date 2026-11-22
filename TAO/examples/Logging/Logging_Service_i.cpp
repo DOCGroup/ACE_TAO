@@ -47,36 +47,44 @@ Logger_Server::init (int argc,
   if (this->orb_manager_.init_child_poa (argc,
                                          argv,
                                          "child_poa") == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "init_child_poa"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "init_child_poa"),
+                        -1);
+    }
 
   this->orb_manager_.activate_poa_manager ();
 
   // Parse the command line arguments.
   if (this->parse_args () != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "parse_args"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "parse_args"),
+                        -1);
+    }
 
   // Activate the logger_factory.
   CORBA::String_var str =
     this->orb_manager_.activate_under_child_poa ("logger_factory",
                                                  std::addressof (this->factory_impl_));
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "The IOR is: <%s>\n",
-                str.in ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "The IOR is: <%s>\n",
+                  str.in ()));
+    }
 
   // Initialize the naming service
   int const ret = this->init_naming_service ();
   if (ret != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "init_naming_service"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "init_naming_service"),
+                        -1);
+    }
 
   return 0;
 }
@@ -114,8 +122,10 @@ Logger_Server::run ()
 {
   int const ret = this->orb_manager_.run ();
   if (ret == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Logger_Server::run"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Logger_Server::run"),
+                        -1);
+    }
   return 0;
 }

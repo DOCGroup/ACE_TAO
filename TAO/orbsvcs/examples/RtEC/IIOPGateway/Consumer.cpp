@@ -50,9 +50,11 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
         orb->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to get the Naming Service.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to get the Naming Service.\n"),
+                            1);
+        }
 
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
@@ -68,9 +70,11 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
         RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ());
 
       if (CORBA::is_nil (event_channel.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to get Event Channel.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to get Event Channel.\n"),
+                            1);
+        }
 
       // The canonical protocol to connect to the EC
       RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =

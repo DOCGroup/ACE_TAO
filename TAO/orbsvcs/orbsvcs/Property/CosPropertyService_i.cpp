@@ -464,10 +464,12 @@ TAO_PropertySet::is_property_allowed (char const *property_name) const
   for (CORBA::ULong ni {};
        ni < this->allowed_property_names_.length ();
        ++ni)
-    if (std::strcmp (this->allowed_property_names_[ni].in (),
-                     property_name) == 0)
     {
-      return true;
+      if (std::strcmp (this->allowed_property_names_[ni].in (),
+                       property_name) == 0)
+      {
+        return true;
+      }
     }
 
   // Name not found in the sequence.
@@ -610,9 +612,13 @@ TAO_PropertySet::get_all_property_names (CORBA::ULong how_many,
   for (CORBA::ULong ni {};
        ni < sequence_length;
        ++ni, iterator.advance ())
-    if (iterator.next (entry_ptr) != 0)
-      property_names [ni] =
-        CORBA::string_dup (entry_ptr->ext_id_.pname_.in ());
+        {
+      if (iterator.next (entry_ptr) != 0)
+        {
+          property_names [ni] =
+            CORBA::string_dup (entry_ptr->ext_id_.pname_.in ());
+        }
+        }
 
   // If there are some more properties, put them in the
   // iterator. How?? Make a new PropertySet and use that to create
@@ -627,11 +633,17 @@ TAO_PropertySet::get_all_property_names (CORBA::ULong how_many,
       for (CORBA::ULong i = how_many;
            i < num_of_properties;
            ++i, iterator.advance ())
-        if (iterator.next (entry_ptr) != 0)
-          if (property_set->hash_table_.bind (entry_ptr->ext_id_,
-                                              entry_ptr->int_id_) < 0)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                        "Error:TAO_PropertySet::get_all_property_names\n"));
+    {
+          if (iterator.next (entry_ptr) != 0)
+            {
+              if (property_set->hash_table_.bind (entry_ptr->ext_id_,
+                                                  entry_ptr->int_id_) < 0)
+                {
+                  ORBSVCS_DEBUG ((LM_DEBUG,
+                              "Error:TAO_PropertySet::get_all_property_names\n"));
+                }
+            }
+    }
 
       // Make the NamesIterator out of this TAO_PropertySet.
       TAO_PropertyNamesIterator *names_iterator {};
@@ -785,13 +797,15 @@ TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
   for (CORBA::ULong i {};
        i < sequence_length;
        ++i, iterator.advance ())
-    if (iterator.next (entry_ptr) != 0)
-      {
-        nproperties[i].property_name =
-          CORBA::string_dup (entry_ptr->ext_id_.pname_.in ());
-        nproperties[i].property_value =
-          entry_ptr->int_id_.pvalue_;
-      }
+        {
+      if (iterator.next (entry_ptr) != 0)
+        {
+          nproperties[i].property_name =
+            CORBA::string_dup (entry_ptr->ext_id_.pname_.in ());
+          nproperties[i].property_value =
+            entry_ptr->int_id_.pvalue_;
+        }
+        }
 
   // If there are more properties, put them in the <PropertiesIterator>.
   // Make a new <TAO_PropertySet> and use that to create an Properties
@@ -811,8 +825,10 @@ TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
           if (iterator.next (entry_ptr) != 0
               && prop_set->hash_table_.bind (entry_ptr->ext_id_,
                                              entry_ptr->int_id_) < 0)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                        "Error:TAO_PropertySet::get_all_properties\n"));
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                          "Error:TAO_PropertySet::get_all_properties\n"));
+            }
         }
 
       // Make the iterator out of the new TAO_Propset.
@@ -1001,8 +1017,10 @@ TAO_PropertySetDef::TAO_PropertySetDef (CosPropertyService::PropertyTypes const 
 
   // Copy the allowed properties' names to the sequence.
   for (CORBA::ULong ni {}; ni < allowed_property_defs.length (); ++ni)
-    this->allowed_property_names_[ni] =
-      allowed_property_defs[ni].property_name;
+    {
+      this->allowed_property_names_[ni] =
+        allowed_property_defs[ni].property_name;
+    }
 
   // Define the allowed properties in the hash table.
   try
@@ -1365,8 +1383,10 @@ TAO_PropertySetDef::set_property_mode (char const *property_name,
           hash_value.pmode_ = property_mode;
           if (this->hash_table_.rebind (hash_key,
                                         hash_value) != 1)
-            // Return values 0 and -1 are not possible.
-            throw CORBA::UNKNOWN ();
+            {
+              // Return values 0 and -1 are not possible.
+              throw CORBA::UNKNOWN ();
+            }
           break;
 
         case CosPropertyService::read_only:
@@ -1381,8 +1401,10 @@ TAO_PropertySetDef::set_property_mode (char const *property_name,
               hash_value.pmode_ = property_mode;
               if (this->hash_table_.rebind (hash_key,
                                             hash_value) != 1)
-                // Return values 0 and -1 are not possible.
-                throw CORBA::UNKNOWN ();
+                {
+                  // Return values 0 and -1 are not possible.
+                  throw CORBA::UNKNOWN ();
+                }
             }
           break;
 
@@ -1398,8 +1420,10 @@ TAO_PropertySetDef::set_property_mode (char const *property_name,
               hash_value.pmode_ = property_mode;
               if (this->hash_table_.rebind (hash_key,
                                             hash_value) != 1)
-                // Return values 0 and -1 are not possible.
-                throw CORBA::UNKNOWN ();
+                {
+                  // Return values 0 and -1 are not possible.
+                  throw CORBA::UNKNOWN ();
+                }
             }
           break;
 
@@ -1544,9 +1568,13 @@ TAO_PropertyNamesIterator::next_n (CORBA::ULong how_many,
   for (CORBA::ULong ni {};
        ni < property_names->length ();
        ++ni, this->iterator_.advance ())
-    if (this->iterator_.next (entry_ptr) != 0)
-      property_names [ni] =
-        CORBA::string_dup (entry_ptr->ext_id_.pname_.in ());
+    {
+      if (this->iterator_.next (entry_ptr) != 0)
+        {
+          property_names [ni] =
+            CORBA::string_dup (entry_ptr->ext_id_.pname_.in ());
+        }
+    }
 
   return true;
 }

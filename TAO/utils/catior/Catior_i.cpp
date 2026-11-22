@@ -317,71 +317,73 @@ Catior_i::catior (char const * str)
       return TAO::TRAVERSE_CONTINUE;
     }
   else
-    while (profiles-- != 0)
-      {
-        ACE_OS::snprintf (buf, bufsize, "Profile number:\t%d\n",
-                                        ++profile_counter);
-        buffer_ += buf;
+    {
+      while (profiles-- != 0)
+        {
+          ACE_OS::snprintf (buf, bufsize, "Profile number:\t%d\n",
+                                          ++profile_counter);
+          buffer_ += buf;
 
-        // We keep decoding until we find a valid IIOP profile.
-        CORBA::ULong tag;
+          // We keep decoding until we find a valid IIOP profile.
+          CORBA::ULong tag;
 
-        continue_decoding = stream.read_ulong (tag);
+          continue_decoding = stream.read_ulong (tag);
 
-        // Get the profile ID tag.
-        if (!continue_decoding)
-          {
-            ACE_ERROR ((LM_ERROR, "cannot read profile tag\n"));
-            continue;
-          }
+          // Get the profile ID tag.
+          if (!continue_decoding)
+            {
+              ACE_ERROR ((LM_ERROR, "cannot read profile tag\n"));
+              continue;
+            }
 
-        ++trace_depth_;
-        if (tag == IOP::TAG_INTERNET_IOP)
-          {
-            continue_decoding = cat_iiop_profile (stream);
-          }
+          ++trace_depth_;
+          if (tag == IOP::TAG_INTERNET_IOP)
+            {
+              continue_decoding = cat_iiop_profile (stream);
+            }
         else if (tag == IOP::TAG_MULTIPLE_COMPONENTS)
-          {
-            continue_decoding = cat_multiple_components (stream);
-          }
+            {
+              continue_decoding = cat_multiple_components (stream);
+            }
         else if (tag == TAO_TAG_SCIOP_PROFILE)
-          {
-            continue_decoding = cat_sciop_profile (stream);
-          }
+            {
+              continue_decoding = cat_sciop_profile (stream);
+            }
         else if (tag == TAO_TAG_UIOP_PROFILE)
-          {
-            continue_decoding = cat_uiop_profile (stream);
-          }
+            {
+              continue_decoding = cat_uiop_profile (stream);
+            }
         else if (tag == TAO_TAG_SHMEM_PROFILE)
-          {
-            continue_decoding = cat_shmiop_profile (stream);
-          }
+            {
+              continue_decoding = cat_shmiop_profile (stream);
+            }
         else if (tag == TAO_TAG_DIOP_PROFILE)
-          {
-            continue_decoding =  cat_profile_helper(stream, "DIOP (GIOP over UDP)");
-          }
+            {
+              continue_decoding =  cat_profile_helper(stream, "DIOP (GIOP over UDP)");
+            }
         else if (tag == TAO_TAG_COIOP_PROFILE)
-          {
-            continue_decoding =  cat_coiop_profile(stream);
-          }
+            {
+              continue_decoding =  cat_coiop_profile(stream);
+            }
         else if (tag == TAO_TAG_NSKPW_PROFILE)
-          {
-            continue_decoding = cat_nskpw_profile (stream);
-          }
+            {
+              continue_decoding = cat_nskpw_profile (stream);
+            }
         else if (tag == TAO_TAG_NSKFS_PROFILE)
-          {
-            continue_decoding = cat_nskfs_profile (stream);
-          }
+            {
+              continue_decoding = cat_nskfs_profile (stream);
+            }
         else
-          {
-            indent ();
-            ACE_OS::snprintf (buf, bufsize,
-                        "Profile tag = %d (unknown protocol)\n", tag);
-            buffer_ += buf;
-            continue_decoding = cat_octet_seq("Profile body", stream);
-          }
-        --trace_depth_;
-      }
+            {
+              indent ();
+              ACE_OS::snprintf (buf, bufsize,
+                          "Profile tag = %d (unknown protocol)\n", tag);
+              buffer_ += buf;
+              continue_decoding = cat_octet_seq("Profile body", stream);
+            }
+          --trace_depth_;
+        }
+    }
   return true;
 }
 
@@ -1899,6 +1901,8 @@ Catior_i::indent()
   if (trace_depth_ != 0)
     {
       for (size_t i {}; i < trace_depth_; ++i)
-        buffer_ += "    ";
+    {
+          buffer_ += "    ";
+    }
     }
 }

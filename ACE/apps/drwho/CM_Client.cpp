@@ -47,7 +47,9 @@ CM_Client::receive (int timeout)
                           0,
                           0,
                           this->top_) <= 0)
-        break;
+        {
+          break;
+        }
       else
         {
           int sin_len = sizeof this->sin_;
@@ -90,9 +92,11 @@ CM_Client::receive (int timeout)
   for (const char *host_name;
        Multicast_Manager::get_next_non_responding_host (host_name);
        )
-    ACE_DEBUG ((LM_DEBUG,
-                "%s did not respond\n",
-                host_name));
+                {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s did not respond\n",
+                  host_name));
+                }
   return 1;
 }
 
@@ -140,8 +144,10 @@ CM_Client::send ()
 CM_Client::~CM_Client ()
 {
   if (Options::get_opt (Options::DEBUGGING))
-    ACE_DEBUG ((LM_DEBUG,
-                "disposing CM_Client\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "disposing CM_Client\n"));
+    }
 
   if (Comm_Manager::sokfd_ != ACE_INVALID_HANDLE)
   {

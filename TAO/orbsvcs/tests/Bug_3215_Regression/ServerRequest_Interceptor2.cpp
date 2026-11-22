@@ -85,16 +85,20 @@ TAO249_ServerRequest_Interceptor2::receive_request (
   if (invocation == 1)
     {
       if (this->expired_.load ())
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("On invocation #%u throwing a ForwardRequest back to the client\n"),
-                    invocation));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("On invocation #%u throwing a ForwardRequest back to the client\n"),
+                      invocation));
+        }
       throw PortableInterceptor::ForwardRequest (this->server_iogr_.in ());
     }
 
   if (this->expired_.load ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("On invocation #%u throwing a TRANSIENT back to the client\n"),
-                invocation));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("On invocation #%u throwing a TRANSIENT back to the client\n"),
+                  invocation));
+    }
   throw CORBA::TRANSIENT (0, CORBA::COMPLETED_NO);
 }
 

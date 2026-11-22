@@ -75,20 +75,22 @@ LB_server::parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        this->ior_output_file_ = get_opts.opt_arg ();
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage:  %s ")
-                           ACE_TEXT ("-o <iorfile>")
-                           ACE_TEXT ("\n"),
-                           argv [0]),
-                          -1);
-      }
+    {
+      switch (c)
+        {
+        case 'o':
+          this->ior_output_file_ = get_opts.opt_arg ();
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage:  %s ")
+                             ACE_TEXT ("-o <iorfile>")
+                             ACE_TEXT ("\n"),
+                             argv [0]),
+                            -1);
+        }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -105,10 +107,12 @@ LB_server::start_orb_and_poa ()
         this->orb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P|%t) Unable to initialize ")
-                           ACE_TEXT ("the POA.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT (" (%P|%t) Unable to initialize ")
+                             ACE_TEXT ("the POA.\n")),
+                            -1);
+        }
 
       this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
 
@@ -119,10 +123,12 @@ LB_server::start_orb_and_poa ()
 
       ACE_Time_Value timeout (10); // Wait up to 10 seconds for the naming service
       if (name_svc_.init (this->orb_.in (), &timeout) != 0)
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           ACE_TEXT (" (%P|%t) LB_server: Could not connect ")
-                           ACE_TEXT ("to naming service.\n")),
-                           -1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             ACE_TEXT (" (%P|%t) LB_server: Could not connect ")
+                             ACE_TEXT ("to naming service.\n")),
+                             -1);
+        }
 
       CORBA::Object_var obj = this->orb_->resolve_initial_references (
         "NamingManager");
@@ -131,10 +137,12 @@ LB_server::start_orb_and_poa ()
         FT_Naming::NamingManager::_narrow (obj.in ());
 
       if (CORBA::is_nil (this->naming_manager_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P|%t) Unable to get Naming Manager ")
-                           ACE_TEXT ("Reference.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT (" (%P|%t) Unable to get Naming Manager ")
+                             ACE_TEXT ("Reference.\n")),
+                            -1);
+        }
     }
   catch (const CORBA::Exception& ex)
     {

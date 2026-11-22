@@ -83,9 +83,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 Test::Hello::_narrow (tmp.in ());
 
               if (CORBA::is_nil (hello.in ()))
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   ACE_TEXT ("Nil Test::Hello reference\n")),
-                                  1);
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     ACE_TEXT ("Nil Test::Hello reference\n")),
+                                    1);
+                }
             }
           catch (CosNaming::NamingContext::NotFound const &)
             {

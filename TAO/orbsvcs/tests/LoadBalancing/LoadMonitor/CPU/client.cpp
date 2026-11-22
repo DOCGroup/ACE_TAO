@@ -106,13 +106,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       if (!retrieved_load)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "\nERROR: Unable to retrieve loads "
-                           "from LoadManager.\n"),
-                           1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "\nERROR: Unable to retrieve loads "
+                             "from LoadManager.\n"),
+                             1);
+        }
       else
-        ACE_DEBUG ((LM_INFO,
-                    " DONE\n"));
+        {
+          ACE_DEBUG ((LM_INFO,
+                      " DONE\n"));
+        }
 
       ::check_loads (loads.in ());
 

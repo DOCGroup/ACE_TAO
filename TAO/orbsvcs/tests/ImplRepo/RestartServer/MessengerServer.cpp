@@ -51,8 +51,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     Terminator terminator;
     if (terminator.open (0) == -1)
-      ACE_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("main Error opening terminator\n")),-1);
+      {
+        ACE_ERROR_RETURN((LM_ERROR,
+                          ACE_TEXT ("main Error opening terminator\n")),-1);
+      }
 
     PortableServer::Servant_var<Messenger_i> messenger_servant =
       new Messenger_i(orb.in(), terminator);

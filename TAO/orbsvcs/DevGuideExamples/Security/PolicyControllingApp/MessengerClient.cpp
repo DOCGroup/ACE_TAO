@@ -97,13 +97,15 @@ parse_args (int argc, ACE_TCHAR *argv[], ClientOptions &options)
       case 'e':
         options.policy = ACE_OS::atoi (get_opts.optarg);
         if (options.policy < 1 || 2 < options.policy)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Usage:  %s "
-                             "-e [12] "
-                             "-k <ior>"
-                             "\n",
-                             argv[0]),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Usage:  %s "
+                               "-e [12] "
+                               "-k <ior>"
+                               "\n",
+                               argv[0]),
+                              -1);
+          }
         break;
       case '?':
       default:
@@ -116,10 +118,12 @@ parse_args (int argc, ACE_TCHAR *argv[], ClientOptions &options)
                           -1);
       }
   if (options.policy == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Usage:  %s -e [12] -k <ior>\n",
-                       argv[0]),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Usage:  %s -e [12] -k <ior>\n",
+                         argv[0]),
+                        -1);
+    }
   return 0;
 }
 

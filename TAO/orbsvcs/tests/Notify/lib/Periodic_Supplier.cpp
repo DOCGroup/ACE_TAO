@@ -120,8 +120,10 @@ TAO_Notify_Tests_Periodic_Supplier::init_state (ACE_Arg_Shifter& arg_shifter)
           ACE_DEBUG ((LM_DEBUG, "parse Task unknown option %s\n",
                       arg_shifter.get_current ()));
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "event type %s, priority %d, period %duS, exec_time %duS, phase %duS, iter %d, load %d\n",
-                        event_.type(), priority_, period_, exec_time_, phase_, iter_, load_));
+            {
+              ACE_DEBUG ((LM_DEBUG, "event type %s, priority %d, period %duS, exec_time %duS, phase %duS, iter %d, load %d\n",
+                          event_.type(), priority_, period_, exec_time_, phase_, iter_, load_));
+            }
           break;
         }
     }
@@ -156,15 +158,19 @@ TAO_Notify_Tests_Periodic_Supplier::activate_task (ACE_Barrier* barrier)
                                             native_prio) == -1)
        {
          if (ACE_OS::last_error () == EPERM)
-           ACE_ERROR_RETURN ((LM_ERROR,
-                              ACE_TEXT ("Insufficient privilege to activate ACE_Task.\n")),
-                             -1);
+           {
+             ACE_ERROR_RETURN ((LM_ERROR,
+                                ACE_TEXT ("Insufficient privilege to activate ACE_Task.\n")),
+                               -1);
+           }
          else
-           ACE_DEBUG ((LM_ERROR,
-                       ACE_TEXT ("(%t) Task activation at priority %d failed, ")
-                        ACE_TEXT ("exiting!\n%a"),
-                       this->priority_,
-                       -1));
+           {
+             ACE_DEBUG ((LM_ERROR,
+                         ACE_TEXT ("(%t) Task activation at priority %d failed, ")
+                          ACE_TEXT ("exiting!\n%a"),
+                         this->priority_,
+                         -1));
+           }
        }
 
   ACE_DEBUG ((LM_ERROR, "Activated Periodic Supplier Thread at priority %d\n", this->priority_));
@@ -244,8 +250,10 @@ TAO_Notify_Tests_Periodic_Supplier::handle_svc ()
         }
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "(%P, %t) Supplier (%s) sending event #%d\n",
-                    this->name_.c_str (), i));
+        {
+          ACE_DEBUG ((LM_DEBUG, "(%P, %t) Supplier (%s) sending event #%d\n",
+                      this->name_.c_str (), i));
+        }
 
       this->send_event (this->event_.event ());
 
@@ -264,8 +272,11 @@ TAO_Notify_Tests_Periodic_Supplier::handle_svc ()
           this->total_deadlines_missed_ += missed;
 
           /* Start -- "Immediate run if last call missed deadline" */
-          if (missed > 0) // if we missed
-            continue;
+          if (missed > 0)
+            {
+              // if we missed
+              continue;
+            }
 
           long sleep_time = period_ - elapsed_microseconds;
           /* End -- "Immediate run if last call missed deadline" */

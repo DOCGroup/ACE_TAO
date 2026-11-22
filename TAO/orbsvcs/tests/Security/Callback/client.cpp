@@ -56,15 +56,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::Object_var const server_object = orb->string_to_object (options.ior);
       if (CORBA::is_nil (server_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P) orb->string_to_object failed.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P) orb->string_to_object failed.\n")),
+                            -1);
+        }
 
       server_var const server_obj = server::_narrow (server_object.in ());
       if (CORBA::is_nil (server_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P) server::_narrow(obj) failed.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P) server::_narrow(obj) failed.\n")),
+                            -1);
+        }
 
       client_i *servant {};
       ACE_NEW_RETURN (servant, client_i (server_obj.in ()), -1);

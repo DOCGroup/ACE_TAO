@@ -72,9 +72,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var const obj = orb->string_to_object (options.ior);
 
       if (CORBA::is_nil (obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "ERROR: Nil server object reference\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "ERROR: Nil server object reference\n"),
+                            -1);
+        }
 
       TX_Object_var const tx_object = TX_Object::_narrow (obj.in ());
       DataSeq data_input {};
@@ -83,7 +85,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Fill in some useless data.
       for (CORBA::ULong i = 0; i < len; ++i)
-        data_input[i] = static_cast<CORBA::Octet> (i % 9);
+        {
+          data_input[i] = static_cast<CORBA::Octet> (i % 9);
+        }
 
       for (long iteration {}; iteration < options.number_iterations; ++iteration)
         {
@@ -104,10 +108,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               || std::memcmp (data_input.get_buffer (),
                               data_output->get_buffer (),
                               len) != 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "ERROR: Received octet sequence does not match "
-                               "the one that was sent.\n"),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "ERROR: Received octet sequence does not match "
+                                 "the one that was sent.\n"),
+                                -1);
+            }
         }
 
       if (options.shutdown_server)

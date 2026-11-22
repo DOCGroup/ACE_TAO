@@ -80,7 +80,9 @@ EC_Master::run (int argc, ACE_TCHAR* argv[])
           {
             int targc = argc;
             for (int j = 0; j < targc; ++j)
-              targv[j] = argv[j];
+        {
+                targv[j] = argv[j];
+        }
             this->channels_[i]->run_init (targc, targv.get ());
           }
       }
@@ -284,8 +286,10 @@ EC_Observer::execute_test ()
   this->activate_tasks ();
 
   if (this->verbose ())
-    ACE_DEBUG ((LM_DEBUG, "EC_Observer[%d] (%P|%t) suppliers are active\n",
-                this->id_));
+    {
+      ACE_DEBUG ((LM_DEBUG, "EC_Observer[%d] (%P|%t) suppliers are active\n",
+                  this->id_));
+    }
 }
 
 void
@@ -358,8 +362,10 @@ EC_Observer::consumer_push (void*,
   if (x < (RAND_MAX / 64))
     {
       if (this->verbose ())
-        ACE_DEBUG ((LM_DEBUG,
-                    "EC_Observer[%d] (%P|%t) reconnecting\n", this->id_));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "EC_Observer[%d] (%P|%t) reconnecting\n", this->id_));
+        }
 
       RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
         this->event_channel_->for_consumers ();

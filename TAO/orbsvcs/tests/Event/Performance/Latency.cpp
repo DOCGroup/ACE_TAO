@@ -41,8 +41,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       "test runs in time-shared class\n"));
         }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "server (%P|%t): sched_params failed\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "server (%P|%t): sched_params failed\n"));
+        }
     }
 
   try
@@ -77,9 +79,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -242,30 +246,32 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'h':
-        do_dump_history = true;
-        break;
+        {
+      switch (c)
+        {
+        case 'h':
+          do_dump_history = true;
+          break;
 
-      case 'i':
-        iterations = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
+        case 'i':
+          iterations = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
 
-      case 'k':
-        ec_ior = get_opts.opt_arg ();
-        break;
+        case 'k':
+          ec_ior = get_opts.opt_arg ();
+          break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-i <iterations>"
-                           "-k <IOR>"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-i <iterations>"
+                             "-k <IOR>"
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+        }
   // Indicates successful parsing of the command line
   return 0;
 }

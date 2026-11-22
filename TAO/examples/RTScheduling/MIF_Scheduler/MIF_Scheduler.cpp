@@ -164,9 +164,11 @@ MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
   CORBA::Short desired_priority = sched_param->importance ();
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "%t MIF_Scheduler::begin_scheduling_segment - Importance %d\n",
-                desired_priority));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%t MIF_Scheduler::begin_scheduling_segment - Importance %d\n",
+                  desired_priority));
+    }
 
   if (desired_priority != 100)
     {
@@ -214,9 +216,11 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &/
   CORBA::Short desired_priority = sched_param->importance ();
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "%t MIF_Scheduler::update_scheduling_segment - Importance %d\n",
-                desired_priority));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%t MIF_Scheduler::update_scheduling_segment - Importance %d\n",
+                  desired_priority));
+    }
 
   DT *new_dt {};
   ACE_NEW (new_dt,
@@ -376,8 +380,10 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
                                 CORBA::Policy_out /*implicit_sched_param*/)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "MIF_Scheduler::receive_request\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "MIF_Scheduler::receive_request\n"));
+    }
 
   IOP::ServiceContext_var serv_cxt =
     request_info->get_request_service_context (Server_Interceptor::SchedulingInfo);
@@ -416,10 +422,12 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
       sched_param_out = DT_TEST::instance ()->scheduler ()->create_segment_scheduling_parameter (importance);
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "%t The Guid is %B Importance is %d\n",
-                    gu_id,
-                    importance));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "%t The Guid is %B Importance is %d\n",
+                      gu_id,
+                      importance));
+        }
 
       DT* new_dt;
       ACE_NEW (new_dt,
@@ -524,10 +532,12 @@ MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr)
   std::memcpy (&gu_id, guid->get_buffer (), guid->length ());
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "MIF_Scheduler::receive_reply Guid = %B Imp = %d\n",
-                gu_id,
-                importance));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "MIF_Scheduler::receive_reply Guid = %B Imp = %d\n",
+                  gu_id,
+                  importance));
+    }
 
   DT* new_dt;
   ACE_NEW (new_dt,

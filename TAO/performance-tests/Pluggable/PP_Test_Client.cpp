@@ -102,49 +102,53 @@ PP_Test_Client::parse_args (int argc, ACE_TCHAR **argv)
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'v':
-        this->only_void_ = true;
-        break;
-      case 'o':
-        this->only_oneway_ = true;
-        break;
-      case 'd':  // debug flag
-        ++TAO_debug_level;
-        break;
-      case 'n':                 // loop count
-        this->loop_count_ = static_cast<CORBA::ULong> (ACE_OS::atoi (get_opts.opt_arg ()));
-        break;
-      case 'f': // read the IOR from the file.
-        if (this->read_ior (get_opts.opt_arg ()) < 0)
+    {
+      switch (c)
+        {
+        case 'v':
+          this->only_void_ = true;
+          break;
+        case 'o':
+          this->only_oneway_ = true;
+          break;
+        case 'd':  // debug flag
+          ++TAO_debug_level;
+          break;
+        case 'n':                 // loop count
+          this->loop_count_ = static_cast<CORBA::ULong> (ACE_OS::atoi (get_opts.opt_arg ()));
+          break;
+        case 'f': // read the IOR from the file.
+          if (this->read_ior (get_opts.opt_arg ()) < 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Unable to read ior from %s : %p\n",
+                                 get_opts.opt_arg ()),
+                                -1);
+            }
+          break;
+        case 'k': // read the cubit IOR from the command-line.
+          this->factory_key_ = get_opts.opt_arg ();
+          break;
+        case 'x':
+          ACE_DEBUG ((LM_DEBUG, "We will shutdown the server\n"));
+          this->shutdown_ = true;
+          break;
+        case '?':
+        default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to read ior from %s : %p\n",
-                             get_opts.opt_arg ()),
+                             "usage:  %s"
+                             " [-v]"
+                             " [-o]"
+                             " [-d]"
+                             " [-n loopcount]"
+                             " [-f factory-obj-ref-key-file]"
+                             " [-k obj-ref-key]"
+                             " [-x]"
+                             "\n",
+                             argv [0]),
                             -1);
-        break;
-      case 'k': // read the cubit IOR from the command-line.
-        this->factory_key_ = get_opts.opt_arg ();
-        break;
-      case 'x':
-        ACE_DEBUG ((LM_DEBUG, "We will shutdown the server\n"));
-        this->shutdown_ = true;
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " [-v]"
-                           " [-o]"
-                           " [-d]"
-                           " [-n loopcount]"
-                           " [-f factory-obj-ref-key-file]"
-                           " [-k obj-ref-key]"
-                           " [-x]"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+        }
+    }
 
   // Indicates successful parsing of command line.
   return 0;

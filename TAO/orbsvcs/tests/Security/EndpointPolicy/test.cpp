@@ -26,24 +26,30 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
       if (ACE_OS::strcasecmp (argv[c], ACE_TEXT ("-o")) == 0)
         {
           if (++c >= argc)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("usage: %s -o <iorfile> -p <port>\n"),
-                               argv[0]),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("usage: %s -o <iorfile> -p <port>\n"),
+                                 argv[0]),
+                                -1);
+            }
           options.ior_file = argv[c];
         }
       else if (ACE_OS::strcasecmp (argv[c], ACE_TEXT ("-p")) == 0)
         {
           if (++c >= argc)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("usage: %s -o <iorfile> -p <port>\n"),
-                               argv[0]),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("usage: %s -o <iorfile> -p <port>\n"),
+                                 argv[0]),
+                                -1);
+            }
           int const port = ACE_OS::atoi (argv[c]);
           if (port < 1 || port > 32756)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Endpoint port must be between 1 and 32756\n")),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Endpoint port must be between 1 and 32756\n")),
+                                -1);
+            }
           options.endpoint_port = static_cast<CORBA::Short> (port);
         }
       else if (ACE_OS::strstr (argv[c], ACE_TEXT ("-ORB")) == argv[c])
@@ -54,10 +60,12 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
           }
         }
       else
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage: %s -o <iorfile> -p <port>\n"),
-                           argv[0]),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage: %s -o <iorfile> -p <port>\n"),
+                             argv[0]),
+                            -1);
+        }
     }
 
   return 0;
@@ -90,7 +98,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   std::vector<ACE_TCHAR *> orb_argv;
   orb_argv.reserve (argc + 5);
   for (int c = 0; c < argc; ++c)
-    orb_argv.push_back (argv[c]);
+    {
+      orb_argv.push_back (argv[c]);
+    }
   orb_argv.push_back (first_option);
   orb_argv.push_back (first_endpoint.data ());
   orb_argv.push_back (second_option);
@@ -107,9 +117,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var const obj = orb->resolve_initial_references ("RootPOA");
       root_poa = PortableServer::POA::_narrow (obj.in ());
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P|%t) Panic: nil RootPOA\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT (" (%P|%t) Panic: nil RootPOA\n")),
+                            1);
+        }
       poa_manager_factory = root_poa->the_POAManagerFactory ();
     }
   catch (CORBA::Exception const &ex)
@@ -153,10 +165,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       std::unique_ptr<FILE, int (*) (FILE *)> output_file (
         ACE_OS::fopen (options.ior_file, ACE_TEXT ("w")), ACE_OS::fclose);
       if (!output_file)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                           options.ior_file),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                             options.ior_file),
+                            1);
+        }
       ACE_OS::fprintf (output_file.get (), "%s", good_ior.in ());
     }
   catch (CORBA::Exception const &ex)

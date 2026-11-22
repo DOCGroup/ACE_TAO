@@ -66,9 +66,11 @@ ConnectDisconnect::on_entity_destroyed ()
   ++this->result_count_;
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "result_count = %d\n",
-                this->result_count_.load ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "result_count = %d\n",
+                  this->result_count_.load ()));
+    }
 }
 
 int

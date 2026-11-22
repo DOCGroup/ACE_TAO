@@ -488,12 +488,14 @@ TAO_Repository_i::repo_init (CORBA::Repository_ptr repo_ref,
         CORBA::TypeCodeFactory::_narrow (object.in ());
 
       if (CORBA::is_nil (this->tc_factory_.in ()))
-        ORBSVCS_ERROR_RETURN ((
-            LM_ERROR,
-            ACE_TEXT ("Repository: TypeCodeFactory narrow failed\n")
-          ),
-          -1
-        );
+        {
+          ORBSVCS_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("Repository: TypeCodeFactory narrow failed\n")
+            ),
+            -1
+          );
+        }
     }
   else
     {
@@ -515,12 +517,14 @@ TAO_Repository_i::repo_init (CORBA::Repository_ptr repo_ref,
         PortableServer::Current::_narrow (object.in ());
 
       if (CORBA::is_nil (this->poa_current_.in ()))
-        ORBSVCS_ERROR_RETURN ((
-            LM_ERROR,
-            ACE_TEXT ("Repository: POACurrent narrow failed\n")
-          ),
-          -1
-        );
+        {
+          ORBSVCS_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("Repository: POACurrent narrow failed\n")
+            ),
+            -1
+          );
+        }
     }
   else
     {

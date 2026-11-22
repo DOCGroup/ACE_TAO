@@ -84,11 +84,13 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
                           arg_shifter.consume_arg ();
 
                           if (TAO_debug_level > 0)
-                            ACE_DEBUG ((LM_DEBUG,
-                                        "POA Create: lane parsed - %d, %d, %d\n",
-                                        lanes_[l_index].lane_priority,
-                                        lanes_[l_index].static_threads,
-                                        lanes_[l_index].dynamic_threads));
+                            {
+                              ACE_DEBUG ((LM_DEBUG,
+                                          "POA Create: lane parsed - %d, %d, %d\n",
+                                          lanes_[l_index].lane_priority,
+                                          lanes_[l_index].static_threads,
+                                          lanes_[l_index].dynamic_threads));
+                            }
                           ++l_index;
                         }
                       else
@@ -123,8 +125,10 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
                           arg_shifter.consume_arg ();
 
                           if (TAO_debug_level > 0)
-                            ACE_DEBUG ((LM_DEBUG, "POA Create: band parsed - %d, %d\n",
-                                        bands_[b_index].low, bands_[b_index].high));
+                            {
+                              ACE_DEBUG ((LM_DEBUG, "POA Create: band parsed - %d, %d\n",
+                                          bands_[b_index].low, bands_[b_index].high));
+                            }
                           ++b_index;
                         }
                       else
@@ -152,8 +156,10 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
                   arg_shifter.consume_arg ();
 
                   if (TAO_debug_level > 0)
-                    ACE_DEBUG ((LM_DEBUG, "ThreadPool parsed - static threads = %d, prio = %d\n",
-                                this->thread_pool_static_threads_, this->thread_pool_default_priority_));
+                    {
+                      ACE_DEBUG ((LM_DEBUG, "ThreadPool parsed - static threads = %d, prio = %d\n",
+                                  this->thread_pool_static_threads_, this->thread_pool_default_priority_));
+                    }
 
                   continue;
                 } /* ThreadPool */

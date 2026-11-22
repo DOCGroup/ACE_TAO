@@ -35,9 +35,11 @@ ECM_Driver::run (int argc, ACE_TCHAR* argv[])
         this->orb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -149,7 +151,9 @@ ECM_Driver::run (int argc, ACE_TCHAR* argv[])
 
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: running the test\n"));
       while (this->federations_running_.load (std::memory_order_relaxed) > 0)
-        this->orb_->perform_work ();
+            {
+          this->orb_->perform_work ();
+            }
 
       this->dump_results ();
 
@@ -337,8 +341,10 @@ ECM_Driver::parse_args (int argc, ACE_TCHAR *argv [])
                  arg = ACE_OS::strtok_r (nullptr, ACE_TEXT (","), &context))
               {
                 if (count == ECM_Driver::MAX_LOCAL_FEDERATIONS)
-                  ACE_ERROR_RETURN ((LM_ERROR,
-                                     "too many local federations\n"), -1);
+                  {
+                    ACE_ERROR_RETURN ((LM_ERROR,
+                                       "too many local federations\n"), -1);
+                  }
                 this->local_names_[count++] = ACE_TEXT_ALWAYS_CHAR (arg);
               }
             this->local_federations_count_ = count;
@@ -501,9 +507,11 @@ ECM_Driver::parse_config_file ()
             }
         }
       if (k == this->all_federations_count_)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot find federation <%s>\n",
-                           this->local_names_[j].c_str ()), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot find federation <%s>\n",
+                             this->local_names_[j].c_str ()), -1);
+        }
     }
 
   return 0;
@@ -527,8 +535,10 @@ ECM_Driver::parse_name_list (FILE* file,
       ACE_Read_Buffer_Unique_Ptr buf (
         tmp.read ('\n', '\n', '\0'), {tmp.alloc ()});
       if (!buf)
-        ACE_ERROR_RETURN ((LM_ERROR, "could not read item %B while %s\n",
-                           i, error_msg), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "could not read item %B while %s\n",
+                             i, error_msg), -1);
+        }
       names.emplace_back (buf.get ());
     }
   return 0;

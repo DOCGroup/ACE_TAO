@@ -28,9 +28,11 @@ Load_Balancing_Service::parse_args (int argc, ACE_TCHAR *argv[])
         this->ior_output_file_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
 
         if (!this->ior_output_file_)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing: %p\n",
-                             get_opts.opt_arg ()), -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Unable to open %s for writing: %p\n",
+                               get_opts.opt_arg ()), -1);
+          }
         break;
       case '?':
       default:
@@ -83,9 +85,11 @@ Load_Balancing_Service::init (int argc,
         return -1;
       }
       if (TAO_debug_level > 1)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Load_Balancer: Object Group Factory ior is %C\n",
-                    ior.in ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Load_Balancer: Object Group Factory ior is %C\n",
+                      ior.in ()));
+        }
     }
   catch (CORBA::Exception const &ex)
     {

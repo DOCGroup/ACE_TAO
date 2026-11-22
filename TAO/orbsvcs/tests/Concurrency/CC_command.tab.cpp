@@ -683,7 +683,9 @@ ace_cc_yynewstate:
       goto ace_cc_yyreduce;
     }
   else if (ace_cc_yyn == 0)
-    goto ace_cc_yyerrlab;
+    {
+      goto ace_cc_yyerrlab;
+    }
 
   if (ace_cc_yyn == ACE_CC_YYFINAL)
   {
@@ -893,7 +895,9 @@ case 30:
 
   ace_cc_yystate = ace_cc_yypgoto[ace_cc_yyn - ACE_CC_YYNTBASE] + *ace_cc_yyssp;
   if (ace_cc_yystate >= 0 && ace_cc_yystate <= ACE_CC_YYLAST && ace_cc_yycheck[ace_cc_yystate] == *ace_cc_yyssp)
-    ace_cc_yystate = ace_cc_yytable[ace_cc_yystate];
+    {
+      ace_cc_yystate = ace_cc_yytable[ace_cc_yystate];
+    }
   else
   {
     ace_cc_yystate = ace_cc_yydefgoto[ace_cc_yyn - ACE_CC_YYNTBASE];
@@ -1037,7 +1041,9 @@ ace_cc_yyerrhandle:
       goto ace_cc_yyreduce;
     }
   else if (ace_cc_yyn == 0)
-    goto ace_cc_yyerrpop;
+    {
+      goto ace_cc_yyerrpop;
+    }
 
   if (ace_cc_yyn == ACE_CC_YYFINAL)
   {

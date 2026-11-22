@@ -111,9 +111,11 @@ TAO::FT_Property_Validator::validate_property (
               CORBA::ULong const flen = factories->length ();
 
               if (flen == 0)
-                throw PortableGroup::InvalidProperty (
-                  property.nam,
-                  property.val);
+                {
+                  throw PortableGroup::InvalidProperty (
+                    property.nam,
+                    property.val);
+                }
 
               for (CORBA::ULong j = 0; j < flen; ++j)
                 {
@@ -122,9 +124,11 @@ TAO::FT_Property_Validator::validate_property (
 
                   if (CORBA::is_nil (factory_info.the_factory.in ())
                       || factory_info.the_location.length () == 0)
-                    throw PortableGroup::InvalidProperty (
-                      property.nam,
-                      property.val);
+                    {
+                      throw PortableGroup::InvalidProperty (
+                        property.nam,
+                        property.val);
+                    }
                 }
             }
         }

@@ -100,9 +100,11 @@ Identity_Client::run ()
     Load_Balancer::Object_Group_Factory::_narrow (obj.in ());
 
   if (CORBA::is_nil (factory.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Identity_Client: problems using the factory ior\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Identity_Client: problems using the factory ior\n"),
+                        -1);
+    }
 
   char const *group_name = this->use_random_
     ? "Identity, Random"
@@ -118,10 +120,12 @@ Identity_Client::run ()
   CORBA::String_var id = object_group->id ();
 
   if (std::strcmp (id.in (), group_name) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Identity_Client: incorrect object group"
-                       "returned from factory->resolve\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Identity_Client: incorrect object group"
+                         "returned from factory->resolve\n"),
+                        -1);
+    }
 
   // List all <Object_Group>s members.
   ACE_DEBUG ((LM_DEBUG,
@@ -135,8 +139,10 @@ Identity_Client::run ()
               "Identity_Client: The Group contains %u members:\n",
               id_list->length ()));
   for (CORBA::ULong i {}; i < id_list->length (); ++i)
-    ACE_DEBUG ((LM_DEBUG, "                 <%C>\n",
-                static_cast<char const *> (id_list[i])));
+    {
+      ACE_DEBUG ((LM_DEBUG, "                 <%C>\n",
+                  static_cast<char const *> (id_list[i])));
+    }
 
   // Perform <number_of_invocations_> method calls on <Identity>
   // objects, which are members of the <Object_Group>.  Before each
@@ -159,10 +165,12 @@ Identity_Client::run ()
 
       identity_object = Identity::_narrow (obj.in ());
       if (CORBA::is_nil (identity_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Identity_Client: cannot narrow an object received from"
-                           "<Object_Group::resolve> to <Identity>\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Identity_Client: cannot narrow an object received from"
+                             "<Object_Group::resolve> to <Identity>\n"),
+                            -1);
+        }
       identity_object->get_name (identity.out ());
     }
 

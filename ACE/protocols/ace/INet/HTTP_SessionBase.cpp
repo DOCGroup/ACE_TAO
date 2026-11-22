@@ -90,10 +90,12 @@ namespace ACE
             if (this->cannot_reconnect_ || !this->connect(this->reactive_))
               {
                 if (!this->cannot_reconnect_)
-                  INET_ERROR (1, (LM_ERROR, DLINFO
-                                  ACE_TEXT ("(%d) HTTP_SessionBase::send_request - ")
-                                  ACE_TEXT ("reconnect failed\n"),
-                                  ACE_OS::last_error ()));
+                  {
+                    INET_ERROR (1, (LM_ERROR, DLINFO
+                                    ACE_TEXT ("(%d) HTTP_SessionBase::send_request - ")
+                                    ACE_TEXT ("reconnect failed\n"),
+                                    ACE_OS::last_error ()));
+                  }
                 return ACE::IOS::Null::out_stream_;
               }
           }

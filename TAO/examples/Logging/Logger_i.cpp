@@ -16,8 +16,10 @@ Logger_Factory_i::make_logger (char const *name)
   if (hash_map_.find (name, result) != 0)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "\nMaking a new logger"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "\nMaking a new logger"));
+        }
 
       // This attempts to create a new Logger_i and throws an
       // exception and returns a null value if it fails

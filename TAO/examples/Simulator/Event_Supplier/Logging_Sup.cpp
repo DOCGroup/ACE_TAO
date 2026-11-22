@@ -131,7 +131,9 @@ Logging_Supplier::load_schedule_data
               // Run through leading whitespace.
               char *temp = input_buf;
               while (*temp && ACE_OS::ace_isspace (*temp))
-                ++temp;
+        {
+                  ++temp;
+        }
 
               // If there is anything besides whitespace in the line
               // read, scan its fields into the scheduling data
@@ -366,9 +368,11 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
       }
     }
     else
-      ACE_ERROR ((LM_ERROR,
-                  "Logging_Supplier::insert_event_data:"
-                  "Could Not access scheduling data"));
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "Logging_Supplier::insert_event_data:"
+                    "Could Not access scheduling data"));
+      }
 
     if (++schedule_index == schedule_data.size ())
     {
@@ -404,10 +408,12 @@ Logging_Supplier::get_options (int argc, ACE_TCHAR *argv [])
                            this->total_messages_));
             }
           else
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%s: count must be > 0",
-                               argv[0]),
-                               1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "%s: count must be > 0",
+                                 argv[0]),
+                                 1);
+            }
           break;
         case 'f':
           this->input_file_name_ = get_opt.opt_arg ();

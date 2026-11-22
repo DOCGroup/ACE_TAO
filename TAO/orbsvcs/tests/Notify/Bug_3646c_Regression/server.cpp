@@ -78,10 +78,12 @@ parse_args (int argc, ACE_TCHAR* argv[])
     }
 
   if (hostname == nullptr || port == nullptr || ior_file == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "usage: %s -h <hostname> -p <port> -o <ior>\n",
-                       argv[0]),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "usage: %s -h <hostname> -p <port> -o <ior>\n",
+                         argv[0]),
+                        -1);
+    }
 
   ACE_TCHAR directive_format[max_length] {};
   ACE_OS::strcpy (directive_format, load_notify_service);

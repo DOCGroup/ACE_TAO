@@ -102,9 +102,11 @@ Activity::resolve_naming_service ()
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) Unable to resolve the Naming Service.\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         " (%P|%t) Unable to resolve the Naming Service.\n"),
+                        -1);
+    }
 
   this->naming_ =
     CosNaming::NamingContextExt::_narrow (naming_obj.in ());
@@ -169,8 +171,10 @@ Activity::activate_schedule ()
   int const count = static_cast<int> (task_list.size ());
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Activating schedule, task count = %d\n",
-                count));
+    {
+      ACE_DEBUG ((LM_DEBUG, "Activating schedule, task count = %d\n",
+                  count));
+    }
 
   ACE_Barrier *barrier {};
   ACE_NEW (barrier, ACE_Barrier (count + 1));
@@ -342,9 +346,11 @@ Activity::create_started_flag_file (int argc, ACE_TCHAR *argv[])
           FILE *file = ACE_OS::fopen (current_arg, ACE_TEXT("w"));
 
           if (file == nullptr)
-            ACE_ERROR ((LM_ERROR,
-                        "Unable to open %s for writing: %p\n",
-                        current_arg));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "Unable to open %s for writing: %p\n",
+                          current_arg));
+            }
 
           std::fprintf (file, "ignore");
 

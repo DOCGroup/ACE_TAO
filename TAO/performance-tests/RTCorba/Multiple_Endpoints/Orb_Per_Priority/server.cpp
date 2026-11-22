@@ -92,8 +92,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           flags = THR_NEW_LWP|THR_JOINABLE|THR_SCHED_DEFAULT;
         }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "server (%P|%t): sched_params failed\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "server (%P|%t): sched_params failed\n"));
+        }
     }
 
   // Create a servant.
@@ -108,7 +110,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_TCHAR *argv_[256];
       int argc_ = argc;
       for (int i = 0; i < argc; ++i)
-        argv_[i] = argv[i];
+        {
+          argv_[i] = argv[i];
+        }
       orb = CORBA::ORB_init (argc_, argv_);
 
       // Parse the arguments.
@@ -150,9 +154,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (servers[i].activate (flags,
                                1, 1,
                                native_priority) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot activate server threads\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot activate server threads\n"),
+                            1);
+        }
     }
 
   ACE_Thread_Manager::instance ()->wait ();
@@ -172,7 +178,9 @@ Server::set (Test_i *server,
   priority_ = priority;
   argc_ = argc;
   for (int i = 0; i < argc; ++i)
-    argv_[i] = argv[i];
+        {
+      argv_[i] = argv[i];
+        }
 }
 
 int
@@ -201,9 +209,11 @@ Server::svc ()
         orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -232,10 +242,12 @@ Server::svc ()
       // Output the ior to a file.
       FILE *output_file= ACE_OS::fopen (file_name, "w");
       if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           file_name),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s",
+                             file_name),
+                            1);
+        }
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 

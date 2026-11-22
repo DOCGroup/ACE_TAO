@@ -23,8 +23,10 @@ int
 PMC_Flo::encode (char *packet, int &packet_length)
 {
   if (Options::get_opt (Options::DEBUGGING) != 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "in PMC_Flo::encode"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "in PMC_Flo::encode"));
+    }
 
   Search_Struct *lookup {};
   ACE_NEW_RETURN (lookup, BS_Client, -1);
@@ -43,8 +45,10 @@ PMC_Flo::encode (char *packet, int &packet_length)
   // buffer.
 
   for (Protocol_Record *prp; (prp = this->get_next_friend ()) != nullptr; )
-    buf_ptr = ACE_OS::strecpy (buf_ptr,
-                               prp->get_login ());
+    {
+      buf_ptr = ACE_OS::strecpy (buf_ptr,
+                                 prp->get_login ());
+    }
 
   packet_length = buf_ptr - packet;
 

@@ -55,9 +55,11 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
       temp =
         this->orb_->resolve_initial_references ("RootPOA");
       if (CORBA::is_nil (temp.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) Unable to get root poa reference.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) Unable to get root poa reference.\n"),
+                            1);
+        }
 
       this->root_poa_ =
         PortableServer::POA::_narrow (temp.in ());
@@ -87,10 +89,12 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
               "Before Parse Args\n"));
 
   if (this->parse_args () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%N:%l) Demux_Test_Server::init - "
-                       "parse_args failed\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) Demux_Test_Server::init - "
+                         "parse_args failed\n"),
+                        -1);
+    }
 
   // init the Policies used by all the POAs
   CORBA::PolicyList policies (2);
@@ -302,67 +306,73 @@ Demux_Test_Server::parse_args ()
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'd':  // debug flag
-        ++TAO_debug_level;
-        break;
-      case 'f':
-        this->ior_fp_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
-        if (!this->ior_fp_)
+            {
+      switch (c)
+        {
+        case 'd':  // debug flag
+          ++TAO_debug_level;
+          break;
+        case 'f':
+          this->ior_fp_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
+          if (!this->ior_fp_)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Unable to open %s for writing: %p\n",
+                                 get_opts.opt_arg ()), -1);
+            }
+          break;
+        case 'o':
+          this->num_objs_ = ACE_OS::atoi (get_opts.opt_arg ());
+          if (this->num_objs_ > TAO_DEMUX_TEST_MAX_OBJS)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "%d exceeds the maximum of "
+                                 "%d objects per POA\n",
+                                 this->num_objs_,
+                                 TAO_DEMUX_TEST_MAX_OBJS),
+                                -1);
+            }
+          break;
+        case 'p':
+          this->num_POAs_ = ACE_OS::atoi (get_opts.opt_arg ());
+          if (this->num_POAs_ > TAO_DEMUX_TEST_MAX_POAS)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "%d exceeds the maximum of "
+                                 "%d POAs\n",
+                                 this->num_objs_,
+                                 TAO_DEMUX_TEST_MAX_POAS),
+                                -1);
+            }
+          break;
+        case 'u':
+          this->use_user_id_ = true;
+          break;
+        case 't':
+          this->use_transient_poas_ = true;
+          break;
+        case '?':
+        default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing: %p\n",
-                             get_opts.opt_arg ()), -1);
-        break;
-      case 'o':
-        this->num_objs_ = ACE_OS::atoi (get_opts.opt_arg ());
-        if (this->num_objs_ > TAO_DEMUX_TEST_MAX_OBJS)
-          {
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%d exceeds the maximum of "
-                               "%d objects per POA\n",
-                               this->num_objs_,
-                               TAO_DEMUX_TEST_MAX_OBJS),
-                              -1);
-          }
-        break;
-      case 'p':
-        this->num_POAs_ = ACE_OS::atoi (get_opts.opt_arg ());
-        if (this->num_POAs_ > TAO_DEMUX_TEST_MAX_POAS)
-          {
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%d exceeds the maximum of "
-                               "%d POAs\n",
-                               this->num_objs_,
-                               TAO_DEMUX_TEST_MAX_POAS),
-                              -1);
-          }
-        break;
-      case 'u':
-        this->use_user_id_ = true;
-        break;
-      case 't':
-        this->use_transient_poas_ = true;
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " [-d]"
-                           " [-o <num objects>]"
-                           " [-p <num POAs>]"
-                           " [-f <IOR file>]"
-                           "\n", this->argv_ [0]),
-                          -1);
-      }
+                             "usage:  %s"
+                             " [-d]"
+                             " [-o <num objects>]"
+                             " [-p <num POAs>]"
+                             " [-f <IOR file>]"
+                             "\n", this->argv_ [0]),
+                            -1);
+        }
+            }
 
   if (!this->ior_fp_)
     {
       // open default IOR file
       this->ior_fp_.reset (ACE_OS::fopen ("ior.dat", "w"));
       if (!this->ior_fp_)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to open file ior.dat for writing\n"), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to open file ior.dat for writing\n"), -1);
+        }
     }
   return 0;
 }
@@ -373,10 +383,12 @@ Demux_Test_Server::init_naming_service ()
 {
   // Initialize the naming services
   if (this->my_name_client_.init (this->orb_.in ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) Unable to initialize "
-                       "the ACE_Naming_Client.\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         " (%P|%t) Unable to initialize "
+                         "the ACE_Naming_Client.\n"),
+                        -1);
+    }
 
   // success
   return 0;

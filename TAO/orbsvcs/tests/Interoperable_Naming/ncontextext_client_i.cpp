@@ -219,18 +219,22 @@ NContextExt_Client_i::init (int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_context_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot resolve Naming Service\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot resolve Naming Service\n")),
+                            1);
+        }
 
       // Narrow to get the correct reference
       this->naming_context_ =
         CosNaming::NamingContextExt::_narrow (naming_context_object.in ());
 
       if (CORBA::is_nil (this->naming_context_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot narrow Naming Service\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot narrow Naming Service\n")),
+                            1);
+        }
     }
   catch (CORBA::Exception const &ex)
     {

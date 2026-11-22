@@ -71,13 +71,15 @@ Periodic_Task::init_task (ACE_Arg_Shifter& arg_shifter)
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("parse Task unknown option %s\n"),
                       arg_shifter.get_current ()));
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("name %C, priority %d, period %QuS, ")
-                        ACE_TEXT ("exec_time %QuS, phase %quS, iter %d, load %d\n"),
-                        name_.c_str (), task_priority_,
-                        static_cast<ACE_UINT64> (period_),
-                        static_cast<ACE_UINT64> (exec_time_),
-                        static_cast<ACE_INT64> (phase_), iter_, load_));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("name %C, priority %d, period %QuS, ")
+                          ACE_TEXT ("exec_time %QuS, phase %quS, iter %d, load %d\n"),
+                          name_.c_str (), task_priority_,
+                          static_cast<ACE_UINT64> (period_),
+                          static_cast<ACE_UINT64> (exec_time_),
+                          static_cast<ACE_INT64> (phase_), iter_, load_));
+            }
           break;
         }
     }

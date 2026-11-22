@@ -318,14 +318,18 @@ ImR_Activator_i::fini ()
   catch (const CORBA::COMM_FAILURE&)
     {
       if (debug_ > 1)
-        ORBSVCS_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) ImR Activator: COMM_FAILURE, unable to unregister from ImR\n")));
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) ImR Activator: COMM_FAILURE, unable to unregister from ImR\n")));
+        }
     }
   catch (const CORBA::TRANSIENT&)
     {
       if (debug_ > 1)
-        ORBSVCS_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) ImR Activator: TRANSIENT, unable to unregister from ImR\n")));
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) ImR Activator: TRANSIENT, unable to unregister from ImR\n")));
+        }
     }
   catch (const CORBA::Exception& ex)
     {
@@ -410,9 +414,11 @@ CORBA::Boolean
 ImR_Activator_i::kill_server (const char* name, CORBA::Long lastpid, CORBA::Short signum)
 {
   if (debug_ > 1)
-    ORBSVCS_DEBUG((LM_DEBUG,
-                   "(%P|%t) ImR Activator: Killing server <%C>, lastpid <%d>\n",
-                   name, lastpid));
+    {
+      ORBSVCS_DEBUG((LM_DEBUG,
+                     "(%P|%t) ImR Activator: Killing server <%C>, lastpid <%d>\n",
+                     name, lastpid));
+    }
   pid_t const lpid = static_cast<pid_t>(lastpid);
   pid_t pid = 0;
   bool found = false;
@@ -449,10 +455,12 @@ ImR_Activator_i::kill_server (const char* name, CORBA::Long lastpid, CORBA::Shor
         }
 
       if (debug_ > 1)
-        ORBSVCS_DEBUG((LM_DEBUG,
-                       "(%P|%t) ImR Activator: Killing server <%C> "
-                       "signal <%d> to pid <%d> found <%d> this->notify_imr_ <%d> result <%d>\n",
-                       name, signum, static_cast<int> (pid), found, this->notify_imr_, result));
+        {
+          ORBSVCS_DEBUG((LM_DEBUG,
+                         "(%P|%t) ImR Activator: Killing server <%C> "
+                         "signal <%d> to pid <%d> found <%d> this->notify_imr_ <%d> result <%d>\n",
+                         name, signum, static_cast<int> (pid), found, this->notify_imr_, result));
+        }
       if (!found && result == 0 && this->notify_imr_)
         {
           this->process_map_.bind (pid, name);
@@ -548,9 +556,11 @@ ImR_Activator_i::start_server(const char* name,
 
   size_t const cmdline_buf_len = std::strlen (cmdline);
   if (debug_ > 0)
-    ORBSVCS_DEBUG((LM_DEBUG,
-                   "(%P|%t) ImR Activator: command line len <%d> <%C> directory <%C>\n",
-                   cmdline_buf_len, cmdline, dir)  );
+    {
+      ORBSVCS_DEBUG((LM_DEBUG,
+                     "(%P|%t) ImR Activator: command line len <%d> <%C> directory <%C>\n",
+                     cmdline_buf_len, cmdline, dir)  );
+    }
 
   ACE_Process_Options proc_opts (
                                  1,

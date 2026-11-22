@@ -59,8 +59,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     return 1;
   }
   if (remote_host == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Client: No remote host specified\n")),1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Client: No remote host specified\n")),1);
+    }
 
   ACE::HTBP::Environment env;
   if (config_file != nullptr)
@@ -113,8 +115,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_OS::sprintf (buffer,"Do you hear me? %d",i);
       n = stream.send (buffer,ACE_OS::strlen(buffer)+1);
       if (n == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT("%p\n"),
-                           ACE_TEXT("stream send")),-1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT("%p\n"),
+                             ACE_TEXT("stream send")),-1);
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) Client: ")
@@ -167,15 +171,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   ACE::HTBP::Channel * const ch = session.outbound();
   if (ch == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Client: ")
-                       ACE_TEXT("session's outbound channel is null!\n")),1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Client: ")
+                         ACE_TEXT("session's outbound channel is null!\n")),1);
+    }
   n = stream.send ("goodbye",7);
   if (n == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Client: ")
-                       ACE_TEXT("%p\n"),
-                       ACE_TEXT("stream send")),-1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Client: ")
+                         ACE_TEXT("%p\n"),
+                         ACE_TEXT("stream send")),-1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Client: ")

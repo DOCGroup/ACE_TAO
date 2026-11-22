@@ -28,17 +28,19 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        options.ior_file = get_opts.opt_arg ();
-        break;
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Usage: %s -o IOR\n"),
-                           argv[0]),
-                          -1);
-      }
+  {
+      switch (c)
+        {
+        case 'o':
+          options.ior_file = get_opts.opt_arg ();
+          break;
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Usage: %s -o IOR\n"),
+                             argv[0]),
+                            -1);
+        }
+  }
 
   return 0;
 }
@@ -156,9 +158,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -210,10 +214,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
            server_interceptor.in ());
 
       if (CORBA::is_nil (interceptor.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) Could not obtain reference to "
-                           "server request interceptor.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) Could not obtain reference to "
+                             "server request interceptor.\n"),
+                            -1);
+        }
 
       interceptor->forward_references (obj1.in (),
                                        obj2.in ());

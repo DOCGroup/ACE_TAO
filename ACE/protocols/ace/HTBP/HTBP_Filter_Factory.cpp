@@ -21,11 +21,15 @@ ACE::HTBP::Filter_Factory::get_filter (bool inside)
 {
   ACE::HTBP::Filter *filter {};
   if (inside)
-    ACE_NEW_RETURN (filter,
-                    ACE::HTBP::Inside_Squid_Filter (), nullptr);
+    {
+      ACE_NEW_RETURN (filter,
+                      ACE::HTBP::Inside_Squid_Filter (), nullptr);
+    }
   else
-    ACE_NEW_RETURN (filter,
-                    ACE::HTBP::Outside_Squid_Filter (), nullptr);
+    {
+      ACE_NEW_RETURN (filter,
+                      ACE::HTBP::Outside_Squid_Filter (), nullptr);
+    }
   return filter;
 }
 

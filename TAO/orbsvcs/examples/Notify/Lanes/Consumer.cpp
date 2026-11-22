@@ -98,8 +98,10 @@ TAO_Notify_Lanes_Consumer::push_structured_event (
 
       // The current thread priority and the event priority must match.
       if (event_priority != thread_priority)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P, %t) Error: Event priority and thread priority are different.\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P, %t) Error: Event priority and thread priority are different.\n")));
+        }
 
       // Disconnect from the EC
       this->disconnect ();

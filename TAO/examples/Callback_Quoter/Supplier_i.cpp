@@ -37,19 +37,23 @@ Supplier::read_ior (ACE_TCHAR const *filename)
   ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
 
   if (f_handle == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open %s for reading\n",
-                        filename),
-                        -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to open %s for reading\n",
+                          filename),
+                          -1);
+    }
 
   ACE_Read_Buffer ior_buffer (f_handle, true);
   ACE_Read_Buffer_Unique_Ptr data (
     ior_buffer.read (), {ior_buffer.alloc ()});
 
   if (data == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to read ior\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to read ior\n"),
+                        -1);
+    }
 
   this->ior_ = ACE_TEXT_CHAR_TO_TCHAR (data.get ());
 
@@ -66,57 +70,63 @@ Supplier::parse_args ()
   int result;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'd':  // Debug flag
-        ++TAO_debug_level; //****
-        break;
+    {
+      switch (c)
+        {
+        case 'd':  // Debug flag
+          ++TAO_debug_level; //****
+          break;
 
-      case 'n':  // Period_value: time between two successive stockfeeds.
-        this->period_value_ = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
+        case 'n':  // Period_value: time between two successive stockfeeds.
+          this->period_value_ = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
 
-      case 'i':  // Stock market information is got from a file.
-        result = this->read_file (get_opts.opt_arg ());
-        if (result < 0)
+        case 'i':  // Stock market information is got from a file.
+          result = this->read_file (get_opts.opt_arg ());
+          if (result < 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Unable to read stock information from %s : %p\n",
+                                 get_opts.opt_arg ()),
+                                -1);
+            }
+          break;
+
+        case 'k':  // Ior provide on command line
+          this->ior_ = get_opts.opt_arg ();
+          break;
+
+        case 'f': // Read the IOR from the file.
+          result = this->read_ior (get_opts.opt_arg ());
+          if (result < 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Unable to read ior from %s : %p\n",
+                                 get_opts.opt_arg ()),
+                                -1);
+            }
+          break;
+
+        case 's': // Don't use the naming service
+          this->use_naming_service_ = false;
+          break;
+
+        case '?':
+        default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to read stock information from %s : %p\n",
-                             get_opts.opt_arg ()),
+                             "usage:  %s"
+                             " [-d]"
+                             " [-n period]"
+                             " [-f ior-file]"
+                             " [-i input_filename]"
+                             " [-k ior]"
+                             " [-x]"
+                             " [-s]"
+                             "\n",
+                             this->argv_ [0]),
                             -1);
-        break;
-
-      case 'k':  // Ior provide on command line
-        this->ior_ = get_opts.opt_arg ();
-        break;
-
-      case 'f': // Read the IOR from the file.
-        result = this->read_ior (get_opts.opt_arg ());
-        if (result < 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to read ior from %s : %p\n",
-                             get_opts.opt_arg ()),
-                            -1);
-        break;
-
-      case 's': // Don't use the naming service
-        this->use_naming_service_ = false;
-        break;
-
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " [-d]"
-                           " [-n period]"
-                           " [-f ior-file]"
-                           " [-i input_filename]"
-                           " [-k ior]"
-                           " [-x]"
-                           " [-s]"
-                           "\n",
-                           this->argv_ [0]),
-                          -1);
-      }
+        }
+    }
 
   // Indicates successful parsing of command line.
   return 0;
@@ -164,10 +174,12 @@ Supplier::run ()
     period,
     period);
   if (this->timer_id_ == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "schedule_timer"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "schedule_timer"),
+                        -1);
+    }
 
   // The reactor starts executing in a loop.
   return this->reactor_used ()->run_reactor_event_loop ();
@@ -180,10 +192,12 @@ Supplier::via_naming_service ()
     {
       // Initialization of the naming service.
       if (naming_services_client_.init (orb_.in ()) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize "
+                             "the TAO_Naming_Client.\n"),
+                            -1);
+        }
       CosNaming::Name notifier_ref_name (1);
       notifier_ref_name.length (1);
       notifier_ref_name[0].id = CORBA::string_dup ("Notifier");
@@ -221,7 +235,9 @@ Supplier::init (int argc, ACE_TCHAR **argv)
   ACE_NEW_RETURN (argv_copy, ACE_TCHAR *[argc], -1);
   this->argv_.reset (argv_copy);
   for (int i = 0; i < argc; ++i)
-    this->argv_[i] = argv[i];
+        {
+      this->argv_[i] = argv[i];
+        }
 
   try
     {
@@ -249,18 +265,22 @@ Supplier::init (int argc, ACE_TCHAR **argv)
       }
 
       if (this->ior_.empty ())
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%s: no ior specified\n",
-                           this->argv_[0]),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%s: no ior specified\n",
+                             this->argv_[0]),
+                            -1);
+        }
       CORBA::Object_var notifier_object =
         this->orb_->string_to_object (this->ior_.c_str ());
 
       if (CORBA::is_nil (notifier_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "invalid ior <%s>\n",
-                           this->ior_.c_str ()),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "invalid ior <%s>\n",
+                             this->ior_.c_str ()),
+                            -1);
+        }
       // The downcasting from CORBA::Object_var to Notifier_var is
       // done using the <_narrow> method.
       this->notifier_ = Notifier::_narrow (notifier_object.in ());
@@ -297,9 +317,11 @@ Supplier::read_file (ACE_TCHAR const *filename)
 
   // the stock values are to be read from a file.
   if (!this->f_ptr_)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open %s for writing: %p\n",
-                       filename),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to open %s for writing: %p\n",
+                         filename),
+                        -1);
+    }
   return 0;
 }

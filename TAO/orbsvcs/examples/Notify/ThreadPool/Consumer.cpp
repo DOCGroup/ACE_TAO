@@ -125,8 +125,10 @@ TAO_Notify_ThreadPool_Consumer::push_structured_event (
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "(%P, %t) Consumer received event %d\n",
-                this->events_received_count_));
+    {
+      ACE_DEBUG ((LM_DEBUG, "(%P, %t) Consumer received event %d\n",
+                  this->events_received_count_));
+    }
 
   // Increment the received count.
   ++this->events_received_count_;

@@ -14,8 +14,10 @@ Single_Lookup::Single_Lookup (const char *usr_name)
 Single_Lookup::~Single_Lookup ()
 {
   if (Options::get_opt (Options::DEBUGGING))
-    ACE_DEBUG ((LM_DEBUG,
-                "disposing Single_Lookup\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "disposing Single_Lookup\n"));
+    }
 }
 
 Protocol_Record *

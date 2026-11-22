@@ -109,19 +109,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             ACE_OS::fopen (options.ior_output_file, ACE_TEXT ("w")),
             ACE_OS::fclose);
           if (!output_file)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
-                               options.ior_output_file),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
+                                 options.ior_output_file),
+                                1);
+            }
           ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 
       OrbTask task (orb.in ());
       if (task.activate (THR_NEW_LWP | THR_JOINABLE,
                          options.thread_count) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot activate threads\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot activate threads\n"),
+                            1);
+        }
       task.wait ();
 
       ACE_DEBUG ((LM_DEBUG,

@@ -342,9 +342,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil(poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in());
@@ -357,19 +359,23 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Initialize the naming services
       TAO_Naming_Client my_name_client;
       if (my_name_client.init (orb.in ()) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize "
+                             "the TAO_Naming_Client.\n"),
+                            -1);
+        }
 
       CosNaming::NamingContext_var context =
         my_name_client.get_context ();
 
       if (ACE_Scheduler_Factory::use_config (context.in (),
                                              ACE_TEXT_ALWAYS_CHAR(service_name)) < 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to bind to the scheduling service.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to bind to the scheduling service.\n"),
+                            1);
+        }
 
       // Create and initialize RT_Infos in the scheduler, make second
       // half of array depend on first half.

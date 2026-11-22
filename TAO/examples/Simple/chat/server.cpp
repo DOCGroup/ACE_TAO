@@ -20,14 +20,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       int ret = server_i.init (argc, argv);
       if (ret != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("\n error in init.\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("\n error in init.\n")),
+                            1);
+        }
       ret = server_i.run ();
       if (ret != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("\n error in run.\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("\n error in run.\n")),
+                            1);
+        }
     }
   catch (CORBA::Exception const &ex)
     {

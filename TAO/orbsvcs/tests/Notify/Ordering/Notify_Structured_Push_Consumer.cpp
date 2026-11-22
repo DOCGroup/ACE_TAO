@@ -104,9 +104,11 @@ Notify_Structured_Push_Consumer::push_structured_event (
           ACE_DEBUG ((LM_DEBUG, "Expected id:%d Received id:%d\n", adjusted_expected_id, id));
         }
       else if (id != this->count_ - 1)
-        ACE_ERROR ((LM_ERROR,
-                    "\nError: Expected id:%d Received id:%d\n",
-                    this->count_ - 1, id));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "\nError: Expected id:%d Received id:%d\n",
+                      this->count_ - 1, id));
+        }
     }
   else
     {

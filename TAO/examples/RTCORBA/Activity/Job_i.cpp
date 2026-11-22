@@ -36,9 +36,11 @@ Job_i::work (CORBA::ULong work)
   static CORBA::ULong prime_number = 9619;
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "test_i::method: %u units of work\n",
-                work));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "test_i::method: %u units of work\n",
+                  work));
+    }
 
   while (work != 0)
     {

@@ -167,19 +167,23 @@ Client_i::read_ior (ACE_TCHAR const *filename)
   ACE_HANDLE const f_handle = ACE_OS::open (filename, O_RDONLY);
 
   if (f_handle == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("[CLIENT] Process/Thread Id : (%P/%t) Unable to open %s for reading: %p\n"),
-                       filename),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("[CLIENT] Process/Thread Id : (%P/%t) Unable to open %s for reading: %p\n"),
+                         filename),
+                        -1);
+    }
 
   ACE_Read_Buffer ior_buffer (f_handle, true);
   ACE_Read_Buffer_Unique_Ptr const data (
     ior_buffer.read (), {ior_buffer.alloc ()});
 
   if (!data)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("[CLIENT] Process/Thread Id : (%P/%t) Unable to read ior: %p\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("[CLIENT] Process/Thread Id : (%P/%t) Unable to read ior: %p\n")),
+                        -1);
+    }
 
   this->ior_ = data.get ();
 
@@ -195,34 +199,38 @@ Client_i::parse_args (int argc, ACE_TCHAR *argv[])
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'd':
-        ++TAO_debug_level;
-        break;
-      case 'n':
-        this->loop_count_ = static_cast<u_int> (ACE_OS::atoi (get_opts.opt_arg ()));
-        break;
-      case 'k':
-        this->ior_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
-        break;
-      case 'f':
-        if (this->read_ior (get_opts.opt_arg ()) != 0)
+    {
+      switch (c)
+        {
+        case 'd':
+          ++TAO_debug_level;
+          break;
+        case 'n':
+          this->loop_count_ = static_cast<u_int> (ACE_OS::atoi (get_opts.opt_arg ()));
+          break;
+        case 'k':
+          this->ior_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
+          break;
+        case 'f':
+          if (this->read_ior (get_opts.opt_arg ()) != 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("[CLIENT] Process/Thread Id : (%P/%t) Unable to read ior from %s : %p\n"),
+                                 get_opts.opt_arg ()),
+                                -1);
+            }
+          break;
+        case 'x':
+          this->shutdown_ = true;
+          break;
+        case '?':
+        default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("[CLIENT] Process/Thread Id : (%P/%t) Unable to read ior from %s : %p\n"),
-                             get_opts.opt_arg ()),
+                             ACE_TEXT ("usage:  %s [-d] [-n loopcount] [-f ior-file] [-k ior] [-x]\n"),
+                             argv[0]),
                             -1);
-        break;
-      case 'x':
-        this->shutdown_ = true;
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage:  %s [-d] [-n loopcount] [-f ior-file] [-k ior] [-x]\n"),
-                           argv[0]),
-                          -1);
-      }
+        }
+    }
 
   // Indicates successful parsing of command line.
   return 0;
@@ -258,10 +266,12 @@ Client_i::obtain_initial_references ()
     {
       // Initialize the naming services.
       if (my_name_client_.init (orb_.in ()) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "[CLIENT] Process/Thread Id : (%P/%t) Unable to initialize "
-                           "the TAO_Naming_Client.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "[CLIENT] Process/Thread Id : (%P/%t) Unable to initialize "
+                             "the TAO_Naming_Client.\n"),
+                            -1);
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   "DONE\n"));
@@ -287,10 +297,12 @@ Client_i::obtain_initial_references ()
       clerk_ = CosTime::TimeService::_narrow (temp_object.in ());
 
       if (CORBA::is_nil (clerk_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "[CLIENT] Process/Thread Id : (%P/%t) Unable to Resolve "
-                           "Clerk Reference\n"),
-                           -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "[CLIENT] Process/Thread Id : (%P/%t) Unable to Resolve "
+                             "Clerk Reference\n"),
+                             -1);
+        }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -328,10 +340,12 @@ Client_i::init (int argc, ACE_TCHAR **argv)
             this->orb_->string_to_object (this->ior_.c_str ());
 
           if (CORBA::is_nil (server_object.in ()))
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "invalid ior <%C>\n",
-                               this->ior_.c_str ()),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "invalid ior <%C>\n",
+                                 this->ior_.c_str ()),
+                                -1);
+            }
           this->clerk_ =
             CosTime::TimeService::_narrow (server_object.in ());
 

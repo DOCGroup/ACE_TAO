@@ -65,9 +65,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (options.first_ior == nullptr || options.second_ior == nullptr
           || options.output_file == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Options -a, -b, and -c are required\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Options -a, -b, and -c are required\n")),
+                            -1);
+        }
 
       // Merge the different IORS
       manager.make_merged_iors (options);
@@ -202,10 +204,12 @@ Manager::write_to_file (ACE_TCHAR const* output_file_name)
   std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
     ACE_OS::fopen (output_file_name, "w"), ACE_OS::fclose);
   if (!output_file)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                       output_file_name),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                         output_file_name),
+                        1);
+    }
   ACE_OS::fprintf (output_file.get (), "%s", iorref.in ());
 
   return 0;
@@ -230,10 +234,12 @@ Client_i::init (ACE_TCHAR const* ior_file)
 {
   FILE *input_file = ACE_OS::fopen (ior_file, "r");
   if (input_file == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unable to open %s for reading: %p\n"),
-                       ior_file),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Unable to open %s for reading: %p\n"),
+                         ior_file),
+                        -1);
+    }
 
   ACE_Read_Buffer ior_buffer (input_file, true);
   ACE_Read_Buffer_Unique_Ptr const data (
@@ -251,10 +257,12 @@ Client_i::init (ACE_TCHAR const* ior_file)
     Simple_Server::_narrow (object.in ());
 
   if (CORBA::is_nil (server.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Object reference <%C> is nil\n"),
-                       data.get ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Object reference <%C> is nil\n"),
+                         data.get ()),
+                        -1);
+    }
 
   run_test (server.in ());
 

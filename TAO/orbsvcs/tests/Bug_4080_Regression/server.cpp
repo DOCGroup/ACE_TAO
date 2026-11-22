@@ -90,9 +90,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Server_Options options;
 
       if (parse_args (argc, argv, options) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("ERROR: wrong arguments\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("ERROR: wrong arguments\n")),
+                            -1);
+        }
 
       CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
@@ -101,9 +103,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableGroup::GOA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_goa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("ERROR: nil RootPOA\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("ERROR: nil RootPOA\n")),
+                            -1);
+        }
 
       PortableServer::POAManager_var const poa_manager = root_goa->the_POAManager ();
 
@@ -124,9 +128,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         Test::UIPMC_Object::_unchecked_narrow (obj.in ());
 
       if (CORBA::is_nil (uipmc_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("ERROR: nil Hello object\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("ERROR: nil Hello object\n")),
+                            -1);
+        }
       CORBA::String_var const ior = orb->object_to_string (obj.in ());
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("MIOP object is <%C>\n"), ior.in ()));
@@ -135,10 +141,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
           ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                             options.ior_output_file.c_str ()),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                               options.ior_output_file.c_str ()),
+                              -1);
+          }
         if (std::fprintf (output_file.get (), "%s", ior.in ()) < 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot write IOR to output file\n")), -1);

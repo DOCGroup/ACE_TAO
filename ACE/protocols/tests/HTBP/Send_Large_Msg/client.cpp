@@ -58,8 +58,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     return 1;
   }
   if (remote_host == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Client: No remote host specified\n")),1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Client: No remote host specified\n")),1);
+    }
 
   ACE::HTBP::Environment env;
   if (config_file != nullptr)
@@ -134,11 +136,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           n = stream->recv (buffer,1000);
         }
       else
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("(%P|%t) Client: ")
-                           ACE_TEXT("%p\n"),
-                           ACE_TEXT("stream.recv")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("(%P|%t) Client: ")
+                             ACE_TEXT("%p\n"),
+                             ACE_TEXT("stream.recv")),
+                            -1);
+        }
     }
 
   ACE_DEBUG ((LM_DEBUG,

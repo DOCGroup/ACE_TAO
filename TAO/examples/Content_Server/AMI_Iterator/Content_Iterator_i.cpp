@@ -38,11 +38,13 @@ Content_Iterator_i::next_chunk (CORBA::ULongLong offset,
                    SEEK_SET);
 
   if (real_offset == static_cast<ACE_OFF_T> (-1))
-    // Invalid supplied offset?
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("Error during lseek")),
-                      false);
+    {
+      // Invalid supplied offset?
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("Error during lseek")),
+                        false);
+    }
   else if (offset != static_cast<CORBA::ULongLong> (real_offset))
     {
       // Didn't get the desired offset.
@@ -133,11 +135,13 @@ Content_Iterator_i::init ()
                          ACE_Addr::sap_any,
                          0,
                          O_RDONLY) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%s %p\n"),
-                       ACE_TEXT ("Could not open file"),
-                       this->file_.get_path_name ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%s %p\n"),
+                         ACE_TEXT ("Could not open file"),
+                         this->file_.get_path_name ()),
+                        -1);
+    }
 
   return 0;
 }

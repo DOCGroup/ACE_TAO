@@ -107,18 +107,22 @@ run_test (PortableServer::POA_ptr poa,
   for (int i {}; i != n; ++i)
     {
       if (consumers[i]->disconnect_count != 1)
-        ACE_DEBUG ((LM_DEBUG,
-                    "ERRROR unexpected "
-                    "disconnect count (%u) in Consumer/%04.4d\n",
-                    consumers[i]->disconnect_count,
-                    i));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "ERRROR unexpected "
+                      "disconnect count (%u) in Consumer/%04.4d\n",
+                      consumers[i]->disconnect_count,
+                      i));
+        }
 
       if (suppliers[i]->disconnect_count != 1)
-        ACE_DEBUG ((LM_DEBUG,
-                    "ERRROR unexpected "
-                    "disconnect count (%u) in Supplier/%04.4d\n",
-                    suppliers[i]->disconnect_count,
-                    i));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "ERRROR unexpected "
+                      "disconnect count (%u) in Supplier/%04.4d\n",
+                      suppliers[i]->disconnect_count,
+                      i));
+        }
     }
 
   for (int i {}; i != n; ++i)

@@ -62,9 +62,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         PortableGroup::GOA::_narrow (poa_object.in ()));
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil RootPOA\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Panic: nil RootPOA\n"),
+                            1);
+        }
 
       // Obtain the root POA's manager
       PortableServer::POAManager_var poa_manager (
@@ -78,9 +80,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ::Compression::CompressionManager::_narrow (compression_manager.in ()));
 
       if (CORBA::is_nil(comp_manager.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil compression manager\n"),
-                           1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Panic: nil compression manager\n"),
+                             1);
+        }
 
       //register Zlib compressor
       ::Compression::CompressorFactory_ptr compressor_factory;

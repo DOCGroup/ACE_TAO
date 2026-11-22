@@ -15,8 +15,10 @@ int
 PMC_All::encode (char *packet, int &packet_length)
 {
   if (Options::get_opt (Options::DEBUGGING) != 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "in PMC_All::encode\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "in PMC_All::encode\n"));
+    }
 
   Search_Struct *lookup {};
   ACE_NEW_RETURN (lookup, HT_Client, -1);

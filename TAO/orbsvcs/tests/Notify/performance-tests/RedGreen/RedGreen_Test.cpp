@@ -425,11 +425,13 @@ RedGreen_Test_StructuredPushConsumer::push_structured_event (
     notification.header.fixed_header.event_type.type_name;
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "Consumer %d event, domain = %s, type =  %s\n",
-                this->proxy_supplier_id_,
-                domain_name,
-                type_name));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Consumer %d event, domain = %s, type =  %s\n",
+                  this->proxy_supplier_id_,
+                  domain_name,
+                  type_name));
+    }
 
   TimeBase::TimeT latency_base_recorded {};
   ACE_hrtime_t latency_base {};

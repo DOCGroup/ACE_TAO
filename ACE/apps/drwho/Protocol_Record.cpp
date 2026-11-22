@@ -9,8 +9,10 @@ Drwho_Node Protocol_Record::drwho_node_;
 Protocol_Record::~Protocol_Record ()
 {
   if (Options::get_opt (Options::DEBUGGING))
-    ACE_DEBUG ((LM_DEBUG,
-                "disposing Protocol_Record\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "disposing Protocol_Record\n"));
+    }
 
   for (Drwho_Node *np = this->get_drwho_list ();
        np != nullptr; )

@@ -79,18 +79,20 @@ LB_server::parse_args (int argc, ACE_TCHAR *argv[])
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        this->options_.ior_output_file = get_opts.opt_arg ();
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage: %s -o <iorfile>\n"),
-                           argv[0]),
-                          -1);
-      }
+    {
+      switch (c)
+        {
+        case 'o':
+          this->options_.ior_output_file = get_opts.opt_arg ();
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage: %s -o <iorfile>\n"),
+                             argv[0]),
+                            -1);
+        }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -112,9 +114,11 @@ LB_server::start_orb_and_poa ()
         this->orb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            -1);
+        }
 
       this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
 
@@ -130,9 +134,11 @@ LB_server::start_orb_and_poa ()
         CosLoadBalancing::LoadManager::_narrow (obj.in ());
 
       if (CORBA::is_nil (this->lm_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to get Load Manager Reference\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to get Load Manager Reference\n"),
+                            -1);
+        }
     }
   catch (const CORBA::Exception& ex)
     {

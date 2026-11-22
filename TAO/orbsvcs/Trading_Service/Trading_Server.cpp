@@ -12,9 +12,11 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
     {
       int const result = trader.init (argc, argv);
       if (result == -1)
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           "Failed to initialize the trader.\n"),
-                          1);
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             "Failed to initialize the trader.\n"),
+                            1);
+        }
 
       trader.run ();
     }

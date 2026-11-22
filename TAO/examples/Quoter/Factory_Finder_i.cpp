@@ -40,8 +40,10 @@ Quoter_Factory_Finder_i::find_factories (CosLifeCycle::Key const &factory_key)
       orb_ptr->resolve_initial_references ("NameService");
 
     if (CORBA::is_nil (namingObj_var.in ()))
-      ACE_ERROR ((LM_ERROR,
-                  " (%P|%t) Unable get the Naming Service.\n"));
+      {
+        ACE_ERROR ((LM_ERROR,
+                    " (%P|%t) Unable get the Naming Service.\n"));
+      }
 
     // Narrow the object reference to a Naming Context.
     exception_message = "While narrowing the Naming Context";
@@ -78,8 +80,10 @@ Quoter_Factory_Finder_i::find_factories (CosLifeCycle::Key const &factory_key)
     (*factories)[0] = CORBA::Object::_duplicate (quoterFactoryObject_var.in ());
 
     if (this->debug_level_ > 1)
-      ACE_DEBUG ((LM_DEBUG,
-                  "Factory Finder: Have reference to a Quoter Factory.\n"));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "Factory Finder: Have reference to a Quoter Factory.\n"));
+      }
   }
   catch (CORBA::Exception const &)
     {

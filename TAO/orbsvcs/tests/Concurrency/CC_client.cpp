@@ -43,18 +43,22 @@ CC_Client::read_ior (ACE_TCHAR *filename)
   this->f_handle_ = ACE_OS::open (filename,0);
 
   if (this->f_handle_ == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open %s for writing: %p\n",
-                       filename),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to open %s for writing: %p\n",
+                         filename),
+                        -1);
+    }
   ACE_Read_Buffer ior_buffer (this->f_handle_);
   this->cc_factory_key_ = ACE_Read_Buffer_Unique_Ptr (
     ior_buffer.read (), {ior_buffer.alloc ()});
 
   if (this->cc_factory_key_ == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to allocate memory to read ior: %p\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to allocate memory to read ior: %p\n"),
+                        -1);
+    }
    return 0;
 }
 
@@ -74,45 +78,49 @@ CC_Client::parse_args ()
     }
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'b':  // debug flag
-        this->run_basic_tests_ = true;
-        break;
-      case 'c':
-        this->use_script_file_ = true;
-        this->script_file_ = ACE_OS::strdup (get_opts.opt_arg ());
-        break;
-      case 'd':  // debug flag
-        ++TAO_debug_level;
-        break;
-      case 'e':  // debug flag
-        run_extended_tests_ = true;
-        this->extended_tests_params_ = ACE_OS::strdup (get_opts.opt_arg ());
-        break;
-      case 'f': // read the IOR from the file.
-        result = this->read_ior (get_opts.opt_arg ());
-        if (result < 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to read ior from %s : %p\n",
-                             get_opts.opt_arg ()),
-                            -1);
-            break;
-      case 'k': // read the cubit IOR from the command-line.
-        this->cc_factory_key_.reset (
-          ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ())));
-        break;
-      case 'x':
-        this->shutdown_ = true;
-        break;
-      case 's': // Don't use the TAO Naming Service.
-        this->use_naming_service_ = false;
-        break;
-      case 'h':
-      default:
-        print_usage ();
-        ACE_ERROR_RETURN ((LM_ERROR, ""), -1);
-      }
+    {
+      switch (c)
+        {
+        case 'b':  // debug flag
+          this->run_basic_tests_ = true;
+          break;
+        case 'c':
+          this->use_script_file_ = true;
+          this->script_file_ = ACE_OS::strdup (get_opts.opt_arg ());
+          break;
+        case 'd':  // debug flag
+          ++TAO_debug_level;
+          break;
+        case 'e':  // debug flag
+          run_extended_tests_ = true;
+          this->extended_tests_params_ = ACE_OS::strdup (get_opts.opt_arg ());
+          break;
+        case 'f': // read the IOR from the file.
+          result = this->read_ior (get_opts.opt_arg ());
+          if (result < 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Unable to read ior from %s : %p\n",
+                                 get_opts.opt_arg ()),
+                                -1);
+            }
+              break;
+        case 'k': // read the cubit IOR from the command-line.
+          this->cc_factory_key_.reset (
+            ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ())));
+          break;
+        case 'x':
+          this->shutdown_ = true;
+          break;
+        case 's': // Don't use the TAO Naming Service.
+          this->use_naming_service_ = false;
+          break;
+        case 'h':
+        default:
+          print_usage ();
+          ACE_ERROR_RETURN ((LM_ERROR, ""), -1);
+        }
+    }
 
   // Indicates successful parsing of command line.
   return 0;
@@ -162,10 +170,12 @@ CC_Client::run ()
         {
           script_file.reset (ACE_OS::fopen (this->script_file_, "r"));
           if (!script_file)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Unable to open %s\n",
-                               this->script_file_),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Unable to open %s\n",
+                                 this->script_file_),
+                                -1);
+            }
           ace_cc_yyin = script_file.get ();
         }
       ace_cc_yyparse();
@@ -177,14 +187,16 @@ CC_Client::run ()
   // if (other_test_flag && success == CC_SUCCESS) ...
 
   if (this->shutdown_)
-    // @@TAO is this needed??
-
-  if (tests_run == 0)
     {
-      print_usage ();
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "No tests given\n"),
-                        -1);
+      // @@TAO is this needed??
+
+    if (tests_run == 0)
+      {
+        print_usage ();
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "No tests given\n"),
+                          -1);
+      }
     }
 
   return success;
@@ -215,7 +227,9 @@ CC_Client::run_basic_tests ()
       t4.run () == CC_SUCCESS &&
       t5.run () == CC_SUCCESS &&
       t6.run () == CC_SUCCESS )
-    return CC_SUCCESS;
+    {
+      return CC_SUCCESS;
+    }
   else
   {
     return CC_FAIL;
@@ -400,10 +414,12 @@ CC_Client::init (int argc, ACE_TCHAR **argv)
       else
         {
           if (this->cc_factory_key_ == nullptr)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%s: no lock set factory key specified\n",
-                               this->argv_[0]),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "%s: no lock set factory key specified\n",
+                                 this->argv_[0]),
+                                -1);
+            }
 
           CORBA::Object_var factory_object =
             this->orb_->string_to_object (this->cc_factory_key_.get ());

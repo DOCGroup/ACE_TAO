@@ -45,9 +45,15 @@ ACE::HTBP::Inside_Squid_Filter::make_request_header (ACE::HTBP::Channel *ch,
   ACE_UINT32 tempId = session->session_id().id_;
   size_t sid_size = 1;
   size_t rid_size = 1;
-  while (tempId /= 10) ++sid_size;
+  while (tempId /= 10)
+  {
+    ++sid_size;
+  }
   tempId = ch->request_count();
-  while (tempId /= 10) ++rid_size;
+  while (tempId /= 10)
+  {
+    ++rid_size;
+  }
 
   // This test was originally get_host_name() == -1, but this is
   // problematic if the address doesn't resolve to a name. I think
@@ -56,10 +62,12 @@ ACE::HTBP::Inside_Squid_Filter::make_request_header (ACE::HTBP::Channel *ch,
   // have dynamic IP addresses. For now that isn't a problem.
   if (session->peer_addr().get_host_addr(remote_host,
                                          sizeof remote_host) == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("HTBP::Inside_Squid_Filter:could not get ")
-                       ACE_TEXT("peer_addr hostname\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("HTBP::Inside_Squid_Filter:could not get ")
+                         ACE_TEXT("peer_addr hostname\n")),
+                        -1);
+    }
 
   const size_t size =
     std::strlen (format)
@@ -72,12 +80,14 @@ ACE::HTBP::Inside_Squid_Filter::make_request_header (ACE::HTBP::Channel *ch,
     + rid_size; // size of request id
 
   if (size > buffer_size)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("HTBP::Inside_Squid_Filter: insufficient ")
-                       ACE_TEXT("buffer space for request header, need %B ")
-                       ACE_TEXT("got %B\n"),
-                       size, buffer_size),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("HTBP::Inside_Squid_Filter: insufficient ")
+                         ACE_TEXT("buffer space for request header, need %B ")
+                         ACE_TEXT("got %B\n"),
+                         size, buffer_size),
+                        -1);
+    }
 
   std::sprintf (buffer, format,
                    cmd,remote_host,remote_port,
@@ -114,10 +124,12 @@ ACE::HTBP::Inside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
   if (this->http_code() != 200 && this->http_code() != 0)
     {
       if (ACE::debug())
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT("HTBP::Inside_Squid_Filter::recv_data_header, ")
-                    ACE_TEXT("non-OK result code %d recvd\n"),
-                    this->http_code()));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT("HTBP::Inside_Squid_Filter::recv_data_header, ")
+                      ACE_TEXT("non-OK result code %d recvd\n"),
+                      this->http_code()));
+        }
 
       errno = ch->consume_error () ? EINVAL : EWOULDBLOCK;
       return 0;

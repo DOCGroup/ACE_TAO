@@ -104,10 +104,12 @@ Identity_Server::register_groups ()
     Load_Balancer::Object_Group_Factory::_narrow (obj.in ());
 
   if (CORBA::is_nil (factory.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Identity_Server::init: "
-                       "problems using the factory ior\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Identity_Server::init: "
+                         "problems using the factory ior\n"),
+                        -1);
+    }
 
   // Unbind the previously registered random group.
   try

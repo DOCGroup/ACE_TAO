@@ -69,17 +69,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var str = orb->object_to_string (messenger_obj.in ());
       std::ofstream ior_file (ACE_TEXT_ALWAYS_CHAR (options.ior_output_file.c_str ()));
       if (!ior_file)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Unable to open %s for writing.\n"),
-                           options.ior_output_file.c_str ()),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Unable to open %s for writing.\n"),
+                             options.ior_output_file.c_str ()),
+                            1);
+        }
       ior_file << str.in () << std::endl;
       ior_file.close ();
       if (!ior_file)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Failed writing IOR to %s.\n"),
-                           options.ior_output_file.c_str ()),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Failed writing IOR to %s.\n"),
+                             options.ior_output_file.c_str ()),
+                            1);
+        }
       std::cout << "IOR written to file "
                 << ACE_TEXT_ALWAYS_CHAR (options.ior_output_file.c_str ())
                 << std::endl;

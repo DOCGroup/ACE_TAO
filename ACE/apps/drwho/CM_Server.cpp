@@ -68,9 +68,11 @@ CM_Server::receive (int)
   }
 
   if (Options::get_opt (Options::DEBUGGING) != 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "receiving from client host %s\n",
-                ACE_OS::inet_ntoa (this->sin_.sin_addr)));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "receiving from client host %s\n",
+                  ACE_OS::inet_ntoa (this->sin_.sin_addr)));
+    }
 
   if (this->demux (this->recv_packet_, n) < 0)
   {
@@ -92,9 +94,11 @@ CM_Server::send ()
   }
 
   if (Options::get_opt (Options::DEBUGGING) != 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "sending to client host %s\n",
-                ACE_OS::inet_ntoa (this->sin_.sin_addr)));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "sending to client host %s\n",
+                  ACE_OS::inet_ntoa (this->sin_.sin_addr)));
+    }
 
   if (ACE_OS::sendto (this->sokfd_,
                       this->send_packet_,
@@ -112,8 +116,10 @@ CM_Server::send ()
 CM_Server::~CM_Server ()
 {
   if (Options::get_opt (Options::DEBUGGING))
-    ACE_DEBUG ((LM_DEBUG,
-                "CM_Server\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "CM_Server\n"));
+    }
 
   if (this->sokfd_ != ACE_INVALID_HANDLE)
   {

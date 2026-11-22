@@ -74,9 +74,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
+                            -1);
+        }
 
       PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -120,10 +122,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           std::unique_ptr<FILE, decltype (&ACE_OS::fclose)> const output_file (
             ACE_OS::fopen (options.ior_output_file, ACE_TEXT ("w")), ACE_OS::fclose);
           if (!output_file)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                               options.ior_output_file),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                                 options.ior_output_file),
+                                -1);
+            }
           if (std::fprintf (output_file.get (), "%s", ior.in ()) < 0)
           {
             ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot write IOR to output file\n")), -1);
@@ -139,10 +143,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
            server_interceptor.in ());
 
       if (CORBA::is_nil (interceptor.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Could not obtain reference to "
-                                     "server request interceptor.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Could not obtain reference to "
+                                       "server request interceptor.\n")),
+                            -1);
+        }
 
       interceptor->forward_reference (ACE_TEXT_ALWAYS_CHAR (options.merged_iorstr));
 

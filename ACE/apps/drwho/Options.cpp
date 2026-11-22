@@ -106,10 +106,12 @@ Options::set_options (int argc, char *argv[])
           break;
         case 'F':
           if (Multicast_Manager::insert_hosts_from_file (getopt.opt_arg ()) < 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "%p%a\n",
-                        Options::program_name,
-                        1));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "%p%a\n",
+                          Options::program_name,
+                          1));
+            }
           add_default_hosts = false;
           break;
         case 'H':

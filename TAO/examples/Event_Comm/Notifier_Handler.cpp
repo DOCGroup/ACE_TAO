@@ -85,10 +85,12 @@ Notifier_Handler::init (int argc,
 
       // Initialization of the naming service.
       if (this->naming_client_.init (orb_.in ()) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) Unable to initialize "
+                             "the TAO_Naming_Client.\n"),
+                            -1);
+        }
 
       CosNaming::Name notifier_ref_name (1);
       notifier_ref_name.length (1);

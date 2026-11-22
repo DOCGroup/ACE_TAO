@@ -18,9 +18,11 @@ SequencePushConsumer::push_structured_events (
   this->test_client_->events_received_.fetch_add (static_cast<int> (batch.length ()));
 
   if (batch.length () > this->test_client_->consumer_batch_size_)
-      ACE_DEBUG ((LM_ERROR,
-                  "Error: Received more than max event batch %u\n",
-                  batch.length ()));
+    {
+        ACE_DEBUG ((LM_ERROR,
+                    "Error: Received more than max event batch %u\n",
+                    batch.length ()));
+    }
 
   this->test_client_->on_event_received ();
 
@@ -200,9 +202,11 @@ void
 Sequence::on_event_received ()
 {
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "Events received = %d\n",
-                this->events_received_.load ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Events received = %d\n",
+                  this->events_received_.load ()));
+    }
 
   if (this->events_received_.load () == this->event_count_)
     {

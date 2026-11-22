@@ -44,10 +44,12 @@ Life_Cycle_Service_Server::init (int argc,
                                     command.get_TCHAR_argv ());
 
   if (retval == -1)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("%p\n"),
-                       ACE_TEXT("init")),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("%p\n"),
+                         ACE_TEXT("init")),
+                        -1);
+    }
 
   // Activate the POA manager
   retval = this->orb_manager_.activate_poa_manager ();
@@ -78,27 +80,35 @@ Life_Cycle_Service_Server::init (int argc,
   try
     {
       if (this->debug_level_ >= 2)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("LifeCycle_Service: Trying to get a reference to the Naming Service.\n")));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("LifeCycle_Service: Trying to get a reference to the Naming Service.\n")));
+        }
 
       // Get the Naming Service object reference.
       CORBA::Object_var naming_obj_var =
         this->orb_manager_.orb ()->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj_var.in ()))
-        ORBSVCS_ERROR ((LM_ERROR,
-                   " LifeCycle_Service: Unable get the Naming Service.\n"));
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                     " LifeCycle_Service: Unable get the Naming Service.\n"));
+        }
 
       // Narrow the object reference to a Naming Context.
       this->namingContext_var_ = CosNaming::NamingContext::_narrow (naming_obj_var.in ());
 
       if (CORBA::is_nil (this->namingContext_var_.in ()))
-        ORBSVCS_ERROR ((LM_ERROR,
-                   "LifeCycle_Service: Unable get the Naming Service.\n"));
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                     "LifeCycle_Service: Unable get the Naming Service.\n"));
+        }
 
       if (this->debug_level_ >= 2)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("LifeCycle_Service: Have a proper reference to the Naming Service.\n")));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("LifeCycle_Service: Have a proper reference to the Naming Service.\n")));
+        }
 
       CosNaming::Name life_cycle_service_name (1);
       life_cycle_service_name.length (1);
@@ -110,8 +120,10 @@ Life_Cycle_Service_Server::init (int argc,
                                       tmp.in ());
 
       if (this->debug_level_ >= 2)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("LifeCycle_Service: Bound the LifeCycle Service to the Naming Context.\n")));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("LifeCycle_Service: Bound the LifeCycle Service to the Naming Context.\n")));
+        }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -126,8 +138,10 @@ int
 Life_Cycle_Service_Server::run ()
 {
   if (this->debug_level_ >= 1)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                ACE_TEXT("\nLifeCycle Service: Life_Cycle_Service_Server is running\n")));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("\nLifeCycle Service: Life_Cycle_Service_Server is running\n")));
+    }
 
   this->orb_manager_.orb ()->run ();
 
@@ -143,27 +157,29 @@ Life_Cycle_Service_Server::parse_args (int argc,
   int exit_code {};
 
   while ((opt = get_opt ()) != EOF)
-    switch (opt)
-      {
-      case 'd':  // debug flag.
-        this->debug_level_ = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      default:
-        exit_code = 1;
-        ORBSVCS_ERROR ((LM_ERROR,
-                    "%s: unknown arg, -%c\n",
-                    argv[0], char(opt)));
-        ACE_FALLTHROUGH;
-      case '?':
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("usage:  %s")
-                    ACE_TEXT(" [-d] <debug level> - Set the debug level\n")
-                    ACE_TEXT(" [-?]               - Prints this message\n")
-                    ACE_TEXT("\n"),
-                    argv[0]));
-        ACE_OS::exit (exit_code);
-        break;
-      }
+    {
+      switch (opt)
+        {
+        case 'd':  // debug flag.
+          this->debug_level_ = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        default:
+          exit_code = 1;
+          ORBSVCS_ERROR ((LM_ERROR,
+                      "%s: unknown arg, -%c\n",
+                      argv[0], char(opt)));
+          ACE_FALLTHROUGH;
+        case '?':
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("usage:  %s")
+                      ACE_TEXT(" [-d] <debug level> - Set the debug level\n")
+                      ACE_TEXT(" [-?]               - Prints this message\n")
+                      ACE_TEXT("\n"),
+                      argv[0]));
+          ACE_OS::exit (exit_code);
+          break;
+        }
+    }
   return 0;
 }
 

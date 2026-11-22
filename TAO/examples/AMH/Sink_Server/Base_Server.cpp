@@ -43,7 +43,9 @@ Base_Server::parse_args ()
             // to avoid any confusion that might result.
             {
               for (int i = count_argv; i <= this->argc_; ++i)
-                this->argv_ [i] = this->argv_ [i+2];
+  {
+                  this->argv_ [i] = this->argv_ [i+2];
+  }
             }
 
             // Decrement the value of this->argc_ to reflect the removal
@@ -83,8 +85,10 @@ Base_Server::try_RT_scheduling ()
                       "test runs in time-shared class\n"));
         }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "server (%P|%t): sched_params failed\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "server (%P|%t): sched_params failed\n"));
+        }
     }
 }
 
@@ -121,9 +125,11 @@ Base_Server::start_orb_and_poa ()
         this->orb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
 

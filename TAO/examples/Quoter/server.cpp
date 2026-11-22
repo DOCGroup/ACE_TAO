@@ -53,10 +53,12 @@ Quoter_Server::init (int argc,
       int const result = this->orb_manager_.init (argc, argv);
 
       if (result == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "init"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%p\n",
+                             "init"),
+                            -1);
+        }
 
       // ORB_init removes ORB options, so preserve only the remaining app args.
       this->argc_ = argc;
@@ -64,7 +66,9 @@ Quoter_Server::init (int argc,
       ACE_NEW_RETURN (argv_copy, ACE_TCHAR *[argc], -1);
       this->argv_.reset (argv_copy);
       for (int i = 0; i < argc; ++i)
-        this->argv_[i] = argv[i];
+        {
+          this->argv_[i] = argv[i];
+        }
 
       if (this->parse_args () != 0)
       {
@@ -153,9 +157,11 @@ Quoter_Server::init_naming_service ()
         orb_ptr->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                                       " (%P|%t) Unable to resolve the Name Service.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                                         " (%P|%t) Unable to resolve the Name Service.\n"),
+                            -1);
+        }
 
       exception_message = "While narrowing naming context";
       namingContext_var_ =
@@ -196,8 +202,10 @@ int
 Quoter_Server::run ()
 {
   if (this->options_.debug_level >= 1)
-    ACE_DEBUG ((LM_DEBUG,
-                "\nQuoter Example: Quoter_Server is running\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "\nQuoter Example: Quoter_Server is running\n"));
+    }
 
   orb_manager_.orb()->run ();
 

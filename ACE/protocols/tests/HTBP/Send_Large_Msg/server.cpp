@@ -58,10 +58,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_TCHAR host[MAXHOSTNAMELEN+1];
   if (ACE_OS::hostname (host,MAXHOSTNAMELEN) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Server failure: %p\n"),
-                       ACE_TEXT ("hostname")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Server failure: %p\n"),
+                         ACE_TEXT ("hostname")),
+                        1);
+    }
 
   ACE_INET_Addr local (port, host);
   ACE_SOCK_Stream sock[2];
@@ -76,9 +78,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       std::unique_ptr<FILE, int (*) (FILE *)> file (
         ACE_OS::fopen (notifier_file, ACE_TEXT ("w+")), ACE_OS::fclose);
       if (!file)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot open notifier file '%s'\n"),
-                           notifier_file), 1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open notifier file '%s'\n"),
+                             notifier_file), 1);
+        }
       char const * const msg = "server ready";
       ACE_OS::fwrite (msg, ACE_OS::strlen (msg), 1, file.get ());
     }
@@ -153,10 +157,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_OS::strcpy (buffer,"I hear you !");
   ssize_t n = stream.send (buffer, ACE_OS::strlen (buffer)+1);
   if (n == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("(%P|%t) Server: ")
-                       ACE_TEXT("%p\n"),
-                       ACE_TEXT("stream.send")),-1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("(%P|%t) Server: ")
+                         ACE_TEXT("%p\n"),
+                         ACE_TEXT("stream.send")),-1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%P|%t) Server: ")

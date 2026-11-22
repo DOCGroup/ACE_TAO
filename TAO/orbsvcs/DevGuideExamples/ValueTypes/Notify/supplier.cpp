@@ -60,11 +60,13 @@ parse_args (int argc, ACE_TCHAR *argv[], SupplierOptions &options)
     options.payload_size = ACE_OS::atoi (argv[argument_index + 1]);
   }
   if (argument_index + 2 < argc)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("usage: %s [-k <ec_ior>] [-h <host>] [-p <port>] "
-                                 "[num_events [payload_size]]\n"),
-                       argv[0]),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("usage: %s [-k <ec_ior>] [-h <host>] [-p <port>] "
+                                   "[num_events [payload_size]]\n"),
+                         argv[0]),
+                        -1);
+    }
   return 0;
 }
 
@@ -249,7 +251,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       MyEvent_var event = new MyEvent_i ("TestName", 42);
       for (int i {}; i < options.payload_size; ++i)
-        event->add_long ((i + 1) * 42);
+        {
+          event->add_long ((i + 1) * 42);
+        }
 
       poa_manager->activate ();
       {

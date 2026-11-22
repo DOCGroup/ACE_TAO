@@ -211,16 +211,20 @@ namespace ACE
       {
         bool connected = false;
         if (http_url.has_proxy ())
-          connected = this->initialize_connection (http_url.get_scheme (),
-                                                   http_url.get_host(),
-                                                   http_url.get_port (),
-                                                   true,
-                                                   http_url.get_proxy_host(),
-                                                   http_url.get_proxy_port ());
+          {
+            connected = this->initialize_connection (http_url.get_scheme (),
+                                                     http_url.get_host(),
+                                                     http_url.get_port (),
+                                                     true,
+                                                     http_url.get_proxy_host(),
+                                                     http_url.get_proxy_port ());
+          }
         else
-          connected = this->initialize_connection (http_url.get_scheme (),
-                                                   http_url.get_host(),
-                                                   http_url.get_port ());
+          {
+            connected = this->initialize_connection (http_url.get_scheme (),
+                                                     http_url.get_host(),
+                                                     http_url.get_port ());
+          }
 
         if (connected)
           {

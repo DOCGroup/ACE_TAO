@@ -21,10 +21,12 @@ IFR_DII_Client::init (int argc,
   this->target_ = this->orb_->string_to_object (ior_output_file_);
 
   if (CORBA::is_nil (this->target_.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to find interface repository in: %s\n",
-                       this->ior_output_file_),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to find interface repository in: %s\n",
+                         this->ior_output_file_),
+                        -1);
+    }
 
   return 0;
 }
@@ -60,27 +62,29 @@ IFR_DII_Client::parse_args (int argc, ACE_TCHAR *argv[])
   int c {};
 
   while ((c = opts ()) != -1)
-    switch (c)
-      {
-        case 'd':
-          this->debug_ = true;
-          break;
-        case 'n':   // Select lookup by name.
-          this->lookup_by_name_ = true;
-          break;
-        case 'k':
-          this->ior_output_file_ = opts.opt_arg ();
-          break;
+    {
+      switch (c)
+        {
+          case 'd':
+            this->debug_ = true;
+            break;
+          case 'n':   // Select lookup by name.
+            this->lookup_by_name_ = true;
+            break;
+          case 'k':
+            this->ior_output_file_ = opts.opt_arg ();
+            break;
 
-        case '?':
-        default:
-          ACE_ERROR_RETURN ((LM_ERROR,
-                            "usage: %s"
-                            " [-n]"
-                            "\n",
-                            argv [0]),
-                            -1);
-      }
+          case '?':
+          default:
+            ACE_ERROR_RETURN ((LM_ERROR,
+                              "usage: %s"
+                              " [-n]"
+                              "\n",
+                              argv [0]),
+                              -1);
+        }
+    }
 
   return 0;
 }

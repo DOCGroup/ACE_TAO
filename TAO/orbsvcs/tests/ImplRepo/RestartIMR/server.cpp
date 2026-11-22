@@ -101,10 +101,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     FILE *output_file = ACE_OS::fopen (pid_file, ACE_TEXT ("w"));
     if (output_file == 0)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
-                         pid_file),
-                        1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
+                           pid_file),
+                          1);
+      }
     int pid = static_cast<int> (ACE_OS::getpid ());
     ACE_OS::fprintf (output_file, "%d\n", pid);
     ACE_OS::fclose (output_file);

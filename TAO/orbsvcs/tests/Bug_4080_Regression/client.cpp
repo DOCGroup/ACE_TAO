@@ -54,9 +54,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Client_Options options;
 
       if (parse_args (argc, argv, options) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("ERROR: wrong arguments\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("ERROR: wrong arguments\n")),
+                            -1);
+        }
 
       CORBA::Object_var const obj = orb->string_to_object (options.ior.c_str ());
 
@@ -64,9 +66,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         TAO::Narrow_Utils<Test::UIPMC_Object>::unchecked_narrow (obj.in ());
 
       if (CORBA::is_nil (test.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("ERROR: IOR is not an UIPMC_Object\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("ERROR: IOR is not an UIPMC_Object\n")),
+                            -1);
+        }
 
       for (CORBA::ULong j {}; j < options.threads; ++j)
         {
@@ -85,7 +89,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Give a chance to flush all OS buffers for client.
       while (orb->work_pending ())
-        orb->perform_work ();
+        {
+          orb->perform_work ();
+        }
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client shutting down\n")));
       orb->destroy ();

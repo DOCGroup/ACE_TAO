@@ -26,10 +26,12 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const*& ifr_ior)
       }
 
   if (ifr_ior == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("usage: %s [-i <ior>]\n"),
-                       argv [0]),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("usage: %s [-i <ior>]\n"),
+                         argv [0]),
+                        -1);
+    }
 
   // Indicates successful parsing of the command line
   return 0;

@@ -36,42 +36,46 @@ Baseline_Test_Base::parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
-      {
-      case 'i':                 // Total iterations
+  {
+      switch (c)
         {
-          int const tmp = ACE_OS::atoi (get_opt.opt_arg ());
-          if (tmp <= 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%d is not a valid value for iteration\n",
-                               tmp), -1);
-          else
+        case 'i':                 // Total iterations
           {
-            this->iteration_ = static_cast<size_t> (tmp);
+            int const tmp = ACE_OS::atoi (get_opt.opt_arg ());
+            if (tmp <= 0)
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "%d is not a valid value for iteration\n",
+                                   tmp), -1);
+              }
+          else
+            {
+              this->iteration_ = static_cast<size_t> (tmp);
+            }
           }
+          break;
+
+        case 'y':                 // Use thr_yield.
+          this->yield_method_ = Baseline_Yield_Method::thread_yield;
+          break;
+
+        case 'l':
+          this->what_ = Lock_Type::lock;
+          break;
+
+        case 'r':
+          this->what_ = Lock_Type::read_lock;
+          break;
+
+        case 'w':
+          this->what_ = Lock_Type::write_lock;
+          break;
+
+        default:
+          ACE_ERROR ((LM_ERROR, "Invalid argument %c used\n", c));
+          break;
         }
-        break;
-
-      case 'y':                 // Use thr_yield.
-        this->yield_method_ = Baseline_Yield_Method::thread_yield;
-        break;
-
-      case 'l':
-        this->what_ = Lock_Type::lock;
-        break;
-
-      case 'r':
-        this->what_ = Lock_Type::read_lock;
-        break;
-
-      case 'w':
-        this->what_ = Lock_Type::write_lock;
-        break;
-
-      default:
-        ACE_ERROR ((LM_ERROR, "Invalid argument %c used\n", c));
-        break;
-      }
+  }
   return 0;
 }
 
@@ -96,21 +100,23 @@ Baseline_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = getopt ()) != -1)
-  //FUZZ: enable check_for_lack_ACE_OS
-    switch (c)
-      {
-      case 't':
-        this->test_try_lock_ = true;
-        break;
+    {
+    //FUZZ: enable check_for_lack_ACE_OS
+      switch (c)
+        {
+        case 't':
+          this->test_try_lock_ = true;
+          break;
 
-      case 'v':
-        this->verbose_ = true;
-        break;
+        case 'v':
+          this->verbose_ = true;
+          break;
 
-      default:
-        ACE_ERROR ((LM_ERROR, "Invalid arguemnt %c used.\n", c));
-        break;
-      }
+        default:
+          ACE_ERROR ((LM_ERROR, "Invalid arguemnt %c used.\n", c));
+          break;
+        }
+    }
   return 0;
 }
 

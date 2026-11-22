@@ -350,12 +350,16 @@ AdminProperties::test_max_clients ()
 
   // check the results and print the assessment.
   if (this->consumers_connected_count_ > this->max_consumers_)
-    ACE_DEBUG ((LM_ERROR, "\nConnected consumers %d, exceed MaxConsumers %d\n",
-                this->consumers_connected_count_ > this->max_consumers_));
+    {
+      ACE_DEBUG ((LM_ERROR, "\nConnected consumers %d, exceed MaxConsumers %d\n",
+                  this->consumers_connected_count_ > this->max_consumers_));
+    }
 
   if (this->suppliers_connected_count_ > this->max_suppliers_)
-    ACE_DEBUG ((LM_ERROR, "\nConnected suppliers %d, exceed MaxSuppliers %d\n",
-                this->suppliers_connected_count_ > this->max_suppliers_));
+    {
+      ACE_DEBUG ((LM_ERROR, "\nConnected suppliers %d, exceed MaxSuppliers %d\n",
+                  this->suppliers_connected_count_ > this->max_suppliers_));
+    }
 }
 
 void

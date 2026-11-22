@@ -95,9 +95,11 @@ TAO::HTIOP::Profile::decode_profile (TAO_InputCDR& cdr)
       || cdr.read_string (this->endpoint_.htid_.out()) == 0)
     {
       if (TAO_debug_level > 0)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) TAO::HTIOP::Profile::decode - ")
-                    ACE_TEXT ("error while decoding host/port")));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) TAO::HTIOP::Profile::decode - ")
+                      ACE_TEXT ("error while decoding host/port")));
+        }
       return -1;
     }
 
@@ -186,11 +188,13 @@ TAO::HTIOP::Profile::parse_string_i (const char *ior)
           // initialized.  Just throw an exception.
 
           if (TAO_debug_level > 0)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("\n\nTAO (%P|%t) ")
-                        ACE_TEXT ("TAO::HTIOP::Profile::parse_string ")
-                        ACE_TEXT ("- %p\n\n"),
-                        ACE_TEXT ("cannot determine hostname")));
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("\n\nTAO (%P|%t) ")
+                          ACE_TEXT ("TAO::HTIOP::Profile::parse_string ")
+                          ACE_TEXT ("- %p\n\n"),
+                          ACE_TEXT ("cannot determine hostname")));
+            }
 
           // @@ What's the right exception to throw here?
           throw CORBA::INV_OBJREF(
@@ -445,16 +449,20 @@ TAO::HTIOP::Profile::decode_endpoints ()
       // Extract the Byte Order.
       CORBA::Boolean byte_order;
       if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,"boolean byte_order extraction failed\n"),
-                          -1);
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,"boolean byte_order extraction failed\n"),
+                            -1);
+        }
       in_cdr.reset_byte_order (static_cast<int> (byte_order));
 
       // Extract endpoints sequence.
       HTIOPEndpointSequence endpoints;
 
       if ((in_cdr >> endpoints) == 0)
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,"endpoint sequence extraction failed\n"),
-                          -1);
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,"endpoint sequence extraction failed\n"),
+                            -1);
+        }
 
       // Use information extracted from the tagged component to
       // populate the profile.  Skip the first endpoint, since it is

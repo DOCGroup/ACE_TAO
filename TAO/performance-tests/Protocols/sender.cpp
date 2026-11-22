@@ -362,23 +362,27 @@ Worker::print_stats ()
                   options.iterations));
 
       if (options.count_missed_end_deadlines)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Deadlines made/missed[start,end]/%% = %d/%d[%d,%d]/%.2f%%; Effective Rate = %.2f\n",
-                    made_total_deadlines,
-                    missed_total_deadlines,
-                    this->missed_start_deadlines_,
-                    this->missed_end_deadlines_,
-                    made_total_deadlines * 100 / (double) options.iterations,
-                    made_total_deadlines / to_seconds (this->test_end_ - this->test_start_,
-                                                       options.gsf)));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Deadlines made/missed[start,end]/%% = %d/%d[%d,%d]/%.2f%%; Effective Rate = %.2f\n",
+                      made_total_deadlines,
+                      missed_total_deadlines,
+                      this->missed_start_deadlines_,
+                      this->missed_end_deadlines_,
+                      made_total_deadlines * 100 / (double) options.iterations,
+                      made_total_deadlines / to_seconds (this->test_end_ - this->test_start_,
+                                                         options.gsf)));
+        }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "Deadlines made/missed/%% = %d/%d/%.2f%%; Effective Rate = %.2f\n",
-                    made_total_deadlines,
-                    missed_total_deadlines,
-                    made_total_deadlines * 100 / (double) options.iterations,
-                    made_total_deadlines / to_seconds (this->test_end_ - this->test_start_,
-                                                       options.gsf)));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Deadlines made/missed/%% = %d/%d/%.2f%%; Effective Rate = %.2f\n",
+                      made_total_deadlines,
+                      missed_total_deadlines,
+                      made_total_deadlines * 100 / (double) options.iterations,
+                      made_total_deadlines / to_seconds (this->test_end_ - this->test_start_,
+                                                         options.gsf)));
+        }
 
       if (options.print_missed_invocations)
         {
@@ -473,8 +477,10 @@ void
 Worker::missed_end_deadline (CORBA::ULong invocation)
 {
   if (options.count_missed_end_deadlines)
-    this->missed_end_invocations_[this->missed_end_deadlines_++] =
-      invocation;
+    {
+      this->missed_end_invocations_[this->missed_end_deadlines_++] =
+        invocation;
+    }
 }
 
 void

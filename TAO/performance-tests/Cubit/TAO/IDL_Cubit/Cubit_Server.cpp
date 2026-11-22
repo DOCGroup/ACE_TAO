@@ -20,11 +20,13 @@ Cubit_Server::parse_args ()
       case 'f': // output the IOR to a file.
         this->ior_output_file_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
         if (!this->ior_output_file_)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open <%s> for writing: %p\n",
-                             get_opts.opt_arg (),
-                             ""),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Unable to open <%s> for writing: %p\n",
+                               get_opts.opt_arg (),
+                               ""),
+                              -1);
+          }
         break;
       case '?':
       default:
@@ -50,18 +52,22 @@ Cubit_Server::init (int argc,
   if (this->orb_manager_.init_child_poa (argc,
                                          argv,
                                          "child_poa") == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "init_child_poa"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "init_child_poa"),
+                        -1);
+    }
   this->argc_ = argc;
   this->argv_ = argv;
 
   if (this->parse_args () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "parse_args"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "parse_args"),
+                        -1);
+    }
   // Get the orb
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
@@ -94,8 +100,10 @@ int
 Cubit_Server::run ()
 {
   if (this->orb_manager_.run () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cubit_Server::run"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Cubit_Server::run"),
+                        -1);
+    }
   return 0;
 }

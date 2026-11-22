@@ -77,29 +77,31 @@ LB_server::parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        this->options_.group_ior_file = get_opts.opt_arg ();
-        break;
-      case 'x':
-        this->options_.factory1_ior = get_opts.opt_arg ();
-        break;
-      case 'y':
-        this->options_.factory2_ior = get_opts.opt_arg ();
-        break;
-      case 'z':
-        this->options_.factory3_ior = get_opts.opt_arg ();
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage: %s -o <group_ior_file> "
-                                     "-x <factory1_ior> -y <factory2_ior> "
-                                     "-z <factory3_ior>\n"),
-                           argv[0]),
-                          -1);
-      }
+    {
+      switch (c)
+        {
+        case 'o':
+          this->options_.group_ior_file = get_opts.opt_arg ();
+          break;
+        case 'x':
+          this->options_.factory1_ior = get_opts.opt_arg ();
+          break;
+        case 'y':
+          this->options_.factory2_ior = get_opts.opt_arg ();
+          break;
+        case 'z':
+          this->options_.factory3_ior = get_opts.opt_arg ();
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage: %s -o <group_ior_file> "
+                                       "-x <factory1_ior> -y <factory2_ior> "
+                                       "-z <factory3_ior>\n"),
+                             argv[0]),
+                            -1);
+        }
+    }
 
   // Indicates successful parsing of the command line
   return 0;
@@ -122,9 +124,11 @@ LB_server::init ()
         this->orb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Unable to initialize the POA.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Unable to initialize the POA.\n")),
+                            -1);
+        }
 
       this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
 
@@ -140,9 +144,11 @@ LB_server::init ()
         CosLoadBalancing::LoadManager::_narrow (obj.in ());
 
       if (CORBA::is_nil (this->lm_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Unable to get Load Manager Reference\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Unable to get Load Manager Reference\n")),
+                            -1);
+        }
 
       if (this->create_object_group () != 0)
       {

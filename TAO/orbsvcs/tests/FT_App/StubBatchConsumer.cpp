@@ -46,9 +46,11 @@ int StubBatchConsumer::init (CORBA::ORB_ptr orb, ::FT::FaultNotifier_var & notif
     this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA);
 
   if (CORBA::is_nil (poa_object.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
+                        -1);
+    }
 
   // Get the POA .
   this->poa_ = PortableServer::POA::_narrow (poa_object.in ());

@@ -42,14 +42,18 @@ test_i::method (CORBA::ULong work,
                 CORBA::ULong prime_number)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "test_i::method: %u units of work\n",
-                work));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "test_i::method: %u units of work\n",
+                  work));
+    }
 
   for (; work != 0; ++work)
-    ACE::is_prime (prime_number,
-                   2,
-                   prime_number / 2);
+    {
+      ACE::is_prime (prime_number,
+                     2,
+                     prime_number / 2);
+    }
 }
 
 PortableServer::POA_ptr
@@ -84,74 +88,76 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'b':
-        bands_file = get_opts.opt_arg ();
-        break;
+    {
+      switch (c)
+        {
+        case 'b':
+          bands_file = get_opts.opt_arg ();
+          break;
 
-      case 'f':
-        pool_priority = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
+        case 'f':
+          pool_priority = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
 
-      case 'l':
-        lanes_file = get_opts.opt_arg ();
-        break;
+        case 'l':
+          lanes_file = get_opts.opt_arg ();
+          break;
 
-      case 'n':
-        number_of_lanes = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
+        case 'n':
+          number_of_lanes = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
 
-      case 'o':
-        ior_output_file = get_opts.opt_arg ();
-        break;
+        case 'o':
+          ior_output_file = get_opts.opt_arg ();
+          break;
 
-      case 's':
-        static_threads = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
+        case 's':
+          static_threads = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
 
-      case 'c':
-      case 'e':
-      case 'g':
-      case 'i':
-      case 'j':
-      case 'k':
-      case 'm':
-      case 'p':
-      case 'q':
-      case 'r':
-      case 't':
-      case 'u':
-      case 'v':
-      case 'w':
-      case 'x':
-      case 'y':
-      case 'z':
-        // client options: ignored.
-        break;
+        case 'c':
+        case 'e':
+        case 'g':
+        case 'i':
+        case 'j':
+        case 'k':
+        case 'm':
+        case 'p':
+        case 'q':
+        case 'r':
+        case 't':
+        case 'u':
+        case 'v':
+        case 'w':
+        case 'x':
+        case 'y':
+        case 'z':
+          // client options: ignored.
+          break;
 
-      case 'h':
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s\n"
-                           "\t-b <bands file> (defaults to %s)\n"
-                           "\t-f <pool priority> (defaults to %d)\n"
-                           "\t-h <help: shows options menu>\n"
-                           "\t-l <lanes file> (defaults to %s)\n"
-                           "\t-n <number of lanes> (defaults to %d)\n"
-                           "\t-o <ior file> (defaults to %s)\n"
-                           "\t-s <static threads> (defaults to %d)\n"
-                           "\n",
-                           argv [0],
-                           bands_file,
-                           default_thread_priority,
-                           lanes_file,
-                           number_of_lanes,
-                           ior_output_file,
-                           static_threads),
-                          -1);
-      }
+        case 'h':
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s\n"
+                             "\t-b <bands file> (defaults to %s)\n"
+                             "\t-f <pool priority> (defaults to %d)\n"
+                             "\t-h <help: shows options menu>\n"
+                             "\t-l <lanes file> (defaults to %s)\n"
+                             "\t-n <number of lanes> (defaults to %d)\n"
+                             "\t-o <ior file> (defaults to %s)\n"
+                             "\t-s <static threads> (defaults to %d)\n"
+                             "\n",
+                             argv [0],
+                             bands_file,
+                             default_thread_priority,
+                             lanes_file,
+                             number_of_lanes,
+                             ior_output_file,
+                             static_threads),
+                            -1);
+        }
+    }
 
   return 0;
 }
@@ -169,10 +175,12 @@ write_ior_to_file (const ACE_TCHAR *ior_file,
                    "w");
 
   if (output_file == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cannot open output file for writing IOR: %s",
-                       ior_file),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Cannot open output file for writing IOR: %s",
+                         ior_file),
+                        -1);
+    }
 
   ACE_OS::fprintf (output_file,
                    "%s",
@@ -289,8 +297,10 @@ Task::svc ()
       else
         {
           if (pool_priority == ACE_INT16_MIN)
-            pool_priority =
-              default_thread_priority;
+            {
+              pool_priority =
+                default_thread_priority;
+            }
 
           RTCORBA::ThreadpoolId threadpool_id =
             rt_orb->create_threadpool (stacksize,

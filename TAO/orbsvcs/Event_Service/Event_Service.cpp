@@ -72,9 +72,11 @@ Event_Service::run (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var const root_poa_object =
         this->orb_->resolve_initial_references ("RootPOA");
       if (CORBA::is_nil (root_poa_object.in ()))
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the root POA.\n"),
-                          1);
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the root POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (root_poa_object.in ());
@@ -100,9 +102,11 @@ Event_Service::run (int argc, ACE_TCHAR *argv[])
             this->orb_->resolve_initial_references ("NameService");
 
           if (CORBA::is_nil (naming_obj.in ()))
-            ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                                " (%P|%t) Unable to initialize the Naming Service.\n"),
-                              1);
+            {
+              ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                  " (%P|%t) Unable to initialize the Naming Service.\n"),
+                                1);
+            }
 
           naming_context =
             CosNaming::NamingContext::_narrow (naming_obj.in ());
@@ -143,9 +147,11 @@ Event_Service::run (int argc, ACE_TCHAR *argv[])
           scheduler = RtecScheduler::Scheduler::_narrow (tmp.in ());
 
           if (CORBA::is_nil (scheduler.in ()))
-            ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                                " (%P|%t) Unable to resolve the Scheduling Service.\n"),
-                              1);
+            {
+              ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                  " (%P|%t) Unable to resolve the Scheduling Service.\n"),
+                                1);
+            }
         }
 
       TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
@@ -219,9 +225,11 @@ Event_Service::run (int argc, ACE_TCHAR *argv[])
             }
 
           if (CORBA::is_nil (child_poa.in ()))
-            ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                               " (%P|%t) Unable to initialize the child POA.\n"),
-                              1);
+            {
+              ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 " (%P|%t) Unable to initialize the child POA.\n"),
+                                1);
+            }
 
           PortableServer::ObjectId_var const ec_object_id =
             PortableServer::string_to_ObjectId (this->object_id_.c_str ());
@@ -245,10 +253,12 @@ Event_Service::run (int argc, ACE_TCHAR *argv[])
                            ACE_TEXT ("w")),
             ACE_OS::fclose);
           if (output_file == nullptr)
-            ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
-                               this->ior_file_name_.c_str()),
-                              1);
+            {
+              ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 "Cannot open output file for writing IOR: %s",
+                                 this->ior_file_name_.c_str()),
+                                1);
+            }
           ACE_OS::fprintf (output_file.get (), "%s", str.in ());
         }
 

@@ -40,9 +40,11 @@ Notifier::Notifier (int argc, ACE_TCHAR *argv[])
   // Register with the ORB's Reactor to receive a signal to shut us
   // down.
   if (ns_.reactor ()->register_handler (SIGINT, this) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "register_handler"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "register_handler"));
+    }
 }
 
 Notifier::~Notifier ()

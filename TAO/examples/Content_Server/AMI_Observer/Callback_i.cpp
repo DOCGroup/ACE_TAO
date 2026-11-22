@@ -192,10 +192,12 @@ Callback_i::get_viewer (std::string& viewer) const
       viewer = "xv";
     }
   else
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unsupported MIME type: <%s>\n"),
-                       content_type),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Unsupported MIME type: <%s>\n"),
+                         content_type),
+                        -1);
+    }
 
   return 0;
 }
@@ -206,10 +208,12 @@ Callback_i::spawn_viewer ()
   std::string viewer;
 
   if (this->get_viewer (viewer) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Problem determining which external ")
-                       ACE_TEXT ("viewer to use.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Problem determining which external ")
+                         ACE_TEXT ("viewer to use.\n")),
+                        -1);
+    }
 
   // Set up the command line that will be used when spawning the
   // external viewer.

@@ -61,8 +61,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                                    b);
 
       if (result != 8)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Error: Add Variables did not return the right value\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Error: Add Variables did not return the right value\n"));
+        }
     }
   catch (CORBA::Exception const &ex)
     {

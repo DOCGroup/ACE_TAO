@@ -21,10 +21,12 @@ Client::init (int argc,
   CORBA::ORB_var const orb = manager_.orb ();
   // Initialize the naming services
   if (my_name_client_.init (orb.in ()) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) Unable to initialize "
-                       "the TAO_Naming_Client.\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         " (%P|%t) Unable to initialize "
+                         "the TAO_Naming_Client.\n"),
+                        -1);
+    }
 
   // Bind PropertySetDef Object.
 
@@ -36,9 +38,11 @@ Client::init (int argc,
   this->propsetdef_ = CosPropertyService::PropertySetDef::_narrow (propsetdef_obj.in ());
 
   if (CORBA::is_nil (this->propsetdef_.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Could not resolve propsetdef in Naming server"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Could not resolve propsetdef in Naming server"),
+                        -1);
+    }
 
   return 0;
 }
@@ -185,9 +189,11 @@ Client::test_get_all_property_names ()
           CORBA::ULong const len = names_var->length ();
 
           for (CORBA::ULong ni {}; ni < len; ++ni)
-            ACE_DEBUG ((LM_DEBUG,
-                        "%s\n",
-                        static_cast<char const*> (names_var [ni])));
+        {
+              ACE_DEBUG ((LM_DEBUG,
+                          "%s\n",
+                          static_cast<char const*> (names_var [ni])));
+        }
         }
 
       // Iterate thru and print out the names in the iterator, if any.
@@ -619,9 +625,11 @@ Client::test_get_property_value ()
         CosPropertyService::PropertySetDef::_narrow (propsetdef_object.in ());
 
       if (CORBA::is_nil (propsetdef.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "invalid object reference\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "invalid object reference\n"),
+                            -1);
+        }
     }
   catch (CORBA::Exception const &ex)
     {

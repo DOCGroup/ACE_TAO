@@ -29,9 +29,11 @@ void
 ACE::HTBP::Environment::clear ()
 {
   if (this->config_)
-    this->config_->remove_section (config_->root_section (),
-                                   ACE_TEXT("htbp"),
-                                   1);
+    {
+      this->config_->remove_section (config_->root_section (),
+                                     ACE_TEXT("htbp"),
+                                     1);
+    }
 }
 
 int
@@ -68,10 +70,12 @@ ACE::HTBP::Environment::initialize (bool use_registry,
   if (this->config_->open_section (config_->root_section (),
                                    ACE_TEXT("htbp"), 1,
                                    this->htbp_key_) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("(%P|%t) ACE::HTBP::Environment::initialize ")
-                       ACE_TEXT("Open HTBP Section failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("(%P|%t) ACE::HTBP::Environment::initialize ")
+                         ACE_TEXT("Open HTBP Section failed")),
+                        -1);
+    }
   return 0;
 }
 

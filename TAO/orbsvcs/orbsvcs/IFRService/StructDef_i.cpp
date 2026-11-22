@@ -72,8 +72,10 @@ TAO_StructDef_i::type_i ()
   //---------------------------------------------------------------------------
 
   if (TAO_RecursiveDef_OuterScopes::SeenBefore( id ))
-    return this->repo_->tc_factory ()->
-                 create_recursive_tc ( id.c_str ());
+    {
+      return this->repo_->tc_factory ()->
+                   create_recursive_tc ( id.c_str ());
+    }
 
   TAO_RecursiveDef_OuterScopes NowSeenThis( id );
 

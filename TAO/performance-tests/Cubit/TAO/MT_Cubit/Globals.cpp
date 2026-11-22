@@ -95,9 +95,11 @@ Globals::sched_fifo_init ()
           return 1;
         }
       else
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%n: ACE_OS::sched_params failed\n%a"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%n: ACE_OS::sched_params failed\n%a"),
+                            -1);
+        }
     }
 
   ACE_SET_BITS (GLOBALS::instance ()->thr_create_flags, THR_BOUND);
@@ -160,7 +162,9 @@ MT_Priority::get_low_priority (u_int num_low_priority,
              (policy, ACE_SCOPE_THREAD);
            priority_iterator.more ();
            priority_iterator.next ())
-        ++this->num_priorities_;
+    {
+          ++this->num_priorities_;
+    }
 
       // 1 priority is exclusive for the high priority client.
       --this->num_priorities_;
@@ -189,10 +193,12 @@ MT_Priority::get_low_priority (u_int num_low_priority,
       }
     }
   else
-    low_priority =
-      ACE_Sched_Params::previous_priority (policy,
-                                           prev_priority,
-                                           ACE_SCOPE_THREAD);
+    {
+      low_priority =
+        ACE_Sched_Params::previous_priority (policy,
+                                             prev_priority,
+                                             ACE_SCOPE_THREAD);
+    }
   return low_priority;
 #endif /* ACE_HAS_THREADS */
 }

@@ -29,8 +29,10 @@ CC_Test::create_lock_set ()
         this->naming_service_->get_lock_set_factory ()->create ();
 
       if (CORBA::is_nil (lock_set))
-        ACE_ERROR ((LM_ERROR,
-                    "null lock set objref returned by factory\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "null lock set objref returned by factory\n"));
+        }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -75,9 +77,11 @@ Test_Single_Lock_With_Mode::run (int /* times_to_run */)
           return CC_FAIL;
         }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "%s lock held\n",
-                    CC_TestUtils::get_lock_mode_name (mode_)));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s lock held\n",
+                      CC_TestUtils::get_lock_mode_name (mode_)));
+        }
 
       cc_lock_set->unlock (mode_);
       ACE_DEBUG ((LM_DEBUG,
@@ -87,9 +91,11 @@ Test_Single_Lock_With_Mode::run (int /* times_to_run */)
       lock_not_held = cc_lock_set->try_lock (mode_);
 
       if (lock_not_held)
-        ACE_DEBUG ((LM_DEBUG,
-                    "%s lock not held\n",
-                    CC_TestUtils::get_lock_mode_name (mode_)));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s lock not held\n",
+                      CC_TestUtils::get_lock_mode_name (mode_)));
+        }
       else
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -237,9 +243,11 @@ Test_Release_Not_Held_Lock::run (int /* times_to_run */)
           return CC_FAIL;
         }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "%s lock held\n",
-                    CC_TestUtils::get_lock_mode_name (mode_)));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s lock held\n",
+                      CC_TestUtils::get_lock_mode_name (mode_)));
+        }
 
       cc_lock_set->unlock (mode_);
       ACE_DEBUG ((LM_DEBUG,

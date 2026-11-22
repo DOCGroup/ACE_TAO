@@ -58,9 +58,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         PortableGroup::GOA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil RootPOA\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Panic: nil RootPOA\n"),
+                            1);
+        }
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -76,10 +78,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Output the Group IOR to the <ior_output_file>
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
       if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
-                           1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s",
+                             ior_output_file),
+                             1);
+        }
       ACE_OS::fprintf (output_file, "%s", ACE_TEXT_ALWAYS_CHAR (group_ior));
       ACE_OS::fclose (output_file);
 
@@ -104,9 +108,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Validate that our servants got the right requests.
       if (server_impl.get_status () == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Multicast Servant did not receive expected requests!\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Multicast Servant did not receive expected requests!\n"),
+                            1);
+        }
       else
       {
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - Success!\n"));

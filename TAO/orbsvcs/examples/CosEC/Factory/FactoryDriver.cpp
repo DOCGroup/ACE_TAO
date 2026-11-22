@@ -55,9 +55,11 @@ FactoryDriver::start (int argc, ACE_TCHAR *argv [])
         orb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
+                            -1);
+        }
 
       root_poa_ =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -68,10 +70,12 @@ FactoryDriver::start (int argc, ACE_TCHAR *argv [])
 
       // Initialization of the naming service.
       if (naming_client_.init (orb_.in ()) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Unable to initialize ")
-                           ACE_TEXT ("the TAO_Naming_Client.\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Unable to initialize ")
+                             ACE_TEXT ("the TAO_Naming_Client.\n")),
+                            1);
+        }
 
       CosNaming::NamingContext_var const context =
         naming_client_.get_context ();
@@ -88,10 +92,12 @@ FactoryDriver::start (int argc, ACE_TCHAR *argv [])
         if (factory_servant->init (root_poa_.in (),
                                    child_poa_name_,
                                    context.in ()) != 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("(%P|%t) Unable to initialize ")
-                             ACE_TEXT ("the factory.\n")),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("(%P|%t) Unable to initialize ")
+                               ACE_TEXT ("the factory.\n")),
+                              1);
+          }
 
         // Activate the factory in the root POA.
         factory_ = factory_servant->_this ();

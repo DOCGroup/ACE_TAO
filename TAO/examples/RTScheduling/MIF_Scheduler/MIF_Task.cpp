@@ -45,9 +45,11 @@ MIF_Task::activate_task (RTScheduling::Current_ptr current,
        ACE_Time_Value* base_time)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-    "MIF_Task::activate %d\n",
-    importance_));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+      "MIF_Task::activate %d\n",
+      importance_));
+    }
 
   char msg [BUFSIZ];
   ACE_OS::sprintf (msg, "MIF_Task::activate task\n");
@@ -65,9 +67,11 @@ MIF_Task::activate_task (RTScheduling::Current_ptr current,
           1) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
-  ACE_ERROR_RETURN ((LM_ERROR,
-         ACE_TEXT ("Insufficient privilege to run this test.\n")),
-        -1);
+        {
+    ACE_ERROR_RETURN ((LM_ERROR,
+           ACE_TEXT ("Insufficient privilege to run this test.\n")),
+          -1);
+        }
     }
 
   post_activate ();
@@ -150,9 +154,11 @@ MIF_Task::perform_task ()
     }
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-    "Thread %d\n",
-    this->count_));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+      "Thread %d\n",
+      this->count_));
+    }
 
   if (dist_)
   {

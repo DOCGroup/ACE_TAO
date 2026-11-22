@@ -68,11 +68,15 @@ Client_i::~Client_i ()
 {
   this->high_priority_client_.reset ();
   if (this->low_priority_client_ != nullptr)
-    // Delete the low priority task array.
-    for (u_int i = this->num_low_priority_;
-         i > 0;
-         i--)
-      delete this->low_priority_client_[i - 1];
+    {
+      // Delete the low priority task array.
+      for (u_int i = this->num_low_priority_;
+           i > 0;
+           i--)
+    {
+          delete this->low_priority_client_[i - 1];
+    }
+    }
   delete [] this->low_priority_client_;
   this->util_thread_.reset ();
   this->ts_.reset ();
@@ -113,8 +117,10 @@ Client_i::init (int argc, ACE_TCHAR *argv[])
         }
       else if (ACE_OS::strcmp (this->argv_[i],ACE_TEXT("-t")) == 0
                && (i - 1 < this->argc_))
-        this->ts_->thread_count_ =
-          ACE_OS::atoi (this->argv_[i+1]);
+        {
+          this->ts_->thread_count_ =
+            ACE_OS::atoi (this->argv_[i+1]);
+        }
     }
   return 0;
 }
@@ -256,15 +262,19 @@ Client_i::init_low_priority ()
 {
   ACE_Sched_Priority prev_priority = this->high_priority_;
   if (this->ts_->use_multiple_priority_ == 1)
-    this->low_priority_ =
-      this->priority_.get_low_priority (this->num_low_priority_,
-                                        prev_priority,
-                                        1);
+    {
+      this->low_priority_ =
+        this->priority_.get_low_priority (this->num_low_priority_,
+                                          prev_priority,
+                                          1);
+    }
   else
-    this->low_priority_ =
-      this->priority_.get_low_priority (this->num_low_priority_,
-                                        prev_priority,
-                                        0);
+    {
+      this->low_priority_ =
+        this->priority_.get_low_priority (this->num_low_priority_,
+                                          prev_priority,
+                                          0);
+    }
   this->num_priorities_ =
     this->priority_.number_of_priorities ();
   this->grain_ = this->priority_.grain ();
@@ -283,7 +293,9 @@ Client_i::calc_util_time ()
   for (u_int i = 0;
        i < NUM_UTIL_COMPUTATIONS;
        ++i)
-    this->util_thread_->computation ();
+    {
+      this->util_thread_->computation ();
+    }
 
   timer.stop ();
   this->util_task_duration_ = timer.get_elapsed () / NUM_UTIL_COMPUTATIONS;
@@ -330,11 +342,13 @@ Client_i::activate_high_client ()
       0,
       0,
       &t_name) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p; priority is %d\n",
-                       "activate failed",
-                       this->high_priority_),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p; priority is %d\n",
+                         "activate failed",
+                         this->high_priority_),
+                        -1);
+    }
   return 0;
 }
 
@@ -405,10 +419,12 @@ Client_i::activate_low_client ()
           0,                   // size_t stack_size[] = 0,
           0,
           &t_name) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "%p; priority is %d\n",
-                    "activate failed",
-                    this->low_priority_));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%p; priority is %d\n",
+                      "activate failed",
+                      this->low_priority_));
+        }
 
       if (this->ts_->use_multiple_priority_ == 1)
         {
@@ -418,9 +434,11 @@ Client_i::activate_low_client ()
               // Just so when we distribute the priorities among the
               // threads, we make sure we don't go overboard.
               && this->num_priorities_ * this->grain_ > this->num_low_priority_ - (i - 1))
-            // Get the next higher priority.
-            this->low_priority_ = ACE_Sched_Params::next_priority
-              (ACE_SCHED_FIFO, this->low_priority_, ACE_SCOPE_THREAD);
+            {
+              // Get the next higher priority.
+              this->low_priority_ = ACE_Sched_Params::next_priority
+                (ACE_SCHED_FIFO, this->low_priority_, ACE_SCOPE_THREAD);
+            }
         }
     } /* end of for () */
 
@@ -595,16 +613,20 @@ Client_i::start_servant ()
        1,
        0,
        this->high_priority_) == -1)
-     ACE_ERROR ((LM_ERROR,
-                 "(%P|%t) %p\n",
-                 "\thigh_priority_task->activate failed"));
+     {
+       ACE_ERROR ((LM_ERROR,
+                   "(%P|%t) %p\n",
+                   "\thigh_priority_task->activate failed"));
+     }
 
    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ready_mon, GLOBALS::instance ()->ready_mtx_,-1));
 
    // Wait on the condition variable till the high priority cubit_task
    // has finished argument processing.
    while (!GLOBALS::instance ()->ready_)
-     GLOBALS::instance ()->ready_cnd_.wait ();
+     {
+       GLOBALS::instance ()->ready_cnd_.wait ();
+     }
    // wait on the barrier till the servant writes its ior.
    GLOBALS::instance ()->barrier_->wait ();
 
@@ -631,11 +653,13 @@ Client_i::do_priority_inversion_test ()
   GLOBALS::instance ()->num_of_objs = 1;
 
   for (int j = 0; j < this->argc_; ++j)
-    if (ACE_OS::strcmp (this->argv_[j], ACE_TEXT("-u")) == 0)
-      {
-        this->start_servant ();
-        break;
-      }
+  {
+      if (ACE_OS::strcmp (this->argv_[j], ACE_TEXT("-u")) == 0)
+        {
+          this->start_servant ();
+          break;
+        }
+  }
   // Create and activate the high priority client.
   int result = this->activate_high_client ();
   if (result < 0)
@@ -648,7 +672,9 @@ Client_i::do_priority_inversion_test ()
   // Wait on the condition variable until the high priority thread
   // wakes us up.
   while (!this->ts_->ready_)
-    this->ts_->ready_cnd_.wait ();
+    {
+      this->ts_->ready_cnd_.wait ();
+    }
 
   result = this->activate_low_client ();
 
@@ -738,8 +764,10 @@ Client_i::do_thread_per_rate_test ()
        1,
        1,
        priority) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%P|%t) errno = %p: activate failed\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) errno = %p: activate failed\n"));
+    }
   // The high priority thread is parsing the arguments, so wait on the
   // condition variable until it wakes us up.
 
@@ -751,7 +779,9 @@ Client_i::do_thread_per_rate_test ()
   // Wait on the condition variable until the high priority thread
   // wakes us up.
   while (!this->ts_->ready_)
-    this->ts_->ready_cnd_.wait ();
+    {
+      this->ts_->ready_cnd_.wait ();
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Argument parsing waiting done\n"));
@@ -768,8 +798,10 @@ Client_i::do_thread_per_rate_test ()
        1,
        1,
        priority) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%P|%t) errno = %p: activate failed\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) errno = %p: activate failed\n"));
+    }
 
   priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
                                                   priority,
@@ -783,8 +815,10 @@ Client_i::do_thread_per_rate_test ()
        1,
        1,
        priority) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%P|%t) errno = %p: activate failed\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) errno = %p: activate failed\n"));
+    }
 
   priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
                                                   priority,
@@ -798,8 +832,10 @@ Client_i::do_thread_per_rate_test ()
        1,
        1,
        priority) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%P|%t) errno = %p: activate failed\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) errno = %p: activate failed\n"));
+    }
 
   // Wait for all the threads to exit.
   this->client_thread_manager_.wait ();

@@ -11,9 +11,11 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       int const result = driver.init (argc, argv);
 
       if (result == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Failed to initialize the Notify Testing Driver.\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Failed to initialize the Notify Testing Driver.\n")),
+                            1);
+        }
 
       driver.run ();
     }

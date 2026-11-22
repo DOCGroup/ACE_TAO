@@ -95,8 +95,10 @@ Nestea_Client_i::init (int argc, ACE_TCHAR **argv)
       this->server_ = Nestea_Bookshelf::_narrow (server_object.in ());
 
       if (CORBA::is_nil (server_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-          "Error: invalid server key <%s>\n", this->server_key_.c_str ()), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+            "Error: invalid server key <%s>\n", this->server_key_.c_str ()), -1);
+        }
     }
   catch (CORBA::Exception const &ex)
     {

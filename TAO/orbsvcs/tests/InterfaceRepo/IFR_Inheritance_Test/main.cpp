@@ -24,18 +24,22 @@ printContents (CORBA::ContainedSeq const &cont)
               for (CORBA::ULong operation {};
                    operation < full_description->operations.length ();
                    ++operation)
-                ACE_DEBUG ((LM_DEBUG,
-                            "operation %C::%C\n",
-                            full_description->name.in (),
-                            full_description->operations[operation].name.in ()));
+            {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "operation %C::%C\n",
+                              full_description->name.in (),
+                              full_description->operations[operation].name.in ()));
+            }
 
               for (CORBA::ULong attribute {};
                    attribute < full_description->attributes.length ();
                    ++attribute)
-                ACE_DEBUG ((LM_DEBUG,
-                            "attribute %C::%C\n",
-                            full_description->name.in (),
-                            full_description->attributes[attribute].name.in ()));
+            {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "attribute %C::%C\n",
+                              full_description->name.in (),
+                              full_description->attributes[attribute].name.in ()));
+            }
             }
           else if (description->kind == CORBA::dk_Module)
             {
@@ -63,16 +67,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var const object = orb->resolve_initial_references ("InterfaceRepository");
 
       if (CORBA::is_nil (object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Null objref from resolve_initial_references\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Null objref from resolve_initial_references\n")),
+                            -1);
+        }
 
       CORBA::Repository_var const repository = CORBA::Repository::_narrow (object.in ());
 
       if (CORBA::is_nil (repository.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("CORBA::Repository::_narrow failed\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("CORBA::Repository::_narrow failed\n")),
+                            -1);
+        }
 
       CORBA::ContainedSeq_var const contents = repository->contents (CORBA::dk_all, 0);
 
@@ -84,17 +92,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::AbstractInterfaceDef::_narrow (contained.in ());
 
       if (CORBA::is_nil (abstract_child.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("AbstractChild was not found in the IFR\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("AbstractChild was not found in the IFR\n")),
+                            -1);
+        }
 
       CORBA::InterfaceDefSeq_var abstract_bases = abstract_child->base_interfaces ();
 
       if (abstract_bases->length () != 1
           || CORBA::is_nil (abstract_bases[0]))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("AbstractChild does not have its expected base\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("AbstractChild does not have its expected base\n")),
+                            -1);
+        }
 
       orb->destroy ();
     }

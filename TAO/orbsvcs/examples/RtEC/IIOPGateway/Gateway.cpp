@@ -49,9 +49,11 @@ Gateway::run (int argc, ACE_TCHAR* argv[])
         orb->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to get the Naming Service.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to get the Naming Service.\n"),
+                            1);
+        }
 
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
@@ -76,17 +78,21 @@ Gateway::run (int argc, ACE_TCHAR* argv[])
         RtecEventChannelAdmin::EventChannel::_narrow (supplierec_obj.in ());
 
       if (CORBA::is_nil (supplier_event_channel.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to get the supplier event channel.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to get the supplier event channel.\n"),
+                            1);
+        }
 
       RtecEventChannelAdmin::EventChannel_var consumer_event_channel =
         RtecEventChannelAdmin::EventChannel::_narrow (consumerec_obj.in ());
 
       if (CORBA::is_nil (consumer_event_channel.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to get the consumer event channel.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to get the consumer event channel.\n"),
+                            1);
+        }
 
       TAO_EC_Gateway_IIOP gateway;
 

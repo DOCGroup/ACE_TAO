@@ -83,9 +83,11 @@ LB_server::start_orb_and_poa ()
         this->orb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            -1);
+        }
 
       this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
 
@@ -101,9 +103,11 @@ LB_server::start_orb_and_poa ()
         CosLoadBalancing::LoadManager::_narrow (obj.in ());
 
       if (CORBA::is_nil (this->lm_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to get Load Manager Reference\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to get Load Manager Reference\n"),
+                            -1);
+        }
     }
   catch (CORBA::Exception const &ex)
     {

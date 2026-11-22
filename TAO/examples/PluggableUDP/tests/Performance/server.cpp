@@ -80,9 +80,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -132,8 +134,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       UDP_var udp_var = UDP::_narrow (obj.in ());
 
       if (CORBA::is_nil (udp_var.in ()))
-        ACE_DEBUG ((LM_DEBUG,
-                    "Failed to narrow correct object reference.\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Failed to narrow correct object reference.\n"));
+        }
 
       CORBA::String_var ior =
         orb->object_to_string (udp_var.in ());
@@ -146,19 +150,23 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_OS::fopen (options.ior_output_file, ACE_TEXT ("w")),
           ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                             options.ior_output_file),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                               options.ior_output_file),
+                              1);
+          }
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
 
       poa_manager->activate ();
 
       if (options.orb_threads > 1)
-        ACE_Thread_Manager::instance ()->spawn_n (options.orb_threads - 1,
-                                                  svc,
-                                                  orb.in ());
+        {
+          ACE_Thread_Manager::instance ()->spawn_n (options.orb_threads - 1,
+                                                    svc,
+                                                    orb.in ());
+        }
 
       orb->run ();
 

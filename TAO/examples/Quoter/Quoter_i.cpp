@@ -203,8 +203,10 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
                 }
             }
           else
-            // if succeeded in creating a new Quoter over there, then stop trying
-            break;
+            {
+              // if succeeded in creating a new Quoter over there, then stop trying
+              break;
+            }
         }
 
       if (TAO_debug_level > 0)

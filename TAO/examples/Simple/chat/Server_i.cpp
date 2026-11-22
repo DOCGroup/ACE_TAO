@@ -60,10 +60,12 @@ Server_i::init (int argc,
 
   if (this->orb_manager_.init (argc,
                                argv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("orb manager init failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("orb manager init failed")),
+                        -1);
+    }
 
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
@@ -85,9 +87,11 @@ Server_i::run ()
   // Run the main event loop for the ORB.
   int ret = this->orb_manager_.run ();
   if (ret == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Server_i::run")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Server_i::run")),
+                        -1);
+    }
   return 0;
 }
 

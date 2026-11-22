@@ -53,11 +53,13 @@ Server_Request_Interceptor::forward_references (
   CORBA::Object_ptr obj2)
 {
   if (CORBA::is_nil (obj1) || CORBA::is_nil (obj2))
-    throw CORBA::INV_OBJREF (
-      CORBA::SystemException::_tao_minor_code (
-        TAO::VMCID,
-        EINVAL),
-      CORBA::COMPLETED_NO);
+    {
+      throw CORBA::INV_OBJREF (
+        CORBA::SystemException::_tao_minor_code (
+          TAO::VMCID,
+          EINVAL),
+        CORBA::COMPLETED_NO);
+    }
 
   this->obj_[0] = CORBA::Object::_duplicate (obj1);
   this->obj_[1] = CORBA::Object::_duplicate (obj2);

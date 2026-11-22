@@ -53,7 +53,9 @@ Grid_i::set (CORBA::Short x,
       || y < 0
       || x >= width_
       || y >= height_)
-    throw Grid::RANGE_ERROR ();
+    {
+      throw Grid::RANGE_ERROR ();
+    }
   else
   {
     array_[x][y] = value;
@@ -70,7 +72,9 @@ Grid_i::get (CORBA::Short x,
       || y < 0
       || x >= width_
       || y >= height_)
-    throw Grid::RANGE_ERROR ();
+    {
+      throw Grid::RANGE_ERROR ();
+    }
   else
   {
     return array_[x][y];
@@ -109,7 +113,9 @@ Grid_i::destroy ( )
 {
   // Delete the array.
   for (int i = 0; i < height_; ++i)
-    this->pool_t_->free (array_[i]);
+    {
+      this->pool_t_->free (array_[i]);
+    }
 
   this->pool_t_->free (array_);
 
@@ -195,8 +201,10 @@ Grid_Factory_i::cleanup ()
   char const * const name = "Array";
 
   if (this->pool_t_->unbind (name) == -1)
-    ACE_DEBUG ((LM_DEBUG,
-                "\n Failed to unbind "));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "\n Failed to unbind "));
+    }
 }
 
 void

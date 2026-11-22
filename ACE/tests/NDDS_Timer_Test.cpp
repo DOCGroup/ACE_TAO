@@ -67,14 +67,16 @@ check_micro_nano (unsigned long long microinterval, unsigned long long nanointer
       return 0;
     }
   else
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("The microseconds * 1000 of %Q ")
-                       ACE_TEXT ("differs from the nanoseconds of %Q ")
-                       ACE_TEXT (" by %Q promille\n"),
-                       microinterval,
-                       nanointerval,
-                       promille_difference),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("The microseconds * 1000 of %Q ")
+                         ACE_TEXT ("differs from the nanoseconds of %Q ")
+                         ACE_TEXT (" by %Q promille\n"),
+                         microinterval,
+                         nanointerval,
+                         promille_difference),
+                        1);
+    }
 }
 
 static

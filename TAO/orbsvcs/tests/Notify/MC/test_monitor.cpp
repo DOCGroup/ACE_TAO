@@ -179,9 +179,11 @@ MonitorTestInterface_i::consumer_stats_check ()
             {
               ++slash_count;
               if (slash_count == 3)
-                is_consumer_queue_size = std::strcmp (
-                  &name[character_index + 1],
-                  NotifyMonitoringExt::EventChannelQueueSize) == 0;
+                {
+                  is_consumer_queue_size = std::strcmp (
+                    &name[character_index + 1],
+                    NotifyMonitoringExt::EventChannelQueueSize) == 0;
+                }
             }
         }
       if (is_consumer_queue_size)

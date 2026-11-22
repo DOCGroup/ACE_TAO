@@ -25,16 +25,20 @@ Airplane_Server_i::parse_args ()
       case 'o':  // output the IOR to a file.
         this->ior_output_file_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
         if (!this->ior_output_file_)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing: %p\n",
-                             get_opts.opt_arg ()), -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Unable to open %s for writing: %p\n",
+                               get_opts.opt_arg ()), -1);
+          }
         break;
       case 'p':  // output the pid to a file.
         this->pid_output_file_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
         if (!this->pid_output_file_)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing: %p\n",
-                             get_opts.opt_arg ()), -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Unable to open %s for writing: %p\n",
+                               get_opts.opt_arg ()), -1);
+          }
         break;
       case 's':  // extension to the server name.
         this->server_name_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());

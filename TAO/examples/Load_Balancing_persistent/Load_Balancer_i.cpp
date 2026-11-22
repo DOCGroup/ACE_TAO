@@ -240,15 +240,19 @@ Object_Group_Factory_i::make_group (bool random,
 
   // As we are sure that it is not in the list go ahead and insert it
   if (random)
-    ACE_NEW_THROW_EX (group_servant,
-                      Random_Object_Group (id,
-                                           this->poa_.in ()),
-                      CORBA::NO_MEMORY ());
+    {
+      ACE_NEW_THROW_EX (group_servant,
+                        Random_Object_Group (id,
+                                             this->poa_.in ()),
+                        CORBA::NO_MEMORY ());
+    }
   else
-    ACE_NEW_THROW_EX (group_servant,
-                      RR_Object_Group (id,
-                                       this->poa_.in ()),
-                      CORBA::NO_MEMORY ());
+    {
+      ACE_NEW_THROW_EX (group_servant,
+                        RR_Object_Group (id,
+                                         this->poa_.in ()),
+                        CORBA::NO_MEMORY ());
+    }
 
   // Register with the poa, begin using ref. counting.
   group = group_servant->_this ();
@@ -779,7 +783,9 @@ Object_Group_i::unbind (char const *id)
   Object_Group_i::ITERATOR iter (*(this->member_id_list_));
 
   while (std::strcmp (id, *(iter.next ())))
-    iter.advance ();
+        {
+      iter.advance ();
+        }
 
   this->allocator_->free (static_cast<void *> (iter.next ()));
 

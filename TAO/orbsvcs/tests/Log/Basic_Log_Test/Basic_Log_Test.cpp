@@ -25,8 +25,10 @@ BasicLog_Test::init (int argc, ACE_TCHAR *argv[])
                               "internet");
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "\nOrb initialized successfully\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "\nOrb initialized successfully\n"));
+        }
 
       // Parse command line and verify parameters.
       if (this->parse_args (argc, argv) == -1)
@@ -38,10 +40,12 @@ BasicLog_Test::init (int argc, ACE_TCHAR *argv[])
       int const init_result = this->init_factory ();
 
       if (init_result != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize naming"
-                           "services.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize naming"
+                             "services.\n"),
+                            -1);
+        }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -97,9 +101,11 @@ BasicLog_Test::init_factory ()
     orb_->object_to_string (basicLog_.in()); //Init the Client
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "The logger IOR is <%s>\n",
-                str.in ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "The logger IOR is <%s>\n",
+                  str.in ()));
+    }
 
   return 0;
 }
@@ -192,9 +198,11 @@ BasicLog_Test::test_LogAction ()
         basicLog_->get_availability_status ();
 
       if (!logStatus.log_full)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Failed the log's get_availability_status.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Failed the log's get_availability_status.\n"),
+                            -1);
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                  "Log's availability status correctly set to log_full\n"));
@@ -204,8 +212,10 @@ BasicLog_Test::test_LogAction ()
         basicLog_->get_log_full_action();
 
       if (logFullAction != DsLogAdmin::wrap)
-        ACE_ERROR_RETURN((LM_ERROR,
-                          "Setting log full action to wrap failed\n"),-1);
+        {
+          ACE_ERROR_RETURN((LM_ERROR,
+                            "Setting log full action to wrap failed\n"),-1);
+        }
 
       try
         {
@@ -463,21 +473,23 @@ BasicLog_Test::parse_args (int argc, ACE_TCHAR *argv[])
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'd':  // debug flag
-        ++TAO_debug_level;
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " [-d]"
-                           "\n"
-                           "    -d: increase debug level\n",
-                           argv[0]),
-                          -1);
-      }
+    {
+      switch (c)
+        {
+        case 'd':  // debug flag
+          ++TAO_debug_level;
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s"
+                             " [-d]"
+                             "\n"
+                             "    -d: increase debug level\n",
+                             argv[0]),
+                            -1);
+        }
+    }
 
   // Indicates successful parsing of command line.
   return 0;

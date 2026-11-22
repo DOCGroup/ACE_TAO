@@ -126,8 +126,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           flags = THR_NEW_LWP|THR_JOINABLE;
         }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "client (%P|%t): sched_params failed\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "client (%P|%t): sched_params failed\n"));
+        }
     }
 
   try
@@ -191,9 +193,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           if (client[i].activate (flags,
                                   1, 1,
                                   native_priority) != 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot activate client threads\n"),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Cannot activate client threads\n"),
+                                1);
+            }
         }
 
       ACE_Thread_Manager::instance ()->wait ();

@@ -53,9 +53,11 @@ Job_i::work (CORBA::ULong work,
   static CORBA::ULong prime_number = 9619;
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-    "Job_i::work: %u units of work\n",
-    work));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+      "Job_i::work: %u units of work\n",
+      work));
+    }
 
   CORBA::Object_var object =
     this->dt_creator_->orb ()->resolve_initial_references (
@@ -71,10 +73,12 @@ Job_i::work (CORBA::ULong work,
     }
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-    "%t Guid is %B, Importance is %d\n",
-    guid_,
-    importance));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+      "%t Guid is %B, Importance is %d\n",
+      guid_,
+      importance));
+    }
 
   ACE_TCHAR msg [BUFSIZ];
   ACE_OS::sprintf (msg,
@@ -149,9 +153,11 @@ Job_i::dump_stats ()
                    guid_);
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-    "File name %s\n",
-    fname));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+      "File name %s\n",
+      fname));
+    }
 
   ACE_TCHAR msg [BUFSIZ];
   ACE_OS::sprintf (msg,

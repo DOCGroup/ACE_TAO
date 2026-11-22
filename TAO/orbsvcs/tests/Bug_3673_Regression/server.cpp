@@ -65,9 +65,11 @@ TestTask::svc ()
         CosNaming::NamingContext::_narrow (obj.in ());
 
       if (CORBA::is_nil (root.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Error, Nil Naming Context reference\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Error, Nil Naming Context reference\n")),
+                            1);
+        }
 
       CosNaming::NamingContext_var example_nc;
       CosNaming::Name name;
@@ -107,11 +109,13 @@ TestTask::svc ()
           ACE_OS::fopen (this->options_.ior_output_file.c_str (), ACE_TEXT ("w")),
           ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Cannot open output file %s for writing IOR: %C\n"),
-                             this->options_.ior_output_file.c_str (),
-                             ior.in ()),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Cannot open output file %s for writing IOR: %C\n"),
+                               this->options_.ior_output_file.c_str (),
+                               ior.in ()),
+                              1);
+          }
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
 

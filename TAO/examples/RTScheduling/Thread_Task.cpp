@@ -117,9 +117,11 @@ Thread_Task::dump_stats ()
                    count_);
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-    "File name %s\n",
-    fname));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+      "File name %s\n",
+      fname));
+    }
 
   ACE_TCHAR msg [BUFSIZ];
   ACE_OS::sprintf (msg,

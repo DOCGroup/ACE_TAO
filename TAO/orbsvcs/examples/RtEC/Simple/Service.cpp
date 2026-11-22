@@ -41,9 +41,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to get the Naming Service.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to get the Naming Service.\n"),
+                            1);
+        }
 
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
@@ -76,10 +78,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           std::unique_ptr<FILE, int (*) (FILE *)> output_file (
             ACE_OS::fopen (ior_output_file.c_str (), "w"), ACE_OS::fclose);
           if (output_file == nullptr)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                               ior_output_file.c_str ()),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                                 ior_output_file.c_str ()),
+                                1);
+            }
           ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 
@@ -111,16 +115,18 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TString &ior_output_file)
   int option {};
 
   while ((option = get_opts ()) != -1)
-    switch (option)
-      {
-      case 'o':
-        ior_output_file = get_opts.opt_arg ();
-        break;
+            {
+      switch (option)
+        {
+        case 'o':
+          ior_output_file = get_opts.opt_arg ();
+          break;
 
-      case '?':
-      default:
-        return -1;
-      }
+        case '?':
+        default:
+          return -1;
+        }
+            }
   // Indicates successful parsing of the command line
   return 0;
 }

@@ -4,19 +4,25 @@ int
 Multiple::init (int argc, ACE_TCHAR *argv[])
 {
   if (init_ORB (argc, argv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("init_ORB returned error.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("init_ORB returned error.\n")),
+                        -1);
+    }
 
   if (this->parse_args (argc, argv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("parse error returned error.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("parse error returned error.\n")),
+                        -1);
+    }
 
   if (init_CosEC () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("init_CosEC returned error.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("init_CosEC returned error.\n")),
+                        -1);
+    }
   return 0;
 }
 
@@ -31,9 +37,11 @@ Multiple::init_ORB (int argc, ACE_TCHAR *argv[])
         this->orb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
+                            -1);
+        }
 
       PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -59,10 +67,12 @@ Multiple::init_CosEC ()
     {
       // Initialization of the naming service.
       if (this->naming_client_.init (this->orb_.in ()) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Unable to initialize ")
-                           ACE_TEXT ("the TAO_Naming_Client.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Unable to initialize ")
+                             ACE_TEXT ("the TAO_Naming_Client.\n")),
+                            -1);
+        }
 
       CosNaming::Name ec_ref_name (1);
       ec_ref_name.length (1);

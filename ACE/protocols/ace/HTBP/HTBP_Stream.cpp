@@ -21,8 +21,10 @@ ACE::HTBP::Stream::Stream (ACE::HTBP::Session *s)
   : session_ (s)
 {
   if (s == nullptr)
-    // create a temporary session to be replaced on first recv.
-    ACE_NEW (session_, ACE::HTBP::Session);
+    {
+      // create a temporary session to be replaced on first recv.
+      ACE_NEW (session_, ACE::HTBP::Session);
+    }
   session_->stream (this);
 }
 
@@ -167,10 +169,14 @@ ACE::HTBP::Stream::sendv (const iovec iov[],
       size_t total = 0;
       int i = 0;
       for (; i < iovcnt; ++i)
-        total += iov[i].iov_len;
+    {
+          total += iov[i].iov_len;
+    }
       ACE_NEW_RETURN (msg,ACE_Message_Block(total),-1);
       for (i = 0; i < iovcnt; ++i)
-        msg->copy (static_cast<char const*> (iov[i].iov_base), iov[i].iov_len);
+    {
+          msg->copy (static_cast<char const*> (iov[i].iov_base), iov[i].iov_len);
+    }
       return this->session_->enqueue(msg);
     }
   return this->session_->outbound()->sendv(iov,iovcnt,timeout);

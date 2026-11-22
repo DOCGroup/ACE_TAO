@@ -19,12 +19,14 @@ Hash_Table::get_next_entry ()
   if (this->current_ptr == nullptr)
     {
       for (; this->current_index < HASH_TABLE_SIZE; ++this->current_index)
-        if (this->hash_table[this->current_index] != nullptr)
-          {
-            Protocol_Record *prp = this->hash_table[this->current_index++];
-            this->current_ptr  = prp->next_;
-            return prp;
-          }
+    {
+          if (this->hash_table[this->current_index] != nullptr)
+            {
+              Protocol_Record *prp = this->hash_table[this->current_index++];
+              this->current_ptr  = prp->next_;
+              return prp;
+            }
+    }
 
       this->current_index = -1;
       return nullptr;
@@ -48,15 +50,19 @@ Hash_Table::get_each_entry ()
 Hash_Table::~Hash_Table ()
 {
   if (Options::get_opt (Options::DEBUGGING))
-    ACE_DEBUG ((LM_DEBUG,
-                "disposing Hash_Table\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "disposing Hash_Table\n"));
+    }
 
   for (int i = 0; i < HASH_TABLE_SIZE; ++i)
-    for (Protocol_Record *prp = this->hash_table[i];
-         prp != nullptr; )
-      {
-        Protocol_Record *next = prp->next_;
-        delete prp;
-        prp = next;
-      }
+    {
+      for (Protocol_Record *prp = this->hash_table[i];
+           prp != nullptr; )
+        {
+          Protocol_Record *next = prp->next_;
+          delete prp;
+          prp = next;
+        }
+    }
 }

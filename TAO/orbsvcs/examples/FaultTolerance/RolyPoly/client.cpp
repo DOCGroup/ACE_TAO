@@ -67,9 +67,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
 
       if (ior_strs.empty ())
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("No IOR provided\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("No IOR provided\n")),
+                            -1);
+        }
 
       // Start out with the first IOR.  Interaction with the second
       // IOR occurs during the various interceptions executed during
@@ -83,7 +85,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("We got %B iors\n"), ior_strs.size ()));
         for (std::string const &ior : ior_strs)
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("IOR: %C\n"), ior.c_str ()));
+        {
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("IOR: %C\n"), ior.c_str ()));
+        }
 
         CORBA::Object_var const object_primary =
           orb->string_to_object (ior_strs.front ().c_str ());

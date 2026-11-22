@@ -75,9 +75,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Check for nil references
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to obtain RootPOA reference.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to obtain RootPOA reference.\n"),
+                            -1);
+        }
 
       // Get poa_manager reference
       PortableServer::POAManager_var poa_manager =
@@ -98,10 +100,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Check for nil reference
       if (CORBA::is_nil (sum_server.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to obtain reference to ORT::sum_server "
-                           "object.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to obtain reference to ORT::sum_server "
+                             "object.\n"),
+                            -1);
+        }
 
       // Convert the object reference to a string format.
       CORBA::String_var ior =
@@ -114,10 +118,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             ACE_OS::fopen (ior_output_file, ACE_TEXT ("w")),
             ACE_OS::fclose);
           if (!output_file)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                               ior_output_file),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                                 ior_output_file),
+                                1);
+            }
           ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 

@@ -27,10 +27,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_Service_Object_Ptr sp (ACE_SVC_INVOKE (Gateway));
 
       if (sp->init (argc - 1, argv + 1) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("init")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("init")),
+                            1);
+        }
 
       // Run forever, performing the configured services until we
       // are shut down by a SIGINT/SIGQUIT signal.
@@ -43,16 +45,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   else
     {
       if (ACE_Service_Config::open (argc, argv) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("open")),
-                          1);
-      else // Use dynamic linking.
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("open")),
+                            1);
+        }
+      else
+        {
+          // Use dynamic linking.
 
-        // Run forever, performing the configured services until we are
-        // shut down by a signal (e.g., SIGINT or SIGQUIT).
+          // Run forever, performing the configured services until we are
+          // shut down by a signal (e.g., SIGINT or SIGQUIT).
 
-        ACE_Reactor::instance ()->run_reactor_event_loop ();
+          ACE_Reactor::instance ()->run_reactor_event_loop ();
+        }
     }
   return 0;
 }

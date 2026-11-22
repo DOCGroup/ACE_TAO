@@ -275,20 +275,29 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
   ORBSVCS_DEBUG ((LM_DEBUG, "  Number of retries: %d\n%C", limit - 1, locked_out));
 
   for (CORBA::ULong i {}; i < info.startup.environment.length (); ++i)
-    ORBSVCS_DEBUG ((LM_DEBUG, "Environment Variable: %C=%C\n",
-    info.startup.environment[i].name.in (),
-    info.startup.environment[i].value.in ()));
+              {
+      ORBSVCS_DEBUG ((LM_DEBUG, "Environment Variable: %C=%C\n",
+      info.startup.environment[i].name.in (),
+      info.startup.environment[i].value.in ()));
+              }
 
   if (info.startup.activation == ImplementationRepository::PER_CLIENT)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "  No running info available for PER_CLIENT mode\n"));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                  "  No running info available for PER_CLIENT mode\n"));
+    }
   else if (std::strlen (info.partial_ior.in ()) > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "  Running at endpoint: %C\n",
-                info.partial_ior.in ()));
-  else   // I am assuming that a blank partial_ior means currently not running.
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "  Not currently running\n"));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                  "  Running at endpoint: %C\n",
+                  info.partial_ior.in ()));
+    }
+  else
+    {
+      // I am assuming that a blank partial_ior means currently not running.
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                  "  Not currently running\n"));
+    }
 
   ORBSVCS_DEBUG ((LM_DEBUG, "\n"));
 }
@@ -1195,7 +1204,9 @@ TAO_IMR_Op_List::run ()
           }
 
           for (CORBA::ULong i {}; i < server_list->length (); ++i)
-            this->display_server_information (server_list[i]);
+            {
+              this->display_server_information (server_list[i]);
+            }
 
           if (!CORBA::is_nil (server_iter.in ()))
             {
@@ -1204,7 +1215,9 @@ TAO_IMR_Op_List::run ()
                 {
                   done = server_iter->next_n (this->how_many_, server_list.out());
                   for (CORBA::ULong i {}; i < server_list->length (); ++i)
-                    this->display_server_information (server_list[i]);
+            {
+                      this->display_server_information (server_list[i]);
+            }
                 }
               server_iter->destroy ();
             }

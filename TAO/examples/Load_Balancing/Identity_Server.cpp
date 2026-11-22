@@ -82,10 +82,12 @@ Identity_Server::init (int argc,
         Load_Balancer::Object_Group_Factory::_narrow (obj.in ());
 
       if (CORBA::is_nil (factory.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Identity_Server::init: "
-                           "problems using the factory ior\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Identity_Server::init: "
+                             "problems using the factory ior\n"),
+                            -1);
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   "Identity_Server: Requesting new Random Object "

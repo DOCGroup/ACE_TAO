@@ -96,10 +96,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::String_var ior = orb->object_to_string (obj.in());
         FILE *output_file= ACE_OS::fopen (iorfile, "w");
         if (output_file == 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file for writing IOR: %s\n",
-                             iorfile),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot open output file for writing IOR: %s\n",
+                               iorfile),
+                              1);
+          }
         ACE_OS::fprintf (output_file, "%s", ior.in ());
         ACE_OS::fclose (output_file);
       }

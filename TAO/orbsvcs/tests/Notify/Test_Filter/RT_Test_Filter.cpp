@@ -156,8 +156,10 @@ TAO_Notify_Tests_RT_Test_Filter::match_structured (
           prop_seq[i].value >>= event_priority;
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "(%P, %t) Event at %d priority, expected at %d\n",
-                        current->the_priority (), event_priority));
+            {
+              ACE_DEBUG ((LM_DEBUG, "(%P, %t) Event at %d priority, expected at %d\n",
+                          current->the_priority (), event_priority));
+            }
 
           if (current->the_priority () != event_priority)
             {
@@ -172,35 +174,43 @@ TAO_Notify_Tests_RT_Test_Filter::match_structured (
   if (lane)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    " (%t) Expected (pool = %d; lane = %d), Received (pool = %d; lane = %d)\n",
-                    this->expected_pool_id_,
-                    this->expected_lane_id_,
-                    lane->pool ().id (),
-                    lane->id ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      " (%t) Expected (pool = %d; lane = %d), Received (pool = %d; lane = %d)\n",
+                      this->expected_pool_id_,
+                      this->expected_lane_id_,
+                      lane->pool ().id (),
+                      lane->id ()));
+        }
 
       if (this->expected_lane_id_ != lane->id () ||
           this->expected_pool_id_ != lane->pool ().id ())
-        ACE_DEBUG ((LM_DEBUG,
-                    " (%t) Error: Expected (pool = %d; lane = %d), Received (pool = %d; lane = %d)\n",
-                    this->expected_pool_id_,
-                    this->expected_lane_id_,
-                    lane->pool ().id (),
-                    lane->id ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      " (%t) Error: Expected (pool = %d; lane = %d), Received (pool = %d; lane = %d)\n",
+                      this->expected_pool_id_,
+                      this->expected_lane_id_,
+                      lane->pool ().id (),
+                      lane->id ()));
+        }
     }
   else
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    " (%t)(default thread pool) Expected (pool = %d; lane = %d)\n",
-                    this->expected_pool_id_,
-                    this->expected_lane_id_));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      " (%t)(default thread pool) Expected (pool = %d; lane = %d)\n",
+                      this->expected_pool_id_,
+                      this->expected_lane_id_));
+        }
 
       if (this->expected_lane_id_ != 0 || this->expected_pool_id_ != 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    " (%t) Error: (default thread pool) Expected (pool = %d; lane = %d)\n",
-                    this->expected_pool_id_,
-                    this->expected_lane_id_));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      " (%t) Error: (default thread pool) Expected (pool = %d; lane = %d)\n",
+                      this->expected_pool_id_,
+                      this->expected_lane_id_));
+        }
     }
 
   return true;

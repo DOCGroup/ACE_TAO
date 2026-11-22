@@ -56,9 +56,11 @@ set_rt_mode ()
                       "test runs in time-shared class\n"));
         }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "client (%P|%t): sched_params failed %p\n",
-                    "set_rt_mode"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "client (%P|%t): sched_params failed %p\n",
+                      "set_rt_mode"));
+        }
     }
 
   // Get our thread handle.
@@ -67,15 +69,19 @@ set_rt_mode ()
 
   // Set our thread priority.
   if (ACE_OS::thr_setprio (self, priority) != 0)
-    ACE_ERROR ((LM_ERROR,
-                "server (%P|%t):thr_setprio failed %p\n",
-                "set_rt_mode"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "server (%P|%t):thr_setprio failed %p\n",
+                  "set_rt_mode"));
+    }
 
   // Do a sanity check.
   if (ACE_OS::thr_getprio (self, priority) == 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "client (%P|%t): thread priority = %d.\n",
-                priority));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "client (%P|%t): thread priority = %d.\n",
+                  priority));
+    }
 
   return 0;
 }
@@ -127,10 +133,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
 
       if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s",
+                             ior_output_file),
+                            1);
+        }
 
       ACE_OS::fprintf (output_file,
                        "%s",

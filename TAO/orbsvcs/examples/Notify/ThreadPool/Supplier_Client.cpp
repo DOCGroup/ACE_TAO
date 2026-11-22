@@ -225,9 +225,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (orb_run_task.activate (flags) == -1 || client.activate (flags) == -1)
         {
           if (ACE_OS::last_error () == EPERM)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Insufficient privilege to activate ACE_Task.\n")),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Insufficient privilege to activate ACE_Task.\n")),
+                                -1);
+            }
           else
           {
             ACE_DEBUG ((LM_ERROR, ACE_TEXT ("(%t) Task activation failed.\n")));

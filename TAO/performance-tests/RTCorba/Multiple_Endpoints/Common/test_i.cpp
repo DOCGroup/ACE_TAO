@@ -10,9 +10,11 @@ void
 Test_i::test_method (CORBA::Long id)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Receiving request from thread <%d> in <%t>\n",
-                id));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Receiving request from thread <%d> in <%t>\n",
+                  id));
+    }
 }
 
 void

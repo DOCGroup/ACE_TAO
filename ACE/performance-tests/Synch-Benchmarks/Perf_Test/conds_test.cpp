@@ -37,33 +37,41 @@ Cond_Signal_Test::svc ()
   // This is a horrible hack and only works for Solaris threads.  This
   // clearly needs to change...
   if (ni == 4)
-    while (!this->done ())
-      {
-        mutex.acquire ();
-
-        while (resources > 0)
-        notfull.wait ();
-
-        ++performance_test_options.thr_work_count[ni];
-        resources = performance_test_options.thr_count () - 1;
-        ++buffer;
-        notempty.signal ();
-        mutex.release ();
-      }
-  else
-    while (!this->done ())
-      {
-        mutex.acquire ();
-        while (resources == 0)
-        notempty.wait ();
-        ++performance_test_options.thr_work_count[ni];
-        ++buffer;
-        if (--resources == 0)
+    {
+      while (!this->done ())
         {
-          notfull.signal ();
+          mutex.acquire ();
+
+          while (resources > 0)
+    {
+            notfull.wait ();
+    }
+
+          ++performance_test_options.thr_work_count[ni];
+          resources = performance_test_options.thr_count () - 1;
+          ++buffer;
+          notempty.signal ();
+          mutex.release ();
         }
-        mutex.release ();
-      }
+    }
+  else
+    {
+      while (!this->done ())
+        {
+          mutex.acquire ();
+          while (resources == 0)
+    {
+            notempty.wait ();
+    }
+          ++performance_test_options.thr_work_count[ni];
+          ++buffer;
+          if (--resources == 0)
+          {
+            notfull.signal ();
+          }
+          mutex.release ();
+        }
+    }
 
   /* NOTREACHED */
   return 0;

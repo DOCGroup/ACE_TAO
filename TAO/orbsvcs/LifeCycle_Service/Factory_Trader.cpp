@@ -172,9 +172,11 @@ Factory_Trader::query (std::string const & constraint)
                 CORBA::Object::_duplicate (offer_seq[0u].reference.in ());
 
               if (CORBA::is_nil (object.in ()))
-                ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                                       "Factory_Trader::query: Object reference is nil.\n"),
-                                      0);
+                {
+                  ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                         "Factory_Trader::query: Object reference is nil.\n"),
+                                        0);
+                }
               else
                 if (this->debug_level_ >= 2)
                 {

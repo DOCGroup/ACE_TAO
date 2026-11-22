@@ -14,17 +14,21 @@ ior_mcast_Client_i::init (int &argc,
         orb->resolve_initial_references ("MCASTServer");
 
       if (CORBA::is_nil (mcast_server_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot resolve MCast Server\n : client"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot resolve MCast Server\n : client"),
+                            -1);
+        }
 
       MCast::Server_var const mcast_srvr =
         MCast::Server::_narrow (mcast_server_object.in ());
 
       if (CORBA::is_nil (mcast_srvr.in ()))
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot narrow MCast Service\n :client"),
-                            -1);
+        {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot narrow MCast Service\n :client"),
+                              -1);
+        }
 
       // Invoke a request on the server
       CORBA::Boolean const ret_value =

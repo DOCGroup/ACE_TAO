@@ -48,14 +48,18 @@ Cubit_Task::svc ()
   int result = this->initialize_orb ();
 
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ORB initialization failed\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ORB initialization failed\n"),
+                        -1);
+    }
   result = this->create_servants ();
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Create Servants failed.\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Create Servants failed.\n"),
+                        -1);
+    }
 
   try
     {
@@ -66,10 +70,12 @@ Cubit_Task::svc ()
       int r = this->orb_manager_.run ();
 
       if (r == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "run"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%p\n",
+                             "run"),
+                            -1);
+        }
 
       CORBA::ORB_var orb =
         this->orb_manager_.orb ();
@@ -85,7 +91,9 @@ Cubit_Task::svc ()
   // created!
 
   for (u_int i = 0; i < num_of_objs_; ++i)
-    delete this->servants_[i];
+        {
+      delete this->servants_[i];
+        }
 
   return 0;
 }
@@ -209,11 +217,13 @@ Cubit_Task::create_servants ()
                           -1);
 
           if (this->servants_[i] == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               " (%P|%t) Unable to create "
-                               "implementation object #%d\n",
-                               i),
-                              2);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 " (%P|%t) Unable to create "
+                                 "implementation object #%d\n",
+                                 i),
+                                2);
+            }
 
           // Stringify the objref we'll be implementing, and print it
           // to stdout.  Someone will take that string and give it to

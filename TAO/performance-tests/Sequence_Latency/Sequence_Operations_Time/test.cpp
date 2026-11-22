@@ -34,17 +34,21 @@ stringseq_time_test (CORBA::ULong const num_loops,
   timer.elapsed_time (time);
 
   if (use_csv)
-    ACE_DEBUG ((LM_INFO,
-                ACE_TEXT("1, 0, 0, %u, %s, %Q\n"),
-                num_loops,
-                use_long_str ? ACE_TEXT("long") : ACE_TEXT("short"),
-                static_cast<ACE_UINT64> (time)));
+    {
+      ACE_DEBUG ((LM_INFO,
+                  ACE_TEXT("1, 0, 0, %u, %s, %Q\n"),
+                  num_loops,
+                  use_long_str ? ACE_TEXT("long") : ACE_TEXT("short"),
+                  static_cast<ACE_UINT64> (time)));
+    }
   else
-    ACE_DEBUG ((LM_INFO,
-                ACE_TEXT("String sequence (%u, %s) = %Q ns\n"),
-                num_loops,
-                use_long_str ? ACE_TEXT("long") : ACE_TEXT("short"),
-                static_cast<ACE_UINT64> (time)));
+    {
+      ACE_DEBUG ((LM_INFO,
+                  ACE_TEXT("String sequence (%u, %s) = %Q ns\n"),
+                  num_loops,
+                  use_long_str ? ACE_TEXT("long") : ACE_TEXT("short"),
+                  static_cast<ACE_UINT64> (time)));
+    }
 }
 
 void
@@ -77,19 +81,23 @@ seqstrseq_time_test (CORBA::ULong const num_seq_loops,
   timer.elapsed_time (time);
 
   if (use_csv)
-    ACE_DEBUG ((LM_INFO,
-                ACE_TEXT("2, 0, %u, %u, %s, %Q\n"),
-                num_string_loops,
-                num_seq_loops,
-                use_long_str ? ACE_TEXT("long") : ACE_TEXT("short"),
-                static_cast<ACE_UINT64> (time)));
+    {
+      ACE_DEBUG ((LM_INFO,
+                  ACE_TEXT("2, 0, %u, %u, %s, %Q\n"),
+                  num_string_loops,
+                  num_seq_loops,
+                  use_long_str ? ACE_TEXT("long") : ACE_TEXT("short"),
+                  static_cast<ACE_UINT64> (time)));
+    }
   else
-    ACE_DEBUG ((LM_INFO,
-                ACE_TEXT("Sequence of string seq (%u, %u, %s) = %Q ns\n"),
-                num_string_loops,
-                num_seq_loops,
-                use_long_str ? ACE_TEXT("long") : ACE_TEXT("short"),
-                static_cast<ACE_UINT64> (time)));
+    {
+      ACE_DEBUG ((LM_INFO,
+                  ACE_TEXT("Sequence of string seq (%u, %u, %s) = %Q ns\n"),
+                  num_string_loops,
+                  num_seq_loops,
+                  use_long_str ? ACE_TEXT("long") : ACE_TEXT("short"),
+                  static_cast<ACE_UINT64> (time)));
+    }
 }
 
 void
@@ -138,21 +146,25 @@ big_time_test (CORBA::ULong const num_list_loops,
   timer.elapsed_time (time);
 
   if (use_csv)
-    ACE_DEBUG ((LM_INFO,
-                ACE_TEXT("3, %u, %u, %u, %s, %Q\n"),
-                num_list_loops,
-                num_string_loops,
-                num_seq_loops,
-                use_long_str ? ACE_TEXT("long") : ACE_TEXT("short"),
-                time));
+    {
+      ACE_DEBUG ((LM_INFO,
+                  ACE_TEXT("3, %u, %u, %u, %s, %Q\n"),
+                  num_list_loops,
+                  num_string_loops,
+                  num_seq_loops,
+                  use_long_str ? ACE_TEXT("long") : ACE_TEXT("short"),
+                  time));
+    }
   else
-    ACE_DEBUG ((LM_INFO,
-                ACE_TEXT("Big list test (%u, %u, %u, %s) = %Q ns\n"),
-                num_list_loops,
-                num_string_loops,
-                num_seq_loops,
-                use_long_str ? ACE_TEXT("long") : ACE_TEXT("short"),
-                time));
+    {
+      ACE_DEBUG ((LM_INFO,
+                  ACE_TEXT("Big list test (%u, %u, %u, %s) = %Q ns\n"),
+                  num_list_loops,
+                  num_string_loops,
+                  num_seq_loops,
+                  use_long_str ? ACE_TEXT("long") : ACE_TEXT("short"),
+                  time));
+    }
 }
 
 int

@@ -248,9 +248,11 @@ Worker_Task::svc ()
       if (stop_flag)
         {
           if (debug != DEBUGGING_RANGE::DEBUG_NONE)
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) Got stop message after [%B] messages\n",
-                        this->messages_processed_));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) Got stop message after [%B] messages\n",
+                          this->messages_processed_));
+            }
 
           break;
         }

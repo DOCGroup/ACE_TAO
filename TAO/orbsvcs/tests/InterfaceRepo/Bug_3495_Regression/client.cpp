@@ -55,23 +55,29 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           CORBA::TypeCode_ptr const parameter_type =
             description->operations[0].parameters[0].type.in ();
           if (parameter_type->member_count () != 2)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("ERROR Incorrect parameter member count %d expected 2.\n"),
-                               parameter_type->member_count ()),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("ERROR Incorrect parameter member count %d expected 2.\n"),
+                                 parameter_type->member_count ()),
+                                1);
+            }
 
           CORBA::TypeCode_ptr const exception_type =
             description->operations[0].exceptions[0].type.in ();
           if (exception_type->member_count () != 1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("ERROR Incorrect exception member count %d expected 1.\n"),
-                               exception_type->member_count ()),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("ERROR Incorrect exception member count %d expected 1.\n"),
+                                 exception_type->member_count ()),
+                                1);
+            }
         }
       else
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("ERROR failed to get interface for object.\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("ERROR failed to get interface for object.\n")),
+                            1);
+        }
 
       orb->destroy ();
     }

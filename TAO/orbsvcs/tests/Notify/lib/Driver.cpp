@@ -191,18 +191,22 @@ TAO_Notify_Tests_Driver::parse_args (int argc, ACE_TCHAR *argv[])
       else if (nullptr != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORoutput")))) // -IORoutput
         {
           if (this->activation_manager_->ior_output_file (current_arg) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Unable to open %s for writing: %p\n",
-                               current_arg), -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Unable to open %s for writing: %p\n",
+                                 current_arg), -1);
+            }
 
           arg_shifter.consume_arg ();
         }
       else if (nullptr != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORinput")))) // -IORinput file_name
         {
           if (this->activation_manager_->ior_input_file (current_arg) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Unable to open %s for reading: %p\n",
-                               current_arg), -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Unable to open %s for reading: %p\n",
+                                 current_arg), -1);
+            }
 
           arg_shifter.consume_arg ();
         }
@@ -279,28 +283,36 @@ TAO_Notify_Tests_Driver::run ()
   if (this->worker_.activate (flags, 1, 0, priority) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Insufficient privilege to activate ACE_Task.\n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Insufficient privilege to activate ACE_Task.\n")));
+        }
       else
-        ACE_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%t) Task activation at priority %d failed, ")
-                    ACE_TEXT ("exiting!\n%a"),
-                    ACE_DEFAULT_THREAD_PRIORITY,
-                    -1));
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("(%t) Task activation at priority %d failed, ")
+                      ACE_TEXT ("exiting!\n%a"),
+                      ACE_DEFAULT_THREAD_PRIORITY,
+                      -1));
+        }
     }
 
   // Activate the ORB run worker.
   if (this->orb_run_worker_.activate (flags, 1, 0, priority) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Insufficient privilege to activate ACE_Task.\n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Insufficient privilege to activate ACE_Task.\n")));
+        }
       else
-        ACE_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%t) Task activation at priority %d failed, ")
-                    ACE_TEXT ("exiting!\n%a"),
-                    ACE_DEFAULT_THREAD_PRIORITY,
-                    -1));
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("(%t) Task activation at priority %d failed, ")
+                      ACE_TEXT ("exiting!\n%a"),
+                      ACE_DEFAULT_THREAD_PRIORITY,
+                      -1));
+        }
     }
 
   // Wait till we're done.

@@ -18,9 +18,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_Time_Value timeout (10);
           if (name_svc.init (orb.in (), &timeout) != 0)
-            ACE_ERROR_RETURN ((LM_DEBUG,
-                               ACE_TEXT ("client: Could not connect to naming service.\n")),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_DEBUG,
+                                 ACE_TEXT ("client: Could not connect to naming service.\n")),
+                                1);
+            }
         }
       catch (CORBA::Exception const &ex)
         {
@@ -54,10 +56,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
 
           if (CORBA::is_nil (basic.in ()))
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Server object reference not obtained from ")
-                               ACE_TEXT ("Load Balancing Name Service\n")),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Server object reference not obtained from ")
+                                 ACE_TEXT ("Load Balancing Name Service\n")),
+                                1);
+            }
 
           try
             {

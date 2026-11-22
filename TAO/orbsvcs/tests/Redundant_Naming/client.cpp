@@ -84,60 +84,70 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'b':
+  {
+      switch (c)
         {
-          int const value = ACE_OS::atoi (get_opts.opt_arg ());
-          if (value < 2)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Invalid context breadth, must be 2 or more\n")),
-                              1);
-          options.context_breadth = value;
+        case 'b':
+          {
+            int const value = ACE_OS::atoi (get_opts.opt_arg ());
+            if (value < 2)
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("Invalid context breadth, must be 2 or more\n")),
+                                  1);
+              }
+            options.context_breadth = value;
+            break;
+          }
+        case 'd':
+          {
+            int const value = ACE_OS::atoi (get_opts.opt_arg ());
+            if (value < 2)
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("Invalid depth, must be 2 or more\n")),
+                                  1);
+              }
+            options.context_depth = value;
+            break;
+          }
+        case 'o':
+          {
+            int const value = ACE_OS::atoi (get_opts.opt_arg ());
+            if (value < 2)
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("Invalid object breadth, must be 2 or more\n")),
+                                  1);
+              }
+            options.object_breadth = value;
+            break;
+          }
+        case 'p':
+          options.ns1_ior = get_opts.opt_arg ();
           break;
-        }
-      case 'd':
-        {
-          int const value = ACE_OS::atoi (get_opts.opt_arg ());
-          if (value < 2)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Invalid depth, must be 2 or more\n")),
-                              1);
-          options.context_depth = value;
+        case 'q':
+          options.ns2_ior = get_opts.opt_arg ();
           break;
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage:")
+                             ACE_TEXT (" [-b <breadth of context tree>]")
+                             ACE_TEXT (" [-d <depth of context tree>]")
+                             ACE_TEXT (" [-o <breadth of object tree>]")
+                             ACE_TEXT (" -p <ior of first name server>")
+                             ACE_TEXT (" -q <ior of second name server>")
+                             ACE_TEXT ("\n")),
+                            -1);
         }
-      case 'o':
-        {
-          int const value = ACE_OS::atoi (get_opts.opt_arg ());
-          if (value < 2)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Invalid object breadth, must be 2 or more\n")),
-                              1);
-          options.object_breadth = value;
-          break;
-        }
-      case 'p':
-        options.ns1_ior = get_opts.opt_arg ();
-        break;
-      case 'q':
-        options.ns2_ior = get_opts.opt_arg ();
-        break;
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage:")
-                           ACE_TEXT (" [-b <breadth of context tree>]")
-                           ACE_TEXT (" [-d <depth of context tree>]")
-                           ACE_TEXT (" [-o <breadth of object tree>]")
-                           ACE_TEXT (" -p <ior of first name server>")
-                           ACE_TEXT (" -q <ior of second name server>")
-                           ACE_TEXT ("\n")),
-                          -1);
-      }
+  }
 
   if (options.ns1_ior.empty () || options.ns2_ior.empty ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Both -p and -q name server IORs are required\n")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Both -p and -q name server IORs are required\n")),
+                        1);
+    }
 
   CosNaming::NamingContext_var root_context_1 {};
   CosNaming::NamingContext_var root_context_2 {};
@@ -155,10 +165,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CORBA::Object_var const ns1obj = orb->string_to_object (options.ns1_ior.c_str ());
 
     if (CORBA::is_nil (ns1obj.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("invalid ior <%s>\n"),
-                         options.ns1_ior.c_str ()),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("invalid ior <%s>\n"),
+                           options.ns1_ior.c_str ()),
+                          -1);
+      }
     root_context_1 = CosNaming::NamingContext::_narrow (ns1obj.in ());
 
     // Resolve the second name server
@@ -166,10 +178,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CORBA::Object_var const ns2obj = orb->string_to_object (options.ns2_ior.c_str ());
 
     if (CORBA::is_nil (ns2obj.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("invalid ior <%s>\n"),
-                         options.ns2_ior.c_str ()),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("invalid ior <%s>\n"),
+                           options.ns2_ior.c_str ()),
+                          -1);
+      }
     root_context_2 = CosNaming::NamingContext::_narrow (ns2obj.in ());
     }
   catch (CORBA::Exception const &ex)
@@ -272,10 +286,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CosNaming::NamingContext_var const result_object =
       CosNaming::NamingContext::_narrow (result_obj_ref.in ());
     if (CORBA::is_nil (result_object.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Problems with resolving wide context ")
-                         ACE_TEXT ("- nil object ref.\n")),
-                         -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Problems with resolving wide context ")
+                           ACE_TEXT ("- nil object ref.\n")),
+                           -1);
+      }
     result_object->destroy ();
     root_context_1->unbind (wide2);
 
@@ -291,10 +307,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CosNaming::NamingContext_var const deep_object =
       CosNaming::NamingContext::_narrow (deep_obj_ref.in ());
     if (CORBA::is_nil (deep_object.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Problems with resolving deep context ")
-                         ACE_TEXT ("- nil object ref.\n")),
-                         -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Problems with resolving deep context ")
+                           ACE_TEXT ("- nil object ref.\n")),
+                           -1);
+      }
     deep_object->destroy ();
     root_context_1->unbind (deep);
     }
@@ -317,10 +335,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CORBA::Object_var const result_obj_ref = root_context_2->resolve (wide);
     Test_Object_var const result_object = Test_Object::_narrow (result_obj_ref.in ());
     if (CORBA::is_nil (result_object.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Problems with resolving object from ")
-                         ACE_TEXT ("redundant server - nil object ref.\n")),
-                         -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Problems with resolving object from ")
+                           ACE_TEXT ("redundant server - nil object ref.\n")),
+                           -1);
+      }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -358,10 +378,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CosNaming::NamingContext_var const result_object =
       CosNaming::NamingContext::_narrow (result_obj_ref.in ());
     if (CORBA::is_nil (result_object.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                      ACE_TEXT ("Problems with resolving wide context from ")
-                      ACE_TEXT ("redundant server - nil object ref.\n")),
-                      -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                        ACE_TEXT ("Problems with resolving wide context from ")
+                        ACE_TEXT ("redundant server - nil object ref.\n")),
+                        -1);
+      }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -422,10 +444,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CosNaming::NamingContext_var const result_object =
       CosNaming::NamingContext::_narrow (result_obj_ref.in ());
     if (CORBA::is_nil (result_object.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                      ACE_TEXT ("Problems with resolving deep context from ")
-                      ACE_TEXT ("redundant server - nil object ref.\n")),
-                      -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                        ACE_TEXT ("Problems with resolving deep context from ")
+                        ACE_TEXT ("redundant server - nil object ref.\n")),
+                        -1);
+      }
     }
   catch (CORBA::Exception const &ex)
     {

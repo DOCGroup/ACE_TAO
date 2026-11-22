@@ -120,28 +120,36 @@ run_test (PortableServer::POA_ptr poa,
     }
 
   if (consumer_0.disconnect_count != count_0)
-    ACE_ERROR ((LM_ERROR,
-                "ERROR: incorrect number of disconnect calls (%u/%u) for "
-                "consumer 0 (%d)\n",
-                consumer_0.disconnect_count, count_0,
-                use_callbacks));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: incorrect number of disconnect calls (%u/%u) for "
+                  "consumer 0 (%d)\n",
+                  consumer_0.disconnect_count, count_0,
+                  use_callbacks));
+    }
   if (supplier_0.disconnect_count != count_0)
-    ACE_ERROR ((LM_ERROR,
-                "ERROR: incorrect number of disconnect calls (%u/%u) for "
-                "supplier 0 (%d)\n",
-                supplier_0.disconnect_count, count_0,
-                use_callbacks));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: incorrect number of disconnect calls (%u/%u) for "
+                  "supplier 0 (%d)\n",
+                  supplier_0.disconnect_count, count_0,
+                  use_callbacks));
+    }
 
   if (consumer_1.disconnect_count != count_1)
-    ACE_ERROR ((LM_ERROR,
-                "ERROR: incorrect number of disconnect calls (%u/%u) for "
-                "consumer 1 (%d)\n",
-                consumer_1.disconnect_count, count_1,
-                use_callbacks));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: incorrect number of disconnect calls (%u/%u) for "
+                  "consumer 1 (%d)\n",
+                  consumer_1.disconnect_count, count_1,
+                  use_callbacks));
+    }
   if (supplier_1.disconnect_count != count_1)
-    ACE_ERROR ((LM_ERROR,
-                "ERROR: incorrect number of disconnect calls (%u/%u) for "
-                "supplier 1 (%d)\n",
-                supplier_1.disconnect_count, count_1,
-                use_callbacks));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: incorrect number of disconnect calls (%u/%u) for "
+                  "supplier 1 (%d)\n",
+                  supplier_1.disconnect_count, count_1,
+                  use_callbacks));
+    }
 }

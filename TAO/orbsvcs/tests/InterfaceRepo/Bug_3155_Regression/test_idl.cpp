@@ -34,10 +34,12 @@ parse_args (int argc, ACE_TCHAR *argv[], Test_Options& options)
     }
 
   if (options.ifr_ior_file == nullptr || options.idl_value == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("usage: %s -i <ifr_ior> -s <idl_valuetype>\n"),
-                       argv [0]),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("usage: %s -i <ifr_ior> -s <idl_valuetype>\n"),
+                         argv [0]),
+                        -1);
+    }
 
   return 0;
 }

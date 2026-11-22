@@ -51,9 +51,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
       if (CORBA::is_nil (obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) ERROR: Unable to initialize the POA.\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) ERROR: Unable to initialize the POA.\n")),
+                            1);
+        }
 
       PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in ());
       PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
@@ -61,9 +63,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       SecurityLevel3::SecurityCurrent_var security_current =
         SecurityLevel3::SecurityCurrent::_narrow (obj.in ());
       if (CORBA::is_nil (security_current.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) ERROR: SecurityCurrent reference is nil.\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) ERROR: SecurityCurrent reference is nil.\n")),
+                            1);
+        }
 
       Foo_i *server_impl {};
       ACE_NEW_RETURN (server_impl,
@@ -77,8 +81,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Foo::Bar_var server2 = server_impl2._this ();
       const CORBA::Boolean equivalent = server->_is_equivalent (server2.in ());
       if (equivalent)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) ERROR: SSLIOP profile equivalence check failed.\n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) ERROR: SSLIOP profile equivalence check failed.\n")));
+        }
 
       CORBA::String_var ior = orb->object_to_string (server.in ());
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
@@ -87,10 +93,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           std::unique_ptr<FILE, int (*) (FILE *)> output_file (
             ACE_OS::fopen (options.ior_output_file, ACE_TEXT ("w")), ACE_OS::fclose);
           if (!output_file)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                               options.ior_output_file),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                                 options.ior_output_file),
+                                1);
+            }
           ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 

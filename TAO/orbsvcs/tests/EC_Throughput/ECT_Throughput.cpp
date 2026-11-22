@@ -48,9 +48,11 @@ ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
         this->orb_->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -132,8 +134,10 @@ ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
               this->options_.thr_create_flags = THR_NEW_LWP;
             }
           else
-            ACE_ERROR ((LM_ERROR,
-                        "%s: ACE_OS::sched_params failed\n", argv[0]));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "%s: ACE_OS::sched_params failed\n", argv[0]));
+            }
         }
 
       if (ACE_OS::thr_setprio (priority) == -1)

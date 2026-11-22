@@ -79,10 +79,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     std::unique_ptr<FILE, int (*) (FILE *)> output_file (
       ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR (ior_file_name), ACE_TEXT ("w")), ACE_OS::fclose);
     if (!output_file)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Cannot open output file for writing IOR: %s",
-                         ior_file_name),
-                        1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot open output file for writing IOR: %s",
+                           ior_file_name),
+                          1);
+      }
     ACE_OS::fprintf (output_file.get (), "%s", str.in ());
 
     // Enter the ORB event loop.

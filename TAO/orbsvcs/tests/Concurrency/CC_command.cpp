@@ -258,9 +258,11 @@ int CC_TryLock_Cmd::execute()
                       CC_TestUtils::get_lock_mode_name (mode_)));
         }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "%C lock held\n",
-                    CC_TestUtils::get_lock_mode_name (mode_)));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "%C lock held\n",
+                      CC_TestUtils::get_lock_mode_name (mode_)));
+        }
     }
   catch (const CORBA::Exception& ex)
     {

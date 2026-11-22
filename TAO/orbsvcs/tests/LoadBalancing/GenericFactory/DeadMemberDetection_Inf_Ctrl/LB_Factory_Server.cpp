@@ -73,29 +73,31 @@ LB_Factory_Server::parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'n':
-        this->options_.server_id = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-      case 'o':
-        this->options_.factory_ior_file = get_opts.opt_arg ();
-        break;
-      case 'l':
-        this->options_.pong_delay = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-      case 'j':
-        this->options_.direct_object_ior_file = get_opts.opt_arg ();
-        break;
+    {
+      switch (c)
+        {
+        case 'n':
+          this->options_.server_id = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
+        case 'o':
+          this->options_.factory_ior_file = get_opts.opt_arg ();
+          break;
+        case 'l':
+          this->options_.pong_delay = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
+        case 'j':
+          this->options_.direct_object_ior_file = get_opts.opt_arg ();
+          break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage: %s -n <server_id> -o <factory_ior_file> "
-                                     "-l <pong_delay> -j <direct_object_ior_file>\n"),
-                           argv[0]),
-                          -1);
-      }
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage: %s -n <server_id> -o <factory_ior_file> "
+                                       "-l <pong_delay> -j <direct_object_ior_file>\n"),
+                             argv[0]),
+                            -1);
+        }
+    }
 
   // Indicates successful parsing of the command line
   return 0;
@@ -118,9 +120,11 @@ LB_Factory_Server::init ()
         this->orb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Unable to initialize the POA.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Unable to initialize the POA.\n")),
+                            -1);
+        }
 
       this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
 
@@ -136,9 +140,11 @@ LB_Factory_Server::init ()
         CosLoadBalancing::LoadManager::_narrow (obj.in ());
 
       if (CORBA::is_nil (this->lm_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Unable to get Load Manager Reference\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Unable to get Load Manager Reference\n")),
+                            -1);
+        }
 
       Factory *servant = new Factory (this->options_.server_id,
                                       this->options_.pong_delay);

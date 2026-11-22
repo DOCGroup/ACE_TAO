@@ -274,8 +274,10 @@ void
 DT_Creator::activate_poa_list ()
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-    "DT_Creator::activate_poa_list\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+      "DT_Creator::activate_poa_list\n"));
+    }
 
   if (!this->poa_list_.empty ())
     {
@@ -300,8 +302,10 @@ void
 DT_Creator::activate_job_list ()
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-    "DT_Creator::activate_job_list\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+      "DT_Creator::activate_job_list\n"));
+    }
 
   CORBA::Object_var object =
     this->orb_->resolve_initial_references ("RootPOA");
@@ -352,9 +356,11 @@ void
 DT_Creator::activate_schedule ()
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-    "Activating schedule, task count = %B\n",
-    this->dt_list_.size ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+      "Activating schedule, task count = %B\n",
+      this->dt_list_.size ()));
+    }
 
   for (std::unique_ptr<Thread_Task> const & task_owner : this->dt_list_)
     {
@@ -383,8 +389,10 @@ DT_Creator::activate_schedule ()
     RTCORBA::PriorityModelPolicy::_narrow (policy.in ());
 
         if (CORBA::is_nil (priority_policy.in ()))
-    ACE_DEBUG ((LM_DEBUG,
-          "ERROR: Priority Model Policy not exposed!\n"));
+          {
+      ACE_DEBUG ((LM_DEBUG,
+            "ERROR: Priority Model Policy not exposed!\n"));
+          }
         else
     {
                   /*
@@ -405,9 +413,11 @@ DT_Creator::activate_schedule ()
   }
     }
   if (TAO_debug_level > 0 && !this->dt_list_.empty ())
-    ACE_DEBUG ((LM_DEBUG,
-    "Activated schedule, task count = %B\n",
-    this->dt_list_.size ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+      "Activated schedule, task count = %B\n",
+      this->dt_list_.size ()));
+    }
 }
 
 int
@@ -418,9 +428,11 @@ DT_Creator::resolve_naming_service ()
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) Unable to resolve the Naming Service.\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         " (%P|%t) Unable to resolve the Naming Service.\n"),
+                        -1);
+    }
 
   this->naming_ =
     CosNaming::NamingContextExt::_narrow (naming_obj.in ());
@@ -545,10 +557,12 @@ void
 DT_Creator::check_ifexit ()
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-    "Checking exit status Job# = %d DT# = %d\n",
-    active_job_count_,
-    active_dt_count_));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+      "Checking exit status Job# = %d DT# = %d\n",
+      active_job_count_,
+      active_dt_count_));
+    }
 
   static int shutdown = 0;
 
@@ -588,7 +602,9 @@ DT_Creator::check_ifexit ()
           {
             ACE_GUARD (ACE_Lock, ace_mon, *state_lock_);
             for (std::string const & message : this->log_)
-              ACE_OS::fprintf (log_file, "%s\n", message.c_str ());
+        {
+                ACE_OS::fprintf (log_file, "%s\n", message.c_str ());
+        }
           }
 
           ACE_OS::fclose (log_file);

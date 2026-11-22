@@ -12,8 +12,10 @@ void
 UDP_i::setResponseHandler (UDP_ptr udpHandler)
 {
   if (CORBA::is_nil (udpHandler))
-    ACE_DEBUG ((LM_DEBUG,
-                "response handler is nil\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "response handler is nil\n"));
+    }
 
   this->responseHandler_ = UDP::_duplicate (udpHandler);
 }

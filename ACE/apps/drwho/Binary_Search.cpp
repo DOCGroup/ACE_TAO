@@ -53,12 +53,14 @@ Binary_Search::get_each_entry ()
   for (;
        this->current_index_ < this->count_;
        ++this->current_index_)
-    if (this->protocol_record_[this->current_index_].drwho_list_ != nullptr)
-      {
-        Protocol_Record * const record = std::addressof (this->protocol_record_[this->current_index_]);
-        ++this->current_index_;
-        return record;
-      }
+    {
+      if (this->protocol_record_[this->current_index_].drwho_list_ != nullptr)
+        {
+          Protocol_Record * const record = std::addressof (this->protocol_record_[this->current_index_]);
+          ++this->current_index_;
+          return record;
+        }
+    }
 
   this->current_index_ = -1;
   return nullptr;
@@ -67,8 +69,10 @@ Binary_Search::get_each_entry ()
 Binary_Search::~Binary_Search ()
 {
   if (Options::get_opt (Options::DEBUGGING))
-    ACE_DEBUG ((LM_DEBUG,
-                "disposing Binary_Search\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "disposing Binary_Search\n"));
+    }
 }
 
 // Used to initialize the values for the iterators...

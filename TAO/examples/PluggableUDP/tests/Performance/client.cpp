@@ -45,9 +45,11 @@ parse_args (Client_Options &options, int argc, ACE_TCHAR *argv[])
         {
           int const burst_messages = ACE_OS::atoi (get_opts.opt_arg ());
           if (burst_messages <= 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("The burst message count must be positive.\n")),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("The burst message count must be positive.\n")),
+                                -1);
+            }
           options.burst_messages = static_cast<ACE_UINT32> (burst_messages);
         }
         break;
@@ -95,9 +97,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());

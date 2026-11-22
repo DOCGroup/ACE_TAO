@@ -210,94 +210,96 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     get_opts.long_option (ACE_TEXT ("validate"), ACE_Get_Opt::NO_ARG);
 
     while ((c = get_opts ()) != -1)
-      switch (c)
-        {
-        case 'b':
-          i = ACE_OS::atoi(get_opts.opt_arg ());
-          if (i<2)
+  {
+        switch (c)
           {
-            ACE_ERROR((LM_ERROR,
-                       ACE_TEXT ("Invalid breadth, must be 2 or more\n")));
-            ACE_OS::exit(RC_ERROR);
-          }
-          c_breadth = i;
-          break;
-        case 'd':
-          i = ACE_OS::atoi(get_opts.opt_arg ());
-          if (i<2)
-          {
-            ACE_ERROR((LM_ERROR,
-                       ACE_TEXT ("Invalid depth, must be 2 or more\n")));
-            ACE_OS::exit(RC_ERROR);
-          }
-          c_depth = i;
-          break;
-        case 'o':
-          i = ACE_OS::atoi(get_opts.opt_arg ());
-          if (i<2)
-          {
-            ACE_ERROR((LM_ERROR,
-                       ACE_TEXT ("Invalid breadth, must be 2 or more\n")));
-            ACE_OS::exit(RC_ERROR);
-          }
-          o_breadth = i;
-          break;
-        case 'p':
-          ns1ref = get_opts.opt_arg ();
-          break;
-        case 'q':
-          ns2ref = get_opts.opt_arg ();
-          break;
-        case 'r':
-          nm1ref = get_opts.opt_arg ();
-          break;
-        case 's':
-          nm2ref = get_opts.opt_arg ();
-          break;
-        case 0:   // A long option was found
-          {
-            const ACE_TCHAR * long_option = get_opts.long_option ();
-            if (ACE_OS::strcmp (long_option,
-                                ACE_TEXT ("failover")) == 0)
-              {
-                test_type = TT_FAILOVER;
-              }
+          case 'b':
+            i = ACE_OS::atoi(get_opts.opt_arg ());
+            if (i<2)
+            {
+              ACE_ERROR((LM_ERROR,
+                         ACE_TEXT ("Invalid breadth, must be 2 or more\n")));
+              ACE_OS::exit(RC_ERROR);
+            }
+            c_breadth = i;
+            break;
+          case 'd':
+            i = ACE_OS::atoi(get_opts.opt_arg ());
+            if (i<2)
+            {
+              ACE_ERROR((LM_ERROR,
+                         ACE_TEXT ("Invalid depth, must be 2 or more\n")));
+              ACE_OS::exit(RC_ERROR);
+            }
+            c_depth = i;
+            break;
+          case 'o':
+            i = ACE_OS::atoi(get_opts.opt_arg ());
+            if (i<2)
+            {
+              ACE_ERROR((LM_ERROR,
+                         ACE_TEXT ("Invalid breadth, must be 2 or more\n")));
+              ACE_OS::exit(RC_ERROR);
+            }
+            o_breadth = i;
+            break;
+          case 'p':
+            ns1ref = get_opts.opt_arg ();
+            break;
+          case 'q':
+            ns2ref = get_opts.opt_arg ();
+            break;
+          case 'r':
+            nm1ref = get_opts.opt_arg ();
+            break;
+          case 's':
+            nm2ref = get_opts.opt_arg ();
+            break;
+          case 0:   // A long option was found
+            {
+              const ACE_TCHAR * long_option = get_opts.long_option ();
+              if (ACE_OS::strcmp (long_option,
+                                  ACE_TEXT ("failover")) == 0)
+                {
+                  test_type = TT_FAILOVER;
+                }
             else if (ACE_OS::strcmp (long_option,
-                                     ACE_TEXT ("persistence")) == 0)
-              {
-                test_type = TT_PERSISTENCE;
-              }
+                                       ACE_TEXT ("persistence")) == 0)
+                {
+                  test_type = TT_PERSISTENCE;
+                }
             else if (ACE_OS::strcmp (long_option,
-                                     ACE_TEXT ("equivalence")) == 0)
-              {
-                test_type = TT_EQUIVALENCE;
-              }
+                                       ACE_TEXT ("equivalence")) == 0)
+                {
+                  test_type = TT_EQUIVALENCE;
+                }
             else if (ACE_OS::strcmp (long_option,
-                                     ACE_TEXT ("create")) == 0)
-              {
-                test_phase = TT_CREATE;
-              }
+                                       ACE_TEXT ("create")) == 0)
+                {
+                  test_phase = TT_CREATE;
+                }
             else if (ACE_OS::strcmp (long_option,
-                                     ACE_TEXT ("validate")) == 0)
-              {
-                test_phase = TT_VALIDATE;
-              }
-          }
-          break;
+                                       ACE_TEXT ("validate")) == 0)
+                {
+                  test_phase = TT_VALIDATE;
+                }
+            }
+            break;
 
-        default:
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Argument %c \n usage:  %s")
-                             ACE_TEXT (" [-b <breadth of context tree>]")
-                             ACE_TEXT (" [-d <depth of context tree>]")
-                             ACE_TEXT (" [-o <breadth of object tree>]")
-                             ACE_TEXT (" -p <ior of first name server>")
-                             ACE_TEXT (" -q <ior of second name server>")
-                             ACE_TEXT (" -r <ior of first naming server>")
-                             ACE_TEXT (" -s <ior of second naming server>")
-                             ACE_TEXT ("\n")),
-                             RC_ERROR);
-        }
+          default:
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Argument %c \n usage:  %s")
+                               ACE_TEXT (" [-b <breadth of context tree>]")
+                               ACE_TEXT (" [-d <depth of context tree>]")
+                               ACE_TEXT (" [-o <breadth of object tree>]")
+                               ACE_TEXT (" -p <ior of first name server>")
+                               ACE_TEXT (" -q <ior of second name server>")
+                               ACE_TEXT (" -r <ior of first naming server>")
+                               ACE_TEXT (" -s <ior of second naming server>")
+                               ACE_TEXT ("\n")),
+                               RC_ERROR);
+          }
+  }
 
     switch(test_type) {
       case TT_FAILOVER:
@@ -714,9 +716,12 @@ do_failover_name_test (
     catch (const CosNaming::NamingContext::NotFound&)
       {
         // Not on replica --- as it should be.
-        if (retried)  // Was found on the retry
-          ACE_ERROR (( LM_ERROR,
-                       ACE_TEXT ("INFO: Was removed after short wait.\n")));
+        if (retried)
+          {
+            // Was found on the retry
+            ACE_ERROR (( LM_ERROR,
+                         ACE_TEXT ("INFO: Was removed after short wait.\n")));
+          }
       }
 
     // Remove the second to last context from the wide root Naming Context
@@ -791,9 +796,12 @@ do_failover_name_test (
     catch (const CosNaming::NamingContext::NotFound&)
       {
         // Not on replica --- as it should be.
-        if (retried)  // Was found on the retry
-          ACE_ERROR (( LM_ERROR,
-                       ACE_TEXT ("INFO: Was removed after short wait.\n")));
+        if (retried)
+          {
+            // Was found on the retry
+            ACE_ERROR (( LM_ERROR,
+                         ACE_TEXT ("INFO: Was removed after short wait.\n")));
+          }
       }
   }
   catch (const CORBA::Exception& ex)
@@ -1921,9 +1929,12 @@ do_equivalence_name_test (
     catch (const CosNaming::NamingContext::NotFound&)
       {
         // Not on replica --- as it should be.
-        if (retried)  // Was found on the retry
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("INFO: Was removed after short wait.\n")));
+        if (retried)
+          {
+            // Was found on the retry
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("INFO: Was removed after short wait.\n")));
+          }
       }
 
     // Remove the second to last context from the wide root Naming Context
@@ -1994,9 +2005,12 @@ do_equivalence_name_test (
     catch (const CosNaming::NamingContext::NotFound&)
       {
         // Not on replica --- as it should be.
-        if (retried)  // Was found on the retry
-          ACE_ERROR (( LM_ERROR,
-                       ACE_TEXT ("INFO: Was removed after short wait.\n")));
+        if (retried)
+          {
+            // Was found on the retry
+            ACE_ERROR (( LM_ERROR,
+                         ACE_TEXT ("INFO: Was removed after short wait.\n")));
+          }
       }
   }
   catch (const CORBA::Exception& ex)
@@ -2058,10 +2072,12 @@ do_equivalence_name_test (
     // expect exception since the context was deleted.
     // Make sure the right exception reason is provided.
     if (ex.why != CosNaming::NamingContext::missing_node)
-      ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("ERROR: Wrong exception returned during ")
-                          ACE_TEXT ("resolve.\n")),
-                          RC_ERROR);
+      {
+        ACE_ERROR_RETURN (( LM_ERROR,
+                            ACE_TEXT ("ERROR: Wrong exception returned during ")
+                            ACE_TEXT ("resolve.\n")),
+                            RC_ERROR);
+      }
   }
   catch (const CORBA::Exception& ex)
     {

@@ -88,8 +88,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       "test runs in time-shared class\n"));
         }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "client (%P|%t): sched_params failed\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "client (%P|%t): sched_params failed\n"));
+        }
     }
 
   try
@@ -125,7 +127,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_hrtime_t const test_start = ACE_OS::gethrtime ();
       for (Client_Task &task : tasks)
-        task.activate (THR_NEW_LWP | THR_JOINABLE);
+        {
+          task.activate (THR_NEW_LWP | THR_JOINABLE);
+        }
 
       tasks [0].thr_mgr ()->wait ();
       ACE_hrtime_t const test_end = ACE_OS::gethrtime ();

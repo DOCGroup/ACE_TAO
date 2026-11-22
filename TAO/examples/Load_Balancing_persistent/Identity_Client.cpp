@@ -95,18 +95,22 @@ Identity_Client::run ()
     orb->string_to_object (this->group_factory_ior_);
 
   if (obj.in () == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%N|%l) <ERROR> [Identity_Client::run]\n")
-                       ACE_TEXT ("factory_resolve\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%N|%l) <ERROR> [Identity_Client::run]\n")
+                         ACE_TEXT ("factory_resolve\n")),
+                        -1);
+    }
 
   Load_Balancer::Object_Group_Factory_var factory =
     Load_Balancer::Object_Group_Factory::_narrow (obj.in ());
 
   if (CORBA::is_nil (factory.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Identity_Client: problems using the factory ior\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Identity_Client: problems using the factory ior\n"),
+                        -1);
+    }
 
   char const *group_name;
   if (this->use_random_)
@@ -178,7 +182,9 @@ Identity_Client::run ()
               "The group contains %u members:\n",
               id_list->length ()));
   for (CORBA::ULong i = 0; i < id_list->length (); ++i)
-    ACE_DEBUG ((LM_DEBUG, "%s\n", static_cast<char const*>(id_list[i])));
+    {
+      ACE_DEBUG ((LM_DEBUG, "%s\n", static_cast<char const*>(id_list[i])));
+    }
 
   // Perform <number_of_invocations_> method calls on <Identity>
   // objects, which are members of the <Object_Group>.  Before each
@@ -197,10 +203,12 @@ Identity_Client::run ()
       identity_object = Identity::_narrow (obj.in ());
 
       if (CORBA::is_nil (identity_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Identity_Client: cannot narrow an object received from"
-                           "<Object_Group::resolve> to <Identity>\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Identity_Client: cannot narrow an object received from"
+                             "<Object_Group::resolve> to <Identity>\n"),
+                            -1);
+        }
       identity_object->get_name (identity.out ());
 
       ACE_DEBUG ((LM_DEBUG,

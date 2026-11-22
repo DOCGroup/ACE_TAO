@@ -625,8 +625,10 @@ ACE_CC_YY_DECL
     }
 
     if ( ! ace_cc_yy_current_buffer )
-      ace_cc_yy_current_buffer =
-        ace_cc_yy_create_buffer( ace_cc_yyin, ACE_CC_YY_BUF_SIZE );
+      {
+        ace_cc_yy_current_buffer =
+          ace_cc_yy_create_buffer( ace_cc_yyin, ACE_CC_YY_BUF_SIZE );
+      }
 
     ace_cc_yy_load_buffer_state();
     }
@@ -867,60 +869,63 @@ case ACE_CC_YY_STATE_EOF(INITIAL):
         }
       }
 
-    else switch ( ace_cc_yy_get_next_buffer() )
+    else
       {
-      case EOB_ACT_END_OF_FILE:
+        switch ( ace_cc_yy_get_next_buffer() )
         {
-#if (ace_cc_yywrap() != 1)
-        ace_cc_yy_did_buffer_switch_on_eof = 0;
-#endif
-
-        if ( ace_cc_yywrap() )
+        case EOB_ACT_END_OF_FILE:
           {
-          /* Note: because we've taken care in
-           * ace_cc_yy_get_next_buffer() to have set up
-           * ace_cc_yytext, we can now set up
-           * ace_cc_yy_c_buf_p so that if some total
-           * hoser (like flex itself) wants to
-           * call the scanner after we return the
-           * ACE_CC_YY_NULL, it'll still work - another
-           * ACE_CC_YY_NULL will get returned.
-           */
-          ace_cc_yy_c_buf_p = ace_cc_yytext_ptr + ACE_CC_YY_MORE_ADJ;
+  #if (ace_cc_yywrap() != 1)
+          ace_cc_yy_did_buffer_switch_on_eof = 0;
+  #endif
 
-          ace_cc_yy_act = ACE_CC_YY_STATE_EOF(ACE_CC_YY_START);
-          goto do_action;
-          }
+          if ( ace_cc_yywrap() )
+            {
+            /* Note: because we've taken care in
+             * ace_cc_yy_get_next_buffer() to have set up
+             * ace_cc_yytext, we can now set up
+             * ace_cc_yy_c_buf_p so that if some total
+             * hoser (like flex itself) wants to
+             * call the scanner after we return the
+             * ACE_CC_YY_NULL, it'll still work - another
+             * ACE_CC_YY_NULL will get returned.
+             */
+            ace_cc_yy_c_buf_p = ace_cc_yytext_ptr + ACE_CC_YY_MORE_ADJ;
+
+            ace_cc_yy_act = ACE_CC_YY_STATE_EOF(ACE_CC_YY_START);
+            goto do_action;
+            }
 
         else
-          {
-#if (ace_cc_yywrap() != 1)
-          if ( ! ace_cc_yy_did_buffer_switch_on_eof )
-            ACE_CC_YY_NEW_FILE;
-#endif
+            {
+  #if (ace_cc_yywrap() != 1)
+            if ( ! ace_cc_yy_did_buffer_switch_on_eof )
+              ACE_CC_YY_NEW_FILE;
+  #endif
+            }
+          break;
           }
-        break;
+
+        case EOB_ACT_CONTINUE_SCAN:
+          ace_cc_yy_c_buf_p =
+            ace_cc_yytext_ptr + ace_cc_yy_amount_of_matched_text;
+
+          ace_cc_yy_current_state = ace_cc_yy_get_previous_state();
+
+          ace_cc_yy_cp = ace_cc_yy_c_buf_p;
+          ace_cc_yy_bp = ace_cc_yytext_ptr + ACE_CC_YY_MORE_ADJ;
+          goto ace_cc_yy_match;
+
+        case EOB_ACT_LAST_MATCH:
+          ace_cc_yy_c_buf_p =
+          &ace_cc_yy_current_buffer->ace_cc_yy_ch_buf[ace_cc_yy_n_chars];
+
+          ace_cc_yy_current_state = ace_cc_yy_get_previous_state();
+
+          ace_cc_yy_cp = ace_cc_yy_c_buf_p;
+          ace_cc_yy_bp = ace_cc_yytext_ptr + ACE_CC_YY_MORE_ADJ;
+          goto ace_cc_yy_find_action;
         }
-
-      case EOB_ACT_CONTINUE_SCAN:
-        ace_cc_yy_c_buf_p =
-          ace_cc_yytext_ptr + ace_cc_yy_amount_of_matched_text;
-
-        ace_cc_yy_current_state = ace_cc_yy_get_previous_state();
-
-        ace_cc_yy_cp = ace_cc_yy_c_buf_p;
-        ace_cc_yy_bp = ace_cc_yytext_ptr + ACE_CC_YY_MORE_ADJ;
-        goto ace_cc_yy_match;
-
-      case EOB_ACT_LAST_MATCH:
-        ace_cc_yy_c_buf_p =
-        &ace_cc_yy_current_buffer->ace_cc_yy_ch_buf[ace_cc_yy_n_chars];
-
-        ace_cc_yy_current_state = ace_cc_yy_get_previous_state();
-
-        ace_cc_yy_cp = ace_cc_yy_c_buf_p;
-        ace_cc_yy_bp = ace_cc_yytext_ptr + ACE_CC_YY_MORE_ADJ;
-        goto ace_cc_yy_find_action;
       }
     break;
     }
@@ -948,8 +953,10 @@ static int ace_cc_yy_get_next_buffer()
   int ret_val;
 
   if ( ace_cc_yy_c_buf_p > &ace_cc_yy_current_buffer->ace_cc_yy_ch_buf[ace_cc_yy_n_chars + 1] )
-    ACE_CC_YY_FATAL_ERROR(
-    "fatal flex scanner internal error--end of buffer missed" );
+    {
+      ACE_CC_YY_FATAL_ERROR(
+      "fatal flex scanner internal error--end of buffer missed" );
+    }
 
   if ( ace_cc_yy_current_buffer->ace_cc_yy_fill_buffer == 0 )
     { /* Don't try to fill the buffer, so this is an EOF. */
@@ -976,14 +983,17 @@ static int ace_cc_yy_get_next_buffer()
   number_to_move = (int) (ace_cc_yy_c_buf_p - ace_cc_yytext_ptr) - 1;
 
   for ( i = 0; i < number_to_move; ++i )
-    *(dest++) = *(source++);
+      {
+      *(dest++) = *(source++);
+      }
 
   if ( ace_cc_yy_current_buffer->ace_cc_yy_buffer_status == ACE_CC_YY_BUFFER_EOF_PENDING )
-    /* don't do the read, it's not guaranteed to return an EOF,
-     * just force an EOF
-     */
-    ace_cc_yy_current_buffer->ace_cc_yy_n_chars = ace_cc_yy_n_chars = 0;
-
+    {
+      /* don't do the read, it's not guaranteed to return an EOF,
+       * just force an EOF
+       */
+      ace_cc_yy_current_buffer->ace_cc_yy_n_chars = ace_cc_yy_n_chars = 0;
+    }
   else
     {
     int num_to_read =
@@ -1007,7 +1017,9 @@ static int ace_cc_yy_get_next_buffer()
         int new_size = b->ace_cc_yy_buf_size * 2;
 
         if ( new_size <= 0 )
-          b->ace_cc_yy_buf_size += b->ace_cc_yy_buf_size / 8;
+          {
+            b->ace_cc_yy_buf_size += b->ace_cc_yy_buf_size / 8;
+          }
         else
         {
           b->ace_cc_yy_buf_size *= 2;
@@ -1019,12 +1031,16 @@ static int ace_cc_yy_get_next_buffer()
                b->ace_cc_yy_buf_size + 2 );
         }
       else
-        /* Can't grow it, we don't own it. */
-        b->ace_cc_yy_ch_buf = 0;
+        {
+          /* Can't grow it, we don't own it. */
+          b->ace_cc_yy_ch_buf = 0;
+        }
 
       if ( ! b->ace_cc_yy_ch_buf )
-        ACE_CC_YY_FATAL_ERROR(
-        "fatal error - scanner input buffer overflow" );
+        {
+          ACE_CC_YY_FATAL_ERROR(
+          "fatal error - scanner input buffer overflow" );
+        }
 
       ace_cc_yy_c_buf_p = &b->ace_cc_yy_ch_buf[ace_cc_yy_c_buf_p_offset];
 
@@ -1453,8 +1469,10 @@ ace_cc_yy_size_t size;
   if ( size < 2 ||
        base[size-2] != ACE_CC_YY_END_OF_BUFFER_CHAR ||
        base[size-1] != ACE_CC_YY_END_OF_BUFFER_CHAR )
-    /* They forgot to leave room for the EOB's. */
-    return 0;
+    {
+      /* They forgot to leave room for the EOB's. */
+      return 0;
+    }
 
   b = (ACE_CC_YY_BUFFER_STATE) ace_cc_yy_flex_alloc( sizeof( struct ace_cc_yy_buffer_state ) );
   if ( ! b )
@@ -1488,7 +1506,9 @@ ace_cc_yyconst char *ace_cc_yy_str;
   {
   int len;
   for ( len = 0; ace_cc_yy_str[len]; ++len )
-    ;
+  {
+      ;
+  }
 
   return ace_cc_yy_scan_bytes( ace_cc_yy_str, len );
   }
@@ -1517,7 +1537,9 @@ int len;
   }
 
   for ( i = 0; i < len; ++i )
-    buf[i] = bytes[i];
+    {
+      buf[i] = bytes[i];
+    }
 
   buf[len] = buf[len+1] = ACE_CC_YY_END_OF_BUFFER_CHAR;
 

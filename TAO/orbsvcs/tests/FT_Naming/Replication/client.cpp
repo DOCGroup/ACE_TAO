@@ -74,67 +74,69 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   int i;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'b':
-        i = ACE_OS::atoi(get_opts.opt_arg ());
-        if (i<2)
+  {
+      switch (c)
         {
-          ACE_ERROR((LM_ERROR,
-                     ACE_TEXT ("Invalid breadth, must be 2 or more\n")));
-          ACE_OS::exit(1);
+        case 'b':
+          i = ACE_OS::atoi(get_opts.opt_arg ());
+          if (i<2)
+          {
+            ACE_ERROR((LM_ERROR,
+                       ACE_TEXT ("Invalid breadth, must be 2 or more\n")));
+            ACE_OS::exit(1);
+          }
+          c_breadth = i;
+          break;
+        case 'd':
+          i = ACE_OS::atoi(get_opts.opt_arg ());
+          if (i<2)
+          {
+            ACE_ERROR ((LM_ERROR,
+                       ACE_TEXT ("Invalid depth, must be 2 or more\n")));
+            ACE_OS::exit (1);
+          }
+          c_depth = i;
+          break;
+        case 'o':
+          i = ACE_OS::atoi(get_opts.opt_arg ());
+          if (i<2)
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("Invalid breadth, must be 2 or more\n")));
+            ACE_OS::exit (1);
+          }
+          o_breadth = i;
+          break;
+        case 'p':
+          ns1ref = get_opts.opt_arg ();
+          break;
+        case 't':
+          i = ACE_OS::atoi (get_opts.opt_arg ());
+          if (i<1)
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("Invalid number of test runs. ")
+                        ACE_TEXT ("Must be 1 or more\n")));
+            ACE_OS::exit (1);
+          }
+          test_runs = i;
+          break;
+        case 'q':
+          ns2ref = get_opts.opt_arg ();
+          break;
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Argument %c \n usage:  %s")
+                             ACE_TEXT (" [-b <breadth of context tree>]")
+                             ACE_TEXT (" [-d <depth of context tree>]")
+                             ACE_TEXT (" [-o <breadth of object tree>]")
+                             ACE_TEXT (" [-t <number of performance test runs>]")
+                             ACE_TEXT (" -p <ior of first name server>")
+                             ACE_TEXT (" -q <ior of second name server>")
+                             ACE_TEXT ("\n")),
+                            -1);
         }
-        c_breadth = i;
-        break;
-      case 'd':
-        i = ACE_OS::atoi(get_opts.opt_arg ());
-        if (i<2)
-        {
-          ACE_ERROR ((LM_ERROR,
-                     ACE_TEXT ("Invalid depth, must be 2 or more\n")));
-          ACE_OS::exit (1);
-        }
-        c_depth = i;
-        break;
-      case 'o':
-        i = ACE_OS::atoi(get_opts.opt_arg ());
-        if (i<2)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Invalid breadth, must be 2 or more\n")));
-          ACE_OS::exit (1);
-        }
-        o_breadth = i;
-        break;
-      case 'p':
-        ns1ref = get_opts.opt_arg ();
-        break;
-      case 't':
-        i = ACE_OS::atoi (get_opts.opt_arg ());
-        if (i<1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Invalid number of test runs. ")
-                      ACE_TEXT ("Must be 1 or more\n")));
-          ACE_OS::exit (1);
-        }
-        test_runs = i;
-        break;
-      case 'q':
-        ns2ref = get_opts.opt_arg ();
-        break;
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Argument %c \n usage:  %s")
-                           ACE_TEXT (" [-b <breadth of context tree>]")
-                           ACE_TEXT (" [-d <depth of context tree>]")
-                           ACE_TEXT (" [-o <breadth of object tree>]")
-                           ACE_TEXT (" [-t <number of performance test runs>]")
-                           ACE_TEXT (" -p <ior of first name server>")
-                           ACE_TEXT (" -q <ior of second name server>")
-                           ACE_TEXT ("\n")),
-                          -1);
-      }
+  }
 
   CosNaming::NamingContext_var root_context_1;
   CosNaming::NamingContext_var root_context_2;
@@ -153,10 +155,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             ACE_TEXT_ALWAYS_CHAR (ns1ref));
 
     if (CORBA::is_nil (ns1obj.in ()))
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("invalid ior <%s>\n"),
-                               ns1ref),
-                              -1);
+      {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("invalid ior <%s>\n"),
+                                 ns1ref),
+                                -1);
+      }
     root_context_1 = CosNaming::NamingContext::_narrow (ns1obj.in ());
 
     // Resolve the second name server
@@ -165,10 +169,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             ACE_TEXT_ALWAYS_CHAR (ns2ref));
 
     if (CORBA::is_nil (ns2obj.in ()))
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("invalid ior <%s>\n"),
-                               ns2ref),
-                              -1);
+      {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("invalid ior <%s>\n"),
+                                 ns2ref),
+                                -1);
+      }
     root_context_2 = CosNaming::NamingContext::_narrow (ns2obj.in ());
   }
   catch (const CORBA::Exception& ex)
@@ -339,9 +345,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     catch (const CosNaming::NamingContext::NotFound&)
       {
         // Not on replica --- as it should be.
-        if (retried)  // Was found on the retry
-          ACE_ERROR ((LM_ERROR,
-                      "Was removed after short wait.\n"));
+        if (retried)
+          {
+            // Was found on the retry
+            ACE_ERROR ((LM_ERROR,
+                        "Was removed after short wait.\n"));
+          }
       }
 
     // Remove the second to last context from the wide root Naming Context
@@ -353,10 +362,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     CosNaming::NamingContext_var result_object =
       CosNaming::NamingContext::_narrow (result_obj_ref.in ());
     if (CORBA::is_nil (result_object.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Problems with resolving wide context ")
-                         ACE_TEXT ("- nil object ref.\n")),
-                         -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Problems with resolving wide context ")
+                           ACE_TEXT ("- nil object ref.\n")),
+                           -1);
+      }
     result_object->destroy();
     root_context_1->unbind (wide2);
 
@@ -373,10 +384,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     result_object =
       CosNaming::NamingContext::_narrow (result_obj_ref.in ());
     if (CORBA::is_nil (result_object.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Problems with resolving deep context ")
-                         ACE_TEXT ("- nil object ref.\n")),
-                         -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Problems with resolving deep context ")
+                           ACE_TEXT ("- nil object ref.\n")),
+                           -1);
+      }
     result_object->destroy();
     root_context_1->unbind (deep);
 
@@ -401,9 +414,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     catch (const CosNaming::NamingContext::NotFound&)
       {
         // Not on replica --- as it should be.
-        if (retried)  // Was found on the retry
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT("Was removed after short wait.\n")));
+        if (retried)
+          {
+            // Was found on the retry
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT("Was removed after short wait.\n")));
+          }
       }
   }
   catch (const CORBA::Exception& ex)
@@ -426,10 +442,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     CORBA::Object_var result_obj_ref = root_context_2->resolve (wide);
     Test_Object_var result_object = Test_Object::_narrow (result_obj_ref.in ());
     if (CORBA::is_nil (result_object.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Problems with resolving object from ")
-                         ACE_TEXT ("redundant server - nil object ref.\n")),
-                         -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Problems with resolving object from ")
+                           ACE_TEXT ("redundant server - nil object ref.\n")),
+                           -1);
+      }
   }
   catch (const CORBA::Exception& ex)
   {
@@ -457,9 +475,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     // expect exception since the context was deleted.
     // Make sure the right exception reason is provided.
     if (ex.why != CosNaming::NamingContext::missing_node)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Wrong exception returned during resolve.\n")),
-                         -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Wrong exception returned during resolve.\n")),
+                           -1);
+      }
   }
   catch (const CORBA::Exception& ex)
     {
@@ -478,10 +498,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     CosNaming::NamingContext_var result_object =
       CosNaming::NamingContext::_narrow (result_obj_ref.in ());
     if (CORBA::is_nil (result_object.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                      ACE_TEXT ("Problems with resolving wide context from ")
-                      ACE_TEXT ("redundant server - nil object ref.\n")),
-                      -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                        ACE_TEXT ("Problems with resolving wide context from ")
+                        ACE_TEXT ("redundant server - nil object ref.\n")),
+                        -1);
+      }
   }
   catch (const CosNaming::NamingContext::NotFound&)
     {
@@ -561,10 +583,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     CosNaming::NamingContext_var result_object =
       CosNaming::NamingContext::_narrow (result_obj_ref.in ());
     if (CORBA::is_nil (result_object.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                      ACE_TEXT ("Problems with resolving deep context from ")
-                      ACE_TEXT ("redundant server - nil object ref.\n")),
-                      -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                        ACE_TEXT ("Problems with resolving deep context from ")
+                        ACE_TEXT ("redundant server - nil object ref.\n")),
+                        -1);
+      }
   }
   catch (const CORBA::Exception& ex)
   {

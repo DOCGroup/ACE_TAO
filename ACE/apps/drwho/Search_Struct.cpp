@@ -5,8 +5,10 @@
 Search_Struct::~Search_Struct ()
 {
   if (Options::get_opt (Options::DEBUGGING))
-    ACE_DEBUG ((LM_DEBUG,
-                "disposing Search_Struct\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "disposing Search_Struct\n"));
+    }
 }
 
 Search_Struct::Search_Struct () = default;

@@ -123,8 +123,10 @@ Server_i::enable_multicast (char const *ior)
                                  ACE_Event_Handler::READ_MASK) == -1)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "MCast_Server: cannot register Event handler\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "MCast_Server: cannot register Event handler\n"));
+        }
       return -1;
     }
 
@@ -138,21 +140,23 @@ Server_i::parse_args (int argc, ACE_TCHAR *argv[])
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'a':
-        this->mcast_address_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
-        break;
+        {
+      switch (c)
+        {
+        case 'a':
+          this->mcast_address_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
+          break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-a <mcast_address>"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-a <mcast_address>"
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+        }
   // Indicates successful parsing of the command line
   return 0;
 }

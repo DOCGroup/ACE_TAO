@@ -106,8 +106,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Bind listener to any port and then find out what the port was.
   if (peer_acceptor.open (addr) == -1
       || peer_acceptor.get_local_addr (server_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) open: %p\n")), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) open: %p\n")), 1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) starting server at port %d\n"),
@@ -118,9 +120,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       std::unique_ptr<FILE, int (*) (FILE *)> file (
         ACE_OS::fopen (notifier_file, ACE_TEXT ("w+")), ACE_OS::fclose);
       if (!file)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot open notifier file '%s'\n"),
-                           notifier_file), 1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open notifier file '%s'\n"),
+                             notifier_file), 1);
+        }
       char const * const msg = "server ready";
       ACE_OS::fwrite (msg, ACE_OS::strlen (msg), 1, file.get ());
     }
@@ -220,15 +224,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               ACE_TEXT("(%P) server, Test 1: recvd len = %b\n"),len));
 
   for (i = 0; i < 255; ++i)
-    if (buffer[i] != i)
-      {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Test 1, rcvd byte %d is %d, not %d\n"),
-                    i,
-                    buffer[i],
-                    i));
-        Test_Result = 1;
-      }
+    {
+      if (buffer[i] != i)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) Test 1, rcvd byte %d is %d, not %d\n"),
+                      i,
+                      buffer[i],
+                      i));
+          Test_Result = 1;
+        }
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%P) ***** server  TEST 2 *****\n")));

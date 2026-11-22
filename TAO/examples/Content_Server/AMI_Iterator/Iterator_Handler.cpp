@@ -110,9 +110,11 @@ Iterator_Handler::initialize_content_iterator
                          0,
                          O_CREAT | O_TRUNC | O_WRONLY,
                          ACE_DEFAULT_FILE_PERMS) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Could not open file %p\n"),
-                this->file_.get_path_name ()));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Could not open file %p\n"),
+                  this->file_.get_path_name ()));
+    }
   else
   {
     ++this->request_count_;
@@ -171,10 +173,12 @@ Iterator_Handler::get_viewer (std::string& viewer) const
       viewer = "xv";
     }
   else
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unsupported MIME type: <%s>\n"),
-                       content_type),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Unsupported MIME type: <%s>\n"),
+                         content_type),
+                        -1);
+    }
 
   return 0;
 }
@@ -185,10 +189,12 @@ Iterator_Handler::spawn_viewer () const
   std::string viewer;
 
   if (this->get_viewer (viewer) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Problem determining which external ")
-                       ACE_TEXT ("viewer to use.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Problem determining which external ")
+                         ACE_TEXT ("viewer to use.\n")),
+                        -1);
+    }
 
   // Set up the command line that will be used when spawning the
   // external viewer.

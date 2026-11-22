@@ -62,9 +62,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Test::GoodDay_var const goodday = Test::GoodDay::_narrow (object.in ());
 
       if (CORBA::is_nil (goodday.in ()))
-        ACE_ERROR ((LM_DEBUG,
-                    ACE_TEXT("Nil Test::GoodDay reference <%s>\n"),
-                    ior));
+        {
+          ACE_ERROR ((LM_DEBUG,
+                      ACE_TEXT("Nil Test::GoodDay reference <%s>\n"),
+                      ior));
+        }
       else
         {
           CORBA::String_var const the_string = goodday->get_string ();

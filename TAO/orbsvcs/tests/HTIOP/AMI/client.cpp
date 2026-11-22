@@ -183,9 +183,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -200,9 +202,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Client client (server.in (), niterations);
       if (client.activate (THR_NEW_LWP | THR_JOINABLE,
                            nthreads) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot activate client threads\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot activate client threads\n"),
+                            1);
+        }
 
       // Main thread collects replies. It needs to collect
       // <nthreads*niterations> replies.

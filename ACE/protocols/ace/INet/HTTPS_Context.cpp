@@ -46,9 +46,11 @@ namespace ACE
 
             this->ssl_ctx_->set_mode (ssl_mode);
             if (verify_peer)
-              this->ssl_ctx_->set_verify_peer (strict ? 1 : 0,
-                                              once ? 1 : 0,
-                                              depth);
+              {
+                this->ssl_ctx_->set_verify_peer (strict ? 1 : 0,
+                                                once ? 1 : 0,
+                                                depth);
+              }
             if (ssl_cbmngr != nullptr)
             {
               ssl_cbmngr->initialize_callbacks (this->ssl_ctx_);

@@ -27,8 +27,10 @@ Iterator_Factory_i::get_iterator (char const *pathname,
   std::string const filename (pathname);
   ACE_stat file_status {};
   if (ACE_OS::stat (filename.c_str (), &file_status) == -1)
-    // HTTP 1.1 "Internal Server Error".
-    throw Web_Server::Error_Result (500);
+    {
+      // HTTP 1.1 "Internal Server Error".
+      throw Web_Server::Error_Result (500);
+    }
 
   Content_Iterator_i *iterator_servant {};
   ACE_NEW_THROW_EX (iterator_servant,
@@ -41,11 +43,15 @@ Iterator_Factory_i::get_iterator (char const *pathname,
   if (iterator_servant->init () != 0)
     {
       if (errno == EACCES)
-        // HTTP 1.1 "Forbidden".
-        throw Web_Server::Error_Result (403);
+        {
+          // HTTP 1.1 "Forbidden".
+          throw Web_Server::Error_Result (403);
+        }
       else
-        // HTTP 1.1 "Internal Server Error".
-        throw Web_Server::Error_Result (500);
+        {
+          // HTTP 1.1 "Internal Server Error".
+          throw Web_Server::Error_Result (500);
+        }
     }
 
   // Activate the Content_Iterator object.
@@ -59,13 +65,17 @@ Iterator_Factory_i::get_iterator (char const *pathname,
 
   if (this->modification_date (file_status,
                                *metadata_value) != 0)
-    // HTTP 1.1 "Internal Server Error.
-    throw Web_Server::Error_Result (500);
+    {
+      // HTTP 1.1 "Internal Server Error.
+      throw Web_Server::Error_Result (500);
+    }
 
   if (this->content_type (filename,
                           *metadata_value) != 0)
-    // HTTP 1.1 "Internal Server Error.
-    throw Web_Server::Error_Result (500);
+    {
+      // HTTP 1.1 "Internal Server Error.
+      throw Web_Server::Error_Result (500);
+    }
 
   contents = iterator._retn ();
   metadata = metadata_value._retn ();
@@ -93,7 +103,9 @@ Iterator_Factory_i::modification_date (ACE_stat const& file_status,
                      buf.size (),
                      "%a, %d %b %Y %H:%M:%S GMT",
                      t_gmt) == 0)
-    return -1;
+    {
+      return -1;
+    }
   else
   {
     metadata.modification_date = CORBA::string_dup (buf.data ());
@@ -113,31 +125,47 @@ Iterator_Factory_i::content_type (std::string const& filename,
 
   if (ACE_OS::strcasecmp (extension.c_str (), "htm") == 0
       || ACE_OS::strcasecmp (extension.c_str (), "html") == 0)
-    metadata.content_type = CORBA::string_dup ("text/html");
+    {
+      metadata.content_type = CORBA::string_dup ("text/html");
+    }
   else if (ACE_OS::strcasecmp (extension.c_str (),
                                "txt") == 0)
-    metadata.content_type = CORBA::string_dup ("text/plain");
+    {
+      metadata.content_type = CORBA::string_dup ("text/plain");
+    }
   else if (ACE_OS::strcasecmp (extension.c_str (),
                                "ps") == 0)
-    metadata.content_type =
-      CORBA::string_dup ("application/postscript");
+    {
+      metadata.content_type =
+        CORBA::string_dup ("application/postscript");
+    }
   else if (ACE_OS::strcasecmp (extension.c_str (),
                                "pdf") == 0)
-    metadata.content_type = CORBA::string_dup ("application/pdf");
+    {
+      metadata.content_type = CORBA::string_dup ("application/pdf");
+    }
   else if (ACE_OS::strcasecmp (extension.c_str (),
                                "jpeg") == 0
            || ACE_OS::strcasecmp (extension.c_str (),
                                   "jpg") == 0)
-    metadata.content_type = CORBA::string_dup ("image/jpeg");
+    {
+      metadata.content_type = CORBA::string_dup ("image/jpeg");
+    }
   else if (ACE_OS::strcasecmp (extension.c_str (),
                                "tiff") == 0)
-    metadata.content_type = CORBA::string_dup ("image/tiff");
+    {
+      metadata.content_type = CORBA::string_dup ("image/tiff");
+    }
   else if (ACE_OS::strcasecmp (extension.c_str (),
                                "gif") == 0)
-    metadata.content_type = CORBA::string_dup ("image/gif");
+    {
+      metadata.content_type = CORBA::string_dup ("image/gif");
+    }
   else if (ACE_OS::strcasecmp (extension.c_str (),
                                "png") == 0)
-    metadata.content_type = CORBA::string_dup ("image/png");
+    {
+      metadata.content_type = CORBA::string_dup ("image/png");
+    }
   else
     {
       metadata.content_type = CORBA::string_dup ("text/html");

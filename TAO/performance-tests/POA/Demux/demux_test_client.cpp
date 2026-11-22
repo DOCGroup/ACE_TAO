@@ -52,53 +52,59 @@ Demux_Test_Client::init (int argc, ACE_TCHAR *argv [])
   // of objects with each POA and other info
 
   if (this->parse_args () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%N:%l) Demux_Test_Client::init - "
-                       "parse_args failed\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) Demux_Test_Client::init - "
+                         "parse_args failed\n"),
+                        -1);
+    }
 
   if (this->init_operation_db () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%N:%l) Demux_Test_Client::init - "
-                       "init_operation_db failed\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) Demux_Test_Client::init - "
+                         "init_operation_db failed\n"),
+                        -1);
+    }
 
   // now read all the IORS
   for (CORBA::ULong i = 0; i < this->num_POAs_; ++i)
-    for (CORBA::ULong j = 0; j < this->num_objs_; ++j)
-      {
-        char str [1024 * 10] {};
+    {
+      for (CORBA::ULong j = 0; j < this->num_objs_; ++j)
+        {
+          char str [1024 * 10] {};
 
-        if (fscanf (this->ior_fp_.get (), "%s", str) == EOF)
-          {
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "IOR database has less entries than required\n"),
-                              -1);
-          }
-
-        // Get the IOR and output it to the file
-        try
-          {
-            CORBA::Object_var objref = this->orb_->string_to_object (str);
-
-            // now narrow to Demux_Test object
-
-            this->demux_test_[i * j] = Demux_Test::_narrow (objref.in ());
-
-            if (CORBA::is_nil (this->demux_test_[i * j].in ()))
-              {
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   "ObjRef for IOR %s (POA %d, OBJ %d) is NULL\n",
-                                   str, i, j),
-                                  -1);
-              }
+          if (fscanf (this->ior_fp_.get (), "%s", str) == EOF)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "IOR database has less entries than required\n"),
+                                -1);
             }
-        catch (const CORBA::Exception& ex)
-          {
-            ex._tao_print_exception ("object_to_string");
-            throw;
-          }
-      } // j and i loop
+
+          // Get the IOR and output it to the file
+          try
+            {
+              CORBA::Object_var objref = this->orb_->string_to_object (str);
+
+              // now narrow to Demux_Test object
+
+              this->demux_test_[i * j] = Demux_Test::_narrow (objref.in ());
+
+              if (CORBA::is_nil (this->demux_test_[i * j].in ()))
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "ObjRef for IOR %s (POA %d, OBJ %d) is NULL\n",
+                                     str, i, j),
+                                    -1);
+                }
+              }
+          catch (const CORBA::Exception& ex)
+            {
+              ex._tao_print_exception ("object_to_string");
+              throw;
+            }
+        } // j and i loop
+    }
 
   this->ior_fp_.reset ();
 
@@ -114,106 +120,114 @@ Demux_Test_Client::parse_args ()
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'd':  // debug flag
-        ++TAO_debug_level;
-        break;
-      case 'f':
-        this->ior_fp_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
-        if (!this->ior_fp_)
+                {
+      switch (c)
+        {
+        case 'd':  // debug flag
+          ++TAO_debug_level;
+          break;
+        case 'f':
+          this->ior_fp_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
+          if (!this->ior_fp_)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Unable to open %s for writing: %p\n",
+                                 get_opts.opt_arg ()), -1);
+            }
+          break;
+        case 'm':
+          this->num_ops_ = ACE_OS::atoi (get_opts.opt_arg ());
+          if (this->num_ops_ > TAO_DEMUX_TEST_MAX_OPS)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "%d exceeds the maximum of "
+                                 "%d objects per POA\n",
+                                 this->num_objs_,
+                                 TAO_DEMUX_TEST_MAX_OPS),
+                                -1);
+            }
+          break;
+        case 'n':
+          this->loop_count_ = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
+        case 'o':
+          this->num_objs_ = ACE_OS::atoi (get_opts.opt_arg ());
+          if (this->num_objs_ > TAO_DEMUX_TEST_MAX_OBJS)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "%d exceeds the maximum of "
+                                 "%d objects per POA\n",
+                                 this->num_objs_,
+                                 TAO_DEMUX_TEST_MAX_OBJS),
+                                -1);
+            }
+          break;
+        case 'p':
+          this->num_POAs_ = ACE_OS::atoi (get_opts.opt_arg ());
+          if (this->num_POAs_ > TAO_DEMUX_TEST_MAX_POAS)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "%d exceeds the maximum of "
+                                 "%d POAs\n",
+                                 this->num_objs_,
+                                 TAO_DEMUX_TEST_MAX_POAS),
+                                -1);
+            }
+          break;
+        case 'i':
+          switch (*get_opts.opt_arg ())
+            {
+            case 'L':
+              this->is_ = Demux_Test_Client::LINEAR;
+              break;
+            case 'R':
+              this->is_ = Demux_Test_Client::RANDOM;
+              break;
+            case 'B':
+              this->is_ = Demux_Test_Client::BEST;
+              break;
+            case 'W':
+              this->is_ = Demux_Test_Client::WORST;
+              break;
+            }
+          break;
+        case 's':
+          this->step_ = ACE_OS::atoi (get_opts.opt_arg ());
+          if (this->step_ > this->num_objs_)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "%d exceeds the no. of Objs specified"),
+                                this->step_);
+            }
+          break;
+        case '?':
+        default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing: %p\n",
-                             get_opts.opt_arg ()), -1);
-        break;
-      case 'm':
-        this->num_ops_ = ACE_OS::atoi (get_opts.opt_arg ());
-        if (this->num_ops_ > TAO_DEMUX_TEST_MAX_OPS)
-          {
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%d exceeds the maximum of "
-                               "%d objects per POA\n",
-                               this->num_objs_,
-                               TAO_DEMUX_TEST_MAX_OPS),
-                              -1);
-          }
-        break;
-      case 'n':
-        this->loop_count_ = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-      case 'o':
-        this->num_objs_ = ACE_OS::atoi (get_opts.opt_arg ());
-        if (this->num_objs_ > TAO_DEMUX_TEST_MAX_OBJS)
-          {
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%d exceeds the maximum of "
-                               "%d objects per POA\n",
-                               this->num_objs_,
-                               TAO_DEMUX_TEST_MAX_OBJS),
-                              -1);
-          }
-        break;
-      case 'p':
-        this->num_POAs_ = ACE_OS::atoi (get_opts.opt_arg ());
-        if (this->num_POAs_ > TAO_DEMUX_TEST_MAX_POAS)
-          {
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%d exceeds the maximum of "
-                               "%d POAs\n",
-                               this->num_objs_,
-                               TAO_DEMUX_TEST_MAX_POAS),
-                              -1);
-          }
-        break;
-      case 'i':
-        switch (*get_opts.opt_arg ())
-          {
-          case 'L':
-            this->is_ = Demux_Test_Client::LINEAR;
-            break;
-          case 'R':
-            this->is_ = Demux_Test_Client::RANDOM;
-            break;
-          case 'B':
-            this->is_ = Demux_Test_Client::BEST;
-            break;
-          case 'W':
-            this->is_ = Demux_Test_Client::WORST;
-            break;
-          }
-        break;
-      case 's':
-        this->step_ = ACE_OS::atoi (get_opts.opt_arg ());
-        if (this->step_ > this->num_objs_)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "%d exceeds the no. of Objs specified"),
-                            this->step_);
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " [-d]"
-                           " [-m <num ops>]"
-                           " [-o <num objs>]"
-                           " [-p <num POAs]"
-                           " [-i <invoke strategy>"
-                           " [-f <IOR file>]"
-                           " [-n <loop count>]"
-                           "\n"
-                           "Invocation Strategy: L(linear), R(random)"
-                           "B(best), W(worst)\n",
-                           this->argv_ [0]),
-                          -1);
-      }
+                             "usage:  %s"
+                             " [-d]"
+                             " [-m <num ops>]"
+                             " [-o <num objs>]"
+                             " [-p <num POAs]"
+                             " [-i <invoke strategy>"
+                             " [-f <IOR file>]"
+                             " [-n <loop count>]"
+                             "\n"
+                             "Invocation Strategy: L(linear), R(random)"
+                             "B(best), W(worst)\n",
+                             this->argv_ [0]),
+                            -1);
+        }
+                }
 
   if (!this->ior_fp_)
     {
       // open default IOR file
       this->ior_fp_.reset (ACE_OS::fopen ("ior.dat", "r"));
       if (!this->ior_fp_)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to open file ior.dat for reading\n"), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to open file ior.dat for reading\n"), -1);
+        }
     }
   return 0;
 }
@@ -292,20 +306,24 @@ Demux_Test_Client::run_linear_test ()
   CORBA::ULong m = 0;
 
   for (CORBA::ULong j = 0; j < this->num_POAs_; ++j)
-    for (CORBA::ULong k = 0; k < this->num_objs_; k += this->step_)
-      for (CORBA::ULong l = 0; l < this->num_ops_; ++l)
-          {
-            ACE_hrtime_t const start = ACE_OS::gethrtime ();
+    {
+      for (CORBA::ULong k = 0; k < this->num_objs_; k += this->step_)
+    {
+          for (CORBA::ULong l = 0; l < this->num_ops_; ++l)
+              {
+                ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
-            // invoke the method
-            this->op_db_[l].op_ (this->demux_test_[j * k].in ());
+                // invoke the method
+                this->op_db_[l].op_ (this->demux_test_[j * k].in ());
 
-            ACE_hrtime_t const end = ACE_OS::gethrtime ();
+                ACE_hrtime_t const end = ACE_OS::gethrtime ();
 
-            ++m;
-            ACE_OS::fprintf (this->result_fp_.get (), "%d %f\n", m,
-                             1.0 * ACE_UINT64_DBLCAST_ADAPTER (end - start));
-          }
+                ++m;
+                ACE_OS::fprintf (this->result_fp_.get (), "%d %f\n", m,
+                                 1.0 * ACE_UINT64_DBLCAST_ADAPTER (end - start));
+              }
+    }
+    }
 
   return 0;
 }

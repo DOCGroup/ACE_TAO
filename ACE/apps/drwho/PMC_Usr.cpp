@@ -11,8 +11,10 @@ int
 PMC_Usr::encode (char *packet, int &packet_length)
 {
   if (Options::get_opt (Options::DEBUGGING) != 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "in PMC_Usr::encode"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "in PMC_Usr::encode"));
+    }
 
   Search_Struct *lookup {};
   ACE_NEW_RETURN (lookup, SL_Client (this->usr_name), -1);
@@ -78,39 +80,45 @@ PMC_Usr::process ()
   Drwho_Node *np  = prp->get_drwho_list ();
 
   if (np == nullptr)
-    ACE_DEBUG ((LM_DEBUG,
-                "<unknown>"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "<unknown>"));
+    }
   else
     {
       // First try to get a login session that is active...
 
       for (; np != nullptr; np = np->next_)
-        if (np->active_count_ > 0)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        "%s ",
-                        np->get_host_name ()));
-
-            if (!Options::get_opt (Options::USE_VERBOSE_FORMAT))
+    {
+          if (np->active_count_ > 0)
             {
-              return;
+              ACE_DEBUG ((LM_DEBUG,
+                          "%s ",
+                          np->get_host_name ()));
+
+              if (!Options::get_opt (Options::USE_VERBOSE_FORMAT))
+              {
+                return;
+              }
             }
-          }
+    }
 
       for (np = prp->get_drwho_list ();
            np != nullptr;
            np = np->next_)
-        if (np->active_count_ == 0)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        "%s ",
-                        np->get_host_name ()));
-
-            if (!Options::get_opt (Options::USE_VERBOSE_FORMAT))
+                {
+          if (np->active_count_ == 0)
             {
-              return;
+              ACE_DEBUG ((LM_DEBUG,
+                          "%s ",
+                          np->get_host_name ()));
+
+              if (!Options::get_opt (Options::USE_VERBOSE_FORMAT))
+              {
+                return;
+              }
             }
-          }
+                }
     }
 }
 

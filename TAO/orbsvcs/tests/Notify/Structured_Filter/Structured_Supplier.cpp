@@ -210,10 +210,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
           ACE_OS::fopen (client.options ().ior_file, ACE_TEXT ("w")), ACE_OS::fclose);
         if (!output_file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Cannot open output file %s for writing IOR\n"),
-                             client.options ().ior_file),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Cannot open output file %s for writing IOR\n"),
+                               client.options ().ior_file),
+                              1);
+          }
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
 
@@ -222,10 +224,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Supplier sending %d events...\n", event_count));
       for (int i {}; i < event_count; ++i)
-        if (send_event (*supplier, i) != 0)
-        {
-          return 1;
-        }
+          {
+          if (send_event (*supplier, i) != 0)
+          {
+            return 1;
+          }
+          }
       ACE_DEBUG ((LM_DEBUG, "\nSupplier sent %d events.\n", event_count));
 
       sig_impl->wait_for_completion ();

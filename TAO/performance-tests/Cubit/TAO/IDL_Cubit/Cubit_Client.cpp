@@ -213,109 +213,117 @@ Cubit_Client::parse_args ()
   u_int test_mask = 0;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'b':
-        // bytes in octet sequence
-        result = ACE_OS::atoi (get_opts.opt_arg ());
+    {
+      switch (c)
+        {
+        case 'b':
+          // bytes in octet sequence
+          result = ACE_OS::atoi (get_opts.opt_arg ());
 
-        if (result <= 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Invalid number of bytes entered: <%s>\n",
-                             get_opts.opt_arg ()),
-                            -1);
+          if (result <= 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Invalid number of bytes entered: <%s>\n",
+                                 get_opts.opt_arg ()),
+                                -1);
+            }
         else
-        {
-          this->bytes_in_octet_sequence_ = (u_int) result;
-        }
-        break;
-      case 't':
-        test_mask = this->opt_to_mask (get_opts.opt_arg ());
-        if (test_mask == 0)
-        {
-          return -1;
-        }
-        this->enable_test (test_mask);
-        break;
-      case 'z':
-        test_mask = this->opt_to_mask (get_opts.opt_arg ());
-        if (test_mask == 0)
-        {
-          return -1;
-        }
-        this->disable_test (test_mask);
-        break;
-      case 'v':
-        // For backward compatibility
-        test_mask = this->opt_to_mask (ACE_TEXT("void"));
-        if (test_mask == 0)
-        {
-          return -1;
-        }
-        this->enable_test (test_mask);
-        break;
-      case 'o':
-        // For backward compatibility
-        test_mask = this->opt_to_mask (ACE_TEXT("one_way"));
-        if (test_mask == 0)
-        {
-          return -1;
-        }
-        this->enable_test (test_mask);
-        break;
-      case 'd':  // debug flag
-        ++TAO_debug_level;
-        break;
-      case 'n':                 // loop count
-        result = ACE_OS::atoi (get_opts.opt_arg ());
+          {
+            this->bytes_in_octet_sequence_ = (u_int) result;
+          }
+          break;
+        case 't':
+          test_mask = this->opt_to_mask (get_opts.opt_arg ());
+          if (test_mask == 0)
+          {
+            return -1;
+          }
+          this->enable_test (test_mask);
+          break;
+        case 'z':
+          test_mask = this->opt_to_mask (get_opts.opt_arg ());
+          if (test_mask == 0)
+          {
+            return -1;
+          }
+          this->disable_test (test_mask);
+          break;
+        case 'v':
+          // For backward compatibility
+          test_mask = this->opt_to_mask (ACE_TEXT("void"));
+          if (test_mask == 0)
+          {
+            return -1;
+          }
+          this->enable_test (test_mask);
+          break;
+        case 'o':
+          // For backward compatibility
+          test_mask = this->opt_to_mask (ACE_TEXT("one_way"));
+          if (test_mask == 0)
+          {
+            return -1;
+          }
+          this->enable_test (test_mask);
+          break;
+        case 'd':  // debug flag
+          ++TAO_debug_level;
+          break;
+        case 'n':                 // loop count
+          result = ACE_OS::atoi (get_opts.opt_arg ());
 
-        if (result <= 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Invalid number of iterations entered: <%s>\n",
-                             get_opts.opt_arg ()),
-                            -1);
+          if (result <= 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Invalid number of iterations entered: <%s>\n",
+                                 get_opts.opt_arg ()),
+                                -1);
+            }
         else
-        {
-          this->loop_count_ = (u_int) result;
-        }
-        break;
-      case 'f': // read the IOR from the file.
-        result = this->read_ior (get_opts.opt_arg ());
-        if (result < 0)
+          {
+            this->loop_count_ = (u_int) result;
+          }
+          break;
+        case 'f': // read the IOR from the file.
+          result = this->read_ior (get_opts.opt_arg ());
+          if (result < 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Unable to read ior from <%s> : %p\n",
+                                 get_opts.opt_arg (),
+                                 ""),
+                                -1);
+            }
+          break;
+        case 'k': // read the cubit IOR from the command-line.
+          this->cubit_factory_key_ =
+            ACE_OS::strdup (get_opts.opt_arg ());
+          break;
+        case 'x':
+          ACE_DEBUG ((LM_DEBUG, "We will shutdown the server\n"));
+          this->shutdown_ = 1;
+          break;
+        case 'q':
+          this->quiet_ = 1;
+          break;
+        case '?':
+        default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to read ior from <%s> : %p\n",
-                             get_opts.opt_arg (),
-                             ""),
+                             "usage:  %s"
+                             " [-b bytes-in-sequence]"
+                             " [-d]"
+                             " [-n loopcount]"
+                             " [-f cubit_factory-obj-ref-key-file]"
+                             " [-k cubit-obj-ref-key]"
+                             " [-x]"
+                             " [-s]"
+                             " [-t test-to-enable]"
+                             " [-z test-to-disable]"
+                             "\n",
+                             this->argv_ [0]),
                             -1);
-        break;
-      case 'k': // read the cubit IOR from the command-line.
-        this->cubit_factory_key_ =
-          ACE_OS::strdup (get_opts.opt_arg ());
-        break;
-      case 'x':
-        ACE_DEBUG ((LM_DEBUG, "We will shutdown the server\n"));
-        this->shutdown_ = 1;
-        break;
-      case 'q':
-        this->quiet_ = 1;
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " [-b bytes-in-sequence]"
-                           " [-d]"
-                           " [-n loopcount]"
-                           " [-f cubit_factory-obj-ref-key-file]"
-                           " [-k cubit-obj-ref-key]"
-                           " [-x]"
-                           " [-s]"
-                           " [-t test-to-enable]"
-                           " [-z test-to-disable]"
-                           "\n",
-                           this->argv_ [0]),
-                          -1);
-      }
+        }
+    }
 
   // Indicates successful parsing of command line.
   return 0;
@@ -815,7 +823,9 @@ Cubit_Client::cube_octet_sequence (int,
 
 #if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
       for (int i = 1 ; i < l; ++i)
-        input[i]=10;
+  {
+          input[i]=10;
+  }
 #endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 
       Cubit::octet_seq_var output;

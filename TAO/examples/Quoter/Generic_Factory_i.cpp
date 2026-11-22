@@ -43,8 +43,10 @@ Quoter_Generic_Factory_i::get_naming_context (CosLifeCycle::Key const &factory_k
         orb_ptr->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (namingObj_var.in ()))
-        ACE_ERROR ((LM_ERROR,
-                    "(%P|%t) Unable get the Naming Service.\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) Unable get the Naming Service.\n"));
+        }
 
       // Narrow the object reference to a Naming Context.
       CosNaming::NamingContext_var namingContext_var =

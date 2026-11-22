@@ -130,9 +130,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                               ACE_SCOPE_PROCESS)) != 0)
     {
       if (ACE_OS::last_error () == EPERM)
-        ACE_DEBUG ((LM_DEBUG,
-                    "client (%P|%t): user is not superuser, "
-                    "test runs in time-shared class\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "client (%P|%t): user is not superuser, "
+                      "test runs in time-shared class\n"));
+        }
       else
       {
         ACE_ERROR ((LM_ERROR, "client (%P|%t): sched_params failed\n"));
@@ -150,10 +152,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::Object_var object = orb->string_to_object (options.ior);
       if (CORBA::is_nil (object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("Nil CORBA::Object reference <%s>\n"),
-                           options.ior),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("Nil CORBA::Object reference <%s>\n"),
+                             options.ior),
+                            1);
+        }
 
       Test::octet_load initial_load;
       for (int i = 0; i < 100; ++i)
@@ -167,23 +171,35 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       if (ACE_OS::strcmp (options.data_type, ACE_TEXT("octet")) == 0)
-        test_sequence<Test::octet_load> (object, options,
-                                         "test_octet_method", "octet_load");
+        {
+          test_sequence<Test::octet_load> (object, options,
+                                           "test_octet_method", "octet_load");
+        }
       else if (ACE_OS::strcmp (options.data_type, ACE_TEXT("char")) == 0)
-        test_sequence<Test::char_load> (object, options,
-                                        "test_char_method", "char_load");
+        {
+          test_sequence<Test::char_load> (object, options,
+                                          "test_char_method", "char_load");
+        }
       else if (ACE_OS::strcmp (options.data_type, ACE_TEXT("long")) == 0)
-        test_sequence<Test::long_load> (object, options,
-                                        "test_long_method", "long_load");
+        {
+          test_sequence<Test::long_load> (object, options,
+                                          "test_long_method", "long_load");
+        }
       else if (ACE_OS::strcmp (options.data_type, ACE_TEXT("short")) == 0)
-        test_sequence<Test::short_load> (object, options,
-                                         "test_short_method", "short_load");
+        {
+          test_sequence<Test::short_load> (object, options,
+                                           "test_short_method", "short_load");
+        }
       else if (ACE_OS::strcmp (options.data_type, ACE_TEXT("double")) == 0)
-        test_sequence<Test::double_load> (object, options,
-                                          "test_double_method", "double_load");
+        {
+          test_sequence<Test::double_load> (object, options,
+                                            "test_double_method", "double_load");
+        }
       else if (ACE_OS::strcmp (options.data_type, ACE_TEXT("longlong")) == 0)
-        test_sequence<Test::longlong_load> (object, options,
-                                            "test_longlong_method", "longlong_load");
+        {
+          test_sequence<Test::longlong_load> (object, options,
+                                              "test_longlong_method", "longlong_load");
+        }
 
       if (options.shutdown)
         {

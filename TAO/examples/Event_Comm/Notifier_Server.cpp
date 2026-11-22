@@ -44,9 +44,11 @@ Notifier_Server::init_naming_service ()
       TAO_debug_level = 1;
 
       if (this->naming_server_.init (orb.in ()) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Failed to initialize TAO_Naming_Server\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Failed to initialize TAO_Naming_Server\n"),
+                            -1);
+        }
 
       // Register the object implementation with the POA.
       Event_Comm::Notifier_var notifier_obj =
@@ -82,11 +84,12 @@ Notifier_Server::init (int argc,
  if (this->orb_manager_.init_child_poa (argc,
                                         argv,
                                         "child_poa") == -1)
-
-   ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                      "init_child_poa"),
-                      -1);
+   {
+     ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                        "init_child_poa"),
+                        -1);
+   }
 
  this->orb_manager_.activate_poa_manager ();
 

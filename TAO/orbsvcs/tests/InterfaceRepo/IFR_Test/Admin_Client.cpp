@@ -95,47 +95,49 @@ Admin_Client::parse_args (int argc, ACE_TCHAR *argv[])
   int c {};
 
   while ((c = opts ()) != -1)
-    switch (c)
-      {
-      case 'd':   // debug flag
-        this->debug_ = true;
-        break;
-      case 'i':   // iterations
         {
-          int const iterations = ACE_OS::atoi (opts.opt_arg ());
-          if (iterations > 0)
+      switch (c)
+        {
+        case 'd':   // debug flag
+          this->debug_ = true;
+          break;
+        case 'i':   // iterations
           {
-            this->iterations_ = iterations;
-          }
-        }
-        break;
-      case 't':   // test selection
-        {
-          this->all_tests_ = false;
-          ACE_TCHAR const * const name = opts.opt_arg ();
-
-          for (size_t i {}; i < NUMBER_OF_TESTS; ++i)
+            int const iterations = ACE_OS::atoi (opts.opt_arg ());
+            if (iterations > 0)
             {
-              if (std::strcmp (ACE_TEXT_ALWAYS_CHAR (name), this->test_names_[i]) == 0)
-                {
-                  this->which_test_ = i;
-                  break;
-                }
+              this->iterations_ = iterations;
             }
-        }
+          }
+          break;
+        case 't':   // test selection
+          {
+            this->all_tests_ = false;
+            ACE_TCHAR const * const name = opts.opt_arg ();
 
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage: %s"
-                           " [-d]"
-                           " [-i iterations]"
-                           " [-t test name]"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+            for (size_t i {}; i < NUMBER_OF_TESTS; ++i)
+              {
+                if (std::strcmp (ACE_TEXT_ALWAYS_CHAR (name), this->test_names_[i]) == 0)
+                  {
+                    this->which_test_ = i;
+                    break;
+                  }
+              }
+          }
+
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage: %s"
+                             " [-d]"
+                             " [-i iterations]"
+                             " [-t test name]"
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+        }
 
   return 0;
 }
@@ -1616,10 +1618,12 @@ Admin_Client::exception_test ()
   for (i = 0; i < length; ++i)
     {
       if (this->debug_)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("ExceptionDef::members[%u]::name: %C\n"),
-                    i,
-                    out_members[i].name.in ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("ExceptionDef::members[%u]::name: %C\n"),
+                      i,
+                      out_members[i].name.in ()));
+        }
 
       if (i == 2)
         {

@@ -25,10 +25,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       if (argc < 2)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Usage: client filename ")
-                           ACE_TEXT ("[filename ...]\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Usage: client filename ")
+                             ACE_TEXT ("[filename ...]\n")),
+                            -1);
+        }
 
       // Initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,

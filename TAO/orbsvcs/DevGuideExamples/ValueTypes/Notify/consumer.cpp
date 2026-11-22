@@ -55,10 +55,12 @@ parse_args (int argc, ACE_TCHAR *argv[], ConsumerOptions &options)
     options.num_events = ACE_OS::atoi (argv[argument_index]);
   }
   if (argument_index + 1 < argc)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("usage: %s [-o <iorfile>] [-h <host>] [-p <port>] [num_events]\n"),
-                       argv[0]),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("usage: %s [-o <iorfile>] [-h <host>] [-p <port>] [num_events]\n"),
+                         argv[0]),
+                        -1);
+    }
   return 0;
 }
 

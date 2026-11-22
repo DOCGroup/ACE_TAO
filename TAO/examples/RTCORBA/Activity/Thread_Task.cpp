@@ -19,10 +19,12 @@ Thread_Task::activate_task (ACE_Barrier *barrier,
   RTCORBA::NativePriority native_priority;
 
   if (priority_mapping->to_native (this->task_priority_, native_priority) == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cannot convert CORBA priority %d to native priority\n",
-                       this->task_priority_),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Cannot convert CORBA priority %d to native priority\n",
+                         this->task_priority_),
+                        -1);
+    }
 
   long flags =
     THR_NEW_LWP |
@@ -36,15 +38,19 @@ Thread_Task::activate_task (ACE_Barrier *barrier,
                       native_priority) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Insufficient privilege to run this test.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Insufficient privilege to run this test.\n")),
+                            -1);
+        }
       else
-        ACE_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%t) task activation at priority %d failed, ")
-                    ACE_TEXT ("exiting!\n%a"),
-                    native_priority,
-                    -1));
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("(%t) task activation at priority %d failed, ")
+                      ACE_TEXT ("exiting!\n%a"),
+                      native_priority,
+                      -1));
+        }
     }
   return 0;
 }
@@ -60,9 +66,11 @@ Thread_Task::svc ()
         ACTIVITY::instance()->current ()->the_priority ();
 
       if (prio == this->task_priority_)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) actual prio of %d equals desired priority\n"),
-                    prio));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%t) actual prio of %d equals desired priority\n"),
+                      prio));
+        }
       else
         {
           ACE_DEBUG ((LM_ERROR,

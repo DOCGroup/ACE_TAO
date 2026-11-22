@@ -20,8 +20,10 @@ int
 PMS_Usr::encode (char *packet, int &packet_length)
 {
   if (Options::get_opt (Options::DEBUGGING) != 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "in PMS_Usr::encode"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "in PMS_Usr::encode"));
+    }
 
   char *buf_ptr = packet;
 

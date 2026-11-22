@@ -43,10 +43,12 @@ Consumer_Handler::init (int argc,
         this->receiver_i_._this ();
 
       if (this->get_notifier () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to get the notifier "
-                           "the TAO_Naming_Client.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to get the notifier "
+                             "the TAO_Naming_Client.\n"),
+                            -1);
+        }
 
       // Subscribe ourselves with the notifier's broker.
       this->notifier_->subscribe (this->receiver_.in (),
@@ -68,10 +70,12 @@ Consumer_Handler::get_notifier ()
     {
       // Initialization of the naming service.
       if (naming_services_client_.init (orb_.in ()) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize "
+                             "the TAO_Naming_Client.\n"),
+                            -1);
+        }
 
       CosNaming::Name notifier_ref_name (1);
       notifier_ref_name.length (1);

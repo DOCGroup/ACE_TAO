@@ -84,20 +84,24 @@ Gateway::init (int argc, ACE_TCHAR *argv[])
 
   if (ACE_Reactor::instance ()->register_handler (sig_set,
                                                   this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%t) %p\n"),
-                       ACE_TEXT ("register_handler")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%t) %p\n"),
+                         ACE_TEXT ("register_handler")),
+                        -1);
+    }
 
   // Register this handler to receive events on stdin.  We use this to
   // shutdown the Gateway gracefully.
   if (ACE_Event_Handler::register_stdin_handler (this,
                                                  ACE_Reactor::instance (),
                                                  ACE_Thread_Manager::instance ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%t) %p\n"),
-                       ACE_TEXT ("register_stdin_handler")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%t) %p\n"),
+                         ACE_TEXT ("register_stdin_handler")),
+                        -1);
+    }
 
   // If this->performance_window_ > 0 start a timer.
 
@@ -107,13 +111,17 @@ Gateway::init (int argc, ACE_TCHAR *argv[])
       if (ACE_Reactor::instance ()->schedule_timer
           (std::addressof (this->event_channel_), 0,
            performance_time) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("schedule_timer")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("schedule_timer")));
+        }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("starting timer for %q seconds...\n"),
-                    static_cast<ACE_INT64> (Options::instance ()->performance_window ())));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("starting timer for %q seconds...\n"),
+                      static_cast<ACE_INT64> (Options::instance ()->performance_window ())));
+        }
     }
 
   // Are we running as a connector?
@@ -182,10 +190,12 @@ Gateway::parse_connection_config_file ()
   int line_number {};
 
   if (connection_file.open (Options::instance ()->connection_config_file ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%t) %p\n"),
-                       Options::instance ()->connection_config_file ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%t) %p\n"),
+                         Options::instance ()->connection_config_file ()),
+                        -1);
+    }
 
   // Keep track of the previous connection id to make sure the
   // connection config file isn't corrupted.
@@ -205,36 +215,42 @@ Gateway::parse_connection_config_file ()
           previous_connection_id = 1;
 
           if (pci.connection_id_ != 1)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%t) warning, the first connection id should be 1 not %d\n"),
-                        pci.connection_id_));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%t) warning, the first connection id should be 1 not %d\n"),
+                          pci.connection_id_));
+            }
         }
       else if (previous_connection_id + 1 != pci.connection_id_)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) warning, connection ids should keep increasing by 1 and %d + 1 != %d\n"),
-                    previous_connection_id,
-                    pci.connection_id_));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%t) warning, connection ids should keep increasing by 1 and %d + 1 != %d\n"),
+                      previous_connection_id,
+                      pci.connection_id_));
+        }
 
       // Update the last connection id to ensure that we monotonically
       // increase by 1.
       previous_connection_id = pci.connection_id_;
 
       if (Options::instance ()->enabled (Options::DEBUGGING))
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) conn id = %d, ")
-                    ACE_TEXT ("host = %s, ")
-                    ACE_TEXT ("remote port = %d, ")
-                    ACE_TEXT ("proxy role = %c, ")
-                    ACE_TEXT ("max retry timeout = %d, ")
-                    ACE_TEXT ("local port = %d, ")
-                    ACE_TEXT ("priority = %d\n"),
-                    pci.connection_id_,
-                    pci.host_,
-                    pci.remote_port_,
-                    pci.connection_role_,
-                    pci.max_retry_timeout_,
-                    pci.local_port_,
-                    pci.priority_));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%t) conn id = %d, ")
+                      ACE_TEXT ("host = %s, ")
+                      ACE_TEXT ("remote port = %d, ")
+                      ACE_TEXT ("proxy role = %c, ")
+                      ACE_TEXT ("max retry timeout = %d, ")
+                      ACE_TEXT ("local port = %d, ")
+                      ACE_TEXT ("priority = %d\n"),
+                      pci.connection_id_,
+                      pci.host_,
+                      pci.remote_port_,
+                      pci.connection_role_,
+                      pci.max_retry_timeout_,
+                      pci.local_port_,
+                      pci.priority_));
+        }
 
       pci.event_channel_ = std::addressof (this->event_channel_);
 
@@ -254,8 +270,10 @@ Gateway::parse_connection_config_file ()
   Options::instance ()->connection_id () = previous_connection_id + 1;
 
   if (file_empty)
-    ACE_ERROR ((LM_WARNING,
-               ACE_TEXT ("warning: connection connection_handler configuration file was empty\n")));
+    {
+      ACE_ERROR ((LM_WARNING,
+                 ACE_TEXT ("warning: connection connection_handler configuration file was empty\n")));
+    }
   return 0;
 }
 
@@ -268,10 +286,12 @@ Gateway::parse_consumer_config_file ()
   int line_number {};
 
   if (consumer_file.open (Options::instance ()->consumer_config_file ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%t) %p\n"),
-                       Options::instance ()->consumer_config_file ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%t) %p\n"),
+                         Options::instance ()->consumer_config_file ()),
+                        -1);
+    }
 
   // Read config file line at a time.
   for (Consumer_Config_Info cci_entry;
@@ -290,10 +310,12 @@ Gateway::parse_consumer_config_file ()
                       cci_entry.total_consumers_));
 
           for (int i = 0; i < cci_entry.total_consumers_; ++i)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%t) destination[%d] = %d\n"),
-                        i,
-                        cci_entry.consumers_[i]));
+        {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%t) destination[%d] = %d\n"),
+                          i,
+                          cci_entry.consumers_[i]));
+        }
         }
 
       Consumer_Dispatch_Set *dispatch_set_raw {};
@@ -314,20 +336,26 @@ Gateway::parse_consumer_config_file ()
           // if found.
           if (this->event_channel_.find_proxy (cci_entry.consumers_[i],
                                                connection_handler) != -1)
-            dispatch_set->insert (connection_handler);
+            {
+              dispatch_set->insert (connection_handler);
+            }
           else
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%t) not found: destination[%d] = %d\n"),
-                        i,
-                        cci_entry.consumers_[i]));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%t) not found: destination[%d] = %d\n"),
+                          i,
+                          cci_entry.consumers_[i]));
+            }
         }
 
       this->event_channel_.subscribe (event_addr, std::move (dispatch_set));
     }
 
   if (file_empty)
-    ACE_ERROR ((LM_WARNING,
-               ACE_TEXT ("warning: consumer map configuration file was empty\n")));
+    {
+      ACE_ERROR ((LM_WARNING,
+                 ACE_TEXT ("warning: consumer map configuration file was empty\n")));
+    }
   return 0;
 }
 

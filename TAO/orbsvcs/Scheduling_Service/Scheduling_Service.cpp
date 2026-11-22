@@ -76,9 +76,11 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR * argv[])
         orb->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to locate the Naming Service.\n"),
-                          -1);
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to locate the Naming Service.\n"),
+                            -1);
+        }
       CosNaming::NamingContext_var const naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
 

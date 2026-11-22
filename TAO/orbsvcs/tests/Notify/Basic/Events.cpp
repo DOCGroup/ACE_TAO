@@ -18,9 +18,11 @@ Event_StructuredPushConsumer::push_structured_event (
   notification.filterable_data[0].value >>= event_num;
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "Received event# %d\n",
-                event_num));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Received event# %d\n",
+                  event_num));
+    }
 
   this->test_client_->on_event_received ();
 }
@@ -193,9 +195,11 @@ Events::on_event_received ()
   ++this->result_count_;
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "event count = #%d\n",
-                this->result_count_.load ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "event count = #%d\n",
+                  this->result_count_.load ()));
+    }
 
   if (this->result_count_.load () == 2 * this->event_count_)
     {

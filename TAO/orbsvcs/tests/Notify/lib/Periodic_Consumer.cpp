@@ -159,14 +159,18 @@ TAO_Notify_Tests_Periodic_Consumer::check_priority (const CosNotification::Prope
       priority_mapping->to_CORBA (native_priority, corba_priority);
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Periodic Consumer expected priority = %d, received priority = %d/%d (native/corba)\n",
-                    event_priority, native_priority, corba_priority));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Periodic Consumer expected priority = %d, received priority = %d/%d (native/corba)\n",
+                      event_priority, native_priority, corba_priority));
+        }
 
       if (corba_priority != event_priority)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Error: Periodic Consumer expected priority = %d, received priority = %d\n",
-                    event_priority, corba_priority));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Error: Periodic Consumer expected priority = %d, received priority = %d\n",
+                      event_priority, corba_priority));
+        }
     }
 }
 
@@ -238,9 +242,11 @@ TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification
   (void)ACE::gcd (prime_number, prime_number/2 -1);
 
   for (CORBA::ULong load = this->load_; load != 0; --load)
-    ACE::is_prime (prime_number,
-                   2,
-                   prime_number / 2);
+        {
+      ACE::is_prime (prime_number,
+                     2,
+                     prime_number / 2);
+        }
 
   // ---
 

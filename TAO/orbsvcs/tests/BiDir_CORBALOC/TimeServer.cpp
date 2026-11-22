@@ -95,9 +95,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CosNaming::NamingContext::_narrow (name_obj.in ());
 
       if (CORBA::is_nil (naming_context.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) Error fetching naming context\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) Error fetching naming context\n"),
+                            -1);
+        }
 
       CosNaming::Name service_name (1);
       service_name.length (1);

@@ -132,8 +132,10 @@ Consumer_Input_Handler::unregister_consumer ()
       consumer_handler_->registered_ = false;
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                " Invalid Operation: Consumer not Registered\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  " Invalid Operation: Consumer not Registered\n"));
+    }
 
   return 0;
 }

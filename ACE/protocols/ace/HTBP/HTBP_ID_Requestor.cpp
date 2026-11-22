@@ -42,21 +42,25 @@ ACE::HTBP::ID_Requestor::connect_to_server (ACE_SOCK_Stream *cli_stream)
       int port_sep = 0;
       int sep = 0;
       if (host_start == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("(%P|%t) ACE::HTBP::ID_Requestor::")
-                           ACE_TEXT("connect_to_server: ")
-                           ACE_TEXT("invalid URL: \"%s\"\n"),
-                           url_.c_str()),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("(%P|%t) ACE::HTBP::ID_Requestor::")
+                             ACE_TEXT("connect_to_server: ")
+                             ACE_TEXT("invalid URL: \"%s\"\n"),
+                             url_.c_str()),
+                            -1);
+        }
       port_sep = url_.find (ACE_TEXT(":"),(size_t)host_start);
       sep = url_.find (ACE_TEXT("/"),(size_t)host_start);
       if (sep == -1 || sep == host_start +1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("(%P|%t) ACE::HTBP::ID_Requestor::")
-                           ACE_TEXT("connect_to_server: ")
-                           ACE_TEXT("invalid URL: \"%s\"\n"),
-                           url_.c_str()),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("(%P|%t) ACE::HTBP::ID_Requestor::")
+                             ACE_TEXT("connect_to_server: ")
+                             ACE_TEXT("invalid URL: \"%s\"\n"),
+                             url_.c_str()),
+                            -1);
+        }
       if (port_sep == -1)
         {
           port_sep = sep;
@@ -69,12 +73,14 @@ ACE::HTBP::ID_Requestor::connect_to_server (ACE_SOCK_Stream *cli_stream)
   ACE_SOCK_Connector con;
   if (con.connect (*cli_stream,
                    remote_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("(%P|%t) ACE::HTBP::ID_Requestor::")
-                       ACE_TEXT("connect_to_server: ")
-                       ACE_TEXT("%p\n"),
-                       ACE_TEXT("socket connect")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("(%P|%t) ACE::HTBP::ID_Requestor::")
+                         ACE_TEXT("connect_to_server: ")
+                         ACE_TEXT("%p\n"),
+                         ACE_TEXT("socket connect")),
+                        -1);
+    }
   return 0;
 }
 
@@ -101,10 +107,12 @@ ACE::HTBP::ID_Requestor::send_request (ACE_SOCK_Stream *cli_stream)
   std::snprintf (buffer.get (), buffer_size, "GET %s HTTP/1.0\n\n", url);
   int result = cli_stream->send_n (buffer.get (), buffer_size - 1);
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("(%P|%t) ACE::HTBP::ID_Requestor::")
-                       ACE_TEXT("send_request %p\n"),
-                       ACE_TEXT("socket send")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("(%P|%t) ACE::HTBP::ID_Requestor::")
+                         ACE_TEXT("send_request %p\n"),
+                         ACE_TEXT("socket send")), -1);
+    }
   return 0;
 }
 

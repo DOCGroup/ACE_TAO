@@ -24,9 +24,11 @@ Protocol_Manager::get_drwho_node (char *key_name, Drwho_Node *&head)
     }
 
   if (*temp == nullptr)
-    ACE_NEW_RETURN (head,
-                    Drwho_Node (key_name, head),
-                    nullptr);
+    {
+      ACE_NEW_RETURN (head,
+                      Drwho_Node (key_name, head),
+                      nullptr);
+    }
   else
     {
       Drwho_Node *t = *temp;
@@ -45,8 +47,10 @@ Protocol_Manager::Protocol_Manager () = default;
 Protocol_Manager::~Protocol_Manager ()
 {
   if (Options::get_opt (Options::DEBUGGING))
-    ACE_DEBUG ((LM_DEBUG,
-                "disposing Protocol_Manager\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "disposing Protocol_Manager\n"));
+    }
 }
 
 // Returns the next friend in the sequence of sorted friends.
