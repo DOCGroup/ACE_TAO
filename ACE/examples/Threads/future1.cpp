@@ -337,7 +337,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   Scheduler andres ("andres");
   Scheduler peter ("peter");
   Scheduler helmut ("helmut");
-  Scheduler matias ("matias", &andres);
+  Scheduler matias ("matias", std::addressof (andres));
   if (andres.open () == -1 || peter.open () == -1 || helmut.open () == -1)
   {
     ACE_ERROR_RETURN ((LM_ERROR, "failed to open a scheduler\n"), -1);

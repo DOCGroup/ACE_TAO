@@ -48,7 +48,7 @@ Async_Timer_Queue::instance ()
       result.sig_del (SIGQUIT);
       return result;
     } ();
-  static Async_Timer_Queue instance (&signal_mask);
+  static Async_Timer_Queue instance (std::addressof (signal_mask));
   return std::addressof (instance);
 }
 

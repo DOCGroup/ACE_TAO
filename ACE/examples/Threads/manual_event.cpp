@@ -16,6 +16,7 @@
 #include "ace/Manual_Event.h"
 #include "ace/Thread_Manager.h"
 #include <atomic>
+#include <memory>
 
 #if defined (ACE_HAS_THREADS)
 static std::atomic<int> amount_of_work {0};
@@ -93,7 +94,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
   Pseudo_Barrier thread_barrier (n_threads);
 
   // create workers
-  if (tm.spawn_n (n_threads, worker, &thread_barrier) == -1)
+  if (tm.spawn_n (n_threads, worker, std::addressof (thread_barrier)) == -1)
   {
     ACE_ERROR_RETURN ((LM_ERROR, "thread creates for worker failed"), -1);
   }

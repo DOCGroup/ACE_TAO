@@ -396,7 +396,7 @@ test_active_object (int n_iterations)
   Scheduler worker_a ("worker A");
   Scheduler worker_b ("worker B");
   // Have worker_c delegate his work to worker_a.
-  Scheduler worker_c ("worker C", &worker_a);
+  Scheduler worker_c ("worker C", std::addressof (worker_a));
 
   // loop 0:
   // test the Schedulers when they are not active.

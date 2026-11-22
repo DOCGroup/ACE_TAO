@@ -10,6 +10,7 @@
 #include "../Latency_Stats.h"
 #include <cerrno>
 #include <limits>
+#include <memory>
 
 static size_t number_of_messages {100};
 static size_t message_size {100};
@@ -386,7 +387,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   for (i = 0; i < number_of_workers; ++i)
     {
       ACE_NEW_RETURN (workers[i],
-                      Worker_Task (&message_queue),
+                      Worker_Task (std::addressof (message_queue)),
                       -1);
 
       // Activate the workers.
@@ -411,7 +412,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   // IO Task.
-  IO_Task io (&message_queue);
+  IO_Task io (std::addressof (message_queue));
 
   // Activate the workers.
   priority =

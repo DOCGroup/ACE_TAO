@@ -5,6 +5,8 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_time.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_THREADS)
 
 class My_Task : public ACE_Task<ACE_MT_SYNCH>
@@ -49,7 +51,9 @@ My_Task::svc ()
       // Wait for up to 1 millisecond past the current time to get the token.
       ACE_Time_Value timeout (ACE_OS::time (0), 1000);
 
-      if (this->token_.acquire (&My_Task::sleep_hook, 0, &timeout) == 1)
+      if (this->token_.acquire (&My_Task::sleep_hook,
+                                0,
+                                std::addressof (timeout)) == 1)
         {
           this->token_.acquire ();
           this->token_.renew ();
