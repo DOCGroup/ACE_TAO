@@ -14,7 +14,7 @@ class Notify_Service_Shutdown_Functor
   : public Shutdown_Functor
 {
 public:
-  Notify_Service_Shutdown_Functor (TAO_Notify_Service_Driver& svc);
+  explicit Notify_Service_Shutdown_Functor (TAO_Notify_Service_Driver& svc);
 
   void operator() (int which_signal) override;
 
