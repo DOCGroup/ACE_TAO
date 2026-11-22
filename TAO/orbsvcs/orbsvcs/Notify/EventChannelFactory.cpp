@@ -433,7 +433,7 @@ TAO_Notify_EventChannelFactory::unregister_callback (
 CORBA::Boolean
 TAO_Notify_EventChannelFactory::is_alive ()
 {
-  return CORBA::Boolean (1);
+  return true;
 }
 
 void
