@@ -213,7 +213,8 @@ private:
 #endif
 
 private slots:
-    // These are all part of the communication mechanism adopted in Qt.
+    /// @name Qt signal callbacks
+    /// @{
     /// Dispatch a Read Event
     void read_event (ACE_QT_HANDLE_TYPE p_handle);
 
@@ -225,6 +226,7 @@ private slots:
 
     /// Dispatch a timeout event
     void timeout_event ();
+    /// @}
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

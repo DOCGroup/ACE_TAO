@@ -20,8 +20,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// The following typedef is here for ease of use and backward
-// compatibility.
+/// This typedef is provided for ease of use and backward compatibility.
 using ACE_Countdown_Time = ACE_Countdown_Time_T<ACE_Default_Time_Policy>;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
