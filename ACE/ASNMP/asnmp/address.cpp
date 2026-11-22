@@ -42,18 +42,17 @@
 #include <memory>
 #include <new>
 
-// allow destruction of derived classes
+/// Allow destruction of derived classes.
 Address::~Address()
 = default;
 
-// is the address object valid?
+/// Return whether the address object is valid.
 int Address::valid() const
 {
   return valid_flag;
 }
 
-//------------[ Address::trim_white_space( char * ptr) ]------------
-// destructive trim white space
+/// Destructively trim whitespace.
 void Address::trim_white_space( char * ptr)
 {
   char *source = ptr;
@@ -71,7 +70,6 @@ void Address::trim_white_space( char * ptr)
 }
 
 //TM: this is not used nor needed, remove?
-//-----[ element access ]----------------------------------------------
 unsigned char& Address::operator[]( const int position)
 {
   if ( position < MAX_ADDR_SZ)
@@ -84,27 +82,27 @@ unsigned char& Address::operator[]( const int position)
     }
 }
 
-// overloaded equivlence operator, are two addresses equal?
+/// Overloaded equivalence operator, are two addresses equal?
 bool operator==( const Address &lhs, const Address &rhs)
 {
   return std::strcmp (static_cast<char const *> (lhs),
                       static_cast<char const *> (rhs)) == 0;
 }
 
-// overloaded equivlence operator, are two addresses equal?
+/// Overloaded inequality operator, are two addresses unequal?
 bool operator!=( const Address &lhs, const Address &rhs)
 {
   return (!( lhs == rhs));
 }
 
-// overloaded > operator, is a1 > a2
+/// Overloaded > operator, is a1 greater than a2?
 bool operator>( const Address &lhs, const Address &rhs)
 {
   return std::strcmp (static_cast<char const *> (lhs),
                       static_cast<char const *> (rhs)) > 0;
 }
 
-// overloaded >= operator, is a1 > a2
+/// Overloaded >= operator, is a1 greater than or equal to a2?
 bool operator>=( const Address &lhs,const Address &rhs)
 {
   if (( lhs > rhs) || ( lhs == rhs))
@@ -117,7 +115,7 @@ bool operator>=( const Address &lhs,const Address &rhs)
     }
 }
 
-// overloaded < operator, is a1 <= a2
+/// Overloaded <= operator, is a1 less than or equal to a2?
 bool operator<=( const Address &lhs,const Address &rhs)
 {
   if (( lhs < rhs) || ( lhs == rhs))
@@ -130,14 +128,14 @@ bool operator<=( const Address &lhs,const Address &rhs)
     }
 }
 
-// overloaded < operator, is a1 < a2
+/// Overloaded < operator, is a1 less than a2?
 bool operator<( const Address &lhs, const Address &rhs)
 {
   return std::strcmp (static_cast<char const *> (lhs),
                       static_cast<char const *> (rhs)) < 0;
 }
 
-// equivlence operator overloaded, are an address and a string equal?
+/// Overloaded equivalence operator, are an address and a string equal?
 bool operator==( const Address &lhs,const char *rhs)
 {
   if (!rhs && !lhs.valid())
@@ -147,13 +145,13 @@ bool operator==( const Address &lhs,const char *rhs)
   return std::strcmp (static_cast<char const *> (lhs), rhs) == 0;
 }
 
-// not equal operator overloaded, are an address and a string not equal?
+/// Overloaded inequality operator, are an address and a string unequal?
 bool operator!=( const Address &lhs,const char *rhs)
 {
   return (!( lhs == rhs));
 }
 
-// overloaded > , is a > inaddr
+/// Overloaded > operator, is an address greater than a string?
 bool operator>( const Address &lhs,const char *rhs)
 {
   if (!rhs)
@@ -163,7 +161,7 @@ bool operator>( const Address &lhs,const char *rhs)
   return std::strcmp (static_cast<char const *> (lhs), rhs) > 0;
 }
 
-// overloaded >= , is a >= inaddr
+/// Overloaded >= operator, is an address greater than or equal to a string?
 bool operator>=( const Address &lhs,const char *rhs)
 {
   if (!rhs)
@@ -173,7 +171,7 @@ bool operator>=( const Address &lhs,const char *rhs)
   return std::strcmp (static_cast<char const *> (lhs), rhs) >= 0;
 }
 
-// overloaded < , are an address and a string equal?
+/// Overloaded < operator, is an address less than a string?
 bool operator<( const Address &lhs,const char *rhs)
 {
   if (!rhs)
@@ -183,7 +181,7 @@ bool operator<( const Address &lhs,const char *rhs)
   return std::strcmp (static_cast<char const *> (lhs), rhs) < 0;
 }
 
-// overloaded <= , is a <= inaddr
+/// Overloaded <= operator, is an address less than or equal to a string?
 bool operator<=( const Address &lhs,const char *rhs)
 {
   if (!rhs)
@@ -193,7 +191,6 @@ bool operator<=( const Address &lhs,const char *rhs)
   return std::strcmp (static_cast<char const *> (lhs), rhs) <= 0;
 }
 
-//-----------[ syntax type ]----------------------------------------------
 SmiUINT32 IpAddress::get_syntax()
 {
   return sNMP_SYNTAX_IPADDR;
@@ -218,7 +215,7 @@ IpAddress::IpAddress(const IpAddress &ipaddr)
   IpAddress::format_output();
 }
 
-//-------[ default construct, an IP address with a string ]---------------------
+/// Default-construct an IP address from a string.
 IpAddress::IpAddress( const char *inaddr): Address()
 {
   // always initialize what type this object is
