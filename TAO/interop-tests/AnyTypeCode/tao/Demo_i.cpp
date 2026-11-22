@@ -46,7 +46,7 @@ ATC_Test_i::do_union (::CORBA::Any const &a)
         {
         case 1:
           {
-            Demo::BaseUnion const bar1 = any_union->bar1 ();
+            Demo::BaseUnion const &bar1 = any_union->bar1 ();
             if (bar1._d () == 1)
               {
                 result = bar1.str ();
@@ -58,7 +58,7 @@ ATC_Test_i::do_union (::CORBA::Any const &a)
           break;
         case 2:
           {
-            Demo::BaseUnion const bar2 = any_union->bar2 ();
+            Demo::BaseUnion const &bar2 = any_union->bar2 ();
             if (bar2._d () == 2)
               {
                 CORBA::Long const l = bar2.l ();
@@ -71,7 +71,7 @@ ATC_Test_i::do_union (::CORBA::Any const &a)
           break;
         default:
           {
-            Demo::BaseUnion const defaultBar = any_union->defaultBar ();
+            Demo::BaseUnion const &defaultBar = any_union->defaultBar ();
             if (defaultBar._d () != 1 && defaultBar._d () != 2)
               {
                 CORBA::Short const s = defaultBar.s ();
@@ -99,9 +99,9 @@ ATC_Test_i::do_struct (::CORBA::Any const &a)
   if (a >>= bar)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%P: a >>= any_struct went well\n")));
-      Demo::BaseStruct const foo1 = bar->foo1;
-      Demo::BaseStruct const foo2 = bar->foo2;
-      Demo::BaseStruct const foo3 = bar->foo3;
+      Demo::BaseStruct const &foo1 = bar->foo1;
+      Demo::BaseStruct const &foo2 = bar->foo2;
+      Demo::BaseStruct const &foo3 = bar->foo3;
       Demo::NestedSeq const &bars = bar->bars;
       if (bars.length () > 0)
         {
