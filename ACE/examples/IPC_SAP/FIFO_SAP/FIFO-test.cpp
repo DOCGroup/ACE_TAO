@@ -65,16 +65,24 @@ do_parent (ACE_TCHAR const fifo_name[],
   {
     if (fifo_sender.send (buf, len) != len)
     {
+      ACE_OS::close (inputfd);
       return -1;
     }
   }
 
   if (len == -1)
   {
+    ACE_OS::close (inputfd);
     return -1;
   }
 
   if (fifo_sender.remove () == -1)
+  {
+    ACE_OS::close (inputfd);
+    return -1;
+  }
+
+  if (ACE_OS::close (inputfd) == -1)
   {
     return -1;
   }
