@@ -20,7 +20,7 @@
 
 #if defined (ACE_HAS_FORE_ATM_WS2)
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-// just map to WS2 GQOS struct
+/// In the Winsock 2 build, ATM_QoS aliases ACE_QoS.
 using ATM_QoS = ACE_QoS;
 ACE_END_VERSIONED_NAMESPACE_DECL
 #elif defined (ACE_HAS_FORE_ATM_XTI)

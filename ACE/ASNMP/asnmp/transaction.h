@@ -69,7 +69,7 @@ public:
   ACE_HANDLE get_handle () const override;
 
 private:
-  // ACE_SOCK_Dgram::recv allocates this buffer; release it through the matching allocator.
+  /// ACE_SOCK_Dgram::recv allocates this buffer; release it through the matching allocator.
   struct Receive_Buffer_Deleter
   {
     void operator() (char *buffer) const

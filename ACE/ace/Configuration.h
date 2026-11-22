@@ -643,7 +643,7 @@ public:
 using VALUE_MAP = ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId>;
 using VALUE_HASH = ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
 
-// Deprecated typedef.  Use the VALUE_HASH::ENTRY trait instead.
+/// Deprecated typedef.  Use the VALUE_HASH::ENTRY trait instead.
 using VALUE_ENTRY = VALUE_HASH::ENTRY;
 
 /**
@@ -684,7 +684,7 @@ public:
 using SECTION_MAP = ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId>;
 using SECTION_HASH = ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
 
-// Deprecated typedef.  Use the SECTION_HASH::ENTRY trait instead.
+/// Deprecated typedef.  Use the SECTION_HASH::ENTRY trait instead.
 using SECTION_ENTRY = SECTION_HASH::ENTRY;
 
 struct ACE_Configuration_Path_Deleter
