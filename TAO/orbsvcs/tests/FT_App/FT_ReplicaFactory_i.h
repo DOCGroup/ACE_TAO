@@ -111,8 +111,8 @@ public:
 
   virtual CORBA::Boolean is_alive ();
 
-  /////////////////////////
-  // Implementation methods
+  /// @name Implementation methods
+  /// @{
 private:
   /**
    * Actual replica creation happens in this method.
@@ -134,10 +134,10 @@ private:
    * Clean house for factory shut down.
    */
   void shutdown_i ();
+  /// @}
 
-  ///////////////
-  // Data Members
-private:
+  /// @name Data members
+  /// @{
   /**
    * Protect internal state.
    * Mutex should be locked by corba methods, or by
@@ -259,6 +259,7 @@ private:
   * A file that use by FT_TestReplica_i object
   */
   const ACE_TCHAR* name_persistent_file_;
+  /// @}
 };
 
 #endif /* FT_REPLICAFACTORY_H_  */

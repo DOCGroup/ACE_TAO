@@ -96,14 +96,14 @@ public:
   // CORBA interface PullMonitorable methods
   CORBA::Boolean is_alive () override;
 
-  /////////////////
-  // Implementation
+  /// @name Implementation methods
+  /// @{
 private:
   int write_ior_file();
+  /// @}
 
-  ///////////////
-  // Data Members
-private:
+  /// @name Data members
+  /// @{
   /**
    * The orb
    */
@@ -151,6 +151,7 @@ private:
    * A human-readable string to distinguish this from other Notifiers.
    */
   ACE_TString identity_;
+  /// @}
 };
 
 #include /**/ <ace/post.h>

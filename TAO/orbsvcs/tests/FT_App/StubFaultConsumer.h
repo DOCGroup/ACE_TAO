@@ -74,18 +74,15 @@ public:
 
   void disconnect_structured_push_consumer () override;
 
-  ////////////////////
-  // Forbidden methods
+  /// @name Disabled operations
+  /// @{
 private:
   StubFaultConsumer (const StubFaultConsumer & rhs);
   StubFaultConsumer & operator = (const StubFaultConsumer & rhs);
+  /// @}
 
-  /////////////////////////
-  // Implementation methods
-private:
-  ///////////////
-  // Data Members
-private:
+  /// @name Data members
+  /// @{
   /**
    * The orb
    */
@@ -122,6 +119,7 @@ private:
   ::FT::FaultNotifier::ConsumerId consumer_id_;
 
   size_t notifications_;
+  /// @}
 };
 
 #include /**/ <ace/post.h>

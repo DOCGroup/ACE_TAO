@@ -61,8 +61,8 @@ public:
   void fini ();
 
 public:
-    ////////////////
-    // CORBA methods
+  /// @name CORBA methods
+  /// @{
 
   void push_structured_events (
     CosNotification::EventBatch const &notifications) override;
@@ -72,19 +72,17 @@ public:
   void offer_change (
     CosNotification::EventTypeSeq const &added,
     CosNotification::EventTypeSeq const &removed) override;
+  /// @}
 
-  ////////////////////
-  // Forbidden methods
 private:
+  /// @name Disabled operations
+  /// @{
   StubBatchConsumer (const StubBatchConsumer & rhs);
   StubBatchConsumer & operator = (const StubBatchConsumer & rhs);
+  /// @}
 
-  /////////////////////////
-  // Implementation methods
-private:
-  ///////////////
-  // Data Members
-private:
+  /// @name Data members
+  /// @{
   /**
    * The orb
    */
@@ -119,6 +117,7 @@ private:
    * consumer id assigned by the notifier
    */
   ::FT::FaultNotifier::ConsumerId consumer_id_;
+  /// @}
 };
 
 #include /**/ <ace/post.h>

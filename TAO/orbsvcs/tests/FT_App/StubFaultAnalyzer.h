@@ -65,14 +65,14 @@ public:
    */
   int fini ();
 
-  /////////////////
-  // Implementation
+  /// @name Implementation methods
+  /// @{
 private:
   int readIORFile(const ACE_TCHAR * fileName, CORBA::String_var & ior);
+  /// @}
 
-  ///////////////
-  // Data Members
-private:
+  /// @name Data members
+  /// @{
   /**
    * The orb
    */
@@ -121,6 +121,7 @@ private:
 
   StubFaultConsumer faultConsumer_;
   StubBatchConsumer batchConsumer_;
+  /// @}
 };
 
 #include /**/ <ace/post.h>

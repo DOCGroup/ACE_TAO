@@ -56,23 +56,17 @@ public:
 
   size_t notifications() const;
 
-  /////////////////
-  // Implementation
-private:
-  ////////////////////
-  // Forbidden methods
+  /// @name Disabled operations
+  /// @{
 private:
   ReplicationManagerFaultConsumerAdapter (
     const ReplicationManagerFaultConsumerAdapter & rhs);
   ReplicationManagerFaultConsumerAdapter & operator =
     (const ReplicationManagerFaultConsumerAdapter & rhs);
+  /// @}
 
-  /////////////////////////
-  // Implementation methods
-private:
-  ///////////////
-  // Data Members
-private:
+  /// @name Data members
+  /// @{
   /**
    * The orb
    */
@@ -133,6 +127,7 @@ private:
    */
   TAO::FT_FaultConsumer* p_fault_consumer_;
   PortableServer::ServantBase_var consumer_servant_;
+  /// @}
 };
 #include /**/ <ace/post.h>
 
