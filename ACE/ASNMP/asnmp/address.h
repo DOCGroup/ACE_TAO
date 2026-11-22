@@ -24,8 +24,6 @@
   or implied. User hereby grants a royalty-free license to any and all
   derivatives based upon this software code base.
 =====================================================================*/
-
-//----[ includes ]-----------------------------------------------------
 // ACE OS Adaption layer
 #include "ace/os_include/netinet/os_in.h"
 #include "ace/os_include/os_netdb.h"
@@ -38,8 +36,6 @@
 #include "asnmp/smival.h"
 #include "asnmp/octet.h"
 #include <memory>
-
-//----[ enumerated types ] --------------------------------
 enum address_lengths {
    IPV4LEN=4,
    UDPIPV4LEN=6,
@@ -76,8 +72,6 @@ enum addr_type {
 enum nb_service {
   nb_workstation = 0x0, nb_server = 0x20
 };
-
-//---[ forward declarations ]-----------------------------------------
 class GenAddress;
 class UdpAddress;
 class IpxSockAddress;
@@ -87,8 +81,6 @@ class SIPAddress;
 
 // TODO:
 // class AtmE164Address;
-
-//----[ Address class ]-----------------------------------------------
 /**
  * @class
  *
@@ -183,8 +175,6 @@ protected:
   /// a reused trimm white space method
   void trim_white_space( char * ptr);
 };
-
-//---------[ IPv4 Address Class ]----------------------------------------
 /**
  * @class IpAddress
  *
@@ -286,8 +276,6 @@ protected:
   static int resolve_to_hostname(const in_addr& quad_addr, char *hostname);
 };
 
-//--------------[ DNS Iterator Class ]------------------------------------
-
 /**
  * @class Address_Iter
  *
@@ -321,8 +309,6 @@ private:
   ACE_HOSTENT_DATA buffer_;
   int query_dns (char const *hostname);
 };
-
-//---------[ UDP/IPv4 Address Class ]-------------------------------------
 /**
  * @class
  *
@@ -387,8 +373,6 @@ protected:
   /// specific to IP addresses
   void format_output() override;
 };
-
-//---------[ 802.3 MAC Address Class ]-------------------------------------
 /**
  * @class
  *
@@ -445,8 +429,6 @@ protected:
   /// redefined format output for MACs
   void format_output() override;
 };
-
-//---------[ Netbios Address Class ]--------------------------------------
 /**
  * @class
  *
@@ -502,8 +484,6 @@ protected:
   int parse_address( const char  *inaddr) override;
   addr_type get_type() const override;
 };
-
-//---------[ DecNet Address Class ]---------------------------------------
 /**
  * @class
  *
@@ -547,8 +527,6 @@ protected:
   void format_output() override;
   char output_buffer[MAX_DISPLAY_SZ] {};
 };
-
-//---------[ AppleTalk Address Class ]------------------------------------
 /**
  * @class
  *
@@ -604,8 +582,6 @@ private:
   void format_output() override;
   char output_buffer[MAX_DISPLAY_SZ] {};
 };
-
-//---------[ IPX Address Class ]------------------------------------------
 /**
  * @class IpxAddress
  *
@@ -665,8 +641,6 @@ protected:
   /// uses same separator as when constructed
   void format_output() override;
 };
-
-//---------[ IpxSock Address Class ]--------------------------------------
 /**
  * @class IpxSockAddress
  *
@@ -725,8 +699,6 @@ protected:
   /// specific to IP addresses
   void format_output() override;
 };
-
-//--------[ Generic Address ]----------------------------------------------
 /**
  * @class GenAddress
  *
