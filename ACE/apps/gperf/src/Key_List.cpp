@@ -62,12 +62,13 @@ string_comparison_expression (bool const case_insensitive,
   std::string expression;
   if (!case_insensitive && compare_length)
     {
+      expression = "len != 0 && *" + input + " == *" + keyword + " && ";
       if (!keyword_length_verified)
         {
-          expression = "len == std::strlen (" + keyword + ") && ";
+          expression += "len == std::strlen (" + keyword + ") && ";
         }
-      expression += "*" + input + " == *" + keyword + " && !std::strncmp ("
-        + input + " + 1, " + keyword + " + 1, len - 1)";
+      expression += "!std::strncmp (" + input + " + 1, " + keyword
+        + " + 1, len - 1)";
       return expression;
     }
 
