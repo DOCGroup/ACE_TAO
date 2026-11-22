@@ -38,21 +38,23 @@ parse_args (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("f:h:p:"));
 
   for (int c; (c = get_opt ()) != -1; )
-    switch (c)
-      {
-      case 'f':
-        file_name = get_opt.opt_arg ();
-        break;
-      case 'h':
-        host_name = get_opt.opt_arg ();
-        break;
-      case 'p':
-        port_number = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      default:
-        print_usage_and_die ();
-        break;
-      }
+    {
+      switch (c)
+        {
+        case 'f':
+          file_name = get_opt.opt_arg ();
+          break;
+        case 'h':
+          host_name = get_opt.opt_arg ();
+          break;
+        case 'p':
+          port_number = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        default:
+          print_usage_and_die ();
+          break;
+        }
+    }
 }
 
 int
@@ -67,46 +69,60 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (con.connect (sc,
                    ACE_INET_Addr (port_number,
                                   host_name)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("open")),
+                        -1);
+    }
 
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_Mem_Map mmap (file_name, PROT_READ);
 
   if (mmap (cp) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("mmap")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("mmap")), -1);
+    }
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Next, send the file's contents.
 
   if (sc.send_n (cp, mmap.size ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("send_n")),
-                       -1);
-
-  if (sc.sndrel () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("close_writer")),
-                      -1);
-
-  for (int n; (n = sc.recv (buf, sizeof buf)) > 0; )
-    if (ACE_OS::write (ACE_STDOUT, buf, n) != n)
+    {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("write")),
+                         ACE_TEXT ("send_n")),
                         -1);
+    }
+
+  if (sc.sndrel () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("close_writer")),
+                        -1);
+    }
+
+  for (int n; (n = sc.recv (buf, sizeof buf)) > 0; )
+    {
+      if (ACE_OS::write (ACE_STDOUT, buf, n) != n)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("write")),
+                            -1);
+        }
+    }
 
   if (sc.close () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("close")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("close")),
+                        -1);
+    }
   return 0;
 }
 #else
