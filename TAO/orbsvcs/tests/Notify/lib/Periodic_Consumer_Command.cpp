@@ -63,32 +63,32 @@ TAO_Notify_Tests_Periodic_Consumer_Command::init (ACE_Arg_Shifter& arg_shifter)
               arg_shifter.consume_arg ();
             }
 
-          TAO_Notify_Tests_Periodic_Consumer* consumer {};
+          TAO_Notify_Tests_Periodic_Consumer* consumer_impl {};
 
           // create the consumer
           if (is_relay == 1)
             {
-              consumer = new TAO_Notify_Tests_Relay_Consumer (relay_destination);
+              consumer_impl = new TAO_Notify_Tests_Relay_Consumer (relay_destination);
             }
           else if (is_direct == 1)
             {
-              consumer = new TAO_Notify_Tests_Direct_Consumer ();
+              consumer_impl = new TAO_Notify_Tests_Direct_Consumer ();
             }
           else
           {
-            consumer = new TAO_Notify_Tests_Periodic_Consumer ();
+            consumer_impl = new TAO_Notify_Tests_Periodic_Consumer ();
           }
 
-          consumer->set_name (this->name_);
+          consumer_impl->set_name (this->name_);
 
          TAO_Notify_Tests_Activation_Manager* act_mgr {};
          LOOKUP_MANAGER->resolve (act_mgr);
 
          {
-           act_mgr->_register (consumer, this->name_.c_str ());
+           act_mgr->_register (consumer_impl, this->name_.c_str ());
          }
 
-         consumer->init_state (arg_shifter);
+         consumer_impl->init_state (arg_shifter);
         } /* -Create */
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Subscription")) == 0) // -Subscription admin_name +added_type1 +-added_type2 ... -added_type3 -added_type4..
         {
@@ -153,18 +153,18 @@ TAO_Notify_Tests_Periodic_Consumer_Command::consumer ()
   LOOKUP_MANAGER->resolve (act_mgr);
 
   // Locate the consumer
-  TAO_Notify_Tests_Periodic_Consumer* consumer {};
+  TAO_Notify_Tests_Periodic_Consumer* resolved_consumer {};
 
   {
-    act_mgr->resolve (consumer, this->name_.c_str ());
+    act_mgr->resolve (resolved_consumer, this->name_.c_str ());
   }
 
-  if (consumer == nullptr)
+  if (resolved_consumer == nullptr)
   {
     ACE_DEBUG ((LM_DEBUG, "Consumer %s not found by Lookup Manager\n", this->name_.c_str ()));
   }
 
-  return consumer;
+  return resolved_consumer;
 }
 
 void
@@ -176,14 +176,14 @@ TAO_Notify_Tests_Periodic_Consumer_Command::handle_set_qos ()
 void
 TAO_Notify_Tests_Periodic_Consumer_Command::handle_create ()
 {
-  TAO_Notify_Tests_Periodic_Consumer* consumer = this->consumer ();
+  TAO_Notify_Tests_Periodic_Consumer* consumer_impl = this->consumer ();
 
-  if (consumer == nullptr)
+  if (consumer_impl == nullptr)
   {
     return;
   }
 
-  consumer->connect ();
+  consumer_impl->connect ();
 
   ACE_DEBUG ((LM_DEBUG, "Consumer %s is connected\n", this->name_.c_str ()));
 }
@@ -191,50 +191,50 @@ TAO_Notify_Tests_Periodic_Consumer_Command::handle_create ()
 void
 TAO_Notify_Tests_Periodic_Consumer_Command::handle_subscriptions ()
 {
-  TAO_Notify_Tests_Periodic_Consumer* consumer = this->consumer ();
-  if (consumer == nullptr)
+  TAO_Notify_Tests_Periodic_Consumer* consumer_impl = this->consumer ();
+  if (consumer_impl == nullptr)
   {
     return;
   }
 
-  consumer->subscription_change (this->added_, this->removed_);
+  consumer_impl->subscription_change (this->added_, this->removed_);
 }
 
 void
 TAO_Notify_Tests_Periodic_Consumer_Command::handle_disconnect ()
 {
-  TAO_Notify_Tests_Periodic_Consumer* consumer = this->consumer ();
-  if (consumer == nullptr)
+  TAO_Notify_Tests_Periodic_Consumer* consumer_impl = this->consumer ();
+  if (consumer_impl == nullptr)
   {
     return;
   }
 
-  consumer->disconnect ();
+  consumer_impl->disconnect ();
 }
 
 void
 TAO_Notify_Tests_Periodic_Consumer_Command::handle_deactivate ()
 {
-  TAO_Notify_Tests_Periodic_Consumer* consumer = this->consumer ();
-  if (consumer == nullptr)
+  TAO_Notify_Tests_Periodic_Consumer* consumer_impl = this->consumer ();
+  if (consumer_impl == nullptr)
   {
     return;
   }
 
-  consumer->deactivate ();
+  consumer_impl->deactivate ();
 }
 
 void
 TAO_Notify_Tests_Periodic_Consumer_Command::handle_status ()
 {
-  TAO_Notify_Tests_Periodic_Consumer* consumer = this->consumer ();
+  TAO_Notify_Tests_Periodic_Consumer* consumer_impl = this->consumer ();
 
-  if (consumer == nullptr)
+  if (consumer_impl == nullptr)
   {
     return;
   }
 
-  consumer->status ();
+  consumer_impl->status ();
 }
 
 void
