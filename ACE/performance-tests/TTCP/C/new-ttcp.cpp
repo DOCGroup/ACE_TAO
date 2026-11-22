@@ -220,7 +220,9 @@ main (int argc, char *argv[])
   int c;
 
   if (argc < 2)
-    goto usage;
+    {
+      goto usage;
+    }
 
   while ((c = getopt (argc, argv, "drstU:uvBDTb:f:l:n:p:A:O:L:xh:")) != -1)
     {
@@ -308,7 +310,9 @@ main (int argc, char *argv[])
   if (trans)
     {
       if (address.set (port, host) == -1)
-        perror ("address.set"), exit (1);
+        {
+          perror ("address.set"), exit (1);
+        }
     }
 
   /* else, receiver create address to listen on */
@@ -322,7 +326,9 @@ main (int argc, char *argv[])
   // allocate the buffer
   message_buf = static_cast<Data_Control_Message *> (malloc (total_msg_len));
   if (message_buf == 0)
-    err ("malloc");
+    {
+      err ("malloc");
+    }
 
   //  if (bufalign != 0)
   //    message_buf += (bufalign - ((int) message_buf % bufalign) + bufoffset) % bufalign;
@@ -343,7 +349,9 @@ main (int argc, char *argv[])
                "ttcp-t: data_buf_len=%d, nbuf=%d, align=%d/%d, port=%d",
                data_buf_len, nbuf, bufalign, bufoffset, port);
       if (sockbufsize)
-        fprintf (stdout, ", sockbufsize=%d", sockbufsize);
+        {
+          fprintf (stdout, ", sockbufsize=%d", sockbufsize);
+        }
       fprintf (stdout, "  %s  -> %s\n",
                domain == PF_INET ? (udp ? "udp" : "tcp") : "unix",
         host == 0 ? domainname : host);
@@ -354,7 +362,9 @@ main (int argc, char *argv[])
               "ttcp-r: data_buf_len=%d, nbuf=%d, align=%d/%d, port=%d",
               data_buf_len, nbuf, bufalign, bufoffset, port);
       if (sockbufsize)
-        fprintf (stdout, ", sockbufsize=%d", sockbufsize);
+        {
+          fprintf (stdout, ", sockbufsize=%d", sockbufsize);
+        }
       fprintf (stdout, "  %s\n", domain == PF_INET ? (udp ? "udp" : "tcp") : "unix");
     }
 
@@ -372,7 +382,9 @@ main (int argc, char *argv[])
       if (trans)
         {
           if (connector_factory.connect (connection_stream, address) == -1)
-            perror ("connection failed"), exit (1);
+            {
+              perror ("connection failed"), exit (1);
+            }
           fprintf (stdout,
                   "ttcp-t: data_buf_len=%d, nbuf=%d, align=%d/%d, port=%d",
                   data_buf_len, nbuf, bufalign, bufoffset, port);
@@ -404,13 +416,17 @@ main (int argc, char *argv[])
       else
         {
           if (acceptor_factory.open (address, 1) == -1)
-            perror ("acceptor open"), exit (1);
+            {
+              perror ("acceptor open"), exit (1);
+            }
 
           ACE_INET_Addr remote_address;
 
           if (acceptor_factory.accept (connection_stream,
                                       &remote_address) == -1)
-            perror ("acceptor accept"), exit (1);
+            {
+              perror ("acceptor accept"), exit (1);
+            }
 
           // set the window size
           if (sockbufsize)
@@ -508,7 +524,9 @@ main (int argc, char *argv[])
 
           cnt = recv_n (& (message_buf->data_), message_buf->size_);
           if (cnt != message_buf->size_)
-            ACE_ERROR_RETURN ((LM_ERROR, "recv data failed\n"), -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "recv data failed\n"), -1);
+            }
 
           ++numCalls;
           nbytes += cnt;
@@ -522,7 +540,9 @@ main (int argc, char *argv[])
     }
 
   if (errno)
-    err ("IO");
+    {
+      err ("IO");
+    }
 
   //
   // stop the timer
@@ -537,9 +557,13 @@ main (int argc, char *argv[])
       (void) Nwrite (connection_stream, message_buf, 4); /* rcvr end */
     }
   if (cput <= 0.0)
-    cput = 0.001;
+    {
+      cput = 0.001;
+    }
   if (realt <= 0.0)
-    realt = 0.001;
+    {
+      realt = 0.001;
+    }
 
 #if defined (LM_RESULTS)
   if (trans && (title != 0))
@@ -550,7 +574,9 @@ main (int argc, char *argv[])
       ACE_OS::sprintf (filename, "%s.results", title);
       fd = fopen(filename, "a+");
       if (new_line)
-        fprintf(fd, "\n  -l %dk \t", data_buf_len/1024);
+        {
+          fprintf(fd, "\n  -l %dk \t", data_buf_len/1024);
+        }
       tmp = ((double) nbytes) / realt;
       fprintf(fd, "%.2f ", tmp * 8.0 / 1024.0 / 1024.0);
       fclose(fd);
@@ -753,7 +779,9 @@ read_timer (char *str, int len)
   tvsub (&td, &tend, &tstart);
   cput = td.tv_sec + ((double) td.tv_usec) / 1000000;
   if (cput < 0.00001)
-    cput = 0.00001;
+    {
+      cput = 0.00001;
+    }
   return (cput);
 }
 
@@ -784,7 +812,9 @@ prusage (struct rusage *r0, struct rusage *r1,
   for (; *cp; ++cp)
     {
       if (*cp != '%')
-        *outp++ = *cp;
+        {
+          *outp++ = *cp;
+        }
       else if (cp[1])
         switch (*++cp)
           {
@@ -876,7 +906,9 @@ tvadd (struct timeval *tsum, struct timeval *t0, struct timeval *t1)
   tsum->tv_sec = t0->tv_sec + t1->tv_sec;
   tsum->tv_usec = t0->tv_usec + t1->tv_usec;
   if (tsum->tv_usec > 1000000)
-    tsum->tv_sec++, tsum->tv_usec -= 1000000;
+    {
+      tsum->tv_sec++, tsum->tv_usec -= 1000000;
+    }
 }
 
 static void
@@ -885,7 +917,9 @@ tvsub (struct timeval *tdiff, struct timeval *t1, struct timeval *t0)
   tdiff->tv_sec = t1->tv_sec - t0->tv_sec;
   tdiff->tv_usec = t1->tv_usec - t0->tv_usec;
   if (tdiff->tv_usec < 0)
-    tdiff->tv_sec--, tdiff->tv_usec += 1000000;
+    {
+      tdiff->tv_sec--, tdiff->tv_usec += 1000000;
+    }
 }
 
 static void
