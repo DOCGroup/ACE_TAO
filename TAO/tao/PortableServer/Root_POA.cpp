@@ -1720,7 +1720,7 @@ TAO_Root_POA::create_object_key (const PortableServer::ObjectId &id)
                                   buffer_size,
                                   buffer,
                                   1),
-                  0);
+                  nullptr);
 
   return key;
 }
@@ -2004,7 +2004,7 @@ TAO_Root_POA::key_to_stub_i (const TAO::ObjectKey &key,
     {
       ACE_NEW_RETURN (filter,
                       TAO_Default_Acceptor_Filter (),
-                      0);
+                      nullptr);
     }
 
   // Give ownership to the unique pointer.
@@ -2614,7 +2614,7 @@ TAO_POA_Static_Resources::instance ()
       // harmless memory leak would be to use reference counting.
       ACE_NEW_RETURN (TAO_POA_Static_Resources::instance_,
                       TAO_POA_Static_Resources (),
-                      0);
+                      nullptr);
     }
 
   return TAO_POA_Static_Resources::instance_;
