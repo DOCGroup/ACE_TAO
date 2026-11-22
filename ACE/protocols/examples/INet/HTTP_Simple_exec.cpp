@@ -166,7 +166,7 @@ class My_HTTP_RequestHandler
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
-  HTTP_Options options {};
+  HTTP_Options options;
   std::ofstream fout;
   std::ostream *sout = &std::cout;
 

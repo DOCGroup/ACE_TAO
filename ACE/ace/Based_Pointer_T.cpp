@@ -68,7 +68,7 @@ template <class CONCRETE>
 ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic (const void *base_addr, int)
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic");
-  this->base_offset_ = static_cast<char const *> (this)
+  this->base_offset_ = reinterpret_cast<char const *> (this)
     - static_cast<char const *> (base_addr);
 }
 

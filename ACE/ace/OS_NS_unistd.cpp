@@ -1019,7 +1019,7 @@ ACE_OS::write_n (ACE_HANDLE handle,
        bytes_transferred += n)
     {
       n = ACE_OS::write (handle,
-                         static_cast<char *> (buf) + bytes_transferred,
+                         static_cast<char const *> (buf) + bytes_transferred,
                          len - bytes_transferred);
 
       if (n == -1 || n == 0)

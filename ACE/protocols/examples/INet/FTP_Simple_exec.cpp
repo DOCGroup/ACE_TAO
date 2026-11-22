@@ -157,7 +157,7 @@ class My_FTP_RequestHandler
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
-  FTP_Options options {};
+  FTP_Options options;
   std::ofstream fout;
   std::ostream *sout = &std::cout;
 

@@ -363,7 +363,7 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
         + ACE_Pagefile_Memory_Pool::round_to_chunk_size
         (append_bytes);
 
-      map_addr = static_cast<char *> (this->shared_cb_)
+      map_addr = reinterpret_cast<char *> (this->shared_cb_)
         + this->local_cb_.sh_.mapped_size_;
 
       if (::VirtualAlloc (map_addr,

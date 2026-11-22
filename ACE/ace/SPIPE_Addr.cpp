@@ -30,7 +30,7 @@ ACE_SPIPE_Addr::set_addr (const void *addr, int len)
 void *
 ACE_SPIPE_Addr::get_addr () const
 {
-  return &this->SPIPE_addr_;
+  return const_cast<void *> (&this->SPIPE_addr_);
 }
 
 // Do nothing constructor.

@@ -263,7 +263,8 @@ JAWS_Asynch_IO::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result
         }
 
       delete &result.message_block ();
-      delete static_cast<ACE_Filecache_Handle *> (result.act ());
+      delete static_cast<ACE_Filecache_Handle *> (
+        const_cast<void *> (result.act ()));
     }
   else
     {
@@ -380,7 +381,8 @@ JAWS_Asynch_IO::handle_transmit_file (const ACE_Asynch_Transmit_File::Result &re
     }
 
   delete result.header_and_trailer ();
-  delete static_cast<ACE_Filecache_Handle *> (result.act ());
+  delete static_cast<ACE_Filecache_Handle *> (
+    const_cast<void *> (result.act ()));
 }
 
 void

@@ -89,7 +89,7 @@ wpdu::wpdu (Pdu const &pdu, UdpTarget const &target)
    // dereferencing.
    int out_length = iovec_.iov_len;
    status = cmu_snmp::build( raw_pdu,
-                            static_cast<unsigned char *> (iovec_.iov_base),
+                            reinterpret_cast<unsigned char *> (iovec_.iov_base),
                             &out_length,
                             target.get_version(),
                             comm_str.data(),
