@@ -44,7 +44,7 @@ ACE_Date_Time::ACE_Date_Time (ACE_Time_Value const &timevalue)
   this->update (timevalue);
 }
 
-// Constructor with init values, no check for validy
+/// Constructor with init values, no check for validity.
 ACE_INLINE
 ACE_Date_Time::ACE_Date_Time (long day,
                               long month,

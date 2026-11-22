@@ -46,7 +46,7 @@ ACE_SV_Shared_Memory::open_and_attach (key_t external_id,
   }
 }
 
-// Constructor interface to this->open_and_attach () member function.
+/// Constructor interface to this->open_and_attach () member function.
 
 ACE_SV_Shared_Memory::ACE_SV_Shared_Memory (key_t external_id,
                                             size_t sz,

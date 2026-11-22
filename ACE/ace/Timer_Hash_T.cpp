@@ -57,8 +57,6 @@ public:
   Hash_Token<TYPE> *next_ {};
 };
 
-// Constructor that specifies a Timer_Hash to call up to
-
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Hash_Upcall (
   ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> *timer_hash)

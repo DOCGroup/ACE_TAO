@@ -245,7 +245,7 @@ ACE_SString::rep (char *s)
     }
 }
 
-// Constructor that actually copies memory.
+/// Constructor that actually copies memory.
 
 ACE_SString::ACE_SString (const char *s,
                           ACE_Allocator *alloc)
@@ -289,7 +289,7 @@ ACE_SString::ACE_SString (char c,
   this->rep_[this->len_] = '\0';
 }
 
-// Constructor that actually copies memory.
+/// Constructor that actually copies memory.
 
 ACE_SString::ACE_SString (const char *s,
                           size_type len,

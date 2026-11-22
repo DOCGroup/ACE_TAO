@@ -29,7 +29,7 @@ ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (ACE_Allocator *the_allocator)
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::ACE_String_Base");
 }
 
-// Constructor that actually copies memory.
+/// Constructor that actually copies memory.
 
 template <class ACE_CHAR_T>
 ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (const ACE_CHAR_T *s,
@@ -51,7 +51,7 @@ ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (ACE_CHAR_T c,
   this->set (&c, 1, true);
 }
 
-// Constructor that actually copies memory.
+/// Constructor that actually copies memory.
 
 template <class ACE_CHAR_T>
 ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (
