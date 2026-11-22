@@ -581,6 +581,7 @@ Log::parse_complete_connection_i ()
   char *addr = std::strrchr (this->info_, '<') + 1;
   char *c = std::strchr (addr, '>');
   *c = '\0';
+  Endpoint const endpoint (addr);
   //  ACE_DEBUG ((LM_DEBUG, "%d, complete_connection, failed for addr %s\n", this->offset_, addr));
 
   if (this->conn_waiters_.size() > 0)
@@ -593,7 +594,7 @@ Log::parse_complete_connection_i ()
         {
           PeerProcess *waiter {};
           c_iter.next(waiter);
-          if (waiter != nullptr && waiter->match_server_addr (addr))
+          if (waiter != nullptr && waiter->match_server_addr (endpoint))
             {
               c_iter.remove();
               // ACE_DEBUG ((LM_DEBUG,"%d: complete_connection: purging waiter\n",this->offset_));
@@ -634,6 +635,7 @@ Log::parse_handler_open_i (bool is_ssl)
   {
     ++c;
   }
+  Endpoint const endpoint (addr);
   long handle = std::strtol (c, nullptr, 10);
   PeerProcess *pp = this->thr_->peek_new_connection();
   if (this->conn_waiters_.size() > 0)
@@ -646,7 +648,7 @@ Log::parse_handler_open_i (bool is_ssl)
         {
           PeerProcess *waiter {};
           c_iter.next(waiter);
-          if (waiter != nullptr && waiter->match_server_addr (addr))
+          if (waiter != nullptr && waiter->match_server_addr (endpoint))
             {
               if (pp != nullptr && waiter != pp)
                 {
