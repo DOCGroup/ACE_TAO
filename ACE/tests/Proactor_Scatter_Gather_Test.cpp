@@ -247,7 +247,9 @@ remove_empty_chunks (ACE_Message_Block *&chunks_chain)
         pre_mb->cont (0);
 
       if (first_empty == chunks_chain)
-        chunks_chain = 0;
+        {
+          chunks_chain = 0;
+        }
 
       free_chunks_chain (first_empty);
     }
@@ -545,10 +547,14 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
       // write everything - when no new bytes were transferred
       int write_everything = 0;
       if (!result.bytes_transferred ())
-        write_everything = 1;
+        {
+          write_everything = 1;
+        }
       if (write_everything)
-        Receiver::writer_->handle_read_chunks_chain (mb,
-                                                     this->odd_ ? ODD : EVEN);
+        {
+          Receiver::writer_->handle_read_chunks_chain (mb,
+                                                       this->odd_ ? ODD : EVEN);
+        }
       else
         { // filter out the partial chunk at the end (if present)
           // and save it for later before writing the full chunks
@@ -570,27 +576,39 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
                 }
               else
                 // chain in length of 1 - so we need to zero mb
-                mb = 0;
+                {
+                  mb = 0;
+                }
             }
           else // last is a full chunk, so hand it over with the rest
-            this->partial_chunk_ = 0;
+            {
+              this->partial_chunk_ = 0;
+            }
 
           // transfer (if there's anything left)
           if (mb && mb->total_length ())
-            Receiver::writer_->handle_read_chunks_chain (
-                                                         mb,
-                                                         this->odd_ ? ODD : EVEN);
+            {
+              Receiver::writer_->handle_read_chunks_chain (
+                                                           mb,
+                                                           this->odd_ ? ODD : EVEN);
+            }
 
           // initiate more reads only if no error
           if (!result.error ())
-            this->initiate_read_stream ();
+            {
+              this->initiate_read_stream ();
+            }
           else
-            ACE_TEST_ASSERT (0);
+            {
+              ACE_TEST_ASSERT (0);
+            }
         }
     }
   else if (mb && !Receiver::writer_)
-    // no one to write to
-    free_chunks_chain (mb);
+    {
+      // no one to write to
+      free_chunks_chain (mb);
+    }
 
   --this->io_count_;
 
@@ -653,7 +671,9 @@ Receiver *
 Acceptor::make_handler ()
 {
   if (this->sessions_ >= RECEIVERS)
-    return 0;
+    {
+      return 0;
+    }
 
   for (int i = 0; i < RECEIVERS; ++i)
     {
@@ -690,7 +710,9 @@ Writer::~Writer ()
               ACE_TEXT ("Writer::~Writer\n")));
 
   if (this->output_file_handle_ != ACE_INVALID_HANDLE)
-    ACE_OS::close (this->output_file_handle_);
+    {
+      ACE_OS::close (this->output_file_handle_);
+    }
 
   Receiver::writer_ = 0;
 }
@@ -735,9 +757,11 @@ Writer::open ()
                 ACE_TEXT ("Writer::open::ACE_OS::open")));
   // Open the ACE_Asynch_Write_File
   else if (this->wf_.open (*this, this->output_file_handle_) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("Writer::open::ACE_Asynch_Write_File::open")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("Writer::open::ACE_Asynch_Write_File::open")));
+    }
 }
 
 int
@@ -817,16 +841,24 @@ Writer::initiate_write_file ()
     {
       pre_odd = new_odd_chain_head;
       if (new_odd_chain_head)
-        new_odd_chain_head  = new_odd_chain_head->cont ();
+        {
+          new_odd_chain_head = new_odd_chain_head->cont ();
+        }
       pre_even = new_even_chain_head;
       if (new_even_chain_head)
-        new_even_chain_head = new_even_chain_head->cont ();
+        {
+          new_even_chain_head = new_even_chain_head->cont ();
+        }
     }
   // now detach the chain
   if (pre_odd)
-    pre_odd->cont (0);
+    {
+      pre_odd->cont (0);
+    }
   if (pre_even)
-    pre_even->cont (0);
+    {
+      pre_even->cont (0);
+    }
 
   // perform merge between the two chains
   merge_odd_even_chains (this->odd_chain_, this->even_chain_);
@@ -885,9 +917,11 @@ Writer::handle_write_file (const ACE_Asynch_Write_File::Result &result)
   last_chunk (mb, last_mb);
 
   if (last_mb->space ())
-    ACE_OS::truncate (output_file,
-                      this->reported_file_offset_ -
-                        static_cast<u_long> (last_mb->space ()));
+    {
+      ACE_OS::truncate (output_file,
+                        this->reported_file_offset_ -
+                          static_cast<u_long> (last_mb->space ()));
+    }
 
   free_chunks_chain (mb);
 
@@ -1055,7 +1089,9 @@ Sender *
 Connector::make_handler ()
 {
   if (this->sessions_ >= SENDERS)
-    return 0;
+    {
+      return 0;
+    }
 
   for (int i = 0; i < SENDERS; ++i)
     {
@@ -1085,7 +1121,9 @@ Sender::Sender (Connector * connector, int index)
   socket_handle_[ODD] = socket_handle_[EVEN] = ACE_INVALID_HANDLE;
 
   if (this->connector_ != 0)
-    this->connector_->on_new_sender (*this);
+    {
+      this->connector_->on_new_sender (*this);
+    }
 }
 
 Sender::~Sender ()
@@ -1094,19 +1132,29 @@ Sender::~Sender ()
               ACE_TEXT ("Sender::~Sender\n")));
 
   if (this->connector_ != 0)
-    this->connector_->on_delete_sender (*this);
+    {
+      this->connector_->on_delete_sender (*this);
+    }
 
   if (this->socket_handle_[ODD] != ACE_INVALID_HANDLE)
-    ACE_OS::closesocket (this->socket_handle_[ODD]);
+    {
+      ACE_OS::closesocket (this->socket_handle_[ODD]);
+    }
 
   if (this->socket_handle_[EVEN] != ACE_INVALID_HANDLE)
-    ACE_OS::closesocket (this->socket_handle_[EVEN]);
+    {
+      ACE_OS::closesocket (this->socket_handle_[EVEN]);
+    }
 
   if (this->input_file_handle_ != ACE_INVALID_HANDLE)
-    ACE_OS::close (this->input_file_handle_);
+    {
+      ACE_OS::close (this->input_file_handle_);
+    }
 
   if (client_only)
-    ACE_Proactor::instance ()->end_event_loop ();
+    {
+      ACE_Proactor::instance ()->end_event_loop ();
+    }
 }
 
 //  return true if we alive, false  we commited suicide
@@ -1114,7 +1162,9 @@ void
 Sender::check_destroy ()
 {
   if (this->io_count_ <= 0)
-    delete this;
+    {
+      delete this;
+    }
 }
 
 void
@@ -1143,9 +1193,11 @@ Sender::open (ACE_HANDLE handle, ACE_Message_Block &)
       ACE_SOCK_Stream    sock_stream;
       if (-1 == sock_connector.connect (sock_stream,
                                         this->connector_->get_address ()))
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%p\n"),
-                    ACE_TEXT ("Sender::open::ACE_SOCK_Connector::connect")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("Sender::open::ACE_SOCK_Connector::connect")));
+        }
 
       else
         {
@@ -1153,24 +1205,32 @@ Sender::open (ACE_HANDLE handle, ACE_Message_Block &)
 
           // Open odd ACE_Asynch_Write_Stream
           if (this->ws_[ODD].open (*this, this->socket_handle_[ODD]) == -1)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("Sender::open::ACE_Asynch_Write_Stream::open")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("%p\n"),
+                          ACE_TEXT ("Sender::open::ACE_Asynch_Write_Stream::open")));
+            }
 
           // Open even ACE_Asynch_Write_Stream
           else if (this->ws_[EVEN].open (*this, this->socket_handle_[EVEN]) == -1)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("Sender::open::ACE_Asynch_Write_Stream::open")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("%p\n"),
+                          ACE_TEXT ("Sender::open::ACE_Asynch_Write_Stream::open")));
+            }
 
           // Open ACE_Asynch_Read_File
           else if (this->rf_.open (*this, this->input_file_handle_) == -1)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("Sender::open::ACE_Asynch_Read_File::open")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("%p\n"),
+                          ACE_TEXT ("Sender::open::ACE_Asynch_Read_File::open")));
+            }
           else
-            // Start an asynchronous read
-            this->initiate_read_file ();
+            {
+              // Start an asynchronous read
+              this->initiate_read_file ();
+            }
         }
     }
 
@@ -1243,7 +1303,9 @@ Sender::initiate_write_stream (ACE_Message_Block &mb)
       free_chunks_chain (odd_mb);
 
       if (even_mb)
-        free_chunks_chain (even_mb);
+        {
+          free_chunks_chain (even_mb);
+        }
 
       ACE_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT ("%p\n"),
@@ -1296,10 +1358,14 @@ Sender::handle_read_file (const ACE_Asynch_Read_File::Result &result)
 
       // and read more if required
       if (bytes_transferred == chunks_chain_size)
-        this->initiate_read_file ();
+        {
+          this->initiate_read_file ();
+        }
     }
   else
-    free_chunks_chain (mb);
+    {
+      free_chunks_chain (mb);
+    }
 
   --this->io_count_;
 
@@ -1316,10 +1382,14 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
               result.bytes_transferred ()));
 
   if (result.error () == 0 && result.bytes_transferred () != 0)
-    // verify sent all
-    ACE_TEST_ASSERT (0 == mb->total_length ());
+    {
+      // verify sent all
+      ACE_TEST_ASSERT (0 == mb->total_length ());
+    }
   else
-    ACE_TEST_ASSERT (0);
+    {
+      ACE_TEST_ASSERT (0);
+    }
 
   free_chunks_chain (mb);
 
@@ -1394,22 +1464,30 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("Proactor_Scatter_Gather_Test"));
 
   if (::parse_args (argc, argv) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   chunk_size = ACE_OS::getpagesize ();
 
   if (client_only)
-    ACE_DEBUG ((LM_INFO,
-                ACE_TEXT ("Running as client only, page size %B\n"),
-                chunk_size));
+    {
+      ACE_DEBUG ((LM_INFO,
+                  ACE_TEXT ("Running as client only, page size %B\n"),
+                  chunk_size));
+    }
   else if (server_only)
-    ACE_DEBUG ((LM_INFO,
-                ACE_TEXT ("Running as server only, page size %B\n"),
-                chunk_size));
+    {
+      ACE_DEBUG ((LM_INFO,
+                  ACE_TEXT ("Running as server only, page size %B\n"),
+                  chunk_size));
+    }
   else
-    ACE_DEBUG ((LM_INFO,
-                ACE_TEXT ("Running as server and client, page size %B\n"),
-                chunk_size));
+    {
+      ACE_DEBUG ((LM_INFO,
+                  ACE_TEXT ("Running as server and client, page size %B\n"),
+                  chunk_size));
+    }
 
   Acceptor  acceptor;
   Connector connector;
@@ -1435,7 +1513,9 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       // connect to first destination
       if (addr.set (port, host, 1, addr.get_type ()) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), host), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), host), -1);
+        }
       connector.set_address (addr);
       if (-1 == connector.connect (addr))
         {
@@ -1484,15 +1564,21 @@ run_main (int argc, ACE_TCHAR *argv[])
       }
 
       if (0 == success)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("input file and the output file identical!\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("input file and the output file identical!\n")));
+        }
       else
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("input file and the output file are different!\n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("input file and the output file are different!\n")));
+        }
     }
 
   if (!client_only)
-    ACE_OS::unlink (output_file);
+    {
+      ACE_OS::unlink (output_file);
+    }
 
   ACE_END_TEST;
 
