@@ -738,10 +738,12 @@ public:
   /// Grants the invariant test access to private members.
   friend class ACE_Token_Invariant_Manager;
 
-  // Initialization and termination methods.
+  /// @name Initialization and termination
+  /// @{
   ACE_Token_Proxy ();
 
   virtual ~ACE_Token_Proxy ();
+  /// @}
 
   /**
    * Open the <ACE_Token>.

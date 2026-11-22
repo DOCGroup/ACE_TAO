@@ -104,9 +104,8 @@ public:
                                    const ACE_INET_Addr &remote,
                                    const ACE_INET_Addr& local);
 
-  //
-  // These are low level tweaking methods
-  //
+  /// @name Low-level connection options
+  /// @{
 
   /// Set and get flag that indicates if parsing and passing of
   /// addresses to the service_handler is necessary.
@@ -117,6 +116,7 @@ public:
   /// required.
   virtual bool validate_new_connection () const;
   virtual void validate_new_connection (bool new_value);
+  /// @}
 
 protected:
   /// This is called when an outstanding accept completes.

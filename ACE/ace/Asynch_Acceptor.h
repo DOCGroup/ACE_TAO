@@ -175,9 +175,8 @@ public:
    */
   virtual bool should_reissue_accept ();
 
-  //
-  // These are low level tweaking methods
-  //
+  /// @name Low-level acceptor options
+  /// @{
 
   /// Get flag that indicates if parsing and passing of addresses to
   /// the service_handler is necessary.
@@ -206,6 +205,7 @@ public:
 
   /// Set bytes to be read with the <accept> call.
   virtual void bytes_to_read (size_t new_value);
+  /// @}
 
 protected:
   /// This is called when an outstanding accept completes.
