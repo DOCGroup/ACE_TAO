@@ -18,7 +18,9 @@ template<class SERVANT>
 Servant_var<SERVANT>::~Servant_var ()
 {
   if (this->ptr_ == nullptr)
-    return;
+    {
+      return;
+    }
 
   try{
     this->ptr_->_remove_ref ();
