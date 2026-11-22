@@ -1,11 +1,9 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    Gadget_Part_Factory.cpp
  *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  */
-//=============================================================================
 
 #include "Gadget_Part_Factory.h"
 #include "Gadget_Part_Impl.h"

@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    BPR_Drivers_T.cpp
  *
@@ -11,7 +10,6 @@
  *          <coryan@cs.wustl.edu>, Douglas C. Schmidt <d.schmidt@vanderbilt.edu>,
  *          and Sergio Flores-Gaitan <sergio@cs.wustl.edu>.
  */
-//=============================================================================
 
 #ifndef _BPR_DRIVER_T_CPP_
 #define _BPR_DRIVER_T_CPP_

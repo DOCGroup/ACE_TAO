@@ -1,11 +1,9 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    Widget_Part_Impl.cpp
  *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  */
-//=============================================================================
 
 #include "Widget_Part_Impl.h"
 #include "ace/Log_Msg.h"

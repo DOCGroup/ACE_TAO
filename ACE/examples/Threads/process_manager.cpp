@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    process_manager.cpp
  *
@@ -16,7 +15,6 @@
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and Dave Madden <dhm@mersenne.com>
  */
-//=============================================================================
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"

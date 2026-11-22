@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file     test_aiosig.cpp
  *
@@ -9,7 +8,6 @@
  *
  *  @author  Programming for the Real World. Bill O. GallMeister.  Modified by Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
-//=============================================================================
 
 //FUZZ: disable check_for_lack_ACE_OS
 //FUZZ: disable check_for_improper_main_declaration

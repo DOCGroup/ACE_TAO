@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    future1.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Andres Kruse <Andres.Kruse@cern.ch> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"

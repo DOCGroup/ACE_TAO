@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    MFC_Log.h
  *
@@ -8,7 +7,6 @@
  *  @author Chris Hafey <chafey@stentor.com>
  *  @author Don Hinton <dhinton@ieee.org>
  */
-//=============================================================================
 
 #ifndef MFC_LOG_H
 #define MFC_LOG_H

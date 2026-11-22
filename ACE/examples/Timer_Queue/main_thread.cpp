@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    main_thread.cpp
  *
@@ -9,7 +8,6 @@
  *
  *  @author Douglas Schmidt      <d.schmidt@vanderbilt.edu> && Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "ace/OS_main.h"
 #include "Driver.h"

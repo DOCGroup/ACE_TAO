@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    task_five.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Author: Detlef Becker <Detlef.Becker@med.siemens.de>
  */
-//=============================================================================
 
 #include "ace/OS_main.h"
 #include "ace/Thread_Manager.h"

@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    sender.cpp
  *
  *  @author Vishal Kachroo <vishal@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "ace/QoS/QoS_Session.h"
 #include "ace/QoS/QoS_Session_Factory.h"

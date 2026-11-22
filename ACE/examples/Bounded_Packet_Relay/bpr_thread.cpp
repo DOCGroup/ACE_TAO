@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    bpr_thread.cpp
  *
@@ -11,7 +10,6 @@
  * Based on the Timer Queue Test example written by Carlos O'Ryan <coryan@cs.wustl.edu>
  * and Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "Thread_Bounded_Packet_Relay.h"
 #include <memory>

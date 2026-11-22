@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    imore.cpp (imore stands for indirect more.)
  *
@@ -13,7 +12,6 @@
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_errno.h"

@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    test_aiocb.cpp
  *
@@ -12,7 +11,6 @@
  *
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
-//=============================================================================
 
 //FUZZ: disable check_for_lack_ACE_OS
 //FUZZ: disable check_for_improper_main_declaration

@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file     test_aiosig_ace.cpp
  *
@@ -24,7 +23,6 @@
  *  ./test_aiosig_ace
  *  @author  Programming for the Real World. Bill O. GallMeister.  Modified by Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "ace/Message_Block.h"
 #include "ace/Log_Msg.h"

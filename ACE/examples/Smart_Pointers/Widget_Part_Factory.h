@@ -1,11 +1,9 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    Widget_Part_Factory.h
  *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  */
-//=============================================================================
 
 #ifndef WIDGET_PART_FACTORY_H
 #define WIDGET_PART_FACTORY_H

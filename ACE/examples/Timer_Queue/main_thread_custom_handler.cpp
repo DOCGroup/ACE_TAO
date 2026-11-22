@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    main_thread_custom_handler.cpp
  *
@@ -10,7 +9,6 @@
  *  @author Douglas Schmidt <d.schmidt@vanderbilt.edu>, Sergio Flores-Gaitan
  *          <sergio@cs.wustl.edu>, and Alon Diamant <diamant.alon@gmail.com>
  */
-//=============================================================================
 
 #include "ace/OS_main.h"
 #include "Driver.h"

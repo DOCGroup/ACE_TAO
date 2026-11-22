@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    test_timeout_st.cpp
  *
@@ -9,7 +8,6 @@
  *
  *  @author Irfan Pyarali and Alexander Babu Arulanthu
  */
-//=============================================================================
 
 #include "ace/Proactor.h"
 #include "ace/OS_main.h"

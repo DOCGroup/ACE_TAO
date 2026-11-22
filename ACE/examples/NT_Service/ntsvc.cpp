@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    ntsvc.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Gonzalo Diethelm <gonzo@cs.wustl.edu> and Steve Huston <shuston@riverace.com>
  */
-//=============================================================================
 
 #include "ace/Reactor.h"
 #include "ntsvc.h"

@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Thread_Timer_Queue_Custom_Handler_Test.h
  *
@@ -11,7 +10,6 @@
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>, Sergio Flores-Gaitan
  *          <sergio@cs.wustl.edu>, and Alon Diamant <diamant.alon@gmail.com>
  */
-//=============================================================================
 
 #ifndef _THREAD_TIMER_QUEUE_TEST_H_
 #define _THREAD_TIMER_QUEUE_TEST_H_

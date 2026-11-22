@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    test_proactor2.cpp
  *
@@ -11,7 +10,6 @@
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu> and Alexander Libman <Alibman@baltimore.com>.
  */
-//=============================================================================
 
 #include "ace/Signal.h"
 

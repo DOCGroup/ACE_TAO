@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Async_Timer_Queue_Test.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Signal.h"

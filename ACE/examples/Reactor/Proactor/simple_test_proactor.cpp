@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    simple_test_proactor.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Alexander Babu Arulanthu (alex@cs.wustl.edu)
  */
-//=============================================================================
 
 #include "ace/Service_Config.h"
 #include "ace/Proactor.h"

@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Thread_Bounded_Packet_Relay.h
  *
@@ -12,7 +11,6 @@
  *          <coryan@cs.wustl.edu>, Douglas C. Schmidt <d.schmidt@vanderbilt.edu>,
  *          and Sergio Flores-Gaitan <sergio@cs.wustl.edu>.
  */
-//=============================================================================
 
 #ifndef _THREAD_BOUNDED_PACKET_RELAY_H_
 #define _THREAD_BOUNDED_PACKET_RELAY_H_

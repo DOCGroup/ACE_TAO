@@ -1,4 +1,3 @@
-//=============================================================================
 /**
   *  @file   diffserv_test.cpp
   *
@@ -8,7 +7,6 @@
   *  @brief  Send UDP packets to a destination host and port.
   *          Change the Diffserv field to various values.
   */
-//=============================================================================
 
 #include "ace/Log_Msg.h"
 #include "ace/SOCK_CODgram.h"

@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    URL_Visitor.h
  *
  *  @author Douglas C.Schmidt <d.schmidt@vanderbilt.edu> Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _URL_VISITOR_H
 #define _URL_VISITOR_H

@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Sender_QoS_Event_Handler.h
  *
  *  @author Vishal Kachroo <vishal@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef SENDER_QOS_EVENT_HANDLER_H
 #define SENDER_QOS_EVENT_HANDLER_H

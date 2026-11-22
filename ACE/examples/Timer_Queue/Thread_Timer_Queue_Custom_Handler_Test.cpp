@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Thread_Timer_Queue_Custom_Handler_Test.cpp
  *
@@ -9,7 +8,6 @@
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>, Douglas C. Schmidt
  *          <d.schmidt@vanderbilt.edu>, and Alon Diamant <diamant.alon@gmail.com>
  */
-//=============================================================================
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Task.h"

@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Receiver_QoS_Event_Handler.cpp
  *
  *  @author Vishal Kachroo <vishal@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "Receiver_QoS_Event_Handler.h"
 #include "ace/Log_Msg.h"

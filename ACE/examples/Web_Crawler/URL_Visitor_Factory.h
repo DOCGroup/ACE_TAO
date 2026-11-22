@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    URL_Visitor_Factory.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef _URL_VISITOR_FACTORY_H
 #define _URL_VISITOR_FACTORY_H

@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Driver.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Douglas Schmidt      <d.schmidt@vanderbilt.edu> && Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  */
-//=============================================================================
 
 #if !defined (_DRIVER_CPP_)
 #define _DRIVER_CPP_

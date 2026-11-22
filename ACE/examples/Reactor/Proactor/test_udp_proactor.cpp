@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    test_udp_proactor.cpp
  *
@@ -9,7 +8,6 @@
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu> and Roger Tragin <r.tragin@computer.org>
  */
-//=============================================================================
 
 #include "ace/OS_main.h"
 #include "ace/Proactor.h"

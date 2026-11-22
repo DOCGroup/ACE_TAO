@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    main.cpp
  *
@@ -9,7 +8,6 @@
  *
  *  @author Gonzalo Diethelm <gonzo@cs.wustl.edu> and Steve Huston <shuston@riverace.com>
  */
-//=============================================================================
 
 #include "ace/Get_Opt.h"
 #include "ace/Init_ACE.h"

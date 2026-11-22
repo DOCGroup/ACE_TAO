@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file     test_end_event_loop.cpp
  *
@@ -13,7 +12,6 @@
  *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/Proactor.h"

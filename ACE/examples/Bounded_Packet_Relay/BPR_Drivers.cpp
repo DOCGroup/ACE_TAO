@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    BPR_Drivers.cpp
  *
@@ -11,7 +10,6 @@
  *          <coryan@cs.wustl.edu>, Douglas C. Schmidt <d.schmidt@vanderbilt.edu>,
  *          and Sergio Flores-Gaitan <sergio@cs.wustl.edu>.
  */
-//=============================================================================
 
 #include "ace/OS_NS_sys_time.h"
 #include "BPR_Drivers.h"

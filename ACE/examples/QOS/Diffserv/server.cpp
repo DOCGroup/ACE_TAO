@@ -1,11 +1,9 @@
-//=============================================================================
 /**
   *  @file   server.cpp
   *
   *  @author Craig Rodrigues <crodrigu@bbn.com>
   *  @brief  Start a server which listens for UDP packets on a specified port.
   */
-//=============================================================================
 
 #include "ace/Reactor.h"
 #include "ace/SOCK_Dgram.h"

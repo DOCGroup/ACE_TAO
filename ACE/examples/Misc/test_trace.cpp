@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    test_trace.cpp
  *
@@ -26,7 +25,6 @@
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 // Enable tracing
 #define ACE_NTRACE 0

@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Thread_Timer_Queue_Test.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Task.h"

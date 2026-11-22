@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    test_proactor.cpp
  *
@@ -9,7 +8,6 @@
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "ace/OS_main.h"
 #include "ace/Service_Config.h"

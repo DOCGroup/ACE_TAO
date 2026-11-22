@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    QoS_Signal_Handler.h
  *
  *  @author Vishal Kachroo <vishal@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef QOS_SIGNAL_HANDLER_H
 #define QOS_SIGNAL_HANDLER_H

@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    future2.cpp
  *
@@ -10,7 +9,6 @@
  *          - make the methods "work_i" and "name_i" private
  *          - make the tests more modular.
  */
-//=============================================================================
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_time.h"
