@@ -127,7 +127,7 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
             test_iterations        = ACE_OS::atoi(get_opt->opt_arg ());
             break;
           case 'n':
-            test_enable_nagle     = 1;
+            test_enable_nagle     = true;
             break;
           case 't':{
             ACE_TCHAR const * const str = get_opt->opt_arg ();

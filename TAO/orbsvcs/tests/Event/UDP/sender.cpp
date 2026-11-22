@@ -149,7 +149,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // receive any event from any source and send it to the "right"
       // multicast group, as defined by the address server set above:
       RtecEventChannelAdmin::ConsumerQOS sub;
-      sub.is_gateway = 1;
+      sub.is_gateway = true;
 
       sub.dependencies.length (1);
       sub.dependencies[0].event.header.type =

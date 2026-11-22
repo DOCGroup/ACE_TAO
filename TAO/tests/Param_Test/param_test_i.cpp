@@ -389,11 +389,11 @@ Param_Test_i::test_unbounded_struct_sequence (const Param_Test::PathSpec & s1,
 
   rPathSpec[0u].name.id = CORBA::string_dup("staff");
   rPathSpec[0u].name.kind = CORBA::string_dup("staff");
-  rPathSpec[0u].process = 1;
+  rPathSpec[0u].process = true;
 
   rPathSpec[1u].name.id = CORBA::string_dup("john");
   rPathSpec[1u].name.kind = CORBA::string_dup("john");
-  rPathSpec[1u].process = 1;
+  rPathSpec[1u].process = true;
 
   s2 = s1;
   *out = s1;

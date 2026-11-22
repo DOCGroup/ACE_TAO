@@ -370,7 +370,7 @@ TAO_SFP_Base::read_frame (TAO_AV_Transport *transport,
           }
           if (frame_header.message_type & 4 )
           {
-            fragment_entry->frame_info.boundary_marker = 1;
+            fragment_entry->frame_info.boundary_marker = true;
           }
           switch (frame_header.message_type)
             {

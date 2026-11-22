@@ -590,7 +590,7 @@ TAO_Log_i::get_availability_status_i ()
     }
   else
   {
-    this->avail_status_.off_duty = 1;
+    this->avail_status_.off_duty = true;
   }
   // The log_full flag is set by the write operations.
   return this->avail_status_;
@@ -883,7 +883,7 @@ TAO_Log_i::write_recordlist (DsLogAdmin::RecordList const &reclist)
     {
       throw DsLogAdmin::LogDisabled ();
     }
-  else if (avail_stat.off_duty == 1)
+  else if (avail_stat.off_duty)
     {
       throw DsLogAdmin::LogOffDuty ();
     }
@@ -902,7 +902,7 @@ TAO_Log_i::write_recordlist (DsLogAdmin::RecordList const &reclist)
           // appropriate action.
           if (log_full_action == DsLogAdmin::halt)
             {
-              avail_status_.log_full = 1;
+              avail_status_.log_full = true;
               throw DsLogAdmin::LogFull (num_written);
             }
 

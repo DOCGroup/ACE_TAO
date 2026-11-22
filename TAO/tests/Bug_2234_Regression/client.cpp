@@ -68,13 +68,13 @@ ACE_TMAIN (
     rL= foo->TestLong( aL, bL, cL);
     ACE_DEBUG( (LM_INFO, "a is %d, b is %d, c is %d, r is %d:  ", aL, bL, cL, rL));
     if (static_cast<CORBA::Long>(1) != aL) {
-       ACE_DEBUG( (LM_ERROR, "a is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "a is wrong\n")); testFailed= true;}
     else if (static_cast<CORBA::Long>(2) != bL) {
-       ACE_DEBUG( (LM_ERROR, "b is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "b is wrong\n")); testFailed= true;}
     else if (static_cast<CORBA::Long>(4) != cL) {
-       ACE_DEBUG( (LM_ERROR, "c is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "c is wrong\n")); testFailed= true;}
     else if (static_cast<CORBA::Long>(7) != rL) {
-       ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= true;}
     else
     {
       ACE_DEBUG( (LM_INFO, "OK\n"));
@@ -90,13 +90,13 @@ ACE_TMAIN (
     rS= foo->TestString( aS.in(), bS.out(), cS.inout());
     ACE_DEBUG( (LM_INFO, "a is %C, b is %C, c is %C, r is %C:  ", aS.in (), bS.in (), cS.in (), rS.in ()));
     if ((0 != *aS.in()) && (0 != std::strcmp(aS.in(), "1"))) {
-       ACE_DEBUG( (LM_ERROR, "a is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "a is wrong\n")); testFailed= true;}
     else if ((0 != *aS.in()) && (0 != std::strcmp(bS.in(), "2"))) {
-       ACE_DEBUG( (LM_ERROR, "b is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "b is wrong\n")); testFailed= true;}
     else if ((0 != *aS.in()) && (0 != std::strcmp(cS.in(), "4"))) {
-       ACE_DEBUG( (LM_ERROR, "c is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "c is wrong\n")); testFailed= true;}
     else if ((0 != *aS.in()) && (0 != std::strcmp(rS.in(), "7"))) {
-       ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= true;}
     else
     {
       ACE_DEBUG( (LM_INFO, "OK\n"));
@@ -115,13 +115,13 @@ ACE_TMAIN (
     ACE_DEBUG ((LM_INFO, "a is %d, b is %d, c is %d, r is %d:  ",
                 aFS.in ().val, bFS.in ().val, cFS.in ().val, rFS.in ().val));
     if (static_cast<CORBA::Long>(1) != aFS->val) {
-       ACE_DEBUG( (LM_ERROR, "a is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "a is wrong\n")); testFailed= true;}
     else if (static_cast<CORBA::Long>(2) != bFS->val) {
-       ACE_DEBUG( (LM_ERROR, "b is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "b is wrong\n")); testFailed= true;}
     else if (static_cast<CORBA::Long>(4) != cFS->val) {
-       ACE_DEBUG( (LM_ERROR, "c is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "c is wrong\n")); testFailed= true;}
     else if (static_cast<CORBA::Long>(7) != rFS->val) {
-       ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= true;}
     else
     {
       ACE_DEBUG( (LM_INFO, "OK\n"));
@@ -140,13 +140,13 @@ ACE_TMAIN (
     ACE_DEBUG ((LM_INFO, "a is %C, b is %C, c is %C, r is %C:  ",
                 aVS->val.in (), bVS->val.in (), cVS->val.in (), rVS->val.in ()));
     if ((0 != *aVS->val) && (0 != std::strcmp(aVS->val, "1"))) {
-       ACE_DEBUG( (LM_ERROR, "a is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "a is wrong\n")); testFailed= true;}
     else if ((0 != *bVS->val) && (0 != std::strcmp(bVS->val, "2"))) {
-       ACE_DEBUG( (LM_ERROR, "b is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "b is wrong\n")); testFailed= true;}
     else if ((0 != *cVS->val) && (0 != std::strcmp(cVS->val, "4"))) {
-       ACE_DEBUG( (LM_ERROR, "c is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "c is wrong\n")); testFailed= true;}
     else if ((0 != *rVS->val) && (0 != std::strcmp(rVS->val, "7"))) {
-       ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= true;}
     else
     {
       ACE_DEBUG( (LM_INFO, "OK\n"));
@@ -200,13 +200,13 @@ ACE_TMAIN (
     }
     ACE_DEBUG( (LM_INFO, ":  "));
     if ((static_cast<CORBA::Short>(1) != aFU->_d()) || (static_cast<CORBA::Long>(1) != aFU->valLong())) {
-       ACE_DEBUG( (LM_ERROR, "a is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "a is wrong\n")); testFailed= true;}
     else if ((static_cast<CORBA::Short>(1) != bFU->_d()) || (static_cast<CORBA::Long>(2) != bFU->valLong())) {
-       ACE_DEBUG( (LM_ERROR, "b is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "b is wrong\n")); testFailed= true;}
     else if ((static_cast<CORBA::Short>(1) != cFU->_d()) || (static_cast<CORBA::Long>(4) != cFU->valLong())) {
-       ACE_DEBUG( (LM_ERROR, "c is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "c is wrong\n")); testFailed= true;}
     else if ((static_cast<CORBA::Short>(1) != rFU->_d()) || (static_cast<CORBA::Long>(7) != rFU->valLong())) {
-       ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= true;}
     else
     {
       ACE_DEBUG( (LM_INFO, "OK\n"));
@@ -260,13 +260,13 @@ ACE_TMAIN (
     }
     ACE_DEBUG( (LM_INFO, ":  "));
     if ((static_cast<CORBA::Short>(1) != aVU->_d()) || (static_cast<CORBA::Long>(1) != aVU->valLong())) {
-       ACE_DEBUG( (LM_ERROR, "a is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "a is wrong\n")); testFailed= true;}
     else if ((static_cast<CORBA::Short>(1) != bVU->_d()) || (static_cast<CORBA::Long>(2) != bVU->valLong())) {
-       ACE_DEBUG( (LM_ERROR, "b is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "b is wrong\n")); testFailed= true;}
     else if ((static_cast<CORBA::Short>(1) != cVU->_d()) || (static_cast<CORBA::Long>(4) != cVU->valLong())) {
-       ACE_DEBUG( (LM_ERROR, "c is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "c is wrong\n")); testFailed= true;}
     else if ((static_cast<CORBA::Short>(1) != rVU->_d()) || (static_cast<CORBA::Long>(7) != rVU->valLong())) {
-       ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= true;}
     else
     {
       ACE_DEBUG( (LM_INFO, "OK\n"));
@@ -322,13 +322,13 @@ ACE_TMAIN (
     }
     ACE_DEBUG( (LM_INFO, ":  "));
     if ((1u != aSL->length()) || (static_cast<CORBA::Long>(1) != aSL[0])) {
-       ACE_DEBUG( (LM_ERROR, "a is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "a is wrong\n")); testFailed= true;}
     else if ((1u != bSL->length()) || (static_cast<CORBA::Long>(2) != bSL[0])) {
-       ACE_DEBUG( (LM_ERROR, "b is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "b is wrong\n")); testFailed= true;}
     else if ((1u != cSL->length()) || (static_cast<CORBA::Long>(4) != cSL[0])) {
-       ACE_DEBUG( (LM_ERROR, "c is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "c is wrong\n")); testFailed= true;}
     else if ((1u != rSL->length()) || (static_cast<CORBA::Long>(7) != rSL[0])) {
-       ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= true;}
     else
     {
       ACE_DEBUG( (LM_INFO, "OK\n"));
@@ -420,27 +420,27 @@ ACE_TMAIN (
       CORBA::ULong const zero (0), one (1); //Use ULong to avoid ambiguity
       if (arr_c[0].length () != 1 || arr_c[0][0] != 24)
         {
-          ACE_DEBUG( (LM_ERROR, "arr_c[0] is wrong\n")); testFailed = 1;
+          ACE_DEBUG( (LM_ERROR, "arr_c[0] is wrong\n")); testFailed = true;
         }
       else if (arr_c[1].length () != 1 || arr_c[1][0] != 10)
         {
-          ACE_DEBUG( (LM_ERROR, "arr_c[1] is wrong\n")); testFailed = 1;
+          ACE_DEBUG( (LM_ERROR, "arr_c[1] is wrong\n")); testFailed = true;
         }
       else if (arr_b[zero].length () != 1 || arr_b[zero][0] != 8)
         {
-          ACE_DEBUG( (LM_ERROR, "arr_b[0] is wrong\n")); testFailed = 1;
+          ACE_DEBUG( (LM_ERROR, "arr_b[0] is wrong\n")); testFailed = true;
         }
       else if (arr_b[one].length () != 1 || arr_b[one][0] != 22)
         {
-          ACE_DEBUG( (LM_ERROR, "arr_b[1] is wrong\n")); testFailed = 1;
+          ACE_DEBUG( (LM_ERROR, "arr_b[1] is wrong\n")); testFailed = true;
         }
       else if (arr_ret[zero].length () != 1 || arr_ret[zero][0] != 7)
         {
-          ACE_DEBUG( (LM_ERROR, "arr_ret[0] is wrong\n")); testFailed = 1;
+          ACE_DEBUG( (LM_ERROR, "arr_ret[0] is wrong\n")); testFailed = true;
         }
       else if (arr_ret[one].length () != 1 || arr_ret[one][0] != 21)
         {
-          ACE_DEBUG( (LM_ERROR, "arr_ret[1] is wrong\n")); testFailed = 1;
+          ACE_DEBUG( (LM_ERROR, "arr_ret[1] is wrong\n")); testFailed = true;
         }
       else
       {
@@ -466,17 +466,17 @@ ACE_TMAIN (
   catch (CORBA::SystemException const & ex)
   {
     ex._tao_print_exception ("CORBA::SystemException: ");
-    testFailed= 1;
+    testFailed= true;
   }
   catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception ("CORBA::Exception: ");
-    testFailed= 1;
+    testFailed= true;
   }
   catch (...)
   {
     ACE_DEBUG( (LM_ERROR, "Unexpected general exception!\n"));
-    testFailed= 1;
+    testFailed= true;
   }
 
   ACE_DEBUG( (LM_INFO, "Regression test for Bug 2234 "));

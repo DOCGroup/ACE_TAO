@@ -101,12 +101,12 @@ TAO_Notify_Object::shutdown ()
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 1);
 
-    if (this->shutdown_ == 1)
+    if (this->shutdown_)
     {
       return 1; // Another thread has already run shutdown.
     }
 
-    this->shutdown_ = 1;
+    this->shutdown_ = true;
   }
 
   this->deactivate ();

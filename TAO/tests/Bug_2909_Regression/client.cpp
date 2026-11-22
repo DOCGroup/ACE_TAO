@@ -300,7 +300,7 @@ Client::svc ()
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("MT_Client: exception raised");
-      invalid_exception = 1;
+      invalid_exception = true;
     }
   return 0;
 }

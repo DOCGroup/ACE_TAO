@@ -111,8 +111,8 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, A
       tpl_params.server_priority = default_priority;
       tpl_params.stacksize = 0;
       tpl_params.lanes.length (lanecount);
-      tpl_params.allow_borrowing = 0;
-      tpl_params.allow_request_buffering = 0;
+      tpl_params.allow_borrowing = false;
+      tpl_params.allow_request_buffering = false;
       tpl_params.max_buffered_requests = 0;
       tpl_params.max_request_buffer_size = 0;
 

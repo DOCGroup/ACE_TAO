@@ -38,11 +38,11 @@ Options::parse_args (int argc, ACE_TCHAR **argv)
       {
       case 'd':  // debug flag
         ++TAO_debug_level;
-        this->debug_ = 1;
+        this->debug_ = true;
         break;
 
       case 'x':
-        this->shutdown_ = 1;
+        this->shutdown_ = true;
         break;
 
       case 'n':                 // loop count
