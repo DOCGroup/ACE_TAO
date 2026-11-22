@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file     server.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Priyanka Gontla <pgontla@ece.uci.edu>
  */
-//=============================================================================
 
 #include "Stock_Factory_i.h"
 #include "tao/Utils/PolicyList_Destroyer.h"

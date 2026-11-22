@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file   config-win32-msvc.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_CONFIG_WIN32_MSVC_H
 #define ACE_CONFIG_WIN32_MSVC_H

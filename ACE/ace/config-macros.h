@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file   config-macros.h
  *
@@ -14,7 +13,6 @@
  *  Allows configuration values and macros to be used by some C
  *  language sources.
  */
-//==========================================================================
 
 #ifndef ACE_CONFIG_MACROS_H
 #define ACE_CONFIG_MACROS_H

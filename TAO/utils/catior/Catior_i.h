@@ -2,7 +2,6 @@
 #ifndef CATIOR_I_H
 #define CATIOR_I_H
 
-//=============================================================================
 /**
  *  @file    Catior_i.h
  *
@@ -11,7 +10,6 @@
  *  @author   Jeff Hopper <jrhopper@cts.com>   SCIOP and Tagged component modifications by:   Jason Cohen
  *  @author Lockheed Martin ATL <jcohen@atl.lmco.com>   Split into a separate library by:   Chad Elliott <elliott_c@ociweb.com>
  */
-//=============================================================================
 
 #include "catior_export.h"
 #include "ace/String_Base.h"

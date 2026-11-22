@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file   config-all.h
  *
@@ -8,7 +7,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//==========================================================================
 
 #ifndef ACE_CONFIG_ALL_H
 #define ACE_CONFIG_ALL_H

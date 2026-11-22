@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file   config-lite.h
  *
@@ -12,7 +11,6 @@
  *  avoid a circular dependency problem caused by some of the new
  *  includes added to config-all.h, e.g., OS_main.h.
  */
-//==========================================================================
 
 #ifndef ACE_CONFIG_LITE_H
 #define ACE_CONFIG_LITE_H

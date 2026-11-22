@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Catior_i.cpp
  *
@@ -8,7 +7,6 @@
  *  @author   Jeff Hopper <jrhopper@cts.com>   SCIOP and Tagged component modifications by:   Jason Cohen
  *  @author Lockheed Martin ATL <jcohen@atl.lmco.com>   Split into a separate library by:   Chad Elliott <elliott_c@ociweb.com>
  */
-//=============================================================================
 
 #include "Catior_i.h"
 #include "tao/Messaging_PolicyValueC.h"

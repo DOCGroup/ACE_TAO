@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   config-win32-msvc-141.h
  *
@@ -9,7 +8,6 @@
  *
  *  @note Do not include this file directly, include config-win32.h instead.
  */
-//=============================================================================
 
 #ifndef ACE_CONFIG_WIN32_MSVC_141_H
 #define ACE_CONFIG_WIN32_MSVC_141_H

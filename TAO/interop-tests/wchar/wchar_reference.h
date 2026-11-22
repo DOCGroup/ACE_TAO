@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    wchar_reference.h
  *
@@ -10,7 +9,6 @@
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
 
 #ifndef WCHAR_REFERENCE_H
 #define WCHAR_REFERENCE_H

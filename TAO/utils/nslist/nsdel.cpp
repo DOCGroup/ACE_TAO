@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    nsdel.cpp
  *
@@ -9,7 +8,6 @@
  *  @author 2001 Paul Caffrey <denginere@hotmail.com>  redone   Jun 21
  *  @author 2006 Simon Massey <sma@prismtech.com>
  */
-//=============================================================================
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Time_Utilities.h"

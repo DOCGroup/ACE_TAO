@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    nsadd.cpp
  *
@@ -7,7 +6,6 @@
  *  @author  Carlos O'Ryan  enhanced Nov 6
  *  @author 2002 Paul Caffrey <denginere@hotmail.com>  redone   Jun 21 2006 Simon Massey <sma@prismtech.com>
  */
-//=============================================================================
 
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Log_Msg.h"
