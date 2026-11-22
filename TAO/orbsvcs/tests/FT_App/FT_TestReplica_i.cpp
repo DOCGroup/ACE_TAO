@@ -260,10 +260,10 @@ CORBA::Boolean FT_TestReplica_i::is_alive ()
 FT::State * FT_TestReplica_i::get_update ()
 {
   KEVORKIAN_RETURN(DURING_GET_UPDATE, get_update, 0)
-  long counter = load();
+  long counter_value = load();
   ::FT::State_var vState = new ::FT::State;
-  vState->length(sizeof(counter));
-  storeLong(vState, 0, counter);
+  vState->length(sizeof(counter_value));
+  storeLong(vState, 0, counter_value);
   return vState._retn();
 }
 
@@ -273,8 +273,8 @@ void FT_TestReplica_i::set_update (const FT::State & s)
   throw FT::InvalidUpdate ();
 #else // FT_TEST_LACKS_UPDATE
   KEVORKIAN(BEFORE_SET_UPDATE, set_update)
-  long counter = loadLong<FT::State>(s, 0);
-  store(counter);
+  long counter_value = loadLong<FT::State>(s, 0);
+  store(counter_value);
   KEVORKIAN(AFTER_SET_UPDATE, set_update)
 #endif // FT_TEST_LACKS_UPDATE
 }
@@ -287,10 +287,10 @@ void FT_TestReplica_i::set_update (const FT::State & s)
   throw FT::NoStateAvailable ();
 #else // FT_TEST_LACKS_STATE
   KEVORKIAN_RETURN(DURING_GET_STATE, get_state, 0)
-  long counter = load();
+  long counter_value = load();
   ::FT::State_var vState = new ::FT::State;
-  vState->length(sizeof(counter));
-  storeLong(vState, 0, counter);
+  vState->length(sizeof(counter_value));
+  storeLong(vState, 0, counter_value);
   return vState._retn();
 #endif // FT_TEST_LACKS_STATE
 }
@@ -301,8 +301,8 @@ void FT_TestReplica_i::set_state (const FT::State & s)
   throw FT::InvalidState ();
 #else // FT_TEST_LACKS_STATE
   KEVORKIAN(BEFORE_SET_STATE, set_state)
-  long counter = loadLong<FT::State>(s, 0);
-  store(counter);
+  long counter_value = loadLong<FT::State>(s, 0);
+  store(counter_value);
   KEVORKIAN(AFTER_SET_STATE, set_state)
 #endif // FT_TEST_LACKS_STATE
 }
@@ -325,33 +325,33 @@ void FT_TestReplica_i::tao_update_object_group (
 void FT_TestReplica_i::set (CORBA::Long value)
 {
   KEVORKIAN(BEFORE_STATE_CHANGE, set)
-  long counter = value;
-  store(counter);
+  long counter_value = value;
+  store(counter_value);
   KEVORKIAN(BEFORE_REPLY, set)
 }
 
 CORBA::Long FT_TestReplica_i::increment (CORBA::Long delta)
 {
   KEVORKIAN_RETURN(BEFORE_STATE_CHANGE, increment, 0)
-  long counter = load ();
-  counter += delta;
-  store (counter);
+  long counter_value = load ();
+  counter_value += delta;
+  store (counter_value);
   KEVORKIAN_RETURN(BEFORE_REPLY, increment, 0)
-  return counter;
+  return counter_value;
 }
 
 CORBA::Long FT_TestReplica_i::get ()
 {
   KEVORKIAN_DURING_RETURN(get, 0)
-  long counter = load ();
-  return counter;
+  long counter_value = load ();
+  return counter_value;
 }
 
 CORBA::Long FT_TestReplica_i::counter ()
 {
   KEVORKIAN_DURING_RETURN([get]counter, 0)
-  long counter = load ();
-  return counter;
+  long counter_value = load ();
+  return counter_value;
 }
 
 void FT_TestReplica_i::counter (CORBA::Long counter)
@@ -427,14 +427,14 @@ void FT_TestReplica_i::store(long counter)
 
 long FT_TestReplica_i::load ()
 {
-  long counter = 0;
+  long loaded_value = 0;
   FILE *f = ACE_OS::fopen(this->name_persistent_storage, "r");
   if (f != nullptr)
   {
     std::array<unsigned char, sizeof (long)> buffer {};
     ACE_OS::fread(buffer.data (), 1, sizeof (long), f);
     ACE_OS::fclose(f);
-    counter = loadLong (buffer, 0);
+    loaded_value = loadLong (buffer, 0);
   }
-  return counter;
+  return loaded_value;
 }

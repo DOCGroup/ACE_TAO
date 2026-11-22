@@ -517,11 +517,11 @@ int FT_ReplicaFactory_i::fini ()
          location_.c_str ()
          ));
 
-      PortableGroup::Location location(1);
-      location.length(1);
-      location[0].id = CORBA::string_dup(location_.c_str ());
+      PortableGroup::Location factory_location(1);
+      factory_location.length(1);
+      factory_location[0].id = CORBA::string_dup(location_.c_str ());
       this->factory_registry_->unregister_factory_by_location (
-              location);
+              factory_location);
     }
     else
     {
@@ -535,12 +535,12 @@ int FT_ReplicaFactory_i::fini ()
            location_.c_str ()
            ));
 
-        PortableGroup::Location location(1);
-        location.length(1);
-        location[0].id = CORBA::string_dup(location_.c_str ());
+        PortableGroup::Location factory_location(1);
+        factory_location.length(1);
+        factory_location[0].id = CORBA::string_dup(location_.c_str ());
         this->factory_registry_->unregister_factory (
                 roleName,
-                location);
+                factory_location);
       }
     }
   }
