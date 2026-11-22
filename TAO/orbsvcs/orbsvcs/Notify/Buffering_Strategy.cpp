@@ -13,6 +13,8 @@
 
 #include "ace/Message_Queue.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Buffering_Strategy::TAO_Notify_Buffering_Strategy (
@@ -148,11 +150,11 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* met
           timeout += ACE_OS::gettimeofday();
           if (local_overflow)
             {
-              local_not_full_.wait(&timeout);
+              local_not_full_.wait (std::addressof (timeout));
             }
           else
             {
-              global_not_full_.wait(&timeout);
+              global_not_full_.wait (std::addressof (timeout));
             }
           if (errno != ETIME)
             {

@@ -6,6 +6,8 @@
 #include "orbsvcs/Naming/FaultTolerant/nsgroup_svc.h"
 #include "ace/Task.h"
 
+#include <memory>
+
 const ACE_TCHAR *group_names[] =
   {ACE_TEXT("C++ Group"), ACE_TEXT("FORTRAN Group"), ACE_TEXT("Groovy Group"), ACE_TEXT("Basic Group"),
    ACE_TEXT("Java Group"), ACE_TEXT("Forth Group"), ACE_TEXT("COBOL Group"), ACE_TEXT("Ruby Group"),
@@ -110,7 +112,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       TAO_Naming_Client name_svc;
       try {
         ACE_Time_Value timeout (10); // Wait up to 10 seconds for the naming service
-        if (name_svc.init (orb.in (), &timeout) != 0)
+        if (name_svc.init (orb.in (), std::addressof (timeout)) != 0)
           {
             ACE_ERROR_RETURN ((LM_DEBUG,
                                ACE_TEXT ("client: Could not connect to ")

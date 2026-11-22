@@ -4,6 +4,8 @@
 #include "TestC.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <memory>
+
 LB_server::LB_server (int argc, ACE_TCHAR **argv)
   : argc_ (argc)
   , argv_ (argv)
@@ -122,7 +124,7 @@ LB_server::start_orb_and_poa ()
       poa_manager->activate ();
 
       ACE_Time_Value timeout (10); // Wait up to 10 seconds for the naming service
-      if (name_svc_.init (this->orb_.in (), &timeout) != 0)
+      if (name_svc_.init (this->orb_.in (), std::addressof (timeout)) != 0)
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              ACE_TEXT (" (%P|%t) LB_server: Could not connect ")

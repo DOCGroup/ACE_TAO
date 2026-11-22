@@ -2,6 +2,8 @@
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "ace/Time_Value.h"
 
+#include <memory>
+
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -17,7 +19,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       try
         {
           ACE_Time_Value timeout (10);
-          if (name_svc.init (orb.in (), &timeout) != 0)
+          if (name_svc.init (orb.in (), std::addressof (timeout)) != 0)
             {
               ACE_ERROR_RETURN ((LM_DEBUG,
                                  ACE_TEXT ("client: Could not connect to naming service.\n")),

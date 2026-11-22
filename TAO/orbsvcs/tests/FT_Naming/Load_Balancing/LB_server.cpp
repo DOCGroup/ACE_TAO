@@ -125,7 +125,7 @@ LB_server::start_orb_and_poa ()
       poa_manager->activate ();
 
       ACE_Time_Value timeout (10);
-      if (this->name_svc_.init (this->orb_.in (), &timeout) != 0)
+      if (this->name_svc_.init (this->orb_.in (), std::addressof (timeout)) != 0)
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              ACE_TEXT ("LB_server: Could not connect to naming ")

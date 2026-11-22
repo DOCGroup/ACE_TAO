@@ -160,7 +160,8 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   ACE_SOCK_Stream stream {};
 
   ORBSVCS_DEBUG((LM_DEBUG, "accepting connection from event channel\n"));
-  if (acceptor.accept(stream, &client_addr, &timeout) == -1)
+  if (acceptor.accept (stream, std::addressof (client_addr),
+                       std::addressof (timeout)) == -1)
   {
     ORBSVCS_ERROR_RETURN ((LM_ERROR, "accept fail\n"), 0);
   }
