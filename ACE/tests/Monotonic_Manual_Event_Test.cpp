@@ -114,7 +114,7 @@ void set_system_time(const ACE_Time_Value& tv)
 // Worker tries to acquire the semaphore, hold it for a while, and
 // then manually releases it.
 
-static void *
+static ACE_THR_FUNC_RETURN
 worker (void *)
 {
   if (evt->wait (initial_timeout) == -1)
@@ -125,14 +125,14 @@ worker (void *)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT (" (%P|%t) Timed out waiting for start pulse at %#T\n"),
                              &tm_now),
-                            0);
+                            ACE_THR_FUNC_RETURN_NULL);
         }
       else
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT (" (%P|%t) %p\n"),
                              ACE_TEXT ("Failed waiting for pulse ()")),
-                            0);
+                            ACE_THR_FUNC_RETURN_NULL);
         }
     }
 
@@ -220,7 +220,7 @@ worker (void *)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) worker finished\n")));
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 #  endif /* ACE_HAS_THREADS */
@@ -266,7 +266,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   if (ACE_Thread_Manager::instance ()->spawn_n
       (static_cast<size_t> (n_workers),
-       ACE_THR_FUNC (worker),
+       worker,
        nullptr,
        THR_NEW_LWP) == -1)
     {

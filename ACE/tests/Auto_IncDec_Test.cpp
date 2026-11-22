@@ -25,7 +25,7 @@ using INTERLOCKED_INT = ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 static INTERLOCKED_INT current_threads_in_first_section;
 static INTERLOCKED_INT current_threads_in_second_section;
 
-static void *
+static ACE_THR_FUNC_RETURN
 worker (void *)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -54,7 +54,7 @@ worker (void *)
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT (" (%t) worker exiting\n")));
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 #endif /* ACE_HAS_THREADS */
@@ -75,7 +75,7 @@ run_main (int, ACE_TCHAR *[])
 
   if (ACE_Thread_Manager::instance ()->spawn_n
       (n_threads,
-       ACE_THR_FUNC (worker),
+       worker,
        nullptr,
        THR_NEW_LWP) == -1)
     {

@@ -138,7 +138,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 // Worker tries to acquire the semaphore, hold it for a while, and
 // then releases it.
 
-static void *
+static ACE_THR_FUNC_RETURN
 worker (void *)
 {
   for (int iterations = 1;
@@ -188,7 +188,7 @@ worker (void *)
       ACE_Thread::yield ();
     }
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 #endif /* ACE_HAS_THREADS */
@@ -214,7 +214,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   if (ACE_Thread_Manager::instance ()->spawn_n
       (static_cast<size_t> (n_workers),
-       ACE_THR_FUNC (worker),
+       worker,
        nullptr,
        THR_NEW_LWP) == -1)
     {
