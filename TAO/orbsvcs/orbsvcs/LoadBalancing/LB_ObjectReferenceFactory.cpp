@@ -217,7 +217,7 @@ TAO_LB_ObjectReferenceFactory::find_object_group (
       object_group = group._retn ();
     }
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean

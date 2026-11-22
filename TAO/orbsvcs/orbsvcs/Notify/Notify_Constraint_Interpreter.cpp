@@ -61,7 +61,7 @@ TAO_Notify_Constraint_Interpreter::build_tree (
     }
     et_exp += "(";
 
-    has_et_exp = has_et_exp || 1;
+    has_et_exp = true;
 
     if (! d)
     {
