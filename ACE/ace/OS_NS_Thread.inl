@@ -870,7 +870,8 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
             {
               result = ACE_OS::cond_timedwait (&m->lock_available_,
                                                &m->nesting_mutex_,
-                                               const_cast <ACE_Time_Value *> (&timeout));
+                                               const_cast <ACE_Time_Value *> (
+                                                 std::addressof (timeout)));
 
               // The mutex is reacquired even in the case of a timeout
               // release the mutex to prevent a deadlock
@@ -2263,7 +2264,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
           {
             if (ACE_OS::cond_timedwait (&s->count_nonzero_,
                                         &s->lock_,
-                                        &tv) == -1)
+                                        std::addressof (tv)) == -1)
               {
                 error = errno;
                 result = -1;
@@ -2346,7 +2347,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
       while (s->count_ == 0)
         if (ACE_OS::cond_timedwait (&s->count_nonzero_,
                                     &s->lock_,
-                                    &tv) == -1)
+                                    std::addressof (tv)) == -1)
           {
             error = errno;
             result = -2; // -2 means that we need to release the mutex.
