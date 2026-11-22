@@ -203,7 +203,8 @@ namespace XSCRT
     template <>
     inline XMLCh *transcode (std::basic_string<wchar_t> const &s)
     {
-      std::unique_ptr<XMLCh[]> result (new XMLCh[s.length () * 2 + 1]);
+      std::unique_ptr<XMLCh[]> result =
+        std::make_unique<XMLCh[]> (s.length () * 2 + 1);
       size_t out{};
 
       for (size_t i{}; i < s.length (); ++i)
