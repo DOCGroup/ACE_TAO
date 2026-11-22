@@ -94,7 +94,7 @@ Content_Iterator_i::next_chunk (CORBA::ULongLong offset,
   chunk->replace (bytes_read,
                   bytes_read,
                   buf,
-                  1);  // The sequence releases memory for us.
+                  true);  // The sequence releases memory for us.
 
   ++this->chunk_index_;
 
