@@ -43,7 +43,7 @@ private:
         ACE_PI_Control_Block>*    c_memory_pool;
 
 protected:
-  ShmemMan(bool no_crash)
+  explicit ShmemMan(bool no_crash)
   {
     if (no_crash)
     {
