@@ -2329,6 +2329,14 @@ ACE::handle_ready (ACE_HANDLE handle,
 
   int const result = ACE_OS::poll (&fds, 1, timeout);
 #else
+#if !defined (ACE_WIN32)
+  if (handle < 0 || handle >= ACE_FD_SETSIZE)
+    {
+      errno = EINVAL;
+      return -1;
+    }
+#endif /* ! ACE_WIN32 */
+
   ACE_Handle_Set handle_set;
   handle_set.set_bit (handle);
 
@@ -2617,6 +2625,14 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   fds.revents = 0;
 
 #else
+#if !defined (ACE_WIN32)
+  if (h < 0 || h >= ACE_FD_SETSIZE)
+    {
+      errno = EINVAL;
+      return ACE_INVALID_HANDLE;
+    }
+#endif /* ! ACE_WIN32 */
+
   ACE_Handle_Set rd_handles;
   ACE_Handle_Set wr_handles;
   rd_handles.set_bit (h);
@@ -2796,6 +2812,14 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
 
 #else
   // Use the select() implementation rather than poll().
+#if !defined (ACE_WIN32)
+  if (listener < 0 || listener >= ACE_FD_SETSIZE)
+    {
+      errno = EINVAL;
+      return -1;
+    }
+#endif /* ! ACE_WIN32 */
+
   ACE_Handle_Set rd_handle;
   rd_handle.set_bit (listener);
 #endif /* ACE_HAS_POLL */
