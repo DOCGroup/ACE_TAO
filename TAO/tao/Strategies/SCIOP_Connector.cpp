@@ -183,7 +183,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
   if (multihomed.set(remote_address.get_port_number(),
                      remote_address.get_ip_address()))
     {
-      return 0;
+      return nullptr;
     }
 
   ACE_Multihomed_INET_Addr local_address;
@@ -249,7 +249,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
                       ACE_TEXT("errno")));
         }
 
-      return 0;
+      return nullptr;
     }
 
   TAO_Leader_Follower &leader_follower = this->orb_core ()->leader_follower ();
@@ -262,7 +262,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
   if (svc_handler->error_detected (leader_follower))
     {
       svc_handler->cancel_pending_connection ();
-      return 0;
+      return nullptr;
     }
 
   // At this point, the connection has be successfully connected.
@@ -295,14 +295,14 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
                       "could not add the new connection to cache\n"));
         }
 
-      return 0;
+      return nullptr;
     }
 
   if (svc_handler->error_detected (leader_follower))
     {
       svc_handler->cancel_pending_connection ();
       transport->purge_entry();
-      return 0;
+      return nullptr;
     }
 
   if (transport->is_connected () &&
@@ -415,14 +415,14 @@ TAO_SCIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != TAO_TAG_SCIOP_PROFILE)
     {
-      return 0;
+      return nullptr;
     }
 
   TAO_SCIOP_Endpoint *sciop_endpoint =
     dynamic_cast<TAO_SCIOP_Endpoint *> (endpoint );
   if (sciop_endpoint == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   return sciop_endpoint;

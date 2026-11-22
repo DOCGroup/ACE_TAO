@@ -95,7 +95,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
   if (diop_endpoint == nullptr)
   {
-    return 0;
+    return nullptr;
   }
 
   const ACE_INET_Addr &remote_address =
@@ -119,7 +119,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                       ACE_TEXT ("invalid connection to IPv4 mapped IPv6 interface <%s>!\n"),
                       remote_as_string));
         }
-      return 0;
+      return nullptr;
     }
 #endif /* ACE_HAS_IPV6 && ACE_HAS_IPV6_V6ONLY */
 
@@ -161,7 +161,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                       ACE_TEXT ("could not make a new connection\n")));
         }
 
-      return 0;
+      return nullptr;
     }
 
   if (TAO_debug_level > 2)
@@ -191,7 +191,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                     ACE_TEXT ("errno")));
         }
 
-      return 0;
+      return nullptr;
     }
 
   // Add the handler to Cache
@@ -211,7 +211,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                       ACE_TEXT ("could not add the new connection to cache\n")));
         }
 
-      return 0;
+      return nullptr;
     }
 
   svc_handler_auto_ptr.release ();
@@ -300,7 +300,7 @@ TAO_DIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != TAO_TAG_DIOP_PROFILE)
   {
-    return 0;
+    return nullptr;
   }
 
   return dynamic_cast<TAO_DIOP_Endpoint *> (endpoint);

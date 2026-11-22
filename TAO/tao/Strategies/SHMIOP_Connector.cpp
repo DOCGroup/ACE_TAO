@@ -150,7 +150,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
   if (shmiop_endpoint == nullptr)
   {
-    return 0;
+    return nullptr;
   }
 
   const ACE_INET_Addr &remote_address =
@@ -195,7 +195,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                       ACE_TEXT ("errno")));
         }
 
-      return 0;
+      return nullptr;
     }
 
   TAO_Leader_Follower &leader_follower = this->orb_core ()->leader_follower ();
@@ -243,14 +243,14 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                       ACE_TEXT("could not add the new connection to cache\n")));
         }
 
-      return 0;
+      return nullptr;
     }
 
   if (svc_handler->error_detected (leader_follower))
     {
       svc_handler->cancel_pending_connection ();
       transport->purge_entry();
-      return 0;
+      return nullptr;
     }
 
   if (transport->is_connected () &&
@@ -273,7 +273,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                     transport->id ()));
         }
 
-      return 0;
+      return nullptr;
     }
 
   svc_handler_auto_ptr.release ();
@@ -363,14 +363,14 @@ TAO_SHMIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != TAO_TAG_SHMEM_PROFILE)
   {
-    return 0;
+    return nullptr;
   }
 
   TAO_SHMIOP_Endpoint *shmiop_endpoint =
     dynamic_cast <TAO_SHMIOP_Endpoint *>(endpoint);
   if (shmiop_endpoint == nullptr)
   {
-    return 0;
+    return nullptr;
   }
 
   return shmiop_endpoint;

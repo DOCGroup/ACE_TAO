@@ -144,7 +144,7 @@ TAO_COIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != TAO_TAG_COIOP_PROFILE)
     {
-      return 0;
+      return nullptr;
     }
 
   TAO_COIOP_Endpoint *COIOP_endpoint =

@@ -82,7 +82,7 @@ TAO_UIOP_Connector::corbaloc_scan (const char *str, size_t &len)
 {
   if (this->check_prefix (str) != 0)
   {
-    return 0;
+    return nullptr;
   }
 
   const char *separator = std::strchr (str,'|');
@@ -95,7 +95,7 @@ TAO_UIOP_Connector::corbaloc_scan (const char *str, size_t &len)
                     "explicit terminating charactor '|' is missing from <%C>",
                     str));
         }
-      return 0;
+      return nullptr;
     }
   len = separator - str;
   return this->make_profile ();
@@ -151,7 +151,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
 
   if (uiop_endpoint == nullptr)
   {
-    return 0;
+    return nullptr;
   }
 
   const ACE_UNIX_Addr &remote_address =
@@ -229,7 +229,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                       ACE_TEXT("errno")));
         }
 
-      return 0;
+      return nullptr;
     }
 
   TAO_Leader_Follower &leader_follower = this->orb_core ()->leader_follower ();
@@ -273,14 +273,14 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                       ACE_TEXT ("could not add the new connection to Cache\n")));
         }
 
-      return 0;
+      return nullptr;
     }
 
   if (svc_handler->error_detected (leader_follower))
     {
       svc_handler->cancel_pending_connection ();
       transport->purge_entry();
-      return 0;
+      return nullptr;
     }
 
   if (transport->is_connected () &&
@@ -304,7 +304,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                     transport->id ()));
         }
 
-      return 0;
+      return nullptr;
     }
 
   svc_handler_auto_ptr.release ();
@@ -392,7 +392,7 @@ TAO_UIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != TAO_TAG_UIOP_PROFILE)
   {
-    return 0;
+    return nullptr;
   }
 
   TAO_UIOP_Endpoint *uiop_endpoint =
@@ -400,7 +400,7 @@ TAO_UIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 
   if (uiop_endpoint == nullptr)
   {
-    return 0;
+    return nullptr;
   }
 
   return uiop_endpoint;

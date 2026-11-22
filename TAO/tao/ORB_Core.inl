@@ -437,15 +437,15 @@ TAO_ORB_Core::codeset_manager()
 {
   if (this->orb_params()->negotiate_codesets() == 0)
     {
-      return 0;
+      return nullptr;
     }
-  if (this->codeset_manager_ == 0)
+  if (this->codeset_manager_ == nullptr)
     {
       // This causes a factory to be loaded which will call
       // the codeset_manager setter in this thread.
       this->codeset_manager_ =
         this->resource_factory()->codeset_manager();
-      if (this->codeset_manager_ == 0)
+      if (this->codeset_manager_ == nullptr)
         {
           this->orb_params()->negotiate_codesets(false);
         }
