@@ -134,7 +134,7 @@ test_registering_all_handlers ()
     {
       t_id[i] =
         ACE_Reactor::instance ()->schedule_timer (std::addressof (rt[i]),
-                                                  (const void *) i,
+                                                  reinterpret_cast<void const *> (i),
                                                   std::chrono::seconds {2 * i + 1});
       ACE_TEST_ASSERT (t_id[i] != -1);
       rt[i].timer_id (t_id[i]);
@@ -162,7 +162,7 @@ test_registering_one_handler ()
     {
       t_id[i] =
         ACE_Reactor::instance ()->schedule_timer (std::addressof (rt[0]),
-                                                  (const void *) i,
+                                                  reinterpret_cast<void const *> (i),
                                                   ACE_Time_Value (2 * i + 1));
       ACE_TEST_ASSERT (t_id[i] != -1);
     }
@@ -189,7 +189,7 @@ test_canceling_odd_timers ()
   for (size_t i = 0; i < ACE_MAX_TIMERS; ++i)
     {
       t_id[i] = ACE_Reactor::instance ()->schedule_timer (std::addressof (rt[i]),
-                                                          (const void *) i,
+                                                          reinterpret_cast<void const *> (i),
                                                           ACE_Time_Value (2 * i + 1));
       ACE_TEST_ASSERT (t_id[i] != -1);
       rt[i].timer_id (t_id[i]);
@@ -232,7 +232,7 @@ test_resetting_timer_intervals ()
   t_id =
     ACE_Reactor::instance ()->schedule_timer
     (std::addressof (rt),
-     (const void *) -1,
+     reinterpret_cast<void const *> (-1),
      ACE_Time_Value (1),
      // Start off by making this an interval timer.
      ACE_Time_Value (1));

@@ -337,7 +337,7 @@ run_main(int /*argc*/, ACE_TCHAR * /*argv*/[])
 
     ACE_Time_Value repeatTime(0, 50000); // 0.05 second time interval
     ACE_Proactor::instance()->schedule_repeating_timer(fileIOHandler,
-                                                       (void *) (100),
+                                                       nullptr,
                                                        repeatTime);
 
     // Run the Proactor
