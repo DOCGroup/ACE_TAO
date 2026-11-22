@@ -22,16 +22,23 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   while ((n = server.recv (&band, &msg, nullptr, &flags)) >= 0)
     {
       if (msg.len == 0)
-        break;
+        {
+          break;
+        }
       else
-        ACE_DEBUG ((LM_DEBUG, "%4d (%4d): %*s",
-                    msg.len, band, msg.len, msg.buf));
+        {
+          ACE_DEBUG ((LM_DEBUG, "%4d (%4d): %*s",
+                      msg.len, band, msg.len, msg.buf));
+        }
       flags = MSG_ANY;
       band = 0;
     }
 
   if (n == -1)
-    ACE_OS::perror ("recv"), ACE_OS::exit (1);
+    {
+      ACE_OS::perror ("recv");
+      ACE_OS::exit (1);
+    }
 
   return 0;
 }
