@@ -847,10 +847,12 @@ Server::initiate_read_stream ()
       // On peer close, ReadFile will yield ERROR_NETNAME_DELETED; won't get
       // a 0-byte read as we would if underlying calls used WSARecv.
       if (ACE_OS::last_error () == ERROR_NETNAME_DELETED)
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           ACE_TEXT ("(%t) Server %d, peer closed\n"),
-                           this->id_),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             ACE_TEXT ("(%t) Server %d, peer closed\n"),
+                             this->id_),
+                            -1);
+        }
 #endif /* ACE_WIN32 */
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%t) Server %d, %p\n"),
@@ -887,10 +889,12 @@ Server::initiate_write_stream (ACE_Message_Block &mb, size_t nbytes)
 #if defined (ACE_WIN32)
       // On peer close, WriteFile will yield ERROR_NETNAME_DELETED.
       if (ACE_OS::last_error () == ERROR_NETNAME_DELETED)
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           ACE_TEXT ("(%t) Server %d, peer gone\n"),
-                           this->id_),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             ACE_TEXT ("(%t) Server %d, peer gone\n"),
+                             this->id_),
+                            -1);
+        }
 #endif /* ACE_WIN32 */
       ACE_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT ("(%t) Server %d, %p\n"),
@@ -1478,10 +1482,12 @@ Client::initiate_write_stream ()
 #if defined (ACE_WIN32)
       // On peer close, WriteFile will yield ERROR_NETNAME_DELETED.
       if (ACE_OS::last_error () == ERROR_NETNAME_DELETED)
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           ACE_TEXT ("(%t) Client %d, peer gone\n"),
-                           this->id_),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             ACE_TEXT ("(%t) Client %d, peer gone\n"),
+                             this->id_),
+                            -1);
+        }
 #endif /* ACE_WIN32 */
       ACE_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT ("(%t) Client %d, %p\n"),
@@ -1577,10 +1583,12 @@ Client::initiate_read_stream ()
       // On peer close, ReadFile will yield ERROR_NETNAME_DELETED; won't get
       // a 0-byte read as we would if underlying calls used WSARecv.
       if (ACE_OS::last_error () == ERROR_NETNAME_DELETED)
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           ACE_TEXT ("(%t) Client %d, peer closed\n"),
-                           this->id_),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             ACE_TEXT ("(%t) Client %d, peer closed\n"),
+                             this->id_),
+                            -1);
+        }
 #endif /* ACE_WIN32 */
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%t) Client %d, %p\n"),

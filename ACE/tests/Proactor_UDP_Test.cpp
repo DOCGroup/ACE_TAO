@@ -927,7 +927,9 @@ Master::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
       ACE_Log_Priority prio = LM_ERROR;
 #if defined (ACE_WIN32)
       if (result.error () == ERROR_OPERATION_ABORTED)
-        prio = LM_DEBUG;
+        {
+          prio = LM_DEBUG;
+        }
 #else
       if (result.error () == ECANCELED)
       {
@@ -1222,7 +1224,9 @@ Server::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
         ACE_Log_Priority prio;
 #if defined (ACE_WIN32)
         if (result.error () == ERROR_OPERATION_ABORTED)
-          prio = LM_DEBUG;
+          {
+            prio = LM_DEBUG;
+          }
 #else
         if (result.error () == ECANCELED)
           {
@@ -1343,7 +1347,9 @@ Server::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
         ACE_Log_Priority prio;
 #if defined (ACE_WIN32)
         if (result.error () == ERROR_OPERATION_ABORTED)
-          prio = LM_DEBUG;
+          {
+            prio = LM_DEBUG;
+          }
 #else
         if (result.error () == ECANCELED)
           {
@@ -1434,10 +1440,12 @@ Connector::start (const ACE_INET_Addr& addr, int num)
     {
       ACE_SOCK_CODgram sock;
       if (sock.open (addr) == -1)
-        ACE_ERROR_BREAK ((LM_ERROR,
-                          ACE_TEXT ("(%t) Starting client %d: %p\n"),
-                          rc,
-                          ACE_TEXT ("open")));
+        {
+          ACE_ERROR_BREAK ((LM_ERROR,
+                            ACE_TEXT ("(%t) Starting client %d: %p\n"),
+                            rc,
+                            ACE_TEXT ("open")));
+        }
       ACE_INET_Addr me;
       sock.get_local_addr (me);
       u_short my_port = ACE_HTONS (me.get_port_number ());
@@ -1447,15 +1455,19 @@ Connector::start (const ACE_INET_Addr& addr, int num)
       session.addr_ = my_addr;
       session.port_ = my_port;
       if (sock.send (&session, sizeof (session)) == -1)
-        ACE_ERROR_BREAK ((LM_ERROR,
-                          ACE_TEXT ("(%t) Starting client %d: %p\n"),
-                          rc,
-                          ACE_TEXT ("send")));
+        {
+          ACE_ERROR_BREAK ((LM_ERROR,
+                            ACE_TEXT ("(%t) Starting client %d: %p\n"),
+                            rc,
+                            ACE_TEXT ("send")));
+        }
       if (sock.recv (&session, sizeof (session)) == -1)
-        ACE_ERROR_BREAK ((LM_ERROR,
-                          ACE_TEXT ("(%t) Starting client %d: %p\n"),
-                          rc,
-                          ACE_TEXT ("recv")));
+        {
+          ACE_ERROR_BREAK ((LM_ERROR,
+                            ACE_TEXT ("(%t) Starting client %d: %p\n"),
+                            rc,
+                            ACE_TEXT ("recv")));
+        }
       ACE_INET_Addr server;
       server.set (session.port_, session.addr_, 0);
       Client *client = this->tester_->client_up ();
@@ -1469,9 +1481,11 @@ Connector::start (const ACE_INET_Addr& addr, int num)
                   server_str));
       sock.close ();
       if (sock.open (server, me) == -1)
-        ACE_ERROR_BREAK ((LM_ERROR,
-                          ACE_TEXT ("(%t) Re-opening %p\n"),
-                          ACE_TEXT ("client")));
+        {
+          ACE_ERROR_BREAK ((LM_ERROR,
+                            ACE_TEXT ("(%t) Re-opening %p\n"),
+                            ACE_TEXT ("client")));
+        }
       client->go (sock.get_handle (), server);
       sock.set_handle (ACE_INVALID_HANDLE);
     }
@@ -1918,7 +1932,9 @@ Client::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
         ACE_Log_Priority prio;
 #if defined (ACE_WIN32)
         if (result.error () == ERROR_OPERATION_ABORTED)
-          prio = LM_DEBUG;
+          {
+            prio = LM_DEBUG;
+          }
 #else
         if (result.error () == ECANCELED)
           {
@@ -2054,7 +2070,9 @@ Client::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
         ACE_Log_Priority prio;
 #if defined (ACE_WIN32)
         if (result.error () == ERROR_OPERATION_ABORTED)
-          prio = LM_DEBUG;
+          {
+            prio = LM_DEBUG;
+          }
 #else
         if (result.error () == ECANCELED)
           {
