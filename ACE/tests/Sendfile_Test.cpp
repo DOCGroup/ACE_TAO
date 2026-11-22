@@ -29,7 +29,7 @@ static int Test_Result = 0;
 
 #if !defined (ACE_LACKS_FORK) || defined (ACE_HAS_THREADS)
 
-static void *
+static ACE_THR_FUNC_RETURN
 client (void *arg)
 {
   ACE_INET_Addr *remote_addr = reinterpret_cast<ACE_INET_Addr *> (arg);
@@ -51,7 +51,7 @@ client (void *arg)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) connect failed: %p\n")));
       Test_Result = 1;
-      return nullptr;
+      return ACE_THR_FUNC_RETURN_NULL;
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -161,10 +161,10 @@ cleanup:
     (void) ACE_OS::close (in_fd);
   }
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 server (void *arg)
 {
   ACE_SOCK_Acceptor *peer_acceptor = static_cast<ACE_SOCK_Acceptor *> (arg);
@@ -181,7 +181,7 @@ server (void *arg)
       ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) accept: %p\n")));
       Test_Result = 1;
-      return nullptr;
+      return ACE_THR_FUNC_RETURN_NULL;
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -252,7 +252,7 @@ server (void *arg)
 
   sock_str.close();
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 #endif /* !ACE_LACKS_FORK || ACE_HAS_THREADS */
@@ -296,7 +296,7 @@ spawn ()
         }
 #elif defined (ACE_HAS_THREADS)
       if (ACE_Thread_Manager::instance ()->spawn
-          (ACE_THR_FUNC (server),
+          (server,
            reinterpret_cast<void *> (&peer_acceptor),
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
@@ -304,7 +304,7 @@ spawn ()
                     ACE_TEXT ("server thread create failed")));
 
       if (ACE_Thread_Manager::instance ()->spawn
-          (ACE_THR_FUNC (client),
+          (client,
            reinterpret_cast<void *> (&server_addr),
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
