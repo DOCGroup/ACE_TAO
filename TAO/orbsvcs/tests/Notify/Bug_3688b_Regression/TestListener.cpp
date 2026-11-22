@@ -33,12 +33,12 @@ TestListener::TestListener (
   this->structured_push_consumer =
     CosNotifyComm::StructuredPushConsumer::_narrow (channel_object.in ());
 
-  CosNotifyChannelAdmin::ProxySupplier_var const proxy_supplier =
+  CosNotifyChannelAdmin::ProxySupplier_var const proxy_supplier_object =
     this->consumer_admin->obtain_notification_push_supplier (
       CosNotifyChannelAdmin::STRUCTURED_EVENT,
       this->proxy_supplier_id);
   this->proxy_supplier =
-    CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow (proxy_supplier.in ());
+    CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow (proxy_supplier_object.in ());
   this->proxy_supplier->connect_structured_push_consumer (this->structured_push_consumer.in ());
 }
 
