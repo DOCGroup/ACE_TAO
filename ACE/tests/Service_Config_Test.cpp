@@ -26,6 +26,8 @@
 #include "ace/Thread_Manager.h"
 #include "ace/ARGV.h"
 
+#include <memory>
+
 static const u_int VARIETIES = 3;
 
 static u_int error = 0;
@@ -514,7 +516,7 @@ testrepository (int, ACE_TCHAR *[])
   ACE_Service_Type s2 (ACE_TEXT ("2"), nullptr, handle, false);
   ACE_Service_Type s3 (ACE_TEXT ("3"), nullptr, handle, false);
   ACE_Service_Type* result {};
-  repository.insert (&s0);
+  repository.insert (std::addressof (s0));
   if (repository.current_size () != 1)
     {
       ++error;
@@ -522,7 +524,7 @@ testrepository (int, ACE_TCHAR *[])
                   ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
-  repository.insert (&s1);
+  repository.insert (std::addressof (s1));
   if (repository.current_size () != 2)
     {
       ++error;
@@ -530,7 +532,7 @@ testrepository (int, ACE_TCHAR *[])
                   ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
-  repository.insert (&s2);
+  repository.insert (std::addressof (s2));
   if (repository.current_size () != 3)
     {
       ++error;
@@ -558,7 +560,7 @@ testrepository (int, ACE_TCHAR *[])
                   ACE_TEXT ("Element 1 not zero\n"),
                   repository.current_size ()));
     }
-  repository.insert (&s3);
+  repository.insert (std::addressof (s3));
   if (repository.current_size () != 4)
     {
       ++error;
