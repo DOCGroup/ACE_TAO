@@ -54,7 +54,7 @@ private:
 class expected_calls
 {
 public:
-  inline expected_calls(call_counter const & counter)
+  inline explicit expected_calls(call_counter const & counter)
     : current_count_(counter.current_count())
     , previous_count_(counter.current_count())
     , counter_(counter)
