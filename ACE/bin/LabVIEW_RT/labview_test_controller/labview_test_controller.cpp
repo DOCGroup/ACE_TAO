@@ -402,10 +402,10 @@ Test::start (const char *name)
       uintptr_t h = _beginthreadex (nullptr,       // security
                                     1024 * 1024,   // stack size
                                     run_test,      // entrypoint
-                                    (void *)this,  // arglist
+                                    static_cast<void *> (this),  // arglist
                                     0,             // initflag
                                     &thread_id);   // thread ID
-      this->thr_handle_ = (HANDLE) h;
+      this->thr_handle_ = reinterpret_cast<HANDLE> (h);
       if (h == 0)         // Test thread may have access to thr_handle_
         {
           msg = format_errmsg (GetLastError (), "spawn");
@@ -556,7 +556,7 @@ test_control (void * /* param */)
 static unsigned int __stdcall
 peer_svc (void *peer_p)
 {
-  Peer *p = (Peer *)peer_p;
+  Peer *p = static_cast<Peer *> (peer_p);
   DWORD status = p->svc ();
   delete p;
   return status;
@@ -568,7 +568,7 @@ peer_svc (void *peer_p)
 static unsigned int __stdcall
 run_test (void *test_p)
 {
-  Test *t = (Test *)test_p;
+  Test *t = static_cast<Test *> (test_p);
   return t->run ();
 }
 
