@@ -49,9 +49,11 @@ ACE_WIN32_Proactor::ACE_WIN32_Proactor (size_t number_of_threads,
                                                      0,
                                                      this->number_of_threads_);
   if (this->completion_port_ == nullptr)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("CreateIoCompletionPort")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("CreateIoCompletionPort")));
+    }
 
   this->get_asynch_pseudo_task ().start ();
 }
@@ -92,7 +94,9 @@ ACE_WIN32_Proactor::close ()
              0);  // poll
 
           if (overlapped == nullptr || res == FALSE)
-            break;
+            {
+              break;
+            }
 
           ACE_WIN32_Asynch_Result *asynch_result =
             static_cast<ACE_WIN32_Asynch_Result *> (overlapped);
@@ -510,7 +514,9 @@ ACE_WIN32_Proactor::handle_signal (int, siginfo_t *, ucontext_t *)
       result = this->handle_events (timeout);
 
       if (result != 1)
-        break;
+        {
+          break;
+        }
     }
 
   // If our handle_events failed, we'll report a failure to the
@@ -532,9 +538,13 @@ ACE_HANDLE
 ACE_WIN32_Proactor::get_handle () const
 {
   if (this->used_with_reactor_event_loop_)
-    return this->event_.handle ();
+    {
+      return this->event_.handle ();
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 int
@@ -582,9 +592,11 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
 
         default:
           if (ACE::debug ())
-            ACELIB_DEBUG ((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("GetQueuedCompletionStatus")));
+            {
+              ACELIB_DEBUG ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("GetQueuedCompletionStatus")));
+            }
           return -1;
         }
     }
@@ -596,9 +608,13 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
 
       // If errors happen, grab the error.
       if (result == FALSE)
-        ACE_OS::set_errno_to_last_error ();
+        {
+          ACE_OS::set_errno_to_last_error ();
+        }
       else
-        errno = 0;
+        {
+          errno = 0;
+        }
 
       u_long result_err = asynch_result->error ();
 
@@ -617,7 +633,9 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
       //     to the application_specific_code ()
 
       if (result_err == 0)
-        result_err = errno ;
+        {
+          result_err = errno ;
+        }
 
       this->application_specific_code (asynch_result,
                                        static_cast<size_t> (bytes_transferred),
@@ -712,7 +730,9 @@ ACE_WIN32_Proactor::post_wakeup_completions (int how_many)
          -1);
 
       if (wakeup_completion->post_completion (this) == -1)
-        return -1;
+        {
+          return -1;
+        }
     }
 
   return 0;
@@ -764,7 +784,9 @@ ACE_WIN32_Asynch_Timer::complete (size_t,
 {
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
-    handler->handle_time_out (this->time_, this->act ());
+    {
+      handler->handle_time_out (this->time_, this->act ());
+    }
 }
 
 ACE_WIN32_Wakeup_Completion::ACE_WIN32_Wakeup_Completion
@@ -789,7 +811,9 @@ ACE_WIN32_Wakeup_Completion::complete (size_t       /* bytes_transferred */,
 {
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
-    handler->handle_wakeup ();
+    {
+      handler->handle_wakeup ();
+    }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
