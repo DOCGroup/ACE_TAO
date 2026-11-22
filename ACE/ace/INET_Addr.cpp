@@ -677,7 +677,8 @@ void *
 ACE_INET_Addr::get_addr () const
 {
   ACE_TRACE ("ACE_INET_Addr::get_addr");
-  return const_cast<void *> (&this->inet_addr_);
+  return const_cast<void *> (static_cast<void const *> (
+    std::addressof (this->inet_addr_)));
 }
 
 void

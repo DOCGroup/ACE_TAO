@@ -3,6 +3,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/sys/os_socket.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 #include "ace/SPIPE_Addr.inl"
 #endif /* __ACE_INLINE__ */
@@ -30,7 +32,8 @@ ACE_SPIPE_Addr::set_addr (const void *addr, int len)
 void *
 ACE_SPIPE_Addr::get_addr () const
 {
-  return const_cast<void *> (&this->SPIPE_addr_);
+  return const_cast<void *> (static_cast<void const *> (
+    std::addressof (this->SPIPE_addr_)));
 }
 
 // Do nothing constructor.

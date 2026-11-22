@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <cstring>
+#include <memory>
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
@@ -33,7 +34,8 @@ ACE_UNIX_Addr::set_addr (const void *addr, int len)
 void *
 ACE_UNIX_Addr::get_addr () const
 {
-  return const_cast<void *> (&this->unix_addr_);
+  return const_cast<void *> (static_cast<void const *> (
+    std::addressof (this->unix_addr_)));
 }
 
 // Transform the string into the current addressing format.
