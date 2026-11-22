@@ -1,6 +1,6 @@
 #include "Analyzer.h"
 
-//============= Test main() ============
+/// Test main().
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

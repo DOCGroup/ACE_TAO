@@ -3,7 +3,7 @@
 
 #include "DynValue_TestC.h"
 
-//============= Factory_id helper mix-in class ===========
+/// Factory_id helper mix-in class.
 
 class factory_id : public virtual CORBA::ValueFactoryBase
 {
@@ -17,7 +17,7 @@ public:
   virtual char const * id () const = 0;
 };
 
-//============= "BaseValue" Value Type implimentation =======
+/// BaseValue value type implementation.
 
 class BaseValue_impl : public virtual OBV_DynValue_Test::BaseValue,
                        public virtual CORBA::DefaultValueRefCountBase
@@ -47,7 +47,7 @@ public:
   CORBA::ValueBase * create_for_unmarshal () override;
 };
 
-//============= "Nested" Value Type implimentation =======
+/// Nested value type implementation.
 
 class NestedValue_impl : public virtual OBV_DynValue_Test::NestedValue,
                          public virtual CORBA::DefaultValueRefCountBase
@@ -76,7 +76,7 @@ public:
   CORBA::ValueBase * create_for_unmarshal () override;
 };
 
-//============= "Null" Value Type implimentation =======
+/// Null value type implementation.
 
 class NullValue_impl : public virtual OBV_DynValue_Test::NullValue,
                        public virtual CORBA::DefaultValueRefCountBase
@@ -103,7 +103,7 @@ public:
   CORBA::ValueBase * create_for_unmarshal () override;
 };
 
-//============= "Trunc" Value Type implimentation =======
+/// Trunc value type implementation.
 
 class Trunc_impl : public virtual OBV_DynValue_Test::Trunc,
                    public virtual CORBA::DefaultValueRefCountBase

@@ -1,8 +1,6 @@
 #include "ValueTypes_impl.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 
-//============= "BaseValue" Value Type implimentation =======
-
 CORBA::ValueBase *
 BaseValue_impl::_copy_value ()
 {
@@ -36,8 +34,6 @@ BaseValue_Factory::create_for_unmarshal ()
   return vb;
 }
 
-//============= "Nested" Value Type implimentation =======
-
 CORBA::ValueBase *
 NestedValue_impl::_copy_value ()
 {
@@ -63,8 +59,6 @@ NestedValue_Factory::create_for_unmarshal ()
   return vb;
 }
 
-//============= "Null" Value Type implimentation =======
-
 CORBA::ValueBase *
 NullValue_impl::_copy_value ()
 {
@@ -86,8 +80,6 @@ NullValue_Factory::create_for_unmarshal ()
   ACE_NEW_THROW_EX (vb, NullValue_impl (), CORBA::NO_MEMORY ());
   return vb;
 }
-
-//============= "Trunc" Value Type implimentation =======
 
 CORBA::ValueBase *
 Trunc_impl::_copy_value ()

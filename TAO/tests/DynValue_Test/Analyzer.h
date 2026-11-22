@@ -8,7 +8,7 @@
 #include <cstddef>
 #include <vector>
 
-//============= class DynAnyAnalyzer ============
+/// DynAnyAnalyzer class.
 
 class DynAnyAnalyzer
 {
