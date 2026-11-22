@@ -321,7 +321,9 @@ Peer_Handler::open (void *)
 
       // Establish connection with server.
       if (connector.connect (stream_, addr) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "connect"), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "connect"), -1);
+        }
 
       ACE_DEBUG ((LM_DEBUG, "(%t) connected.\n"));
     }
@@ -332,18 +334,24 @@ Peer_Handler::open (void *)
 
       if ((acceptor.open (local_addr) == -1) ||
           (acceptor.accept (this->stream_) == -1))
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "accept failed"), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "accept failed"), -1);
+        }
 
       ACE_DEBUG ((LM_DEBUG, "(%t) accepted.\n"));
     }
 
   int result = this->rd_stream_.open (*this);
   if (result != 0)
-    return result;
+    {
+      return result;
+    }
 
   result = this->wr_stream_.open (*this);
   if (result != 0)
-    return result;
+    {
+      return result;
+    }
 
   result = this->rd_stream_.read (this->mb_,
                                   this->mb_.size () - 1);
@@ -357,8 +365,10 @@ void
 Peer_Handler::handle_write_stream (ACE_Asynch_Write_Stream::Result const &result)
 {
   if (result.bytes_transferred () <= 0)
-    ACE_DEBUG ((LM_DEBUG, "(%t) %p bytes = %d\n", "Message failed",
-                result.bytes_transferred ()));
+    {
+      ACE_DEBUG ((LM_DEBUG, "(%t) %p bytes = %d\n", "Message failed",
+                  result.bytes_transferred ()));
+    }
 
   // This was allocated by the STDIN_Handler, queued, dequeued, passed
   // to the proactor, and now passed back to us.
@@ -461,7 +471,9 @@ int
 STDIN_Handler::open (void *)
 {
   if (this->activate (THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), -1);
+    }
 
   return 0;
 }
@@ -505,7 +517,9 @@ STDIN_Handler::svc ()
           // which dequeues the message and sends it to the peer
           // across the network.
           if (this->ph_.putq (message_block.get ()) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR, "%p putq failed\n", "STDIN_Handler"), -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "%p putq failed\n", "STDIN_Handler"), -1);
+            }
           message_block.release ();
         }
       else
@@ -571,9 +585,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Peer_Handler peer_handler (argc, argv);
 
   if (peer_handler.open () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p open failed, errno = %d.\n",
-                       "peer_handler", errno), 0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p open failed, errno = %d.\n",
+                         "peer_handler", errno), 0);
+    }
 
   // Open active object for reading from stdin.
   // The detached worker registers the handler with the reactor and its
@@ -582,9 +598,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Spawn thread.
   if (stdin_handler->open () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p open failed, errno = %d.\n",
-                       "stdin_handler", errno), 0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p open failed, errno = %d.\n",
+                         "stdin_handler", errno), 0);
+    }
 
   // Register proactor with Reactor so that we can demultiplex
   // "waitable" events and I/O operations from a single thread.

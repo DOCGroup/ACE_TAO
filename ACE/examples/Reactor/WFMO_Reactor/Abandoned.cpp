@@ -52,7 +52,9 @@ worker (void *data)
   handler->mutex_->acquire ();
 
   if (!abandon)
-    handler->mutex_->release ();
+    {
+      handler->mutex_->release ();
+    }
 
   return 0;
 }

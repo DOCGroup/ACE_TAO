@@ -69,7 +69,9 @@ Event_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
 {
   ::FindNextChangeNotification (this->handle_);
   if (stop_test)
-    this->reactor ()->close ();
+    {
+      this->reactor ()->close ();
+    }
   return 0;
 }
 
@@ -89,7 +91,9 @@ worker (void *)
   ACE_DEBUG ((LM_DEBUG, "(%t) Thread creating temporary file\n"));
   ACE_HANDLE const file = ACE_OS::open (temp_file, _O_CREAT | _O_EXCL);
   if (file == ACE_INVALID_HANDLE)
-    ACE_ERROR ((LM_ERROR, "Error in creating %s: %p\n", temp_file, "ACE_OS::open"));
+    {
+      ACE_ERROR ((LM_ERROR, "Error in creating %s: %p\n", temp_file, "ACE_OS::open"));
+    }
   else
     {
       ACE_OS::close (file);

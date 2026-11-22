@@ -58,22 +58,28 @@ Event_Handler::Event_Handler (ACE_Reactor &reactor)
 
   if (this->reactor ()->register_handler (this,
                                           this->event_.handle ()) != 0)
-    ACE_ERROR ((LM_ERROR, "Registration with Reactor could not be done\n"));
+    {
+      ACE_ERROR ((LM_ERROR, "Registration with Reactor could not be done\n"));
+    }
 }
 
 int
 Event_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
 {
   if (stop_test)
-    this->reactor ()->close ();
+    {
+      this->reactor ()->close ();
+    }
   else if (::RegNotifyChangeKeyValue (this->context_.key (), // handle of key to watch
                                       FALSE, // flag for subkey notification
                                       REG_NOTIFY_CHANGE_NAME, // changes to be reported
                                       this->event_.handle (), // handle of signaled event
                                       TRUE // flag for asynchronous reporting
                                       ) != ERROR_SUCCESS)
-    ACE_ERROR ((LM_ERROR,
-                "RegNotifyChangeKeyValue could not be setup\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "RegNotifyChangeKeyValue could not be setup\n"));
+    }
   return 0;
 }
 
