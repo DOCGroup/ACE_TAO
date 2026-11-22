@@ -1030,7 +1030,7 @@ TAO_Policies::copy_to_forward (CosTrading::PolicySeq& policy_seq,
                   CosTrading::TraderName new_name (length - 1,
                                                    length - 1,
                                                    buf,
-                                                   1);
+                                                   true);
 
                   new_policy.value <<= new_name;
                   ++counter;

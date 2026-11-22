@@ -132,7 +132,7 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
   // if no establishment of trust policy was set.  Specifically, if
   // the "trust" pointer below is zero, then the SSLIOP pluggable
   // protocol default value will be used.
-  ::Security::EstablishTrust trust = { 0 , 0 };
+  ::Security::EstablishTrust trust = { false, false };
   if (!CORBA::is_nil (trust_policy.in ()))
     {
       trust = trust_policy->trust ();
