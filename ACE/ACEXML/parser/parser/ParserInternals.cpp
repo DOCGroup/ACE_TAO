@@ -49,7 +49,7 @@ ACEXML_ParserInt::isBasechar_i (ACEXML_Char const c)
     }
   else if (c < 0x0905)
     {
-      return ((c >= 0x0100 && c <= 0x0131) ||
+      return ((c <= 0x0131) ||
             (c >= 0x0134 && c <= 0x013E) ||
             (c >= 0x0141 && c <= 0x0148) ||
             (c >= 0x014A && c <= 0x017E) ||
@@ -96,7 +96,7 @@ ACEXML_ParserInt::isBasechar_i (ACEXML_Char const c)
     }
   else if (c < 0x10A0)
     {
-      return ((c >= 0x0905 && c <= 0x0939) ||
+      return ((c <= 0x0939) ||
             (c == 0x093D) ||
             (c >= 0x0958 && c <= 0x0961) ||
             (c >= 0x0985 && c <= 0x098C) ||
@@ -186,7 +186,7 @@ ACEXML_ParserInt::isBasechar_i (ACEXML_Char const c)
     }
   else
     {
-      return ((c >= 0x10A0 && c <= 0x10C5) ||
+      return ((c <= 0x10C5) ||
             (c >= 0x10D0 && c <= 0x10F6) ||
             (c == 0x1100) ||
             (c >= 0x1102 && c <= 0x1103) ||
@@ -280,7 +280,7 @@ ACEXML_ParserInt::isCombiningchar_i (ACEXML_Char const c)
     }
   else
     {
-      return ((c >= 0x0901 && c <= 0x0903) ||
+      return ((c <= 0x0903) ||
             (c == 0x093C) ||
             (c >= 0x093E && c <= 0x094C) ||
             (c == 0x094D) ||
