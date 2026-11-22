@@ -209,7 +209,7 @@ class QueueOverflows:
   public Monitor_Base
 {
 public:
-  QueueOverflows (const ACE_CString& name)
+  explicit QueueOverflows (const ACE_CString& name)
   : Monitor_Base (
       name.c_str (),
       Monitor_Control_Types::MC_COUNTER) {
