@@ -265,7 +265,9 @@ test_log_msg_features (const ACE_TCHAR *program)
   big[ACE_Log_Record::MAXLOGMSGLEN] = ACE_TEXT ('\0');
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("This is too big:%l %s\n"), big));
 
-  ACE_HEX_DUMP((LM_INFO, (const char*)big, ACE_Log_Record::MAXLOGMSGLEN ));
+  ACE_HEX_DUMP ((LM_INFO,
+                 reinterpret_cast<const char *> (big),
+                 ACE_Log_Record::MAXLOGMSGLEN));
 
   // Exercise many different combinations of OSTREAM.
 
@@ -337,7 +339,7 @@ test_log_msg_features (const ACE_TCHAR *program)
 
   // Print out the binary bytes of the array in hex form.
   ACE_LOG_MSG->log_hexdump (LM_DEBUG,
-                            (char *) array,
+                            reinterpret_cast<const char *> (array),
                             sizeof array);
 
   // Disable the LM_DEBUG and LM_INFO messages.
