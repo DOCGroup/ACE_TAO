@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    server.h
  *
@@ -8,7 +7,6 @@
  *  @author Reading
  *  @author MA.  Used with permission of Addison-Wesley.Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef server_HH_
 #define server_HH_

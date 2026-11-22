@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file Client_ORBInitializer.h
  *
  * @author Iliyan jeliazkov <iliyan@ociweb.com>
  */
-//=============================================================================
 
 #ifndef CLIENT_ORBINITIALIZER_T_H
 #define CLIENT_ORBINITIALIZER_T_H

@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file     client.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "testC.h"
 #include "Smart_Proxy_Impl.h"

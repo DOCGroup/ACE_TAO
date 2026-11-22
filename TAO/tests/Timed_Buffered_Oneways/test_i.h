@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   test_i.h
  *
  *  @author Irfan Pyarali
  */
-//=============================================================================
 
 #ifndef TAO_TIMED_BUFFERED_ONEWAYS_TEST_I_H
 #define TAO_TIMED_BUFFERED_ONEWAYS_TEST_I_H

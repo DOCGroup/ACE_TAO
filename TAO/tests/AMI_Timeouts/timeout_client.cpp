@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    timeout_client.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
-//=============================================================================
 
 #include "timeout_client.h"
 #include "tao/Messaging/Messaging.h"

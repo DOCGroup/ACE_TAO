@@ -1,11 +1,9 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file    WUCS4_UTF16_Factory.h
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
 
 #ifndef WUCS4_UTF16_FACTORY_H
 #define WUCS4_UTF16_FACTORY_H

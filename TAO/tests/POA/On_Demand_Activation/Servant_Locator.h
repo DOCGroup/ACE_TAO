@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     Servant_Locator.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author  Irfan Pyarali
  */
-//=============================================================================
 
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/ServantLocatorC.h"

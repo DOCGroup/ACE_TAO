@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file     server.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Irfan Pyarali
  */
-//=============================================================================
 #include "testS.h"
 #include "tao/PortableServer/ServantLocatorC.h"
 #include <cstring>

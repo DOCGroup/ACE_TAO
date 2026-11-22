@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    UTF16_UCS2_Translator.cpp
  *
@@ -21,7 +20,6 @@
  *
  *  @author Iliyan Jeliazkov <jeliazkov_i@ociweb.com> Byron Harris <harrisb@ociweb.com>
  */
-//=============================================================================
 
 #include "UTF16_UCS2_Translator.h"
 #include "tao/debug.h"

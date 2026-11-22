@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    test_dynany.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"

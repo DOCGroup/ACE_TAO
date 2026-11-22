@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Wchar_IBM1047_ISO8859_Factory.h
  *
@@ -11,7 +10,6 @@
  *
  *  @author   Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
 
 #ifndef WCHAR_IBM1047_ISO8859_FACTORY_H
 #define WCHAR_IBM1047_ISO8859_FACTORY_H

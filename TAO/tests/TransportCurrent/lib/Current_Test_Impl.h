@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file    Current_Test_Impl.h
  *
@@ -9,7 +8,6 @@
  *
  * @author  Iliyan Jeliazkov <iliyan@ociweb.com>
  */
-//=============================================================================
 
 #ifndef CURRENT_TEST_IMPL_H
 #define CURRENT_TEST_IMPL_H

@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    OrbShutdownTask.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
 
 #ifndef ORB_SHUTDOWN_TASK_H
 #define ORB_SHUTDOWN_TASK_H

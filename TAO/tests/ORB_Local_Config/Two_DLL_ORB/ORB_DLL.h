@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file ORB_DLL.h
  *
  * @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
-//=============================================================================
 
 #ifndef SERVICE_CONFIG_ORB_DLL_H
 #define SERVICE_CONFIG_ORB_DLL_H

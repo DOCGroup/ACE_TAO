@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file server.cpp
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"

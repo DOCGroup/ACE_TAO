@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Char_IBM1047_ISO8859_Translator.cpp
  *
@@ -9,7 +8,6 @@
  *
  *  @author Jim Rogers (jrogers@viasoft.com)
  */
-//=============================================================================
 
 #include "Char_IBM1047_ISO8859_Translator.h"
 #include "ace/OS_Memory.h"

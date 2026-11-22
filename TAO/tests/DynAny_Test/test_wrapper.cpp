@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    test_wrapper.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #if !defined (TEST_WRAPPER_CPP)
 #define TEST_WRAPPER_CPP

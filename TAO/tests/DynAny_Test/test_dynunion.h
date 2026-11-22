@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    test_dynunion.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #if !defined (TEST_DYNUNION_H)
 #define TEST_DYNUNION_H

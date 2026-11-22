@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file   octet_sequence.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Dave Meyer (dmeyer@std.saic.com)Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
 
 #include "ace/Log_Msg.h"
 

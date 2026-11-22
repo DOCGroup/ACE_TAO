@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file   test_i.h
  *
  *  @author Nanbor Wang
  */
-//=============================================================================
 
 #ifndef SERVICE_CONTEXT_MANIPULATION_COLLOCATED_TEST_I_H
 #define SERVICE_CONTEXT_MANIPULATION_COLLOCATED_TEST_I_H

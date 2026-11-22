@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file ServantLocator.h
  *
@@ -9,7 +8,6 @@
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef SERVANT_LOCATOR_H
 #define SERVANT_LOCATOR_H

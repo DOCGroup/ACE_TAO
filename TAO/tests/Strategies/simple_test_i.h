@@ -1,11 +1,9 @@
 
-//=============================================================================
 /**
  *  @file   simple_test_i.h
  *
  *  @author  Priyanka Gontla <pgontla@ece.uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_STRATEGIES_TEST_I_H
 #define TAO_STRATEGIES_TEST_I_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Server_ORBInitializer.h
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SERVER_ORB_INITIALIZER_H
 #define TAO_SERVER_ORB_INITIALIZER_H

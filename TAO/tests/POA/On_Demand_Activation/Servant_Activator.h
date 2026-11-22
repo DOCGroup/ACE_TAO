@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     Servant_Activator.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Irfan Pyarali
  */
-//=============================================================================
 
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/ServantActivatorC.h"

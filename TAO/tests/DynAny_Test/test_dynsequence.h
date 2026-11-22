@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    test_dynsequence.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #if !defined (TEST_DYNSEQUENCE_H)
 #define TEST_DYNSEQUENCE_H

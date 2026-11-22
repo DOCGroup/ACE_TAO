@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file     Servant_Activator.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef SERVANT_ACTIVATOR_H
 #define SERVANT_ACTIVATOR_H

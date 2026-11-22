@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file     Servant_Locator.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Irfan Pyarali  Michael Kircher
  */
-//=============================================================================
 
 #include "Servant_Locator.h"
 #include "ace/Log_Msg.h"

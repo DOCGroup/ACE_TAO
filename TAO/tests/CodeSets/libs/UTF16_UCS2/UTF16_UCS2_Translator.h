@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    UTF16_UCS2_Translator.h
  *
  *  @author Iliyan Jeliazkov <jeliazkov_i@ociweb.com>
  *  @author Byron Harris <harrisb@ociweb.com>
  */
-//=============================================================================
 
 #ifndef UTF16_UCS2_TRANSLATOR_H
 #define UTF16_UCS2_TRANSLATOR_H

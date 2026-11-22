@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file Client_ORBInitializer.h
  *
@@ -9,7 +8,6 @@
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_CLIENT_ORB_INITIALIZER_H
 #define TAO_CLIENT_ORB_INITIALIZER_H

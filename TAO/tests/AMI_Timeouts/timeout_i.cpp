@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    timeout_i.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
-//=============================================================================
 
 #include "timeout_i.h"
 #include "ace/OS_NS_unistd.h"

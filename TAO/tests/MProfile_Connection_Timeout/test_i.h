@@ -1,11 +1,9 @@
 
-//=============================================================================
 /**
  *  @file   test_i.h
  *
  *  @author Balachandran Natarajan <bala@isis-server.isis.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_MPROFILE_CONNECTION_TIMEOUT_TEST_I_H
 #define TAO_MPROFILE_CONNECTION_TIMEOUT_TEST_I_H

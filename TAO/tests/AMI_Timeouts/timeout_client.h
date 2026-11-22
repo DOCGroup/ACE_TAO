@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    timeout_client.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
-//=============================================================================
 
 #include "ace/Task.h"
 #include "timeout_i.h"

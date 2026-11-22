@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file   ORT_test_IORInterceptor.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  * @author Priyanka Gontla <gontla_p@ociweb.com>
  */
-//=============================================================================
 
 #ifndef ORT_TEST_IORINTERCEPTOR_H
 #define ORT_TEST_IORINTERCEPTOR_H

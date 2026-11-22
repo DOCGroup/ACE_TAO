@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    server.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
-//=============================================================================
 
 #include "timeout_i.h"
 #include "tao/debug.h"

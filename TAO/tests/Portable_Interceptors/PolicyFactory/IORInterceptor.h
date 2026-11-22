@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file IORInterceptor.h
  *
@@ -8,7 +7,6 @@
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef IOR_INTERCEPTOR_H
 #define IOR_INTERCEPTOR_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Custom_Time_Policy_Strategy.h
  *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
-//=============================================================================
 
 #ifndef CUSTOM_TIME_POLICY_STRATEGY_H
 #define CUSTOM_TIME_POLICY_STRATEGY_H

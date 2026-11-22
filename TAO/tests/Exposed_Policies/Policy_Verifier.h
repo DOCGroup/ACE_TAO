@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Policy_Verifier.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef POLICY_VERIFIER_H_
 #define POLICY_VERIFIER_H_

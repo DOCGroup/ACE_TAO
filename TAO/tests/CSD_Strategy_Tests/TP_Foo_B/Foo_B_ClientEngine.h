@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    Foo_B_ClientEngine.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
 
 #ifndef FOO_B_CLIENT_ENGINE_H
 #define FOO_B_CLIENT_ENGINE_H

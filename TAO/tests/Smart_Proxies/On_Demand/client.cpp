@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file     client.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #define ACE_BUILD_SVC_DLL
 #include "ace/Get_Opt.h"

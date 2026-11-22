@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Policy_Tester.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef POLICY_TESTER_H_
 #define POLICY_TESTER_H_

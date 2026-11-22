@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file     destroy.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author  Andrew Schnable <Andrew.Schnable@veritas.com>  Iliyan Jeliazkov <jeliazkov_i@ociweb.com>
  */
-//=============================================================================
 
 #include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"

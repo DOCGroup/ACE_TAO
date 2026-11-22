@@ -1,11 +1,9 @@
 
-//=============================================================================
 /**
  *  @file   test_i.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SINGLE_READ_TEST_I_H
 #define TAO_SINGLE_READ_TEST_I_H

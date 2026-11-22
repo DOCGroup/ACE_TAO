@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    server_B.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Michael Kircher
  */
-//=============================================================================
 #ifndef _TRIANGLE_TEST_OBJECT_B_SERVER_H
 #define _TRIANGLE_TEST_OBJECT_B_SERVER_H
 

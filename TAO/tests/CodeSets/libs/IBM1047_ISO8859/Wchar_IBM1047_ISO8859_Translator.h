@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Wchar_IBM1047_ISO8859_Translator.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Jim Rogers (jrogers@viasoft.com)
  */
-//=============================================================================
 
 #ifndef WCHAR_IBM1047_ISO8859_TRANSLATOR_H
 #define WCHAR_IBM1047_ISO8859_TRANSLATOR_H

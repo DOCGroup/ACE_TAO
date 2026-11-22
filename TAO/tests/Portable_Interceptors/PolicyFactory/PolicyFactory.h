@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file PolicyFactory.h
  *
@@ -8,7 +7,6 @@
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef POLICY_FACTORY_H
 #define POLICY_FACTORY_H

@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    data.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_TESTS_DYNANY_TEST_DATA_H
 #define TAO_TESTS_DYNANY_TEST_DATA_H

@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file   test_i.h
  *
  *  @author Carlos O'Ryan
  */
-//=============================================================================
 #ifndef TAO_RETRY_ON_REPLY_FAILURE_I_H
 #define TAO_RETRY_ON_REPLY_FAILURE_I_H
 

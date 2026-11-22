@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    Foo_C_Custom_Proxy.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
 
 #ifndef FOO_C_CUSTOM_PROXY_H
 #define FOO_C_CUSTOM_PROXY_H

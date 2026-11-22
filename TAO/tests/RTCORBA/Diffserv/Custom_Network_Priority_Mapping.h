@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file   Custom_Network_Priority_Mapping.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Yamuna Krishnamurthy (yamuna@oomworks.com)
  */
-//=============================================================================
 #ifndef CUSTOM_NETWORK_PRIORITY_MAPPING_H
 #define CUSTOM_NETWORK_PRIORITY_MAPPING_H
 

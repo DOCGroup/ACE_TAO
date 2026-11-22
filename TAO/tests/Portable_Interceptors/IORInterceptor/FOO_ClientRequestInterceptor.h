@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file FOO_ClientRequestInterceptor.h
  *
@@ -9,7 +8,6 @@
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef FOO_CLIENT_REQUEST_INTERCEPTOR_H
 #define FOO_CLIENT_REQUEST_INTERCEPTOR_H

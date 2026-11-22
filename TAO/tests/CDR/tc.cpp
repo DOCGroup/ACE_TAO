@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    tc.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Carlos O'Ryan
  */
-//=============================================================================
 
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"

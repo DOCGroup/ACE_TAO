@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file ClientRequestInterceptor2.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef CLIENT_REQUEST_INTERCEPTOR2_H
 #define CLIENT_REQUEST_INTERCEPTOR2_H

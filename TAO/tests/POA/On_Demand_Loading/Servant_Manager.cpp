@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file     Servant_Manager.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "Servant_Manager.h"
 #include "tao/debug.h"

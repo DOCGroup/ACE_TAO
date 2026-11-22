@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file ObjectReferenceFactory.h
  *
 
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_OBJECT_REFERENCE_FACTORY_H
 #define TAO_OBJECT_REFERENCE_FACTORY_H

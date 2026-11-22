@@ -1,9 +1,7 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file     ClientRequest_Interceptor.h
  */
-//=============================================================================
 #ifndef CLIENTREQUEST_INTERCEPTOR_H
 #define CLIENTREQUEST_INTERCEPTOR_H
 #include /**/ "ace/pre.h"

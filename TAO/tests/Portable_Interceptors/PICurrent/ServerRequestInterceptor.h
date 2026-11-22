@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file    ServerRequestInterceptor.h
  *
@@ -9,7 +8,6 @@
  *
  * @author  Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef SERVER_REQUEST_INTERCEPTOR_H
 #define SERVER_REQUEST_INTERCEPTOR_H

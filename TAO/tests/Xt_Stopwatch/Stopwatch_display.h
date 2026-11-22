@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file   Stopwatch_display.h
  *
  *  @author Balachandran  Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef STOPWATCH_H
 #define STOPWATCH_H
 #include /**/ "ace/pre.h"

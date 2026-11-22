@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file     Servant_Activator.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "Servant_Activator.h"
 

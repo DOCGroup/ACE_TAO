@@ -1,10 +1,8 @@
-// ===================================================================
 /**
  *  @file   Sender_i.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  **/
-// ===================================================================
 
 #ifndef TAO_TESTS_ONEWAYS_INVOKING_TWOWAYS_SENDER_I_H
 #define TAO_TESTS_ONEWAYS_INVOKING_TWOWAYS_SENDER_I_H

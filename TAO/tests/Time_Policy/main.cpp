@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    main.cpp
  *
@@ -7,7 +6,6 @@
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
-//=============================================================================
 
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"

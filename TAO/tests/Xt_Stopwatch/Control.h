@@ -1,11 +1,9 @@
 
-//=============================================================================
 /**
  *  @file   Control.h
  *
  *  @author Balachandran  Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef CONTROL_H
 #define CONTROL_H
 #include "Client.h"

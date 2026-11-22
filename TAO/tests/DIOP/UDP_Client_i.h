@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    UDP_Client_i.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
-//=============================================================================
 
 #ifndef UDP_CLIENT_I_H
 #define UDP_CLIENT_I_H

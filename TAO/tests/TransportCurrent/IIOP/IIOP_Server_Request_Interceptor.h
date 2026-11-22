@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file IIOP_Server_Request_Interceptor.h
  *
@@ -10,7 +9,6 @@
  * @author Iliyan Jeliazkov <iliyan@ociweb.com>
  * @author Ciju John <johnc@ociweb.com>
  */
-//=============================================================================
 
 #ifndef ISERVER_REQUEST_INTERCEPTOR_H
 #define ISERVER_REQUEST_INTERCEPTOR_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file Server_ORBInitializer.h
  *
  * @author Iliyan jeliazkov <iliyan@ociweb.com>
  */
-//=============================================================================
 
 #ifndef SERVER_ORBINITIALIZER_T_H
 #define SERVER_ORBINITIALIZER_T_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     Servant_Activator.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author  Irfan Pyarali  Michael Kircher
  */
-//=============================================================================
 
 #ifndef SERVANT_ACTIVATOR_H
 #define SERVANT_ACTIVATOR_H

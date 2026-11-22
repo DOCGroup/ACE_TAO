@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file     Servant_Locator.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef SERVANT_LOCATOR_H
 #define SERVANT_LOCATOR_H

@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Multiple_Impl.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_MULTIPLE_IMPL_H_
 #define TAO_MULTIPLE_IMPL_H_

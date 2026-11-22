@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    RT_Properties.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef RT_PROPERTIES_H_
 #define RT_PROPERTIES_H_

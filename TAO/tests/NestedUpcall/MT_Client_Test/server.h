@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    server.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Michael Kircher
  */
-//=============================================================================
 
 #ifndef MT_CLIENT_TEST_MT_OBJECT_SERVER_H
 #define MT_CLIENT_TEST_MT_OBJECT_SERVER_H
