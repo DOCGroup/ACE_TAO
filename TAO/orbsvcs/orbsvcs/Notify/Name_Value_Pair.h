@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
 *  @file    Name_Value_Pair.h
 *
 *  @author Jonathan Pollack <pollack_j@ociweb.com>
 */
-//=============================================================================
 
 #ifndef NAME_VALUE_PAIR_H
 #define NAME_VALUE_PAIR_H

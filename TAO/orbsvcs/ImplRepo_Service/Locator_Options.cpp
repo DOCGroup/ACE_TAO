@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    Locator_Options.cpp
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "Locator_Options.h"
 #include "ace/Arg_Shifter.h"

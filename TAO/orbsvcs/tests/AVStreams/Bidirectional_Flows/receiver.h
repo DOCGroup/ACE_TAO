@@ -13,7 +13,6 @@
 #include "orbsvcs/AV/Policy.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 
-//=============================================================================
 /**
  *  @file    receiver.h
  *
@@ -22,7 +21,6 @@
  *
  *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
  */
-//=============================================================================
 
 /**
  * @class Receiver_Callback

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file Notify_EventChannelFactory_i.h
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef NOTIFY_EVENTCHANNELFACTORY_I_H
 #define NOTIFY_EVENTCHANNELFACTORY_I_H

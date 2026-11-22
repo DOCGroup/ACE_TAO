@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   ForwardCtrlServerInterceptor.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 #ifndef FORWARDCTRLSERVERINTERCEPTOR_H
 #define FORWARDCTRLSERVERINTERCEPTOR_H
 

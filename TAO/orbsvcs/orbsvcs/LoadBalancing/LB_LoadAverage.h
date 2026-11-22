@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file LB_LoadAverage.h
  *
  *  @author Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef LB_LOAD_AVERAGE_H
 #define LB_LOAD_AVERAGE_H

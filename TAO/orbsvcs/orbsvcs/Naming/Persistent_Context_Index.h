@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Persistent_Context_Index.h
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_PERSISTENT_CONTEXT_INDEX_H
 #define TAO_PERSISTENT_CONTEXT_INDEX_H

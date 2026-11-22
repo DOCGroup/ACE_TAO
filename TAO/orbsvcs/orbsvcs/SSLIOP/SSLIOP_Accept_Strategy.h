@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    SSLIOP_Accept_Strategy.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SSLIOP_ACCEPT_STRATEGY_H
 #define TAO_SSLIOP_ACCEPT_STRATEGY_H

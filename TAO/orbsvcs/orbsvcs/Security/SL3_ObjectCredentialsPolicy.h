@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file SL3_ObjectCredentialsPolicy.h
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SL3_OBJECT_CREDENTIALS_POLICY_H
 #define TAO_SL3_OBJECT_CREDENTIALS_POLICY_H

@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    LifeCycle_Service_i.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Michael Kircher (mk1@cs.wustl.edu)
  */
-//=============================================================================
 
 #include "orbsvcs/Log_Macros.h"
 #include "ace/Get_Opt.h"

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Naming_Service_Container.h
  *
  *  @author Bruce Trask <trask_b@ociweb.com>
  */
-//=============================================================================
 
 #ifndef NS_CONTAINER_H
 #define NS_CONTAINER_H

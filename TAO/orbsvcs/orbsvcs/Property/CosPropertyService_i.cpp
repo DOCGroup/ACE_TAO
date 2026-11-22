@@ -1,11 +1,9 @@
 
-//=============================================================================
 /**
  *  @file   CosPropertyService_i.cpp
  *
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Property/CosPropertyService_i.h"

@@ -1,11 +1,9 @@
 
-//=============================================================================
 /**
  *  @file   CC_LockSet.cpp
  *
  *  @author Torben Worm <tworm@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Concurrency/CC_LockSet.h"

@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    Naming_Service_Container.cpp
  *
  *  @author Bruce Trask <trask_b@ociweb.com>
  */
-//=============================================================================
 
 #ifndef NS_CONTAINER_CPP
 #define NS_CONTAINER_CPP

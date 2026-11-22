@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    client.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef PROPERTY_CLIENT_H
 #define PROPERTY_CLIENT_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   GroupInfoPublisher.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef GROUPINFOPUBLISHER_H
 #define GROUPINFOPUBLISHER_H

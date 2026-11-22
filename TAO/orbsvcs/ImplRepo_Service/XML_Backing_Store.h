@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
 *  @file XML_Backing_Store.h
 *
@@ -9,7 +8,6 @@
 *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
 *  @author Priyanka Gontla <gontla_p@ociweb.com>
 */
-//=============================================================================
 
 #ifndef XML_BACKING_STORE_H
 #define XML_BACKING_STORE_H

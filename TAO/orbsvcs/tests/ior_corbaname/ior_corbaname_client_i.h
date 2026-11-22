@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ior_corbaname_client_i.h
  *
@@ -10,7 +9,6 @@
  *
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  */
-//=============================================================================
 
 #if !defined (IOR_CORBANAME_CLIENT_I_H)
 #define IOR_CORBANAME_CLIENT_I_H

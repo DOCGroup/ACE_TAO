@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   ExtendedFilter.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef NOTIFY_TESTS_EXTENDED_FILTER_H
 #define NOTIFY_TESTS_EXTENDED_FILTER_H

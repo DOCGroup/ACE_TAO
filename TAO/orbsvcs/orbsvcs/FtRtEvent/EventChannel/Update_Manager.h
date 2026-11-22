@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Update_Manager.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef UPDATE_MANAGER_H
 #define UPDATE_MANAGER_H

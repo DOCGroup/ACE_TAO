@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file  FT_PG_Group_Factory.h
  *
  *
  * @author Byron Harris <harrisb@ociweb.com>
  */
-//=============================================================================
 
 #ifndef FT_TAO_PG_GROUP_FACTORY_H
 #define FT_TAO_PG_GROUP_FACTORY_H

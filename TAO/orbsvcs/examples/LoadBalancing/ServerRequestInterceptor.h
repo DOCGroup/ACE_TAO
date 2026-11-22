@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file    ServerRequestInterceptor.h
  *
  * @author  Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SERVER_REQUEST_INTERCEPTOR_H
 #define TAO_SERVER_REQUEST_INTERCEPTOR_H

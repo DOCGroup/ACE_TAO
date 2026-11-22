@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    FT_Replica.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 
 #include "tao/Utils/Server_Main.h"
 #include "FT_ReplicaFactory_i.h"

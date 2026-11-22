@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Criteria_Evaluator.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Michael Kircher (mk1@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef CRITERIA_EVALUATOR_H_H
 #define CRITERIA_EVALUATOR_H_H

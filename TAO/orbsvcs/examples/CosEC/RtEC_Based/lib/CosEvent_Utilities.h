@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file     CosEvent_Utilities.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_COSEVENT_UTILITIES_H
 #define TAO_COSEVENT_UTILITIES_H

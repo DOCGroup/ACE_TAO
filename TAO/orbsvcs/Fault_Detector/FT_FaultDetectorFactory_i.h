@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    FT_FaultDetectorFactory_i.h
  *
@@ -10,7 +9,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 
 #ifndef FT_FAULTDETECTORFACTORY_I_H_
 #define FT_FAULTDETECTORFACTORY_I_H_

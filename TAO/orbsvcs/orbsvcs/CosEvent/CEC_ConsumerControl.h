@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   CEC_ConsumerControl.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)More details can be found in:http://www.cs.wustl.edu/~coryan/EC/index.html
  */
-//=============================================================================
 
 #ifndef TAO_CEC_CONSUMERCONTROL_H
 #define TAO_CEC_CONSUMERCONTROL_H

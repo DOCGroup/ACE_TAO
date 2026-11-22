@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file    Naming_Service.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Nagarajan Surendran (naga@cs.wustl.edu) Marina Spivak <marina@cs.wustl.edu>
  */
-//==========================================================================
 
 #ifndef TAO_NAMING_SERVICE_H
 #define TAO_NAMING_SERVICE_H

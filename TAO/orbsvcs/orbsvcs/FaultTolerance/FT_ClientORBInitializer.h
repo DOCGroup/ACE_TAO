@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     FT_ClientORBInitializer.h
  *
  *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef TAO_FT_CLIENTORB_INITIALIZER_H
 #define TAO_FT_CLIENTORB_INITIALIZER_H
 

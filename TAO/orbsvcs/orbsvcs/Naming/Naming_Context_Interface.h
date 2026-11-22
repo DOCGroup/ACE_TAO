@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Naming_Context_Interface.h
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_NAMING_CONTEXT_INTERFACE_H
 #define TAO_NAMING_CONTEXT_INTERFACE_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file    FT_Naming_Service.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Kevin Stanley <stanleyk@ociweb.com>
  */
-//==========================================================================
 
 #ifndef TAO_FT_NAMING_SERVICE_H
 #define TAO_FT_NAMING_SERVICE_H

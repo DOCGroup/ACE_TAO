@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   IdAssignment.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Chanaka Liyanaarachchi <chanaka@ociweb.com> and Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef IDASSIGNMENT_H
 #define IDASSIGNMENT_H

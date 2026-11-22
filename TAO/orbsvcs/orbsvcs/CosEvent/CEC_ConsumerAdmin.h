@@ -1,11 +1,9 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file   CEC_ConsumerAdmin.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef TAO_CEC_CONSUMERADMIN_H
 #define TAO_CEC_CONSUMERADMIN_H

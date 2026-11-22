@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   BasicLogFactory_i.h
  *
@@ -10,7 +9,6 @@
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
-//=============================================================================
 
 #ifndef TAO_TLS_BASICLOGFACTORY_I_H
 #define TAO_TLS_BASICLOGFACTORY_I_H

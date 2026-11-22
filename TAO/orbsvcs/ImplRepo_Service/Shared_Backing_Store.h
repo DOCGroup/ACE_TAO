@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
 *  @file Shared_Backing_Store.h
 *
@@ -10,7 +9,6 @@
 *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
 *  @author Priyanka Gontla <gontla_p@ociweb.com>
 */
-//=============================================================================
 
 #ifndef SHARED_BACKING_STORE_H
 #define SHARED_BACKING_STORE_H

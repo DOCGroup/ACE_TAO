@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   FTEC_Fault_Listener.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_FTEC_FAULT_LISTENER_H
 #define TAO_FTEC_FAULT_LISTENER_H

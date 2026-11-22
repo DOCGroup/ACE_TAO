@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Notify_Test_Client.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef NOTIFY_TEST_CLIENT_H
 #define NOTIFY_TEST_CLIENT_H

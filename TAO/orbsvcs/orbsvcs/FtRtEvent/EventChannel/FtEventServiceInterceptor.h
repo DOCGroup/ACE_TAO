@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   FtEventServiceInterceptor.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef FTEVENTSERVICEINTERCEPTOR_H
 #define FTEVENTSERVICEINTERCEPTOR_H

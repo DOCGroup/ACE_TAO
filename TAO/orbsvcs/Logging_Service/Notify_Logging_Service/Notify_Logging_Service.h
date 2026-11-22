@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-// ============================================================================
 /**
  *  @file   Notify_Logging_Service.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author D A Hanvey (d.hanvey@qub.ac.uk)
  */
-// ============================================================================
 
 #ifndef NOTIFY_LOGGING_SERVICE_H
 #define NOTIFY_LOGGING_SERVICE_H

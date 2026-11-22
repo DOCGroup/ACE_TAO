@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    FT_IOGR_Property.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Bala Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_FT_IOGR_PROPERTY_H
 #define TAO_FT_IOGR_PROPERTY_H

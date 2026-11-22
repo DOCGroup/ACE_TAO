@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Trading_Service.h
  *
  *  @author Seth Widoff <sbw1@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _TRADING_SERVICE_H
 #define _TRADING_SERVICE_H

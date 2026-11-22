@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file FT_ServerRequest_Interceptor.h
  *
@@ -8,7 +7,6 @@
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_FT_SERVER_REQUEST_INTERCEPTOR_H
 #define TAO_FT_SERVER_REQUEST_INTERCEPTOR_H

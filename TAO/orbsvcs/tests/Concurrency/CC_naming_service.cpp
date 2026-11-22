@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    CC_naming_service.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Torben Worm <tworm@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "CC_naming_service.h"
 #include "ace/Log_Msg.h"

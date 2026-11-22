@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    CC_LockSetFactory.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Torben Worm <tworm@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _CC_LOCKSETFACTORY_H
 #define _CC_LOCKSETFACTORY_H

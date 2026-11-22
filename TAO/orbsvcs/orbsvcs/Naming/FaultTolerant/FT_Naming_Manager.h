@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file   FT_Naming_Manager.h
  *
  *
  * @author Kevin Stanley <stanleyk@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_FT_NAMING_MANAGER_H
 #define TAO_FT_NAMING_MANAGER_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Hash_Iterator_i.h
  *
@@ -9,7 +8,6 @@
  *  @author Matthew Braun <mjb2@cs.wustl.edu>
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_TLS_HASH_ITERATOR_H
 #define TAO_TLS_HASH_ITERATOR_H

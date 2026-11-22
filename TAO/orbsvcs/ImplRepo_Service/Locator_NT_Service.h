@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Locator_NT_Service.h
  *
@@ -8,7 +7,6 @@
  *  @author John Tucker <jtucker@infoglide.com>
  *  @author Mike Vitalo <mvitalo@infoglide.com>
  */
-//=============================================================================
 
 #ifndef Locator_NT_Service_H
 #define Locator_NT_Service_H

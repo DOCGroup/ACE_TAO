@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Notify_Structured_Push_Consumer.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Chad Elliott <elliott_c@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_NOTIFY_STRUCTURED_PUSH_CONSUMER_H
 #define TAO_NOTIFY_STRUCTURED_PUSH_CONSUMER_H

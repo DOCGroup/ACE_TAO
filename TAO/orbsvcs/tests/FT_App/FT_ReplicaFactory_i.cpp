@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    FT_ReplicaFactory_i.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 #include "FT_ReplicaFactory_i.h"
 #include "FT_TestReplica_i.h"
 #include "ace/Get_Opt.h"

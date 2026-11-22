@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Scheduling_Service.h
  *
@@ -11,7 +10,6 @@
  *  @author  and on the Naming Service program implementation by Marina Spivak
  *  (marina@cs.wustl.edu) and Nagarajan Surendran (naga@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef TAO_SCHEDULING_SERVICE_H
 #define TAO_SCHEDULING_SERVICE_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    AbstractInterfaceDef_i.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_ABSTRACTINTERFACEDEF_I_H
 #define TAO_ABSTRACTINTERFACEDEF_I_H

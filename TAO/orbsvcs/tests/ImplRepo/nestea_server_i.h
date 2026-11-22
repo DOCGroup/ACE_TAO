@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    nestea_server_i.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
-//=============================================================================
 
 #if !defined (NESTEA_SERVER_I_H)
 #define NESTEA_SERVER_I_H

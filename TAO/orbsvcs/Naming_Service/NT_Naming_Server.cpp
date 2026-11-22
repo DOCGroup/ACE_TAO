@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    NT_Naming_Server.cpp
  *
@@ -9,7 +8,6 @@
  *
  *  @author John Tucker <jtucker@infoglide.com> and Mike Vitalo <mvitalo@infoglide.com>
  */
-//=============================================================================
 
 #include "orbsvcs/Log_Macros.h"
 

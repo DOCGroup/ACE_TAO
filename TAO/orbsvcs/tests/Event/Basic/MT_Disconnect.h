@@ -1,11 +1,9 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   MT_Disconnect.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef EC_MT_DISCONNECT_H
 #define EC_MT_DISCONNECT_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   FT_Endpoint_Selector_Factory.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef TAO_FT_ENDPOINT_SELECTOR_FACTORY_H
 #define TAO_FT_ENDPOINT_SELECTOR_FACTORY_H
 

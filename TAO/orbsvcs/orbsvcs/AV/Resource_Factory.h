@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Resource_Factory.h
  *
  *  @author Yamuna Krishnamurthy
  */
-//=============================================================================
 
 #ifndef TAO_AV_DEFAULT_RESOURCE_FACTORY_H
 #define TAO_AV_DEFAULT_RESOURCE_FACTORY_H

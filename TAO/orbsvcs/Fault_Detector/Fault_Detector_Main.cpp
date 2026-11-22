@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    Fault_Detector_Main.cpp
  *
@@ -10,7 +9,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 
 #include "tao/Utils/Server_Main.h"
 #include "FT_FaultDetectorFactory_i.h"

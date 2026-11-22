@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file   FT_Naming_Server.cpp
  *
  *
  * @author Kevin Stanley <stanleyk@ociweb.com>
  */
-//=============================================================================
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h"

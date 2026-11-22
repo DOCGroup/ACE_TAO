@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Endpoint_Strategy.h
  *
  *  @author Sumedh Mungee <sumedh@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_AV_ENDPOINT_STRATEGY_H
 #define TAO_AV_ENDPOINT_STRATEGY_H

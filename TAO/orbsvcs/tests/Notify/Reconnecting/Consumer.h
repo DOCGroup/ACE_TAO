@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Consumer.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 
 #ifndef RECONNECTING_CONSUMER_H
 #define RECONNECTING_CONSUMER_H

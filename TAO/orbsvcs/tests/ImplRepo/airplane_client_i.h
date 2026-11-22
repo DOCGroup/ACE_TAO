@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    airplane_client_i.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
-//=============================================================================
 
 #if !defined (AIRPLANE_CLIENT_I_H)
 #define AIRPLANE_CLIENT_I_H

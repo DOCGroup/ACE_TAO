@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    CosEventChannelFactory_i.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_COSEVENTCHANNELFACTORY_I_H
 #define TAO_COSEVENTCHANNELFACTORY_I_H

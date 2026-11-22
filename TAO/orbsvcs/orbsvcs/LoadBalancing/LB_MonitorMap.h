@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file   LB_MonitorMap.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LB_MONITOR_MAP_H
 #define TAO_LB_MONITOR_MAP_H

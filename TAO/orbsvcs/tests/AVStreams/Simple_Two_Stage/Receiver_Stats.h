@@ -1,11 +1,9 @@
 
-//=============================================================================
 /**
  *  @file    Receiver_Stats.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef RECEIVER_STATS_H
 #define RECEIVER_STATS_H

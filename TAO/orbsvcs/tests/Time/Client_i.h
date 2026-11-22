@@ -3,7 +3,6 @@
 #ifndef TAO_ORBSVCS_TESTS_TIME_CLIENT_I_H
 #define TAO_ORBSVCS_TESTS_TIME_CLIENT_I_H
 
-//=============================================================================
 /**
  *  @file    Client_i.h
  *
@@ -12,7 +11,6 @@
  *
  *  @author Vishal Kachroo <vishal@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "orbsvcs/TimeServiceC.h"
 #include "orbsvcs/Naming/Naming_Client.h"

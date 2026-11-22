@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    FT_ReplicationManagerFaultAnalyzer.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Steve Totten <totten_s@ociweb.com>
  */
-//=============================================================================
 
 #ifndef FT_REPLICATION_MANAGER_FAULT_ANALYZER_H_
 #define FT_REPLICATION_MANAGER_FAULT_ANALYZER_H_

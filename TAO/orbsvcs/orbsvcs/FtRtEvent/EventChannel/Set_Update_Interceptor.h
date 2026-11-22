@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Set_Update_Interceptor.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SET_UPDATE_INTERCEPTOR_H
 #define TAO_SET_UPDATE_INTERCEPTOR_H

@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    distributer.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_AVSTREAMS_SIMPLE_THREE_STAGE_DISTRIBUTER_H
 #define TAO_AVSTREAMS_SIMPLE_THREE_STAGE_DISTRIBUTER_H

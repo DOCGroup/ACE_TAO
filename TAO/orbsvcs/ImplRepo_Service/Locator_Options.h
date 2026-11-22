@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Locator_Options.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef LOCATOR_OPTIONS_H
 #define LOCATOR_OPTIONS_H

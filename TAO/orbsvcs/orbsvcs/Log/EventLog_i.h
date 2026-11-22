@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-// ============================================================================
 /**
  *  @file   EventLog_i.h
  *
@@ -11,7 +10,6 @@
  *  @author Rob Ruff <rruff@scires.com>
  *  @author D A Hanvey <d.hanvey@qub.ac.uk>
  */
-// ============================================================================
 
 #ifndef TAO_TLS_EVENTLOG_I_H
 #define TAO_TLS_EVENTLOG_I_H

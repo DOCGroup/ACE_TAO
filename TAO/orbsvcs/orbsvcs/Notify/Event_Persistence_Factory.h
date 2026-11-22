@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Event_Persistence_Factory.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Jonathan Pollack <pollack_j@ociweb.com>
  */
-//=============================================================================
 
 #ifndef EVENT_PERSISTENCE_FACTORY_H
 #define EVENT_PERSISTENCE_FACTORY_H

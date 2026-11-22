@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    distributer.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_AV_COMPONENT_SWITCHING_DISTRIBUTER_H
 #define TAO_AV_COMPONENT_SWITCHING_DISTRIBUTER_H

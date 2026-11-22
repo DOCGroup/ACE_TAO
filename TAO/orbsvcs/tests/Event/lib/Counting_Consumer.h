@@ -1,11 +1,9 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Counting_Consumer.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef EC_COUNTING_CONSUMER_H
 #define EC_COUNTING_CONSUMER_H

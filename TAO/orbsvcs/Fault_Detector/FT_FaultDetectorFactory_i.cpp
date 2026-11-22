@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    FT_FaultDetectorFactory_i.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 #include "orbsvcs/Log_Macros.h"
 #include "FT_FaultDetectorFactory_i.h"
 #include "Fault_Detector_i.h"

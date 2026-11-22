@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Supplier.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 
 #ifndef RECONNECTING_SUPPLIER_H
 #define RECONNECTING_SUPPLIER_H

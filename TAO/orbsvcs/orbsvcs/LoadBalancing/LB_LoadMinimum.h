@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file LB_LoadMinimum.h
  *
  *  @author Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  *          Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef LB_LOAD_MINIMUM_H
 #define LB_LOAD_MINIMUM_H

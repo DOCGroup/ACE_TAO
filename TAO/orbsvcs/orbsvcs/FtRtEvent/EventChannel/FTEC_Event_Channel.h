@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   FTEC_Event_Channel.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 #ifndef FTEC_EVENT_CHANNEL_H
 #define FTEC_EVENT_CHANNEL_H
 

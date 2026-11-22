@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   SL2_EstablishTrustPolicy.h
  *
  *  @author Ossama Othman <ossama@uci.edu>
  */
-// ===================================================================
 
 #ifndef TAO_ESTABLISH_TRUST_POLICY_H
 #define TAO_ESTABLISH_TRUST_POLICY_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   SSLIOP_Current_Impl.h
  *
  *  @author Ossama Othman <ossama@uci.edu>
  */
-// ===================================================================
 
 #ifndef TAO_SSLIOP_CURRENT_IMPL_H
 #define TAO_SSLIOP_CURRENT_IMPL_H

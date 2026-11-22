@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Topology_Loader.h
  *
  *  @author Jonathan Pollack <pollack_j@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TOPOLOGY_LOADER_H
 #define TOPOLOGY_LOADER_H

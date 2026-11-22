@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Naming_Server.h
  *
@@ -10,7 +9,6 @@
  *  @author Matt Braun <mjb2@cs.wustl.edu>
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>.
  */
-//=============================================================================
 
 #ifndef TAO_NAMING_SERVER_H
 #define TAO_NAMING_SERVER_H

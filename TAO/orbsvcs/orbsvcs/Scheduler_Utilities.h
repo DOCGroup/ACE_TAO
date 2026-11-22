@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Scheduler_Utilities.h
  *
  *  @author  Chris Gill <cdgill@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SCHEDULER_UTILITIES_H
 #define ACE_SCHEDULER_UTILITIES_H

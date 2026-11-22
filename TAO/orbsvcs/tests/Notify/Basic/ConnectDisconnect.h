@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   ConnectDisconnect.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef NOTIFY_CONNECT_DISCONNECT_H
 #define NOTIFY_CONNECT_DISCONNECT_H

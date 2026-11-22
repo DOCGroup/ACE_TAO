@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   CEC_SupplierAdmin.h
  *
@@ -10,7 +9,6 @@
  *
  * http://doc.ece.uci.edu/~coryan/EC/
  */
-//=============================================================================
 
 #ifndef TAO_CEC_SUPPLIERADMIN_H
 #define TAO_CEC_SUPPLIERADMIN_H

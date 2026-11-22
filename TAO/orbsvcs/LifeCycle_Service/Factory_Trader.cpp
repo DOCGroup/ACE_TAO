@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file   Factory_Trader.cpp
  *
@@ -11,7 +10,6 @@
  *
  *  @author Michael Kircher  (mk1@cs.wustl.edu)
  */
-//=============================================================================
 
 #include "orbsvcs/Log_Macros.h"
 #include "Factory_Trader.h"

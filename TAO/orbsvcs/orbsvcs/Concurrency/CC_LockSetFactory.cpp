@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file   CC_LockSetFactory.cpp
  *
  *  @author Torben Worm <tworm@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "orbsvcs/Concurrency/CC_LockSetFactory.h"
 #include "orbsvcs/Concurrency/CC_LockSet.h"

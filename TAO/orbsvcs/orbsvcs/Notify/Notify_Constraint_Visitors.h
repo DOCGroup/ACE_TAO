@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Notify_Constraint_Visitors.h
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef NOTIFY_CONSTRAINT_VISITORS_H
 #define NOTIFY_CONSTRAINT_VISITORS_H

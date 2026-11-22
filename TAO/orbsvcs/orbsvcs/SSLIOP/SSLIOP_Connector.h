@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     SSLIOP_Connector.h
  *
@@ -9,7 +8,6 @@
  *  @author Carlos O'Ryan
  *  @author Ossama Othman
  */
-//=============================================================================
 
 #ifndef TAO_SSLIOP_CONNECTOR_H
 #define TAO_SSLIOP_CONNECTOR_H

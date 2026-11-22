@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   AMI_Primary_Replication_Strategy.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef AMI_PRIMARY_REPLICATION_STRATEGY_H
 #define AMI_PRIMARY_REPLICATION_STRATEGY_H

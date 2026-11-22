@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    SSLIOP_Connection_Handler.h
  *
  *  @author  Carlos O'Ryan <coryan@uci.edu>
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SSLIOP_CONNECTION_HANDLER_H
 #define TAO_SSLIOP_CONNECTION_HANDLER_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Hash_LogRecordStore.h
  *
@@ -8,7 +7,6 @@
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
-//=============================================================================
 
 #ifndef TAO_HASH_LOG_RECORD_STORE_H
 #define TAO_HASH_LOG_RECORD_STORE_H

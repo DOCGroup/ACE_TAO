@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Routing_Slip_Persistence_Manager.h
  *
@@ -10,7 +9,6 @@
  *
  *  @author Jonathan Pollack <pollack_j@ociweb.com>
  */
-//=============================================================================
 
 #ifndef ROUTING_SLIP_PERSISTENCE_MANAGER_H
 #define ROUTING_SLIP_PERSISTENCE_MANAGER_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=======================================================================
 /**
  *  @file    LB_LoadListMap.h
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=======================================================================
 
 #ifndef TAO_LB_LOAD_LIST_MAP_H
 #define TAO_LB_LOAD_LIST_MAP_H

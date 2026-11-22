@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    LifeCycle_Service.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Michael Kircher (mk1@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef LIFECYCLE_SERVICE_H
 #define LIFECYCLE_SERVICE_H

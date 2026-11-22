@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    client.cpp
  *
@@ -8,7 +7,6 @@
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
-//=============================================================================
 
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/Get_Opt.h"

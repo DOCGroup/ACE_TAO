@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    AttributeDef_i.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_ATTRIBUTEDEF_I_H
 #define TAO_ATTRIBUTEDEF_I_H

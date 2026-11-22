@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Dynamic_Bitset.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 #ifndef DYNAMIC_BITSET_H
 #define DYNAMIC_BITSET_H
 

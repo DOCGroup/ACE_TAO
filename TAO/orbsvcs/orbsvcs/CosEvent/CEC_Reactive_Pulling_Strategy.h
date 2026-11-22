@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   CEC_Reactive_Pulling_Strategy.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef TAO_CEC_REACTIVE_PULLING_STRATEGY_H
 #define TAO_CEC_REACTIVE_PULLING_STRATEGY_H

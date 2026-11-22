@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   HTIOP_Transport.h
  *
  *  @author Originally by Fred Kuhns <fredk@cs.wustl.edu>
  *  @author Modified by Balachandran Natarajan <bala@cs.wustl.edu>
  */
-// ===================================================================
 
 #ifndef TAO_HTIOP_TRANSPORT_H
 #define TAO_HTIOP_TRANSPORT_H

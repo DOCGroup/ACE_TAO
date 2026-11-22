@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   FTEC_ProxyConsumer.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 #ifndef TAO_FTEC_PROXYCONSUMER_H
 #define TAO_FTEC_PROXYCONSUMER_H
 

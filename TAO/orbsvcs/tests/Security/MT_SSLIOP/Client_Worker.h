@@ -1,11 +1,9 @@
 
-//=============================================================================
 /**
  *  @file   Client_Worker.h
  *
  *  @author Anand Krishnan
  */
-//=============================================================================
 
 #ifndef MT_SSLIOP_CLIENT_WORKER_H
 #define MT_SSLIOP_CLIENT_WORKER_H

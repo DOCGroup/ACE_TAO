@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Request_Context_Repository.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef REQUEST_CONTEXT_REPOSITORY_H
 #define REQUEST_CONTEXT_REPOSITORY_H

@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file   EventChannel_i.h
  *
@@ -9,7 +8,6 @@
  * This has the implementation of the
  * CosEventChannelAdmin::EventChannel interface.
  */
-//=============================================================================
 
 #ifndef EVENTCHANNEL_I_H
 #define EVENTCHANNEL_I_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Concurrency_Utils.h
  *
@@ -11,7 +10,6 @@
  *
  *  @author Torben Worm <tworm@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _CONCURRENCY_SERVER_H
 #define _CONCURRENCY_SERVER_H

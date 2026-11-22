@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file constants.h
  *
@@ -8,7 +7,6 @@
  *
  * @author Chris Cleeland <cleeland@ociweb.com>
  */
-//=============================================================================
 
 #ifndef SECURE_INVOCATION_CONSTANTS_H
 #define SECURE_INVOCATION_CONSTANTS_H

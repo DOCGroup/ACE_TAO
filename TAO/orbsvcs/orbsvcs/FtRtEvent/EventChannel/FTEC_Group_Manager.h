@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   FTEC_Group_Manager.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_FTEC_GROUP_MANAGER_H
 #define TAO_FTEC_GROUP_MANAGER_H

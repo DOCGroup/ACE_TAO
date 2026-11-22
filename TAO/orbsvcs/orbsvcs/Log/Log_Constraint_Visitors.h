@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Log_Constraint_Visitors.h
  *
@@ -8,7 +7,6 @@
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  *  @author D A Hanvey <d.hanvey@qub.ac.uk>
  */
-//=============================================================================
 
 #ifndef TAO_LOG_CONSTRAINT_VISITORS_H
 #define TAO_LOG_CONSTRAINT_VISITORS_H

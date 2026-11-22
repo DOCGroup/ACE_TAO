@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   HTIOP_Completion_Handler.h
  *
  *  @author Priyanka Gontla <gontla_p@ociweb.com>
  */
-// ===================================================================
 
 #ifndef HTIOP_COMPLETION_HANDLER_H
 #define HTIOP_COMPLETION_HANDLER_H

@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file sender.h
  *
  *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_ORBsvcs_AVSTREAMS_TESTS_MODIFY_QOS_SENDER_H
 #define TAO_ORBsvcs_AVSTREAMS_TESTS_MODIFY_QOS_SENDER_H

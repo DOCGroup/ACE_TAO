@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    FTAPP_FaultConsumer_Main.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Steve Totten <totten_s@ociweb.com>
  */
-//=============================================================================
 
 #include "tao/Utils/Server_Main.h"
 #include "ReplicationManagerFaultConsumerAdapter.h"

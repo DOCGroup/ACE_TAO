@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file FT_Property_Validator.h
  *
  * @author Curt Hibbs <hibbs_c@ociweb.com>
  */
-//=============================================================================
 
 #ifndef FT_PROPERTY_VALIDATOR_H
 #define FT_PROPERTY_VALIDATOR_H

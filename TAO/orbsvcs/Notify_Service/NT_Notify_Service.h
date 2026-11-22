@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    NT_Notify_Service.h
  *
@@ -10,7 +9,6 @@
  *  @author Mike Vitalo <mvitalo@infoglide.com>
  *  @author David Robison <drrobison@openroadsconsulting.com>
  */
-//=============================================================================
 
 #ifndef TAO_NT_NOTIFY_SERVICE_H
 #define TAO_NT_NOTIFY_SERVICE_H

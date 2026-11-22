@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   CEC_MT_Dispatching.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef TAO_CEC_MT_DISPATCHING_H
 #define TAO_CEC_MT_DISPATCHING_H

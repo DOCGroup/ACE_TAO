@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    XML_Topology_Factory.h
  *
  *  @author Jonathan Pollack <pollack_j@ociweb.com>
  */
-//=============================================================================
 
 #ifndef XML_TOPOLOGY_FACTORY_H
 #define XML_TOPOLOGY_FACTORY_H

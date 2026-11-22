@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
 *  @file Locator_Repository.h
 *
@@ -9,7 +8,6 @@
 *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
 *  @author Priyanka Gontla <gontla_p@ociweb.com>
 */
-//=============================================================================
 
 #ifndef LOCATOR_REPOSITORY_H
 #define LOCATOR_REPOSITORY_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   FT_EventService.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 #ifndef FT_EVENTSERVICE_H
 #define FT_EVENTSERVICE_H
 

@@ -1,4 +1,3 @@
-//=============================================================================
 /**
 *  @file   Forwarder.cpp
 *
@@ -6,7 +5,6 @@
 *
 *  @author Phil Mesnier <mesnier_p@ociweb.com>
 */
-//=============================================================================
 
 #include "orbsvcs/Log_Macros.h"
 #include "Forwarder.h"

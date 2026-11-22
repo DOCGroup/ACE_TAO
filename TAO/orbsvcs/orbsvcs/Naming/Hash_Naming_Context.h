@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Hash_Naming_Context.h
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_HASH_NAMING_CONTEXT_H
 #define TAO_HASH_NAMING_CONTEXT_H

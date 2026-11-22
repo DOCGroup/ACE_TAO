@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Storable.h
  *
  *  @author Bruce Trask <trask_b@ociweb.com>
  *  @author Chanaka Liyanaarachchi <chanaka@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_NAMING_STORABLE_H
 #define TAO_NAMING_STORABLE_H

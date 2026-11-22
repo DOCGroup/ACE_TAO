@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   SCTP_Fault_Detector.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef SCTP_FAULT_DETECTOR_H
 #define SCTP_FAULT_DETECTOR_H

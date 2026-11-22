@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  * @file Object_Factory_i.h
  *
@@ -8,7 +7,6 @@
  * @author Carlos O'Ryan <coryan@uci.edu>
  * @author Priyanka Gontla <gontla_p@ociweb.com>
  */
-//=============================================================================
 
 #ifndef OBJECT_FACTORY_I_H
 #define OBJECT_FACTORY_I_H

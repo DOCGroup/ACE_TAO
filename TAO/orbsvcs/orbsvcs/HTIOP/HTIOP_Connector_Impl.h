@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   HTIOP_Connector_Impl.h
  *
  *  @author Priyanka Gontla <gontla_p@ociweb.com>
  */
-// ===================================================================
 
 #ifndef HTIOP_CONNECTOR_IMPL_H
 #define HTIOP_CONNECTOR_IMPL_H

@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    FT_FaultEventDescriptor.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Steve Totten <totten_s@ociweb.com>
  */
-//=============================================================================
 
 #ifndef FT_FAULT_EVENT_DESCRIPTOR_H_
 #define FT_FAULT_EVENT_DESCRIPTOR_H_

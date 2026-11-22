@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    FT_FaultConsumer.cpp
  *
@@ -12,7 +11,6 @@
  *
  *  @author Steve Totten <totten_s@ociweb.com>
  */
-//=============================================================================
 
 #include "orbsvcs/Log_Macros.h"
 #include "FT_FaultConsumer.h"

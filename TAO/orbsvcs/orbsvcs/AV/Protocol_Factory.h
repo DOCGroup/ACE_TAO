@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Protocol_Factory.h
  *
  *  @author Nagarajan Surendran <naga@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_AV_PROTOCOL_FACTORY_T_H
 #define TAO_AV_PROTOCOL_FACTORY_T_H

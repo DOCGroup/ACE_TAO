@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file   LB_LoadManager.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LB_LOAD_MANAGER_H
 #define TAO_LB_LOAD_MANAGER_H

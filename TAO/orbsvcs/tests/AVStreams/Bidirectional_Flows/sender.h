@@ -12,7 +12,6 @@
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 
-//=============================================================================
 /**
  *  @file    sender.h
  *
@@ -21,7 +20,6 @@
  *
  *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
  */
-//=============================================================================
 
 /**
  * @class Sender_Callback

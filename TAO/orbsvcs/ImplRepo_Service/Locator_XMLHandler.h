@@ -1,11 +1,9 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file   Locator_XMLHandler.h
  *
  *  @author Justin Michel <michel_j@ociweb.com>
  */
-//=============================================================================
 
 #ifndef Locator_XMLHandler_H
 #define Locator_XMLHandler_H

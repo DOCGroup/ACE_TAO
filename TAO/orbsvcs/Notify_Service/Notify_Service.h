@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Notify_Service.h
  *
@@ -8,7 +7,6 @@
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  *  @author Service options code by Wei Chiang <Wei.Chiang@nokia.com>.
  */
-//=============================================================================
 
 #ifndef NOTIFY_SERVICE_H
 #define NOTIFY_SERVICE_H

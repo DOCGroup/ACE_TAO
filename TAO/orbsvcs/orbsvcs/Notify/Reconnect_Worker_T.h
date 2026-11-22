@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
 *  @file    Reconnect_Worker_T.h
 *
 *  @author Jonathan Pollack <pollack_j@ociweb.com>
 */
-//=============================================================================
 
 #ifndef RECONNECT_WORKER_H
 #define RECONNECT_WORKER_H

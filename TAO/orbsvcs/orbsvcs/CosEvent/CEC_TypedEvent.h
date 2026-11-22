@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   CEC_TypedEvent.h
  *
  *  @author Jon Astle (jon@astle45.fsnet.co.uk)
  */
-//=============================================================================
 
 #ifndef TAO_CEC_TYPEDEVENT_H_
 #define TAO_CEC_TYPEDEVENT_H_

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   FTEC_ORBInitializer.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 #ifndef FTEC_ORBINITIALIZER__H_
 #define FTEC_ORBINITIALIZER__H_
 #include /**/ "ace/pre.h"

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   CEC_EventChannel.h
  *
@@ -9,7 +8,6 @@
  * A new implementation of the COS Event Channel.
  * This version does not rely on the RTEC in its implementation.
  */
-//=============================================================================
 
 #ifndef TAO_CEC_EVENTCHANNEL_H
 #define TAO_CEC_EVENTCHANNEL_H

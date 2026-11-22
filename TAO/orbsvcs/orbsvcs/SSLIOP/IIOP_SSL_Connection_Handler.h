@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   IIOP_SSL_Connection_Handler.h
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_IIOP_SSL_CONNECTION_HANDLER_H
 #define TAO_IIOP_SSL_CONNECTION_HANDLER_H

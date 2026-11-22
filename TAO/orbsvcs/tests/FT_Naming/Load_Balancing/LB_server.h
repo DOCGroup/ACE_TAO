@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   LB_server.h
  *
  *  @author Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
  *  @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef FT_NAMING_LOAD_BALANCING_LB_SERVER_H
 #define FT_NAMING_LOAD_BALANCING_LB_SERVER_H

@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file  FT_PG_Group_Factory.cpp
  *
  *
  * @author Byron Harris <harrisb@ociweb.com>
  */
-//=============================================================================
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_PG_Group_Factory.h"

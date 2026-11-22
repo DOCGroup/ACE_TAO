@@ -1,11 +1,9 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Throughput.h
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef NOTIFY_Throughput_H
 #define NOTIFY_Throughput_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    HTIOP_Connector.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Priyanka Gontla <gontla_p@ociweb.com>
  */
-//=============================================================================
 
 #ifndef HTIOP_CONNECTOR_H
 #define HTIOP_CONNECTOR_H

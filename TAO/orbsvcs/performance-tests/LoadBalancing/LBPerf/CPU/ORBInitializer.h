@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file ORBInitializer.h
  *
  *  @author  Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ORB_INITIALIZER_H
 #define ORB_INITIALIZER_H

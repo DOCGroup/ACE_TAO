@@ -1,10 +1,8 @@
-//==========================================================================
 /**
  *  @file nsgroup_svc.h
  *
  *  @author Phillip LaBanca <labancap@ociweb.com>
  */
-//==========================================================================
 
 #ifndef i_nsgroup_svc_h
 #define i_nsgroup_svc_h

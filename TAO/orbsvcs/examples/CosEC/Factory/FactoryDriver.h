@@ -1,7 +1,6 @@
 
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    FactoryDriver.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_FACTORYDRIVER_H
 #define TAO_FACTORYDRIVER_H

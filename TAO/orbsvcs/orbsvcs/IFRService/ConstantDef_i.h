@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ConstantDef_i.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_CONSTANTDEF_I_H
 #define TAO_CONSTANTDEF_I_H

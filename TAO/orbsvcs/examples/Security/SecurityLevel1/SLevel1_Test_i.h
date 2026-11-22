@@ -1,11 +1,9 @@
 
-//=============================================================================
 /**
  *  @file   SLevel1_Test_i.h
  *
  *  @author Priyanka Gontla <gontla_p@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_SLEVEL1_TEST_I_H
 #define TAO_SLEVEL1_TEST_I_H

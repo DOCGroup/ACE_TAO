@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   NotifyLogFactory_i.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
-//=============================================================================
 
 #ifndef TAO_TLS_NOTIFYLOGFACTORY_I_H
 #define TAO_TLS_NOTIFYLOGFACTORY_I_H

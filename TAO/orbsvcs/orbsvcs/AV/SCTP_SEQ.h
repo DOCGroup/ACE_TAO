@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   SCTP_SEQ.h
  *
  *  @author Yamuna Krishnamurthy <yamuna@oomworks.com>
  */
-//=============================================================================
 
 #ifndef TAO_AV_SCTP_SEQ_H
 #define TAO_AV_SCTP_SEQ_H

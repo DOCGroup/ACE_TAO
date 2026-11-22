@@ -1,10 +1,8 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file Server_Request_Interceptor.h
  */
-//=============================================================================
 
 #ifndef BUG_2248_REGRESSION_SERVER_REQUEST_INTERCEPTOR_H
 #define BUG_2248_REGRESSION_SERVER_REQUEST_INTERCEPTOR_H

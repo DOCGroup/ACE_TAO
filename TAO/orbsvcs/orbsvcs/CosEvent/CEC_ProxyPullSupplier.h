@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   CEC_ProxyPullSupplier.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef TAO_CEC_PROXYPULLSUPPLIER_H
 #define TAO_CEC_PROXYPULLSUPPLIER_H

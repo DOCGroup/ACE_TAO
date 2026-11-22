@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    client.cpp
  *
@@ -10,7 +9,6 @@
  *  @author   Marina Spivak <marina@cs.wustl.edu>
  *  @author and   Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "client.h"
 #include "tao/debug.h"

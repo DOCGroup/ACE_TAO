@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Endpoint_Strategy_T.h
  *
  *  @author Sumedh Mungee <sumedh@cs.wustl.edu>
  *  @author Nagarajan Surendran <naga@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_AV_ENDPOINT_STRATEGY_T_H
 #define TAO_AV_ENDPOINT_STRATEGY_T_H

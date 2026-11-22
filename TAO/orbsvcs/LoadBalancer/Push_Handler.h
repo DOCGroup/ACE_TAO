@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=======================================================================
 /**
  *  @file    Push_Handler.h
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=======================================================================
 
 #ifndef TAO_LB_PUSH_HANDLER_H
 #define TAO_LB_PUSH_HANDLER_H

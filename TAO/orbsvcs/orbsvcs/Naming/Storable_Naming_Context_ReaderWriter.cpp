@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file  Storable_Naming_Context_ReaderWriter.cpp
  *
  * @author Marina Spivak <marina@cs.wustl.edu>
  * @author Byron Harris <harrisb@ociweb.com>
  */
-//=============================================================================
 
 #include "orbsvcs/Naming/Storable_Naming_Context_ReaderWriter.h"
 #include "orbsvcs/Naming/Storable_Naming_Context.h"

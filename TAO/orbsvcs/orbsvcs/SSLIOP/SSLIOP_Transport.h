@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   SSLIOP_Transport.h
  *
@@ -9,7 +8,6 @@
  *  @author Carlos O'Ryan <coryan@ece.uci.edu>
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SSLIOP_TRANSPORT_H
 #define TAO_SSLIOP_TRANSPORT_H

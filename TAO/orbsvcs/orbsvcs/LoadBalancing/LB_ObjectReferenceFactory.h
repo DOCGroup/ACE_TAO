@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file LB_ObjectReferenceFactory.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LB_OBJECT_REFERENCE_FACTORY_H
 #define TAO_LB_OBJECT_REFERENCE_FACTORY_H

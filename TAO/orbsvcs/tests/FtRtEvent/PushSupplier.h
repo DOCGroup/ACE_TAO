@@ -1,11 +1,9 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file   PushSupplier.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef PUSHSUPPLIER_H
 #define PUSHSUPPLIER_H

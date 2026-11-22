@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    Activator_Options.cpp
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
-//=============================================================================
 #include "Activator_Options.h"
 
 #include "ace/Arg_Shifter.h"

@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    FT_FaultAnalyzer.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Steve Totten <totten_s@ociweb.com>
  */
-//=============================================================================
 
 #ifndef FT_FAULT_ANALYZER_H_
 #define FT_FAULT_ANALYZER_H_

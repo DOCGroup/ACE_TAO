@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file   SupplierAdmin_i.h
  *
@@ -9,7 +8,6 @@
  * This has the implementation of the
  * CosEventChannelAdmin::SupplierAdmin interface.
  */
-//=============================================================================
 
 #ifndef SUPPLIER_ADMIN_I_H
 #define SUPPLIER_ADMIN_I_H

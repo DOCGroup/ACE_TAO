@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file SSLIOP_CredentialsAcquirerFactory.h
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SSLIOP_CREDENTIALS_ACQUIRER_FACTORY_H
 #define TAO_SSLIOP_CREDENTIALS_ACQUIRER_FACTORY_H

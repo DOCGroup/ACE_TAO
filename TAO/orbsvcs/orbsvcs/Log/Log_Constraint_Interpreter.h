@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Log_Constraint_Interpreter.h
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  *  @author D A Hanvey <d.hanvey@qub.ac.uk>
  */
-//=============================================================================
 
 #ifndef TAO_LOG_CONSTRAINT_INTERPRETER_H
 #define TAO_LOG_CONSTRAINT_INTERPRETER_H

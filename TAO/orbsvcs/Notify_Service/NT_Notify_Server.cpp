@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    NT_Notify_Server.cpp
  *
@@ -11,7 +10,6 @@
  *  @author Mike Vitalo <mvitalo@infoglide.com>
  *  @author and David Robison <drrobison@openroadsconsulting.com>
  */
-//=============================================================================
 
 #include "orbsvcs/Log_Macros.h"
 

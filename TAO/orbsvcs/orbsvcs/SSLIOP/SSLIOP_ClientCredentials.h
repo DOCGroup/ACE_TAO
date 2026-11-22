@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file SSLIOP_ClientCredentials.h
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SSLIOP_CLIENT_CREDENTIALS_H
 #define TAO_SSLIOP_CLIENT_CREDENTIALS_H

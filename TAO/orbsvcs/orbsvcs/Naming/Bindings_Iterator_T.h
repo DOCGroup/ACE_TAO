@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Bindings_Iterator_T.h
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_BINDINGS_ITERATOR_T_H
 #define TAO_BINDINGS_ITERATOR_T_H

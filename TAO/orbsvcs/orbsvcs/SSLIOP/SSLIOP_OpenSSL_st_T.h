@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   SSLIOP_OpenSSL_st_T.h
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SSLIOP_OPENSSL_ST_T_H
 #define TAO_SSLIOP_OPENSSL_ST_T_H

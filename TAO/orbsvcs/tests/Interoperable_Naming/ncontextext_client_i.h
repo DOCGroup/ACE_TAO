@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ncontextext_client_i.h
  *
@@ -10,7 +9,6 @@
  *
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  */
-//=============================================================================
 
 #if !defined (NCONTEXTEXT_CLIENT_I_H)
 #define NCONTEXTEXT_CLIENT_I_H

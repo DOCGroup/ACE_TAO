@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   AdminProperties.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ADMINPROPERTIES
 #define ADMINPROPERTIES

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ============================================================================
 /**
  * @file   LB_LoadAlert_Handler.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-// ============================================================================
 
 #ifndef TAO_LB_LOAD_ALERT_REPLY_HANDLER_H
 #define TAO_LB_LOAD_ALERT_REPLY_HANDLER_H

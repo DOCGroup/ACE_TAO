@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Notify_Push_Consumer.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Chip Jones <jones_c@ociweb.com>
  */
-//=============================================================================
 
 #ifndef NOTIFY_PUSH_CONSUMER_H
 #define NOTIFY_PUSH_CONSUMER_H

@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    Concurrency_Utils.cpp
  *
  *  @author Torben Worm <tworm@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "orbsvcs/Log_Macros.h"
 #include "ace/streams.h"

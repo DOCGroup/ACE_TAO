@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file   FT_Naming_Replication_Manager.cpp
  *
  * @author Kevin Stanley <stanleyk@ociweb.com>
  * @author Phil Mesnier
  */
-//=============================================================================
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h"

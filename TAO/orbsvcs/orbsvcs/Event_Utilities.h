@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Event_Utilities.h
  *
  *  @author Tim Harrison (harrison@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef ACE_EVENT_UTILITIES_H
 #define ACE_EVENT_UTILITIES_H

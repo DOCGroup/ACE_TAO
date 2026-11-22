@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     SSLIOP_Endpoint.h
  *
@@ -9,7 +8,6 @@
  *  @author Marina Spivak <marina@cs.wustl.edu>
  *  @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SSLIOP_ENDPOINT_H
 #define TAO_SSLIOP_ENDPOINT_H

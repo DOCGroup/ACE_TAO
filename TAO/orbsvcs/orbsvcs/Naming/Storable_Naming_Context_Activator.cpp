@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file   Storable_Naming_Context_Activator.cpp
  *
  *  @author Byron Harris <harris_b@ociweb.com>
  */
-//=============================================================================
 
 #include "orbsvcs/Naming/Storable_Naming_Context_Activator.h"
 #include <string>

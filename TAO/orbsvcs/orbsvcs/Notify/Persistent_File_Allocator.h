@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Persistent_File_Allocator.h
  *
@@ -10,7 +9,6 @@
  *
  *  @author Jonathan Pollack <pollack_j@ociweb.com>
  */
-//=============================================================================
 
 #ifndef PERSISTENT_FILE_ALLOCATOR_H
 #define PERSISTENT_FILE_ALLOCATOR_H

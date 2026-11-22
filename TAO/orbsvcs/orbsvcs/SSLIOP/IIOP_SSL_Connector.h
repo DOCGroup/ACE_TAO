@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    IIOP_SSL_Connector.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_IIOP_SSL_CONNECTOR_H
 #define TAO_IIOP_SSL_CONNECTOR_H

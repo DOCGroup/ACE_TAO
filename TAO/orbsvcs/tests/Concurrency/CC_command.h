@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    CC_command.h
  *
@@ -10,7 +9,6 @@
  *
  *  @author Torben Worm <tworm@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "orbsvcs/CosConcurrencyControlC.h"
 #include <memory>

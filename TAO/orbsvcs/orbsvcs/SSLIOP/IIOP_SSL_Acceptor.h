@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    IIOP_SSL_Acceptor.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_IIOP_SSL_ACCEPTOR_H
 #define TAO_IIOP_SSL_ACCEPTOR_H

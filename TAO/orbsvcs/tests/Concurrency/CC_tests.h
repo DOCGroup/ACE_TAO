@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    CC_tests.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Torben Worm <tworm@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "orbsvcs/CosConcurrencyControlC.h"
 #include "orbsvcs/CosNamingC.h"

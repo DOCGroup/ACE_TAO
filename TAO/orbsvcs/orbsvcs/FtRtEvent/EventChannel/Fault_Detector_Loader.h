@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Fault_Detector_Loader.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef FAULT_DETECTOR_LOADER_H
 #define FAULT_DETECTOR_LOADER_H

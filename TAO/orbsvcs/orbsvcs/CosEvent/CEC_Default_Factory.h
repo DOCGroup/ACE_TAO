@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   CEC_Default_Factory.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef TAO_CEC_DEFAULT_FACTORY_H
 #define TAO_CEC_DEFAULT_FACTORY_H

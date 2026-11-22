@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   CEC_DynamicImplementation.h
  *
  *  @author Jon Astle (jon@astle45.fsnet.co.uk)
  */
-//=============================================================================
 
 #ifndef TAO_CEC_DYNAMICIMPLEMENTATION_H
 #define TAO_CEC_DYNAMICIMPLEMENTATION_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  *  @file    Event_Service_Constants.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//==========================================================================
 
 #ifndef ACE_ES_CONSTANTS_H
 #define ACE_ES_CONSTANTS_H

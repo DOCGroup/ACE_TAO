@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     FT_ServerPolicyFactory.h
  *
  *  @author  Bala Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_FT_SERVERPOLICY_FACTORY_H
 #define TAO_FT_SERVERPOLICY_FACTORY_H

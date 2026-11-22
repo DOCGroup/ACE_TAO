@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file SL3_PolicyFactory.h
  *
@@ -8,7 +7,6 @@
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SL3_POLICY_FACTORY_H
 #define TAO_SL3_POLICY_FACTORY_H

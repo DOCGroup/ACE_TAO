@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ComponentModuleDef_i.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_COMPONENTMODULEDEF_I_H
 #define TAO_COMPONENTMODULEDEF_I_H

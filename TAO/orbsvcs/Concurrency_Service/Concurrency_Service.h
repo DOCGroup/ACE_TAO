@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Concurrency_Service.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Torben Worm <tworm@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _CONCURRENCY_SERVICE_H
 #define _CONCURRENCY_SERVICE_H

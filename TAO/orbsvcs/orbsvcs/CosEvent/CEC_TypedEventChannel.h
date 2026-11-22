@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   CEC_TypedEventChannel.h
  *
@@ -9,7 +8,6 @@
  * A new implementation of the COS Typed Event Channel, based on
  * the untyped version by Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef TAO_CEC_TYPEDEVENTCHANNEL_H_
 #define TAO_CEC_TYPEDEVENTCHANNEL_H_

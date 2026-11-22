@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   ConnectionHandler_T.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 #ifndef CONNECTIONACCEPTHANDLER_H
 #define CONNECTIONACCEPTHANDLER_H
 

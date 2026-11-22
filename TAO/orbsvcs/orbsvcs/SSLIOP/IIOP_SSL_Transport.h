@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   IIOP_SSL_Transport.h
  *
  *  @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_IIOP_SSL_TRANSPORT_H
 #define TAO_IIOP_SSL_TRANSPORT_H

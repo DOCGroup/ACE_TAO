@@ -1,11 +1,9 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file   activate_with_id.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 #ifndef ACTIVATE_WITH_ID_H
 #define ACTIVATE_WITH_ID_H
 

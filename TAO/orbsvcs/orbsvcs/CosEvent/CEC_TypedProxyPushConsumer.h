@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   CEC_TypedProxyPushConsumer.h
  *
@@ -8,7 +7,6 @@
  *
  *  Based on the untyped version by Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef TAO_CEC_TYPEDPROXYPUSHCONSUMER_H_
 #define TAO_CEC_TYPEDPROXYPUSHCONSUMER_H_

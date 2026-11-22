@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   default_resource.h
  *
  *  @author Yamuna Krishnamurthy
  */
-//=============================================================================
 
 #ifndef TAO_AV_DEFAULT_RESOURCE_H
 #define TAO_AV_DEFAULT_RESOURCE_H

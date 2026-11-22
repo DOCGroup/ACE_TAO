@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Runtime_Scheduler.h
  *
  *  @author  Chris Gill <cdgill@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_RUNTIME_SCHEDULER_H
 #define ACE_RUNTIME_SCHEDULER_H

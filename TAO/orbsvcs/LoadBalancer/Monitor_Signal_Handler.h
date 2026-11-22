@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file   Monitor_Signal_Handler.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LB_MONITOR_SIGNAL_HANDLER_H
 #define TAO_LB_MONITOR_SIGNAL_HANDLER_H

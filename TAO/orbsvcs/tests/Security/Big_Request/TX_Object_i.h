@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file TX_Object_i.h
  *
@@ -9,7 +8,6 @@
  * @author Andrew Finnell
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TX_OBJECT_I_H
 #define TX_OBJECT_I_H

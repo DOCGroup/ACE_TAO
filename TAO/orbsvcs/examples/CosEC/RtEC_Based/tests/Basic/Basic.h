@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file   Basic.h
  *
@@ -8,7 +7,6 @@
  *
  * This is a simple test class for the standard Cos Event Channel.
  */
-//=============================================================================
 
 #ifndef COSECBASIC_H
 #define COSECBASIC_H

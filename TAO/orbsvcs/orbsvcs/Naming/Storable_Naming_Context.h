@@ -1,11 +1,9 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Storable_Naming_Context.h
  *
  *  @author Bruce Trask <trask_b@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_STORABLE_NAMING_CONTEXT_H
 #define TAO_STORABLE_NAMING_CONTEXT_H

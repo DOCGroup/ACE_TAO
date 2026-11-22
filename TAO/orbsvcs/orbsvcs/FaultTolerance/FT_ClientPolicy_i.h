@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   FT_ClientPolicy_i.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_FT_CLIENTPOLICY_I_H
 #define TAO_FT_CLIENTPOLICY_I_H

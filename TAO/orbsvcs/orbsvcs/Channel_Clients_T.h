@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Channel_Clients_T.h
  *
@@ -11,7 +10,6 @@
  *  accomplished with adapters to prevent the use of multiple
  *  inheritance (which is this root of all evil.)
  */
-//=============================================================================
 
 #ifndef ACE_CHANNEL_CLIENTS_T_H
 #define ACE_CHANNEL_CLIENTS_T_H

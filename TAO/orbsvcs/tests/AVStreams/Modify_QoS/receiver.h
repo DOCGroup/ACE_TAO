@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   receiver.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_ORBsvcs_AVSTREAMS_TESTS_MODIFY_QOS_RECEIVER_H
 #define TAO_ORBsvcs_AVSTREAMS_TESTS_MODIFY_QOS_RECEIVER_H

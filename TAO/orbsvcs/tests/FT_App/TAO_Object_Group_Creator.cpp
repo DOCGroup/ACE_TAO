@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    TAO_Object_Group_Creator.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 
 #include "TAO_Object_Group_Creator.h"
 #include <ace/OS_NS_stdio.h>

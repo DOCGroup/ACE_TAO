@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   RTEventLogNotification.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author D A Hanvey <d.hanvey@qub.ac.uk>
  */
-//=============================================================================
 
 #ifndef TAO_TLS_RTEVENT_LOG_NOTIFICATION_H
 #define TAO_TLS_RTEVENT_LOG_NOTIFICATION_H

@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file   ConsumerAdmin_i.h
  *
@@ -9,7 +8,6 @@
  * This has the implementation of the
  * CosEventChannelAdmin::ConsumerAdmin interface.
  */
-//=============================================================================
 
 #ifndef CONSUMERADMIN_I_H
 #define CONSUMERADMIN_I_H

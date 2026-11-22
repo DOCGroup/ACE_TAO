@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
 *  @file FT_Naming_Replication_Manager.h
 *
@@ -8,7 +7,6 @@
 *  Based on the replicator class used in the ImR.
 *
 */
-//=============================================================================
 
 #ifndef FT_REPLICATOR_H
 #define FT_REPLICATOR_H

@@ -1,11 +1,9 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file   Validate_Worker_T.h
  *
  *  @author Yan Dai (dai_y@ociweb.com)
  */
-//=============================================================================
 
 #ifndef NOTIFY_VALIDATE_WORKER_H
 #define NOTIFY_VALIDATE_WORKER_H

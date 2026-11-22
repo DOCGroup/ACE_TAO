@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   Security_Current.h
  *
  *  @author Ossama Othman <ossama@uci.edu>
  */
-// ===================================================================
 
 #ifndef TAO_SECURITY_CURRENT_H
 #define TAO_SECURITY_CURRENT_H

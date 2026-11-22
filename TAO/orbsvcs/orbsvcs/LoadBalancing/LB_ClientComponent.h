@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file LB_ClientComponent.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LB_CLIENTCOMPONENT_H
 #define TAO_LB_CLIENTCOMPONENT_H

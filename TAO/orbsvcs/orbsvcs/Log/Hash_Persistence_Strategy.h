@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Hash_Persistence_Strategy.h
  *
@@ -8,7 +7,6 @@
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
-//=============================================================================
 
 #ifndef TAO_TLS_HASH_PERSISTENCE_STRATEGY_H
 #define TAO_TLS_HASH_PERSISTENCE_STRATEGY_H

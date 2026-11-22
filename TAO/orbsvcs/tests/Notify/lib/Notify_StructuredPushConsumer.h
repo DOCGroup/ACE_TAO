@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Notify_StructuredPushConsumer.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef NOTIFY_STRUCTUREDPUSHCONSUMER_H
 #define NOTIFY_STRUCTUREDPUSHCONSUMER_H

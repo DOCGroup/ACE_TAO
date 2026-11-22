@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file     nsconf.h
  *
@@ -7,7 +6,6 @@
  *  @author  Chris Cleeland
  *  @author  Douglas C. Schmidt
  */
-//=============================================================================
 
 #ifndef TAO_NAMESERVICE_CONF_H
 #define TAO_NAMESERVICE_CONF_H

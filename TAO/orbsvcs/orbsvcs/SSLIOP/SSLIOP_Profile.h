@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file SSLIOP_Profile.h
  *
@@ -9,7 +8,6 @@
  *  @author Carlos O'Ryan <coryan@uci.edu>
  *  @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SSLIOP_PROFILE_H
 #define TAO_SSLIOP_PROFILE_H

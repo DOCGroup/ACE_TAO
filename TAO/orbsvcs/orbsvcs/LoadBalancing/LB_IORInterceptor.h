@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file LB_IORInterceptor.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LB_IOR_INTERCEPTOR_H
 #define TAO_LB_IOR_INTERCEPTOR_H

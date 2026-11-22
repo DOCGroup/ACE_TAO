@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file   Locator_NT_Service.cpp
  *
@@ -7,7 +6,6 @@
  *  @author John Tucker <jtucker@infoglide.com>
  *  @author Mike Vitalo <mvitalo@infoglide.com>
  */
-//=============================================================================
 
 #include "Locator_NT_Service.h"
 

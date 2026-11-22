@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-// ============================================================================
 /**
  *  @file   EventLogConsumer.h
  *
@@ -10,7 +9,6 @@
  *  @author Rob Ruff <rruff@scires.com>
  *  @D A Hanvey <d.hanvey@qub.ac.uk>
  */
-// ============================================================================
 
 #ifndef TAO_TLS_EVENTLOGCONSUMER_H
 #define TAO_TLS_EVENTLOGCONSUMER_H

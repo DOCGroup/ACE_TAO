@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Sequence.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef NOTIFY_TESTS_SEQUENCE_H
 #define NOTIFY_TESTS_SEQUENCE_H

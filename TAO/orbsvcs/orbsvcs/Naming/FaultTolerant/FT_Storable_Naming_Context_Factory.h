@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   FT_Storable_Naming_Context_Factory.h
  *
  *
  *  @author Kevin Stanley stanleyk@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_FT_STORABLE_NAMING_CONTEXT_FACTORY_H
 #define TAO_FT_STORABLE_NAMING_CONTEXT_FACTORY_H

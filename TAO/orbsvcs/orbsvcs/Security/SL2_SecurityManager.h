@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file SL2_SecurityManager.h
  *
  * @author Chris Cleeland <cleeland@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_SL2_SECURITY_MANAGER_H
 #define TAO_SL2_SECURITY_MANAGER_H

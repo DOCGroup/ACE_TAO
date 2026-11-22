@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   SSLIOP_TargetCredentials.h
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SSLIOP_TARGET_CREDENTIALS_H
 #define TAO_SSLIOP_TARGET_CREDENTIALS_H

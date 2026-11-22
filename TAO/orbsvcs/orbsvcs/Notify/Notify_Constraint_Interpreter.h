@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Notify_Constraint_Interpreter.h
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_NOTIFY_CONSTRAINT_INTERPRETER_H
 #define TAO_NOTIFY_CONSTRAINT_INTERPRETER_H

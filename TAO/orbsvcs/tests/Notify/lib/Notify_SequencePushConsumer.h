@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Notify_SequencePushConsumer.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef NOTIFY_SEQUENCEPUSHCONSUMER_H
 #define NOTIFY_SEQUENCEPUSHCONSUMER_H

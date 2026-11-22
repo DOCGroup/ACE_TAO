@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    ncontextext_client_i.cpp
  *
@@ -9,7 +8,6 @@
  *
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  */
-//=============================================================================
 
 #include "ncontextext_client_i.h"
 #include "tao/debug.h"

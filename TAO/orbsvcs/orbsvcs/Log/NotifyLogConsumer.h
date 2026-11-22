@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   NotifyLogConsumer.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
-//=============================================================================
 
 #ifndef TAO_TLS_NOTIFYLOGCONSUMER_H
 #define TAO_TLS_NOTIFYLOGCONSUMER_H

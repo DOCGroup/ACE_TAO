@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file LB_CPU_Load_Average_Monitor.h
  *
  *  @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LB_CPU_LOAD_AVERAGE_MONITOR_H
 #define TAO_LB_CPU_LOAD_AVERAGE_MONITOR_H

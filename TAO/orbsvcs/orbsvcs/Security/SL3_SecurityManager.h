@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file SL3_SecurityManager.h
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SL3_SECURITY_MANAGER_H
 #define TAO_SL3_SECURITY_MANAGER_H

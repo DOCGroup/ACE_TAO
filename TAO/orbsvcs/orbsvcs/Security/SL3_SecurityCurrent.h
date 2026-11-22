@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file SL3_SecurityCurrent.h
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SL3_SECURITY_CURRENT_H
 #define TAO_SL3_SECURITY_CURRENT_H

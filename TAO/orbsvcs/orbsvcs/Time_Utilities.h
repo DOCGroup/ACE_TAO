@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Time_Utilities.h
  *
  *  @author  David Levine <levine@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ORBSVCS_TIME_UTILITIES_H
 #define ORBSVCS_TIME_UTILITIES_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   FT_ProxyAdmin_Base.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 #ifndef FT_PROXYADMIN_BASE_H
 #define FT_PROXYADMIN_BASE_H
 

@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file   Forwarder.h
  *
@@ -8,7 +7,6 @@
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  *  @author Priyanka Gontla <pgontla@doc.ece.uci.edu>
  */
-//=============================================================================
 
 #ifndef IMR_FORWARDER_H
 #define IMR_FORWARDER_H

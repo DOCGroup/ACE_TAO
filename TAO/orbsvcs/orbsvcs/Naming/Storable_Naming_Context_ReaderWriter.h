@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file  Storable_Naming_Context_ReaderWriter.h
  *
  * @author Marina Spivak <marina@cs.wustl.edu>
  * @author Byron Harris <harrisb@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_STORABLE_NAMING_CONTEXT_READERWRITER_H
 #define TAO_STORABLE_NAMING_CONTEXT_READERWRITER_H

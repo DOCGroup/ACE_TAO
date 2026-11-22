@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file FTRT_ClientORB_Initializer.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef FTRT_CLIENTORB_INITIALIZER_H
 #define FTRT_CLIENTORB_INITIALIZER_H

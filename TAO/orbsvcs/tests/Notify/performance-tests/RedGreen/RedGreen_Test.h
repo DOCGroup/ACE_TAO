@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   RedGreen_Test.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef NOTIFY_RedGreen_Test_CLIENT_H
 #define NOTIFY_RedGreen_Test_CLIENT_H
 

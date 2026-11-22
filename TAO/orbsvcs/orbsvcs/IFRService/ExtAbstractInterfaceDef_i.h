@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ExtAbstractInterfaceDef_i.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_EXTABSTRACTINTERFACEDEF_I_H
 #define TAO_EXTABSTRACTINTERFACEDEF_I_H

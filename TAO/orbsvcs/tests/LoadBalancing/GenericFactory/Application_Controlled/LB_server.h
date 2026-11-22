@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   LB_server.h
  *
  *  @author Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
  *  @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LOADBALANCING_APPLICATION_CONTROLLED_SERVER_H
 #define TAO_LOADBALANCING_APPLICATION_CONTROLLED_SERVER_H

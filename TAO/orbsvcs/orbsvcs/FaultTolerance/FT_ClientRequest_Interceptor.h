@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     FT_ClientRequest_Interceptor.h
  *
  *  @author  Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 #ifndef TAO_FT_CLIENT_REQUEST_INTERCEPTOR_H
 #define TAO_FT_CLIENT_REQUEST_INTERCEPTOR_H
 #include /**/ "ace/pre.h"

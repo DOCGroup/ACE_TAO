@@ -1,12 +1,10 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file   ImR_Activator_i.h
  *
  *  @author Priyanka Gontla <gontla_p@ociweb.com>
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef IMR_ACTIVATOR_I_H
 #define IMR_ACTIVATOR_I_H

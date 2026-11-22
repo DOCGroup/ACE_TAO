@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file client.cpp
  *
@@ -7,7 +6,6 @@
  *  @author Rich Seibel <seibel_r@ociweb.com>
  *  @author Phillip LaBanca <labancap@ociweb.com>
  */
-//=============================================================================
 
 #include "TestC.h"
 #include "test_objectS.h"

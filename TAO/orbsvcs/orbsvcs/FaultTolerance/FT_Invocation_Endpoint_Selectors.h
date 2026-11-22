@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file FT_Invocation_Endpoint_Selectors.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_FT_INVOCATION_ENDPOINT_SELECTOR_H
 #define TAO_FT_INVOCATION_ENDPOINT_SELECTOR_H

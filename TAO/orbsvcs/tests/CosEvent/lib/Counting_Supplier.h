@@ -1,11 +1,9 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Counting_Supplier.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef CEC_COUNTING_SUPPLIER_H
 #define CEC_COUNTING_SUPPLIER_H

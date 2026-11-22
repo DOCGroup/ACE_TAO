@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    client.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author   Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_TESTS_SECURITY_SSLIOP_CORBALOC_CLIENT_H
 #define TAO_TESTS_SECURITY_SSLIOP_CORBALOC_CLIENT_H

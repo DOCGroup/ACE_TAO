@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file SL3_CredentialsAcquirerFactory.h
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SL3_CREDENTIALS_ACQUIRER_FACTORY_H
 #define TAO_SL3_CREDENTIALS_ACQUIRER_FACTORY_H

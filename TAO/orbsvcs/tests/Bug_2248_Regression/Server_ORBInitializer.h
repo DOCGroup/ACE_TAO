@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file Server_ORBInitializer.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef BUG_2248_REGRESSION_SERVER_ORB_INITIALIZER_H
 #define BUG_2248_REGRESSION_SERVER_ORB_INITIALIZER_H

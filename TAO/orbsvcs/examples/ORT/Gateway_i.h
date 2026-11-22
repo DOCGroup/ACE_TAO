@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  * @file Gateway_i.h
  *
@@ -9,7 +8,6 @@
  * @author Carlos O'Ryan <coryan@uci.edu>
  * @author Priyanka Gontla <gontla_p@ociweb.com>
  */
-//=============================================================================
 
 #ifndef GATEWAY_I_H
 #define GATEWAY_I_H

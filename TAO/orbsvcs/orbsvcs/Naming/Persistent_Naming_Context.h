@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Persistent_Naming_Context.h
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_PERSISTENT_NAMING_CONTEXT_H
 #define TAO_PERSISTENT_NAMING_CONTEXT_H

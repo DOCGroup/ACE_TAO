@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   ProxySupplierStateWorker.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef PROXYSUPPLIERSTATEWORKER_H
 #define PROXYSUPPLIERSTATEWORKER_H

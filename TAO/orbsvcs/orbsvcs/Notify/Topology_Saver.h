@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
 *  @file    Topology_Saver.h
 *
 *  @author Jonathan Pollack <pollack_j@ociweb.com>
 */
-//=============================================================================
 
 #ifndef TOPOLOGY_SAVER_H
 #define TOPOLOGY_SAVER_H

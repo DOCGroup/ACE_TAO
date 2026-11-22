@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Scheduler_Factory.h
  *
  *  @author  Chris Gill <cdgill@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SCHEDULER_FACTORY_H
 #define ACE_SCHEDULER_FACTORY_H

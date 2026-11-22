@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file nsgroup_svc.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Phillip LaBanca <labancap@ociweb.com>
  */
-//=============================================================================
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/FaultTolerant/nsgroup_svc.h"

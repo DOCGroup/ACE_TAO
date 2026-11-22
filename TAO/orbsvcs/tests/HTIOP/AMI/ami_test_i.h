@@ -1,11 +1,9 @@
 
-//=============================================================================
 /**
  *  @file   ami_test_i.h
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
-//=============================================================================
 
 #ifndef TAO_AMI_TEST_I_H
 #define TAO_AMI_TEST_I_H

@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file   AVStreams_i.cpp
  *
  *  @author Sumedh Mungee <sumedh@cs.wustl.edu> Nagarajan Surendran <naga@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/AVStreams_i.h"

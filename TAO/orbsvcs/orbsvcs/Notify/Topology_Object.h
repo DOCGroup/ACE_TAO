@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
 *  @file    Topology_Object.h
 *
 *  @author Jonathan Pollack <pollack_j@ociweb.com>
 */
-//=============================================================================
 
 #ifndef TOPOLOGY_OBJECT_H
 #define TOPOLOGY_OBJECT_H

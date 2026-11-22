@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file FT_Service_Callbacks.h
  *
@@ -8,7 +7,6 @@
  *
  * @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_FT_CALLBACKS_H
 #define TAO_FT_CALLBACKS_H

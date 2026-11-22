@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file SL3_CredentialsCurator.h
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SL3_CREDENTIALS_CURATOR_H
 #define TAO_SL3_CREDENTIALS_CURATOR_H

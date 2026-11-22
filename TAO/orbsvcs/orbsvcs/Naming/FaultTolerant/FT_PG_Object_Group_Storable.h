@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    FT_PG_Object_Group_Storable.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Byron Harris <harrisb@ociweb.com>
  */
-//=============================================================================
 
 #ifndef FT_TAO_PG_OBJECT_GROUP_STORABLE_H_
 #define FT_TAO_PG_OBJECT_GROUP_STORABLE_H_

@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Connection_Manager.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_AV_ASYNCH_THREE_STAGE_CONNECTION_MANAGER_H
 #define TAO_AV_ASYNCH_THREE_STAGE_CONNECTION_MANAGER_H

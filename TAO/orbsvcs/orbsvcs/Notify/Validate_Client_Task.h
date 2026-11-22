@@ -1,11 +1,9 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file   Validate_Client_Task.h
  *
  *  @author Yan Dai (dai_y@ociweb.com)
  */
-//=============================================================================
 
 #ifndef NOTIFY_VALIDATE_CLIENT_TASK_H
 #define NOTIFY_VALIDATE_CLIENT_TASK_H

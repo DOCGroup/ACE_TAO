@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   RTEventLogFactory_i.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
-//=============================================================================
 
 #ifndef TLS_RTEVENTLOGFACTORY_I_H
 #define TLS_RTEVENTLOGFACTORY_I_H

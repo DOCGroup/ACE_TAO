@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    FT_ReplicationManager.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Curt Hibbs <hibbs_c@ociweb.com>
  */
-//=============================================================================
 
 #ifndef FT_REPLICATION_MANAGER_H_
 #define FT_REPLICATION_MANAGER_H_

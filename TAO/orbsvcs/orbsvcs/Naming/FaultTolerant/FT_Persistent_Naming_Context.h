@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   FT_Persistent_Naming_Context.h
  *
  *  @author Kevin Stanley <stanleyk@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_FT_PERSISTENT_NAMING_CONTEXT_H
 #define TAO_FT_PERSISTENT_NAMING_CONTEXT_H

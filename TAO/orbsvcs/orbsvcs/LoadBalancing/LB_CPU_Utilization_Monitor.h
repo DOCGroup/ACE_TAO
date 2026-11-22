@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file LB_CPU_Utilization_Monitor.h
  *
  *  @author Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  *  @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LB_CPU_UTILIZATION_MONITOR_H
 #define TAO_LB_CPU_UTILIZATION_MONITOR_H

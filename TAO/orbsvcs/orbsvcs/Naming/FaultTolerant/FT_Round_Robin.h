@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file FT_Round_Robin.h
  *
  *  @author Kevin Stanley <stanleyk@ociweb.com>
  */
-//=============================================================================
 
 #ifndef FT_ROUND_ROBIN_H
 #define FT_ROUND_ROBIN_H

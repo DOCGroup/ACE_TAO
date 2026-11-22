@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   SSLIOP_Invocation_Interceptor.h
  *
  *  @author Ossama Othman <ossama@uci.edu>
  */
-// ===================================================================
 
 #ifndef TAO_SSLIOP_INVOCATION_INTERCEPTOR_H
 #define TAO_SSLIOP_INVOCATION_INTERCEPTOR_H

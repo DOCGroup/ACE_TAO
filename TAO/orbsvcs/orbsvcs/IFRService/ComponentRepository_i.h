@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ComponentRepository_i.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Jeff Parsons <j.parsons@vanderbiltl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_COMPONENTREPOSITORY_I_H
 #define TAO_COMPONENTREPOSITORY_I_H

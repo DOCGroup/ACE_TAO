@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Notify_Default_Collection_Factory.h
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef NOTIFY_DEFAULT_COLLECTION_FACTORY_H
 #define NOTIFY_DEFAULT_COLLECTION_FACTORY_H

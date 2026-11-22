@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Persistent_Entries.h
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_PERSISTENT_ENTRIES_H
 #define TAO_PERSISTENT_ENTRIES_H

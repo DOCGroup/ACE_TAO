@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    FT_Creator.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 
 #include "FT_Creator.h"
 // FUZZ: disable check_for_streams_include

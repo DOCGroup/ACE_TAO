@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Transport.h
  *
  *  @author Nagarajan Surendran <naga@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_AV_TRANSPORT_H
 #define TAO_AV_TRANSPORT_H

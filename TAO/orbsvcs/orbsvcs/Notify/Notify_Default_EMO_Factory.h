@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Notify_Default_EMO_Factory.h
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef NOTIFY_DEFAULT_EMO_FACTORY_H
 #define NOTIFY_DEFAULT_EMO_FACTORY_H

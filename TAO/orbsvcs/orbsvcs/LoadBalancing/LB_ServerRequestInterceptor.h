@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file    LB_ServerRequestInterceptor.h
  *
  * @author  Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LB_SERVER_REQUEST_INTERCEPTOR_H
 #define TAO_LB_SERVER_REQUEST_INTERCEPTOR_H

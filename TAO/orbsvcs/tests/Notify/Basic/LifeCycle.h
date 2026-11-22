@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   LifeCycle.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Chanaka Liyanaarachchi <chanaka@ociweb.com>
  */
-//=============================================================================
 
 #ifndef NOTIFY_LIFECYCLETST_H
 #define NOTIFY_LIFECYCLETST_H

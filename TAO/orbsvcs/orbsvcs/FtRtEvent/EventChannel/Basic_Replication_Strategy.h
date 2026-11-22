@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Basic_Replication_Strategy.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 #ifndef BASIC_REPLICATION_STRATEGY_H
 #define BASIC_REPLICATION_STRATEGY_H
 #include "orbsvcs/FtRtEvent/EventChannel/Replication_Strategy.h"

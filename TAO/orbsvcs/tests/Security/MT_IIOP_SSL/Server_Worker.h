@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Server_Worker.h
  *
  *  @author Anand Krishnan
  */
-//=============================================================================
 
 #ifndef MT_SSLIOP_SERVER_WORKER_H
 #define MT_SSLIOP_SERVER_WORKER_H

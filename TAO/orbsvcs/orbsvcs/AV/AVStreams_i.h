@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   AVStreams_i.h
  *
  *  @author Sumedh Mungee <sumedh@cs.wustl.edu>
  *  @author Nagarajan Surendran <naga@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef AVSTREAMS_I_H
 #define AVSTREAMS_I_H

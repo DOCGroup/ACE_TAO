@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Connection_Manager.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef CONNECTION_MANAGER_H
 #define CONNECTION_MANAGER_H

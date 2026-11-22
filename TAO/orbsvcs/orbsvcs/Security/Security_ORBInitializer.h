@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     Security_ORBInitializer.h
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SECURITY_ORB_INITIALIZER_H
 #define TAO_SECURITY_ORB_INITIALIZER_H

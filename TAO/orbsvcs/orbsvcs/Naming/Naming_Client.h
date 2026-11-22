@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Naming_Client.h
  *
@@ -10,7 +9,6 @@
  *  @author Matt Braun <mjb2@cs.wustl.edu>
  *  @author and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>.
  */
-//=============================================================================
 
 #ifndef TAO_NAMING_CLIENT_H
 #define TAO_NAMING_CLIENT_H

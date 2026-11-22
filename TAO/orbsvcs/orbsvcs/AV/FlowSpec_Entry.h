@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ============================================================================
 /**
  *  @file    FlowSpec_Entry.h
  *
  *  @author  Nagarajan Surendran <naga@cs.wustl.edu>
  */
-// ============================================================================
 
 #ifndef TAO_AV_FLOWSPEC_ENTRY_H
 #define TAO_AV_FLOWSPEC_ENTRY_H

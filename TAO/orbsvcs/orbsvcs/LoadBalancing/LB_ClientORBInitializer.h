@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file LB_ClientORBInitializer.h
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LB_CLIENT_ORB_INITIALIZER_H
 #define TAO_LB_CLIENT_ORB_INITIALIZER_H

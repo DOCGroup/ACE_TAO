@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Concurrency_Service.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Torben Worm <tworm@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "orbsvcs/Log_Macros.h"
 #include "Concurrency_Service.h"

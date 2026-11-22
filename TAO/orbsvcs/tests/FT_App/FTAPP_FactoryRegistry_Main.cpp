@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    FTAPP_FactoryRegistry_Main.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 
 #include "tao/Utils/Server_Main.h"
 #include "orbsvcs/PortableGroup/PG_FactoryRegistry.h"

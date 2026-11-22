@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     FT_ClientPolicyFactory.h
  *
  *  @author  Bala Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_FT_CLIENTPOLICY_FACTORY_H
 #define TAO_FT_CLIENTPOLICY_FACTORY_H

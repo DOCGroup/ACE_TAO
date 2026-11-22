@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file   Notify_PushConsumer.h
  *
@@ -15,7 +14,6 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_NOTIFY_PUSHCONSUMER_H
 #define TAO_NOTIFY_PUSHCONSUMER_H

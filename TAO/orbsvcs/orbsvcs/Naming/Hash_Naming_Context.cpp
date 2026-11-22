@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file   Hash_Naming_Context.cpp
  *
  *  @author Marina Spivak <marina@cs.wustl.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "orbsvcs/Naming/Hash_Naming_Context.h"
 #include "orbsvcs/Naming/nsconf.h"

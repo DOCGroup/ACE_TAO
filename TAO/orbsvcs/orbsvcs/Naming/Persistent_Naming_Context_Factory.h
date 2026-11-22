@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Persistent_Naming_Context_Factory.h
  *
  *  @author Kevin Stanley stanleyk@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_PERSISTENT_NAMING_CONTEXT_FACTORY_H
 #define TAO_PERSISTENT_NAMING_CONTEXT_FACTORY_H

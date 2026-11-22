@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   SL2_QOPPolicy.h
  *
  *  @author Ossama Othman <ossama@uci.edu>
  */
-// ===================================================================
 
 #ifndef TAO_SL2_QOP_POLICY_H
 #define TAO_SL2_QOP_POLICY_H

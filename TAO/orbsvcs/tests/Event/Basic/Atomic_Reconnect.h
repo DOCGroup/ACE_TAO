@@ -1,11 +1,9 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Atomic_Reconnect.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef EC_ATOMIC_RECONNECT_H
 #define EC_ATOMIC_RECONNECT_H

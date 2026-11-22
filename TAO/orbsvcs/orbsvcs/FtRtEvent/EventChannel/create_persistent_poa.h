@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   create_persistent_poa.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 #ifndef CREATE_PERSISTENT_POA_H
 #define CREATE_PERSISTENT_POA_H
 #include "tao/PortableServer/PortableServer.h"

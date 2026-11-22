@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    receiver.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_AV_COMPONENT_SWITCHING_RECEIVER_H
 #define TAO_AV_COMPONENT_SWITCHING_RECEIVER_H

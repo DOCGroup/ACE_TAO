@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    simple_client.cpp
  *
@@ -8,7 +7,6 @@
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
-//=============================================================================
 
 #include "../test_config.h"
 

@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file   ProxyPushConsumer_i.h
  *
@@ -9,7 +8,6 @@
  * This has the implementation of the
  * CosEventChannelAdmin::ProxyPushConsumer interface.
  */
-//=============================================================================
 
 #ifndef _PROXYPUSHCONSUMER_I_H
 #define _PROXYPUSHCONSUMER_I_H

@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    sender.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_AVSTREAMS_ASYNCH_THREE_STAGE_SENDER_H
 #define TAO_AVSTREAMS_ASYNCH_THREE_STAGE_SENDER_H

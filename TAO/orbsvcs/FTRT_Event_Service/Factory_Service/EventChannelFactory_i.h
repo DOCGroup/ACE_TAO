@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   EventChannelFactory_i.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef EVENTCHANNELFACTORY_I_H
 #define EVENTCHANNELFACTORY_I_H

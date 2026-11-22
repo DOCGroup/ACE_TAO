@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=======================================================================
 /**
  *  @file    LB_Pull_Handler.h
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=======================================================================
 
 #ifndef TAO_LB_PULL_HANDLER_H
 #define TAO_LB_PULL_HANDLER_H

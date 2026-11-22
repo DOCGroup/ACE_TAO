@@ -1,6 +1,5 @@
 
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    ifr_adding_visitor_structure.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_IFR_ADDING_VISITOR_STRUCTURE_H
 #define TAO_IFR_ADDING_VISITOR_STRUCTURE_H

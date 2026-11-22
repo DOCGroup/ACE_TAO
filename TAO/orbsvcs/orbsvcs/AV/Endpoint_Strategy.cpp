@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file   Endpoint_Strategy.cpp
  *
  *  @author Sumedh Mungee <sumedh@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file FTRT_ClientORB_Interceptor.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_FTRT_CLIENTORB_INTERCEPTOR_H
 #define TAO_FTRT_CLIENTORB_INTERCEPTOR_H
