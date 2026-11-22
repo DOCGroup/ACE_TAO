@@ -1788,7 +1788,7 @@ AsyncAccessManager *
 ImR_Locator_i::create_aam (UpdateableServerInfo &info, bool running)
 {
   AsyncAccessManager_ptr aam;
-  ACE_NEW_RETURN (aam, AsyncAccessManager (info, *this), 0);
+  ACE_NEW_RETURN (aam, AsyncAccessManager (info, *this), nullptr);
   if (running)
     {
       aam->started_running ();
