@@ -568,10 +568,9 @@ ECM_Federation::ECM_Federation (std::string name,
     supplier_ipaddr_ (supplier_names_.size ()),
     consumer_names_ (std::move (consumer_names)),
     consumer_ipaddr_ (consumer_names_.size ()),
+    sender_ (TAO_ECG_UDP_Sender::create (true)),
     addr_server_ (mcast_port)
 {
-  sender_ = TAO_ECG_UDP_Sender::create (true);
-
   for (size_t i {}; i < this->supplier_names_.size (); ++i)
     {
       ACE_INET_Addr addr (u_short(0), this->supplier_names_[i].c_str (), AF_INET);
@@ -844,12 +843,11 @@ ECM_Local_Federation::ECM_Local_Federation (ECM_Federation *federation,
      send_count_ (0),
      event_count_ (0),
      last_subscription_change_ (0),
+     receiver_ (TAO_ECG_UDP_Receiver::create (true)),
      mcast_eh_ {},
      seed_ (0),
      subscription_change_period_ (10000)
 {
-  receiver_ = TAO_ECG_UDP_Receiver::create (true);
-
   this->mcast_eh_ = std::make_unique<TAO_ECG_Mcast_EH> (this->receiver_.in ());
   this->subscription_subset_.resize (this->consumer_types ());
 }
