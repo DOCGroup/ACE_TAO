@@ -140,8 +140,8 @@ public:
   /// This is a no-op in POSIX. Returns ACE_INVALID_HANDLE.
   ACE_HANDLE get_handle () const override;
 
-  // Methods used to create Asynch IO factory and result objects. We
-  // create the right objects here in these methods.
+  /// Methods used to create Asynch IO factory and result objects. We
+  /// create the right objects here in these methods.
 
   ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream () override;
   ACE_Asynch_Read_Stream_Result_Impl *

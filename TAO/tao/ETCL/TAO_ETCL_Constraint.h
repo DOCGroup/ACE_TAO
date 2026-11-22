@@ -57,13 +57,16 @@ public:
 
   void operator= (TAO_ETCL_Literal_Constraint const &co);
 
-  // Conversion routines.
+  /// @name Conversion routines
+  /// @{
+
   operator ACE_CDR::Boolean () const;
   operator ACE_CDR::ULong () const;
   operator ACE_CDR::Long () const;
   operator ACE_CDR::Double () const;
   operator char const* () const;
   operator TAO::Any_Impl* () const;
+  /// @}
 
   TAO_ETCL_Literal_Constraint
   operator+ (TAO_ETCL_Literal_Constraint const &rhs);

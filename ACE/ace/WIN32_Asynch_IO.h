@@ -328,9 +328,9 @@ public:
 
   virtual ~ACE_WIN32_Asynch_Read_Stream ();
 
-  // Methods belong to ACE_WIN32_Asynch_Operation base class. These
-  // methods are defined here to avoid VC++ warnings. They route the
-  // call to the ACE_WIN32_Asynch_Operation base class.
+  /// Methods belong to ACE_WIN32_Asynch_Operation base class. These
+  /// methods are defined here to avoid VC++ warnings. They route the
+  /// call to the ACE_WIN32_Asynch_Operation base class.
 
   /**
    * Initializes the factory with information which will be used with
@@ -1094,9 +1094,9 @@ public:
 
   ~ACE_WIN32_Asynch_Accept ();
 
-  // Methods belong to ACE_WIN32_Asynch_Operation base class. These
-  // methods are defined here to avoid VC++ warnings. They route the
-  // call to the ACE_WIN32_Asynch_Operation base class.
+  /// Methods belong to ACE_WIN32_Asynch_Operation base class. These
+  /// methods are defined here to avoid VC++ warnings. They route the
+  /// call to the ACE_WIN32_Asynch_Operation base class.
 
   /**
    * Initializes the factory with information which will be used with
@@ -1502,9 +1502,9 @@ public:
 
   ~ACE_WIN32_Asynch_Transmit_File ();
 
-  // Methods belong to ACE_WIN32_Asynch_Operation base class. These
-  // methods are defined here to avoid VC++ warnings. They route the
-  // call to the ACE_WIN32_Asynch_Operation base class.
+  /// Methods belong to ACE_WIN32_Asynch_Operation base class. These
+  /// methods are defined here to avoid VC++ warnings. They route the
+  /// call to the ACE_WIN32_Asynch_Operation base class.
 
   /**
    * Initializes the factory with information which will be used with
@@ -1688,9 +1688,9 @@ public:
                         int priority,
                         int signal_number);
 
-  // Methods belong to ACE_WIN32_Asynch_Operation base class. These
-  // methods are defined here to avoid VC++ warnings. They route the
-  // call to the ACE_WIN32_Asynch_Operation base class.
+  /// Methods belong to ACE_WIN32_Asynch_Operation base class. These
+  /// methods are defined here to avoid VC++ warnings. They route the
+  /// call to the ACE_WIN32_Asynch_Operation base class.
 
   /**
    * Initializes the factory with information which will be used with

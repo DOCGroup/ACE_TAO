@@ -342,7 +342,8 @@ public:
     /// @note <close> does not call <flush>
     int close ();
 
-    // Accessors
+    /// @name Accessors
+    /// @{
 
     /// Get key
     HKEY key ();
@@ -360,6 +361,7 @@ public:
 
     /// Get name (String version)
     ACE_TString name ();
+    /// @}
 
   protected:
     /// Set key
