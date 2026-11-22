@@ -1479,7 +1479,9 @@ ACE_WFMO_Reactor::register_handler_i (ACE_HANDLE event_handle,
                                  new_network_events);
   // If we had found the <Event_Handler> there is nothing more to do
   if (found)
-    return result;
+    {
+      return result;
+    }
   else if (result != SOCKET_ERROR &&
            this->handler_rep_.bind_i (1,
                                       event_handler,
@@ -2000,21 +2002,29 @@ ACE_WFMO_Reactor::dispatch_handles (DWORD wait_status)
                  wait_status <= (WAIT_OBJECT_0 + nCount));
 
       if (ok)
-        dispatch_slot += wait_status - WAIT_OBJECT_0;
+        {
+          dispatch_slot += wait_status - WAIT_OBJECT_0;
+        }
       else
-        // Otherwise, a handle was abandoned.
-        dispatch_slot += wait_status - WAIT_ABANDONED_0;
+        {
+          // Otherwise, a handle was abandoned.
+          dispatch_slot += wait_status - WAIT_ABANDONED_0;
+        }
 
       // Dispatch handler
       if (this->dispatch_handler (dispatch_slot, max_handlep1) == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       // Increment slot
       ++dispatch_slot;
 
       // We're done.
       if (dispatch_slot >= max_handlep1)
-        return number_of_handlers_dispatched;
+        {
+          return number_of_handlers_dispatched;
+        }
 
       // Readjust nCount
       nCount = max_handlep1 - dispatch_slot;
@@ -2039,7 +2049,9 @@ ACE_WFMO_Reactor::dispatch_handler (DWORD slot,
 {
   // Check if there are window messages that need to be dispatched
   if (slot == max_handlep1)
-    return this->dispatch_window_messages ();
+    {
+      return this->dispatch_window_messages ();
+    }
 
   // Dispatch the handler if it has not been scheduled for deletion.
   // Note that this is a very week test if there are multiple threads
@@ -2538,7 +2550,9 @@ ACE_WFMO_Reactor_Notify::handle_signal (int signum, siginfo_t *siginfo, ucontext
               // If there are still notification in the queue, we need
               // to wake up again
               if (!this->message_queue_.is_empty ())
-                this->wakeup_one_thread_.signal ();
+                {
+                  this->wakeup_one_thread_.signal ();
+                }
 
               // Break the loop as we have reached max_notify_iterations_
               return 0;
@@ -2593,7 +2607,9 @@ ACE_WFMO_Reactor_Notify::max_notify_iterations (int iterations)
   ACE_TRACE ("ACE_WFMO_Reactor_Notify::max_notify_iterations");
   // Must always be > 0 or < 0 to optimize the loop exit condition.
   if (iterations == 0)
-    iterations = 1;
+    {
+      iterations = 1;
+    }
 
   this->max_notify_iterations_ = iterations;
 }
@@ -2617,7 +2633,9 @@ ACE_WFMO_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
   // notify the reactor queued for itself.
 
   if (this->message_queue_.is_empty ())
-    return 0;
+    {
+      return 0;
+    }
 
   // Guard against new and/or delivered notifications while purging.
   // WARNING!!! The use of the notification queue's lock object for
