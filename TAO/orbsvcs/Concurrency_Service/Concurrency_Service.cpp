@@ -48,29 +48,31 @@ Concurrency_Service::parse_args (int argc, ACE_TCHAR **argv)
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'd': // debug flag
-        ++TAO_debug_level;
-        break;
-      case 'o': // output the IOR to a file
-        this->options_.ior_file_name = get_opts.opt_arg ();
-        break;
-      case 'p':
-        this->options_.pid_file_name = get_opts.opt_arg ();
-        break;
-      case 's':
-        this->options_.use_naming_service = false;
-        break;
-      default:
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("usage:  %s")
-                           ACE_TEXT(" [-d]")
-                           ACE_TEXT(" [-o] <ior_output_file>")
-                           ACE_TEXT("\n"),
-                           argv[0]),
-                           1);
-      }
+    {
+      switch (c)
+        {
+        case 'd': // debug flag
+          ++TAO_debug_level;
+          break;
+        case 'o': // output the IOR to a file
+          this->options_.ior_file_name = get_opts.opt_arg ();
+          break;
+        case 'p':
+          this->options_.pid_file_name = get_opts.opt_arg ();
+          break;
+        case 's':
+          this->options_.use_naming_service = false;
+          break;
+        default:
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT("usage:  %s")
+                                 ACE_TEXT(" [-d]")
+                                 ACE_TEXT(" [-o] <ior_output_file>")
+                                 ACE_TEXT("\n"),
+                                 argv[0]),
+                                1);
+        }
+    }
   // Indicates successful persing of command line.
   return 0;
 }
@@ -94,15 +96,19 @@ Concurrency_Service::init (int argc,
   if (this->orb_manager_.init_child_poa (command_line.get_argc(),
                                          command_line.get_TCHAR_argv(),
                                          "child_poa") == -1)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("%p\n"),
-                       ACE_TEXT("init_child_poa")),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("%p\n"),
+                             ACE_TEXT("init_child_poa")),
+                            -1);
+    }
 
   if (this->parse_args (command_line.get_argc (), command_line.get_TCHAR_argv ()) != 0)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("Could not parse command line\n")),
-                     -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("Could not parse command line\n")),
+                            -1);
+    }
   CORBA::String_var str =
     this->orb_manager_.activate (this->my_concurrency_server_.GetLockSetFactory ());
   ORBSVCS_DEBUG ((LM_DEBUG,
@@ -185,9 +191,11 @@ Concurrency_Service::run ()
 
   int const retval = this->orb_manager_.run ();
   if (retval == -1)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                      "Concurrency_Service::run"),
-                     -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             "Concurrency_Service::run"),
+                            -1);
+    }
   return 0;
 }
 

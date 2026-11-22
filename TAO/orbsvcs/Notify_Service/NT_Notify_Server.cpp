@@ -115,58 +115,62 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
-      {
-      case 'c':
-        opt_setargs = true;
-        opt_args = get_opt.opt_arg ();
-        break;
-      case 'i':
-        opt_install = true;
-        opt_startup = ACE_OS::atoi (get_opt.optarg);
-        if (opt_startup <= 0)
-          {
-            print_usage_and_die ();
-          }
-        break;
-      case 'r':
-        opt_remove = true;
-        break;
-      case 's':
-        opt_start = true;
-        break;
-      case 'k':
-        opt_kill = true;
-        break;
-      case 't':
-        opt_type = true;
-        opt_startup = ACE_OS::atoi (get_opt.optarg);
-        if (opt_startup <= 0)
-          {
-            print_usage_and_die ();
-          }
-        break;
-      case 'd':
-        //opt_debug = 1;
-        break;
-      default:
-        // -c and -i can also be given without a value - if so, it defaults
-        // to defined value.
-        const ACE_TCHAR *lastarg = get_opt.argv ()[get_opt.opt_ind () - 1];
-        if (ACE_OS::strcmp (get_opt.argv_[get_opt.optind-1], ACE_TEXT ("-i")) == 0)
-          {
-            opt_install = true;
-            opt_startup = DEFAULT_SERVICE_INIT_STARTUP;
-          }
-        else if (ACE_OS::strcmp (lastarg, ACE_TEXT ("-c")) == 0)
-          {
-            opt_setargs = true;
-            opt_args = nullptr;
-          }
-        else
-          this->print_usage_and_die ();
-        break;
-      }
+    {
+      switch (c)
+        {
+        case 'c':
+          opt_setargs = true;
+          opt_args = get_opt.opt_arg ();
+          break;
+        case 'i':
+          opt_install = true;
+          opt_startup = ACE_OS::atoi (get_opt.optarg);
+          if (opt_startup <= 0)
+            {
+              print_usage_and_die ();
+            }
+          break;
+        case 'r':
+          opt_remove = true;
+          break;
+        case 's':
+          opt_start = true;
+          break;
+        case 'k':
+          opt_kill = true;
+          break;
+        case 't':
+          opt_type = true;
+          opt_startup = ACE_OS::atoi (get_opt.optarg);
+          if (opt_startup <= 0)
+            {
+              print_usage_and_die ();
+            }
+          break;
+        case 'd':
+          //opt_debug = 1;
+          break;
+        default:
+          // -c and -i can also be given without a value - if so, it defaults
+          // to defined value.
+          const ACE_TCHAR *lastarg = get_opt.argv ()[get_opt.opt_ind () - 1];
+          if (ACE_OS::strcmp (get_opt.argv_[get_opt.optind-1], ACE_TEXT ("-i")) == 0)
+            {
+              opt_install = true;
+              opt_startup = DEFAULT_SERVICE_INIT_STARTUP;
+            }
+          else if (ACE_OS::strcmp (lastarg, ACE_TEXT ("-c")) == 0)
+            {
+              opt_setargs = true;
+              opt_args = nullptr;
+            }
+          else
+            {
+              this->print_usage_and_die ();
+            }
+          break;
+        }
+    }
 }
 
 // Define a function to handle Ctrl+C to cleanly shut this down.
