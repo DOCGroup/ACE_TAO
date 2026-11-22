@@ -267,7 +267,9 @@ test_i::oneway_method (CORBA::Long session_id,
     ACE_OS::gethrtime ();
 
   if (this->first_invocation_)
-    this->first_invocation_ = false;
+    {
+      this->first_invocation_ = false;
+    }
   else
   {
     this->inter_arrival_times_->sample (time_of_current_call - this->time_of_last_call_);
@@ -305,7 +307,9 @@ test_i::twoway_method (CORBA::Long &session_id,
     ACE_OS::gethrtime ();
 
   if (this->first_invocation_)
-    this->first_invocation_ = false;
+    {
+      this->first_invocation_ = false;
+    }
   else
   {
     this->inter_arrival_times_->sample (time_of_current_call - this->time_of_last_call_);

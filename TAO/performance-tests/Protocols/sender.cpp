@@ -639,7 +639,9 @@ Worker::run ()
             ACE_OS::gethrtime ();
 
           if (options.test_type == Test_Type::latency)
-            this->history_.sample ((time_after_call - time_before_call) / 2);
+            {
+              this->history_.sample ((time_after_call - time_before_call) / 2);
+            }
           else
           {
             this->history_.sample (time_after_call - time_before_call);

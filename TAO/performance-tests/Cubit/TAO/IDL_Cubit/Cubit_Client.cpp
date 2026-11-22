@@ -329,37 +329,69 @@ Cubit_Client::opt_to_mask (const ACE_TCHAR *test_type)
       return TAO_ENABLE_CUBIT_VOID;
     }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("octet")) == 0)
-    return TAO_ENABLE_CUBIT_OCTET;
+    {
+      return TAO_ENABLE_CUBIT_OCTET;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("short")) == 0)
-    return TAO_ENABLE_CUBIT_SHORT;
+    {
+      return TAO_ENABLE_CUBIT_SHORT;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("long")) == 0)
-    return TAO_ENABLE_CUBIT_LONG;
+    {
+      return TAO_ENABLE_CUBIT_LONG;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("struct")) == 0)
-    return TAO_ENABLE_CUBIT_STRUCT;
+    {
+      return TAO_ENABLE_CUBIT_STRUCT;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("union")) == 0)
-    return TAO_ENABLE_CUBIT_UNION;
+    {
+      return TAO_ENABLE_CUBIT_UNION;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("small_octet_seq")) == 0)
-    return TAO_ENABLE_CUBIT_SMALL_OCTET_SEQ;
+    {
+      return TAO_ENABLE_CUBIT_SMALL_OCTET_SEQ;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("small_long_seq")) == 0)
-    return TAO_ENABLE_CUBIT_SMALL_LONG_SEQ;
+    {
+      return TAO_ENABLE_CUBIT_SMALL_LONG_SEQ;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("small_struct_seq")) == 0)
-    return TAO_ENABLE_CUBIT_SMALL_STRUCT_SEQ;
+    {
+      return TAO_ENABLE_CUBIT_SMALL_STRUCT_SEQ;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("large_octet_seq")) == 0)
-    return TAO_ENABLE_CUBIT_LARGE_OCTET_SEQ;
+    {
+      return TAO_ENABLE_CUBIT_LARGE_OCTET_SEQ;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("large_long_seq")) == 0)
-    return TAO_ENABLE_CUBIT_LARGE_LONG_SEQ;
+    {
+      return TAO_ENABLE_CUBIT_LARGE_LONG_SEQ;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("large_struct_seq")) == 0)
-    return TAO_ENABLE_CUBIT_LARGE_STRUCT_SEQ;
+    {
+      return TAO_ENABLE_CUBIT_LARGE_STRUCT_SEQ;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("mixin")) == 0)
-    return TAO_ENABLE_CUBIT_MIXIN;
+    {
+      return TAO_ENABLE_CUBIT_MIXIN;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("rti_data")) == 0)
-    return TAO_ENABLE_CUBIT_RTI_DATA;
+    {
+      return TAO_ENABLE_CUBIT_RTI_DATA;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("one_way")) == 0)
-    return TAO_ENABLE_CUBIT_ONE_WAY;
+    {
+      return TAO_ENABLE_CUBIT_ONE_WAY;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("any")) == 0)
-    return TAO_ENABLE_CUBIT_ANY;
+    {
+      return TAO_ENABLE_CUBIT_ANY;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("any_struct")) == 0)
-    return TAO_ENABLE_CUBIT_ANY_STRUCT;
+    {
+      return TAO_ENABLE_CUBIT_ANY_STRUCT;
+    }
 
   ACE_ERROR_RETURN ((LM_ERROR,
                      "Incorrect test: %s\n"

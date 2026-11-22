@@ -703,7 +703,9 @@ Client::svc ()
   ACE_THR_FUNC_RETURN status = 0;
 
   if (thr_mgr ())
-    thr_mgr ()->exit (status, true);
+    {
+      thr_mgr ()->exit (status, true);
+    }
   else
   {
     ACE_OS::thr_exit (status);

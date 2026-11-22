@@ -46,7 +46,9 @@ switchHook (WIND_TCB *pOldTcb,    // pointer to old task's WIND_TCB.
   // We create the client threads with names starting with "@".
   char* name = ::taskName (::taskIdSelf ());
   if (name[0] == '@')
-    ++ctx;
+    {
+      ++ctx;
+    }
 
   if (ct < SWITCHES)
     {
@@ -106,7 +108,9 @@ Client_i::init (int argc, ACE_TCHAR *argv[])
        ++i)
     {
       if (ACE_OS::strcmp (this->argv_[i],ACE_TEXT("-r")) == 0)
-        this->ts_->thread_per_rate_ = 1;
+        {
+          this->ts_->thread_per_rate_ = 1;
+        }
       else if (ACE_OS::strcmp (this->argv_[i],ACE_TEXT("-t")) == 0
                && (i - 1 < this->argc_))
         this->ts_->thread_count_ =
