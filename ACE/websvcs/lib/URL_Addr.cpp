@@ -218,9 +218,7 @@ ACE_URL_Addr::known_scheme (const ACE_TCHAR *url)
 
 // ****************************************************************
 
-ACE_URL_Addr_Visitor::~ACE_URL_Addr_Visitor ()
-{
-}
+ACE_URL_Addr_Visitor::~ACE_URL_Addr_Visitor () = default;
 
 int
 ACE_URL_Addr_Visitor::visit (ACE_URL_Addr*)
