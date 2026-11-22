@@ -11,7 +11,9 @@ ACE_INLINE TAO::Security::Current_Impl *
 TAO_Security_Current::implementation ()
 {
   if (this->orb_core_ == nullptr && this->init () != 0)
-    return nullptr;
+    {
+      return nullptr;
+    }
 
   TAO::Security::Current_Impl *impl =
     static_cast<TAO::Security::Current_Impl *> (
