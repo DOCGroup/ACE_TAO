@@ -52,7 +52,7 @@ public:
   const ACE_TCHAR *collection_name_;
 };
 
-static void *
+static ACE_THR_FUNC_RETURN
 run_thread (void *vp)
 {
   Test_Params *tp = static_cast<Test_Params *> (vp);
@@ -78,7 +78,7 @@ run_thread (void *vp)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%t) %p acquire failed\n"),
                       ACE_TEXT ("run_thread")));
-          return (void *) -1;
+          return ACE_THR_FUNC_RETURN (-1);
         }
 
       ACE_TEST_ASSERT ((TOKEN_INVARIANTS::instance ()->acquired (tp->token1_) == 1) ||
@@ -101,7 +101,7 @@ run_thread (void *vp)
             }
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p renew failed\n"),
                       ACE_TEXT ("run_thread")));
-          return (void *) -1;
+          return ACE_THR_FUNC_RETURN (-1);
         }
 
       ACE_TEST_ASSERT (TOKEN_INVARIANTS::instance ()->acquired (tp->token1_) == 1 ||
@@ -121,7 +121,7 @@ run_thread (void *vp)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%t) %p release failed\n"),
                       ACE_TEXT ("run_thread")));
-          return (void *) -1;
+          return ACE_THR_FUNC_RETURN (-1);
         }
 
       ACE_DEBUG ((LM_DEBUG,
@@ -132,7 +132,7 @@ run_thread (void *vp)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) thread finished.\n")));
 
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 static int
@@ -161,7 +161,7 @@ run_test (ACE_Token_Proxy *A,
   // Spawn off three threads.
   ACE_Thread_Manager *mgr = ACE_Thread_Manager::instance ();
 
-  if (mgr->spawn (ACE_THR_FUNC (run_thread),
+  if (mgr->spawn (run_thread,
                   &tp1,
                   THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG,
@@ -169,7 +169,7 @@ run_test (ACE_Token_Proxy *A,
                        ACE_TEXT ("spawn 1 failed")),
                       -1);
 
-  if (mgr->spawn (ACE_THR_FUNC (run_thread),
+  if (mgr->spawn (run_thread,
                   &tp2,
                   THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG,
@@ -177,7 +177,7 @@ run_test (ACE_Token_Proxy *A,
                        ACE_TEXT ("spawn 2 failed")),
                       -1);
 
-  if (mgr->spawn (ACE_THR_FUNC (run_thread),
+  if (mgr->spawn (run_thread,
                   &tp3,
                   THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG,
