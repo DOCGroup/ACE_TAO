@@ -40,7 +40,9 @@ ACE_INLINE void
 TAO_EC_Auto_Command<T>::set_command (TAO_EC_Auto_Command<T> & auto_command)
 {
   if (this == std::addressof (auto_command))
-    return;
+    {
+      return;
+    }
 
   this->command_ = auto_command.command_;
   this->allow_command_ = auto_command.allow_command_;

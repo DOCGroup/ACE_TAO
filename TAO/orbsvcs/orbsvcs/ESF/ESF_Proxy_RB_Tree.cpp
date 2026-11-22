@@ -14,7 +14,9 @@ TAO_ESF_Proxy_RB_Tree<PROXY>::connected (PROXY *proxy)
 {
   int const r = this->impl_.bind (proxy, 1);
   if (r == 0)
-    return;
+    {
+      return;
+    }
 
   if (r == 1)
     {
@@ -34,7 +36,9 @@ TAO_ESF_Proxy_RB_Tree<PROXY>::reconnected (PROXY *proxy)
 {
   int const r = this->impl_.rebind (proxy, 1);
   if (r == 0)
-    return;
+    {
+      return;
+    }
 
   if (r == 1)
     {

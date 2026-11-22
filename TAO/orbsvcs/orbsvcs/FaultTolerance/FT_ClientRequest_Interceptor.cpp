@@ -167,7 +167,9 @@ namespace TAO
     TAO_OutputCDR cdr;
 
     if (!ex->impl ()->marshal_value (cdr))
-    return;
+      {
+        return;
+      }
 
     // Place for optimization..
     TAO_InputCDR icdr (cdr);
@@ -184,7 +186,9 @@ namespace TAO
 
     // ORB would take care of it
     if (cs != CORBA::COMPLETED_MAYBE)
-      return;
+      {
+        return;
+      }
 
     // If it is COMPLETED_MAYBE, then we will throw a COMPLETED_NO,
     // which the ORB should understand

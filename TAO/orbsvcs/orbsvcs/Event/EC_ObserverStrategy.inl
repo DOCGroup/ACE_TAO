@@ -31,7 +31,9 @@ TAO_EC_Basic_ObserverStrategy::Header_Compare::
                  const RtecEventComm::EventHeader& rhs) const
 {
   if (lhs.source == rhs.source)
-    return lhs.type < rhs.type;
+    {
+      return lhs.type < rhs.type;
+    }
   return lhs.source < rhs.source;
 }
 

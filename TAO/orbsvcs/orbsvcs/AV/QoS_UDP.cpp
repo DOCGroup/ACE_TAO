@@ -461,7 +461,9 @@ TAO_AV_UDP_QoS_Flow_Handler::change_qos (AVStreams::QoS new_qos)
                                         std::addressof (qos_manager),
                                         *ace_qos);
   if (result != 0)
-    return result;
+    {
+      return result;
+    }
 
   return 0;
 }
@@ -633,7 +635,9 @@ TAO_AV_UDP_QoS_Transport::send (ACE_Message_Block const *mblk,
                               bytes_sent));
 
               if (n < 1)
-                return n;
+                {
+                  return n;
+                }
 
               nbytes += bytes_sent;
               iovcnt = 0;
@@ -663,7 +667,9 @@ TAO_AV_UDP_QoS_Transport::send (ACE_Message_Block const *mblk,
                       bytes_sent));
 
       if (n < 1)
-        return n;
+        {
+          return n;
+        }
 
       nbytes += bytes_sent;
     }
@@ -813,7 +819,9 @@ TAO_AV_UDP_QoS_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   int result = this->open_i (inet_addr);
 
   if (result < 0)
-    return result;
+    {
+      return result;
+    }
 
   return 0;
 }
@@ -849,7 +857,9 @@ TAO_AV_UDP_QoS_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
 
   int result = this->open_i (std::addressof (qos_acceptor_addr_));
   if (result < 0)
-    return result;
+    {
+      return result;
+    }
   return 0;
 }
 

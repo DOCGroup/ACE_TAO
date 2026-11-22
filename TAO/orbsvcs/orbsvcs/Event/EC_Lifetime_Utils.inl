@@ -75,7 +75,9 @@ ACE_INLINE void
 TAO_EC_Object_Deactivator::set_values (TAO_EC_Object_Deactivator & deactivator)
 {
   if (this == std::addressof (deactivator))
-    return;
+    {
+      return;
+    }
 
   this->poa_ = deactivator.poa_._retn ();
   this->id_ = deactivator.id_;
