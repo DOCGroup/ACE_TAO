@@ -31,7 +31,7 @@ class Endpoint
 public:
   Endpoint ();
   Endpoint (const Endpoint &other);
-  Endpoint (const char *addr, EndpointRole role = ER_UNKNOWN);
+  explicit Endpoint (const char *addr, EndpointRole role = ER_UNKNOWN);
   void assign (const char *addr, EndpointRole role = ER_UNKNOWN);
   Endpoint & operator = (const Endpoint &other);
   bool operator == (const Endpoint &other) const;
