@@ -512,7 +512,7 @@ reference_count_1 (ACE_Reactor_Impl *impl)
   ACE_DEBUG ((LM_DEBUG,
               "\nTesting Reference Counted Event Handler Test 1....\n\n"));
 
-  reference_counted_event_handler_test_1 (&reactor);
+  reference_counted_event_handler_test_1 (std::addressof (reactor));
 }
 
 void
@@ -523,7 +523,7 @@ reference_count_2 (ACE_Reactor_Impl *impl)
   ACE_DEBUG ((LM_DEBUG,
               "\nTesting Reference Counted Event Handler Test 2....\n\n"));
 
-  reference_counted_event_handler_test_2 (&reactor);
+  reference_counted_event_handler_test_2 (std::addressof (reactor));
 }
 
 class Simple_Event_Handler : public ACE_Event_Handler
@@ -863,7 +863,7 @@ simple (ACE_Reactor_Impl *impl)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nTesting Simple Event Handler....\n\n")));
 
-  simple_event_handler (&reactor);
+  simple_event_handler (std::addressof (reactor));
 }
 
 class Closed_In_Upcall_Event_Handler : public ACE_Event_Handler
@@ -1043,7 +1043,7 @@ closed_in_upcall (ACE_Reactor_Impl *impl)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\nTesting Closed in Upcall Event Handler....\n\n")));
 
-  closed_in_upcall_event_handler (&reactor);
+  closed_in_upcall_event_handler (std::addressof (reactor));
 }
 
 template <class REACTOR_IMPLEMENTATION>
