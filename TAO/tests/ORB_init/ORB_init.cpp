@@ -24,9 +24,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_ptr my_orb {};
 
       {
-        CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv, orbid);
+        CORBA::ORB_var const initial_orb = CORBA::ORB_init (argc, argv, orbid);
 
-        my_orb = orb.in ();
+        my_orb = initial_orb.in ();
 
         // Once we leave this scope, the ORB is released but it should
         // be possible to obtain the same ORB with another call to

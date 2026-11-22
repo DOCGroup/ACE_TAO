@@ -48,7 +48,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       int largc = argc + extra_argc;
-      int second_largc = argc + extra_argc;
+      int second_largc = largc;
 
         {
           CORBA::ORB_var const orb = CORBA::ORB_init (largc, largv.data (), "FirstORB");

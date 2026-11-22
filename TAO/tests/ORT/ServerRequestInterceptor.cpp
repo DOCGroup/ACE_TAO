@@ -66,14 +66,14 @@ ServerRequestInterceptor::receive_request (
   // RootPOA.
   ACE_ASSERT (!CORBA::is_nil (parent_poa.in ()));
 
-  PortableInterceptor::AdapterName_var name =
+  PortableInterceptor::AdapterName_var adapter_name =
     ri->adapter_name ();
 
   ACE_DEBUG ((LM_INFO,
               "POA Hierarchy:\n"
               "==============\n"));
 
-  CORBA::ULong const len = name->length ();
+  CORBA::ULong const len = adapter_name->length ();
 
   // Make sure there is more than one AdapterName in the AdapterName
   // sequence since the servant should have been registered with a
@@ -87,7 +87,7 @@ ServerRequestInterceptor::receive_request (
 
       ACE_DEBUG ((LM_INFO,
                   "%C\n",
-                  static_cast<char const*>(name[i])));
+                  static_cast<char const*> (adapter_name[i])));
     }
 
   ACE_DEBUG ((LM_INFO,
