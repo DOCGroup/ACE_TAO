@@ -25,8 +25,6 @@
   derivatives based upon this software code base.
 =====================================================================*/
 
-//---------[ external C libraries used ]--------------------------------
-
 #include <cstring>
 #include <memory>
 
@@ -50,7 +48,7 @@ SmiUINT32 Oid::get_syntax()
   return sNMP_SYNTAX_OID;
 }
 
-// do a string to oid using the string passed in
+/// Construct an OID from its dotted string representation.
 Oid::Oid( const char * dotted_oid_string, size_t size)
 {
   // can't init enum SmiValue so just memset it clean
@@ -93,7 +91,7 @@ Oid::Oid( const char * dotted_oid_string, size_t size)
   }
 }
 
-// do an oid copy using the oid object passed in
+/// Copy an OID.
 Oid::Oid ( const Oid &oid)
   : SnmpSyntax (oid)
 {
@@ -110,7 +108,7 @@ Oid::Oid ( const Oid &oid)
   }
 }
 
-// copy the integer values into the private member
+/// Construct an OID from raw integer values.
 Oid::Oid(const unsigned long *raw_oid, size_t oid_len)
 {
   set_null();
@@ -128,18 +126,12 @@ Oid::Oid(const unsigned long *raw_oid, size_t oid_len)
   }
 }
 
-//
-// free up the descriptor space
+/// Release the descriptor storage.
 Oid::~Oid()
 {
   set_invalid ();
 }
 
-// assignment to a string operator overloaded
-//
-// free the existing oid
-// create the new oid from the string
-// return this object
 void Oid::set_data( const char *dotted_oid_string)
 {
   // delete the old value
@@ -155,10 +147,7 @@ void Oid::set_data( const char *dotted_oid_string)
   }
 }
 
-// assignment to another oid object overloaded
-//
-// free the existing oid
-// create a new one from the object passed in
+/// Assign from another OID.
 // TODO: measure perf vs memory of no realloc in case where len >= oid.len
 Oid& Oid::operator=( const Oid &oid)
 {
@@ -187,7 +176,7 @@ Oid& Oid::operator= (char const *dotted_oid_string)
   return *this = value;
 }
 
-// assign this object the oid, set to invalid if copy fails
+/// Initialize this OID from another raw OID value.
 void Oid::init_value(const SmiLPOID srcOid, size_t len)
 {
   // allocate some memory for the oid
@@ -208,14 +197,7 @@ void Oid::init_value(const unsigned long *raw_oid, size_t oid_len)
   smival.value.oid.len = oid_len;
 }
 
-// append operator, appends a string
-//
-// allocate some space for a max oid string
-// extract current string into space
-// concat new string
-// free up existing oid
-// make a new oid from string
-// delete allocated space
+/// Append a dotted string to this OID.
 Oid& Oid::operator+=( const char *a)
 {
   if (!a)
@@ -266,7 +248,7 @@ Oid& Oid::operator+=( const char *a)
   return *this;
 }
 
-// equivlence operator overloaded
+/// Compare two OIDs for equality.
 bool operator==( const Oid &lhs, const Oid &rhs)
 {
   // ensure same len, then use left_comparison
@@ -284,13 +266,13 @@ bool operator==( const Oid &lhs, const Oid &rhs)
   }
 }
 
-//not equivlence operator overloaded
+/// Compare two OIDs for inequality.
 bool operator!=( const Oid &lhs,const Oid &rhs)
 {
   return (!(lhs == rhs));
 }
 
-// less than < overloaded
+/// Compare two OIDs for ordering.
 bool operator<( const Oid &lhs,const Oid &rhs)
 {
   int result;
@@ -319,7 +301,7 @@ bool operator<( const Oid &lhs,const Oid &rhs)
   }
 }
 
-// less than <= overloaded
+/// Compare two OIDs for less-than-or-equal ordering.
 bool operator<=( const Oid &x,const Oid &y)
 {
   if ( (x < y) || (x == y) )
@@ -332,7 +314,7 @@ bool operator<=( const Oid &x,const Oid &y)
   }
 }
 
-// greater than > overloaded
+/// Compare two OIDs for greater-than ordering.
 bool operator>( const Oid &x,const Oid &y)
 {
   // just invert existing <=
@@ -346,7 +328,7 @@ bool operator>( const Oid &x,const Oid &y)
   }
 }
 
-// greater than >= overloaded
+/// Compare two OIDs for greater-than-or-equal ordering.
 bool operator>=( const Oid &x,const Oid &y)
 {
   // just invert existing <
@@ -360,13 +342,13 @@ bool operator>=( const Oid &x,const Oid &y)
   }
 }
 
-// return the WinSnmp oid part
+/// Return the WinSNMP OID representation.
 SmiLPOID Oid::oidval()
 {
   return std::addressof (smival.value.oid);
 }
 
-// copy data from raw form...
+/// Set this OID from raw integer values.
 void Oid::set_data( const unsigned long *raw_oid, const size_t oid_len)
 {
   if (smival.value.oid.len < oid_len) {
@@ -377,15 +359,14 @@ void Oid::set_data( const unsigned long *raw_oid, const size_t oid_len)
   init_value(raw_oid, oid_len);
 }
 
-// return the len of the oid
+/// Return the number of sub-identifiers.
 size_t Oid::length() const
 {
   return smival.value.oid.len;
 }
 
-// trim off the n leftmost values of an oid
-// Note!, does not adjust actual space for
-// speed
+/// Trim the requested number of leftmost sub-identifiers.
+/// The allocated storage is retained for speed.
 void Oid::trim( const size_t n)
 {
   // verify that n is legal
@@ -398,7 +379,7 @@ void Oid::trim( const size_t n)
   }
 }
 
-// make this object invalid by resetting all values
+/// Invalidate this OID and release its storage.
 void Oid::set_invalid() {
   delete [] smival.value.oid.ptr;
   smival.value.oid.ptr = nullptr;
@@ -413,14 +394,7 @@ void Oid::set_null() {
   iv_str.reset ();
 }
 
-// append operator, appends an int
-//
-// allocate some space for a max oid string
-// extract current string into space
-// concat new string
-// free up existing oid
-// make a new oid from string
-// delete allocated space
+/// Append an integer sub-identifier to this OID.
 Oid& Oid::operator+=( const unsigned long i)
 {
   size_t const max_component_size =
@@ -466,14 +440,7 @@ Oid& Oid::operator+=( const unsigned long i)
   return *this;
 }
 
-// append operator, appends an Oid
-//
-// allocate some space for a max oid string
-// extract current string into space
-// concat new string
-// free up existing oid
-// make a new oid from string
-// delete allocated space
+/// Append another OID's sub-identifiers.
 Oid& Oid::operator+=( const Oid &o)
 {
   if (o.smival.value.oid.len == 0)
@@ -503,8 +470,7 @@ Oid& Oid::operator+=( const Oid &o)
   return *this;
 }
 
-// return string portion of the oid
-//
+/// Return this OID's dotted string representation.
 const char * Oid::to_string()
 {
   unsigned long n;
@@ -577,7 +543,7 @@ int Oid::suboid(Oid& new_oid, size_t start, size_t how_many)
   return 0;
 }
 
-// convert a string to an oid
+/// Convert a dotted string to an OID value.
 int Oid::StrToOid( const char *string, SmiLPOID dstOid, size_t& how_many)
 {
   size_t index = 0;
@@ -638,7 +604,7 @@ int Oid::StrToOid( const char *string, SmiLPOID dstOid, size_t& how_many)
   return 0;
 }
 
-// Copy an oid, return bytes copied
+/// Copy an OID value and report the number of copied sub-identifiers.
 int Oid::OidCopy( SmiLPOID srcOid, SmiLPOID dstOid, size_t& how_many_bytes)
 {
   // check source len ! zero
@@ -657,11 +623,8 @@ int Oid::OidCopy( SmiLPOID srcOid, SmiLPOID dstOid, size_t& how_many_bytes)
   return 0;
 }
 
-// compare the n leftmost values of two oids ( left-to_right )
-//
-// self == Oid then return 0, they are equal
-// self < Oid then return -1, <
-// self > Oid then return 1,  >
+/// Compare the requested number of leftmost sub-identifiers.
+/// Returns 0 when equal, -1 when this OID is less, and 1 when greater.
 int Oid::left_comparison( const unsigned long n, const Oid &o) const
 {
   unsigned long z;
@@ -717,10 +680,8 @@ int Oid::left_comparison( const unsigned long n, const Oid &o) const
 
 }
 
-// compare the n rightmost bytes (right-to-left)
-// returns 0, equal
-// returns -1, <
-// returns 1 , >
+/// Compare the requested number of rightmost sub-identifiers.
+/// Returns 0 when equal, -1 when this OID is less, and 1 when greater.
 int Oid::right_comparison( const unsigned long n, const Oid &o) const
 {
    // oid to compare must have at least the same number
@@ -758,14 +719,13 @@ int Oid::right_comparison( const unsigned long n, const Oid &o) const
 
 }
 
-// is the Oid object valid
-// returns validity
+/// Return whether this OID has valid storage.
 int Oid::valid() const
 {
    return ( smival.value.oid.ptr ? 1 : 0 );
 }
 
-// convert an oid to a string
+/// Convert an OID value to its dotted string representation.
 int Oid::OidToStr( SmiLPOID srcOid, unsigned long size,
                   char *string, size_t& how_many_bytes)
 {
