@@ -47,14 +47,22 @@ namespace ACE
 
         size_type spos = 0;
         if (way == std::ios::cur)
-          spos = this->rd_ptr_;
+          {
+            spos = this->rd_ptr_;
+          }
         else if (way == std::ios::end)
-          spos = this->string_ref_->length ();
+          {
+            spos = this->string_ref_->length ();
+          }
         spos += off;
         if (spos < this->string_ref_->length ())
-          this->rd_ptr_ = spos;
+          {
+            this->rd_ptr_ = spos;
+          }
         else
-          this->rd_ptr_ = this->string_ref_->length ();
+          {
+            this->rd_ptr_ = this->string_ref_->length ();
+          }
 
         this->setg (this->eback (), this->eback (), this->eback ());
         return pos_type (this->rd_ptr_);

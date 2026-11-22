@@ -36,7 +36,9 @@ namespace ACE
         unsigned long opt = synch_options[ACE_Synch_Options::USE_REACTOR] ?
                               ACE_Synch_Options::USE_REACTOR : 0;
         if (synch_options[ACE_Synch_Options::USE_TIMEOUT])
-          opt |= ACE_Synch_Options::USE_TIMEOUT;
+          {
+            opt |= ACE_Synch_Options::USE_TIMEOUT;
+          }
         this->sync_opt_.set (opt,
                              synch_options.timeout (),
                              synch_options.arg ());
@@ -134,7 +136,9 @@ namespace ACE
             return this->handle_output_i (&to);
           }
         else
-          return this->handle_output_i (nullptr);
+          {
+            return this->handle_output_i (nullptr);
+          }
       }
 
     template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
@@ -352,7 +356,9 @@ namespace ACE
                     break; // timeout; queue still empty
                   }
                 else
-                  return -1; // message queue shut down
+                  {
+                    return -1; // message queue shut down
+                  }
               }
 
             size_t copy_len = 0;
@@ -418,7 +424,9 @@ namespace ACE
                 mb_remain = mb;
               }
             else
-              mb->release ();
+              {
+                mb->release ();
+              }
           }
 
         if (mb_remain)

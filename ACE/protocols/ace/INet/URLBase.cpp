@@ -290,7 +290,9 @@ namespace ACE
             for (ch = is.get (); ch != ']' && ch != eof ;ch = is.get ())
               sos.put (ch);
             if (ch != eof)
-              ch = is.get (); // skip ']'
+              {
+                ch = is.get (); // skip ']'
+              }
             if (ch != '/' && ch != ':' && ch != '?' && ch != '#' && ch != eof)
               {
                 this->set_host (empty_); // invalid URL, clear host field

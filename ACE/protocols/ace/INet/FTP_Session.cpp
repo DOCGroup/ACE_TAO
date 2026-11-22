@@ -304,7 +304,9 @@ namespace ACE
     void Session_T<ACE_SYNCH_USE>::get_local_addr (ACE_INET_Addr& loc_addr) const
       {
         if (this->is_connected ())
-          this->connection_->peer ().get_local_addr (loc_addr);
+          {
+            this->connection_->peer ().get_local_addr (loc_addr);
+          }
       }
 
   }
