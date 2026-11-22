@@ -31,7 +31,7 @@ template <typename T>
 class Exchange_Tester : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
-  Exchange_Tester (unsigned int thr_count);
+  explicit Exchange_Tester (unsigned int thr_count);
   int result () const;
 
 private:
