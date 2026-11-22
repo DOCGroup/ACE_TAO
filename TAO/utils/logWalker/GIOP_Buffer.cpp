@@ -177,7 +177,7 @@ GIOP_Buffer::GIOP_Buffer(const char *text,
       const char *id = std::strchr (size_str, '[') + 1;
       this->expected_req_id_ = std::strtol (id, nullptr, 10);
     }
-  this->sending_ = std::strstr (text, "send") ? 0 : 1;
+  this->sending_ = std::strstr (text, "send") == nullptr;
   this->expected_type_ = std::strstr (text, "Request") ? 0 : 1;
 }
 
