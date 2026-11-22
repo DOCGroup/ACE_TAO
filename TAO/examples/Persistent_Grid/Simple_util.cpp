@@ -99,7 +99,9 @@ Server<Servant>::init (char const *servant_name,
   int const retval = this->parse_args ();
 
   if (retval != 0)
-    return retval;
+    {
+      return retval;
+    }
 
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 

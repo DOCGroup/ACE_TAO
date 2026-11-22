@@ -176,11 +176,13 @@ int
 Baseline_Test::run_test ()
 {
   if (baseline_options.test_try_lock ())
-    return this->current_test_->test_try_lock ();
+    {
+      return this->current_test_->test_try_lock ();
+    }
   else
-  {
-    return this->current_test_->test_acquire_release ();
-  }
+    {
+      return this->current_test_->test_acquire_release ();
+    }
 }
 
 int

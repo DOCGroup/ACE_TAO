@@ -276,7 +276,9 @@ namespace ACE
                   }
 
                 if (result == -1)
-                  return result;
+                  {
+                    return result;
+                  }
 
                 result = this->process_input (&wptr[recv_char_count],
                                               char_length,
@@ -285,7 +287,9 @@ namespace ACE
                                                         std::addressof (max_wait_time) : nullptr);
 
                 if (result == -1)
-                  return result;
+                  {
+                    return result;
+                  }
 
                 recv_char_count += result;
 
@@ -344,7 +348,9 @@ namespace ACE
             if (this->getq (mb, &wait) == -1)
               {
                 if (ACE_OS::last_error () == EWOULDBLOCK)
-                  break; // timeout; queue still empty
+                  {
+                    break; // timeout; queue still empty
+                  }
                 else
                   return -1; // message queue shut down
               }
@@ -560,7 +566,9 @@ namespace ACE
           }
 
         if (this->connected_)
-          return ACE_Utils::truncate_cast<int> (length); // all sent
+          {
+            return ACE_Utils::truncate_cast<int> (length); // all sent
+          }
         else
           return ACE_Utils::truncate_cast<int>
               (length - (this->msg_queue ()->message_bytes () / char_size));

@@ -77,7 +77,9 @@ private:
     void operator() (char *buffer) const
     {
       if (!buffer)
-        return;
+        {
+          return;
+        }
 #if defined (ACE_HAS_ALLOC_HOOKS)
       ACE_Allocator::instance ()->free (buffer);
 #else

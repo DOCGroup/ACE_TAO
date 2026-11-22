@@ -340,7 +340,9 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
   // locally on the server side as a side effect of another call,
   // meaning that the client hasn't added the service context yet.
   if (std::strcmp ("_is_a", operation.in ()) == 0)
-    return;
+    {
+      return;
+    }
 
   IOP::ServiceContext_var sc =
     ri->get_request_service_context (Server_Interceptor::SchedulingInfo);
