@@ -8,8 +8,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Create an ACE_SPIPE_Stream.
-
 ACE_INLINE int
 ACE_SPIPE_Stream::get_remote_addr (ACE_SPIPE_Addr &remote_sap) const
 {
