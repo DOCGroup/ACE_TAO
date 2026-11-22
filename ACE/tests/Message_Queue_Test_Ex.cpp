@@ -632,7 +632,7 @@ int basic_queue_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
       {
         User_Class *b;
         ACE_Time_Value tv (ACE_OS::gettimeofday ());   // Now
-        if (q.dequeue_head (b, &tv) != -1)
+        if (q.dequeue_head (b, std::addressof (tv)) != -1)
           {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("Dequeued from empty queue!\n")));
             status = 1;

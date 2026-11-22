@@ -31,6 +31,8 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_MONOTONIC_TIME_POLICY) && defined (ACE_HAS_MONOTONIC_CONDITIONS)
 
 #  if defined (ACE_WIN32)
@@ -295,7 +297,7 @@ timeout_test ()
       // shift back in time 4 sec
       set_system_time (ACE_OS::gettimeofday () - ACE_Time_Value (4, 0));
 
-      if (mq.dequeue_head (b, &tv) != -1)
+      if (mq.dequeue_head (b, std::addressof (tv)) != -1)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Dequeued before timeout elapsed!\n")));
@@ -314,7 +316,7 @@ timeout_test ()
                       ACE_TEXT ("First dequeue timed out: OK\n")));
 
           tv = (tv.now () + ACE_Time_Value (3,0)); // Now (monotonic time) + 3 sec
-          if (mq.dequeue_head (b, &tv) != -1)
+          if (mq.dequeue_head (b, std::addressof (tv)) != -1)
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("Second dequeue succeeded: OK\n")));

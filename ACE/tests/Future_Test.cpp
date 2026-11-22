@@ -519,7 +519,7 @@ run_main (int, ACE_TCHAR *[])
     ACE_Time_Value timeout (ACE_OS::gettimeofday () + ACE_Time_Value (10));
     int value = 0;
 
-    if (f1.get (value, &timeout) == 0
+    if (f1.get (value, std::addressof (timeout)) == 0
         && value == 100)
       {
         ACE_DEBUG ((LM_DEBUG,
@@ -561,7 +561,7 @@ run_main (int, ACE_TCHAR *[])
     ACE_Time_Value timeout (ACE_OS::gettimeofday () + ACE_Time_Value (10));
 
     f1.set (100);
-    f1.get (value, &timeout);
+    f1.get (value, std::addressof (timeout));
 
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("1.\n")));
@@ -569,7 +569,7 @@ run_main (int, ACE_TCHAR *[])
       // Might delete the same data a couple of times.
       ACE_Future<int> f2 (f1);
       f1.set (100);
-      f1.get (value, &timeout);
+      f1.get (value, std::addressof (timeout));
     }
 
     ACE_DEBUG ((LM_DEBUG,
@@ -577,7 +577,7 @@ run_main (int, ACE_TCHAR *[])
     {
       ACE_Future<int> f2 (f1);
       f1.set (100);
-      f1.get (value, &timeout);
+      f1.get (value, std::addressof (timeout));
     }
 
     ACE_DEBUG ((LM_DEBUG,
@@ -585,21 +585,21 @@ run_main (int, ACE_TCHAR *[])
     {
       ACE_Future<int> f2 (f1);
       f1.set (100);
-      f1.get (value, &timeout);
+      f1.get (value, std::addressof (timeout));
     }
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("4.\n")));
     {
       ACE_Future<int> f2 (f1);
       f1.set (100);
-      f1.get (value, &timeout);
+      f1.get (value, std::addressof (timeout));
     }
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("5.\n")));
     {
       ACE_Future<int> f2 (90);
-      f2.get (value, &timeout);
-      f1.get (value, &timeout);
+      f2.get (value, std::addressof (timeout));
+      f1.get (value, std::addressof (timeout));
     }
   }
   ACE_DEBUG ((LM_DEBUG,

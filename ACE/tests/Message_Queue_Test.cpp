@@ -827,7 +827,7 @@ timeout_test ()
       ACE_Message_Block *b;
       ACE_Time_Value tv (ACE_OS::gettimeofday ());   // Now
 
-      if (mq.dequeue_head (b, &tv) != -1)
+      if (mq.dequeue_head (b, std::addressof (tv)) != -1)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Dequeued from empty queue!\n")));

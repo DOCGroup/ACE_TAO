@@ -139,7 +139,7 @@ MyTask::put_message ()
   tv += ACE_Time_Value (5,0); // Now + 5 sec
 
   // wait for signal; should not come causing us to sleep 5 sec (monotonic)
-  if (this->cond_.wait (&tv) == 0)
+  if (this->cond_.wait (std::addressof (tv)) == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%P|%t) MyTask::put_message - Received signal from thread before timeout\n")),
@@ -210,7 +210,7 @@ MyTask::svc ()
       ACE_Message_Block *b;
       tv += ACE_Time_Value (3,0); // Now + 3 sec
 
-      if (this->getq (b, &tv) != -1)
+      if (this->getq (b, std::addressof (tv)) != -1)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Dequeued before timeout elapsed!\n")));
@@ -228,15 +228,17 @@ MyTask::svc ()
           ACE_Time_Value_T<ACE_Monotonic_Time_Policy> tv_now (this->gettimeofday ());
 
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("First getq timed out at %#T (timeout was %#T)\n"), &tv_now, &tv));
+                      ACE_TEXT ("First getq timed out at %#T (timeout was %#T)\n"),
+                      std::addressof (tv_now), std::addressof (tv)));
 
           tv =  this->gettimeofday () + ACE_Time_Value (4,0); // Now (monotonic time) + 3 sec
-          if (this->getq (b, &tv) != -1)
+          if (this->getq (b, std::addressof (tv)) != -1)
             {
               tv_now = tv.now ();
 
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Second getq succeeded at %#T\n"), &tv_now));
+                          ACE_TEXT ("Second getq succeeded at %#T\n"),
+                          std::addressof (tv_now)));
               delete b;
             }
           else
@@ -297,7 +299,7 @@ run_main (int , ACE_TCHAR *[])
           tv_shift += ACE_Time_Value (3, 0);
           set_system_time (ACE_OS::gettimeofday () - ACE_Time_Value (3,0));
 
-          if (my_task.thr_mgr ()->wait (&tv) == 0)
+          if (my_task.thr_mgr ()->wait (std::addressof (tv)) == 0)
             {
               ACE_ERROR ((LM_ERROR, ACE_TEXT ("Thread manager did not time out\n")));
               status = 1;
@@ -306,7 +308,8 @@ run_main (int , ACE_TCHAR *[])
             {
               ACE_Time_Value_T<ACE_Monotonic_Time_Policy> tv_now (my_task.gettimeofday ());
 
-              ACE_DEBUG ((LM_INFO, ACE_TEXT ("Thread manager timed out at %#T\n"), &tv_now));
+              ACE_DEBUG ((LM_INFO, ACE_TEXT ("Thread manager timed out at %#T\n"),
+                          std::addressof (tv_now)));
             }
         }
       else
