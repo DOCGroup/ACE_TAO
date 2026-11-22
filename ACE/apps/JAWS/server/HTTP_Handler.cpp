@@ -83,7 +83,7 @@ HTTP_Handler::read_complete (ACE_Message_Block &message_block)
 
           this->io_.read (message_block, next_read_size);
         }
-      while (0);
+      while (false);
       break;
 
     default:
