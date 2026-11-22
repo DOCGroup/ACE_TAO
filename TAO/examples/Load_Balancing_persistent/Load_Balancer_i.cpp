@@ -722,7 +722,7 @@ Object_Group_i::bind (Load_Balancer::Member const &member)
         }
     }
 
-  if (member_id_list_->insert_tail (id_ptr) == 0)
+  if (member_id_list_->insert_tail (id_ptr) == nullptr)
   {
     throw CORBA::NO_MEMORY ();
   }

@@ -128,7 +128,7 @@ JAWS_Parse_Headers::parse_header_name (JAWS_Header_Info *info,
     {
       // Ignore empty header type names
       info->finish_last_header_value ();
-      info->create_next_header_value (0);
+      info->create_next_header_value (nullptr);
       info->end_of_line (0);
       mb.rd_ptr (q+1);
       return 0;
@@ -141,7 +141,7 @@ JAWS_Parse_Headers::parse_header_name (JAWS_Header_Info *info,
         {
           // blank line means end of headers
           info->finish_last_header_value ();
-          info->create_next_header_value (0);
+          info->create_next_header_value (nullptr);
           info->end_of_headers (1);
           if (mb.rd_ptr () == mb.wr_ptr ())
           {
@@ -152,7 +152,7 @@ JAWS_Parse_Headers::parse_header_name (JAWS_Header_Info *info,
 
       // not a blank line, but no ':', so ignore it
       info->finish_last_header_value ();
-      info->create_next_header_value (0);
+      info->create_next_header_value (nullptr);
       return 0;
     }
 
@@ -174,7 +174,7 @@ JAWS_Parse_Headers::parse_header_value (JAWS_Header_Info *info,
 
   char *q = mb.rd_ptr ();
 
-  if (info->last_header_data () == 0)
+  if (info->last_header_data () == nullptr)
     {
       // Ignoring this header (it is too long or something).
 
@@ -276,7 +276,7 @@ JAWS_Parse_Headers::parse_header_value (JAWS_Header_Info *info,
 JAWS_Header_Info::JAWS_Header_Info ()
   : end_of_headers_ (0),
     end_of_line_ (1),
-    last_header_data_ (0),
+    last_header_data_ (nullptr),
     last_header_length_ (0),
     status_ (0)
 {
@@ -306,7 +306,7 @@ JAWS_Header_Info::dump ()
     {
       JAWS_Header_Data *data;
       data = iter.next ();
-      if (data != 0)
+      if (data != nullptr)
         {
           ACE_DEBUG ((LM_DEBUG,
                     "%s -- %s\n",
@@ -329,7 +329,7 @@ JAWS_Header_Info::table ()
 void
 JAWS_Header_Info::append_last_header_value (char c)
 {
-  if (this->last_header_data_ == 0)
+  if (this->last_header_data_ == nullptr)
   {
     return;
   }
@@ -351,7 +351,7 @@ JAWS_Header_Info::append_last_header_value (char c)
 int
 JAWS_Header_Info::append_last_header_value ()
 {
-  if (this->last_header_data_ == 0 || this->last_header_length_ == 0)
+  if (this->last_header_data_ == nullptr || this->last_header_length_ == 0)
   {
     return -1;
   }
@@ -362,7 +362,7 @@ JAWS_Header_Info::append_last_header_value ()
 void
 JAWS_Header_Info::append_last_header_value (const char *begin, const char *end)
 {
-  if (this->last_header_data_ == 0)
+  if (this->last_header_data_ == nullptr)
   {
     return;
   }
@@ -385,7 +385,7 @@ JAWS_Header_Info::append_last_header_value (const char *begin, const char *end)
 void
 JAWS_Header_Info::reduce_last_header_value ()
 {
-  if (this->last_header_data_ == 0)
+  if (this->last_header_data_ == nullptr)
   {
     return;
   }
@@ -400,12 +400,12 @@ JAWS_Header_Info::reduce_last_header_value ()
 void
 JAWS_Header_Info::create_next_header_value (char *ht)
 {
-  if (ht == 0)
+  if (ht == nullptr)
     {
       // discard last header data
 
       delete this->last_header_data_;
-      this->last_header_data_ = 0;
+      this->last_header_data_ = nullptr;
       this->last_header_length (0);
       return;
     }
@@ -419,11 +419,11 @@ JAWS_Header_Info::create_next_header_value (char *ht)
       this->last_header_data_ = new JAWS_Header_Data (ht, 0);
       // The above performs a strdup.
 
-      if (this->last_header_data_ == 0 || this->last_header_name () == 0)
+      if (this->last_header_data_ == nullptr || this->last_header_name () == nullptr)
         {
           this->status (JAWS_Header_Info::STATUS_CODE_NO_MEMORY);
           delete this->last_header_data_;
-          this->last_header_data_ = 0;
+          this->last_header_data_ = nullptr;
         }
       this->last_header_length (0);
       this->header_buf_[0] = '\0';
@@ -433,7 +433,7 @@ JAWS_Header_Info::create_next_header_value (char *ht)
 void
 JAWS_Header_Info::finish_last_header_value ()
 {
-  if (this->last_header_data_ != 0)
+  if (this->last_header_data_ != nullptr)
     {
       // prepare to insert last header data into the table.
 
@@ -448,7 +448,7 @@ JAWS_Header_Info::finish_last_header_value ()
       {
         delete this->last_header_data_;
       }
-      this->last_header_data_ = 0;
+      this->last_header_data_ = nullptr;
     }
 }
 
@@ -461,7 +461,7 @@ JAWS_Header_Info::header_buf ()
 const char *
 JAWS_Header_Info::last_header_name () const
 {
-  return this->last_header_data_ ? this->last_header_data_->header_name () : 0;
+  return this->last_header_data_ ? this->last_header_data_->header_name () : nullptr;
 }
 
 const JAWS_Header_Data *

@@ -845,7 +845,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     rootPOAMgr->activate( );
 
-    orb->run( 0 );
+    orb->run( nullptr );
 
     orb->destroy( );
   }

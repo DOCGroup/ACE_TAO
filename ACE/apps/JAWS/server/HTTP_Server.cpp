@@ -343,7 +343,7 @@ Thread_Per_Request_Task::open (void *)
   else
     {
       status = this->activate (THR_DETACHED | THR_NEW_LWP,
-                               1, 0, -1, this->grp_id_, 0);
+                               1, 0, -1, this->grp_id_, nullptr);
     }
 
   if (status == -1)
