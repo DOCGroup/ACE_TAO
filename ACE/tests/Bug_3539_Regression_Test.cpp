@@ -88,7 +88,7 @@ run_main (int, ACE_TCHAR *[])
 
     if (ACE_Thread_Manager::instance ()->spawn_n
         (threads,
-         ACE_THR_FUNC (worker),
+         worker,
          o,
          THR_BOUND) == -1)
       {
