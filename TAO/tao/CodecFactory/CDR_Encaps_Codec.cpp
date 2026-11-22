@@ -105,7 +105,10 @@ TAO_CDR_Encaps_Codec::decode (CORBA::OctetSeq const& data)
   ACE_Message_Block mb (data.length () + 2 * ACE_CDR::MAX_ALIGNMENT);
   ACE_CDR::mb_align (std::addressof (mb));
 
-  std::memcpy (mb.rd_ptr (), data.get_buffer (), data.length ());
+  if (data.length () != 0)
+    {
+      std::memcpy (mb.rd_ptr (), data.get_buffer (), data.length ());
+    }
 
   size_t const rd_pos = mb.rd_ptr () - mb.base ();
   size_t const wr_pos = mb.wr_ptr () - mb.base () + data.length ();
@@ -250,7 +253,10 @@ TAO_CDR_Encaps_Codec::decode_value (CORBA::OctetSeq const& data,
   ACE_Message_Block mb (data.length () + 2 * ACE_CDR::MAX_ALIGNMENT);
   ACE_CDR::mb_align (std::addressof (mb));
 
-  std::memcpy (mb.rd_ptr (), data.get_buffer (), data.length ());
+  if (data.length () != 0)
+    {
+      std::memcpy (mb.rd_ptr (), data.get_buffer (), data.length ());
+    }
 
   // @todo How do we check for a type mismatch so that we can
   //       throw a IOP::Codec::TypeMismatch exception?
