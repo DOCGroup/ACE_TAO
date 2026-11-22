@@ -191,7 +191,7 @@ ExtendedFilter::run_filter_test (CosNotifyFilter::FilterAdmin_ptr filter_admin)
 void
 ExtendedFilter::verify_filter_count (CosNotifyFilter::FilterAdmin_ptr filter_admin, CORBA::ULong expected_count)
 {
-  expected_count = expected_count; // if we don;t do this, we get a warning on linux about arg not used.
+  ACE_UNUSED_ARG (expected_count);
   CosNotifyFilter::FilterIDSeq_var filter_seq = filter_admin->get_all_filters ();
   ACE_ASSERT (filter_seq->length () == expected_count);
 }
