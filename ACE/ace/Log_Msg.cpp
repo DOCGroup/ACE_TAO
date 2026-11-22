@@ -99,8 +99,15 @@ public:
 // would be in an unnamed namespace, but it's a macro instead.
 // count is a size_t, len is an int and assumed to be non-negative.
 #define ACE_UPDATE_COUNT(COUNT, LEN) \
-   do { if (static_cast<size_t> (LEN) > COUNT) COUNT = 0; \
-     else COUNT -= static_cast<size_t> (LEN); \
+   do { \
+     if (static_cast<size_t> (LEN) > COUNT) \
+       { \
+         COUNT = 0; \
+       } \
+     else \
+       { \
+         COUNT -= static_cast<size_t> (LEN); \
+       } \
    } while (0)
 
 /// Instance count for Log_Msg - used to know when dynamically

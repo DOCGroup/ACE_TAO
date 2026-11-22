@@ -59,7 +59,10 @@ TAO_END_VERSIONED_NAMESPACE_DECL
   do { \
     int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
     ACE_Log_Category_TSS *ace___ = TAO_VERSIONED_NAMESPACE_NAME::TAO_log_category.per_thr_obj(); \
-    if (ace___ == 0) break;\
+    if (ace___ == 0) \
+      { \
+        break; \
+      } \
     ace___->conditional_set (__FILE__, __LINE__, 0, __ace_error); \
     ace___->log_hexdump X; \
   } while (0)
@@ -69,7 +72,10 @@ TAO_END_VERSIONED_NAMESPACE_DECL
   do { \
     int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
     ACE_Log_Category_TSS *ace___ = TAO_VERSIONED_NAMESPACE_NAME::TAO_log_category.per_thr_obj(); \
-    if (ace___ == 0) return Y;\
+    if (ace___ == 0) \
+      { \
+        return Y; \
+      } \
     ace___->conditional_set (__FILE__, __LINE__, Y, __ace_error); \
     ace___->log X; \
     return Y; \
@@ -80,7 +86,10 @@ TAO_END_VERSIONED_NAMESPACE_DECL
   do { \
     int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
     ACE_Log_Category_TSS *ace___ = TAO_VERSIONED_NAMESPACE_NAME::TAO_log_category.per_thr_obj(); \
-    if (ace___ == 0) break;\
+    if (ace___ == 0) \
+      { \
+        break; \
+      } \
     ace___->conditional_set (__FILE__, __LINE__, -1, __ace_error); \
     ace___->log X; \
   } while (0)
@@ -90,7 +99,10 @@ TAO_END_VERSIONED_NAMESPACE_DECL
   do { \
     int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
     ACE_Log_Category_TSS *ace___ = TAO_VERSIONED_NAMESPACE_NAME::TAO_log_category.per_thr_obj(); \
-    if (ace___ == 0) break;\
+    if (ace___ == 0) \
+      { \
+        break; \
+      } \
     ace___->conditional_set (__FILE__, __LINE__, 0, __ace_error); \
     ace___->log X; \
   } while (0)

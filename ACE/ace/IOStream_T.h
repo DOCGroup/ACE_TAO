@@ -208,7 +208,13 @@ public:
         }
       return good ();
     }
-  virtual void osfx () {  if (flags () & unitbuf) flush (); }
+  virtual void osfx ()
+    {
+      if (flags () & unitbuf)
+        {
+          flush ();
+        }
+    }
 #  else
 #    if defined (__GNUC__)
   virtual int ipfx0 () { return iostream::ipfx0 (); }  // Optimized ipfx(0)
