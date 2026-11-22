@@ -27,7 +27,9 @@ load_file (Vector &vector,
 {
   std::ifstream is (filename);
   if (!is)
-    throw "Cannot open file";
+    {
+      throw "Cannot open file";
+    }
 
   long i {};
   double v {};
@@ -57,7 +59,9 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
 
           Vector::iterator k = Z.find (ki);
           if (k == Z.end ())
-            Z.insert (Element (ki, p));
+            {
+              Z.insert (Element (ki, p));
+            }
           else
             Z[ki] += p;
         }

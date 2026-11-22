@@ -42,12 +42,16 @@ Low_Priority_Setup (int consumer_count,
       int per_consumer_workload =
         workload / this->consumer_count_;
       if (workload != 0 && per_consumer_workload == 0)
-        per_consumer_workload = 1;
+        {
+          per_consumer_workload = 1;
+        }
 
       CORBA::Long event_type =
         base_event_type;
       if (use_different_types)
-        event_type = base_event_type + 2 * i;
+        {
+          event_type = base_event_type + 2 * i;
+        }
 
       this->clients_[i].init (experiment_id,
                               event_type,
@@ -67,7 +71,9 @@ Low_Priority_Setup (int consumer_count,
       CORBA::Long event_type =
         base_event_type;
       if (use_different_types)
-        event_type = base_event_type + 2 * j;
+        {
+          event_type = base_event_type + 2 * j;
+        }
 
       this->tasks_[j].init (0,
                             per_thread_period,

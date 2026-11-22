@@ -124,9 +124,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           if (options.unique_low_priority_event)
             event_range = 1 + options.low_priority_consumers;
           else
-          {
-            event_range = 2;
-          }
+            {
+              event_range = 2;
+            }
         }
 
       Client_Group high_priority_group;
