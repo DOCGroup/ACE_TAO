@@ -73,13 +73,15 @@ class ACE_Message_Block;
 class ACE_Export ACE_SOCK_SEQPACK_Association : public ACE_SOCK_IO
 {
 public:
-  // Initialization and termination methods.
+  /// @name Initialization and termination
+  /// @{
   ACE_SOCK_SEQPACK_Association ();
 
   /// Constructor (sets the underlying ACE_HANDLE with <h>).
   explicit ACE_SOCK_SEQPACK_Association (ACE_HANDLE h);
 
   ~ACE_SOCK_SEQPACK_Association ();
+  /// @}
 
   /**
    * Return local endpoint addresses in the referenced array of

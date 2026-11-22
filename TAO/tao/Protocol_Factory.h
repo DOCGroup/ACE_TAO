@@ -50,12 +50,14 @@ public:
   /// where its options begin.
   virtual char options_delimiter () const = 0;
 
-  // Factory methods
+  /// @name Factory methods
+  /// @{
   /// Create an acceptor
   virtual TAO_Acceptor *make_acceptor () = 0;
 
   /// Create a connector
   virtual TAO_Connector *make_connector  () = 0;
+  /// @}
 
   /**
    * Some protocols should not create a default endpoint unless the

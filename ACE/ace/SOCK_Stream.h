@@ -36,13 +36,15 @@ class ACE_Message_Block;
 class ACE_Export ACE_SOCK_Stream : public ACE_SOCK_IO
 {
 public:
-  // Initialization and termination methods.
+  /// @name Initialization and termination
+  /// @{
   ACE_SOCK_Stream ();
 
   /// Constructor (sets the underlying ACE_HANDLE with @a h).
   explicit ACE_SOCK_Stream (ACE_HANDLE h);
 
   ~ACE_SOCK_Stream ();
+  /// @}
 
   /** @name Counted send/receive methods
    *

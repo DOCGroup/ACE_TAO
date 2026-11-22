@@ -68,7 +68,8 @@ namespace ACE
     class HTBP_Export Session
     {
     public:
-      // Initialization and termination methods.
+      /// @name Initialization and termination
+      /// @{
       Session ();
 
       /// Constructor (sets the underlying session id with <sid>).
@@ -87,6 +88,7 @@ namespace ACE
       Session& operator= (Session&& other) = delete;
 
       ~Session ();
+      /// @}
 
       /// The following methods are specific to the Session
       static ACE_UINT32 next_session_id ();
