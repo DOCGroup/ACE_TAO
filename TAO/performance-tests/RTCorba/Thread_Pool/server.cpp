@@ -9,6 +9,8 @@
 #include "tests/RTCORBA/common_args.cpp"
 #include "tests/RTCORBA/check_supported_priorities.cpp"
 
+#include <memory>
+
 class test_i :
   public POA_test
 {
@@ -204,7 +206,7 @@ public:
 
 Task::Task (ACE_Thread_Manager &thread_manager,
             CORBA::ORB_ptr orb)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     orb_ (CORBA::ORB::_duplicate (orb))
 {
 }

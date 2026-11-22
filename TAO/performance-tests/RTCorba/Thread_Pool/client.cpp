@@ -16,6 +16,8 @@
 #include "tests/RTCORBA/check_supported_priorities.cpp"
 #include "ace/Event.h"
 
+#include <memory>
+
 enum Priority_Setting
 {
   AT_THREAD_CREATION = 0,
@@ -456,7 +458,7 @@ Paced_Worker::Paced_Worker (ACE_Thread_Manager &thread_manager,
                             RTCORBA::Current_ptr current,
                             RTCORBA::PriorityMapping &priority_mapping,
                             Synchronizers &synchronizers)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     test_ (test::_duplicate (test)),
     rate_ (rate),
     history_ (iterations),
@@ -737,7 +739,7 @@ Continuous_Worker::Continuous_Worker (ACE_Thread_Manager &thread_manager,
                                       RTCORBA::Current_ptr current,
                                       RTCORBA::PriorityMapping &priority_mapping,
                                       Synchronizers &synchronizers)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     test_ (test::_duplicate (test)),
     iterations_ (iterations),
     current_ (RTCORBA::Current::_duplicate (current)),
@@ -904,7 +906,7 @@ public:
 
 Task::Task (ACE_Thread_Manager &thread_manager,
             CORBA::ORB_ptr orb)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
