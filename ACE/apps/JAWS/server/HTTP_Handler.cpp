@@ -285,8 +285,6 @@ Synch_HTTP_Handler_Factory::destroy_http_handler (HTTP_Handler &handler,
   delete &handler;
 }
 
-//-------------SYNCH IO no Cache
-
 HTTP_Handler *
 No_Cache_Synch_HTTP_Handler_Factory::create_http_handler ()
 {

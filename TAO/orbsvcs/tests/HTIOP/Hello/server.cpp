@@ -42,7 +42,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      //------ Get Root POA & POA Manager references
+      // Get the Root POA and POA Manager references.
 
       CORBA::Object_var obj =
         orb->resolve_initial_references("RootPOA");
@@ -60,7 +60,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      //------- Get IOR Table reference to support CORBALOC URLs
+      // Get the IOR Table reference to support CORBALOC URLs.
 
       obj =
         orb->resolve_initial_references("IORTable");
@@ -68,7 +68,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       IORTable::Table_var ior_table =
         IORTable::Table::_narrow(obj.in());
 
-      //------- Get NameService Root Context
+      // Get the NameService root context.
 
       obj =
         orb->resolve_initial_references("NameService");
@@ -76,7 +76,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CosNaming::NamingContextExt_var root_nc =
         CosNaming::NamingContextExt::_narrow(obj.in());
 
-      //-------- Prepare Servant
+      // Prepare the servant.
 
       if (parse_args (argc, argv) != 0)
       {
@@ -95,7 +95,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior =
         orb->object_to_string (hello.in ());
 
-      //--------- Publish IOR using various means
+      // Publish the IOR using available mechanisms.
 
       if (!CORBA::is_nil(root_nc.in()))
         {

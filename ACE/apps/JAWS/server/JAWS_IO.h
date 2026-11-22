@@ -235,8 +235,6 @@ protected:
 
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
-//-------------------Adding SYNCH IO no Caching
-
 /**
  * @class JAWS_Synch_IO_No_Cache
  *

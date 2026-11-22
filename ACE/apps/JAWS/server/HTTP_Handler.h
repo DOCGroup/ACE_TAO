@@ -168,8 +168,6 @@ public:
                              JAWS_IO &io) override;
 };
 
-//--------------Added a factory for SYNCH IO without caching
-
 /**
  * @class No_Cache_Synch_HTTP_Handler_Factory
  *

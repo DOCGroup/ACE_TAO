@@ -168,7 +168,7 @@ int trapapp::run ()
    }
    target_.set_address (address_); // make a target using the address
 
-   //-------[ issue the request, blocked mode ]-----------------------------
+   // Issue the request in blocked mode.
    cout << "\nASNMP:INFO:SNMP Version " << (target_.get_version () + 1)
         << " TRAP GENERATOR SAMPLE PROGRAM \nOID: " << oid_.to_string () << "\n";
    target_.get_address (address_); // target updates port used

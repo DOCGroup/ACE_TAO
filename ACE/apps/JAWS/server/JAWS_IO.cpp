@@ -447,8 +447,6 @@ JAWS_Asynch_IO::handle_write_stream (const ACE_Asynch_Write_Stream::Result &resu
 
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
-//-------------------Adding SYNCH IO no Caching
-
 JAWS_Synch_IO_No_Cache::JAWS_Synch_IO_No_Cache ()
   : handle_ (ACE_INVALID_HANDLE)
 {

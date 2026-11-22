@@ -151,21 +151,21 @@ void getapp::usage ()
 
 int getapp::run ()
 {
-   //----------[ create a ASNMP session ]-----------------------------------
+   // Create an ASNMP session.
    if (snmp_.valid () != SNMP_CLASS_SUCCESS) {
       cout << "\nASNMP:ERROR:Create session failed: "<<
           snmp_.error_string()<< "\n";
       return 1;
    }
 
-   //--------[ build up ASNMP object needed ]-------------------------------
+   // Build the required ASNMP objects.
    if (address_.get_port () == 0)
    {
      address_.set_port (DEF_AGENT_PORT);
    }
    target_.set_address (address_); // make a target using the address
 
-   //-------[ issue the request, blocked mode ]-----------------------------
+   // Issue the request in blocked mode.
    cout << "\nASNMP:INFO:SNMP Version " << (target_.get_version () + 1)
         << " GET SAMPLE PROGRAM \nOID: " << oid_.to_string () << "\n";
    target_.get_address (address_); // target updates port used
