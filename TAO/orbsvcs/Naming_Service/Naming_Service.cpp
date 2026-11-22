@@ -153,7 +153,9 @@ TAO_Naming_Service::run ()
 {
   ORB_Runner runner (this->orb_.in (), this->time_);
   if (this->num_threads_ == 1)
-    return runner.svc ();
+    {
+      return runner.svc ();
+    }
   else
     {
       int const grpid = runner.activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
