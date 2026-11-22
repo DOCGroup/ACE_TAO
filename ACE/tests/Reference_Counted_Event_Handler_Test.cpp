@@ -156,7 +156,7 @@ Reference_Counted_Event_Handler::handle_timeout (const ACE_Time_Value &,
 {
   ACE_DEBUG ((LM_DEBUG,
               "Reference count in Reference_Counted_Event_Handler::handle_timeout() for arg = %C is %q\n",
-              (const char *) arg,
+              static_cast<const char *> (arg),
               static_cast<ACE_INT64> (this->reference_count_.load ())));
 
   --this->events_;
@@ -629,7 +629,7 @@ Simple_Event_Handler::handle_timeout (const ACE_Time_Value &,
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Simple_Event_Handler::handle_timeout() for arg = %C\n"),
-              (const char *) arg));
+              static_cast<const char *> (arg)));
 
   --this->events_;
 
