@@ -160,7 +160,7 @@ template <typename SVC_HANDLER, typename PEER_CONNECTOR>
 class ACE_Connector : public ACE_Connector_Base<SVC_HANDLER>, public ACE_Service_Object
 {
 public:
-  // Useful STL-style traits.
+  /// Useful STL-style traits.
   using addr_type = typename SVC_HANDLER::addr_type;
   using connector_type = PEER_CONNECTOR;
   using handler_type = SVC_HANDLER;

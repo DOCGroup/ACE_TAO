@@ -47,7 +47,7 @@ template<class SVC_HANDLER>
 class ACE_Recycling_Strategy
 {
 public:
-  // Useful STL-style traits.
+  /// Useful STL-style traits.
   using addr_type = typename SVC_HANDLER::addr_type;
   using handler_type = SVC_HANDLER;
   using stream_type = typename SVC_HANDLER::stream_type;
@@ -80,7 +80,7 @@ template <class SVC_HANDLER>
 class ACE_Creation_Strategy
 {
 public:
-  // Useful STL-style traits.
+  /// Useful STL-style traits.
   using addr_type = typename SVC_HANDLER::addr_type;
   using handler_type = SVC_HANDLER;
   using stream_type = typename SVC_HANDLER::stream_type;
@@ -132,7 +132,7 @@ template <class SVC_HANDLER>
 class ACE_Singleton_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
 {
 public:
-  // Useful STL-style traits.
+  /// Useful STL-style traits.
   using base_type = ACE_Creation_Strategy<SVC_HANDLER>;
 
   ACE_Singleton_Strategy (SVC_HANDLER * = nullptr,
@@ -174,7 +174,7 @@ template <class SVC_HANDLER>
 class ACE_DLL_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
 {
 public:
-  // Useful STL-style traits.
+  /// Useful STL-style traits.
   using base_type = ACE_Creation_Strategy<SVC_HANDLER>;
 
   /// "Do-nothing" constructor.
@@ -240,7 +240,7 @@ template <class SVC_HANDLER>
 class ACE_Concurrency_Strategy
 {
 public:
-  // Useful STL-style traits.
+  /// Useful STL-style traits.
   using addr_type = typename SVC_HANDLER::addr_type;
   using handler_type = SVC_HANDLER;
   using stream_type = typename SVC_HANDLER::stream_type;
@@ -284,7 +284,7 @@ template <class SVC_HANDLER>
 class ACE_Reactive_Strategy : public ACE_Concurrency_Strategy <SVC_HANDLER>
 {
 public:
-  // Useful STL-style traits.
+  /// Useful STL-style traits.
   using base_type = ACE_Concurrency_Strategy<SVC_HANDLER>;
 
   /// "Do-nothing constructor"
@@ -340,7 +340,7 @@ template <class SVC_HANDLER>
 class ACE_Thread_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
 {
 public:
-  // Useful STL-style traits.
+  /// Useful STL-style traits.
   using base_type = ACE_Concurrency_Strategy<SVC_HANDLER>;
 
   /// "Do-nothing constructor"
@@ -404,7 +404,7 @@ template <class SVC_HANDLER>
 class ACE_Process_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
 {
 public:
-  // Useful STL-style traits.
+  /// Useful STL-style traits.
   using base_type = ACE_Concurrency_Strategy<SVC_HANDLER>;
 
   /// Initialize the strategy.  If @a avoid_zombies is non-0 then set a
@@ -472,7 +472,7 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 class ACE_Accept_Strategy
 {
 public:
-  // Useful STL-style traits.
+  /// Useful STL-style traits.
   using addr_type = typename _ACE_PEER_ACCEPTOR::PEER_ADDR;
   using acceptor_type = _ACE_PEER_ACCEPTOR;
   using handler_type = SVC_HANDLER;
@@ -535,7 +535,7 @@ template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>
 class ACE_Connect_Strategy
 {
 public:
-  // Useful STL-style traits.
+  /// Useful STL-style traits.
   using addr_type = typename _ACE_PEER_CONNECTOR::PEER_ADDR;
   using connector_type = _ACE_PEER_CONNECTOR;
   using handler_type = SVC_HANDLER;
@@ -597,7 +597,7 @@ template <class SVC_HANDLER>
 class ACE_Scheduling_Strategy
 {
 public:
-  // Useful STL-style traits.
+  /// Useful STL-style traits.
   using addr_type = typename SVC_HANDLER::addr_type;
   using handler_type = SVC_HANDLER;
   using stream_type = typename SVC_HANDLER::stream_type;
@@ -635,7 +635,7 @@ class ACE_Schedule_All_Reactive_Strategy
   : public ACE_Scheduling_Strategy<SVC_HANDLER>
 {
 public:
-  // Useful STL-style traits.
+  /// Useful STL-style traits.
   using base_type = ACE_Scheduling_Strategy<SVC_HANDLER>;
 
   explicit ACE_Schedule_All_Reactive_Strategy (SVC_HANDLER * = nullptr);
@@ -673,7 +673,7 @@ class ACE_Schedule_All_Threaded_Strategy
   : public ACE_Scheduling_Strategy<SVC_HANDLER>
 {
 public:
-  // Useful STL-style traits.
+  /// Useful STL-style traits.
   using base_type = ACE_Scheduling_Strategy<SVC_HANDLER>;
 
   explicit ACE_Schedule_All_Threaded_Strategy (SVC_HANDLER * = nullptr);
@@ -712,7 +712,7 @@ template <class SVC_HANDLER>
 class ACE_NOOP_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
 {
 public:
-  // Useful STL-style traits.
+  /// Useful STL-style traits.
   using base_type = ACE_Creation_Strategy<SVC_HANDLER>;
 
   /// This is a no-op.
@@ -735,7 +735,7 @@ class ACE_NOOP_Concurrency_Strategy
   : public ACE_Concurrency_Strategy<SVC_HANDLER>
 {
 public:
-  // Useful STL-style traits.
+  /// Useful STL-style traits.
   using base_type = ACE_Concurrency_Strategy<SVC_HANDLER>;
 
   /// This is a no-op.
@@ -787,7 +787,7 @@ class ACE_Cached_Connect_Strategy
     public ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
 {
 public:
-  // Useful STL-style traits.
+  /// Useful STL-style traits.
   using creation_strategy_type = ACE_Creation_Strategy<SVC_HANDLER>;
   using connect_strategy_type = ACE_Connect_Strategy<SVC_HANDLER, _ACE_PEER_CONNECTOR>;
   using concurrency_strategy_type = ACE_Concurrency_Strategy<SVC_HANDLER>;

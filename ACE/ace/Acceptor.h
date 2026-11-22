@@ -57,7 +57,7 @@ template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
 class ACE_Acceptor : public ACE_Service_Object
 {
 public:
-  // Useful STL-style traits.
+  /// Useful STL-style traits.
   using addr_type = typename PEER_ACCEPTOR::PEER_ADDR;
   using acceptor_type = PEER_ACCEPTOR;
   using handler_type = SVC_HANDLER;
@@ -548,7 +548,7 @@ template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
 class ACE_Oneshot_Acceptor : public ACE_Service_Object
 {
 public:
-  // Useful STL-style traits.
+  /// Useful STL-style traits.
   using addr_type = typename PEER_ACCEPTOR::PEER_ADDR;
   using acceptor_type = PEER_ACCEPTOR;
   using handler_type = SVC_HANDLER;

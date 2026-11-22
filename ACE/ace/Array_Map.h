@@ -87,7 +87,7 @@ template<typename Key, typename Value, class EqualTo = std::equal_to<Key>,
 class ACE_Array_Map
 {
 public:
-  // STL-style typedefs/traits.
+  /// STL-style typedefs/traits.
   using key_type = Key;
   using mapped_type = Value;
   using data_type = Value;
