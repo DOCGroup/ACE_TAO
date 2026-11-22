@@ -226,8 +226,8 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 
   // Store the initial value of the count in the file.
   if (ACE_OS::write (this->file_lock_.get_handle (),
-                     (const void *) &count,
-                     sizeof count) != (ssize_t) sizeof count)
+                     &count,
+                     sizeof count) != static_cast<ssize_t> (sizeof count))
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
@@ -305,9 +305,9 @@ Counting_Service::read ()
 
   int count;
   if (ACE_OS::pread (OPTIONS::instance ()->file_lock ().get_handle (),
-                     (void *) &count,
+                     &count,
                      sizeof count,
-                     0) != (ssize_t) sizeof count)
+                     0) != static_cast<ssize_t> (sizeof count))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%P|%t) %p\n"),
@@ -345,9 +345,9 @@ Counting_Service::inc ()
 
   int count;
   if (ACE_OS::pread (OPTIONS::instance ()->file_lock ().get_handle (),
-                     (void *) &count,
+                     &count,
                      sizeof count,
-                     0) != (ssize_t) sizeof count)
+                     0) != static_cast<ssize_t> (sizeof count))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%P|%t) %p\n"),
@@ -362,9 +362,9 @@ Counting_Service::inc ()
   ++count;
 
   if (ACE_OS::pwrite (OPTIONS::instance ()->file_lock ().get_handle (),
-                      (const void *) &count,
+                      &count,
                       sizeof count,
-                      0) != (ssize_t) sizeof count)
+                      0) != static_cast<ssize_t> (sizeof count))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%P|%t) %p\n"),
@@ -388,7 +388,7 @@ Counting_Service::handle_input (ACE_HANDLE)
               this->peer ().get_handle ()));
   size_t len;
   // Read the PDU length first.
-  ssize_t bytes = this->peer ().recv ((void *) &len,
+  ssize_t bytes = this->peer ().recv (&len,
                                       sizeof len,
                                       timeout);
   if (bytes <= 0)
@@ -398,7 +398,7 @@ Counting_Service::handle_input (ACE_HANDLE)
 
   bytes = this->peer ().recv (buf, len);
 
-  if (bytes <= 0 || buf[0] == (char) EOF)
+  if (bytes <= 0 || buf[0] == static_cast<char> (EOF))
     {
       return -1;
     }
@@ -507,8 +507,7 @@ Counting_Service::open (void *)
 void *
 client (void *arg)
 {
-  ACE_INET_Addr *remote_addr =
-    reinterpret_cast<ACE_INET_Addr *> (arg);
+  ACE_INET_Addr *remote_addr = static_cast<ACE_INET_Addr *> (arg);
   ACE_INET_Addr server_addr (remote_addr->get_port_number (),
                              ACE_DEFAULT_SERVER_HOST);
   ACE_SOCK_Stream stream;
@@ -695,7 +694,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Note that this implicitly creates the Reactor singleton.
   if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &),
                      ACE_Reactor::instance(),
-                     nullptr,
+           nullptr,
                      nullptr,
                      OPTIONS::instance ()->concurrency_strategy ()) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
@@ -736,7 +735,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 #elif defined (ACE_HAS_THREADS)
       if (ACE_Thread_Manager::instance ()->spawn
           (ACE_THR_FUNC (server),
-           (void *) 0,
+           nullptr,
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n%a"),
@@ -744,7 +743,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       if (ACE_Thread_Manager::instance ()->spawn
           (ACE_THR_FUNC (client),
-           (void *) &server_addr,
+           &server_addr,
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n%a"),
