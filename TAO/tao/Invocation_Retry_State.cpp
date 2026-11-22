@@ -13,13 +13,17 @@ namespace
                          TAO::Invocation_Retry_Params &result)
   {
 #define FOEL forward_on_exception_limit_
-    if (command_line_params.FOEL[ex] != result.FOEL[ex])
+    TAO::Invocation_Retry_Params::exception_limit_map_type::const_iterator const
+      command_line_limit = command_line_params.FOEL.find (ex);
+    TAO::Invocation_Retry_Params::exception_limit_map_type::const_iterator const
+      client_factory_limit = client_factory_params.FOEL.find (ex);
+    if (command_line_limit->second != result.FOEL[ex])
       {
-        result.FOEL[ex] = command_line_params.FOEL[ex];
+        result.FOEL[ex] = command_line_limit->second;
       }
-    else if (client_factory_params.FOEL[ex] != result.FOEL[ex])
+    else if (client_factory_limit->second != result.FOEL[ex])
       {
-        result.FOEL[ex] = client_factory_params.FOEL[ex];
+        result.FOEL[ex] = client_factory_limit->second;
       }
 #undef FOEL
   }

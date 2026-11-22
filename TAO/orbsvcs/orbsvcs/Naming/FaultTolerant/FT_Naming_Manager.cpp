@@ -27,6 +27,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 
+#include <memory>
+
 // Use this macro at the beginning of CORBA methods
 // to aid in debugging.
 #define METHOD_ENTRY(name)    \
@@ -49,7 +51,6 @@
 //  if (cave_is_closing) METHOD_RETURN(Plugh::pirate) aarrggh;
 // Moral:  Always use braces.
 #define METHOD_RETURN(name)   \
-#include <memory>
   if (TAO_debug_level > 6)    \
   {                           \
     ORBSVCS_DEBUG (( LM_DEBUG,    \

@@ -115,27 +115,32 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb)
     {
     case Options::REPO_REGISTRY:
       {
-        repository_ = std::make_unique<Registry_Backing_Store> (*this->opts_, orb);
+        repository_ = Repository_Ptr (
+          new Registry_Backing_Store (*this->opts_, orb));
         break;
       }
     case Options::REPO_HEAP_FILE:
       {
-        repository_ = std::make_unique<Heap_Backing_Store> (*this->opts_, orb);
+        repository_ = Repository_Ptr (
+          new Heap_Backing_Store (*this->opts_, orb));
         break;
       }
     case Options::REPO_XML_FILE:
       {
-        repository_ = std::make_unique<XML_Backing_Store> (*this->opts_, orb);
+        repository_ = Repository_Ptr (
+          new XML_Backing_Store (*this->opts_, orb));
         break;
       }
     case Options::REPO_SHARED_FILES:
       {
-        repository_ = std::make_unique<Shared_Backing_Store> (*this->opts_, orb, this);
+        repository_ = Repository_Ptr (
+          new Shared_Backing_Store (*this->opts_, orb, this));
         break;
       }
     case Options::REPO_NONE:
       {
-        repository_ = std::make_unique<No_Backing_Store> (*this->opts_, orb);
+        repository_ = Repository_Ptr (
+          new No_Backing_Store (*this->opts_, orb));
         break;
       }
     default:
