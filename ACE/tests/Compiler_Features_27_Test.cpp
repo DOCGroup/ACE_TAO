@@ -6,7 +6,6 @@
 #include "test_config.h"
 
 #include <string>
-#include <utility>
 
 class Foo
 {
@@ -24,7 +23,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT("Compiler_Features_27_Test"));
 
   Foo any;
-  any <<= std::move("abc");
+  any <<= "abc";
 
   ACE_END_TEST;
 
