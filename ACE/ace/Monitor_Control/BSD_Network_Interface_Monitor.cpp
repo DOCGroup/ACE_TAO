@@ -4,6 +4,9 @@
 
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_stropts.h"
+#include "ace/OS_NS_sys_socket.h"
+#include "ace/OS_NS_unistd.h"
 #include <cstring>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -49,7 +52,7 @@ namespace ACE
     BSD_Network_Interface_Monitor::fetch (ACE_UINT64& value) const
     {
       ACE_UINT64 count {};
-      int const fd = socket (AF_INET, SOCK_DGRAM, 0);
+      ACE_HANDLE const fd = ACE_OS::socket (AF_INET, SOCK_DGRAM, 0);
 
       if (fd == -1)
         {
@@ -62,7 +65,7 @@ namespace ACE
       if (getifaddrs (&ifap) < 0)
         {
           ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("getifaddrs failed\n")));
-          close (fd);
+          ACE_OS::close (fd);
           return;
         }
 
@@ -90,7 +93,7 @@ namespace ACE
 #else
           std::strncpy (ifdr.ifdr_name, ifa->ifa_name, sizeof (ifdr.ifdr_name) - 1);
 #endif
-          if (ioctl (fd, SIOCGIFDATA, &ifdr) == -1)
+          if (ACE_OS::ioctl (fd, SIOCGIFDATA, &ifdr) == -1)
             {
               ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("SIOCGIFDATA failed\n")));
             }
@@ -120,7 +123,7 @@ namespace ACE
         }
 
       freeifaddrs (ifap);
-      close (fd);
+      ACE_OS::close (fd);
 
       value = count;
     }
