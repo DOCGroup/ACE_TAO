@@ -77,7 +77,9 @@ TAO_Notify_Tests_Consumer_T<Consumer_Traits>::subscription_change (CosNotificati
       proxy_supplier->subscription_change (added, removed);
     }
   else
-    ACE_DEBUG ((LM_DEBUG, "Proxy Supplier not available, subscription change not made."));
+    {
+      ACE_DEBUG ((LM_DEBUG, "Proxy Supplier not available, subscription change not made."));
+    }
 }
 
 template <class Consumer_Traits> void

@@ -104,7 +104,9 @@ Notify_Structured_Push_Consumer::push_structured_event (
       }
     }
   else if (discard_policy_ == CosNotification::LifoOrder)
-    expected = this->count_;
+    {
+      expected = this->count_;
+    }
   else
     {
       ACE_ERROR ((LM_ERROR, "Error: Unexpected discard policy.\n"));

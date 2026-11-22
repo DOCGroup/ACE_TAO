@@ -121,7 +121,9 @@ load_unload_cycle ()
   TAO_Notify_Service_Driver* const notify_service =
     ACE_Dynamic_Service<TAO_Notify_Service_Driver>::instance ("testNotifyService");
   if (notify_service == nullptr)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Could not resolve testNotifyService\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Could not resolve testNotifyService\n")));
+    }
   else
   {
     notify_service->run ();

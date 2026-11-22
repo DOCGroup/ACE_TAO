@@ -59,7 +59,9 @@ TAO_Notify_Tests_Periodic_Supplier_Command::init (ACE_Arg_Shifter& arg_shifter)
 
           // create the supplier
           if (is_direct == 1)
-            supplier = new TAO_Notify_Tests_Direct_Supplier (direct_target);
+            {
+              supplier = new TAO_Notify_Tests_Direct_Supplier (direct_target);
+            }
           else
           {
             supplier = new TAO_Notify_Tests_Periodic_Supplier ();

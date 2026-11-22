@@ -103,7 +103,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
           std::unique_ptr<FILE, int (*) (FILE *)> load_file (
             ACE_OS::fopen ("loadtest.xml", "r"), ACE_OS::fclose);
           if (load_file)
-            pass_options.pass2 = true;
+            {
+              pass_options.pass2 = true;
+            }
           else
           {
             pass_options.pass1 = true;

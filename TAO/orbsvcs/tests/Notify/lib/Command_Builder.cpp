@@ -31,7 +31,9 @@ TAO_Notify_Tests_Command_Builder::init (int argc, ACE_TCHAR *argv[])
 
       // obtain the factory
       if (this->factory_map_.find (current_arg, factory) == -1)
-          ACE_DEBUG ((LM_DEBUG, "NS Command: %s not recognized!\n", current_arg.c_str ()));
+          {
+            ACE_DEBUG ((LM_DEBUG, "NS Command: %s not recognized!\n", current_arg.c_str ()));
+          }
       else
         {
           std::unique_ptr<TAO_Notify_Tests_Command> new_command_owner (factory->create ());
@@ -67,7 +69,9 @@ void
 TAO_Notify_Tests_Command_Builder::_register (ACE_CString command_factory_name, TAO_Notify_Tests_Command_Factory* command_factory)
 {
   if (this->factory_map_.bind (command_factory_name, command_factory) == -1)
-    ACE_DEBUG ((LM_DEBUG, "Failed to register command factory for %s\n", command_factory_name.c_str ()));
+    {
+      ACE_DEBUG ((LM_DEBUG, "Failed to register command factory for %s\n", command_factory_name.c_str ()));
+    }
   else
   {
     ACE_DEBUG ((LM_DEBUG, "Registered command factory for %s\n", command_factory_name.c_str ()));

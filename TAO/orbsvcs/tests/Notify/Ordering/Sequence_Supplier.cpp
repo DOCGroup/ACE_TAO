@@ -104,9 +104,13 @@ Supplier_Client::parse_args (int argc, ACE_TCHAR* argv[])
           {
             ACE_TCHAR const* const order = get_opts.opt_arg ();
             if (ACE_OS::strcasecmp (order, ACE_TEXT ("fifo")) == 0)
-              this->options_.order_policy = CosNotification::FifoOrder;
+              {
+                this->options_.order_policy = CosNotification::FifoOrder;
+              }
             else if (ACE_OS::strcasecmp (order, ACE_TEXT ("priority")) == 0)
-              this->options_.order_policy = CosNotification::PriorityOrder;
+              {
+                this->options_.order_policy = CosNotification::PriorityOrder;
+              }
             else if (ACE_OS::strcasecmp (order, ACE_TEXT ("deadline")) == 0)
               {
                 this->options_.order_policy = CosNotification::DeadlineOrder;

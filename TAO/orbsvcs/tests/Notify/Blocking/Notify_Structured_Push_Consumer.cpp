@@ -52,7 +52,9 @@ Notify_Structured_Push_Consumer::_connect (
   // and receive the remaining events
   properties[0].name = CORBA::string_dup (CosNotification::MaxEventsPerConsumer);
   if (blocking_timeout_ < CONSUMER_DELAY * 1000 * 1000 * 10)
-    properties[0].value <<= (CORBA::Long) expected_ - 1;
+    {
+      properties[0].value <<= (CORBA::Long) expected_ - 1;
+    }
   else
   {
     properties[0].value <<= (CORBA::Long) 10;

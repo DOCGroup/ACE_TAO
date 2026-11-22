@@ -169,7 +169,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           consumer->messages_received ()));
 
               if (client.options ().expect_fail == 1)
-                status = consumer->messages_received () == 0 ? 0 : 1;
+                {
+                  status = consumer->messages_received () == 0 ? 0 : 1;
+                }
               else
               {
                 status = consumer->messages_received () == 1 ? 0 : 1;

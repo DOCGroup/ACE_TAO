@@ -42,7 +42,9 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
               if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-PriorityModel"))) != nullptr)
                 {
                   if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("CLIENT")) == 0)
-                    priority_model_ = RTCORBA::CLIENT_PROPAGATED;
+                    {
+                      priority_model_ = RTCORBA::CLIENT_PROPAGATED;
+                    }
                   else
                   {
                     priority_model_ = RTCORBA::SERVER_DECLARED;

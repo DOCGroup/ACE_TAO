@@ -646,7 +646,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       //  client.run ();
       int const ret = client.property_tester ();
       if (ret != 0)
-        ACE_DEBUG ((LM_DEBUG, "Test failed\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG, "Test failed\n"));
+        }
       else
       {
         ACE_DEBUG ((LM_DEBUG, "Test succeeded\n"));

@@ -12,7 +12,9 @@ template <class COMMAND>
 TAO_Notify_Tests_Command_Factory_T<COMMAND>::TAO_Notify_Tests_Command_Factory_T ()
 {
   if (TAO_debug_level > 0)
+    {
       ACE_DEBUG ((LM_DEBUG, "Creating command factory for %s\n", COMMAND::name()));
+    }
 }
 
 template <class COMMAND>
@@ -28,7 +30,9 @@ TAO_Notify_Tests_Command_Factory_T<COMMAND>::init (int /*argc*/, ACE_TCHAR/*argv
     ACE_Dynamic_Service<TAO_Notify_Tests_Command_Builder>::instance (TAO_Notify_Tests_Name::command_builder);
 
   if (cmd_builder)
-    cmd_builder->_register (COMMAND::name(), this);
+    {
+      cmd_builder->_register (COMMAND::name(), this);
+    }
   else
     ACE_DEBUG ((LM_DEBUG, "Could not register command builder %s\n", COMMAND::name()));
   return 0;

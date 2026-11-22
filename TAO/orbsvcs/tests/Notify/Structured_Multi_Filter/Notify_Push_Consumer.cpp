@@ -118,14 +118,22 @@ Notify_Push_Consumer::push_structured_event (CosNotification::StructuredEvent co
   event.filterable_data[2].value >>= type;
 
   if (this->consumer_filter_ == NS_FilterType::or_op)
-    validate (type != 1 || group != 1);
+    {
+      validate (type != 1 || group != 1);
+    }
   else if (this->consumer_filter_ == NS_FilterType::and_op)
-    validate (type != 1 && group != 1);
+    {
+      validate (type != 1 && group != 1);
+    }
 
   if (this->supplier_filter_ == NS_FilterType::or_op)
-    validate (type != 0 || group != 0);
+    {
+      validate (type != 0 || group != 0);
+    }
   else if (this->supplier_filter_ == NS_FilterType::and_op)
-    validate (type != 0 && group != 0);
+    {
+      validate (type != 0 && group != 0);
+    }
 
   if (received > this->expected_)
     {
