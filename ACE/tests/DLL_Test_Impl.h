@@ -1,11 +1,9 @@
 
-//=============================================================================
 /**
  *  @file    DLL_Test_Impl.h
  *
  *  @author  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_TESTS_DLL_TEST_IMPL_H
 #define ACE_TESTS_DLL_TEST_IMPL_H

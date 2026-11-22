@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Timer_Cancellation_Test.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Irfan Pyarali <irfan@oomworks.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"

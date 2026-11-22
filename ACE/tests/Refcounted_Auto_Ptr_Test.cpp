@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Refcounted_Auto_Ptr_Test.cpp
  *
@@ -9,7 +8,6 @@
  *
  *  @author Johnny Tucker <johnny_tucker@yahoo.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/ACE.h"

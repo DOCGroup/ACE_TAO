@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Timer_Queue_Reference_Counting_Test.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Irfan Pyarali <irfan@oomworks.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Get_Opt.h"

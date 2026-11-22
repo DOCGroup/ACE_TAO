@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    TSS_Test_Errno.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "ace/Guard_T.h"
 #include "ace/Thread_Mutex.h"

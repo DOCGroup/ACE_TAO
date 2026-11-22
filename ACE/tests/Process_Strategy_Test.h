@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Process_Strategy_Test.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Doug Schmidt <d.schmidt@vanderbilt.edu> and Kevin Boyle <kboyle@sanwafp.com>
  */
-//=============================================================================
 
 #ifndef ACE_TESTS_PROCESS_STRATEGY_TEST_H
 #define ACE_TESTS_PROCESS_STRATEGY_TEST_H

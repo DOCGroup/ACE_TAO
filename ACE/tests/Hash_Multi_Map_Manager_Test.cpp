@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Hash_Multi_Map_Manager_Test.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Hash_Multi_Map_Manager_T.h"

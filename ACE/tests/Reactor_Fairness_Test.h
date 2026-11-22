@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Reactor_Fairness_Test.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Steve Huston <shuston@riverace.com>
  */
-//=============================================================================
 
 #ifndef ACE_TESTS_REACTOR_FAIRNESS_TEST_H
 #define ACE_TESTS_REACTOR_FAIRNESS_TEST_H

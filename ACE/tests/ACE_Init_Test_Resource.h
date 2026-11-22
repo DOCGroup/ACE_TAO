@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    ACE_Init_Test_Resource.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Steve Huston <shuston@riverace.com>
  */
-//=============================================================================
 
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.

@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Proactor_Test.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author @author Alexander Libman <alibman@baltimore.com>
  */
-//=============================================================================
 
 #ifndef ACE_TESTS_PROACTOR_TEST_H
 #define ACE_TESTS_PROACTOR_TEST_H

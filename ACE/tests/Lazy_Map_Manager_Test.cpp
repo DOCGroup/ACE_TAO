@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Lazy_Map_Manager_Test.cpp
  *
@@ -9,7 +8,6 @@
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Map_Manager.h"

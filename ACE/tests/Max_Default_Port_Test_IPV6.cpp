@@ -1,4 +1,3 @@
-// ============================================================================
 /**
  * @file Max_Default_Port_Test_IPV6.cpp
  *
@@ -19,7 +18,6 @@
  * @author Chanaka Liyanaarachchi <chanaka@ociweb.com>
  *         Brian Buesker <bbuesker@qualcomm.com>
  */
-// ============================================================================
 
 #include "test_config.h"
 #include "ace/Reactor.h"

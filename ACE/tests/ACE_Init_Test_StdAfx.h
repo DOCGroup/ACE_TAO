@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    ACE_Init_Test_StdAfx.h
  *
@@ -10,7 +9,6 @@
  *
  *  @author Steve Huston <shuston@riverace.com>
  */
-//=============================================================================
 
 #ifndef AFX_STDAFX_H__64FDCA02_F7F9_11D2_89B6_00A024CC68DB__INCLUDED_
 #define AFX_STDAFX_H__64FDCA02_F7F9_11D2_89B6_00A024CC68DB__INCLUDED_

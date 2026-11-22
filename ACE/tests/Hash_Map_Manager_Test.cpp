@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Hash_Map_Manager_Test.cpp
  *
@@ -10,7 +9,6 @@
  *
  *  @author James Hu <jxh@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "STL_algorithm_Test_T.h"

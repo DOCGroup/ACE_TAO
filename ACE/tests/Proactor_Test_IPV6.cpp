@@ -1,4 +1,3 @@
-// ============================================================================
 /**
  *  @file Proactor_Test_IPV6.cpp
  *
@@ -9,7 +8,6 @@
  *  @author Alexander Libman <alibman@baltimore.com>
  *  @author Brian Buesker <bbuesker@qualcomm.com> - modified for IPv6 operation
  */
-// ============================================================================
 
 #include "test_config.h"
 #include <cstring>

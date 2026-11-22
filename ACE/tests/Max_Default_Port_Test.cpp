@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Max_Default_Port_Test.cpp
  *
@@ -16,7 +15,6 @@
  *
  *  @author Chanaka Liyanaarachchi <chanaka@ociweb.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Reactor.h"

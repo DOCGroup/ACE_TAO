@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Bug_3539_Regression_Test.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Vladimir Zykov <vz@prismtech.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "TSS_Test_Errno.h"

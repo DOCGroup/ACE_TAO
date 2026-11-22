@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Enum_Interfaces_Test.cpp
  *
@@ -18,7 +17,6 @@
  *
  *  @author Michael R. MacFaden <mrm@cisco.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_sys_utsname.h"

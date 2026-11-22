@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Framework_Component_DLL.cpp
  *
@@ -9,7 +8,6 @@
  *
  *  @author Don Hinton <dhinton@ieee.org>
  */
-//=============================================================================
 
 #include "Framework_Component_DLL.h"
 #include "ace/Service_Config.h"

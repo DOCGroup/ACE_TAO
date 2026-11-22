@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Priority_Buffer_Test.cpp
  *
@@ -10,7 +9,6 @@
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Message_Queue.h"

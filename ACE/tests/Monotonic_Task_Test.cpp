@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Monotonic_Task_Test.cpp
  *
@@ -14,7 +13,6 @@
  *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Reactor.h"

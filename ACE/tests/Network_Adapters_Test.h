@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Network_Adapters_Test.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Robert S. Iakobashvili <roberti@go-WLAN.com> <coroberti@walla.co.il> Gonzalo A. Diethelm <gonzalo.diethelm@aditiva.com> made aceing
  */
-//=============================================================================
 
 #ifndef ACE_NETWORK_ADAPTERS_TEST_H
 #define ACE_NETWORK_ADAPTERS_TEST_H

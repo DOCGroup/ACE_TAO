@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Sig_Handlers_Test.cpp
  *
@@ -10,7 +9,6 @@
  *
  *  @author Douglas C. Schmidt <schmidt@dre.vanderbilt.edu> and Andreas Drescher <ace at anticat dot ch>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Reactor.h"

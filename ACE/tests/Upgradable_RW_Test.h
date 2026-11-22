@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Upgradable_RW_Test.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Michael Kircher <mk1@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_TESTS_UPGRADABLE_RW_TEST_H
 #define ACE_TESTS_UPGRADABLE_RW_TEST_H

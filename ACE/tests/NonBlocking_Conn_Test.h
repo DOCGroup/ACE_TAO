@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    NonBlocking_Conn_Test.h
  *
@@ -12,7 +11,6 @@
  *
  *  @author Irfan Pyarali <irfan@oomworks.com>
  */
-//=============================================================================
 
 #ifndef NONBLOCKING_CONN_TEST_H
 #define NONBLOCKING_CONN_TEST_H

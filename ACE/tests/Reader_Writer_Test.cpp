@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Reader_Writer_Test.cpp
  *
@@ -9,7 +8,6 @@
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu> and Doug C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Thread.h"

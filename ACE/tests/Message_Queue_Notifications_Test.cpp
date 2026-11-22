@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Message_Queue_Notifications_Test.cpp
  *
@@ -25,7 +24,6 @@
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu> and Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Reactor.h"

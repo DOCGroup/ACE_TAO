@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Map_Manager_Test.cpp
  *
@@ -11,7 +10,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author and Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Map_Manager.h"

@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file  Bug_4189_Regression_Test.cpp
  *
@@ -7,7 +6,6 @@
  * For broadcast sockets it should be possible to open the same port more than
  * once at the time on a host.
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"

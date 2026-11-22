@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Service_Config_Test.cpp
  *
@@ -10,7 +9,6 @@
  *  @author David Levine <levine@cs.wustl.edu>
  *  @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_stdio.h"

@@ -1,4 +1,3 @@
-// ============================================================================
 /**
  * @file Integer_Truncate_Test.cpp
  *
@@ -6,7 +5,6 @@
  *
  * @author Ossama Othman <ossama_othman at symantec dot com>
  */
-// ============================================================================
 
 #include "test_config.h"
 

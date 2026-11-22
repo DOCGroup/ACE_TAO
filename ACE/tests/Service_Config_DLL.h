@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file Service_Config_DLL.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef SERVICE_CONFIG_DLL_H
 #define SERVICE_CONFIG_DLL_H

@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    MT_Reactor_Timer_Test.cpp
  *
@@ -10,7 +9,6 @@
  *
  *  @author Steve Huston <shuston@riverace.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "MT_Reactor_Timer_Test.h"

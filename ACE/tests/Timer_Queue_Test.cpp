@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Timer_Queue_Test.cpp
  *
@@ -14,7 +13,6 @@
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  *  @author and Darrell Brunsch <brunsch@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "randomize.h"

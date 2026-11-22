@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    CDR_File_Test.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Giga Giguashvili <gregoryg@ParadigmGeo.com> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_Memory.h"

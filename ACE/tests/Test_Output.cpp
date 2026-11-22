@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-// ============================================================================
 /**
  *  @file Test_Output.cpp
  *
@@ -12,7 +11,6 @@
  *  @author David Levine <levine@cs.wustl.edu>
  *  @author Don Hinton <dhinton@dresystems.com>
  */
-// ============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_stdio.h"

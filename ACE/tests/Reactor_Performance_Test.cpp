@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Reactor_Performance_Test.cpp
  *
@@ -9,7 +8,6 @@
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "Reactor_Performance_Test.h"

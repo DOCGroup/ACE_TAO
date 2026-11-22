@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    UPIPE_SAP_Test.cpp
  *
@@ -10,7 +9,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author and Prashant Jain <pjain@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Stream.h"

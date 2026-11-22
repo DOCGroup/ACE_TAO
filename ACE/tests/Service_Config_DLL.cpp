@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file    Service_Config_DLL.cpp
  *
@@ -11,7 +10,6 @@
  *
  *  @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #include "Service_Config_DLL.h"
 #include "ace/Service_Config.h"

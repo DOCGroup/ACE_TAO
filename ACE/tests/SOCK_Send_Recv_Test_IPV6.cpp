@@ -1,4 +1,3 @@
-// ===========================================================================
 /**
  * @file  SOCK_Send_Recv_Test_IPV6.cpp
  *
@@ -15,7 +14,6 @@
  * @author Steve Huston <shuston@riverace.com>
  *         Brian Buesker <bbuesker@qualcomm.com>
  */
-// ============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_sys_wait.h"

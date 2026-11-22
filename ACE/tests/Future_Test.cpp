@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Future_Test.cpp
  *
@@ -14,7 +13,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author and Per Andersson <pera@ipso.se>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"

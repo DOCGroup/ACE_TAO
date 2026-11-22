@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Message_Block_Large_Copy_Test.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Phillip LaBanca <labancap@ociweb.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Message_Block.h"

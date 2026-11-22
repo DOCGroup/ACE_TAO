@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Recursive_Condition_Test.cpp
  *
@@ -9,7 +8,6 @@
  *
  *  @author Stephen Howard <stephen.e.howard@lmco.com> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"

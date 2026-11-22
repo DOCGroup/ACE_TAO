@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    MT_Reference_Counted_Event_Handler_Test.cpp
  *
@@ -17,7 +16,6 @@
  *
  *  @author Irfan Pyarali <irfan@oomworks.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Reactor.h"

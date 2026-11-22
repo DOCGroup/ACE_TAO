@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Upgradable_RW_Test.cpp
  *
@@ -10,7 +9,6 @@
  *
  *  @author Michael Kircher <mk1@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "Upgradable_RW_Test.h"
 #include "ace/OS_NS_stdio.h"

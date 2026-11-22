@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Vector_Test.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Gonzalo A. Diethelm <gonzalo.diethelm@aditiva.com> and Karl-Heinz Wind <wind@itq.de>
  */
-//=============================================================================
 
 #include <algorithm>
 

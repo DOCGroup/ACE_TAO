@@ -1,4 +1,3 @@
-// ============================================================================
 /**
  *  @file Proactor_UDP_Test.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Steve Huston <shuston@riverace.com>, based on Proactor_Test.cpp
  */
-// ============================================================================
 
 #include "test_config.h"
 

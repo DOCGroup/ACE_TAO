@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Priority_Reactor_Test.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_TESTS_PRIORITY_REACTOR_TEST_H
 #define ACE_TESTS_PRIORITY_REACTOR_TEST_H

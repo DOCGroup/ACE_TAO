@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    SOCK_Connector_Test.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Steve Huston <shuston@riverace.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"

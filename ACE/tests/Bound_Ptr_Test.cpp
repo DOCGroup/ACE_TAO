@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Bound_Ptr_Test.cpp
  *
@@ -10,7 +9,6 @@
  *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Null_Mutex.h"

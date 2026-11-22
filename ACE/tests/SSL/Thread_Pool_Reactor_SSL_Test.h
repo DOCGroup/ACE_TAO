@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Thread_Pool_Reactor_SSL_Test.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author   Irfan Pyarali <irfan@cs.wustl.edu>   Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_TESTS_THREAD_POOL_REACTOR_TEST_SSL_H
 #define ACE_TESTS_THREAD_POOL_REACTOR_TEST_SSL_H

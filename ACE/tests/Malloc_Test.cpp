@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Malloc_Test.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "Malloc_Test.h"

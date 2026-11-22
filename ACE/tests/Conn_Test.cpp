@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Conn_Test.cpp
  *
@@ -14,7 +13,6 @@
  *  @author Chris Cleeland <cleeland@cs.wustl.edu>
  *  @author and Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/SOCK_Connector.h"

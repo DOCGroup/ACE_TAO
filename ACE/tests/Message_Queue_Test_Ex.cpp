@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Message_Queue_Test_Ex.cpp
  *
@@ -14,7 +13,6 @@
  *  @author Michael Vitlo <mvitalo@sprynet.com>
  *  @author copied the code from: Irfan Pyarali <irfan@cs.wustl.edu> and David L. Levine <levine@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Thread_Manager.h"

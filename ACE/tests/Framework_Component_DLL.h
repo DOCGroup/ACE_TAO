@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Framework_Component_DLL.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Don Hinton <dhinton@ieee.org>
  */
-//=============================================================================
 
 #ifndef ACE_TESTS_FRAMEWORK_COMPONENT_DLL_H
 #define ACE_TESTS_FRAMEWORK_COMPONENT_DLL_H

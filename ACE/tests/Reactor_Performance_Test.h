@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Reactor_Performance_Test.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu> and Steve Huston <shuston@riverace.com>
  */
-//=============================================================================
 
 #ifndef ACE_TESTS_REACTOR_PERFORMANCE_TEST_H
 #define ACE_TESTS_REACTOR_PERFORMANCE_TEST_H

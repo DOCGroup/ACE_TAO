@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    RW_Process_Mutex_Test.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Steve Huston <shuston@riverace.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Process.h"

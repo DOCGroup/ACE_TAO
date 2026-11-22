@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Singleton_Test.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Singleton.h"

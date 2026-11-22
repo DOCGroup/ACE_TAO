@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    SV_Shared_Memory_Test.cpp
  *
@@ -12,7 +11,6 @@
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Malloc_T.h"

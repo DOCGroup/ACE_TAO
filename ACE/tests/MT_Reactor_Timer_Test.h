@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    MT_Reactor_Timer_Test.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Steve Huston <shuston@riverace.com>
  */
-//=============================================================================
 
 #ifndef ACE_TESTS_MT_REACTOR_TIMER_TEST_H
 #define ACE_TESTS_MT_REACTOR_TIMER_TEST_H

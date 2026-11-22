@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Future_Set_Test.cpp
  *
@@ -13,7 +12,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Per Andersson <pera@ipso.se> and Johnny Tucker <jtucker@infoglide.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"

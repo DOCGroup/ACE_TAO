@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Naming_Test.cpp
  *
@@ -9,7 +8,6 @@
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu> and Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "randomize.h"

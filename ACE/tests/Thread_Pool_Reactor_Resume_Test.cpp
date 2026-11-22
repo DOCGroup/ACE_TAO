@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Thread_Pool_Reactor_Resume_Test.cpp
  *
@@ -25,7 +24,6 @@
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"

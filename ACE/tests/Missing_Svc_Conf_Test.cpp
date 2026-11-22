@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Missing_Svc_Conf_Test.cpp
  *
@@ -17,7 +16,6 @@
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
 
 #include "ace/Service_Config.h"
 #include "ace/OS_NS_fcntl.h"

@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    CDR_Array_Test.cpp
  *
@@ -12,7 +11,6 @@
  *
  *  @author Cristian Ferretti <cristian_ferretti@yahoo.com>
  */
-//=============================================================================
 
 // For measuring time, choose your method:
 // Define:

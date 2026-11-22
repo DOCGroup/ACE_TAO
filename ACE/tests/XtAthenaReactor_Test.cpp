@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    XtAthenaReactor_Test.cpp
  *
@@ -17,7 +16,6 @@
  *
  *  @author Kirill Rybaltchenko <Kirill.Rybaltchenko@cern.ch>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/XtReactor/XtReactor.h"

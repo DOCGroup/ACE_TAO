@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Multihomed_INET_Addr_Test.cpp
  *
@@ -9,7 +8,6 @@
  *
  *  @author Edward Mulholland (emulholl@atl.lmco.com)
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"

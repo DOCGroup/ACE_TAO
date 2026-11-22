@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Process_Strategy_Test.cpp
  *
@@ -27,7 +26,6 @@
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and Kevin Boyle <kboyle@sanwafp.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include <cstring>

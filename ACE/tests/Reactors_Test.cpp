@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Reactors_Test.cpp
  *
@@ -10,7 +9,6 @@
  *  @author Detlef Becker <Detlef.Becker@med.siemens.de>
  *  @author and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Task.h"

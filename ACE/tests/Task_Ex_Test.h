@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file Task_Ex_Test.h
  *
@@ -8,7 +7,6 @@
  *
  * @author Kobi Cohen-Arazi <kobi-co@barak-online.net>
  */
-//=============================================================================
 
 #ifndef ACE_TESTS_TASK_EX_TEST_H
 #define ACE_TESTS_TASK_EX_TEST_H

@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    UUID_Test.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Andrew T. Finnel <andrew@activesol.net> and Yamuna Krishnmaurthy <yamuna@oomworks.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/UUID.h"

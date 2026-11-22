@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Refcounted_Event_Handler_Test_DevPoll.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Reactor.h"

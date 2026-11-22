@@ -1,4 +1,3 @@
-// ============================================================================
 /**
  *  @file Proactor_Scatter_Gather_Test.cpp
  *
@@ -22,7 +21,6 @@
  *  Proactor_Test.cpp.
  *
  *  @author Edan Ayal <edanayal@yahoo.com> */
-// ============================================================================
 
 #include "test_config.h"
 

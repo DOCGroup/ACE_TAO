@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Reactor_Registration_Test.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Irfan Pyarali <irfan@oomworks.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Pipe.h"

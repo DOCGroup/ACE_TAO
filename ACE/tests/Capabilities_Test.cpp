@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Capabilities_Test.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Arturo Montes <mitosys@colomsat.net.co>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_fcntl.h"

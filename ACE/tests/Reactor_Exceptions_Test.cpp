@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Reactor_Exceptions_Test.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Luca Priorelli <lucapri@mbox.vol.it> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Reactor.h"

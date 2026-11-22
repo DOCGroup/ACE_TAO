@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    DLList_Test.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author James Hu <jxh@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Containers.h"

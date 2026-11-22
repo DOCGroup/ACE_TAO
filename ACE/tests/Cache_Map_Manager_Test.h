@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Cache_Map_Manager_Test.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef __ACE_CACHE_MAP_MANAGER_TEST_H
 #define __ACE_CACHE_MAP_MANAGER_TEST_H

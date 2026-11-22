@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Message_Block_Test.cpp
  *
@@ -9,7 +8,6 @@
  *
  *  @author Doug Schmidt <d.schmidt@vanderbilt.edu> and Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Message_Block.h"

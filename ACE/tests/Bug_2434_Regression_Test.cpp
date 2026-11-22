@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Bug_2434_Regression_Test.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu> and David Levine <levine@cs.wustl.edu>
  */
-//=============================================================================
 
 // Note, for this test the config.h file *must* come first!
 #include "ace/config-all.h"

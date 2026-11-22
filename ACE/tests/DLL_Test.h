@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ================================================================
 /**
  * @file DLL_Test.h
  *
  * @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  */
-// ================================================================
 
 #ifndef ACE_TESTS_DLL_TEST_H
 #define ACE_TESTS_DLL_TEST_H

@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    MT_NonBlocking_Connect_Test.cpp
  *
@@ -13,7 +12,6 @@
  *
  *  @author Vladimir Zykov <vladimir.zykov@prismtech.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Reactor.h"

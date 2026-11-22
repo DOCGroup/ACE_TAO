@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Dirent_Test.cpp
  *
@@ -15,7 +14,6 @@
  *  @author Rich Newman <RNewman@directv.com>
  *  @author and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Dirent.h"

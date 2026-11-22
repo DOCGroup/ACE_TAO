@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    TP_Reactor_Test.h
  *
@@ -8,7 +7,6 @@
  *  @author Alexander Libman <alibman@ihug.com.au>
  *  @author <alexl@rumblgroup.com>
  */
-//=============================================================================
 
 #ifndef ACE_TESTS_TP_REACTOR_TEST_H
 #define ACE_TESTS_TP_REACTOR_TEST_H

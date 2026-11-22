@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Future_Stress_Test.cpp
  *
@@ -13,7 +12,6 @@
  *
  *  @author Andres Kruse <Frank.Hilliger@cs-sol.de>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include <ace/Time_Value.h>

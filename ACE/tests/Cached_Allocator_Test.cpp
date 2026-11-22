@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Cached_Allocator_Test.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Jaroslaw Nozderko <jareknz@polbox.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"

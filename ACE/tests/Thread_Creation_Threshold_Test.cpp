@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Thread_Creation_Threshold_Test.cpp
  *
@@ -10,7 +9,6 @@
  *
  *  @author Chris Cleeland <cleeland@ociweb.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Atomic_Op.h"

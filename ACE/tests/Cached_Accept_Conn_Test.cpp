@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Cached_Accept_Conn_Test.cpp
  *
@@ -13,7 +12,6 @@
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef CACHED_ACCEPT_CONNECTION_TEST
 #define CACHED_ACCEPT_CONNECTION_TEST

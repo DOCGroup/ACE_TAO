@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Bound_Ptr_Test.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author @author Christopher Kohlhoff <chris@kohlhoff.com>
  */
-//=============================================================================
 
 #ifndef ACE_TESTS_BOUND_PTR_TEST_H
 #define ACE_TESTS_BOUND_PTR_TEST_H

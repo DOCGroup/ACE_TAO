@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Refcounted_Auto_Ptr_Test.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Steve Huston  <shuston@riverace.com>
  */
-//=============================================================================
 
 #ifndef ACE_TESTS_REFCOUNTED_AUTO_PTR_TEST_H
 #define ACE_TESTS_REFCOUNTED_AUTO_PTR_TEST_H

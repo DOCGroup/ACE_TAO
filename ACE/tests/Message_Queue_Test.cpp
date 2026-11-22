@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Message_Queue_Test.cpp
  *
@@ -18,7 +17,6 @@
  *  @author David L. Levine <levine@cs.wustl.edu>
  *  @author and Douglas C. Schmidt <schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Atomic_Op.h"

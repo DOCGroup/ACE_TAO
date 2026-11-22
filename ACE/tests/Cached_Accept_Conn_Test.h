@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Cached_Accept_Conn_Test.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_TESTS_CACHED_ACCEPT_CONN_TEST_H
 #define ACE_TESTS_CACHED_ACCEPT_CONN_TEST_H

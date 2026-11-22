@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Max_Default_Port_Test.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Chanaka Liyanaarachchi <chanaka@ociweb.com>
  */
-//=============================================================================
 
 #ifndef ACE_TESTS_MAX_DEFAULT_PORT_TEST
 #define ACE_TESTS_MAX_DEFAULT_PORT_TEST

@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Process_Manual_Event_Test.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Process.h"

@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Config_Test.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Michael Searles <msearles@base16.com> and Jerry D. Odenwelder Jr. <jerry.o@mindspring.com>
  */
-//=============================================================================
 
 #ifndef __CONFIG_TEST_H
 #define __CONFIG_TEST_H

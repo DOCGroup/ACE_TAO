@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Basic_Types_Test.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author David L. Levine <levine@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "ace/config-all.h"
 // Don't use the ACE version accessors in class ACE, so that we can

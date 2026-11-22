@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    SOCK_Dgram_Test.cpp
  *
@@ -9,7 +8,6 @@
  *
  *  @author Brian Buesker (bbuesker@qualcomm.com)
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"

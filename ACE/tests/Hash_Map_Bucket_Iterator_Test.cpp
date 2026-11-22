@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Hash_Map_Bucket_Iterator_Test.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_stdlib.h"

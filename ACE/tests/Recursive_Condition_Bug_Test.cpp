@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Recursive_Condition_Bug_Test.cpp
  *
@@ -12,7 +11,6 @@
  *
  *  @author Leonid Kvetnyi <leonidk@nice.com> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_sys_time.h"

@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file      Reactor_Notify_Test.cpp
  *
@@ -12,7 +11,6 @@
  *
  *  @author   Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"

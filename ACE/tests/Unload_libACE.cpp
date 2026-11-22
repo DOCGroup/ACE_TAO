@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Unload_libACE.cpp
  *
@@ -10,7 +9,6 @@
  *
  *  @author David Smith <dts@prismtech.com> and Don Sharp <Donald.Sharp@prismtech.com>
  */
-//=============================================================================
 
 //FUZZ: disable check_for_lack_ACE_OS
 //FUZZ: disable check_for_improper_main_declaration

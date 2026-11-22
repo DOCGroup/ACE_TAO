@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Multihomed_INET_Addr_Test_IPV6.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Edward Mulholland (emulholl@atl.lmco.com) Brian Buesker (bbuesker@qualcomm.com) - Added testing of                                         ACE_Multihomed_INET_Addr class                                         using IPv6 addresses based on                                         Multihomed_INET_Addr_Test.
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"

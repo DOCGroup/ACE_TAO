@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Semaphore_Test.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Thread_Semaphore.h"

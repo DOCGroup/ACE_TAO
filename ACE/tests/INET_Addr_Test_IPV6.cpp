@@ -1,4 +1,3 @@
-// ============================================================================
 /**
  * @file INET_Addr_Test_IPV6.cpp
  *
@@ -9,7 +8,6 @@
  * @author John Aughey <jha@aughey.com>
  *         Brian Buesker <bbuesker@qualcomm.com>
  */
-// ============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"

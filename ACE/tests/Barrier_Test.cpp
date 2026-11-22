@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Barrier_Test.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Barrier.h"

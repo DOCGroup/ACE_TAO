@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Process_Manager_Test.cpp
  *
@@ -15,7 +14,6 @@
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and Dave Madden <dhm@mersenne.com>
  */
-//=============================================================================
 
 #include <string>
 

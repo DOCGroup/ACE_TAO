@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Unbounded_Set_Test.cpp
  *
@@ -9,7 +8,6 @@
  *  @author Rudolf Weber <rfweber@tesionmail.de>
  *  @author ace/tests integration <Oliver.Kellogg@sysde.eads.net>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include <ace/Unbounded_Set.h>

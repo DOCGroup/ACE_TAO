@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Dev_Poll_Reactor_Echo_Test.cpp
  *
@@ -8,7 +7,6 @@
  *  receive a message then send a messages.
  *  @author Justin Wilson <wilsonj@ociweb.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 

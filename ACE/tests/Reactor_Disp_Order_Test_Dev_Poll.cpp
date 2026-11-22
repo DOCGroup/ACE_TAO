@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Reactor_Disp_Order_Test_Dev_Poll.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Reactor.h"

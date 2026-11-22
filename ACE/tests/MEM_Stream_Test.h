@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    MEM_Stream_Test.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Steve Huston <shuston@riverace.com>
  */
-//=============================================================================
 
 #ifndef ACE_TESTS_MEM_STREAM_TEST_H
 #define ACE_TESTS_MEM_STREAM_TEST_H

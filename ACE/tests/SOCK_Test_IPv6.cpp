@@ -1,4 +1,3 @@
-// ============================================================================
 /**
  * @file SOCK_Test_IPv6.cpp
  *
@@ -13,7 +12,6 @@
  *         Doug Schmidt <d.schmidt@vanderbilt.edu>
  *         Brian Buesker <bbuesker@qualcomm.com>
  */
-// ============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_sys_select.h"

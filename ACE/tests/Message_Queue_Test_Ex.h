@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file Message_Queue_Test_Ex.h
  *
@@ -11,7 +10,6 @@
  * @author David L. Levine <levine@cs.wustl.edu>
  * @author Guy Peleg <guy.peleg@amdocs.com>
  */
-//=============================================================================
 
 #ifndef ACE_TESTS_MESSAGE_QUEUE_TEST_EX_H
 #define ACE_TESTS_MESSAGE_QUEUE_TEST_EX_H

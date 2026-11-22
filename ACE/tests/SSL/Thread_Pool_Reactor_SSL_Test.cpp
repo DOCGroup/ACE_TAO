@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Thread_Pool_Reactor_SSL_Test.cpp
  *
@@ -30,7 +29,6 @@
  *
  *  @author   Irfan Pyarali <irfan@cs.wustl.edu> and   Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "../test_config.h"
 #include "ace/OS_NS_string.h"

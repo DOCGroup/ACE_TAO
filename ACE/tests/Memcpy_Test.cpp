@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Memcpy_Test.cpp
  *
@@ -7,7 +6,6 @@
  * This test compares the performance of ACE_OS::memcpy with
  * that of smemcpy which unrolls the memcpy loop upto size = 16.
  */
-//=============================================================================
 
 #include "ace/OS_NS_string.h"
 #include "ace/High_Res_Timer.h"

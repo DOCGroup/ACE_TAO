@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    SOCK_Dgram_Bcast_Test.cpp
  *
@@ -13,7 +12,6 @@
  *
  *  @author Marek Brudka (mbrudka@elka.pw.edu.pl)
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"

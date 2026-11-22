@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Process_Semaphore_Test.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Mutex.h"

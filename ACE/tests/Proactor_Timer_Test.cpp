@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Proactor_Timer_Test.cpp
  *
@@ -11,7 +10,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author and Miljenko Norsic <Miljenko.Norsic@etk.ericsson.se>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Trace.h"

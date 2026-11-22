@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    DLL_Test_Impl.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "DLL_Test_Impl.h"
 #include "ace/ACE.h"

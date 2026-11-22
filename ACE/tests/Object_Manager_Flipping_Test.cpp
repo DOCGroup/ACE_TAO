@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Object_Manager_Flipping_Test.cpp
  *
@@ -13,7 +12,6 @@
  *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Object_Manager.h"

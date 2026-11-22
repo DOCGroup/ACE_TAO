@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Priority_Reactor_Test.cpp
  *
@@ -14,7 +13,6 @@
  *
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Get_Opt.h"

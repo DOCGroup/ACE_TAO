@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    NonBlocking_Conn_Test.cpp
  *
@@ -12,7 +11,6 @@
  *
  *  @author Irfan Pyarali <irfan@oomworks.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "NonBlocking_Conn_Test.h"

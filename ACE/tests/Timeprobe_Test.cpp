@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Timeprobe_Test.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 //#define ACE_ENABLE_TIMEPROBES
 //#define ACE_MT_TIMEPROBES

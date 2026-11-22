@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Config_Test.cpp
  *
@@ -10,7 +9,6 @@
  *  @author Chris Hafey <chafey@stentor.com>
  *  @author and Jerry D. Odenwelder Jr. <jerry.o@mindspring.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "Config_Test.h"

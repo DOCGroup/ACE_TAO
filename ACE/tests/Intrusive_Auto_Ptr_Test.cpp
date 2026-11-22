@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Intrusive_Auto_Ptr_Test.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Intrusive_Auto_Ptr.h"
