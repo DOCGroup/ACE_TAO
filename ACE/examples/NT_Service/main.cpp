@@ -240,9 +240,11 @@ Process::run (int argc, ACE_TCHAR* argv[])
                           SERVICE::instance (),
                           ret);
       if (ret == 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%p\n"),
-                    ACE_TEXT ("Couldn't start service")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("Couldn't start service")));
+        }
       else
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%T (%t): Service stopped.\n")));
     }

@@ -155,7 +155,9 @@ Handle_R_Stream::handle_input (ACE_HANDLE)
   ACE_OS::puts (ACE_TEXT ("----------------------------------------"));
 
   while ((bytes = this->new_remote_stream.recv (buf, sizeof buf)) > 0)
-    ACE_OS::write (ACE_STDOUT, buf, bytes);
+    {
+      ACE_OS::write (ACE_STDOUT, buf, bytes);
+    }
 
   ACE_OS::puts (ACE_TEXT ("----------------------------------------"));
 
