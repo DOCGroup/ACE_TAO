@@ -35,28 +35,28 @@ ImR_Locator_Shutdown::operator () (int /*sig*/)
 int
 run_standalone (Options& opts)
 {
-  ImR_Locator_i server;
+  ImR_Locator_i locator;
 
-  ImR_Locator_Shutdown killer (server);
+  ImR_Locator_Shutdown killer (locator);
   Service_Shutdown kill_contractor(killer);
 
   try
     {
-      int status = server.init (opts);
-      if (status == -1)
+      int init_status = locator.init (opts);
+      if (init_status == -1)
         {
-          server.fini ();
+          locator.fini ();
           return 1;
         }
       else
         {
           // Run the server if it is initialized correctly.
-          server.run ();
+          locator.run ();
 
           // End the server after its work is done.
-          status = server.fini ();
+          init_status = locator.fini ();
 
-          if (status == -1)
+          if (init_status == -1)
           {
             return 1;
           }
@@ -179,9 +179,9 @@ run_service_command (Options& opts)
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  Options opts;
+  Options options;
 
-  int result = opts.init (argc, argv);
+  int result = options.init (argc, argv);
   if (result < 0)
   {
     return 1;  // Error
@@ -191,7 +191,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     return 0;  // No error, but we should exit anyway.
   }
 
-  result = run_service_command(opts);
+  result = run_service_command(options);
   if (result < 0)
   {
     return 1;  // Error
@@ -201,10 +201,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     return 0;  // No error, but we should exit anyway.
   }
 
-  if (opts.service ())
+  if (options.service ())
   {
     return run_service ();
   }
 
-  return run_standalone (opts);
+  return run_standalone (options);
 }

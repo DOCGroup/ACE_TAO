@@ -60,8 +60,7 @@ Foo_C_Custom_Proxy::op2(CORBA::Long x)
 CORBA::Long
 Foo_C_Custom_Proxy::op3(CORBA::Long x)
 {
-  CORBA::Long result = this->objref_->op3(x);
-  return result;
+  return this->objref_->op3(x);
 }
 
 void

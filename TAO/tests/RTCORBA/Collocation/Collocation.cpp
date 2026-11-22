@@ -718,14 +718,14 @@ Server::start_testing ()
   Tests::ITERATOR iterator (this->tests_);
   while (!iterator.done ())
     {
-      Test_Object_And_Servant *test {};
-      iterator.next (test);
+      Test_Object_And_Servant *test_object_and_servant {};
+      iterator.next (test_object_and_servant);
 
-      setup_test_parameters (test,
+      setup_test_parameters (test_object_and_servant,
                              this->current_.in (),
                              this->orb_.in ());
 
-      test->object_->start ();
+      test_object_and_servant->object_->start ();
 
       iterator.advance ();
     }

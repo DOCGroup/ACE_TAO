@@ -81,8 +81,8 @@ AccountManager_i::close (Bank::Account_ptr account)
                  ACE_TEXT ("[SERVER] Process/Thread Id : (%P/%t) Closing Account for %C\n"),
                  name.in ()));
 
-      Account_i_var account;
-      if (hash_map_.unbind (name.in (), account) == -1)
+      Account_i_var account_impl;
+      if (hash_map_.unbind (name.in (), account_impl) == -1)
         {
           if (TAO_debug_level > 0)
             {
@@ -91,12 +91,12 @@ AccountManager_i::close (Bank::Account_ptr account)
             }
         }
 
-      if (!account.is_nil ())
+      if (!account_impl.is_nil ())
         {
-          PortableServer::POA_var account_poa = account->_default_POA ();
+          PortableServer::POA_var account_poa = account_impl->_default_POA ();
 
           PortableServer::ObjectId_var account_id =
-            account_poa->servant_to_id (account.in ());
+            account_poa->servant_to_id (account_impl.in ());
 
           account_poa->deactivate_object (account_id.in ());
         }

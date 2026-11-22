@@ -94,12 +94,12 @@ Peer_Base::setup_loopback (CORBA::Long experiment_id,
                     this->poa_.in (),
                     this->event_channel_.in ()));
 
-  Auto_Disconnect<Loopback> disconnect (loopback);
+  Auto_Disconnect<Loopback> disconnect_guard (loopback);
 
   Federated_Test::Loopback_var lb =
     loopback->_this ();
 
-  disconnect.release ();
+  disconnect_guard.release ();
 
   return lb._retn ();
 }

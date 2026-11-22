@@ -29,8 +29,8 @@ Reply_Handler::next_prime_excep (
 
       this->orb_->shutdown (false);
     }
-  catch (CORBA::Exception const &ex)
+  catch (CORBA::Exception const &caught_exception)
     {
-      ex._tao_print_exception ("Caught exception:");
+      caught_exception._tao_print_exception ("Caught exception:");
     }
 }

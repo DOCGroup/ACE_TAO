@@ -162,10 +162,10 @@ DT_Creator::init (int argc, ACE_TCHAR *argv [])
         {
           arg_shifter.consume_arg ();
 
-          Job_i *job {};
-          ACE_NEW_RETURN (job, Job_i (this), -1);
-          PortableServer::ServantBase_var job_servant (job);
-          if (job->init (arg_shifter) == -1)
+          Job_i *job_impl {};
+          ACE_NEW_RETURN (job_impl, Job_i (this), -1);
+          PortableServer::ServantBase_var job_servant (job_impl);
+          if (job_impl->init (arg_shifter) == -1)
           {
             return -1;
           }
@@ -193,18 +193,18 @@ DT_Creator::init (int argc, ACE_TCHAR *argv [])
 void
 DT_Creator::register_synch_obj ()
 {
-  CosNaming::Name name (1);
-  name.length (1);
+  CosNaming::Name naming_name (1);
+  naming_name.length (1);
 
   CosNaming::NamingContext_var synch_context;
 
   try
     {
       // Try binding the sender context in the NS
-      name [0].id =
+      naming_name [0].id =
         CORBA::string_dup ("Synch");
 
-      synch_context = this->naming_->bind_new_context (name);
+      synch_context = this->naming_->bind_new_context (naming_name);
 
       //
       // We reach here if there was no exception raised in
@@ -220,11 +220,11 @@ DT_Creator::register_synch_obj ()
       //
 
       // Get the synch context.
-      name [0].id =
+      naming_name [0].id =
         CORBA::string_dup ("Synch");
 
       CORBA::Object_var object =
-        this->naming_->resolve (name);
+        this->naming_->resolve (naming_name);
 
       synch_context = CosNaming::NamingContext::_narrow (object.in ());
     }
@@ -236,7 +236,7 @@ DT_Creator::register_synch_obj ()
   ACE_OS::sprintf(buf, "%lu", static_cast<unsigned long> (timestamp.sec ()));
   synch_name += buf;
 
-  name [0].id =
+  naming_name [0].id =
     CORBA::string_dup (synch_name.c_str ());
 
   ACE_DEBUG ((LM_DEBUG,
@@ -246,11 +246,11 @@ DT_Creator::register_synch_obj ()
   ACE_NEW (synch_,
      Synch_i);
 
-  Synch_var synch = synch_->_this ();
+  Synch_var synch_object = synch_->_this ();
 
   // Register the synch object with the Synch context.
-  synch_context->rebind (name,
-       synch.in ());
+  synch_context->rebind (naming_name,
+                         synch_object.in ());
 }
 
 int
@@ -291,9 +291,9 @@ DT_Creator::activate_poa_list ()
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in ());
 
-      for (std::unique_ptr<POA_Holder> const & poa : this->poa_list_)
+      for (std::unique_ptr<POA_Holder> const & poa_holder : this->poa_list_)
         {
-          poa->activate (rt_orb.in(), root_poa.in ());
+          poa_holder->activate (rt_orb.in(), root_poa.in ());
         }
     }
 }
@@ -317,21 +317,21 @@ DT_Creator::activate_job_list ()
     {
       ++active_job_count_;
 
-      Job_i * const job = dynamic_cast<Job_i *> (job_servant.in ());
+      Job_i * const job_impl = dynamic_cast<Job_i *> (job_servant.in ());
 
       if (TAO_debug_level > 0)
       {
-        ACE_DEBUG ((LM_DEBUG, "Activating job:%C\n", job->name ().c_str ()));
+        ACE_DEBUG ((LM_DEBUG, "Activating job:%C\n", job_impl->name ().c_str ()));
       }
 
       // find your poa
       PortableServer::POA_var host_poa =
-        root_poa->find_POA (job->poa ().c_str (), false);
+        root_poa->find_POA (job_impl->poa ().c_str (), false);
 
       // Register with poa.
       PortableServer::ObjectId_var id;
 
-      id = host_poa->activate_object (job);
+      id = host_poa->activate_object (job_impl);
 
       CORBA::Object_var server =
         host_poa->id_to_reference (id.in ());
@@ -339,12 +339,12 @@ DT_Creator::activate_job_list ()
       CORBA::String_var ior =
         orb_->object_to_string (server.in ());
 
-      const ACE_CString &job_name = job->name ();
+      const ACE_CString &job_name = job_impl->name ();
 
-      CosNaming::Name_var name =
+      CosNaming::Name_var naming_name =
         this->naming_->to_name (job_name.c_str ());
 
-      this->naming_->rebind (name.in (),
+      this->naming_->rebind (naming_name.in (),
                              server.in ());
     } /* while */
 
@@ -369,21 +369,21 @@ DT_Creator::activate_schedule ()
       if (task->dist ())
   {
     // resolve the object from the naming service
-    CosNaming::Name name (1);
-    name.length (1);
-    name[0].id = CORBA::string_dup (task->job ());
+    CosNaming::Name naming_name (1);
+    naming_name.length (1);
+    naming_name[0].id = CORBA::string_dup (task->job ());
 
     CORBA::Object_var obj =
-      this->naming_->resolve (name);
+      this->naming_->resolve (naming_name);
 
-    Job_var job = Job::_narrow (obj.in ());
+    Job_var job_object = Job::_narrow (obj.in ());
 
     //    if (TAO_debug_level > 0)
     // {
         // Check that the object is configured with some
         // PriorityModelPolicy.
         CORBA::Policy_var policy =
-    job->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE);
+    job_object->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE);
 
         RTCORBA::PriorityModelPolicy_var priority_policy =
     RTCORBA::PriorityModelPolicy::_narrow (policy.in ());
@@ -464,12 +464,12 @@ DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current)
         }
     }
 
-  CORBA::Policy_var sched_param;
-  sched_param = this->sched_param (100);
-  char const *name {};
-  current->begin_scheduling_segment (name,
-              sched_param.in (),
-              sched_param.in ());
+  CORBA::Policy_var scheduling_policy;
+  scheduling_policy = this->sched_param (100);
+  char const *scheduling_segment_name {};
+  current->begin_scheduling_segment (scheduling_segment_name,
+                                     scheduling_policy.in (),
+                                     scheduling_policy.in ());
 
   this->base_time_ = std::make_unique<ACE_Time_Value> (
     *this->synch ()->base_time ());
@@ -502,9 +502,9 @@ DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current)
           yield (suspension_time, task);
         }
 
-      sched_param = this->sched_param (task->importance ());
+      scheduling_policy = this->sched_param (task->importance ());
       task->activate_task (current,
-                           sched_param.in (),
+                           scheduling_policy.in (),
                            flags,
                            this->base_time_.get ());
 
@@ -513,7 +513,7 @@ DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current)
 
   this->wait ();
 
-  current->end_scheduling_segment (name);
+  current->end_scheduling_segment (scheduling_segment_name);
 
   this->check_ifexit ();
 }
@@ -565,10 +565,10 @@ DT_Creator::check_ifexit ()
     }
 
   {
-    static int shutdown = 0;
+    static int shutdown_started = 0;
     ACE_GUARD (ACE_Lock, ace_mon, *shutdown_lock_);
 
-    if (!shutdown)
+    if (!shutdown_started)
       {
   // All tasks have finished and all jobs have been shutdown.
   if (active_dt_count_ == 0 && active_job_count_ == 0)
@@ -589,7 +589,7 @@ DT_Creator::check_ifexit ()
       TASK_STATS::instance ()->dump_samples (file_name_.c_str (),
                ACE_TEXT("#Schedule Output"));
 
-      shutdown = 1;
+      shutdown_started = 1;
 
       FILE* log_file = ACE_OS::fopen (log_file_name_.c_str (), "w");
 

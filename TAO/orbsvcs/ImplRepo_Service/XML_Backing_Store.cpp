@@ -110,7 +110,7 @@ XML_Backing_Store::persist (FILE* fp,
     }
 
   ACE_CString activator = ACEXML_escape_cstring (info.activator);
-  ACE_CString cmdline = ACEXML_escape_cstring (info.cmdline);
+  ACE_CString command_line = ACEXML_escape_cstring (info.cmdline);
   ACE_CString wdir = ACEXML_escape_cstring (info.dir);
   ACE_CString partial_ior = ACEXML_escape_cstring (info.partial_ior);
   ACE_CString ior = ACEXML_escape_cstring (info.ior);
@@ -122,7 +122,7 @@ XML_Backing_Store::persist (FILE* fp,
   ACE_OS::fprintf (fp, " %s=\"%s\"", Locator_XMLHandler::SERVER_TAG, server_id.c_str ());
   ACE_OS::fprintf (fp, " %s=\"%s\"", Locator_XMLHandler::POANAME_TAG, pname.c_str ());
   ACE_OS::fprintf (fp, " %s=\"%s\"", Locator_XMLHandler::ACTNAME_TAG, activator.c_str ());
-  ACE_OS::fprintf (fp, " %s=\"%s\"", Locator_XMLHandler::CMDLINE_TAG, cmdline.c_str ());
+  ACE_OS::fprintf (fp, " %s=\"%s\"", Locator_XMLHandler::CMDLINE_TAG, command_line.c_str ());
   ACE_OS::fprintf (fp, " %s=\"%s\"", Locator_XMLHandler::DIR_TAG, wdir.c_str ());
   ACE_OS::fprintf (fp, " %s=\"%s\"", Locator_XMLHandler::MODE_TAG, amodestr.c_str ());
   ACE_OS::fprintf (fp, " %s=\"%d\"", Locator_XMLHandler::LIMIT_TAG, info.start_limit_);
