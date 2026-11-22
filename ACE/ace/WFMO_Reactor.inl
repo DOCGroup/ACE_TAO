@@ -680,9 +680,11 @@ ACE_WFMO_Reactor::suspend_handler (ACE_HANDLE handle)
                                           changes_required);
 
   if (changes_required)
-    // Wake up all threads in WaitForMultipleObjects so that they can
-    // reconsult the handle set
-    this->wakeup_all_threads ();
+    {
+      // Wake up all threads in WaitForMultipleObjects so that they can
+      // reconsult the handle set
+      this->wakeup_all_threads ();
+    }
 
   return result;
 }
@@ -734,7 +736,9 @@ ACE_WFMO_Reactor::suspend_handlers ()
         this->handler_rep_.suspend_handler_i (this->handler_rep_.current_handles_[i],
                                               changes_required);
       if (result == -1)
-        error = true;
+        {
+          error = true;
+        }
     }
 
   // Then suspend all to_be_added_handles
@@ -755,7 +759,9 @@ ACE_WFMO_Reactor::suspend_handlers ()
                                                   changes_required);
         }
       if (result == -1)
-        error = true;
+        {
+          error = true;
+        }
     }
 
   // Wake up all threads in WaitForMultipleObjects so that they can
@@ -775,9 +781,11 @@ ACE_WFMO_Reactor::resume_handler (ACE_HANDLE handle)
     this->handler_rep_.resume_handler_i (handle, changes_required);
 
   if (changes_required)
-    // Wake up all threads in WaitForMultipleObjects so that they can
-    // reconsult the handle set
-    this->wakeup_all_threads ();
+    {
+      // Wake up all threads in WaitForMultipleObjects so that they can
+      // reconsult the handle set
+      this->wakeup_all_threads ();
+    }
 
   return result;
 }
@@ -799,7 +807,9 @@ ACE_WFMO_Reactor::resume_handler (const ACE_Handle_Set &handles)
 
   while ((h = handle_iter ()) != ACE_INVALID_HANDLE)
     if (this->handler_rep_.resume_handler_i (h, changes_required) == -1)
-      return -1;
+      {
+        return -1;
+      }
 
   // Wake up all threads in WaitForMultipleObjects so that they can
   // reconsult the handle set
@@ -824,7 +834,9 @@ ACE_WFMO_Reactor::resume_handlers ()
         this->handler_rep_.resume_handler_i (this->handler_rep_.current_suspended_info_[i].event_handle_,
                                              changes_required);
       if (result == -1)
-        error = true;
+        {
+          error = true;
+        }
     }
 
   // Then resume all to_be_added_handles
@@ -845,7 +857,9 @@ ACE_WFMO_Reactor::resume_handlers ()
                                                 changes_required);
         }
       if (result == -1)
-        error = true;
+        {
+          error = true;
+        }
     }
 
   // Wake up all threads in WaitForMultipleObjects so that they can
@@ -921,7 +935,9 @@ ACE_WFMO_Reactor::owner (ACE_thread_t new_owner, ACE_thread_t *old_owner)
   this->new_owner_ = new_owner;
 
   if (old_owner != nullptr)
-    *old_owner = this->owner_i ();
+    {
+      *old_owner = this->owner_i ();
+    }
 
   // Wake up all threads in WaitForMultipleObjects so that they can
   // reconsult the new owner responsibilities
@@ -1050,9 +1066,13 @@ ACE_WFMO_Reactor::handler (int signum, ACE_Event_Handler **eh)
   ACE_Event_Handler *handler = this->signal_handler_->handler (signum);
 
   if (handler == nullptr)
-    return -1;
+    {
+      return -1;
+    }
   else if (eh != nullptr)
-    *eh = handler;
+    {
+      *eh = handler;
+    }
   return 0;
 }
 
