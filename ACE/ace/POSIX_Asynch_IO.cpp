@@ -162,12 +162,12 @@ ACE_POSIX_Asynch_Operation::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
   // Proactor.
 
   // If no proactor was passed
-  if (this->proactor_ == 0)
+  if (this->proactor_ == nullptr)
     {
       // Grab the proactor from the <Service_Config> if
       // <handler->proactor> is zero
       this->proactor_ = this->handler_->proactor ();
-      if (this->proactor_ == 0)
+      if (this->proactor_ == nullptr)
         this->proactor_ = ACE_Proactor::instance();
     }
 #endif /* 0 */
