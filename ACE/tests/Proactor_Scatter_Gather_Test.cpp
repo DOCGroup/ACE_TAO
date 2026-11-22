@@ -94,11 +94,15 @@ static int allocate_chunks_chain (ACE_Message_Block *&head_mb,
           ACE_Message_Block *mb = new ACE_Message_Block (static_cast<char *> (addr),
                                                          chunk_size);
           if (!head_mb)
-            head_mb = mb;
+            {
+              head_mb = mb;
+            }
 
           // chain them together
           if (pre_mb)
-            pre_mb->cont (mb);
+            {
+              pre_mb->cont (mb);
+            }
           pre_mb = mb;
         }
       else
@@ -136,7 +140,9 @@ last_chunk (ACE_Message_Block *chain,
             ACE_Message_Block *&last)
 {
   if (!chain)
-    return 0;
+    {
+      return 0;
+    }
 
   int index = 1;
   last = chain;
@@ -192,7 +198,9 @@ split_odd_even_chains (ACE_Message_Block *odd_mb,
 
   pre_pre_mb->cont (0);
   if (pre_mb)
-    pre_mb->cont (0);
+    {
+      pre_mb->cont (0);
+    }
 }
 
 static void
@@ -200,13 +208,17 @@ add_to_chunks_chain (ACE_Message_Block *&chunks_chain,
                      ACE_Message_Block *additional_chunks_chain)
 {
   if (0 == chunks_chain)
-    chunks_chain = additional_chunks_chain;
+    {
+      chunks_chain = additional_chunks_chain;
+    }
   else
     {
       ACE_Message_Block *last {};
       last_chunk (chunks_chain, last);
       if (last)
-        last->cont (additional_chunks_chain);
+        {
+          last->cont (additional_chunks_chain);
+        }
     }
 }
 
@@ -214,7 +226,9 @@ static void
 remove_empty_chunks (ACE_Message_Block *&chunks_chain)
 {
   if (0 == chunks_chain)
-    return;
+    {
+      return;
+    }
 
   ACE_Message_Block *first_empty = chunks_chain;
   ACE_Message_Block *pre_mb {};
@@ -383,7 +397,9 @@ Receiver::Receiver (Acceptor * acceptor, int index)
   Receiver::writer_->on_new_receiver ();
 
   if (this->acceptor_ != 0)
-    this->acceptor_->on_new_receiver (*this);
+    {
+      this->acceptor_->on_new_receiver (*this);
+    }
 }
 
 Receiver::~Receiver ()
@@ -392,10 +408,14 @@ Receiver::~Receiver ()
               ACE_TEXT ("Receiver::~Receiver\n")));
 
   if (this->acceptor_ != 0)
-    this->acceptor_->on_delete_receiver (*this);
+    {
+      this->acceptor_->on_delete_receiver (*this);
+    }
 
   if (this->socket_handle_ != ACE_INVALID_HANDLE)
-    ACE_OS::closesocket (this->socket_handle_);
+    {
+      ACE_OS::closesocket (this->socket_handle_);
+    }
 
   Receiver::writer_->on_delete_receiver ();
 
@@ -410,7 +430,9 @@ void
 Receiver::check_destroy ()
 {
   if (this->io_count_ <= 0)
-    delete this;
+    {
+      delete this;
+    }
 }
 
 void
@@ -420,13 +442,17 @@ Receiver::open (ACE_HANDLE handle, ACE_Message_Block &)
 
   // Open the ACE_Asynch_Read_Stream
   if (this->rs_.open (*this, this->socket_handle_) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("Receiver::ACE_Asynch_Read_Stream::open")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("Receiver::ACE_Asynch_Read_Stream::open")));
+    }
   else
     {
       if (this->odd_)
-        Receiver::writer_->open ();
+        {
+          Receiver::writer_->open ();
+        }
 
       this->initiate_read_stream ();
     }
@@ -438,7 +464,9 @@ int
 Receiver::initiate_read_stream ()
 {
   if (!Receiver::writer_)
-    return -1;
+    {
+      return -1;
+    }
 
   // how many chunks to allocate?
   size_t number_of_new_chunks = (this->partial_chunk_ ?
