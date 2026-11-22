@@ -193,9 +193,11 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
   multi_addr.addr_to_string (buf, BUFSIZ);
 
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "TAO_AV_SCTP_SEQ_Base_Acceptor::open: %s",
-                buf));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                  "TAO_AV_SCTP_SEQ_Base_Acceptor::open: %s",
+                  buf));
+    }
 
   if (this->open (multi_addr,reactor) < 0)
     {
@@ -286,9 +288,11 @@ TAO_AV_SCTP_SEQ_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   inet_addr->addr_to_string (buf, BUFSIZ);
 
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "TAO_AV_SCTP_SEQ_Acceptor::open: %s",
-                buf));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                  "TAO_AV_SCTP_SEQ_Acceptor::open: %s",
+                  buf));
+    }
 
   //Add code for reading multihomed addresses and pass the multihomed
   //addr to the following method. ACE_Multihomed_addr derives from
@@ -354,9 +358,11 @@ TAO_AV_SCTP_SEQ_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
   address->addr_to_string (buf,BUFSIZ);
 
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "TAO_AV_SCTP_SEQ_Acceptor::open_default: %s\n",
-                buf));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                  "TAO_AV_SCTP_SEQ_Acceptor::open_default: %s\n",
+                  buf));
+    }
 
   entry->set_local_addr (address);
 
@@ -428,7 +434,9 @@ int
 TAO_AV_SCTP_SEQ_Connector::make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&sctp_handler)
 {
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Connector::make_svc_handler\n"));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Connector::make_svc_handler\n"));
+    }
 
   //  TAO_AV_Callback *callback = 0;
   if (this->endpoint_ != nullptr)
@@ -463,7 +471,9 @@ TAO_AV_SCTP_SEQ_Connector::open (TAO_Base_StreamEndPoint *endpoint,
   this->endpoint_ = endpoint;
   this->flow_protocol_factory_ = factory;
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Connector::open "));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Connector::open "));
+    }
   int result = this->connector_.connector_open(this,
                                                av_core->reactor ());
   return result;
@@ -610,7 +620,9 @@ TAO_AV_Acceptor*
 TAO_AV_SCTP_SEQ_Factory::make_acceptor ()
 {
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Factory::make_acceptor\n"));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Factory::make_acceptor\n"));
+    }
   TAO_AV_Acceptor *acceptor {};
   ACE_NEW_RETURN (acceptor,
                   TAO_AV_SCTP_SEQ_Acceptor,
@@ -622,7 +634,9 @@ TAO_AV_Connector*
 TAO_AV_SCTP_SEQ_Factory::make_connector ()
 {
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Factory::make_connector\n"));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Factory::make_connector\n"));
+    }
   TAO_AV_Connector *connector {};
   ACE_NEW_RETURN (connector,
                   TAO_AV_SCTP_SEQ_Connector,
@@ -807,9 +821,11 @@ TAO_AV_SCTP_SEQ_Flow_Handler::open (void * /*arg*/)
                                 SCTP_NODELAY,
                                 (void *) &nodelay,
                                 sizeof (nodelay)) == -1)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       "NODELAY failed\n"),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                         "NODELAY failed\n"),
+                        -1);
+    }
 #endif /* SCTP_NODELAY */
 
   // Called by the <Strategy_Acceptor> when the handler is completely
