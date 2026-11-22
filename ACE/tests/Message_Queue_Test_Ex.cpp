@@ -663,11 +663,10 @@ int queue_priority_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
   }
 
   // Set up a few objects with names for how they should come out of the queue.
-  std::unique_ptr<User_Class> b1, b2, b3, b4;
-  b1.reset (new User_Class ("first"));
-  b2.reset (new User_Class ("second"));
-  b3.reset (new User_Class ("third"));
-  b4.reset (new User_Class ("fourth"));
+  std::unique_ptr<User_Class> b1 = std::make_unique<User_Class> ("first");
+  std::unique_ptr<User_Class> b2 = std::make_unique<User_Class> ("second");
+  std::unique_ptr<User_Class> b3 = std::make_unique<User_Class> ("third");
+  std::unique_ptr<User_Class> b4 = std::make_unique<User_Class> ("fourth");
   unsigned long prio =
     ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>::DEFAULT_PRIORITY;
 
