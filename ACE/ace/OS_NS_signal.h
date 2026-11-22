@@ -115,7 +115,7 @@ inline int ace_sigsuspend_helper (const sigset_t *s)
 #   define SIG_SETMASK 3
 # endif /* SIG_SETMASK */
 
-// Create some useful typedefs.
+/// Create some useful typedefs.
 
 # if !defined (ACE_HAS_SIGINFO_T)
 struct ACE_Export siginfo_t

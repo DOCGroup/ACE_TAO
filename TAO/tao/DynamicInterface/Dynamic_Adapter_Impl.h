@@ -71,7 +71,7 @@ public:
 
   void create_exception_list (CORBA::ExceptionList_ptr &list) override;
 
-  // Used to force the initialization of the ORB code.
+  /// Used to force the initialization of the ORB code.
   static int Initializer ();
 };
 

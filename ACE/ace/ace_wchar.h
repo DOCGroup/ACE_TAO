@@ -59,7 +59,7 @@ using size_t;
 # endif /* ACE_WSTRING_HAS_USHORT_SUPPORT */
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_NATIVE_WCHAR_T */
 
-// Set the default behaviour for ACE_TEXT_WIDE to use the L-prefix
+/// Set the default behaviour for ACE_TEXT_WIDE to use the L-prefix.
 #if !defined (ACE_USES_L_PREFIX)
 # define ACE_USES_L_PREFIX 1
 #endif /* ACE_USES_L_PREFIX */
