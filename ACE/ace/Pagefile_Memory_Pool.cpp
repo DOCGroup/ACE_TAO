@@ -207,7 +207,9 @@ ACE_Pagefile_Memory_Pool::unmap ()
   this->shared_cb_ = 0;
 
   if (this->local_cb_.sh_.mapped_size_ > 0)
-    ::UnmapViewOfFile (this->local_cb_.mapped_base_);
+    {
+      ::UnmapViewOfFile (this->local_cb_.mapped_base_);
+    }
 
   // Reset local pool statistics.
   this->local_cb_.req_base_ =

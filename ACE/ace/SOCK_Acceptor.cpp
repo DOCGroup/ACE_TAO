@@ -92,8 +92,10 @@ ACE_SOCK_Acceptor::shared_accept_finish (ACE_SOCK_Stream new_stream,
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   if (reset_new_handle)
-    // Reset the event association inherited by the new handle.
-    ::WSAEventSelect ((SOCKET) new_handle, 0, 0);
+    {
+      // Reset the event association inherited by the new handle.
+      ::WSAEventSelect ((SOCKET) new_handle, 0, 0);
+    }
 #else
   ACE_UNUSED_ARG (reset_new_handle);
 #endif /* ACE_WIN32 */
