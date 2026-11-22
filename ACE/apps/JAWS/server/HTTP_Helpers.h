@@ -93,7 +93,7 @@ public:
   };
 
 private:
-  // Singleton pattern is afoot here.
+  /// Singleton pattern is afoot here.
   static const char *Reason[MAX_STATUS_CODE + 1];
   static int instance_;
   static ACE_SYNCH_MUTEX lock_;

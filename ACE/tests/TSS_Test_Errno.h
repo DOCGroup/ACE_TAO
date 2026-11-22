@@ -87,7 +87,7 @@ private:
   static int created_;
   static int deleted_;
 #if defined (ACE_HAS_THREADS)
-  // flags_ needs a lock.
+  /// flags_ needs a lock.
   static ACE_Thread_Mutex *lock_;
 #endif /* ACE_HAS_THREADS */
 };

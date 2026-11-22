@@ -79,7 +79,7 @@ public:
   /// @}
 
 protected:
-  // Prevent default construction.
+  /// Prevent default construction.
   ACE_Base64 () = default;
 
 private:

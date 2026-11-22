@@ -29,7 +29,7 @@ public:
 
   ~QoS_Util () = default;
 
-  // Parse command-line arguments.
+  /// Parse command-line arguments.
   int parse_args ();
 
   ACE_INET_Addr const &mult_session_addr () const;

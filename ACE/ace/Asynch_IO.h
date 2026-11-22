@@ -353,7 +353,7 @@ public:
 #endif /* defined (ACE_HAS_WIN32_OVERLAPPED_IO) */
 
   /// Return the underlying implementation class.
-  //  (this should be protected...)
+  /// This should be protected.
   ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
@@ -652,7 +652,7 @@ public:
 #endif /* defined (ACE_WIN32) */
 
   /// Return the underlying implementation class.
-  //  (this should be protected...)
+  /// This should be protected.
   ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
@@ -787,7 +787,7 @@ public:
 #endif /* defined (ACE_WIN32) */
 
   /// Return the underlying implementation class.
-  //  (this should be protected...)
+  /// This should be protected.
   ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
@@ -923,7 +923,7 @@ public:
               int addr_family = AF_INET);
 
   /// Return the underlying implementation class.
-  //  (this should be protected...)
+  /// This should be protected.
   ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
@@ -1026,7 +1026,7 @@ public:
                int signal_number = ACE_SIGRTMIN);
 
   /// Return the underlying implementation class.
-  //  (this should be protected...)
+  /// This should be protected.
   ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
@@ -1150,7 +1150,7 @@ public:
                      int signal_number = ACE_SIGRTMIN);
 
   /// Return the underlying implementation class.
-  //  (this should be protected...)
+  /// This should be protected.
   ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
@@ -1355,7 +1355,7 @@ public:
                 int signal_number = ACE_SIGRTMIN);
 
   /// Return the underlying implementation class.
-  //  (this should be protected...)
+  /// This should be protected.
   ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
@@ -1487,7 +1487,7 @@ public:
                 int signal_number = ACE_SIGRTMIN);
 
   /// Return the underlying implementation class.
-  //  (this should be protected...)
+  /// This should be protected.
   ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
