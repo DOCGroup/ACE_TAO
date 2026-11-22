@@ -159,8 +159,10 @@ open_new_endpoint (ACE_HANDLE listen_handle,
 #endif /* I_PUSH */
 
   if (fd == ACE_INVALID_HANDLE)
-    ACE_OS::t_snddis (listen_handle,
-                      callp);
+    {
+      ACE_OS::t_snddis (listen_handle,
+                        callp);
+    }
   return fd;
 }
 
@@ -210,7 +212,9 @@ ACE_TLI_Request_Queue::open (ACE_HANDLE f, int sz)
                                                  T_CALL,
                                                  T_ALL);
       if (item->callp_ == 0)
-        return ACE_INVALID_HANDLE;
+        {
+          return ACE_INVALID_HANDLE;
+        }
     }
 
   this->tail_ = this->alloc ();
@@ -283,8 +287,10 @@ ACE_TLI_Request_Queue::remove (int sequence_number)
     prev = temp;
 
   if (temp == this->tail_)
-    // Sequence # was not found, since we're back at the dummy node!
-    return -1;
+    {
+      // Sequence # was not found, since we're back at the dummy node!
+      return -1;
+    }
   else
     {
       prev->next_ = temp->next_;
@@ -350,9 +356,11 @@ ACE_TLI_Acceptor::open (const ACE_Addr &remote_sap,
       req.addr.maxlen = remote_sap.get_size ();
 
       if (remote_sap == ACE_Addr::sap_any)
-        // Note that if addr.len == 0 then ACE_TLI selects the port
-        // number.
-        req.addr.len = 0;
+        {
+          // Note that if addr.len == 0 then ACE_TLI selects the port
+          // number.
+          req.addr.len = 0;
+        }
       else
         {
           req.addr.buf = (char *) remote_sap.get_addr ();
@@ -372,7 +380,9 @@ ACE_TLI_Acceptor::open (const ACE_Addr &remote_sap,
         }
     }
   if (res == ACE_INVALID_HANDLE)
-    this->close ();
+    {
+      this->close ();
+    }
   return this->get_handle ();
 }
 
@@ -484,18 +494,28 @@ ACE_TLI_Acceptor::accept (ACE_TLI_Stream &new_tli_sap,
 #endif /* ACE_WIN32 */
                                           );
         if (req->handle_ == ACE_INVALID_HANDLE)
-          res = -1;
+          {
+            res = -1;
+          }
         else
-          res = 0;
+          {
+            res = 0;
+          }
       }
     }
   else
-    res = this->queue_->dequeue (req);
+    {
+      res = this->queue_->dequeue (req);
+    }
 
   if (udata != 0)
-    ACE_OS::memcpy (&req->callp_->udata, udata, sizeof *udata);
+    {
+      ACE_OS::memcpy (&req->callp_->udata, udata, sizeof *udata);
+    }
   if (opt != 0)
-    ACE_OS::memcpy (&req->callp_->opt, opt, sizeof *opt);
+    {
+      ACE_OS::memcpy (&req->callp_->opt, opt, sizeof *opt);
+    }
 
   while (res != -1)
     {
@@ -503,11 +523,17 @@ ACE_TLI_Acceptor::accept (ACE_TLI_Stream &new_tli_sap,
                               req->handle_,
                               req->callp_);
       if (res != -1)
-        break; // Got one!
+        {
+          break; // Got one!
+        }
       else if (t_errno == TLOOK)
-        res = this->handle_async_event (restart, rwf);
+        {
+          res = this->handle_async_event (restart, rwf);
+        }
       else if (restart && t_errno == TSYSERR && errno == EINTR)
-        res = 0;
+        {
+          res = 0;
+        }
     }
 
   if (res == -1)
@@ -516,7 +542,9 @@ ACE_TLI_Acceptor::accept (ACE_TLI_Stream &new_tli_sap,
         {
           new_tli_sap.set_handle (ACE_INVALID_HANDLE);
           if (req->handle_ != ACE_INVALID_HANDLE)
-            ACE_OS::t_close (req->handle_);
+            {
+              ACE_OS::t_close (req->handle_);
+            }
         }
     }
   else
@@ -524,8 +552,10 @@ ACE_TLI_Acceptor::accept (ACE_TLI_Stream &new_tli_sap,
       new_tli_sap.set_handle (req->handle_);
 
       if (remote_addr != 0)
-        remote_addr->set_addr (req->callp_->addr.buf,
-                               req->callp_->addr.len);
+        {
+          remote_addr->set_addr (req->callp_->addr.buf,
+                                 req->callp_->addr.len);
+        }
     }
 
   req->handle_ = ACE_INVALID_HANDLE;
