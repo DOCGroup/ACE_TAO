@@ -298,7 +298,9 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
           devpar.c_cflag |= CNEW_RTSCTS;
         }
       else
-        devpar.c_cflag &= ~CNEW_RTSCTS;
+        {
+          devpar.c_cflag &= ~CNEW_RTSCTS;
+        }
 #elif defined (CRTSCTS)
       if ((arg->ctsenb) || (arg->rtsenb)) // Enable RTS/CTS protocol
         {
@@ -542,17 +544,29 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
         {
           dcb.fParity = TRUE;
           if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_ODD) == 0)
-            dcb.Parity = ODDPARITY;
+            {
+              dcb.Parity = ODDPARITY;
+            }
           else if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_EVEN) == 0)
-            dcb.Parity = EVENPARITY;
+            {
+              dcb.Parity = EVENPARITY;
+            }
           else if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_NONE) == 0)
-            dcb.Parity = NOPARITY;
+            {
+              dcb.Parity = NOPARITY;
+            }
           else if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_MARK) == 0)
-            dcb.Parity = MARKPARITY;
+            {
+              dcb.Parity = MARKPARITY;
+            }
           else if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_SPACE) == 0)
-            dcb.Parity = SPACEPARITY;
+            {
+              dcb.Parity = SPACEPARITY;
+            }
           else
-            return -1;
+            {
+              return -1;
+            }
         }
       else
         {
@@ -578,39 +592,63 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 
       // Enable/disable CTS protocol.
       if (arg->ctsenb)
-        dcb.fOutxCtsFlow = TRUE;
+        {
+          dcb.fOutxCtsFlow = TRUE;
+        }
       else
-        dcb.fOutxCtsFlow = FALSE;
+        {
+          dcb.fOutxCtsFlow = FALSE;
+        }
 
       // Enable/disable DSR protocol.
       if (arg->dsrenb)
-        dcb.fOutxDsrFlow = TRUE;
+        {
+          dcb.fOutxDsrFlow = TRUE;
+        }
       else
-        dcb.fOutxDsrFlow = FALSE;
+        {
+          dcb.fOutxDsrFlow = FALSE;
+        }
 
       // Disable/enable DTR protocol
       if (arg->dtrdisable)
-        dcb.fDtrControl = DTR_CONTROL_DISABLE;
+        {
+          dcb.fDtrControl = DTR_CONTROL_DISABLE;
+        }
       else
-        dcb.fDtrControl = DTR_CONTROL_ENABLE;
+        {
+          dcb.fDtrControl = DTR_CONTROL_ENABLE;
+        }
 
       // Enable/disable software flow control on input
       if (arg->xinenb)
-        dcb.fInX = TRUE;
+        {
+          dcb.fInX = TRUE;
+        }
       else
-        dcb.fInX = FALSE;
+        {
+          dcb.fInX = FALSE;
+        }
 
       // Enable/disable software flow control on output
       if (arg->xoutenb)
-        dcb.fOutX = TRUE;
+        {
+          dcb.fOutX = TRUE;
+        }
       else
-        dcb.fOutX = FALSE;
+        {
+          dcb.fOutX = FALSE;
+        }
 
       // Always set limits unless set to negative to use default.
       if (arg->xonlim >= 0)
-        dcb.XonLim  = static_cast<WORD>(arg->xonlim);
+        {
+          dcb.XonLim  = static_cast<WORD>(arg->xonlim);
+        }
       if (arg->xofflim >= 0)
-        dcb.XoffLim = static_cast<WORD>(arg->xofflim);
+        {
+          dcb.XoffLim = static_cast<WORD>(arg->xofflim);
+        }
 
       dcb.fAbortOnError = FALSE;
       dcb.fErrorChar = FALSE;
@@ -730,15 +768,23 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 
       // Enable/disable CTS protocol.
       if (dcb.fOutxCtsFlow)
-        arg->ctsenb = true;
+        {
+          arg->ctsenb = true;
+        }
       else
-        arg->ctsenb = false;
+        {
+          arg->ctsenb = false;
+        }
 
       // Enable/disable DSR protocol.
       if (dcb.fOutxDsrFlow)
-        arg->dsrenb = true;
+        {
+          arg->dsrenb = true;
+        }
       else
-        arg->dsrenb = false;
+        {
+          arg->dsrenb = false;
+        }
 
       // Disable/enable DTR protocol
       // Attention: DTR_CONTROL_HANDSHAKE is not supported.
@@ -756,15 +802,23 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 
       // Enable/disable software flow control on input
       if (dcb.fInX)
-        arg->xinenb = true;
+        {
+          arg->xinenb = true;
+        }
       else
-        arg->xinenb = false;
+        {
+          arg->xinenb = false;
+        }
 
       // Enable/disable software flow control on output
       if (dcb.fOutX)
-        arg->xoutenb = true;
+        {
+          arg->xoutenb = true;
+        }
       else
-        arg->xoutenb = false;
+        {
+          arg->xoutenb = false;
+        }
 
       arg->xonlim = static_cast<int>(dcb.XonLim);
       arg->xofflim = static_cast<int>(dcb.XoffLim);
@@ -774,7 +828,9 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
         timeouts.ReadTotalTimeoutConstant == 0)
           arg->readtimeoutmsec = -1;
       else
-        arg->readtimeoutmsec = timeouts.ReadTotalTimeoutConstant;
+        {
+          arg->readtimeoutmsec = timeouts.ReadTotalTimeoutConstant;
+        }
 
       return 0;
 
