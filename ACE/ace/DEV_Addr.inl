@@ -15,7 +15,7 @@ ACE_DEV_Addr::set (ACE_TCHAR const *devname)
   ACE_OS::strsncpy (this->devname_, devname, ACE_DEV_Addr::DEVNAME_LENGTH);
 }
 
-// Compare two addresses for equality.
+/// Compare two addresses for equality.
 
 ACE_INLINE bool
 ACE_DEV_Addr::operator == (ACE_DEV_Addr const &sap) const
@@ -25,7 +25,7 @@ ACE_DEV_Addr::operator == (ACE_DEV_Addr const &sap) const
   return ACE_OS::strcmp (this->devname_, sap.devname_) == 0;
 }
 
-// Compare two addresses for inequality.
+/// Compare two addresses for inequality.
 
 ACE_INLINE bool
 ACE_DEV_Addr::operator != (ACE_DEV_Addr const &sap) const
@@ -35,7 +35,7 @@ ACE_DEV_Addr::operator != (ACE_DEV_Addr const &sap) const
   return !((*this) == sap);     // This is lazy, of course... ;-).
 }
 
-// Return the path name used for the rendezvous point.
+/// Return the path name used for the rendezvous point.
 
 ACE_INLINE ACE_TCHAR const *
 ACE_DEV_Addr::get_path_name () const
