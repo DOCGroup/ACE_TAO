@@ -660,7 +660,7 @@ Acceptor::on_delete_receiver (Receiver & rcvr)
   if (rcvr.index_ >= 0
       && rcvr.index_ < RECEIVERS
       && this->list_receivers_[rcvr.index_] == std::addressof (rcvr))
-    this->list_receivers_[rcvr.index_] = 0;
+    this->list_receivers_[rcvr.index_] = nullptr;
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Receiver::~DTOR sessions_ = %d\n"),
@@ -672,21 +672,21 @@ Acceptor::make_handler ()
 {
   if (this->sessions_ >= RECEIVERS)
     {
-      return 0;
+      return nullptr;
     }
 
   for (int i = 0; i < RECEIVERS; ++i)
     {
-      if (this->list_receivers_[i] == 0)
+      if (this->list_receivers_[i] == nullptr)
         {
           ACE_NEW_RETURN (this->list_receivers_[i],
                           Receiver (this, i),
-                          0);
+                          nullptr);
           return this->list_receivers_[i];
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 // *************************************************************
@@ -1078,7 +1078,7 @@ Connector::on_delete_sender (Sender &sndr)
   if (sndr.index_ >= 0
       && sndr.index_ < SENDERS
       && this->list_senders_[sndr.index_] == std::addressof (sndr))
-    this->list_senders_[sndr.index_] = 0;
+    this->list_senders_[sndr.index_] = nullptr;
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Sender::~DTOR sessions_ = %d\n"),
@@ -1090,21 +1090,21 @@ Connector::make_handler ()
 {
   if (this->sessions_ >= SENDERS)
     {
-      return 0;
+      return nullptr;
     }
 
   for (int i = 0; i < SENDERS; ++i)
     {
-      if (this->list_senders_ [i] == 0)
+      if (this->list_senders_ [i] == nullptr)
         {
           ACE_NEW_RETURN (this->list_senders_[i],
                           Sender (this, i),
-                          0);
+                          nullptr);
           return this->list_senders_[i];
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 // *************************************************************

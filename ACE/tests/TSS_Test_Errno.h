@@ -69,13 +69,13 @@ public:
   ACE_Thread_Mutex *
   allocate_lock ()
   {
-    ACE_NEW_RETURN (Errno::lock_, ACE_Thread_Mutex, 0);
+    ACE_NEW_RETURN (Errno::lock_, ACE_Thread_Mutex, nullptr);
     return Errno::lock_;
   }
 
   static
   void
-  deallocate_lock () { delete lock_; lock_ = 0; }
+  deallocate_lock () { delete lock_; lock_ = nullptr; }
 #endif /* ACE_HAS_THREADS */
 
 private:
