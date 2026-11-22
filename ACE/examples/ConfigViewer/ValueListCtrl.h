@@ -5,18 +5,17 @@
 class ValueListCtrl : public wxListCtrl
 {
 public:
-  ///////////////////////////////////////////
-  // Initializers
-  ///////////////////////////////////////////
+  /// @name Initializers
+  /// @{
   ValueListCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pos = wxDefaultPosition,
         const wxSize& size = wxDefaultSize, long style = wxLC_ICON,
         const wxValidator& validator = wxDefaultValidator,
         const wxString& name = "listCtrl");
   virtual ~ValueListCtrl();
+  /// @}
 
-  ///////////////////////////////////////////
-  // Methods
-  ///////////////////////////////////////////
+  /// @name Methods
+  /// @{
   void DisplaySection(const ACE_Configuration_Section_Key& Key);
   long GetSelectedItem();
   void SelectItem(long ItemID);
@@ -25,12 +24,10 @@ public:
   void OnDelete(wxCommandEvent& event);
   void OnRename(wxCommandEvent& event);
   void ChangeConfig(ACE_Configuration* pConfig);
-  ///////////////////////////////////////////
-  // Attribute Accessors
-  ///////////////////////////////////////////
+  /// @}
 
 protected:
-  // Not Used
+  /// Not Used
   ValueListCtrl(const ValueListCtrl& RHS);
   const ValueListCtrl& operator=(const ValueListCtrl& RHS);
 

@@ -7,15 +7,14 @@ class ValueListCtrl;
 class ConfigTreeCtrl : public wxTreeCtrl
 {
 public:
-  ///////////////////////////////////////////
-  // Initializers
-  ///////////////////////////////////////////
+  /// @name Initializers
+  /// @{
   ConfigTreeCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxTR_HAS_BUTTONS, const wxValidator& validator = wxDefaultValidator, const wxString& name = "listCtrl");
   virtual ~ConfigTreeCtrl();
+  /// @}
 
-  ///////////////////////////////////////////
-  // Methods
-  ///////////////////////////////////////////
+  /// @name Methods
+  /// @{
   void LoadTree();
   void OnRightDown(wxMouseEvent& event);
   void OnRightUp(wxMouseEvent& event);
@@ -27,13 +26,15 @@ public:
   void OnDelete(wxCommandEvent& event);
   void OnSelChanged(wxTreeEvent& event);
   void ChangeConfig(ACE_Configuration* pConfig);
-  ///////////////////////////////////////////
-  // Attribute Accessors
-  ///////////////////////////////////////////
+  /// @}
+
+  /// @name Attribute Accessors
+  /// @{
   void SetpListCtrl(ValueListCtrl* pListCtrl) {m_pListCtrl = pListCtrl;};
+  /// @}
 
 protected:
-  // Not Used
+  /// Not Used
   ConfigTreeCtrl(const ConfigTreeCtrl& RHS);
   const ConfigTreeCtrl& operator=(const ConfigTreeCtrl& RHS);
 

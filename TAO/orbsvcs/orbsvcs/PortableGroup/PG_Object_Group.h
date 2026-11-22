@@ -74,8 +74,8 @@ namespace TAO
       /// TRUE if this is primary member
       CORBA::Boolean is_primary_ {};
 
-      ///////////////
-      // Methods
+      /// @name Methods
+      /// @{
 
       /// Construct an application-supplied member.
       MemberInfo (CORBA::Object_ptr member, PortableGroup::Location const & location);
@@ -88,6 +88,7 @@ namespace TAO
         PortableGroup::GenericFactory::FactoryCreationId factory_id);
 
       ~MemberInfo();
+      /// @}
     };
 
     using MemberMapMutex = TAO_SYNCH_MUTEX;
