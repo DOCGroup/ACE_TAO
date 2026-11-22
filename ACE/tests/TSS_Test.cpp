@@ -75,7 +75,7 @@ cleanup (void *ptr)
 
 // This worker function is the entry point for each thread.
 
-static void *
+static ACE_THR_FUNC_RETURN
 worker (void *c)
 {
   int count = *(static_cast<int*> (c));
@@ -92,10 +92,10 @@ worker (void *c)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p (no keys available)\n"),
                   ACE_TEXT ("ACE_Thread::keycreate")));
-      return (void *) -1;
+      return ACE_THR_FUNC_RETURN (-1);
     }
 
-  ACE_NEW_RETURN (ip, int, nullptr);
+  ACE_NEW_RETURN (ip, int, ACE_THR_FUNC_RETURN_NULL);
 
   if (ACE_Thread::setspecific (key, (void *) ip) == -1)
     {
@@ -112,7 +112,7 @@ worker (void *c)
           break;
         }
 
-      ACE_NEW_RETURN (ip, int, nullptr);
+      ACE_NEW_RETURN (ip, int, ACE_THR_FUNC_RETURN_NULL);
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) in worker at location 1, ")
                             ACE_TEXT ("key = %d, ip = %@\n"),
@@ -161,7 +161,8 @@ worker (void *c)
 
       {
         // Use the guard to serialize access
-        ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, output_lock, nullptr));
+        ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, output_lock,
+                                  ACE_THR_FUNC_RETURN_NULL));
         ACE_TEST_ASSERT ((*tss_error)->flags () == ITERATIONS);
       }
 
@@ -177,7 +178,7 @@ worker (void *c)
         {
           // Use the guard to serialize access to errors.
           ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, output_lock,
-                                    nullptr));
+                                    ACE_THR_FUNC_RETURN_NULL));
           ACE_DEBUG ((LM_ERROR,
                       ACE_TEXT ("use of ACE_TSS_Type_Adapter failed, value ")
                       ACE_TEXT ("is %u, it should be 37!\n"),
@@ -196,7 +197,7 @@ worker (void *c)
           break;
         }
 
-      ACE_NEW_RETURN (ip, int, 0);
+      ACE_NEW_RETURN (ip, int, ACE_THR_FUNC_RETURN_NULL);
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) in worker at location 2, ")
                             ACE_TEXT ("key = %d, ip = %@\n"),
@@ -228,7 +229,7 @@ worker (void *c)
 #  endif /* defined (ACE_HAS_TSS_EMULATION) */
 #endif /* ACE_HAS_TSS_EMULATION */
     }
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 #endif /* ACE_HAS_THREADS */
@@ -257,7 +258,7 @@ run_main (int, ACE_TCHAR *[])
   int iterations = ITERATIONS;
   if (ACE_Thread_Manager::instance ()->spawn_n
       (threads,
-       ACE_THR_FUNC (worker),
+       worker,
        &iterations,
        THR_BOUND) == -1)
     {
