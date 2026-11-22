@@ -10,7 +10,7 @@
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  if (argc < 3 || argc > 3)
+  if (argc != 3)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "usage: %s filename string\n",
@@ -18,9 +18,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         1);
     }
 
-  ssize_t len =
+  ssize_t const len =
     ACE_Utils::truncate_cast<ssize_t> (ACE_OS::strlen (argv[2]) + 1);
-  std::unique_ptr<ACE_TCHAR[]> readback =
+  auto const readback =
     std::make_unique<ACE_TCHAR[]> (ACE_OS::strlen (argv[2]) + 1);
 
   ACE_FILE_Info fileinfo;
