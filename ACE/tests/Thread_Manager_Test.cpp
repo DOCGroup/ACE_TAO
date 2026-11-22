@@ -84,9 +84,10 @@ handler (int /* signum */)
     }
 }
 
-static void *
-worker (int iterations)
+static ACE_THR_FUNC_RETURN
+worker (void *arg)
 {
+  const int iterations = *static_cast<int *> (arg);
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
   // Cache this thread's ID.
   const ACE_thread_t t_id = ACE_OS::thr_self ();
@@ -144,7 +145,7 @@ worker (int iterations)
     }
 
   // Destructor removes thread from Thread_Manager.
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 static constexpr int DEFAULT_ITERATIONS = 10000;
@@ -274,7 +275,7 @@ run_main (int, ACE_TCHAR *[])
   int status = 0;
 
 #if defined (ACE_HAS_THREADS)
-  size_t n_iterations = DEFAULT_ITERATIONS;
+  int n_iterations = DEFAULT_ITERATIONS;
 
   u_int i;
 
@@ -332,8 +333,8 @@ run_main (int, ACE_TCHAR *[])
   int grp_id = thr_mgr->spawn_n
                  (
                   n_threads,
-                  (ACE_THR_FUNC) worker,
-                  reinterpret_cast <void *> (n_iterations),
+                  worker,
+                  &n_iterations,
                   THR_BOUND
                   , ACE_DEFAULT_THREAD_PRIORITY
                   , -1
