@@ -22,45 +22,47 @@ parse_args (int argc, ACE_TCHAR *argv[], Monitor_Client_Options& options)
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'f':
-        options.filter = get_opts.opt_arg ();
-        break;
-      case 'k':
-        options.monitor_ior = get_opts.opt_arg ();
-        break;
-      case 'p':
+    {
+      switch (c)
         {
-          CORBA::ULong const length = options.monitor_points.length ();
-          options.monitor_points.length (length + 1);
-          options.monitor_points[length] =
-            CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()));
+        case 'f':
+          options.filter = get_opts.opt_arg ();
           break;
+        case 'k':
+          options.monitor_ior = get_opts.opt_arg ();
+          break;
+        case 'p':
+          {
+            CORBA::ULong const length = options.monitor_points.length ();
+            options.monitor_points.length (length + 1);
+            options.monitor_points[length] =
+              CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()));
+            break;
+          }
+        case 'c':
+          options.clear = true;
+          break;
+        case 'i':
+          options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
+        case 's':
+          options.sleep_time.set (ACE_OS::atoi (get_opts.opt_arg ()), 0);
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-k <ior> "
+                             "-p <point> "
+                             "-i <iterations> "
+                             "-c clear "
+                             "-s <sleeptime> "
+                             "-f <filter> "
+                             "\n",
+                             argv [0]),
+                            -1);
         }
-      case 'c':
-        options.clear = true;
-        break;
-      case 'i':
-        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-      case 's':
-        options.sleep_time.set (ACE_OS::atoi (get_opts.opt_arg ()), 0);
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "-p <point> "
-                           "-i <iterations> "
-                           "-c clear "
-                           "-s <sleeptime> "
-                           "-f <filter> "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+    }
 
   // Indicates successful parsing of the command line
   return 0;
