@@ -50,7 +50,7 @@ namespace ACE
       }
 
     URLStream::URLStream (ClientRequestHandler& rh)
-      : request_handler_ (&rh)
+      : request_handler_ (std::addressof (rh))
       {
       }
 

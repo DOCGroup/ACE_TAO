@@ -71,7 +71,7 @@ namespace ACE
       {
         // always read non-blocking however much there is
         ACE_Time_Value to = ACE_Time_Value::zero;
-        return this->handle_input_i (MAX_INPUT_SIZE, &to);
+        return this->handle_input_i (MAX_INPUT_SIZE, std::addressof (to));
       }
 
     template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
@@ -101,7 +101,7 @@ namespace ACE
             ACE_Message_Block_Unique_Ptr mb (raw_mb);
             mb->copy (buffer, bytes_in);
             ACE_Time_Value nowait (ACE_OS::gettimeofday ());
-            if (this->putq (mb.get (), &nowait) == -1)
+            if (this->putq (mb.get (), std::addressof (nowait)) == -1)
               {
                 INET_ERROR (1, (LM_ERROR, DLINFO
                             ACE_TEXT ("ACE_IOS_StreamHandler - discarding input data, "),
@@ -133,7 +133,7 @@ namespace ACE
         if (this->use_timeout ())
           {
             ACE_Time_Value to = this->sync_opt_.timeout ();
-            return this->handle_output_i (&to);
+            return this->handle_output_i (std::addressof (to));
           }
         else
           {
@@ -148,7 +148,7 @@ namespace ACE
 
         ACE_Message_Block *raw_mb {};
         ACE_Time_Value nowait (ACE_OS::gettimeofday ());
-        if (-1 != this->getq (raw_mb, &nowait))
+        if (-1 != this->getq (raw_mb, std::addressof (nowait)))
           {
             ACE_Message_Block_Unique_Ptr mb (raw_mb);
             size_t bytes_out = 0;
@@ -270,7 +270,7 @@ namespace ACE
             // blocking for 1 char_size data
             size_t rdlen = MAX_INPUT_SIZE;
             ACE_Time_Value timeout = ACE_Time_Value::zero;
-            ACE_Time_Value* to = &timeout;
+            ACE_Time_Value* to = std::addressof (timeout);
             while ((this->connected_ || this->char_in_queue (char_size)) && char_length > 0)
               {
                 if (!this->char_in_queue (char_size))
@@ -349,7 +349,7 @@ namespace ACE
         while (!this->msg_queue ()->is_empty () && char_length > 0)
           {
             ACE_Message_Block *mb {};
-            if (this->getq (mb, &wait) == -1)
+            if (this->getq (mb, std::addressof (wait)) == -1)
               {
                 if (ACE_OS::last_error () == EWOULDBLOCK)
                   {
@@ -481,7 +481,7 @@ namespace ACE
         ACE_Message_Block_Unique_Ptr mb (raw_mb);
         mb->copy (static_cast<char const *> (buf), datasz);
         ACE_Time_Value nowait (ACE_OS::gettimeofday ());
-        if (this->putq (mb.get (), &nowait) == -1)
+        if (this->putq (mb.get (), std::addressof (nowait)) == -1)
           {
             INET_ERROR (1, (LM_ERROR, DLINFO
                         ACE_TEXT ("(%d) ACE_IOS_StreamHandler - discarding output data, "),
