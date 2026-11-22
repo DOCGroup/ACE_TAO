@@ -10,10 +10,12 @@
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (argc < 2)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Usage: %s [-s selector] hostname [QoS in KB/sec]\n",
-                       argv[0]),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Usage: %s [-s selector] hostname [QoS in KB/sec]\n",
+                         argv[0]),
+                        1);
+    }
 
   unsigned char selector = ACE_ATM_Addr::DEFAULT_SELECTOR;
   int selector_specified = 0;
@@ -21,19 +23,19 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   int opt;
   while ((opt = ACE_OS::getopt (argc, argv, "s:?h")) != EOF)
     {
-    switch(opt)
-      {
-      case 's':
-        selector = ACE_OS::atoi (optarg);
-        selector_specified = 1;
-        break;
-      case '?':
-      case 'h':
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Usage: %s hostname [-s selector] [QoS in KB/s]\n",
-                           argv[0]),
-                          1);
-      } // switch
+      switch (opt)
+        {
+        case 's':
+          selector = ACE_OS::atoi (optarg);
+          selector_specified = 1;
+          break;
+        case '?':
+        case 'h':
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Usage: %s hostname [-s selector] [QoS in KB/s]\n",
+                             argv[0]),
+                            1);
+        }
     } // while getopt
 
   const char *host = argv[optind];
@@ -50,7 +52,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_ATM_Addr remote_addr (host);
   if (selector_specified)
-    remote_addr.set_selector(selector);
+    {
+      remote_addr.set_selector (selector);
+    }
   char hostname[MAXNAMELEN];
   ACE_OS::hostname(hostname, MAXNAMELEN);
   ACE_ATM_Addr local_addr (hostname);
@@ -59,10 +63,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // needed.  Therefore, we need to open the TLI_Stream before we
   // construct the options.
   if (cli_stream.open (ACE_XTI_ATM_DEVICE, O_RDWR, 0) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "open failed"),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "open failed"),
+                        1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "starting non-blocking connect\n"));
@@ -102,10 +108,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                    &optbuf) == -1)
     {
       if (errno != EWOULDBLOCK)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "connection failed"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%p\n",
+                             "connection failed"),
+                            1);
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   "starting timed connect\n"));
@@ -117,14 +125,18 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (con.complete (cli_stream,
                         &remote_addr,
                         &tv) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "connection failed"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%p\n",
+                             "connection failed"),
+                            1);
+        }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "connected to %s\n",
-                    remote_addr.addr_to_string ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "connected to %s\n",
+                      remote_addr.addr_to_string ()));
+        }
     }
 
   // Send data to server (correctly handles "incomplete writes").
@@ -132,20 +144,26 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   for (int r_bytes;
        (r_bytes = ACE_OS::read (ACE_STDIN, buf, sizeof buf)) > 0;
        )
-    if (cli_stream.send_n (buf,
-                           r_bytes,
-                           0) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n",
-                         "send_n"),
-                        1);
+    {
+      if (cli_stream.send_n (buf,
+                             r_bytes,
+                             0) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%p\n",
+                             "send_n"),
+                            1);
+        }
+    }
 
   // Explicitly close the connection.
   if (cli_stream.close () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "close"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "close"),
+                        -1);
+    }
   return 0;
 }
 #else
