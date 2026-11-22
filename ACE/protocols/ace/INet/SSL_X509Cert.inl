@@ -9,21 +9,16 @@ namespace ACE
   {
 
     ACE_INLINE
-    SSL_X509Cert::SSL_X509Cert ()
-      : ssl_cert_ (nullptr)
-      {
-      }
+    SSL_X509Cert::SSL_X509Cert () = default;
 
     ACE_INLINE
     SSL_X509Cert::SSL_X509Cert (::X509* ssl_cert)
-      : ssl_cert_ (nullptr)
       {
         *this = ssl_cert;
       }
 
     ACE_INLINE
     SSL_X509Cert::SSL_X509Cert (const SSL_X509Cert& cert)
-      : ssl_cert_ (nullptr)
       {
         *this = cert;
       }

@@ -41,7 +41,7 @@ namespace ACE
               ::X509* operator & ();
 
             private:
-              ::X509* ssl_cert_;
+              ::X509* ssl_cert_ {};
           };
       }
   }
