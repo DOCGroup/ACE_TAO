@@ -16,6 +16,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/OS_NS_arpa_inet.h"
+#include "ace/OS_NS_stdio.h"
 
 #include <cstdio>
 #include <memory>
@@ -102,7 +103,7 @@ TAO_Basic_StreamCtrl::stop (AVStreams::flowSpec const &flow_spec)
     }
   catch(...)
     {
-      printf ("TAO_Basic_StreamCtrl::stop - unknown exception\n");
+      ACE_OS::printf ("TAO_Basic_StreamCtrl::stop - unknown exception\n");
     }
 }
 
@@ -154,7 +155,7 @@ TAO_Basic_StreamCtrl::start (AVStreams::flowSpec const &flow_spec)
     }
   catch(...)
     {
-      printf ("TAO_Basic_StreamCtrl::start - unknown exception\n");
+      ACE_OS::printf ("TAO_Basic_StreamCtrl::start - unknown exception\n");
     }
 }
 
@@ -442,7 +443,7 @@ TAO_StreamCtrl::stop (AVStreams::flowSpec const &flow_spec)
     }
   catch(...)
     {
-      printf ("TAO_StreamCtrl::stop - unknow exception\n");
+      ACE_OS::printf ("TAO_StreamCtrl::stop - unknow exception\n");
     }
 }
 
@@ -482,7 +483,7 @@ TAO_StreamCtrl::start (AVStreams::flowSpec const &flow_spec)
     }
   catch(...)
     {
-      printf ("TAO_StreamCtrl::start - unknow exception\n");
+      ACE_OS::printf ("TAO_StreamCtrl::start - unknow exception\n");
     }
 }
 
@@ -3573,7 +3574,7 @@ TAO_FlowConnection::stop ()
     }
   catch(...)
     {
-      printf ("TAO_FlowConnection::stop - unknown exception\n");
+      ACE_OS::printf ("TAO_FlowConnection::stop - unknown exception\n");
     }
 }
 
@@ -3611,7 +3612,7 @@ TAO_FlowConnection::start ()
     }
   catch(...)
     {
-      printf ("TAO_FlowConnection::start - unknown exception\n");
+      ACE_OS::printf ("TAO_FlowConnection::start - unknown exception\n");
     }
 }
 
