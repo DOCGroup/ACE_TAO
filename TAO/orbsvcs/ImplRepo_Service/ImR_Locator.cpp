@@ -146,14 +146,18 @@ run_service_command (Options& opts)
           ORBSVCS_ERROR ((LM_ERROR, "Error: Failed to install service. errno %d, error <%p>\n", errno, "install"));
         }
       if (ret == 0)
-        return 1;
+        {
+          return 1;
+        }
     }
   else if (opts.service_command () == Options::SC_REMOVE)
     {
       int ret = SERVICE::instance ()->remove ();
       ORBSVCS_DEBUG ((LM_DEBUG, "ImR: Service removed.\n"));
       if (ret == 0)
-        return 1; // If successful, then we don't want to continue.
+        {
+          return 1; // If successful, then we don't want to continue.
+        }
     }
   else
     {

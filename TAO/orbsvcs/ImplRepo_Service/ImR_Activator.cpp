@@ -162,14 +162,18 @@ run_service_command (Activator_Options& opts)
           ORBSVCS_ERROR ((LM_ERROR, "Error: Failed to install service. errno %d, error <%p>\n", errno, "install"));
         }
       if (ret == 0)
-        return 1;
+        {
+          return 1;
+        }
     }
   else if (opts.service_command () == Activator_Options::SC_REMOVE)
     {
       int ret = SERVICE::instance ()->remove ();
       ORBSVCS_DEBUG ((LM_DEBUG, "ImR Activator: Service removed\n"));
       if (ret == 0)
-        return 1; // If successful, then we don't want to continue.
+        {
+          return 1; // If successful, then we don't want to continue.
+        }
     }
   else
     {
@@ -193,15 +197,23 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   int result = opts.init (argc, argv);
   if (result < 0)
-    return 1;  // Error
+    {
+      return 1;  // Error
+    }
   else if (result > 0)
-    return 0;  // No error, but we should exit anyway.
+    {
+      return 0;  // No error, but we should exit anyway.
+    }
 
   result = run_service_command (opts);
   if (result < 0)
-    return 1;  // Error
+    {
+      return 1;  // Error
+    }
   else if (result > 0)
-    return 0;  // No error, but we should exit anyway.
+    {
+      return 0;  // No error, but we should exit anyway.
+    }
 
   if (opts.service ())
   {

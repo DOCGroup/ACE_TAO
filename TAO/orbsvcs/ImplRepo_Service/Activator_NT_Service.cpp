@@ -89,7 +89,9 @@ Activator_NT_Service::svc ()
           report_status (SERVICE_STOPPED);
         }
         if (status != -1)
+          {
             return 0;
+          }
     }
   catch (const CORBA::SystemException& sysex)
     {
