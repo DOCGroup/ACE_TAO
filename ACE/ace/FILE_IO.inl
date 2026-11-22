@@ -26,7 +26,7 @@ ACE_FILE_IO::send_n (const ACE_Message_Block *message_block,
                       bytes_transferred);
 }
 
-// Recv an n byte message from the file.
+/// Recv an n byte message from the file.
 
 ACE_INLINE ssize_t
 ACE_FILE_IO::recvv_n (iovec iov[], int n) const
@@ -39,7 +39,7 @@ ACE_FILE_IO::recvv_n (iovec iov[], int n) const
                         n);
 }
 
-// Send an <iovec> of size <n> to the file.
+/// Send an <iovec> of size <n> to the file.
 
 ACE_INLINE ssize_t
 ACE_FILE_IO::sendv (const iovec iov[], int n) const
@@ -48,8 +48,8 @@ ACE_FILE_IO::sendv (const iovec iov[], int n) const
   return ACE_OS::writev (this->get_handle (), iov, n);
 }
 
-// Send exactly N bytes from BUF to this file.  Keeping trying until
-// this many bytes are sent.
+/// Send exactly N bytes from BUF to this file.  Keeping trying until
+/// this many bytes are sent.
 
 ACE_INLINE ssize_t
 ACE_FILE_IO::send_n (const void *buf, size_t n) const
@@ -58,8 +58,8 @@ ACE_FILE_IO::send_n (const void *buf, size_t n) const
   return ACE::write_n (this->get_handle (), buf, n);
 }
 
-// Receive exactly N bytes from this file into BUF.  Keep trying until
-// this many bytes are received.
+/// Receive exactly N bytes from this file into BUF.  Keep trying until
+/// this many bytes are received.
 
 ACE_INLINE ssize_t
 ACE_FILE_IO::recv_n (void *buf, size_t n) const
