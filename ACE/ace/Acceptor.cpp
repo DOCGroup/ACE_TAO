@@ -13,6 +13,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE_Tca(ACE_Acceptor)
@@ -481,7 +483,8 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::handle_input (ACE_HANDLE listener)
       // Now, check to see if there is another connection pending and
       // break out of the loop if there is none.
     } while (this->use_select_ &&
-             ACE::handle_read_ready (listener, &timeout) == 1);
+             ACE::handle_read_ready (listener,
+                                     std::addressof (timeout)) == 1);
   return 0;
 }
 

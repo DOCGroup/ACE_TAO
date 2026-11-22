@@ -206,7 +206,7 @@ Dispatcher_Task::discard_pending_commands ()
     {
       ACE_Message_Block *mb {};
       ACE_Time_Value timeout {ACE_OS::gettimeofday ()};
-      if (this->getq (mb, &timeout) == -1)
+      if (this->getq (mb, std::addressof (timeout)) == -1)
         {
           if (ACE_OS::last_error () == EWOULDBLOCK)
             {

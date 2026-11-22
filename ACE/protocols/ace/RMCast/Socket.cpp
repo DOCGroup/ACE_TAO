@@ -383,7 +383,7 @@ namespace ACE_RMCast
 
   ssize_t Socket::recv (void* buf, size_t s, ACE_Time_Value const& timeout)
     {
-      return impl_->recv_ (buf, s, &timeout, nullptr);
+      return impl_->recv_ (buf, s, std::addressof (timeout), nullptr);
     }
 
   ssize_t Socket::recv (void* buf,
@@ -391,7 +391,8 @@ namespace ACE_RMCast
                         ACE_Time_Value const& timeout,
                         ACE_INET_Addr& from)
     {
-      return impl_->recv_ (buf, s, &timeout, &from);
+      return impl_->recv_ (buf, s, std::addressof (timeout),
+                           std::addressof (from));
     }
 
   ssize_t Socket::
@@ -403,7 +404,7 @@ namespace ACE_RMCast
   ssize_t Socket::
     size (ACE_Time_Value const& timeout)
     {
-      return impl_->size_ (&timeout);
+      return impl_->size_ (std::addressof (timeout));
     }
 
   ACE_HANDLE Socket::

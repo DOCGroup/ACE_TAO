@@ -1100,7 +1100,7 @@ ACE_POSIX_AIOCB_Proactor::handle_events_i (u_long milli_seconds)
       timeout.tv_nsec = (milli_seconds - (timeout.tv_sec * 1000)) * 1000000;
       result_suspend = aio_suspend (aiocb_list_,
                                     aiocb_list_max_size_,
-                                    &timeout);
+                                    std::addressof (timeout));
     }
 
   // Check for errors
@@ -1684,7 +1684,7 @@ ACE_POSIX_SIG_Proactor::handle_events (ACE_Time_Value &wait_time)
 {
   // Decrement <wait_time> with the amount of time spent in the method
   ACE_Countdown_Time countdown (std::addressof (wait_time));
-  return this->handle_events_i (&wait_time);
+  return this->handle_events_i (std::addressof (wait_time));
 }
 
 int

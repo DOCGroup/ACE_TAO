@@ -3,6 +3,8 @@
 
 #include "DSRT_CV_Dispatcher_Impl_T.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 //#include "DSRT_CV_Dispatcher_Impl_T.i"
 #endif /* __ACE_INLINE__ */
@@ -114,7 +116,7 @@ schedule_i (Guid_t id, DSRT_QoSDescriptor const &qos)
       ACE_DEBUG ((LM_DEBUG,
                   "(%t|%T): About to block on cv\n"));
 #endif
-      if (this->run_cond_.wait (&tv) == -1)
+      if (this->run_cond_.wait (std::addressof (tv)) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%t|%T): run_cond.wait timed out -- Possible Lockup\n"));

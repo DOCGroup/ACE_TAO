@@ -6,6 +6,8 @@
 #include "ace/Functor_T.h"
 #include "ace/OS_NS_sys_time.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 #include "ace/TP_Reactor.inl"
 #endif /* __ACE_INLINE__ */
@@ -32,7 +34,7 @@ ACE_TP_Token_Guard::acquire_read_token (ACE_Time_Value *max_wait_time)
 
       ACE_MT (result = this->token_.acquire_read (&ACE_TP_Reactor::no_op_sleep_hook,
                                                   nullptr,
-                                                  &tv));
+                                                  std::addressof (tv)));
     }
   else
     {
@@ -74,7 +76,7 @@ ACE_TP_Token_Guard::acquire_token (ACE_Time_Value *max_wait_time)
 
       ACE_MT (result = this->token_.acquire (nullptr,
                                              nullptr,
-                                             &tv));
+                                             std::addressof (tv)));
     }
   else
     {

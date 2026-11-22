@@ -2658,7 +2658,7 @@ ACE_Dev_Poll_Reactor::Token_Guard::acquire_quietly (ACE_Time_Value *max_wait)
 
       ACE_MT (result = this->token_.acquire_read (&polite_sleep_hook,
                                                   nullptr,
-                                                  &tv));
+                                                  std::addressof (tv)));
     }
   else
     {
@@ -2698,7 +2698,8 @@ ACE_Dev_Poll_Reactor::Token_Guard::acquire (ACE_Time_Value *max_wait)
       ACE_Time_Value tv = ACE_OS::gettimeofday ();
       tv += *max_wait;
 
-      ACE_MT (result = this->token_.acquire (nullptr, nullptr, &tv));
+      ACE_MT (result = this->token_.acquire (nullptr, nullptr,
+                                             std::addressof (tv)));
     }
   else
     {

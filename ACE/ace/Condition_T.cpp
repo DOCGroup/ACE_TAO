@@ -132,7 +132,7 @@ ACE_Condition<MUTEX>::wait (MUTEX &mutex,
       ACE_Time_Value tv = *abstime;
       return ACE_OS::cond_timedwait (std::addressof (this->cond_),
                                      std::addressof (mutex.lock ()),
-                                     &tv);
+                                     std::addressof (tv));
     }
 }
 
