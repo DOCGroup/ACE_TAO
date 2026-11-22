@@ -207,7 +207,7 @@ Options::shared_client_test (u_short port,
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%P|%t) %p\n"),
                          ACE_TEXT ("connection failed")),
-                        0);
+                        nullptr);
     }
   else
     {
@@ -221,7 +221,7 @@ Options::shared_client_test (u_short port,
   char *buf;
   ACE_NEW_RETURN (buf,
                   char[this->message_len ()],
-                  0);
+                  nullptr);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) waiting...\n")));
