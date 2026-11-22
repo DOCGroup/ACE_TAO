@@ -24,42 +24,42 @@ CORBA::Request::target () const
   return this->target_;
 }
 
-// Return the operation name for the request.
+/// Return the operation name for the request.
 ACE_INLINE CORBA::Char const*
 CORBA::Request::operation () const
 {
   return this->opname_;
 }
 
-// Return the arguments for the request.
+/// Return the arguments for the request.
 ACE_INLINE CORBA::NVList_ptr
 CORBA::Request::arguments ()
 {
   return this->args_;
 }
 
-// Return the result for the request.
+/// Return the result for the request.
 ACE_INLINE CORBA::NamedValue_ptr
 CORBA::Request::result ()
 {
   return this->result_;
 }
 
-// Return the exceptions resulting from this request.
+/// Return the exceptions resulting from this request.
 ACE_INLINE CORBA::ExceptionList_ptr
 CORBA::Request::exceptions ()
 {
   return this->exceptions_.in ();
 }
 
-// Return the request's contexts
+/// Return the request's contexts.
 ACE_INLINE CORBA::ContextList_ptr
 CORBA::Request::contexts ()
 {
   return this->contexts_;
 }
 
-// The argument manipulation helper functions
+/// The argument manipulation helper functions.
 ACE_INLINE CORBA::Any &
 CORBA::Request::add_in_arg ()
 {

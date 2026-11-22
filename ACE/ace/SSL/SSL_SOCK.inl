@@ -42,7 +42,7 @@ ACE_SSL_SOCK::set_option (int level,
 //    }
 }
 
-// Provides access to the ACE_OS::getsockopt system call.
+/// Provides access to the ACE_OS::getsockopt system call.
 
 ACE_INLINE int
 ACE_SSL_SOCK::get_option (int level,

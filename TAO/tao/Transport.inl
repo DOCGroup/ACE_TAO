@@ -25,7 +25,7 @@ TAO_Transport::tms () const
   return this->tms_.get ();
 }
 
-// Return the Wait strategy used by the Transport.
+/// Return the Wait strategy used by the Transport.
 ACE_INLINE TAO_Wait_Strategy *
 TAO_Transport::wait_strategy () const
 {
