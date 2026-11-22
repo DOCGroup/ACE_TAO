@@ -316,7 +316,6 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
                                 CORBA::Policy_out sched_param_out,
                                 CORBA::Policy_out /*implicit_sched_param_out*/)
 {
-  Kokyu::Svc_Ctxt_DSRT_QoS* sc_qos_ptr;
   RTScheduling::Current::IdType guid;
   RTScheduling::Current::IdType const *schedule_guid = &guid;
   int int_guid;
@@ -369,7 +368,11 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
       sc_qos_as_any = scqostmp.in ();
       //Don't store in a _var, since >>= returns a pointer to an
       //internal buffer and we are not supposed to free it.
-      sc_qos_as_any >>= sc_qos_ptr;
+      Kokyu::Svc_Ctxt_DSRT_QoS const *sc_qos_ptr {};
+      if (!(sc_qos_as_any >>= sc_qos_ptr) || sc_qos_ptr == nullptr)
+        {
+          throw CORBA::MARSHAL ();
+        }
 
       deadline  = sc_qos_ptr->deadline;
       importance = sc_qos_ptr->importance;
@@ -588,11 +591,14 @@ EDF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri)
 
       //Don't store in a _var, since >>= returns a pointer to an internal buffer
       //and we are not supposed to free it.
-      Kokyu::Svc_Ctxt_DSRT_QoS* sc_qos_ptr;
+      Kokyu::Svc_Ctxt_DSRT_QoS const *sc_qos_ptr {};
       CORBA::Any sc_qos_as_any;
       CORBA::Any_var scqostmp = codec_->decode (sc->context_data);
       sc_qos_as_any = scqostmp.in ();
-      sc_qos_as_any >>= sc_qos_ptr;
+      if (!(sc_qos_as_any >>= sc_qos_ptr) || sc_qos_ptr == nullptr)
+        {
+          throw CORBA::MARSHAL ();
+        }
 
       deadline  = sc_qos_ptr->deadline;
       importance = sc_qos_ptr->importance;
