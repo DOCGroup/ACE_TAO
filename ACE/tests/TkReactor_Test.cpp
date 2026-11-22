@@ -69,7 +69,7 @@ Quit (ClientData, XEvent *)
   quit = 1;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 client (void *)
 {
   char buf[100];
@@ -114,7 +114,7 @@ client (void *)
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P) Client: Message has been sent, about to exit...\n"));
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // Callback for "Press Me" button.
@@ -314,7 +314,7 @@ run_main (int, ACE_TCHAR *[])
                         -1);
     }
 
-  ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) client,
+  ACE_Thread_Manager::instance ()->spawn (client,
                                           nullptr,
                                           THR_NEW_LWP | THR_DETACHED);
 
