@@ -94,7 +94,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 // Iterate <n_iterations> each time checking that nobody modifies the data
 // while we have a read lock.
 
-static void *
+static ACE_THR_FUNC_RETURN
 reader (void *)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) reader starting\n")));
@@ -106,7 +106,8 @@ reader (void *)
   for (size_t iterations = 1; iterations <= n_iterations; ++iterations)
     {
       ACE_OS::sleep (pause);
-      ACE_READ_GUARD_RETURN (ACE_RW_Thread_Mutex, g, rw_mutex, nullptr);
+      ACE_READ_GUARD_RETURN (ACE_RW_Thread_Mutex, g, rw_mutex,
+                             ACE_THR_FUNC_RETURN_NULL);
       // int n = ++current_readers;
       // ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) I'm reader number %d\n"), n));
 
@@ -192,13 +193,13 @@ reader (void *)
                   ACE_TEXT ("(%t) reader finished %B iterations at %T\n"),
                   iterations));
     }
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // Iterate <n_iterations> each time modifying the global data
 // and checking that nobody steps on it while we can write it.
 
-static void *
+static ACE_THR_FUNC_RETURN
 writer (void *)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) writer starting\n")));
@@ -211,7 +212,8 @@ writer (void *)
     {
       ACE_OS::sleep (pause);
 
-      ACE_WRITE_GUARD_RETURN (ACE_RW_Thread_Mutex, g, rw_mutex, nullptr);
+      ACE_WRITE_GUARD_RETURN (ACE_RW_Thread_Mutex, g, rw_mutex,
+                              ACE_THR_FUNC_RETURN_NULL);
 
       ++current_writers;
 
@@ -247,7 +249,7 @@ writer (void *)
 
       ACE_DEBUG((LM_DEBUG, ACE_TEXT (" (%t) write %B done at %T\n"), iterations));
     }
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 #endif /* ACE_HAS_THREADS */
@@ -268,7 +270,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
               ACE_TEXT (" (%t) main thread starting\n")));
 
   if (ACE_Thread_Manager::instance ()->spawn_n (n_readers,
-                                               ACE_THR_FUNC (reader),
+                                               reader,
                                                nullptr,
                                                THR_NEW_LWP) == -1)
     {
@@ -277,7 +279,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
                          ACE_TEXT ("spawn_n")), 1);
     }
   else if (ACE_Thread_Manager::instance ()->spawn_n (n_writers,
-                                                    ACE_THR_FUNC (writer),
+                                                    writer,
                                                     nullptr,
                                                     THR_NEW_LWP) == -1)
     {
