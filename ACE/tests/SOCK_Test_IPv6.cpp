@@ -205,11 +205,11 @@ server (void *arg)
 #  if defined (ACE_WIN64)
           // This arg is ignored on Windows and causes pointer truncation
           // warnings on 64-bit compiles.
-          int const select_width = 0;
+          int const stream_select_width = 0;
 #  else
-          int const select_width = int (stream_handle) + 1;
+          int const stream_select_width = int (stream_handle) + 1;
 #  endif /* ACE_WIN64 */
-          if (ACE_OS::select (select_width,
+          if (ACE_OS::select (stream_select_width,
                               handle_set,
                               nullptr, nullptr, nullptr) == -1)
             {
