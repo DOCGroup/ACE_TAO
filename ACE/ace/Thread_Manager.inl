@@ -129,7 +129,7 @@ ACE_Thread_Descriptor::self () const
   return this->thr_id_;
 }
 
-// Unique kernel-level thread handle.
+/// Unique kernel-level thread handle.
 
 ACE_INLINE void
 ACE_Thread_Descriptor::self (ACE_hthread_t &handle)
@@ -145,7 +145,7 @@ ACE_Thread_Descriptor::log_msg_cleanup (ACE_Log_Msg* log_msg)
   log_msg_ = log_msg;
 }
 
-// Set the <next_> pointer
+/// Set the <next_> pointer
 ACE_INLINE void
 ACE_Thread_Descriptor::set_next (ACE_Thread_Descriptor *td)
 {
@@ -153,7 +153,7 @@ ACE_Thread_Descriptor::set_next (ACE_Thread_Descriptor *td)
   this->next_ = td;
 }
 
-// Get the <next_> pointer
+/// Get the <next_> pointer
 ACE_INLINE ACE_Thread_Descriptor *
 ACE_Thread_Descriptor::get_next () const
 {
@@ -161,7 +161,7 @@ ACE_Thread_Descriptor::get_next () const
   return static_cast<ACE_Thread_Descriptor *> (this->next_);
 }
 
-// Reset this thread descriptor
+/// Reset this thread descriptor
 ACE_INLINE void
 ACE_Thread_Descriptor::reset (ACE_Thread_Manager *tm)
 {
@@ -205,7 +205,7 @@ ACE_Thread_Manager::thread_desc_self ()
   return desc;
 }
 
-// Return the unique ID of the thread.
+/// Return the unique ID of the thread.
 
 ACE_INLINE ACE_thread_t
 ACE_Thread_Manager::thr_self ()
