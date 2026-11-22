@@ -187,7 +187,7 @@ typedef struct
   };
 } ACE_mutex_t;
 
-// Wrapper for NT Events.
+/// Wrapper for NT Events.
 typedef HANDLE ACE_event_t;
 
 #     if defined (ACE_WIN32)
