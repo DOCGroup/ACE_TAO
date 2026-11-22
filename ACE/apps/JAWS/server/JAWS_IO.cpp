@@ -127,7 +127,9 @@ JAWS_Synch_IO::transmit_file (const char *filename,
           && (stream.send_n (trailer, trailer_size) == trailer_size))
         this->handler_->transmit_file_complete ();
       else
-        result = -1;
+        {
+          result = -1;
+        }
 #else
       // Attempting to use writev
       // Is this faster?
@@ -239,16 +241,24 @@ JAWS_Asynch_IO::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result
                               result.act ()) == -1)
                 code = -1;
               else
-                return;
+                {
+                  return;
+                }
             }
         }
       else
-        code = -1;
+        {
+          code = -1;
+        }
 
       if (code == ACE_Filecache_Handle::ACE_SUCCESS)
-        this->handler_->receive_file_complete ();
+        {
+          this->handler_->receive_file_complete ();
+        }
       else
-        this->handler_->receive_file_error (code);
+        {
+          this->handler_->receive_file_error (code);
+        }
 
       delete &result.message_block ();
       delete static_cast<ACE_Filecache_Handle *> (result.act ());
@@ -260,7 +270,9 @@ JAWS_Asynch_IO::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result
           && result.bytes_transferred () != 0)
         this->handler_->read_complete (result.message_block ());
       else
-        this->handler_->read_error ();
+        {
+          this->handler_->read_error ();
+        }
     }
 }
 
@@ -357,9 +369,13 @@ void
 JAWS_Asynch_IO::handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result)
 {
   if (result.success ())
-    this->handler_->transmit_file_complete ();
+    {
+      this->handler_->transmit_file_complete ();
+    }
   else
-    this->handler_->transmit_file_error (-1);
+    {
+      this->handler_->transmit_file_error (-1);
+    }
 
   delete result.header_and_trailer ();
   delete static_cast<ACE_Filecache_Handle *> (result.act ());
@@ -400,9 +416,13 @@ JAWS_Asynch_IO::send_message (const char *buffer,
       mb->release ();
 
       if (act == CONFORMATION)
-        this->handler_->confirmation_message_complete ();
+        {
+          this->handler_->confirmation_message_complete ();
+        }
       else
-        this->handler_->error_message_complete ();
+        {
+          this->handler_->error_message_complete ();
+        }
     }
 }
 
@@ -412,9 +432,13 @@ JAWS_Asynch_IO::handle_write_stream (const ACE_Asynch_Write_Stream::Result &resu
   result.message_block ().release ();
 
   if (result.act () == reinterpret_cast<void *> (static_cast<intptr_t> (CONFORMATION)))
-    this->handler_->confirmation_message_complete ();
+    {
+      this->handler_->confirmation_message_complete ();
+    }
   else
-    this->handler_->error_message_complete ();
+    {
+      this->handler_->error_message_complete ();
+    }
 }
 
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */

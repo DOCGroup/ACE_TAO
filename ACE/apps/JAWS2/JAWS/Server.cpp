@@ -201,21 +201,25 @@ JAWS_Server::parse_args (int argc, ACE_TCHAR *argv[])
 
 #if (ACE_NTRACE != 1)
   if (t)
-    ACE_Trace::start_tracing ();
+    {
+      ACE_Trace::start_tracing ();
+    }
   else
-    ACE_Trace::stop_tracing ();
+    {
+      ACE_Trace::stop_tracing ();
+    }
 #endif /* ACE_NTRACE != 1*/
 
   if (this->port_ == 0)
-  {
-    this->port_ = 5432;
-  }
+    {
+      this->port_ = 5432;
+    }
   if (this->nthreads_ == 0)
-  {
-    this->nthreads_ = 5;
-  }
+    {
+      this->nthreads_ = 5;
+    }
   if (this->maxthreads_ == 0)
-  {
-    this->maxthreads_ = 20;
-  }
+    {
+      this->maxthreads_ = 20;
+    }
 }

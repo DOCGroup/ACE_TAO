@@ -101,7 +101,9 @@ JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::maxsize (Cache_Manager *cm,
             new_heap[i] = this->heap_[i];
           }
         else
-          new_heap[i] = nullptr;
+          {
+            new_heap[i] = nullptr;
+          }
 
       Cache_Heap_Item ** volatile temp = this->heap_;
       this->heap_ = new_heap;

@@ -157,7 +157,9 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::bind (const EXT_ID &ext_id,
       result = this->hashtable_[hash_idx]->bind (ext_id, int_id);
     }
   else
-    result = this->hashtable_[hash_idx]->bind (ext_id, int_id);
+    {
+      result = this->hashtable_[hash_idx]->bind (ext_id, int_id);
+    }
 
   return result;
 }
@@ -181,7 +183,9 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::trybind (const EXT_ID &ext_id,
       result = this->hashtable_[hash_idx]->trybind (ext_id, int_id);
     }
   else
-    result = this->hashtable_[hash_idx]->trybind (ext_id, int_id);
+    {
+      result = this->hashtable_[hash_idx]->trybind (ext_id, int_id);
+    }
 
   return result;
 }

@@ -207,7 +207,9 @@ JAWS_Assoc_Array_Iterator<KEY,DATA>::previous ()
       this->first ();
     }
   else
-    --this->i_;
+    {
+      --this->i_;
+    }
 
   return 1;
 }

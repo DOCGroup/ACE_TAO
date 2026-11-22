@@ -46,11 +46,13 @@ PM_Server::insert_protocol_info (Protocol_Record &protocol_record)
                               prp->drwho_list_);
 
       if (current_node->get_idle_time () >= MAX_USER_TIMEOUT)
-        ++np->inactive_count_;
+        {
+          ++np->inactive_count_;
+        }
       else
-      {
-        ++np->active_count_;
-      }
+        {
+          ++np->active_count_;
+        }
     }
 
   return prp;

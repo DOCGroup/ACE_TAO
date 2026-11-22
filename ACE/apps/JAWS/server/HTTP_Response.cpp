@@ -44,7 +44,9 @@ HTTP_Response::~HTTP_Response ()
 {
 #if defined (ACE_JAWS_BASELINE)
   if (this->HTTP_HEADER != EMPTY_HEADER)
-    delete [] this->HTTP_HEADER;
+    {
+      delete [] this->HTTP_HEADER;
+    }
   // The [] is important.  Without it, there was a huge memory leak!
 #endif /* ACE_JAWS_BASELINE */
 }

@@ -35,9 +35,13 @@ JAWS_Cached_Allocator<T, ACE_LOCK>::extend_pool ()
     }
 
   if (this->pool_head_ == nullptr)
-    this->pool_head_ = this->pool_tail_ = new_pool;
+    {
+      this->pool_head_ = this->pool_tail_ = new_pool;
+    }
   else
-    this->set_next_pool (this->pool_tail_, new_pool);
+    {
+      this->set_next_pool (this->pool_tail_, new_pool);
+    }
 
   this->pool_tail_ = new_pool;
 }

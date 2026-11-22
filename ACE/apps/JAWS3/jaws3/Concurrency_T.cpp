@@ -13,7 +13,9 @@ JAWS_Concurrency_Bridge<CONCURRENCY_IMPL>
   : impl_ (impl)
 {
   if (this->impl_ == nullptr)
-    this->impl_ = CONCURRENCY_IMPL::instance ();
+    {
+      this->impl_ = CONCURRENCY_IMPL::instance ();
+    }
 }
 
 template <class CONCURRENCY_IMPL> int

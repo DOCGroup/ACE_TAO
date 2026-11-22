@@ -43,11 +43,13 @@ PM_Client::process ()
   const char *(Protocol_Record::*get_name)();
 
   if (Options::get_opt (Options::PRINT_LOGIN_NAME))
-    get_name = &Protocol_Record::get_login;
+    {
+      get_name = &Protocol_Record::get_login;
+    }
   else
-  {
-    get_name = &Protocol_Record::get_real;
-  }
+    {
+      get_name = &Protocol_Record::get_real;
+    }
 
   int active_friends = 0;
   const int users = this->Protocol_Manager::get_total_users ();

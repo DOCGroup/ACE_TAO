@@ -87,11 +87,13 @@ BS_Server::insert (char const *key_name, int max_len)
                               buffer[mid]->get_login (),
                               max_len);
           if (cmp < 0)
-            hi = mid - 1;
+            {
+              hi = mid - 1;
+            }
           else
-          {
-            lo = mid;
-          }
+            {
+              lo = mid;
+            }
         }
 
       // This line is very subtle... ;-)

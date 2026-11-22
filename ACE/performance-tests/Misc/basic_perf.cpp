@@ -490,7 +490,9 @@ get_options (int argc, ACE_TCHAR *argv [])
           {
             int const temp = ACE_OS::atoi (get_opt.opt_arg ());
             if (temp > 0)
-              iterations = static_cast<u_int> (temp);
+              {
+                iterations = static_cast<u_int> (temp);
+              }
             else
               {
                 ACE_DEBUG ((LM_ERROR, "%s: number of iterations must be > 0\n",

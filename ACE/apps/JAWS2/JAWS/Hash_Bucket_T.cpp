@@ -138,9 +138,13 @@ JAWS_Hash_Bucket_DLCStack<EXT_ID, INT_ID>::remove (JAWS_HASH_BUCKET_ITEM *item)
           if (item->next_ != item)
             {
               if (this->head_ == item)
-                this->head_ = item->next_;
+                {
+                  this->head_ = item->next_;
+                }
               if (this->tail_ == item)
-                this->tail_ = item->prev_;
+                {
+                  this->tail_ = item->prev_;
+                }
               item->next_->prev_ = item->prev_;
               item->prev_->next_ = item->next_;
             }
@@ -158,7 +162,9 @@ JAWS_Hash_Bucket_DLCStack<EXT_ID, INT_ID>::remove (JAWS_HASH_BUCKET_ITEM *item)
                                   JAWS_Hash_Bucket_Item, EXT_ID, INT_ID);
         }
       else
-        result = -1;
+        {
+          result = -1;
+        }
     }
 
   return result;
@@ -216,7 +222,9 @@ JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>::advance ()
         }
     }
   else
-    result = this->first ();
+    {
+      result = this->first ();
+    }
 
   return result;
 }
@@ -237,7 +245,9 @@ JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>::revert ()
         }
     }
   else
-    result = this->last ();
+    {
+      result = this->last ();
+    }
 
   return result;
 }
@@ -247,7 +257,9 @@ JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>::
 next (JAWS_HASH_BUCKET_ITEM *&item)
 {
   if (this->next_ == nullptr)
-    this->first ();
+    {
+      this->first ();
+    }
 
   item = this->next_;
   return ! this->done ();
@@ -266,7 +278,9 @@ JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>::
 prev (JAWS_HASH_BUCKET_ITEM *&item)
 {
   if (this->prev_ == nullptr)
-    this->last ();
+    {
+      this->last ();
+    }
 
   item = this->prev_;
   return ! this->done ();
@@ -296,7 +310,9 @@ JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>
   : dlcstack_ (alloc)
 {
   if (alloc == nullptr)
-    this->dlcstack_.allocator_ = ACE_Allocator::instance ();
+    {
+      this->dlcstack_.allocator_ = ACE_Allocator::instance ();
+    }
 }
 
 template <class EXT_ID, class INT_ID, class EQ_FUNC> int
@@ -304,7 +320,9 @@ JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::open (ACE_Allocator *alloc)
 {
   this->dlcstack_.allocator_ = alloc;
   if (alloc == nullptr)
-    this->dlcstack_.allocator_ = ACE_Allocator::instance ();
+    {
+      this->dlcstack_.allocator_ = ACE_Allocator::instance ();
+    }
 
   return 0;
 }
@@ -374,7 +392,9 @@ JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::bind (const EXT_ID &ext_id,
   else
     {
       if (this->dlcstack_.push (ext_id, int_id) == nullptr)
-        result = -1;
+        {
+          result = -1;
+        }
     }
 
   return result;
@@ -393,7 +413,9 @@ JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::trybind (const EXT_ID &ext_id,
   else
     {
       if (this->dlcstack_.push (ext_id, int_id) == nullptr)
-        result = -1;
+        {
+          result = -1;
+        }
     }
 
   return result;
@@ -417,7 +439,9 @@ JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::rebind (const EXT_ID &ext_id,
     }
 
   if (this->dlcstack_.push (ext_id, int_id) == nullptr)
-    result = -1;
+    {
+      result = -1;
+    }
 
   return result;
 }

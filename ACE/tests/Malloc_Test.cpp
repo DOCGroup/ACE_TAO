@@ -312,7 +312,9 @@ get_base_addrs ()
       vinfo.dwMajorVersion >= 4)
     PARENT_BASE_ADDR = (char*) (64 * 1024*1024);
   else
-    PARENT_BASE_ADDR = (char*) ((2048UL + 512UL)*(1024UL*1024UL));
+    {
+      PARENT_BASE_ADDR = (char*) ((2048UL + 512UL)*(1024UL*1024UL));
+    }
 
   CHILD_BASE_ADDR = CHILD_ADDR_DELTA + (char*) PARENT_BASE_ADDR;
 }
