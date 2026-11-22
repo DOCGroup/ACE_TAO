@@ -8,6 +8,7 @@
 #include <map>
 #include <string>
 #include <typeinfo>
+#include <utility>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -180,8 +181,7 @@ TAO_Notify_Tracker::add (TAO_Notify_Refcountable *p)
   int id = ++id_counter_;
 
   Entry e { p, typeid (*p).name () };
-  std::pair< EntityMap::iterator, bool > result =
-    map_.insert( std::make_pair( id, e ) );
+  auto result = map_.try_emplace (id, std::move (e));
   EntityMap::iterator& it = result.first;
   if (!result.second)
   {
