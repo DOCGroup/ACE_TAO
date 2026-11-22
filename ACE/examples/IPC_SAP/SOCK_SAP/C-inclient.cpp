@@ -16,7 +16,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_OS::socket_init (ACE_WSOCK_VERSION);
 
   struct sockaddr_in saddr;
-  struct hostent *hp;
   const ACE_TCHAR *host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
   u_short port_num =
     ACE_HTONS (argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_SERVER_PORT);
@@ -37,13 +36,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (sockbufsize > 0)
     {
       if (ACE_OS::setsockopt (s_handle, SOL_SOCKET, SO_SNDBUF,
-                              (const char *) &sockbufsize,
+                              reinterpret_cast<char const *> (&sockbufsize),
                               sizeof (sockbufsize)) != 0)
       {
         ACE_OS::perror (ACE_TEXT("SO_SNDBUF")), ACE_OS::exit (1);
       }
       if (ACE_OS::setsockopt (s_handle, SOL_SOCKET, SO_RCVBUF,
-                              (const char *) &sockbufsize,
+                              reinterpret_cast<char const *> (&sockbufsize),
                               sizeof (sockbufsize)) != 0)
       {
         ACE_OS::perror (ACE_TEXT("SO_RCVBUF")), ACE_OS::exit (1);
@@ -51,7 +50,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   // Determine IP address of the server.
-  if ((hp = ACE_OS::gethostbyname (ACE_TEXT_ALWAYS_CHAR(host))) == nullptr)
+  struct hostent *const hp = ACE_OS::gethostbyname (ACE_TEXT_ALWAYS_CHAR(host));
+  if (hp == nullptr)
   {
     ACE_OS::perror (ACE_TEXT("gethostbyname")), ACE_OS::exit (1);
   }
