@@ -48,7 +48,7 @@ TAO_Notify_StructuredProxyPushConsumer::push_structured_event (
   CosNotification::StructuredEvent const &notification)
 {
   // Check if we should proceed at all.
-  if (this->admin_properties().reject_new_events () == 1
+  if (this->admin_properties().reject_new_events () == true
       && this->admin_properties().queue_full ())
   {
     throw CORBA::IMP_LIMIT ();

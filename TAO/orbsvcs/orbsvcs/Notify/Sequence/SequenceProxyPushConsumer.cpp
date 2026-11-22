@@ -49,7 +49,7 @@ TAO_Notify_SequenceProxyPushConsumer::push_structured_events (
   CosNotification::EventBatch const &event_batch)
 {
   // Check if we should proceed at all.
-  if (this->admin_properties().reject_new_events () == 1 && this->admin_properties().queue_full ())
+  if (this->admin_properties().reject_new_events () == true && this->admin_properties().queue_full ())
   {
     throw CORBA::IMP_LIMIT ();
   }
