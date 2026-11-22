@@ -846,7 +846,7 @@ TAO_Default_Resource_Factory::allocate_reactor_impl () const
   TAO_RSF_Timer_Queue_Ptr tmq (*this, this->create_timer_queue ());
   ACE_NEW_RETURN (impl,
                   ACE_TP_Reactor (ACE::max_handles (),
-                                  1,
+                                  true,
                                   nullptr,
                                   tmq.get (),
                                   this->reactor_mask_signals_,

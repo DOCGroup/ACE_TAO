@@ -485,7 +485,7 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl () const
     case TAO_REACTOR_DEV_POLL:
       ACE_NEW_RETURN (impl,
                       ACE_Dev_Poll_Reactor (ACE::max_handles (),
-                                            1,  // restart
+                                            true,  // restart
                                             nullptr,
                                             tmq.get (),
                                             0, // Do not disable notify
@@ -504,7 +504,7 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl () const
     case TAO_REACTOR_TP:
       ACE_NEW_RETURN (impl,
           ACE_TP_Reactor (ACE::max_handles (),
-              1,
+              true,
               nullptr,
               tmq.get (),
               this->reactor_mask_signals_,
