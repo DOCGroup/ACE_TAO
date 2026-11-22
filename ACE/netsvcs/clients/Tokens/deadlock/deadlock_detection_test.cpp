@@ -242,8 +242,10 @@ parse_args (int argc, ACE_TCHAR *argv[], Options &options)
     }
 
   if (options.remote_mutexes)
-    ACE_Remote_Mutex::set_server_address (
-      ACE_INET_Addr (options.server_port, options.server_host));
+    {
+      ACE_Remote_Mutex::set_server_address (
+        ACE_INET_Addr (options.server_port, options.server_host));
+    }
 
   return 0;
 }
@@ -326,10 +328,12 @@ rwlock_test (Options const &options)
   ACE_Token_Manager::instance ()->debug (true);
 
   for (Two_Tokens &reader : readers)
-    if (thr_mgr.spawn (two_token_thread, &reader, THR_BOUND) == -1)
-      {
-        ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "reader spawn"), -1);
-      }
+    {
+      if (thr_mgr.spawn (two_token_thread, &reader, THR_BOUND) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "reader spawn"), -1);
+        }
+    }
 
   if (thr_mgr.spawn (run_writer, &writer, THR_BOUND) == -1)
     {

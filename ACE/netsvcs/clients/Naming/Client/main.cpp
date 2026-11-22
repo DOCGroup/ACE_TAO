@@ -27,17 +27,21 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
 
   // Print the contents of the combined <ACE_ARGV>.
   for (int i = 0; i < new_args.argc (); ++i)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%d) %s\n"),
-                i,
-                new_args.argv ()[i]));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%d) %s\n"),
+                  i,
+                  new_args.argv ()[i]));
+    }
 
   if (daemon.open (new_args.argc (),
                    new_args.argv ()) == -1)
     {
       if (errno != ENOENT)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")),
+                            1);
+        }
       else // Use static binding.
         {
           ACE_ARGV args;
