@@ -230,9 +230,13 @@ TAO::SL3::CredentialsCurator::register_acquirer_factory (
     this->acquirer_factories_.bind (method.in (), factory);
 
   if (result == 1)  // Entry already exists in table.
-    throw CORBA::BAD_INV_ORDER ();
+    {
+      throw CORBA::BAD_INV_ORDER ();
+    }
   else if (result == -1)  // Failure.
-    throw CORBA::INTERNAL ();
+    {
+      throw CORBA::INTERNAL ();
+    }
 
   // CredentialsCurator now owns the acquisition method id.
   (void) method._retn ();

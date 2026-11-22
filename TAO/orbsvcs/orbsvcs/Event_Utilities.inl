@@ -8,7 +8,9 @@ ACE_ConsumerQOS_Factory::insert (RtecEventComm::EventSourceID source,
 {
   RtecEventChannelAdmin::Dependency dependency;
   if (this->event_initializer_ != nullptr)
-    (*this->event_initializer_) (dependency.event);
+    {
+      (*this->event_initializer_) (dependency.event);
+    }
   dependency.event.header.source = source;
   dependency.event.header.type = type;
   //dependency.event.header.creation_time = 0;
@@ -27,7 +29,9 @@ ACE_ConsumerQOS_Factory::insert_bitmasked_value (CORBA::ULong source_mask,
 {
   RtecEventChannelAdmin::Dependency dependency;
   if (this->event_initializer_ != nullptr)
-    (*this->event_initializer_) (dependency.event);
+    {
+      (*this->event_initializer_) (dependency.event);
+    }
   dependency.event.header.type = ACE_ES_MASKED_TYPE_DESIGNATOR;
   dependency.event.header.source = 0;
   //dependency.event.header.creation_time = 0;
@@ -50,7 +54,9 @@ ACE_ConsumerQOS_Factory::insert_null_terminator ()
 {
   RtecEventChannelAdmin::Dependency dependency;
   if (this->event_initializer_ != nullptr)
-    (*this->event_initializer_) (dependency.event);
+    {
+      (*this->event_initializer_) (dependency.event);
+    }
   dependency.event.header.type = ACE_ES_NULL_DESIGNATOR;
   dependency.event.header.source = 0;
   return this->insert (dependency);
@@ -62,7 +68,9 @@ ACE_ConsumerQOS_Factory::insert_type (RtecEventComm::EventType type,
 {
   RtecEventChannelAdmin::Dependency dependency;
   if (this->event_initializer_ != nullptr)
-    (*this->event_initializer_) (dependency.event);
+    {
+      (*this->event_initializer_) (dependency.event);
+    }
   dependency.event.header.source = ACE_ES_EVENT_SOURCE_ANY;
   dependency.event.header.type = type;
   //dependency.event.header.creation_time = 0;
@@ -78,7 +86,9 @@ ACE_ConsumerQOS_Factory::insert_source (RtecEventComm::EventSourceID source,
 {
   RtecEventChannelAdmin::Dependency dependency;
   if (this->event_initializer_ != nullptr)
-    (*this->event_initializer_) (dependency.event);
+    {
+      (*this->event_initializer_) (dependency.event);
+    }
   dependency.event.header.source = source;
   dependency.event.header.type = ACE_ES_EVENT_ANY;
   //dependency.event.header.creation_time = 0;
@@ -95,7 +105,9 @@ ACE_ConsumerQOS_Factory::insert_time (RtecEventComm::EventType type,
 {
   RtecEventChannelAdmin::Dependency dependency;
   if (this->event_initializer_ != nullptr)
-    (*this->event_initializer_) (dependency.event);
+    {
+      (*this->event_initializer_) (dependency.event);
+    }
   dependency.event.header.source = ACE_ES_EVENT_SOURCE_ANY;
   dependency.event.header.type = type;
   dependency.event.header.creation_time = interval;
@@ -110,7 +122,9 @@ ACE_ConsumerQOS_Factory::insert_act (RtecEventComm::EventData act)
 {
   RtecEventChannelAdmin::Dependency dependency;
   if (this->event_initializer_ != nullptr)
-    (*this->event_initializer_) (dependency.event);
+    {
+      (*this->event_initializer_) (dependency.event);
+    }
   dependency.event.header.source = 0;
   dependency.event.header.type = ACE_ES_EVENT_ACT;
   //dependency.event.header.creation_time = 0;

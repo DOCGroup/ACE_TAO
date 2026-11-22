@@ -171,7 +171,9 @@ ACE_Unbounded_List<T>::ACE_Unbounded_List (ACE_Allocator *alloc)
   // ACE_TRACE ("ACE_Unbounded_List<T>::ACE_Unbounded_List");
 
   if (this->allocator_ == nullptr)
-    this->allocator_ = ACE_Allocator::instance ();
+    {
+      this->allocator_ = ACE_Allocator::instance ();
+    }
 
   ACE_NEW_MALLOC (this->head_,
                   (ACE_NS_Node<T>*) this->allocator_->malloc (sizeof (ACE_NS_Node<T>)),
@@ -189,7 +191,9 @@ ACE_Unbounded_List<T>::ACE_Unbounded_List (ACE_Unbounded_List<T> const &us)
   ACE_TRACE ("ACE_Unbounded_List<T>::ACE_Unbounded_List");
 
   if (this->allocator_ == nullptr)
-    this->allocator_ = ACE_Allocator::instance ();
+    {
+      this->allocator_ = ACE_Allocator::instance ();
+    }
 
   ACE_NEW_MALLOC (this->head_,
                   (ACE_NS_Node<T>*) this->allocator_->malloc (sizeof (ACE_NS_Node<T>)),

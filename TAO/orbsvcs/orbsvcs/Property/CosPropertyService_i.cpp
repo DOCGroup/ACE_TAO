@@ -581,8 +581,10 @@ TAO_PropertySet::get_all_property_names (CORBA::ULong how_many,
     this->get_number_of_properties ();
 
   if (num_of_properties == 0)
-    // Nothing to do.
-    return;
+    {
+      // Nothing to do.
+      return;
+    }
 
   // Set the length of the property_names appropriately.
   CORBA::ULong sequence_length {};
@@ -590,7 +592,9 @@ TAO_PropertySet::get_all_property_names (CORBA::ULong how_many,
   if (how_many > 0)
     {
       if (how_many >= num_of_properties)
-        sequence_length = num_of_properties;
+        {
+          sequence_length = num_of_properties;
+        }
       else
       {
         sequence_length = how_many;
@@ -1366,7 +1370,9 @@ TAO_PropertySetDef::set_property_mode (char const *property_name,
         case CosPropertyService::read_only:
           // Read_only to fixed read only alone is possible.
           if (property_mode != CosPropertyService::fixed_readonly)
-            throw CosPropertyService::UnsupportedMode();
+            {
+              throw CosPropertyService::UnsupportedMode();
+            }
           else
             {
               // Change the mode and update hash table.
@@ -1381,7 +1387,9 @@ TAO_PropertySetDef::set_property_mode (char const *property_name,
         case CosPropertyService::fixed_normal:
           // Fixed_normal to fixed_readonly alone is possible.
           if (property_mode != CosPropertyService::fixed_readonly)
-            throw CosPropertyService::UnsupportedMode();
+            {
+              throw CosPropertyService::UnsupportedMode();
+            }
           else
             {
               // Change the mode and update the hash table.
