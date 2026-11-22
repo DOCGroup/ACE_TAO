@@ -22,7 +22,7 @@ class Task : public ACE_Task_Base
 public:
   /// Create the task...
   Task (RtecEventChannelAdmin::EventChannel_ptr ec,
-        int use_callbacks);
+        bool use_callbacks);
   Task (Task const &) = delete;
   Task &operator= (Task const &) = delete;
   Task (Task &&) = delete;
@@ -39,7 +39,7 @@ private:
 
   /// Does the event channel send any callback messages when a client
   /// diconnects
-  int use_callbacks;
+  bool use_callbacks;
 };
 
 #endif /* EC_DISCONNECT_H */

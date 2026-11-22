@@ -8,7 +8,7 @@
 #include "orbsvcs/Event/EC_Default_Factory.h"
 
 static void run_test (PortableServer::POA_ptr poa,
-                      int use_callbacks);
+                      bool use_callbacks);
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -31,9 +31,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // ****************************************************************
 
-      run_test (poa.in (), 0);
+      run_test (poa.in (), false);
 
-      run_test (poa.in (), 1);
+      run_test (poa.in (), true);
 
       // ****************************************************************
 
@@ -63,7 +63,7 @@ deactivate_servant (PortableServer::Servant servant)
 
 void
 run_test (PortableServer::POA_ptr poa,
-          int use_callbacks)
+          bool use_callbacks)
 {
   TAO_EC_Event_Channel_Attributes attributes (poa, poa);
   attributes.disconnect_callbacks = use_callbacks;
@@ -90,7 +90,7 @@ run_test (PortableServer::POA_ptr poa,
 }
 
 Task::Task (RtecEventChannelAdmin::EventChannel_ptr ec,
-            int callbacks)
+            bool callbacks)
   :  event_channel (RtecEventChannelAdmin::EventChannel::_duplicate (ec)),
      use_callbacks (callbacks)
 {
