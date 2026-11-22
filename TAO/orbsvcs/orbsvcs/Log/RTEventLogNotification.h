@@ -59,7 +59,7 @@ protected:
   /// that will log these events.
   void obtainProxyConsumer ();
 
-  // Send the event on the event channel.
+  /// Send the event on the event channel.
   void send_notification (CORBA::Any const & any) override;
   /// @}
 

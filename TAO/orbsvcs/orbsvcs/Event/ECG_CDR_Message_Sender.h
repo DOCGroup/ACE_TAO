@@ -91,7 +91,7 @@ public:
    */
   void init (TAO_ECG_Refcounted_Endpoint endpoint_rptr);
 
-  // Shutdown this component.  Frees up the endpoint.
+  /// Shutdown this component.  Frees up the endpoint.
   void shutdown ();
   /// @}
 

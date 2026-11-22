@@ -45,7 +45,7 @@ class ACE_Export ACE_Process_Options
 public:
   static constexpr int DEFAULT_COMMAND_LINE_BUF_LEN = 1024;
 
-  // UNIX process creation flags.
+  /// UNIX process creation flags.
   enum
   {
 #if defined (ACE_WIN32)

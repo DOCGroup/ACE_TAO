@@ -198,7 +198,7 @@ private:
 class ACE_InputCDR;
 class ACE_OutputCDR;
 
-// iostream operators for ACE_Log_Record.
+/// iostream operators for ACE_Log_Record.
 ACE_Export int operator>> (ACE_InputCDR &cdr, ACE_Log_Record &log_record);
 ACE_Export int operator<< (ACE_OutputCDR &cdr, const ACE_Log_Record &log_record);
 
