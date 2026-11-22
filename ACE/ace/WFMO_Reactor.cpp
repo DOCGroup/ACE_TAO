@@ -318,11 +318,15 @@ ACE_WFMO_Reactor_Handler_Repository::remove_handler_i (size_t slot,
     }
   // Normal event entries.
   else if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::DONT_CALL))
-    // Preserve DONT_CALL
-    to_be_removed_masks = ACE_Event_Handler::DONT_CALL;
+    {
+      // Preserve DONT_CALL
+      to_be_removed_masks = ACE_Event_Handler::DONT_CALL;
+    }
   else
-    // Make sure that the <to_be_removed_masks> is the NULL_MASK
-    to_be_removed_masks = ACE_Event_Handler::NULL_MASK;
+    {
+      // Make sure that the <to_be_removed_masks> is the NULL_MASK
+      to_be_removed_masks = ACE_Event_Handler::NULL_MASK;
+    }
 
   // If this event was marked for suspension, undo the suspension flag
   // and reduce the to be suspended count.
@@ -386,11 +390,15 @@ ACE_WFMO_Reactor_Handler_Repository::remove_suspended_handler_i (size_t slot,
     }
   // Normal event entries.
   else if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::DONT_CALL))
-    // Preserve DONT_CALL
-    to_be_removed_masks = ACE_Event_Handler::DONT_CALL;
+    {
+      // Preserve DONT_CALL
+      to_be_removed_masks = ACE_Event_Handler::DONT_CALL;
+    }
   else
-    // Make sure that the <to_be_removed_masks> is the NULL_MASK
-    to_be_removed_masks = ACE_Event_Handler::NULL_MASK;
+    {
+      // Make sure that the <to_be_removed_masks> is the NULL_MASK
+      to_be_removed_masks = ACE_Event_Handler::NULL_MASK;
+    }
 
   // If this event was marked for resumption, undo the resumption flag
   // and reduce the to be resumed count.
@@ -453,11 +461,15 @@ ACE_WFMO_Reactor_Handler_Repository::remove_to_be_added_handler_i (size_t slot,
     }
   // Normal event entries.
   else if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::DONT_CALL))
-    // Preserve DONT_CALL
-    to_be_removed_masks = ACE_Event_Handler::DONT_CALL;
+    {
+      // Preserve DONT_CALL
+      to_be_removed_masks = ACE_Event_Handler::DONT_CALL;
+    }
   else
-    // Make sure that the <to_be_removed_masks> is the NULL_MASK
-    to_be_removed_masks = ACE_Event_Handler::NULL_MASK;
+    {
+      // Make sure that the <to_be_removed_masks> is the NULL_MASK
+      to_be_removed_masks = ACE_Event_Handler::NULL_MASK;
+    }
 
   // If this event was marked for suspension, undo the suspension flag
   // and reduce the to be suspended count.
@@ -916,9 +928,11 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_suspension_infos ()
               // removed slot.  Reset the end and decrement the number
               // of suspended handles.
               if (i < last_valid_slot)
-                // Struct copy
-                this->current_suspended_info_[i] =
-                  this->current_suspended_info_[last_valid_slot];
+                {
+                  // Struct copy
+                  this->current_suspended_info_[i] =
+                    this->current_suspended_info_[last_valid_slot];
+                }
               this->current_suspended_info_[last_valid_slot].reset ();
               --this->suspended_handles_;
             }
@@ -1527,7 +1541,9 @@ ACE_WFMO_Reactor::register_handler_i (ACE_HANDLE event_handle,
       return 0;
     }
   else
-    return -1;
+    {
+      return -1;
+    }
 
 #endif /* ACE_HAS_WINSOCK2 || ACE_HAS_WINSOCK2 == 0 */
 
@@ -1979,13 +1995,16 @@ ACE_WFMO_Reactor::expire_timers ()
 {
   // If "owner" thread
   if (ACE_Thread::self () == this->owner_)
-
-    // expire all pending timers.
-    return this->timer_queue_->expire ();
+    {
+      // expire all pending timers.
+      return this->timer_queue_->expire ();
+    }
 
   else
-    // Nothing to expire
-    return 0;
+    {
+      // Nothing to expire
+      return 0;
+    }
 }
 
 int
@@ -2117,8 +2136,10 @@ ACE_WFMO_Reactor::dispatch_handler (DWORD slot,
         }
     }
   else
-    // The handle was scheduled for deletion, so we will skip it.
-    return 0;
+    {
+      // The handle was scheduled for deletion, so we will skip it.
+      return 0;
+    }
 }
 
 int
@@ -2412,8 +2433,10 @@ ACE_WFMO_Reactor::update_state ()
             // Make necessary changes to the handler repository
             this->handler_rep_.make_changes ();
           if (this->new_owner ())
-            // Update the owner
-            this->change_owner ();
+            {
+              // Update the owner
+              this->change_owner ();
+            }
           // Turn off <wakeup_all_threads_>
           this->wakeup_all_threads_.reset ();
           // Let everyone know that it is ok to go ahead
@@ -2422,16 +2445,20 @@ ACE_WFMO_Reactor::update_state ()
           this->change_state_thread_ = 0;
         }
       else if (this->active_threads_ == 0)
-        // This thread did not get a chance to become the change
-        // thread. If it is the last one out, it will wakeup the
-        // change thread
-        this->waiting_to_change_state_.signal ();
+        {
+          // This thread did not get a chance to become the change
+          // thread. If it is the last one out, it will wakeup the
+          // change thread
+          this->waiting_to_change_state_.signal ();
+        }
     }
   // This is if we were woken up explicitily by the user and there are
   // no state changes required.
   else if (this->active_threads_ == 0)
-    // Turn off <wakeup_all_threads_>
-    this->wakeup_all_threads_.reset ();
+    {
+      // Turn off <wakeup_all_threads_>
+      this->wakeup_all_threads_.reset ();
+    }
 
   return 0;
 }
@@ -2547,11 +2574,15 @@ ACE_WFMO_Reactor_Notify::handle_signal (int signum, siginfo_t *siginfo, ucontext
       if (this->message_queue_.dequeue_head (mb, &zero_timeout) == -1)
         {
           if (errno == EWOULDBLOCK)
-            // We've reached the end of the processing, return
-            // normally.
-            return 0;
+            {
+              // We've reached the end of the processing, return
+              // normally.
+              return 0;
+            }
           else
-            return -1; // Something weird happened...
+            {
+              return -1; // Something weird happened...
+            }
         }
       else
         {
@@ -2658,7 +2689,9 @@ ACE_WFMO_Reactor_Notify::notify (ACE_Event_Handler *event_handler,
       // current time of day.  This is what <ACE_Message_Queue>
       // expects.
       if (timeout != nullptr)
-        *timeout += timer_queue_->gettimeofday ();
+        {
+          *timeout += timer_queue_->gettimeofday ();
+        }
 
       if (this->message_queue_.enqueue_tail
           (mb, timeout) == -1)
