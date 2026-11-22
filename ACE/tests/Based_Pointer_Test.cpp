@@ -12,6 +12,7 @@
 #include "test_config.h"
 #include "ace/DLL.h"
 #include "ace/ACE.h"
+#include "ace/Basic_Types.h"
 #ifdef ACE_HAS_POSITION_INDEPENDENT_POINTERS
 #include "ace/Based_Pointer_Repository.h"
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS */
@@ -306,7 +307,12 @@ mmap_remap_test()
     // sort pools into base address order
     for (i= 0; i<2; ++i)
       {
-        if (pool_base[ i ] < pool_base[ i+1 ])
+        uintptr_t const current_address =
+          reinterpret_cast<uintptr_t> (pool_base[i]);
+        uintptr_t const next_address =
+          reinterpret_cast<uintptr_t> (pool_base[i + 1]);
+
+        if (current_address < next_address)
           {
             void * const tmp1 = pool_base[ i ];
             MMAP_Allocator * const tmp2 = alloc[ i ];
@@ -324,8 +330,14 @@ mmap_remap_test()
     //
     // Calculate maximum space between base addresses
 
-    size_t size= (char *) pool_base[ 0 ] - (char *) pool_base[ 1 ];
-    size_t const tmpsize = (char *) pool_base[ 1 ] - (char *) pool_base[ 2 ];
+    uintptr_t const first_address =
+      reinterpret_cast<uintptr_t> (pool_base[0]);
+    uintptr_t const second_address =
+      reinterpret_cast<uintptr_t> (pool_base[1]);
+    uintptr_t const third_address =
+      reinterpret_cast<uintptr_t> (pool_base[2]);
+    size_t size = static_cast<size_t> (first_address - second_address);
+    size_t const tmpsize = static_cast<size_t> (second_address - third_address);
     size= (size < tmpsize) ? tmpsize : size;
 
     // force pool to move
