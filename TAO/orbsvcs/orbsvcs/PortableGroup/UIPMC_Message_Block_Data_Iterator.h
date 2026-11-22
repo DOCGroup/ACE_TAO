@@ -41,10 +41,10 @@ private:
   int iovcnt_;
   int iov_index_ {};
 
-  // Point internal to a message block, if we have to split one up.
+  /// Point internal to a message block, if we have to split one up.
   char *iov_ptr_ {};
 
-  // Length used in a split message block.
+  /// Length used in a split message block.
   size_t iov_len_left_ {};
 
   // Current message iterator state.

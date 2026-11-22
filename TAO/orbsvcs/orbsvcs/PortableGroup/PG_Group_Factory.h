@@ -217,7 +217,7 @@ namespace TAO
 
     ///// Support for object group persistent /////
 
-    // Lazily read groups from store
+    /// Lazily read groups from store.
     bool groups_read_ {};
     std::unique_ptr<Storable_Factory> storable_factory_;
   };

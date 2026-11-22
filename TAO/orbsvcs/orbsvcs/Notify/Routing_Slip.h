@@ -179,7 +179,7 @@ private:
   /// Also lets the Routing_Slip manage its own minimum lifetime.
   Routing_Slip_Ptr this_ptr_ {};
 
-  // The event being delivered.
+  /// The event being delivered.
   TAO_Notify_Event::Ptr event_;
 
   /// A  mini-state machine to control persistence

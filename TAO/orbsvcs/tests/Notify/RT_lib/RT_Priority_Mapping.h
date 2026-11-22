@@ -45,7 +45,7 @@ public:
 
 protected:
   /// The Priority Mapping helper.
-  // Borrowed from PriorityMappingManager, which owns the mapping.
+  /// Borrowed from PriorityMappingManager, which owns the mapping.
   RTCORBA::PriorityMapping* priority_mapping_ {};
 };
 

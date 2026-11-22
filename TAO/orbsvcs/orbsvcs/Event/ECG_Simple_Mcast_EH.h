@@ -66,7 +66,7 @@ public:
   int handle_input (ACE_HANDLE fd) override;
 
 private:
-  // Socket on which we listen for messages.
+  /// Socket on which we listen for messages.
   ACE_SOCK_Dgram_Mcast dgram_;
 
   /// We callback to this object when a message arrives.

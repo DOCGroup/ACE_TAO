@@ -66,7 +66,7 @@ public:
 
   /// @}
 private:
-  // Use our own thread manager
+  /// Use our own thread manager.
   ACE_Thread_Manager thread_manager_;
 
   /// The flags (THR_BOUND, THR_NEW_LWP, etc.) used to create the
@@ -81,13 +81,13 @@ private:
                             ACE_Pointer_Hash<RtecEventComm::PushConsumer_ptr>,
                             ACE_Equal_To<RtecEventComm::PushConsumer_ptr>, ACE_Null_Mutex>;
 
-  // Tweak the default size of this map by #defining
-  //    TAO_EC_TPC_DISPATCHING_DEFAULT_MAP_SIZE
+  /// Tweak the default size of this map by #defining
+  /// TAO_EC_TPC_DISPATCHING_DEFAULT_MAP_SIZE.
   MAPTYPE consumer_task_map_;
 
-  // Lock for modifying the map.  It's not enough to have a lock only
-  // on the map, because we have to hold the map constant while doing
-  // multiple distinct map manipulations, such as in remove_consumer().
+  /// Lock for modifying the map.  It's not enough to have a lock only
+  /// on the map, because we have to hold the map constant while doing
+  /// multiple distinct map manipulations, such as in remove_consumer().
   TAO_SYNCH_MUTEX lock_;
 
   // Service object information

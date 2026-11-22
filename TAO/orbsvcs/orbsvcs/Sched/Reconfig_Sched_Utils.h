@@ -101,7 +101,7 @@ struct TAO_RTSched_Export TAO_RT_Info_Tuple
 class TAO_RTSched_Export TAO_Reconfig_Scheduler_Entry
 {
 public:
-  // Info for DFS traversal, topological sort of call graph.
+  /// Info for DFS traversal, topological sort of call graph.
   enum DFS_Status {NOT_VISITED, VISITED, FINISHED};
 
   enum Tuple_Type {ORIGINAL = 0x01UL, PROPAGATED = 0x02UL};

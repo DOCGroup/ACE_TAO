@@ -131,6 +131,6 @@ private:
   Options options_;
 
   /// Protocol object corresponding to the transport protocol selected.
-  // Non-owning protocol objects managed by the AVStreams framework.
+  /// Non-owning protocol objects managed by the AVStreams framework.
   ProtocolObject_Set protocol_object_;
 };

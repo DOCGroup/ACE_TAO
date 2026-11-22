@@ -216,7 +216,7 @@ private:
   /// The class that handles the forwarding.
   ImR_DSI_Forwarder dsi_forwarder_;
 
-  // Used for the forwarding of any type of POA.
+  /// Used for the forwarding of any type of POA.
   ImR_Adapter adapter_;
 
   /// The locator interface for the IORTable

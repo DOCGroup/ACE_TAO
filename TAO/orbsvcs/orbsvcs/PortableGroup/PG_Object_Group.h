@@ -301,7 +301,7 @@ namespace TAO
     PortableGroup::FactoryRegistry_var factory_registry_;
 
   protected:
-    // The object group manipulator
+    /// The object group manipulator.
     TAO::PG_Object_Group_Manipulator & manipulator_;
 
     /// boolean true if updates should be distributed
@@ -340,14 +340,14 @@ namespace TAO
      */
     std::optional<std::string> group_name_;
 
-    // The map stores raw pointers; PG_Object_Group owns and deletes each
-    // MemberInfo when a member is removed or the group is destroyed.
+    /// The map stores raw pointers; PG_Object_Group owns and deletes each
+    /// MemberInfo when a member is removed or the group is destroyed.
     MemberMap members_;
 
     PortableGroup::Location primary_location_;
 
-    // Miscellaneous properties passed to create_object when this group
-    // was initially created.  To be used to create new members.
+    /// Miscellaneous properties passed to create_object when this group
+    /// was initially created.  To be used to create new members.
     TAO::PG_Property_Set properties_;
 
     /// Cached property information.

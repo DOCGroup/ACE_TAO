@@ -75,7 +75,7 @@ namespace CORBA
     std::unique_ptr<CORBA::Any> exception_;
   };
 
-  // The CORBA::UnknownUserException TypeCode.
+  /// The CORBA::UnknownUserException TypeCode.
   extern TAO_DynamicInterface_Export TypeCode_ptr const _tc_UnknownUserException;
 } // End CORBA namespace.
 
