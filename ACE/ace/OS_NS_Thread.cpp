@@ -3322,29 +3322,39 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
 
   ACE_condattr_t attributes;
   if (ACE_OS::condattr_init (attributes, type) != 0)
-    return -1;
+    {
+      return -1;
+    }
 
   RWLockCleaner cleanup (attributes, rw);
 
   if (ACE_OS::mutex_init (&rw->lock_, type, UniqueName (type, &rw->lock_),
                           (ACE_mutexattr_t *) arg) != 0)
-    return -1;
+    {
+      return -1;
+    }
 
   cleanup.state_ = RWLC_Lock;
   if (ACE_OS::cond_init (&rw->waiting_readers_, attributes,
                          UniqueName (type, &rw->waiting_readers_), arg) != 0)
-    return -1;
+    {
+      return -1;
+    }
 
   cleanup.state_ = RWLC_CondReaders;
   if (ACE_OS::cond_init (&rw->waiting_writers_, attributes,
                          UniqueName (type, &rw->waiting_writers_), arg) != 0)
-    return -1;
+    {
+      return -1;
+    }
 
   cleanup.state_ = RWLC_CondWriters;
   if (ACE_OS::cond_init (&rw->waiting_important_writer_, attributes,
                          UniqueName (type, &rw->waiting_important_writer_),
                          arg) != 0)
-    return -1;
+    {
+      return -1;
+    }
 
   cleanup.state_ = RWLC_CondAttr;
   rw->ref_count_ = 0;
@@ -3716,7 +3726,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   // *** Set Stack Size
 # if defined (ACE_NEEDS_HUGE_THREAD_STACKSIZE)
   if (stacksize < ACE_NEEDS_HUGE_THREAD_STACKSIZE)
-    stacksize = ACE_NEEDS_HUGE_THREAD_STACKSIZE;
+    {
+      stacksize = ACE_NEEDS_HUGE_THREAD_STACKSIZE;
+    }
 # endif /* ACE_NEEDS_HUGE_THREAD_STACKSIZE */
 
   ACE_thread_t tmp_thr;
@@ -4076,9 +4088,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   // assume that ACE_thread_t and ACE_hthread_t are the same.  If this
   // *isn't* correct on some platform, please let us know.
   if (result != -1)
-  {
-    *thr_handle = *thr_id;
-  }
+    {
+      *thr_handle = *thr_id;
+    }
 
   auto_thread_args.release ();
 
@@ -4122,7 +4134,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       *thr_id = cwin_thread->m_nThreadID;
 
       if (ACE_BIT_ENABLED (flags, THR_SUSPENDED) == 0)
-        cwin_thread->ResumeThread ();
+        {
+          cwin_thread->ResumeThread ();
+        }
       // cwin_thread will be deleted in AfxThreadExit()
       // Warning: If AfxThreadExit() is called from within the
       // thread, ACE_TSS_Cleanup->thread_exit() never gets called !
@@ -4133,9 +4147,11 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       int const start_suspended = ACE_BIT_ENABLED (flags, THR_SUSPENDED);
 
       if (priority != ACE_DEFAULT_THREAD_PRIORITY)
-        // If we need to set the priority, then we need to start the
-        // thread in a suspended mode.
-        ACE_SET_BITS (flags, THR_SUSPENDED);
+        {
+          // If we need to set the priority, then we need to start the
+          // thread in a suspended mode.
+          ACE_SET_BITS (flags, THR_SUSPENDED);
+        }
 
       *thr_handle = (void *) ACE_BEGINTHREADEX (0,
                                                 static_cast <u_int> (stacksize),
@@ -4181,7 +4197,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
   // Close down the handle if no one wants to use it.
   if (thr_handle == std::addressof (tmp_handle) && tmp_handle != 0)
-    ::CloseHandle (tmp_handle);
+    {
+      ::CloseHandle (tmp_handle);
+    }
 
   if (*thr_handle != 0)
     {
@@ -4189,7 +4207,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       return 0;
     }
   else
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
   /* NOTREACHED */
 
 # elif defined (ACE_VXWORKS)
@@ -4266,17 +4286,25 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #   endif /* 0 */
 
   if (tid == ACE_VX_TASK_ID_ERROR)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       if (thr_id)
-        *thr_id = tid;
+        {
+          *thr_id = tid;
+        }
 
       if (thr_handle)
-        *thr_handle = tid;
+        {
+          *thr_handle = tid;
+        }
 
       if (thr_name && !(*thr_name))
-        *thr_name = ::taskName (tid);
+        {
+          *thr_name = ::taskName (tid);
+        }
 
       auto_thread_args.release ();
       return 0;
@@ -4294,7 +4322,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     Value max_parent_prio, unused_weight;
     Error err_code = ::GetMaximumPriorityAndWeight (CurrentTask (), &max_parent_prio, &unused_weight);
     if (err_code != Success)
-      return -1;
+      {
+        return -1;
+      }
 
     // Disregard the input priority value
     priority = max_parent_prio;
@@ -4306,7 +4336,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       {
         stack = int178_stack_manager.acquire (slot);
         if (!stack)
-          return -1;
+          {
+            return -1;
+          }
         stacksize = ACE_INTEGRITY178B_DEFAULT_STACK_SIZE;
       }
 
@@ -4357,7 +4389,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
       Semaphore sema;
       if (::CreateSemaphore (0, &sema) != Success)
-        return -1;
+        {
+          return -1;
+        }
       integrity_join_semas[*thr_handle] = sema;
     }
 
