@@ -66,10 +66,10 @@ client (void *arg)
 
       if (con.complete (cli_stream, &server_addr, std::addressof (tv)) == -1)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("(%P|%t) %p\n"),
-                             ACE_TEXT ("connection failed")),
-                            ACE_THR_FUNC_RETURN_NULL);
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) %p\n"),
+                      ACE_TEXT ("connection failed")));
+          return ACE_THR_FUNC_RETURN_NULL;
         }
       else
         {
@@ -155,7 +155,8 @@ server (void *arg)
 
   if (result == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("select")), ACE_THR_FUNC_RETURN_NULL);
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("select")));
+      return ACE_THR_FUNC_RETURN_NULL;
     }
   else if (result == 0)
     {
@@ -174,7 +175,8 @@ server (void *arg)
       // Enable non-blocking I/O.
       if (new_stream.enable (ACE_NONBLOCK) == -1)
         {
-          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("enable")), ACE_THR_FUNC_RETURN_NULL);
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("enable")));
+          return ACE_THR_FUNC_RETURN_NULL;
         }
 
       handle_set.reset ();
@@ -194,7 +196,8 @@ server (void *arg)
                               handle_set,
                               nullptr, nullptr, nullptr) == -1)
             {
-              ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("select")), ACE_THR_FUNC_RETURN_NULL);
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("select")));
+              return ACE_THR_FUNC_RETURN_NULL;
             }
 
           while ((r_bytes = new_stream.recv (buf, 1)) > 0)
@@ -229,10 +232,10 @@ server (void *arg)
                 }
               else
                 {
-                  ACE_ERROR_RETURN ((LM_ERROR,
-                                     ACE_TEXT ("(%P|%t) %p\n"),
-                                     ACE_TEXT ("recv_n")),
-                                    ACE_THR_FUNC_RETURN_NULL);
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("(%P|%t) %p\n"),
+                              ACE_TEXT ("recv_n")));
+                  return ACE_THR_FUNC_RETURN_NULL;
                 }
             }
         }

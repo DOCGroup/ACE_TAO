@@ -245,10 +245,10 @@ client (void *arg)
         {
           if (writers[i]->send_data () == -1)
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("(%t) %p\n"),
-                                 ACE_TEXT ("writer::send_data")),
-                                ACE_THR_FUNC_RETURN_NULL);
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%t) %p\n"),
+                          ACE_TEXT ("writer::send_data")));
+              return ACE_THR_FUNC_RETURN_NULL;
             }
         }
     }

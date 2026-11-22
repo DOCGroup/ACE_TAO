@@ -504,10 +504,10 @@ server (void *arg)
             }
           else
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("(%P|%t) %p\n"),
-                                 ACE_TEXT ("accept failed, shutting down")),
-                                ACE_THR_FUNC_RETURN_NULL);
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) %p\n"),
+                          ACE_TEXT ("accept failed, shutting down")));
+              return ACE_THR_FUNC_RETURN_NULL;
             }
         }
       // Use this rather than get_host_name() to properly adjust to the

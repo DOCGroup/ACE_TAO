@@ -177,10 +177,10 @@ client (void *arg)
 
   if (connector.connect (server, addr) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT (" (%t) %p\n"),
-                         ACE_TEXT ("Failed to connect to server thread")),
-                        ACE_THR_FUNC_RETURN_NULL);
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT (" (%t) %p\n"),
+                  ACE_TEXT ("Failed to connect to server thread")));
+      return ACE_THR_FUNC_RETURN_NULL;
     }
 
   // Send a string to the server which it can interpret as a qchar[]
@@ -292,10 +292,10 @@ server (void *arg)
 
   if (acceptor->get_local_addr (server_addr) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("get_local_addr")),
-                        ACE_THR_FUNC_RETURN_NULL);
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("get_local_addr")));
+      return ACE_THR_FUNC_RETURN_NULL;
     }
 
 #if defined (ACE_HAS_THREADS)
@@ -303,18 +303,18 @@ server (void *arg)
                                               &server_addr,
                                               THR_NEW_LWP | THR_DETACHED) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT (" (%t) %p\n"),
-                         ACE_TEXT ("spawing client thread")),
-                        ACE_THR_FUNC_RETURN_NULL);
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT (" (%t) %p\n"),
+                  ACE_TEXT ("spawing client thread")));
+      return ACE_THR_FUNC_RETURN_NULL;
     }
 #endif /* ACE_HAS_THREADS */
 
   if (acceptor->accept (client_handler) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT (" (%P|%t) Failed to accept new client_handler")),
-                        ACE_THR_FUNC_RETURN_NULL);
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT (" (%P|%t) Failed to accept new client_handler")));
+      return ACE_THR_FUNC_RETURN_NULL;
     }
 
   // Read a qbuf[] from the client.  Notice that all of the client's

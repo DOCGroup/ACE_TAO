@@ -56,10 +56,10 @@ client (void *arg)
 
       if (con.complete (cli_stream, &server_addr, std::addressof (tv)) == -1)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("(%P|%t) %p\n"),
-                             ACE_TEXT ("connection failed")),
-                            ACE_THR_FUNC_RETURN_NULL);
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) %p\n"),
+                      ACE_TEXT ("connection failed")));
+          return ACE_THR_FUNC_RETURN_NULL;
         }
       else
         {
@@ -83,7 +83,8 @@ client (void *arg)
   // we expect the handle to be at least write_ready since it is freshly connected.
   if (result == -1)
   {
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("ACE::handle_ready")), ACE_THR_FUNC_RETURN_NULL);
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("ACE::handle_ready")));
+    return ACE_THR_FUNC_RETURN_NULL;
   }
 
   // Send data to server (correctly handles "incomplete writes").
@@ -145,7 +146,8 @@ server (void *arg)
 
   if (result == -1)
   {
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("handle_read_ready")), ACE_THR_FUNC_RETURN_NULL);
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("handle_read_ready")));
+    return ACE_THR_FUNC_RETURN_NULL;
   }
 
   // Create a new ACE_SOCK_Stream endpoint (note automatic restart
@@ -159,7 +161,8 @@ server (void *arg)
       // Enable non-blocking I/O.
       if (new_stream.enable (ACE_NONBLOCK) == -1)
       {
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("enable")), ACE_THR_FUNC_RETURN_NULL);
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("enable")));
+        return ACE_THR_FUNC_RETURN_NULL;
       }
 
       // Read data from client (terminate on error).
@@ -167,10 +170,10 @@ server (void *arg)
         {
           if (ACE::handle_read_ready (new_stream.get_handle (), nullptr) == -1)
           {
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("(%P|%t) %p\n"),
-                               ACE_TEXT ("handle_read_ready")),
-                              ACE_THR_FUNC_RETURN_NULL);
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %p\n"),
+                        ACE_TEXT ("handle_read_ready")));
+            return ACE_THR_FUNC_RETURN_NULL;
           }
 
           while ((r_bytes = new_stream.recv (buf, 1)) > 0)
@@ -205,7 +208,8 @@ server (void *arg)
                 }
               else
               {
-                ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("recv_n")), ACE_THR_FUNC_RETURN_NULL);
+                ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("recv_n")));
+                return ACE_THR_FUNC_RETURN_NULL;
               }
             }
         }

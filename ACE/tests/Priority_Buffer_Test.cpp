@@ -118,10 +118,10 @@ producer (void *args)
       // Enqueue in priority order.
       if (msg_queue->enqueue_prio (mb) == -1)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("(%t) %p\n"),
-                             ACE_TEXT ("put_next")),
-                            ACE_THR_FUNC_RETURN_NULL);
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("put_next")));
+          return ACE_THR_FUNC_RETURN_NULL;
         }
     }
 

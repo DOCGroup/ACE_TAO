@@ -122,17 +122,17 @@ worker (void *)
       if (ACE_OS::last_error () == ETIME)
         {
           ACE_Time_Value tm_now = initial_timeout->now ();
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT (" (%P|%t) Timed out waiting for start pulse at %#T\n"),
-                             &tm_now),
-                            ACE_THR_FUNC_RETURN_NULL);
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT (" (%P|%t) Timed out waiting for start pulse at %#T\n"),
+                      &tm_now));
+          return ACE_THR_FUNC_RETURN_NULL;
         }
       else
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT (" (%P|%t) %p\n"),
-                             ACE_TEXT ("Failed waiting for pulse ()")),
-                            ACE_THR_FUNC_RETURN_NULL);
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT (" (%P|%t) %p\n"),
+                      ACE_TEXT ("Failed waiting for pulse ()")));
+          return ACE_THR_FUNC_RETURN_NULL;
         }
     }
 
