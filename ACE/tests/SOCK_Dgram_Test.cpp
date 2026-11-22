@@ -27,7 +27,7 @@
 static void *
 client (void *arg)
 {
-  ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
+  ACE_INET_Addr *remote_addr = static_cast<ACE_INET_Addr *> (arg);
   ACE_INET_Addr server_addr, peer_addr;
   ACE_SOCK_Dgram cli_dgram;
   ACE_Time_Value timeout (1);
@@ -138,7 +138,7 @@ client (void *arg)
 #else
       iovec iov[1];
       // Some platforms define iov_base as char* instead of void*.
-      iov[0].iov_base = (char *)buf;
+      iov[0].iov_base = reinterpret_cast<char *> (buf);
       iov[0].iov_len = sizeof buf;
 
       ssize_t rcv_cnt = cli_dgram.recv (iov,
@@ -218,7 +218,7 @@ client (void *arg)
 static void *
 server (void *arg)
 {
-  ACE_SOCK_Dgram *server_dgram = (ACE_SOCK_Dgram *) arg;
+  ACE_SOCK_Dgram *server_dgram = static_cast<ACE_SOCK_Dgram *> (arg);
   ACE_INET_Addr peer_addr;
 
   ACE_TCHAR buf[20];
@@ -332,13 +332,13 @@ spawn (int proto)
               ACE_OS::exit (0);
               /* NOTREACHED */
             default:
-              server ((void *) &server_dgram);
+              server (&server_dgram);
               ACE_OS::wait ();
             }
 #elif defined (ACE_HAS_THREADS)
           if (ACE_Thread_Manager::instance ()->spawn
               (ACE_THR_FUNC (server),
-               (void *) &server_dgram,
+               &server_dgram,
                THR_NEW_LWP | THR_DETACHED) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("(%P|%t) %p\n"),
@@ -347,7 +347,7 @@ spawn (int proto)
 
           if (ACE_Thread_Manager::instance ()->spawn
               (ACE_THR_FUNC (client),
-               (void *) &server_addr,
+               &server_addr,
                THR_NEW_LWP | THR_DETACHED) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) %p\n"),
