@@ -237,7 +237,9 @@ parse_args (int argc, ACE_TCHAR *argv[], Options &options)
     }
 
   if (options.iterations < 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "iterations cannot be negative\n"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "iterations cannot be negative\n"), -1);
+    }
 
   if (options.remote_mutexes)
     ACE_Remote_Mutex::set_server_address (
@@ -268,10 +270,14 @@ mutex_test (Options const &options)
   ACE_Token_Manager::instance ()->debug (true);
 
   if (thr_mgr.spawn (two_token_thread, &one, THR_BOUND) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "first spawn"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "first spawn"), -1);
+    }
 
   if (thr_mgr.spawn (two_token_thread, &two, THR_BOUND) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "second spawn"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "second spawn"), -1);
+    }
 
   // Wait for all threads to exit.
   thr_mgr.wait ();
@@ -321,10 +327,14 @@ rwlock_test (Options const &options)
 
   for (Two_Tokens &reader : readers)
     if (thr_mgr.spawn (two_token_thread, &reader, THR_BOUND) == -1)
-      ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "reader spawn"), -1);
+      {
+        ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "reader spawn"), -1);
+      }
 
   if (thr_mgr.spawn (run_writer, &writer, THR_BOUND) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "second spawn"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "second spawn"), -1);
+    }
 
   // Wait for all threads to exit.
   thr_mgr.wait ();
@@ -337,12 +347,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Options options;
   if (parse_args (argc, argv, options) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (options.rwlocks)
-    rwlock_test (options);
+    {
+      rwlock_test (options);
+    }
   else
-    mutex_test (options);
+    {
+      mutex_test (options);
+    }
 
   ACE_DEBUG ((LM_DEBUG, "test exiting.\n"));
   return 0;

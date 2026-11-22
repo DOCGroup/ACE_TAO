@@ -220,9 +220,11 @@ parse_args (int argc, ACE_TCHAR *argv[], Options &options)
     }
 
   if (options.threads <= 0 || options.iterations < 0 || options.reads < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "threads must be positive; iterations and reads cannot be negative\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "threads must be positive; iterations and reads cannot be negative\n"),
+                        -1);
+    }
   return 0;
 }
 
