@@ -1,7 +1,6 @@
 /* -*-C++-*- */
 #ifndef TRANSACTION_
 #define TRANSACTION_
-//=============================================================================
 /**
  *  @file    transaction.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Michael R. MacFaden port to ACE / use Reactor pattern
  */
-//=============================================================================
 
 #include "ace/Event_Handler.h"
 

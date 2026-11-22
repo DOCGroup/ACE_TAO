@@ -1,14 +1,12 @@
 /* -*-C++-*- */
 #ifndef SMIDEF_
 #define SMIDEF_
-//=============================================================================
 /**
  *  @file    smi.h
  *
  * Address class definition. Encapsulates various network
  * addresses into easy to use, safe and portable classes.
  */
-//=============================================================================
 
 /*===================================================================
   Copyright (c) 1996

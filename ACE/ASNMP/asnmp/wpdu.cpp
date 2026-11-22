@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    wpdu.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Michael R. MacFaden rework the class api and impl using ACEPeter E Mellquist  implementation/code from snmp++ snmpmsg class
  */
-//=============================================================================
 
 #include "asnmp/wpdu.h"
 #include "ace/Log_Msg.h"

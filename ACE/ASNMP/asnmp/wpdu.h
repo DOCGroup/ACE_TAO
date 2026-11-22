@@ -1,7 +1,6 @@
 /* -*-C++-*- */
 #ifndef WPDU_H_
 #define WPDU_H_
-//=============================================================================
 /**
  *  @file    wpdu.h
  *
@@ -11,7 +10,6 @@
  *  @author Michael R. MacFaden re-worked api
  *  @author use ACE APIPeter E Mellquist wrote original class snmpmsg
  */
-//=============================================================================
 
 #include "ace/config-all.h"
 

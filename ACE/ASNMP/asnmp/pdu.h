@@ -1,7 +1,6 @@
 /* -*-C++-*- */
 #ifndef PDU_CLS_
 #define PDU_CLS_
-//=============================================================================
 /**
  *  @file     pdu.h
  *
@@ -11,7 +10,6 @@
  *  @author Peter E Mellquist  original code Michael MacFaden  mrm@cisco.com  ACE port
  *  @author add iterator class for pdus
  */
-//=============================================================================
 
 /*===================================================================
   Copyright (c) 1996

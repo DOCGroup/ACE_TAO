@@ -4,13 +4,11 @@
 #ifndef SNMP_AGENT_
 #define SNMP_AGENT_
 #include <memory>
-//=============================================================================
 /**
  *  @file    snmp_agent.h
  *
  *  @author Michael R. MacFaden (mrm@cisco.com)
  */
-//=============================================================================
 
 class agent_impl;
 

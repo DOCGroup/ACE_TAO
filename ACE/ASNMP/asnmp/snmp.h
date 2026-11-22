@@ -1,7 +1,6 @@
 /* -*-C++-*- */
 #ifndef SNMP_CLS_
 #define SNMP_CLS_
-//=============================================================================
 /**
  *  @file    snmp.h
  *
@@ -13,7 +12,6 @@
  *  @author Peter E Mellquist  design
  *  @author first implementation Michael R. MacFaden port to ACE / use Reactor pattern
  */
-//=============================================================================
 
 /*===================================================================
    Copyright (c) 1996

@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    snmp.cpp
  *
@@ -9,7 +8,6 @@
  *  @author Peter E Mellquist class design/orig codeMichael R MacFaden  mrm@cisco.com / rework API
  *  @author use ACE facilities
  */
-//=============================================================================
 
 /*===================================================================
   Copyright (c) 1996
