@@ -413,8 +413,8 @@ Server::Server (CORBA::ORB_ptr orb)
     stacksize_ (0),
     static_threads_ (1),
     dynamic_threads_ (0),
-    allow_request_buffering_ (0),
-    allow_borrowing_ (0),
+    allow_request_buffering_ (false),
+    allow_borrowing_ (false),
     max_buffered_requests_ (0),
     max_request_buffer_size_ (0)
 {

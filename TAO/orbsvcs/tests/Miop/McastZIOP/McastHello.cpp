@@ -4,22 +4,22 @@ McastHello::McastHello (CORBA::ORB_ptr orb,
                         int instance)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     instance_ (instance),
-    small_request_status_ (0),
-    large_request_status_ (0)
+    small_request_status_ (false),
+    large_request_status_ (false)
 {
 }
 
 void
 McastHello::send_forty_two (CORBA::Long forty_two)
 {
-  if (this->small_request_status_ == 0 &&
+  if (!this->small_request_status_ &&
       forty_two == 42)
     {
-      this->small_request_status_ = 1;
+      this->small_request_status_ = true;
     }
   else
   {
-    this->small_request_status_ = 0;
+    this->small_request_status_ = false;
   }
 }
 
@@ -40,14 +40,14 @@ McastHello::send_large_octet_array (const Test::Octets &payload)
         }
     }
 
-  if (this->large_request_status_ == 0 &&
+  if (!this->large_request_status_ &&
       valid_payload == 1)
     {
-      this->large_request_status_ = 1;
+      this->large_request_status_ = true;
     }
   else
   {
-    this->large_request_status_ = 0;
+    this->large_request_status_ = false;
   }
 }
 

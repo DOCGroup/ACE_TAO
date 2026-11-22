@@ -19,8 +19,8 @@ Options::Options ()
     test_type_ (Options::NO_TEST),
     invoke_type_ (Options::SII),
     loop_count_ (1),
-    debug_ (0),
-    shutdown_ (0)
+    debug_ (false),
+    shutdown_ (false)
 {
 }
 

@@ -14,7 +14,7 @@
 #include "ace/Log_Msg.h"
 
 Data::Data (CORBA::ORB_var orb)
-  : m_bool1 (1),                                m_bool2 (0),
+  : m_bool1 (true),                             m_bool2 (false),
     m_octet1 (8),                               m_octet2 (0),
     m_char1 ('z'),                              m_char2 (0),
     m_short1 (-5),                              m_short2 (0),

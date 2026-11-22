@@ -127,7 +127,7 @@ AdminProperties::AdminProperties ()
   : max_queue_length_ (10),
     max_consumers_ (3),
     max_suppliers_ (3),
-    reject_new_events_ (0),
+    reject_new_events_ (false),
     consumers_ (4),
     suppliers_ (4),
     event_count_ (30),
@@ -170,7 +170,7 @@ AdminProperties::parse_args(int argc, ACE_TCHAR *argv[])
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-reject_new_events")) == 0)
         {
-          this->reject_new_events_ = 1;
+          this->reject_new_events_ = true;
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-consumers"))))

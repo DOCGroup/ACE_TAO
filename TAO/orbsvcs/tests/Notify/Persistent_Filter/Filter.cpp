@@ -34,7 +34,7 @@ FilterClient::FilterClient ()
   channel_id_ (0),
   use_persistent_ (false),
   modify_constraint_ (false),
-  done_ (0)
+  done_ (false)
 {
   g_result_count = 0;
 }
@@ -221,7 +221,7 @@ FilterClient::run_consumer ()
 void
 FilterClient::done ()
 {
-  this->done_ = 1;
+  this->done_ = true;
 }
 
 void

@@ -7,7 +7,7 @@
 #include "orbsvcs/Notify/Service.h"
 
 TAO_Notify_Tests_EventChannel_Command::TAO_Notify_Tests_EventChannel_Command ()
-  : collocated_ (0)
+  : collocated_ (false)
 {
 }
 
@@ -46,12 +46,12 @@ TAO_Notify_Tests_EventChannel_Command::init (ACE_Arg_Shifter& arg_shifter)
 
           if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("COLLOCATED")) == 0)
             {
-              this->collocated_ = 1;
+              this->collocated_ = true;
             }
 
           if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("COLOCATED")) == 0) // grandfather in misspelled
             {
-              this->collocated_ = 1;
+              this->collocated_ = true;
               ACE_DEBUG ((LM_WARNING, "TAO_Notify_Tests_EventChannel_Command::init --"
                           " warning: deprecated misspelled COLOCATED option used.\n"));
             }
@@ -124,7 +124,7 @@ TAO_Notify_Tests_EventChannel_Command::create_collocated_ecf ()
 void
 TAO_Notify_Tests_EventChannel_Command::handle_create ()
 {
-  if (this->collocated_ == 1)
+  if (this->collocated_)
     {
       this->create_collocated_ecf ();
     }
