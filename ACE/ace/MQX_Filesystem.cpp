@@ -4,12 +4,11 @@
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_stat.h"
+#include "ace/OS_NS_string.h"
 
 #include <mqx.h>
 #include <fio.h>
 #include <mfs.h>
-
-#include <string.h>
 
 #ifndef FOPEN_MAX
 #  error "FOPEN_MAX, the max number of open files, must be defined"
@@ -69,7 +68,7 @@ MQX_Filesystem::reset_state ()
   update_fs (_io_get_first_valid_fs ());
   if (current_fs_ != 0)
     {
-      chdir ("\\");
+      ACE_OS::chdir ("\\");
     }
   return current_fs_ == 0;
 }
@@ -89,7 +88,7 @@ MQX_Filesystem::update_fs (MQX_FILE_PTR fs)
     }
   else
     {
-      current_fs_name_len_ = strlen (current_fs_name_);
+      current_fs_name_len_ = ACE_OS::strlen (current_fs_name_);
     }
 
   if (invalid)
@@ -261,13 +260,13 @@ MQX_Filesystem::getcwd (char *buf, size_t size)
       errno = ACE_OS::mqx_error_to_errno (mqx_error);
       return 0;
     }
-  if ((current_fs_name_len_ + strlen (curdirtmp) + 1) > size)
+  if ((current_fs_name_len_ + ACE_OS::strlen (curdirtmp) + 1) > size)
     {
       errno = ERANGE;
       return 0;
     }
-  strcpy (buf, current_fs_name_);
-  strcat (buf, curdirtmp);
+  ACE_OS::strcpy (buf, current_fs_name_);
+  ACE_OS::strcat (buf, curdirtmp);
   return buf;
 }
 
@@ -433,10 +432,10 @@ MQX_Filesystem::rename (const char *oldpath, const char *newpath)
 
   MFS_RENAME_PARAM mfs_rename;
   char oldtmp[FS_FILENAME_SIZE];
-  strcpy (oldtmp, oldpath + old_fs_name_len);
+  ACE_OS::strcpy (oldtmp, oldpath + old_fs_name_len);
   mfs_rename.OLD_PATHNAME = oldtmp;
   char newtmp[FS_FILENAME_SIZE];
-  strcpy (newtmp, newpath + new_fs_name_len);
+  ACE_OS::strcpy (newtmp, newpath + new_fs_name_len);
   mfs_rename.NEW_PATHNAME = newtmp;
 
   int mqx_error = _io_ioctl (fs, IO_IOCTL_RENAME_FILE, (uint32_t*) &mfs_rename);
@@ -520,7 +519,7 @@ MQX_Filesystem::stat (const char * path, ACE_stat *statbuf)
   MFS_SEARCH_PARAM search;
   search.ATTRIBUTE = MFS_SEARCH_ANY;
   char tmppath[ACE_MQX_ABS_PATH_SIZE];
-  strcpy (tmppath, path);
+  ACE_OS::strcpy (tmppath, path);
   search.WILDCARD = tmppath + fs_name_len;
   MFS_SEARCH_DATA search_results;
   search.SEARCH_DATA_PTR = &search_results;
