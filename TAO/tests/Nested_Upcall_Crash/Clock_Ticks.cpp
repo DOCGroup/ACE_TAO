@@ -11,7 +11,9 @@ Clock_Ticks::get_hz ()
 #if defined(_SC_CLK_TCK)
   long const ticks = ACE_OS::sysconf (_SC_CLK_TCK);
   if (ticks != -1)
-    return ticks;
+    {
+      return ticks;
+    }
 #endif /* _SC_CLK_TCK */
 
 #if defined(CLK_TCK)

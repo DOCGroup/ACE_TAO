@@ -247,7 +247,9 @@ Client<InterfaceObj, Var>::init (char const * /*name*/,
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       if (!this->ior_.empty ())
         {

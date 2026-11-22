@@ -1325,7 +1325,9 @@ TAO_AV_UDP_QoS_Factory::match_protocol (char const *protocol_string)
                 "TAO_AV_UDP_QoS_Factory::match_protocol\n"));
 
   if (ACE_OS::strcasecmp (protocol_string,"QoS_UDP") == 0)
-    return 1;
+    {
+      return 1;
+    }
   return 0;
 }
 
@@ -1387,7 +1389,9 @@ int
 TAO_AV_UDP_QoS_Flow_Factory::match_protocol (char const *flow_string)
 {
   if (ACE_OS::strcasecmp (flow_string,"QoS_UDP") == 0)
-    return 1;
+    {
+      return 1;
+    }
   return 0;
 }
 

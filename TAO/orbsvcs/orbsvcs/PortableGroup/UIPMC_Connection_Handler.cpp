@@ -441,7 +441,9 @@ TAO_UIPMC_Connection_Handler::set_tos (int tos)
 #if defined (ACE_HAS_IPV6)
       ACE_INET_Addr local_addr;
       if (this->peer ().get_local_addr (local_addr) == -1)
-        return -1;
+        {
+          return -1;
+        }
       else if (local_addr.get_type () == AF_INET6)
 # if !defined (IPV6_TCLASS)
       // IPv6 defines option IPV6_TCLASS for specifying traffic class/priority

@@ -967,7 +967,9 @@ mread (int fd, char *bufp, unsigned n)
         return (-1);
       }
       if (nread == 0)
-        return ((int) count);
+        {
+          return ((int) count);
+        }
       count += (unsigned) nread;
       bufp += nread;
     }

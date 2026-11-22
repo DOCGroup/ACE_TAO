@@ -148,7 +148,9 @@ char*
 Cubit_Task::get_servant_ior (u_int index)
 {
   if (index >= num_of_objs_)
-    return 0;
+    {
+      return 0;
+    }
   else
   {
     return ACE_OS::strdup (this->servants_iors_[index]);

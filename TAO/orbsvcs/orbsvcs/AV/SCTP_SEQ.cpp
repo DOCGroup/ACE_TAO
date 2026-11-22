@@ -88,7 +88,9 @@ TAO_AV_SCTP_SEQ_Transport::send (ACE_Message_Block const *mblk, ACE_Time_Value *
                                                    iovcnt);
                                                    //&timeout);
               if (n < 1)
-                return n;
+                {
+                  return n;
+                }
 
               nbytes += n;
               iovcnt = 0;
@@ -102,7 +104,9 @@ TAO_AV_SCTP_SEQ_Transport::send (ACE_Message_Block const *mblk, ACE_Time_Value *
       n = this->handler_->peer ().sendv_n ((iovec const *) iov,
                                            iovcnt);
       if (n < 1)
-        return n;
+        {
+          return n;
+        }
 
       nbytes += n;
     }

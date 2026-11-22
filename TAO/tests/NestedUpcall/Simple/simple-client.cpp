@@ -121,7 +121,9 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
       int const result = parse_args (argc, argv);
       if (result != 0)
-        return result;
+        {
+          return result;
+        }
 
       CORBA::Object_var object = orb->resolve_initial_references ("RootPOA");
 

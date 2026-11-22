@@ -123,7 +123,9 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   this->output_file_->open (ACE_TEXT_ALWAYS_CHAR (temp),
                             ios::out | (append ? ios::app : ios::trunc));
   if (this->output_file_->bad ())
-    return -1;
+    {
+      return -1;
+    }
 #else /* when ACE_LACKS_IOSTREAM_TOTALLY */
   ACE_TCHAR *fmode {};
   if (append)

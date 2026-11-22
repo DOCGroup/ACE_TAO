@@ -148,14 +148,18 @@ Peer::command ()
       p += count;
       char *nl;
       if ((nl = strchr (line, '\n')) == nullptr)
-        continue;
+        {
+          continue;
+        }
 
       // At this point we have a 0-terminated string with a newline ending
       // the command line. Break out and process the command.
       break;
     }
   if (count <= 0)
-    return -1;         // Relay closed/error socket to caller
+    {
+      return -1;         // Relay closed/error socket to caller
+    }
 
   char *cmd = strtok (line, "\t \n\r");
   if (cmd == nullptr)
@@ -356,7 +360,9 @@ const char *
 Test::start (const char *name)
 {
   if (this->running_)
-    return "Already running\n";
+    {
+      return "Already running\n";
+    }
 
   const char *msg {};
 
@@ -387,7 +393,9 @@ Test::start (const char *name)
   char libspec[1024];
   sprintf (libspec, "%s.dll", name);
   if ((this->dll_handle_ = LoadLibrary (libspec)) == nullptr)
-    return format_errmsg (GetLastError (), libspec);
+    {
+      return format_errmsg (GetLastError (), libspec);
+    }
 
   this->entry_ = (TEST_FUNC) GetProcAddress (this->dll_handle_, "main");
   if (this->entry_ == nullptr)
@@ -420,7 +428,9 @@ bool
 Test::status (int *exit_status)
 {
   if (this->running_)
-    return false;   // still running
+    {
+      return false;   // still running
+    }
 
   *exit_status = this->status_;
   this->cleanup ();

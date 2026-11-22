@@ -135,12 +135,16 @@ namespace ACE
     u_long ClientRequestHandler::HttpConnectionKey::hash () const
       {
         if (this->proxy_connection_)
-          return ACE_Hash<ACE_CString>()(this->proxy_target_host_) +
-                this->proxy_target_port_ +
-                (this->proxy_connection_ ? 1 : 0);
+          {
+            return ACE_Hash<ACE_CString>()(this->proxy_target_host_) +
+                  this->proxy_target_port_ +
+                  (this->proxy_connection_ ? 1 : 0);
+          }
         else
-          return INetConnectionKey::hash () +
-                (this->proxy_connection_ ? 1 : 0);
+          {
+            return INetConnectionKey::hash () +
+                  (this->proxy_connection_ ? 1 : 0);
+          }
       }
 
     ACE::INet::ConnectionKey* ClientRequestHandler::HttpConnectionKey::duplicate () const

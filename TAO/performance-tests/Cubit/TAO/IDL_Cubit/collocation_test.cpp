@@ -117,7 +117,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   // Make sure the server shuts itself down afterward.
 
   if (cubit_client.init (args.argc (), args.argv ()) == -1)
-    return 1;
+    {
+      return 1;
+    }
   else
   {
     retv = cubit_client.run ();

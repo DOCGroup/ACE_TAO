@@ -41,7 +41,9 @@ namespace ACE
         openmode which)
       {
         if (which != this->get_mode () || which == std::ios::out)
-          return pos_type (-1);
+          {
+            return pos_type (-1);
+          }
 
         size_type spos = 0;
         if (way == std::ios::cur)

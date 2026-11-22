@@ -231,7 +231,9 @@ ACE_Unbounded_List<T>::remove (T const &item)
     curr = curr->next_;
 
   if (curr->next_ == this->head_)
-    return -1; // Item was not found.
+    {
+      return -1; // Item was not found.
+    }
   else
     {
       ACE_NS_Node<T> *temp = curr->next_;
@@ -305,7 +307,9 @@ ACE_Unbounded_List_Iterator<T>::next (T *&item)
 {
   // ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::next");
   if (this->current_ == this->set_->head_)
-    return 0;
+    {
+      return 0;
+    }
   else
     {
       item = std::addressof (this->current_->item_);

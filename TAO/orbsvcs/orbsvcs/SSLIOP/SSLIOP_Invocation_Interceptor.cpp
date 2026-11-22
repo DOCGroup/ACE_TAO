@@ -55,7 +55,9 @@ char *
 TAO::SSLIOP::Server_Invocation_Interceptor::name ()
 {
   if (this->collocated_)
-    return CORBA::string_dup ("TAO::SSLIOP::Server_Invocation_Interceptor::Collocated");
+    {
+      return CORBA::string_dup ("TAO::SSLIOP::Server_Invocation_Interceptor::Collocated");
+    }
   else
   {
     return CORBA::string_dup ("TAO::SSLIOP::Server_Invocation_Interceptor::Remote");
