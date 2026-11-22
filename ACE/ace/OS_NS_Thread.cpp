@@ -2739,7 +2739,9 @@ ACE_OS::event_init (ACE_event_t *event,
                            initial_state,
                            name);
   if (*event == 0)
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
   else
     {
       // Make sure to set errno to ERROR_ALREADY_EXISTS if necessary.
@@ -2892,9 +2894,11 @@ ACE_OS::event_pulse (ACE_event_t *event)
                   }
 
               if (result == 0)
-                while (event->eventdata_->signal_count_ != 0 &&
-                       event->eventdata_->waiting_threads_ != 0)
-                  ACE_OS::thr_yield ();
+                {
+                  while (event->eventdata_->signal_count_ != 0 &&
+                         event->eventdata_->waiting_threads_ != 0)
+                    ACE_OS::thr_yield ();
+                }
             }
           else
 #endif
@@ -4431,7 +4435,9 @@ ACE_OS::thr_exit (ACE_THR_FUNC_RETURN status)
     ACE_OS_Thread_Descriptor *td =
       ACE_Base_Thread_Adapter::thr_desc_log_msg ();
     if (td)
-      using_afx = ACE_BIT_ENABLED (td->flags (), THR_USE_AFX);
+      {
+        using_afx = ACE_BIT_ENABLED (td->flags (), THR_USE_AFX);
+      }
 #   endif /* ACE_HAS_MFC && (ACE_HAS_MFC != 0) */
 
     // Call TSS destructors.
@@ -4445,9 +4451,13 @@ ACE_OS::thr_exit (ACE_THR_FUNC_RETURN status)
     if (using_afx != -1)
       {
         if (using_afx)
-          ::AfxEndThread (status);
+          {
+            ::AfxEndThread (status);
+          }
         else
-          ACE_ENDTHREADEX (status);
+          {
+            ACE_ENDTHREADEX (status);
+          }
       }
     else
       {
@@ -4457,9 +4467,13 @@ ACE_OS::thr_exit (ACE_THR_FUNC_RETURN status)
         // know to cause some problem.
         CWinThread *pThread = ::AfxGetThread ();
         if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
-          ACE_ENDTHREADEX (status);
+          {
+            ACE_ENDTHREADEX (status);
+          }
         else
-          ::AfxEndThread (status);
+          {
+            ::AfxEndThread (status);
+          }
       }
 #   else
     ACE_ENDTHREADEX (status);
@@ -4596,7 +4610,9 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
       }
 
       if (::WaitForSemaphore (join_sema) != Success)
-        retval = EINVAL;
+        {
+          retval = EINVAL;
+        }
       else
         {
           LockGuard guard (integrity_task_args_lock);
@@ -4784,7 +4800,9 @@ ACE_OS::thr_keycreate_native (ACE_OS_thread_key_t *key,
     *key = ::TlsAlloc ();
 
     if (*key == ACE_SYSCALL_FAILED)
-      ACE_FAIL_RETURN (-1);
+      {
+        ACE_FAIL_RETURN (-1);
+      }
     return 0;
 #   endif /* ACE_HAS_PTHREADS */
 # else
@@ -4823,7 +4841,9 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
           }
       }
     else
-      return -1;
+      {
+        return -1;
+      }
 #   elif defined (ACE_HAS_WTHREADS)
     if (ACE_OS::thr_keycreate_native (key, dest) == 0)
       {
@@ -4840,7 +4860,9 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
           }
       }
     else
-      return -1;
+      {
+        return -1;
+      }
       /* NOTREACHED */
 #   elif defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
     return  ACE_OS::thr_keycreate_native (key, dest);
@@ -5104,7 +5126,9 @@ spa (FUNCPTR entry, ...)
       argv[argc] = va_arg (pvar, char *);
 
       if (argv[argc] == 0)
-        break;
+        {
+          break;
+        }
     }
 
   if (argc >= ACE_MAX_ARGS && argv[ACE_MAX_ARGS - 1] != 0)
@@ -5115,8 +5139,10 @@ spa (FUNCPTR entry, ...)
       // using a 64bit compiler. Cast the argument up so that the format
       // specifier remains correct for either build type.
       if (va_arg (pvar, char *) != 0)
-        ACE_OS::fprintf (stderr, "spa(): number of arguments limited to %ld\n",
-                         (long)ACE_MAX_ARGS);
+        {
+          ACE_OS::fprintf (stderr, "spa(): number of arguments limited to %ld\n",
+                           (long)ACE_MAX_ARGS);
+        }
     }
   else
     {
@@ -5356,7 +5382,9 @@ vx_execae (FUNCPTR entry, char* arg, int prio, int opt, size_t stacksz, ...)
                                           0, 0, 0, 0, 0, 0, 0);
 
   if (ret == ACE_VX_TASK_ID_ERROR)
-    return 255;
+    {
+      return 255;
+    }
 
   while( ::taskIdVerify (ret) != ERROR )
     ::taskDelay (3 * ::sysClkRateGet ());
