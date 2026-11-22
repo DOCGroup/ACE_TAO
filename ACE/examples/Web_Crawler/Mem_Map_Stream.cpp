@@ -195,7 +195,7 @@ Mem_Map_Stream::grow_file_and_remap ()
   ssize_t const n = this->svc_handler_->peer ().recv_n (buf,
                                                         sizeof buf,
                                                         0,
-                                                        &tv);
+                                                        std::addressof (tv));
   if (n == -1)
     {
       if (OPTIONS::instance ()->debug ())

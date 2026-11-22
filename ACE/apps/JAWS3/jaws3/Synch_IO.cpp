@@ -8,6 +8,8 @@
 #include "jaws3/Synch_IO.h"
 #include "jaws3/Event_Completer.h"
 
+#include <memory>
+
 static JAWS_Event_Result
 JAWS_synch_send ( ACE_HANDLE handle
                 , ACE_Message_Block *mb
@@ -77,7 +79,7 @@ JAWS_Synch_IO::send ( ACE_HANDLE handle
 
   if (ACE_Time_Value::zero < tv)
   {
-    tvp = &tv;
+    tvp = std::addressof (tv);
   }
 
   io_result = JAWS_synch_send (handle, mb, tvp);
@@ -109,7 +111,7 @@ JAWS_Synch_IO::recv ( ACE_HANDLE handle
 
   if (ACE_Time_Value::zero < tv)
   {
-    tvp = &tv;
+    tvp = std::addressof (tv);
   }
 
   ssize_t result = ACE::recv (handle, mb->wr_ptr (), mb->space (), tvp);
@@ -164,7 +166,7 @@ JAWS_Synch_IO::transmit ( ACE_HANDLE handle
 
   if (ACE_Time_Value::zero < tv)
   {
-    tvp = &tv;
+    tvp = std::addressof (tv);
   }
 
   size_t bytes = 0;
