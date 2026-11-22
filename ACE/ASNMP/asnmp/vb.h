@@ -28,7 +28,6 @@
   derivatives based upon this software code base.
 =====================================================================*/
 
-//----[ external calls ]----------------------------------------------
 #include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -47,19 +46,12 @@
 #include "asnmp/integer.h"             // integer class
 #include <memory>
 
-//------------[ VB Class Def ]-------------------------------------
-// The Vb class is the encapsulation of the SNMP variable binding.
-// Variable binding lists in SNMP++ are represented as arrays of
-// Vb objects. Vb objects are passed to and from SNMP objects to
-// provide getting or setting MIB values.
-// The vb class keeps its own memory for objects and does not
-// utilize pointers to external data structures.
-//
 /**
  * @class Vb
  *
  * @brief Implement the concrete Variable Bindings aka Varbind
- * composite type. Varbinds hold 1 Oid and 1 Value (Any SMI value)
+ * composite type. Varbinds hold 1 Oid and 1 Value (Any SMI value).
+ * Each Vb owns its OID and value storage.
  */
 class ASNMP_Export Vb
 {
