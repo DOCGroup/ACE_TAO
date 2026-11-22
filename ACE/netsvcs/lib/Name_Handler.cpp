@@ -26,14 +26,16 @@ ACE_Name_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
 
   // dont allow to connect to another name serever
   if(this->naming_context()->name_options()->context() == ACE_Naming_Context::NET_LOCAL)
-  {
-    this->naming_context()->name_options()->nameserver_host(ACE_TEXT ("localhost"));
-  }
+    {
+      this->naming_context()->name_options()->nameserver_host(ACE_TEXT ("localhost"));
+    }
 
   if (this->naming_context()->open( this->naming_context()->name_options()->context() ) == -1)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                            ACE_TEXT ("%n:\n open naming context failed.\n")),
-                           -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%n:\n open naming context failed.\n")),
+                        -1);
+    }
 
   this->service_addr_.set (service_port);
   return 0;
@@ -47,10 +49,12 @@ ACE_Name_Acceptor::init (int argc, ACE_TCHAR *argv[])
   // Use the options hook to parse the command line arguments and set
   // options.
   if( this->parse_args (argc, argv) == -1 )
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE_Name_Acceptor::parse_args failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("ACE_Name_Acceptor::parse_args failed")),
+                        -1);
+    }
 
   // Set the acceptor endpoint into listen mode (use the Singleton
   // global Reactor...).
@@ -60,11 +64,13 @@ ACE_Name_Acceptor::init (int argc, ACE_TCHAR *argv[])
                   std::addressof (this->scheduling_strategy_),
                   ACE_TEXT ("Name Server"),
                   ACE_TEXT ("ACE naming service")) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%n: %p on port %d\n"),
-                       ACE_TEXT ("acceptor::open failed"),
-                       this->service_addr_.get_port_number ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%n: %p on port %d\n"),
+                         ACE_TEXT ("acceptor::open failed"),
+                         this->service_addr_.get_port_number ()),
+                        -1);
+    }
 
   // Ignore SIGPIPE so that each <SVC_HANDLER> can handle this on its
   // own.
@@ -75,10 +81,12 @@ ACE_Name_Acceptor::init (int argc, ACE_TCHAR *argv[])
 
   // Figure out what port we're really bound to.
   if (this->acceptor ().get_local_addr (server_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("get_local_addr")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("get_local_addr")),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("starting up Name Server at port %d on handle %H\n"),
@@ -141,10 +149,12 @@ ACE_Name_Handler::open (void * v)
 
   // Call down to our parent to register ourselves with the Reactor.
   if (ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::open (0) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("open")),
+                        -1);
+    }
 
   ACE_Name_Acceptor* acceptor_ = static_cast<ACE_Name_Acceptor*>(v);
   naming_context_ = acceptor_->naming_context();
@@ -174,12 +184,14 @@ ACE_Name_Handler::send_reply (ACE_INT32 status,
   ssize_t n = this->peer ().send (buf, len);
 
   if (n != len)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n, expected len = %d, actual len = %b"),
-                       ACE_TEXT ("send failed"),
-                       len,
-                       n),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n, expected len = %d, actual len = %b"),
+                         ACE_TEXT ("send failed"),
+                         len,
+                         n),
+                        -1);
+    }
   else
   {
     return 0;
@@ -194,17 +206,21 @@ ACE_Name_Handler::send_request (ACE_Name_Request &request)
   ssize_t length = request.encode (buffer);
 
   if (length == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("encode failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("encode failed")),
+                        -1);
+    }
   // Transmit request via a blocking send.
 
   if (this->peer ().send_n (buffer, length) != length)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("send_n failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("send_n failed")),
+                        -1);
+    }
   return 0;
 }
 
