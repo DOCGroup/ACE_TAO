@@ -176,7 +176,9 @@ protected:
         ACE_Select_Reactor_Handle_Set &handle_set,
         int ops) override;
 
-    int set_enable_flag_by_mask (int flag_value, ACE_HANDLE handle, ACE_Reactor_Mask mask);
+    int set_enable_flag_by_mask (bool enabled,
+                                ACE_HANDLE handle,
+                                ACE_Reactor_Mask mask);
     void create_notifiers_for_handle (ACE_HANDLE handle);
     void destroy_notifiers_for_handle (ACE_HANDLE handle);
 

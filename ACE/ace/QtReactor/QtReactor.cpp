@@ -158,7 +158,7 @@ ACE_QtReactor::read_event (ACE_QT_HANDLE_TYPE p_handle)
     this->mask_ops (handle, ACE_Reactor_Mask {}, ACE_Reactor::GET_MASK);
   if (mask != -1)
     {
-      this->set_enable_flag_by_mask (1, handle, mask);
+      this->set_enable_flag_by_mask (true, handle, mask);
     }
 #endif /* ACE_QTREACTOR_CLEAR_PENDING_EVENTS  */
 }
@@ -196,7 +196,7 @@ ACE_QtReactor::write_event (ACE_QT_HANDLE_TYPE p_handle)
     this->mask_ops (handle, ACE_Reactor_Mask {}, ACE_Reactor::GET_MASK);
   if (mask != -1)
     {
-      this->set_enable_flag_by_mask (1, handle, mask);
+      this->set_enable_flag_by_mask (true, handle, mask);
     }
 #endif /* ACE_QTREACTOR_CLEAR_PENDING_EVENTS  */
 }
@@ -234,13 +234,13 @@ ACE_QtReactor::exception_event (ACE_QT_HANDLE_TYPE p_handle)
     this->mask_ops (handle, ACE_Reactor_Mask {}, ACE_Reactor::GET_MASK);
   if (mask != -1)
     {
-      this->set_enable_flag_by_mask (1, handle, mask);
+      this->set_enable_flag_by_mask (true, handle, mask);
     }
 #endif /* ACE_QTREACTOR_CLEAR_PENDING_EVENTS  */
 }
 
 int
-ACE_QtReactor::set_enable_flag_by_mask (int flag_value,
+ACE_QtReactor::set_enable_flag_by_mask (bool enabled,
                                         ACE_HANDLE handle,
                                         ACE_Reactor_Mask mask)
 {
@@ -256,7 +256,7 @@ ACE_QtReactor::set_enable_flag_by_mask (int flag_value,
           return -1;
         }
 
-      qs_not->setEnabled (flag_value);
+      qs_not->setEnabled (enabled);
     }
 
   if (ACE_BIT_ENABLED( mask, ACE_Event_Handler::WRITE_MASK) ||
@@ -269,7 +269,7 @@ ACE_QtReactor::set_enable_flag_by_mask (int flag_value,
           return -1;
         }
 
-      qs_not->setEnabled (flag_value);
+      qs_not->setEnabled (enabled);
     }
 
   if (ACE_BIT_ENABLED( mask,
@@ -281,7 +281,7 @@ ACE_QtReactor::set_enable_flag_by_mask (int flag_value,
           return -1;
         }
 
-      qs_not->setEnabled (flag_value);
+      qs_not->setEnabled (enabled);
     }
 
   return 0;
@@ -303,13 +303,12 @@ ACE_QtReactor::bit_ops (ACE_HANDLE handle,
     }
 
   // disable or enable the notifiers based on handle_set and mask
-  int const enable_flag = std::addressof (handle_set)
-    == std::addressof (this->suspend_set_)
-    ? 0
-    : std::addressof (handle_set) == std::addressof (this->wait_set_)
-      ? 1
-      : -1;
-  if (enable_flag == -1)
+  bool enable_flag {};
+  if (std::addressof (handle_set) == std::addressof (this->wait_set_))
+    {
+      enable_flag = true;
+    }
+  else if (std::addressof (handle_set) != std::addressof (this->suspend_set_))
     {
       // We have no work to do here, so just return
       return result;
