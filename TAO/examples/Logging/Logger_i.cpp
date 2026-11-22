@@ -35,12 +35,13 @@ Logger_Factory_i::make_logger (char const *name)
       delete result;
       throw CORBA::UNKNOWN ();
     }
-  else
-    // Logger of name <name> already bound.  <result> is set
-    // appropriately by <find>.  So do nothing.
-    if (TAO_debug_level > 0)
+  else if (TAO_debug_level > 0)
+    {
+      // Logger of name <name> already bound.  <result> is set
+      // appropriately by <find>.  So do nothing.
       ACE_DEBUG ((LM_DEBUG,
                   "\nLogger name already bound"));
+    }
 
   // <_this> is an performance hit here, but apparently if the object
   // is already registered with the POA, it will ignore the second

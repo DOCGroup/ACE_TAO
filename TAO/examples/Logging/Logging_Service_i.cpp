@@ -10,24 +10,26 @@ Logger_Server::parse_args ()
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'd':  // debug flag.
-        ++TAO_debug_level;
-        break;
-      case 'n':  // Set factory name to cmnd line arg
-        service_name_ = get_opts.opt_arg ();
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " [-d]"
-                           " [-n service-name]"
-                           "\n",
-                           argv_ [0]),
-                          -1);
-      }
+    {
+      switch (c)
+        {
+        case 'd':  // debug flag.
+          ++TAO_debug_level;
+          break;
+        case 'n':  // Set factory name to cmnd line arg
+          service_name_ = get_opts.opt_arg ();
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s"
+                             " [-d]"
+                             " [-n service-name]"
+                             "\n",
+                             argv_ [0]),
+                            -1);
+        }
+    }
 
   // Indicates successful parsing of command line.
   return 0;
