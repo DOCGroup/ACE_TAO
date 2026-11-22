@@ -232,7 +232,7 @@ Prime_Scheduler::Prime_Scheduler (const ACE_TCHAR *newname,
 {
   ACE_NEW (this->name_,
            ACE_TCHAR[ACE_OS::strlen (newname) + 1]);
-  ACE_OS::strcpy ((ACE_TCHAR *) this->name_,
+  ACE_OS::strcpy (this->name_,
                   newname);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Prime_Scheduler %s created\n"),
