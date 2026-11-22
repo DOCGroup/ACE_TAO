@@ -107,7 +107,7 @@ namespace TAO
     std::unique_ptr<Storable_Base> fl_ {};
 
   private:
-    // Return 0 if successful.
+    /// Return 0 if successful.
     int load ();
 
     bool const redundant_;

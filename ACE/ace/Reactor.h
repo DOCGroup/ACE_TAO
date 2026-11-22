@@ -26,7 +26,6 @@
 // Event_Handler.h contains the definition of ACE_Reactor_Mask
 #include "ace/Event_Handler.h"
 
-// Get ACE_Time_Value in
 #include "ace/Time_Value.h"
 #include "ace/Synch_Traits.h"
 

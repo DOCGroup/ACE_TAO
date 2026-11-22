@@ -42,7 +42,7 @@ public:
 
   TAO_IORInterceptor_Adapter *create () override;
 
-  // Used to force the initialization of the ORB code.
+  /// Used to force the initialization of the ORB code.
   static int Initializer ();
 
   TAO_IORInterceptor_Adapter_Factory_Impl (TAO_IORInterceptor_Adapter_Factory_Impl const &) = delete;

@@ -63,7 +63,7 @@ public:
       CORBA::NVList_ptr&) override;
 #endif /*TAO_HAS_MINIMUM_CORBA*/
 
-  // Used to force the initialization of the ORB code.
+  /// Used to force the initialization of the ORB code.
   static int Initializer ();
 
   TAO_IFR_Client_Adapter_Impl (TAO_IFR_Client_Adapter_Impl const &) = delete;

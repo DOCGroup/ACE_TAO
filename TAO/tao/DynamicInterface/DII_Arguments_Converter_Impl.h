@@ -52,7 +52,7 @@ public:
   void handle_corba_exception (TAO_ServerRequest & server_request,
                                CORBA::Exception *exception) override;
 
-  // Used to force the initialization of the ORB code.
+  /// Used to force the initialization of the ORB code.
   static int Initializer ();
 };
 
