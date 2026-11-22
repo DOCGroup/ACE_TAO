@@ -51,13 +51,19 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       result = ::update_counter (HKEY_LOCAL_MACHINE,
                                  current_counter);
       if (result == 0)
-        cout << "Machine counter: " << current_counter << endl;
+        {
+          cout << "Machine counter: " << current_counter << endl;
+        }
     }
 
   if (result != 0)
-    ACE_DEBUG ((LM_DEBUG, "test failed\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG, "test failed\n"));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG, "test succeeded\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG, "test succeeded\n"));
+    }
 
   return 0;
 }
@@ -74,19 +80,31 @@ update_counter (HKEY predefined,
   result = ACE_Predefined_Naming_Contexts::connect (parent_context,
                                                     predefined);
   if (result != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Predefined_Naming_Contexts::connect failed"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Predefined_Naming_Contexts::connect failed"),
+                        -1);
+    }
 
   // Find application context name
   result = parent_context.resolve_context (application_context_name,
                                            application_context);
 
   if (result != 0)
-    // Failed to find: create a new context
-    result = parent_context.bind_new_context (application_context_name,
-                                              application_context);
+    {
+      // Failed to find: create a new context
+      result = parent_context.bind_new_context (application_context_name,
+                                                application_context);
+    }
 
   if (result != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Registry::Naming_Contexts::bind/resolve_context failed"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Registry::Naming_Contexts::bind/resolve_context failed"),
+                        -1);
+    }
 
   // Counter
   u_long counter {};
@@ -116,9 +134,16 @@ update_counter (HKEY predefined,
     }
 
   if (result != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Registry::Naming_Contexts::bind/resolve failed"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Registry::Naming_Contexts::bind/resolve failed"),
+                        -1);
+    }
   else
-    current_counter = counter;
+    {
+      current_counter = counter;
+    }
 
   return 0;
 }
@@ -140,12 +165,17 @@ setup_names ()
 
   ACE_Registry::Name_Component component;
 
-  component.id_ = ACE_TEXT ("Software"),         ::application_context_name.insert (component);
-  component.id_ = ACE_TEXT ("AcmeSoft"),         ::application_context_name.insert (component);
-  component.id_ = ACE_TEXT ("AcmeApplication"),  ::application_context_name.insert (component);
-  component.id_ = ACE_TEXT ("1.0"),              ::application_context_name.insert (component);
+  component.id_ = ACE_TEXT ("Software");
+  ::application_context_name.insert (component);
+  component.id_ = ACE_TEXT ("AcmeSoft");
+  ::application_context_name.insert (component);
+  component.id_ = ACE_TEXT ("AcmeApplication");
+  ::application_context_name.insert (component);
+  component.id_ = ACE_TEXT ("1.0");
+  ::application_context_name.insert (component);
 
-  component.id_ = ACE_TEXT ("Instance Counter"), ::counter_name.insert (component);
+  component.id_ = ACE_TEXT ("Instance Counter");
+  ::counter_name.insert (component);
 }
 #else /* !ACE_WIN32 || ACE_LACKS_WIN32_REGISTRY */
 int
