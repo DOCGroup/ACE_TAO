@@ -212,19 +212,23 @@ operator>> (STREAM &stream,
   if (c != '"')
     {
       for (str = c; stream.get (c) && !isspace (c); str += c)
-        continue;
+        {
+          continue;
+        }
     }
   else
     {
       for (; stream.get (c) && c != '"'; str += c)
-        if (c == '\\')
-          {
-            stream.get (c);
-            if (c != '"')
-              {
-                str += '\\';
-              }
-          }
+        {
+          if (c == '\\')
+            {
+              stream.get (c);
+              if (c != '"')
+                {
+                  str += '\\';
+                }
+            }
+        }
     }
 
   return stream;

@@ -360,9 +360,11 @@ ACE_Token_Proxy_Queue::dequeue ()
   --this->size_;
 
   if (this->head_ == nullptr && this->size_ != 0)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("incorrect size = %d\n"),
-                this->size_));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("incorrect size = %d\n"),
+                     this->size_));
+    }
 }
 
 void
@@ -1464,9 +1466,11 @@ ACE_Token_Proxy::release (ACE_Synch_Options &)
   else
     {
       if (this->debug_)
-        ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) released %s, owner is %s\n"),
-                    this->name (),
-                    token_->owner_id ()));
+        {
+          ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) released %s, owner is %s\n"),
+                         this->name (),
+                         token_->owner_id ()));
+        }
 
       return 0;
     }
