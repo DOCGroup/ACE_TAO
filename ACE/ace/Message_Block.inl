@@ -119,7 +119,7 @@ ACE_Message_Block::flags () const
    return this->data_block ()->flags ();
 }
 
-// Return the length of the "active" portion of the message.
+/// Return the length of the "active" portion of the message.
 
 ACE_INLINE size_t
 ACE_Message_Block::length () const
@@ -128,8 +128,8 @@ ACE_Message_Block::length () const
   return this->wr_ptr_ - this->rd_ptr_;
 }
 
-// Sets the length of the "active" portion of the message.  This is
-// defined as the offset from RD_PTR to WR_PTR.
+/// Sets the length of the "active" portion of the message.  This is
+/// defined as the offset from RD_PTR to WR_PTR.
 
 ACE_INLINE void
 ACE_Message_Block::length (size_t len)
@@ -138,7 +138,7 @@ ACE_Message_Block::length (size_t len)
   this->wr_ptr_ = this->rd_ptr_ + len;
 }
 
-// Return the length of the potential size of the message.
+/// Return the length of the potential size of the message.
 
 ACE_INLINE size_t
 ACE_Message_Block::size () const
@@ -316,7 +316,7 @@ ACE_Message_Block::wr_ptr (char *new_ptr)
   this->wr_ptr_ = static_cast<size_t> (new_ptr - this->base ());
 }
 
-// Return a pointer to 1 past the end of the data buffer.
+/// Return a pointer to 1 past the end of the data buffer.
 
 ACE_INLINE char *
 ACE_Data_Block::mark () const

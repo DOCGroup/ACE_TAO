@@ -12,7 +12,7 @@ ACE_Mem_Map::handle () const
   return this->handle_;
 }
 
-// Return the name of file that is mapped (if any).
+/// Return the name of file that is mapped (if any).
 
 ACE_INLINE const ACE_TCHAR *
 ACE_Mem_Map::filename () const
@@ -33,7 +33,7 @@ ACE_Mem_Map::map (ACE_HANDLE handle,
   return this->map_it (handle, length, prot, share, addr, offset, sa);
 }
 
-// Remap the file associated with <this->handle_>.
+/// Remap the file associated with <this->handle_>.
 
 ACE_INLINE int
 ACE_Mem_Map::map (size_t length,
@@ -56,7 +56,7 @@ ACE_Mem_Map::map (size_t length,
                        share, addr, offset, sa);
 }
 
-// This operator passes back the starting address of the mapped file.
+/// This operator passes back the starting address of the mapped file.
 
 ACE_INLINE int
 ACE_Mem_Map::operator () (void *&addr)
@@ -74,7 +74,7 @@ ACE_Mem_Map::operator () (void *&addr)
     }
 }
 
-// Return the base address.
+/// Return the base address.
 
 ACE_INLINE void *
 ACE_Mem_Map::addr () const
@@ -84,8 +84,8 @@ ACE_Mem_Map::addr () const
   return this->base_addr_;
 }
 
-// This function returns the number of bytes currently mapped in the
-// file.
+/// This function returns the number of bytes currently mapped in the
+/// file.
 
 ACE_INLINE size_t
 ACE_Mem_Map::size () const
