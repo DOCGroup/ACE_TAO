@@ -1568,7 +1568,9 @@ ACE_OS::sema_init (ACE_sema_t *s,
       && ACE_OS::mutex_lock (&s->lock_) == 0)
     {
       if (ACE_OS::mutex_unlock (&s->lock_) == 0)
-        result = 0;
+        {
+          result = 0;
+        }
     }
 
   if (result == -1)
@@ -1590,9 +1592,11 @@ ACE_OS::sema_init (ACE_sema_t *s,
       if (fd == ACE_INVALID_HANDLE)
         {
           if (errno == EEXIST)
-            fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR (name),
-                                   O_RDWR | O_CREAT,
-                                   ACE_DEFAULT_FILE_PERMS);
+            {
+              fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR (name),
+                                     O_RDWR | O_CREAT,
+                                     ACE_DEFAULT_FILE_PERMS);
+            }
           else
             {
               return -1;
@@ -1769,7 +1773,9 @@ ACE_OS::sema_init (ACE_sema_t *s,
       char    c = 1;
       for (u_int i=0; i<count ;++i)
         if (ACE_OS::write (s->fd_[1], &c, sizeof (char)) != 1)
-          return -1;
+          {
+            return -1;
+          }
     }
 
   // In the case of process scope semaphores we can already unlink the FIFO now that
@@ -1801,7 +1807,9 @@ ACE_OS::sema_init (ACE_sema_t *s,
       s->waiters_ = 0;
 
       if (ACE_OS::mutex_unlock (&s->lock_) == 0)
-        result = 0;
+        {
+          result = 0;
+        }
     }
 
   if (result == -1)
@@ -1825,7 +1833,9 @@ ACE_OS::sema_init (ACE_sema_t *s,
      ACE_TEXT_CHAR_TO_TCHAR (name));
 
   if (*s == 0)
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
   /* NOTREACHED */
   else
     {
@@ -1903,7 +1913,9 @@ ACE_OS::sema_init (ACE_sema_t *s,
      name);
 
   if (*s == 0)
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
   /* NOTREACHED */
   else
     {
@@ -1953,7 +1965,9 @@ ACE_OS::sema_post (ACE_sema_t *s)
   if (ACE_OS::mutex_lock (&s->lock_) == 0)
     {
       if (::sem_post (s->sema_) == 0)
-        result = ACE_OS::cond_signal (&s->count_nonzero_);
+        {
+          result = ACE_OS::cond_signal (&s->count_nonzero_);
+        }
 
       ACE_OS::mutex_unlock (&s->lock_);
     }
@@ -1974,9 +1988,13 @@ ACE_OS::sema_post (ACE_sema_t *s)
     {
       // Always allow a waiter to continue if there is one.
       if (s->waiters_ > 0)
-        result = ACE_OS::cond_signal (&s->count_nonzero_);
+        {
+          result = ACE_OS::cond_signal (&s->count_nonzero_);
+        }
       else
-        result = 0;
+        {
+          result = 0;
+        }
 
       ++s->count_;
       ACE_OS::mutex_unlock (&s->lock_);
@@ -2067,7 +2085,9 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
           result = 0;
         }
       else
-        errno = EBUSY;
+        {
+          errno = EBUSY;
+        }
 
       ACE_OS::mutex_unlock (&s->lock_);
     }
@@ -2094,18 +2114,24 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
     }
 #   elif defined (ACE_VXWORKS)
   if (::semTake (s->sema_, NO_WAIT) == ERROR)
-    if (errno == S_objLib_OBJ_UNAVAILABLE)
-      {
-        // couldn't get the semaphore
-        errno = EBUSY;
-        return -1;
-      }
-    else
-      // error
-      return -1;
+    {
+      if (errno == S_objLib_OBJ_UNAVAILABLE)
+        {
+          // couldn't get the semaphore
+          errno = EBUSY;
+          return -1;
+        }
+      else
+        {
+          // error
+          return -1;
+        }
+    }
   else
-    // got the semaphore
-    return 0;
+    {
+      // got the semaphore
+      return 0;
+    }
 #   elif defined (ACE_INTEGRITY)
   return ::TryToObtainSemaphore (*s) == Success ? 0 : -1;
 #   endif /* ACE_HAS_PTHREADS */
@@ -2213,7 +2239,9 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   ACE_PTHREAD_CLEANUP_PUSH (&s->lock_);
 
   if (ACE_OS::mutex_lock (&s->lock_) != 0)
-    result = -2;
+    {
+      result = -2;
+    }
   else
     {
       bool finished = true;
@@ -2275,14 +2303,18 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
           if (rc == 0 || errno != EAGAIN)
           {
             if (rc == 0)
+            {
               errno = ETIME;
+            }
             return -1;
           }
         }
 
       // try to read the signal *but* do *not* block
       if (rc == 1 && ACE_OS::sema_trywait (s) == 0)
-        return 0;
+        {
+          return 0;
+        }
 
       // we were woken for input but someone beat us to it
       // so we wait again if there is still time
@@ -2301,7 +2333,9 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   ACE_PTHREAD_CLEANUP_PUSH (&s->lock_);
 
   if (ACE_OS::mutex_lock (&s->lock_) != 0)
-    result = -1;
+    {
+      result = -1;
+    }
   else
     {
       // Keep track of the number of waiters so that we can signal
@@ -2328,7 +2362,9 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
     }
 
   if (result != -1)
-    ACE_OS::mutex_unlock (&s->lock_);
+    {
+      ACE_OS::mutex_unlock (&s->lock_);
+    }
   ACE_PTHREAD_CLEANUP_POP (0);
   return result < 0 ? -1 : result;
 #   elif defined (ACE_HAS_WTHREADS)
@@ -2384,11 +2420,15 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   if (::semTake (s->sema_, ticks) == ERROR)
     {
       if (errno == S_objLib_OBJ_TIMEOUT)
+        {
         // Convert the VxWorks errno to one that's common for to ACE
         // platforms.
-        errno = ETIME;
+          errno = ETIME;
+        }
       else if (errno == S_objLib_OBJ_UNAVAILABLE)
-        errno = EBUSY;
+        {
+          errno = EBUSY;
+        }
       return -1;
     }
   else
@@ -2677,7 +2717,9 @@ ACE_OS::thr_getprio (ACE_hthread_t ht_id, int &priority, int &policy)
   Value active_prio;
   const Error err = ::GetActivePriority (ht_id, &active_prio);
   if (err != Success)
-    return -1;
+    {
+      return -1;
+    }
   priority = static_cast<int> (active_prio);
   return 0;
 # else
@@ -2716,7 +2758,9 @@ ACE_OS::thr_getspecific_native (ACE_OS_thread_key_t key, void **data)
       return -1;
     }
   else
-    return 0;
+    {
+      return 0;
+    }
 # else /* ACE_HAS_PTHREADS etc.*/
   ACE_UNUSED_ARG (key);
   ACE_UNUSED_ARG (data);
