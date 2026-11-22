@@ -57,7 +57,7 @@ TAO_EC_RTCORBA_Factory::create_dispatching (TAO_EC_Event_Channel_Base *)
                       TAO_EC_RTCORBA_Dispatching (this->lanes_,
                                                   priority_mapping,
                                                   current.in ()),
-                      0);
+                      nullptr);
     }
   catch (const CORBA::Exception&)
     {

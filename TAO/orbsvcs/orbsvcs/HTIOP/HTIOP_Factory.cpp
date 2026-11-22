@@ -139,7 +139,7 @@ TAO::HTIOP::Protocol_Factory::make_acceptor ()
   ACE_NEW_RETURN (acceptor,
                   TAO::HTIOP::Acceptor (this->ht_env_.get (),
                                         this->inside_),
-                  0);
+                  nullptr);
   return acceptor;
 }
 
@@ -149,7 +149,7 @@ TAO::HTIOP::Protocol_Factory::make_connector ()
   TAO_Connector *connector {};
   ACE_NEW_RETURN (connector,
                   TAO::HTIOP::Connector (this->ht_env_.get ()),
-                  0);
+                  nullptr);
   return connector;
 }
 

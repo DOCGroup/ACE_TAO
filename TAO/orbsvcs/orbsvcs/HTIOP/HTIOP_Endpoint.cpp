@@ -197,7 +197,7 @@ TAO::HTIOP::Endpoint::duplicate ()
                                       this->port_,
                                       this->htid_.in(),
                                       this->object_addr_),
-                  0);
+                  nullptr);
 
   return endpoint;
 }
