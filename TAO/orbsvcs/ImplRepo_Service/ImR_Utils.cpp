@@ -70,7 +70,6 @@ ImR_Utils::stringToEnvList(const ACE_CString& s,
   const ACE_CString ENDTAG = "\"";
 
   size_t pos = 0;
-  size_t start = 0;
 
   CORBA::ULong idx {};
   for (pos = s.find ('\n'); pos != ACE_CString::npos; pos = s.find ('\n',pos + 1))
@@ -92,7 +91,8 @@ ImR_Utils::stringToEnvList(const ACE_CString& s,
       ret[i].name = "";
       ret[i].value = "";
 
-      if ((start = entry.find (NAMETAG)) == ACE_CString::npos)
+      size_t start = entry.find (NAMETAG);
+      if (start == ACE_CString::npos)
       {
         continue;
       }
@@ -103,7 +103,8 @@ ImR_Utils::stringToEnvList(const ACE_CString& s,
       }
       ret[i].name = entry.substr (start, pos - start).c_str();
 
-      if ((start = entry.find (VALTAG, pos)) == ACE_CString::npos)
+      start = entry.find (VALTAG, pos);
+      if (start == ACE_CString::npos)
       {
         continue;
       }
@@ -137,7 +138,6 @@ ImR_Utils::stringToPeerList (const ACE_CString& s, CORBA::StringSeq& ret)
   const ACE_CString ENDTAG = "\"";
 
   size_t pos = 0;
-  size_t start = 0;
 
   CORBA::ULong idx {};
   for (pos = s.find ('\n'); pos != ACE_CString::npos; pos = s.find ('\n',pos + 1))
@@ -158,7 +158,8 @@ ImR_Utils::stringToPeerList (const ACE_CString& s, CORBA::StringSeq& ret)
       source = source.substr (pos + 1);
       ret[i] = "";
 
-      if ((start = entry.find (NAMETAG)) == ACE_CString::npos)
+      size_t start = entry.find (NAMETAG);
+      if (start == ACE_CString::npos)
       {
         continue;
       }

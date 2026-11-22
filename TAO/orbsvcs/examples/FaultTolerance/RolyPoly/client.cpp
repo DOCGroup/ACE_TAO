@@ -53,10 +53,10 @@ parse_args (int argc, ACE_TCHAR *argv[], std::vector<std::string> &ior_strs)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  std::vector<std::string> ior_strs;
-
   try
     {
+      std::vector<std::string> ior_strs;
+
       CORBA::ORB_var const orb = CORBA::ORB_init (argc,
                                                   argv,
                                                   "Client ORB");
