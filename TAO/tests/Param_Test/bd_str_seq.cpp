@@ -117,7 +117,7 @@ Test_Bounded_String_Sequence::check_validity ()
       (this->in_->length () == this->out_->length ()) &&
       (this->in_->length () == this->ret_->length ()))
     {
-      flag = 1; // assume all are equal
+      flag = true; // assume all are equal
       // lengths are same. Now compare the contents
       for (CORBA::ULong i=0; i < this->in_->length () && flag; ++i)
         {

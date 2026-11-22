@@ -234,7 +234,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             i->s = 5;
             i->o = 255;
             i->f = 2.3f;
-            i->b = 0;
+            i->b = false;
             i->d = 3.1416;
 
             any <<= *i;

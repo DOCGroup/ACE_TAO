@@ -134,7 +134,7 @@ Test_Nested_Struct::check_validity ()
       (this->in_.vs.seq.length () == this->out_->vs.seq.length ()) &&
       (this->in_.vs.seq.length () == this->ret_->vs.seq.length ()))
     {
-      flag = 1; // assume all are equal
+      flag = true; // assume all are equal
       // lengths are same. Now compare the contents
       for (CORBA::ULong i=0; i < this->in_.vs.seq.length () && flag; ++i)
         {

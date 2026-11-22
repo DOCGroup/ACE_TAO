@@ -151,7 +151,7 @@ Test_Var_Struct::check_validity ()
       (this->in_.seq.length () == this->out_->seq.length ()) &&
       (this->in_.seq.length () == this->ret_->seq.length ()))
     {
-      flag = 1; // assume all are equal
+      flag = true; // assume all are equal
       // lengths are same. Now compare the contents
       for (CORBA::ULong i=0; i < this->in_.seq.length () && flag; ++i)
         {

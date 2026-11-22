@@ -444,7 +444,7 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
       _error_message = ACE_TEXT ("test_transport_protocol may only take 'sctp' and 'tcp' as values");
     }
 
-    __initialized = 1;
+    __initialized = true;
 
   }
 }

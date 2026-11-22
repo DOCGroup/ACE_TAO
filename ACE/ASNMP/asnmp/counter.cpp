@@ -39,7 +39,7 @@ Counter32::Counter32 (Counter32 const &c)
 {
    this->smival.value.uNumber = c.smival.value.uNumber;
    smival.syntax = sNMP_SYNTAX_CNTR32;
-   valid_flag = 1;
+   valid_flag = true;
 }
 
 // syntax type
@@ -55,7 +55,7 @@ SnmpSyntax& Counter32::operator=( SnmpSyntax &in_val){
       return *this;
     }
 
-  valid_flag = 0;               // will get set true if really valid
+  valid_flag = false;           // will get set true if really valid
   if (in_val.valid())
   {
     switch (in_val.get_syntax())
@@ -67,7 +67,7 @@ SnmpSyntax& Counter32::operator=( SnmpSyntax &in_val){
       case sNMP_SYNTAX_INT32:           // implied cast int -> uint
           this->smival.value.uNumber =
                 ((Counter32 &)in_val).smival.value.uNumber;
-          valid_flag = 1;
+          valid_flag = true;
           break;
     }
   }

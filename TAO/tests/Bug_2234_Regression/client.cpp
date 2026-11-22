@@ -387,13 +387,13 @@ ACE_TMAIN (
     }
     ACE_DEBUG( (LM_INFO, ":  "));
     if (!aB || (static_cast<CORBA::Long>(1) != aL)) {
-       ACE_DEBUG( (LM_ERROR, "a is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "a is wrong\n")); testFailed= true;}
     else if (!bB || (static_cast<CORBA::Long>(2) != bL)) {
-       ACE_DEBUG( (LM_ERROR, "b is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "b is wrong\n")); testFailed= true;}
     else if (!cB || (static_cast<CORBA::Long>(4) != cL)) {
-       ACE_DEBUG( (LM_ERROR, "c is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "c is wrong\n")); testFailed= true;}
     else if (!rB || (static_cast<CORBA::Long>(7) != rL)) {
-       ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= 1;}
+       ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= true;}
     else
     {
       ACE_DEBUG( (LM_INFO, "OK\n"));

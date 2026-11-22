@@ -154,7 +154,7 @@ namespace TAO_Notify
     {
       if (v == "true")
       {
-        p = 1;
+        p = true;
       }
       else
       {
