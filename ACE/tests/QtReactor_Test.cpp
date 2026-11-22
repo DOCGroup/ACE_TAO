@@ -269,12 +269,16 @@ int DgramHandler::handle_input (ACE_HANDLE)
   int result = peer_.recv (&recvBuffer, sizeof (recvBuffer) , peerAddress);
 
   if (0 >= result)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT (" (%P) %p\n"),
-                       ACE_TEXT ("While reading datagram from socket"))
-                      , -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT (" (%P) %p\n"),
+                         ACE_TEXT ("While reading datagram from socket"))
+                        , -1);
+    }
   else
-    ++dgramsReceived_;
+    {
+      ++dgramsReceived_;
+    }
 
   return 0;
 }
@@ -286,7 +290,9 @@ int DgramHandler::handle_timeout (const ACE_Time_Value &current_time, const void
   int sendBuffer = 0;
 
   if (++timeoutsTriggered_ >= expectedTriggers_)
-    reactor ()->cancel_timer (this, 1);
+    {
+      reactor ()->cancel_timer (this, 1);
+    }
 
   ACE_SOCK_Dgram socket;
   if (-1 == socket.open (ACE_INET_Addr (static_cast< u_short > (0),
@@ -301,11 +307,15 @@ int DgramHandler::handle_timeout (const ACE_Time_Value &current_time, const void
 
   if (sizeof (sendBuffer) != socket.send (&sendBuffer,
                                           sizeof (sendBuffer), peerAddr))
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT (" (%P) %p\n"),
-                ACE_TEXT ("Cannot send dgram")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT (" (%P) %p\n"),
+                  ACE_TEXT ("Cannot send dgram")));
+    }
   else
-    ++dgramsSent_;
+    {
+      ++dgramsSent_;
+    }
 
   socket.close ();
 
@@ -315,14 +325,18 @@ int DgramHandler::handle_timeout (const ACE_Time_Value &current_time, const void
 int DgramHandler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close_mask)
 {
   if (peer_.get_handle () != handle )
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Unknown handle %H DgramHandler::handle_close "
-                          "with mask %Q. My handle is %H\n"),
-                handle,
-                static_cast<ACE_UINT64> (close_mask),
-                peer_.get_handle ()));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Unknown handle %H DgramHandler::handle_close "
+                            "with mask %Q. My handle is %H\n"),
+                  handle,
+                  static_cast<ACE_UINT64> (close_mask),
+                  peer_.get_handle ()));
+    }
   else
-    peer_.close ();
+    {
+      peer_.close ();
+    }
 
   return 0;
 }
@@ -385,23 +399,29 @@ int TCPConnectionHandler::handle_input (ACE_HANDLE handle)
           buffer->wr_ptr (bytesReceived);
           int result = scheduleSend (buffer);
           if (0 > result)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT (" (%P) %p\n"),
-                               ACE_TEXT ("Cannot schedule TCP reply")),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT (" (%P) %p\n"),
+                                 ACE_TEXT ("Cannot schedule TCP reply")),
+                                -1);
+            }
         }
       else
-        buffer->release ();
+        {
+          buffer->release ();
+        }
 
       return 0;
     }
 
   if (errno != EWOULDBLOCK)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT (" (%P:%p (%H)\n"),
-                       ACE_TEXT ("TCPConnectionHandler::handle_input call with no data on handle "),
-                       handle),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT (" (%P:%p (%H)\n"),
+                         ACE_TEXT ("TCPConnectionHandler::handle_input call with no data on handle "),
+                         handle),
+                        -1);
+    }
 
   ACE_ERROR ((LM_WARNING,
               ACE_TEXT (" (%P:%p (%H)\n"),
@@ -415,11 +435,15 @@ int TCPConnectionHandler::handle_output (ACE_HANDLE handle)
 {
   ACE_UNUSED_ARG (handle);
   if (!buffers_)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("TCPConnectionHandler::handle_output call for empty buffers (%H)\n"),
-                handle));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("TCPConnectionHandler::handle_output call for empty buffers (%H)\n"),
+                  handle));
+    }
   if (0 > sendBuffers ()) // socket broken, kill yourself
-    return -1;
+    {
+      return -1;
+    }
 
   if (!buffers_) // everything already send, unregister
     {
@@ -446,9 +470,11 @@ int TCPConnectionHandler::open (void * )
         bufferData[ i ] = static_cast< char > (i);
       buffer->wr_ptr (buffer->size ());
       if (0 != (scheduleSend (buffer)))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot schedule initial send\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot schedule initial send\n")),
+                            -1);
+        }
     }
 
   return result;
@@ -465,13 +491,17 @@ int TCPConnectionHandler::scheduleSend (ACE_Message_Block * buffer)
       lastBuffer->cont (buffer);
     }
   else
-    buffers_ = buffer;
+    {
+      buffers_ = buffer;
+    }
 
   if (0 > sendBuffers ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT (" (%P) %p\n"),
-                       ACE_TEXT ("Cannot schedule TCP send.")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT (" (%P) %p\n"),
+                         ACE_TEXT ("Cannot schedule TCP send.")),
+                        -1);
+    }
   return 0;
 }
 
@@ -480,22 +510,26 @@ int TCPConnectionHandler::sendBuffers ()
   int result = 0;
 
   if (buffers_)
-    if (0 < (result = peer_.send_n (buffers_))) // remove sent blocks
-      {
-        totalSent_ += result;
-        while (buffers_ &&
-               static_cast< size_t > (result) >= buffers_->length ())
-          {
-            ACE_Message_Block *buffer = buffers_;
-            result -= buffers_->length ();
-            buffers_= buffers_->cont ();
-            buffer->cont (nullptr);
-            buffer->release ();
-          }
+    {
+      if (0 < (result = peer_.send_n (buffers_))) // remove sent blocks
+        {
+          totalSent_ += result;
+          while (buffers_ &&
+                 static_cast< size_t > (result) >= buffers_->length ())
+            {
+              ACE_Message_Block *buffer = buffers_;
+              result -= buffers_->length ();
+              buffers_= buffers_->cont ();
+              buffer->cont (nullptr);
+              buffer->release ();
+            }
 
-        if (buffers_) // some buffers were not sent, truncate data
-          buffers_->rd_ptr (result);
-      }
+          if (buffers_) // some buffers were not sent, truncate data
+            {
+              buffers_->rd_ptr (result);
+            }
+        }
+    }
 
   return result;
 }
@@ -503,14 +537,18 @@ int TCPConnectionHandler::sendBuffers ()
 int TCPConnectionHandler::handle_close (ACE_HANDLE handle,ACE_Reactor_Mask close_mask)
 {
   if (peer_.get_handle () != handle )
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Unknown handle %H TCPConnectionHandler::handle_close "
-                          "with mask %Q. My handle is %H\n"),
-                handle,
-                static_cast<ACE_UINT64> (close_mask),
-                peer_.get_handle ());
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Unknown handle %H TCPConnectionHandler::handle_close "
+                            "with mask %Q. My handle is %H\n"),
+                  handle,
+                  static_cast<ACE_UINT64> (close_mask),
+                  peer_.get_handle ()));
+    }
   else
-    peer_.close ();
+    {
+      peer_.close ();
+    }
 
   return 0;
 }
@@ -648,10 +686,12 @@ int HandlersRegister::registerTCPHandlers ()
   ACE_INET_Addr addr (BaseTCPPort);
 
   if (-1 == acceptor_->open (addr, reactor_, 1))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT (" (%P) %p\n"),
-                       ACE_TEXT ("Cannot open acceptor port")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT (" (%P) %p\n"),
+                         ACE_TEXT ("Cannot open acceptor port")),
+                        -1);
+    }
 
   int i;
   addr.set (BaseTCPPort, ACE_TEXT ("127.0.0.1"));
@@ -662,12 +702,16 @@ int HandlersRegister::registerTCPHandlers ()
                                            TCPClients_[ i ],
                                            addr,
                                            ACE_Synch_Options::asynch))
-        if (errno != EWOULDBLOCK )
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT (" (%P) %p (%d)\n"),
-                             ACE_TEXT ("Cannot connect connector"),
-                             i),
-                            -1);
+        {
+          if (errno != EWOULDBLOCK )
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT (" (%P) %p (%d)\n"),
+                                 ACE_TEXT ("Cannot connect connector"),
+                                 i),
+                                -1);
+            }
+        }
     }
 
   return 0;
@@ -691,13 +735,19 @@ int HandlersRegister::analyze () const
   int result = 0;
 
   if (0 > analyzeTimeouts ())
-    result = -1;
+    {
+      result = -1;
+    }
 
   if (0 > analyzeDgrams ())
-    result = -1;
+    {
+      result = -1;
+    }
 
   if (0 > analyzeTCP ())
-    result = -1;
+    {
+      result = -1;
+    }
 
   return result;
 }
@@ -821,11 +871,15 @@ int TCPAcceptorHandler::make_svc_handler (TCPConnectionHandler *& sh)
   sh = new TCPConnectionHandler (true);
   sh->reactor (reactor ());
   if (handlersRegister_->TCPServersNo () >= HandlersNo)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("TCPAcceptorHandler::make_svc_handler called to many times!\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("TCPAcceptorHandler::make_svc_handler called to many times!\n")));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TCPAcceptorHandler::make_svc_handler new TCP server created\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TCPAcceptorHandler::make_svc_handler new TCP server created\n")));
+    }
 
   return 0;
 }
@@ -847,9 +901,11 @@ int TCPAcceptorHandler::activate_svc_handler (TCPConnectionHandler * sh)
 
     }
   else
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Failed to create server TCPConnectionHandler\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Failed to create server TCPConnectionHandler\n")),
+                        -1);
+    }
 
   return 0;
 }
@@ -874,11 +930,15 @@ void testNativeReactor (int, ACE_TCHAR *[])
       reactor.run_reactor_event_loop (testTime);
 
       if (0  != handlersRegister.analyze ())
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Test failed for native reactor. "
-                              "Fix QtReactor_Test or ACE_Reactor.\n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Test failed for native reactor. "
+                                "Fix QtReactor_Test or ACE_Reactor.\n")));
+        }
       else
-        ACE_ERROR ((LM_INFO, ACE_TEXT ("Test seems to work with native reactor.\n")));
+        {
+          ACE_ERROR ((LM_INFO, ACE_TEXT ("Test seems to work with native reactor.\n")));
+        }
     }
 }
 
@@ -902,9 +962,13 @@ void testQtReactor (int argc, ACE_TCHAR *argv[])
       app.exec (TotalTestTime);
 
       if (0  != handlersRegister.analyze ())
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("QtReactor_Test failed.\n")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("QtReactor_Test failed.\n")));
+        }
       else
-        ACE_ERROR ((LM_INFO, ACE_TEXT ("QtReactor_Test passed.\n")));
+        {
+          ACE_ERROR ((LM_INFO, ACE_TEXT ("QtReactor_Test passed.\n")));
+        }
     }
 }
 
