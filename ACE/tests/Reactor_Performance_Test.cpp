@@ -176,14 +176,13 @@ using CONNECTOR = ACE_Connector<Write_Handler, ACE_SOCK_Connector>;
 using ACCEPTOR = ACE_Acceptor<Read_Handler, ACE_SOCK_Acceptor>;
 
 // Execute the client tests.
-void *
+ACE_THR_FUNC_RETURN
 client (void *arg)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) running client\n")));
 
-  ACE_INET_Addr *connection_addr =
-    reinterpret_cast<ACE_INET_Addr *> (arg);
+  ACE_INET_Addr *connection_addr = static_cast<ACE_INET_Addr *> (arg);
   CONNECTOR connector;
 
   int i;
@@ -192,20 +191,20 @@ client (void *arg)
   Write_Handler **temp_writers {};
   ACE_NEW_RETURN (temp_writers,
                   Write_Handler *[opt_nconnections],
-                  nullptr);
+                  ACE_THR_FUNC_RETURN_NULL);
   std::unique_ptr <Write_Handler *[]> writers (temp_writers);
 
   ACE_TCHAR *temp_failed {};
   ACE_NEW_RETURN (temp_failed,
                   ACE_TCHAR[opt_nconnections],
-                  nullptr);
+                  ACE_THR_FUNC_RETURN_NULL);
   std::unique_ptr <ACE_TCHAR[]> failed_svc_handlers (temp_failed);
 
   // Automagic memory cleanup.
   ACE_INET_Addr *temp_addresses;
   ACE_NEW_RETURN (temp_addresses,
                   ACE_INET_Addr [opt_nconnections],
-                  nullptr);
+                  ACE_THR_FUNC_RETURN_NULL);
   std::unique_ptr <ACE_INET_Addr[]> addresses (temp_addresses);
 
   // Initialize array.
@@ -234,7 +233,7 @@ client (void *arg)
                           failed_addr.get_port_number ()));
             }
         }
-      return nullptr;
+      return ACE_THR_FUNC_RETURN_NULL;
     }
 
   // If no connections failed (result == 0) then there should be valid
@@ -249,7 +248,7 @@ client (void *arg)
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("(%t) %p\n"),
                                  ACE_TEXT ("writer::send_data")),
-                                0);
+                                ACE_THR_FUNC_RETURN_NULL);
             }
         }
     }
@@ -261,7 +260,7 @@ client (void *arg)
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) finishing client\n")));
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // Sets up the correct reactor (based on platform and options).
@@ -392,8 +391,8 @@ run_main (int argc, ACE_TCHAR *argv[])
                                  ACE_DEFAULT_SERVER_HOST);
 
   if (ACE_Thread_Manager::instance ()->spawn
-      (ACE_THR_FUNC (client),
-       (void *) &connection_addr,
+      (client,
+       &connection_addr,
        THR_NEW_LWP | THR_DETACHED) == -1)
     {
       ACE_ERROR ((LM_ERROR,
