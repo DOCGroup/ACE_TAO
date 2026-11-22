@@ -80,13 +80,13 @@ static bool wipeout_logfile = false;
 // This adapter function runs the Reactor's event loop in a separate
 // thread of control.
 
-static void *
+static ACE_THR_FUNC_RETURN
 run_reactor (void *)
 {
   ACE_Reactor::instance ()->owner
     (ACE_Thread_Manager::instance ()->thr_self ());
   ACE_Reactor::instance ()->run_reactor_event_loop ();
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // Initiate the cycle of messages.
@@ -504,7 +504,7 @@ int run_main (int argc, ACE_TCHAR *argv [])
 
   // launch a new Thread
   if (ACE_Thread_Manager::instance ()->spawn
-      (ACE_THR_FUNC (run_reactor)) == -1)
+      (run_reactor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Spawning Reactor.\n"),
