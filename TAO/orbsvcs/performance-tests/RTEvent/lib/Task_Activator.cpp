@@ -23,7 +23,9 @@ Task_Activator<Task>::Task_Activator (int priority,
   : task_ (task)
 {
   if (this->task_ == nullptr)
-    return;
+    {
+      return;
+    }
 
   // We explicitly ignore errors, this is exactly what we do in the
   // test anyway.  In a generic class we would need to throw an
@@ -44,7 +46,9 @@ template<class Task>
 Task_Activator<Task>::~Task_Activator ()
 {
   if (this->task_ == nullptr)
-    return;
+    {
+      return;
+    }
 
   // Wait until the task terminates
   this->task_->wait ();
