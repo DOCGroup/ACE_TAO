@@ -1102,7 +1102,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending
   ACE_TRACE ("ACE_Select_Reactor_T::work_pending");
 
   ACE_Time_Value mwt (max_wait_time);
-  ACE_MT (ACE_Countdown_Time countdown (&mwt));
+  ACE_MT (ACE_Countdown_Time countdown (std::addressof (mwt)));
 
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN,
                             ace_mon,

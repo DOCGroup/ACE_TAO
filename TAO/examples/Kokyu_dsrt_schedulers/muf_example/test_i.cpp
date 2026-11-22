@@ -5,6 +5,7 @@
 #include "tao/debug.h"
 #include "ace/Countdown_Time.h"
 #include <cstring>
+#include <memory>
 
 #if !defined(__ACE_INLINE__)
 #include "test_i.inl"
@@ -48,14 +49,14 @@ Simple_Server_i::test_method (CORBA::Long exec_duration)
   constexpr CORBA::ULong prime_number = 9619899;
 
   ACE_Time_Value compute_count_down_time (exec_duration, 0);
-  ACE_Countdown_Time compute_count_down (&compute_count_down_time);
+  ACE_Countdown_Time compute_count_down (std::addressof (compute_count_down_time));
 
   //Applicable only for CV based implementations
   //yield every 1 sec
   ACE_Time_Value yield_interval (1,0);
 
   ACE_Time_Value yield_count_down_time (yield_interval);
-  ACE_Countdown_Time yield_count_down (&yield_count_down_time);
+  ACE_Countdown_Time yield_count_down (std::addressof (yield_count_down_time));
 
   timer.start ();
   int j {};

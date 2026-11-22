@@ -941,7 +941,7 @@ ACE_Process_Manager::wait (pid_t pid,
               sleeptm = timeout;
             }
           ACE_Time_Value tmo (timeout);  // Need one we can change
-          for (ACE_Countdown_Time time_left (&tmo); tmo > ACE_Time_Value::zero ; time_left.update ())
+          for (ACE_Countdown_Time time_left (std::addressof (tmo)); tmo > ACE_Time_Value::zero ; time_left.update ())
             {
               pid = ACE_OS::waitpid (-1, status, WNOHANG);
               if (pid > 0 || pid == ACE_INVALID_PID)
@@ -968,7 +968,7 @@ ACE_Process_Manager::wait (pid_t pid,
             }
 
           ACE_Time_Value tmo (timeout);  // Need one we can change
-          for (ACE_Countdown_Time time_left (&tmo); ; time_left.update ())
+          for (ACE_Countdown_Time time_left (std::addressof (tmo)); ; time_left.update ())
             {
               pid = ACE_OS::waitpid (-1, status, WNOHANG);
 #   if defined (ACE_VXWORKS)

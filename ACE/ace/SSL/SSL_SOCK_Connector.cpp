@@ -8,6 +8,7 @@
 #include "ace/Countdown_Time.h"
 #include "ace/Truncate.h"
 
+#include <memory>
 #include <openssl/err.h>
 
 #if !defined (__ACE_INLINE__)
@@ -212,7 +213,7 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
   // Take into account the time to complete the basic TCP handshake
   // and the SSL handshake.
   ACE_Time_Value time_copy;
-  ACE_Countdown_Time countdown (&time_copy);
+  ACE_Countdown_Time countdown (std::addressof (time_copy));
   if (timeout != nullptr)
     {
       time_copy += *timeout;
@@ -288,7 +289,7 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
   // Take into account the time to complete the basic TCP handshake
   // and the SSL handshake.
   ACE_Time_Value time_copy;
-  ACE_Countdown_Time countdown (&time_copy);
+  ACE_Countdown_Time countdown (std::addressof (time_copy));
   if (timeout != nullptr)
     {
       time_copy += *timeout;
@@ -361,7 +362,7 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
   // Take into account the time to complete the basic TCP handshake
   // and the SSL handshake.
   ACE_Time_Value time_copy;
-  ACE_Countdown_Time countdown (&time_copy);
+  ACE_Countdown_Time countdown (std::addressof (time_copy));
   if (tv != nullptr)
     {
       time_copy += *tv;

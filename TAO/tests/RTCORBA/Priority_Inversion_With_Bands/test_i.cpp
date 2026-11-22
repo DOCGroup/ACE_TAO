@@ -3,6 +3,8 @@
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "ace/Countdown_Time.h"
 
+#include <memory>
+
 test_i::test_i (CORBA::ORB_ptr orb,
                 PortableServer::POA_ptr poa,
                 RTCORBA::Priority low_priority,
@@ -95,7 +97,7 @@ test_i::estimate_iterations ()
 {
   // Estimate for 2 seconds.
   ACE_Time_Value work_time (2);
-  ACE_Countdown_Time countdown (&work_time);
+  ACE_Countdown_Time countdown (std::addressof (work_time));
 
   int i {};
   for (; work_time > ACE_Time_Value::zero; ++i)

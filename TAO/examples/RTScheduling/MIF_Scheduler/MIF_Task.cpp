@@ -102,7 +102,7 @@ MIF_Task::perform_task ()
           TASK_STATS::instance ()->sample (run_time.sec (), count_);
 
           ACE_Time_Value count_down_time (1);
-          ACE_Countdown_Time count_down (&count_down_time);
+          ACE_Countdown_Time count_down (std::addressof (count_down_time));
 
           while (count_down_time > ACE_Time_Value::zero)
             {
@@ -129,7 +129,7 @@ MIF_Task::perform_task ()
               TASK_STATS::instance ()->sample (run_time.sec (), count_);
 
               ACE_Time_Value count_down_time (1);
-              ACE_Countdown_Time count_down (&count_down_time);
+              ACE_Countdown_Time count_down (std::addressof (count_down_time));
 
               while (count_down_time > ACE_Time_Value::zero)
                 {

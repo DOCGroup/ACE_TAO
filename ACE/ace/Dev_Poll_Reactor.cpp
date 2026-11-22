@@ -940,7 +940,7 @@ ACE_Dev_Poll_Reactor::work_pending (const ACE_Time_Value & max_wait_time)
   // The destructor of this object will automatically compute how much
   // time elapsed since this method was called.
   ACE_Time_Value mwt (max_wait_time);
-  ACE_MT (ACE_Countdown_Time countdown (&mwt));
+  ACE_MT (ACE_Countdown_Time countdown (std::addressof (mwt)));
 
   Token_Guard guard (this->token_);
   int const result = guard.acquire_quietly (&mwt);

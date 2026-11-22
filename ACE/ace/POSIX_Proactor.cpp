@@ -15,6 +15,8 @@
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 // *********************************************************************
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -969,7 +971,7 @@ int
 ACE_POSIX_AIOCB_Proactor::handle_events (ACE_Time_Value &wait_time)
 {
   // Decrement <wait_time> with the amount of time spent in the method
-  ACE_Countdown_Time countdown (&wait_time);
+  ACE_Countdown_Time countdown (std::addressof (wait_time));
   return this->handle_events_i (wait_time.msec ());
 }
 
@@ -1681,7 +1683,7 @@ int
 ACE_POSIX_SIG_Proactor::handle_events (ACE_Time_Value &wait_time)
 {
   // Decrement <wait_time> with the amount of time spent in the method
-  ACE_Countdown_Time countdown (&wait_time);
+  ACE_Countdown_Time countdown (std::addressof (wait_time));
   return this->handle_events_i (&wait_time);
 }
 

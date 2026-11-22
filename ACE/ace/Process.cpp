@@ -653,7 +653,7 @@ ACE_Process::wait (const ACE_Time_Value &tv,
       sleeptm = tv;
     }
   ACE_Time_Value tmo (tv);       // Need one we can change
-  for (ACE_Countdown_Time time_left (&tmo); tmo > ACE_Time_Value::zero ; time_left.update ())
+  for (ACE_Countdown_Time time_left (std::addressof (tmo)); tmo > ACE_Time_Value::zero ; time_left.update ())
     {
       pid = ACE_OS::waitpid (this->getpid (),
                              &this->exit_code_,
@@ -707,7 +707,7 @@ ACE_Process::wait (const ACE_Time_Value &tv,
 
   pid_t pid;
   ACE_Time_Value tmo (tv);       // Need one we can change
-  for (ACE_Countdown_Time time_left (&tmo); ; time_left.update ())
+  for (ACE_Countdown_Time time_left (std::addressof (tmo)); ; time_left.update ())
     {
       pid = ACE_OS::waitpid (this->getpid (),
                              &this->exit_code_,

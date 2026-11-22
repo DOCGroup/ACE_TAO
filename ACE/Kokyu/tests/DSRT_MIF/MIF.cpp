@@ -6,6 +6,7 @@
 #include "ace/Lock_Adapter_T.h"
 #include "ace/Countdown_Time.h"
 #include <atomic>
+#include <memory>
 
 #include "Kokyu_dsrt.h"
 
@@ -79,7 +80,7 @@ int MyTask::svc ()
 
   ACE_Time_Value const one_second {1, 0};
   ACE_Time_Value compute_count_down_time {exec_duration_, 0};
-  ACE_Countdown_Time compute_count_down (&compute_count_down_time);
+  ACE_Countdown_Time compute_count_down (std::addressof (compute_count_down_time));
 
   timer.start ();
   while (compute_count_down_time > ACE_Time_Value::zero)
