@@ -96,7 +96,9 @@ execname_test ()
       ++error_count;
     }
   else
-    delete [] const_cast<ACE_TCHAR *> (newname);
+    {
+      delete [] const_cast<ACE_TCHAR *> (newname);
+    }
 #endif /* ACE_WIN32 */
 
   return error_count;

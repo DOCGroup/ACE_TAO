@@ -323,8 +323,10 @@ run_main (int, ACE_TCHAR *[])
           ACE_OS::snprintf (thread_name[i], 32, ACE_TEXT ("thread%d"), i);
         }
       else
-        // Pass an ACE_thread_t pointer of 0 for the last thread name.
-        thread_name[n_threads - 1] = 0;
+        {
+          // Pass an ACE_thread_t pointer of 0 for the last thread name.
+          thread_name[n_threads - 1] = 0;
+        }
 
       stack_size[i] = 40000;
     }

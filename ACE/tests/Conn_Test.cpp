@@ -706,7 +706,9 @@ spawn_threads (ACCEPTOR *acceptor,
                       static_cast<ACE_UINT64> (max_wait.msec ())));
         }
       else
-        ACE_OS::perror (ACE_TEXT ("wait"));
+        {
+          ACE_OS::perror (ACE_TEXT ("wait"));
+        }
 
       status = -1;
     }
