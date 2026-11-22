@@ -36,12 +36,12 @@
 static int reported_notsup = 0;
 #endif /* ACE_HAS_MUTEX_TIMEOUTS */
 
-static void *
+static ACE_THR_FUNC_RETURN
 test (void *args)
 {
-  ACE_TEST_MUTEX *mutex = (ACE_TEST_MUTEX *) args;
+  ACE_TEST_MUTEX *mutex = static_cast<ACE_TEST_MUTEX *> (args);
   ACE_UNUSED_ARG (mutex); // Suppress ghs warning about unused local "mutex".
-  u_int seed = (u_int) ACE_OS::time (nullptr);
+  u_int seed = static_cast<u_int> (ACE_OS::time (nullptr));
 
   for (size_t i = 0; i < ACE_MAX_ITERATIONS / 2; ++i)
     {
@@ -88,7 +88,7 @@ test (void *args)
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) %p\n%a"),
                           ACE_TEXT ("mutex timeout failed\n")));
-              return nullptr;
+              return ACE_THR_FUNC_RETURN_NULL;
             }
         }
       else
@@ -230,7 +230,7 @@ test (void *args)
       // FUZZ: enable check_for_ACE_Guard
     }
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 #endif /* ACE_HAS_THREADS */
 
@@ -243,8 +243,8 @@ spawn ()
   const u_int n_threads = ACE_MAX_THREADS;
 
   if (ACE_Thread_Manager::instance ()->spawn_n (n_threads,
-                                                ACE_THR_FUNC (test),
-                                                (void *) &mutex,
+                                                test,
+                                                &mutex,
                                                 THR_NEW_LWP | THR_DETACHED) == -1)
     {
       ACE_ERROR ((LM_ERROR,
