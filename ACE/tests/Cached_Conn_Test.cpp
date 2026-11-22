@@ -33,6 +33,8 @@
 #include "ace/Cached_Connect_Strategy_T.h"
 #include "ace/Handle_Gobbler.h"
 
+#include <memory>
+
 #if defined(_MSC_VER)
 #pragma warning(disable:4503)
 #endif /* _MSC_VER */
@@ -295,7 +297,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("cached_connect")));
       }
 
-      if (-1 == server (&acceptor))
+      if (-1 == server (std::addressof (acceptor)))
       {
         out_of_sockets_handler ();
       }

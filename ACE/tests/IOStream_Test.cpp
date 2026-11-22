@@ -17,6 +17,8 @@
 #include "ace/IOStream.h"
 #include "ace/OS_NS_sys_wait.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 #  include "ace/OS_NS_unistd.h"
 #  include "ace/OS_NS_ctype.h"  // Needed for isspace() function
@@ -457,7 +459,7 @@ spawn ()
         break;
       }
     default: // In parent
-      server (&acceptor);
+      server (std::addressof (acceptor));
 
       // Allow the client to exit, then remove the Process_Mutex.
       ACE_OS::wait ();

@@ -20,6 +20,8 @@
 #include "ace/Timer_Heap.h"
 #include "ace/Timer_Queue_Adapters.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_THREADS)
 
 using Thread_Timer_Queue = ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Heap>;
@@ -327,7 +329,9 @@ run_main (int, ACE_TCHAR *[])
   ACE_Time_Value timeout =
     ACE_OS::gettimeofday() + ACE_Time_Value (1, 0);
 
-  if (-1 == timer_queue.schedule (&handler, &timer_queue, timeout))
+  if (-1 == timer_queue.schedule (std::addressof (handler),
+                                  std::addressof (timer_queue),
+                                  timeout))
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %s: %p\n"), ACE_TEXT ("schedule")));
       ++status;
