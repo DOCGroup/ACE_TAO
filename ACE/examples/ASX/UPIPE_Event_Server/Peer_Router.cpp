@@ -196,7 +196,7 @@ Peer_Router<PH, PK>::send_peers (ACE_Message_Block *mb)
     {
       if (options.debug ())
         {
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) sending to peer via sd %d\n"),
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) sending to peer via sd %H\n"),
                       ss->ext_id_));
         }
 
