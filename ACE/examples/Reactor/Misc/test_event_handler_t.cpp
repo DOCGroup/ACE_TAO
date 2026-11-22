@@ -1,6 +1,7 @@
 #include "ace/Event_Handler_T.h"
 #include "ace/Log_Msg.h"
 
+#include <memory>
 #include <type_traits>
 
 static int destruction_count {};
@@ -37,7 +38,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     ACE_Test_Sig_Handler handler;
     {
       // Tie the ACE_Event_Handler_T together with the methods from ACE_Test_Sig_Handler.
-      EH_SH tied_sh (&handler, false,
+      EH_SH tied_sh (std::addressof (handler), false,
                      &ACE_Test_Sig_Handler::get_handle,
                      &ACE_Test_Sig_Handler::handle_async_io,
                      &ACE_Test_Sig_Handler::shutdown,

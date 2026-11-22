@@ -219,7 +219,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (ACE_Thread_Manager::instance ()->spawn_n
       (opt_nthreads,
        client,
-       &handler,
+       std::addressof (handler),
        THR_NEW_LWP | THR_DETACHED) == -1)
   {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n%a"), ACE_TEXT ("thread create failed")));

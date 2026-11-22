@@ -1168,7 +1168,8 @@ run_main (int , ACE_TCHAR *[])
                   ACE_TEXT ("(%P|%t) starting server at port %d\n"),
                   server_addr.get_port_number ()));
 
-      if (spawn_threads (&acceptor, &server_addr) == -1)
+      if (spawn_threads (std::addressof (acceptor),
+                         std::addressof (server_addr)) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("(%P|%t) %p\n"),
