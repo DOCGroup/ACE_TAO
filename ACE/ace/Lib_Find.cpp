@@ -393,7 +393,7 @@ ACE::ldname (const ACE_TCHAR *entry_point)
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (new_name,
                         static_cast<ACE_TCHAR *>(ACE_Allocator::instance()->malloc(sizeof(ACE_TCHAR) * size)),
-                        0);
+                        nullptr);
 #else
   ACE_NEW_RETURN (new_name,
                   ACE_TCHAR[size],

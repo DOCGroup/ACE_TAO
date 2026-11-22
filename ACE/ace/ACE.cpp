@@ -3425,7 +3425,7 @@ ACE::strndup (const char *str, size_t n)
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (s,
                         static_cast<char *> (ACE_Allocator::instance()->malloc (len + 1)),
-                        0);
+                        nullptr);
 #else
   ACE_ALLOCATOR_RETURN (s,
                         static_cast<char *> (ACE_OS::malloc (len + 1)),
@@ -3457,7 +3457,7 @@ ACE::strndup (const wchar_t *str, size_t n)
   ACE_ALLOCATOR_RETURN (s,
                         static_cast<wchar_t*> (
                           ACE_Allocator::instance ()->malloc (size)),
-                        0);
+                        nullptr);
 #else
   ACE_ALLOCATOR_RETURN (s,
                         static_cast<wchar_t*> (ACE_OS::malloc (size)),
@@ -3488,7 +3488,7 @@ ACE::strnnew (const char *str, size_t n)
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (s,
                         static_cast<char*> (ACE_Allocator::instance ()->malloc (sizeof (char) * (len + 1))),
-                        0);
+                        nullptr);
 #else
   ACE_NEW_RETURN (s,
                   char[len + 1],
@@ -3558,7 +3558,7 @@ ACE::strnew (const char *s)
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (t,
                         static_cast<char*> (ACE_Allocator::instance ()->malloc (sizeof (char) * (std::strlen (s) + 1))),
-    0);
+                        nullptr);
 #else
   ACE_NEW_RETURN (t,
                   char [std::strlen (s) + 1],
@@ -3584,7 +3584,7 @@ ACE::strnew (const wchar_t *s)
                         static_cast<wchar_t*> (
                           ACE_Allocator::instance ()->malloc (
                             sizeof (wchar_t) * (n))),
-                        0);
+                        nullptr);
 #else
   ACE_NEW_RETURN (t, wchar_t[n], nullptr);
 #endif  /* ACE_HAS_ALLOC_HOOKS */

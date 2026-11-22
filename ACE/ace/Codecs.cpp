@@ -62,7 +62,7 @@ ACE_Base64::encode (ACE_Byte const *input,
     result,
     static_cast<ACE_Byte *> (
       ACE_Allocator::instance ()->malloc (sizeof (ACE_Byte) * length)),
-    0);
+    nullptr);
 #else
   ACE_NEW_RETURN (result, ACE_Byte[length], nullptr);
 #endif /* ACE_HAS_ALLOC_HOOKS */
@@ -172,7 +172,7 @@ ACE_Base64::decode (ACE_Byte const *input, size_t *output_len)
     result,
     static_cast<ACE_Byte *> (
       ACE_Allocator::instance ()->malloc (sizeof (ACE_Byte) * result_len)),
-    0);
+    nullptr);
 #else
   ACE_NEW_RETURN (result, ACE_Byte[result_len], nullptr);
 #endif /* ACE_HAS_ALLOC_HOOKS */

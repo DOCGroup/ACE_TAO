@@ -80,7 +80,7 @@ namespace ACE_Utils
 #if defined (ACE_HAS_ALLOC_HOOKS)
         ACE_ALLOCATOR_RETURN (buf,
                               static_cast<char*> (ACE_Allocator::instance()->malloc(sizeof (char) * (UUID_STRING_LENGTH + 1))),
-                              0);
+                              nullptr);
 #else
         ACE_NEW_RETURN (buf,
                         char[UUID_STRING_LENGTH + 1],
@@ -111,7 +111,7 @@ namespace ACE_Utils
 #if defined (ACE_HAS_ALLOC_HOOKS)
         ACE_ALLOCATOR_RETURN (buf,
                               static_cast<char*> (ACE_Allocator::instance()->malloc(sizeof (char) * (UUID_STRING_LENGTH + 1))),
-                              0);
+                              nullptr);
 #else
         ACE_NEW_RETURN (buf,
                         char[UUID_STRING_LENGTH + 1],
