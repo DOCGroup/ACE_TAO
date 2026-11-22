@@ -1002,7 +1002,7 @@ struct snmp_pdu * cmu_snmp::pdu_create( int command)
   ACE_TRACE("cmu_snmp::snmp_pdu_create");
   struct snmp_pdu *pdu;
 
-  ACE_NEW_RETURN(pdu, snmp_pdu, 0);
+  ACE_NEW_RETURN(pdu, snmp_pdu, nullptr);
   std::memset (pdu, 0, sizeof (struct snmp_pdu));
   pdu->command = command;
   pdu->errstat = 0;
