@@ -178,7 +178,7 @@ Write_Handler::svc ()
 #if !defined (ACE_LACKS_FORK) || defined (ACE_HAS_THREADS)
 
 // Execute the client tests.
-void *
+ACE_THR_FUNC_RETURN
 client (void *arg)
 {
   ACE_INET_Addr *connection_addr =
@@ -221,14 +221,14 @@ client (void *arg)
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) finishing client\n")));
-          return nullptr;
+          return ACE_THR_FUNC_RETURN_NULL;
         }
     }
 
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("(%P|%t) failed to connect after %d retries\n"),
               max_retries));
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 #endif
@@ -327,8 +327,8 @@ run_main (int argc, ACE_TCHAR *argv[])
   for (i = 0; i < opt_nchildren; ++i)
     {
       if (ACE_Thread_Manager::instance ()->spawn
-          (ACE_THR_FUNC (client),
-           (void *) &connection_addr,
+          (client,
+           &connection_addr,
            THR_NEW_LWP | THR_DETACHED) == -1)
         {
           ACE_ERROR ((LM_ERROR,

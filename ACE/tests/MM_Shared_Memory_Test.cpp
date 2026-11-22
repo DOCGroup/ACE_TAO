@@ -69,7 +69,7 @@ static ACE_TCHAR *shm_key;
 // Synchronize the start of the parent and the child.
 static SYNCHRONIZER *synchronizer {};
 
-static void *
+static ACE_THR_FUNC_RETURN
 child (void * = nullptr)
 {
   int result;
@@ -97,10 +97,10 @@ child (void * = nullptr)
   // Indicate to the parent that we're done.
   *shm = '*';
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 parent (void * = nullptr)
 {
   int result;
@@ -137,7 +137,7 @@ parent (void * = nullptr)
   ACE_TEST_ASSERT (result != -1);
 
   ACE_OS::unlink (shm_key);
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 static int
@@ -174,16 +174,16 @@ spawn ()
     }
 #elif defined (ACE_HAS_THREADS)
   if (ACE_Thread_Manager::instance ()->spawn
-      (ACE_THR_FUNC (child),
-       (void *) 0,
+      (child,
+       nullptr,
        THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) %p\n"),
                        ACE_TEXT ("thread create failed")),
                       1);
   else if (ACE_Thread_Manager::instance ()->spawn
-      (ACE_THR_FUNC (parent),
-       (void *) 0,
+      (parent,
+       nullptr,
        THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) %p\n"),

@@ -107,7 +107,7 @@ public:
 };
 
 #if defined (ACE_HAS_THREADS)
-static void*
+static ACE_THR_FUNC_RETURN
 worker (void*)
 {
   ACE_Reactor::instance ()->owner (ACE_OS::thr_self ());
@@ -121,7 +121,7 @@ worker (void*)
           }
       }
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 #endif /* ACE_HAS_THREADS */
 
@@ -158,7 +158,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       }
 
 #if defined (ACE_HAS_THREADS)
-    thr_mgr->spawn (ACE_THR_FUNC (worker));
+    thr_mgr->spawn (worker);
 #else
     // Need to figure out how to implement this test.
     ACE_ERROR ((LM_INFO,
