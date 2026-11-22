@@ -40,13 +40,13 @@ Counter32::Counter32 (Counter32 const &c)
    valid_flag = true;
 }
 
-// syntax type
+/// Syntax type.
 SmiUINT32 Counter32::get_syntax()
 {
   return sNMP_SYNTAX_CNTR32;
 }
 
-// general assignment from any Value
+/// General assignment from any value.
 SnmpSyntax& Counter32::operator=( SnmpSyntax &in_val){
   if (this == std::addressof (in_val))        // handle assignment from itself
     {
@@ -72,27 +72,27 @@ SnmpSyntax& Counter32::operator=( SnmpSyntax &in_val){
   return *this;
 }
 
-// overloaded assignment
+/// Overloaded assignment.
 Counter32 &Counter32::operator= (unsigned long i)
 {
   this->smival.value.uNumber=i;
   return *this;
 }
 
-// overloaded assignment
+/// Overloaded assignment.
 Counter32 &Counter32::operator= (Counter32 const &uli)
 {
   this->smival.value.uNumber = uli.smival.value.uNumber;
   return *this;
 }
 
-// otherwise, behave like an unsigned long int
+/// Otherwise, behave like an unsigned long integer.
 Counter32::operator unsigned long() const
 {
   return this->smival.value.uNumber;
 }
 
-// clone
+/// Create a new instance of this value.
 SnmpSyntax * Counter32::clone() const
 {
   return new Counter32(*this);

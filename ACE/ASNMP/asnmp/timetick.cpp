@@ -40,33 +40,33 @@ TimeTicks::TimeTicks (TimeTicks const &t)
   smival.syntax = sNMP_SYNTAX_TIMETICKS;
 }
 
-// syntax type
+/// Syntax type.
 SmiUINT32 TimeTicks::get_syntax()
 {
   return sNMP_SYNTAX_TIMETICKS;
 }
 
-// create a new instance of this Value
+/// Create a new instance of this value.
 SnmpSyntax *TimeTicks::clone() const
 {
   return new TimeTicks (*this);
 }
 
-// overloaded assignment from ulong
+/// Overloaded assignment from an unsigned long.
 TimeTicks &TimeTicks::operator= (unsigned long const i)
 {
   smival.value.uNumber = i;
   return *this;
 }
 
-// overloaded assignment from TimeTicks
+/// Overloaded assignment from another TimeTicks value.
 TimeTicks &TimeTicks::operator= (TimeTicks const &uli)
 {
   this->smival.value.uNumber = uli.smival.value.uNumber;
   return *this;
 }
 
-// general assignment from any Value
+/// General assignment from any value.
 SnmpSyntax& TimeTicks::operator=( SnmpSyntax &in_val)
 {
   if (this == std::addressof (in_val))        // handle assignment from itself
@@ -91,13 +91,13 @@ SnmpSyntax& TimeTicks::operator=( SnmpSyntax &in_val)
   return *this;
 }
 
-// otherwise, behave like an unsigned long
+/// Otherwise, behave like an unsigned long.
 TimeTicks::operator unsigned long() const
 {
   return smival.value.uNumber;
 }
 
-// ASCII format return
+/// Return the ASCII representation.
 char const *TimeTicks::to_string ()
   /* Should do something nicer like days:hours:minutes... */
 {

@@ -41,27 +41,27 @@ Gauge32::Gauge32 (Gauge32 const &g)
   valid_flag = true;
 }
 
-// syntax type
+/// Syntax type.
 SmiUINT32 Gauge32::get_syntax()
 {
   return sNMP_SYNTAX_GAUGE32;
 }
 
-// overloaded assignment
+/// Overloaded assignment.
 Gauge32 &Gauge32::operator= (Gauge32 const &uli)
 {
   this->smival.value.uNumber = uli.smival.value.uNumber;
   return *this;
 }
 
-// overloaded assignment
+/// Overloaded assignment.
 Gauge32 &Gauge32::operator= (unsigned long i)
 {
   smival.value.uNumber = i;
   return *this;
 }
 
-// general assignment from any Value
+/// General assignment from any value.
 // TODO: this is broken if not inherited from UInt32 (see UInt32 code).
 SnmpSyntax& Gauge32::operator=( SnmpSyntax &in_val)
 {
@@ -89,13 +89,13 @@ SnmpSyntax& Gauge32::operator=( SnmpSyntax &in_val)
   return *this;
 }
 
-// otherwise, act as unsigned long
+/// Otherwise, act as an unsigned long.
 Gauge32::operator unsigned long() const
 {
   return smival.value.uNumber;
 }
 
-// clone - create a new instance of this Value
+/// Create a new instance of this value.
 SnmpSyntax* Gauge32::clone() const
 {
   return new Gauge32(*this);
