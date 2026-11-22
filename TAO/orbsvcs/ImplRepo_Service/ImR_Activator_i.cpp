@@ -563,7 +563,7 @@ ImR_Activator_i::start_server(const char* name,
     }
 
   ACE_Process_Options proc_opts (
-                                 1,
+                                 true,
                                  cmdline_buf_len + 1,
                                  this->env_buf_len_, this->max_env_vars_);
   proc_opts.command_line (ACE_TEXT("%") ACE_TEXT_PRIs, ACE_TEXT_CHAR_TO_TCHAR(cmdline));

@@ -46,7 +46,7 @@ TAO::SSLIOP::Accept_Strategy::accept_svc_handler (handler_type * svc_handler)
   if (this->peer_acceptor_.accept (svc_handler->peer (), // stream
                                    0,                // remote address
                                    std::addressof (timeout), // timeout
-                                   1,                // restart
+                                   true,             // restart
                                    reset_new_handle  // reset new handler
                                    ) == -1)
     {

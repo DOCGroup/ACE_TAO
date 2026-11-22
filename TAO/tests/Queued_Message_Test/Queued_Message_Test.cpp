@@ -30,7 +30,11 @@ create_new_message (std::mt19937 &random_generator)
   mb.wr_ptr (block_size);
 
   // The queue owns this intrusive node and releases it through destroy().
-  return new TAO_Asynch_Queued_Message (&mb, TAO_ORB_Core_instance (), 0, 0, 1);
+  return new TAO_Asynch_Queued_Message (&mb,
+                                        TAO_ORB_Core_instance (),
+                                        nullptr,
+                                        nullptr,
+                                        true);
 }
 
 /// Add a new message at the tail of the queue.

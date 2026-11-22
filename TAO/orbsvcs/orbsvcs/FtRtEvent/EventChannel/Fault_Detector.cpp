@@ -6,7 +6,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 Fault_Detector::ReactorTask::ReactorTask()
-  : reactor_(new ACE_Select_Reactor, 1)
+  : reactor_(new ACE_Select_Reactor, true)
 {
 }
 

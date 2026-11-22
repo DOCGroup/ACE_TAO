@@ -154,7 +154,7 @@ TAO_PG_GenericFactory::create_object (
   catch (CORBA::Exception const &)
     {
       this->delete_object_i (factory_set,
-                             1 /* Ignore exceptions */);
+                             true /* Ignore exceptions */);
 
       this->object_group_manager_.destroy_object_group (oid.in ());
 
@@ -196,7 +196,7 @@ TAO_PG_GenericFactory::delete_object (
           TAO_PG_Factory_Set & factory_set = entry->int_id_;
 
           this->delete_object_i (factory_set,
-                                 0  /* Do not ignore exceptions */);
+                                 false  /* Do not ignore exceptions */);
 
           if (this->factory_map_.unbind (fcid) != 0)
           {

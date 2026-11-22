@@ -48,7 +48,7 @@ NamingTask::svc ()
                        poa.in (),
                        ACE_DEFAULT_MAP_SIZE,
                        0,
-                       0,
+                       false,
                        0,
                        TAO_NAMING_BASE_ADDR,
                        0) == 0)

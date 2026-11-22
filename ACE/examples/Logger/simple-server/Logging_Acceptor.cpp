@@ -54,7 +54,7 @@ Logging_Acceptor::handle_input (ACE_HANDLE)
   if (this->peer_acceptor_.accept (svc_handler->peer (), // stream
                                    nullptr, // remote address
                                    nullptr, // timeout
-                                   1, // restart
+                                   true, // restart
                                    reset_new_handle  // reset new handler
                                    ) == -1
       || svc_handler->open () == -1)

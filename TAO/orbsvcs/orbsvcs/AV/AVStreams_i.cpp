@@ -3963,7 +3963,7 @@ TAO_FlowConnection::add_consumer (AVStreams::FlowConsumer_ptr consumer,
           flow_consumer->set_protocol_restriction (protocols);
           char * address =
             flow_consumer->go_to_listen (the_qos,
-                                         1,
+                                         true,
                                          flow_producer,
                                          this->fp_name_.inout ());
           CORBA::Boolean is_met;

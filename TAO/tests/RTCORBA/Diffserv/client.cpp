@@ -42,9 +42,9 @@ change_network_priority (bool const enable_network_priority,
       RTCORBA::TCPProtocolProperties_var const tcp_properties =
         rt_orb->create_tcp_protocol_properties (ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
                                                 ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
-                                                1,
-                                                0,
-                                                1,
+                                                true,
+                                                false,
+                                                true,
                                                 enable_network_priority);
 
       RTCORBA::ProtocolList protocols;

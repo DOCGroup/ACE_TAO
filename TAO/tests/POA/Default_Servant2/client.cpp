@@ -117,7 +117,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int const message_length = std::strlen (ACE_TEXT_ALWAYS_CHAR (options.message)) + 1;
       CORBA::Octet *buffer = File::Descriptor::DataBuffer::allocbuf (message_length);
       std::strcpy (reinterpret_cast<char *> (buffer), ACE_TEXT_ALWAYS_CHAR (options.message));
-      File::Descriptor::DataBuffer data_sent (message_length, message_length, buffer, 1);
+      File::Descriptor::DataBuffer data_sent (message_length,
+                                              message_length,
+                                              buffer,
+                                              true);
 
       // write the message to the file
       fd->write (data_sent);

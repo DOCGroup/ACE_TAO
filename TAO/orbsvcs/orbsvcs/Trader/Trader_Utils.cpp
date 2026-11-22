@@ -1452,7 +1452,7 @@ TAO_Offer_Filter::limits_applied ()
       temp[i++] = CORBA::string_dup (policy_name.in ());
     }
 
-  return new CosTrading::PolicyNameSeq (size, size, temp, 1);
+  return new CosTrading::PolicyNameSeq (size, size, temp, true);
 }
 
 TAO_Property_Filter::

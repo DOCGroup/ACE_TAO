@@ -61,9 +61,9 @@ ACE_TMAIN (int, ACE_TCHAR **argv)
   int const result = ACE_Service_Config::open (
       argv[0],
       ACE_DEFAULT_LOGGER_KEY,
-      1,  // ignore_static_svcs
-      1,  // ignore_default_svc_conf_file
-      0   // ignore_debug_flag
+      true,  // ignore_static_svcs
+      true,  // ignore_default_svc_conf_file
+      false  // ignore_debug_flag
     );
   if (result != 0)
     {

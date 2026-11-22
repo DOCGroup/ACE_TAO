@@ -124,7 +124,7 @@ TAO_Offer_Importer::perform_queries_with_policies (
         (char*) TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::HOST_NAME]
       };
 
-      CosTrading::PropertyNameSeq prop_name_seq (4, 4, props, 0);
+      CosTrading::PropertyNameSeq prop_name_seq (4, 4, props, false);
       desired_props.prop_names (prop_name_seq);
 
       for (int i = 0; i < TT_Info::NUM_QUERIES; ++i)

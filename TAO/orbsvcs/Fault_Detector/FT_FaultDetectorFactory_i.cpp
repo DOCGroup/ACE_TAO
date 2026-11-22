@@ -655,7 +655,7 @@ void TAO::FT_FaultDetectorFactory_i::delete_object (
 CORBA::Boolean TAO::FT_FaultDetectorFactory_i::is_alive ()
 {
   METHOD_RETURN(TAO::FT_FaultDetectorFactory_i::is_alive)
-    1;
+    true;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
