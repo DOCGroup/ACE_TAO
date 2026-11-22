@@ -378,7 +378,7 @@ ACE::ldname (const ACE_TCHAR *entry_point)
   ACE_TCHAR *new_name;
   ACE_NEW_RETURN (new_name,
                   ACE_TCHAR[size],
-                  0);
+                  nullptr);
 
   ACE_OS::strcpy (new_name, ACE_TEXT ("_"));
   ACE_OS::strcat (new_name, entry_point);

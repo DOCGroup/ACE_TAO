@@ -180,7 +180,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 #   if defined (ACE_USES_ASM_SYMBOL_IN_DLSYM)
   int const l = std::strlen (symbolname) + 2;
   char *asm_symbolname {};
-  ACE_NEW_RETURN (asm_symbolname, char[l], 0);
+  ACE_NEW_RETURN (asm_symbolname, char[l], nullptr);
   std::strcpy (asm_symbolname, "_");
   std::strcpy (asm_symbolname + 1, symbolname);
   void *ace_result;

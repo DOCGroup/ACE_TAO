@@ -665,7 +665,7 @@ ACE_Function_Node::make_func_name (ACE_TCHAR const * func_name)
       ACE_TCHAR * mangled_func_name;
       ACE_NEW_RETURN (mangled_func_name,
                       ACE_TCHAR[len],
-                      0);
+                      nullptr);
 
       std::unique_ptr<ACE_TCHAR[]> safe (mangled_func_name);
 
