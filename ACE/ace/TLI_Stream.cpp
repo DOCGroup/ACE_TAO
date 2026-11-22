@@ -38,9 +38,13 @@ ACE_TLI_Stream::get_remote_addr (ACE_Addr &sa) const
   name.buf = static_cast<char *> (sa.get_addr ());
 
   if (ACE_OS::t_getname (this->get_handle (), &name, REMOTENAME) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 // Send a release and then await the release from the other side.
@@ -52,16 +56,22 @@ ACE_TLI_Stream::active_close ()
   char buf;
 
   if (this->sndrel () == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (this->recv (&buf, sizeof buf) == -1)
     {
       if (t_errno == TLOOK && this->look () == T_ORDREL)
         {
           if (this->rcvrel () == -1)
-            return -1;
+            {
+              return -1;
+            }
         }
       else
-        return -1;
+        {
+          return -1;
+        }
     }
 
   return this->close ();
@@ -76,9 +86,13 @@ ACE_TLI_Stream::passive_close ()
   ACE_TRACE ("ACE_TLI_Stream::passive_close");
 
   if (this->rcvrel () == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (this->sndrel () == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   return this->close ();
 }
@@ -94,10 +108,14 @@ ACE_TLI_Stream::close ()
 
 #if !defined (ACE_WIN32)
   if (this->rwflag_)
-    return ACE_OS::close (fd);
+    {
+      return ACE_OS::close (fd);
+    }
   else
 #endif /* ACE_WIN32 */
-    return ACE_OS::t_close (fd);
+    {
+      return ACE_OS::t_close (fd);
+    }
 }
 
 ssize_t
