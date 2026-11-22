@@ -333,7 +333,16 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
   // a file decriptor set
   ACE_Handle_Set handle_set;
   // add the acceptor socket to the file descriptor set.
-  handle_set.set_bit(acceptor_socket.get_handle());
+  ACE_HANDLE const acceptor_handle = acceptor_socket.get_handle ();
+#if !defined (ACE_WIN32)
+  if (acceptor_handle < 0 || acceptor_handle >= ACE_FD_SETSIZE)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("acceptor handle exceeds FD_SETSIZE\n")),
+                        1);
+    }
+#endif /* ! ACE_WIN32 */
+  handle_set.set_bit (acceptor_handle);
 
   for (;;){
     ACE_Time_Value timeout(ACE_DEFAULT_TIMEOUT);
@@ -344,7 +353,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
     // services. So select was needed to wait on both sockets
     // simultaneously. In this test we could just call accept on the
     // one socket.
-    int result = ACE_OS::select((int) (acceptor_socket.get_handle()) +1,
+    int select_width = 0;
+#if !defined (ACE_WIN32)
+    select_width = acceptor_handle + 1;
+#endif /* ! ACE_WIN32 */
+    int result = ACE_OS::select (select_width,
                                 temp.fdset (),
                                 0,
                                 0,

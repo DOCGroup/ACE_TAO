@@ -952,14 +952,23 @@ Svc_Handler::wait_for_completion(Direction direction)
   ACE_SOCK_Stream &new_stream = this->peer ();
 
   ACE_Handle_Set handle_set;
-  handle_set.set_bit (new_stream.get_handle ());
+  ACE_HANDLE const handle = new_stream.get_handle ();
+#if !defined (ACE_WIN32)
+  if (handle < 0 || handle >= ACE_FD_SETSIZE)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) stream handle exceeds FD_SETSIZE\n")));
+      return false;
+    }
+#endif /* ! ACE_WIN32 */
+  handle_set.set_bit (handle);
 
   // Since we're in non-blocking mode we need to use <select> to
   // avoid busy waiting.
 #if defined (ACE_WIN64)
   int select_width = 0;
 #else
-  int select_width = int (new_stream.get_handle ()) + 1;
+  int select_width = int (handle) + 1;
 #endif /* ACE_WIN64 */
 
   int result =

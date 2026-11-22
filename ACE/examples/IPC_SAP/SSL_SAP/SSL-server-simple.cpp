@@ -290,13 +290,25 @@ run_event_loop (u_short port)
               twoway_server_addr.get_port_number (),
               oneway_server_addr.get_port_number ()));
 
+  ACE_HANDLE const twoway_handle = twoway_acceptor.get_handle ();
+  ACE_HANDLE const oneway_handle = oneway_acceptor.get_handle ();
+#if !defined (ACE_WIN32)
+  if (twoway_handle < 0 || twoway_handle >= ACE_FD_SETSIZE ||
+      oneway_handle < 0 || oneway_handle >= ACE_FD_SETSIZE)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("acceptor handle exceeds FD_SETSIZE\n")),
+                        1);
+    }
+#endif /* ! ACE_WIN32 */
+
   // Keep these objects out here to prevent excessive constructor
   // calls within the loop.
   ACE_SSL_SOCK_Stream new_stream;
 
   ACE_Handle_Set handle_set;
-  handle_set.set_bit (twoway_acceptor.get_handle ());
-  handle_set.set_bit (oneway_acceptor.get_handle ());
+  handle_set.set_bit (twoway_handle);
+  handle_set.set_bit (oneway_handle);
 
   // Performs the iterative server activities.
 
@@ -307,10 +319,10 @@ run_event_loop (u_short port)
 
       int maxfd = 0;
 #if !defined (ACE_WIN32)
-      maxfd = oneway_acceptor.get_handle ();
-      if (maxfd < twoway_acceptor.get_handle ())
+      maxfd = oneway_handle;
+      if (maxfd < twoway_handle)
         {
-          maxfd = twoway_acceptor.get_handle ();
+          maxfd = twoway_handle;
         }
 #  endif /* ACE_WIN32 */
       int result = ACE_OS::select (maxfd + 1,

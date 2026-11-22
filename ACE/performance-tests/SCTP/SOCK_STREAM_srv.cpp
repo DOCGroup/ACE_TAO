@@ -364,7 +364,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
     // services. So select was needed to wait on both sockets
     // simultaneously. In this test we could just call accept on the
     // one socket.
-    int result = ACE_OS::select(ACE_Utils::truncate_cast<int> (static_cast<intptr_t> (acceptor_handle)) + 1,
+    int select_width {};
+#if !defined (ACE_WIN32)
+    select_width = acceptor_handle + 1;
+#endif /* ! ACE_WIN32 */
+    int result = ACE_OS::select (select_width,
                                 temp.fdset (),
                                 0,
                                 0,
