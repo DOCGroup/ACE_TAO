@@ -20,12 +20,11 @@
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int n = 1024;
-
   try
     {
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
+      int n = 1024;
       ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("dn:"));
       int opt;
 

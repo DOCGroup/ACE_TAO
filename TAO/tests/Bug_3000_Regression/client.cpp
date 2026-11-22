@@ -41,7 +41,6 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-  bool shutdown_server {};
   try
     {
       CORBA::ORB_var const orb =
@@ -89,6 +88,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       }
 
+      bool shutdown_server {};
       if (parse_args (argc, argv, ior, shutdown_server) != 0)
       {
         return 1;

@@ -59,7 +59,6 @@ test_colocal (Collocated_ForwardRequestTest::test_ptr const server)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  bool direct_collocation {};
   try
     {
       Server_ORBInitializer *temp_initializer {};
@@ -73,6 +72,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::ORB_var const orb {CORBA::ORB_init (argc, argv, "Server ORB")};
 
+      bool direct_collocation {};
       if (::parse_args (argc, argv, direct_collocation) != 0)
       {
         return -1;

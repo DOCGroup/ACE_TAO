@@ -104,13 +104,12 @@ ServerServant::DeleteExtra (ServerSequence const &seq)
               "(%P|%t) Deleting %u sequences\n",
               seq.length ()));
 
-  PortableServer::ObjectId_var oid;
-  PortableServer::ServantBase *servant {};
-
   for (CORBA::ULong count {}; count < seq.length (); ++count)
     {
-      oid = this->root_poa_->reference_to_id (seq[count]);
-      servant = this->root_poa_->reference_to_servant (seq[count]);
+      PortableServer::ObjectId_var oid =
+        this->root_poa_->reference_to_id (seq[count]);
+      PortableServer::ServantBase *servant =
+        this->root_poa_->reference_to_servant (seq[count]);
       this->root_poa_->deactivate_object (oid.in ());
       servant->_remove_ref ();
       servant->_remove_ref ();

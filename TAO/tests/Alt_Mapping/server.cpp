@@ -47,7 +47,6 @@ int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   PortableServer::POA_var oa_ptr;
-  Alt_Mapping_i *svnt {};
 
   try
     {
@@ -81,6 +80,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // adapter
 
       // Create the implementation object
+      Alt_Mapping_i *svnt {};
       ACE_NEW_RETURN (svnt,
                       Alt_Mapping_i (orb_ptr.in ()),
                      -1);

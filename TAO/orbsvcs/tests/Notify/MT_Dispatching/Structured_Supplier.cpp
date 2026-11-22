@@ -200,7 +200,6 @@ disconnect_suppliers (Suppliers const& suppliers, unsigned int supplier_count)
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   sig_i* sig_impl {};
-  Suppliers suppliers {};
   try
   {
     Supplier_Client client;
@@ -239,6 +238,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CosNotifyChannelAdmin::SupplierAdmin_var admin =
       create_supplieradmin (ec.in ());
     ACE_ASSERT (!CORBA::is_nil (admin.in ()));
+    Suppliers suppliers {};
     create_suppliers (admin.in (), client, client.options ().supplier_count, suppliers);
 
     sig_impl->wait_for_startup ();

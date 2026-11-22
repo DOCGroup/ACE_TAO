@@ -32,11 +32,11 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-  int message_size {};
   try
     {
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
+      int message_size {};
       if (parse_args (argc, argv, ior, message_size) != 0)
       {
         return 1;

@@ -71,9 +71,9 @@ parse_args (int argc, ACE_TCHAR *argv[], std::basic_string<ACE_TCHAR> &ior_outpu
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  std::basic_string<ACE_TCHAR> ior_output_file;
   try
     {
+      std::basic_string<ACE_TCHAR> ior_output_file;
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var const poa_object = orb->resolve_initial_references ("RootPOA");

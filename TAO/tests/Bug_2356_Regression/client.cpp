@@ -111,7 +111,6 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-  bool debug {};
   try
     {
       CORBA::ORB_var const orb =
@@ -128,6 +127,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       poa_manager_var->activate ();
 
+      bool debug {};
       if (parse_args (argc, argv, ior, debug) != 0)
       {
         return 1;

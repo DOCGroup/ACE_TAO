@@ -127,7 +127,6 @@ disconnect_consumers (Consumers const& consumers, unsigned int consumer_count)
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int status {};
-  Consumers consumers {};
   try
   {
     Consumer_Client client;
@@ -157,6 +156,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (!CORBA::is_nil (admin.in ()))
       {
+        Consumers consumers {};
         create_consumers (admin.in (), client, client.options (), consumers);
 
         // Tell the supplier to go

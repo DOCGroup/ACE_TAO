@@ -64,7 +64,6 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
-  int nthreads {4};
   try
     {
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
@@ -84,6 +83,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
 
+      int nthreads {4};
       if (parse_args (argc, argv, ior_output_file, nthreads) != 0)
       {
         return 1;

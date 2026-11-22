@@ -84,13 +84,13 @@ send_echo (TO_TYPE ctype, CORBA::ORB_ptr orb,
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-  int min_timeout {};
-  int max_timeout {20};
   try
     {
       CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
+      int min_timeout {};
+      int max_timeout {20};
       if (parse_args (argc, argv, ior, min_timeout, max_timeout) != 0)
       {
         return 1;

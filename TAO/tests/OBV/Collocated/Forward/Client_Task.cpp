@@ -189,13 +189,13 @@ Client_Task::is_equal_tree (TreeController *tree1, TreeController *tree2)
 bool
 Client_Task::is_equal_node (BaseNode *node1, BaseNode *node2)
 {
-  bool ret_val {};
   if (node1 == nullptr && node2 == nullptr)
   {
     return true;
   }
   if (node1 != nullptr && node2 != nullptr)
     {
+      bool ret_val {};
       StringNode * const sn1 = StringNode::_downcast (node1);
       StringNode * const sn2 = StringNode::_downcast (node2);
       if (sn1 && sn2)

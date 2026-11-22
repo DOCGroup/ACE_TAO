@@ -43,7 +43,6 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_TCHAR const *ior_output_file {};
   try
     {
       CORBA::ORB_var const orb =
@@ -65,6 +64,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
+      ACE_TCHAR const *ior_output_file {};
       if (parse_args (argc, argv, ior_output_file) != 0)
       {
         return 1;

@@ -91,8 +91,6 @@ read_ior (ACE_TCHAR const *file_name, std::string &ior)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_TCHAR const *ior_output_file {};
-  ACE_TCHAR const *ior_input_file {};
   ACE_DEBUG ((LM_DEBUG,
               "Middle (%P|%t) started\n"));
 
@@ -102,6 +100,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc,
                          argv);
 
+      ACE_TCHAR const *ior_output_file {};
+      ACE_TCHAR const *ior_input_file {};
       if (!parse_args (argc, argv, ior_output_file, ior_input_file))
         {
           return -1;

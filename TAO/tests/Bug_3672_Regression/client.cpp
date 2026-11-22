@@ -164,13 +164,13 @@ int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://test.ior")};
-  int nthreads {1};
   int niterations {1};
   Client_State state;
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
+      int nthreads {1};
       if (parse_args (argc, argv, ior, nthreads, niterations, state.debug) != 0)
       {
         return 1;

@@ -39,12 +39,12 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
   ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
   ACE_TCHAR const *loop_forever_ior = ACE_TEXT ("file://forward_forever.ior");
-  bool shutdown_only {};
   try
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - ORB_init()\n"));
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
+      bool shutdown_only {};
       if (parse_args (argc, argv, ior, loop_forever_ior, shutdown_only) != 0)
       {
         return 1;

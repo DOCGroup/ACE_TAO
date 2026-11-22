@@ -35,12 +35,12 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&proxy_ior,
 int
 ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
-  ACE_TCHAR const *proxy_ior {};
-  ACE_TCHAR const *control_ior {};
   try
     {
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
+      ACE_TCHAR const *proxy_ior {};
+      ACE_TCHAR const *control_ior {};
       if (parse_args (argc, argv, proxy_ior, control_ior) == -1)
       {
         return -1;

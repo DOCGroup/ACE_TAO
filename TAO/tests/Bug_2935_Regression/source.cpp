@@ -73,7 +73,6 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result {};
-  ACE_TCHAR const *ior_input_file {};
   ACE_DEBUG ((LM_DEBUG,
               "Source (%P|%t) started\n"));
   try
@@ -83,6 +82,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       // Initialize options based on command-line arguments.
+      ACE_TCHAR const *ior_input_file {};
       if (!parse_args (argc, argv, ior_input_file))
         {
           return -1;

@@ -148,10 +148,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_TCHAR const *ior1 = ACE_TEXT ("file://server1.ior");
   ACE_TCHAR const *ior2 = ACE_TEXT ("file://server2.ior");
-  int debug_level {};
 
   try
     {
+      int debug_level {};
       if (parse_args (argc, argv, ior1, ior2, debug_level) != 0)
       {
         return 1;

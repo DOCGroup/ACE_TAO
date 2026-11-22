@@ -268,9 +268,6 @@ child_poa_testing (PortableServer::POA_ptr root_poa,
   std::vector<CORBA::Object_var> objects (options.iterations);
   std::vector<PortableServer::ObjectId_var> object_ids (options.iterations);
 
-  // Buffer for the id string.
-  char id_buffer[128] {};
-
   {
     // Record and quantify stats.
     stats s (QUANTIFY_CREATE_REFERENCE_WITH_ID,
@@ -280,6 +277,8 @@ child_poa_testing (PortableServer::POA_ptr root_poa,
 
     for (u_long i = 0; i < options.iterations; ++i)
       {
+        // Buffer for the id string.
+        char id_buffer[128] {};
         std::snprintf (id_buffer, sizeof (id_buffer), "%lu", i);
 
         object_ids[i] =

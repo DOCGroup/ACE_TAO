@@ -34,7 +34,6 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_TCHAR const *ior_output_file {};
   try
     {
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
@@ -82,6 +81,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
+      ACE_TCHAR const *ior_output_file {};
       if (parse_args (argc, argv, ior_output_file) != 0)
       {
         return 1;

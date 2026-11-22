@@ -32,8 +32,6 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&control_ior,
 int
 ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
-  ACE_TCHAR const *control_ior {};
-  ACE_TCHAR const *proxy_ior {};
   try
     {
       Manager manager;
@@ -41,6 +39,8 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       // Initilaize the ORB, POA etc.
       manager.init (argc, argv);
 
+      ACE_TCHAR const *control_ior {};
+      ACE_TCHAR const *proxy_ior {};
       if (parse_args (argc, argv, control_ior, proxy_ior) == -1)
       {
         return -1;
