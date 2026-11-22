@@ -126,9 +126,13 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
   //callptr->addr.buf = (char *) remote_sap.get_addr ();
 
   if (udata != 0)
-    ACE_OS::memcpy (&callptr->udata, udata, sizeof *udata);
+    {
+      ACE_OS::memcpy (&callptr->udata, udata, sizeof *udata);
+    }
   if (opt != 0)
-    ACE_OS::memcpy (&callptr->opt, opt, sizeof *opt);
+    {
+      ACE_OS::memcpy (&callptr->opt, opt, sizeof *opt);
+    }
 
   // Connect to remote endpoint.
 #if defined (ACE_HAS_FORE_ATM_XTI)
@@ -152,17 +156,25 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
           if (t_errno == TNODATA)
             {
               if (*timeout == ACE_Time_Value::zero)
-                errno = EWOULDBLOCK;
+                {
+                  errno = EWOULDBLOCK;
+                }
               else
-                result = this->complete (new_stream, 0, timeout);
+                {
+                  result = this->complete (new_stream, 0, timeout);
+                }
             }
           else if (t_errno == TLOOK && new_stream.look () == T_DISCONNECT)
-            new_stream.rcvdis ();
+            {
+              new_stream.rcvdis ();
+            }
         }
     }
   // Do a blocking connect to the server.
   else if (ACE_OS::t_connect (new_stream.get_handle (), callptr, 0) == -1)
-    result = -1;
+    {
+      result = -1;
+    }
 
   if (result != -1)
     {
@@ -182,7 +194,9 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
     }
 
   if (ACE_OS::t_free (reinterpret_cast<char *> (callptr), T_CALL) == -1)
-    return -1;
+    {
+      return -1;
+    }
   return result;
 }
 
@@ -198,12 +212,18 @@ ACE_TLI_Connector::complete (ACE_TLI_Stream &new_stream,
    if (WaitForSingleObject (new_stream.get_handle(), tv->msec()) == WAIT_OBJECT_0)
     {
       if (ACE_OS::t_look (new_stream.get_handle()) == T_CONNECT)
-        return t_rcvconnect (new_stream.get_handle(), 0);
+        {
+          return t_rcvconnect (new_stream.get_handle(), 0);
+        }
       else
-        return -1;
+        {
+          return -1;
+        }
     }
   else
-    return -1;
+    {
+      return -1;
+    }
 #else
   ACE_HANDLE h = ACE::handle_timed_complete (new_stream.get_handle (),
                                              tv,
