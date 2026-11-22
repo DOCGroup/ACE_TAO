@@ -224,24 +224,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Create a few MyResult objects and post them to Proactor.
   const size_t NrCompletions (10);
   My_Result *result_objects [NrCompletions];
-  int signal_number = ACE_SIGRTMAX;
-  size_t ri = 0;
 
   Completions_To_Go = NrCompletions;
 
   // Creation.
-  for (ri = 0; ri < NrCompletions; ++ri)
+  for (size_t ri = 0; ri < NrCompletions; ++ri)
     {
       // Use RTMIN and RTMAX proactor alternatively, to post
       // completions.
-      if (ri % 2)
-        {
-          signal_number = ACE_SIGRTMIN;
-        }
-      else
-      {
-        signal_number = ACE_SIGRTMAX;
-      }
+      int const signal_number = ri % 2 ? ACE_SIGRTMIN : ACE_SIGRTMAX;
       // Create the result.
       ACE_NEW_RETURN (result_objects [ri],
                       My_Result (handler,
@@ -253,7 +244,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_OS::sleep(5);
   // Post all the result objects.
   ACE_Proactor *proactor;
-  for (ri = 0; ri < NrCompletions; ++ri)
+  for (size_t ri = 0; ri < NrCompletions; ++ri)
     {
       // Use RTMIN and RTMAX Proactor alternatively, to post
       // completions.
