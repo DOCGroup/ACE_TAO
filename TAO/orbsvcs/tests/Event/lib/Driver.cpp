@@ -331,7 +331,9 @@ EC_Driver::deactivate_ec ()
 {
 #if !defined(EC_DISABLE_REMOTE_EC)
   if (this->use_remote_ec_ == 1)
-    return;
+    {
+      return;
+    }
 #endif
 
   {

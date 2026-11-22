@@ -145,11 +145,13 @@ FilterClient::wait_ready ()
       = ec_->get_all_supplieradmins ();
 
     if (cons_ids->length () + sup_ids->length () == 3)
-      break;
+      {
+        break;
+      }
     else
-    {
-      ACE_OS::sleep (1);
-    }
+      {
+        ACE_OS::sleep (1);
+      }
   }
 }
 

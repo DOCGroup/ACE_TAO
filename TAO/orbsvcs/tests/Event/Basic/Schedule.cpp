@@ -21,7 +21,9 @@ int
 EC_Schedule::parse_args (int& argc, ACE_TCHAR* argv[])
 {
   if (this->EC_Driver::parse_args (argc, argv) != 0)
-    return -1;
+    {
+      return -1;
+    }
 
   return 0;
 }
