@@ -192,8 +192,6 @@ public class MultiDoubleVisComp extends Canvas implements VisComp
 
   public void update (Graphics g)
   {
-    int x1, y1, x2, y2;
-    float tmp, value_1, value_2;
     Dimension d = getSize ();
     FontMetrics fm = g.getFontMetrics ();
     int fheight = fm.getHeight ();
@@ -224,23 +222,23 @@ public class MultiDoubleVisComp extends Canvas implements VisComp
       {
         local_max_ [i] = 0;
         Enumeration queue_iter = plots_ [i].forward_iterator ();
-        value_1 = ((Float) queue_iter.nextElement ()).floatValue ();
-        x1 = d.width - 8;
+        float value_1 = ((Float) queue_iter.nextElement ()).floatValue ();
+        int x1 = d.width - 8;
         while (queue_iter.hasMoreElements ())
           {
-	    value_2 = ((Float) queue_iter.nextElement ()).floatValue ();
+	    float value_2 = ((Float) queue_iter.nextElement ()).floatValue ();
 
 	    if (value_1 > local_max_ [i])
 	      local_max_ [i] = value_1;
 
-            y1 = normalize (offscreensize_.height - fheight, value_1, i);
-            y2 = normalize (offscreensize_.height - fheight, value_2, i);
+            int y1 = normalize (offscreensize_.height - fheight, value_1, i);
+            int y2 = normalize (offscreensize_.height - fheight, value_2, i);
 
-	    tmp = value_2;
+	    float tmp = value_2;
 	    value_2 = value_1;
 	    value_1 = tmp;
 
-            x2 = x1 - spacing_;
+            int x2 = x1 - spacing_;
             offgraphics_.drawLine (x1, y1, x2, y2);
             x1 = x2;
 	    if (x1 <= 5)

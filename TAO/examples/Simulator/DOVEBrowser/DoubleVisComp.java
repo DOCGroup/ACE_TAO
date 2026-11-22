@@ -141,10 +141,11 @@ public class DoubleVisComp extends Canvas implements VisComp
   public void update(Graphics g)
   {
     Dimension d = getSize ();
-    float tmp, value_1, value_2;
+    float value_1;
     FontMetrics fm = g.getFontMetrics ();
     Enumeration queue_iter = plot_.forward_iterator();
-    int x1 = d.width - 8, y1, x2, y2, fheight = fm.getHeight (), i;
+    int x1 = d.width - 8;
+    int fheight = fm.getHeight ();
     String value =  "Value (of " + max_value_ + "): " + String.valueOf(plot_.head());
 
     if ((offscreen_ == null) ||
@@ -173,19 +174,19 @@ public class DoubleVisComp extends Canvas implements VisComp
     value_1 = ((Float)queue_iter.nextElement()).floatValue();
     while (queue_iter.hasMoreElements())
       {
-	value_2 = ((Float)queue_iter.nextElement()).floatValue();
+        float value_2 = ((Float)queue_iter.nextElement()).floatValue();
 
 	if (value_1 > local_max_)
 	  local_max_ = value_1;
 
-        y1 = normalize(offscreensize_.height - fheight, value_1);
-        y2 = normalize(offscreensize_.height - fheight, value_2);
+        int y1 = normalize(offscreensize_.height - fheight, value_1);
+        int y2 = normalize(offscreensize_.height - fheight, value_2);
 
-	tmp = value_2;
+	float tmp = value_2;
 	value_2 = value_1;
 	value_1 = tmp;
 
-        x2 = x1 - spacing_;
+        int x2 = x1 - spacing_;
         offgraphics_.drawLine(x1, y1, x2, y2);
         x1 = x2;
 	if (x1 <= 5)
