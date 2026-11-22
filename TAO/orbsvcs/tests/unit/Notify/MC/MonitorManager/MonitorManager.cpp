@@ -25,7 +25,7 @@ ACE_TMAIN (int, ACE_TCHAR* argv[])
         }
 
       ACE_Service_Object* obj =
-        (ACE_Service_Object*) st->type ()->object ();
+        static_cast<ACE_Service_Object*> (st->type ()->object ());
       obj->resume ();
 
       // Wait for an external entity to stop it.
