@@ -46,23 +46,27 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   int c {};
 
   while ((c = get_opt ()) != -1)
-    switch (c)
-      {
-      case 'g':
-        test_type = TEST_GUARD;
-        test_function = guard;
-        break;
-      case 'n':
-        iterations = ACE_OS::atoi (get_opt.opt_arg ());
-        if (iterations <= 0)
+    {
+      switch (c)
+        {
+        case 'g':
+          test_type = TEST_GUARD;
+          test_function = guard;
+          break;
+        case 'n':
+          iterations = ACE_OS::atoi (get_opt.opt_arg ());
+          if (iterations <= 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Iterations must be greater than 0\n"),
+                                1);
+            }
+          break;
+        default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Iterations must be greater than 0\n"),
-                            1);
-        break;
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Invalid option\n"), -1);
-      }
+                             "Invalid option\n"), -1);
+        }
+    }
 
   ACE_DEBUG ((LM_DEBUG, "%s for iterations = %d\n", test_name[test_type], iterations));
 
@@ -72,7 +76,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // binding).
 
   for (int i {}; i < iterations; ++i)
-    test_function ();
+    {
+      test_function ();
+    }
 
   timer.stop ();
 

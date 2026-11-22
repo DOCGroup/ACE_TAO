@@ -197,7 +197,9 @@ Inline_Call_Test::run ()
   this->start_timing ();
 
   for (u_int i = 0; i < iterations; ++i)
-    inline_func ();
+    {
+      inline_func ();
+    }
 
   this->stop_timing ();
 }
@@ -231,7 +233,9 @@ Noninline_Call_Test::run ()
   this->start_timing ();
 
   for (u_int i = 0; i < iterations; ++i)
-    func ();
+    {
+      func ();
+    }
 
   this->stop_timing ();
 }
@@ -449,11 +453,13 @@ Virtual_Member_Call_Test::run ()
   std::unique_ptr<Foo_v> fv;
 
   if (iterations < 2)
-    fv = std::make_unique<Foo_v> ();
+    {
+      fv = std::make_unique<Foo_v> ();
+    }
   else
-  {
-    fv = std::make_unique<Foo_d_v> ();
-  }
+    {
+      fv = std::make_unique<Foo_d_v> ();
+    }
 
   this->start_timing ();
 
