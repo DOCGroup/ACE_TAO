@@ -366,7 +366,7 @@ dev_poll_reactor_factory ()
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Creating ACE_Dev_Poll_Reactor.\n")));
 
-  return std::unique_ptr<ACE_Reactor_Impl> (new ACE_Dev_Poll_Reactor);
+  return std::make_unique<ACE_Dev_Poll_Reactor> ();
 }
 
 // ------------------------------------------------------------

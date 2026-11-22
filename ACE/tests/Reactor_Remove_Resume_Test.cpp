@@ -363,7 +363,7 @@ tp_reactor_factory ()
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Creating ACE_TP_Reactor.\n")));
 
-  return std::unique_ptr<ACE_Reactor_Impl> (new ACE_TP_Reactor);
+  return std::make_unique<ACE_TP_Reactor> ();
 }
 
 // ------------------------------------------------------------
