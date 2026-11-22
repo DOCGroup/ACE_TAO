@@ -98,7 +98,9 @@ t_free (char *ptr, int struct_type)
 {
 #if defined (ACE_HAS_TLI)
   if (!ptr)
-    return 0;
+    {
+      return 0;
+    }
   return ::t_free (ptr, struct_type);
 #else
   ACE_UNUSED_ARG (struct_type);
@@ -152,12 +154,18 @@ t_getname (ACE_HANDLE handle, struct netbuf *namep, int type)
       return -1;
     }
   if (t_getprotaddr (handle, &bound, &peer) == -1)
-    return -1;
+    {
+      return -1;
+    }
   // Call succeeded; put the caller's desired address length in his netbuf.
   if (type == LOCALNAME)
-    namep->len = bound.addr.len;
+    {
+      namep->len = bound.addr.len;
+    }
   else
-    namep->len = peer.addr.len;
+    {
+      namep->len = peer.addr.len;
+    }
   return 0;
 #else
   ACE_UNUSED_ARG (handle);

@@ -92,9 +92,13 @@ ACE_Token_Request::options (const ACE_Synch_Options &opt)
     {
       transfer_.usec_ = opt.timeout ().usec ();
       if (opt.timeout ().sec () > static_cast<time_t> (ACE_UINT32_MAX))
-        transfer_.sec_ = ACE_UINT32_MAX;
+        {
+          transfer_.sec_ = ACE_UINT32_MAX;
+        }
       else
-        transfer_.sec_ = static_cast<ACE_UINT32> (opt.timeout ().sec ());
+        {
+          transfer_.sec_ = static_cast<ACE_UINT32> (opt.timeout ().sec ());
+        }
     }
   else
     {

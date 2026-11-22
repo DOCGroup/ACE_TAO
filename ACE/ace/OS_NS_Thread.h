@@ -319,7 +319,9 @@ public:
           {
             // Use a slot from an already finished thread.
             if (first_slot == ACE_MAX_NUM_THREADS)
-              first_slot = i;
+              {
+                first_slot = i;
+              }
           }
         else if (ti.id == id)
           {
