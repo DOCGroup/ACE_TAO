@@ -102,7 +102,7 @@ connector (void *)
 static void *
 acceptor (void *args)
 {
-  ACE_UPIPE_Acceptor *acceptor = (ACE_UPIPE_Acceptor *) args;
+  ACE_UPIPE_Acceptor *acceptor = static_cast<ACE_UPIPE_Acceptor *> (args);
   ACE_UPIPE_Stream s_stream;
 
   if (acceptor->accept (s_stream) == -1)
