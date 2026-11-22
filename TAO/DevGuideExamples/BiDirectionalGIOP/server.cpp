@@ -21,20 +21,22 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
   int option;
 
   while ((option = get_opts ()) != -1)
-    switch (option)
-      {
-      case 'o':
-        options.ior_output_file = get_opts.opt_arg ();
-        break;
-      case 'i':
-        options.callback_count = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-      case '?':
-      default:
-        std::cerr << "usage: " << argv[0]
-                  << " -o <iorfile> -i <no_iterations>" << std::endl;
-        return -1;
-      }
+    {
+      switch (option)
+        {
+        case 'o':
+          options.ior_output_file = get_opts.opt_arg ();
+          break;
+        case 'i':
+          options.callback_count = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
+        case '?':
+        default:
+          std::cerr << "usage: " << argv[0]
+                    << " -o <iorfile> -i <no_iterations>" << std::endl;
+          return -1;
+        }
+    }
   return 0;
 }
 

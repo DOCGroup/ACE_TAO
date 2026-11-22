@@ -20,17 +20,19 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
   int option;
 
   while ((option = get_opts ()) != -1)
-    switch (option)
-      {
-      case 'k':
-        options.ior = get_opts.opt_arg ();
-        break;
+    {
+      switch (option)
+        {
+        case 'k':
+          options.ior = get_opts.opt_arg ();
+          break;
 
-      case '?':
-      default:
-        std::cerr << "usage: " << argv[0] << " -k <ior>" << std::endl;
-        return -1;
-      }
+        case '?':
+        default:
+          std::cerr << "usage: " << argv[0] << " -k <ior>" << std::endl;
+          return -1;
+        }
+    }
   return 0;
 }
 
