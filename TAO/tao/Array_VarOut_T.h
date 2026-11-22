@@ -217,7 +217,7 @@ private:
   using THIS_OUT_TYPE = TAO_Array_Out_T<T, T_var, T_slice, TAG>;
   _slice_type *& ptr_;
 
-  // Assignment from T_var not allowed.
+  /// Assignment from T_var is not allowed.
   void operator= (_value_type const &);
 };
 

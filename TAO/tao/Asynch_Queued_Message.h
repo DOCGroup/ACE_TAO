@@ -115,7 +115,7 @@ private:
   /// The buffer containing the complete message.
   std::unique_ptr<char[]> buffer_;
 
-  // Expiration time
+  /// Expiration time.
   ACE_Time_Value abs_timeout_;
 };
 

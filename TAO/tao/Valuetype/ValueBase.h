@@ -145,13 +145,17 @@ namespace CORBA
 
     virtual CORBA::ValueBase* _copy_value () TAO_local_COPY_VALUE_IS_PURE;
 
-    // Reference counting.
+    /// @name Reference counting
+    /// @{
     virtual void _add_ref () = 0;
     virtual void _remove_ref () = 0;
     virtual CORBA::ULong _refcount_value () = 0;
+    /// @}
 
-    // dynamic casting
+    /// @name Dynamic casting
+    /// @{
     static CORBA::ValueBase* _downcast (CORBA::ValueBase *);
+    /// @}
 
     /// TAO extension
 

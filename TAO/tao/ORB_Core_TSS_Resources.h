@@ -71,8 +71,8 @@ public:
   /// Generic container for thread-specific objects.
   ACE_Array_Base<void *> ts_objects_;
 
-  // Set to true by the wait_on_lf_no_nested_upcall wait strategy
-  // @CJC@  maybe we should use allocate_tss_slot_id() instead?
+  /// Set to true by the wait_on_lf_no_nested_upcall wait strategy.
+  /// @todo Maybe we should use allocate_tss_slot_id() instead?
   bool upcalls_temporarily_suspended_on_this_thread_;
 
   /// Pointer to the ORB core.  Needed to get access to the TSS
