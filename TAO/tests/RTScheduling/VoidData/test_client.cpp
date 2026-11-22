@@ -26,9 +26,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           orb->shutdown ();
           orb->destroy ();
         }
-      catch (CORBA::Exception const & ex)
+      catch (CORBA::Exception const & shutdown_ex)
         {
-          ex._tao_print_exception ("Caught exception while shutting down:");
+          shutdown_ex._tao_print_exception ("Caught exception while shutting down:");
           return 1;
         }
       return 0;

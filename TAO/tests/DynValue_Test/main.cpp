@@ -1191,10 +1191,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "..%N:%l Creating dynamic any from truncted any (no truncation allowed)\n"));
       try
         {
-          DynamicAny::DynAny_var const dany_base (
+          DynamicAny::DynAny_var const dany_without_truncation (
             analyzer.DynAny_NoTrunc (myAny_trunc));
           ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED, obtained Dynamic any\n"));
-          analyzer.analyze (dany_base.in ());
+          analyzer.analyze (dany_without_truncation.in ());
           return 1;
         }
       catch (DynamicAny::MustTruncate const &)

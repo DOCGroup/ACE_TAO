@@ -240,15 +240,15 @@ Task::svc ()
            ++i)
         {
           // Select a priority in the middle of the band.
-          CORBA::Short const client_priority =
+          CORBA::Short const band_priority =
             (bands[i].low + bands[i].high) / 2;
 
           // Reset the current thread's priority.
-          current->the_priority (client_priority);
+          current->the_priority (band_priority);
 
           // Invoke test method on server.
           client_propagated_obj->test_method (true, // CLIENT_PROPAGATED
-                                              client_priority);
+                                              band_priority);
         }
 
       // Test: Attempt invocation with the same thread priority, but

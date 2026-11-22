@@ -94,11 +94,11 @@ change_network_priority (bool const enable_network_priority,
           // Change policy at OBJECT level
         case Priority_Level::OBJECT:
           {
-            CORBA::Object_var const object = server->_set_policy_overrides (
+            CORBA::Object_var const overridden_object = server->_set_policy_overrides (
               policy_list,
               CORBA::SET_OVERRIDE);
 
-            server = Test::_narrow (object.in ());
+            server = Test::_narrow (overridden_object.in ());
 
             break;
           }

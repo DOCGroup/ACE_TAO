@@ -94,7 +94,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Test::Oneway_Buffering_var oneway_buffering =
         Test::Oneway_Buffering::_narrow (object.in ());
 
-      CORBA::String_var ior =
+      CORBA::String_var buffering_ior =
         orb->object_to_string (oneway_buffering.in ());
 
       // If the ior_output_file exists, output the ior to it
@@ -106,7 +106,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                              ior_output_file),
                             1);
         }
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
+      ACE_OS::fprintf (output_file, "%s", buffering_ior.in ());
       ACE_OS::fclose (output_file);
 
       poa_manager->activate ();

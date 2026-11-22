@@ -132,10 +132,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       {
         CORBA::Object_var rawObject = orb_->string_to_object( serverior);
 
-        Test_Idl::SharedIntf_var intf_var =
+        Test_Idl::SharedIntf_var peer_intf =
         Test_Idl::SharedIntf::_narrow(rawObject.in());
 
-        if (CORBA::is_nil (intf_var.in ()))
+        if (CORBA::is_nil (peer_intf.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR, "Nil reference <%s>\n", serverior), -1);
         }
@@ -143,7 +143,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         // make call on server
         ACE_DEBUG((LM_INFO,"(%P|%t) farewell START for %s\n", serverior));
 
-        intf_var->farewell();
+        peer_intf->farewell();
 
         ACE_DEBUG((LM_INFO,"(%P|%t) farewell COMPLETE for %s\n", serverior));
       }

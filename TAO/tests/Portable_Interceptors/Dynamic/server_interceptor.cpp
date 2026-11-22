@@ -68,8 +68,8 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   catched_exception = false;
   try
     {
-      PortableInterceptor::ReplyStatus const tmdi = ri->reply_status ();
-      ACE_UNUSED_ARG(tmdi);
+      PortableInterceptor::ReplyStatus const reply_status = ri->reply_status ();
+      ACE_UNUSED_ARG(reply_status);
     }
   catch (::CORBA::BAD_INV_ORDER const& ex)
     {
@@ -191,8 +191,8 @@ Echo_Server_Request_Interceptor::receive_request (
   catched_exception = false;
   try
     {
-      PortableInterceptor::ReplyStatus const tmdi = ri->reply_status ();
-      ACE_UNUSED_ARG(tmdi);
+      PortableInterceptor::ReplyStatus const reply_status = ri->reply_status ();
+      ACE_UNUSED_ARG(reply_status);
     }
   catch (::CORBA::BAD_INV_ORDER const& ex)
     {
