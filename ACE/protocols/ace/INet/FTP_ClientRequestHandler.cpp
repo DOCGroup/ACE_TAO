@@ -18,16 +18,11 @@ namespace ACE
 {
   namespace FTP
   {
-    ClientRequestHandler::SessionHolder::SessionHolder ()
-      : session_ ()
-      {
-      }
+    ClientRequestHandler::SessionHolder::SessionHolder () = default;
 
     ClientRequestHandler::SessionHolder::~SessionHolder() = default;
 
-    ClientRequestHandler::SessionFactory::SessionFactory ()
-      {
-      }
+    ClientRequestHandler::SessionFactory::SessionFactory () = default;
 
     ClientRequestHandler::SessionFactory::~SessionFactory () = default;
 

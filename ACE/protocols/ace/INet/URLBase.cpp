@@ -239,8 +239,7 @@ namespace ACE
 
     URL_Base::TURLFactoryMap* URL_Base::factories_ {};
 
-    URL_Base::Factory::Factory ()
-      {}
+    URL_Base::Factory::Factory () = default;
 
     URL_Base::Factory::~Factory () = default;
 
