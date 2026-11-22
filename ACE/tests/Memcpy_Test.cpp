@@ -66,8 +66,8 @@ testit (int type)
 
   switch (type)
     {
-    case 0: smemcpy ((void*)buffer, (void*)" THIS IS A TEST", size); break;
-    case 1:  ACE_OS::memcpy ((void*)buffer, (void*)" THIS IS A TEST", size); break;
+    case 0: smemcpy (buffer, " THIS IS A TEST", size); break;
+    case 1:  ACE_OS::memcpy (buffer, " THIS IS A TEST", size); break;
     }
 
 }
