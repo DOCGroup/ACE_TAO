@@ -27,41 +27,29 @@ testCurrentORBInitializer (int argc, ACE_TCHAR *argv[])
 int
 testCurrentLoader (int, char *[])
 {
-  ACE_Service_Object *factory {};
-
-  factory = ACE_Dynamic_Service<ACE_Service_Object>::instance
+  ACE_Service_Object *factory = ACE_Dynamic_Service<ACE_Service_Object>::instance
     (ACE_TEXT ("TAO_Transport_Current_Loader"));
-
-  bool const done =
-#if defined (TAO_AS_STATIC_LIBS)
-    true;
-#else
-  (factory != nullptr);
-#endif /* TAO_AS_STATIC_LIBS */
 
   if (factory == nullptr)
     {
-      if (done)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Unable to instantiate TAO::Transport::Current_Factory\n")),
-                          -1);
-      else
-        {
 #if !defined (TAO_AS_STATIC_LIBS)
-          int ret = ACE_Service_Config::process_directive
-            (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
-               "TAO_Transport_Current_Loader",
-               "TAO_Transport_Current",
-               TAO_VERSION,
-               "_make_TAO_Transport_Current_Loader",
-               ""));
-          ACE_ASSERT (ret == 0);
+      int ret = ACE_Service_Config::process_directive
+        (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
+           "TAO_Transport_Current_Loader",
+           "TAO_Transport_Current",
+           TAO_VERSION,
+           "_make_TAO_Transport_Current_Loader",
+           ""));
+      ACE_ASSERT (ret == 0);
 
-          factory = ACE_Dynamic_Service<ACE_Service_Object>::instance
-            (ACE_TEXT ("TAO_Transport_Current_Loader"));
+      factory = ACE_Dynamic_Service<ACE_Service_Object>::instance
+        (ACE_TEXT ("TAO_Transport_Current_Loader"));
 
+#else
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Unable to instantiate TAO::Transport::Current_Factory\n")),
+                        -1);
 #endif /* !TAO_AS_STATIC_LIBS */
-        }
     }
 
   if (factory == nullptr)
