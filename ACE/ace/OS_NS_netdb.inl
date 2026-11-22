@@ -54,9 +54,9 @@ ACE_OS::gethostbyaddr (const char *addr, int length, int type)
   ACE_NOTSUP_RETURN (0);
 # else
 
-  if (0 == addr || '\0' == addr[0])
+  if (addr == nullptr || '\0' == addr[0])
     {
-      return 0;
+      return nullptr;
     }
 
 #   if defined (ACE_VXWORKS_HAS_GETHOSTBYADDR_REENTRANT)
@@ -109,9 +109,9 @@ ACE_OS::gethostbyaddr_r (const char *addr,
   ACE_NOTSUP_RETURN (0);
 # elif defined (ACE_HAS_REENTRANT_FUNCTIONS)
 
-  if (0 == addr || '\0' == addr[0])
+  if (addr == nullptr || '\0' == addr[0])
     {
-      return 0;
+      return nullptr;
     }
 
 #   if defined (__GLIBC__)
@@ -236,9 +236,9 @@ ACE_OS::gethostbyname (const char *name)
   ACE_NOTSUP_RETURN (0);
 # else
 
-  if (0 == name || '\0' == name[0])
+  if (name == nullptr || '\0' == name[0])
     {
-      return 0;
+      return nullptr;
     }
 
 #   if defined (ACE_VXWORKS_HAS_GETHOSTBYNAME_REENTRANT)
