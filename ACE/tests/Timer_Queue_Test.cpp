@@ -163,7 +163,7 @@ test_functionality (ACE_Timer_Queue *tq)
   tq->cancel (timer_id2, &timer_act);
   delete (int *) timer_act;
 
-  ACE_TEST_ASSERT (tq->is_empty () == 1);
+  ACE_TEST_ASSERT (tq->is_empty ());
   ACE_TEST_ASSERT (eh.close_count_ == 0);
 
   ACE_NEW (timer_act, int (1));
