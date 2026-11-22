@@ -26,18 +26,21 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Class TAO_RecursiveDef_OuterScopes is a support class for StructDef_i.h and
-// UnionDef_i.h files. It creates a stack of outer structure definitions, used
-// by TAO_StructDef_i::type_i(), and TAO_UnionDef_i::type_i() during nested
-// structure processing.
+/// Class TAO_RecursiveDef_OuterScopes is a support class for StructDef_i.h and
+/// UnionDef_i.h files. It creates a stack of outer structure definitions, used
+/// by TAO_StructDef_i::type_i(), and TAO_UnionDef_i::type_i() during nested
+/// structure processing.
 
 class TAO_RecursiveDef_OuterScopes
 {
 public:
-  explicit TAO_RecursiveDef_OuterScopes (ACE_TString const &id); // "Push" scope's ID
-  ~TAO_RecursiveDef_OuterScopes(); // "Pop" this scope
+  /// "Push" scope's ID.
+  explicit TAO_RecursiveDef_OuterScopes (ACE_TString const &id);
+  /// "Pop" this scope.
+  ~TAO_RecursiveDef_OuterScopes();
 
-  static bool SeenBefore (ACE_TString const &id); // Check for outer ID
+  /// Check for outer ID.
+  static bool SeenBefore (ACE_TString const &id);
 
   TAO_RecursiveDef_OuterScopes (TAO_RecursiveDef_OuterScopes const &) = delete;
   TAO_RecursiveDef_OuterScopes (TAO_RecursiveDef_OuterScopes &&) = delete;
