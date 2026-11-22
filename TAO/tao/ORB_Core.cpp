@@ -2310,7 +2310,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int perform_work)
   // We don't need to do this because we use the Reactor
   // mechanisms to shutdown in a thread-safe way.
 
-  while (this->has_shutdown () == false)
+  while (!this->has_shutdown ())
     {
       // Every time we perform an interaction we have to become the
       // leader again, because it is possible that a client has
@@ -2383,7 +2383,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int perform_work)
     }
 
   // wait only in the parent thread.
-  if (this->has_shutdown () == true &&
+  if (this->has_shutdown () &&
       (this->server_factory_->activate_server_connections () ||
        (this->tm_.task() == nullptr && this->tm_.count_threads() > 0) ) )
     {
@@ -2407,7 +2407,7 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion)
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
 
-    if (this->has_shutdown () == true)
+    if (this->has_shutdown ())
     {
       return;
     }

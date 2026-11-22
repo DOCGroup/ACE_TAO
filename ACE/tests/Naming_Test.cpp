@@ -237,7 +237,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 # if (defined (ACE_WIN32) && defined (ACE_USES_WCHAR))
   unicode = true;
 # endif /* ACE_WIN32 && ACE_USES_WCHAR */
-  if (unicode && name_options->use_registry () == 1)
+  if (unicode && name_options->use_registry ())
     {
       name_options->namespace_dir (ACE_TEXT ("Software\\ACE\\Name Service"));
       name_options->database (ACE_TEXT ("Version 1"));

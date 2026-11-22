@@ -525,7 +525,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
             // set to 0.
             H::read_array (is, idata, 10 * total);
 
-            if (is.good_bit () != 0)
+            if (is.good_bit ())
               {
                 ACE_ERROR ((LM_ERROR,
                             ACE_TEXT ("Test for good bit failed in %s Array_test\n"),
