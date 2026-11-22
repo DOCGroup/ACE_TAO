@@ -19,7 +19,10 @@ namespace ACE_RMCast
 
     /*int r (rand ());
 
-    if ((r % 3) == 0) return;
+    if ((r % 3) == 0)
+      {
+        return;
+      }
 
     Lock l (mutex_);
 

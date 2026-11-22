@@ -125,7 +125,9 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
       ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'normal'"));
     }
   else
-    prio[0] = ACE_TEXT ('\0');
+    {
+      prio[0] = ACE_TEXT ('\0');
+    }
 
   ACE_TCHAR pd [16];
   ACE_OS::snprintf (pd, 16, ACE_TEXT (" -p %d"), my_process_id);
@@ -351,7 +353,9 @@ run_main (int argc, ACE_TCHAR *argv[])
           ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'realtime'"));
         }
 #else
-      prio[0] = ACE_TEXT ('\0');
+      {
+        prio[0] = ACE_TEXT ('\0');
+      }
 #endif
       if (debug_test)
         {

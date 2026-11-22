@@ -174,7 +174,9 @@ void Get_MultiTask::wait_for_all ()
   ++n_open_urls_;
 
   if (n_open_urls_ == n_threads_)
-    signal_.broadcast (); // signal all threads that all urls are opened
+    {
+      signal_.broadcast (); // signal all threads that all urls are opened
+    }
   else
   {
     signal_.wait (); // wait for all urls to be opened

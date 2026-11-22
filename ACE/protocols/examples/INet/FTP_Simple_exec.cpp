@@ -209,7 +209,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
         {
           std::cout << "Saving to: ";
           if (!options.outfile.empty ())
-            std::cout << '\'' << options.outfile.c_str () << '\'' << std::endl;
+            {
+              std::cout << '\'' << options.outfile.c_str () << '\'' << std::endl;
+            }
           else
           {
             std::cout << "(stdout)" << std::endl;

@@ -150,10 +150,14 @@ Thermometer_impl::_remove_ref ()
     {
     ACE_GUARD (ACE_Mutex, ace_mon, m_count_mutex);
     if (--m_ref_count == 0)
-        del = true;
+        {
+            del = true;
+        }
     }
     if (del)
-    delete this;
+        {
+            delete this;
+        }
 }
 
 // IDL model attribute.
