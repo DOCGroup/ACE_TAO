@@ -207,7 +207,9 @@ ACE_Token_Manager::token_waiting_for (const ACE_TCHAR *client_id)
        iterator.advance ())
     {
       if (temp->int_id_->is_waiting_for (client_id))
-        return temp->int_id_;
+        {
+          return temp->int_id_;
+        }
     }
 
   // Nothing was found.

@@ -53,32 +53,46 @@ ACE_UTF16_Encoding_Converter::is_legal_utf8 (const ACE_Byte* source,
       // no fall-through in this inner switch
       case 0xE0:
         if (a < 0xA0)
-          return false;
+          {
+            return false;
+          }
         break;
       case 0xED:
         if (a > 0x9F)
-          return false;
+          {
+            return false;
+          }
         break;
       case 0xF0:
         if (a < 0x90)
-          return false;
+          {
+            return false;
+          }
         break;
       case 0xF4:
         if (a > 0x8F)
-          return false;
+          {
+            return false;
+          }
         break;
       default:
         if (a < 0x80)
-          return false;
+          {
+            return false;
+          }
     }
 
     case 1:
       if (*source >= 0x80 && *source < 0xC2)
-        return false;
+        {
+          return false;
+        }
     }
 
   if (*source > 0xF4)
-    return false;
+    {
+      return false;
+    }
 
   return true;
 }
