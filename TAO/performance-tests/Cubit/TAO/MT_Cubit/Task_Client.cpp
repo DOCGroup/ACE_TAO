@@ -727,7 +727,9 @@ Client::cube_octet ()
       START_QUANTIFY;
 
       if (this->ts_->use_utilization_test_ == 1 && this->ts_->remote_invocations_ == 0)
-        ret_octet = this->cubit_impl_.cube_octet (arg_octet);
+        {
+          ret_octet = this->cubit_impl_.cube_octet (arg_octet);
+        }
       else
       {
         ret_octet = this->cubit_->cube_octet (arg_octet);

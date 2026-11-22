@@ -12,7 +12,9 @@ namespace Demux_Test_Utils
     void operator() (FILE *file) const
     {
       if (file != nullptr)
-        ACE_OS::fclose (file);
+        {
+          ACE_OS::fclose (file);
+        }
     }
   };
 
