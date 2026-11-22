@@ -90,7 +90,7 @@ TAO_Offer_Importer::perform_directed_queries ()
               trader_name[0] = CORBA::string_dup (link_name_seq[0u]);
               trader_name[1] = CORBA::string_dup (link_name_seq2[i]);
               policies.starting_trader (new CosTrading::TraderName
-                                        (2, 2, trader_name, 1));
+                                        (2, 2, trader_name, true));
 
               this->perform_queries_with_policies (policies);
             }

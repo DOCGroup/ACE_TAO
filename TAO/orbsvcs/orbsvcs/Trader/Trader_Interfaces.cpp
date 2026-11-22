@@ -1581,7 +1581,7 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::list_links ()
     link_seq[i++] = CORBA::string_dup ((*links_iter).ext_id_.in ());
 
   // Return a sequence of the buf names.
-  return new CosTrading::LinkNameSeq (i, i, link_seq, 1);
+  return new CosTrading::LinkNameSeq (i, i, link_seq, true);
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>

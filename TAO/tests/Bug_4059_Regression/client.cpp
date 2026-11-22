@@ -75,7 +75,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       RTCORBA::TCPProtocolProperties_var const tcp_properties =
         rt_orb->create_tcp_protocol_properties (ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
                                                 ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
-                                                1, 0, 1, 0);
+                                                true, false, true, false);
       RTCORBA::ProtocolList protocols;
       protocols.length (1);
       protocols[0].protocol_type = 0;
