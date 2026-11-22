@@ -62,9 +62,7 @@ namespace ACE
 
     const ACE_CString URL_Base::empty_;
 
-    URL_Base::URL_Base ()
-      {
-      }
+    URL_Base::URL_Base () = default;
 
     URL_Base::~URL_Base () = default;
 

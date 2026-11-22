@@ -148,7 +148,7 @@ namespace ACE
           }
       }
 
-    NVPair::NVPair () {}
+    NVPair::NVPair () = default;
 
     NVPair::NVPair (const ACE_CString& first)
       : first_ (first)

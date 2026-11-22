@@ -14,9 +14,7 @@ namespace ACE
 {
   namespace HTTP
   {
-    SessionFactoryRegistry::SessionFactoryRegistry ()
-      {
-      }
+    SessionFactoryRegistry::SessionFactoryRegistry () = default;
 
     SessionFactoryRegistry::~SessionFactoryRegistry () = default;
 
@@ -47,9 +45,7 @@ namespace ACE
         return *ACE_Singleton<SessionFactoryRegistry, ACE_SYNCH::MUTEX>::instance ();
       }
 
-    SessionHolder::SessionHolder ()
-      {
-      }
+    SessionHolder::SessionHolder () = default;
 
     SessionHolder::~SessionHolder() = default;
 

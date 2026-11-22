@@ -11,7 +11,7 @@ namespace ACE
 {
   namespace INet
   {
-    ClientRequestHandler::ClientRequestHandler () {}
+    ClientRequestHandler::ClientRequestHandler () = default;
 
     ClientRequestHandler::~ClientRequestHandler () = default;
 
@@ -20,7 +20,7 @@ namespace ACE
         return *TConnectionCacheSingleton::instance ();
       }
 
-    ClientINetRequestHandler::ClientINetRequestHandler () {}
+    ClientINetRequestHandler::ClientINetRequestHandler () = default;
 
     ClientINetRequestHandler::~ClientINetRequestHandler () = default;
 

@@ -6,7 +6,7 @@ namespace ACE
 {
   namespace INet
   {
-    RequestHandler::RequestHandler () {}
+    RequestHandler::RequestHandler () = default;
 
     RequestHandler::~RequestHandler () = default;
 

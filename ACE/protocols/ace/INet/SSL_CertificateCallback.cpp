@@ -27,15 +27,11 @@ namespace ACE
 
     SSL_CertificateCallbackArg::~SSL_CertificateCallbackArg () = default;
 
-    SSL_CertificateCallback::SSL_CertificateCallback ()
-      {
-      }
+    SSL_CertificateCallback::SSL_CertificateCallback () = default;
 
     SSL_CertificateCallback::~SSL_CertificateCallback () = default;
 
-    SSL_CertificateAcceptor::SSL_CertificateAcceptor ()
-      {
-      }
+    SSL_CertificateAcceptor::SSL_CertificateAcceptor () = default;
 
     SSL_CertificateAcceptor::~SSL_CertificateAcceptor () = default;
 

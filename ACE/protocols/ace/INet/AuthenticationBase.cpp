@@ -12,9 +12,7 @@ namespace ACE
   {
     AuthenticationBase::~AuthenticationBase () = default;
 
-    AuthenticatorBase::AuthenticatorBase ()
-    {
-    }
+    AuthenticatorBase::AuthenticatorBase () = default;
 
     AuthenticatorBase::~AuthenticatorBase () = default;
   }

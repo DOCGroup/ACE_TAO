@@ -6,7 +6,7 @@ namespace ACE
 {
   namespace INet
   {
-    Response::Response () {}
+    Response::Response () = default;
 
     Response::~Response () = default;
 

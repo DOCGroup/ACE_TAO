@@ -6,7 +6,7 @@ namespace ACE
 {
   namespace INet
   {
-    Request::Request () {}
+    Request::Request () = default;
 
     Request::~Request () = default;
 

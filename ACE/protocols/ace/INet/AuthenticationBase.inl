@@ -6,8 +6,7 @@ namespace ACE
   namespace INet
   {
     ACE_INLINE
-    AuthenticationBase::AuthenticationBase ()
-    {}
+    AuthenticationBase::AuthenticationBase () = default;
   }
 }
 

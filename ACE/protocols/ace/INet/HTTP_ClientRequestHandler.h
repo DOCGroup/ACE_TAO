@@ -65,7 +65,7 @@ namespace ACE
           : public ACE::INet::ConnectionFactory
           {
             protected:
-              SessionFactory () {}
+              SessionFactory () = default;
               ~SessionFactory () override = default;
           };
 
