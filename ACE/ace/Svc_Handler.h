@@ -67,7 +67,7 @@ template <typename PEER_STREAM, typename SYNCH_TRAITS>
 class ACE_Svc_Handler : public ACE_Task<SYNCH_TRAITS>
 {
 public:
-  // Useful STL-style traits.
+  /// Useful STL-style traits.
   using addr_type = typename PEER_STREAM::PEER_ADDR;
   using stream_type = PEER_STREAM;
 
