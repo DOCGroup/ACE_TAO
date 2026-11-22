@@ -40,7 +40,9 @@ Event_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
   --this->iterations_;
 
   if (this->iterations_ == 0)
-    ACE_Reactor::end_event_loop ();
+    {
+      ACE_Reactor::end_event_loop ();
+    }
 
   return 0;
 }

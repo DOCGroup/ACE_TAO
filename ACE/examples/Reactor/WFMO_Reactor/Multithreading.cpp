@@ -131,13 +131,15 @@ Task_Handler::Task_Handler (size_t number_of_handles,
   this->events_.reset (raw_events);
 
   for (size_t i = 0; i < number_of_handles; ++i)
-    if (ACE_Reactor::instance ()->register_handler (this,
-                                                    this->events_[i].handle ()) == -1)
       {
-        ACE_ERROR ((LM_ERROR,
-                    "%p\t cannot register handle %B with Reactor\n",
-                    "Task_Handler::Task_Handler",
-                    i));
+        if (ACE_Reactor::instance ()->register_handler (this,
+                                                        this->events_[i].handle ()) == -1)
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "%p\t cannot register handle %B with Reactor\n",
+                        "Task_Handler::Task_Handler",
+                        i));
+          }
       }
 
   // Make us an active object.

@@ -66,7 +66,9 @@ Simple_Handler::handle_signal (int, siginfo_t *s, ucontext_t *)
   ++this->handle_signal_count_;
 
   if (this->handle_signal_count_ == 1)
-    this->reactor ()->suspend_handler (event1_.handle ());
+    {
+      this->reactor ()->suspend_handler (event1_.handle ());
+    }
   else if (this->handle_signal_count_ == 2)
     {
       this->reactor ()->resume_handler (event1_.handle ());
@@ -88,9 +90,13 @@ Simple_Handler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask)
   ++this->handle_close_count_;
 
   if (this->handle_close_count_ == 1)
-    stop_test = false;
+    {
+      stop_test = false;
+    }
   else if (this->handle_close_count_ == 2)
-    stop_test = true;
+    {
+      stop_test = true;
+    }
 
   return 0;
 }

@@ -53,11 +53,15 @@ Event_Handler::Event_Handler (ACE_Reactor &reactor)
                                                         change_notification_flags // filter conditions to watch for
                                                         );
   if (this->handle_ == ACE_INVALID_HANDLE)
-    ACE_ERROR ((LM_ERROR, "FindFirstChangeNotification could not be setup\n"));
+    {
+      ACE_ERROR ((LM_ERROR, "FindFirstChangeNotification could not be setup\n"));
+    }
 
   if (this->reactor ()->register_handler (this,
                                           this->handle_) != 0)
-    ACE_ERROR ((LM_ERROR, "Registration with Reactor could not be done\n"));
+    {
+      ACE_ERROR ((LM_ERROR, "Registration with Reactor could not be done\n"));
+    }
 }
 
 int

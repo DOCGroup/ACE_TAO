@@ -103,7 +103,9 @@ worker (void *data)
                                                            temp_context);
 
   if (result == -1)
-    ACE_ERROR ((LM_ERROR, "Error in creating %s: %p\n", temp_context_name, "bind_new_context"));
+    {
+      ACE_ERROR ((LM_ERROR, "Error in creating %s: %p\n", temp_context_name, "bind_new_context"));
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG, "(%t) Thread sleeping\n"));

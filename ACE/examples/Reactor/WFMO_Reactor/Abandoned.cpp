@@ -64,8 +64,10 @@ Event_Handler::handle_signal (int,
 {
   ACE_HANDLE const handle = s->si_handle_;
   if (handle == this->handle_.handle ())
-    ACE_Reactor::instance ()->register_handler (this,
-                                                this->mutex_->lock ().proc_mutex_);
+    {
+      ACE_Reactor::instance ()->register_handler (this,
+                                                  this->mutex_->lock ().proc_mutex_);
+    }
   else
     {
       ACE_Reactor::instance ()->remove_handler (this->mutex_->lock ().proc_mutex_,
