@@ -67,7 +67,9 @@ Performance_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
           long const connections = ACE_OS::atoi (get_opt.opt_arg ());
 
           if (connections < 0)
-            this->physical_connections (size_t (-connections));
+            {
+              this->physical_connections (size_t (-connections));
+            }
           else if (connections > 0)
             this->logical_connections (size_t (connections));
           else
@@ -134,9 +136,13 @@ Performance_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
       case 'T':                 // Enable/disable tracing.
 #if defined (ACE_HAS_TRACE)
         if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("ON")) == 0)
-          ACE_Trace::start_tracing ();
+          {
+            ACE_Trace::start_tracing ();
+          }
         else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("OFF")) == 0)
-          ACE_Trace::stop_tracing ();
+          {
+            ACE_Trace::stop_tracing ();
+          }
 #endif /* ACE_HAS_TRACE */
         break;
       case 't':                 // Set # of threads contending the lock.

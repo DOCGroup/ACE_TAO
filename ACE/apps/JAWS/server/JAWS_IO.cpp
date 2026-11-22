@@ -231,7 +231,9 @@ JAWS_Asynch_IO::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result
       if (result.success () && result.bytes_transferred () != 0)
         {
           if (result.message_block ().length () == result.message_block ().size ())
-            code = ACE_Filecache_Handle::ACE_SUCCESS;
+            {
+              code = ACE_Filecache_Handle::ACE_SUCCESS;
+            }
           else
             {
               ACE_Asynch_Read_Stream ar;

@@ -19,7 +19,9 @@ ACE_INLINE
 HTTP_Base::~HTTP_Base ()
 {
   if (this->line_ != nullptr)
-    ACE_OS::free (this->line_);
+    {
+      ACE_OS::free (this->line_);
+    }
 }
 
 ACE_INLINE int

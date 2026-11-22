@@ -46,7 +46,9 @@ namespace ACE
           }
 
         if (this->ssl_cert_ != nullptr)
-          ::X509_free (this->ssl_cert_);
+          {
+            ::X509_free (this->ssl_cert_);
+          }
 
         if (ssl_cert != nullptr)
           {

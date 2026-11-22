@@ -213,7 +213,9 @@ prof_native_thread (size_t iteration)
       return time / iteration;
     }
   else
-    return -1.0;
+    {
+      return -1.0;
+    }
 #else
   ACE_UNUSED_ARG (iteration);
   ACE_ERROR_RETURN ((LM_ERROR, "Testing of native threads is not supported on this platform.\n"), -1);

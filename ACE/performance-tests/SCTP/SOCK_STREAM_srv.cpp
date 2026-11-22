@@ -145,11 +145,13 @@ static void run_server (ACE_HANDLE handle)
   // NO NAGLING
   ACE_CDR::Long nagle;
   if (Options_Manager::test_enable_nagle)
-    nagle=0;
+    {
+      nagle=0;
+    }
   else
-  {
-    nagle=1;
-  }
+    {
+      nagle=1;
+    }
 
   if (Options_Manager::test_transport_protocol == IPPROTO_SCTP){
     // default - sctp case

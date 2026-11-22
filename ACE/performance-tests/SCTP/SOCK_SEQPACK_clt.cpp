@@ -106,7 +106,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
   // can access. So the histogram created in one of the *_test() functions
   // will be reported out by the report() call
   if (testResultsHistogram != nullptr)
-    ACE_SCTP::report();
+    {
+      ACE_SCTP::report();
+    }
 
   return 0;
 #endif /* ACE_HAS_SCTP */

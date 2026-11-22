@@ -51,7 +51,9 @@ namespace ACE
         if (this->count_ < this->length_)
         {
           if ((this->count_ + length) > this->length_)
-            length = this->length_ - this->count_;
+            {
+              length = this->length_ - this->count_;
+            }
           n = this->write_to_stream_i (buf, length);
           if (n > 0)
             {
@@ -83,7 +85,9 @@ namespace ACE
             return eof_;
           }
         else
-          return chbuf[0];
+          {
+            return chbuf[0];
+          }
       }
 
     template <class STREAM_BUFFER>
@@ -121,10 +125,14 @@ namespace ACE
         if (this->chunk_cnt_ > 0)
         {
           if (length > this->chunk_cnt_)
-            length = this->chunk_cnt_;
+            {
+              length = this->chunk_cnt_;
+            }
           int n = this->read_from_stream_i (buf, length);
           if (n > 0)
-            this->chunk_cnt_ -= n;
+            {
+              this->chunk_cnt_ -= n;
+            }
           return n;
         }
         else

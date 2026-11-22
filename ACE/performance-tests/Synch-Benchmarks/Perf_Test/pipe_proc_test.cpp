@@ -77,11 +77,13 @@ Pipe_Proc_Test::svc ()
 
   while (!this->done ())
     if (ACE_OS::write (handle, from.get (), length) == length)
-      ++performance_test_options.thr_work_count[ni];
+      {
+        ++performance_test_options.thr_work_count[ni];
+      }
     else
-    {
-      ACE_OS::perror (ACE_TEXT("write"));
-    }
+      {
+        ACE_OS::perror (ACE_TEXT("write"));
+      }
 
   ACE_OS::close (this->pipe_handles[0]);
   ACE_OS::close (this->pipe_handles[1]);

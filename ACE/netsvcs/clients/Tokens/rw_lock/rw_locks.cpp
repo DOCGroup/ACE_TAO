@@ -62,7 +62,9 @@ run_thread (void *argument)
                   goto READ_DEADLOCK;
                 }
               else
-                return ACE_THR_FUNC_RETURN_NULL;
+                {
+                  return ACE_THR_FUNC_RETURN_NULL;
+                }
             }
 
           if (ACE_TOKEN_INVARIANTS::instance ()->acquired (options->read_lock) == 0)
@@ -85,7 +87,9 @@ run_thread (void *argument)
                   goto READ_DEADLOCK;
                 }
               else
-                return ACE_THR_FUNC_RETURN_NULL;
+                {
+                  return ACE_THR_FUNC_RETURN_NULL;
+                }
             }
 
           ACE_DEBUG ((LM_DEBUG, "(%t) rlock renewed.\n"));
