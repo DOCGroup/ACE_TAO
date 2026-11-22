@@ -48,7 +48,7 @@ client (void *arg)
   // Initiate connection with server; don't wait forever
   if (con.connect (cli_stream,
                    server_addr,
-                   &timeout) == -1)
+                   std::addressof (timeout)) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) connect failed: %p\n")));
@@ -178,7 +178,7 @@ server (void *arg)
   // Don't lock up if client doesn't connect
   if (peer_acceptor->accept (sock_str,
                              &cli_addr,
-                             &timeout) == -1)
+                             std::addressof (timeout)) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) accept: %p\n")));

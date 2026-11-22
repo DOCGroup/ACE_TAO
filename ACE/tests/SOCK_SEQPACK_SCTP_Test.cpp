@@ -29,6 +29,8 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Handle_Set.h"
 
+#include <memory>
+
 #define TTCPPORT 5001
 #define BYTE_MESG 0xcd
 
@@ -88,7 +90,7 @@ Server (void *arg)
                           handle_set,
                           nullptr,
                           nullptr,
-                          &tv);
+                          std::addressof (tv));
 
   if (-1 == result)
     {
@@ -188,7 +190,7 @@ Client(void *arg)
 
   if (-1 == Connector.connect (Stream,
                                *ServerAddr,
-                               &tv,
+                               std::addressof (tv),
                                ACE_Addr::sap_any,
                                1))
   {
@@ -207,7 +209,7 @@ Client(void *arg)
                 ACE_TEXT ("Association.disable (ACE_NONBLOCK)")));
   }
 
-  if (-1 == Stream.recv_n (&b, 1, &tv, &bytes))
+  if (-1 == Stream.recv_n (&b, 1, std::addressof (tv), &bytes))
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) %p\n"),
@@ -234,7 +236,7 @@ Client(void *arg)
 
   // abort closes the connection, so the recv should either see a closed
   // socket or some failure other than a timeout.
-  ssize_t cnt = Stream.recv_n (&b, 1, &tv, &bytes);
+  ssize_t cnt = Stream.recv_n (&b, 1, std::addressof (tv), &bytes);
   if (cnt > 0 || (cnt == -1 && errno == ETIME))
     {
       ACE_ERROR ((LM_ERROR,

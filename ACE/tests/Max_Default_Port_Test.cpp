@@ -27,6 +27,8 @@
 
 #include "Max_Default_Port_Test.h"
 
+#include <memory>
+
 // implement a retry and recuperation mechanism for VxWorks because test will otherwise fail
 // on a non-optimized kernel with several ETIME errors on the client connects.
 #if defined (ACE_VXWORKS)
@@ -115,7 +117,7 @@ client (void *arg)
   // Initiate connection with server; don't wait forever
   if (con.connect (cli_stream,
                    server_addr,
-                   &timeout) == -1)
+                   std::addressof (timeout)) == -1)
     {
 #if defined (ACE_VXWORKS)
       if (errno == ETIME)

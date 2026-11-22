@@ -54,7 +54,7 @@ client (void *arg)
       // and wait up to ACE_DEFAULT_TIMEOUT seconds for it to complete.
       ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
 
-      if (con.complete (cli_stream, &server_addr, &tv) == -1)
+      if (con.complete (cli_stream, &server_addr, std::addressof (tv)) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("(%P|%t) %p\n"),
@@ -76,7 +76,7 @@ client (void *arg)
   // Test Bug 3606
   const ACE_Time_Value def_timeout (ACE_DEFAULT_TIMEOUT);
   ACE_Time_Value tv (def_timeout);
-  int result = ACE::handle_ready (cli_stream.get_handle (), &tv,
+  int result = ACE::handle_ready (cli_stream.get_handle (), std::addressof (tv),
                                   true, // read_ready
                                   true, // write_ready
                                   false);
@@ -138,7 +138,8 @@ server (void *arg)
   char buf[BUFSIZ];
   const char *t = ACE_ALPHABET;
 
-  int result = ACE::handle_read_ready (peer_acceptor->get_handle (), &tv);
+  int result = ACE::handle_read_ready (peer_acceptor->get_handle (),
+                                       std::addressof (tv));
 
   ACE_TEST_ASSERT (tv == def_timeout);
 

@@ -136,7 +136,7 @@ client (void *arg)
                                         sizeof (buf),
                                         peer_addr,
                                         0,
-                                        &timeout);
+                                        std::addressof (timeout));
 #else
       iovec iov[1];
       // Some platforms define iov_base as char* instead of void*.

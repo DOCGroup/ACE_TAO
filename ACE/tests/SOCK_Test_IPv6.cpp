@@ -64,7 +64,7 @@ client (void *arg)
       // and wait up to ACE_DEFAULT_TIMEOUT seconds for it to complete.
       ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
 
-      if (con.complete (cli_stream, &server_addr, &tv) == -1)
+      if (con.complete (cli_stream, &server_addr, std::addressof (tv)) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("(%P|%t) %p\n"),
@@ -150,7 +150,7 @@ server (void *arg)
 #  endif /* ACE_WIN64 */
   int result = ACE_OS::select (select_width,
                                handle_set,
-                               nullptr, nullptr, &tv);
+                               nullptr, nullptr, std::addressof (tv));
   ACE_TEST_ASSERT (tv == def_timeout);
 
   if (result == -1)
