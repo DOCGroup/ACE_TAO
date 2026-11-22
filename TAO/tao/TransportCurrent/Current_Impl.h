@@ -70,10 +70,10 @@ namespace TAO
       ~Current_Impl () override = default;
 
     private:
-      // Borrowed from the ORB that owns this Current object.
+      /// Borrowed from the ORB that owns this Current object.
       TAO_ORB_Core * const core_;
 
-      // The ORB's TSS slot id for the Transport pointer.
+      /// The ORB's TSS slot id for the Transport pointer.
       size_t const tss_slot_id_;
     };
   }

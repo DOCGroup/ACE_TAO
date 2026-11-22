@@ -65,7 +65,7 @@ namespace ACE
       void query () const;
 
     private:
-      // The registry owns this monitor; this query only borrows it.
+      /// The registry owns this monitor; this query only borrows it.
       Monitor_Base* monitor_ {};
     };
   }

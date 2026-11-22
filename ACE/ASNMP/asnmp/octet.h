@@ -141,7 +141,7 @@ public:
   SnmpSyntax &operator= (SnmpSyntax &val) override;
 
 protected:
-  // The SmiVALUE C structure owns the octet array through its raw pointer.
+  /// The SmiVALUE C structure owns the octet array through its raw pointer.
   std::unique_ptr<char[]> output_buffer {};
   int validity {};
 };

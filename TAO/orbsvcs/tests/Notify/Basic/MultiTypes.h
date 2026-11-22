@@ -128,16 +128,16 @@ protected:
   TAO_Notify_Tests_StructuredPushSupplier* structured_supplier_;
   TAO_Notify_Tests_SequencePushSupplier* sequence_supplier_;
 
-  // Count of Any events received;
+  /// Count of Any events received.
   std::atomic<int> any_event_count_ {0};
 
-  // Count of Structured events received;
+  /// Count of Structured events received.
   std::atomic<int> struct_event_count_ {0};
 
-  // Count of Sequence events received;
+  /// Count of Sequence events received.
   std::atomic<int> seq_event_count_ {0};
 
-  // disconnect_on_last_event_
+  /// disconnect_on_last_event_
   int disconnect_on_last_event_;
 };
 

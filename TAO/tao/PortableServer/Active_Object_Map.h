@@ -273,7 +273,7 @@ public:
     }
   };
 
-  // remove_ref() owns the final destruction after registry removal.
+  /// remove_ref() owns the final destruction after registry removal.
   std::unique_ptr<ACE::Monitor_Control::Size_Monitor, Size_Monitor_Deleter> monitor_;
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
 };
