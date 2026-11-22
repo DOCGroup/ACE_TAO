@@ -326,7 +326,6 @@ find (CCS::Controller::SearchSeq & slist)
     CORBA::ULong const listlen = slist.length ();
     for (CORBA::ULong i {}; i < listlen; ++i) {
         AssetMap::const_iterator where;  // Iterator for asset map
-        int num_found {};                // Num matched per iteration
 
         // Assume we will not find a matching device.
         slist[i].device = CCS::Thermometer::_nil ();
@@ -343,6 +342,7 @@ find (CCS::Controller::SearchSeq & slist)
                 }
         } else {
             // Search for model or location string.
+            int num_found {};                // Num matched per iteration
             char const *const search_str = sc == CCS::Controller::LOCATION
                 ? slist[i].key.loc ()
                 : slist[i].key.model_desc ();
