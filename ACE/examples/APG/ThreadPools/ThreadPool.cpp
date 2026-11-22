@@ -132,7 +132,7 @@ public:
         tv += ACE_OS::time (nullptr);
 
         // Get a message request.
-        if (this->getq (raw_message_block, &tv) < 0)
+        if (this->getq (raw_message_block, std::addressof (tv)) < 0)
           {
             shut_down ();
             break;

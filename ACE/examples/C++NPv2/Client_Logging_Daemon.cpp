@@ -22,7 +22,10 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Thread_Manager.h"
 #include "Logging_Acceptor.h"
+
 #include "CLD_export.h"
+
+#include <memory>
 #include <array>
 
 #if !defined (FLUSH_TIMEOUT)
@@ -173,7 +176,7 @@ ACE_THR_FUNC_RETURN CLD_Handler::forward () {
       timeout += FLUSH_TIMEOUT;
     }
     ACE_Message_Block *mblk {};
-    if (msg_queue_.dequeue_head (mblk, &timeout) == -1) {
+    if (msg_queue_.dequeue_head (mblk, std::addressof (timeout)) == -1) {
       if (errno != EWOULDBLOCK)
         {
           break;
@@ -338,7 +341,7 @@ int CLD_Connector::reconnect () {
       ACE_OS::sleep (timeout);
     }
     if (connector.connect (handler_->peer (), remote_addr_,
-                           &timeout) == -1)
+                           std::addressof (timeout)) == -1)
     {
       timeout *= 2; // Exponential backoff.
     }

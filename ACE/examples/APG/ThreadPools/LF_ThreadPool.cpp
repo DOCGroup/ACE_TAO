@@ -137,7 +137,7 @@ LF_ThreadPool::svc ()
       tv += ACE_OS::gettimeofday ();
 
       // Get a message, elect new leader, then process message.
-      if (this->getq (raw_message_block, &tv) < 0)
+      if (this->getq (raw_message_block, std::addressof (tv)) < 0)
         {
           if (done ())
           {

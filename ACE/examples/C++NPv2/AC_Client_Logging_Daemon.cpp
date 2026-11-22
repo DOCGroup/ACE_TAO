@@ -197,7 +197,7 @@ int AC_Output_Handler::svc () {
       timeout += FLUSH_TIMEOUT;
     }
     ACE_Message_Block *mblk {};
-    if (getq (mblk, &timeout) == -1) {
+    if (getq (mblk, std::addressof (timeout)) == -1) {
       if (errno == ESHUTDOWN) {
         if (connector_->reconnect () == -1)
         {

@@ -8,6 +8,7 @@
 #include "ace/Message_Block.h"
 #include <chrono>
 #include <cstring>
+#include <memory>
 #include <thread>
 
 // Listing 2 code/ch16
@@ -95,7 +96,7 @@ public:
         tv += ACE_OS::time (nullptr);
 
         // Get a message request.
-        if (this->getq (raw_message_block, &tv) < 0)
+        if (this->getq (raw_message_block, std::addressof (tv)) < 0)
           {
             pool.msg_queue ()->deactivate ();
             pool.wait ();

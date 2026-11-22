@@ -199,7 +199,8 @@ public:
         tv += ACE_OS::time (nullptr);
 
         // Get the next message
-        ACE_Method_Request *request = this->queue_.dequeue (&tv);
+        ACE_Method_Request *request = this->queue_.dequeue (
+          std::addressof (tv));
         if (request == nullptr)
           {
             shut_down ();

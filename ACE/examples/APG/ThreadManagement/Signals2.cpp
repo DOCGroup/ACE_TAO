@@ -42,7 +42,7 @@ public:
         ACE_Time_Value tv {0, 1000};
         tv += ACE_OS::time (nullptr);
 
-        int const result = this->getq (mb, &tv);
+        int const result = this->getq (mb, std::addressof (tv));
 
         if (result == -1 && errno == EWOULDBLOCK)
           {
