@@ -376,7 +376,7 @@ Sender::send_message ()
   return ACE::send_n (this->handle_,
                       message,
                       message_size,
-                      &timeout);
+                      std::addressof (timeout));
 }
 
 class Event_Loop_Thread : public ACE_Task_Base
@@ -490,7 +490,7 @@ Receiver::handle_input (ACE_HANDLE handle)
     ACE::recv_n (handle,
                  buf,
                  message_size,
-                 &timeout);
+                 std::addressof (timeout));
 
   if (debug && result < 1)
     {
@@ -1069,7 +1069,7 @@ Close_Socket_Thread::svc ()
     {
       // Wait for the new connection to be established.
       int result =
-        this->new_connection_event_.wait (&timeout,
+        this->new_connection_event_.wait (std::addressof (timeout),
                                           0);
       ACE_TEST_ASSERT (result == 0 ||
                   (result == -1 && errno == ETIME));

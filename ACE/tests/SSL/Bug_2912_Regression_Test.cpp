@@ -35,6 +35,8 @@
 #include "ace/Manual_Event.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 /* Linux kernels can't hack multiple outstanding I/O, which this
    test requires */
 #if defined (ACE_HAS_THREADS) && \
@@ -1209,7 +1211,8 @@ run_main (int, ACE_TCHAR *[])
 
   if (0 == ret)
   {
-    ret = client_handler.wait_for_external_write_queue (&wait_time);
+    ret = client_handler.wait_for_external_write_queue (
+      std::addressof (wait_time));
     if (-1 == ret)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT (
@@ -1228,7 +1231,8 @@ run_main (int, ACE_TCHAR *[])
 
   if (0 == ret)
   {
-    ret = client_handler.wait_for_read_completed (&wait_time);
+    ret = client_handler.wait_for_read_completed (
+      std::addressof (wait_time));
 
     if (-1 == ret)
     {

@@ -839,10 +839,10 @@ test_format_specs ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l6:%D\n")));
   ACE_Time_Value tv = ACE_OS::gettimeofday ();
   tv += ACE_Time_Value (25*60*60); // + 25 hours
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l6:%#D\n"), &tv));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l6:%#D\n"), std::addressof (tv)));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l6:%T\n")));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l6:%#T\n"), &tv));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l6:%#T\n"), std::addressof (tv)));
 
   ACE_TCHAR expected_handle[64];
   ACE_TCHAR expected_invalid_handle[64];

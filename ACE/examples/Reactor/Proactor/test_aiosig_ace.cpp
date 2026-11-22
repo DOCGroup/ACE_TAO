@@ -205,7 +205,7 @@ query_aio_completions ()
       // Await the RT completion signal.
       int sig_return = ACE_OS::sigtimedwait (&completion_signal,
                                              &sig_info,
-                                             &timeout);
+                                             std::addressof (timeout));
 
       // Error case.
       // If failure is coz of timeout, then return *0* but set

@@ -310,7 +310,7 @@ HTTP_Server::thread_per_request (HTTP_Handler_Factory &factory)
       // This works because each task has only one thread.
       while (this->tm_.num_tasks_in_group (grp_id) > this->threads_)
         {
-          this->tm_.wait (&wait_time);
+          this->tm_.wait (std::addressof (wait_time));
         }
     }
 

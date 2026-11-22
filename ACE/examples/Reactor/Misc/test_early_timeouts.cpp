@@ -19,6 +19,8 @@
 #include "ace/OS_NS_sys_select.h"
 #include "ace/Truncate.h"
 
+#include <memory>
+
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
@@ -77,7 +79,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
         dummy_handle_set,
         nullptr,
         nullptr,
-        &timeout);
+        std::addressof (timeout));
       ACE_ASSERT (result == 0);
 
       // Note the time after select
