@@ -279,13 +279,13 @@ spawn ()
           ACE_OS::exit (0);
           /* NOTREACHED */
         default:
-          server ((void *) &peer_acceptor);
+          server (&peer_acceptor);
           ACE_OS::wait ();
         }
 #elif defined (ACE_HAS_THREADS)
       if (ACE_Thread_Manager::instance ()->spawn
           (ACE_THR_FUNC (server),
-           (void *) &peer_acceptor,
+           &peer_acceptor,
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n%a"),
@@ -294,7 +294,7 @@ spawn ()
 
       if (ACE_Thread_Manager::instance ()->spawn
           (ACE_THR_FUNC (client),
-           (void *) &server_addr,
+           &server_addr,
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n%a"),
