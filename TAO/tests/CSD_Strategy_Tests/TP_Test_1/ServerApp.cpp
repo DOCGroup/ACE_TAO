@@ -60,7 +60,7 @@ ServerApp::run_i(int argc, ACE_TCHAR* argv[])
                                                  new TAO::CSD::TP_Strategy();
 
   // Tell the strategy to apply itself to the child poa.
-  if (csd_strategy->apply_to(child_poa.in()) == false)
+  if (!csd_strategy->apply_to(child_poa.in()))
     {
       ACE_ERROR((LM_ERROR,
                  "Failed to apply CSD strategy to child poa.\n"));

@@ -386,7 +386,7 @@ IdAssignment::run_test()
                 this->create_consumer_admin (ec_id [ec_count]);
             }
 
-          if (this->default_consumer_admin_test (ec_id[ec_count]) == false)
+          if (!this->default_consumer_admin_test (ec_id[ec_count]))
           {
             ACE_OS::exit (1);
           }
@@ -401,7 +401,7 @@ IdAssignment::run_test()
                 this->create_supplier_admin (ec_id [ec_count]);
             }
 
-          if (this->default_supplier_admin_test (ec_id[ec_count]) == false)
+          if (!this->default_supplier_admin_test (ec_id[ec_count]))
           {
             ACE_OS::exit (1);
           }

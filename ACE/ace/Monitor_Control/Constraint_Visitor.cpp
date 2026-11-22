@@ -188,7 +188,7 @@ namespace ACE
           result = static_cast<ACE_CDR::Boolean> (lhs_result);
 
           /// Short-circuiting AND.
-          if (result == true)
+          if (result)
             {
               ETCL_Constraint *const rhs = binary->rhs ();
 

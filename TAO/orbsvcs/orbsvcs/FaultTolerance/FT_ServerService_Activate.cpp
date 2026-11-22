@@ -16,7 +16,7 @@ TAO_FT_ServerService_Activate::~TAO_FT_ServerService_Activate () = default;
 int
 TAO_FT_ServerService_Activate::Initializer ()
 {
-  if (initialized == false)
+  if (!initialized)
     {
       PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
         PortableInterceptor::ORBInitializer::_nil ();

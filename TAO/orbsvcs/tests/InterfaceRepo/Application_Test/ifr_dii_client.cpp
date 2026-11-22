@@ -276,19 +276,19 @@ IFR_DII_Client::invoke_and_display ()
 
       char const *artist {};
 
-      ACE_ASSERT ((*args->item (0)->value () >>= artist) == true);
+      ACE_ASSERT (*args->item (0)->value () >>= artist);
 
       ACE_ASSERT (std::strcmp (artist, "the Beatles") == 0);
 
       char const *title {};
 
-      ACE_ASSERT ((*args->item (1)->value () >>= title) == true);
+      ACE_ASSERT (*args->item (1)->value () >>= title);
 
       ACE_ASSERT (std::strcmp (title, "Sgt. Pepper's Lonely Hearts Club Band") == 0);
 
       CORBA::Float price {};
 
-      ACE_ASSERT ((*args->item (2)->value () >>= price) == true);
+      ACE_ASSERT (*args->item (2)->value () >>= price);
 
       ACE_ASSERT (ACE::is_equal (price, 13.49f));
 

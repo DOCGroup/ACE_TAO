@@ -44,30 +44,30 @@ ACE_TMAIN (int, ACE_TCHAR*[])
                                     Monitor_Control_Types::MC_COUNTER),
                       2);
 
-      if (reg->add (s) == false)
+      if (!reg->add (s))
         {
           error ("clean Monitor_Point_Registry::add() failed");
         }
 
-      if (reg->add (s) == true)
+      if (reg->add (s))
         {
           error ("duplicate Monitor_Point_Registry::add() failed");
         }
 
       // Test registry addition of null value - should get ACE_ERROR
       // message and return value of 'false'.
-      if (reg->add (0) == true)
+      if (reg->add (0))
         {
           error ("Monitor_Point_Registry::add() of null succeeded");
         }
 
       // Test registry removal.
-      if (reg->remove ("fake name") == true)
+      if (reg->remove ("fake name"))
         {
           error ("non-existent Monitor_Point_Registry::remove() failed");
         }
 
-      if (reg->remove ("test1") == false)
+      if (!reg->remove ("test1"))
         {
           error ("existent Monitor_Point_Registry::remove() failed");
         }
@@ -78,7 +78,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
                                     Monitor_Control_Types::MC_COUNTER),
                       2);
 
-      if (reg->add (s) == false)
+      if (!reg->add (s))
         {
           error ("re-addition Monitor_Point_Registry::add() failed");
         }
@@ -88,7 +88,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
                                     Monitor_Control_Types::MC_NUMBER),
                       2);
 
-      if (reg->add (s) == false)
+      if (!reg->add (s))
         {
           error ("second Monitor_Point_Registry::add() failed");
         }

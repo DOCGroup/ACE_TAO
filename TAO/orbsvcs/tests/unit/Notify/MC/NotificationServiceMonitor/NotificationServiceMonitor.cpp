@@ -35,7 +35,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
                                     Monitor_Control_Types::MC_COUNTER),
                       2);
 
-      if (reg->add (s) == false)
+      if (!reg->add (s))
         {
           ACE_ERROR_RETURN ((LM_ERROR, "clean Monitor_Point_Registry::add() failed\n"), 1);
         }
@@ -53,7 +53,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
                                     Monitor_Control_Types::MC_NUMBER),
                       2);
 
-      if (reg->add (s) == false)
+      if (!reg->add (s))
         {
           ACE_ERROR_RETURN ((LM_ERROR, "second Monitor_Point_Registry::add() failed\n"), 1);
         }
@@ -68,7 +68,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
                                     Monitor_Control_Types::MC_INTERVAL),
                       2);
 
-      if (reg->add (s) == false)
+      if (!reg->add (s))
         {
           ACE_ERROR_RETURN ((LM_ERROR, "third Monitor_Point_Registry::add() failed\n"), 1);
         }

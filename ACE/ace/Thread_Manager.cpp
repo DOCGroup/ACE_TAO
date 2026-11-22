@@ -1830,7 +1830,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
     // Just hold onto the guard while waiting.
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-    if (ACE_Object_Manager::shutting_down () == false)
+    if (!ACE_Object_Manager::shutting_down ())
       {
         // Program is not shutting down.  Perform a normal wait on threads.
         if (abandon_detached_threads != 0)

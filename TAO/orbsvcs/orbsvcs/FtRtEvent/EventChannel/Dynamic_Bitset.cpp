@@ -62,7 +62,7 @@ void Dynamic_Bitset::set(Dynamic_Bitset::size_type bit, bool val)
   size_type block_pos = bit/BITS_PER_BLOCK;
   size_type bit_pos = bit%BITS_PER_BLOCK;
   block mask = 1 << bit_pos;
-  if (val == false)
+  if (!val)
   {
     mask ^= static_cast<block> (-1);
   }

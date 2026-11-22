@@ -576,7 +576,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::cancel (SVC_HANDLER *sh)
 
   SVC_HANDLER *tmp_sh {};
 
-  if (nbch->close (tmp_sh) == false)
+  if (!nbch->close (tmp_sh))
     {
       return -1;
     }

@@ -19,7 +19,7 @@ Foo_C_Custom_ClientEngine::execute()
 {
   // Make sure the connection is established before making
   // remote invocations.
-  if (this->proxy_.validate_connection () == false)
+  if (!this->proxy_.validate_connection ())
     {
       ACE_ERROR((LM_ERROR, "(%P|%t)Foo_A_ClientEngine::execute  " \
                           "client %d connect failed.\n", this->client_id_));

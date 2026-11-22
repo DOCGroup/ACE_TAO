@@ -102,7 +102,7 @@ namespace TAO
 
 #if TAO_HAS_INTERCEPTORS == 1
         if (this->reply_status_ == GIOP::LOCATION_FORWARD ||
-            this->response_expected_ == false)
+            !this->response_expected_)
           {
             if (this->reply_status_ == GIOP::LOCATION_FORWARD)
             {
@@ -127,7 +127,7 @@ namespace TAO
     catch ( ::CORBA::UserException& ex)
       {
         // Ignore CORBA exceptions for oneways
-        if (this->response_expected_ == false)
+        if (!this->response_expected_)
         {
           return TAO_INVOKE_SUCCESS;
         }
@@ -160,7 +160,7 @@ namespace TAO
     catch ( ::CORBA::SystemException& TAO_INTERCEPTOR (ex))
       {
         // Ignore CORBA exceptions for oneways
-        if (this->response_expected_ == false)
+        if (!this->response_expected_)
         {
           return TAO_INVOKE_SUCCESS;
         }

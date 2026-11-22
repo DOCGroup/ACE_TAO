@@ -204,7 +204,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
 
     }
 
-  if (reply.is_dsi_ == true)
+  if (reply.is_dsi_)
     {
       // @@ Much of this code is GIOP 1.1 specific and should be
       size_t const target = static_cast<size_t>(reply.dsi_nvlist_align_);

@@ -21,7 +21,7 @@ Foo_B_SimpleClientEngine::execute()
 {
   // Make sure the connection is established before making
   // remote invocations.
-  if (AppHelper::validate_connection (this->obj_.in ()) == false)
+  if (!AppHelper::validate_connection (this->obj_.in ()))
     {
       ACE_ERROR((LM_ERROR, "(%P|%t)Foo_A_SimpleClientEngine::execute  " \
                           "client %d connect failed.\n", this->client_id_));

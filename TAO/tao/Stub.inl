@@ -383,7 +383,7 @@ TAO_Stub::transport_queueing_strategy ()
 
   this->orb_core_->call_sync_scope_hook (this, has_synchronization, scope);
 
-  if (has_synchronization == true)
+  if (has_synchronization)
     {
       return this->orb_core_->get_transport_queueing_strategy  (this, scope);
     }

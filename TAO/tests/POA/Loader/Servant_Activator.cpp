@@ -86,7 +86,7 @@ ServantActivator::etherealize (PortableServer::ObjectId const &oid,
   // garbage_collection_function.  Etheralization happens on
   // POA::destroy() and/or Object::deactivate().
 
-  if (remaining_activations == false)
+  if (!remaining_activations)
     {
       (*servant_garbage_collector_) (oid,
                                      poa,

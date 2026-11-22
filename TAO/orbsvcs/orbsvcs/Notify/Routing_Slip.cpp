@@ -266,7 +266,7 @@ Routing_Slip::route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel)
     {
       enter_state_new (guard);
     }
-    else if (this->event_->reliable().value() == true)
+    else if (this->event_->reliable().value())
     {
       enter_state_new (guard);
     }

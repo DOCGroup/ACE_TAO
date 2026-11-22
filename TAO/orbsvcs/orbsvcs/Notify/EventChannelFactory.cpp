@@ -111,7 +111,7 @@ TAO_Notify_EventChannelFactory::init (PortableServer::POA_ptr poa)
 
   this->load_event_persistence ();
 
-  if (TAO_Notify_PROPERTIES::instance()->validate_client() == true)
+  if (TAO_Notify_PROPERTIES::instance()->validate_client())
   {
     TAO_Notify_validate_client_Task* validate_client_task {};
     ACE_NEW_THROW_EX (validate_client_task,

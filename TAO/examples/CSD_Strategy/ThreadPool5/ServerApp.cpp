@@ -79,7 +79,7 @@ ServerApp::run (int argc, ACE_TCHAR* argv[])
   csd_tp_strategy->set_num_threads (this->options_.num_csd_threads);
 
   // Tell the strategy to apply itself to the child poa.
-  if (csd_tp_strategy->apply_to(child_poa.in()) == false)
+  if (!csd_tp_strategy->apply_to(child_poa.in()))
     {
       ACE_ERROR((LM_ERROR, "(%P|%t) ERROR [ServerApp::run()]: "
                  "Failed to apply custom dispatching strategy to child poa.\n"));

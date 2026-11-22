@@ -47,7 +47,7 @@ run_main (int, ACE_TCHAR *[])
     }
 
   // ... and the booleans says that it is already in the set ...
-  if (r.second == true)
+  if (r.second)
     {
       status = 1;
       ACE_ERROR ((LM_ERROR, ACE_TEXT("Expected duplicate insert to fail")));

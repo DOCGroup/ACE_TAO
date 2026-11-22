@@ -823,7 +823,7 @@ TAO_FT_Naming_Manager::next_member (PortableGroup::ObjectGroup_ptr object_group)
     break;
   }
 
-  if (result == true)
+  if (result)
     {
       return this->get_member_ref (object_group, next_location);
     }

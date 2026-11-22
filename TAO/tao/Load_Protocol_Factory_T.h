@@ -86,7 +86,7 @@ namespace TAO
                       ACE_TEXT("<%C> to protocol factory set.\n"),
                       item->protocol_name ().c_str ()));
 
-          if (transfer_ownership == false)
+          if (!transfer_ownership)
             {
               delete protocol_factory;
             }

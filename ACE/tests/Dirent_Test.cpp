@@ -239,7 +239,7 @@ dirent_count (const ACE_TCHAR *dir_path,
   for (ACE_DIRENT *directory; (directory = dir.read ()) != nullptr;)
     {
       // Skip the ".." and "." files.
-      if (ACE::isdotdir(directory->d_name) == true)
+      if (ACE::isdotdir(directory->d_name))
       {
         continue;
       }

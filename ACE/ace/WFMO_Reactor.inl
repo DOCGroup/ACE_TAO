@@ -335,9 +335,9 @@ ACE_INLINE int
 ACE_WFMO_Reactor_Handler_Repository::scheduled_for_deletion (size_t slot) const
 {
   if (ACE_Thread::self () == this->wfmo_reactor_.owner_i ())
-    return this->current_info_[slot].delete_entry_ == true;
+    return this->current_info_[slot].delete_entry_;
   else
-    return this->current_info_[slot + 1].delete_entry_ == true;
+    return this->current_info_[slot + 1].delete_entry_;
 }
 
 ACE_INLINE int

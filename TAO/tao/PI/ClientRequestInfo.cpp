@@ -422,7 +422,7 @@ TAO_ClientRequestInfo::arguments ()
 
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
 
-  if (this->parameter_list (*parameter_list) == false)
+  if (!this->parameter_list (*parameter_list))
   {
     throw ::CORBA::MARSHAL ();
   }
@@ -465,7 +465,7 @@ TAO_ClientRequestInfo::exceptions ()
 
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
 
-  if (this->exception_list (*exception_list) == false)
+  if (!this->exception_list (*exception_list))
   {
     throw ::CORBA::MARSHAL ();
   }
@@ -523,7 +523,7 @@ TAO_ClientRequestInfo::result ()
 
   CORBA::Any_var safe_result_any = result_any;
 
-  if (this->result (result_any) == false)
+  if (!this->result (result_any))
   {
     throw ::CORBA::MARSHAL ();
   }

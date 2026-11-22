@@ -679,8 +679,8 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
                nullptr != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBPreferredInterface"))) )
         {
-          if (this->orb_params ()->preferred_interfaces (
-                ACE_TEXT_ALWAYS_CHAR (current_arg)) == false)
+          if (!this->orb_params ()->preferred_interfaces (
+                ACE_TEXT_ALWAYS_CHAR (current_arg)))
             {
               throw ::CORBA::INTERNAL (
                 CORBA::SystemException::_tao_minor_code (
@@ -2441,7 +2441,7 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion)
   tm->cancel_all ();
 
   // If <wait_for_completion> is set, wait for all threads to exit.
-  if (wait_for_completion == true)
+  if (wait_for_completion)
   {
     tm->wait ();
   }

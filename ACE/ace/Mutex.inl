@@ -216,7 +216,7 @@ ACE_Mutex::remove ()
   // shm_open needs to be deleted as well.
   if (this->process_lock_)
     {
-      if (this->removed_ == false)
+      if (!this->removed_)
         {
           this->removed_ = true;
           // Only destroy the lock if we're the ones who initialized
@@ -249,7 +249,7 @@ ACE_Mutex::remove ()
     }
 #endif /* ACE_MUTEX_USE_PROCESS_LOCK */
 
-  if (this->removed_ == false)
+  if (!this->removed_)
     {
       this->removed_ = true;
       result = ACE_OS::mutex_destroy (&this->lock_);

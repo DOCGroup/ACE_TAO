@@ -152,7 +152,7 @@ TAO_Notify_Object::destroy_proxy_poa ()
         this->poa_ = nullptr;
       }
 
-      if ( this->own_proxy_poa_ == true )
+      if (this->own_proxy_poa_)
       {
         this->own_proxy_poa_ = false;
         std::unique_ptr< TAO_Notify_POA_Helper > app( proxy_poa_ );
@@ -186,7 +186,7 @@ TAO_Notify_Object::destroy_object_poa ()
         this->poa_ = nullptr;
       }
 
-      if (this->own_object_poa_ == true)
+      if (this->own_object_poa_)
       {
         this->own_object_poa_ = false;
         std::unique_ptr<TAO_Notify_POA_Helper> aop (object_poa_);

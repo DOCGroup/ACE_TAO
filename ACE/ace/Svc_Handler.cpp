@@ -96,7 +96,7 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::destroy ()
 
   // Only delete ourselves if we're not owned by a module and have
   // been allocated dynamically.
-  if (this->mod_ == 0 && this->dynamic_ && this->closing_ == false)
+  if (this->mod_ == 0 && this->dynamic_ && !this->closing_)
     {
       // Will call the destructor, which automatically calls <shutdown>.
       // Note that if we are *not* allocated dynamically then the
@@ -282,7 +282,7 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::~ACE_Svc_Handler ()
 {
   ACE_TRACE ("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::~ACE_Svc_Handler");
 
-  if (this->closing_ == false)
+  if (!this->closing_)
     {
       // We're closing down now, so make sure not to call ourselves
       // recursively via other calls to handle_close() (e.g., from the

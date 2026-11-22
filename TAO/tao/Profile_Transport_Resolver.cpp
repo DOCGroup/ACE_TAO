@@ -58,7 +58,7 @@ namespace TAO
 
     if (this->transport_.get ())
       {
-        if (this->is_released_ == false)
+        if (!this->is_released_)
           {
             this->transport_->make_idle ();
           }
@@ -196,7 +196,7 @@ namespace TAO
     // exception.  Otherwise, just fall through and return false to
     // look at the next endpoint.
     if (this->transport_.get () == nullptr &&
-        has_con_timeout == false &&
+        !has_con_timeout &&
         errno == ETIME)
       {
         throw ::CORBA::TIMEOUT (

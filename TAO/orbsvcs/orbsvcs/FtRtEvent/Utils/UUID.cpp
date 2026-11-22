@@ -69,7 +69,7 @@ static char const *seperators = "----";
 UUID::UUID (ACE_TCHAR const *string_rep)
   : rep_ {}
 {
-  if (this->from_string(ACE_TEXT_ALWAYS_CHAR(string_rep)) == false)
+  if (!this->from_string(ACE_TEXT_ALWAYS_CHAR(string_rep)))
   {
     rep_.timestamp.hi = 0;
   }

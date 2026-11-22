@@ -70,7 +70,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             new TAO_DTP_POA_Strategy(&tp_config, false);
 
   // Tell the strategy to apply itself to the child poa.
-    if (dtp_strategy->apply_to(poa.in()) == false)
+    if (!dtp_strategy->apply_to(poa.in()))
       {
         ACE_ERROR((LM_ERROR,
                    "Failed to apply CSD strategy to root poa.\n"));

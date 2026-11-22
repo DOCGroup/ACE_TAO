@@ -468,7 +468,7 @@ namespace TAO
       case GIOP::NO_EXCEPTION:
         {
           Reply_Guard mon (this, TAO_INVOKE_FAILURE);
-          if (this->details_.demarshal_args (cdr) == false)
+          if (!this->details_.demarshal_args (cdr))
             {
               throw ::CORBA::MARSHAL ();
             }

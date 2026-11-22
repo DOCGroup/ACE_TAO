@@ -989,7 +989,7 @@ TAO_Notify_Constraint_Visitor::visit_and (ETCL_Binary_Expr *binary)
       result = (CORBA::Boolean) lhs_result;
 
       // Short-circuiting AND.
-      if (result == true)
+      if (result)
         {
           ETCL_Constraint *rhs = binary->rhs ();
 

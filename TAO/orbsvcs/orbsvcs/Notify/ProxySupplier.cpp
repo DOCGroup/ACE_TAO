@@ -66,7 +66,7 @@ TAO_Notify_ProxySupplier::connect (TAO_Notify_Consumer *consumer)
                         CORBA::INTERNAL ());
 
     // if consumer is set and reconnect not allowed we get out.
-    if (this->is_connected () && TAO_Notify_PROPERTIES::instance()->allow_reconnect() == false)
+    if (this->is_connected () && !TAO_Notify_PROPERTIES::instance()->allow_reconnect())
       {
           throw CosEventChannelAdmin::AlreadyConnected ();
       }

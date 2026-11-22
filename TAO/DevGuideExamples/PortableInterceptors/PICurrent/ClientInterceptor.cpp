@@ -57,7 +57,7 @@ ClientInterceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
   CORBA::Boolean x = false;
   CORBA::Any flag;
   if (*recurse >>= CORBA::Any::to_boolean (x)) {
-    if (x == false)
+    if (!x)
       {
         x = true;
         flag <<= CORBA::Any::from_boolean(x);

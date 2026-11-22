@@ -314,8 +314,7 @@ TAO_Root_POA::~TAO_Root_POA ()
 void
 TAO_Root_POA::complete_destruction_i ()
 {
-  bool doing_complete_destruction =
-    this->waiting_destruction_ != false;
+  bool doing_complete_destruction = this->waiting_destruction_;
 
   // No longer awaiting destruction.
   this->waiting_destruction_ = false;
@@ -1083,7 +1082,7 @@ TAO_Root_POA::add_ior_component_to_profile (
   // According to the Portable Interceptor specification, we're
   // supposed to throw a CORBA::BAD_PARAM exception if no profile
   // matched the given ProfileId.
-  if (found_profile == false)
+  if (!found_profile)
   {
     throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 29, CORBA::COMPLETED_NO);
   }
