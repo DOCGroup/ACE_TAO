@@ -230,7 +230,9 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_times ()
               static_cast<ACE_UINT64> (size)));
 
   if (size == 0)
-    return;
+    {
+      return;
+    }
 
   ACELIB_DEBUG ((LM_DEBUG,
               "\n%-50.50s %8.8s %13.13s\n\n",
@@ -252,7 +254,9 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_times ()
               "START"));
 
   if (size == 1)
-    return;
+    {
+      return;
+    }
 
   bool has_timestamp_inversion = false;
 
@@ -273,7 +277,9 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_times ()
         (ACE_INT64) (this->timeprobes_[i].time_ - this->timeprobes_[j].time_);
 
       if (time_difference < 0)
-        has_timestamp_inversion = true;
+        {
+          has_timestamp_inversion = true;
+        }
 
       // Convert to microseconds.
       time_difference /= gsf;
@@ -359,7 +365,9 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::find_description_i (u_long i)
           ++next_event_descriptions;
 
           if (this->timeprobes_[i].event_.event_number_ < (*next_event_descriptions).minimum_id_)
-            break;
+            {
+              break;
+            }
         }
       return (*iterator).descriptions_[this->timeprobes_[i].event_.event_number_ - (*iterator).minimum_id_];
     }
@@ -381,7 +389,9 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::sort_event_descriptions_i ()
            iterator != this->event_descriptions_.end ();
            ++iterator)
         if ((*iterator).minimum_id_ < min_entry.minimum_id_)
-          min_entry = *iterator;
+          {
+            min_entry = *iterator;
+          }
 
       this->sorted_event_descriptions_.insert (min_entry);
       this->event_descriptions_.remove (min_entry);

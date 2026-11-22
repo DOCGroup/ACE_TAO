@@ -123,27 +123,31 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (ACE_INET_Addr const &mcast_addr,
             ++nr_subscribed;
         }
       else
-        // Iterate through all the interfaces, figure out which ones
-        // offer multicast service, and subscribe to them.
-        while (if_cnt > 0)
-          {
-            --if_cnt;
+        {
+          // Iterate through all the interfaces, figure out which ones
+          // offer multicast service, and subscribe to them.
+          while (if_cnt > 0)
+            {
+              --if_cnt;
 
-            // Convert to 0-based for indexing, next loop check.
-            if (if_addrs[if_cnt].is_loopback())
-              {
-                continue;
-              }
-            if (this->subscribe (mcast_addr,
-                                 qos_params,
-                                 reuse_addr,
-                                 ACE_TEXT_CHAR_TO_TCHAR
-                                   (if_addrs[if_cnt].get_host_addr()),
-                                 protocol_family,
-                                 protocol,
-                                 protocolinfo) == 0)
-              ++nr_subscribed;
-          }
+              // Convert to 0-based for indexing, next loop check.
+              if (if_addrs[if_cnt].is_loopback())
+                {
+                  continue;
+                }
+              if (this->subscribe (mcast_addr,
+                                   qos_params,
+                                   reuse_addr,
+                                   ACE_TEXT_CHAR_TO_TCHAR
+                                     (if_addrs[if_cnt].get_host_addr()),
+                                   protocol_family,
+                                   protocol,
+                                   protocolinfo) == 0)
+                {
+                  ++nr_subscribed;
+                }
+            }
+        }
 
       if (nr_subscribed == 0)
         {
@@ -151,10 +155,12 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (ACE_INET_Addr const &mcast_addr,
           return -1;
         }
       else
-        // 1 indicates a "short-circuit" return.  This handles the
-        // rather bizarre semantics of checking all the interfaces on
-        // NT.
-        return 1;
+        {
+          // 1 indicates a "short-circuit" return.  This handles the
+          // rather bizarre semantics of checking all the interfaces on
+          // NT.
+          return 1;
+        }
     }
 #else
   ACE_UNUSED_ARG (mcast_addr);
