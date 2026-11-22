@@ -224,7 +224,7 @@ TAO::HTIOP::Profile::do_is_equivalent (const TAO_Profile *other_profile)
 
   if (op == nullptr)
   {
-    return 0;
+    return false;
   }
 
   // Check endpoints equivalence.
@@ -239,11 +239,11 @@ TAO::HTIOP::Profile::do_is_equivalent (const TAO_Profile *other_profile)
         }
       else
       {
-        return 0;
+        return false;
       }
     }
 
-  return 1;
+  return true;
 }
 
 CORBA::ULong

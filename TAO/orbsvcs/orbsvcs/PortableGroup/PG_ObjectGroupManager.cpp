@@ -713,12 +713,12 @@ TAO_PG_ObjectGroupManager::member_already_present (
         {
           // Member with given type ID exists at the given
           // location.
-          return 1;
+          return true;
         }
     }
 
   // No member with given type ID present at the given location.
-  return 0;
+  return false;
 }
 
 int

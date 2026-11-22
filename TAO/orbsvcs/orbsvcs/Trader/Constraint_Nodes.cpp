@@ -435,7 +435,7 @@ TAO_Literal_Constraint::operator= (const TAO_Literal_Constraint& co)
 
 TAO_Literal_Constraint::operator CORBA::Boolean () const
 {
-  return (this->type_ == TAO_BOOLEAN) ? this->op_.bool_ : 0;
+  return (this->type_ == TAO_BOOLEAN) ? this->op_.bool_ : false;
 }
 
 TAO_Literal_Constraint::operator CORBA::ULongLong () const

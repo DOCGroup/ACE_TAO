@@ -158,7 +158,7 @@ Test_ObjRef::check_validity ()
           || CORBA::is_nil (this->ret_.in ()))
         {
           ACE_ERROR ((LM_ERROR, "Nil object references returned\n"));
-          return 0;
+          return false;
         }
       Coffee::Desc_var in_desc =
         this->in_->description ();
@@ -184,16 +184,16 @@ Test_ObjRef::check_validity ()
           !std::strcmp (in, out) &&
           !std::strcmp (in, ret))
       {
-        return 1; // success
+        return true; // success
       }
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Retrieving description");
-      return 0;
+      return false;
     }
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
