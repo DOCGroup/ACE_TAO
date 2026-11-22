@@ -29,15 +29,19 @@ check (const time_t interval, const time_t measured)
   time_t const percentage_difference = difference * 100 / interval;
 
   if (percentage_difference < threshold)
-    return 0;
+    {
+      return 0;
+    }
   else
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("The measured time of %Q differs from ")
-                       ACE_TEXT ("the interval of %Q by %Q percent.\n"),
-                       measured,
-                       interval,
-                       percentage_difference),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("The measured time of %Q differs from ")
+                         ACE_TEXT ("the interval of %Q by %Q percent.\n"),
+                         measured,
+                         interval,
+                         percentage_difference),
+                        1);
+    }
 }
 
 // Does a sanity check of the microseconds vs nanoseconds. They're supposed

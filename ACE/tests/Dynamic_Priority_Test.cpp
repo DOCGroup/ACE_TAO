@@ -712,17 +712,23 @@ run_main (int, ACE_TCHAR *[])
           ACE_SCOPE_PROCESS)) != 0)
   {
     if (ACE_OS::last_error () == EPERM)
-      ACE_DEBUG ((LM_MAX,
-                  ACE_TEXT ("user is not superuser, ")
-                  ACE_TEXT ("so remain in time-sharing class\n")));
+      {
+        ACE_DEBUG ((LM_MAX,
+                    ACE_TEXT ("user is not superuser, ")
+                    ACE_TEXT ("so remain in time-sharing class\n")));
+      }
     else if (ACE_OS::last_error () == ENOTSUP)
-      ACE_DEBUG ((LM_MAX,
-                  ACE_TEXT ("process scope scheduling is not available, ")
-                  ACE_TEXT ("so remain in time-sharing class\n")));
+      {
+        ACE_DEBUG ((LM_MAX,
+                    ACE_TEXT ("process scope scheduling is not available, ")
+                    ACE_TEXT ("so remain in time-sharing class\n")));
+      }
     else
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%n: ACE_OS::sched_params failed\n%a")),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%n: ACE_OS::sched_params failed\n%a")),
+                          -1);
+      }
   }
 
   // Test factory, static message queue.

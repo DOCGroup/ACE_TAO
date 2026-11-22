@@ -327,17 +327,29 @@ run_main (int argc, ACE_TCHAR *argv[])
       check_process_priority(priority);
 
       if (priority == ABOVE_NORMAL_PRIORITY_CLASS)
-        ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'above normal'"));
+        {
+          ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'above normal'"));
+        }
       else if (priority == BELOW_NORMAL_PRIORITY_CLASS)
-        ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'below normal'"));
+        {
+          ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'below normal'"));
+        }
       else if (priority == HIGH_PRIORITY_CLASS)
-        ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'high'"));
+        {
+          ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'high'"));
+        }
       else if (priority == IDLE_PRIORITY_CLASS)
-        ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'idle'"));
+        {
+          ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'idle'"));
+        }
       else if (priority == NORMAL_PRIORITY_CLASS)
-        ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'normal'"));
+        {
+          ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'normal'"));
+        }
       else if (priority == REALTIME_PRIORITY_CLASS)
-        ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'realtime'"));
+        {
+          ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'realtime'"));
+        }
 #else
       prio[0] = ACE_TEXT ('\0');
 #endif
