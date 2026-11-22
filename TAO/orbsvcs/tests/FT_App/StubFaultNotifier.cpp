@@ -187,8 +187,8 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb)
     for(size_t nRep = 0; result == 0 && nRep < replicaCount; ++nRep)
     {
       const char * iorName = this->iorReplicaFiles_[nRep];
-      CORBA::Object_var obj = this->orb_->string_to_object(iorName);
-      FT::PullMonitorable_var replica = FT::PullMonitorable::_narrow(obj.in ());
+      CORBA::Object_var replica_object = this->orb_->string_to_object(iorName);
+      FT::PullMonitorable_var replica = FT::PullMonitorable::_narrow(replica_object.in ());
       if (CORBA::is_nil(replica.in ()))
       {
         ACE_OS::fprintf (stderr, "Can't resolve Replica IOR %s\n", iorName);

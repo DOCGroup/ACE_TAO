@@ -995,8 +995,8 @@ Test_ECG::dump_results (ACE_TCHAR const* name, Stats& stats)
     }
   for (i = 1; i < stats.rmt_count_ - 1; ++i)
     {
-      double usec = ACE_U64_TO_U32 (stats.rmt_latency_[i]) / 1000.0;
-      ACE_DEBUG ((LM_DEBUG, "Latency[RMT,%s]: %.3f\n", name, usec));
+      double rmt_usec = ACE_U64_TO_U32 (stats.rmt_latency_[i]) / 1000.0;
+      ACE_DEBUG ((LM_DEBUG, "Latency[RMT,%s]: %.3f\n", name, rmt_usec));
     }
 }
 
