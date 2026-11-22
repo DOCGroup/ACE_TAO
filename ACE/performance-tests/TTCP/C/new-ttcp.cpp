@@ -569,17 +569,17 @@ main (int argc, char *argv[])
   if (trans && (title != 0))
     {
       double tmp;
-      FILE *fd;
+      FILE *results_file;
       char filename[BUFSIZ];
       ACE_OS::sprintf (filename, "%s.results", title);
-      fd = fopen(filename, "a+");
+      results_file = fopen(filename, "a+");
       if (new_line)
         {
-          fprintf(fd, "\n  -l %dk \t", data_buf_len/1024);
+          fprintf(results_file, "\n  -l %dk \t", data_buf_len/1024);
         }
       tmp = ((double) nbytes) / realt;
-      fprintf(fd, "%.2f ", tmp * 8.0 / 1024.0 / 1024.0);
-      fclose(fd);
+      fprintf(results_file, "%.2f ", tmp * 8.0 / 1024.0 / 1024.0);
+      fclose(results_file);
     }
 #endif
 

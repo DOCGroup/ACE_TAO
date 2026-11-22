@@ -137,43 +137,43 @@ join_object_group (CORBA::ORB_ptr orb,
             {
               CORBA::ULong len = 1;
 
-              PortableGroup::Properties & props =
+              PortableGroup::Properties & strategy_props =
                 strategy_info.props;
 
               if (reject_threshold != 0)
                 {
                   const CORBA::ULong i = len - 1;
 
-                  props.length (len++);
+                  strategy_props.length (len++);
 
-                  props[i].nam.length (1);
-                  props[i].nam[0].id =
+                  strategy_props[i].nam.length (1);
+                  strategy_props[i].nam[0].id =
                     CORBA::string_dup ("org.omg.CosLoadBalancing.Strategy.LeastLoaded.RejectThreshold");
-                  props[i].val <<= reject_threshold;
+                  strategy_props[i].val <<= reject_threshold;
                 }
 
               if (critical_threshold != 0)
                 {
                   const CORBA::ULong i = len - 1;
 
-                  props.length (len++);
+                  strategy_props.length (len++);
 
-                  props[i].nam.length (1);
-                  props[i].nam[0].id =
+                  strategy_props[i].nam.length (1);
+                  strategy_props[i].nam[0].id =
                     CORBA::string_dup ("org.omg.CosLoadBalancing.Strategy.LeastLoaded.CriticalThreshold");
-                  props[i].val <<= critical_threshold;
+                  strategy_props[i].val <<= critical_threshold;
                 }
 
               if (dampening != 0)
                 {
                   const CORBA::ULong i = len - 1;
 
-                  props.length (len++);
+                  strategy_props.length (len++);
 
-                  props[i].nam.length (1);
-                  props[i].nam[0].id =
+                  strategy_props[i].nam.length (1);
+                  strategy_props[i].nam[0].id =
                     CORBA::string_dup ("org.omg.CosLoadBalancing.Strategy.LeastLoaded.Dampening");
-                  props[i].val <<= dampening;
+                  strategy_props[i].val <<= dampening;
                 }
 
             }

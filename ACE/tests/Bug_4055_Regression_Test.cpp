@@ -298,15 +298,15 @@ bool test_timer (ACE_Condition_Thread_Mutex& condition_, ACE_Time_Value& waittim
       curtime += ACE_Time_Value (4, 0);
 #    if defined (ACE_WIN32)
       curdt.update (curtime);
-      SYSTEMTIME sys_time;
-      sys_time.wDay = ACE_Utils::truncate_cast <WORD> (curdt.day ());
-      sys_time.wMonth = ACE_Utils::truncate_cast <WORD> (curdt.month ());
-      sys_time.wYear = ACE_Utils::truncate_cast <WORD> (curdt.year ());
-      sys_time.wHour = ACE_Utils::truncate_cast <WORD> (curdt.hour ());
-      sys_time.wMinute = ACE_Utils::truncate_cast <WORD> (curdt.minute ());
-      sys_time.wSecond = ACE_Utils::truncate_cast <WORD> (curdt.second ());
-      sys_time.wMilliseconds = ACE_Utils::truncate_cast <WORD> (curdt.microsec () / 1000);
-      if (!::SetLocalTime (&sys_time))
+      SYSTEMTIME reset_time;
+      reset_time.wDay = ACE_Utils::truncate_cast <WORD> (curdt.day ());
+      reset_time.wMonth = ACE_Utils::truncate_cast <WORD> (curdt.month ());
+      reset_time.wYear = ACE_Utils::truncate_cast <WORD> (curdt.year ());
+      reset_time.wHour = ACE_Utils::truncate_cast <WORD> (curdt.hour ());
+      reset_time.wMinute = ACE_Utils::truncate_cast <WORD> (curdt.minute ());
+      reset_time.wSecond = ACE_Utils::truncate_cast <WORD> (curdt.second ());
+      reset_time.wMilliseconds = ACE_Utils::truncate_cast <WORD> (curdt.microsec () / 1000);
+      if (!::SetLocalTime (&reset_time))
 #    else
       curts = curtime;
       if (ACE_OS::clock_settime (CLOCK_REALTIME, &curts) != 0)
