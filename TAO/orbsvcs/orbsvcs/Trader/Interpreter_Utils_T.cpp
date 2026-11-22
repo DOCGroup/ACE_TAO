@@ -26,7 +26,9 @@ TAO_find (const CORBA::Any& sequence, const OPERAND_TYPE& element)
       for (CORBA::ULong i {}; i < length && ! return_value; ++i)
         {
           if (functor (dyn_seq, element))
-            return_value = true;
+            {
+              return_value = true;
+            }
 
           dyn_seq.next( );
         }

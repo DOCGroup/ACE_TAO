@@ -93,7 +93,9 @@ template <ACE_PEER_STREAM_1>
 int ConnectionDetectHandler<ACE_PEER_STREAM_2>::close (u_long )
 {
   if (listener_)
-    listener_->connection_closed();
+    {
+      listener_->connection_closed();
+    }
   delete this;
   return 0;
 }

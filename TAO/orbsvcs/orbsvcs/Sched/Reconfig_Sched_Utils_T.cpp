@@ -962,7 +962,9 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
       RtecScheduler::Criticality_t max_crit = entry_crit;
 
       if (max_crit < succ_crit)
-        max_crit = succ_crit;
+        {
+          max_crit = succ_crit;
+        }
 
       successor.actual_rt_info ()->criticality = max_crit;
 

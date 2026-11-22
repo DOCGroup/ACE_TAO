@@ -142,7 +142,9 @@ TAO_ECG_Complex_Address_Server::get_addr (
       // Key was not found in the mapping.  Use default.
 #if defined (ACE_HAS_IPV6)
       if (this->default_addr_.get_type() == PF_INET6)
-        throw CORBA::DATA_CONVERSION(0, CORBA::COMPLETED_YES);
+        {
+          throw CORBA::DATA_CONVERSION(0, CORBA::COMPLETED_YES);
+        }
 #endif /* ACE_HAS_IPV6 */
       addr.ipaddr = this->default_addr_.get_ip_address ();
       addr.port = this->default_addr_.get_port_number ();
@@ -151,7 +153,9 @@ TAO_ECG_Complex_Address_Server::get_addr (
     {
 #if defined (ACE_HAS_IPV6)
       if (mapping_entry->int_id_.get_type() == PF_INET6)
-        throw CORBA::DATA_CONVERSION(0, CORBA::COMPLETED_YES);
+        {
+          throw CORBA::DATA_CONVERSION(0, CORBA::COMPLETED_YES);
+        }
 #endif /* ACE_HAS_IPV6 */
       addr.ipaddr = mapping_entry->int_id_.get_ip_address ();
       addr.port = mapping_entry->int_id_.get_port_number ();

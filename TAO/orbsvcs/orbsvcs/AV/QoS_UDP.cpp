@@ -1024,7 +1024,9 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
 
   result = handler->get_socket ()->get_local_addr (*local_addr);
   if (result < 0)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_Dgram_Connector::open: get_local_addr failed\n"),result);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_Dgram_Connector::open: get_local_addr failed\n"),result);
+    }
   local_addr->set (local_addr->get_port_number (),
                    local_addr->get_host_name ());
 

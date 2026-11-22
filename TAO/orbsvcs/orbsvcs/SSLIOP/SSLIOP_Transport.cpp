@@ -281,7 +281,9 @@ TAO::SSLIOP::Transport::get_listen_point (
 
 #ifdef ACE_HAS_IPV6
   if (local_addr.is_ipv4_mapped_ipv6 ())
-    local_addr.set (local_addr.get_port_number (), local_addr.get_ip_address ());
+    {
+      local_addr.set (local_addr.get_port_number (), local_addr.get_ip_address ());
+    }
 #endif /* ACE_HAS_IPV6 */
 
   // Note: Looks like there is no point in sending the list of

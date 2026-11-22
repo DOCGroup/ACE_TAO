@@ -138,9 +138,13 @@ TAO_UIPMC_Acceptor::open (
       else
         {
           if (cp_pos[1] == ':')    // Look for a port
-            port_separator_loc = cp_pos + 1;
+            {
+              port_separator_loc = cp_pos + 1;
+            }
           else
-            port_separator_loc = nullptr;
+            {
+              port_separator_loc = nullptr;
+            }
           // Extract out just the host part of the address.
           size_t const len = cp_pos - (address + 1);
           std::memcpy (tmp_host, address + 1, len);

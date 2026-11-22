@@ -21,7 +21,9 @@ TAO_ECG_Simple_Address_Server::get_addr (
 {
 #if defined (ACE_HAS_IPV6)
   if (this->addr_.get_type() == PF_INET6)
-    throw CORBA::DATA_CONVERSION(0, CORBA::COMPLETED_YES);
+    {
+      throw CORBA::DATA_CONVERSION(0, CORBA::COMPLETED_YES);
+    }
 #endif /* ACE_HAS_IPV6 */
   // unsigned long
   addr.ipaddr = this->addr_.get_ip_address ();
