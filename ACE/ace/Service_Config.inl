@@ -88,12 +88,12 @@ ACE_Service_Config::instance ()
   return ACE_Service_Config::current ();
 }
 
-/// This method returns the gestalt instead of the container underlying
-/// the service repository and defined by
-/// ACE_Service_Gestalt::insert (ACE_Static_Svc_Descriptor*). Existing
-/// source code can keep using ACE_Service_Config::static_svcs(), while
-/// repository storage stays hidden and service registration problems are
-/// easier to debug.
+/// This method now returns the service gestalt instead of exposing the
+/// underlying repository container. Existing code can continue to use
+/// ACE_Service_Config::static_svcs() through
+/// ACE_Service_Gestalt::insert (ACE_Static_Svc_Descriptor*), without
+/// exposing repository storage. This also makes service registration
+/// problems easier to debug.
 
 ACE_INLINE ACE_Service_Gestalt*
 ACE_Service_Config::static_svcs ()
