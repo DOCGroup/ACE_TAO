@@ -86,14 +86,15 @@ public:
   void operator= (ETCL_Literal_Constraint const &co);
   void operator= (ETCL_Literal_Constraint &&) = delete;
 
-  // Conversion routines.
+  /// @name Conversion routines
+  /// @{
+
   operator ACE_CDR::Boolean () const;
   operator ACE_CDR::ULong () const;
   operator ACE_CDR::Long () const;
   operator ACE_CDR::Double () const;
   operator char const * () const;
-
-  // Return the type represented by this MysteryOperand.
+  /// @}
 
   /// @name Boolean operators
   /// @{
