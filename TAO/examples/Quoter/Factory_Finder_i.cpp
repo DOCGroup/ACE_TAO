@@ -70,7 +70,9 @@ Quoter_Factory_Finder_i::find_factories (CosLifeCycle::Key const &factory_key)
 
     // Check if it is a valid Quoter Factory reference.
     if (CORBA::is_nil (quoterFactoryObject_var.in ())) // throw a NoFactory exception.
-      throw CosLifeCycle::NoFactory (factory_key);
+      {
+        throw CosLifeCycle::NoFactory (factory_key);
+      }
 
     // insert the object reference
     (*factories)[0] = CORBA::Object::_duplicate (quoterFactoryObject_var.in ());

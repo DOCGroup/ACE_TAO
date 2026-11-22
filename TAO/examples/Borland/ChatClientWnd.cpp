@@ -20,7 +20,9 @@ __fastcall TChatClientWindow::TChatClientWindow (TComponent* Owner)
                             "noname");
 
       if (!OpenDialog->Execute ())
-        throw Exception ("IOR file not selected - unable to continue");
+        {
+          throw Exception ("IOR file not selected - unable to continue");
+        }
       ior_file_name_ = OpenDialog->FileName;
 
       // Retrieve the ORB.
@@ -48,7 +50,9 @@ __fastcall TChatClientWindow::TChatClientWindow (TComponent* Owner)
         orb_->string_to_object (ior_.c_str ());
 
       if (CORBA::is_nil (server_object.in ()))
-        throw Exception ("Invalid IOR " + ior_);
+        {
+          throw Exception ("Invalid IOR " + ior_);
+        }
 
       server_ = Broadcaster::_narrow (server_object);
 
@@ -77,7 +81,9 @@ void __fastcall TChatClientWindow::WMMessageReceived (TMessage& Message)
   std::unique_ptr<String> str (reinterpret_cast<String *> (Message.WParam));
   for (int i = 1; i <= str->Length (); ++i)
     if (ACE_OS::ace_isspace ((*str)[i]))
-      (*str)[i] = ' ';
+      {
+        (*str)[i] = ' ';
+      }
   OutputMemo->Lines->Append (str->Trim ());
 }
 //---------------------------------------------------------------------------

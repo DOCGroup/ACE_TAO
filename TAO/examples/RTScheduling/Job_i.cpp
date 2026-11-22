@@ -66,7 +66,9 @@ Job_i::work (CORBA::ULong work,
   RTScheduling::Current::IdType_var guid = current->id ();
 
   if (guid_ == 0)
-    ACE_OS::memcpy (&guid_, guid->get_buffer (), sizeof (guid->length ()));
+    {
+      ACE_OS::memcpy (&guid_, guid->get_buffer (), sizeof (guid->length ()));
+    }
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
