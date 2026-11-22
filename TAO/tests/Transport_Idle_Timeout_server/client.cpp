@@ -102,7 +102,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         Transport_Idle_Timeout_Test::Test::_narrow (object.in ());
 
       if (CORBA::is_nil (test.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR, "nil Test reference\n"), 1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "nil Test reference\n"), 1);
+        }
 
       // Y=2, X=2. Reuse for five seconds, beyond the first Y+X window.
       // Process closure notifications and check before each new invocation

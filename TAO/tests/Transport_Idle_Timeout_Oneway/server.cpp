@@ -76,10 +76,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         std::unique_ptr<FILE, int (*) (FILE *)> file (
           ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
         if (!file)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("(%P|%t) Cannot open output file '%s'\n"),
-                             options.ior_output_file.c_str ()),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("(%P|%t) Cannot open output file '%s'\n"),
+                               options.ior_output_file.c_str ()),
+                              1);
+          }
         ACE_OS::fprintf (file.get (), "%s", ior.in ());
       }
 
@@ -113,9 +115,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (impl->test_failed () || size != 0)
         {
           if (size != 0)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) ERROR: expected server transport cache size 0, got %B\n"),
-                        size));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) ERROR: expected server transport cache size 0, got %B\n"),
+                          size));
+            }
           return 1;
         }
 
