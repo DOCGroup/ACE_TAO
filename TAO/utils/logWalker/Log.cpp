@@ -1009,9 +1009,18 @@ void
 Log::get_timestamp ()
 {
   const char *time_tok = std::strchr (this->line_, '@');
-  size_t len = (size_t)(time_tok - this->line_);
+  if (time_tok == nullptr)
+    {
+      return;
+    }
 
-  if (time_tok != nullptr && len < 28 )
+  size_t len = static_cast<size_t> (time_tok - this->line_);
+  if (len < 11)
+    {
+      return;
+    }
+
+  if (len < 28)
     {
       if (this->line_[4] != '-' ||
           this->line_[7] != '-' ||
