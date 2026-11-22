@@ -70,12 +70,12 @@ PortableServer::Servant
 create_test_i (CORBA::ORB_ptr orb,
                PortableServer::POA_ptr poa)
 {
-  PortableServer::Servant servant;
+  PortableServer::Servant servant {};
 
   ACE_NEW_RETURN (servant,
                   test_i (orb,
                           poa),
-                  0);
+                  nullptr);
   return servant;
 }
 
@@ -88,7 +88,7 @@ supply_servant (const PortableServer::ObjectId &oid,
                 PortableServer::POA_ptr poa,
                 CORBA::ORB_ptr orb)
 {
-  PortableServer::Servant servant = 0;
+  PortableServer::Servant servant {};
 
   // Convert ObjectId to string.
   CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
@@ -98,7 +98,7 @@ supply_servant (const PortableServer::ObjectId &oid,
       ACE_NEW_RETURN (servant,
                       test_i (orb,
                               poa),
-                      0);
+                      nullptr);
     }
   return servant;
 }
