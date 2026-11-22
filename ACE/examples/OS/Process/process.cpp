@@ -314,9 +314,11 @@ win32_test_ls ()
   ::CloseHandle (startup_info.hStdOutput);
 
   if (fork_result == 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p CreateProcess failed.\n"),
-                ACE_TEXT ("test_ls")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p CreateProcess failed.\n"),
+                  ACE_TEXT ("test_ls")));
+    }
   else
     {
       ::WaitForSingleObject (process_info.hProcess,
@@ -434,9 +436,11 @@ win32_spawn_environment_process ()
   ::CloseHandle (startup_info.hStdError);
 
   if (fork_result == 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p.\n"),
-                ACE_TEXT ("spawn_environment_process")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p.\n"),
+                  ACE_TEXT ("spawn_environment_process")));
+    }
   else
     {
       ::WaitForSingleObject (process_info.hProcess,
@@ -563,7 +567,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_UNUSED_ARG (&win32_test_ls);
 
   if (environment_string != nullptr)
-    win32_spawn_environment_process ();
+    {
+      win32_spawn_environment_process ();
+    }
 #endif /* ACE_WIN32 */
 
   if (print_file != nullptr)
