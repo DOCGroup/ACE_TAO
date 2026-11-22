@@ -211,7 +211,7 @@ run_main (int, ACE_TCHAR *[])
   // Reverse the original file and write the output to the temporary
   // file.
   reverse_file (temp_file_handle,
-                (char *) mmap.addr (),
+                static_cast<char *> (mmap.addr ()),
                 mmap.size ());
 #if defined (__QNXNTO__) || (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x670))
   mmap_4_open.close();
@@ -248,7 +248,7 @@ run_main (int, ACE_TCHAR *[])
   // Now reverse the temporary file and write everything to the second
   // temporary file.
   reverse_file (temp_file_handle,
-                (char *) temp_mmap.addr (),
+                static_cast<char *> (temp_mmap.addr ()),
                 temp_mmap.size ());
 #if defined (__QNXNTO__) || (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x670))
   mmap_4_open.close();
