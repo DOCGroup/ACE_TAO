@@ -20,7 +20,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *const argv[])
   int flags = 0;
 
   if (argc > 1)
-    rendezvous = argv[1];
+    {
+      rendezvous = argv[1];
+    }
 
   ACE_OS::unlink (rendezvous);
   ACE_OS::fdetach (ACE_TEXT_ALWAYS_CHAR (rendezvous));
@@ -29,20 +31,30 @@ ACE_TMAIN (int argc, ACE_TCHAR *const argv[])
   ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);
 
   if (peer_acceptor.open (addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 1);
+    }
 
   ACE_DEBUG ((LM_DEBUG, "waiting for connection\n"));
 
   if (peer_acceptor.accept (new_stream, nullptr, &timeout) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "accept"), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "accept"), 1);
+    }
 
   ACE_DEBUG ((LM_DEBUG, "accepted\n"));
 
   while (new_stream.recv (nullptr, &buffer, &flags) >= 0)
-    if (buffer.len == 0)
-      break;
-    else
-      ACE_OS::write (ACE_STDOUT, buffer.buf, buffer.len);
+    {
+      if (buffer.len == 0)
+        {
+          break;
+        }
+      else
+        {
+          ACE_OS::write (ACE_STDOUT, buffer.buf, buffer.len);
+        }
+    }
   return 0;
 }
 #else

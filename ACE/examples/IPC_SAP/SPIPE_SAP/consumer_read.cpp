@@ -22,23 +22,31 @@ ACE_TMAIN (int argc, ACE_TCHAR *const argv[])
   ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);
 
   if (argc > 1)
-    rendezvous = argv[1];
+    {
+      rendezvous = argv[1];
+    }
 
   ACE_OS::unlink (rendezvous);
   ACE_OS::fdetach (ACE_TEXT_ALWAYS_CHAR (rendezvous));
 
   if (peer_acceptor.open (ACE_SPIPE_Addr (rendezvous)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 1);
+    }
 
   ACE_DEBUG ((LM_DEBUG, "waiting for connection\n"));
 
   if (peer_acceptor.accept (new_stream, nullptr, &timeout) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "accept"), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "accept"), 1);
+    }
 
   ACE_DEBUG ((LM_DEBUG, "accepted\n"));
 
   while ((n = new_stream.recv (buf, sizeof buf)) > 0)
-    ACE_OS::write (ACE_STDOUT, buf, n);
+    {
+      ACE_OS::write (ACE_STDOUT, buf, n);
+    }
 
   return 0;
 }
