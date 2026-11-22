@@ -178,10 +178,10 @@ protected:
 private:
   /// Helpers for the connect() method.
   /// @{
-  // Establishes connection to the Event Channel for the first time.
+  /// Establishes connection to the Event Channel for the first time.
   void new_connect (RtecEventChannelAdmin::ConsumerQOS const &sub);
 
-  // Updates existing connection to the Event Channel.
+  /// Updates existing connection to the Event Channel.
   void reconnect (RtecEventChannelAdmin::ConsumerQOS const &sub);
   /// @}
 
