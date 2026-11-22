@@ -34,7 +34,9 @@ read_file (void *fd)
               stream.get_handle ()));
 
   if (stream.close () == -1)
-    ACE_OS::t_error ("stream.close error");
+    {
+      ACE_OS::t_error ("stream.close error");
+    }
 
   return ACE_THR_FUNC_RETURN_NULL;
 }

@@ -22,7 +22,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     {
       msg.len = std::strlen (buf) + 1;
       if (client.send (std::rand () % 11, &msg) == -1)
-        std::perror ("send");
+        {
+          std::perror ("send");
+        }
     }
 
   if (client.close () == -1)
