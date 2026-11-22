@@ -196,7 +196,8 @@ run_tests (interop::WChar_Passer_ptr server)
   ref.set_verbose (verbose);
   int t {1};
   for (int i = 0; i < LAST_TEST; ++i, t <<= 1)
-    if ((tests_to_run & t) == t)
+    {
+      if ((tests_to_run & t) == t)
       {
         bool const result = run_one_test (server, t);
         ++numtests;
@@ -205,13 +206,18 @@ run_tests (interop::WChar_Passer_ptr server)
           ++successes;
         }
         if (verbose)
-          ACE_DEBUG ((LM_DEBUG, "%s[%d] %s\n",
-                      test_name[i], data_set,
-                      (result ? "passed" : "failed")));
+          {
+            ACE_DEBUG ((LM_DEBUG, "%s[%d] %s\n",
+                        test_name[i], data_set,
+                        (result ? "passed" : "failed")));
+          }
       }
+    }
   if (verbose)
-    ACE_DEBUG ((LM_DEBUG, "Total of %d successes out of %d tests\n",
-                successes, numtests));
+    {
+      ACE_DEBUG ((LM_DEBUG, "Total of %d successes out of %d tests\n",
+                  successes, numtests));
+    }
   return successes == numtests;
 }
 #endif // ACE_HAS_WCHAR || ACE_HAS_XPG4_MULTIBYTE_CHAR
@@ -222,55 +228,59 @@ parse_args (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:t:vx"));
   int c {};
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'k':
-        ior = get_opts.opt_arg ();
-        break;
-      case 't':
+    {
+      switch (c)
         {
-          int const tnum = ACE_OS::atoi (get_opts.opt_arg ());
-          if (tnum >= 0 && tnum < LAST_TEST)
-            {
-              tests_to_run |= (1 << tnum);
-            }
-          else
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "test %d is out of range\n",
-                                 tnum),
-                                -1);
-            }
+        case 'k':
+          ior = get_opts.opt_arg ();
           break;
+        case 't':
+          {
+            int const tnum = ACE_OS::atoi (get_opts.opt_arg ());
+            if (tnum >= 0 && tnum < LAST_TEST)
+              {
+                tests_to_run |= (1 << tnum);
+              }
+            else
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "test %d is out of range\n",
+                                   tnum),
+                                  -1);
+              }
+            break;
+          }
+        case 'v':
+          verbose = true;
+          break;
+        case 'x':
+          kill_server = true;
+          break;
+        case '?':
+        default:
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "usage:  %s "
+                        "-k <ior> "
+                        "[-t <0 <= test_num < %d>][ -t ...] "
+                        "[-v] "
+                        "[-x] "
+                        "\n",
+                        argv [0], LAST_TEST));
+            ACE_ERROR ((LM_ERROR, "Available tests:\n"));
+            for (int i = 0; i < LAST_TEST; ++i)
+              {
+                ACE_ERROR ((LM_ERROR, " %d - %s\n",i, test_name[i]));
+              }
+            return -1;
+          }
         }
-      case 'v':
-        verbose = true;
-        break;
-      case 'x':
-        kill_server = true;
-        break;
-      case '?':
-      default:
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "usage:  %s "
-                      "-k <ior> "
-                      "[-t <0 <= test_num < %d>][ -t ...] "
-                      "[-v] "
-                      "[-x] "
-                      "\n",
-                      argv [0], LAST_TEST));
-          ACE_ERROR ((LM_ERROR, "Available tests:\n"));
-          for (int i = 0; i < LAST_TEST; ++i)
-            ACE_ERROR ((LM_ERROR, " %d - %s\n",i, test_name[i]));
-          return -1;
-        }
-      }
+    }
 
   if (tests_to_run == 0)
-  {
-    tests_to_run = ALL_TESTS;
-  }
+    {
+      tests_to_run = ALL_TESTS;
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -287,22 +297,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
       if (parse_args (argc, argv) == -1)
-      {
-        return 0;
-      }
+        {
+          return 0;
+        }
 
       CORBA::Object_var const obj = orb->string_to_object (ior);
       if (CORBA::is_nil (obj.in ()))
-      {
-        ACE_ERROR_RETURN ((LM_ERROR, "arg is not a valid IOR string"), -1);
-      }
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "arg is not a valid IOR string"), -1);
+        }
 
       interop::WChar_Passer_var const server =
         interop::WChar_Passer::_narrow (obj.in ());
       if (CORBA::is_nil (server.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "arg is not an interop::WChar_Passer reference\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "arg is not an interop::WChar_Passer reference\n"),
+                            -1);
+        }
 
       bool const result = run_tests (server.in ());
       CORBA::String_var const server_orb = server->orb_name ();
@@ -311,9 +323,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   server_orb.in (),
                   (result ? "passed" : "failed")));
       if (kill_server)
-      {
-        server->shutdown ();
-      }
+        {
+          server->shutdown ();
+        }
     }
   catch (CORBA::Exception const &ex)
     {

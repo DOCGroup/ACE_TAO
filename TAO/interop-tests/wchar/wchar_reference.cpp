@@ -81,9 +81,11 @@ bool
 wchar_reference::match_wchar (short key, ACE_OS::WChar test) const
 {
   if (verbose_)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("match_wchar, expecting %x, got %x for key %d\n"),
-                wchar_reference::ref_wchar[key],test,key));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("match_wchar, expecting %x, got %x for key %d\n"),
+                  wchar_reference::ref_wchar[key],test,key));
+    }
   return wchar_reference::ref_wchar[key] == test;
 }
 
@@ -93,16 +95,20 @@ wchar_reference::match_wstring (short key, ACE_OS::WChar const *test) const
   if (key == -1)
     {
       if (verbose_)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("match_wstring: expecting nul string, ")
-                    ACE_TEXT("got string length %B\n"),
-                    std::wcslen (test)));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("match_wstring: expecting nul string, ")
+                      ACE_TEXT("got string length %B\n"),
+                      std::wcslen (test)));
+        }
       return std::wcslen (test) == 0;
     }
   if (verbose_)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("match_wstring: expecting %W, got %W for key %d\n"),
-                wchar_reference::ref_wstring[key],test,key));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("match_wstring: expecting %W, got %W for key %d\n"),
+                  wchar_reference::ref_wstring[key],test,key));
+    }
   return std::wcscmp (wchar_reference::ref_wstring[key], test) == 0;
 }
 
@@ -110,19 +116,23 @@ bool
 wchar_reference::match_warray (short key, ACE_OS::WChar const *test) const
 {
   if (verbose_)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("match_warray: key %d\n"),key));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("match_warray: key %d\n"),key));
+    }
   for (size_t i = 0; i < WARRAY_LENGTH; ++i)
     {
       if (verbose_)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("  expecting[%B] %x, got %x\n"),
-                    i, wchar_reference::ref_warray[key][i],
-                    test[i]));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("  expecting[%B] %x, got %x\n"),
+                      i, wchar_reference::ref_warray[key][i],
+                      test[i]));
+        }
       if (wchar_reference::ref_warray[key][i] != test[i])
-      {
-        return false;
-      }
+        {
+          return false;
+        }
     }
   return true;
 }
@@ -131,9 +141,11 @@ bool
 wchar_reference::match_except (short key, ACE_OS::WChar const *test) const
 {
   if (verbose_)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("match_except: expecting %W, got %W for key %d\n"),
-                wchar_reference::ref_except[key],test,key));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("match_except: expecting %W, got %W for key %d\n"),
+                  wchar_reference::ref_except[key],test,key));
+    }
   return std::wcscmp (wchar_reference::ref_except[key], test) == 0;
 }
 #else // ACE_HAS_WCHAR
