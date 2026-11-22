@@ -257,9 +257,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             {
               continue;                   // Skip thermometers
             }
-            CORBA::ULong const len = tss.length ();
-            tss.length (len + 1);
-            tss[len] = tmstat;
+            CORBA::ULong const thermostat_count = tss.length ();
+            tss.length (thermostat_count + 1);
+            tss[thermostat_count] = tmstat;
         }
 
         // Try to change all thermostats.

@@ -118,15 +118,16 @@ UDP_PerformanceClient::svc ()
             }
 
           {
-            ACE_Time_Value tv;
-            timer.elapsed_time (tv);
+            ACE_Time_Value elapsed_time_value;
+            timer.elapsed_time (elapsed_time_value);
 
-            time_t const elapsed_sec = tv.sec ();
-            suseconds_t const elapsed_usec = tv.usec ();
-            unsigned long const elapsed_msec = tv.msec ();
+            time_t const elapsed_sec = elapsed_time_value.sec ();
+            suseconds_t const elapsed_usec = elapsed_time_value.usec ();
+            unsigned long const elapsed_msec = elapsed_time_value.msec ();
 
             ACE_UINT32 const calls_per_second =
-              tv.msec () == 0 ? 0 : (1000L * burst_messages_) / tv.msec ();
+              elapsed_time_value.msec () == 0 ? 0 :
+              (1000L * burst_messages_) / elapsed_time_value.msec ();
 
             ACE_DEBUG ((LM_DEBUG,
                         "\n  Time needed %: s %d us  (%B ms) for %u messages"
