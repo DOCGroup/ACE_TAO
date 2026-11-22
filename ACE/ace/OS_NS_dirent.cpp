@@ -55,7 +55,7 @@ ACE_OS::opendir_emulation (const ACE_TCHAR *filename)
    DWORD fileAttribute = ACE_TEXT_GetFileAttributes (filename);
    if (fileAttribute == INVALID_FILE_ATTRIBUTES
        || !(fileAttribute & FILE_ATTRIBUTE_DIRECTORY))
-     return 0;
+     return nullptr;
 
 /*
   Note: the semantics of the win32 function FindFirstFile take the
@@ -91,10 +91,10 @@ ACE_OS::opendir_emulation (const ACE_TCHAR *filename)
         }
     }
 
-  ACE_NEW_RETURN (dir, ACE_DIR, 0);
+  ACE_NEW_RETURN (dir, ACE_DIR, nullptr);
   ACE_NEW_RETURN (dir->directory_name_,
                   ACE_TCHAR[lastchar + ACE_OS::strlen (extra) + 1],
-                  0);
+                  nullptr);
   ACE_OS::strcpy (dir->directory_name_, filename);
   if (extra[0])
     {
@@ -102,11 +102,11 @@ ACE_OS::opendir_emulation (const ACE_TCHAR *filename)
     }
   dir->current_handle_ = INVALID_HANDLE_VALUE;
   dir->started_reading_ = 0;
-  dir->dirent_ = 0;
+  dir->dirent_ = nullptr;
   return dir;
 #else /* WIN32 */
   ACE_UNUSED_ARG (filename);
-  ACE_NOTSUP_RETURN (0);
+  ACE_NOTSUP_RETURN (nullptr);
 #endif /* WIN32 */
 }
 #endif /* ACE_LACKS_CLOSEDIR */

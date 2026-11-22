@@ -58,13 +58,13 @@ ACE_TSS_Connection::make_TSS_TYPE () const
 
   ACE_NEW_RETURN (stream,
                   ACE_SOCK_Stream,
-                  0);
+                  nullptr);
 
   if (connector.connect (*stream, server_address_) == -1)
     {
       delete stream;
       errno = ECONNREFUSED;
-      return 0;
+      return nullptr;
     }
 
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_TSS_Connection new connection\n")));
@@ -438,7 +438,7 @@ ACE_Remote_Mutex::clone () const
                   ACE_Remote_Mutex (this->name (),
                                                       ignore_deadlock_,
                                                       debug_),
-                  0);
+                  nullptr);
   return temp;
 }
 
@@ -448,7 +448,7 @@ ACE_Remote_Mutex::create_token (const ACE_TCHAR *name)
   ACE_Tokens *temp;
   ACE_NEW_RETURN (temp,
                   ACE_Mutex_Token (name),
-                  0);
+                  nullptr);
   return temp;
 }
 
@@ -471,7 +471,7 @@ ACE_Remote_RLock::create_token (const ACE_TCHAR *name)
   ACE_Tokens *temp {};
   ACE_NEW_RETURN (temp,
                   ACE_RW_Token (name),
-                  0);
+                  nullptr);
   return temp;
 }
 
@@ -489,7 +489,7 @@ ACE_Remote_RLock::clone () const
                   ACE_Remote_RLock (this->name (),
                                     ignore_deadlock_,
                                     debug_),
-                  0);
+                  nullptr);
   return temp;
 }
 
@@ -512,7 +512,7 @@ ACE_Remote_WLock::create_token (const ACE_TCHAR *name)
   ACE_Tokens *temp {};
   ACE_NEW_RETURN (temp,
                   ACE_RW_Token (name),
-                  0);
+                  nullptr);
   return temp;
 }
 
@@ -530,7 +530,7 @@ ACE_Remote_WLock::clone () const
                   ACE_Remote_WLock (this->name (),
                                     ignore_deadlock_,
                                     debug_),
-                  0);
+                  nullptr);
   return temp;
 }
 
