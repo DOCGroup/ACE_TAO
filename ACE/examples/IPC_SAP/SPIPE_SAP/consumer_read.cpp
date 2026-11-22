@@ -11,7 +11,7 @@
 #include "shared.h"
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *const argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *const [])
 {
   ACE_SPIPE_Acceptor peer_acceptor;
   ACE_SPIPE_Stream new_stream;
