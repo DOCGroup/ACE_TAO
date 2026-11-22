@@ -19,7 +19,7 @@
 
 struct Printer
 {
-  Printer (const char *message);
+  explicit Printer (const char *message);
   ~Printer () ;
 
   void print ();
