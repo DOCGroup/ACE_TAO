@@ -25,46 +25,48 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 't':
-        options.data_type = get_opts.opt_arg ();
-
-        if (ACE_OS::strcmp (options.data_type, ACE_TEXT("octet")) != 0 &&
-            ACE_OS::strcmp (options.data_type, ACE_TEXT("char")) != 0 &&
-            ACE_OS::strcmp (options.data_type, ACE_TEXT("long")) != 0 &&
-            ACE_OS::strcmp (options.data_type, ACE_TEXT("short")) != 0 &&
-            ACE_OS::strcmp (options.data_type, ACE_TEXT("double")) != 0 &&
-            ACE_OS::strcmp (options.data_type, ACE_TEXT("longlong")) != 0)
+    {
+      switch (c)
         {
-          return -1;
+        case 't':
+          options.data_type = get_opts.opt_arg ();
+
+          if (ACE_OS::strcmp (options.data_type, ACE_TEXT("octet")) != 0 &&
+              ACE_OS::strcmp (options.data_type, ACE_TEXT("char")) != 0 &&
+              ACE_OS::strcmp (options.data_type, ACE_TEXT("long")) != 0 &&
+              ACE_OS::strcmp (options.data_type, ACE_TEXT("short")) != 0 &&
+              ACE_OS::strcmp (options.data_type, ACE_TEXT("double")) != 0 &&
+              ACE_OS::strcmp (options.data_type, ACE_TEXT("longlong")) != 0)
+            {
+              return -1;
+            }
+          break;
+
+        case 's':
+          options.size = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
+
+        case 'x':
+          options.shutdown = false;
+          break;
+
+        case 'k':
+          options.ior = get_opts.opt_arg ();
+          break;
+
+        case 'i':
+          options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
+
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("usage: %s -t <datatype> -s <size> -k <ior> "
+                                      "-i <niterations> -x\n"),
+                             argv [0]),
+                            -1);
         }
-        break;
-
-      case 's':
-        options.size = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-
-      case 'x':
-        options.shutdown = false;
-        break;
-
-      case 'k':
-        options.ior = get_opts.opt_arg ();
-        break;
-
-      case 'i':
-        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("usage: %s -t <datatype> -s <size> -k <ior> "
-                                    "-i <niterations> -x\n"),
-                           argv [0]),
-                          -1);
-      }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -88,8 +90,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       "test runs in time-shared class\n"));
         }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "client (%P|%t): sched_params failed\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "client (%P|%t): sched_params failed\n"));
+        }
     }
   try
     {
@@ -124,7 +128,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_hrtime_t const test_start = ACE_OS::gethrtime ();
       for (Client_Task &task : tasks)
-        task.activate (THR_NEW_LWP | THR_JOINABLE);
+        {
+          task.activate (THR_NEW_LWP | THR_JOINABLE);
+        }
 
       tasks [0].thr_mgr ()->wait ();
       ACE_hrtime_t const test_end = ACE_OS::gethrtime ();
