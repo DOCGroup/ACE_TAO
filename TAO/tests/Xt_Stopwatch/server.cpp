@@ -81,9 +81,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       stopwatch.manage ();
 
       // Make a timer class
-      Timer_imp timer (app, 100, &stopwatch);
+      Timer_imp timer (app, 100, std::addressof (stopwatch));
 
-      Stopwatch_imp server_impl (orb.in (), &timer);
+      Stopwatch_imp server_impl (orb.in (), std::addressof (timer));
 
       PortableServer::ObjectId_var const id =
         root_poa->activate_object (std::addressof (server_impl));
