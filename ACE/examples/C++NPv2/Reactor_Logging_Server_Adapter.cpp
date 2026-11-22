@@ -26,7 +26,7 @@ Reactor_Logging_Server_Adapter<ACCEPTOR>::init (int argc,
 // handle_close().
 template <class ACCEPTOR> int
 Reactor_Logging_Server_Adapter<ACCEPTOR>::fini ()
-{ ((ACCEPTOR*)server_)->handle_close (); server_ = nullptr; return 0; }
+{ (static_cast<ACCEPTOR *> (server_))->handle_close (); server_ = nullptr; return 0; }
 
 template <class ACCEPTOR> int
 Reactor_Logging_Server_Adapter<ACCEPTOR>::info
