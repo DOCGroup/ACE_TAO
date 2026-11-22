@@ -110,9 +110,11 @@ Worker_Task::svc ()
       ACE_Message_Block *mb {};
 
       if (-1 == this->msg_queue ()->dequeue_head (mb))
-        ACE_ERROR_BREAK ((LM_ERROR,
-                          ACE_TEXT ("(%t) %p\n"),
-                          ACE_TEXT ("Worker_Task dequeue_head")));
+        {
+          ACE_ERROR_BREAK ((LM_ERROR,
+                            ACE_TEXT ("(%t) %p\n"),
+                            ACE_TEXT ("Worker_Task dequeue_head")));
+        }
 
       size_t length = mb->length ();
 
@@ -124,9 +126,11 @@ Worker_Task::svc ()
       if (this->next () != nullptr)
         {
           if (-1 == this->put_next (mb->duplicate ()))
-            ACE_ERROR_BREAK ((LM_ERROR,
-                              ACE_TEXT ("(%t) %p\n"),
-                              ACE_TEXT ("Worker_Task put_next")));
+            {
+              ACE_ERROR_BREAK ((LM_ERROR,
+                                ACE_TEXT ("(%t) %p\n"),
+                                ACE_TEXT ("Worker_Task put_next")));
+            }
         }
 
       // If there's no next() Task to send to, then we'll consume the
@@ -137,10 +141,12 @@ Worker_Task::svc ()
           int i;
 
           if (count != current_count)
-            ACE_ERROR_BREAK ((LM_ERROR,
-                              ACE_TEXT ("(%t) count from block should be %d ")
-                              ACE_TEXT ("but is %d\n"),
-                              count, current_count));
+            {
+              ACE_ERROR_BREAK ((LM_ERROR,
+                                ACE_TEXT ("(%t) count from block should be %d ")
+                                ACE_TEXT ("but is %d\n"),
+                                count, current_count));
+            }
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) enqueueing %d duplicates\n"),
@@ -168,10 +174,12 @@ Worker_Task::svc ()
                            (ACE_Time_Value *) &ACE_Time_Value::zero);
 
               if (enqueue_prio_result == -1)
-                ACE_ERROR_BREAK ((LM_ERROR,
-                                  ACE_TEXT ("(%t) Pass %d %p\n"),
-                                  i,
-                                  ACE_TEXT ("Worker_Task enqueue_prio")));
+                {
+                  ACE_ERROR_BREAK ((LM_ERROR,
+                                    ACE_TEXT ("(%t) Pass %d %p\n"),
+                                    i,
+                                    ACE_TEXT ("Worker_Task enqueue_prio")));
+                }
             }
 
           ACE_DEBUG ((LM_DEBUG,
@@ -182,10 +190,12 @@ Worker_Task::svc ()
           for (i = current_count; i > 0; --i)
             {
               if (-1 == this->msg_queue ()->dequeue_head (dup))
-                ACE_ERROR_BREAK ((LM_ERROR,
-                                  ACE_TEXT ("(%t) Dup %d, %p\n"),
-                                  i,
-                                  ACE_TEXT ("Worker_Task dequeue dups")));
+                {
+                  ACE_ERROR_BREAK ((LM_ERROR,
+                                    ACE_TEXT ("(%t) Dup %d, %p\n"),
+                                    i,
+                                    ACE_TEXT ("Worker_Task dequeue dups")));
+                }
               if (count != ACE_OS::atoi ((ACE_TCHAR *)(dup->rd_ptr ())))
                 {
                   ACE_ERROR ((LM_ERROR,

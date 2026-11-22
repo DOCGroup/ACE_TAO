@@ -44,14 +44,20 @@ client (void *)
   ACE_OS::sleep (5);
 
   if (con.connect (cli_stream, ACE_SPIPE_Addr (rendezvous)) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), rendezvous, 1));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), rendezvous, 1));
+    }
 
   for (const char *c = ACE_ALPHABET; *c != '\0'; ++c)
     if (cli_stream.send (c, 1) == -1)
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send")));
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send")));
+      }
 
   if (cli_stream.close () == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("close")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("close")));
+    }
 
 #if defined (ACE_HAS_WIN32_NAMED_PIPES)
 
@@ -73,15 +79,21 @@ client (void *)
   // Write out the alphabet all at once.
   if (cli_stream.send_n (ACE_ALPHABET,
                          ACE_OS::strlen (ACE_ALPHABET)) != (ssize_t) ACE_OS::strlen (ACE_ALPHABET))
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send_n")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send_n")));
+    }
 
   // Write out the alphabet one byte at a time
   for (const char *d = ACE_ALPHABET; *d != '\0'; ++d)
     if (cli_stream.send (d, 1) == -1)
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send")));
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send")));
+      }
 
   if (cli_stream.close () == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("close")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("close")));
+    }
 #endif
 
 #if !defined (ACE_WIN32)
@@ -103,13 +115,17 @@ server (void *)
   // Initialize named pipe listener.
 
   if (acceptor.open (ACE_SPIPE_Addr (rendezvous)) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("open"), 1));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("open"), 1));
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("waiting for connection\n")));
 
   // Accept a client connection
   if (acceptor.accept (new_stream, 0) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("accept"), 1));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("accept"), 1));
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Accepted connection\n")));
 
@@ -129,13 +145,17 @@ server (void *)
                      0,
                      0,
                      PIPE_TYPE_BYTE | PIPE_READMODE_BYTE) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("open"), 1));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("open"), 1));
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("waiting for connection\n")));
 
   // Accept a client connection
   if (acceptor.accept (new_stream, 0) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("accept"), 1));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("accept"), 1));
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Accepted connection\n")));
 
@@ -158,9 +178,13 @@ server (void *)
   // Verify that we can read the stream of individual bytes all at
   // once.
   if (new_stream.recv (buf, sizeof(buf)) != (ssize_t) ACE_OS::strlen (ACE_ALPHABET))
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("recv"), 1));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("recv"), 1));
+    }
   else
-    ACE_TEST_ASSERT(ACE_OS::memcmp(ACE_ALPHABET, buf, ACE_OS::strlen (ACE_ALPHABET)) == 0);
+    {
+      ACE_TEST_ASSERT(ACE_OS::memcmp(ACE_ALPHABET, buf, ACE_OS::strlen (ACE_ALPHABET)) == 0);
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("End of connection. Closing handle\n")));
   new_stream.close ();
