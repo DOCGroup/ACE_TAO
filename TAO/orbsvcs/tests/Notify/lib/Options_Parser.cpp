@@ -90,7 +90,7 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, A
 
       NotifyExt::ThreadPoolParams tp_params
         = { NotifyExt::CLIENT_PROPAGATED, default_priority,
-            0, static_threads, 0, default_priority, 0, 0, 0 };
+            0, static_threads, 0, default_priority, false, 0, 0 };
 
       qos.length (1);
       qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);

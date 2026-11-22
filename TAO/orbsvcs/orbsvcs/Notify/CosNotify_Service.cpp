@@ -306,7 +306,7 @@ void
 TAO_CosNotify_Service::set_threads (CosNotification::QoSProperties &qos, int threads)
 {
   NotifyExt::ThreadPoolParams tp_params =
-    {NotifyExt::CLIENT_PROPAGATED, 0, 0, (unsigned)threads, 0, 0, 0, 0, 0 };
+    {NotifyExt::CLIENT_PROPAGATED, 0, 0, (unsigned)threads, 0, 0, false, 0, 0 };
 
   qos.length (1);
   qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
