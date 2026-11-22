@@ -117,7 +117,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     {
       // It is ok to lose some number of messages at the beginning.
       //
-      unsigned long count (0);
+      decltype (lost_count) count {};
 
       for (unsigned char const e : received)
       {
