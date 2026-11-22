@@ -42,13 +42,14 @@ client (void *arg)
 
   ACE_SOCK_Stream cli_stream;
   ACE_SOCK_Connector con;
+  ACE_Time_Value nonblocking_timeout (ACE_Time_Value::zero);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) starting non-blocking connect\n")));
   // Initiate timed, non-blocking connection with server.
 
   // Attempt a non-blocking connect to the server.
   if (con.connect (cli_stream, server_addr,
-                   (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
+                   &nonblocking_timeout) == -1)
     {
       if (errno != EWOULDBLOCK)
         {
