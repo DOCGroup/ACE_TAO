@@ -148,10 +148,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         Stock::StockDistributor::_narrow (obj.in ()));
 
       if (CORBA::is_nil (stock_distributor.in ()))
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "Nil StockDistributor object reference <%s>\n",
-                           ior.c_str ()),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "Nil StockDistributor object reference <%s>\n",
+                             ior.c_str ()),
+                            1);
+        }
 
       // Create an instance of the <StockBroker>.
 
@@ -162,10 +164,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                   stock_name.c_str ()));
 
       if (CORBA::is_nil (stock_broker.in ()))
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "Nil StockBroker object reference <%s>\n",
-                           ior.c_str ()),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "Nil StockBroker object reference <%s>\n",
+                             ior.c_str ()),
+                            1);
+        }
 
       // Create a new consumer and initialize it.
       Stock::StockNameConsumer_var consumer (stock_broker->get_consumer_notifier ());
@@ -182,9 +186,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         stock_distributor->provide_quoter_info (cookie.in ()));
 
       if (CORBA::is_nil (stock_quoter.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "ERROR: Quoter reference was nil!\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "ERROR: Quoter reference was nil!\n"),
+                            -1);
+        }
 
       // Stash the stock_quoter object reference away for later use.
       stock_broker->connect_quoter_info (stock_quoter.in ());

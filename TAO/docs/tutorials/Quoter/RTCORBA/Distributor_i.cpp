@@ -112,9 +112,11 @@ StockDistributor_i::provide_quoter_info (::Stock::Cookie *ck)
         ::Stock::StockQuoter::_narrow (obj.in ()));
 
       if (CORBA::is_nil (quoter_var.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "ERROR: No reference to quoter returned from narrow!\n"),
-                          0);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "ERROR: No reference to quoter returned from narrow!\n"),
+                            0);
+        }
 
       return quoter_var._retn ();
     }
@@ -272,8 +274,10 @@ StockDistributorHome_i::StockDistributorHome_i (CORBA::ORB_ptr orb)
 {
   // Register this class as a signal handler to catch keyboard interrupts.
   if (orb_->orb_core ()->reactor ()->register_handler (SIGINT, this) == -1)
-    ACE_DEBUG ((LM_DEBUG, "ERROR: Failed to register as a signal handler: %p\n",
-                "register_handler\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG, "ERROR: Failed to register as a signal handler: %p\n",
+                  "register_handler\n"));
+    }
 
   // Register the necessary factories and mappings with the specified
   // <orb>. If we neglect to perform these registrations then the app

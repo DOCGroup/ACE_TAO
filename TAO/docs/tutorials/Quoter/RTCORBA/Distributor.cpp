@@ -105,10 +105,12 @@ set_distributor_reference (CORBA::ORB_ptr orb,
       CORBA::String_var str (orb->object_to_string (obj));
       FILE *output_file = ACE_OS::fopen (ior.c_str (), "w");
       if (output_file == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s\n",
-                           ior.c_str ()),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s\n",
+                             ior.c_str ()),
+                            -1);
+        }
       ACE_OS::fprintf (output_file, "%s", str.in ());
       ACE_OS::fclose (output_file);
     }
@@ -145,16 +147,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Stock::StockDistributor_var stock_distributor (stock_distributor_home.create ());
 
       if (CORBA::is_nil (stock_distributor.in ()))
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "Nil StockDistributor object reference <%s>\n",
-                           ior.c_str ()),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "Nil StockDistributor object reference <%s>\n",
+                             ior.c_str ()),
+                            1);
+        }
 
       // Store the distributor reference in a location that's
       // accessible by the client.
       if (set_distributor_reference (orb.in (),
                                      stock_distributor.in ()) == -1)
-        return 1;
+        {
+          return 1;
+        }
 
       // Set the initial notification rate.
       stock_distributor->notification_rate (rate);

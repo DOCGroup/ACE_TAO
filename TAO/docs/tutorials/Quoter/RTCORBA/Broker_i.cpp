@@ -114,8 +114,10 @@ Stock_StockBrokerHome_i::Stock_StockBrokerHome_i (CORBA::ORB_ptr orb)
   // Register this class as an event handler with the ORB to catch
   // ctrl-c from the command line.
   if (orb_->orb_core ()->reactor ()->register_handler (SIGINT, this) == -1)
-    ACE_DEBUG ((LM_DEBUG, "ERROR: Failed to register as a signal handler: %p\n",
-                "register_handler\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG, "ERROR: Failed to register as a signal handler: %p\n",
+                  "register_handler\n"));
+    }
 }
 
 Stock_StockBrokerHome_i::~Stock_StockBrokerHome_i () = default;

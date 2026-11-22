@@ -121,10 +121,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         Stock::StockDistributor::_narrow (obj.in ()));
 
       if (CORBA::is_nil (stock_distributor.in ()))
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "Nil StockDistributor object reference <%s>\n",
-                           ior.c_str ()),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "Nil StockDistributor object reference <%s>\n",
+                             ior.c_str ()),
+                            1);
+        }
 
       if (option == Option_Type::STOP)
         {
