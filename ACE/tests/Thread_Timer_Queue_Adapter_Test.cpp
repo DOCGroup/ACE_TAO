@@ -170,7 +170,7 @@ run_main (int, ACE_TCHAR *[])
             ACE_TEXT("%I(%t) Scheduling timer...\n")));
 
         TimerWheelThreadAdapter.schedule(p_TestEventHandler,
-            (void*) 1,
+            reinterpret_cast<void *> (1),
             ACE_OS::gettimeofday() + ACE_Time_Value(1, 0));
 
         ACE_OS::sleep(ACE_Time_Value(1, 100 * 1000));
@@ -193,7 +193,7 @@ run_main (int, ACE_TCHAR *[])
 
         long lTimerHandle =
             TimerWheelThreadAdapter.schedule(p_TestEventHandler,
-                (void*) 1,
+                reinterpret_cast<void *> (1),
                 ACE_OS::gettimeofday() + ACE_Time_Value(1, 0));
 
         // Cancel the repeating timer
@@ -221,7 +221,7 @@ run_main (int, ACE_TCHAR *[])
         long lTimerHandle =
             TimerWheelThreadAdapter.schedule
                 (p_TestEventHandler,
-                 (void*) 1,
+                 reinterpret_cast<void *> (1),
                  ACE_OS::gettimeofday() + ACE_Time_Value(1, 0),
                  ACE_Time_Value(1, 0));
 
@@ -249,17 +249,17 @@ run_main (int, ACE_TCHAR *[])
 
         TimerWheelThreadAdapter.schedule
                 (p_TestEventHandler,
-                 (void*) 1,
+                 reinterpret_cast<void *> (1),
                  ACE_OS::gettimeofday() + ACE_Time_Value(1, 0));
 
         TimerWheelThreadAdapter.schedule
                 (p_TestEventHandler,
-                 (void*) 1,
+                 reinterpret_cast<void *> (1),
                  ACE_OS::gettimeofday() + ACE_Time_Value(1, 0));
 
         TimerWheelThreadAdapter.schedule
                 (p_TestEventHandler,
-                 (void*) 1,
+                 reinterpret_cast<void *> (1),
                  ACE_OS::gettimeofday() + ACE_Time_Value(2, 0));
 
         ACE_OS::sleep(ACE_Time_Value(3, 0));
