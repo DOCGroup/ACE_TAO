@@ -219,7 +219,7 @@ ACEXML_Mem_Map_Stream::grow_file_and_remap ()
   // file.
   ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
   ssize_t bytes = 0;
-  while (1)
+  while (true)
     {
       ssize_t const n = this->svc_handler_->peer ().recv (
         buf, sizeof buf, 0, std::addressof (tv));

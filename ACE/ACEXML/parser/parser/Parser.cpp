@@ -283,7 +283,7 @@ ACEXML_Parser::parse_internal_dtd ()
           this->fatal_error (ACE_TEXT ("Invalid content in internal subset"));
       };
     nextch = this->skip_whitespace ();
-  } while (1);
+  } while (true);
 
   ACE_NOTREACHED (return -1);
 }
@@ -387,7 +387,7 @@ ACEXML_Parser::parse_external_subset ()
           this->fatal_error (ACE_TEXT ("Invalid content in external DTD"));
       }
     nextch = this->skip_whitespace();
-  } while (1);
+  } while (true);
 }
 
 int
@@ -506,7 +506,7 @@ ACEXML_Parser::parse_ignoresect ()
       break;
     }
     nextch = this->get();
-  } while (1);
+  } while (true);
 
   return 0;
 }
@@ -563,7 +563,7 @@ ACEXML_Parser::parse_includesect ()
           this->fatal_error (ACE_TEXT ("Invalid includeSect"));
       }
     nextch = this->skip_whitespace();
-  } while (1);
+  } while (true);
 }
 
 int
@@ -861,7 +861,7 @@ ACEXML_Parser::parse_content (ACEXML_Char const *startname,
   size_t cdata_length {};
 
   // Parse element contents.
-  while (1)
+  while (true)
     {
       ACEXML_Char ch = this->get ();
       switch (ch)
@@ -1028,7 +1028,7 @@ ACEXML_Parser::parse_cdata ()
   ACEXML_Char ch {};
   int datalen {};
   ACEXML_Char *cdata {};
-  while (1)
+  while (true)
     {
       ch = this->get ();
       // Anything goes except the sequence "]]>".
@@ -1981,7 +1981,7 @@ ACEXML_Parser::parse_attvalue (ACEXML_Char *&str)
       return -1;
     }
   ACEXML_Char ch = this->get ();
-  while (1)
+  while (true)
     {
       if (ch == quote)
         {
@@ -2315,7 +2315,7 @@ ACEXML_Parser::parse_entity_value (ACEXML_Char *&str)
       return -1;
     }
   ACEXML_Char ch = this->get ();
-  while (1)
+  while (true)
     {
       if (ch == quote)
         {
@@ -2423,7 +2423,7 @@ ACEXML_Parser::parse_version_num (ACEXML_Char*& str)
       return -1;
     }
   int numchars {};
-  while (1)
+  while (true)
     {
       ACEXML_Char ch = this->get ();
       if (ch == quote && !numchars)
@@ -2459,7 +2459,7 @@ ACEXML_Parser::parse_system_literal (ACEXML_Char*& str)
     {
       return -1;
     }
-  while (1)
+  while (true)
     {
       ACEXML_Char ch = this->get ();
       if (ch == quote)
@@ -2494,7 +2494,7 @@ ACEXML_Parser::parse_pubid_literal (ACEXML_Char*& str)
     {
       return -1;
     }
-  while (1)
+  while (true)
     {
       ACEXML_Char ch = this->get ();
       if (ch == quote)
@@ -2522,7 +2522,7 @@ ACEXML_Parser::parse_encname (ACEXML_Char*& str)
       return -1;
     }
   int numchars {};
-  while (1)
+  while (true)
     {
       ACEXML_Char ch = this->get ();
       if (ch == quote && !numchars)
@@ -2564,7 +2564,7 @@ ACEXML_Parser::parse_sddecl (ACEXML_Char*& str)
       return -1;
     }
   int numchars {};
-  while (1)
+  while (true)
     {
       ACEXML_Char ch = this->get ();
       if (ch == quote && numchars < 2)
