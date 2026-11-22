@@ -270,9 +270,9 @@ ECMS_Driver::supplier_task (Test_Supplier& supplier)
 
           // Now copy over each byte.
           char* base = mb->data_block ()->base ();
-          for (CORBA::ULong i {}; i < mblen; ++i)
+          for (CORBA::ULong byte_index {}; byte_index < mblen; ++byte_index)
             {
-              event[0].data.payload[i] = base[i];
+              event[0].data.payload[byte_index] = base[byte_index];
             }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 

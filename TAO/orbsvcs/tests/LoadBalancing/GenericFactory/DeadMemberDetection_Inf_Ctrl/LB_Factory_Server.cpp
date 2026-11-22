@@ -171,9 +171,10 @@ LB_Factory_Server::init ()
 
           PortableServer::ServantBase_var simple_safe_servant = simple_servant;
 
-          CORBA::Object_var obj = simple_servant->_this ();
-          CORBA::String_var ior = this->orb_->object_to_string (obj.in ());
-          if (this->write_ior_to_file (ior.in (),
+          CORBA::Object_var direct_object = simple_servant->_this ();
+          CORBA::String_var direct_object_ior =
+            this->orb_->object_to_string (direct_object.in ());
+          if (this->write_ior_to_file (direct_object_ior.in (),
                                        this->options_.direct_object_ior_file.c_str ()) != 0)
           {
             return -1;

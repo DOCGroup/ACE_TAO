@@ -75,9 +75,9 @@ Process_Factory::create_new_process ()
     {
       PortableServer::POA_var const poa =
         startup_callback_impl->_default_POA ();
-      PortableServer::ObjectId_var const id =
+      PortableServer::ObjectId_var const callback_object_id =
         poa->servant_to_id (startup_callback_impl);
-      poa->deactivate_object (id.in ());
+      poa->deactivate_object (callback_object_id.in ());
     }
   catch (CORBA::Exception const &)
     {

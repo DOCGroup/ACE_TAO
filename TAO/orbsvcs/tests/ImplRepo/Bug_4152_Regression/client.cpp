@@ -106,9 +106,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             n));
               }
           }
-        catch (const CORBA::Exception &ex)
+        catch (const CORBA::Exception &second_attempt_ex)
           {
-            ex._tao_print_exception ("Client second attempt: ");
+            second_attempt_ex._tao_print_exception ("Client second attempt: ");
           }
       }
 
