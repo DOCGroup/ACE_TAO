@@ -238,15 +238,17 @@ ACE_Process::spawn (ACE_Process_Options &options)
   // environment variables.
 # if defined (ACE_USES_WCHAR)
   wchar_t * const *wargv = options.command_line_argv ();
-  size_t vcount, i;
-  for (vcount = 0; wargv[vcount] != 0; ++vcount)
-    ;
+  size_t vcount {};
+  while (wargv[vcount] != 0)
+    {
+      ++vcount;
+    }
   std::unique_ptr<char *[]> procargv_owner =
     std::make_unique<char *[]> (vcount + 1);
   char **procargv = procargv_owner.get ();
   std::vector<std::unique_ptr<char[]>> procargv_strings;
   procargv_strings.reserve (vcount);
-  for (i = 0; i < vcount; ++i)
+  for (size_t i {}; i < vcount; ++i)
     {
       std::unique_ptr<char[]> converted {ACE_Wide_To_Ascii::convert (wargv[i])};
       procargv[i] = converted.get ();
@@ -259,19 +261,22 @@ ACE_Process::spawn (ACE_Process_Options &options)
   char **procenv {};
   if (options.inherit_environment ())
     {
-      wargv = options.env_argv ();
-      for (vcount = 0; wargv[vcount] != 0; ++vcount)
-        ;
-      procenv_owner = std::make_unique<char *[]> (vcount + 1);
-      procenv = procenv_owner.get ();
-      procenv_strings.reserve (vcount);
-      for (i = 0; i < vcount; ++i)
+      wchar_t * const *wenv = options.env_argv ();
+      size_t env_count {};
+      while (wenv[env_count] != 0)
         {
-          std::unique_ptr<char[]> converted {ACE_Wide_To_Ascii::convert (wargv[i])};
+          ++env_count;
+        }
+      procenv_owner = std::make_unique<char *[]> (env_count + 1);
+      procenv = procenv_owner.get ();
+      procenv_strings.reserve (env_count);
+      for (size_t i {}; i < env_count; ++i)
+        {
+          std::unique_ptr<char[]> converted {ACE_Wide_To_Ascii::convert (wenv[i])};
           procenv[i] = converted.get ();
           procenv_strings.push_back (std::move (converted));
         }
-      procenv[vcount] = nullptr;
+      procenv[env_count] = nullptr;
     }
 # else
   const char **procargv = const_cast<const char**> (options.command_line_argv ());
@@ -473,15 +478,17 @@ ACE_Process::spawn (ACE_Process_Options &options)
         const char *procname = n_procname.char_rep ();
 
         wchar_t * const *wargv = options.command_line_argv ();
-        size_t vcount, i;
-        for (vcount = 0; wargv[vcount] != 0; ++vcount)
-          ;
+        size_t vcount {};
+        while (wargv[vcount] != 0)
+          {
+            ++vcount;
+          }
         std::unique_ptr<char *[]> procargv_owner =
           std::make_unique<char *[]> (vcount + 1);
         char **procargv = procargv_owner.get ();
         std::vector<std::unique_ptr<char[]>> procargv_strings;
         procargv_strings.reserve (vcount);
-        for (i = 0; i < vcount; ++i)
+        for (size_t i {}; i < vcount; ++i)
           {
             std::unique_ptr<char[]> converted {ACE_Wide_To_Ascii::convert (wargv[i])};
             procargv[i] = converted.get ();
@@ -489,21 +496,24 @@ ACE_Process::spawn (ACE_Process_Options &options)
           }
         procargv[vcount] = nullptr;
 
-        wargv = options.env_argv ();
-        for (vcount = 0; wargv[vcount] != 0; ++vcount)
-          ;
+        wchar_t * const *wenv = options.env_argv ();
+        size_t env_count {};
+        while (wenv[env_count] != 0)
+          {
+            ++env_count;
+          }
         std::unique_ptr<char *[]> procenv_owner =
-          std::make_unique<char *[]> (vcount + 1);
+          std::make_unique<char *[]> (env_count + 1);
         char **procenv = procenv_owner.get ();
         std::vector<std::unique_ptr<char[]>> procenv_strings;
-        procenv_strings.reserve (vcount);
-        for (i = 0; i < vcount; ++i)
+        procenv_strings.reserve (env_count);
+        for (size_t i {}; i < env_count; ++i)
           {
-            std::unique_ptr<char[]> converted {ACE_Wide_To_Ascii::convert (wargv[i])};
+            std::unique_ptr<char[]> converted {ACE_Wide_To_Ascii::convert (wenv[i])};
             procenv[i] = converted.get ();
             procenv_strings.push_back (std::move (converted));
           }
-        procenv[vcount] = nullptr;
+        procenv[env_count] = nullptr;
 # else
         const char *procname = options.process_name ();
         char *const *procargv = options.command_line_argv ();
