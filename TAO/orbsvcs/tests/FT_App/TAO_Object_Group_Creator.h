@@ -78,8 +78,8 @@ namespace TAO
       Object_Group_Creator (const Object_Group_Creator & rhs);
       Object_Group_Creator & operator = (const Object_Group_Creator & rhs);
 
-    ////////////////
-    // Data members
+    /// @name Data members
+    /// @{
    private:
     CORBA::ORB_var orb_;
     PortableGroup::FactoryRegistry_var registry_;
@@ -93,6 +93,7 @@ namespace TAO
      * bool: true if we have a real replication manager
      */
     int have_replication_manager_;
+    /// @}
   };
 } // namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL

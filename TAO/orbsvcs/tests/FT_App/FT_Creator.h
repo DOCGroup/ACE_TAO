@@ -60,8 +60,8 @@ namespace FTAPP
       FT_Creator (const FT_Creator & rhs);
       FT_Creator & operator = (const FT_Creator & rhs);
 
-    ////////////////
-    // Data members
+    /// @name Data members
+    /// @{
    private:
     TAO::Object_Group_Creator creator_;
     CORBA::ORB_var orb_;
@@ -101,6 +101,7 @@ namespace FTAPP
      * prefix for names
      */
     ACE_CString prefix_;
+    /// @}
   };
 } // namespace TAO
 

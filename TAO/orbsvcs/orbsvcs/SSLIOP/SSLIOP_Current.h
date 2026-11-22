@@ -108,7 +108,6 @@ namespace TAO
        * compiler for all IDL interfaces.
        */
       /// @{
-      // The static operations.
       static Current_ptr _duplicate (Current_ptr obj);
 
       static Current_ptr _narrow (CORBA::Object_ptr obj);

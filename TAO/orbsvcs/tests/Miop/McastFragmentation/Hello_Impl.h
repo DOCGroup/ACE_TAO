@@ -15,8 +15,10 @@ public:
 
   ~UIPMC_Object_Impl ();
 
-  // The skeleton methods
+  /// @name Skeleton operations
+  /// @{
   void process (Test::Octets const& payload) override;
+  /// @}
 
 private:
   CORBA::ULong payload_;
@@ -36,10 +38,12 @@ class Hello_Impl : public virtual POA_Test::Hello
 public:
   Hello_Impl (CORBA::ORB_ptr orb, Test::UIPMC_Object_ptr obj);
 
-  // The skeleton methods
+  /// @name Skeleton operations
+  /// @{
   Test::UIPMC_Object_ptr get_object () override;
 
   void shutdown () override;
+  /// @}
 
 private:
   CORBA::ORB_var orb_;
