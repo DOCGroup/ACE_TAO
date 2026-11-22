@@ -75,7 +75,8 @@ class TAO_RTEvent_Serv_Export TAO_ECG_CDR_Message_Sender
 public:
   static constexpr size_t ECG_HEADER_SIZE = 32;
   static constexpr size_t ECG_MIN_MTU = 32 + 8;
-  static constexpr size_t ECG_MAX_MTU = 65536; // Really optimistic...
+  /// Really optimistic...
+  static constexpr size_t ECG_MAX_MTU = 65536;
   static constexpr size_t ECG_DEFAULT_MTU = 1024;
 
   /// Initialization and termination methods.

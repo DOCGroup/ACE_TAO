@@ -84,7 +84,8 @@ class GenAddress;
 class UdpAddress;
 class IpxSockAddress;
 class NetbiosAddress;
-class SIPAddress; // aka ipv6
+/// aka ipv6
+class SIPAddress;
 
 // TODO:
 // class AtmE164Address;
