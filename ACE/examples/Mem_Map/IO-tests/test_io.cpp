@@ -136,7 +136,7 @@ run_tests (size_t iterations, FILE *input_fp, FILE *output_fp)
 
   for (std::unique_ptr<IO_Test> const &test : test_vector)
     {
-      ACE_HANDLE const hfile = fileno (output_fp);
+      ACE_HANDLE const hfile = ACE_OS::fileno (output_fp);
       if (ACE_OS::ftruncate (hfile, 0) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
