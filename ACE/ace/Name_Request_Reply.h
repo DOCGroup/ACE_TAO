@@ -140,10 +140,10 @@ private:
     ACE_UINT32 block_forever_;
 
     /// Max seconds willing to wait for name if not blocking forever.
-    ACE_UINT64 sec_timeout_;
+    ACE_UINT64 sec_timeout_ {};
 
     /// Max micro seconds to wait for name if not blocking forever.
-    ACE_UINT32 usec_timeout_;
+    ACE_UINT32 usec_timeout_ {};
 
     /// Len of name in bytes
     ACE_UINT32 name_len_;

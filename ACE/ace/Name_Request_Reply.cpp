@@ -38,8 +38,6 @@ ACE_Name_Request::ACE_Name_Request (
   if (timeout == nullptr)
     {
       this->transfer_.block_forever_ = 1;
-      this->transfer_.sec_timeout_   = 0;
-      this->transfer_.usec_timeout_  = 0;
     }
   else // Do a "timed wait."
     {
