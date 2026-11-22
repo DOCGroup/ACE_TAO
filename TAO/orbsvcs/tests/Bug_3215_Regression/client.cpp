@@ -70,7 +70,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           hello->throw_location_forward ();
 
           ACE_DEBUG ((LM_ERROR, ACE_TEXT ("REGRESSION - Test has failed !!!\n")));
-          result = 1;
+          result = true;
         }
       catch (CORBA::TRANSIENT const &)
         {

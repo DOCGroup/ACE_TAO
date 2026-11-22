@@ -103,7 +103,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_ERROR,
                       ACE_TEXT ("ERROR - REGRESSION - Request made on an IOGR has no FT_REQUEST service context.\n")));
-          result = 1;
+          result = true;
         }
       else
         {

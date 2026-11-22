@@ -93,7 +93,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       catch (Test::MyException const &)
         {
           ACE_DEBUG ((LM_ERROR, "Error - REGRESSION - normal format service context not transmitted\n"));
-          result = 1;
+          result = true;
         }
 
       tmp =
@@ -118,7 +118,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       catch (Test::MyException const &)
         {
           ACE_DEBUG ((LM_ERROR, "Error - REGRESSION - extended format service context not transmitted\n"));
-          result = 1;
+          result = true;
         }
 
       hello->shutdown ();
