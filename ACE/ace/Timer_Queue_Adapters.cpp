@@ -35,7 +35,7 @@ ACE_Async_Timer_Queue_Adapter<TQ, TYPE>::cancel (long timer_id,
                                            void const **act)
 {
   // Block designated signals.
-  ACE_Sig_Guard sg (&this->mask_);
+  ACE_Sig_Guard sg (std::addressof (this->mask_));
   ACE_UNUSED_ARG (sg);
 
   return this->timer_queue_.cancel (timer_id, act);
@@ -45,7 +45,7 @@ template <class TQ, class TYPE> int
 ACE_Async_Timer_Queue_Adapter<TQ, TYPE>::expire ()
 {
   // Block designated signals.
-  ACE_Sig_Guard sg (&this->mask_);
+  ACE_Sig_Guard sg (std::addressof (this->mask_));
   ACE_UNUSED_ARG (sg);
 
   return this->timer_queue_.expire ();
@@ -81,7 +81,7 @@ ACE_Async_Timer_Queue_Adapter<TQ, TYPE>::schedule (TYPE eh,
   ACE_UNUSED_ARG (interval);
 
   // Block designated signals.
-  ACE_Sig_Guard sg (&this->mask_);
+  ACE_Sig_Guard sg (std::addressof (this->mask_));
   ACE_UNUSED_ARG (sg);
 
   // @@ We still need to implement interval timers...
@@ -252,7 +252,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::svc ()
 
   // Thread cancellation point, if ACE supports it.
 # if !defined (ACE_LACKS_PTHREAD_CANCEL)
-  ACE_PTHREAD_CLEANUP_PUSH (&this->condition_.mutex ().get_nesting_mutex ());
+  ACE_PTHREAD_CLEANUP_PUSH (std::addressof (this->condition_.mutex ().get_nesting_mutex ()));
 # endif /* ACE_LACKS_PTHREAD_CANCEL */
 
   while (this->active_)
