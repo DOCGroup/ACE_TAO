@@ -261,7 +261,7 @@ ACE_TLI_Connector::complete (ACE_TLI_Stream &new_stream,
                                  &name,
                                  REMOTENAME) == -1)
 #else /* ACE_HAS_XTI */
-          if (0)
+          if (false)
 #endif /* ACE_HAS_XTI */
             {
               new_stream.close ();
