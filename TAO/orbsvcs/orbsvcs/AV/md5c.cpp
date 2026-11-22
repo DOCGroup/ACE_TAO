@@ -147,9 +147,7 @@ void MD5Update (MD5_CTX *context, unsigned char *input, unsigned int inputLen)
   }
 
   /* Buffer remaining input */
-  std::memcpy (context->buffer + index,
-               input + i,
-               inputLen - i);
+  std::memcpy (context->buffer + index, input + i, inputLen - i);
 }
 
 /* MD5 finalization. Ends an MD5 message-digest operation, writing the
