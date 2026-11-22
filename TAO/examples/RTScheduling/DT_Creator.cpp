@@ -18,25 +18,25 @@
 int
 DT_Creator::dt_task_init (ACE_Arg_Shifter& arg_shifter)
 {
-  time_t start_time = 0;
+  time_t start_time_seconds = 0;
   int load = 0;
   int iter = 0;
-  int importance = 0;
+  int importance_value = 0;
   char *job_name {};
-  int dist = 0;
+  int distributed = 0;
   ACE_TCHAR const *current_arg {};
 
   if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Importance")) == 0)
     {
       arg_shifter.consume_arg ();
       current_arg = arg_shifter.get_current ();
-      importance = ACE_OS::atoi (current_arg);
+      importance_value = ACE_OS::atoi (current_arg);
       arg_shifter.consume_arg ();
     }
 
   if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Start_Time"))))
     {
-      start_time = ACE_OS::atoi (current_arg);
+      start_time_seconds = ACE_OS::atoi (current_arg);
       arg_shifter.consume_arg ();
     }
 
@@ -55,16 +55,16 @@ DT_Creator::dt_task_init (ACE_Arg_Shifter& arg_shifter)
   if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-JobName"))))
     {
       job_name = (char *)current_arg;
-      dist = 1;
+      distributed = 1;
       arg_shifter.consume_arg ();
     }
 
   std::unique_ptr<Thread_Task> task =
-    this->create_thr_task (importance,
-                           start_time,
+    this->create_thr_task (importance_value,
+                           start_time_seconds,
                            load,
                            iter,
-                           dist,
+                           distributed,
                            job_name);
   if (!task)
   {

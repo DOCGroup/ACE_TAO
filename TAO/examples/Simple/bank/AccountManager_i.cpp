@@ -93,11 +93,12 @@ AccountManager_i::close (Bank::Account_ptr account)
 
       if (!account.is_nil ())
         {
-          PortableServer::POA_var poa = account->_default_POA ();
+          PortableServer::POA_var account_poa = account->_default_POA ();
 
-          PortableServer::ObjectId_var id = poa->servant_to_id (account.in ());
+          PortableServer::ObjectId_var account_id =
+            account_poa->servant_to_id (account.in ());
 
-          poa->deactivate_object (id.in ());
+          account_poa->deactivate_object (account_id.in ());
         }
     }
   catch (CORBA::Exception const &ex)
