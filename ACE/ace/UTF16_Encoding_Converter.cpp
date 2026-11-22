@@ -145,13 +145,21 @@ ACE_UTF16_Encoding_Converter::to_utf8 (const void* source,
       // Figure out how many bytes the result will require
       unsigned short bytesToWrite = 0;
       if (ch < 0x80)
-        bytesToWrite = 1;
+        {
+          bytesToWrite = 1;
+        }
       else if (ch < 0x800)
-        bytesToWrite = 2;
+        {
+          bytesToWrite = 2;
+        }
       else if (ch < 0x10000)
-        bytesToWrite = 3;
+        {
+          bytesToWrite = 3;
+        }
       else if (ch < 0x110000)
-        bytesToWrite = 4;
+        {
+          bytesToWrite = 4;
+        }
       else
         {
           bytesToWrite = 3;

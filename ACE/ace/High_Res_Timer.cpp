@@ -214,8 +214,10 @@ ACE_High_Res_Timer::global_scale_factor ()
 
 #         if !defined (ACE_WIN32)
           if (ACE_High_Res_Timer::global_scale_factor_ <= 1u)
-            // Failed to retrieve CPU speed from system, so calculate it.
-            ACE_High_Res_Timer::calibrate ();
+            {
+              // Failed to retrieve CPU speed from system, so calculate it.
+              ACE_High_Res_Timer::calibrate ();
+            }
 
           // We have set the global scale factor so set out status
           // to 1, this way we only set the global_scale_factor_ once.

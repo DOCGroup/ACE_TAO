@@ -306,9 +306,11 @@ ACE_Handle_Set_Iterator::operator () ()
   fd_mask * const maskp = reinterpret_cast<fd_mask *> (this->handles_.mask_.fds_bits);
 
   if (this->handle_index_ >= maxhandlep1)
-    // We've seen all the handles we're interested in seeing for this
-    // iterator.
-    return ACE_INVALID_HANDLE;
+    {
+      // We've seen all the handles we're interested in seeing for this
+      // iterator.
+      return ACE_INVALID_HANDLE;
+    }
   else
     {
       ACE_HANDLE const result = this->handle_index_;
