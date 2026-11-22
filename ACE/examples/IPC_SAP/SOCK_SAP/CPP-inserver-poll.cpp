@@ -51,9 +51,9 @@ init_buffer (size_t index)
 {
   ACE_INT32 len;
 
- if (ACE::recv_n (poll_array[index].fd,
-                  &len,
-                  sizeof (ACE_INT32)) != sizeof (ACE_INT32))
+  if (ACE::recv_n (poll_array[index].fd,
+                   &len,
+                   sizeof (ACE_INT32)) != sizeof (ACE_INT32))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%P|%t) %p\n",
@@ -155,15 +155,15 @@ handle_connections (ACE_SOCK_Acceptor &peer_acceptor,
               ACE_OS::perror ("accept");
             }
           else
-          {
-            const char *s = client.get_host_name ();
+            {
+              const char *s = client.get_host_name ();
 
-            ACE_ASSERT (s != nullptr);
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) client %s\n",
-                        s));
-            poll_array[n_handles++].fd = new_stream.get_handle ();
-          }
+              ACE_ASSERT (s != nullptr);
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) client %s\n",
+                          s));
+              poll_array[n_handles++].fd = new_stream.get_handle ();
+            }
         }
     }
 }
