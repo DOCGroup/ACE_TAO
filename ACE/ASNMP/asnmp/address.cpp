@@ -276,7 +276,7 @@ IpAddress::IpAddress( const GenAddress &genaddr)
     valid_flag = genaddr.valid();
     if ( valid_flag) {
       // copy in the IP address data
-      IpAddress temp_ip( (const char *) genaddr);
+      IpAddress temp_ip (static_cast<char const *> (genaddr));
       *this = temp_ip;
     }
   }
@@ -285,7 +285,7 @@ IpAddress::IpAddress( const GenAddress &genaddr)
       valid_flag = genaddr.valid();
       if ( valid_flag) {
         // copy in the IP address data
-        UdpAddress temp_udp( (const char *) genaddr);
+        UdpAddress temp_udp (static_cast<char const *> (genaddr));
         *this = temp_udp;
       }
     }
@@ -566,8 +566,10 @@ int IpAddress::resolve_to_hostname(const in_addr& quad_addr, char *hostname)
   std::memset (&buffer, 0, sizeof (ACE_HOSTENT_DATA));
 
   // reverse lookup (requires in-addr.arpa to be setup in DNS
-  if (ACE_OS::gethostbyaddr_r((const char *)&quad_addr.s_addr, IPV4LEN,
-                          AF_INET, &lookupResult, buffer, &loc_errno)) {
+  if (ACE_OS::gethostbyaddr_r (
+        reinterpret_cast<char const *> (std::addressof (quad_addr.s_addr)),
+        IPV4LEN,
+        AF_INET, &lookupResult, buffer, &loc_errno)) {
     // verify right type of record
     if (lookupResult.h_addrtype == AF_INET &&
         lookupResult.h_length == IPV4LEN) {
@@ -806,7 +808,7 @@ UdpAddress::UdpAddress( const GenAddress &genaddr):IpAddress()
     if ( valid_flag)
     {
       // copy in the IP address data
-      UdpAddress temp_udp( (const char *) genaddr);
+      UdpAddress temp_udp (static_cast<char const *> (genaddr));
       *this = temp_udp;
 
       //  port info since are making an UpAddress
@@ -820,7 +822,7 @@ UdpAddress::UdpAddress( const GenAddress &genaddr):IpAddress()
     if ( valid_flag)
     {
       // copy in the IP address data
-      IpAddress temp_ip( (const char *) genaddr);
+      IpAddress temp_ip (static_cast<char const *> (genaddr));
       *this = temp_ip;
     }
   }
@@ -1100,7 +1102,7 @@ NetbiosAddress::NetbiosAddress( const GenAddress& genaddr)
     valid_flag = genaddr.valid();
     if ( valid_flag) {
       // copy in the Ipx address data
-      NetbiosAddress temp_nb( (const char *) genaddr);
+      NetbiosAddress temp_nb (static_cast<char const *> (genaddr));
       *this = temp_nb;
     }
   }
@@ -1259,7 +1261,7 @@ IpxAddress::IpxAddress( const GenAddress &genaddr)
     valid_flag = genaddr.valid();
     if ( valid_flag) {
       // copy in the Ipx address data
-      IpxAddress temp_ipx( (const char *) genaddr);
+      IpxAddress temp_ipx (static_cast<char const *> (genaddr));
       *this = temp_ipx;
     }
   }
@@ -1268,7 +1270,7 @@ IpxAddress::IpxAddress( const GenAddress &genaddr)
       valid_flag = genaddr.valid();
       if ( valid_flag) {
         // copy in the Ipx address data
-        IpxSockAddress temp_ipxsock( (const char *) genaddr);
+        IpxSockAddress temp_ipxsock (static_cast<char const *> (genaddr));
         *this = temp_ipxsock;
       }
     }
@@ -1647,7 +1649,7 @@ IpxSockAddress::IpxSockAddress( const GenAddress &genaddr):IpxAddress()
     if ( valid_flag)
     {
       // copy in the Ipx address data
-      IpxAddress temp_ipx( (const char *) genaddr);
+      IpxAddress temp_ipx (static_cast<char const *> (genaddr));
       *this = temp_ipx;
     }
   }
@@ -1658,7 +1660,7 @@ IpxSockAddress::IpxSockAddress( const GenAddress &genaddr):IpxAddress()
     if ( valid_flag)
     {
       // copy in the Ipx address data
-      IpxSockAddress temp_ipxsock( (const char *) genaddr);
+      IpxSockAddress temp_ipxsock (static_cast<char const *> (genaddr));
       *this = temp_ipxsock;
       //  socketid info since are making an IpxSockAddress
       socketid = temp_ipxsock.get_socket();
@@ -1891,7 +1893,7 @@ MacAddress::MacAddress( const GenAddress &genaddr)
     if ( valid_flag)
     {
       // copy in the Mac address data
-      MacAddress temp_mac( (const char *) genaddr);
+      MacAddress temp_mac (static_cast<char const *> (genaddr));
       *this = temp_mac;
     }
   }
@@ -2620,7 +2622,7 @@ DecNetAddress::DecNetAddress( const GenAddress& genaddr)
     valid_flag = genaddr.valid();
     if ( valid_flag) {
       // copy in the Ipx address data
-      DecNetAddress temp_ipx( (const char *) genaddr);
+      DecNetAddress temp_ipx (static_cast<char const *> (genaddr));
       *this = temp_ipx;
     }
   }
@@ -2766,7 +2768,7 @@ AppleTalkAddress::AppleTalkAddress( const GenAddress& genaddr)
     valid_flag = genaddr.valid();
     if ( valid_flag) {
       // copy in the Ipx address data
-      AppleTalkAddress temp_ipx( (const char *) genaddr);
+      AppleTalkAddress temp_ipx (static_cast<char const *> (genaddr));
       *this = temp_ipx;
     }
   }
