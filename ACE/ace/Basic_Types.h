@@ -200,7 +200,7 @@ using uintptr_t = ACE::If_Then_Else<
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// The sizes of the commonly implemented types are known.
+/// The sizes of the commonly implemented types are known.
 using ACE_INT8 = int8_t;
 using ACE_UINT8 = uint8_t;
 using ACE_INT16 = int16_t;

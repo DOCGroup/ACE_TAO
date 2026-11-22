@@ -76,7 +76,7 @@ public:
   ACE_UINT64 get_sample (size_t i) const;
 
 private:
-  // Select the matching deallocator for the configured ACE allocation mode.
+  /// Select the matching deallocator for the configured ACE allocation mode.
   struct Samples_Deleter
   {
     void operator() (ACE_UINT64 *samples) const;

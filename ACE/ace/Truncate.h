@@ -29,7 +29,7 @@ namespace ACE_Utils
 {
   template<typename T> struct Sign_Check;
 
-  // Specialize the unsigned signed cases.
+  /// Specialize the unsigned signed cases.
   template<> struct Sign_Check<unsigned char>  { static bool const is_signed = false; };
   template<> struct Sign_Check<unsigned short> { static bool const is_signed = false; };
   template<> struct Sign_Check<unsigned int>   { static bool const is_signed = false; };
@@ -41,7 +41,7 @@ namespace ACE_Utils
 # endif  /* __GNUC__ */
   template<> struct Sign_Check<unsigned long long> { static bool const is_signed = false; };
 
-  // Specialize the signed cases.
+  /// Specialize the signed cases.
   template<> struct Sign_Check<signed char>  { static bool const is_signed = true; };
   template<> struct Sign_Check<signed short> { static bool const is_signed = true; };
   template<> struct Sign_Check<signed int>   { static bool const is_signed = true; };
@@ -377,8 +377,8 @@ namespace ACE_Utils
 
   };
 
-  // Partial specialization for the case where the types are the same.
-  // No truncation is necessary.
+  /// Partial specialization for the case where the types are the same.
+  /// No truncation is necessary.
   template<typename T>
   struct Truncator<T, T>
   {
