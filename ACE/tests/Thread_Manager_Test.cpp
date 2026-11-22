@@ -439,7 +439,7 @@ run_main (int, ACE_TCHAR *[])
   // But, wait for a limited time, just in case.
   ACE_Time_Value const max_wait (600);
   ACE_Time_Value const wait_time (ACE_OS::gettimeofday () + max_wait);
-  if (thr_mgr->wait (&wait_time) == -1)
+  if (thr_mgr->wait (std::addressof (wait_time)) == -1)
     {
       if (errno == ETIME)
         {

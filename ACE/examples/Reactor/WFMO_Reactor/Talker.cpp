@@ -437,7 +437,7 @@ Peer_Handler::handle_output (ACE_HANDLE)
   ACE_Time_Value tv (ACE_Time_Value::zero);
 
   // Forward the message to the remote peer receiver.
-  if (this->getq (raw_message_block, &tv) != -1)
+  if (this->getq (raw_message_block, std::addressof (tv)) != -1)
     {
       ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
       if (this->wr_stream_.write (*message_block,

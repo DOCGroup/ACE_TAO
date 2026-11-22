@@ -110,7 +110,7 @@ run_test (u_short localport)
   while (true)
     {
       ACE_Time_Value tv (10, 0);
-      int const ret = ACE_Reactor::instance ()->handle_events (&tv);
+      int const ret = ACE_Reactor::instance ()->handle_events (std::addressof (tv));
       /* Error occurred while handling event */
       if (ret < 0)
         {

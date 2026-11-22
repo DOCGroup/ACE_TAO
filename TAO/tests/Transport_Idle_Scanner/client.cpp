@@ -6,13 +6,14 @@
 #include "ace/Log_Msg.h"
 
 #include <cstring>
+#include <memory>
 
 // Probe without consuming anything. A timeout means the peer is still open.
 static bool expect_open (ACE_SOCK_Stream &stream, bool open)
 {
   char byte {};
   ACE_Time_Value timeout (0, 100000);
-  ssize_t result = stream.recv (&byte, 1, MSG_PEEK, &timeout);
+  ssize_t result = stream.recv (&byte, 1, MSG_PEEK, std::addressof (timeout));
   bool actual = result == -1
     && (errno == ETIME || errno == ETIMEDOUT || errno == EWOULDBLOCK);
   if (actual != open)
@@ -30,7 +31,9 @@ static bool expect_close_connection (ACE_SOCK_Stream &stream)
 {
   unsigned char message[12];
   ACE_Time_Value timeout (5);
-  ssize_t const result = stream.recv_n (message, sizeof message, &timeout);
+  ssize_t const result = stream.recv_n (message,
+                                       sizeof message,
+                                       std::addressof (timeout));
   unsigned char const expected[] = {
     'G', 'I', 'O', 'P', 1, 2, ACE_CDR_BYTE_ORDER, 5, 0, 0, 0, 0
   };
@@ -56,9 +59,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_SOCK_Connector connector;
   ACE_SOCK_Stream idle, partial, fragmented;
   ACE_Time_Value connect_timeout (5);
-  if (connector.connect (idle, address, &connect_timeout) == -1
-      || connector.connect (partial, address, &connect_timeout) == -1
-      || connector.connect (fragmented, address, &connect_timeout) == -1)
+  if (connector.connect (idle, address, std::addressof (connect_timeout)) == -1
+      || connector.connect (partial, address, std::addressof (connect_timeout)) == -1
+      || connector.connect (fragmented, address, std::addressof (connect_timeout)) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) connect failed: %m\n")), 1);
     }
