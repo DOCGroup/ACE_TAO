@@ -78,7 +78,7 @@ public:
   void shutdown () override;
 
 private:
-  // Cached ORB pointer
+  /// Cached ORB pointer
   CORBA::ORB_var orb_;
 
   /// A StockQuoter object reference that is used to get detailed

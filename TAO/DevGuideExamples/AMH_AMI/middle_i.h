@@ -44,7 +44,7 @@ public:
   Middle_i &operator= (Middle_i &&) = delete;
 
 private:
-  // The synchronous servant does not create or activate callback servants.
+  /// The synchronous servant does not create or activate callback servants.
   Inner_var inner_;
 };
 

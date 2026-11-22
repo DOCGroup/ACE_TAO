@@ -53,7 +53,7 @@ private:
 class  ArrayTest_i : public virtual POA_ArrayTest
 {
 private:
-  // These slices are allocated and released with their generated *_alloc/*_free functions.
+  /// These slices are allocated and released with their generated *_alloc/*_free functions.
   LongArray_slice * longArray_;
   ULongArray_slice *  ulongArray_;
   StringArray_slice * stringArray_;
