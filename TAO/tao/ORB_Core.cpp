@@ -2900,7 +2900,7 @@ TAO_ORB_Core::resolve_rir (const char *name)
   // Get the table of initial references specified through
   // -ORBInitRef.
   ACE_CString ior;
-  ACE_CString object_id ((const char *) name);
+  ACE_CString object_id (name);
 
   // Get the list of initial reference prefixes specified through
   // -ORBDefaultInitRef.
