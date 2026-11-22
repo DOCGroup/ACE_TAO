@@ -35,6 +35,13 @@ ACE_TMAIN (int, ACE_TCHAR **argv)
       ACE_OS::sleep (5);
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) signaling parent\n")));
       result = ACE_OS::kill (ACE_OS::getppid (), SIGUSR2);
+      if (result != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) Failed to signal parent: %p\n"),
+                      ACE_TEXT ("kill")));
+          return result;
+        }
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) signaled parent\n")));
       return 0;
     }
