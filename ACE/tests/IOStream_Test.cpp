@@ -98,11 +98,11 @@ operator>> (ACE_SOCK_IOStream & stream, qchar *buf)
   // if we don't have a quote, append until we see space
   if (c != '"')
     for (*buf++ = c;
-         (void *) stream.get (c) && !ACE_OS::ace_isspace (c);
+         stream.get (c) && !ACE_OS::ace_isspace (c);
          *buf++ = c)
       continue;
   else
-    for (; (void *) stream.get (c) && c != '"'; *buf++ = c)
+    for (; stream.get (c) && c != '"'; *buf++ = c)
       if (c == '\\')
         {
           stream.get (c);
@@ -145,18 +145,16 @@ operator<< (ostream &stream, qchar *buf)
 // Our client thread will initiate the test by sending some data to
 // the server.
 
-static void *
-client (void *arg = nullptr)
+static ACE_THR_FUNC_RETURN
+client (void *arg)
 {
-  ACE_UNUSED_ARG (arg);
-
   // We don't _need_ to dynamically allocate the ACE_SOCK_IOStream.
   // But if we don't, it doesn't get destroyed on some platforms,
   // If we manage the storage ourselves, we _will_ destroy it at
   // the end of this function.
   ACE_SOCK_IOStream server;
 
-  ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
+  ACE_INET_Addr *remote_addr = static_cast<ACE_INET_Addr *> (arg);
   ACE_INET_Addr addr (remote_addr->get_port_number (),
                       ACE_DEFAULT_SERVER_HOST);
   ACE_SOCK_Connector connector;
@@ -165,7 +163,7 @@ client (void *arg = nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" (%t) %p\n"),
                        ACE_TEXT ("Failed to connect to server thread")),
-                      0);
+                      ACE_THR_FUNC_RETURN_NULL);
 
   // Send a string to the server which it can interpret as a qchar[]
   const char *str = "\"This is a test     string.\"";
@@ -234,7 +232,7 @@ client (void *arg = nullptr)
               ACE_TEXT (" (%P|%t) Client Received: int %d float %f long %d float %f double %f\n"),
               i,
               f1,
-              (int) l,
+              static_cast<int> (l),
               f2,
               d));
 
@@ -256,14 +254,14 @@ client (void *arg = nullptr)
   // Shut down the test.
   server.close ();
 
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // Test the server's ability to receive data from the client and then
 // begin a two-way conversation.
 
-static void *
-server (void *arg = nullptr)
+static ACE_THR_FUNC_RETURN
+server (void *arg)
 {
   // We don't _need_ to dynamically allocate the ACE_SOCK_IOStream.
   // But if we don't, it doesn't get destroyed on some platforms,
@@ -272,29 +270,28 @@ server (void *arg = nullptr)
   ACE_SOCK_IOStream client_handler;
 
   ACE_INET_Addr server_addr;
-  ACE_SOCK_Acceptor *acceptor =
-    reinterpret_cast<ACE_SOCK_Acceptor *> (arg);
+  ACE_SOCK_Acceptor *acceptor = static_cast<ACE_SOCK_Acceptor *> (arg);
 
   if (acceptor->get_local_addr (server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("get_local_addr")),
-                      0);
+                      ACE_THR_FUNC_RETURN_NULL);
 
 #if defined (ACE_HAS_THREADS)
-  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (client),
-                                              (void *) &server_addr,
+  if (ACE_Thread_Manager::instance ()->spawn (client,
+                                              &server_addr,
                                               THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" (%t) %p\n"),
                        ACE_TEXT ("spawing client thread")),
-                      0);
+                      ACE_THR_FUNC_RETURN_NULL);
 #endif /* ACE_HAS_THREADS */
 
   if (acceptor->accept (client_handler) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" (%P|%t) Failed to accept new client_handler")),
-                      0);
+                      ACE_THR_FUNC_RETURN_NULL);
 
   // Read a qbuf[] from the client.  Notice that all of the client's
   // whitespace is preserved.
@@ -304,7 +301,7 @@ server (void *arg = nullptr)
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT (" (%P|%t) Server Received: (\"%C\")\n"),
-              (char *) qbuf));
+              reinterpret_cast<char *> (qbuf)));
 
   // Give the client time to announce the next test to the user.
   ACE_OS::sleep (2);
@@ -365,7 +362,7 @@ server (void *arg = nullptr)
               ACE_TEXT (" (%P|%t) Server Received: int %d float %f long %d float %f double %f\n"),
               i,
               f1,
-              (int) l,
+              static_cast<int> (l),
               f2,
               d));
 
@@ -376,7 +373,7 @@ server (void *arg = nullptr)
 
   client_handler.close ();
 
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 static int
@@ -391,7 +388,7 @@ spawn ()
                        ACE_TEXT ("open")),
                       -1);
 #if defined (ACE_HAS_THREADS)
-  else if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (server),
+  else if (ACE_Thread_Manager::instance ()->spawn (server,
                                                   &acceptor,
                                                   THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -421,7 +418,7 @@ spawn ()
                       ACE_TEXT ("%p\n"),
                       ACE_TEXT ("get_local_addr")));
         else
-          client ((void *) &server_addr);
+          client (&server_addr);
         ACE_END_LOG;
         break;
       }
