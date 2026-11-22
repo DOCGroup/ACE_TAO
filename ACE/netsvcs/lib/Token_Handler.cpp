@@ -63,8 +63,10 @@ ACE_Token_Acceptor::init (int argc, ACE_TCHAR *argv[])
   ACE_INET_Addr server_addr;
 
   if (this->acceptor ().get_local_addr (server_addr) == -1)
-    ACE_ERROR_RETURN
-      ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("get_remote_addr")), -1);
+    {
+      ACE_ERROR_RETURN
+        ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("get_remote_addr")), -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("starting up Token Server at port %d on handle %H\n"),
@@ -104,11 +106,15 @@ ACE_Token_Handler::send_reply (ACE_UINT32 err)
   n = this->peer ().send (buf, len);
 
   if (n != (ssize_t) len)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p, expected len = %B, actual len = %b\n"),
-                       ACE_TEXT ("send failed"), len, n), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p, expected len = %B, actual len = %b\n"),
+                         ACE_TEXT ("send failed"), len, n), -1);
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 // Acquire the token.
@@ -342,13 +348,17 @@ ACE_Token_Handler::create_proxy ()
     {
     case ACE_Tokens::RWLOCK:
       if (token_request_.proxy_type () == ACE_RW_Token::READER)
-        ACE_NEW_RETURN (proxy,
-                        ACE_TS_RLock (token_request_.token_name (), this),
-                        0);
+        {
+          ACE_NEW_RETURN (proxy,
+                          ACE_TS_RLock (token_request_.token_name (), this),
+                          0);
+        }
       else
-        ACE_NEW_RETURN (proxy,
-                        ACE_TS_WLock (token_request_.token_name (), this),
-                        0);
+        {
+          ACE_NEW_RETURN (proxy,
+                          ACE_TS_WLock (token_request_.token_name (), this),
+                          0);
+        }
       break;
     case ACE_Tokens::MUTEX:
       ACE_NEW_RETURN (proxy,

@@ -50,11 +50,13 @@ ACE_TS_Server_Acceptor::init (int argc, ACE_TCHAR *argv[])
                   std::addressof (this->scheduling_strategy_),
                   ACE_TEXT ("Time Server"),
                   ACE_TEXT ("ACE time service")) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%n: %p on port %d\n"),
-                       ACE_TEXT ("acceptor::open failed"),
-                       this->service_addr_.get_port_number ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%n: %p on port %d\n"),
+                         ACE_TEXT ("acceptor::open failed"),
+                         this->service_addr_.get_port_number ()),
+                        -1);
+    }
 
   // Ignore SIGPIPE so that each <SVC_HANDLER> can handle this on its
   // own.
@@ -65,10 +67,12 @@ ACE_TS_Server_Acceptor::init (int argc, ACE_TCHAR *argv[])
 
   // Figure out what port we're really bound to.
   if (this->acceptor ().get_local_addr (server_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("get_local_addr")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("get_local_addr")),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("starting up Time Server at port %d on handle %H\n"),
@@ -100,10 +104,12 @@ ACE_TS_Server_Handler::open (void *)
 
   // Determine the address of the client and display it.
   if (this->peer ().get_remote_addr (client_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("get_remote_addr")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("get_remote_addr")),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) accepted connection from host %C on fd %H\n"),
@@ -112,10 +118,12 @@ ACE_TS_Server_Handler::open (void *)
 
   // Call down to our parent to register ourselves with the Reactor.
   if (ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::open (0) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("open")),
+                        -1);
+    }
   return 0;
 }
 
@@ -127,18 +135,22 @@ ACE_TS_Server_Handler::send_request (ACE_Time_Request &request)
   ssize_t length = request.encode (buffer);
 
   if (length == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("encode failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("encode failed")),
+                        -1);
+    }
 
   // Transmit request via a blocking send.
 
   if (this->peer ().send_n (buffer, length) != length)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("send_n failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("send_n failed")),
+                        -1);
+    }
   return 0;
 }
 
