@@ -169,7 +169,7 @@ ACE_Unbounded_Stack<T>::delete_all_nodes ()
 {
   //  ACE_TRACE ("ACE_Unbounded_Stack<T>::delete_all_nodes");
 
-  while (this->is_empty () == 0)
+  while (!this->is_empty ())
     {
       ACE_Node<T> *temp = this->head_->next_;
       this->head_->next_ = temp->next_;

@@ -55,7 +55,7 @@ run_main (int, ACE_TCHAR *[])
     }
 
   // Should still have 39 elements in the set.
-  ACE_TEST_ASSERT (set.is_empty () == 0);
+  ACE_TEST_ASSERT (!set.is_empty ());
   ACE_TEST_ASSERT (set.size () == 39);
 
   // Iterate forward through the range we created: should be one of
@@ -125,7 +125,7 @@ run_main (int, ACE_TCHAR *[])
   // advance or retreat on an out of range iterator does not cause
   // problems
   set.reset ();
-  ACE_TEST_ASSERT (set.is_empty () != 0);
+  ACE_TEST_ASSERT (set.is_empty ());
   iter.first ();
   ACE_TEST_ASSERT (iter.done () != 0);
   iter.retreat ();
@@ -229,7 +229,7 @@ run_main (int, ACE_TCHAR *[])
     }
 
   // Should have no more elements in the set.
-  ACE_TEST_ASSERT (set.is_empty () != 0);
+  ACE_TEST_ASSERT (set.is_empty ());
   ACE_TEST_ASSERT (set.size () == 0);
   iter.first ();
   ACE_TEST_ASSERT (iter.done () != 0);

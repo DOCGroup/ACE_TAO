@@ -1744,7 +1744,7 @@ ACE_DynScheduler::create_timeline ()
 
     // iterate through the set of dispatch entries that need to be rescheduled
     Dispatch_Entry *rescheduled_entry;
-    while (reschedule_queue.is_empty () == 0)
+    while (!reschedule_queue.is_empty ())
     {
       if (reschedule_queue.dequeue_head (rescheduled_entry) < 0)
       {
@@ -1810,7 +1810,7 @@ ACE_DynScheduler::create_timeline ()
         break;
       }
 
-      while (reschedule_queue.is_empty () == 0)
+      while (!reschedule_queue.is_empty ())
       {
         if (reschedule_queue.dequeue_head (rescheduled_entry) < 0)
         {

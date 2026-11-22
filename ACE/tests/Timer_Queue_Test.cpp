@@ -138,7 +138,7 @@ test_functionality (ACE_Timer_Queue *tq)
 {
   Example_Handler eh;
 
-  ACE_TEST_ASSERT (tq->is_empty () != 0);
+  ACE_TEST_ASSERT (tq->is_empty ());
   ACE_TEST_ASSERT (ACE_Time_Value::zero == ACE_Time_Value (0));
   long timer_id;
   long timer_id2;
@@ -171,21 +171,21 @@ test_functionality (ACE_Timer_Queue *tq)
                            timer_act,
                            tq->gettimeofday ());
   ACE_TEST_ASSERT (timer_id != -1);
-  ACE_TEST_ASSERT (tq->is_empty () == 0); //==
+  ACE_TEST_ASSERT (!tq->is_empty ()); //==
 
   ACE_NEW (timer_act, int (42));
   result = tq->schedule (&eh,
                          timer_act,
                          tq->gettimeofday ());
   ACE_TEST_ASSERT (result != -1);
-  ACE_TEST_ASSERT (tq->is_empty () == 0); //==
+  ACE_TEST_ASSERT (!tq->is_empty ()); //==
 
   ACE_NEW (timer_act, int (42));
   result = tq->schedule (&eh,
                          timer_act,
                          tq->gettimeofday ());
   ACE_TEST_ASSERT (result != -1);
-  ACE_TEST_ASSERT (tq->is_empty () == 0); //==
+  ACE_TEST_ASSERT (!tq->is_empty ()); //==
 
   // The following method will trigger a call to <handle_close>.
   ACE_TEST_ASSERT (eh.close_count_ == 0);
@@ -193,7 +193,7 @@ test_functionality (ACE_Timer_Queue *tq)
   ACE_TEST_ASSERT (result == 1);
   delete (int *) timer_act;
 
-  ACE_TEST_ASSERT (tq->is_empty () == 0);
+  ACE_TEST_ASSERT (!tq->is_empty ());
   ACE_TEST_ASSERT (eh.close_count_ == 1);
 
   result = tq->expire ();
@@ -231,7 +231,7 @@ test_functionality (ACE_Timer_Queue *tq)
   ACE_TEST_ASSERT (result == 1);
   ACE_TEST_ASSERT (eh.close_count_ == 2);
 
-  ACE_TEST_ASSERT (tq->is_empty () != 0);
+  ACE_TEST_ASSERT (tq->is_empty ());
   delete (int *) timer_act2;
   delete (int *) timer_act1;
 
@@ -258,7 +258,7 @@ test_functionality (ACE_Timer_Queue *tq)
   delete (int *) timer_act;
 
   ACE_TEST_ASSERT (eh.close_count_ == 2); // Only one call to handle_close() even though two timers
-  ACE_TEST_ASSERT (tq->is_empty () != 0);
+  ACE_TEST_ASSERT (tq->is_empty ());
 
   result = tq->expire ();
   ACE_TEST_ASSERT (result == 0);
@@ -315,7 +315,7 @@ test_performance (ACE_Timer_Queue *tq,
   int i;
   const void *timer_act {};
 
-  ACE_TEST_ASSERT (tq->is_empty () != 0);
+  ACE_TEST_ASSERT (tq->is_empty ());
   ACE_TEST_ASSERT (ACE_Time_Value::zero == ACE_Time_Value (0));
 
   // Test the amount of time required to schedule all the timers.
@@ -348,7 +348,7 @@ test_performance (ACE_Timer_Queue *tq,
       ACE_TEST_ASSERT (timer_ids[i] != -1);
     }
 
-  ACE_TEST_ASSERT (tq->is_empty () == 0);
+  ACE_TEST_ASSERT (!tq->is_empty ());
 
   timer.stop ();
 
@@ -378,7 +378,7 @@ test_performance (ACE_Timer_Queue *tq,
 
   timer.stop ();
 
-  ACE_TEST_ASSERT (tq->is_empty () != 0);
+  ACE_TEST_ASSERT (tq->is_empty ());
 
   timer.elapsed_time (et);
 
@@ -404,14 +404,14 @@ test_performance (ACE_Timer_Queue *tq,
       ACE_TEST_ASSERT (result != -1);
     }
 
-  ACE_TEST_ASSERT (tq->is_empty () == 0);
+  ACE_TEST_ASSERT (!tq->is_empty ());
 
   // Expire all the timers.
   tq->expire (last_time + ACE_Time_Value(1));
 
   timer.stop ();
 
-  ACE_TEST_ASSERT (tq->is_empty () != 0);
+  ACE_TEST_ASSERT (tq->is_empty ());
 
   timer.elapsed_time (et);
 
@@ -441,7 +441,7 @@ test_performance (ACE_Timer_Queue *tq,
       ACE_TEST_ASSERT (timer_ids[i] != -1);
     }
 
-  ACE_TEST_ASSERT (tq->is_empty () == 0);
+  ACE_TEST_ASSERT (!tq->is_empty ());
 
   timer.start ();
 
@@ -451,7 +451,7 @@ test_performance (ACE_Timer_Queue *tq,
       delete (int *) timer_act;
     }
 
-  ACE_TEST_ASSERT (tq->is_empty () != 0);
+  ACE_TEST_ASSERT (tq->is_empty ());
 
   timer.stop ();
 
@@ -485,7 +485,7 @@ test_performance (ACE_Timer_Queue *tq,
 
   timer.stop ();
 
-  ACE_TEST_ASSERT (tq->is_empty () == 0);
+  ACE_TEST_ASSERT (!tq->is_empty ());
 
   timer.elapsed_time (et);
 

@@ -124,7 +124,7 @@ ACE_Proactor_Timer_Handler::svc ()
   while (!this->shutting_down_)
     {
       // Check whether the timer queue has any items in it.
-      if (this->proactor_.timer_queue ()->is_empty () == 0)
+      if (!this->proactor_.timer_queue ()->is_empty ())
         {
           // Get the earliest absolute time.
           ACE_Time_Value const absolute_time =

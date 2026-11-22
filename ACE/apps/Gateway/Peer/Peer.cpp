@@ -57,7 +57,7 @@ Peer_Handler::open (void *a)
 
   // If there are events left in the queue, make sure we enable the
   // <ACE_Reactor> appropriately to get them sent out.
-  if (this->msg_queue ()->is_empty () == 0
+  if (!this->msg_queue ()->is_empty ()
       && ACE_Reactor::instance ()->schedule_wakeup
           (this, ACE_Event_Handler::WRITE_MASK) == -1)
     {
