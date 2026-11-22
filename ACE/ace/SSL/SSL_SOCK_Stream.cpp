@@ -124,15 +124,24 @@ ACE_SSL_SOCK_Stream::recvv (iovec *io_vec,
 
   // From ACE_SOCK_IO::recvv().
 #if defined (FIONREAD)
+  ACE_HANDLE const handle = this->get_handle ();
+#if !defined (ACE_WIN32)
+  if (handle < 0 || handle >= ACE_FD_SETSIZE)
+    {
+      errno = EINVAL;
+      return -1;
+    }
+#endif /* ! ACE_WIN32 */
+
   ACE_Handle_Set handle_set;
   handle_set.reset ();
-  handle_set.set_bit (this->get_handle ());
+  handle_set.set_bit (handle);
 
   io_vec->iov_base = nullptr;
 
   int select_width {};
 #if !defined (ACE_WIN32)
-  select_width = this->get_handle () + 1;
+  select_width = handle + 1;
 #endif /* ACE_WIN32 */
 
   // Check the status of the current socket.
@@ -157,7 +166,7 @@ ACE_SSL_SOCK_Stream::recvv (iovec *io_vec,
 
   int inlen;
 
-  if (ACE_OS::ioctl (this->get_handle (),
+  if (ACE_OS::ioctl (handle,
                      FIONREAD,
                      &inlen) == -1)
     {

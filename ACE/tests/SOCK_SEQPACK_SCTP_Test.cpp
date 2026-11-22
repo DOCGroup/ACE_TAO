@@ -81,10 +81,20 @@ Server (void *arg)
   //
   // Set up select to wait for I/O events.
   //
-  handle_set.reset ();
-  handle_set.set_bit (AcceptorSocket->get_handle ());
+  ACE_HANDLE const acceptor_handle = AcceptorSocket->get_handle ();
+#if !defined (ACE_WIN32)
+  if (acceptor_handle < 0 || acceptor_handle >= ACE_FD_SETSIZE)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) AcceptorSocket handle exceeds FD_SETSIZE\n")),
+                        0);
+    }
+#endif /* ! ACE_WIN32 */
 
-  select_width = SELECT_WIDTH(int (AcceptorSocket->get_handle ()) + 1);
+  handle_set.reset ();
+  handle_set.set_bit (acceptor_handle);
+
+  select_width = SELECT_WIDTH (static_cast<int> (acceptor_handle) + 1);
 
   result = ACE_OS::select(select_width,
                           handle_set,
