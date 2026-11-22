@@ -88,7 +88,7 @@ public:
   /// @}
 
 private:
-  // Called by both versions of init().
+  /// Called by both versions of init().
   void init_common ();
 
   /// Current numeric value of the enum.

@@ -57,7 +57,7 @@ namespace CORBA
 
     // @@ add "==", "<", ">" operators
 
-    // The pseudo object operations.
+    /// The pseudo object operations.
     static Principal * _duplicate (Principal *);
     static Principal * _nil ();
 

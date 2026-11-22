@@ -98,7 +98,7 @@ namespace CORBA
     /// Get the operation name.
     char const* operation () const;
 
-    // Pseudo object methods.
+    /// Pseudo object methods.
     static ServerRequest_ptr _duplicate (ServerRequest_ptr);
     static ServerRequest_ptr _nil ();
 

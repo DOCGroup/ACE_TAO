@@ -47,8 +47,8 @@ public:
 };
 
 //#if defined (TAO_AS_STATIC_LIBS)
-// only do this for static builds, it causes a circular
-// dependency for dynamic builds.
+/// only do this for static builds, it causes a circular
+/// dependency for dynamic builds.
 static int
 TAO_Requires_Monitor_Initializer = TAO_Monitor_Init::Initializer ();
 //#endif /* TAO_AS_STATIC_LIBS */

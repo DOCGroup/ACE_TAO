@@ -110,8 +110,8 @@ namespace TAO_Notify
     Standard_Event_Persistence &operator= (Standard_Event_Persistence const &) = delete;
     Standard_Event_Persistence &operator= (Standard_Event_Persistence &&) = delete;
     /////////////////////////////////////////////
-    // Override Event_Persistent_Strategy methods
-    // Parse arguments and initialize.
+    /// Override Event_Persistent_Strategy methods
+    /// Parse arguments and initialize.
     int init(int argc, ACE_TCHAR *argv[]) override;
     // Prepare for shutdown
     int fini () override;

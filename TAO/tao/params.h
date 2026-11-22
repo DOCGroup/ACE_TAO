@@ -513,14 +513,14 @@ private:
    */
   std::string collocation_resolver_name_;
 
-  // Allows a client to ZIOP compress without having any server
-  // ZIOP available compressor's list policies. THIS IS GOING DIRECTLY
-  // AGAINST THE CORBA Compressed GIOP (ZIOP) V1.0 specification, but
-  // allows us to use ZIOP with MIOP and/or CORBALOCs.
-  // We have to trust the end user knows what his system is configured to allow;
-  // Any servers that cannot decompress the client's used ZIOP compressor will
-  // reject the request as they simply cannot decode or handle it (comms will
-  // simply timeout or lock-up at the client for any such incorrect two-way requests).
+  /// Allows a client to ZIOP compress without having any server
+  /// ZIOP available compressor's list policies. THIS IS GOING DIRECTLY
+  /// AGAINST THE CORBA Compressed GIOP (ZIOP) V1.0 specification, but
+  /// allows us to use ZIOP with MIOP and/or CORBALOCs.
+  /// We have to trust the end user knows what his system is configured to allow;
+  /// Any servers that cannot decompress the client's used ZIOP compressor will
+  /// reject the request as they simply cannot decode or handle it (comms will
+  /// simply timeout or lock-up at the client for any such incorrect two-way requests).
   bool allow_ziop_no_server_policies_;
 };
 

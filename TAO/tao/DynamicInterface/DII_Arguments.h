@@ -77,8 +77,8 @@ namespace TAO
 
     CORBA::Boolean demarshal (TAO_InputCDR &) override;
 
-    // Not an override of a base class method, but a new one that
-    // deals with the argument list as a whole.
+    /// Not an override of a base class method, but a new one that
+    /// deals with the argument list as a whole.
     void interceptor_paramlist (Dynamic::ParameterList *);
 
     CORBA::NVList_ptr arg () const;

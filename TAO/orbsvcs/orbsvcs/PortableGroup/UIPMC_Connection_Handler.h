@@ -117,8 +117,8 @@ protected:
   int handle_write_ready (ACE_Time_Value const *timeout) override;
   /// @}
 
-  // helper function used by the set_dscp_codepoint () methods to
-  // set the TOS field in the IP packets.
+  /// helper function used by the set_dscp_codepoint () methods to
+  /// set the TOS field in the IP packets.
   int set_tos (int tos);
 
   TAO_UIPMC_Connection_Handler (TAO_UIPMC_Connection_Handler const &) = delete;

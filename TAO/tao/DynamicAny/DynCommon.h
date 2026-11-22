@@ -243,7 +243,7 @@ protected:
   CORBA::Boolean allow_truncation_;
 
 private:
-  // Utility functions used by insert_* and get_*.
+  /// Utility functions used by insert_* and get_*.
   CORBA::TypeCode_ptr check_type_and_unalias (CORBA::TypeCode_ptr tc);
 };
 

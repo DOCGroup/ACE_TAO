@@ -86,11 +86,11 @@ namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-// Note that these declarations are placed outside of the scope of the
-// namespace. The generated functions use a C style signature which does
-// not accommodate namespaces, so assuming namespace concatenation is an
-// error. The service class name should be composed of a flattened class
-// name, with the namespaces preceding the class name with '_'.
+/// Note that these declarations are placed outside of the scope of the
+/// namespace. The generated functions use a C style signature which does
+/// not accommodate namespaces, so assuming namespace concatenation is an
+/// error. The service class name should be composed of a flattened class
+/// name, with the namespaces preceding the class name with '_'.
 ACE_STATIC_SVC_DECLARE_EXPORT (HTIOP, TAO_HTIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (HTIOP, TAO_HTIOP_Protocol_Factory)
 

@@ -677,7 +677,7 @@ public:
   CORBA::Object_ptr resolve_monitor ();
 
   /// Resolve an initial reference via the -ORBInitRef and
-  // -ORBDefaultInitRef options.
+  /// -ORBDefaultInitRef options.
   CORBA::Object_ptr resolve_rir (const char *name);
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0

@@ -80,7 +80,7 @@ public:
   TAO_FixedSeq_Var_T (T *);
   TAO_FixedSeq_Var_T (const TAO_FixedSeq_Var_T<T> &);
 
-  // Fixed-size base types only.
+  /// Fixed-size base types only.
   TAO_FixedSeq_Var_T (const T &);
 
   TAO_FixedSeq_Var_T & operator= (T *);

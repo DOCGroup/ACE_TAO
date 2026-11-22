@@ -61,7 +61,7 @@ protected:
   ~TAO_RTScheduler_Manager () override = default;
 
 private:
-  // Borrowed from the ORB that creates this manager.
+  /// Borrowed from the ORB that creates this manager.
   TAO_ORB_Core *orb_ {};
   RTScheduling::Scheduler_var rtscheduler_;
 };
@@ -87,8 +87,8 @@ public:
   TAO_RTScheduler_Manager_ptr _retn ();
   TAO_RTScheduler_Manager_ptr ptr () const;
 
-  // Hooks used by template sequence and object manager classes
-  // for non-defined forward declared interfaces.
+  /// Hooks used by template sequence and object manager classes
+  /// for non-defined forward declared interfaces.
   static TAO_RTScheduler_Manager_ptr duplicate (TAO_RTScheduler_Manager_ptr);
   static void release (TAO_RTScheduler_Manager_ptr);
   static TAO_RTScheduler_Manager_ptr nil ();

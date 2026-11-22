@@ -43,8 +43,8 @@ public:
   void _add_ref () override;
   void _remove_ref () override;
 
-  // SERVANT_TYPE may be a CosEvent servant without these Notify operations.
-  // Retain virtual here so both servant families can instantiate this template.
+  /// SERVANT_TYPE may be a CosEvent servant without these Notify operations.
+  /// Retain virtual here so both servant families can instantiate this template.
   virtual void validate_event_qos (
     CosNotification::QoSProperties const &required_qos,
     CosNotification::NamedPropertyRangeSeq_out available_qos);

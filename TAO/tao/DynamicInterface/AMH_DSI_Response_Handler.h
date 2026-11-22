@@ -97,8 +97,8 @@ public:
   TAO_AMH_DSI_Exception_Holder* _retn ();
   TAO_AMH_DSI_Exception_Holder* ptr () const;
 
-  // Hooks used by template sequence and valuetype manager classes
-  // for non-defined forward declared valuetypes.
+  /// Hooks used by template sequence and valuetype manager classes
+  /// for non-defined forward declared valuetypes.
   static void tao_add_ref (TAO_AMH_DSI_Exception_Holder *);
   static void tao_remove_ref (TAO_AMH_DSI_Exception_Holder *);
 

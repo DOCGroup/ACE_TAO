@@ -109,10 +109,10 @@ private:
   CONV_FRAME::CodeSetId intersectionOf (CONV_FRAME::CodeSetComponent const &,
                                         CONV_FRAME::CodeSetComponent const &) const;
 
-  // traverse the list of codeset factories, populating the list of
-  // conversion codeset values with the translated codeset id from
-  // each factory that has a matching native codeset. Those factories
-  // that do not have a matching codeset are not retained in the list.
+  /// traverse the list of codeset factories, populating the list of
+  /// conversion codeset values with the translated codeset id from
+  /// each factory that has a matching native codeset. Those factories
+  /// that do not have a matching codeset are not retained in the list.
   int init_ccs (TAO_Codeset_Descriptor&,
                 CONV_FRAME::CodeSetComponent&);
 

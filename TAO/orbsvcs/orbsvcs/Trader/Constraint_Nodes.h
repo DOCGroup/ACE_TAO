@@ -115,10 +115,10 @@ public:
   /// Return the right operand of the binary expression
   TAO_Constraint* right_operand () const;
 
-  // Allow double dispatching without creating an inundation of
-  // classes by using a dispatch table of static method pointers to
-  // invoke the correct visitor method as efficiently as a virtual
-  // method invocation.
+  /// Allow double dispatching without creating an inundation of
+  /// classes by using a dispatch table of static method pointers to
+  /// invoke the correct visitor method as efficiently as a virtual
+  /// method invocation.
   static int visit_or (TAO_Constraint_Visitor*, TAO_Binary_Constraint*);
   static int visit_and (TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
   static int visit_less_than (TAO_Constraint_Visitor* , TAO_Binary_Constraint*);

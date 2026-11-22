@@ -242,8 +242,8 @@ namespace CORBA
 
     void create_environment (CORBA::Environment_ptr &new_env);
 
-    // The following are not implemented and just throw
-    // CORBA::NO_IMPLEMENT.
+    /// The following are not implemented and just throw
+    /// CORBA::NO_IMPLEMENT.
 
     void create_context_list (CORBA::ContextList_ptr &ctxtlist);
 

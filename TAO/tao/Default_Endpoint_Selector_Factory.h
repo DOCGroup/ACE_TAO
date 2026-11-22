@@ -60,7 +60,7 @@ public:
   TAO_Invocation_Endpoint_Selector *get_selector () override;
 
 private:
-  // Prevent copying/assignment.
+  /// Prevent copying/assignment.
   TAO_Default_Endpoint_Selector_Factory (
     TAO_Default_Endpoint_Selector_Factory const &) = delete;
   TAO_Default_Endpoint_Selector_Factory &operator= (

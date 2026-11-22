@@ -69,13 +69,13 @@ public:
   TAO_Fixed_Var_T (T *);
   TAO_Fixed_Var_T (const TAO_Fixed_Var_T<T> &);
 
-  // Fixed-size types only.
+  /// Fixed-size types only.
   TAO_Fixed_Var_T (const T &);
 
   TAO_Fixed_Var_T & operator= (T *);
   TAO_Fixed_Var_T & operator= (const TAO_Fixed_Var_T<T> &);
 
-  // Fixed-size types only.
+  /// Fixed-size types only.
   TAO_Fixed_Var_T & operator= (const T &);
 
   operator const T & () const;

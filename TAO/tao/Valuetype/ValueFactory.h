@@ -85,8 +85,8 @@ namespace TAO
     static void add_ref (CORBA::ValueFactoryBase *);
     static void remove_ref (CORBA::ValueFactoryBase *);
 
-    // For INOUT value type arguments, so they can use the same set
-    // of arg classes as interfaces.
+    /// For INOUT value type arguments, so they can use the same set
+    /// of arg classes as interfaces.
     static void release (CORBA::ValueFactoryBase *);
   };
 }

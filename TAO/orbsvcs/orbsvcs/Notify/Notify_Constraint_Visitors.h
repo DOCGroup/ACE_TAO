@@ -75,7 +75,7 @@ public:
   /// @}
 
 protected:
-  // Sub-methods for visit_binary_expr().
+  /// Sub-methods for visit_binary_expr().
   int visit_or (ETCL_Binary_Expr *);
   int visit_and (ETCL_Binary_Expr *);
   int visit_twiddle (ETCL_Binary_Expr *);
@@ -83,7 +83,7 @@ protected:
   int visit_binary_op (ETCL_Binary_Expr *binary_expr,
                        int op_type);
 
-  // These use dynamic anys to look inside the ETCL component.
+  /// These use dynamic anys to look inside the ETCL component.
   CORBA::Boolean sequence_does_contain (const CORBA::Any *any,
                                         TAO_ETCL_Literal_Constraint &item);
   CORBA::Boolean array_does_contain (const CORBA::Any *any,

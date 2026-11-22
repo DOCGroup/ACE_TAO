@@ -35,9 +35,9 @@ namespace TAO
 
       TAO_Protocol_Item *raw_item {};
 
-      // If a protocol factory is obtained from the Service
-      // Configurator then do not transfer ownership to the
-      // TAO_Protocol_Item.
+      /// If a protocol factory is obtained from the Service
+      /// Configurator then do not transfer ownership to the
+      /// TAO_Protocol_Item.
       bool transfer_ownership {};
 
       protocol_factory =

@@ -80,7 +80,7 @@ public:
     , length_ (length)
     , buffer_ (reinterpret_cast <CORBA::Octet *>(mb->rd_ptr ()))
     , release_ (false) {
-    // Get the message block flags.
+    /// Get the message block flags.
     ACE_Message_Block::Message_Flags const flg = mb->self_flags ();
 
     // If the DONT_DELETE flag is disabled just a duplicate would

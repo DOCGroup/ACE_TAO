@@ -45,7 +45,7 @@ namespace TAO
     static T_ptr unchecked_narrow (CORBA::Object_ptr);
 
   private:
-    // Code for lazily evaluated IORs.
+    /// Code for lazily evaluated IORs.
     static T_ptr lazy_evaluation (CORBA::Object_ptr);
   };
 }

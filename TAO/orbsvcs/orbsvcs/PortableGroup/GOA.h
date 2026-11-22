@@ -172,7 +172,7 @@ public:
   TAO_GOA & operator= (TAO_GOA const &) = delete;
   TAO_GOA & operator= (TAO_GOA &&) = delete;
 
-  // Used to force the initialization of the code.
+  /// Used to force the initialization of the code.
   static int Initializer ();
 
 protected:

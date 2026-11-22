@@ -93,10 +93,10 @@ public:
   /// @}
 
 private:
-  // Utility, turns the type of elements contained in the sequence.
+  /// Utility, turns the type of elements contained in the sequence.
   CORBA::TypeCode_ptr get_element_type ();
 
-  // Called by both versions of init().
+  /// Called by both versions of init().
   void init_common ();
 
   /// Each component is also a DynAny.

@@ -65,7 +65,7 @@ class TAO_Export TAO_Dynamic_Adapter : public ACE_Service_Object
 public:
   ~TAO_Dynamic_Adapter () override;
 
-  // CORBA::Object::_create_request and CORBA::Object::_request.
+  /// CORBA::Object::_create_request and CORBA::Object::_request.
   virtual void create_request (CORBA::Object_ptr obj,
                                CORBA::ORB_ptr orb,
                                const char *operation,
@@ -79,7 +79,7 @@ public:
                                       CORBA::ORB_ptr orb,
                                       const char *op) = 0;
 
-  // CORBA::is_nil and CORBA::release for Context, Request, and ServerRequest.
+  /// CORBA::is_nil and CORBA::release for Context, Request, and ServerRequest.
 
   virtual CORBA::Boolean context_is_nil (CORBA::Context_ptr ctx) = 0;
 
@@ -93,7 +93,7 @@ public:
 
   virtual void server_request_release (CORBA::ServerRequest_ptr req) = 0;
 
-  // CORBA::ORB::create_exception_list.
+  /// CORBA::ORB::create_exception_list.
   virtual void create_exception_list (CORBA::ExceptionList_ptr &) = 0;
 };
 
