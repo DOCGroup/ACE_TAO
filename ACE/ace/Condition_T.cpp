@@ -19,6 +19,8 @@
 #include "ace/Time_Value.h"
 #endif /* __ACE_INLINE__ */
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Condition)
@@ -65,7 +67,7 @@ ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
 {
   // ACE_TRACE ("ACE_Condition<MUTEX>::ACE_Condition");
 
-  if (ACE_OS::cond_init (&this->cond_,
+  if (ACE_OS::cond_init (std::addressof (this->cond_),
                          (short) type,
                          name,
                          arg) != 0)
@@ -84,7 +86,7 @@ ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
   : mutex_ (m)
 {
 // ACE_TRACE ("ACE_Condition<MUTEX>::ACE_Condition<MUTEX>");
-  if (ACE_OS::cond_init (&this->cond_,
+  if (ACE_OS::cond_init (std::addressof (this->cond_),
                          const_cast<ACE_condattr_t &> (attributes.attributes ()),
                          name, arg) != 0)
     {
@@ -111,8 +113,8 @@ template <class MUTEX> int
 ACE_Condition<MUTEX>::wait ()
 {
   // ACE_TRACE ("ACE_Condition<MUTEX>::wait");
-  return ACE_OS::cond_wait (&this->cond_,
-                            &this->mutex_.lock ());
+  return ACE_OS::cond_wait (std::addressof (this->cond_),
+                            std::addressof (this->mutex_.lock ()));
 }
 
 template <class MUTEX> int
@@ -122,14 +124,14 @@ ACE_Condition<MUTEX>::wait (MUTEX &mutex,
 // ACE_TRACE ("ACE_Condition<MUTEX>::wait");
   if (abstime == nullptr)
     {
-      return ACE_OS::cond_wait (&this->cond_,
-                                &mutex.lock ());
+      return ACE_OS::cond_wait (std::addressof (this->cond_),
+                                std::addressof (mutex.lock ()));
     }
   else
     {
       ACE_Time_Value tv = *abstime;
-      return ACE_OS::cond_timedwait (&this->cond_,
-                                     &mutex.lock (),
+      return ACE_OS::cond_timedwait (std::addressof (this->cond_),
+                                     std::addressof (mutex.lock ()),
                                      &tv);
     }
 }
