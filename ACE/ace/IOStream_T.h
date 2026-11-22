@@ -28,6 +28,7 @@
 
 #  if defined (ACE_LACKS_IOSTREAM_FX)
 #   include "ace/os_include/os_ctype.h"
+#   include "ace/OS_NS_ctype.h"
 #  endif /**/
 
 #  include <memory>
@@ -164,7 +165,7 @@ public:
           if (!noskip && flags () & skipws)
             {
               int ch;
-              while (isspace (ch = rdbuf ()->sbumpc ()))
+              while (ACE_OS::ace_isspace (ch = rdbuf ()->sbumpc ()))
                 continue;
               if (ch != EOF)
                 {

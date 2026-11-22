@@ -263,7 +263,7 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
   if (buffer->state_ == ACE_NO_STATE)
     {
       while (buffer->index_ < buffer->size_ &&
-             isspace (buffer->input_[buffer->index_]))
+             ACE_OS::ace_isspace (buffer->input_[buffer->index_]))
         {
           // Make sure that we count all of the new lines
           if (buffer->input_[buffer->index_] == '\n')
@@ -386,7 +386,7 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
                 if (current == buffer->index_)
                   {
                     buffer->index_ = current + 1;
-                    if (isspace (c))
+                    if (ACE_OS::ace_isspace (c))
                       {
                         // This is an empty line.
                         // Let's look for something else.
