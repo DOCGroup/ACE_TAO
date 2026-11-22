@@ -146,7 +146,9 @@ ECT_Supplier_Driver::run (int argc, ACE_TCHAR* argv[])
 
       RtecEventChannelAdmin::EventChannel_var channel;
       if (CORBA::is_nil (ec_obj.in ()))
-        channel = RtecEventChannelAdmin::EventChannel::_nil ();
+        {
+          channel = RtecEventChannelAdmin::EventChannel::_nil ();
+        }
       else
       {
         channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ());

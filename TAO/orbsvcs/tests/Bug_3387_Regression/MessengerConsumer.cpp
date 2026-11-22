@@ -133,7 +133,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       consumer_state.orb->run (&run_time);
 
       if (servant.nummsgs () > 0)
-        std::cout << "Success pass " << consumer_state.pass << ": events received " << std::endl;
+        {
+          std::cout << "Success pass " << consumer_state.pass << ": events received " << std::endl;
+        }
       else
       {
         std::cout << "ERROR pass " << consumer_state.pass << ": no events received " << std::endl;

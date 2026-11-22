@@ -26,7 +26,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-o")) == 0)
             {
               if (argv[i + 1] != nullptr)
-                ior_file_name = argv[++i];
+                {
+                  ior_file_name = argv[++i];
+                }
             }
         }
 

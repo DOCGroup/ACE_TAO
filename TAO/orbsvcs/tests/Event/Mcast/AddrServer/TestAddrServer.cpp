@@ -27,7 +27,9 @@ TestAddrServer_i::get_addr (RtecEventComm::EventHeader const& h,
 
 #if defined (ACE_HAS_IPV6)
   if (addr.get_type () == PF_INET6)
-    throw CORBA::DATA_CONVERSION (0, CORBA::COMPLETED_YES);
+    {
+      throw CORBA::DATA_CONVERSION (0, CORBA::COMPLETED_YES);
+    }
 #endif /* ACE_HAS_IPV6 */
   address.ipaddr = addr.get_ip_address ();
   address.port = addr.get_port_number ();

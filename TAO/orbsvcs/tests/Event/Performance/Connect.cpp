@@ -41,16 +41,24 @@ EC_Connect::parse_args (int& argc, ACE_TCHAR* argv[])
             {
               ACE_TCHAR const* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("consumers")) == 0)
-                this->order_ = Order::consumers;
+                {
+                  this->order_ = Order::consumers;
+                }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("suppliers")) == 0)
-                this->order_ = Order::suppliers;
+                {
+                  this->order_ = Order::suppliers;
+                }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("interleaved")) == 0)
-                this->order_ = Order::interleaved;
+                {
+                  this->order_ = Order::interleaved;
+                }
               else
-                ACE_ERROR ((LM_ERROR,
-                            "EC_Connect - invalid choice <%s> for"
-                            " connection order\n",
-                            opt));
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              "EC_Connect - invalid choice <%s> for"
+                              " connection order\n",
+                              opt));
+                }
 
               arg_shifter.consume_arg ();
             }

@@ -61,9 +61,13 @@ TAO249_ServerRequest_Interceptor::receive_request (
                   ftrsc.retention_id));
 
       if (this->client_id_ == 0)
-        this->client_id_ = ftrsc.retention_id;
+        {
+          this->client_id_ = ftrsc.retention_id;
+        }
       else if (this->client_id_ != ftrsc.retention_id)
-        this->client_id_ = ftrsc.retention_id;
+        {
+          this->client_id_ = ftrsc.retention_id;
+        }
       else
         {
           ACE_DEBUG ((LM_ERROR,

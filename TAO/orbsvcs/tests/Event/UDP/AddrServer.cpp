@@ -15,7 +15,9 @@ AddrServer::get_addr (RtecEventComm::EventHeader const &,
 {
 #if defined (ACE_HAS_IPV6)
   if (this->addr_.get_type () == PF_INET6)
-    throw CORBA::DATA_CONVERSION (0, CORBA::COMPLETED_YES);
+    {
+      throw CORBA::DATA_CONVERSION (0, CORBA::COMPLETED_YES);
+    }
 #endif /* ACE_HAS_IPV6 */
   addr.ipaddr = this->addr_.get_ip_address ();
   addr.port   = this->addr_.get_port_number ();

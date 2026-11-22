@@ -54,7 +54,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-ecname")) == 0)
           {
             if (argv[i + 1] != nullptr)
+              {
                 ecname = argv[++i];
+              }
             else
             {
               ACE_ERROR_RETURN ((LM_ERROR,  "Missing Event channel name\n"),0);
@@ -63,7 +65,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         else if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-address")) == 0)
           {
             if (argv[i + 1] != nullptr)
-              address = argv[++i];
+              {
+                address = argv[++i];
+              }
             else
             {
               ACE_ERROR_RETURN ((LM_ERROR, "Missing address\n"),0);
@@ -72,7 +76,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         else if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-port")) == 0)
           {
             if (argv[i + 1] != nullptr)
-              port = ACE_OS::atoi (argv[++i]);
+              {
+                port = ACE_OS::atoi (argv[++i]);
+              }
             else
             {
               ACE_ERROR_RETURN ((LM_ERROR, "Missing port\n"),0);
@@ -81,7 +87,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         else if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-listenport")) == 0)
           {
             if (argv[i + 1] != nullptr)
-              listenport = ACE_OS::atoi (argv[++i]);
+              {
+                listenport = ACE_OS::atoi (argv[++i]);
+              }
             else
             {
               ACE_ERROR_RETURN ((LM_ERROR, "Missing port\n"), 0);
@@ -90,14 +98,18 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         else if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-iorfile")) == 0)
           {
             if (argv[i + 1] != nullptr)
-              iorfile = argv[++i];
+              {
+                iorfile = argv[++i];
+              }
              else
              {
                ACE_ERROR_RETURN ((LM_ERROR, "Missing ior file\n"), 0);
              }
           }
         else if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-udp")) == 0)
-          mcast = false;
+          {
+            mcast = false;
+          }
       }
 
     // Get the POA

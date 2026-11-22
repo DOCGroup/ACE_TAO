@@ -236,7 +236,9 @@ CC_Client::check_extended_test_params(ACE_TCHAR *params)
         {
         case TAO_START:
           if(ACE_OS::ace_isdigit(*cp))
-            state = TAO_NUMBER;
+            {
+              state = TAO_NUMBER;
+            }
           else
           {
             state = TAO_ERROR;
@@ -274,7 +276,9 @@ CC_Client::check_extended_test_params(ACE_TCHAR *params)
       ++cp;
     }
   if (state==TAO_ERROR) // there was only one character given and it was wrong
-    return -1;
+    {
+      return -1;
+    }
   else
   {
     return no_of_params;
