@@ -37,7 +37,9 @@ protected:
   /// Override inherited open() from Logging_Server
   int open (u_short port) override {
     if (make_log_file (log_file_) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "make_log_file()"), -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "make_log_file()"), -1);
+      }
     return Logging_Server::open (port);
   }
 
@@ -46,7 +48,9 @@ protected:
 
     if (acceptor ().accept (logging_handler_.peer (),
                             &logging_peer_addr) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "acceptor.accept()"), -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "acceptor.accept()"), -1);
+      }
 
     ACE_DEBUG ((LM_DEBUG, "Accepted connection from %s\n",
                 logging_peer_addr.get_host_name ()));

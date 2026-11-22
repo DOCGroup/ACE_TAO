@@ -115,14 +115,18 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   for (;;) {
     std::array<char, ACE_Log_Record::MAXLOGMSGLEN> user_input {};
     if (!cin.getline (user_input.data (), static_cast<int> (user_input.size ())))
-      break;
+      {
+        break;
+      }
 
     ACE_Time_Value const now (ACE_OS::gettimeofday ());
     ACE_Log_Record log_record (LM_INFO, now, ACE_OS::getpid ());
     log_record.msg_data (user_input.data ());
     if (logging_client.send (log_record) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n", "logging_client.send()"), 1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n", "logging_client.send()"), 1);
+      }
   }
 #else
   // Limit the number of characters read on each record

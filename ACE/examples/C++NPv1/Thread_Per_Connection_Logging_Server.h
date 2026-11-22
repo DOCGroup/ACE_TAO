@@ -42,13 +42,19 @@ public:
   /// call handle_data; therefore, this method must not.
   int run (int argc, char *argv[]) override {
     if (open (argc > 1 ? atoi (argv[1]) : 0) == -1)
-      return -1;
+      {
+        return -1;
+      }
 
     for (;;) {
       if (wait_for_multiple_events () == -1)
-        return -1;
+        {
+          return -1;
+        }
       if (handle_connections () == -1)
-        return -1;
+        {
+          return -1;
+        }
     }
 
     ACE_NOTREACHED (return 0;)

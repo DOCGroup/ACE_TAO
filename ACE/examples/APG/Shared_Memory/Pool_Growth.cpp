@@ -138,12 +138,16 @@ int handle_remap (EXCEPTION_POINTERS *ep)
 
   DWORD ecode = ep->ExceptionRecord->ExceptionCode;
   if (ecode != EXCEPTION_ACCESS_VIOLATION)
-    return EXCEPTION_CONTINUE_SEARCH;
+    {
+      return EXCEPTION_CONTINUE_SEARCH;
+    }
 
   void *addr =
     (void *) ep->ExceptionRecord->ExceptionInformation[1];
   if (g_shmem_allocator->alloc().memory_pool().remap (addr) == -1)
-    return EXCEPTION_CONTINUE_SEARCH;
+    {
+      return EXCEPTION_CONTINUE_SEARCH;
+    }
 #if __X86__
   // This is 80x86-specific.
   ep->ContextRecord->Edi = (DWORD) addr;

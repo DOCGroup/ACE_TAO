@@ -76,7 +76,9 @@ protected:
 
       // Use the client's hostname as the logfile name.
       if (make_log_file (*log_file, &logging_peer) == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       // Add the new <logging_peer>'s handle to the map and
       // to the set of handles we <select> for input.
