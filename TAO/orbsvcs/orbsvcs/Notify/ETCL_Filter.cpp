@@ -479,7 +479,7 @@ TAO_Notify_ETCL_Filter::match_structured (
   if (visitor.bind_structured_event (filterable_data) != 0)
     {
       // Maybe throw some kind of exception here, or lower down,
-      return 0;
+      return false;
     }
 
   for (; iter.done () == 0; iter.advance ())
@@ -488,12 +488,12 @@ TAO_Notify_ETCL_Filter::match_structured (
         {
           if (entry->int_id_->interpreter.evaluate (visitor) == 1)
             {
-              return 1;
+              return true;
             }
         }
     }
 
-  return 0;
+  return false;
 }
 
 CORBA::Boolean

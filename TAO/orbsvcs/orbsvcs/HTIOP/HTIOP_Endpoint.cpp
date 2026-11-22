@@ -212,7 +212,7 @@ TAO::HTIOP::Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
     dynamic_cast<TAO::HTIOP::Endpoint *> (endpt);
   if (endpoint == nullptr)
   {
-    return 0;
+    return false;
   }
 
   if (this->htid_.in() && std::strlen (this->htid_.in ()))

@@ -564,9 +564,9 @@ TAO_SFP_Base::start_frame (CORBA::Octet flags,
   frame_header.message_size = 0;
   if (!(msg << frame_header))
   {
-    return 0;
+    return false;
   }
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -583,9 +583,9 @@ TAO_SFP_Base::write_start_message (TAO_OutputCDR &msg)
   start.flags = 0;
   if (!(msg << start))
   {
-    return 0;
+    return false;
   }
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -600,9 +600,9 @@ TAO_SFP_Base::write_start_reply_message (TAO_OutputCDR &msg)
   start_reply.flags = 0;
   if (!(msg << start_reply))
   {
-    return 0;
+    return false;
   }
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -618,9 +618,9 @@ TAO_SFP_Base::write_credit_message (CORBA::ULong cred_num,
   credit.cred_num = cred_num;
   if (!(msg << credit))
   {
-    return 0;
+    return false;
   }
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -643,9 +643,9 @@ TAO_SFP_Base::write_fragment_message (CORBA::Octet flags,
   fragment.source_id = source_id;
   if (!(msg << fragment))
   {
-    return 0;
+    return false;
   }
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -663,9 +663,9 @@ TAO_SFP_Base::write_frame_message (CORBA::ULong timestamp,
   frame.sequence_num = sequence_num;
   if (!(msg << frame))
   {
-    return 0;
+    return false;
   }
-  return 1;
+  return true;
 }
 
 int
