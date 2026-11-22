@@ -6,6 +6,8 @@
 #include "ace/XTI_ATM_Mcast.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/OS_NS_string.h"
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_XTI_ATM_Mcast)
@@ -34,7 +36,7 @@ ACE_XTI_ATM_Mcast::add_leaf (ACE_TLI_Stream &current_stream,
   ACE_TRACE ("ACE_XTI_ATM_Mcast::add_leaf");
 
   struct netbuf call_req;
-  memset(&call_req, 0, sizeof(call_req));
+  ACE_OS::memset (&call_req, 0, sizeof (call_req));
   call_req.len = remote_sap.get_size ();
   call_req.buf = static_cast<char *> (remote_sap.get_addr ());
 
