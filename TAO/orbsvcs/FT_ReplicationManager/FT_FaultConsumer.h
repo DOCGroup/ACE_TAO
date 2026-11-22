@@ -99,17 +99,17 @@ namespace TAO
 
     /// @}
 
-    ////////////////////
-    // Forbidden methods
   private:
+    /// @name Disabled operations
+    /// @{
     FT_FaultConsumer (FT_FaultConsumer const &) = delete;
     FT_FaultConsumer (FT_FaultConsumer &&) = delete;
     FT_FaultConsumer & operator= (FT_FaultConsumer const &) = delete;
     FT_FaultConsumer & operator= (FT_FaultConsumer &&) = delete;
+    /// @}
 
-    ///////////////
-    // Data Members
-  private:
+    /// @name Data members
+    /// @{
     /// The POA with which we are activated.
     PortableServer::POA_var poa_;
 
@@ -131,6 +131,7 @@ namespace TAO
     ///TODO: Remove this later, it is just for testing.
     /// Keep track of how many notifications we have received.
     size_t notifications_ {};
+    /// @}
   };
 } // namespace TAO
 

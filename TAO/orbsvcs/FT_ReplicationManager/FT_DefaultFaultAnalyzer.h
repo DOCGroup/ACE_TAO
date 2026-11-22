@@ -56,13 +56,14 @@ namespace TAO
     int analyze_fault_event (
       CosNotification::StructuredEvent const & event) override;
 
-    ////////////////////
-    // Forbidden methods
   private:
+    /// @name Disabled operations
+    /// @{
     FT_DefaultFaultAnalyzer (FT_DefaultFaultAnalyzer const &) = delete;
     FT_DefaultFaultAnalyzer (FT_DefaultFaultAnalyzer &&) = delete;
     FT_DefaultFaultAnalyzer & operator= (FT_DefaultFaultAnalyzer const &) = delete;
     FT_DefaultFaultAnalyzer & operator= (FT_DefaultFaultAnalyzer &&) = delete;
+    /// @}
   };
 } // namespace TAO
 

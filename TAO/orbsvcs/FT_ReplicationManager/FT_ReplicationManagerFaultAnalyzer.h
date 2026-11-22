@@ -72,9 +72,9 @@ namespace TAO
     int analyze_fault_event (
       CosNotification::StructuredEvent const & event) override;
 
-    ////////////////////
-    // Forbidden methods
   private:
+    /// @name Disabled operations
+    /// @{
     FT_ReplicationManagerFaultAnalyzer () = delete;
 
     FT_ReplicationManagerFaultAnalyzer (
@@ -85,6 +85,7 @@ namespace TAO
       FT_ReplicationManagerFaultAnalyzer const &) = delete;
     FT_ReplicationManagerFaultAnalyzer & operator= (
       FT_ReplicationManagerFaultAnalyzer &&) = delete;
+    /// @}
 
     /// @name Implementation methods
     /// @{

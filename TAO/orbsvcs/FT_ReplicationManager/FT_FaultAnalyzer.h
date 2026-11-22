@@ -52,17 +52,14 @@ namespace TAO
     virtual int analyze_fault_event (
       CosNotification::StructuredEvent const & event) = 0;
 
-    ////////////////////
-    // Forbidden methods
   private:
+    /// @name Disabled operations
+    /// @{
     FT_FaultAnalyzer (FT_FaultAnalyzer const &) = delete;
     FT_FaultAnalyzer (FT_FaultAnalyzer &&) = delete;
     FT_FaultAnalyzer & operator= (FT_FaultAnalyzer const &) = delete;
     FT_FaultAnalyzer & operator= (FT_FaultAnalyzer &&) = delete;
-
-    ///////////////
-    // Data Members
-  private:
+    /// @}
   };
 } // namespace TAO
 
