@@ -6,6 +6,7 @@
 #define _REACTIVE_LOGGING_SERVER_H
 
 #include "ace/INET_Addr.h"
+#include "ace/OS_NS_errno.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Log_Record.h"
@@ -34,7 +35,16 @@ protected:
 
   int open (u_short logger_port) override {
     Iterative_Logging_Server::open (logger_port);
-    master_handle_set_.set_bit (acceptor ().get_handle ());
+    ACE_HANDLE const handle = acceptor ().get_handle ();
+#if !defined (ACE_WIN32)
+    if (handle < 0 || handle >= ACE_FD_SETSIZE)
+      {
+        errno = EINVAL;
+        acceptor ().close ();
+        return -1;
+      }
+#endif /* ! ACE_WIN32 */
+    master_handle_set_.set_bit (handle);
     acceptor ().enable (ACE_NONBLOCK);
     return 0;
   }
@@ -65,8 +75,18 @@ protected:
   int handle_connections () override {
     if (active_handles_.is_set (acceptor ().get_handle ())) {
       while (acceptor ().accept (logging_handler ().peer ()) == 0)
-        master_handle_set_.set_bit
-          (logging_handler ().peer ().get_handle ());
+        {
+          ACE_HANDLE const handle = logging_handler ().peer ().get_handle ();
+#if !defined (ACE_WIN32)
+          if (handle < 0 || handle >= ACE_FD_SETSIZE)
+            {
+              errno = EINVAL;
+              logging_handler ().peer ().close ();
+              continue;
+            }
+#endif /* ! ACE_WIN32 */
+          master_handle_set_.set_bit (handle);
+        }
 
       // Remove acceptor handle from further consideration.
       active_handles_.clr_bit (acceptor ().get_handle ());

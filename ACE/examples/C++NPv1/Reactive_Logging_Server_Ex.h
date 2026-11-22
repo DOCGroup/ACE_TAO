@@ -13,6 +13,7 @@
 #include "ace/Log_Record.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Stream.h"
+#include "ace/OS_NS_errno.h"
 #include "Logging_Server.h"
 #include "Logging_Handler.h"
 #include "ace/Null_Mutex.h"
@@ -45,7 +46,16 @@ protected:
 
   int open (u_short port) override {
     Logging_Server::open (port);
-    master_handle_set_.set_bit (acceptor ().get_handle ());
+    ACE_HANDLE const handle = acceptor ().get_handle ();
+#if !defined (ACE_WIN32)
+    if (handle < 0 || handle >= ACE_FD_SETSIZE)
+      {
+        errno = EINVAL;
+        acceptor ().close ();
+        return -1;
+      }
+#endif /* ! ACE_WIN32 */
+    master_handle_set_.set_bit (handle);
     acceptor ().enable (ACE_NONBLOCK);
     return 0;
   }
@@ -66,6 +76,16 @@ protected:
     ACE_SOCK_Stream logging_peer;
 
     while (acceptor ().accept (logging_peer) != -1) {
+      ACE_HANDLE const handle = logging_peer.get_handle ();
+#if !defined (ACE_WIN32)
+      if (handle < 0 || handle >= ACE_FD_SETSIZE)
+        {
+          errno = EINVAL;
+          logging_peer.close ();
+          continue;
+        }
+#endif /* ! ACE_WIN32 */
+
       std::unique_ptr<ACE_FILE_IO> log_file (
         new (std::nothrow) ACE_FILE_IO);
       if (!log_file)
@@ -82,10 +102,10 @@ protected:
 
       // Add the new <logging_peer>'s handle to the map and
       // to the set of handles we <select> for input.
-      if (log_map_.bind (logging_peer.get_handle (), log_file.get ()) == 0)
+      if (log_map_.bind (handle, log_file.get ()) == 0)
         {
           log_file.release ();
-          master_handle_set_.set_bit (logging_peer.get_handle ());
+          master_handle_set_.set_bit (handle);
         }
     }
     active_read_handles_.clr_bit (acceptor ().get_handle ());
