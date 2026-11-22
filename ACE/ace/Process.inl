@@ -181,7 +181,7 @@ ACE_Process_Options::avoid_zombies (int avoid_zombies)
 ACE_INLINE ACE_TEXT_STARTUPINFO *
 ACE_Process_Options::startup_info ()
 {
-  return &startup_info_;
+  return std::addressof (startup_info_);
 }
 
 ACE_INLINE LPSECURITY_ATTRIBUTES
