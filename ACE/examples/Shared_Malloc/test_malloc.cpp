@@ -123,9 +123,11 @@ spawn ()
       }
 #else
       if (options->spawn_count () > 1)
-        ACE_ERROR ((LM_ERROR,
-                    "only one thread may be run in a process on this platform\n%a",
-                    1));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "only one thread may be run in a process on this platform\n%a",
+                      1));
+        }
 #endif /* ACE_HAS_THREADS */
     }
 #if !defined (ACE_WIN32)
