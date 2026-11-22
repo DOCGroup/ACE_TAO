@@ -58,9 +58,11 @@ ACE_OS::waitpid (pid_t pid,
     {
     case WAIT_OBJECT_0:
       if (status != 0)
-        // The error status of <GetExitCodeProcess> is nonetheless
-        // not tested because we don't know how to return the value.
-        ::GetExitCodeProcess (phandle, status);
+        {
+          // The error status of <GetExitCodeProcess> is nonetheless
+          // not tested because we don't know how to return the value.
+          ::GetExitCodeProcess (phandle, status);
+        }
       break;
     case WAIT_TIMEOUT:
       errno = ETIME;

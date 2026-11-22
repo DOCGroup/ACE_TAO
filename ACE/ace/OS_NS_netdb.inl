@@ -103,7 +103,9 @@ ACE_OS::gethostbyaddr_r (const char *addr,
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
   if (h_errnop)
-    *h_errnop = ENOTSUP;
+    {
+      *h_errnop = ENOTSUP;
+    }
   ACE_NOTSUP_RETURN (0);
 # elif defined (ACE_HAS_REENTRANT_FUNCTIONS)
 
@@ -277,7 +279,9 @@ ACE_OS::gethostbyname_r (const char *name,
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
   if (h_errnop)
-    *h_errnop = ENOTSUP;
+    {
+      *h_errnop = ENOTSUP;
+    }
   ACE_NOTSUP_RETURN (0);
 # elif defined (ACE_HAS_REENTRANT_FUNCTIONS)
 
@@ -392,7 +396,9 @@ ACE_OS::gethostbyname_r (const char *name,
                 0,
                 result2);
   if (result2 == 0 && h_errnop)
-    *h_errnop = errno;
+    {
+      *h_errnop = errno;
+    }
   return result2;
   //FUZZ: enable check_for_lack_ACE_OS
 # endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) */
