@@ -13,6 +13,7 @@
 #include "test_config.h"
 
 #include <cstring>
+#include <memory>
 
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS))
   // This only works on Win32 platforms and on Unix platforms
@@ -2012,8 +2013,8 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   if (task1.start (threads, proactor_type, max_aio_operations) == 0)
     {
-      Acceptor  acceptor (&test);
-      Connector connector (&test);
+      Acceptor  acceptor (std::addressof (test));
+      Connector connector (std::addressof (test));
       ACE_INET_Addr addr (port);
 
       int rc = 0;

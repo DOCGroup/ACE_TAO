@@ -2,6 +2,8 @@
 #include "../Scheduler.h"
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 
+#include <memory>
+
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
@@ -17,7 +19,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       TAO_Scheduler scheduler (orb.in ());
 
-      manager->rtscheduler (&scheduler);
+      manager->rtscheduler (std::addressof (scheduler));
 
       Thread_Task task (orb.in ());
 

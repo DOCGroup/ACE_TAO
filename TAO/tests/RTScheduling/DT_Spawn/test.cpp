@@ -4,6 +4,7 @@
 #include "Thread_Action.h"
 #include "ace/Thread_Manager.h"
 #include <cstring>
+#include <memory>
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -28,7 +29,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       TAO_Scheduler scheduler (orb.in ());
 
-      manager->rtscheduler (&scheduler);
+      manager->rtscheduler (std::addressof (scheduler));
 
       CORBA::Object_var current_obj = orb->resolve_initial_references ("RTScheduler_Current");
 

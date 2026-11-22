@@ -4,6 +4,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/SString.h"
 
+#include <memory>
+
 ACE_TString ior = ACE_TEXT("file://test.ior");
 
 int
@@ -56,7 +58,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ());
 
-          manager->rtscheduler (&scheduler);
+          manager->rtscheduler (std::addressof (scheduler));
 
           CORBA::Object_var object =
             orb->string_to_object (ior.c_str ());

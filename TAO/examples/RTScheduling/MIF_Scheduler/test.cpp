@@ -10,6 +10,8 @@
 #include "ace/Event_Handler.h"
 #include "ace/Sig_Handler.h"
 
+#include <memory>
+
 class TestShutdown : public ACE_Event_Handler
 {
 public:
@@ -164,7 +166,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int status = 0;
 
-  ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_MIF_DT_Creator);
+  ACE_Service_Config::static_svcs ()->insert (
+    std::addressof (ace_svc_desc_MIF_DT_Creator));
 
   try
     {

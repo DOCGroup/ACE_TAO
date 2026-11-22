@@ -4,6 +4,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <memory>
+
 ACE_TCHAR const * filename = ACE_TEXT("test.ior");
 
 class test_impl : public POA_test
@@ -144,7 +146,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ());
 
       TAO_Scheduler scheduler (orb.in ());
-      manager->rtscheduler (&scheduler);
+      manager->rtscheduler (std::addressof (scheduler));
 
       // Print ior to the file.
       if (filename != nullptr)

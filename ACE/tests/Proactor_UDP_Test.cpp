@@ -11,6 +11,8 @@
 
 #include "test_config.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS))
   // This only works on Win32 platforms and on Unix platforms
   // supporting POSIX aio calls.
@@ -2303,8 +2305,8 @@ run_main (int argc, ACE_TCHAR *argv[])
       // on IPv6 as well as IPv4, you need to do some work on passing the
       // Session_Data address differently.
       ACE_INET_Addr addr (port, ACE_LOCALHOST, AF_INET);
-      Master master (&test, addr, clients);
-      Connector connector (&test);
+      Master master (std::addressof (test), addr, clients);
+      Connector connector (std::addressof (test));
       int rc = 0;
 
       if (both != 0 || host == nullptr) // Acceptor
