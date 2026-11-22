@@ -10,6 +10,8 @@
 #ifndef ACE_TESTS_DLL_TEST_IMPL_H
 #define ACE_TESTS_DLL_TEST_IMPL_H
 
+#include <new>
+
 #include "DLL_Test.h"
 #include "ace/OS_Memory.h"
 
