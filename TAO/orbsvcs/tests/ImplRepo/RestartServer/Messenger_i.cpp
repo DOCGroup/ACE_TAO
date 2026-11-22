@@ -32,7 +32,7 @@ CORBA::Boolean Messenger_i::send_message (
   std::cout << "Message from: " << user_name << std::endl
        << "Subject:      " << subject << std::endl
        << "Message:      " << message << std::endl;
-  return 1;
+  return true;
 }
 
 void

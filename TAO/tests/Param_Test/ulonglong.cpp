@@ -85,10 +85,10 @@ Test_ULongLong::check_validity ()
   if (this->inout_ == this->in_ * 2 &&
       this->out_ == this->in_ * 3 &&
       this->ret_ == this->in_ * 4)
-    return 1; // success
+    return true; // success
   else
   {
-    return 0;
+    return false;
   }
 }
 

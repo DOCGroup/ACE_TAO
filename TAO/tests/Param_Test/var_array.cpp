@@ -105,10 +105,10 @@ Test_Var_Array::check_validity ()
   if (this->compare (this->in_, this->inout_) &&
       this->compare (this->in_, this->out_.in ()) &&
       this->compare (this->in_, this->ret_.in ()))
-    return 1;
+    return true;
   else
   {
-    return 0;
+    return false;
   }
 }
 
@@ -126,10 +126,10 @@ Test_Var_Array::compare (const Param_Test::Var_Array_slice *a1,
     {
       if (std::strcmp (a1[i].in (), a2[i].in ()))
       {
-        return 0;
+        return false;
       }
     }
-  return 1; // success
+  return true; // success
 }
 
 void

@@ -130,7 +130,7 @@ Test_Small_Union::check_validity ()
       || this->in_._d () != this->ret_->_d ())
     {
       ACE_DEBUG ((LM_DEBUG, "mismatch of discriminators\n"));
-      return 0;
+      return false;
     }
 
   switch (this->in_._d ())
@@ -143,7 +143,7 @@ Test_Small_Union::check_validity ()
         CORBA::Long const ret   = this->ret_->the_long ();
         if (in != out || in != inout || in != ret)
         {
-          return 0;
+          return false;
         }
       }
       break;
@@ -156,16 +156,16 @@ Test_Small_Union::check_validity ()
         CORBA::Short const ret   = this->ret_->the_short ();
         if (in != out || in != inout || in != ret)
         {
-          return 0;
+          return false;
         }
       }
       break;
 
     default:
-      return 0;
+      return false;
     }
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean

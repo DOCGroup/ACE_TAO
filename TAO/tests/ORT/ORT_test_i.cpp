@@ -8,7 +8,7 @@ ORT_test_i::ORT_test_i (CORBA::ORB_ptr orb)
 CORBA::Boolean
 ORT_test_i::request_server ()
 {
-  return 0;
+  return false;
 }
 
 void

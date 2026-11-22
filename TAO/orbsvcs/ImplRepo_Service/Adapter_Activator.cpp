@@ -74,9 +74,9 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
                   "IMR_Adapter_Activator::unknown_adapter - %C\n",
                   exception_message));
       ex._tao_print_exception ("System Exception");
-      return 0;
+      return false;
     }
 
   // Finally, now everything is fine
-  return 1;
+  return true;
 }

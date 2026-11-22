@@ -116,10 +116,10 @@ Test_Fixed_Struct::check_validity ()
       ACE::is_equal (this->in_.f, this->ret_.f) &&
       this->in_.b == this->ret_.b &&
       ACE::is_equal (this->in_.d, this->ret_.d))
-    return 1;
+    return true;
   else
   {
-    return 0;
+    return false;
   }
 }
 

@@ -132,7 +132,7 @@ Test_Objref_Struct::check_validity ()
       || this->in_.x != this->out_->x
       || this->in_.x != this->ret_->x)
   {
-    return 0;
+    return false;
   }
 
   try
@@ -142,7 +142,7 @@ Test_Objref_Struct::check_validity ()
           || CORBA::is_nil (this->ret_->y.in ())
           || CORBA::is_nil (this->inout_->y.in ()))
         {
-          return 0;
+          return false;
         }
 
       Coffee::Desc_var s_in = this->in_.y->description ();
@@ -157,16 +157,16 @@ Test_Objref_Struct::check_validity ()
           || std::strcmp (s_in->name, s_inout->name) != 0
           || std::strcmp (s_in->name, s_ret->name) != 0 )
         {
-          return 0;
+          return false;
         }
 
-      return 1;
+      return true;
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_Objref_Struct::check_validity\n");
     }
-  return 0;
+  return false;
 }
 
 CORBA::Boolean

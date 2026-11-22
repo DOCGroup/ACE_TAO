@@ -106,10 +106,10 @@ Test_Fixed_Array::check_validity ()
   if (this->compare (this->in_, this->inout_) &&
       this->compare (this->in_, this->out_) &&
       this->compare (this->in_, this->ret_.in ()))
-    return 1;
+    return true;
   else
   {
-    return 0;
+    return false;
   }
 }
 
@@ -128,10 +128,10 @@ Test_Fixed_Array::compare (const Param_Test::Fixed_Array_slice *a1,
     {
       if (a1[i] != a2[i])
       {
-        return 0;
+        return false;
       }
     }
-  return 1; // success
+  return true; // success
 }
 
 void

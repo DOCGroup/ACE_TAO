@@ -36,5 +36,5 @@ Test_i::send_message (const char * user_name,
       ACE_OS::sprintf(mb->wr_ptr (), "0");
       terminator_.putq(mb);
     }
-  return 1;
+  return true;
 }

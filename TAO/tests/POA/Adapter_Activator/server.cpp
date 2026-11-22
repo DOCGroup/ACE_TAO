@@ -102,7 +102,7 @@ Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
       child->set_servant (servant.in ());
 
       // Finally everything is fine
-      return 1;
+      return true;
     }
   else if (std::strcmp (name, "secondPOA") == 0)
     {
@@ -127,7 +127,7 @@ Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
       child->activate_object_with_id (oid.in (), servant.in ());
 
       // Finally everything is fine
-      return 1;
+      return true;
     }
   // Unknown POA.
   return false;

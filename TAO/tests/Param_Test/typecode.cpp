@@ -130,18 +130,18 @@ Test_TypeCode::check_validity ()
 
       if (one && two && three)
         {
-          return 1;
+          return true;
         }
       else
       {
-        return 0;
+        return false;
       }
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_TypeCode::check_validity\n");
     }
-  return 0;
+  return false;
 }
 
 CORBA::Boolean

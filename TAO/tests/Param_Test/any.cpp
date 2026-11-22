@@ -313,11 +313,11 @@ Test_Any::check_validity ()
       if ((short_in == short_inout) &&
           (short_in == short_out) &&
           (short_in == short_ret))
-        return 1;
+        return true;
       else
         {
           ACE_DEBUG ((LM_DEBUG, "mismatch of short values\n"));
-          return 0;
+          return false;
         }
     }
   else if ((this->in_ >>= str_in) &&
@@ -328,11 +328,11 @@ Test_Any::check_validity ()
       if (!std::strcmp (str_in, str_inout) &&
           !std::strcmp (str_in, str_out) &&
           !std::strcmp (str_in, str_ret))
-        return 1;
+        return true;
       else
         {
           ACE_DEBUG ((LM_DEBUG, "mismatch of string values\n"));
-          return 0;
+          return false;
         }
     }
   else if ((this->in_ >>= obj_in) &&
@@ -341,7 +341,7 @@ Test_Any::check_validity ()
            (this->ret_.in () >>= obj_ret))
     {
       // all the >>= operators returned true so we are OK.
-      return 1;
+      return true;
     }
   else if ((this->in_ >>= array_in) &&
            (this->inout_ >>= array_inout) &&
@@ -357,10 +357,10 @@ Test_Any::check_validity ()
               array_inout[i] != square ||
               array_ret[i] != square)
           {
-            return 0;
+            return false;
           }
         }
-      return 1;
+      return true;
     }
   else if ((this->in_ >>= bdss_in) &&
            (this->inout_ >>= bdss_inout) &&
@@ -374,10 +374,10 @@ Test_Any::check_validity ()
               (*bdss_inout)[i] != square ||
               (*bdss_inout)[i] != (*bdss_ret)[i])
           {
-            return 0;
+            return false;
           }
         }
-      return 1;
+      return true;
     }
   else if ((this->in_ >>= ubss_in) &&
            (this->inout_ >>= ubss_inout) &&
@@ -391,10 +391,10 @@ Test_Any::check_validity ()
               (*ubss_inout)[i] != square ||
               (*ubss_inout)[i] != (*ubss_ret)[i])
           {
-            return 0;
+            return false;
           }
         }
-      return 1;
+      return true;
     }
   else if ((this->in_ >>= fs_in) &&
            (this->inout_ >>= fs_inout) &&
@@ -402,7 +402,7 @@ Test_Any::check_validity ()
            (this->ret_.in () >>= fs_ret))
     {
       // @@ Added test for data validity here.
-      return 1;
+      return true;
     }
   else if ((this->in_ >>= bu_in) &&
            (this->inout_ >>= bu_inout) &&
@@ -416,7 +416,7 @@ Test_Any::check_validity ()
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Test_Any - not all unions contain a long\n"));
-          return 0;
+          return false;
         }
 
       if (bu_in->the_long () != bu_inout->the_long ()
@@ -433,9 +433,9 @@ Test_Any::check_validity ()
                       bu_inout->the_long (),
                       bu_out->the_long (),
                       bu_ret->the_long () ));
-          return 0;
+          return false;
         }
-      return 1;
+      return true;
     }
   else if ((this->in_ >>= su_in) &&
            (this->inout_ >>= su_inout) &&
@@ -449,7 +449,7 @@ Test_Any::check_validity ()
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Test_Any - not all unions contain a long\n"));
-          return 0;
+          return false;
         }
 
       if (su_in->the_long () != su_inout->the_long ()
@@ -466,13 +466,13 @@ Test_Any::check_validity ()
                       su_inout->the_long (),
                       su_out->the_long (),
                       su_ret->the_long () ));
-          return 0;
+          return false;
         }
-      return 1;
+      return true;
     }
   else
   {
-    return 0;
+    return false;
   }
 }
 

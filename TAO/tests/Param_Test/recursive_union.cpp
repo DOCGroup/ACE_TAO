@@ -123,7 +123,7 @@ Test_Recursive_Union::check_validity ()
       ACE_DEBUG ((LM_DEBUG,
                   "mismatch of inout arg\n"));
 
-      return 0;
+      return false;
     }
 
   if (this->deep_check (this->in_, this->out_.in ()) == 0)
@@ -131,7 +131,7 @@ Test_Recursive_Union::check_validity ()
       ACE_DEBUG ((LM_DEBUG,
                   "mismatch of out arg\n"));
 
-      return 0;
+      return false;
     }
 
   if (this->deep_check (this->in_, this->ret_.in ()) == 0)
@@ -139,11 +139,11 @@ Test_Recursive_Union::check_validity ()
       ACE_DEBUG ((LM_DEBUG,
                   "mismatch of ret value\n"));
 
-      return 0;
+      return false;
     }
 
   // If we get this far, all is correct.
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -257,7 +257,7 @@ Test_Recursive_Union::deep_check (const Param_Test::Recursive_Union &in_union,
       ACE_DEBUG ((LM_DEBUG,
                   "mismatch of Recursive_Union discriminators\n"));
 
-      return 0;
+      return false;
     }
 
   switch (in_union._d ())
@@ -272,7 +272,7 @@ Test_Recursive_Union::deep_check (const Param_Test::Recursive_Union &in_union,
               ACE_DEBUG ((LM_DEBUG,
                           "mismatch of Recursive_Union member sequence lengths\n"));
 
-              return 0;
+              return false;
             }
 
           for (CORBA::ULong i = 0; i < in_union.rec_member ().length (); ++i)
@@ -283,7 +283,7 @@ Test_Recursive_Union::deep_check (const Param_Test::Recursive_Union &in_union,
                   ACE_DEBUG ((LM_DEBUG,
                               "mismatch of contained Recursive_Unions\n"));
 
-                  return 0;
+                  return false;
                 }
             }
 
@@ -302,7 +302,7 @@ Test_Recursive_Union::deep_check (const Param_Test::Recursive_Union &in_union,
         break;
     }
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -314,7 +314,7 @@ Test_Recursive_Union::deep_check_nested (const Param_Test::nested_rec_union &in,
       ACE_DEBUG ((LM_DEBUG,
                   "mismatch of nested union discriminators\n"));
 
-      return 0;
+      return false;
     }
 
   switch (in._d ())
@@ -327,7 +327,7 @@ Test_Recursive_Union::deep_check_nested (const Param_Test::nested_rec_union &in,
             ACE_DEBUG ((LM_DEBUG,
                         "mismatch of nested_rec_union member values\n"));
 
-            return 0;
+            return false;
           }
 
         break;
@@ -342,7 +342,7 @@ Test_Recursive_Union::deep_check_nested (const Param_Test::nested_rec_union &in,
               ACE_DEBUG ((LM_DEBUG,
                           "mismatch of nested_rec_union member sequence lengths\n"));
 
-              return 0;
+              return false;
             }
 
           for (CORBA::ULong i = 0; i < in.nested_rec_member ().length (); ++i)
@@ -353,11 +353,11 @@ Test_Recursive_Union::deep_check_nested (const Param_Test::nested_rec_union &in,
                   ACE_DEBUG ((LM_DEBUG,
                               "mismatch of contained nested_rec_unions\n"));
 
-                  return 0;
+                  return false;
                 }
             }
         }
     }
 
-  return 1;
+  return true;
 }

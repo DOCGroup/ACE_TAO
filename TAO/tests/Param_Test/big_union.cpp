@@ -232,7 +232,7 @@ Test_Big_Union::check_validity ()
       || this->in_._d () != this->ret_->_d ())
     {
       ACE_DEBUG ((LM_DEBUG, "mismatch of discriminators\n"));
-      return 0;
+      return false;
     }
 
   switch (this->in_._d ())
@@ -251,7 +251,7 @@ Test_Big_Union::check_validity ()
               {
                 ACE_DEBUG ((LM_DEBUG,
                             "mismatch of arrays\n"));
-                return 0;
+                return false;
               }
           }
       }
@@ -270,7 +270,7 @@ Test_Big_Union::check_validity ()
                 || CORBA::is_nil (out)
                 || CORBA::is_nil (ret))
             {
-              return 0;
+              return false;
             }
 
             Coffee::Desc_var in_desc =
@@ -289,12 +289,12 @@ Test_Big_Union::check_validity ()
                 || std::strcmp (in_desc->name.in (),
                                    ret_desc->name.in ()))
             {
-              return 0;
+              return false;
             }
           }
         catch (const CORBA::Exception&)
           {
-            return 0;
+            return false;
           }
       }
       break;
@@ -307,7 +307,7 @@ Test_Big_Union::check_validity ()
 
         if (in != out || in != inout || in != ret)
           {
-            return 0;
+            return false;
           }
       }
       break;
@@ -328,7 +328,7 @@ Test_Big_Union::check_validity ()
                 || in_array[i] != out_array[i]
                 || in_array[i] != ret_array[i])
               {
-                return 0;
+                return false;
               }
           }
       }
@@ -344,7 +344,7 @@ Test_Big_Union::check_validity ()
             || std::strcmp (in,inout)
             || std::strcmp (in,ret))
           {
-            return 0;
+            return false;
           }
       }
       break;
@@ -363,7 +363,7 @@ Test_Big_Union::check_validity ()
             || in.length () != inout.length ()
             || in.length () != ret.length ())
         {
-          return 0;
+          return false;
         }
 
         for (CORBA::ULong i = 0; i != in.length (); ++i)
@@ -372,7 +372,7 @@ Test_Big_Union::check_validity ()
                 || in[i] != inout[i]
                 || in[i] != ret[i])
               {
-                return 0;
+                return false;
               }
           }
       }
@@ -394,14 +394,14 @@ Test_Big_Union::check_validity ()
             || !(out >>= out_short)
             || !(ret >>= ret_short))
           {
-            return 0;
+            return false;
           }
 
         if (in_short != inout_short
             || in_short != out_short
             || in_short != ret_short)
           {
-            return 0;
+            return false;
           }
       }
       break;
@@ -414,7 +414,7 @@ Test_Big_Union::check_validity ()
 
         if (in != out || in != inout || in != ret)
           {
-            return 0;
+            return false;
           }
       }
       break;
@@ -427,7 +427,7 @@ Test_Big_Union::check_validity ()
 
         if (in != out || in != inout || in != ret)
           {
-            return 0;
+            return false;
           }
       }
       break;
@@ -440,7 +440,7 @@ Test_Big_Union::check_validity ()
 
         if (in != out || in != inout || in != ret)
           {
-            return 0;
+            return false;
           }
       }
       break;
@@ -468,14 +468,14 @@ Test_Big_Union::check_validity ()
                && std::strcmp (in.dummy2.in (),
                                   ret.dummy2.in ()) == 0))
           {
-            return 0;
+            return false;
           }
 
         if (in.seq.length () != inout.seq.length ()
             || in.seq.length () != out.seq.length ()
             || in.seq.length () != ret.seq.length ())
           {
-            return 0;
+            return false;
           }
 
         CORBA::ULong const len = in.seq.length ();
@@ -489,7 +489,7 @@ Test_Big_Union::check_validity ()
                 || std::strcmp (in.seq[i],
                                    ret.seq[i]))
               {
-                return 0;
+                return false;
               }
           }
       }
@@ -527,13 +527,13 @@ Test_Big_Union::check_validity ()
                  && in.b == ret.b
                  && ACE::is_equal (in.d, ret.d)))
           {
-            return 0;
+            return false;
           }
       }
       break;
     }
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean

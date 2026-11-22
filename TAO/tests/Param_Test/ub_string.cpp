@@ -114,10 +114,10 @@ Test_Unbounded_String::check_validity ()
       !std::strncmp (this->in_.in (), this->inout_.in (), len) &&
       !std::strncmp (this->in_.in (), &this->inout_[len], len))
   {
-    return 1;
+    return true;
   }
 
-  return 0; // otherwise
+  return false; // otherwise
 }
 
 CORBA::Boolean

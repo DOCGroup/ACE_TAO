@@ -396,7 +396,7 @@ void StubFaultNotifier::disconnect_consumer (
 
 CORBA::Boolean StubFaultNotifier::is_alive ()
 {
-  return 1;
+  return true;
 }
 
 int StubFaultNotifier::idle(int & result)

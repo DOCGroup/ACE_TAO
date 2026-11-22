@@ -136,10 +136,10 @@ Test_Multdim_Array::check_validity ()
                      this->out_.in ()) &&
       this->compare (this->in_.in (),
                      this->ret_.in ()))
-    return 1;
+    return true;
   else
   {
-    return 0;
+    return false;
   }
 }
 
@@ -162,12 +162,12 @@ Test_Multdim_Array::compare (const Param_Test::Multdim_Array_slice *a1,
             {
               if (a1[i][j][k] != a2[i][j][k])
               {
-                return 0;
+                return false;
               }
             }
         }
     }
-  return 1; // success
+  return true; // success
 }
 
 void

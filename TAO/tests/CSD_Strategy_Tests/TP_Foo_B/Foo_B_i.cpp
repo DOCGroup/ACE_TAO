@@ -50,7 +50,7 @@ Foo_B_i::op6(const TimeOfDay& t,
   CORBA::string_free (message);
   message = CORBA::string_dup (buf);
 
-  return 1;
+  return true;
 }
 
 void

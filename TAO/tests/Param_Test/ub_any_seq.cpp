@@ -235,7 +235,7 @@ Test_AnySeq::check_validity ()
             {
               ACE_DEBUG ((LM_DEBUG,
                           "mismatch of short values\n"));
-              return 0;
+              return false;
             }
           else
           {
@@ -253,7 +253,7 @@ Test_AnySeq::check_validity ()
             {
               ACE_DEBUG ((LM_DEBUG,
                           "mismatch of string values\n"));
-              return 0;
+              return false;
             }
           else
           {
@@ -271,7 +271,7 @@ Test_AnySeq::check_validity ()
             {
               ACE_DEBUG ((LM_DEBUG,
                           "mismatch of Coffee values\n"));
-              return 0;
+              return false;
             }
         }
       else
@@ -281,7 +281,7 @@ Test_AnySeq::check_validity ()
     }
 
   // Everything checks out.
-  return 1;
+  return true;
 }
 
 CORBA::Boolean

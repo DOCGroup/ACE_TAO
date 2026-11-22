@@ -157,7 +157,7 @@ test_i::start_test (CORBA::Long session_id,
   for (CORBA::ULong i = 0;
        i < iterations;
        ++i)
-    this->invocations_received_[i] = 0;
+    this->invocations_received_[i] = false;
 
   // Record start time.
   this->test_start_ =
@@ -260,7 +260,7 @@ test_i::oneway_method (CORBA::Long session_id,
                   payload.length ()));
     }
 
-  this->invocations_received_[iteration] = 1;
+  this->invocations_received_[iteration] = true;
   ++this->number_of_invocations_received_;
 
   ACE_hrtime_t const time_of_current_call =
@@ -300,7 +300,7 @@ test_i::twoway_method (CORBA::Long &session_id,
                   payload.length ()));
     }
 
-  this->invocations_received_[iteration] = 1;
+  this->invocations_received_[iteration] = true;
   ++this->number_of_invocations_received_;
 
   ACE_hrtime_t const time_of_current_call =

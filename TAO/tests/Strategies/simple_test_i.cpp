@@ -13,7 +13,7 @@ Simple_Server_i::print_status ()
       ACE_DEBUG ((LM_DEBUG,
                   "%N:%l:(%P:%t):Simple_Server_i::print_status called\n"));
     }
-  return 0;
+  return false;
 }
 
 void

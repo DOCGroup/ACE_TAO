@@ -376,10 +376,10 @@ Test_Exception::check_validity ()
       this->out_ == this->in_ * 3 &&
       this->ret_ == this->in_ * 4)
     {
-      return 1;
+      return true;
     }
 
-  return 0;
+  return false;
 }
 
 CORBA::Boolean

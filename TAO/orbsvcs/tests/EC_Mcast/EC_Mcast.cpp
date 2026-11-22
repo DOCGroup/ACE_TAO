@@ -1064,7 +1064,7 @@ ECM_Local_Federation::subscribed_bit (size_t i) const
 {
   if (i >= this->consumer_types ())
   {
-    return 0;
+    return false;
   }
   return this->subscription_subset_[i];
 }

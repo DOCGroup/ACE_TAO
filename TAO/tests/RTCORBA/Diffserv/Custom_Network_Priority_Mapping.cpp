@@ -66,7 +66,7 @@ Custom_Network_Priority_Mapping::to_network (
                   network_priority));
     }
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -77,5 +77,5 @@ Custom_Network_Priority_Mapping::to_CORBA (
   // This method should not be called.
   ACE_ASSERT (0);
 
-  return 0;
+  return false;
 }

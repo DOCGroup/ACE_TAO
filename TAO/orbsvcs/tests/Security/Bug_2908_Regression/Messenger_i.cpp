@@ -20,7 +20,7 @@ Messenger_i::send_message (char const *, char const *, char *&)
   if (CORBA::is_nil (messenger.in ()))
     {
       ACE_ERROR ((LM_ERROR, "ERROR: Not a Messenger reference\n"));
-      return 1;
+      return true;
     }
 
   Client_Task client_task (orb_.in (),

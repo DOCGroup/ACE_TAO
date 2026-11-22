@@ -122,7 +122,7 @@ Test_Recursive_Struct::check_validity ()
       ACE_DEBUG ((LM_DEBUG,
                   "mismatch of inout arg\n"));
 
-      return 0;
+      return false;
     }
 
   if (this->deep_check (this->in_, this->out_.in ()) == 0)
@@ -130,7 +130,7 @@ Test_Recursive_Struct::check_validity ()
       ACE_DEBUG ((LM_DEBUG,
                   "mismatch of out arg\n"));
 
-      return 0;
+      return false;
     }
 
   if (this->deep_check (this->in_, this->ret_.in ()) == 0)
@@ -138,11 +138,11 @@ Test_Recursive_Struct::check_validity ()
       ACE_DEBUG ((LM_DEBUG,
                   "mismatch of ret value\n"));
 
-      return 0;
+      return false;
     }
 
   // If we get this far, all is correct.
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -199,7 +199,7 @@ Test_Recursive_Struct::deep_check (const Param_Test::Recursive_Struct &in_struct
       ACE_DEBUG ((LM_DEBUG,
                   "mismatch of CORBA::Long struct members\n"));
 
-      return 0;
+      return false;
     }
 
   // Do the sequence lengths match?
@@ -208,7 +208,7 @@ Test_Recursive_Struct::deep_check (const Param_Test::Recursive_Struct &in_struct
       ACE_DEBUG ((LM_DEBUG,
                   "mismatch of member sequence lengths\n"));
 
-      return 0;
+      return false;
     }
 
   // At the bottom level, the length is 0 and we skip this part.
@@ -221,9 +221,9 @@ Test_Recursive_Struct::deep_check (const Param_Test::Recursive_Struct &in_struct
           ACE_DEBUG ((LM_DEBUG,
                       "mismatch of contained structs\n"));
 
-          return 0;
+          return false;
         }
     }
 
-  return 1;
+  return true;
 }

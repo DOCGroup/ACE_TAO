@@ -128,11 +128,11 @@ Test_Array_Sequence::check_validity ()
       this->compare (this->in_, this->out_.in ()) &&
       this->compare (this->in_, this->ret_.in ()))
   {
-    return 1;
+    return true;
   }
   else
   {
-    return 0;
+    return false;
   }
 }
 
@@ -169,12 +169,12 @@ Test_Array_Sequence::compare (const Param_Test::ArraySeq &s1,
 {
   if (s1.maximum () != s2.maximum ())
     {
-      return 0;
+      return false;
     }
 
   if (s1.length () != s2.length ())
     {
-      return 0;
+      return false;
     }
 
   for (CORBA::ULong i = 0; i < s1.length (); ++i)
@@ -186,12 +186,12 @@ Test_Array_Sequence::compare (const Param_Test::ArraySeq &s1,
         {
           if (vs1[j] != vs2[j])
             {
-              return 0;
+              return false;
             }
         }
     }
 
-  return 1; // success
+  return true; // success
 }
 
 void

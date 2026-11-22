@@ -147,13 +147,13 @@ Test_ObjRef_Sequence::check_validity ()
       this->compare (this->in_,
                      this->ret_.in ());
 
-      return 1;
+      return true;
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_ObjRef_Sequence::check_validity");
     }
-  return 0;
+  return false;
 }
 
 CORBA::Boolean
@@ -192,11 +192,11 @@ Test_ObjRef_Sequence::compare (const Param_Test::Coffee_Mix &s1,
     {
       if (s1.maximum () != s2.maximum ())
         {
-          return 0;
+          return false;
         }
       if (s1.length () != s2.length ())
         {
-          return 0;
+          return false;
         }
 
       for (CORBA::ULong i=0; i < s1.length (); ++i)
@@ -211,7 +211,7 @@ Test_ObjRef_Sequence::compare (const Param_Test::Coffee_Mix &s1,
 
           if (CORBA::is_nil (vs1) || CORBA::is_nil (vs2))
             {
-              return 0;
+              return false;
             }
 
           Coffee::Desc_var desc1 = vs1->description ();
@@ -224,17 +224,17 @@ Test_ObjRef_Sequence::compare (const Param_Test::Coffee_Mix &s1,
 
           if (std::strcmp(n1.in (), n2.in ()) != 0)
             {
-              return 0;
+              return false;
             }
         }
 
-      return 1; // success
+      return true; // success
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_ObjRef_Sequence::compare");
     }
-  return 0;
+  return false;
 }
 
 void

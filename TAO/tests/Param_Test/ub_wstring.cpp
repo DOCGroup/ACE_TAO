@@ -113,10 +113,10 @@ Test_Unbounded_WString::check_validity ()
       !ACE_OS::wsncmp (this->in_.in (), this->inout_.in (), len) &&
       !ACE_OS::wsncmp (this->in_.in (), &this->inout_[len], len))
   {
-    return 1;
+    return true;
   }
 
-  return 0; // otherwise
+  return false; // otherwise
 }
 
 CORBA::Boolean

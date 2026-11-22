@@ -71,7 +71,7 @@ Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flows
       connection_manager->add_streamctrl (flowname.c_str (),
                                          this);
     }
-  return 1;
+  return true;
 }
 
 ACE_CString &
