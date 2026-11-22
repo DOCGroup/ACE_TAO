@@ -132,7 +132,7 @@ namespace ACE_TMCast
       try
       {
         sock_.join (addr_);
-        std::unique_ptr<LinkListener> ll =
+        [[maybe_unused]] std::unique_ptr<LinkListener> link_listener =
           std::make_unique<LinkListener> (sock_, in_link_data_);
 
         {
