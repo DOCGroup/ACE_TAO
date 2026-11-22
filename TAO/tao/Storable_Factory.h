@@ -30,12 +30,14 @@ namespace TAO
 
     virtual ~Storable_Factory();
 
-    // Factory Methods
+    /// @name Factory methods
+    /// @{
 
     virtual Storable_Base *create_stream (std::string const &file,
                                          char const *mode,
                                          bool use_backup =
                                          Storable_Base::use_backup_default) = 0;
+    /// @}
   };
 }
 

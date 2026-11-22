@@ -13,8 +13,8 @@
 
 #include /**/ "ace/pre.h"
 
-// Globally visible macros, type decls, and extern var decls for
-// Service Configurator utility.
+/// Globally visible macros, type declarations, and extern variable
+/// declarations for the Service Configurator utility.
 
 #include "ace/Obstack.h"
 

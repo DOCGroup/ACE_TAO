@@ -132,12 +132,14 @@ namespace TAO
 
     ~Storable_FlatFileFactory ();
 
-  // Factory Methods
+    /// @name Factory methods
+    /// @{
 
     /// Create the stream that can operate on a disk file
     Storable_Base *create_stream (std::string const &file,
                                   char const *mode,
                                   bool = false) override;
+    /// @}
   private:
     static bool is_nfs (std::string const &dir);
     std::string directory_;

@@ -59,7 +59,8 @@ int ACE_SEH_Default_Exception_Handler (void *);
 class ACE_Cleanup_Info_Node;
 template <class T> class ACE_Cleanup_Adapter;
 
-// Configuration parameters.
+/// @name Configuration parameters
+/// @{
 #if !defined (ACE_MAX_MANAGED_OBJECTS)
 # define ACE_MAX_MANAGED_OBJECTS 128
 #endif /* ! ACE_MAX_MANAGED_OBJECTS */
@@ -71,6 +72,7 @@ template <class T> class ACE_Cleanup_Adapter;
 #if !defined (ACE_APPLICATION_PREALLOCATED_ARRAY_DECLARATIONS)
 # define ACE_APPLICATION_PREALLOCATED_ARRAY_DECLARATIONS
 #endif /* ! ACE_APPLICATION_PREALLOCATED_ARRAY_DECLARATIONS */
+/// @}
 
 /**
  * @class ACE_Object_Manager
