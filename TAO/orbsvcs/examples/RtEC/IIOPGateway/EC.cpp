@@ -63,8 +63,8 @@ EC::run (int argc, ACE_TCHAR* argv[])
 
       // Create a local event channel and register it with the RootPOA.
       TAO_EC_Event_Channel_Attributes attributes (rootpoa.in (), rootpoa.in ());
-      attributes.consumer_reconnect = 1;
-      attributes.supplier_reconnect = 1;
+      attributes.consumer_reconnect = true;
+      attributes.supplier_reconnect = true;
 
       TAO_EC_Event_Channel ec_impl (attributes);
       ec_impl.activate ();

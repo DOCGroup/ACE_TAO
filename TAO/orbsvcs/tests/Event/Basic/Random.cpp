@@ -126,8 +126,8 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
 
       TAO_EC_Event_Channel_Attributes attributes (poa.in (),
                                                   poa.in ());
-      attributes.consumer_reconnect = 1;
-      attributes.supplier_reconnect = 1;
+      attributes.consumer_reconnect = true;
+      attributes.supplier_reconnect = true;
 
       TAO_EC_Event_Channel ec_impl (attributes);
       ec_impl.activate ();

@@ -44,7 +44,7 @@ EC_Wrapper::init (CORBA::ORB_ptr orb,
   TAO_EC_Event_Channel_Attributes attr (poa, poa);
 
   // Allow reconnections - used by some tests.
-  attr.consumer_reconnect = 1;
+  attr.consumer_reconnect = true;
 
   // ACE_NEW_RETURN provides the -1 result when allocation fails.
   TAO_EC_Event_Channel* impl {};
