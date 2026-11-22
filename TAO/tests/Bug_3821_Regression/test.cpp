@@ -189,18 +189,18 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       start_test (current_test, "uac_bd_out");
       test::UnionAllCovered_BooleanDiscriminant uac_bd_out;
       // uac_bd_out._default (); // no _default() since all labels are covered.
-      uac_bd_out._d (static_cast<CORBA::Boolean> (3));
+      uac_bd_out._d (true);
       marshal (cdr_out, uac_bd_out);
 
       start_test (current_test, "uac_bd2_out");
       test::UnionAllCovered_BooleanDiscriminant uac_bd2_out;
-      uac_bd2_out._d (static_cast<CORBA::Boolean> (5));
+      uac_bd2_out._d (true);
       marshal (cdr_out, uac_bd2_out);
 
       start_test (current_test, "uwd_bd_out");
       test::UnionWithDefault_BooleanDiscriminant uwd_bd_out;
       uwd_bd_out.e_true (0);
-      uwd_bd_out._d (static_cast<CORBA::Boolean> (7));
+      uwd_bd_out._d (true);
       marshal (cdr_out, uwd_bd_out);
 
       start_test (current_test, "uwid_bd_out");
@@ -211,7 +211,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       start_test (current_test, "uwid_bd2_out");
       test::UnionWithImplicitDefault_BooleanDiscriminant uwid_bd2_out;
       uwid_bd2_out.e_true (16);
-      uwid_bd2_out._d (static_cast<CORBA::Boolean> (9));
+      uwid_bd2_out._d (true);
       marshal (cdr_out, uwid_bd2_out);
 
       start_test (current_test, "uwid_bdf_out");

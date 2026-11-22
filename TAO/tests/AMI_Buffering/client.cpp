@@ -452,7 +452,7 @@ run_message_count (CORBA::ORB_ptr orb,
                       i, initial_receive_count, send_count));
         }
 
-      while (1)
+      while (true)
         {
           ami_buffering->sendc_receive_data (reply_handler.in (),
                                              payload);
@@ -573,7 +573,7 @@ run_timeout (CORBA::ORB_ptr orb,
         }
 
       ACE_Time_Value const start = ACE_OS::gettimeofday ();
-      while (1)
+      while (true)
         {
           ami_buffering->sendc_receive_data (reply_handler.in (),
                                              payload);
@@ -707,7 +707,7 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
                                              payload);
           ++send_count;
         }
-      while (1)
+      while (true)
         {
           CORBA::ULong const receive_count =
             ami_buffering_admin->request_count ();
@@ -828,7 +828,7 @@ run_buffer_size (CORBA::ORB_ptr orb,
                       i, initial_bytes_received, bytes_sent));
         }
 
-      while (1)
+      while (true)
         {
           ami_buffering->sendc_receive_data (reply_handler.in (),
                                              payload);
