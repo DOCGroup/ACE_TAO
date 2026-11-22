@@ -216,11 +216,15 @@ ACE_Registry::Naming_Context::bind_new (const ACE_TString &name,
   Object temp;
   long result = this->resolve (name, temp);
   if (result == 0)
-    // resolve succeeded
-    result = -1;
+    {
+      // resolve succeeded
+      result = -1;
+    }
   else
-    // resolve failed
-    result = this->bind (name, object);
+    {
+      // resolve failed
+      result = this->bind (name, object);
+    }
   return result;
 }
 
@@ -268,8 +272,10 @@ ACE_Registry::Naming_Context::rebind (const ACE_TString &name,
   // find the old one first
   long result = this->resolve (name, old_object);
   if (result == 0)
-    // no need to delete first
-    result = this->bind (name, new_object);
+    {
+      // no need to delete first
+      result = this->bind (name, new_object);
+    }
   return result;
 }
 
@@ -577,8 +583,10 @@ ACE_Registry::make_string (const Name &const_name)
        ++iterator)
     {
       if (iterator != name.begin ())
-        // If this is not the first component, we will add separators
-        string += STRING_SEPARATOR;
+        {
+          // If this is not the first component, we will add separators
+          string += STRING_SEPARATOR;
+        }
       const Name_Component &component = *iterator;
       // Add to string
       string += component.id_;
