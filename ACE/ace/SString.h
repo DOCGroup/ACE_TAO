@@ -103,7 +103,6 @@ ACE_Export
 ACE_NS_WString operator + (const ACE_NS_WString &,
                            const ACE_NS_WString &);
 
-// -----------------------------------------------------------------
 
 /**
  * @class ACE_SString

@@ -59,9 +59,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Options &options)
   return 0;
 }
 
-// ------------------------------------------------------------
 // Client
-// ------------------------------------------------------------
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int error_count {};

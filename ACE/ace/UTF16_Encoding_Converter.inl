@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-// ======================================================================
 //
 // The actual conversion methods are covered by the copyright information
 // below.
@@ -15,7 +14,6 @@
 // for internal or external distribution as long as this notice
 // remains attached.
 //
-// ======================================================================
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

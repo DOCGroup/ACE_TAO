@@ -67,7 +67,6 @@ ACE_Select_Reactor_Handler_Repository::find (ACE_HANDLE handle)
   return eh;
 }
 
-// ------------------------------------------------------------------
 
 ACE_INLINE bool
 ACE_Select_Reactor_Handler_Repository_Iterator::done () const
@@ -80,7 +79,6 @@ ACE_Select_Reactor_Handler_Repository_Iterator::done () const
 #endif /* ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
 }
 
-// ------------------------------------------------------------------
 
 ACE_INLINE
 ACE_Event_Tuple::ACE_Event_Tuple ()

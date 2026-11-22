@@ -34,9 +34,7 @@ operator< (TAO_SFP_Fragment_Node const &left,
   return left.fragment_info_.frag_number < right.fragment_info_.frag_number;
 }
 
-//------------------------------------------------------------
 // TAO_SFP_Base
-//------------------------------------------------------------
 
 TAO_SFP_Base::TAO_SFP_Base ()
 {
@@ -971,9 +969,7 @@ TAO_SFP_Base::dump_buf (char *buffer,int size)
   }
 }
 
-//------------------------------------------------------------
 // TAO_SFP_Object
-//------------------------------------------------------------
 
 TAO_SFP_Object::TAO_SFP_Object (TAO_AV_Callback *callback,
                                 TAO_AV_Transport *transport)
@@ -1473,9 +1469,7 @@ TAO_AV_SFP_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
   return object;
 }
 
-//------------------------------------------------------------
 // TAO_SFP_Frame_State
-//------------------------------------------------------------
 
 TAO_SFP_Frame_State::TAO_SFP_Frame_State ()
   :cdr (new ACE_Data_Block (ACE_CDR::DEFAULT_BUFSIZE,

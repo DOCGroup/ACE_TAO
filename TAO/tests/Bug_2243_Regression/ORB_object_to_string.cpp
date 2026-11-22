@@ -25,10 +25,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      // --------------------------------------------------------
       // Create an object (but don't narrow() it) so we can test
       // that we can stringify it later
-      // --------------------------------------------------------
 
       CORBA::Object_var const object = orb->string_to_object (IOR);
       CORBA::String_var const object_ref_str = orb->object_to_string (object.in ());

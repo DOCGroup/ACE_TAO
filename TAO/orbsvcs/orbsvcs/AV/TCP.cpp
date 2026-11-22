@@ -10,9 +10,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-//------------------------------------------------------------
 // TAO_AV_TCP_Transport
-//------------------------------------------------------------
 
 TAO_AV_TCP_Transport::TAO_AV_TCP_Transport () = default;
 
@@ -150,9 +148,7 @@ TAO_AV_TCP_Transport::recv (iovec *iov,
   return handler_->peer ().recvv_n (iov, iovcnt);
 }
 
-//------------------------------------------------------------
 // TAO_AV_TCP_Protocol_Factory
-//------------------------------------------------------------
 
 TAO_AV_TCP_Factory::TAO_AV_TCP_Factory () = default;
 
@@ -203,9 +199,7 @@ TAO_AV_TCP_Factory::make_connector ()
   return connector;
 }
 
-//------------------------------------------------------------
 // TAO_AV_TCP_Object
-//------------------------------------------------------------
 
 int
 TAO_AV_TCP_Object::handle_input ()
@@ -266,9 +260,7 @@ TAO_AV_TCP_Object::destroy ()
   return 0;
 }
 
-//------------------------------------------------------------
 // TAO_AV_TCP_Flow_Factory
-//------------------------------------------------------------
 TAO_AV_TCP_Flow_Factory::TAO_AV_TCP_Flow_Factory () = default;
 
 TAO_AV_TCP_Flow_Factory::~TAO_AV_TCP_Flow_Factory () = default;
@@ -317,9 +309,7 @@ TAO_AV_TCP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
   return object;
 }
 
-//------------------------------------------------------------
 // TAO_AV_TCP_Base_Connector
-//------------------------------------------------------------
 
 int
 TAO_AV_TCP_Base_Connector::connector_open (TAO_AV_TCP_Connector *connector,
@@ -363,9 +353,7 @@ TAO_AV_TCP_Base_Connector::connector_connect (TAO_AV_TCP_Flow_Handler *&handler,
   return 0;
 }
 
-//------------------------------------------------------------
 // TAO_AV_TCP_Connector
-//------------------------------------------------------------
 TAO_AV_TCP_Connector::TAO_AV_TCP_Connector () = default;
 
 TAO_AV_TCP_Connector::~TAO_AV_TCP_Connector () = default;
@@ -453,9 +441,7 @@ TAO_AV_TCP_Connector::close ()
   return 0;
 }
 
-//------------------------------------------------------------
 // TAO_AV_TCP_Base_Connector
-//------------------------------------------------------------
 
 int
 TAO_AV_TCP_Base_Acceptor::acceptor_open (TAO_AV_TCP_Acceptor *acceptor,
@@ -489,9 +475,7 @@ TAO_AV_TCP_Base_Acceptor::make_svc_handler (TAO_AV_TCP_Flow_Handler *&handler)
   return 0;
 }
 
-//------------------------------------------------------------
 // TAO_AV_TCP_Acceptor
-//------------------------------------------------------------
 
 TAO_AV_TCP_Acceptor::TAO_AV_TCP_Acceptor () = default;
 
@@ -640,9 +624,7 @@ TAO_AV_TCP_Acceptor::close ()
   return 0;
 }
 
-//------------------------------------------------------------
 // TAO_AV_TCP_Flow_Handler
-//------------------------------------------------------------
 
 TAO_AV_TCP_Flow_Handler::TAO_AV_TCP_Flow_Handler (TAO_AV_Callback * /*callback*/)
   //  :TAO_AV_Flow_Handler (callback)

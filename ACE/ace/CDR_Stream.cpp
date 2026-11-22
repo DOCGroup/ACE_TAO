@@ -2460,7 +2460,6 @@ ACE_InputCDR::unregister_monitor ()
 
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 
-// --------------------------------------------------------------
 
 ACE_CDR::Boolean
 ACE_Char_Codeset_Translator::read_string (ACE_InputCDR &cdr,
@@ -2473,7 +2472,6 @@ ACE_Char_Codeset_Translator::read_string (ACE_InputCDR &cdr,
   return marshal_flag;
 }
 
-// --------------------------------------------------------------
 
 #if !defined(ACE_LACKS_STD_WSTRING)
 ACE_CDR::Boolean
@@ -2488,7 +2486,6 @@ ACE_WChar_Codeset_Translator::read_wstring (ACE_InputCDR &cdr,
 }
 #endif
 
-// --------------------------------------------------------------
 
 ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, const ACE_CString &x)

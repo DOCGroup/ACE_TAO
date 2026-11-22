@@ -73,9 +73,7 @@ static int initial_read_size = BUFSIZ;
 //#define MyMutex ACE_Thread_Mutex
 //#define MyMutex ACE_Null_Mutex
 
-//--------------------------------------------------------------------------
 // MyTask plays role for Proactor threads pool
-//--------------------------------------------------------------------------
 class MyTask: public ACE_Task<ACE_MT_SYNCH>
 {
 public:
@@ -95,9 +93,7 @@ int MyTask::svc ()
   return 0 ;
 }
 
-//-----------------------------------------------------------
 //  Receiver
-//-----------------------------------------------------------
 class Receiver : public ACE_Service_Handler
 {
 public:
@@ -157,10 +153,8 @@ Receiver::~Receiver ()
               static_cast<ACE_INT64> (nSessions)));
 }
 
-//---------------------------------------------------------------------
 //  return true if we alive, false  we commited suicide
 //
-//---------------------------------------------------------------------
 bool Receiver::check_destroy ()
 {
   {
@@ -343,10 +337,8 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result
   check_destroy () ;
 }
 
-//-------------------------------------------------------------------------
 // Sender:  sends indefinetely welcome message
 //  and  recieves it back
-//------------------------------------------------------------------------
 class Sender : public ACE_Handler
 {
 public:
@@ -615,7 +607,6 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
   }
 }
 
-//--------------------------------------------------------------------------
 
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -722,9 +713,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-//--------------------------------------------------------------------
 //
-//--------------------------------------------------------------------
 int DisableSignal ( int SigNum )
 {
 #ifndef ACE_WIN32
@@ -751,9 +740,7 @@ int DisableSignal ( int SigNum )
 
   return  1;
 }
-//--------------------------------------------------------------------
 // Get the <signal_set> back from the OS.
-//--------------------------------------------------------------------
 
 int PrintSigMask ()
 {

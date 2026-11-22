@@ -129,7 +129,6 @@ static int iterations = 2000;
 static int iterations = 200;
 #endif /* ACE_WIN32 */
 
-//====================================================================
 
 static void
 out_of_sockets_handler ()

@@ -83,7 +83,6 @@ MPC_Generator::write_projectinfo()
            << "  dynamicflags = ACE_BUILD_DLL ACE_OS_BUILD_DLL" << endl;
 }
 
-//-----------------------------------------------------------------------------
 MPC_ACE_Dep_Lib::MPC_ACE_Dep_Lib (ACE_CString const &libname)
   : MPC_Generator(libname)
 {}
@@ -102,7 +101,6 @@ MPC_ACE_Dep_Lib::write_projectinfo()
            << "  after       += ACE_subset" << endl;
 }
 
-//-----------------------------------------------------------------------------
 MPC_TAO_Lib::MPC_TAO_Lib (ACE_CString const &libname)
   : MPC_ACE_Dep_Lib(libname)
 {}
@@ -121,7 +119,6 @@ MPC_TAO_Lib::write_projectinfo()
   mpcfile_ << "  dynamicflags = TAO_BUILD_DLL" << endl;
 }
 
-//-----------------------------------------------------------------------------
 MPC_TAO_Dep_Lib::MPC_TAO_Dep_Lib (ACE_CString const &libname)
   : MPC_TAO_Lib(libname)
 {}
@@ -151,7 +148,6 @@ MPC_TAO_Dep_Lib::write_projectinfo()
            << "  idlflags    += -I$(TAO_ROOT)/orbsvcs" << endl;
 }
 
-//-----------------------------------------------------------------------------
 
 Library::Library (ACE_TCHAR const *name)
   : name_ (name),

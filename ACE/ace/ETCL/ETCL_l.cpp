@@ -441,13 +441,11 @@ char *yytext;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-//=============================================================================
 /**
  *  @file   ETCL_l.cpp
  *
  *  @author Carlos O'Ryan <coryan@uci.edu> based on previous work by Seth Widoff <sbw1@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "ace/ETCL/ETCL_Interpreter.h"
 #include "ace/ETCL/ETCL_y.h"

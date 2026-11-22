@@ -40,9 +40,7 @@ TAO_AV_Flow_Protocol_Factory::control_flow_factory ()
   return nullptr;
 }
 
-//----------------------------------------------------------------------
 // TAO_AV_Protocol_Object
-//----------------------------------------------------------------------
 TAO_AV_Protocol_Object::TAO_AV_Protocol_Object () = default;
 
 TAO_AV_Protocol_Object::TAO_AV_Protocol_Object (TAO_AV_Callback *callback,

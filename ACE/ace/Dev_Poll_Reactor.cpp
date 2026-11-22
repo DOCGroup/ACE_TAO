@@ -437,7 +437,6 @@ ACE_Dev_Poll_Reactor_Notify::dequeue_one (ACE_Notification_Buffer &nb)
   return this->read_notify_pipe (this->notify_handle (), nb);
 }
 
-// -----------------------------------------------------------------
 
 ACE_Dev_Poll_Reactor::Handler_Repository::Handler_Repository ()
 {
@@ -616,7 +615,6 @@ ACE_Dev_Poll_Reactor::Handler_Repository::unbind (ACE_HANDLE handle,
   return 0;
 }
 
-// -----------------------------------------------------------------
 
 ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (ACE_Sig_Handler *sh,
                                             ACE_Timer_Queue *tq,

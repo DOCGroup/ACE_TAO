@@ -500,7 +500,6 @@ ACE_String_Base<ACE_CHAR_T>::swap (ACE_String_Base<ACE_CHAR_T> & str)
   std::swap (this->release_   , str.release_);
 }
 
-// ----------------------------------------------
 
 template <class ACE_CHAR_T>
 int ACE_String_Base_Iterator <ACE_CHAR_T>::next (ACE_CHAR_T * & ch) const
@@ -552,7 +551,6 @@ operator = (const ACE_String_Base_Iterator <ACE_CHAR_T> & rhs)
   return *this;
 }
 
-// ----------------------------------------------
 
 template <class ACE_CHAR_T>
 int ACE_String_Base_Const_Iterator <ACE_CHAR_T>::next (const ACE_CHAR_T * & ch) const
@@ -604,7 +602,6 @@ operator = (const ACE_String_Base_Const_Iterator <ACE_CHAR_T> & rhs)
   return *this;
 }
 
-// ----------------------------------------------
 
 template <class ACE_CHAR_T> ACE_String_Base<ACE_CHAR_T>
 operator+ (const ACE_String_Base<ACE_CHAR_T> &s, const ACE_String_Base<ACE_CHAR_T> &t)

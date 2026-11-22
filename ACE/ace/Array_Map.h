@@ -259,7 +259,6 @@ private:
   value_type * nodes_;
 };
 
-// --------------------------------------------------------------
 
 /// @c ACE_Array_Map equality operator.
 template <typename Key, typename Value, class EqualTo, class Alloc>
@@ -271,7 +270,6 @@ template <typename Key, typename Value, class EqualTo, class Alloc>
 bool operator<  (ACE_Array_Map<Key, Value, EqualTo, Alloc> const & lhs,
                  ACE_Array_Map<Key, Value, EqualTo, Alloc> const & rhs);
 
-// --------------------------------------------------------------
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

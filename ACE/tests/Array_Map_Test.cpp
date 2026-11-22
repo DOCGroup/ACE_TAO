@@ -34,7 +34,6 @@ static ACE_TString const words[] =
 static size_t const letters_len = sizeof (letters) / sizeof (letters[0]);
 static size_t const words_len   = sizeof (words)   / sizeof (words[0]);
 
-// --------------------------------------------------------------
 
 bool
 insertion_removal_test ()
@@ -216,7 +215,6 @@ insertion_removal_test ()
   return true;
 }
 
-// --------------------------------------------------------------
 
 bool
 index_operator_test ()
@@ -334,7 +332,6 @@ index_operator_test ()
   return true;
 }
 
-// --------------------------------------------------------------
 
 class RefCounted
 {
@@ -391,7 +388,6 @@ private:
   unsigned int * refcount_;
 };
 
-// --------
 
 bool
 reference_count_test ()
@@ -452,7 +448,6 @@ reference_count_test ()
   return true;
 }
 
-// --------------------------------------------------------------
 
 int
 run_main (int, ACE_TCHAR *[])

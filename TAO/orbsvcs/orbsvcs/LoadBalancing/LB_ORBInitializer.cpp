@@ -55,7 +55,6 @@ TAO_LB_ORBInitializer::post_init (
 
   info->add_ior_interceptor (ior_interceptor.in ());
 
-  // ----------------
 
   PortableInterceptor::ServerRequestInterceptor_ptr sri;
   ACE_NEW_THROW_EX (sri,

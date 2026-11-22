@@ -926,7 +926,6 @@ CORBA::ORB::resolve_initial_references (const char *name,
     }
 #endif
 
-  // -----------------------------------------------------------------
 
   if (CORBA::is_nil (result.in ()))
     {
@@ -941,7 +940,6 @@ CORBA::ORB::resolve_initial_references (const char *name,
     return result._retn ();
   }
 
-  // -----------------------------------------------------------------
 
   // Check ORBInitRef options.
 
@@ -1008,7 +1006,6 @@ CORBA::ORB::resolve_initial_references (const char *name,
   {
     return result._retn ();
   }
-  // -----------------------------------------------------------------
 
   throw ::CORBA::ORB::InvalidName ();
 }

@@ -7,7 +7,6 @@
 #include "orbsvcs/SecurityC.h"
 
 // Policy Example 1
-// ================
 //
 // Example of a client that downgrades
 // from message protection to no message
@@ -42,7 +41,6 @@
 // static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
 //
 // Policy Example 2
-// ================
 //
 // Example of client upgrading from
 // no message protection and no

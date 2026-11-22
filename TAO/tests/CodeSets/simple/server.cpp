@@ -51,9 +51,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Options &options)
   return 0;
 }
 
-// ------------------------------------------------------------
 // Servant for associated CORBA object
-// ------------------------------------------------------------
 class SimpleImpl : public POA_simple
 {
 public:
@@ -108,9 +106,7 @@ private:
   CORBA::ORB_var orb_;
 };
 
-// ------------------------------------------------------------
 // Main routine
-// ------------------------------------------------------------
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try

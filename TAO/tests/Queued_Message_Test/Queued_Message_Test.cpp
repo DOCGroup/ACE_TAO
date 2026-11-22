@@ -1,10 +1,8 @@
-// ============================================================================
 /**
  * @brief Unit test for the TAO_Queued_Message class
  *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
-// ============================================================================
 
 #include "tao/Asynch_Queued_Message.h"
 #include "tao/ORB_Core.h"

@@ -24,7 +24,6 @@
 
 int overall_result = 0;
 
-// ------------------------------------------------------------
 
 class Bogus_Handler : public ACE_Event_Handler
 {
@@ -106,7 +105,6 @@ Bogus_Handler::resume_handler ()
   return ACE_APPLICATION_RESUMES_HANDLER;
 }
 
-// ------------------------------------------------------------
 
 class Bad_Handler : public ACE_Event_Handler
 {
@@ -249,7 +247,6 @@ Bad_Handler::handle_input_result () const
      : -1);
 }
 
-// ------------------------------------------------------------
 int
 register_handler (ACE_Reactor * reactor,
                   ACE_HANDLE read_handle,
@@ -274,7 +271,6 @@ register_handler (ACE_Reactor * reactor,
   return 0;
 }
 
-// ------------------------------------------------------------
 
 int
 send_data (ACE_HANDLE write_handle)
@@ -308,7 +304,6 @@ send_data (ACE_HANDLE write_handle)
   return 0;
 }
 
-// ------------------------------------------------------------
 
 int
 handle_events (ACE_Reactor & reactor,
@@ -353,7 +348,6 @@ handle_events (ACE_Reactor & reactor,
   return -1;
 }
 
-// ------------------------------------------------------------
 
 using reactor_factory_type = std::unique_ptr<ACE_Reactor_Impl> (*)();
 
@@ -366,7 +360,6 @@ tp_reactor_factory ()
   return std::make_unique<ACE_TP_Reactor> ();
 }
 
-// ------------------------------------------------------------
 /**
  * @struct Caller
  *
@@ -434,7 +427,6 @@ struct Run_Test
   }
 };
 
-// ------------------------------------------------------------
 
 int
 run_main (int, ACE_TCHAR *[])

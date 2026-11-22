@@ -17,7 +17,6 @@ namespace ACE
       , type_ (type)
     {}
 
-    //=============================================================
 
     Monitor_Control_Types::Constraint::Constraint (const Constraint& rhs)
       : expr (rhs.expr),

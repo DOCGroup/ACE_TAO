@@ -131,7 +131,6 @@ Service_Config_DLL::svc ()
 // The same class (Service_Config_DLL) is used to implement each of the
 // Service Objects whose service descriptors are defined below.
 
-// -----------------------------------------------------------------
 
 ACE_STATIC_SVC_DEFINE (Test_Object_1,
                        ACE_TEXT ("Test_Object_1"),
@@ -141,7 +140,6 @@ ACE_STATIC_SVC_DEFINE (Test_Object_1,
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
 
-// -----------------------------------------------------------------
 
 ACE_STATIC_SVC_DEFINE (Test_Object_2,
                        ACE_TEXT ("Test_Object_2"),
@@ -151,7 +149,6 @@ ACE_STATIC_SVC_DEFINE (Test_Object_2,
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
 
-// -----------------------------------------------------------------
 
 ACE_STATIC_SVC_DEFINE (Test_Object_3,
                        ACE_TEXT ("Test_Object_3"),
@@ -161,7 +158,6 @@ ACE_STATIC_SVC_DEFINE (Test_Object_3,
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
 
-// -----------------------------------------------------------------
 
 ACE_STATIC_SVC_DEFINE (Test_Object_4,
                        ACE_TEXT ("Test_Object_4"),
@@ -171,7 +167,6 @@ ACE_STATIC_SVC_DEFINE (Test_Object_4,
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
 
-// -----------------------------------------------------------------
 
 ACE_STATIC_SVC_DEFINE (Test_Object_5,
                        ACE_TEXT ("Test_Object_5"),
@@ -181,7 +176,6 @@ ACE_STATIC_SVC_DEFINE (Test_Object_5,
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
 
-// -----------------------------------------------------------------
 
 ACE_STATIC_SVC_DEFINE (Test_Object_6,
                        ACE_TEXT ("Test_Object_6"),
@@ -191,7 +185,6 @@ ACE_STATIC_SVC_DEFINE (Test_Object_6,
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
 
-// -----------------------------------------------------------------
 
 ACE_STATIC_SVC_DEFINE (Final_Object,
                        ACE_TEXT ("Final_Object"),
@@ -201,7 +194,6 @@ ACE_STATIC_SVC_DEFINE (Final_Object,
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
 
-// -----------------------------------------------------------------
 
 ACE_STATIC_SVC_DEFINE (Test_Object_1_More,
                        ACE_TEXT ("Test_Object_1_More"),
@@ -211,7 +203,6 @@ ACE_STATIC_SVC_DEFINE (Test_Object_1_More,
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
 
-// -----------------------------------------------------------------
 
 ACE_STATIC_SVC_DEFINE (Test_Object_2_More,
                        ACE_TEXT ("Test_Object_2_More"),
@@ -221,7 +212,6 @@ ACE_STATIC_SVC_DEFINE (Test_Object_2_More,
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
 
-// -----------------------------------------------------------------
 
 // Same factory is used for all service descriptors defined above.
 ACE_FACTORY_DEFINE (Service_Config_DLL, Service_Config_DLL)

@@ -23,7 +23,6 @@ Simple_Server_i::shutdown ()
   this->orb_->shutdown (false);
 }
 
-//---------------------------------------------------------------------------
 
 CORBA::Long
 Another_One_i::test_method (CORBA::Long x)

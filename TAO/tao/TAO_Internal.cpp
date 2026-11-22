@@ -593,7 +593,6 @@ TAO::ORB::default_svc_conf_entries (char const * rf_args,
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-// -----------------------------------------------------
 namespace
 {
   /// Open services, belonging to the gestalt instance.

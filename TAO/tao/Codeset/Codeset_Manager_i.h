@@ -1,4 +1,3 @@
-//======================================================================
 /*
  *  @file Codeset_Manager_i.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author  Phil Mesnier
  */
-//======================================================================
 
 #ifndef TAO_CODESET_MANAGER_I_H
 #define TAO_CODESET_MANAGER_I_H

@@ -71,7 +71,6 @@ TAO_Default_Thread_Lane_Resources_Manager::is_collocated (const TAO_MProfile &mp
   return this->lane_resources_->is_collocated (mprofile);
 }
 
-// -------------------------------------------------------
 
 TAO_Default_Thread_Lane_Resources_Manager_Factory::
 ~TAO_Default_Thread_Lane_Resources_Manager_Factory () = default;
@@ -89,7 +88,6 @@ TAO_Default_Thread_Lane_Resources_Manager_Factory::create_thread_lane_resources_
   return manager;
 }
 
-// -------------------------------------------------------
 
 ACE_STATIC_SVC_DEFINE (TAO_Default_Thread_Lane_Resources_Manager_Factory,
                        ACE_TEXT ("Default_Thread_Lane_Resources_Manager_Factory"),

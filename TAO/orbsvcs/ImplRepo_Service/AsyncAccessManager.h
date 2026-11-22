@@ -29,7 +29,6 @@
 class ImR_Locator_i;
 struct Server_Info;
 
-//----------------------------------------------------------------------------
 /*
  * @class AsyncAccessManager
  *
@@ -116,7 +115,6 @@ class Locator_Export AsyncAccessManager
 
 using AsyncAccessManager_ptr = TAO_Intrusive_Ref_Count_Handle<AsyncAccessManager>;
 
-//----------------------------------------------------------------------------
 /*
  * @class ActivatorReceiver
  *
@@ -144,7 +142,6 @@ private:
   PortableServer::POA_var poa_;
 };
 
-//----------------------------------------------------------------------------
 
 class AccessLiveListener : public LiveListener
 {

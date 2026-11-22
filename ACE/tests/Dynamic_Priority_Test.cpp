@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Dynamic_Priority_Test.cpp (based on Priority_Buffer_Test.cpp)
  *
@@ -38,7 +37,6 @@
  *
  *  @author Chris Gill <cdgill@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h" /* Include first to enable ACE_TEST_ASSERT. */
 #include "ace/Message_Queue.h"

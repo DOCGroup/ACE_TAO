@@ -453,7 +453,6 @@ invariant_failed()
   // Just a good place to set a breakpoint
 }
 
-// ============================================
 
 One_Shot_Handler::One_Shot_Handler(
   Driver * master_handler,

@@ -214,7 +214,6 @@ namespace {
 
 } // End anonymous namespace
 
-//---------------------------------------------------------------------------
 
 Shared_Backing_Store::Shared_Backing_Store(const Options& opts,
                                            CORBA::ORB_ptr orb,

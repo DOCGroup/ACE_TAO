@@ -45,7 +45,6 @@ operator<< (std::ostream& os, CCS::Thermometer_ptr t)
     return os;
 }
 
-//----------------------------------------------------------------
 
 // Show the information in a BtData struct.
 
@@ -60,7 +59,6 @@ operator<< (std::ostream& os, CCS::Thermostat::BtData const& btd)
     return os;
 }
 
-//----------------------------------------------------------------
 
 // Loop over the sequence of records in an EChange exception and
 // show the details of each record.
@@ -76,7 +74,6 @@ operator<< (std::ostream& os, CCS::Controller::EChange const& ec)
     return os;
 }
 
-//----------------------------------------------------------------
 
 // Generic ostream inserter for exceptions. Inserts the exception
 // name, if available, and the repository ID otherwise.
@@ -100,7 +97,6 @@ operator<< (std::ostream& os, CORBA::Exception const& e)
 
 #endif
 
-//----------------------------------------------------------------
 
 // Change the temperature of a thermostat.
 
@@ -130,7 +126,6 @@ set_temp (CCS::Thermostat_ptr tmstat, CCS::TempType new_temp)
     }
 }
 
-//----------------------------------------------------------------
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

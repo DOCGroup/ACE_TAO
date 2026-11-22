@@ -391,7 +391,6 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   ACE_exitcode exitcode;
 
-  // --------------------------------------------------
   // wait for a specific PID
   pid_t child1 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
@@ -420,7 +419,6 @@ run_main (int argc, ACE_TCHAR *argv[])
                   exitcode));
     }
 
-  // --------------------------------------------------
   // wait for a specific PID; another should finish first
   pid_t child2 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
@@ -477,7 +475,6 @@ run_main (int argc, ACE_TCHAR *argv[])
                   exitcode));
     }
 
-  // --------------------------------------------------
   // Try the timed wait functions
 
   // This one shouldn't timeout:
@@ -627,7 +624,6 @@ run_main (int argc, ACE_TCHAR *argv[])
 #endif /* ACE_HAS_THREADS */
 
 #if defined ACE_WIN32 || !defined ACE_LACKS_UNIX_SIGNALS
-  // --------------------------------------------------
   // Finally, try the reactor stuff...
   mgr.open (ACE_Process_Manager::DEFAULT_SIZE,
             ACE_Reactor::instance ());

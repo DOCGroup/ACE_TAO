@@ -60,7 +60,6 @@ UPN_i::register_replica
   seq_num = this->owner_.seq_num_;
 }
 
-//---------------------------------------------------------------------------
 
 Replicator::Replicator (Shared_Backing_Store &repo, const Options& opts)
   : me_ (),

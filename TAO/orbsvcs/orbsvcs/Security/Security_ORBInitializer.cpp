@@ -172,7 +172,6 @@ TAO::Security::ORBInitializer::register_policy_factories (
   info->register_policy_factory (SecurityLevel3::ObjectCredentialsPolicyType,
                                  this->policy_factory_.in ());
 
-  // ----------------------------------------------------------------
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

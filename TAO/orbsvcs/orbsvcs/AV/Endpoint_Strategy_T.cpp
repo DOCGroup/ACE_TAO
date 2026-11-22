@@ -13,9 +13,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// ----------------------------------------------------------------------
 // TAO_AV_Endpoint_Reactive_Strategy
-// ----------------------------------------------------------------------
 
 template <class T_StreamEndpoint, class T_VDev, class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Endpoint_Reactive_Strategy ()
@@ -196,11 +194,8 @@ TAO_AV_Endpoint_Reactive_Strategy<T_StreamEndpoint, T_VDev, T_MediaCtrl>::make_m
   return 0;
 }
 
-// ----------------------------------------------------------------------
 
-// ----------------------------------------------------------------------
 // TAO_AV_Endpoint_Reactive_Strategy_A
-// ----------------------------------------------------------------------
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::
@@ -261,9 +256,7 @@ TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
   return 0;
 }
 
-// ----------------------------------------------------------------------
 // TAO_AV_Endpoint_Reactive_Strategy_B
-// ----------------------------------------------------------------------
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::
@@ -322,9 +315,7 @@ TAO_AV_Endpoint_Reactive_Strategy_B<T_StreamEndpoint, T_VDev, T_MediaCtrl>::crea
   return 0;
 }
 
-// ----------------------------------------------------------------------
 // TAO_AV_Child_Process
-// ----------------------------------------------------------------------
 
 template <class T_StreamEndpoint_B, class T_VDev , class T_MediaCtrl>
 TAO_AV_Child_Process <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::TAO_AV_Child_Process ()
@@ -696,9 +687,7 @@ TAO_AV_Child_Process<T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Child_Proce
   this->unbind_names ();
 }
 
-// ----------------------------------------------------------------------
 // TAO_AV_Child_Process_A
-// ----------------------------------------------------------------------
 
 // Define the name of the stream_endpoint, as used to register with
 // the  naming service
@@ -723,9 +712,7 @@ TAO_AV_Child_Process_A<T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Proc
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Child_Process_A  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Child_Process_A () = default;
 
-// ----------------------------------------------------------------------
 // TAO_AV_Child_Process_B
-// ----------------------------------------------------------------------
 
 // Define the name of the stream_endpoint, as used to register with
 // the  naming service

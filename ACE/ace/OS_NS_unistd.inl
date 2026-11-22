@@ -1006,10 +1006,8 @@ ACE_OS::swab (const void *src,
               ssize_t length)
 {
 #if defined (ACE_LACKS_SWAB)
-  // ------------------------------------------------------------
   // The following copyright notice applies to the swab()
   // implementation within this "ACE_LACKS_SWAB" block of code.
-  // ------------------------------------------------------------
   /*
     Copyright (c) 1994-2006  Red Hat, Inc. All rights reserved.
 

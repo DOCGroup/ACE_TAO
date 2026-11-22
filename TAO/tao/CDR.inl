@@ -122,7 +122,6 @@ TAO_OutputCDR::reset_vt_indirect_maps ()
   }
 }
 
-// -------------------------------------------------------------------
 
 ACE_INLINE
 TAO_InputCDR::TAO_InputCDR (const char *buf,

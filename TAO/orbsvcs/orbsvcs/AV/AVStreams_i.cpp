@@ -28,9 +28,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-//------------------------------------------------------------
 // TAO_AV_Qos
-//------------------------------------------------------------
 
 TAO_AV_QoS::TAO_AV_QoS () = default;
 
@@ -45,16 +43,12 @@ TAO_AV_QoS::convert (AVStreams::streamQoS &/*network_qos*/)
   return -1;
 }
 
-// ----------------------------------------------------------------------
 // AV_Null_MediaCtrl
-// ----------------------------------------------------------------------
 AV_Null_MediaCtrl::AV_Null_MediaCtrl () = default;
 
 AV_Null_MediaCtrl::~AV_Null_MediaCtrl () = default;
 
-// ----------------------------------------------------------------------
 // TAO_Basic_StreamCtrl
-// ----------------------------------------------------------------------
 
 TAO_Basic_StreamCtrl::TAO_Basic_StreamCtrl ()
   :flow_count_ (0)
@@ -295,9 +289,7 @@ TAO_Basic_StreamCtrl::set_flow_connection (char const *flow_name,
 
 TAO_Basic_StreamCtrl::~TAO_Basic_StreamCtrl () = default;
 
-// ----------------------------------------------------------------------
 // TAO_Negotiator
-// ----------------------------------------------------------------------
 
 CORBA::Boolean
 TAO_Negotiator::negotiate (AVStreams::Negotiator_ptr /* remote_negotiator */,
@@ -308,9 +300,7 @@ TAO_Negotiator::negotiate (AVStreams::Negotiator_ptr /* remote_negotiator */,
   return 0;
 }
 
-// ----------------------------------------------------------------------
 // MMDevice_Map_Hash_Key
-// ----------------------------------------------------------------------
 
 MMDevice_Map_Hash_Key::MMDevice_Map_Hash_Key ()
 {
@@ -392,9 +382,7 @@ MMDevice_Map_Hash_Key::hash ()  const
   return result;
 }
 
-// ----------------------------------------------------------------------
 // TAO_StreamCtrl
-// ----------------------------------------------------------------------
 
 TAO_StreamCtrl::TAO_StreamCtrl ()
   : source_id_ (0)
@@ -1350,9 +1338,7 @@ TAO_StreamCtrl::modify_QoS (AVStreams::streamQoS &new_qos,
   return 1;
 }
 
-// ----------------------------------------------------------------------
 // TAO_MCastConfigIf
-// ----------------------------------------------------------------------
 
 TAO_MCastConfigIf::TAO_MCastConfigIf ()
   :peer_list_iterator_ (peer_list_)
@@ -1482,9 +1468,7 @@ TAO_MCastConfigIf::in_flowSpec (AVStreams::flowSpec const &flow_spec, char const
   return 0;
 }
 
-// ----------------------------------------------------------------------
 // TAO_Base_StreamEndPoint
-// ----------------------------------------------------------------------
 
 TAO_Base_StreamEndPoint::TAO_Base_StreamEndPoint () = default;
 
@@ -1606,9 +1590,7 @@ TAO_Base_StreamEndPoint::set_control_flow_handler (char const *flowname,
   }
 }
 
-// ----------------------------------------------------------------------
 // TAO_StreamEndPoint
-// ----------------------------------------------------------------------
 
 TAO_StreamEndPoint::TAO_StreamEndPoint ()
   :flow_count_ (0),
@@ -2543,9 +2525,7 @@ TAO_StreamEndPoint::~TAO_StreamEndPoint ()
     }
 }
 
-// ----------------------------------------------------------------------
 // TAO_StreamEndPoint_A
-// ----------------------------------------------------------------------
 
 TAO_StreamEndPoint_A::TAO_StreamEndPoint_A ()
 {
@@ -2765,9 +2745,7 @@ TAO_StreamEndPoint_A::disconnect_leaf (AVStreams::StreamEndPoint_B_ptr /* the_ep
 
 TAO_StreamEndPoint_A::~TAO_StreamEndPoint_A () = default;
 
-// ----------------------------------------------------------------------
 // TAO_StreamEndPoint_B
-// ----------------------------------------------------------------------
 
 TAO_StreamEndPoint_B::TAO_StreamEndPoint_B ()
 {
@@ -2917,9 +2895,7 @@ TAO_StreamEndPoint_B::multiconnect (AVStreams::streamQoS &stream_qos,
 
 TAO_StreamEndPoint_B::~TAO_StreamEndPoint_B () = default;
 
-// ----------------------------------------------------------------------
 // TAO_VDev
-// ----------------------------------------------------------------------
 
 TAO_VDev::TAO_VDev ()
 {
@@ -3100,9 +3076,7 @@ TAO_VDev::modify_QoS (AVStreams::streamQoS &the_qos,
 
 TAO_VDev::~TAO_VDev () = default;
 
-// ----------------------------------------------------------------------
 // TAO_MMDevice
-// ----------------------------------------------------------------------
 
 TAO_MMDevice::TAO_MMDevice (TAO_AV_Endpoint_Strategy *endpoint_strategy)
   : endpoint_strategy_ (endpoint_strategy),
@@ -3536,9 +3510,7 @@ TAO_MMDevice::remove_fdev (char const *flow_name)
 
 TAO_MMDevice::~TAO_MMDevice () = default;
 
-//------------------------------------------------------------------
 // TAO_FlowConnection
-//------------------------------------------------------------------
 
 TAO_FlowConnection::TAO_FlowConnection ()
   : fp_name_ (CORBA::string_dup (""))
@@ -4017,9 +3989,7 @@ TAO_FlowConnection::drop (AVStreams::FlowEndPoint_ptr target)
   return 0;
 }
 
-// -----------------------------------------------------------------
 // TAO_FlowEndPoint
-// -----------------------------------------------------------------
 
 TAO_FlowEndPoint::TAO_FlowEndPoint () = default;
 
@@ -4508,9 +4478,7 @@ TAO_FlowEndPoint::set_protocol_object (char const * /*flowname*/,
   return 0;
 }
 
-// ------------------------------------------------------------
 // TAO_FlowProducer class
-// ------------------------------------------------------------
 
 TAO_FlowProducer::TAO_FlowProducer ()
   : source_id_ (0)
@@ -4658,9 +4626,7 @@ TAO_FlowProducer::set_source_id (CORBA::Long source_id)
   this->source_id_ = source_id;
 }
 
-// ------------------------------------------------------------
 // TAO_FlowConsumer
-// ------------------------------------------------------------
 
 TAO_FlowConsumer::TAO_FlowConsumer () = default;
 
@@ -4717,9 +4683,7 @@ TAO_FlowConsumer::connect_to_peer (AVStreams::QoS & the_qos,
                                   use_flow_protocol);
 }
 
-//------------------------------------------------------------
 // TAO_Tokenizer
-//------------------------------------------------------------
 TAO_Tokenizer::TAO_Tokenizer (char const *string, char delimiter)
   : token_array_ (10, nullptr, nullptr)
 {

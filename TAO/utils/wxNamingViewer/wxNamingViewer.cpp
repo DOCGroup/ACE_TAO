@@ -29,7 +29,6 @@ USEUNIT("wxBindDialog.cpp");
 USEUNIT("wxViewIORDialog.cpp");
 USERC("wxNamingViewer.rc");
 
-//---------------------------------------------------------------------------
 
 class WxNamingViewer:
     public wxApp

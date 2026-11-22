@@ -191,7 +191,6 @@ public:
                              JAWS_IO &io) override;
 };
 
-//--------------
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 /**

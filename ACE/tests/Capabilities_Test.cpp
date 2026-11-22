@@ -54,9 +54,7 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Capabilities_Test"));
 
-  // --------------------------------------------------------
   // Create config file
-  // --------------------------------------------------------
 
   // A config file is created within the test so that the test is
   // completely self contained.
@@ -98,7 +96,6 @@ run_main (int, ACE_TCHAR *[])
                          ACE_TEXT ("ACE_OS::close")),
                         -1);
     }
-  // --------------------------------------------------------
 
   int const result = load_config ();
 

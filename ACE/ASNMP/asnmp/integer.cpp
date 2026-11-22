@@ -116,9 +116,7 @@ char const *SnmpUInt32::to_string ()
   return output_buffer;
 }
 
-//====================================================================
 //  INT 32 Implementation
-//====================================================================
 
 SnmpInt32::SnmpInt32 (long const i)
 {

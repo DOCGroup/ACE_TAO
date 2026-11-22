@@ -1045,7 +1045,6 @@ operator<< (std::ostream &strm, CORBA::Object_ptr _tao_objref)
 
 #endif /* GEN_OSTREAM_OPS */
 
-// =========================================================
 // Traits specializations for CORBA::Object.
 namespace TAO
 {

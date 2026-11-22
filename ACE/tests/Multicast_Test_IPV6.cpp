@@ -1,4 +1,3 @@
-// ============================================================================
 //FUZZ: disable check_for_lack_ACE_OS
 /**
  * @file Multicast_Test_IPV6.cpp
@@ -30,7 +29,6 @@
  * @author Don Hinton <dhinton@dresystems.com>
  *         Brian Buesker <bbuesker@qualcomm.com>
  */
-// ============================================================================
 //FUZZ: enable check_for_lack_ACE_OS
 
 #include "test_config.h"

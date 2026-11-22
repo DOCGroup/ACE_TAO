@@ -337,7 +337,6 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Bound_Ptr_Test"));
 
-  // =========================================================================
   // The following test uses the ACE_Strong_Bound_Ptr in a single
   // thread of control, hence we use the ACE_Null_Mutex
 
@@ -425,7 +424,6 @@ run_main (int, ACE_TCHAR *[])
 
 #if defined (ACE_HAS_THREADS)
 
-  // =========================================================================
   // The following test uses the ACE_Strong_Bound_Ptr in multiple
   // threads of control.
 

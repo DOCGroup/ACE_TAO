@@ -1027,7 +1027,6 @@ ACE_Thread_Manager::remove_thr_all ()
     }
 }
 
-// ------------------------------------------------------------------
 // Factor out some common behavior to simplify the following methods.
 #define ACE_THR_OP(OP,STATE) \
   int result = OP (td->thr_handle_); \
@@ -1189,7 +1188,6 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int signum)
     return 0;
 }
 
-// ------------------------------------------------------------------
 // Factor out some common behavior to simplify the following methods.
 #define ACE_EXECUTE_OP(OP, ARG) \
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1)); \

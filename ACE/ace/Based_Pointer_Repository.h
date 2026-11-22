@@ -74,7 +74,6 @@ private:
   std::unique_ptr<ACE_Based_Pointer_Repository_Rep> rep_;
 };
 
-// ----------------------------------
 
 /// Declare a process wide singleton
 ACE_SINGLETON_DECLARE (ACE_Singleton, ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX)

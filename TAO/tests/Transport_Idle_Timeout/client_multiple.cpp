@@ -11,9 +11,7 @@
 #include "tao/Transport_Cache_Manager_T.h"
 #include "tao/Thread_Lane_Resources.h"
 
-// ---------------------------------------------------------------------------
 // Helpers
-// ---------------------------------------------------------------------------
 
 /// Keep this ORB's reactor running while waiting on a monotonic deadline.
 void
@@ -53,9 +51,7 @@ cache_size (CORBA::ORB_ptr orb)
   return core->lane_resources ().transport_cache ().current_size ();
 }
 
-// ---------------------------------------------------------------------------
 // Argument parsing
-// ---------------------------------------------------------------------------
 
 static char const *ior {};
 static char const *ior2 {};
@@ -94,14 +90,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-// ---------------------------------------------------------------------------
 // TC-1 : Basic idle close
-// ---------------------------------------------------------------------------
 // Steps:
 //   1. Ping once  -> transport created, server cache_size must be 1.
 //   2. Wait Y + X + margin while processing local reactor events.
 //   3. cache_size must be 0 -> transport closed by an idle scan.
-// ---------------------------------------------------------------------------
 static bool
 tc1_basic_idle_close (CORBA::ORB_ptr orb, Test::Echo_ptr echo, Test::Echo_ptr echo2)
 {
@@ -139,13 +132,10 @@ tc1_basic_idle_close (CORBA::ORB_ptr orb, Test::Echo_ptr echo, Test::Echo_ptr ec
   return ok;
 }
 
-// ---------------------------------------------------------------------------
 // TC-2 : Reconnect after idle close
-// ---------------------------------------------------------------------------
 // Steps:
 //   1. Ping (reconnects transparently after TC-1 closed the transport).
 //   2. cache_size must be 1 again.
-// ---------------------------------------------------------------------------
 static bool
 tc2_reconnect (CORBA::ORB_ptr orb, Test::Echo_ptr echo, Test::Echo_ptr echo2)
 {
@@ -161,12 +151,9 @@ tc2_reconnect (CORBA::ORB_ptr orb, Test::Echo_ptr echo, Test::Echo_ptr echo2)
   return ok;
 }
 
-// ---------------------------------------------------------------------------
 // TC-3 : Activity refresh on reuse
-// ---------------------------------------------------------------------------
 // Send pings over multiple scan intervals, then check retention before Y
 // and eventual closure after Y + X plus margin from the last activity.
-// ---------------------------------------------------------------------------
 static bool
 tc3_activity_on_reuse (CORBA::ORB_ptr orb, Test::Echo_ptr echo, Test::Echo_ptr echo2)
 {
@@ -208,12 +195,9 @@ tc3_activity_on_reuse (CORBA::ORB_ptr orb, Test::Echo_ptr echo, Test::Echo_ptr e
   return ok;
 }
 
-// ---------------------------------------------------------------------------
 // TC-4 : Disabled timeout (opt-out)
-// ---------------------------------------------------------------------------
 // The server is started with -ORBTransportIdleTimeout 0 for this scenario.
 // After waiting beyond the enabled expiry window, the connection must remain.
-// ---------------------------------------------------------------------------
 static bool
 tc4_disabled_timeout (CORBA::ORB_ptr orb, Test::Echo_ptr echo, Test::Echo_ptr echo2)
 {
@@ -236,9 +220,7 @@ tc4_disabled_timeout (CORBA::ORB_ptr orb, Test::Echo_ptr echo, Test::Echo_ptr ec
   return ok;
 }
 
-// ---------------------------------------------------------------------------
 // main
-// ---------------------------------------------------------------------------
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

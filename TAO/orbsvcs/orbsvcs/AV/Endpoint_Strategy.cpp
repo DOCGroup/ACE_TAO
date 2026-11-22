@@ -17,9 +17,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// ----------------------------------------------------------------------
 // TAO_AV_Endpoint_Strategy
-// ----------------------------------------------------------------------
 
 TAO_AV_Endpoint_Strategy::TAO_AV_Endpoint_Strategy () = default;
 
@@ -51,9 +49,7 @@ TAO_AV_Endpoint_Strategy::create_B (AVStreams::StreamEndPoint_B_ptr & /* stream_
                     -1);
 }
 
-// ----------------------------------------------------------------------
 // TAO_AV_Endpoint_Process_Strategy
-// ----------------------------------------------------------------------
 
 TAO_AV_Endpoint_Process_Strategy::TAO_AV_Endpoint_Process_Strategy (ACE_Process_Options *process_options)
   : process_options_ (process_options)
@@ -225,9 +221,7 @@ TAO_AV_Endpoint_Process_Strategy::get_vdev ()
   return 0;
 }
 
-// ----------------------------------------------------------------------
 // TAO_AV_Endpoint_Process_Strategy_A
-// ----------------------------------------------------------------------
 
 TAO_AV_Endpoint_Process_Strategy_A::TAO_AV_Endpoint_Process_Strategy_A (ACE_Process_Options *process_options)
   : TAO_AV_Endpoint_Process_Strategy (process_options)
@@ -300,9 +294,7 @@ TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint ()
   return 0;
 }
 
-// ----------------------------------------------------------------------
 // TAO_AV_Endpoint_Process_Strategy_B
-// ----------------------------------------------------------------------
 
 TAO_AV_Endpoint_Process_Strategy_B::TAO_AV_Endpoint_Process_Strategy_B (ACE_Process_Options *process_options)
   : TAO_AV_Endpoint_Process_Strategy (process_options)

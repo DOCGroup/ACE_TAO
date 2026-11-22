@@ -239,7 +239,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  //-----------------------------------------------------------------------
 
   // Create two valid endpoint policies. One to match each of the generated
   // endpoint arguments supplied to ORB_init().

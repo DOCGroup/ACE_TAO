@@ -15,9 +15,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-//------------------------------------------------------------
 // TAO_AV_SCTP_SEQ_Transport
-//------------------------------------------------------------
 
 TAO_AV_SCTP_SEQ_Transport::TAO_AV_SCTP_SEQ_Transport () = default;
 
@@ -158,9 +156,7 @@ TAO_AV_SCTP_SEQ_Transport::recv (iovec *iov,
   return handler_->peer ().recvv_n (iov, iovcnt);
 }
 
-//------------------------------------------------------------
 // TAO_AV_SCTP_SEQ_Base_Acceptor
-//------------------------------------------------------------
 
 int
 TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor,
@@ -225,9 +221,7 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&
   return 0;
 }
 
-//------------------------------------------------------------
 // TAO_AV_SCTP_SEQ_Acceptor
-//------------------------------------------------------------
 
 TAO_AV_SCTP_SEQ_Acceptor::TAO_AV_SCTP_SEQ_Acceptor () = default;
 
@@ -379,9 +373,7 @@ TAO_AV_SCTP_SEQ_Acceptor::close ()
   return 0;
 }
 
-//------------------------------------------------------------
 // TAO_AV_SCTP_SEQ_Base_Connector
-//------------------------------------------------------------
 
 int
 TAO_AV_SCTP_SEQ_Base_Connector::connector_open (TAO_AV_SCTP_SEQ_Connector *connector,
@@ -427,9 +419,7 @@ TAO_AV_SCTP_SEQ_Base_Connector::connector_connect (TAO_AV_SCTP_SEQ_Flow_Handler 
   return 0;
 }
 
-//------------------------------------------------------------
 // TAO_AV_SCTP_SEQ_Connector
-//------------------------------------------------------------
 TAO_AV_SCTP_SEQ_Connector::TAO_AV_SCTP_SEQ_Connector () = default;
 
 TAO_AV_SCTP_SEQ_Connector::~TAO_AV_SCTP_SEQ_Connector () = default;
@@ -602,9 +592,7 @@ TAO_AV_SCTP_SEQ_Connector::close ()
   return 0;
 }
 
-//------------------------------------------------------------
 // TAO_AV_SCTP_SEQ_Protocol_Factory
-//------------------------------------------------------------
 
 TAO_AV_SCTP_SEQ_Factory::TAO_AV_SCTP_SEQ_Factory () = default;
 
@@ -654,9 +642,7 @@ TAO_AV_SCTP_SEQ_Factory::init (int, ACE_TCHAR *[])
   return 0;
 }
 
-//------------------------------------------------------------
 // TAO_AV_SCTP_SEQ_Object
-//------------------------------------------------------------
 
 int
 TAO_AV_SCTP_SEQ_Object::handle_input ()
@@ -720,9 +706,7 @@ TAO_AV_SCTP_SEQ_Object::destroy ()
   return 0;
 }
 
-//------------------------------------------------------------
 // TAO_AV_SCTP_SEQ_Flow_Handler
-//------------------------------------------------------------
 
 TAO_AV_SCTP_SEQ_Flow_Handler::TAO_AV_SCTP_SEQ_Flow_Handler (TAO_AV_Callback * /*callback*/)
   //  :TAO_AV_Flow_Handler (callback)
@@ -885,9 +869,7 @@ TAO_AV_SCTP_SEQ_Flow_Handler::handle_timeout (ACE_Time_Value const &tv,
   return TAO_AV_Flow_Handler::handle_timeout (tv,arg);
 }
 
-//------------------------------------------------------------
 // TAO_AV_SCTP_SEQ_Flow_Factory
-//------------------------------------------------------------
 TAO_AV_SCTP_SEQ_Flow_Factory::TAO_AV_SCTP_SEQ_Flow_Factory () = default;
 
 TAO_AV_SCTP_SEQ_Flow_Factory::~TAO_AV_SCTP_SEQ_Flow_Factory () = default;

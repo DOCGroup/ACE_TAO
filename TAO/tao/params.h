@@ -33,7 +33,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 using TAO_EndpointSet = std::vector<ACE_CString>;
 using TAO_EndpointSetIterator = TAO_EndpointSet::const_iterator;
 
-// -------------------------------------------------------------------
 
 /**
  * @class TAO_ORB_Parameters

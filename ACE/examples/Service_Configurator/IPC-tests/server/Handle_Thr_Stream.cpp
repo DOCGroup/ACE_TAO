@@ -189,7 +189,6 @@ CLI_Stream<PR_ST_2>::svc ()
 #undef PR_ST_1
 #undef PR_ST_2
 
-//----------------------------------------
 
 #if defined (ACE_HAS_TLI)
 #include "ace/TLI_Stream.h"

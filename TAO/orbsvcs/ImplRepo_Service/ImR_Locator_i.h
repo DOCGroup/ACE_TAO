@@ -249,7 +249,6 @@ private:
   } shutdown_handler_;
 };
 
-//----------------------------------------------------------------------------
 
 class SyncListener : public LiveListener
 {
@@ -270,7 +269,6 @@ class SyncListener : public LiveListener
   bool callback_;
 };
 
-//----------------------------------------------------------------------------
 /*
  * @class ImR_Loc_ResponseHandler
  *
@@ -295,7 +293,6 @@ private:
   CORBA::ORB_var orb_;
 };
 
-//----------------------------------------------------------------------------
 /*
  * @class ImR_Loc_ResponseHandler
  *

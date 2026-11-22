@@ -55,7 +55,6 @@ TAO_Profile::add_tagged_component (IOP::TaggedComponent const &component)
 
   this->verify_profile_version ();
 
-  // ----------------------------------------------------------------
 
   // Add the given tagged component to this profile.
   //

@@ -78,9 +78,7 @@ add_default_av_factory (Set &factories,
   return 0;
 }
 
-//------------------------------------------------------------
 // TAO_AV_Core
-//------------------------------------------------------------
 
 TAO_AV_Core::TAO_AV_Core ()
   : connector_registry_ (std::make_unique<TAO_AV_Connector_Registry> ())

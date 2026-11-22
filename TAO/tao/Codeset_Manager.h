@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /*
  *  @file Codeset_Manager.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Mahesh Vedantam <mahesh@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_CODESET_MANAGER_H
 #define TAO_CODESET_MANAGER_H

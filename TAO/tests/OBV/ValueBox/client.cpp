@@ -303,9 +303,7 @@ int test_basic_invocations (Test * test_object)
 
     try
       {
-        //============================================================
         // Test method invocation with boxed value
-        //============================================================
 
         ACE_NEW_RETURN (p1,
                         VBlong(25),
@@ -324,9 +322,7 @@ int test_basic_invocations (Test * test_object)
         OBV_VERITY (p3->_value () == (53*5));
         OBV_VERITY (result->_value () == (p1->_value () *3));
 
-        //============================================================
         // Test method invocation with boxed value from nested module
-        //============================================================
 
         ACE_NEW_RETURN (mp1,
                         vb_basic::M_VBlong(25),
@@ -346,9 +342,7 @@ int test_basic_invocations (Test * test_object)
         OBV_VERITY (mp3->_value () == (53*5));
         OBV_VERITY (mresult->_value () == (mp1->_value () *3));
 
-        //============================================================
         // Test _boxed_in(), _boxed_inout(), and _boxed_out())
-        //============================================================
 
         p1->_value(67);
         p2->_value(93);
@@ -510,9 +504,7 @@ int test_boxed_string_invocations (Test * test_object)
 
     try
       {
-        //============================================================
         // Test method invocation with boxed value
-        //============================================================
 
         ACE_NEW_RETURN (p1,
                         VBstring(CORBA::string_dup ("string1")),
@@ -530,9 +522,7 @@ int test_boxed_string_invocations (Test * test_object)
         OBV_VERITY (std::strcmp (p3->_value (), "2string") == 0);
         OBV_VERITY (std::strcmp (result->_value (), "1string") == 0);
 
-        //============================================================
         // Test _boxed_in(), _boxed_inout(), and _boxed_out())
-        //============================================================
 
         p2->_value(CORBA::string_dup ("second string2"));
 
@@ -673,9 +663,7 @@ int test_boxed_sequence_invocations (Test * test_object)
 
   try
     {
-      //============================================================
       // Test method invocation with boxed value
-      //============================================================
 
       ACE_NEW_RETURN (p1,
                       VBseqlong(4),
@@ -713,9 +701,7 @@ int test_boxed_sequence_invocations (Test * test_object)
       OBV_VERITY ((*result.in ())[2] ==  8);
       OBV_VERITY ((*result.in ())[3] ==  7);
 
-      //============================================================
       // Test _boxed_in(), _boxed_inout(), and _boxed_out())
-      //============================================================
 
       test_object->seq_op2(p1->_boxed_in(), p2->_boxed_inout(),
                             p3->_boxed_out());
@@ -863,10 +849,8 @@ int test_boxed_struct_invocations (Test * test_object)
 
   try
     {
-      //============================================================
       // Fixed struct
       // Test method invocation with boxed value
-      //============================================================
       Fixed_Struct1 fs1;
       fs1.l = 29;
       fs1.abstruct.s1 = 117;
@@ -907,10 +891,8 @@ int test_boxed_struct_invocations (Test * test_object)
       OBV_VERITY ((result->abstruct()).s1 == fs1.abstruct.s1);
       OBV_VERITY ((result->abstruct()).s2 == fs1.abstruct.s2);
 
-      //============================================================
       // Fixed struct
       // Test _boxed_in(), _boxed_inout(), and _boxed_out())
-      //============================================================
 
       test_object->struct_op2(p1->_boxed_in(), p2->_boxed_inout(),
                               p3->_boxed_out());
@@ -927,10 +909,8 @@ int test_boxed_struct_invocations (Test * test_object)
       p2->_remove_ref ();
       p3->_remove_ref ();
 
-      //============================================================
       // Variable struct
       // Test method invocation with boxed value
-      //============================================================
 
       Variable_Struct1 vs1;
       vs1.l = 29;
@@ -966,10 +946,8 @@ int test_boxed_struct_invocations (Test * test_object)
       OBV_VERITY (result2->l() == vs1.l);
       OBV_VERITY (std::strcmp (result2->str(), vs1.str) == 0);
 
-      //============================================================
       // Variable struct
       // Test _boxed_in(), _boxed_inout(), and _boxed_out())
-      //============================================================
 
       test_object->struct_op4(p4->_boxed_in(), p5->_boxed_inout(),
                               p6->_boxed_out());
@@ -1079,10 +1057,8 @@ int test_boxed_array_invocations (Test * test_object)
 
   try
     {
-      //============================================================
       // Array (fixed)
       // Test method invocation with boxed value
-      //============================================================
 
       LongArray la;
       la[0] = 101;
@@ -1124,10 +1100,8 @@ int test_boxed_array_invocations (Test * test_object)
               && (*result.in ())[1] == 202
               && (*result.in ())[2] == 303);
 
-      //============================================================
       // Array (fixed)
       // Test _boxed_in(), _boxed_inout(), and _boxed_out())
-      //============================================================
 
 // Exclude the following test for now until issues with _boxed_out()
 // for arrays are resolved.
@@ -1148,10 +1122,8 @@ int test_boxed_array_invocations (Test * test_object)
       p2->_remove_ref ();
       p3->_remove_ref ();
 
-      //============================================================
       // Array (variable)
       // Test method invocation with boxed value
-      //============================================================
 
       StringArray sa;
       sa[0] = CORBA::string_dup ("in string1");
@@ -1185,10 +1157,8 @@ int test_boxed_array_invocations (Test * test_object)
       OBV_VERITY (std::strcmp ((*result2.in ())[0], sa[0]) == 0);
       OBV_VERITY (std::strcmp ((*result2.in ())[1], sa[1]) == 0);
 
-      //============================================================
       // Array (variable)
       // Test _boxed_in(), _boxed_inout(), and _boxed_out())
-      //============================================================
 
 // Disable the following for now.  Need to troubleshoot it.
 #if 0
@@ -1336,10 +1306,8 @@ int test_boxed_union_invocations (Test * test_object)
 
   try
     {
-      //============================================================
       // Union (fixed)
       // Test method invocation with boxed value
-      //============================================================
 
       Fixed_Union1 *ptemp {};
       ACE_NEW_RETURN (ptemp,
@@ -1380,10 +1348,8 @@ int test_boxed_union_invocations (Test * test_object)
       OBV_VERITY (result->_d () == 1);
       OBV_VERITY (result->m1 () == 321*3);
 
-      //============================================================
       // Union (fixed)
       // Test _boxed_in(), _boxed_inout(), and _boxed_out())
-      //============================================================
 
       test_object->union_op2(p1->_boxed_in(), p2->_boxed_inout(),
                               p3->_boxed_out());
@@ -1398,10 +1364,8 @@ int test_boxed_union_invocations (Test * test_object)
       p2->_remove_ref ();
       p3->_remove_ref ();
 
-      //============================================================
       // Union (variable)
       // Test method invocation with boxed value
-      //============================================================
 
       Variable_Union1_var variable_union1;
       ACE_NEW_RETURN (variable_union1,
@@ -1440,10 +1404,8 @@ int test_boxed_union_invocations (Test * test_object)
       OBV_VERITY (result2->_d () == 1);
       OBV_VERITY (result2->m1 () == 321);
 
-      //============================================================
       // Union (variable)
       // Test _boxed_in(), _boxed_inout(), and _boxed_out())
-      //============================================================
 
       p4->m1 (1722);
 

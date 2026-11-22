@@ -108,7 +108,6 @@ run_main (int, ACE_TCHAR *[])
   return result;
 }
 
-// ============================================
 
 Simple_Handler::
 Simple_Handler(

@@ -65,7 +65,6 @@
 // throw an exception
 #define ACE_NOEXCEPT_FALSE noexcept(false)
 
-// ----------------------------------------------------------------
 
 // FUZZ: disable check_for_ACE_Guard
 
@@ -171,7 +170,6 @@
 #endif /* !ACE_READ_GUARD_RETURN */
 // FUZZ: enable check_for_ACE_Guard
 
-// ----------------------------------------------------------------
 
 #if defined(ACE_UNEXPECTED_RETURNS)
 
@@ -202,7 +200,6 @@
 
 #endif
 
-// ----------------------------------------------------------------
 
 # define ACE_DES_NOFREE(POINTER,CLASS) \
    do { \

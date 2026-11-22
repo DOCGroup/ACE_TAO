@@ -1,11 +1,9 @@
-//---------------------------------------------------------------------------
 #include "pch.h"
 #pragma hdrstop
 #include "ace/ace.h"
 #include "tao/corba.h"
 #include "ChatClientWnd.h"
 USEFORM("ChatClientWnd.cpp", ChatClientWindow);
-//---------------------------------------------------------------------------
 #pragma package(smart_init)
 
 void ace_init()
@@ -19,7 +17,6 @@ void ace_fini()
   ACE::fini();
 }
 #pragma exit ace_fini
-//---------------------------------------------------------------------------
 WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
   try
@@ -44,5 +41,4 @@ WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
   return 0;
 }
-//---------------------------------------------------------------------------
 

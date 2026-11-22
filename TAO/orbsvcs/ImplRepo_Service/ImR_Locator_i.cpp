@@ -1797,7 +1797,6 @@ ImR_Locator_i::create_aam (UpdateableServerInfo &info, bool running)
   return aam._retn ();
 }
 
-//-------------------------------------------------------------------------
 
 SyncListener::SyncListener (const char *server,
                             CORBA::ORB_ptr orb,
@@ -1845,7 +1844,6 @@ SyncListener::status_changed (LiveStatus status)
   return true;
 }
 
-//---------------------------------------------------------------------------
 
 ImR_SyncResponseHandler::ImR_SyncResponseHandler (const char *objkey, CORBA::ORB_ptr orb)
   :excep_ (nullptr),
@@ -1887,7 +1885,6 @@ ImR_SyncResponseHandler::wait_for_result ()
   return this->result_._retn();
 }
 
-//---------------------------------------------------------------------------
 
 ImR_Loc_ResponseHandler::ImR_Loc_ResponseHandler
 (Loc_Operation_Id opid,

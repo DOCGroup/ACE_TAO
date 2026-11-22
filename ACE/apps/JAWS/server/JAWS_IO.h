@@ -290,7 +290,6 @@ protected:
   ACE_HANDLE handle_;
 };
 
-//-------------------
 
 #endif /* JAWS_IO_H */
 

@@ -473,7 +473,6 @@ ACE_Hash_Map_Manager_Ex<EXT_ID,
     }
 }
 
-// ---------------------------------------------------------------------
 
 template <class EXT_ID,
           class INT_ID,

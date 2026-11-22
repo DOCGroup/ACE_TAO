@@ -60,7 +60,6 @@ namespace TAO
   };
 }
 
-// -----------------------------------------------------
 
 TAO::Remote_Object_Proxy_Broker *the_tao_remote_object_proxy_broker ();
 

@@ -38,7 +38,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //#define INDUCE_BUG_2654_C
 //#define INDUCE_BUG_2654_D
 
-//-----------------------------------------------------------------------------
 
 /**
  * @class TAO_Event_Handler_Array_var
@@ -90,7 +89,6 @@ TAO_IIOP_Connection_Handler_Array_Guard::~TAO_IIOP_Connection_Handler_Array_Guar
     }
 }
 
-//---------------------------------------------------------------------------
 
 TAO_IIOP_Connector::~TAO_IIOP_Connector () = default;
 

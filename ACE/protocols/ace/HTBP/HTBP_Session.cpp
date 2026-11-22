@@ -58,7 +58,6 @@ ACE::HTBP::Session::find_session (ACE::HTBP::Session_Id_t const& sid,
   return 0;
 }
 
-//----------------------------------------------------------------------------
 ACE::HTBP::Session::Session ()
   : proxy_addr_ (nullptr),
     destroy_proxy_addr_ (false),

@@ -3,9 +3,7 @@
 
 #include "JAWS/Hash_Bucket_T.h"
 
-// -----------------
 // Hash_Bucket_Item
-// -----------------
 
 template <class EXT_ID, class INT_ID>
 JAWS_Hash_Bucket_Item<EXT_ID, INT_ID>
@@ -28,9 +26,7 @@ JAWS_Hash_Bucket_Item<EXT_ID, INT_ID>
 {
 }
 
-// ---------------------
 // Hash_Bucket_DLCStack
-// ---------------------
 
 template <class EXT_ID, class INT_ID>
 JAWS_Hash_Bucket_DLCStack<EXT_ID, INT_ID>::
@@ -170,9 +166,7 @@ JAWS_Hash_Bucket_DLCStack<EXT_ID, INT_ID>::remove (JAWS_HASH_BUCKET_ITEM *item)
   return result;
 }
 
-// ------------------------------
 // Hash_Bucket_DLCStack_Iterator
-// ------------------------------
 
 template <class EXT_ID, class INT_ID>
 JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>::
@@ -300,9 +294,7 @@ JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>::done () const
   return this->done_;
 }
 
-// --------------------
 // Hash_Bucket_Manager
-// --------------------
 
 template <class EXT_ID, class INT_ID, class EQ_FUNC>
 JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>

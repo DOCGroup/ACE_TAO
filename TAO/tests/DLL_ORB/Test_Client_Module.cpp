@@ -34,10 +34,8 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TString &ior)
 int
 Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
 {
-  // -----------------------------------------------------------------
   // Pre-ORB initialization steps necessary for proper DLL ORB
   // support.
-  // -----------------------------------------------------------------
   // Make sure TAO's singleton manager is initialized, and set to not
   // register itself with the ACE_Object_Manager since it is under the
   // control of the Service Configurator.  If we register with the
@@ -55,9 +53,7 @@ Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
                       -1);  // No exceptions available yet, so return
                             // an error status.
 
-  // -----------------------------------------------------------------
   // Boilerplate CORBA/TAO client-side ORB initialization code.
-  // -----------------------------------------------------------------
   try
     {
       // Prepend a "dummy" program name argument to the Service
@@ -133,9 +129,7 @@ Test_Client_Module::fini ()
 {
   ACE_DEBUG ((LM_INFO, "Client is being finalized.\n"));
 
-  // ------------------------------------------------------------
   // Pre-Test_Client_Module termination steps.
-  // ------------------------------------------------------------
   // Explicitly clean up singletons and other objects created by TAO
   // before unloading this module.
   if (TAO_Singleton_Manager::instance ()->fini () == -1)

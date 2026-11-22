@@ -126,9 +126,7 @@ ACE_Filecache_Handle::size () const
   return this->file_->size ();
 }
 
-// ------------------
 // ACE_Filecache_Hash
-// ------------------
 
 #define ACE_Filecache_Hash \
         ACE_Hash_Map_Manager_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>
@@ -191,9 +189,7 @@ ACE_Filecache_Hash::equal (const ACE_TCHAR *const &id1,
 #undef ACE_Filecache_Hash
 #undef ACE_Filecache_Hash_Entry
 
-// -------------
 // ACE_Filecache
-// -------------
 
 ACE_Filecache *
 ACE_Filecache::instance ()

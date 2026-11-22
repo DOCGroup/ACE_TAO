@@ -147,7 +147,6 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(ACE_UINT32 *ssrc_list,
   }
 }
 
-//==============================================================================
 
 RTCP_BYE_Packet::RTCP_BYE_Packet(char* buffer, int *len)
                  : RTCP_Packet(buffer)
@@ -191,11 +190,9 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(char* buffer, int *len)
   *len-=(chd_.length_+1)*4;
 }
 
-//==============================================================================
 
 RTCP_BYE_Packet::~RTCP_BYE_Packet() = default;
 
-//==============================================================================
 
 unsigned int
 RTCP_BYE_Packet::packet_size()
@@ -214,7 +211,6 @@ RTCP_BYE_Packet::packet_size()
   return size;
 }
 
-//==============================================================================
 
 void
 RTCP_BYE_Packet::ssrc_list(ACE_UINT32 **ssrc_list, unsigned char &length)
@@ -223,7 +219,6 @@ RTCP_BYE_Packet::ssrc_list(ACE_UINT32 **ssrc_list, unsigned char &length)
   length = this->ssrc_list_length_;
 }
 
-//==============================================================================
 
 char const *
 RTCP_BYE_Packet::reason ()
@@ -231,7 +226,6 @@ RTCP_BYE_Packet::reason ()
   return this->reason_;
 }
 
-//==============================================================================
 
 void
 RTCP_BYE_Packet::build_packet()
@@ -318,7 +312,6 @@ RTCP_RR_Packet::RTCP_RR_Packet (ACE_UINT32 ssrc,
   this->chd_.length_ = static_cast<ACE_UINT16> (1+6*(this->chd_.count_)); // + profile specific extensions ??
 }
 
-//==============================================================================
 
 RTCP_RR_Packet::RTCP_RR_Packet (char* buffer,
                                 int *len)
@@ -362,11 +355,9 @@ RTCP_RR_Packet::RTCP_RR_Packet (char* buffer,
   *len-=(this->chd_.length_+1)*4;
 }
 
-//==============================================================================
 
 RTCP_RR_Packet::~RTCP_RR_Packet() = default;
 
-//==============================================================================
 
 unsigned int
 RTCP_RR_Packet::packet_size()
@@ -375,7 +366,6 @@ RTCP_RR_Packet::packet_size()
     return size;
 }
 
-//==============================================================================
 
 void
 RTCP_RR_Packet::build_packet()
@@ -461,7 +451,6 @@ RTCP_SDES_Packet::RTCP_SDES_Packet() :
 //  this->num_items_ = 0;
 }
 
-//==============================================================================
 
 RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
                    RTCP_Packet (buffer)
@@ -554,11 +543,9 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
 
 }
 
-//==============================================================================
 
 RTCP_SDES_Packet::~RTCP_SDES_Packet() = default;
 
-//==============================================================================
 
 sdesChunk_t *
 RTCP_SDES_Packet::add_chunk (ACE_UINT32 ssrc)
@@ -613,7 +600,6 @@ RTCP_SDES_Packet::add_item_node (sdesChunk_t *chunk)
   return item_ptr;
 }
 
-//==============================================================================
 
 void
 RTCP_SDES_Packet::add_item (ACE_UINT32 ssrc,
@@ -667,7 +653,6 @@ RTCP_SDES_Packet::add_item (ACE_UINT32 ssrc,
   ip->data_ = std::move (item_data);
 }
 
-//==============================================================================
 
 void
 RTCP_SDES_Packet::add_priv_item (ACE_UINT32 ssrc,
@@ -727,7 +712,6 @@ RTCP_SDES_Packet::add_priv_item (ACE_UINT32 ssrc,
   ip->priv_data_ = std::move (item_data);
 }
 
-//==============================================================================
 
 unsigned int
 RTCP_SDES_Packet::packet_size()
@@ -766,7 +750,6 @@ RTCP_SDES_Packet::packet_size()
   return size;
 }
 
-//==============================================================================
 
 void
 RTCP_SDES_Packet::build_packet()
@@ -972,7 +955,6 @@ RTCP_SR_Packet::RTCP_SR_Packet(ACE_UINT32 ssrc,
   this->chd_.length_ = static_cast<ACE_UINT16> (6 + 6*(chd_.count_)); //+profile specific extensions ??
 }
 
-//==============================================================================
 
 RTCP_SR_Packet::RTCP_SR_Packet (char* buffer,
                                 int *len)
@@ -1026,11 +1008,9 @@ RTCP_SR_Packet::RTCP_SR_Packet (char* buffer,
   *len-=(this->chd_.length_+1)*4;
 }
 
-//==============================================================================
 
 RTCP_SR_Packet::~RTCP_SR_Packet() = default;
 
-//==============================================================================
 
 unsigned int RTCP_SR_Packet::packet_size ()
 {
@@ -1040,7 +1020,6 @@ unsigned int RTCP_SR_Packet::packet_size ()
   return size;
 }
 
-//==============================================================================
 
 void RTCP_SR_Packet::build_packet()
 {

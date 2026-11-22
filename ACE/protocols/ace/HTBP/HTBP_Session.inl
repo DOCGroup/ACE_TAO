@@ -92,7 +92,6 @@ ACE::HTBP::Session::sock_flags () const
   return this->sock_flags_;
 }
 
-//---------------------------------------------------------------------------
 ACE_INLINE
 u_long
 ACE::HTBP::Session_Id_t::hash () const

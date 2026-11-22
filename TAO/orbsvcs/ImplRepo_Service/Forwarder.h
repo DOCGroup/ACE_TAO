@@ -27,7 +27,6 @@
 
 class ImR_Locator_i;
 
-//----------------------------------------------------------------------------
 /**
  * @class ImR_DSI_ReplyHandler
  *
@@ -68,7 +67,6 @@ private:
   TAO_AMH_DSI_Response_Handler_var resp_;
 };
 
-//---------------------------------------------------------------------------
 /**
  * @class ImR_Forwarder
  *

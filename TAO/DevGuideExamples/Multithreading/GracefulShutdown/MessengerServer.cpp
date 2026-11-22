@@ -128,9 +128,7 @@ int MessengerServer::parse_args (int argc, ACE_TCHAR *argv[], Options &options)
   return 0;
 }
 
-// ------------------------------------------------------------------
 // main
-// ------------------------------------------------------------------
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

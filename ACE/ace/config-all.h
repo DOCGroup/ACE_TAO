@@ -32,7 +32,6 @@
 # define ACE_NOTSUP do { errno = ENOTSUP; return; } while (0)
 #endif /* ! ACE_HAS_VERBOSE_NOTSUP */
 
-// ----------------------------------------------------------------
 
 # define ACE_TRACE_IMPL(X) ACE_Trace ____ (ACE_TEXT (X), __LINE__, ACE_TEXT (__FILE__))
 

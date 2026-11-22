@@ -48,7 +48,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Sig_Handler;
 class ACE_Dev_Poll_Reactor;
 
-// ---------------------------------------------------------------------
 
 /**
  * @class ACE_Dev_Poll_Reactor_Notify
@@ -202,7 +201,6 @@ protected:
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 };
 
-// ---------------------------------------------------------------------
 
 /**
  * @class ACE_Dev_Poll_Reactor
@@ -288,7 +286,6 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
     ACE_ALLOC_HOOK_DECLARE;
   };
 
-  // ---------------------------------------------------------------------
 
   /**
    * @class Handler_Repository

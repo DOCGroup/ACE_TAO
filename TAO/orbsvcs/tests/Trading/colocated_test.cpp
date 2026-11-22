@@ -60,7 +60,6 @@ int failure = 0;
       TAO_ORB_Manager orb_manager;
       orb_manager.init (argc, argv);
 
-      //-------------------------------------------------------------------------
       ACE_DEBUG ((LM_DEBUG, "*** Setup an embedded TradingService.\n"));
       // Create a Service Type Repository and a Trader Object so the test can
       // run without an external trading service.
@@ -124,7 +123,6 @@ int failure = 0;
 
         offer_importer.perform_queries ();
       }; // End of Trading service scope.
-      //-----------------------------------------------------------------------
       ACE_DEBUG ((LM_DEBUG, "*** Shutting down.\n"));
       orb_manager.fini();
     }

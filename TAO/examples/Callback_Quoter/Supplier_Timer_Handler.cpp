@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  Implementation of the Supplier_Time_Handler class.
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "ace/ACE.h"
 #include "Supplier_Timer_Handler.h"

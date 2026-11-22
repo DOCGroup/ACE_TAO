@@ -83,7 +83,6 @@ ACE_Bounded_Stack<T>::~ACE_Bounded_Stack ()
   delete [] this->stack_;
 }
 
-// ----------------------------------------
 
 ACE_ALLOC_HOOK_DEFINE_Tcs(ACE_Fixed_Stack)
 
@@ -136,7 +135,6 @@ ACE_Fixed_Stack<T, ACE_SIZE>::~ACE_Fixed_Stack ()
   ACE_TRACE ("ACE_Fixed_Stack<T, ACE_SIZE>::~ACE_Fixed_Stack");
 }
 
-//----------------------------------------
 
 ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Unbounded_Stack)
 
@@ -355,7 +353,6 @@ ACE_Unbounded_Stack<T>::remove (const T &item)
     }
 }
 
-//--------------------------------------------------
 ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Double_Linked_List_Iterator_Base)
 
 template <class T>
@@ -470,7 +467,6 @@ ACE_Double_Linked_List_Iterator_Base<T>::dump_i () const
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-//--------------------------------------------------
 ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Double_Linked_List_Iterator)
 
 template <class T>
@@ -573,7 +569,6 @@ ACE_Double_Linked_List_Iterator<T>::operator-- (int)
   return retv;
 }
 
-//--------------------------------------------------
 ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Double_Linked_List_Reverse_Iterator)
 
   template <class T>
@@ -906,7 +901,6 @@ ACE_Double_Linked_List<T>::remove_element (T *item)
   return 0;
 }
 
-//--------------------------------------------------
 ACE_ALLOC_HOOK_DEFINE_Tcs(ACE_Fixed_Set)
 
 template <class T, size_t ACE_SIZE> size_t
@@ -1061,7 +1055,6 @@ ACE_Fixed_Set<T, ACE_SIZE>::remove (const T &item)
   return -1;
 }
 
-//--------------------------------------------------
 ACE_ALLOC_HOOK_DEFINE_Tcs(ACE_Fixed_Set_Iterator_Base)
 
 template <class T, size_t ACE_SIZE> void
@@ -1148,7 +1141,6 @@ ACE_Fixed_Set_Iterator_Base<T, ACE_SIZE>::next_i (T *&item)
   return 0;
 }
 
-//--------------------------------------------------
 ACE_ALLOC_HOOK_DEFINE_Tcs(ACE_Fixed_Set_Iterator)
 
 template <class T, size_t ACE_SIZE> void
@@ -1204,7 +1196,6 @@ ACE_Fixed_Set_Iterator<T, ACE_SIZE>::operator* ()
   return *retv;
 }
 
-//--------------------------------------------------
 ACE_ALLOC_HOOK_DEFINE_Tcs(ACE_Fixed_Set_Const_Iterator)
 
 template <class T, size_t ACE_SIZE> void
@@ -1245,7 +1236,6 @@ ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::operator* () const
   return *retv;
 }
 
-//--------------------------------------------------
 ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Bounded_Set)
 
 template <class T> void

@@ -24,7 +24,6 @@ namespace ACE
       return 0;
     }
 
-    //====================================================================
 
     Monitor_Admin::Monitor_Admin ()
       : reactor_ (ACE_Reactor::instance ()),

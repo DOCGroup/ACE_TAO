@@ -8,8 +8,6 @@
 
 #include <memory>
 
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
 
 AsyncListManager::AsyncListManager (Locator_Repository const *repo,
                                     PortableServer::POA_ptr poa,
@@ -332,8 +330,6 @@ AsyncListManager::_remove_ref ()
     }
 }
 
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
 
 ListLiveListener::ListLiveListener (char const *server,
                                     int pid,

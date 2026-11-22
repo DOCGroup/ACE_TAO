@@ -276,7 +276,6 @@ ACE_Event_Handler::remove_stdin_handler (ACE_Reactor *reactor,
 #endif /* ACE_WIN32 */
 }
 
-// ---------------------------------------------------------------------
 
 ACE_Event_Handler_var::ACE_Event_Handler_var ()
 {
@@ -369,7 +368,6 @@ ACE_Event_Handler_var::operator !=(std::nullptr_t) const
   return this->ptr_ != nullptr;
 }
 
-// ---------------------------------------------------------------------
 
 ACE_Notification_Buffer::ACE_Notification_Buffer ()
   : mask_ (ACE_Event_Handler::NULL_MASK)

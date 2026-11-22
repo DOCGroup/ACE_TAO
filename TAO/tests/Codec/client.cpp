@@ -77,7 +77,6 @@ verify_data (Foo::Bar const *const original, Foo::Bar const *const extracted)
 int
 test_codec (IOP::Codec_ptr const codec)
 {
-  // ----------------------------------------------------------
 
   // Test values to be placed in the test structure.
   constexpr CORBA::Long A = 1010;
@@ -97,7 +96,6 @@ test_codec (IOP::Codec_ptr const codec)
   CORBA::Any data {};
   data <<= value;
 
-  // ----------------------------------------------------------
 
   CORBA::OctetSeq_var encoded_data {};
   CORBA::Any_var decoded_data {};
@@ -216,7 +214,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       retval = test_codec (codec_1_2.in ());
 
-      // ----------------------------------------------------------
 
       // Set up a structure that contains information necessary to
       // create a GIOP 1.1 CDR encapsulation Codec.

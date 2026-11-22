@@ -17,9 +17,7 @@
 #include "orbsvcs/AV/QoS_UDP.inl"
 #endif /* __ACE_INLINE__ */
 
-//------------------------------------------------------------
 // TAO_AV_UDP_Flow_Handler
-//------------------------------------------------------------
 
 static int resv_error = 0;
 static int resv_confirm = 0;
@@ -540,9 +538,7 @@ TAO_AV_UDP_QoS_Flow_Handler::get_handle () const
   return this->qos_sock_dgram_.get_handle () ;
 }
 
-//------------------------------------------------------------
 // TAO_AV_UDP_Transport
-//------------------------------------------------------------
 
 TAO_AV_UDP_QoS_Transport::TAO_AV_UDP_QoS_Transport () = default;
 
@@ -757,9 +753,7 @@ TAO_AV_UDP_QoS_Transport::recv (iovec *iov,
   return handler_->get_socket ()->recv (iov,this->peer_addr_,0,timeout);
 }
 
-//------------------------------------------------------------
 // TAO_AV_UDP_Acceptor
-//------------------------------------------------------------
 
 TAO_AV_UDP_QoS_Acceptor::TAO_AV_UDP_QoS_Acceptor () = default;
 
@@ -1052,9 +1046,7 @@ TAO_AV_UDP_QoS_Acceptor::close ()
   return 0;
 }
 
-//------------------------------------------------------------
 // TAO_AV_UDP_Connector
-//------------------------------------------------------------
 TAO_AV_UDP_QoS_Connector::TAO_AV_UDP_QoS_Connector () = default;
 
 TAO_AV_UDP_QoS_Connector::~TAO_AV_UDP_QoS_Connector () = default;
@@ -1306,9 +1298,7 @@ TAO_AV_UDP_QoS_Connector::close ()
   return 0;
 }
 
-//------------------------------------------------------------
 // TAO_AV_UDP_Protocol_Factory
-//------------------------------------------------------------
 
 TAO_AV_UDP_QoS_Factory::TAO_AV_UDP_QoS_Factory ()
 {
@@ -1368,9 +1358,7 @@ TAO_AV_UDP_QoS_Factory::init (int /* argc */,
   return 0;
 }
 
-//------------------------------------------------------------
 // TAO_AV_UDP_Flow_Factory
-//------------------------------------------------------------
 TAO_AV_UDP_QoS_Flow_Factory::TAO_AV_UDP_QoS_Flow_Factory ()
 {
   if (TAO_debug_level > 0)

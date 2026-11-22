@@ -1,4 +1,3 @@
-// ======================================================================
 //
 // The actual conversion methods are covered by the copyright information
 // below.  It is not the actual code provided by Unicode, Inc. but is an
@@ -16,7 +15,6 @@
 // for internal or external distribution as long as this notice
 // remains attached.
 //
-// ======================================================================
 
 #include "ace/UTF32_Encoding_Converter.h"
 

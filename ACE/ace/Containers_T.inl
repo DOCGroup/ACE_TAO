@@ -67,7 +67,6 @@ ACE_Bounded_Stack<T>::size () const
   return this->size_;
 }
 
-//----------------------------------------
 
 template <class T, size_t ACE_SIZE> ACE_INLINE bool
 ACE_Fixed_Stack<T, ACE_SIZE>::is_empty () const

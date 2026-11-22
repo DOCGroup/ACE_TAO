@@ -44,7 +44,6 @@ TAO::In_Fixed_Size_Clonable_Argument_T<S,Insert_Policy>::clone ()
   return clone_arg.release ();
 }
 
-// ===========================================================
 
 template<typename S,
          template <typename> class Insert_Policy>
@@ -74,7 +73,6 @@ TAO::Inout_Fixed_Size_Argument_T<S,Insert_Policy>::interceptor_value (CORBA::Any
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-// ==============================================================
 
 template<typename S,
          template <typename> class Insert_Policy>
@@ -96,7 +94,6 @@ TAO::Out_Fixed_Size_Argument_T<S,Insert_Policy>::interceptor_value (CORBA::Any *
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-// ============================================================
 
 template<typename S,
          template <typename> class Insert_Policy>

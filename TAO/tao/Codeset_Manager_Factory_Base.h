@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /*
  *  @file Codeset_Manager_Factory_Base.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Mahesh Vedantam <mahesh@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_CODESET_MANAGER_FACTORY_BASE_H
 #define TAO_CODESET_MANAGER_FACTORY_BASE_H

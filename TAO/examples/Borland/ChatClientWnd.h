@@ -1,7 +1,5 @@
-//---------------------------------------------------------------------------
 #ifndef ChatClientWndH
 #define ChatClientWndH
-//---------------------------------------------------------------------------
 #include "ReceiverImpl.h"
 #include "BroadcasterC.h"
 #include "ORBThread.h"
@@ -11,10 +9,8 @@
 #include <StdCtrls.hpp>
 #include <memory>
 
-//---------------------------------------------------------------------------
 // Message used to notify window of incoming data
 #define WM_MESSAGE_RECEIVED (WM_APP + 0x123)
-//---------------------------------------------------------------------------
 class TChatClientWindow : public TForm
 {
 __published:  // IDE-managed Components
@@ -69,8 +65,6 @@ protected: // Message handlers
   VCL_MESSAGE_HANDLER (WM_MESSAGE_RECEIVED, TMessage, WMMessageReceived)
   END_MESSAGE_MAP (TForm)
 };
-//---------------------------------------------------------------------------
 extern PACKAGE TChatClientWindow *ChatClientWindow;
-//---------------------------------------------------------------------------
 #endif
 

@@ -32,7 +32,6 @@
 
 //----[ macros ]-------------------------------------------------------
 
-//======================================================================
 /// SMI value structure conforming with the SMI RFC.
 ///
 /// SMI value portion of a VarBind.

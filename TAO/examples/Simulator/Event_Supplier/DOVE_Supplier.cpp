@@ -263,7 +263,6 @@ DOVE_Supplier::Internal_DOVE_Supplier::Internal_DOVE_Supplier (DOVE_Supplier *im
 {
 }
 
-// ----------------------------------------------------------------------------
 
 int
 DOVE_Supplier::get_Scheduler ()

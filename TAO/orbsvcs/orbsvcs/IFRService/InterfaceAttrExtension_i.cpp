@@ -9,7 +9,6 @@
 #include "ace/SString.h"
 #include <deque>
 
-// =====================================================================
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

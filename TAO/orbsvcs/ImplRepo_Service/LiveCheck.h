@@ -28,7 +28,6 @@ class LiveCheck;
 class LiveEntry;
 class PingReceiver;
 
-//---------------------------------------------------------------------------
 /*
  * @enum LiveStatus
  *
@@ -56,7 +55,6 @@ enum LiveStatus {
   LS_CANCELED
 };
 
-//---------------------------------------------------------------------------
 /*
  * @class LiveListener
  *
@@ -97,7 +95,6 @@ class Locator_Export LiveListener
 
 using LiveListener_ptr = TAO_Intrusive_Ref_Count_Handle<LiveListener>;
 
-//---------------------------------------------------------------------------
 /*
  * @class LiveEntry
  *
@@ -162,7 +159,6 @@ class Locator_Export LiveEntry
   static int reping_limit_;
 };
 
-//---------------------------------------------------------------------------
 /*
  * @class PingReceiver
  *
@@ -193,7 +189,6 @@ class Locator_Export PingReceiver :
   LiveEntry * entry_;
 };
 
-//---------------------------------------------------------------------------
 /*
  * @class LC_TimeoutGuard
  *
@@ -232,7 +227,6 @@ class Locator_Export LC_TimeoutGuard
   bool blocked_;
 };
 
-//---------------------------------------------------------------------------
 /*
  * @class LiveCheck
  *

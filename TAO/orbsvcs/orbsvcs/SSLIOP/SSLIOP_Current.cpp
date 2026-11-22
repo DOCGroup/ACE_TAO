@@ -133,7 +133,6 @@ TAO::SSLIOP::Current::_interface_repository_id () const
   return "IDL:TAO/SSLIOP/Current:1.0";
 }
 
-// ----------------------------------------------------------------
 
 TAO::SSLIOP::Current_ptr
 tao_TAO_SSLIOP_Current_duplicate (TAO::SSLIOP::Current_ptr p)

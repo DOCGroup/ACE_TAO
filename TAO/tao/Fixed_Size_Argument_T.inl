@@ -29,7 +29,6 @@ TAO::In_Fixed_Size_Clonable_Argument_T<S,Insert_Policy>::In_Fixed_Size_Clonable_
 {
 }
 
-// ==========================================================================
 
 template<typename S,
          template <typename> class Insert_Policy>
@@ -48,7 +47,6 @@ TAO::Inout_Fixed_Size_Argument_T<S,Insert_Policy>::arg ()
   return *this->x_;
 }
 
-// ==========================================================================
 
 template<typename S,
          template <typename> class Insert_Policy>
@@ -68,7 +66,6 @@ TAO::Out_Fixed_Size_Argument_T<S,Insert_Policy>::arg ()
   return this->x_;
 }
 
-// ==========================================================================
 
 template<typename S,
          template <typename> class Insert_Policy>

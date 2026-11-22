@@ -1,15 +1,12 @@
-//---------------------------------------------------------------------------
 #include "pch.h"
 #pragma hdrstop
 
 #include <memory>
 
 #include "ChatClientWnd.h"
-//---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 TChatClientWindow *ChatClientWindow;
-//---------------------------------------------------------------------------
 __fastcall TChatClientWindow::TChatClientWindow (TComponent* Owner)
    : TForm (Owner)
 {
@@ -68,14 +65,12 @@ __fastcall TChatClientWindow::TChatClientWindow (TComponent* Owner)
       throw;
     }
 }
-//---------------------------------------------------------------------------
 void __fastcall TChatClientWindow::ReadIOR (String filename)
 {
   std::unique_ptr<TStringList> ior = std::make_unique<TStringList> ();
   ior->LoadFromFile (filename);
   ior_ = ior->Text;
 }
-//---------------------------------------------------------------------------
 void __fastcall TChatClientWindow::WMMessageReceived (TMessage& Message)
 {
   std::unique_ptr<String> str (reinterpret_cast<String *> (Message.WParam));
@@ -86,7 +81,6 @@ void __fastcall TChatClientWindow::WMMessageReceived (TMessage& Message)
       }
   OutputMemo->Lines->Append (str->Trim ());
 }
-//---------------------------------------------------------------------------
 void __fastcall TChatClientWindow::FormClose (TObject *,
       TCloseAction&)
 {
@@ -101,7 +95,6 @@ void __fastcall TChatClientWindow::FormClose (TObject *,
       ShowMessage ("CORBA Exception in FormClose: " + String (e._rep_id ()));
     }
 }
-//---------------------------------------------------------------------------
 void __fastcall TChatClientWindow::InputMemoKeyPress (TObject *, char& Key)
 {
   if (Key == '\n' || Key == '\r')
@@ -121,4 +114,3 @@ void __fastcall TChatClientWindow::InputMemoKeyPress (TObject *, char& Key)
       InputMemo->Lines->Clear ();
     }
 }
-//---------------------------------------------------------------------------

@@ -25,9 +25,7 @@ struct TAO_DynAny_i : virtual TAO_DynCommon, virtual DynamicAny::DynAny {
 struct TAO_DynValueCommon_i : virtual TAO_DynAny_i, virtual DynamicAny::DynValueCommon {
     ~TAO_DynValueCommon_i() override { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("~TAO_DynValueCommon_i %@\n"), static_cast<void *> (this))); }
 };
-// ============================================================
 // CreateDynAnyUtils<T>
-// ============================================================
 template<typename DA_IMPL>
 struct CreateDynAnyUtils {
     static DA_IMPL* create(bool trigger, int depth = 0) {
@@ -45,9 +43,7 @@ struct CreateDynAnyUtils {
         return guard.release();
     }
 };
-// ============================================================
 // TAO_DynValue_i
-// ============================================================
 struct TAO_DynValue_i : virtual DynamicAny::DynValue, virtual TAO_DynValueCommon_i {
     TAO_DynValue_i() { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("TAO_DynValue_i ctor %@\n"), static_cast<void *> (this))); }
     ~TAO_DynValue_i() override { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("~TAO_DynValue_i dtor %@\n"), static_cast<void *> (this))); }

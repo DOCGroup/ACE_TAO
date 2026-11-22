@@ -16,7 +16,6 @@
 
 using namespace ACE_Utils;
 
-// ----------------------------------------------------
 
 bool
 sizeof_from_lt_sizeof_to ()
@@ -317,7 +316,6 @@ sizeof_from_gt_sizeof_to ()
   return success;
 }
 
-// ----------------------------------------------------
 
 /**
  * @struct Caller
@@ -347,7 +345,6 @@ struct Caller
   bool success;
 };
 
-// ----------------------------------------------------
 
 int
 run_main (int, ACE_TCHAR *[])

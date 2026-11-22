@@ -745,7 +745,6 @@ TAO::Storable_FlatFileStream::throw_on_write_error (Storable_State state)
     }
 }
 
-//------------------------------------------------
 
 TAO::Storable_FlatFileFactory::Storable_FlatFileFactory (std::string const &directory,
                                                         bool use_backup,

@@ -616,7 +616,6 @@ Locator_Repository::link_peers (Server_Info_Ptr base,
   return 0;
 }
 
-// -------------------------------------------------------------------------------------
 
 Activator_Info_Ptr
 Locator_Repository::get_activator (const ACE_CString& name)
@@ -702,7 +701,6 @@ Locator_Repository::registered () const
   return this->registered_;
 }
 
-//--------------------------------------------------------------------------
 
 No_Backing_Store::No_Backing_Store (const Options& opts,
                                     CORBA::ORB_ptr orb)

@@ -172,7 +172,6 @@ private:
   T *stack_;
 };
 
-//----------------------------------------
 
 /**
  * @class ACE_Fixed_Stack
@@ -302,7 +301,6 @@ private:
   T stack_[ACE_SIZE];
 };
 
-//----------------------------------------
 
 template<class T> class ACE_Ordered_MultiSet;
 template<class T> class ACE_Ordered_MultiSet_Iterator;

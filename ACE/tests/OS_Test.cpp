@@ -186,7 +186,6 @@ int
 string_emulation_test ()
 {
   {
-    // ========================================================================
     // Test memchr
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing memchr\n")));
 
@@ -198,7 +197,6 @@ string_emulation_test ()
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::memchr (memchr1, 'a', sizeof (memchr1)) != nullptr);
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::memchr (memchr1, '1', sizeof (memchr1)) == nullptr);
 
-    // ========================================================================
     // Test strchr
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strchr\n")));
 
@@ -208,7 +206,6 @@ string_emulation_test ()
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strchr (strchr1, 'h') == strchr1 + 7);
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strchr (strchr1, '1') == nullptr);
 
-    // ========================================================================
     // Test strrchr
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strrchr\n")));
 
@@ -218,7 +215,6 @@ string_emulation_test ()
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strrchr (strrchr1, 'h') == strrchr1 + 18);
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strrchr (strrchr1, '1') == nullptr);
 
-    // ========================================================================
     // Test strcspn
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strcspn\n")));
 
@@ -227,7 +223,6 @@ string_emulation_test ()
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strcspn (strcspn1, "d") == 3);
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strcspn (strcspn1, "abcdefghijk") == 0);
 
-    // ========================================================================
     // Test strcasecmp
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strcasecmp\n")));
 
@@ -243,7 +238,6 @@ string_emulation_test ()
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strcasecmp (strcasecmp1, strcasecmp4) == 0);
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strcasecmp (strcasecmp1, strcasecmp5) > 0);
 
-    // ========================================================================
     // Test strtok_r
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strtok_r\n")));
 
@@ -268,7 +262,6 @@ string_emulation_test ()
                                 "tokens") == 0);
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strtok_r (nullptr, " ", &strtok_r2) == nullptr);
 
-    // ========================================================================
     // Test itoa
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing itoa\n")));
 
@@ -305,7 +298,6 @@ string_emulation_test ()
 #if defined (ACE_HAS_WCHAR)
   {
     //FUZZ: disable check_for_lack_ACE_OS
-    // ========================================================================
     // Test itoa (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing itoa (wchar_t version)\n")));
     //FUZZ: enable check_for_lack_ACE_OS
@@ -322,7 +314,6 @@ string_emulation_test ()
                                 ACE_TEXT_WIDE ("2a")) == 0);
 
     //FUZZ: disable check_for_lack_ACE_OS
-    // ========================================================================
     // Test strcmp (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strcmp (wchar_t version)\n")));
     //FUZZ: enable check_for_lack_ACE_OS
@@ -340,7 +331,6 @@ string_emulation_test ()
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strcmp (strcmp1, strcmp5) > 0);
 
     //FUZZ: disable check_for_lack_ACE_OS
-    // ========================================================================
     // Test strcpy (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strcpy (wchar_t version)\n")));
     //FUZZ: enable check_for_lack_ACE_OS
@@ -354,7 +344,6 @@ string_emulation_test ()
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strcmp (strcpy2, strcpy1) == 0);
 
     //FUZZ: disable check_for_lack_ACE_OS
-    // ========================================================================
     // Test strcat (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strcat (wchar_t version)\n")));
     //FUZZ: enable check_for_lack_ACE_OS
@@ -369,7 +358,6 @@ string_emulation_test ()
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strcmp (strcat2, strcat1) == 0);
 
     //FUZZ: disable check_for_lack_ACE_OS
-    // ========================================================================
     // Test strncat (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strncat (wchar_t version)\n")));
     //FUZZ: enable check_for_lack_ACE_OS
@@ -384,7 +372,6 @@ string_emulation_test ()
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strcmp (strncat2, strncat1) == 0);
 
     //FUZZ: disable check_for_lack_ACE_OS
-    // ========================================================================
     // Test strspn (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strspn (wchar_t version)\n")));
     //FUZZ: enable check_for_lack_ACE_OS
@@ -397,7 +384,6 @@ string_emulation_test ()
                                 ACE_TEXT_WIDE ("mno")) == 0);
 
     //FUZZ: disable check_for_lack_ACE_OS
-    // ========================================================================
     // Test strchr (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strchr (wchar_t version)\n")));
     //FUZZ: enable check_for_lack_ACE_OS
@@ -411,7 +397,6 @@ string_emulation_test ()
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strchr (strchr1, ACE_TEXT_WIDE ('1')) == nullptr);
 
     //FUZZ: disable check_for_lack_ACE_OS
-    // ========================================================================
     // Test strstr (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strstr (wchar_t version)\n")));
     //FUZZ: enable check_for_lack_ACE_OS
@@ -427,7 +412,6 @@ string_emulation_test ()
                                 ACE_TEXT_WIDE ("mno")) == nullptr);
 
     //FUZZ: disable check_for_lack_ACE_OS
-    // ========================================================================
     // Test strlen (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strlen (wchar_t version)\n")));
     //FUZZ: enable check_for_lack_ACE_OS
@@ -439,7 +423,6 @@ string_emulation_test ()
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strlen (strlen2) == 5);
 
     //FUZZ: disable check_for_lack_ACE_OS
-    // ========================================================================
     // Test strpbrk (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strpbrk (wchar_t version)\n")));
     //FUZZ: enable check_for_lack_ACE_OS
@@ -452,7 +435,6 @@ string_emulation_test ()
                                         ACE_TEXT_WIDE ("mno")) == nullptr);
 
     //FUZZ: disable check_for_lack_ACE_OS
-    // ========================================================================
     // Test strrchr (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strrchr (wchar_t version)\n")));
     //FUZZ: enable check_for_lack_ACE_OS
@@ -467,7 +449,6 @@ string_emulation_test ()
                   == nullptr);
 
     //FUZZ: disable check_for_lack_ACE_OS
-    // ========================================================================
     // Test strcasecmp (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strcasecmp (wchar_t version)\n")));
     //FUZZ: enable check_for_lack_ACE_OS
@@ -485,7 +466,6 @@ string_emulation_test ()
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strcasecmp (strcasecmp1, strcasecmp5) > 0);
 
     //FUZZ: disable check_for_lack_ACE_OS
-    // ========================================================================
     // Test strncasecmp (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strncasecmp (wchar_t version)\n")));
     //FUZZ: enable check_for_lack_ACE_OS
@@ -508,7 +488,6 @@ string_emulation_test ()
       (ACE_OS::strncasecmp (strncasecmp1, strncasecmp5, 7) > 0);
 
     //FUZZ: disable check_for_lack_ACE_OS
-    // ========================================================================
     // Test strncmp (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strncmp (wchar_t version)\n")));
     //FUZZ: enable check_for_lack_ACE_OS
@@ -526,7 +505,6 @@ string_emulation_test ()
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strncmp (strncmp1, strncmp5, 7) > 0);
 
     //FUZZ: disable check_for_lack_ACE_OS
-    // ========================================================================
     // Test strncpy (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strncpy (wchar_t version)\n")));
     //FUZZ: enable check_for_lack_ACE_OS
@@ -546,7 +524,6 @@ string_emulation_test ()
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strcmp (strncpy2, strncpy1) == 0);
 
     //FUZZ: disable check_for_lack_ACE_OS
-    // ========================================================================
     // Test strtok (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strtok (wchar_t version)\n")));
 #  ifdef ACE_LACKS_WCSTOK

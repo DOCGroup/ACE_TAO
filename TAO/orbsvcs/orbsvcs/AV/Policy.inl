@@ -1,9 +1,7 @@
 // -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-//--------------------------------------------------
 // TAO_AV_Policy
-//--------------------------------------------------
 
 ACE_INLINE CORBA::ULong
 TAO_AV_Policy::type ()
@@ -11,9 +9,7 @@ TAO_AV_Policy::type ()
   return this->type_;
 }
 
-//--------------------------------------------------
 // TAO_AV_SSRC_Policy
-//--------------------------------------------------
 
 ACE_INLINE CORBA::ULong
 TAO_AV_SSRC_Policy::value ()
@@ -27,9 +23,7 @@ TAO_AV_SSRC_Policy::value (CORBA::ULong ssrc)
   this->ssrc_ = ssrc;
 }
 
-//--------------------------------------------------
 // TAO_AV_Payload_Type_Policy
-//--------------------------------------------------
 ACE_INLINE void
 TAO_AV_Payload_Type_Policy::value (int pt)
 {
@@ -55,9 +49,7 @@ TAO_AV_RTCP_Sdes_Policy::value (TAO_AV_RTCP_Sdes const &sdes_val)
   this->sdes_ = sdes_val;
 }
 
-//----------------------------------------------------------------------
 // TAO_AV_SFP_Credit_Policy
-//----------------------------------------------------------------------
 
 ACE_INLINE
 void

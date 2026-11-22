@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    TP_Reactor_Test.cpp
  *
@@ -40,7 +39,6 @@
  *  @author   Alexander Libman <alibman@ihug.com.au>
  *  @author <alexl@rumblgroup.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 

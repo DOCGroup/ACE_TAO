@@ -21,10 +21,8 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/Argv_Type_Converter.h"
 
-//============================================================================
 namespace
 {
-  //==========================================================================
   CORBA::Object_ptr
   set_rtt (CORBA::ORB_ptr orb,
            CORBA::Object_ptr obj,

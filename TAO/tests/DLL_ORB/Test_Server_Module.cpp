@@ -37,10 +37,8 @@ Test_Server_Module::~Test_Server_Module () = default;
 int
 Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
 {
-  // -----------------------------------------------------------------
   // Pre-ORB initialization steps necessary for proper DLL ORB
   // support.
-  // -----------------------------------------------------------------
   // Make sure TAO's singleton manager is initialized, and set to not
   // register itself with the ACE_Object_Manager since it is under the
   // control of the Service Configurator.  If we register with the
@@ -58,9 +56,7 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
                       -1);  // No CORBA exceptions available yet, so
                             // return an error status.
 
-  // -----------------------------------------------------------------
   // Boilerplate CORBA/TAO server-side ORB initialization code.
-  // -----------------------------------------------------------------
   try
     {
       // Add one to the new argc since "dummy" is being added to the
@@ -163,9 +159,7 @@ Test_Server_Module::fini ()
 {
   ACE_DEBUG ((LM_INFO, "Server is being finalized.\n"));
 
-  // ------------------------------------------------------------
   // Pre-Test_Server_Module termination steps.
-  // ------------------------------------------------------------
   // Explicitly clean up singletons created by TAO before
   // unloading this module.
   if (TAO_Singleton_Manager::instance ()->fini () == -1)

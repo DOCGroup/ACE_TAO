@@ -18,7 +18,6 @@
 #include <map>
 #include <string>
 
-//----------------------------------------------------------------
 
 enum class DeviceType { thermometer = 0, thermostat = 1 };
 
@@ -30,7 +29,6 @@ struct DeviceState {                // State for a device
 };
 using StateMap = std::map<unsigned long, DeviceState>;
 
-//----------------------------------------------------------------
 
 constexpr size_t MAXSTR {32};  // Max len of string including NUL
 
@@ -40,7 +38,6 @@ constexpr short DFLT_TEMP {68};     // 68 F == 20.00 C
 
 static StateMap dstate;         // Map of known devices
 
-//----------------------------------------------------------------
 
 // ICP_online() simulates adding a new device to the network by
 // adding it to the dstate map.
@@ -81,7 +78,6 @@ ICP_online (unsigned long id)
     return 0;
 }
 
-//----------------------------------------------------------------
 
 // ICP_offline() simulates removing a device from the network by
 // removing it from the dstate map. If the device isn't known, the
@@ -101,7 +97,6 @@ ICP_offline (unsigned long id)
     return 0;
 }
 
-//----------------------------------------------------------------
 
 // vary_temp() simulates the variation in actual temperature
 // around a thermostat.The function randomly varies the
@@ -144,7 +139,6 @@ vary_temp (long temp)
     return temp + delta;
 }
 
-//----------------------------------------------------------------
 
 // Function object. Locates a thermostat that is in the same room
 // as the device at position pos.
@@ -165,7 +159,6 @@ private:
     StateMap::const_iterator m_pos;
 };
 
-//----------------------------------------------------------------
 
 // actual_temp() is a helper function to determine the actual
 // temperature returned by a particular thermometer or thermostat.
@@ -196,7 +189,6 @@ actual_temp (StateMap::const_iterator pos)
     return vary_temp(count == 0 ? DFLT_TEMP : sum / count);
 }
 
-//---------------------------------------------------------------
 
 // ICP_get() returns an attribute value of the device with the
 // given id. The attribute is named by the attr parameter. The
@@ -258,7 +250,6 @@ ICP_get (
     return 0;                               // OK
 }
 
-//----------------------------------------------------------------
 
 // ICP_set() sets the the attributed specified by attr to the
 // value specified by value for the device with ID id. Attempts to
@@ -303,7 +294,6 @@ ICP_set (unsigned long id, char const *attr, void const *value)
     return 0;                               // OK
 }
 
-//----------------------------------------------------------------
 
 class ICP_Persist {
 public:

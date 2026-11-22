@@ -27,7 +27,6 @@ TAO::In_Var_Size_Clonable_Argument_T<S,Insert_Policy>::In_Var_Size_Clonable_Argu
   : In_Var_Size_Argument_T<S,Insert_Policy> (x)
 {}
 
-// ==========================================================================
 
 template<typename S,
          template <typename> class Insert_Policy>
@@ -46,7 +45,6 @@ TAO::Inout_Var_Size_Argument_T<S,Insert_Policy>::arg ()
   return *this->x_;
 }
 
-// ==========================================================================
 
 template<typename S,
          template <typename> class Insert_Policy>
@@ -66,7 +64,6 @@ TAO::Out_Var_Size_Argument_T<S,Insert_Policy>::arg ()
   return this->x_;
 }
 
-// ==========================================================================
 
 template<typename S,
          template <typename> class Insert_Policy>

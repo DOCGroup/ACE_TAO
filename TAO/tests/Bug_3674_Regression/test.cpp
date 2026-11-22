@@ -61,7 +61,6 @@ namespace
           }
     }
 
-  //------------------------------------------------------------------
   // Need either a Client OR Server OR BOTH Request Interceptors
   // registered for the use of PICurrent to make sense in the application.
   struct ClientRequestInterceptor
@@ -113,7 +112,6 @@ namespace
       }
   };
 
-  //------------------------------------------------------------------
   // This is our server side request interceptor.
   // Need either a Client OR Server OR BOTH Request Interceptors
   // registered for the use of PICurrent to make sense in the application.
@@ -177,7 +175,6 @@ namespace
       }
     };
 
-  //------------------------------------------------------------------
   // This is the test ORB initializer that registers the IORInterceptor
   // for this test.
   class MyORBInitializer :
@@ -249,7 +246,6 @@ namespace
       Test_State &state_;
     };
 
-  //------------------------------------------------------------------
   // This is the implimentation of our test server.
   class testInterface_i : public virtual POA_testInterface
     {
@@ -323,7 +319,6 @@ namespace
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-//------------------------------------------------------------------
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

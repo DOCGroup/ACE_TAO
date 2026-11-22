@@ -17,9 +17,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-//------------------------------------------------------------
 // TAO_AV_UDP_Flow_Handler
-//------------------------------------------------------------
 
 TAO_AV_UDP_Flow_Handler::TAO_AV_UDP_Flow_Handler ()
   : av_core_ {}
@@ -157,9 +155,7 @@ TAO_AV_UDP_Flow_Handler::change_qos(AVStreams::QoS qos)
       return ret;
 }
 
-//------------------------------------------------------------
 // TAO_AV_UDP_Transport
-//------------------------------------------------------------
 
 TAO_AV_UDP_Transport::TAO_AV_UDP_Transport ()
   : handler_ (nullptr)
@@ -326,9 +322,7 @@ TAO_AV_UDP_Transport::recv (iovec *iov,
   return handler_->get_socket ()->recv (iov,this->peer_addr_,0,timeout);
 }
 
-//------------------------------------------------------------
 // TAO_AV_UDP_Acceptor
-//------------------------------------------------------------
 
 TAO_AV_UDP_Acceptor::TAO_AV_UDP_Acceptor () = default;
 
@@ -589,9 +583,7 @@ TAO_AV_UDP_Acceptor::close ()
   return 0;
 }
 
-//------------------------------------------------------------
 // TAO_AV_UDP_Connector
-//------------------------------------------------------------
 TAO_AV_UDP_Connector::TAO_AV_UDP_Connector () = default;
 
 TAO_AV_UDP_Connector::~TAO_AV_UDP_Connector ()
@@ -820,9 +812,7 @@ TAO_AV_UDP_Connector::close ()
   return 0;
 }
 
-//------------------------------------------------------------
 // TAO_AV_UDP_Connection_Setup
-//------------------------------------------------------------
 
 int
 TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
@@ -982,9 +972,7 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
   return 1;
 }
 
-//------------------------------------------------------------
 // TAO_AV_UDP_Protocol_Factory
-//------------------------------------------------------------
 
 TAO_AV_UDP_Factory::TAO_AV_UDP_Factory () = default;
 
@@ -1039,9 +1027,7 @@ TAO_AV_UDP_Factory::init (int /* argc */,
   return 0;
 }
 
-//------------------------------------------------------------
 // TAO_AV_UDP_Object
-//------------------------------------------------------------
 
 int
 TAO_AV_UDP_Object::handle_input ()
@@ -1117,9 +1103,7 @@ TAO_AV_UDP_Object::destroy ()
   return 0;
 }
 
-//------------------------------------------------------------
 // TAO_AV_UDP_Flow_Factory
-//------------------------------------------------------------
 TAO_AV_UDP_Flow_Factory::TAO_AV_UDP_Flow_Factory () = default;
 
 TAO_AV_UDP_Flow_Factory::~TAO_AV_UDP_Flow_Factory () = default;

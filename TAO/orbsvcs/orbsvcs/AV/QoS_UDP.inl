@@ -3,9 +3,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-//----------------------------------------------------------------------
 // TAO_AV_UDP_Flow_Handler
-//----------------------------------------------------------------------
 
 ACE_INLINE
 ACE_SOCK_Dgram_Mcast_QoS *

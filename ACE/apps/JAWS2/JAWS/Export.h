@@ -1,7 +1,6 @@
 // -*- C++ -*-
 // Definition for Win32 Export directives.
 // This file is generated automatically by generate_export_file.pl -s JAWS
-// ------------------------------
 #ifndef JAWS_EXPORT_H
 #define JAWS_EXPORT_H
 

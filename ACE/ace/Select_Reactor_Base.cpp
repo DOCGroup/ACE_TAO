@@ -1034,7 +1034,6 @@ ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
   return number_dispatched;
 }
 
-// -------------------------------------------
 
 int
 ACE_Select_Reactor_Impl::purge_pending_notifications (ACE_Event_Handler *eh,

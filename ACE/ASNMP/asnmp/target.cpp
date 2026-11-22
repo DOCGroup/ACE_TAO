@@ -27,9 +27,7 @@
 #include <cstdio>
 #include <memory>
 
-//----------------------------------------------------------------------
 //--------[ Class default values ]----------------------
-//----------------------------------------------------------------------
 u_long SnmpTarget::default_timeout_ = DEF_TIMEOUT;
 int SnmpTarget::default_retries_ = DEF_RETRIES;
 u_long SnmpTarget::default_max_pdu_size_ = DEF_MAX_SNMP_PACKET;
@@ -38,9 +36,7 @@ snmp_version SnmpTarget::default_version_ = version1;
 OctetStr UdpTarget::default_rd_community_(READ_COMM_STR);
 OctetStr UdpTarget::default_wr_community_(WRITE_COMM_STR);
 
-//----------------------------------------------------------------------
 //--------[ Abstract SnmpTarget Member Functions ]----------------------
-//----------------------------------------------------------------------
 SnmpTarget::SnmpTarget ()
   : timeout_ (default_timeout_), retries_ (default_retries_),
     max_pdu_size_ (default_max_pdu_size_), version_ (default_version_)
@@ -173,9 +169,7 @@ bool operator== (SnmpTarget const &lhs, SnmpTarget const &rhs)
   return true;
 }
 
-//----------------------------------------------------------------------
 //--------[ IpTarget Member Functions ]----------------------------------
-//----------------------------------------------------------------------
 //---------[ UdpTarget::UdpTarget() ]----------------------------------
 
 UdpTarget::UdpTarget ()

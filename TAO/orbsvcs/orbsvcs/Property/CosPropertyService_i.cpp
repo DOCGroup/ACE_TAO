@@ -44,7 +44,6 @@ CosProperty_Hash_Key::hash () const
   return ret;
 }
 
-//======================================================================
 
 CosProperty_Hash_Value::CosProperty_Hash_Value (CORBA::Any const & any,
                                                 CosPropertyService::PropertyModeType mode)
@@ -61,7 +60,6 @@ CosProperty_Hash_Value::CosProperty_Hash_Value (CosProperty_Hash_Value const & s
 
 CosProperty_Hash_Value::~CosProperty_Hash_Value () = default;
 
-//======================================================================
 
 // Returns a new TAO_PropertySet object. "The property set returned
 // will *not* have any initial properties."  Keep sequence of things
@@ -165,7 +163,6 @@ TAO_PropertySetDefFactory::~TAO_PropertySetDefFactory ()
     delete this->propertysetdef_products_[pi];
 }
 
-//======================================================================
 
 // Returns a  new TAO_PropertySetDef object. "The property setdef
 // returned  will *not* have any initial properties."
@@ -253,7 +250,6 @@ TAO_PropertySetDefFactory::create_initial_propertysetdef (
   return propsetdef_ptr;
 }
 
-//======================================================================
 
 // Init values that the PropertySetFactory will want to specify. Write
 // the allowed properties in the Hash Table with *fixed-normal* mode.
@@ -1502,7 +1498,6 @@ TAO_PropertySetDef::set_property_modes (CosPropertyService::PropertyModes const 
   }
 }
 
-//======================================================================
 
 // Construct the iterator from the PropertySet object.
 
@@ -1591,7 +1586,6 @@ TAO_PropertyNamesIterator::destroy ()
   poa->deactivate_object (id.in ());
 }
 
-//======================================================================
 
 TAO_PropertiesIterator::TAO_PropertiesIterator (TAO_PropertySet &property_set)
   : iterator_ (property_set.hash_table_)

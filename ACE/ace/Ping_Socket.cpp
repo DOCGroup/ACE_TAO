@@ -23,10 +23,8 @@ ACE_ALLOC_HOOK_DEFINE (ACE_Ping_Socket)
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-//---------------------------------------------------------------------------
 // Better to arrange some os_include/netinet/ip.h and
 // os_include/netinet/icmp.h files ?
-//---------------------------------------------------------------------------
 
 #if !defined (ACE_WIN32)
 

@@ -1,9 +1,7 @@
 // -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-//------------------------------------------------------------
 // TAO_AV_Transport_Item
-//------------------------------------------------------------
 ACE_INLINE
 ACE_CString const &
 TAO_AV_Transport_Item::name ()
@@ -25,9 +23,7 @@ TAO_AV_Transport_Item::factory (TAO_AV_Transport_Factory *factory)
   this->factory_ = factory;
 }
 
-//------------------------------------------------------------
 // TAO_AV_Flow_Protocol_Item
-//------------------------------------------------------------
 ACE_INLINE
 ACE_CString const &
 TAO_AV_Flow_Protocol_Item::name ()
@@ -49,9 +45,7 @@ TAO_AV_Flow_Protocol_Item::factory (TAO_AV_Flow_Protocol_Factory *factory)
   this->factory_ = factory;
 }
 
-//------------------------------------------------------------
 // TAO_AV_Connector_Registry
-//------------------------------------------------------------
 
 ACE_INLINE
 TAO_AV_ConnectorSetItor
@@ -67,9 +61,7 @@ TAO_AV_Connector_Registry::end ()
   return this->connectors_.end ();
 }
 
-//------------------------------------------------------------
 // TAO_AV_Acceptor_Registry
-//------------------------------------------------------------
 ACE_INLINE
 TAO_AV_AcceptorSetItor
 TAO_AV_Acceptor_Registry::begin ()
@@ -84,9 +76,7 @@ TAO_AV_Acceptor_Registry::end ()
   return this->acceptors_.end ();
 }
 
-//------------------------------------------------------------
 // TAO_AV_Acceptor
-//------------------------------------------------------------
 ACE_INLINE
 char const *
 TAO_AV_Acceptor::flowname ()
@@ -94,9 +84,7 @@ TAO_AV_Acceptor::flowname ()
   return this->flowname_.c_str ();
 }
 
-//------------------------------------------------------------
 // TAO_AV_Connector
-//------------------------------------------------------------
 ACE_INLINE
 char const *
 TAO_AV_Connector::flowname ()

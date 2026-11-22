@@ -72,11 +72,7 @@ private:
                          ACE_TCHAR const *ior_file);
 };
 
-// ------------------------------------------------------------------------
-// ------------------------------------------------------------------------
-// ------------------------------------------------------------------------
 
-// ------------------------------------------------------------------------
 //
 int parse_args (int argc,
                 ACE_TCHAR *argv[],
@@ -109,7 +105,6 @@ int parse_args (int argc,
 /*** Servant Definition ***/
 /***************************/
 
-// ------------------------------------------------------------------------
 //
 void
 ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr,
@@ -131,7 +126,6 @@ ST_AMH_Servant::calls_received () const
 
 /*** Server Declaration ***/
 
-// ------------------------------------------------------------------------
 //
 ST_AMH_Server::ST_AMH_Server (int num_calls, ACE_TCHAR const *ior_file)
   : num_calls_ (num_calls)
@@ -154,7 +148,6 @@ ST_AMH_Server::~ST_AMH_Server ()
     }
 }
 
-// ------------------------------------------------------------------------
 //
 int ST_AMH_Server::start_orb_and_poa (CORBA::ORB_ptr orb)
 {
@@ -188,7 +181,6 @@ int ST_AMH_Server::start_orb_and_poa (CORBA::ORB_ptr orb)
   return 0;
 }
 
-// ------------------------------------------------------------------------
 //
 void ST_AMH_Server::register_servant (ST_AMH_Servant *servant)
 {
@@ -213,7 +205,6 @@ void ST_AMH_Server::register_servant (ST_AMH_Servant *servant)
     }
 }
 
-// ------------------------------------------------------------------------
 //
 void ST_AMH_Server::run_event_loop ()
 {
@@ -236,7 +227,6 @@ void ST_AMH_Server::run_event_loop ()
     }
 }
 
-// ------------------------------------------------------------------------
 //
 int
 ST_AMH_Server::write_ior_to_file (CORBA::String_var const &ior,
@@ -257,7 +247,6 @@ ST_AMH_Server::write_ior_to_file (CORBA::String_var const &ior,
   return 0;
 }
 
-// ------------------------------------------------------------------------
 //
 static ACE_THR_FUNC_RETURN
 start_server (void *arg)
@@ -294,7 +283,6 @@ start_client (void *arg)
   return ACE_THR_FUNC_RETURN_NULL;
 }
 
-// ------------------------------------------------------------------------
 //
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

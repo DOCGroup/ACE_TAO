@@ -221,7 +221,6 @@ Thermometer_impl::location (char const *loc)
   set_loc (loc);
 }
 
-//----------------------------------------------------------------
 
 // Helper function to get a thermostat's nominal temperature.
 

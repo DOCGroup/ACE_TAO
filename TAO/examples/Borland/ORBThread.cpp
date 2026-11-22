@@ -1,4 +1,3 @@
-//---------------------------------------------------------------------------
 // To be able to handle CORBA requests an application usually calls orb->run().
 // To integrate this into VCL applications we will run the orb in a separate
 // thread. The ability to run the orb in a thread other than the main thread is
@@ -12,18 +11,15 @@
 //
 // Note that a "pure" client application (one that does not handle requests
 // from any other application) need not do either of these things.
-//---------------------------------------------------------------------------
 #include "pch.h"
 #pragma hdrstop
 #include "ORBThread.h"
-//---------------------------------------------------------------------------
 __fastcall TORBThread::TORBThread (CORBA::ORB_ptr orb)
    : TThread (true),
      orb_ (CORBA::ORB::_duplicate (orb))
 {
   Resume ();
 }
-//---------------------------------------------------------------------------
 __fastcall TORBThread::~TORBThread ()
 {
   try
@@ -36,7 +32,6 @@ __fastcall TORBThread::~TORBThread ()
 
   WaitFor ();
 }
-//---------------------------------------------------------------------------
 void __fastcall TORBThread::Execute ()
 {
   try
@@ -49,4 +44,3 @@ void __fastcall TORBThread::Execute ()
       Application->Terminate ();
     }
 }
-//---------------------------------------------------------------------------

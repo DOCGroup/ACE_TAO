@@ -468,7 +468,6 @@ run_main (int, ACE_TCHAR *[])
 
   int test_errors = 0;
 
-  // =========================================================================
   // The following test uses the ACE_Refcounted_Auto_Ptr in a single
   // thread of control, hence we use the ACE_Null_Mutex
 
@@ -505,7 +504,6 @@ run_main (int, ACE_TCHAR *[])
 
 #if defined (ACE_HAS_THREADS)
 
-  // =========================================================================
   // The following test uses the ACE_Refcounted_Auto_Ptr in multiple
   // threads of control.
 

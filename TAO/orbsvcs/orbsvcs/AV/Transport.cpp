@@ -25,25 +25,19 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-//------------------------------------------------------------
 // TAO_AV_Transport_Item
-//------------------------------------------------------------
 TAO_AV_Transport_Item::TAO_AV_Transport_Item (ACE_CString const &name)
   : name_ (name)
 {
 }
 
-//------------------------------------------------------------
 // TAO_AV_Transport_Item
-//------------------------------------------------------------
 TAO_AV_Flow_Protocol_Item::TAO_AV_Flow_Protocol_Item (ACE_CString const &name)
   : name_ (name)
 {
 }
 
-//------------------------------------------------------------
 // TAO_AV_Connector_Registry
-//------------------------------------------------------------
 
 TAO_AV_Connector_Registry::TAO_AV_Connector_Registry () = default;
 
@@ -218,9 +212,7 @@ TAO_AV_Connector_Registry::~TAO_AV_Connector_Registry ()
   this->close_all ();
 }
 
-//------------------------------------------------------------
 // TAO_AV_Acceptor_Registry
-//------------------------------------------------------------
 
 TAO_AV_Acceptor_Registry::TAO_AV_Acceptor_Registry () = default;
 
@@ -531,9 +523,7 @@ TAO_AV_Acceptor_Registry::close_all ()
   return 0;
 }
 
-//----------------------------------------------------------------------
 // TAO_AV_Transport
-//----------------------------------------------------------------------
 
 TAO_AV_Transport::TAO_AV_Transport () = default;
 
@@ -545,9 +535,7 @@ TAO_AV_Transport::get_local_addr ()
   return 0;
 }
 
-//----------------------------------------------------------------------
 // TAO_AV_Flow_Handler
-//----------------------------------------------------------------------
 
 //TAO_AV_Flow_Handler::TAO_AV_Flow_Handler (TAO_AV_Callback *callback)
 TAO_AV_Flow_Handler::TAO_AV_Flow_Handler () = default;

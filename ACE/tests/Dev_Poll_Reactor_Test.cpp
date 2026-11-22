@@ -37,7 +37,6 @@
 
 using SVC_HANDLER = ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH>;
 
-// ----------------------------------------------------
 
 class Client : public SVC_HANDLER
 {
@@ -77,7 +76,6 @@ private:
   unsigned int call_count_;
 };
 
-// ----------------------------------------------------
 
 Client::Client ()
   : call_count_ (0)
@@ -206,7 +204,6 @@ Client::handle_close (ACE_HANDLE handle,
   return SVC_HANDLER::handle_close (handle, mask);
 }
 
-// ----------------------------------------------------
 
 Server::Server ()
   : call_count_ (0)
@@ -328,12 +325,10 @@ Server::handle_close (ACE_HANDLE handle,
   return SVC_HANDLER::handle_close (handle, mask);
 }
 
-// ----------------------------------------------------
 
 using ACCEPTOR = ACE_Acceptor<Server, ACE_SOCK_Acceptor>;
 using CONNECTOR = ACE_Connector<Client, ACE_SOCK_Connector>;
 
-// ----------------------------------------------------
 
 class TestAcceptor : public ACCEPTOR
 {
@@ -383,7 +378,6 @@ public:
   }
 };
 
-// ----------------------------------------------------
 
 class TestConnector : public CONNECTOR
 {
@@ -460,7 +454,6 @@ public:
   }
 };
 
-// ----------------------------------------------------
 
 static int
 disable_signal (int sigmin, int sigmax)
@@ -501,7 +494,6 @@ disable_signal (int sigmin, int sigmax)
   return 0;
 }
 
-// ----------------------------------------------------
 
 ACE_THR_FUNC_RETURN
 server_worker (void *p)
@@ -557,7 +549,6 @@ server_worker (void *p)
   return ACE_THR_FUNC_RETURN_NULL;
 }
 
-// ----------------------------------------------------
 
 // struct server_arg
 // {
@@ -566,7 +557,6 @@ server_worker (void *p)
 //   ACE_Condition<ACE_SYNCH_MUTEX> * cv;
 // };
 
-// ----------------------------------------------------
 
 int
 run_main (int, ACE_TCHAR *[])

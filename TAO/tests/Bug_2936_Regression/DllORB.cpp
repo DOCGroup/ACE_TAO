@@ -43,10 +43,8 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_INFO,
                       ACE_TEXT ("Pre-ORB initialization ...\n")));
-          // -----------------------------------------------------------------
           // Pre-ORB initialization steps necessary for proper DLL ORB
           // support.
-          // -----------------------------------------------------------------
           // Make sure TAO's singleton manager is initialized, and set to not
           // register itself with the ACE_Object_Manager since it is under the
           // control of the Service Configurator.  If we register with the
@@ -162,10 +160,8 @@ DllORB::fini ()
 
   if (failPrePostInit_ < 3)
     {
-      // -----------------------------------------------------------------
       // Post-ORB finalization steps necessary for proper DLL ORB
       // support.
-      // -----------------------------------------------------------------
       // Explicitly clean up singletons created by TAO before
       // unloading this module.
       TAO_Singleton_Manager * const p_tsm = TAO_Singleton_Manager::instance ();

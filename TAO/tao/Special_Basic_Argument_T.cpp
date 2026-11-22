@@ -52,7 +52,6 @@ TAO::In_Special_Basic_Clonable_Argument_T<S,to_S,from_S,Insert_Policy>::clone ()
   return clone_arg.release ();
 }
 
-// ===========================================================
 
 template<typename S,
          typename to_S,
@@ -91,7 +90,6 @@ TAO::Inout_Special_Basic_Argument_T<S,to_S,from_S,Insert_Policy>::interceptor_va
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-// ==============================================================
 
 template<typename S,
          typename to_S,
@@ -119,7 +117,6 @@ TAO::Out_Special_Basic_Argument_T<S,to_S,from_S,Insert_Policy>::interceptor_valu
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-// ============================================================
 
 template<typename S,
          typename to_S,

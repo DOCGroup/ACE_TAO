@@ -127,7 +127,6 @@ ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard ()
     }
 }
 
-// ----------------------------------------
 
 ACE_Service_Gestalt::Processed_Static_Svc::
 Processed_Static_Svc (const ACE_Static_Svc_Descriptor *assd)

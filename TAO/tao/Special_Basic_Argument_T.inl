@@ -34,7 +34,6 @@ TAO::In_Special_Basic_Clonable_Argument_T<S,to_S,from_S,Insert_Policy>::In_Speci
   : In_Special_Basic_Argument_T<S,to_S,from_S,Insert_Policy> (x)
 {}
 
-// ===========================================================================
 
 template<typename S,
          typename to_S,
@@ -57,7 +56,6 @@ TAO::Inout_Special_Basic_Argument_T<S,to_S,from_S,Insert_Policy>::arg ()
   return this->x_;
 }
 
-// ===========================================================================
 
 template<typename S,
          typename to_S,
@@ -80,7 +78,6 @@ TAO::Out_Special_Basic_Argument_T<S,to_S,from_S,Insert_Policy>::arg ()
   return this->x_;
 }
 
-// ===========================================================================
 
 template<typename S,
          typename to_S,

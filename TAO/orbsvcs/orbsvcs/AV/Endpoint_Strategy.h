@@ -62,7 +62,6 @@ protected:
   AVStreams::VDev_var vdev_;
 };
 
-// ----------------------------------------------------------------------
 /**
  * @class TAO_AV_Endpoint_Process_Strategy
  * @brief Process-based strategy for creating endpoints.
@@ -115,7 +114,6 @@ protected:
   pid_t pid_ {-1};
 };
 
-// ----------------------------------------------------------------------
 
 /**
  * @class TAO_AV_Endpoint_Process_Strategy_A
@@ -142,7 +140,6 @@ protected:
   int get_stream_endpoint () override;
 };
 
-// ----------------------------------------------------------------------
 
 /**
  * @class TAO_AV_Endpoint_Process_Strategy_B

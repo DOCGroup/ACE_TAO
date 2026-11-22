@@ -138,7 +138,6 @@ namespace TAO
     ::TAO_ORB_Core * first_orb_ {};
   };
 
-  // -----------------------------------------------
 
   /**
    * @class ORB_Table_Ref_Counter

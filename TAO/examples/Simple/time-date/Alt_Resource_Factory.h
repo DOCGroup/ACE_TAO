@@ -1,7 +1,6 @@
 // Definition for Win32 Export directives.
 // This file is generated automatically by
 // ${ACE_ROOT}/GenExportH.BAT
-// ------------------------------
 #ifndef Alt_Resource_Factory_EXPORT_H
 #define Alt_Resource_Factory_EXPORT_H
 

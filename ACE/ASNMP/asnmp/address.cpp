@@ -42,15 +42,12 @@
 #include <memory>
 #include <new>
 
-//=================================================================
 //======== Abstract Address Class Implementation ==================
-//=================================================================
 
 // allow destruction of derived classes
 Address::~Address()
 = default;
 
-//-----------------------------------------------------------------
 // is the address object valid?
 int Address::valid() const
 {
@@ -89,7 +86,6 @@ unsigned char& Address::operator[]( const int position)
     }
 }
 
-//-----------------------------------------------------------------------
 // overloaded equivlence operator, are two addresses equal?
 bool operator==( const Address &lhs, const Address &rhs)
 {
@@ -97,14 +93,12 @@ bool operator==( const Address &lhs, const Address &rhs)
                       static_cast<char const *> (rhs)) == 0;
 }
 
-//-----------------------------------------------------------------------
 // overloaded equivlence operator, are two addresses equal?
 bool operator!=( const Address &lhs, const Address &rhs)
 {
   return (!( lhs == rhs));
 }
 
-//------------------------------------------------------------------
 // overloaded > operator, is a1 > a2
 bool operator>( const Address &lhs, const Address &rhs)
 {
@@ -138,7 +132,6 @@ bool operator<=( const Address &lhs,const Address &rhs)
     }
 }
 
-//-----------------------------------------------------------------
 // overloaded < operator, is a1 < a2
 bool operator<( const Address &lhs, const Address &rhs)
 {
@@ -146,7 +139,6 @@ bool operator<( const Address &lhs, const Address &rhs)
                       static_cast<char const *> (rhs)) < 0;
 }
 
-//------------------------------------------------------------------
 // equivlence operator overloaded, are an address and a string equal?
 bool operator==( const Address &lhs,const char *rhs)
 {
@@ -157,14 +149,12 @@ bool operator==( const Address &lhs,const char *rhs)
   return std::strcmp (static_cast<char const *> (lhs), rhs) == 0;
 }
 
-//------------------------------------------------------------------
 // not equal operator overloaded, are an address and a string not equal?
 bool operator!=( const Address &lhs,const char *rhs)
 {
   return (!( lhs == rhs));
 }
 
-//------------------------------------------------------------------
 // overloaded > , is a > inaddr
 bool operator>( const Address &lhs,const char *rhs)
 {
@@ -175,7 +165,6 @@ bool operator>( const Address &lhs,const char *rhs)
   return std::strcmp (static_cast<char const *> (lhs), rhs) > 0;
 }
 
-//------------------------------------------------------------------
 // overloaded >= , is a >= inaddr
 bool operator>=( const Address &lhs,const char *rhs)
 {
@@ -186,7 +175,6 @@ bool operator>=( const Address &lhs,const char *rhs)
   return std::strcmp (static_cast<char const *> (lhs), rhs) >= 0;
 }
 
-//-----------------------------------------------------------------
 // overloaded < , are an address and a string equal?
 bool operator<( const Address &lhs,const char *rhs)
 {
@@ -197,7 +185,6 @@ bool operator<( const Address &lhs,const char *rhs)
   return std::strcmp (static_cast<char const *> (lhs), rhs) < 0;
 }
 
-//-----------------------------------------------------------------
 // overloaded <= , is a <= inaddr
 bool operator<=( const Address &lhs,const char *rhs)
 {
@@ -208,9 +195,7 @@ bool operator<=( const Address &lhs,const char *rhs)
   return std::strcmp (static_cast<char const *> (lhs), rhs) <= 0;
 }
 
-//=====================================================================
 //============ IPAddress Implementation ===============================
-//=====================================================================
 
 //-----------[ syntax type ]----------------------------------------------
 SmiUINT32 IpAddress::get_syntax()
@@ -642,7 +627,6 @@ addr_type IpAddress::get_type() const
   return type_ip;
 }
 
-//-----------------------------------------------------------------
 // logically and two IPaddresses and
 // return the new one
 void IpAddress::mask( const IpAddress& ipaddr)
@@ -657,9 +641,7 @@ void IpAddress::mask( const IpAddress& ipaddr)
 
 }
 
-//=======================================================================
 //========== DNS Iterator Implementation ================================
-//=======================================================================
 
 Address_Iter::Address_Iter (char const *hostname)
 {
@@ -743,9 +725,7 @@ int Address_Iter::query_dns (char const *hostname)
   return loc_errno;
 }
 
-//=======================================================================
 //========== Udp Address Implementation =================================
-//=======================================================================
 
 //-----------[ syntax type ]----------------------------------------------
 SmiUINT32 UdpAddress::get_syntax()
@@ -994,9 +974,7 @@ void UdpAddress::format_output()
   }
 }
 
-//=======================================================================
 //=========== Netbios Address Implementation ============================
-//=======================================================================
 
 void NetbiosAddress::format_output()
 {
@@ -1195,9 +1173,7 @@ addr_type NetbiosAddress::get_type() const
   return type_nb;
 }
 
-//=======================================================================
 //=========== IPX Address Implementation ================================
-//=======================================================================
 
 //-----------[ syntax type ]----------------------------------------------
 SmiUINT32 IpxAddress::get_syntax()
@@ -1584,9 +1560,7 @@ void IpxAddress::to_octet(OctetStr& octet) const
    octet.set_data( smival.value.string.ptr, smival.value.string.len);
 }
 
-//========================================================================
 //======== IpxSockAddress Implementation =================================
-//========================================================================
 
 //-----------[ syntax type ]----------------------------------------------
 SmiUINT32 IpxSockAddress::get_syntax()
@@ -1827,9 +1801,7 @@ addr_type IpxSockAddress::get_type() const
   return type_ipxsock;
 }
 
-//========================================================================
 //======== MACAddress Implementation =====================================
-//========================================================================
 
 //-----------[ syntax type ]----------------------------------------------
 SmiUINT32 MacAddress::get_syntax()
@@ -2099,9 +2071,7 @@ void MacAddress::to_octet(OctetStr& octet) const
    octet.set_data( smival.value.string.ptr, smival.value.string.len);
 }
 
-//========================================================================
 //========== Generic Address Implementation ==============================
-//========================================================================
 
 //-----------[ get the syntax]----------------------------------------------
 SmiUINT32 GenAddress::get_syntax()
@@ -2577,9 +2547,7 @@ void GenAddress::to_octet(OctetStr& octet) const
   address->to_octet(octet);
 }
 
-//------------------------------------------------------------------------
 //---------[ DecNet Address Class ]---------------------------------------
-//------------------------------------------------------------------------
 
 DecNetAddress::DecNetAddress( const char *inaddr): Address()
 {
@@ -2724,9 +2692,7 @@ int DecNetAddress::parse_address( const char *address)
   return 1; // valid
 }
 
-//------------------------------------------------------------------------
 //---------[ AppleTalk Address Class ]------------------------------------
-//------------------------------------------------------------------------
 
 AppleTalkAddress::AppleTalkAddress( const char *inaddr): Address()
 {

@@ -53,7 +53,6 @@ operator+ (const ACE_NS_WString &s, const ACE_NS_WString &t)
   return temp;
 }
 
-// -------------------------------------------------------
 
 ACE_INLINE ACE_SString
 ACE_SString::substr (size_type offset,

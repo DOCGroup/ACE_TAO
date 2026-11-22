@@ -292,7 +292,6 @@ ACE_Sig_Handler::dispatch (int signum, siginfo_t *siginfo, ucontext_t *ucontext)
     }
 }
 
-// ----------------------------------------
 // The following classes are local to this file.
 
 // There are bugs with HP/UX's C++ compiler that prevents this stuff

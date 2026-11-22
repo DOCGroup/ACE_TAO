@@ -58,7 +58,6 @@ ACE_TMAIN (
     Test::Foo_var
        foo= Test::Foo::_narrow( object.in());
 
-    //-----------------------------------------------------------------------
     CORBA::Long
        aL= 1,
        bL {},
@@ -80,7 +79,6 @@ ACE_TMAIN (
       ACE_DEBUG( (LM_INFO, "OK\n"));
     }
 
-    //-----------------------------------------------------------------------
     CORBA::String_var
        aS= CORBA::string_dup("1"),
        bS,
@@ -102,7 +100,6 @@ ACE_TMAIN (
       ACE_DEBUG( (LM_INFO, "OK\n"));
     }
 
-    //-----------------------------------------------------------------------
     Test::MyNonVarStruct_var
        aFS= new Test::MyNonVarStruct(),
        bFS= new Test::MyNonVarStruct(),
@@ -127,7 +124,6 @@ ACE_TMAIN (
       ACE_DEBUG( (LM_INFO, "OK\n"));
     }
 
-    //-----------------------------------------------------------------------
     Test::MyVarStruct_var
        aVS= new Test::MyVarStruct(),
        bVS,
@@ -152,7 +148,6 @@ ACE_TMAIN (
       ACE_DEBUG( (LM_INFO, "OK\n"));
     }
 
-    //-----------------------------------------------------------------------
     Test::MyNonVarUnion_var
        aFU= new Test::MyNonVarUnion(),
        bFU= new Test::MyNonVarUnion(),
@@ -212,7 +207,6 @@ ACE_TMAIN (
       ACE_DEBUG( (LM_INFO, "OK\n"));
     }
 
-    //-----------------------------------------------------------------------
     Test::MyVarUnion_var
        aVU= new Test::MyVarUnion(),
        bVU,
@@ -272,7 +266,6 @@ ACE_TMAIN (
       ACE_DEBUG( (LM_INFO, "OK\n"));
     }
 
-    //-----------------------------------------------------------------------
     Test::MySeqOfLong_var
        aSL= new Test::MySeqOfLong(1),
        bSL,
@@ -334,7 +327,6 @@ ACE_TMAIN (
       ACE_DEBUG( (LM_INFO, "OK\n"));
     }
 
-    //-----------------------------------------------------------------------
     CORBA::Any_var
        aA= new CORBA::Any(),
        bA,
@@ -399,7 +391,6 @@ ACE_TMAIN (
       ACE_DEBUG( (LM_INFO, "OK\n"));
     }
 
-    //-----------------------------------------------------------------------
     {
       Test::MyArray arr_a {};
       arr_a[0].length (1);
@@ -448,7 +439,6 @@ ACE_TMAIN (
       }
     }
 
-    //-----------------------------------------------------------------------
     {
       CORBA::Object_var a = CORBA::Object::_duplicate (foo.in ());
       CORBA::Object_var b;
@@ -456,10 +446,8 @@ ACE_TMAIN (
       CORBA::Object_var ret = foo->TestObject (a.in (), b.out (), c.inout ());
     }
 
-    //-----------------------------------------------------------------------
     foo->ShutdownServer();
 
-    //-----------------------------------------------------------------------
     orb->shutdown(true);
     orb->destroy();
   }

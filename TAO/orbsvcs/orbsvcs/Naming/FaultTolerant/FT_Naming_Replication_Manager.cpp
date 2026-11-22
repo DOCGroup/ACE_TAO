@@ -67,7 +67,6 @@ FT_Update_Replicant_i::register_peer (FT_Naming::UpdatePushNotifier_ptr peer,
   this->owner_.server_.update_iors (iors);
 }
 
-//---------------------------------------------------------------------------
 
 TAO_FT_Naming_Replication_Manager::TAO_FT_Naming_Replication_Manager (TAO_FT_Naming_Server &owner)
   : me_ (),

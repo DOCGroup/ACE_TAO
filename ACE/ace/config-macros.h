@@ -645,14 +645,12 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy () \
 #  define ACE_OS_TLI ACE_OS
 #endif /* ACE_OS_TLI */
 
-// -------------------------------------------------------------------
 // Preprocessor symbols will not be expanded if they are
 // concatenated.  Force the preprocessor to expand them during the
 // argument prescan by calling a macro that itself calls another that
 // performs the actual concatenation.
 #define ACE_PREPROC_CONCATENATE_IMPL(A,B) A ## B
 #define ACE_PREPROC_CONCATENATE(A,B) ACE_PREPROC_CONCATENATE_IMPL(A,B)
-// -------------------------------------------------------------------
 
 /// If MPC is using a lib modifier this define will be set and this then
 /// is used by the service configurator framework

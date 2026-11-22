@@ -1,6 +1,4 @@
-//------------------------------------------------------------
 // TAO_FlowSpec_Entry
-//------------------------------------------------------------
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/FlowSpec_Entry.h"
@@ -434,9 +432,7 @@ TAO_FlowSpec_Entry::get_local_addr_str ()
     }
 }
 
-//------------------------------------------------------------
 // TAO_Forward_FlowSpec_Entry
-//------------------------------------------------------------
 
 TAO_Forward_FlowSpec_Entry::TAO_Forward_FlowSpec_Entry () = default;
 
@@ -771,9 +767,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
   return this->entry_.c_str();
 }
 
-//------------------------------------------------------------
 // TAO_Reverse_FlowSpec_Entry
-//------------------------------------------------------------
 
 TAO_Reverse_FlowSpec_Entry::TAO_Reverse_FlowSpec_Entry () = default;
 

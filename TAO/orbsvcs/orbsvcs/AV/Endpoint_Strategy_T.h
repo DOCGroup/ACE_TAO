@@ -73,7 +73,6 @@ protected:
 
   T_MediaCtrl *media_ctrl_servant_ {};
 };
-// ----------------------------------------------------------------------
 
 /**
  * @class TAO_AV_Endpoint_Reactive_Strategy_A
@@ -103,7 +102,6 @@ public:
                 AVStreams::VDev_ptr &vdev) override;
 };
 
-// ----------------------------------------------------------------------
 /**
  * @class TAO_AV_Endpoint_Reactive_Strategy_B
  * @brief Reactive strategy
@@ -132,7 +130,6 @@ public:
                 AVStreams::VDev_ptr &vdev) override;
 };
 
-// ----------------------------------------------------------------------
 
 /**
  * @class TAO_AV_Child_Process
@@ -233,7 +230,6 @@ protected:
   PortableServer::POA_ptr poa_ {};
 };
 
-// ----------------------------------------------------------------------
 /**
  * @class TAO_AV_Child_Process_A
  * @brief Helper class for the child process created in TAO_AV_Child_Process
@@ -252,7 +248,6 @@ public:
   TAO_AV_Child_Process_A &operator= (TAO_AV_Child_Process_A &&) = delete;
 };
 
-// ----------------------------------------------------------------------
 
 /**
  * @class TAO_AV_Child_Process_B

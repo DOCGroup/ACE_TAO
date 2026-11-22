@@ -21,7 +21,6 @@ Sleeper_i::shutdown ()
   this->orb_->shutdown (false);
 }
 
-//-----------------------------------------------
 
 Middle_i::Middle_i (CORBA::ORB_ptr orb, Test::Sleeper_ptr s)
   : orb_ (CORBA::ORB::_duplicate (orb)),

@@ -69,7 +69,6 @@ public:
   FooImpl & operator= (FooImpl const &) = delete;
   FooImpl & operator= (FooImpl &&) = delete;
 
-  //-----------------------------------------------------------
 
   CORBA::Long TestLong(
     CORBA::Long a,
@@ -94,7 +93,6 @@ public:
     return static_cast<CORBA::Long>( 7);
   }
 
-  //-----------------------------------------------------------
 
   char *TestString(
     char const * a,
@@ -139,7 +137,6 @@ public:
     return CORBA::string_dup("7");
   }
 
-  //-----------------------------------------------------------
 
   Test::MyNonVarStruct TestNonVarStruct(
     Test::MyNonVarStruct const & a,
@@ -175,7 +172,6 @@ public:
     return newret;
   }
 
-  //-----------------------------------------------------------
 
   Test::MyVarStruct *TestVarStruct(
     Test::MyVarStruct const & a,
@@ -237,7 +233,6 @@ public:
     return newret._retn();
   }
 
-  //-----------------------------------------------------------
 
   Test::MyNonVarUnion TestNonVarUnion(
     Test::MyNonVarUnion const & a,
@@ -283,7 +278,6 @@ public:
     return newret;
   }
 
-  //-----------------------------------------------------------
 
   Test::MyVarUnion *TestVarUnion(
     Test::MyVarUnion const & a,
@@ -331,7 +325,6 @@ public:
     return newret._retn();
   }
 
-  //-----------------------------------------------------------
 
   Test::MySeqOfLong *TestSeqOfLong (
     Test::MySeqOfLong const & a,
@@ -380,7 +373,6 @@ public:
     return newret._retn();
   }
 
-  //-----------------------------------------------------------
 
   CORBA::Any *TestAny(
     CORBA::Any const & a,
@@ -435,7 +427,6 @@ public:
     return newret._retn();
   }
 
-  //-----------------------------------------------------------
 
   Test::MyArray_slice *TestArray(
     Test::MyArray const a,
@@ -503,7 +494,6 @@ public:
     return ret._retn ();
   }
 
-  //-----------------------------------------------------------
 
   CORBA::Object_ptr TestObject(
     CORBA::Object_ptr a,
@@ -514,7 +504,6 @@ public:
     return CORBA::Object::_duplicate (c);
   }
 
-  //-----------------------------------------------------------
 
   void ShutdownServer () override
   {

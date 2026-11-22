@@ -12,9 +12,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-//------------------------------------------------------------
 //TAO_AV_UDP_MCast_Flow_Handler
-//------------------------------------------------------------
 
 TAO_AV_UDP_MCast_Flow_Handler::TAO_AV_UDP_MCast_Flow_Handler ()
 {
@@ -54,9 +52,7 @@ TAO_AV_UDP_MCast_Flow_Handler::set_peer_addr (ACE_INET_Addr *peer_addr)
   this->peer_addr_ = peer_addr;
 }
 
-//------------------------------------------------------------
 // TAO_AV_UDP_MCast_Transport
-//------------------------------------------------------------
 
 TAO_AV_UDP_MCast_Transport::TAO_AV_UDP_MCast_Transport () = default;
 

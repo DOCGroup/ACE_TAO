@@ -8,8 +8,6 @@
 #include <cstdlib>
 #include <cstring>
 
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
 
 static ACE_CString unique_prefix = "\001\002\003\004";
 
@@ -828,8 +826,6 @@ AsyncAccessManager::_remove_ref ()
     }
 }
 
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
 
 ActivatorReceiver::ActivatorReceiver (AsyncAccessManager *aam,
                                       PortableServer::POA_ptr poa)
@@ -920,8 +916,6 @@ ActivatorReceiver::kill_server_excep (Messaging::ExceptionHolder * )
 {
 }
 
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
 
 AccessLiveListener::AccessLiveListener (const char *server,
                                         AsyncAccessManager *aam,

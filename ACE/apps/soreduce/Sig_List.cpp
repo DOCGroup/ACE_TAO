@@ -6,7 +6,6 @@
 #include <algorithm>
 #include <memory>
 
-//-----------------------------------------------------------------------------
 
 Sig_List::Sig_List (size_t cap)
 {
