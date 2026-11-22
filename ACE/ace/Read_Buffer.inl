@@ -1,7 +1,7 @@
 // -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Accessor to the number of bytes in the buffer.
+/// Accessor to the number of bytes in the buffer.
 
 ACE_INLINE size_t
 ACE_Read_Buffer::size () const
