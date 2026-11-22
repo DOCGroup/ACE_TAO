@@ -37,7 +37,7 @@ static constexpr int NUM_CLIENTS = 30;
 
 #if !defined (ACE_LACKS_FORK) || defined (ACE_HAS_THREADS)
 
-void *
+ACE_THR_FUNC_RETURN
 client (void *arg)
 {
   ACE_INET_Addr *remote_addr = static_cast<ACE_INET_Addr *> (arg);
@@ -60,7 +60,7 @@ client (void *arg)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("client: Connection timed out.")));
-      return nullptr;
+      return ACE_THR_FUNC_RETURN_NULL;
     }
 
   if (cli_stream.get_local_addr (client_addr) == -1)
@@ -106,7 +106,7 @@ client (void *arg)
               ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) client: Connection refused (delayed)\n")));
             cli_stream.close ();
-            return nullptr;
+            return ACE_THR_FUNC_RETURN_NULL;
           }
 
         ACE_ERROR ((LM_ERROR,
@@ -114,7 +114,7 @@ client (void *arg)
                     ACE_TEXT ("client: send_n")));
         ACE_ERROR ((LM_ERROR, "client: Closing stream.\n"));
         cli_stream.close();
-        return nullptr;
+        return ACE_THR_FUNC_RETURN_NULL;
       }
     }
 
@@ -152,10 +152,10 @@ client (void *arg)
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("client: close")));
     }
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-void *
+ACE_THR_FUNC_RETURN
 server (void *arg)
 {
   ACE_SOCK_Acceptor *peer_acceptor =
@@ -211,7 +211,7 @@ server (void *arg)
                               ACE_TEXT ("connections. Expected:%d-%d Actual:%d\n"),
                               BACKLOG, BACKLOG * 2, num_clients_connected));
                 }
-              return nullptr;
+              return ACE_THR_FUNC_RETURN_NULL;
             }
 
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -328,7 +328,7 @@ server (void *arg)
             }
         }
     }
-  ACE_NOTREACHED (return nullptr);
+  ACE_NOTREACHED (return ACE_THR_FUNC_RETURN_NULL);
 }
 
 #endif /* !ACE_LACKS_FORK || ACE_HAS_THREADS */
@@ -393,7 +393,7 @@ spawn (int num_clients)
       ACE_DEBUG((LM_DEBUG, "Spawning server...\n"));
 
       if (ACE_Thread_Manager::instance ()->spawn
-          (ACE_THR_FUNC (server),
+          (server,
            &peer_acceptor,
            THR_BOUND | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
@@ -405,7 +405,7 @@ spawn (int num_clients)
 
       if (ACE_Thread_Manager::instance ()->spawn_n
           (num_clients,
-           ACE_THR_FUNC (client),
+           client,
            &server_addr,
            THR_BOUND | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,

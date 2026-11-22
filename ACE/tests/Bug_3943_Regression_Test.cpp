@@ -979,7 +979,7 @@ Svc_Handler::close (u_long side)
 
 #if defined (ACE_HAS_THREADS)
 
-static void *
+static ACE_THR_FUNC_RETURN
 client (void *arg)
 {
   ACE_INET_Addr *remote_addr = reinterpret_cast<ACE_INET_Addr *> (arg);
@@ -991,7 +991,7 @@ client (void *arg)
   // Run the blocking test.
   ACE_NEW_RETURN (svc_handler,
                   Svc_Handler,
-                  nullptr);
+                  ACE_THR_FUNC_RETURN_NULL);
 
   // Perform a blocking connect to the server.
   if (connector.connect (svc_handler,
@@ -1006,15 +1006,15 @@ client (void *arg)
       // Send the data to the server.
       svc_handler->send_data ();
     }
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // Performs the iterative server activities.
 
-static void *
+static ACE_THR_FUNC_RETURN
 server (void *arg)
 {
-  ACCEPTOR *acceptor = (ACCEPTOR *) arg;
+  ACCEPTOR *acceptor = static_cast<ACCEPTOR *> (arg);
   ACE_INET_Addr cli_addr;
   ACE_TCHAR peer_host[MAXHOSTNAMELEN];
   const ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
@@ -1023,7 +1023,7 @@ server (void *arg)
   Svc_Handler *svc_handler {};
   ACE_NEW_RETURN (svc_handler,
                   Svc_Handler,
-                  nullptr);
+                  ACE_THR_FUNC_RETURN_NULL);
 
   // Keep looping until we timeout on <accept> or fail.
 
@@ -1046,7 +1046,7 @@ server (void *arg)
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("accept timed out\n")));
-              return nullptr;
+              return ACE_THR_FUNC_RETURN_NULL;
             }
           else
             {
@@ -1068,7 +1068,7 @@ server (void *arg)
       break;
     }
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // Spawn threads and run the client and server.
@@ -1082,8 +1082,8 @@ spawn_threads (ACCEPTOR *acceptor,
   if (ACE_Thread_Manager::instance ()->spawn_n
       (
        1,
-       (ACE_THR_FUNC) server,
-       (void *) acceptor,
+       server,
+       acceptor,
        THR_NEW_LWP
        , ACE_DEFAULT_THREAD_PRIORITY
        , -1
@@ -1097,8 +1097,8 @@ spawn_threads (ACCEPTOR *acceptor,
     }
 
   if (ACE_Thread_Manager::instance ()->spawn
-      ((ACE_THR_FUNC) client,
-       (void *) server_addr,
+      (client,
+       server_addr,
        THR_NEW_LWP,
        nullptr
        ) == -1)
