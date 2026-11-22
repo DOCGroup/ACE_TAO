@@ -1595,7 +1595,7 @@ ACE_Local_Mutex::clone () const
                   ACE_Local_Mutex (token_->name (),
                                    ignore_deadlock_,
                                    debug_),
-                  0);
+                  nullptr);
   return temp;
 }
 
@@ -1605,7 +1605,7 @@ ACE_Local_Mutex::create_token (const ACE_TCHAR *name)
   ACE_Tokens *temp {};
   ACE_NEW_RETURN (temp,
                   ACE_Mutex_Token (name),
-                  0);
+                  nullptr);
   return temp;
 }
 
@@ -1621,7 +1621,7 @@ ACE_Local_RLock::create_token (const ACE_TCHAR *name)
   ACE_Tokens *temp {};
   ACE_NEW_RETURN (temp,
                   ACE_RW_Token (name),
-                  0);
+                  nullptr);
   return temp;
 }
 
@@ -1639,7 +1639,7 @@ ACE_Local_RLock::clone () const
                   ACE_Local_RLock (token_->name (),
                                    ignore_deadlock_,
                                    debug_),
-                  0);
+                  nullptr);
   return temp;
 }
 
@@ -1653,7 +1653,7 @@ ACE_Local_WLock::create_token (const ACE_TCHAR *name)
   ACE_Tokens *temp {};
   ACE_NEW_RETURN (temp,
                   ACE_RW_Token (name),
-                  0);
+                  nullptr);
   return temp;
 }
 
@@ -1671,7 +1671,7 @@ ACE_Local_WLock::clone () const
                   ACE_Local_WLock (token_->name (),
                                    ignore_deadlock_,
                                    debug_),
-                  0);
+                  nullptr);
   return temp;
 }
 

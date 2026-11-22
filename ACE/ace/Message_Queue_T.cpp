@@ -3160,7 +3160,7 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE, TIME_POLICY>::create_static_message_que
 
   ACE_NEW_RETURN (tmp,
                   QUEUE_TYPE (hwm, lwm, ns),
-                  0);
+                  nullptr);
   return tmp;
 }
 
@@ -3183,13 +3183,13 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE, TIME_POLICY>::create_deadline_message_q
                                                  static_bit_field_shift,
                                                  dynamic_priority_max,
                                                  dynamic_priority_offset),
-                  0);
+                  nullptr);
 
   using QUEUE_TYPE = ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>;
   QUEUE_TYPE *tmp {};
   ACE_NEW_RETURN (tmp,
                   QUEUE_TYPE (*adms, hwm, lwm, ns),
-                  0);
+                  nullptr);
   return tmp;
 }
 
@@ -3213,13 +3213,13 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE, TIME_POLICY>::create_laxity_message_que
                                                static_bit_field_shift,
                                                dynamic_priority_max,
                                                dynamic_priority_offset),
-                  0);
+                  nullptr);
 
   using QUEUE_TYPE = ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>;
   QUEUE_TYPE *tmp {};
   ACE_NEW_RETURN (tmp,
                   QUEUE_TYPE (*alms, hwm, lwm, ns),
-                  0);
+                  nullptr);
   return tmp;
 }
 
@@ -3239,7 +3239,7 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE, TIME_POLICY>::create_Vx_message_queue (
 
   ACE_NEW_RETURN (tmp,
                   ACE_Message_Queue_Vx (max_messages, max_message_length, ns),
-                  0);
+                  nullptr);
   return tmp;
 }
 #endif /* defined (ACE_VXWORKS) */
@@ -3254,7 +3254,7 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE, TIME_POLICY>::create_NT_message_queue (
 
   ACE_NEW_RETURN (tmp,
                   ACE_Message_Queue_NT (max_threads),
-                  0);
+                  nullptr);
   return tmp;
 }
 
