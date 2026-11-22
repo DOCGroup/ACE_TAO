@@ -34,7 +34,7 @@ ACE_Recyclable_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (
       return -1;
     }
 
-  value.first->recycler (0, 0);
+  value.first->recycler (nullptr, nullptr);
 
   value.first->close ();
 
