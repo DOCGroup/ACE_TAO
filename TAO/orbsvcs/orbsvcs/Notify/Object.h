@@ -122,10 +122,10 @@ protected:
   /// Get the POA assigned to us.
   TAO_Notify_POA_Helper* poa ();
 
-  // Sets the admin properties
+  /// Set the event manager.
   void set_event_manager(TAO_Notify_Event_Manager* event_manager);
 
-  // Sets the admin properties
+  /// Set the admin properties.
   void set_admin_properties(TAO_Notify_AdminProperties* admin_properties);
 
   /// Accessor for the Admin Properties

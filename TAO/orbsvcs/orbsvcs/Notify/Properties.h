@@ -75,40 +75,40 @@ public:
   ACE_Time_Value validate_client_interval ();
   void validate_client_interval (ACE_Time_Value b);
 
-  // Turn on/off update messages.
+  /// Turn on or off update messages.
   CORBA::Boolean updates ();
   void updates (CORBA::Boolean updates);
   bool separate_dispatching_orb ();
   void separate_dispatching_orb (bool b);
 
-  // The QoS Property that must be applied to each newly created Event Channel
+  /// The QoS property applied to each newly created event channel.
   const CosNotification::QoSProperties& default_event_channel_qos_properties ();
 
-  // Set the default EC QoS Property.
+  /// Set the default event channel QoS property.
   void default_event_channel_qos_properties (const CosNotification::QoSProperties &ec_qos);
 
-  // The QoS Property that must be applied to each newly created Supplier Admin
+  /// The QoS property applied to each newly created supplier admin.
   const CosNotification::QoSProperties& default_supplier_admin_qos_properties ();
 
-  // Set the default SA QoS Property.
+  /// Set the default supplier admin QoS property.
   void default_supplier_admin_qos_properties (const CosNotification::QoSProperties &sa_qos);
 
-  // The QoS Property that must be applied to each newly created Consumer Admin
+  /// The QoS property applied to each newly created consumer admin.
   const CosNotification::QoSProperties& default_consumer_admin_qos_properties ();
 
-  // Set the default CA QoS Property.
+  /// Set the default consumer admin QoS property.
   void default_consumer_admin_qos_properties (const CosNotification::QoSProperties &ca_qos);
 
-  // The QoS Property that must be applied to each newly created Proxy Supplier
+  /// The QoS property applied to each newly created proxy supplier.
   const CosNotification::QoSProperties& default_proxy_supplier_qos_properties ();
 
-  // Set the default PS QoS Property.
+  /// Set the default proxy supplier QoS property.
   void default_proxy_supplier_qos_properties (const CosNotification::QoSProperties &ps_qos);
 
-  // The QoS Property that must be applied to each newly created Proxy Consumer
+  /// The QoS property applied to each newly created proxy consumer.
   const CosNotification::QoSProperties& default_proxy_consumer_qos_properties ();
 
-  // Set the default PC QoS Property.
+  /// Set the default proxy consumer QoS property.
   void default_proxy_consumer_qos_properties (const CosNotification::QoSProperties &pc_qos);
 
   CosNotifyChannelAdmin::InterFilterGroupOperator defaultConsumerAdminFilterOp ();

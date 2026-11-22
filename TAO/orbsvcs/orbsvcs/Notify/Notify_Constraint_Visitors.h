@@ -54,7 +54,8 @@ public:
    */
   CORBA::Boolean evaluate_constraint (ETCL_Constraint *root);
 
-  // The overridden methods.
+  /// @name Overridden methods
+  /// @{
   int visit_literal (ETCL_Literal_Constraint *) override;
   int visit_identifier (ETCL_Identifier *) override;
   int visit_union_value (ETCL_Union_Value *) override;
@@ -71,6 +72,7 @@ public:
   int visit_unary_expr (ETCL_Unary_Expr *) override;
   int visit_binary_expr (ETCL_Binary_Expr *) override;
   int visit_preference (ETCL_Preference *) override;
+  /// @}
 
 protected:
   // Sub-methods for visit_binary_expr().

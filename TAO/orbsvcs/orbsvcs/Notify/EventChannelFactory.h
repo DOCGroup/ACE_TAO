@@ -83,9 +83,8 @@ public:
       CosNotifyChannelAdmin::ChannelID_out id,
       char const *name);
 
-  //////////////////////////
-  // The following methods are for
-  // unit testing and debugging
+  /// @name Unit testing and debugging
+  /// @{
 
   /// Use the registered Topology_Factory to create a loader, and
   /// load the topology. If no Topology_Factory is registered
@@ -95,6 +94,7 @@ public:
   /// Use the passed in saver factory to generate topology saver objects.
   /// Does not take ownership.
   void set_topology_factory(TAO_Notify::Topology_Factory* sf);
+  /// @}
 
   //-- Topology_Parent
 

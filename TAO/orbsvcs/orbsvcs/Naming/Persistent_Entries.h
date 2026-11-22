@@ -107,10 +107,11 @@ public:
   /// reference in a Persistent Naming Context.
   char const *kind_;
 
-  // Accessors.
-
+  /// @name Accessors
+  /// @{
   char const * id ();
   char const * kind ();
+  /// @}
 };
 
 /**

@@ -90,11 +90,11 @@ public:
   /// reference in a Storable Naming Context.
   CORBA::String_var kind_;
 
-  // Accessors.
-  // follow the mapping rules!
-
+  /// @name Accessors
+  /// @{
   char const *id ();
   char const *kind ();
+  /// @}
 };
 
 /**
