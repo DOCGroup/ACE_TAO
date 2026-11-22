@@ -21,6 +21,7 @@
 #include "ace/Stack_Trace.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_stdlib.h"
 #include <algorithm>
 
 #include <cstring>
@@ -106,7 +107,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset, size_t num_frame
         }
       this->buf_[this->buflen_] = '\0'; // zero terminate the string
 
-      ::free (stack_syms);
+      ACE_OS::free (stack_syms);
     }
   else
     {
