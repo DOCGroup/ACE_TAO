@@ -396,7 +396,7 @@ MQ_Ex_N_Tester::test_enqueue_head ()
 
 #if defined (ACE_HAS_THREADS)
 
-static void *
+static ACE_THR_FUNC_RETURN
 receiver (void *arg)
 {
   Queue_Wrapper *queue_wrapper = reinterpret_cast<Queue_Wrapper *> (arg);
@@ -405,7 +405,7 @@ receiver (void *arg)
   User_Class **receive_block_p {};
   ACE_NEW_RETURN (receive_block_p,
                   User_Class *[max_messages],
-                  (void *) -1);
+                  ACE_THR_FUNC_RETURN (-1));
 
   for (i = 0; i < max_messages; ++i)
     {
@@ -421,10 +421,10 @@ receiver (void *arg)
 
   delete [] receive_block_p;
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 sender (void *arg)
 {
   Queue_Wrapper *queue_wrapper = reinterpret_cast<Queue_Wrapper *> (arg);
@@ -444,7 +444,7 @@ sender (void *arg)
                             0);
         }
     }
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 static int
@@ -477,7 +477,7 @@ performance_test ()
                   SYNCH_QUEUE,
                   -1);
 
-  if (ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) sender,
+  if (ACE_Thread_Manager::instance ()->spawn (sender,
                                               &queue_wrapper,
                                               THR_BOUND) == -1)
     {
@@ -487,7 +487,7 @@ performance_test ()
                         -1);
     }
 
-  if (ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) receiver,
+  if (ACE_Thread_Manager::instance ()->spawn (receiver,
                                               &queue_wrapper,
                                               THR_BOUND) == -1)
     {
@@ -529,7 +529,7 @@ MQ_Ex_N_Tester::performance_test ()
   tester_wrapper.head_send_block_ = messages.head_send_block_;
   tester_wrapper.tester_ = this;
 
-  if (ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) &MQ_Ex_N_Tester::sender,
+  if (ACE_Thread_Manager::instance ()->spawn (&MQ_Ex_N_Tester::sender,
                                               &tester_wrapper,
                                               THR_BOUND) == -1)
     {
@@ -539,7 +539,7 @@ MQ_Ex_N_Tester::performance_test ()
                         -1);
     }
 
-  if (ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) &MQ_Ex_N_Tester::receiver,
+  if (ACE_Thread_Manager::instance ()->spawn (&MQ_Ex_N_Tester::receiver,
                                               this,
                                               THR_BOUND) == -1)
     {

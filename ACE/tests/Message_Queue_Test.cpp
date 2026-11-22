@@ -638,7 +638,7 @@ single_thread_performance_test (int queue_type = 0)
   return 0;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 receiver (void *arg)
 {
   Queue_Wrapper *queue_wrapper =
@@ -648,7 +648,7 @@ receiver (void *arg)
   ACE_Message_Block **receive_block_p {};
   ACE_NEW_RETURN (receive_block_p,
                   ACE_Message_Block *[max_messages],
-                  (void *) -1);
+                  ACE_THR_FUNC_RETURN (-1));
 
 #if defined (ACE_VXWORKS)
   // Set up blocks to receive the messages.  Allocate these off the
@@ -657,7 +657,7 @@ receiver (void *arg)
   ACE_Message_Block *receive_block;
   ACE_NEW_RETURN (receive_block,
                   ACE_Message_Block[max_messages],
-                  (void *) -1);
+                  ACE_THR_FUNC_RETURN (-1));
 
   for (i = 0; i < max_messages; ++i)
     {
@@ -686,10 +686,10 @@ receiver (void *arg)
   delete [] receive_block;
 #endif /* ACE_VXWORKS */
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 sender (void *arg)
 {
   Queue_Wrapper *queue_wrapper =
@@ -710,7 +710,7 @@ sender (void *arg)
                             0);
         }
     }
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 static
@@ -766,7 +766,7 @@ performance_test (int queue_type = 0)
     }
 #endif /* ACE_VXWORKS */
 
-  if (ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) sender,
+  if (ACE_Thread_Manager::instance ()->spawn (sender,
                                               &queue_wrapper,
                                               THR_BOUND) == -1)
     {
@@ -776,7 +776,7 @@ performance_test (int queue_type = 0)
                         -1);
     }
 
-  if (ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) receiver,
+  if (ACE_Thread_Manager::instance ()->spawn (receiver,
                                               &queue_wrapper,
                                               THR_BOUND) == -1)
     {
