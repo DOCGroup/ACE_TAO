@@ -109,16 +109,15 @@ public:
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Test_Handler::handle_timeout\n")));
 
-    void *nc_arg = const_cast<void *> (arg);
     Test_Task *test_task =
-      reinterpret_cast<Test_Task *> (nc_arg);
+      static_cast<Test_Task *> (const_cast<void *> (arg));
     ACE_Message_Block *mb {};
     ACE_NEW_MALLOC_RETURN (mb,
                            static_cast<ACE_Message_Block *> (ACE_Allocator::instance()->malloc (sizeof (ACE_Message_Block))),
                            ACE_Message_Block (sizeof (*this),    // size
                                               ACE_Message_Block::MB_DATA, // type
                                               nullptr,       // cont
-                                              (char *) this,     // data
+                                              reinterpret_cast<char *> (this), // data
                                               nullptr,
                                               nullptr,
                                               ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY,
@@ -161,7 +160,7 @@ run_main (int, ACE_TCHAR *[])
                          ACE_Message_Block (sizeof (handler),    // size
                                             ACE_Message_Block::MB_DATA, // type
                                             nullptr,       // cont
-                                            (char *) &handler,
+                                            reinterpret_cast<char *> (&handler),
                                             nullptr,
                                             nullptr,
                                             ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY,
