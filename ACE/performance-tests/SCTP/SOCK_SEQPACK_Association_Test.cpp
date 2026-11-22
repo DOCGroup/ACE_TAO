@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    SOCK_SEQPACK_Association_Test.cpp
  *
@@ -13,7 +12,6 @@
  *
  *  @author Edward Mulholland (emulholl@atl.lmco.com)
  */
-//=============================================================================
 
 #include "ace/SOCK_SEQPACK_Association.h"
 #include "ace/SOCK_SEQPACK_Connector.h"

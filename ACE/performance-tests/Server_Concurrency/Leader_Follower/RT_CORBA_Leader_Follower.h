@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    RT_CORBA_Leader_Follower.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef PERF_TEST_RT_CORBA_LEADER_FOLLOWER_H
 #define PERF_TEST_RT_CORBA_LEADER_FOLLOWER_H
 #include /**/ "ace/pre.h"

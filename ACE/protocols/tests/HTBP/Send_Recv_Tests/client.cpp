@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    client.cpp
  *
@@ -14,7 +13,6 @@
  *
  *  @author Steve Huston <shuston@riverace.com>
  */
-//=============================================================================
 
 #include "ace/HTBP/HTBP_Stream.h"
 #include "ace/HTBP/HTBP_Session.h"

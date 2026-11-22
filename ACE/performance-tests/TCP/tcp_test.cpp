@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file   tcp_test.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Based on udp_test by Fred Kuhns and David L. LevineModified by Carlos O'Ryan and Nanbor Wang.
  */
-//=============================================================================
 
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"

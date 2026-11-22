@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    udp_test.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Fred Kuhns and David L. Levine
  */
-//=============================================================================
 #include "ace/OS_main.h"
 #include "ace/Reactor.h"
 #include "ace/SOCK_Dgram.h"

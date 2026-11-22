@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    collection.cpp
  *
@@ -9,7 +8,6 @@
  *
  *  @author Tim Harrison
  */
-//=============================================================================
 #include "ace/Get_Opt.h"
 #include "ace/Local_Tokens.h"
 #include "ace/Token_Collection.h"

@@ -1,13 +1,11 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Token_Handler.h
  *
  *  @author Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
  *          Tim Harrison (harrison@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef ACE_TOKEN_HANDLER_H
 #define ACE_TOKEN_HANDLER_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Name_Handler.h
  *
@@ -8,7 +7,6 @@
  *  @author Gerhard Lenzer
  *  @author and Douglas C. Schmidt
  */
-//=============================================================================
 
 #ifndef ACE_NAME_HANDLER_H
 #define ACE_NAME_HANDLER_H

@@ -1,11 +1,9 @@
 
-//=============================================================================
 /**
  *  @file    deadlock_detection_test.cpp
  *
  *  @author Tim Harrison
  */
-//=============================================================================
 
 #include "ace/Token_Manager.h"
 #include "ace/Remote_Tokens.h"

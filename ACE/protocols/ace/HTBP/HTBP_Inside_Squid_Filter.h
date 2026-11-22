@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    HTBP_Inside_Squid_Filter.h
  *
  *  @author Phil Mesnier
  */
-//=============================================================================
 
 #ifndef ACE_HTBP_INSIDE_SQUID_FILTER_H
 #define ACE_HTBP_INSIDE_SQUID_FILTER_H

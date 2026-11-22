@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-// ============================================================================
 /**
  *  @file test_config.h
  *
@@ -11,7 +10,6 @@
  *  @author Tim Harrison <harrison@cs.wustl.edu>
  *  @author David Levine <levine@cs.wustl.edu>
  */
-// ============================================================================
 
 #ifndef ACE_TEST_CONFIG_H
 #define ACE_TEST_CONFIG_H

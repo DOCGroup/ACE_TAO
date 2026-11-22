@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Client_Logging_Handler.h
  *
  *  @author Doug Schmidt <schmidt@.cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_CLIENT_LOGGER_H
 #define ACE_CLIENT_LOGGER_H

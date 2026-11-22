@@ -1,11 +1,9 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file    HTBP_Filter_Factory.h
  *
  *  @author Priyanka Gontla
  */
-//=============================================================================
 
 #ifndef ACE_HTBP_FILTER_FACTORY
 #define ACE_HTBP_FILTER_FACTORY

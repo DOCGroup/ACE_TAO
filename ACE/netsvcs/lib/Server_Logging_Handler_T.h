@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Server_Logging_Handler_T.h
  *
  *  @author Doug Schmidt and Per Andersson
  */
-//=============================================================================
 
 #ifndef ACE_SERVER_LOGGING_HANDLER_T_H
 #define ACE_SERVER_LOGGING_HANDLER_T_H

@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    HTBP_Notifier.cpp
  *
  *  @author Phil Mesnier, Priyanka Gontla
  */
-//=============================================================================
 #include "HTBP_Notifier.h"
 #include "HTBP_Channel.h"
 #include "HTBP_Session.h"

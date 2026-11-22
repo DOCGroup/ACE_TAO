@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Log_Message_Receiver.h
  *
  *  @author Per Andersson
  */
-//=============================================================================
 
 #ifndef LOG_MESSAGE_RECEIVER_H
 #define LOG_MESSAGE_RECEIVER_H

@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    HTBP_Channel.h
  *
  *  @author Phil Mesnier, Priyanka Gontla
  */
-//=============================================================================
 
 #ifndef ACE_HTBP_CHANNEL_H
 #define ACE_HTBP_CHANNEL_H

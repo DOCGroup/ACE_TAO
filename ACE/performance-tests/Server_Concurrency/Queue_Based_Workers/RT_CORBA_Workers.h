@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    RT_CORBA_Workers.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef PERF_TEST_RT_CORBA_WORKERS_H
 #define PERF_TEST_RT_CORBA_WORKERS_H
 #include /**/ "ace/pre.h"

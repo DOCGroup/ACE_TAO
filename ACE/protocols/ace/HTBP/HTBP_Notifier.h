@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   HTBP_Notifier.h
  *
  *  @author Phil Mesnier, Priyanka Gontla
  */
-//=============================================================================
 
 #ifndef ACE_HTBP_NOTIFIER_H
 #define ACE_HTBP_NOTIFIER_H
