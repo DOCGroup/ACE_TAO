@@ -57,7 +57,7 @@ public:
   const_iterator end () const;
 
 private:
-  // The parser registry should not be copied.
+  /// The parser registry should not be copied.
   TAO_Parser_Registry (TAO_Parser_Registry const &) = delete;
   TAO_Parser_Registry &operator= (TAO_Parser_Registry const &) = delete;
   TAO_Parser_Registry (TAO_Parser_Registry &&) = delete;

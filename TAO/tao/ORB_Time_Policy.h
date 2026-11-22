@@ -48,7 +48,7 @@ namespace TAO
     static ACE_Dynamic_Time_Policy_Base const * active_policy_;
   };
 
-  // Declare a countdown timer type based on ORB time policy
+  /// Declare a countdown timer type based on ORB time policy.
   using ORB_Countdown_Time = ACE_Countdown_Time_T<ORB_Time_Policy>;
 } // TAO
 

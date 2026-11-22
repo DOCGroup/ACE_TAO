@@ -22,7 +22,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// A hash define for the regular two way operation.
+/// A hash define for the regular two way operation.
 #define TAO_TWOWAY_RESPONSE_FLAG 255
 
 namespace CORBA
@@ -150,7 +150,7 @@ const CORBA::ULong TAO_TAG_NSKFS_PROFILE = 0x00003039U;
 /// Tandem (HP) Pathsend Protocol
 const CORBA::ULong TAO_TAG_NSKPW_PROFILE = 0x0000303AU;
 
-// Default DiffServ CodePoint.
+/// Default DiffServ CodePoint.
 const int IPDSFIELD_DSCP_DEFAULT = 0x00;
 
 /**
