@@ -20,9 +20,11 @@ ACE_ATM_Acceptor::ACE_ATM_Acceptor (const ACE_Addr &remote_sap,
   //FUZZ: disable check_for_lack_ACE_OS
   if (open (remote_sap, backlog, params) < 0)
   //FUZZ: enable check_for_lack_ACE_OS
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_ATM_Acceptor::ACE_ATM_Acceptor")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_ATM_Acceptor::ACE_ATM_Acceptor")));
+    }
 }
 
 ACE_INLINE

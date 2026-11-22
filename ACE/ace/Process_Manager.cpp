@@ -366,10 +366,12 @@ ACE_Process_Manager::handle_signal (int, siginfo_t *si, ucontext_t *)
           return -1; // remove this HANDLE/Event_Handler combination
         }
       else
-        ACELIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Process still active")
-                           ACE_TEXT (" -- shouldn't have been called yet!\n")),
-                          0); // return 0 : stay registered
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                                ACE_TEXT ("Process still active")
+                                ACE_TEXT (" -- shouldn't have been called yet!\n")),
+                               0); // return 0 : stay registered
+        }
     }
   else
     {

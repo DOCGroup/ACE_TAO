@@ -88,8 +88,10 @@ ACE_ATM_Connector::add_leaf (ACE_ATM_Stream &current_stream,
                                         qos_params);
 
   if ( result == ACE_INVALID_HANDLE )
-    ACE_OS::printf( "ATM_Connector(add_leaf): connection failed, %d\n",
-                    ::WSAGetLastError());
+    {
+      ACE_OS::printf( "ATM_Connector(add_leaf): connection failed, %d\n",
+                      ::WSAGetLastError());
+    }
 
   return (result != ACE_INVALID_HANDLE);
 #elif defined (ACE_HAS_LINUX_ATM)
