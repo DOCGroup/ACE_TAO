@@ -82,7 +82,7 @@ ACE_TSS<TYPE>::make_TSS_TYPE () const
   TYPE *temp {};
   ACE_NEW_RETURN (temp,
                   TYPE,
-                  0);
+                  nullptr);
   return temp;
 }
 
@@ -150,7 +150,7 @@ ACE_TSS<TYPE>::ACE_TSS (TYPE *ts_obj)
   // since it enables us to assign objects to thread-specific data
   // that have arbitrarily complex constructors!
 
-  if (ts_obj != 0)
+  if (ts_obj != nullptr)
     {
       if (this->ts_init () == -1)
         {
@@ -192,7 +192,7 @@ ACE_TSS<TYPE>::ts_get () const
       if (const_cast< ACE_TSS < TYPE > * >(this)->ts_init () == -1)
         {
           // Seriously wrong..
-          return 0;
+          return nullptr;
         }
     }
 
@@ -204,19 +204,19 @@ ACE_TSS<TYPE>::ts_get () const
 
   // If tss_adapter is not 0 but its ts_obj_ is 0 then we still need to create
   // a proper ts_obj. That's the intent of this member function.
-  if (tss_adapter != 0 && tss_adapter->ts_obj_ == 0)
+  if (tss_adapter != nullptr && tss_adapter->ts_obj_ == nullptr)
     {
       fake_tss_adapter = tss_adapter;
-      tss_adapter = 0;
+      tss_adapter = nullptr;
     }
 
   // Check to see if this is the first time in for this thread.
-  if (tss_adapter == 0)
+  if (tss_adapter == nullptr)
 #else
   ts_obj = this->ts_value ();
 
   // Check to see if this is the first time in for this thread.
-  if (ts_obj == 0)
+  if (ts_obj == nullptr)
 #endif /* ACE_HAS_THR_C_DEST */
     {
       // Allocate memory off the heap and store it in a pointer in
@@ -224,9 +224,9 @@ ACE_TSS<TYPE>::ts_get () const
 
       ts_obj = this->make_TSS_TYPE ();
 
-      if (ts_obj == 0)
+      if (ts_obj == nullptr)
         {
-          return 0;
+          return nullptr;
         }
 
 #if defined (ACE_HAS_THR_C_DEST)
@@ -234,14 +234,14 @@ ACE_TSS<TYPE>::ts_get () const
       // ACE_TSS_Adapter.
       ACE_NEW_RETURN (tss_adapter,
                       ACE_TSS_Adapter (ts_obj,
-                                       ACE_TSS<TYPE>::cleanup), 0);
+                                       ACE_TSS<TYPE>::cleanup), nullptr);
 
       // Put the adapter in thread specific storage
       if (this->ts_value (tss_adapter) == -1)
         {
           delete tss_adapter;
           delete ts_obj;
-          return 0; // Major problems, this should *never* happen!
+          return nullptr; // Major problems, this should *never* happen!
         }
 #else
       // Store the dynamically allocated pointer in thread-specific
@@ -249,7 +249,7 @@ ACE_TSS<TYPE>::ts_get () const
       if (this->ts_value (ts_obj) == -1)
         {
           delete ts_obj;
-          return 0; // Major problems, this should *never* happen!
+          return nullptr; // Major problems, this should *never* happen!
         }
 #endif /* ACE_HAS_THR_C_DEST */
     }
@@ -273,7 +273,7 @@ ACE_TSS<TYPE>::ts_object () const
 {
   if (!this->once_) // Return 0 if we've never been initialized.
     {
-      return 0;
+      return nullptr;
     }
 
   TYPE *ts_obj {};
@@ -281,7 +281,7 @@ ACE_TSS<TYPE>::ts_object () const
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter = this->ts_value ();
 
-  if (tss_adapter != 0)
+  if (tss_adapter != nullptr)
     {
       // Extract the real TS object.
       ts_obj = static_cast <TYPE *> (tss_adapter->ts_obj_);
@@ -304,7 +304,7 @@ ACE_TSS<TYPE>::ts_object (TYPE *new_ts_obj)
       // Create and initialize thread-specific ts_obj.
       if (this->ts_init () == -1)
         {
-          return 0;
+          return nullptr;
         }
     }
 
@@ -313,7 +313,7 @@ ACE_TSS<TYPE>::ts_object (TYPE *new_ts_obj)
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter = this->ts_value ();
 
-  if (tss_adapter != 0)
+  if (tss_adapter != nullptr)
     {
       ts_obj = static_cast <TYPE *> (tss_adapter->ts_obj_);
       // Don't delete tss_adapter yet. It can be double-deleted
@@ -324,7 +324,7 @@ ACE_TSS<TYPE>::ts_object (TYPE *new_ts_obj)
   ACE_NEW_RETURN (new_tss_adapter,
                   ACE_TSS_Adapter (new_ts_obj,
                                    ACE_TSS<TYPE>::cleanup),
-                  0);
+                  nullptr);
 
   if (this->ts_value (new_tss_adapter) == -1)
     {

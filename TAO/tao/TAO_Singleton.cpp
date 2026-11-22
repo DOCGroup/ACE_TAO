@@ -50,7 +50,7 @@ TAO_Singleton<TYPE, ACE_LOCK>::instance ()
     TAO_Singleton<TYPE, ACE_LOCK>::instance_i ();
 
   // Perform the Double-Check pattern...
-  if (singleton == 0)
+  if (singleton == nullptr)
     {
       if (TAO_Singleton_Manager::starting_up () || TAO_Singleton_Manager::shutting_down ())
         {
@@ -61,7 +61,7 @@ TAO_Singleton<TYPE, ACE_LOCK>::instance ()
           // don't register for destruction with the
           // TAO_Singleton_Manager:  we'll have to leak this instance.
 
-          ACE_NEW_RETURN (singleton, (TAO_Singleton<TYPE, ACE_LOCK>), 0);
+          ACE_NEW_RETURN (singleton, (TAO_Singleton<TYPE, ACE_LOCK>), nullptr);
         }
       else
         {
@@ -73,19 +73,19 @@ TAO_Singleton<TYPE, ACE_LOCK>::instance ()
           if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
             {
               // Failed to acquire the lock!
-              return 0;
+              return nullptr;
             }
 
-          ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, 0);
+          ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, nullptr);
 
-          if (singleton == 0)
+          if (singleton == nullptr)
             {
 #endif /* ACE_MT_SAFE */
-              ACE_NEW_RETURN (singleton, (TAO_Singleton<TYPE, ACE_LOCK>), 0);
+              ACE_NEW_RETURN (singleton, (TAO_Singleton<TYPE, ACE_LOCK>), nullptr);
 
               // Register for destruction with TAO_Singleton_Manager.
 #if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
-              TAO_Singleton_Manager::at_exit (singleton, 0,
+              TAO_Singleton_Manager::at_exit (singleton, nullptr,
                                               typeid (TYPE).name ());
 #else
               TAO_Singleton_Manager::at_exit (singleton, std::addressof (lock),
@@ -147,7 +147,7 @@ TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance ()
     TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance_i ();
 
   // Perform the Double-Check pattern...
-  if (singleton == 0)
+  if (singleton == nullptr)
     {
       if (TAO_Singleton_Manager::starting_up () || TAO_Singleton_Manager::shutting_down ())
         {
@@ -158,7 +158,7 @@ TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance ()
           // don't register for destruction with the
           // TAO_Singleton_Manager:  we'll have to leak this instance.
 
-          ACE_NEW_RETURN (singleton, (TAO_TSS_Singleton<TYPE, ACE_LOCK>), 0);
+          ACE_NEW_RETURN (singleton, (TAO_TSS_Singleton<TYPE, ACE_LOCK>), nullptr);
         }
       else
         {
@@ -170,19 +170,19 @@ TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance ()
           if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
             {
               // Failed to acquire the lock!
-              return 0;
+              return nullptr;
             }
 
-          ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, 0);
+          ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, nullptr);
 
-          if (singleton == 0)
+          if (singleton == nullptr)
             {
 #endif /* ACE_MT_SAFE */
               ACE_NEW_RETURN (singleton, (TAO_TSS_Singleton<TYPE, ACE_LOCK>),
-                              0);
+                              nullptr);
 
               // Register for destruction with TAO_Singleton_Manager.
-              TAO_Singleton_Manager::at_exit (singleton, 0, typeid (TYPE).name ());
+              TAO_Singleton_Manager::at_exit (singleton, nullptr, typeid (TYPE).name ());
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
             }
 #endif /* ACE_MT_SAFE */
