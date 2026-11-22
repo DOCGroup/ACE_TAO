@@ -18,6 +18,7 @@
 #include "tao/GIOP_Message_Base.h"
 
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -150,7 +151,7 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
                                    this->orb_core_->input_cdr_msgblock_allocator ());
 
   // Align the message block
-  ACE_CDR::mb_align (&message_block);
+  ACE_CDR::mb_align (std::addressof (message_block));
 
   // Read the message into the  message block that we have created on
   // the stack.

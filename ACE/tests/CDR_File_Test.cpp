@@ -279,13 +279,13 @@ run_test (int write_file,
       // Create message block for the whole file.  Ensure that it is
       // aligned to properly handle the double.
       ACE_Message_Block mb (ACE_CDR::MAX_ALIGNMENT + msgsize);
-      ACE_CDR::mb_align (&mb);
+      ACE_CDR::mb_align (std::addressof (mb));
 
       mb.copy (buffer, msgsize);
 
       // Create CDR input stream from the message block.
 
-      ACE_InputCDR input_cdr (&mb);
+      ACE_InputCDR input_cdr (std::addressof (mb));
       input_cdr.reset_byte_order ((int) byte_order);
 
       ACE_DEBUG ((LM_DEBUG,

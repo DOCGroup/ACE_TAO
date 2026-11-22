@@ -15,6 +15,7 @@
 #include "tao/GIOP_Message_Base.h"
 
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -141,7 +142,7 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
                                    this->orb_core_->input_cdr_msgblock_allocator ());
 
   // Align the message block
-  ACE_CDR::mb_align (&message_block);
+  ACE_CDR::mb_align (std::addressof (message_block));
 
   size_t const missing_header_data = this->messaging_object ()->header_length ();
 

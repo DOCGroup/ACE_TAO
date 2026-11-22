@@ -544,7 +544,7 @@ TAO_UIPMC_Mcast_Transport::handle_input (
         this->orb_core_->input_cdr_msgblock_allocator ());
 
       // Align the message block.
-      ACE_CDR::mb_align (&message_block);
+      ACE_CDR::mb_align (std::addressof (message_block));
 
       complete->copy_data (message_block.wr_ptr ());
 

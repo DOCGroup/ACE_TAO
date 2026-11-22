@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <cstddef>
 #include <cstring>
+#include <memory>
 
 TimeStamp_Protocol_Object::TimeStamp_Protocol_Object (
     TAO_AV_Callback *callback,
@@ -54,7 +55,7 @@ TimeStamp_Protocol_Object::send_frame (ACE_Message_Block *frame,
   timestamp.wr_ptr (sizeof timestamp_value);
 
   ACE_Message_Block * const continuation = frame->cont ();
-  frame->cont (&timestamp);
+  frame->cont (std::addressof (timestamp));
   ssize_t const result = this->transport_->send (frame);
   frame->cont (continuation);
   return result < 0 ? static_cast<int> (result) : 0;

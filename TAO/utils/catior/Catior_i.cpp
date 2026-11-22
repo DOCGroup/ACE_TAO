@@ -212,7 +212,7 @@ Catior_i::catior (char const * str)
 
   ACE_Message_Block mb (std::strlen (str)  / 2 + 1
                         + ACE_CDR::MAX_ALIGNMENT);
-  ACE_CDR::mb_align (&mb);
+  ACE_CDR::mb_align (std::addressof (mb));
 
   char * const buffer = mb.rd_ptr ();
   char const *tmp = str;

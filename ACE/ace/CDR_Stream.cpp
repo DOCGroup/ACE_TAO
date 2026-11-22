@@ -2329,7 +2329,7 @@ ACE_InputCDR::clone_from (ACE_InputCDR &cdr)
 
   // As we have reset the stream, try to align the underlying message
   // block in the incoming stream
-  ACE_CDR::mb_align (&cdr.start_);
+  ACE_CDR::mb_align (std::addressof (cdr.start_));
 
   // Get the read & write pointer positions again
   char *nrd_ptr = cdr.start_.rd_ptr ();

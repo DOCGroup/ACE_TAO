@@ -14,6 +14,8 @@
 
 #include "ace/Log_Msg.h"
 
+#include <memory>
+
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   int status {};
@@ -21,7 +23,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   for (CORBA::ULong i = 16; i != 64; ++i)
     {
       ACE_Message_Block mb (i + ACE_CDR::MAX_ALIGNMENT);
-      ACE_CDR::mb_align (&mb);
+      ACE_CDR::mb_align (std::addressof (mb));
       mb.wr_ptr (i);
 
       CORBA::Double const dbl = i;
@@ -47,7 +49,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
         }
 
       ACE_Message_Block read_mb (len + ACE_CDR::MAX_ALIGNMENT);
-      ACE_CDR::mb_align (&mb);
+      ACE_CDR::mb_align (std::addressof (mb));
       mb.wr_ptr (len);
       input.read_char_array (mb.rd_ptr (), len);
 
