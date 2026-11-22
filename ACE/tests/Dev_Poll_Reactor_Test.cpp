@@ -287,7 +287,7 @@ Server::handle_timeout (const ACE_Time_Value &,
 //     return -1;
 
 //   ACE_DEBUG ((LM_INFO,
-//               "SERVER HANDLE = %d\n",
+//               "SERVER HANDLE = %H\n",
 //               this->get_handle ()));
 
   ++this->call_count_;
