@@ -389,13 +389,17 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
    // if it's not found in the host file or the DNS datase, there is nothing
    // much we can do. embed the IP address
    if (hp == 0 || hp->h_name == 0)
-     return -1;
+     {
+       return -1;
+     }
 
    if (ACE::debug())
-     ACELIB_DEBUG ((LM_DEBUG,
-                 ACE_TEXT ("(%P|%t) - ACE::get_fqdn, ")
-                 ACE_TEXT ("canonical host name is %C\n"),
-                 hp->h_name));
+     {
+       ACELIB_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) - ACE::get_fqdn, ")
+                      ACE_TEXT ("canonical host name is %C\n"),
+                      hp->h_name));
+     }
 
    // check if the canonical name is the FQDN
    if (!std::strchr (hp->h_name, '.'))
@@ -415,20 +419,24 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
                  {
                    // we got an FQDN from an alias. use this
                    if (std::strlen (*q) >= len)
-                     // the hostname is too huge to fit into a
-                     // buffer of size MAXHOSTNAMELEN
-                     // should we check other aliases as well
-                     // before bailing out prematurely?
-                     // for right now, let's do it. this (short name)
-                     // is atleast better than embedding the IP
-                     // address in the profile
-                     continue;
+                     {
+                       // the hostname is too huge to fit into a
+                       // buffer of size MAXHOSTNAMELEN
+                       // should we check other aliases as well
+                       // before bailing out prematurely?
+                       // for right now, let's do it. this (short name)
+                       // is atleast better than embedding the IP
+                       // address in the profile
+                       continue;
+                     }
 
                    if (ACE::debug ())
-                     ACELIB_DEBUG ((LM_DEBUG,
-                                 ACE_TEXT ("(%P|%t) - ACE::get_fqdn, ")
-                                 ACE_TEXT ("found fqdn within alias as %C\n"),
-                                 *q));
+                     {
+                       ACELIB_DEBUG ((LM_DEBUG,
+                                      ACE_TEXT ("(%P|%t) - ACE::get_fqdn, ")
+                                      ACE_TEXT ("found fqdn within alias as %C\n"),
+                                      *q));
+                     }
                    std::strcpy (hostname, *q);
 
                    return 0;
@@ -469,7 +477,9 @@ get_ip_interfaces_win32 (size_t &count,
   // Get an (overlapped) DGRAM socket to test with
   sock = socket (AF_INET, SOCK_DGRAM, 0);
   if (sock == INVALID_SOCKET)
-    return -1;
+    {
+      return -1;
+    }
 
   DWORD bytes;
   status = WSAIoctl(sock,
@@ -483,7 +493,9 @@ get_ip_interfaces_win32 (size_t &count,
                     0);
   closesocket (sock);
   if (status == SOCKET_ERROR)
-    return -1;
+    {
+      return -1;
+    }
 
   n_interfaces = bytes / sizeof(INTERFACE_INFO);
 
@@ -520,7 +532,9 @@ get_ip_interfaces_win32 (size_t &count,
                         0);
       closesocket (sock);
       if (status != SOCKET_ERROR)
-        n_v6_interfaces = v6info->iAddressCount;
+        {
+          n_v6_interfaces = v6info->iAddressCount;
+        }
     }
 # endif /* ACE_HAS_IPV6 */
 
@@ -539,12 +553,16 @@ get_ip_interfaces_win32 (size_t &count,
 
       lpii = info + i;
       if (!(lpii->iiFlags & IFF_UP))
-        continue;
+        {
+          continue;
+        }
 
       // We assume IPv4 addresses here
       addrp = reinterpret_cast<struct sockaddr_in *> (&lpii->iiAddress.AddressIn);
       if (addrp->sin_addr.s_addr == INADDR_ANY)
-        continue;
+        {
+          continue;
+        }
 
       // Set the address for the caller.
       addr_array[count].set(addrp, sizeof(sockaddr_in));
@@ -559,7 +577,9 @@ get_ip_interfaces_win32 (size_t &count,
       struct sockaddr_in6 *addr6p;
 
       if (v6info->Address[i].lpSockaddr->sa_family != AF_INET6)
-        continue;
+        {
+          continue;
+        }
 
       addr6p = reinterpret_cast<struct sockaddr_in6 *> (v6info->Address[i].lpSockaddr);
       if (IN6_IS_ADDR_UNSPECIFIED(&addr6p->sin6_addr))  // IN6ADDR_ANY?
@@ -573,7 +593,9 @@ get_ip_interfaces_win32 (size_t &count,
 # endif /* ACE_HAS_IPV6 */
 
   if (count == 0)
-    return 0;
+    {
+      return 0;
+    }
 
   addrs = safe_addr_array.release ();
 
@@ -693,10 +715,12 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
   ACE_HANDLE handle = ACE::get_handle();
 
   if (handle == ACE_INVALID_HANDLE)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE::get_ip_interfaces:open")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("ACE::get_ip_interfaces:open")),
+                          -1);
+    }
 
   size_t num_ifs = 0;
 
@@ -793,7 +817,9 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
               int addrlen = static_cast<int> (sizeof (struct sockaddr_in));
 #  if defined (ACE_HAS_IPV6)
               if (addr->sin_family == AF_INET6)
-                addrlen = static_cast<int> (sizeof (struct sockaddr_in6));
+                {
+                  addrlen = static_cast<int> (sizeof (struct sockaddr_in6));
+                }
 #  endif
               addr_array[count].set (addr, addrlen);
               ++count;
@@ -848,7 +874,9 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
 
           error = ACE_OS::getaddrinfo (s_ipaddr, 0, &hints, &res0);
           if (error)
-            continue;
+            {
+              continue;
+            }
 
           if (res0->ai_family == AF_INET6 &&
                 !IN6_IS_ADDR_UNSPECIFIED (&reinterpret_cast<sockaddr_in6 *> (res0->ai_addr)->sin6_addr))
@@ -887,11 +915,13 @@ ACE::count_interfaces (ACE_HANDLE handle, size_t &how_many)
   int if_num = 0;
 # endif /* SIOCGLIFNUM */
   if (ACE_OS::ioctl (handle, cmd, (caddr_t)&if_num) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE::count_interfaces:")
-                       ACE_TEXT ("ioctl - SIOCGLIFNUM failed")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("ACE::count_interfaces:")
+                           ACE_TEXT ("ioctl - SIOCGLIFNUM failed")),
+                          -1);
+    }
 # if defined (SIOCGLIFNUM)
   how_many = if_num.lifn_count;
 # else
