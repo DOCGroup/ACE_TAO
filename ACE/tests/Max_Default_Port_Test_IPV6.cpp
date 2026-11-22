@@ -91,7 +91,7 @@ My_Accept_Handler::port ()
 long max_connected_port = 0;
 
 #if defined (ACE_HAS_IPV6)
-static void *
+static ACE_THR_FUNC_RETURN
 client (void *arg)
 {
   ACE_INET_Addr *remote_addr = reinterpret_cast<ACE_INET_Addr *> (arg);
@@ -117,7 +117,7 @@ client (void *arg)
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("connection failed")));
 
-      return nullptr;
+      return ACE_THR_FUNC_RETURN_NULL;
     }
 
   // if connect succesful, what is the max port number we connected
@@ -131,7 +131,7 @@ client (void *arg)
 
   cli_stream.close ();
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 #endif /*ACE_HAS_IPV6*/
 
@@ -171,7 +171,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       if (ACE_Thread_Manager::instance ()->spawn_n
           (1,
-           ACE_THR_FUNC (client),
+           client,
            reinterpret_cast<void *> (&addr),
            THR_NEW_LWP | THR_DETACHED) == -1)
         {

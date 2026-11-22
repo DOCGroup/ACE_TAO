@@ -95,7 +95,7 @@ My_Accept_Handler::port ()
 
 long max_connected_port = 0;
 
-void *
+ACE_THR_FUNC_RETURN
 client (void *arg)
 {
   ACE_INET_Addr *remote_addr = reinterpret_cast<ACE_INET_Addr *> (arg);
@@ -138,7 +138,7 @@ client (void *arg)
 #if defined (ACE_VXWORKS)
         }
 #endif
-      return nullptr;
+      return ACE_THR_FUNC_RETURN_NULL;
     }
 
 #if defined (ACE_VXWORKS)
@@ -156,7 +156,7 @@ client (void *arg)
 
   cli_stream.close ();
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int
@@ -212,7 +212,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       if (ACE_Thread_Manager::instance ()->spawn_n
           (1,
-           ACE_THR_FUNC (client),
+           client,
            reinterpret_cast <void *> (&addr),
            THR_NEW_LWP | THR_DETACHED) == -1)
         {
