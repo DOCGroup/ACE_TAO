@@ -60,8 +60,7 @@ public:
    */
   CORBA::Object_ptr resolve (CosNaming::Name const &n) override;
 
-  // Set the Naming Manager as a static so that it is available for all
-  // naming context implementations.
+  /// Set the Naming Manager shared by all naming context implementations.
   static void set_naming_manager (TAO_FT_Naming_Manager *mgr_impl);
 
   bool is_object_group (CORBA::Object_ptr const obj) const;

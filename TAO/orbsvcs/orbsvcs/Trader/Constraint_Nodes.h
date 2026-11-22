@@ -237,15 +237,15 @@ public:
 
   void operator= (TAO_Literal_Constraint const& co);
 
-  // Conversion routines.
+  /// @name Conversion operators
+  /// @{
   operator CORBA::Boolean () const;
   operator CORBA::ULongLong () const;
   operator CORBA::LongLong () const;
   operator CORBA::Double () const;
   operator const char* () const;
   operator const CORBA::Any* () const;
-
-  // Return the type represented by this MysteryOperand.
+  /// @}
 
   friend TAO_Trading_Serv_Export bool
     operator< (TAO_Literal_Constraint const& left,

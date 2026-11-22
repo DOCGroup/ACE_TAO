@@ -165,26 +165,23 @@ public:
 
   explicit TAO_Import_Attributes (TAO_Import_Attributes_i const& attrs);
 
+  /// Search cardinality determines the maximum number of offers searched
+  /// before not considering other offers.
   CORBA::ULong def_search_card () override;
 
   CORBA::ULong max_search_card () override;
 
-  // Search cardinality determines the maximum number of offers searched
-  // before not considering other offers.
-
+  /// Match cardinality determines the maximum number of offers matched to
+  /// the constraints before not considering other offers.
   CORBA::ULong def_match_card () override;
 
   CORBA::ULong max_match_card () override;
 
-  // Match cardinality determines the maximum number of offers
-  // matched to the constraints before not considering other offers..
-
+  /// Return cardinality determines the maximum number of offers marked for
+  /// return before not considering other offers.
   CORBA::ULong def_return_card () override;
 
   CORBA::ULong max_return_card () override;
-
-  // Return cardinality determines the maximum number of offers marked
-  // to return before not considering other offers.
 
   CORBA::ULong max_list () override;
 

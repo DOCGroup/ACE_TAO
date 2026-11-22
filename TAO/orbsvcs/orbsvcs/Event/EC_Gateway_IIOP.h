@@ -89,7 +89,7 @@ public:
   /// Disconnect and shutdown the gateway
   int shutdown ();
 
-  // The following methods are documented in the base class.
+  /// These methods are documented in the base class.
   void close () override;
   void update_consumer (RtecEventChannelAdmin::ConsumerQOS const &sub) override;
   void update_supplier (RtecEventChannelAdmin::SupplierQOS const &pub) override;
