@@ -28,20 +28,15 @@
 #include "asnmp/smival.h"
 #include "asnmp/integer.h"
 
-//------------[ Counter32 Class ]------------------------------------------
-// The counter class allows all the functionality of unsigned
-// 32 bit integers but is recognized as a distinct SMI type. Counter32
-// class objects may be set or get into Vb objects.
-//
-// This class does not behave as defined by the abstract model
-// in RFC 1155 section 3.2.3.3
-
 /**
  * @class Counter32
  *
  * @brief Defines the member functions for the Counter32 concrete class
  * This class implements RFC 1155 Counter Object and is named
  * Counter32 after the RFC1902 redefinition of V1 SMI datatypes
+ * It behaves like an unsigned 32-bit integer, retains a distinct SMI type,
+ * and can be used in Vb objects. It does not follow the abstract model in
+ * RFC 1155 section 3.2.3.3.
  */
 class ASNMP_Export Counter32 : public SnmpUInt32
 {

@@ -30,7 +30,6 @@
   derivatives based upon this software code base.
 =====================================================================*/
 
-//----------[ extern C libraries Needed ]---------------------------------
 #include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

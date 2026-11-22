@@ -27,7 +27,6 @@
 
 #include "asnmp/asn1.h"                       // ASN.1 header file
 
-//--------------[ well known trap ids ]-----------------------------------
 /**
  * @class snmpTrapsOid
  *

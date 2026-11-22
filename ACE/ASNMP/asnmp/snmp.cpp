@@ -27,7 +27,6 @@
 
 #define INCLUDE_SNMP_ERR_STRINGS_
 
-//----[ snmp++ includes ]----------------------------------------------
 #include "asnmp/snmp.h"    // class def for this module
 #include "asnmp/oid.h"     // class def for oids
 #include "asnmp/enttraps.h" // class def for well known trap oids

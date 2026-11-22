@@ -27,14 +27,10 @@
 
 constexpr size_t INTOUTBUF = 3 * sizeof (long) + 2;
 
-//------------[ Integer Classes ]------------------------------------------
-// The integer class allows all the functionality of the various
-// integers but is contained in a Value object for consistency
-// among the various types.
-// class objects may be set or get into Vb objects.
-//
-
-// 32 bit unsigned integer class
+/// @name Integer classes.
+/// These classes wrap integers in Value objects to provide a consistent
+/// interface and integrate with Vb objects.
+/// @{
 /**
  * @class SnmpUInt32
  *
@@ -82,7 +78,6 @@ protected:
   char output_buffer[INTOUTBUF] {};
 };
 
-// 32 bit signed integer class
   /**
    * @class SnmpInt32
    *
@@ -129,5 +124,7 @@ protected:
   bool valid_flag {};
   char output_buffer[INTOUTBUF] {};
 };
+
+/// @}
 
 #endif

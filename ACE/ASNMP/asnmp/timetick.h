@@ -29,15 +29,12 @@
 
 constexpr size_t TICKOUTBUF = 3 * sizeof (unsigned long) + 12;
 
-//------------[ TimeTicks Class ]-----------------------------------
-// The timeticks class allows all the functionality of unsigned
-// integers but is recognized as a distinct SMI type. TimeTicks
-// objects may be get or set into Vb objects.
-//
 /**
  * @class TimeTicks
  *
  * @brief Define RFC1155 TimeTicks Data object
+ * Behaves like an unsigned integer while retaining a distinct SMI type and
+ * can be used in Vb objects.
  */
 class ASNMP_Export TimeTicks : public SnmpUInt32
 {
