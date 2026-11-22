@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ErrorHandler.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef _ACEXML_ERRORHANDLER_H_
 #define _ACEXML_ERRORHANDLER_H_
 

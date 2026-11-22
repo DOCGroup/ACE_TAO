@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    SAXPrint_Handler.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACEXML_SAXPRINT_HANDLER_H
 #define ACEXML_SAXPRINT_HANDLER_H

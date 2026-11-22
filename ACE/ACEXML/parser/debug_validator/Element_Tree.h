@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Element_Tree.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef _ACEXML_ELEMENT_TREE_H_
 #define _ACEXML_ELEMENT_TREE_H_
 

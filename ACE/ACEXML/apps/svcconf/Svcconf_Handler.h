@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    Svcconf_Handler.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACEXML_SVCCONF_HANDLER_H
 #define ACEXML_SVCCONF_HANDLER_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    HttpCharStream.h
  *
  *  @author Krishnakumar B <kitty@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _ACEXML_HTTPCHARSTREAM_H_
 #define _ACEXML_HTTPCHARSTREAM_H_

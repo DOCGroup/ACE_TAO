@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Attributes.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _ACEXML_ATTRIBUTES_H_
 #define _ACEXML_ATTRIBUTES_H_

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    DTDHandler.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef _ACEXML_DTDHANDLER_H_
 #define _ACEXML_DTDHANDLER_H_
 

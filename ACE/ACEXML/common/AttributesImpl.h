@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    AttributesImpl.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACEXML_ATTRIBUTESIMPL_H
 #define ACEXML_ATTRIBUTESIMPL_H

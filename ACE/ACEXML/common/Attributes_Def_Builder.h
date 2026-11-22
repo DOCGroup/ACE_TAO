@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Attributes_Def_Builder.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef _ACEXML_ATTRIBUTES_DEF_BUILDER_H_
 #define _ACEXML_ATTRIBUTES_DEF_BUILDER_H_
 

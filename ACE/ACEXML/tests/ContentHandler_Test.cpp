@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    ContentHandler_Test.cpp
  *
  *  @author Steve Huston  <shuston@riverace.com>
  */
-//=============================================================================
 
 #include "ACEXML/common/DefaultHandler.h"
 #include "ACEXML/common/InputSource.h"

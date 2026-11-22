@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Debug_Attributes_Builder.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef _ACEXML_DEBUG_ATTRIBUTES_BUILDER_H_
 #define _ACEXML_DEBUG_ATTRIBUTES_BUILDER_H_
 

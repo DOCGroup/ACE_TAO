@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ACEXML_Export.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 // Definition for Win32 Export directives.
 // This file is generated automatically by generate_export_file.pl

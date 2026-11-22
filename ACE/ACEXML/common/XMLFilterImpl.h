@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    XMLFilterImpl.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef ACEXML_XMLFILTERIMPL_H
 #define ACEXML_XMLFILTERIMPL_H
 #include /**/ "ace/pre.h"

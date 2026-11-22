@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Parser.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  *  @author Krishnakumar B <kitty@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _ACEXML_BASIC_PARSER_H_
 #define _ACEXML_BASIC_PARSER_H_

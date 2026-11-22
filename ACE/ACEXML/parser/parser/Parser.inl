@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    Parser.inl
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 ACEXML_INLINE ACEXML_ContentHandler *
 ACEXML_Parser::getContentHandler () const

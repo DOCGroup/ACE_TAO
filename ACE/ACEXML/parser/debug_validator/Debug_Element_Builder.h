@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Debug_Element_Builder.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef _ACEXML_DEBUG_ELEMENT_BUILDER_H_
 #define _ACEXML_DEBUG_ELEMENT_BUILDER_H_
 

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ParserInternals.h
  *
  *  @author Krishnakumar B <kitty@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _ACEXML_PARSER_INTERNALS_H_
 #define _ACEXML_PARSER_INTERNALS_H_

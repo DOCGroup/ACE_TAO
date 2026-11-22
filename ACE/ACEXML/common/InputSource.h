@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    InputSource.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _ACEXML_INPUTSOURCE_H_
 #define _ACEXML_INPUTSOURCE_H_

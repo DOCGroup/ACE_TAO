@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Debug_DTD_Manager.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef _ACEXML_DEBUG_DTD_Manager_H_
 #define _ACEXML_DEBUG_DTD_Manager_H_
 

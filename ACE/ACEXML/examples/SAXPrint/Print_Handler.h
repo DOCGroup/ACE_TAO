@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    Print_Handler.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACEXML_PRINT_HANDLER_H
 #define ACEXML_PRINT_HANDLER_H

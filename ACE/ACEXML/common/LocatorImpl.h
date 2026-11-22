@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    LocatorImpl.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  *  @author Krishnakumar Balasubramanian <kitty@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACEXML_LOCALTORIMPL_H
 #define ACEXML_LOCALTORIMPL_H

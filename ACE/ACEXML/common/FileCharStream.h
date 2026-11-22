@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    FileCharStream.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _ACEXML_FILECHARSTREAM_H_
 #define _ACEXML_FILECHARSTREAM_H_

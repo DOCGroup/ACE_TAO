@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Entity_Manager.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  *  @author Krishnakumar B <kitty@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACEXML_ENTITY_MANAGER_H
 #define ACEXML_ENTITY_MANAGER_H

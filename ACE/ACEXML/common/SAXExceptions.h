@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    SAXExceptions.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _ACEXML_SAXEXCEPTIONS_H_
 #define _ACEXML_SAXEXCEPTIONS_H_

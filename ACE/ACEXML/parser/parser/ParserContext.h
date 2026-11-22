@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ParserContext.h
  *
  *  @author Krishnakumar B <kitty@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACEXML_PARSER_CONTEXT_H
 #define ACEXML_PARSER_CONTEXT_H

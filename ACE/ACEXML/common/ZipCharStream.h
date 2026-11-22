@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ZipCharStream.h
  *
  *  @author Krishnakumar B <kitty@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _ACEXML_ZIPCHARSTREAM_H_
 #define _ACEXML_ZIPCHARSTREAM_H_

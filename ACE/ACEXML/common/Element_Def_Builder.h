@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Element_Def_Builder.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef _ACEXML_ELEMENT_DEF_BUILDER_H_
 #define _ACEXML_ELEMENT_DEF_BUILDER_H_
 

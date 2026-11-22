@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    NamespaceSupport.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACEXML_NAMESPACESUPPORT_H
 #define ACEXML_NAMESPACESUPPORT_H

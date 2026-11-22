@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    DefaultHandler.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef ACEXML_DEFAULTHANDLER_H
 #define ACEXML_DEFAULTHANDLER_H
 
