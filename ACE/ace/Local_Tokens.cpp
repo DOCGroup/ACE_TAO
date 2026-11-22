@@ -1033,8 +1033,10 @@ ACE_RW_Token::owners (OWNER_STACK &stack,
            iterator.advance ())
         {
           if (temp->proxy ()->type () == WRITER)
-            // We've gone through all the readers.
-            break;
+            {
+              // We've gone through all the readers.
+              break;
+            }
 
           stack.push (temp);
 

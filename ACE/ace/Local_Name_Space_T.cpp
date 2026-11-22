@@ -98,8 +98,10 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::remap (EXCEPTION_POINTERS *ep)
   // defined. Thus currently this will only work for
   // ACE_MMap_Memory_Pool.
   if (this->allocator_->alloc ().memory_pool ().remap (addr) == -1)
-    // Kick it upstairs...
-    return EXCEPTION_CONTINUE_SEARCH;
+    {
+      // Kick it upstairs...
+      return EXCEPTION_CONTINUE_SEARCH;
+    }
 
 #if __X86__
   // This is 80x86-specific.
