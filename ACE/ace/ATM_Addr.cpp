@@ -5,6 +5,8 @@
 
 #include "ace/Log_Category.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_FORE_ATM_WS2)
 #include /**/ "forews2.h"
 #endif /* ACE_HAS_FORE_ATM_WS2 */
@@ -112,7 +114,7 @@ void *
 ACE_ATM_Addr::get_addr () const
 {
   ACE_TRACE ("ACE_ATM_Addr::get_addr");
-  return &this->atm_addr_;
+  return std::addressof (this->atm_addr_);
 }
 
 void
