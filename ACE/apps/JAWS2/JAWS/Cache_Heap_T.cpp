@@ -12,7 +12,9 @@ JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::JAWS_Cache_Heap (ACE_Allocator *alloc,
     size_ (0)
 {
   if (this->allocator_ == nullptr)
-    this->allocator_ = ACE_Allocator::instance ();
+    {
+      this->allocator_ = ACE_Allocator::instance ();
+    }
 
   size_t const memsize
     = this->maxsize_ * sizeof (Cache_Heap_Item *);

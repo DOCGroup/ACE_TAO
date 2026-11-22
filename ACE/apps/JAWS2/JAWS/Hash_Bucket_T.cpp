@@ -40,7 +40,9 @@ JAWS_Hash_Bucket_DLCStack (ACE_Allocator *alloc)
     tail_ {}
 {
   if (this->allocator_ == nullptr)
-    this->allocator_ = ACE_Allocator::instance ();
+    {
+      this->allocator_ = ACE_Allocator::instance ();
+    }
 }
 
 template <class EXT_ID, class INT_ID>

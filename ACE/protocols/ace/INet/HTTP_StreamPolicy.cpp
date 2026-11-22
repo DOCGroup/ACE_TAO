@@ -30,7 +30,9 @@ namespace ACE
         if (this->count_ < this->length_)
         {
           if (this->count_ + length > this->length_)
-            length = this->length_ - this->count_;
+            {
+              length = this->length_ - this->count_;
+            }
           n = this->read_from_stream_i (buf, length);
           if (n > 0)
             {

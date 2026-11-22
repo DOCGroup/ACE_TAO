@@ -15,7 +15,9 @@ JAWS_Cache_List<EXT_ID,FACT,H_FN,E_FN>::JAWS_Cache_List (ACE_Allocator *alloc,
     tail_ {}
 {
   if (this->allocator_ == nullptr)
-    this->allocator_ = ACE_Allocator::instance ();
+    {
+      this->allocator_ = ACE_Allocator::instance ();
+    }
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN>

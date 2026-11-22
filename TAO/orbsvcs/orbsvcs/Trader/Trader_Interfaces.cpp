@@ -461,7 +461,9 @@ retrieve_links (TAO_Policies& policies,
       CORBA::ULong hc = policies.hop_count ();
 
       if (hc > 0)
-        should_follow = true;
+        {
+          should_follow = true;
+        }
     }
 
   if (should_follow)

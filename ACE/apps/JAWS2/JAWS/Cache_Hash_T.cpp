@@ -64,7 +64,9 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::JAWS_Cache_Hash (ACE_Allocator *alloc
   this->size_ = size;
 
   if (this->allocator_ == nullptr)
-    this->allocator_ = ACE_Allocator::instance ();
+    {
+      this->allocator_ = ACE_Allocator::instance ();
+    }
 
   size_t const memsize = this->size_ * sizeof (CACHE_BUCKET_MANAGER *);
 
