@@ -18,7 +18,9 @@ public:
   HA_Device_Repository ()
   {
     for (int i = 0; i < N_DEVICES; ++i)
-      tokens_[i] = std::make_unique<ACE_Local_Mutex> (0, 0, 1);
+      {
+        tokens_[i] = std::make_unique<ACE_Local_Mutex> (0, 0, 1);
+      }
   }
 
   HA_Device_Repository (HA_Device_Repository const &) = delete;
@@ -71,7 +73,9 @@ public:
   int svc () override
   {
     for (int i = 0; i < HA_Device_Repository::N_DEVICES; ++i)
-      rep_.update_device (i, "");
+      {
+        rep_.update_device (i, "");
+      }
     return 0;
   }
 
