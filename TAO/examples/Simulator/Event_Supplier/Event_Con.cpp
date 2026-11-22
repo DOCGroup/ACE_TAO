@@ -235,13 +235,15 @@ get_options (int argc, ACE_TCHAR *argv [])
   }
 
   if (argc != get_opt.opt_ind ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%s: too many arguments\n"
-                       "Usage: %s %s\n",
-                       argv[0],
-                       argv[0],
-                       usage),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%s: too many arguments\n"
+                         "Usage: %s %s\n",
+                         argv[0],
+                         argv[0],
+                         usage),
+                        1);
+    }
   return 0;
 }
 
@@ -261,9 +263,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -275,9 +279,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
@@ -302,9 +308,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in());
 
       if (CORBA::is_nil (ec.in()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Not able to get the Event Service reference.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Not able to get the Event Service reference.\n"),
+                            -1);
+        }
 
       // Create consumer.
 

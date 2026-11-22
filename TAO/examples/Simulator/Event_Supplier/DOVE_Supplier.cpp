@@ -47,9 +47,11 @@ DOVE_Supplier::init ()
       TAO_ORB_Core_instance()->orb()->resolve_initial_references("RootPOA");
 
     if (CORBA::is_nil (poaObject_var.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         " (%P|%t) Unable to initialize the POA.\n"),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to initialize the POA.\n"),
+                          -1);
+      }
 
     this->root_POA_var_ =
       PortableServer::POA::_narrow (poaObject_var.in ());
@@ -63,9 +65,11 @@ DOVE_Supplier::init ()
           "NameService");
 
     if (CORBA::is_nil (namingObj_var.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                        " (%P|%t) Unable to get the Naming Service.\n"),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to get the Naming Service.\n"),
+                          -1);
+      }
 
     this->namingContext_var_ =
       CosNaming::NamingContext::_narrow (namingObj_var.in ());
@@ -310,9 +314,11 @@ DOVE_Supplier::get_EventChannel ()
        RtecEventChannelAdmin::EventChannel::_narrow (eventServiceObj_var.in());
 
     if (CORBA::is_nil (this->current_connection_params_->eventChannel_var_.in()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "The reference to the event channel is nil!"),
-                         1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "The reference to the event channel is nil!"),
+                          1);
+      }
   }
   catch (CORBA::Exception const &ex)
   {
