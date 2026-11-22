@@ -478,7 +478,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           ACE_NEW_RETURN (pf, TAO::Storable_FlatFileFactory (directory), -1);
           std::unique_ptr<TAO::Storable_Factory> persFactory(pf);
 
-          // Use an auto_ptr to ensure that we clean up the factory in the case
+          // Use a unique_ptr to ensure that we clean up the factory in the case
           // of a failure in creating and registering the Activator.
           TAO_Storable_Naming_Context_Factory* cf =
             this->storable_naming_context_factory (context_size);
@@ -533,7 +533,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           }
           catch (CORBA::Exception const &ex)
           {
-            // The activator already took over the factories so we need to release the auto_ptr
+            // The activator already took over the factories so we need to release the unique_ptr
             if (this->use_servant_activator_)
             {
               // The context factory is now owned by the activator
