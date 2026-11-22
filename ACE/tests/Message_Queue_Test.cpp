@@ -335,7 +335,7 @@ iterator_test ()
 
       ACE_Message_Block *entry {};
       ACE_NEW_RETURN (entry,
-                      ACE_Message_Block ((char *) buffer[i],
+                      ACE_Message_Block (reinterpret_cast<char *> (buffer[i]),
                                          sizeof buffer[i]),
                       -1);
 

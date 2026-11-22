@@ -28,7 +28,7 @@ static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 void *
 client (void *arg)
 {
-  ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
+  ACE_INET_Addr *remote_addr = static_cast<ACE_INET_Addr *> (arg);
   ACE_INET_Addr server_addr (remote_addr->get_port_number (), ACE_LOCALHOST);
   ACE_SOCK_Stream cli_stream;
   ACE_SOCK_Connector con;
@@ -115,7 +115,7 @@ client (void *arg)
 void *
 server (void *arg)
 {
-  ACE_SOCK_Acceptor *peer_acceptor = (ACE_SOCK_Acceptor *) arg;
+  ACE_SOCK_Acceptor *peer_acceptor = static_cast<ACE_SOCK_Acceptor *> (arg);
 
   if (peer_acceptor->enable (ACE_NONBLOCK) == -1)
   {
@@ -250,13 +250,13 @@ spawn ()
           ACE_OS::exit (0);
           /* NOTREACHED */
         default:
-          server ((void *) &peer_acceptor);
+          server (&peer_acceptor);
           ACE_OS::wait ();
         }
 #elif defined (ACE_HAS_THREADS)
       if (ACE_Thread_Manager::instance ()->spawn
           (ACE_THR_FUNC (server),
-           (void *) &peer_acceptor,
+           &peer_acceptor,
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n%a"),
@@ -265,7 +265,7 @@ spawn ()
 
       if (ACE_Thread_Manager::instance ()->spawn
           (ACE_THR_FUNC (client),
-           (void *) &server_addr,
+           &server_addr,
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n%a"),

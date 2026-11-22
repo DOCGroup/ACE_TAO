@@ -229,7 +229,7 @@ client (void *arg)
 void *
 server (void *arg)
 {
-  ACE_SOCK_Acceptor *peer_acceptor = (ACE_SOCK_Acceptor *) arg;
+  ACE_SOCK_Acceptor *peer_acceptor = static_cast<ACE_SOCK_Acceptor *> (arg);
   ACE_SOCK_Stream sock_str;
   ACE_INET_Addr cli_addr;
   ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);

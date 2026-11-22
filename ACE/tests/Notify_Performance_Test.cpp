@@ -76,7 +76,7 @@ client (void *arg)
     }
   else
   {
-    handler = (Handler *) arg;
+    handler = static_cast<Handler *> (arg);
   }
 
   for (int i = 0; i < opt_nloops; ++i)
