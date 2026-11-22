@@ -39,48 +39,37 @@
 #include <new>
 #include <utility>
 
-//---------------[ Vb::Vb() ]--------------------------------------
-// makes an vb, unitialized
+/// Construct an uninitialized variable binding.
 Vb::Vb ()
 {
 }
 
-//---------------[ Vb::Vb( const Oid &oid) ]-----------------------------
-// makes a vb with oid portion initialized
+/// Construct a variable binding with its OID initialized.
 Vb::Vb (Oid const &oid)
   : iv_vb_oid_ (oid)
 {
 }
 
-//---------------[ Vb::Vb( const Oid &oid, const SmiSyntax &val) ]-------
 Vb::Vb (Oid const &oid, SnmpSyntax const &val, SmiUINT32 status)
   : iv_vb_oid_ (oid), iv_vb_value_ (val.clone ()), exception_status_ (status)
 {
 }
 
-//---------------[ Vb::Vb( const Vb &vb) ]-----------------------------
 Vb::Vb (Vb const &vb)
 {
    *this = vb;
 }
 
-//---------------[ Vb::~Vb() ]------------------------------------------
-// if the vb has a oid or an octect string then
-// the associated memory needs to be freed
+/// Release the OID and value storage owned by this variable binding.
 Vb::~Vb() = default;
 
-//--------------[ Vb::valid() ]-----------------------------------------
-// returns validity of a Vb object
-// must have a valid oid and value
+/// Return whether this variable binding has a valid OID and value.
 int Vb::valid () const
 {
    return iv_vb_oid_.valid () && iv_vb_value_ != nullptr && iv_vb_value_->valid ();
 }
 
-//---------------[ Vb& Vb::operator=( const Vb &vb) ]--------------------
-// overloaded assignment allows assigning one Vb to another
-// this involves deep memory thus target vb needs to be freed
-// before assigning source
+/// Assign another variable binding, cloning its value.
 Vb &Vb::operator= (Vb const &vb)
 {
    if (this == std::addressof (vb))
@@ -98,31 +87,25 @@ Vb &Vb::operator= (Vb const &vb)
    return *this; // return self reference
 }
 
- // set a Vb null, if its not already
+/// Set this variable binding to null if it is not already.
 void Vb::set_null ()
 {
    free_vb();
 }
 
-//---------------[ Vb::set_oid( const Oid oid ) ]-----------------------
-// set value oid only with another oid
+/// Set the OID value.
 void Vb::set_oid (Oid const &oid)
 {
   iv_vb_oid_ = oid;
 }
 
-//---------------[ Vb::get_oid( Oid &oid) ]-----------------------------
-// get oid portion
+/// Get the OID portion.
 void Vb::get_oid (Oid &oid) const
 {
   oid = iv_vb_oid_;
 }
 
-//----------------[ void Vb::free_vb() ]--------------------------------
-// protected method to free memory
-// this methos is used to free memory when assigning new vbs
-// or destructing
-// in the case of oids and octets, we need to do a deep free
+/// Free the value storage and reset the exception status.
 void Vb::free_vb()
 {
   iv_vb_value_.reset ();
@@ -302,7 +285,6 @@ int Vb::get_value (Oid &s)
    }
 }
 
-//---------------[ Vb::get_value( Value &val) ]--------
 int Vb::get_value (SnmpSyntax &val)
 {
   if (iv_vb_value_ != nullptr) {
@@ -323,12 +305,8 @@ int Vb::get_value (SnmpSyntax &val)
   }
 }
 
-//-----[ misc]--------------------------------------------------------
-
-// return the current syntax
-// This method violates Object Orientation but may be useful if
-// the caller has a vb object and does not know what it is.
-// This would be useful in the implementation of a browser.
+/// Return the syntax, or the exception status if an exception is present.
+/// This can be useful when a caller does not know the value type.
 SmiUINT32 Vb::get_syntax ()
 {
   if ( exception_status_ != SNMP_CLASS_SUCCESS)
@@ -341,7 +319,7 @@ SmiUINT32 Vb::get_syntax ()
   }
 }
 
-// return the printabel value
+/// Return the printable value.
 char const *Vb::to_string_value ()
 {
   if (iv_vb_value_ != nullptr)
@@ -354,13 +332,13 @@ char const *Vb::to_string_value ()
   }
 }
 
-// return the printable oid
+/// Return the printable OID.
 char const *Vb::to_string_oid ()
 {
   return iv_vb_oid_.to_string();
 }
 
-// generate string with name/ value format
+/// Generate a string in name/value format.
 char const *Vb::to_string ()
 {
   size_t len = std::strlen (iv_vb_oid_.to_string ());
@@ -377,14 +355,13 @@ char const *Vb::to_string ()
   return output_.get ();
 }
 
-// friend function to set exception status
+/// Set the exception status.
 void set_exception_status (Vb *vb, SmiUINT32 status)
 {
    vb->exception_status_ = status;
 }
 
-// equivlence operator overloaded
-// hack, by side effect, compare based on string formatting output_
+/// Compare variable bindings for equivalence using their formatted output.
 bool operator== (Vb const &lhs, Vb const &rhs)
 {
   if ( lhs.iv_vb_oid_ != rhs.iv_vb_oid_)
