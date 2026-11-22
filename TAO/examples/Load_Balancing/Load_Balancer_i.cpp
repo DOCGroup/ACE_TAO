@@ -319,10 +319,10 @@ Object_Group_i::destroy ()
   PortableServer::POA_var poa =
     this->_default_POA ();
 
-  PortableServer::ObjectId_var id =
+  PortableServer::ObjectId_var object_id =
     poa->servant_to_id (this);
 
-  poa->deactivate_object (id.in ());
+  poa->deactivate_object (object_id.in ());
 
   ACE_DEBUG ((LM_DEBUG,
               "Load_Balancer: Destroyed object group"
