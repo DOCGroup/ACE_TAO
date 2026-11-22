@@ -11,15 +11,19 @@ int ConnectionAcceptHandler<ACE_PEER_STREAM_2>::open (void * acceptor)
   ACE_INET_Addr addr;
 
   if (this->peer ().get_remote_addr (addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   reactor_ = static_cast<ACE_Service_Object*> (acceptor)->reactor();
 
   if (reactor_->register_handler (this,
     ACE_Event_Handler::READ_MASK) == -1)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-    "(%P|%t) can't register with reactor\n"),
-    -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+      "(%P|%t) can't register with reactor\n"),
+      -1);
+    }
 
   ORBSVCS_DEBUG ((LM_DEBUG,
     "(%P|%t) connected with %s\n",
@@ -60,7 +64,9 @@ int ConnectionAcceptHandler<ACE_PEER_STREAM_2>::handle_input (ACE_HANDLE)
 {
   char buf[8];
   if (this->peer().recv(buf, sizeof(buf)))
-    return -1;
+    {
+      return -1;
+    }
   return 0;
 }
 
