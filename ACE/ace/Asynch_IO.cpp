@@ -205,7 +205,7 @@ ACE_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
                                int priority,
                                int signal_number)
 {
-  if (0 == this->implementation_)
+  if (this->implementation_ == nullptr)
     {
       errno = EFAULT;
       return -1;
@@ -324,7 +324,7 @@ ACE_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
                                  int priority,
                                  int signal_number)
 {
-  if (0 == this->implementation_)
+  if (this->implementation_ == nullptr)
     {
       errno = EFAULT;
       return -1;
@@ -449,7 +449,7 @@ ACE_Asynch_Read_File::readv (ACE_Message_Block &message_block,
                              int priority,
                              int signal_number)
 {
-  if (0 == this->implementation_)
+  if (this->implementation_ == nullptr)
     {
       errno = EFAULT;
       return -1;
@@ -558,7 +558,7 @@ ACE_Asynch_Write_File::writev (ACE_Message_Block &message_block,
                                int priority,
                                int signal_number)
 {
-  if (0 == this->implementation_)
+  if (this->implementation_ == nullptr)
     {
       errno = EFAULT;
       return -1;
