@@ -36,8 +36,8 @@ int run_main (int, ACE_TCHAR *[])
   addr.set (path);
   ACE_TEST_ASSERT (addr.get_size () > origin);
   ACE_TEST_ASSERT (addr.addr_to_string (buf, sizeof (buf)) == 0);
-  ACE_TEST_ASSERT (strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
-  ACE_TEST_ASSERT (strcmp (path, addr.get_path_name ()) == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (path, addr.get_path_name ()) == 0);
 
   // Set longer path by ACE_UNIX_Addr::string_to_addr
   origin = addr.get_size ();
@@ -45,8 +45,8 @@ int run_main (int, ACE_TCHAR *[])
   addr.string_to_addr (path);
   ACE_TEST_ASSERT (addr.get_size () > origin);
   ACE_TEST_ASSERT (addr.addr_to_string (buf, sizeof (buf)) == 0);
-  ACE_TEST_ASSERT (strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
-  ACE_TEST_ASSERT (strcmp (path, addr.get_path_name ()) == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (path, addr.get_path_name ()) == 0);
 
   // Set shorter path by ACE_UNIX_Addr::string_to_addr
   origin = addr.get_size ();
@@ -54,8 +54,8 @@ int run_main (int, ACE_TCHAR *[])
   addr.string_to_addr (path);
   ACE_TEST_ASSERT (addr.get_size () < origin);
   ACE_TEST_ASSERT (addr.addr_to_string (buf, sizeof (buf)) == 0);
-  ACE_TEST_ASSERT (strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
-  ACE_TEST_ASSERT (strcmp (path, addr.get_path_name ()) == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (path, addr.get_path_name ()) == 0);
 
   // Bounds checking
   path = "/tmp/bounds.test";
@@ -139,17 +139,17 @@ int run_main (int, ACE_TCHAR *[])
   path = "@/tmp/ace.test";
   addr.set (path);
   ACE_TEST_ASSERT (addr.addr_to_string (buf, sizeof (buf)) == 0);
-  ACE_TEST_ASSERT (strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
   ACE_TEST_ASSERT (*addr.get_path_name () == '\0');
-  ACE_TEST_ASSERT (strcmp (path + 1, addr.get_path_name () + 1) == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (path + 1, addr.get_path_name () + 1) == 0);
 
   // Set abstract path by string_to_addr.
   path = "@/tmp/unix_addr_test";
   addr.string_to_addr (path);
   ACE_TEST_ASSERT (addr.addr_to_string (buf, sizeof (buf)) == 0);
-  ACE_TEST_ASSERT (strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
   ACE_TEST_ASSERT (*addr.get_path_name () == '\0');
-  ACE_TEST_ASSERT (strcmp (path + 1, addr.get_path_name () + 1) == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (path + 1, addr.get_path_name () + 1) == 0);
 
   // Test maximum length abstract path
   char max_path[108] = "@";  // sizeof(sun_path) is typically 108
@@ -157,7 +157,7 @@ int run_main (int, ACE_TCHAR *[])
   max_path[sizeof(max_path) - 1] = '\0';
   addr.set(max_path);
   ACE_TEST_ASSERT(addr.addr_to_string(buf, sizeof(buf)) == 0);
-  ACE_TEST_ASSERT(strcmp(max_path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (max_path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
 
   // Test comparison of abstract paths
   ACE_UNIX_Addr addr2("@/tmp/ace.test");
