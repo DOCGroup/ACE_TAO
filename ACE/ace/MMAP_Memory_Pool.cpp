@@ -54,6 +54,12 @@ ACE_MMAP_Memory_Pool::sync (size_t len, int flags)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::sync");
 
+  // ACE_Malloc_T forwards its -1 sync-all sentinel through size_t.
+  if (len == static_cast<size_t> (-1))
+    {
+      return this->sync (flags);
+    }
+
   return this->mmap_.sync (len, flags);
 }
 
