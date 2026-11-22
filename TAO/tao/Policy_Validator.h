@@ -99,6 +99,7 @@ protected:
   TAO_ORB_Core &orb_core_;
 
 private:
+  TAO_Policy_Validator () = delete;
   TAO_Policy_Validator (TAO_Policy_Validator const &) = delete;
   TAO_Policy_Validator &operator= (TAO_Policy_Validator const &) = delete;
   TAO_Policy_Validator (TAO_Policy_Validator &&) = delete;

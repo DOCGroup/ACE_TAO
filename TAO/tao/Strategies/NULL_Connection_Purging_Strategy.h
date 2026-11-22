@@ -40,6 +40,7 @@ public:
   int cache_maximum () const override;
 
 private:
+  TAO_NULL_Connection_Purging_Strategy () = delete;
   TAO_NULL_Connection_Purging_Strategy (TAO_NULL_Connection_Purging_Strategy const &) = delete;
   TAO_NULL_Connection_Purging_Strategy &operator= (
     TAO_NULL_Connection_Purging_Strategy const &) = delete;

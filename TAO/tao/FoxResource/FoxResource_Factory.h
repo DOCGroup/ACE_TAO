@@ -37,6 +37,7 @@ namespace TAO
   public:
     explicit FoxResource_Factory (FXApp *app);
 
+    FoxResource_Factory () = delete;
     FoxResource_Factory (FoxResource_Factory const &) = delete;
     FoxResource_Factory &operator= (FoxResource_Factory const &) = delete;
     FoxResource_Factory (FoxResource_Factory &&) = delete;

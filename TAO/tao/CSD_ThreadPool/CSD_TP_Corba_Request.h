@@ -41,6 +41,7 @@ namespace TAO
     {
     public:
       ~TP_Corba_Request() override = default;
+      TP_Corba_Request () = delete;
       TP_Corba_Request (TP_Corba_Request const &) = delete;
       TP_Corba_Request &operator= (TP_Corba_Request const &) = delete;
       TP_Corba_Request (TP_Corba_Request &&) = delete;

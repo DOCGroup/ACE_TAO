@@ -112,6 +112,7 @@ private:
   bool are_policies_parsed_ {};
 
 private:
+  TAO_RT_Stub () = delete;
   TAO_RT_Stub (TAO_RT_Stub const &) = delete;
   TAO_RT_Stub (TAO_RT_Stub &&) = delete;
   TAO_RT_Stub &operator = (TAO_RT_Stub const &) = delete;

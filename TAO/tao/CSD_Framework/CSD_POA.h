@@ -46,6 +46,7 @@ public:
 
   ~TAO_CSD_POA () override;
 
+  TAO_CSD_POA () = delete;
   TAO_CSD_POA (TAO_CSD_POA const &) = delete;
   TAO_CSD_POA &operator= (TAO_CSD_POA const &) = delete;
   TAO_CSD_POA (TAO_CSD_POA &&) = delete;

@@ -84,6 +84,7 @@ public:
   /// @}
 
 private:
+  TAO_UIOP_Transport () = delete;
   TAO_UIOP_Transport (TAO_UIOP_Transport const &) = delete;
   TAO_UIOP_Transport &operator= (TAO_UIOP_Transport const &) = delete;
   TAO_UIOP_Transport (TAO_UIOP_Transport &&) = delete;

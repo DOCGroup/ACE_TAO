@@ -83,6 +83,7 @@ public:
 #endif
 
   ~TAO_POA_Manager ();
+  TAO_POA_Manager () = delete;
   TAO_POA_Manager (TAO_POA_Manager const &) = delete;
   TAO_POA_Manager &operator= (TAO_POA_Manager const &) = delete;
   TAO_POA_Manager (TAO_POA_Manager &&) = delete;

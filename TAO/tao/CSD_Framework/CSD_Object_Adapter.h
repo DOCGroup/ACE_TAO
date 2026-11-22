@@ -36,6 +36,7 @@ public:
 
   ~TAO_CSD_Object_Adapter () override;
 
+  TAO_CSD_Object_Adapter () = delete;
   TAO_CSD_Object_Adapter (TAO_CSD_Object_Adapter const &) = delete;
   TAO_CSD_Object_Adapter &operator= (TAO_CSD_Object_Adapter const &) = delete;
   TAO_CSD_Object_Adapter (TAO_CSD_Object_Adapter &&) = delete;

@@ -208,6 +208,7 @@ public:
                              RTScheduling::DistributableThread_ptr dt,
                              TAO_RTScheduler_Current_i* prev_current);
 
+  TAO_RTScheduler_Current_i () = delete;
   TAO_RTScheduler_Current_i (TAO_RTScheduler_Current_i const &) = delete;
   TAO_RTScheduler_Current_i &operator= (TAO_RTScheduler_Current_i const &) = delete;
   TAO_RTScheduler_Current_i (TAO_RTScheduler_Current_i &&) = delete;
@@ -301,6 +302,7 @@ public:
 
   ~DTTask () override;
 
+  DTTask () = delete;
   DTTask (DTTask const &) = delete;
   DTTask &operator= (DTTask const &) = delete;
   DTTask (DTTask &&) = delete;

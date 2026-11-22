@@ -47,6 +47,7 @@ namespace TAO
     public:
       IIOP_Current_Impl (TAO_ORB_Core *core, size_t tss_slot_id);
 
+      IIOP_Current_Impl () = delete;
       IIOP_Current_Impl (IIOP_Current_Impl const &) = delete;
       IIOP_Current_Impl (IIOP_Current_Impl &&) = delete;
       IIOP_Current_Impl &operator= (IIOP_Current_Impl const &) = delete;

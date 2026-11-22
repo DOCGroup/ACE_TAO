@@ -65,6 +65,7 @@ public:
   CORBA::Any * decode_value (CORBA::OctetSeq const& data,
                              CORBA::TypeCode_ptr tc) override;
 
+  TAO_CDR_Encaps_Codec () = delete;
   TAO_CDR_Encaps_Codec (TAO_CDR_Encaps_Codec const &) = delete;
   TAO_CDR_Encaps_Codec &operator= (TAO_CDR_Encaps_Codec const &) = delete;
   TAO_CDR_Encaps_Codec (TAO_CDR_Encaps_Codec &&) = delete;

@@ -93,6 +93,7 @@ public:
                     ACE_Time_Value *max_time_wait = nullptr) override;
 
 private:
+  TAO_DIOP_Transport () = delete;
   TAO_DIOP_Transport (TAO_DIOP_Transport const &) = delete;
   TAO_DIOP_Transport &operator= (TAO_DIOP_Transport const &) = delete;
   TAO_DIOP_Transport (TAO_DIOP_Transport &&) = delete;

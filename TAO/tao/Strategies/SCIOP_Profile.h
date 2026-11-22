@@ -87,6 +87,7 @@ protected:
   CORBA::Boolean do_is_equivalent (TAO_Profile const *other_profile) override;
 
 protected:
+  TAO_SCIOP_Profile () = delete;
   TAO_SCIOP_Profile (TAO_SCIOP_Profile const &) = delete;
   TAO_SCIOP_Profile &operator= (TAO_SCIOP_Profile const &) = delete;
   TAO_SCIOP_Profile (TAO_SCIOP_Profile &&) = delete;

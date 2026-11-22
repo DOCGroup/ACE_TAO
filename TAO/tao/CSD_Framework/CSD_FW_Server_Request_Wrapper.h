@@ -70,6 +70,7 @@ namespace TAO
       /// Cancel the request.
       void cancel();
 
+      FW_Server_Request_Wrapper () = delete;
       FW_Server_Request_Wrapper (FW_Server_Request_Wrapper const &) = delete;
       FW_Server_Request_Wrapper &operator= (FW_Server_Request_Wrapper const &) = delete;
       FW_Server_Request_Wrapper (FW_Server_Request_Wrapper &&) = delete;

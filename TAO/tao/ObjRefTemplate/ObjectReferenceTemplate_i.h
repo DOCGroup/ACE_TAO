@@ -84,6 +84,7 @@ namespace TAO
       PortableInterceptor::ObjectId const &id) override;
     /// @}
 
+    ObjectReferenceTemplate () = delete;
     ObjectReferenceTemplate (ObjectReferenceTemplate const &) = delete;
     ObjectReferenceTemplate &operator= (ObjectReferenceTemplate const &) = delete;
     ObjectReferenceTemplate (ObjectReferenceTemplate &&) = delete;

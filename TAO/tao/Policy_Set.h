@@ -92,6 +92,7 @@ public:
 
 private:
   TAO_Policy_Set &operator= (TAO_Policy_Set const &) = delete;
+  TAO_Policy_Set () = delete;
   TAO_Policy_Set (TAO_Policy_Set &&) = delete;
   TAO_Policy_Set &operator= (TAO_Policy_Set &&) = delete;
 

@@ -49,6 +49,7 @@ public:
 
   ~TAO_ZIOP_Stub () override;
 
+  TAO_ZIOP_Stub () = delete;
   TAO_ZIOP_Stub (TAO_ZIOP_Stub const &) = delete;
   TAO_ZIOP_Stub (TAO_ZIOP_Stub &&) = delete;
   TAO_ZIOP_Stub &operator= (TAO_ZIOP_Stub const &) = delete;

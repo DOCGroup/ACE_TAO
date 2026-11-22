@@ -213,6 +213,7 @@ namespace TAO
         IOP::ServiceId id);
 
   protected:
+    ServerRequestInfo () = delete;
     ServerRequestInfo (ServerRequestInfo const &) = delete;
     ServerRequestInfo &operator= (ServerRequestInfo const &) = delete;
     ServerRequestInfo (ServerRequestInfo &&) = delete;

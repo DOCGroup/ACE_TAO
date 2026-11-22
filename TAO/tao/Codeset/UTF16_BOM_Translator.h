@@ -62,6 +62,7 @@ public:
   ACE_CDR::ULong ncs () override { return 0x00010109; }
   ACE_CDR::ULong tcs () override { return 0x00010109; }
 
+  TAO_UTF16_BOM_Translator () = delete;
   TAO_UTF16_BOM_Translator (TAO_UTF16_BOM_Translator const &) = delete;
   TAO_UTF16_BOM_Translator &operator= (TAO_UTF16_BOM_Translator const &) = delete;
   TAO_UTF16_BOM_Translator (TAO_UTF16_BOM_Translator &&) = delete;

@@ -1019,6 +1019,7 @@ protected:
   int notify_reactor_now ();
 
 private:
+  TAO_Transport () = delete;
   TAO_Transport (TAO_Transport const &) = delete;
   TAO_Transport (TAO_Transport &&) = delete;
   TAO_Transport &operator= (TAO_Transport const &) = delete;
@@ -1173,6 +1174,7 @@ private:
 
   private:
     /// A guard represents one dispatch and cannot transfer ownership.
+    Active_Request_Guard () = delete;
     Active_Request_Guard (Active_Request_Guard const &) = delete;
     Active_Request_Guard &operator= (Active_Request_Guard const &) = delete;
     Active_Request_Guard (Active_Request_Guard &&) = delete;

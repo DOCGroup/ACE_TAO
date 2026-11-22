@@ -245,6 +245,7 @@ private:
   void set_giop_flags (TAO_OutputCDR & msg) const;
 
 private:
+  TAO_GIOP_Message_Base () = delete;
   TAO_GIOP_Message_Base (TAO_GIOP_Message_Base const &) = delete;
   TAO_GIOP_Message_Base &operator= (TAO_GIOP_Message_Base const &) = delete;
   TAO_GIOP_Message_Base (TAO_GIOP_Message_Base &&) = delete;

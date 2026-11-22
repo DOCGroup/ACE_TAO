@@ -37,6 +37,7 @@ class TAO_ZIOP_Export TAO_ZIOPPolicy_Validator : public TAO_Policy_Validator
 public:
   explicit TAO_ZIOPPolicy_Validator (TAO_ORB_Core &orb_core);
 
+  TAO_ZIOPPolicy_Validator () = delete;
   TAO_ZIOPPolicy_Validator (TAO_ZIOPPolicy_Validator const &) = delete;
   TAO_ZIOPPolicy_Validator &operator= (TAO_ZIOPPolicy_Validator const &) = delete;
   TAO_ZIOPPolicy_Validator (TAO_ZIOPPolicy_Validator &&) = delete;

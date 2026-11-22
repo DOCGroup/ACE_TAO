@@ -155,6 +155,7 @@ namespace TAO
     /// ORB.
     bool get_connection_timeout (ACE_Time_Value &max_wait_time);
 
+    Profile_Transport_Resolver () = delete;
     Profile_Transport_Resolver (Profile_Transport_Resolver const &) = delete;
     Profile_Transport_Resolver &operator= (Profile_Transport_Resolver const &) = delete;
     Profile_Transport_Resolver (Profile_Transport_Resolver &&) = delete;

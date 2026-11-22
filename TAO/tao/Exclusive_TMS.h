@@ -62,6 +62,7 @@ public:
   /// @}
 
 private:
+  TAO_Exclusive_TMS () = delete;
   TAO_Exclusive_TMS (TAO_Exclusive_TMS const &) = delete;
   TAO_Exclusive_TMS (TAO_Exclusive_TMS &&) = delete;
   TAO_Exclusive_TMS &operator= (TAO_Exclusive_TMS const &) = delete;

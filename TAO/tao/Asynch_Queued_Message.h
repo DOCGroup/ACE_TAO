@@ -55,6 +55,7 @@ public:
                              bool is_heap_allocated);
 
   ~TAO_Asynch_Queued_Message () override;
+  TAO_Asynch_Queued_Message () = delete;
   TAO_Asynch_Queued_Message (TAO_Asynch_Queued_Message const &) = delete;
   TAO_Asynch_Queued_Message &operator= (TAO_Asynch_Queued_Message const &) = delete;
   TAO_Asynch_Queued_Message (TAO_Asynch_Queued_Message &&) = delete;

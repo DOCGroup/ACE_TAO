@@ -39,6 +39,7 @@ class TAO_EndpointPolicy_Export TAO_EndpointPolicy_Factory
 public:
   explicit TAO_EndpointPolicy_Factory (TAO_ORB_Core *orb_core);
 
+  TAO_EndpointPolicy_Factory () = delete;
   TAO_EndpointPolicy_Factory (TAO_EndpointPolicy_Factory const &) = delete;
   TAO_EndpointPolicy_Factory &operator= (TAO_EndpointPolicy_Factory const &) = delete;
   TAO_EndpointPolicy_Factory (TAO_EndpointPolicy_Factory &&) = delete;

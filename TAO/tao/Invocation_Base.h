@@ -139,6 +139,7 @@ namespace TAO
     GIOP::ReplyStatusType reply_status_;
 
   private:
+    Invocation_Base () = delete;
     Invocation_Base (Invocation_Base const &) = delete;
     Invocation_Base &operator= (Invocation_Base const &) = delete;
     Invocation_Base (Invocation_Base &&) = delete;

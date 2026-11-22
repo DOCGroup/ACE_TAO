@@ -135,6 +135,7 @@ protected:
 
 private:
   /// Endpoints should not be copied.
+  TAO_Endpoint () = delete;
   TAO_Endpoint (TAO_Endpoint const &) = delete;
   TAO_Endpoint &operator= (TAO_Endpoint const &) = delete;
   TAO_Endpoint (TAO_Endpoint &&) = delete;

@@ -56,6 +56,7 @@ namespace CORBA
     explicit ServerRequest (TAO_ServerRequest &orb_server_request);
 
     ~ServerRequest ();
+    ServerRequest () = delete;
     ServerRequest (ServerRequest const &) = delete;
     ServerRequest &operator= (ServerRequest const &) = delete;
     ServerRequest (ServerRequest &&) = delete;

@@ -89,6 +89,7 @@ protected:
   CORBA::Boolean do_is_equivalent (TAO_Profile const *other_profile) override;
 
 private:
+  TAO_SHMIOP_Profile () = delete;
   TAO_SHMIOP_Profile (TAO_SHMIOP_Profile const &) = delete;
   TAO_SHMIOP_Profile &operator= (TAO_SHMIOP_Profile const &) = delete;
   TAO_SHMIOP_Profile (TAO_SHMIOP_Profile &&) = delete;

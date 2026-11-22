@@ -40,6 +40,7 @@ public:
 
   ~TAO_POA_RT_Policy_Validator () override = default;
 
+  TAO_POA_RT_Policy_Validator () = delete;
   TAO_POA_RT_Policy_Validator (TAO_POA_RT_Policy_Validator const &) = delete;
   TAO_POA_RT_Policy_Validator &operator= (TAO_POA_RT_Policy_Validator const &) = delete;
   TAO_POA_RT_Policy_Validator (TAO_POA_RT_Policy_Validator &&) = delete;

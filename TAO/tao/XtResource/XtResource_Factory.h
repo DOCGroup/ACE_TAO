@@ -38,6 +38,7 @@ namespace TAO
   public:
     explicit XtResource_Factory (XtAppContext context);
 
+    XtResource_Factory () = delete;
     XtResource_Factory (XtResource_Factory const &) = delete;
     XtResource_Factory &operator= (XtResource_Factory const &) = delete;
     XtResource_Factory (XtResource_Factory &&) = delete;

@@ -58,6 +58,7 @@ public:
   /// @}
 
 private:
+  TAO_RT_Transport_Descriptor () = delete;
   TAO_RT_Transport_Descriptor (TAO_RT_Transport_Descriptor const &) = delete;
   TAO_RT_Transport_Descriptor &operator= (TAO_RT_Transport_Descriptor const &) = delete;
   TAO_RT_Transport_Descriptor (TAO_RT_Transport_Descriptor &&) = delete;

@@ -43,6 +43,7 @@ public:
   TAO_DII_Deferred_Reply_Dispatcher (CORBA::Request_ptr req,
                                      TAO_ORB_Core *orb_core);
 
+  TAO_DII_Deferred_Reply_Dispatcher () = delete;
   TAO_DII_Deferred_Reply_Dispatcher (TAO_DII_Deferred_Reply_Dispatcher const &) = delete;
   TAO_DII_Deferred_Reply_Dispatcher &operator= (TAO_DII_Deferred_Reply_Dispatcher const &) = delete;
   TAO_DII_Deferred_Reply_Dispatcher (TAO_DII_Deferred_Reply_Dispatcher &&) = delete;
@@ -82,6 +83,7 @@ public:
                                      TAO_ORB_Core *orb_core);
   ~TAO_DII_Asynch_Reply_Dispatcher () override;
 
+  TAO_DII_Asynch_Reply_Dispatcher () = delete;
   TAO_DII_Asynch_Reply_Dispatcher (TAO_DII_Asynch_Reply_Dispatcher const &) = delete;
   TAO_DII_Asynch_Reply_Dispatcher &operator= (TAO_DII_Asynch_Reply_Dispatcher const &) = delete;
   TAO_DII_Asynch_Reply_Dispatcher (TAO_DII_Asynch_Reply_Dispatcher &&) = delete;

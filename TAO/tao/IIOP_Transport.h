@@ -115,6 +115,7 @@ private:
   /// endpoints in the @a acceptor
   int get_listen_point (IIOP::ListenPointList &listen_point_list,
                         TAO_Acceptor *acceptor);
+  TAO_IIOP_Transport () = delete;
   TAO_IIOP_Transport (TAO_IIOP_Transport const &) = delete;
   TAO_IIOP_Transport &operator= (TAO_IIOP_Transport const &) = delete;
   TAO_IIOP_Transport (TAO_IIOP_Transport &&) = delete;

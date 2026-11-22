@@ -52,6 +52,7 @@ public:
   /// we are out of leaders.
   bool no_leaders_available () override;
 
+  TAO_DTP_New_Leader_Generator () = delete;
   TAO_DTP_New_Leader_Generator (TAO_DTP_New_Leader_Generator const &) = delete;
   TAO_DTP_New_Leader_Generator &operator= (
     TAO_DTP_New_Leader_Generator const &) = delete;
@@ -76,6 +77,7 @@ class TAO_DTP_Thread_Pool_Threads : public ACE_Task_Base
 public:
   explicit TAO_DTP_Thread_Pool_Threads (TAO_DTP_Thread_Pool &pool);
 
+  TAO_DTP_Thread_Pool_Threads () = delete;
   TAO_DTP_Thread_Pool_Threads (TAO_DTP_Thread_Pool_Threads const &) = delete;
   TAO_DTP_Thread_Pool_Threads &operator= (
     TAO_DTP_Thread_Pool_Threads const &) = delete;
@@ -108,6 +110,7 @@ class TAO_DTP_Termination_Waiter : public ACE_Task_Base
 public:
   explicit TAO_DTP_Termination_Waiter (TAO_DTP_Thread_Pool &pool);
 
+  TAO_DTP_Termination_Waiter () = delete;
   TAO_DTP_Termination_Waiter (TAO_DTP_Termination_Waiter const &) = delete;
   TAO_DTP_Termination_Waiter &operator= (
     TAO_DTP_Termination_Waiter const &) = delete;
@@ -183,6 +186,7 @@ public:
 
   /// @}
 
+  TAO_DTP_Thread_Pool () = delete;
   TAO_DTP_Thread_Pool (TAO_DTP_Thread_Pool const &) = delete;
   TAO_DTP_Thread_Pool &operator= (TAO_DTP_Thread_Pool const &) = delete;
   TAO_DTP_Thread_Pool (TAO_DTP_Thread_Pool &&) = delete;
@@ -252,6 +256,7 @@ public:
   TAO_ORB_Core &orb_core () const;
   /// @}
 
+  TAO_DTP_Thread_Pool_Manager () = delete;
   TAO_DTP_Thread_Pool_Manager (TAO_DTP_Thread_Pool_Manager const &) = delete;
   TAO_DTP_Thread_Pool_Manager &operator= (
     TAO_DTP_Thread_Pool_Manager const &) = delete;

@@ -55,6 +55,7 @@ namespace TAO
     CORBA::ULong decr_refcount ();
 
   private:
+    Refcounted_ObjectKey () = delete;
     Refcounted_ObjectKey (Refcounted_ObjectKey const &) = delete;
     Refcounted_ObjectKey &operator= (Refcounted_ObjectKey const &) = delete;
     Refcounted_ObjectKey (Refcounted_ObjectKey &&) = delete;

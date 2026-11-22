@@ -67,6 +67,7 @@ namespace TAO
       /// servant object.
       bool is_target(PortableServer::Servant servant);
 
+      TP_Request () = delete;
       TP_Request (TP_Request const &) = delete;
       TP_Request &operator= (TP_Request const &) = delete;
       TP_Request (TP_Request &&) = delete;

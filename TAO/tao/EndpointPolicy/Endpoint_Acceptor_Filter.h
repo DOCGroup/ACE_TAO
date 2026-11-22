@@ -48,6 +48,7 @@ public:
                     TAO_AcceptorSet const &acceptors,
                     CORBA::Short priority = TAO_INVALID_PRIORITY) override;
 
+  TAO_Endpoint_Acceptor_Filter () = delete;
   TAO_Endpoint_Acceptor_Filter (TAO_Endpoint_Acceptor_Filter const &) = delete;
   TAO_Endpoint_Acceptor_Filter &operator= (TAO_Endpoint_Acceptor_Filter const &) = delete;
   TAO_Endpoint_Acceptor_Filter (TAO_Endpoint_Acceptor_Filter &&) = delete;

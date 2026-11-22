@@ -38,6 +38,8 @@ class TAO_RelativeRoundtripTimeoutPolicy
 public:
   explicit TAO_RelativeRoundtripTimeoutPolicy (TimeBase::TimeT const &relative_expiry);
 
+  TAO_RelativeRoundtripTimeoutPolicy () = delete;
+
   TAO_RelativeRoundtripTimeoutPolicy (TAO_RelativeRoundtripTimeoutPolicy const &rhs);
   TAO_RelativeRoundtripTimeoutPolicy &operator= (TAO_RelativeRoundtripTimeoutPolicy const &) = delete;
   TAO_RelativeRoundtripTimeoutPolicy (TAO_RelativeRoundtripTimeoutPolicy &&) = delete;
@@ -96,6 +98,8 @@ class TAO_Messaging_Export TAO_Sync_Scope_Policy
 {
 public:
   explicit TAO_Sync_Scope_Policy (Messaging::SyncScope synchronization);
+
+  TAO_Sync_Scope_Policy () = delete;
 
   TAO_Sync_Scope_Policy (TAO_Sync_Scope_Policy const &rhs);
   TAO_Sync_Scope_Policy &operator= (TAO_Sync_Scope_Policy const &) = delete;

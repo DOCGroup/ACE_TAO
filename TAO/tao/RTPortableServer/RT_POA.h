@@ -178,6 +178,7 @@ public:
 
   ~TAO_RT_POA () override = default;
 
+  TAO_RT_POA () = delete;
   TAO_RT_POA (TAO_RT_POA const &) = delete;
   TAO_RT_POA &operator= (TAO_RT_POA const &) = delete;
   TAO_RT_POA (TAO_RT_POA &&) = delete;

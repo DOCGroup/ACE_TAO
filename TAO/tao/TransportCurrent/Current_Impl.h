@@ -39,6 +39,7 @@ namespace TAO
     public:
       Current_Impl (TAO_ORB_Core *core, size_t tss_slot_id);
 
+      Current_Impl () = delete;
       Current_Impl (Current_Impl const &) = delete;
       Current_Impl (Current_Impl &&) = delete;
       Current_Impl &operator= (Current_Impl const &) = delete;

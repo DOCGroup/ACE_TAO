@@ -94,6 +94,7 @@ public:
                     ACE_Time_Value *max_time_wait = nullptr) override;
 
 private:
+  TAO_COIOP_Transport () = delete;
   TAO_COIOP_Transport (TAO_COIOP_Transport const &) = delete;
   TAO_COIOP_Transport &operator= (TAO_COIOP_Transport const &) = delete;
   TAO_COIOP_Transport (TAO_COIOP_Transport &&) = delete;

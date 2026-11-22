@@ -39,6 +39,7 @@ public:
 
   /// @}
 
+  TAO_Async_Table_Adapter () = delete;
   TAO_Async_Table_Adapter (TAO_Async_Table_Adapter const &) = delete;
   TAO_Async_Table_Adapter &operator= (TAO_Async_Table_Adapter const &) = delete;
   TAO_Async_Table_Adapter (TAO_Async_Table_Adapter &&) = delete;

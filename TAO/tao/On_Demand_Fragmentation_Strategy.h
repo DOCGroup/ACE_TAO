@@ -46,6 +46,7 @@ public:
                 ACE_CDR::ULong pending_length) override;
 
 private:
+  TAO_On_Demand_Fragmentation_Strategy () = delete;
   TAO_On_Demand_Fragmentation_Strategy (TAO_On_Demand_Fragmentation_Strategy const &) = delete;
   TAO_On_Demand_Fragmentation_Strategy &operator= (
     TAO_On_Demand_Fragmentation_Strategy const &) = delete;

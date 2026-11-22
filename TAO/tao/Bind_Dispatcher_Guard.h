@@ -48,6 +48,7 @@ public:
   void status (TAO_Bind_Dispatcher_Status status);
 
 private:
+  TAO_Bind_Dispatcher_Guard () = delete;
   TAO_Bind_Dispatcher_Guard (TAO_Bind_Dispatcher_Guard const &) = delete;
   TAO_Bind_Dispatcher_Guard &operator= (TAO_Bind_Dispatcher_Guard const &) = delete;
   TAO_Bind_Dispatcher_Guard (TAO_Bind_Dispatcher_Guard &&) = delete;

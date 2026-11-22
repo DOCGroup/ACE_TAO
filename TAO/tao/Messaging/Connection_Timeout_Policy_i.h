@@ -44,6 +44,8 @@ class TAO_ConnectionTimeoutPolicy
 public:
   explicit TAO_ConnectionTimeoutPolicy (TimeBase::TimeT const &relative_expiry);
 
+  TAO_ConnectionTimeoutPolicy () = delete;
+
   TAO_ConnectionTimeoutPolicy (TAO_ConnectionTimeoutPolicy const &rhs);
   TAO_ConnectionTimeoutPolicy &operator= (TAO_ConnectionTimeoutPolicy const &) = delete;
   TAO_ConnectionTimeoutPolicy (TAO_ConnectionTimeoutPolicy &&) = delete;

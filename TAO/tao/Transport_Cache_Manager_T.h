@@ -110,6 +110,7 @@ namespace TAO
 
     ~Transport_Cache_Manager_T ();
 
+    Transport_Cache_Manager_T () = delete;
     Transport_Cache_Manager_T (Transport_Cache_Manager_T const &) = delete;
     Transport_Cache_Manager_T &operator= (Transport_Cache_Manager_T const &) = delete;
     Transport_Cache_Manager_T (Transport_Cache_Manager_T &&) = delete;

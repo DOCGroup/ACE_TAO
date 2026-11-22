@@ -55,6 +55,7 @@ public:
                             bool is_heap_allocated = false);
 
   ~TAO_Synch_Queued_Message () override;
+  TAO_Synch_Queued_Message () = delete;
   TAO_Synch_Queued_Message (TAO_Synch_Queued_Message const &) = delete;
   TAO_Synch_Queued_Message &operator= (TAO_Synch_Queued_Message const &) = delete;
   TAO_Synch_Queued_Message (TAO_Synch_Queued_Message &&) = delete;

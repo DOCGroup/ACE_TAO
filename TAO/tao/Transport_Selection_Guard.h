@@ -101,6 +101,7 @@ namespace TAO
     }
 
   private:
+    Transport_Selection_Guard () = delete;
     Transport_Selection_Guard (Transport_Selection_Guard const &) = delete;
     Transport_Selection_Guard (Transport_Selection_Guard &&) = delete;
     Transport_Selection_Guard &operator= (Transport_Selection_Guard &&) = delete;

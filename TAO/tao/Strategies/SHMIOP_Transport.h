@@ -92,6 +92,7 @@ public:
                     ACE_Time_Value *max_time_wait = nullptr) override;
 
 private:
+  TAO_SHMIOP_Transport () = delete;
   TAO_SHMIOP_Transport (TAO_SHMIOP_Transport const &) = delete;
   TAO_SHMIOP_Transport &operator= (TAO_SHMIOP_Transport const &) = delete;
   TAO_SHMIOP_Transport (TAO_SHMIOP_Transport &&) = delete;

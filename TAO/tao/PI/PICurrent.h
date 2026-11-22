@@ -97,6 +97,7 @@ namespace TAO
     ~PICurrent () override = default;
 
   private:
+    PICurrent () = delete;
     PICurrent (PICurrent const &) = delete;
     PICurrent &operator= (PICurrent const &) = delete;
     PICurrent (PICurrent &&) = delete;

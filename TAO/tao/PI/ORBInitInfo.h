@@ -213,6 +213,7 @@ protected:
   void check_validity ();
 
 private:
+  TAO_ORBInitInfo () = delete;
   TAO_ORBInitInfo (TAO_ORBInitInfo const &) = delete;
   TAO_ORBInitInfo &operator= (TAO_ORBInitInfo const &) = delete;
   TAO_ORBInitInfo (TAO_ORBInitInfo &&) = delete;

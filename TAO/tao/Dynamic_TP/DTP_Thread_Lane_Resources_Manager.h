@@ -69,6 +69,7 @@ public:
 
   /// @}
 
+  TAO_DTP_Thread_Lane_Resources_Manager () = delete;
   TAO_DTP_Thread_Lane_Resources_Manager (TAO_DTP_Thread_Lane_Resources_Manager const &) = delete;
   TAO_DTP_Thread_Lane_Resources_Manager &operator= (
     TAO_DTP_Thread_Lane_Resources_Manager const &) = delete;

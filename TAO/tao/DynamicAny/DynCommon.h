@@ -30,6 +30,7 @@ public:
 
   ~TAO_DynCommon () override = default;
 
+  TAO_DynCommon () = delete;
   TAO_DynCommon (TAO_DynCommon const &) = delete;
   TAO_DynCommon &operator= (TAO_DynCommon const &) = delete;
   TAO_DynCommon (TAO_DynCommon &&) = delete;

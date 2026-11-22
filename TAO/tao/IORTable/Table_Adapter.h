@@ -53,6 +53,7 @@ public:
 
   /// @}
 
+  TAO_Table_Adapter () = delete;
   TAO_Table_Adapter (TAO_Table_Adapter const &) = delete;
   TAO_Table_Adapter &operator= (TAO_Table_Adapter const &) = delete;
   TAO_Table_Adapter (TAO_Table_Adapter &&) = delete;

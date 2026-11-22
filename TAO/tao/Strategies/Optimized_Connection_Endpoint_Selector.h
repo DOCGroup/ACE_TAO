@@ -56,6 +56,7 @@ public:
   void select_endpoint (TAO::Profile_Transport_Resolver *,
                         ACE_Time_Value *max_wait_time) override;
 private:
+  TAO_Optimized_Connection_Endpoint_Selector () = delete;
   TAO_Optimized_Connection_Endpoint_Selector (
     TAO_Optimized_Connection_Endpoint_Selector const &) = delete;
   TAO_Optimized_Connection_Endpoint_Selector &operator= (

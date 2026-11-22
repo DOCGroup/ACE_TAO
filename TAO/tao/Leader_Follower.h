@@ -192,6 +192,7 @@ public:
   int defer_event (ACE_Event_Handler *);
 
 private:
+  TAO_Leader_Follower () = delete;
   TAO_Leader_Follower (TAO_Leader_Follower const &) = delete;
   TAO_Leader_Follower &operator= (TAO_Leader_Follower const &) = delete;
   TAO_Leader_Follower (TAO_Leader_Follower &&) = delete;
@@ -313,6 +314,7 @@ public:
   ~TAO_LF_Client_Thread_Helper ();
 
 private:
+  TAO_LF_Client_Thread_Helper () = delete;
   TAO_LF_Client_Thread_Helper (TAO_LF_Client_Thread_Helper const &) = delete;
   TAO_LF_Client_Thread_Helper &operator= (TAO_LF_Client_Thread_Helper const &) = delete;
   TAO_LF_Client_Thread_Helper (TAO_LF_Client_Thread_Helper &&) = delete;
@@ -330,6 +332,7 @@ public:
   ~TAO_LF_Client_Leader_Thread_Helper ();
 
 private:
+  TAO_LF_Client_Leader_Thread_Helper () = delete;
   TAO_LF_Client_Leader_Thread_Helper (TAO_LF_Client_Leader_Thread_Helper const &) = delete;
   TAO_LF_Client_Leader_Thread_Helper &operator= (TAO_LF_Client_Leader_Thread_Helper const &) = delete;
   TAO_LF_Client_Leader_Thread_Helper (TAO_LF_Client_Leader_Thread_Helper &&) = delete;

@@ -41,6 +41,7 @@ public:
 
   ~TAO_Asynch_Timeout_Handler () override = default;
 
+  TAO_Asynch_Timeout_Handler () = delete;
   TAO_Asynch_Timeout_Handler (TAO_Asynch_Timeout_Handler const &) = delete;
   TAO_Asynch_Timeout_Handler &operator= (TAO_Asynch_Timeout_Handler const &) = delete;
   TAO_Asynch_Timeout_Handler (TAO_Asynch_Timeout_Handler &&) = delete;

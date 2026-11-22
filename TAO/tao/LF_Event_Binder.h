@@ -34,6 +34,7 @@ public:
 
   ~TAO_LF_Event_Binder ();
 
+  TAO_LF_Event_Binder () = delete;
   TAO_LF_Event_Binder (TAO_LF_Event_Binder const &) = delete;
   TAO_LF_Event_Binder (TAO_LF_Event_Binder &&) = delete;
   TAO_LF_Event_Binder &operator= (TAO_LF_Event_Binder const &) = delete;

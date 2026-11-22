@@ -36,6 +36,7 @@ namespace TAO
     public:
       explicit Current_ORBInitializer_Base (ACE_TCHAR const *id);
 
+      Current_ORBInitializer_Base () = delete;
       Current_ORBInitializer_Base (Current_ORBInitializer_Base const &) = delete;
       Current_ORBInitializer_Base &operator= (Current_ORBInitializer_Base const &) = delete;
       Current_ORBInitializer_Base (Current_ORBInitializer_Base &&) = delete;

@@ -138,6 +138,7 @@ namespace TAO
         CORBA::Request *req,
         TAO::Invocation_Mode mode = TAO_DII_DEFERRED_INVOCATION);
 
+    DII_Deferred_Invocation_Adapter () = delete;
     DII_Deferred_Invocation_Adapter (DII_Deferred_Invocation_Adapter const &) = delete;
     DII_Deferred_Invocation_Adapter &operator= (DII_Deferred_Invocation_Adapter const &) = delete;
     DII_Deferred_Invocation_Adapter (DII_Deferred_Invocation_Adapter &&) = delete;
@@ -190,6 +191,7 @@ namespace TAO
        int op_len,
        TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION);
 
+    DII_Oneway_Invocation_Adapter () = delete;
     DII_Oneway_Invocation_Adapter (DII_Oneway_Invocation_Adapter const &) = delete;
     DII_Oneway_Invocation_Adapter &operator= (DII_Oneway_Invocation_Adapter const &) = delete;
     DII_Oneway_Invocation_Adapter (DII_Oneway_Invocation_Adapter &&) = delete;

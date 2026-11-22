@@ -71,6 +71,7 @@ protected:
   ~TAO_Priority_Mapping_Manager () override;
 
 private:
+  TAO_Priority_Mapping_Manager () = delete;
   TAO_Priority_Mapping_Manager (TAO_Priority_Mapping_Manager const &) = delete;
   TAO_Priority_Mapping_Manager &operator= (TAO_Priority_Mapping_Manager const &) = delete;
   TAO_Priority_Mapping_Manager (TAO_Priority_Mapping_Manager &&) = delete;

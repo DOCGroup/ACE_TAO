@@ -54,6 +54,7 @@ public:
   int signal ();
 
 private:
+  TAO_LF_Follower () = delete;
   TAO_LF_Follower (TAO_LF_Follower const &) = delete;
   TAO_LF_Follower &operator= (TAO_LF_Follower const &) = delete;
   TAO_LF_Follower (TAO_LF_Follower &&) = delete;

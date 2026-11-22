@@ -189,6 +189,7 @@ namespace TAO
     void set_status (Invocation_Status s);
 
   private:
+    Reply_Guard () = delete;
     Reply_Guard (Reply_Guard const &) = delete;
     Reply_Guard &operator= (Reply_Guard const &) = delete;
     Reply_Guard (Reply_Guard &&) = delete;

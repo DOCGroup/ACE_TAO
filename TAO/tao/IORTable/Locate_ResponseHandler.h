@@ -112,6 +112,7 @@ public:
   static TAO_AMH_Locate_ResponseHandler* _narrow (CORBA::Object_ptr);
   static TAO_AMH_Locate_ResponseHandler* _unchecked_narrow (CORBA::Object_ptr);
 
+  TAO_AMH_Locate_ResponseHandler () = delete;
   TAO_AMH_Locate_ResponseHandler (TAO_AMH_Locate_ResponseHandler const &) = delete;
   TAO_AMH_Locate_ResponseHandler &operator= (TAO_AMH_Locate_ResponseHandler const &) = delete;
   TAO_AMH_Locate_ResponseHandler (TAO_AMH_Locate_ResponseHandler &&) = delete;

@@ -172,6 +172,7 @@ protected:
   CORBA::ULong count_ {1};
 
 private:
+  TAO_IIOP_Profile () = delete;
   TAO_IIOP_Profile (TAO_IIOP_Profile const &) = delete;
   TAO_IIOP_Profile &operator= (TAO_IIOP_Profile const &) = delete;
   TAO_IIOP_Profile (TAO_IIOP_Profile &&) = delete;

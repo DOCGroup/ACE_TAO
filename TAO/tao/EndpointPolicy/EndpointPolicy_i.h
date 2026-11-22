@@ -44,6 +44,7 @@ public:
 
   TAO_EndpointPolicy_i (TAO_EndpointPolicy_i const &rhs);
 
+  TAO_EndpointPolicy_i () = delete;
   TAO_EndpointPolicy_i (TAO_EndpointPolicy_i &&) = delete;
   TAO_EndpointPolicy_i &operator= (TAO_EndpointPolicy_i &&) = delete;
 

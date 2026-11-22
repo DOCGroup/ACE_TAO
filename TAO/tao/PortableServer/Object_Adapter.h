@@ -80,6 +80,7 @@ public:
                       TAO_ORB_Core &orb_core);
 
   ~TAO_Object_Adapter ();
+  TAO_Object_Adapter () = delete;
   TAO_Object_Adapter (TAO_Object_Adapter const &) = delete;
   TAO_Object_Adapter &operator= (TAO_Object_Adapter const &) = delete;
   TAO_Object_Adapter (TAO_Object_Adapter &&) = delete;

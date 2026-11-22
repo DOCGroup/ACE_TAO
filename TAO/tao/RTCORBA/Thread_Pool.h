@@ -88,6 +88,7 @@ protected:
   TAO_Thread_Lane &lane_;
 
 private:
+  TAO_Thread_Pool_Threads () = delete;
   TAO_Thread_Pool_Threads (TAO_Thread_Pool_Threads const &) = delete;
   TAO_Thread_Pool_Threads &operator= (TAO_Thread_Pool_Threads const &) = delete;
   TAO_Thread_Pool_Threads (TAO_Thread_Pool_Threads &&) = delete;
@@ -112,6 +113,7 @@ protected:
   int run (TAO_ORB_Core &orb_core) override;
 
 private:
+  TAO_Dynamic_Thread_Pool_Threads () = delete;
   TAO_Dynamic_Thread_Pool_Threads (TAO_Dynamic_Thread_Pool_Threads const &) = delete;
   TAO_Dynamic_Thread_Pool_Threads &operator= (
     TAO_Dynamic_Thread_Pool_Threads const &) = delete;
@@ -289,6 +291,7 @@ public:
 
   ~TAO_Thread_Pool ();
 
+  TAO_Thread_Pool () = delete;
   TAO_Thread_Pool (TAO_Thread_Pool const &) = delete;
   TAO_Thread_Pool &operator= (TAO_Thread_Pool const &) = delete;
   TAO_Thread_Pool (TAO_Thread_Pool &&) = delete;

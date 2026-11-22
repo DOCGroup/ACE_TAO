@@ -96,6 +96,7 @@ namespace TAO
     int create_backup () override;
 
   private:
+    Storable_FlatFileStream () = delete;
     Storable_FlatFileStream (Storable_FlatFileStream const &) = delete;
     Storable_FlatFileStream &operator= (Storable_FlatFileStream const &) = delete;
     Storable_FlatFileStream (Storable_FlatFileStream &&) = delete;

@@ -70,6 +70,7 @@ namespace TAO
     ~PICurrent_Guard ();
 
   private:
+    PICurrent_Guard () = delete;
     PICurrent_Guard (PICurrent_Guard const &) = delete;
     PICurrent_Guard &operator= (PICurrent_Guard const &) = delete;
     PICurrent_Guard (PICurrent_Guard &&) = delete;

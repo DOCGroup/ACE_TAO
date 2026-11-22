@@ -187,6 +187,7 @@ public:
   */
 
 private:
+  TAO_ClientRequestInfo () = delete;
   TAO_ClientRequestInfo (TAO_ClientRequestInfo const &) = delete;
   TAO_ClientRequestInfo &operator= (TAO_ClientRequestInfo const &) = delete;
   TAO_ClientRequestInfo (TAO_ClientRequestInfo &&) = delete;

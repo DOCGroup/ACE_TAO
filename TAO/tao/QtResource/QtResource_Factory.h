@@ -40,6 +40,7 @@ namespace TAO
   public:
     explicit QtResource_Factory (QApplication *qapp);
 
+    QtResource_Factory () = delete;
     QtResource_Factory (QtResource_Factory const &) = delete;
     QtResource_Factory &operator= (QtResource_Factory const &) = delete;
     QtResource_Factory (QtResource_Factory &&) = delete;

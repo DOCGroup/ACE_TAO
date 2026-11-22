@@ -68,6 +68,7 @@ public:
   bool has_request () override;
 
 private:
+  TAO_Muxed_TMS () = delete;
   TAO_Muxed_TMS (TAO_Muxed_TMS const &) = delete;
   TAO_Muxed_TMS (TAO_Muxed_TMS &&) = delete;
   TAO_Muxed_TMS &operator= (TAO_Muxed_TMS const &) = delete;

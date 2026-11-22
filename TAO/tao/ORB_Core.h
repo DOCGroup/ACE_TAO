@@ -164,6 +164,7 @@ class TAO_Export TAO_ORB_Core
 public:
   TAO_ORB_Core (const char* id, ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> g);
 
+  TAO_ORB_Core () = delete;
   TAO_ORB_Core (TAO_ORB_Core const &) = delete;
   TAO_ORB_Core (TAO_ORB_Core &&) = delete;
   TAO_ORB_Core &operator= (TAO_ORB_Core const &) = delete;

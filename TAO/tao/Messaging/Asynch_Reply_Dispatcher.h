@@ -39,6 +39,7 @@ public:
 
   ~TAO_Asynch_Reply_Dispatcher () override = default;
 
+  TAO_Asynch_Reply_Dispatcher () = delete;
   TAO_Asynch_Reply_Dispatcher (TAO_Asynch_Reply_Dispatcher const &) = delete;
   TAO_Asynch_Reply_Dispatcher &operator= (TAO_Asynch_Reply_Dispatcher const &) = delete;
   TAO_Asynch_Reply_Dispatcher (TAO_Asynch_Reply_Dispatcher &&) = delete;

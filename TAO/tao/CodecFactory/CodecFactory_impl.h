@@ -49,6 +49,7 @@ public:
   /// Create a Coder/Decoder for the given type of encoding and codesets.
   IOP::Codec_ptr create_codec_with_codesets (IOP::Encoding_1_2 const& enc) override;
 
+  TAO_CodecFactory () = delete;
   TAO_CodecFactory (TAO_CodecFactory const &) = delete;
   TAO_CodecFactory &operator= (TAO_CodecFactory const &) = delete;
   TAO_CodecFactory (TAO_CodecFactory &&) = delete;

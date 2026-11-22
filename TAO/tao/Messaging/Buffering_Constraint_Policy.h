@@ -42,6 +42,8 @@ class TAO_Buffering_Constraint_Policy
 public:
   explicit TAO_Buffering_Constraint_Policy (TAO::BufferingConstraint const &buffering_constraint);
 
+  TAO_Buffering_Constraint_Policy () = delete;
+
   TAO_Buffering_Constraint_Policy (TAO_Buffering_Constraint_Policy const &rhs);
   TAO_Buffering_Constraint_Policy &operator= (TAO_Buffering_Constraint_Policy const &) = delete;
   TAO_Buffering_Constraint_Policy (TAO_Buffering_Constraint_Policy &&) = delete;

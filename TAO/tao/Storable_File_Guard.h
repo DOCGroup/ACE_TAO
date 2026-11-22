@@ -34,6 +34,7 @@ namespace TAO
     explicit Storable_File_Guard (bool redundant,
                                   bool use_backup = Storable_Base::use_backup_default);
 
+    Storable_File_Guard () = delete;
     Storable_File_Guard (Storable_File_Guard const &) = delete;
     Storable_File_Guard (Storable_File_Guard &&) = delete;
     Storable_File_Guard & operator= (Storable_File_Guard const &) = delete;

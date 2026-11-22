@@ -76,6 +76,7 @@ public:
 
   /// @}
 
+  TAO_IORInfo () = delete;
   TAO_IORInfo (TAO_IORInfo const &) = delete;
   TAO_IORInfo &operator= (TAO_IORInfo const &) = delete;
   TAO_IORInfo (TAO_IORInfo &&) = delete;

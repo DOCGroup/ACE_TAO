@@ -39,6 +39,7 @@ public:
   void update_item (TAO_Transport& transport) override;
 
 private:
+  TAO_FIFO_Connection_Purging_Strategy () = delete;
   TAO_FIFO_Connection_Purging_Strategy (TAO_FIFO_Connection_Purging_Strategy const &) = delete;
   TAO_FIFO_Connection_Purging_Strategy &operator= (
     TAO_FIFO_Connection_Purging_Strategy const &) = delete;

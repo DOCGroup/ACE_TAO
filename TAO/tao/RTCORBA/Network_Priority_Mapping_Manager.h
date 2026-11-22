@@ -76,6 +76,7 @@ protected:
   ~TAO_Network_Priority_Mapping_Manager () override;
 
 private:
+  TAO_Network_Priority_Mapping_Manager () = delete;
   TAO_Network_Priority_Mapping_Manager (TAO_Network_Priority_Mapping_Manager const &) = delete;
   TAO_Network_Priority_Mapping_Manager &operator= (
     TAO_Network_Priority_Mapping_Manager const &) = delete;

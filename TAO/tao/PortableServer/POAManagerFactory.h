@@ -41,6 +41,7 @@ public:
   explicit TAO_POAManager_Factory (TAO_Object_Adapter &object_adapter);
 
   ~TAO_POAManager_Factory () override;
+  TAO_POAManager_Factory () = delete;
   TAO_POAManager_Factory (TAO_POAManager_Factory const &) = delete;
   TAO_POAManager_Factory &operator= (TAO_POAManager_Factory const &) = delete;
   TAO_POAManager_Factory (TAO_POAManager_Factory &&) = delete;

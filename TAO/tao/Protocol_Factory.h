@@ -69,6 +69,7 @@ public:
   virtual int requires_explicit_endpoint () const = 0;
 
 private:
+  TAO_Protocol_Factory () = delete;
   TAO_Protocol_Factory (TAO_Protocol_Factory const &) = delete;
   TAO_Protocol_Factory &operator= (TAO_Protocol_Factory const &) = delete;
   TAO_Protocol_Factory (TAO_Protocol_Factory &&) = delete;

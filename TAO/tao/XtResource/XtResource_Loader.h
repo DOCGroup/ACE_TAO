@@ -44,6 +44,7 @@ namespace TAO
 
     virtual ~XtResource_Loader ();
 
+    XtResource_Loader () = delete;
     XtResource_Loader (XtResource_Loader const &) = delete;
     XtResource_Loader &operator= (XtResource_Loader const &) = delete;
     XtResource_Loader (XtResource_Loader &&) = delete;

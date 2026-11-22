@@ -53,6 +53,7 @@ namespace TAO
                             TP_Servant_State*               servant_state);
 
       ~TP_Collocated_Synch_With_Server_Request() override = default;
+      TP_Collocated_Synch_With_Server_Request () = delete;
       TP_Collocated_Synch_With_Server_Request (TP_Collocated_Synch_With_Server_Request const &) = delete;
       TP_Collocated_Synch_With_Server_Request &operator= (TP_Collocated_Synch_With_Server_Request const &) = delete;
       TP_Collocated_Synch_With_Server_Request (TP_Collocated_Synch_With_Server_Request &&) = delete;

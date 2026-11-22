@@ -49,6 +49,7 @@ namespace TAO
                     CORBA::Request_ptr req,
                     bool response_expected = true);
 
+    DII_Invocation () = delete;
     DII_Invocation (DII_Invocation const &) = delete;
     DII_Invocation &operator= (DII_Invocation const &) = delete;
     DII_Invocation (DII_Invocation &&) = delete;
@@ -80,6 +81,7 @@ namespace TAO
                              TAO_DII_Deferred_Reply_Dispatcher *rd,
                              bool response_expected = true);
 
+    DII_Deferred_Invocation () = delete;
     DII_Deferred_Invocation (DII_Deferred_Invocation const &) = delete;
     DII_Deferred_Invocation &operator= (DII_Deferred_Invocation const &) = delete;
     DII_Deferred_Invocation (DII_Deferred_Invocation &&) = delete;

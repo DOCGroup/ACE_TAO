@@ -40,6 +40,7 @@ namespace TAO
     {
     public:
       ~TP_Custom_Request() override = default;
+      TP_Custom_Request () = delete;
       TP_Custom_Request (TP_Custom_Request const &) = delete;
       TP_Custom_Request &operator= (TP_Custom_Request const &) = delete;
       TP_Custom_Request (TP_Custom_Request &&) = delete;

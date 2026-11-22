@@ -94,6 +94,7 @@ public:
   /// @}
 
 private:
+  TAO_SCIOP_Transport () = delete;
   TAO_SCIOP_Transport (TAO_SCIOP_Transport const &) = delete;
   TAO_SCIOP_Transport &operator= (TAO_SCIOP_Transport const &) = delete;
   TAO_SCIOP_Transport (TAO_SCIOP_Transport &&) = delete;

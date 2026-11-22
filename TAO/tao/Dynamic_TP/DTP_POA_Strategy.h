@@ -148,6 +148,7 @@ class TAO_Dynamic_TP_Export TAO_DTP_POA_Strategy:
     (PortableServer::Servant servant,
      PortableServer::ObjectId const &oid) override;
 
+  TAO_DTP_POA_Strategy () = delete;
   TAO_DTP_POA_Strategy (TAO_DTP_POA_Strategy const &) = delete;
   TAO_DTP_POA_Strategy &operator= (TAO_DTP_POA_Strategy const &) = delete;
   TAO_DTP_POA_Strategy (TAO_DTP_POA_Strategy &&) = delete;

@@ -90,6 +90,7 @@ public:
   TAO_Adapter *find_adapter (char const *name) const;
 
 private:
+  TAO_Adapter_Registry () = delete;
   TAO_Adapter_Registry (TAO_Adapter_Registry const &) = delete;
   TAO_Adapter_Registry &operator= (TAO_Adapter_Registry const &) = delete;
   TAO_Adapter_Registry (TAO_Adapter_Registry &&) = delete;

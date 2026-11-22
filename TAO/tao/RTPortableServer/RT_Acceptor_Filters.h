@@ -44,6 +44,7 @@ class TAO_RTPortableServer_Export TAO_Server_Protocol_Acceptor_Filter :
 public:
   explicit TAO_Server_Protocol_Acceptor_Filter (RTCORBA::ProtocolList &protocols);
 
+  TAO_Server_Protocol_Acceptor_Filter () = delete;
   TAO_Server_Protocol_Acceptor_Filter (TAO_Server_Protocol_Acceptor_Filter const &) = delete;
   TAO_Server_Protocol_Acceptor_Filter &operator= (TAO_Server_Protocol_Acceptor_Filter const &) = delete;
   TAO_Server_Protocol_Acceptor_Filter (TAO_Server_Protocol_Acceptor_Filter &&) = delete;

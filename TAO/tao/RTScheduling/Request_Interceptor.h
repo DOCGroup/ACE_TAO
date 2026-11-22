@@ -69,6 +69,7 @@ public:
 
   static const IOP::ServiceId SchedulingInfo;
 
+  Server_Interceptor () = delete;
   Server_Interceptor (Server_Interceptor const &) = delete;
   Server_Interceptor &operator= (Server_Interceptor const &) = delete;
   Server_Interceptor (Server_Interceptor &&) = delete;

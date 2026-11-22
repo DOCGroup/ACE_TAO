@@ -70,6 +70,7 @@ public:
   void factory (TAO_Protocol_Factory *factory, int owner = 0);
 
 private:
+  TAO_Protocol_Item () = delete;
   TAO_Protocol_Item (TAO_Protocol_Item const &) = delete;
   TAO_Protocol_Item &operator= (TAO_Protocol_Item const &) = delete;
   TAO_Protocol_Item (TAO_Protocol_Item &&) = delete;
