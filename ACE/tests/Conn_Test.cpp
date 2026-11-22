@@ -363,7 +363,7 @@ cached_connect (STRAT_CONNECTOR &con,
     }
 }
 
-void *
+ACE_THR_FUNC_RETURN
 client_connections (void *arg)
 {
   Client_Info *info = static_cast<Client_Info *> (arg);
@@ -395,15 +395,15 @@ client_connections (void *arg)
               ACE_TEXT ("(%P|%t) **** starting cached blocking connect\n")));
   cached_connect (*info->strat_connector_,
                   *info->server_addr_);
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // Execute the client tests.
 
-void *
+ACE_THR_FUNC_RETURN
 client (void *arg)
 {
-  ACE_INET_Addr *remote_addr = reinterpret_cast<ACE_INET_Addr *> (arg);
+  ACE_INET_Addr *remote_addr = static_cast<ACE_INET_Addr *> (arg);
   ACE_INET_Addr server_addr (remote_addr->get_port_number (),
                              ACE_DEFAULT_SERVER_HOST);
   CONNECTOR connector;
@@ -432,8 +432,8 @@ client (void *arg)
 
   if (client_manager.spawn_n
       (n_threads,
-       (ACE_THR_FUNC) client_connections,
-       (void *) &info,
+       client_connections,
+       &info,
        THR_NEW_LWP) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -448,12 +448,12 @@ client (void *arg)
 #else  /* ACE_HAS_THREADS */
   client_connections (&info);
 #endif /* ACE_HAS_THREADS */
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // Performs the iterative server activities.
 
-void *
+ACE_THR_FUNC_RETURN
 server (void *arg)
 {
 #if defined (VXWORKS)
@@ -462,7 +462,7 @@ server (void *arg)
               ACE_OS::thr_min_stack ()));
 #endif /* VXWORKS */
 
-  ACCEPTOR *acceptor = (ACCEPTOR *) arg;
+  ACCEPTOR *acceptor = static_cast<ACCEPTOR *> (arg);
   ACE_INET_Addr cli_addr;
   ACE_TCHAR peer_host[MAXHOSTNAMELEN];
   const ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
@@ -471,7 +471,7 @@ server (void *arg)
   Svc_Handler *svc_handler;
   ACE_NEW_RETURN (svc_handler,
                   Svc_Handler,
-                  nullptr);
+                  ACE_THR_FUNC_RETURN_NULL);
 
   // Keep looping until we timeout on <accept> or fail.
 
@@ -500,14 +500,14 @@ server (void *arg)
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("accept timed out\n")));
-              return nullptr;
+              return ACE_THR_FUNC_RETURN_NULL;
             }
           else
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("(%P|%t) %p\n"),
                                  ACE_TEXT ("accept failed, shutting down")),
-                                0);
+                                ACE_THR_FUNC_RETURN_NULL);
             }
         }
       // Use this rather than get_host_name() to properly adjust to the
@@ -521,7 +521,7 @@ server (void *arg)
       svc_handler->recv_data ();
     }
 
-  ACE_NOTREACHED (return nullptr);
+  ACE_NOTREACHED (return ACE_THR_FUNC_RETURN_NULL);
 }
 
 #endif /* !ACE_LACKS_FORK || ACE_HAS_THREADS */
@@ -658,8 +658,8 @@ spawn_threads (ACCEPTOR *acceptor,
   if (ACE_Thread_Manager::instance ()->spawn_n
       (
        n_servers,
-       (ACE_THR_FUNC) server,
-       (void *) acceptor,
+       server,
+       acceptor,
        THR_NEW_LWP
        , ACE_DEFAULT_THREAD_PRIORITY
        , -1
@@ -680,8 +680,8 @@ spawn_threads (ACCEPTOR *acceptor,
                 1));
 
   if (ACE_Thread_Manager::instance ()->spawn
-      ((ACE_THR_FUNC) client,
-       (void *) server_addr,
+      (client,
+       server_addr,
        THR_NEW_LWP,
        0
 #if 0
