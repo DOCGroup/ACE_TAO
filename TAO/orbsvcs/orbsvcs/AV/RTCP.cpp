@@ -387,7 +387,7 @@ TAO_AV_RTCP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry * /*entry*/,
                   TAO_AV_RTCP_Object (client_cb,
                                       rtcp_cb,
                                       transport),
-                  0);
+                  nullptr);
 
   rtcp_cb->open (object, handler);
 
