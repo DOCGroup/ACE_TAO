@@ -182,9 +182,7 @@ public class DoubleVisComp extends Canvas implements VisComp
         int y1 = normalize(offscreensize_.height - fheight, value_1);
         int y2 = normalize(offscreensize_.height - fheight, value_2);
 
-	float tmp = value_2;
-	value_2 = value_1;
-	value_1 = tmp;
+	value_1 = value_2;
 
         int x2 = x1 - spacing_;
         offgraphics_.drawLine(x1, y1, x2, y2);
