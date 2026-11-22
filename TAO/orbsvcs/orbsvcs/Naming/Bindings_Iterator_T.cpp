@@ -57,7 +57,9 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (
 
   // Check to make sure this object is still valid.
   if (this->destroyed_)
-    throw CORBA::OBJECT_NOT_EXIST ();
+    {
+      throw CORBA::OBJECT_NOT_EXIST ();
+    }
 
   // If the context we are iterating over has been destroyed,
   // self-destruct.
@@ -87,7 +89,9 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (
       hash_iter_->next (hash_entry);
 
       if (populate_binding (hash_entry, *binding) == 0)
-        throw CORBA::NO_MEMORY ();
+        {
+          throw CORBA::NO_MEMORY ();
+        }
 
       hash_iter_->advance ();
       return 1;
@@ -107,7 +111,9 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_n (
 
   // Check to make sure this object is still valid.
   if (this->destroyed_)
-    throw CORBA::OBJECT_NOT_EXIST ();
+    {
+      throw CORBA::OBJECT_NOT_EXIST ();
+    }
 
   // If the context we are iterating over has been destroyed,
   // self-destruct.
@@ -120,11 +126,15 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_n (
 
   // Check for illegal parameter values.
   if (how_many == 0)
-    throw CORBA::BAD_PARAM ();
+    {
+      throw CORBA::BAD_PARAM ();
+    }
 
   // If there are no more bindings...
   if (hash_iter_->done ())
-      return 0;
+    {
+        return 0;
+    }
   else
     {
       ACE_READ_GUARD_THROW_EX (TAO_SYNCH_RW_MUTEX,
@@ -144,7 +154,9 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_n (
           hash_iter_->next (hash_entry);
 
           if (populate_binding (hash_entry, bl[i]) == 0)
-            throw CORBA::NO_MEMORY ();
+            {
+              throw CORBA::NO_MEMORY ();
+            }
 
           if (hash_iter_->advance () == 0)
             {
@@ -163,7 +175,9 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::destroy ()
 {
   // Check to make sure this object is still valid.
   if (this->destroyed_)
-    throw CORBA::OBJECT_NOT_EXIST ();
+    {
+      throw CORBA::OBJECT_NOT_EXIST ();
+    }
 
   // Mark the object invalid.
   this->destroyed_ = true;
@@ -190,14 +204,18 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::populate_binding (
       b.binding_name[0].id =
         hash_entry->ext_id_.id ();
       if (b.binding_name[0].id.in () == nullptr)
-        return 0;
+        {
+          return 0;
+        }
     }
   if (hash_entry->ext_id_.kind () != nullptr)
     {
       b.binding_name[0].kind =
         hash_entry->ext_id_.kind ();
       if (b.binding_name[0].kind.in () == nullptr)
-        return 0;
+        {
+          return 0;
+        }
     }
   return 1;
 }
