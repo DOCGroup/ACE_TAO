@@ -752,9 +752,13 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_current_infos ()
                 {
                   // Grab the correct handle depending on the type entry
                   if (this->current_info_[i].io_entry_)
-                    handle = this->current_info_[i].io_handle_;
+                    {
+                      handle = this->current_info_[i].io_handle_;
+                    }
                   else
-                    handle = this->current_handles_[i];
+                    {
+                      handle = this->current_handles_[i];
+                    }
 
                   // Event handler
                   event_handler = this->current_info_[i].event_handler_;
@@ -865,9 +869,13 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_suspension_infos ()
                 {
                   // Grab the correct handle depending on the type entry
                   if (this->current_suspended_info_[i].io_entry_)
-                    handle = this->current_suspended_info_[i].io_handle_;
+                    {
+                      handle = this->current_suspended_info_[i].io_handle_;
+                    }
                   else
-                    handle = this->current_suspended_info_[i].event_handle_;
+                    {
+                      handle = this->current_suspended_info_[i].event_handle_;
+                    }
 
                   // Upcall
                   event_handler = this->current_suspended_info_[i].event_handler_;
@@ -875,7 +883,9 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_suspension_infos ()
 
               // If <WFMO_Reactor> created the event, we need to clean it up
               if (this->current_suspended_info_[i].delete_event_)
-                ACE_OS::event_destroy (&this->current_suspended_info_[i].event_handle_);
+                {
+                  ACE_OS::event_destroy (&this->current_suspended_info_[i].event_handle_);
+                }
 
               // Reduce count by one
               --this->handles_to_be_deleted_;
@@ -970,9 +980,13 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_to_be_added_infos ()
             {
               // Grab the correct handle depending on the type entry
               if (this->to_be_added_info_[i].io_entry_)
-                handle = this->to_be_added_info_[i].io_handle_;
+                {
+                  handle = this->to_be_added_info_[i].io_handle_;
+                }
               else
-                handle = this->to_be_added_info_[i].event_handle_;
+                {
+                  handle = this->to_be_added_info_[i].event_handle_;
+                }
 
               // Upcall
               event_handler = this->to_be_added_info_[i].event_handler_;
@@ -980,7 +994,9 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_to_be_added_infos ()
 
           // If <WFMO_Reactor> created the event, we need to clean it up
           if (this->to_be_added_info_[i].delete_event_)
-            ACE_OS::event_destroy (&this->to_be_added_info_[i].event_handle_);
+            {
+              ACE_OS::event_destroy (&this->to_be_added_info_[i].event_handle_);
+            }
 
           // Reduce count by one
           --this->handles_to_be_deleted_;
@@ -1370,7 +1386,9 @@ ACE_WFMO_Reactor::close ()
 
   // If we are already closed, return error
   if (!this->open_for_business_)
-    return -1;
+    {
+      return -1;
+    }
 
   // We are now closed
   this->open_for_business_ = false;
@@ -1522,7 +1540,9 @@ ACE_WFMO_Reactor::mask_ops_i (ACE_HANDLE io_handle,
 {
   // Make sure that the <handle> is valid
   if (this->handler_rep_.invalid_handle (io_handle))
-    return -1;
+    {
+      return -1;
+    }
 
   long new_network_events = 0;
   bool delete_event = false;
@@ -1544,12 +1564,18 @@ ACE_WFMO_Reactor::mask_ops_i (ACE_HANDLE io_handle,
                                      event_handle,
                                      new_network_events);
       if (result == 0)
-        return old_masks;
+        {
+          return old_masks;
+        }
       else
-        return result;
+        {
+          return result;
+        }
     }
   else
-    return -1;
+    {
+      return -1;
+    }
 }
 
 int
@@ -1677,7 +1703,9 @@ ACE_WFMO_Reactor_Handler_Repository::handler (ACE_HANDLE handle,
       }
 
   if (event_handler)
-    event_handler->add_reference ();
+    {
+      event_handler->add_reference ();
+    }
 
   return event_handler;
 }
@@ -1811,7 +1839,9 @@ ACE_WFMO_Reactor::event_handling (ACE_Time_Value *max_wait_time,
       // lock will not be acquired
       result = this->ok_to_wait (max_wait_time, alertable);
       if (result != 1)
-        return result;
+        {
+          return result;
+        }
 
       // Increment the number of active threads
       ++this->active_threads_;
@@ -1843,7 +1873,9 @@ ACE_WFMO_Reactor::event_handling (ACE_Time_Value *max_wait_time,
           // caller wanted to wait has been used up.
           countdown.update ();     // Reflect time waiting for events
           if (0 == max_wait_time || max_wait_time->usec () == 0)
-            break;
+            {
+              break;
+            }
         }
     }
   while (result == 0);
@@ -1874,7 +1906,9 @@ ACE_WFMO_Reactor::ok_to_wait (ACE_Time_Value *max_wait_time,
                                            alertable);
 
       if (result != WAIT_IO_COMPLETION)
-        break;
+        {
+          break;
+        }
     }
 
   switch (result)
@@ -1922,14 +1956,22 @@ ACE_WFMO_Reactor::calculate_timeout (ACE_Time_Value *max_wait_time)
 {
   ACE_Time_Value *time {};
   if (this->owner_ == ACE_Thread::self ())
-    time = this->timer_queue_->calculate_timeout (max_wait_time);
+    {
+      time = this->timer_queue_->calculate_timeout (max_wait_time);
+    }
   else
-    time = max_wait_time;
+    {
+      time = max_wait_time;
+    }
 
   if (time == nullptr)
-    return INFINITE;
+    {
+      return INFINITE;
+    }
   else
-    return time->msec ();
+    {
+      return time->msec ();
+    }
 }
 
 int
@@ -2064,11 +2106,15 @@ ACE_WFMO_Reactor::dispatch_handler (DWORD slot,
       ACE_HANDLE event_handle = *(this->handler_rep_.handles () + slot);
 
       if (this->handler_rep_.current_info ()[slot].io_entry_)
-        return this->complex_dispatch_handler (slot,
-                                               event_handle);
+        {
+          return this->complex_dispatch_handler (slot,
+                                                 event_handle);
+        }
       else
-        return this->simple_dispatch_handler (slot,
-                                              event_handle);
+        {
+          return this->simple_dispatch_handler (slot,
+                                                event_handle);
+        }
     }
   else
     // The handle was scheduled for deletion, so we will skip it.
@@ -2099,8 +2145,10 @@ ACE_WFMO_Reactor::simple_dispatch_handler (DWORD slot,
 
   // Upcall
   if (event_handler->handle_signal (0, &sig) == -1)
-    this->handler_rep_.unbind (event_handle,
-                               ACE_Event_Handler::NULL_MASK);
+    {
+      this->handler_rep_.unbind (event_handle,
+                                 ACE_Event_Handler::NULL_MASK);
+    }
 
   // Call remove_reference() if needed.
   if (requires_reference_counting)
@@ -2166,7 +2214,9 @@ ACE_WFMO_Reactor::complex_dispatch_handler (DWORD slot,
             }
 
           if (this->handler_rep_.scheduled_for_deletion (slot))
-            break;
+            {
+              break;
+            }
         }
     }
 
@@ -2200,7 +2250,9 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
         {
           ACE_CLR_BITS (actual_events, FD_WRITE);
           if (action == -1)
-            ACE_SET_BITS (problems, ACE_Event_Handler::WRITE_MASK);
+            {
+              ACE_SET_BITS (problems, ACE_Event_Handler::WRITE_MASK);
+            }
         }
     }
 
@@ -2214,8 +2266,10 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
             {
               ACE_CLR_BITS (actual_events, FD_CONNECT);
               if (action == -1)
-                ACE_SET_BITS (problems,
-                              ACE_Event_Handler::CONNECT_MASK);
+                {
+                  ACE_SET_BITS (problems,
+                                ACE_Event_Handler::CONNECT_MASK);
+                }
             }
         }
       // Unsuccessful connect
@@ -2226,8 +2280,10 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
             {
               ACE_CLR_BITS (actual_events, FD_CONNECT);
               if (action == -1)
-                ACE_SET_BITS (problems,
-                              ACE_Event_Handler::CONNECT_MASK);
+                {
+                  ACE_SET_BITS (problems,
+                                ACE_Event_Handler::CONNECT_MASK);
+                }
             }
         }
     }
@@ -2239,7 +2295,9 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
         {
           ACE_CLR_BITS (actual_events, FD_OOB);
           if (action == -1)
-            ACE_SET_BITS (problems, ACE_Event_Handler::EXCEPT_MASK);
+            {
+              ACE_SET_BITS (problems, ACE_Event_Handler::EXCEPT_MASK);
+            }
         }
     }
 
@@ -2250,7 +2308,9 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
         {
           ACE_CLR_BITS (actual_events, FD_READ);
           if (action == -1)
-            ACE_SET_BITS (problems, ACE_Event_Handler::READ_MASK);
+            {
+              ACE_SET_BITS (problems, ACE_Event_Handler::READ_MASK);
+            }
         }
     }
 
@@ -2262,7 +2322,9 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
         {
           ACE_CLR_BITS (actual_events, FD_CLOSE);
           if (action == -1)
-            ACE_SET_BITS (problems, ACE_Event_Handler::READ_MASK);
+            {
+              ACE_SET_BITS (problems, ACE_Event_Handler::READ_MASK);
+            }
         }
     }
 
@@ -2273,7 +2335,9 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
         {
           ACE_CLR_BITS (actual_events, FD_ACCEPT);
           if (action == -1)
-            ACE_SET_BITS (problems, ACE_Event_Handler::ACCEPT_MASK);
+            {
+              ACE_SET_BITS (problems, ACE_Event_Handler::ACCEPT_MASK);
+            }
         }
     }
 
@@ -2284,7 +2348,9 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
         {
           ACE_CLR_BITS (actual_events, FD_QOS);
           if (action == -1)
-            ACE_SET_BITS (problems, ACE_Event_Handler::QOS_MASK);
+            {
+              ACE_SET_BITS (problems, ACE_Event_Handler::QOS_MASK);
+            }
         }
     }
 
@@ -2295,7 +2361,9 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
         {
           ACE_CLR_BITS (actual_events, FD_GROUP_QOS);
           if (action == -1)
-            ACE_SET_BITS (problems, ACE_Event_Handler::GROUP_QOS_MASK);
+            {
+              ACE_SET_BITS (problems, ACE_Event_Handler::GROUP_QOS_MASK);
+            }
         }
     }
 
@@ -2462,7 +2530,9 @@ ACE_WFMO_Reactor_Notify::handle_signal (int signum, siginfo_t *siginfo, ucontext
 
   // Just check for sanity...
   if (siginfo->si_handle_ != this->wakeup_one_thread_.handle ())
-    return -1;
+    {
+      return -1;
+    }
 
   // This will get called when <WFMO_Reactor->wakeup_one_thread_> event
   // is signaled.
@@ -2529,8 +2599,10 @@ ACE_WFMO_Reactor_Notify::handle_signal (int signum, siginfo_t *siginfo, ucontext
                 }
 
               if (result == -1)
-                event_handler->handle_close (ACE_INVALID_HANDLE,
-                                             ACE_Event_Handler::EXCEPT_MASK);
+                {
+                  event_handler->handle_close (ACE_INVALID_HANDLE,
+                                               ACE_Event_Handler::EXCEPT_MASK);
+                }
 
               if (requires_reference_counting)
                 {
@@ -2658,7 +2730,9 @@ ACE_WFMO_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
     {
       ACE_Message_Block *mb {};
       if (-1 == this->message_queue_.dequeue_head (mb))
-        return -1;        // This shouldn't happen...
+        {
+          return -1;        // This shouldn't happen...
+        }
 
       ACE_Notification_Buffer *buffer =
         reinterpret_cast<ACE_Notification_Buffer *> (mb->base ());
@@ -2688,14 +2762,19 @@ ACE_WFMO_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
           // (or purging all), then apply the mask
           if ((0 != buffer->eh_) &&
               (0 == eh || eh == buffer->eh_))
-            ACE_CLR_BITS(buffer->mask_, mask);
+            {
+              ACE_CLR_BITS(buffer->mask_, mask);
+            }
           if (-1 == local_queue.enqueue_head (mb))
-            return -1;
+            {
+              return -1;
+            }
         }
     }
 
+  // Should be empty!
   if (this->message_queue_.message_count ())
-    { // Should be empty!
+    {
       ACE_ASSERT (0);
       return -1;
     }
@@ -2761,9 +2840,13 @@ ACE_WFMO_Reactor::purge_pending_notifications (ACE_Event_Handler *eh,
 {
   ACE_TRACE ("ACE_WFMO_Reactor::purge_pending_notifications");
   if (this->notify_handler_ == nullptr)
-    return 0;
+    {
+      return 0;
+    }
   else
-    return this->notify_handler_->purge_pending_notifications (eh, mask);
+    {
+      return this->notify_handler_->purge_pending_notifications (eh, mask);
+    }
 }
 
 int
