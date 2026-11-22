@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    server.h
  *
@@ -8,7 +7,6 @@
  *  @author Sumedh Mungee
  *  @author Sergio Flores-Gaitan and Nagarajan Surendran.
  */
-//=============================================================================
 
 #ifndef SERVER_H
 #define SERVER_H

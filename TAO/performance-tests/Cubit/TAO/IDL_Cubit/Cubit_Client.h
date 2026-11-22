@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Cubit_Client.h
  *
@@ -10,7 +9,6 @@
  *  @author Sumedh Mungee
  *  @author and Sergio Flores-Gaitan
  */
-//=============================================================================
 
 #ifndef _CUBIT_CLIENT_H
 #define _CUBIT_CLIENT_H

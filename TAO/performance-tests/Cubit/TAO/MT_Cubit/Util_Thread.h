@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Util_Thread.h
  *
@@ -8,7 +7,6 @@
  *  @author Sumedh Mungee
  *  @author Sergio Flores-Gaitan and Nagarajan Surendran.
  */
-//=============================================================================
 
 #ifndef UTIL_THREAD_H
 #define UTIL_THREAD_H

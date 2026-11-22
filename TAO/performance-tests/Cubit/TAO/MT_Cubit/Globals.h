@@ -3,7 +3,6 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
-//=============================================================================
 /**
  *  @file    Globals.h
  *
@@ -12,7 +11,6 @@
  *
  *  @author Nagarajan Surendran <naga@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "ace/config-all.h"
 

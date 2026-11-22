@@ -1,12 +1,10 @@
 
-//=============================================================================
 /**
  *  @file    Cubit_i.cpp
  *
  *  @author Andy Gokhale
  *  @author Sumedh Mungee and Sergio Flores-Gaitan
  */
-//=============================================================================
 
 #include "Cubit_Client.h"
 #include "Cubit_i.h"

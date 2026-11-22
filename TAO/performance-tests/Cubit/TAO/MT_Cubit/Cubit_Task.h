@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Cubit_Task.h
  *
@@ -8,7 +7,6 @@
  *  @author Sumedh Mungee
  *  @author Sergio Flores-Gaitan and Nagarajan Surendran.
  */
-//=============================================================================
 
 #ifndef MT_CUBIT_TASK_H
 #define MT_CUBIT_TASK_H

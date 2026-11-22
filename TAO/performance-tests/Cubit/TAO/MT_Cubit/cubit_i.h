@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    cubit_i.h
  *
@@ -8,7 +7,6 @@
  *  @author Sumedh Mungee
  *  @author Sergio Flores-Gaitan and Nagarajan Surendran.
  */
-//=============================================================================
 
 #ifndef _CUBIT_I_H
 #define _CUBIT_I_H

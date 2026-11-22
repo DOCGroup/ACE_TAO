@@ -1,12 +1,10 @@
 
-//=============================================================================
 /**
  *  @file    Cubit_i.h
  *
  *  @author Andy Gokhale
  *  @author Sumedh Mungee and Sergio Flores-Gaitan
  */
-//=============================================================================
 
 #ifndef _CUBIT_I_H
 #define _CUBIT_I_H

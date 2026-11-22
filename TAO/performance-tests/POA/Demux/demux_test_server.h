@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    demux_test_server.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef DOORS_DEMUX_TEST_SERVER_H
 #define DOORS_DEMUX_TEST_SERVER_H

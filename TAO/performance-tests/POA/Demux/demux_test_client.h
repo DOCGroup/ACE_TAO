@@ -1,7 +1,6 @@
 #ifndef TAO_DEMUX_TEST_CLIENT_H
 #define TAO_DEMUX_TEST_CLIENT_H
 
-//=============================================================================
 /**
  *  @file    demux_test_client.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 // FUZZ: disable check_for_math_include
 

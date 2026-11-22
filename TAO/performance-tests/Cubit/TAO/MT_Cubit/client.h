@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    client.h
  *
@@ -9,7 +8,6 @@
  *  @author Sumedh Mungee
  *  @author Sergio Flores-Gaitan and Nagarajan Surendran.
  */
-//=============================================================================
 
 #include "ace/Task.h"
 #include <memory>

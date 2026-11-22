@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Task_Client.h
  *
@@ -9,7 +8,6 @@
  *  @author Sergio Flores-Gaitan
  *  @author and Nagarajan Surendran.
  */
-//=============================================================================
 
 #ifndef TASK_CLIENT_H
 #define TASK_CLIENT_H
