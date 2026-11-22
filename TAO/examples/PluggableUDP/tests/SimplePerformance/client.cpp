@@ -172,7 +172,9 @@ Client::svc ()
       ACE_INT64 const duration =
         static_cast<ACE_INT64> (measured.sec ()) * 1000000 + measured.usec ();
       if (duration == 0 || this->niterations_ == 0)
-        ACE_DEBUG ((LM_DEBUG, "Time not measurable, calculation skipped\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG, "Time not measurable, calculation skipped\n"));
+        }
       else
         {
           ACE_INT64 const usec_per_call = duration / this->niterations_;

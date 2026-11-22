@@ -416,7 +416,9 @@ Object_Group_Factory_i::list_groups (bool random)
   // Figure out the length of the list.
   CORBA::ULong len;
   if (random)
-    len = random_groups_->current_size ();
+    {
+      len = random_groups_->current_size ();
+    }
   else
   {
     len = rr_groups_->current_size ();
@@ -433,7 +435,9 @@ Object_Group_Factory_i::list_groups (bool random)
   HASH_MAP::ITERATOR random_iter (*(this->random_groups_));
   HASH_MAP::ITERATOR rr_iter (*(this->rr_groups_));
   if (random)
-    group_iter = &random_iter;
+    {
+      group_iter = &random_iter;
+    }
   else
   {
     group_iter = &rr_iter;
@@ -669,9 +673,13 @@ Object_Group_i::bind (Load_Balancer::Member const &member)
                                         ior_ptr);
 
   if (result == 1)
-    throw Load_Balancer::duplicate_member ();
+    {
+      throw Load_Balancer::duplicate_member ();
+    }
   else if (result == -1)
-    throw CORBA::INTERNAL ();
+    {
+      throw CORBA::INTERNAL ();
+    }
 
   // Search the list first from the mem mapp pool and then Insert new
   // member's id into <member_id_list_>.
@@ -1025,10 +1033,16 @@ RR_Object_Group::unbind (char const *id)
 
   // Update <next_> if necessary to reflect the deletion.
   if (position < next_)
-    --this->next_;
+    {
+      --this->next_;
+    }
   else if (curr_size == 0)
-    this->next_ = 0;
+    {
+      this->next_ = 0;
+    }
   else if (position == next_)
-    this->next_ = next_ % (this->members_->current_size ());
+    {
+      this->next_ = next_ % (this->members_->current_size ());
+    }
 }
 

@@ -110,7 +110,9 @@ Identity_Client::run ()
 
   char const *group_name;
   if (this->use_random_)
-    group_name = "Random group";
+    {
+      group_name = "Random group";
+    }
   else
   {
     group_name = "Round Robin group";

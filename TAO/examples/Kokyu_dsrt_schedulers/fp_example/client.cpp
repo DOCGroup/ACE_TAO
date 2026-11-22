@@ -106,7 +106,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   long flags {};
 
   if (sched_policy == ACE_SCHED_RR)
-    flags = THR_NEW_LWP | THR_BOUND | THR_JOINABLE | THR_SCHED_RR;
+    {
+      flags = THR_NEW_LWP | THR_BOUND | THR_JOINABLE | THR_SCHED_RR;
+    }
   else
   {
     flags = THR_NEW_LWP | THR_BOUND | THR_JOINABLE | THR_SCHED_FIFO;
