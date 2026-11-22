@@ -186,7 +186,8 @@ public:
     /// Destructor will call <Naming_Context::close>.
     ~Naming_Context ();
 
-    // The following interfaces are for objects
+    /// @name Object operations
+    /// @{
 
     /**
      * Insert @a object with @a name into @c this context.
@@ -245,7 +246,9 @@ public:
     /// Delete object with @a name in @c this context
     int unbind (const ACE_TString &name);
 
-    // The following interfaces are for Naming Context
+    /// @}
+    /// @name Naming context operations
+    /// @{
 
     /// Create new @c naming_context
     int new_context (Naming_Context &naming_context);
@@ -332,8 +335,9 @@ public:
     /// This gives back a listing of all entries in @c this context.
     int list (Binding_List &list);
 
-    // Some other necessary functions which are
-    // not part of the CORBA interface
+    /// @}
+    /// @name Context management
+    /// @{
 
     /// Sync content of context to disk
     int flush ();
@@ -341,6 +345,7 @@ public:
     /// Close the handle of the context
     /// @note <close> does not call <flush>
     int close ();
+    /// @}
 
     /// @name Accessors
     /// @{

@@ -52,9 +52,11 @@ private:
   /// The scheduling policy
   long policy_;
 
-  // The range
+  /// @name Priority range
+  /// @{
   int const min_;
   int const max_;
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

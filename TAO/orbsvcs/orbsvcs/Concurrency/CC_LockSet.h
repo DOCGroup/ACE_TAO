@@ -116,11 +116,10 @@ private:
   /// Returns true if the held lock and the requested lock are compatible
   bool compatible (CC_LockModeEnum mr) const;
 
-  // The _i functions below ensures atomical access the the state data
-  // for the lock set. The functions acquires a thread lock in order
-  // to insure consistency within the lock set. The return value
-  // typically indicates whether the current thread should be
-  // suspended or not (by locking the semaphore.
+  /// The _i functions below ensure atomic access to the lock set state.
+  /// They acquire a thread lock to maintain consistency. Their return
+  /// values typically indicate whether the current thread should be
+  /// suspended by locking the semaphore.
 
   /// Locks the access to the data and decides whether to lock or
   /// not. Returns true if the semaphore should be locked.
