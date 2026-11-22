@@ -466,15 +466,16 @@ ACE_OS_Object_Manager::print_error_message (unsigned int line_number,
 {
   // To avoid duplication of these const strings in OS.o.
 #ifndef ACE_LACKS_STDERR
-  fprintf (stderr, "ace/Object_Manager_Base.cpp, line %u: %s ",
-           line_number,
-           ACE_TEXT_ALWAYS_CHAR (message));
+  ACE_OS::fprintf (stderr,
+                   "ace/Object_Manager_Base.cpp, line %u: %s ",
+                   line_number,
+                   ACE_TEXT_ALWAYS_CHAR (message));
 #else
   ACE_UNUSED_ARG (line_number);
   ACE_UNUSED_ARG (message);
 #endif
 #if !defined (ACE_LACKS_PERROR)
-  perror ("failed");
+  ACE_OS::perror ("failed");
 #endif /* ACE_LACKS_PERROR */
 }
 
