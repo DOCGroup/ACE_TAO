@@ -41,7 +41,8 @@ int ACE_TMAIN(int, ACE_TCHAR **) {
 
     // create a new accept handler using that reactor
     AcceptHandler *acceptHandler_raw {};
-    ACE_NEW_NORETURN (acceptHandler_raw, AcceptHandler(&reactor));
+    ACE_NEW_NORETURN (acceptHandler_raw,
+                      AcceptHandler (std::addressof (reactor)));
     std::unique_ptr<AcceptHandler> acceptHandler (acceptHandler_raw);
     if (acceptHandler == nullptr)
       {
@@ -58,7 +59,9 @@ int ACE_TMAIN(int, ACE_TCHAR **) {
     acceptHandler.release ();
 
     // spawn some threads which run the reactor event loop(s)
-    ACE_Thread_Manager::instance()->spawn_n(9, threadFunc, &reactor);
+    ACE_Thread_Manager::instance()->spawn_n (9,
+                                             threadFunc,
+                                             std::addressof (reactor));
 
     // let the thread manager wait for all threads
     ACE_Thread_Manager::instance()->wait();
