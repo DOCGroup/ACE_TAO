@@ -52,27 +52,29 @@ parse_args (int argc, ACE_TCHAR **argv)
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
-      {
-      case 't':
-        concurrent_threads = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 'e':
-        iterations = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 'h':
-        number_of_handles = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 'i':
-        interval = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 's':
-        number_of_handles_to_signal = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      default:
-        print_usage_and_die ();
-        break;
-      }
+    {
+      switch (c)
+        {
+        case 't':
+          concurrent_threads = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'e':
+          iterations = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'h':
+          number_of_handles = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'i':
+          interval = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 's':
+          number_of_handles_to_signal = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        default:
+          print_usage_and_die ();
+          break;
+        }
+    }
 }
 
 class Task_Handler : public ACE_Task<ACE_NULL_SYNCH>
@@ -131,16 +133,20 @@ Task_Handler::Task_Handler (size_t number_of_handles,
   for (size_t i = 0; i < number_of_handles; ++i)
     if (ACE_Reactor::instance ()->register_handler (this,
                                                     this->events_[i].handle ()) == -1)
-      ACE_ERROR ((LM_ERROR,
-                  "%p\t cannot register handle %B with Reactor\n",
-                  "Task_Handler::Task_Handler",
-                  i));
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "%p\t cannot register handle %B with Reactor\n",
+                    "Task_Handler::Task_Handler",
+                    i));
+      }
 
   // Make us an active object.
   if (this->activate (THR_NEW_LWP,
                       static_cast<int> (concurrent_threads)) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\t cannot activate task\n",
-                "activate"));
+    {
+      ACE_ERROR ((LM_ERROR, "%p\t cannot activate task\n",
+                  "activate"));
+    }
 }
 
 Task_Handler::~Task_Handler ()

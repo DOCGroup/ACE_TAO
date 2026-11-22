@@ -48,9 +48,13 @@ public:
   int handle_signal (int, siginfo_t *, ucontext_t *) override
     {
       if (this->close_down_)
-        return -1;
+        {
+          return -1;
+        }
       else
-        return 0;
+        {
+          return 0;
+        }
     }
 
   int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override
@@ -100,7 +104,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
           break;
         }
       if (result == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "main"), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "main"), -1);
+        }
     }
   return 0;
 }

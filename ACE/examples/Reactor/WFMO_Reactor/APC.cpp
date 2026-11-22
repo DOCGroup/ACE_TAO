@@ -56,7 +56,9 @@ queue_apc ()
                                  ::GetCurrentThread (),  // handle to the thread
                                  0);                     // argument for the APC function
   if (result == FALSE)
-    ACE_OS::exit (-1);
+    {
+      ACE_OS::exit (-1);
+    }
 }
 
 int
