@@ -34,7 +34,7 @@ static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 // pipe name to use
 static const ACE_TCHAR *PIPE_NAME = ACE_TEXT ("ace_pipe_name");
 
-static void *
+static ACE_THR_FUNC_RETURN
 client (void *)
 {
   const ACE_TCHAR *rendezvous = PIPE_NAME;
@@ -87,10 +87,10 @@ client (void *)
 #if !defined (ACE_WIN32)
   ACE_OS::exit (0);
 #endif
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 server (void *)
 {
   ACE_SPIPE_Acceptor acceptor;
@@ -167,7 +167,7 @@ server (void *)
   acceptor.close ();
 #endif /* defined (ACE_HAS_WIN32NAMED_PIPES) */
 
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 #endif /* TEST_HAS_STREAM_PIPES */
 
@@ -184,18 +184,18 @@ run_main (int, ACE_TCHAR *[])
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("fork failed")));
       ACE_OS::exit (-1);
     case 0:
-      client (0);
+      client (nullptr);
     default:
-      server (0);
+      server (nullptr);
     }
 #elif defined (ACE_HAS_THREADS)
-  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (client),
-                                              (void *) 0,
+  if (ACE_Thread_Manager::instance ()->spawn (client,
+                                              nullptr,
                                               THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("thread create failed")));
 
-  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (server),
-                                              (void *) 0,
+  if (ACE_Thread_Manager::instance ()->spawn (server,
+                                              nullptr,
                                               THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("thread create failed")));
 
