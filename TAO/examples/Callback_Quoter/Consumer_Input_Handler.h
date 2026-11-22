@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Consumer_Input_Handler.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef CONSUMER_INPUT_HANDLER_H
 #define CONSUMER_INPUT_HANDLER_H

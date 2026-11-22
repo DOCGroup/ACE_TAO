@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Time_Date_Client_i.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TIME_DATE_CLIENT_I_H
 #define TIME_DATE_CLIENT_I_H

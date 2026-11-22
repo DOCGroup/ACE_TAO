@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    Notifier_Input_Handler.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef SUPPLIER_INPUT_HANDLER_H
 #define SUPPLIER_INPUT_HANDLER_H

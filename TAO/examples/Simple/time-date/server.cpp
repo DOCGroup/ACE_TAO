@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    server.cpp
  *
@@ -9,7 +8,6 @@
  *
  *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "ace/Service_Config.h"
 #include "ace/Reactor.h"

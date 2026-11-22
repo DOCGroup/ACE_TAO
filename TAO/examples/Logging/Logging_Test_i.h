@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Logging_Test_i.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author   Sergio Flores-Gaitan <sergio@cs.wustl.edu>   Matt Braun <mjb2@cec.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _LOG_CLIENT_H
 #define _LOG_CLIENT_H

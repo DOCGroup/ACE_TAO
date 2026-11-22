@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    Load_Balancing_Service.cpp
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "Load_Balancing_Service.h"
 #include "Load_Balancer_i.h"

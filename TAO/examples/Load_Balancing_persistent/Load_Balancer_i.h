@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Load_Balancer_i.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Marina Spivak <marina@cs.wustl.edu> with modifications by Bala Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef LOAD_BALANCER_I_H_
 #define LOAD_BALANCER_I_H_

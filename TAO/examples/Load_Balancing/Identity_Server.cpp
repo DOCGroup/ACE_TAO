@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    Identity_Server.cpp
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "Identity_Server.h"
 #include "Identity_i.h"

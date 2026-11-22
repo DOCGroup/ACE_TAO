@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Time_Date_i.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and Michael Kircher.
  */
-//=============================================================================
 
 #ifndef TIME_DATE_I_H
 #define TIME_DATE_I_H

@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Event_Comm_i.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Douglas C. Schmidt (d.schmidt@vanderbilt.edu) and Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _EVENT_COMM_I_H
 #define _EVENT_COMM_I_H

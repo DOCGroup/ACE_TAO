@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    server.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Darrell Brunsch (brunsch@cs.wustl.edu) Michael Kircher (mk1@cs.wustl.edu)
  */
-//=============================================================================
 #include "server.h"
 #include "tao/ORB_Core.h"
 

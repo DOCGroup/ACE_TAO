@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Client_i.h
  *
@@ -10,7 +9,6 @@
  *
  *  @author Torsten Kuepperbased on the echo examplefrom code from Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ECHO_CLIENT_I_H
 #define ECHO_CLIENT_I_H

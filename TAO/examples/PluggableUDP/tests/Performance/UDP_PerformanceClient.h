@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    UDP_PerformanceClient.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
-//=============================================================================
 
 #ifndef UDP_PERFORMANCECLIENT_H
 #define UDP_PERFORMANCECLIENT_H

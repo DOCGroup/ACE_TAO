@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Consumer_Input_Handler.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "Consumer_Input_Handler.h"
 #include "ace/Read_Buffer.h"

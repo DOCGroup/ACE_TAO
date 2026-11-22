@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Identity_Server.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef IDENTITY_SERVER_H_
 #define IDENTITY_SERVER_H_

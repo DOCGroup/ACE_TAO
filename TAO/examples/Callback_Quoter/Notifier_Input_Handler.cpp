@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Notifier_Input_Handler.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "Notifier_Input_Handler.h"
 #include "tao/debug.h"

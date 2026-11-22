@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Logging_Service_i.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Nagarajan Surendran <naga@cs.wustl.edu> Matthew Braun <mjb2@cec.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _LOG_SERVER_H
 #define _LOG_SERVER_H

@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    Identity_Client.cpp
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "Identity_Client.h"
 #include "IdentityC.h"

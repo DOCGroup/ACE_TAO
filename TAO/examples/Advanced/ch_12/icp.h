@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    icp.h
  *
@@ -8,7 +7,6 @@
  *  @author Reading
  *  @author MA.  Used with permission ofAddison-Wesley.Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _ICP_H
 #define _ICP_H

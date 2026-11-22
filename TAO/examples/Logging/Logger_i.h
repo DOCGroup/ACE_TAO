@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Logger_i.h
  *
@@ -8,7 +7,6 @@
  *  @author Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  *  @author and Matthew Braun <mjb2@cec.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_ORBSVCS_LOGGER_I_H
 #define TAO_ORBSVCS_LOGGER_I_H

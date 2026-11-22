@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Logging_Sup.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Chris Gill (cdgill@cs.wustl.edu) Adapted from the orginal DOVE simulation event supplier written by Michael Kircher (mk1@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef LOGGING_SUP_H
 #define LOGGING_SUP_H

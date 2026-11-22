@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Load_Balancing_Service.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Marina Spivak <marina@cs.wustl.edu> with modifications by Bala Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef LOAD_BALANCING_SERVICE_H_
 #define LOAD_BALANCING_SERVICE_H_

@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Supplier_Timer_Handler.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef SUPPLIER_TIMER_HANDLER_H
 #define SUPPLIER_TIMER_HANDLER_H

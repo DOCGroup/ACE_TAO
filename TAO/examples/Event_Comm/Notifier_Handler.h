@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Notifier_Handler.h
  *
  *  @author Douglas C. Schmidt (d.schmidt@vanderbilt.edu) and Pradeep Gore (pradeep@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef _NOTIFIER_HANDLER_H
 #define _NOTIFIER_HANDLER_H

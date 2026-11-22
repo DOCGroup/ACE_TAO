@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     Content_Iterator_i.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef CONTENT_ITERATOR_I_H
 #define CONTENT_ITERATOR_I_H

@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    DualEC_Sup.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Chris Gill (cdgill@cs.wustl.edu) Adapted from the DOVE simulation event supplier originally David Levine (levine@cs.wustl.edu) and Tim Harrison (harrison@cs.wustl.edu) modified Michael Kircher (mk1@cs.wustl.edu)
  */
-//=============================================================================
 
 #include "DualEC_Sup.h"
 #include "NavWeapC.h"

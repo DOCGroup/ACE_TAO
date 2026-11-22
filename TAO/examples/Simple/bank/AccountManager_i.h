@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    AccountManager_i.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Vishal Kachroo  <vishal@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACCOUNTMANAGER_I_H
 #define ACCOUNTMANAGER_I_H

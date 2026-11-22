@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Consumer_Handler.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Douglas C. Schmidt (d.schmidt@vanderbilt.edu) and Pradeep Gore (pradeep@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef _CONSUMER_HANDLER_H
 #define _CONSUMER_HANDLER_H

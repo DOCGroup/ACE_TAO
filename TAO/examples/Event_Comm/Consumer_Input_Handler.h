@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Consumer_Input_Handler.h
  *
  *  @author Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
  */
-//=============================================================================
 
 #ifndef CONSUMER_INPUT_HANDLER_H
 #define CONSUMER_INPUT_HANDLER_H

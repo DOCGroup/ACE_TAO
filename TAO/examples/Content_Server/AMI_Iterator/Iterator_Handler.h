@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     Iterator_Handler.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef ITERATOR_HANDLER_H
 #define ITERATOR_HANDLER_H

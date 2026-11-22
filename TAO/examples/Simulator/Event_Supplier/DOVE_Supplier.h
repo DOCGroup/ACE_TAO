@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    DOVE_Supplier.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Michael Kircher (mk1@cs.wustl.edu) Chris Gill (cdgill@cs.wustl.edu)
  */
-//=============================================================================
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
 

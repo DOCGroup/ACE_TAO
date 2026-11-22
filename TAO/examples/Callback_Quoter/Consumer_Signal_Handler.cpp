@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Consumer_Signal_Handler.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "Consumer_Signal_Handler.h"
 

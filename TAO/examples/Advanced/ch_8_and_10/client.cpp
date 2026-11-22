@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    client.cpp
  *
@@ -7,7 +6,6 @@
  *  @author Reading
  *  @author MA.Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
  */
-//=============================================================================
 
 #include    "CCSC.h"        // ORB-specific
 #include    <iostream>

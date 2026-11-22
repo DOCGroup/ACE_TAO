@@ -1,11 +1,9 @@
 
-//=============================================================================
 /**
  *  @file    Event_Con.h
  *
  *  @author originally David Levine (levine@cs.wustl.edu) and Tim Harrison (harrison@cs.wustl.edu) modified Michael Kircher (mk1@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef EVENT_CON_H
 #define EVENT_CON_H

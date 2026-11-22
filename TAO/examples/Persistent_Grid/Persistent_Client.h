@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Persistent_Client.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef PERSISTENT_CLIENT_I_H
 #define PERSISTENT_CLIENT_I_H

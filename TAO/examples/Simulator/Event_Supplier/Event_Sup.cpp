@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Event_Sup.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author originally David Levine (levine@cs.wustl.edu) and Tim Harrison (harrison@cs.wustl.edu) modified Michael Kircher (mk1@cs.wustl.edu)
  */
-//=============================================================================
 
 #include "Event_Sup.h"
 #include "NavWeapC.h"

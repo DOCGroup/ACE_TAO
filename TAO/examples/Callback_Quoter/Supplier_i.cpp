@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Supplier_i.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "Supplier_i.h"
 #include "tao/debug.h"

@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    icp.cpp
  *
@@ -8,7 +7,6 @@
  *  @author Reading
  *  @author MA.  Used with permission ofAddison-Wesley.Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "icp.h"
 

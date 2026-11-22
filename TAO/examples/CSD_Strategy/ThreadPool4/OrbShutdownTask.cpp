@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    OrbShutdownTask.cpp
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
 
 #include "OrbShutdownTask.h"
 #include "ace/Log_Msg.h"

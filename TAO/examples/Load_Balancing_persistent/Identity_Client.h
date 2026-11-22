@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Identity_Client.h
  *
@@ -10,7 +9,6 @@
  *
  *  @author Marina Spivak <marina@cs.wustl.edu> with modifications by Bala Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef IDENTITY_CLIENT_H_
 #define IDENTITY_CLIENT_H_

@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    server.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
-//=============================================================================
 
 #include "ace/Get_Opt.h"
 #include "ace/Thread_Manager.h"

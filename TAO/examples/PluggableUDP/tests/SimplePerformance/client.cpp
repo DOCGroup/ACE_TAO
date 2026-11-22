@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    client.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
-//=============================================================================
 
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"

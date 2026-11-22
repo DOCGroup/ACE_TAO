@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     Callback_Handler.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef CALLBACK_HANDLER_H
 #define CALLBACK_HANDLER_H
