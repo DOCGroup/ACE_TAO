@@ -38,24 +38,24 @@ run_main (int, ACE_TCHAR* [])
   ACE_START_TEST (ACE_TEXT ("Monitor_Point_Registry_Test"));
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
-  char const* const name = "Monitor_Point_Registry_Test_Point";
+  char const* const point_name = "Monitor_Point_Registry_Test_Point";
   Monitor_Point_Registry* const registry = Monitor_Point_Registry::instance ();
   Monitor_Admin admin;
 
   ACE_TEST_ASSERT (!admin.monitor_point (nullptr, ACE_Time_Value::zero));
 
   Test_Monitor* registered {};
-  ACE_NEW_RETURN (registered, Test_Monitor (name), -1);
+  ACE_NEW_RETURN (registered, Test_Monitor (point_name), -1);
   ACE_TEST_ASSERT (registry->add (registered));
   registered->remove_ref ();
 
   Test_Monitor* duplicate {};
-  ACE_NEW_RETURN (duplicate, Test_Monitor (name), -1);
+  ACE_NEW_RETURN (duplicate, Test_Monitor (point_name), -1);
   ACE_TEST_ASSERT (!registry->add (duplicate));
   duplicate->remove_ref ();
   ACE_TEST_ASSERT (Test_Monitor::destructor_count_ == 1);
 
-  ACE_TEST_ASSERT (registry->remove (name));
+  ACE_TEST_ASSERT (registry->remove (point_name));
   ACE_TEST_ASSERT (Test_Monitor::destructor_count_ == 2);
 #endif /* ACE_HAS_MONITOR_FRAMEWORK */
 

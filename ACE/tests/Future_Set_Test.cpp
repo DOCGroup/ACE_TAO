@@ -528,16 +528,16 @@ run_main (int, ACE_TCHAR *[])
                   (u_int) resultd));
     }
 
-  const ACE_TCHAR *name {};
+  const ACE_TCHAR *result_name {};
   count = 0;
   while (fsetname.next_readable (fname))
     {
-      fname.get (name);
+      fname.get (result_name);
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) result(%u) name %s\n"),
                   count,
-                  name));
+                  result_name));
     }
 
   if (fseta.is_empty ())

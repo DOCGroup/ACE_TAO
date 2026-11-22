@@ -17,11 +17,11 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_DLL dll;
 
-  const ACE_TCHAR * dll_name = ACE_TEXT ("NOT_A_DLL") ACE_DLL_SUFFIX;
+  const ACE_TCHAR * library_name = ACE_TEXT ("NOT_A_DLL") ACE_DLL_SUFFIX;
 
   // Normally applications should check the return value, but if they
   // ignore it...
-  int result = dll.open (dll_name);
+  int result = dll.open (library_name);
 
   if(result == -1)
   {
@@ -34,7 +34,7 @@ run_main (int, ACE_TCHAR *[])
   {
     ACE_ERROR((LM_ERROR,
                ACE_TEXT ("Success loading %s ? It should have failed!\n"),
-               dll_name));
+               library_name));
   }
 
   // ... and then use the DLL library, the program crashes (instead of
