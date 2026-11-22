@@ -49,7 +49,7 @@ client (void *arg)
   ACE_SOCK_Stream cli_stream;
   ACE_SOCK_Connector con;
   ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
-  ACE_Time_Value *timeout = &tv;
+  ACE_Time_Value *timeout = std::addressof (tv);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) client: Connecting...\n")));
   // Initiate timed connection with server.

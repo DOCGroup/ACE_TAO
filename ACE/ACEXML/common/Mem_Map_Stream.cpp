@@ -2,6 +2,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Truncate.h"
 
+#include <memory>
+
 #include "ACEXML/common/Mem_Map_Stream.h"
 
 ACEXML_Mem_Map_Stream::ACEXML_Mem_Map_Stream ()
@@ -219,7 +221,8 @@ ACEXML_Mem_Map_Stream::grow_file_and_remap ()
   ssize_t bytes = 0;
   while (1)
     {
-      ssize_t const n = this->svc_handler_->peer ().recv (buf, sizeof buf, 0, &tv);
+      ssize_t const n = this->svc_handler_->peer ().recv (
+        buf, sizeof buf, 0, std::addressof (tv));
       if (n < 0)
         {
           if (errno != EWOULDBLOCK)

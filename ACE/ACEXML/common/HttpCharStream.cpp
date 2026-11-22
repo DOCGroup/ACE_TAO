@@ -320,7 +320,8 @@ ACEXML_HttpCharStream::send_request ()
   ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
 
   // Send the command to the connected server.
-  int retval = static_cast<int> (this->stream_->send_n (command.get (), bytes, &tv));
+  int retval = static_cast<int> (this->stream_->send_n (
+    command.get (), bytes, std::addressof (tv)));
   if (retval <= 0)
   {
     return -1;

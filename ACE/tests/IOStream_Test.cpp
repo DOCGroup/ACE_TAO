@@ -215,7 +215,7 @@ client (void *arg)
               ACE_TEXT (" (%P|%t) Client Receiving\n")));
 
   ACE_Time_Value timeout (2);
-  ACE_Time_Value *timeoutp = &timeout;
+  ACE_Time_Value *timeoutp = std::addressof (timeout);
 
   server >> timeoutp;
 
