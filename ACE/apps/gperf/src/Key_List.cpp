@@ -62,7 +62,9 @@ string_comparison_expression (bool const case_insensitive,
   std::string expression;
   if (!case_insensitive && compare_length)
     {
-      expression = "len != 0 && *" + input + " == *" + keyword + " && ";
+      // Non-optimized lookup code checks MIN_WORD_LENGTH before reaching this
+      // comparison; -O omits that check and requires a valid input length.
+      expression = "*" + input + " == *" + keyword + " && ";
       if (!keyword_length_verified)
         {
           expression += "len == std::strlen (" + keyword + ") && ";
