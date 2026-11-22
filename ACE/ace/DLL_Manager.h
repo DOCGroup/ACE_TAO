@@ -109,8 +109,8 @@ public:
             ACE_SHLIB_HANDLE handle,
             ERROR_STACK *errors = nullptr);
 
-  /// Call to close the DLL object.  If unload = 0, it only decrements
-  /// the refcount, but if unload = 1, then it will actually unload
+  /// Call to close the DLL object.  If unload is false, it only decrements
+  /// the refcount, but if unload is true, then it will actually unload
   /// the library when the refcount == 0;
   int close (int unload = 0);
 

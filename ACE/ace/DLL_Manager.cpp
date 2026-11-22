@@ -26,7 +26,7 @@ ACE_DLL_Handle::ACE_DLL_Handle ()
 ACE_DLL_Handle::~ACE_DLL_Handle ()
 {
   ACE_TRACE ("ACE_DLL_Handle::~ACE_DLL_Handle");
-  this->close (1);
+  this->close (true);
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_Allocator::instance()->free(this->dll_name_);
 #else
@@ -655,7 +655,7 @@ ACE_DLL_Manager::unload_policy (u_long unload_policy)
               if (this->handle_vector_[i] &&
                   this->handle_vector_[i]->refcount () == 0)
                 {
-                  this->handle_vector_[i]->close (1);
+                  this->handle_vector_[i]->close (true);
                 }
             }
           }

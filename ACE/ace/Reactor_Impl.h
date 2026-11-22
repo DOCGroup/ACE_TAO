@@ -215,7 +215,7 @@ public:
 
   /**
    * Control whether the Reactor will handle any more incoming events or not.
-   * If @a do_stop == 1, the Reactor will be disabled.  By default, a reactor
+   * If @a do_stop is true, the Reactor will be disabled.  By default, a reactor
    * is in active state and can be deactivated/reactived as wish.
    */
   virtual void deactivate (int do_stop) = 0;

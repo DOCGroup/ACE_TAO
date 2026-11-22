@@ -103,7 +103,7 @@ ACE_Reactor::end_reactor_event_loop ()
 {
   ACE_TRACE ("ACE_Reactor::end_reactor_event_loop");
 
-  this->implementation_->deactivate (1);
+  this->implementation_->deactivate (true);
 
   return 0;
 }
@@ -113,7 +113,7 @@ ACE_Reactor::reset_reactor_event_loop ()
 {
   ACE_TRACE ("ACE_Reactor::reset_reactor_event_loop");
 
-  this->implementation_->deactivate (0);
+  this->implementation_->deactivate (false);
 }
 
 ACE_INLINE int
