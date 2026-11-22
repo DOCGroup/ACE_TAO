@@ -29,7 +29,6 @@
 
 static constexpr ACE_UINT64 counter64_base = 1ULL << 32;
 
-//-----------[ syntax type ]----------------------------------------------
 SmiUINT32 Counter64::get_syntax()
 {
   return sNMP_SYNTAX_CNTR64;
@@ -57,36 +56,31 @@ Counter64::Counter64 (Counter64 const &ctr64)
   smival.value.hNumber.lopart = ctr64.low();
 }
 
-//------------------[ Counter64::high() ]------------------------------
-// return the high part
+/// Return the high part.
 unsigned long Counter64::high() const
 {
   return smival.value.hNumber.hipart;
 }
 
-//------------------[ Counter64::low() ]-------------------------------
-// return the low part
+/// Return the low part.
 unsigned long Counter64::low() const
 {
   return smival.value.hNumber.lopart;
 }
 
-//------------------[ set_high( const unsigned long h) ]-----------
-// set the high part
+/// Set the high part.
 void Counter64::set_high (unsigned long h)
 {
   smival.value.hNumber.hipart = h;
 }
 
-//------------------[ set_low( const unsigned long l) ]------------
-// set the low part
+/// Set the low part.
 void Counter64::set_low (unsigned long l)
 {
   smival.value.hNumber.lopart = l;
 }
 
-//-----------[ to_long_double( Counter64 c64) ]-----------------------------
-// convert a Counter 64 to a long double
+/// Convert this Counter64 to a long double.
 long double Counter64::to_long_double () const
 {
   long double ld = this->high();
@@ -95,9 +89,8 @@ long double Counter64::to_long_double () const
   return ld;
 }
 
-//-----------[ ld_to_c64( long double ld) ]----------------------------
-// convert a long double to a Counter64
-// semantics changed from prior version
+/// Convert a long double to a Counter64.
+/// Conversion semantics differ from the prior version.
 Counter64 &Counter64::assign (long double ld)
 {
   smival.syntax = sNMP_SYNTAX_CNTR64;
@@ -108,7 +101,6 @@ Counter64 &Counter64::assign (long double ld)
   return *this;
 }
 
-//----------------[ general Value = operator ]---------------------
 SnmpSyntax& Counter64::operator=( SnmpSyntax &val)
 {
   // protect against assignment from itself
@@ -144,7 +136,7 @@ SnmpSyntax& Counter64::operator=( SnmpSyntax &val)
   return *this;
 }
 
-// overloaded assignment
+/// Overloaded assignment.
 Counter64 &Counter64::operator= (ACE_UINT64 rhs)
 {
    smival.value.hNumber.hipart = static_cast<unsigned long> (rhs >> 32);
@@ -152,7 +144,7 @@ Counter64 &Counter64::operator= (ACE_UINT64 rhs)
    return *this;
 }
 
-// overloaded assignment
+/// Overloaded assignment.
 Counter64 &Counter64::operator= (Counter64 const &rhs)
 {
    smival.value.hNumber.hipart = rhs.high();
@@ -160,7 +152,7 @@ Counter64 &Counter64::operator= (Counter64 const &rhs)
    return *this;
 }
 
-// otherwise, behave like an unsigned long int
+/// Otherwise, behave like an unsigned long integer.
 Counter64::operator ACE_UINT64() const
 {
   ACE_UINT64 val = static_cast<ACE_UINT64> (smival.value.hNumber.hipart);
@@ -169,20 +161,17 @@ Counter64::operator ACE_UINT64() const
   return val;
 }
 
-//----------------[ Counter64::clone() ]-----------------------------------
-// create a new instance of this Value
+/// Create a new instance of this value.
 SnmpSyntax* Counter64::clone() const
 {
   return new Counter64(*this);
 }
 
-//----------------[ Counter64::valid() ]-------------------------------------
 int Counter64::valid() const
 {
   return 1;
 }
 
-//----------[ return ASCII format ]-------------------------
 // TODO:  Fix up to do real 64bit decimal value printing...
 //        For now, print > 32-bit values in hex
 char const *Counter64::to_string ()

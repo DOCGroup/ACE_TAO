@@ -30,11 +30,6 @@
 
 #define CTR64OUTBUF 30  // maximum ascii string for a 64-bit ctr
 
-//---------[ 64 bit Counter Class ]--------------------------------
-// Counter64 Class encapsulates two unsigned integers into a
-// a single entity. This type has is available in SNMPv2 but
-// may be used anywhere where needed.
-//
 /**
  * @class Counter64
  *
