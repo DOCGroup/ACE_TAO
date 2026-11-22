@@ -146,9 +146,9 @@ class Supplier_Main
   void save_ids();
   bool load_ids();
 
-  // Data members
+  /// @name Data members
+  /// @{
  private:
-  // set by command line parameters
   /// Set by -v to enable verbose output.
   bool verbose_ {};
   enum Mode_T {
@@ -198,6 +198,7 @@ class Supplier_Main
   ReconnectionCallback_i reconnection_callback_;
 
   bool reconnecting_ {};
+  /// @}
 };
 
 #endif /* RECONNECTING_SUPPLIER_H */
