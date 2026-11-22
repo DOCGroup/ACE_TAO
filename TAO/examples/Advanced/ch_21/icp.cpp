@@ -66,7 +66,9 @@ ICP_online (unsigned long id)
     // Look for id in state map.
     StateMap::iterator pos = dstate.find (id);
     if (pos != dstate.end ())
-        return -1;                          // Already exists
+        {
+            return -1;                      // Already exists
+        }
 
     // Fill in state.
     DeviceState ds {};
@@ -94,7 +96,9 @@ ICP_offline (unsigned long id)
     // Look for id in state map
     StateMap::iterator pos = dstate.find (id);
     if (pos == dstate.end ())
-        return -1;                              // No such device
+        {
+            return -1;                      // No such device
+        }
     dstate.erase (id);
     return 0;
 }
@@ -217,7 +221,9 @@ ICP_get (
     // Look for id in state map
     StateMap::const_iterator pos = dstate.find (id);
     if (pos == dstate.end ())
-        return -1;                              // No such device
+        {
+            return -1;                      // No such device
+        }
 
     // Depending on the attribute, return the
     // corresponding piece of state.
@@ -227,7 +233,9 @@ ICP_get (
       std::strncpy (static_cast<char *> (value), pos->second.location.c_str (), len);
     } else if (std::strcmp (attr, "nominal_temp") == 0) {
         if (pos->second.type != DeviceType::thermostat)
-            return -1;                      // Must be thermostat
+            {
+                return -1;                  // Must be thermostat
+            }
         std::memcpy (value, &pos->second.nominal_temp, (std::min) (len, sizeof (pos->second.nominal_temp)));
     } else if (std::strcmp (attr, "temperature") == 0) {
         long const temp = actual_temp (pos);
@@ -260,7 +268,9 @@ ICP_set (unsigned long id, char const *attr, void const *value)
     // Look for id in state map
     StateMap::iterator pos = dstate.find (id);
     if (pos == dstate.end ())
-        return -1;                          // No such device
+        {
+            return -1;                      // No such device
+        }
 
     // Change either location or nominal temp, depending on attr.
     if (std::strcmp (attr, "location") == 0) {
@@ -269,11 +279,15 @@ ICP_set (unsigned long id, char const *attr, void const *value)
         );
     } else if (std::strcmp (attr, "nominal_temp") == 0) {
         if (pos->second.type != DeviceType::thermostat)
-            return -1;                      // Must be thermostat
+            {
+                return -1;                  // Must be thermostat
+            }
         short temp {};
         std::memcpy (&temp, value, sizeof (temp));
         if (temp < MIN_TEMP || temp > MAX_TEMP)
-            return -1;
+            {
+                return -1;
+            }
         pos->second.nominal_temp = temp;
     } else {
         return -1;                          // No such attribute
