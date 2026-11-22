@@ -46,7 +46,7 @@ static void set_label(Widget w, const char *p)
 {
   XtVaSetValues (w,
                  XmNlabelString,
-                 XmStringCreateLocalized( (char*) p),
+                 XmStringCreateLocalized (const_cast<char *> (p)),
                  static_cast<void *>(0));
 }
 #define LABEL_WIDGET xmLabelWidgetClass
@@ -59,7 +59,7 @@ static Widget create_box(Widget parent, const char *name)
   XtSetArg (al[ac], XmNnumColumns, 3); ++ac;
   XtSetArg (al[ac], XmNpacking, XmPACK_COLUMN); ++ac;
   XtSetArg (al[ac], XmNentryAlignment, XmALIGNMENT_CENTER); ++ac;
-  return XmCreateRowColumn (parent, (char *) name, al, ac);
+  return XmCreateRowColumn (parent, const_cast<char *> (name), al, ac);
 }
 
 // Port we listen on.
@@ -187,7 +187,7 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
     char buf[100];
     int head;
-    ssize_t ret = this->peer ().recv_n ((char *) &head,
+    ssize_t ret = this->peer ().recv_n (reinterpret_cast<char *> (&head),
                                         sizeof (int));
     if (ret != sizeof (int))
       {
@@ -242,7 +242,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   digits_rc = create_box(topLevel, "digits_rc");
 
   //"Stop Test" button.
-  goodbye = XtCreateWidget ( (char *) "goodbye",
+  goodbye = XtCreateWidget (const_cast<char *> ("goodbye"),
                              BUTTON_WIDGET,
                              digits_rc,
                              0,
@@ -250,14 +250,14 @@ run_main (int argc, ACE_TCHAR *argv[])
   set_label(goodbye, "Stop Test");
 
   //"Press Me" button
-  PressMe = XtCreateWidget ((char *) "PressMe",
+  PressMe = XtCreateWidget (const_cast<char *> ("PressMe"),
                             BUTTON_WIDGET,
                             digits_rc,
                             0,
                             0);
 
   //Display for event counter
-  lbl = XtCreateWidget ((char *) "label_for_event_one",
+  lbl = XtCreateWidget (const_cast<char *> ("label_for_event_one"),
                         LABEL_WIDGET,
                         digits_rc,
                         0,

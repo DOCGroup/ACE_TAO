@@ -56,7 +56,11 @@ static void set_label(Widget w, const char *p)
 #define PRESS_ME_CALLBACK XtNcallback
 static Widget create_box(Widget parent, const char * name)
 {
-    return XtCreateWidget( (char*) name, boxWidgetClass, parent, 0, 0);
+    return XtCreateWidget (const_cast<char *> (name),
+                           boxWidgetClass,
+                           parent,
+                           0,
+                           0);
 }
 
 // Port we listen on.
@@ -184,7 +188,7 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
     char buf[100];
     int head;
-    ssize_t ret = this->peer ().recv_n ((char *) &head,
+    ssize_t ret = this->peer ().recv_n (reinterpret_cast<char *> (&head),
                                         sizeof (int));
     if (ret != sizeof (int))
       {
@@ -239,7 +243,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   digits_rc = create_box(topLevel, "digits_rc");
 
   //"Stop Test" button.
-  goodbye = XtCreateWidget ( (char *) "goodbye",
+  goodbye = XtCreateWidget (const_cast<char *> ("goodbye"),
                              BUTTON_WIDGET,
                              digits_rc,
                              0,
@@ -247,14 +251,14 @@ run_main (int argc, ACE_TCHAR *argv[])
   set_label(goodbye, "Stop Test");
 
   //"Press Me" button
-  PressMe = XtCreateWidget ((char *) "PressMe",
+  PressMe = XtCreateWidget (const_cast<char *> ("PressMe"),
                             BUTTON_WIDGET,
                             digits_rc,
                             0,
                             0);
 
   //Display for event counter
-  lbl = XtCreateWidget ((char *) "label_for_event_one",
+  lbl = XtCreateWidget (const_cast<char *> ("label_for_event_one"),
                         LABEL_WIDGET,
                         digits_rc,
                         0,

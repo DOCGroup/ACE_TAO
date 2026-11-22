@@ -134,7 +134,10 @@ inc_count (ClientData client_data, Tcl_Interp *interp,int, char **)
 
   //  sprintf (command,"set %s %s",(char *)client_data,new_string);
   // eval (command);
-  const char *varValue = Tcl_SetVar (interp,(char *)client_data,new_string,TCL_LEAVE_ERR_MSG);
+  const char *varValue = Tcl_SetVar (interp,
+                                     static_cast<const char *> (client_data),
+                                     new_string,
+                                     TCL_LEAVE_ERR_MSG);
   if (varValue == nullptr)
     {
       return TCL_ERROR;
@@ -158,7 +161,10 @@ inc_tmo (ClientData client_data)
 
   //  sprintf (command,"set %s %s",(char *)client_data,new_string);
   //  eval (command);
-  const char *varValue = Tcl_SetVar (tcl_interp,(char *)client_data,new_string,TCL_LEAVE_ERR_MSG);
+  const char *varValue = Tcl_SetVar (tcl_interp,
+                                     static_cast<const char *> (client_data),
+                                     new_string,
+                                     TCL_LEAVE_ERR_MSG);
   if (varValue == nullptr)
     {
       ACE_ERROR ((LM_ERROR,"Tcl_SetVar failed in inc_tmo\n"));
@@ -181,7 +187,10 @@ public:
 
     //    sprintf (command,"set %s %s",(char *)arg,new_string);
     //    eval (command);
-    const char *varValue = Tcl_SetVar (tcl_interp,(char *)arg,new_string,TCL_LEAVE_ERR_MSG);
+    const char *varValue = Tcl_SetVar (tcl_interp,
+                                       static_cast<const char *> (arg),
+                                       new_string,
+                                       TCL_LEAVE_ERR_MSG);
     if (varValue == nullptr)
       {
         ACE_ERROR_RETURN ((LM_ERROR,"Tcl_SetVar failed in handle_timeout\n"),-1);
@@ -200,7 +209,7 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
     char buf[100];
     int head;
-    ssize_t ret = this->peer ().recv_n ((char *) &head,
+    ssize_t ret = this->peer ().recv_n (reinterpret_cast<char *> (&head),
                                         sizeof (int));
     if (ret != sizeof (int))
       {
