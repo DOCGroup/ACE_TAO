@@ -136,20 +136,19 @@ namespace TAO
      */
     void export_properties (PortableGroup::Properties & property_set) const;
 
-    /////////////////////////
-    // Implementation Methods
- private:
+  private:
+    /// @name Implementation methods
+    /// @{
     /**
      * populate a ValueMap with the properties known to this decoder
      * including but overriding default values
      */
     void merge_properties (ValueMap & merged_values) const;
 
-    ////////////////////
-  private:
-    ///////////////
-    // Data Members
-  private:
+    /// @}
+
+    /// @name Data members
+    /// @{
     /**
      * Protect internal state.
      */
@@ -161,6 +160,7 @@ namespace TAO
      * these can be chained indefinitely.
      */
     PG_Property_Set_var defaults_ {};
+    /// @}
   };
 
 #ifdef PG_PS_UNIT_TEST

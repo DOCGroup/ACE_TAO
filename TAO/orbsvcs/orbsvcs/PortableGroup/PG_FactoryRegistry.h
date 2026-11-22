@@ -153,17 +153,17 @@ namespace TAO
     ::PortableGroup::FactoryInfos * list_factories_by_location (
       PortableGroup::Location const &location) override;
 
-    /////////////////////////
-    // Implementation methods
   private:
+    /// @name Implementation methods
+    /// @{
     /**
      * Write this factory's IOR to a file
      */
     int write_ior_file (ACE_TCHAR const *outputFile, char const *ior);
+    /// @}
 
-    ///////////////
-    // Data Members
-  private:
+    /// @name Data members
+    /// @{
     /**
      * A human-readable string to distinguish this from other Notifiers.
      */
@@ -222,6 +222,7 @@ namespace TAO
     int linger_ {};
 
     RegistryType registry_;
+    /// @}
   };
 } // namespace TAO
 

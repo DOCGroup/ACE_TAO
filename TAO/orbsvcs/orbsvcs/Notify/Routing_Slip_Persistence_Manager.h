@@ -99,9 +99,9 @@ public:
   /// when all persistent events have been reloaded.
   Routing_Slip_Persistence_Manager * load_next ();
 
-  /////////////////////////
-  // Implementation methods.
-  // Should not be called by Routing_Slip
+  /// @name Routing slip implementation methods
+  /// Should not be called by Routing_Slip.
+  /// @{
 
   /// \brief Commit root data to disk, which should only be done for a root node.
   bool store_root();
@@ -116,6 +116,7 @@ public:
 
   /// \brief During cleanup for shut down, release all chained RSPMs.
   void release_all ();
+  /// @}
 
 private:
   /**

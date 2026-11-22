@@ -175,9 +175,8 @@ namespace TAO
         char const * type_id,
         PortableGroup::Properties const & props);
 
-    ///////////////
-    // Data Members
-  private:
+    /// @name Data members
+    /// @{
     /**
      * Protect internal state.
      */
@@ -188,6 +187,7 @@ namespace TAO
 
     /// A collection of property sets indexed by type_id.
     Properties_Map properties_map_;
+    /// @}
   };
 } //namespace TAO_PG
 
