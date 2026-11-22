@@ -9,6 +9,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_socket.h"
+#include "ace/OS_NS_stropts.h"
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/net/os_if.h"
@@ -475,7 +476,7 @@ get_ip_interfaces_win32 (size_t &count,
   SOCKET sock;
 
   // Get an (overlapped) DGRAM socket to test with
-  sock = socket (AF_INET, SOCK_DGRAM, 0);
+  sock = ACE_OS::socket (AF_INET, SOCK_DGRAM, 0);
   if (sock == INVALID_SOCKET)
     {
       return -1;
@@ -491,7 +492,7 @@ get_ip_interfaces_win32 (size_t &count,
                     &bytes,
                     0,
                     0);
-  closesocket (sock);
+  ACE_OS::closesocket (sock);
   if (status == SOCKET_ERROR)
     {
       return -1;
@@ -518,7 +519,7 @@ get_ip_interfaces_win32 (size_t &count,
 
   // Get an (overlapped) DGRAM socket to test with.
   // If it fails only return IPv4 interfaces.
-  sock = socket (AF_INET6, SOCK_DGRAM, IPPROTO_UDP);
+  sock = ACE_OS::socket (AF_INET6, SOCK_DGRAM, IPPROTO_UDP);
   if (sock != INVALID_SOCKET)
     {
       status = WSAIoctl(sock,
@@ -530,7 +531,7 @@ get_ip_interfaces_win32 (size_t &count,
                         &bytes,
                         0,
                         0);
-      closesocket (sock);
+      ACE_OS::closesocket (sock);
       if (status != SOCKET_ERROR)
         {
           n_v6_interfaces = v6info->iAddressCount;
