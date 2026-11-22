@@ -351,24 +351,24 @@ ACE_Token_Handler::create_proxy ()
         {
           ACE_NEW_RETURN (proxy,
                           ACE_TS_RLock (token_request_.token_name (), this),
-                          0);
+                          nullptr);
         }
       else
         {
           ACE_NEW_RETURN (proxy,
                           ACE_TS_WLock (token_request_.token_name (), this),
-                          0);
+                          nullptr);
         }
       break;
     case ACE_Tokens::MUTEX:
       ACE_NEW_RETURN (proxy,
                       ACE_TS_Mutex (token_request_.token_name (), this),
-                      0);
+                      nullptr);
       break;
     default:
       // Nonexistent token type.
       errno = EINVAL;
-      return 0;
+      return nullptr;
     }
 
   // Check for failed new.
@@ -592,7 +592,7 @@ ACE_TS_Mutex::clone () const
 {
   ACE_TRACE ("ACE_TS_Mutex::clone");
   ACE_Token_Proxy *temp;
-  ACE_NEW_RETURN (temp, ACE_TS_Mutex (*this), 0);
+  ACE_NEW_RETURN (temp, ACE_TS_Mutex (*this), nullptr);
   return temp;
 }
 
@@ -637,7 +637,7 @@ ACE_TS_RLock::clone () const
   ACE_TRACE ("ACE_TS_RLock::clone");
   ACE_Token_Proxy *temp;
 
-  ACE_NEW_RETURN (temp, ACE_TS_RLock (*this), 0);
+  ACE_NEW_RETURN (temp, ACE_TS_RLock (*this), nullptr);
   return temp;
 }
 
@@ -682,7 +682,7 @@ ACE_TS_WLock::clone () const
   ACE_TRACE ("ACE_TS_WLock::clone");
   ACE_Token_Proxy *temp;
 
-  ACE_NEW_RETURN (temp, ACE_TS_WLock (*this), 0);
+  ACE_NEW_RETURN (temp, ACE_TS_WLock (*this), nullptr);
   return temp;
 }
 
