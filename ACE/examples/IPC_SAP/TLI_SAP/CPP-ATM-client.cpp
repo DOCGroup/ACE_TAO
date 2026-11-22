@@ -3,6 +3,8 @@
 #include "ace/ATM_Addr.h"
 #include "ace/Log_Msg.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_FORE_ATM_XTI)
 
 /* ACE_XTI/ATM Client */
@@ -124,7 +126,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (con.complete (cli_stream,
                         &remote_addr,
-                        &tv) == -1)
+                        std::addressof (tv)) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "%p\n",

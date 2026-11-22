@@ -4,6 +4,8 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Log_Msg.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_ATM)
 
 constexpr int MAX_LEAVES = 32;
@@ -119,7 +121,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_OS::printf( "ATM_Client: connection completed\n" );
           if (con.complete (atm_stream,
                             &hosts[ 0 ],
-                            &tv) == -1)
+                            std::addressof (tv)) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "%p\n",

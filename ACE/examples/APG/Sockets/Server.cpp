@@ -6,6 +6,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/Time_Value.h"
 
+#include <memory>
+
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   // Listing 1 code/ch06
@@ -56,7 +58,8 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 #endif /* 0 */
 
       // Listing 4 code/ch06
-      if (acceptor.accept (peer, &peer_addr, &timeout, false) == -1)
+      if (acceptor.accept (peer, &peer_addr, std::addressof (timeout),
+                           false) == -1)
         {
           if (ACE_OS::last_error () == EINTR)
             {

@@ -192,7 +192,8 @@ server (void *arg)
 
       ACE_DEBUG((LM_DEBUG, "(%P|%t) server: Waiting for connection...\n"));
 
-      int result = ACE::handle_read_ready (peer_acceptor->get_handle (), &tv);
+      int result = ACE::handle_read_ready (peer_acceptor->get_handle (),
+                                           std::addressof (tv));
       ACE_TEST_ASSERT (tv == def_timeout);
 
       if (result == -1)

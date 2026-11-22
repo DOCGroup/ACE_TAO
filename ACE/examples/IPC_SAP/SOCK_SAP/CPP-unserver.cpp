@@ -7,6 +7,8 @@
 #include "ace/OS_main.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 // Are we running verbosely?
@@ -130,7 +132,8 @@ run_event_loop (const ACE_TCHAR rendezvous[])
     {
       ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);
 
-      if (peer_acceptor.accept (new_stream, nullptr, &timeout) == -1)
+      if (peer_acceptor.accept (new_stream, nullptr,
+                                std::addressof (timeout)) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%p\n"),

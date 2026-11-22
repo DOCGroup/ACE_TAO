@@ -2,6 +2,8 @@
 #include "ace/ATM_Addr.h"
 #include "ace/Log_Msg.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_FORE_ATM_XTI)
 // ACE_TLI Server
 
@@ -70,7 +72,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // if errno == EINTR).
       if (peer_acceptor.accept (new_stream,
                                 &addr,
-                                &timeout) == -1)
+                                std::addressof (timeout)) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       "%p\n",

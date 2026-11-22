@@ -5,6 +5,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/Time_Value.h"
 
+#include <memory>
+
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   /*
@@ -63,7 +65,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_SOCK_Connector logConnector;
   ACE_Time_Value const timeout (10);
   ACE_SOCK_Stream log;
-  if (logConnector.connect (log, addr, &timeout) == -1)
+  if (logConnector.connect (log, addr, std::addressof (timeout)) == -1)
     {
       if (ACE_OS::last_error () == ETIME)
         {

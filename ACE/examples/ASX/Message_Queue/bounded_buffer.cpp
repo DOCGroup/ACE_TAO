@@ -8,6 +8,8 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_THREADS)
 
 // The producer reads data from the stdin stream, creates a message,
@@ -91,7 +93,7 @@ consumer (void *arg)
 
       ACE_Time_Value timeout (ACE_OS::time (0) + 4, 0); // Wait for upto 4 seconds
 
-      result = msg_queue->dequeue_head (mb, &timeout);
+      result = msg_queue->dequeue_head (mb, std::addressof (timeout));
 
       if (result == -1)
       {

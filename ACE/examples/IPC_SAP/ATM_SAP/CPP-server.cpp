@@ -4,6 +4,8 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Log_Msg.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_ATM)
 // ACE_ATM Server
 
@@ -72,7 +74,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (peer_acceptor.accept (new_stream,
                                 &addr,
-                                &timeout) == -1)
+                                std::addressof (timeout)) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       "%p\n",

@@ -5,6 +5,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Time_Value.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_TLI)
 
 /* ACE_TLI Client */
@@ -50,7 +52,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (con.complete (cli_stream,
                         &remote_addr,
-                        &tv) == -1)
+                        std::addressof (tv)) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("%p\n"),
