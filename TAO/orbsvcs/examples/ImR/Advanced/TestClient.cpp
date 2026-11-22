@@ -154,7 +154,9 @@ bool TestClient::buildIORList ()
   while (getline (ior_file_owner.get (), ior) != EOF)
     {
       if (ior.length () > 0)
-        iors_.push_back (ior);
+        {
+          iors_.push_back (ior);
+        }
       else
       {
         break;

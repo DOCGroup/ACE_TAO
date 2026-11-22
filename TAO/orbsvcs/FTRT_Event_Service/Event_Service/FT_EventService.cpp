@@ -86,7 +86,9 @@ FT_EventService::run (int argc, ACE_TCHAR *argv [])
                     ec.activate (this->membership_);
 
                   if (this->report_factory (this->orb_.in (), ec_ior.in ()) == -1)
-                    result = -1;
+                    {
+                      result = -1;
+                    }
                   else
                   {
                     this->orb_->run ();

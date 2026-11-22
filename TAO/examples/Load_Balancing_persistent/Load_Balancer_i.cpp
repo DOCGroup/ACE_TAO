@@ -504,7 +504,9 @@ Object_Group_Factory_i::update_flags (bool random)
     {
     case 0:
       if (random)
-        *(this->flags_) = 2;
+        {
+          *(this->flags_) = 2;
+        }
       else
       {
         *(this->flags_) = 1;

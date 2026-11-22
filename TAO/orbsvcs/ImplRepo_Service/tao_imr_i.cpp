@@ -152,27 +152,49 @@ TAO_IMR_Op::make_op (ACE_TCHAR const *op_name)
       return std::make_unique<TAO_IMR_Op_Activate> ();
     }
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("start")) == 0)
-    return std::make_unique<TAO_IMR_Op_Activate> ();
+    {
+      return std::make_unique<TAO_IMR_Op_Activate> ();
+    }
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("add")) == 0)
-    return std::make_unique<TAO_IMR_Op_Register> (true);
+    {
+      return std::make_unique<TAO_IMR_Op_Register> (true);
+    }
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("autostart")) == 0)
-    return std::make_unique<TAO_IMR_Op_Autostart> ();
+    {
+      return std::make_unique<TAO_IMR_Op_Autostart> ();
+    }
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("ior")) == 0)
-    return std::make_unique<TAO_IMR_Op_IOR> ();
+    {
+      return std::make_unique<TAO_IMR_Op_IOR> ();
+    }
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("kill")) == 0)
-    return std::make_unique<TAO_IMR_Op_Kill> ();
+    {
+      return std::make_unique<TAO_IMR_Op_Kill> ();
+    }
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("link")) == 0)
-    return std::make_unique<TAO_IMR_Op_Link> ();
+    {
+      return std::make_unique<TAO_IMR_Op_Link> ();
+    }
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("list")) == 0)
-    return std::make_unique<TAO_IMR_Op_List> ();
+    {
+      return std::make_unique<TAO_IMR_Op_List> ();
+    }
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("remove")) == 0)
-    return std::make_unique<TAO_IMR_Op_Remove> ();
+    {
+      return std::make_unique<TAO_IMR_Op_Remove> ();
+    }
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("shutdown")) == 0)
-    return std::make_unique<TAO_IMR_Op_Shutdown> ();
+    {
+      return std::make_unique<TAO_IMR_Op_Shutdown> ();
+    }
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("shutdown-repo")) == 0)
-    return std::make_unique<TAO_IMR_Op_ShutdownRepo> ();
+    {
+      return std::make_unique<TAO_IMR_Op_ShutdownRepo> ();
+    }
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("update")) == 0)
-    return std::make_unique<TAO_IMR_Op_Register> (false);
+    {
+      return std::make_unique<TAO_IMR_Op_Register> (false);
+    }
 
   return {};
 }
@@ -194,13 +216,21 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
   // Figure out what the activation string is.
   const char *act = "UNKNOWN STARTUP";
   if (info.startup.activation == ImplementationRepository::NORMAL)
-    act = "NORMAL";
+    {
+      act = "NORMAL";
+    }
   else if (info.startup.activation == ImplementationRepository::MANUAL)
-    act = "MANUAL";
+    {
+      act = "MANUAL";
+    }
   else if (info.startup.activation == ImplementationRepository::PER_CLIENT)
-    act = "PER_CLIENT";
+    {
+      act = "PER_CLIENT";
+    }
   else if (info.startup.activation == ImplementationRepository::AUTO_START)
-    act = "AUTO_START";
+    {
+      act = "AUTO_START";
+    }
 
   // Print out information
   ORBSVCS_DEBUG ((LM_DEBUG, "Server <%C>\n", info.server.in ()));
@@ -815,18 +845,28 @@ TAO_IMR_Op_Register::parse (int argc, ACE_TCHAR **argv)
       case 'a':  // Activation Mode
         this->set_activation_ = true;
         if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT("NORMAL")) == 0)
-          this->activation_ = ImplementationRepository::NORMAL;
+          {
+            this->activation_ = ImplementationRepository::NORMAL;
+          }
         else if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT("MANUAL")) == 0)
-          this->activation_ = ImplementationRepository::MANUAL;
+          {
+            this->activation_ = ImplementationRepository::MANUAL;
+          }
         else if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT("PER_CLIENT")) == 0)
-          this->activation_ = ImplementationRepository::PER_CLIENT;
+          {
+            this->activation_ = ImplementationRepository::PER_CLIENT;
+          }
         else if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT("AUTO_START")) == 0)
-          this->activation_ = ImplementationRepository::AUTO_START;
+          {
+            this->activation_ = ImplementationRepository::AUTO_START;
+          }
         else
-          ORBSVCS_ERROR_RETURN ((LM_ERROR,
-          "Unknown Activation Mode <%s>.\n",
-          get_opts.opt_arg ()),
-          -1);
+          {
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                   "Unknown Activation Mode <%s>.\n",
+                                   get_opts.opt_arg ()),
+                                  -1);
+          }
         break;
       case 'r':
       case 'R':   // startup/ping Retry Count
@@ -1394,7 +1434,9 @@ TAO_IMR_Op_Register::run ()
       }
 
       if (this->set_activator_)
-        options->activator = CORBA::string_dup(this->activator_.c_str ());
+        {
+          options->activator = CORBA::string_dup(this->activator_.c_str ());
+        }
       // If the command line is set, we must have an activator
       else if (this->set_command_line_ &&
               (options->activator.in () == 0 || *options->activator.in () == 0))
@@ -1453,11 +1495,15 @@ TAO_IMR_Op_List::display_server_information (const ImplementationRepository::Ser
     }
 
   if (this->verbose_server_information_)
-    TAO_IMR_Op::display_server_information (info);
+    {
+      TAO_IMR_Op::display_server_information (info);
+    }
   else
     {
       if (this->terse_)
-        ORBSVCS_DEBUG ((LM_DEBUG, "%C\n", info.server.in ()));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG, "%C\n", info.server.in ()));
+        }
       else
       {
         ORBSVCS_DEBUG ((LM_DEBUG, "<%C> %C\n", info.server.in (), maybe));

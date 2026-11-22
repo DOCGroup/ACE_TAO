@@ -695,7 +695,9 @@ TAO_SFP_Base::send_message (TAO_AV_Transport *transport,
       *reinterpret_cast<CORBA::ULong *> (buf + offset) = total_len;
 #else
       if (!stream.do_byte_swap ())
-        *reinterpret_cast<CORBA::ULong *> (buf + offset) = total_len;
+        {
+          *reinterpret_cast<CORBA::ULong *> (buf + offset) = total_len;
+        }
       else
         ACE_CDR::swap_4 (reinterpret_cast<char *> (&total_len),
                          buf + offset);

@@ -93,7 +93,9 @@ run_service ()
   ACE_NT_SERVICE_RUN (service, SERVICE::instance (), ret);
 
   if (ret == 0)
-    ORBSVCS_ERROR ((LM_ERROR, "%p\n", "Couldn't start service"));
+    {
+      ORBSVCS_ERROR ((LM_ERROR, "%p\n", "Couldn't start service"));
+    }
 
   return ret;
 #else /* ACE_WIN32 */

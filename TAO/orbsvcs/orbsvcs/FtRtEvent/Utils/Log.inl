@@ -21,7 +21,9 @@ namespace TAO_FTRTEC {
   void Log::hexdump(unsigned int level, char const *buf, size_t len, ACE_TCHAR const *msg)
   {
     if (Log::log_level_ >= level)
-      ORBSVCS_HEX_DUMP((LM_DEBUG, buf, len, msg));
+      {
+        ORBSVCS_HEX_DUMP((LM_DEBUG, buf, len, msg));
+      }
   }
 #else // NDEBUG
   ACE_INLINE

@@ -170,7 +170,9 @@ ImR_Activator_i::register_with_imr (ImplementationRepository::Activator_ptr acti
           return;
         }
       else if (this->debug_ > 1)
-        ORBSVCS_DEBUG((LM_DEBUG, "(%P|%t) ImR Activator: ImplRepoService not found\n"));
+        {
+          ORBSVCS_DEBUG((LM_DEBUG, "(%P|%t) ImR Activator: ImplRepoService not found\n"));
+        }
     }
   catch (const CORBA::Exception& ex)
     {
