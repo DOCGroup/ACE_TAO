@@ -206,7 +206,7 @@ public:
 Event_Loop_Thread::Event_Loop_Thread (ACE_Thread_Manager &thread_manager,
                                       ACE_Reactor &reactor,
                                       int extra_iterations_needed)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     reactor_ (reactor),
     extra_iterations_needed_ (extra_iterations_needed)
 {

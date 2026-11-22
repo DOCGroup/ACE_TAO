@@ -15,6 +15,8 @@
 #include "ace/Auto_Event.h"
 #include "tao/PortableServer/ServantActivatorC.h"
 
+#include <memory>
+
 class test_i :
   public virtual POA_test
 {
@@ -71,7 +73,7 @@ public:
 
 Object_Activator::Object_Activator (ACE_Thread_Manager &thread_manager,
                                     PortableServer::POA_ptr poa)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     poa_ (PortableServer::POA::_duplicate (poa))
 {
 }

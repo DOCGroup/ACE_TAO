@@ -5,6 +5,8 @@
 #include "ace/Task.h"
 #include "../check_supported_priorities.cpp"
 
+#include <memory>
+
 #include <cstdio>
 
 struct Client_Options
@@ -82,7 +84,7 @@ public:
 Task::Task (ACE_Thread_Manager &thread_manager,
             CORBA::ORB_ptr orb,
             Client_Options const &options)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     options_ (options),
     orb_ (CORBA::ORB::_duplicate (orb))
 {

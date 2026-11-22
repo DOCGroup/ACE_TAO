@@ -102,7 +102,7 @@ Worker_Thread::Worker_Thread (ACE_Thread_Manager &thread_manager,
                               RTCORBA::Current_ptr current,
                               CORBA::Short priority,
                               int iterations)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     test_ (test::_duplicate (test)),
     current_ (RTCORBA::Current::_duplicate (current)),
     priority_ (priority),
@@ -188,7 +188,7 @@ private:
 Task::Task (ACE_Thread_Manager &thread_manager,
             CORBA::ORB_ptr orb,
             Client_Options const &options)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     orb_ (CORBA::ORB::_duplicate (orb)),
     options_ (options)
 {

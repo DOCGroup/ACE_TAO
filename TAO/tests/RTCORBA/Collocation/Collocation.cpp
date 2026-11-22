@@ -7,6 +7,8 @@
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "../check_supported_priorities.cpp"
 
+#include <memory>
+
 RTCORBA::Priority default_thread_priority;
 
 class test_i;
@@ -763,7 +765,7 @@ public:
 
 Task::Task (ACE_Thread_Manager &thread_manager,
             CORBA::ORB_ptr orb)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     orb_ (CORBA::ORB::_duplicate (orb))
 {
 }

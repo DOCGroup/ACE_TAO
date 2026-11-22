@@ -421,7 +421,7 @@ public:
 Receiver::Receiver (ACE_Thread_Manager &thread_manager,
                     ACE_HANDLE handle,
                     int nested_upcalls)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     handle_ (handle),
     counter_ (1),
     nested_upcalls_ (nested_upcalls),
@@ -843,7 +843,7 @@ Invocation_Thread::Invocation_Thread (ACE_Thread_Manager &thread_manager,
                                       int make_invocations,
                                       int run_receiver_thread,
                                       int nested_upcalls)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     connection_cache_ (connection_cache),
     reactor_ (reactor),
     thread_manager_ (thread_manager),
@@ -1047,7 +1047,7 @@ Close_Socket_Thread::Close_Socket_Thread (ACE_Thread_Manager &thread_manager,
                                           ACE_Auto_Event &new_connection_event,
                                           int make_invocations,
                                           int run_receiver_thread)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     new_connection_event_ (new_connection_event),
     reactor_ (reactor),
     make_invocations_ (make_invocations),
@@ -1142,7 +1142,7 @@ Close_Socket_Thread::svc ()
 
 Event_Loop_Thread::Event_Loop_Thread (ACE_Thread_Manager &thread_manager,
                                       ACE_Reactor &reactor)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     reactor_ (reactor)
 {
 }
@@ -1184,7 +1184,7 @@ public:
 Purger_Thread::Purger_Thread (ACE_Thread_Manager &thread_manager,
                               ACE_Reactor &reactor,
                               Connection_Cache &connection_cache)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     reactor_ (reactor),
     connection_cache_ (connection_cache)
 {

@@ -6,6 +6,8 @@
 #include "testC.h"
 #include "../check_supported_priorities.cpp"
 
+#include <memory>
+
 struct Client_Options
 {
   ACE_TCHAR const *ior { ACE_TEXT ("file://ior_1") };
@@ -71,7 +73,7 @@ private:
 Task::Task (ACE_Thread_Manager &thread_manager,
             CORBA::ORB_ptr orb,
             Client_Options const &options)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     orb_ (CORBA::ORB::_duplicate (orb)),
     options_ (options)
 {

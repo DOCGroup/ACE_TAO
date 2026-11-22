@@ -134,7 +134,7 @@ public:
   Connect_Thread (ACE_Thread_Manager &thread_manager,
                   ACE_Reactor &reactor,
                   ACE_Thread_Mutex &reactor_lock)
-    : ACE_Task_Base (&thread_manager)
+    : ACE_Task_Base (std::addressof (thread_manager))
     , reactor_ (reactor)
     , reactor_lock_ (reactor_lock)
     , threads_ (number_of_threads)

@@ -130,7 +130,7 @@ private:
 Task::Task (ACE_Thread_Manager &thread_manager,
             CORBA::ORB_ptr orb,
             ACE_TCHAR const *ior_output_file)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     orb_ (CORBA::ORB::_duplicate (orb)),
     ior_output_file_ (ior_output_file)
 {
