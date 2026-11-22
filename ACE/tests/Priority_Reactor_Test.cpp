@@ -350,7 +350,7 @@ run_main (int argc, ACE_TCHAR *argv[])
           ACE_OS::exit (-1);
           /* NOTREACHED */
         case 0:
-          client (&connection_addr);
+          client (std::addressof (connection_addr));
           ACE_OS::exit (0);
           break;
           /* NOTREACHED */

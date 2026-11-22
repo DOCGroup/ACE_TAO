@@ -27,6 +27,8 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Stream.h"
 
+#include <memory>
+
 // Change to non-zero if test fails
 static int Test_Result = 0;
 
@@ -354,11 +356,11 @@ spawn ()
                       1));
           /* NOTREACHED */
         case 0:
-          client (&server_addr);
+          client (std::addressof (server_addr));
           ACE_OS::exit (0);
           /* NOTREACHED */
         default:
-          server (&peer_acceptor);
+          server (std::addressof (peer_acceptor));
           ACE_OS::wait ();
         }
 #elif defined (ACE_HAS_THREADS)

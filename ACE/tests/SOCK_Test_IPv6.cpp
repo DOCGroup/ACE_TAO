@@ -25,6 +25,8 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Handle_Set.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_FORK)
 # include "ace/OS_NS_unistd.h"
 #endif
@@ -281,11 +283,11 @@ spawn ()
                       1));
           /* NOTREACHED */
         case 0:
-          client (&server_addr);
+          client (std::addressof (server_addr));
           ACE_OS::exit (0);
           /* NOTREACHED */
         default:
-          server (&peer_acceptor);
+          server (std::addressof (peer_acceptor));
           ACE_OS::wait ();
         }
 #elif defined (ACE_HAS_THREADS)

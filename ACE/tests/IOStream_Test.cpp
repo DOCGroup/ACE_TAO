@@ -453,7 +453,7 @@ spawn ()
           }
         else
           {
-            client (&server_addr);
+            client (std::addressof (server_addr));
           }
         ACE_END_LOG;
         break;

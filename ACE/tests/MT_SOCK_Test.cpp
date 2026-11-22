@@ -26,6 +26,8 @@
 #include "ace/Handle_Set.h"
 #include "ace/Time_Value.h"
 
+#include <memory>
+
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
 // Normally the test will have BACKLOG < NUM_CLIENTS to force some
@@ -369,7 +371,7 @@ spawn (int num_clients)
               break;
             case 0:
               ACE_LOG_MSG->sync (ACE_TEXT ("MT_SOCK_Test-child"));
-              client (&server_addr);
+              client (std::addressof (server_addr));
               ACE_OS::exit (0);
               /* NOTREACHED */
             default:
@@ -377,7 +379,7 @@ spawn (int num_clients)
             }
         }
 
-      server (&peer_acceptor);
+      server (std::addressof (peer_acceptor));
 
       peer_acceptor.close();
 

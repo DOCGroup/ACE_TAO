@@ -21,6 +21,8 @@
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 #define SERVER_PORT 20000
 #define TEST_DATA ACE_TEXT ("UDP Open Test")
 
@@ -328,11 +330,11 @@ spawn (int proto)
                                 ACE_TEXT ("fork failed")));
               /* NOTREACHED */
             case 0:
-              client (&server_addr);
+              client (std::addressof (server_addr));
               ACE_OS::exit (0);
               /* NOTREACHED */
             default:
-              server (&server_dgram);
+              server (std::addressof (server_dgram));
               ACE_OS::wait ();
             }
 #elif defined (ACE_HAS_THREADS)

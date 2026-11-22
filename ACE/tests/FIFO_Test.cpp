@@ -25,6 +25,8 @@
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
 
+#include <memory>
+
 #include <cstring>
 
 #if !defined (ACE_LACKS_MKFIFO)
@@ -247,7 +249,7 @@ test_fifo_msg ()
       ACE_OS::exit (0);
       /* NOTREACHED */
     default:
-      server (&read_side);
+      server (std::addressof (read_side));
       ACE_OS::wait ();
     }
 #elif defined (ACE_HAS_THREADS)

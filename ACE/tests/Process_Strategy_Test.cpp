@@ -46,6 +46,8 @@
 #include "ace/File_Lock.h"
 #include "ace/Lib_Find.h"
 
+#include <memory>
+
 // Counting_Service and Options in here
 #include "Process_Strategy_Test.h"
 
@@ -724,7 +726,7 @@ run_main (int argc, ACE_TCHAR *argv[])
           ACE_OS::exit (-1);
           /* NOTREACHED */
         case 0:
-          client (&server_addr);
+          client (std::addressof (server_addr));
           break;
           /* NOTREACHED */
         default:

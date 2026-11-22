@@ -24,6 +24,8 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/OS_NS_sys_sendfile.h"
 
+#include <memory>
+
 // Change to non-zero if test fails
 static int Test_Result = 0;
 
@@ -287,7 +289,7 @@ spawn ()
                       ACE_TEXT ("(%P|%t) fork failed: %p\n")));
           ACE_OS::abort ();
         case 0:
-          client (&server_addr);
+          client (std::addressof (server_addr));
           ACE_OS::exit (0);
           /* NOTREACHED */
         default:
