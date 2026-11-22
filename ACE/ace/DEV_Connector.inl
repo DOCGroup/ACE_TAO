@@ -1,7 +1,7 @@
 // -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Creates a Local ACE_DEV.
+/// Creates a Local ACE_DEV.
 
 ACE_INLINE
 ACE_DEV_Connector::ACE_DEV_Connector (ACE_DEV_IO &new_io,
