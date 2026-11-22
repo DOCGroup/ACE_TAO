@@ -34,7 +34,7 @@ static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 // This length is used for the "big buffer" send/receive.
 static constexpr size_t big_size = (BUFSIZ * 4);
 
-static void *
+static ACE_THR_FUNC_RETURN
 client (void *arg)
 {
   ACE_TCHAR *fifo_path = reinterpret_cast <ACE_TCHAR *> (arg);
@@ -98,10 +98,10 @@ client (void *arg)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("fifo close")));
   }
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 server (void *arg)
 {
   ACE_FIFO_Recv_Msg *fifo = reinterpret_cast <ACE_FIFO_Recv_Msg *> (arg);
@@ -194,7 +194,7 @@ server (void *arg)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) All receives ok\n")));
   }
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 static int
@@ -252,7 +252,7 @@ test_fifo_msg ()
     }
 #elif defined (ACE_HAS_THREADS)
   if (ACE_Thread_Manager::instance ()->spawn
-        (ACE_THR_FUNC (server),
+        (server,
          &read_side,
          THR_NEW_LWP | THR_DETACHED) == -1)
     {
@@ -261,7 +261,7 @@ test_fifo_msg ()
     }
 
   if (ACE_Thread_Manager::instance ()->spawn
-        (ACE_THR_FUNC (client),
+        (client,
          fifo_path,
          THR_NEW_LWP | THR_DETACHED) == -1)
     {
