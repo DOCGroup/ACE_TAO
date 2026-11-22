@@ -20,7 +20,7 @@ extern "C"
   /// Removes a device.
   int ICP_offline (unsigned long id);
 
-  // Get attribute
+  /// Gets an attribute.
   int ICP_get (unsigned long id,
                char const *attr,
                void *value,

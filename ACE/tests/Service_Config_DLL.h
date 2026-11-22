@@ -62,7 +62,7 @@ private:
 class Service_Config_DLL_Export Refuses_Init : public ACE_Service_Object
 {
 public:
-  // Constructor; required for factory function.
+  /// Constructor; required for factory function.
   Refuses_Init () {}
 
   /// Initializes object when dynamic linking occurs.

@@ -150,8 +150,8 @@ private:
   /// counter of the number of priorities used within a grain.
   u_int counter_ {};
 
-  // Set a task_name string starting with "@", so we are able to
-  // accurately count the number of context switches.
+  /// Set a task_name string starting with "@", so we are able to
+  /// accurately count the number of context switches.
   std::unique_ptr<char[]> task_name_ {};
 
   /// elapsed time for the latency tests.
