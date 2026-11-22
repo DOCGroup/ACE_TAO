@@ -267,14 +267,18 @@ ACE_RAPI_Session::open (ACE_INET_Addr const &dest_addr,
                                         rsvp_callback,
                                         this,
                                         &rsvp_error)) == NULL_SID)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       "rapi_session () call fails. Error\n"),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            "rapi_session () call fails. Error\n"),
+                           -1);
+    }
   else
-    ACELIB_DEBUG ((LM_DEBUG,
-                "rapi_session () call succeeds. "
-                "Session ID = %d\n",
-                this->session_id_));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     "rapi_session () call succeeds. "
+                     "Session ID = %d\n",
+                     this->session_id_));
+    }
 
   return 0;
 }
@@ -473,12 +477,16 @@ ACE_RAPI_Session::receiving_qos (ACE_QoS const &ace_qos)
                        // WILDCARD.
                        0,
                        0) == -1)
-        ACELIB_ERROR_RETURN ((LM_ERROR,
-                           "(%N|%l)rapi_reserve () error:\n\tRESV Generation can't be started\n"),
-                          -1);
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                                "(%N|%l)rapi_reserve () error:\n\tRESV Generation can't be started\n"),
+                               -1);
+        }
       else
-        ACELIB_DEBUG ((LM_DEBUG,
-                    "rapi_reserve () for RESV Tear call succeeds\n"));
+        {
+          ACELIB_DEBUG ((LM_DEBUG,
+                         "rapi_reserve () for RESV Tear call succeeds\n"));
+        }
 
       return 0;
     }
@@ -542,12 +550,16 @@ ACE_RAPI_Session::receiving_qos (ACE_QoS const &ace_qos)
                    // WILDCARD.
                    1,
                    flow_spec) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       "rapi_reserve () error:\n\tRESV Generation can't be started\n"),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            "rapi_reserve () error:\n\tRESV Generation can't be started\n"),
+                           -1);
+    }
   else
-    ACELIB_DEBUG ((LM_DEBUG,
-                "rapi_reserve () call succeeds\n"));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     "rapi_reserve () call succeeds\n"));
+    }
 
   return 0;
 }

@@ -808,8 +808,10 @@ ACE_Registry::Binding_Iterator::next_one (Binding &binding)
   long result = this->next_n (how_many, list);
 
   if (result == 0)
-    // Success
-    binding = (*list.begin ());
+    {
+      // Success
+      binding = (*list.begin ());
+    }
 
   return result;
 }
@@ -1029,10 +1031,12 @@ ACE_Predefined_Naming_Contexts::connect (ACE_Registry::Naming_Context &naming_co
     }
 
   if (predefined == HKEY_LOCAL_MACHINE || predefined == HKEY_USERS)
-    result =
-      ACE_TEXT_RegConnectRegistry (const_cast<ACE_TCHAR *> (machine_name),
-                                   predefined,
-                                   &naming_context.key_);
+    {
+      result =
+        ACE_TEXT_RegConnectRegistry (const_cast<ACE_TCHAR *> (machine_name),
+                                     predefined,
+                                     &naming_context.key_);
+    }
   if (predefined == HKEY_CURRENT_USER || predefined == HKEY_CLASSES_ROOT)
     {
       // Make sure that for these types, the machine is local
