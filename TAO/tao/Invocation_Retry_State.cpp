@@ -91,13 +91,10 @@ TAO::Invocation_Retry_State::Invocation_Retry_State (TAO_Stub &stub)
   this->ex_count_map_[FOE_TRANSIENT] = 0;
   this->ex_count_map_[FOE_INV_OBJREF] = 0;
 
-  // Cast away const to avoid tedious iterator operations on the ACE_Array_Map.
-  TAO::Invocation_Retry_Params &command_line_params =
-    const_cast<TAO::Invocation_Retry_Params &> (stub.orb_core ()
-      ->orb_params ()->invocation_retry_params ());
-  TAO::Invocation_Retry_Params &client_factory_params =
-    const_cast<TAO::Invocation_Retry_Params &> (stub.orb_core ()
-      ->client_factory ()->invocation_retry_params ());
+  TAO::Invocation_Retry_Params const &command_line_params =
+    stub.orb_core ()->orb_params ()->invocation_retry_params ();
+  TAO::Invocation_Retry_Params const &client_factory_params =
+    stub.orb_core ()->client_factory ()->invocation_retry_params ();
 
   retry_params_calc(command_line_params,
                     client_factory_params,
