@@ -82,7 +82,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       {
         ++ipv4_cnt;
         if (if_addrs_owner[j].is_loopback ())
-          ++ipv4_lo_cnt;  // keep track of IPv4 loopback ifs
+          {
+            ++ipv4_lo_cnt;  // keep track of IPv4 loopback ifs
+          }
       }
     else if (!if_addrs_owner[j].is_linklocal () &&
              !if_addrs_owner[j].is_loopback())

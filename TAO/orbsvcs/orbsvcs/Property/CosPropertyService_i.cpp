@@ -765,7 +765,9 @@ TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
   if (how_many > 0)
     {
       if (how_many >= num_of_properties)
-        sequence_length = num_of_properties;
+        {
+          sequence_length = num_of_properties;
+        }
       else
       {
         sequence_length = how_many;

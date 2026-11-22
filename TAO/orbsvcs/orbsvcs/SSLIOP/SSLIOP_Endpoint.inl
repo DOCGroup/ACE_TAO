@@ -27,7 +27,9 @@ TAO_SSLIOP_Endpoint::iiop_endpoint (TAO_IIOP_Endpoint *iiop_endpoint,
         new_endpoint = iiop_endpoint;
 
       if (this->destroy_iiop_endpoint_)
-        delete this->iiop_endpoint_;
+        {
+          delete this->iiop_endpoint_;
+        }
 
       this->iiop_endpoint_ = new_endpoint;
       this->destroy_iiop_endpoint_ = destroy;

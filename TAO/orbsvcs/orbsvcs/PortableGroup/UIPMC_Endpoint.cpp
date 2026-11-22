@@ -66,7 +66,9 @@ TAO_UIPMC_Endpoint::addr_to_string (char *buffer, size_t length)
 
 #if defined (ACE_HAS_IPV6)
   if (this->object_addr_.get_type () == AF_INET6)
-    actual_len += 2; // '[' + ']'
+    {
+      actual_len += 2; // '[' + ']'
+    }
 #endif /* ACE_HAS_IPV6 */
 
   if (length < actual_len)

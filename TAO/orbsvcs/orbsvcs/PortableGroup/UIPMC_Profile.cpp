@@ -543,7 +543,9 @@ TAO_UIPMC_Profile::to_string () const
                    5 /* port number */);
 #if defined (ACE_HAS_IPV6)
   if (this->endpoint_.object_addr ().get_type () == AF_INET6)
-    buflen += 2; // room for '[' and ']'
+    {
+      buflen += 2; // room for '[' and ']'
+    }
 #endif /* ACE_HAS_IPV6 */
 
   static const char digits [] = "0123456789";
