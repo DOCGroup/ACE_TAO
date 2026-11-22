@@ -1,3 +1,4 @@
+#include "ace/Assert.h"
 #include "ace/OS_NS_stdio.h"
 
 // Listing 1 code/ch17
@@ -251,12 +252,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (argc == 1) // parent
     {
       int const parent_result = handle_parent (argv[0]);
-      ACE_ASSERT (parent_result == 0);
+      ACE_TEST_ASSERT (parent_result == 0);
     }
   else
   {
     int const child_result = handle_child ();
-    ACE_ASSERT (child_result == 0);
+    ACE_TEST_ASSERT (child_result == 0);
   }
 
   ACE_UNUSED_ARG (argv);

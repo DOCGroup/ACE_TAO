@@ -19,9 +19,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
   // Checked access.
   int const set_result = arr.set (elem, 11);
-  ACE_ASSERT (set_result == -1);
+  ACE_TEST_ASSERT (set_result == -1);
   int const get_result = arr.get (elem, 11);
-  ACE_ASSERT (get_result == -1);
+  ACE_TEST_ASSERT (get_result == -1);
 
   // Make a copy and compare to the original.
   ACE_Array<DataElement *> copy = arr;

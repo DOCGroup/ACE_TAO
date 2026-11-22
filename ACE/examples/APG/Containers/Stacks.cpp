@@ -36,17 +36,17 @@ int StackExample::run ()
   ACE_TRACE ("StackExample::run");
 
   int const bounded_stack_result = this->runBoundedStack ();
-  ACE_ASSERT (bounded_stack_result == 0);
+  ACE_TEST_ASSERT (bounded_stack_result == 0);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n# of live objects %d\n"),
               DataElement::numOfActiveObjects()));
 
   int const fixed_stack_result = this->runFixedStack ();
-  ACE_ASSERT (fixed_stack_result == 0);
+  ACE_TEST_ASSERT (fixed_stack_result == 0);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n# of live objects %d\n"),
               DataElement::numOfActiveObjects()));
 
   int const unbounded_stack_result = this->runUnboundedStack ();
-  ACE_ASSERT (unbounded_stack_result == 0);
+  ACE_TEST_ASSERT (unbounded_stack_result == 0);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n# of live objects %d\n"),
               DataElement::numOfActiveObjects()));
 

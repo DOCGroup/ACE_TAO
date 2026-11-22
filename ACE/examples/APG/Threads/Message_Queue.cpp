@@ -1,6 +1,7 @@
 #include "ace/config-lite.h"
 #if defined (ACE_HAS_THREADS)
 
+#include "ace/Assert.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Acceptor.h"
 #include "Message_Receiver.h"
@@ -166,7 +167,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   HA_Device_Repository rep;
   HA_CommandHandler handler (rep);
   int const activate_result = handler.activate ();
-  ACE_ASSERT (activate_result == 0);
+  ACE_TEST_ASSERT (activate_result == 0);
   //start up the handler.
 
   Acceptor acceptor (std::addressof (handler));

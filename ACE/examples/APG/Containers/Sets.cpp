@@ -23,12 +23,12 @@ int SetExample::run ()
   ACE_TRACE ("SetExample::run");
 
   int const bounded_set_result = this->runBoundedSet ();
-  ACE_ASSERT (bounded_set_result == 0);
+  ACE_TEST_ASSERT (bounded_set_result == 0);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n# of live objects %d\n"),
               DataElement::numOfActiveObjects ()));
 
   int const unbounded_set_result = this->runUnboundedSet ();
-  ACE_ASSERT (unbounded_set_result == 0);
+  ACE_TEST_ASSERT (unbounded_set_result == 0);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n# of live objects %d\n"),
               DataElement::numOfActiveObjects ()));
 
