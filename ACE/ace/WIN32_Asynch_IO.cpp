@@ -82,7 +82,7 @@ ACE_WIN32_Asynch_Result::post_completion (ACE_Proactor_Impl *proactor)
   // Get to the platform specific implementation.
   ACE_WIN32_Proactor *win32_proactor = dynamic_cast<ACE_WIN32_Proactor *> (proactor);
 
-  if (win32_proactor == 0)
+  if (win32_proactor == nullptr)
     ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Dynamic cast to WIN32 Proactor failed\n")),
                       -1);
@@ -146,13 +146,13 @@ ACE_WIN32_Asynch_Operation::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
   if (this->handle_ == ACE_INVALID_HANDLE)
     {
       ACE_Handler *handler = handler_proxy.get ()->handler ();
-      if (handler != 0)
+      if (handler != nullptr)
         this->handle_ = handler->handle ();
     }
   if (this->handle_ == ACE_INVALID_HANDLE)
     return -1;
 
-  if (this->proactor_!= 0)
+  if (this->proactor_ != nullptr)
     // update implementation.
     this->win32_proactor_ =
       dynamic_cast <ACE_WIN32_Proactor *>(this->proactor_->implementation ());
@@ -173,7 +173,7 @@ ACE_WIN32_Asynch_Operation::cancel ()
 #if (_WIN32_WINNT < 0x0600)
   int const result = (int) ::CancelIo (this->handle_);
 #else
-  int const result = (int) ::CancelIoEx (this->handle_, 0);
+  int const result = (int) ::CancelIoEx (this->handle_, nullptr);
 #endif // < _WIN32_WINNT_VISTA
   if (result == 0)
     // Couldn't cancel the operations.
@@ -266,7 +266,7 @@ ACE_WIN32_Asynch_Read_Stream_Result::complete (size_t bytes_transferred,
   else
   {
     for (ACE_Message_Block* mb = &this->message_block_;
-         (mb != 0) && (bytes_transferred > 0);
+         (mb != nullptr) && (bytes_transferred > 0);
          mb = mb->cont ())
     {
       size_t len_part = mb->space ();
@@ -285,7 +285,7 @@ ACE_WIN32_Asynch_Read_Stream_Result::complete (size_t bytes_transferred,
 
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
-  if (handler != 0)
+  if (handler != nullptr)
     handler->handle_read_stream (result);
 }
 
@@ -428,7 +428,7 @@ ACE_WIN32_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
   // but it is allowed to read less
 
   for (const ACE_Message_Block* msg = &message_block;
-       msg != 0 && bytes_to_read > 0 && iovcnt < ACE_IOV_MAX;
+       msg != nullptr && bytes_to_read > 0 && iovcnt < ACE_IOV_MAX;
        msg = msg->cont () , ++iovcnt )
   {
     size_t msg_space = msg->space ();
@@ -691,7 +691,7 @@ ACE_WIN32_Asynch_Write_Stream_Result::complete (size_t bytes_transferred,
   else
   {
     for (ACE_Message_Block* mb = &this->message_block_;
-         (mb != 0) && (bytes_transferred > 0);
+         (mb != nullptr) && (bytes_transferred > 0);
          mb = mb->cont ())
     {
       size_t len_part = mb->length ();
@@ -710,7 +710,7 @@ ACE_WIN32_Asynch_Write_Stream_Result::complete (size_t bytes_transferred,
 
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
-  if (handler != 0)
+  if (handler != nullptr)
     handler->handle_write_stream (result);
 }
 
@@ -907,7 +907,7 @@ ACE_WIN32_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
   // but it is allowed to write less
 
   for (const ACE_Message_Block* msg = &message_block;
-       msg != 0 && bytes_to_write > 0 && iovcnt < ACE_IOV_MAX;
+       msg != nullptr && bytes_to_write > 0 && iovcnt < ACE_IOV_MAX;
        msg = msg->cont ())
   {
     size_t msg_len = msg->length ();
@@ -1106,7 +1106,7 @@ ACE_WIN32_Asynch_Read_File_Result::complete (size_t bytes_transferred,
     static const size_t page_size = ACE_OS::getpagesize();
 
     for (ACE_Message_Block* mb = &this->message_block_;
-         (mb != 0) && (bytes_transferred > 0);
+         (mb != nullptr) && (bytes_transferred > 0);
          mb = mb->cont ())
     {
       // mb->space () is ought to be >= page_size.
@@ -1129,7 +1129,7 @@ ACE_WIN32_Asynch_Read_File_Result::complete (size_t bytes_transferred,
 
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
-  if (handler != 0)
+  if (handler != nullptr)
     handler->handle_read_file (result);
 }
 
@@ -1305,7 +1305,7 @@ ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
   size_t total_space = 0;
 
   for (const ACE_Message_Block* msg = &message_block;
-       msg != 0 && buffer_pointers_count < ACE_IOV_MAX && total_space < bytes_to_read;
+       msg != nullptr && buffer_pointers_count < ACE_IOV_MAX && total_space < bytes_to_read;
        msg = msg->cont(), ++buffer_pointers_count )
   {
     size_t msg_space = msg->space ();
@@ -1502,7 +1502,7 @@ ACE_WIN32_Asynch_Write_File_Result::complete (size_t bytes_transferred,
     static const size_t page_size = ACE_OS::getpagesize();
 
     for (ACE_Message_Block* mb = &this->message_block_;
-         (mb != 0) && (bytes_transferred > 0);
+         (mb != nullptr) && (bytes_transferred > 0);
          mb = mb->cont ())
     {
       // mb->length () is ought to be >= page_size.
@@ -1526,7 +1526,7 @@ ACE_WIN32_Asynch_Write_File_Result::complete (size_t bytes_transferred,
 
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
-  if (handler != 0)
+  if (handler != nullptr)
     handler->handle_write_file (result);
 }
 
@@ -1738,7 +1738,7 @@ ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
   size_t total_len = 0;
 
   for (const ACE_Message_Block* msg = &message_block;
-       msg != 0 && buffer_pointers_count < ACE_IOV_MAX && total_len < bytes_to_write;
+       msg != nullptr && buffer_pointers_count < ACE_IOV_MAX && total_len < bytes_to_write;
        msg = msg->cont (), ++buffer_pointers_count )
   {
     size_t msg_len = msg->length ();
@@ -1971,7 +1971,7 @@ ACE_WIN32_Asynch_Accept_Result::complete (size_t bytes_transferred,
 
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
-  if (handler != 0)
+  if (handler != nullptr)
     handler->handle_accept (result);
 }
 
@@ -2254,7 +2254,7 @@ ACE_WIN32_Asynch_Connect_Result::complete (size_t bytes_transferred,
 
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
-  if (handler != 0)
+  if (handler != nullptr)
     handler->handle_connect (result);
 }
 
@@ -2457,12 +2457,12 @@ ACE_WIN32_Asynch_Connect::connect (ACE_HANDLE connect_handle,
                                       ACE_Event_Handler::CONNECT_MASK,
                                       0))  // not to suspend after register
     {
-      result = 0;
+      result = nullptr;
       {
         ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
         this->result_map_.unbind (connect_handle, result);
       }
-      if (result != 0)
+      if (result != nullptr)
         {
           result->set_error (EFAULT);
           this->post_result (result, true);
@@ -2873,7 +2873,7 @@ ACE_WIN32_Asynch_Transmit_File_Result::complete (size_t bytes_transferred,
 
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
-  if (handler != 0)
+  if (handler != nullptr)
     handler->handle_transmit_file (result);
 }
 
@@ -2995,8 +2995,8 @@ ACE_WIN32_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
                                                          signal_number),
                   -1);
 
-  ACE_LPTRANSMIT_FILE_BUFFERS transmit_buffers = 0;
-  if (result->header_and_trailer () != 0)
+  ACE_LPTRANSMIT_FILE_BUFFERS transmit_buffers = nullptr;
+  if (result->header_and_trailer () != nullptr)
     transmit_buffers = result->header_and_trailer ()->transmit_buffers ();
 
   // Initiate the transmit file
@@ -3235,7 +3235,7 @@ ACE_WIN32_Asynch_Read_Dgram_Result::complete (size_t bytes_transferred,
 
   // Appropriately move the pointers in the message block.
   for (ACE_Message_Block* mb = this->message_block_;
-       (mb != 0) && (bytes_transferred > 0);
+       (mb != nullptr) && (bytes_transferred > 0);
        mb = mb->cont ())
     {
       size_t len_part = mb->space ();
@@ -3256,7 +3256,7 @@ ACE_WIN32_Asynch_Read_Dgram_Result::complete (size_t bytes_transferred,
 
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
-  if (handler != 0)
+  if (handler != nullptr)
     handler->handle_read_dgram (result);
 }
 
@@ -3286,7 +3286,7 @@ ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
   int    iovcnt = 0;
 
   for (const ACE_Message_Block* msg = message_block;
-       msg != 0 && iovcnt < ACE_IOV_MAX;
+       msg != nullptr && iovcnt < ACE_IOV_MAX;
        msg = msg->cont () , ++iovcnt )
   {
     size_t msg_space = msg->space ();
@@ -3568,7 +3568,7 @@ ACE_WIN32_Asynch_Write_Dgram_Result::complete (size_t bytes_transferred,
 
   // Appropriately move the pointers in the message block.
   for (ACE_Message_Block* mb = this->message_block_;
-       (mb != 0) && (bytes_transferred > 0);
+       (mb != nullptr) && (bytes_transferred > 0);
        mb = mb->cont ())
     {
       size_t len_part = mb->length ();
@@ -3586,7 +3586,7 @@ ACE_WIN32_Asynch_Write_Dgram_Result::complete (size_t bytes_transferred,
 
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
-  if (handler != 0)
+  if (handler != nullptr)
     handler->handle_write_dgram (result);
 }
 
@@ -3613,7 +3613,7 @@ ACE_WIN32_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
   int    iovcnt = 0;
 
   for (const ACE_Message_Block* msg = message_block;
-       msg != 0 && iovcnt < ACE_IOV_MAX;
+       msg != nullptr && iovcnt < ACE_IOV_MAX;
        msg = msg->cont () , ++iovcnt )
   {
     size_t msg_len = msg->length ();
