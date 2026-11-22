@@ -126,7 +126,7 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
               else
                 {
                   const ACE_CString name_cstr (ACE_TEXT_ALWAYS_CHAR (name.c_str ()));
-                  this->extra_params_.push_back (std::make_pair (name_cstr, value));
+                  this->extra_params_.emplace_back (name_cstr, value);
                 }
             }
         }
@@ -147,7 +147,7 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
           {
             ACE_CString name (ACE_TEXT_ALWAYS_CHAR (attrs->getLocalName(index)));
             ACE_CString value (ACE_TEXT_ALWAYS_CHAR (attrs->getValue(index)));
-            extra_params.push_back (std::make_pair (name, value));
+            extra_params.emplace_back (name, value);
           }
         this->repo_.load_activator (aname, token, ior, extra_params);
       }
