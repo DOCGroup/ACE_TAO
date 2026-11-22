@@ -322,7 +322,9 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_absolute_times ()
               static_cast<ACE_UINT64> (size)));
 
   if (size == 0)
-    return;
+    {
+      return;
+    }
 
   ACELIB_DEBUG ((LM_DEBUG,
               "\n%-50.50s %8.8s %13.13s\n\n",
@@ -353,7 +355,9 @@ template <class ACE_LOCK, class ALLOCATOR> const char *
 ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::find_description_i (u_long i)
 {
   if (this->timeprobes_[i].event_type_ == ACE_timeprobe_t::STRING)
-    return this->timeprobes_[i].event_.event_description_;
+    {
+      return this->timeprobes_[i].event_.event_description_;
+    }
   else
     {
       EVENT_DESCRIPTIONS::iterator iterator = this->sorted_event_descriptions_.begin ();

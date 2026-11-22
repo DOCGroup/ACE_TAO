@@ -630,7 +630,9 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::grow_heap ()
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
   if (this->timer_ids_ != nullptr)
+    {
       (ACE_Allocator::instance ()->free (this->timer_ids_));
+    }
 #else
   delete [] this->timer_ids_;
 #endif /* ACE_HAS_ALLOC_HOOKS */
