@@ -40,7 +40,7 @@ static constexpr int NUM_CLIENTS = 30;
 void *
 client (void *arg)
 {
-  ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
+  ACE_INET_Addr *remote_addr = static_cast<ACE_INET_Addr *> (arg);
   ACE_INET_Addr server_addr (remote_addr->get_port_number (),
                              ACE_DEFAULT_SERVER_HOST);
   ACE_INET_Addr client_addr;
@@ -377,7 +377,7 @@ spawn (int num_clients)
             }
         }
 
-      server ((void *) &peer_acceptor);
+      server (&peer_acceptor);
 
       peer_acceptor.close();
 
@@ -394,7 +394,7 @@ spawn (int num_clients)
 
       if (ACE_Thread_Manager::instance ()->spawn
           (ACE_THR_FUNC (server),
-           (void *) &peer_acceptor,
+           &peer_acceptor,
            THR_BOUND | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n%a"),
@@ -406,7 +406,7 @@ spawn (int num_clients)
       if (ACE_Thread_Manager::instance ()->spawn_n
           (num_clients,
            ACE_THR_FUNC (client),
-           (void *) &server_addr,
+           &server_addr,
            THR_BOUND | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n%a"),
