@@ -114,11 +114,13 @@ Ping_Pong::handle_input (ACE_HANDLE)
   ssize_t const n = ACE::recv (this->handle_, this->buf_, this->buflen_);
 
   if (n != (ssize_t) this->buflen_)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) reading [%H] %p\n"),
-                       handle_,
-                       ACE_TEXT ("read")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) reading [%H] %p\n"),
+                         handle_,
+                         ACE_TEXT ("read")),
+                        -1);
+    }
 
   int process_id {};
   int count {};
