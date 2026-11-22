@@ -102,7 +102,7 @@ ATC_Test_i::do_struct (::CORBA::Any const &a)
       Demo::BaseStruct const foo1 = bar->foo1;
       Demo::BaseStruct const foo2 = bar->foo2;
       Demo::BaseStruct const foo3 = bar->foo3;
-      Demo::NestedSeq const bars = bar->bars;
+      Demo::NestedSeq const &bars = bar->bars;
       if (bars.length () > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
