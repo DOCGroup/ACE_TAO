@@ -407,8 +407,10 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
             }
           // open a stream only if such doesn't exists
           else if (output_file == 0)
-            output_file = ACE_OS::fopen (this->filename_,
-                                         ACE_TEXT ("at"));
+            {
+              output_file = ACE_OS::fopen (this->filename_,
+                                           ACE_TEXT ("at"));
+            }
 
           if (output_file == 0)
             {
