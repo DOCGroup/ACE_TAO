@@ -77,7 +77,7 @@ TAO_Stub::make_profiles ()
 
   ACE_NEW_RETURN (mp,
                   TAO_MProfile (base_profiles_),
-                  0);
+                  nullptr);
 
   return mp;
 }

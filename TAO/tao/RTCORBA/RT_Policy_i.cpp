@@ -1130,7 +1130,7 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
                                                    dont_route,
                                                    no_delay,
                                                    enable_network_priority),
-                      0);
+                      nullptr);
     }
 
   else if (id == TAO_TAG_SHMEM_PROFILE)
@@ -1153,7 +1153,7 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
                                                             preallocate_buffer_size,
                                                             mmap_filename,
                                                             mmap_lockname),
-                      0);
+                      nullptr);
     }
 
   else if (id == TAO_TAG_UIOP_PROFILE)
@@ -1177,7 +1177,7 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
                       TAO_UserDatagram_Protocol_Properties (send_buffer_size,
                                                             recv_buffer_size,
                                                             enable_network_priority),
-                      0);
+                      nullptr);
     }
 
   else if (id == TAO_TAG_SCIOP_PROFILE)
@@ -1196,7 +1196,7 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
                                                              dont_route,
                                                              no_delay,
                                                              enable_network_priority),
-                      0);
+                      nullptr);
     }
 
   return property;
