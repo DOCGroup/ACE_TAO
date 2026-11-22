@@ -710,9 +710,6 @@ DualEC_Supplier::start_generating_events ()
 void
 DualEC_Supplier::load_schedule_data ()
 {
-  Navigation *nav {};
-  Weapons *weap {};
-
   Schedule_Viewer_Data data;
 
   // constants for periods (in units of one hundred nanoseconds)
@@ -727,7 +724,6 @@ DualEC_Supplier::load_schedule_data ()
       // a queue.
       FILE *input_file;
 
-      int scan_count = 0;
       input_file = ACE_OS::fopen(this->input_file_name_, "r");
 
       if (input_file)
@@ -748,7 +744,7 @@ DualEC_Supplier::load_schedule_data ()
               // structure.
               if (std::strlen (temp) > 0)
                 {
-                  scan_count = sscanf (temp, "%s %lf %lf %lu %lu %lu %lu",
+                  int const scan_count = sscanf (temp, "%s %lf %lf %lu %lu %lu %lu",
                                        data.operation_name,
                                        &data.utilitzation,
                                        &data.overhead,
@@ -767,6 +763,7 @@ DualEC_Supplier::load_schedule_data ()
                   if ((std::strcmp(data.operation_name, "high_20") == 0) ||
                       (std::strcmp(data.operation_name, "low_20") == 0))
                     {
+                      Weapons *weap {};
                       ACE_NEW (weap, Weapons);
                       if (weap == nullptr)
                         {
@@ -806,6 +803,7 @@ DualEC_Supplier::load_schedule_data ()
                     }
                   else
                     {
+                      Navigation *nav {};
                       ACE_NEW (nav, Navigation);
                       if (nav == nullptr)
                         {

@@ -112,7 +112,6 @@ Event_Supplier::load_schedule_data
       // a queue.
       FILE *input_file;
 
-      int scan_count = 0;
       input_file = ACE_OS::fopen(this->input_file_name_, "r");
 
       if (input_file)
@@ -134,7 +133,7 @@ Event_Supplier::load_schedule_data
               if (std::strlen (temp) > 0)
                 {
                   ACE_NEW (data, Schedule_Viewer_Data);
-                  scan_count = sscanf (temp, "%s %lf %lf %lu %lu %lu %lu",
+                  int const scan_count = sscanf (temp, "%s %lf %lf %lu %lu %lu %lu",
                                        data->operation_name,
                                        &data->utilitzation,
                                        &data->overhead,
