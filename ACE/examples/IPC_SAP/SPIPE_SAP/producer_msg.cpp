@@ -26,29 +26,41 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   std::unique_ptr<char[]> buf (raw_buf);
 
   if (argc > 3)
-    rendezvous = argv[3];
+    {
+      rendezvous = argv[3];
+    }
 
   ACE_SPIPE_Stream cli_stream;
   ACE_SPIPE_Connector con;
   int i;
 
   if (con.connect (cli_stream, ACE_SPIPE_Addr (rendezvous)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", rendezvous), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", rendezvous), 1);
+    }
 
   for (i = 0; i < size; ++i)
-    buf[i] = 'a';
+    {
+      buf[i] = 'a';
+    }
 
   ACE_Str_Buf buffer (buf.get (), size);
 
   for (i = 0; i < iterations; ++i)
-    if (cli_stream.send (nullptr,
-                         &buffer,
-                         1,
-                         MSG_BAND) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), 1);
+    {
+      if (cli_stream.send (nullptr,
+                           &buffer,
+                           1,
+                           MSG_BAND) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), 1);
+        }
+    }
 
   if (cli_stream.close () == -1)
+    {
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), 1);
+    }
 
   return 0;
 }
