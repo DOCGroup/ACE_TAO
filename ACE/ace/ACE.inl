@@ -71,18 +71,22 @@ ACE::t_rcv_n (ACE_HANDLE handle,
               size_t *bytes_transferred)
 {
   if (timeout == 0)
-    return ACE::t_rcv_n_i (handle,
-                           buf,
-                           len,
-                           flags,
-                           bytes_transferred);
+    {
+      return ACE::t_rcv_n_i (handle,
+                             buf,
+                             len,
+                             flags,
+                             bytes_transferred);
+    }
   else
-    return ACE::t_rcv_n_i (handle,
-                           buf,
-                           len,
-                           flags,
-                           timeout,
-                           bytes_transferred);
+    {
+      return ACE::t_rcv_n_i (handle,
+                             buf,
+                             len,
+                             flags,
+                             timeout,
+                             bytes_transferred);
+    }
 }
 
 #endif /* ACE_HAS_TLI */
@@ -173,18 +177,22 @@ ACE::t_snd_n (ACE_HANDLE handle,
               size_t *bytes_transferred)
 {
   if (timeout == 0)
-    return ACE::t_snd_n_i (handle,
-                           buf,
-                           len,
-                           flags,
-                           bytes_transferred);
+    {
+      return ACE::t_snd_n_i (handle,
+                             buf,
+                             len,
+                             flags,
+                             bytes_transferred);
+    }
   else
-    return ACE::t_snd_n_i (handle,
-                           buf,
-                           len,
-                           flags,
-                           timeout,
-                           bytes_transferred);
+    {
+      return ACE::t_snd_n_i (handle,
+                             buf,
+                             len,
+                             flags,
+                             timeout,
+                             bytes_transferred);
+    }
 }
 
 #endif /* ACE_HAS_TLI */
@@ -323,7 +331,9 @@ ACE::log2 (u_long num)
   u_long log = 0;
 
   for (; num > 1; ++log)
-    num >>= 1;
+    {
+      num >>= 1;
+    }
 
   return log;
 }

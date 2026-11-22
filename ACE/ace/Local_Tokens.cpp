@@ -671,7 +671,9 @@ ACE_Mutex_Token::is_owner (const ACE_TCHAR *id)
   // If there is an owner, return whether it is <id>.
   if ((this->owner () != nullptr) &&
       this->owner ()->equal_client_id (id))
-    return true;
+    {
+      return true;
+    }
   else
     {
       return false;
@@ -1017,7 +1019,9 @@ ACE_RW_Token::owners (OWNER_STACK &stack,
       // returned.
       if ((id != nullptr) &&
           (ACE_OS::strcmp (id, this->owner ()->client_id ()) == 0))
-        id_is_owner = 1;
+        {
+          id_is_owner = 1;
+        }
     }
   // The first waiter is a reader, so there can be multiple owning
   // readers.
@@ -1036,7 +1040,9 @@ ACE_RW_Token::owners (OWNER_STACK &stack,
 
           if (!id_is_owner && (id != nullptr) &&
               (ACE_OS::strcmp (id, temp->client_id ()) == 0))
-            id_is_owner = 1;
+            {
+              id_is_owner = 1;
+            }
         }
     }
 
@@ -1050,7 +1056,9 @@ ACE_RW_Token::is_waiting_for (const ACE_TCHAR *id)
   // If there is no owner, or <id> is the owner, return false.
   if ((this->owner () == nullptr) ||
       this->is_owner (id))
-    return false;
+    {
+      return false;
+    }
 
   // Step through each waiter looking for <id>.
   ACE_TPQ_Iterator iterator (waiters_);

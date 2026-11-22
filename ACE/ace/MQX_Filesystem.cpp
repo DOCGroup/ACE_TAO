@@ -68,7 +68,9 @@ MQX_Filesystem::reset_state ()
 {
   update_fs (_io_get_first_valid_fs ());
   if (current_fs_ != 0)
-    chdir ("\\");
+    {
+      chdir ("\\");
+    }
   return current_fs_ == 0;
 }
 
@@ -153,7 +155,9 @@ MQX_Filesystem::open (const char *path, int mode)
       file->fd = -1; // Free File in Our Array
       errno = ACE_OS::mqx_error_to_errno (_task_get_error());
       if (_task_get_error() == FS_FILE_NOT_FOUND)
-        _task_set_error(MQX_OK);
+        {
+          _task_set_error(MQX_OK);
+        }
     }
 
   return file->fd;
