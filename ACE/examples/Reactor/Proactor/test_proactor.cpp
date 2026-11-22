@@ -491,7 +491,7 @@ Sender::handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result)
 
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
   ACE_DEBUG ((LM_DEBUG, "%s = %H\n", "socket", result.socket ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "file", reinterpret_cast<void *> (result.file ())));
+  ACE_DEBUG ((LM_DEBUG, "%s = %H\n", "file", result.file ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_write", result.bytes_to_write ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_per_send", result.bytes_per_send ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "flags", result.flags ()));
