@@ -420,7 +420,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (ACE_OS::strcasecmp (options.strategy, ACE_TEXT ("roundrobin")) == 0)
         {
           if (options.ping_timedout)
-            status = hang_member_rr_test (orb.in (), options, direct_basic.in ());
+            {
+              status = hang_member_rr_test (orb.in (), options, direct_basic.in ());
+            }
           else
           {
             status = dead_member_rr_test (orb.in (), options, direct_basic.in ());
@@ -429,7 +431,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       else if (ACE_OS::strcasecmp (options.strategy, ACE_TEXT ("random")) == 0)
         {
           if (options.ping_timedout)
-            status = hang_member_rand_test (orb.in (), options, direct_basic.in ());
+            {
+              status = hang_member_rand_test (orb.in (), options, direct_basic.in ());
+            }
           else
           {
             status = dead_member_rand_test (orb.in (), options, direct_basic.in ());

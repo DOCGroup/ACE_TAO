@@ -127,9 +127,13 @@ Notify_Sequence_Push_Consumer::push_structured_events (
   CORBA::Long expected {};
 
   if (this->discard_policy_ == CosNotification::PriorityOrder)
-    expected = this->sent_ - BATCH_SIZE + 1; // e.g. 37, 38, 39, 40
+    {
+      expected = this->sent_ - BATCH_SIZE + 1; // e.g. 37, 38, 39, 40
+    }
   else if (discard_policy_ == CosNotification::FifoOrder)
-    expected = this->sent_ - BATCH_SIZE + 1; // e.g. 37, 38, 39, 40
+    {
+      expected = this->sent_ - BATCH_SIZE + 1; // e.g. 37, 38, 39, 40
+    }
   else
     {
       ACE_ASSERT (this->discard_policy_ == CosNotification::LifoOrder);

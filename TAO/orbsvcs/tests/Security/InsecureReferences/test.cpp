@@ -32,7 +32,9 @@ parse_args (int argc, ACE_TCHAR *argv[], InsecureReferences_Options &options)
                               -1);
 
           if (ACE_OS::strcasecmp (argv[c], ACE_TEXT ("-o")) == 0)
-            options.ior_file = argv[++c];
+            {
+              options.ior_file = argv[++c];
+            }
           else if (ACE_OS::strcasecmp (argv[c], ACE_TEXT ("-k")) == 0)
             {
               options.as_server = false;

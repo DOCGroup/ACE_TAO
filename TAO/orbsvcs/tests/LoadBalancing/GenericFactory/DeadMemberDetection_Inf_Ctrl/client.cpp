@@ -403,26 +403,32 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       if (ACE_OS::strcasecmp (options.strategy, ACE_TEXT ("roundrobin")) == 0)
-      {
-        if (options.ping_timedout)
-          status = hang_member_rr_test (orb.in (), options, direct_simple.in ());
-        else
         {
-          status = dead_member_rr_test (orb.in (), options, direct_simple.in ());
+          if (options.ping_timedout)
+            {
+              status = hang_member_rr_test (orb.in (), options, direct_simple.in ());
+            }
+          else
+            {
+              status = dead_member_rr_test (orb.in (), options, direct_simple.in ());
+            }
         }
-      }
       else if (ACE_OS::strcasecmp (options.strategy, ACE_TEXT ("random")) == 0)
-        if (options.ping_timedout)
-          status = hang_member_rand_test (orb.in (), options, direct_simple.in ());
-        else
         {
-          status = dead_member_rand_test (orb.in (), options, direct_simple.in ());
+          if (options.ping_timedout)
+            {
+              status = hang_member_rand_test (orb.in (), options, direct_simple.in ());
+            }
+          else
+            {
+              status = dead_member_rand_test (orb.in (), options, direct_simple.in ());
+            }
         }
       else
-      {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t)Invalid strategy \n")));
-        status = 1;
-      }
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t)Invalid strategy \n")));
+          status = 1;
+        }
 
       orb->destroy ();
     }

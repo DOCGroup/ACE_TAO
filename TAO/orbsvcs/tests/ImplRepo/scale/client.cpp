@@ -18,7 +18,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
     Long n = test->get();
     Long m = test->get();
     if (m == n + 1)
-      ACE_DEBUG((LM_DEBUG, "Client: All tests ran successfully.\n"));
+      {
+        ACE_DEBUG((LM_DEBUG, "Client: All tests ran successfully.\n"));
+      }
     else
     {
       ACE_DEBUG((LM_DEBUG, "Error: Client Expected %d = %d + 1.\n", m, n));
