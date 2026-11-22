@@ -75,6 +75,14 @@ ACE_SOCK_Dgram_SC<STREAM>::recv (char *buf,
   if (tv != 0)
     {
       ACE_HANDLE handle = this->get_handle ();
+#if !defined (ACE_WIN32)
+      if (handle < 0 || handle >= ACE_FD_SETSIZE)
+        {
+          errno = EINVAL;
+          return -1;
+        }
+#endif /* ! ACE_WIN32 */
+
       ACE_Handle_Set handle_set;
 
       handle_set.set_bit (handle);
