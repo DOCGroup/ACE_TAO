@@ -564,9 +564,8 @@ DT_Creator::check_ifexit ()
       active_dt_count_));
     }
 
-  static int shutdown = 0;
-
   {
+    static int shutdown = 0;
     ACE_GUARD (ACE_Lock, ace_mon, *shutdown_lock_);
 
     if (!shutdown)

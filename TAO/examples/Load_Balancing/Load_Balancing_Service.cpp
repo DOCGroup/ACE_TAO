@@ -51,23 +51,22 @@ int
 Load_Balancing_Service::init (int argc,
                               ACE_TCHAR *argv[])
 {
-  int result {};
   CORBA::String_var ior;
 
   try
     {
-      result = this->orb_manager_.init (argc,
-                                        argv);
-      if (result == -1)
+      int const init_result = this->orb_manager_.init (argc,
+                                                       argv);
+      if (init_result == -1)
       {
-        return result;
+        return init_result;
       }
 
       // Check the non-ORB arguments.
-      result = this->parse_args (argc, argv);
-      if (result < 0)
+      int const parse_result = this->parse_args (argc, argv);
+      if (parse_result < 0)
       {
-        return result;
+        return parse_result;
       }
 
       // Create, ref. count, and activate the servant.
