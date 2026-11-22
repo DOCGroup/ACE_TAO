@@ -194,7 +194,7 @@ FTClientMain::parse_args (int argc, ACE_TCHAR *argv[])
       }
       case 'f':
       {
-        replica_iors_.push_back(ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
+        replica_iors_.emplace_back (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()));
         break;
       }
 
