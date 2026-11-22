@@ -47,6 +47,18 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
   }
 
   ACE_HANDLE const handle = new_stream.get_handle ();
+  auto set_handle_bit = [handle] (ACE_Handle_Set &handle_set)
+    {
+#if !defined (ACE_WIN32)
+      if (handle < 0 || handle >= ACE_FD_SETSIZE)
+        {
+          errno = EINVAL;
+          return false;
+        }
+#endif /* ! ACE_WIN32 */
+      handle_set.set_bit (handle);
+      return true;
+    };
 
   // We're going to call SSL_connect, optionally doing ACE::select and
   // retrying the SSL_connect, until the SSL handshake is done or
@@ -99,13 +111,11 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
           break;                    // Done
 
         case SSL_ERROR_WANT_WRITE:
-          wr_handle.set_bit (handle);
-          status = 1;               // Wait for more activity
+          status = set_handle_bit (wr_handle) ? 1 : -1;
           break;
 
         case SSL_ERROR_WANT_READ:
-          rd_handle.set_bit (handle);
-          status = 1;               // Wait for more activity
+          status = set_handle_bit (rd_handle) ? 1 : -1;
           break;
 
         case SSL_ERROR_ZERO_RETURN:
@@ -133,11 +143,11 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
               status = 1;               // Wait for more activity
               if (SSL_want_write (ssl_session))
                 {
-                  wr_handle.set_bit (handle);
+                  status = set_handle_bit (wr_handle) ? 1 : -1;
                 }
               else if (SSL_want_read (ssl_session))
                 {
-                  rd_handle.set_bit (handle);
+                  status = set_handle_bit (rd_handle) ? 1 : -1;
                 }
               else
                 {
