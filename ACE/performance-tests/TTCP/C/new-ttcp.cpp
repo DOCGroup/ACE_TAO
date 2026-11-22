@@ -446,7 +446,7 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "Sending session control message"
                   " nbuf %d, size %d\n", session_control_buf.nbuf_,
                   session_control_buf.size_));
-      if (send_n ((char *) &session_control_buf,
+      if (send_n (&session_control_buf,
                   sizeof (Session_Control_Message))
           != sizeof (Session_Control_Message))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -457,7 +457,7 @@ main (int argc, char *argv[])
       long ack;
       while (nbuf--)
         {
-          int const send_result = send_n ((char *) message_buf, total_msg_len);
+          int const send_result = send_n (message_buf, total_msg_len);
           if (send_result != total_msg_len)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%p only sent %d of %d bytes on call %d\n",
@@ -466,7 +466,7 @@ main (int argc, char *argv[])
           ++numCalls;
           nbytes += data_buf_len;
 
-          if (recv_n ((char *) &ack, sizeof ack) != sizeof ack)
+          if (recv_n (&ack, sizeof ack) != sizeof ack)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%p recv of ack failed\n",
                                "ttcp"),
@@ -481,7 +481,7 @@ main (int argc, char *argv[])
     {
       prep_timer ();
 
-      if (recv_n ((char *) &session_control_buf,
+      if (recv_n (&session_control_buf,
                   sizeof (Session_Control_Message))
           != sizeof (Session_Control_Message))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -500,7 +500,7 @@ main (int argc, char *argv[])
 
       while (nbuf--)
         {
-          if (recv_n ((char *) message_buf, sizeof (long)) != sizeof (long))
+          if (recv_n (message_buf, sizeof (long)) != sizeof (long))
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%p recv data control failed\n",
                                "ttcp"),
@@ -513,7 +513,7 @@ main (int argc, char *argv[])
           ++numCalls;
           nbytes += cnt;
 
-          if (send_n ((char *) &cnt, sizeof cnt) != sizeof cnt)
+          if (send_n (&cnt, sizeof cnt) != sizeof cnt)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%p send ack failed\n",
                                "ttcp"),
@@ -596,8 +596,9 @@ send_n (const void *buf, int len)
   int n;
 
   for (bytes_written = 0; bytes_written < len; bytes_written += n)
-    if ((n = write (connection_descriptor, (const char *) buf + bytes_written,
-         len - bytes_written)) == -1)
+    if ((n = write (connection_descriptor,
+                    static_cast<char const *> (buf) + bytes_written,
+                    len - bytes_written)) == -1)
       return -1;
 
   return bytes_written;
@@ -610,8 +611,9 @@ recv_n (void *buf, int len)
   int n;
 
   for (bytes_read = 0; bytes_read < len; bytes_read += n)
-    if ((n = read (connection_descriptor, (char *) buf + bytes_read,
-         len - bytes_read)) == -1)
+    if ((n = read (connection_descriptor,
+                   static_cast<char *> (buf) + bytes_read,
+                   len - bytes_read)) == -1)
       return -1;
     else if (n == 0)
       break;
