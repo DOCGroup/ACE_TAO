@@ -13,7 +13,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       int rc = notifier.init (argc, argv);
 
       if (rc == -1)
-        return 1;
+        {
+          return 1;
+        }
       else
         {
           notifier.run ();

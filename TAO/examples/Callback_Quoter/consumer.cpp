@@ -10,9 +10,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               "\n\t***Consumer***\n\n"));
 
   if (consumer.init (argc, argv) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-  {
-    return consumer.run ();
-  }
+    {
+      return consumer.run ();
+    }
 }
