@@ -175,7 +175,7 @@ handle_connections (ACE_SSL_SOCK_Acceptor &peer_acceptor,
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  u_short port = ACE_DEFAULT_SERVER_PORT + 1;
+  u_short const port = ACE_DEFAULT_SERVER_PORT + 1;
 
   // Create a server end-point.
   ACE_INET_Addr const addr (port);

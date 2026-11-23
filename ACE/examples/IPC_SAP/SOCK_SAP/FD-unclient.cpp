@@ -25,7 +25,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p"), ACE_TEXT ("connect")), -1);
   }
 
-  ACE_HANDLE handle = ACE_OS::open (file_name, O_RDONLY);
+  ACE_HANDLE const handle = ACE_OS::open (file_name, O_RDONLY);
 
   if (handle == ACE_INVALID_HANDLE)
   {
@@ -40,7 +40,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   }
 
   char buf[BUFSIZ];
-  ssize_t n = cli_stream.recv (buf, sizeof buf);
+  ssize_t const n = cli_stream.recv (buf, sizeof buf);
 
   if (n == -1)
   {

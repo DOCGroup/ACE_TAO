@@ -111,7 +111,7 @@ parse_args (int argc, ACE_TCHAR **argv)
 static void
 test_more ()
 {
-  ACE_HANDLE infile = ACE_OS::open (print_file, O_RDONLY);
+  ACE_HANDLE const infile = ACE_OS::open (print_file, O_RDONLY);
 
   if (infile == ACE_INVALID_HANDLE)
     {
