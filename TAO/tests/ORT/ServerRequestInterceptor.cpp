@@ -37,7 +37,7 @@ ServerRequestInterceptor::receive_request (
   // If no response is expected, then we're invoking the oneway
   // shutdown operation.  Don't bother displaying output a second
   // time.
-  CORBA::Boolean response_expected =
+  CORBA::Boolean const response_expected =
     ri->response_expected ();
 
   if (!response_expected)

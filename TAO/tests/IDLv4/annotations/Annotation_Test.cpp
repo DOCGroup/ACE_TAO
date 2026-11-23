@@ -305,7 +305,7 @@ Annotation_Test::assert_annotation_member_count (
       failed ();
     }
 
-  size_t actual_count = anno_decl->member_count ();
+  size_t const actual_count = anno_decl->member_count ();
   if (actual_count != count)
     {
       std::string const anno_decl_name = anno_decl->name ()->get_string_copy ();
