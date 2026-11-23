@@ -1719,7 +1719,7 @@ TAO_Root_POA::create_object_key (const PortableServer::ObjectId &id)
                   TAO::ObjectKey (buffer_size,
                                   buffer_size,
                                   buffer,
-                                  1),
+                                  true),
                   nullptr);
 
   return key;
