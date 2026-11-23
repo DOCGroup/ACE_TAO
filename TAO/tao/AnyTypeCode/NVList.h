@@ -211,7 +211,7 @@ namespace CORBA
     /**
      * Set the incoming CDR stream, this is used by TAO to perform lazy
      * evaluation of the NVList in an incoming ServerRequest.
-     * The <flag> is used to check which parameters (IN, OUT and/or
+     * The @a flag is used to check which parameters (IN, OUT and/or
      * INOUT) are to be extracted
      */
     void _tao_incoming_cdr (TAO_InputCDR & cdr,
@@ -287,7 +287,7 @@ namespace CORBA
     std::unique_ptr<TAO_InputCDR> incoming_ {};
 
     /// The flags used to check which parameters are actually extracted
-    /// from the <incoming_> buffer
+    /// from the @c incoming_ buffer
     int incoming_flag_ {};
   };
 }
