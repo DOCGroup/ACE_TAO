@@ -1,3 +1,6 @@
+#ifndef ACE_APPS_GPERF_TESTS_TEST_DRIVER_H
+#define ACE_APPS_GPERF_TESTS_TEST_DRIVER_H
+
 // Tests the generated perfect hash function.
 
 // The -v option prints diagnostics as to whether a word is in the set
@@ -53,3 +56,5 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
+
+#endif /* ACE_APPS_GPERF_TESTS_TEST_DRIVER_H */

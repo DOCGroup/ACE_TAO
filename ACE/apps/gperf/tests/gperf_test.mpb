@@ -10,8 +10,4 @@ project: aceexe, crosscompile {
     source_outputext  = .cpp
     keyword gperf_cmd = command
   }
-
-  Source_Files {
-    test.cpp
-  }
 }
