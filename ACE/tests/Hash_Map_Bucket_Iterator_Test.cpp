@@ -58,7 +58,7 @@ int
 run_main (int argc, ACE_TCHAR *argv[])
 {
   // Validate options.
-  int result = parse_args (argc, argv);
+  int const result = parse_args (argc, argv);
   if (result != 0)
   {
     return result;
@@ -73,7 +73,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   for (i = 0; i < iterations; ++i)
     {
-      int result = map.bind (i, i);
+      int const result = map.bind (i, i);
       ACE_TEST_ASSERT (result == 0);
     }
 
@@ -82,7 +82,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       HASH_MAP_BUCKET_ITERATOR iterator (map,
                                          i);
 
-      HASH_MAP_BUCKET_ITERATOR end (map,
+      HASH_MAP_BUCKET_ITERATOR const end (map,
                                     i,
                                     1);
 
@@ -91,7 +91,7 @@ run_main (int argc, ACE_TCHAR *argv[])
            ++iterator)
         {
           ACE_DEBUG ((LM_DEBUG, "%d ", (*iterator).int_id_));
-          ACE_UINT32 key = (*iterator).ext_id_;
+          ACE_UINT32 const key = (*iterator).ext_id_;
           ACE_TEST_ASSERT (((key - i) % table_size) == 0);
         }
 
