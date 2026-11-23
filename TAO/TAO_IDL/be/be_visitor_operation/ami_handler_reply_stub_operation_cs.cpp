@@ -201,7 +201,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       << "static_cast <CORBA::ULong> (cdr->length ())," << be_nl
       << "static_cast <CORBA::ULong> (cdr->length ())," << be_nl
       << "reinterpret_cast <unsigned char*> (cdr->rd_ptr ())," << be_nl
-      << "0);" << be_uidt
+      << "false);" << be_uidt
       << be_uidt_nl;
 
  *os  << "::Messaging::ExceptionHolder* exception_holder_ptr {};" << be_nl
