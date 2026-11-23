@@ -71,20 +71,20 @@ static void  TestCounter()
 
    Counter32 c1;
    ACE_TEST_ASSERT(c1 == def);
-   Counter32 c2(l);
+   Counter32 const c2(l);
    ACE_TEST_ASSERT(c2 == static_cast<unsigned long> (l));
-   Counter32 c3(nl);
+   Counter32 const c3(nl);
    ACE_TEST_ASSERT(c3 == static_cast<unsigned long> (nl));
-   Counter32 c4(ul);
+   Counter32 const c4(ul);
    ACE_TEST_ASSERT(c4 == ul);
-   Counter32 c5(i);
+   Counter32 const c5(i);
    ACE_TEST_ASSERT(c5 == static_cast<unsigned long> (i));
-   Counter32 c6(ni);
+   Counter32 const c6(ni);
    ACE_TEST_ASSERT(c6 == static_cast<unsigned long> (ni));
-   Counter32 c7(ui);
+   Counter32 const c7(ui);
    ACE_TEST_ASSERT(c7 == ui);
    ACE_TEST_ASSERT(static_cast<unsigned long> (static_cast<Counter32 const &> (c7)) == ui);
-   std::unique_ptr<Counter32> c8 = std::make_unique<Counter32> (c5);
+   std::unique_ptr<Counter32> const c8 = std::make_unique<Counter32> (c5);
    ACE_TEST_ASSERT(c8 != nullptr);
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) c1(\"\") [%Q]\n",

@@ -70,17 +70,17 @@ static void TestInteger32()
    SnmpInt32 i2(l);
    ACE_TEST_ASSERT(i2 == l);
    ACE_TEST_ASSERT (std::strcmp (i2.to_string (), std::to_string (l).c_str ()) == 0);
-   SnmpInt32 i3(nl);
+   SnmpInt32 const i3(nl);
    ACE_TEST_ASSERT(i3 == nl);
-   SnmpInt32 i4(ul);
+   SnmpInt32 const i4(ul);
    ACE_TEST_ASSERT(i4 == static_cast<long> (ul));
-   SnmpInt32 i5(i);
+   SnmpInt32 const i5(i);
    ACE_TEST_ASSERT(i5 == i);
-   SnmpInt32 i6(ni);
+   SnmpInt32 const i6(ni);
    ACE_TEST_ASSERT(i6 == ni);
-   SnmpInt32 i7(ui);
+   SnmpInt32 const i7(ui);
    ACE_TEST_ASSERT(i7 == static_cast<long> (ui));
-   std::unique_ptr<SnmpInt32> i8 = std::make_unique<SnmpInt32> (i5);
+   std::unique_ptr<SnmpInt32> const i8 = std::make_unique<SnmpInt32> (i5);
    ACE_TEST_ASSERT(i8 != nullptr);
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) i1(\"\") [%Q]\n",
@@ -131,20 +131,20 @@ static void TestUnsignedInteger32()
 #if !defined (ACE_WIN32)
    SnmpUInt32 u1;
    ACE_TEST_ASSERT(u1 == def);
-   SnmpUInt32 u2(l);
+   SnmpUInt32 const u2(l);
    ACE_TEST_ASSERT(u2 == static_cast<unsigned long> (l));
-   SnmpUInt32 u3(nl);
+   SnmpUInt32 const u3(nl);
    ACE_TEST_ASSERT(u3 == static_cast<unsigned long> (nl));
    SnmpUInt32 u4(ul);
    ACE_TEST_ASSERT(u4 == ul);
    ACE_TEST_ASSERT (std::strcmp (u4.to_string (), std::to_string (ul).c_str ()) == 0);
-   SnmpUInt32 u5(i);
+   SnmpUInt32 const u5(i);
    ACE_TEST_ASSERT(u5 == static_cast<unsigned long> (i));
-   SnmpUInt32 u6(ni);
+   SnmpUInt32 const u6(ni);
    ACE_TEST_ASSERT(u6 == static_cast<unsigned long> (ni));
-   SnmpUInt32 u7(ui);
+   SnmpUInt32 const u7(ui);
    ACE_TEST_ASSERT(u7 == ui);
-   std::unique_ptr<SnmpUInt32> u8 = std::make_unique<SnmpUInt32> (u5);
+   std::unique_ptr<SnmpUInt32> const u8 = std::make_unique<SnmpUInt32> (u5);
    ACE_TEST_ASSERT(u8 != nullptr);
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) u1(\"\") [%Q]\n",

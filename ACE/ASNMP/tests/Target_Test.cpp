@@ -77,7 +77,8 @@ DAMAGES.
 
 static void TestSnmpTarget()
 {
-  OctetStr rd("rd_comm"), wr("wr_comm");
+  OctetStr const rd ("rd_comm");
+  OctetStr const wr ("wr_comm");
   ACE_TEST_ASSERT(rd.valid() == 1);
   ACE_TEST_ASSERT(wr.valid() == 1);
 

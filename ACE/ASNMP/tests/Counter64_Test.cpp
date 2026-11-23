@@ -105,7 +105,7 @@ static void TestCounter64()
   c6.assign(ld);
   ACE_TEST_ASSERT(ACE::is_equal(c6.to_long_double(), ld));
 
-  Counter64 c7(ull);
+  Counter64 const c7(ull);
   ACE_TEST_ASSERT(c7 == ull);
 
   Counter64 low_word_max (static_cast<ACE_UINT64> (0xffffffffULL));

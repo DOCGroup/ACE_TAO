@@ -90,7 +90,8 @@ static void VbTest()
 
   Vb v2(v1);
   ACE_TEST_ASSERT(v2.valid() == 0);
-  Oid o1("1.2.3"), o2;
+  Oid const o1 ("1.2.3");
+  Oid o2;
   v2.set_oid(o1);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) VarBinad:v2(\"1.2.3/\") [%s]\n",
     v2.to_string()));
@@ -119,7 +120,8 @@ static void VbTest()
   ACE_TEST_ASSERT(o1 == o2);
 
   Vb v5;
-  Counter32 c1(12), c2;
+  Counter32 const c1 (12);
+  Counter32 c2;
   v5.set_oid(o1);
   v5.set_value(c1);
   ACE_TEST_ASSERT(v5.valid() == 1);
@@ -127,7 +129,8 @@ static void VbTest()
   ACE_TEST_ASSERT(c1 == c2);
 
   Vb v6;
-  Counter64 c3(12345678901234ULL), c4;
+  Counter64 const c3 (12345678901234ULL);
+  Counter64 c4;
   v6.set_oid(o1);
   v6.set_value(c3);
   ACE_TEST_ASSERT(v6.valid() == 1);
@@ -135,7 +138,8 @@ static void VbTest()
   ACE_TEST_ASSERT(c3 == c4);
 
   Vb v7;
-  Gauge32 g1(0123456), g2;
+  Gauge32 const g1 (0123456);
+  Gauge32 g2;
   v7.set_oid(o1);
   v7.set_value(g1);
   ACE_TEST_ASSERT(v7.valid() == 1);
@@ -143,7 +147,8 @@ static void VbTest()
   ACE_TEST_ASSERT(g1 == g2);
 
   Vb v8;
-  SnmpInt32 i1(0123456), i2;
+  SnmpInt32 const i1 (0123456);
+  SnmpInt32 i2;
   v8.set_oid(o1);
   v8.set_value(i1);
   ACE_TEST_ASSERT(v8.valid() == 1);
@@ -151,7 +156,8 @@ static void VbTest()
   ACE_TEST_ASSERT(i1 == i2);
 
   Vb v9;
-  SnmpUInt32 u1(0123456), u2;
+  SnmpUInt32 const u1 (0123456);
+  SnmpUInt32 u2;
   v9.set_oid(o1);
   v9.set_value(u1);
   ACE_TEST_ASSERT(v9.valid() == 1);
@@ -159,7 +165,8 @@ static void VbTest()
   ACE_TEST_ASSERT(u1 == u2);
 
   Vb v10;
-  OctetStr s1(" abcdefghighlmnopqrstuvwxyz!@#$%^&*()"), s2;
+  OctetStr const s1 (" abcdefghighlmnopqrstuvwxyz!@#$%^&*()");
+  OctetStr s2;
   v10.set_oid(o1);
   v10.set_value(s1);
   ACE_TEST_ASSERT(v10.valid() == 1);
@@ -195,7 +202,7 @@ static void VbTest()
   ACE_TEST_ASSERT(copied_vb == v10);
 
   Vb varbinds[] {v5, v10};
-  Pdu constructed_pdu {varbinds, 2};
+  Pdu const constructed_pdu {varbinds, 2};
   ACE_TEST_ASSERT(constructed_pdu.get_vb_count() == 2);
   ACE_TEST_ASSERT(constructed_pdu.get_vb (copied_vb, 1) == 1);
   ACE_TEST_ASSERT(copied_vb == v10);
@@ -212,11 +219,11 @@ static void VbTest()
   request_vb.set_oid (o1);
   request_vb.set_null ();
   request += request_vb;
-  UdpTarget target {UdpAddress (IpAddress ("127.0.0.1"))};
-  wpdu encoded (request, target);
+  UdpTarget const target {UdpAddress (IpAddress ("127.0.0.1"))};
+  wpdu const encoded (request, target);
   ACE_TEST_ASSERT(encoded.valid() == 1);
 
-  wpdu copied_wire (encoded.get_buffer());
+  wpdu const copied_wire (encoded.get_buffer());
   ACE_TEST_ASSERT(copied_wire.valid() == 1);
   ACE_TEST_ASSERT(copied_wire.get_buffer().iov_len == encoded.get_buffer().iov_len);
   ACE_TEST_ASSERT(std::memcmp (copied_wire.get_buffer().iov_base,
