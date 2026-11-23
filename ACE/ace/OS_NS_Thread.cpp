@@ -2815,7 +2815,7 @@ ACE_OS::event_init (ACE_event_t *event,
             }
         }
 
-      int const result = 0;
+      int result = 0;
 # if !ACE_EVENT_USE_COND_PSHARED
       char sem_name[128] {};
       format_name (sem_name, name, "._ACE_EVTSEM_");
