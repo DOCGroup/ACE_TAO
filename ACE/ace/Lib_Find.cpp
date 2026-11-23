@@ -439,7 +439,7 @@ ACE::get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len)
 #endif
     }
 
-  size_t len = ACE_OS::strlen (tmpdir);
+  size_t const len = ACE_OS::strlen (tmpdir);
 
   // Check to see if the buffer is large enough for the string,
   // another /, and its null character (hence the + 2)
@@ -473,7 +473,7 @@ ACE::open_temp_file (const ACE_TCHAR *name, int mode, int perm)
                                     | FILE_SHARE_DELETE);
 #else
   // Open it.
-  ACE_HANDLE handle = ACE_OS::open (name, mode, perm);
+  ACE_HANDLE const handle = ACE_OS::open (name, mode, perm);
 #endif /* ACE_WIN32 */
 
   if (handle == ACE_INVALID_HANDLE)
