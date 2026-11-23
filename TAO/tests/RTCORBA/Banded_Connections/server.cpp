@@ -551,7 +551,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::INTERNAL& exception)
     {
-      int minor_code =
+      const int minor_code =
         exception.minor ();
 
       if (errno == EPERM)
