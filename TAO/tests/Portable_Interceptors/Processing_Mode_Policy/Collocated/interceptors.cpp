@@ -61,7 +61,7 @@ Echo_Client_Request_Interceptor::send_request (
         ri->arguments ();
 
       CORBA::Long param {};
-      CORBA::ULong i {};  // index -- explicitly used to avoid
+      const CORBA::ULong i {};  // index -- explicitly used to avoid
                            // overloaded operator ambiguity.
       paramlist[i].argument >>= param;
 
@@ -111,7 +111,7 @@ Echo_Client_Request_Interceptor::receive_reply (
         ri->arguments ();
 
       CORBA::Long param {};
-      CORBA::ULong i {};  // index -- explicitly used to avoid
+      const CORBA::ULong i {};  // index -- explicitly used to avoid
                            // overloaded operator ambiguity.
       paramlist[i].argument >>= param;
     }
@@ -210,7 +210,7 @@ Echo_Server_Request_Interceptor::receive_request (
         ri->arguments ();
 
       CORBA::Long param {};
-      CORBA::ULong i {};  // index -- explicitly used to avoid
+      const CORBA::ULong i {};  // index -- explicitly used to avoid
                            // overloaded operator ambiguity.
       paramlist[i].argument >>= param;
 
@@ -249,7 +249,7 @@ Echo_Server_Request_Interceptor::send_reply (
         ri->arguments ();
 
       CORBA::Long param {};
-      CORBA::ULong i {};  // index -- explicitly used to avoid
+      const CORBA::ULong i {};  // index -- explicitly used to avoid
                            // overloaded operator ambiguity.
       paramlist[i].argument >>= param;
       ACE_DEBUG ((LM_DEBUG,
