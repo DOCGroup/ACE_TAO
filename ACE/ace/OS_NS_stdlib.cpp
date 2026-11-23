@@ -301,7 +301,7 @@ ACE_OS::mktemp (wchar_t *s)
   // For narrow-char filesystems, convert the wide-char input to a narrow-char
   // string for mktemp (), then convert the name back for the caller.
   ACE_Wide_To_Ascii narrow_s (s);
-  if (::mktemp (narrow_s.char_rep ()) == 0)
+  if (::mktemp (narrow_s.char_rep ()) == nullptr)
   {
     return nullptr;
   }
