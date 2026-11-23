@@ -76,7 +76,7 @@ cleanup (void *ptr)
 static ACE_THR_FUNC_RETURN
 worker (void *c)
 {
-  int count = *(static_cast<int*> (c));
+  int const count = *(static_cast<int*> (c));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) worker, iterations = %d\n"), count));
 

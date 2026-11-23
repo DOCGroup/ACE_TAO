@@ -27,7 +27,7 @@ public:
   Test_SIGINT_Handler (ACE_Reactor *reactor, const char *message)
     : message_ (message)
   {
-    int result = reactor->register_handler (SIGINT, this);
+    int const result = reactor->register_handler (SIGINT, this);
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("Main::Test_SIGINT_Handler (%@) - Result %i\n"),
                 static_cast<void *> (this),
@@ -67,7 +67,7 @@ class Test_SIGINT_Shutdown_Handler : public ACE_Event_Handler
 public:
   Test_SIGINT_Shutdown_Handler (ACE_Reactor *reactor)
   {
-    int result = reactor->register_handler (SIGINT, this);
+    int const result = reactor->register_handler (SIGINT, this);
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("Main::Test_SIGINT_Shutdown_Handler (%@) - Result %i\n"),
                 static_cast<void *> (this),

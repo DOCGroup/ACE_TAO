@@ -126,7 +126,7 @@ run_main (int, ACE_TCHAR *[])
                         -1);
     }
 
-  int result=ACE_Thread_Manager::instance()->spawn_n (PRODUCER_THREADS_NO,
+  int const result=ACE_Thread_Manager::instance()->spawn_n (PRODUCER_THREADS_NO,
                                                       producer,
                                                       &c);
   if (result==-1)
@@ -137,7 +137,7 @@ run_main (int, ACE_TCHAR *[])
   }
 
   // wait all threads
-  int wait_result=ACE_Thread_Manager::instance()->wait();
+  int const wait_result=ACE_Thread_Manager::instance()->wait();
   if (wait_result==-1)
   {
     ACE_ERROR((LM_ERROR,

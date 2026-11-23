@@ -130,7 +130,7 @@ int
 Request_Handler::open (void *arg)
 {
   // Open base class.
-  int result =
+  int const result =
     ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>::open (arg);
 
   // Return on error.
@@ -231,7 +231,7 @@ static ACE_THR_FUNC_RETURN
 svr_worker (void *)
 {
   // Server thread function.
-  int result =
+  int const result =
     ACE_Reactor::instance ()->run_reactor_event_loop (std::addressof (reactor_event_hook));
 
   if (result == -1)
@@ -302,7 +302,7 @@ worker (void *)
   ACE_DEBUG((LM_DEBUG,
              "(%t) Spawning %B client threads...\n",
              cli_thrno));
-  int grp = ACE_Thread_Manager::instance ()->spawn_n (cli_thrno,
+  int const grp = ACE_Thread_Manager::instance ()->spawn_n (cli_thrno,
                                                       &cli_worker,
                                                       buf);
   ACE_TEST_ASSERT (grp != -1);
