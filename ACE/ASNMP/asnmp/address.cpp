@@ -247,7 +247,7 @@ IpAddress::IpAddress( const GenAddress &genaddr)
     valid_flag = genaddr.valid();
     if ( valid_flag) {
       // copy in the IP address data
-      IpAddress temp_ip (static_cast<char const *> (genaddr));
+      IpAddress const temp_ip (static_cast<char const *> (genaddr));
       *this = temp_ip;
     }
   }
@@ -256,7 +256,7 @@ IpAddress::IpAddress( const GenAddress &genaddr)
       valid_flag = genaddr.valid();
       if ( valid_flag) {
         // copy in the IP address data
-        UdpAddress temp_udp (static_cast<char const *> (genaddr));
+        UdpAddress const temp_udp (static_cast<char const *> (genaddr));
         *this = temp_udp;
       }
     }
@@ -499,7 +499,7 @@ int IpAddress::parse_address( const char *inaddr)
 int IpAddress::addr_to_friendly()
 {
   in_addr ipAddr;
-  long result = ACE_OS::inet_addr(to_string());
+  long const result = ACE_OS::inet_addr(to_string());
   if (result == -1)
   {
     return -1;    // expected a dotted quad!
@@ -673,7 +673,7 @@ int Address_Iter::next (IpAddress &addr)
     return 1;
   }
 
-  IpAddress resolved_address (address_string);
+  IpAddress const resolved_address (address_string);
   if (!resolved_address.valid())
   {
     return 1;
@@ -758,7 +758,7 @@ UdpAddress::UdpAddress( const GenAddress &genaddr):IpAddress()
     if ( valid_flag)
     {
       // copy in the IP address data
-      UdpAddress temp_udp (static_cast<char const *> (genaddr));
+      UdpAddress const temp_udp (static_cast<char const *> (genaddr));
       *this = temp_udp;
 
       //  port info since are making an UpAddress
@@ -808,7 +808,7 @@ SnmpSyntax& UdpAddress::operator=( SnmpSyntax &val)
     switch (val.get_syntax()){
     case sNMP_SYNTAX_IPADDR:
     {
-      UdpAddress temp_udp(val.to_string());
+      UdpAddress const temp_udp(val.to_string());
       *this = temp_udp; // valid_flag is set by the udp assignment
     }
     break;
@@ -1040,7 +1040,7 @@ NetbiosAddress::NetbiosAddress( const GenAddress& genaddr)
     valid_flag = genaddr.valid();
     if ( valid_flag) {
       // copy in the Ipx address data
-      NetbiosAddress temp_nb (static_cast<char const *> (genaddr));
+      NetbiosAddress const temp_nb (static_cast<char const *> (genaddr));
       *this = temp_nb;
     }
   }
@@ -1193,7 +1193,7 @@ IpxAddress::IpxAddress( const GenAddress &genaddr)
     valid_flag = genaddr.valid();
     if ( valid_flag) {
       // copy in the Ipx address data
-      IpxAddress temp_ipx (static_cast<char const *> (genaddr));
+      IpxAddress const temp_ipx (static_cast<char const *> (genaddr));
       *this = temp_ipx;
     }
   }
@@ -1202,7 +1202,7 @@ IpxAddress::IpxAddress( const GenAddress &genaddr)
       valid_flag = genaddr.valid();
       if ( valid_flag) {
         // copy in the Ipx address data
-        IpxSockAddress temp_ipxsock (static_cast<char const *> (genaddr));
+        IpxSockAddress const temp_ipxsock (static_cast<char const *> (genaddr));
         *this = temp_ipxsock;
       }
     }
@@ -1483,7 +1483,7 @@ int IpxAddress::get_hostid( MacAddress& mac)
                       static_cast<unsigned int> (address_buffer[7]),
                       static_cast<unsigned int> (address_buffer[8]),
                       static_cast<unsigned int> (address_buffer[9]));
-       MacAddress temp( buffer);
+       MacAddress const temp( buffer);
        // mac = (SnmpSyntax&) temp;
        mac = temp;
        if ( mac.valid())
@@ -1577,7 +1577,7 @@ IpxSockAddress::IpxSockAddress( const GenAddress &genaddr):IpxAddress()
     if ( valid_flag)
     {
       // copy in the Ipx address data
-      IpxSockAddress temp_ipxsock (static_cast<char const *> (genaddr));
+      IpxSockAddress const temp_ipxsock (static_cast<char const *> (genaddr));
       *this = temp_ipxsock;
       //  socketid info since are making an IpxSockAddress
       socketid = temp_ipxsock.get_socket();
@@ -1617,7 +1617,7 @@ SnmpSyntax& IpxSockAddress::operator=( SnmpSyntax &val)
       {
         // See if it is of the Ipx address family
         // This handles IpxSockAddress == IpxAddress
-        IpxSockAddress temp_ipx(val.to_string());
+        IpxSockAddress const temp_ipx(val.to_string());
         if (temp_ipx.valid()){
           *this = temp_ipx;             // ipxsock = ipxsock
         }
@@ -1795,7 +1795,7 @@ MacAddress::MacAddress( const GenAddress &genaddr)
     if ( valid_flag)
     {
       // copy in the Mac address data
-      MacAddress temp_mac (static_cast<char const *> (genaddr));
+      MacAddress const temp_mac (static_cast<char const *> (genaddr));
       *this = temp_mac;
     }
   }
@@ -2500,7 +2500,7 @@ DecNetAddress::DecNetAddress( const GenAddress& genaddr)
     valid_flag = genaddr.valid();
     if ( valid_flag) {
       // copy in the Ipx address data
-      DecNetAddress temp_ipx (static_cast<char const *> (genaddr));
+      DecNetAddress const temp_ipx (static_cast<char const *> (genaddr));
       *this = temp_ipx;
     }
   }
@@ -2643,7 +2643,7 @@ AppleTalkAddress::AppleTalkAddress( const GenAddress& genaddr)
     valid_flag = genaddr.valid();
     if ( valid_flag) {
       // copy in the Ipx address data
-      AppleTalkAddress temp_ipx (static_cast<char const *> (genaddr));
+      AppleTalkAddress const temp_ipx (static_cast<char const *> (genaddr));
       *this = temp_ipx;
     }
   }
