@@ -489,7 +489,7 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl () const
                                             nullptr,
                                             tmq.get (),
                                             0, // Do not disable notify
-                                            0, // Allocate notify handler
+                                            nullptr, // Allocate notify handler
                                             this->reactor_mask_signals_,
                                             ACE_Select_Reactor_Token::LIFO),
                       nullptr);

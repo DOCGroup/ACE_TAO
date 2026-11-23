@@ -163,7 +163,7 @@ namespace TAO
           // We ended up waiting on a condition variable, the
           // POA state may have changed while we are waiting.
           // Therefore, we need to restart this call.
-          return 0;
+          return nullptr;
         }
 
       // Success

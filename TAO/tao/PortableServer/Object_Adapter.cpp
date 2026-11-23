@@ -971,7 +971,7 @@ TAO_Object_Adapter::get_collocated_servant (const TAO_MProfile &mp)
       return servant;
     }
 
-  return 0;
+  return nullptr;
 }
 
 // ****************************************************************

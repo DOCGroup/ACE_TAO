@@ -161,7 +161,7 @@ namespace TAO
                           TAO_TWOWAY_INVOCATION,
                           mode)
       , request_ (req)
-      , rd_ (0)
+      , rd_ (nullptr)
       , orb_core_ (oc)
   {
   }

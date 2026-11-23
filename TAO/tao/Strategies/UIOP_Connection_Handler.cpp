@@ -21,7 +21,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_UIOP_SVC_HANDLER (t, nullptr, 0),
+  : TAO_UIOP_SVC_HANDLER (t, nullptr, nullptr),
     TAO_Connection_Handler (nullptr)
 {
   // This constructor should *never* get called, it is just here to
@@ -33,7 +33,7 @@ TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (ACE_Thread_Manager *t)
 }
 
 TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (TAO_ORB_Core *orb_core)
-  : TAO_UIOP_SVC_HANDLER (orb_core->thr_mgr (), nullptr, 0),
+  : TAO_UIOP_SVC_HANDLER (orb_core->thr_mgr (), nullptr, nullptr),
     TAO_Connection_Handler (orb_core)
 {
   TAO_UIOP_Transport *specific_transport {};

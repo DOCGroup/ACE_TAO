@@ -183,7 +183,7 @@ CORBA::ValueBase::_tao_unmarshal (TAO_InputCDR &strm,
   if (!CORBA::ValueBase::_tao_unmarshal_pre (
          strm,
          new_object,
-         0, // repo_id to be obtained from strm
+         nullptr, // repo_id to be obtained from strm
          is_null_object,
          is_indirected  ))
     {
@@ -1425,7 +1425,7 @@ namespace TAO
                                                    tc_value_base_name,
                                                    CORBA::VM_NONE,
                                                    std::addressof (CORBA::_tc_null),
-                                                   0,  // Field array
+                                                   nullptr,  // Field array
                                                    0); // Field count
 
     char const tc_event_base_id[]   = "IDL:omg.org/CORBA/EventBase:1.0";
@@ -1438,7 +1438,7 @@ namespace TAO
                                                    tc_event_base_name,
                                                    CORBA::VM_NONE,
                                                    std::addressof (CORBA::_tc_null),
-                                                   0,  // Field array
+                                                   nullptr,  // Field array
                                                    0); // Field count
   }
 }

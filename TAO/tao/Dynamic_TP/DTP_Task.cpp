@@ -187,9 +187,9 @@ TAO_DTP_Task::open (void * /* args */)
                           1,
                           ACE_DEFAULT_THREAD_PRIORITY,
                           -1,
-                          0,
-                          0,
-                          0,
+                          nullptr,
+                          nullptr,
+                          nullptr,
                           stack_sz_arr.get ()) != 0)
         {
           TAOLIB_ERROR_RETURN ((LM_ERROR,
@@ -382,9 +382,9 @@ TAO_DTP_Task::svc ()
                               1,
                               ACE_DEFAULT_THREAD_PRIORITY,
                               -1,
-                              0,
-                              0,
-                              0,
+                              nullptr,
+                              nullptr,
+                              nullptr,
                               this->thread_stack_size_ == 0 ? nullptr :
                               std::addressof (this->thread_stack_size_)) != 0)
             {

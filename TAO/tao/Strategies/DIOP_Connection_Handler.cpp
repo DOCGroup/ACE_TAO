@@ -25,7 +25,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_DIOP_SVC_HANDLER (t, nullptr, 0),
+  : TAO_DIOP_SVC_HANDLER (t, nullptr, nullptr),
     TAO_Connection_Handler (nullptr),
     dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
@@ -38,7 +38,7 @@ TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (ACE_Thread_Manager *t)
 }
 
 TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core)
-  : TAO_DIOP_SVC_HANDLER (orb_core->thr_mgr (), nullptr, 0),
+  : TAO_DIOP_SVC_HANDLER (orb_core->thr_mgr (), nullptr, nullptr),
     TAO_Connection_Handler (orb_core),
     dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {

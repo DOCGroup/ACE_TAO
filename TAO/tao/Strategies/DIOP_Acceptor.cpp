@@ -171,7 +171,7 @@ TAO_DIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
       if (mprofile.give_profile (diop_profile) == -1)
         {
           diop_profile->_decr_refcnt ();
-          diop_profile = 0;
+          diop_profile = nullptr;
           return -1;
         }
 

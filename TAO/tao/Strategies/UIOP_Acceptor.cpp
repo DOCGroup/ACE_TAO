@@ -254,7 +254,7 @@ TAO_UIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
     return -1;
   }
 
-  ACE_Auto_String_Free const tempname (ACE_OS::tempnam (0, "TAO"));
+  ACE_Auto_String_Free const tempname (ACE_OS::tempnam (nullptr, "TAO"));
 
   if (tempname.get () == nullptr)
   {
