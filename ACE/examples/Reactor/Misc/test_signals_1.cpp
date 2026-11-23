@@ -92,14 +92,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Set up a non-ACE signal handler.  When this goes off, the Reactor
   // should return from its <run_event_loop> method.
-  ACE_Sig_Action sig (&my_signal_function, SIGQUIT);
+  ACE_Sig_Action const sig (&my_signal_function, SIGQUIT);
   ACE_UNUSED_ARG (sig);
 
   ACE_DEBUG ((LM_DEBUG,
               "starting event loop that runs until you've typed ^C a total of 10 times or ^\\ once.\n"));
 
   // This call executes the reactor events until we're finished.
-  int result = ACE_Reactor::run_event_loop ();
+  int const result = ACE_Reactor::run_event_loop ();
 
   ACE_DEBUG ((LM_DEBUG,
               "result = %d\n",
