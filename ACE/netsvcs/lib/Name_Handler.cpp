@@ -271,8 +271,8 @@ ACE_Name_Handler::dispatch ()
                                           ACE_Name_Request::OP_TABLE_MASK)]) ();
 }
 
-/// Receive, frame, and decode the client's request.  Note, this method
-/// should use non-blocking I/O.
+/// Receive, frame, and decode the client's request.
+/// @note This method should use non-blocking I/O.
 
 /* VIRTUAL */ int
 ACE_Name_Handler::recv_request ()
