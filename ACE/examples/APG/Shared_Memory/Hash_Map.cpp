@@ -31,7 +31,7 @@ HASH_MAP* smap (ALLOCATOR *shmem_allocator)
   {
     return static_cast<HASH_MAP *> (db);
   }
-  size_t hash_table_size = sizeof (HASH_MAP);
+  size_t const hash_table_size = sizeof (HASH_MAP);
   void *hash_map = shmem_allocator->malloc (hash_table_size);
   if (hash_map == nullptr)
   {
@@ -53,19 +53,19 @@ int processRecords (HASH_MAP *map, ALLOCATOR *shmem_allocator)
 {
   ACE_TRACE ("processRecords");
 
-  size_t mapLength = map->current_size ();
+  size_t const mapLength = map->current_size ();
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Found %B records\n\n"),
               mapLength));
 
-  std::unique_ptr<int[]> todelete = std::make_unique<int[]> (mapLength);
+  std::unique_ptr<int[]> const todelete = std::make_unique<int[]> (mapLength);
   int i = 0;
 
   for (HASH_MAP::iterator iter = map->begin ();
       iter != map->end ();
       ++iter)
     {
-      int key = (*iter).ext_id_;
+      int const key = (*iter).ext_id_;
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) [%d] Preprocessing %d:%@\n"),
                   i+1, key, std::addressof ((*iter).ext_id_)));
@@ -74,7 +74,7 @@ int processRecords (HASH_MAP *map, ALLOCATOR *shmem_allocator)
 
       // Illustrate the find feature of the map.
       Record record;
-      int result = map->find (key, record, shmem_allocator);
+      int const result = map->find (key, record, shmem_allocator);
       if (result == -1)
         {
           ACE_DEBUG ((LM_ERROR,
@@ -92,8 +92,8 @@ int processRecords (HASH_MAP *map, ALLOCATOR *shmem_allocator)
   // Delete everything we processed.
   for (int j = 0; j < i ; ++j)
     {
-      int result = map->unbind (todelete[j],
-                                shmem_allocator);
+      int const result = map->unbind (todelete[j],
+                                      shmem_allocator);
       if (result == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -119,7 +119,7 @@ int addRecords(HASH_MAP *map, ALLOCATOR *shmem_allocator)
   ACE_TRACE ("addRecords");
 
   char buf[32];
-  int mapLength = static_cast<int> (map->current_size ());
+  int const mapLength = static_cast<int> (map->current_size ());
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Map has %B entries; adding 20 more\n"),
               mapLength));
@@ -129,11 +129,11 @@ int addRecords(HASH_MAP *map, ALLOCATOR *shmem_allocator)
       ACE_OS::sprintf (buf, "%s:%d", "Record", i);
 
       // Allocate new record on stack;
-      Record newRecord (i, i+1, buf);
+      Record const newRecord (i, i+1, buf);
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Adding a record for %d\n"), i));
 
-      int result = map->bind (i, newRecord, shmem_allocator);
+      int const result = map->bind (i, newRecord, shmem_allocator);
       if (result == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
@@ -152,7 +152,7 @@ int handle_child ()
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, coordMutex, -1);
 
   ALLOCATOR *allocator {};
-  ACE_MMAP_Memory_Pool_Options options
+  ACE_MMAP_Memory_Pool_Options const options
     (ACE_DEFAULT_BASE_ADDR,
      ACE_MMAP_Memory_Pool_Options::ALWAYS_FIXED);
 
@@ -184,7 +184,7 @@ int handle_parent (ACE_TCHAR *cmdLine)
   ACE_TRACE ("handle_parent");
 
   ALLOCATOR *allocator {};
-  ACE_MMAP_Memory_Pool_Options options
+  ACE_MMAP_Memory_Pool_Options const options
     (ACE_DEFAULT_BASE_ADDR,
      ACE_MMAP_Memory_Pool_Options::ALWAYS_FIXED);
 

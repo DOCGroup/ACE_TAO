@@ -60,7 +60,7 @@ static Logger logger {};
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  CriticalLogMessage cm;
+  CriticalLogMessage const cm;
   logger.log (cm);  // Will cause deadlock.
   return 0;
 }

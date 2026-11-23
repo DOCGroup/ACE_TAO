@@ -64,7 +64,7 @@ QUEUE *squeue (ALLOCATOR *shmem_allocator)
 
   // Create a new map (because we've just created a new
   // memory-mapped file).
-  size_t queue_size = sizeof (QUEUE);
+  size_t const queue_size = sizeof (QUEUE);
 
   queue = shmem_allocator->malloc (queue_size);
 
@@ -193,7 +193,7 @@ int sendRecord (int recordId,  ALLOCATOR *shmem_allocator)
     }
   char buf[128];
   ACE_OS::sprintf (buf, "%s:%d", "Record", recordId);
-  Record newRecord (recordId, recordId+1, buf);
+  Record const newRecord (recordId, recordId+1, buf);
 
   int const result = queue->enqueue_tail (newRecord, shmem_allocator);
   if (result == -1)
@@ -209,7 +209,7 @@ int sendRecord (int recordId,  ALLOCATOR *shmem_allocator)
 int handle_parent (ACE_TCHAR *cmdLine)
 {
   ALLOCATOR *shmem_allocator {};
-  ACE_MMAP_Memory_Pool_Options options
+  ACE_MMAP_Memory_Pool_Options const options
     (ACE_DEFAULT_BASE_ADDR,
      ACE_MMAP_Memory_Pool_Options::ALWAYS_FIXED);
 
@@ -219,7 +219,7 @@ int handle_parent (ACE_TCHAR *cmdLine)
                              BACKING_STORE,
                              &options),
                   -1);
-  std::unique_ptr<ALLOCATOR> allocator_owner {shmem_allocator};
+  std::unique_ptr<ALLOCATOR> const allocator_owner {shmem_allocator};
 
   ACE_Process processa, processb;
   ACE_Process_Options poptions;
@@ -251,7 +251,7 @@ int handle_parent (ACE_TCHAR *cmdLine)
 int handle_child ()
 {
   ALLOCATOR *shmem_allocator {};
-  ACE_MMAP_Memory_Pool_Options options
+  ACE_MMAP_Memory_Pool_Options const options
     (ACE_DEFAULT_BASE_ADDR,
      ACE_MMAP_Memory_Pool_Options::ALWAYS_FIXED);
   ACE_NEW_RETURN (shmem_allocator,
@@ -259,7 +259,7 @@ int handle_child ()
                              BACKING_STORE,
                              &options),
                   -1);
-  std::unique_ptr<ALLOCATOR> allocator_owner {shmem_allocator};
+  std::unique_ptr<ALLOCATOR> const allocator_owner {shmem_allocator};
   g_shmem_allocator = allocator_owner.get ();
 
 #if defined (WIN32)

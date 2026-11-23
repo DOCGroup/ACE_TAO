@@ -295,7 +295,7 @@ Manager::shut_down ()
 
       Exit *req {};
       ACE_NEW_RETURN (req, Exit (), -1);
-      std::unique_ptr<Exit> request {req};
+      std::unique_ptr<Exit> const request {req};
 
       // Send the hangup message
       worker->perform (request.get ());
@@ -305,7 +305,7 @@ Manager::shut_down ()
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) Worker shut down.\n")));
-      std::unique_ptr<Worker> worker_owner {worker};
+      std::unique_ptr<Worker> const worker_owner {worker};
 
     }
   while (iter.advance ());
