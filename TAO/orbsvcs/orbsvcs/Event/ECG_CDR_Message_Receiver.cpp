@@ -227,7 +227,7 @@ TAO_ECG_CDR_Message_Receiver::Requests::purge_requests (
 {
   for (CORBA::ULong i = purge_first; i <= purge_last; ++i)
     {
-      size_t index = i % this->size_;
+      const size_t index = i % this->size_;
       if (this->fragmented_requests_[index]
           != std::addressof (TAO_ECG_CDR_Message_Receiver::Request_Completed_))
         {
@@ -265,7 +265,7 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
   iov[1].iov_len  = ACE_MAX_DGRAM_SIZE;
 
   ACE_INET_Addr from;
-  ssize_t n = dgram.recv (iov, iovcnt, from);
+  const ssize_t n = dgram.recv (iov, iovcnt, from);
 
   if (n == -1)
     {
