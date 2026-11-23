@@ -1049,8 +1049,8 @@ public:
   ACE_Message_Queue_Ex (size_t high_water_mark = ACE_Message_Queue_Base::DEFAULT_HWM,
                         size_t low_water_mark = ACE_Message_Queue_Base::DEFAULT_LWM,
                         ACE_Notification_Strategy * ns = nullptr);
-  virtual int open (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
-                    size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
+  virtual int open (size_t high_water_mark = ACE_Message_Queue_Base::DEFAULT_HWM,
+                    size_t low_water_mark = ACE_Message_Queue_Base::DEFAULT_LWM,
                     ACE_Notification_Strategy * = nullptr);
   /// @}
 
