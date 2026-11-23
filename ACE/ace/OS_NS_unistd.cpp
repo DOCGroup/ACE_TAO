@@ -851,7 +851,7 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
           // Grok quotes....
           if (*cp == ACE_TEXT ('\'') || *cp == ACE_TEXT ('"'))
             {
-              ACE_TCHAR quote = *cp;
+              ACE_TCHAR const quote = *cp;
 
               // Scan past the string..
               for (++cp; *cp != ACE_TEXT ('\0')
@@ -923,7 +923,7 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
         {
           if (*ptr == ACE_TEXT ('\'') || *ptr == ACE_TEXT ('"'))
             {
-              ACE_TCHAR quote = *ptr++;
+              ACE_TCHAR const quote = *ptr++;
 
               while (*ptr != ACE_TEXT ('\0')
                      && (*ptr != quote || ptr[-1] == ACE_TEXT ('\\')))
