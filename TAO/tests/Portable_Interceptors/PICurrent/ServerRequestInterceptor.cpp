@@ -28,7 +28,7 @@ void
 ServerRequestInterceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-  CORBA::String_var op = ri->operation ();
+  CORBA::String_var const op = ri->operation ();
 
   if (std::strcmp (op.in (), "invoke_me") != 0)
   {
@@ -79,7 +79,7 @@ ServerRequestInterceptor::receive_request (
 
       // Now retrieve the data from the TSC again.  It should not have
       // changed to the new value
-      CORBA::Any_var data2 =
+      CORBA::Any_var const data2 =
         this->pi_current_->get_slot (this->slot_id_);
 
       CORBA::Long number2 {};
@@ -113,7 +113,7 @@ void
 ServerRequestInterceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-  CORBA::String_var op = ri->operation ();
+  CORBA::String_var const op = ri->operation ();
 
   if (std::strcmp (op.in (), "invoke_me") != 0)
   {
@@ -165,7 +165,7 @@ ServerRequestInterceptor::send_reply (
 
       // Now retrieve the data from the RSC again.  It should not have
       // changed!
-      CORBA::Any_var data2 =
+      CORBA::Any_var const data2 =
         ri->get_slot (this->slot_id_);
 
       char const *str2 {};
