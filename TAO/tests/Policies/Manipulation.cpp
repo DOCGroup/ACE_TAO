@@ -147,7 +147,7 @@ Manipulation::perform_iteration (unsigned int *seed,
 {
   try
     {
-      int r = ACE_OS::rand_r (seed);
+      const int r = ACE_OS::rand_r (seed);
 
       int const ADD_OBJECT_POLICY  = 0;
       int const ADD_CURRENT_POLICY = 1;
@@ -162,7 +162,7 @@ Manipulation::perform_iteration (unsigned int *seed,
       int const SAVE_MANAGER_POLICIES    = 8;
       // const int RESTORE_MANAGER_POLICIES = 9;
       int const LAST_OPERATION   = 10;
-      int operation = r % LAST_OPERATION;
+      const int operation = r % LAST_OPERATION;
 
       if (operation == ADD_OBJECT_POLICY
           || operation == ADD_CURRENT_POLICY
@@ -176,7 +176,7 @@ Manipulation::perform_iteration (unsigned int *seed,
           CORBA::Any any;
           CORBA::ULong policy_type = 0;
 
-          int type = ACE_OS::rand_r (seed) % 3;
+          const int type = ACE_OS::rand_r (seed) % 3;
           if (type == 0)
             {
               TimeBase::TimeT value = 0;
