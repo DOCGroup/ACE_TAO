@@ -1,10 +1,9 @@
 /* -*- C++ -*- */
 /// @file UDP.idl
+/// Defines operations to request the current time from another
+/// machine and shut down the server.
 interface UDP
 {
-  /// Defines operations to request the current time from another
-  /// machine and shut down the server.
-
   /// Returns the current time of day to a client on another machine.
   oneway void invoke (in string client_name,
                       in UDP udpHandler,

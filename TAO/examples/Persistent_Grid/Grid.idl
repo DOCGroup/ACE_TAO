@@ -1,8 +1,7 @@
 /// -*- C++ -*-
+/// Creates a Grid of the specified type.
 interface Grid
 {
-  /// Creates a Grid of the specified type.
-
   /// Height of the grid.
   attribute short height;
 
@@ -32,10 +31,9 @@ interface Grid
   void destroy ();
 };
 
+/// Factory that creates a Grid.
 interface Grid_Factory
 {
-  /// Factory that creates a Grid.
-
   /// @name Default Grid dimensions
   /// @{
   const short DEFAULT_HEIGHT = 10;

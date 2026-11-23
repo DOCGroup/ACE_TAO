@@ -2,11 +2,10 @@
 #if !defined (_ECHO_IDL)
 #define _ECHO_IDL
 
+/// Encapsulates operations that return and display messages and shut
+/// down the server.
 interface Echo
 {
-  /// Encapsulates operations that return and display messages and shut
-  /// down the server.
-
   typedef sequence<Object> List;
 
   /// Returns the message as a sequence of Objects and displays it as a string.

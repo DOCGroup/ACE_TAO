@@ -1,11 +1,10 @@
 /* -*- C++ -*- */
+/// Defines an interface that encapsulates operations that cube numbers.
+///
+/// This interface encapsulates operations that cube octets, shorts,
+/// longs, structs, and unions.
 interface Cubit
 {
-  /// Defines an interface that encapsulates operations that cube numbers.
-  ///
-  /// This interface encapsulates operations that cube octets, shorts,
-  /// longs, structs, and unions.
-
   /// Test the basic latency of a nil oneway operation.
   oneway void cube_oneway ();
 

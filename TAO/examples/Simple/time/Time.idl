@@ -1,9 +1,8 @@
 /* -*- C++ -*- */
+/// Defines operations that return the current time of day and shut down
+/// the server.
 interface Time
 {
-  /// Defines operations that return the current time of day and shut down
-  /// the server.
-
   /// Returns the current time of day on another machine.
   long current_time ();
 
