@@ -83,7 +83,7 @@ public:
    * return true.  Note that if the @c max_size_ of @c array_ is >= than
    * <s.max_size_> we can copy it without reallocating.  However, if
    * @c max_size_ is < <s.max_size_> we must delete the @c array_,
-   * reallocate a new @c array_, and then copy the contents of <s>.
+   * reallocate a new @c array_, and then copy the contents of @a s.
    */
   void operator= (ACE_Array_Base<T> const &s);
   void operator= (ACE_Array_Base<T> &&) = delete;

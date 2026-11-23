@@ -129,9 +129,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::uses_event_associations ()
   return false;
 }
 
-/// @name Operations requiring locks
 /// These operations must be called with locks held.
-/// @{
 
 /// Performs operations on the ready bits.
 
@@ -186,8 +184,6 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_wakeup (ACE_HANDLE handle
   ACE_TRACE ("ACE_Select_Reactor_T::cancel_wakeup");
   return this->mask_ops (handle, mask, ACE_Reactor::CLR_MASK);
 }
-/// @}
-
 template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE ACE_Lock &
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::lock ()
 {

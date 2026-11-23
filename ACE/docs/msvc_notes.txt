@@ -31,8 +31,8 @@ version of an ACE example only uses debug version of ACE library.
 @subsection msvc_otheroptions How to Set Other Options
 
 Other compile time options are set or unset via the config.h file.  For
-example, to turn on a compile time definition, #define it at the beginning of
-config.h.  Unsetting a definition just requires #define ACE_FOO 0 or a #undef
+example, to turn on a compile time definition, define it at the beginning of
+config.h.  Unsetting a definition just requires setting ACE_FOO to 0 or undefining it
 at the end of the file (after including config-win32.h).  Different macros
 require different techniques.
 
@@ -88,8 +88,8 @@ There are three main dependencies a project would have on ACE/TAO.
 
 - Include paths:  Since all the headers use a subdirectory way of referring
   to include files (such as "ace/OS.h" instead of just "OS.h").  In order
-  to make this work either the path to ACE_wrappers (and ACE_wrappers\TAO and
-  ACE_wrappers\TAO\orbsvcs, etc.) to the additional include paths of the
+  to make this work either the path to ACE_wrappers (and ACE_wrappers\\TAO and
+  ACE_wrappers\\TAO\\orbsvcs, etc.) to the additional include paths of the
   project or in MSVC.  I believe it is a better idea to add them to the global
   MSVC directories.  That way the path to ACE on a machine doesn't get hard
   coded into the project itself (this should make it easier to move the
@@ -99,20 +99,20 @@ There are three main dependencies a project would have on ACE/TAO.
   different libraries are needed to be linked in.  (This is covered more in
   an above section).  These libraries are specified in the project, but can
   be specified in different ways.  The first is the hard coded way (a full
-  path, such as "C:\ACE_wrappers\ace\aced.lib").  The second is listing only
+  path, such as "C:\\ACE_wrappers\\ace\\aced.lib").  The second is listing only
   the library (such as "aced.lib") and then specify the path either in the
   project or via MSVC global settings.  Just like for the include paths, MSVC
   global settings is probably the more robust way of specifying this.
 
-- TAO_IDL: TAO's IDL compiler resides in ACE_wrappers\bin.  If the external
+- TAO_IDL: TAO's IDL compiler resides in ACE_wrappers\\bin.  If the external
   project contains IDL files, then a custom build configuration can be used
   to automatically call TAO_IDL.  Note that the location of the release
-  version of the compiler is in ACE_wrappers\bin\Release (although it doesn't
+  version of the compiler is in ACE_wrappers\\bin\\Release (although it doesn't
   matter which version you use, they both produce the same output).  If
-  ACE_wrappers\bin is included in the path, then the build command can just
+  ACE_wrappers\\bin is included in the path, then the build command can just
   refer to tao_idl and it can be found via the path.  The other options are
   to refer to tao_idl via an absolute hard coded path or to add
-  ACE_wrappers\bin to the MSVC's global executable path settings.  Either
+  ACE_wrappers\\bin to the MSVC's global executable path settings.  Either
   way the bin directory must be in the path or in the global settings so
   tao_idl can find aced.dll.
 
