@@ -75,7 +75,7 @@ find_last ()
 
   char search_string[MAX_STRING_SIZE];
   ACE_OS::snprintf (search_string, MAX_STRING_SIZE, "%d", n_entries - 1);
-  ACE_CString cString (search_string);
+  ACE_CString const cString (search_string);
   Element *element_ptr {};
 
   for (ACE_Double_Linked_List_Iterator<Element> iterator (*linked_list_ptr);
@@ -163,7 +163,7 @@ Reader_Task::svc ()
     {
       ACE_Thread::yield ();
 
-      int result = 0;
+      const int result = 0;
 
       {
 #if defined (RW_MUTEX)
@@ -274,7 +274,7 @@ void
 Time_Calculation ::print_stats ()
 {
   ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time = this->times_;
-  u_int iterations = 1;
+  u_int const iterations = 1;
 
   if (iterations > 0)
     {
