@@ -282,7 +282,7 @@ TAO_IIOP_Profile::parse_string_i (char const *ior)
 
   if (this->endpoint_.host_.in ()[0] == '\0')
     {
-      ACE_INET_Addr host_addr;
+      ACE_INET_Addr const host_addr;
 
       char tmp_host [MAXHOSTNAMELEN + 1];
 
@@ -443,7 +443,7 @@ TAO_IIOP_Profile::remove_endpoint (TAO_IIOP_Endpoint *endp)
       if (--this->count_ > 0)
         {
           TAO_IIOP_Endpoint *n = this->endpoint_.next_;
-          std::unique_ptr<TAO_IIOP_Endpoint> removed {n};
+          std::unique_ptr<TAO_IIOP_Endpoint> const removed {n};
           this->endpoint_ = *n;
           // since the assignment operator does not copy the next_
           // pointer, we must do it by hand
@@ -478,7 +478,7 @@ TAO_IIOP_Profile::remove_endpoint (TAO_IIOP_Endpoint *endp)
       {
         this->last_endpoint_ = prev;
       }
-      std::unique_ptr<TAO_IIOP_Endpoint> removed {cur};
+      std::unique_ptr<TAO_IIOP_Endpoint> const removed {cur};
     }
 }
 
@@ -564,7 +564,7 @@ TAO_IIOP_Profile::to_string () const
         {
           // Don't publish scopeid if included.
           ACE_CString tmp (endp->host ());
-          ACE_CString::size_type pos = tmp.find ('%');
+          ACE_CString::size_type const pos = tmp.find ('%');
           if (pos != ACE_CString::npos)
             {
               tmp = tmp.substr (0, pos + 1);
@@ -776,7 +776,7 @@ TAO_IIOP_Profile::encode_endpoints ()
             {
               // Don't publish scopeid if included.
               ACE_CString tmp (endpoint->host ());
-              ACE_CString::size_type pos = tmp.find ('%');
+              ACE_CString::size_type const pos = tmp.find ('%');
               if (pos != ACE_CString::npos)
                 {
                   tmp = tmp.substr (0, pos + 1);

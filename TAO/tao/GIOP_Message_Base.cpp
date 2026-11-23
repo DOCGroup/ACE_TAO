@@ -1131,7 +1131,7 @@ TAO_GIOP_Message_Base::process_request (
       // we have native exceptions but no support for them in the ORB
       // we should still be able to catch it.  If we don't have native
       // exceptions it couldn't have been raised in the first place!
-      int result {};
+      int const result {};
 
       if (response_required)
         {
@@ -1185,7 +1185,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
 
   TAO_GIOP_Locate_Status_Msg status_info;
 
-  CORBA::Boolean response_required = true;
+  CORBA::Boolean const response_required = true;
 
   try
     {
@@ -1203,11 +1203,11 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
 
       // Set it to an error state
       parse_error = 1;
-      CORBA::ULong req_id = locate_request.request_id ();
+      CORBA::ULong const req_id = locate_request.request_id ();
 
       // We will send the reply. The ServerRequest class need not send
       // the reply
-      CORBA::Boolean deferred_reply = true;
+      CORBA::Boolean const deferred_reply = true;
       TAO_ServerRequest server_request (this,
                                         req_id,
                                         response_required,
