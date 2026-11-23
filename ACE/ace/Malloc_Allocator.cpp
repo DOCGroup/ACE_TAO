@@ -46,8 +46,8 @@ ACE_Allocator::instance ()
           // first to avoid stupid compiler warnings that the
           // condition may always be true/false.
 #         if !defined (ACE_NDEBUG)
-          int assertion = (sizeof allocator_instance ==
-                           sizeof (ACE_New_Allocator));
+          int const assertion = (sizeof allocator_instance ==
+                                 sizeof (ACE_New_Allocator));
           ACE_ASSERT (assertion);
 #         endif /* !ACE_NDEBUG */
 
