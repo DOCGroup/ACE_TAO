@@ -17,12 +17,12 @@ JAWS_synch_send ( ACE_HANDLE handle
 {
   JAWS_Event_Result io_result;
 
-  ssize_t result = ACE::send_n (handle, mb->rd_ptr (), mb->length (), tv);
+  ssize_t const result = ACE::send_n (handle, mb->rd_ptr (), mb->length (), tv);
   if (result < 0)
     {
       if (errno == ETIME)
         {
-          JAWS_Event_Result tmp_io_result ( 0
+          JAWS_Event_Result const tmp_io_result ( 0
                                           , JAWS_Event_Result::JE_ERROR
                                           , JAWS_Event_Result::JE_SEND_TIMEOUT
                                           );
@@ -30,7 +30,7 @@ JAWS_synch_send ( ACE_HANDLE handle
         }
       else
         {
-          JAWS_Event_Result tmp_io_result ( 0
+          JAWS_Event_Result const tmp_io_result ( 0
                                           , JAWS_Event_Result::JE_ERROR
                                           , JAWS_Event_Result::JE_SEND_FAIL
                                           );
@@ -44,7 +44,7 @@ JAWS_synch_send ( ACE_HANDLE handle
         mb->rd_ptr (result);
       }
 
-      JAWS_Event_Result tmp_io_result ( result
+      JAWS_Event_Result const tmp_io_result ( result
                                       , JAWS_Event_Result::JE_ERROR
                                       , JAWS_Event_Result::JE_SEND_SHORT
                                       );
@@ -57,7 +57,7 @@ JAWS_synch_send ( ACE_HANDLE handle
         mb->rd_ptr (result);
       }
 
-      JAWS_Event_Result tmp_io_result ( result
+      JAWS_Event_Result const tmp_io_result ( result
                                       , JAWS_Event_Result::JE_OK
                                       , JAWS_Event_Result::JE_SEND_OK
                                       );
@@ -114,10 +114,10 @@ JAWS_Synch_IO::recv ( ACE_HANDLE handle
     tvp = std::addressof (tv);
   }
 
-  ssize_t result = ACE::recv (handle, mb->wr_ptr (), mb->space (), tvp);
+  ssize_t const result = ACE::recv (handle, mb->wr_ptr (), mb->space (), tvp);
   if (result < 0)
     {
-      JAWS_Event_Result tmp_io_result ( 0
+      JAWS_Event_Result const tmp_io_result ( 0
                                       , JAWS_Event_Result::JE_ERROR
                                       , JAWS_Event_Result::JE_RECV_FAIL
                                       );
@@ -130,7 +130,7 @@ JAWS_Synch_IO::recv ( ACE_HANDLE handle
         mb->wr_ptr (result);
       }
 
-      JAWS_Event_Result tmp_io_result ( result
+      JAWS_Event_Result const tmp_io_result ( result
                                       , JAWS_Event_Result::JE_OK
                                       , JAWS_Event_Result::JE_RECV_OK
                                       );
@@ -200,7 +200,7 @@ JAWS_Synch_IO::transmit ( ACE_HANDLE handle
       bytes += io_result.bytes ();
       if (io_result.status () != JAWS_Event_Result::JE_OK)
         {
-          JAWS_Event_Result tmp_io_result ( bytes
+          JAWS_Event_Result const tmp_io_result ( bytes
                                           , JAWS_Event_Result::JE_ERROR
                                           , JAWS_Event_Result::JE_SEND_SHORT
                                           );
@@ -222,7 +222,7 @@ JAWS_Synch_IO::transmit ( ACE_HANDLE handle
       bytes += io_result.bytes ();
       if (io_result.status () != JAWS_Event_Result::JE_OK)
         {
-          JAWS_Event_Result tmp_io_result ( bytes
+          JAWS_Event_Result const tmp_io_result ( bytes
                                           , JAWS_Event_Result::JE_ERROR
                                           , JAWS_Event_Result::JE_SEND_SHORT
                                           );
@@ -238,7 +238,7 @@ JAWS_Synch_IO::transmit ( ACE_HANDLE handle
 
   if (len == 0)
     {
-      JAWS_Event_Result tmp_io_result ( bytes
+      JAWS_Event_Result const tmp_io_result ( bytes
                                       , JAWS_Event_Result::JE_OK
                                       , JAWS_Event_Result::JE_SEND_OK
                                       );
@@ -246,7 +246,7 @@ JAWS_Synch_IO::transmit ( ACE_HANDLE handle
     }
   else
     {
-      JAWS_Event_Result tmp_io_result ( bytes
+      JAWS_Event_Result const tmp_io_result ( bytes
                                       , JAWS_Event_Result::JE_ERROR
                                       , JAWS_Event_Result::JE_SEND_SHORT
                                       );

@@ -29,7 +29,7 @@ JAWS_Asynch_IO::send ( ACE_HANDLE handle
       || asynch_write_stream.write (*mb, mb->length (), act) == -1)
     {
       delete jecaha;
-      JAWS_Event_Result io_result ( 0
+      JAWS_Event_Result const io_result ( 0
                                   , JAWS_Event_Result::JE_ERROR
                                   , JAWS_Event_Result::JE_SEND_FAIL
                                   );
@@ -57,7 +57,7 @@ JAWS_Asynch_IO::recv ( ACE_HANDLE handle
       || asynch_read_stream.read (*mb, mb->space (), act) == -1)
     {
       delete jecaha;
-      JAWS_Event_Result io_result ( 0
+      JAWS_Event_Result const io_result ( 0
                                   , JAWS_Event_Result::JE_ERROR
                                   , JAWS_Event_Result::JE_RECV_FAIL
                                   );
@@ -106,7 +106,7 @@ JAWS_Asynch_IO::transmit ( ACE_HANDLE handle
     {
       delete jecaha;
       delete header_and_trailer;
-      JAWS_Event_Result io_result ( 0
+      JAWS_Event_Result const io_result ( 0
                                   , JAWS_Event_Result::JE_ERROR
                                   , JAWS_Event_Result::JE_TRANSMIT_FAIL
                                   );
@@ -185,7 +185,7 @@ JAWS_EC_AH_Adapter
                  , JAWS_Event_Result::JE_REASON reason_ok
                  , JAWS_Event_Result::JE_REASON reason_fail)
 {
-  size_t bytes = result.bytes_transferred ();
+  size_t const bytes = result.bytes_transferred ();
 
   JAWS_Event_Result::JE_STATUS status;
   JAWS_Event_Result::JE_REASON reason;

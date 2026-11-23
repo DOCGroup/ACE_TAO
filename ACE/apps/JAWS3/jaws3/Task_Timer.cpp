@@ -25,7 +25,7 @@ JAWS_Task_Timer::schedule_timer ( long *timer_id
          this->timer_queue_.schedule (eh.get (), nullptr,
                                       delta + ACE_OS::gettimeofday ())) == -1)
     {
-      JAWS_Event_Result timer_result ( 0
+      JAWS_Event_Result const timer_result ( 0
                                      , JAWS_Event_Result::JE_ERROR
                                      , JAWS_Event_Result::JE_TIMER_FAIL
                                      );
@@ -52,7 +52,7 @@ JAWS_Task_Timer::schedule_absolute_timer ( long *timer_id
     completer, act);
   if ((*timer_id = this->timer_queue_.schedule (eh.get (), nullptr, tv)) == -1)
     {
-      JAWS_Event_Result timer_result ( 0
+      JAWS_Event_Result const timer_result ( 0
                                      , JAWS_Event_Result::JE_ERROR
                                      , JAWS_Event_Result::JE_TIMER_FAIL
                                      );
@@ -82,7 +82,7 @@ JAWS_Task_Timer::schedule_interval_timer ( long *timer_id
                                       interval + ACE_OS::gettimeofday (),
                                       interval)) == -1)
     {
-      JAWS_Event_Result timer_result ( 0
+      JAWS_Event_Result const timer_result ( 0
                                      , JAWS_Event_Result::JE_ERROR
                                      , JAWS_Event_Result::JE_TIMER_FAIL
                                      );

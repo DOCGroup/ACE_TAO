@@ -19,7 +19,7 @@ JAWS_Signal_Task_function (void *)
 
   while (! done)
     {
-      int signo = ACE_OS::sigwait (JAWS_Signal_Task::instance ()->sigset ());
+      int const signo = ACE_OS::sigwait (JAWS_Signal_Task::instance ()->sigset ());
 
       switch (signo)
         {

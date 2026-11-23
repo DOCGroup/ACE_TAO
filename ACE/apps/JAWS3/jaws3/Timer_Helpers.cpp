@@ -7,7 +7,7 @@
 int
 JAWS_Timer_EH::handle_timeout (const ACE_Time_Value &, const void *)
 {
-  JAWS_Event_Result timer_result ( 0
+  JAWS_Event_Result const timer_result ( 0
                                  , JAWS_Event_Result::JE_OK
                                  , JAWS_Event_Result::JE_TIMER_OK
                                  );
@@ -29,7 +29,7 @@ JAWS_Timer_EH::handle_timeout (const ACE_Time_Value &, const void *)
 int
 JAWS_Timer_EH::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
-  JAWS_Event_Result timer_result ( 0
+  JAWS_Event_Result const timer_result ( 0
                                  , JAWS_Event_Result::JE_CANCEL
                                  , JAWS_Event_Result::JE_TIMER_CANCEL
                                  );

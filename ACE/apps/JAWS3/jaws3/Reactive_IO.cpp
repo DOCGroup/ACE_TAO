@@ -20,7 +20,7 @@ JAWS_Reactive_IO::send ( ACE_HANDLE handle
 {
   if (mb->length () == 0)
     {
-      JAWS_Event_Result io_result ( 0
+      JAWS_Event_Result const io_result ( 0
                                   , JAWS_Event_Result::JE_OK
                                   , JAWS_Event_Result::JE_SEND_OK
                                   );
@@ -37,7 +37,7 @@ JAWS_Reactive_IO::send ( ACE_HANDLE handle
 
   if (rs == nullptr)
     {
-      JAWS_Event_Result io_result ( 0
+      JAWS_Event_Result const io_result ( 0
                                   , JAWS_Event_Result::JE_ERROR
                                   , JAWS_Event_Result::JE_SEND_FAIL
                                   );
@@ -73,7 +73,7 @@ JAWS_Reactive_IO::recv ( ACE_HANDLE handle
 
   if (rr == nullptr)
     {
-      JAWS_Event_Result io_result ( 0
+      JAWS_Event_Result const io_result ( 0
                                   , JAWS_Event_Result::JE_ERROR
                                   , JAWS_Event_Result::JE_RECV_FAIL
                                   );
@@ -118,7 +118,7 @@ JAWS_Reactive_IO::transmit ( ACE_HANDLE handle
 
   if (rt == nullptr)
     {
-      JAWS_Event_Result io_result ( 0
+      JAWS_Event_Result const io_result ( 0
                                   , JAWS_Event_Result::JE_ERROR
                                   , JAWS_Event_Result::JE_TRANSMIT_FAIL
                                   );
@@ -154,7 +154,7 @@ JAWS_Reactive_IO::transmit ( ACE_HANDLE handle
 void
 JAWS_IO_Reactive_Handler::open ()
 {
-  int result = ACE_Reactor::instance ()->notify (this);
+  int const result = ACE_Reactor::instance ()->notify (this);
 
   if (result < 0)
   {
@@ -169,7 +169,7 @@ JAWS_IO_Reactive_Handler::close (int result)
     {
       if (ACE_BIT_ENABLED (this->mask_, ACE_Event_Handler::WRITE_MASK))
         {
-          JAWS_Event_Result io_result ( 0
+          JAWS_Event_Result const io_result ( 0
                                       , JAWS_Event_Result::JE_ERROR
                                       , JAWS_Event_Result::JE_SEND_FAIL
                                       );
@@ -177,7 +177,7 @@ JAWS_IO_Reactive_Handler::close (int result)
         }
       else if (ACE_BIT_ENABLED (this->mask_, ACE_Event_Handler::READ_MASK))
         {
-          JAWS_Event_Result io_result ( 0
+          JAWS_Event_Result const io_result ( 0
                                       , JAWS_Event_Result::JE_ERROR
                                       , JAWS_Event_Result::JE_RECV_FAIL
                                       );
@@ -210,7 +210,7 @@ JAWS_IO_Reactive_Handler::handle_timeout (const ACE_Time_Value &, const void *)
 
   if (ACE_BIT_ENABLED (this->mask_, ACE_Event_Handler::WRITE_MASK))
     {
-      JAWS_Event_Result io_result ( 0
+      JAWS_Event_Result const io_result ( 0
                                   , JAWS_Event_Result::JE_ERROR
                                   , JAWS_Event_Result::JE_SEND_TIMEOUT
                                   , ETIME
@@ -219,7 +219,7 @@ JAWS_IO_Reactive_Handler::handle_timeout (const ACE_Time_Value &, const void *)
     }
   else if (ACE_BIT_ENABLED (this->mask_, ACE_Event_Handler::READ_MASK))
     {
-      JAWS_Event_Result io_result ( 0
+      JAWS_Event_Result const io_result ( 0
                                   , JAWS_Event_Result::JE_ERROR
                                   , JAWS_Event_Result::JE_RECV_TIMEOUT
                                   , ETIME
@@ -279,7 +279,7 @@ JAWS_IO_Reactive_Handler::handle_exception (ACE_HANDLE handle)
 
   if (ACE_BIT_ENABLED (this->mask_, ACE_Event_Handler::WRITE_MASK))
     {
-      JAWS_Event_Result io_result ( this->bytes_
+      JAWS_Event_Result const io_result ( this->bytes_
                                   , JAWS_Event_Result::JE_ERROR
                                   , JAWS_Event_Result::JE_SEND_SHORT
                                   );
@@ -287,7 +287,7 @@ JAWS_IO_Reactive_Handler::handle_exception (ACE_HANDLE handle)
     }
   else if (ACE_BIT_ENABLED (this->mask_, ACE_Event_Handler::READ_MASK))
     {
-      JAWS_Event_Result io_result ( this->bytes_
+      JAWS_Event_Result const io_result ( this->bytes_
                                   , JAWS_Event_Result::JE_ERROR
                                   , JAWS_Event_Result::JE_RECV_SHORT
                                   );
@@ -302,14 +302,14 @@ JAWS_IO_Reactive_Send::handle_output (ACE_HANDLE handle)
 {
   this->was_active_ = true;
 
-  ssize_t count = ACE::send ( handle
+  ssize_t const count = ACE::send ( handle
                             , this->mb_->rd_ptr ()
                             , this->mb_->length ()
                             );
 
   if (count <= 0 && this->bytes_ == 0)
     {
-      JAWS_Event_Result io_result ( 0
+      JAWS_Event_Result const io_result ( 0
                                   , JAWS_Event_Result::JE_ERROR
                                   , JAWS_Event_Result::JE_SEND_FAIL
                                   );
@@ -317,7 +317,7 @@ JAWS_IO_Reactive_Send::handle_output (ACE_HANDLE handle)
     }
   else if (count <= 0 && this->bytes_ > 0)
     {
-      JAWS_Event_Result io_result ( this->bytes_
+      JAWS_Event_Result const io_result ( this->bytes_
                                   , JAWS_Event_Result::JE_ERROR
                                   , JAWS_Event_Result::JE_SEND_SHORT
                                   );
@@ -332,7 +332,7 @@ JAWS_IO_Reactive_Send::handle_output (ACE_HANDLE handle)
 
       this->bytes_ += count;
 
-      JAWS_Event_Result io_result ( this->bytes_
+      JAWS_Event_Result const io_result ( this->bytes_
                                   , JAWS_Event_Result::JE_OK
                                   , JAWS_Event_Result::JE_SEND_OK
                                   );
@@ -351,14 +351,14 @@ JAWS_IO_Reactive_Send::handle_output (ACE_HANDLE handle)
 int
 JAWS_IO_Reactive_Recv::handle_input (ACE_HANDLE handle)
 {
-  ssize_t count = ACE::recv ( handle
+  ssize_t const count = ACE::recv ( handle
                             , this->mb_->wr_ptr ()
                             , this->mb_->space ()
                             );
 
   if (count < 0)
     {
-      JAWS_Event_Result io_result ( 0
+      JAWS_Event_Result const io_result ( 0
                                   , JAWS_Event_Result::JE_ERROR
                                   , JAWS_Event_Result::JE_RECV_FAIL
                                   );
@@ -371,7 +371,7 @@ JAWS_IO_Reactive_Recv::handle_input (ACE_HANDLE handle)
         this->mb_->wr_ptr (count);
       }
 
-      JAWS_Event_Result io_result ( count
+      JAWS_Event_Result const io_result ( count
                                   , JAWS_Event_Result::JE_OK
                                   , JAWS_Event_Result::JE_RECV_OK
                                   );
@@ -409,7 +409,7 @@ JAWS_IO_Reactive_Transmit::handle_output (ACE_HANDLE handle)
     this->trailer_ = nullptr;
   }
 
-  JAWS_Event_Result io_result ( this->bytes_
+  JAWS_Event_Result const io_result ( this->bytes_
                               , JAWS_Event_Result::JE_OK
                               , JAWS_Event_Result::JE_TRANSMIT_OK
                               );
@@ -447,7 +447,7 @@ JAWS_IO_Reactive_Transmit::handle_output_source (ACE_HANDLE handle)
 
           if (this->bytes_ == 0)
             {
-              JAWS_Event_Result io_result ( 0
+              JAWS_Event_Result const io_result ( 0
                                           , JAWS_Event_Result::JE_ERROR
                                           , JAWS_Event_Result::JE_TRANSMIT_FAIL
                                           );
@@ -455,7 +455,7 @@ JAWS_IO_Reactive_Transmit::handle_output_source (ACE_HANDLE handle)
             }
           else if (this->bytes_ > 0)
             {
-              JAWS_Event_Result io_result ( this->bytes_
+              JAWS_Event_Result const io_result ( this->bytes_
                                           , JAWS_Event_Result::JE_ERROR
                                           , JAWS_Event_Result::JE_TRANSMIT_SHORT
                                           );
@@ -501,11 +501,11 @@ JAWS_IO_Reactive_Transmit::handle_output_source (ACE_HANDLE handle)
 int
 JAWS_IO_Reactive_Transmit::handle_output_trailer (ACE_HANDLE handle)
 {
-  int result = this->handle_output_mb (handle, this->trailer_);
+  int const result = this->handle_output_mb (handle, this->trailer_);
 
   if (result == 0 && this->trailer_ == nullptr)
     {
-      JAWS_Event_Result io_result ( this->bytes_
+      JAWS_Event_Result const io_result ( this->bytes_
                                   , JAWS_Event_Result::JE_ERROR
                                   , JAWS_Event_Result::JE_TRANSMIT_SHORT
                                   );
@@ -520,11 +520,11 @@ int
 JAWS_IO_Reactive_Transmit::handle_output_mb ( ACE_HANDLE handle
                                             , ACE_Message_Block *&mb)
 {
-  ssize_t count = ACE::send (handle, mb->rd_ptr (), mb->length ());
+  ssize_t const count = ACE::send (handle, mb->rd_ptr (), mb->length ());
 
   if (count <= 0 && this->bytes_ == 0)
     {
-      JAWS_Event_Result io_result ( 0
+      JAWS_Event_Result const io_result ( 0
                                   , JAWS_Event_Result::JE_ERROR
                                   , JAWS_Event_Result::JE_TRANSMIT_FAIL
                                   );
@@ -532,7 +532,7 @@ JAWS_IO_Reactive_Transmit::handle_output_mb ( ACE_HANDLE handle
     }
   else if (count <= 0 && this->bytes_ > 0)
     {
-      JAWS_Event_Result io_result ( this->bytes_
+      JAWS_Event_Result const io_result ( this->bytes_
                                   , JAWS_Event_Result::JE_ERROR
                                   , JAWS_Event_Result::JE_TRANSMIT_SHORT
                                   );
@@ -562,7 +562,7 @@ JAWS_IO_Reactive_Transmit::close (int result)
 {
   if (result < 0)
     {
-      JAWS_Event_Result io_result ( 0
+      JAWS_Event_Result const io_result ( 0
                                   , JAWS_Event_Result::JE_ERROR
                                   , JAWS_Event_Result::JE_TRANSMIT_FAIL
                                   );
@@ -592,7 +592,7 @@ JAWS_IO_Reactive_Transmit::handle_timeout (const ACE_Time_Value &, const void *)
 
   this->timer_id_ = -1;
 
-  JAWS_Event_Result io_result ( 0
+  JAWS_Event_Result const io_result ( 0
                               , JAWS_Event_Result::JE_ERROR
                               , JAWS_Event_Result::JE_TRANSMIT_TIMEOUT
                               , ETIME
@@ -626,7 +626,7 @@ JAWS_IO_Reactive_Transmit::handle_exception (ACE_HANDLE handle)
 
   // back to our regularly scheduled except mask handling.
 
-  JAWS_Event_Result io_result ( this->bytes_
+  JAWS_Event_Result const io_result ( this->bytes_
                               , JAWS_Event_Result::JE_ERROR
                               , JAWS_Event_Result::JE_TRANSMIT_SHORT
                               );
