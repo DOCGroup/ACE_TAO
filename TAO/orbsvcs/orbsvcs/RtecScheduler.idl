@@ -350,7 +350,7 @@ module RtecScheduler
     /// TODO: Do we need the two interfaces or is it simply confusing?
     /// If we should to keep only the @a handle version: Are the extra
     /// round-trips too expensive?
-    /// If we choose only the @a entry_point version: Are the copies for
+    /// If we choose only the @c entry_point version: Are the copies for
     /// the string affordable?
     /// Obtain the run time priorities.
     void priority (in handle_t handle,
