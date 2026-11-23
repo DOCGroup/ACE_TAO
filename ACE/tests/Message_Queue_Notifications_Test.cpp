@@ -315,7 +315,7 @@ int
 Watermark_Test::svc ()
 {
   // this->role_ is an Atomic_Op object.
-  int role = this->role_++;
+  int const role = this->role_++;
 
   switch (role)
     {

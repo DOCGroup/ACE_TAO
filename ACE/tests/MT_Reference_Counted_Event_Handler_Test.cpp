@@ -775,7 +775,7 @@ Connection_Cache::release_connection (Sender *sender)
   // Make sure that the state of the connection cache is as expected.
   // remove_connection() may have already removed the connection from
   // the cache.
-  int index =
+  int const index =
     this->find (sender);
 
   if (index == -1)
@@ -937,7 +937,7 @@ Invocation_Thread::svc ()
 
               // This lets the Close_Socket_Thread know that the new
               // connection has been created.
-              int result =
+              int const result =
                 this->new_connection_event_.signal ();
               ACE_TEST_ASSERT (result == 0);
               ACE_UNUSED_ARG (result);
@@ -1066,7 +1066,7 @@ Close_Socket_Thread::svc ()
   for (; !this->reactor_.reactor_event_loop_done ();)
     {
       // Wait for the new connection to be established.
-      int result =
+      int const result =
         this->new_connection_event_.wait (std::addressof (timeout),
                                           0);
       ACE_TEST_ASSERT (result == 0 ||
@@ -1477,7 +1477,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("MT_Reference_Counted_Event_Handler_Test"));
 
   // Validate options.
-  int result =
+  int const result =
     parse_args (argc, argv);
   if (result != 0)
   {
@@ -1486,11 +1486,11 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   disable_signal (SIGPIPE, SIGPIPE);
 
-  int ignore_nested_upcalls = 1;
-  int perform_nested_upcalls = 0;
+  int const ignore_nested_upcalls = 1;
+  int const perform_nested_upcalls = 0;
 
-  int event_loop_thread_required = 1;
-  int event_loop_thread_not_required = 0;
+  int const event_loop_thread_required = 1;
+  int const event_loop_thread_not_required = 0;
 
   if (test_select_reactor)
     {

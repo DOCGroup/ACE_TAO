@@ -396,15 +396,15 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("MT_Reference_Counted_Notify_Test"));
 
   // Validate options.
-  int result =
+  int const result =
     parse_args (argc, argv);
   if (result != 0)
   {
     return result;
   }
 
-  int extra_iterations_needed = 1;
-  int extra_iterations_not_needed = 0;
+  int const extra_iterations_needed = 1;
+  int const extra_iterations_not_needed = 0;
 
   if (test_select_reactor)
     {
