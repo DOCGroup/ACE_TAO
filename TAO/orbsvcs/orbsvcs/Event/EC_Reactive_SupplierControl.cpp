@@ -203,7 +203,7 @@ TAO_EC_Ping_Supplier::work (TAO_EC_ProxyPushConsumer *consumer)
   try
     {
       CORBA::Boolean disconnected;
-      CORBA::Boolean non_existent =
+      const CORBA::Boolean non_existent =
         consumer->supplier_non_existent (disconnected);
       if (non_existent && !disconnected)
         {

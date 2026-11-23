@@ -92,8 +92,8 @@ TAO_EC_Basic_Filter_Builder:: recursive_build (
       {
         return nullptr;
       }
-      CORBA::ULong source_mask = qos.dependencies[pos].event.header.source;
-      CORBA::ULong type_mask = qos.dependencies[pos].event.header.type;
+      const CORBA::ULong source_mask = qos.dependencies[pos].event.header.source;
+      const CORBA::ULong type_mask = qos.dependencies[pos].event.header.type;
       ++pos;
 
       TAO_EC_Filter *child =
@@ -110,16 +110,16 @@ TAO_EC_Basic_Filter_Builder:: recursive_build (
       {
         return nullptr;
       }
-      CORBA::ULong source_mask = qos.dependencies[pos].event.header.source;
-      CORBA::ULong type_mask = qos.dependencies[pos].event.header.type;
+      const CORBA::ULong source_mask = qos.dependencies[pos].event.header.source;
+      const CORBA::ULong type_mask = qos.dependencies[pos].event.header.type;
       ++pos;
 
       if (pos == qos.dependencies.length ())
       {
         return nullptr;
       }
-      CORBA::ULong source_value = qos.dependencies[pos].event.header.source;
-      CORBA::ULong type_value = qos.dependencies[pos].event.header.type;
+      const CORBA::ULong source_value = qos.dependencies[pos].event.header.source;
+      const CORBA::ULong type_value = qos.dependencies[pos].event.header.type;
       ++pos;
 
       return new TAO_EC_Masked_Type_Filter (source_mask,
