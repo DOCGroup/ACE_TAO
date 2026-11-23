@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_VISITOR_TYPECODE_H
 #define TAO_BE_VISITOR_TYPECODE_H
 
@@ -26,6 +25,5 @@
 #include "be_visitor_typecode/struct_typecode.h"
 #include "be_visitor_typecode/union_typecode.h"
 #include "be_visitor_typecode/value_typecode.h"
-
 
 #endif /* TAO_BE_VISITOR_TYPECODE_H */

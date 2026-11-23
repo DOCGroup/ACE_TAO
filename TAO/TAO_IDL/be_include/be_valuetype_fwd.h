@@ -19,14 +19,10 @@
 #include "be_interface_fwd.h"
 #include "ast_valuetype_fwd.h"
 
+/// Extends be_interface_fwd with additional means for C++ mapping of a valuetype.
 class be_valuetype_fwd : public virtual be_interface_fwd,
                          public virtual AST_ValueTypeFwd
 {
-  // =TITLE
-  //   be_valuetype_fwd
-  //
-  // =DESCRIPTION
-  //   Extensions to the be_interface_fwd class
 public:
   be_valuetype_fwd (AST_Interface *dummy,
                     UTL_ScopedName *n);

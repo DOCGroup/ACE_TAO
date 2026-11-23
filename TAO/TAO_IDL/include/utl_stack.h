@@ -90,7 +90,7 @@ public:
   UTL_ScopeStack& operator= (UTL_ScopeStack&&) = delete;
 
   /// The initial capacity reserved for scope stack entries.
-  static constexpr std::size_t increments = 64;
+  static constexpr size_t increments = 64;
 
   // Return top element.
   UTL_Scope *top () const;
@@ -105,7 +105,7 @@ public:
   UTL_ScopeStack *push (UTL_Scope *el);
 
   // How deep is the stack now?
-  std::size_t depth () const;
+  size_t depth () const;
 
   // Return bottom element.
   UTL_Scope *bottom () const;
@@ -150,7 +150,7 @@ private:
   UTL_ScopeStack &source;
 
   // How many elements remain to be visited?
-  std::size_t remaining;
+  size_t remaining;
 };
 
 #endif           // _UTL_STACK_UTL_STACK_HH

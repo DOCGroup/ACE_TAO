@@ -35,7 +35,6 @@ be_mirror_port::destroy ()
   this->be_extended_port::destroy ();
 }
 
-
 int
 be_mirror_port::accept (be_visitor *visitor)
 {

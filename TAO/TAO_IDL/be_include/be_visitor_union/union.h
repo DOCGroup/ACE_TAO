@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_UNION_UNION_H_
 #define _BE_VISITOR_UNION_UNION_H_
 
@@ -37,7 +36,8 @@ public:
   /// visit union. We provide code for this method in the derived class
   int visit_union (be_union *node) override;
 
-  // =visit operations on syntactically valid elements in our scope
+  /// @name Visitor methods for valid scope elements
+  /// @{
 
   /// visit union_branch
   int visit_union_branch (be_union_branch *node) override;
@@ -47,6 +47,7 @@ public:
   static Bool_Union_Branch boolean_branch (be_union_branch *b);
 
   static int branch_index (be_union_branch *b);
+  /// @}
 };
 
 #endif /* _BE_VISITOR_UNION_UNION_H_ */

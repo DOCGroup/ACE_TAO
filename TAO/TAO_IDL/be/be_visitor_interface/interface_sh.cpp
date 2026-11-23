@@ -79,7 +79,6 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   *os << "using " << class_name << "_ptr = "
       << class_name << " *;";
 
-
   if (be_global->gen_direct_collocation ())
     {
       *os << be_nl_2
@@ -99,7 +98,6 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "{" << be_nl
       << "protected:" << be_idt_nl;
 
-  // Default constructor.
   *os << class_name << " ();"
       << be_uidt_nl << be_nl
       << "public:" << be_idt_nl;
@@ -113,7 +111,6 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "using _stub_var_type = ::" << node->name () << "_var;"
       << be_nl_2;
 
-  // Copy constructor and destructor.
   *os << class_name << " (" << class_name << " const &rhs) = default;" << be_nl
       << "~" << class_name << " () override = default;" << be_nl_2;
 

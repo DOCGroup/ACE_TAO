@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "orbsvcs/Log_Macros.h"
 #include "be_global.h"
 #include "ast_generator.h"

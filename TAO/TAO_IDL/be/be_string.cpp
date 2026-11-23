@@ -18,12 +18,14 @@
 #include "utl_identifier.h"
 #include "global_extern.h"
 
+#include <memory>
+
 #include <string>
 
 be_string::be_string (AST_Decl::NodeType nt,
                       UTL_ScopedName * n,
                       AST_Expression * v,
-                      std::size_t width)
+                      size_t width)
   : COMMON_Base (),
     AST_Decl (nt,
               n,
@@ -85,7 +87,7 @@ be_string::gen_member_ostream_operator (TAO_OutStream *os,
   else
     {
       *os << "\"[\";" << be_nl_2
-          << "for (std::size_t i = 0; i < " << "std::wcslen ("
+          << "for (size_t i = 0; i < " << "std::wcslen ("
           << instance_name
           << (accessor ? " ()" : ".in ()") << "); ++i)" << be_idt_nl
           << "{" << be_idt_nl
@@ -108,7 +110,7 @@ be_string::compute_tc_name ()
   ACE_CDR::ULong const val = 0UL;
   AST_Expression zero (val);
 
-  if (*this->max_size () == &zero)
+  if (*this->max_size () == std::addressof (zero))
     {
       // If the string is unbounded, use the string TypeCode
       // constants.

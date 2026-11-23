@@ -58,7 +58,6 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
       *os << "{}" << be_nl_2;
     }
 
-
   *os << "ACE_INLINE char const *" << be_nl
       << node->name () << "::_tao_obv_static_repository_id ()" << be_nl
       <<  "{" << be_idt_nl

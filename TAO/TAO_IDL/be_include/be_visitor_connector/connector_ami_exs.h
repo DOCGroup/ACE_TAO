@@ -10,25 +10,15 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_CONNECTOR_CONNECTOR_AMI_EXS_H_
 #define _BE_CONNECTOR_CONNECTOR_AMI_EXS_H_
 
 class be_visitor_context;
 
+/// Generates executor implementation source for AMI4CCM connectors.
 class be_visitor_connector_ami_exs
   : public be_visitor_component_scope
 {
-  //
-  // = TITLE
-  //   be_visitor_connector_ami_exs
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate
-  //   the executor implementation source for
-  //   AMI4CCM connectors.
-  //
-  //
 public:
   explicit be_visitor_connector_ami_exs (be_visitor_context *ctx);
 

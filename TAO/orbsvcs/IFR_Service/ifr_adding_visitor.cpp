@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "orbsvcs/Log_Macros.h"
 #include "ast_argument.h"
@@ -53,8 +54,6 @@
 
 #include "tao/IFR_Client/IFR_ComponentsC.h"
 
-#include "ace/Vector_T.h"
-
 static bool
 append_wide_codepoint (std::uint32_t codepoint,
                        CORBA::WChar *target,
@@ -62,12 +61,16 @@ append_wide_codepoint (std::uint32_t codepoint,
                        size_t &target_index)
 {
   if (codepoint > 0x10ffff || (codepoint >= 0xd800 && codepoint <= 0xdfff))
-    return false;
+    {
+      return false;
+    }
 
   if (sizeof (CORBA::WChar) == 2 && codepoint > 0xffff)
     {
       if (target_index + 2 > target_size)
-        return false;
+        {
+          return false;
+        }
 
       codepoint -= 0x10000;
       target[target_index++] = static_cast<CORBA::WChar> (0xd800 + (codepoint >> 10));
@@ -76,7 +79,9 @@ append_wide_codepoint (std::uint32_t codepoint,
   else
     {
       if (target_index >= target_size)
-        return false;
+        {
+          return false;
+        }
 
       target[target_index++] = static_cast<CORBA::WChar> (codepoint);
     }
@@ -96,15 +101,25 @@ read_hex_escape (std::string const &source,
       unsigned char const ch = static_cast<unsigned char> (source[source_index]);
       std::uint32_t value = 0;
       if (ch >= '0' && ch <= '9')
-        value = ch - '0';
+        {
+          value = ch - '0';
+        }
       else if (ch >= 'a' && ch <= 'f')
-        value = ch - 'a' + 10;
+        {
+          value = ch - 'a' + 10;
+        }
       else if (ch >= 'A' && ch <= 'F')
-        value = ch - 'A' + 10;
+        {
+          value = ch - 'A' + 10;
+        }
       else
-        break;
+        {
+          break;
+        }
       if (codepoint > (0x10ffff - value) / 16)
-        return false;
+        {
+          return false;
+        }
       codepoint = codepoint * 16 + value;
       ++source_index;
       ++digits;
@@ -129,12 +144,16 @@ decode_wide_literal (std::string const &source,
           ++source_index;
           while (source_index < source.size ()
                  && (source[source_index] == ' ' || source[source_index] == '\t'))
-            ++source_index;
+            {
+              ++source_index;
+            }
 
           if (source_index + 1 >= source.size ()
               || source[source_index] != 'L'
               || source[source_index + 1] != '"')
-            return false;
+            {
+              return false;
+            }
 
           source_index += 2;
           continue;
@@ -162,18 +181,24 @@ decode_wide_literal (std::string const &source,
             case 'x':
               {
                 if (!read_hex_escape (source, source_index, source.size (), codepoint))
-                  codepoint = 'x';
+                  {
+                    codepoint = 'x';
+                  }
                 break;
               }
             case 'u':
               if (!read_hex_escape (source, source_index, 4, codepoint))
-                return false;
+                {
+                  return false;
+                }
               if (codepoint >= 0xd800 && codepoint <= 0xdbff)
                 {
                   if (source_index + 2 >= source.size ()
                       || source[source_index] != '\\'
                       || source[source_index + 1] != 'u')
-                    return false;
+                    {
+                      return false;
+                    }
                   size_t next_index = source_index + 2;
                   std::uint32_t low_surrogate = 0;
                   if (read_hex_escape (source, next_index, 4, low_surrogate)
@@ -184,10 +209,14 @@ decode_wide_literal (std::string const &source,
                       source_index = next_index;
                     }
                   else
-                    return false;
+                    {
+                      return false;
+                    }
                 }
               else if (codepoint >= 0xdc00 && codepoint <= 0xdfff)
-                return false;
+                {
+                  return false;
+                }
               break;
             default:
               if (escape >= '0' && escape <= '7')
@@ -202,12 +231,16 @@ decode_wide_literal (std::string const &source,
                     }
                 }
               else
-                codepoint = static_cast<unsigned char> (escape);
+                {
+                  codepoint = static_cast<unsigned char> (escape);
+                }
               break;
             }
         }
       else if (first < 0x80)
-        codepoint = first;
+        {
+          codepoint = first;
+        }
       else
         {
           unsigned int continuation_count = 0;
@@ -227,27 +260,37 @@ decode_wide_literal (std::string const &source,
               continuation_count = 3;
             }
           else
-            return false;
+            {
+              return false;
+            }
 
           for (unsigned int i = 0; i < continuation_count; ++i)
             {
               if (source_index >= source.size ())
-                return false;
+                {
+                  return false;
+                }
 
               unsigned char const next = static_cast<unsigned char> (source[source_index++]);
               if ((next & 0xc0) != 0x80)
-                return false;
+                {
+                  return false;
+                }
               codepoint = (codepoint << 6) | (next & 0x3f);
             }
 
           if ((continuation_count == 1 && codepoint < 0x80)
               || (continuation_count == 2 && codepoint < 0x800)
               || (continuation_count == 3 && codepoint < 0x10000))
-            return false;
+            {
+              return false;
+            }
         }
 
       if (!append_wide_codepoint (codepoint, target, target_size, target_length))
-        return false;
+        {
+          return false;
+        }
     }
 
   return true;
@@ -1248,7 +1291,6 @@ ifr_adding_visitor::visit_component_fwd (AST_ComponentFwd *node)
               CORBA::InterfaceDefSeq supported_interfaces;
               supported_interfaces.length (0);
               CORBA::ComponentIR::ComponentDef_var base_component;
-
 
               if (node->is_defined ())
                 {
@@ -3101,7 +3143,6 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
                              );
         }
 
-
       node->ifr_added (true);
 
       // Push the new IR object onto the scope stack.
@@ -3754,8 +3795,7 @@ ifr_adding_visitor::fill_base_value (CORBA::ValueDef_ptr &result,
 void
 ifr_adding_visitor::fill_base_component (
     CORBA::ComponentIR::ComponentDef_ptr &result,
-    AST_Component *node
-  )
+    AST_Component *node)
 {
   result = CORBA::ComponentIR::ComponentDef::_nil ();
   AST_Component *base_component = node->base_component ();
@@ -3812,8 +3852,7 @@ ifr_adding_visitor::fill_base_home (CORBA::ComponentIR::HomeDef_ptr &result,
 void
 ifr_adding_visitor::fill_managed_component (
     CORBA::ComponentIR::ComponentDef_ptr &result,
-    AST_Home *node
-  )
+    AST_Home *node)
 {
   result = CORBA::ComponentIR::ComponentDef::_nil ();
   AST_Component *managed_component = node->managed_component ();
@@ -3969,7 +4008,7 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
 {
   result.length (0);
   AST_Decl *item {};
-  ACE_Vector<AST_Factory *> factories;
+  std::vector<AST_Factory *> factories;
 
   for (UTL_ScopeActiveIterator v_iter (node,
                                        UTL_Scope::IK_decls);
@@ -3994,7 +4033,6 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
   result.length (n_factories);
   CORBA::ULong n_args = 0;
   AST_Argument *arg {};
-  CORBA::ULong index = 0;
   AST_Exception *excp {};
   CORBA::Contained_var holder;
 
@@ -4004,17 +4042,18 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
         CORBA::string_dup (factories[i]->local_name ()->get_string ().c_str ());
       n_args = static_cast<CORBA::ULong> (factories[i]->argument_count ());
       result[i].members.length (n_args);
+      CORBA::ULong member_index = 0;
 
       // The factory should have nothing in its scope but args.
       for (UTL_ScopeActiveIterator f_iter (factories[i],
                                            UTL_Scope::IK_decls);
            !f_iter.is_done ();
-           f_iter.next (), ++index)
+           f_iter.next (), ++member_index)
         {
           arg = dynamic_cast<AST_Argument*> (f_iter.item ());
-          result[i].members[index].name =
+          result[i].members[member_index].name =
             CORBA::string_dup (arg->local_name ()->get_string ().c_str ());
-          result[i].members[index].type =
+          result[i].members[member_index].type =
             CORBA::TypeCode::_duplicate (CORBA::_tc_void);
 
           /// This will put the field type in ir_current_, and also add it
@@ -4029,30 +4068,30 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
                 ));
             }
 
-          result[i].members[index].type_def =
+          result[i].members[member_index].type_def =
             CORBA::IDLType::_duplicate (this->ir_current_.in ());
         }
 
       CORBA::ULong n_exceptions =
         static_cast<CORBA::ULong> (factories[i]->n_exceptions ());
       result[i].exceptions.length (n_exceptions);
-      index = 0;
+      CORBA::ULong exception_index = 0;
 
       for (UTL_ExceptlistActiveIterator ei (factories[i]->exceptions ());
            !ei.is_done ();
            ei.next ())
         {
           excp = dynamic_cast<AST_Exception*> (ei.item ());
-          result[i].exceptions[index].name =
+          result[i].exceptions[exception_index].name =
             CORBA::string_dup (excp->local_name ()->get_string ().c_str ());
-          result[i].exceptions[index].id =
+          result[i].exceptions[exception_index].id =
             CORBA::string_dup (excp->repoID ().c_str ());
-          result[i].exceptions[index].defined_in =
+          result[i].exceptions[exception_index].defined_in =
             CORBA::string_dup (
               ScopeAsDecl (excp->defined_in ())->repoID ().c_str ());
-          result[i].exceptions[index].version =
+          result[i].exceptions[exception_index].version =
             CORBA::string_dup (excp->version ().c_str ());
-          result[i].exceptions[index++].type =
+          result[i].exceptions[exception_index++].type =
             CORBA::TypeCode::_duplicate (CORBA::_tc_void);
         }
     }

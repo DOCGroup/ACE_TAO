@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_INTERFACE_FWD_ANY_OP_CH_H_
 #define _BE_INTERFACE_FWD_ANY_OP_CH_H_
 

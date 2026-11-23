@@ -95,6 +95,9 @@ module mod
     factory create_tv (in string set_tm1a,
                        in short set_tm2)
       raises (help::whups, help::doh);
+
+    // Check that exceptions from one factory don't affect the next factory.
+    factory create_after_exception (in string value);
   };
 
   home test_home : help::h_base

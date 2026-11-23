@@ -242,8 +242,9 @@ TAO_Active_Object_Map::find_user_id_using_system_id (
   PortableServer::ObjectId id;
   if (this->id_hint_strategy_->recover_key (system_id, id) == 0)
     {
+      // Moving transfers owned buffers and copies borrowed buffers.
       ACE_NEW_RETURN (user_id,
-                      PortableServer::ObjectId (std::move(id)),
+                      PortableServer::ObjectId (std::move (id)),
                       -1);
     }
 

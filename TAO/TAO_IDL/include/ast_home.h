@@ -23,7 +23,7 @@ public:
             AST_Type_List const& supports,
             long n_supports,
             AST_Interface_List const& supports_flat,
-            std::size_t n_supports_flat);
+            size_t n_supports_flat);
 
   ~AST_Home () override;
 
@@ -51,7 +51,6 @@ public:
   AST_Component *managed_component () const;
 
   AST_Type *primary_key () const;
-
 
   // Cleanup function.
   void destroy () override;

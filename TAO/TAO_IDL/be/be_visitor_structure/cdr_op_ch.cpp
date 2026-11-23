@@ -67,7 +67,6 @@ be_visitor_structure_cdr_op_ch::visit_structure (be_structure *node)
                         -1);
     }
 
-
   node->cli_hdr_cdr_op_gen (true);
   return 0;
 }

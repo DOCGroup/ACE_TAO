@@ -21,14 +21,11 @@
 class AST_Interface;
 class be_visitor;
 
+/// Extends AST_InterfaceFwd with additional means for C++ mapping of a
+/// forward-declared interface.
 class be_interface_fwd : public virtual AST_InterfaceFwd,
                          public virtual be_type
 {
-  // =TITLE
-  //   be_interface_fwd
-  //
-  // =DESCRIPTION
-  //   Extensions to the AST_InterfaceFwd class
 public:
   be_interface_fwd (AST_Interface *dummy,
                     UTL_ScopedName *n);

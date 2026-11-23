@@ -42,7 +42,7 @@ namespace
                 continue;
               }
 
-            for (std::size_t j = 0; j < branch->label_list_length (); ++j)
+            for (size_t j = 0; j < branch->label_list_length (); ++j)
               {
                 AST_UnionLabel * const label = branch->label (j);
 
@@ -98,7 +98,7 @@ namespace
           }
 
         bool generated_label {};
-        for (std::size_t j = 0; j < branch->label_list_length (); ++j)
+        for (size_t j = 0; j < branch->label_list_length (); ++j)
           {
             if (branch->label (j)->label_kind () == AST_UnionLabel::UL_default)
               {
@@ -157,7 +157,6 @@ be_visitor_union_discriminant_ci::be_visitor_union_discriminant_ci (
   : be_visitor_decl (ctx)
 {
 }
-
 
 int
 be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
@@ -257,8 +256,7 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
 
 int
 be_visitor_union_discriminant_ci::visit_predefined_type (
-    be_predefined_type *node
-  )
+    be_predefined_type *node)
 {
   be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->node ());

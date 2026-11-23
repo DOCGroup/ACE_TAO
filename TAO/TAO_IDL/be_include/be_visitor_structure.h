@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_VISITOR_STRUCTURE_H
 #define TAO_BE_VISITOR_STRUCTURE_H
 
@@ -28,6 +27,5 @@
 #include "be_visitor_structure/any_op_cs.h"
 #include "be_visitor_structure/cdr_op_ch.h"
 #include "be_visitor_structure/cdr_op_cs.h"
-
 
 #endif // TAO_BE_VISITOR_STRUCTURE_H

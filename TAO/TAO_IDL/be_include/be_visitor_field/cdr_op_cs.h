@@ -34,7 +34,8 @@ public:
   /// visit the field node
   int visit_field (be_field *node) override;
 
-  // =visit operations on all possible data types that a field can be
+  /// @name Field type visitor methods
+  /// @{
 
   int visit_array (be_array *node) override;
   int visit_enum (be_enum *node) override;
@@ -57,6 +58,8 @@ public:
   int visit_typedef (be_typedef *node) override;
   int visit_union (be_union *node) override;
   int visit_union_fwd (be_union_fwd *node) override;
+
+  /// @}
 
  private:
   int emit_valuetype_common ();
@@ -85,13 +88,16 @@ public:
   /// visit the field node
   int visit_field (be_field *node) override;
 
-  // = visit operations for data types that require a local variable.
+  /// @name Visitor methods for types that require a local variable
+  /// @{
 
   /// visit array type
   int visit_array (be_array *node) override;
 
   /// visit typedef type
   int visit_typedef (be_typedef *node) override;
+
+  /// @}
 };
 
 #endif /*  _BE_VISITOR_FIELD_CDR_OP_CS_H_ */

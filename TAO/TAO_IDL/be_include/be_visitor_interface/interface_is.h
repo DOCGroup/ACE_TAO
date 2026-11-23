@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_INTERFACE_INTERFACE_IS_H_
 #define _BE_INTERFACE_INTERFACE_IS_H_
 
@@ -34,7 +33,6 @@ public:
 
   /// set the right context and make a visitor
   int visit_interface (be_interface *node) override;
-
 
   static int method_helper (be_interface *derived,
                             be_interface *node,

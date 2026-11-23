@@ -52,12 +52,12 @@
 class Vectors
 {
 public:
-  static constexpr std::size_t character_index (char character) noexcept
+  static constexpr size_t character_index (char character) noexcept
   {
     return character_index (static_cast<unsigned char> (character));
   }
 
-  static constexpr std::size_t character_index (unsigned char character) noexcept
+  static constexpr size_t character_index (unsigned char character) noexcept
   {
     return character % ACE_STANDARD_CHARACTER_SET_SIZE;
   }

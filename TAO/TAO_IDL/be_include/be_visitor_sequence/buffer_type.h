@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_SEQUENCE_BUFFER_TYPE_H_
 #define _BE_VISITOR_SEQUENCE_BUFFER_TYPE_H_
 
@@ -36,7 +35,6 @@ public:
   be_visitor_sequence_buffer_type &operator= (const be_visitor_sequence_buffer_type &) = delete;
   be_visitor_sequence_buffer_type &operator= (be_visitor_sequence_buffer_type &&) = delete;
 
-  // = Visitor methods.
   int visit_predefined_type (be_predefined_type *node) override;
   int visit_interface (be_interface *node) override;
   int visit_interface_fwd (be_interface_fwd *node) override;

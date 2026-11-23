@@ -47,7 +47,7 @@ public:
                 AST_Type_List const& ih,
                 long nih,
                 AST_Interface_List const& ih_flat,
-                std::size_t nih_flat,
+                size_t nih_flat,
                 bool local,
                 bool abstract);
 
@@ -347,7 +347,7 @@ protected:
 
 protected:
   /// Number of static skeletons in the operation table.
-  std::size_t skel_count_ {};
+  size_t skel_count_ {};
 
   /// Am I directly or indirectly involved in a multiple inheritance. If the
   /// value is -1 => not computed yet.

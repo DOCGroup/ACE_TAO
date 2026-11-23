@@ -39,4 +39,17 @@ valuetype TreeController supports base
   public BaseNode root;
 };
 
+interface RefCountMarker {};
+
+abstract valuetype RefCountBase supports RefCountMarker {};
+
+valuetype RefCountConcrete
+{
+  public long value;
+};
+
+valuetype RefCountDerived : RefCountConcrete, RefCountBase
+{
+  public long derived_value;
+};
 

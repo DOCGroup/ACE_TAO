@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_OPERATION_ARGUMENT_MARSHAL_H_
 #define _BE_VISITOR_OPERATION_ARGUMENT_MARSHAL_H_
 

@@ -20,6 +20,50 @@ be_visitor_valuetype::be_visitor_valuetype (be_visitor_context *ctx)
 
 be_visitor_valuetype::~be_visitor_valuetype () = default;
 
+void
+be_visitor_valuetype::gen_valuetype_field_copy_expression (
+  be_field *field,
+  char const *accessor_prefix,
+  char const *null_pointer,
+  bool multiline)
+{
+  be_type *field_type = dynamic_cast<be_type *> (field->field_type ());
+  be_typedef *field_typedef = dynamic_cast<be_typedef *> (field_type);
+  if (field_typedef != nullptr)
+    {
+      field_type = field_typedef->primitive_base_type ();
+    }
+
+  if (dynamic_cast<be_valuetype_fwd *> (field_type) == nullptr
+      && dynamic_cast<be_valuetype *> (field_type) == nullptr
+      && dynamic_cast<be_valuebox *> (field_type) == nullptr)
+    {
+      TAO_OutStream *os = this->ctx_->stream ();
+      *os << accessor_prefix << field->local_name () << " ()";
+      return;
+    }
+
+  TAO_OutStream *os = this->ctx_->stream ();
+  if (multiline)
+    {
+      *os << "(" << accessor_prefix << field->local_name () << " () ?"
+          << be_idt_nl
+          << field_type->full_name ()
+          << "::_downcast (::CORBA::ValueBase_var ("
+          << accessor_prefix << field->local_name ()
+          << " ()->_copy_value ()).in ())" << be_nl
+          << ": " << null_pointer << ")" << be_uidt;
+    }
+  else
+    {
+      *os << accessor_prefix << field->local_name () << " () ? "
+          << field_type->full_name ()
+          << "::_downcast (::CORBA::ValueBase_var ("
+          << accessor_prefix << field->local_name ()
+          << " ()->_copy_value ()).in ()) : " << null_pointer;
+    }
+}
+
 int
 be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
 {
@@ -157,7 +201,6 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
 
   return 0;
 }
-
 
 int
 be_visitor_valuetype::visit_constant (be_constant *node)
@@ -658,7 +701,6 @@ be_visitor_valuetype::visit_field (be_field *)
   return 0;
 }
 
-
 // Private data fields for scope.
 int
 be_visitor_valuetype::gen_pd (be_valuetype *node)
@@ -814,73 +856,6 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
       arg.be_decl::destroy ();
       arg.AST_Decl::destroy ();
     }
-}
-
-bool
-be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
-{
-  // Go thru our base VTs and see if one has already.
-  for (int i = 0; i < node->n_inherits (); ++i)
-    {
-      be_valuetype *vt =
-        dynamic_cast<be_valuetype*> (node->inherits ()[i]);
-
-      if (vt != nullptr)
-        {
-          if (be_visitor_valuetype::obv_have_ref_counter (vt))
-            {
-              return false;
-            }
-        }
-    }
-
-  // If we inherit from CORBA::Object and/or CORBA::AbstractBase
-  // (in addition to CORBA::ValueBase) we have to override _add_ref()
-  // and _remove_ref() by calling the one in DefaultValueRefCountBase
-  // to avoid ambiguity.
-  if (node->n_supports () > 0)
-    {
-      return true;
-    }
-
-  // VT needs RefCounter if it has concrete factory.
-  if (be_valuetype::FS_CONCRETE_FACTORY == node->determine_factory_style ())
-    {
-      return true;
-    }
-
-  return false;
-}
-
-bool
-be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
-{
-  // Just try to find a VT with concrete factory in inheritance tree.
-  if (node == nullptr)
-    {
-      return false;
-    }
-
-  if (node->determine_factory_style () == be_valuetype::FS_CONCRETE_FACTORY)
-    {
-      return true;
-    }
-
-  // Now go thru our base VTs.
-  for (int i = 0; i < node->n_inherits (); ++i)
-    {
-      be_valuetype *vt = dynamic_cast<be_valuetype*> (node->inherits ()[i]);
-
-      if (vt != nullptr)
-        {
-          if (be_visitor_valuetype::obv_have_ref_counter (vt))
-            {
-              return true;
-            }
-        }
-    }
-
-  return false;
 }
 
 bool

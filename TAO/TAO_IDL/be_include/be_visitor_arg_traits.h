@@ -67,5 +67,4 @@ private:
   bool fixed_generated_ {};
 };
 
-
 #endif // TAO_BE_VISITOR_ARG_TRAITS_H

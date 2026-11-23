@@ -9,12 +9,10 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_VISITOR_SCOPE_H
 #define TAO_BE_VISITOR_SCOPE_H
 
 #include "be_visitor_decl.h"
-
 
 /**
  * @class be_visitor_scope
@@ -56,6 +54,5 @@ public:
 protected:
   int elem_number_ {};
 };
-
 
 #endif // TAO_BE_VISITOR_SCOPE_H

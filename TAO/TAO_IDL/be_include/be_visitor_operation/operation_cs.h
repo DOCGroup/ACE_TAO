@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_OPERATION_OPERATION_CS_H_
 #define _BE_VISITOR_OPERATION_OPERATION_CS_H_
 
@@ -41,7 +40,6 @@ public:
   /// visit argument to generate ParamData entries
   int visit_argument (be_argument *node) override;
 
-  // =helper
   /// stuff to output after every member of the scope is handled
   int post_process (be_decl *) override;
 };

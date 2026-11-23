@@ -3,13 +3,13 @@
 
 /* C++ code produced by ACE gperf version 8.0.8 */
 /* Command-line: ace_gperf -M -J -Q -c -C -D -E -T -f 0 -o -t -p
- * -K keyword_ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$ TAO/TAO_IDL/fe/keywords.dat */
+ * -K keyword_ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$ fe/keywords.dat */
 
 #include <array>
 #include <cstddef>
 #include <memory>
-std::size_t
-TAO_IDL_CPP_Keyword_Table::hash (char const *str, std::size_t len)
+size_t
+TAO_IDL_CPP_Keyword_Table::hash (char const *str, size_t len)
 {
   static constexpr std::array<unsigned char, 128> asso_values =
     {
@@ -34,10 +34,10 @@ TAO_IDL_CPP_Keyword_Table::hash (char const *str, std::size_t len)
 }
 
 struct TAO_IDL_CPP_Keyword_Entry const *
-TAO_IDL_CPP_Keyword_Table::lookup (char const *str, std::size_t len)
+TAO_IDL_CPP_Keyword_Table::lookup (char const *str, size_t len)
 {
-  constexpr std::size_t MIN_WORD_LENGTH {2};
-  constexpr std::size_t MAX_WORD_LENGTH {16};
+  constexpr size_t MIN_WORD_LENGTH {2};
+  constexpr size_t MAX_WORD_LENGTH {16};
   constexpr int MIN_HASH_VALUE {6};
   constexpr int MAX_HASH_VALUE {251};
 
@@ -299,15 +299,16 @@ TAO_IDL_CPP_Keyword_Table::lookup (char const *str, std::size_t len)
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
     {
-      std::size_t const key = hash (str, len);
+      size_t const key = hash (str, len);
 
       if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)
         {
           char const *s = wordlist[key].keyword_;
 
-          if (len == std::strlen (s) && *str == *s &&
-              !std::strncmp (str + 1, s + 1, len - 1))
-            return std::addressof (wordlist[key]);
+          if (*str == *s && len == std::strlen (s) && !std::strncmp (str + 1, s + 1, len - 1))
+            {
+              return std::addressof (wordlist[key]);
+            }
         }
     }
   return nullptr;

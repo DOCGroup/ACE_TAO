@@ -23,11 +23,9 @@ be_visitor_valuetype_fwd_any_op_ch::be_visitor_valuetype_fwd_any_op_ch (
 {
 }
 
-
 int
 be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (
-    be_valuetype_fwd *node
-  )
+    be_valuetype_fwd *node)
 {
   AST_Interface * const fd = node->full_definition ();
 

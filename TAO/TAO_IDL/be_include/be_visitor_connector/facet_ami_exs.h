@@ -13,18 +13,10 @@
 #ifndef _BE_CONNECTOR_FACET_AMI_EXS_H_
 #define _BE_CONNECTOR_FACET_AMI_EXS_H_
 
+/// Generates AMI connector implementation source for facets.
 class be_visitor_facet_ami_exs
   : public be_visitor_component_scope
 {
-  //
-  // = TITLE
-  //   be_visitor_facet_ami_exs
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate
-  //   the AMI connector implementation header for facets.
-  //
-  //
 public:
   explicit be_visitor_facet_ami_exs (be_visitor_context *ctx);
 

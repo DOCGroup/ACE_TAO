@@ -11,26 +11,34 @@
 #include "testing_range_checking.hpp"
 
 #include "tao/Unbounded_Basic_String_Sequence_T.h"
+#include "tao/Unbounded_BD_String_Sequence_T.h"
 #include "tao/CORBA_String.h"
 
 #include "string_sequence_tester.hpp"
 
 #include "test_macros.h"
 
+#include <type_traits>
 
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
+
+using unbounded_bd_sequence = TAO::unbounded_bd_string_sequence<char, 16>;
+static_assert (std::is_move_constructible<unbounded_bd_sequence>::value);
+static_assert (!std::is_nothrow_move_constructible<unbounded_bd_sequence>::value);
+static_assert (std::is_move_assignable<unbounded_bd_sequence>::value);
+static_assert (!std::is_nothrow_move_assignable<unbounded_bd_sequence>::value);
 
 template<class tested_sequence>
 struct Tester
 {
-  typedef typename tested_sequence::character_type char_type;
-  typedef string_sequence_test_helpers<char_type> helper;
-  typedef typename tested_sequence::value_type value_type;
-  typedef typename tested_sequence::const_value_type const_value_type;
+  using char_type = typename tested_sequence::character_type;
+  using helper = string_sequence_test_helpers<char_type>;
+  using value_type = typename tested_sequence::value_type;
+  using const_value_type = typename tested_sequence::const_value_type;
 
-  typedef typename tested_sequence::element_traits tested_element_traits;
-  typedef typename tested_sequence::allocation_traits tested_allocation_traits;
-  typedef TAO::details::range_checking<value_type,true> range;
+  using tested_element_traits = typename tested_sequence::element_traits;
+  using tested_allocation_traits = typename tested_sequence::allocation_traits;
+  using range = TAO::details::range_checking<value_type,true>;
 
   int test_ulong_constructor()
   {
@@ -475,11 +483,10 @@ struct Tester
     return 0;
   }
 
-
   int test_all()
   {
-    int status = 0;
-    typedef string_sequence_tester<tested_sequence> common;
+    int status {};
+    using common = string_sequence_tester<tested_sequence>;
     common tester;
     status += tester.test_all ();
 
@@ -503,23 +510,23 @@ struct Tester
     status += this->test_regression_2201();
     return status;
   }
-  Tester() {}
+  Tester () = default;
 };
 
 int ACE_TMAIN(int,ACE_TCHAR*[])
 {
-  int status = 0;
+  int status {};
   try
     {
       {
-        typedef Tester<unbounded_basic_string_sequence <char> > nTester;
+        using nTester = Tester<unbounded_basic_string_sequence <char> >;
         nTester ntester;
         status += ntester.test_all ();
       }
 
 #if defined(ACE_HAS_WCHAR) && !defined(TAO_LACKS_WCHAR_CXX_STDLIB)
       {
-        typedef Tester<unbounded_basic_string_sequence <CORBA::WChar> > wTester;
+        using wTester = Tester<unbounded_basic_string_sequence <CORBA::WChar> >;
         wTester wtester;
         status += wtester.test_all ();
       }
