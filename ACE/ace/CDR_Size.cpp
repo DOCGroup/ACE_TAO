@@ -23,7 +23,7 @@ ACE_SizeCDR::write_wchar (ACE_CDR::WChar x)
   if (static_cast<ACE_CDR::Short> (major_version_) == 1
           && static_cast<ACE_CDR::Short> (minor_version_) == 2)
     {
-      ACE_CDR::Octet len =
+      ACE_CDR::Octet const len =
         static_cast<ACE_CDR::Octet> (ACE_OutputCDR::wchar_maxbytes ());
 
       if (this->write_1 (&len))
@@ -134,7 +134,7 @@ ACE_SizeCDR::write_wstring (ACE_CDR::ULong len,
           //In GIOP 1.2 the length field contains the number of bytes
           //the wstring occupies rather than number of wchars
           //Taking sizeof might not be a good way! This is a temporary fix.
-          ACE_CDR::Boolean good_ulong =
+          ACE_CDR::Boolean const good_ulong =
             this->write_ulong (
               ACE_Utils::truncate_cast<ACE_CDR::ULong> (
                 ACE_OutputCDR::wchar_maxbytes () * len));
