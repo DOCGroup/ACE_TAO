@@ -891,7 +891,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::info (ACE_TCHAR **strp,
   // length.  That makes the possible total length of the combined string
   // (given the size of the literal string constants) 5 + BUFSIZE + 1.
   //
-  const size_t additional = 6;
+  size_t const additional {24};
   ACE_TCHAR buf[BUFSIZ + additional];
   ACE_OS::snprintf (buf, sizeof buf,
                     ACE_TEXT ("%s\t %s #%s\n"),

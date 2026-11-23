@@ -1824,9 +1824,9 @@ Config_Test::get_section_integer (ACE_Configuration&             config,
                                pszName,
                                StringValue) == 0)
     {
-      ACE_OS::strncpy (pszString,
-                       StringValue.c_str (),
-                       30);
+      ACE_OS::strsncpy (pszString,
+                        StringValue.c_str (),
+                        sizeof pszString / sizeof *pszString);
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%s = %s\n"),
                   pszName,
@@ -1856,9 +1856,9 @@ Config_Test::get_section_boolean (ACE_Configuration&             config,
                                pszName,
                                StringValue) == 0)
     {
-      ACE_OS::strncpy (pszString,
-                       StringValue.c_str (),
-                       10);
+      ACE_OS::strsncpy (pszString,
+                        StringValue.c_str (),
+                        sizeof pszString / sizeof *pszString);
       for (ACE_TCHAR* pSrc = pszString;
            *pSrc != ACE_TEXT ('\0');
            ++pSrc)
