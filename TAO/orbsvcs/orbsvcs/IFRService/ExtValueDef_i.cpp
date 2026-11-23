@@ -42,7 +42,7 @@ TAO_ExtValueDef_i::ext_initializers_i ()
   int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "initializers",
-                                          0,
+                                          false,
                                           initializers_key);
 
   if (status != 0)
@@ -65,7 +65,7 @@ TAO_ExtValueDef_i::ext_initializers_i ()
       char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (initializers_key,
                                             stringified,
-                                            0,
+                                            false,
                                             initializer_key);
       this->repo_->config ()->get_string_value (initializer_key,
                                                 "name",
@@ -74,7 +74,7 @@ TAO_ExtValueDef_i::ext_initializers_i ()
       status =
         this->repo_->config ()->open_section (initializer_key,
                                               "params",
-                                              0,
+                                              false,
                                               params_key);
 
       if (status != 0)
@@ -94,7 +94,7 @@ TAO_ExtValueDef_i::ext_initializers_i ()
           char * const stringified = TAO_IFR_Service_Utils::int_to_string (j);
           this->repo_->config ()->open_section (params_key,
                                                 stringified,
-                                                0,
+                                                false,
                                                 arg_key);
           this->repo_->config ()->get_string_value (arg_key,
                                                     "arg_name",
@@ -143,7 +143,7 @@ TAO_ExtValueDef_i::ext_initializers_i (
   ACE_Configuration *config = this->repo_->config ();
   config->remove_section (this->section_key_,
                           "initializers",
-                          1);
+                          true);
 
   /// This does not handle the initializer exceptions, so we do that below.
   TAO_IFR_Generic_Utils<CORBA::ExtInitializerSeq>::set_initializers (
@@ -161,7 +161,7 @@ TAO_ExtValueDef_i::ext_initializers_i (
 
       this->repo_->config ()->open_section (this->section_key_,
                                             "initializers",
-                                            0,
+                                            false,
                                             initializers_key);
 
       for (CORBA::ULong i {}; i < length; ++i)
@@ -169,7 +169,7 @@ TAO_ExtValueDef_i::ext_initializers_i (
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (initializers_key,
                                                 stringified,
-                                                0,
+                                                false,
                                                 initializer_key);
 
           this->exceptions (initializer_key,
@@ -235,7 +235,7 @@ TAO_ExtValueDef_i::describe_ext_value_i ()
   int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "ops",
-                                          0,
+                                          false,
                                           ops_key);
   CORBA::ULong count = 0;
   CORBA::ULong param_count = 0;
@@ -259,7 +259,7 @@ TAO_ExtValueDef_i::describe_ext_value_i ()
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (ops_key,
                                                 stringified,
-                                                0,
+                                                false,
                                                 op_key);
           this->repo_->config ()->get_string_value (op_key,
                                                     "name",
@@ -312,7 +312,7 @@ TAO_ExtValueDef_i::describe_ext_value_i ()
           status =
             this->repo_->config ()->open_section (op_key,
                                                   "params",
-                                                  0,
+                                                  false,
                                                   params_key);
           if (status == 0)
             {
@@ -327,7 +327,7 @@ TAO_ExtValueDef_i::describe_ext_value_i ()
                   stringified = TAO_IFR_Service_Utils::int_to_string (j);
                   this->repo_->config ()->open_section (params_key,
                                                         stringified,
-                                                        0,
+                                                        false,
                                                         param_key);
                   this->repo_->config ()->get_string_value (param_key,
                                                             "name",
@@ -365,7 +365,7 @@ TAO_ExtValueDef_i::describe_ext_value_i ()
           status =
             this->repo_->config ()->open_section (op_key,
                                                   "excepts",
-                                                  0,
+                                                  false,
                                                   excepts_key);
           fv_desc->operations[i].exceptions.length (0);
 
@@ -389,7 +389,7 @@ TAO_ExtValueDef_i::describe_ext_value_i ()
                                               this->repo_->root_key (),
                                               holder,
                                               except_def_key,
-                                              0
+                                              false
                                             );
                   this->repo_->config ()->get_string_value (except_def_key,
                                                             "name",
@@ -429,7 +429,7 @@ TAO_ExtValueDef_i::describe_ext_value_i ()
   status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "attrs",
-                                          0,
+                                          false,
                                           attrs_key);
   if (status == 0)
     {
@@ -444,7 +444,7 @@ TAO_ExtValueDef_i::describe_ext_value_i ()
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (attrs_key,
                                                 stringified,
-                                                0,
+                                                false,
                                                 attr_key);
           this->repo_->config ()->get_string_value (attr_key,
                                                     "name",
@@ -478,7 +478,7 @@ TAO_ExtValueDef_i::describe_ext_value_i ()
           this->repo_->config ()->expand_path (this->repo_->root_key (),
                                                holder,
                                                attr_def_key,
-                                               0);
+                                               false);
           this->repo_->config ()->get_string_value (attr_def_key,
                                                     "container_id",
                                                     holder);
@@ -502,7 +502,7 @@ TAO_ExtValueDef_i::describe_ext_value_i ()
   status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "members",
-                                          0,
+                                          false,
                                           members_key);
   if (status == 0)
     {
@@ -517,7 +517,7 @@ TAO_ExtValueDef_i::describe_ext_value_i ()
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (members_key,
                                                 stringified,
-                                                0,
+                                                false,
                                                 member_key);
           this->repo_->config ()->get_string_value (member_key,
                                                     "name",
@@ -570,7 +570,7 @@ TAO_ExtValueDef_i::describe_ext_value_i ()
   status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "initializers",
-                                          0,
+                                          false,
                                           initializers_key);
 
   if (status == 0)
@@ -589,7 +589,7 @@ TAO_ExtValueDef_i::describe_ext_value_i ()
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (initializers_key,
                                                 stringified,
-                                                0,
+                                                false,
                                                 initializer_key);
           this->repo_->config ()->get_string_value (initializer_key,
                                                     "name",
@@ -601,7 +601,7 @@ TAO_ExtValueDef_i::describe_ext_value_i ()
           status =
             this->repo_->config ()->open_section (initializer_key,
                                                   "params",
-                                                  0,
+                                                  false,
                                                   params_key);
 
           if (status == 0)
@@ -616,7 +616,7 @@ TAO_ExtValueDef_i::describe_ext_value_i ()
                   stringified = TAO_IFR_Service_Utils::int_to_string (j);
                   this->repo_->config ()->open_section (params_key,
                                                         stringified,
-                                                        0,
+                                                        false,
                                                         arg_key);
                   this->repo_->config ()->get_string_value (arg_key,
                                                             "arg_name",
@@ -678,7 +678,7 @@ TAO_ExtValueDef_i::describe_ext_value_i ()
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            holder,
                                            base_key,
-                                           0);
+                                           false);
       this->repo_->config ()->get_string_value (base_key,
                                                 "id",
                                                 holder);
@@ -781,7 +781,7 @@ TAO_ExtValueDef_i::fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
   int status =
     this->repo_->config ()->open_section (key,
                                           sub_section,
-                                          0,
+                                          false,
                                           excepts_key);
 
   if (status != 0)
@@ -808,7 +808,7 @@ TAO_ExtValueDef_i::fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            holder,
                                            except_key,
-                                           0);
+                                           false);
       this->repo_->config ()->get_string_value (except_key,
                                                 "name",
                                                 holder);
@@ -848,7 +848,7 @@ TAO_ExtValueDef_i::exceptions (ACE_Configuration_Section_Key &key,
   ACE_Configuration_Section_Key new_key;
   this->repo_->config ()->open_section (key,
                                         sub_section,
-                                        1,
+                                        true,
                                         new_key);
   this->repo_->config ()->set_integer_value (new_key,
                                              "count",
@@ -883,7 +883,7 @@ TAO_ExtValueDef_i::exceptions (ACE_Configuration_Section_Key &key,
   ACE_Configuration_Section_Key excepts_key;
   this->repo_->config ()->open_section (key,
                                         sub_section,
-                                        1,
+                                        true,
                                         excepts_key);
 
   this->repo_->config ()->set_integer_value (excepts_key,

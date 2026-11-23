@@ -65,7 +65,7 @@ TAO_IRObject_i::update_key ()
     this->repo_->config ()->expand_path (this->repo_->root_key (),
                                          path,
                                          this->section_key_,
-                                         0);
+                                         false);
 
   if (status != 0)
     {

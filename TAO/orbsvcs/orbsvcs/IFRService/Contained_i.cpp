@@ -66,19 +66,19 @@ TAO_Contained_i::destroy_i ()
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            parent_path,
                                            parent_key,
-                                           0);
+                                           false);
     }
 
   ACE_Configuration_Section_Key defns_key;
   this->repo_->config ()->open_section (parent_key,
                                         "defns",
-                                        0,
+                                        false,
                                         defns_key);
 
   ACE_TString last_seg = path.substr (path.rfind ('\\') + 1);
   this->repo_->config ()->remove_section (defns_key,
                                           last_seg.c_str (),
-                                          1);
+                                          true);
 }
 
 char *
@@ -378,12 +378,12 @@ TAO_Contained_i::name_exists (char const *name)
   this->repo_->config ()->expand_path (this->repo_->root_key (),
                                        container_path,
                                        container_key,
-                                       0);
+                                       false);
 
   ACE_Configuration_Section_Key defns_key;
   this->repo_->config ()->open_section (container_key,
                                         "defns",
-                                        0,
+                                        false,
                                         defns_key);
 
   ACE_TString section_name;
@@ -397,7 +397,7 @@ TAO_Contained_i::name_exists (char const *name)
     ACE_Configuration_Section_Key defn_key;
     this->repo_->config ()->open_section (defns_key,
                                           section_name.c_str (),
-                                          0,
+                                          false,
                                           defn_key);
 
     ACE_TString defn_name;
@@ -421,7 +421,7 @@ TAO_Contained_i::contents_name_update (ACE_TString stem,
   ACE_Configuration_Section_Key defns_key;
   if (this->repo_->config ()->open_section (key,
                                             "defns",
-                                            0,
+                                            false,
                                             defns_key)
        != 0)
     {
@@ -439,7 +439,7 @@ TAO_Contained_i::contents_name_update (ACE_TString stem,
 
       this->repo_->config ()->open_section (defns_key,
                                             sub_section.c_str (),
-                                            0,
+                                            false,
                                             defn_key);
 
       ACE_TString name;
@@ -492,7 +492,7 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            container_path,
                                            container_key,
-                                           0);
+                                           false);
     }
 
   CORBA::DefinitionKind my_dk =
@@ -900,19 +900,19 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
           this->repo_->config ()->expand_path (this->repo_->root_key (),
                                                parent_path,
                                                parent_key,
-                                               0);
+                                               false);
         }
 
       ACE_Configuration_Section_Key defns_key;
       this->repo_->config ()->open_section (parent_key,
                                             "defns",
-                                            0,
+                                            false,
                                             defns_key);
 
       ACE_TString last_seg = my_path.substr (my_path.rfind ('\\') + 1);
       this->repo_->config ()->remove_section (defns_key,
                                               last_seg.c_str (),
-                                              1);
+                                              true);
     }
 }
 
@@ -928,12 +928,12 @@ TAO_Contained_i::move_pre_process (CORBA::Container_ptr container,
   this->repo_->config ()->expand_path (this->repo_->root_key (),
                                        container_path,
                                        container_key,
-                                       0);
+                                       false);
 
   ACE_Configuration_Section_Key refs_key;
   this->repo_->config ()->open_section (container_key,
                                         "refs",
-                                        0,
+                                        false,
                                         refs_key);
 
   int index = 0;
@@ -946,7 +946,7 @@ TAO_Contained_i::move_pre_process (CORBA::Container_ptr container,
       ACE_Configuration_Section_Key ref_key;
       this->repo_->config ()->open_section (refs_key,
                                             section_name.c_str (),
-                                            0,
+                                            false,
                                             ref_key);
 
       ACE_TString ref_name;
@@ -981,7 +981,7 @@ TAO_Contained_i::move_contents (CORBA::Container_ptr new_container)
   int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "defns",
-                                          0,
+                                          false,
                                           defns_key);
 
   if (status == 0)
@@ -998,7 +998,7 @@ TAO_Contained_i::move_contents (CORBA::Container_ptr new_container)
           status =
             this->repo_->config ()->open_section (defns_key,
                                                   stringified,
-                                                  0,
+                                                  false,
                                                   defn_key);
 
           if (status == 0)
@@ -1041,7 +1041,7 @@ TAO_Contained_i::move_contents (CORBA::Container_ptr new_container)
       int status =
         this->repo_->config ()->open_section (this->section_key_,
                                               "attrs",
-                                              0,
+                                              false,
                                               attrs_key);
 
       if (status == 0)
@@ -1054,7 +1054,7 @@ TAO_Contained_i::move_contents (CORBA::Container_ptr new_container)
               ACE_Configuration_Section_Key attr_key;
               this->repo_->config ()->open_section (attrs_key,
                                                     section_name.c_str (),
-                                                    0,
+                                                    false,
                                                     attr_key);
 
               this->repo_->config ()->get_string_value (attr_key,
@@ -1082,7 +1082,7 @@ TAO_Contained_i::move_contents (CORBA::Container_ptr new_container)
       status =
         this->repo_->config ()->open_section (this->section_key_,
                                               "ops",
-                                              0,
+                                              false,
                                               ops_key);
 
       if (status == 0)
@@ -1095,7 +1095,7 @@ TAO_Contained_i::move_contents (CORBA::Container_ptr new_container)
               ACE_Configuration_Section_Key op_key;
               this->repo_->config ()->open_section (ops_key,
                                                     section_name.c_str (),
-                                                    0,
+                                                    false,
                                                     op_key);
 
               this->repo_->config ()->get_string_value (op_key,

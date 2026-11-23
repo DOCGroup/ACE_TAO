@@ -141,7 +141,7 @@ TAO_ExceptionDef_i::members_i ()
   ACE_Configuration_Section_Key refs_key;
   this->repo_->config ()->open_section (this->section_key_,
                                         "refs",
-                                        0,
+                                        false,
                                         refs_key);
 
   u_int count = 0;
@@ -155,7 +155,7 @@ TAO_ExceptionDef_i::members_i ()
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (refs_key,
                                             stringified,
-                                            0,
+                                            false,
                                             member_key);
 
       ACE_TString path;
@@ -168,7 +168,7 @@ TAO_ExceptionDef_i::members_i ()
         this->repo_->config ()->expand_path (this->repo_->root_key (),
                                              path,
                                              entry_key,
-                                             0);
+                                             false);
 
       // This entry may have been removed.
       if (status == 0)
@@ -236,7 +236,7 @@ TAO_ExceptionDef_i::members_i ()
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            path,
                                            member_key,
-                                           0);
+                                           false);
 
       impl = TAO_IFR_Service_Utils::path_to_idltype (path,
                                                      this->repo_);
@@ -278,7 +278,7 @@ TAO_ExceptionDef_i::members_i (CORBA::StructMemberSeq const &members)
 
       this->repo_->config ()->open_section (this->section_key_,
                                             "refs",
-                                            1,
+                                            true,
                                             refs_key);
       // Create a section for each new member. We just store the
       // member name and the path to its database entry.
@@ -288,7 +288,7 @@ TAO_ExceptionDef_i::members_i (CORBA::StructMemberSeq const &members)
           char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (refs_key,
                                                 stringified,
-                                                1,
+                                                true,
                                                 member_key);
 
           ACE_TString name (members[i].name);

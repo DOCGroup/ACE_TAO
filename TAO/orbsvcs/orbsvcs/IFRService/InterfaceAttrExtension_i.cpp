@@ -83,7 +83,7 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i ()
   int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "ops",
-                                          0,
+                                          false,
                                           ops_key);
 
   CORBA::ULong count = 0;
@@ -100,7 +100,7 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i ()
           status =
             this->repo_->config ()->open_section (ops_key,
                                                   stringified,
-                                                  0,
+                                                  false,
                                                   op_key);
 
           if (status == 0)
@@ -141,7 +141,7 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i ()
   status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "attrs",
-                                          0,
+                                          false,
                                           attrs_key);
 
   count = 0;
@@ -159,7 +159,7 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i ()
           status =
             this->repo_->config ()->open_section (attrs_key,
                                                   stringified,
-                                                  0,
+                                                  false,
                                                   attr_key);
 
           if (status == 0)
@@ -206,7 +206,7 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i ()
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            base_path,
                                            base_key,
-                                           0);
+                                           false);
       this->repo_->config ()->get_string_value (base_key,
                                                 "id",
                                                 holder);

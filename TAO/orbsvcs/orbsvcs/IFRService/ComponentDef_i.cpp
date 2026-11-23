@@ -155,7 +155,7 @@ TAO_ComponentDef_i::describe_i ()
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            holder,
                                            base_key,
-                                           0);
+                                           false);
       this->repo_->config ()->get_string_value (base_key,
                                                 ACE_TEXT("id"),
                                                 holder);
@@ -168,7 +168,7 @@ TAO_ComponentDef_i::describe_i ()
   ACE_Configuration_Section_Key supports_key;
   status = this->repo_->config ()->open_section (this->section_key_,
                                                  "supported",
-                                                 0,
+                                                 false,
                                                  supports_key);
 
   if (status == 0)
@@ -232,7 +232,7 @@ TAO_ComponentDef_i::describe_i ()
   status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "attrs",
-                                          0,
+                                          false,
                                           attrs_key);
   if (status == 0)
     {
@@ -249,7 +249,7 @@ TAO_ComponentDef_i::describe_i ()
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (attrs_key,
                                             stringified,
-                                            0,
+                                            false,
                                             attr_key);
 
       TAO_ExtAttributeDef_i impl (this->repo_);
@@ -325,7 +325,7 @@ TAO_ComponentDef_i::supported_interfaces_i ()
   int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "supported",
-                                          0,
+                                          false,
                                           supported_key);
 
   if (status == 0)
@@ -373,13 +373,13 @@ TAO_ComponentDef_i::supported_interfaces_i (
   // Remove the old supported interfaces.
   this->repo_->config ()->remove_section (this->section_key_,
                                           "supported",
-                                          0);
+                                          false);
 
   CORBA::ULong length = supported_interfaces.length ();
   ACE_Configuration_Section_Key inherited_key;
   this->repo_->config ()->open_section (this->section_key_,
                                         "supported",
-                                        1,
+                                        true,
                                         inherited_key);
 
   CORBA::String_var name;
@@ -399,7 +399,7 @@ TAO_ComponentDef_i::supported_interfaces_i (
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                             supported_path,
                                             TAO_IFR_Service_Utils::tmp_key_,
-                                            0);
+                                            false);
       TAO_IFR_Service_Utils::name_exists (&TAO_InterfaceDef_i::name_clash,
                                           this->section_key_,
                                           this->repo_,
@@ -475,7 +475,7 @@ TAO_ComponentDef_i::base_component_i (
                               this->repo_->root_key (),
                               base_path,
                               TAO_IFR_Service_Utils::tmp_key_,
-                              0
+                              false
                             );
   TAO_IFR_Service_Utils::name_exists (&TAO_ComponentDef_i::name_clash,
                                       this->section_key_,

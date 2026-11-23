@@ -68,7 +68,7 @@ TAO_EventPortDef_i::event_i (
   this->repo_->config ()->expand_path (this->repo_->root_key (),
                                        tmp,
                                        new_key,
-                                       0);
+                                       false);
 
   ACE_TString holder;
   this->repo_->config ()->get_string_value (new_key,
@@ -106,7 +106,7 @@ TAO_EventPortDef_i::is_a_i (
   this->repo_->config ()->expand_path (this->repo_->root_key (),
                                        holder,
                                        key,
-                                       0);
+                                       false);
   TAO_EventDef_i impl (this->repo_);
   impl.section_key (key);
   return impl.is_a_i (event_id);

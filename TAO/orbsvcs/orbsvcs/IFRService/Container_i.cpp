@@ -52,7 +52,7 @@ TAO_Container_i::destroy_references_i ()
   status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "refs",
-                                          0,
+                                          false,
                                           refs_key);
   // This section may not have been created.
   if (status == 0)
@@ -65,7 +65,7 @@ TAO_Container_i::destroy_references_i ()
           ACE_Configuration_Section_Key member_key;
           this->repo_->config ()->open_section (refs_key,
                                                 section_name.c_str (),
-                                                0,
+                                                false,
                                                 member_key);
 
           ACE_TString path;
@@ -78,7 +78,7 @@ TAO_Container_i::destroy_references_i ()
             this->repo_->config ()->expand_path (this->repo_->root_key (),
                                                  path,
                                                  entry_key,
-                                                 0);
+                                                 false);
 
           // This entry may already have been destroyed.
           if (status == 0)
@@ -111,7 +111,7 @@ TAO_Container_i::destroy_references_i ()
 
       this->repo_->config ()->remove_section (this->section_key_,
                                               "refs",
-                                              1);
+                                              true);
     }
 }
 
@@ -126,7 +126,7 @@ TAO_Container_i::destroy_definitions_i ()
   status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "defns",
-                                          0,
+                                          false,
                                           defns_key);
 
   // Store our section key for later in case this method is
@@ -146,7 +146,7 @@ TAO_Container_i::destroy_definitions_i ()
           ACE_Configuration_Section_Key defn_key;
           this->repo_->config ()->open_section (defns_key,
                                                 section_name.c_str (),
-                                                0,
+                                                false,
                                                 defn_key);
           u_int kind = 0;
           this->repo_->config ()->get_integer_value (defn_key,
@@ -167,7 +167,7 @@ TAO_Container_i::destroy_definitions_i ()
 
       this->repo_->config ()->remove_section (this->section_key_,
                                               "defns",
-                                              1);
+                                              true);
     }
 }
 
@@ -217,7 +217,7 @@ TAO_Container_i::lookup_i (char const *search_name)
       status =
         this->repo_->config ()->open_section (iter_key,
                                               "defns",
-                                              0,
+                                              false,
                                               defns_key);
       if (status == 0)
         {
@@ -230,7 +230,7 @@ TAO_Container_i::lookup_i (char const *search_name)
             {
               this->repo_->config ()->open_section (defns_key,
                                                     section_name.c_str (),
-                                                    0,
+                                                    false,
                                                     work_key);
 
               ACE_TString defn_name;
@@ -278,7 +278,7 @@ TAO_Container_i::lookup_i (char const *search_name)
                   status =
                     this->repo_->config ()->open_section (iter_key,
                                                           "attrs",
-                                                          0,
+                                                          false,
                                                           attrs_key);
 
                   if (status == 0)
@@ -294,7 +294,7 @@ TAO_Container_i::lookup_i (char const *search_name)
                           this->repo_->config ()->open_section (
                                                       attrs_key,
                                                       section_name.c_str (),
-                                                      0,
+                                                      false,
                                                       work_key
                                                     );
 
@@ -324,7 +324,7 @@ TAO_Container_i::lookup_i (char const *search_name)
                       status =
                         this->repo_->config ()->open_section (iter_key,
                                                               "ops",
-                                                              0,
+                                                              false,
                                                               ops_key);
 
                       if (status == 0)
@@ -341,7 +341,7 @@ TAO_Container_i::lookup_i (char const *search_name)
                               this->repo_->config ()->open_section (
                                   ops_key,
                                   section_name.c_str (),
-                                  0,
+                                  false,
                                   work_key
                                );
 
@@ -372,7 +372,7 @@ TAO_Container_i::lookup_i (char const *search_name)
                       status =
                         this->repo_->config ()->open_section (iter_key,
                                                               "members",
-                                                              0,
+                                                              false,
                                                               members_key);
 
                       if (status == 0)
@@ -389,7 +389,7 @@ TAO_Container_i::lookup_i (char const *search_name)
                               this->repo_->config ()->open_section (
                                   members_key,
                                   section_name.c_str (),
-                                  0,
+                                  false,
                                   work_key
                                );
 
@@ -476,7 +476,7 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
   int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "defns",
-                                          0,
+                                          false,
                                           defns_key);
 
   // If there are no contents (other than possible attributes or
@@ -495,7 +495,7 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
           status =
             this->repo_->config ()->open_section (defns_key,
                                                   stringified,
-                                                  0,
+                                                  false,
                                                   defn_key);
 
           if (status == 0)
@@ -914,7 +914,7 @@ TAO_Container_i::create_struct_i (char const *id,
   ACE_Configuration_Section_Key refs_key;
   this->repo_->config ()->open_section (new_key,
                                         "refs",
-                                        1,
+                                        true,
                                         refs_key);
 
   CORBA::ULong count = members.length ();
@@ -930,7 +930,7 @@ TAO_Container_i::create_struct_i (char const *id,
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (refs_key,
                                             stringified,
-                                            1,
+                                            true,
                                             member_key);
 
       this->repo_->config ()->set_string_value (member_key,
@@ -1022,7 +1022,7 @@ TAO_Container_i::create_union_i (char const *id,
   // For the union's members.
   this->repo_->config ()->open_section (new_key,
                                         "refs",
-                                        1,
+                                        true,
                                         refs_key);
 
   CORBA::ULong count = members.length ();
@@ -1039,7 +1039,7 @@ TAO_Container_i::create_union_i (char const *id,
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (refs_key,
                                             stringified,
-                                            1,
+                                            true,
                                             member_key);
 
       this->repo_->config ()->set_string_value (member_key,
@@ -1127,7 +1127,7 @@ TAO_Container_i::create_enum_i (char const *id,
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (new_key,
                                             stringified,
-                                            1,
+                                            true,
                                             member_key);
 
       this->repo_->config ()->set_string_value (member_key,
@@ -1252,7 +1252,7 @@ TAO_Container_i::create_interface_i (char const *id,
       ACE_Configuration_Section_Key inherited_key;
       this->repo_->config ()->open_section (new_key,
                                             "inherited",
-                                            1,
+                                            true,
                                             inherited_key);
       // Store the path to each base interface.
       for (CORBA::ULong i {}; i < length; ++i)
@@ -1441,7 +1441,7 @@ TAO_Container_i::create_exception_i (char const *id,
   ACE_Configuration_Section_Key refs_key;
   this->repo_->config ()->open_section (new_key,
                                         "refs",
-                                        1,
+                                        true,
                                         refs_key);
 
   CORBA::ULong count = members.length ();
@@ -1458,7 +1458,7 @@ TAO_Container_i::create_exception_i (char const *id,
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (refs_key,
                                             stringified,
-                                            1,
+                                            true,
                                             member_key);
 
       this->repo_->config ()->set_string_value (member_key,
@@ -1571,7 +1571,7 @@ TAO_Container_i::create_abstract_interface_i (
 
       this->repo_->config ()->open_section (new_key,
                                             "inherited",
-                                            1,
+                                            true,
                                             inherited_key);
       char *inherited_path {};
 
@@ -1644,7 +1644,7 @@ TAO_Container_i::create_local_interface_i (
 
       this->repo_->config ()->open_section (new_key,
                                             "inherited",
-                                            1,
+                                            true,
                                             inherited_key);
       char *inherited_path {};
 
@@ -1741,7 +1741,7 @@ TAO_Container_i::create_ext_value_i (
       ACE_Configuration_Section_Key initializers_key, initializer_key;
       this->repo_->config ()->open_section (new_key,
                                             "initializers",
-                                            0,
+                                            false,
                                             initializers_key);
 
       for (CORBA::ULong i {}; i < length; ++i)
@@ -1749,7 +1749,7 @@ TAO_Container_i::create_ext_value_i (
           char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (initializers_key,
                                                 stringified,
-                                                0,
+                                                false,
                                                 initializer_key);
 
           TAO_ExtValueDef_i impl (this->repo_);
@@ -1794,7 +1794,7 @@ TAO_Container_i::lookup_name_recursive (
   int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "defns",
-                                          0,
+                                          false,
                                           defns_key);
 
   if (status == 0)
@@ -1809,7 +1809,7 @@ TAO_Container_i::lookup_name_recursive (
           ACE_Configuration_Section_Key defn_key;
           this->repo_->config ()->open_section (defns_key,
                                                 section_name.c_str (),
-                                                0,
+                                                false,
                                                 defn_key);
 
           u_int kind = 0;
@@ -1907,7 +1907,7 @@ TAO_Container_i:: lookup_attr (
   int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "attrs",
-                                          0,
+                                          false,
                                           sub_key);
 
   if (status == 0)
@@ -1920,7 +1920,7 @@ TAO_Container_i:: lookup_attr (
           ACE_Configuration_Section_Key member_key;
           this->repo_->config ()->open_section (sub_key,
                                                 section_name.c_str (),
-                                                0,
+                                                false,
                                                 member_key);
 
           ACE_TString name;
@@ -1955,7 +1955,7 @@ TAO_Container_i:: lookup_attr (
       status =
         this->repo_->config ()->open_section (this->section_key_,
                                               "inherited",
-                                              0,
+                                              false,
                                               bases_key);
 
       if (status == 0)
@@ -1980,7 +1980,7 @@ TAO_Container_i:: lookup_attr (
               this->repo_->config ()->expand_path (this->repo_->root_key (),
                                                    path,
                                                    base_key,
-                                                   0);
+                                                   false);
 
               TAO_InterfaceDef_i impl (this->repo_);
               impl.section_key (base_key);
@@ -2008,7 +2008,7 @@ TAO_Container_i::lookup_op (
   int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "ops",
-                                          0,
+                                          false,
                                           sub_key);
 
   if (status == 0)
@@ -2021,7 +2021,7 @@ TAO_Container_i::lookup_op (
           ACE_Configuration_Section_Key member_key;
           this->repo_->config ()->open_section (sub_key,
                                                 section_name.c_str (),
-                                                0,
+                                                false,
                                                 member_key);
 
           ACE_TString name;
@@ -2056,7 +2056,7 @@ TAO_Container_i::lookup_op (
       status =
         this->repo_->config ()->open_section (this->section_key_,
                                               "inherited",
-                                              0,
+                                              false,
                                               bases_key);
 
       if (status == 0)
@@ -2082,7 +2082,7 @@ TAO_Container_i::lookup_op (
               this->repo_->config ()->expand_path (this->repo_->root_key (),
                                                    path,
                                                    base_key,
-                                                   0);
+                                                   false);
 
               TAO_InterfaceDef_i impl (this->repo_);
               impl.section_key (base_key);
@@ -2228,7 +2228,7 @@ TAO_Container_i::update_refs (char const *path,
   int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "refs",
-                                          0,
+                                          false,
                                           refs_key);
 
   // If this container has no "refs" section, there is nothing to do.
@@ -2252,7 +2252,7 @@ TAO_Container_i::update_refs (char const *path,
       ACE_Configuration_Section_Key ref_key;
       this->repo_->config ()->open_section (refs_key,
                                             section_name.c_str (),
-                                            0,
+                                            false,
                                             ref_key);
 
       ACE_TString ref_name;
@@ -2299,7 +2299,7 @@ TAO_Container_i::update_refs (char const *path,
   char *stringified = TAO_IFR_Service_Utils::int_to_string (count);
   this->repo_->config ()->open_section (refs_key,
                                         stringified,
-                                        1,
+                                        true,
                                         new_key);
 
   this->repo_->config ()->set_string_value (new_key,
@@ -2367,7 +2367,7 @@ TAO_Container_i::create_value_common (
                                   this->repo_->root_key (),
                                   base_path,
                                   TAO_IFR_Service_Utils::tmp_key_,
-                                  0
+                                  false
                                 );
       TAO_IFR_Service_Utils::name_exists (&TAO_ValueDef_i::name_clash,
                                           new_key,
@@ -2386,7 +2386,7 @@ TAO_Container_i::create_value_common (
       ACE_Configuration_Section_Key bases_key;
       this->repo_->config ()->open_section (this->section_key_,
                                             "abstract_bases",
-                                            1,
+                                            true,
                                             bases_key);
       this->repo_->config ()->set_integer_value (bases_key,
                                                  "count",
@@ -2407,7 +2407,7 @@ TAO_Container_i::create_value_common (
                                       this->repo_->root_key (),
                                       base_path,
                                       TAO_IFR_Service_Utils::tmp_key_,
-                                      0
+                                      false
                                     );
           TAO_IFR_Service_Utils::name_exists (&TAO_ValueDef_i::name_clash,
                                               new_key,
@@ -2433,7 +2433,7 @@ TAO_Container_i::create_value_common (
       ACE_Configuration_Section_Key supported_key;
       this->repo_->config ()->open_section (new_key,
                                             "supported",
-                                            1,
+                                            true,
                                             supported_key);
       this->repo_->config ()->set_integer_value (supported_key,
                                                  "count",
@@ -2456,7 +2456,7 @@ TAO_Container_i::create_value_common (
           this->repo_->config ()->expand_path (this->repo_->root_key (),
                                                supported_path,
                                                TAO_IFR_Service_Utils::tmp_key_,
-                                               0);
+                                               false);
           this->repo_->config ()->get_integer_value (
                                       TAO_IFR_Service_Utils::tmp_key_,
                                       "def_kind",

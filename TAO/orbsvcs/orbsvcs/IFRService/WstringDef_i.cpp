@@ -39,7 +39,7 @@ TAO_WstringDef_i::destroy_i ()
 
   this->repo_->config ()->remove_section (this->repo_->wstrings_key (),
                                           name.c_str (),
-                                          0);
+                                          false);
 }
 
 CORBA::TypeCode_ptr

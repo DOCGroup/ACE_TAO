@@ -116,7 +116,7 @@ TAO_UsesDef_i::interface_type_i (
   this->repo_->config ()->expand_path (this->repo_->root_key (),
                                        tmp,
                                        new_key,
-                                       0);
+                                       false);
 
   ACE_TString holder;
   this->repo_->config ()->get_string_value (new_key,

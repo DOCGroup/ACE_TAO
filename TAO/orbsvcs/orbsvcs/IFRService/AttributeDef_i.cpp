@@ -201,7 +201,7 @@ TAO_AttributeDef_i::get_exceptions ()
   int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           ACE_TEXT("get_excepts"),
-                                          0,
+                                          false,
                                           get_excepts_key);
 
   // This section may not have been created.
@@ -225,7 +225,7 @@ TAO_AttributeDef_i::get_exceptions ()
             this->repo_->config ()->expand_path (this->repo_->root_key (),
                                                  get_except_path,
                                                  dummy,
-                                                 0);
+                                                 false);
 
           if (status == 0)
             {
@@ -273,7 +273,7 @@ TAO_AttributeDef_i::put_exceptions ()
   int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           ACE_TEXT("put_excepts"),
-                                          0,
+                                          false,
                                           put_excepts_key);
 
   // This section may not have been created.
@@ -297,7 +297,7 @@ TAO_AttributeDef_i::put_exceptions ()
             this->repo_->config ()->expand_path (this->repo_->root_key (),
                                                  put_except_path,
                                                  dummy,
-                                                 0);
+                                                 false);
 
           if (status == 0)
             {

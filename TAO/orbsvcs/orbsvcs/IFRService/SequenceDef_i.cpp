@@ -44,7 +44,7 @@ TAO_SequenceDef_i::destroy_i ()
 
   this->repo_->config ()->remove_section (this->repo_->sequences_key (),
                                           name.c_str (),
-                                          0);
+                                          false);
 }
 
 CORBA::TypeCode_ptr

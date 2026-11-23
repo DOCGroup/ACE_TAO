@@ -76,7 +76,7 @@ TAO_ComponentContainer_i::create_component_i (
                                   this->repo_->root_key (),
                                   base_path,
                                   TAO_IFR_Service_Utils::tmp_key_,
-                                  0
+                                  false
                                 );
       TAO_IFR_Service_Utils::name_exists (&TAO_ComponentDef_i::name_clash,
                                           new_key,
@@ -101,7 +101,7 @@ TAO_ComponentContainer_i::create_component_i (
       ACE_Configuration_Section_Key supports_key;
       this->repo_->config ()->open_section (new_key,
                                             "supported",
-                                            1,
+                                            true,
                                             supports_key);
 
       this->repo_->config ()->set_integer_value (supports_key,
@@ -206,7 +206,7 @@ TAO_ComponentContainer_i::create_home_i (
       ACE_Configuration_Section_Key supports_key;
       this->repo_->config ()->open_section (new_key,
                                             "supported",
-                                            1,
+                                            true,
                                             supports_key);
       this->repo_->config ()->set_integer_value (supports_key,
                                                  "count",
@@ -325,7 +325,7 @@ TAO_ComponentContainer_i::create_event_i (
                                   this->repo_->root_key (),
                                   base_path,
                                   TAO_IFR_Service_Utils::tmp_key_,
-                                  0
+                                  false
                                 );
       TAO_IFR_Service_Utils::name_exists (&TAO_ValueDef_i::name_clash,
                                           new_key,
@@ -345,7 +345,7 @@ TAO_ComponentContainer_i::create_event_i (
       ACE_Configuration_Section_Key bases_key;
       this->repo_->config ()->open_section (new_key,
                                             "abstract_bases",
-                                            1,
+                                            true,
                                             bases_key);
 
       for (i = 0; i < length; ++i)
@@ -368,7 +368,7 @@ TAO_ComponentContainer_i::create_event_i (
       ACE_Configuration_Section_Key supported_key;
       this->repo_->config ()->open_section (new_key,
                                             "supported",
-                                            1,
+                                            true,
                                             supported_key);
 
       this->repo_->config ()->set_integer_value (supported_key,
@@ -394,7 +394,7 @@ TAO_ComponentContainer_i::create_event_i (
       ACE_Configuration_Section_Key initializers_key;
       this->repo_->config ()->open_section (new_key,
                                             "initializers",
-                                            1,
+                                            true,
                                             initializers_key);
 
       CORBA::ULong count = 0;
@@ -408,7 +408,7 @@ TAO_ComponentContainer_i::create_event_i (
           char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (initializers_key,
                                                 stringified,
-                                                1,
+                                                true,
                                                 initializer_key);
           this->repo_->config ()->set_string_value (
                                       initializer_key,
@@ -422,7 +422,7 @@ TAO_ComponentContainer_i::create_event_i (
             {
               this->repo_->config ()->open_section (initializer_key,
                                                     "params",
-                                                    1,
+                                                    true,
                                                     outer_key);
 
               this->repo_->config ()->set_integer_value (outer_key,
@@ -434,7 +434,7 @@ TAO_ComponentContainer_i::create_event_i (
                   char * const stringified = TAO_IFR_Service_Utils::int_to_string (j);
                   this->repo_->config ()->open_section (outer_key,
                                                         stringified,
-                                                        1,
+                                                        true,
                                                         inner_key);
 
                   this->repo_->config ()->set_string_value (
@@ -460,7 +460,7 @@ TAO_ComponentContainer_i::create_event_i (
             {
               this->repo_->config ()->open_section (initializer_key,
                                                     "excepts",
-                                                    1,
+                                                    true,
                                                     outer_key);
 
               this->repo_->config ()->set_integer_value (outer_key,

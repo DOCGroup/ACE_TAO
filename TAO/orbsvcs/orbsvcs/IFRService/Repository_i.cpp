@@ -166,7 +166,7 @@ TAO_Repository_i::get_canonical_typecode_i (CORBA::TypeCode_ptr tc)
       this->config ()->expand_path (this->root_key (),
                                     path,
                                     key,
-                                    0);
+                                    false);
 
       // An ExceptionDef is not an IDLType.
       if (kind == CORBA::tk_except)
@@ -227,7 +227,7 @@ TAO_Repository_i::create_string_i (CORBA::ULong bound)
   ACE_Configuration_Section_Key new_key;
   this->config_->open_section (this->strings_key_,
                                name,
-                               1,
+                               true,
                                new_key);
 
   this->config_->set_integer_value (new_key,
@@ -279,7 +279,7 @@ TAO_Repository_i::create_wstring_i (CORBA::ULong bound)
   ACE_Configuration_Section_Key new_key;
   this->config_->open_section (this->wstrings_key_,
                                name,
-                               1,
+                               true,
                                new_key);
 
   this->config_->set_integer_value (new_key,
@@ -334,7 +334,7 @@ TAO_Repository_i::create_sequence_i (CORBA::ULong bound,
   ACE_Configuration_Section_Key new_key;
   this->config_->open_section (this->sequences_key_,
                                name,
-                               1,
+                               true,
                                new_key);
 
   // Set the bound attribute.
@@ -400,7 +400,7 @@ TAO_Repository_i::create_array_i (CORBA::ULong length,
   ACE_Configuration_Section_Key new_key;
   this->config_->open_section (this->arrays_key_,
                                name,
-                               1,
+                               true,
                                new_key);
 
   // Set the length attribute.
@@ -556,18 +556,18 @@ TAO_Repository_i::create_sections ()
 {
   this->config_->open_section (config_->root_section (),
                                "root",
-                               1, // Will create if IFR is not persistent.
+                               true, // Will create if IFR is not persistent.
                                this->root_key_);
 
   this->config_->open_section (this->root_key_,
                                "repo_ids",
-                               1, // Will create if IFR is not persistent.
+                               true, // Will create if IFR is not persistent.
                                this->repo_ids_key_);
 
   int status =
     this->config_->open_section (this->root_key_,
                                  "pkinds",
-                                 0, // Don't create
+                                 false, // Don't create
                                  this->pkinds_key_);
 
   if (status != 0)
@@ -576,7 +576,7 @@ TAO_Repository_i::create_sections ()
     {
       this->config_->open_section (this->root_key_,
                                    "pkinds",
-                                   1, // It doesn't exist so create it.
+                                   true, // It doesn't exist so create it.
                                    this->pkinds_key_);
 
       u_int const num_pkinds = this->num_pkinds ();
@@ -588,7 +588,7 @@ TAO_Repository_i::create_sections ()
 
           this->config_->open_section (this->pkinds_key_,
                                        this->pkind_to_string (pkind),
-                                       1,
+                                       true,
                                        key);
 
           this->config_->set_integer_value (key,
@@ -603,27 +603,27 @@ TAO_Repository_i::create_sections ()
 
   this->config_->open_section (this->root_key_,
                                "strings",
-                               1,
+                               true,
                                this->strings_key_);
 
   this->config_->open_section (this->root_key_,
                                "wstrings",
-                               1,
+                               true,
                                this->wstrings_key_);
 
   this->config_->open_section (this->root_key_,
                                "fixeds",
-                               1,
+                               true,
                                this->fixeds_key_);
 
   this->config_->open_section (this->root_key_,
                                "arrays",
-                               1,
+                               true,
                                this->arrays_key_);
 
   this->config_->open_section (this->root_key_,
                                "sequences",
-                               1,
+                               true,
                                this->sequences_key_);
 
   u_int count = 0;

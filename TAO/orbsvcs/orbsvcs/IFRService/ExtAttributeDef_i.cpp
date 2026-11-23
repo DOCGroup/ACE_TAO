@@ -163,7 +163,7 @@ TAO_ExtAttributeDef_i::fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
   int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           sub_section,
-                                          0,
+                                          false,
                                           excepts_key);
 
   if (status != 0)
@@ -189,7 +189,7 @@ TAO_ExtAttributeDef_i::fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            holder,
                                            except_key,
-                                           0);
+                                           false);
       this->repo_->config ()->get_string_value (except_key,
                                                 "name",
                                                 holder);
@@ -220,11 +220,11 @@ TAO_ExtAttributeDef_i::exceptions (char const *sub_section,
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           sub_section,
-                                          0);
+                                          false);
   ACE_Configuration_Section_Key new_key;
   this->repo_->config ()->open_section (this->section_key_,
                                         sub_section,
-                                        1,
+                                        true,
                                         new_key);
   CORBA::ULong count = exceptions.length ();
   this->repo_->config ()->set_integer_value (new_key,

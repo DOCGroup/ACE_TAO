@@ -123,7 +123,7 @@ TAO_InterfaceDef_i::describe_i ()
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            base_path,
                                            base_key,
-                                           0);
+                                           false);
 
       TAO_InterfaceDef_i impl (this->repo_);
       impl.section_key (base_key);
@@ -249,13 +249,13 @@ TAO_InterfaceDef_i::base_interfaces_i (CORBA::InterfaceDefSeq const &base_interf
   // Remove the old base interfaces.
   this->repo_->config ()->remove_section (this->section_key_,
                                           "inherited",
-                                          0);
+                                          false);
 
   CORBA::ULong length = base_interfaces.length ();
   ACE_Configuration_Section_Key inherited_key;
   this->repo_->config ()->open_section (this->section_key_,
                                         "inherited",
-                                        1,
+                                        true,
                                         inherited_key);
 
   CORBA::String_var name;
@@ -270,7 +270,7 @@ TAO_InterfaceDef_i::base_interfaces_i (CORBA::InterfaceDefSeq const &base_interf
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            inherited_path,
                                            base_key,
-                                           0);
+                                           false);
 
       TAO_InterfaceDef_i impl (this->repo_);
       impl.section_key (base_key);
@@ -337,7 +337,7 @@ TAO_InterfaceDef_i::is_a_i (char const *interface_id)
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            base_path,
                                            base_key,
-                                           0);
+                                           false);
 
       TAO_InterfaceDef_i impl (this->repo_);
       impl.section_key (base_key);
@@ -413,7 +413,7 @@ TAO_InterfaceDef_i::describe_interface_i ()
   int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "ops",
-                                          0,
+                                          false,
                                           ops_key);
 
   CORBA::ULong count {};
@@ -430,7 +430,7 @@ TAO_InterfaceDef_i::describe_interface_i ()
           status =
             this->repo_->config ()->open_section (ops_key,
                                                   stringified,
-                                                  0,
+                                                  false,
                                                   op_key);
 
           if (status == 0)
@@ -471,7 +471,7 @@ TAO_InterfaceDef_i::describe_interface_i ()
   status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "attrs",
-                                          0,
+                                          false,
                                           attrs_key);
 
   count = 0;
@@ -489,7 +489,7 @@ TAO_InterfaceDef_i::describe_interface_i ()
           status =
             this->repo_->config ()->open_section (attrs_key,
                                                   stringified,
-                                                  0,
+                                                  false,
                                                   attr_key);
 
           if (status == 0)
@@ -539,7 +539,7 @@ TAO_InterfaceDef_i::describe_interface_i ()
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            base_path,
                                            base_key,
-                                           0);
+                                           false);
 
       TAO_InterfaceDef_i impl (this->repo_);
       impl.section_key (base_key);
@@ -717,7 +717,7 @@ TAO_InterfaceDef_i::create_operation_i (char const *id,
       ACE_Configuration_Section_Key params_key;
       this->repo_->config ()->open_section (new_key,
                                             "params",
-                                            1,
+                                            true,
                                             params_key);
 
       this->repo_->config ()->set_integer_value (params_key,
@@ -735,7 +735,7 @@ TAO_InterfaceDef_i::create_operation_i (char const *id,
           char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (params_key,
                                                 stringified,
-                                                1,
+                                                true,
                                                 param_key);
 
           this->repo_->config ()->set_string_value (param_key,
@@ -770,7 +770,7 @@ TAO_InterfaceDef_i::create_operation_i (char const *id,
       ACE_Configuration_Section_Key excepts_key;
       this->repo_->config ()->open_section (new_key,
                                             "excepts",
-                                            1,
+                                            true,
                                             excepts_key);
       char *type_path {};
 
@@ -795,7 +795,7 @@ TAO_InterfaceDef_i::create_operation_i (char const *id,
 
       this->repo_->config ()->open_section (new_key,
                                             "contexts",
-                                            1,
+                                            true,
                                             contexts_key);
 
       for (i = 0; i < length; ++i)
@@ -848,7 +848,7 @@ TAO_InterfaceDef_i::interface_contents (
       status =
         this->repo_->config ()->open_section (this->section_key_,
                                               "attrs",
-                                              0,
+                                              false,
                                               attrs_key);
 
       // Only if we have any.
@@ -878,7 +878,7 @@ TAO_InterfaceDef_i::interface_contents (
       status =
         this->repo_->config ()->open_section (this->section_key_,
                                               "ops",
-                                              0,
+                                              false,
                                               ops_key);
 
       // Only if we have any.
@@ -905,7 +905,7 @@ TAO_InterfaceDef_i::interface_contents (
       status =
         this->repo_->config ()->open_section (this->section_key_,
                                               "inherited",
-                                              0,
+                                              false,
                                               inherited_key);
 
       if (status == 0)
@@ -928,7 +928,7 @@ TAO_InterfaceDef_i::interface_contents (
               this->repo_->config ()->expand_path (this->repo_->root_key (),
                                                    base_path,
                                                    base_key,
-                                                   0);
+                                                   false);
 
               TAO_InterfaceDef_i base_iface (this->repo_);
               base_iface.section_key (base_key);
@@ -970,7 +970,7 @@ TAO_InterfaceDef_i::base_interfaces_recursive (
   int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "inherited",
-                                          0,
+                                          false,
                                           inherited_key);
 
   // No base interfaces.
@@ -1000,7 +1000,7 @@ TAO_InterfaceDef_i::base_interfaces_recursive (
         this->repo_->config ()->expand_path (this->repo_->root_key (),
                                              inherited_path,
                                              base_key,
-                                             0);
+                                             false);
 
       if (status == 0)
         {
@@ -1047,13 +1047,13 @@ TAO_InterfaceDef_i::inherited_attributes (
         this->repo_->config ()->expand_path (this->repo_->root_key (),
                                              path_name,
                                              base_key,
-                                             0);
+                                             false);
 
       if (status == 0)
         {
           this->repo_->config ()->open_section (base_key,
                                                 "attrs",
-                                                0,
+                                                false,
                                                 attrs_key);
 
           this->repo_->config ()->get_integer_value (attrs_key,
@@ -1065,7 +1065,7 @@ TAO_InterfaceDef_i::inherited_attributes (
               char *stringified = TAO_IFR_Service_Utils::int_to_string (j);
               this->repo_->config ()->open_section (attrs_key,
                                                     stringified,
-                                                    0,
+                                                    false,
                                                     attr_key);
 
               key_queue.push_back (attr_key);
@@ -1099,13 +1099,13 @@ TAO_InterfaceDef_i::inherited_operations (
         this->repo_->config ()->expand_path (this->repo_->root_key (),
                                              path_name,
                                              base_key,
-                                             0);
+                                             false);
 
       if (status == 0)
         {
           this->repo_->config ()->open_section (base_key,
                                                 "ops",
-                                                0,
+                                                false,
                                                 ops_key);
 
           this->repo_->config ()->get_integer_value (ops_key,
@@ -1117,7 +1117,7 @@ TAO_InterfaceDef_i::inherited_operations (
               char *stringified = TAO_IFR_Service_Utils::int_to_string (j);
               this->repo_->config ()->open_section (ops_key,
                                                     stringified,
-                                                    0,
+                                                    false,
                                                     op_key);
 
               key_queue.push_back (op_key);

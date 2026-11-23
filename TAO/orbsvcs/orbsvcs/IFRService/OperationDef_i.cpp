@@ -147,7 +147,7 @@ TAO_OperationDef_i::params_i ()
   int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "params",
-                                          0,
+                                          false,
                                           params_key);
 
   std::deque<ACE_Configuration_Section_Key> key_queue;
@@ -167,7 +167,7 @@ TAO_OperationDef_i::params_i ()
           status =
             this->repo_->config ()->open_section (params_key,
                                                   stringified,
-                                                  0,
+                                                  false,
                                                   param_key);
 
           if (status == 0)
@@ -260,7 +260,7 @@ TAO_OperationDef_i::params_i (CORBA::ParDescriptionSeq const &params)
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "params",
-                                          1);
+                                          true);
 
   CORBA::ULong length = params.length ();
 
@@ -272,7 +272,7 @@ TAO_OperationDef_i::params_i (CORBA::ParDescriptionSeq const &params)
   ACE_Configuration_Section_Key params_key;
   this->repo_->config ()->open_section (this->section_key_,
                                         "params",
-                                        1,
+                                        true,
                                         params_key);
 
   this->repo_->config ()->set_integer_value (params_key,
@@ -284,7 +284,7 @@ TAO_OperationDef_i::params_i (CORBA::ParDescriptionSeq const &params)
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (params_key,
                                             stringified,
-                                            1,
+                                            true,
                                             param_key);
 
       this->repo_->config ()->set_string_value (param_key,
@@ -359,7 +359,7 @@ TAO_OperationDef_i::contexts_i ()
   int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "contexts",
-                                          0,
+                                          false,
                                           contexts_key);
 
   std::deque<ACE_TString> context_queue;
@@ -423,7 +423,7 @@ TAO_OperationDef_i::contexts_i (CORBA::ContextIdSeq const &contexts)
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "contexts",
-                                          0);
+                                          false);
 
   CORBA::ULong length = contexts.length ();
 
@@ -435,7 +435,7 @@ TAO_OperationDef_i::contexts_i (CORBA::ContextIdSeq const &contexts)
   ACE_Configuration_Section_Key contexts_key;
   this->repo_->config ()->open_section (this->section_key_,
                                         "contexts",
-                                        1,
+                                        true,
                                         contexts_key);
 
   for (CORBA::ULong i {}; i < length; ++i)
@@ -464,7 +464,7 @@ TAO_OperationDef_i::exceptions_i ( )
   int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "excepts",
-                                          0,
+                                          false,
                                           excepts_key);
 
   int index = 0;
@@ -538,7 +538,7 @@ TAO_OperationDef_i::exceptions_i (CORBA::ExceptionDefSeq const &exceptions)
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "excepts",
-                                          0);
+                                          false);
 
   TAO_IFR_Service_Utils::set_exceptions (this->repo_->config (),
                                          this->section_key_,
@@ -581,7 +581,7 @@ TAO_OperationDef_i::make_description (
   int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "excepts",
-                                          0,
+                                          false,
                                           excepts_key);
 
   // This section may not have been created.
@@ -624,7 +624,7 @@ TAO_OperationDef_i::make_description (
           this->repo_->config ()->expand_path (this->repo_->root_key (),
                                                type_path,
                                                type_key,
-                                               0);
+                                               false);
 
           ACE_TString name;
           this->repo_->config ()->get_string_value (type_key,

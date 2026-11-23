@@ -136,7 +136,7 @@ TAO_ValueDef_i::supported_interfaces_i ()
   int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "supported",
-                                          0,
+                                          false,
                                           supported_key);
 
   if (status != 0)
@@ -188,11 +188,11 @@ TAO_ValueDef_i::supported_interfaces_i (
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "supported",
-                                          0);
+                                          false);
   ACE_Configuration_Section_Key supported_key;
   this->repo_->config ()->open_section (this->section_key_,
                                         "supported",
-                                        1,
+                                        true,
                                         supported_key);
   CORBA::ULong count = supported_interfaces.length ();
   this->repo_->config ()->set_integer_value (supported_key,
@@ -215,7 +215,7 @@ TAO_ValueDef_i::supported_interfaces_i (
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            supported_path,
                                            TAO_IFR_Service_Utils::tmp_key_,
-                                           0);
+                                           false);
       this->repo_->config ()->get_integer_value (
                                   TAO_IFR_Service_Utils::tmp_key_,
                                   "def_kind",
@@ -275,7 +275,7 @@ TAO_ValueDef_i::initializers_i ()
   int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "initializers",
-                                          0,
+                                          false,
                                           initializers_key);
 
   if (status != 0)
@@ -299,7 +299,7 @@ TAO_ValueDef_i::initializers_i ()
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (initializers_key,
                                             stringified,
-                                            0,
+                                            false,
                                             initializer_key);
       this->repo_->config ()->get_string_value (initializer_key,
                                                 "name",
@@ -308,7 +308,7 @@ TAO_ValueDef_i::initializers_i ()
       status =
         this->repo_->config ()->open_section (initializer_key,
                                               "params",
-                                              0,
+                                              false,
                                               params_key);
 
       if (status != 0)
@@ -328,7 +328,7 @@ TAO_ValueDef_i::initializers_i ()
           stringified = TAO_IFR_Service_Utils::int_to_string (j);
           this->repo_->config ()->open_section (params_key,
                                                 stringified,
-                                                0,
+                                                false,
                                                 arg_key);
           this->repo_->config ()->get_string_value (arg_key,
                                                     "arg_name",
@@ -370,7 +370,7 @@ TAO_ValueDef_i::initializers_i (CORBA::InitializerSeq const &initializers)
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "initializers",
-                                          1);
+                                          true);
   TAO_IFR_Generic_Utils<CORBA::InitializerSeq>::set_initializers (
       initializers,
       this->repo_->config (),
@@ -439,7 +439,7 @@ TAO_ValueDef_i::base_value_i (CORBA::ValueDef_ptr base_value)
                               this->repo_->root_key (),
                               base_path,
                               TAO_IFR_Service_Utils::tmp_key_,
-                              0
+                              false
                             );
   TAO_IFR_Service_Utils::name_exists (&TAO_ValueDef_i::name_clash,
                                       this->section_key_,
@@ -476,7 +476,7 @@ TAO_ValueDef_i::abstract_base_values_i ()
   int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "abstract_bases",
-                                          0,
+                                          false,
                                           bases_key);
 
   if (status != 0)
@@ -529,7 +529,7 @@ TAO_ValueDef_i::abstract_base_values_i (
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "abstract_bases",
-                                          0);
+                                          false);
   CORBA::ULong count = abstract_base_values.length ();
 
   if (count == 0)
@@ -540,7 +540,7 @@ TAO_ValueDef_i::abstract_base_values_i (
   ACE_Configuration_Section_Key bases_key;
   this->repo_->config ()->open_section (this->section_key_,
                                         "abstract_bases",
-                                        0,
+                                        false,
                                         bases_key);
   this->repo_->config ()->set_integer_value (bases_key,
                                              "count",
@@ -559,7 +559,7 @@ TAO_ValueDef_i::abstract_base_values_i (
                                   this->repo_->root_key (),
                                   base_path,
                                   TAO_IFR_Service_Utils::tmp_key_,
-                                  0
+                                  false
                                 );
       TAO_IFR_Service_Utils::name_exists (&TAO_ValueDef_i::name_clash,
                                           this->section_key_,
@@ -732,7 +732,7 @@ TAO_ValueDef_i::is_a_i (char const *id)
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            holder,
                                            base_key,
-                                           0);
+                                           false);
       this->repo_->config ()->get_string_value (base_key,
                                                 "id",
                                             holder);
@@ -748,7 +748,7 @@ TAO_ValueDef_i::is_a_i (char const *id)
   status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "abstract_bases",
-                                          0,
+                                          false,
                                           bases_key);
 
   if (status != 0)
@@ -776,7 +776,7 @@ TAO_ValueDef_i::is_a_i (char const *id)
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            holder,
                                            base_key,
-                                           0);
+                                           false);
       TAO_ValueDef_i impl (this->repo_);
       impl.section_key (base_key);
       success = impl.is_a_i (id);
@@ -846,7 +846,7 @@ TAO_ValueDef_i::describe_value_i ()
   int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "ops",
-                                          0,
+                                          false,
                                           ops_key);
   CORBA::ULong count = 0;
   CORBA::ULong param_count = 0;
@@ -870,7 +870,7 @@ TAO_ValueDef_i::describe_value_i ()
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (ops_key,
                                                 stringified,
-                                                0,
+                                                false,
                                                 op_key);
           this->repo_->config ()->get_string_value (op_key,
                                                     "name",
@@ -923,7 +923,7 @@ TAO_ValueDef_i::describe_value_i ()
           status =
             this->repo_->config ()->open_section (op_key,
                                                   "params",
-                                                  0,
+                                                  false,
                                                   params_key);
           if (status == 0)
             {
@@ -938,7 +938,7 @@ TAO_ValueDef_i::describe_value_i ()
                   stringified = TAO_IFR_Service_Utils::int_to_string (j);
                   this->repo_->config ()->open_section (params_key,
                                                         stringified,
-                                                        0,
+                                                        false,
                                                         param_key);
                   this->repo_->config ()->get_string_value (param_key,
                                                             "name",
@@ -976,7 +976,7 @@ TAO_ValueDef_i::describe_value_i ()
           status =
             this->repo_->config ()->open_section (op_key,
                                                   "excepts",
-                                                  0,
+                                                  false,
                                                   excepts_key);
           fv_desc->operations[i].exceptions.length (0);
 
@@ -1003,7 +1003,7 @@ TAO_ValueDef_i::describe_value_i ()
                                               this->repo_->root_key (),
                                               holder,
                                               except_def_key,
-                                              0
+                                              false
                                             );
                   this->repo_->config ()->get_string_value (except_def_key,
                                                             "name",
@@ -1042,7 +1042,7 @@ TAO_ValueDef_i::describe_value_i ()
   status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "attrs",
-                                          0,
+                                          false,
                                           attrs_key);
   if (status == 0)
     {
@@ -1057,7 +1057,7 @@ TAO_ValueDef_i::describe_value_i ()
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (attrs_key,
                                                 stringified,
-                                                0,
+                                                false,
                                                 attr_key);
           this->repo_->config ()->get_string_value (attr_key,
                                                     "name",
@@ -1091,7 +1091,7 @@ TAO_ValueDef_i::describe_value_i ()
           this->repo_->config ()->expand_path (this->repo_->root_key (),
                                                holder,
                                                attr_def_key,
-                                               0);
+                                               false);
           this->repo_->config ()->get_string_value (attr_def_key,
                                                     "container_id",
                                                     holder);
@@ -1107,7 +1107,7 @@ TAO_ValueDef_i::describe_value_i ()
   status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "members",
-                                          0,
+                                          false,
                                           members_key);
   if (status == 0)
     {
@@ -1122,7 +1122,7 @@ TAO_ValueDef_i::describe_value_i ()
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (members_key,
                                                 stringified,
-                                                0,
+                                                false,
                                                 member_key);
           this->repo_->config ()->get_string_value (member_key,
                                                     "name",
@@ -1175,7 +1175,7 @@ TAO_ValueDef_i::describe_value_i ()
   status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "initializers",
-                                          0,
+                                          false,
                                           initializers_key);
 
   if (status == 0)
@@ -1191,7 +1191,7 @@ TAO_ValueDef_i::describe_value_i ()
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (initializers_key,
                                                 stringified,
-                                                0,
+                                                false,
                                                 initializer_key);
           this->repo_->config ()->get_string_value (initializer_key,
                                                     "name",
@@ -1202,7 +1202,7 @@ TAO_ValueDef_i::describe_value_i ()
           status =
             this->repo_->config ()->open_section (initializer_key,
                                                   stringified,
-                                                  0,
+                                                  false,
                                                   params_key);
 
           if (status == 0)
@@ -1217,7 +1217,7 @@ TAO_ValueDef_i::describe_value_i ()
                   stringified = TAO_IFR_Service_Utils::int_to_string (j);
                   this->repo_->config ()->open_section (params_key,
                                                         stringified,
-                                                        0,
+                                                        false,
                                                         arg_key);
                   this->repo_->config ()->get_string_value (arg_key,
                                                             "arg_name",
@@ -1267,7 +1267,7 @@ TAO_ValueDef_i::describe_value_i ()
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            holder,
                                            base_key,
-                                           0);
+                                           false);
       this->repo_->config ()->get_string_value (base_key,
                                                 "id",
                                             holder);
@@ -1500,7 +1500,7 @@ TAO_ValueDef_i::create_operation_i (
       ACE_Configuration_Section_Key params_key;
       this->repo_->config ()->open_section (new_key,
                                             "params",
-                                            1,
+                                            true,
                                             params_key);
 
       this->repo_->config ()->set_integer_value (params_key,
@@ -1520,7 +1520,7 @@ TAO_ValueDef_i::create_operation_i (
           char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (params_key,
                                                 stringified,
-                                                1,
+                                                true,
                                                 param_key);
 
           this->repo_->config ()->set_string_value (param_key,
@@ -1556,7 +1556,7 @@ TAO_ValueDef_i::create_operation_i (
 
       this->repo_->config ()->open_section (new_key,
                                             "excepts",
-                                            1,
+                                            true,
                                             excepts_key);
 
       this->repo_->config ()->set_integer_value (excepts_key,
@@ -1585,7 +1585,7 @@ TAO_ValueDef_i::create_operation_i (
 
       this->repo_->config ()->open_section (new_key,
                                             "contexts",
-                                            1,
+                                            true,
                                             contexts_key);
 
       for (i = 0; i < length; ++i)
@@ -1677,7 +1677,7 @@ TAO_ValueDef_i::fill_value_description (CORBA::ValueDescription &desc)
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            holder,
                                            base_key,
-                                           0);
+                                           false);
       this->repo_->config ()->get_string_value (base_key,
                                                 "id",
                                                 holder);
@@ -1716,7 +1716,7 @@ TAO_ValueDef_i::value_contents (
       status =
         this->repo_->config ()->open_section (this->section_key_,
                                               "members",
-                                              0,
+                                              false,
                                               members_key);
 
       // Only if we have any.
@@ -1743,7 +1743,7 @@ TAO_ValueDef_i::value_contents (
       status =
         this->repo_->config ()->open_section (this->section_key_,
                                               "base",
-                                              0,
+                                              false,
                                               base_key);
 
       if (status == 0)
@@ -1766,7 +1766,7 @@ TAO_ValueDef_i::value_contents (
               this->repo_->config ()->expand_path (this->repo_->root_key (),
                                                    base_path,
                                                    base_key,
-                                                   0);
+                                                   false);
 
               TAO_ValueDef_i base_value (this->repo_);
               base_value.section_key (base_key);

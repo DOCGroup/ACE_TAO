@@ -194,7 +194,7 @@ TAO_UnionDef_i::members_i ()
   ACE_Configuration_Section_Key refs_key;
   this->repo_->config ()->open_section (this->section_key_,
                                         "refs",
-                                        0,
+                                        false,
                                         refs_key);
 
   u_int count;
@@ -208,7 +208,7 @@ TAO_UnionDef_i::members_i ()
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       if (this->repo_->config ()->open_section (refs_key,
                                                 stringified,
-                                                0,
+                                                false,
                                                 member_key)
            == 0)
         {
@@ -223,7 +223,7 @@ TAO_UnionDef_i::members_i ()
           if (this->repo_->config ()->expand_path (this->repo_->root_key (),
                                                    path,
                                                    entry_key,
-                                                   0)
+                                                   false)
                == 0)
             {
               key_queue.push_back (member_key);
@@ -311,7 +311,7 @@ TAO_UnionDef_i::members_i (CORBA::UnionMemberSeq const &members)
 
   this->repo_->config ()->open_section (this->section_key_,
                                         "refs",
-                                        1,
+                                        true,
                                         refs_key);
 
   // Store the new member count of the union.
@@ -327,7 +327,7 @@ TAO_UnionDef_i::members_i (CORBA::UnionMemberSeq const &members)
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (refs_key,
                                             stringified,
-                                            1,
+                                            true,
                                             member_key);
 
       this->repo_->config ()->set_string_value (member_key,

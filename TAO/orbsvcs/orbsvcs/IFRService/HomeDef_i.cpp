@@ -95,7 +95,7 @@ TAO_HomeDef_i::describe_i ()
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            holder,
                                            tmp_key,
-                                           0);
+                                           false);
       this->repo_->config ()->get_string_value (tmp_key,
                                                 "id",
                                                 holder);
@@ -117,7 +117,7 @@ TAO_HomeDef_i::describe_i ()
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            holder,
                                            tmp_key,
-                                           0);
+                                           false);
       TAO_ValueDef_i impl (this->repo_);
       impl.section_key (tmp_key);
       impl.fill_value_description (home_desc.primary_key);
@@ -249,7 +249,7 @@ TAO_HomeDef_i::supported_interfaces_i ()
   int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "supported",
-                                          0,
+                                          false,
                                           supported_key);
 
   if (status != 0)
@@ -297,7 +297,7 @@ TAO_HomeDef_i::supported_interfaces_i (
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "supported",
-                                          1);
+                                          true);
   CORBA::ULong length = supported_interfaces.length ();
 
   if (length == 0)
@@ -308,7 +308,7 @@ TAO_HomeDef_i::supported_interfaces_i (
   ACE_Configuration_Section_Key supported_key;
   this->repo_->config ()->open_section (this->section_key_,
                                         "supported",
-                                        1,
+                                        true,
                                         supported_key);
   for (CORBA::ULong i {}; i < length; ++i)
     {
@@ -550,7 +550,7 @@ TAO_HomeDef_i::create_common (CORBA::DefinitionKind created_kind,
       ACE_Configuration_Section_Key params_key;
       this->repo_->config ()->open_section (new_key,
                                             "params",
-                                            1,
+                                            true,
                                             params_key);
 
       this->repo_->config ()->set_integer_value (params_key,
@@ -563,7 +563,7 @@ TAO_HomeDef_i::create_common (CORBA::DefinitionKind created_kind,
           char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (params_key,
                                                 stringified,
-                                                1,
+                                                true,
                                                 param_key);
 
           this->repo_->config ()->set_string_value (param_key,
@@ -598,7 +598,7 @@ TAO_HomeDef_i::create_common (CORBA::DefinitionKind created_kind,
       ACE_Configuration_Section_Key excepts_key;
       this->repo_->config ()->open_section (new_key,
                                             "excepts",
-                                            1,
+                                            true,
                                             excepts_key);
 
       this->repo_->config ()->set_integer_value (excepts_key,
@@ -635,7 +635,7 @@ TAO_HomeDef_i::fill_op_desc_seq (ACE_Configuration_Section_Key &key,
   int status =
     this->repo_->config ()->open_section (key,
                                           sub_section,
-                                          0,
+                                          false,
                                           sub_key);
 
   if (status != 0)
@@ -665,7 +665,7 @@ TAO_HomeDef_i::fill_op_desc (ACE_Configuration_Section_Key &key,
   ACE_Configuration_Section_Key op_key;
   this->repo_->config ()->open_section (key,
                                         sub_section,
-                                        0,
+                                        false,
                                         op_key);
   TAO_IFR_Desc_Utils<CORBA::OperationDescription,
                      TAO_OperationDef_i>::fill_desc_begin (
@@ -713,7 +713,7 @@ TAO_HomeDef_i::fill_param_desc_seq (ACE_Configuration_Section_Key &key,
   int status =
     this->repo_->config ()->open_section (key,
                                           sub_section,
-                                          0,
+                                          false,
                                           params_key);
 
   if (status != 0)
@@ -745,7 +745,7 @@ TAO_HomeDef_i::fill_param_desc (ACE_Configuration_Section_Key &key,
   ACE_Configuration_Section_Key param_key;
   this->repo_->config ()->open_section (key,
                                         sub_section,
-                                        0,
+                                        false,
                                         param_key);
   ACE_TString holder;
   this->repo_->config ()->get_string_value (param_key,
@@ -782,7 +782,7 @@ TAO_HomeDef_i::fill_exc_desc_seq (ACE_Configuration_Section_Key &key,
   int status =
     this->repo_->config ()->open_section (key,
                                           sub_section,
-                                          0,
+                                          false,
                                           excepts_key);
 
   if (status != 0)
@@ -823,7 +823,7 @@ TAO_HomeDef_i::fill_exc_desc (ACE_Configuration_Section_Key &key,
   this->repo_->config ()->expand_path (this->repo_->root_key (),
                                        path,
                                        except_def_key,
-                                       0);
+                                       false);
   TAO_IFR_Desc_Utils<CORBA::ExceptionDescription,
                      TAO_ExceptionDef_i>::fill_desc_begin (
                                               ed,
@@ -846,7 +846,7 @@ TAO_HomeDef_i::fill_attr_desc_seq (ACE_Configuration_Section_Key &key,
   int status =
     this->repo_->config ()->open_section (key,
                                           sub_section,
-                                          0,
+                                          false,
                                           attrs_key);
 
   if (status != 0)
@@ -878,7 +878,7 @@ TAO_HomeDef_i::fill_attr_desc (ACE_Configuration_Section_Key &key,
   ACE_Configuration_Section_Key attr_key;
   this->repo_->config ()->open_section (key,
                                         sub_section,
-                                        0,
+                                        false,
                                         attr_key);
   TAO_IFR_Desc_Utils<CORBA::ExtAttributeDescription,
                      TAO_AttributeDef_i>::fill_desc_begin (

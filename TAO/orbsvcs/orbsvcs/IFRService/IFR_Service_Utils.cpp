@@ -607,7 +607,7 @@ TAO_IFR_Service_Utils::name_exists (
   status =
     repo->config ()->open_section (key,
                                    "refs",
-                                   0,
+                                   false,
                                    refs_key);
 
   if (status == 0)
@@ -623,7 +623,7 @@ TAO_IFR_Service_Utils::name_exists (
 
           repo->config ()->open_section (refs_key,
                                          stringified,
-                                         0,
+                                         false,
                                          member_key);
 
           ACE_TString member_name;
@@ -645,7 +645,7 @@ TAO_IFR_Service_Utils::name_exists (
   status =
     repo->config ()->open_section (key,
                                    "defns",
-                                   0,
+                                   false,
                                    defns_key);
   if (status == 0)
     {
@@ -660,7 +660,7 @@ TAO_IFR_Service_Utils::name_exists (
 
           repo->config ()->open_section (defns_key,
                                          stringified,
-                                         0,
+                                         false,
                                          defn_key);
 
           ACE_TString defn_name;
@@ -734,7 +734,7 @@ TAO_IFR_Service_Utils::check_subsection (
   int status =
     config->open_section (key,
                           sub_section,
-                          0,
+                          false,
                           sub_key);
 
   if (status != 0)
@@ -756,7 +756,7 @@ TAO_IFR_Service_Utils::check_subsection (
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       config->open_section (sub_key,
                             stringified,
-                            0,
+                            false,
                             entry_key);
       config->get_string_value (entry_key,
                                 "name",
@@ -825,7 +825,7 @@ TAO_IFR_Service_Utils::create_common (
   ACE_Configuration_Section_Key sub_key;
   config->open_section (container_key,
                         sub_section_name,
-                        1,
+                        true,
                         sub_key);
 
   u_int defn_count = 0;
@@ -839,7 +839,7 @@ TAO_IFR_Service_Utils::create_common (
     TAO_IFR_Service_Utils::int_to_string (defn_count);
   config->open_section (sub_key,
                         section_name,
-                        1,
+                        true,
                         new_key);
 
   // Increment the count.
@@ -939,7 +939,7 @@ TAO_IFR_Service_Utils::set_exceptions (
   ACE_Configuration_Section_Key excepts_key;
   config->open_section (key,
                         sub_section,
-                        1,
+                        true,
                         excepts_key);
 
   config->set_integer_value (excepts_key,
@@ -1020,7 +1020,7 @@ TAO_IFR_Service_Utils::gen_valuetype_tc_r (
       repo->config ()->expand_path (repo->root_key (),
                                     base_path,
                                     base_key,
-                                    0);
+                                    false);
       base_tc =
         TAO_IFR_Service_Utils::gen_valuetype_tc_r (base_key,
                                                    repo);
@@ -1050,7 +1050,7 @@ TAO_IFR_Service_Utils::fill_valuemember_seq (
   int status =
     repo->config ()->open_section (key,
                                    "members",
-                                   0,
+                                   false,
                                    members_key);
 
   if (status != 0)
@@ -1074,7 +1074,7 @@ TAO_IFR_Service_Utils::fill_valuemember_seq (
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       repo->config ()->open_section (members_key,
                                      stringified,
-                                     0,
+                                     false,
                                      member_key);
       repo->config ()->get_string_value (member_key,
                                          "name",
@@ -1142,7 +1142,7 @@ TAO_IFR_Service_Utils::path_to_def_kind (ACE_TString &path,
     repo->config ()->expand_path (repo->root_key (),
                                   path,
                                   TAO_IFR_Service_Utils::tmp_key_,
-                                  0);
+                                  false);
 
   if (status != 0)
     {

@@ -100,7 +100,7 @@ void ConfigTreeCtrl::ResolveKey(wxTreeItemId Item, ACE_Configuration_Section_Key
   }
   if(Path.length())
   {
-    m_pConfig->expand_path(m_pConfig->root_section(), Path, Key, 0);
+    m_pConfig->expand_path(m_pConfig->root_section(), Path, Key, false);
   }
   else
   {

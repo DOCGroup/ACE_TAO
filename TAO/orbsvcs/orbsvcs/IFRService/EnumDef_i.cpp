@@ -83,7 +83,7 @@ TAO_EnumDef_i::members_i ()
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (this->section_key_,
                                             stringified,
-                                            0,
+                                            false,
                                             member_key);
 
       ACE_TString member_name;
@@ -112,7 +112,7 @@ TAO_EnumDef_i::members_i (CORBA::EnumMemberSeq const &members)
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "members",
-                                          1);
+                                          true);
 
   CORBA::ULong count = members.length ();
   this->repo_->config ()->set_integer_value (this->section_key_,
@@ -125,7 +125,7 @@ TAO_EnumDef_i::members_i (CORBA::EnumMemberSeq const &members)
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (this->section_key_,
                                             stringified,
-                                            1,
+                                            true,
                                             member_key);
 
       ACE_TString member_name (members[i]);

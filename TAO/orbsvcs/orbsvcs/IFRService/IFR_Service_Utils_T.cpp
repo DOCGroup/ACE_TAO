@@ -19,7 +19,7 @@ TAO_IFR_Generic_Utils<T>::destroy_special (const ACE_TCHAR *section_name,
   int status =
     repo->config ()->open_section (key,
                                    section_name,
-                                   0,
+                                   false,
                                    sub_key);
 
   if (status != 0)
@@ -42,7 +42,7 @@ TAO_IFR_Generic_Utils<T>::destroy_special (const ACE_TCHAR *section_name,
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       repo->config ()->open_section (sub_key,
                                      stringified,
-                                     0,
+                                     false,
                                      special_key);
       T impl (repo);
       impl.section_key (special_key);
@@ -67,7 +67,7 @@ TAO_IFR_Generic_Utils<T>::set_initializers (
   ACE_Configuration_Section_Key initializers_key;
   config->open_section (key,
                         ACE_TEXT("initializers"),
-                        1,
+                        true,
                         initializers_key);
   config->set_integer_value (initializers_key,
                              ACE_TEXT("count"),
@@ -84,7 +84,7 @@ TAO_IFR_Generic_Utils<T>::set_initializers (
       ACE_TCHAR *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       config->open_section (initializers_key,
                             stringified,
-                            1,
+                            true,
                             initializer_key);
       config->set_string_value (initializer_key,
                                 ACE_TEXT("name"),
@@ -96,7 +96,7 @@ TAO_IFR_Generic_Utils<T>::set_initializers (
         {
           config->open_section (initializer_key,
                                 ACE_TEXT("params"),
-                                1,
+                                true,
                                 params_key);
           config->set_integer_value (params_key,
                                      ACE_TEXT("count"),
@@ -108,7 +108,7 @@ TAO_IFR_Generic_Utils<T>::set_initializers (
                 TAO_IFR_Service_Utils::int_to_string (j);
               config->open_section (params_key,
                                     stringified,
-                                    1,
+                                    true,
                                     arg_key);
               config->set_string_value (
                   arg_key,
@@ -161,7 +161,7 @@ TAO_IFR_Strseq_Utils<T_strseq> ::fill_string_seq (
   ACE_Configuration_Section_Key section_key;
   int status = config->open_section (key,
                                      section_name,
-                                     0,
+                                     false,
                                      section_key);
 
   if (status != 0)
@@ -199,7 +199,7 @@ TAO_Port_Desc_Seq_Utils<T_desc_seq>::port_descriptions (
   ACE_Configuration_Section_Key sub_key;
   int status = config->open_section (key,
                                      sub_section,
-                                     0,
+                                     false,
                                      sub_key);
 
   if (status != 0)
@@ -222,7 +222,7 @@ TAO_Port_Desc_Seq_Utils<T_desc_seq>::port_descriptions (
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       config->open_section (sub_key,
                             stringified,
-                            0,
+                            false,
                             desc_key);
 
       config->get_string_value (desc_key,
@@ -314,7 +314,7 @@ TAO_Port_Utils<T>::create_entry (char const *id,
   repo->config ()->expand_path (repo->root_key (),
                                 tmp,
                                 base_type_key,
-                                0);
+                                false);
 
   ACE_TString holder;
   repo->config ()->get_string_value (base_type_key,
