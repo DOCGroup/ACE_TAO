@@ -3,6 +3,9 @@
  *
  *  implementation-defined constants
  *
+ *  @note PATH_MAX is used instead of _POSIX_PATH_MAX because POSIX defines
+ *  _POSIX_PATH_MAX as the minimum maximum value for PATH_MAX (256).
+ *
  *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
@@ -61,9 +64,6 @@ extern "C"
 #  define HOST_NAME_MAX 256
 #endif /* !HOST_NAME_MAX */
 
-// Note that we are using PATH_MAX instead of _POSIX_PATH_MAX, since
-// _POSIX_PATH_MAX is the *minimum* maximum value for PATH_MAX and is
-// defined by POSIX as 256.
 #if !defined (PATH_MAX)
 #  if defined (_MAX_PATH)
 #    define PATH_MAX _MAX_PATH

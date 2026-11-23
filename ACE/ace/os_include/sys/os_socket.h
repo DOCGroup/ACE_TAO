@@ -3,6 +3,9 @@
  *
  *  main sockets header
  *
+ *  @note AF_ANY must be defined after sys/socket.h is included so the
+ *  AF_FILE definition is available on Linux/glibc2.
+ *
  *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
@@ -136,9 +139,7 @@ extern "C"
 #  define ACE_BSD_CONTROL_MSG_LEN sizeof (struct cmsghdr) + sizeof (ACE_HANDLE)
 #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
-// Increase the range of "address families".  Please note that this
-// must appear _after_ the include of sys/socket.h, for the AF_FILE
-// definition on Linux/glibc2.
+// Increase the range of "address families".
 #if !defined (AF_ANY)
 #  define AF_ANY (-1)
 #endif /* AF_ANY */
