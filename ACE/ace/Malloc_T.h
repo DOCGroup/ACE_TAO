@@ -429,7 +429,7 @@ class ACE_Malloc_FIFO_Iterator_T;
  * Note that the ACE_Allocator_Adapter class can be used to integrate allocator
  * classes which do not meet the interface requirements of ACE_Malloc_T.
  *
- * @Note The bind() and find() methods use linear search, so
+ * @note The bind() and find() methods use linear search, so
  * it's not a good idea to use them for managing a large number of
  * entities.  If you need to manage a large number of entities, it's
  * recommended that you bind() an ACE_Hash_Map_Manager that

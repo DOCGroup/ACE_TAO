@@ -45,7 +45,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * specifications.  Constructor arguments determine per-instance optional
  * functionality.
  *
- * Note that multicast semantics and implementation details are @i very
+ * Note that multicast semantics and implementation details are very
  * environment-specific; this class is just a wrapper around the underlying
  * implementation and does not try to normalize the concept of multicast
  * communications.

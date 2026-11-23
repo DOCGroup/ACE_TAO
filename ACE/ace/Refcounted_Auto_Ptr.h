@@ -152,8 +152,8 @@ private:
 
   /// Increase the reference count on @a rep.
   ///
-  /// @retval @a rep if success, 0 if there's an error obtaining the lock
-  ///         on @a rep.
+  /// @return @a rep on success, or 0 if there's an error obtaining the
+  ///         lock on @a rep.
   static ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *attach (
     ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *rep);
 

@@ -969,9 +969,9 @@ protected:
 
   /// Remove the event handler associated with the given handle and
   /// event mask from the "interest set." If @a eh is supplied, only do the
-  /// remove if @eh matches the event handler that's registered for @a handle.
+  /// remove if @a eh matches the event handler that's registered for @a handle.
   /// The caller is expected to be holding the repo token on entry and have
-  /// @repo_guard referencing that token. It will be temporarily released
+  /// @a repo_guard referencing that token. It will be temporarily released
   /// during a handle_close() callback if needed; if it is released for the
   //// callback it will be reacquired before return.
   // FUZZ: disable check_for_ACE_Guard

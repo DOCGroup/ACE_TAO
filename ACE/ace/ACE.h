@@ -454,7 +454,7 @@ namespace ACE
    *
    * @param pathname  The name to check for a proper suffix.
    *
-   * @retval @c pathname if there is a proper suffix for Windows. This is
+   * @return @c pathname if there is a proper suffix for Windows. This is
    *         always the return value for non-Windows platforms.
    * @retval If a suffix needs to be added, returns a pointer to new[]
    *         allocated memory containing the original @c pathname plus

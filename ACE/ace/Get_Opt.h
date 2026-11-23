@@ -216,7 +216,7 @@ public:
    * @return The parsed option character. The following characters have
    * special significance.
    * @retval 0      A long option was found
-   * @retval '\?'   Either an unknown option character was found, or the
+   * @retval '?'    Either an unknown option character was found, or the
    *                option is known but requires an argument, none was
    *                specified, and @a optstring did not contain a leading
    *                colon.

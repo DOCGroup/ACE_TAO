@@ -426,7 +426,7 @@ public:
    *
    * Internally, ACE_Thread_Manager keeps a freelist for caching
    * resources it uses to keep track of managed threads (not the
-   * threads themselves.)  @a prealloc, @a lwm, @a inc, @hwm
+   * threads themselves.)  @a prealloc, @a lwm, @a inc, and @a hwm
    * determine the initial size, the low water mark, increment step,
    * and high water mark of the freelist.
    *
