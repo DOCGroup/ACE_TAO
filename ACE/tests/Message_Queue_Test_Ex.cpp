@@ -109,7 +109,7 @@ struct Send_Messages
         return -1;
       }
 
-    int limit = this->number_of_messages_ / this->chain_limit_;
+    int const limit = this->number_of_messages_ / this->chain_limit_;
     ACE_NEW_RETURN (this->send_block_,
                     User_Class *[limit],
                     -1);
@@ -301,7 +301,7 @@ MQ_Ex_N_Tester::test_enqueue_tail ()
     }
 
   // prepare
-  int limit = max_messages / chain_limit;
+  int const limit = max_messages / chain_limit;
   timer->start ();
   // Send with just one call
   for (int i = 0; i < limit; ++i)
@@ -355,7 +355,7 @@ MQ_Ex_N_Tester::test_enqueue_head ()
   // prepare
   int i, j, k = 0;
 
-  int limit = max_messages / chain_limit;
+  int const limit = max_messages / chain_limit;
   timer->start ();
 
   // Send/receive the messages.
@@ -595,7 +595,7 @@ MQ_Ex_N_Tester::sender (void *args)
     {
       return (ACE_THR_FUNC_RETURN) -1;
     }
-  int limit = max_messages / chain_limit;
+  int const limit = max_messages / chain_limit;
   tester_barrier.wait ();
   timer->start ();
   // Send/receive the messages.

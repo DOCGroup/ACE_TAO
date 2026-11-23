@@ -219,7 +219,7 @@ test_task_record_keeping (ACE_Thread_Manager *mgr)
   }
 
   ACE_Task_Base *task_list[10];
-  int num_tasks = mgr->task_all_list (task_list, 10);
+  int const num_tasks = mgr->task_all_list (task_list, 10);
   if (2 != num_tasks)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected 2 tasks; got %d\n"),
@@ -330,7 +330,7 @@ run_main (int, ACE_TCHAR *[])
     }
 #endif /* ACE_HAS_VXTHREADS */
 
-  int grp_id = thr_mgr->spawn_n
+  int const grp_id = thr_mgr->spawn_n
                  (
                   n_threads,
                   worker,

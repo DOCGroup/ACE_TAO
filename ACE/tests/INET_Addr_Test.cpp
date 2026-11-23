@@ -69,7 +69,7 @@ static bool test_tao_use ()
 
   addr.set (full.c_str ());
 
-  u_short p = addr.get_port_number ();
+  u_short const p = addr.get_port_number ();
 
   if (p != 12345)
     {
@@ -208,7 +208,7 @@ int run_main (int, ACE_TCHAR *[])
   int status = 0;     // Innocent until proven guilty
 
   // Try to set up known IP and port.
-  u_short port (80);
+  u_short const port (80);
   ACE_UINT32 const ia_any = INADDR_ANY;
   ACE_INET_Addr local_addr(port, ia_any);
   status |= check_type_consistency (local_addr);
@@ -468,7 +468,7 @@ int run_main (int, ACE_TCHAR *[])
       for (int i = 0; i < 2; ++i)
       {
          ACE_INET_Addr addr;
-         int old_type = addr.get_type();
+         int const old_type = addr.get_type();
          if (addr.set(12345, local_names[i]) == 0) {
            if (addr.get_type() != old_type) {
              ACE_ERROR ((LM_ERROR,

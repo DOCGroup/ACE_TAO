@@ -230,7 +230,7 @@ cancellation_test<TIMER_QUEUE>::cancellation_test (const char *timer_queue_type)
               "\nCancellation test for %C\n\n",
               timer_queue_type));
 
-  int configs[][4] = {
+  int const configs[][4] = {
     { 0, 0, 0, 0, },
     { 0, 0, 0, 1, },
     { 0, 0, 1, 0, },
@@ -290,7 +290,7 @@ expire (ACE_Timer_Queue &timer_queue,
 
   ACE_Event_Handler_var safe_handler (handler);
 
-  long timer_id =
+  long const timer_id =
     timer_queue.schedule (handler,
                           one_second_timeout,
                           ACE_Time_Value (1) + timer_queue.gettimeofday (),
@@ -583,7 +583,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("Timer_Queue_Reference_Counting_Test"));
 
   // Validate options.
-  int result =
+  int const result =
     parse_args (argc, argv);
   if (result != 0)
   {

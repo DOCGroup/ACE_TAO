@@ -717,7 +717,7 @@ MCT_Task::open (void *)
   MCT_Event_Handler *handler {};
 
   ACE_INET_Addr addr = this->config_.group_start ();
-  int groups = this->config_.groups ();
+  int const groups = this->config_.groups ();
   for (int i = 0; i < groups; ++i)
     {
       ACE_NEW_RETURN (handler,
@@ -869,9 +869,9 @@ int producer (MCT_Config &config)
       }
     }
 
-  int iterations = config.iterations ();
+  int const iterations = config.iterations ();
   // we add an extra 5 groups for noise.
-  int groups = config.groups () + 5;
+  int const groups = config.groups () + 5;
   for (int i = 0; (i < iterations || iterations == 0) && !finished; ++i)
     {
       ACE_INET_Addr addr = config.group_start ();
@@ -956,7 +956,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   const ACE_TCHAR *temp = ACE_TEXT ("Multicast_Test");
   ACE_TString test = temp;
 
-  u_long role = config.role ();
+  u_long const role = config.role ();
   if (ACE_BIT_DISABLED (role, MCT_Config::PRODUCER)
       || ACE_BIT_DISABLED (role, MCT_Config::CONSUMER))
     {
