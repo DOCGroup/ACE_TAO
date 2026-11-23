@@ -18,13 +18,13 @@ namespace ACE
         bool trace = false;
         ACE_TString filename;
 
-        ACE_Env_Value<int> log (ACE_TEXT("INET_LOG_LEVEL"), debug_level);
+        ACE_Env_Value<int> const log (ACE_TEXT("INET_LOG_LEVEL"), debug_level);
         debug_level = log;
 
-        ACE_Env_Value<int> trace_env (ACE_TEXT("INET_TRACE_ENABLE"), 0);
+        ACE_Env_Value<int> const trace_env (ACE_TEXT("INET_TRACE_ENABLE"), 0);
         trace = (trace_env != 0);
 
-        ACE_Env_Value<ACE_TString> filename_env (ACE_TEXT("INET_LOG_FILE"), filename.c_str ());
+        ACE_Env_Value<ACE_TString> const filename_env (ACE_TEXT("INET_LOG_FILE"), filename.c_str ());
         filename = filename_env;
 
         if (trace)

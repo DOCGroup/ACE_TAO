@@ -58,7 +58,7 @@ namespace ACE
             return false; // invalid status
           }
 
-        bool multi_line = (ch == '-');
+        bool const multi_line = (ch == '-');
 
         ACE_Array<ACE_CString>::size_type n =
             this->response_.size ();

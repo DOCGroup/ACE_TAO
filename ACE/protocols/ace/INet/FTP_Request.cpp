@@ -59,7 +59,7 @@ namespace ACE
             if (ch != eof_)
               {
                 // get arg
-                ACE_Array<ACE_CString>::size_type n =
+                ACE_Array<ACE_CString>::size_type const n =
                     args.size ();
                 args.size (n + 1);
                 ACE_CString& arg = args[n];

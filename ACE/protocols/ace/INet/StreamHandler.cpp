@@ -84,7 +84,7 @@ namespace ACE
         size_t bytes_in = 0;
 
         // blocking (with or without timeout) or non-blocking?
-        bool no_wait = timeout && (*timeout == ACE_Time_Value::zero);
+        bool const no_wait = timeout && (*timeout == ACE_Time_Value::zero);
 
         recv_cnt = this->peer ().recv_n (buffer,
                                          rdlen <= sizeof(buffer) ? rdlen : sizeof(buffer),
@@ -201,7 +201,7 @@ namespace ACE
           {
             ACE_thread_t tid;
             this->reactor ()->owner (&tid);
-            bool reactor_thread =
+            bool const reactor_thread =
               ACE_OS::thr_equal (ACE_Thread::self (), tid) ? true : false;
 
             if (this->connected_)
@@ -405,9 +405,9 @@ namespace ACE
               }
 
             // normalize to total nr of char_size elements available in mb [+ mb_remain]
-            size_t total_char_len = ((mb->length () + copy_len)/ char_size) * char_size;
+            size_t const total_char_len = ((mb->length () + copy_len)/ char_size) * char_size;
             // what was the max we could copy?
-            size_t max_copy_len = (total_char_len > char_length) ?
+            size_t const max_copy_len = (total_char_len > char_length) ?
                                         char_length :
                                         total_char_len;
             // subtract what we possibly already copied from mb_remain
@@ -475,7 +475,7 @@ namespace ACE
                                              use_reactor ?
                                                 std::addressof (this->notification_strategy_) : nullptr);
 
-        size_t datasz = length * char_size;
+        size_t const datasz = length * char_size;
         ACE_Message_Block *raw_mb {};
         ACE_NEW_RETURN (raw_mb, ACE_Message_Block (datasz), -1);
         ACE_Message_Block_Unique_Ptr mb (raw_mb);
