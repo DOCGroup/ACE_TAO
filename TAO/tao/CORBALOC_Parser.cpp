@@ -333,7 +333,7 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
 
   if (raw_host.length() == 0)
     {
-      ACE_INET_Addr host_addr;
+      ACE_INET_Addr const host_addr;
 
       char tmp_host [MAXHOSTNAMELEN + 1];
 

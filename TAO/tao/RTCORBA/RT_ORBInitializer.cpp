@@ -71,7 +71,7 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
 
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // orb_core() TAO extension.
-  TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
+  TAO_ORBInitInfo_var const tao_info = TAO_ORBInitInfo::_narrow (info);
 
   if (CORBA::is_nil (tao_info.in ()))
     {
@@ -146,7 +146,7 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
                       CORBA::COMPLETED_NO));
   safe_pm.release ();
 
-  TAO_Priority_Mapping_Manager_var safe_manager = manager;
+  TAO_Priority_Mapping_Manager_var const safe_manager = manager;
 
   info->register_initial_reference ("PriorityMappingManager", manager);
 
@@ -175,7 +175,7 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
                       CORBA::COMPLETED_NO));
   safe_npm.release ();
 
-  TAO_Network_Priority_Mapping_Manager_var safe_network_manager =
+  TAO_Network_Priority_Mapping_Manager_var const safe_network_manager =
     network_manager;
 
   info->register_initial_reference ("NetworkPriorityMappingManager",
@@ -192,7 +192,7 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  CORBA::Object_var safe_rt_orb = rt_orb;
+  CORBA::Object_var const safe_rt_orb = rt_orb;
 
   info->register_initial_reference (TAO_OBJID_RTORB, rt_orb);
 
@@ -205,7 +205,7 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  CORBA::Object_var safe_rt_current = current;
+  CORBA::Object_var const safe_rt_current = current;
 
   info->register_initial_reference (TAO_OBJID_RTCURRENT, current);
 
