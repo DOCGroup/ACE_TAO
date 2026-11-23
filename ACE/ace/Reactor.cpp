@@ -307,7 +307,7 @@ ACE_Reactor::run_alertable_reactor_event_loop (ACE_Time_Value &tv,
 
   for (;;)
     {
-      int result = this->implementation_->alertable_handle_events (tv);
+      int const result = this->implementation_->alertable_handle_events (tv);
 
       if (eh != nullptr && (*eh)(this))
         {
@@ -334,7 +334,7 @@ ACE_Reactor::register_handler (ACE_Event_Handler *event_handler,
   // Assign *this* <Reactor> to the <Event_Handler>.
   event_handler->reactor (this);
 
-  int result = this->implementation ()->register_handler (event_handler, mask);
+  int const result = this->implementation ()->register_handler (event_handler, mask);
   if (result == -1)
     {
       // Reset the old reactor in case of failures.
@@ -355,7 +355,7 @@ ACE_Reactor::register_handler (ACE_HANDLE io_handle,
   // Assign *this* <Reactor> to the <Event_Handler>.
   event_handler->reactor (this);
 
-  int result = this->implementation ()->register_handler (io_handle,
+  int const result = this->implementation ()->register_handler (io_handle,
                                                           event_handler,
                                                           mask);
   if (result == -1)
@@ -404,7 +404,7 @@ ACE_Reactor::register_handler (ACE_HANDLE event_handle,
   // Assign *this* <Reactor> to the <Event_Handler>.
   event_handler->reactor (this);
 
-  int result = this->implementation ()->register_handler (event_handle,
+  int const result = this->implementation ()->register_handler (event_handle,
                                                           io_handle,
                                                           event_handler,
                                                           mask);
@@ -428,7 +428,7 @@ ACE_Reactor::register_handler (const ACE_Handle_Set &handles,
   // Assign *this* <Reactor> to the <Event_Handler>.
   event_handler->reactor (this);
 
-  int result = this->implementation ()->register_handler (handles,
+  int const result = this->implementation ()->register_handler (handles,
                                                           event_handler,
                                                           mask);
   if (result == -1)
@@ -452,7 +452,7 @@ ACE_Reactor::schedule_timer (ACE_Event_Handler *event_handler,
   // Assign *this* <Reactor> to the <Event_Handler>.
   event_handler->reactor (this);
 
-  long result = this->implementation ()->schedule_timer (event_handler,
+  long const result = this->implementation ()->schedule_timer (event_handler,
                                                          arg,
                                                          delta,
                                                          interval);
@@ -475,7 +475,7 @@ ACE_Reactor::schedule_wakeup (ACE_Event_Handler *event_handler,
   // Assign *this* <Reactor> to the <Event_Handler>.
   event_handler->reactor (this);
 
-  int result = this->implementation ()->schedule_wakeup (event_handler,
+  int const result = this->implementation ()->schedule_wakeup (event_handler,
                                                          masks_to_be_added);
   if (result == -1)
     {

@@ -96,7 +96,7 @@ ACE_Priority_Reactor::build_bucket (ACE_Handle_Set &dispatch_mask,
         return -1;
       }
 
-      ACE_Event_Tuple et (event_handler,
+      ACE_Event_Tuple const et (event_handler,
                           handle);
       int prio = et.event_handler_->priority ();
 
