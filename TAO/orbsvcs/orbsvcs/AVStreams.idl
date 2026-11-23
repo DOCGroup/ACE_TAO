@@ -281,7 +281,7 @@ module AVStreams
       /// Sets the initial configuration to be used for all added peers.
       void set_initial_configuration (in CosPropertyService::Properties initial);
 
-      /// Uses @c format_name standardised by OMG and IETF
+      /// Uses @a format_name standardised by OMG and IETF
       /// Multicasting operations are not supported yet.
       void set_format (in string flowName,
                        in string format_name)
@@ -451,7 +451,7 @@ module AVStreams
         raises (PropertyException,
                 streamOpFailed);
 
-      /// Uses @c format_name standardised by OMG and IETF
+      /// Uses @a format_name standardised by OMG and IETF
       /// Used to set a format on a flowname.
       void set_format (in string flowName,
                        in string format_name)
