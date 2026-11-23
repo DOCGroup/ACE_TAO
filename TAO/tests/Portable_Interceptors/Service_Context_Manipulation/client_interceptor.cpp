@@ -50,11 +50,11 @@ Echo_Client_Request_Interceptor::send_request (
                                     this->orb_id_.in ());
     }
 
-  CORBA::String_var operation = ri->operation ();
+  CORBA::String_var const operation = ri->operation ();
 
-  CORBA::Object_var target = ri->target ();
+  CORBA::Object_var const target = ri->target ();
 
-  CORBA::String_var ior =
+  CORBA::String_var const ior =
     this->orb_->object_to_string (target.in ());
 
 #if 0
@@ -111,11 +111,11 @@ Echo_Client_Request_Interceptor::receive_reply (
                                     this->orb_id_.in ());
     }
 
-  CORBA::String_var operation = ri->operation ();
+  CORBA::String_var const operation = ri->operation ();
 
-  CORBA::Object_var target = ri->target ();
+  CORBA::Object_var const target = ri->target ();
 
-  CORBA::String_var ior =
+  CORBA::String_var const ior =
     this->orb_->object_to_string (target.in ());
 
 #if 0
@@ -185,11 +185,11 @@ Echo_Client_Request_Interceptor::receive_exception (
                                     this->orb_id_.in ());
     }
 
-  CORBA::String_var operation = ri->operation ();
+  CORBA::String_var const operation = ri->operation ();
 
-  CORBA::Object_var target = ri->target ();
+  CORBA::Object_var const target = ri->target ();
 
-  CORBA::String_var ior =
+  CORBA::String_var const ior =
     this->orb_->object_to_string (target.in ());
 
 #if 0
