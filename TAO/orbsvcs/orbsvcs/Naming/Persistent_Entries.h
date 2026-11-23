@@ -159,7 +159,7 @@ public:
  * that stores info about every active Naming Context).
  *
  * We need this wrapper class around the actual data because we must
- * provide <hash> function for it to work with
+ * provide @c hash function for it to work with
  * ACE_Hash_Map_Manager.
  */
 class TAO_Naming_Serv_Export TAO_Persistent_Index_ExtId
@@ -185,7 +185,7 @@ public:
   /// Inequality comparison operator.
   bool operator!= (TAO_Persistent_Index_ExtId const &rhs) const;
 
-  /// <hash> function is required in order for this class to be usable by
+  /// @c hash function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
   u_long hash () const;
 

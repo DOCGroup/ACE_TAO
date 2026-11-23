@@ -38,16 +38,16 @@ class TAO_Persistent_Naming_Context_Factory;
  * @brief Defines a wrapper class that holds the root Naming Context.
  *
  * This class either finds an existing Naming Service (if the
- * <resolve_for_existing_naming_service> flag is set) or creates
+ * @c resolve_for_existing_naming_service flag is set) or creates
  * one (if @a resolve_for_existing_naming_service flag isn't set or
  * Naming Service was not found).  This class also defines the
- * operator-> so that  <NamingContext> functions like <bind>,
- * <unbind> .. can be called directly on a <TAO_Naming_Server>
+ * operator-> so that  @c NamingContext functions like @c bind,
+ * @c unbind .. can be called directly on a @c TAO_Naming_Server
  * object, and be forwareded to the root Naming Context.
  * This class is intended to simplify
  * programs that want to play the role of a Naming Service
  * server.  To simplify programs that want to play the role of
- * Naming Service clients, use <TAO_Naming_Client>.
+ * Naming Service clients, use @c TAO_Naming_Client.
  * If a Naming Service is created locally, a TAO_IOR_Multicast
  * event handler is created and installed on the ORB's reactor.
  * This event handler allows other clients on the network to
@@ -57,7 +57,7 @@ class TAO_Persistent_Naming_Context_Factory;
  * of the root Naming Context.  For more information on how this
  * bootstraping through a multicast process works, check out
  * orbsvcs/orbsvcs/TAO_IOR_Multicast.*, implementation of
- * <resolve_initial_references>, and orbsvcs/Naming/README.
+ * @c resolve_initial_references, and orbsvcs/Naming/README.
  */
 class TAO_Naming_Serv_Export TAO_Naming_Server
 {
@@ -70,12 +70,12 @@ public:
    * false, or no Naming Service was found during a @a timeout period,
    * create the Naming Service in this process.  If creating the
    * Naming Service locally, make the root context of size
-   * <context_size>, register it under the <poa>, and make the Naming
-   * Service persistent if <persistence_location> is not 0.
-   * (<persistence_location> specifies name of the file to use for
-   * persistent storage, <base_addr> specifies the address used for
-   * memory mapping <persistent_location> file).
-   * If <enable_multicast> is not zero then the service will respond
+   * @c context_size, register it under the @c poa, and make the Naming
+   * Service persistent if @c persistence_location is not 0.
+   * (@c persistence_location specifies name of the file to use for
+   * persistent storage, @c base_addr specifies the address used for
+   * memory mapping @c persistent_location file).
+   * If @c enable_multicast is not zero then the service will respond
    * to multicast location queries.
    */
   TAO_Naming_Server (CORBA::ORB_ptr orb,
@@ -94,15 +94,15 @@ public:
   /**
    * Initializer.  Attempts to find an existing Naming Service if
    * @a resolve_for_existing_naming_service is set to true.  If it is
-   * false, or no Naming Service was found during a <timeout> period,
+   * false, or no Naming Service was found during a @c timeout period,
    * create the Naming Service in this process.  If creating the
    * Naming Service locally, make the root context of size
-   * <context_size>, register it under the <poa>, and make the Naming
-   * Service persistent if <persistence_location> is not 0.
-   * (<persistence_location> specifies name of the file to use for
-   * persistent storage, <base_addr> specifies the address used for
-   * memory mapping <persistent_location> file).
-   * If <enable_multicast> is not zero then the service will respond
+   * @c context_size, register it under the @c poa, and make the Naming
+   * Service persistent if @c persistence_location is not 0.
+   * (@c persistence_location specifies name of the file to use for
+   * persistent storage, @c base_addr specifies the address used for
+   * memory mapping @c persistent_location file).
+   * If @c enable_multicast is not zero then the service will respond
    * to multicast location queries.
    */
   int init (CORBA::ORB_ptr orb,
@@ -156,10 +156,10 @@ protected:
    * refine how Naming Service components are created and initialized
    * Make the root context of size
    * @a context_size, register it under the @a root_poa, and make the Naming
-   * Service persistent if <persistence_location> is not 0.
-   * (<persistence_location> specifies name of the file to use for
+   * Service persistent if @c persistence_location is not 0.
+   * (@c persistence_location specifies name of the file to use for
    * persistent storage).
-   * If <enable_multicast> is not zero then the service will respond
+   * If @c enable_multicast is not zero then the service will respond
    * to multicast location queries.
    */
   virtual int init_new_naming (CORBA::ORB_ptr orb,
@@ -238,7 +238,7 @@ protected:
   ACE_TCHAR const *persistence_dir_ {};
 
   /// Address to be used for memory mapping Naming Service state file,
-  /// identified by the <persistence_file_name_>.
+  /// identified by the @c persistence_file_name_.
   void *base_address_ {TAO_NAMING_BASE_ADDR};
 
   /// If not zero use flat file persistence

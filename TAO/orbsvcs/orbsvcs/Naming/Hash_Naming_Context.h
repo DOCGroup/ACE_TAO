@@ -124,7 +124,7 @@ public:
   /// the server, and false otherwise.
   int root ();
 
-  /// Returns true if this context had <destroy> operation invoked on
+  /// Returns true if this context had @c destroy operation invoked on
   /// it, and false otherwise.
   int destroyed ();
 
@@ -135,10 +135,10 @@ public:
   /**
    * Create a binding for name @a n and object @a obj in the naming
    * context.  Compound names are treated as follows: ctx->bind (<c1;
-   * c2; c3; cn>, obj) = (ctx->resolve (<c1; c2; cn-1>))->bind (<cn>,
+   * c2; c3; cn>, obj) = (ctx->resolve (<c1; c2; cn-1>))->bind (@c cn,
    * obj) if the there already exists a binding for the specified
-   * name, <AlreadyBound> exception is thrown.  Naming contexts should
-   * be bound using <bind_context> and <rebind_context> in order to
+   * name, @c AlreadyBound exception is thrown.  Naming contexts should
+   * be bound using @c bind_context and @c rebind_context in order to
    * participate in name resolution later.
    */
   void bind (CosNaming::Name const &n,
@@ -154,7 +154,7 @@ public:
                CORBA::Object_ptr obj) override;
 
   /**
-   * This is the version of <bind> specifically for binding naming
+   * This is the version of @c bind specifically for binding naming
    * contexts, so that they will participate in name resolution when
    * compound names are passed to be resolved.
    */
@@ -162,7 +162,7 @@ public:
                      CosNaming::NamingContext_ptr nc) override;
 
   /**
-   * This is a version of <rebind> specifically for naming contexts,
+   * This is a version of @c rebind specifically for naming contexts,
    * so that they can participate in name resolution when compound
    * names are passed.
    */
@@ -172,7 +172,7 @@ public:
   /**
    * Return object reference that is bound to the name.  Compound name
    * resolve is defined as follows: ctx->resolve (<c1; c2; cn>) =
-   * ctx->resolve (<c1; c2 cn-1>)->resolve (<cn>) The naming service
+   * ctx->resolve (<c1; c2 cn-1>)->resolve (@c cn) The naming service
    * does not return the type of the object.  Clients are responsible
    * for "narrowing" the object to the appropriate type.
    */
@@ -181,7 +181,7 @@ public:
   /**
    * Remove the name binding from the context.  When compound names
    * are used, unbind is defined as follows: ctx->unbind (<c1; c2;
-   * cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (<cn>)
+   * cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (@c cn)
    */
   void unbind (CosNaming::Name const &n) override;
 
@@ -194,11 +194,11 @@ public:
   CosNaming::NamingContext_ptr bind_new_context (CosNaming::Name const &n) override;
 
   /**
-   * Delete the naming context.  The user should take care to <unbind> any
+   * Delete the naming context.  The user should take care to @c unbind any
    * bindings in which the given context is bound to some names, to
-   * avoid dangling references when invoking <destroy> operation.
-   * @note <destroy> is a no-op on the root context.
-   * @note after <destroy> is invoked on a Naming Context, all
+   * avoid dangling references when invoking @c destroy operation.
+   * @note @c destroy is a no-op on the root context.
+   * @note after @c destroy is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
   void destroy () override;
@@ -214,9 +214,9 @@ protected:
   /// @{
 
   /**
-   * <get_context> is used by methods that need to resolve a compound
+   * @c get_context is used by methods that need to resolve a compound
    * name before performing the actual operation (e.g., bind, unbind,
-   * etc.)  <get_context> takes a full name (including the last
+   * etc.)  @c get_context takes a full name (including the last
    * component that doesn't need to be resolved), and returns a
    * pointer to the target context.
    */
@@ -225,14 +225,14 @@ protected:
 
   /**
    * Pointer to the data structure used to store this Naming Context's
-   * bindings.  <context_> is initialized with a concrete data
+   * bindings.  @c context_ is initialized with a concrete data
    * structure by subclasses, which know which data structure to use.
    */
   TAO_Bindings_Map *context_;
 
   /**
-   * Pointer to the <interface> object for which we serve as a
-   * <concrete implementation>, i.e., the object that delegates to us
+   * Pointer to the @c interface object for which we serve as a
+   * concrete implementation, i.e., the object that delegates to us
    * all client CosNaming::NamingContext CORBA calls.
    * We need this pointer for reference counting.
    */
@@ -253,9 +253,9 @@ protected:
   PortableServer::POA_var poa_;
 
   /**
-   * ID with which we are registered with <poa_>.
-   * @note if <poa_id_> is equivalent to TAO_ROOT_NAMING_CONTEXT, then this Naming Context
-   * is the root Naming Context for the server, i.e., it is un<destroy>able.
+   * ID with which we are registered with @c poa_.
+   * @note if @c poa_id_ is equivalent to TAO_ROOT_NAMING_CONTEXT, then this Naming Context
+   * is the root Naming Context for the server, i.e., it is un@c destroyable.
    */
   ACE_CString poa_id_;
 };

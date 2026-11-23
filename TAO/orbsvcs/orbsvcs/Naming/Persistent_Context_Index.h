@@ -66,17 +66,17 @@ public:
 
   /**
    * Create ACE_Allocator, open/create memory-mapped file with the
-   * specified file name/base address.  Find or allocate <index_>.
+   * specified file name/base address.  Find or allocate @c index_.
    * Return 0 on success or -1 on failure.
    */
   int open (ACE_TCHAR const *file_name,
             void * base_address = TAO_NAMING_BASE_ADDR);
 
   /**
-   * If <index_> contains no entries (i.e., was just created), create
+   * If @c index_ contains no entries (i.e., was just created), create
    * a root Persistent Naming Context servant with table of size
-   * <context_size>, and make an entry for it
-   * in the <index_>.  If <index_> contains entries, create a
+   * @c context_size, and make an entry for it
+   * in the @c index_.  If @c index_ contains entries, create a
    * Persistent Naming Context servant for each entry.  Return 0 on
    * success and -1 on failure.
    */
@@ -108,14 +108,14 @@ public:
   /// @{
 
   /**
-   * Create an entry for a Persistent Naming Context in <index_>,
-   * i.e., a context with @a poa_id, @A counter and @A hash_map has just
+   * Create an entry for a Persistent Naming Context in @c index_,
+   * i.e., a context with @a poa_id, @a counter and @a hash_map has just
    * been created, and is registering with us.
    */
   int bind (char const *poa_id, ACE_UINT32 *&counter, CONTEXT *hash_map);
 
   /// Remove an entry for the Persistent Naming Context with @a poa_id
-  /// from <index_> (i.e., this context has just been destroyed).
+  /// from @c index_ (i.e., this context has just been destroyed).
   int unbind (char const *poa_id);
 
   /// @}
@@ -134,19 +134,19 @@ public:
 
   /// @}
 private:
-  /// Helper for the <init> method.  Iterates over <index_>, and
+  /// Helper for the @c init method.  Iterates over @c index_, and
   /// creates a servant for each entry.
   int recreate_all ();
 
   /// Helper for the @c open method.
   int create_index ();
 
-  /// Helper for <create_index> method: places hash table into an
+  /// Helper for @c create_index method: places hash table into an
   /// allocated space.
   int create_index_helper (void *buffer);
 
   /// Lock to prevent multiple threads from modifying entries in the
-  /// <index_> simultanneously.
+  /// @c index_ simultanneously.
   TAO_SYNCH_MUTEX lock_;
 
   /**

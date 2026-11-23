@@ -28,13 +28,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * underlying data structures supporting
  * ACE_Hash_Map_Manager/Iterator - like interfaces).
  *
- * Instances of <TAO_Bindings_Iterator>s affect reference counts
+ * Instances of @c TAO_Bindings_Iterators affect reference counts
  * of corresponding Naming Contexts. Reference count on a
  * Naming Context is incremented by one for a lifetime of each
- * instance of <TAO_Bindings_Iterator> created for that
+ * instance of @c TAO_Bindings_Iterator created for that
  * context, i.e., a Naming Context cannot
  * be cleaned up (but, of course, it can be invalidated) before
- * all of its iterators have been cleaned up.  When <destroy>
+ * all of its iterators have been cleaned up.  When @c destroy
  * method is invoked on a Naming Context, all of its iterators are
  * destroyed in a "lazy evaluation" fashion, i.e., whenever a next
  * operation is invoked on an iterator, and it can detect that
@@ -73,7 +73,7 @@ public:
   CORBA::Boolean next_one (CosNaming::Binding_out b) override;
 
   /**
-   * This operation passes back at most <how_many> unseen bindings.
+   * This operation passes back at most @c how_many unseen bindings.
    * True is returned if bindings were passed back, and false is
    * returned if no bindings were passed back.
    */
@@ -89,8 +89,8 @@ public:
 
   /**
    * Helper function used by TAO_*_Naming_Context and
-   * TAO_BindingIterator: populate a binding <b> with info contained
-   * in <hash_entry>.  Return 1 if everything went smoothly, 0 if an
+   * TAO_BindingIterator: populate a binding @c b with info contained
+   * in @c hash_entry.  Return 1 if everything went smoothly, 0 if an
    * allocation failed.
    */
   static int populate_binding (TABLE_ENTRY *hash_entry, CosNaming::Binding &b);
@@ -99,8 +99,8 @@ public:
 private:
   /**
    * Flag indicating whether this iterator is still valid.  (The
-   * iterator becomes invalid when <destroy> method has been invoked
-   * on it, or when <destroy> method has been invoked on the
+   * iterator becomes invalid when @c destroy method has been invoked
+   * on it, or when @c destroy method has been invoked on the
    * corresponding Naming Context.) This flag is necessary
    * because immediate destruction of this servant might not be possible
    * due to pending requests in the POA.
@@ -110,7 +110,7 @@ private:
   /**
    * Pointer to the Naming Context we are iterating over.  We need
    * this pointer to make sure the context is still valid before
-   * each iteration, and to decrement its reference count once we are <destroyed>.
+   * each iteration, and to decrement its reference count once we are @c destroyed.
    */
   TAO_Hash_Naming_Context *context_;
 

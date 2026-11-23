@@ -57,7 +57,7 @@ public:
   /**
    * Add a binding with the specified parameters to the table.
    * Return 0 on success and -1 on failure, 1 if there already is a
-   * binding with <id> and <kind>.
+   * binding with @c id and @c kind.
    */
   int bind (char const *id,
                     char const *kind,
@@ -65,7 +65,7 @@ public:
                     CosNaming::BindingType type) override;
 
   /**
-   * Overwrite a binding containing <id> and <kind> (or create a new
+   * Overwrite a binding containing @c id and @c kind (or create a new
    * one if one doesn't exist) with the specified parameters.  Return
    * 0 or 1 on success.  Return -1 or -2 on failure. (-2 is returned
    * if the new and old bindings differ in type).
@@ -76,14 +76,14 @@ public:
                       CosNaming::BindingType type) override;
 
   /**
-   * Remove a binding containing <id> and <kind> from the table.
+   * Remove a binding containing @c id and @c kind from the table.
    * Return 0 on success and -1 on failure.
    */
   int unbind (char const *id,
               char const *kind) override;
 
   /**
-   * Find the binding containing <id> and <kind> in the table, and
+   * Find the binding containing @c id and @c kind in the table, and
    * pass binding's type and object back to the caller by reference.
    * Return 0 on success and -1 on failure.
    * @note A duplicated object reference is assigned to @a obj, so the caller
@@ -139,7 +139,7 @@ public:
    * This utility method factors out the code needed to create a new
    * Transient Naming Context servant and activate it under the
    * specified POA with the specified id.  This function is static so
-   * that the code can be used, both from inside the class (e.g., <new_context>),
+   * that the code can be used, both from inside the class (e.g., @c new_context),
    * and from outside (e.g., Naming_Utils.cpp).
    */
   static CosNaming::NamingContext_ptr make_new_context (PortableServer::POA_ptr poa,
@@ -158,10 +158,10 @@ public:
   CosNaming::NamingContext_ptr new_context () override;
 
   /**
-   * Returns at most the requested number of bindings <how_many> in
-   * <bl>.  If the naming context contains additional bindings, they
+   * Returns at most the requested number of bindings @c how_many in
+   * @c bl.  If the naming context contains additional bindings, they
    * are returned with a BindingIterator.  In the naming context does
-   * not contain any additional bindings <bi> returned as null.
+   * not contain any additional bindings @c bi returned as null.
    */
   void list (CORBA::ULong how_many,
              CosNaming::BindingList_out &bl,

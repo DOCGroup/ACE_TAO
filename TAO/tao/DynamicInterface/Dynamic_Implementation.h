@@ -35,7 +35,7 @@ namespace CORBA
  *
  * @brief Base class for DSI.
  *
- * It is expected that the <invoke> and <_primary_interface>
+ * It is expected that the @c invoke() and @c _primary_interface()
  * methods will be only invoked by the POA in the context of
  * serving a CORBA request. Invoking this method in other
  * circumstances may lead to unpredictable results.

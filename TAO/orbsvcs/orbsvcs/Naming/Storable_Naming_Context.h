@@ -75,17 +75,17 @@ public:
   /// Inequality comparison operator.
   bool operator!= (TAO_Storable_ExtId const &rhs) const;
 
-  /// <hash> function is required in order for this class to be usable by
+  /// @c hash function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
   u_long hash () const;
 
   /// @}
 
-  /// <id> portion of the name to be associated with some object
+  /// @c id portion of the name to be associated with some object
   /// reference in a Storable Naming Context.
   CORBA::String_var id_;
 
-  /// <kind> portion of the name to be associated with some object
+  /// @c kind portion of the name to be associated with some object
   /// reference in a Storable Naming Context.
   CORBA::String_var kind_;
 
@@ -137,7 +137,7 @@ public:
   /**
    * Add a binding with the specified parameters to the table.
    * Return 0 on success and -1 on failure, 1 if there already is a
-   * binding with <id> and <kind>.
+   * binding with @c id and @c kind.
    */
   int bind (char const *id,
                     char const *kind,
@@ -145,7 +145,7 @@ public:
                     CosNaming::BindingType type) override;
 
   /**
-   * Overwrite a binding containing <id> and <kind> (or create a new
+   * Overwrite a binding containing @c id and @c kind (or create a new
    * one if one doesn't exist) with the specified parameters.  Return
    * 0 or 1 on success.  Return -1 or -2 on failure. (-2 is returned
    * if the new and old bindings differ in type).
@@ -156,13 +156,13 @@ public:
                       CosNaming::BindingType type) override;
 
   /**
-   * Remove a binding containing <id> and <kind> from the table.
+   * Remove a binding containing @c id and @c kind from the table.
    * Return 0 on success and -1 on failure.
    */
   int unbind (char const *id, char const *kind) override;
 
   /**
-   * Find the binding containing <id> and <kind> in the table, and
+   * Find the binding containing @c id and @c kind in the table, and
    * pass binding's type and object back to the caller by reference.
    * Return 0 on success and -1 on failure.
    * @note A duplicated object reference is assigned to @a obj, so the caller
@@ -223,7 +223,7 @@ public:
    * Storable Naming Context servant and activate it under the
    * specified POA with the specified id.  This function is static so
    * that the code can be used, both from inside the class (e.g.,
-   * <new_context>), and from outside (e.g., Naming_Utils.cpp).
+   * @c new_context), and from outside (e.g., Naming_Utils.cpp).
    */
   static CosNaming::NamingContext_ptr make_new_context (
                                CORBA::ORB_ptr orb,
@@ -255,10 +255,10 @@ public:
   CosNaming::NamingContext_ptr new_context () override;
 
   /**
-   * Returns at most the requested number of bindings <how_many> in
-   * <bl>.  If the naming context contains additional bindings, they
+   * Returns at most the requested number of bindings @c how_many in
+   * @c bl.  If the naming context contains additional bindings, they
    * are returned with a BindingIterator.  In the naming context does
-   * not contain any additional bindings <bi> returned as null.
+   * not contain any additional bindings @c bi returned as null.
    */
   void list (CORBA::ULong how_many,
              CosNaming::BindingList_out &bl,
@@ -268,19 +268,19 @@ public:
                CORBA::Object_ptr obj) override;
 
   /**
-   * Create a binding for name <n> and object <obj> in the naming
+   * Create a binding for name @c n and object @c obj in the naming
    * context.  Compound names are treated as follows: ctx->bind (<c1;
-   * c2; c3; cn>, obj) = (ctx->resolve (<c1; c2; cn-1>))->bind (<cn>,
+   * c2; c3; cn>, obj) = (ctx->resolve (<c1; c2; cn-1>))->bind (@c cn,
    * obj) if the there already exists a binding for the specified
-   * name, <AlreadyBound> exception is thrown.  Naming contexts should
-   * be bound using <bind_context> and <rebind_context> in order to
+   * name, @c AlreadyBound exception is thrown.  Naming contexts should
+   * be bound using @c bind_context and @c rebind_context in order to
    * participate in name resolution later.
    */
   void bind (CosNaming::Name const &n,
              CORBA::Object_ptr obj) override;
 
   /**
-   * This is the version of <bind> specifically for binding naming
+   * This is the version of @c bind specifically for binding naming
    * contexts, so that they will participate in name resolution when
    * compound names are passed to be resolved.
    */
@@ -288,7 +288,7 @@ public:
                      CosNaming::NamingContext_ptr nc) override;
 
   /**
-   * This is a version of <rebind> specifically for naming contexts,
+   * This is a version of @c rebind specifically for naming contexts,
    * so that they can participate in name resolution when compound
    * names are passed.
    */
@@ -298,7 +298,7 @@ public:
   /**
    * Return object reference that is bound to the name.  Compound name
    * resolve is defined as follows: ctx->resolve (<c1; c2; cn>) =
-   * ctx->resolve (<c1; c2 cn-1>)->resolve (<cn>) The naming service
+   * ctx->resolve (<c1; c2 cn-1>)->resolve (@c cn) The naming service
    * does not return the type of the object.  Clients are responsible
    * for "narrowing" the object to the appropriate type.
    */
@@ -307,7 +307,7 @@ public:
   /**
    * Remove the name binding from the context.  When compound names
    * are used, unbind is defined as follows: ctx->unbind (<c1; c2;
-   * cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (<cn>)
+   * cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (@c cn)
    */
   void unbind (CosNaming::Name const &n) override;
 
@@ -321,11 +321,11 @@ public:
                                 CosNaming::Name const &n) override;
 
   /**
-   * Delete the naming context.  The user should take care to <unbind> any
+   * Delete the naming context.  The user should take care to @c unbind any
    * bindings in which the given context is bound to some names, to
-   * avoid dangling references when invoking <destroy> operation.
-   * @note <destroy> is a no-op on the root context.
-   * @note after <destroy> is invoked on a Naming Context, all
+   * avoid dangling references when invoking @c destroy operation.
+   * @note @c destroy is a no-op on the root context.
+   * @note after @c destroy is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
   void destroy () override;

@@ -67,7 +67,7 @@ public:
   /// @name Iteration methods
   /// @{
 
-  /// Pass back the <next_item> that hasn't been seen in the List.
+  /// Pass back the @a next_item that hasn't been seen in the List.
   /// Returns 0 when all items have been seen, else 1.
   int next (T *&next_item);
 
@@ -157,14 +157,14 @@ public:
   /// @{
 
   /**
-   * Insert <new_item> into the set (doesn't allow duplicates).
+   * Insert @a new_item into the set (doesn't allow duplicates).
    * Returns -1 if failures occur, 1 if item is already present, else
    * 0.
    */
   int insert (T const &new_item);
 
   /**
-   * Remove first occurrence of <item> from the set.  Returns 0 if
+   * Remove first occurrence of @a item from the set.  Returns 0 if
    * it removes the item, -1 if it can't find the item, and -1 if a
    * failure occurs.
    */
@@ -190,7 +190,7 @@ public:
 
   /// @}
 private:
-  /// Insert <item> at the tail of the set (doesn't check for
+  /// Insert @a item at the tail of the set (doesn't check for
   /// duplicates).
   int insert_tail (T const &item);
 

@@ -74,6 +74,11 @@ namespace TAO
      * is an optimization which helps us to avoid calling strlen ()
      * while creating a message format.
      *
+     * @param exception Exception list used to determine the user
+     * exceptions declared for the operation.
+     *
+     * @param r DII request associated with the invocation.
+     *
      * @param mode Invocation mode. This information is also available
      * in the IDL file and in the generated code.
      */

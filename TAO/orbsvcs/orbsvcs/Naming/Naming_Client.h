@@ -25,9 +25,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * the role of Naming Service clients.
  *
  * Wrapper class that locates the root Naming Context.  It also
- * defines the operator-> so that <NamingContext> functions like
- * <resolve>, etc. can be directly called on a
- * <TAO_Naming_Client> object, and will be forwarded to the root
+ * defines the operator-> so that @c NamingContext functions like
+ * @c resolve, etc. can be directly called on a
+ * @c TAO_Naming_Client object, and will be forwarded to the root
  * Naming Context.
  */
 class TAO_Naming_Export TAO_Naming_Client
@@ -49,7 +49,7 @@ public:
 
   /**
    * Returns a pointer to the root Naming Context.  This ptr is
-   * duplicated via <_duplicate> so that it can be stored into a
+   * duplicated via @c _duplicate so that it can be stored into a
    * <*_var>.
    */
   CosNaming::NamingContext_ptr get_context () const;

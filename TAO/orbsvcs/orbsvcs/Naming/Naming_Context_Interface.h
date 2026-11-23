@@ -33,7 +33,7 @@ class TAO_Naming_Context_Impl;
  * implementation.
  *
  * This class simply forwards all client requests to a concrete
- * NamingContext implementation through its <impl_> pointer.  See
+ * NamingContext implementation through its @c impl_ pointer.  See
  * README file for more info.  Comments for the idl methods
  * describe methods semantics - actual actions are carried out by
  * concrete implementors.
@@ -57,19 +57,19 @@ public:
   /// @{
 
   /**
-   * Create a binding for name <n> and object <obj> in the naming
+   * Create a binding for name @c n and object @c obj in the naming
    * context.  Compound names are treated as follows: ctx->bind (<c1;
-   * c2; c3; cn>, obj) = (ctx->resolve (<c1; c2; cn-1>))->bind (<cn>,
+   * c2; c3; cn>, obj) = (ctx->resolve (<c1; c2; cn-1>))->bind (@c cn,
    * obj) if the there already exists a binding for the specified
-   * name, <AlreadyBound> exception is thrown.  Naming contexts should
-   * be bound using <bind_context> and <rebind_context> in order to
+   * name, @c AlreadyBound exception is thrown.  Naming contexts should
+   * be bound using @c bind_context and @c rebind_context in order to
    * participate in name resolution later.
    */
   void bind (CosNaming::Name const &n,
              CORBA::Object_ptr obj) override;
 
   /**
-   * This is similar to <bind> operation above, except for when the
+   * This is similar to @c bind operation above, except for when the
    * binding for the specified name already exists in the specified
    * context.  In that case, the existing binding is replaced with the
    * new one.
@@ -78,7 +78,7 @@ public:
                CORBA::Object_ptr obj) override;
 
   /**
-   * This is the version of <bind> specifically for binding naming
+   * This is the version of @c bind specifically for binding naming
    * contexts, so that they will participate in name resolution when
    * compound names are passed to be resolved.
    */
@@ -86,7 +86,7 @@ public:
                      CosNaming::NamingContext_ptr nc) override;
 
   /**
-   * This is a version of <rebind> specifically for naming contexts,
+   * This is a version of @c rebind specifically for naming contexts,
    * so that they can participate in name resolution when compound
    * names are passed.
    */
@@ -96,7 +96,7 @@ public:
   /**
    * Return object reference that is bound to the name.  Compound name
    * resolve is defined as follows: ctx->resolve (<c1; c2; cn>) =
-   * ctx->resolve (<c1; c2 cn-1>)->resolve (<cn>) The naming service
+   * ctx->resolve (<c1; c2 cn-1>)->resolve (@c cn) The naming service
    * does not return the type of the object.  Clients are responsible
    * for "narrowing" the object to the appropriate type.
    */
@@ -105,7 +105,7 @@ public:
   /**
    * Remove the name binding from the context.  When compound names
    * are used, unbind is defined as follows: ctx->unbind (<c1; c2;
-   * cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (<cn>)
+   * cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (@c cn)
    */
   void unbind (CosNaming::Name const &n) override;
 
@@ -126,20 +126,20 @@ public:
       CosNaming::Name const &n) override;
 
   /**
-   * Delete the naming context.  The user should take care to <unbind> any
+   * Delete the naming context.  The user should take care to @c unbind any
    * bindings in which the given context is bound to some names, to
-   * avoid dangling references when invoking <destroy> operation.
-   * @note <destroy> is a no-op on the root context.
-   * @note after <destroy> is invoked on a Naming Context, all
+   * avoid dangling references when invoking @c destroy operation.
+   * @note @c destroy is a no-op on the root context.
+   * @note after @c destroy is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
   void destroy () override;
 
   /**
-   * Returns at most the requested number of bindings <how_many> in
-   * <bl>.  If the naming context contains additional bindings, they
+   * Returns at most the requested number of bindings @c how_many in
+   * @c bl.  If the naming context contains additional bindings, they
    * are returned with a BindingIterator.  In the naming context does
-   * not contain any additional bindings <bi> returned as null.
+   * not contain any additional bindings @c bi returned as null.
    */
   void list (CORBA::ULong how_many,
              CosNaming::BindingList_out bl,
@@ -170,7 +170,7 @@ public:
                  char const *sn) override;
 
   /**
-   * Similar to <resolve> as in the CosNaming::NamingContext interface.
+   * Similar to @c resolve as in the CosNaming::NamingContext interface.
    * It accepts a strigified name as an argument instead of a Name.
    */
   CORBA::Object_ptr resolve_str (char const *n) override;
@@ -193,17 +193,17 @@ private:
     };
 
   /**
-   * This private function is used as a helper to <to_name>. It reads
+   * This private function is used as a helper to @c to_name. It reads
    * character by character from 'src' and depending on the character,
    * either assigns it to 'dest' or returns back to the calling
    * function. If the character is a seperator between the 'id' and
    * 'kind' fields or a seperator between two name components, the
-   * control is returned back to the calling function <to_name>.
+   * control is returned back to the calling function @c to_name.
    */
   void to_name_helper (char *dest, char const *&src, Hint hint);
 
   /**
-   * This method functions similar to <to_name_helper>. If the
+   * This method functions similar to @c to_name_helper. If the
    * character read is '.' or '/' or '\', an escape character '\' is
    * prepended before the character.
    */
@@ -251,19 +251,19 @@ public:
   /// @{
 
   /**
-   * Create a binding for name <n> and object <obj> in the naming
+   * Create a binding for name @c n and object @c obj in the naming
    * context.  Compound names are treated as follows: ctx->bind (<c1;
-   * c2; c3; cn>, obj) = (ctx->resolve (<c1; c2; cn-1>))->bind (<cn>,
+   * c2; c3; cn>, obj) = (ctx->resolve (<c1; c2; cn-1>))->bind (@c cn,
    * obj) if the there already exists a binding for the specified
-   * name, <AlreadyBound> exception is thrown.  Naming contexts should
-   * be bound using <bind_context> and <rebind_context> in order to
+   * name, @c AlreadyBound exception is thrown.  Naming contexts should
+   * be bound using @c bind_context and @c rebind_context in order to
    * participate in name resolution later.
    */
   virtual void bind (CosNaming::Name const &n,
                      CORBA::Object_ptr obj) = 0;
 
   /**
-   * This is similar to <bind> operation above, except for when the
+   * This is similar to @c bind operation above, except for when the
    * binding for the specified name already exists in the specified
    * context.  In that case, the existing binding is replaced with the
    * new one.
@@ -272,7 +272,7 @@ public:
                        CORBA::Object_ptr obj) = 0;
 
   /**
-   * This is the version of <bind> specifically for binding naming
+   * This is the version of @c bind specifically for binding naming
    * contexts, so that they will participate in name resolution when
    * compound names are passed to be resolved.
    */
@@ -280,7 +280,7 @@ public:
                              CosNaming::NamingContext_ptr nc) = 0;
 
   /**
-   * This is a version of <rebind> specifically for naming contexts,
+   * This is a version of @c rebind specifically for naming contexts,
    * so that they can participate in name resolution when compound
    * names are passed.
    */
@@ -290,7 +290,7 @@ public:
   /**
    * Return object reference that is bound to the name.  Compound name
    * resolve is defined as follows: ctx->resolve (<c1; c2; cn>) =
-   * ctx->resolve (<c1; c2 cn-1>)->resolve (<cn>) The naming service
+   * ctx->resolve (<c1; c2 cn-1>)->resolve (@c cn) The naming service
    * does not return the type of the object.  Clients are responsible
    * for "narrowing" the object to the appropriate type.
    */
@@ -299,7 +299,7 @@ public:
   /**
    * Remove the name binding from the context.  When compound names
    * are used, unbind is defined as follows: ctx->unbind (<c1; c2;
-   * cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (<cn>)
+   * cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (@c cn)
    */
   virtual void unbind (CosNaming::Name const &n) = 0;
 
@@ -319,20 +319,20 @@ public:
   virtual CosNaming::NamingContext_ptr bind_new_context (CosNaming::Name const &n) = 0;
 
   /**
-   * Delete the naming context.  The user should take care to <unbind> any
+   * Delete the naming context.  The user should take care to @c unbind any
    * bindings in which the given context is bound to some names, to
-   * avoid dangling references when invoking <destroy> operation.
-   * @note <destroy> is a no-op on the root context.
-   * @note after <destroy> is invoked on a Naming Context, all
+   * avoid dangling references when invoking @c destroy operation.
+   * @note @c destroy is a no-op on the root context.
+   * @note after @c destroy is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
   virtual void destroy () = 0;
 
   /**
-   * Returns at most the requested number of bindings <how_many> in
-   * <bl>.  If the naming context contains additional bindings, they
+   * Returns at most the requested number of bindings @c how_many in
+   * @c bl.  If the naming context contains additional bindings, they
    * are returned with a BindingIterator.  In the naming context does
-   * not contain any additional bindings <bi> returned as null.
+   * not contain any additional bindings @c bi returned as null.
    */
   virtual void list (CORBA::ULong how_many,
                      CosNaming::BindingList_out &bl,

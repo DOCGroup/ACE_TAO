@@ -91,17 +91,17 @@ public:
   /// Inequality comparison operator.
   bool operator!= (TAO_ExtId const &rhs) const;
 
-  /// <hash> function is required in order for this class to be usable by
+  /// @c hash function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
   u_long hash () const;
 
   /// @}
 
-  /// <kind> portion of the name to be associated with some object
+  /// @c kind portion of the name to be associated with some object
   /// reference in a Transient Naming Context.
   ACE_CString kind_;
 
-  /// <id> portion of the name to be associated with some object
+  /// @c id portion of the name to be associated with some object
   /// reference in a Transient Naming Context.
   ACE_CString id_;
 
