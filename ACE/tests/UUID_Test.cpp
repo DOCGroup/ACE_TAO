@@ -23,14 +23,14 @@ Tester::test ()
 
   // Generate UUID
   std::unique_ptr <ACE_Utils::UUID> uuid (ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ());
-  ACE_CString uuid_str (uuid->to_string ()->c_str ());
+  ACE_CString const uuid_str (uuid->to_string ()->c_str ());
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Generated UUID\n %C\n"),
               uuid_str.c_str ()));
 
 #ifndef ACE_LACKS_SSCANF
   // Construct UUID from string
-  ACE_Utils::UUID new_uuid (uuid_str);
+  ACE_Utils::UUID const new_uuid (uuid_str);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("UUID Constructed from above Generated UUID\n %C\n"),
@@ -66,7 +66,7 @@ Tester::test ()
 #endif
 
   // Construct UUID using the copy constructor
-  ACE_Utils::UUID new_uuid_copy (new_uuid);
+  ACE_Utils::UUID const new_uuid_copy (new_uuid);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("UUID constructed from above Generated UUID")
               ACE_TEXT (" with copy\n %C\n"),
@@ -81,7 +81,7 @@ Tester::test ()
     }
 
 #ifndef ACE_LACKS_SSCANF
-  ACE_Utils::UUID nil_uuid (*ACE_Utils::UUID::NIL_UUID.to_string ());
+  ACE_Utils::UUID const nil_uuid (*ACE_Utils::UUID::NIL_UUID.to_string ());
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("UUID Constructed from NIL_UUID with ")
               ACE_TEXT ("string copy\n %C\n"),
@@ -129,7 +129,7 @@ Tester::test ()
 
 #ifndef ACE_LACKS_SSCANF
   // Construct UUID from string
-  ACE_Utils::UUID new_uuid_with_tp_id (uuid_with_tp_id->to_string ()->c_str ());
+  ACE_Utils::UUID const new_uuid_with_tp_id (uuid_with_tp_id->to_string ()->c_str ());
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("UUID with Thread and Process ID reconstructed ")
               ACE_TEXT ("from above UUID \n %C\n"),
