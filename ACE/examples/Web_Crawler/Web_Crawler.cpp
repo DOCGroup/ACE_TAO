@@ -36,7 +36,7 @@ int
 Web_Crawler::run ()
 {
   // Make the appropriate <URL_Visitor>.
-  Destroyable_Unique_Ptr<URL_Visitor> visitor (this->url_visitor_factory_->make_visitor ());
+  Destroyable_Unique_Ptr<URL_Visitor> const visitor (this->url_visitor_factory_->make_visitor ());
 
   if (!visitor)
     {
@@ -70,7 +70,7 @@ Web_Crawler::run ()
                                 OPTIONS::instance()->path_name (),
                                 OPTIONS::instance()->port_no ()), //KIRTHIKA
                   -1);
-  Destroyable_Unique_Ptr<ACE_URL_Addr> url_addr_ptr (url_addr);
+  Destroyable_Unique_Ptr<ACE_URL_Addr> const url_addr_ptr (url_addr);
 
   HTTP_URL *http_url {};
   ACE_NEW_RETURN (http_url,
