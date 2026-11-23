@@ -69,8 +69,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       /// Activate it.
       poa_manager->activate ();
 
-      ///@}
-
       CORBA::PolicyList policies (3);
       policies.length (3);
 

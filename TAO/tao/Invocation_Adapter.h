@@ -255,7 +255,6 @@ namespace TAO
     * No-Collocation is a special case of collocation.
     */
     TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object);
-    /// @}
 
   protected:
     /// The target object on which this invocation is carried out.

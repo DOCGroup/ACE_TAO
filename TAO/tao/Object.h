@@ -302,8 +302,6 @@ namespace CORBA
 
     IOP::IOR const &ior () const;
 
-    /// @} End of TAO-specific methods..
-
     /// Can this object be stringified?
     virtual bool can_convert_to_ior () const;
 

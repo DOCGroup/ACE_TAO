@@ -101,7 +101,6 @@ namespace TAO
        *       TAO::SSLIOP::EVP_PKEY_var.
        */
       ::EVP_PKEY *evp () const;
-      /// @}
 
       bool operator== (SSLIOP_Credentials const &rhs);
 

@@ -34,12 +34,12 @@ namespace ACE
     /**
      * @class ACE::HTBP::Channel
      *
-     * @brief Defines the methods in the <Ht_Channel> abstraction.
+     * @brief Defines the methods in the @c Ht_Channel abstraction.
      *
-     * This adds additional wrapper methods atop the <IO>
+     * This adds additional wrapper methods atop the @c IO
      * class.
      *
-     * <buf> is the buffer to write from or receive into.
+     * @a buf is the buffer to write from or receive into.
      * <len> is the number of bytes to transfer.
      * The <timeout> parameter in the following methods indicates how
      * long to blocking trying to transfer data.  If <timeout> == 0,
@@ -65,7 +65,7 @@ namespace ACE
      * On partial transfers, i.e., if any data is transferred before
      * timeout/error/EOF, <bytes_transferred> will contain the number of
      * bytes transferred.
-     * Methods with <iovec> parameter are I/O vector variants of the I/O
+     * Methods with @c iovec parameter are I/O vector variants of the I/O
      * operations.
      * Methods with the extra <flags> argument will always result in
      * <send> getting called. Methods without the extra <flags> argument
@@ -112,18 +112,18 @@ namespace ACE
       /// an HTTP request or reply wrapper, and to send application data in only
       /// one direction on one stream.
 
-      /// Recv an <n> byte buffer from the connected socket.
+      /// Recv an @a n byte buffer from the connected socket.
       ssize_t recv (void *buf,
                     size_t n,
                     int flags,
                     ACE_Time_Value const* timeout = nullptr);
 
-      /// Recv an <n> byte buffer from the connected socket.
+      /// Recv an @a n byte buffer from the connected socket.
       ssize_t recv (void *buf,
                     size_t n,
                     ACE_Time_Value const* timeout = nullptr);
 
-      /// Recv an <iovec> of size <n> from the connected socket.
+      /// Recv an @c iovec of size @a n from the connected socket.
       ssize_t recvv (iovec iov[],
                      int n,
                      ACE_Time_Value const* timeout = nullptr);
@@ -138,24 +138,24 @@ namespace ACE
        * buffer to read.  This method determines how much data is in the
        * socket, allocates a buffer of this size, reads in the data, and
        * returns the number of bytes read.  The caller is responsible for
-       * deleting the member in the <iov_base> field of <io_vec> using
+       * deleting the member in the @a iov_base field of @a io_vec using
        * delete [] io_vec->iov_base.
        */
       ssize_t recvv (iovec *io_vec,
                      ACE_Time_Value const* timeout = nullptr);
 
-      /// Send an <n> byte buffer to the connected socket.
+      /// Send an @a n byte buffer to the connected socket.
       ssize_t send (const void *buf,
                     size_t n,
                     int flags,
                     ACE_Time_Value const* timeout = nullptr);
 
-      /// Send an <n> byte buffer to the connected socket.
+      /// Send an @a n byte buffer to the connected socket.
       ssize_t send (const void *buf,
                     size_t n,
                     ACE_Time_Value const* timeout = nullptr);
 
-      /// Send an <iovec> of size <n> to the connected socket.
+      /// Send an @c iovec of size @a n to the connected socket.
       ssize_t sendv (const iovec iov[],
                      int n,
                      ACE_Time_Value const* timeout = nullptr);
@@ -201,10 +201,10 @@ namespace ACE
       const ACE_SOCK_Stream &ace_stream () const;
       ACE_SOCK_Stream &ace_stream ();
 
-      ///@notes Added the following methods to continue with
+      /// @note Added the following methods to continue with
       /// current compilation of HTIOP. Might not be needed in
       /// future. - Priyanka
-      /// {@
+      /// @{
       void set_handle (ACE_HANDLE h);
 
       /**

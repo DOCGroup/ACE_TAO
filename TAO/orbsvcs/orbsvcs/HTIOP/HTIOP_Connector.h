@@ -64,7 +64,7 @@ namespace TAO
       using CONNECT_CREATION_STRATEGY = TAO_Connect_Creation_Strategy<Connection_Handler>;
 
       /// Initialization and termination methods.
-      /// {@
+      /// @{
       explicit Connector (ACE::HTBP::Environment *ht_env);
       Connector (Connector const&) = delete;
       Connector (Connector&&) = delete;
@@ -77,7 +77,7 @@ namespace TAO
 
       /// The TAO_Connector methods, please check the documentation on
       /// Transport_Connector.h
-      /// {@
+      /// @{
       int open (TAO_ORB_Core *orb_core) override;
       int close () override;
 

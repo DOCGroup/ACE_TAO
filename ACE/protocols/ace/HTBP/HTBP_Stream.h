@@ -47,7 +47,7 @@ namespace ACE
      * as some data may have to be stored by the HTBP classes prior to
      * transmission.
      *
-     * <buf> is the buffer to write from or receive into.
+     * @a buf is the buffer to write from or receive into.
      * <len> is the number of bytes to transfer.
      * The <timeout> parameter in the following methods indicates how
      * long to blocking trying to transfer data.  If <timeout> == 0,
@@ -73,7 +73,7 @@ namespace ACE
      * On partial transfers, i.e., if any data is transferred before
      * timeout/error/EOF, <bytes_transferred> will contain the number of
      * bytes transferred.
-     * Methods with <iovec> parameter are I/O vector variants of the I/O
+     * Methods with @c iovec parameter are I/O vector variants of the I/O
      * operations.
      * Methods with the extra <flags> argument will always result in
      * <send> getting called. Methods without the extra <flags> argument
@@ -98,18 +98,18 @@ namespace ACE
       /// messages with an HTTP request or reply wrapper, and to send
       /// application data in only one direction on one stream.
 
-      /// Recv an <n> byte buffer from the connected socket.
+      /// Recv an @a n byte buffer from the connected socket.
       ssize_t recv (void *buf,
                     size_t n,
                     int flags,
                     ACE_Time_Value const* timeout = nullptr) const;
 
-      /// Recv an <n> byte buffer from the connected socket.
+      /// Recv an @a n byte buffer from the connected socket.
       ssize_t recv (void *buf,
                     size_t n,
                     ACE_Time_Value const* timeout = nullptr) const;
 
-      /// Recv an <iovec> of size <n> from the connected socket.
+      /// Recv an @c iovec of size @a n from the connected socket.
       ssize_t recvv (iovec iov[],
                      int n,
                      ACE_Time_Value const* timeout = nullptr) const;
@@ -125,39 +125,39 @@ namespace ACE
        * data is in the socket, allocates a buffer of this size, reads
        * in the data, and returns the number of bytes read.  The
        * caller is responsible for deleting the member in the
-       * <iov_base> field of <io_vec> using delete []
+       * @a iov_base field of @a io_vec using delete []
        * io_vec->iov_base.
        */
       ssize_t recvv (iovec *io_vec,
                      ACE_Time_Value const* timeout = nullptr) const;
 
-      /// Recv <n> bytes via Win32 <ReadFile> using overlapped I/O.
+      /// Recv @a n bytes via Win32 @c ReadFile using overlapped I/O.
       ssize_t recv (void *buf,
                     size_t n,
                     ACE_OVERLAPPED *overlapped) const;
 
-      /// Send an <n> byte buffer to the connected socket.
+      /// Send an @a n byte buffer to the connected socket.
       ssize_t send (const void *buf,
                     size_t n,
                     int flags,
                     ACE_Time_Value const* timeout = nullptr) const;
 
-      /// Send an <n> byte buffer to the connected socket.
+      /// Send an @a n byte buffer to the connected socket.
       ssize_t send (const void *buf,
                     size_t n,
                     ACE_Time_Value const* timeout = nullptr) const;
 
-      /// Send an <iovec> of size <n> to the connected socket.
+      /// Send an @c iovec of size @a n to the connected socket.
       ssize_t sendv (const iovec iov[],
                      int n,
                      ACE_Time_Value const* timeout = nullptr) const;
 
-      /// Send <n> bytes via Win32 <WriteFile> using overlapped I/O.
+      /// Send @a n bytes via Win32 @c WriteFile using overlapped I/O.
       ssize_t send (const void *buf,
                     size_t n,
                     ACE_OVERLAPPED *overlapped) const;
 
-      /// Try to recv exactly <len> bytes into <buf> from the
+      /// Try to recv exactly <len> bytes into @a buf from the
       /// connected socket.
       ssize_t recv_n (void *buf,
                       size_t len,
@@ -165,21 +165,21 @@ namespace ACE
                       ACE_Time_Value const* timeout = nullptr,
                       size_t *bytes_transferred = nullptr) const;
 
-      /// Try to recv exactly <len> bytes into <buf> from the
+      /// Try to recv exactly <len> bytes into @a buf from the
       /// connected socket.
       ssize_t recv_n (void *buf,
                       size_t len,
                       ACE_Time_Value const* timeout = nullptr,
                       size_t *bytes_transferred = nullptr) const;
 
-      /// Receive an <iovec> of size <iovcnt> from the connected
+      /// Receive an @c iovec of size @a iovcnt from the connected
       /// socket.
       ssize_t recvv_n (iovec iov[],
                        int iovcnt,
                        ACE_Time_Value const* timeout = nullptr,
                        size_t *bytes_transferred = nullptr) const;
 
-      /// Try to send exactly <len> bytes from <buf> to the connection
+      /// Try to send exactly <len> bytes from @a buf to the connection
       /// socket.
       ssize_t send_n (const void *buf,
                       size_t len,
@@ -187,7 +187,7 @@ namespace ACE
                       ACE_Time_Value const* timeout = nullptr,
                       size_t *bytes_transferred = nullptr) const;
 
-      /// Try to send exactly <len> bytes from <buf> to the connected
+      /// Try to send exactly <len> bytes from @a buf to the connected
       /// socket.
       ssize_t send_n (const void *buf,
                       size_t len,
@@ -202,7 +202,7 @@ namespace ACE
                       ACE_Time_Value const* timeout = nullptr,
                       size_t* bytes_transferred = nullptr) const;
 
-      /// Send an <iovec> of size <iovcnt> to the connected socket.
+      /// Send an @c iovec of size @a iovcnt to the connected socket.
       ssize_t sendv_n (const iovec iov[],
                        int iovcnt,
                        ACE_Time_Value const* timeout = nullptr,
@@ -236,10 +236,10 @@ namespace ACE
 
       /// @}
     public:
-      ///@notes Added the following methods to continue with
+      /// @note Added the following methods to continue with
       /// current compilation of HTIOP. Might not be needed in
       /// future. - Priyanka
-      /// {@
+      /// @{
       void set_handle (ACE_HANDLE h);
       ACE_HANDLE get_handle () const;
 

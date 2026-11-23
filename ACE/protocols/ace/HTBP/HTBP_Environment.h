@@ -47,7 +47,7 @@ namespace ACE
 
       /// Accessors to HTID URL
       /// Returns 0 on success
-      /// {@
+      /// @{
       int get_htid_url (ACE_TString &htid_url) const;
       int set_htid_url (ACE_TCHAR const* htid_generator_url);
       /// @}
@@ -55,20 +55,20 @@ namespace ACE
       /// Accessors to HTID via proxy - If value is true, HTID request goes
       /// through configured proxy otherwise it uses a direct connection.
       /// Returns 0 on success
-      /// {@
+      /// @{
       int get_htid_via_proxy (int &htid_via_proxy) const;
       int set_htid_via_proxy (int htid_via_proxy);
       /// @}
 
       /// Accessors to Proxy Address
       /// Returns 0 on success
-      /// {@
+      /// @{
       int get_proxy_host (ACE_TString &proxy_host) const;
       int set_proxy_host (ACE_TCHAR const* proxy_host);
       /// @}
 
       /// Returns 0 on success
-      /// {@
+      /// @{
       int get_proxy_port (unsigned int &proxy_port) const;
       int set_proxy_port (unsigned int proxy_port);
       /// @}
