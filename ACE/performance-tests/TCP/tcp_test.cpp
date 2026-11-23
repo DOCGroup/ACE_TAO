@@ -471,7 +471,7 @@ thread_pool_worker (void *)
         }
     }
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int

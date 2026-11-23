@@ -473,17 +473,17 @@ get_ip_interfaces_win32 (size_t &count,
   int i, n_interfaces, status;
 
   INTERFACE_INFO info[64];
-  SOCKET sock;
+  ACE_HANDLE sock;
 
   // Get an (overlapped) DGRAM socket to test with
   sock = ACE_OS::socket (AF_INET, SOCK_DGRAM, 0);
-  if (sock == INVALID_SOCKET)
+  if (sock == ACE_INVALID_HANDLE)
     {
       return -1;
     }
 
   DWORD bytes;
-  status = WSAIoctl(sock,
+  status = WSAIoctl (reinterpret_cast<ACE_SOCKET> (sock),
                     SIO_GET_INTERFACE_LIST,
                     0,
                     0,
@@ -520,9 +520,9 @@ get_ip_interfaces_win32 (size_t &count,
   // Get an (overlapped) DGRAM socket to test with.
   // If it fails only return IPv4 interfaces.
   sock = ACE_OS::socket (AF_INET6, SOCK_DGRAM, IPPROTO_UDP);
-  if (sock != INVALID_SOCKET)
+  if (sock != ACE_INVALID_HANDLE)
     {
-      status = WSAIoctl(sock,
+      status = WSAIoctl (reinterpret_cast<ACE_SOCKET> (sock),
                         SIO_ADDRESS_LIST_QUERY,
                         0,
                         0,

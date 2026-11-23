@@ -409,7 +409,7 @@ DT_Creator::activate_schedule ()
     }
         //} /*  if (TAO_debug_level > 0) */
 
-    task->job (job.in ());
+    task->job (job_object.in ());
   }
     }
   if (TAO_debug_level > 0 && !this->dt_list_.empty ())

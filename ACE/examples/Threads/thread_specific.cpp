@@ -54,7 +54,7 @@ worker (void *c)
 
   ACE_NEW_RETURN (ip,
                   int,
-                  nullptr);
+                  ACE_THR_FUNC_RETURN_NULL);
   std::unique_ptr<int> owned_ip {ip};
 
   if (ACE_Thread::setspecific (key, ip) == -1)
@@ -79,7 +79,7 @@ worker (void *c)
 
       ACE_NEW_RETURN (ip,
                       int,
-                      nullptr);
+                      ACE_THR_FUNC_RETURN_NULL);
       std::unique_ptr<int> thread_owned_ip {ip};
 
       ACE_DEBUG ((LM_DEBUG,
@@ -137,7 +137,10 @@ worker (void *c)
 
       {
         // Use the guard to serialize access to printf...
-        ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, printf_lock, nullptr);
+        ACE_GUARD_RETURN (ACE_Thread_Mutex,
+                          ace_mon,
+                          printf_lock,
+                          ACE_THR_FUNC_RETURN_NULL);
 
         // Print the thread id portably.
         ACE_DEBUG ((LM_DEBUG,
@@ -157,7 +160,7 @@ worker (void *c)
 
       ACE_NEW_RETURN (ip,
                       int,
-                      nullptr);
+                      ACE_THR_FUNC_RETURN_NULL);
       std::unique_ptr<int> owned_ip_second {ip};
 
       ACE_DEBUG ((LM_DEBUG,
@@ -213,7 +216,7 @@ handler (int signum)
 {
   ACE_DEBUG ((LM_DEBUG,
               "signal = %S\n", signum));
-  ACE_Thread_Manager::instance ()->exit (nullptr);
+  ACE_Thread_Manager::instance ()->exit (ACE_THR_FUNC_RETURN_NULL);
 }
 
 int

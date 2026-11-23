@@ -94,7 +94,7 @@ static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
     if (!msgBuf)
       {
         errno = ENOMEM;
-        return nullptr;
+        return ACE_THR_FUNC_RETURN_NULL;
       }
 
     // read the buffer
@@ -119,7 +119,7 @@ static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
       }
   } while (--numIterations);
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // sets up the dataModeSocket Stream, reads the test header infomation

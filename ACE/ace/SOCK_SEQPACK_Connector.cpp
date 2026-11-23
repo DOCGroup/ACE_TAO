@@ -375,7 +375,7 @@ ACE_SOCK_SEQPACK_Connector::complete (ACE_SOCK_SEQPACK_Association &new_associat
                               const ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::complete");
-  ACE_HANDLE const h = ACE::handle_timed_complete (new_association.get_handle (),
+  ACE_HANDLE h = ACE::handle_timed_complete (new_association.get_handle (),
                                              tv);
   // We failed to get connected.
   if (h == ACE_INVALID_HANDLE)

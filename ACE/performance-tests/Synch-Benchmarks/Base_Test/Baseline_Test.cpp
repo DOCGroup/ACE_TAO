@@ -223,7 +223,7 @@ Baseline_Test::hold_lock (void *arg)
   this_test->get_lock_.wait ();
 
   this_test->let_go_lock_.wait ();
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 ACE_SVC_FACTORY_DEFINE (Baseline_Test)

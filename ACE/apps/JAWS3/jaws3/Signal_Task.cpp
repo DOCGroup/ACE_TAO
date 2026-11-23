@@ -47,7 +47,7 @@ JAWS_Signal_Task_function (void *)
 
     }
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 JAWS_Signal_Task::JAWS_Signal_Task ()

@@ -172,7 +172,7 @@ ACE_Thread_Descriptor::terminate ()
      // We must remove Thread_Descriptor from Thread_Manager list
      if (this->tm_ != nullptr)
       {
-         int const close_handle = 0;
+         int close_handle = 0;
 
 #if !defined (ACE_HAS_VXTHREADS)
          // Threads created with THR_DAEMON shouldn't exist here, but
