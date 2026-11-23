@@ -72,8 +72,8 @@ std::string const ADDL_EXCEP_NAMES[] =
     "DuplicateKeyValue"
   };
 
-constexpr std::size_t N_LW_EXCEPS = sizeof (LW_EXCEP_NAMES) / sizeof (LW_EXCEP_NAMES[0]);
-constexpr std::size_t N_ADDL_EXCEPS = sizeof (ADDL_EXCEP_NAMES) / sizeof (ADDL_EXCEP_NAMES[0]);
+constexpr size_t N_LW_EXCEPS = sizeof (LW_EXCEP_NAMES) / sizeof (LW_EXCEP_NAMES[0]);
+constexpr size_t N_ADDL_EXCEPS = sizeof (ADDL_EXCEP_NAMES) / sizeof (ADDL_EXCEP_NAMES[0]);
 
 be_exception *LW_EXCEPS[N_LW_EXCEPS];
 be_exception *ADDL_EXCEPS[N_ADDL_EXCEPS];
@@ -1418,7 +1418,7 @@ be_visitor_ccm_pre_proc::lookup_exceptions ()
 {
   int status {};
 
-  for (std::size_t i = 0; i < N_LW_EXCEPS; ++i)
+  for (size_t i = 0; i < N_LW_EXCEPS; ++i)
     {
       status = this->lookup_one_exception (LW_EXCEP_NAMES[i],
                                            LW_EXCEPS[i]);
@@ -1439,7 +1439,7 @@ be_visitor_ccm_pre_proc::lookup_exceptions ()
 
   if (!be_global->gen_lwccm ())
     {
-      for (std::size_t j = 0; j < N_ADDL_EXCEPS; ++j)
+      for (size_t j = 0; j < N_ADDL_EXCEPS; ++j)
         {
           status = this->lookup_one_exception (ADDL_EXCEP_NAMES[j],
                                                ADDL_EXCEPS[j]);

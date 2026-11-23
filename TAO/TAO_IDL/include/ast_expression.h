@@ -198,7 +198,6 @@ public:
 
  // Operations.
 
-  // Constructor(s).
   AST_Expression (AST_Expression *v,
                   ExprType t);
   AST_Expression (AST_Expression const &) = delete;
@@ -244,7 +243,6 @@ public:
 
   explicit AST_Expression (ACE_CDR::Fixed const& f);
 
-  // Destructor.
   virtual ~AST_Expression ();
 
   // Data Accessors.

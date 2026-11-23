@@ -44,6 +44,23 @@ module OBV_FactoryTest
                     in BV_Data data);
   };
 
+  /// A generated concrete valuetype supporting an interface.
+  interface EmptyInterface
+  {
+  };
+
+  valuetype SupportedValue supports EmptyInterface
+  {
+    public unsigned long value;
+  };
+
+  /// Its application implementation supplies _copy_value().
+  valuetype ApplicationFactoryValue
+  {
+    public unsigned long value;
+    factory create ();
+  };
+
   ///
   /// Interface to pass valuetypes.
   ///

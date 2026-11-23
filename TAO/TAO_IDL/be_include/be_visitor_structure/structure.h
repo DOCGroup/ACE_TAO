@@ -38,10 +38,12 @@ public:
   /// visit structure. We provide code for this method in the derived class
   int visit_structure (be_structure *node) override;
 
-  // =visit operations on syntactically valid elements in our scope
+  /// @name Visitor methods for valid scope elements
+  /// @{
 
   /// visit field
   int visit_field (be_field *node) override;
+  /// @}
 };
 
 #endif /* _BE_VISITOR_STRUCTURE_STRUCTURE_H_ */

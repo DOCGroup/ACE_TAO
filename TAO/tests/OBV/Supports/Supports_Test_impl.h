@@ -4,6 +4,11 @@
 #include "Supports_TestS.h"
 #include "ace/Get_Opt.h"
 
+#include <unordered_map>
+
+class node_impl;
+using Node_Copy_Map = std::unordered_map<node_impl const *, node_impl *>;
+
 /**
  * \class node_impl
  */
@@ -23,6 +28,10 @@ public:
   void change_weight (CORBA::Long new_weight);
 
   void print ();
+
+  CORBA::ValueBase *_copy_value () override;
+
+  static node_impl *copy_node (node_impl const *node, Node_Copy_Map& copies);
 };
 
 class node_init_impl : public Supports_Test::Node_init
@@ -49,6 +58,8 @@ class vt_graph_impl :
   virtual void add_node (const char * name);
 
   virtual void print ();
+
+  CORBA::ValueBase *_copy_value () override;
 };
 
 class vt_graph_init_impl :

@@ -37,7 +37,6 @@ be_visitor_root_cs::visit_root (be_root *node)
                         -1);
     }
 
-
   if (this->gen_obv_defns (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -46,7 +45,6 @@ be_visitor_root_cs::visit_root (be_root *node)
                          ACE_TEXT ("failed to generate OBV_ defns\n")),
                         -1);
     }
-
 
   if (this->gen_any_ops (node) == -1)
     {
@@ -57,7 +55,6 @@ be_visitor_root_cs::visit_root (be_root *node)
                         -1);
     }
 
-
   if (this->gen_cdr_ops (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -66,7 +63,6 @@ be_visitor_root_cs::visit_root (be_root *node)
                          ACE_TEXT ("generate CDR operators\n")),
                         -1);
     }
-
 
   (void) tao_cg->end_client_stubs ();
 
@@ -141,5 +137,4 @@ be_visitor_root_cs::gen_cdr_ops (be_root *node)
 
   return status;
 }
-
 

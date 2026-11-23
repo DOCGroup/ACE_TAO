@@ -84,7 +84,6 @@ public:
 
   // Operations.
 
-  // Constructor and destructor.
   FE_Declarator (UTL_ScopedName *n,
                  Declarator_Type dt,
                  AST_Decl *cp);

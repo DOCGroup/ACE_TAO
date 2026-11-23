@@ -17,14 +17,11 @@
 #include "be_interface_fwd.h"
 #include "ast_component_fwd.h"
 
+/// Extends AST_ComponentFwd with additional means for C++ mapping of a
+/// forward-declared component.
 class be_component_fwd : public virtual AST_ComponentFwd,
                          public virtual be_interface_fwd
 {
-  // =TITLE
-  //   be_component_fwd
-  //
-  // =DESCRIPTION
-  //   Extensions to the AST_ComponentFwd class
 public:
   be_component_fwd (AST_Interface *dummy,
                     UTL_ScopedName *n);

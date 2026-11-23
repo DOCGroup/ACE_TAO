@@ -11,10 +11,8 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VALUETYPE_VALUETYPE_H_
 #define _BE_VALUETYPE_VALUETYPE_H_
-
 
 /**
  * @class be_visitor_valuetype
@@ -42,7 +40,8 @@ public:
   virtual void begin_public ();
   virtual void begin_private ();
 
- // =visit methods on all elements syntactically valid in a Valuetype scope
+  /// @name Visitor methods for elements allowed in a valuetype scope
+  /// @{
 
   /// visit attribute
   int visit_attribute (be_attribute *node) override;
@@ -74,7 +73,10 @@ public:
   /// visit a field
   int visit_field (be_field *node) override;
 
-  // =helper methods for generation of fields
+  /// @}
+
+  /// @name Field generation helpers
+  /// @{
 
   /// private data fields for scope
   int gen_pd (be_valuetype *node);
@@ -86,14 +88,14 @@ public:
   void gen_obv_init_constructor_args (be_valuetype *node,
                                       unsigned long &index);
 
-protected:
-  /// check is VT needs a RefCounter mix-in in OBV_ class
-  /// suppose that we are deciding for this node
-  static bool obv_need_ref_counter (be_valuetype *node);
+  /// @}
 
-  /// recurse down the inheritance tree to see
-  /// if node or one of its OBV_ base class already has RefCounter
-  static bool obv_have_ref_counter (be_valuetype *node);
+protected:
+  /// Generate a deep-copy expression for a valuetype or valuebox field.
+  void gen_valuetype_field_copy_expression (be_field *field,
+                                           char const *accessor_prefix,
+                                           char const *null_pointer,
+                                           bool multiline);
 
   /// Predicate common to _ch and _cs visitors.
   bool is_amh_exception_holder (be_valuetype *node);

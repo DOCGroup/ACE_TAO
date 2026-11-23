@@ -147,7 +147,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       unique = bt->flat_name ();
     }
 
-  std::size_t i;
+  size_t i;
 
   for (i = 0; i < node->n_dims (); ++i)
     {
@@ -199,7 +199,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << fname << "_slice * _tao_slice)" << be_uidt << be_uidt_nl
       << "{" << be_idt_nl;
 
-  std::size_t const ndims = node->n_dims ();
+  size_t const ndims = node->n_dims ();
   be_array *primitive_type {};
 
   if (bt->node_type () == AST_Decl::NT_typedef)

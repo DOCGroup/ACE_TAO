@@ -174,7 +174,7 @@ be_visitor_connector_dds_ex_base::match_template_args ()
 
   for (std::string const& ref_name : this->t_ref_->param_refs ())
     {
-      std::size_t slot {};
+      size_t slot {};
 
       for (FE_Utils::T_Param_Info const& t_param :
              *this->t_inst_->ref ()->template_params ())

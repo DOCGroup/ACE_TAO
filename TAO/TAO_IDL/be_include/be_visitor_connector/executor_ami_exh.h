@@ -10,22 +10,13 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_CONNECTOR_EXECUTOR_AMI_EXH_H_
 #define _BE_CONNECTOR_EXECUTOR_AMI_EXH_H_
 
+/// Generates AMI connector implementation headers for connectors.
 class be_visitor_executor_ami_exh
   : public be_visitor_component_scope
 {
-  //
-  // = TITLE
-  //   be_visitor_executor_ami_exh
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate
-  //   the AMI connector implementation header for connectors.
-  //
-  //
 public:
   explicit be_visitor_executor_ami_exh (be_visitor_context *ctx);
 

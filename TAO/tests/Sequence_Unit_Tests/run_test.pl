@@ -23,6 +23,7 @@ my @testsToRun = qw(unbounded_value_sequence_ut
                bounded_object_reference_sequence_ut
                bounded_sequence_cdr_ut
                unbounded_sequence_cdr_ut
+               sequence_move_maximum_ut
                Unbounded_Octet
                Unbounded_Simple_Types
                Bounded_Simple_Types

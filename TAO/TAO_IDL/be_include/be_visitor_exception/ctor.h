@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_EXCEPTION_CTOR_H_
 #define _BE_VISITOR_EXCEPTION_CTOR_H_
 

@@ -19,14 +19,10 @@
 
 class be_visitor;
 
+/// Extends AST_UnionFwd with additional means for C++ mapping of a union.
 class be_union_fwd : public virtual AST_UnionFwd,
                      public virtual be_structure_fwd
 {
-  // =TITLE
-  //   be_union_fwd
-  //
-  // =DESCRIPTION
-  //   Extensions to the AST_UnionFwd class
 public:
   be_union_fwd (AST_Union *dummy,
                 UTL_ScopedName *n);

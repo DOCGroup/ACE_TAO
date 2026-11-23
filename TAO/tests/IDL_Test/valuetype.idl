@@ -31,6 +31,114 @@ valuetype DefaultInitializedValue
   public long long_value;
 };
 
+interface Valuetype_Operation_Base
+{
+  void inherited_operation ();
+};
+
+abstract interface Abstract_Operation_Interface
+{
+  void ping ();
+};
+
+/// A directly supported abstract-interface operation uses TAO's generated default.
+valuetype Supports_Abstract_Operation
+  supports Abstract_Operation_Interface
+{
+  public long value;
+};
+
+/// A valuetype that supports an operation-bearing interface is abstract.
+valuetype Supports_Inherited_Operation supports Valuetype_Operation_Base
+{
+  public long value;
+};
+
+interface Empty_Valuetype_Interface
+{
+};
+
+/// A supported interface must not make the generated refcount methods ambiguous.
+valuetype Supported_Interface_Value supports Empty_Valuetype_Interface
+{
+  public long value;
+};
+
+/// Abstract valuetypes do not own a ref counter; concrete descendants do.
+abstract valuetype Abstract_Supported_Refcount_Base
+  supports Empty_Valuetype_Interface
+{
+};
+
+valuetype Concrete_Supported_Refcount_Derived : Abstract_Supported_Refcount_Base
+{
+  public long value;
+};
+
+/// An application factory's implementation supplies its own copy operation.
+valuetype Application_Factory_Value
+{
+  public long value;
+  factory create ();
+};
+
+valuetype Copy_Base
+{
+  public long base_value;
+};
+
+valuetype Copy_Derived : Copy_Base
+{
+  public long derived_value;
+};
+
+valuetype Copy_Operation_Derived : Copy_Base
+{
+  void op ();
+};
+
+/// A factory-bearing derived valuetype must provide its own copy operation.
+valuetype Copy_Factory_Derived : Copy_Base
+{
+  public long derived_value;
+  factory create ();
+};
+
+/// Copy inheritance must be found beyond an intermediate factory valuetype.
+valuetype Copy_Factory_Operation_Derived : Copy_Factory_Derived
+{
+  void op ();
+};
+
+valuetype Copy_Leaf
+{
+  public long leaf_value;
+};
+
+typedef Copy_Leaf Copy_Leaf_Alias;
+
+typedef sequence<Copy_Leaf_Alias> Copy_Leaf_Sequence;
+
+struct Copy_Leaf_Struct
+{
+  Copy_Leaf_Alias leaf;
+};
+
+valuetype Copy_Alias_Holder
+{
+  public Copy_Leaf_Alias leaf;
+};
+
+valuetype Copy_Sequence_Holder
+{
+  public Copy_Leaf_Sequence leaves;
+};
+
+valuetype Copy_Struct_Holder
+{
+  public Copy_Leaf_Struct value;
+};
+
 enum ValueSort2 {
   SYMBOL_TYPE2
 };

@@ -144,7 +144,6 @@ be_visitor_servant_svh::visit_attribute (be_attribute *node)
   return v.visit_attribute (node);
 }
 
-
 int
 be_visitor_servant_svh::visit_provides (be_provides *node)
 {
@@ -290,7 +289,7 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
         node->local_name ()->get_string ();
 
       std::string holder (obj_name);
-      std::size_t const pos = holder.rfind (':');
+      size_t const pos = holder.rfind (':');
       std::string ev_lname;
 
       if (pos == std::string::npos)

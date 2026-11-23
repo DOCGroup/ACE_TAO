@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_VALUETYPE_CDR_OP_CI_H_
 #define _BE_VISITOR_VALUETYPE_CDR_OP_CI_H_
 

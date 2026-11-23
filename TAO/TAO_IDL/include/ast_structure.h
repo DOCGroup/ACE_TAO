@@ -81,7 +81,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include <cstddef>
 #include <vector>
 
-
 class TAO_IDL_FE_Export AST_Structure
   : public virtual AST_ConcreteType,
     public virtual UTL_Scope
@@ -162,7 +161,7 @@ public:
 
   /// Easy Member Access
   ///{
-  virtual AST_Decl *operator[] (std::size_t const index);
+  virtual AST_Decl *operator[] (size_t const index);
   virtual AST_Decl *operator[] (std::string const& name);
   ///}
 

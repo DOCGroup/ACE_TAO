@@ -782,6 +782,8 @@ public:
   //   indicate which formatters they are used for (pct_c => %c).
   // - size_t (%B), ssize_t (%b), and time_t (%:) will use one of the
   //   other overloads (int, INT64, UINT64) depending on the platform.
+  // - ACE_HANDLE (%H) is formatted as a pointer on Windows and as an int on
+  //   other platforms.
   // - %*s (etc) uses the int or uint overloads for the size argument.
   // - No support for ACE_USES_WCHAR has been attempted.
   // - Not all platform-specific features from the varargs implementation have

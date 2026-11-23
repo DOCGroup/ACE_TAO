@@ -14,7 +14,6 @@ class GoodDay
   : public virtual POA_Test::GoodDay
 {
 public:
-  /// Constructor
   GoodDay (CORBA::ORB_ptr orb);
 
   GoodDay (GoodDay const&) = delete;
@@ -22,7 +21,7 @@ public:
   GoodDay& operator= (GoodDay const&) = delete;
   GoodDay& operator= (GoodDay&&) = delete;
 
-  // = The skeleton methods
+  /// The skeleton methods
   char* get_string () override;
 
   void shutdown () override;

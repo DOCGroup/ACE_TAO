@@ -6,17 +6,6 @@
 #include "ace/Throughput_Stats.h"
 #include "ace/Sample_History.h"
 
-constexpr CORBA::ULong DEFAULT_NUMCALLS = 20000;
-
-Latency_Query_Client::Latency_Query_Client ()
-  : debug_ (false),
-    do_dump_history_ (false),
-    iterations_ (DEFAULT_NUMCALLS)
-{
-}
-
-Latency_Query_Client::~Latency_Query_Client () = default;
-
 int
 Latency_Query_Client::init (int argc,
                             ACE_TCHAR *argv[])
@@ -25,14 +14,14 @@ Latency_Query_Client::init (int argc,
     {
       this->orb_ = CORBA::ORB_init (argc, argv);
 
-      int retval = this->parse_args (argc, argv);
+      int const retval = this->parse_args (argc, argv);
 
       if (retval != 0)
         {
           return retval;
         }
 
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         this->orb_->resolve_initial_references ("InterfaceRepository");
 
       if (CORBA::is_nil (object.in ()))
@@ -53,14 +42,14 @@ Latency_Query_Client::init (int argc,
                             -1);
         }
 
-      retval = this->populate_ifr ();
+      int const populate_result = this->populate_ifr ();
 
-      if (retval != 0)
+      if (populate_result != 0)
         {
-          return retval;
+          return populate_result;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Latency_Query_Client::init:");
       return -1;
@@ -72,35 +61,28 @@ Latency_Query_Client::init (int argc,
 int
 Latency_Query_Client::run ()
 {
-//  CORBA::DefinitionKind dk;
-  CORBA::AttributeMode am;
-
   try
     {
-      for (int j = 0; j < 100; ++j)
+      for (int j {}; j < 100; ++j)
         {
-          am = this->attr_->mode ();
-
-          if (am != CORBA::ATTR_NORMAL)
+          if (this->attr_->mode () != CORBA::ATTR_NORMAL)
             {
               return -1;
             }
         }
 
       ACE_Sample_History history (this->iterations_);
-      ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+      ACE_hrtime_t const test_start = ACE_OS::gethrtime ();
 
-      for (CORBA::ULong i = 0; i < this->iterations_; ++i)
+      for (CORBA::ULong i {}; i < this->iterations_; ++i)
         {
-          ACE_hrtime_t start = ACE_OS::gethrtime ();
-
-          am = this->attr_->mode ();
-
-          ACE_hrtime_t now = ACE_OS::gethrtime ();
+          ACE_hrtime_t const start = ACE_OS::gethrtime ();
+          this->attr_->mode ();
+          ACE_hrtime_t const now = ACE_OS::gethrtime ();
           history.sample (now - start);
         }
 
-      ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+      ACE_hrtime_t const test_end = ACE_OS::gethrtime ();
 
       if (this->debug_)
         {
@@ -108,7 +90,7 @@ Latency_Query_Client::run ()
                       "test finished\n"));
           ACE_DEBUG ((LM_DEBUG,
                       "High resolution timer calibration...."));
-          ACE_High_Res_Timer::global_scale_factor_type gsf =
+          ACE_High_Res_Timer::global_scale_factor_type const gsf =
             ACE_High_Res_Timer::global_scale_factor ();
           ACE_DEBUG ((LM_DEBUG,
                       "done\n"));
@@ -128,7 +110,7 @@ Latency_Query_Client::run ()
                                                  stats.samples_count ());
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Latency_Query_Client::run:");
       return -1;
@@ -142,8 +124,7 @@ Latency_Query_Client::parse_args (int argc,
                                   ACE_TCHAR *argv[])
 {
   ACE_Get_Opt opts (argc, argv, ACE_TEXT("dhi:"));
-  int c;
-  int result = 0;
+  int c {};
 
   while ((c = opts ()) != -1)
     {
@@ -156,14 +137,16 @@ Latency_Query_Client::parse_args (int argc,
           this->do_dump_history_ = true;
           break;
         case 'i':
-          result = ACE_OS::atoi (opts.opt_arg ());
+          {
+            int const requested_iterations = ACE_OS::atoi (opts.opt_arg ());
 
-          if (result > 0)
-            {
-              this->iterations_ = result;
-            }
+            if (requested_iterations > 0)
+              {
+                this->iterations_ = requested_iterations;
+              }
 
-          break;
+            break;
+          }
         case '?':
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -182,7 +165,7 @@ Latency_Query_Client::parse_args (int argc,
 int
 Latency_Query_Client::populate_ifr ()
 {
-  CORBA::Contained_var irobj = this->repo_->lookup_id ("IDL:dummy/attr:1.0");
+  CORBA::Contained_var const irobj = this->repo_->lookup_id ("IDL:dummy/attr:1.0");
 
   if (! CORBA::is_nil (irobj.in ()))
     {
@@ -199,16 +182,15 @@ Latency_Query_Client::populate_ifr ()
       return 0;
     }
 
-  CORBA::InterfaceDefSeq in_bases (0);
-  in_bases.length (0);
+  CORBA::InterfaceDefSeq const in_bases (0);
 
-  CORBA::InterfaceDef_var iface =
+  CORBA::InterfaceDef_var const iface =
     this->repo_->create_interface ("IDL:dummy:1.0",
                                    "dummy",
                                    "1.0",
                                    in_bases);
 
-  CORBA::PrimitiveDef_var p_long =
+  CORBA::PrimitiveDef_var const p_long =
     this->repo_->get_primitive (CORBA::pk_long);
 
   this->attr_ =

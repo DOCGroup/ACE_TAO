@@ -52,10 +52,10 @@ public:
 
   Annotation_Test &run (const std::string &idl);
 
-  AST_Decl *assert_node (const char *name, UTL_Scope *from = 0);
+  AST_Decl *assert_node (const char *name, UTL_Scope *from = nullptr);
 
   template <typename T>
-  T *assert_node (const char *name, UTL_Scope *from = 0)
+  T *assert_node (const char *name, UTL_Scope *from = nullptr)
   {
     T *cast = dynamic_cast<T *> (assert_node (name, from));
     if (!cast)

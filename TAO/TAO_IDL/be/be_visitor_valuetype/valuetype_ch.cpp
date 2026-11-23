@@ -154,11 +154,19 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
     }
 
   // Generate the supported interfaces.
-  for (std::size_t i = 0; i < node->n_supports (); ++i)
+  for (size_t i = 0; i < node->n_supports (); ++i)
     {
       *os << "," << be_nl
           << "public virtual ::"
           << node->supports ()[i]->name ();
+    }
+
+  if (node->opt_accessor ()
+      && node->obv_need_ref_counter ()
+      && !is_an_amh_exception_holder)
+    {
+      *os << "," << be_nl
+          << "public virtual ::CORBA::DefaultValueRefCountBase";
     }
 
   // Generate the body.
@@ -167,6 +175,21 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       << "public:" << be_idt;
 
   node->gen_stub_decls (os);
+
+  if (node->opt_accessor ()
+      && node->generates_obv_copy_value ()
+      && !is_an_amh_exception_holder)
+    {
+      *os << be_nl_2
+          << "::CORBA::ValueBase *_copy_value () override;";
+    }
+  else if (node->opt_accessor ()
+           && node->inherits_obv_copy_value ()
+           && !is_an_amh_exception_holder)
+    {
+      *os << be_nl_2
+          << "::CORBA::ValueBase *_copy_value () override = 0;";
+    }
 
   if (is_an_amh_exception_holder)
     {
@@ -238,12 +261,31 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   // If we inherit from CORBA::Object and/or CORBA::AbstractBase
   // (in addition to CORBA::ValueBase) we have to add these
   // to avoid ambiguity.
-  if (node->n_supports () > 0)
+  if (node->has_supported_interface ())
     {
       *os << be_uidt_nl << be_nl << "public:" << be_idt_nl;
-      *os << be_nl << "void _add_ref () override = 0;" << be_nl;
-      *os << "void _remove_ref () override = 0;" << be_nl;
-      *os << "::CORBA::ValueBase *_tao_to_value () override;";
+      if (node->opt_accessor () && node->obv_has_refcount_overrides ())
+        {
+          *os << be_nl << "void _add_ref () override;" << be_nl;
+          *os << "void _remove_ref () override;" << be_nl;
+        }
+      else if (node->n_supports () > 0)
+        {
+          *os << be_nl << "void _add_ref () override = 0;" << be_nl;
+          *os << "void _remove_ref () override = 0;" << be_nl;
+        }
+
+      if (node->n_supports () > 0)
+        {
+          *os << "::CORBA::ValueBase *_tao_to_value ()";
+
+          if (node->supports_abstract ())
+            {
+              *os << " override";
+            }
+
+          *os << ";";
+        }
     }
 
   // Generate the "protected" constructor so that users cannot
@@ -295,18 +337,22 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
     }
   /*********************************************************/
 
-
   // Map fields to private data (if optimizing).
   if (node->opt_accessor ())
     {
+      if (node->generates_obv_copy_value ())
+        {
+          *os << "friend class " << node->local_name () << "_init;" << be_nl;
+        }
+
       *os << be_uidt_nl << "protected:" << be_idt_nl;
 
       if (be_global->cdr_support ())
        {
         *os << "::CORBA::Boolean "
-            << "_tao_marshal_state (TAO_OutputCDR &) const;" << be_nl
+            << "_tao_marshal_state (TAO_OutputCDR &, TAO_ChunkInfo &) const;" << be_nl
             << "::CORBA::Boolean "
-            << "_tao_unmarshal_state (TAO_InputCDR &);" << be_nl
+            << "_tao_unmarshal_state (TAO_InputCDR &, TAO_ChunkInfo &);" << be_nl
             << "void truncation_hook () override;" << be_nl;
        }
 
@@ -314,6 +360,11 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           << "private:" << be_idt_nl;
 
       this->gen_pd (node);
+
+      if (be_global->cdr_support ())
+        {
+          *os << be_nl << "::CORBA::Boolean require_truncation_ {false};";
+        }
     }
   else // Need a way to access the state of derived OBV_ classes.
     {
@@ -396,8 +447,15 @@ be_visitor_valuetype_ch::visit_operation (be_operation *node)
 
   TAO_INSERT_COMMENT (os);
 
-  // Every operation is declared public and virtual in the client code.
-  *os << be_uidt_nl << "public:" << be_idt_nl << "virtual ";
+  bool const supported_operation =
+    this->ctx_->interface () != nullptr
+    && this->ctx_->interface () != node->defined_in ();
+
+  *os << be_uidt_nl << "public:" << be_idt_nl;
+  if (!supported_operation)
+    {
+      *os << "virtual ";
+    }
 
   be_type *bt = dynamic_cast<be_type*> (node->return_type ());
 
@@ -473,7 +531,6 @@ be_visitor_valuetype_ch::visit_field (be_field *node)
 
   return 0;
 }
-
 
 void
 be_visitor_valuetype_ch::begin_public ()

@@ -24,7 +24,6 @@ be_visitor_valuebox_field_ci::be_visitor_valuebox_field_ci (
 {
 }
 
-
 int
 be_visitor_valuebox_field_ci::visit_field (be_field *node)
 {

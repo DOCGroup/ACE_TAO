@@ -30,9 +30,9 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
                             long n_inherits,
                             AST_Type *inherits_concrete,
                               AST_Interface_List const& inherits_flat,
-                            std::size_t n_inherits_flat,
+                            size_t n_inherits_flat,
                               AST_Type_List const& supports,
-                            std::size_t n_supports,
+                            size_t n_supports,
                             AST_Type *supports_concrete,
                             bool abstract,
                             bool truncatable,
@@ -91,7 +91,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
   // Always the case.
   this->has_constructor (true);
 
-  for (std::size_t i = 0; i < this->n_supports (); ++i)
+  for (size_t i = 0; i < this->n_supports (); ++i)
     {
       be_interface *intf =
         dynamic_cast<be_interface*> (this->pd_supports[i]);
@@ -142,6 +142,10 @@ be_valuetype::redefine (AST_Interface *from)
     }
 
   this->AST_ValueType::redefine (from);
+  this->have_operation_computed_ = false;
+  this->has_supported_interface_computed_ = false;
+  this->obv_need_ref_counter_computed_ = false;
+  this->obv_have_ref_counter_computed_ = false;
 }
 
 // Is true if non-virtual accessor and modifier should be generated
@@ -181,7 +185,6 @@ be_valuetype::FactoryStyle
 be_valuetype::determine_factory_style ()
 {
   FactoryStyle factory_style = FS_UNKNOWN;
-
 
   if (this->is_abstract ())
     {
@@ -241,8 +244,52 @@ be_valuetype::determine_factory_style ()
 }
 
 bool
+be_valuetype::has_concrete_factory ()
+{
+  return this->determine_factory_style () == FS_CONCRETE_FACTORY;
+}
+
+bool
+be_valuetype::generates_obv_copy_value ()
+{
+  return this->has_concrete_factory ();
+}
+
+bool
+be_valuetype::inherits_obv_copy_value ()
+{
+  be_valuetype * const concrete_base =
+    dynamic_cast<be_valuetype *> (this->inherits_concrete ());
+  if (concrete_base != nullptr
+      && (concrete_base->generates_obv_copy_value ()
+          || concrete_base->inherits_obv_copy_value ()))
+    {
+      return true;
+    }
+
+  for (int i = 0; i < this->n_inherits (); ++i)
+    {
+      be_valuetype * const vt =
+        dynamic_cast<be_valuetype *> (this->inherits ()[i]);
+      if (vt != nullptr && vt != concrete_base
+          && (vt->generates_obv_copy_value ()
+              || vt->inherits_obv_copy_value ()))
+        {
+          return true;
+        }
+    }
+
+  return false;
+}
+
+bool
 be_valuetype::have_operation ()
 {
+  if (this->have_operation_computed_)
+    {
+      return this->have_operation_cache_;
+    }
+
   // Check whatever scope we get for operations/attributes.
 
   bool have_operation {};
@@ -288,7 +335,7 @@ be_valuetype::have_operation ()
       // Now traverse inheritance tree.
       AST_Type_List const& inherits = this->inherits ();
 
-      for (std::size_t i = 0; i < inherits.size (); ++i)
+      for (size_t i = 0; i < inherits.size (); ++i)
         {
           be_valuetype *vt = dynamic_cast<be_valuetype*> (inherits[i]);
 
@@ -302,7 +349,8 @@ be_valuetype::have_operation ()
 
   if (! have_operation)
     {
-      // Check for operations on supported interfaces
+      // Operations of the concretely supported interface must be
+      // implemented by the valuetype implementation.
       AST_Type * supported = this->supports_concrete ();
 
       if (supported != nullptr)
@@ -318,7 +366,99 @@ be_valuetype::have_operation ()
         }
     }
 
+  this->have_operation_cache_ = have_operation;
+  this->have_operation_computed_ = true;
   return have_operation;
+}
+
+bool
+be_valuetype::has_supported_interface () const
+{
+  if (this->has_supported_interface_computed_)
+    {
+      return this->has_supported_interface_cache_;
+    }
+
+  bool result = this->n_supports () != 0;
+  if (!result)
+    {
+      AST_Type_List const& inherits = this->inherits ();
+      for (size_t i = 0; i < inherits.size (); ++i)
+        {
+          be_valuetype const * const vt =
+            dynamic_cast<be_valuetype const *> (inherits[i]);
+          if (vt != nullptr && vt->has_supported_interface ())
+            {
+              result = true;
+              break;
+            }
+        }
+    }
+
+  this->has_supported_interface_cache_ = result;
+  this->has_supported_interface_computed_ = true;
+  return result;
+}
+
+bool
+be_valuetype::obv_need_ref_counter ()
+{
+  if (this->obv_need_ref_counter_computed_)
+    {
+      return this->obv_need_ref_counter_cache_;
+    }
+
+  bool base_has_ref_counter {};
+  for (int i = 0; i < this->n_inherits (); ++i)
+    {
+      be_valuetype * const vt =
+        dynamic_cast<be_valuetype *> (this->inherits ()[i]);
+      if (vt != nullptr && vt->obv_have_ref_counter ())
+        {
+          base_has_ref_counter = true;
+          break;
+        }
+    }
+
+  // Inherited CORBA interfaces add another refcount implementation.
+  bool const result =
+    !this->is_abstract ()
+    && !base_has_ref_counter
+    && (this->has_supported_interface ()
+        || FS_CONCRETE_FACTORY == this->determine_factory_style ());
+  this->obv_need_ref_counter_cache_ = result;
+  this->obv_need_ref_counter_computed_ = true;
+  return result;
+}
+
+bool
+be_valuetype::obv_have_ref_counter ()
+{
+  if (this->obv_have_ref_counter_computed_)
+    {
+      return this->obv_have_ref_counter_cache_;
+    }
+
+  bool result = !this->is_abstract () && this->obv_need_ref_counter ();
+  for (int i = 0; !result && i < this->n_inherits (); ++i)
+    {
+      be_valuetype * const vt =
+        dynamic_cast<be_valuetype *> (this->inherits ()[i]);
+      if (vt != nullptr && !vt->is_abstract () && vt->obv_have_ref_counter ())
+        {
+          result = true;
+        }
+    }
+
+  this->obv_have_ref_counter_cache_ = result;
+  this->obv_have_ref_counter_computed_ = true;
+  return result;
+}
+
+bool
+be_valuetype::obv_has_refcount_overrides ()
+{
+  return this->has_supported_interface () && this->obv_have_ref_counter ();
 }
 
 bool
@@ -362,7 +502,7 @@ be_valuetype::have_supported_op (be_interface * node)
       // Now traverse inheritance tree.
       AST_Type_List const& inherits = node->inherits ();
 
-      for (std::size_t i = 0; i < inherits.size (); ++i)
+      for (size_t i = 0; i < inherits.size (); ++i)
         {
           be_interface * intf =
             dynamic_cast<be_interface*> (inherits[i]);
@@ -611,7 +751,10 @@ be_valuetype::data_members_count (AST_Field::Visibility vis)
 
       if (vis != AST_Field::vis_NA)
         {
-          if (vis == field->visibility ()) ++count;
+          if (vis == field->visibility ())
+            {
+              ++count;
+            }
         }
       else
         {
@@ -635,12 +778,11 @@ be_valuetype::traverse_supports_list_graphs (
     be_interface::tao_code_emitter gen,
     TAO_OutStream *os,
     bool use_abstract_paths,
-    bool use_concrete_paths
-  )
+    bool use_concrete_paths)
 {
   bool const abstract_paths_only = use_abstract_paths && !use_concrete_paths;
 
-  std::size_t const n_supports = this->n_supports ();
+  size_t const n_supports = this->n_supports ();
 
   if (n_supports == 0)
     {
@@ -653,7 +795,7 @@ be_valuetype::traverse_supports_list_graphs (
 
   be_interface *supported_interface {};
 
-  for (std::size_t i = 0; i < n_supports; ++i)
+  for (size_t i = 0; i < n_supports; ++i)
     {
       if (! use_abstract_paths
           && this->pd_supports[i]->is_abstract ())

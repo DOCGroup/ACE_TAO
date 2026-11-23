@@ -9,8 +9,7 @@ be_visitor_interface_direct_proxy_impl_sh (be_visitor_context *ctx)
 
 int
 be_visitor_interface_direct_proxy_impl_sh::visit_interface (
-    be_interface *node
-  )
+    be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -61,7 +60,6 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
   *os << be_nl
       << "{" << be_nl << "public:" << be_idt_nl;
 
-  // Dtor
   *os << "virtual ~" << node->direct_proxy_impl_name () << " ();";
 
   if (this->visit_scope (node) == -1)
@@ -83,8 +81,7 @@ int
 be_visitor_interface_direct_proxy_impl_sh::gen_abstract_ops_helper (
     be_interface *node,
     be_interface *base,
-    TAO_OutStream *os
-  )
+    TAO_OutStream *os)
 {
   if (!base->is_abstract ())
     {

@@ -35,9 +35,9 @@ public:
                 long n_inherits,
                 AST_Type *inherits_concrete,
                 AST_Interface_List const& inherits_flat,
-                std::size_t n_inherits_flat,
+                size_t n_inherits_flat,
                 AST_Type_List const& supports,
-                std::size_t n_supports,
+                size_t n_supports,
                 AST_Type *supports_concrete,
                 bool abstract,
                 bool truncatable,
@@ -80,8 +80,7 @@ public:
       tao_code_emitter gen,
       TAO_OutStream *os,
       bool use_abstract_paths = true,
-      bool use_concrete_paths = true
-    );
+      bool use_concrete_paths = true);
 
   /// Do we support at least one abstract interface?
   bool supports_abstract () const;
@@ -97,8 +96,7 @@ public:
 
   /// Compute the count of private/public/all data members.
   ACE_CDR::ULong data_members_count (
-      AST_Field::Visibility vis = AST_Field::vis_NA
-    );
+      AST_Field::Visibility vis = AST_Field::vis_NA);
 
   /// Accessor to the member.
   std::string const& fwd_helper_name () const;
@@ -126,9 +124,27 @@ public:
   /// Determine what kind of factory needed.
   FactoryStyle determine_factory_style ();
 
+  /// Does this valuetype use a generated concrete factory?
+  bool has_concrete_factory ();
+
+  /// Does its generated implementation provide _copy_value()?
+  bool generates_obv_copy_value ();
+
+  /// Does a base valuetype provide a generated _copy_value()?
+  bool inherits_obv_copy_value ();
+
   /// Recurse down the inheritance tree to determine
   /// if valuetype has at least one operation/attribute.
   bool have_operation ();
+
+  /// Check whether this valuetype or a base supports an interface.
+  bool has_supported_interface () const;
+
+  /// Check whether the generated OBV class needs or inherits a ref counter.
+  bool obv_need_ref_counter ();
+  bool obv_have_ref_counter ();
+  /// Check whether supported interfaces need refcount overrides.
+  bool obv_has_refcount_overrides ();
 
   /// Check if VT supports an interface with at least 1 operation.
   static bool have_supported_op (be_interface *node);
@@ -156,6 +172,16 @@ private:
 
   /// Flag used by default constructor generator.
   bool is_amh_excep_holder_ {};
+
+  /// Cache operation lookup after the IDL scope is complete.
+  bool have_operation_computed_ {};
+  bool have_operation_cache_ {};
+  mutable bool has_supported_interface_computed_ {};
+  mutable bool has_supported_interface_cache_ {};
+  bool obv_need_ref_counter_computed_ {};
+  bool obv_need_ref_counter_cache_ {};
+  bool obv_have_ref_counter_computed_ {};
+  bool obv_have_ref_counter_cache_ {};
 };
 
 #endif  // if !defined

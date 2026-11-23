@@ -33,7 +33,6 @@ be_visitor_exception_any_op_ch::visit_exception (be_exception *node)
 
   TAO_INSERT_COMMENT (os);
 
-
   *os << be_global->anyops_versioning_begin () << be_nl;
 
   *os << be_nl_2

@@ -214,11 +214,11 @@ TAO_OutStream::flush_pending_whitespace ()
 void
 TAO_OutStream::write_text (std::string const& text)
 {
-  std::size_t position {};
+  size_t position {};
 
   while (position < text.size ())
     {
-      std::size_t const whitespace = text.find_first_of (" \t\r\n", position);
+      size_t const whitespace = text.find_first_of (" \t\r\n", position);
 
       if (whitespace != position)
         {
@@ -598,9 +598,15 @@ signed_int_helper (TAO_OutStream &os, IntType value, IntType min, const char *sp
    * Apparently the workaround is to write it as `VALUE_PLUS_ONE - 1`.
    */
   const bool min_value = value == min;
-  if (min_value) ++value;
+  if (min_value)
+    {
+      ++value;
+    }
   os.print (specifier, value);
-  if (min_value) os.print (" - 1");
+  if (min_value)
+    {
+      os.print (" - 1");
+    }
 }
 
 TAO_OutStream&
@@ -657,14 +663,20 @@ TAO_OutStream::print (AST_Expression *expr)
       // isprint() sees \ and ' as printable characters
       // so we have to test for them first.
       if (ev->u.cval == '\\')
-        this->TAO_OutStream::print ("'\\\\'");
+        {
+          this->TAO_OutStream::print ("'\\\\'");
+        }
       else if (ev->u.cval == '\'')
-        this->TAO_OutStream::print ("'\\''");
+        {
+          this->TAO_OutStream::print ("'\\''");
+        }
 
       // This handles hex and octal escape sequences
       // that would print out as weird characters.
       else if (std::isprint (static_cast<unsigned char> (ev->u.cval)))
-        this->TAO_OutStream::print ("'%c'", ev->u.cval);
+        {
+          this->TAO_OutStream::print ("'%c'", ev->u.cval);
+        }
       else if (std::iscntrl (static_cast<unsigned char> (ev->u.cval)))
         switch (ev->u.cval)
           {
@@ -696,7 +708,9 @@ TAO_OutStream::print (AST_Expression *expr)
             this->TAO_OutStream::print ("'\\x%x'", ev->u.oval);
           }
        else
-        this->TAO_OutStream::print ("'\\x%x'", ev->u.oval);
+         {
+           this->TAO_OutStream::print ("'\\x%x'", ev->u.oval);
+         }
       break;
     case AST_Expression::EV_wchar:
       this->TAO_OutStream::print ("L'%lc'", ev->u.wcval);

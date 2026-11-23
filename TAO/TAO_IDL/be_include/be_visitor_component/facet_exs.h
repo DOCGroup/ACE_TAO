@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_COMPONENT_FACET_EXS_H_
 #define _BE_COMPONENT_FACET_EXS_H_
 

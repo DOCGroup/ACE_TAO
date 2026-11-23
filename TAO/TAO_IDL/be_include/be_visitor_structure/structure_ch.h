@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_STRUCTURE_STRUCTURE_CH_H_
 #define _BE_VISITOR_STRUCTURE_STRUCTURE_CH_H_
 

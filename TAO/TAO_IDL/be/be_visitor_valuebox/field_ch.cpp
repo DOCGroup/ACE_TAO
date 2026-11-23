@@ -29,7 +29,6 @@ be_visitor_valuebox_field_ch::be_visitor_valuebox_field_ch (
 {
 }
 
-
 int
 be_visitor_valuebox_field_ch::visit_field (be_field *node)
 {
@@ -88,7 +87,6 @@ be_visitor_valuebox_field_ch::visit_array (be_array *node)
 
   TAO_OutStream * const os = this->ctx_->stream ();
 
-
   std::string fname;
 
   if (bt->node_type () != AST_Decl::NT_typedef)
@@ -114,7 +112,6 @@ be_visitor_valuebox_field_ch::visit_array (be_array *node)
     { // Typedefed node.
       fname = bt->full_name ();
     }
-
 
   TAO_INSERT_COMMENT (os);
 
@@ -330,7 +327,6 @@ be_visitor_valuebox_field_ch::visit_sequence (be_sequence *node)
   this->emit_member_get (field, bt, "const ", " &", "const");
   this->emit_member_get (field, bt, "", " &", "");
 
-
   return 0;
 }
 
@@ -469,7 +465,6 @@ be_visitor_valuebox_field_ch::visit_union (be_union *node)
 
   TAO_OutStream * const os = this->ctx_->stream ();
 
-
   TAO_INSERT_COMMENT (os);
 
   this->emit_member_set (field, bt, "const ", " &");
@@ -478,7 +473,6 @@ be_visitor_valuebox_field_ch::visit_union (be_union *node)
 
   return 0;
 }
-
 
 void
 be_visitor_valuebox_field_ch::emit_member_set (be_decl *field,
@@ -492,7 +486,6 @@ be_visitor_valuebox_field_ch::emit_member_set (be_decl *field,
   emit_valuebox_type_name (os, const_arg, field_type->name (), arg_modifier);
   *os << ");" << be_nl;
 }
-
 
 void
 be_visitor_valuebox_field_ch::emit_member_get (be_decl *field,

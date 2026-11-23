@@ -18,7 +18,7 @@ foreach $i (@ARGV) {
         $debug_level = '10';
     }
     if ($i eq '-d') {
-        $debug_client = "-n";
+        $debug_client = "-d";
     }
 }
 
