@@ -272,7 +272,7 @@ oneway_server (void *arg)
               et.user_time,
               et.system_time));
 
-  double messages_per_sec = double (message_count) / et.real_time;
+  double const messages_per_sec = double (message_count) / et.real_time;
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\t\tmessages = %B\n")

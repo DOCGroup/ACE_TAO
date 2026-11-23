@@ -335,8 +335,8 @@ Options::twoway_client_test ()
   ACE_Time_Value tv;
 
   timer.elapsed_time_incr (tv);
-  double real_time = static_cast<double> (tv.sec () * ACE_ONE_SECOND_IN_USECS + tv.usec ());
-  double messages_per_sec = iteration * double (ACE_ONE_SECOND_IN_USECS) / real_time;
+  double const real_time = static_cast<double> (tv.sec () * ACE_ONE_SECOND_IN_USECS + tv.usec ());
+  double const messages_per_sec = iteration * double (ACE_ONE_SECOND_IN_USECS) / real_time;
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) messages = %B\n(%t) usec-per-message = %f\n(%t) messages-per-second = %0.00f\n"),

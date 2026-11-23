@@ -269,7 +269,7 @@ oneway_server (void *arg)
               et.user_time,
               et.system_time));
 
-  double messages_per_sec = double (message_count) / et.real_time;
+  double const messages_per_sec = double (message_count) / et.real_time;
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\t\tmessages = %B\n\t\ttotal bytes = %B\n\t\tmbits/sec = %f\n\t\tusec-per-message = %f\n\t\tmessages-per-second = %0.00f\n"),
@@ -355,11 +355,11 @@ run_event_loop (u_short port)
 #if !defined (ACE_WIN32)
       select_width = handle_set.max_set () + 1;
 #endif /* ! ACE_WIN32 */
-      int result = ACE_OS::select (select_width,
-                                   temp.fdset (),
-                                   nullptr,
-                                   nullptr,
-                                   timeout);
+      int const result = ACE_OS::select (select_width,
+                                         temp.fdset (),
+                                         nullptr,
+                                         nullptr,
+                                         timeout);
       if (result == -1)
         {
           ACE_ERROR ((LM_ERROR,
