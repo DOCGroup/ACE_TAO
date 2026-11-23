@@ -311,7 +311,7 @@ ACE_HTTP_Addr::set (const ACE_TCHAR *host_name,
   this->query_ = std::move (query_copy);
   this->port_number_ = port;
 
-  size_t size = this->url_size (1);
+  size_t const size = this->url_size (1);
 
   ACE_TCHAR *raw_buffer {};
   ACE_ALLOCATOR_RETURN (raw_buffer,
@@ -431,7 +431,7 @@ path_copy (const ACE_TCHAR *begin,
   // previous '/'
   for (; *src != 0; ++src)
     {
-      ACE_TCHAR c = *src;
+      ACE_TCHAR const c = *src;
 
       switch (c)
         {
@@ -490,7 +490,7 @@ ACE_HTTP_Addr::create_relative_address (const ACE_TCHAR *url) const
       ACE_NEW_RETURN (raw_buffer,
                       ACE_TCHAR [n],
                       nullptr);
-      std::unique_ptr<ACE_TCHAR[]> buffer (raw_buffer);
+      std::unique_ptr<ACE_TCHAR[]> const buffer (raw_buffer);
 
       // We copy the contens of <path> into <buf>; but simplifying the
       // path, to avoid infinite loop like:
@@ -648,7 +648,7 @@ ACE_HTTP_Addr::addr_to_string (ACE_TCHAR *buffer,
                               ACE_TEXT ("http://"));
   if (flags == 0)
     {
-      ACE_INET_Addr inet = this->get_inet_address ();
+      ACE_INET_Addr const inet = this->get_inet_address ();
       n += ACE_OS::sprintf (buffer + n, ACE_TEXT ("%") ACE_TEXT_PRIs, inet.get_host_addr ());
     }
   else
@@ -756,7 +756,7 @@ ACE_FTP_Addr::set (const ACE_TCHAR *host_name,
   this->user_ = std::move (user_copy);
   this->password_ = std::move (password_copy);
 
-  size_t size = this->url_size (1);
+  size_t const size = this->url_size (1);
 
   ACE_TCHAR *raw_buffer {};
   ACE_ALLOCATOR_RETURN (raw_buffer,
@@ -880,7 +880,7 @@ ACE_FTP_Addr::addr_to_string (ACE_TCHAR *buffer,
 
   if (flags == 0)
     {
-      ACE_INET_Addr inet = this->get_inet_address ();
+      ACE_INET_Addr const inet = this->get_inet_address ();
       n += ACE_OS::sprintf (buffer + n, ACE_TEXT ("%") ACE_TEXT_PRIs, inet.get_host_addr ());
     }
   else
@@ -1034,7 +1034,7 @@ ACE_Mailto_Addr::set (const ACE_TCHAR *user,
   this->user_ = std::move (user_copy);
   this->hostname_ = std::move (hostname_copy);
   this->headers_ = std::move (headers_copy);
-  size_t size = this->url_size (1);
+  size_t const size = this->url_size (1);
   ACE_TCHAR *raw_buffer {};
   ACE_ALLOCATOR_RETURN (raw_buffer,
                         reinterpret_cast<ACE_TCHAR *> (ACE_OS::malloc (size)),
@@ -1095,7 +1095,7 @@ ACE_Mailto_Addr::url_size (int) const
   size_t size = sizeof (ACE_TEXT ("mailto:"))
     + sizeof (ACE_TEXT ("@?")); // separators
 
-  size_t chars =
+  size_t const chars =
     + (this->user_?ACE_OS::strlen (this->user_.get ()):0)
     + (this->hostname_?ACE_OS::strlen (this->hostname_.get ()):0)
     + (this->headers_?ACE_OS::strlen (this->headers_.get ()):0);
