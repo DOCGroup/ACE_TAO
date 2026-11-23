@@ -93,7 +93,7 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
                            -1);
     }
 
-  ACE_HANDLE new_handle = temp_stream.get_handle ();
+  ACE_HANDLE const new_handle = temp_stream.get_handle ();
   new_stream.set_handle (new_handle);
   new_stream.disable (ACE_NONBLOCK);
   // Do not close the handle.

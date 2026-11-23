@@ -64,7 +64,7 @@ ACE_SOCK_IO::recvv (iovec *io_vec,
       // It's ok to blindly cast this value since 'inlen' is an int and, thus,
       // we can't get more than that back. Besides, if the recv() fails, we
       // don't want that value cast to unsigned and returned.
-      ssize_t recv_len = this->recv (io_vec->iov_base, inlen);
+      ssize_t const recv_len = this->recv (io_vec->iov_base, inlen);
       if (recv_len > 0)
         {
           // u_long is the Windows type; size_t is everyone else's. A u_long

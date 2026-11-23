@@ -38,7 +38,7 @@ ACE_Reactive_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
   }
 
   ACE_OFF_T new_offset {};
-  ssize_t retv = ACE::recv (this->handle_,
+  ssize_t const retv = ACE::recv (this->handle_,
                             (char *) &new_offset,
                             sizeof (ACE_OFF_T),
                             flags,

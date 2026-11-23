@@ -95,7 +95,7 @@ ACE_MEM_Addr::string_to_addr (const ACE_TCHAR s[])
 {
   ACE_TRACE ("ACE_MEM_Addr::string_to_addr");
 
-  u_short pn = static_cast<u_short> (ACE_OS::strtoul (s, nullptr, 10));
+  u_short const pn = static_cast<u_short> (ACE_OS::strtoul (s, nullptr, 10));
   return this->set (pn);
 }
 

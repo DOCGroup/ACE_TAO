@@ -79,7 +79,7 @@ ACE_MEM_SAP::close_shm_malloc ()
 {
   ACE_TRACE ("ACE_MEM_SAP::close_shm_malloc");
 
-  int retv = -1;
+  int const retv = -1;
 
   if (this->shm_malloc_ != nullptr)
     {
