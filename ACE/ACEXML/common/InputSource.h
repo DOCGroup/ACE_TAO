@@ -58,7 +58,7 @@ public:
   /**
    * Create a new input source with a ACEXML_Char stream.
    * Notice that ACEXML_InputSource assumes the ownership
-   * of <stream>
+   * of @a stream.
    */
   explicit ACEXML_InputSource (ACEXML_CharStream *stream);
 
@@ -92,7 +92,7 @@ public:
   /**
    * Set the ACEXML_Char stream for this input source.
    * Notice that ACEXML_InputSource assumes the ownership
-   * of <stream>
+   * of @a charStream.
    */
   virtual void setCharStream (ACEXML_CharStream *charStream);
 

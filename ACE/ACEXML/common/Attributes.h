@@ -30,7 +30,7 @@
  * - by Namespace-qualified name; or
  * - by qualified (prefixed) name.
  *
- * The list will not contain attributes that were declared #IMPLIED
+ * The list will not contain attributes declared with the @c IMPLIED keyword
  * but not specified in the start tag. It will also not contain
  * attributes used as Namespace declarations (xmlns*) unless the
  * http://xml.org/sax/features/namespace-prefixes feature is set to

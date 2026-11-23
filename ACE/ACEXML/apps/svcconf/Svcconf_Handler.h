@@ -162,12 +162,12 @@ public:
 
 protected:
   /**
-   * Get the only attribute in <stream> or <streamdef>.
+   * Get the only attribute in the "stream" or "streamdef" element.
    */
   int get_stream_id (ACEXML_Attributes *alist);
 
   /**
-   * Get the only attribute in <resume>, <suspend>, <remove>
+   * Get the only attribute in the "resume", "suspend", or "remove" element.
    */
   int get_id (ACEXML_Attributes *alist);
 

@@ -43,12 +43,12 @@ public:
   int set (const ACEXML_URL_Addr &addr);
 
   /**
-   *  Initializes an <ACEXML_URL_Addr> from the <address>, which can be
-   *  "ip-number:port-number/path-name" (e.g.,
-   *  "www.cs.wustl.edu:1234/~schmidt/" "ip-number:port-number/path-name"
-   *  (e.g., "128.252.166.57:1234/~schmidt"). If there is no ':' in the
-   *  <address> it is assumed to be an ip-number or ip-address number, with
-   *  the port number <ACE_DEFAULT_HTTP_PORT>.
+   *  Initializes an @c ACEXML_URL_Addr from @a address, which can be
+   *  "ip-number:port-number/path-name", e.g.,
+   *  "128.252.166.57:1234/~schmidt/", or "host:port-number/path-name",
+   *  e.g., "www.cs.wustl.edu:1234/~schmidt/". If there is no ':' in the
+   *  @a address it is assumed to be an IP address, with the port number
+   *  @c ACE_DEFAULT_HTTP_PORT.
    */
 #if defined (ACE_USES_WCHAR)
   virtual int string_to_addr (const ACEXML_Char* address,
@@ -65,13 +65,13 @@ public:
 #endif
 
   /**
-   *  Transform the current <ACE_INET_Addr> address into string format. If
-   *  <ipaddr_format> is non-0 this produces
+   *  Transform the current @c ACE_INET_Addr address into string format. If
+   *  @a ipaddr_format is nonzero, this produces
    *  "ip-number:port-number/path-name" (e.g.,
-   *  "128.252.166.57:80/~schmidt/"), whereas if <ipaddr_format> is 0 this
+   *  "128.252.166.57:80/~schmidt/"), whereas if @a ipaddr_format is 0 this
    *  produces "ip-name:port-number" (e.g.,
-   *  "www.cs.wustl.edu:80/~schmidt/"). Returns -1 if the <size> of the
-   *  <buffer> is too small, else 0.
+   *  "www.cs.wustl.edu:80/~schmidt/"). Returns -1 if @a size is too small
+   *  for @a s, else 0.
    */
   int addr_to_string (ACEXML_Char *s,
                       size_t size,
