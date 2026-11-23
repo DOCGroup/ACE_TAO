@@ -221,7 +221,7 @@ run_main (int, ACE_TCHAR *[])
     ACE_CString s4 ("ello");
     ACE_CString s5 = s1 + " " + s2;
 
-    char single_character = 'z';
+    char const single_character = 'z';
     ACE_CString single_character_string (single_character);
 
     ACE_CString empty_string;
@@ -380,7 +380,7 @@ run_main (int, ACE_TCHAR *[])
     ACE_CString s4 ("ello", nullptr, false);
     ACE_CString s5 = s1 + " " + s2;
 
-    char single_character = 'z';
+    char const single_character = 'z';
     ACE_CString single_character_string (single_character);
 
     ACE_CString empty_string (nullptr, nullptr, false);

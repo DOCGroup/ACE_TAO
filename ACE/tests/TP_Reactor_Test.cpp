@@ -563,7 +563,7 @@ Receiver::handle_input (ACE_HANDLE h)
 
   ACE_Time_Value tv = ACE_Time_Value::zero;
 
-  int qcount = this->putq (mb, std::addressof (tv));
+  int const qcount = this->putq (mb, std::addressof (tv));
 
   if (qcount <= 0)  // failed to putq
     {
@@ -615,7 +615,7 @@ Receiver::handle_output (ACE_HANDLE h)
   ssize_t res = 0;
   size_t  bytes = 0;
 
-  int     qcount = this->getq (mb, std::addressof (tv));
+  int const qcount = this->getq (mb, std::addressof (tv));
 
   if (mb != nullptr)  // qcount >= 0)
     {
@@ -915,7 +915,7 @@ Sender::initiate_write ()
 
       ACE_Time_Value tv = ACE_Time_Value::zero;
 
-      int qcount =this->putq (mb, std::addressof (tv));
+      int const qcount =this->putq (mb, std::addressof (tv));
 
       if (qcount <= 0)
         {
@@ -1066,7 +1066,7 @@ Sender::handle_output (ACE_HANDLE h)
   ssize_t res=0;
   size_t  bytes=0;
 
-  int     qcount = this->getq (mb , std::addressof (tv));
+  int const qcount = this->getq (mb , std::addressof (tv));
 
   if (mb != nullptr)  // qcount >= 0
     {

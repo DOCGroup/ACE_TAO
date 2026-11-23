@@ -121,7 +121,7 @@ class CTestEventHandler : public ICustomEventHandler
         /// @param p_vParameter
         int operator() (void* p_vParameter) override
         {
-            long iParameter = ACE_Utils::truncate_cast<long> ((intptr_t)p_vParameter);
+            long const iParameter = ACE_Utils::truncate_cast<long> ((intptr_t)p_vParameter);
 
             ACE_DEBUG((LM_DEBUG,
                        ACE_TEXT("%I(%t) Incrementing test event handler call count by %q.\n"),
@@ -190,7 +190,7 @@ run_main (int, ACE_TCHAR *[])
         ACE_DEBUG((LM_DEBUG,
             ACE_TEXT("%I(%t) Scheduling timer...\n")));
 
-        long lTimerHandle =
+        long const lTimerHandle =
             TimerWheelThreadAdapter.schedule(p_TestEventHandler,
                 reinterpret_cast<void *> (1),
                 ACE_OS::gettimeofday() + ACE_Time_Value(1, 0));
@@ -217,7 +217,7 @@ run_main (int, ACE_TCHAR *[])
         ACE_DEBUG((LM_DEBUG,
                    ACE_TEXT("%I(%t) Scheduling timer...\n")));
 
-        long lTimerHandle =
+        long const lTimerHandle =
             TimerWheelThreadAdapter.schedule
                 (p_TestEventHandler,
                  reinterpret_cast<void *> (1),
