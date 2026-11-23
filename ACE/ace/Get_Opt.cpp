@@ -488,7 +488,7 @@ ACE_Get_Opt::operator () ()
   // preceding one doesn't take an argument.
   if (this->nextchar_ == nullptr || *this->nextchar_ == '\0')
     {
-      int retval = this->nextchar_i ();
+      int const retval = this->nextchar_i ();
       if (retval != 0)
       {
         return retval;
@@ -683,7 +683,7 @@ ACE_Get_Opt::permute_args ()
   ACE_TRACE ("ACE_Get_Opt::permute_args");
 
   u_long cyclelen, i, j, ncycle, nnonopts, nopts;
-  u_long opt_end = this->optind;
+  u_long const opt_end = this->optind;
   int cstart, pos = 0;
   ACE_TCHAR *swap {};
 
