@@ -28,7 +28,7 @@ interface Coffee
 
 interface Param_Test
 {
-  /// Add exceptions to each
+  // Add exceptions to each
 
   /// primitive types
   short test_short (in short s1,
@@ -385,7 +385,7 @@ interface Param_Test
                                     inout Multdim_Array m2,
                                     out Multdim_Array m3);
 
-  /// sequence of typecodes
-  /// TypeCodeSeq test_tcseq (in TypeCodeSeq t1,  inout TypeCodeSeq t2, out TypeCodeSeq t3);
+  // sequence of typecodes
   //  typedef sequence<TypeCode> TypeCodeSeq;
+  //  TypeCodeSeq test_tcseq (in TypeCodeSeq t1,  inout TypeCodeSeq t2, out TypeCodeSeq t3);
 };

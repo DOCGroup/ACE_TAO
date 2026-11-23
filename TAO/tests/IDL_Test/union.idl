@@ -23,11 +23,11 @@ enum DataType
 union Data switch (DataType)
 {
   case dtLong: long longData;
-  /// by default, empty union
   case dtShort: short shortData;
+  // by default, empty union
 };
 
-/// Explicit default case
+// Explicit default case
 
 /// It is important to have a module, in which
 /// the following union is declared.

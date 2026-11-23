@@ -17,7 +17,7 @@
 
 module CosTrading
 {
-  /// forward references to our interfaces
+  // forward references to our interfaces
 
   interface Lookup;
   interface Register;
