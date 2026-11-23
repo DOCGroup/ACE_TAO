@@ -34,7 +34,7 @@ Client_Request_Interceptor::send_request (
         ri->arguments ();
 
       Test::TestScenario scenario {};
-      CORBA::ULong i {};  // Index avoids overloaded operator ambiguity.
+      CORBA::ULong const i {};  // Index avoids overloaded operator ambiguity.
       if (paramlist[i].argument >>= scenario)
         {
           switch (scenario)
@@ -112,7 +112,7 @@ Client_Request_Interceptor::receive_reply (
         ri->arguments ();
 
       Test::TestScenario scenario {};
-      CORBA::ULong i {};  // Index avoids overloaded operator ambiguity.
+      CORBA::ULong const i {};  // Index avoids overloaded operator ambiguity.
       if (paramlist[i].argument >>= scenario)
         {
           switch (scenario)
@@ -169,7 +169,7 @@ Client_Request_Interceptor::receive_exception (
         ri->arguments ();
 
       Test::TestScenario scenario {};
-      CORBA::ULong i {};  // Index avoids overloaded operator ambiguity.
+      CORBA::ULong const i {};  // Index avoids overloaded operator ambiguity.
       if (paramlist[i].argument >>= scenario)
         {
           CORBA::Any_var exception;
