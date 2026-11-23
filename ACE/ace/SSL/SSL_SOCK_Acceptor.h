@@ -63,6 +63,13 @@ public:
    *                   was selected, call this object's
    *                   @c ACE_SOCK::get_local_addr(ACE_Addr&) method
    *                   upon return.
+   * @param reuse_addr If non-zero, enable @c SO_REUSEADDR.
+   * @param protocol_family The protocol family for the listening socket.
+   * @param backlog The maximum length of the queue of pending connections.
+   * @param protocol The protocol to use when creating the socket; 0 selects
+   *                 the default protocol.
+   * @param ipv6_only If non-zero, accept only IPv6 connections on an IPv6
+   *                  socket.
    */
   explicit ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
                                   int reuse_addr = 0,
@@ -80,6 +87,16 @@ public:
    *                   was selected, call this object's
    *                   @c ACE_SOCK::get_local_addr(ACE_Addr&) method
    *                   upon return.
+   * @param protocolinfo Protocol information used when creating the socket.
+   * @param g Socket group used for QoS.
+   * @param flags Flags passed when creating the QoS-enabled socket.
+   * @param reuse_addr If non-zero, enable @c SO_REUSEADDR.
+   * @param protocol_family The protocol family for the listening socket.
+   * @param backlog The maximum length of the queue of pending connections.
+   * @param protocol The protocol to use when creating the socket; 0 selects
+   *                 the default protocol.
+   * @param ipv6_only If non-zero, accept only IPv6 connections on an IPv6
+   *                  socket.
    */
   ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
                          ACE_Protocol_Info *protocolinfo,
@@ -100,6 +117,13 @@ public:
    *                   was selected, call this object's
    *                   @c ACE_SOCK::get_local_addr(ACE_Addr&) method
    *                   upon return.
+   * @param reuse_addr If non-zero, enable @c SO_REUSEADDR.
+   * @param protocol_family The protocol family for the listening socket.
+   * @param backlog The maximum length of the queue of pending connections.
+   * @param protocol The protocol to use when creating the socket; 0 selects
+   *                 the default protocol.
+   * @param ipv6_only If non-zero, accept only IPv6 connections on an IPv6
+   *                  socket.
    *
    * @return 0 if success; -1 for failure (errno contains error code).
    */
@@ -131,6 +155,8 @@ public:
    *                    block forever, a timeout of {0, 0} means poll.
    * @param restart     1 means "restart if interrupted," that is,
    *                    if errno == EINTR.
+   * @param reset_new_handle If true, reset event associations on the accepted
+   *                         handle.
    *
    * @return 0 if success; -1 for failure (errno contains error code).
    */
@@ -145,6 +171,7 @@ public:
    * information in qos_params.
    * @param new_stream  The @c ACE_SSL_SOCK_Stream object that will receive
    *                    the new SSL socket.
+   * @param qos_params QoS parameters used for accepting the connection.
    * @param remote_addr Pointer to an @c ACE_INET_Addr object that will
    *                    receive the address of the peer that connected.
    * @param timeout     The maximum time to wait for the combined socket
@@ -152,6 +179,8 @@ public:
    *                    block forever, a timeout of {0, 0} means poll.
    * @param restart     1 means "restart if interrupted," that is,
    *                    if errno == EINTR.
+   * @param reset_new_handle If true, reset event associations on the accepted
+   *                         handle.
    *
    * @return 0 if success; -1 for failure (errno contains error code).
    */
