@@ -30,7 +30,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
     throw ::CORBA::INTERNAL ();
   }
 
-  CORBA::Policy_var client_protocol_policy_base =
+  CORBA::Policy_var const client_protocol_policy_base =
     TAO_RT_Endpoint_Utils::policy (TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL, *r);
 
   if (CORBA::is_nil(client_protocol_policy_base.in ()))
@@ -56,7 +56,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
     }
   else
     {
-      RTCORBA::ClientProtocolPolicy_var client_protocol_policy =
+      RTCORBA::ClientProtocolPolicy_var const client_protocol_policy =
         RTCORBA::ClientProtocolPolicy::_narrow (
           client_protocol_policy_base.in ());
 
@@ -157,11 +157,11 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
   }
 
   // Get the priority model policy.
-  CORBA::Policy_var priority_model_policy =
+  CORBA::Policy_var const priority_model_policy =
     rt_stub->get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL);
 
   // Get the bands policy.
-  CORBA::Policy_var bands_policy =
+  CORBA::Policy_var const bands_policy =
     TAO_RT_Endpoint_Utils::policy (
       TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION, r);
 
@@ -313,7 +313,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
 
           TAO_RT_Transport_Descriptor rt_transport_descriptor (ep);
 
-          CORBA::Policy_var private_connection_policy =
+          CORBA::Policy_var const private_connection_policy =
             rt_stub->get_cached_policy (TAO_CACHED_POLICY_RT_PRIVATE_CONNECTION);
 
           if (!CORBA::is_nil (private_connection_policy.in ()))
