@@ -261,9 +261,9 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
 
 #endif // (ACE_WIN32)
 
-  // always delete implementation  1 , not  !(proactor_impl == 0)
+  // Always delete the implementation, even when it is nullptr.
   ACE_NEW_RETURN (this->proactor_,
-                  ACE_Proactor (proactor_impl, 1 ),
+                  ACE_Proactor (proactor_impl, true),
                   -1);
   // Set new singleton and delete it in close_singleton()
   ACE_Proactor::instance (this->proactor_, true);
