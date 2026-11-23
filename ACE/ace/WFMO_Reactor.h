@@ -613,7 +613,7 @@ private:
  * exception notification just as with other platforms. See Chapter 4 in
  * C++NPv2 for complete details.
  *
- * @note that changes to the state of ACE_WFMO_Reactor are not
+ * @note changes to the state of ACE_WFMO_Reactor are not
  * instantaneous.  Most changes (registration, removal,
  * suspension, and resumption of handles, and changes in
  * ownership) are made when the ACE_WFMO_Reactor reaches a stable
@@ -626,7 +626,7 @@ private:
  * allocated event handlers and call "delete this" inside the handle_close()
  * hook method.
  *
- * @note that although multiple threads can concurrently run the
+ * @note although multiple threads can concurrently run the
  * ACE_WFMO_Reactor event loop, the concept of the reactor "owner" is still
  * important. Only the owner thread can expire timers and wait on the
  * notifications handle. Thus, be careful to properly set the owner thread

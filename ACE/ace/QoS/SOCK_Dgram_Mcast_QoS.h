@@ -60,7 +60,7 @@ public:
    * @c nullptr, @c subscribe() uses the default multicast
    * interface.  Returns: -1 if the call fails.
    *
-   * @note that some platforms, such as pSoS, support only number, not
+   * @note some platforms, such as pSoS, support only number, not
    * names, for network interfaces. For these platforms, give the numbers
    * in alphanumeric form and @c subscribe() converts them via
    * @c ACE_OS::atoi().

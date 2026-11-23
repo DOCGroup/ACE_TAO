@@ -1331,7 +1331,7 @@ namespace ACE_OS {
    * acquired within the given amount of time, then this method
    * returns -1 with an @c ETIME errno on platforms that actually
    * support timed mutexes.  The timeout should be an absolute time.
-   * @note that the mutex should not be a recursive one, i.e., it
+   * @note the mutex should not be a recursive one, i.e., it
    * should only be a standard mutex or an error checking mutex since
    * some implementations of this method don't support recursive
    * mutexes.  If you want to use a recursive mutex see the methods
@@ -1616,7 +1616,7 @@ namespace ACE_OS {
    * EXTREMEMLY implementation-dependent, and are probably best
    * avoided.
    *
-   * @note that @a thread_adapter is always deleted by @c thr_create,
+   * @note @a thread_adapter is always deleted by @c thr_create,
    * therefore it must be allocated with global operator new.
    *
    * At the moment for @a thr_name a valid string is passed then this

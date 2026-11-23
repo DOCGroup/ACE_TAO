@@ -72,7 +72,7 @@ public:
    * EXTREMELY implementation-dependent, and are probably best
    * avoided.
    *
-   * @note that @a thread_adapter is always deleted when @a spawn
+   * @note @a thread_adapter is always deleted when @a spawn
    * is called, so it must be allocated with global operator new.
    */
   static int spawn (ACE_THR_FUNC func,

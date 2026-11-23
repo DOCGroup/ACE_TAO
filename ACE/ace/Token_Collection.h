@@ -115,7 +115,7 @@ public:
    * value, etc.  Returns: 0 on success, -1 on failure with @c errno ==
    * problem.  If and error or deadlock occurs for one of the tokens,
    * all the tokens will be released and the method will return -1.
-   * @note that returning on detection of deadlock prevents livelock
+   * @note returning on detection of deadlock prevents livelock
    * between competing collections.  If a collection returns after
    * detecting deadlock, it is the application's responsibility to not
    * to blindly loop on the collection::acquire operation.  In other

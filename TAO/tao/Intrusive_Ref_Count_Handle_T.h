@@ -122,7 +122,7 @@ private:
   /// Drop our "copy" of the reference-counted object by removing
   /// one from its reference counter.  Do nothing if this smart pointer
   /// object is currently in the "nil" state.
-  /// @note that this method will always leave this smart pointer
+  /// @note this method will always leave this smart pointer
   /// in the "nil" state upon its return.
   void drop ();
 

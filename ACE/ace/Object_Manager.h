@@ -145,7 +145,7 @@ template <class T> class ACE_Cleanup_Adapter;
  * To ensure a static object manager is used, undefine
  * ACE_HAS_NONSTATIC_OBJECT_MANAGER *after* including the platform
  * specific config-* file.
- * @note that the ACE_Object_Manager _must_ be created before
+ * @note the ACE_Object_Manager _must_ be created before
  * any threads are spawned by the program.
  * If ACE_HAS_NONSTATIC_OBJECT_MANAGER is not defined, the ACE
  * library creates a static, singleton ACE_Object_Manager instance.

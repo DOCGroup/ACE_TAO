@@ -5,7 +5,7 @@
  *  Checks to be sure that a failed ACE_NEW[_RETURN | _NORETURN] doesn't end
  *  up throwing an exception up to the caller.
  *
- *  @note that this test doesn't get a real attempt on platforms which:
+ *  @note this test doesn't get a real attempt on platforms which:
  *    1. Are known to throw exceptions when 'new' runs out of resources,
  *    2. Are built with exceptions disabled.
  *  In these cases, the test puts a message in the log noting that a failed

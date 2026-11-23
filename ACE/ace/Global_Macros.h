@@ -613,7 +613,7 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
  *
  * ACE_FACTORY_NAMESPACE_DEFINE(ACE,ACE_Foo_Bar,ACE::Foo::Bar)
  *
- * @note that in this example, the ACE_FACTORY_DECLARE is done outside
+ * @note in this example, the ACE_FACTORY_DECLARE is done outside
  * the namespace scope. Then, the SERVICE_CLASS name is the same as
  * the fully scoped class name, but with '::' replaced with '_'. Doing
  * this will ensure unique generated signatures for the various C

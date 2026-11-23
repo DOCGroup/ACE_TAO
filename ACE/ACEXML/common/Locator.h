@@ -23,7 +23,7 @@
  * obtain the location of any other content handler event in the XML
  * source document.
  *
- * @note that the results returned by the object will be valid only
+ * @note the results returned by the object will be valid only
  * during the scope of each content handler method: the application
  * will receive unpredictable results if it attempts to use the
  * locator at any other time.

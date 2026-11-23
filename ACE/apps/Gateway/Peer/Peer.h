@@ -21,7 +21,7 @@
  *     forwarded to it from gatewayd.  In this program, peerd
  *     "processes" the events sent to it by writing them to stdout.
  *
- *  @note that in the current peerd implementation, one Peer process
+ *  @note in the current peerd implementation, one Peer process
  *  cannot serve as both a Consumer and Supplier of Events.  This is
  *  because the gatewayd establishes a separate connection for
  *  Suppliers and Consumers and the peerd only maintains a single

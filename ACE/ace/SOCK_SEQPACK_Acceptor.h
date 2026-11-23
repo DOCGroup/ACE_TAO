@@ -115,7 +115,7 @@ public:
    * Accept a new ACE_SOCK_SEQPACK_Association connection.  A @a timeout of 0
    * means block forever, a @a timeout of {0, 0} means poll.  @c restart
    * == 1 means "restart if interrupted," i.e., if errno == EINTR.
-   * @note that @c new_association inherits the "blocking mode" of @c this
+   * @note @c new_association inherits the "blocking mode" of @c this
    * @c ACE_SOCK_SEQPACK_Acceptor, i.e., if @c this acceptor factory is in
    * non-blocking mode, the @c net_association will be in non-blocking mode
    * and vice versa.

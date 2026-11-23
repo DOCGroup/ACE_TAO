@@ -104,7 +104,7 @@ public:
    * Run the event loop until the
    * ACE_Reactor::handle_events()/ACE_Reactor::alertable_handle_events()
    * method returns -1 or the end_event_loop() method is invoked.
-   * @note that this method can only be used by the singleton
+   * @note this method can only be used by the singleton
    * ACE_Reactor::instance().  Thus, to run another reactor use
    * ACE_Reactor::run_reactor_event_loop().
    *
@@ -140,7 +140,7 @@ public:
 
   /**
    * Report if the ACE_Reactor::instance()'s event loop is finished.
-   * @note that this method can only be used by the singleton
+   * @note this method can only be used by the singleton
    * ACE_Reactor::instance().  Thus, to check another reactor use
    * <ACE_Reactor::reactor_event_loop_done>.
    *
@@ -185,7 +185,7 @@ public:
    * end_reactor_event_loop() method is invoked, or the ACE_Time_Value
    * expires while the underlying event demultiplexer is waiting for
    * events.
-   * @note that it is possible for events to continuously be available,
+   * @note it is possible for events to continuously be available,
    * avoiding the need to wait for events. In this situation the timeout
    * value will not have an opportunity to expire until the next time
    * the underlying event demultiplexer waits for events.
@@ -458,7 +458,7 @@ public:
    * Install the new disposition (if given) and return the previous
    * disposition (if desired by the caller).
    *
-   * @note that the registered handler's ACE_Event_Handler::handle_close ()
+   * @note the registered handler's ACE_Event_Handler::handle_close ()
    * callback will be called to indicate the signal handler has been removed.
    * Unlike with I/O handles, there is no way to prevent this callback. The
    * handle_close() callback can check the passed mask for the value
@@ -639,7 +639,7 @@ public:
   /// @{
   /// Add @a masks_to_be_added to the @a event_handler's entry.
   /// @a event_handler must already have been registered.
-  /// @note that this call does not cause the Reactor to re-examine
+  /// @note this call does not cause the Reactor to re-examine
   /// its set of handlers - the new masks will be noticed the next
   /// time the Reactor waits for activity. If there is no other
   /// activity expected, or you need immediate re-examination of the
@@ -650,7 +650,7 @@ public:
 
   /// Add @a masks_to_be_added to the @a handle's entry.  @c event_handler
   /// associated with @a handle must already have been registered.
-  /// @note that this call does not cause the Reactor to re-examine
+  /// @note this call does not cause the Reactor to re-examine
   /// its set of handlers - the new masks will be noticed the next
   /// time the Reactor waits for activity. If there is no other
   /// activity expected, or you need immediate re-examination of
@@ -660,7 +660,7 @@ public:
                        ACE_Reactor_Mask masks_to_be_added);
 
   /// Clear @a masks_to_be_cleared from the @a event_handler's entry.
-  /// @note that this call does not cause the Reactor to re-examine
+  /// @note this call does not cause the Reactor to re-examine
   /// its set of handlers - the new masks will be noticed the next
   /// time the Reactor waits for activity. If there is no other
   /// activity expected, or you need immediate re-examination of
@@ -670,7 +670,7 @@ public:
                      ACE_Reactor_Mask masks_to_be_cleared);
 
   /// Clear @a masks_to_be_cleared from the @a handle's entry.
-  /// @note that this call does not cause the Reactor to re-examine
+  /// @note this call does not cause the Reactor to re-examine
   /// its set of handlers - the new masks will be noticed the next
   /// time the Reactor waits for activity. If there is no other
   /// activity expected, or you need immediate re-examination of

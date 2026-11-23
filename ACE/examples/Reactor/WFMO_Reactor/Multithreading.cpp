@@ -6,7 +6,7 @@
  *  can update the state of Reactor by registering and removing
  *  Event_Handlers.
  *
- *  @note that this test will only work with WFMO_Reactor
+ *  @note this test will only work with WFMO_Reactor
  *
  *  @author Irfan Pyarali
  */

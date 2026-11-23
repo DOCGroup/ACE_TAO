@@ -90,7 +90,7 @@ public:
    *        @li Name + decorator + suffix
    *        @li Name + suffix
    *        @li Name
-   *        @note that the transforms with @a decorator will be avoided if
+   *        @note the transforms with @a decorator will be avoided if
    *        ACE is built with the @c ACE_DISABLE_DEBUG_DLL_CHECK config macro.
    *
    *        @note There is another mode for locating library/DLL files that

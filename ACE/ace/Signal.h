@@ -214,7 +214,7 @@ private:
  * @class ACE_Sig_Guard
  *
  * @brief Hold signals in MASK for duration of a C++ statement block.
- * @note that a "0" for mask causes all signals to be held.
+ * @note a "0" for mask causes all signals to be held.
  */
 class ACE_Export ACE_Sig_Guard
 {

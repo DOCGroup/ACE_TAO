@@ -83,7 +83,7 @@ private:
 protected:
   /// The service context list.
   /**
-   * @note that this is not a reference as in
+   * @note this is not a reference as in
    * the synchronous case. We own the reply_service_info
    * because our TAO_Asynch_Invocation or TAO_DII_Deferred_Invocation
    * will go out of scope before we are done.

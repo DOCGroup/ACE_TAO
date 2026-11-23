@@ -27,7 +27,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * wide-character (wchar_t) format and stores the copy of it.
  * This is useful for all classes that use 'char**' argv but cannot
  * be converted into 'ACE_TCHAR**' version.
- * @note that the converted data will be lost upon destruction, so
+ * @note the converted data will be lost upon destruction, so
  * classes should use this class as their data member.
  */
 class ACE_Export ACE_Argv_Type_Converter

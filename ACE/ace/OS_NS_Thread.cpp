@@ -581,7 +581,7 @@ ACE_ALLOC_HOOK_DEFINE (ACE_TSS_Keys);
 /**
  * @class TSS_Cleanup_Instance
  * @brief A class to manage an instance pointer to ACE_TSS_Cleanup.
- * @note that the double checked locking pattern doesn't allow
+ * @note the double checked locking pattern doesn't allow
  * safe deletion.
  * Callers who wish to access the singleton ACE_TSS_Cleanup must
  * do so by instantiating a TSS_Cleanup_Instance, calling the valid

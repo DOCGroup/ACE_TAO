@@ -401,7 +401,7 @@ namespace CORBA
 
     /**
      * This operation performs an implementation-defined unit of work.
-     * @note that the default behavior is to block if the unit of work
+     * @note the default behavior is to block if the unit of work
      * is not present; this behavior can be modified by passing an
      * appropriate @c ACE_Time_Value as described in run().
      **/

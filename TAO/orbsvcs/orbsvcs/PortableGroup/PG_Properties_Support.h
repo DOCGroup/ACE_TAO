@@ -40,7 +40,7 @@ namespace TAO
    *    the default property set, or
    *    the request will fail..
    *
-   *  @note that changes to type_id or default properties will be visible
+   *  @note changes to type_id or default properties will be visible
    *  immediately at the ObjectGroup level.
    */
 

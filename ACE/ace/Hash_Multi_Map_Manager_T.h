@@ -820,7 +820,7 @@ public:
  * @c ACE_GUARD or @c ACE_READ_GUARD on the @c ACE_Hash_Multi_Map_Manager's
  * internal lock, which is accessible via its @c mutex method.
  *
- * @note that a creation method for this new iterator cannot be added
+ * @note a creation method for this new iterator cannot be added
  * to the hash map, since this would require adding explicit template
  * instantiations for bucket iterators on platforms with broken
  * templates.

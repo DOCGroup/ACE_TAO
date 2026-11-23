@@ -920,7 +920,7 @@ module SecurityLevel3 {
      * Security Contexts may be long lived and not established on
      * every request. Therefore, an identifier is assigned.
      * <p>
-     * @note that this Context Id is not directly related to the context
+     * @note this Context Id is not directly related to the context
      * defined in the CSIv2 specification.
      */
     typedef string ContextId;
@@ -1080,7 +1080,7 @@ module SecurityLevel3 {
         /**
          * The principal attribute contains a local view of the
          * Principal that the Credentials intend to represent.
-         * @note that during context establishment, the actual establish
+         * @note during context establishment, the actual establish
          * client principal may be represented differently, especially
          * with respect to environmental attributes. Some environmental
          * attributes are a direct result of context establishment.
@@ -1146,7 +1146,7 @@ module SecurityLevel3 {
         /**
          * The principal attribute contains a local view of the
          * Principal that the Credentials intend to represent.
-         * @note that during context establishment, the actual establish
+         * @note during context establishment, the actual establish
          * target principal may be represented differently, especially
          * with respect to environmental attributes. Some environmental
          * attributes are a direct result of context establishment.

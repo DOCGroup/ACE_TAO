@@ -31,7 +31,7 @@ class ACE_Export ACE_FIFO_Recv : public ACE_FIFO
 public:
   /// @name Initialization methods.
   ///
-  /// @note that @c ACE_NONBLOCK will be added to any @a flags value passed.
+  /// @note @c ACE_NONBLOCK will be added to any @a flags value passed.
   /// This causes the open to succeed even if no writer has yet opened the
   /// fifo. There is no way to disable this behavior.
   ///
