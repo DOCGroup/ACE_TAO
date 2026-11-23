@@ -298,7 +298,7 @@ ACE_INET_Addr::string_to_addr (const char s[], int address_family)
       *port_p = '\0'; ++port_p; // skip over ':'
 
       char *endp {};
-      long port = ACE_OS::strtol (port_p, &endp, 10);
+      long const port = ACE_OS::strtol (port_p, &endp, 10);
 
       if (*endp == '\0')    // strtol scanned the entire string - all digits
         {
