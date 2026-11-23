@@ -108,12 +108,12 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDL
   // created handle. This is because the newly created handle will
   // inherit the properties of the listen handle, including its event
   // associations.
-  int reset_new_handle = this->reactor_->uses_event_associations ();
+  bool const reset_new_handle = this->reactor_->uses_event_associations ();
 
   int result = this->acceptor ().accept (svc_handler->peer (), // stream
                                          nullptr, // remote address
                                          nullptr, // timeout
-                                         1, // restart
+                                         true, // restart
                                          reset_new_handle  // reset new handler
                                          );
   if (result == 0)

@@ -507,7 +507,7 @@ public:
    * signals should be used by the asynchronous operations when they
    * use this Proactor.
    */
-  ACE_POSIX_SIG_Proactor (const sigset_t mask_set,
+  ACE_POSIX_SIG_Proactor (sigset_t mask_set,
                           size_t nmaxop = ACE_AIO_DEFAULT_SIZE);
 
   ~ACE_POSIX_SIG_Proactor () override;

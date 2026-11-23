@@ -143,7 +143,7 @@ CORBA::Request::raw_user_exception (TAO_InputCDR &cdr)
 {
   this->raw_user_exception_.set (cdr.start ()->rd_ptr (),
                                  cdr.start ()->length (),
-                                 1);
+                                 true);
 }
 
 ACE_INLINE ACE_CString &

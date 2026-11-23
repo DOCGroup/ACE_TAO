@@ -1617,7 +1617,7 @@ ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (size_t max_aio_operations)
   return;
 }
 
-ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (const sigset_t signal_set,
+ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (sigset_t signal_set,
                                                 size_t max_aio_operations)
   :  ACE_POSIX_AIOCB_Proactor (max_aio_operations,
                                ACE_POSIX_Proactor::PROACTOR_SIG)

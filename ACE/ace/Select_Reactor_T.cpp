@@ -502,7 +502,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
   this->token_.reactor (*this);
   // First try to open the Reactor with the hard-coded default.
   if (this->open (ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::DEFAULT_SIZE,
-                  0,
+                  false,
                   sh,
                   tq,
                   disable_notify_pipe,
@@ -523,7 +523,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
       // number of file descriptors available to the process.  This
       // size is not necessarily the maximum limit.
       if (this->open (static_cast<size_t> (ACE::max_handles ()),
-                      0,
+                      false,
                       sh,
                       tq,
                       disable_notify_pipe,
