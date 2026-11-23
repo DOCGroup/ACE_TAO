@@ -49,7 +49,7 @@ Echo_Client_Request_Interceptor::send_request (
         ri->arguments ();
 
       CORBA::Long param {};
-      CORBA::ULong i {};  // Index avoids overloaded operator ambiguity.
+      const CORBA::ULong i {};  // Index avoids overloaded operator ambiguity.
       paramlist[i].argument >>= param;
 
 #if 0
@@ -97,7 +97,7 @@ Echo_Client_Request_Interceptor::receive_reply (
         ri->arguments ();
 
       CORBA::Long param {};
-      CORBA::ULong i {};  // Index avoids overloaded operator ambiguity.
+      const CORBA::ULong i {};  // Index avoids overloaded operator ambiguity.
       paramlist[i].argument >>= param;
     }
   else if (std::strcmp (op.in (), "calculate") == 0)
@@ -183,7 +183,7 @@ Echo_Server_Request_Interceptor::receive_request (
         ri->arguments ();
 
       CORBA::Long param {};
-      CORBA::ULong i {};  // Index avoids overloaded operator ambiguity.
+      const CORBA::ULong i {};  // Index avoids overloaded operator ambiguity.
       paramlist[i].argument >>= param;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -217,7 +217,7 @@ Echo_Server_Request_Interceptor::send_reply (
         ri->arguments ();
 
       CORBA::Long param {};
-      CORBA::ULong i {};  // Index avoids overloaded operator ambiguity.
+      const CORBA::ULong i {};  // Index avoids overloaded operator ambiguity.
       paramlist[i].argument >>= param;
       ACE_DEBUG ((LM_DEBUG,
                   "The arg is %d\n",
