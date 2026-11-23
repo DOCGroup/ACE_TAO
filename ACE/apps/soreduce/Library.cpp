@@ -35,7 +35,7 @@ MPC_Generator::write_file (ACE_CString const &file)
 void
 MPC_Generator::write_prolog (ACE_CString const &path)
 {
-  ACE_CString fname (path + "/" + mpcfilename_);
+  ACE_CString const fname (path + "/" + mpcfilename_);
   ACE_DEBUG ((LM_DEBUG, "writing file %s\n",fname.c_str()));
   mpcfile_.open(fname.c_str());
   if (!mpcfile_)

@@ -99,7 +99,7 @@ Obj_Module::add_source(char const *p, bool imports_only)
   }
 
   ACE_HANDLE pipe[2] {};
-  ACE_Pipe io(pipe);
+  ACE_Pipe const io(pipe);
 
   nm_opts.working_directory (workpath.c_str());
   nm_opts.set_handles (ACE_STDIN,pipe[1]);

@@ -64,10 +64,10 @@ BS_Client::insert (char const *key_name, int)
 
   while (lo <= hi)
     {
-      int mid   = (lo + hi) / 2;
+      int const mid = (lo + hi) / 2;
       Protocol_Record *prp = sorted_buffer[mid];
-      int cmp = std::strcmp (key_name,
-                             prp->get_login ());
+      int const cmp = std::strcmp (key_name,
+                                   prp->get_login ());
       if (cmp == 0)
         {
           return prp;

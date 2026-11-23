@@ -83,7 +83,7 @@ RWho_DB_Manager::get_next_host ()
        dir_ptr != nullptr;
        dir_ptr = this->rwho_dir.read ())
     {
-      ACE_HANDLE user_file =
+      ACE_HANDLE const user_file =
         ACE_OS::open (dir_ptr->d_name, O_RDONLY);
 
       if (user_file < 0)
@@ -91,7 +91,7 @@ RWho_DB_Manager::get_next_host ()
         return -1;
       }
 
-      int host_data_length =
+      int const host_data_length =
         ACE_OS::read (user_file,
                       std::addressof (this->host_data),
                       sizeof this->host_data);

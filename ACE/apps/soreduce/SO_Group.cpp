@@ -25,7 +25,7 @@ SO_Group::add_executable (char const *path)
   ACE_Process_Options opts;
 
   ACE_HANDLE pipe[2] {};
-  ACE_Pipe io(pipe);
+  ACE_Pipe const io(pipe);
 
   opts.set_handles (ACE_STDIN,pipe[1]);
 

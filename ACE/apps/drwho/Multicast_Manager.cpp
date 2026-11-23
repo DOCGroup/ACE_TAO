@@ -40,7 +40,7 @@ int
 Multicast_Manager::insert_hosts_from_file (const char *filename)
 {
   //FUZZ: disable check_for_lack_ACE_OS
-  ACE_Mem_Map mmap (filename);
+  ACE_Mem_Map const mmap (filename);
   //FUZZ: enable check_for_lack_ACE_OS
 
   char *host_ptr = static_cast<char *> (mmap.addr ());

@@ -79,7 +79,7 @@ int
 File_Manager::open_passwd_file ()
 {
   char filename[] = "passwd-XXXXXX";
-  ACE_HANDLE f = ACE_OS::mkstemp (filename);
+  ACE_HANDLE const f = ACE_OS::mkstemp (filename);
   if (f == ACE_INVALID_HANDLE)
   {
     return -1;
