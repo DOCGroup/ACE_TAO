@@ -544,6 +544,11 @@ public:
   /// @name Timer management
   /// @{
   /**
+   * @fn long ACE_Reactor::schedule_timer(ACE_Event_Handler *event_handler,
+   *                                      const void *arg,
+   *                                      const ACE_Time_Value &delay,
+   *                                      const ACE_Time_Value &interval)
+   *
    * Schedule a timer event.
    *
    * Schedule a timer event that will expire after an @a delay amount

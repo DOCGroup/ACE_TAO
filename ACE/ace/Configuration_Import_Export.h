@@ -142,12 +142,9 @@ private:
  *        get_string_value() function and convert the string to the
  *        desired data type.
  *
- * @todo
- *  - Strings with embedded newlines cause the import to fail
- *  - Strings with embedded quotes " cause the import to fail
- *  - Importing/exporting for values in the root section does not work
- *  - Add dynamic buffer when importing.  currently it will not allow
- *    importing of values greater than a fixed amount (4096 bytes)
+ * @todo Strings with embedded newlines or quotes cause import failures, and
+ * values in the root section cannot be imported or exported. Add a dynamic
+ * buffer so values larger than 4096 bytes can be imported.
 */
 class ACE_Export ACE_Ini_ImpExp  : public ACE_Config_ImpExp_Base
 {

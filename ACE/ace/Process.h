@@ -87,6 +87,10 @@ public:
   /// @{
 
   /**
+   * @fn int ACE_Process_Options::set_handles(ACE_HANDLE std_in,
+   *                                          ACE_HANDLE std_out,
+   *                                          ACE_HANDLE std_err)
+   *
    * Set the standard handles of the new process to the respective
    * handles.  If you want to affect a subset of the handles, make
    * sure to set the others to ACE_INVALID_HANDLE.
