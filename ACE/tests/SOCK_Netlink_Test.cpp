@@ -131,7 +131,7 @@ get_if_index (const char*const interface,
                    static_cast<const char*> (interface),
                    sizeof (if_req.ifr_name));
 
-  ACE_HANDLE s = ACE_OS::socket (AF_INET,SOCK_DGRAM,0);
+  ACE_HANDLE const s = ACE_OS::socket (AF_INET,SOCK_DGRAM,0);
 
   if (s == ACE_INVALID_HANDLE)
     {

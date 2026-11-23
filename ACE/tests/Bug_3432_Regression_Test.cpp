@@ -20,12 +20,12 @@ strptime_test ()
   tm lTime;
   ACE_OS::strptime(original_time, "%Y-%m-%d %H:%M", &lTime);
   lTime.tm_isdst = 0; // do not change due to daylight saving time
-  time_t lNewTime = ACE_OS::mktime(&lTime);
-  ACE_Time_Value lValue(lNewTime - ACE_OS::timezone(), 0); // do  not change because of timezone
+  time_t const lNewTime = ACE_OS::mktime(&lTime);
+  ACE_Time_Value const lValue(lNewTime - ACE_OS::timezone(), 0); // do  not change because of timezone
 
   // convert UTC ACE_Time_Value to UTC time string
   char lBuffer[128];
-  time_t time = lValue.sec();
+  time_t const time = lValue.sec();
   struct tm tm_time;
   if (ACE_OS::gmtime_r (&time, &tm_time) == nullptr && errno == ENOTSUP)
     {
