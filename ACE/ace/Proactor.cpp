@@ -710,9 +710,9 @@ ACE_Proactor::schedule_timer (ACE_Handler &handler,
                               const ACE_Time_Value &interval)
 {
   // absolute time.
-  ACE_Time_Value absolute_time =
+  const ACE_Time_Value absolute_time =
     this->timer_queue_->gettimeofday () + time;
-  long result = this->timer_queue_->schedule (&handler,
+  const long result = this->timer_queue_->schedule (&handler,
                                               act,
                                               absolute_time,
                                               interval);

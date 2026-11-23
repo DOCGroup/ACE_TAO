@@ -49,11 +49,11 @@ ACE_Remote_Name_Space::bind (const ACE_NS_WString &name,
                              const char *type)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::bind");
-  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> name_urep (name.rep ());
-  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> value_urep (value.rep ());
-  ACE_UINT32 name_len = static_cast<ACE_UINT32> (name.length () * sizeof (ACE_WCHAR_T));
-  ACE_UINT32 value_len = static_cast<ACE_UINT32> (value.length () * sizeof (ACE_WCHAR_T));
-  ACE_UINT32 type_len = static_cast<ACE_UINT32> (ACE_OS::strlen (type));
+  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> const name_urep (name.rep ());
+  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> const value_urep (value.rep ());
+  ACE_UINT32 const name_len = static_cast<ACE_UINT32> (name.length () * sizeof (ACE_WCHAR_T));
+  ACE_UINT32 const value_len = static_cast<ACE_UINT32> (value.length () * sizeof (ACE_WCHAR_T));
+  ACE_UINT32 const type_len = static_cast<ACE_UINT32> (ACE_OS::strlen (type));
   ACE_Name_Request request (ACE_Name_Request::BIND,
                             name_urep.get (),
                             name_len,
@@ -70,11 +70,11 @@ ACE_Remote_Name_Space::rebind (const ACE_NS_WString &name,
                                const char *type)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::rebind");
-  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> name_urep (name.rep ());
-  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> value_urep (value.rep ());
-  ACE_UINT32 name_len = static_cast<ACE_UINT32> (name.length () * sizeof (ACE_WCHAR_T));
-  ACE_UINT32 value_len = static_cast<ACE_UINT32> (value.length () * sizeof (ACE_WCHAR_T));
-  ACE_UINT32 type_len = static_cast<ACE_UINT32> (ACE_OS::strlen (type));
+  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> const name_urep (name.rep ());
+  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> const value_urep (value.rep ());
+  ACE_UINT32 const name_len = static_cast<ACE_UINT32> (name.length () * sizeof (ACE_WCHAR_T));
+  ACE_UINT32 const value_len = static_cast<ACE_UINT32> (value.length () * sizeof (ACE_WCHAR_T));
+  ACE_UINT32 const type_len = static_cast<ACE_UINT32> (ACE_OS::strlen (type));
   ACE_Name_Request request (ACE_Name_Request::REBIND,
                             name_urep.get (),
                             name_len,
@@ -91,8 +91,8 @@ ACE_Remote_Name_Space::resolve (const ACE_NS_WString &name,
                                 char *&type)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::resolve");
-  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> name_urep (name.rep ());
-  ACE_UINT32 name_len = static_cast<ACE_UINT32> (name.length () * sizeof (ACE_WCHAR_T));
+  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> const name_urep (name.rep ());
+  ACE_UINT32 const name_len = static_cast<ACE_UINT32> (name.length () * sizeof (ACE_WCHAR_T));
   ACE_Name_Request request (ACE_Name_Request::RESOLVE,
                             name_urep.get (),
                             name_len,
@@ -110,7 +110,7 @@ ACE_Remote_Name_Space::resolve (const ACE_NS_WString &name,
     return -1;
   }
 
-  ACE_NS_WString temp (reply.value (), reply.value_len () / sizeof (ACE_WCHAR_T));
+  ACE_NS_WString const temp (reply.value (), reply.value_len () / sizeof (ACE_WCHAR_T));
   value = temp;
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (type,
@@ -129,8 +129,8 @@ int
 ACE_Remote_Name_Space::unbind (const ACE_NS_WString &name)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::unbind");
-  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> name_urep (name.rep ());
-  ACE_UINT32 name_len = static_cast<ACE_UINT32> (name.length () * sizeof (ACE_WCHAR_T));
+  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> const name_urep (name.rep ());
+  ACE_UINT32 const name_len = static_cast<ACE_UINT32> (name.length () * sizeof (ACE_WCHAR_T));
   ACE_Name_Request request (ACE_Name_Request::UNBIND,
                             name_urep.get (),
                             name_len,
@@ -143,8 +143,8 @@ ACE_Remote_Name_Space::list_names (ACE_WSTRING_SET &set,
                                    const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_names");
-  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> pattern_urep (pattern.rep ());
-  ACE_UINT32 pattern_len = static_cast<ACE_UINT32> (pattern.length () * sizeof (ACE_WCHAR_T));
+  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> const pattern_urep (pattern.rep ());
+  ACE_UINT32 const pattern_len = static_cast<ACE_UINT32> (pattern.length () * sizeof (ACE_WCHAR_T));
   ACE_Name_Request request (ACE_Name_Request::LIST_NAMES,
                             pattern_urep.get (),
                             pattern_len,
@@ -167,7 +167,7 @@ ACE_Remote_Name_Space::list_names (ACE_WSTRING_SET &set,
         }
       if (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
         {
-          ACE_NS_WString name (reply.name (),
+          ACE_NS_WString const name (reply.name (),
                                reply.name_len () / sizeof (ACE_WCHAR_T));
           set.insert (name);
         }
@@ -180,8 +180,8 @@ ACE_Remote_Name_Space::list_values (ACE_WSTRING_SET &set,
                                     const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_values");
-  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> pattern_urep (pattern.rep ());
-  ACE_UINT32 pattern_len = static_cast<ACE_UINT32> (pattern.length () * sizeof (ACE_WCHAR_T));
+  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> const pattern_urep (pattern.rep ());
+  ACE_UINT32 const pattern_len = static_cast<ACE_UINT32> (pattern.length () * sizeof (ACE_WCHAR_T));
   ACE_Name_Request request (ACE_Name_Request::LIST_VALUES,
                             pattern_urep.get (),
                             pattern_len,
@@ -204,7 +204,7 @@ ACE_Remote_Name_Space::list_values (ACE_WSTRING_SET &set,
         }
       if (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
         {
-          ACE_NS_WString value (reply.value (),
+          ACE_NS_WString const value (reply.value (),
                                 reply.value_len () / sizeof (ACE_WCHAR_T));
           set.insert (value);
         }
@@ -218,8 +218,8 @@ ACE_Remote_Name_Space::list_types (ACE_WSTRING_SET &set,
                                    const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_types");
-  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> pattern_urep (pattern.rep ());
-  ACE_UINT32 pattern_len = static_cast<ACE_UINT32> (pattern.length () * sizeof (ACE_WCHAR_T));
+  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> const pattern_urep (pattern.rep ());
+  ACE_UINT32 const pattern_len = static_cast<ACE_UINT32> (pattern.length () * sizeof (ACE_WCHAR_T));
   ACE_Name_Request request (ACE_Name_Request::LIST_TYPES,
                             pattern_urep.get (),
                             pattern_len,
@@ -243,7 +243,7 @@ ACE_Remote_Name_Space::list_types (ACE_WSTRING_SET &set,
         }
       if (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
         {
-          ACE_NS_WString type (reply.type ());
+          ACE_NS_WString const type (reply.type ());
           set.insert (type);
         }
     }
@@ -256,8 +256,8 @@ ACE_Remote_Name_Space::list_name_entries (ACE_BINDING_SET &set,
                                           const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_name_entries");
-  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> pattern_urep (pattern.rep ());
-  ACE_UINT32 pattern_len = static_cast<ACE_UINT32> (pattern.length () * sizeof (ACE_WCHAR_T));
+  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> const pattern_urep (pattern.rep ());
+  ACE_UINT32 const pattern_len = static_cast<ACE_UINT32> (pattern.length () * sizeof (ACE_WCHAR_T));
   ACE_Name_Request request (ACE_Name_Request::LIST_NAME_ENTRIES,
                             pattern_urep.get (),
                             pattern_len,
@@ -281,11 +281,11 @@ ACE_Remote_Name_Space::list_name_entries (ACE_BINDING_SET &set,
         }
       if (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
         {
-          ACE_NS_WString name (reply.name (),
+          ACE_NS_WString const name (reply.name (),
                                reply.name_len () / sizeof (ACE_WCHAR_T));
-          ACE_NS_WString value (reply.value (),
+          ACE_NS_WString const value (reply.value (),
                                 reply.value_len () / sizeof (ACE_WCHAR_T));
-          ACE_Name_Binding entry (name,
+          ACE_Name_Binding const entry (name,
                                   value,
                                   reply.type ());
           if (set.insert (entry) == -1)
@@ -302,8 +302,8 @@ ACE_Remote_Name_Space::list_value_entries (ACE_BINDING_SET &set,
                                            const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_value_entries");
-  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> pattern_urep (pattern.rep ());
-  ACE_UINT32 pattern_len = static_cast<ACE_UINT32> (pattern.length () * sizeof (ACE_WCHAR_T));
+  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> const pattern_urep (pattern.rep ());
+  ACE_UINT32 const pattern_len = static_cast<ACE_UINT32> (pattern.length () * sizeof (ACE_WCHAR_T));
   ACE_Name_Request request (ACE_Name_Request::LIST_VALUE_ENTRIES,
                             pattern_urep.get (),
                             pattern_len,
@@ -327,11 +327,11 @@ ACE_Remote_Name_Space::list_value_entries (ACE_BINDING_SET &set,
         }
       if (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
         {
-          ACE_NS_WString name (reply.name (),
+          ACE_NS_WString const name (reply.name (),
                                reply.name_len () / sizeof (ACE_WCHAR_T));
-          ACE_NS_WString value (reply.value (),
+          ACE_NS_WString const value (reply.value (),
                                 reply.value_len () / sizeof (ACE_WCHAR_T));
-          ACE_Name_Binding entry (name,
+          ACE_Name_Binding const entry (name,
                                   value,
                                   reply.type());
           if (set.insert (entry) == -1)
@@ -348,8 +348,8 @@ ACE_Remote_Name_Space::list_type_entries (ACE_BINDING_SET &set,
                                           const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_type_entries");
-  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> pattern_urep (pattern.rep ());
-  ACE_UINT32 pattern_len = static_cast<ACE_UINT32> (pattern.length () * sizeof (ACE_WCHAR_T));
+  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> const pattern_urep (pattern.rep ());
+  ACE_UINT32 const pattern_len = static_cast<ACE_UINT32> (pattern.length () * sizeof (ACE_WCHAR_T));
   ACE_Name_Request request (ACE_Name_Request::LIST_TYPE_ENTRIES,
                             pattern_urep.get (),
                             pattern_len,
@@ -373,11 +373,11 @@ ACE_Remote_Name_Space::list_type_entries (ACE_BINDING_SET &set,
         }
       if (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
         {
-          ACE_NS_WString name (reply.name (),
+          ACE_NS_WString const name (reply.name (),
                                reply.name_len () / sizeof (ACE_WCHAR_T));
-          ACE_NS_WString value (reply.value (),
+          ACE_NS_WString const value (reply.value (),
                                 reply.value_len () / sizeof (ACE_WCHAR_T));
-          ACE_Name_Binding entry (name,
+          ACE_Name_Binding const entry (name,
                                   value,
                                   reply.type ());
           if (set.insert (entry) == -1)

@@ -124,7 +124,7 @@ ACE_SV_Semaphore_Complex::open (key_t k,
       // Get the value of the process counter. If it equals 0, then no
       // one has initialized the ACE_SV_Semaphore yet.
 
-      int semval = ACE_SV_Semaphore_Simple::control (GETVAL, 0, 1);
+      const int semval = ACE_SV_Semaphore_Simple::control (GETVAL, 0, 1);
 
       if (semval == -1)
         {
@@ -246,7 +246,7 @@ ACE_SV_Semaphore_Complex::close ()
     }
   else
     {
-      int result = ACE_OS::semop (this->internal_id_,
+      const int result = ACE_OS::semop (this->internal_id_,
                                   &ACE_SV_Semaphore_Complex::op_unlock_[0], 1);
 #ifdef ACE_HAS_SYSV_IPC
       this->init ();
