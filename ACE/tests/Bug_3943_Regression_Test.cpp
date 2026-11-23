@@ -1046,7 +1046,7 @@ server (void *arg)
     {
       // Create a new <Svc_Handler> to consume the data.
 
-      int result = acceptor->accept (svc_handler,
+      int const result = acceptor->accept (svc_handler,
                                      &cli_addr,
                                      options);
 

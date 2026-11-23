@@ -67,7 +67,7 @@ protected:
   int accept_svc_handler (My_Svc_Handler *svc_handler) override
   {
     TEST_TRACE ("accept_svc_handler");
-    int rv = super::accept_svc_handler(svc_handler);
+    int const rv = super::accept_svc_handler(svc_handler);
     if (g_acceptor_accept_fails)
       {
         g_semaphore.release();

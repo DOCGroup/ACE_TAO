@@ -226,7 +226,7 @@ FileIOHandler::handle_read_file(const ACE_Asynch_Read_File::Result &result)
       if (reader_.read(*new_mb, new_mb->space(),
                        result.offset () + result.bytes_transferred ()) != 0)
       {
-        int errnr = ACE_OS::last_error ();
+        int const errnr = ACE_OS::last_error ();
         ACE_DEBUG(
             (LM_INFO, ACE_TEXT("%p [%d]\n"), ACE_TEXT("FileIOHandler continuing read failed"), errnr));
         new_mb->release();

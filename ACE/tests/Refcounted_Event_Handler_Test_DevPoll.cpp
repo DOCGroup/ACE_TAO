@@ -118,7 +118,7 @@ Handler::handle_timeout (const ACE_Time_Value &,
 int
 Handler::handle_output (ACE_HANDLE)
 {
-  int me = this->dispatch_order_++;
+  int const me = this->dispatch_order_++;
   if (me != 2)
     {
       ACE_ERROR ((LM_ERROR,
