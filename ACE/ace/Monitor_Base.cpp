@@ -139,7 +139,7 @@ namespace ACE
                                   Control_Action* action)
     {
       /// Thread-safe and guaranteed to be unique.
-      long id = Monitor_Point_Registry::instance ()->constraint_id ();
+      long const id = Monitor_Point_Registry::instance ()->constraint_id ();
 
       CONSTRAINTS::value_type entry;
       entry.first = id;
