@@ -3,8 +3,11 @@
 // The -v option prints diagnostics as to whether a word is in the set
 // or not.  Without -v the program is useful for timing.
 
-#include "ace/OS_NS_string.h"
+#include "test_driver.h"
+
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
+
 #include <cstddef>
 
 static constexpr int MAX_LEN = 80;
@@ -18,9 +21,9 @@ public:
 };
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+gperf_test_main (int argc, ACE_TCHAR *argv[], Gperf_Test_Mode const test_mode)
 {
-  int verbose = argc > 1 && ACE_OS::strcmp (argv[1], ACE_TEXT("-v")) == 0 ? 1 : 0;
+  int verbose = argc > 1 && ACE_OS::strcmp (argv[1], ACE_TEXT ("-v")) == 0 ? 1 : 0;
   char buf[MAX_LEN];
 
   while (ACE_OS::fgets (buf, sizeof buf, stdin) != 0)
@@ -35,7 +38,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_OS::printf ("NOT in word set %s\n", buf);
     }
 
-  if (argc > 2 && ACE_OS::strcmp (argv[2], ACE_TEXT ("-switch-prefix")) == 0)
+  if (test_mode == Gperf_Test_Mode::switch_prefix)
     {
       char const bounded_prefix[] = {'g', 'o', 't'};
       if (Perfect_Hash::in_word_set (bounded_prefix, 2) != nullptr)
@@ -44,7 +47,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
     }
 
-  if (argc > 2 && ACE_OS::strcmp (argv[2], ACE_TEXT ("-duplicate-prefix")) == 0)
+  if (test_mode == Gperf_Test_Mode::duplicate_prefix)
     {
       char const duplicate_prefix[] = {'a', 'l'};
       if (Perfect_Hash::in_word_set (duplicate_prefix, sizeof duplicate_prefix) != nullptr)

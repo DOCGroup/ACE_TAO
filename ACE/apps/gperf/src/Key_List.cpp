@@ -1541,17 +1541,22 @@ Key_List::output_hash_function ()
 
               // Break these options up for speed (gee, is this misplaced efficiency or what?!
               if (option[STRCASECMP])
-
                 for (i = max_key_len; i > 0; --i)
-                  ACE_OS::printf ("      case %d:\n        hval += asso_values[static_cast<unsigned char> "
-                                  "(charmap[static_cast<unsigned char> (str[%d])]) %% asso_values.size ()];\n",
-                                  i, i - 1);
-
+                  {
+                    ACE_OS::printf ("      case %d:\n        hval += asso_values[static_cast<unsigned char> "
+                                    "(charmap[static_cast<unsigned char> (str[%d])]) %% asso_values.size ()];\n",
+                                    i, i - 1);
+                    if (i > 1)
+                      ACE_OS::printf ("        [[fallthrough]];\n");
+                  }
               else
-
                 for (i = max_key_len; i > 0; --i)
-                  ACE_OS::printf ("      case %d:\n        hval += asso_values[static_cast<unsigned char> "
-                                  "(str[%d]) %% asso_values.size ()];\n", i, i - 1);
+                  {
+                    ACE_OS::printf ("      case %d:\n        hval += asso_values[static_cast<unsigned char> "
+                                    "(str[%d]) %% asso_values.size ()];\n", i, i - 1);
+                    if (i > 1)
+                      ACE_OS::printf ("        [[fallthrough]];\n");
+                  }
 
               ACE_OS::printf ("    }\n  return hval;\n}\n\n");
             }

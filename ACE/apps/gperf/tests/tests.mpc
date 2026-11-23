@@ -19,6 +19,7 @@ project(cinset): gperf_test {
   }
 
   Source_Files {
+    test_cinset.cpp
     c.cpp
   }
 }
@@ -43,6 +44,7 @@ project(adainset): gperf_test {
   }
 
   Source_Files {
+    test_adainset.cpp
     ada.cpp
   }
 }
@@ -67,6 +69,7 @@ project(cppinset): gperf_test {
   }
 
   Source_Files {
+    test_cppinset.cpp
     cpp.cpp
   }
 }
@@ -91,6 +94,7 @@ project(optinset): gperf_test {
   }
 
   Source_Files {
+    test_optinset.cpp
     optimize.cpp
   }
 }
@@ -116,6 +120,7 @@ project(opt_d_inset): gperf_test {
   }
 
   Source_Files {
+    test_opt_d_inset.cpp
     opt_d_gen/optimize.cpp
   }
 }
@@ -140,6 +145,7 @@ project(switchinset): gperf_test {
   }
 
   Source_Files {
+    test_switchinset.cpp
     switch.cpp
   }
 }
@@ -165,6 +171,7 @@ project(switch_ci_inset): gperf_test {
   }
 
   Source_Files {
+    test_switch_ci_inset.cpp
     switch_ci_gen/switch.cpp
   }
 }
@@ -190,6 +197,7 @@ project(switch_comp_inset): gperf_test {
   }
 
   Source_Files {
+    test_switch_comp_inset.cpp
     switch_comp_gen/switch.cpp
   }
 }
@@ -215,6 +223,7 @@ project(switch_ci_comp_inset): gperf_test {
   }
 
   Source_Files {
+    test_switch_ci_comp_inset.cpp
     switch_ci_comp_gen/switch.cpp
   }
 }
@@ -240,6 +249,7 @@ project(hash_prefix_inset): gperf_test {
   }
 
   Source_Files {
+    test_hash_prefix_inset.cpp
     hash_prefix_gen/switch.cpp
   }
 }
@@ -265,6 +275,7 @@ project(hash_prefix_duplicate_inset): gperf_test {
   }
 
   Source_Files {
+    test_hash_prefix_duplicate_inset.cpp
     hash_prefix_duplicate_gen/duplicates.cpp
   }
 }
@@ -290,6 +301,7 @@ project(allchars_duplicate_inset): gperf_test {
   }
 
   Source_Files {
+    test_allchars_duplicate_inset.cpp
     allchars_duplicate_gen/allchars_duplicates.cpp
   }
 }
@@ -315,6 +327,7 @@ project(switch_ci_comp_lentable_dup_inset): gperf_test {
   }
 
   Source_Files {
+    test_switch_ci_comp_lentable_dup_inset.cpp
     switch_ci_comp_lentable_dup_gen/switch.cpp
   }
 }
@@ -339,6 +352,7 @@ project(preinset): gperf_test {
   }
 
   Source_Files {
+    test_preinset.cpp
     adadefs.cpp
   }
 }
@@ -363,6 +377,7 @@ project(m3inset): gperf_test {
   }
 
   Source_Files {
+    test_m3inset.cpp
     modula3.cpp
   }
 }
@@ -387,6 +402,7 @@ project(pinset): gperf_test {
   }
 
   Source_Files {
+    test_pinset.cpp
     pascal.cpp
   }
 }
@@ -411,6 +427,7 @@ project(iinset): gperf_test {
   }
 
   Source_Files {
+    test_iinset.cpp
     idl.cpp
   }
 }
@@ -437,6 +454,7 @@ project(iinset2): gperf_test {
   }
 
   Source_Files {
+    test_iinset2.cpp
     iout2_gen/idl.cpp
   }
 }
@@ -461,6 +479,7 @@ project(tinset): gperf_test {
   }
 
   Source_Files {
+    test_tinset.cpp
     corba.cpp
   }
 }
@@ -485,6 +504,7 @@ project(taoinset): gperf_test {
   }
 
   Source_Files {
+    test_taoinset.cpp
     tao.cpp
   }
 }
