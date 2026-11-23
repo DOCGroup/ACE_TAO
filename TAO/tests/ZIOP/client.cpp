@@ -150,7 +150,7 @@ CORBA::Policy_ptr
 create_compression_enabled_policy (CORBA::ORB_ptr orb)
 {
   // Setting policy whether compression is used.
-  CORBA::Boolean compression_enabling = true;
+  const CORBA::Boolean compression_enabling = true;
   CORBA::Any compression_enabling_any;
   compression_enabling_any <<= CORBA::Any::from_boolean(compression_enabling);
 

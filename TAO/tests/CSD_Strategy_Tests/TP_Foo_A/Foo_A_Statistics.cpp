@@ -50,9 +50,9 @@ Foo_A_Statistics::actual_vs_expected()
           continue;
         }
 
-      unsigned actual_size
+      const unsigned actual_size
         = this->actual_in_values_[i].size ();
-      unsigned expected_size
+      const unsigned expected_size
         = this->num_clients_ * stats.expected_[i];
       if (actual_size != expected_size)
         {
