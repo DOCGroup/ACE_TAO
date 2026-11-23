@@ -34,7 +34,7 @@ TAO_ECG_Reactive_ConsumerEC_Control::query_eventchannel ()
   try
     {
       CORBA::Boolean disconnected;
-      CORBA::Boolean non_existent =
+      const CORBA::Boolean non_existent =
         gateway_->consumer_ec_non_existent (disconnected);
       if (non_existent && !disconnected)
         {
