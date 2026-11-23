@@ -616,7 +616,7 @@ TAO_RT_Protocols_Hooks::restore_thread_CORBA_and_native_priority (
 {
   // Only used for restoration of values that were previously set /
   // checked when so no need to re-apply the mapping.
-  int result = this->set_thread_native_priority (native_priority);
+  int const result = this->set_thread_native_priority (native_priority);
 
   if (result == 0)
   {

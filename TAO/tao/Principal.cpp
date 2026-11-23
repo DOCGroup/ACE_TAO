@@ -23,7 +23,7 @@ operator<< (TAO_OutputCDR & cdr, CORBA::Principal * x)
 {
   if (x != nullptr)
     {
-      CORBA::ULong length  = x->id.length ();
+      CORBA::ULong const length = x->id.length ();
       cdr.write_long (length);
       cdr.write_octet_array (x->id.get_buffer (), length);
     }
