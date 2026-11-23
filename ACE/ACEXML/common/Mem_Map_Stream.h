@@ -36,17 +36,16 @@ using Connector = ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
  * connection are buffered incrementally in a memory-mapped file. This
  * class maintains pointers to two positions in the stream:
  *
- *   1. The <recv> position, which keeps track of the beginning of a
+ *   1. The receive position, which keeps track of the beginning of a
  *      token that is in the stream.
  *
- *   2. The <get> position, which moves along character-by-character
+ *   2. The read position, which moves along character-by-character
  *      until the end of the token is reached.
  *
  * Once a token has been located, it can be extracted from the stream by
- * calling the <recv>. The length of the token, i.e., the <recv_len>, is
- * the length in bytes between the <get> position and the <recv> position.
- * Once the token has been extracted, the <recv> and <get> positions can be
- * updated by the <seek> method.
+ * calling @c recv(). The length of the token, returned by @c recv_len(), is
+ * the number of bytes between the read and receive positions. Once the token
+ * has been extracted, the @c seek() method can update both positions.
  */
 class ACEXML_Export ACEXML_Mem_Map_Stream
 {
@@ -59,11 +58,11 @@ public:
 
   virtual ~ACEXML_Mem_Map_Stream ();
 
-  /// Returns the underlying <ACE_SOCK_Stream>.
+  /// Returns the underlying @c ACE_SOCK_Stream.
   ACE_SOCK_Stream &stream ();
 
   /**
-   * Send <size> bytes in <buf> to the connected peer.  This is a
+   * Send @a size bytes from @a buf to the connected peer. This is a
    * completely unbuffered call.
    */
   virtual ssize_t send_n (const void *buf,
@@ -71,30 +70,28 @@ public:
                           ACE_Time_Value *tv = nullptr);
 
   /**
-   * Return the next character in the stream and advance the <get>
-   * position. Returns EOF when the <get> position reaches the end of the
-   * HTTP stream.
+   * Return the next character in the stream and advance the read position.
+   * Returns EOF when the read position reaches the end of the HTTP stream.
    */
   virtual int get_char ();
 
   /**
-   *  Returns a pointer to array of at most <len> characters starting at
-   *  the <recv> position. If the <recv> position + <len> extends past the
-   *  EOF then <len> is set to the number of characters between the <recv>
-   *  position and the EOF and both the <get> and <recv> positions are
-   *  advanced by <len>. Returns 0 if the <recv> position is at the EOF.
+   *  Returns a pointer to an array of at most @a len characters starting at
+   *  the receive position. If the requested range extends past EOF, @a len
+   *  is set to the number of characters between the receive position and
+   *  EOF, and both positions are advanced by that amount. Returns 0 if the
+   *  receive position is at EOF.
    */
   virtual const char *recv (size_t &len);
 
   /**
-   *  Returns a pointer to array of characters starting at the <recv>
+   *  Returns a pointer to an array of characters starting at the receive
    *  position.
    */
   virtual const char *recv () const;
 
   /**
-   *  Returns the length in bytes between the <get> position and the <recv>
-   *  position.
+   *  Returns the number of bytes between the read and receive positions.
    */
   virtual size_t recv_len () const;
 
@@ -104,39 +101,39 @@ public:
   virtual size_t available () const;
 
   /**
-   *  Resets the <get> and <recv> positions to the beginning of the stream.
+   *  Resets the read and receive positions to the beginning of the stream.
    *  This works since all the data has been cached in the memory-mapped
    *  backing store.
    */
   virtual void rewind ();
 
   /**
-   *  Returns the nth character <offset> from the <get> position in the
-   *  stream without advancing the <get> position. Automatically extends
-   *  the backing store if necessary. Returns EOF if <offset> is past the
+   *  Returns the character at @a offset from the read position without
+   *  advancing that position. Automatically extends the backing store if
+   *  necessary. Returns EOF if @a offset is past the
    *  end of the stream.
    */
   virtual int peek_char (size_t offset);
 
   /**
-   *  Return a pointer to an array of <size> characters starting at
-   *  <offset> characters from the <get> position in the stream without
-   *  advancing the <get> position. Automatically extends the backing store
-   *  if necessary. Returns 0 if <offset> or <offset + size> is past the
+   *  Return a pointer to an array of @a size characters starting at
+   *  @a offset from the read position without advancing that position.
+   *  Automatically extends the backing store if necessary. Returns 0 if
+   *  @a offset or @c offset + size is past the
    *  end of the stream.
    */
   virtual const char *peek_str (size_t offset, size_t size);
 
   /**
-   *  Sets the <get> and <recv> positions as follows:
-   *    o  If <whence> is <SEEK_SET>, the positions are set to <offset>
+   *  Sets the read and receive positions as follows:
+   *    o  If @a whence is @c SEEK_SET, the positions are set to @a offset
    *       bytes from the start of the stream.
-   *    o  If <whence> is <SEEK_CUR>, the positions are set to the
-   *       current <get> position plus <offset>.
-   *    o  If <whence> is <SEEK_END>, the positions are set to the size
-   *       of the stream plus <offset>.
+   *    o  If @a whence is @c SEEK_CUR, the positions are set to the
+   *       current read position plus @a offset.
+   *    o  If @a whence is @c SEEK_END, the positions are set to the size
+   *       of the stream plus @a offset.
    *
-   *  If offset is greater than EOF, both <get> and <recv> are set to EOF.
+   *  If @a offset is greater than EOF, both positions are set to EOF.
    *  @note special return value is returned to indicate this condition.
    */
   virtual ACE_OFF_T seek (ACE_OFF_T offset, int whence = SEEK_CUR);
@@ -164,11 +161,11 @@ private:
   /// Memory-mapped file that we're iterating over.
   ACE_Mem_Map mem_map_;
 
-  /// Pointer to the address where the next <recv> method will start.
+  /// Pointer to the address where the next @c recv() call will start.
   char *recv_pos_;
 
   /**
-   *  Pointer to the address where the next <get_char> method will
+   *  Pointer to the address where the next @c get_char() call will
    *  start.
    */
   char *get_pos_;

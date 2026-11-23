@@ -44,7 +44,7 @@ public:
   /// Dynamically create a copy of this exception.
   virtual ACEXML_Exception *duplicate () const = 0;
 
-  /// Check whether this is an exception of type specified by <name>.
+  /// Check whether this is an exception of type specified by @a name.
   virtual bool is_a (ACEXML_Char const *name);
 
   /// Print out exception using ACE_DEBUG.
