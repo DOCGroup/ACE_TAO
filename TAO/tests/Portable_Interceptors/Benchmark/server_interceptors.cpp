@@ -169,7 +169,7 @@ Vault_Server_Request_Dynamic_Interceptor::receive_request (
         ri->arguments ();
 
       char const *user {};
-      CORBA::ULong i {};  // index -- explicitly used to avoid
+      const CORBA::ULong i {};  // index -- explicitly used to avoid
                            // overloaded operator ambiguity.
       paramlist[i].argument >>= user;
     }
