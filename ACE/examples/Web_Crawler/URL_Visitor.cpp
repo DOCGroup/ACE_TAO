@@ -73,7 +73,7 @@ HTTP_Header_Processing_Strategy::execute ()
       if (i == 0)
         {
           // Assuming that the status-no is a space away.
-          int status_index =
+          int const status_index =
             ACE_Utils::truncate_cast<int> (line.find ("HTTP", 0));
           ACE_CString status = line.substring (status_index + 9, //HTTP/1.1 200
                                                3);
@@ -125,7 +125,7 @@ HTML_Body_Validation_Strategy::execute ()
   prev_location.set (ACE_TEXT_ALWAYS_CHAR (this->url_.url_addr ().get_path_name ()),
                      ACE_OS::strlen (this->url_.url_addr ().get_path_name ()),
                      true);
-  int index =
+  int const index =
     ACE_Utils::truncate_cast<int> (
       prev_location.rfind ('/', prev_location.length ()));
   ACE_CString str = prev_location.substring (0, index + 1);
@@ -151,7 +151,7 @@ HTML_Body_Validation_Strategy::execute ()
           if (url[0] == '.' && url[1] == '.')
            {
              url = url.substr (3);
-             int i =
+             int const i =
                ACE_Utils::truncate_cast<int> (
                  prev_location.rfind ('/', prev_location.length () - 1));
              prev_location = prev_location.substring (0, i+1);
@@ -386,7 +386,7 @@ URL_Validation_Visitor::visit (HTTP_URL &http_url)
                              "make_header_strategy"),
                             -1);
         }
-      int phs_result = phs->execute ();
+      int const phs_result = phs->execute ();
       if (phs_result == -1)
         {
           ACE_DEBUG ((LM_DEBUG,
