@@ -349,10 +349,10 @@ ACE_CDR::swap_4_array (char const * orig, char* target, size_t n)
           b = (b84 | b73 | b62 | b51);
 #endif
 
-          ACE_UINT32 c1 = static_cast<ACE_UINT32> (a >> 32);
-          ACE_UINT32 c2 = static_cast<ACE_UINT32> (a & 0xffffffff);
-          ACE_UINT32 c3 = static_cast<ACE_UINT32> (b >> 32);
-          ACE_UINT32 c4 = static_cast<ACE_UINT32> (b & 0xffffffff);
+          ACE_UINT32 const c1 = static_cast<ACE_UINT32> (a >> 32);
+          ACE_UINT32 const c2 = static_cast<ACE_UINT32> (a & 0xffffffff);
+          ACE_UINT32 const c3 = static_cast<ACE_UINT32> (b >> 32);
+          ACE_UINT32 const c4 = static_cast<ACE_UINT32> (b & 0xffffffff);
 
 #if defined (ACE_LITTLE_ENDIAN)
           * reinterpret_cast<ACE_UINT32*> (target + 0) = c2;
@@ -497,7 +497,7 @@ ACE_CDR::mb_align (ACE_Message_Block *mb)
 int
 ACE_CDR::grow (ACE_Message_Block *mb, size_t minsize)
 {
-  size_t newsize =
+  size_t const newsize =
     ACE_CDR::first_size (minsize + ACE_CDR::MAX_ALIGNMENT);
 
   if (newsize <= mb->size ())
@@ -571,9 +571,9 @@ ACE_CDR::consolidate (ACE_Message_Block *dst,
 #if !defined (ACE_CDR_IGNORE_ALIGNMENT)
   // We must copy the contents of src into the new buffer, but
   // respecting the alignment.
-  ptrdiff_t srcalign =
+  ptrdiff_t const srcalign =
     ptrdiff_t(src->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
-  ptrdiff_t dstalign =
+  ptrdiff_t const dstalign =
     ptrdiff_t(dst->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
   ptrdiff_t offset = srcalign - dstalign;
   if (offset < 0)
@@ -1220,7 +1220,7 @@ ACE_CDR::Fixed::ConstIterator ACE_CDR::Fixed::pre_add (const ACE_CDR::Fixed &f)
 
   if (f.digits_ - f.scale_ > this->digits_ - this->scale_)
     {
-      ACE_CDR::Octet new_digits = this->digits_ + (f.digits_ - f.scale_) - (this->digits_ - this->scale_);
+      ACE_CDR::Octet const new_digits = this->digits_ + (f.digits_ - f.scale_) - (this->digits_ - this->scale_);
       if (new_digits > MAX_DIGITS)
         {
           for (size_t i = 0; i < static_cast<size_t> (new_digits - MAX_DIGITS); ++i)
@@ -1741,7 +1741,7 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator-- ()
     }
   else
     {
-      Fixed before = *this;
+      Fixed const before = *this;
       Iterator iter = this->begin ();
       iter += this->scale_;
       for (; iter != this->end (); ++iter)
