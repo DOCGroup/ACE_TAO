@@ -71,7 +71,7 @@ public:
 
   /// Template methods. Please see tao/Profile.h for documentation.
 
-  /// N.B. We have to override the TAO_Profile default decode because
+  /// @note We have to override the TAO_Profile default decode because
   /// in UIPMC there is no object key marshalled and we do not implement
   /// a useable decode_endpoints
   int decode (TAO_InputCDR &cdr) override;
