@@ -304,7 +304,7 @@ ACEXML_HttpCharStream::send_request ()
                        + 1      // NUL byte
                        + 16 ;   // Protocol filler...
 
-  std::unique_ptr<char[]> command {
+  std::unique_ptr<char[]> const command {
     new (std::nothrow) char[commandsize]};
   if (!command)
     {
@@ -320,7 +320,7 @@ ACEXML_HttpCharStream::send_request ()
   ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
 
   // Send the command to the connected server.
-  int retval = static_cast<int> (this->stream_->send_n (
+  int const retval = static_cast<int> (this->stream_->send_n (
     command.get (), bytes, std::addressof (tv)));
   if (retval <= 0)
   {

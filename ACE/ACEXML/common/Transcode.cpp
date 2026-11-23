@@ -65,7 +65,7 @@ ACEXML_Transcoder::ucs42utf8 (ACEXML_UCS4 src,
 {
   if (src < 0x10000)
     {
-      int retv = ACEXML_Transcoder::utf162utf8
+      int const retv = ACEXML_Transcoder::utf162utf8
                  (static_cast<ACEXML_UTF16> (src),
                   dst, len);
       return (retv == ACEXML_IS_SURROGATE ? ACEXML_NON_UNICODE : retv);
@@ -150,7 +150,7 @@ ACEXML_Transcoder::surrogate2utf8 (ACEXML_UTF16 high,
     return ACEXML_INVALID_ARGS;
   }
 
-  ACEXML_UCS4 src = (high - 0xD800) * 0x400 + (low - 0xDC00) + 0x10000;
+  ACEXML_UCS4 const src = (high - 0xD800) * 0x400 + (low - 0xDC00) + 0x10000;
   *dst = static_cast<ACEXML_UTF8> (0xD800 | (src / 0x400));
   *(dst+1) = static_cast<ACEXML_UTF8> (0xDC00 | (src % 0x400));
   return 2;
@@ -278,7 +278,7 @@ ACEXML_Transcoder::utf162ucs4 (const ACEXML_UTF16 *src,
       return ACEXML_INVALID_ARGS;
     }
 
-  size_t forward = 1;
+  size_t const forward = 1;
   if (*src >= 0xDC00 && *src < 0xE000)
     {
       if (len < 2)

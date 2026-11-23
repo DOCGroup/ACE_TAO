@@ -29,7 +29,7 @@ ACEXML_URL_Addr::addr_to_string (ACEXML_Char *s,
                                  size_t size,
                                  int ipaddr_format) const
 {
-  size_t total_len = this->calculate_length (ipaddr_format);
+  size_t const total_len = this->calculate_length (ipaddr_format);
   if (size < total_len)
     {
       return -1;
@@ -49,7 +49,7 @@ ACEXML_URL_Addr::addr_to_string (ACEXML_Char *s,
 const ACEXML_Char *
 ACEXML_URL_Addr::addr_to_string (int ipaddr_format)
 {
-  size_t size = this->calculate_length (ipaddr_format);
+  size_t const size = this->calculate_length (ipaddr_format);
   if (size > this->addr_string_len_)
     {
       ACEXML_Char *resized = static_cast<ACEXML_Char *> (
@@ -132,7 +132,7 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
     }
 
   // Set the addr
-  int result = this->ACE_INET_Addr::set (port, host_name.get ());
+  int const result = this->ACE_INET_Addr::set (port, host_name.get ());
 
   if (result == -1)
   {

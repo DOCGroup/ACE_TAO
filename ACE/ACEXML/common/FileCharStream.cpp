@@ -204,7 +204,7 @@ ACEXML_FileCharStream::peek ()
   return this->peek_i();
 #else
 
-  ACEXML_Char ch = static_cast<ACEXML_Char> (ACE_OS::fgetc (this->infile_));
+  ACEXML_Char const ch = static_cast<ACEXML_Char> (ACE_OS::fgetc (this->infile_));
   ACE_OS::ungetc (ch, this->infile_);
   return ch;
 #endif /* ACE_USES_WCHAR */

@@ -38,7 +38,7 @@ ACEXML_Namespace_Context_Stack::pop ()
   }
 
   ACEXML_NS_CONTEXT *temp {};
-  int retval = this->stack_.pop (temp);
+  int const retval = this->stack_.pop (temp);
   if (retval != 0)
     {
       ACE_ERROR ((LM_ERROR, "Unable to pop Namespace context from stack\n"));
@@ -246,7 +246,7 @@ ACEXML_NamespaceSupport::processName (ACEXML_Char const *qName,
                                       ACEXML_Char const *&name,
                                       bool is_attribute) const
 {
-  int qlen = static_cast<int> (ACE_OS::strlen (qName));
+  int const qlen = static_cast<int> (ACE_OS::strlen (qName));
   int len = -1;
   for (int i = 0; i < qlen; ++i)
       {
