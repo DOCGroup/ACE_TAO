@@ -633,7 +633,6 @@ private:
    *
    * @param prefix Namespace prefix
    * @param uri Namespace URI
-   * @param name Local name
    * @param start true => startPrefixMapping, false => endPrefixMapping
    */
   void prefix_mapping (ACEXML_Char const *prefix,

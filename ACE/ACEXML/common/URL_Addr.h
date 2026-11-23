@@ -125,11 +125,10 @@ private:
   /// Our path name.
   ACEXML_Char_Ptr path_name_ {};
 
-  /// The dynamically created address string that's used for the
-  /// <addr_to_string> method.
+  /// The dynamically created address string used by @c addr_to_string().
   ACEXML_Char_Ptr addr_string_ {};
 
-  /// Current length of the <addr_string_>
+  /// Current length of @c addr_string_.
   size_t addr_string_len_;
 };
 
