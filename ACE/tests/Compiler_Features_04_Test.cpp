@@ -36,7 +36,7 @@ run_main (int, ACE_TCHAR *[])
   c.insert(1);
 
   // ... inserting twice returns a pair ...
-  std::pair<collection::iterator,bool> r =
+  std::pair<collection::iterator,bool> const r =
     c.insert(collection::value_type(5));
 
   // ... the iterator points to the element ...

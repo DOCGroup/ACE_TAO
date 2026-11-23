@@ -39,7 +39,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
   };
 
   // The port will always be this
-  u_short port = 80;
+  u_short const port = 80;
 
   // ... and as you can see, there are 5 of them
   const size_t num_secondaries = 5;
@@ -93,7 +93,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
     // Check that the test subject reports the correct number of
     // secondary addresses.
-    size_t returned_num_secondaries = addr.get_num_secondary_addresses();
+    size_t const returned_num_secondaries = addr.get_num_secondary_addresses();
     if (returned_num_secondaries == i) {
       // Initialize the stay_out array with the secondary addresses
       for (j = 0; j < i; ++j) {

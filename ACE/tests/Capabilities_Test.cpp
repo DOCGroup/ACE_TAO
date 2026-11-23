@@ -65,7 +65,7 @@ run_main (int, ACE_TCHAR *[])
     "   integer#2,\n"
     "   string=000030,\n\n";
 
-  ACE_HANDLE fd = ACE_OS::open (config,
+  ACE_HANDLE const fd = ACE_OS::open (config,
                                 O_RDWR | O_CREAT | O_TRUNC,
                                 ACE_DEFAULT_FILE_PERMS);
 
