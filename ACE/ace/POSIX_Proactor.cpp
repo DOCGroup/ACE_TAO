@@ -665,7 +665,7 @@ ACE_AIOCB_Notify_Pipe_Manager::notify ()
 {
   // Send the result pointer through the pipe.
   char char_send = 0;
-  ssize_t ret_val = ACE::send (this->pipe_.write_handle (),
+  ssize_t const ret_val = ACE::send (this->pipe_.write_handle (),
                                &char_send,
                                sizeof (char_send));
 
@@ -1167,7 +1167,7 @@ ACE_POSIX_AIOCB_Proactor::get_result_status (ACE_POSIX_Asynch_Result *asynch_res
     return 0;  // not completed
   }
 
-  ssize_t op_return = aio_return (aio_ptr);
+  ssize_t const op_return = aio_return (aio_ptr);
   if (op_return > 0)
   {
     transfer_count = static_cast<size_t> (op_return);
@@ -1277,14 +1277,14 @@ ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
 
   // Find a free slot and store.
 
-  ssize_t slot = allocate_aio_slot (result);
+  ssize_t const slot = allocate_aio_slot (result);
 
   if (slot < 0)
   {
     return -1;
   }
 
-  size_t index = static_cast<size_t> (slot);
+  size_t const index = static_cast<size_t> (slot);
 
   result_list_[index] = result;   //Store result ptr anyway
   ++aiocb_list_cur_size_;
