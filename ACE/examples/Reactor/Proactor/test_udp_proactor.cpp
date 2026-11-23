@@ -304,7 +304,7 @@ Sender::open (const ACE_TCHAR *host,
 
   // do the asynch send
   size_t number_of_bytes_sent = 0;
-  ACE_INET_Addr serverAddr (port, host);
+  ACE_INET_Addr const serverAddr (port, host);
   int res = this->wd_.send (msg, number_of_bytes_sent, 0, serverAddr, this->act_);
 
   switch (res)

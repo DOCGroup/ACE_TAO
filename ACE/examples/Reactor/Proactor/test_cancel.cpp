@@ -143,7 +143,7 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
       ACE_DEBUG ((LM_DEBUG,
                   "Cacelling Asynch Read "));
 
-      int ret_val = this->rs_.cancel ();
+      int const ret_val = this->rs_.cancel ();
       if (ret_val == -1)
         {
           ACE_ERROR ((LM_ERROR,

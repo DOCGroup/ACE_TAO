@@ -44,7 +44,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
 
     // take size as the number of MiB and create appropriate buffer
     size *= BASE;
-    std::unique_ptr<char[]> someData (new (std::nothrow) char[size]);
+    std::unique_ptr<char[]> const someData (new (std::nothrow) char[size]);
 
     if (someData == nullptr)
       {

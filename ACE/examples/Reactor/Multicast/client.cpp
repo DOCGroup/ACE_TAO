@@ -75,7 +75,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   char *raw_buffer {};
   ACE_NEW_RETURN (raw_buffer, char[max_message_size], -1);
-  std::unique_ptr<char[]> buffer (raw_buffer);
+  std::unique_ptr<char[]> const buffer (raw_buffer);
   char *const buf = buffer.get ();
 
   // If -i has been specified, send max_message_size messages

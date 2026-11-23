@@ -135,7 +135,7 @@ Ping_Pong::handle_input (ACE_HANDLE)
               count,
               message));
 #else
-  ssize_t n = ACE::recv (this->handle_,
+  ssize_t const n = ACE::recv (this->handle_,
                          this->buf_,
                          this->buflen_);
   if (n == -1)
@@ -304,7 +304,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   1));
   barrier.wait ();
 #else
-  pid_t pid = ACE_OS::fork (argv[0]);
+  pid_t const pid = ACE_OS::fork (argv[0]);
 
   if (pid == -1)
     {

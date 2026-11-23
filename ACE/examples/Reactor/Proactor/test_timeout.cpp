@@ -83,7 +83,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   Timeout_Handler handler;
 
   // Register a 2 second timer.
-  ACE_Time_Value foo_tv (2);
+  ACE_Time_Value const foo_tv (2);
   if (ACE_Proactor::instance ()->schedule_timer (handler,
                                                  "Foo",
                                                  ACE_Time_Value::zero,
@@ -93,7 +93,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   }
 
   // Register a 3 second timer.
-  ACE_Time_Value bar_tv (3);
+  ACE_Time_Value const bar_tv (3);
   if (ACE_Proactor::instance ()->schedule_timer (handler,
                                                  "Bar",
                                                  ACE_Time_Value::zero,

@@ -137,8 +137,8 @@ run_test (u_short localport,
           u_short remoteport,
           const ACE_TCHAR *peer)
 {
-  ACE_INET_Addr remote_addr (remoteport, remotehost);
-  ACE_INET_Addr local_addr (localport);
+  ACE_INET_Addr const remote_addr (remoteport, remotehost);
+  ACE_INET_Addr const local_addr (localport);
 
   Dgram_Endpoint *endpoint_raw {};
 

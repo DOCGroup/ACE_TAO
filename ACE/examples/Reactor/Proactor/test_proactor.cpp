@@ -392,7 +392,7 @@ Sender::open (const ACE_TCHAR *host,
     ACE_OS::filesize (this->input_file_);
 
   // Connect to remote host
-  ACE_INET_Addr address (port, host);
+  ACE_INET_Addr const address (port, host);
   ACE_SOCK_Connector connector;
   if (connector.connect (this->stream_,
                          address) == -1)
@@ -440,7 +440,7 @@ int
 Sender::transmit_file ()
 {
   // Open file (in SEQUENTIAL_SCAN mode)
-  ACE_HANDLE file_handle =
+  ACE_HANDLE const file_handle =
     ACE_OS::open (file, GENERIC_READ | FILE_FLAG_SEQUENTIAL_SCAN);
   if (file_handle == ACE_INVALID_HANDLE)
     {
@@ -608,7 +608,7 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
   if (result.success ())
     {
       // Partial write to socket
-      int unsent_data =
+      int const unsent_data =
         ACE_Utils::truncate_cast<int> (
           result.bytes_to_write () - result.bytes_transferred ());
 
