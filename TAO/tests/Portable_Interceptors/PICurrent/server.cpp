@@ -90,14 +90,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_NEW_RETURN (temp_initializer,
                       ServerORBInitializer,
                       -1);  // No CORBA exceptions yet!
-      PortableInterceptor::ORBInitializer_var orb_initializer =
+      PortableInterceptor::ORBInitializer_var const orb_initializer =
         temp_initializer;
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            "test_orb");
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc,
+                                                  argv,
+                                                  "test_orb");
 
       if (parse_args (argc, argv) != 0)
       {
@@ -107,7 +107,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (obj.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -117,14 +117,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             -1);
         }
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
 
       obj = orb->resolve_initial_references ("PICurrent");
 
-      PortableInterceptor::Current_var pi_current =
+      PortableInterceptor::Current_var const pi_current =
         PortableInterceptor::Current::_narrow (obj.in ());
 
       if (CORBA::is_nil (pi_current.in ()))
@@ -140,7 +140,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       obj = server_impl._this ();
 
-      PICurrentTest::test_var server =
+      PICurrentTest::test_var const server =
         PICurrentTest::test::_narrow (obj.in ());
 
       if (CORBA::is_nil (server.in ()))
@@ -151,7 +151,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             -1);
         }
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (server.in ());
 
       ACE_DEBUG ((LM_INFO, "PICurrentTest::test: <%C>\n", ior.in ()));
@@ -159,7 +159,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // If the ior_output_file exists, output the IOR to it.
       if (ior_output_file != nullptr)
         {
-          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
             ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
           if (!output_file)
             {
