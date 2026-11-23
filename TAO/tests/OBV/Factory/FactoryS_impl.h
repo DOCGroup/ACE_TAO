@@ -1,8 +1,12 @@
+
+//=============================================================================
 /**
  *  @file   FactoryS_impl.h
  *
  *  @author Boris Kolpackov <bosk@ipmce.ru>
  */
+//=============================================================================
+
 
 #ifndef TAO_FACTORY_S_IMPL_H
 #define TAO_FACTORY_S_IMPL_H
@@ -20,12 +24,8 @@
 class Test_impl : public POA_OBV_FactoryTest::Test
 {
 public:
-  explicit Test_impl (CORBA::ORB_ptr orb);
-
-  Test_impl (Test_impl const&) = delete;
-  Test_impl (Test_impl&&) = delete;
-  Test_impl& operator= (Test_impl const&) = delete;
-  Test_impl& operator= (Test_impl&&) = delete;
+  /// ctor
+  Test_impl (CORBA::ORB_ptr orb);
 
   OBV_FactoryTest::BaseValue *get_base_value () override;
 
@@ -37,7 +37,7 @@ public:
 
 private:
   /// The ORB
-  CORBA::ORB_var const orb_;
+  CORBA::ORB_var orb_;
 };
 
 #endif /* TAO_FACTORY_S_IMPL_H */

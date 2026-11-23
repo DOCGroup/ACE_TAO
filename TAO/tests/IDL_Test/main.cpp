@@ -1,4 +1,5 @@
 
+//=============================================================================
 /**
  *  @file    main.cpp
  *
@@ -7,6 +8,7 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
+//=============================================================================
 
 #include "pragmaS.h"
 #include "unionC.h"
@@ -18,9 +20,8 @@
 #include "structC.h"
 #include "valuetypeC.h"
 #include "valuetype_opt_accessorC.h"
-
-#include <memory>
 #include "fixedA.h"
+#include "keywordsS.h"
 
 #include "ace/Log_Msg.h"
 #include "tao/AnyTypeCode/Any.h"
@@ -30,6 +31,8 @@
 
 static_assert (std::is_abstract<OBV_Supports_Inherited_Operation>::value,
                "A valuetype that supports an inherited operation is abstract");
+static_assert (!std::is_abstract<OBV_Supports_Abstract_Operation>::value,
+               "A directly supported abstract-interface operation uses its generated default");
 static_assert (!std::is_abstract<OBV_Copy_Derived>::value,
                "A concrete derived valuetype gets its own copy implementation");
 static_assert (std::is_abstract<OBV_Copy_Operation_Derived>::value,
@@ -49,6 +52,10 @@ static_assert (std::is_abstract<Accessor_Optimized_Operation_Derived>::value,
                "An optimized derived valuetype must not inherit a sliced copy");
 
 class hello_i : public virtual POA_hello
+{
+};
+
+class con_i : public virtual POA_con
 {
 };
 
@@ -1100,7 +1107,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var obj;
 
       hello_i h;
-      PortableServer::ObjectId_var id = root_poa->activate_object (std::addressof (h));
+      PortableServer::ObjectId_var id = root_poa->activate_object (&h);
       obj = root_poa->id_to_reference (id.in ());
       obj = hello::_narrow (obj.in ());
 
@@ -1113,7 +1120,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       goodbye_i g;
-      id = root_poa->activate_object (std::addressof (g));
+      id = root_poa->activate_object (&g);
       obj = root_poa->id_to_reference (id.in ());
       obj = goodbye::_narrow (obj.in ());
 
@@ -1126,7 +1133,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       sayonara_i s;
-      id = root_poa->activate_object (std::addressof (s));
+      id = root_poa->activate_object (&s);
       obj = root_poa->id_to_reference (id.in ());
       obj = salutation::sayonara::_narrow (obj.in ());
 
@@ -1145,7 +1152,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       toi.length (4);
 
       ciao_i c;
-      id = root_poa->activate_object (std::addressof (c));
+      id = root_poa->activate_object (&c);
       obj = root_poa->id_to_reference (id.in ());
       obj = ciao::_narrow (obj.in ());
 
@@ -1158,7 +1165,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       aloha_i a;
-      id = root_poa->activate_object (std::addressof (a));
+      id = root_poa->activate_object (&a);
       obj = root_poa->id_to_reference (id.in ());
       obj = aloha::_narrow (obj.in ());
 

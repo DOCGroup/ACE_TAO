@@ -4,45 +4,44 @@
 #include "Supports_TestS.h"
 #include "ace/Get_Opt.h"
 
+#include <unordered_map>
+
+class node_impl;
+using Node_Copy_Map = std::unordered_map<node_impl const *, node_impl *>;
+
+/**
+ * \class node_impl
+ */
 class node_impl :
   public virtual OBV_Supports_Test::Node,
   public virtual CORBA::DefaultValueRefCountBase
 {
 public:
-  node_impl () = default;
+  node_impl ();
 
-  explicit node_impl (char const *name);
+  node_impl (const char * name);
 
-  node_impl (node_impl const&) = delete;
-  node_impl (node_impl&&) = delete;
-  node_impl& operator= (node_impl const&) = delete;
-  node_impl& operator= (node_impl&&) = delete;
+  virtual void add_edge (Supports_Test::Node * neighbor);
 
-  void add_edge (Supports_Test::Node *neighbor) override;
+  virtual void remove_edge (Supports_Test::Node * neighbor);
 
-  void remove_edge (Supports_Test::Node *neighbor) override;
+  void change_weight (CORBA::Long new_weight);
 
-  void change_weight (CORBA::Long new_weight) override;
-
-  void print () override;
+  void print ();
 
   CORBA::ValueBase *_copy_value () override;
+
+  static node_impl *copy_node (node_impl const *node, Node_Copy_Map& copies);
 };
 
 class node_init_impl : public Supports_Test::Node_init
 {
  public:
-  node_init_impl () = default;
+  virtual Supports_Test::Node * create ();
 
-  node_init_impl (node_init_impl const&) = delete;
-  node_init_impl (node_init_impl&&) = delete;
-  node_init_impl& operator= (node_init_impl const&) = delete;
-  node_init_impl& operator= (node_init_impl&&) = delete;
-
-  Supports_Test::Node *create () override;
-
-  CORBA::ValueBase *create_for_unmarshal () override;
+  virtual CORBA::ValueBase * create_for_unmarshal ();
 };
+
 
 class vt_graph_impl :
   public virtual OBV_Supports_Test::vt_graph,
@@ -50,20 +49,15 @@ class vt_graph_impl :
   public virtual CORBA::DefaultValueRefCountBase
 {
  public:
-  vt_graph_impl () = default;
+  vt_graph_impl ();
 
-  explicit vt_graph_impl (int num_nodes);
+  vt_graph_impl (int num_nodes);
 
-  vt_graph_impl (vt_graph_impl const&) = delete;
-  vt_graph_impl (vt_graph_impl&&) = delete;
-  vt_graph_impl& operator= (vt_graph_impl const&) = delete;
-  vt_graph_impl& operator= (vt_graph_impl&&) = delete;
+  virtual CORBA::Long size ();
 
-  CORBA::Long size () override;
+  virtual void add_node (const char * name);
 
-  void add_node (char const *name) override;
-
-  void print () override;
+  virtual void print ();
 
   CORBA::ValueBase *_copy_value () override;
 };
@@ -72,46 +66,34 @@ class vt_graph_init_impl :
   public Supports_Test::vt_graph_init
 {
  public:
-  vt_graph_init_impl () = default;
+  virtual Supports_Test::vt_graph * create ();
 
-  vt_graph_init_impl (vt_graph_init_impl const&) = delete;
-  vt_graph_init_impl (vt_graph_init_impl&&) = delete;
-  vt_graph_init_impl& operator= (vt_graph_init_impl const&) = delete;
-  vt_graph_init_impl& operator= (vt_graph_init_impl&&) = delete;
-
-  Supports_Test::vt_graph *create () override;
-
-  CORBA::ValueBase *create_for_unmarshal () override;
+  virtual CORBA::ValueBase * create_for_unmarshal ();
 };
 
 class test_impl :
   public virtual POA_Supports_Test::test
 {
  public:
-  explicit test_impl (CORBA::ORB_ptr orb);
+  test_impl (CORBA::ORB_ptr orb);
 
-  ~test_impl () override = default;
+  virtual ~test_impl ();
 
-  test_impl (test_impl const&) = delete;
-  test_impl (test_impl&&) = delete;
-  test_impl& operator= (test_impl const&) = delete;
-  test_impl& operator= (test_impl&&) = delete;
+  virtual void pass_obj_graph_in (Supports_Test::graph * graph_param);
 
-  void pass_obj_graph_in (Supports_Test::graph *graph_param) override;
+  virtual void pass_vt_graph_in (Supports_Test::vt_graph * vt_graph_param);
 
-  void pass_vt_graph_in (Supports_Test::vt_graph *vt_graph_param) override;
+  virtual void pass_obj_graph_out (Supports_Test::graph_out graph_param);
 
-  void pass_obj_graph_out (Supports_Test::graph_out graph_param) override;
+  virtual void pass_vt_graph_out (Supports_Test::vt_graph_out vt_graph_param);
 
-  void pass_vt_graph_out (Supports_Test::vt_graph_out vt_graph_param) override;
+  virtual void pass_obj_graph_inout (Supports_Test::graph * &graph_param);
 
-  void pass_obj_graph_inout (Supports_Test::graph *&graph_param) override;
+  virtual void pass_vt_graph_inout (Supports_Test::vt_graph * &vt_graph_param);
 
-  void pass_vt_graph_inout (Supports_Test::vt_graph *&vt_graph_param) override;
+  virtual void start ();
 
-  void start () override;
-
-  void finish () override;
+  virtual void finish ();
 
  private:
   CORBA::ORB_var orb_;

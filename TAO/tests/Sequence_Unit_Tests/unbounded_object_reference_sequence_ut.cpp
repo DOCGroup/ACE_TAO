@@ -16,17 +16,21 @@
 
 #include "test_macros.h"
 
+#include <type_traits>
+
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
 struct Tester
 {
-  using tested_sequence = unbounded_object_reference_sequence<mock_reference, mock_reference_var>;
-  using value_type = tested_sequence::value_type;
-  using const_value_type = tested_sequence::const_value_type;
+  typedef unbounded_object_reference_sequence<mock_reference, mock_reference_var> tested_sequence;
+  static_assert (std::is_move_constructible<tested_sequence>::value);
+  static_assert (!std::is_nothrow_move_constructible<tested_sequence>::value);
+  typedef tested_sequence::value_type value_type;
+  typedef tested_sequence::const_value_type const_value_type;
 
-  using tested_element_traits = tested_sequence::element_traits;
-  using tested_allocation_traits = tested_sequence::allocation_traits;
-  using range = TAO::details::range_checking<value_type,true>;
+  typedef tested_sequence::element_traits tested_element_traits;
+  typedef tested_sequence::allocation_traits tested_allocation_traits;
+  typedef TAO::details::range_checking<value_type,true> range;
 
   int test_default_constructor()
   {
@@ -34,7 +38,7 @@ struct Tester
     expected_calls f(tested_allocation_traits::freebuf_calls);
     expected_calls i(tested_element_traits::default_initializer_calls);
     {
-      tested_sequence const x;
+      tested_sequence x;
 
       CHECK_EQUAL(CORBA::ULong(0), x.maximum());
       CHECK_EQUAL(CORBA::ULong(0), x.length());
@@ -52,7 +56,7 @@ struct Tester
     expected_calls f(tested_allocation_traits::freebuf_calls);
     expected_calls i(tested_element_traits::default_initializer_calls);
     {
-      tested_sequence const x(16);
+      tested_sequence x(16);
 
       CHECK_EQUAL(CORBA::ULong(16), x.maximum());
       CHECK_EQUAL(CORBA::ULong(0), x.length());
@@ -87,7 +91,7 @@ struct Tester
     expected_calls f(tested_allocation_traits::freebuf_calls);
     expected_calls i(tested_element_traits::default_initializer_calls);
     {
-      CORBA::ULong const maximum = 32;
+      CORBA::ULong maximum = 32;
       tested_sequence::value_type * data = tested_sequence::allocbuf(maximum);
       a.reset();
       tested_sequence x(maximum, maximum / 2, data, true);
@@ -110,7 +114,7 @@ struct Tester
     expected_calls f(tested_allocation_traits::freebuf_calls);
     expected_calls i(tested_element_traits::default_initializer_calls);
     {
-      CORBA::ULong const maximum = 64;
+      CORBA::ULong maximum = 64;
       tested_sequence::value_type * data = tested_sequence::allocbuf(maximum);
       a.reset();
       {
@@ -140,9 +144,9 @@ struct Tester
     expected_calls f(tested_allocation_traits::freebuf_calls);
     expected_calls i(tested_element_traits::default_initializer_calls);
     {
-      tested_sequence const x;
+      tested_sequence x;
 
-      tested_sequence const y(x);
+      tested_sequence y(x);
     }
     FAIL_RETURN_IF_NOT(a.expect(0), a);
     FAIL_RETURN_IF_NOT(f.expect(0), f);
@@ -157,7 +161,7 @@ struct Tester
     expected_calls i(tested_element_traits::default_initializer_calls);
     expected_calls d(mock_reference::duplicate_calls);
     expected_calls r(mock_reference::release_calls);
-    CORBA::ULong constexpr l = 16;
+    CORBA::ULong const l = 16;
     {
       tested_sequence x(l);
       x.length(l);
@@ -198,7 +202,7 @@ struct Tester
     expected_calls i(tested_element_traits::default_initializer_calls);
     expected_calls d(mock_reference::duplicate_calls);
     expected_calls r(mock_reference::release_calls);
-    CORBA::ULong constexpr l = 16;
+    CORBA::ULong const l = 16;
     {
       tested_sequence x(l);
       x.length(l);
@@ -463,7 +467,7 @@ struct Tester
 
   int test_all()
   {
-    int status {};
+    int status = 0;
     status += this->test_default_constructor();
     status += this->test_ulong_constructor();
     status += this->test_ulong_constructor_throw();
@@ -482,12 +486,12 @@ struct Tester
     return status;
   }
 
-  Tester () = default;
+  Tester() {}
 };
 
 int ACE_TMAIN(int,ACE_TCHAR*[])
 {
-  int status {};
+  int status = 0;
   try
     {
       {

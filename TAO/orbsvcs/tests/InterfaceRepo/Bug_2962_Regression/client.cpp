@@ -26,12 +26,10 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const*& ifr_ior)
       }
 
   if (ifr_ior == nullptr)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("usage: %s [-i <ior>]\n"),
-                         argv [0]),
-                        -1);
-    }
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("usage: %s [-i <ior>]\n"),
+                       argv [0]),
+                      -1);
 
   // Indicates successful parsing of the command line
   return 0;
@@ -47,9 +45,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, ifr_ior) != 0)
-      {
-        return 1;
-      }
+        {
+          return 1;
+        }
 
       CORBA::Object_var const obj = orb->string_to_object (ifr_ior);
       if (CORBA::is_nil (obj.in ()))

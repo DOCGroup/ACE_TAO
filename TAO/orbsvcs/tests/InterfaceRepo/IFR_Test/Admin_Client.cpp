@@ -19,9 +19,9 @@ Admin_Client::init (int argc, ACE_TCHAR *argv[])
       int const retval = this->parse_args (argc, argv);
 
       if (retval != 0)
-      {
-        return retval;
-      }
+        {
+          return retval;
+        }
 
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("InterfaceRepository");
@@ -95,49 +95,47 @@ Admin_Client::parse_args (int argc, ACE_TCHAR *argv[])
   int c {};
 
   while ((c = opts ()) != -1)
+    switch (c)
+      {
+      case 'd':   // debug flag
+        this->debug_ = true;
+        break;
+      case 'i':   // iterations
         {
-      switch (c)
-        {
-        case 'd':   // debug flag
-          this->debug_ = true;
-          break;
-        case 'i':   // iterations
-          {
-            int const iterations = ACE_OS::atoi (opts.opt_arg ());
-            if (iterations > 0)
+          int const iterations = ACE_OS::atoi (opts.opt_arg ());
+          if (iterations > 0)
             {
               this->iterations_ = iterations;
             }
-          }
-          break;
-        case 't':   // test selection
-          {
-            this->all_tests_ = false;
-            ACE_TCHAR const * const name = opts.opt_arg ();
-
-            for (size_t i {}; i < NUMBER_OF_TESTS; ++i)
-              {
-                if (std::strcmp (ACE_TEXT_ALWAYS_CHAR (name), this->test_names_[i]) == 0)
-                  {
-                    this->which_test_ = i;
-                    break;
-                  }
-              }
-          }
-
-          break;
-        case '?':
-        default:
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "usage: %s"
-                             " [-d]"
-                             " [-i iterations]"
-                             " [-t test name]"
-                             "\n",
-                             argv [0]),
-                            -1);
         }
+        break;
+      case 't':   // test selection
+        {
+          this->all_tests_ = false;
+          ACE_TCHAR const * const name = opts.opt_arg ();
+
+          for (size_t i {}; i < NUMBER_OF_TESTS; ++i)
+            {
+              if (std::strcmp (ACE_TEXT_ALWAYS_CHAR (name), this->test_names_[i]) == 0)
+                {
+                  this->which_test_ = i;
+                  break;
+                }
+            }
         }
+
+        break;
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage: %s"
+                           " [-d]"
+                           " [-i iterations]"
+                           " [-t test name]"
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
 
   return 0;
 }
@@ -464,7 +462,7 @@ Admin_Client::enum_test ()
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("EnumDef::describe::value::type::")
-                      ACE_TEXT ("member_name[%u]: %C\n"),
+                      ACE_TEXT ("member_name[%d]: %C\n"),
                       i,
                       str.in ()));
         }
@@ -500,7 +498,7 @@ Admin_Client::enum_test ()
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("EnumDef::")
-                      ACE_TEXT ("members[%u]: %C\n"),
+                      ACE_TEXT ("members[%d]: %C\n"),
                       i,
                       tmp));
         }
@@ -925,7 +923,7 @@ Admin_Client::struct_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("StructDef::type::member_name[%u]: %C\n"),
+                      ACE_TEXT ("StructDef::type::member_name[%d]: %C\n"),
                       i,
                       str.in ()));
         }
@@ -1007,7 +1005,7 @@ Admin_Client::struct_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("StructDef::members[%u]::name: %C\n"),
+                      ACE_TEXT ("StructDef::members[%d]::name: %C\n"),
                       i,
                       out_members[i].name.in ()));
         }
@@ -1070,7 +1068,7 @@ Admin_Client::struct_test ()
 
   CORBA::ContainedSeq_var contents =
     this->repo_->contents (CORBA::dk_all,
-                           false);
+                           0);
 
   length = contents->length ();
 
@@ -1084,7 +1082,7 @@ Admin_Client::struct_test ()
   ACE_TEST_ASSERT (length == 2);
 
   contents = svar->contents (CORBA::dk_all,
-                             false);
+                             0);
 
   length = contents->length ();
 
@@ -1105,7 +1103,7 @@ Admin_Client::struct_test ()
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("StructDef::contents[%u]::absolute_name: %C\n"),
+              ACE_TEXT ("StructDef::contents[%d]::absolute_name: %C\n"),
               i,
               str.in ()
             ));
@@ -1145,7 +1143,7 @@ Admin_Client::struct_test ()
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("Repository::lookup_name[%u]::absolute_name: %C\n"),
+              ACE_TEXT ("Repository::lookup_name[%d]::absolute_name: %C\n"),
               i,
               str.in ()
             ));
@@ -1157,7 +1155,7 @@ Admin_Client::struct_test ()
 
   CORBA::Container::DescriptionSeq_var cont_desc =
     this->repo_->describe_contents (CORBA::dk_all,
-                                    false,
+                                    0,
                                     -1);
 
   length = cont_desc->length ();
@@ -1182,7 +1180,7 @@ Admin_Client::struct_test ()
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("Repository::describe_contents[%u]::id: %C\n"),
+              ACE_TEXT ("Repository::describe_contents[%d]::id: %C\n"),
               i,
               str.in ()
             ));
@@ -1207,7 +1205,7 @@ Admin_Client::struct_test ()
     }
 
   contents = svar->contents (CORBA::dk_all,
-                             false);
+                             0);
 
   length = contents->length ();
 
@@ -1230,7 +1228,7 @@ Admin_Client::struct_test ()
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("StructDef::contents[%u]::absolute_name: %C\n"),
+              ACE_TEXT ("StructDef::contents[%d]::absolute_name: %C\n"),
               i,
               str.in ()
             ));
@@ -1403,7 +1401,7 @@ Admin_Client::union_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("UnionDef::type::member_name[%u]: %C\n"),
+                      ACE_TEXT ("UnionDef::type::member_name[%d]: %C\n"),
                       i,
                       str.in ()));
         }
@@ -1432,7 +1430,7 @@ Admin_Client::union_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("UnionDef::type::member_label[%u]: %C\n"),
+                      ACE_TEXT ("UnionDef::type::member_label[%d]: %C\n"),
                       i,
                       i == (CORBA::ULong) slot ? "default" : tmp));
         }
@@ -1526,7 +1524,7 @@ Admin_Client::exception_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("ExceptionDef::type::member_name[%u]: %C\n"),
+                      ACE_TEXT ("ExceptionDef::type::member_name[%d]: %C\n"),
                       i,
                       str.in ()));
         }
@@ -1618,12 +1616,10 @@ Admin_Client::exception_test ()
   for (i = 0; i < length; ++i)
     {
       if (this->debug_)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("ExceptionDef::members[%u]::name: %C\n"),
-                      i,
-                      out_members[i].name.in ()));
-        }
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("ExceptionDef::members[%d]::name: %C\n"),
+                    i,
+                    out_members[i].name.in ()));
 
       if (i == 2)
         {
@@ -1655,7 +1651,7 @@ Admin_Client::exception_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("ExceptionDef::members[%u]::name: %C\n"),
+                      ACE_TEXT ("ExceptionDef::members[%d]::name: %C\n"),
                       i,
                       out_members[i].name.in ()));
         }
@@ -1702,7 +1698,7 @@ Admin_Client::exception_test ()
 
   CORBA::ContainedSeq_var contents =
     this->repo_->contents (CORBA::dk_all,
-                           false);
+                           0);
 
   length = contents->length ();
 
@@ -1716,7 +1712,7 @@ Admin_Client::exception_test ()
   ACE_TEST_ASSERT (length == 2);
 
   contents = exvar->contents (CORBA::dk_all,
-                              false);
+                              0);
 
   length = contents->length ();
 
@@ -1737,7 +1733,7 @@ Admin_Client::exception_test ()
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("ExceptionDef::contents[%u]::absolute_name: %C\n"),
+              ACE_TEXT ("ExceptionDef::contents[%d]::absolute_name: %C\n"),
               i,
               str.in ()
             ));
@@ -1771,7 +1767,7 @@ Admin_Client::exception_test ()
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("Repository::lookup_name%u]::absolute_name: %C\n"),
+              ACE_TEXT ("Repository::lookup_name%d]::absolute_name: %C\n"),
               i,
               str.in ()
             ));
@@ -1782,7 +1778,7 @@ Admin_Client::exception_test ()
 
   CORBA::Container::DescriptionSeq_var cont_desc =
     this->repo_->describe_contents (CORBA::dk_all,
-                                    false,
+                                    0,
                                     -1);
 
   length = cont_desc->length ();
@@ -1812,7 +1808,7 @@ Admin_Client::exception_test ()
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Repository::describe_contents[%u]")
+                          ACE_TEXT ("Repository::describe_contents[%d]")
                           ACE_TEXT ("::value::type::member_count: %d\n"),
                           i,
                           length));
@@ -1823,7 +1819,7 @@ Admin_Client::exception_test ()
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Repository::describe_contents[%u]")
+                          ACE_TEXT ("Repository::describe_contents[%d]")
                           ACE_TEXT ("::value::name: %C\n"),
                           i,
                           ed->name.in ()));
@@ -1841,7 +1837,7 @@ Admin_Client::exception_test ()
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Repository::describe_contents[%u]")
+                          ACE_TEXT ("Repository::describe_contents[%d]")
                           ACE_TEXT ("::value::type::member_count: %d\n"),
                           i,
                           length));
@@ -1852,7 +1848,7 @@ Admin_Client::exception_test ()
           if (this->debug_)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Repository::describe_contents[%u]")
+                          ACE_TEXT ("Repository::describe_contents[%d]")
                           ACE_TEXT ("::value::name: %C\n"),
                           i,
                           td->name.in ()));
@@ -1871,7 +1867,7 @@ Admin_Client::exception_test ()
     }
 
   contents = exvar->contents (CORBA::dk_all,
-                              false);
+                              0);
 
   length = contents->length ();
   char const *tmp = "::your_exception";
@@ -1884,7 +1880,7 @@ Admin_Client::exception_test ()
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("ExceptionDef::contents[%u]::absolute_name: %C\n"),
+              ACE_TEXT ("ExceptionDef::contents[%d]::absolute_name: %C\n"),
               i,
               str.in ()
             ));
@@ -2229,7 +2225,7 @@ Admin_Client::interface_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("OperationDef::describe::parameters[%u]::")
+                      ACE_TEXT ("OperationDef::describe::parameters[%d]::")
                       ACE_TEXT ("name: %C\n"),
                       i,
                       tmp));
@@ -2240,7 +2236,7 @@ Admin_Client::interface_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("OperationDef::describe::parameters[%u]::")
+                      ACE_TEXT ("OperationDef::describe::parameters[%d]::")
                       ACE_TEXT ("mode: %d\n"),
                       i,
                       od->parameters[i].mode));
@@ -2329,7 +2325,7 @@ Admin_Client::interface_test ()
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("InterfaceDef::describe_interface::")
-                      ACE_TEXT ("operations[0]::contexts[%u]: %C\n"),
+                      ACE_TEXT ("operations[0]::contexts[%d]: %C\n"),
                       i,
                       tmp));
         }
@@ -2357,7 +2353,7 @@ Admin_Client::interface_test ()
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("InterfaceDef::describe::operations[3]::")
-                      ACE_TEXT ("contexts[%u]: %C\n"),
+                      ACE_TEXT ("contexts[%d]: %C\n"),
                       i,
                       tmp));
         }
@@ -2412,7 +2408,7 @@ Admin_Client::interface_test ()
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("InterfaceDef::describe::")
-                      ACE_TEXT ("base_interfaces[%u]: %C\n"),
+                      ACE_TEXT ("base_interfaces[%d]: %C\n"),
                       i,
                       base_iface_id));
         }
@@ -2440,7 +2436,7 @@ Admin_Client::interface_test ()
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("InterfaceDef::base_interfaces[%u]::name: %C\n"),
+              ACE_TEXT ("InterfaceDef::base_interfaces[%d]::name: %C\n"),
               i,
               str.in ()
             ));
@@ -2448,7 +2444,7 @@ Admin_Client::interface_test ()
     }
 
   CORBA::ContainedSeq_var contents = ivar->contents (CORBA::dk_all,
-                                                     false);
+                                                     0);
 
   length = contents->length ();
 
@@ -2468,7 +2464,7 @@ Admin_Client::interface_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("InterfaceDef::contents[%u]::name: %C\n"),
+                      ACE_TEXT ("InterfaceDef::contents[%d]::name: %C\n"),
                       i,
                       str.in ()));
         }
@@ -2484,7 +2480,7 @@ Admin_Client::interface_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("InterfaceDef::contents[%u]::")
+                      ACE_TEXT ("InterfaceDef::contents[%d]::")
                       ACE_TEXT ("defined_in::name: %C\n"),
                       i,
                       str.in ()));
@@ -2608,7 +2604,7 @@ Admin_Client::move_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("UnionDef::members[%u]::name: %C\n"),
+                      ACE_TEXT ("UnionDef::members[%d]::name: %C\n"),
                       i,
                       tmp));
         }
@@ -2618,7 +2614,7 @@ Admin_Client::move_test ()
 
   CORBA::ContainedSeq_var out_contents =
     u_var->contents (CORBA::dk_all,
-                     true);
+                     1);
 
   length = out_contents->length ();
 
@@ -2661,7 +2657,7 @@ Admin_Client::move_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("UnionDef::members[%u]::name: %C\n"),
+                      ACE_TEXT ("UnionDef::members[%d]::name: %C\n"),
                       i,
                       tmp));
         }
@@ -2677,7 +2673,7 @@ Admin_Client::move_test ()
     }
 
   out_contents = u_var->contents (CORBA::dk_all,
-                                  true);
+                                  1);
 
   length = out_contents->length ();
 
@@ -2700,7 +2696,7 @@ Admin_Client::move_test ()
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("UnionDef::contents[%u]::absolute_name: %C\n"),
+              ACE_TEXT ("UnionDef::contents[%d]::absolute_name: %C\n"),
               i,
               str.in ()
             ));
@@ -2728,7 +2724,7 @@ Admin_Client::move_test ()
     }
 
   out_contents = this->repo_->contents (CORBA::dk_all,
-                                        true);
+                                        1);
 
   length = out_contents->length ();
 
@@ -2761,7 +2757,7 @@ Admin_Client::move_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("UnionDef::members[%u]::name: %C\n"),
+                      ACE_TEXT ("UnionDef::members[%d]::name: %C\n"),
                       i,
                       tmp));
         }
@@ -2770,7 +2766,7 @@ Admin_Client::move_test ()
     }
 
   out_contents = u_var->contents (CORBA::dk_all,
-                                  true);
+                                  1);
 
   length = out_contents->length ();
 
@@ -2794,7 +2790,7 @@ Admin_Client::move_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("UnionDef::contents[%u]::absolute_name: %C\n"),
+                      ACE_TEXT ("UnionDef::contents[%d]::absolute_name: %C\n"),
                       i,
                       str.in ()));
         }
@@ -2811,7 +2807,7 @@ Admin_Client::move_test ()
     }
 
   out_contents = s_tmp->contents (CORBA::dk_all,
-                                  false);
+                                  0);
 
   length = out_contents->length ();
 
@@ -2833,7 +2829,7 @@ Admin_Client::move_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("StructDef::contents[%u]::absolute_name: %C\n"),
+                      ACE_TEXT ("StructDef::contents[%d]::absolute_name: %C\n"),
                       i,
                       str.in ()));
         }
@@ -2870,7 +2866,7 @@ Admin_Client::move_test ()
       if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("StructDef::members[%u]::name: %C\n"),
+                      ACE_TEXT ("StructDef::members[%d]::name: %C\n"),
                       i,
                       tmp));
         }
@@ -3046,7 +3042,7 @@ Admin_Client::module_test ()
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("Repository::lookup_name[%u]::absolute_name: %C\n"),
+              ACE_TEXT ("Repository::lookup_name[%d]::absolute_name: %C\n"),
               i,
               str.in ()
             ));
@@ -3082,7 +3078,7 @@ Admin_Client::module_test ()
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("Repository::lookup_name[%u]::absolute_name: %C\n"),
+              ACE_TEXT ("Repository::lookup_name[%d]::absolute_name: %C\n"),
               i,
               str.in ()
             ));
@@ -3125,7 +3121,7 @@ Admin_Client::module_test ()
         {
           ACE_DEBUG ((
               LM_DEBUG,
-              ACE_TEXT ("Repository::lookup_name[%u]::absolute_name: %C\n"),
+              ACE_TEXT ("Repository::lookup_name[%d]::absolute_name: %C\n"),
               i,
               str.in ()
             ));

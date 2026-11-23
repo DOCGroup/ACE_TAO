@@ -1,5 +1,6 @@
 // -*- C++ -*-
 
+//=============================================================================
 /**
  *  @file    idl3_client.h
  *
@@ -7,6 +8,7 @@
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
+//=============================================================================
 
 #ifndef IDL3_CLIENT_H
 #define IDL3_CLIENT_H
@@ -41,7 +43,8 @@ private:
 
   // Also tests eventtype.
   int valuetype_test (char const* repo_id,
-                      char const* prefix);
+                      char const* prefix,
+                      CORBA::ULong factory_count);
 
   int component_attribute_test (
       CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var const&);
@@ -77,7 +80,8 @@ private:
 
   int valuetype_factory_test (
       CORBA::ExtValueDef::ExtFullValueDescription_var const&,
-      char const* prefix);
+      char const* prefix,
+      CORBA::ULong factory_count);
 
   int home_inheritance_test (CORBA::ComponentIR::HomeDef_var const&);
 

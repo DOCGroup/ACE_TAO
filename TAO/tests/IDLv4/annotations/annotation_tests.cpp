@@ -421,18 +421,18 @@ annotation_tests ()
     // Get Sequence
     AST_Typedef *typedef_node = dynamic_cast<AST_Typedef *> (value->field_type ());
     if (!typedef_node)
-    {
-      t.failed ("Could not get AST_Typedef");
-    }
+      {
+        t.failed ("Could not get AST_Typedef");
+      }
     AST_Sequence *seq = dynamic_cast<AST_Sequence *> (typedef_node->base_type ());
     if (!seq)
-    {
-      t.failed ("Could get AST_Sequence");
-    }
+      {
+        t.failed ("Could get AST_Sequence");
+      }
 
     // Verify Annotation on Base Type
     AST_Annotation_Appls &annotations = seq->base_type_annotations ();
-    size_t const count = annotations.size ();
+    size_t count = annotations.size ();
     if (count != 1)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
@@ -558,7 +558,7 @@ annotation_tests ()
 
     // Annotation On Discriminator
     AST_Annotation_Appls &annotations = test_union->disc_annotations ();
-    size_t const count = annotations.size ();
+    size_t count = annotations.size ();
     if (count != 1)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
@@ -742,14 +742,14 @@ annotation_tests ()
     AST_Array *struct12Array =
       dynamic_cast<AST_Array *> (thetypedef->base_type ());
     if (!struct12Array)
-    {
-      t.failed ("Could not get AST_Array");
-    }
+      {
+        t.failed ("Could not get AST_Array");
+      }
 
     // Verify Annotation on Base Type
     AST_Annotation_Appls &annotations =
       struct12Array->base_type_annotations ();
-    size_t const count = annotations.size ();
+    size_t count = annotations.size ();
     if (count != 1)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")

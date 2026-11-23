@@ -144,7 +144,7 @@ project(*B_Value_Sequence): seq_tests, taoexe {
     bounded_value_sequence_ut.cpp
   }
 }
-project(*Move_Max): seq_tests, taoexe, valuetype {
+project(*Sequence_Move_Maximum): seq_tests, taoexe, valuetype {
   after += Valuetype
   exename = sequence_move_maximum_ut
   Source_Files {

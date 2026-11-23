@@ -21,12 +21,10 @@ IFR_DII_Client::init (int argc,
   this->target_ = this->orb_->string_to_object (ior_output_file_);
 
   if (CORBA::is_nil (this->target_.in ()))
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unable to find interface repository in: %s\n",
-                         this->ior_output_file_),
-                        -1);
-    }
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Unable to find interface repository in: %s\n",
+                       this->ior_output_file_),
+                      -1);
 
   return 0;
 }
@@ -62,29 +60,27 @@ IFR_DII_Client::parse_args (int argc, ACE_TCHAR *argv[])
   int c {};
 
   while ((c = opts ()) != -1)
-    {
-      switch (c)
-        {
-          case 'd':
-            this->debug_ = true;
-            break;
-          case 'n':   // Select lookup by name.
-            this->lookup_by_name_ = true;
-            break;
-          case 'k':
-            this->ior_output_file_ = opts.opt_arg ();
-            break;
+    switch (c)
+      {
+        case 'd':
+          this->debug_ = true;
+          break;
+        case 'n':   // Select lookup by name.
+          this->lookup_by_name_ = true;
+          break;
+        case 'k':
+          this->ior_output_file_ = opts.opt_arg ();
+          break;
 
-          case '?':
-          default:
-            ACE_ERROR_RETURN ((LM_ERROR,
-                              "usage: %s"
-                              " [-n]"
-                              "\n",
-                              argv [0]),
-                              -1);
-        }
-    }
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "usage: %s"
+                            " [-n]"
+                            "\n",
+                            argv [0]),
+                            -1);
+      }
 
   return 0;
 }
@@ -143,7 +139,7 @@ IFR_DII_Client::lookup_interface_def ()
         {
           // Does this container contain any interfaces?
           interfaces = candidate->contents (CORBA::dk_Interface,
-                                            true); // Exclude parents.
+                                            1); // Exclude parents.
 
           n_interfaces = interfaces->length ();
 
@@ -180,7 +176,7 @@ IFR_DII_Client::get_operation_def ()
   // What operation(s) does this interface contain?
   CORBA::ContainedSeq_var operations =
     this->target_def_->contents (CORBA::dk_Operation,
-                                 false);  // Do not exclude inherited operations.
+                                 0);  // Do not exclude inherited operations.
 
   CORBA::ULong const n_operations = operations->length ();
 
@@ -280,19 +276,19 @@ IFR_DII_Client::invoke_and_display ()
 
       char const *artist {};
 
-      ACE_ASSERT (*args->item (0)->value () >>= artist);
+      ACE_ASSERT ((*args->item (0)->value () >>= artist) == true);
 
       ACE_ASSERT (std::strcmp (artist, "the Beatles") == 0);
 
       char const *title {};
 
-      ACE_ASSERT (*args->item (1)->value () >>= title);
+      ACE_ASSERT ((*args->item (1)->value () >>= title) == true);
 
       ACE_ASSERT (std::strcmp (title, "Sgt. Pepper's Lonely Hearts Club Band") == 0);
 
       CORBA::Float price {};
 
-      ACE_ASSERT (*args->item (2)->value () >>= price);
+      ACE_ASSERT ((*args->item (2)->value () >>= price) == true);
 
       ACE_ASSERT (ACE::is_equal (price, 13.49f));
 

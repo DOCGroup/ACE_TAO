@@ -50,6 +50,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // The ObjectId returned by reference_to_id must own its key data.
       obj_var = CORBA::Object::_nil ();
 
+      // The ObjectId returned by reference_to_id must own its key data.
+      obj_var = CORBA::Object::_nil ();
+
       root_poa->deactivate_object (new_obj_id.in ());
 
       orb->destroy ();
