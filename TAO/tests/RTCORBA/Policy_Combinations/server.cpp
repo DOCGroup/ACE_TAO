@@ -709,10 +709,10 @@ Task::svc ()
       int sched_policy =
         this->orb_->orb_core ()->orb_params ()->ace_sched_policy ();
 
-      int minimum_priority =
+      const int minimum_priority =
         ACE_Sched_Params::priority_min (sched_policy);
 
-      int result =
+      const int result =
         ACE_Thread::setprio (current_thread,
                              minimum_priority);
       if (result != 0)
