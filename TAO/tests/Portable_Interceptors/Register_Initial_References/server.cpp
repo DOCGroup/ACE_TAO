@@ -10,7 +10,7 @@ int test_orb (CORBA::ORB_ptr orb)
   ACE_NEW_RETURN (test,
                   test_i, 1);
   // Transfer ownership of the servant to the CORBA var.
-  PortableServer::ServantBase_var safe (test);
+  PortableServer::ServantBase_var const safe (test);
 
   CORBA::Object_var const object (test->_this ());
 
