@@ -4,7 +4,7 @@
  *
  *  Define class needed for generating templates.
  *
- *  @author @author Christopher Kohlhoff <chris@kohlhoff.com>
+ *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  */
 
 #ifndef ACE_TESTS_BOUND_PTR_TEST_H
