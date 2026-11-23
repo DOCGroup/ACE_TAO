@@ -114,7 +114,7 @@ TimeoutClient::send (bool async,
     {
       if (local_timeout != 0)
         {
-          TimeBase::TimeT timeout = 10000 * local_timeout;
+          TimeBase::TimeT const timeout = 10000 * local_timeout;
 
           CORBA::Any any_orb;
           any_orb <<= timeout;

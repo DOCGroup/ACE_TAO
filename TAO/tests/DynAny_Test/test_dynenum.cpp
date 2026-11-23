@@ -68,7 +68,7 @@ Test_DynEnum::run_test ()
 
         de1->set_as_string ("TE_FIRST");
 
-        CORBA::ULong ul_out1 =
+        CORBA::ULong const ul_out1 =
           de1->get_as_ulong ();
 
         analyzer.analyze(de1.in());
@@ -143,7 +143,7 @@ Test_DynEnum::run_test ()
         ACE_DEBUG ((LM_DEBUG,
                   "testing: equal\n"));
 
-        CORBA::Boolean equal =
+        CORBA::Boolean const equal =
           de1->equal (de2.in ());
 
         if (equal)
@@ -190,7 +190,7 @@ Test_DynEnum::run_test ()
 
         member1->set_as_string ("TE_FOURTH");
 
-        CORBA::ULong ul_out1 = member1->get_as_ulong ();
+        CORBA::ULong const ul_out1 = member1->get_as_ulong ();
 
         if (ul_out1 == 4)
           {
