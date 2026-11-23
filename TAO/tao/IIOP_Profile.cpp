@@ -211,7 +211,7 @@ TAO_IIOP_Profile::parse_string_i (char const *ior)
   else if (cp_pos != nullptr)
     {
       // A port number or port name was specified.
-      CORBA::ULong length_port = ACE_Utils::truncate_cast<CORBA::ULong> (okd - cp_pos - 1);
+      CORBA::ULong const length_port = ACE_Utils::truncate_cast<CORBA::ULong> (okd - cp_pos - 1);
       CORBA::String_var tmp = CORBA::string_alloc (length_port);
 
       if (tmp.in() != nullptr)

@@ -305,7 +305,7 @@ CORBA::SystemException::_info () const
 
       const char *errno_indication {};
       char unknown_errno [255];
-      CORBA::ULong minor_code = this->minor () & 0x7FU;
+      CORBA::ULong const minor_code = this->minor () & 0x7FU;
       switch (minor_code)
         {
         case TAO_UNSPECIFIED_MINOR_CODE:

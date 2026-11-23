@@ -212,7 +212,7 @@ TAO_Thread_Lane::new_dynamic_thread ()
                     this->dynamic_threads_number_));
         }
 
-      int result =
+      int const result =
         this->create_threads_i (this->dynamic_threads_,
                                 1,
                                 THR_BOUND | THR_DETACHED);
@@ -442,7 +442,7 @@ TAO_Thread_Lane::create_threads_i (TAO_Thread_Pool_Threads &thread_pool,
   int const force_active {1};
 
   // Default parameters.
-  int default_grp_id = -1;
+  int const default_grp_id = -1;
   ACE_Task_Base *default_task {};
   ACE_hthread_t *default_thread_handles {};
   void **default_stack {};
@@ -467,12 +467,12 @@ TAO_Thread_Lane::create_threads_i (TAO_Thread_Pool_Threads &thread_pool,
   TAO_ORB_Core &orb_core =
     this->pool ().manager ().orb_core ();
 
-  long flags =
+  long const flags =
     thread_flags |
     orb_core.orb_params ()->thread_creation_flags ();
 
   // Activate the threads.
-  int result =
+  int const result =
     thread_pool.activate (flags,
                           number_of_threads,
                           force_active,
