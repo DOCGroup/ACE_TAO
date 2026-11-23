@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    os_dirent.h
  *
@@ -9,7 +6,6 @@
  *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
-//=============================================================================
 
 #ifndef ACE_OS_INCLUDE_OS_DIRENT_H
 #define ACE_OS_INCLUDE_OS_DIRENT_H
@@ -51,9 +47,6 @@ struct dirent {
   unsigned short d_ino;
   unsigned short d_off;
   unsigned short d_reclen;
-  // This must be a ACE_TCHAR * and not a one element
-  // ACE_TCHAR array.  It causes problems on wide
-  // character builds with Visual C++ 6.0.
   ACE_TCHAR *d_name;
 };
 

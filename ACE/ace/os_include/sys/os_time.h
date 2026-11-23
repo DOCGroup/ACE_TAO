@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file os_time.h
  *
@@ -9,7 +6,6 @@
  *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
-//=============================================================================
 
 #ifndef ACE_OS_INCLUDE_SYS_OS_TIME_H
 #define ACE_OS_INCLUDE_SYS_OS_TIME_H
@@ -43,9 +39,9 @@ extern "C"
 #endif /* __cplusplus */
 
 #if defined (ACE_HAS_SVR4_GETTIMEOFDAY)
-  int gettimeofday (struct timeval *tp, void * = 0);
+  int gettimeofday (struct timeval *tp, void * = nullptr);
 #elif defined (ACE_HAS_OSF1_GETTIMEOFDAY)
-  int gettimeofday (struct timeval *tp, struct timezone * = 0);
+  int gettimeofday (struct timeval *tp, struct timezone * = nullptr);
 #elif defined (ACE_HAS_VOIDPTR_GETTIMEOFDAY)
 # define ACE_HAS_SVR4_GETTIMEOFDAY
 #endif /* ACE_HAS_SVR4_GETTIMEOFDAY */

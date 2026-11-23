@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    os_stdint.h
  *
@@ -9,7 +6,6 @@
  *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
-//=============================================================================
 
 #ifndef ACE_OS_INCLUDE_OS_STDINT_H
 #define ACE_OS_INCLUDE_OS_STDINT_H
@@ -128,7 +124,6 @@ _POSIX_V6_LPBIG_OFFBIG programming environment.
 
 // @todo move the ACE_INT## typedefs here so that ACE_INT64 will
 // always be available.
-
 
 // @todo perhaps add macros
 

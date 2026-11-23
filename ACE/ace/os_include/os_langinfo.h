@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    os_langinfo.h
  *
@@ -9,7 +6,6 @@
  *  @author Don Hinton <dhinton@dresystem.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
-//=============================================================================
 
 #ifndef ACE_OS_INCLUDE_OS_LANGINFO_H
 #define ACE_OS_INCLUDE_OS_LANGINFO_H
