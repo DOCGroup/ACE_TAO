@@ -114,7 +114,7 @@ Worker_Task::svc ()
                             ACE_TEXT ("Worker_Task dequeue_head")));
         }
 
-      size_t length = mb->length ();
+      size_t const length = mb->length ();
 
       // If there's a next() Task then "logically" copy the message by
       // calling <duplicate> and send it on down the pipeline.  Note
@@ -135,7 +135,7 @@ Worker_Task::svc ()
       // message here.
       else if (length > 0)
         {
-          int current_count = ACE_OS::atoi ((ACE_TCHAR *)(mb->rd_ptr ()));
+          int const current_count = ACE_OS::atoi ((ACE_TCHAR *)(mb->rd_ptr ()));
           int i;
 
           if (count != current_count)
@@ -165,7 +165,7 @@ Worker_Task::svc ()
               // threads.
               dup->msg_priority (ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY + 1);
 
-              int enqueue_prio_result =
+              int const enqueue_prio_result =
                    this->msg_queue ()->enqueue_prio
                           (dup,
                            // Don't block indefinitely if we flow control...
@@ -277,7 +277,7 @@ produce (Worker_Task &worker_task,
       ACE_TCHAR buf[BUFSIZ];
       ACE_OS::snprintf (buf, BUFSIZ, ACE_SIZE_T_FORMAT_SPECIFIER, count);
 
-      size_t n = (ACE_OS::strlen (buf) + 1) * sizeof (ACE_TCHAR);
+      size_t const n = (ACE_OS::strlen (buf) + 1) * sizeof (ACE_TCHAR);
 
       // Allocate a new message.
       ACE_NEW_RETURN (mb,
@@ -453,7 +453,7 @@ run_main (int, ACE_TCHAR *[])
   }
 
 #if defined (ACE_HAS_THREADS)
-  int n_threads = ACE_MAX_THREADS;
+  int const n_threads = ACE_MAX_THREADS;
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) threads = %d\n"), n_threads));
 
