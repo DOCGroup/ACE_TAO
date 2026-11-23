@@ -7,9 +7,9 @@
 
 struct Options
 {
-  ACE_TString primary_ior;
-  ACE_TString first_forward_ior;
-  ACE_TString second_forward_ior;
+  ACE_TString primary_ior {};
+  ACE_TString first_forward_ior {};
+  ACE_TString second_forward_ior {};
 };
 
 int
