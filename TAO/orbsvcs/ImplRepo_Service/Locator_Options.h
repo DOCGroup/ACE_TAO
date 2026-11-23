@@ -96,9 +96,9 @@ public:
   /// rules, all registered servers.
   bool ping_external () const;
 
-  /// If the server hasn't been verified for a while, then we'll
-  /// ping it. Note : No timers are currently used. We simply ping()
-  /// during indirect invocations, if this interval has elapsed.
+  /// If the server hasn't been verified for a while, then we'll ping it.
+  /// @note No timers are currently used. We simply ping() during indirect
+  /// invocations if this interval has elapsed.
   ACE_Time_Value ping_interval () const;
 
   /// When pinging, this is the timeout

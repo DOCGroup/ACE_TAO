@@ -138,8 +138,8 @@ public:
   TAO_POA_Policy_Set &default_poa_policies ();
 
   /// Set the servant dispatcher method.  Ownership is transferred to
-  /// this Object Adapter.  Note: This should only be called
-  /// at initialization.
+  /// this Object Adapter.
+  /// @note This should only be called at initialization.
   void servant_dispatcher (TAO_Servant_Dispatcher *dispatcher);
 
   /// Initialize the default set of POA policies.

@@ -45,7 +45,7 @@ namespace TAO
      * FW_Server_Request_Wrapper class' implementation, and all CSD
      * Strategies will work again.  It's a maintenance issue.
      *
-     * @note: The CSD namespace is inside of TAO namespace in current
+     * @note The CSD namespace is inside of TAO namespace in current
      *        implementation. This can be changed but, at least for now, it's
      *        already been delivered to some customs, we leave it as-is. If it
      *        needs to change, we will make this change.

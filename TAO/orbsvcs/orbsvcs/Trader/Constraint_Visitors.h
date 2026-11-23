@@ -205,8 +205,8 @@ private:
  * each node of the expression tree call back to it with the
  * method designated for its type. In that method, the visitor
  * will evaluate its operands and perform the operation
- * designated by that node's type, and return the result. Note:
- * the TAO_Constraint_Evaluator assumes the tree is semantically
+ * designated by that node's type, and return the result.
+ * @note The TAO_Constraint_Evaluator assumes the tree is semantically
  * correct, that is, the validate method on
  * TAO_Constraint_Validator return true. The only possible
  * evaluation time errors are a divide by a property whose value

@@ -838,7 +838,7 @@ public:
    * connected to the @c remote_addr.  If so, we return this pointer.
    * Otherwise we establish the connection, put it into the cache, and
    * return the SVC_HANDLER pointer.
-   * @note The <{reuse_addr}>
+   * @note The @a reuse_addr
    * argument does NOT control re-use of addresses in the cache.
    * Rather, if the underlying protocol requires a "dead time" prior
    * to re-use of its addresses (TCP is a classic example of this),

@@ -146,7 +146,7 @@ private :
    * Generate an id for this POAManager.
    * @return A value that uniquely identifies the POAManager within a
    *         given process.
-   * @note: The id_ has the ownership of the memory allocated in this method.
+   * @note The id_ has the ownership of the memory allocated in this method.
    */
   char* generate_manager_id () const;
 };

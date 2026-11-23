@@ -85,9 +85,9 @@ public:
   /**
    * Find the binding containing <id> and <kind> in the table, and
    * pass binding's type and object back to the caller by reference.
-   * Return 0 on success and -1 on failure.  Note: a 'duplicated' object
-   * reference is assigned to <obj>, so the caller is responsible for
-   * its deallocation.
+   * Return 0 on success and -1 on failure.
+   * @note A duplicated object reference is assigned to @a obj, so the caller
+   * is responsible for its deallocation.
    */
   int find (char const *id,
                     char const *kind,

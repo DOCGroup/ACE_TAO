@@ -211,11 +211,12 @@ public:
   /// command_line_argv(), this is a single string of space separated
   /// arguments independent of which form of command_line() was used to
   /// create it.  After a call to command_line_argv(), this is a list of
-  /// strings each terminated by '\0'.  [Note: spawn() will call
-  /// command_line_argv().]  The total length of all these strings is the
+  /// strings each terminated by '\0'.
+  /// The total length of all these strings is the
   /// same as the single string in the prior case and can be obtained by
   /// providing max_len. @arg max_len, if non-zero, provides a location
   /// into which the total length of the command line buffer is returned.
+  /// @note spawn() calls command_line_argv().
   ACE_TCHAR *command_line_buf (size_t *max_len = nullptr);
 
   /**

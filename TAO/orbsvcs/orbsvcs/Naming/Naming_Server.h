@@ -216,9 +216,9 @@ protected:
 
   /**
    * Size of the hash_table allocated upon the creation of the Naming
-   * Service context (if one is created).  Note: all the contexts
-   * created under the given context will use the same size for their
-   * initial hash table allocations.
+   * Service context (if one is created).
+   * @note All contexts created under the given context use the same size
+   * for their initial hash table allocations.
    */
   size_t context_size_ {ACE_DEFAULT_MAP_SIZE};
 

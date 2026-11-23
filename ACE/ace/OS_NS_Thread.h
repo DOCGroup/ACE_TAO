@@ -1314,7 +1314,7 @@ namespace ACE_OS {
                   int lock_type = 0);
 #endif /* ACE_HAS_WCHAR */
 
-  /// Win32 note: Abandoned mutexes are not treated differently. 0 is
+  /// @note On Win32, abandoned mutexes are not treated differently. 0 is
   /// returned since the calling thread does get the ownership.
   extern ACE_Export
   int mutex_lock (ACE_mutex_t *m);
@@ -1360,7 +1360,7 @@ namespace ACE_OS {
   extern ACE_Export
   void mutex_lock_cleanup (void *mutex);
 
-  /// Win32 note: Abandoned mutexes are not treated differently. 0 is
+  /// @note On Win32, abandoned mutexes are not treated differently. 0 is
   /// returned since the calling thread does get the ownership.
   extern ACE_Export
   int mutex_trylock (ACE_mutex_t *m);

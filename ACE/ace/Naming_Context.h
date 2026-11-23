@@ -33,18 +33,17 @@ class ACE_Static_Svc_Descriptor;
  * NameBindings, change them, remove them and resolve
  * NameBindings
  *
- * Manages a Naming Service .  That represents a persistent
- * string to string mapping for different scopes. The scope of a
- * ACE_Naming_Context may be either local for the calling
- * process (Note : A process is hereby not identified by it's
- * pid, but by it's argv[0]. So different processes (in UNIX
- * syntax) may access the same NameBindings), global for all
- * processes running on one host or global for all processes on
- * the net (that know the address of the net name server
+ * Manages a Naming Service that represents a persistent string-to-string
+ * mapping for different scopes. The scope of an ACE_Naming_Context may be
+ * local to the calling process (where process identity is based on argv[0],
+ * not pid), global to all processes running on one host, or global to all
+ * processes on the network (that know the address of the net name server
  * socket). Strings may be plain character strings or Wide
  * character strings. A Name Binding consists of a name string
  * (that's the key), a value string and an optional type string
  * (no wide chars).
+ * @note On UNIX, different processes with the same argv[0] may access the
+ * same NameBindings.
  */
 class ACE_Export ACE_Naming_Context : public ACE_Service_Object
 {
