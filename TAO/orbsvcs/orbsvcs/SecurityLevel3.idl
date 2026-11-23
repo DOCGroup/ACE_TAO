@@ -83,17 +83,17 @@ module SecurityLevel3 {
      */
     const unsigned long ADIRON_VMCID = 0xA11C000;
 
-    /// Security Level 3 Data Representations
-    ///
+    // Security Level 3 Data Representations
+    //
 
-    ///
-    /// A Principal Name
-    /// A principal name always has a type, and a path of
-    /// name components. They are ordered from least significant
-    /// to most significant. For example, if a principal is represented
-    /// by a single X.509 certificate, the first element in the path
-    /// is the SubjectDN, and the second is the IssuerDN.
-    ///
+    //
+    // A Principal Name
+    // A principal name always has a type, and a path of
+    // name components. They are ordered from least significant
+    // to most significant. For example, if a principal is represented
+    // by a single X.509 certificate, the first element in the path
+    // is the SubjectDN, and the second is the IssuerDN.
+    //
     /**
      * A NameType is used for typing a PrincipalName data structure.
      * A NameType is a string that represents an ASN.1
@@ -170,9 +170,9 @@ module SecurityLevel3 {
      */
     typedef sequence<PrincipalName> PrincipalNameList;
 
-    ///
-    /// Attributes for privileges and other things. They are type value pairs.
-    ///
+    //
+    // Attributes for privileges and other things. They are type value pairs.
+    //
 
     /**
      * A PrinAttribute is a "type-value" pair, usually attributed to
@@ -256,9 +256,9 @@ module SecurityLevel3 {
      */
     typedef sequence<ResourceName> ResourceNameList;
 
-    ///
-    /// NameTypes used in SL3
-    ///
+    //
+    // NameTypes used in SL3
+    //
 
     /**
      * An NT_KerberosName is a NameType that signifies that the
@@ -310,9 +310,9 @@ module SecurityLevel3 {
      */
     const NameType NT_StringName = "oid:2.23.130.1.2.1";
 
-    ///
-    /// Privileges
-    ///
+    //
+    // Privileges
+    //
 
     /**
      * A ScopedPrivileges structure represents privileges that
@@ -332,9 +332,9 @@ module SecurityLevel3 {
      */
     typedef sequence<ScopedPrivileges> ScopedPrivilegesList;
 
-    ///
-    /// Principals
-    ///
+    //
+    // Principals
+    //
 
     /**
      * A Principal comes in three forms, which correspond to the
@@ -551,9 +551,9 @@ module SecurityLevel3 {
 
     };
 
-    ///
-    /// Statements
-    ///
+    //
+    // Statements
+    //
 
     /**
      * A Statement is a value type that has extensions which
@@ -833,12 +833,12 @@ module SecurityLevel3 {
     };
     typedef sequence<X509IdentityStatement> X509IdentityStatementList;
 
-    /// Security Level 3 Application Users Interface
-    ///
+    // Security Level 3 Application Users Interface
+    //
 
-    ///
-    /// The Security Level 3 Credentials Model
-    ///
+    //
+    // The Security Level 3 Credentials Model
+    //
 
     /**
      * Credentials come in three types. OwnCredentials, ClientCredentials,
@@ -1518,8 +1518,8 @@ module SecurityLevel3 {
         void release();
     };
 
-    /// Security Invocation Policy
-    ///
+    // Security Invocation Policy
+    //
 
     /**
      * The ContextEstablishmentPolicy policy object directs the
@@ -1635,8 +1635,8 @@ module SecurityLevel3 {
      */
     const CORBA::PolicyType ObjectCredentialsPolicyType = ADIRON_VMCID | 1002;
 
-    /// Security Level 3 Credentials Acquisition Mechanism
-    ///
+    // Security Level 3 Credentials Acquisition Mechanism
+    //
 
     /**
      * Credentials are acquired by a Credentials Acquirer by some
@@ -1878,9 +1878,9 @@ module SecurityLevel3 {
 
     };
 
-    /// Security Service ORB Objects
-    /// Retrieved from the ORB by "resolve_initial_references".
-    ///
+    // Security Service ORB Objects
+    // Retrieved from the ORB by "resolve_initial_references".
+    //
 
     /**
      * The <code>SecurityManager</code> object represents the Security Level 3
