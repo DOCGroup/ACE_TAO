@@ -37,7 +37,7 @@ namespace ACE_OS
   pid_t wait (int * = nullptr);
 
   /**
-   * Calls @c ::WaitForSingleObject on Win32 and ACE::waitpid ()
+   * Calls @c WaitForSingleObject() on Win32 and @c ACE::waitpid()
    * otherwise.  Returns the passed in @a pid_t on success and -1 on
    * failure.
    * On Win32, @a pid is ignored if the @a handle is not equal to 0.

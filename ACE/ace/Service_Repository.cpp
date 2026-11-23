@@ -409,7 +409,7 @@ ACE_Service_Repository::find (ACE_TCHAR const name[],
 /// Insert the ACE_Service_Type SR into the repository.  Note that
 /// services may be inserted either resumed or suspended. Using same
 /// name as in an existing service causes the delete () to be called
-/// for the old one, i.e. make sure @code sr is allocated on the heap!
+/// for the old one, i.e. make sure @c sr is allocated on the heap!
 int
 ACE_Service_Repository::insert (ACE_Service_Type const *sr)
 {
@@ -545,7 +545,7 @@ ACE_Service_Repository::remove (ACE_TCHAR const name[], ACE_Service_Type **ps)
  * @brief Completely remove a @a name entry from the Repository and
  * dynamically unlink it if it was originally dynamically linked.
  *
- * Return a ptr to the entry in @code ps. There is no locking so make
+ * Return a ptr to the entry in @c ps. There is no locking so make
  * sure you hold the repo lock when calling.
  *
  * Since the order of services in the Respository matters, we can't

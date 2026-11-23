@@ -268,7 +268,7 @@ public:
  * uses signal_handler_.  Therefore, if the program has any
  * static ACE_Service_Config objects, there might be
  * initialization order problems.  They can be minimized, but
- * not eliminated, by _not_ #defining
+ * not eliminated, by not defining
  * ACE_HAS_NONSTATIC_OBJECT_MANAGER.
  */
 class ACE_Export ACE_Service_Config

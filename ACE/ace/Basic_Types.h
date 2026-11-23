@@ -5,7 +5,7 @@
  *
  *  @author David L. Levine
  *
- *  #defines the list of preprocessor macros below.  The config.h file can
+ *  Defines the list of preprocessor macros below.  The config.h file can
  *  pre-define any of these to short-cut the definitions.  This is usually
  *  only necessary if the preprocessor does all of its math using integers.
  *

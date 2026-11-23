@@ -355,13 +355,13 @@ public:
   /**
    * This method should be called from
    * ACE_POSIX_Asynch_Operation::cancel()
-   * instead of usual ::aio_cancel.
+   * instead of usual @c aio_cancel().
    * For all deferred AIO requests with handle "h"
    * it removes its from the lists and notifies user.
    * For all running AIO requests with handle "h"
-   * it calls ::aio_cancel. According to the POSIX standards
-   * we will receive ECANCELED  for all ::aio_canceled AIO requests
-   * later on return from ::aio_suspend
+   * it calls @c aio_cancel(). According to the POSIX standards
+   * we will receive ECANCELED for every request canceled by @c aio_cancel()
+   * later on return from @c aio_suspend()
    */
   int cancel_aio (ACE_HANDLE h) override;
 

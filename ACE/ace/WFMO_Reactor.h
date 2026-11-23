@@ -1296,7 +1296,7 @@ protected:
    *
    * A Process Mutex is used here because of two reasons:
    * (a) The implementation of ACE_Thread_Mutex uses CriticalSections
-   *     CriticalSections are not waitable using ::WaitForMultipleObjects
+   *     CriticalSections are not waitable using @c WaitForMultipleObjects()
    * (b) This is really not a process mutex because it is not
    *     named. No other process can use this mutex.
    */

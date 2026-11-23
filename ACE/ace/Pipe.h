@@ -103,23 +103,23 @@ public:
   /// Recv n bytes, keep trying until n are received.
   ssize_t recv_n (void *buf, size_t n) const;
 
-  /// Send iovecs via <::writev>.
+  /// Send iovecs via @c writev().
   ssize_t send (const iovec iov[], int n) const;
 
-  /// Recv iovecs via <::readv>.
+  /// Recv iovecs via @c readv().
   ssize_t recv (iovec iov[], int n) const;
 
 #if !defined (ACE_LACKS_VA_FUNCTIONS)
   /**
    * Send N char *ptrs and int lengths.  Note that the char *'s
-   * precede the ints (basically, an varargs version of writev).  The
+   * precede the ints (basically, a varargs version of @c writev()). The
    * count N is the *total* number of trailing arguments, *not* a
    * couple of the number of tuple pairs!
    */
   ssize_t send (size_t n, ...) const;
 
   /**
-   * This is an interface to ::readv, that doesn't use the struct
+   * This is an interface to @c readv(), that doesn't use the struct
    * iovec explicitly.  The ... can be passed as an arbitrary number
    * of (char *ptr, int len) tuples.  However, the count N is the
    * *total* number of trailing arguments, *not* a count of the

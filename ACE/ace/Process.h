@@ -331,7 +331,7 @@ public:
   HANDLE get_user_token () const;
 
   /// Set user token for creating process as user.
-  /// @param token the user token is passed to \c ::CreateProcessAsUser.
+  /// @param token the user token is passed to @c CreateProcessAsUser().
   /// @param close_token whether to close the user token when destructing.
   void set_user_token (HANDLE token, bool close_token = false);
   /// @}

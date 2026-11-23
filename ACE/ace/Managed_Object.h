@@ -93,7 +93,7 @@ private:
  * preallocated objects and arrays are allocated off the heap in
  * the ACE_Object_Manager constructor.  To statically place the
  * preallocated objects in program global data instead of on the
- * heap, #define ACE_HAS_STATIC_PREALLOCATION prior to building
+ * heap, define @c ACE_HAS_STATIC_PREALLOCATION prior to building
  * the ACE library.
  */
 template <class TYPE>

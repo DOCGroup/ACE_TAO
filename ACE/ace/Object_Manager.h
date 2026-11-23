@@ -136,24 +136,24 @@ template <class T> class ACE_Cleanup_Adapter;
  * time).  These are intended to replace static locks, etc.
  * Instead of creating a static ACE_Object_Manager instance, one
  * can alternatively be created on the stack of the main program
- * thread.  It is created just after entry to ::main (int, char
- * *[]), and before any existing code in that function is
- * executed.  To enable this alternative, add #define
+ * thread.  It is created just after entry to @c main(), and before
+ * any existing code in that function is executed. To enable this
+ * alternative, define
  * ACE_HAS_NONSTATIC_OBJECT_MANAGER before including the platform
  * specific config-* file in ace/config.h prior to
- * building the ACE library and your applications.  This #define
+ * building the ACE library and your applications.  This definition
  * is enabled in some config files that are supplied with ACE.
  *
- * To ensure a static object manager is used, #undef
+ * To ensure a static object manager is used, undefine
  * ACE_HAS_NONSTATIC_OBJECT_MANAGER *after* including the platform
  * specific config-* file.
  * Note that the ACE_Object_Manager _must_ be created before
  * any threads are spawned by the program.
- * If ACE_HAS_NONSTATIC_OBJECT_MANAGER is not #defined, the ACE
+ * If ACE_HAS_NONSTATIC_OBJECT_MANAGER is not defined, the ACE
  * library creates a static, singleton ACE_Object_Manager instance.
  * The instance is placed in global program data, and constructed
  * via a static object constructor.  If ACE_HAS_NONSTATIC_OBJECT_MANAGER
- * is #defined, the ACE_Object_Manager instance is created on the stack
+ * is defined, the ACE_Object_Manager instance is created on the stack
  * of the main program thread, as noted above.
  *
  * With ACE_HAS_NONSTATIC_OBJECT_MANAGER enabled, the ACE
@@ -166,33 +166,33 @@ template <class T> class ACE_Cleanup_Adapter;
  * cleaned up by the Object_Manager, they'll get cleaned up too
  * late.  The ACE tests do not violate this requirement.
  * However, applications may have trouble with it.
- * @note On the use of <::exit>: <::exit> does not destroy
+ * @note On the use of @c exit(): @c exit() does not destroy
  * automatic objects.  Therefore, if
  * ACE_HAS_NONSTATIC_OBJECT_MANAGER is enabled, the
  * ACE_Object_Manager instance will *not* be destroyed if
- * <::exit> is called!  However, <ACE_OS::exit> will properly
+ * @c exit() is called!  However, @c ACE_OS::exit() will properly
  * destroy the ACE_Object_Manager.  It is highly recommended
- * that <ACE_OS::exit> be used instead of <::exit>.
+ * that @c ACE_OS::exit() be used instead of @c exit().
  *
- * However, <::exit> and <ACE_OS::exit> are tricky to use
+ * However, @c exit() and @c ACE_OS::exit() are tricky to use
  * properly, especially in multithread programs.  It is much
  * safer to throw an exception (or simulate that effect) that
  * will be caught by @c main instead of calling exit.  Then,
  * @c main can perform any necessary application-specific cleanup
  * and return the status value.  In addition, it's usually best
- * to avoid calling <::exit> and <ACE_OS::exit> from threads
+ * to avoid calling @c exit() and @c ACE_OS::exit() from threads
  * other than the main thread.  Thanks to Jeff Greif
- * <jmg@trivida.com> for pointing out that <::exit> doesn't
+ * <jmg@trivida.com> for pointing out that @c exit() doesn't
  * destroy automatic objects, and for developing the
  * recommendations in this paragraph.
  *
  * Instead of creating a static ACE_Object_Manager, or letting
  * ACE create it on the stack of @c main for you, another
- * alternative is to #define
- * ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER.  With that
- * #define, the application must create the ACE_Object_Manager.
- * The recommended way is to call <ACE::init> at the start of
- * the program, and call <ACE::fini> at the end.  Alternatively,
+ * alternative is to define
+ * @c ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER. With that
+ * definition, the application must create the ACE_Object_Manager.
+ * The recommended way is to call @c ACE::init() at the start of
+ * the program, and call @c ACE::fini() at the end.  Alternatively,
  * the application could explicity construct an
  * ACE_Object_Manager.
  */

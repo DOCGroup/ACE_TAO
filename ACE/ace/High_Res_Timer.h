@@ -60,7 +60,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * ticks since system boot.  For a 200MHz cpu, each clock tick
  * is 1/200 of a microsecond; the global_scale_factor_ should
  * therefore be 200 or 200000 if it's in unit/millisecond.
- * On Windows ::QueryPerformanceCounter() is used, which can be a
+ * On Windows @c QueryPerformanceCounter() is used, which can be a
  * different implementation depending on the used windows HAL
  * (Hardware Abstraction Layer).  On some it uses the PC "timer chip"
  * while it uses RDTSC on others.
@@ -85,7 +85,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * are reports that the different RDTSC's are not always kept
  * in sync.
  * @note Windows "timer chip" (8254-compatible real-time clock):
- * When ::QueryPerformanceCounter() uses the 8254 it has a
+ * When @c QueryPerformanceCounter() uses the 8254 it has a
  * frequency off about 1.193 Mhz (or sometimes 3.579 Mhz?) and
  * reading it requires some time (several thousand cycles).
  */

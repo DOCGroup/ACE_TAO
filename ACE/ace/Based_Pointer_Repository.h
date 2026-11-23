@@ -70,7 +70,7 @@ public:
 
 private:
   /// Use the "Cheshire-Cat" technique to hide the implementation in
-  /// order to avoid circular #include dependencies.
+  /// order to avoid circular header inclusion dependencies.
   std::unique_ptr<ACE_Based_Pointer_Repository_Rep> rep_;
 };
 
