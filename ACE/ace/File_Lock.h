@@ -37,18 +37,18 @@ public:
   ACE_File_Lock &operator= (ACE_File_Lock &&) = delete;
 
   /**
-   * Set the <handle_> of the File_Lock to @a handle.  Note that this
+   * Set the @c handle_ of the File_Lock to @a handle.  Note that this
    * constructor assumes ownership of the @a handle and will close it
-   * down in <remove>.  If you want the @a handle to stay open when
-   * <remove> is called make sure to call <dup> on the @a handle.
+   * down in @c remove.  If you want the @a handle to stay open when
+   * @c remove is called make sure to call @c dup on the @a handle.
    * If you don't want the file unlinked in the destructor pass a
-   * zero value for <unlink_in_destructor>.
+   * zero value for @c unlink_in_destructor.
    */
   ACE_File_Lock (ACE_HANDLE handle = ACE_INVALID_HANDLE,
                  bool unlink_in_destructor = true);
 
   /// Open the @a filename with @a flags and @a mode and set the result
-  /// to <handle_>.  If you don't want the file unlinked in the
+  /// to @c handle_.  If you don't want the file unlinked in the
   /// destructor pass a false value for @a unlink_in_destructor.
   ACE_File_Lock (const ACE_TCHAR *filename,
                  int flags,
@@ -56,16 +56,16 @@ public:
                  bool unlink_in_destructor = true);
 
   /// Open the @a filename with @a flags and @a mode and set the result to
-  /// <handle_>.
+  /// @c handle_.
   int open (const ACE_TCHAR *filename,
             int flags,
             mode_t mode = 0);
 
-  /// Remove a File lock by releasing it and closing down the <handle_>.
+  /// Remove a File lock by releasing it and closing down the @c handle_.
   ~ACE_File_Lock ();
 
   /// Remove a File lock by releasing it and closing down the
-  /// <handle_>.  If @a unlink_file is true then we unlink the file.
+  /// @c handle_.  If @a unlink_file is true then we unlink the file.
   int remove (bool unlink_file = true);
 
   /**
@@ -77,7 +77,7 @@ public:
 
   /**
    * Note, for interface uniformity with other synchronization
-   * wrappers we include the <tryacquire> method.  This is implemented
+   * wrappers we include the @c tryacquire method.  This is implemented
    * as a write-lock to be on the safe-side...  Returns -1 on failure.
    * If we "failed" because someone else already had the lock, @c errno
    * is set to @c EBUSY.
@@ -126,9 +126,9 @@ public:
 
   /**
    * Set underlying ACE_HANDLE.  Note that this method assumes
-   * ownership of the @a handle and will close it down in <remove>.  If
-   * you want the @a handle to stay open when <remove> is called make
-   * sure to call <dup> on the @a handle before closing it. You are
+   * ownership of the @a handle and will close it down in @c remove.  If
+   * you want the @a handle to stay open when @c remove is called make
+   * sure to call @c dup on the @a handle before closing it. You are
    * responsible for the closing the existing @a handle before
    * overwriting it.
    */
@@ -144,11 +144,11 @@ protected:
   /// Locking structure for OS record locks.
   ACE_OS::ace_flock_t lock_;
 
-  /// Keeps track of whether <remove> has been called yet to avoid
-  /// multiple <remove> calls, e.g., explicitly and implicitly in the
+  /// Keeps track of whether @c remove has been called yet to avoid
+  /// multiple @c remove calls, e.g., explicitly and implicitly in the
   /// destructor.  This flag isn't protected by a lock, so make sure
   /// that you don't have multiple threads simultaneously calling
-  /// <remove> on the same object, which is a bad idea anyway...
+  /// @c remove on the same object, which is a bad idea anyway...
   bool removed_ {};
 
   /// Keeps track of whether to unlink the underlying file in the

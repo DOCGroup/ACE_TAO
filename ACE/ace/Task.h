@@ -75,7 +75,7 @@ public:
   // provide <Task>-specific initialization and termination behavior.
 
   /// Hook called to initialize a task and prepare it for execution.
-  /// @a args can be used to pass arbitrary information into <open>.
+  /// @a args can be used to pass arbitrary information into @c open.
   virtual int open (void *args = nullptr);
 
   /**
@@ -121,9 +121,9 @@ public:
    * object and a thread is created successfully or thread is an
    * active object and @a force_active is true.  Note that if
    * @a force_active is true and there are already threads spawned in
-   * this <Task>, the @a grp_id parameter is ignored and the @a grp_id
+   * this @c Task, the @a grp_id parameter is ignored and the @a grp_id
    * of any newly activated thread(s) will inherit the existing
-   * @a grp_id of the existing thread(s) in the <Task>.
+   * @a grp_id of the existing thread(s) in the @c Task.
    *
    * The <{flags}> are a bitwise-OR of the following:
    * = BEGIN<INDENT>
@@ -140,7 +140,7 @@ public:
    * By default, or if <{priority}> is set to
    * ACE_DEFAULT_THREAD_PRIORITY, an "appropriate" priority value for
    * the given scheduling policy (specified in <{flags}>, e.g.,
-   * <THR_SCHED_DEFAULT>) is used.  This value is calculated
+   * @c THR_SCHED_DEFAULT) is used.  This value is calculated
    * dynamically, and is the median value between the minimum and
    * maximum priority values for the given policy.  If an explicit
    * value is given, it is used.  Note that actual priority values are
@@ -258,7 +258,7 @@ protected:
   /**
    * Count of the number of threads running within the task.  If this
    * value is greater than 0 then we're an active object and the value
-   * of <thr_count_> is the number of active threads at this instant.
+   * of @c thr_count_ is the number of active threads at this instant.
    * If the value == 0, then we're a passive object.
    */
   size_t thr_count_ {};

@@ -61,7 +61,7 @@ public:
 
   /// Proactor calls this to shut down the timer handler
   /// gracefully. Just calling the destructor alone doesnt do what
-  /// <destroy> does. <destroy> make sure the thread exits properly.
+  /// @c destroy does. @c destroy make sure the thread exits properly.
   int destroy ();
 
   /// Proactor calls this to refresh the timer event thread, to wake

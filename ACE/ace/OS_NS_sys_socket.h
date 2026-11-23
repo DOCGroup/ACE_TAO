@@ -299,7 +299,7 @@ namespace ACE_OS
                      int proto);
 
   /// Create a QoS-enabled socket.  If the OS platform doesn't support
-  /// QoS-enabled <socket> then the BSD-style <socket> is called.
+  /// QoS-enabled @c socket then the BSD-style @c socket is called.
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_HANDLE socket (int protocol_family,
                      int type,

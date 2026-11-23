@@ -945,7 +945,7 @@ private:
  *
  * @brief "Reference count" for thread-specific storage keys.
  *
- * Since the <ACE_Unbounded_Stack> doesn't allow duplicates, the
+ * Since the @c ACE_Unbounded_Stack doesn't allow duplicates, the
  * "reference count" is the identify of the thread_id.
  */
 class ACE_TSS_Ref

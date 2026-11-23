@@ -58,7 +58,7 @@ public:
 
   /**
    * Block indefinitely until at least one event is dispatched.
-   * Dispatch a single set of events.  If <wait_time> elapses before
+   * Dispatch a single set of events.  If @c wait_time elapses before
    * any events occur, return 0.  Return 1 on success i.e., when a
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
@@ -246,7 +246,7 @@ public:
   /**
    * Post @a how_many completions to the completion port so that all
    * threads can wake up. This is used in conjunction with the
-   * <run_event_loop>.
+   * @c run_event_loop.
    */
   virtual int post_wakeup_completions (int how_many) = 0;
 };

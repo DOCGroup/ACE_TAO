@@ -144,10 +144,10 @@ protected:
   /// Pointer to the ACE_Timer_Hash that we are iterating over.
   Hash &timer_hash_;
 
-  /// Current position in <timer_hash_>'s table
+  /// Current position in @c timer_hash_'s table
   size_t position_ {};
 
-  /// Current iterator used on <position>'s bucket
+  /// Current iterator used on @c position's bucket
   ACE_Timer_Queue_Iterator_T<TYPE> *iter_ {};
 };
 
@@ -208,14 +208,14 @@ public:
   /// True if queue is empty, else false.
   bool is_empty () const override;
 
-  /// Returns the time of the earlier node in the <ACE_Timer_Hash>.
+  /// Returns the time of the earlier node in the @c ACE_Timer_Hash.
   /// Must be called on a non-empty queue.
   ACE_Time_Value const &earliest_time () const override;
 
   /**
    * Resets the interval of the timer represented by @a timer_id to
    * @a interval, which is specified in relative time to the current
-   * <gettimeofday>.  If @a interval is equal to
+   * @c gettimeofday.  If @a interval is equal to
    * ACE_Time_Value::zero, the timer will become a non-rescheduling
    * timer.  Returns 0 if successful, -1 if not.
    */
@@ -223,8 +223,8 @@ public:
                       ACE_Time_Value const &interval) override;
 
   /**
-   * Cancel all timer associated with @a type.  If <dont_call> is 0
-   * then the <functor> will be invoked.  Returns number of timers
+   * Cancel all timer associated with @a type.  If @c dont_call is 0
+   * then the @c functor will be invoked.  Returns number of timers
    * cancelled. If any valid timer is not cancelled before destruction
    * of this instance of ACE_Timer_Hash_T then user will get a memory
    * leak.
@@ -234,11 +234,11 @@ public:
 
   /**
    * Cancel the single timer that matches the @a timer_id value (which
-   * was returned from the <schedule> method).  If act is nullptr
+   * was returned from the @c schedule method).  If act is nullptr
    * then it will be set to point to the ``magic cookie'' argument
    * passed in when the timer was registered.  This makes it possible
    * to free up the memory and avoid memory leaks.  If
-   * @a dont_call_handle_close is 0 then the <functor> will be invoked.
+   * @a dont_call_handle_close is 0 then the @c functor will be invoked.
    * Returns 1 if cancellation succeeded and 0 if the @a timer_id wasn't
    * found.  If any valid timer is not cancelled before destruction of
    * this instance of ACE_Timer_Hash_T then user will get a memory leak.
@@ -253,15 +253,15 @@ public:
   int close () override;
 
   /**
-   * Run the <functor> for all timers whose values are <=
-   * gettimeofday.  Also accounts for <timer_skew>.  Returns
+   * Run the @c functor for all timers whose values are <=
+   * gettimeofday.  Also accounts for @c timer_skew.  Returns
    * the number of timers canceled.
    */
   int expire () override;
 
   /**
-   * Run the <functor> for all timers whose values are <= @a current_time.
-   * This does not account for <timer_skew>.  Returns the number of
+   * Run the @c functor for all timers whose values are <= @a current_time.
+   * This does not account for @c timer_skew.  Returns the number of
    * timers canceled.
    */
   int expire (ACE_Time_Value const &current_time) override;
@@ -286,11 +286,11 @@ private:
   /**
    * Schedule @a type that will expire at @a future_time,
    * which is specified in absolute time.  If it expires then @a act is
-   * passed in as the value to the <functor>.  If @a interval is != to
+   * passed in as the value to the @c functor.  If @a interval is != to
    * ACE_Time_Value::zero then it is used to reschedule the @a type
-   * automatically, using relative time to the current <gettimeofday>.
-   * This method returns a <timer_id> that is a pointer to a token
-   * which stores information about the event. This <timer_id> can be
+   * automatically, using relative time to the current @c gettimeofday.
+   * This method returns a @c timer_id that is a pointer to a token
+   * which stores information about the event. This @c timer_id can be
    * used to cancel the timer before it expires.  Returns -1 on
    * failure.
    */

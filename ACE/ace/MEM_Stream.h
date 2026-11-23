@@ -92,7 +92,7 @@ public:
 
   /**
    * Close down the socket (we need this to make things work correctly
-   * on Win32, which requires use to do a <close_writer> before doing
+   * on Win32, which requires use to do a @c close_writer before doing
    * the close to avoid losing data).
    */
   int close ();

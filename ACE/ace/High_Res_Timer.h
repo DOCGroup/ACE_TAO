@@ -44,7 +44,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * <ACE_OS::gethrtime> by global_scale_factor_ to obtain the
  * time in microseconds.  Its units are therefore 1/microsecond.
  * On Windows the global_scale_factor_ units are 1/millisecond.
- * There's a macro <ACE_HR_SCALE_CONVERSION> which gives the
+ * There's a macro @c ACE_HR_SCALE_CONVERSION which gives the
  * units/second.  Because it's possible that the units/second
  * changes in the future, it's recommended to use it instead
  * of a "hard coded" solution.
@@ -104,8 +104,8 @@ public:
    * factor just once for all High_Res_Timers.  Check
    *  High_Res_Timer.cpp for the default global_scale_factors for
    * several platforms.  For many platforms the
-   * global_scale_factor_ is set to 1000 so that <scale_factor> need
-   * not be set.  Careful, a <scale_factor> of 0 will cause division
+   * global_scale_factor_ is set to 1000 so that @c scale_factor need
+   * not be set.  Careful, a @c scale_factor of 0 will cause division
    * by zero exceptions.
    * Depending on the platform its units are 1/microsecond or
    * 1/millisecond. Use @c ACE_HR_SCALE_CONVERSION inside calculations
@@ -224,12 +224,12 @@ public:
    * <ACE_OS::gettimeofday> INSTEAD!  Calls <ACE_High_Res_Timer::hrtime_to_tv>
    * passing <ACE_OS::gethrtime>.  This function can be used to parameterize
    * objects such as <ACE_Timer_Queue::gettimeofday>.  If
-   * <global_scale_factor_> is not set, and we're on a platform that
-   * requires <global_scale_factor_> (e.g., Win32),
+   * @c global_scale_factor_ is not set, and we're on a platform that
+   * requires @c global_scale_factor_ (e.g., Win32),
    * ACE_OS::gettimeofday will be used instead of <ACE_OS::gethrtime>.
-   * This allows applications on Intel to use <High_Res_Timer> even
-   * when <global_scale_factor> is not set.  However, setting the
-   * <global_scale_factor_> appropriately will result in the finest
+   * This allows applications on Intel to use @c High_Res_Timer even
+   * when @c global_scale_factor is not set.  However, setting the
+   * @c global_scale_factor_ appropriately will result in the finest
    * resolution possible.
    */
   static ACE_Time_Value gettimeofday (const ACE_OS::ACE_HRTimer_Op =
@@ -252,8 +252,8 @@ private:
   /**
    * For internal use: gets the high-resolution time using
    * <ACE_OS::gethrtime>.  Except on platforms that require that the
-   * <global_scale_factor_> be set, such as ACE_WIN32, uses the
-   * low-resolution clock if the <global_scale_factor_> has not been
+   * @c global_scale_factor_ be set, such as ACE_WIN32, uses the
+   * low-resolution clock if the @c global_scale_factor_ has not been
    * set.
    */
   static ACE_hrtime_t gettime (const ACE_OS::ACE_HRTimer_Op =

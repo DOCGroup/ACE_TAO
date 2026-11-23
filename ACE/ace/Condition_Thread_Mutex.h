@@ -90,8 +90,8 @@ public:
    * Block on condition or until absolute time-of-day has passed.  If
    * abstime == 0 use "blocking" wait() semantics on the @a mutex
    * passed as a parameter (this is useful if you need to store the
-   * <Condition> in shared memory).  Else, if @a abstime != 0 and the
-   * call times out before the condition is signaled <wait> returns -1
+   * @c Condition in shared memory).  Else, if @a abstime != 0 and the
+   * call times out before the condition is signaled @c wait returns -1
    * and sets errno to ETIME.
    */
   int wait (ACE_Thread_Mutex &mutex, ACE_Time_Value const *abstime = nullptr);

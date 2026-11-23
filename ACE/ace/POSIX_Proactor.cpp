@@ -24,7 +24,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_POSIX_Wakeup_Completion
  *
- * This result object is used by the <end_event_loop> of the
+ * This result object is used by the @c end_event_loop of the
  * ACE_Proactor interface to wake up all the threads blocking
  * for completions.
  */
@@ -39,7 +39,7 @@ public:
 
   ~ACE_POSIX_Wakeup_Completion () override;
 
-  /// This method calls the <handler>'s <handle_wakeup> method.
+  /// This method calls the @c handler's @c handle_wakeup method.
   void complete (size_t bytes_transferred = 0,
                          int success = 1,
                          const void *completion_key = nullptr,
@@ -527,32 +527,32 @@ ACE_POSIX_Proactor::get_impl_type ()
  * @brief This class manages the notify pipe of the AIOCB Proactor.
  *
  * This class acts as the Handler for the
- * <Asynch_Read> operations issued on the notify pipe. This
- * class is very useful in implementing <Asynch_Accept> operation
- * class for the <AIOCB_Proactor>. This is also useful for
- * implementing <post_completion> for <AIOCB_Proactor>.
+ * @c Asynch_Read operations issued on the notify pipe. This
+ * class is very useful in implementing @c Asynch_Accept operation
+ * class for the @c AIOCB_Proactor. This is also useful for
+ * implementing @c post_completion for @c AIOCB_Proactor.
 
- * <AIOCB_Proactor> class issues a <Asynch_Read> on
+ * @c AIOCB_Proactor class issues a @c Asynch_Read on
  * the pipe, using this class as the
  * Handler. <POSIX_Asynch_Result *>'s are sent through the
  * notify pipe. When <POSIX_Asynch_Result *>'s show up on the
- * notify pipe, the <POSIX_AIOCB_Proactor> dispatches the
- * completion of the <Asynch_Read_Stream> and calls the
- * <handle_read_stream> of this class. This class calls
- * <complete> on the <POSIX_Asynch_Result *> and thus calls the
+ * notify pipe, the @c POSIX_AIOCB_Proactor dispatches the
+ * completion of the @c Asynch_Read_Stream and calls the
+ * @c handle_read_stream of this class. This class calls
+ * @c complete on the <POSIX_Asynch_Result *> and thus calls the
  * application handler.
  * Handling the MessageBlock:
  * We give this message block to read the result pointer through
  * the notify pipe. We expect that to read 4 bytes from the
- * notify pipe, for each <accept> call. Before giving this
- * message block to another <accept>, we update <wr_ptr> and put
+ * notify pipe, for each @c accept call. Before giving this
+ * message block to another @c accept, we update @c wr_ptr and put
  * it in its initial position.
  */
 class ACE_AIOCB_Notify_Pipe_Manager : public ACE_Handler
 {
 public:
   /// Constructor. You need the posix proactor because you need to call
-  /// <application_specific_code>
+  /// @c application_specific_code
   ACE_AIOCB_Notify_Pipe_Manager (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
 
   ~ACE_AIOCB_Notify_Pipe_Manager () override;
@@ -560,7 +560,7 @@ public:
   /// Send the result pointer through the notification pipe.
   int notify ();
 
-  /// This is the call back method when <Asynch_Read> from the pipe is
+  /// This is the call back method when @c Asynch_Read from the pipe is
   /// complete.
   void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
 

@@ -700,9 +700,9 @@ ACE_Service_Gestalt::remove (const ACE_TCHAR svc_name[])
 
 /// Suspend @a svc_name.  Note that this will not unlink the service
 /// from the daemon if it was dynamically linked, it will mark it as
-/// being suspended in the Service Repository and call the <suspend>
-/// member function on the appropriate <ACE_Service_Object>.  A service
-/// can be resumed later on by calling the <resume> method...
+/// being suspended in the Service Repository and call the @c suspend
+/// member function on the appropriate @c ACE_Service_Object.  A service
+/// can be resumed later on by calling the @c resume method...
 int
 ACE_Service_Gestalt::suspend (const ACE_TCHAR svc_name[])
 {

@@ -183,7 +183,7 @@ private:
 /**
  * @class ACE_Unbounded_Set_Ex
  *
- * @brief Implement a simple unordered set of <T> of unbounded size.
+ * @brief Implement a simple unordered set of @c T of unbounded size.
  *
  * This implementation of an unordered set uses a circular
  * linked list with a dummy node.  This implementation does not

@@ -154,9 +154,9 @@ private:
     /// Len of type in bytes
     ACE_UINT32 type_len_;
 
-    /// The data portion contains the <name_>
-    /// followed by the <value_>
-    /// followed by the <type_>.
+    /// The data portion contains the @c name_
+    /// followed by the @c value_
+    /// followed by the @c type_.
     ACE_WCHAR_T data_[MAX_NAME_LENGTH + MAXPATHLEN + MAXPATHLEN + 2];
   };
 

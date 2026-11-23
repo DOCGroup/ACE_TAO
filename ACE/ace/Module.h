@@ -111,7 +111,7 @@ public:
   /**
    * Close down the module and its tasks.  The flags argument can be
    * used to override the default behaviour, which depends on previous
-   * @a flags values in calls to c'tor, <open>, <reader>, and <writer>.
+   * @a flags values in calls to c'tor, @c open, @c reader, and @c writer.
    * A previous value M_DELETE[_XXX] can not be overridden.  Should
    * not be called from within <ACE_Task::module_closed>.
    */

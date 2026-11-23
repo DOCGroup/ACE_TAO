@@ -99,7 +99,7 @@ public:
   virtual int unbind (const ACE_NS_WString &name_in) = 0;
 
   /// Get value and type of a given name binding (Wide chars).  The
-  /// caller is responsible for deleting both <value_out> and <type_out>!
+  /// caller is responsible for deleting both @c value_out and @c type_out!
   virtual int resolve (const ACE_NS_WString &name_in,
                        ACE_NS_WString &value_out,
                        char *&type_out) = 0;

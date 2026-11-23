@@ -513,12 +513,12 @@ public:
    * An optimized method that efficiently reacquires the token if no
    * other threads are waiting.  This is useful for situations where
    * you don't want to degrade the quality of service if there are
-   * other threads waiting to get the token.  If <requeue_position> ==
+   * other threads waiting to get the token.  If @c requeue_position ==
    * -1 and there are other threads waiting to obtain the token we are
-   * queued at the end of the list of waiters.  If <requeue_position>
+   * queued at the end of the list of waiters.  If @c requeue_position
    * > -1 then it indicates how many entries to skip over before
    * inserting our thread into the list of waiters (e.g.,
-   * <requeue_position> == 0 means "insert at front of the queue").
+   * @c requeue_position == 0 means "insert at front of the queue").
    * Renew has the rather odd semantics such that if there are other
    * waiting threads it will give up the token even if the
    * nesting_level_ > 1.  I'm not sure if this is really the right
@@ -606,12 +606,12 @@ public:
    * An optimized method that efficiently reacquires the token if no
    * other threads are waiting.  This is useful for situations where
    * you don't want to degrade the quality of service if there are
-   * other threads waiting to get the token.  If <requeue_position> ==
+   * other threads waiting to get the token.  If @c requeue_position ==
    * -1 and there are other threads waiting to obtain the token we are
-   * queued at the end of the list of waiters.  If <requeue_position>
+   * queued at the end of the list of waiters.  If @c requeue_position
    * > -1 then it indicates how many entries to skip over before
    * inserting our thread into the list of waiters (e.g.,
-   * <requeue_position> == 0 means "insert at front of the queue").
+   * @c requeue_position == 0 means "insert at front of the queue").
    * Renew has the rather odd semantics such that if there are other
    * waiting threads it will give up the token even if the
    * nesting_level_ > 1.  I'm not sure if this is really the right
@@ -671,7 +671,7 @@ protected:
  *
  * For now, this is just a string.  We need a string class
  * anyway to use in ACE_Map_Manager.  Having this class
- * (instead of <ACE_SString>) allows us to easily change if
+ * (instead of @c ACE_SString) allows us to easily change if
  * needed.  For instance, we may choose to identify tokens by
  * name and *type* in the future.
  */
@@ -746,7 +746,7 @@ public:
   /// @}
 
   /**
-   * Open the <ACE_Token>.
+   * Open the @c ACE_Token.
    * @param name The string uniquely identifying the token.
    * @param ignore_deadlock Can be 1 to disable deadlock notifications.
    * @param debug Prints debug messages.
@@ -784,25 +784,25 @@ public:
                       ACE_Synch_Options::defaults);
 
   /// Since the locking mechanism doesn't support read locks then this
-  /// just calls <acquire>.
+  /// just calls @c acquire.
   virtual int acquire_read (int notify = 0,
                             void (*sleep_hook)(void *) = nullptr,
                             ACE_Synch_Options &options =
                             ACE_Synch_Options::defaults);
 
   /// Since the locking mechanism doesn't support write locks then this
-  /// just calls <acquire>.
+  /// just calls @c acquire.
   virtual int acquire_write (int notify = 0,
                              void (*sleep_hook)(void *) = nullptr,
                              ACE_Synch_Options &options =
                              ACE_Synch_Options::defaults);
 
   /// Since the locking mechanism doesn't support read locks then this
-  /// just calls <tryacquire>.
+  /// just calls @c tryacquire.
   virtual int tryacquire_read (void (*sleep_hook)(void *) = nullptr);
 
   /// Since the locking mechanism doesn't support write locks then this
-  /// just calls <tryacquire>.
+  /// just calls @c tryacquire.
   virtual int tryacquire_write (void (*sleep_hook)(void *) = nullptr);
   /// @}
 
@@ -830,7 +830,7 @@ public:
   virtual const ACE_TCHAR *name () const;
 
   /**
-   * This should really be called <someone_waiting>.  This is called
+   * This should really be called @c someone_waiting.  This is called
    * by ACE_Token_xx's when another proxy enters the waiting list and
    * requests that the current token holder be notified.
    */

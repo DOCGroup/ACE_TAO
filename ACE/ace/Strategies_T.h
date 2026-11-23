@@ -181,7 +181,7 @@ public:
   ACE_DLL_Strategy ();
 
   /// Initialize the DLL strategy based upon the service's DLL
-  /// information contained in the <svc_dll_info> string.
+  /// information contained in the @c svc_dll_info string.
   ACE_DLL_Strategy (const ACE_TCHAR dll_name[],
                     const ACE_TCHAR factory_function[],
                     const ACE_TCHAR svc_name[],
@@ -189,7 +189,7 @@ public:
                     ACE_Thread_Manager * = nullptr);
 
   /// Initialize the DLL strategy based upon the service's DLL
-  /// information contained in the <svc_dll_info> string.
+  /// information contained in the @c svc_dll_info string.
   int open (const ACE_TCHAR dll_name[],
             const ACE_TCHAR factory_function[],
             const ACE_TCHAR svc_name[],
@@ -219,7 +219,7 @@ protected:
   /// Name of the service.
   ACE_TCHAR svc_name_[MAXNAMELEN + 1];
 
-  /// Pointer to the <Service_Repository>.
+  /// Pointer to the @c Service_Repository.
   ACE_Service_Repository *svc_rep_;
 };
 
@@ -230,7 +230,7 @@ protected:
  * for a SVC_HANDLER.
  *
  * Default behavior is to activate the SVC_HANDLER by calling
- * its <open> method (which allows the SVC_HANDLER to define its
+ * its @c open method (which allows the SVC_HANDLER to define its
  * own concurrency strategy).  However, subclasses can override
  * this default strategy to do more sophisticated concurrency
  * activations (such as creating the SVC_HANDLER as an active
@@ -250,7 +250,7 @@ public:
   /**
    * Activate the @a svc_handler with an appropriate concurrency
    * strategy.  The default behavior of this method is to activate the
-   * SVC_HANDLER by calling its <open> method (which allows the
+   * SVC_HANDLER by calling its @c open method (which allows the
    * SVC_HANDLER to define its own concurrency strategy).
    */
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
@@ -278,7 +278,7 @@ protected:
  * methods run in the reactor's thread of control.
  *
  * This class provides a strategy that registers the
- * SVC_HANDLER with a <Reactor>.
+ * SVC_HANDLER with a @c Reactor.
  */
 template <class SVC_HANDLER>
 class ACE_Reactive_Strategy : public ACE_Concurrency_Strategy <SVC_HANDLER>
@@ -302,8 +302,8 @@ public:
 
   ~ACE_Reactive_Strategy () override;
 
-  /// Activate the @a svc_handler by registering it with the <Reactor>
-  /// and then calling it's <open> hook.
+  /// Activate the @a svc_handler by registering it with the @c Reactor
+  /// and then calling it's @c open hook.
   int activate_svc_handler (SVC_HANDLER *svc_handler,
                             void *arg = nullptr) override;
 
@@ -319,7 +319,7 @@ protected:
   /// Pointer to the Reactor we'll use to register the SVC_HANDLER.
   ACE_Reactor *reactor_;
 
-  /// The mask that we pass to the <Reactor> when we register the
+  /// The mask that we pass to the @c Reactor when we register the
   /// SVC_HANDLER.
   ACE_Reactor_Mask mask_;
 };
@@ -363,7 +363,7 @@ public:
   /**
    * Activate the @a svc_handler with an appropriate concurrency
    * strategy.  This method activates the SVC_HANDLER by first calling
-   * its <open> method and then calling its <activate> method to turn
+   * its @c open method and then calling its @c activate method to turn
    * it into an active object.
    */
   int activate_svc_handler (SVC_HANDLER *svc_handler,
@@ -485,20 +485,20 @@ public:
                        bool restart = false,
                        ACE_Reactor *reactor = ACE_Reactor::instance ());
 
-  /// Initialize the <peer_acceptor_> with @a local_addr, indicating
+  /// Initialize the @c peer_acceptor_ with @a local_addr, indicating
   /// whether to @a reuse_addr if it's already in use.
   virtual int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
                     bool reuse_addr = false);
 
-  /// Return the underlying ACE_HANDLE of the <peer_acceptor_>.
+  /// Return the underlying ACE_HANDLE of the @c peer_acceptor_.
   virtual ACE_HANDLE get_handle () const;
 
-  /// Return a reference to the <peer_acceptor_>.
+  /// Return a reference to the @c peer_acceptor_.
   virtual ACE_PEER_ACCEPTOR &acceptor () const;
 
   virtual ~ACE_Accept_Strategy ();
 
-  /// The default behavior delegates to the <accept> method of the
+  /// The default behavior delegates to the @c accept method of the
   /// PEER_ACCEPTOR.
   virtual int accept_svc_handler (SVC_HANDLER *);
 
@@ -515,10 +515,10 @@ protected:
   /// Pointer to the reactor used by the Acceptor.
   ACE_Reactor *reactor_;
 
-  /// Needed to reopen the socket if <accept> fails.
+  /// Needed to reopen the socket if @c accept fails.
   bool reuse_addr_;
 
-  /// Needed to reopen the socket if <accept> fails.
+  /// Needed to reopen the socket if @c accept fails.
   ACE_PEER_ACCEPTOR_ADDR peer_acceptor_addr_;
 };
 
@@ -543,12 +543,12 @@ public:
 
   ACE_Connect_Strategy ();
 
-  /// Return a reference to the <peer_connector_>.
+  /// Return a reference to the @c peer_connector_.
   virtual ACE_PEER_CONNECTOR &connector () const;
 
   virtual ~ACE_Connect_Strategy ();
 
-  /// The default behavior delegates to the <connect> method of the
+  /// The default behavior delegates to the @c connect method of the
   /// <PEER_CONNECTOR::connect>.
   virtual int connect_svc_handler (SVC_HANDLER *&sh,
                                    const ACE_PEER_CONNECTOR_ADDR &remote_addr,
@@ -559,7 +559,7 @@ public:
                                    int perms);
 
   /**
-   * The default behavior delegates to the <connect> method of the
+   * The default behavior delegates to the @c connect method of the
    * <PEER_CONNECTOR::connect>.
    * Please check the documentation in Connector.h for more details.
    */
@@ -777,7 +777,7 @@ protected:
  * (represented by SVC_HANDLER instances), thereby allowing
  * subsequent re-use of unused, but available, connections.
  *
- * <ACE_Cached_Connect_Strategy> is intended to be used as a
+ * @c ACE_Cached_Connect_Strategy is intended to be used as a
  * plug-in connection strategy for ACE_Strategy_Connector.
  * It's added value is re-use of established connections.
  */
@@ -820,7 +820,7 @@ public:
                     ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
                     ACE_Recycling_Strategy<SVC_HANDLER> *rec_s);
 
-  /// Template method for making a new <svc_handler>
+  /// Template method for making a new @c svc_handler
   virtual int make_svc_handler (SVC_HANDLER *&sh);
 
   /// Template method for activating a new @a svc_handler
@@ -836,8 +836,8 @@ public:
   virtual int prepare_for_recycling (SVC_HANDLER *svc_handler);
 
   /**
-   * Checks to see if there is already a <SVC_HANDLER> in the cache
-   * connected to the <remote_addr>.  If so, we return this pointer.
+   * Checks to see if there is already a @c SVC_HANDLER in the cache
+   * connected to the @c remote_addr.  If so, we return this pointer.
    * Otherwise we establish the connection, put it into the cache, and
    * return the SVC_HANDLER pointer.
    * @note The <{reuse_addr}>
@@ -872,7 +872,7 @@ public:
   /// Add to cache.
   int cache (const void *recycling_act) override;
 
-  /// Get/Set <recycle_state>.
+  /// Get/Set @c recycle_state.
   int recycle_state (const void *recycling_act,
                              ACE_Recyclable_State new_state) override;
   ACE_Recyclable_State recycle_state (const void *recycling_act) const override;
@@ -958,11 +958,11 @@ protected:
   /// Add to cache (non-locking version).
   virtual int cache_i (const void *recycling_act);
 
-  /// Set <recycle_state> (non-locking version).
+  /// Set @c recycle_state (non-locking version).
   virtual int recycle_state_i (const void *recycling_act,
                                ACE_Recyclable_State new_state);
 
-  /// Get <recycle_state> (non-locking version).
+  /// Get @c recycle_state (non-locking version).
   virtual ACE_Recyclable_State recycle_state_i (const void *recycling_act) const;
 
   /// Cleanup hint and reset <*act_holder> to nullptr if <act_holder != nullptr>.
@@ -1016,13 +1016,13 @@ protected:
   /// Reverse lock owned by this strategy.
   reverse_mutex_ptr reverse_lock_;
 
-  /// Creation strategy for an <Connector>; ownership follows its deleter.
+  /// Creation strategy for an @c Connector; ownership follows its deleter.
   creation_strategy_ptr creation_strategy_;
 
-  /// Concurrency strategy for an <Connector>; ownership follows its deleter.
+  /// Concurrency strategy for an @c Connector; ownership follows its deleter.
   concurrency_strategy_ptr concurrency_strategy_;
 
-  /// Recycling strategy for an <Connector>; ownership follows its deleter.
+  /// Recycling strategy for an @c Connector; ownership follows its deleter.
   recycling_strategy_ptr recycling_strategy_;
 
   /// @}

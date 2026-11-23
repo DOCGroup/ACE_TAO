@@ -236,7 +236,7 @@ union ACE_max_align_info
 /**
  * @class ACE_Control_Block
  *
- * @brief This information is stored in memory allocated by the <Memory_Pool>.
+ * @brief This information is stored in memory allocated by the @c Memory_Pool.
  *
  * This class defines the "old" control block class for use in
  * ACE_Malloc_T.  This control block implementation is
@@ -252,7 +252,7 @@ public:
   /**
    * @class ACE_Malloc_Header
    *
-   * @brief This is the control block header.  It's used by <ACE_Malloc>
+   * @brief This is the control block header.  It's used by @c ACE_Malloc
    * to keep track of each chunk of data when it's in the free
    * list or in use.
    */

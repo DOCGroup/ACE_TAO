@@ -48,7 +48,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * just another level of indirection in event dispatching. The
  * coupling betweent the ultimate handler of the event and the
  * ACE_Event_Handler class is relaxed a bit by have this
- * intermediate <op_handler_> object of type <T> around. The
+ * intermediate @c op_handler_ object of type @c T around. The
  * client object can then dynamically change the bindings for
  * the various handlers so that during the life of one of the
  * operation objects, it can change how it wants events to be
@@ -89,7 +89,7 @@ public:
                        SET_HANDLE set_handle = nullptr,
                        IO_HANDLER except = nullptr);
 
-  /// Close down and delete the <op_handler>
+  /// Close down and delete the @c op_handler
   ~ACE_Event_Handler_T () override;
 
   ACE_Event_Handler_T (ACE_Event_Handler_T const &) = delete;

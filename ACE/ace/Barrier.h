@@ -76,7 +76,7 @@ struct ACE_Export ACE_Sub_Barrier
  *
  * @brief Implements "barrier synchronization".
  *
- * This class allows <count> number of threads to synchronize
+ * This class allows @c count number of threads to synchronize
  * their completion of (one round of) a task, which is known as
  * "barrier synchronization".   After all the threads call <wait()>
  * on the barrier they are all atomically released and can begin a new

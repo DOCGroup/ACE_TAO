@@ -41,7 +41,7 @@ public:
   virtual void add (T *element) = 0;
 
   /// Takes a element off the freelist and returns it.  It creates
-  /// <inc> new elements if the size is at or below the low water mark.
+  /// @c inc new elements if the size is at or below the low water mark.
   virtual T *remove () = 0;
 
   /// Returns the current size of the free list.
@@ -87,7 +87,7 @@ public:
   void add (T *element) override;
 
   /// Takes a element off the freelist and returns it.  It creates
-  /// <inc> new elements if the size is at or below the low water mark.
+  /// @c inc new elements if the size is at or below the low water mark.
   T *remove () override;
 
   /// Returns the current size of the free list.

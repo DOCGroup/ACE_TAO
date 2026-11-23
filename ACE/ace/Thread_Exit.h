@@ -32,7 +32,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * point function, etc.).
  *
  * This clever little helper class is stored in thread-specific
- * storage using the <ACE_TSS> wrapper.  When a thread exits the
+ * storage using the @c ACE_TSS wrapper.  When a thread exits the
  * <ACE_TSS::cleanup> function deletes this object, thereby
  * closing it down gracefully.
  */

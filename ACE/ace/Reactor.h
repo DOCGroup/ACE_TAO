@@ -347,8 +347,8 @@ public:
    * Register handler for OS events.
    *
    * Register an @a event_handler that will be notified when
-   * <event_handle> is signaled.  This will call back its
-   * <handle_signal> hook method.
+   * @c event_handle is signaled.  This will call back its
+   * @c handle_signal hook method.
    *
    * Reactor will call ACE_Event_Handler::add_reference() for a new
    * handler/handle pair.
@@ -411,7 +411,7 @@ public:
    * Shorthand for calling
    * register_handler(int,ACE_Event_Handler*,ACE_Sig_Action*,ACE_Event_Handler**,ACE_Sig_Action*)
    * multiple times for the same @a event_handler and @a sig_action but
-   * different <signals>.
+   * different @c signals.
    */
   int register_handler (const ACE_Sig_Set &sigset,
                         ACE_Event_Handler *event_handler,
@@ -445,7 +445,7 @@ public:
                       ACE_Reactor_Mask masks);
 
   /**
-   * Remove @a masks from multiple <handle> registrations.
+   * Remove @a masks from multiple @c handle registrations.
    *
    * Shorthand for calling remove_handler(ACE_HANDLE,ACE_Reactor_Mask)
    * multiple times for the same @a masks but different @a handles.
@@ -654,7 +654,7 @@ public:
   int schedule_wakeup (ACE_Event_Handler *event_handler,
                        ACE_Reactor_Mask masks_to_be_added);
 
-  /// Add @a masks_to_be_added to the @a handle's entry.  <event_handler>
+  /// Add @a masks_to_be_added to the @a handle's entry.  @c event_handler
   /// associated with @a handle must already have been registered.
   /// Note that this call does not cause the Reactor to re-examine
   /// its set of handlers - the new masks will be noticed the next

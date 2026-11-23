@@ -207,14 +207,14 @@ private:
   /// The array in which the arguments are reordered.
   CHAR_TYPE **argv_;
 
-  /// The element in <temp_> we're currently examining.
+  /// The element in @c temp_ we're currently examining.
   int current_index_ {};
 
-  /// The index of <argv_> in which we'll stick the next unknown
+  /// The index of @c argv_ in which we'll stick the next unknown
   /// argument.
   int back_;
 
-  /// The index of <argv_> in which we'll stick the next known
+  /// The index of @c argv_ in which we'll stick the next known
   /// argument.
   /** This is not really the "front" at all.  It's the point after
    * which the unknown arguments end and at which the known arguments begin.

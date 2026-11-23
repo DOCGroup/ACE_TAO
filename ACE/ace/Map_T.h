@@ -260,7 +260,7 @@ public:
   virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
                     ACE_Allocator *alloc = nullptr) = 0;
 
-  /// Close down a <Map> and release dynamically allocated resources.
+  /// Close down a @c Map and release dynamically allocated resources.
   virtual int close () = 0;
 
   /**
@@ -275,7 +275,7 @@ public:
   /**
    * Add @a key / @a value pair to the map.  @a key is an "inout" parameter
    * and maybe modified/extended by the map to add additional
-   * information.  To recover original key, call the <recover_key>
+   * information.  To recover original key, call the @c recover_key
    * method.
    */
   virtual int bind_modify_key (const VALUE &value,
@@ -315,7 +315,7 @@ public:
   virtual int bind_create_key (const VALUE &value) = 0;
 
   /// Recovers the original key potentially modified by the map during
-  /// <bind_modify_key>.
+  /// @c bind_modify_key.
   virtual int recover_key (const KEY &modified_key,
                            KEY &original_key) = 0;
 
@@ -416,7 +416,7 @@ protected:
  *
  * @brief Defines a iterator implementation for the Map_Impl class.
  *
- * Implementation to be provided by <IMPLEMENTATION>.
+ * Implementation to be provided by @c IMPLEMENTATION.
  */
 template <class T, class IMPLEMENTATION, class ENTRY>
 class ACE_Map_Impl_Iterator_Adapter : public ACE_Iterator_Impl<T>
@@ -498,7 +498,7 @@ protected:
  *
  * @brief Defines a map implementation.
  *
- * Implementation to be provided by <IMPLEMENTATION>.
+ * Implementation to be provided by @c IMPLEMENTATION.
  */
 template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY>
 class ACE_Map_Impl : public ACE_Map<KEY, VALUE>
@@ -526,11 +526,11 @@ public:
   /// Close down and release dynamically allocated resources.
   virtual ~ACE_Map_Impl ();
 
-  /// Initialize a <Map> with size @a length.
+  /// Initialize a @c Map with size @a length.
   int open (size_t length = ACE_DEFAULT_MAP_SIZE,
             ACE_Allocator *alloc = nullptr) override;
 
-  /// Close down a <Map> and release dynamically allocated resources.
+  /// Close down a @c Map and release dynamically allocated resources.
   int close () override;
 
   /**
@@ -545,7 +545,7 @@ public:
   /**
    * Add @a key / @a value pair to the map.  @a key is an "inout" parameter
    * and maybe modified/extended by the map to add additional
-   * information.  To recover original key, call the <recover_key>
+   * information.  To recover original key, call the @c recover_key
    * method.
    */
   int bind_modify_key (const VALUE &value,
@@ -585,7 +585,7 @@ public:
   int bind_create_key (const VALUE &value) override;
 
   /// Recovers the original key potentially modified by the map during
-  /// <bind_modify_key>.
+  /// @c bind_modify_key.
   int recover_key (const KEY &modified_key,
                    KEY &original_key) override;
 
@@ -764,7 +764,7 @@ protected:
  *
  * @brief Defines a map implementation.
  *
- * Implementation to be provided by <ACE_Active_Map_Manager>.
+ * Implementation to be provided by @c ACE_Active_Map_Manager.
  */
 template <class KEY, class VALUE, class KEY_ADAPTER>
 class ACE_Active_Map_Manager_Adapter : public ACE_Map<KEY, VALUE>
@@ -1089,7 +1089,7 @@ public:
   /**
    * Add @a key / @a value pair to the map.  @a key is an "inout" parameter
    * and maybe modified/extended by the map to add additional
-   * information.  To recover original key, call the <recover_key>
+   * information.  To recover original key, call the @c recover_key
    * method.
    */
   int bind_modify_key (const VALUE &value,
@@ -1341,11 +1341,11 @@ public:
   /// Close down and release dynamically allocated resources.
   virtual ~ACE_Map_Manager_Adapter ();
 
-  /// Initialize a <Map> with size @a length.
+  /// Initialize a @c Map with size @a length.
   int open (size_t length = ACE_DEFAULT_MAP_SIZE,
             ACE_Allocator *alloc = nullptr) override;
 
-  /// Close down a <Map> and release dynamically allocated resources.
+  /// Close down a @c Map and release dynamically allocated resources.
   int close () override;
 
   /**
@@ -1360,7 +1360,7 @@ public:
   /**
    * Add @a key / @a value pair to the map.  @a key is an "inout" parameter
    * and maybe modified/extended by the map to add additional
-   * information.  To recover original key, call the <recover_key>
+   * information.  To recover original key, call the @c recover_key
    * method.
    */
   int bind_modify_key (const VALUE &value,
@@ -1400,7 +1400,7 @@ public:
   int bind_create_key (const VALUE &value) override;
 
   /// Recovers the original key potentially modified by the map during
-  /// <bind_modify_key>.
+  /// @c bind_modify_key.
   int recover_key (const KEY &modified_key,
                    KEY &original_key) override;
 

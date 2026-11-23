@@ -34,7 +34,7 @@ class ACE_Message_Block;
  *
  * @brief Defines the methods in the ACE_SOCK_SEQPACK_Association abstraction.
  *
- * This adds additional wrapper methods atop the <ACE_SOCK_IO>
+ * This adds additional wrapper methods atop the @c ACE_SOCK_IO
  * class.
  *
  * @a buf is the buffer to write from or receive into.
@@ -61,14 +61,14 @@ class ACE_Message_Block;
  * - On EOF, 0 is returned, errno is irrelevant.
  *
  * On partial transfers, i.e., if any data is transferred before
- * timeout/error/EOF, <bytes_transferred> will contain the number of
+ * timeout/error/EOF, @c bytes_transferred will contain the number of
  * bytes transferred.
- * Methods with <iovec> parameter are I/O vector variants of the I/O
+ * Methods with @c iovec parameter are I/O vector variants of the I/O
  * operations.
  * Methods with the extra @a flags argument will always result in
- * <send> getting called. Methods without the extra @a flags argument
- * will result in <send> getting called on Win32 platforms, and
- * <write> getting called on non-Win32 platforms.
+ * @c send getting called. Methods without the extra @a flags argument
+ * will result in @c send getting called on Win32 platforms, and
+ * @c write getting called on non-Win32 platforms.
  */
 class ACE_Export ACE_SOCK_SEQPACK_Association : public ACE_SOCK_IO
 {
@@ -117,7 +117,7 @@ public:
                   const ACE_Time_Value *timeout = nullptr,
                   size_t *bytes_transferred = nullptr) const;
 
-  /// Receive an <iovec> of size <iovcnt> from the connected socket.
+  /// Receive an @c iovec of size @c iovcnt from the connected socket.
   ssize_t recvv_n (iovec iov[],
                    int iovcnt,
                    const ACE_Time_Value *timeout = nullptr,
@@ -136,14 +136,14 @@ public:
                   const ACE_Time_Value *timeout = nullptr,
                   size_t *bytes_transferred = nullptr) const;
 
-  /// Send all the @a message_blocks chained through their <next> and
-  /// <cont> pointers.  This call uses the underlying OS gather-write
+  /// Send all the @a message_blocks chained through their @c next and
+  /// @c cont pointers.  This call uses the underlying OS gather-write
   /// operation to reduce the domain-crossing penalty.
   ssize_t send_n (const ACE_Message_Block *message_block,
                   const ACE_Time_Value *timeout = nullptr,
                   size_t *bytes_transferred = nullptr) const;
 
-  /// Send an <iovec> of size <iovcnt> to the connected socket.
+  /// Send an @c iovec of size @c iovcnt to the connected socket.
   ssize_t sendv_n (const iovec iov[],
                    int iovcnt,
                    const ACE_Time_Value *timeout = nullptr,
@@ -171,7 +171,7 @@ public:
 
   /**
    * Close down the socket (we need this to make things work correctly
-   * on Win32, which requires use to do a <close_writer> before doing
+   * on Win32, which requires use to do a @c close_writer before doing
    * the close to avoid losing data).  */
   int close ();
 

@@ -43,7 +43,7 @@ public:
   };
   /// @}
 
-  /// Open a message queue using the <external_id>.
+  /// Open a message queue using the @c external_id.
   ACE_SV_Message_Queue ();
   ACE_SV_Message_Queue (key_t external_id,
                         int create = ACE_SV_Message_Queue::ACE_OPEN,
@@ -89,7 +89,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Returned from the underlying <msgget> system call.
+  /// Returned from the underlying @c msgget system call.
   int internal_id_;
 };
 

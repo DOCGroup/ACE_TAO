@@ -64,7 +64,7 @@ ACE_Semaphore::release (unsigned int release_count)
 }
 
 // Acquire semaphore ownership.  This calls <acquire> and is only
-// here to make the <ACE_Semaphore> interface consistent with the
+// here to make the @c ACE_Semaphore interface consistent with the
 // other synchronization APIs.
 
 ACE_INLINE int
@@ -74,7 +74,7 @@ ACE_Semaphore::acquire_read ()
 }
 
 // Acquire semaphore ownership.  This calls <acquire> and is only
-// here to make the <ACE_Semaphore> interface consistent with the
+// here to make the @c ACE_Semaphore interface consistent with the
 // other synchronization APIs.
 
 ACE_INLINE int
@@ -84,7 +84,7 @@ ACE_Semaphore::acquire_write ()
 }
 
 // Conditionally acquire semaphore (i.e., won't block).  This calls
-// <tryacquire> and is only here to make the <ACE_Semaphore>
+// <tryacquire> and is only here to make the @c ACE_Semaphore
 // interface consistent with the other synchronization APIs.
 
 ACE_INLINE int
@@ -94,7 +94,7 @@ ACE_Semaphore::tryacquire_read ()
 }
 
 // Conditionally acquire semaphore (i.e., won't block).  This calls
-// <tryacquire> and is only here to make the <ACE_Semaphore>
+// <tryacquire> and is only here to make the @c ACE_Semaphore
 // interface consistent with the other synchronization APIs.
 
 ACE_INLINE int
@@ -103,7 +103,7 @@ ACE_Semaphore::tryacquire_write ()
   return this->tryacquire ();
 }
 
-/// This is only here to make the <ACE_Semaphore> interface consistent
+/// This is only here to make the @c ACE_Semaphore interface consistent
 /// with the other synchronization APIs. Assumes the caller has already
 /// acquired the semaphore using one of the above calls, and always
 /// returns 0 (success).

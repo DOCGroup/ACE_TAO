@@ -363,7 +363,7 @@ private:
                        const ACE_TCHAR *net_if = nullptr);
 
   /// Do unsubscription processing w/out udpating subscription list.
-  ///  (Layered method for <unsubscribe> processing).
+  ///  (Layered method for @c unsubscribe processing).
   int unsubscribe_i (const ACE_INET_Addr &mcast_addr,
                      const ACE_TCHAR *net_if = nullptr);
 

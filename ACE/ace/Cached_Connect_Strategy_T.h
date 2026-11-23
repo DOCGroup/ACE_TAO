@@ -35,7 +35,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * (represented by SVC_HANDLER instances), thereby allowing
  * subsequent re-use of unused, but available, connections.
  *
- * <Cached_Connect_Strategy> is intended to be used as a
+ * @c Cached_Connect_Strategy is intended to be used as a
  * plug-in connection strategy for ACE_Strategy_Connector.
  * It's added value is re-use of established connections and
  * tweaking the role of the cache as per the caching strategy.
@@ -71,7 +71,7 @@ public:
   /**
    * Since g++ version < 2.8 arent happy with templates, this special
    * method had to be devised to avoid memory leaks and perform
-   * cleanup of the <connection_cache_>.
+   * cleanup of the @c connection_cache_.
    */
   void cleanup ();
 

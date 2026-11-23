@@ -171,8 +171,8 @@ private:
     /// value returned in <Token_Reply::arg>;
     ACE_UINT32 arg_;
 
-    /// The data portion contains the <tokenName_> including a 0 terminator,
-    /// a ':', then the <clientId> including a 0 terminator
+    /// The data portion contains the @c tokenName_ including a 0 terminator,
+    /// a ':', then the @c clientId including a 0 terminator
     ACE_TCHAR data_[ACE_MAXTOKENNAMELEN + ACE_MAXCLIENTIDLEN + 3];
   } transfer_;
 
@@ -227,18 +227,18 @@ public:
   void dump () const;
 
 private:
-  /// The 2 fields in the <Transfer> struct are transmitted to the server.
+  /// The 2 fields in the @c Transfer struct are transmitted to the server.
   struct Transfer
   {
     /// Length of entire reply.
     ACE_UINT32 length_;
 
-    /// Indicates why error occurred if <this->type_> == <FAILURE>.
+    /// Indicates why error occurred if <this->type_> == @c FAILURE.
     /// Typical reasons include:
     ///   @c EWOULDBLOCK (if client requested a non-blocking check for the token).
     ///   @c ETIME (if the client timed out after waiting for the token).
-    ///   <ENOLCK> (if the token lock was removed out from underneath a waiter).
-    ///   <EACCES> (attempt to renew a token that isn't owned by the client).
+    ///   @c ENOLCK (if the token lock was removed out from underneath a waiter).
+    ///   @c EACCES (attempt to renew a token that isn't owned by the client).
     ACE_UINT32 errno_;
 
     /// magic cookie

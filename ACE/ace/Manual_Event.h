@@ -26,7 +26,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief Manual Events.
  *
  * Specialization of Event mechanism which wakes up all waiting
- * thread on <signal>.  All platforms support process-scope locking
+ * thread on @c signal.  All platforms support process-scope locking
  * support.  However, only Win32 platforms support global naming and
  * system-scope locking support.
  */

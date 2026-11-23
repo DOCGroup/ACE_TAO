@@ -169,8 +169,8 @@ public:
    * @a max_wait_time value is a reference and can therefore never be
    * NULL.
    *
-   * Current <alertable_handle_events> is identical to
-   * <handle_events>.
+   * Current @c alertable_handle_events is identical to
+   * @c handle_events.
    */
   int handle_events (ACE_Time_Value &max_wait_time) override;
   int alertable_handle_events (ACE_Time_Value &max_wait_time) override;
@@ -182,8 +182,8 @@ public:
 
   /**
    * Return the status of Reactor.  If this function returns 0, the reactor is
-   * actively handling events.  If it returns non-zero, <handling_events> and
-   * <handle_alertable_events> return -1 immediately.
+   * actively handling events.  If it returns non-zero, @c handling_events and
+   * @c handle_alertable_events return -1 immediately.
    */
   int deactivated () override;
 
@@ -236,7 +236,7 @@ public:
                                 ACE_Event_Handler *event_handler,
                                 ACE_Reactor_Mask mask) override;
 
-  /// Register @a eh with all the @a handles in the <Handle_Set>.
+  /// Register @a eh with all the @a handles in the @c Handle_Set.
   int register_handler (const ACE_Handle_Set &handles,
                                 ACE_Event_Handler *eh,
                                 ACE_Reactor_Mask mask) override;
@@ -296,7 +296,7 @@ public:
                               ACE_Sig_Action *old_disp = nullptr,
                               int sigkey = -1) override;
 
-  /// Calls <remove_handler> for every signal in @a sigset.
+  /// Calls @c remove_handler for every signal in @a sigset.
   int remove_handler (const ACE_Sig_Set &sigset) override;
 
   /// @}
@@ -313,7 +313,7 @@ public:
   /// Suspend all @a handles in handle set temporarily.
   int suspend_handler (const ACE_Handle_Set &handles) override;
 
-  /// Suspend all the <Event_Handlers> in the Select_Reactor.
+  /// Suspend all event handlers in the Select_Reactor.
   int suspend_handlers () override;
 
   /// Resume a temporarily suspend Event_Handler associated with
@@ -327,7 +327,7 @@ public:
   /// Resume all @a handles in handle set.
   int resume_handler (const ACE_Handle_Set &handles) override;
 
-  /// Resume all the <Event_Handlers> in the Select_Reactor.
+  /// Resume all event handlers in the Select_Reactor.
   int resume_handlers () override;
 
   /// @}
@@ -369,7 +369,7 @@ public:
   /**
    * Resets the interval of the timer represented by @a timer_id to
    * @a interval, which is specified in relative time to the current
-   * <gettimeofday>.  If @a interval is equal to
+   * @c gettimeofday.  If @a interval is equal to
    * ACE_Time_Value::zero, the timer will become a non-rescheduling
    * timer.  Returns 0 if successful, -1 if not.
    */
@@ -377,9 +377,9 @@ public:
                                     const ACE_Time_Value &interval) override;
 
   /**
-   * Cancel all <event_handlers> that match the address of
+   * Cancel all @c event_handlers that match the address of
    * @a event_handler.  If @a dont_call_handle_close is 0 then the
-   * <handle_close> method of @a event_handler will be invoked.
+   * @c handle_close method of @a event_handler will be invoked.
    * Returns number of handler's cancelled.
    */
   int cancel_timer (ACE_Event_Handler *event_handler,
@@ -387,12 +387,12 @@ public:
 
   /**
    * Cancel the single ACE_Event_Handler that matches the @a timer_id
-   * value (which was returned from the <schedule> method).  If arg is
+   * value (which was returned from the @c schedule method).  If arg is
    * non-NULL then it will be set to point to the ``magic cookie''
    * argument passed in when the Event_Handler was registered.  This
    * makes it possible to free up the memory and avoid memory leaks.
-   * If @a dont_call_handle_close is 0 then the <handle_close> method
-   * of <event_handler> will be invoked.  Returns 1 if cancellation
+   * If @a dont_call_handle_close is 0 then the @c handle_close method
+   * of @c event_handler will be invoked.  Returns 1 if cancellation
    * succeeded and 0 if the @a timer_id wasn't found.
    */
   int cancel_timer (long timer_id,
@@ -467,11 +467,11 @@ public:
   bool restart (bool r) override;
 
   /// Set position that the main ACE_Select_Reactor thread is requeued in the
-  /// list of waiters during a <notify> callback.
+  /// list of waiters during a @c notify callback.
   void requeue_position (int) override;
 
   /// Get position that the main ACE_Select_Reactor thread is requeued in the
-  /// list of waiters during a <notify> callback.
+  /// list of waiters during a @c notify callback.
   int requeue_position () override;
 
   /// @}
@@ -688,8 +688,8 @@ protected:
    * Factors the dispatching of an io handle set (each WRITE, EXCEPT
    * or READ set of handles).  It updates the
    * @a number_of_handlers_dispatched and invokes this->notify_handle
-   * for all the handles in <dispatch_set> using the @a mask,
-   * <ready_set> and @a callback parameters.  Must return -1 if
+   * for all the handles in @c dispatch_set using the @a mask,
+   * @c ready_set and @a callback parameters.  Must return -1 if
    * this->state_changed otherwise it must return 0.
    */
   virtual int dispatch_io_set (int number_of_active_handles,

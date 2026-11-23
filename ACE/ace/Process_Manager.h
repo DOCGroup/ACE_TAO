@@ -370,7 +370,7 @@ protected:
   /**
    * On Unix, this routine is called asynchronously when a SIGCHLD is
    * received.  We just tweak the reactor so that it'll call back our
-   * <handle_input> function, which allows us to handle Process exits
+   * @c handle_input function, which allows us to handle Process exits
    * synchronously.
    *
    * On Win32, this routine is called synchronously, and is passed the
@@ -425,7 +425,7 @@ private:
                    ACE_Event_Handler *event_handler = nullptr);
 
   /**
-   * Append information about a process, i.e., its <process_id> in the
+   * Append information about a process, i.e., its @c process_id in the
    * @c process_table_.  Each entry is added at the end, growing the
    * table if necessary.
    * Register @a event_handler to be called back when the process exits.
@@ -458,7 +458,7 @@ private:
   /// Singleton pointer.
   static ACE_Process_Manager *instance_;
 
-  /// Controls whether the <Process_Manager> is deleted when we shut
+  /// Controls whether the @c Process_Manager is deleted when we shut
   /// down (we can only delete it safely if we created it!)
   static bool delete_instance_;
 

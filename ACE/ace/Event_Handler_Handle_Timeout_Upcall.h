@@ -26,7 +26,7 @@ class ACE_Time_Value;
  * @brief Functor for Timer_Queues.
  *
  * This class implements the functor required by the Timer
- * Queue to call <handle_timeout> on ACE_Event_Handlers.
+ * Queue to call @c handle_timeout on ACE_Event_Handlers.
  */
 class ACE_Export ACE_Event_Handler_Handle_Timeout_Upcall
 {

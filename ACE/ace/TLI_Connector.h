@@ -33,7 +33,7 @@ public:
   ACE_TLI_Connector ();
 
   /**
-   * Actively connect and produce a <new_stream> if things go well.
+   * Actively connect and produce a @c new_stream if things go well.
    * The @a remote_sap is the address that we are trying to connect
    * with.  The @a timeout is the amount of time to wait to connect.
    * If it's 0 then we block indefinitely.  If *timeout == {0, 0} then
@@ -45,7 +45,7 @@ public:
    * @a local_sap is the value of local address to bind to.  If it's
    * the default value of ACE_Addr::sap_any then the user is letting
    * the OS do the binding.  If @a reuse_addr == 1 then the
-   * <local_addr> is reused, even if it hasn't been cleanedup yet.
+   * @c local_addr is reused, even if it hasn't been cleanedup yet.
    */
   ACE_TLI_Connector (ACE_TLI_Stream &new_stream,
                      const ACE_Addr &remote_sap,
@@ -61,7 +61,7 @@ public:
                      struct netbuf *opt = nullptr);
 
   /**
-   * Actively connect and produce a <new_stream> if things go well.
+   * Actively connect and produce a @c new_stream if things go well.
    * The @a remote_sap is the address that we are trying to connect
    * with.  The @a timeout is the amount of time to wait to connect.
    * If it's 0 then we block indefinitely.  If *timeout == {0, 0} then
@@ -73,7 +73,7 @@ public:
    * @a local_sap is the value of local address to bind to.  If it's
    * the default value of ACE_Addr::sap_any then the user is letting
    * the OS do the binding.  If @a reuse_addr == 1 then the
-   * <local_addr> is reused, even if it hasn't been cleanedup yet.
+   * @c local_addr is reused, even if it hasn't been cleanedup yet.
    */
   int connect (ACE_TLI_Stream &new_stream,
                const ACE_Addr &remote_sap,

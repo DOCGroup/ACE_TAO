@@ -86,13 +86,13 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  /// Point to object that gets passed into the <cleanup_hook_>.
+  /// Point to object that gets passed into the @c cleanup_hook_.
   void *object_ {};
 
   /// Cleanup hook that gets called back.
   ACE_CLEANUP_FUNC cleanup_hook_ {};
 
-  /// Parameter passed to the <cleanup_hook_>.
+  /// Parameter passed to the @c cleanup_hook_.
   void *param_ {};
 
   /// Name of the cleanup object

@@ -39,7 +39,7 @@ class ACE_Reactor;
  * non-localhost endpoint as the acceptor listen point because
  * it doesn't make any sense at all to make the listening
  * endpoint visible (or connectable) anywhere outside of this
- * machine.  However, the type of endpoint is left as <ACE_Addr>
+ * machine.  However, the type of endpoint is left as @c ACE_Addr
  * so we can later changed to use UNIX-domain sockets with mmap stream
  * if so desired.  (Currently, using UNIX-domain sockets, i.e.,
  * ACE_LSOCK_*, with this class will not work.)
@@ -84,10 +84,10 @@ public:
 
   /**
    * Accessor/mutator of mmap filename prefix.  By default, the
-   * <mmap_prefix_> is not set and the mmap filename is
+   * @c mmap_prefix_ is not set and the mmap filename is
    * ${(TMP|TEMP)}//ACE_MEM_Acceptor_(port-number)_(&stream),
-   * otherwise, it is <mmap_prefix_>_(port-number)_(&stream),
-   * <mmap_prefix_> should include _absolute_ path so the connector
+   * otherwise, it is @c mmap_prefix__(port-number)_(&stream),
+   * @c mmap_prefix_ should include _absolute_ path so the connector
    * within the same host can located the mmap file.  Example:
    * /tmp/mmapfile.
    */
@@ -106,7 +106,7 @@ public:
   /// Set the preferred signaling strategy.
   void preferred_strategy (ACE_MEM_IO::Signal_Strategy strategy);
 
-  /// Return the local endpoint address in the referenced <ACE_Addr>.
+  /// Return the local endpoint address in the referenced @c ACE_Addr.
   /// Returns 0 if successful, else -1.
   int get_local_addr (ACE_MEM_Addr &) const;
 

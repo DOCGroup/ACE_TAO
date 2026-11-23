@@ -209,7 +209,7 @@ public:
 
 protected:
   /// Indicates the state of the queue, which can be
-  /// <ACTIVATED>, <DEACTIVATED>, or <PULSED>.
+  /// @c ACTIVATED, @c DEACTIVATED, or @c PULSED.
   int state_;
 };
 

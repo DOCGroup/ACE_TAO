@@ -41,8 +41,8 @@ class ACE_Based_Pointer_Basic
 {
 public:
   /**
-   * This constructor initializes the <base_offset_> by asking the
-   * <ACE_BASED_POINTER_REPOSITORY> Singleton for the base address of
+   * This constructor initializes the @c base_offset_ by asking the
+   * @c ACE_BASED_POINTER_REPOSITORY Singleton for the base address of
    * the memory region within which it is instantiated.  Two results
    * are possible:
    *
@@ -61,8 +61,8 @@ public:
 
   /**
    * Initialize this object using the @a initial pointer.  This
-   * constructor initializes the <base_offset_> by asking the
-   * <ACE_BASED_POINTER_REPOSITORY> Singleton for the base address of
+   * constructor initializes the @c base_offset_ by asking the
+   * @c ACE_BASED_POINTER_REPOSITORY Singleton for the base address of
    * the memory region within which it is instantiated.  Three results
    * are possible:
    *
@@ -77,7 +77,7 @@ public:
    *    based-pointer uses its address as an offset to its base
    *    address 0.
    *
-   * 3. If @a initial is 0 then set the value of <target_> to -1, which
+   * 3. If @a initial is 0 then set the value of @c target_ to -1, which
    *    indicates a "NULL" pointer.
    */
   ACE_Based_Pointer_Basic (CONCRETE *initial);
@@ -154,7 +154,7 @@ public:
   /// details.
   ACE_Based_Pointer ();
 
-  /// Initialize this object using the <initial> pointer.  See
+  /// Initialize this object using the @c initial pointer.  See
   /// constructor for ACE_Based_Pointer_Basic for details.
   ACE_Based_Pointer (CONCRETE *initial);
 

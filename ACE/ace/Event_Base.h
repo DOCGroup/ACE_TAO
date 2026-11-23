@@ -55,10 +55,10 @@ public:
 
   /**
    * Set the underlying handle to event. Note that this method assumes
-   * ownership of the <handle> and will close it down in <remove>.  If
-   * you want the <handle> to stay open when <remove> is called make
-   * sure to call <dup> on the <handle> before closing it.  You are
-   * responsible for the closing the existing <handle> before
+   * ownership of the @c handle and will close it down in @c remove.  If
+   * you want the @c handle to stay open when @c remove is called make
+   * sure to call @c dup on the @c handle before closing it.  You are
+   * responsible for the closing the existing @c handle before
    * overwriting it.
    */
   void handle (ACE_event_t new_handle);
@@ -116,11 +116,11 @@ protected:
   /// The underlying handle.
   ACE_event_t handle_;
 
-  /// Keeps track of whether <remove> has been called yet to avoid
-  /// multiple <remove> calls, e.g., explicitly and implicitly in the
+  /// Keeps track of whether @c remove has been called yet to avoid
+  /// multiple @c remove calls, e.g., explicitly and implicitly in the
   /// destructor.  This flag isn't protected by a lock, so make sure
   /// that you don't have multiple threads simultaneously calling
-  /// <remove> on the same object, which is a bad idea anyway...
+  /// @c remove on the same object, which is a bad idea anyway...
   bool removed_ {};
 };
 

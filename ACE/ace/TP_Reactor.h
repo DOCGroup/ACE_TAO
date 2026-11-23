@@ -292,8 +292,8 @@ private:
   /// Get socket event dispatch information.
   int get_socket_event_info (ACE_EH_Dispatch_Info &info);
 
-  /// Notify the appropriate <callback> in the context of the <eh>
-  /// associated with <handle> that a particular event has occurred.
+  /// Notify the appropriate @c callback in the context of the @c eh
+  /// associated with @c handle that a particular event has occurred.
   int dispatch_socket_event (ACE_EH_Dispatch_Info &dispatch_info);
 
   /// Clear the @a handle from the read_set

@@ -84,7 +84,7 @@ public:
 
   /**
    * Note, for interface uniformity with other synchronization
-   * wrappers we include the <acquire> method.  This is implemented as
+   * wrappers we include the @c acquire method.  This is implemented as
    * a write-lock to safe...
    */
   int acquire ();

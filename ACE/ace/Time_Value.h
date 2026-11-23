@@ -41,7 +41,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * This class centralizes all the time related processing in
  * ACE.  These time values are typically used in conjunction with OS
- * mechanisms like <select>, <poll>, or <cond_timedwait>.
+ * mechanisms like @c select, @c poll, or @c cond_timedwait.
  */
 class ACE_Export ACE_Time_Value
 {
@@ -51,7 +51,7 @@ public:
 
   /**
    * Constant for maximum time representable.  Note that this time is
-   * not intended for use with <select> or other calls that may have
+   * not intended for use with @c select or other calls that may have
    * *their own* implementation-specific maximum time representations.
    * Its primary use is in time computations such as those used by the
    * dynamic subpriority strategies in the ACE_Dynamic_Message_Queue

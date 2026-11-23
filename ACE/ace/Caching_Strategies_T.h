@@ -213,9 +213,9 @@ public:
   /// @{
 
   /**
-   * The <container> is the map in which the entries reside.  The
+   * The @c container is the map in which the entries reside.  The
    * timer attribute is initialed to zero in this constructor.  And
-   * the <purge_percent> field denotes the percentage of the entries
+   * the @c purge_percent field denotes the percentage of the entries
    * in the cache which can be purged automagically and by default is
    * set to 10%.
    */
@@ -321,9 +321,9 @@ public:
   /// @{
 
   /**
-   * The <container> is the map in which the entries reside.  The
+   * The @c container is the map in which the entries reside.  The
    * timer attribute is initialed to zero in this constructor.  And
-   * the <purge_percent> field denotes the percentage of the entries
+   * the @c purge_percent field denotes the percentage of the entries
    * in the cache which can be purged automagically and by default is
    * set to 10%.
    */
@@ -419,9 +419,9 @@ public:
   /// @{
 
   /**
-   * The <container> is the map in which the entries reside.  The
+   * The @c container is the map in which the entries reside.  The
    * timer attribute is initialed to zero in this constructor.  And
-   * the <purge_percent> field denotes the percentage of the entries
+   * the @c purge_percent field denotes the percentage of the entries
    * in the cache which can be purged automagically and by default is
    * set to 10%.
    */

@@ -48,7 +48,7 @@ using ACE_Proactor_Timer_Queue = ACE_Abstract_Timer_Queue<ACE_Handler *>;
  * @brief Functor for ACE_Timer_Queue.
  *
  * This class implements the functor required by the Timer
- * Queue to call <handle_timeout> on ACE_Handlers.
+ * Queue to call @c handle_timeout on ACE_Handlers.
  */
 class ACE_Export ACE_Proactor_Handle_Timeout_Upcall
 {
@@ -184,12 +184,12 @@ public:
   /// @{
 
   /// Run the event loop until the <ACE_Proactor::handle_events> method
-  /// returns -1 or the <end_event_loop> method is invoked.
+  /// returns -1 or the @c end_event_loop method is invoked.
   static int run_event_loop ();
 
   /**
    * Run the event loop until the <ACE_Proactor::handle_events> method
-   * returns -1, the <end_event_loop> method is invoked, or the
+   * returns -1, the @c end_event_loop method is invoked, or the
    * ACE_Time_Value expires, in which case 0 is returned.
    */
   static int run_event_loop (ACE_Time_Value &tv);
@@ -204,7 +204,7 @@ public:
 
   /**
    * Resets the <ACE_Proactor::end_event_loop_> static so that the
-   * <run_event_loop> method can be restarted.
+   * @c run_event_loop method can be restarted.
    */
   static int reset_event_loop ();
 
@@ -238,14 +238,14 @@ public:
   /**
    * Run the event loop until the
    * <ACE_Proactor::handle_events>
-   * method returns -1 or the <end_proactor_event_loop> method is invoked.
+   * method returns -1 or the @c end_proactor_event_loop method is invoked.
    */
   int proactor_run_event_loop (PROACTOR_EVENT_HOOK = 0);
 
   /**
    * Run the event loop until the <ACE_Proactor::handle_events>
    * method returns -1, the
-   * <end_proactor_event_loop> method is invoked,
+   * @c end_proactor_event_loop method is invoked,
    * or the ACE_Time_Value
    * expires, in which case a 0 is returned.
    */
@@ -263,7 +263,7 @@ public:
   int proactor_event_loop_done ();
 
   /// Resets the <ACE_Proactor::end_event_loop_> static so that the
-  /// <run_event_loop> method can be restarted.
+  /// @c run_event_loop method can be restarted.
   int proactor_reset_event_loop ();
 
   /// This method adds the @a handle to the I/O completion port. This
@@ -275,15 +275,15 @@ public:
   /// @name Timer management
   /// @{
   /**
-   * Schedule a @a handler that will expire after <time>.  If it
+   * Schedule a @a handler that will expire after @c time.  If it
    * expires then @a act is passed in as the value to the @a handler's
-   * <handle_timeout> callback method.  This method returns a
-   * <timer_id>. This <timer_id> can be used to cancel a timer before
-   * it expires.  The cancellation ensures that <timer_ids> are unique
+   * @c handle_timeout callback method.  This method returns a
+   * @c timer_id. This @c timer_id can be used to cancel a timer before
+   * it expires.  The cancellation ensures that @c timer_ids are unique
    * up to values of greater than 2 billion timers.  As long as timers
    * don't stay around longer than this there should be no problems
    * with accidentally deleting the wrong timer.  Returns -1 on
-   * failure (which is guaranteed never to be a valid <timer_id>).
+   * failure (which is guaranteed never to be a valid @c timer_id).
    */
   long schedule_timer (ACE_Handler &handler,
                        const void *act,
@@ -309,10 +309,10 @@ public:
                     int dont_call_handle_close = 1);
 
   /**
-   * Cancel the single <ACE_Handler> that matches the @a timer_id value
-   * (which was returned from the <schedule> method).  If @a act is
+   * Cancel the single @c ACE_Handler that matches the @a timer_id value
+   * (which was returned from the @c schedule method).  If @a act is
    * non-NULL then it will be set to point to the ``magic cookie''
-   * argument passed in when the <Handler> was registered.  This makes
+   * argument passed in when the @c Handler was registered.  This makes
    * it possible to free up the memory and avoid memory leaks.
    * Returns 1 if cancellation succeeded and 0 if the @a timer_id
    * wasn't found.
@@ -533,7 +533,7 @@ public:
   /**
    * Create a timer result object which can be used with the Timer
    * mechanism of the Proactor.
-   * If @a signal_number is -1, <POSIX_SIG_Proactor> will create a
+   * If @a signal_number is -1, @c POSIX_SIG_Proactor will create a
    * Timer object with a meaningful signal number, choosing the
    * largest signal number from the signal mask of the Proactor.
    */
@@ -548,16 +548,16 @@ public:
 
 protected:
   /**
-   * Post <how_many> completions to the completion port so that all
+   * Post @c how_many completions to the completion port so that all
    * threads can wake up. This is used in conjunction with the
-   * <run_event_loop>.
+   * @c run_event_loop.
    */
   static int post_wakeup_completions (int how_many);
 
   /**
-   * Post <how_many> completions to the completion port so that all
+   * Post @c how_many completions to the completion port so that all
    * threads can wake up. This is used in conjunction with the
-   * <proactor_run_event_loop>.
+   * @c proactor_run_event_loop.
    */
   int proactor_post_wakeup_completions (int how_many);
 
@@ -575,7 +575,7 @@ protected:
   /// Pointer to a process-wide ACE_Proactor.
   static ACE_Proactor *proactor_;
 
-  /// Must delete the <proactor_> if true.
+  /// Must delete the @c proactor_ if true.
   static bool delete_proactor_;
 
   /// Handles timeout events.

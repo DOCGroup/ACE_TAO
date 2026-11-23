@@ -33,7 +33,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE_OS {
   /** @name Functions from <cstring>
    *
-   *  Included are the functions defined in <cstring> and their <cwchar>
+   *  Included are the functions defined in @c cstring and their @c cwchar
    *  equivalents.
    *
    *  @todo To be complete, we should add strcoll, and strxfrm.

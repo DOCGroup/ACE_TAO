@@ -1827,11 +1827,11 @@ ACE_POSIX_Asynch_Transmit_File_Result::~ACE_POSIX_Asynch_Transmit_File_Result ()
 /**
  * @class ACE_POSIX_Asynch_Transmit_Handler
  *
- * @brief Auxillary handler for doing <Asynch_Transmit_File> in
- * Unix. <ACE_POSIX_Asynch_Transmit_File> internally uses this.
+ * @brief Auxillary handler for doing @c Asynch_Transmit_File in
+ * Unix. @c ACE_POSIX_Asynch_Transmit_File internally uses this.
  *
  * This is a helper class for implementing
- * <ACE_POSIX_Asynch_Transmit_File> in Unix systems.
+ * @c ACE_POSIX_Asynch_Transmit_File in Unix systems.
  */
 class ACE_Export ACE_POSIX_Asynch_Transmit_Handler : public ACE_Handler
 {
@@ -1845,7 +1845,7 @@ public:
   ~ACE_POSIX_Asynch_Transmit_Handler () override;
 
   /// Do the transmission. All the info to do the transmission is in
-  /// the <result> member.
+  /// the @c result member.
   int transmit ();
 
 protected:

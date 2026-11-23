@@ -36,8 +36,8 @@ public:
   /// Returns true if we are set, else false.
   TYPE is_set () const;
 
-  /// Sets the <is_set_> status, returning the original value of
-  /// <is_set_>.
+  /// Sets the @c is_set_ status, returning the original value of
+  /// @c is_set_.
   TYPE set (TYPE);
 
   /// Called when object is signaled by OS (either via UNIX signals or

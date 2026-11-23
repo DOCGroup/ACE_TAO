@@ -444,7 +444,7 @@ public:
   /// Return the last message in the chain that is is use.
   const ACE_Message_Block *end () const;
 
-  /// Return the <current_> message block in chain.
+  /// Return the @c current_ message block in chain.
   const ACE_Message_Block *current () const;
 
   /// Replace the message block chain with a single message block.
@@ -585,7 +585,7 @@ private:
   /**
    * Grow the CDR stream. When it returns @a buf contains a pointer to
    * memory in the CDR stream, with at least @a size bytes ahead of it
-   * and aligned to an @a align boundary. It moved the <wr_ptr> to <buf
+   * and aligned to an @a align boundary. It moved the @c wr_ptr to <buf
    * + size>.
    */
   int grow_and_adjust (size_t size,
@@ -1247,9 +1247,9 @@ protected:
                                ACE_CDR::ULong length);
 
   /**
-   * Efficiently write @a length elements of size @a size from <x> into
-   * <output>. Before inserting the elements enough padding is added
-   * to ensure that the elements will be aligned to <align> in the
+   * Efficiently write @a length elements of size @a size from @c x into
+   * @c output. Before inserting the elements enough padding is added
+   * to ensure that the elements will be aligned to @c align in the
    * stream.
    */
   ACE_CDR::Boolean write_array (ACE_OutputCDR& output,
@@ -1259,7 +1259,7 @@ protected:
                                 ACE_CDR::ULong length);
 
   /**
-   * Exposes the stream implementation of <adjust>, this is useful in
+   * Exposes the stream implementation of @c adjust, this is useful in
    * many cases to minimize memory allocations during marshaling.
    * On success @a buf will contain a contiguous area in the CDR stream
    * that can hold @a size bytes aligned to @a align.

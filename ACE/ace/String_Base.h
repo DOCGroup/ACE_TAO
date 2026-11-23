@@ -292,7 +292,7 @@ public:
                                           size_type length = npos) const;
 
   /**
-   *  Same as <substring>.
+   *  Same as @c substring.
    *
    * @param offset Index of first desired character of the substring.
    * @param length How many characters to return starting at the offset.

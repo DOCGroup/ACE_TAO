@@ -722,7 +722,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::dump () const
 }
 
 /**
-* Removes the earliest node and then find the new <earliest_spoke_>
+* Removes the earliest node and then find the new @c earliest_spoke_
 *
 * @return The earliest timer node.
 */

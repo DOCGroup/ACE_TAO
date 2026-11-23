@@ -38,7 +38,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * see the "NOTE" below about not all combinations of parameters
  * being legal on a particular platform.
  * For the case of thread priorities, it is intended that
- * <ACE_OS::sched_params> usually be called from <main> before
+ * <ACE_OS::sched_params> usually be called from @c main before
  * any threads have been spawned.  If spawned threads inherit
  * their parent's priority (I think that's the default behavior
  * for all of our platforms), then this sets the default base
@@ -130,12 +130,12 @@ private:
   /// Scheduling policy.
   Policy policy_;
 
-  /// Default <priority_>: for setting the priority for the process, LWP,
+  /// Default @c priority_: for setting the priority for the process, LWP,
   /// or thread, as indicated by the scope_ parameter.
   ACE_Sched_Priority priority_;
 
   /**
-   * <scope_> must be one of the following:
+   * @c scope_ must be one of the following:
    *   ACE_SCOPE_PROCESS:  sets the scheduling policy for the
    *     process, and the process priority.  On some platforms,
    *     such as Win32, the scheduling policy can _only_ be
@@ -151,7 +151,7 @@ private:
   int scope_;
 
   /**
-   * The <quantum_> is for time slicing.  An ACE_Time_Value of 0 has
+   * The @c quantum_ is for time slicing.  An ACE_Time_Value of 0 has
    * special significance: it means time-slicing is disabled; with
    * that, a thread that is running on a CPU will continue to run
    * until it blocks or is preempted.  Currently ignored if the OS

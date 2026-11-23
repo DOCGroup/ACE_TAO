@@ -58,7 +58,7 @@ class ACE_Hash_Cache_Map_Manager : public ACE_CACHE_MAP_MANAGER
 {
 public:
   /**
-   * The actual value mapped to the key in the map. The <attributes>
+   * The actual value mapped to the key in the map. The @c attributes
    * are used by the strategy and is transparent to the user of this
    * class.
    */
@@ -68,12 +68,12 @@ public:
   using key_type = KEY;
   using mapped_type = VALUE;
 
-  /// Initialize a <Hash_Cache_Map_Manager> with @a size entries.
+  /// Initialize a @c Hash_Cache_Map_Manager with @a size entries.
   ACE_Hash_Cache_Map_Manager (CACHING_STRATEGY &caching_s,
                               size_t size = ACE_DEFAULT_MAP_SIZE,
                               ACE_Allocator *alloc = nullptr);
 
-  /// Close down a <Cache_Map_Manager> and release dynamically allocated
+  /// Close down a @c Cache_Map_Manager and release dynamically allocated
   /// resources.
   ~ACE_Hash_Cache_Map_Manager () = default;
 

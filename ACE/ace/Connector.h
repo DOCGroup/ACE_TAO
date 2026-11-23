@@ -200,7 +200,7 @@ public:
    * 1). @a flags and @a perms can be used to pass any flags that are
    * needed to perform specific operations such as opening a file
    * within connect with certain permissions.  If the connection fails
-   * the <close> hook on the @a svc_handler will be called
+   * the @c close hook on the @a svc_handler will be called
    * automatically to prevent resource leaks.
    */
   virtual int connect (SVC_HANDLER *&svc_handler,
@@ -213,13 +213,13 @@ public:
                        int perms = 0);
 
   /**
-   * This is a variation on the previous <connect> method.  On cached
+   * This is a variation on the previous @c connect method.  On cached
    * connectors the @a svc_handler_hint variable can be used as a hint
    * for future lookups.  Since this variable is modified in the
    * context of the internal cache its use is thread-safe.  But the
    * actual svc_handler for the current connection is returned in the
    * second parameter @a svc_handler.  If the connection fails the
-   * <close> hook on the @a svc_handler will be called automatically to
+   * @c close hook on the @a svc_handler will be called automatically to
    * prevent resource leaks.
    */
   virtual int connect (SVC_HANDLER *&svc_handler_hint,
@@ -250,7 +250,7 @@ public:
   /**
    * Cancel the @a svc_handler that was started asynchronously. Note that
    * this is the only case when the Connector does not actively close
-   * the @a svc_handler. It is left up to the caller of <cancel> to
+   * the @a svc_handler. It is left up to the caller of @c cancel to
    * decide the fate of the @a svc_handler.
    */
   virtual int cancel (SVC_HANDLER *svc_handler);
@@ -332,7 +332,7 @@ protected:
   /**
    * Bridge method for activating a @a svc_handler with the appropriate
    * concurrency strategy.  The default behavior of this method is to
-   * activate the SVC_HANDLER by calling its <open> method (which
+   * activate the SVC_HANDLER by calling its @c open method (which
    * allows the SVC_HANDLER to define its own concurrency strategy).
    * However, subclasses can override this strategy to do more
    * sophisticated concurrency activations (such as creating the
@@ -487,7 +487,7 @@ protected:
   /**
    * Bridge method for creating a SVC_HANDLER.  The strategy for
    * creating a SVC_HANDLER are configured into the Connector via
-   * it's <creation_strategy_>.  The default is to create a new
+   * it's @c creation_strategy_.  The default is to create a new
    * SVC_HANDLER only if @a sh == 0, else @a sh is unchanged.
    * However, subclasses can override this policy to perform
    * SVC_HANDLER creation in any way that they like (such as
@@ -500,7 +500,7 @@ protected:
   /**
    * Bridge method for connecting the new connection into the
    * SVC_HANDLER.  The default behavior delegates to the
-   * <PEER_CONNECTOR::connect> in the <Connect_Strategy>.
+   * <PEER_CONNECTOR::connect> in the @c Connect_Strategy.
    */
   int connect_svc_handler (SVC_HANDLER *&sh,
                            const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
@@ -513,7 +513,7 @@ protected:
   /**
    * Bridge method for connecting the new connection into the
    * SVC_HANDLER.  The default behavior delegates to the
-   * <PEER_CONNECTOR::connect> in the <Connect_Strategy>.
+   * <PEER_CONNECTOR::connect> in the @c Connect_Strategy.
    * @a sh_copy is used to obtain a copy of the @a sh pointer, but that
    * can be kept in the stack; the motivation is a bit too long to
    * include here, but basically we want to modify @a sh safely, using
@@ -532,7 +532,7 @@ protected:
   /**
    * Bridge method for activating a SVC_HANDLER with the appropriate
    * concurrency strategy.  The default behavior of this method is to
-   * activate the SVC_HANDLER by calling its <open> method (which
+   * activate the SVC_HANDLER by calling its @c open method (which
    * allows the SVC_HANDLER to define its own concurrency strategy).
    * However, subclasses can override this strategy to do more
    * sophisticated concurrency activations (such as creating the

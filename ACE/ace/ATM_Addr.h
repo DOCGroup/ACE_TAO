@@ -75,7 +75,7 @@ public:
                 u_char selector = DEFAULT_SELECTOR);
 
   /**
-   * Initializes an ACE_ATM_Addr from the <sap> which can be
+   * Initializes an ACE_ATM_Addr from the @c sap which can be
    * "atm-address" (e.g.,
    * "47.0005.80.ffe100.0000.f20f.2200.0020480694f9.00") or "hostname"
    * (e.g., "frisbee.cs.wustl.edu").
@@ -102,7 +102,7 @@ public:
            u_char selector = DEFAULT_SELECTOR);
 
   /**
-   * Initializes an ACE_ATM_Addr from the <sap> which can be
+   * Initializes an ACE_ATM_Addr from the @c sap which can be
    * "atm-address" (e.g.,
    * "47.0005.80.ffe100.0000.f20f.2200.0020480694f9.00") or "hostname"
    * (e.g., "frisbee.cs.wustl.edu").
@@ -111,7 +111,7 @@ public:
            u_char selector = DEFAULT_SELECTOR);
 
   /**
-   * Initializes an ACE_ATM_Addr from the <sap> which can be
+   * Initializes an ACE_ATM_Addr from the @c sap which can be
    * "atm-address" (e.g.,
    * "47.0005.80.ffe100.0000.f20f.2200.0020480694f9.00") or "hostname"
    * (e.g., "frisbee.cs.wustl.edu").
@@ -121,8 +121,8 @@ public:
   /**
    * Return the character representation of the ATM address (e.g.,
    * "47.0005.80.ffe100.0000.f20f.2200.0020480694f9.00") storing it in
-   * the @a addr (which is assumed to be <addrlen> bytes long). This
-   * version is reentrant.  Returns -1 if the <addrlen> of the @a addr
+   * the @a addr (which is assumed to be @c addrlen bytes long). This
+   * version is reentrant.  Returns -1 if the @c addrlen of the @a addr
    * is too small, else 0.
    */
   virtual int addr_to_string (ACE_TCHAR addr[],
@@ -131,7 +131,7 @@ public:
   /**
    * Return the character representation of the ATM address (e.g.,
    * "47.0005.80.ffe100.0000.f20f.2200.0020480694f9.00"). Returns -1
-   * if the <size> of the <buffer> is too small, else 0.(This version
+   * if the @c size of the @c buffer is too small, else 0.(This version
    * is non-reentrant since it returns a pointer to a static data
    * area.)
    */

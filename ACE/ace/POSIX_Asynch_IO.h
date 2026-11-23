@@ -94,8 +94,8 @@ public:
 
   /**
    * POSIX4 realtime signal number to be used for the
-   * operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By
-   * default, SIGRTMIN is used to issue <aio_> calls.
+   * operation. @c signal_number ranges from SIGRTMIN to SIGRTMAX. By
+   * default, SIGRTMIN is used to issue @c aio_ calls.
    */
   int signal_number () const override;
 
@@ -271,7 +271,7 @@ protected:
 /**
  * @class ACE_POSIX_Asynch_Read_Stream
  *
- * This class implements <ACE_Asynch_Read_Stream> for all POSIX
+ * This class implements @c ACE_Asynch_Read_Stream for all POSIX
  * based implementation of Proactor.
  */
 class ACE_Export ACE_POSIX_Asynch_Read_Stream : public virtual ACE_Asynch_Read_Stream_Impl,
@@ -356,7 +356,7 @@ protected:
 /**
  * @class ACE_POSIX_Asynch_Write_Stream
  *
- * @brief This class implements <ACE_Asynch_Write_Stream> for
+ * @brief This class implements @c ACE_Asynch_Write_Stream for
  *  all POSIX implementations of ACE_Proactor.
  */
 class ACE_Export ACE_POSIX_Asynch_Write_Stream : public virtual ACE_Asynch_Write_Stream_Impl,
@@ -418,16 +418,16 @@ protected:
  * @class ACE_POSIX_Asynch_Read_File
  *
  * @brief This class is a factory for starting off asynchronous reads
- *     on a file. This class implements <ACE_Asynch_Read_File> for
+ *     on a file. This class implements @c ACE_Asynch_Read_File for
  *     all POSIX implementations of Proactor.
  *
- *     Once <open> is called, multiple asynchronous <read>s can
+ *     Once @c open is called, multiple asynchronous @c reads can
  *     started using this class.  A <ACE_Asynch_Read_File::Result>
  *     will be passed back to the @c handler when the asynchronous
  *     reads completes through the <ACE_Handler::handle_read_file>
  *     callback.
  *
- *     This class differs slightly from <ACE_Asynch_Read_Stream> as it
+ *     This class differs slightly from @c ACE_Asynch_Read_Stream as it
  *     allows the user to specify an offset for the read.
  */
 class ACE_Export ACE_POSIX_Asynch_Read_File : public virtual ACE_Asynch_Read_File_Impl,
@@ -468,7 +468,7 @@ private:
  * @class ACE_POSIX_Asynch_Write_File_Result
  *
  * @brief This class provides implementation for
- *     <ACE_Asynch_Write_File_Result> for POSIX platforms.
+ *     @c ACE_Asynch_Write_File_Result for POSIX platforms.
  *
  *     This class has all the information necessary for the
  *     @c handler to uniquiely identify the completion of the
@@ -478,7 +478,7 @@ private:
  *     <ACE_Asynch_Write_Stream::Result> as it calls back
  *     <ACE_Handler::handle_write_file> on the @c handler instead of
  *     <ACE_Handler::handle_write_stream>.  No additional state is
- *     required by this class as <ACE_Asynch_Result> can store the
+ *     required by this class as @c ACE_Asynch_Result can store the
  *     @a offset.
  */
 class ACE_Export ACE_POSIX_Asynch_Write_File_Result : public virtual ACE_Asynch_Write_File_Result_Impl,
@@ -544,7 +544,7 @@ public:
 
 private:
   /**
-   * This <write> belongs to ACE_POSIX_Asynch_Write_Stream. We
+   * This @c write belongs to ACE_POSIX_Asynch_Write_Stream. We
    * have put this here to avoid compiler warnings. We forward this
    * method call to the <ACE_POSIX_Asynch_Write_Stream::write>
    * one.
@@ -634,7 +634,7 @@ public:
   ~ACE_POSIX_Asynch_Accept () override;
 
  /**
-   * This <open> belongs to ACE_POSIX_Asynch_Operation. We forward
+   * This @c open belongs to ACE_POSIX_Asynch_Operation. We forward
    * this call to that method. We have put this here to avoid the
    * compiler warnings.
    */
@@ -647,8 +647,8 @@ public:
    * This starts off an asynchronous accept.  The asynchronous accept
    * call also allows any initial data to be returned to the
    * @c handler.  Upto @a bytes_to_read will be read and stored in the
-   * @a message_block.  The <accept_handle> will be used for the
-   * <accept> call.  If (<accept_handle> == INVALID_HANDLE), a new
+   * @a message_block.  The @c accept_handle will be used for the
+   * @c accept call.  If (@c accept_handle == INVALID_HANDLE), a new
    * handle will be created.
    *
    * @a message_block must be specified. This is because the address of
@@ -681,7 +681,7 @@ public:
   void set_handle (ACE_HANDLE handle) override;
 
   /// virtual from ACE_Event_Handler
-  /// Called when accept event comes up on <listen_handle>
+  /// Called when accept event comes up on @c listen_handle
   int handle_input (ACE_HANDLE handle) override;
 
   /// virtual from ACE_Event_Handler
@@ -860,10 +860,10 @@ private:
  * @class ACE_POSIX_Asynch_Transmit_File_Result
  *
  * @brief This is that class which will be passed back to the
- *     <handler> when the asynchronous transmit file completes.
+ *     @c handler when the asynchronous transmit file completes.
  *
  *     This class has all the information necessary for the
- *     <handler> to uniquiely identify the completion of the
+ *     @c handler to uniquiely identify the completion of the
  *     asynchronous transmit file.
  */
 class ACE_Export ACE_POSIX_Asynch_Transmit_File_Result : public virtual ACE_Asynch_Transmit_File_Result_Impl,
@@ -958,12 +958,12 @@ public:
   ACE_POSIX_Asynch_Transmit_File (ACE_POSIX_Proactor *posix_proactor);
 
   /**
-   * This starts off an asynchronous transmit file. The <file> is a
-   * handle to an open file.  <header_and_trailer> is a pointer to a
+   * This starts off an asynchronous transmit file. The @c file is a
+   * handle to an open file.  @c header_and_trailer is a pointer to a
    * data structure that contains pointers to data to send before and
    * after the file data is sent.  Set this parameter to 0 if you only
    * want to transmit the file data.  Upto @a bytes_to_write will be
-   * written to the <socket>.  If you want to send the entire file,
+   * written to the @c socket.  If you want to send the entire file,
    * let @a bytes_to_write = 0.  @a bytes_per_send is the size of each
    * block of data sent per send operation. Please read the POSIX
    * documentation on what the flags should be.
@@ -988,9 +988,9 @@ public:
  * @brief This class is a factory for starting off asynchronous reads
  *     on a UDP socket.
  *
- *     Once <open> is called, multiple asynchronous <read>s can be
+ *     Once @c open is called, multiple asynchronous @c reads can be
  *     started using this class.  An ACE_Asynch_Read_Dgram::Result
- *     will be passed back to the <handler> when the asynchronous
+ *     will be passed back to the @c handler when the asynchronous
  *     reads completes through the <ACE_Handler::handle_read_stream>
  *     callback.
  */
@@ -1007,7 +1007,7 @@ public:
    * write pointer will be updated to reflect any added bytes if the read
    * operation is successful completed.
    * Priority of the operation is specified by @a priority. On POSIX4-Unix,
-   * this is supported. Works like <nice> in Unix. Negative values are not
+   * this is supported. Works like @c nice in Unix. Negative values are not
    * allowed. 0 means priority of the operation same as the process
    * priority. 1 means priority of the operation is one less than
    * process.  @a signal_number argument is a no-op on non-POSIX4 systems.

@@ -75,7 +75,7 @@ private:
  * construction/destruction.  Managed objects won't be allocated
  * until needed, but should be allocated when first needed.  And
  * they are destroyed in the reverse order of construction.
- * <get_preallocated_object> accesses a "preallocated" object,
+ * @c get_preallocated_object accesses a "preallocated" object,
  * i.e., one that is identified by a value in the
  * ACE_Object_Manager:: Preallocated_Object enum.  These objects
  * are used internally by the ACE library.

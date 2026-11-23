@@ -41,7 +41,7 @@ class ACE_Time_Value;
  * up waiting threads by signaling the associated condition
  * variable.  The waiting threads, upon awakening, reacquire the
  * mutex and re-evaluate the condition.
- * Note, you can only parameterize <ACE_Condition> with
+ * Note, you can only parameterize @c ACE_Condition with
  * @a ACE_Thread_Mutex, @a ACE_Recursive_Thread_Mutex, or @a ACE_Null_Mutex.
  */
 template <class MUTEX>
@@ -71,7 +71,7 @@ public:
 
   /**
    * Block on condition, or until absolute time-of-day has passed.  If
-   * @a abstime == 0 use "blocking" <wait> semantics.  Else, if @a abstime
+   * @a abstime == 0 use "blocking" @c wait semantics.  Else, if @a abstime
    * != 0 and the call times out before the condition is signaled
    * wait() returns -1 and sets errno to ETIME.
    */
@@ -84,7 +84,7 @@ public:
    * Block on condition or until absolute time-of-day has passed.  If
    * @a abstime == 0 use "blocking" wait() semantics on the @a mutex
    * passed as a parameter (this is useful if you need to store the
-   * <Condition> in shared memory).  Else, if @a abstime != 0 and the
+   * @c Condition in shared memory).  Else, if @a abstime != 0 and the
    * call times out before the condition is signaled wait() returns -1
    * and sets errno to ETIME.
    */

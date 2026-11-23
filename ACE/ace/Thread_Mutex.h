@@ -33,8 +33,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * process).
  *
  * This implementation is optimized for locking threads that are
- * in the same process.  It maps to <CRITICAL_SECTION>s on NT
- * and <ACE_mutex_t> with <type> set to <USYNC_THREAD> on UNIX.
+ * in the same process.  It maps to @c CRITICAL_SECTIONs on NT
+ * and @c ACE_mutex_t with @c type set to @c USYNC_THREAD on UNIX.
  * ACE_Thread_Mutex is recursive on some platforms (like
  * Win32). However, on most platforms it is not
  * recursive.  To be totally safe and portable, developers
@@ -149,10 +149,10 @@ protected:
   ACE_thread_mutex_t lock_;
 
   /// Keeps track of whether remove() has been called yet to avoid
-  /// multiple <remove> calls, e.g., explicitly and implicitly in the
+  /// multiple @c remove calls, e.g., explicitly and implicitly in the
   /// destructor.  This flag isn't protected by a lock, so make sure
   /// that you don't have multiple threads simultaneously calling
-  /// <remove> on the same object, which is a bad idea anyway...
+  /// @c remove on the same object, which is a bad idea anyway...
   bool removed_ {};
 };
 

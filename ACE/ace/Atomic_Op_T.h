@@ -192,7 +192,7 @@ public:
   /// Atomically assign rhs to @c value_.
   ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &operator= (arg_type rhs);
 
-  /// Atomically assign <rhs> to @c value_.
+  /// Atomically assign @a rhs to @c value_.
   ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &operator= (
     ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> const & rhs);
 

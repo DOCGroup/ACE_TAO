@@ -2545,7 +2545,7 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
 /// also stored in the beginning of the date_and_time array
 /// using ISO-8601 format.
 /// 012345678901234567890123456
-/// 2010-12-02 12:56:00.123456<nul>
+/// 2010-12-02 12:56:00.123456@c nul
 ACE_TCHAR *
 ACE::timestamp (const ACE_Time_Value& time_value,
                 ACE_TCHAR date_and_time[],

@@ -426,7 +426,7 @@ public:
   HKEY hKey_;
 
 protected:
-  /// Destructor - invokes <RegCloseKey>
+  /// Destructor - invokes @c RegCloseKey
   virtual ~ACE_Section_Key_Win32 ();
 
   // Not used
@@ -449,7 +449,7 @@ public:
   /**
    * Constructor for registry configuration database.  hKey is the
    * base registry key to attach to.  This class takes ownership of
-   * hKey, it will invoke <RegCloseKey> on it upon destruction.
+   * hKey, it will invoke @c RegCloseKey on it upon destruction.
    */
   explicit ACE_Configuration_Win32Registry (HKEY hKey,
                                             u_long security_access = KEY_ALL_ACCESS);
@@ -509,7 +509,7 @@ public:
                             const ACE_TCHAR* name);
 
   /**
-   * This method traverses <path> through <hKey>.  It is useful when
+   * This method traverses @c path through @c hKey.  It is useful when
    * you want the HKEY for a specific registry key, especially when
    * initializing this implementation.  Caller is responsible for
    * closeing this key when it is no longer used.  If create is 1
@@ -843,7 +843,7 @@ private:
                    const ACE_TCHAR *sub_section,
                    ACE_Configuration_Section_Key &result);
 
-  /// Helper for the <open> method.
+  /// Helper for the @c open method.
   int create_index ();
 
   /// Helper for create_index() method: places hash table into an

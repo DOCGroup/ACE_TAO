@@ -266,7 +266,7 @@ ACE_SPIPE_Stream::recvv_n (iovec iov[],
                         n);
 }
 
-/// Send an <iovec> of size <n> to the Stream.
+/// Send an @c iovec of size @c n to the Stream.
 
 ACE_INLINE ssize_t
 ACE_SPIPE_Stream::sendv (const iovec iov[],

@@ -33,12 +33,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * IO completion port mechanism.
  * @note *Many* ACE_Message_Queue features are not supported with
  * this implementation, including:
- * * <open> method have different signatures.
- * * <dequeue_head> *requires* that the ACE_Message_Block
+ * * @c open method have different signatures.
+ * * @c dequeue_head *requires* that the ACE_Message_Block
  * pointer argument point to an ACE_Message_Block that was
  * allocated by the caller.
- * * <peek_dequeue_head>.
- * * <ACE_Message_Queue_Iterators>.
+ * * @c peek_dequeue_head.
+ * * @c ACE_Message_Queue_Iterators.
  * * No flow control.
  */
 class ACE_Export ACE_Message_Queue_NT : public ACE_Message_Queue_Base
@@ -166,8 +166,8 @@ public:
    */
   virtual int pulse ();
 
-  /// Returns true if the state of the queue is <DEACTIVATED>,
-  /// but false if the queue's is <ACTIVATED> or <PULSED>.
+  /// Returns true if the state of the queue is @c DEACTIVATED,
+  /// but false if the queue's is @c ACTIVATED or @c PULSED.
   virtual int deactivated ();
   /// @}
 

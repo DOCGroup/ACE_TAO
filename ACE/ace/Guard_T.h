@@ -134,7 +134,7 @@ private:
  *
  * @brief This class is similar to class ACE_Guard, though it
  * acquires/releases a write lock automatically (naturally, the
- * <ACE_LOCK> it is instantiated with must support the appropriate
+ * @c ACE_LOCK it is instantiated with must support the appropriate
  * API).
  *
  * @warning See important "WARNING" in comments at top of ACE_Guard.
@@ -183,7 +183,7 @@ public:
  *
  * @brief This class is similar to class ACE_Guard, though it
  * acquires/releases a read lock automatically (naturally, the
- * <ACE_LOCK> it is instantiated with must support the appropriate
+ * @c ACE_LOCK it is instantiated with must support the appropriate
  * API).
  *
  * @warning See important "WARNING" in comments at top of ACE_Guard.

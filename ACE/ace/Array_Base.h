@@ -80,10 +80,10 @@ public:
   /**
    * Assignment operator performs an assignment by making an exact
    * copy of the contents of parameter @a s, i.e., *this == s will
-   * return true.  Note that if the <max_size_> of <array_> is >= than
+   * return true.  Note that if the @c max_size_ of @c array_ is >= than
    * <s.max_size_> we can copy it without reallocating.  However, if
-   * <max_size_> is < <s.max_size_> we must delete the <array_>,
-   * reallocate a new <array_>, and then copy the contents of <s>.
+   * @c max_size_ is < <s.max_size_> we must delete the @c array_,
+   * reallocate a new @c array_, and then copy the contents of <s>.
    */
   void operator= (ACE_Array_Base<T> const &s);
   void operator= (ACE_Array_Base<T> &&) = delete;
@@ -114,7 +114,7 @@ public:
    */
   int get (T &item, size_type slot) const;
 
-  /// Returns the <cur_size_> of the array.
+  /// Returns the @c cur_size_ of the array.
   size_type size () const;
 
   /**
@@ -124,7 +124,7 @@ public:
    */
   int size (size_type new_size);
 
-  /// Returns the <max_size_> of the array.
+  /// Returns the @c max_size_ of the array.
   size_type max_size () const;
 
   /**
@@ -167,8 +167,8 @@ protected:
 
   /**
    * Current size of the array.  This starts out being == to
-   * <max_size_>.  However, if we are assigned a smaller array, then
-   * <cur_size_> will become less than <max_size_>.  The purpose of
+   * @c max_size_.  However, if we are assigned a smaller array, then
+   * @c cur_size_ will become less than @c max_size_.  The purpose of
    * keeping track of both sizes is to avoid reallocating memory if we
    * don't have to.
    */

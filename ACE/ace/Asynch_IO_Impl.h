@@ -75,7 +75,7 @@ public:
   /**
    * POSIX4 real-time signal number to be used for the
    * operation. signal_number ranges from SIGRTMIN to SIGRTMAX. By
-   * default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
+   * default, SIGRTMIN is used to issue @c aio_ calls. This is a no-op
    * on non-POSIX4 systems and returns 0.
    */
   virtual int signal_number () const = 0;
@@ -438,9 +438,9 @@ public:
   /**
    * This starts off an asynchronous accept.  The asynchronous accept
    * call also allows any initial data to be returned to the
-   * <handler>.  Upto @a bytes_to_read will be read and stored in the
+   * @c handler.  Upto @a bytes_to_read will be read and stored in the
    * @a message_block.  The @a accept_handle will be used for the
-   * <accept> call.  If (@a accept_handle == INVALID_HANDLE), a new
+   * @c accept call.  If (@a accept_handle == INVALID_HANDLE), a new
    * handle will be created.
    *
    * @a message_block must be specified. This is because the address of
@@ -611,9 +611,9 @@ public:
 
   /** This starts off an asynchronous read.  Upto
    * <message_block->total_size()> will be read and stored in the
-   * @a message_block.  @a message_block's <wr_ptr> will be updated to reflect
+   * @a message_block.  @a message_block's @c wr_ptr will be updated to reflect
    * the added bytes if the read operation is successful completed.
-   * Return code of 1 means immediate success and <number_of_bytes_recvd>
+   * Return code of 1 means immediate success and @c number_of_bytes_recvd
    * will contain number of bytes read.  The <ACE_Handler::handle_read_dgram>
    * method will still be called.  Return code of 0 means the IO will
    * complete proactively.  Return code of -1 means there was an error, use
@@ -621,13 +621,13 @@ public:
    *
    * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
    * method.  Up to ACE_IOV_MAX @a message_block's are supported.  Upto
-   * <message_block->size()> bytes will be read into each <message block> for
+   * <message_block->size()> bytes will be read into each @c message_block for
    * a total of <message_block->total_size()> bytes.  All @a message_block's
-   * <wr_ptr>'s will be updated to reflect the added bytes for each
+   * @c wr_ptr's will be updated to reflect the added bytes for each
    * @a message_block
    *
    * Priority of the operation is specified by @a priority. On POSIX4-Unix,
-   * this is supported. Works like <nice> in Unix. Negative values are not
+   * this is supported. Works like @c nice in Unix. Negative values are not
    * allowed. 0 means priority of the operation same as the process
    * priority. 1 means priority of the operation is one less than
    * process. And so forth. On Win32, @a priority is a no-op.
@@ -693,9 +693,9 @@ public:
 
   /** This starts off an asynchronous send.  Upto
    * <message_block->total_length()> will be sent.  @a message_block's
-   * <rd_ptr> will be updated to reflect the sent bytes if the send operation
+   * @c rd_ptr will be updated to reflect the sent bytes if the send operation
    * is successful completed.
-   * Return code of 1 means immediate success and <number_of_bytes_sent>
+   * Return code of 1 means immediate success and @c number_of_bytes_sent
    * is updated to number of bytes sent.  The <ACE_Handler::handle_write_dgram>
    * method will still be called.  Return code of 0 means the IO will
    * complete proactively.  Return code of -1 means there was an error, use
@@ -703,13 +703,13 @@ public:
    *
    * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
    * method.  Up to ACE_IOV_MAX @a message_block's are supported.  Upto
-   * <message_block->length()> bytes will be sent from each <message block>
+   * <message_block->length()> bytes will be sent from each @c message_block
    * for a total of <message_block->total_length()> bytes.  All
-   * @a message_block's <rd_ptr>'s will be updated to reflect the bytes sent
+   * @a message_block's @c rd_ptr's will be updated to reflect the bytes sent
    * from each @a message_block.
    *
    * Priority of the operation is specified by @a priority. On POSIX4-Unix,
-   * this is supported. Works like <nice> in Unix. Negative values are not
+   * this is supported. Works like @c nice in Unix. Negative values are not
    * allowed. 0 means priority of the operation same as the process
    * priority. 1 means priority of the operation is one less than
    * process. And so forth. On Win32, this argument is a no-op.

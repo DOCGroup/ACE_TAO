@@ -137,12 +137,12 @@ public:
 
   /**
    * This function is called in response to a request from the Service
-   * Dispatcher.  It must interact with the <svc> function to effect the
+   * Dispatcher.  It must interact with the @c svc function to effect the
    * requested control operation.  The default implementation handles
    * all requests as follows:
    *    SERVICE_CONTROL_STOP: set stop pending, set cancel flag
-   *    SERVICE_CONTROL_PAUSE: set pause pending, <suspend>, set paused
-   *    SERVICE_CONTROL_CONTINUE: set continue pending, <resume>, set running
+   *    SERVICE_CONTROL_PAUSE: set pause pending, @c suspend, set paused
+   *    SERVICE_CONTROL_CONTINUE: set continue pending, @c resume, set running
    *    SERVICE_CONTROL_INTERROGATE: reports current status
    *    SERVICE_CONTROL_SHUTDOWN: same as SERVICE_CONTROL_STOP.
    */
@@ -300,7 +300,7 @@ public:
    */
   DWORD state (ACE_Time_Value *wait_hint = nullptr);
 
-  /// A version of <state> that returns -1 for failure, 0 for success.
+  /// A version of @c state that returns -1 for failure, 0 for success.
   /// The DWORD pointed to by @a pstate receives the state value.
   int state (DWORD *pstate, ACE_Time_Value *wait_hint = nullptr);
 
@@ -339,16 +339,16 @@ protected:
   void wait_for_service_state (DWORD desired_state,
                                ACE_Time_Value *wait_time);
 
-  /// Called by <handle_control> when a stop/shutdown was requested.
+  /// Called by @c handle_control when a stop/shutdown was requested.
   virtual void stop_requested (DWORD control_code);
 
-  /// Called by <handle_control> when a pause was requested.
+  /// Called by @c handle_control when a pause was requested.
   virtual void pause_requested (DWORD control_code);
 
-  /// Called by <handle_control> when a continue was requested.
+  /// Called by @c handle_control when a continue was requested.
   virtual void continue_requested (DWORD control_code);
 
-  /// Called by <handle_control> when a interrogate was requested.
+  /// Called by @c handle_control when a interrogate was requested.
   virtual void interrogate_requested (DWORD control_code);
 
 protected:

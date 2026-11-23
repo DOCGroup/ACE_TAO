@@ -545,13 +545,13 @@ protected:
   /// True if we've been initialized yet...
   bool initialized_ {};
 
-  /// Restart the <handle_events> event-loop method automatically when
+  /// Restart the @c handle_events event-loop method automatically when
   /// @c select() is interrupted via @c EINTR.
   bool restart_ {};
 
   /**
    * Position that the main ACE_Select_Reactor thread is requeued in
-   * the list of waiters during a <notify> callback.  If this value ==
+   * the list of waiters during a @c notify callback.  If this value ==
    * -1 we are requeued at the end of the list.  Else if it's 0 then
    * we are requeued at the front of the list.  Else if it's > 1 then
    * that indicates the number of waiters to skip over.

@@ -170,7 +170,7 @@ public:
   /// Returns the current thread hook for the process.
   static ACE_Thread_Hook *thread_hook ();
 
-  /// Returns the existing thread hook and assign a <new_thread_hook>.
+  /// Returns the existing thread hook and assign a @c new_thread_hook.
   static ACE_Thread_Hook *thread_hook (ACE_Thread_Hook *new_thread_hook);
 
 #if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)

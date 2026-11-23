@@ -262,7 +262,7 @@ public:
 
   /**
    * Reassociate @a ext_id with @a int_id.  If @a ext_id is not in the
-   * map then behaves just like <bind>.  Returns 0 if a new entry is
+   * map then behaves just like @c bind.  Returns 0 if a new entry is
    * bound successfully, returns 1 if an existing entry was rebound,
    * and returns -1 if failures occur.
    */
@@ -280,7 +280,7 @@ public:
 
   /**
    * Associate @a ext_id with @a int_id.  If @a ext_id is not in the map
-   * then behaves just like <bind>.  Otherwise, store the old value of
+   * then behaves just like @c bind.  Otherwise, store the old value of
    * @a int_id into the "out" parameter and rebind the new parameters.
    * Returns 0 if a new entry is bound successfully, returns 1 if an
    * existing entry was rebound, and returns -1 if failures occur.
@@ -301,7 +301,7 @@ public:
 
   /**
    * Associate @a ext_id with @a int_id.  If @a ext_id is not in the map
-   * then behaves just like <bind>.  Otherwise, store the old values
+   * then behaves just like @c bind.  Otherwise, store the old values
    * of @a ext_id and @a int_id into the "out" parameters and rebind the
    * new parameters.  This is very useful if you need to have an
    * atomic way of updating ACE_Hash_Map_Entrys and you also need
@@ -387,12 +387,12 @@ public:
   size_t total_size () const;
 
   /**
-   * Returns a reference to the underlying <ACE_LOCK>.  This makes it
+   * Returns a reference to the underlying @c ACE_LOCK.  This makes it
    * possible to acquire the lock explicitly, which can be useful in
    * some cases if you instantiate the ACE_Atomic_Op with an
    * ACE_Recursive_Mutex or ACE_Process_Mutex, or if you need to
    * guard the state of an iterator.
-   * @note The right name would be <lock>, but HP/C++ will choke on that!
+   * @note The right name would be @c lock, but HP/C++ will choke on that!
    */
   ACE_LOCK &mutex ();
 
@@ -419,7 +419,7 @@ public:
 protected:
   /// The following methods do the actual work.
 
-  /// Returns 1 if <id1> == <id2>, else 0.  This is defined as a
+  /// Returns 1 if @c id1 == @c id2, else 0.  This is defined as a
   /// separate method to facilitate template specialization.
   int equal (const EXT_ID &id1, const EXT_ID &id2);
 
@@ -511,11 +511,11 @@ protected:
    */
   int create_buckets (size_t size);
 
-  /// Close down a <Map_Manager_Ex>.  Must be called with
+  /// Close down a @c Map_Manager_Ex.  Must be called with
   /// locks held.
   int close_i ();
 
-  /// Removes all the entries in <Map_Manager_Ex>.  Must be called with
+  /// Removes all the entries in @c Map_Manager_Ex.  Must be called with
   /// locks held.
   int unbind_all_i ();
 
@@ -551,7 +551,7 @@ private:
   /**
    * Array of ACE_Hash_Map_Entry *s, each of which points to an
    * ACE_Hash_Map_Entry that serves as the beginning of a linked
-   * list of <EXT_ID>s that hash to that bucket.
+   * list of @c EXT_IDs that hash to that bucket.
    */
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *table_ {};
 
@@ -559,7 +559,7 @@ private:
   size_t total_size_ {};
 
   /// Current number of entries in the table
-  /// @note That this can be larger than <total_size_> due to the
+  /// @note That this can be larger than @c total_size_ due to the
   /// bucket chaining).
   size_t cur_size_ {};
 };
@@ -612,7 +612,7 @@ public:
 
   /// ITERATION methods.
 
-  /// Pass back the next <entry> that hasn't been seen in the Set.
+  /// Pass back the next @c entry that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
   int next (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&next_entry) const;
 
@@ -687,7 +687,7 @@ public:
 
   /// ITERATION methods.
 
-  /// Pass back the next <entry> that hasn't been seen in the Set.
+  /// Pass back the next @c entry that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
   int next (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&next_entry) const;
 
@@ -861,7 +861,7 @@ public:
  *
  * @brief Forward iterator for the ACE_Hash_Map_Manager_Ex which
  * only traverses a particular bucket.  The particular bucket is
- * specified by the <EXT_ID> parameter specified in the constructor.
+ * specified by the @c EXT_ID parameter specified in the constructor.
  *
  * This class does not perform any internal locking of the
  * ACE_Hash_Map_Manager_Ex it is iterating upon since locking is
@@ -1006,7 +1006,7 @@ public:
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
  * ACE_GUARD or ACE_READ_GUARD on the ACE_Hash_Map_Manager_Ex's
- * internal lock, which is accessible via its <mutex> method.
+ * internal lock, which is accessible via its @c mutex method.
  */
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_Hash_Map_Const_Reverse_Iterator_Ex : public ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
@@ -1057,8 +1057,8 @@ public:
  * @brief Wrapper for backward compatibility.
  *
  * This implementation of a map uses a hash table.  This class
- * expects that the <EXT_ID> contains a method called <hash>.
- * In addition, the <EXT_ID> must support <operator==>.  Both of
+ * expects that the @c EXT_ID contains a method called @c hash.
+ * In addition, the @c EXT_ID must support <operator==>.  Both of
  * these constraints can be alleviated via template
  * specialization, as shown in the $ACE_ROOT/tests/Conn_Test.cpp
  * test.

@@ -44,7 +44,7 @@ template <ACE_SYNCH_DECL, class TIME_POLICY> class ACE_Module;
  * Now specialized version of ACE_Task with ACE_Message_Block as its
  * ACE_MESSAGE_TYPE...
  *
- * template <ACE_SYNCH_DECL>
+ * template @c ACE_SYNCH_DECL
  * class ACE_Task <ACE_SYNCH_USE, ACE_Message_Block> : public ACE_Task_Base
  * {
  *   // put here the good old ACE_Task code
@@ -150,8 +150,8 @@ public: // Should be protected:
   /**
    * Flush the task's queue, i.e., free all of the enqueued
    * message blocks and releases any threads blocked on the queue.
-   * Note that if this conflicts with the C++ iostream <flush>
-   * function, just rewrite the iostream function as ::<flush>.
+   * Note that if this conflicts with the C++ iostream @c flush
+   * function, just rewrite the iostream function as ::@c flush.
    */
   int flush (u_long flag = ACE_Task_Flags::ACE_FLUSHALL);
 

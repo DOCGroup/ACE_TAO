@@ -69,7 +69,7 @@ protected:
   /// Current position in the timing wheel
   u_int spoke_;
 
-  /// Pointer to the position in the the <pos_>th list
+  /// Pointer to the position in the the @c pos_th list
   ACE_Timer_Node_T<TYPE> *current_node_ {};
 private:
   void goto_next(u_int start_spoke);
@@ -134,7 +134,7 @@ public:
                       ACE_Time_Value const &interval) override;
 
   /// Cancel all timer associated with @a type.  If @a dont_call_handle_close is
-  /// 0 then the <functor> will be invoked.  Returns number of timers
+  /// 0 then the @c functor will be invoked.  Returns number of timers
   /// cancelled.
   int cancel (TYPE const &type,
               int dont_call_handle_close = 1) override;
@@ -151,17 +151,17 @@ public:
    */
   int close () override;
 
-  /// Run the <functor> for all timers whose values are <=
-  /// <ACE_OS::gettimeofday>.  Also accounts for <timer_skew>.  Returns
+  /// Run the @c functor for all timers whose values are <=
+  /// @c ACE_OS::gettimeofday(). Also accounts for @c timer_skew. Returns
   /// the number of timers canceled.
   int expire () override;
 
-  /// Run the <functor> for all timers whose values are <= @a current_time.
-  /// This does not account for <timer_skew>.  Returns the number of
+  /// Run the @c functor for all timers whose values are <= @a current_time.
+  /// This does not account for @c timer_skew. Returns the number of
   /// timers canceled.
   int expire (ACE_Time_Value const &current_time) override;
 
-  /// Returns a pointer to this <ACE_Timer_Queue_T>'s iterator.
+  /// Returns a pointer to this @c ACE_Timer_Queue_T's iterator.
   ACE_Timer_Queue_Iterator_T<TYPE> &iter () override;
 
   /// Removes the earliest node from the queue and returns it

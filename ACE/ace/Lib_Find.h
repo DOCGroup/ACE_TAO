@@ -46,10 +46,10 @@ namespace ACE
 
   /**
    * Transforms @a entry_point into a form that can be located in a
-   * dynamic library using <dlsym>. For example, with Win32/Borland
+   * dynamic library using @c dlsym. For example, with Win32/Borland
    * extern "C" functions which use the default calling convention
    * have a '_' prepended. Always returns a buffer that has been
-   * dynamically allocated using <operator new>.
+   * dynamically allocated using @c operator new.
    */
   extern ACE_Export ACE_TCHAR *ldname (const ACE_TCHAR *entry_point);
 

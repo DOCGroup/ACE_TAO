@@ -32,10 +32,10 @@ class ACE_Time_Value;
  *
  * @brief Defines a factory that creates new ACE_Associations passively.
  *
- * The <ACE_SOCK_SEQPACK_Acceptor> has its own "passive-mode" socket.
+ * The @c ACE_SOCK_SEQPACK_Acceptor has its own "passive-mode" socket.
  * This serves as a factory to create so-called "data-mode"
  * sockets, which are what the ACE_SOCK_SEQPACK_Association encapsulates.
- * Therefore, by inheriting from <ACE_SOCK>, <ACE_SOCK_SEQPACK_Acceptor>
+ * Therefore, by inheriting from @c ACE_SOCK, @c ACE_SOCK_SEQPACK_Acceptor
  * gets its very own socket.
  */
 class ACE_Export ACE_SOCK_SEQPACK_Acceptor : public ACE_SOCK
@@ -115,11 +115,11 @@ public:
   /// @{
   /**
    * Accept a new ACE_SOCK_SEQPACK_Association connection.  A @a timeout of 0
-   * means block forever, a @a timeout of {0, 0} means poll.  <restart>
+   * means block forever, a @a timeout of {0, 0} means poll.  @c restart
    * == 1 means "restart if interrupted," i.e., if errno == EINTR.
-   * Note that <new_association> inherits the "blocking mode" of @c this
-   * <ACE_SOCK_SEQPACK_Acceptor>, i.e., if @c this acceptor factory is in
-   * non-blocking mode, the <net_association> will be in non-blocking mode
+   * Note that @c new_association inherits the "blocking mode" of @c this
+   * @c ACE_SOCK_SEQPACK_Acceptor, i.e., if @c this acceptor factory is in
+   * non-blocking mode, the @c net_association will be in non-blocking mode
    * and vice versa.
    */
   int accept (ACE_SOCK_SEQPACK_Association &new_association,
@@ -156,8 +156,8 @@ protected:
                             bool reset_new_handle) const;
 
   /**
-   * This method factors out the common <open> code and is called by
-   * both the QoS-enabled <open> method and the BSD-style <open>
+   * This method factors out the common @c open code and is called by
+   * both the QoS-enabled @c open method and the BSD-style @c open
    * method.
    */
   int shared_open (const ACE_Addr &local_sap,

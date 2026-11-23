@@ -31,13 +31,13 @@ class ACE_Time_Value;
  *
  * @brief Process Options
  *
- * This class controls the options passed to <CreateProcess> (or <fork>
- * and <exec>).
- * Notice that on UNIX platforms, if the <setenv> is used, the
- * <spawn> is using the <execve> system call. It means that the
- * <command_line> should include a full path to the program file
- * (<execve> does not search the PATH).  If <setenv> is not used
- * then, the <spawn> is using the <execvp> which searches for the
+ * This class controls the options passed to @c CreateProcess (or @c fork
+ * and @c exec).
+ * Notice that on UNIX platforms, if the @c setenv is used, the
+ * @c spawn is using the @c execve system call. It means that the
+ * @c command_line should include a full path to the program file
+ * (@c execve does not search the PATH).  If @c setenv is not used
+ * then, the @c spawn is using the @c execvp which searches for the
  * program file in the PATH variable.
  */
 class ACE_Export ACE_Process_Options
@@ -222,7 +222,7 @@ public:
 
   /**
    * argv-style command-line options.  Parses and modifies the string
-   * created from <command_line_>.  All spaces not in quotes ("" or
+   * created from @c command_line_.  All spaces not in quotes ("" or
    * '') are replaced with null (\0) bytes.  An argv array is built
    * and returned with each entry pointing to the start of
    * null-terminated string.  Returns { 0 } if nothing has been set.

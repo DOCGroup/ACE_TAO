@@ -338,7 +338,7 @@ public:
   /// Suspend all @a handles in handle set temporarily.
   virtual int suspend_handler (const ACE_Handle_Set &handles) = 0;
 
-  /// Suspend all <handles> temporarily.
+  /// Suspend all @c handles temporarily.
   virtual int suspend_handlers () = 0;
 
   /// Resume @a event_handler. Uses ACE_Event_Handler::get_handle() to
@@ -428,7 +428,7 @@ public:
   virtual int schedule_wakeup (ACE_Event_Handler *event_handler,
                                ACE_Reactor_Mask masks_to_be_added) = 0;
 
-  /// Add @a masks_to_be_added to the @a handle's entry.  <event_handler>
+  /// Add @a masks_to_be_added to the @a handle's entry.  @c event_handler
   /// associated with @a handle must already have been registered.
   virtual int schedule_wakeup (ACE_HANDLE handle,
                                ACE_Reactor_Mask masks_to_be_added) = 0;

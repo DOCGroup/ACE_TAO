@@ -54,7 +54,7 @@ public:
                       , long cancel_flags = 0);
 
   /**
-   * Execute the <user_func_> with the <arg>.  This function deletes
+   * Execute the @c user_func_ with the @c arg.  This function deletes
    * @c this, thereby rendering the object useless after the call
    * returns.
    */

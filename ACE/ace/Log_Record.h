@@ -110,13 +110,13 @@ public:
   void category (ACE_Log_Category_TSS*);
 
   /**
-   * Get the priority of the Log_Record <type_>.  This is computed
-   * as the base 2 logarithm of <type_> (which must be a power of 2,
+   * Get the priority of the Log_Record @c type_.  This is computed
+   * as the base 2 logarithm of @c type_ (which must be a power of 2,
    * as defined by the enums in ACE_Log_Priority).
    */
   u_long priority () const;
 
-  /// Set the priority of the Log_Record <type_> (which must be a
+  /// Set the priority of the Log_Record @c type_ (which must be a
   /// power of 2, as defined by the enums in ACE_Log_Priority).
   void priority (u_long num);
 

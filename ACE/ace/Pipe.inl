@@ -78,7 +78,7 @@ ACE_Pipe::recvv_n (iovec iov[], int n) const
 #endif /* ACE_WIN32 */
 }
 
-/// Send an <iovec> of size <n> to the file.
+/// Send an @c iovec of size @c n to the file.
 
 ACE_INLINE ssize_t
 ACE_Pipe::sendv (const iovec iov[], int n) const

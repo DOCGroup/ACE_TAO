@@ -130,17 +130,17 @@ public:
    * buffer to read.  This method determines how much data is in the
    * file, allocates a buffer of this size, reads in the data, and
    * returns the number of bytes read.  The caller is responsible for
-   * deleting the member in the <iov_base> field of <io_vec> using
+   * deleting the member in the @c iov_base field of @c io_vec using
    * delete [] io_vec->iov_base.
    */
   ssize_t recvv (iovec *io_vec);
 
-  /// Send an <iovec> of size @a n to the file.  Will block until all
+  /// Send an @c iovec of size @a n to the file.  Will block until all
   /// bytes are sent or an error occurs.
   ssize_t sendv_n (const iovec iov[],
                    int n) const;
 
-  /// Receive an <iovec> of size @a n to the file.
+  /// Receive an @c iovec of size @a n to the file.
   ssize_t recvv_n (iovec iov[],
                    int n) const;
 

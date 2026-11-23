@@ -21,7 +21,7 @@ ACE_Thread_Control::status ()
   return this->status_;
 }
 
-/// Returns the current <Thread_Manager>.
+/// Returns the current @c Thread_Manager.
 
 ACE_INLINE ACE_Thread_Manager *
 ACE_Thread_Control::thr_mgr ()
@@ -30,8 +30,8 @@ ACE_Thread_Control::thr_mgr ()
   return this->tm_;
 }
 
-/// Atomically set a new <Thread_Manager> and return the old
-/// <Thread_Manager>.
+/// Atomically set a new @c Thread_Manager and return the old
+/// @c Thread_Manager.
 
 ACE_INLINE ACE_Thread_Manager *
 ACE_Thread_Control::thr_mgr (ACE_Thread_Manager *tm)

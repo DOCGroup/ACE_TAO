@@ -475,7 +475,7 @@ private:
   static int close ();
 
   /// Perform user-specified close hooks and possibly delete all of the
-  /// configured services in the <Service_Repository>.
+  /// configured services in the @c Service_Repository.
   static int fini_svcs ();
 
   /// True if reconfiguration occurred.
@@ -530,9 +530,9 @@ private:
   /**
    * Suspend @a svc_name.  Note that this will not unlink the service
    * from the daemon if it was dynamically linked, it will mark it as
-   * being suspended in the Service Repository and call the <suspend>
+   * being suspended in the Service Repository and call the @c suspend
    * member function on the appropriate ACE_Service_Object.  A
-   * service can be resumed later on by calling the <RESUME> member
+   * service can be resumed later on by calling the @c RESUME member
    * function...
    */
   static int suspend (const ACE_TCHAR svc_name[]);

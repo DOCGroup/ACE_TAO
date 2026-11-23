@@ -36,7 +36,7 @@ namespace ACE_OS {
 
   /** @name Functions from <cctype>
    *
-   *  Included are the functions defined in <cctype> and their <cwctype>
+   *  Included are the functions defined in @c cctype and their @c cwctype
    *  equivalents.
    *
    *  Since they are often implemented as macros, we don't use the same name

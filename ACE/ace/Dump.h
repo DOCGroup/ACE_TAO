@@ -116,7 +116,7 @@ public:
   /// Add the tuple <dumper, this_> to the list of registered ACE objects.
   void register_object (const ACE_Dumpable *dumper);
 
-  /// Use <this_> to locate and remove the associated <dumper> from the
+  /// Use @c this_ to locate and remove the associated @c dumper from the
   /// list of registered ACE objects.
   void remove_object (const void *this_);
 
@@ -152,7 +152,7 @@ private:
   /// changed to be dynamic.
   Tuple object_table_[ACE_ODB::MAX_TABLE_SIZE];
 
-  /// Current size of <object_table_>.
+  /// Current size of @c object_table_.
   int current_size_ {};
 };
 

@@ -30,7 +30,7 @@ class ACE_NS_WString;
  * with the Map_Manager.
  *
  * In order to work correctly, this class must be able to
- * convert back and forth with <ACE_NS_WStrings>.
+ * convert back and forth with @c ACE_NS_WStrings.
  */
 class ACE_Export ACE_NS_String
 {

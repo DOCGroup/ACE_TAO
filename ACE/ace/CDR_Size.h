@@ -141,13 +141,13 @@ private:
 
   /**
    * write an array of @a length elements, each of @a size bytes and the
-   * start aligned at a multiple of <align>. The elements are assumed
+   * start aligned at a multiple of @c align. The elements are assumed
    * to be packed with the right alignment restrictions.  It is mostly
    * designed for buffers of the basic types.
    *
-   * This operation uses <memcpy>; as explained above it is expected
-   * that using assignment is faster that <memcpy> for one element,
-   * but for several elements <memcpy> should be more efficient, it
+   * This operation uses @c memcpy; as explained above it is expected
+   * that using assignment is faster that @c memcpy for one element,
+   * but for several elements @c memcpy should be more efficient, it
    * could be interesting to find the break even point and optimize
    * for that case, but that would be too platform dependent.
    */

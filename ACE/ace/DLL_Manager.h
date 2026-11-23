@@ -135,7 +135,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  /// Returns a string explaining why <symbol> or <open>
+  /// Returns a string explaining why @c symbol or @c open
   /// failed in @a err.  This is used internal to print out the error to the log,
   /// but since this object is shared, we can't store or return the error
   /// to the caller.

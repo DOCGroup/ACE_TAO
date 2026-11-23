@@ -102,7 +102,7 @@ private:
 
   /**
    * Set the result value.  The specified @a caller represents the
-   * future that invoked this <set> method, which is used to notify
+   * future that invoked this @c set method, which is used to notify
    * the list of future observers. Returns 0 for success, -1 on error.
    * This function only has an effect the first time it is called for
    * the object. Subsequent calls return 0 (success) but have no effect.
@@ -142,7 +142,7 @@ private:
    * available.  Note that this method is going away in a subsequent
    * release since it doesn't distinguish between failure results and
    * success results (exceptions should be used, but they aren't
-   * portable...).  The <get> method should be used instead since it
+   * portable...).  The @c get method should be used instead since it
    * separates the error value from the result, and also permits
    * timeouts.
    */
@@ -352,7 +352,7 @@ public:
 
 private:
   /// The ACE_Future_Rep
-  /// Protect operations on the <Future>.
+  /// Protect operations on the @c Future.
   using FUTURE_REP = ACE_Future_Rep<T>;
   FUTURE_REP *future_rep_;
 };

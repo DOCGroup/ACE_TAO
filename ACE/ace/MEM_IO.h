@@ -49,7 +49,7 @@ public:
             MALLOC_OPTIONS *options) override;
 
   /**
-   * Fetch location of next available data into <recv_buffer_>.
+   * Fetch location of next available data into @c recv_buffer_.
    * As this operation read the address of the data off the socket
    * using ACE::recv, @a timeout only applies to ACE::recv.
    */
@@ -58,7 +58,7 @@ public:
                     const ACE_Time_Value *timeout) override;
 
   /**
-   * Wait to to @a timeout amount of time to send @a buf.  If <send>
+   * Wait to to @a timeout amount of time to send @a buf.  If @c send
    * times out a -1 is returned with @c errno == ETIME.  If it succeeds
    * the number of bytes sent is returned.  */
   ssize_t send_buf (ACE_MEM_SAP_Node *buf,
@@ -68,7 +68,7 @@ public:
   /**
    * Convert the buffer offset @a off to absolute address to @a buf.
    * Return the size of valid information containing in the @a buf,
-   * -1 if <shm_malloc_> is not initialized.
+   * -1 if @c shm_malloc_ is not initialized.
    */
   ssize_t get_buf_len (const ACE_OFF_T off, ACE_MEM_SAP_Node *&buf);
 };
@@ -125,7 +125,7 @@ public:
   int fini () override;
 
   /**
-   * Fetch location of next available data into <recv_buffer_>.
+   * Fetch location of next available data into @c recv_buffer_.
    * As this operation read the address of the data off the socket
    * using ACE::recv, @a timeout only applies to ACE::recv.
    */
@@ -134,7 +134,7 @@ public:
                     const ACE_Time_Value *timeout) override;
 
   /**
-   * Wait to to @a timeout amount of time to send @a buf.  If <send>
+   * Wait to to @a timeout amount of time to send @a buf.  If @c send
    * times out a -1 is returned with @c errno == ETIME.  If it succeeds
    * the number of bytes sent is returned.  */
   ssize_t send_buf (ACE_MEM_SAP_Node *buf,
@@ -198,7 +198,7 @@ public:
 
   /**
    * Finalizing the MEM_IO object.  This method doesn't invoke
-   * the <remove> method.
+   * the @c remove method.
    */
   int fini ();
 
@@ -224,7 +224,7 @@ public:
 
   /**
    * Wait to to @a timeout amount of time to send up to @a n bytes into
-   * @a buf from <handle> (uses the <send> call).  If <send> times out
+   * @a buf from @c handle (uses the @c send call).  If @c send times out
    * a -1 is returned with @c errno == ETIME.  If it succeeds the
    * number of bytes sent is returned.
    */
@@ -234,7 +234,7 @@ public:
 
   /**
    * Wait to to @a timeout amount of time to send up to @a n bytes into
-   * @a buf from <handle> (uses the <send> call).  If <send> times out
+   * @a buf from @c handle (uses the @c send call).  If @c send times out
    * a -1 is returned with @c errno == ETIME.  If it succeeds the
    * number of bytes sent is returned.
    */
@@ -245,7 +245,7 @@ public:
 
   /**
    * Wait to to @a timeout amount of time to send the @a message_block.
-   * If <send> times out a -1 is returned with @c errno == ETIME.  If
+   * If @c send times out a -1 is returned with @c errno == ETIME.  If
    * it succeeds the number of bytes sent is returned.
    */
   ssize_t send (const ACE_Message_Block *message_block,
@@ -253,7 +253,7 @@ public:
 
   /**
    * Wait up to @a timeout amount of time to receive up to @a n bytes
-   * into @a buf from <handle> (uses the <recv> call).  If <recv> times
+   * into @a buf from @c handle (uses the @c recv call).  If @c recv times
    * out a -1 is returned with @c errno == ETIME.  If it succeeds the
    * number of bytes received is returned.
    */
@@ -263,7 +263,7 @@ public:
 
   /**
    * Wait up to @a timeout amount of time to receive up to @a n bytes
-   * into @a buf from <handle> (uses the <recv> call).  If <recv> times
+   * into @a buf from @c handle (uses the @c recv call).  If @c recv times
    * out a -1 is returned with @c errno == ETIME.  If it succeeds the
    * number of bytes received is returned.
    */
@@ -296,10 +296,10 @@ private:
   /// Buffer currently leased from the delivery strategy; release it through that strategy.
   ACE_MEM_SAP_Node *recv_buffer_ {};
 
-  /// Record the current total buffer size of <recv_buffer_>.
+  /// Record the current total buffer size of @c recv_buffer_.
   ssize_t buf_size_ {};
 
-  /// Record the current read pointer location in <recv_buffer_>.
+  /// Record the current read pointer location in @c recv_buffer_.
   ssize_t cur_offset_ {};
 };
 

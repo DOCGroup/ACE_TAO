@@ -49,7 +49,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * single access point for operations on multiple tokens.
  *
  * @bug Although ACE_Token_Collection inherits from ACE_Token_Proxy, it
- * can not be including in a collection.  This is because <clone>
+ * can not be including in a collection.  This is because @c clone
  * returns zero for now.
  */
 class ACE_Export ACE_Token_Collection : public ACE_Token_Proxy
@@ -77,7 +77,7 @@ public:
    * performed prior to the insertion will be performed.  Returns: 0
    * on success, -1 on failure with @c errno == problem.  If a token
    * proxy already exists in the collection with the same name, the
-   * insertion will fail.  Also, <token> is copied.  Note that during
+   * insertion will fail.  Also, @c token is copied.  Note that during
    * the copy, client_id's are *not* inherited.  The client ID of the
    * thread using the collection will be used.  Client ID's can be
    * changed explicity on each proxy using is_member.
@@ -130,7 +130,7 @@ public:
                ACE_Synch_Options::defaults) override;
 
   /// Acquire the token corresponding to @a token_name.  The other
-  /// parameters are passed to <token>::acquire.
+  /// parameters are passed to @c token::acquire.
   virtual int acquire (const ACE_TCHAR *token_name,
                        int notify = 0,
                        void (*sleep_hook)(void *) = nullptr,
@@ -156,7 +156,7 @@ public:
              ACE_Synch_Options::defaults) override;
 
   /// Renew the token corresponding to @a token_name.  The other
-  /// parameters are passed to <token>::renew.
+  /// parameters are passed to @c token::renew.
   virtual int renew (const ACE_TCHAR *token_name,
                      int requeue_position = 0,
                      ACE_Synch_Options &options =
@@ -172,8 +172,8 @@ public:
   int release (ACE_Synch_Options &options =
                ACE_Synch_Options::defaults) override;
 
-  /// Release the token corresponding to <token_name>.  The other
-  /// parameters are passed to <token>::release.
+  /// Release the token corresponding to @c token_name.  The other
+  /// parameters are passed to @c token::release.
   virtual int release (const ACE_TCHAR *token_name,
                        ACE_Synch_Options &options =
                        ACE_Synch_Options::defaults);

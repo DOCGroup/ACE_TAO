@@ -453,8 +453,8 @@ public:
   /// ACTIVATED, DEACTIVATED, or PULSED.
   int state () override;
 
-  /// Returns true if the state of the queue is <DEACTIVATED>,
-  /// but false if the queue's is <ACTIVATED> or <PULSED>.
+  /// Returns true if the state of the queue is @c DEACTIVATED,
+  /// but false if the queue's is @c ACTIVATED or @c PULSED.
   int deactivated () override;
   /// @}
 
@@ -462,21 +462,21 @@ public:
    */
   /// @{
   /**
-   * This hook is automatically invoked by <enqueue_head>,
-   * <enqueue_tail>, and <enqueue_prio> when a new item is inserted
+   * This hook is automatically invoked by @c enqueue_head,
+   * @c enqueue_tail, and @c enqueue_prio when a new item is inserted
    * into the queue.  Subclasses can override this method to perform
    * specific notification strategies (e.g., signaling events for a
-   * <WFMO_Reactor>, notifying a <Reactor>, etc.).  In a
+   * @c WFMO_Reactor, notifying a @c Reactor, etc.).  In a
    * multi-threaded application with concurrent consumers, there is no
    * guarantee that the queue will be still be non-empty by the time
    * the notification occurs.
    */
   virtual int notify ();
 
-  /// Get the notification strategy for the <Message_Queue>
+  /// Get the notification strategy for the @c Message_Queue.
   ACE_Notification_Strategy *notification_strategy () override;
 
-  /// Set the notification strategy for the <Message_Queue>
+  /// Set the notification strategy for the @c Message_Queue.
   void notification_strategy (ACE_Notification_Strategy *s) override;
   /// @}
 
@@ -725,7 +725,7 @@ protected:
  *
  * @brief A derived class which adapts the ACE_Message_Queue
  * class in order to maintain dynamic priorities for enqueued
- * <ACE_Message_Blocks> and manage the queue order according
+ * @c ACE_Message_Blocks and manage the queue order according
  * to these dynamic priorities.
  *
  * The messages in the queue are managed so as to preserve
@@ -1196,7 +1196,7 @@ public:
   virtual int enqueue_head (ACE_MESSAGE_TYPE *new_item,
                             ACE_Time_Value *timeout = nullptr);
 
-  /// This method is an alias for the following <dequeue_head> method.
+  /// This method is an alias for the following @c dequeue_head() method.
   virtual int dequeue (ACE_MESSAGE_TYPE *&first_item,
                        ACE_Time_Value *timeout = nullptr);
 
@@ -1317,7 +1317,7 @@ public:
   /**
    * Set the low watermark, which determines how many bytes must be in
    * the queue before supplier threads are allowed to enqueue
-   * additional <ACE_MESSAGE_TYPE>s.
+   * additional @c ACE_MESSAGE_TYPEs.
    */
   virtual void low_water_mark (size_t lwm);
   /// @}
@@ -1366,21 +1366,21 @@ public:
    */
   /// @{
   /**
-   * This hook is automatically invoked by <enqueue_head>,
-   * <enqueue_tail>, and <enqueue_prio> when a new item is inserted
+   * This hook is automatically invoked by @c enqueue_head,
+   * @c enqueue_tail, and @c enqueue_prio when a new item is inserted
    * into the queue.  Subclasses can override this method to perform
    * specific notification strategies (e.g., signaling events for a
-   * <WFMO_Reactor>, notifying a <Reactor>, etc.).  In a
+   * @c WFMO_Reactor, notifying a @c Reactor, etc.).  In a
    * multi-threaded application with concurrent consumers, there is no
    * guarantee that the queue will be still be non-empty by the time
    * the notification occurs.
    */
   virtual int notify ();
 
-  /// Get the notification strategy for the <Message_Queue>
+  /// Get the notification strategy for the @c Message_Queue.
   virtual ACE_Notification_Strategy *notification_strategy ();
 
-  /// Set the notification strategy for the <Message_Queue>
+  /// Set the notification strategy for the @c Message_Queue.
   virtual void notification_strategy (ACE_Notification_Strategy *s);
   /// @}
 
@@ -1398,7 +1398,7 @@ public:
   /// Dump the state of an object.
   virtual void dump () const;
 
-  /// Support access to the underlying <Message_Queue>. Note that
+  /// Support access to the underlying @c Message_Queue. Note that
   /// manipulating the lower level queue directly may be hazardous (, but
   /// necessary in some scenarios); be sure to lock the queue first.
   ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> &queue ();

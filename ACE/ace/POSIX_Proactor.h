@@ -40,7 +40,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief POSIX implementation of the Proactor.
  *
  * There are two different strategies by which Proactor can get
- * to know the completion of <aio> operations. One is based on
+ * to know the completion of @c aio operations. One is based on
  * Asynchronous I/O Control Blocks (AIOCB) where a list of
  * AIOCBs are stored and completion status of the corresponding
  * operations are queried on them. The other one is based on
@@ -268,9 +268,9 @@ protected:
 
   /**
    * Protect against structured exceptions caused by user code when
-   * dispatching handles. The <completion_key> is not very useful
-   * compared to <AST> that can be associated each asynchronous
-   * operation. <completion_key> is implemented right now for the
+   * dispatching handles. The @c completion_key is not very useful
+   * compared to @c AST that can be associated each asynchronous
+   * operation. @c completion_key is implemented right now for the
    * POSIX Proators.
    */
   void application_specific_code (ACE_POSIX_Asynch_Result *asynch_result,
@@ -279,9 +279,9 @@ protected:
                                   u_long error);
 
   /**
-   * Post <how_many> completions to the completion port so that all
+   * Post @c how_many completions to the completion port so that all
    * threads can wake up. This is used in conjunction with the
-   * <run_event_loop>.
+   * @c run_event_loop.
    */
   int post_wakeup_completions (int how_many) override;
 
@@ -303,7 +303,7 @@ class ACE_AIOCB_Notify_Pipe_Manager;
  * @class ACE_POSIX_AIOCB_Proactor
  *
  * @brief This Proactor makes use of Asynchronous I/O Control Blocks
- * (AIOCB) to notify/get the completion status of the <aio_>
+ * (AIOCB) to notify/get the completion status of the @c aio_
  * operations issued.
  */
 class ACE_Export ACE_POSIX_AIOCB_Proactor : public ACE_POSIX_Proactor
@@ -397,7 +397,7 @@ protected:
   void set_notify_handle (ACE_HANDLE h);
 
   /**
-   * Dispatch a single set of events.  If <milli_seconds> elapses
+   * Dispatch a single set of events.  If @c milli_seconds elapses
    * before any events occur, return 0. Return 1 if a completion
    * dispatched. Return -1 on errors.
    */
@@ -437,7 +437,7 @@ protected:
   /// Process the internal results queue
   int process_result_queue ();
 
-  /// This class takes care of doing <accept> when we use
+  /// This class takes care of doing @c accept when we use
   /// AIO_CONTROL_BLOCKS strategy.
   ACE_AIOCB_Notify_Pipe_Manager *aiocb_notify_pipe_manager_ {};
 

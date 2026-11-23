@@ -589,7 +589,7 @@ public:
 
   /**
    * Removes @a handle.  If @a mask == ACE_Event_Handler::DONT_CALL
-   * then the <handle_close> method of the associated <event_handler>
+   * then the @c handle_close method of the associated @c event_handler
    * is not invoked.
    */
   int remove_handler (ACE_HANDLE handle,
@@ -597,8 +597,8 @@ public:
 
   /**
    * Removes all handles in @a handle_set.  If @a mask ==
-   * ACE_Event_Handler::DONT_CALL then the <handle_close> method of
-   * the associated <event_handler>s is not invoked.
+   * ACE_Event_Handler::DONT_CALL then the @c handle_close method of
+   * the associated @c event_handlers is not invoked.
    */
   int remove_handler (const ACE_Handle_Set &handle_set,
                               ACE_Reactor_Mask mask) override;
@@ -614,7 +614,7 @@ public:
                               ACE_Sig_Action *old_disp = nullptr,
                               int sigkey = -1) override;
 
-  /// Calls <remove_handler> for every signal in @a sigset.
+  /// Calls @c remove_handler for every signal in @a sigset.
   int remove_handler (const ACE_Sig_Set &sigset) override;
 
   /// @}
@@ -689,7 +689,7 @@ public:
   /**
    * Resets the interval of the timer represented by @a timer_id to
    * @a interval, which is specified in relative time to the current
-   * <gettimeofday>.  If @a interval is equal to
+   * @c gettimeofday.  If @a interval is equal to
    * ACE_Time_Value::zero, the timer will become a non-rescheduling
    * timer.  Returns 0 if successful, -1 if not.
    */
@@ -724,7 +724,7 @@ public:
   int schedule_wakeup (ACE_Event_Handler *event_handler,
                                ACE_Reactor_Mask masks_to_be_added) override;
 
-  /// Add @a masks_to_be_added to the @a handle's entry.  <event_handler>
+  /// Add @a masks_to_be_added to the @a handle's entry.  @c event_handler
   /// associated with @a handle must already have been registered.
   int schedule_wakeup (ACE_HANDLE handle,
                                ACE_Reactor_Mask masks_to_be_added) override;
@@ -1069,7 +1069,7 @@ protected:
   /// didn't create it, then we don't delete it).
   bool delete_signal_handler_ {};
 
-  /// Callback object that unblocks the <ACE_Select_Reactor> if it's
+  /// Callback object that unblocks the @c ACE_Select_Reactor if it's
   /// sleeping.
   ACE_Reactor_Notify *notify_handler_ {};
 

@@ -21,7 +21,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_LOCK_SOCK_Acceptor
  *
- * @brief Specialize ACE_SOCK_Acceptor to lock around <accept>;
+ * @brief Specialize ACE_SOCK_Acceptor to lock around @c accept;
  *
  * This class is necessary since some OS platforms do not allow
  * multiple threads/processes to simultaneously call @c accept
@@ -33,7 +33,7 @@ template <class ACE_LOCK>
 class ACE_LOCK_SOCK_Acceptor : public ACE_SOCK_Acceptor
 {
 public:
-  /// Accept the connection under the control of the <ACE_LOCK>.
+  /// Accept the connection under the control of the @c ACE_LOCK.
   int accept (ACE_SOCK_Stream &new_stream,
               ACE_Addr *remote_addr = nullptr,
               ACE_Time_Value *timeout = nullptr,

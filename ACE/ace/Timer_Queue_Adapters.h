@@ -149,7 +149,7 @@ public:
 
   ~ACE_Thread_Timer_Queue_Adapter () override;
 
-  /// Schedule the timer according to the semantics of the <TQ>; wakes
+  /// Schedule the timer according to the semantics of the @c TQ; wakes
   /// up the dispatching thread.
   long schedule (TYPE handler,
                  void const *act,
@@ -172,7 +172,7 @@ public:
   /// Set a user-specified timer queue.
   int timer_queue (TQ *tq);
 
-  /// Return the current <TQ>.
+  /// Return the current @c TQ.
   TQ *timer_queue () const;
 
   /// Return the thread id of our active object.
@@ -230,7 +230,7 @@ private:
   std::unique_ptr<TQ> owned_timer_queue_;
 
   /// The mutual exclusion mechanism that is required to use the
-  /// <condition_>.
+  /// @c condition_.
   ACE_SYNCH_RECURSIVE_MUTEX mutex_;
 
   /// Attributes to initialize condition with.

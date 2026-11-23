@@ -35,7 +35,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * to a large number, decremented on every create or open and
  * incremented on every close. This way we can use the "adjust"
  * feature provided by System V so that any process that exit's
- * without calling <close> is accounted for. It doesn't help us
+ * without calling @c close is accounted for. It doesn't help us
  * if the last process does this (as we have no way of getting
  * control to remove the ACE_SV_Semaphore_Complex) but it
  * will work if any process other than the last does an exit

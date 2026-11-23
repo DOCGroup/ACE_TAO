@@ -113,7 +113,7 @@ public:
 
   /**
    * Get the dispatch information for a timer whose value is <= @a current_time.
-   * This does not account for <timer_skew>. Returns 1 if
+   * This does not account for @c timer_skew. Returns 1 if
    * there is a node whose value <= @a current_time else returns a 0.
    *
    */
@@ -171,19 +171,19 @@ public:
   void dump () const override;
 
   /// Method used to return a timer node to the queue's ownership
-  /// after it is returned by a method like <remove_first>.
+  /// after it is returned by a method like @c remove_first().
   virtual void return_node (ACE_Timer_Node_T<TYPE> *);
 
-  /// This method will call the preinvoke() on <functor>.
+  /// This method will call the preinvoke() on @c functor.
   void preinvoke (ACE_Timer_Node_Dispatch_Info_T<TYPE> &info,
                   ACE_Time_Value const &cur_time,
                   void const *&upcall_act);
 
-  /// This method will call the timeout() on <functor>.
+  /// This method will call the timeout() on @c functor.
   void upcall (ACE_Timer_Node_Dispatch_Info_T<TYPE> &info,
                ACE_Time_Value const &cur_time);
 
-  /// This method will call the postinvoke() on <functor>.
+  /// This method will call the postinvoke() on @c functor.
   void postinvoke (ACE_Timer_Node_Dispatch_Info_T<TYPE> &info,
                    ACE_Time_Value const &cur_time,
                    void const *upcall_act);
@@ -222,11 +222,11 @@ protected:
   /// The policy to return the current time of day
   TIME_POLICY time_policy_;
 
-  /// Flag to delete only if the class created the <free_list_>
+  /// Flag to delete only if the class created the @c free_list_
   bool const delete_free_list_;
 
 private:
-  /// Returned by <calculate_timeout>.
+  /// Returned by @c calculate_timeout.
   ACE_Time_Value timeout_;
 
   /// Adjusts for timer skew in various clocks.

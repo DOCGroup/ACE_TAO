@@ -43,8 +43,8 @@ public:
    * @a local_sap is the value of local address to bind to.  If it's
    * the default value of ACE_Addr::sap_any then the user is letting
    * the OS do the binding.  If @a reuse_addr == 1 then the
-   * <local_addr> is reused, even if it hasn't been cleanedup yet.
-   * The @a flags and @a perms arguments are passed down to the <open>
+   * @c local_addr is reused, even if it hasn't been cleanedup yet.
+   * The @a flags and @a perms arguments are passed down to the @c open
    * method.
    */
   ACE_DEV_Connector (ACE_DEV_IO &new_io,
@@ -68,8 +68,8 @@ public:
    * @a local_sap is the value of local address to bind to.  If it's
    * the default value of ACE_Addr::sap_any then the user is letting
    * the OS do the binding.  If @a reuse_addr == 1 then the
-   * <local_addr> is reused, even if it hasn't been cleanedup yet.
-   * The @a flags and @a perms arguments are passed down to the <open>
+   * @c local_addr is reused, even if it hasn't been cleanedup yet.
+   * The @a flags and @a perms arguments are passed down to the @c open
    * method.
    */
   int connect (ACE_DEV_IO &new_io,

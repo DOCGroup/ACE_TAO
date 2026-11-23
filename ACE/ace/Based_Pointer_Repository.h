@@ -63,7 +63,7 @@ public:
   int bind (void *addr,
             size_t size);
 
-  /// Unbind from the repository the <base_addr> that @a addr is
+  /// Unbind from the repository the @c base_addr that @a addr is
   /// contained within.
   int unbind (void *addr);
   /// @}

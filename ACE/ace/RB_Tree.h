@@ -211,7 +211,7 @@ public:
 
   /**
    * Associate @a ext_id with @a int_id.  If @a ext_id is already in the
-   * tree then the <ACE_RB_Tree_Node> is not changed.  Returns 0 if a
+   * tree then the @c ACE_RB_Tree_Node is not changed.  Returns 0 if a
    * new entry is bound successfully, returns 1 if an attempt is made
    * to bind an existing entry, and returns -1 if failures occur.
    */
@@ -248,7 +248,7 @@ public:
 
   /**
    * Reassociate @a ext_id with @a int_id.  If @a ext_id is not in the
-   * tree then behaves just like <bind>.  Returns 0 if a new entry is
+   * tree then behaves just like @c bind.  Returns 0 if a new entry is
    * bound successfully, returns 1 if an existing entry was rebound,
    * and returns -1 if failures occur.
    */
@@ -266,7 +266,7 @@ public:
 
   /**
    * Associate @a ext_id with @a int_id.  If @a ext_id is not in the tree
-   * then behaves just like <bind>.  Otherwise, store the old value of
+   * then behaves just like @c bind.  Otherwise, store the old value of
    * @a int_id into the "out" parameter and rebind the new parameters.
    * Returns 0 if a new entry is bound successfully, returns 1 if an
    * existing entry was rebound, and returns -1 if failures occur.
@@ -287,10 +287,10 @@ public:
 
   /**
    * Associate @a ext_id with @a int_id.  If @a ext_id is not in the tree
-   * then behaves just like <bind>.  Otherwise, store the old values
+   * then behaves just like @c bind.  Otherwise, store the old values
    * of @a ext_id and @a int_id into the "out" parameters and rebind the
    * new parameters.  This is very useful if you need to have an
-   * atomic way of updating <ACE_RB_Tree_Nodes> and you also need
+   * atomic way of updating @c ACE_RB_Tree_Nodes and you also need
    * full control over memory allocation.  Returns 0 if a new entry is
    * bound successfully, returns 1 if an existing entry was rebound,
    * and returns -1 if failures occur.
@@ -353,12 +353,12 @@ public:
                   ACE_LOCK> &rbt);
 
   /**
-   * Returns a reference to the underlying <ACE_LOCK>.  This makes it
+   * Returns a reference to the underlying @c ACE_LOCK.  This makes it
    * possible to acquire the lock explicitly, which can be useful in
    * some cases if you instantiate the ACE_Atomic_Op with an
    * ACE_Recursive_Mutex or ACE_Process_Mutex, or if you need to
    * guard the state of an iterator.
-   * @note The right name would be <lock>, but HP/C++ will choke on that!
+   * @note The right name would be @c lock, but HP/C++ will choke on that!
    */
   ACE_LOCK &mutex ();
 
@@ -741,7 +741,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
   /**
-   * Passes back the <entry> under the iterator.  Returns 0 if
+   * Passes back the @c entry under the iterator.  Returns 0 if
    * the iteration has completed, otherwise 1.  This method must
    * be declared and defined in both the derived forward and
    * reverse iterator classes rather than in the base iterator
@@ -782,7 +782,7 @@ public:
   int previous ();
 
   /**
-   * @deprecated: use the base class <done> method instead.
+   * @deprecated: use the base class @c done() method instead.
    * Returns true if the iterator is not positioned over a valid
    * ACE_RB_Tree node.
    */
@@ -862,7 +862,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
   /**
-   * Passes back the <entry> under the iterator.  Returns 0 if
+   * Passes back the @c entry under the iterator.  Returns 0 if
    * the iteration has completed, otherwise 1.  This method must
    * be declared and defined in both the derived forward and
    * reverse iterator classes rather than in the base iterator

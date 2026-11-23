@@ -74,7 +74,7 @@ public:
            ACE_OFF_T offset = 0,
            LPSECURITY_ATTRIBUTES sa = 0);
 
-  /// Remap the file associated with <handle_>.
+  /// Remap the file associated with @c handle_.
   int map (size_t length = static_cast<size_t> (-1),
            int prot = PROT_RDWR,
            int share = ACE_MAP_PRIVATE,
@@ -101,14 +101,14 @@ public:
             mode_t perms = ACE_DEFAULT_FILE_PERMS,
             LPSECURITY_ATTRIBUTES sa = 0);
 
-  /// Close down the <handle_> if necessary and unmap the mapping.
+  /// Close down the @c handle_ if necessary and unmap the mapping.
   int close ();
 
-  /// Close down the <handle_> if necessary.
+  /// Close down the @c handle_ if necessary.
   int close_handle ();
 
   /**
-   * Close down the internal <file_mapping_> if necessary.  This is
+   * Close down the internal @c file_mapping_ if necessary.  This is
    * mostly necessary on Win32, which has a different handle for
    * file-mapping kernel object.
    */
@@ -170,7 +170,7 @@ public:
   /// Hook into the underlying VM system.
   int advise (int behavior, int len = -1);
 
-  /// Return the underlying <handle_>.
+  /// Return the underlying @c handle_.
   ACE_HANDLE handle () const;
 
   /// Return the name of file that is mapped (if any).

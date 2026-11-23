@@ -161,8 +161,8 @@ protected:
                             bool reset_new_handle) const;
 
   /**
-   * This method factors out the common <open> code and is called by
-   * both the QoS-enabled <open> method and the BSD-style <open>
+   * This method factors out the common @c open code and is called by
+   * both the QoS-enabled @c open method and the BSD-style @c open
    * method.
    */
   int shared_open (const ACE_Addr &local_sap,

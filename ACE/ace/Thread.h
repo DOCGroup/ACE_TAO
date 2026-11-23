@@ -41,7 +41,7 @@ struct cancel_state
  * POSIX Pthreads, Win32 threads, VxWorks
  * threads, or pSoS threads.  Note, however, that it is
  * generally a better idea to use the ACE_Thread_Manager
- * programming API rather than the <ACE_Thread> API since the
+ * programming API rather than the @c ACE_Thread API since the
  * thread manager is more powerful.
  */
 class ACE_Export ACE_Thread

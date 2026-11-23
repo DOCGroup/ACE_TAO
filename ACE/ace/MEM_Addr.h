@@ -62,8 +62,8 @@ public:
    */
   int set (u_short port_number, int encode = 1);
 
-  /// Uses <getservbyname> to initialize an ACE_MEM_Addr from a
-  /// @a port_name, the remote <host_name>, and the <protocol>.
+  /// Uses @c getservbyname to initialize an ACE_MEM_Addr from a
+  /// @a port_name, the remote @c host_name, and the @c protocol.
   int set (const ACE_TCHAR port_name[]);
 
   /// @}

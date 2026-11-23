@@ -36,17 +36,17 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * This implementation is a slight variation on the GoF
  * Singleton pattern.  In particular, a single
  * <ACE_Singleton<TYPE, ACE_LOCK> > instance is allocated here,
- * not a <TYPE> instance.  The reason for this is to allow
+ * not a @c TYPE instance.  The reason for this is to allow
  * registration with the ACE_Object_Manager, so that the
  * Singleton can be cleaned up when the process exits.  For this
  * scheme to work, a (static) cleanup() function must be
  * provided.  ACE_Singleton provides one so that TYPE doesn't
  * need to.
  * If you want to make sure that only the singleton instance of
- * <T> is created, and that users cannot create their own
- * instances of <T>, do the following to class <T>:
- * (a) Make the constructor of <T> private (or protected)
- * (b) Make Singleton a friend of <T>
+ * @c T is created, and that users cannot create their own
+ * instances of @c T, do the following to class @c T:
+ * (a) Make the constructor of @c T private (or protected)
+ * (b) Make Singleton a friend of @c T
  * Here is an example:
  * @verbatim
  * class foo
@@ -166,8 +166,8 @@ protected:
  *
  * This implementation is another variation on the GoF Singleton
  * pattern.  In this case, a single <ACE_TSS_Singleton<TYPE,
- * LOCK> > instance is allocated here, not a <TYPE> instance.
- * Each call to the <instance> static method returns a Singleton
+ * LOCK> > instance is allocated here, not a @c TYPE instance.
+ * Each call to the @c instance static method returns a Singleton
  * whose pointer resides in thread-specific storage.  As with
  * ACE_Singleton, we use the ACE_Object_Manager so that the
  * Singleton can be cleaned up when the process exits.  For this
@@ -182,7 +182,7 @@ public:
   /// Global access point to the singleton.
   static TYPE *instance ();
 
-  /// Cleanup method, used by <ace_cleanup_destroyer> to destroy the
+  /// Cleanup method, used by @c ace_cleanup_destroyer to destroy the
   /// singleton.
   void cleanup (void *param = nullptr) override;
 

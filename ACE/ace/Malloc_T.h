@@ -660,7 +660,7 @@ private:
   void shared_free (void *ptr);
 
   /// Pointer to the control block that is stored in memory controlled
-  /// by <MEMORY_POOL>.
+  /// by @c MEMORY_POOL.
   ACE_CB *cb_ptr_ {};
 
   /// Pool of memory used by ACE_Malloc to manage its freestore.

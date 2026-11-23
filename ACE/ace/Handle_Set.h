@@ -95,7 +95,7 @@ public:
 
   /**
    * Rescan the underlying @c fd_set up to handle @a max to find the new
-   * <max_handle> (highest bit set) and <size> (how many bits set) values.
+   * @c max_handle (highest bit set) and @c size (how many bits set) values.
    * This is useful for evaluating the changes after the handle set has
    * been manipulated in some way other than member functions; for example,
    * after @c select() modifies @c fd_set.
@@ -105,11 +105,11 @@ public:
   /// @}
 
   /// Returns a pointer to the underlying @c fd_set.  Returns nullptr if
-  /// there are no handle bits set (<size_> == 0).
+  /// there are no handle bits set (@c size_ == 0).
   operator fd_set *();
 
   /// Returns a pointer to the underlying @c fd_set.  Returns nullptr if
-  /// there are no handle bits set (<size_> == 0).
+  /// there are no handle bits set (@c size_ == 0).
   fd_set *fdset ();
 
 #if defined (ACE_HAS_BIG_FD_SET)
@@ -161,8 +161,8 @@ private:
   static int bitpos (u_long bit);
 #endif /* ACE_HAS_BIG_FD_SET */
 
-  /// Resets the <max_handle_> after a clear of the original
-  /// <max_handle_>.
+  /// Resets the @c max_handle_ after a clear of the original
+  /// @c max_handle_.
   void set_max (ACE_HANDLE max);
 
   /// Table that maps bytes to counts of the enabled bits in each value
@@ -188,8 +188,8 @@ public:
 
   /**
    * "Next" operator.  Returns the next unseen ACE_HANDLE in the
-   * <Handle_Set> up to <handle_set_.max_handle_>).  When all the
-   * handles have been seen returns <ACE_INVALID_HANDLE>.  Advances
+   * @c Handle_Set up to <handle_set_.max_handle_>).  When all the
+   * handles have been seen returns @c ACE_INVALID_HANDLE.  Advances
    * the iterator automatically, so you need not call <operator++>
    * (which is now obsolete).
    */

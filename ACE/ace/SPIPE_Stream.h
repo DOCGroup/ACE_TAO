@@ -40,10 +40,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * - On error, -1 is returned, errno is set to appropriate error.
  * - On EOF, 0 is returned, errno is irrelevant.
  *
- * Methods with <iovec> parameter are I/O vector variants of the I/O
+ * Methods with @c iovec parameter are I/O vector variants of the I/O
  * operations.
  *
- * The <send> and <revc> operations use "message" semantics rather
+ * The @c send and @c revc operations use "message" semantics rather
  * than "bytestream" semantics.
  */
 class ACE_Export ACE_SPIPE_Stream : public ACE_SPIPE
@@ -131,16 +131,16 @@ public:
   /// Recv @a len bytes via Win32 @c ReadFile using overlapped I/O.
   ssize_t recv (void *buf, size_t len, ACE_OVERLAPPED *overlapped) const;
 
-  /// Send an <iovec> of size @a len to the stream.
+  /// Send an @c iovec of size @a len to the stream.
   ssize_t sendv (const iovec iov[],
                  int len) const;
 
-  /// Send an <iovec> of size @a len to the stream.  Will block until all
+  /// Send an @c iovec of size @a len to the stream.  Will block until all
   /// bytes are sent or an error occurs.
   ssize_t sendv_n (const iovec iov[],
                    int len) const;
 
-  /// Receive an <iovec> of size @a len from the stream.
+  /// Receive an @c iovec of size @a len from the stream.
   ssize_t recvv_n (iovec iov[],
                    int len) const;
 

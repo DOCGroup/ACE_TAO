@@ -127,7 +127,7 @@ protected:
   /// Size of the buffer.
   size_t size_;
 
-  /// Pointer to the current offset in the <buffer_>.
+  /// Pointer to the current offset in the @c buffer_.
   size_t offset_;
 };
 

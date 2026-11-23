@@ -304,13 +304,13 @@ class ACE_Export ACE_QoS_Params
 {
 public:
   /**
-   * Initialize the data members.  The <caller_data> is a pointer to
+   * Initialize the data members.  The @c caller_data is a pointer to
    * the user data that is to be transferred to the peer during
-   * connection establishment.  The <callee_data> is a pointer to the
+   * connection establishment.  The @c callee_data is a pointer to the
    * user data that is to be transferred back from the peer during
    * connection establishment.  The_<socket_qos> is a pointer to the
    * flow specifications for the socket, one for each direction.  The
-   * <group_socket_qos> is a pointer to the flow speicfications for
+   * @c group_socket_qos is a pointer to the flow speicfications for
    * the socket group, if applicable.  The_@a flags indicate if we're a
    * sender, receiver, or both.
    */
@@ -385,12 +385,12 @@ class ACE_Export ACE_Accept_QoS_Params
 {
 public:
   /**
-   * Initialize the data members.  The <qos_condition_callback> is the
+   * Initialize the data members.  The @c qos_condition_callback is the
    * address of an optional, application-supplied condition function
    * that will make an accept/reject decision based on the caller
    * information pass in as parameters, and optionally create or join
    * a socket group by assinging an appropriate value to the result
-   * parameter <g> of this function.  The <callback_data> data is
+   * parameter @c g of this function.  The @c callback_data data is
    * passed back to the application as a condition function parameter,
    * i.e., it is an Asynchronous Completion Token (ACT).
    */
@@ -415,7 +415,7 @@ private:
    * condition function that will make an accept/reject decision based
    * on the caller information pass in as parameters, and optionally
    * create or join a socket group by assinging an appropriate value
-   * to the result parameter <g> of this function.
+   * to the result parameter @c g of this function.
    */
   ACE_QOS_CONDITION_FUNC qos_condition_callback_;
 

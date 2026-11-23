@@ -124,7 +124,7 @@ public:
   /// Acquire a semaphore for writing
   int acquire_write (u_short n = 0, short flags = 0) const;
 
-  /// Non-blocking version of <acquire>.
+  /// Non-blocking version of @c acquire.
   int tryacquire (u_short n = 0, short flags = 0) const;
 
   /// Try to acquire the semaphore for reading.

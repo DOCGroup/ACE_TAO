@@ -207,7 +207,7 @@ public:
    * Create a Message Block that assumes it has ownership of @a data,
    * but in reality it doesn't (i.e., cannot delete it since it didn't
    * malloc it!).  Note that the @c size of the Message_Block will
-   * be @a size, but the @a length  will be 0 until <wr_ptr> is set.
+   * be @a size, but the @a length  will be 0 until @c wr_ptr is set.
    */
   int init (char const *data,
             size_t size = 0);
@@ -223,7 +223,7 @@ public:
    * to protect regions of code that access shared state (e.g.,
    * reference counting) from race conditions.  Note that the @a size
    * of the Message_Block will be @a size, but the @a length will be 0
-   * until <wr_ptr> is set. The @a data_block_allocator is use to
+   * until @c wr_ptr is set. The @a data_block_allocator is use to
    * allocate the data blocks while the @a allocator_strategy is used
    * to allocate the buffers contained by those.
    */
@@ -404,10 +404,10 @@ public:
   int copy (const char *buf);
 
   /// Normalizes data in the top-level Message_Block to align with the base,
-  /// i.e., it "shifts" the data pointed to by <rd_ptr> down to the <base> and
-  /// then readjusts <rd_ptr> to point to <base> and <wr_ptr> to point
-  /// to <base> + the length of the moved data.  Returns -1 and does
-  /// nothing if the <rd_ptr> is > <wr_ptr>, else 0 on success.
+  /// i.e., it "shifts" the data pointed to by @c rd_ptr down to the @c base and
+  /// then readjusts @c rd_ptr to point to @c base and @c wr_ptr to point
+  /// to @c base + the length of the moved data.  Returns -1 and does
+  /// nothing if the @c rd_ptr is > @c wr_ptr, else 0 on success.
   int crunch ();
 
   /// Resets the Message Block data to contain nothing, i.e., sets the
@@ -479,7 +479,7 @@ public:
   void wr_ptr (char *ptr);
 
   /// Set the write pointer ahead @a n bytes.  This is used to compute
-  /// the <length> of a message.
+  /// the @c length of a message.
   void wr_ptr (size_t n);
 
   /// @}
@@ -530,7 +530,7 @@ public:
   /// Get the number of allocated bytes in the top-level Message_Block.
   size_t capacity () const;
 
-  /// Get the number of bytes available after the <wr_ptr_> in the
+  /// Get the number of bytes available after the @c wr_ptr_ in the
   /// top-level Message_Block.
   size_t space () const;
   /// @}
@@ -548,14 +548,14 @@ public:
   /**
    * Set a new data block pointer. The original ACE_Data_Block is released
    * as a result of this call. If you need to keep the original block, call
-   * <replace_data_block> instead. Upon return, this ACE_Message_Block
+   * @c replace_data_block instead. Upon return, this ACE_Message_Block
    * holds a pointer to the new ACE_Data_Block, taking over the reference
    * you held on it prior to the call.
    */
   void data_block (ACE_Data_Block *);
 
   /// Set a new data block pointer. A pointer to the original ACE_Data_Block
-  /// is returned, and not released (as it is with <data_block>).
+  /// is returned, and not released (as it is with @c data_block).
   ACE_Data_Block *replace_data_block (ACE_Data_Block*);
   /// @}
 
@@ -705,9 +705,9 @@ using ACE_Message_Block_Unique_Ptr =
  * ACE_Message_Block's.
  *
  * This data structure is reference counted to maximize
- * sharing.  It also contains the <locking_strategy_> (which
+ * sharing.  It also contains the @c locking_strategy_ (which
  * protects the reference count from race conditions in
- * concurrent programs) and the <allocation_strategy_> (which
+ * concurrent programs) and the @c allocation_strategy_ (which
  * determines what memory pool is used to allocate the memory).
  */
 class ACE_Export ACE_Data_Block
@@ -892,7 +892,7 @@ protected:
   /**
    * Reference count for this ACE_Data_Block, which is used to avoid
    * deep copies (i.e., clone()).  Note that this pointer value is
-   * shared by all owners of the <Data_Block>'s data, i.e., all the
+   * shared by all owners of the @c Data_Block's data, i.e., all the
    * ACE_Message_Blocks.
    */
   int reference_count_;

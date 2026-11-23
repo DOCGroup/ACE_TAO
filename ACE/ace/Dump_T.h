@@ -24,10 +24,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief
  * This class inherits the interface of the abstract ACE_Dumpable
  * class and is instantiated with the implementation of the
- * concrete component class <class Concrete>.
+ * concrete component class @c Concrete.
  *
  * This design is similar to the Adapter and Decorator patterns
- * from the ``Gang of Four'' book.  Note that <class Concrete>
+ * from the ``Gang of Four'' book.  Note that @c Concrete
  * need not inherit from a common class since ACE_Dumpable
  * provides the uniform virtual interface!
  */
@@ -39,14 +39,14 @@ public:
   ~ACE_Dumpable_Adapter () override;
 
   /// Concrete dump method (simply delegates to the dump() method of
-  /// <class Concrete>).
+  /// @c Concrete).
   void dump () const override;
 
   /// Delegate to methods in the Concrete class.
   Concrete *operator->() const;
 
 private:
-  /// Pointer to @c this of <class Concrete>.
+  /// Pointer to @c this of @c Concrete.
   const Concrete *this_;
 };
 

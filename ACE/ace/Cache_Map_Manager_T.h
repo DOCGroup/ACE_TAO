@@ -43,7 +43,7 @@ class ACE_Cache_Map_Reverse_Iterator;
  *
  * @brief Defines a abstraction that will purge entries from a map.
  *
- * The <ACE_Cache_Map_Manager> will manage the map it contains
+ * The @c ACE_Cache_Map_Manager will manage the map it contains
  * and provide purging on demand from the map. The strategy for
  * caching is decided by the user and provided to the Cache
  * Manager.  The Cache Manager acts as a agent and communicates
@@ -89,19 +89,19 @@ public:
   /// @}
 
   /**
-   * The actual value mapped to the key in the map. The <attributes>
+   * The actual value mapped to the key in the map. The @c attributes
    * are used by the strategy and is transparent to the user of this
    * class.
    */
   using CACHE_VALUE = std::pair<VALUE, ATTRIBUTES>;
 
-  /// Initialize a <Cache_Map_Manager> with <caching_strategy> and
+  /// Initialize a @c Cache_Map_Manager with @c caching_strategy and
   /// @a size entries.
   ACE_Cache_Map_Manager (CACHING_STRATEGY &caching_strategy,
                          size_t size = ACE_DEFAULT_MAP_SIZE,
                          ACE_Allocator *alloc = nullptr);
 
-  /// Close down a <Cache_Map_Manager> and release dynamically allocated
+  /// Close down a @c Cache_Map_Manager and release dynamically allocated
   /// resources.
   virtual ~ACE_Cache_Map_Manager ();
 
@@ -245,7 +245,7 @@ class ACE_Cache_Map_Iterator
 public:
   /// @name Traits
   /// @{
-  /// The actual value mapped to the key in the cache. The <attributes>
+  /// The actual value mapped to the key in the cache. The @c attributes
   /// are used by the strategy and is transparent to the cache user.
   using value_type = ACE_Reference_Pair<KEY, VALUE>;
   using CACHE_VALUE = std::pair <VALUE, ATTRIBUTES>;
@@ -321,7 +321,7 @@ class ACE_Cache_Map_Reverse_Iterator
 public:
   /// @name Traits
   /// @{
-  /// The actual value mapped to the key in the cache. The <attributes>
+  /// The actual value mapped to the key in the cache. The @c attributes
   /// are used by the strategy and is transparent to the cache user.
   using value_type = ACE_Reference_Pair<KEY, VALUE>;
   using CACHE_VALUE = std::pair <VALUE, ATTRIBUTES>;

@@ -39,7 +39,7 @@ ACE_FILE_IO::recvv_n (iovec iov[], int n) const
                         n);
 }
 
-/// Send an <iovec> of size <n> to the file.
+/// Send an @c iovec of size @c n to the file.
 
 ACE_INLINE ssize_t
 ACE_FILE_IO::sendv (const iovec iov[], int n) const

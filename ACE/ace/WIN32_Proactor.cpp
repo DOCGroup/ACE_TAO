@@ -17,7 +17,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_WIN32_Wakeup_Completion
  *
- * This is result object is used by the <end_event_loop> of the
+ * This is result object is used by the @c end_event_loop of the
  * ACE_Proactor interface to wake up all the threads blocking
  * for completions.
  */
@@ -33,7 +33,7 @@ public:
 
   virtual ~ACE_WIN32_Wakeup_Completion ();
 
-  /// This method calls the <handler>'s <handle_wakeup> method.
+  /// This method calls the @c handler's @c handle_wakeup method.
   virtual void complete (size_t bytes_transferred = 0,
                          int success = 1,
                          const void *completion_key = nullptr,

@@ -144,8 +144,8 @@ public: // Should be protected:
   /**
    * Flush the task's queue, i.e., free all of the enqueued
    * message blocks and unblocks any threads waiting on the queue.
-   * Note that if this conflicts with the C++ iostream <flush>
-   * function, just rewrite the iostream function as ::<flush>.
+   * Note that if this conflicts with the C++ iostream @c flush
+   * function, just rewrite the iostream function as ::@c flush.
    */
   virtual int flush (u_long flag = ACE_Task_Flags::ACE_FLUSHALL);
 

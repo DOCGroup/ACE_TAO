@@ -397,12 +397,12 @@ private:
     /// Owned string allocated with ACE::strnew and released with matching allocator semantics.
     ACE_TCHAR const *name_;
 
-    /// Contains value for <OPTION_ARG_MODE>.
+    /// Contains value for @c OPTION_ARG_MODE.
     int has_arg_;
 
     /// Contains a valid short option character or zero if it doesn't
     /// have a corresponding short option.  It can also contain a
-    /// non-printable value that cannot be passed to <optstring> but
+    /// non-printable value that cannot be passed to @c optstring but
     /// will be returned by <operator()>.  This is handy for
     /// simplifying long option handling, see tests/Get_Opt_Test.cpp
     /// for an example of this technique.
@@ -422,10 +422,10 @@ private:
 
   /// If permuting args, this functions manages the nonopt_start_ and
   /// nonopt_end_ indexes and makes calls to permute to actually
-  /// reorder the <argv>-elements.
+  /// reorder the @c argv-elements.
   void permute_args ();
 
-  /// Handles reordering <argv>-elements.
+  /// Handles reordering @c argv-elements.
   int permute ();
 
   /// Set last_option.
@@ -438,7 +438,7 @@ private:
   /// Treat all options as long options.
   bool long_only_;
 
-  /// Keeps track of whether or not a colon was passed in <optstring>.
+  /// Keeps track of whether or not a colon was passed in @c optstring.
   /// This is used to determine the return value when required
   /// arguments are missing.
   bool has_colon_ {};
@@ -452,21 +452,21 @@ private:
    * last option character we returned was found.  This allows us to
    * pick up the scan where we left off   *
    * If this is zero, or a null string, it means resume the scan
-   * by advancing to the next <argv>-element.
+   * by advancing to the next @c argv-element.
    */
   ACE_TCHAR *nextchar_ {};
 
   /// Most recently matched short option character.
   int optopt_ {};
 
-  /// Keeps track of ordering mode (default <PERMUTE_ARGS>).
+  /// Keeps track of ordering mode (default @c PERMUTE_ARGS).
   int ordering_;
 
-  /// Index of the first non-option <argv>-element found (only valid
+  /// Index of the first non-option @c argv-element found (only valid
   /// when permuting).
   int nonopt_start_;
 
-  /// Index of the <argv>-element following the last non-option element
+  /// Index of the @c argv-element following the last non-option element
   /// (only valid when permuting).
   int nonopt_end_;
 

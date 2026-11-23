@@ -142,7 +142,7 @@ public:
   /**
    * Resets the interval of the timer represented by @a timer_id to
    * @a interval, which is specified in relative time to the current
-   * <gettimeofday>.  If @a interval is equal to
+   * @c gettimeofday.  If @a interval is equal to
    * ACE_Time_Value::zero, the timer will become a non-rescheduling
    * timer.  Returns 0 if successful, -1 if not.
    */
@@ -151,7 +151,7 @@ public:
 
   /**
    * Cancel all timers associated with @a type.  If @a dont_call_handle_close
-   * is 0 then the <functor> will be invoked.  Returns number of timers
+   * is 0 then the @c functor will be invoked.  Returns number of timers
    * cancelled.
    */
   int cancel (TYPE const &type,
@@ -159,11 +159,11 @@ public:
 
   /**
    * Cancel the single timer that matches the @a timer_id value (which
-   * was returned from the <schedule> method).  If act is nullptr
+   * was returned from the @c schedule method).  If act is nullptr
    * then it will be set to point to the ``magic cookie'' argument
    * passed in when the timer was registered.  This makes it possible
    * to free up the memory and avoid memory leaks. If @a dont_call_handle_close
-   * is 0 then the <functor> will be invoked.  Returns 1 if cancellation
+   * is 0 then the @c functor will be invoked.  Returns 1 if cancellation
    * succeeded and 0 if the @a timer_id wasn't found.
    */
   int cancel (long timer_id,
@@ -202,17 +202,17 @@ protected:
    * Schedule a timer that may optionally auto-reset.
    * Schedule @a type that will expire at @a future_time,
    * which is specified in absolute time.  If it expires then @a act is
-   * passed in as the value to the <functor>.  If @a interval is != to
+   * passed in as the value to the @c functor.  If @a interval is != to
    * ACE_Time_Value::zero then it is used to reschedule the @a type
-   * automatically, using relative time to the current <gettimeofday>.
-   * This method returns a <timer_id> that uniquely identifies the the
-   * @a type entry in an internal list.  This <timer_id> can be used to
+   * automatically, using relative time to the current @c gettimeofday.
+   * This method returns a @c timer_id that uniquely identifies the the
+   * @a type entry in an internal list.  This @c timer_id can be used to
    * cancel the timer before it expires.  The cancellation ensures
-   * that <timer_ids> are unique up to values of greater than 2
+   * that @c timer_ids are unique up to values of greater than 2
    * billion timers.  As long as timers don't stay around longer than
    * this there should be no problems with accidentally deleting the
    * wrong timer.  Returns -1 on failure (which is guaranteed never to
-   * be a valid <timer_id>).
+   * be a valid @c timer_id).
    */
   long schedule_i (TYPE const &type,
                    void const *act,
@@ -258,8 +258,8 @@ private:
                     size_t slot,
                     size_t child);
 
-  /// Copy @a moved_node into the @a slot slot of <heap_> and move
-  /// @a slot into the corresponding slot in the <timer_id_> array.
+  /// Copy @a moved_node into the @a slot slot of @c heap_ and move
+  /// @a slot into the corresponding slot in the @c timer_id_ array.
   void copy (size_t slot, ACE_Timer_Node_T<TYPE> *moved_node);
 
   /**
@@ -299,17 +299,17 @@ private:
 
   /**
    * An array of "pointers" that allows each ACE_Timer_Node in the
-   * <heap_> to be located in O(1) time.  Basically, <timer_id_[i]>
-   * contains the slot in the <heap_> array where an ACE_Timer_Node
+   * @c heap_ to be located in O(1) time.  Basically, <timer_id_[i]>
+   * contains the slot in the @c heap_ array where an ACE_Timer_Node
    * * with timer id \<i\> resides.  Thus, the timer id passed back from
-   * <schedule> is really a slot into the <timer_ids> array.  The
-   * <timer_ids_> array serves two purposes: negative values are
+   * @c schedule is really a slot into the @c timer_ids array.  The
+   * @c timer_ids_ array serves two purposes: negative values are
    * indications of free timer IDs, whereas positive values are
-   * "pointers" into the <heap_> array for assigned timer IDs.
+   * "pointers" into the @c heap_ array for assigned timer IDs.
    */
   ssize_t *timer_ids_ {};
 
-  /// "Pointer" to the element in the <timer_ids_> array that was
+  /// "Pointer" to the element in the @c timer_ids_ array that was
   /// last given out as a timer ID.
   size_t timer_ids_curr_;
 
@@ -319,14 +319,14 @@ private:
   size_t timer_ids_min_free_;
 
   /**
-   * If this is not nullptr, then we preallocate <max_size_> number of
+   * If this is not nullptr, then we preallocate @c max_size_ number of
    * ACE_Timer_Node objects in order to reduce dynamic allocation
    * costs.  In auto-growing implementation, this points to the
    * last array of nodes allocated.
    */
   ACE_Timer_Node_T<TYPE> *preallocated_nodes_ {};
 
-  /// This points to the head of the <preallocated_nodes_> freelist,
+  /// This points to the head of the @c preallocated_nodes_ freelist,
   /// which is organized as a stack.
   ACE_Timer_Node_T<TYPE> *preallocated_nodes_freelist_ {};
 

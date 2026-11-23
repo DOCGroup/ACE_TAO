@@ -25,14 +25,14 @@ public:
   ACE_Null_Barrier &operator= (ACE_Null_Barrier const &) = delete;
   ACE_Null_Barrier &operator= (ACE_Null_Barrier &&) = delete;
 
-  /// Initialize the barrier to synchronize <count> threads.
+  /// Initialize the barrier to synchronize @c count threads.
   ACE_Null_Barrier (unsigned int,
                     const char * = nullptr,
                     void * = nullptr) {}
 
   ~ACE_Null_Barrier () = default;
 
-  /// Block the caller until all <count> threads have called <wait> and
+  /// Block the caller until all @c count threads have called @c wait and
   /// then allow all the caller threads to continue in parallel.
   int wait () { return 0; }
 

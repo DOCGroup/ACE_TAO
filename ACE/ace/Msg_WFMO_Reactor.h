@@ -27,7 +27,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class ACE_Msg_WFMO_Reactor
  *
  * @brief An OO event demultiplexor and event handler dispatcher for
- * Win32 <MsgWaitForMultipleObjects>.
+ * Win32 @c MsgWaitForMultipleObjects.
  *
  * The ACE_Msg_WFMO_Reactor is an OO event demultiplexor and
  * event handler Reactor. It differs from ACE_WFMO_Reactor by
@@ -68,15 +68,15 @@ public:
    * application wishes to handle events for some fixed amount of
    * time.
    *
-   * <MsgWaitForMultipleObjects> is used as the demultiplexing call
+   * @c MsgWaitForMultipleObjects is used as the demultiplexing call
    *
    * Returns the total number of ACE_Event_Handlers that were
    * dispatched, 0 if the @a max_wait_time elapsed without dispatching
    * any handlers, or -1 if an error occurs.
    *
-   * The only difference between <alertable_handle_events> and
-   * <handle_events> is that in the alertable case, MWMO_ALERTABLE is
-   * passed to <MsgWaitForMultipleObjects> for the <bAlertable>
+   * The only difference between @c alertable_handle_events and
+   * @c handle_events is that in the alertable case, MWMO_ALERTABLE is
+   * passed to @c MsgWaitForMultipleObjects for the @c bAlertable
    * option.
    */
   virtual int handle_events (ACE_Time_Value *max_wait_time = nullptr);

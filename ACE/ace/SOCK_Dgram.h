@@ -103,7 +103,7 @@ public:
    * buffer to read.  This method determines how much data is in the
    * socket, allocates a buffer of this size, reads in the data, and
    * returns the number of bytes read.  The caller is responsible for
-   * deleting the member in the <iov_base> field of <io_vec> using the
+   * deleting the member in the @c iov_base field of @c io_vec using the
    * ``delete []'' syntax.
    */
   ssize_t recv (iovec *io_vec,
@@ -111,14 +111,14 @@ public:
                 int flags = 0,
                 const ACE_Time_Value *timeout = nullptr) const;
 
-  /// Send an <iovec> of size @a n to the datagram socket (uses
+  /// Send an @c iovec of size @a n to the datagram socket (uses
   /// <sendmsg(3)>).
   ssize_t send (const iovec iov[],
                 int n,
                 const ACE_Addr &addr,
                 int flags = 0) const;
 
-  /// Recv an <iovec> of size @a n to the datagram socket (uses
+  /// Recv an @c iovec of size @a n to the datagram socket (uses
   /// <recvmsg(3)>).  The IP destination address will be placed in @a
   /// *to_addr if it is not null and set_option has been called with
   /// 1) level IPPROTO_IP, option ACE_RECVPKTINFO, and value 1 for
@@ -135,7 +135,7 @@ public:
    * @a buf.  The ACE_Time_Value indicates how long to blocking
    * trying to receive.  If @a timeout == 0, the caller will block
    * until action is possible, else will wait until the relative time
-   * specified in *@a timeout elapses).  If <recv> times out a -1 is
+   * specified in *@a timeout elapses).  If @c recv times out a -1 is
    * returned with @c errno == ETIME.  If it succeeds the number of
    * bytes received is returned.
    */
@@ -150,7 +150,7 @@ public:
    * @a buf.  The ACE_Time_Value indicates how long to blocking
    * trying to receive.  If @a timeout == 0, the caller will block
    * until action is possible, else will wait until the relative time
-   * specified in *@a timeout elapses).  If <send> times out a -1 is
+   * specified in *@a timeout elapses).  If @c send times out a -1 is
    * returned with @c errno == ETIME.  If it succeeds the number of
    * bytes sent is returned.
    */
@@ -160,8 +160,8 @@ public:
                 int flags,
                 const ACE_Time_Value *timeout) const;
 
-  /// Send <buffer_count> worth of @a buffers to @a addr using overlapped
-  /// I/O (uses <WSASendTo>).  Returns 0 on success.
+  /// Send @c buffer_count worth of @a buffers to @a addr using overlapped
+  /// I/O (uses @c WSASendTo).  Returns 0 on success.
   ssize_t send (const iovec buffers[],
                 int buffer_count,
                 size_t &number_of_bytes_sent,
@@ -170,8 +170,8 @@ public:
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
 
-  /// Recv <buffer_count> worth of @a buffers from @a addr using
-  /// overlapped I/O (uses <WSARecvFrom>).  Returns 0 on success.
+  /// Recv @c buffer_count worth of @a buffers from @a addr using
+  /// overlapped I/O (uses @c WSARecvFrom).  Returns 0 on success.
   ssize_t recv (iovec buffers[],
                 int buffer_count,
                 size_t &number_of_bytes_recvd,
@@ -180,7 +180,7 @@ public:
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
 
-  /// Send an @a n byte @a buf to the datagram socket (uses <WSASendTo>).
+  /// Send an @a n byte @a buf to the datagram socket (uses @c WSASendTo).
   ssize_t send (const void *buf,
                 size_t n,
                 const ACE_Addr &addr,
@@ -189,7 +189,7 @@ public:
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
 
   /// Receive an @a n byte @a buf from the datagram socket (uses
-  /// <WSARecvFrom>).
+  /// @c WSARecvFrom).
   ssize_t recv (void *buf,
                 size_t n,
                 ACE_Addr &addr,
@@ -212,7 +212,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Open is shared by this and by <LSOCK_Dgram>.
+  /// Open is shared by this and by @c LSOCK_Dgram.
   int shared_open (const ACE_Addr &local,
                    int protocol_family,
                    int ipv6_only = 0);

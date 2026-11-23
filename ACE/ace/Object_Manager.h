@@ -105,7 +105,7 @@ template <class T> class ACE_Cleanup_Adapter;
  * 1) Derive the object's class from ACE_Cleanup.
  * 2) Allow the ACE_Object_Manager to both dynamically allocate
  * and deallocate the object.
- * 3) Provide an <ACE_CLEANUP_FUNC> cleanup hook for the object or
+ * 3) Provide an @c ACE_CLEANUP_FUNC cleanup hook for the object or
  * array.
  * 4) Allow the ACE_Object_Manager to both preallocate the object
  * or array, either statically in global data or dynamically on
@@ -177,8 +177,8 @@ template <class T> class ACE_Cleanup_Adapter;
  * However, <::exit> and <ACE_OS::exit> are tricky to use
  * properly, especially in multithread programs.  It is much
  * safer to throw an exception (or simulate that effect) that
- * will be caught by <main> instead of calling exit.  Then,
- * <main> can perform any necessary application-specific cleanup
+ * will be caught by @c main instead of calling exit.  Then,
+ * @c main can perform any necessary application-specific cleanup
  * and return the status value.  In addition, it's usually best
  * to avoid calling <::exit> and <ACE_OS::exit> from threads
  * other than the main thread.  Thanks to Jeff Greif
@@ -187,7 +187,7 @@ template <class T> class ACE_Cleanup_Adapter;
  * recommendations in this paragraph.
  *
  * Instead of creating a static ACE_Object_Manager, or letting
- * ACE create it on the stack of <main> for you, another
+ * ACE create it on the stack of @c main for you, another
  * alternative is to #define
  * ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER.  With that
  * #define, the application must create the ACE_Object_Manager.
@@ -238,9 +238,9 @@ public:
   /**
    * Register an ACE_Cleanup object for cleanup at process
    * termination.  The object is deleted via the
-   * <ace_cleanup_destroyer>.  If you need more flexibility, see the
+   * @c ace_cleanup_destroyer.  If you need more flexibility, see the
    * @c other at_exit method below.  For OS's that do not have
-   * processes, cleanup takes place at the end of <main>.  Returns 0
+   * processes, cleanup takes place at the end of @c main.  Returns 0
    * on success.  On failure, returns -1 and sets errno to: EAGAIN if
    * shutting down, ENOMEM if insufficient virtual memory, or EEXIST
    * if the object (or array) had already been registered.
@@ -261,7 +261,7 @@ public:
    * @a cleanup_hook function; the first parameter is the object (or
    * array) to be destroyed.  @a cleanup_hook, for example, may delete
    * the object (or array).  For OS's that do not have processes, this
-   * function is the same as <at_thread_exit>.  Returns 0 on success.
+   * function is the same as @c at_thread_exit.  Returns 0 on success.
    * On failure, returns -1 and sets errno to: EAGAIN if shutting
    * down, ENOMEM if insufficient virtual memory, or EEXIST if the
    * object (or array) had already been registered.
@@ -421,7 +421,7 @@ public:
 public:
   /// Application code should not use these explicitly, so they're
   /// hidden here.  They're public so that the ACE_Object_Manager can
-  /// be constructed/destructed in <main> with
+  /// be constructed/destructed in @c main with
   /// ACE_HAS_NONSTATIC_OBJECT_MANAGER.
   ACE_Object_Manager ();
   ~ACE_Object_Manager () override;

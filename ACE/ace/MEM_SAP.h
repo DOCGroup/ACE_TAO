@@ -91,12 +91,12 @@ public:
 
   /**
    * Finalizing the MEM_SAP object.  This method doesn't invoke
-   * the <remove> method.
+   * the @c remove method.
    */
   virtual int fini ();
 
   /**
-   * Fetch location of next available data into <recv_buffer_>.
+   * Fetch location of next available data into @c recv_buffer_.
    * As this operation read the address of the data off the socket
    * using ACE::recv, @a timeout only applies to ACE::recv.
    */
@@ -105,18 +105,18 @@ public:
                             const ACE_Time_Value *timeout) = 0;
 
   /**
-   * Wait to to @a timeout amount of time to send @a buf.  If <send>
+   * Wait to to @a timeout amount of time to send @a buf.  If @c send
    * times out a -1 is returned with @c errno == ETIME.  If it succeeds
    * the number of bytes sent is returned.  */
   virtual ssize_t send_buf (ACE_MEM_SAP_Node *buf,
                             int flags,
                             const ACE_Time_Value *timeout) = 0;
 
-  /// request a buffer of size @a size.  Return 0 if the <shm_malloc_> is
+  /// request a buffer of size @a size.  Return 0 if the @c shm_malloc_ is
   /// not initialized.
   ACE_MEM_SAP_Node *acquire_buffer (const ssize_t size);
 
-  /// release a buffer pointed by @a buf.  Return -1 if the <shm_malloc_>
+  /// release a buffer pointed by @a buf.  Return -1 if the @c shm_malloc_
   /// is not initialized.
   int release_buffer (ACE_MEM_SAP_Node *buf);
 

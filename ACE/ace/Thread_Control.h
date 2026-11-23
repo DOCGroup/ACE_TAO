@@ -44,7 +44,7 @@ public:
                       int insert = 0);
 
   /// Remove the thread from its associated Thread_Manager and exit
-  /// the thread if <do_thr_exit> is enabled.
+  /// the thread if @c do_thr_exit is enabled.
   ~ACE_Thread_Control ();
 
   /// Remove this thread from its associated ACE_Thread_Manager and exit

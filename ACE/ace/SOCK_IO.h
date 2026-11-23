@@ -60,7 +60,7 @@ public:
                 size_t n,
                 const ACE_Time_Value *timeout = nullptr) const;
 
-  /// Recv an <iovec> of size @a n from the connected socket.
+  /// Recv an @c iovec of size @a n from the connected socket.
   ssize_t recvv (iovec iov[],
                  int n,
                  const ACE_Time_Value *timeout = nullptr) const;
@@ -70,7 +70,7 @@ public:
    * buffer to read.  This method determines how much data is in the
    * socket, allocates a buffer of this size, reads in the data, and
    * returns the number of bytes read.  The caller is responsible for
-   * deleting the member in the <iov_base> field of @a io_vec using
+   * deleting the member in the @c iov_base field of @a io_vec using
    * delete [] io_vec->iov_base.
    */
   ssize_t recvv (iovec *io_vec,

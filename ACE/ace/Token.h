@@ -51,7 +51,7 @@ class ACE_Time_Value;
  * than many native OS mutexes.  For example, it implements
  * "recursive mutex" semantics, where a thread that owns the token
  * can reacquire it without deadlocking.  If the same thread calls
- * <acquire> multiple times, however, it must call <release> an
+ * @c acquire multiple times, however, it must call @c release an
  * equal number of times before the token is actually released.
  * Threads that are blocked awaiting the token are serviced in
  * strict FIFO/LIFO order as other threads release the token
@@ -103,31 +103,31 @@ public:
   /**
    * Acquire the token, sleeping until it is obtained or until the
    * expiration of @a timeout, which is treated as "absolute" time.  If
-   * some other thread currently holds the token then <sleep_hook> is
-   * called before our thread goes to sleep.  This <sleep_hook> can be
+   * some other thread currently holds the token then @c sleep_hook is
+   * called before our thread goes to sleep.  This @c sleep_hook can be
    * used by the requesting thread to unblock a token-holder that is
    * sleeping, e.g., by means of writing to a pipe (the ACE
    * ACE_Reactor uses this functionality).  Return values: 0 if
-   * acquires without calling <sleep_hook> 1 if <sleep_hook> is
+   * acquires without calling @c sleep_hook 1 if @c sleep_hook is
    * called.  2 if the token is signaled.  -1 if failure or timeout
    * occurs (if timeout occurs errno == ETIME) If @a timeout ==
    * <&ACE_Time_Value::zero> then acquire has polling semantics (and
-   * does *not* call <sleep_hook>).
+   * does *not* call @c sleep_hook).
    */
   int acquire (void (*sleep_hook)(void *),
                void *arg = nullptr,
                ACE_Time_Value *timeout = nullptr);
 
   /**
-   * This behaves just like the previous <acquire> method, except that
-   * it invokes the virtual function called <sleep_hook> that can be
+   * This behaves just like the previous @c acquire method, except that
+   * it invokes the virtual function called @c sleep_hook that can be
    * overridden by a subclass of ACE_Token.
    */
   int acquire (ACE_Time_Value *timeout = nullptr);
 
   /**
    * This should be overridden by a subclass to define the appropriate
-   * behavior before <acquire> goes to sleep.  By default, this is a
+   * behavior before @c acquire goes to sleep.  By default, this is a
    * no-op...
    */
   virtual void sleep_hook ();
@@ -136,25 +136,25 @@ public:
    * An optimized method that efficiently reacquires the token if no
    * other threads are waiting.  This is useful for situations where
    * you don't want to degrade the quality of service if there are
-   * other threads waiting to get the token.  If <requeue_position> ==
+   * other threads waiting to get the token.  If @c requeue_position ==
    * -1 and there are other threads waiting to obtain the token we are
-   * queued according to the queueing strategy.  If <requeue_position>
+   * queued according to the queueing strategy.  If @c requeue_position
    * > -1 then it indicates how many entries to skip over before
    * inserting our thread into the list of waiters (e.g.,
-   * <requeue_position> == 0 means "insert at front of the queue").
+   * @c requeue_position == 0 means "insert at front of the queue").
    * Renew has the rather odd semantics such that if there are other
    * waiting threads it will give up the token even if the
    * nesting_level_ > 1.  I'm not sure if this is really the right
    * thing to do (since it makes it possible for shared data to be
    * changed unexpectedly) so use with caution...  This method
-   * maintians the original token priority.  As in <acquire>, the
+   * maintians the original token priority.  As in @c acquire, the
    * @a timeout value is an absolute time.
    */
   int renew (int requeue_position = 0,
              ACE_Time_Value *timeout = nullptr);
 
   /// Become interface-compliant with other lock mechanisms (implements
-  /// a non-blocking <acquire>).
+  /// a non-blocking @c acquire).
   int tryacquire ();
 
   /// Shuts down the ACE_Token instance.
@@ -189,7 +189,7 @@ public:
   /// Lower priority try_acquire().
   int tryacquire_read ();
 
-  /// Just calls <tryacquire>.
+  /// Just calls @c tryacquire.
   int tryacquire_write ();
 
   /// Assumes the caller has acquired the token and returns 0.
@@ -274,7 +274,7 @@ private:
     ACE_Token_Queue_Entry *tail_ {};
   };
 
-  /// Implements the <acquire> and <tryacquire> methods above.
+  /// Implements the @c acquire and @c tryacquire methods above.
   int shared_acquire (void (*sleep_hook_func)(void *),
                       void *arg,
                       ACE_Time_Value *timeout,
@@ -295,7 +295,7 @@ private:
   /// Current owner of the token.
   ACE_thread_t owner_;
 
-  /// Some thread (i.e., <owner_>) is using the token.  We need this
+  /// Some thread (i.e., @c owner_) is using the token.  We need this
   /// extra variable to deal with POSIX pthreads madness...
   int in_use_;
 

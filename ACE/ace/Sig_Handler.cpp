@@ -182,7 +182,7 @@ ACE_Sig_Handler::register_handler_i (int signum,
 
 /// Register an ACE_Event_Handler along with the corresponding SIGNUM.
 /// This method acquires a lock, so it can't be called from a signal
-/// handler, e.g., <dispatch>.
+/// handler, e.g., @c dispatch.
 int
 ACE_Sig_Handler::register_handler (int signum,
                                    ACE_Event_Handler *new_sh,
@@ -300,7 +300,7 @@ ACE_Sig_Handler::dispatch (int signum, siginfo_t *siginfo, ucontext_t *ucontext)
 
 /// Keeps track of the id that uniquely identifies each registered
 /// signal handler.  This id can be used to cancel a timer via the
-/// <remove_handler> method.
+/// @c remove_handler method.
 int ACE_Sig_Handlers::sigkey_ = 0;
 
 /// If this is true then a 3rd party library has registered a

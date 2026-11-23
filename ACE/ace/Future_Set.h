@@ -110,11 +110,11 @@ private:
 
   using FUTURE_HASH_MAP = ACE_Hash_Map_Manager_Ex<FUTURE_REP *, FUTURE_HOLDER *, FUTURE_REP_HASH, FUTURE_REP_COMPARE, ACE_Null_Mutex>;
 
-  /// Map of <ACE_Futures>, subjects, which have not been written to by
+  /// Map of @c ACE_Futures, subjects, which have not been written to by
   /// client's writer thread.
   FUTURE_HASH_MAP future_map_;
 
-  /// Message queue for notifying the reader thread of <ACE_Futures> which
+  /// Message queue for notifying the reader thread of @c ACE_Futures which
   /// have been written to by client's writer thread.
   std::unique_ptr<ACE_Message_Queue<ACE_SYNCH>> owned_future_notification_queue_;
 

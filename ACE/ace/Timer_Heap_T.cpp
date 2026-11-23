@@ -40,7 +40,7 @@ ACE_HEAP_LCHILD (size_t X)
   return X + X + 1;
 }
 
-/// Constructor that takes in an <ACE_Timer_Heap_T> to iterate over.
+/// Constructor that takes in an @c ACE_Timer_Heap_T to iterate over.
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Heap_Iterator_T (
   Heap &heap)

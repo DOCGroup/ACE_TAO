@@ -145,7 +145,7 @@ ACE_Thread_Descriptor::log_msg_cleanup (ACE_Log_Msg* log_msg)
   log_msg_ = log_msg;
 }
 
-/// Set the <next_> pointer
+/// Set the @c next_ pointer
 ACE_INLINE void
 ACE_Thread_Descriptor::set_next (ACE_Thread_Descriptor *td)
 {
@@ -153,7 +153,7 @@ ACE_Thread_Descriptor::set_next (ACE_Thread_Descriptor *td)
   this->next_ = td;
 }
 
-/// Get the <next_> pointer
+/// Get the @c next_ pointer
 ACE_INLINE ACE_Thread_Descriptor *
 ACE_Thread_Descriptor::get_next () const
 {

@@ -93,8 +93,8 @@ public:
   /// Send n bytes, keep trying until n are sent.
   ssize_t send_n (const void *buf, size_t n) const;
 
-  /// Send all the @a message_blocks chained through their <next> and
-  /// <cont> pointers.  This call uses the underlying OS gather-write
+  /// Send all the @a message_blocks chained through their @c next and
+  /// @c cont pointers.  This call uses the underlying OS gather-write
   /// operation to reduce the domain-crossing penalty.
   ssize_t send_n (const ACE_Message_Block *message_block,
                   const ACE_Time_Value *timeout = nullptr,
@@ -138,7 +138,7 @@ public:
                 size_t n,
                 ACE_OVERLAPPED *overlapped) const;
 
-  /// Send an <iovec> of size @a n to the file.
+  /// Send an @c iovec of size @a n to the file.
   ssize_t sendv (const iovec iov[],
                  int n) const;
 

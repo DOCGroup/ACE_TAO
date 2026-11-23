@@ -52,7 +52,7 @@ public:
   /**
    * Actively connect and produce a @a new_stream if things go well.
    * The @a remote_sap is the address that we are trying to connect
-   * with.  The <params> are the parameters needed for either socket
+   * with.  The @c params are the parameters needed for either socket
    * or XTI/ATM connections.  The @a timeout is the amount of time to
    * wait to connect. If it's 0 then we block indefinitely.  If
    * *timeout == {0, 0} then the connection is done using non-blocking
@@ -63,7 +63,7 @@ public:
    * @c errno == ETIME.  The @a local_sap is the value of local address
    * to bind to.  If it's the default value of <ACE_ATM_Addr::sap_any> then
    * the user is letting the OS do the binding.  If @a reuse_addr == 1
-   * then the <local_addr> is reused, even if it hasn't been cleanedup yet.
+   * then the @c local_addr is reused, even if it hasn't been cleanedup yet.
    */
   ACE_ATM_Connector (ACE_ATM_Stream &new_stream,
                      const ACE_ATM_Addr &remote_sap,
@@ -82,7 +82,7 @@ public:
   /**
    * Actively connect and produce a @a new_stream if things go well.
    * The @a remote_sap is the address that we are trying to connect
-   * with.  The <params> are the parameters needed for either socket
+   * with.  The @c params are the parameters needed for either socket
    * or XTI/ATM connections.  The @a timeout is the amount of time to
    * wait to connect. If it's 0 then we block indefinitely.  If
    * *timeout == {0, 0} then the connection is done using non-blocking
@@ -93,7 +93,7 @@ public:
    * @c errno == ETIME.  The @a local_sap is the value of local address
    * to bind to.  If it's the default value of <ACE_ATM_Addr::sap_any> then
    * the user is letting the OS do the binding.  If @a reuse_addr == 1
-   * then the <local_addr> is reused, even if it hasn't been cleanedup yet.
+   * then the @c local_addr is reused, even if it hasn't been cleanedup yet.
    */
   int connect (ACE_ATM_Stream &new_stream,
                const ACE_ATM_Addr &remote_sap,

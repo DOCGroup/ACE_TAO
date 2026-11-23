@@ -27,7 +27,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * This class centralizes all the time related processing in
  * ACE.  These time values are typically used in conjunction with OS
- * mechanisms like <select>, <poll>, or <cond_timedwait>.
+ * mechanisms like @c select, @c poll, or @c cond_timedwait.
  */
 template <class TIME_POLICY>
 class ACE_Time_Value_T : public ACE_Time_Value

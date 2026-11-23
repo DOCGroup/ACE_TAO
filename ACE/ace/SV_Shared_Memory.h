@@ -69,7 +69,7 @@ public:
   /// Remove this shared memory segment.
   int remove ();
 
-  /// Forward to underlying System V <shmctl>.
+  /// Forward to underlying System V @c shmctl.
   int control (int cmd, void *buf);
 
   /// @name Segment information

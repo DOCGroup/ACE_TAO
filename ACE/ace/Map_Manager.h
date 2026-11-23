@@ -184,7 +184,7 @@ public:
    * map then behaves just like bind().  Otherwise, store the old
    * values of @a ext_id and @a int_id into the "out" parameters and
    * rebind the new parameters.  This is very useful if you need to
-   * have an atomic way of updating <Map_Entries> and you also need
+   * have an atomic way of updating @c Map_Entries and you also need
    * full control over memory allocation.
    * @retval 0 If a new entry is bound successfully.
    * @retval 1 If an existing entry was rebound.
@@ -306,20 +306,20 @@ protected:
   int shared_bind (const EXT_ID &ext_id,
                    const INT_ID &int_id);
 
-  /// Performs a rebinding of <ext_it> to @a int_id.  Also, recovers old
+  /// Performs a rebinding of @c ext_it to @a int_id.  Also, recovers old
   /// values.  Must be called with locks held.
   int rebind_i (const EXT_ID &ext_id,
                 const INT_ID &int_id,
                 EXT_ID &old_ext_id,
                 INT_ID &old_int_id);
 
-  /// Performs a rebinding of <ext_it> to @a int_id.  Also, recovers old
+  /// Performs a rebinding of @c ext_it to @a int_id.  Also, recovers old
   /// values.  Must be called with locks held.
   int rebind_i (const EXT_ID &ext_id,
                 const INT_ID &int_id,
                 INT_ID &old_int_id);
 
-  /// Performs a rebinding of <ext_it> to @a int_id.  Must be called
+  /// Performs a rebinding of @c ext_it to @a int_id.  Must be called
   /// with locks held.
   int rebind_i (const EXT_ID &ext_id,
                 const INT_ID &int_id);
@@ -362,7 +362,7 @@ protected:
   /// Close down a @c Map_Manager.  Must be called with locks held.
   int close_i ();
 
-  /// Returns 1 if <id1> == <id2>, else 0.  This is defined as a
+  /// Returns 1 if @c id1 == @c id2, else 0.  This is defined as a
   /// separate method to facilitate template specialization.
   int equal (const EXT_ID &id1, const EXT_ID &id2);
 
@@ -371,7 +371,7 @@ protected:
   ACE_UINT32 new_size ();
 
   /// Explicitly call the destructors and free up the
-  /// <search_structure_>.
+  /// @c search_structure_.
   void free_search_structure ();
 
   /// Id of the free list sentinel.
@@ -456,7 +456,7 @@ public:
   /// @name Iteration methods
   /// @{
 
-  /// Pass back the next <entry> that hasn't been seen in the Set.
+  /// Pass back the next @c entry that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
   int next (ACE_Map_Entry<EXT_ID, INT_ID> *&next_entry) const;
 
@@ -516,7 +516,7 @@ public:
   /// @name Iteration methods
   /// @{
 
-  /// Pass back the next <entry> that hasn't been seen in the Set.
+  /// Pass back the next @c entry that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
   int next (ACE_Map_Entry<EXT_ID, INT_ID> *&next_entry) const;
 

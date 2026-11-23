@@ -40,7 +40,7 @@ class ACE_Time_Value;
  * contains two @c ACE_Tasks.  Even though the methods in this
  * class are virtual, this class isn't really intended for
  * subclassing unless you know what you are doing.  In
- * particular, the ACE_Stream destructor calls <close>, which
+ * particular, the ACE_Stream destructor calls @c close, which
  * won't be overridden properly unless you call it in a subclass
  * destructor.
  */
@@ -63,7 +63,7 @@ public:
    * Create a Stream consisting of @a head and @a tail as the Stream
    * head and Stream tail, respectively.  If these are nullptr then the
    * ACE_Stream_Head and ACE_Stream_Tail are used, respectively.
-   * @a arg is the value past in to the <open> methods of the tasks.
+   * @a arg is the value past in to the @c open methods of the tasks.
    */
   ACE_Stream (void *arg = nullptr,
               ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *head = nullptr,

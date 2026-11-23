@@ -70,7 +70,7 @@ public:
                       size_t &rounded_bytes,
                       int &first_time);
 
-  /// Acquire at least @a nbytes from the memory pool.  <rounded_bytes>
+  /// Acquire at least @a nbytes from the memory pool.  @c rounded_bytes
   /// is the actual number of bytes allocated.
   void *acquire (size_t nbytes,
                  size_t &rounded_bytes);

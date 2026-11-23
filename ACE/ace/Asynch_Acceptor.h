@@ -200,10 +200,10 @@ public:
   /// completes.
   virtual void reissue_accept (bool new_value);
 
-  /// Get bytes to be read with the <accept> call.
+  /// Get bytes to be read with the @c accept call.
   virtual size_t bytes_to_read () const;
 
-  /// Set bytes to be read with the <accept> call.
+  /// Set bytes to be read with the @c accept call.
   virtual void bytes_to_read (size_t new_value);
   /// @}
 
@@ -252,7 +252,7 @@ private:
   /// accept completes.
   bool reissue_accept_ {true};
 
-  /// Bytes to be read with the <accept> call.
+  /// Bytes to be read with the @c accept call.
   size_t bytes_to_read_ {};
 };
 

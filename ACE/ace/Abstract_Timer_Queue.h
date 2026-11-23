@@ -55,17 +55,17 @@ public:
   /**
    * Schedule @a type that will expire at @a future_time, which is
    * specified in absolute time.  If it expires then @a act is passed
-   * in as the value to the <functor>.  If @a interval is != to
+   * in as the value to the @c functor.  If @a interval is != to
    * ACE_Time_Value::zero then it is used to reschedule the @a type
-   * automatically, using relative time to the current <gettimeofday>.
-   * This method returns a <timer_id> that uniquely identifies the the
-   * @a type entry in an internal list.  This <timer_id> can be used to
+   * automatically, using relative time to the current @c gettimeofday.
+   * This method returns a @c timer_id that uniquely identifies the the
+   * @a type entry in an internal list.  This @c timer_id can be used to
    * cancel the timer before it expires.  The cancellation ensures
-   * that <timer_ids> are unique up to values of greater than 2
+   * that @c timer_ids are unique up to values of greater than 2
    * billion timers.  As long as timers don't stay around longer than
    * this there should be no problems with accidentally deleting the
    * wrong timer.  Returns -1 on failure (which is guaranteed never to
-   * be a valid <timer_id>).
+   * be a valid @c timer_id).
    */
   virtual long schedule (TYPE const &type,
                          void const *act,
@@ -73,15 +73,15 @@ public:
                          ACE_Time_Value const &interval = ACE_Time_Value::zero) = 0;
 
   /**
-   * Run the <functor> for all timers whose values are <= @a current_time.
-   * This does not account for <timer_skew>.  Returns the number of
+   * Run the @c functor for all timers whose values are <= @a current_time.
+   * This does not account for @c timer_skew.  Returns the number of
    * timers canceled.
    */
   virtual int expire (ACE_Time_Value const &current_time) = 0;
 
   /**
-   * Run the <functor> for all timers whose values are <=
-   * <ACE_OS::gettimeofday>.  Also accounts for <timer_skew>.
+   * Run the @c functor for all timers whose values are <=
+   * <ACE_OS::gettimeofday>.  Also accounts for @c timer_skew.
    *
    * Depending on the resolution of the underlying OS the system calls
    * like select()/poll() might return at time different than that is
@@ -101,8 +101,8 @@ public:
    * then the timeout will occur at interval after B. Now depending upon the
    * resolution of your timeouts and the accuracy of the timeouts
    * needed for your application, you should set the value of
-   * <timer_skew>. In the above case, if you want the timeout A to fire
-   * no later than A, then you should specify your <timer_skew> to be
+   * @c timer_skew. In the above case, if you want the timeout A to fire
+   * no later than A, then you should specify your @c timer_skew to be
    * A % t.
    *
    * The timeout value should be specified via the macro ACE_TIMER_SKEW
@@ -132,7 +132,7 @@ public:
   /**
    * Resets the interval of the timer represented by @a timer_id to
    * @a interval, which is specified in relative time to the current
-   * <gettimeofday>.  If @a interval is equal to
+   * @c gettimeofday.  If @a interval is equal to
    * ACE_Time_Value::zero, the timer will become a non-rescheduling
    * timer.  Returns 0 if successful, -1 if not.
    */
@@ -141,8 +141,8 @@ public:
 
   /**
    * Cancel all timer associated with @a type.  If
-   * @a dont_call_handle_close is 0 then the <functor> will be invoked,
-   * which typically invokes the <handle_close> hook.  Returns number
+   * @a dont_call_handle_close is 0 then the @c functor will be invoked,
+   * which typically invokes the @c handle_close hook.  Returns number
    * of timers cancelled.
    */
   virtual int cancel (TYPE const &type,
@@ -150,12 +150,12 @@ public:
 
   /**
    * Cancel the single timer that matches the @a timer_id value (which
-   * was returned from the <schedule> method).  If act is non-NULL
+   * was returned from the @c schedule method).  If act is non-NULL
    * then it will be set to point to the ``magic cookie'' argument
    * passed in when the timer was registered.  This makes it possible
    * to free up the memory and avoid memory leaks.  If
-   * @a dont_call_handle_close is 0 then the <functor> will be invoked,
-   * which typically calls the <handle_close> hook.  Returns 1 if
+   * @a dont_call_handle_close is 0 then the @c functor will be invoked,
+   * which typically calls the @c handle_close hook.  Returns 1 if
    * cancellation succeeded and 0 if the @a timer_id wasn't found.
    */
   virtual int cancel (long timer_id,
