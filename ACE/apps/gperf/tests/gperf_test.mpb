@@ -12,6 +12,6 @@ project: aceexe, crosscompile {
   }
 
   Source_Files {
-    test.cpp
+    test_driver.cpp
   }
 }
