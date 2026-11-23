@@ -228,7 +228,7 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
       || ACE_BIT_ENABLED (verbose_flag,
                           ACE_Log_Msg::VERBOSE_LITE))
     {
-      ACE_Time_Value reftime (this->secs_, this->usecs_);
+      ACE_Time_Value const reftime (this->secs_, this->usecs_);
       if (nullptr == ACE::timestamp (reftime,
                                timestamp,
                                sizeof (timestamp) / sizeof (ACE_TCHAR)))
@@ -299,7 +299,7 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
 #else
       ACE_NEW_RETURN (verbose_msg, ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-      std::unique_ptr<ACE_TCHAR[], ACE_Array_Deleter<ACE_TCHAR>> safe_verbose_msg (
+      std::unique_ptr<ACE_TCHAR[], ACE_Array_Deleter<ACE_TCHAR>> const safe_verbose_msg (
         verbose_msg);
 
       int result = this->format_msg (host_name, verbose_flag,
@@ -341,7 +341,7 @@ operator<< (ACE_OutputCDR &cdr,
 {
   // The written message length can't be more than 32 bits (ACE_CDR::ULong)
   // so reduce it here if needed.
-  ACE_CDR::ULong u_msglen =
+  ACE_CDR::ULong const u_msglen =
     ACE_Utils::truncate_cast<ACE_CDR::ULong> (log_record.msg_data_len ());
 
   // Insert each field from <log_record> into the output CDR stream.
@@ -377,7 +377,7 @@ operator>> (ACE_InputCDR &cdr,
 #else
     ACE_NEW_RETURN (log_msg, ACE_TCHAR[buffer_len + 1], -1);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-    std::unique_ptr<ACE_TCHAR[], ACE_Array_Deleter<ACE_TCHAR>> log_msg_p (
+    std::unique_ptr<ACE_TCHAR[], ACE_Array_Deleter<ACE_TCHAR>> const log_msg_p (
       log_msg);
     log_record.type (type);
     log_record.pid (pid);
@@ -408,7 +408,7 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
     {
       ACE_TCHAR* verbose_msg {};
       ACE_NEW_RETURN (verbose_msg, ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
-      std::unique_ptr<ACE_TCHAR[]> safe_verbose_msg (verbose_msg);
+      std::unique_ptr<ACE_TCHAR[]> const safe_verbose_msg (verbose_msg);
 
       int const result = this->format_msg (host_name, verbose_flag,
                                            safe_verbose_msg.get (),
