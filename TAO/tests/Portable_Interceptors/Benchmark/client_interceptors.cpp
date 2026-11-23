@@ -56,7 +56,7 @@ Vault_Client_Request_Interceptor::send_request (
 
       Test_Interceptors::Secure_Vault::Record const *record {};
       CORBA::Long id {};
-      CORBA::ULong i {};  // index -- explicitly used to avoid
+      CORBA::ULong const i {};  // index -- explicitly used to avoid
                            // overloaded operator ambiguity.
       paramlist[i++].argument >>= id;
       paramlist[i].argument >>= record;
