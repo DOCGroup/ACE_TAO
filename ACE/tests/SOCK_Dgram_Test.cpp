@@ -30,7 +30,7 @@ client (void *arg)
   ACE_INET_Addr *remote_addr = static_cast<ACE_INET_Addr *> (arg);
   ACE_INET_Addr server_addr, peer_addr;
   ACE_SOCK_Dgram cli_dgram;
-  ACE_Time_Value timeout (1);
+  ACE_Time_Value const timeout (1);
 
   ACE_TCHAR buf[20];
   ACE_TCHAR hostname_string[100];
@@ -141,7 +141,7 @@ client (void *arg)
       iov[0].iov_base = reinterpret_cast<char *> (buf);
       iov[0].iov_len = sizeof buf;
 
-      ssize_t rcv_cnt = cli_dgram.recv (iov,
+      ssize_t const rcv_cnt = cli_dgram.recv (iov,
                                         1,
                                         peer_addr,
                                         0,
@@ -167,7 +167,7 @@ client (void *arg)
       else
         {
           // recv() ok, check data, 'from', and 'to' address
-          size_t rcv_siz = static_cast<size_t> (rcv_cnt);
+          size_t const rcv_siz = static_cast<size_t> (rcv_cnt);
           if (rcv_siz != sizeof (TEST_DATA))
             {
               ACE_ERROR ((LM_ERROR,
@@ -232,7 +232,7 @@ server (void *arg)
   else
     {
       // recv() ok, check data and 'from' address
-      size_t rcv_siz = static_cast<size_t> (rcv_cnt);
+      size_t const rcv_siz = static_cast<size_t> (rcv_cnt);
       if (rcv_siz != sizeof (TEST_DATA))
         {
           ACE_ERROR ((LM_ERROR,

@@ -220,7 +220,7 @@ run_main (int, ACE_TCHAR *[])
   nameset names;
 
   get_valid_ipv4_interface_names (names);
-  ACE_INET_Addr ipv4_mc_addr ("239.255.0.7:1234", AF_INET);
+  ACE_INET_Addr const ipv4_mc_addr ("239.255.0.7:1234", AF_INET);
   result |= create_socket_and_join_multicast (ipv4_mc_addr, ACE_TString ());
   for (nameset::const_iterator it = names.begin (); result == 0 && it != names.end (); ++it)
     {
@@ -230,7 +230,7 @@ run_main (int, ACE_TCHAR *[])
 #if defined (ACE_HAS_IPV6)
   names.clear ();
   get_valid_ipv6_interface_names (names);
-  ACE_INET_Addr ipv6_mc_addr ("ff03::7:4321", AF_INET6);
+  ACE_INET_Addr const ipv6_mc_addr ("ff03::7:4321", AF_INET6);
   result |= create_socket_and_join_multicast (ipv6_mc_addr, ACE_TString ());
   for (nameset::const_iterator it = names.begin (); result == 0 && it != names.end (); ++it)
     {
