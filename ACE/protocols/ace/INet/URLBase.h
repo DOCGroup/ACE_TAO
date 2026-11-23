@@ -31,7 +31,7 @@ namespace ACE
         * @class ACE_INet_URLStream
         *
         * @brief Provides abstracted wrapper class for the resulting
-        *   stream of an URL <open> operation.
+        *   stream of an URL @c open operation.
         *
         * Provides proper life cycle management for either factory provided
         * or user provided request handlers.

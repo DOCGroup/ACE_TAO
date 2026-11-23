@@ -38,18 +38,18 @@ namespace ACE
      * class.
      *
      * @a buf is the buffer to write from or receive into.
-     * <len> is the number of bytes to transfer.
-     * The <timeout> parameter in the following methods indicates how
-     * long to blocking trying to transfer data.  If <timeout> == 0,
+     * @a len is the number of bytes to transfer.
+     * The @a timeout parameter in the following methods indicates how
+     * long to blocking trying to transfer data.  If @a timeout == 0,
      * then the call behaves as a normal send/recv call, i.e., for
      * blocking sockets, the call will block until action is possible;
      * for non-blocking sockets, EWOULDBLOCK will be returned if no
      * action is immediately possible.
-     * If <timeout> != 0, the call will wait for data to arrive no longer
-     * than the relative time specified in *<timeout>.
+     * If @a timeout != 0, the call will wait for data to arrive no longer
+     * than the relative time specified in *@a timeout.
      * The "_n()" I/O methods keep looping until all the data has been
      * transferred.  These methods also work for sockets in non-blocking
-     * mode i.e., they keep looping on EWOULDBLOCK.  <timeout> is used
+     * mode i.e., they keep looping on EWOULDBLOCK.  @a timeout is used
      * to make sure we keep making progress, i.e., the same timeout
      * value is used for every I/O operation in the loop and the timeout
      * is not counted down.
@@ -61,14 +61,14 @@ namespace ACE
      * - On EOF, 0 is returned, errno is irrelevant.
      *
      * On partial transfers, i.e., if any data is transferred before
-     * timeout/error/EOF, <bytes_transferred> will contain the number of
+     * timeout/error/EOF, @a bytes_transferred will contain the number of
      * bytes transferred.
      * Methods with @c iovec parameter are I/O vector variants of the I/O
      * operations.
-     * Methods with the extra <flags> argument will always result in
-     * <send> getting called. Methods without the extra <flags> argument
-     * will result in <send> getting called on Win32 platforms, and
-     * <write> getting called on non-Win32 platforms.
+     * Methods with the extra @a flags argument will always result in
+     * @c send getting called. Methods without the extra @a flags argument
+     * will result in @c send getting called on Win32 platforms, and
+     * @c write getting called on non-Win32 platforms.
      */
     class HTBP_Export Channel
     {
@@ -169,7 +169,7 @@ namespace ACE
 
       /**
        * Close down the socket (we need this to make things work correctly
-       * on Win32, which requires use to do a <close_writer> before doing
+       * on Win32, which requires use to do a @c close_writer before doing
        * the close to avoid losing data).
        */
       int close ();

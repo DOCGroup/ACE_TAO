@@ -24,7 +24,7 @@ namespace ACE
         * @brief Provides the functionality to attach an SSL_SOCK_Stream
         *   to an established socket of a proxy tunneling service.
         *
-        * The <connect> method will finalize the setting up an SSL connection
+        * The @c connect method will finalize the setting up an SSL connection
         * over the tunnel by performing an SSL handhake after setting the socket
         * in the @c SSL_SOCK_Stream.
         */

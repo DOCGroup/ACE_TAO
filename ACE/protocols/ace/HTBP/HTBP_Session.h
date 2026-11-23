@@ -47,7 +47,7 @@ namespace ACE
     /**
      * @class Session
      *
-     * @brief Defines the methods in the <Session> abstraction.
+     * @brief Defines the methods in the @c Session abstraction.
      *
      * A session is an entity that combines two Ht_Channels that connect directly
      * to a proxy to manage communication with a remote peer. The Session may
@@ -70,7 +70,7 @@ namespace ACE
       /// @{
       Session ();
 
-      /// Constructor (sets the underlying session id with <sid>).
+      /// Constructor (sets the underlying session id with @a sid).
       Session (Addr const& peer,
                Addr const& local,
                ACE_UINT32 sid = 0,

@@ -35,7 +35,7 @@ namespace ACE
         *
         * Implements a base class for a C++ standard unidirectional
         * streambuffer using any data source/destination that can be
-        * driven by overloading the <write_to_stream> or <read_from_stream>
+        * driven by overloading the @c write_to_stream or @c read_from_stream
         * methods.
         */
         template <class ACE_CHAR_T, class TR = std::char_traits<ACE_CHAR_T> >

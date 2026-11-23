@@ -28,7 +28,7 @@ namespace ACE
     /**
      * @class ACE_HTBP_Filter
      *
-     * @brief Defines the methods in the <ACE_HTBP_Filter> abstraction.
+     * @brief Defines the methods in the @c ACE_HTBP_Filter abstraction.
      *
      * A filter is responsible for wrapping / unwrapping messages
      * depending on direction of flow on each stream. There will be 4

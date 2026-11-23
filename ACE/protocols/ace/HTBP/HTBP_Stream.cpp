@@ -34,10 +34,7 @@ ACE::HTBP::Stream::dump () const
 {
 }
 
-/// @name I/O functions
-/// @{
-
-/// Recv an <n> byte buffer from the connected socket.
+/// Recv an @a n byte buffer from the connected socket.
 ssize_t
 ACE::HTBP::Stream::recv (void *buf,
                          size_t n,
@@ -56,7 +53,7 @@ ACE::HTBP::Stream::recv (void *buf,
   return this->session_->inbound()->recv(buf,n,flags,timeout);
 }
 
-  /// Recv an <n> byte buffer from the connected socket.
+  /// Recv an @a n byte buffer from the connected socket.
 ssize_t
 ACE::HTBP::Stream::recv (void *buf,
                          size_t n,
@@ -74,7 +71,7 @@ ACE::HTBP::Stream::recv (void *buf,
   return this->session_->inbound()->recv(buf,n,timeout);
 }
 
-  /// Recv an <iovec> of size <n> from the connected socket.
+  /// Recv an @c iovec of size @a n from the connected socket.
 ssize_t
 ACE::HTBP::Stream::recvv (iovec iov[],
                   int iovcnt,
@@ -202,7 +199,7 @@ ACE::HTBP::Stream::recv_n (void *,
                     -1);
 }
 
-  /// Try to recv exactly <len> bytes into <buf> from the connected socket.
+  /// Try to recv exactly @a len bytes into @a buf from the connected socket.
 ssize_t
 ACE::HTBP::Stream::recv_n (void *,
                    size_t ,
@@ -215,7 +212,7 @@ ACE::HTBP::Stream::recv_n (void *,
                     -1);
 }
 
-  /// Receive an <iovec> of size <iovcnt> from the connected socket.
+  /// Receive an @c iovec of size @a iovcnt from the connected socket.
 ssize_t
 ACE::HTBP::Stream::recvv_n (iovec [],
                    int ,
@@ -228,7 +225,7 @@ ACE::HTBP::Stream::recvv_n (iovec [],
                     -1);
 }
 
-  /// Try to send exactly <len> bytes from <buf> to the connection socket.
+  /// Try to send exactly @a len bytes from @a buf to the connection socket.
 ssize_t
 ACE::HTBP::Stream::send_n (const void *,
                    size_t ,
@@ -242,7 +239,7 @@ ACE::HTBP::Stream::send_n (const void *,
                     -1);
 }
 
-  /// Try to send exactly <len> bytes from <buf> to the connected socket.
+  /// Try to send exactly @a len bytes from @a buf to the connected socket.
 ssize_t
 ACE::HTBP::Stream::send_n (const void *,
                    size_t ,
@@ -255,8 +252,8 @@ ACE::HTBP::Stream::send_n (const void *,
                     -1);
 }
 
-  /// Send all the <message_block>s chained through their <next> and
-  /// <cont> pointers.  This call uses the underlying OS gather-write
+  /// Send all the @a message_blocks chained through their @c next and
+  /// @c cont pointers.  This call uses the underlying OS gather-write
   /// operation to reduce the domain-crossing penalty.
 ssize_t
 ACE::HTBP::Stream::send_n (const ACE_Message_Block *,
@@ -269,7 +266,7 @@ ACE::HTBP::Stream::send_n (const ACE_Message_Block *,
                     -1);
 }
 
-  /// Send an <iovec> of size <iovcnt> to the connected socket.
+  /// Send an @c iovec of size @a iovcnt to the connected socket.
 ssize_t
 ACE::HTBP::Stream::sendv_n (const iovec [],
                     int,
@@ -282,7 +279,6 @@ ACE::HTBP::Stream::sendv_n (const iovec [],
                     -1);
 }
 
-/// @}
 int
 ACE::HTBP::Stream::close_reader ()
 {

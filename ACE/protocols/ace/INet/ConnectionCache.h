@@ -199,14 +199,14 @@ namespace ACE
               ConnectionCache& operator = (ConnectionCache&&) = delete;
 
               /// Claim a connection from the cache.
-              /// Creates a new connection using <connection_factory>
+              /// Creates a new connection using @a connection_factory
               /// if the cache does not contain a matching entry for
-              /// <key>.
-              /// If <wait> is true and the state of the matching
+              /// @a key.
+              /// If @a wait is true and the state of the matching
               /// connection is BUSY the method will block waiting for
               /// connection to become available.
               /// Returns true if a connection could be successfully
-              /// claimed and sets <connection> to the claimed connection.
+              /// claimed and sets @a connection to the claimed connection.
               /// Returns false otherwise.
               bool claim_connection (ConnectionKey const& key,
                                     connection_type*& connection,
@@ -227,7 +227,7 @@ namespace ACE
                                     connection_type* connection);
 
               /// Returns true if the cache contains a connection matching
-              /// <key>. Cache entries with state CLOSED are not considered.
+              /// @a key. Cache entries with state CLOSED are not considered.
               /// Returns false otherwise.
               bool has_connection (ConnectionKey const& key);
 

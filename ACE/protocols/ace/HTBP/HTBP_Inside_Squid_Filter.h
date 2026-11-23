@@ -24,7 +24,7 @@ namespace ACE
     /**
      * @class Inside_Squid_Filter
      *
-     * @brief Defines the methods in the <Filter> abstraction.
+     * @brief Defines the methods in the @c Filter abstraction.
      *
      * A filter is responsible for wrapping / unwrapping messages
      * depending on direction of flow on each stream. There will be 4

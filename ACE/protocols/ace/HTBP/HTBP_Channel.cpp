@@ -297,9 +297,6 @@ ACE::HTBP::Channel::consume_error ()
   return 0;
 }
 
-/// @name I/O functions
-/// @{
-
 /// The ACE::HTBP::Channel is a sibling of the ACE_SOCK_IO class, rather than a
 /// decendant. This is due to the requirement to wrap all messages with
 /// an HTTP request or reply wrapper, and to send application data in only
@@ -365,7 +362,7 @@ ACE::HTBP::Channel::pre_recv()
   return -1;
 }
 
-/// Recv an <n> byte buffer from the connected socket.
+/// Recv an @a n byte buffer from the connected socket.
 ssize_t
 ACE::HTBP::Channel::recv (void *buf,
                  size_t n,
@@ -398,7 +395,7 @@ ACE::HTBP::Channel::recv (void *buf,
   return result;
 }
 
-  /// Recv an <n> byte buffer from the connected socket.
+  /// Recv an @a n byte buffer from the connected socket.
 ssize_t
 ACE::HTBP::Channel::recv (void *buf,
                  size_t n,
@@ -432,7 +429,7 @@ ACE::HTBP::Channel::recv (void *buf,
   return result;
 }
 
-  /// Recv an <iovec> of size <n> from the connected socket.
+  /// Recv an @c iovec of size @a n from the connected socket.
 ssize_t
 ACE::HTBP::Channel::recvv (iovec iov[],
                   int iovcnt,
@@ -618,7 +615,6 @@ ACE::HTBP::Channel::sendv (const iovec iov[],
   return result;
 }
 
-/// @}
 int
 ACE::HTBP::Channel::enable (int value) const
 {
