@@ -39,6 +39,7 @@ public:
 
   /// Open the output file.
   /// \param file_name the fully qualified file name
+  /// \param backup_count number of previous topology files to retain
   /// \return true if successful
   bool open (ACE_TString const &file_name, size_t backup_count);
 

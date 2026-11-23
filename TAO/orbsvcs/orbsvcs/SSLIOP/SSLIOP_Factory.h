@@ -75,9 +75,11 @@ namespace TAO
 
     private:
       /// Parse an X509 file path, which is expected to looks like:
+      /// @code
       ///   <X509Path> ::= <Prefix> ':' <Path>
       ///   <Prefix>   ::= 'PEM' | 'ASN1'
       ///   <Path>     ::= any-string
+      /// @endcode
       /// Returns either SSL_FILETYPE_ASN1, SSL_FILETYPE_PEM or -1
       /// if the prefix can not be recognized. The *path will point
       /// to the part of the original buffer, after the initial ':',

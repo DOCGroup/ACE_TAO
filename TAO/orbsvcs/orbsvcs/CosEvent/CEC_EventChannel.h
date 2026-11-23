@@ -113,7 +113,7 @@ public:
   /**
    * constructor
    * If @a own_factory is not 0 it assumes ownership of the factory.
-   * If the factory is <nil> it uses the Service_Configurator to load
+   * If the factory is @c nullptr it uses the Service_Configurator to load
    * the Factory, if not found it uses TAO_CEC_Default_Resource_Factory
    */
   TAO_CEC_EventChannel (TAO_CEC_EventChannel_Attributes const &attributes,
