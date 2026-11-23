@@ -215,7 +215,7 @@ public:
    * @arg act                ACT which is passed to the completion handler in
    *                         the result object.
    * @arg priority           Specifies the operation priority. This has an
-   *                         affect on POSIX only. Works like @i nice in Unix.
+   *                         affect on POSIX only. Works like @c nice in Unix.
    *                         Negative values are not allowed. 0 means priority
    *                         of the operation same as the process priority.
    *                         1 means priority of the operation is one less than
@@ -251,7 +251,7 @@ public:
    * @arg act                ACT which is passed to the completion handler in
    *                         the result object.
    * @arg priority           Specifies the operation priority. This has an
-   *                         affect on POSIX only. Works like @i nice in Unix.
+   *                         affect on POSIX only. Works like @c nice in Unix.
    *                         Negative values are not allowed. 0 means priority
    *                         of the operation same as the process priority.
    *                         1 means priority of the operation is one less than

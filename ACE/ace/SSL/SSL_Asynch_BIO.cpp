@@ -115,7 +115,7 @@ ACE_SSL_make_BIO (void * ssl_asynch_stream)
 }
 
 /**
- * @struct @c ACE_SSL_Asynch_Stream_Accessor
+ * @struct ACE_SSL_Asynch_Stream_Accessor
  *
  * @brief Privileged @c ACE_SSL_Asynch_Stream accessor.
  *
