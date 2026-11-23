@@ -2,11 +2,10 @@
  *  @file    PG_Object_Group.h
  *
  *  Manage all information related to an object group.
- *  @@ Note: the above description is optimistic.  The hope is to eventually
- *  @@ consolidate all information related to an object group into this object.
- *  @@ however at the moment GenericFactory, ObjectGroupManager, and
- *  FT_ReplicationManager have parallel collections of object group
- *  information.
+ *  @note The above description is optimistic. The goal is to eventually
+ *  consolidate all object group information into this object. Currently,
+ *  GenericFactory, ObjectGroupManager, and FT_ReplicationManager have
+ *  parallel collections of object group information.
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
