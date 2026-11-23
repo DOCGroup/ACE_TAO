@@ -66,7 +66,7 @@ Quiet_Notify_Tester::svc ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Starting quiet event loop\n")));
   this->r_.owner (ACE_Thread::self ());
   ACE_Time_Value tmo (LONG_TIMEOUT);
-  int status = this->r_.handle_events (&tmo);
+  int const status = this->r_.handle_events (&tmo);
   time_t remain = tmo.sec ();
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) event loop status %d, %: secs remain\n"),

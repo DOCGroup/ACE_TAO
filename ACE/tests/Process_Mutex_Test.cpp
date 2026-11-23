@@ -80,7 +80,7 @@ acquire_release ()
   ACE_OS::strncat (mutex_check, ACE_TEXT ("_checker"), MAXPATHLEN);
 
   // Grab the lock
-  int mutex_acq = mutex.acquire ();
+  int const mutex_acq = mutex.acquire ();
   ACE_TEST_ASSERT (mutex_acq == 0);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -114,7 +114,7 @@ acquire_release ()
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P) Releasing the mutex %s\n"),
                   mutex_name));
-      int mutex_release = mutex.release ();
+      int const mutex_release = mutex.release ();
       ACE_TEST_ASSERT (mutex_release == 0);
     }
 }
@@ -128,7 +128,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (child_process)
     {
       ACE_TCHAR lognm[MAXPATHLEN];
-      int mypid (ACE_OS::getpid ());
+      int const mypid (ACE_OS::getpid ());
       ACE_OS::snprintf (lognm, MAXPATHLEN,
                         ACE_TEXT ("Process_Mutex_Test-child-%d"), mypid);
 
@@ -195,7 +195,7 @@ run_main (int argc, ACE_TCHAR *argv[])
         {
           ACE_exitcode child_status;
           // Wait for the child processes we created to exit.
-          int wait_result = children[i].wait (&child_status);
+          int const wait_result = children[i].wait (&child_status);
           ACE_TEST_ASSERT (wait_result != -1);
           if (child_status == 0)
             {

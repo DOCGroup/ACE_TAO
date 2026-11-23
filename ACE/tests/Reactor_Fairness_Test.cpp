@@ -276,7 +276,7 @@ ACE_THR_FUNC_RETURN
 reactor_loop (void *p)
 {
   ACE_Reactor *r = reinterpret_cast<ACE_Reactor *> (p);
-  int me = reactor_thread_nr++;
+  int const me = reactor_thread_nr++;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Reactor loop %d starting...\n"), me));
   if (me == 0)
   {
@@ -333,7 +333,7 @@ run (ACE_Reactor_Impl &ri, const ACE_TCHAR *what, bool tp = true)
   ACE_INET_Addr connection_addr (server_addr.get_port_number (),
                                  ACE_DEFAULT_SERVER_HOST);
 
-  int sender_grp = tm->spawn (sender, &connection_addr);
+  int const sender_grp = tm->spawn (sender, &connection_addr);
   if (-1 == sender_grp)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("sender spawn")));

@@ -406,10 +406,10 @@ TestData::TestData ()
 bool
 TestData::testing_done ()
 {
-  int svr_up = this->servers_.sessions_up_.value ();
-  int svr_dn = this->servers_.sessions_down_.value ();
-  int clt_up = this->clients_.sessions_up_.value ();
-  int clt_dn = this->clients_.sessions_down_.value ();
+  int const svr_up = this->servers_.sessions_up_.value ();
+  int const svr_dn = this->servers_.sessions_down_.value ();
+  int const clt_up = this->clients_.sessions_up_.value ();
+  int const clt_dn = this->clients_.sessions_down_.value ();
 
   if (svr_up == 0 && clt_up == 0)      // No connections up yet
     {
