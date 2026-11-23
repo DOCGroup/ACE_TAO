@@ -109,7 +109,7 @@ Logger::log (ACE_Log_Record &log_record)
   else
     {
       ACE_TCHAR verbose_msg[ACE_Log_Record::MAXVERBOSELOGMSGLEN];
-      int result = log_record.format_msg (ACE_LOG_MSG->local_host (),
+      int const result = log_record.format_msg (ACE_LOG_MSG->local_host (),
                                           ACE_LOG_MSG->flags (),
                                           verbose_msg,
                                           ACE_Log_Record::MAXVERBOSELOGMSGLEN);
@@ -514,7 +514,7 @@ test_ostream ()
 
   ACE_FILE_Connector connector;
   ACE_FILE_IO file;
-  ACE_FILE_Addr file_addr (filename);
+  ACE_FILE_Addr const file_addr (filename);
 
   // Open up the file.
   if (connector.connect (file, file_addr) == -1)
@@ -551,10 +551,10 @@ test_ostream ()
                   char[info.size_ + 1],
                   -1);
   // Make sure <buffer> is released automagically.
-  std::unique_ptr<char[]> b (buffer);
+  std::unique_ptr<char[]> const b (buffer);
 
   // Read the file into the buffer.
-  ssize_t size = file.recv (buffer,
+  ssize_t const size = file.recv (buffer,
                             info.size_);
   if (size != info.size_)
     {

@@ -100,7 +100,7 @@ client (void *arg)
 {
   ACE_INET_Addr *remote_addr = reinterpret_cast<ACE_INET_Addr *> (arg);
 
-  ACE_INET_Addr server_addr (remote_addr->get_port_number (),
+  ACE_INET_Addr const server_addr (remote_addr->get_port_number (),
                              ACE_LOCALHOST,
                              AF_INET);
 
@@ -147,7 +147,7 @@ client (void *arg)
 
   // if connect succesful, what is the max port number we connected
   // up to now.
-  int connected_port = server_addr.get_port_number ();
+  int const connected_port = server_addr.get_port_number ();
 
   if (connected_port > max_connected_port)
   {

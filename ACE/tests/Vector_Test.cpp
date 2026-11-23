@@ -120,7 +120,7 @@ int run_main (int, ACE_TCHAR *[])
   VECTOR vector2;
 
   // should be around 32
-  size_t boundary = vector2.capacity ();
+  size_t const boundary = vector2.capacity ();
 
   // we fill everything up with 1
   // 1, 1, 1, 1, 1, 1, 1, 1,
