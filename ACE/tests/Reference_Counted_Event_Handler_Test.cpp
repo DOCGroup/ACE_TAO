@@ -100,7 +100,7 @@ Reference_Counted_Event_Handler::handle_input (ACE_HANDLE)
 
   char buf[message_size + 1];
 
-  ssize_t result =
+  ssize_t const result =
     ACE::recv_n (this->pipe_.read_handle (),
                  buf,
                  sizeof buf - 1);
@@ -131,7 +131,7 @@ Reference_Counted_Event_Handler::handle_output (ACE_HANDLE)
 
   --this->events_;
 
-  ssize_t result =
+  ssize_t const result =
     ACE::send_n (this->pipe_.write_handle (),
                  message,
                  message_size);
@@ -187,7 +187,7 @@ Reference_Counted_Event_Handler::handle_close (ACE_HANDLE handle,
 ACE_Event_Handler::Reference_Count
 Reference_Counted_Event_Handler::add_reference ()
 {
-  ACE_Event_Handler::Reference_Count reference_count =
+  ACE_Event_Handler::Reference_Count const reference_count =
     this->ACE_Event_Handler::add_reference ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -200,7 +200,7 @@ Reference_Counted_Event_Handler::add_reference ()
 ACE_Event_Handler::Reference_Count
 Reference_Counted_Event_Handler::remove_reference ()
 {
-  ACE_Event_Handler::Reference_Count reference_count =
+  ACE_Event_Handler::Reference_Count const reference_count =
     this->ACE_Event_Handler::remove_reference ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -219,7 +219,7 @@ reference_counted_event_handler_test_1 (ACE_Reactor *reactor)
   Reference_Counted_Event_Handler *handler =
     new Reference_Counted_Event_Handler (events);
 
-  ACE_Event_Handler_var safe_handler (handler);
+  ACE_Event_Handler_var const safe_handler (handler);
 
   if (test_io)
     {
@@ -326,7 +326,7 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
       Reference_Counted_Event_Handler *handler =
         new Reference_Counted_Event_Handler (events);
 
-      ACE_Event_Handler_var safe_handler (handler);
+      ACE_Event_Handler_var const safe_handler (handler);
 
       result =
         reactor->register_handler (handler->pipe_.read_handle (),
@@ -346,7 +346,7 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
           reactor->handler (handler->pipe_.read_handle (),
                             ACE_Event_Handler::READ_MASK,
                             &result_handler);
-        ACE_Event_Handler_var safe_result_handler (result_handler);
+        ACE_Event_Handler_var const safe_result_handler (result_handler);
 
         if (result != 0)
           {
@@ -370,7 +370,7 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
           reactor->handler (handler->pipe_.read_handle (),
                             ACE_Event_Handler::WRITE_MASK,
                             &result_handler);
-        ACE_Event_Handler_var safe_result_handler (result_handler);
+        ACE_Event_Handler_var const safe_result_handler (result_handler);
 
         if (result == 0)
           {
@@ -380,7 +380,7 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
       }
 
       {
-        ACE_Event_Handler_var result_handler =
+        ACE_Event_Handler_var const result_handler =
           reactor->find_handler (handler->pipe_.read_handle ());
 
         if (result_handler.handler () != handler)
@@ -397,7 +397,7 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
       Reference_Counted_Event_Handler *handler =
         new Reference_Counted_Event_Handler (events);
 
-      ACE_Event_Handler_var safe_handler (handler);
+      ACE_Event_Handler_var const safe_handler (handler);
 
       if (-1 == reactor->register_handler (handler->pipe_.read_handle (),
                                            handler,
@@ -431,9 +431,9 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
       Reference_Counted_Event_Handler *handler =
         new Reference_Counted_Event_Handler (events);
 
-      ACE_Event_Handler_var safe_handler (handler);
+      ACE_Event_Handler_var const safe_handler (handler);
 
-      long timer_id =
+      long const timer_id =
         reactor->schedule_timer (handler,
                                  one_second_timeout,
                                  one_second,
@@ -460,7 +460,7 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
       Reference_Counted_Event_Handler *handler =
         new Reference_Counted_Event_Handler (events);
 
-      ACE_Event_Handler_var safe_handler (handler);
+      ACE_Event_Handler_var const safe_handler (handler);
 
       long timer_id =
         reactor->schedule_timer (handler,
@@ -581,7 +581,7 @@ Simple_Event_Handler::handle_input (ACE_HANDLE)
 
   char buf[message_size + 1];
 
-  ssize_t result =
+  ssize_t const result =
     ACE::recv_n (this->pipe_.read_handle (),
                  buf,
                  sizeof buf - 1);
@@ -606,7 +606,7 @@ Simple_Event_Handler::handle_output (ACE_HANDLE)
 
   --this->events_;
 
-  ssize_t result =
+  ssize_t const result =
     ACE::send_n (this->pipe_.write_handle (),
                  message,
                  message_size);
@@ -691,7 +691,7 @@ simple_event_handler (ACE_Reactor *reactor)
           reactor->handler (handler.pipe_.read_handle (),
                             ACE_Event_Handler::READ_MASK,
                             &result_handler);
-        ACE_Event_Handler_var safe_result_handler (result_handler);
+        ACE_Event_Handler_var const safe_result_handler (result_handler);
         if (result != 0)
           {
             ACE_ERROR ((LM_ERROR,
@@ -715,7 +715,7 @@ simple_event_handler (ACE_Reactor *reactor)
           reactor->handler (handler.pipe_.read_handle (),
                             ACE_Event_Handler::WRITE_MASK,
                             &result_handler);
-        ACE_Event_Handler_var safe_result_handler (result_handler);
+        ACE_Event_Handler_var const safe_result_handler (result_handler);
         if (result != -1)
           {
             ACE_ERROR ((LM_ERROR,
@@ -724,7 +724,7 @@ simple_event_handler (ACE_Reactor *reactor)
       }
 
       {
-        ACE_Event_Handler_var result_handler =
+        ACE_Event_Handler_var const result_handler =
           reactor->find_handler (handler.pipe_.read_handle ());
         if (result_handler.handler () != std::addressof (handler))
           {
@@ -786,7 +786,7 @@ simple_event_handler (ACE_Reactor *reactor)
         new Simple_Event_Handler (events,
                                   1);
 
-      long timer_id =
+      long const timer_id =
         reactor->schedule_timer (handler,
                                  one_second_timeout,
                                  one_second,
@@ -926,7 +926,7 @@ Closed_In_Upcall_Event_Handler::handle_input (ACE_HANDLE)
 
   char buf[message_size + 1];
 
-  ssize_t recv_result =
+  ssize_t const recv_result =
     ACE::recv_n (this->pipe_.read_handle (),
                  buf,
                  sizeof buf - 1);
@@ -964,7 +964,7 @@ Closed_In_Upcall_Event_Handler::handle_close (ACE_HANDLE handle,
 ACE_Event_Handler::Reference_Count
 Closed_In_Upcall_Event_Handler::add_reference ()
 {
-  ACE_Event_Handler::Reference_Count reference_count =
+  ACE_Event_Handler::Reference_Count const reference_count =
     this->ACE_Event_Handler::add_reference ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -977,7 +977,7 @@ Closed_In_Upcall_Event_Handler::add_reference ()
 ACE_Event_Handler::Reference_Count
 Closed_In_Upcall_Event_Handler::remove_reference ()
 {
-  ACE_Event_Handler::Reference_Count reference_count =
+  ACE_Event_Handler::Reference_Count const reference_count =
     this->ACE_Event_Handler::remove_reference ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -997,9 +997,9 @@ closed_in_upcall_event_handler (ACE_Reactor *reactor)
       Closed_In_Upcall_Event_Handler *handler {};
       ACE_NEW (handler, Closed_In_Upcall_Event_Handler (events));
 
-      ACE_Event_Handler_var safe_handler (handler);
+      ACE_Event_Handler_var const safe_handler (handler);
 
-      ssize_t send_n_result =
+      ssize_t const send_n_result =
         ACE::send_n (handler->pipe_.write_handle (),
                      message,
                      message_size);
@@ -1027,7 +1027,7 @@ closed_in_upcall_event_handler (ACE_Reactor *reactor)
 
   while (events > 0)
     {
-      int handle_events_result =
+      int const handle_events_result =
         reactor->handle_events ();
       ACE_UNUSED_ARG (handle_events_result);
     }
@@ -1164,7 +1164,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("Reference_Counted_Event_Handler_Test"));
 
   // Validate options.
-  int result =
+  int const result =
     parse_args (argc, argv);
   if (result != 0)
   {
@@ -1175,7 +1175,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n\nTesting Select Reactor....\n\n")));
 
-      test<ACE_Select_Reactor> test;
+      test<ACE_Select_Reactor> const test;
       ACE_UNUSED_ARG (test);
     }
 
@@ -1183,7 +1183,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n\nTesting TP Reactor....\n\n")));
 
-      test<ACE_TP_Reactor> test;
+      test<ACE_TP_Reactor> const test;
       ACE_UNUSED_ARG (test);
     }
 
@@ -1207,7 +1207,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("\n\nTesting ACE_Dev_Poll_Reactor....\n\n")));
 
-      test<ACE_Dev_Poll_Reactor> test;
+      test<ACE_Dev_Poll_Reactor> const test;
       ACE_UNUSED_ARG (test);
     }
 
