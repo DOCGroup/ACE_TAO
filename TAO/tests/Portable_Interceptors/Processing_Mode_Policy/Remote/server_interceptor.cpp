@@ -36,9 +36,9 @@ Echo_Server_Request_Interceptor::receive_request (
 {
   ++server_interceptor_check_;
 
-  CORBA::String_var op = ri->operation ();
+  CORBA::String_var const op = ri->operation ();
 
-  PortableInterceptor::ObjectId_var test_oid =
+  PortableInterceptor::ObjectId_var const test_oid =
     ri->object_id ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -60,7 +60,7 @@ Echo_Server_Request_Interceptor::receive_request (
                   param));
      }
 
-  CORBA::String_var tmdi =
+  CORBA::String_var const tmdi =
     ri->target_most_derived_interface ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -74,7 +74,7 @@ Echo_Server_Request_Interceptor::send_reply (
 {
   ++server_interceptor_check_;
 
-  CORBA::String_var op = ri->operation ();
+  CORBA::String_var const op = ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Server_Request_Interceptor::send_reply from \"%C\"\n",
@@ -105,7 +105,7 @@ Echo_Server_Request_Interceptor::send_reply (
       paramlist[i++].argument >>= param1;
       paramlist[i].argument >>= param2;
 
-      CORBA::Any_var result_any = ri->result ();
+      CORBA::Any_var const result_any = ri->result ();
 
       (result_any.in ()) >>= result;
 
@@ -121,7 +121,7 @@ void
 Echo_Server_Request_Interceptor::send_exception (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-  CORBA::String_var op = ri->operation ();
+  CORBA::String_var const op = ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Server_Request_Interceptor::send_exception "
@@ -131,7 +131,7 @@ Echo_Server_Request_Interceptor::send_exception (
   CORBA::Any_var any =
     ri->sending_exception ();
 
-  CORBA::TypeCode_var type = any->type ();
+  CORBA::TypeCode_var const type = any->type ();
   if (type.in () == nullptr)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -142,7 +142,7 @@ Echo_Server_Request_Interceptor::send_exception (
 
   ++server_interceptor_check_;
 
-  CORBA::String_var exception_id = type->id ();
+  CORBA::String_var const exception_id = type->id ();
 
   ACE_DEBUG ((LM_DEBUG,
               "Exception ID = %C\n",
