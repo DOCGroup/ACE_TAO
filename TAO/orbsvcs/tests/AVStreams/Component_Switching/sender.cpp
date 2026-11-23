@@ -97,7 +97,7 @@ Sender_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &flowspec)
           connection_manager.destroy (flowname);
         }
     }
-  return 1;
+  return true;
 }
 
 Sender::~Sender ()
