@@ -1,5 +1,7 @@
 // OS_NS_wchar.h is only needed to get the emulation methods.
 // Perhaps they should be moved.  dhinton
+#include <cstring>
+
 #include "ace/OS_NS_wchar.h"
 #include "ace/os_include/os_string.h"
 
@@ -249,7 +251,7 @@ ACE_OS::strncmp (const ACE_WCHAR_T *s, const ACE_WCHAR_T *t, size_t len)
 ACE_INLINE char *
 ACE_OS::strncpy (char *s, const char *t, size_t len)
 {
-  return ::strncpy (s, t, len);
+  return std::strncpy (s, t, len);
 }
 
 ACE_INLINE ACE_WCHAR_T *
