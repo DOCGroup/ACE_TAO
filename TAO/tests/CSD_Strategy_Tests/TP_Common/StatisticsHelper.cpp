@@ -11,7 +11,7 @@ void swap (CORBA::Long& x, CORBA::Long& y)
 
 void sort (LongVector & vector)
 {
-  unsigned size = vector.size ();
+  unsigned const size = vector.size ();
 
   if (size > 0)
     {

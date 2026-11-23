@@ -120,7 +120,7 @@ Server_Task::svc ()
 
      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - verifing results\n"));
 
-     CORBA::ULong errors = hello_impl->error_count ();
+     CORBA::ULong const errors = hello_impl->error_count ();
 
      error_count_ += errors;
    }
