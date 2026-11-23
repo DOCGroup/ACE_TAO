@@ -32,7 +32,7 @@ sizeof_from_lt_sizeof_to ()
 
     ACE_TEST_ASSERT (sizeof (from_type) < sizeof (to_type));
 
-    from_type f =
+    from_type const f =
       (ACE_Numeric_Limits<from_type>::max) ();  // Should not be truncated.
 
     if (truncate_cast<to_type> (f) != static_cast<to_type> (f))
@@ -52,7 +52,7 @@ sizeof_from_lt_sizeof_to ()
 
     ACE_TEST_ASSERT (sizeof (from_type) < sizeof (to_type));
 
-    from_type f =
+    from_type const f =
       (ACE_Numeric_Limits<from_type>::max) ();  // Should not be truncated.
 
     if (truncate_cast<to_type> (f) != static_cast<to_type> (f))
@@ -72,8 +72,8 @@ sizeof_from_lt_sizeof_to ()
 
     ACE_TEST_ASSERT (sizeof (from_type) < sizeof (to_type));
 
-    from_type f1 = -1;  // Should not be truncated.
-    from_type f2 =
+    from_type const f1 = -1;  // Should not be truncated.
+    from_type const f2 =
       (ACE_Numeric_Limits<from_type>::max) ();  // Should not be truncated.
 
     if (truncate_cast<to_type> (f1) != f1
@@ -94,7 +94,7 @@ sizeof_from_lt_sizeof_to ()
 
     ACE_TEST_ASSERT (sizeof (from_type) < sizeof (to_type));
 
-    from_type f =
+    from_type const f =
       (ACE_Numeric_Limits<from_type>::max) ();  // Should not be truncated.
 
     if (truncate_cast<to_type> (f) != static_cast<to_type> (f))
@@ -131,8 +131,8 @@ sizeof_from_eq_sizeof_to ()
 
     ACE_TEST_ASSERT (sizeof (from_type) == sizeof (to_type));
 
-    from_type f1 = -1;  // Should not be truncated.
-    from_type f2 =
+    from_type const f1 = -1;  // Should not be truncated.
+    from_type const f2 =
       (ACE_Numeric_Limits<from_type>::max) ();  // Should not be truncated.
 
     if (static_cast<from_type> (truncate_cast<to_type> (f1)) != f1
@@ -153,7 +153,7 @@ sizeof_from_eq_sizeof_to ()
 
     ACE_TEST_ASSERT (sizeof (from_type) == sizeof (to_type));
 
-    from_type f =
+    from_type const f =
       (ACE_Numeric_Limits<from_type>::max) ();  // Should be truncated.
 
     if (truncate_cast<to_type> (f) != (ACE_Numeric_Limits<to_type>::max) ())
@@ -173,8 +173,8 @@ sizeof_from_eq_sizeof_to ()
 
     ACE_TEST_ASSERT (sizeof (from_type) == sizeof (to_type));
 
-    from_type f1 = -1;  // Should not be truncated.
-    from_type f2 =
+    from_type const f1 = -1;  // Should not be truncated.
+    from_type const f2 =
       (ACE_Numeric_Limits<from_type>::max) ();  // Should not be truncated.
 
     if (truncate_cast<to_type> (f1) != f1
@@ -195,7 +195,7 @@ sizeof_from_eq_sizeof_to ()
 
     ACE_TEST_ASSERT (sizeof (from_type) == sizeof (to_type));
 
-    from_type f =
+    from_type const f =
       (ACE_Numeric_Limits<from_type>::max) ();  // Should not be truncated.
 
     if (truncate_cast<to_type> (f) != f)
@@ -232,7 +232,7 @@ sizeof_from_gt_sizeof_to ()
 
     ACE_TEST_ASSERT (sizeof (from_type) > sizeof (to_type));
 
-    from_type f =
+    from_type const f =
       (ACE_Numeric_Limits<from_type>::max) ();  // Should be truncated.
 
     if (truncate_cast<to_type> (f) != (ACE_Numeric_Limits<to_type>::max) ())
@@ -252,7 +252,7 @@ sizeof_from_gt_sizeof_to ()
 
     ACE_TEST_ASSERT (sizeof (from_type) > sizeof (to_type));
 
-    from_type f =
+    from_type const f =
       (ACE_Numeric_Limits<from_type>::max) ();  // Should be truncated.
 
     if (truncate_cast<to_type> (f) != (ACE_Numeric_Limits<to_type>::max) ())
@@ -272,8 +272,8 @@ sizeof_from_gt_sizeof_to ()
 
     ACE_TEST_ASSERT (sizeof (from_type) > sizeof (to_type));
 
-    from_type f1 = -1;  // Should not be truncated.
-    from_type f2 =
+    from_type const f1 = -1;  // Should not be truncated.
+    from_type const f2 =
       (ACE_Numeric_Limits<from_type>::max) ();  // Should be truncated.
 
     if (truncate_cast<to_type> (f1) != f1
@@ -294,7 +294,7 @@ sizeof_from_gt_sizeof_to ()
 
     ACE_TEST_ASSERT (sizeof (from_type) > sizeof (to_type));
 
-    from_type f =
+    from_type const f =
       (ACE_Numeric_Limits<from_type>::max) ();  // Should be truncated.
 
     if (truncate_cast<to_type> (f) != (ACE_Numeric_Limits<to_type>::max) ())
@@ -363,7 +363,7 @@ run_main (int, ACE_TCHAR *[])
   static size_t const test_count = sizeof (tests) / sizeof (tests[0]);
 
   // Have some fun with the STL.  :-)
-  Caller<test_func> c =
+  Caller<test_func> const c =
     std::for_each (tests,
                    tests + test_count,
                    Caller<test_func> ());
