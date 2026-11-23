@@ -268,7 +268,7 @@ TAO::Storable_FlatFileStream::flock (int whence, int start, int len)
   ACE_UNUSED_ARG (start);
   ACE_UNUSED_ARG (len);
 #else
-  bool shared = std::strcmp(mode_.c_str(), "r") == 0;
+  bool const shared = std::strcmp(mode_.c_str(), "r") == 0;
   result = -1;
   bool retry {};
   for (int attempts = this->retry_on_ebadf_ ? 2 : 1;
