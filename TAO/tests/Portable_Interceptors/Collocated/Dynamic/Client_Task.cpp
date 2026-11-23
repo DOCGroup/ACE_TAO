@@ -16,10 +16,10 @@ Client_Task::svc ()
 {
   try
     {
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         corb_->string_to_object (input_.c_str ());
 
-      Test_Interceptors::Visual_var server =
+      Test_Interceptors::Visual_var const server =
         Test_Interceptors::Visual::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
@@ -48,7 +48,7 @@ Client_Task::run_test (Test_Interceptors::Visual_ptr server)
   server->normal (10);
 
   const CORBA::Long one { 1 };
-  CORBA::Long two { 1 };
+  CORBA::Long const two { 1 };
   (void) server->calculate (one,
                             two);
 

@@ -57,25 +57,25 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_NEW_RETURN (temp_initializer,
                       Client_ORBInitializer,
                       -1);  // No exceptions yet!
-      PortableInterceptor::ORBInitializer_var orb_initializer =
+      PortableInterceptor::ORBInitializer_var const orb_initializer =
         temp_initializer;
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            "Client ORB");
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc,
+                                                  argv,
+                                                  "Client ORB");
 
       if (::parse_args (argc, argv, options) != 0)
       {
         return -1;
       }
 
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->string_to_object (options.primary_ior.c_str ());
 
-      RedirectionTest::test_var server =
+      RedirectionTest::test_var const server =
         RedirectionTest::test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
