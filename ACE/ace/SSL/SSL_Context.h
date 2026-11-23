@@ -266,16 +266,16 @@ public:
   /**
    *  @todo Complete this documentation where elipses(...) are used
    *
-   *  @doc Use this method when certificate chain verification is
+   *  Use this method when certificate chain verification is
    *  required.  The default server behaviour is SSL_VERIFY_NONE
    *  i.e. client certicates are requested for verified. This method
    *  can be used to configure server to request client certificates
-   *  and perform the certificate verification. If <strict> is set
+   *  and perform the certificate verification. If @a strict is set
    *  true the client connection is rejected when certificate
    *  verification fails.  Otherwise the session is accepted with a
-   *  warning, which is the default behaviour.  If <once> is set true
+   *  warning, which is the default behaviour. If @a once is set true
    *  (default), certificates are requested only once per session.
-   *  The last parameter <depth> can be used to set the verification
+   *  The last parameter @a depth can be used to set the verification
    *  depth.
    *
    *  @note for verification to work correctly there should be a valid
