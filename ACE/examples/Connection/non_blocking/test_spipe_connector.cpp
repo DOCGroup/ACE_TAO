@@ -11,7 +11,7 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Perform Service_Config initializations
-  ACE_Service_Config daemon (argv[0]);
+  ACE_Service_Config const daemon (argv[0]);
 
   IPC_CLIENT peer_connector;
 

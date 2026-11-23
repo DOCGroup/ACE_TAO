@@ -34,7 +34,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #endif /* ACE_WIN32 */
 
   // Perform Service_Config initializations
-  ACE_Service_Config daemon (argv[0]);
+  ACE_Service_Config const daemon (argv[0]);
 
   IPC_CLIENT peer_connector;
 

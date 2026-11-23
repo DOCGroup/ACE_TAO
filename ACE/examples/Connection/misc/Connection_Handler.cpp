@@ -197,7 +197,7 @@ using Connection_Acceptor = ACE_Acceptor<Connection_Handler, ACE_SOCK_ACCEPTOR>;
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Service_Config daemon (argv[0]);
+  ACE_Service_Config const daemon (argv[0]);
 
   u_short const port = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
 

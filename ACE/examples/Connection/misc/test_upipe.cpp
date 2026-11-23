@@ -102,7 +102,7 @@ private:
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Service_Config svc_conf;
+  ACE_Service_Config const svc_conf;
   ACE_Thread_Manager thr_mgr;
 
   Client peer_connector (&thr_mgr);
