@@ -46,7 +46,7 @@ namespace ACE_RMCast
     operator() (Address const& a) const
     {
       unsigned long port (a.get_port_number ());
-      unsigned long ip (a.get_ip_address ());
+      unsigned long const ip (a.get_ip_address ());
 
       port <<= sizeof (unsigned long) - sizeof (unsigned short);
 
@@ -337,7 +337,7 @@ namespace ACE_RMCast
     {
       sstream ss;
 
-      u32 s (0);
+      u32 const s (0);
 
       ss << s;
 
@@ -353,7 +353,7 @@ namespace ACE_RMCast
     ostream&
     operator<< (ostream& os, Message const& m)
     {
-      u32 s (m.size ());
+      u32 const s (m.size ());
 
       os << s;
 
@@ -423,8 +423,8 @@ namespace ACE_RMCast
   public:
     void serialize_body (ostream& os) const override
     {
-      u32 addr (address_.get_ip_address ());
-      u16 port (address_.get_port_number ());
+      u32 const addr (address_.get_ip_address ());
+      u16 const port (address_.get_port_number ());
 
       os << addr;
       os << port;
@@ -432,8 +432,8 @@ namespace ACE_RMCast
 
     void serialize_body (sstream& ss) const override
     {
-      u32 addr (0);
-      u16 port (0);
+      u32 const addr (0);
+      u16 const port (0);
 
       ss << addr;
       ss << port;
@@ -495,8 +495,8 @@ namespace ACE_RMCast
   public:
     void serialize_body (ostream& os) const override
     {
-      u32 addr (address_.get_ip_address ());
-      u16 port (address_.get_port_number ());
+      u32 const addr (address_.get_ip_address ());
+      u16 const port (address_.get_port_number ());
 
       os << addr;
       os << port;
@@ -504,8 +504,8 @@ namespace ACE_RMCast
 
     void serialize_body (sstream& ss) const override
     {
-      u32 addr (0);
-      u16 port (0);
+      u32 const addr (0);
+      u16 const port (0);
 
       ss << addr;
       ss << port;
@@ -744,14 +744,14 @@ namespace ACE_RMCast
       sstream ss;
 
       ss << sn;
-      size_t sn_size (ss.total_length ());
+      size_t const sn_size (ss.total_length ());
 
       ss.reset ();
 
       ss << addr;
       ss << port;
 
-      size_t addr_size (ss.total_length ());
+      size_t const addr_size (ss.total_length ());
 
       is >> addr;
       is >> port;
@@ -839,17 +839,17 @@ namespace ACE_RMCast
 
       sstream ss;
 
-      Profile::Header hdr (0, 0);
+      Profile::Header const hdr (0, 0);
       ss << hdr;
 
-      u32 addr (0);
-      u16 port (0);
+      u32 const addr (0);
+      u16 const port (0);
       ss << addr;
       ss << port;
 
       while (true)
       {
-        u64 sn (0);
+        u64 const sn (0);
         ss << sn;
 
         if (ss.total_length () <= max_size)
@@ -871,8 +871,8 @@ namespace ACE_RMCast
     {
       NAK& this_ = const_cast<NAK&> (*this); // Don't put in ROM.
 
-      u32 addr (address_.get_ip_address ());
-      u16 port (address_.get_port_number ());
+      u32 const addr (address_.get_ip_address ());
+      u16 const port (address_.get_port_number ());
 
       os << addr;
       os << port;
@@ -891,8 +891,8 @@ namespace ACE_RMCast
     {
       NAK& this_ = const_cast<NAK&> (*this); // Don't put in ROM.
 
-      u32 addr (0);
-      u16 port (0);
+      u32 const addr (0);
+      u16 const port (0);
 
       ss << addr;
       ss << port;
@@ -901,7 +901,7 @@ namespace ACE_RMCast
       //
       for (iterator i (this_.begin ()); !i.done (); i.advance ())
       {
-        u64 sn (0);
+        u64 const sn (0);
         ss << sn;
       }
     }
@@ -936,7 +936,7 @@ namespace ACE_RMCast
       ss << addr;
       ss << port;
 
-      size_t block_size (ss.total_length ());
+      size_t const block_size (ss.total_length ());
 
       // num_of_blocks = size / block_size
       //
@@ -1017,14 +1017,14 @@ namespace ACE_RMCast
 
       sstream ss;
 
-      Profile::Header hdr (0, 0);
+      Profile::Header const hdr (0, 0);
       ss << hdr;
 
       while (true)
       {
-        u32 addr (0);
-        u16 port (0);
-        u64 sn (0);
+        u32 const addr (0);
+        u16 const port (0);
+        u64 const sn (0);
 
         ss << sn;
         ss << addr;
@@ -1049,9 +1049,9 @@ namespace ACE_RMCast
     {
       for (Map::const_iterator i (map_), e (map_, 1); i != e; ++i)
       {
-        u32 addr ((*i).ext_id_.get_ip_address ());
-        u16 port ((*i).ext_id_.get_port_number ());
-        u64 sn ((*i).int_id_);
+        u32 const addr ((*i).ext_id_.get_ip_address ());
+        u16 const port ((*i).ext_id_.get_port_number ());
+        u64 const sn ((*i).int_id_);
 
         os << sn;
         os << addr;
@@ -1063,9 +1063,9 @@ namespace ACE_RMCast
     {
       for (Map::const_iterator i (map_), e (map_, 1); i != e; ++i)
       {
-        u32 addr (0);
-        u16 port (0);
-        u64 sn (0);
+        u32 const addr (0);
+        u16 const port (0);
+        u64 const sn (0);
 
         ss << sn;
         ss << addr;
