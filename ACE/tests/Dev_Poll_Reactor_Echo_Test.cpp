@@ -89,8 +89,8 @@ int
 Client::open (void *)
 {
   // Trigger writes on a timer.
-  ACE_Time_Value delay (1, 0);
-  ACE_Time_Value restart (1, 0);
+  ACE_Time_Value const delay (1, 0);
+  ACE_Time_Value const restart (1, 0);
   if (this->reactor ()->schedule_timer (this,
                                         nullptr,
                                         delay,
@@ -119,7 +119,7 @@ int
 Client::handle_output (ACE_HANDLE handle)
 {
   std::string buffer = "Hello, world!";
-  ssize_t bytes_sent = this->peer ().send (buffer.data (), buffer.size ());
+  ssize_t const bytes_sent = this->peer ().send (buffer.data (), buffer.size ());
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Client::handle_output; handle = %H")
@@ -167,7 +167,7 @@ Client::handle_input (ACE_HANDLE handle)
   for (;;)
     {
       char buffer[BUFSIZ];
-      ssize_t bytes_read = this->peer ().recv (buffer, BUFSIZ);
+      ssize_t const bytes_read = this->peer ().recv (buffer, BUFSIZ);
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) Client::handle_input handle = %H bytes_read = %b\n"),
                   handle, bytes_read));
@@ -252,7 +252,7 @@ Server::handle_input (ACE_HANDLE handle)
   for (;;)
     {
       char buffer[BUFSIZ];
-      ssize_t bytes_read = this->peer ().recv (buffer, BUFSIZ);
+      ssize_t const bytes_read = this->peer ().recv (buffer, BUFSIZ);
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) Server::handle_input handle = %H bytes_read = %b\n"),
                   handle, bytes_read));
@@ -313,8 +313,8 @@ Server::handle_output (ACE_HANDLE handle)
 {
   while (!buffer_list_.empty ())
     {
-      size_t bytes_to_send = buffer_list_.front ()->size () - offset_;
-      ssize_t bytes_sent = this->peer ().send (buffer_list_.front ()->data () + offset_, bytes_to_send);
+      size_t const bytes_to_send = buffer_list_.front ()->size () - offset_;
+      ssize_t const bytes_sent = this->peer ().send (buffer_list_.front ()->data () + offset_, bytes_to_send);
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) Server::handle_output; handle = %H")
@@ -387,7 +387,7 @@ class TestAcceptor : public ACCEPTOR
 public:
   int accept_svc_handler (Server * handler) override
   {
-    int result = this->ACCEPTOR::accept_svc_handler (handler);
+    int const result = this->ACCEPTOR::accept_svc_handler (handler);
 
     if (result != 0)
       {
@@ -537,7 +537,7 @@ run_main (int, ACE_TCHAR *[])
                         -1);
     }
 
-  unsigned short port = 54678;
+  unsigned short const port = 54678;
 
   ACE_INET_Addr addr;
 
