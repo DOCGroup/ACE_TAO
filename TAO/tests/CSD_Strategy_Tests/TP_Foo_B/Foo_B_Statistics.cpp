@@ -29,7 +29,7 @@ Foo_B_Statistics::actual(unsigned op_num, unsigned count)
 void
 Foo_B_Statistics::actual(unsigned op_num, LongVector lv)
 {
-  unsigned sz = lv.size();
+  const unsigned sz = lv.size();
   for (unsigned i = 0; i < sz; ++i)
     {
       this->actual_in_long_[op_num-1].push_back (lv[i]);
@@ -39,7 +39,7 @@ Foo_B_Statistics::actual(unsigned op_num, LongVector lv)
 void
 Foo_B_Statistics::actual(unsigned op_num, StringVector sv)
 {
-  unsigned sz = sv.size();
+  const unsigned sz = sv.size();
   for (unsigned i = 0; i < sz; ++i)
     {
       this->actual_in_string_[op_num-1].push_back (sv[i]);
@@ -117,9 +117,9 @@ Foo_B_Statistics::actual_vs_expected()
       {
         case FOO_B_STAT_LONG:
           {
-            unsigned actual_size
+            const unsigned actual_size
               = this->actual_in_long_[i].size ();
-            unsigned expected_size
+            const unsigned expected_size
               = this->num_clients_ * stats.expected_op_count_[i];
             if (actual_size != expected_size)
               {
@@ -150,9 +150,9 @@ Foo_B_Statistics::actual_vs_expected()
 
         case FOO_B_STAT_STRING:
           {
-            unsigned actual_size
+            const unsigned actual_size
               = this->actual_in_string_[i].size ();
-            unsigned expected_size
+            const unsigned expected_size
               = this->num_clients_ * stats.expected_op_count_[i];
             if (actual_size != expected_size)
               {
