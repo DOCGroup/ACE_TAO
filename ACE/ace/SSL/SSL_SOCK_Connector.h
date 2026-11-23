@@ -91,10 +91,6 @@ public:
    *                    cleaned up yet.
    * @param flags       Ignored.
    * @param perms       Ignored.
-   *
-   * @return            Returns 0 if the connection succeeds. If it fails,
-   *                    -1 is returned and errno contains a specific error
-   *                    code.
    */
   ACE_SSL_SOCK_Connector (ACE_SSL_SOCK_Stream &new_stream,
                           const ACE_Addr &remote_sap,
@@ -142,10 +138,6 @@ public:
    *                    cleaned up yet.
    * @param flags       Ignored.
    * @param perms       Ignored.
-   *
-   * @return            Returns 0 if the connection succeeds. If it fails,
-   *                    -1 is returned and errno contains a specific error
-   *                    code.
    */
   ACE_SSL_SOCK_Connector (ACE_SSL_SOCK_Stream &new_stream,
                           const ACE_Addr &remote_sap,
