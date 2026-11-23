@@ -547,7 +547,7 @@ test_timeout (int n_iterations)
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  int n_iterations = determine_iterations ();
+  int const n_iterations = determine_iterations ();
 
   test_active_object (n_iterations);
   test_cancellation (n_iterations);

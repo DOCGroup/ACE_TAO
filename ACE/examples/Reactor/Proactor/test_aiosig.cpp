@@ -125,7 +125,7 @@ query_aio_completions ()
       siginfo_t sig_info;
 
       // Await the RT completion signal.
-      int sig_return = sigtimedwait (&completion_signal,
+      int const sig_return = sigtimedwait (&completion_signal,
                                      &sig_info,
                                      &timeout);
 
@@ -178,7 +178,7 @@ query_aio_completions ()
       // Analyze error and return values. Return values are
       // actually <errno>'s associated with the <aio_> call
       // corresponding to aiocb_ptr.
-      int error_code = aio_error (aiocb_ptr);
+      int const error_code = aio_error (aiocb_ptr);
       if (error_code == -1)
         {
           perror ("Error:Invalid control block was sent to <aio_error> for compleion querying\n");
@@ -195,7 +195,7 @@ query_aio_completions ()
         }
 
       // No error occurred in the AIO operation.
-      int nbytes = aio_return (aiocb_ptr);
+      int const nbytes = aio_return (aiocb_ptr);
       if (nbytes == -1)
         {
           perror ("Error:Invalid control block was send to <aio_return>\n");
@@ -270,7 +270,7 @@ setup_signal_handler (int signal_number)
   reaction.sa_flags &= SA_SIGACTION;
 #endif /* SA_SIGACTION */
   reaction.sa_sigaction = null_handler;     // Null handler.
-  int sigaction_return = sigaction (SIGRTMIN,
+  int const sigaction_return = sigaction (SIGRTMIN,
                                     &reaction,
                                     0);
   if (sigaction_return == -1)

@@ -67,7 +67,7 @@ HTML_Body_Iterator::next (ACE_CString &url)
 
           end_index += start_index + 1;
 
-          ssize_t url_len = end_index - (start_index + 1);
+          ssize_t const url_len = end_index - (start_index + 1);
 
           ACE_CString temp = buffer.substring (start_index + 1,
                                                url_len);

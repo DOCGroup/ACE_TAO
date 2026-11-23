@@ -35,13 +35,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   daemon.open (argv[0]);
 
-  int n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_THREADS;
-  intptr_t n_iterations =
+  int const n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_THREADS;
+  intptr_t const n_iterations =
     argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_ITERATIONS;
 
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
-  int grp_id = thr_mgr->spawn_n (n_threads, worker,
+  int const grp_id = thr_mgr->spawn_n (n_threads, worker,
                                  reinterpret_cast<void *> (n_iterations),
                                  THR_NEW_LWP | THR_DETACHED);
 

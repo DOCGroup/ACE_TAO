@@ -20,7 +20,7 @@ Widget_Impl::~Widget_Impl ()
   Widget_Part *part {};
   while (parts_.dequeue_head (part) == 0)
     {
-      std::unique_ptr<Widget_Part> owned_part {part};
+      std::unique_ptr<Widget_Part> const owned_part {part};
     }
 }
 

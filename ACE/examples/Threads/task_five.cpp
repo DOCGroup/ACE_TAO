@@ -107,7 +107,7 @@ work (ACE_Thread_Manager *thr_mgr,
   ACE_UNUSED_ARG (stack_size);
 
   int i;
-  std::unique_ptr<Test_Task[]> task_array = std::make_unique<Test_Task[]> (n_tasks);
+  std::unique_ptr<Test_Task[]> const task_array = std::make_unique<Test_Task[]> (n_tasks);
 
   ACE_DEBUG ((LM_DEBUG,
               "Opening Tasks, loop count = %d, error count = %d\n",
@@ -166,9 +166,9 @@ work (ACE_Thread_Manager *thr_mgr,
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  size_t stack_size = argc > 1 ? ACE_OS::atoi (argv[1]) : default_stack_size;
+  size_t const stack_size = argc > 1 ? ACE_OS::atoi (argv[1]) : default_stack_size;
   const int n_tasks = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_TASKS;
-  u_int iterations = argc > 3 ? ACE_OS::atoi (argv[3]) : DEFAULT_ITERATIONS;
+  u_int const iterations = argc > 3 ? ACE_OS::atoi (argv[3]) : DEFAULT_ITERATIONS;
 
   for (u_int i = 0; i < iterations; ++i)
     {

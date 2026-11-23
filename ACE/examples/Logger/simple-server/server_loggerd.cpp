@@ -28,7 +28,7 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Register a signal handler.
-  ACE_Sig_Action sa (static_cast<ACE_SignalHandler> (handler), SIGINT);
+  ACE_Sig_Action const sa (static_cast<ACE_SignalHandler> (handler), SIGINT);
   ACE_UNUSED_ARG (sa);
 
   // The reactor owns this dynamically allocated acceptor after registration;

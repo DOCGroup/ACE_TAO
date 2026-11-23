@@ -143,7 +143,7 @@ ACE_TMAIN (int argc, ACE_TCHAR**argv)
                                         argv,
                                         nullptr,
                                         static_cast<void *> (nullptr));
-  char change[] = "change"; // XmCreatePushButton() wants a non-const
+  char const change[] = "change"; // XmCreatePushButton() wants a non-const
                             // string.
   Widget const button = XmCreatePushButton (top_level,
                                       change,
@@ -161,7 +161,7 @@ ACE_TMAIN (int argc, ACE_TCHAR**argv)
 
   // Print a message when data is recv'd on stdin...
   Stdout stdout_handler (reactor);
-  Stdin stdin_handler (stdout_handler);
+  Stdin const stdin_handler (stdout_handler);
   reactor.register_handler (std::addressof (stdin_handler),
                             ACE_Event_Handler::READ_MASK);
 

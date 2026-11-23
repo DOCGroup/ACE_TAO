@@ -114,12 +114,12 @@ HTML_Body_Validation_Strategy::HTML_Body_Validation_Strategy (URL &url,
 int
 HTML_Body_Validation_Strategy::execute ()
 {
-  char host_name_buf[BUFSIZ + 1] {};
+  char const host_name_buf[BUFSIZ + 1] {};
   ACE_CString host_name (host_name_buf);
   host_name.set (url_.url_addr ().get_host_name (), true);
 
   // All to facilitate relative paths
-  char temp[BUFSIZ + 1] {};
+  char const temp[BUFSIZ + 1] {};
   ACE_CString prev_location (temp);
 
   prev_location.set (ACE_TEXT_ALWAYS_CHAR (this->url_.url_addr ().get_path_name ()),
@@ -317,7 +317,7 @@ URL_Validation_Visitor::make_visitation_strategy_factory (URL &url)
 
   // See if we can get connected and send the GET request via the
   // <HTTP_URL>.
-  int result = url.send_request ();
+  int const result = url.send_request ();
   if (result == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -357,7 +357,7 @@ URL_Validation_Visitor::destroy ()
 int
 URL_Validation_Visitor::visit (HTTP_URL &http_url)
 {
-  int result = this->in_cache (http_url.url_addr ());
+  int const result = this->in_cache (http_url.url_addr ());
   if (result == 0)
     {
       Destroyable_Unique_Ptr <URL_Visitation_Strategy_Factory> vs (this->make_visitation_strategy_factory (http_url));
@@ -520,7 +520,7 @@ URL_Download_Visitor::make_visitation_strategy_factory (URL &url)
   // <HTTP_URL>.
   while (true)
     {
-      int retval = url.send_request ();
+      int const retval = url.send_request ();
       if (retval != -1)
       {
         break;

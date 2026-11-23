@@ -191,7 +191,7 @@ Process_Per_Connection_Logging_Server::run_worker (int, char *argv[])
   ACE_HANDLE client_handle =
     reinterpret_cast<ACE_HANDLE> (client_handle_i);
 #else
-  ACE_HANDLE client_handle = static_cast<ACE_HANDLE> (ACE_OS::atoi (argv[2]));
+  ACE_HANDLE const client_handle = static_cast<ACE_HANDLE> (ACE_OS::atoi (argv[2]));
 #endif /* ACE_WIN32 */
   ACE_SOCK_Stream client (client_handle);
 
@@ -203,7 +203,7 @@ Process_Per_Connection_Logging_Server::run_worker (int, char *argv[])
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Register to receive the <SIGTERM> signal.
-  ACE_Sig_Action sa (sigterm_handler, SIGTERM);
+  ACE_Sig_Action const sa (sigterm_handler, SIGTERM);
 
   Process_Per_Connection_Logging_Server server;
 

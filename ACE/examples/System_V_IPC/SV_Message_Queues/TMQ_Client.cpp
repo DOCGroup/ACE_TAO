@@ -16,7 +16,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Typed_SV_Message_Queue<Message_Data> msgque (key_t (SRV_KEY));
 
 #if !defined(ACE_LACKS_CUSERID)
-  Message_Data msg_data (pid,
+  Message_Data const msg_data (pid,
                          ACE_OS::cuserid (static_cast<char *> (nullptr)),
                          "did you get this?");
 #else

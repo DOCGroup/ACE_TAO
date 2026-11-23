@@ -231,7 +231,7 @@ Handler::svc ()
   this->timer_.start ();
 
   // Invoke the hook method to run the specific test.
-  int result = this->run ();
+  int const result = this->run ();
 
   this->timer_.stop ();
 

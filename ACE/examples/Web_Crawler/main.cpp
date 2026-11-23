@@ -23,7 +23,7 @@ void sig_handler (int)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Sig_Action sa ((ACE_SignalHandler) sig_handler, SIGFPE);
+  ACE_Sig_Action const sa ((ACE_SignalHandler) sig_handler, SIGFPE);
   Web_Crawler crawler;
 
   if (crawler.open (argc, argv) == -1)

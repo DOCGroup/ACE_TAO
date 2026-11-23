@@ -52,11 +52,11 @@ private:
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  Timeout_Handler handler;
+  Timeout_Handler const handler;
 
   // Register a 3 second timer.
   ACE_Time_Value bar_tv (3);
-  static char bar[] = "Bar";
+  static char const bar[] = "Bar";
   ACE_Reactor::instance ()->schedule_timer (std::addressof (handler),
                                             bar,
                                             bar_tv,
@@ -64,7 +64,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   // Register a 2 second timer.
   ACE_Time_Value foo_tv (2);
-  static char foo[] = "Foo";
+  static char const foo[] = "Foo";
   ACE_Reactor::instance ()->schedule_timer (std::addressof (handler),
                                             foo,
                                             foo_tv,

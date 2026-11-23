@@ -24,7 +24,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_Process_Semaphore pm (1, name);
 
-  ACE_Sig_Action sa (handler, SIGINT);
+  ACE_Sig_Action const sa (handler, SIGINT);
   ACE_UNUSED_ARG (sa);
 
   for (int i = 0; i < iterations && !done; ++i)

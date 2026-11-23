@@ -87,7 +87,7 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
 {
   ACE_Service_Config daemon (argv[0]);
 
-  FIFO_Recv_Handler fr_handler;
+  FIFO_Recv_Handler const fr_handler;
 
   ACE_Reactor::instance ()->run_reactor_event_loop ();
 

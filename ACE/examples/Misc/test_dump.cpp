@@ -11,16 +11,16 @@
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  SOCK outer_sock;
+  SOCK const outer_sock;
   // Note that the SOCK superclass is *not* printed.
-  SOCK_Stream outer_stream;
-  SOCK_Acceptor outer_acceptor;
+  SOCK_Stream const outer_stream;
+  SOCK_Acceptor const outer_acceptor;
   ACE_ODB::instance ()->dump_objects ();
   {
-    SOCK inner_sock;
+    SOCK const inner_sock;
     // Note that the SOCK superclass is *not* printed.
-    SOCK_Stream inner_stream;
-    SOCK_Acceptor inner_acceptor;
+    SOCK_Stream const inner_stream;
+    SOCK_Acceptor const inner_acceptor;
     ACE_ODB::instance ()->dump_objects ();
   }
   ACE_ODB::instance ()->dump_objects ();

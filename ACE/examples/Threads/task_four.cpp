@@ -234,7 +234,7 @@ Invoker_Task::svc ()
         }
     }
 
-  size_t n_tasks =
+  size_t const n_tasks =
     thr_mgr->num_tasks_in_group (1);
   ACE_DEBUG ((LM_DEBUG,
               "Number of tasks in group 1: %B\n",
@@ -280,9 +280,9 @@ static constexpr size_t DEFAULT_ITERATIONS = 5;
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  size_t n_tasks = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_TASKS;
-  size_t n_threads = argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_THREADS;
-  size_t n_iterations = argc > 3 ? ACE_OS::atoi (argv[3]) : DEFAULT_ITERATIONS;
+  size_t const n_tasks = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_TASKS;
+  size_t const n_threads = argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_THREADS;
+  size_t const n_iterations = argc > 3 ? ACE_OS::atoi (argv[3]) : DEFAULT_ITERATIONS;
 
   // Since ACE_Thread_Manager can only wait for all threads, we'll
   // have special manager for the Invoker_Task.

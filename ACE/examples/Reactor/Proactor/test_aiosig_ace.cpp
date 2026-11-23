@@ -56,7 +56,7 @@ setup_signal_delivery ()
 {
   // Mask all the signals.
 
-  sigset_t full_set;
+  sigset_t const full_set;
 
   // Get full set.
   if (ACE_OS::sigfillset (&full_set) != 0)
@@ -268,7 +268,7 @@ query_aio_completions ()
           // Analyze error and return values. Return values are
           // actually <errno>'s associated with the <aio_> call
           // corresponding to aiocb_ptr.
-          int error_code = aio_error (aiocb_ptr);
+          int const error_code = aio_error (aiocb_ptr);
           if (error_code == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
@@ -286,7 +286,7 @@ query_aio_completions ()
             }
 
           // No error occurred in the AIO operation.
-          int nbytes = aio_return (aiocb_ptr);
+          int const nbytes = aio_return (aiocb_ptr);
           if (nbytes == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR, "%p\n",

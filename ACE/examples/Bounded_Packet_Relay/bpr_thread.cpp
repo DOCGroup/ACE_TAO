@@ -28,7 +28,7 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   // The input wrapper and relay borrow this manager.
-  std::unique_ptr<ACE_Thread_Manager> mgr (
+  std::unique_ptr<ACE_Thread_Manager> const mgr (
     new (std::nothrow) ACE_Thread_Manager);
   if (!mgr)
     {
@@ -44,7 +44,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       return -1;
     }
 
-  std::unique_ptr<Text_Output_Device_Wrapper> output (
+  std::unique_ptr<Text_Output_Device_Wrapper> const output (
     new (std::nothrow) Text_Output_Device_Wrapper);
   if (!output)
     {
@@ -61,7 +61,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     }
 
   // The input wrapper borrows the callback; keep it alive through the driver.
-  std::unique_ptr<INPUT_CALLBACK> callback (
+  std::unique_ptr<INPUT_CALLBACK> const callback (
     new (std::nothrow) INPUT_CALLBACK (*relay,
                                        &Bounded_Packet_Relay::receive_input));
   if (!callback)

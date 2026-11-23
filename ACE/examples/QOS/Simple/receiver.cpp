@@ -44,7 +44,7 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
   // This is a multicast application.
   if (qos_util.multicast_flag ())
     {
-       Fill_ACE_QoS fill_ace_qos;
+       Fill_ACE_QoS const fill_ace_qos;
 
        // The application adds the flow specs that it wants into the
        // Fill_ACE_QoS. The Fill_ACE_QoS indexes the flow specs by the
@@ -181,7 +181,7 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                       "Dgram_Mcast subscribe succeeds\n"));
         }
 
-      int nIP_TTL = 25;
+      int const nIP_TTL = 25;
       char achInBuf [BUFSIZ] {};
       u_long dwBytes {};
 
@@ -206,7 +206,7 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                       "Setting TTL with Multicast scope ACE_OS::ioctl call succeeds\n"));
         }
 
-      int bFlag {};
+      int const bFlag {};
 
       // Should this be abstracted into QoS objects ?? Doesnt seem to have
       // to do anything directly with QoS.

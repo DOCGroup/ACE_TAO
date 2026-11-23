@@ -314,7 +314,7 @@ run_event_loop (u_short port)
 
   for (;;)
     {
-      ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);
+      ACE_Time_Value const timeout (ACE_DEFAULT_TIMEOUT);
       ACE_Handle_Set temp = handle_set;
 
       int maxfd = 0;

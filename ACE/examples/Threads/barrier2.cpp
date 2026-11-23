@@ -130,7 +130,7 @@ template <class BARRIER> int
 Worker_Task<BARRIER>::service (ACE_Message_Block *mb,
                                int iter)
 {
-  size_t length = mb->length ();
+  size_t const length = mb->length ();
 
   if (length > 0)
     {
@@ -175,7 +175,7 @@ Worker_Task<BARRIER>::svc ()
           break;
         }
 
-      size_t length = mb->length ();
+      size_t const length = mb->length ();
       this->service (mb,iter);
 
       if (length == 0)
@@ -319,7 +319,7 @@ Worker_Task<BARRIER>::input (ACE_Message_Block_Unique_Ptr &message_block)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_THREADS;
+  int const n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_THREADS;
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) worker threads running=%d\n",

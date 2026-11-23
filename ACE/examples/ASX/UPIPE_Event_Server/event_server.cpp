@@ -77,7 +77,7 @@ static ACE_THR_FUNC_RETURN
 consumer (void *)
 {
   ACE_UPIPE_Stream c_stream;
-  ACE_UPIPE_Addr c_addr (ACE_TEXT ("/tmp/conupipe"));
+  ACE_UPIPE_Addr const c_addr (ACE_TEXT ("/tmp/conupipe"));
 
   bool const verb = options.verbose ();
   size_t const msiz = options.message_size ();
@@ -157,7 +157,7 @@ static ACE_THR_FUNC_RETURN
 supplier (void *dummy)
 {
   ACE_UPIPE_Stream s_stream;
-  ACE_UPIPE_Addr serv_addr (ACE_TEXT ("/tmp/supupipe"));
+  ACE_UPIPE_Addr const serv_addr (ACE_TEXT ("/tmp/supupipe"));
   ACE_UPIPE_Connector con;
 
   size_t const iter = options.iterations ();
@@ -239,7 +239,7 @@ supplier (void *dummy)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Service_Config daemon;
+  ACE_Service_Config const daemon;
 
   options.parse_args (argc, argv);
   options.start_timer ();
@@ -248,7 +248,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   MT_Stream event_server;
 
   // Enable graceful shutdowns....
-  Quit_Handler quit_handler;
+  Quit_Handler const quit_handler;
 
   // Create the modules..
 

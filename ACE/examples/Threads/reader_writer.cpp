@@ -97,7 +97,7 @@ reader (void *)
         ACE_DEBUG ((LM_DEBUG, "(%t) writers found!!!\n"));
       }
 
-      ACE_thread_t thr_id = shared_thr_id;
+      ACE_thread_t const thr_id = shared_thr_id;
 
       for (int loop = 1; loop <= n_loops; ++loop)
         {
@@ -143,7 +143,7 @@ writer (void *)
         ACE_DEBUG ((LM_DEBUG, "(%t) readers found!!!\n"));
       }
 
-      ACE_thread_t self = ACE_Thread::self ();
+      ACE_thread_t const self = ACE_Thread::self ();
       shared_thr_id = self;
 
       for (int loop = 1; loop <= n_loops; ++loop)

@@ -37,7 +37,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Typed_SV_Message<Message_Data> recv_msg (SRV_ID);
 
   // Register a signal handler.
-  ACE_Sig_Action sa (handler, SIGINT);
+  ACE_Sig_Action const sa (handler, SIGINT);
   ACE_UNUSED_ARG (sa);
 
   while (true)

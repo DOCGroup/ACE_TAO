@@ -28,7 +28,7 @@ static ACE_THR_FUNC_RETURN
 reader (void *arg)
 {
   // Shared data via a reference.
-  int &data = *static_cast<int *> (arg);
+  int  const&data = *static_cast<int *> (arg);
 
   // Wait for writer to complete.
 

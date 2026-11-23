@@ -120,7 +120,7 @@ Thread_Pool::svc ()
         }
 
       ACE_Message_Block_Unique_Ptr message_block {mb};
-      size_t length = mb->length ();
+      size_t const length = mb->length ();
 
       if (length > 0)
         {
@@ -252,7 +252,7 @@ producer (Thread_Pool &thread_pool)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_THREADS;
+  int const n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_THREADS;
   n_iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : n_iterations;
   manual = argc > 3 ? 1 : 0;
 

@@ -42,7 +42,7 @@ consumer (void *arg)
         break;
       }
 
-      Message_Block_Owner message {mb};
+      Message_Block_Owner const message {mb};
       int const length = ACE_Utils::truncate_cast<int> (mb->length ());
 
       if (length > 0)

@@ -69,7 +69,7 @@ Event_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Service_Config loggerd;
+  ACE_Service_Config const loggerd;
   Event_Handler handler;
   ACE_Sig_Adapter shutdown_handler (end_reactor_event_loop);
 

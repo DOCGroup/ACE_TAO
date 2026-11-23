@@ -63,7 +63,7 @@ ACE_TMAIN (int argc, ACE_TCHAR**argv)
                                         argv,
                                         nullptr,
                                         static_cast<void *> (nullptr));
-  char change[] = "change"; // XmCreatePushButton() wants a non-const
+  char const change[] = "change"; // XmCreatePushButton() wants a non-const
                             // string.
   Widget const button = XmCreatePushButton (top_level,
                                       change,
