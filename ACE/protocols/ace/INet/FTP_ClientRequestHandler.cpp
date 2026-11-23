@@ -440,10 +440,10 @@ namespace ACE
                 // establish data connection
 
                 // copy sync settings from session
-                unsigned long f_reactor =
+                unsigned long const f_reactor =
                     this->session ()->is_reactive() ? ACE_Synch_Options::USE_REACTOR : 0;
-                ACE_Synch_Options sync_opt (ACE_Synch_Options::USE_TIMEOUT | f_reactor,
-                                            this->session ()->timeout ());
+                ACE_Synch_Options const sync_opt (ACE_Synch_Options::USE_TIMEOUT | f_reactor,
+                                                  this->session ()->timeout ());
 
                 using connector_type = ACE_Connector<SessionHolder::session_type::connection_type, ACE_SOCK_CONNECTOR>;
                 connector_type connector;
@@ -504,10 +504,10 @@ namespace ACE
             data_addr.set_port_number (this->active_port_);
 
             // copy sync settings from session
-            unsigned long f_reactor =
+            unsigned long const f_reactor =
                 this->session ()->is_reactive() ? ACE_Synch_Options::USE_REACTOR : 0;
-            ACE_Synch_Options sync_opt (ACE_Synch_Options::USE_TIMEOUT | f_reactor,
-                                        this->session ()->timeout ());
+            ACE_Synch_Options const sync_opt (ACE_Synch_Options::USE_TIMEOUT | f_reactor,
+                                              this->session ()->timeout ());
 
             using acceptor_type = ACE_Oneshot_Acceptor<SessionHolder::session_type::connection_type, ACE_SOCK_ACCEPTOR>;
             acceptor_type acceptor;
@@ -626,7 +626,7 @@ namespace ACE
                   {
                     sis >> port_lo;
 
-                    u_short port = port_hi*256 + port_lo;
+                    u_short const port = port_hi*256 + port_lo;
                     addr.set (port, sos_host.str ().c_str ());
                     return true;
                   }
@@ -642,10 +642,10 @@ namespace ACE
 
         ACE::IOS::CString_IStream sis (str);
         sis.ignore (str.length (), '(');
-        int ch = sis.get ();
+        int const ch = sis.get ();
         if (ch != eof_)
           {
-            int delim = ch;
+            int const delim = ch;
             sis.ignore (str.length (), delim);
             sis.ignore (str.length (), delim);
             if (sis.peek () != eof_)

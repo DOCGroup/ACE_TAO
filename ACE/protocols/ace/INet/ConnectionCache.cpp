@@ -297,7 +297,7 @@ namespace ACE
               {
                 // signal other threads about closed connection
                 this->condition_.broadcast ();
-                std::unique_ptr<connection_type> connection_owner (conn);
+                std::unique_ptr<connection_type> const connection_owner (conn);
                 return true;
               }
             else

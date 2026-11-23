@@ -51,7 +51,7 @@ namespace ACE
 
     int SSL_CallbackManager::verify_certificate_callback (SSL_CertificateCallbackArg& arg)
       {
-        TCertificateCallback cert_cb = this->cert_callback_;
+        TCertificateCallback const cert_cb = this->cert_callback_;
         if (cert_cb)
           {
             cert_cb->handle_certificate_failure (arg);
@@ -61,7 +61,7 @@ namespace ACE
 
     void SSL_CallbackManager::passwd_callback (ACE_CString& pwd)
       {
-        TPasswordCallback pw_cb = passwd_callback_;
+        TPasswordCallback const pw_cb = passwd_callback_;
         if (pw_cb)
           {
             pw_cb->get_privatekey_password (pwd);

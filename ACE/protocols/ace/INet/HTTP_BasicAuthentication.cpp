@@ -34,11 +34,11 @@ namespace ACE
           if (scheme == SCHEME)
             {
               size_t out_len = 0;
-              std::unique_ptr<ACE_Byte[]> safe_buf (ACE_Base64::decode (
+              std::unique_ptr<ACE_Byte[]> const safe_buf (ACE_Base64::decode (
                 reinterpret_cast<ACE_Byte const *> (info.c_str ()),
                 std::addressof (out_len)));
-              ACE_CString credentials (reinterpret_cast<char *> (safe_buf.get ()), out_len);
-              ACE_CString::size_type pos = credentials.find (':');
+              ACE_CString const credentials (reinterpret_cast<char *> (safe_buf.get ()), out_len);
+              ACE_CString::size_type const pos = credentials.find (':');
               if (pos != ACE_CString::npos)
                 {
                   this->user_ = credentials.substr (0, pos);
@@ -56,12 +56,12 @@ namespace ACE
         credentials += ':';
         credentials += this->passwd_;
         size_t out_len = 0;
-        std::unique_ptr<ACE_Byte[]> safe_buf (
+        std::unique_ptr<ACE_Byte[]> const safe_buf (
             ACE_Base64::encode ((const ACE_Byte*)credentials.c_str (),
                                 credentials.length (),
                                 std::addressof (out_len),
                                 false));
-        ACE_CString enc_cred ((char*)safe_buf.get (), out_len);
+        ACE_CString const enc_cred ((char*)safe_buf.get (), out_len);
         request.set_credentials (SCHEME, enc_cred);
       }
   }

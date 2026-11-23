@@ -63,9 +63,9 @@ namespace ACE
 
         this->close ();
 
-        unsigned long f_reactor = use_reactor ? ACE_Synch_Options::USE_REACTOR : 0;
-        ACE_Synch_Options sync_opt (ACE_Synch_Options::USE_TIMEOUT | f_reactor,
-                                    this->http_timeout_);
+        unsigned long const f_reactor = use_reactor ? ACE_Synch_Options::USE_REACTOR : 0;
+        ACE_Synch_Options const sync_opt (ACE_Synch_Options::USE_TIMEOUT | f_reactor,
+                                          this->http_timeout_);
 
         return this->connect_i (sync_opt);
       }
@@ -76,7 +76,7 @@ namespace ACE
 
         this->in_stream_.reset ();
 
-        bool keep_alive = this->keep_alive ();
+        bool const keep_alive = this->keep_alive ();
         if ((this->is_connected () && !keep_alive) || this->reconnect_needed ())
         {
           close();

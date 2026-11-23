@@ -165,7 +165,7 @@ namespace ACE
 
     URL_Base* URL_Base::create_from_string (const ACE_CString& url_string)
       {
-        ACE_CString::size_type pos = url_string.find (':');
+        ACE_CString::size_type const pos = url_string.find (':');
         if (pos >0 )
           {
             Factory* url_factory {};
@@ -202,7 +202,7 @@ namespace ACE
         // the protocol prefix) we allow for the fact we
         // may get a url passed without the actual prefix
 
-        ACE_CString::size_type pos = url_string.find (':');
+        ACE_CString::size_type const pos = url_string.find (':');
         if (pos > 0 && url_string[pos+1] == '/' && url_string[pos+2] == '/')
           {
             // in case we find a scheme check for the right protocol
@@ -447,7 +447,7 @@ namespace ACE
         for (; it != URL_INetAuthBase::authenticators_.end ();
              ++it)
           {
-            authenticator_ptr auth_ptr = (*it).int_id_;
+            authenticator_ptr const auth_ptr = (*it).int_id_;
 
             // release lock before calling user code
             if (URL_INetAuthBase::authenticators_.mutex ().release () != 0)

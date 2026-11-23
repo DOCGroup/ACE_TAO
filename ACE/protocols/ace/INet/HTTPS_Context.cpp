@@ -102,7 +102,7 @@ namespace ACE
         ACE_stat stat;
         if (ca_location != nullptr && ACE_OS::stat (ca_location, &stat) == 0)
           {
-            bool is_dir = ((stat.st_mode & S_IFMT) == S_IFDIR);
+            bool const is_dir = ((stat.st_mode & S_IFMT) == S_IFDIR);
             if (this->ssl_ctx_->load_trusted_ca (is_dir ? nullptr : ca_location,
                                                  is_dir ? ca_location : nullptr,
                                                  false) == 0)

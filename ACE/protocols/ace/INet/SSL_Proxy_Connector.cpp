@@ -219,7 +219,7 @@ namespace ACE
         new_stream.set_handle (proxy_handle);
 
         // Finalize the connection by performing the SSL handshake
-        int result = this->ssl_connect (new_stream, timeout);
+        int const result = this->ssl_connect (new_stream, timeout);
 
         if (result == -1)
         {
