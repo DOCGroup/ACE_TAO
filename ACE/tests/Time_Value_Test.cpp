@@ -58,7 +58,7 @@ int test_year_month (ACE_Time_Value const &time, long year, long month)
 {
   int ret = 0;
 
-  ACE_Date_Time dt (time);
+  ACE_Date_Time const dt (time);
   if (dt.year () != year)
     {
       ACE_ERROR ((LM_ERROR,
@@ -100,20 +100,20 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_Time_Value tv1;
   ACE_Time_Value tv2 (2);
-  ACE_Time_Value tv3 (100U);
-  ACE_Time_Value tv4 (1, 1000000);
-  ACE_Time_Value tv5 (2UL);
-  ACE_Time_Value tv6 (1, -1000000);
-  ACE_Time_Value tv7 (static_cast<long> (2.0));
+  ACE_Time_Value const tv3 (100U);
+  ACE_Time_Value const tv4 (1, 1000000);
+  ACE_Time_Value const tv5 (2UL);
+  ACE_Time_Value const tv6 (1, -1000000);
+  ACE_Time_Value const tv7 (static_cast<long> (2.0));
 
   // Beware!  2.5 gets truncated to 2!
   // NOTE:  this is intended to show what happens with
   // ACE_Time_Value (2.5).  Some compilers, such as g++ 2.7.2.3,
   // actually warn about it without the case.
-  ACE_Time_Value tv8 (static_cast <long> (2.5));
+  ACE_Time_Value const tv8 (static_cast <long> (2.5));
 
   ACE_Time_Value first;
-  ACE_Time_Value last(ACE_Time_Value::max_time);
+  ACE_Time_Value const last(ACE_Time_Value::max_time);
   first = last;
   ACE_TEST_ASSERT (first == last);
 
@@ -135,7 +135,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_TEST_ASSERT (tv7 == tv8); // That's right!  See above . . .
   ACE_TEST_ASSERT (tv9 == tv6);
 
-  ACE_Time_Value tv10 (1);
+  ACE_Time_Value const tv10 (1);
 
   ACE_TEST_ASSERT (tv10.sec() == 1);
 
@@ -194,11 +194,11 @@ run_main (int, ACE_TCHAR *[])
     }
 
   // Test setting double values
-  ACE_Time_Value d1(10, 500000);
+  ACE_Time_Value const d1(10, 500000);
   ACE_Time_Value d2;
   d2.set(10.5);
 
-  ACE_Time_Value d3(-10, -500000);
+  ACE_Time_Value const d3(-10, -500000);
   ACE_Time_Value d4;
   d4.set(-10.5);
 
@@ -302,11 +302,11 @@ run_main (int, ACE_TCHAR *[])
 
   // Test whether some times in the past and the future are correctly converted to year/month, no need to check
   // day/time as that could be challenging due to timezones.
-  ACE_Time_Value dt20250726 (static_cast<time_t> (1753519444));
+  ACE_Time_Value const dt20250726 (static_cast<time_t> (1753519444));
   ret += test_year_month (dt20250726, 2025, 7);
-  ACE_Time_Value dt20370726 (static_cast<time_t> (2132203444));
+  ACE_Time_Value const dt20370726 (static_cast<time_t> (2132203444));
   ret += test_year_month (dt20370726, 2037, 7);
-  ACE_Time_Value dt20570726 (static_cast<time_t> (2763355444));
+  ACE_Time_Value const dt20570726 (static_cast<time_t> (2763355444));
   ret += test_year_month (dt20570726, 2057, 7);
   ACE_END_TEST;
 
