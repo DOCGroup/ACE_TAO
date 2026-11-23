@@ -1,8 +1,7 @@
 /// @file Event_Types.idl
 /// Simple demonstration of typed events in a distributed system.
 ///
-/// Author:
-/// Torsten Kuepper
+/// @author Torsten Kuepper
 ///
 
 /// Event inheritance hierarchy

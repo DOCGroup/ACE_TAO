@@ -1,5 +1,5 @@
 /// @file StateTransfer.idl
-/// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+/// @author Boris Kolpackov <boris@dre.vanderbilt.edu>
 interface StateTransfer
 {
   short
