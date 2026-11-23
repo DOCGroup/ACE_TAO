@@ -814,7 +814,7 @@ CORBA::ORB::resolve_service (TAO::MCAST_SERVICEID mcast_service_id)
   // checked.  We only get here if the table didn't contain an initial
   // reference for the requested Service.
 
-  CORBA::String_var default_init_ref =
+  CORBA::String_var const default_init_ref =
         this->orb_core_->orb_params ()->default_init_ref ();
 
   static char const mcast_prefix[] = "mcast://:::";
@@ -967,7 +967,7 @@ CORBA::ORB::resolve_initial_references (const char *name,
 
   if (service_ior_value != nullptr && *service_ior_value != '\0')
     {
-      std::string service_ior (service_ior_value);
+      std::string const service_ior (service_ior_value);
       result = this->string_to_object (service_ior.c_str());
 
       return result._retn ();
@@ -1189,7 +1189,7 @@ namespace TAO
       size_t const shared_len = ACE_OS::strlen(shared);
       if (ACE_OS::strncmp (arg, shared, shared_len) == 0)
         {
-          ACE_TString orbid (orbconfig_string.substr (shared_len));
+          ACE_TString const orbid (orbconfig_string.substr (shared_len));
 
           // Get ORB Core
           TAO_ORB_Core_Auto_Ptr oc (TAO::ORB_Table::instance ()->find (
@@ -1318,7 +1318,8 @@ CORBA::ORB_init (int &argc, ACE_TCHAR *argv[], const char *orbid)
     // Use this string variable to hold the configuration identity key
   ACE_TString orbconfig_string;
   TAO::parse_orb_opt (command_line, ACE_TEXT("-ORBGestalt"), orbconfig_string);
-  ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> gestalt = TAO::find_orb_context (orbconfig_string);
+  ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> const gestalt =
+    TAO::find_orb_context (orbconfig_string);
 
   // An ORB corresponding to the desired ORBid doesn't exist so create
   // a new one.
