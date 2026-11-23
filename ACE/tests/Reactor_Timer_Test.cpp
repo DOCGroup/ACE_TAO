@@ -70,7 +70,7 @@ int
 Time_Handler::handle_timeout (const ACE_Time_Value &tv,
                               const void *arg)
 {
-  long current_count = static_cast<long> (reinterpret_cast<size_t> (arg));
+  long const current_count = static_cast<long> (reinterpret_cast<size_t> (arg));
   if (current_count >= 0)
   {
     ACE_TEST_ASSERT (current_count == the_count);
@@ -95,7 +95,7 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
     }
   else if (current_count == -1)
     {
-      int result = ACE_Reactor::instance ()->reset_timer_interval (this->timer_id (),
+      int const result = ACE_Reactor::instance ()->reset_timer_interval (this->timer_id (),
                                                                    std::chrono::seconds {the_count + 1});
       if (result == -1)
         {
@@ -198,7 +198,7 @@ test_canceling_odd_timers ()
         // Cancel handlers with odd numbered timer ids.
         if (ACE_ODD (rt[j].timer_id ()))
           {
-            int result =
+            int const result =
               ACE_Reactor::instance ()->cancel_timer (rt[j].timer_id ());
             if (result == -1)
               {

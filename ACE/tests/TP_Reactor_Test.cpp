@@ -771,7 +771,7 @@ Connector::start (const ACE_INET_Addr & addr, int num)
          0);
     }
 
-  int rc = 0;
+  int const rc = 0;
 
   for (int i = 0 ; i < num ; ++i)
     {

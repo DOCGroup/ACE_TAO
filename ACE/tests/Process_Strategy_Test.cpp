@@ -316,7 +316,7 @@ Counting_Service::read ()
     }
 
   char buf[BUFSIZ];
-  int n = ACE_OS::snprintf (buf, BUFSIZ, "count = %d\n", count);
+  int const n = ACE_OS::snprintf (buf, BUFSIZ, "count = %d\n", count);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) count = %d\n"),
               count));

@@ -431,7 +431,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (child_nr >= 0)
     {
       ACE_TCHAR lognm[MAXPATHLEN];
-      int mypid (ACE_OS::getpid ());
+      int const mypid (ACE_OS::getpid ());
       ACE_OS::snprintf (lognm, MAXPATHLEN,
                         ACE_TEXT ("RW_Process_Mutex_Test-child-%d"), mypid);
       ACE_START_TEST (lognm);
@@ -577,7 +577,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                 }
               ACE_exitcode child_status;
               // See if the child has exited.
-              int wait_result = children[i]->wait (poll, &child_status);
+              int const wait_result = children[i]->wait (poll, &child_status);
               if (wait_result == -1)
                 {
                   ACE_ERROR ((LM_ERROR, ACE_TEXT ("Wait for child %d, %p\n"),

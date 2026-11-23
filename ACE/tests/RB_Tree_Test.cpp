@@ -808,7 +808,7 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_tree_insertion ()
   for (int i = 0; i < entry_count_; ++i)
     {
       INT_ID item;
-      int k = order_index_ [i];
+      int const k = order_index_ [i];
       if (!(k >= 0 && k < entry_count_))
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Assert failure at line %l\n")));
