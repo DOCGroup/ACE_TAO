@@ -401,7 +401,7 @@ struct Run_Test
                         ACE_TEXT ("** Running removal test **\n")));
           }
 
-        std::unique_ptr<ACE_Reactor_Impl> the_factory (factory ());
+        std::unique_ptr<ACE_Reactor_Impl> const the_factory (factory ());
         ACE_Reactor reactor (the_factory.get ());
 
         // In this test, it's only okay to close the Bogus_Handler

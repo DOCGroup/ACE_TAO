@@ -128,7 +128,7 @@ HTML_Body_Validation_Strategy::execute ()
   int const index =
     ACE_Utils::truncate_cast<int> (
       prev_location.rfind ('/', prev_location.length ()));
-  ACE_CString str = prev_location.substring (0, index + 1);
+  ACE_CString const str = prev_location.substring (0, index + 1);
   prev_location.set (str.c_str (), true);
 
   // Note: prev_location always ends with '/'

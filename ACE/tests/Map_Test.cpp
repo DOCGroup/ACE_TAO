@@ -74,13 +74,13 @@ functionality_test (TEST_MAP &map,
   // Forward iteration...
   {
     counter = 0;
-    TEST_MAP::iterator end = map.end ();
+    TEST_MAP::iterator const end = map.end ();
 
     for (TEST_MAP::iterator iter = map.begin ();
          iter != end;
          ++iter, ++counter)
       {
-        TEST_MAP::value_type entry = *iter;
+        TEST_MAP::value_type const entry = *iter;
 
         // Recover original key.
         KEY original_key;
@@ -110,14 +110,14 @@ functionality_test (TEST_MAP &map,
   // Reverse iteration...
   {
     counter = iterations;
-    TEST_MAP::reverse_iterator end = map.rend ();
+    TEST_MAP::reverse_iterator const end = map.rend ();
 
     for (TEST_MAP::reverse_iterator iter = map.rbegin ();
          iter != end;
          ++iter)
       {
         --counter;
-        TEST_MAP::value_type entry = *iter;
+        TEST_MAP::value_type const entry = *iter;
 
         // Recover original key.
         KEY original_key;
