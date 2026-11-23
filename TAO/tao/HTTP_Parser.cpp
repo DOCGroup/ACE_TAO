@@ -80,7 +80,7 @@ TAO_HTTP_Parser::parse_string (char const *nior,
   ACE_NEW_THROW_EX (mb,
                     ACE_Message_Block (),
                     CORBA::INTERNAL ());
-  ACE_Message_Block_Unique_Ptr mb_owner {mb};
+  ACE_Message_Block_Unique_Ptr const mb_owner {mb};
 
   // Create a client
   TAO_HTTP_Client client;

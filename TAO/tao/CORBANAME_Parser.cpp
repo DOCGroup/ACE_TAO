@@ -68,7 +68,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
       // string
       ACE_CString::size_type pos_seperator {};
 
-      ACE_CString corbaname_str (corbaname, nullptr, true);
+      ACE_CString const corbaname_str (corbaname, nullptr, true);
 
       pos_seperator = corbaname_str.find ("#", 0);
 
