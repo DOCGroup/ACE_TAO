@@ -169,7 +169,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
                               u_char[length],
                               -1);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-              std::unique_ptr<u_char[], ACE_Array_Deleter<u_char>> data_owner {data};
+              std::unique_ptr<u_char[], ACE_Array_Deleter<u_char>> const data_owner {data};
               u_char* out = data;
               ACE_TCHAR* inb = end + 4;
               ACE_TCHAR* endptr {};
@@ -198,7 +198,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
           // processing a file in the old format.
           // Try and process the line as such and if it fails,
           // return an error
-          int rc = process_previous_line_format (buffer, section);
+          int const rc = process_previous_line_format (buffer, section);
           if (rc != 0)
             {
               return rc;
@@ -329,7 +329,7 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
                 {
                   return -2;
                 }
-                std::unique_ptr<char[], ACE_Array_Deleter<char>> binary_data_owner {
+                std::unique_ptr<char[], ACE_Array_Deleter<char>> const binary_data_owner {
                   static_cast<char *> (binary_data)};
                 line += ACE_TEXT ("hex:");
                 unsigned char const * const data =
@@ -414,7 +414,7 @@ ACE_Registry_ImpExp::process_previous_line_format (ACE_TCHAR* buffer,
       else if (*end == '#')
         {
           // number type
-          u_int value = ACE_OS::atoi (end + 1);
+          u_int const value = ACE_OS::atoi (end + 1);
           if (config_.set_integer_value (section, buffer, value))
           {
             return -4;
@@ -438,7 +438,7 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
       errno = EINVAL;
       return -1;
     }
-  std::unique_ptr<FILE, int (*) (FILE *)> in {
+  std::unique_ptr<FILE, int (*) (FILE *)> const in {
     ACE_OS::fopen (filename, ACE_TEXT ("r")), ACE_OS::fclose};
   if (!in)
   {
@@ -627,7 +627,7 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
                 {
                   return -2;
                 }
-                std::unique_ptr<char[], ACE_Array_Deleter<char>> binary_data_owner {
+                std::unique_ptr<char[], ACE_Array_Deleter<char>> const binary_data_owner {
                   static_cast<char *> (binary_data)};
                 line += ACE_TEXT ("\"");
                 unsigned char const * const data =
