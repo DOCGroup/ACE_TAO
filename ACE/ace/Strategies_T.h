@@ -842,11 +842,11 @@ public:
    * argument does NOT control re-use of addresses in the cache.
    * Rather, if the underlying protocol requires a "dead time" prior
    * to re-use of its addresses (TCP is a classic example of this),
-   * <{and}> the protocol provides a means by which to defeat the dead
-   * time, setting this argument to non-zero will defeat the dead-time
-   * requirement.  <{Dev. Note: We might want to consider enhancing
-   * the interface at some point so that this also controls re-use of
-   * the cache.}>
+   * and the protocol provides a means by which to defeat the dead time,
+   * setting this argument to non-zero will defeat the dead-time
+   * requirement.
+   * @note The interface could be enhanced so that this also controls
+   * re-use of the cache.
    */
   int connect_svc_handler (SVC_HANDLER *&sh,
                            const ACE_PEER_CONNECTOR_ADDR &remote_addr,
