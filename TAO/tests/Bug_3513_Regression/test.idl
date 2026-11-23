@@ -10,8 +10,8 @@ directives:
 
 #undef FOO
 #ifdef FOO
-/// We've ifdef'd these directives out because we don't want to include them right now
-/// either because that would be wrong too.
+// We've ifdef'd these directives out because we don't want to include them right now
+// either because that would be wrong too.
 #include "tao/PI_Server/PI_Server.pidl"
 #include "tao/CodecFactory/IOP_Codec.pidl"
 #include "tao/RTCORBA/RTCORBA.pidl"

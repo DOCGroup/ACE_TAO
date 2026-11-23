@@ -39,7 +39,7 @@ module gleep
     local interface schmuck {};
     local interface schmendrick;
 
-/// Tests the handling of extra whitespace as well as the version setting.
+// Tests the handling of extra whitespace as well as the version setting.
 #    pragma version     gleep::floop::schmendrick    524.23
 
     local interface schmendrick {};

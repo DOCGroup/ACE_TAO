@@ -529,7 +529,7 @@ module AVStreams
       /// Remove the StreamEndPoint and the related vdev.
       void destroy (in StreamEndPoint the_ep,
                     in string vdev_name)
-        /// ie VDev not found
+        // ie VDev not found
         raises (notSupported);
 
       /// Not supported in the light profile, raises notsupported.

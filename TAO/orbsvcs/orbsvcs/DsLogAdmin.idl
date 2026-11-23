@@ -9,7 +9,7 @@
 #ifndef DS_LOG_ADMIN_IDL
 #define DS_LOG_ADMIN_IDL
 
-/// CORBA Time Service
+// CORBA Time Service
 #include "tao/TimeBase.pidl"
 
 #pragma prefix "omg.org"
@@ -222,7 +222,7 @@ module DsLogAdmin
         raises (InvalidTime, InvalidTimeInterval, InvalidMask);
 
       /// Returns all records in the log that match the given
-      /// constraint <c>. Note that match () only returns the number
+      /// constraint @a c. Note that match () only returns the number
       /// of matches, whereas query () returns the actual matches.
       RecordList query(in string grammar,
                        in Constraint c,
@@ -230,18 +230,18 @@ module DsLogAdmin
         raises(InvalidGrammar, InvalidConstraint);
 
       /// Retrieve <how_many> records from time <from_time> using
-      /// iterator <i>. Negative <how_many> indicates backwards
+      /// iterator @a i. Negative <how_many> indicates backwards
       /// retrieval
       RecordList retrieve(in TimeT from_time,
                           in long how_many,
                           out Iterator i);
 
-      /// Returns the number of records matching constraint <c>
+      /// Returns the number of records matching constraint @a c
       unsigned long match(in string grammar,
                           in Constraint c)
         raises(InvalidGrammar, InvalidConstraint);
 
-      /// Delete records matching constraint <c> or with ids in
+      /// Delete records matching constraint @a c or with ids in
       /// <ids>. Both operations return the number of records deleted
       unsigned long delete_records(in string grammar,
                                    in Constraint c)

@@ -22,7 +22,7 @@ module SSLIOP {
     unsigned short        _port;
   };
 
-  /// OMG allocated
+  // OMG allocated
   // const Firewall::IdTag TAG_ID_SSL_CERT = xx;
 
   /// A DER encoded X.509 certificate.

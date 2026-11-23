@@ -41,7 +41,7 @@ module A
 
 module salutation
 {
-/// This prefix applies only in this module
+// This prefix applies only in this module
 # pragma prefix "hammer.com"
 
   interface sayonara {};
