@@ -128,7 +128,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
   std::strcpy (ifr.ifr_name, p_if->ifa_name);
   ::freeifaddrs (ifap);
 
-  ACE_HANDLE handle =
+  ACE_HANDLE const handle =
     ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
 
   if (handle == ACE_INVALID_HANDLE)
