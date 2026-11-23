@@ -143,7 +143,7 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, ssize_t *len) const
         }
     }
 #else
-  ssize_t nbytes = ACE_OS::recvmsg (this->get_handle (),
+  ssize_t const nbytes = ACE_OS::recvmsg (this->get_handle (),
                                     &recv_msg,
                                     MSG_PEEK);
 

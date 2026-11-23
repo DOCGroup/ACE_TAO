@@ -324,7 +324,7 @@ ACE_Pipe::send (size_t n, ...) const
 {
   ACE_TRACE ("ACE_Pipe::send");
   va_list argp;
-  int total_tuples = ACE_Utils::truncate_cast<int> (n / 2);
+  int const total_tuples = ACE_Utils::truncate_cast<int> (n / 2);
   iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
@@ -354,7 +354,7 @@ ACE_Pipe::send (size_t n, ...) const
                                iovp,
                                total_tuples);
 #else
-  ssize_t result = ACE_OS::writev (this->write_handle (),
+  ssize_t const result = ACE_OS::writev (this->write_handle (),
                                    iovp,
                                    total_tuples);
 #endif /* ACE_WIN32 */
@@ -381,7 +381,7 @@ ACE_Pipe::recv (size_t n, ...) const
 {
   ACE_TRACE ("ACE_Pipe::recv");
   va_list argp;
-  int total_tuples = ACE_Utils::truncate_cast<int> (n / 2);
+  int const total_tuples = ACE_Utils::truncate_cast<int> (n / 2);
   iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));

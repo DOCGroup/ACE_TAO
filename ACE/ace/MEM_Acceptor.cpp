@@ -124,7 +124,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
 
       if (remote_sap != nullptr)
         {
-          ACE_INET_Addr temp (&inet_addr, len);
+          ACE_INET_Addr const temp (&inet_addr, len);
           remote_sap->set_port_number (temp.get_port_number ());
         }
     }
@@ -179,7 +179,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
   ACE_OS::unlink (buf);
 
   new_stream.disable (ACE_NONBLOCK);
-  ACE_HANDLE new_handle = new_stream.get_handle ();
+  ACE_HANDLE const new_handle = new_stream.get_handle ();
 
   // Protocol negociation:
   //   Tell the client side what level of signaling strategy
@@ -251,7 +251,7 @@ ACE_MEM_Acceptor::shared_accept_finish (const ACE_MEM_Stream &new_stream,
 {
   ACE_TRACE ("ACE_MEM_Acceptor::shared_accept_finish ()");
 
-  ACE_HANDLE new_handle = new_stream.get_handle ();
+  ACE_HANDLE const new_handle = new_stream.get_handle ();
 
   // Check to see if we were originally in blocking mode, and if so,
   // set the <new_stream>'s handle and <this> handle to be in blocking

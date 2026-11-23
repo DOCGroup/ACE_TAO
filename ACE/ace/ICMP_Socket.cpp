@@ -51,7 +51,7 @@ ACE_ICMP_Socket::recv (void * buf,
   ACE_TRACE ("ACE_ICMP_Socket::recv");
 
   int addr_len = addr.get_size ();
-  ssize_t status = ACE_OS::recvfrom (this->get_handle (),
+  ssize_t const status = ACE_OS::recvfrom (this->get_handle (),
                                      static_cast<char *> (buf),
                                      n,
                                      flags,

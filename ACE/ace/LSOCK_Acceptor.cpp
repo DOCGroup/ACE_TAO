@@ -139,7 +139,7 @@ int
 ACE_LSOCK_Acceptor::remove ()
 {
   ACE_TRACE ("ACE_LSOCK_Acceptor::remove");
-  int result = this->close ();
+  int const result = this->close ();
   return ACE_OS::unlink (this->local_addr_.get_path_name ()) == -1
     || result == -1 ? -1 : 0;
 }
