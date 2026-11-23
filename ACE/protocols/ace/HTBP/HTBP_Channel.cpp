@@ -57,7 +57,7 @@ ACE::HTBP::Channel::Channel (ACE_SOCK_Stream &s)
 {
 #if !defined (ACE_LACKS_TCP_NODELAY)
   int no_delay = 1;
-  int result = this->ace_stream_.set_option (ACE_IPPROTO_TCP,
+  int const result = this->ace_stream_.set_option (ACE_IPPROTO_TCP,
                                              TCP_NODELAY,
                                              (void *) &no_delay,
                                              sizeof (no_delay));
@@ -84,7 +84,7 @@ ACE::HTBP::Channel::Channel (ACE_HANDLE h)
 {
 #if !defined (ACE_LACKS_TCP_NODELAY)
   int no_delay = 1;
-  int result = this->ace_stream_.set_option (ACE_IPPROTO_TCP,
+  int const result = this->ace_stream_.set_option (ACE_IPPROTO_TCP,
                                              TCP_NODELAY,
                                              (void *) &no_delay,
                                              sizeof (no_delay));
@@ -449,10 +449,10 @@ ACE::HTBP::Channel::recvv (iovec iov[],
   if (this->leftovers_.length())
     {
       int ndx = 0;
-      std::unique_ptr<iovec[]> iov2 = std::make_unique<iovec[]> (iovcnt);
+      std::unique_ptr<iovec[]> const iov2 = std::make_unique<iovec[]> (iovcnt);
       for (int i = 0; i < iovcnt; ++i)
         {
-          size_t n = (std::min) ((size_t) iov[i].iov_len ,
+          size_t const n = (std::min) ((size_t) iov[i].iov_len ,
                               (size_t) this->leftovers_.length());
           if (n > 0)
             {

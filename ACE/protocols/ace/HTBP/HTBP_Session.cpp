@@ -71,7 +71,7 @@ ACE::HTBP::Session::Session ()
 {
   ACE::HTBP::ID_Requestor req;
   ACE_TCHAR * htid = req.get_HTID();
-  std::unique_ptr<ACE_TCHAR[]> guard (htid);
+  std::unique_ptr<ACE_TCHAR[]> const guard (htid);
   session_id_.local_.set_htid (ACE_TEXT_ALWAYS_CHAR (htid));
   session_id_.id_ = ACE::HTBP::Session::next_session_id();
   ACE_NEW (inbound_, ACE::HTBP::Channel (this));
@@ -180,7 +180,7 @@ ACE::HTBP::Session::reconnect_i (ACE::HTBP::Channel *s) const
     {
 #if !defined (ACE_LACKS_TCP_NODELAY)
       int no_delay = 1;
-      int result = s->ace_stream().set_option (ACE_IPPROTO_TCP,
+      int const result = s->ace_stream().set_option (ACE_IPPROTO_TCP,
                                                TCP_NODELAY,
                                                (void *) &no_delay,
                                                sizeof (no_delay));
@@ -255,7 +255,7 @@ ACE::HTBP::Session::flush_outbound_queue ()
       ACE_NEW_RETURN (iov,
                       iovec[this->outbound_queue_.message_count()],
                       -1);
-      std::unique_ptr<iovec[]> guard (iov);
+      std::unique_ptr<iovec[]> const guard (iov);
       this->outbound_queue_.peek_dequeue_head (msg);
       for (size_t i = 0; i < this->outbound_queue_.message_count(); ++i)
         {

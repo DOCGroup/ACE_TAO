@@ -38,7 +38,7 @@ ACE::HTBP::ID_Requestor::connect_to_server (ACE_SOCK_Stream *cli_stream)
 {
   if (port_ == 0 || host_.length() == 0)
     {
-      int host_start = url_.find (ACE_TEXT("http://")) + 7;
+      int const host_start = url_.find (ACE_TEXT("http://")) + 7;
       int port_sep = 0;
       int sep = 0;
       if (host_start == -1)
@@ -69,7 +69,7 @@ ACE::HTBP::ID_Requestor::connect_to_server (ACE_SOCK_Stream *cli_stream)
       host_ = url_.substr(host_start,port_sep - host_start);
     }
 
-  ACE_INET_Addr remote_addr (static_cast<u_short> (port_), host_.c_str());
+  ACE_INET_Addr const remote_addr (static_cast<u_short> (port_), host_.c_str());
   ACE_SOCK_Connector con;
   if (con.connect (*cli_stream,
                    remote_addr) == -1)
@@ -102,10 +102,10 @@ ACE::HTBP::ID_Requestor::send_request (ACE_SOCK_Stream *cli_stream)
   size_t const buffer_size = std::strlen (url) + std::strlen ("GET  HTTP/1.0\n\n") + 1;
   char *request_buffer {};
   ACE_NEW_RETURN (request_buffer, char[buffer_size], -1);
-  std::unique_ptr<char[]> buffer (request_buffer);
+  std::unique_ptr<char[]> const buffer (request_buffer);
 
   std::snprintf (buffer.get (), buffer_size, "GET %s HTTP/1.0\n\n", url);
-  int result = cli_stream->send_n (buffer.get (), buffer_size - 1);
+  int const result = cli_stream->send_n (buffer.get (), buffer_size - 1);
   if (result == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -146,12 +146,12 @@ ACE::HTBP::ID_Requestor::get_HTID ()
       return ACE::HTBP::ID_Requestor::htid_.rep();
     }
   iovec recv_buf;
-  ssize_t result = cli_stream.recvv (&recv_buf);
+  ssize_t const result = cli_stream.recvv (&recv_buf);
   cli_stream.close();
 
   if (result > 0)
     {
-      ACE_CString answer ((char *)recv_buf.iov_base,recv_buf.iov_len);
+      ACE_CString const answer ((char *)recv_buf.iov_base,recv_buf.iov_len);
       ACE_CString::size_type start = answer.rfind (ACE_TEXT('\n'));
       if (start == ACE_CString::npos)
         {

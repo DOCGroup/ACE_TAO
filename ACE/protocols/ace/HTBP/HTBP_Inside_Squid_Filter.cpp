@@ -39,7 +39,7 @@ ACE::HTBP::Inside_Squid_Filter::make_request_header (ACE::HTBP::Channel *ch,
 
   char const* format = "%shttp://%s:%d/%s/%d/request%d.html HTTP/1.1\n";
   char remote_host[ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1];
-  unsigned remote_port = session->peer_addr().get_port_number();
+  unsigned const remote_port = session->peer_addr().get_port_number();
   char const* local_htid = session->local_addr().get_htid();
 
   ACE_UINT32 tempId = session->session_id().id_;
@@ -101,7 +101,7 @@ ssize_t
 ACE::HTBP::Inside_Squid_Filter::send_data_header (ssize_t data_len,
                                                 ACE::HTBP::Channel *ch)
 {
-  std::unique_ptr<char[]> buffer = std::make_unique<char[]> (BUFSIZ);
+  std::unique_ptr<char[]> const buffer = std::make_unique<char[]> (BUFSIZ);
   ssize_t result = -1;
   if (this->make_request_header (ch,"POST ",buffer.get (),BUFSIZ) != -1)
     {
@@ -149,7 +149,7 @@ ACE::HTBP::Inside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
                         0);
     }
   char *start = ch->leftovers().rd_ptr();
-  ACE_CString token = "Content-Length: ";
+  ACE_CString const token = "Content-Length: ";
   char *tpos = std::strstr (start, token.c_str ());
   char *nl = std::strchr (start, '\n');
   if (tpos != nullptr)
@@ -186,7 +186,7 @@ ACE::HTBP::Inside_Squid_Filter::recv_data_trailer (ACE::HTBP::Channel *ch)
 int
 ACE::HTBP::Inside_Squid_Filter::send_ack (ACE::HTBP::Channel *ch)
 {
-  std::unique_ptr<char[]> buffer = std::make_unique<char[]> (BUFSIZ);
+  std::unique_ptr<char[]> const buffer = std::make_unique<char[]> (BUFSIZ);
   ssize_t result = -1;
   if (ch->state() == ACE::HTBP::Channel::Ack_Sent)
     {
@@ -230,7 +230,7 @@ ACE::HTBP::Inside_Squid_Filter::recv_ack (ACE::HTBP::Channel *ch)
     }
 
   char *start = ch->leftovers().rd_ptr();
-  ACE_CString token = "Content-Length: ";
+  ACE_CString const token = "Content-Length: ";
   char *tpos = std::strstr (start, token.c_str ());
   char *nl = std::strchr (start, '\n');
   if (tpos != nullptr)

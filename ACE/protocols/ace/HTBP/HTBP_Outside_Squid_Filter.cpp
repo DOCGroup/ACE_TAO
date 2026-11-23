@@ -179,7 +179,7 @@ ACE::HTBP::Outside_Squid_Filter::send_data_header (ssize_t data_len,
   const std::string data_length = std::to_string (data_len);
   header += data_length.c_str ();
   header += "\n\n";
-  ssize_t result = ch->ace_stream().send(header.c_str(),header.length());
+  ssize_t const result = ch->ace_stream().send(header.c_str(),header.length());
   ch->state(result == -1 ?
             ACE::HTBP::Channel::Closed : ACE::HTBP::Channel::Header_Sent);
   this->reset_http_code();
