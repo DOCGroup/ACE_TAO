@@ -11,7 +11,7 @@ valuetype BaseNode;
 valuetype BaseNode
 {
   //@@ TODO:
-  /// public BaseNodeSeq node_seq;
+  // public BaseNodeSeq node_seq;
 
   public BaseNode left;
   public BaseNode right;

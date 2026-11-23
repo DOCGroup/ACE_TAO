@@ -10,7 +10,7 @@
 #define _GSSUP_IDL_
 
 #include <orbsvcs/CSI.idl>
-/// import ::CSI;
+// import ::CSI;
 
 module GSSUP {
   /// The GSS Object Identifier allocated for the
