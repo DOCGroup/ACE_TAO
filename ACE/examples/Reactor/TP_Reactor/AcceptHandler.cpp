@@ -27,7 +27,7 @@ int AcceptHandler::open() {
     ACE_TRACE("AcceptHandler::open()");
 
     // create the local address used for the service (PORT is from common.h)
-    ACE_INET_Addr addr(PORT);
+    ACE_INET_Addr const addr(PORT);
 
     // open a port using the acceptor; reuse the address later
     if (mAcceptor.open(addr, 1) == -1)

@@ -199,7 +199,7 @@ char *
 Options::shared_client_test (u_short port,
                              ACE_SOCK_Stream &cli_stream)
 {
-  ACE_INET_Addr remote_addr (port, this->host_);
+  ACE_INET_Addr const remote_addr (port, this->host_);
 
   ACE_SOCK_Connector con;
 
@@ -219,7 +219,7 @@ Options::shared_client_test (u_short port,
                   remote_addr.get_port_number ()));
     }
 
-  ACE_INT32 len =
+  ACE_INT32 const len =
     ACE_HTONL (ACE_Utils::truncate_cast<ACE_INT32> (this->message_len ()));
 
   // Allocate the transmit buffer.
@@ -262,7 +262,7 @@ Options::oneway_client_test (void *)
 
   // Keep track of return value.
   intptr_t result = 0;
-  ACE_INT32 len =
+  ACE_INT32 const len =
     ACE_Utils::truncate_cast<ACE_INT32> (options->message_len ());
 
   ACE_DEBUG ((LM_DEBUG,
@@ -324,7 +324,7 @@ Options::twoway_client_test (void *)
   // Timer business.
   ACE_High_Res_Timer timer;
 
-  ACE_INT32 len =
+  ACE_INT32 const len =
     ACE_Utils::truncate_cast<ACE_INT32> (options->message_len ());
 
   ACE_DEBUG ((LM_DEBUG,
@@ -380,8 +380,8 @@ Options::twoway_client_test (void *)
   ACE_Time_Value tv;
 
   timer.elapsed_time_incr (tv);
-  double real_time = (long) tv.sec () * ACE_ONE_SECOND_IN_USECS + tv.usec ();
-  double messages_per_sec = iteration * double (ACE_ONE_SECOND_IN_USECS) / real_time;
+  double const real_time = (long) tv.sec () * ACE_ONE_SECOND_IN_USECS + tv.usec ();
+  double const messages_per_sec = iteration * double (ACE_ONE_SECOND_IN_USECS) / real_time;
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) messages = %B\n(%t) usec-per-message = %f\n(%t) messages-per-second = %0.00f\n"),
