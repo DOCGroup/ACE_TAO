@@ -5,7 +5,7 @@
  *  that are pushed to the EventLog.
  *
  *  @author Rob Ruff <rruff@scires.com>
- *  @D A Hanvey <d.hanvey@qub.ac.uk>
+ *  @author D A Hanvey <d.hanvey@qub.ac.uk>
  */
 
 #ifndef TAO_TLS_EVENTLOGCONSUMER_H

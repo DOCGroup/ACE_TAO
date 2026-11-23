@@ -89,7 +89,7 @@ protected:
 
   PortableServer::ServantBase * create_log_servant (DsLogAdmin::LogId id) override;
 
-  /// Our object ref. after <active>ation.
+  /// Our object reference after activation.
   DsLogAdmin::LogMgr_var log_mgr_;
 
   /// The event channel used for log generated events.

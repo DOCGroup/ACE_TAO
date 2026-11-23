@@ -47,7 +47,7 @@ public:
 
   /**
    * Returns 1 if the offer satisfies the constraint
-   * represented by the the expression tree rooted at <root>, 0 if it
+   * represented by the expression tree rooted at @a root, 0 if it
    * doesn't. If an error occurs during process, the traversal
    * automatically fails.
    */

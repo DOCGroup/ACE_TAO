@@ -5,7 +5,7 @@
  *
  *  @author Matthew Braun <mjb2@cs.wustl.edu>
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
- *  @David A. Hanvey <d.hanvey@qub.ac.uk>
+ *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
 
 #ifndef TAO_TLS_BASICLOG_I_H

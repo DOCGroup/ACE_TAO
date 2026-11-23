@@ -77,7 +77,7 @@ private:
   TAO_BasicLogFactory_i &operator= (TAO_BasicLogFactory_i &&) = delete;
 
 protected:
-  /// Our object ref. after <active>ation.
+  /// Our object reference after activation.
   DsLogAdmin::LogMgr_var        log_mgr_;
 };
 

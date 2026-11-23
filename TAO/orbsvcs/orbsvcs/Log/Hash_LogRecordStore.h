@@ -165,7 +165,7 @@ public:
                                       char const * c,
                                       DsLogAdmin::NVList const & attr_list) override;
 
-  /// Get the attributes of the record with id <id>. Raises
+  /// Get the attributes of the record with ID @a id. Raises
   /// DsLogAdmin::InvalidRecordId
   DsLogAdmin::NVList *get_record_attribute (DsLogAdmin::RecordId id) override;
 
@@ -174,24 +174,24 @@ public:
   int flush () override;
 
   /// Returns all records in the log that match the given constraint
-  /// <c>.
+  /// @a c.
   DsLogAdmin::RecordList *query (char const * grammar,
                                  char const * c,
                                  DsLogAdmin::Iterator_out i) override;
 
-  /// Retrieve <how_many> records from time <from_time> using iterator
-  /// <i>.
+  /// Retrieve @a how_many records from time @a from_time using iterator
+  /// @a i.
   DsLogAdmin::RecordList *retrieve (DsLogAdmin::TimeT from_time,
                                     CORBA::Long how_many,
                                     DsLogAdmin::Iterator_out i) override;
 
-  /// Returns the number of records matching constraint <c>.
+  /// Returns the number of records matching constraint @a c.
   CORBA::ULong match (char const * grammar, char const * c) override;
 
-  /// Delete records matching constraint <c>.
+  /// Delete records matching constraint @a c.
   CORBA::ULong delete_records (char const * grammar, char const * c) override;
 
-  /// Delete records matching ids in <ids>
+  /// Delete records matching IDs in @a ids.
   CORBA::ULong delete_records_by_id (DsLogAdmin::RecordIdList const & ids) override;
 
   CORBA::ULong remove_old_records () override;
@@ -226,7 +226,7 @@ protected:
   /// Update into storage. Returns 0 on success -1 on failure.
   int update_i (DsLogAdmin::LogRecord &rec);
 
-  /// Remove the record with id <id> from the LogRecordStore.
+  /// Remove the record with ID @a id from the LogRecordStore.
   /// Returns 0 on success, -1 on failure.
   int remove_i (DsLogAdmin::RecordId id);
 

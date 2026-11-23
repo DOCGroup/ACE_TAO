@@ -160,7 +160,7 @@ public:
                            char const *c,
                            DsLogAdmin::NVList const &attr_list) = 0;
 
-  /// Get the attributes of the record with id <id>. Raises
+  /// Get the attributes of the record with ID @a id. Raises
   /// DsLogAdmin::InvalidRecordId
   virtual DsLogAdmin::NVList*
     get_record_attribute (DsLogAdmin::RecordId id) = 0;
@@ -171,30 +171,30 @@ public:
     flush () = 0;
 
   /// Returns all records in the log that match the given constraint
-  /// <c>.
+  /// @a c.
   virtual DsLogAdmin::RecordList*
     query (char const *grammar,
            char const *c,
            DsLogAdmin::Iterator_out i) = 0;
 
-  /// Retrieve <how_many> records from time <from_time> using iterator
-  /// <i>.
+  /// Retrieve @a how_many records from time @a from_time using iterator
+  /// @a i.
   virtual DsLogAdmin::RecordList*
     retrieve (DsLogAdmin::TimeT from_time,
               CORBA::Long how_many,
               DsLogAdmin::Iterator_out i) = 0;
 
-  /// Returns the number of records matching constraint <c>.
+  /// Returns the number of records matching constraint @a c.
   virtual CORBA::ULong
     match (char const *grammar,
            char const *c) = 0;
 
-  /// Delete records matching constraint <c>.
+  /// Delete records matching constraint @a c.
   virtual CORBA::ULong
     delete_records (char const *grammar,
                     char const *c) = 0;
 
-  /// Delete records matching ids in <ids>
+  /// Delete records matching IDs in @a ids.
   virtual CORBA::ULong
     delete_records_by_id (DsLogAdmin::RecordIdList const &ids) = 0;
 
