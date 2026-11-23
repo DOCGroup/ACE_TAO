@@ -30,7 +30,7 @@ int
 ACE_FIFO_Recv::close ()
 {
   ACE_TRACE ("ACE_FIFO_Recv::close");
-  int result = ACE_FIFO::close ();
+  int const result = ACE_FIFO::close ();
 
   if (this->aux_handle_ != ACE_INVALID_HANDLE)
     {

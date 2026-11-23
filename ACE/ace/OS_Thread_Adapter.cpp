@@ -48,7 +48,7 @@ ACE_OS_Thread_Adapter::invoke ()
   void *arg = this->arg_;
 
   // Pick up the cancel-related flags before deleting this.
-  long cancel_flags = this->flags_;
+  long const cancel_flags = this->flags_;
 
   // Delete ourselves since we don't need <this> anymore.  Make sure
   // not to access <this> anywhere below this point.
