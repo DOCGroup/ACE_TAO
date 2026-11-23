@@ -245,7 +245,7 @@ ACE_OutputCDR::write_wchar (ACE_CDR::WChar x)
   if (static_cast<ACE_CDR::Short> (major_version_) == 1
       && static_cast<ACE_CDR::Short> (minor_version_) == 2)
     {
-      ACE_CDR::Octet len =
+      ACE_CDR::Octet const len =
         static_cast<ACE_CDR::Octet> (ACE_OutputCDR::wchar_maxbytes_);
       if (this->write_1 (&len))
         {
@@ -364,7 +364,7 @@ ACE_OutputCDR::write_wstring (ACE_CDR::ULong len,
           //In GIOP 1.2 the length field contains the number of bytes
           //the wstring occupies rather than number of wchars
           //Taking sizeof might not be a good way! This is a temporary fix.
-          ACE_CDR::Boolean good_ulong =
+          ACE_CDR::Boolean const good_ulong =
             this->write_ulong (
               ACE_Utils::truncate_cast<ACE_CDR::ULong> (
                 ACE_OutputCDR::wchar_maxbytes_ * len));
@@ -1628,7 +1628,7 @@ ACE_InputCDR::read_string (ACE_CString &x)
   ACE_CDR::Char * data {};
   if (this->read_string (data))
     {
-      std::unique_ptr<ACE_CDR::Char[], ACE_Array_Deleter<ACE_CDR::Char>> safe_data (data);
+      std::unique_ptr<ACE_CDR::Char[], ACE_Array_Deleter<ACE_CDR::Char>> const safe_data (data);
       x = data;
       return true;
     }
@@ -2265,8 +2265,8 @@ ACE_InputCDR::exchange_data_blocks (ACE_InputCDR &cdr)
   cdr.start_.replace_data_block (dnb);
 
   // Exchange the flags information..
-  ACE_Message_Block::Message_Flags df = cdr.start_.self_flags ();
-  ACE_Message_Block::Message_Flags sf = this->start_.self_flags ();
+  ACE_Message_Block::Message_Flags const df = cdr.start_.self_flags ();
+  ACE_Message_Block::Message_Flags const sf = this->start_.self_flags ();
 
   cdr.start_.clr_self_flags (df);
   this->start_.clr_self_flags (sf);
