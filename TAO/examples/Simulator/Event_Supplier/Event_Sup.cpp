@@ -195,9 +195,7 @@ Event_Supplier::load_schedule_data
         break;
       }
 
-      std::strncpy (data->operation_name,
-                       oper_name,
-                       BUFSIZ-1);
+      std::strcpy (data->operation_name, oper_name);
 
       data->utilitzation = (double)(20.0+ACE_OS::rand() %10);
       data->overhead = (double)(ACE_OS::rand() %20);

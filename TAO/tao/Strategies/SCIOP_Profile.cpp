@@ -172,7 +172,7 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior)
 
       CORBA::String_var tmp = CORBA::string_alloc (length_port);
 
-      std::strncpy (tmp.inout (), cp_pos + 1, length_port);
+      std::memcpy (tmp.inout (), cp_pos + 1, length_port);
       tmp[length_port] = '\0';
 
       this->endpoint_.port_ =
@@ -188,7 +188,7 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior)
   CORBA::String_var tmp = CORBA::string_alloc (length_host);
 
   // Skip the trailing '/'
-  std::strncpy (tmp.inout (), ior, length_host);
+  std::memcpy (tmp.inout (), ior, length_host);
   tmp[length_host] = '\0';
 
   this->endpoint_.host_ = tmp._retn ();

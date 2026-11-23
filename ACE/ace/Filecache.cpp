@@ -296,12 +296,22 @@ ACE_Filecache::update_i (const ACE_TCHAR *filename,
 int
 ACE_Filecache::find (const ACE_TCHAR *filename)
 {
+  if (filename == nullptr || ACE_OS::strlen (filename) > MAXPATHLEN)
+    {
+      return -1;
+    }
+
   return this->hash_.find (filename);
 }
 
 ACE_Filecache_Object *
 ACE_Filecache::remove (const ACE_TCHAR *filename)
 {
+  if (filename == nullptr || ACE_OS::strlen (filename) > MAXPATHLEN)
+    {
+      return nullptr;
+    }
+
   ACE_Filecache_Object *handle {};
 
   ACE_OFF_T const loc = ACE::hash_pjw (filename) % this->size_;
@@ -324,6 +334,11 @@ ACE_Filecache::remove (const ACE_TCHAR *filename)
 ACE_Filecache_Object *
 ACE_Filecache::fetch (const ACE_TCHAR *filename, int mapit)
 {
+  if (filename == nullptr || ACE_OS::strlen (filename) > MAXPATHLEN)
+    {
+      return nullptr;
+    }
+
   ACE_Filecache_Object *handle {};
 
   ACE_OFF_T const loc = ACE::hash_pjw (filename) % this->size_;
@@ -376,6 +391,11 @@ ACE_Filecache::fetch (const ACE_TCHAR *filename, int mapit)
 ACE_Filecache_Object *
 ACE_Filecache::create (const ACE_TCHAR *filename, int size)
 {
+  if (filename == nullptr || ACE_OS::strlen (filename) > MAXPATHLEN)
+    {
+      return nullptr;
+    }
+
   ACE_Filecache_Object *handle {};
 
   ACE_OFF_T const loc = ACE::hash_pjw (filename) % this->size_;
@@ -465,9 +485,17 @@ ACE_Filecache_Object::ACE_Filecache_Object (const ACE_TCHAR *filename,
   : sa_ (sa),
     lock_ (lock)
 {
-  // ASSERT strlen(filename) < sizeof (this->filename_)
-  ACE_OS::strcpy (this->filename_, filename);
   this->action_ = ACE_Filecache_Object::ACE_READING;
+  if (filename == nullptr
+      || ACE_OS::strlen (filename)
+         >= sizeof this->filename_ / sizeof *this->filename_)
+    {
+      this->error_i (ACE_Filecache_Object::ACE_ACCESS_FAILED,
+                     ACE_TEXT ("ACE_Filecache_Object::ctor: invalid filename"));
+      return;
+    }
+
+  ACE_OS::strcpy (this->filename_, filename);
   // place ourselves into the READING state
 
   // Can we access the file?
@@ -523,8 +551,17 @@ ACE_Filecache_Object::ACE_Filecache_Object (const ACE_TCHAR *filename,
     lock_ (lock)
 {
   this->size_ = size;
-  ACE_OS::strcpy (this->filename_, filename);
   this->action_ = ACE_Filecache_Object::ACE_WRITING;
+  if (filename == nullptr
+      || ACE_OS::strlen (filename)
+         >= sizeof this->filename_ / sizeof *this->filename_)
+    {
+      this->error_i (ACE_Filecache_Object::ACE_ACCESS_FAILED,
+                     ACE_TEXT ("ACE_Filecache_Object::ctor: invalid filename"));
+      return;
+    }
+
+  ACE_OS::strcpy (this->filename_, filename);
 
   // Can we access the file?
   if (ACE_OS::access (this->filename_, R_OK|W_OK) == -1

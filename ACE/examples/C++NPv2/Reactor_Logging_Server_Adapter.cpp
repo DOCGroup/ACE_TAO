@@ -46,7 +46,7 @@ Reactor_Logging_Server_Adapter<ACCEPTOR>::info
     }
   else
     {
-      ACE_OS::strncpy (*bufferp, buf, length);
+      ACE_OS::strsncpy (*bufferp, buf, length);
     }
 
   return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (*bufferp));

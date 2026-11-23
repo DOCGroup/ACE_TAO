@@ -29,9 +29,9 @@ HA_Status::init (int argc, ACE_TCHAR *argv[])
       switch (option)
         {
         case 'f':
-          ACE_OS::strncpy (config_file,
-                           cmd_opts.opt_arg (),
-                           MAXPATHLEN);
+          ACE_OS::strsncpy (config_file,
+                            cmd_opts.opt_arg (),
+                            sizeof config_file / sizeof *config_file);
           break;
         case ':':
           ACE_ERROR_RETURN
@@ -113,7 +113,7 @@ HA_Status::info (ACE_TCHAR **str, size_t len) const
     }
   else
   {
-    ACE_OS::strncpy (*str, buffer, len);
+    ACE_OS::strsncpy (*str, buffer, len);
   }
   return static_cast<int> (ACE_OS::strlen (*str));
 }

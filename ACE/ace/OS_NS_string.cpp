@@ -199,7 +199,7 @@ ACE_OS::strerror_r (int errnum, char *buf, size_t buflen)
   return ::strerror_r (errnum, buf, buflen);
 # endif
 #else
-  return ACE_OS::strncpy (buf, strerror (errnum), buflen);
+  return ACE_OS::strsncpy (buf, strerror (errnum), buflen);
 #endif
 }
 

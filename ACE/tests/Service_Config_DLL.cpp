@@ -254,7 +254,7 @@ Refuses_Init::info (ACE_TCHAR **info_string, size_t length) const
     }
   else
   {
-    ACE_OS::strncpy (*info_string, msg, length);
+    ACE_OS::strsncpy (*info_string, msg, length);
   }
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("Refuses_Init::info() called - shouldn't be\n")));

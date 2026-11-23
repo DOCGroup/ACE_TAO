@@ -159,7 +159,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string)
 
   CORBA::String_var tmp = CORBA::string_alloc (length);
 
-  std::strncpy (tmp.inout (), cp + 1, length);
+  std::memcpy (tmp.inout (), cp + 1, length);
   tmp[length] = '\0';
 
   if (std::strspn (tmp.in (), "1234567890") == length)
@@ -188,7 +188,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string)
 
   tmp = CORBA::string_alloc (length);
 
-  std::strncpy (tmp.inout (), start, length);
+  std::memcpy (tmp.inout (), start, length);
   tmp[length] = '\0';
 
   this->endpoint_.host_ = tmp._retn ();

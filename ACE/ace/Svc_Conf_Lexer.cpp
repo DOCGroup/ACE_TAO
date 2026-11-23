@@ -412,7 +412,7 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
                   {
                     str = str_buf;
                   }
-                std::strncpy (str, buffer->input_ + buffer->index_, size - 1);
+                std::memcpy (str, buffer->input_ + buffer->index_, size - 1);
                 str[size - 1] = '\0';
 
                 if (std::strcmp (str, "dynamic") == 0)
@@ -612,6 +612,11 @@ ACE_Svc_Conf_Lexer::convert_from_utf8 (ACE_Encoding_Converter* converter,
     }
   else
     {
+      if (source_size >= target_size)
+        {
+          return false;
+        }
+
       ACE_OS::strncpy (target, ACE_TEXT_CHAR_TO_TCHAR (source), source_size);
       target[source_size] = 0;
     }

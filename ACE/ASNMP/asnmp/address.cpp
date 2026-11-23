@@ -476,7 +476,9 @@ int IpAddress::parse_address( const char *inaddr)
     int rc;
     if ((rc = resolve_to_address(inaddr, ipAddr)) == 0) {
         // now lets check out the dotted string
-        std::strncpy (ds, ACE_OS::inet_ntoa (ipAddr), MAXHOSTNAMELEN);
+        ACE_OS::strsncpy (ds,
+                          ACE_OS::inet_ntoa (ipAddr),
+                          sizeof ds / sizeof *ds);
 
         if ( !parse_dotted_ipstring( ds))
         {
@@ -484,7 +486,9 @@ int IpAddress::parse_address( const char *inaddr)
         }
 
         // save the friendly name
-        std::strcpy (iv_friendly_name_, inaddr);
+        ACE_OS::strsncpy (iv_friendly_name_,
+                          inaddr,
+                          sizeof this->iv_friendly_name_ / sizeof *this->iv_friendly_name_);
     }    // end if lookup result
     else {
       iv_friendly_name_status_ = rc;
@@ -539,7 +543,7 @@ int IpAddress::resolve_to_hostname(const in_addr& quad_addr, char *hostname)
     // verify right type of record
     if (lookupResult.h_addrtype == AF_INET &&
         lookupResult.h_length == IPV4LEN) {
-      std::strcpy (hostname, lookupResult.h_name);
+      ACE_OS::strsncpy (hostname, lookupResult.h_name, MAX_DISPLAY_SZ);
       // setup multiple entries
       return 0;
     }

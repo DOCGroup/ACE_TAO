@@ -94,7 +94,7 @@ int Service_Reporter::info (ACE_TCHAR **bufferp,
     }
   else
   {
-    ACE_OS::strncpy (*bufferp, buf, length);
+    ACE_OS::strsncpy (*bufferp, buf, length);
   }
 
   return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (*bufferp));

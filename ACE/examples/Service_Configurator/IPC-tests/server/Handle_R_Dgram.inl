@@ -46,7 +46,7 @@ Handle_R_Dgram::info (ACE_TCHAR **strp, size_t length) const
     }
   else
     {
-      ACE_OS::strncpy (*strp, buf, length);
+      ACE_OS::strsncpy (*strp, buf, length);
     }
   return ACE_OS::strlen (buf);
 }

@@ -60,9 +60,12 @@ ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
     }
   else
     {
-      (void)ACE_OS::strsncpy (this->filename_, sa.filename_, sa.get_size ());
+      (void) ACE_OS::strsncpy (this->filename_,
+                               sa.filename_,
+                               sizeof this->filename_ / sizeof (ACE_TCHAR));
 
-      this->base_set (sa.get_type (), sa.get_size ());
+      this->base_set (sa.get_type (),
+                      static_cast<int> (ACE_OS::strlen (this->filename_) + 1));
     }
   return 0;
 }
@@ -76,11 +79,11 @@ ACE_FILE_Addr::ACE_FILE_Addr (const ACE_FILE_Addr &sa)
 int
 ACE_FILE_Addr::set (const ACE_TCHAR *filename)
 {
-  this->ACE_Addr::base_set (AF_FILE,
-                            static_cast<int> (ACE_OS::strlen (filename) + 1));
   (void) ACE_OS::strsncpy (this->filename_,
                            filename,
                            sizeof this->filename_ / sizeof (ACE_TCHAR));
+  this->ACE_Addr::base_set (
+    AF_FILE, static_cast<int> (ACE_OS::strlen (this->filename_) + 1));
   return 0;
 }
 

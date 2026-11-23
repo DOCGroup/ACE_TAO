@@ -194,7 +194,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
                        ACE_Process_Options::NO_EXEC))
     ACE_NOTSUP_RETURN (ACE_INVALID_PID);
 
-  if (options.working_directory () != 0)
+  if (options.working_directory () != nullptr)
     {
       ACE_NOTSUP_RETURN (ACE_INVALID_PID);
     }
@@ -239,7 +239,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
 # if defined (ACE_USES_WCHAR)
   wchar_t * const *wargv = options.command_line_argv ();
   size_t vcount {};
-  while (wargv[vcount] != 0)
+  while (wargv[vcount] != nullptr)
     {
       ++vcount;
     }
@@ -263,7 +263,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
     {
       wchar_t * const *wenv = options.env_argv ();
       size_t env_count {};
-      while (wenv[env_count] != 0)
+      while (wenv[env_count] != nullptr)
         {
           ++env_count;
         }
@@ -479,7 +479,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
 
         wchar_t * const *wargv = options.command_line_argv ();
         size_t vcount {};
-        while (wargv[vcount] != 0)
+        while (wargv[vcount] != nullptr)
           {
             ++vcount;
           }
@@ -498,7 +498,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
 
         wchar_t * const *wenv = options.env_argv ();
         size_t env_count {};
-        while (wenv[env_count] != 0)
+        while (wenv[env_count] != nullptr)
           {
             ++env_count;
           }
@@ -1283,34 +1283,41 @@ ACE_Process_Options::~ACE_Process_Options ()
 int
 ACE_Process_Options::command_line (const ACE_TCHAR *const argv[])
 {
-  int i = 0;
-
-  if (argv[i])
+  size_t length = ACE_OS::strlen (command_line_buf_);
+  for (size_t i = 0; argv[i] != nullptr; ++i)
     {
-      ACE_OS::strcat (command_line_buf_, argv[i]);
-
-      while (argv[++i])
+      if (length >= command_line_buf_len_)
         {
-          // Check to see if the next argument will overflow the
-          // command_line buffer.
-          size_t const cur_len =
-            ACE_OS::strlen (command_line_buf_)
-              + ACE_OS::strlen (argv[i])
-              + 2;
-
-          if (cur_len > command_line_buf_len_)
-            {
-              ACELIB_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("ACE_Process:command_line: ")
-                                 ACE_TEXT ("command line is ")
-                                 ACE_TEXT ("longer than %d\n"),
-                                 command_line_buf_len_),
-                                1);
-            }
-
-          ACE_OS::strcat (command_line_buf_, ACE_TEXT (" "));
-          ACE_OS::strcat (command_line_buf_, argv[i]);
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                                ACE_TEXT ("ACE_Process:command_line: ")
+                                ACE_TEXT ("command line is ")
+                                ACE_TEXT ("longer than %B\n"),
+                                command_line_buf_len_),
+                               1);
         }
+
+      size_t remaining = command_line_buf_len_ - length;
+      size_t const separator = length == 0 ? 0 : 1;
+      size_t const arg_length = ACE_OS::strlen (argv[i]);
+
+      if (arg_length >= remaining || separator >= remaining - arg_length)
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                                ACE_TEXT ("ACE_Process:command_line: ")
+                                ACE_TEXT ("command line is ")
+                                ACE_TEXT ("longer than %B\n"),
+                                command_line_buf_len_),
+                               1);
+        }
+
+      if (separator != 0)
+        {
+          command_line_buf_[length++] = ' ';
+          --remaining;
+        }
+
+      ACE_OS::strsncpy (command_line_buf_ + length, argv[i], remaining);
+      length += arg_length;
     }
 
   command_line_argv_calculated_ = false;

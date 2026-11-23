@@ -621,9 +621,9 @@ ACE_TS_Clerk_Processor::parse_args (int argc, ACE_TCHAR *argv[])
           break;
         case 'p':
           // Get the poolname
-          ACE_OS::strncpy (this->poolname_,
-                           get_opt.opt_arg (),
-                           sizeof this->poolname_ / sizeof (ACE_TCHAR));
+          ACE_OS::strsncpy (this->poolname_,
+                            get_opt.opt_arg (),
+                            sizeof this->poolname_ / sizeof *this->poolname_);
           break;
         case 'b':
           // Blocking semantics

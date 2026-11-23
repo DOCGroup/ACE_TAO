@@ -60,7 +60,7 @@ ACE_OS::dlerror ()
 #   if defined (ACE_USES_WCHAR)
   const size_t BufLen = 256;
   static wchar_t buf[BufLen];
-  ACE_OS::strncpy (buf, ACE_TEXT_CHAR_TO_TCHAR (err), BufLen);
+  ACE_OS::strsncpy (buf, ACE_TEXT_CHAR_TO_TCHAR (err), BufLen);
   return buf;
 #   else
   return const_cast <char *> (err);

@@ -216,7 +216,7 @@ TAO_IIOP_Profile::parse_string_i (char const *ior)
 
       if (tmp.in() != nullptr)
         {
-          std::strncpy (tmp.inout (), cp_pos + 1, length_port);
+          std::memcpy (tmp.inout (), cp_pos + 1, length_port);
           tmp[length_port] = '\0';
         }
 
@@ -265,13 +265,13 @@ TAO_IIOP_Profile::parse_string_i (char const *ior)
 #if defined (ACE_HAS_IPV6)
   if (ipv6_in_host)
     {
-      std::strncpy (tmp.inout (), ior + 1, length_host);
+      std::memcpy (tmp.inout (), ior + 1, length_host);
     }
   else
 #endif /* ACE_HAS_IPV6 */
     {
       // Skip the trailing '/'
-      std::strncpy (tmp.inout (), ior, length_host);
+      std::memcpy (tmp.inout (), ior, length_host);
     }
   tmp[length_host] = '\0';
 

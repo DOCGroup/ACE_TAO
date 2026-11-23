@@ -248,7 +248,7 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::handle_close (ACE_HANDLE,
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::handle_close");
   // Guard against multiple closes.
-  if (this->reactor () != 0)
+  if (this->reactor () != nullptr)
     {
       ACE_HANDLE handle = this->get_handle ();
 
@@ -284,7 +284,7 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::make_svc_handler (SVC_HANDLER *&sh)
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::make_svc_handler");
 
-  if (sh == 0)
+  if (sh == nullptr)
     {
       ACE_NEW_RETURN (sh,
                       SVC_HANDLER,
@@ -539,9 +539,9 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::dump () const
   this->scheduling_strategy_->dump ();
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("delete_scheduling_strategy_ = %d"), delete_scheduling_strategy_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nservice_name_ = %s"),
-              this->service_name_ == 0 ? ACE_TEXT ("<unknown>") : this->service_name_));
+              this->service_name_ == nullptr ? ACE_TEXT ("<unknown>") : this->service_name_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nservice_description_ = %s"),
-              this->service_description_ == 0 ? ACE_TEXT ("<unknown>") : this->service_description_));
+              this->service_description_ == nullptr ? ACE_TEXT ("<unknown>") : this->service_description_));
   this->service_addr_.dump ();
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -602,13 +602,13 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open");
 
-  if (this->service_name_ == 0 && service_name != nullptr)
+  if (this->service_name_ == nullptr && service_name != nullptr)
     {
       ACE_ALLOCATOR_RETURN (this->service_name_,
                             ACE_OS::strdup (service_name),
                             -1);
     }
-  if (this->service_description_ == 0 && service_description != nullptr)
+  if (this->service_description_ == nullptr && service_description != nullptr)
     {
       ACE_ALLOCATOR_RETURN (this->service_description_,
                             ACE_OS::strdup (service_description),
@@ -625,7 +625,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open
 
   // Initialize the creation strategy.
 
-  if (cre_s == 0)
+  if (cre_s == nullptr)
     {
       ACE_NEW_RETURN (cre_s,
                       CREATION_STRATEGY,
@@ -636,7 +636,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open
 
   // Initialize the accept strategy.
 
-  if (acc_s == 0)
+  if (acc_s == nullptr)
     {
       ACE_NEW_RETURN (acc_s,
                       ACCEPT_STRATEGY (this->reactor ()),
@@ -663,7 +663,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open
 
   // Initialize the concurrency strategy.
 
-  if (con_s == 0)
+  if (con_s == nullptr)
     {
       ACE_NEW_RETURN (con_s,
                       CONCURRENCY_STRATEGY,
@@ -674,7 +674,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open
 
   // Initialize the scheduling strategy.
 
-  if (sch_s == 0)
+  if (sch_s == nullptr)
     {
       ACE_NEW_RETURN (sch_s,
                       SCHEDULING_STRATEGY,
@@ -756,7 +756,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::handle_close (ACE_HANDLE,
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::handle_close");
   // Guard against multiple closes.
-  if (this->reactor () != 0)
+  if (this->reactor () != nullptr)
     {
       ACE_HANDLE handle = this->get_handle ();
 
@@ -877,29 +877,27 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::info (ACE_TCHAR **strp,
     {
       return -1;
     }
-  else if (addr.addr_to_string (service_addr_str,
-                                sizeof service_addr_str) == -1)
+  else if (addr.addr_to_string (
+             service_addr_str,
+             sizeof service_addr_str / sizeof *service_addr_str) == -1)
     {
       return -1;
     }
 
-  //
-  // gcc10 complains that it is possible that buf could be truncated by up to
-  // 6 bytes in this call to snprintf.  Technically, this is possible
-  // (however unlikely that may be).  Since service_addr_str is defined to be
-  // of size BUFSIZ, gcc assumes that the string could actually be BUFSIZ in
-  // length.  That makes the possible total length of the combined string
-  // (given the size of the literal string constants) 5 + BUFSIZE + 1.
-  //
-  const size_t additional = 6;
-  ACE_TCHAR buf[BUFSIZ + additional];
-  ACE_OS::snprintf (buf, sizeof buf,
-                    ACE_TEXT ("%s\t %s #%s\n"),
-                    this->service_name_ == 0
+  // Bound each field and allow space for all three, separators, and the
+  // terminating null character.
+  size_t const additional {8};
+  ACE_TCHAR buf[3 * BUFSIZ + additional];
+  ACE_OS::snprintf (buf, sizeof buf / sizeof *buf,
+                    ACE_TEXT ("%.*s\t %.*s #%.*s\n"),
+                    BUFSIZ,
+                    this->service_name_ == nullptr
                     ? ACE_TEXT ("<unknown>")
                     : this->service_name_,
+                    BUFSIZ,
                     service_addr_str,
-                    this->service_description_ == 0
+                    BUFSIZ,
+                    this->service_description_ == nullptr
                     ? ACE_TEXT ("<unknown>")
                     : this->service_description_);
 
@@ -951,7 +949,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open
 
   // Initialize the concurrency strategy.
 
-  if (con_s == 0)
+  if (con_s == nullptr)
     {
       ACE_NEW_RETURN (con_s,
                       ACE_Concurrency_Strategy<SVC_HANDLER>,
@@ -1070,7 +1068,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::register_handler
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::register_handler");
   // Can't do this if we don't have a Reactor.
-  if (this->reactor () == 0)
+  if (this->reactor () == nullptr)
     {
       errno = EINVAL;
       return -1;
@@ -1127,7 +1125,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::shared_accept
    bool reset_new_handle)
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::shared_accept");
-  if (svc_handler == 0)
+  if (svc_handler == nullptr)
     {
       return -1;
     }

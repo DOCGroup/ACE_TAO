@@ -55,13 +55,13 @@ ACE::HTBP::Addr::addr_to_string (ACE_TCHAR buffer[],
   {
     return this->ACE_INET_Addr::addr_to_string(buffer,size,ipaddr_format);
   }
-  if (size < htid_.length())
+  if (size <= htid_.length())
   {
     return -1;
   }
-  ACE_OS::strncpy (buffer,
-                   ACE_TEXT_CHAR_TO_TCHAR(htid_.c_str()),
-                   size);
+  ACE_OS::strsncpy (buffer,
+                    ACE_TEXT_CHAR_TO_TCHAR(htid_.c_str()),
+                    size);
   return 0;
 }
 

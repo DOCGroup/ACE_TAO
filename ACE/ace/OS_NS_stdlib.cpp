@@ -112,11 +112,12 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
   const ACE_TCHAR * start {};
   if ((start = ACE_OS::strchr (str, ACE_TEXT ('$'))) != nullptr)
     {
-      ACE_TCHAR buf[ACE_DEFAULT_ARGV_BUFSIZ];
-      size_t var_len = ACE_OS::strcspn (start + 1,
+      size_t const var_len = ACE_OS::strcspn (start + 1,
         ACE_TEXT ("$~!#%^&*()-+=\\|/?,.;:'\"`[]{} \t\n\r"));
-      ACE_OS::strncpy (buf, start + 1, var_len);
-      buf[var_len++] = ACE_TEXT ('\0');
+      size_t const var_name_len = var_len + 1;
+      ACE_TCHAR *buf {};
+      ACE_NEW_RETURN (buf, ACE_TCHAR[var_name_len], nullptr);
+      ACE_OS::strsncpy (buf, start + 1, var_name_len);
 #  if defined (ACE_WIN32)
       // Always use the ACE_TCHAR for Windows.
       ACE_TCHAR *temp = ACE_OS::getenv (buf);
@@ -124,11 +125,31 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
       // Use char * for environment on non-Windows.
       char *temp = ACE_OS::getenv (ACE_TEXT_ALWAYS_CHAR (buf));
 #  endif /* ACE_WIN32 */
+      delete [] buf;
       size_t buf_len = ACE_OS::strlen (str) + 1;
       if (temp != nullptr)
       {
-        buf_len += ACE_OS::strlen (temp) - var_len;
+        size_t const replacement_len = ACE_OS::strlen (temp);
+        if (replacement_len >= var_name_len)
+          {
+            size_t const extra_len = replacement_len - var_name_len;
+            if (extra_len > static_cast<size_t> (-1) - buf_len)
+              {
+                errno = ENOMEM;
+                return nullptr;
+              }
+            buf_len += extra_len;
+          }
+        else
+          {
+            buf_len -= var_name_len - replacement_len;
+          }
       }
+      if (buf_len > static_cast<size_t> (-1) / sizeof (ACE_TCHAR))
+        {
+          errno = ENOMEM;
+          return nullptr;
+        }
       ACE_TCHAR * buf_p =
 #if defined (ACE_HAS_ALLOC_HOOKS)
         static_cast<ACE_TCHAR *> (
@@ -144,7 +165,7 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
         }
       ACE_TCHAR * p = buf_p;
       size_t const len = static_cast<size_t> (start - str);
-      ACE_OS::strncpy (p, str, len);
+      std::memcpy (p, str, len * sizeof (ACE_TCHAR));
       p += len;
       if (temp != nullptr)
         {
@@ -156,11 +177,11 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
         }
       else
         {
-          ACE_OS::strncpy (p, start, var_len);
-          p += var_len;
+          std::memcpy (p, start, var_name_len * sizeof (ACE_TCHAR));
+          p += var_name_len;
           *p = ACE_TEXT ('\0');
         }
-      ACE_OS::strcpy (p, start + var_len);
+      ACE_OS::strcpy (p, start + var_name_len);
       return buf_p;
     }
   else

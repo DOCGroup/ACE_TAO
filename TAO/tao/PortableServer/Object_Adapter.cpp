@@ -692,10 +692,6 @@ TAO_Object_Adapter::close (int wait_for_completion)
     root = std::move (this->root_);
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-    if (this->poa_manager_factory_ == nullptr)
-    {
-      return;
-    }
     factory = std::move (this->poa_manager_factory_);
 #endif
   }

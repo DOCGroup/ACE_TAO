@@ -1,5 +1,6 @@
 #include "ACEXML/common/URL_Addr.h"
 
+#include <cstring>
 #include <memory>
 #include <new>
 
@@ -117,7 +118,8 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
       errno = ENOMEM;
       return -1;
     }
-  ACE_OS::strncpy (host_name.get (), s + http_len, host_len);
+  std::memcpy (host_name.get (), s + http_len,
+               host_len * sizeof (*host_name.get ()));
   host_name[host_len] = '\0';
 
   // Get the port number (if any)

@@ -90,7 +90,7 @@ namespace ACE
 
     int extern_C_passwd_callback (char* buf, int size, int /*rwflag*/, void* user_data)
       {
-        if (user_data == nullptr)
+        if (buf == nullptr || size <= 0 || user_data == nullptr)
         {
           return 0;
         }
@@ -101,14 +101,9 @@ namespace ACE
         cbmngr->passwd_callback (pwd);
         if (!pwd.empty ())
           {
-            std::strncpy (buf, pwd.c_str (), size);
-            buf[size - 1] = '\0';
-            if (size > ACE_Utils::truncate_cast<int> (pwd.length ()))
-            {
-              size = ACE_Utils::truncate_cast<int> (pwd.length ());
-            }
-
-            return size;
+            int const password_length = ACE_Utils::truncate_cast<int> (pwd.length ());
+            ACE_OS::strsncpy (buf, pwd.c_str (), size);
+            return password_length < size ? password_length : size - 1;
           }
         else
         {

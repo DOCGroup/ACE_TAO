@@ -96,7 +96,7 @@ setup_named_pipes (ACE_Process_Options &opt)
       ACE_OS::free (memory);
     }
   };
-  std::unique_ptr<ACE_TCHAR, ACE_OS_Free> rendezvous (
+  std::unique_ptr<ACE_TCHAR, ACE_OS_Free> const rendezvous (
     ACE_OS::tempnam (rendezvous_dir, rendezvous_pfx));
 
   // Out of memory?
@@ -223,7 +223,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   }
 
   // Can I find the file you want?
-  ACE_HANDLE infile = ACE_OS::open (fname, O_RDONLY);
+  ACE_HANDLE const infile = ACE_OS::open (fname, O_RDONLY);
   if (infile == ACE_INVALID_HANDLE)
   {
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", fname), -1);

@@ -210,7 +210,7 @@ int run_main (int, ACE_TCHAR *[])
   // Try to set up known IP and port.
   u_short const port (80);
   ACE_UINT32 const ia_any = INADDR_ANY;
-  ACE_INET_Addr local_addr(port, ia_any);
+  ACE_INET_Addr const local_addr(port, ia_any);
   status |= check_type_consistency (local_addr);
   if (local_addr.get_port_number () != 80)
     {
@@ -226,7 +226,7 @@ int run_main (int, ACE_TCHAR *[])
     }
 
   // Assignment constructor
-  ACE_INET_Addr local_addr2 (local_addr);
+  ACE_INET_Addr const local_addr2 (local_addr);
   status |= check_type_consistency (local_addr2);
   if (local_addr2.get_port_number () != 80)
     {
@@ -266,7 +266,7 @@ int run_main (int, ACE_TCHAR *[])
                           addr_ports[i]));
               status = 1;
             }
-          ACE_INET_Addr check (addr_ports[i]);
+          ACE_INET_Addr const check (addr_ports[i]);
           if (addr_port != check)
             {
               ACE_ERROR ((LM_ERROR, ACE_TEXT ("Reset on iter %d failed\n"), i));
@@ -494,7 +494,7 @@ int run_main (int, ACE_TCHAR *[])
 
       for (int i=0; ipv6_addresses[i] != nullptr; ++i)
         {
-          ACE_INET_Addr addr (80, ipv6_addresses[i]);
+          ACE_INET_Addr const addr (80, ipv6_addresses[i]);
           status |= check_type_consistency (addr);
 
           if (0 != std::strcmp (addr.get_host_addr (), ipv6_addresses[i]))
@@ -514,7 +514,7 @@ int run_main (int, ACE_TCHAR *[])
       };
       for (int i=0; ipv6_names[i] != nullptr; ++i)
         {
-          ACE_INET_Addr addr (80, ipv6_names[i]);
+          ACE_INET_Addr const addr (80, ipv6_names[i]);
           status |= check_type_consistency (addr);
 
           if (0 != std::strcmp (addr.get_host_name (), ipv6_names[i]))
@@ -548,7 +548,7 @@ int run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_HAS_IPV6 not set; no IPv6 tests run\n")));
 #endif
 
-  struct Address loopback_addresses[] =
+  struct Address const loopback_addresses[] =
     { {"127.0.0.1", true}, {"127.1.2.3", true}
       , {"127.0.0.0", true}, {"127.255.255.255", true}
       , {"126.255.255.255", false}, {"128.0.0.0", false}, {nullptr, true}
@@ -598,8 +598,8 @@ int run_main (int, ACE_TCHAR *[])
     status = 1;
   }
 
-  ACE_INET_Addr a1 (80, "127.0.0.1");
-  ACE_INET_Addr a2 = a1;
+  ACE_INET_Addr const a1 (80, "127.0.0.1");
+  ACE_INET_Addr const a2 = a1;
   if (a1 != a2)
     {
       ACE_ERROR ((LM_ERROR,

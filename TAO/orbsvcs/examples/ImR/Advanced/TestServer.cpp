@@ -79,7 +79,7 @@ string normalizePath (string const &dir, char delim, bool toLower)
               if (i == begin) // relative start
                 {
                   string const curDir = getWorkingPath ();
-                  std::strncpy (buffer, curDir.c_str (), sizeof (buffer));
+                  ACE_OS::strsncpy (buffer, curDir.c_str (), sizeof buffer / sizeof *buffer);
                   j = curDir.length();
                 }
               else
@@ -93,7 +93,7 @@ string normalizePath (string const &dir, char delim, bool toLower)
               if (i == begin) // relative start
                 {
                   string const curDir = getWorkingPath ();
-                  std::strncpy (buffer, curDir.c_str (), sizeof (buffer));
+                  ACE_OS::strsncpy (buffer, curDir.c_str (), sizeof buffer / sizeof *buffer);
                   j = curDir.length();
                 }
 

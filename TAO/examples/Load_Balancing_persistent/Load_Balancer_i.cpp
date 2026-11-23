@@ -668,11 +668,17 @@ Object_Group_i::bind (Load_Balancer::Member const &member)
   }
 
   char **id_ptr = static_cast<char **> (this->allocator_->malloc (sizeof (char *)));
+  if (id_ptr == nullptr)
+    {
+      this->allocator_->free (mem_alloc);
+      throw CORBA::NO_MEMORY ();
+    }
+
   *id_ptr = mem_alloc;
   char *ior_ptr = mem_alloc + id_len;
 
-  std::strcpy (*id_ptr, member.id);
-  std::strcpy (ior_ptr, member.obj);
+  std::memcpy (*id_ptr, member.id, id_len);
+  std::memcpy (ior_ptr, member.obj, ref_len);
 
   // Insert new member into <members_> and check for duplicates/failures.
   int result = this->members_->trybind (*id_ptr,

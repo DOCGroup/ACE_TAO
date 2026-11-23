@@ -213,10 +213,10 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
           this->blocking_semantics_ = 1;
           break;
         case 'C': // Use a different proxy config filename.
-          ACE_OS::strncpy (this->consumer_config_file_,
-                           get_opt.opt_arg (),
-                           sizeof this->consumer_config_file_
-                             / sizeof (ACE_TCHAR));
+          ACE_OS::strsncpy (this->consumer_config_file_,
+                            get_opt.opt_arg (),
+                            sizeof this->consumer_config_file_
+                              / sizeof *this->consumer_config_file_);
           break;
         case 'c':
           {
@@ -255,9 +255,10 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                         Options::DEBUGGING);
           break;
         case 'P': // Use a different connection config filename.
-          ACE_OS::strncpy (this->connection_config_file_,
-                           get_opt.opt_arg (),
-                           sizeof this->connection_config_file_);
+          ACE_OS::strsncpy (this->connection_config_file_,
+                            get_opt.opt_arg (),
+                            sizeof this->connection_config_file_
+                              / sizeof *this->connection_config_file_);
           break;
         case 'q': // Use a different socket queue size.
           this->socket_queue_size_ = ACE_OS::atoi (get_opt.opt_arg ());

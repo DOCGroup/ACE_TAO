@@ -788,7 +788,8 @@ TAO::Storable_FlatFileFactory::is_nfs (std::string const &directory)
           return ret;
         }
       size_t const rootlen = std::strlen(rpath);
-      if ((rootlen + directory.length() +1) > PATH_MAX)
+      if (rootlen > PATH_MAX - 2 ||
+          directory.length() > PATH_MAX - rootlen - 2)
         {
           if (TAO_debug_level > 0)
             {
@@ -801,7 +802,7 @@ TAO::Storable_FlatFileFactory::is_nfs (std::string const &directory)
         }
       char *pos = rpath + rootlen;
       *pos++ = '/';
-      std::strcpy (pos, directory.c_str ());
+      std::memcpy (pos, directory.c_str (), directory.length () + 1);
       dir = rpath;
     }
   size_t match {};

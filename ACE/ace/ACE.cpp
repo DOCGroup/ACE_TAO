@@ -237,7 +237,7 @@ ACE::terminate_process (pid_t pid)
                    pid);
 
   if (process_handle == ACE_INVALID_HANDLE
-      || process_handle == 0)
+      || process_handle == nullptr)
     {
       return -1;
     }
@@ -275,7 +275,7 @@ ACE::process_active (pid_t pid)
   // Create a handle for the given process id.
   ACE_HANDLE process_handle =
     ::OpenProcess (PROCESS_QUERY_INFORMATION, FALSE, pid);
-  if (process_handle == ACE_INVALID_HANDLE || process_handle == 0)
+  if (process_handle == ACE_INVALID_HANDLE || process_handle == nullptr)
     {
       return 0;
     }
@@ -735,7 +735,7 @@ ACE::t_rcv_n_i (ACE_HANDLE handle,
                 size_t *bt)
 {
   size_t temp;
-  size_t &bytes_transferred = bt == 0 ? temp : *bt;
+  size_t &bytes_transferred = bt == nullptr ? temp : *bt;
   ssize_t n;
 
   for (bytes_transferred = 0;
@@ -788,7 +788,7 @@ ACE::t_rcv_n_i (ACE_HANDLE handle,
                 size_t *bt)
 {
   size_t temp;
-  size_t &bytes_transferred = bt == 0 ? temp : *bt;
+  size_t &bytes_transferred = bt == nullptr ? temp : *bt;
   ssize_t n;
   ssize_t result = 0;
   bool error = false;
@@ -1560,7 +1560,7 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
                 size_t *bt)
 {
   size_t temp;
-  size_t &bytes_transferred = bt == 0 ? temp : *bt;
+  size_t &bytes_transferred = bt == nullptr ? temp : *bt;
   ssize_t n;
 
   for (bytes_transferred = 0;
@@ -1613,7 +1613,7 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
                 size_t *bt)
 {
   size_t temp;
-  size_t &bytes_transferred = bt == 0 ? temp : *bt;
+  size_t &bytes_transferred = bt == nullptr ? temp : *bt;
   ssize_t n;
   ssize_t result = 0;
   bool error = false;
@@ -2579,7 +2579,7 @@ ACE::timestamp (const ACE_Time_Value& time_value,
                     tms.tm_sec,
                     static_cast<long> (cur_time.usec()));
   date_and_time[date_and_timelen - 1] = '\0';
-  return date_and_time + 10 + (return_pointer_to_first_digit != 0);
+  return date_and_time + 10 + return_pointer_to_first_digit;
 }
 
 /// This function rounds the request to a multiple of the page size.

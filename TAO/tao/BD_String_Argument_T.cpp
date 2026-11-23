@@ -50,11 +50,17 @@ template<typename S_var,
 TAO::Argument*
 TAO::In_BD_String_Clonable_Argument_T<S_var,BOUND,Insert_Policy>::clone ()
 {
-  std::unique_ptr<typename S_var::s_traits::char_type[]> clone_x (
-    new typename S_var::s_traits::char_type[BOUND]);
-  ACE_OS::strncpy (clone_x.get (), this->x_, BOUND);
+  using char_type = typename S_var::s_traits::char_type;
+  std::unique_ptr<char_type[]> clone_x;
+  if (this->x_ != nullptr)
+    {
+      size_t const length = ACE_OS::strlen (this->x_);
+      clone_x.reset (new char_type[length + 1]);
+      ACE_OS::strcpy (clone_x.get (), this->x_);
+    }
   std::unique_ptr<In_BD_String_Clonable_Argument_T<S_var,BOUND,Insert_Policy>> clone_arg =
-    std::make_unique<In_BD_String_Clonable_Argument_T<S_var,BOUND,Insert_Policy>> (clone_x.get ());
+    std::make_unique<In_BD_String_Clonable_Argument_T<S_var,BOUND,Insert_Policy>> (
+      clone_x.get ());
   clone_arg->clone_buffer_ = std::move (clone_x);
   return clone_arg.release ();
 }

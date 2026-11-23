@@ -671,7 +671,12 @@ TAO_DIOP_Acceptor::parse_address (const char *address,
           }
         else
         {
-          std::strcpy (tmp_host, address);
+          size_t const len = std::strlen (address);
+          if (len >= sizeof (tmp_host))
+            {
+              return -1;
+            }
+          std::memcpy (tmp_host, address, len + 1);
         }
       }
 

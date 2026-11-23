@@ -197,7 +197,7 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
 
       CORBA::String_var tmp = CORBA::string_alloc (length_port);
 
-      std::strncpy (tmp.inout (), cp_pos + 1, length_port);
+      std::memcpy (tmp.inout (), cp_pos + 1, length_port);
       tmp[length_port] = '\0';
 
       if (std::strspn (tmp.in (), "1234567890") == length_port)
@@ -241,13 +241,13 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
 #if defined (ACE_HAS_IPV6)
   if (ipv6_in_host)
     {
-      std::strncpy (tmp.inout (), ior + 1, length_host);
+      std::memcpy (tmp.inout (), ior + 1, length_host);
     }
   else
 #endif /* ACE_HAS_IPV6 */
     {
       // Skip the trailing '/'
-      std::strncpy (tmp.inout (), ior, length_host);
+      std::memcpy (tmp.inout (), ior, length_host);
     }
   tmp[length_host] = '\0';
 

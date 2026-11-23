@@ -10,6 +10,7 @@
 #include "ace/Mutex.h"
 #include "ace/Process.h"
 #include "ace/Process_Mutex.h"
+#include "ace/SString.h"
 #include "ace/Get_Opt.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
@@ -75,9 +76,8 @@ acquire_release ()
   // To see if we really are the only holder of the mutex below,
   // we'll try to create a file with exclusive access. If the file
   // already exists, we're not the only one holding the mutex.
-  ACE_TCHAR mutex_check[MAXPATHLEN+1];
-  ACE_OS::strncpy (mutex_check, mutex_name, MAXPATHLEN);
-  ACE_OS::strncat (mutex_check, ACE_TEXT ("_checker"), MAXPATHLEN);
+  ACE_TString mutex_check (mutex_name);
+  mutex_check += ACE_TEXT ("_checker");
 
   // Grab the lock
   int const mutex_acq = mutex.acquire ();
@@ -87,7 +87,7 @@ acquire_release ()
               ACE_TEXT ("(%P) Mutex acquired %s\n"),
               mutex_name));
 
-  ACE_HANDLE checker_handle = ACE_OS::open (mutex_check, O_CREAT | O_EXCL);
+  ACE_HANDLE checker_handle = ACE_OS::open (mutex_check.c_str (), O_CREAT | O_EXCL);
   if (checker_handle == ACE_INVALID_HANDLE)
     {
       ACE_DEBUG ((LM_WARNING, ACE_TEXT ("(%P): %p\n"),
@@ -106,7 +106,7 @@ acquire_release ()
   ACE_OS::sleep (2);
 
   // Free up the check file for the next acquirer.
-  ACE_OS::unlink (mutex_check);
+  ACE_OS::unlink (mutex_check.c_str ());
 
   // Check if we need to release the mutex
   if (release_mutex == 1)

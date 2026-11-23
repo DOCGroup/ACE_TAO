@@ -271,7 +271,7 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
     }
   else
   {
-    ACE_OS::strcpy (verbose_msg, this->msg_data_);
+    ACE_OS::strsncpy (verbose_msg, this->msg_data_, verbose_msg_size);
   }
   return 0;
 }

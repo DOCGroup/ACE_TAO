@@ -445,13 +445,13 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i ()
 
   ACE_OS::strncat (lock_name_for_local_name_space,
                    ACE_DIRECTORY_SEPARATOR_STR,
-                   length -  ACE_OS::strlen (lock_name_for_local_name_space));
+                   length - ACE_OS::strlen (lock_name_for_local_name_space) - 1);
   ACE_OS::strncat (lock_name_for_local_name_space,
                    ACE_TEXT ("name_space_"),
-                   length -  ACE_OS::strlen (lock_name_for_local_name_space));
+                   length - ACE_OS::strlen (lock_name_for_local_name_space) - 1);
   ACE_OS::strncat (lock_name_for_local_name_space,
                    postfix,
-                   length -  ACE_OS::strlen (lock_name_for_local_name_space));
+                   length - ACE_OS::strlen (lock_name_for_local_name_space) - 1);
 
   length = sizeof lock_name_for_backing_store / sizeof (ACE_TCHAR);
   ACE_OS::strsncpy (lock_name_for_backing_store,
@@ -459,13 +459,13 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i ()
                     length);
   ACE_OS::strncat (lock_name_for_backing_store,
                    ACE_DIRECTORY_SEPARATOR_STR,
-                   length -  ACE_OS::strlen (lock_name_for_backing_store));
+                   length - ACE_OS::strlen (lock_name_for_backing_store) - 1);
   ACE_OS::strncat (lock_name_for_backing_store,
                    ACE_TEXT ("backing_store_"),
-                   length -  ACE_OS::strlen (lock_name_for_backing_store));
+                   length - ACE_OS::strlen (lock_name_for_backing_store) - 1);
   ACE_OS::strncat (lock_name_for_backing_store,
                    postfix,
-                   length - ACE_OS::strlen (ACE_TEXT ("backing_store_")));
+                   length - ACE_OS::strlen (lock_name_for_backing_store) - 1);
 
   // Create the allocator with the appropriate options.
   ALLOCATOR *allocator {};

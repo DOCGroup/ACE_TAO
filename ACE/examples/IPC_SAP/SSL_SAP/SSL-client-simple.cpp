@@ -12,6 +12,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Truncate.h"
+#include "ace/OS_NS_string.h"
 
 #include "ace/SSL/SSL_SOCK_Connector.h"
 
@@ -125,9 +126,9 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->port_ = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 'q':
-        std::strncpy (this->quit_string_,
-                      ACE_TEXT_ALWAYS_CHAR (getopt.opt_arg ()),
-                      QUIT_STRING_SIZE);
+        ACE_OS::strsncpy (this->quit_string_,
+                          ACE_TEXT_ALWAYS_CHAR (getopt.opt_arg ()),
+                          sizeof this->quit_string_ / sizeof *this->quit_string_);
         break;
       case 's':
         this->io_source_ = ACE_STDIN;

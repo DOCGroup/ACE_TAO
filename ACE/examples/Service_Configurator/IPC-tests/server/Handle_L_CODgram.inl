@@ -46,7 +46,7 @@ Handle_L_CODgram::info (ACE_TCHAR **strp, size_t length) const
     }
   else
     {
-      ACE_OS::strncpy (*strp, buf, length);
+      ACE_OS::strsncpy (*strp, buf, length);
     }
   return ACE_OS::strlen (buf);
 }
@@ -68,7 +68,9 @@ Handle_L_CODgram::init (int argc, ACE_TCHAR *argv[])
         break;
       }
 
-  ACE_OS::strncpy (this->rendezvous, r, MAXPATHLEN);
+  ACE_OS::strsncpy (this->rendezvous,
+                    r,
+                    sizeof this->rendezvous / sizeof *this->rendezvous);
   ACE_OS::unlink (this->rendezvous);
   sucd.set (this->rendezvous);
   if (this->open (sucd) == -1)

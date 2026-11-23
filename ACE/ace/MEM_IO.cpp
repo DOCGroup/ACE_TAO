@@ -176,9 +176,15 @@ ACE_MT_MEM_IO::init (ACE_HANDLE handle,
   ACE_TCHAR server_lock [MAXPATHLEN];
   ACE_TCHAR client_lock [MAXPATHLEN];
   const ACE_TCHAR *basename = ACE::basename (name);
-  //  size_t baselen = ACE_OS::strlen (basename);
+  size_t const basename_len = ACE_OS::strlen (basename);
+  size_t const suffix_len = ACE_OS::strlen (ACE_TEXT ("_sema_to_server"));
+  if (basename_len >= MAXPATHLEN - suffix_len)
+    {
+      errno = ENAMETOOLONG;
+      return -1;
+    }
 
-  // Building names.  @@ Check buffer overflow?
+  // Build the semaphore and mutex names.
   ACE_OS::strcpy (server_sema, basename);
   ACE_OS::strcat (server_sema, ACE_TEXT ("_sema_to_server"));
   ACE_OS::strcpy (client_sema, basename);

@@ -40,6 +40,20 @@ constexpr long DFLT_TEMP {68};     // 68 F == 20.00 C
 
 static StateMap dstate;         // Map of known devices
 
+namespace
+{
+  void copy_string (char *destination, size_t capacity, char const *source)
+  {
+    if (capacity != 0)
+      {
+        size_t const source_size = std::strlen (source);
+        size_t const copy_size = capacity - 1 < source_size ? capacity - 1 : source_size;
+        std::memcpy (destination, source, copy_size);
+        destination[copy_size] = '\0';
+      }
+  }
+}
+
 // ICP_online () simulates adding a new device to the network by
 // adding it to the dstate map.
 //
@@ -232,11 +246,11 @@ ICP_get (unsigned long id,
   // corresponding piece of state.
   if (std::strcmp (attr, "model") == 0)
     {
-      std::strncpy (static_cast<char *> (value), pos->second.model, len);
+      copy_string (static_cast<char *> (value), len, pos->second.model);
     }
   else if (std::strcmp (attr, "location") == 0)
     {
-      std::strncpy (static_cast<char *> (value), pos->second.location.c_str (), len);
+      copy_string (static_cast<char *> (value), len, pos->second.location.c_str ());
     }
   else if (std::strcmp (attr, "nominal_temp") == 0)
     {

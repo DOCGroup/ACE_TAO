@@ -127,9 +127,9 @@ get_if_index (const char*const interface,
   struct ifreq if_req;
   ACE_OS::memset (std::addressof (if_req), 0, sizeof (struct ifreq));
 
-  ACE_OS::strncpy (if_req.ifr_name,
-                   static_cast<const char*> (interface),
-                   sizeof (if_req.ifr_name));
+  ACE_OS::strsncpy (if_req.ifr_name,
+                    static_cast<const char*> (interface),
+                    sizeof if_req.ifr_name / sizeof *if_req.ifr_name);
 
   ACE_HANDLE const s = ACE_OS::socket (AF_INET,SOCK_DGRAM,0);
 
@@ -405,13 +405,13 @@ Secondary_Ipaddr_Handler::open (ACE_Reactor *const reactor,
 
   this->seq_ = ACE_OS::time (nullptr);
 
-  ACE_OS::strncpy (this->ip_buff_,
-                   ip_slash_mask,
-                   sizeof this->ip_buff_);
+  ACE_OS::strsncpy (this->ip_buff_,
+                    ip_slash_mask,
+                    sizeof this->ip_buff_ / sizeof *this->ip_buff_);
 
-  ACE_OS::strncpy (this->if_buff_,
-                   if_name,
-                   sizeof this->if_buff_);
+  ACE_OS::strsncpy (this->if_buff_,
+                    if_name,
+                    sizeof this->if_buff_ / sizeof *this->if_buff_);
 
   return 0;
 }
@@ -655,7 +655,9 @@ Secondary_Ipaddr_Handler::fill_inet_prefix (
   inet_prefix.bitlen = -1;
 
   char ip_buff[32];
-  ACE_OS::strncpy (ip_buff, ip_slash_netmask, sizeof (ip_buff));
+  ACE_OS::strsncpy (ip_buff,
+                    ip_slash_netmask,
+                    sizeof ip_buff / sizeof *ip_buff);
 
   char* to_search = ip_buff, *dot {};
 

@@ -4,6 +4,7 @@
 
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stropts.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_unistd.h"
@@ -89,9 +90,11 @@ namespace ACE
 #if defined (__OpenBSD__)
           struct if_data if_data {};
           ifdr.ifr_data = reinterpret_cast<caddr_t> (&if_data);
-          std::strncpy (ifdr.ifr_name, ifa->ifa_name, IFNAMSIZ - 1);
+          ACE_OS::strsncpy (ifdr.ifr_name, ifa->ifa_name, sizeof ifdr.ifr_name);
 #else
-          std::strncpy (ifdr.ifdr_name, ifa->ifa_name, sizeof (ifdr.ifdr_name) - 1);
+          ACE_OS::strsncpy (ifdr.ifdr_name,
+                            ifa->ifa_name,
+                            sizeof ifdr.ifdr_name / sizeof *ifdr.ifdr_name);
 #endif
           if (ACE_OS::ioctl (fd, SIOCGIFDATA, &ifdr) == -1)
             {

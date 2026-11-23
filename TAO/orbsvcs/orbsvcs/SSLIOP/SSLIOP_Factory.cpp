@@ -127,6 +127,11 @@ ACE_CString const key_env("env:");
 int
 TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *the_passwd)
 {
+  if (buf == nullptr || size <= 0)
+    {
+      return 0;
+    }
+
   char const *passwd_str = reinterpret_cast<char const *>(the_passwd);
   int len {};
   if (the_passwd != nullptr)
@@ -235,8 +240,7 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
                                                 (void *) passwd_str);
     }
 
-  std::strncpy (buf, pem_passwd_.c_str (), len);
-  buf[len] = 0;
+  ACE_OS::strsncpy (buf, pem_passwd_.c_str (), len + 1);
   return len;
 }
 

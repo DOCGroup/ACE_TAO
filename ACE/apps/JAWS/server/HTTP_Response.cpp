@@ -13,9 +13,10 @@
 #include <cstdio>
 #include <cstring>
 #include <memory>
+#include <string>
 
 #if defined (ACE_JAWS_BASELINE)
-static char * const EMPTY_HEADER = "";
+static char EMPTY_HEADER[] = "";
 #else
 static const char * const EMPTY_HEADER = "";
 #endif /* ACE_JAWS_BASELINE */
@@ -395,43 +396,44 @@ HTTP_Response::build_headers ()
   else
     {
 #if defined (ACE_JAWS_BASELINE)
-      HTTP_HEADER = new char[BUFSIZ * 4];
-
-      // We assume that at this point everything is OK
-      HTTP_HEADER_LENGTH =
-        ACE_OS::sprintf (HTTP_HEADER, "%s", "HTTP/1.0 200 OK\r\n");
+      std::string header = "HTTP/1.0 200 OK\r\n";
 
       char date_ptr [40];
       // 40 bytes is the maximum length needed to store the date
 
       if (HTTP_Helper::HTTP_date (date_ptr) != nullptr)
-        HTTP_HEADER_LENGTH +=
-          ACE_OS::sprintf (HTTP_HEADER+HTTP_HEADER_LENGTH,
-                           "Date: %s\r\n", date_ptr);
-
-      if (! this->request_.cgi ()) {
-        HTTP_HEADER_LENGTH +=
-          ACE_OS::sprintf (HTTP_HEADER+HTTP_HEADER_LENGTH,
-                           "Content-type: %s\r\n",
-                           "text/html");
-
-        struct stat file_stat;
-        // If possible, add the Content-length field to the header.
-        // @@ Note that using 'ACE_OS::stat' is a hack.  Normally, a
-        // web browser will have a 'virtual' file system. In a VFS,
-        // 'stat' might not reference the correct location.
-        if ((this->request_.type () == HTTP_Request::GET) &&
-            (ACE_OS::stat (this->request_.path (), &file_stat) == 0))
         {
-          HTTP_HEADER_LENGTH +=
-            ACE_OS::sprintf (HTTP_HEADER+HTTP_HEADER_LENGTH,
-                             "Content-length: %u\r\n", file_stat.st_size);
+          header += "Date: ";
+          header += date_ptr;
+          header += "\r\n";
         }
 
-        // Complete header with empty line and adjust header length.
-        HTTP_HEADER[HTTP_HEADER_LENGTH++] = '\r';
-        HTTP_HEADER[HTTP_HEADER_LENGTH++] = '\n';
-      }
+      if (! this->request_.cgi ())
+        {
+          header += "Content-type: text/html\r\n";
+
+          struct stat file_stat;
+          // If possible, add the Content-length field to the header.
+          // @@ Note that using 'ACE_OS::stat' is a hack.  Normally, a
+          // web browser will have a 'virtual' file system. In a VFS,
+          // 'stat' might not reference the correct location.
+          char const *const path = this->request_.path ();
+          if (this->request_.type () == HTTP_Request::GET
+              && path != nullptr
+              && ACE_OS::stat (path, &file_stat) == 0)
+            {
+              header += "Content-length: ";
+              header += std::to_string (file_stat.st_size);
+              header += "\r\n";
+            }
+
+          // Complete header with empty line.
+          header += "\r\n";
+        }
+
+      HTTP_HEADER_LENGTH = static_cast<int> (header.size ());
+      HTTP_HEADER = new char[header.size () + 1];
+      std::memcpy (HTTP_HEADER, header.c_str (), header.size () + 1);
 #else
       if (! this->request_.cgi ())
         {

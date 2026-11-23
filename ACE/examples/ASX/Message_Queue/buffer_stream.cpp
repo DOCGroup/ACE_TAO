@@ -282,7 +282,7 @@ Filter::put (ACE_Message_Block *mb,
       char buf[BUFSIZ + 1] {};
 
       // Stash a copy of the buffer away.
-      std::strncpy (buf, mb->rd_ptr (), sizeof buf - 1);
+      ACE_OS::strsncpy (buf, mb->rd_ptr (), sizeof buf / sizeof *buf);
 
       // Increase the size of the buffer large enough that it will be
       // reallocated (in order to test the reallocation mechanisms).

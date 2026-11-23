@@ -123,7 +123,7 @@ void Child::do_something ()
   // In cases where we may need to call operations on the weak pointer
   // many times, we can reduce the overhead by explicitly converting to a
   // strong pointer first.
-  ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> strong_parent (parent_);
+  ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> const strong_parent (parent_);
 
   // You can check for null to see if the parent object still exists (in this
   // case it is not strictly necessary since the child will only exist if the
@@ -202,7 +202,7 @@ Method_Request_print::call ()
 {
   // Dispatch the Servant's operation and store the result into the
   // Future.
-  Printer_var temp = printer_;
+  Printer_var const temp = printer_;
 
   temp->print ();
 
@@ -290,7 +290,7 @@ Scheduler::svc ()
     {
       // Dequeue the next method request (we use an strong pointer in
       // case an exception is thrown in the <call>).
-      ACE_Strong_Bound_Ptr<ACE_Method_Request, ACE_Null_Mutex> mo (this->activation_queue_.dequeue ());
+      ACE_Strong_Bound_Ptr<ACE_Method_Request, ACE_Null_Mutex> const mo (this->activation_queue_.dequeue ());
       if (mo == nullptr)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -350,14 +350,14 @@ run_main (int, ACE_TCHAR *[])
   ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex> p8;
   {
     // Must get the pointer from the parent object's weak_self_ member.
-    ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> p(parent1->weak_self_);
-    ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> p1(p);
-    ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> p2(p);
-    ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex> p3(p);
-    ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> p4(p);
-    ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> p5 = p2;
-    ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> p6 = p3;
-    ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex> p7(p1);
+    ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> const p(parent1->weak_self_);
+    ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> const p1(p);
+    ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> const p2(p);
+    ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex> const p3(p);
+    ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> const p4(p);
+    ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> const p5 = p2;
+    ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> const p6 = p3;
+    ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex> const p7(p1);
     p8 = p2;
     p->child_->do_something ();
   }
@@ -393,15 +393,15 @@ run_main (int, ACE_TCHAR *[])
                   -1);
   ACE_Weak_Bound_Ptr<Printer, ACE_Null_Mutex> r9;
   {
-    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> r(printer1);
-    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> r1(r);
-    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> r2(r);
-    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> r3(r);
-    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> r4(r);
-    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> r5 = r2;
-    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> r6 = r1;
-    ACE_Weak_Bound_Ptr<Printer, ACE_Null_Mutex> r7(r1);
-    ACE_Weak_Bound_Ptr<Printer, ACE_Null_Mutex> r8 = r2;
+    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> const r(printer1);
+    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> const r1(r);
+    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> const r2(r);
+    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> const r3(r);
+    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> const r4(r);
+    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> const r5 = r2;
+    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> const r6 = r1;
+    ACE_Weak_Bound_Ptr<Printer, ACE_Null_Mutex> const r7(r1);
+    ACE_Weak_Bound_Ptr<Printer, ACE_Null_Mutex> const r8 = r2;
     r9 = r3;
     r9->print ();
   }
@@ -437,7 +437,7 @@ run_main (int, ACE_TCHAR *[])
                   Scheduler (),
                   -1);
 
-  ACE_Strong_Bound_Ptr<Scheduler, ACE_Null_Mutex> scheduler(scheduler_ptr);
+  ACE_Strong_Bound_Ptr<Scheduler, ACE_Null_Mutex> const scheduler(scheduler_ptr);
 
   if (scheduler->open () == -1)
     {

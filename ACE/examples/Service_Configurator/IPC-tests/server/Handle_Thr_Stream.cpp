@@ -47,7 +47,7 @@ Handle_Thr_Acceptor<SVH, PR_AC_2>::info (ACE_TCHAR **strp,
     }
   else
     {
-      ACE_OS::strncpy (*strp, buf, length);
+      ACE_OS::strsncpy (*strp, buf, length);
     }
 
   return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (buf));

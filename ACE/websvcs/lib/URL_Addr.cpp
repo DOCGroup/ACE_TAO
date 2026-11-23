@@ -100,11 +100,12 @@ ACE_URL_Addr::addr_to_string (ACE_TCHAR *s,
                               size_t size,
                               int) const
 {
-  if (size < ACE_OS::strlen (this->url_.get ()))
+  ACE_TCHAR const *url = this->url_.get ();
+  if (url == nullptr || s == nullptr || size <= ACE_OS::strlen (url))
   {
     return -1;
   }
-  ACE_OS::strcpy (s, this->url_.get ());
+  ACE_OS::strcpy (s, url);
   return 0;
 }
 

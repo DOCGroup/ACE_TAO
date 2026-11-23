@@ -187,16 +187,32 @@ ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (CHAR_TYPE *first_argv[],
   ACE_NEW (this->buf_,
            CHAR_TYPE[buf_len + 1]);
 
-  // copy the first argv string to the buffer
-  ACE_OS::strcpy (this->buf_, first_buf);
+  // Copy the first argv string to the buffer.
+  if (first_buf != nullptr)
+    {
+      ACE_OS::strcpy (this->buf_, first_buf);
+    }
+  else
+    {
+      this->buf_[0] = CHAR_TYPE {};
+    }
 
-  // concatenate the second argv string to the buffer
-  ACE_OS::strcat (this->buf_, second_buf);
+  // Concatenate the second argv string to the buffer.
+  if (second_buf != nullptr)
+    {
+      ACE_OS::strcat (this->buf_, second_buf);
+    }
 
-  //   Delete the first and second buffers
+  // Delete the first and second buffers.
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_Allocator::instance()->free (first_buf);
-  ACE_Allocator::instance()->free (second_buf);
+  if (first_buf != nullptr)
+    {
+      ACE_Allocator::instance ()->free (first_buf);
+    }
+  if (second_buf != nullptr)
+    {
+      ACE_Allocator::instance ()->free (second_buf);
+    }
 #else
   delete [] first_buf;
   delete [] second_buf;

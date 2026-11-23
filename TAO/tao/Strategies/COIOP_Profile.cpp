@@ -115,7 +115,7 @@ TAO_COIOP_Profile::parse_string_i (const char *ior)
   CORBA::String_var tmp = CORBA::string_alloc (length_host);
 
   // Skip the trailing '/'
-  std::strncpy (tmp.inout (), ior, length_host);
+  std::memcpy (tmp.inout (), ior, length_host);
   tmp[length_host] = '\0';
 
   this->endpoint_.uuid_.from_string (tmp._retn ());

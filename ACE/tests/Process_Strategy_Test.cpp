@@ -248,6 +248,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
       break;
 #else
       ACE_TEST_ASSERT ("PROCESS invalid on this platform" == 0);
+      [[fallthrough]];
 #endif /* !defined (ACE_LACKS_FORK) */
     case Options::THREAD:
 #if defined (ACE_HAS_THREADS)
@@ -260,6 +261,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
       break;
 #else
       ACE_TEST_ASSERT (!"THREAD invalid on this platform");
+      [[fallthrough]];
 #endif /* !ACE_HAS_THREADS */
     case Options::REACTIVE:
       // Settle for the purely Reactive strategy.
@@ -614,8 +616,8 @@ client (void *arg)
       // the call to ACE_OS::strrchr ().
       buf [bytes_read] = '\0';
 
-      size_t count = ACE_OS::atoi (ACE_OS::strrchr (ACE_TEXT_CHAR_TO_TCHAR (buf),
-                                                    ACE_TEXT (' ')));
+      size_t const count = ACE_OS::atoi (ACE_OS::strrchr (ACE_TEXT_CHAR_TO_TCHAR (buf),
+                                                          ACE_TEXT (' ')));
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) count = %B\n"),
@@ -712,8 +714,8 @@ run_main (int argc, ACE_TCHAR *argv[])
 
 #if !defined (ACE_LACKS_FORK)
       // We're running the client and serve as separate processes.
-      pid_t pid = ACE::fork (ACE_TEXT ("child"),
-                             1); // Avoid zombies.
+      pid_t const pid = ACE::fork (ACE_TEXT ("child"),
+                                   1); // Avoid zombies.
 
       switch (pid)
         {

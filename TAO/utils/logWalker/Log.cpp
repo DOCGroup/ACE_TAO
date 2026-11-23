@@ -53,7 +53,7 @@ Log::process_file (const ACE_TCHAR *filename, const char *alias)
           maxline = linelen + 100;
           buffer = std::make_unique<char[]> (maxline);
         }
-      std::strncpy (buffer.get (), base, linelen);
+      std::memcpy (buffer.get (), base, linelen);
       buffer[linelen] = '\0';
       this->line_ = buffer.get ();
       if (linelen > 0)

@@ -104,8 +104,8 @@ insertion_removal_test ()
 
   ACE_TEST_ASSERT (!phonetic[0].is_empty ()); // Sanity check.
 
-  Map foo (phonetic[0]);  // Copy construction
-  Map bar = foo;          // Assignment
+  Map const foo (phonetic[0]);  // Copy construction
+  Map const bar = foo;          // Assignment
 
   if (!(foo == bar))
     {
@@ -398,7 +398,7 @@ reference_count_test ()
 
   unsigned int ref_count = 1;
 
-  RefCounted counted (&ref_count);
+  RefCounted const counted (&ref_count);
 
   ACE_TEST_ASSERT (counted.refcount () == 1);
 

@@ -148,10 +148,16 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
 
   if (this->mmap_prefix_ != nullptr)
     {
-      ACE_OS::snprintf (buf, sizeof buf / sizeof buf[0],
-                        ACE_TEXT ("%s_%d_"),
-                        this->mmap_prefix_,
-                        local_addr.get_port_number ());
+      int const result = ACE_OS::snprintf (buf, sizeof buf / sizeof buf[0],
+                                           ACE_TEXT ("%s_%d_"),
+                                           this->mmap_prefix_,
+                                           local_addr.get_port_number ());
+      if (result < 0 || static_cast<size_t> (result) >=
+          sizeof buf / sizeof buf[0])
+        {
+          errno = ENAMETOOLONG;
+          return -1;
+        }
     }
   else
     {
@@ -172,6 +178,14 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
     }
   ACE_TCHAR unique [MAXPATHLEN];
   ACE_OS::unique_name (&new_stream, unique, MAXPATHLEN);
+
+  size_t const current_name_len = ACE_OS::strlen (buf);
+  size_t const unique_len = ACE_OS::strlen (unique);
+  if (unique_len >= sizeof buf / sizeof buf[0] - current_name_len)
+    {
+      errno = ENAMETOOLONG;
+      return -1;
+    }
 
   ACE_OS::strcat (buf, unique);
 

@@ -428,23 +428,24 @@ run_tests ()
     }
     ACE_Ini_ImpExp import (cf);
     // This one should work...
-    ACE_TCHAR import_file_name [MAXPATHLEN];
+    ACE_TString import_file_name;
 #if defined (TEST_DIR)
-    ACE_OS::strcpy (import_file_name, TEST_DIR);
-    ACE_OS::strcat (import_file_name, ACE_DIRECTORY_SEPARATOR_STR);
-    ACE_OS::strcat (import_file_name, ACE_TEXT ("Config_Test_Import_1.ini"));
+    import_file_name = TEST_DIR;
+    import_file_name += ACE_DIRECTORY_SEPARATOR_STR;
+    import_file_name += ACE_TEXT ("Config_Test_Import_1.ini");
 #else
-    ACE_OS::strcpy (import_file_name, ACE_TEXT ("Config_Test_Import_1.ini"));
+    import_file_name = ACE_TEXT ("Config_Test_Import_1.ini");
 #endif
 
-    status = import.import_config (import_file_name);
+    status = import.import_config (import_file_name.c_str ());
     if (status != 0) {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p: %s\n"),
                   ACE_TEXT ("Config_Test_Import_1.ini failed"),
-                  import_file_name));
+                  import_file_name.c_str ()));
     }
     else {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s imported\n"), import_file_name));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s imported\n"),
+                  import_file_name.c_str ()));
 
       // Imported clean; verify content.  See ini file for expected content.
       // Verify the expected sections are there, but no others. Verify the
@@ -1795,9 +1796,9 @@ Config_Test::get_section_string (ACE_Configuration&             config,
                                pszName,
                                StringValue) == 0)
     {
-      ACE_OS::strncpy (pszVariable,
-                       StringValue.c_str (),
-                       nMaxLength);
+      ACE_OS::strsncpy (pszVariable,
+                        StringValue.c_str (),
+                        nMaxLength);
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%s = %s\n"),
                   pszName,
@@ -1824,9 +1825,9 @@ Config_Test::get_section_integer (ACE_Configuration&             config,
                                pszName,
                                StringValue) == 0)
     {
-      ACE_OS::strncpy (pszString,
-                       StringValue.c_str (),
-                       30);
+      ACE_OS::strsncpy (pszString,
+                        StringValue.c_str (),
+                        sizeof pszString / sizeof *pszString);
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%s = %s\n"),
                   pszName,
@@ -1856,9 +1857,9 @@ Config_Test::get_section_boolean (ACE_Configuration&             config,
                                pszName,
                                StringValue) == 0)
     {
-      ACE_OS::strncpy (pszString,
-                       StringValue.c_str (),
-                       10);
+      ACE_OS::strsncpy (pszString,
+                        StringValue.c_str (),
+                        sizeof pszString / sizeof *pszString);
       for (ACE_TCHAR* pSrc = pszString;
            *pSrc != ACE_TEXT ('\0');
            ++pSrc)

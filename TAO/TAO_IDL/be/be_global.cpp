@@ -2459,7 +2459,6 @@ BE_GlobalData::parse_args (long &i, char **av)
 {
   switch (av[i][1])
     {
-      // = Various 'h'eader_file_name_endings.
       case 'h':
 
         // <-hc Client's header file name ending>
@@ -2527,7 +2526,6 @@ BE_GlobalData::parse_args (long &i, char **av)
             idl_global->parse_args_exit (1);
           }
         break;
-      // = Various 'c'lient side stub file_name_endings.
       case 'c':
         // <-cs Client stub's file name ending>
         //      Default is "C.cpp".
@@ -2557,7 +2555,6 @@ BE_GlobalData::parse_args (long &i, char **av)
             idl_global->parse_args_exit (1);
           }
         break;
-      // = Various 's'erver side skeleton file name endings.
       case 's':
         // <-ss Server's skeleton file name ending>
         //      Default is "S.cpp".

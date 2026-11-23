@@ -244,11 +244,13 @@ dirent_count (const ACE_TCHAR *dir_path,
       ++entry_count;
 
 #if defined (ACE_HAS_TCHAR_DIRENT)
-      ACE_OS::strncpy (tname, directory->d_name, maxnamlen);
+      ACE_OS::strsncpy (tname,
+                        directory->d_name,
+                        sizeof tname / sizeof *tname);
 #else
-      ACE_OS::strncpy (tname,
-                       ACE_TEXT_CHAR_TO_TCHAR (directory->d_name),
-                       maxnamlen);
+      ACE_OS::strsncpy (tname,
+                        ACE_TEXT_CHAR_TO_TCHAR (directory->d_name),
+                        sizeof tname / sizeof *tname);
 #endif /* ACE_LACKS_STRUCT_DIR */
 
       int local_file_count = 0;

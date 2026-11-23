@@ -134,7 +134,7 @@ Supplier_Router::info (ACE_TCHAR **strp, size_t length) const
   }
   else
   {
-    ACE_OS::strncpy (*strp, module_name, length);
+    ACE_OS::strsncpy (*strp, module_name, length);
   }
 
   return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (module_name));

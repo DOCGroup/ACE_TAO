@@ -110,7 +110,7 @@ Client::handle_output (ACE_HANDLE)
 
       ACE_OS::snprintf (buffer, BUFSIZ, "test message %d.\n", i);
 
-      ssize_t bytes_sent =
+      ssize_t const bytes_sent =
         this->peer ().send (buffer, ACE_OS::strlen (buffer));
 
       if (bytes_sent == -1)
@@ -359,8 +359,8 @@ public:
 //       return -1;
 
 // #if 0
-    ACE_Time_Value delay (2, 0);
-    ACE_Time_Value restart (2, 0);
+    ACE_Time_Value const delay (2, 0);
+    ACE_Time_Value const restart (2, 0);
     if (handler->reactor ()->schedule_timer (handler,
                                              nullptr,
                                              delay,
@@ -420,8 +420,8 @@ public:
                 (int) remote_addr.get_port_number ()));
 
 // #if 0
-    ACE_Time_Value delay (4, 0);
-    ACE_Time_Value restart (3, 0);
+    ACE_Time_Value const delay (4, 0);
+    ACE_Time_Value const restart (3, 0);
     if (handler->reactor ()->schedule_timer (handler,
                                              nullptr,
                                              delay,

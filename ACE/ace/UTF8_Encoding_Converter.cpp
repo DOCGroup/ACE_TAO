@@ -60,6 +60,11 @@ ACE_UTF8_Encoding_Converter::from_utf8 (ACE_Byte const *source,
                                        target, target_size, strict);
     }
 
+  if (source_size >= target_size)
+    {
+      return TARGET_EXHAUSTED;
+    }
+
   ACE_TCHAR *target_start = static_cast<ACE_TCHAR *> (target);
   ACE_OS::strncpy (target_start,
                    ACE_TEXT_CHAR_TO_TCHAR (

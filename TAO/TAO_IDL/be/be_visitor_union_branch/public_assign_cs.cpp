@@ -77,8 +77,6 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (
   return 0;
 }
 
-// =visit operations on all possible data types  that a union_branch can be
-
 int
 be_visitor_union_branch_public_assign_cs::visit_array (be_array *node)
 {

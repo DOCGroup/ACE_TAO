@@ -1,3 +1,4 @@
+#include <cstring>
 #include <memory>
 
 #include "ACEXML/parser/parser/Parser.h"
@@ -698,7 +699,7 @@ ACEXML_Parser::normalize_systemid (ACEXML_Char const *systemId)
           size_t const pos = temp - baseURI + 1;
           size_t const len = pos + ACE_OS::strlen (systemId) + 1;
           ACE_NEW_RETURN (normalized_uri, ACEXML_Char[len], {});
-          ACE_OS::strncpy (normalized_uri, baseURI, pos);
+          std::memcpy (normalized_uri, baseURI, pos * sizeof (*normalized_uri));
           ACE_OS::strcpy (normalized_uri + pos, systemId);
           return std::unique_ptr<ACEXML_Char[]> (normalized_uri);
         }

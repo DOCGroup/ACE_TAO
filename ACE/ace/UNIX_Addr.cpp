@@ -157,7 +157,15 @@ ACE_UNIX_Addr::set (const sockaddr_un *un, int len)
       std::memcpy (this->unix_addr_.sun_path, un->sun_path, n);
     }
 #else
-  std::strcpy (this->unix_addr_.sun_path, un->sun_path);
+  int const n = (std::min) (len - int (sizeof this->unix_addr_ -
+                                       sizeof (this->unix_addr_.sun_path)),
+                            int (sizeof (this->unix_addr_.sun_path)));
+  if (n > 0)
+    {
+      ACE_OS::strsncpy (this->unix_addr_.sun_path,
+                        un->sun_path,
+                        static_cast<size_t> (n));
+    }
 #endif /* ACE_LINUX */
   this->base_set (AF_UNIX, len);
   return 0;

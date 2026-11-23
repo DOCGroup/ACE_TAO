@@ -59,7 +59,7 @@ namespace {
 
     void report (ACE_HANDLE h, unsigned int chunks)
     {
-      std::pair<ACE_HANDLE, unsigned int> newval (h, chunks);
+      std::pair<ACE_HANDLE, unsigned int> const newval (h, chunks);
       reports.insert (newval);
     }
 
@@ -106,7 +106,7 @@ int
 Read_Handler::handle_input (ACE_HANDLE h)
 {
   char buf[BUFSIZ];
-  ssize_t result = this->peer ().recv (buf, ACE_OS::strlen(ACE_ALPHABET));
+  ssize_t const result = this->peer ().recv (buf, ACE_OS::strlen(ACE_ALPHABET));
   if (opt_debug)
     {
       ACE_DEBUG((LM_DEBUG,
@@ -193,7 +193,7 @@ sender (void *arg)
   ACE_NEW_RETURN (temp_socks,
                   ACE_SOCK_Stream [opt_nconnections],
                   ACE_THR_FUNC_RETURN_NULL);
-  std::unique_ptr <ACE_SOCK_Stream[]> socks (temp_socks);
+  std::unique_ptr <ACE_SOCK_Stream[]> const socks (temp_socks);
 
   // Connection all <opt_nconnections> connections before sending data.
   ACE_SOCK_Connector c;
@@ -223,7 +223,7 @@ sender (void *arg)
   // Keep blasting data on all possible connections until this thread
   // is canceled. If we manage to overrun the receiver on all sockets,
   // sleep a bit for the receivers to catch up.
-  ACE_thread_t me = ACE_Thread::self ();
+  ACE_thread_t const me = ACE_Thread::self ();
   ACE_Thread_Manager *tm = ACE_Thread_Manager::instance ();
   const size_t send_cnt = ACE_OS::strlen (ACE_ALPHABET);
   bool fail = false;
@@ -232,7 +232,7 @@ sender (void *arg)
       bool sent_something = false;
       for (i = 0; i < opt_nconnections; ++i)
         {
-          ssize_t cnt = socks[i].send (ACE_ALPHABET, send_cnt);
+          ssize_t const cnt = socks[i].send (ACE_ALPHABET, send_cnt);
           if (opt_debug)
             {
               ACE_DEBUG ((LM_DEBUG,
@@ -304,7 +304,7 @@ run (ACE_Reactor_Impl &ri, const ACE_TCHAR *what, bool tp = true)
 
   // Bind acceptor to any port and then find out what the port was.
   ACE_INET_Addr server_addr;
-  ACE_INET_Addr local_addr (ACE_sap_any_cast (const ACE_INET_Addr &));
+  ACE_INET_Addr const local_addr (ACE_sap_any_cast (const ACE_INET_Addr &));
   if (acceptor.open (local_addr, std::addressof (r)) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
     {

@@ -977,9 +977,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
       repeats_seconds_timer = 2;
       number_of_ping_points = 1;
 
-      ACE_OS::strncpy (ping_points_ips [0],
-                       "127.0.0.1",
-                       sizeof ping_points_ips [0]);
+      ACE_OS::strsncpy (ping_points_ips [0],
+                        "127.0.0.1",
+                        sizeof ping_points_ips [0] / sizeof *ping_points_ips [0]);
 
       ping_points_addrs[0].set ((u_short) 0, ping_points_ips[0]);
       return 0;
@@ -994,9 +994,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
       switch (c)
         {
         case 'b':     // ip-address of the interface to bind to
-          ACE_OS::strncpy (local_ip_to_bind,
-                           ACE_TEXT_ALWAYS_CHAR (get_opt.optarg),
-                           sizeof local_ip_to_bind);
+          ACE_OS::strsncpy (local_ip_to_bind,
+                            ACE_TEXT_ALWAYS_CHAR (get_opt.optarg),
+                            sizeof local_ip_to_bind / sizeof *local_ip_to_bind);
 
           if (!ACE_OS::strlen (local_ip_to_bind) ||
               b_temp_addr.set ((u_short)0, local_ip_to_bind) != 0)

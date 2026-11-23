@@ -3,8 +3,10 @@
 #include "PeerProcess.h"
 #include "GIOP_Buffer.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 #include <stack>
 #include <deque>
+#include <string>
 
 Thread::Thread (long tid, const char *alias, size_t offset)
   : id_(tid),
@@ -157,11 +159,24 @@ Thread::alias () const
 void
 Thread::split_filename (char *buff, size_t len) const
 {
-  strncpy (buff, this->alias_.c_str(), len);
-  char *c = strchr(buff, '[');
-  *c = '_';
-  c = strchr (c, ']');
-  strcpy (c, ".txt");
+  if (buff == nullptr || len == 0)
+    {
+      return;
+    }
+
+  std::string filename (this->alias_.c_str ());
+  std::string::size_type const open_bracket = filename.find ('[');
+  if (open_bracket != std::string::npos)
+    {
+      filename[open_bracket] = '_';
+      std::string::size_type const close_bracket = filename.find (']', open_bracket);
+      if (close_bracket != std::string::npos)
+        {
+          filename.erase (close_bracket, 1);
+        }
+    }
+  filename += ".txt";
+  ACE_OS::strsncpy (buff, filename.c_str (), len);
 }
 
 void

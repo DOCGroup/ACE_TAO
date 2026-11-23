@@ -1,3 +1,5 @@
+#include <cstring>
+
 #include "ACEXML/common/StrCharStream.h"
 #include "ACEXML/common/Encoding.h"
 #include "ace/ACE.h"
@@ -106,11 +108,12 @@ ACEXML_StrCharStream::read (ACEXML_Char *str, size_t len)
   if (this->start_ != nullptr &&
       this->ptr_ != this->end_)
     {
-      if (len * sizeof (ACEXML_Char) > (size_t) (this->end_ - this->ptr_))
-      {
-        len = this->end_ - this->ptr_;
-      }
-      ACE_OS::strncpy (str, this->ptr_, len);
+      size_t const available = this->end_ - this->ptr_;
+      if (len > available)
+        {
+          len = available;
+        }
+      std::memcpy (str, this->ptr_, len * sizeof (*str));
       this->ptr_ += len;
       return static_cast<int> (len);
     }

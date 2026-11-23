@@ -6,6 +6,7 @@
 #include "ace/OS_NS_pwd.h"
 #include "ace/Log_Msg.h"
 #include <cstring>
+#include <string>
 
 const char *const
 HTTP_Request::static_header_strings_[HTTP_Request::NUM_HEADER_STRINGS] =
@@ -664,8 +665,7 @@ const char *
 HTTP_Request::path (const char *uri_string)
 {
   char const *file_name = uri_string;
-  char buf[MAXPATHLEN + 1];
-  buf[0] = '\0';
+  std::string path;
 
   if (file_name == nullptr)
     {
@@ -677,49 +677,76 @@ HTTP_Request::path (const char *uri_string)
       ++file_name;
       if (*file_name == '~')
         {
-          char *ptr = buf;
+          char const *const username = ++file_name;
 
-          while (*++file_name && *file_name != '/')
+          while (*file_name != '\0' && *file_name != '/')
             {
-              *ptr++ = *file_name;
+              ++file_name;
             }
 
-          *ptr = '\0';
-
-          if (ptr == buf)
+          if (username == file_name)
             {
-              std::strcpy (buf, ACE_OS::getenv ("HOME"));
+              char const *const home = ACE_OS::getenv ("HOME");
+              if (home == nullptr)
+                {
+                  return nullptr;
+                }
+              path = home;
             }
           else
             {
+              std::string const username_string (username,
+                                                 static_cast<size_t> (file_name - username));
+              path = username_string;
 #if !defined (ACE_WIN32) && !defined (VXWORKS)
               char pw_buf[BUFSIZ];
               struct passwd pw_struct;
-              struct passwd *pw_struct_ptr;
-              if (ACE_OS::getpwnam_r (buf, &pw_struct, pw_buf,
-                                      sizeof (pw_buf), &pw_struct_ptr) == 0)
+              struct passwd *pw_struct_ptr {};
+              if (ACE_OS::getpwnam_r (username_string.c_str (),
+                                      &pw_struct,
+                                      pw_buf,
+                                      sizeof pw_buf,
+                                      &pw_struct_ptr) != 0
+                  || pw_struct_ptr == nullptr)
               {
                 return nullptr;
               }
-              std::strcpy (buf, pw_struct.pw_dir);
+              path = pw_struct.pw_dir;
 #endif /* NOT ACE_WIN32 AND NOT VXWORKS */
             }
 
-          std::strcat (buf, "/");
-          std::strcat (buf, HTTP_Config::instance ()->user_dir ());
-          std::strcat (buf, file_name);
+          char const *const user_dir = HTTP_Config::instance ()->user_dir ();
+          if (user_dir == nullptr)
+            {
+              return nullptr;
+            }
+          path += '/';
+          path += user_dir;
+          path += file_name;
         }
       else
         {
           // With a starting '/' but no '~'
-          std::strcat (buf, HTTP_Config::instance ()->document_root ());
-          std::strcat (buf, file_name - 1);
+          char const *const document_root =
+            HTTP_Config::instance ()->document_root ();
+          if (document_root == nullptr)
+            {
+              return nullptr;
+            }
+          path = document_root;
+          path += file_name - 1;
         }
     }
 
-  if (*buf != '\0')
+  if (!path.empty ())
     {
-      this->path_ = ACE_OS::strdup (buf);
+      char *const new_path = ACE_OS::strdup (path.c_str ());
+      if (new_path == nullptr)
+        {
+          return nullptr;
+        }
+      ACE_OS::free (this->path_);
+      this->path_ = new_path;
     }
 
   return this->path_;

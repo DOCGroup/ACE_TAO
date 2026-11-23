@@ -4,6 +4,7 @@
 #include "ace/ACE.h"
 #include "ace/INET_Addr.h"
 #include "ace/Log_Record.h"
+#include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
 
 Logger_ptr
@@ -154,7 +155,9 @@ Logger_i::logv (Logger::Log_Record const &log_rec,
   // Create a buffer and fill it with the host name of the logger
   ACE_TCHAR namebuf[MAXHOSTNAMELEN + 1] {};
 
-  ACE_OS::strncpy (namebuf, ACE_TEXT_CHAR_TO_TCHAR(addy.get_host_addr ()), MAXHOSTNAMELEN);
+  ACE_OS::strsncpy (namebuf,
+                    ACE_TEXT_CHAR_TO_TCHAR (addy.get_host_addr ()),
+                    sizeof namebuf / sizeof *namebuf);
 
   u_long const verb_level = verbosity_conversion (verbosity);
 

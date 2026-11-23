@@ -72,9 +72,9 @@ TAO_IOR_Multicast::init (char const *ior,
       length_addr = static_cast<CORBA::ULong> (tmpnic - mcast_addr + 1);
       actual_mcast_addr = CORBA::string_alloc (length_addr);
 
-      std::strncpy (actual_mcast_addr.inout (),
-                    mcast_addr,
-                    length_addr - 1);
+      std::memcpy (actual_mcast_addr.inout (),
+                   mcast_addr,
+                   length_addr - 1);
 
       actual_mcast_addr[length_addr - 1] = '\0';
 

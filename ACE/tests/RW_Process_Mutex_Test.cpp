@@ -23,7 +23,6 @@ static int child_nr = -1;
 static u_short reporting_port = 0;
 static constexpr int Nr_Processes = 4;
 static ACE_TString mutex_name;
-static ACE_TCHAR mutex_check[MAXPATHLEN+1];
 
 // The child processes spawned will report times that they hold the lock.
 // The Child class gets records of the timestamps when the lock is acquired
@@ -157,10 +156,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
           break;
         }
     }
-
-  // Now that the mutex name is known, set up the checker file name.
-  ACE_OS::strncpy (mutex_check, mutex_name.c_str (), MAXPATHLEN);
-  ACE_OS::strncat (mutex_check, ACE_TEXT ("_checker"), MAXPATHLEN);
 }
 
 /*

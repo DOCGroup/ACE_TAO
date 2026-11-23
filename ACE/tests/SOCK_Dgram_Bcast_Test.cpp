@@ -182,7 +182,7 @@ int run_auto_test (const ACE_TCHAR *prog_name)
       while (true)
         {
           send_datagram (socket, dgrams_no--);
-          ACE_Time_Value const child_timeout (1);
+          ACE_Time_Value child_timeout (1);
 #if defined (ACE_HAS_PROCESS_SPAWN)
 
           if (ACE_Process_Manager::instance ()->wait (child_pid,

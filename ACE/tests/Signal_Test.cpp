@@ -116,6 +116,12 @@ handle_signal (int signum)
     }
 }
 
+static void
+handle_signal_async (int signum)
+{
+  static_cast<void> (handle_signal (signum));
+}
+
 // This function handles signals synchronously.
 
 static ACE_THR_FUNC_RETURN
@@ -184,7 +190,7 @@ asynchronous_signal_handler (void *)
 
   // Register the <handle_signal> method to process all the signals in
   // <sigset>.
-  ACE_Sig_Action sa (sigset, (ACE_SignalHandler)handle_signal);
+  ACE_Sig_Action const sa (sigset, handle_signal_async);
   ACE_UNUSED_ARG (sa);
 
   return ACE_THR_FUNC_RETURN_NULL;

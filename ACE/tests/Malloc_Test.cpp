@@ -106,7 +106,7 @@ init_test (const void *base_addr = nullptr)
 {
   // Cleanup the MMAP file so we won't trip over the leftover mmap
   // file from the previous crash.
-  ACE_MMAP_Memory_Pool_Options options (base_addr);
+  ACE_MMAP_Memory_Pool_Options const options (base_addr);
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_MMAP_Memory_Pool mmap (MMAP_FILENAME, &options);
   //FUZZ: enable check_for_lack_ACE_OS
@@ -264,7 +264,7 @@ child ()
   // new name called "bar" in <ACE_Malloc>.  This isn't a good design
   // -- it's just to test that synchronization is working across
   // processes via <ACE_Malloc>.
-  for (ACE_Time_Value timeout (0, 1000 * 10);
+  for (ACE_Time_Value const timeout (0, 1000 * 10);
        myallocator ()->find ("bar",
                              bar) == -1;
        )
@@ -362,7 +362,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_TEST_ASSERT (result != -1);
 
       ACE_Process p;
-      pid_t pid = p.spawn (options);
+      pid_t const pid = p.spawn (options);
       if (pid == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,

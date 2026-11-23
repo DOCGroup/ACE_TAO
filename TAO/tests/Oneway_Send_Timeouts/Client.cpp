@@ -251,7 +251,7 @@ Client::test_oneway_timeout (bool flood)
   // Timeout with SYNC_SCOPE SYNC_NONE
   try {
     std::string scope_name ("SYNC_NONE");
-    ACE_OS::strncpy (msg, scope_name.c_str(), scope_name.length());
+    ACE_OS::strcpy (msg, scope_name.c_str ());
     test_obj_none_timeout_->dummy_one_way (msg);
 
     if (flood && flush_strategy_ == Flushing_Strategy::BLOCKING) {
@@ -276,7 +276,7 @@ Client::test_oneway_timeout (bool flood)
   // Timeout with TAO specific SYNC_SCOPE SYNC_EAGER_BUFFERING
   try {
     std::string scope_name ("SYNC_EAGER_BUFFERING");
-    ACE_OS::strncpy (msg, scope_name.c_str(), scope_name.length());
+    ACE_OS::strcpy (msg, scope_name.c_str ());
 
     /* BLOCKed flushing has SYNCH_WITH_TRANSPORT semantics. With flooding turned on
         you would have received a TIMEOUT in the previous test (SYNC_NONE). Even without
@@ -321,7 +321,7 @@ Client::test_oneway_timeout (bool flood)
   // Timeout with TAO specific SYNC_SCOPE SYNC_DELAYED_BUFFERING
   try {
     std::string scope_name ("SYNC_DELAYED_BUFFERING");
-    ACE_OS::strncpy (msg, scope_name.c_str(), scope_name.length());
+    ACE_OS::strcpy (msg, scope_name.c_str ());
 
     if (flush_strategy_ == Flushing_Strategy::BLOCKING) {
       if (flood) {
@@ -363,7 +363,7 @@ Client::test_oneway_timeout (bool flood)
   // Timeout with SYNC_SCOPE SYNC_WITH_TRANSPORT
   try {
     std::string scope_name ("SYNC_WITH_TRANSPORT");
-    ACE_OS::strncpy (msg, scope_name.c_str(), scope_name.length());
+    ACE_OS::strcpy (msg, scope_name.c_str ());
 
     if (flush_strategy_ == Flushing_Strategy::BLOCKING) {
       if (flood) {
@@ -401,7 +401,7 @@ Client::test_oneway_timeout (bool flood)
 // Timeout with default SYNC_SCOPE SYNC_WITH_SERVER
   try {
     std::string scope_name ("SYNC_WITH_SERVER");
-    ACE_OS::strncpy (msg, scope_name.c_str(), scope_name.length());
+    ACE_OS::strcpy (msg, scope_name.c_str ());
 
     if (flush_strategy_ == Flushing_Strategy::BLOCKING) {
       if (flood) {
@@ -438,7 +438,7 @@ Client::test_oneway_timeout (bool flood)
   // Timeout with default SYNC_SCOPE (SYNC_WITH_TARGET)
   try {
     std::string scope_name ("SYNC_WITH_TARGET");
-    ACE_OS::strncpy (msg, scope_name.c_str(), scope_name.length());
+    ACE_OS::strcpy (msg, scope_name.c_str ());
 
     if (flush_strategy_ == Flushing_Strategy::BLOCKING) {
       if (flood) {
