@@ -163,7 +163,7 @@ ACE_Dev_Poll_Reactor_Notify::notify (ACE_Event_Handler *eh,
   // pipe bytes will cause the entire notification queue to be processed.
   // Note that we don't need a timeout since the pipe is already in
   // nonblocking mode and all we want is one attempt.
-  ssize_t n = ACE::send (this->notification_pipe_.write_handle (),
+  const ssize_t n = ACE::send (this->notification_pipe_.write_handle (),
                          &buffer,
                          1);             // Only need one byte to pop the pipe
   if (n == -1 && (errno != EAGAIN))
@@ -1809,7 +1809,7 @@ ACE_Dev_Poll_Reactor::suspend_handler (ACE_Event_Handler *event_handler)
       return -1;
     }
 
-  ACE_HANDLE handle = event_handler->get_handle ();
+  const ACE_HANDLE handle = event_handler->get_handle ();
 
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1));
 
@@ -1934,7 +1934,7 @@ ACE_Dev_Poll_Reactor::resume_handler (ACE_Event_Handler *event_handler)
       return -1;
     }
 
-  ACE_HANDLE handle = event_handler->get_handle ();
+  const ACE_HANDLE handle = event_handler->get_handle ();
 
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1));
 
@@ -2009,7 +2009,7 @@ ACE_Dev_Poll_Reactor::resume_handler_i (ACE_HANDLE handle)
     return 0;
   }
 
-  ACE_Reactor_Mask mask = info->mask;
+  const ACE_Reactor_Mask mask = info->mask;
   if (mask == ACE_Event_Handler::NULL_MASK)
     {
       info->suspended = false;
@@ -2374,7 +2374,7 @@ ACE_Dev_Poll_Reactor::restart (bool r)
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Dev_Poll_Reactor_Token, mon, this->token_, false));
 
-  bool current_value = this->restart_;
+  const bool current_value = this->restart_;
   this->restart_ = r;
   return current_value;
 }
