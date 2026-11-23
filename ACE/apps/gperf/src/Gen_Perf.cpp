@@ -319,11 +319,11 @@ Gen_Perf::open ()
     + option.asso_max ()
     * option.max_keysig_size ();
 
-  char *union_set {};
-  ACE_NEW_RETURN (union_set,
+  char *union_set_buffer {};
+  ACE_NEW_RETURN (union_set_buffer,
                   char[2 * option.max_keysig_size () + 1],
                   -1);
-  this->union_set.reset (union_set);
+  this->union_set.reset (union_set_buffer);
   ACE_OS::printf ("/* ");
 
   ACE_OS::printf ("C++ code produced by ACE gperf version %s */\n",
