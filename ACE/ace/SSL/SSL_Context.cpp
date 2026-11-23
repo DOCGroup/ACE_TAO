@@ -401,18 +401,17 @@ ACE_SSL_Context::check_host (const ACE_INET_Addr &host, SSL *peerssl)
     }
 
   char *peer_raw {};
-  std::unique_ptr<char, void (*) (char *)> peer (
-    nullptr,
-    [] (char *value)
-    {
-      ::OPENSSL_free (value);
-    });
   char **peerarg = ACE::debug () ? &peer_raw : nullptr;
   int const flags = X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT;
   size_t const len = std::strlen (name);
 
   int const result = ::X509_check_host (cert.get (), name, len, flags, peerarg);
-  peer.reset (peer_raw);
+  std::unique_ptr<char, void (*) (char *)> const peer (
+    peer_raw,
+    [] (char *value)
+    {
+      ::OPENSSL_free (value);
+    });
 
   if (ACE::debug ())
     {

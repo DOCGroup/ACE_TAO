@@ -7,6 +7,7 @@
 #include "ace/Time_Value.h"
 #include "ace/Countdown_Time.h"
 #include "ace/Truncate.h"
+#include "SSL_SOCK_Utils.h"
 
 #if !defined (__ACE_INLINE__)
 #include "SSL_SOCK_Acceptor.inl"
@@ -38,18 +39,10 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
   }
 
   ACE_HANDLE const handle = new_stream.get_handle ();
-  auto set_handle_bit = [handle] (ACE_Handle_Set &handle_set)
+  if (!ACE_SSL_SOCK_Utils::valid_handle (handle))
     {
-#if !defined (ACE_WIN32)
-      if (handle < 0 || handle >= ACE_FD_SETSIZE)
-        {
-          errno = EINVAL;
-          return false;
-        }
-#endif /* ! ACE_WIN32 */
-      handle_set.set_bit (handle);
-      return true;
-    };
+      return -1;
+    }
 
   // We're going to call SSL_accept, optionally doing ACE::select and
   // retrying the SSL_accept, until the SSL handshake is done or
@@ -93,11 +86,13 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
           break;                    // Done
 
         case SSL_ERROR_WANT_WRITE:
-          status = set_handle_bit (wr_handle) ? 1 : -1;
+          wr_handle.set_bit (handle);
+          status = 1;
           break;
 
         case SSL_ERROR_WANT_READ:
-          status = set_handle_bit (rd_handle) ? 1 : -1;
+          rd_handle.set_bit (handle);
+          status = 1;
           break;
 
         case SSL_ERROR_ZERO_RETURN:
@@ -125,11 +120,11 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
               status = 1;               // Wait for more activity
               if (SSL_want_write (ssl_session))
                 {
-                  status = set_handle_bit (wr_handle) ? 1 : -1;
+                  wr_handle.set_bit (handle);
                 }
               else if (SSL_want_read (ssl_session))
                 {
-                  status = set_handle_bit (rd_handle) ? 1 : -1;
+                  rd_handle.set_bit (handle);
                 }
               else
               {

@@ -108,7 +108,7 @@ public:
   int tryacquire () { return 0; }
   int release () { return 0; }
   void disown () {}
-  int locked () { return 1; }
+  int locked () const { return 1; }
   int remove () { return 0; }
   void dump () const {}
 
