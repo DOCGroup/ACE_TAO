@@ -35,7 +35,7 @@ int
 ACE_DEV::close ()
 {
   ACE_TRACE ("ACE_DEV::close");
-  int result = ACE_OS::close (this->get_handle ());
+  int const result = ACE_OS::close (this->get_handle ());
   this->set_handle (ACE_INVALID_HANDLE);
   return result;
 }
