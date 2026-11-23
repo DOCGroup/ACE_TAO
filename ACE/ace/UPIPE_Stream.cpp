@@ -156,7 +156,7 @@ ACE_UPIPE_Stream::recv (char *buffer,
       else
         {
           // We have to get a new Message_Buffer from our stream.
-          int result = this->stream_.get (this->mb_last_, timeout);
+          int const result = this->stream_.get (this->mb_last_, timeout);
 
           if (result == -1)
             {
