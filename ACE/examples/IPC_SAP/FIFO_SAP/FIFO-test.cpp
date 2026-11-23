@@ -51,7 +51,7 @@ do_parent (ACE_TCHAR const fifo_name[],
     return -1;
   }
 
-  ACE_HANDLE inputfd =
+  ACE_HANDLE const inputfd =
     ACE_OS::open (input_filename, O_RDONLY);
 
   if (inputfd == ACE_INVALID_HANDLE)
