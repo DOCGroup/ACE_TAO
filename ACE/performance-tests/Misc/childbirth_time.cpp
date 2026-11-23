@@ -77,7 +77,7 @@ DWORD WINAPI ace_empty (LPVOID)
 #else
 extern "C" void *ace_empty (void*)
 {
-  return 0;
+  return nullptr;
 }
 #endif
 

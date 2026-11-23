@@ -61,7 +61,7 @@ ACE::HTBP::Inside_Squid_Filter::make_request_header (ACE::HTBP::Channel *ch,
   // be carried independent of the address to work with hosts that may
   // have dynamic IP addresses. For now that isn't a problem.
   if (session->peer_addr().get_host_addr(remote_host,
-                                         sizeof remote_host) == 0)
+                                         sizeof remote_host) == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT("HTBP::Inside_Squid_Filter:could not get ")

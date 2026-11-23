@@ -79,7 +79,7 @@ static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
     size_t bt;
     ACE_CDR::ULong msgBufSize {};
     // read the size of the buffer to follow
-    if ((dataModeStream->recv_n(&msgBufSize, ACE_CDR::LONG_SIZE, 0, &bt)) == -1)
+    if ((dataModeStream->recv_n(&msgBufSize, ACE_CDR::LONG_SIZE, nullptr, &bt)) == -1)
       {
         ACE_ERROR_RETURN((LM_ERROR,
                           ACE_TEXT ("%p\n"),
@@ -94,11 +94,11 @@ static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
     if (!msgBuf)
       {
         errno = ENOMEM;
-        return 0;
+        return nullptr;
       }
 
     // read the buffer
-    if ((dataModeStream->recv_n(msgBuf.get (), msgBufSize, 0, &bt)) == -1)
+    if ((dataModeStream->recv_n(msgBuf.get (), msgBufSize, nullptr, &bt)) == -1)
       {
         ACE_ERROR_RETURN((LM_ERROR,
                           ACE_TEXT ("%p\n"),
@@ -110,7 +110,7 @@ static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
 
     // send back a 2 byte reply
     ACE_CDR::Short reply {};
-    if ((dataModeStream->send_n(&reply, ACE_CDR::SHORT_SIZE, 0, &bt)) == -1)
+    if ((dataModeStream->send_n(&reply, ACE_CDR::SHORT_SIZE, nullptr, &bt)) == -1)
       {
         ACE_ERROR_RETURN((LM_ERROR,
                           ACE_TEXT ("%p\n"),
@@ -119,7 +119,7 @@ static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
       }
   } while (--numIterations);
 
-  return 0;
+  return nullptr;
 }
 
 // sets up the dataModeSocket Stream, reads the test header infomation
@@ -194,7 +194,7 @@ static void run_server (ACE_HANDLE handle)
 
   size_t bt;
   // read the header
-  if ((dataModeStream->recv_n(hdrBuf_a, hdrBufSize, 0, &bt)) == -1){
+  if ((dataModeStream->recv_n(hdrBuf_a, hdrBufSize, nullptr, &bt)) == -1){
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("recv_n")));
@@ -370,8 +370,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
 #endif /* ! ACE_WIN32 */
     int result = ACE_OS::select (select_width,
                                 temp.fdset (),
-                                0,
-                                0,
+                                nullptr,
+                                nullptr,
                                 timeout);
 
     // check that select did not end with an error.

@@ -664,7 +664,7 @@ namespace ACE
       {
         ACE::IOS::CString_OStream arg;
         char ip_buf[128];
-        if (addr.get_host_addr (ip_buf, sizeof(ip_buf)) == 0)
+        if (addr.get_host_addr (ip_buf, sizeof(ip_buf)) == nullptr)
           {
             return false;
           }

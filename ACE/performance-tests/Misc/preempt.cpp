@@ -464,13 +464,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           return -1;
         case 0: // In child
           {
-            low_priority_task.open (0);
+            low_priority_task.open (nullptr);
             break;
           }
         default: // In parent
           for (i = 0; i < high_priority_tasks; ++i)
             {
-              high_priority_task[i].open (0);
+              high_priority_task[i].open (nullptr);
             }
           break;
         }
@@ -479,9 +479,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       for (i = 0; i < high_priority_tasks; ++i)
         {
-          high_priority_task[i].open (0);
+          high_priority_task[i].open (nullptr);
         }
-      low_priority_task.open (0);
+      low_priority_task.open (nullptr);
 
 #if defined (ACE_HAS_THREADS)
      // Wait for all threads to exit.

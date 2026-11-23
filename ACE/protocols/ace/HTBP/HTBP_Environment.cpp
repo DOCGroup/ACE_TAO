@@ -186,7 +186,7 @@ ACE::HTBP::Environment::get_proxy_port (unsigned int &proxy_port) const
                                                 port_str);
       if (result == 0)
       {
-        proxy_port = ACE_OS::strtol(port_str.c_str(),0,10);
+        proxy_port = ACE_OS::strtol(port_str.c_str(),nullptr,10);
       }
     }
   return result;

@@ -158,7 +158,7 @@ const char* Get_MultiTask::get_url ()
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
                     guard_,
                     lock_,
-                    0);
+                    nullptr);
 
   const char* url = urls_[n_thread_starts_];
   ++n_thread_starts_;

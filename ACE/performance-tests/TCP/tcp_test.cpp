@@ -471,7 +471,7 @@ thread_pool_worker (void *)
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 int

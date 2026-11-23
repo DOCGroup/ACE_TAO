@@ -146,10 +146,10 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
             break;
           }
           case 'm':
-            histogram_min_bin      = ACE_OS::strtod(get_opt->opt_arg (), 0);
+            histogram_min_bin      = ACE_OS::strtod(get_opt->opt_arg (), nullptr);
             break;
           case 'M':
-            histogram_max_bin      = ACE_OS::strtod(get_opt->opt_arg (), 0);
+            histogram_max_bin      = ACE_OS::strtod(get_opt->opt_arg (), nullptr);
             break;
           case 'x':
             histogram_num_outliers = ACE_OS::atoi(get_opt->opt_arg ());

@@ -91,7 +91,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
   // connect to the server
   if (connector.connect (dataStream,
                          serverAddr,
-                         0,clientAddr, 0, 0, 0, // ALL DEFAULT ARGUMENTS
+                         nullptr,clientAddr, 0, 0, 0, // ALL DEFAULT ARGUMENTS
                          Options_Manager::test_transport_protocol) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -149,7 +149,7 @@ int sendHeader(ACE_SOCK_Stream & stream) {
 
   // send the header to the server (HEADER IS 8 BYTES LONG)
   size_t bt;
-  if (stream.send_n(hdrCDR.begin(), 0,  &bt) == -1)
+  if (stream.send_n(hdrCDR.begin(), nullptr,  &bt) == -1)
   {
     return 0;
   }
@@ -202,7 +202,7 @@ ACE_SCTP::HIST runUnmarshalledOctetTest (
     // send message size
     // TODO : The message length should be CDR encoded
     ACE_CDR::ULong msgLenExpressed = ACE_HTONL (msgLen);
-    if (-1 == stream.send_n (&msgLenExpressed, ACE_CDR::LONG_SIZE, 0, &bt))
+    if (-1 == stream.send_n (&msgLenExpressed, ACE_CDR::LONG_SIZE, nullptr, &bt))
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
@@ -211,7 +211,7 @@ ACE_SCTP::HIST runUnmarshalledOctetTest (
       }
 
     // send a message
-    if (-1 == stream.send_n (buf.get (), msgLen, 0, &bt))
+    if (-1 == stream.send_n (buf.get (), msgLen, nullptr, &bt))
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
@@ -221,7 +221,7 @@ ACE_SCTP::HIST runUnmarshalledOctetTest (
 
     // block for a Short reply
     ACE_CDR::Short reply;
-    if ((stream.recv_n(&reply, ACE_CDR::SHORT_SIZE, 0, &bt)) == -1)
+    if ((stream.recv_n(&reply, ACE_CDR::SHORT_SIZE, nullptr, &bt)) == -1)
       {
         ACE_ERROR_RETURN((LM_ERROR,
                           "%p\n",
@@ -270,7 +270,7 @@ ACE_SCTP::HIST runUnmarshalledOctetTest (
 
     // block for a Short reply
     ACE_CDR::Short reply;
-    if ((stream.recv_n(&reply, ACE_CDR::SHORT_SIZE, 0, &bt)) == -1)
+    if ((stream.recv_n(&reply, ACE_CDR::SHORT_SIZE, nullptr, &bt)) == -1)
       {
         ACE_ERROR_RETURN((LM_ERROR,
                           "%p\n",
@@ -334,7 +334,7 @@ ACE_SCTP::HIST runTest(ACE_SOCK_Stream & stream)
     new (std::nothrow) ACE_CDR::Octet[seqLen]);
   if (!o_arr)
   {
-    return 0;
+    return nullptr;
   }
 
   return runUnmarshalledOctetTest (std::move (o_arr), seqLen, stream);

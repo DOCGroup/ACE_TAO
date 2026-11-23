@@ -267,7 +267,7 @@ ACE::HTBP::Session::flush_outbound_queue ()
       {
         this->outbound_->recv_ack();
       }
-      result = this->outbound_->sendv (iov,this->outbound_queue_.message_count(),0);
+      result = this->outbound_->sendv (iov,this->outbound_queue_.message_count(),nullptr);
       while (this->outbound_queue_.message_count ())
         {
           this->outbound_queue_.dequeue_head (msg);

@@ -132,7 +132,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_SOCK_Stream sock_stream[2];
   ACE_DEBUG ((LM_DEBUG,"(%P) server is ready\n"));
 
-  if (peer_acceptor.accept(sock_stream[0],&cli_addr,0) == -1)
+  if (peer_acceptor.accept(sock_stream[0],&cli_addr,nullptr) == -1)
     {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) accept: %p\n")));
@@ -144,7 +144,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               ACE_TEXT("(%P) Got sock[0], handle = %H\n"),
               sock_stream[0].get_handle()));
 
-  if (peer_acceptor.accept(sock_stream[1],&cli_addr,0) == -1)
+  if (peer_acceptor.accept(sock_stream[1],&cli_addr,nullptr) == -1)
     {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) accept: %p\n")));

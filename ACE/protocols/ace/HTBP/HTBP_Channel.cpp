@@ -119,7 +119,7 @@ ACE::HTBP::Channel::request_count ()
 void
 ACE::HTBP::Channel::register_notifier (ACE_Reactor *r)
 {
-  if (r == 0)
+  if (r == nullptr)
   {
     return;
   }

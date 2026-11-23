@@ -96,7 +96,7 @@ namespace ACE_RMCast
 
     // Start IN stack from top to bottom.
     //
-    in_start (0);
+    in_start (nullptr);
     fragment_->in_start (this);
     reassemble_->in_start (fragment_.get ());
     acknowledge_->in_start (reassemble_.get ());
@@ -106,7 +106,7 @@ namespace ACE_RMCast
 
     // Start OUT stack from bottom up.
     //
-    link_->out_start (0);
+    link_->out_start (nullptr);
     flow_->out_start (link_.get ());
     retransmit_->out_start (flow_.get ());
     acknowledge_->out_start (retransmit_.get ());
