@@ -26,7 +26,7 @@ public:
     try
       {
         // @todo, really want to send the value to the subscriber.
-        ::Monitor::DataList d;
+        ::Monitor::DataList const d;
         sub_->push (d);
       }
     catch (::CORBA::Exception const &)

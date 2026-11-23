@@ -209,7 +209,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
     } // end of while
 
   // At this point, ior points at the start of the object key
-  ACE_CString obj_key (*ior ? ior : (const char *)"NameService");
+  ACE_CString const obj_key (*ior ? ior : (const char *)"NameService");
 
   // now take the collection of endpoints along with the decoded key and
   // mix them together to get the mprofile.
@@ -217,7 +217,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
 
   for (size_t i {}; i < endpoints.size(); ++i)
     {
-      ACE_CString full_ep = endpoints[i].prot_addr_ +
+      ACE_CString const full_ep = endpoints[i].prot_addr_ +
         endpoints[i].obj_key_sep_ +
         obj_key;
       const char * str = full_ep.c_str();

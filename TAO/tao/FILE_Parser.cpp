@@ -40,7 +40,7 @@ TAO_FILE_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
 
   ACE_Read_Buffer reader (file, true);
 
-  ACE_Read_Buffer_Unique_Ptr string (
+  ACE_Read_Buffer_Unique_Ptr const string (
     reader.read (), {reader.alloc ()});
 
   if (string == nullptr)

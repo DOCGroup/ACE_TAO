@@ -472,7 +472,7 @@ TAO::Storable_FlatFileStream::operator >> (std::string &str)
     }
   {
     int const strSize = bufSize + 1; // Account for newline
-    std::unique_ptr<char[]> str_array = std::make_unique<char[]> (strSize);
+    std::unique_ptr<char[]> const str_array = std::make_unique<char[]> (strSize);
     str_array[0] = '\0';
     if (std::fgets (str_array.get (),
                     strSize,
@@ -637,7 +637,7 @@ TAO::Storable_FlatFileStream::create_backup ()
             }
           break;
         }
-      std::unique_ptr<FILE, int (*) (FILE *)> backup (
+      std::unique_ptr<FILE, int (*) (FILE *)> const backup (
         ACE_OS::fopen (this->backup_file_name ().c_str (), "w"),
         ACE_OS::fclose);
       if (!backup)

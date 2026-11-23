@@ -107,7 +107,7 @@ TAO::ObjectKey::encode_sequence_to_string (char* & str,
        cp < eos && i < seq_len;
        ++i)
     {
-      unsigned char bt = seq[i];
+      unsigned char const bt = seq[i];
       if (is_legal (bt))
         {
           *cp++ = static_cast<char> (bt);
