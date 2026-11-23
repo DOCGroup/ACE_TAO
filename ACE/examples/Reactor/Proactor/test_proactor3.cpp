@@ -132,7 +132,7 @@ MyTask::create_proactor ()
         }
 #endif
 
-      proactor_ = new ACE_Proactor (proactor, 1);
+      proactor_ = new ACE_Proactor (proactor, true);
 
       ACE_Proactor::instance(proactor_);
       event_.signal ();

@@ -667,7 +667,7 @@ run_tests ()
 
   // test resolving of forward slashes
   HKEY const root_fs = ACE_Configuration_Win32Registry::resolve_key (HKEY_CURRENT_USER,
-                                                  ACE_TEXT ("Software/ACETEST/test"), 0);
+                                                  ACE_TEXT ("Software/ACETEST/test"), false);
   if (!root_fs)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

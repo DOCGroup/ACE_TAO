@@ -157,7 +157,7 @@ void MainFrame::OnFileOpenRegistry(wxCommandEvent& event)
   {
     return;
   }
-  HKEY Root = ACE_Configuration_Win32Registry::resolve_key(HKEY_LOCAL_MACHINE, Dlg.GetValue(), 0);
+  HKEY Root = ACE_Configuration_Win32Registry::resolve_key(HKEY_LOCAL_MACHINE, Dlg.GetValue(), false);
   ACE_Configuration_Win32Registry* pWin32Reg = new ACE_Configuration_Win32Registry(Root);;
   delete m_pConfig;
   SetNewConfig(pWin32Reg);

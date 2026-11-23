@@ -243,7 +243,7 @@ create_reactor ()
   ACE_Reactor *reactor_raw {};
   ACE_NEW_RETURN (reactor_raw,
                   ACE_Reactor (impl.get (),
-                               1),
+                               true),
                   nullptr);
   impl.release ();
 
