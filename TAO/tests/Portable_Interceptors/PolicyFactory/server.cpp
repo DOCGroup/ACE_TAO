@@ -15,14 +15,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_NEW_RETURN (temp_initializer,
                       Server_ORBInitializer,
                       -1);  // No CORBA exceptions yet!
-      PortableInterceptor::ORBInitializer_var orb_initializer =
+      PortableInterceptor::ORBInitializer_var const orb_initializer =
         temp_initializer;
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            "test_orb");
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc,
+                                                  argv,
+                                                  "test_orb");
 
       // Create the test policy.
 
@@ -30,8 +30,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Any any {};
       any <<= val;
 
-      CORBA::Policy_var p (orb->create_policy (Test::POLICY_TYPE,
-                                               any));
+      CORBA::Policy_var const p (orb->create_policy (Test::POLICY_TYPE,
+                                                     any));
 
       const CORBA::PolicyType ptype (p->policy_type ());
 
@@ -41,7 +41,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         throw CORBA::INTERNAL ();
       }
 
-      Test::Policy_var policy (Test::Policy::_narrow (p.in ()));
+      Test::Policy_var const policy (Test::Policy::_narrow (p.in ()));
 
       const CORBA::ULong pval (policy->value ());
 
@@ -51,10 +51,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         throw CORBA::INTERNAL ();
       }
 
-      CORBA::Object_var obj =
+      CORBA::Object_var const obj =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (obj.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -64,7 +64,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             -1);
         }
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       CORBA::PolicyList policies (1);
@@ -72,7 +72,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       policies[0] = policy->copy ();
 
-      PortableServer::POA_var poa =
+      PortableServer::POA_var const poa =
         root_poa->create_POA ("Test POA",
                               poa_manager.in (),
                               policies);
