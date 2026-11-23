@@ -112,10 +112,10 @@ namespace ACE_RMCast
 
           // Send NRTM.
           //
-          unsigned short max_payload_size (
+          unsigned short const max_payload_size (
             params_.max_packet_size () - max_service_size);
 
-          u32 max_elem (NRTM::max_count (max_payload_size));
+          u32 const max_elem (NRTM::max_count (max_payload_size));
 
           Profile_ptr nrtm (create_nrtm (max_elem));
 
@@ -177,10 +177,10 @@ namespace ACE_RMCast
   void Acknowledge::
   track_queue (Address const& addr, Queue& q, Messages& msgs)
   {
-    unsigned short max_payload_size (
+    unsigned short const max_payload_size (
       params_.max_packet_size () - max_service_size);
 
-    u32 max_elem (NAK::max_count (max_payload_size));
+    u32 const max_elem (NAK::max_count (max_payload_size));
     u32 count (0);
 
     Queue::iterator i (q.begin ()), e (q.end ());
@@ -195,7 +195,7 @@ namespace ACE_RMCast
       //
       for (; i != e && nak->count () < max_elem; ++i)
       {
-        u64 sn ((*i).ext_id_);
+        u64 const sn ((*i).ext_id_);
         Descr& d = (*i).int_id_;
 
         if (d.lost ())
@@ -258,13 +258,13 @@ namespace ACE_RMCast
     {
       for (Map::iterator i (hold_.begin ()), e (hold_.end ()); i != e; ++i)
       {
-        u64 sn (nrtm->find ((*i).ext_id_));
+        u64 const sn (nrtm->find ((*i).ext_id_));
 
         if (sn != 0)
         {
           Queue& q = (*i).int_id_;
 
-          u64 old (q.max_sn ());
+          u64 const old (q.max_sn ());
 
           if (old < sn)
           {
@@ -278,10 +278,10 @@ namespace ACE_RMCast
 
     if (m->find (Data::id) || m->find (NoData::id))
     {
-      Address from (
+      Address const from (
         static_cast<From const*> (m->find (From::id))->address ());
 
-      u64 sn (static_cast<SN const*> (m->find (SN::id))->num ());
+      u64 const sn (static_cast<SN const*> (m->find (SN::id))->num ());
 
       Map::ENTRY* e {};
 
@@ -333,13 +333,13 @@ namespace ACE_RMCast
   {
     if (Data const* data = static_cast<Data const*> (m->find (Data::id)))
     {
-      size_t max_payload_size (
+      size_t const max_payload_size (
         params_.max_packet_size () - max_service_size);
 
       if (max_payload_size > data->size ())
       {
-        u32 max_size (max_payload_size - data->size ());
-        u32 max_elem (NRTM::max_count (max_size));
+        u32 const max_size (max_payload_size - data->size ());
+        u32 const max_elem (NRTM::max_count (max_size));
 
         if (max_elem > 0)
         {
@@ -372,7 +372,7 @@ namespace ACE_RMCast
     {
       for (Map::iterator i (hold_.begin ()), e (hold_.end ()); i != e; ++i)
       {
-        Address addr ((*i).ext_id_);
+        Address const addr ((*i).ext_id_);
         Queue const & q = (*i).int_id_;
 
         //@@ Should look for the highest known number.
