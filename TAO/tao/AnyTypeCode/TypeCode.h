@@ -497,7 +497,7 @@ namespace TAO
     /// Marshal the @c TypeCode @a tc in to the output CDR stream @a
     /// cdr.
     /**
-     * @see @CORBA::TypeCode::tao_marshal() description for details.
+     * @see CORBA::TypeCode::tao_marshal() description for details.
      */
 
     TAO_AnyTypeCode_Export bool marshal (TAO_OutputCDR & cdr,
