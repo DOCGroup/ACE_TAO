@@ -49,10 +49,10 @@ public:
   TAO_PriorityModelPolicy (TAO_PriorityModelPolicy const &rhs);
 
   /**
-   * Accessor for the <priority_model_> attribute.  This method is
+   * Accessor for the @c priority_model_ attribute.  This method is
    * used internally by the orb.  This is a more efficient
    * (non-virtual, no exception handling) relative of the idl interface
-   * implementation <priority_model> below.
+   * implementation @c priority_model() below.
    */
   RTCORBA::PriorityModel get_priority_model ();
 
@@ -204,7 +204,7 @@ public:
 
   /**
    * Accessor to the underlying priority bands of the policy (does not
-   * make a copy like the idl accessor <priority_bands> implementation
+   * make a copy like the IDL accessor @c priority_bands() implementation
    * below.)
    */
   RTCORBA::PriorityBands &priority_bands_rep ();
@@ -270,7 +270,7 @@ public:
 
   /**
    * Accessor to the underlying protocols list of the policy (does not
-   * make a copy like the idl accessor <protocols> implementation
+   * make a copy like the IDL accessor @c protocols() implementation
    * below.)
    */
   RTCORBA::ProtocolList & protocols_rep ();
@@ -322,7 +322,7 @@ public:
 
   /**
    * Accessor to the underlying protocols list of the policy (does not
-   * make a copy like the idl accessor <protocols> implementation
+   * make a copy like the IDL accessor @c protocols() implementation
    * below.)
    */
   RTCORBA::ProtocolList & protocols_rep ();

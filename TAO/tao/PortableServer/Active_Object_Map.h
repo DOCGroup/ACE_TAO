@@ -308,7 +308,7 @@ public:
                               PortableServer::ObjectId_out user_id) = 0;
 
   /// Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
-  /// <user_id> is actually @a system_id.
+  /// @a user_id is actually @c system_id.
   virtual int
   find_system_id_using_servant (PortableServer::Servant servant,
                                 PortableServer::ObjectId_out system_id,
@@ -363,7 +363,7 @@ public:
                               PortableServer::ObjectId_out user_id) override;
 
   /// Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
-  /// <user_id> is actually @a system_id.
+  /// @a user_id is actually @c system_id.
   int
   find_system_id_using_servant (PortableServer::Servant servant,
                                 PortableServer::ObjectId_out system_id,
@@ -411,7 +411,7 @@ public:
                               PortableServer::ObjectId_out user_id) override;
 
   /// Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
-  /// <user_id> is actually @a system_id.
+  /// @a user_id is actually @c system_id.
   int
   find_system_id_using_servant (PortableServer::Servant servant,
                                 PortableServer::ObjectId_out system_id,

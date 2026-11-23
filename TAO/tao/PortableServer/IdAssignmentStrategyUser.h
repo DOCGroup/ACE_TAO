@@ -1,5 +1,5 @@
 /**
- *  @fileIdAssignmentStrategyUser.h
+ *  @file IdAssignmentStrategyUser.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */

@@ -52,8 +52,8 @@ namespace TAO
      * The intent is that instances of this class are held in
      * Thread-Specific Storage so that upcalls can get context
      * information regarding their invocation.  The POA itself must
-     * insure that all <set_*> operations are performed in the
-     * execution thread so that the proper <TAO_POA_Current> pointer
+     * insure that all @c set_* operations are performed in the
+     * execution thread so that the proper @c TAO_POA_Current pointer
      * is obtained from TSS.
      */
     class TAO_PortableServer_Export POA_Current_Impl
@@ -67,7 +67,7 @@ namespace TAO
 
       /**
        * Return pointer to the object id through which this was invoked.
-       * This may be necessary in cases where a <Servant> is serving under
+       * This may be necessary in cases where a @c Servant is serving under
        * the guise of multiple object ids.
        */
       PortableServer::ObjectId *get_object_id ();

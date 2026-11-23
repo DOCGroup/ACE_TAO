@@ -72,7 +72,7 @@ public:
  *
  * Define the encoding and decoding methods for converting
  * between Object Ids and active keys.  This class ignores the
- * <original_key> passed to it.
+ * @a original_key passed to it.
  */
 class TAO_Ignore_Original_Key_Adapter
 {
@@ -97,7 +97,7 @@ public:
  *
  * Define the encoding and decoding methods for converting
  * between Object Ids and active keys.  This class remembers the
- * <original_key> passed to it.
+ * @a original_key passed to it.
  */
 class TAO_Preserve_Original_Key_Adapter
 {
