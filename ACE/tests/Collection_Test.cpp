@@ -120,11 +120,11 @@ run_main (int, ACE_TCHAR *[])
   }
 
   {
-    ARRAY array;
+    ARRAY const array;
   }
 
   {
-    ARRAY array (0);
+    ARRAY const array (0);
   }
 
   {
@@ -141,7 +141,7 @@ run_main (int, ACE_TCHAR *[])
     ACE_Fixed_Set<int, 8> original;
     ACE_TEST_ASSERT (original.insert (42) == 0);
 
-    ACE_Fixed_Set<int, 8> copy (original);
+    ACE_Fixed_Set<int, 8> const copy (original);
     ACE_TEST_ASSERT (copy.size () == 1);
     ACE_TEST_ASSERT (copy.find (42) == 0);
   }
@@ -152,9 +152,9 @@ run_main (int, ACE_TCHAR *[])
     array1[0] = 4;
     array1[1] = 4;
 
-    ARRAY array2 (2, 4);
+    ARRAY const array2 (2, 4);
 
-    ARRAY array3 (array2);
+    ARRAY const array3 (array2);
 
     ARRAY array4;
     array4 = array2;
