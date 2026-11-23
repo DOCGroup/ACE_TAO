@@ -606,7 +606,7 @@ TAO_IIOP_Acceptor::open_i (ACE_INET_Addr const &addr,
   // interface then the endpoint created on each interface will be on
   // the same port.  This is how a wildcard socket bind() is supposed
   // to work.
-  unsigned short port = address.get_port_number ();
+  unsigned short const port = address.get_port_number ();
   for (CORBA::ULong j {}; j < this->endpoint_count_; ++j)
     {
       this->addrs_[j].set_port_number (port, 1);
