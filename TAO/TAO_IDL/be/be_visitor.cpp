@@ -5,8 +5,7 @@
  *
  *  Abstract class for back end visitors.
  *
- * = NOTES
- *  This is not a pure abstract class
+ * @note This visitor is not a pure abstract class.
  *
  *  @author Aniruddha Gokhale and Carlos O'Ryan
  */
