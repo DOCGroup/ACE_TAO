@@ -9,7 +9,7 @@ bool interceptor_invoked {};
 
 struct Options
 {
-  ACE_TString ior {};
+  ACE_TString ior {ACE_TEXT ("")};
 };
 
 int

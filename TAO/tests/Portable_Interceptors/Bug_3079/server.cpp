@@ -10,7 +10,7 @@
 
 struct Options
 {
-  ACE_TString ior_file {};
+  ACE_TString ior_file {ACE_TEXT ("")};
   int crash_point {};
   int number {};
   int server_number {};

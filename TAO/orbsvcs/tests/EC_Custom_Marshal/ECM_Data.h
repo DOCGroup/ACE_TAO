@@ -20,7 +20,7 @@ struct ECM_Data
   using Inventory = ACE_Map_Manager<CORBA::ULong, CORBA::Double, ACE_Null_Mutex>;
 
   CORBA::String_var description;
-  Inventory inventory {};
+  Inventory inventory {nullptr};
 };
 
 extern CORBA::Boolean
