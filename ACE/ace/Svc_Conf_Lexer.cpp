@@ -279,8 +279,8 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
   for (current = buffer->index_; current < last; ++current)
     {
       static const char* separators = " \t\r\n:*(){}";
-      char c = (buffer->eof_ && current == buffer->size_ ?
-                                     '\n' : buffer->input_[current]);
+      char const c = (buffer->eof_ && current == buffer->size_ ?
+                                       '\n' : buffer->input_[current]);
       switch (buffer->state_)
         {
           case ACE_COMMENT:
