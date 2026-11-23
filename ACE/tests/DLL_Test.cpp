@@ -67,7 +67,7 @@ int basic_test (ACE_DLL &dll)
 
   dll_file += OBJ_PREFIX ACE_TEXT ("DLL_Test_Lib") OBJ_SUFFIX;
 
-  int retval = dll.open (dll_file.c_str());
+  const int retval = dll.open (dll_file.c_str());
 
   if (retval != 0)
     {

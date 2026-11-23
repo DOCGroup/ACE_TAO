@@ -340,7 +340,7 @@ run_main (int, ACE_TCHAR *[])
   timer_queue.deactivate ();
   timer_queue.wait ();
   // Scheduling every second, waiting 10 seconds, should get at least 9
-  int expirations = handler.nr_expirations ();
+  const int expirations = handler.nr_expirations ();
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Caught %d timer expirations\n"),
               expirations));
   if (expirations < 9)

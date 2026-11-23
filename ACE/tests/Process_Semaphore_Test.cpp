@@ -215,7 +215,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_Process child;
 
       // Spawn the child process.
-      int result = child.spawn (options);
+      const int result = child.spawn (options);
       ACE_TEST_ASSERT (result != -1);
       ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Parent spawned child process with pid = %d.\n"),

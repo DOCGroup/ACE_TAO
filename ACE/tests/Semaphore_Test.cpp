@@ -170,7 +170,7 @@ worker (void *)
           }
           ACE_Time_Value diff = ACE_OS::gettimeofday ();
           diff = diff - tv;       // tv should have been reset to time acquired
-          long diff_msec = diff.msec ();
+          const long diff_msec = diff.msec ();
 
           if (diff_msec > ACE_ALLOWED_SLACK)
             {
@@ -232,7 +232,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   ACE_Thread_Manager::instance ()->wait ();
 
-  size_t percent = (timeouts * 100) / (n_workers * n_iterations);
+  const size_t percent = (timeouts * 100) / (n_workers * n_iterations);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Worker threads timed out %d percent of the time\n"),

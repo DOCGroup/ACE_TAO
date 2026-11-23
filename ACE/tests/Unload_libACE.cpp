@@ -124,7 +124,7 @@ main (int, char **)
     {
       setvbuf (logfp, nullptr, _IONBF, 0);
       // reassign stdout/stderr to log file
-      int fdno = fileno (logfp);
+      const int fdno = fileno (logfp);
 
       dup2 (fdno, fileno (stdout));
       dup2 (fdno, fileno (stderr));

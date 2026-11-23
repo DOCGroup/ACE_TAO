@@ -124,7 +124,7 @@ Thread_Pool::svc ()
     {
       ACE_Message_Block *mb {};
 
-      int result = this->getq (mb);
+      const int result = this->getq (mb);
 
       ACE_TEST_ASSERT (result != -1 || errno == ESHUTDOWN);
 
@@ -140,7 +140,7 @@ Thread_Pool::svc ()
           break;
         }
 
-      size_t length = mb->length ();
+      const size_t length = mb->length ();
 
       if (length > 0)
         {
@@ -420,7 +420,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Thread_Pool_Test"));
 
 #if defined (ACE_HAS_THREADS)
-  int n_threads = ACE_MAX_THREADS;
+  const int n_threads = ACE_MAX_THREADS;
 
   // Create the worker tasks.
   Thread_Pool thread_pool (n_threads);
