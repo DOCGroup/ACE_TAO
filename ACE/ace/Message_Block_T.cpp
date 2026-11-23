@@ -34,11 +34,11 @@ ACE_Locked_Data_Block<ACE_LOCK>::clone_nocopy (ACE_Message_Block::Message_Flags 
                                                    max_size == 0 ?
                                                      this->size () : max_size,
                                                    this->msg_type (),
-                                                   0,
+                                                   nullptr,
                                                    this->allocator_strategy (),
                                                    this->flags (),
                                                    this->data_block_allocator ()),
-                         0);
+                         nullptr);
 
   // Set new flags minus the mask...
   nb->clr_flags (mask | always_clear);

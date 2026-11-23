@@ -40,7 +40,7 @@ ACE::recv_n (ACE_HANDLE handle,
              const ACE_Time_Value *timeout,
              size_t *bytes_transferred)
 {
-  if (timeout == 0)
+  if (timeout == nullptr)
     {
       return ACE::recv_n_i (handle,
                             buf,
@@ -69,7 +69,7 @@ ACE::t_rcv_n (ACE_HANDLE handle,
               const ACE_Time_Value *timeout,
               size_t *bytes_transferred)
 {
-  if (timeout == 0)
+  if (timeout == nullptr)
     {
       return ACE::t_rcv_n_i (handle,
                              buf,
@@ -97,7 +97,7 @@ ACE::recv_n (ACE_HANDLE handle,
              const ACE_Time_Value *timeout,
              size_t *bytes_transferred)
 {
-  if (timeout == 0)
+  if (timeout == nullptr)
     {
       return ACE::recv_n_i (handle,
                             buf,
@@ -121,7 +121,7 @@ ACE::recvv_n (ACE_HANDLE handle,
               const ACE_Time_Value *timeout,
               size_t *bytes_transferred)
 {
-  if (timeout == 0)
+  if (timeout == nullptr)
     {
       return ACE::recvv_n_i (handle,
                              iov,
@@ -146,7 +146,7 @@ ACE::send_n (ACE_HANDLE handle,
              const ACE_Time_Value *timeout,
              size_t *bytes_transferred)
 {
-  if (timeout == 0)
+  if (timeout == nullptr)
     {
       return ACE::send_n_i (handle,
                             buf,
@@ -175,7 +175,7 @@ ACE::t_snd_n (ACE_HANDLE handle,
               const ACE_Time_Value *timeout,
               size_t *bytes_transferred)
 {
-  if (timeout == 0)
+  if (timeout == nullptr)
     {
       return ACE::t_snd_n_i (handle,
                              buf,
@@ -203,7 +203,7 @@ ACE::send_n (ACE_HANDLE handle,
              const ACE_Time_Value *timeout,
              size_t *bytes_transferred)
 {
-  if (timeout == 0)
+  if (timeout == nullptr)
     {
       return ACE::send_n_i (handle,
                             buf,
@@ -227,7 +227,7 @@ ACE::sendv_n (ACE_HANDLE handle,
               const ACE_Time_Value *timeout,
               size_t *bytes_transferred)
 {
-  if (timeout == 0)
+  if (timeout == nullptr)
     {
       return ACE::sendv_n_i (handle,
                              iov,
