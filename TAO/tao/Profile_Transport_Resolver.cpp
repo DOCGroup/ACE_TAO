@@ -92,7 +92,7 @@ namespace TAO
   void
   Profile_Transport_Resolver::resolve (ACE_Time_Value *max_time_val)
   {
-    TAO::ORB_Countdown_Time countdown (max_time_val);
+    TAO::ORB_Countdown_Time const countdown (max_time_val);
 
     TAO_Invocation_Endpoint_Selector * const es =
       this->stub_->orb_core ()->endpoint_selector_factory ()->get_selector ();

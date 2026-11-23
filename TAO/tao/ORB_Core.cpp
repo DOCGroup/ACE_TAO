@@ -753,9 +753,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
                   0),
                 CORBA::COMPLETED_NO);
             }
-          ACE_CString object_id (ACE_TEXT_ALWAYS_CHAR(current_arg),
-                                 pos - current_arg);
-          ACE_CString IOR (ACE_TEXT_ALWAYS_CHAR(pos + 1));
+          ACE_CString const object_id (ACE_TEXT_ALWAYS_CHAR(current_arg),
+                                       pos - current_arg);
+          ACE_CString const IOR (ACE_TEXT_ALWAYS_CHAR(pos + 1));
           if (!this->init_ref_map_.insert (
                  std::make_pair (InitRefMap::key_type (object_id),
                                  InitRefMap::data_type (IOR))).second)
@@ -1004,7 +1004,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
             return -1;
           }
 
-          ACE_CString lane (ACE_TEXT_ALWAYS_CHAR (current_arg));
+          ACE_CString const lane (ACE_TEXT_ALWAYS_CHAR (current_arg));
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_option_next ())
@@ -1012,7 +1012,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
             return -1;
           }
 
-          ACE_CString endpoints (ACE_TEXT_ALWAYS_CHAR
+          ACE_CString const endpoints (ACE_TEXT_ALWAYS_CHAR
                                   (arg_shifter.get_current ()));
           arg_shifter.consume_arg ();
 
@@ -1069,7 +1069,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else if (nullptr != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBDisableRTCollocation"))))
         {
-          int disable_rt_collocation = ACE_OS::atoi (current_arg);
+          int const disable_rt_collocation = ACE_OS::atoi (current_arg);
           if (disable_rt_collocation)
             {
               this->orb_params ()->disable_rt_collocation_resolver (true);
@@ -1160,7 +1160,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
                 (ACE_TEXT("-ORBForwardDelay"))))
         {
           int const msecs = ACE_OS::atoi (current_arg);
-          ACE_Time_Value delay(0, 1000*msecs);
+          ACE_Time_Value const delay(0, 1000*msecs);
           this->orb_params_.forward_on_exception_delay (delay);
           arg_shifter.consume_arg ();
         }
@@ -1200,7 +1200,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else if (nullptr != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBForwardOnceOnInvObjref"))))
         {
-          int forward = ACE_OS::atoi (current_arg);
+          int const forward = ACE_OS::atoi (current_arg);
           if (forward)
           {
             this->orb_params_.forward_once_exception (TAO::FOE_INV_OBJREF);
@@ -1261,7 +1261,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 
   if (env_endpoint != nullptr)
     {
-      int result =
+      int const result =
         this->orb_params ()->add_endpoints (TAO_DEFAULT_LANE, env_endpoint);
 
       if (result != 0)
@@ -1544,7 +1544,7 @@ TAO_ORB_Core::fini ()
     }
   catch (const ::CORBA::Exception& ex)
     {
-      std::string message =
+      std::string const message =
         "Exception caught in trying to shutdown " + this->orbid_ + "\n";
 
       ex._tao_print_exception (message.c_str ());
@@ -1693,7 +1693,7 @@ TAO_ORB_Core::resource_factory ()
     }
 
   // Look in the service repository for an instance.
-  std::string &resource_factory_name =
+  std::string const &resource_factory_name =
     TAO_ORB_Core_Static_Resources::instance ()->resource_factory_name_;
 
   this->resource_factory_ =
@@ -2318,7 +2318,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int perform_work)
       TAO_Leader_Follower &leader_follower = this->leader_follower ();
       TAO_LF_Strategy &lf_strategy = this->lf_strategy ();
 
-      TAO_LF_Event_Loop_Thread_Helper helper (leader_follower, lf_strategy, tv);
+      TAO_LF_Event_Loop_Thread_Helper const helper (leader_follower, lf_strategy, tv);
 
       result = helper.event_loop_return ();
       if (result != 0)
@@ -2899,12 +2899,12 @@ TAO_ORB_Core::resolve_rir (const char *name)
 {
   // Get the table of initial references specified through
   // -ORBInitRef.
-  ACE_CString ior;
-  ACE_CString object_id (name);
+  ACE_CString const ior;
+  ACE_CString const object_id (name);
 
   // Get the list of initial reference prefixes specified through
   // -ORBDefaultInitRef.
-  CORBA::String_var default_init_ref =
+  CORBA::String_var const default_init_ref =
     this->orb_params ()->default_init_ref ();
 
   // Check if a DefaultInitRef was specified.
@@ -3756,7 +3756,7 @@ TAO_ORB_Core_instance ()
             {
               int argc {};
               ACE_TCHAR **const argv {};
-              CORBA::ORB_var orb =
+              CORBA::ORB_var const orb =
                 CORBA::ORB_init (argc, argv);
             }
           catch (const ::CORBA::Exception&)
