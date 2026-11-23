@@ -191,8 +191,8 @@ TAO_Tagged_Components::set_component_i (IOP::TaggedComponent& component)
     {
       if (component.tag == this->components_[i].tag)
         {
-          CORBA::ULong max = component.component_data.maximum ();
-          CORBA::ULong len = component.component_data.length ();
+          CORBA::ULong const max = component.component_data.maximum ();
+          CORBA::ULong const len = component.component_data.length ();
           CORBA::Octet* buf = component.component_data.get_buffer (true);
           this->components_[i].component_data.replace (max, len, buf, true);
           return;
@@ -207,11 +207,11 @@ TAO_Tagged_Components::add_component_i (IOP::TaggedComponent& component)
 {
   // @@ TODO Some components can show up multiple times, others
   //    can't find out and take appropriate action.
-  CORBA::ULong l = this->components_.length ();
+  CORBA::ULong const l = this->components_.length ();
   this->components_.length (l + 1);
   this->components_[l].tag = component.tag;
-  CORBA::ULong max = component.component_data.maximum ();
-  CORBA::ULong len = component.component_data.length ();
+  CORBA::ULong const max = component.component_data.maximum ();
+  CORBA::ULong const len = component.component_data.length ();
   CORBA::Octet* buf = component.component_data.get_buffer (true);
   this->components_[l].component_data.replace (max, len, buf, true);
 }
@@ -221,7 +221,7 @@ TAO_Tagged_Components::add_component_i (const IOP::TaggedComponent& component)
 {
   // @@ TODO Some components can show up multiple times, others
   //    can't find out and take appropriate action.
-  CORBA::ULong l = this->components_.length ();
+  CORBA::ULong const l = this->components_.length ();
   this->components_.length (l + 1);
   this->components_[l] = component;
 }
@@ -263,7 +263,7 @@ int
 TAO_Tagged_Components::remove_component_i (IOP::ComponentId tag)
 {
   CORBA::ULong src {}, dest {};
-  CORBA::ULong len = this->components_.length ();
+  CORBA::ULong const len = this->components_.length ();
 
   for (;src != len;++src)
     {
