@@ -252,7 +252,7 @@ module SecurityLevel3 {
 
     /**
      * A List of Resource Names.
-     * @See ResourceName
+     * @see ResourceName
      */
     typedef sequence<ResourceName> ResourceNameList;
 
@@ -429,15 +429,15 @@ module SecurityLevel3 {
          * <p>
          * If the <code>SimplePrincipal</code> is directly or indirectly
          * (as part of a composite <code>Principal</code>) in the
-         * <code>ClientCredentials.client_principal<code> or
-         * <code>TargetCredentials.target_principal<code> field,
+         * <code>ClientCredentials.client_principal</code> or
+         * <code>TargetCredentials.target_principal</code> field,
          * the <code>authenticated</code> field indicates the authentication
          * status of the <code>SimplePrincipal</code> in the client or target
          * principal, respectively.
          * <p>
          * If the <code>SimplePricipal</code> is directly or indirectly in
-         * the <code>ClientCredentials.target_principal<code>
-         * (or <code>TargetCredentials.client_principal<code>) field,
+         * the <code>ClientCredentials.target_principal</code>
+         * (or <code>TargetCredentials.client_principal</code>) field,
          * the <code>authenticated</code> field indicates the target's
          * (or client's belief) about its authentication status to the other
          * party.
@@ -1981,7 +1981,7 @@ module SecurityLevel3 {
          * <p>
          * The value of this attribute, if not null, represents the
          * security context with a remote CSIv2 client.
-         * If the <code>request_is_local<code> attribute is <code>FALSE</code>,
+         * If the <code>request_is_local</code> attribute is <code>FALSE</code>,
          * the current thread of execution is directly servicing a remote
          * request for the target object within the target's implementation.
          * If the <code>request_is_local</code> attribute is <code>TRUE</code>,
@@ -1991,7 +1991,7 @@ module SecurityLevel3 {
          * If the client is not CSIv2 based, there are no CSIv2 Client
          * Credentials, and this attribute is null. In this case,
          * the user should try the
-         * <a href="TransportSecurity.SecurityCurrent.html>
+         * <a href="TransportSecurity.SecurityCurrent.html">
          * TransportSecurity::SecurityCurrent</a>,
          * as the request may have come over a secure or
          * insecure transport, such as IIOP or TLS, without a CSIv2

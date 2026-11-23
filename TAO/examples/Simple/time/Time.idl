@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /// Defines operations that return the current time of day and shut down
 /// the server.
 interface Time

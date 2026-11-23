@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #include "Receiver.idl"
 
 /// Implemented by the simple chat server to broadcast messages from one

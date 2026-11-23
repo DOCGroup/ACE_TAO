@@ -2,7 +2,7 @@
 /**
  * @file test.idl
  *
- * Simple IDL file to test PortableInterceptor/ORB::shutdown()
+ * Simple IDL file to test PortableInterceptor and @c ORB::shutdown()
  * semantics.
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>

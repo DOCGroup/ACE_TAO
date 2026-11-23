@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /// Implemented by simple chat clients; the chat server calls its operations.
 interface Receiver
 {

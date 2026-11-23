@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /// Defines an interface that encapsulates operations that cube numbers.
 ///
 /// This interface encapsulates operations that cube octets, shorts,
