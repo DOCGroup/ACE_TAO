@@ -130,7 +130,7 @@ ACE_Configuration::expand_path (const ACE_Configuration_Section_Key& key,
 {
   // Make a copy of key
   ACE_Configuration_Section_Key current_section = key;
-  std::unique_ptr<ACE_TCHAR[], ACE_Array_Deleter<ACE_TCHAR>> pData (path_in.rep ());
+  std::unique_ptr<ACE_TCHAR[], ACE_Array_Deleter<ACE_TCHAR>> const pData (path_in.rep ());
   ACE_Tokenizer parser (pData.get ());
   parser.delimiter_replace ('\\', '\0');
   parser.delimiter_replace ('/', '\0');
@@ -334,7 +334,7 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
                         valueName.c_str (),
                         thisData,
                         thisLength);
-                      std::unique_ptr<char[], ACE_Array_Deleter<char>> thisDataOwner (
+                      std::unique_ptr<char[], ACE_Array_Deleter<char>> const thisDataOwner (
                         static_cast<char *> (thisData));
                       if (this_result != 0)
                         {
@@ -350,7 +350,7 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
                             valueName.c_str (),
                             rhsData,
                             rhsLength);
-                          std::unique_ptr<char[], ACE_Array_Deleter<char>> rhsDataOwner (
+                          std::unique_ptr<char[], ACE_Array_Deleter<char>> const rhsDataOwner (
                             static_cast<char *> (rhsData));
                           if (rhs_result != 0)
                             {
@@ -1192,7 +1192,7 @@ ACE_Configuration_ExtId::operator!= (const ACE_Configuration_ExtId& rhs) const
 u_long
 ACE_Configuration_ExtId::hash () const
 {
-  ACE_TString temp (name_, nullptr, false);
+  ACE_TString const temp (name_, nullptr, false);
   return temp.hash ();
 }
 
@@ -1308,7 +1308,7 @@ ACE_Configuration_Heap::open (const ACE_TCHAR* file_name,
       return -1;
     }
 
-  ACE_MMAP_Memory_Pool::OPTIONS options (base_address);
+  ACE_MMAP_Memory_Pool::OPTIONS const options (base_address);
 
   // Create the allocator with the appropriate options.  The name used
   // for  the lock is the same as one used for the file.
@@ -1390,7 +1390,7 @@ ACE_Configuration_Heap::load_key (const ACE_Configuration_Section_Key& key,
       return -1;
     }
 
-  ACE_TString temp (pKey->path_.get (), nullptr, false);
+  ACE_TString const temp (pKey->path_.get (), nullptr, false);
   name.assign_nocopy (temp);
   return 0;
 }
@@ -1408,7 +1408,7 @@ ACE_Configuration_Heap::add_section (const ACE_Configuration_Section_Key& base,
   }
 
   // Find the base section
-  ACE_Configuration_ExtId ExtId (section.fast_rep ());
+  ACE_Configuration_ExtId const ExtId (section.fast_rep ());
   ACE_Configuration_Section_IntId IntId;
   if (index_->find (ExtId, IntId, allocator_.get ()))
   {
@@ -1416,7 +1416,7 @@ ACE_Configuration_Heap::add_section (const ACE_Configuration_Section_Key& base,
   }
 
   // See if this section already exists
-  ACE_Configuration_ExtId SubSectionExtId (sub_section);
+  ACE_Configuration_ExtId const SubSectionExtId (sub_section);
   int ignored = 0;
 
   if (!IntId.section_hash_map_->find (SubSectionExtId, ignored, allocator_.get ()))
@@ -1439,7 +1439,7 @@ ACE_Configuration_Heap::add_section (const ACE_Configuration_Section_Key& base,
   ACE_TCHAR* pers_name = static_cast<ACE_TCHAR *> (
     allocator_->malloc ((ACE_OS::strlen (sub_section) + 1) * sizeof (ACE_TCHAR)));
   ACE_OS::strcpy (pers_name, sub_section);
-  ACE_Configuration_ExtId SSExtId (pers_name);
+  ACE_Configuration_ExtId const SSExtId (pers_name);
   if (IntId.section_hash_map_->bind (SSExtId, ignored, allocator_.get ()))
     {
       allocator_->free (pers_name);
@@ -1505,8 +1505,8 @@ ACE_Configuration_Heap::new_section (const ACE_TString& section,
           return -1;
         }
 
-      ACE_Configuration_ExtId name (ptr);
-      ACE_Configuration_Section_IntId entry (
+      ACE_Configuration_ExtId const name (ptr);
+      ACE_Configuration_Section_IntId const entry (
         static_cast<VALUE_MAP *> (value_hash_map),
         static_cast<SUBSECTION_MAP *> (section_hash_map));
 
@@ -1576,7 +1576,7 @@ ACE_Configuration_Heap::open_section (const ACE_Configuration_Section_Key& base,
       // Create a substring from the current location until the new found separator
       // Because both separator and sub_section are ACE_TCHAR*, the character size is
       // already taken into account.
-      ACE_TString tsub_section (sub_section);
+      ACE_TString const tsub_section (sub_section);
       ACE_TString const simple_section = tsub_section.substring(0, separator - sub_section);
       int const ret_val = open_simple_section (result, simple_section.c_str(), create, result);
       if (ret_val)
@@ -1611,7 +1611,7 @@ ACE_Configuration_Heap::open_simple_section (const ACE_Configuration_Section_Key
   section += sub_section;
 
   // resolve the section
-  ACE_Configuration_ExtId ExtId (section.fast_rep ());
+  ACE_Configuration_ExtId const ExtId (section.fast_rep ());
   ACE_Configuration_Section_IntId IntId;
 
   if (index_->find (ExtId, IntId, allocator_.get ()))
@@ -1651,7 +1651,7 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
   }
 
   // Find this key
-  ACE_Configuration_ExtId ParentExtId (section.fast_rep ());
+  ACE_Configuration_ExtId const ParentExtId (section.fast_rep ());
   ACE_Configuration_Section_IntId ParentIntId;
   if (index_->find (ParentExtId, ParentIntId, allocator_.get ()))
   {
@@ -1665,7 +1665,7 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
   }
 
   section += sub_section;
-  ACE_Configuration_ExtId SectionExtId (section.fast_rep ());
+  ACE_Configuration_ExtId const SectionExtId (section.fast_rep ());
   SECTION_HASH::ENTRY* section_entry {};
   SECTION_HASH* hashmap = index_;
   if (hashmap->find (SectionExtId, section_entry))
@@ -1702,7 +1702,7 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
     }
 
   // Now remove subkey from parent key
-  ACE_Configuration_ExtId SubSExtId (sub_section);
+  ACE_Configuration_ExtId const SubSExtId (sub_section);
   SUBSECTION_HASH::ENTRY* subsection_entry {};
   if (static_cast<SUBSECTION_HASH *> (ParentIntId.section_hash_map_)->
       find (SubSExtId, subsection_entry))
@@ -1771,7 +1771,7 @@ ACE_Configuration_Heap::enumerate_values (const ACE_Configuration_Section_Key& k
   name = pKey->path_.get ();
 
   // resolve the section
-  ACE_Configuration_ExtId ExtId (pKey->path_.get ());
+  ACE_Configuration_ExtId const ExtId (pKey->path_.get ());
   ACE_Configuration_Section_IntId IntId;
   if (index_->find (ExtId, IntId, allocator_.get ()))
   {
@@ -1826,7 +1826,7 @@ ACE_Configuration_Heap::enumerate_sections (const ACE_Configuration_Section_Key&
   }
 
   // resolve the section
-  ACE_Configuration_ExtId ExtId (pKey->path_.get ());
+  ACE_Configuration_ExtId const ExtId (pKey->path_.get ());
   ACE_Configuration_Section_IntId IntId;
   if (index_->find (ExtId, IntId, allocator_.get ()))
   {
@@ -1877,7 +1877,7 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
     return -1;
   }
 
-  ACE_Configuration_ExtId section_ext (section.fast_rep ());
+  ACE_Configuration_ExtId const section_ext (section.fast_rep ());
   ACE_Configuration_Section_IntId section_int;
   if (index_->find (section_ext, section_int, allocator_.get ()))
   {
@@ -1886,7 +1886,7 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
 
   // Get the entry for this item (if it exists)
   VALUE_HASH::ENTRY* entry {};
-  ACE_Configuration_ExtId item_name (t_name);
+  ACE_Configuration_ExtId const item_name (t_name);
   if (section_int.value_hash_map_->VALUE_HASH::find (item_name, entry) == 0)
     {
       // found item, replace it
@@ -1897,7 +1897,7 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
         static_cast<ACE_TCHAR *> (
           allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR)));
       ACE_OS::strcpy (pers_value, value.fast_rep ());
-      ACE_Configuration_Value_IntId new_value_int (pers_value);
+      ACE_Configuration_Value_IntId const new_value_int (pers_value);
       entry->int_id_ = new_value_int;
     }
   else
@@ -1911,8 +1911,8 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
         static_cast<ACE_TCHAR *> (
           allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR)));
       ACE_OS::strcpy (pers_value, value.fast_rep ());
-      ACE_Configuration_ExtId new_item_name (pers_name);
-      ACE_Configuration_Value_IntId item_value (pers_value);
+      ACE_Configuration_ExtId const new_item_name (pers_name);
+      ACE_Configuration_Value_IntId const item_value (pers_value);
       if (section_int.value_hash_map_->bind (new_item_name, item_value, allocator_.get ()))
         {
           allocator_->free (pers_value);
@@ -1945,7 +1945,7 @@ ACE_Configuration_Heap::set_integer_value (const ACE_Configuration_Section_Key& 
   }
 
   // Find this section
-  ACE_Configuration_ExtId section_ext (section.fast_rep ());
+  ACE_Configuration_ExtId const section_ext (section.fast_rep ());
   ACE_Configuration_Section_IntId section_int;
   if (index_->find (section_ext, section_int, allocator_.get ()))
   {
@@ -1954,11 +1954,11 @@ ACE_Configuration_Heap::set_integer_value (const ACE_Configuration_Section_Key& 
 
   // Get the entry for this item (if it exists)
   VALUE_HASH::ENTRY* entry {};
-  ACE_Configuration_ExtId item_name (t_name);
+  ACE_Configuration_ExtId const item_name (t_name);
   if (section_int.value_hash_map_->VALUE_HASH::find (item_name, entry) == 0)
     {
       // found item, replace it
-      ACE_Configuration_Value_IntId new_value_int (value);
+      ACE_Configuration_Value_IntId const new_value_int (value);
       entry->int_id_ = new_value_int;
     }
   else
@@ -1968,8 +1968,8 @@ ACE_Configuration_Heap::set_integer_value (const ACE_Configuration_Section_Key& 
         static_cast<ACE_TCHAR *> (
           allocator_->malloc ((ACE_OS::strlen (t_name) + 1) * sizeof (ACE_TCHAR)));
       ACE_OS::strcpy (pers_name, t_name);
-      ACE_Configuration_ExtId item_name_pers (pers_name);
-      ACE_Configuration_Value_IntId item_value (value);
+      ACE_Configuration_ExtId const item_name_pers (pers_name);
+      ACE_Configuration_Value_IntId const item_value (value);
       if (section_int.value_hash_map_->bind (item_name_pers, item_value, allocator_.get ()))
         {
           allocator_->free (pers_name);
@@ -2002,7 +2002,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
   }
 
   // Find this section
-  ACE_Configuration_ExtId section_ext (section.fast_rep ());
+  ACE_Configuration_ExtId const section_ext (section.fast_rep ());
   ACE_Configuration_Section_IntId section_int;
   if (index_->find (section_ext, section_int, allocator_.get ()))
   {
@@ -2011,7 +2011,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
 
   // Get the entry for this item (if it exists)
   VALUE_HASH::ENTRY* entry {};
-  ACE_Configuration_ExtId item_name (t_name);
+  ACE_Configuration_ExtId const item_name (t_name);
   if (section_int.value_hash_map_->VALUE_HASH::find (item_name, entry) == 0)
     {
       // found item, replace it
@@ -2020,7 +2020,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
       // Allocate the new value in this heap
       ACE_TCHAR* pers_value = static_cast<ACE_TCHAR *> (allocator_->malloc (length));
       std::memcpy (pers_value, data, length);
-      ACE_Configuration_Value_IntId new_value_int (pers_value, length);
+      ACE_Configuration_Value_IntId const new_value_int (pers_value, length);
       entry->int_id_ = new_value_int;
     }
   else
@@ -2032,8 +2032,8 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
       ACE_OS::strcpy (pers_name, t_name);
       ACE_TCHAR* pers_value = static_cast<ACE_TCHAR *> (allocator_->malloc (length));
       std::memcpy (pers_value, data, length);
-      ACE_Configuration_ExtId item_name_pers (pers_name);
-      ACE_Configuration_Value_IntId item_value (pers_value, length);
+      ACE_Configuration_ExtId const item_name_pers (pers_name);
+      ACE_Configuration_Value_IntId const item_value (pers_value, length);
       if (section_int.value_hash_map_->bind (item_name_pers, item_value, allocator_.get ()))
         {
           allocator_->free (pers_value);
@@ -2066,7 +2066,7 @@ ACE_Configuration_Heap::get_string_value (const ACE_Configuration_Section_Key& k
   }
 
   // Find this section
-  ACE_Configuration_ExtId ExtId (section.fast_rep ());
+  ACE_Configuration_ExtId const ExtId (section.fast_rep ());
   ACE_Configuration_Section_IntId IntId;
   if (index_->find (ExtId, IntId, allocator_.get ()))
   {
@@ -2074,7 +2074,7 @@ ACE_Configuration_Heap::get_string_value (const ACE_Configuration_Section_Key& k
   }
 
   // See if it exists first
-  ACE_Configuration_ExtId VExtId (t_name);
+  ACE_Configuration_ExtId const VExtId (t_name);
   ACE_Configuration_Value_IntId VIntId;
   if (IntId.value_hash_map_->find (VExtId, VIntId, allocator_.get ()))
   {
@@ -2115,7 +2115,7 @@ ACE_Configuration_Heap::get_integer_value (const ACE_Configuration_Section_Key& 
     }
 
   // Find this section
-  ACE_Configuration_ExtId ExtId (section.fast_rep ());
+  ACE_Configuration_ExtId const ExtId (section.fast_rep ());
   ACE_Configuration_Section_IntId IntId;
 
   if (index_->find (ExtId, IntId, allocator_.get ()) != 0)
@@ -2124,7 +2124,7 @@ ACE_Configuration_Heap::get_integer_value (const ACE_Configuration_Section_Key& 
     }
 
   // See if it exists first
-  ACE_Configuration_ExtId VExtId (t_name);
+  ACE_Configuration_ExtId const VExtId (t_name);
   ACE_Configuration_Value_IntId VIntId;
 
   if (IntId.value_hash_map_->find (VExtId, VIntId, allocator_.get ()) != 0)
@@ -2166,14 +2166,14 @@ ACE_Configuration_Heap::get_binary_value (
   }
 
   // Find this section
-  ACE_Configuration_ExtId ExtId (section.fast_rep ());
+  ACE_Configuration_ExtId const ExtId (section.fast_rep ());
   ACE_Configuration_Section_IntId IntId;
   if (index_->find (ExtId, IntId, allocator_.get ()))
   {
     return -1;    // section does not exist
   }
 
-  ACE_Configuration_ExtId VExtId (t_name);
+  ACE_Configuration_ExtId const VExtId (t_name);
   ACE_Configuration_Value_IntId VIntId;
   // See if it exists first
   if (IntId.value_hash_map_->find (VExtId, VIntId, allocator_.get ()))
@@ -2219,7 +2219,7 @@ ACE_Configuration_Heap::find_value (const ACE_Configuration_Section_Key& key,
   }
 
   // Find this section
-  ACE_Configuration_ExtId ExtId (section.fast_rep ());
+  ACE_Configuration_ExtId const ExtId (section.fast_rep ());
   ACE_Configuration_Section_IntId IntId;
   if (index_->find (ExtId, IntId, allocator_.get ()))
   {
@@ -2227,7 +2227,7 @@ ACE_Configuration_Heap::find_value (const ACE_Configuration_Section_Key& key,
   }
 
   // Find it
-  ACE_Configuration_ExtId ValueExtId (t_name);
+  ACE_Configuration_ExtId const ValueExtId (t_name);
   VALUE_HASH::ENTRY* value_entry {};
   if (static_cast<VALUE_HASH *> (IntId.value_hash_map_)->find (ValueExtId, value_entry))
   {
@@ -2257,7 +2257,7 @@ ACE_Configuration_Heap::remove_value (const ACE_Configuration_Section_Key& key,
   }
 
   // Find this section
-  ACE_Configuration_ExtId ExtId (section.fast_rep ());
+  ACE_Configuration_ExtId const ExtId (section.fast_rep ());
   ACE_Configuration_Section_IntId IntId;
   if (index_->find (ExtId, IntId, allocator_.get ()))
   {
@@ -2265,7 +2265,7 @@ ACE_Configuration_Heap::remove_value (const ACE_Configuration_Section_Key& key,
   }
 
   // Find it
-  ACE_Configuration_ExtId ValueExtId (t_name);
+  ACE_Configuration_ExtId const ValueExtId (t_name);
   VALUE_HASH::ENTRY* value_entry {};
   if (static_cast<VALUE_HASH *> (IntId.value_hash_map_)->find (ValueExtId, value_entry))
   {
