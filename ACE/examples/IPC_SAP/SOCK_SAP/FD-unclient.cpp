@@ -15,7 +15,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   const ACE_TCHAR *rendezvous = argc > 2 ? argv[2] : ACE_DEFAULT_RENDEZVOUS;
 
   ACE_LSOCK_Stream cli_stream;
-  ACE_UNIX_Addr addr (rendezvous);
+  ACE_UNIX_Addr const addr (rendezvous);
 
   // Establish the connection with server.
   ACE_LSOCK_Connector connector;

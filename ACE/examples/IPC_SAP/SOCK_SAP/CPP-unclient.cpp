@@ -15,7 +15,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_LSOCK_Stream cli_stream;
   ACE_LSOCK_Connector con;
-  ACE_UNIX_Addr remote_addr (rendezvous);
+  ACE_UNIX_Addr const remote_addr (rendezvous);
 
   // Establish the connection with server.
   if (con.connect (cli_stream, remote_addr) == -1)
