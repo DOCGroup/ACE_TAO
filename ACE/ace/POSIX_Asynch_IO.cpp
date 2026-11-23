@@ -314,7 +314,7 @@ ACE_POSIX_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
                   -1);
 
   std::unique_ptr<ACE_POSIX_Asynch_Result> result_owner (result);
-  int return_val = proactor->start_aio (result_owner.get (), ACE_POSIX_Proactor::ACE_OPCODE_READ);
+  int const return_val = proactor->start_aio (result_owner.get (), ACE_POSIX_Proactor::ACE_OPCODE_READ);
   if (return_val != -1)
     {
       result_owner.release ();
@@ -437,7 +437,7 @@ ACE_POSIX_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
                   -1);
 
   std::unique_ptr<ACE_POSIX_Asynch_Result> result_owner (result);
-  int return_val = proactor->start_aio (result_owner.get (), ACE_POSIX_Proactor::ACE_OPCODE_WRITE);
+  int const return_val = proactor->start_aio (result_owner.get (), ACE_POSIX_Proactor::ACE_OPCODE_WRITE);
   if (return_val != -1)
     {
       result_owner.release ();
@@ -555,7 +555,7 @@ ACE_POSIX_Asynch_Read_File::read (ACE_Message_Block &message_block,
                   -1);
 
   std::unique_ptr<ACE_POSIX_Asynch_Result> result_owner (result);
-  int return_val = proactor->start_aio (result_owner.get (), ACE_POSIX_Proactor::ACE_OPCODE_READ);
+  int const return_val = proactor->start_aio (result_owner.get (), ACE_POSIX_Proactor::ACE_OPCODE_READ);
   if (return_val != -1)
     {
       result_owner.release ();
@@ -687,7 +687,7 @@ ACE_POSIX_Asynch_Write_File::write (ACE_Message_Block &message_block,
                   -1);
 
   std::unique_ptr<ACE_POSIX_Asynch_Result> result_owner (result);
-  int return_val = proactor->start_aio (result_owner.get (), ACE_POSIX_Proactor::ACE_OPCODE_WRITE);
+  int const return_val = proactor->start_aio (result_owner.get (), ACE_POSIX_Proactor::ACE_OPCODE_WRITE);
   if (return_val != -1)
     {
       result_owner.release ();
@@ -1015,7 +1015,7 @@ ACE_POSIX_Asynch_Accept::cancel ()
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
 
-    int num_cancelled = cancel_uncompleted (flg_open_);
+    int const num_cancelled = cancel_uncompleted (flg_open_);
 
     if (num_cancelled == 0)
       {
@@ -1457,7 +1457,7 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
 
   if (handle == ACE_INVALID_HANDLE)
     {
-      int protocol_family = remote_sap.get_type ();
+      int const protocol_family = remote_sap.get_type ();
 
       handle = ACE_OS::socket (protocol_family,
                                SOCK_STREAM,
@@ -1522,7 +1522,7 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
 
   for (;;)
     {
-      int rc = ACE_OS::connect
+      int const rc = ACE_OS::connect
         (handle,
          reinterpret_cast<sockaddr *> (remote_sap.get_addr ()),
          remote_sap.get_size ());
@@ -2249,7 +2249,7 @@ ACE_POSIX_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
   std::unique_ptr<ACE_POSIX_Asynch_Transmit_Handler> transmit_handler_owner (
     transmit_handler);
 
-  int return_val = transmit_handler_owner->transmit ();
+  int const return_val = transmit_handler_owner->transmit ();
 
   if (return_val == -1)
     {
@@ -2479,7 +2479,7 @@ ACE_POSIX_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
                   -1);
 
   std::unique_ptr<ACE_POSIX_Asynch_Result> result_owner (result);
-  int return_val = proactor->start_aio (result_owner.get (), ACE_POSIX_Proactor::ACE_OPCODE_READ);
+  int const return_val = proactor->start_aio (result_owner.get (), ACE_POSIX_Proactor::ACE_OPCODE_READ);
   if (return_val != -1)
     {
       result_owner.release ();
@@ -2531,7 +2531,7 @@ ACE_POSIX_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
                   -1);
 
   std::unique_ptr<ACE_POSIX_Asynch_Result> result_owner (result);
-  int return_val = proactor->start_aio (result_owner.get (), ACE_POSIX_Proactor::ACE_OPCODE_WRITE);
+  int const return_val = proactor->start_aio (result_owner.get (), ACE_POSIX_Proactor::ACE_OPCODE_WRITE);
   if (return_val != -1)
     {
       result_owner.release ();

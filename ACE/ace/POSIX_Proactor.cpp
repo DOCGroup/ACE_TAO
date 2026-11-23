@@ -831,7 +831,7 @@ int ACE_POSIX_AIOCB_Proactor::delete_result_aiocb_list ()
       // Get the error and return status of the aio_ operation.
       int error_status  = 0;
       size_t transfer_count = 0;
-      int flg_completed = this->get_result_status (result_list_[ai],
+      int const flg_completed = this->get_result_status (result_list_[ai],
                                                    error_status,
                                                    transfer_count);
 
@@ -893,7 +893,7 @@ void ACE_POSIX_AIOCB_Proactor::check_max_aio_num ()
   // Officially, the Android OS does not support AIO so if ACE_HAS_AIO_CALLS is defined
   // then a 3rd party library must be in use and this check is invalid.
 
-  long max_os_aio_num = ACE_OS::sysconf (_SC_AIO_MAX);
+  long const max_os_aio_num = ACE_OS::sysconf (_SC_AIO_MAX);
 
   // Define max limit AIO's for concrete OS
   // -1 means that there is no limit, but it is not true
@@ -994,7 +994,7 @@ ACE_POSIX_AIOCB_Proactor::post_completion (ACE_POSIX_Asynch_Result *result)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1));
 
-  int ret_val = this->putq_result (result);
+  int const ret_val = this->putq_result (result);
 
   return ret_val;
 }
@@ -1010,8 +1010,8 @@ ACE_POSIX_AIOCB_Proactor::putq_result (ACE_POSIX_Asynch_Result *result)
       return -1;
     }
 
-  int sig_num = result->signal_number ();
-  int ret_val = this->result_queue_.enqueue_tail (result);
+  int const sig_num = result->signal_number ();
+  int const ret_val = this->result_queue_.enqueue_tail (result);
 
   if (ret_val == -1)
     {
@@ -1450,7 +1450,7 @@ ACE_POSIX_AIOCB_Proactor::start_deferred_aio ()
 
   ACE_POSIX_Asynch_Result *result = result_list_[i];
 
-  int ret_val = start_aio_i (result);
+  int const ret_val = start_aio_i (result);
 
   switch (ret_val)
     {
@@ -1538,7 +1538,7 @@ ACE_POSIX_AIOCB_Proactor::cancel_aio (ACE_HANDLE handle)
           }
         else      // Cancel started aio
           {
-            int rc_cancel = this->cancel_aiocb (asynch_result);
+            int const rc_cancel = this->cancel_aiocb (asynch_result);
 
             if (rc_cancel == 0)    //notification in the future
               {
@@ -1567,7 +1567,7 @@ ACE_POSIX_AIOCB_Proactor::cancel_aiocb (ACE_POSIX_Asynch_Result * result)
 {
   // This method is called from cancel_aio
   // to cancel a previously submitted AIO request
-  int rc = ::aio_cancel (0, result);
+  int const rc = ::aio_cancel (0, result);
 
   // Check the return value and return 0/1/2 appropriately.
   if (rc == AIO_CANCELED)
