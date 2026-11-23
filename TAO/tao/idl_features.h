@@ -6,6 +6,7 @@
  *
  * In C++ it can be used like this if you want to be compatible with older
  * versions of TAO:
+ * @code{.cpp}
  *
  * #include "tao/orbconf.h"
  * #if defined TAO_HAS_IDL_FEATURES && TAO_HAS_IDL_FEATURES
@@ -17,9 +18,11 @@
  * #    define USE_FEATURE
  * #  endif
  * #endif
+ * @endcode
  *
  * In IDL it can be used like this if you want to be compatible with older
  * versions of TAO:
+ * @code{.idl}
  *
  * #if defined __TAO_IDL_FEATURES
  * #  include __TAO_IDL_FEATURES
@@ -27,6 +30,7 @@
  * #    define USE_FEATURE
  * #  endif
  * #endif
+ * @endcode
  *
  * Note that support for annotations and anonymous types in IDL4 predate this
  * file, so they are a potential special case depending on what ACE/TAO is

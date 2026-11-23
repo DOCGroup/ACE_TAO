@@ -51,9 +51,9 @@ namespace TAO
   /**
    * @brief Helper class for TAO_Transport_Cache_Manager
    *
-   * Helper class that wraps the <value> part of the Map or
+   * Helper class that wraps the value part of the Map or
    * table holding the Transport state.: unifies data items, so
-   * they can be stored together as a <value> for a <key> in a
+   * they can be stored together as a value for a key in a
    * table holding the state of the Transport Cache.
    */
   template <typename TRANSPORT_TYPE>

@@ -79,7 +79,7 @@ public:
 
 private:
   /// Extract the object key from the TaggedProfile and store it in
-  /// <object_key_>
+  /// @c object_key_.
   CORBA::Boolean extract_object_key (IOP::TaggedProfile &profile);
 
   /// Unmarshals the received object key

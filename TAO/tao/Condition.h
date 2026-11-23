@@ -62,10 +62,10 @@ public:
   /// @{
 
   /**
-   * Block on condition, or until absolute time-of-day has passed.  If
-   * abstime == 0 use "blocking" <wait> semantics.  Else, if <abstime>
-   * != 0 and the call times out before the condition is signaled
-   * <wait> returns -1 and sets errno to ETIME.
+   * Block on condition, or until absolute time-of-day has passed. If
+   * @a abstime is null, use blocking @c wait() semantics. Otherwise,
+   * if @a abstime is not null and the call times out before the
+   * condition is signaled, @c wait() returns -1 and sets errno to ETIME.
    */
   int wait (const ACE_Time_Value *abstime);
 
@@ -73,12 +73,12 @@ public:
   int wait ();
 
   /**
-   * Block on condition or until absolute time-of-day has passed.  If
-   * abstime == 0 use "blocking" wait() semantics on the <mutex>
-   * passed as a parameter (this is useful if you need to store the
-   * <Condition> in shared memory).  Else, if <abstime> != 0 and the
-   * call times out before the condition is signaled <wait> returns -1
-   * and sets errno to ETIME.
+   * Block on condition or until absolute time-of-day has passed. If
+   * @a abstime is null, use blocking @c wait() semantics on @a mutex
+   * (this is useful if you need to store @c TAO_Condition in shared
+   * memory). Otherwise, if @a abstime is not null and the call times
+   * out before the condition is signaled, @c wait() returns -1 and
+   * sets errno to ETIME.
    */
   int wait (MUTEX &mutex, const ACE_Time_Value *abstime = nullptr);
 

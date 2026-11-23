@@ -719,7 +719,7 @@ public:
    * The loaded service in the ORB_Core would determine if the profile
    * selection is going to be made by the services or not. If the
    * services do make the selection they would return the selected
-   * profile through <profile>.
+   * profile through @a profile.
    */
   CORBA::Boolean service_profile_selection (const TAO_MProfile &mprofile,
                                             TAO_Profile  *&profile);
@@ -740,7 +740,7 @@ public:
                                         const TAO_Profile *this_p,
                                         const TAO_Profile *that_p);
 
-  /// Hook for the services to determine the <hash> value of a
+  /// Hook for the services to determine the @c hash value of a
   /// profile.
   /**
    * For details on how this is used please see the FT service

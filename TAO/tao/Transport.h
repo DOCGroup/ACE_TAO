@@ -1098,7 +1098,7 @@ protected:
   /// are going to be enqueued in "incoming_message_queue_"
   TAO::Incoming_Message_Stack incoming_message_stack_;
 
-  /// The queue will start draining no later than <queeing_deadline_>
+  /// The queue will start draining no later than @c current_deadline_
   /// *if* the deadline is
   ACE_Time_Value current_deadline_;
 

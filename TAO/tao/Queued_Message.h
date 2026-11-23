@@ -167,8 +167,6 @@ public:
    * @param byte_count The number of bytes successfully sent.  The
    *                   TAO_Queued_Message should decrement this value
    *                   by the number of bytes that must still be sent.
-   * @return Returns 1 if the TAO_Queued_Message has any more data to
-   *         send.
    */
   virtual void bytes_transferred (size_t &byte_count) = 0;
 

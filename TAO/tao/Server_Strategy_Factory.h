@@ -85,8 +85,8 @@ public:
   ~TAO_Server_Strategy_Factory () override;
 
   /**
-   * Call <open> on various strategies.  This is not performed in
-   * <init> so that the other portions of the ORB have a chance to
+   * Call @c open() on various strategies.  This is not performed in
+   * @c init() so that the other portions of the ORB have a chance to
    * "settle" in their initialization since the strategies herein
    * might need some of that information.
    */

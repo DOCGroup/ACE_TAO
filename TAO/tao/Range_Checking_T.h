@@ -72,7 +72,9 @@ namespace details
  * seen, therefore, the application would also need to define the
  * following macro in their $ACE_ROOT/ace/config.h file:
  *
- * - #define TAO_USER_DEFINED_SEQUENCE_SAFETY_TRAITS_INCLUDE "<filename here>"
+ * @code{.cpp}
+ * #define TAO_USER_DEFINED_SEQUENCE_SAFETY_TRAITS_INCLUDE "<filename here>"
+ * @endcode
  *
  * Likewise, if the application only wanted to check the range for a
  * special type, say some structure MyStruct, then they would provide

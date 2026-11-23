@@ -27,8 +27,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * condition variable.
  *
  * This implementation is to work with the Muxed Transport
- * Mechanism. Here the state variables such as <Condition
- * Variable> etc cannot be kept in the Wait Strategy, since the
+ * Mechanism. Here the state variables such as the condition variable cannot be kept in the Wait Strategy, since the
  * Wait Strategy is per Transport object and here the Transport
  * is Muxed and hence there are multiple threads running in the
  * same Transport context.

@@ -121,7 +121,7 @@ private:
                                  int &major,
                                  int &minor);
 
-  /// Iterator through addrs in the string <iop>, and create an
+  /// Iterator through addrs in the string @c iop, and create an
   /// acceptor for each one.
   int open_i (TAO_ORB_Core *orb_core,
               ACE_Reactor *reactor,

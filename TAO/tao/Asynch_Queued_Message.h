@@ -79,19 +79,19 @@ public:
 
 protected:
   /**
-   * @param buf The buffer that needs to be sent on the wire. The
-   *            buffer will be owned by this class. The buffer will be
-   *            deleted when the destructor is called and hence the
-   *            buffer should always come off the heap!
+   * @param buffer The buffer that needs to be sent on the wire. The
+   *               buffer will be owned by this class. The buffer will be
+   *               deleted when the destructor is called and hence the
+   *               buffer should always come off the heap!
    *
    * @param oc The ORB Core
    *
-   * @param size The size of the buffer <buf> that is being handed
+   * @param size The size of the buffer @c buffer that is being handed
    *             over.
    *
    * @param abs_timeout The time after which this  message should be expired.
    *
-   * @param alloc Allocator used for creating <this> object.
+   * @param alloc Allocator used for creating @c this object.
    */
   TAO_Asynch_Queued_Message (std::unique_ptr<char[]> buffer,
                              TAO_ORB_Core *oc,

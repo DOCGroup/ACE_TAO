@@ -271,12 +271,16 @@ public:
 
 private:
   /// Each "endpoint" is of the form:
+  /// @code{.text}
   ///
-  ///   protocol://V.v@addr1,...,W.w@addrN/
+  /// protocol://V.v@addr1,...,W.w@addrN/
+  /// @endcode
   ///
   /// or:
   ///
-  ///   protocol://addr1,addr2,...,addrN/
+  /// @code{.text}
+  /// protocol://addr1,addr2,...,addrN/
+  /// @endcode
   ///
   /// where "V.v" and "W.w" are optional versions.
   ///

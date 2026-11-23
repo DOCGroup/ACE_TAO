@@ -79,16 +79,16 @@ private:
   int parse_magic_bytes (char const *buf);
 
   /// Extracts the version information from the incoming
-  /// stream. Performs a check for  whether the version information is
-  /// right and sets the information in the <state>
+  /// stream. Performs a check for whether the version information is
+  /// right and sets the information in @c state.
   int get_version_info (char const *buf);
 
   /// Extracts the byte order information from the incoming
-  /// stream. Performs a check for  whether the byte order information
-  /// right and sets the information in the <state>
+  /// stream. Performs a check for whether the byte order information
+  /// is right and sets the information in @c state.
   int get_byte_order_info (char const *buf);
 
-  /// Gets the size of the payload and set the size in the <state>
+  /// Gets the size of the payload and sets it in @c state.
   void get_payload_size (char const *buf);
 
   /// Read the unsigned long from the buffer. The @a buf should just

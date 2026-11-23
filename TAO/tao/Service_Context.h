@@ -37,6 +37,7 @@ namespace TAO
  * list that is passed around with every GIOP request/reply. The
  * definition of the service context list is simply a sequence of the
  * following structures:
+ * @code{.idl}
  * typedef unsigned long ServiceId;
  * struct ServiceContext
  * {
@@ -44,6 +45,7 @@ namespace TAO
  *   sequence <octet>   context_data;
  * };
  * typedef sequence <ServiceContext> ServiceContextList;
+ * @endcode
  *
  * the real motivation behind this class is to consolidate all the
  * marshalling and unmarshalling information pertaining to service

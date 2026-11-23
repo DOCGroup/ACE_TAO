@@ -16,9 +16,9 @@ TAO_Condition<MUTEX>::wait (MUTEX &mutex,
                            abstime);
 }
 
-/// Peform an "alertable" timed wait.  If the argument ABSTIME == 0
-/// then we do a regular cond_wait(), else we do a timed wait for up to
-/// @a abstime
+/// Perform an "alertable" timed wait.  If @a abstime is null, then we
+/// do a regular @c cond_wait(); otherwise, we do a timed wait up to
+/// @a abstime.
 template <class MUTEX> ACE_INLINE int
 TAO_Condition<MUTEX>::wait (const ACE_Time_Value *abstime)
 {

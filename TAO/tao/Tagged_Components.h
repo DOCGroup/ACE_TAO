@@ -36,17 +36,19 @@ constexpr CORBA::ULong TAO_TAG_ENDPOINTS = 0x54414f02U;
  *
  * @brief The policy manager implementation.
  *
- * This class is used to manipulate and access the <components>
+ * This class is used to manipulate and access the @c components
  * field of an IIOP profile (and other GIOP profiles).
  * The definition for that field is simply a sequence of the
  * following structures:
+ * @code{.idl}
  * typedef unsigned long ComponentId;
  * struct TaggedComponent {
- * ComponentId     tag;
- * sequence<octet> component_data;
+ *   ComponentId tag;
+ *   sequence<octet> component_data;
  * };
+ * @endcode
  * the real motivation is to minimize the marshaling and
- * demarshaling of the <component_data> field for certain critical
+ * demarshaling of the @c component_data field for certain critical
  * components.
  */
 class TAO_Export TAO_Tagged_Components

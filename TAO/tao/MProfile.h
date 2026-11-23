@@ -111,7 +111,7 @@ public:
   /// Return the maximum number of profiles that can be stored in this container.
   CORBA::ULong size () const;
 
-  /// Return the profile at position <slot>.  If <slot> is out of range
+  /// Return the profile at position @a slot.  If @a slot is out of range
   /// it returns 0.
   const TAO_Profile* get_profile (CORBA::ULong slot) const;
 
@@ -159,8 +159,8 @@ public:
   CORBA::ULong hash (CORBA::ULong max);
 
 protected:
-  /// This method handle the dynamic allocation of the data member
-  /// <policy_list_>.
+  /// This method handles the dynamic allocation of the data member
+  /// @c policy_list_.
  void create_policy_list ();
 
 public:
