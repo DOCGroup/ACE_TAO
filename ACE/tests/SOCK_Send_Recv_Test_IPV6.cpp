@@ -49,7 +49,7 @@ static ACE_THR_FUNC_RETURN
 client (void *arg)
 {
   ACE_INET_Addr *remote_addr = static_cast<ACE_INET_Addr *> (arg);
-  ACE_INET_Addr server_addr (remote_addr->get_port_number (),
+  ACE_INET_Addr const server_addr (remote_addr->get_port_number (),
                              ACE_IPV6_LOCALHOST);
 
   ACE_SOCK_Stream cli_stream;

@@ -134,7 +134,7 @@ Thread_Pool::start ()
 int
 Thread_Pool::svc ()
 {
-  unsigned long t = ++this->total_activated_threads_;
+  unsigned long const t = ++this->total_activated_threads_;
   if (PRINT_DEBUG_MSGS) // change this to 'true' for debugging
     {
       this->doprint_ = (t > 65530);
@@ -194,7 +194,7 @@ run_main (int, ACE_TCHAR *[])
               ACE_TEXT ("(%P|%t) will try to start and kill up")
               ACE_TEXT (" to %Q threads sequentially\n"),
               static_cast<ACE_UINT64> (MAX_THREAD)));
-  int initial_pool_size = 50;
+  int const initial_pool_size = 50;
 
   // Create the worker tasks.
   Thread_Pool thread_pool (initial_pool_size);

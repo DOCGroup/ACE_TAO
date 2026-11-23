@@ -41,7 +41,7 @@ encode_decode_stream (const ACE_Byte* stream, size_t length)
               ACE_TEXT ("Base64 encoded stream = %C\n"),
               encodeBuf));
 
-  std::unique_ptr<ACE_Byte[]> cleanup_encodeBuf (encodeBuf);
+  std::unique_ptr<ACE_Byte[]> const cleanup_encodeBuf (encodeBuf);
 
   size_t decode_len = 0;
   ACE_Byte* decodeBuf = ACE_Base64::decode (encodeBuf, &decode_len);
@@ -53,7 +53,7 @@ encode_decode_stream (const ACE_Byte* stream, size_t length)
       return -1;
     }
 
-  std::unique_ptr<ACE_Byte[]> cleanup_decodeBuf (decodeBuf);
+  std::unique_ptr<ACE_Byte[]> const cleanup_decodeBuf (decodeBuf);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Decoded Base64 encoded stream = %C\n"),
