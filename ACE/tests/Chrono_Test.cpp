@@ -54,7 +54,7 @@ test_assignments ()
     ACE_Time_Value const tv = ACE_Time_Value { std::chrono::microseconds {10005} };
     errors += tv_test_case(tv, "microseconds (10005)", 0, 10005);
 
-    std::chrono::milliseconds ms_test { tv.msec () };
+    std::chrono::milliseconds const ms_test { tv.msec () };
     if (ms_test.count () != 10)
     {
       ACE_ERROR ((LM_ERROR,
@@ -96,9 +96,9 @@ test_assignments ()
   };
 
   //                       half a day  3 hours   24 minutes 54 seconds
-  time_t expected_sec = { ((12*3600) + (3*3600) + (24*60) + 54 ) * 2 };
+  time_t const expected_sec = { ((12*3600) + (3*3600) + (24*60) + 54 ) * 2 };
   //                              238 milli   754 usec  342 nano (lost)
-  suseconds_t expected_usec = { ((238*1000) + 754 + 0) * 2 };
+  suseconds_t const expected_usec = { ((238*1000) + 754 + 0) * 2 };
   errors += tv_test_case(nsec,
     "two times half a day, 3 hours, 24 minutes, 54 seconds, "
     "238 milliseconds, 754 microseconds and 342 nanoseconds (lost)",
@@ -117,13 +117,13 @@ test_streamers ()
   // Three days, 13 hours, 54 seconds, 25 milliseconds and 132 microseconds
   constexpr int nr_hours { (3*24) + 13 };
 
-  std::chrono::hours day_test_h {nr_hours};
-  std::chrono::seconds day_test_s {54};
-  std::chrono::milliseconds day_test_ms {25};
-  std::chrono::microseconds day_test_us {132};
+  std::chrono::hours const day_test_h {nr_hours};
+  std::chrono::seconds const day_test_s {54};
+  std::chrono::milliseconds const day_test_ms {25};
+  std::chrono::microseconds const day_test_us {132};
 
-  std::chrono::seconds day_test_ts { day_test_h+day_test_s };
-  std::chrono::microseconds day_test_tus { day_test_ms+day_test_us };
+  std::chrono::seconds const day_test_ts { day_test_h+day_test_s };
+  std::chrono::microseconds const day_test_tus { day_test_ms+day_test_us };
   ACE_Time_Value const test_day {
     ACE_Time_Value {
       ACE_Utils::truncate_cast<time_t>(day_test_ts.count ()),
@@ -501,7 +501,7 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Chrono_Test"));
 
-  int errors = test_chrono ();
+  int const errors = test_chrono ();
 
   ACE_END_TEST;
   return errors;

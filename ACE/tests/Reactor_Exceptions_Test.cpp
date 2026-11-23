@@ -57,7 +57,7 @@ My_Handler::handle_input (ACE_HANDLE)
               ACE_TEXT ("Activity occurred on handle %H!\n"),
               ACE_SOCK_Dgram::get_handle ()));
 
-  ssize_t n = ACE_SOCK_Dgram::recv (buf,
+  ssize_t const n = ACE_SOCK_Dgram::recv (buf,
                                     sizeof buf,
                                     from_addr);
   if (n == -1)
@@ -131,10 +131,10 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Starting tracing\n")));
 
-  u_short port = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
+  u_short const port = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
 
-  ACE_INET_Addr local_addr (port);
-  ACE_INET_Addr remote_addr (port, ACE_LOCALHOST, PF_INET);
+  ACE_INET_Addr const local_addr (port);
+  ACE_INET_Addr const remote_addr (port, ACE_LOCALHOST, PF_INET);
   ACE_Reactor reactor (new My_Reactor, true);
 
     ACE_Reactor::instance (std::addressof (reactor));
