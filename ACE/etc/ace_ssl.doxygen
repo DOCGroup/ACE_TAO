@@ -2276,6 +2276,8 @@ INCLUDE_FILE_PATTERNS  =
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
 PREDEFINED             = __ACE_INLINE__ \
+                         ACE_HAS_AIO_CALLS \
+                         OPENSSL_VERSION_NUMBER=0x30000000L \
                          ACE_TEMPLATES_REQUIRE_SOURCE \
                          ACE_BEGIN_VERSIONED_NAMESPACE_DECL \
                          ACE_END_VERSIONED_NAMESPACE_DECL \

@@ -2277,6 +2277,7 @@ INCLUDE_FILE_PATTERNS  =
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
 PREDEFINED             = __ACE_INLINE__ \
+                         ACE_USES_CLASSIC_SVC_CONF=0 \
                          ACE_TEMPLATES_REQUIRE_SOURCE \
                          ACE_BEGIN_VERSIONED_NAMESPACE_DECL \
                          ACE_END_VERSIONED_NAMESPACE_DECL \
