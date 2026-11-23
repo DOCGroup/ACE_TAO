@@ -34,8 +34,8 @@ worker (void *)
       (current_threads_in_first_section);
 
     // Wait according to the number of threads...
-    ACE_Time_Value pause (current_threads_in_first_section.value (),
-                          0);
+    ACE_Time_Value const pause (current_threads_in_first_section.value (),
+                                0);
     ACE_OS::sleep (pause);
   }
 
@@ -45,8 +45,8 @@ worker (void *)
 
     // Wait according to the number of threads inside the previous
     // section...
-    ACE_Time_Value pause (current_threads_in_first_section.value (),
-                          0);
+    ACE_Time_Value const pause (current_threads_in_first_section.value (),
+                                0);
     ACE_OS::sleep (pause);
   }
 
@@ -94,7 +94,7 @@ run_main (int, ACE_TCHAR *[])
                   current_threads_in_second_section.value (),
                   ACE_Thread_Manager::instance ()->count_threads ()));
 
-      ACE_Time_Value pause (1, 0);
+      ACE_Time_Value const pause (1, 0);
       ACE_OS::sleep (pause);
     }
 
