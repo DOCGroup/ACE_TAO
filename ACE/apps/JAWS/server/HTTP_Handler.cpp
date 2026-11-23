@@ -332,6 +332,6 @@ Asynch_HTTP_Handler_Factory::destroy_http_handler (HTTP_Handler &handler,
 HTTP_Handler *
 Asynch_HTTP_Handler_Factory::create_http_handler ()
 {
-  return 0;
+  return nullptr;
 }
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */

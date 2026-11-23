@@ -1767,7 +1767,7 @@ ImR_Locator_i::find_aam (const char *name, bool active)
           return (*i)->_add_ref();
         }
     }
-  return 0;
+  return nullptr;
 }
 
 AsyncAccessManager *
@@ -1781,7 +1781,7 @@ ImR_Locator_i::find_not_running_aam (const char *name, bool active)
           return (*i)->_add_ref();
         }
     }
-  return 0;
+  return nullptr;
 }
 
 AsyncAccessManager *

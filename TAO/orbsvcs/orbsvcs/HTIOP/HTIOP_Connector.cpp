@@ -411,7 +411,7 @@ TAO::HTIOP::Connector::remote_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != OCI_TAG_HTIOP_PROFILE)
   {
-    return 0;
+    return nullptr;
   }
 
   TAO::HTIOP::Endpoint *htiop_endpoint =

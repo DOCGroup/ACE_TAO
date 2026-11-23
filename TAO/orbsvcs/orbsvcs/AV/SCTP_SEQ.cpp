@@ -47,7 +47,7 @@ TAO_AV_SCTP_SEQ_Transport::mtu ()
 ACE_Addr*
 TAO_AV_SCTP_SEQ_Transport::get_peer_addr ()
 {
-  return 0;
+  return nullptr;
 }
 
 ssize_t

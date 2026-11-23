@@ -198,7 +198,7 @@ HTTP_Helper::HTTP_month (int month)
 {
   if (month < 0 || month >= 12)
   {
-    return 0;
+    return nullptr;
   }
 
   return HTTP_Helper::months_[month];

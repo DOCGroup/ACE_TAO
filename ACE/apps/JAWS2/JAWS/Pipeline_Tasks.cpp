@@ -146,10 +146,10 @@ JAWS_Pipeline_Accept_Task::new_handler (JAWS_Data_Block *data)
 {
   // Create a new handler and message block
   JAWS_Data_Block *ndb = new JAWS_Data_Block (*data);
-  if (ndb == 0)
+  if (ndb == nullptr)
     {
       JAWS_TRACE ("JAWS_Pipeline_Accept_Task::new_handler, failed DB");
-      return 0;
+      return nullptr;
     }
 
   JAWS_Dispatch_Policy *policy =
@@ -157,10 +157,10 @@ JAWS_Pipeline_Accept_Task::new_handler (JAWS_Data_Block *data)
   JAWS_IO_Handler_Factory *ioh_factory = policy->ioh_factory ();
 
   JAWS_IO_Handler *nioh = ioh_factory->create_io_handler ();
-  if (nioh == 0)
+  if (nioh == nullptr)
     {
       delete ndb;
-      return 0;
+      return nullptr;
     }
 
   ndb->io_handler (nioh);

@@ -532,7 +532,7 @@ TAO_AV_Transport::~TAO_AV_Transport () = default;
 ACE_Addr*
 TAO_AV_Transport::get_local_addr ()
 {
-  return 0;
+  return nullptr;
 }
 
 // TAO_AV_Flow_Handler
@@ -722,13 +722,13 @@ TAO_AV_Transport_Factory::match_protocol (char const * /* protocol_string */)
 TAO_AV_Acceptor *
 TAO_AV_Transport_Factory::make_acceptor ()
 {
-  return 0;
+  return nullptr;
 }
 
 TAO_AV_Connector *
 TAO_AV_Transport_Factory::make_connector ()
 {
-  return 0;
+  return nullptr;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
