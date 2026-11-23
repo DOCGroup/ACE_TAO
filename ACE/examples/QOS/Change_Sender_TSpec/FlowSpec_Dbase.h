@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    FlowSpec_Dbase.h

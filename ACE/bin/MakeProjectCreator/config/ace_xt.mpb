@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project: ace_x11 {
   // this feature by default is set to 1 as projects dependent on Xt has their own features
   requires += xt

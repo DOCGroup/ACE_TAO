@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Perf_IDL): taoidldefaults, strategies {
   IDL_Files {
     callback.idl

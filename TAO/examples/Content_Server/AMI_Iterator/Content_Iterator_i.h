@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file     Content_Iterator_i.h

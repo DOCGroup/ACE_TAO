@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    ConstantDef_i.h

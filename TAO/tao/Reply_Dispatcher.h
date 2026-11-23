@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file     Reply_Dispatcher.h

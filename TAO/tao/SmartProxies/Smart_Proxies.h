@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Smart_Proxies.h

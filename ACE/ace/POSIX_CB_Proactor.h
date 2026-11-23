@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    POSIX_CB_Proactor.h

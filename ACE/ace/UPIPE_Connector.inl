@@ -1,4 +1,3 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Creates a local ACE_UPIPE.

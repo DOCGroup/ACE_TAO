@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Service_Context_Handler.h

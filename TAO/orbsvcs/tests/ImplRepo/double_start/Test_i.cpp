@@ -1,4 +1,3 @@
-/* -*- C++ -*-  */
 
 #include "Test_i.h"
 #include "ace/Log_Msg.h"

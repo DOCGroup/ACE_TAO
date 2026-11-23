@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file     Endpoint_Value_Impl.h
  *

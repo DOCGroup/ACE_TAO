@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file SupplierAdmin_Command.h
  *

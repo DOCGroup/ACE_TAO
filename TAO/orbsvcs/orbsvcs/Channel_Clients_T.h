@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Channel_Clients_T.h

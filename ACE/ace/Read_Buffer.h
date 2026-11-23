@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Read_Buffer.h

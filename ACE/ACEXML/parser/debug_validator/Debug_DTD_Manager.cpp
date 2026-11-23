@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 #include "ACEXML/common/SAXExceptions.h"
 #include "ACEXML/parser/debug_validator/Debug_DTD_Manager.h"

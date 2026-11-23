@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file   LB_LoadAlert.h

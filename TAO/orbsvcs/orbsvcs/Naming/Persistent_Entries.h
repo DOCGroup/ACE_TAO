@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Persistent_Entries.h

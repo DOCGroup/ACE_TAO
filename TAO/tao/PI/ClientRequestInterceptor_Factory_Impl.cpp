@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file ClientRequestInterceptor_Factory_Impl.cpp

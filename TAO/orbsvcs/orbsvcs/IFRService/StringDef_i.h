@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    StringDef_i.h

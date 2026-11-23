@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    TLI_Acceptor.h

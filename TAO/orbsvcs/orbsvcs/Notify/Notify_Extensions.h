@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef TAO_NOTIFY_EXTENSIONS_H
 #define TAO_NOTIFY_EXTENSIONS_H
 

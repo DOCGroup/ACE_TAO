@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Collocated_Invocation.h

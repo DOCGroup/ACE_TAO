@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/Reactor.h"
 #include "ace/Signal.h"
 #include "ace/Sig_Handler.h"

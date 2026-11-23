@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/EndpointPolicy/EndpointPolicy_Factory.h"
 
 #include "tao/EndpointPolicy/EndpointPolicy_i.h"

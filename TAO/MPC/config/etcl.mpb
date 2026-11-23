@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : tao_etcl, ace_etcl_parser {
   tagchecks += Notify
 }

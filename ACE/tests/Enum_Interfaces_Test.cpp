@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Enum_Interfaces_Test.cpp

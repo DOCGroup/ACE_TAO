@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "RedGreen_Test.h"
 
 int

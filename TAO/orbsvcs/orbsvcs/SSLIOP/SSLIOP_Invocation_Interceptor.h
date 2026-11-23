@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   SSLIOP_Invocation_Interceptor.h

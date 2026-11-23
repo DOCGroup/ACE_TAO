@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   CDR_Stream.h

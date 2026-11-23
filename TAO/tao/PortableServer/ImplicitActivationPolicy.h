@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file ImplicitActivationPolicy.h
  *

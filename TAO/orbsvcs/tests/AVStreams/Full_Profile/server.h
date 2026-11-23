@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 #ifndef TAO_AV_FULL_PROFILE_SERVER_H
 #define TAO_AV_FULL_PROFILE_SERVER_H

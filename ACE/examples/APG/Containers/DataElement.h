@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #if !defined(DATAELEMENT_H)
 #define DATAELEMENT_H
 

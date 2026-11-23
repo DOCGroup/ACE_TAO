@@ -1,4 +1,3 @@
-/* -*- C++ -*-  */
 #include "Subscribe.h"
 #include <cstring>
 #include <memory>

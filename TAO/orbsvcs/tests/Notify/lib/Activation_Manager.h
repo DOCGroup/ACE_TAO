@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Activation_Manager.h
  *

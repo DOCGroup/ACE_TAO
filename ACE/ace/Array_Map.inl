@@ -1,4 +1,3 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename Key, typename Value, class EqualTo, class Alloc>

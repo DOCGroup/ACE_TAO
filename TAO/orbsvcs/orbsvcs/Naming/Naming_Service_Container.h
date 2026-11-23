@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Naming_Service_Container.h

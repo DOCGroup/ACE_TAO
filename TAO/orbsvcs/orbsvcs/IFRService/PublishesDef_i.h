@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    PublishesDef_i.h

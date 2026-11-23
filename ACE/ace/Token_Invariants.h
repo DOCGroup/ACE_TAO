@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Token_Invariants.h

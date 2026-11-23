@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #if !defined (IOR_MCAST_CLIENT_I_H)
 #define IOR_MCAST_CLIENT_I_H
 

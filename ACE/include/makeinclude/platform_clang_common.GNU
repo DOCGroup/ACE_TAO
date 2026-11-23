@@ -1,4 +1,3 @@
-# -*- Makefile -*-
 
 ifneq ($(CROSS_COMPILE),)
   CROSS-COMPILE = 1

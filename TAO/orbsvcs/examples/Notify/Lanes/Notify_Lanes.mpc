@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Supplier): rtcorba, rtnotify, avoids_minimum_corba, naming {
   exename = Supplier
   Source_Files {

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifdef ACE_HAS_NETLINK
 
 #include <cstring>

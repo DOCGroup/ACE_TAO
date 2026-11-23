@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file   Notify_Default_CO_Factory.h
  *

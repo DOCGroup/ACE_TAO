@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file    Gadget_Impl.h
  *

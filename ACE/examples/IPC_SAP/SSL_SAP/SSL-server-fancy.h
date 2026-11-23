@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // This file defines the Options class for SSL-server-fancy.
 // IBM C++ compiler'd template auto-instantiator needs this in a separate file.
 

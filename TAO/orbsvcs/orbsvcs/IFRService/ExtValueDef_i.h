@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    ExtValueDef_i.h

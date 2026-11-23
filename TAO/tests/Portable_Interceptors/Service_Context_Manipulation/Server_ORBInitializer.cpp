@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 #include "Server_ORBInitializer.h"
 #include "server_interceptor.h"

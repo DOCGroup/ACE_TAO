@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "orbsvcs/Time/TAO_UTO.h"
 #include "orbsvcs/Time/TAO_TIO.h"
 

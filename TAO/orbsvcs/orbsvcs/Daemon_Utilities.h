@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef _DAEMON_UTILS_H
 #define _DAEMON_UTILS_H
 #include /**/ "ace/pre.h"

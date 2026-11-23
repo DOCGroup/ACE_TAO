@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    ValueDef_i.h

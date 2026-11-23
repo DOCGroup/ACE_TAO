@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_errno.h"
 

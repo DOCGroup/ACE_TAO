@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/SmartProxies/Smart_Proxies.h"
 
 #if !defined (__ACE_INLINE__)

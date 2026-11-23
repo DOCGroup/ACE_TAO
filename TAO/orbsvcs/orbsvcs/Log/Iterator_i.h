@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Iterator_i.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/CSD_Framework/CSD_Object_Adapter.h"
 #include "tao/CSD_Framework/CSD_Strategy_Proxy.h"
 #include "tao/CSD_Framework/CSD_POA.h"

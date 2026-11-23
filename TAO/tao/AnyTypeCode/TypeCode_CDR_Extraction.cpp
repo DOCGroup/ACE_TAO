@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/AnyTypeCode/TypeCode_CDR_Extraction.h"
 
 #include "tao/AnyTypeCode/TypeCode_Constants.h"

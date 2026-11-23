@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/Event_Handler.h"
 #include "ace/Naming_Context.h"
 #include <string>

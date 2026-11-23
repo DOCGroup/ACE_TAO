@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // File: Obj_Module.h
 
 // Author: Phil Mesnier

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 interface ThreeTier
 {
   /// record the occurrence of a tick

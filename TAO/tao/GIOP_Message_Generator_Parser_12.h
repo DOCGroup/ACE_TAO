@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   GIOP_Message_Generator_Parser_12.h

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /* Defines the class used to dynamically link in the benchmark tests */
 
 #ifndef ACE_BENCHMARK_PERFORMANCE_H

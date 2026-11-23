@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    ImR_Client.h

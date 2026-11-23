@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
 
 #ifndef __ACE_INLINE__

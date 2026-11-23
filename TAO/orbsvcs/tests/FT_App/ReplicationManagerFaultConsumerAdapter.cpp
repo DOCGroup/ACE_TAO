@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ReplicationManagerFaultConsumerAdapter.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"

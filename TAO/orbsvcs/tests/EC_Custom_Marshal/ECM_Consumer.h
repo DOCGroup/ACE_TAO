@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  * @file ECM_Consumer.h
  * @brief Consumer driver for the custom marshaling event-channel test.

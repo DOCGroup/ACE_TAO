@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    FT_Location_Index_Map.h

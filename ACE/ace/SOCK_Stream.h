@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    SOCK_Stream.h

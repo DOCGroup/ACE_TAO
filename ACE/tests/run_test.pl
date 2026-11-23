@@ -2,7 +2,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# -*- perl -*-
 # This file is for running the tests in the ACE tests directory.
 # It is usually used for auto_compiles.
 

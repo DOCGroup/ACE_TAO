@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef SERVER_I_H
 #define SERVER_I_H
 

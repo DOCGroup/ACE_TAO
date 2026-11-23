@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_POLICY_H
 #define JAWS_POLICY_H
 

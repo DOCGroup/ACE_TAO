@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Client): taoclient, pi, interceptors {
   Source_Files {
     Client_ORBInitializer.cpp

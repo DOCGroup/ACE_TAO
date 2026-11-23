@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Hash_Iterator_i.h

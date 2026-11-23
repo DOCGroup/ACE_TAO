@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef HTID_REQUESTOR_H
 #define HTID_REQUESTOR_H
 #include /**/ "ace/pre.h"

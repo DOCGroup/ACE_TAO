@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/AnyTypeCode/Sequence_TypeCode_Static.h"
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/TypeCode_Traits.h"

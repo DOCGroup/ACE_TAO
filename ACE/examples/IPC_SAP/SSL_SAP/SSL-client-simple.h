@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /// This file defines the Options class for SSL-client-simple. IBM C++
 /// compiler's template auto-instantiator needs this in a separate file.
 

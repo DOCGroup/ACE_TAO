@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file   MT_Disconnect.h
  *

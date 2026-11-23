@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file   Validate_Client_Task.h
  *

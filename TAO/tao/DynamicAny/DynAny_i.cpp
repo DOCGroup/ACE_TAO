@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"

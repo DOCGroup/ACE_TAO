@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Network_Priority_Mapping.h

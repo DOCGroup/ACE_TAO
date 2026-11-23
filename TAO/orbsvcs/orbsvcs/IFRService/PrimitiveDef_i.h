@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    PrimitiveDef_i.h

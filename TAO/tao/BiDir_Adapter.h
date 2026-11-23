@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    BiDir_Adapter.h

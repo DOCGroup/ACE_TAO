@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*UB_Simple_Types) : seq_tests, taoexe {
   Source_Files {
     Unbounded_Simple_Types.cpp

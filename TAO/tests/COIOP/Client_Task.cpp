@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "Client_Task.h"
 #include "tao/ORB_Core.h"
 #include "TestC.h"

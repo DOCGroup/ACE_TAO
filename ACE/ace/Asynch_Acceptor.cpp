@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #ifndef ACE_ASYNCH_ACCEPTOR_C
 #define ACE_ASYNCH_ACCEPTOR_C
 

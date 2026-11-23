@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    IDLType_i.h

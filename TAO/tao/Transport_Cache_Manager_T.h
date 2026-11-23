@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Transport_Cache_Manager_T.h

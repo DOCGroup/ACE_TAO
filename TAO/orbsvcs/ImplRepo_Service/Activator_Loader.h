@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef TAO_IMR_ACTIVATOR_LOADER_H
 #define TAO_IMR_ACTIVATOR_LOADER_H
 

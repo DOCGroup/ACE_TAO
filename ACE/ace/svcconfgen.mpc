@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(ace_svcconf_gen) {
   requires += ace_svcconf_gen
   custom_only = 1

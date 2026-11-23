@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /// A RecordingDevice that listens to a socket and collects text.
 
 #ifndef RECORDING_DEVICE_TEXT_H

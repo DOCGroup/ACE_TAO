@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Compression_Manager.h

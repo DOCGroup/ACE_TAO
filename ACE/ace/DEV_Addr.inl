@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_string.h"
 #include "ace/Global_Macros.h"
 #include "ace/os_include/sys/os_socket.h"

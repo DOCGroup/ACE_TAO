@@ -1,4 +1,3 @@
-/* -*-C++-*- */
 #ifndef ASN1
 #define ASN1
 /**

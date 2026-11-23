@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   ConnectionHandler_T.h

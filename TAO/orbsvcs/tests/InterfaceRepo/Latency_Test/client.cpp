@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "Latency_Query_Client.h"
 
 int

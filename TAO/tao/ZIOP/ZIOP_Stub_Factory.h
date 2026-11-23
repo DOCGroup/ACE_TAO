@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    ZIOP_Stub_Factory.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file     ValueFactory.h

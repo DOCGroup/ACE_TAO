@@ -1,4 +1,3 @@
-// -*- MPC -*-
 feature(ace_for_tao) {
   macros += ACE_LIB_NAME=\\"ACE_FOR_TAO\\"
 }

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    HTBP_Outside_Squid_Filter.h

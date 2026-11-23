@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    CSD_TP_Cancel_Visitor.h
  *

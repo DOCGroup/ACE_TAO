@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "File_i.h"
 #include "tao/debug.h"
 #include "ace/SString.h"

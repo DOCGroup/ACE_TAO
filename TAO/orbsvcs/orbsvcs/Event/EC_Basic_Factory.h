@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   EC_Basic_Factory.h

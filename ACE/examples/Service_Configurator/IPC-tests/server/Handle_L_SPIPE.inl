@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 #include "ace/SPIPE_Stream.h"
 

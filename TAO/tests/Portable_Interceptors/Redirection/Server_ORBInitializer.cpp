@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "Server_ORBInitializer.h"
 
 #if TAO_HAS_INTERCEPTORS == 1

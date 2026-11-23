@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  * @file ECT_Driver.h
  * @brief Base interface for Event Channel throughput test drivers.

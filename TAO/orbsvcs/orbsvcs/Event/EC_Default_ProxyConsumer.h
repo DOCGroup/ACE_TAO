@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   EC_Default_ProxyConsumer.h

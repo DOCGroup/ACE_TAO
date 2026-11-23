@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Consumer):  orbsvcsexe, ftrteventclient, strategies {
   exename = consumer
 

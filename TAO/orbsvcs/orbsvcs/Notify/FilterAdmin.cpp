@@ -1,4 +1,3 @@
-/* -*- C++ -*-  */
 
 #include "orbsvcs/Notify/FilterAdmin.h"
 

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    SV_Message.h

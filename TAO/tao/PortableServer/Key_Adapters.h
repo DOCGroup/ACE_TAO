@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file    Key_Adapters.h
  *

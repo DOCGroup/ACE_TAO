@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(RTSchedTestLib): naming, rtscheduling, negotiate_codesets, rtportableserver, rtcorba {
   after += Job
   libs += Job RTSchedSynch

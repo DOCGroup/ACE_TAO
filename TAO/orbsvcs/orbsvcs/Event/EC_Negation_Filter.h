@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   EC_Negation_Filter.h

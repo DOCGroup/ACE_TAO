@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 #ifndef DISTRIBUTABLE_THREAD_H
 #define DISTRIBUTABLE_THREAD_H

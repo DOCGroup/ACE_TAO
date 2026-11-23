@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Log_Msg_Callback.h

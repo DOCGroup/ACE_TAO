@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project {
   // We tested with all orbsvcs libs going to $(TAO_ROOT)/orbsvcs/lib, but
   // decided that it was easier to deal with all libs in one place.

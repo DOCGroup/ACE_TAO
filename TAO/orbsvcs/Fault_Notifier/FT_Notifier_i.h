@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    FT_Notifier_i.h
  *

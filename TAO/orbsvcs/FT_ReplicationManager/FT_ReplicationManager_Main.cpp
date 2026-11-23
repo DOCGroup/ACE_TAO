@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file    FT_ReplicationManager_Main.cpp
  *

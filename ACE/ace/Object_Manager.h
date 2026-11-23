@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Object_Manager.h

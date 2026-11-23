@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file Linux_Network_Interface_Monitor.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Tagged_Components.h

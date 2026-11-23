@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   RequestInfo_Util.h

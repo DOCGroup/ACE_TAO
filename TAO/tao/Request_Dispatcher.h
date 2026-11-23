@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Request_Dispatcher.h

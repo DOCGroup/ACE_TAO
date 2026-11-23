@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*idl): taoidldefaults, anytypecode {
   IDL_Files {
     Quoter.idl

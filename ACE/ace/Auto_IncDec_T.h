@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Auto_IncDec_T.h

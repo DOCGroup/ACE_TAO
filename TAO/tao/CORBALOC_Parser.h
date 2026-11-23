@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   CORBALOC_Parser.h

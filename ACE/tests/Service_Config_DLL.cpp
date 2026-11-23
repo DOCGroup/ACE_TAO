@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    Service_Config_DLL.cpp
  *

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    os_unistd.h

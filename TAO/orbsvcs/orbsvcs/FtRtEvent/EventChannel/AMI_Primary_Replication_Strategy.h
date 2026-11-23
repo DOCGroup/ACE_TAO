@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   AMI_Primary_Replication_Strategy.h

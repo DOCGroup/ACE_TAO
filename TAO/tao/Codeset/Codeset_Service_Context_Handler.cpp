@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Codeset/Codeset_Service_Context_Handler.h"
 
 #include "tao/CDR.h"

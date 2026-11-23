@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*event_handler_t) : aceexe {
   exename = event_handler_t
   Source_Files {

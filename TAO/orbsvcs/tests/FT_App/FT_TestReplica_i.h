@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file    FT_TestReplica_i.h
  *

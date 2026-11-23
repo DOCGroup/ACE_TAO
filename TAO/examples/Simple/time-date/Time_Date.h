@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/Task.h"
 #include "ace/svc_export.h"
 #include "tao/default_resource.h"

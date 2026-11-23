@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "orbsvcs/Security/SL2_QOPPolicy.h"
 #include "tao/ORB_Constants.h"
 

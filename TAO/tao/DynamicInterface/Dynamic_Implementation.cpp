@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/DynamicInterface/Dynamic_Implementation.h"
 #include "tao/DynamicInterface/Server_Request.h"
 #include "tao/ORB_Core.h"

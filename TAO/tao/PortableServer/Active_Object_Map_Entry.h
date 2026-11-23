@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    Active_Object_Map_Entry.h
  *

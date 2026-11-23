@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "Server_Request_Interceptor.h"
 #include "tao/ORB_Constants.h"

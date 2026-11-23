@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    HTIOP_Connector.h

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Buffering_Strategy.h
  *

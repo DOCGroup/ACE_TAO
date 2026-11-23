@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "Server_ORBInitializer.h"
 #include "test_i.h"
 #include "tao/ORBInitializer_Registry.h"

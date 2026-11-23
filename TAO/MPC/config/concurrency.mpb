@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : orbsvcslib {
   after     += CosConcurrency
   libs      += TAO_CosConcurrency

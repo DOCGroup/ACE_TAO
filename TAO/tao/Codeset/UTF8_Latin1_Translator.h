@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    UTF8_Latin1_Translator.h

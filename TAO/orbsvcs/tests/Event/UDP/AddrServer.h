@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file   AddrServer.h
  *

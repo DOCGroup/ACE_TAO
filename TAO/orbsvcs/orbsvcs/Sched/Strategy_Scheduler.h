@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Strategy_Scheduler.h

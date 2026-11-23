@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Command_Factory_T.h
  *

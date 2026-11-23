@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file Connect_Strategy.h

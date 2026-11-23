@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    BiDirPolicy_Validator.h

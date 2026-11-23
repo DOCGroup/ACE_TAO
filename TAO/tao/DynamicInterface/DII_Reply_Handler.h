@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file DII_Reply_Handler.h

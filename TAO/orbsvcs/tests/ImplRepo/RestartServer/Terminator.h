@@ -1,4 +1,3 @@
-/* -*- C++ -*-  */
 
 #include "ace/Task_T.h"
 

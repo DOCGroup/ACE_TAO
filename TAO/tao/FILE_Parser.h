@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   FILE_Parser.h

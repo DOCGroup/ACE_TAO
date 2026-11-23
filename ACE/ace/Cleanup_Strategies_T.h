@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Cleanup_Strategies_T.h

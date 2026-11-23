@@ -1,4 +1,3 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Clean up the array (e.g., delete dynamically allocated memory).

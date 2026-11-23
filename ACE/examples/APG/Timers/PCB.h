@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #if !defined(PCB_H)
 #define PCB_H
 

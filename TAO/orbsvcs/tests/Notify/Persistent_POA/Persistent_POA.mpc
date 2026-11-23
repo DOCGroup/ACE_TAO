@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*notify_supplier): notifytest {
   exename = Structured_Supplier
 

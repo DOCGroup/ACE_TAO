@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : orbsvcslib, namingexe, rt_server {
   exename = activity
 

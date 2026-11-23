@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : orbsvcsexe, install, rtevent_serv, rtschedevent, bidir_giop, svc_utils {
   exename  = tao_rtevent
 }

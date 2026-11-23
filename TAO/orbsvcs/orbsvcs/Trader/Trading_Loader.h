@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file Trading_Loader.h

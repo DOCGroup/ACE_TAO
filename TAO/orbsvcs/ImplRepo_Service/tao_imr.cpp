@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #include "tao_imr_i.h"
 
 int

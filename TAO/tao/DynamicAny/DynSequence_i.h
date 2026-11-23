@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    DynSequence_i.h
  *

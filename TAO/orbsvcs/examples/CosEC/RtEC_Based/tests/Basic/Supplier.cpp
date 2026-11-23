@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #include "Supplier.h"
 
 void

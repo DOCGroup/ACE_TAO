@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Log_Compaction_Handler.h

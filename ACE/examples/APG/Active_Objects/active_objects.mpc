@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(AO) : aceexe, avoids_ace_for_tao {
   exename = AO
   Source_Files {

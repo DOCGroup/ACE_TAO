@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #include "ace/Global_Macros.h"
 
 // Open versioned namespace, if enabled by the user.

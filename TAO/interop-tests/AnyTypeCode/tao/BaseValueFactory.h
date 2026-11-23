@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef BASEVALUEFACTORY_H
 #define BASEVALUEFACTORY_H
 

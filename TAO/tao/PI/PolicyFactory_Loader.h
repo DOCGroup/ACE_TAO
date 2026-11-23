@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    PolicyFactory_Loader.h

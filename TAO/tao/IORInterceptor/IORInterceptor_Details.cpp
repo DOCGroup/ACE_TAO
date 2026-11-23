@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/IORInterceptor/IORInterceptor_Details.h"
 #include "tao/SystemException.h"
 

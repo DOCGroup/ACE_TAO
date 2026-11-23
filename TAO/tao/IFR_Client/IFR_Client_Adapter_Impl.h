@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    IFR_Client_Adapter_Impl.h

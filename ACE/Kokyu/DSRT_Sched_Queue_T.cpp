@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file  DSRT_Sched_Queue_T.cpp
  *

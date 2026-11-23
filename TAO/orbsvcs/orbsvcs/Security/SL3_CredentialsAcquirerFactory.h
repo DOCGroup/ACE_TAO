@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file SL3_CredentialsAcquirerFactory.h

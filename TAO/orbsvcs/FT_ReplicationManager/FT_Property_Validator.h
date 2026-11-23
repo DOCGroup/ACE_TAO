@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file FT_Property_Validator.h

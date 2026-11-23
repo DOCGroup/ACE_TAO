@@ -1,4 +1,3 @@
-//  -*- MPC -*-
 project(ACEXML_Parser): acelib, ace_output, install {
   avoids       += ace_for_tao
   sharedname    = ACEXML_Parser

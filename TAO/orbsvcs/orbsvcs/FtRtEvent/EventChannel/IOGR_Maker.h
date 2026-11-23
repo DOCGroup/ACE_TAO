@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   IOGR_Maker.h

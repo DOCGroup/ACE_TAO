@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef BUG_2247_REGRESSION_CLIENT_I_H
 #define BUG_2247_REGRESSION_CLIENT_I_H
 

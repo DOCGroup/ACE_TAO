@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Consumer_Map.h
  *

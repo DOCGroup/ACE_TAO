@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    AccountManager_i.h

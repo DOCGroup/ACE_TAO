@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Any_Basic_Impl.h

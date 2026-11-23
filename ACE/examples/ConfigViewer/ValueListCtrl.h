@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #ifndef _ConfigurationViewer_ValueListCtrl_H
 #define _ConfigurationViewer_ValueListCtrl_H
 

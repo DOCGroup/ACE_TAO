@@ -1,4 +1,3 @@
-//  -*- MPC -*-
 project(TAO_TkResource) : acelib, taolib, install, tao_output, taodefaults, ace_tkreactor, taoidldefaults {
   sharedname   = TAO_TkResource
   dynamicflags += TAO_TKRESOURCE_BUILD_DLL

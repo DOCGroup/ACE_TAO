@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Method_Request.h

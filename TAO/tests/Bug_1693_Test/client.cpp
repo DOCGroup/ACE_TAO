@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/CodecFactory/CodecFactory.h"
 #include "testC.h"
 #include "ace/Log_Msg.h"

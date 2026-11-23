@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 #include "ACEXML/common/Exception.h"
 #include "ace/Log_Msg.h"

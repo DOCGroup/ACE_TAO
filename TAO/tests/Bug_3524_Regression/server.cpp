@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include <cstdio>
 #include <memory>
 

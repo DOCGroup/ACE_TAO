@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file Copy_Disabled.h

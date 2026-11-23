@@ -1,4 +1,3 @@
-/* -*-C++-*- */
 #ifndef TRANSACTION_RESULT_H_
 #define TRANSACTION_RESULT_H_
 /**

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file     Shared_Memory_Pool.h

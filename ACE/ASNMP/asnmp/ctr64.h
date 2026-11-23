@@ -1,4 +1,3 @@
-/* -*-C++-*- */
 #ifndef CTR64_
 #define CTR64_
 /**

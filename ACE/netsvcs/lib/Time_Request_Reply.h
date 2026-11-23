@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Time_Request_Reply.h

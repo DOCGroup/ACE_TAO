@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Fixed_Size_Argument_T.h

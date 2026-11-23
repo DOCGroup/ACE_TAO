@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T, typename from_T, typename to_T>

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #ifndef COMMAND_TASK_H
 #define COMMAND_TASK_H
 

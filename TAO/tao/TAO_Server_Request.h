@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
 *  @file    TAO_Server_Request.h

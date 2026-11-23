@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /*-
  * Copyright (c) 1993-1994 The Regents of the University of California.

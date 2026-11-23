@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    SArg_Traits_T.h
  *

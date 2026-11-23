@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "interop_wchar_i.h"
 
 interop_WChar_Passer_i::interop_WChar_Passer_i (CORBA::ORB_ptr o,

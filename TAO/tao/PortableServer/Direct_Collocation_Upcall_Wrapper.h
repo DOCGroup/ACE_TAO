@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    Direct_Collocation_Upcall_Wrapper.h
  *

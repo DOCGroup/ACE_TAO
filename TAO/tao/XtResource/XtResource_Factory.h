@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   XtResource_Factory.h

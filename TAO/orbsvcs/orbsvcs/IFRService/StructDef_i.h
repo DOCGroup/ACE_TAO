@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    StructDef_i.h

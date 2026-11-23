@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file ECG_UDP_Out_Endpoint.h

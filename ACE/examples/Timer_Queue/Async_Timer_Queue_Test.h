@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Async_Timer_Queue_Test.h

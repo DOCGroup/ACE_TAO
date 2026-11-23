@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Reactor_Notification_Strategy.h

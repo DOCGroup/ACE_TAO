@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    DynValueBox_i.h
  *

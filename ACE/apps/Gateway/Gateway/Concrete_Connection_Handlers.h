@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Concrete_Connection_Handlers.h

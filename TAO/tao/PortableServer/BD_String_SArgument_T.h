@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    BD_String_SArgument_T.h
  *

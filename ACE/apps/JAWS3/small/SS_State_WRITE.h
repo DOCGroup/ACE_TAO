@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef TERA_SS_STATE_WRITE_H
 #define TERA_SS_STATE_WRITE_H
 

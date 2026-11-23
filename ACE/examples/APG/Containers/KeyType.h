@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #ifndef __KEYTYPE_H_
 #define __KEYTYPE_H_
 

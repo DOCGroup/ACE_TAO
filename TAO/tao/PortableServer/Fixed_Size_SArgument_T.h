@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    Fixed_Size_SArgument_T.h
  *

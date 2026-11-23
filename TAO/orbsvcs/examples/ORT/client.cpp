@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "sum_serverC.h"
 #include "ace/Get_Opt.h"
 

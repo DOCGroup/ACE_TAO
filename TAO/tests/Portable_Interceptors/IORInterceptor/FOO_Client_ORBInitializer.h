@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file FOO_Client_ORBInitializer.h

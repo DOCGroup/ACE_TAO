@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   PolicyFactory_Registry_Adapter.h

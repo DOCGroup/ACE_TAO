@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef IFR_DII_CLIENT_H
 #define IFR_DII_CLIENT_H
 

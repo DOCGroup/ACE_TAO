@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Offer_Iterators.h

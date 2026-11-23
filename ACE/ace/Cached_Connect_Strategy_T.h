@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Cached_Connect_Strategy_T.h

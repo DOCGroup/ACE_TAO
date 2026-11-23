@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
 *  \file    Save_Persist_Worker_T.h

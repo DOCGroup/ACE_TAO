@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // Exception macros
 #include "tao/PortableServer/poa_macros.h"
 #include "tao/PortableServer/POA_Guard.h"

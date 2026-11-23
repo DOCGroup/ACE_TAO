@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file ECG_CDR_Message_Sender.h

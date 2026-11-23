@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Element_Tree.h

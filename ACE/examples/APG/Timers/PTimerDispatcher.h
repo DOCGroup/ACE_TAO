@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #if !defined(PTIMER_DISPATCHER_H)
 #define PTIMER_DISPATCHER_H
 

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/AnyTypeCode/TypeCode_Traits.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

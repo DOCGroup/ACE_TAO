@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   ESF_RefCount_Guard.h

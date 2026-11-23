@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file   Basic_Log_Test.h

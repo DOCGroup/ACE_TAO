@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef STUBBATCHCONSUMER_H
 #define STUBBATCHCONSUMER_H
 #include /**/ <ace/pre.h>

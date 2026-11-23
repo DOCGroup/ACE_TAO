@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    Object_SArgument_T.h
  *

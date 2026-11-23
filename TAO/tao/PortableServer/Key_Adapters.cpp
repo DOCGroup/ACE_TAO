@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/PortableServer/Key_Adapters.h"
 
 #include "ace/ACE.h"

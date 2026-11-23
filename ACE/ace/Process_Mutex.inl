@@ -1,4 +1,3 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if !defined (_ACE_USE_SV_SEM)

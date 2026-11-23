@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Log_Persistence_Strategy.h

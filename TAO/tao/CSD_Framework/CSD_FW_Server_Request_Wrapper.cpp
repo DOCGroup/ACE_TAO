@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"

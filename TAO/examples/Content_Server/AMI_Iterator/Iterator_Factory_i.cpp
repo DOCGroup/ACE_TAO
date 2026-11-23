@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // Ossama Othman <ossama@uci.edu>
 
 #include "Content_Iterator_i.h"

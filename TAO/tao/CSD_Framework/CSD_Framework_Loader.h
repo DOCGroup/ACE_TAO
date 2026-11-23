@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    CSD_Framework_Loader.h

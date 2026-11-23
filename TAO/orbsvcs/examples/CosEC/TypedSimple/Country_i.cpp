@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "Country_i.h"
 
 Country_i::Country_i (CORBA::ORB_ptr orb)

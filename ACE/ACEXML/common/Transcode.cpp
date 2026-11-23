@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 #include "ACEXML/common/Transcode.h"
 #include "ace/Truncate.h"

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/FlResource/FlResource_Loader.h"
 #include "tao/ORB_Core.h"
 #include "tao/FlResource/FlResource_Factory.h"

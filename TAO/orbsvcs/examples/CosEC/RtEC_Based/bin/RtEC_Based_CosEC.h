@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file   RtEC_Based_CosEC.h
  *

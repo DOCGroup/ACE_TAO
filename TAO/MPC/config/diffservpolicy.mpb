@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : taolib, portableserver, pi, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after   += DiffServPolicy
   libs    += TAO_DiffServPolicy

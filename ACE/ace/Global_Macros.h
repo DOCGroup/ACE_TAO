@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Global_Macros.h

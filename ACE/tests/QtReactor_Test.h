@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #ifndef QTREACTOR_TEST_H
 #define QTREACTOR_TEST_H
 

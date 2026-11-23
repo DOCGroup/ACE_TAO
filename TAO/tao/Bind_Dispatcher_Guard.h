@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file     Bind_Dispatcher_Guard.h

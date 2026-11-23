@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "IIOP_Server_Request_Interceptor.h"
 
 /// Prototype

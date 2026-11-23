@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Fault_Listener.h

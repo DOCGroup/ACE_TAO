@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "Client_ORBInitializer.h"
 #include "client_interceptors.h"
 #include "Interceptor_Type.h"

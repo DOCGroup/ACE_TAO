@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file   EC_Prefix_Filter_Builder.h
  *

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Bindings_Iterator_T.h

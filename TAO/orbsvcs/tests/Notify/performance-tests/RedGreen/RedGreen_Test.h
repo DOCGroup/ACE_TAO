@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file   RedGreen_Test.h
  *

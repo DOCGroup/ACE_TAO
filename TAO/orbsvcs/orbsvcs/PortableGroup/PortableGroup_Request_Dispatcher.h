@@ -1,4 +1,3 @@
-//-*- C++ -*-
 
 /**
  *  @file    PortableGroup_Request_Dispatcher.h

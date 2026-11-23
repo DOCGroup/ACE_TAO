@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Map_Manager.h

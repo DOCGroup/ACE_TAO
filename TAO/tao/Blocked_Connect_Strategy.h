@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file Blocked_Connect_Strategy.h

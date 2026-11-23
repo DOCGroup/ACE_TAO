@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "SSL_Asynch_BIO.h"
 
 #if OPENSSL_VERSION_NUMBER > 0x0090581fL && (defined (ACE_WIN32) || (defined (ACE_HAS_AIO_CALLS)))

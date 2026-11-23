@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Server): taoserver, iorinterceptor, interceptors {
   Source_Files {
     testC.cpp

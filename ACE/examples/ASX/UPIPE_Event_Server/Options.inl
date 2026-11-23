@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // Option manager for ustreams.
 
 // Since this is only included in Options.h these should stay

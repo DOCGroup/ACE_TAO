@@ -1,8 +1,6 @@
-// -*- C++ -*-
 #ifndef _LIBRARY_H_
 #define _LIBRARY_H_
 
-// -*- C++ -*-
 // File: Library.h
 
 // Author: Phil Mesnier

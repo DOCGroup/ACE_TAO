@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file Packets_Sent_Monitor.h

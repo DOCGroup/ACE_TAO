@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file   ESF_Busy_Lock.h
  *

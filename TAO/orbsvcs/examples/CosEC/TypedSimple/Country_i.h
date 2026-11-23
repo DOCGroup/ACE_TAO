@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef COUNTRYI_H_
 #define COUNTRYI_H_
 

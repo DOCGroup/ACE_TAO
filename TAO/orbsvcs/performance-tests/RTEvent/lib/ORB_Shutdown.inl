@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file ORB_Shutdown.inl

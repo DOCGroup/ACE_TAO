@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file Resume_Handle.h

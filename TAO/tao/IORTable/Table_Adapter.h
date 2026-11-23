@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file Table_Adapter.h

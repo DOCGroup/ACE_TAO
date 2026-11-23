@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    QoS_Decorator.h

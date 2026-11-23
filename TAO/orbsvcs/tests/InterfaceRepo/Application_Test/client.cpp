@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ifr_dii_client.h"
 
 int

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file   Connection_Recycling_Strategy.h

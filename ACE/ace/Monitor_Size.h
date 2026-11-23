@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file Monitor_Size.h

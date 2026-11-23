@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    IORInterceptor_Adapter_Impl.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    CSD_Strategy_Base.h

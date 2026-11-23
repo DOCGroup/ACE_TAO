@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/CORBA_methods.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

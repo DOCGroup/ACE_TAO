@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    UDP_PerformanceClient.h

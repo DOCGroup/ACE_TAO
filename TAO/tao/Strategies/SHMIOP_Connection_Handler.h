@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   SHMIOP_Connection_Handler.h

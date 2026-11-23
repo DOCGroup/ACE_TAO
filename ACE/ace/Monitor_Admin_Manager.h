@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file Monitor_Admin_Manager.h

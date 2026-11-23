@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef OBJECT_FACTORY_I_H
 #define OBJECT_FACTORY_I_H
 

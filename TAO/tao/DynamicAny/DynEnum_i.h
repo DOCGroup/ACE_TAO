@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    DynEnum_i.h
  *

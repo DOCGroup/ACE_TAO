@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Framework_Component.h

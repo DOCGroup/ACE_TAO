@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
 #include "ace/Truncate.h"

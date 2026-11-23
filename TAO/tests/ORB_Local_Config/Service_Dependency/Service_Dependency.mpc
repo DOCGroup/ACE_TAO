@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*) : taoserver {
   after += Service_Config_Dependent_DLL TAO
   exename = Test

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Alignment) : taoexe {
   exename  = alignment
 

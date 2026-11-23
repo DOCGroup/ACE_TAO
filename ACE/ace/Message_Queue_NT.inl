@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 #  include "ace/Guard_T.h"
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */

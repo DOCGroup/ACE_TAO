@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef ACE_BASELINE_TEST_H
 #define ACE_BASELINE_TEST_H
 

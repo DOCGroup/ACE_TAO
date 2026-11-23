@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Multi_Priority_Mapping.h

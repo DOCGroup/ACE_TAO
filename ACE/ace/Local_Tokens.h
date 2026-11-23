@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Local_Tokens.h

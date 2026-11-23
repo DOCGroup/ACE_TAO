@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/Log_Category.h"
 #include <memory>
 

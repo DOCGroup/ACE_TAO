@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    DTP_ORB_Loader.h

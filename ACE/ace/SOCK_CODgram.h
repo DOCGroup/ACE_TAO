@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    SOCK_CODgram.h

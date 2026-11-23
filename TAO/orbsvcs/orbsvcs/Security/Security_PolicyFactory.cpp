@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "orbsvcs/Security/Security_PolicyFactory.h"
 #include "orbsvcs/Security/SL2_QOPPolicy.h"
 #include "orbsvcs/Security/SL2_EstablishTrustPolicy.h"

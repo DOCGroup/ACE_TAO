@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Continuous_Priority_Mapping.h

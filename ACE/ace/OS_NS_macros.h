@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   OS_NS_macros.h

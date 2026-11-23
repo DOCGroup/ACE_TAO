@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 #include "Server_ORBInitializer.h"
 #include "Test_Protocols_Hooks.h"

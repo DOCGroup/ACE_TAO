@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    NT_Notify_Server.cpp

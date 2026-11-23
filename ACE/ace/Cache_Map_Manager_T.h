@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Cache_Map_Manager_T.h

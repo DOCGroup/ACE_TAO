@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file Concurrency_Loader.h

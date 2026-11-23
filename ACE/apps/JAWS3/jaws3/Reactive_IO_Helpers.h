@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_REACTIVE_IO_HELPERS_H
 #define JAWS_REACTIVE_IO_HELPERS_H
 

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    operation_details.h
  *

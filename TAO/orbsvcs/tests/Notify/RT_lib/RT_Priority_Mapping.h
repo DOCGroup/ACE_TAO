@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file RT_Priority_Mapping.h
  *

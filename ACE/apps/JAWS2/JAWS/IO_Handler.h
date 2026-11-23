@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 
 /**
  *  @file    IO_Handler.h

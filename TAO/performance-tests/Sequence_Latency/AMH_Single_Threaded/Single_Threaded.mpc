@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*AMH_sequence_idl): taoidldefaults, amh {
   IDL_Files {
     Test.idl

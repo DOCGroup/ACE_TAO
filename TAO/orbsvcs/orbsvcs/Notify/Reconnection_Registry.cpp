@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file Reconnection_Registry.cpp

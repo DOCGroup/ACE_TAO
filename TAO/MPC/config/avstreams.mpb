@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project: property_serv, naming, qos {
   avoids    += ace_for_tao
   after     += AV

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T1, class T2> ACE_INLINE

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : messaging, svc_utils {
   after     += RTEvent
   libs      += TAO_RTEvent

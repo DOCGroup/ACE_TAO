@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "Grid_i.h"
 
 #include <new>

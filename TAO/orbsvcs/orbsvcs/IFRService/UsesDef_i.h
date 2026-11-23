@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    UsesDef_i.h

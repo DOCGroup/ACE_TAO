@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_WAITER_H
 #define JAWS_WAITER_H
 

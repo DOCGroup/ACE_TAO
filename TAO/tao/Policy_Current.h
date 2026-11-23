@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Policy_Current.h

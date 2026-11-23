@@ -1,4 +1,3 @@
-/* -*- C++ -*-  */
 
 #ifndef MIDDLE_I_H_
 #define MIDDLE_I_H_

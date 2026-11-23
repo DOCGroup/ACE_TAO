@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    POAManagerFactory.h
  *

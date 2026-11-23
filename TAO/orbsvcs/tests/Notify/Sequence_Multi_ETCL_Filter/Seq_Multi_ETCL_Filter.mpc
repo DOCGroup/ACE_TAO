@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*idl): taoidldefaults {
   avoids += ace_for_tao
   IDL_Files {

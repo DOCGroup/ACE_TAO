@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "Admin_Client.h"
 
 #include <cstring>

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file   ESF_Immediate_Changes.h
  *

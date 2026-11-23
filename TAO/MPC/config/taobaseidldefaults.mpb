@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project: build_files {
   // Set the idl compiler and flags as template values
   specific {

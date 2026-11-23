@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "orbsvcs/LoadBalancing/LB_Random.h"
 
 #include "tao/ORB_Constants.h"

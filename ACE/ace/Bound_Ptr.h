@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Bound_Ptr.h

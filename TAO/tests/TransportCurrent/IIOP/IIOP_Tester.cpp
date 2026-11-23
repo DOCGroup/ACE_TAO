@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/TransportCurrent/IIOP_Transport_Current.h"
 #include "tao/SystemException.h"
 

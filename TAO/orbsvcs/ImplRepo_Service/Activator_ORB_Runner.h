@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef TAO_IMR_ACTIVATOR_ORB_RUNNER_H
 #define TAO_IMR_ACTIVATOR_ORB_RUNNER_H
 

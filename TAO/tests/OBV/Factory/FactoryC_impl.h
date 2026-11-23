@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   FactoryC_impl.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file TC_Constants_Forward.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
 #include <memory>

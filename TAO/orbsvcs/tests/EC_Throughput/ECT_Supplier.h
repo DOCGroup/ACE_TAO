@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  * @file ECT_Supplier.h
  * @brief Event Channel throughput test supplier task.

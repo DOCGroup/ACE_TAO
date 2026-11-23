@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file   Locator_NT_Service.h
  *

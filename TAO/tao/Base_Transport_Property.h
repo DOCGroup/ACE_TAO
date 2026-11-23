@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file  Base_Transport_Property.h
  *

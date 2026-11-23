@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Rwho_DB_Manager.h

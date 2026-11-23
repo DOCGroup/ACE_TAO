@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Fixed_TypeCode.h

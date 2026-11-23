@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include <memory>
 //
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

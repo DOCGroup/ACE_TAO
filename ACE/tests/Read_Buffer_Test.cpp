@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 #include "test_config.h"
 #include "ace/Malloc_Allocator.h"

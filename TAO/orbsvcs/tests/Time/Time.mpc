@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*orbsvcs client): namingexe, time {
   exename = client
 }

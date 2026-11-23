@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file   DSRT_Dispatcher_Impl_T.h
  */

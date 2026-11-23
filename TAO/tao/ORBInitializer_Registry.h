@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   ORBInitializer_Registry.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Compressor_Factory.h

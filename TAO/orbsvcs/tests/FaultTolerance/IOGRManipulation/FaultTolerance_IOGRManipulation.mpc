@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(IOGRTest): taoserver, orbsvcsexe, iormanip, ftorb, messaging {
   exename  = IOGRTest
 }

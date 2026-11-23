@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_string.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

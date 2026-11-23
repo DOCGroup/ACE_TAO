@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(RTEvent_Serv) : orbsvcslib, orbsvcs_output, install, rtevent_skel, svc_utils, messaging {
   avoids      += ace_for_tao  // Requires ACE_crc32
   sharedname   = TAO_RTEvent_Serv

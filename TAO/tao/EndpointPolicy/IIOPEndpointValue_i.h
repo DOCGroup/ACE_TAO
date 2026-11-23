@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file     IIOPEndpointValue_i.h
  *

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Empty_Param_TypeCode.h

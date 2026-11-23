@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Codeset_Descriptor.h

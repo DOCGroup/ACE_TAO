@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Test) : orbsvcsexe, portablegroup, portableserver {
   exename = uipmc_test
 

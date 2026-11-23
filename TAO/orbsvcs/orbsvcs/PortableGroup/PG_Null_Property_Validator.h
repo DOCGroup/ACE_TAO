@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file PG_Null_Property_Validator.h

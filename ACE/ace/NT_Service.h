@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    NT_Service.h

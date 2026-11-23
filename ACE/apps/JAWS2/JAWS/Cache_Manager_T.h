@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 // Hey Emacs!  This is a C++ file!
 #ifndef JAWS_CACHE_MANAGER_T_H
 #define JAWS_CACHE_MANAGER_T_H

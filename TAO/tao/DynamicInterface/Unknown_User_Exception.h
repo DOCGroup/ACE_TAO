@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Unknown_User_Exception.h

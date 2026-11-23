@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*server): orbsvcsexe, portablegroup, loadbalancing, naming, svc_utils {
   exename = server
   Source_Files {

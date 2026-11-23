@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_HTTP_SERVICE_HANDLER_H
 #define JAWS_HTTP_SERVICE_HANDLER_H
 

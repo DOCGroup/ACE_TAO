@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    TSS_Test_Errno.h

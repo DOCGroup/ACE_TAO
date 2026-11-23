@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    OperationDef_i.h

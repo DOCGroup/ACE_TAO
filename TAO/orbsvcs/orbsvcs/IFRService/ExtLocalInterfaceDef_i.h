@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    ExtLocalInterfaceDef_i.h

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*client) : aceexe, ssl, avoids_ace_for_tao {
   exename = client
   Source_Files {

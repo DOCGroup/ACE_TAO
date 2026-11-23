@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file   Kokyu_defs.h
  *

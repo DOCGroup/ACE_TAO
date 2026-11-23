@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  * @file EC_Multiple.h
  * @brief Declarations for the multiple Event Channel test.

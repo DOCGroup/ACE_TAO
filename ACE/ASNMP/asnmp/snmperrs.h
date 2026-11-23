@@ -1,4 +1,3 @@
-/* -*-C++-*- */
 #ifndef SNMPERRS_H_
 #define SNMPERRS_H_
 /**

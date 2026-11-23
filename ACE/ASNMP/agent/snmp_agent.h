@@ -1,5 +1,4 @@
 
-/* -*-C++-*- */
 
 #ifndef SNMP_AGENT_
 #define SNMP_AGENT_

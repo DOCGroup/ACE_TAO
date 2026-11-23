@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    SOCK_Dgram_Mcast.h

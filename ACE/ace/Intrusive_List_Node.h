@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file Intrusive_List_Node.h

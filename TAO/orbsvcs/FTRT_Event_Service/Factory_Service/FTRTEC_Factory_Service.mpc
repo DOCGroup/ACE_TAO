@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(FTRTEC_Factory_Service): orbsvcsexe, fault_tolerance, notification, event_skel, strategies, install, svc_utils {
   after    += FaultTolerance
   exename   = ftrtec_factory_service

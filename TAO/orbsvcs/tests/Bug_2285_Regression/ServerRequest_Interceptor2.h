@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 
 #ifndef TAO249_SERVER_REQUEST_INTERCEPTOR2_H

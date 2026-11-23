@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Sched_Params.inl

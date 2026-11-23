@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
 

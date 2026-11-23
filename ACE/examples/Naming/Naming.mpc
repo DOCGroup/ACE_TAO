@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*multiple_contexts) : aceexe, avoids_ace_for_tao {
   requires += ace_other
   exename = multiple_contexts

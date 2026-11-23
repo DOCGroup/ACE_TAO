@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    FactoryDef_i.h

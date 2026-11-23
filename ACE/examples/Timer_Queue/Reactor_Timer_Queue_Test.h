@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Reactor_Timer_Queue_Test.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   RT_Endpoint_Selector_Factory.h

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file   Notify_SequencePushConsumer.h
  *

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Null_Barrier.h

@@ -1,7 +1,6 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
-# -*- perl -*-
 # This script does a realclean of the list in the reverse order that
 # is passed to this. This is just a utility script
 

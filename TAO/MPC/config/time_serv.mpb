@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : orbsvcslib, time_skel, svc_utils {
   after     += CosTime_Serv
   libs      += TAO_CosTime_Serv

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    Servant_Base.h
  *

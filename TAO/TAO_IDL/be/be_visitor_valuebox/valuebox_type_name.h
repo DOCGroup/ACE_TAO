@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 
 #ifndef TAO_IDL_VALUEBOX_TYPE_NAME_H
 #define TAO_IDL_VALUEBOX_TYPE_NAME_H

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file     Arg_Shifter.h

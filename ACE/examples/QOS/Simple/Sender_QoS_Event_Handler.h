@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Sender_QoS_Event_Handler.h

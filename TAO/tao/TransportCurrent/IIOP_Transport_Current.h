@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef IIOP_TRANSPORT_CURRENT_H
 #define IIOP_TRANSPORT_CURRENT_H
 

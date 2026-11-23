@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Debug_Attributes_Builder.h

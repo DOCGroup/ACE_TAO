@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/DynamicAny/DynArray_i.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
 #include "tao/DynamicAny/DynAnyUtils_T.h"

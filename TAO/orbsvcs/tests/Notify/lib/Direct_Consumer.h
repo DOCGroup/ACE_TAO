@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Direct_Consumer.h
  *

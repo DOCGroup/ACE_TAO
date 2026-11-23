@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/Log_Msg.h"
 
 #include "Client_Request_Interceptor.h"

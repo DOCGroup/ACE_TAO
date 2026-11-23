@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file Message_Queue_Test_Ex.h

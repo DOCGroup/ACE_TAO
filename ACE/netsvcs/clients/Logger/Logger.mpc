@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(direct logging) : aceexe {
   avoids  += ace_for_tao
   exename  = direct_logging

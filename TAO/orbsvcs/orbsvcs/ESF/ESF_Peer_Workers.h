@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   ESF_Peer_Workers.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/IORManipulation/IORManipulation.h"
 
 #include "tao/MProfile.h"

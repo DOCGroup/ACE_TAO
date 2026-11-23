@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_ASSOC_ARRAY_H
 #define JAWS_ASSOC_ARRAY_H
 

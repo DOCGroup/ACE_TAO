@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    PortableServer_Functions.h
  *

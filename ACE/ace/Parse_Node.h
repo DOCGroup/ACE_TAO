@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Parse_Node.h

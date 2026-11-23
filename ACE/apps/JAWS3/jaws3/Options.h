@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_OPTIONS_H
 #define JAWS_OPTIONS_H
 

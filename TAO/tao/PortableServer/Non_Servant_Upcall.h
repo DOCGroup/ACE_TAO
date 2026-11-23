@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    Non_Servant_Upcall.h
  *

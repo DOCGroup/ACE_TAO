@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "Server_Request_Interceptor.h"
 
 /// Prototype

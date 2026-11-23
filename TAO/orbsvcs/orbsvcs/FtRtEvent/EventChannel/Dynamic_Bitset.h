@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Dynamic_Bitset.h

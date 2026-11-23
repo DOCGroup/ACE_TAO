@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef MT_BIDIR_RECEIVER_H
 #define MT_BIDIR_RECEIVER_H
 #include /**/ "ace/pre.h"

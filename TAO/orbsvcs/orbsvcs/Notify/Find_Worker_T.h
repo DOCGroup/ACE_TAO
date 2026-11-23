@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Find_Worker_T.h
  *

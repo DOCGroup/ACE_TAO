@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 // Hey Emacs!  This is a C++ file!
 #ifndef JAWS_HASH_BUCKET_T_H
 #define JAWS_HASH_BUCKET_T_H

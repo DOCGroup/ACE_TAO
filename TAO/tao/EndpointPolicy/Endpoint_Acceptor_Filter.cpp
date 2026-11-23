@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/EndpointPolicy/Endpoint_Acceptor_Filter.h"
 #include "tao/EndpointPolicy/EndpointPolicyC.h"
 #include "tao/EndpointPolicy/Endpoint_Value_Impl.h"

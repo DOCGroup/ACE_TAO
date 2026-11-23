@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Config_Files.h

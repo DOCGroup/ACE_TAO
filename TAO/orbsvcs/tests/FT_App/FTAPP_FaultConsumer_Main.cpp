@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file    FTAPP_FaultConsumer_Main.cpp
  *

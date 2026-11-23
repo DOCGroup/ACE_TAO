@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Thread_Timer_Queue_Test.h

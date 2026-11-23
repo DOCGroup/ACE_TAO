@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    SMR_Client.h

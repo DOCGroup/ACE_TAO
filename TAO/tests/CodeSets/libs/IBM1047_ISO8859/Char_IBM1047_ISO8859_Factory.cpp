@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Char_IBM1047_ISO8859_Factory.cpp

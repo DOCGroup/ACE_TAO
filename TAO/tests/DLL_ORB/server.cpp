@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file server.cpp

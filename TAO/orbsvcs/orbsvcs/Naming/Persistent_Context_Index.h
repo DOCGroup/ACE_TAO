@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Persistent_Context_Index.h

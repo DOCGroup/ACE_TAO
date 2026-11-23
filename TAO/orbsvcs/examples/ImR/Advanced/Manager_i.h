@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef MANAGERI_H_
 #define MANAGERI_H_
 

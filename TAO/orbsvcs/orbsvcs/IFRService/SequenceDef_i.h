@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    SequenceDef_i.h

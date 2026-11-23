@@ -1,4 +1,3 @@
-// -*- MPC -*-
 feature(versioned_namespace) {
 
   macros += ACE_HAS_VERSIONED_NAMESPACE=1

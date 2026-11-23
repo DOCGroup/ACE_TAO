@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Server): taoserver, tc, pi_server {
   after += Current_Test_Lib_Client Current_Test_Lib_Server
   libs += Current_Test_Lib_Client Current_Test_Lib_Server

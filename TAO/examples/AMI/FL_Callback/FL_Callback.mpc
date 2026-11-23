@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*idl): taoexe, messaging, ami {
   IDL_Files {
     test.idl

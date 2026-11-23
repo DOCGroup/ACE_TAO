@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   RLECompressor_Factory.h

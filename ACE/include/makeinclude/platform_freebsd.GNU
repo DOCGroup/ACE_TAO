@@ -1,4 +1,3 @@
-# -*- Makefile -*-
 
 # platform_freebsd.GNU
 

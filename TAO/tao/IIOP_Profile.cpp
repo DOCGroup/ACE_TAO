@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/IIOP_Profile.h"
 
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)

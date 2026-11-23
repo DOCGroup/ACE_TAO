@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(Current) : rtscheduling_client {
  Source_Files {
     ../Scheduler.cpp

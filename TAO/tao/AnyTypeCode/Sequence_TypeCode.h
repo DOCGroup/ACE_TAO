@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Sequence_TypeCode.h

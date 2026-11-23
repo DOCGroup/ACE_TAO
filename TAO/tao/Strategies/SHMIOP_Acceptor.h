@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file   SHMIOP_Acceptor.h
  *

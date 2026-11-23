@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 #ifndef ACE_CONFIG_SCHEDULER_H
 #define ACE_CONFIG_SCHEDULER_H

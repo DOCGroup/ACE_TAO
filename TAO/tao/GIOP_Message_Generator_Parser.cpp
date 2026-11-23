@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/GIOP_Message_Generator_Parser.h"
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/GIOP_Utils.h"

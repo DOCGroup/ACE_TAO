@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    Vector_SArgument_T.h
  *

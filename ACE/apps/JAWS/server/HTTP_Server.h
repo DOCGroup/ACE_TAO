@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    HTTP_Server.h

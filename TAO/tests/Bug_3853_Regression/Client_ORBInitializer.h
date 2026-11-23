@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 #ifndef CLIENT_ORB_INITIALIZER_H
 #define CLIENT_ORB_INITIALIZER_H

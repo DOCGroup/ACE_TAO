@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_sys_resource.h"
 #include "ace/Global_Macros.h"

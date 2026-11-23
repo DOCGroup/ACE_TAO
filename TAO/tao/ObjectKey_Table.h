@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file ObjectKey_Table.h

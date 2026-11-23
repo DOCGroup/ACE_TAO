@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file   BasicLog_i.h

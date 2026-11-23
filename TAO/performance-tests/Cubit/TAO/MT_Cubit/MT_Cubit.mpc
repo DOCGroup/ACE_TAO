@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*IDL): taoidldefaults, strategies {
   IDL_Files {
     cubit.idl

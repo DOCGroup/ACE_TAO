@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    TypeCodeFactory_Loader.cpp

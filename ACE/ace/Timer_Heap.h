@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Timer_Heap.h

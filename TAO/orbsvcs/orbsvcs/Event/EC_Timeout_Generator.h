@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   EC_Timeout_Generator.h

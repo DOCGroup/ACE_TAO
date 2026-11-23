@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project: qt4_core, qt4_gui {
   macros += ACE_HAS_QT4
 }

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // File: Library.cpp
 
 // Author: Phil Mesnier

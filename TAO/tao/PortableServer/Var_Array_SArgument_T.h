@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    Var_Array_SArgument_T.h
  *

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file    TAO_Object_Group_Creator.cpp
  *

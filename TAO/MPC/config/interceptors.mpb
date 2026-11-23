@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project {
   requires += interceptors
 }

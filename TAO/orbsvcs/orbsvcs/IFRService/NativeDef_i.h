@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    NativeDef_i.h

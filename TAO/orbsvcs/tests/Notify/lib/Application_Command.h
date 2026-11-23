@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Application_Command.h
  *

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    MT_SOCK_Test.cpp

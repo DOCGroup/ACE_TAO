@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(MT_Get) : aceexe, inet {
   exename = mt_get
   Source_Files {

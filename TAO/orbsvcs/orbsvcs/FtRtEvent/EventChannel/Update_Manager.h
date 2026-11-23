@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Update_Manager.h

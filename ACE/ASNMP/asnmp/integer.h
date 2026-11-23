@@ -1,4 +1,3 @@
-/* -*-C++-*- */
 #ifndef SNMPINTEGER_
 #define SNMPINTEGER_
 /**

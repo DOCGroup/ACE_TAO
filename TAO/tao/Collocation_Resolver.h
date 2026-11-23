@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Collocation_Resolver.h

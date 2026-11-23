@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file   FlReactor_Test.cpp

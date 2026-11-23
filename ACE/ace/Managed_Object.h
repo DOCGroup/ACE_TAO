@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Managed_Object.h

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project (Bug_1639_testclient) : taoserver, dynamicany {
    exename    = client
    Source_Files {

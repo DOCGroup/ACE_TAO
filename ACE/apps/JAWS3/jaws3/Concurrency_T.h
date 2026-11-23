@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_CONCURRENCY_T_H
 #define JAWS_CONCURRENCY_T_H
 

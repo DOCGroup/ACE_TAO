@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   EC_Supplier_Filter_Builder.h

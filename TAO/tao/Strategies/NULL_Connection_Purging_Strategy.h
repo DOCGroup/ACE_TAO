@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   NULL_Connection_Purging_Strategy.h

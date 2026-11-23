@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  * @file ECM_Supplier.h
  * @brief Supplier driver for the custom marshaling event-channel test.

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/IORInterceptor/IORInterceptor_Adapter_Impl.h"
 #include "tao/IORInterceptor/IORInfo.h"
 #include "tao/debug.h"

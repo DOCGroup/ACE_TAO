@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/os_include/os_errno.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"

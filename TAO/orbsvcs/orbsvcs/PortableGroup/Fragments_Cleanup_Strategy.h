@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Fragments_Cleanup_Strategy.h

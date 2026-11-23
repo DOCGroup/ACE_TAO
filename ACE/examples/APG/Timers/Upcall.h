@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #if !defined(UPCALL_H)
 #define UPCALL_H
 

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file Block_Flushing_Strategy.h

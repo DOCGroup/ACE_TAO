@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Ping_Socket.h

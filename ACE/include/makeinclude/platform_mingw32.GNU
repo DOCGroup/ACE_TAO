@@ -1,4 +1,3 @@
-# -*- Makefile -*-
 #
 # This file should allow to build ACE for mingw32 with mingw tools.
 

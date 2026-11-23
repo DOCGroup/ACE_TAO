@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef UTF8_LATIN1_FACTORY_H
 #define UTF8_LATIN1_FACTORY_H
 

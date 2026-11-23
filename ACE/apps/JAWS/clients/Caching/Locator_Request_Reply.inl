@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 #include "URL_Locator.h"
 

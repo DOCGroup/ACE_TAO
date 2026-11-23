@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file Incoming_Message_Queue.h

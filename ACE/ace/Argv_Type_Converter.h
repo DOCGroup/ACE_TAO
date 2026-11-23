@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Argv_Type_Converter.h

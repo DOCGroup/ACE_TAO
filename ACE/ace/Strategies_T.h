@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Strategies_T.h

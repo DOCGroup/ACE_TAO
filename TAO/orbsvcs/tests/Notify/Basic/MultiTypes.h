@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file   MultiTypes.h
  *

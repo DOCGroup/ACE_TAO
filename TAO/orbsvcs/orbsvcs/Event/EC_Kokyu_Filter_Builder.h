@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file   EC_Kokyu_Filter_Builder.h
  *

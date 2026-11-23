@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/orbconf.h"        /* For POA_NO_TIMESTAMP definition. */
 
 #include <cstring>

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "Time_Date_i.h"
 #include "ace/OS_NS_time.h"
 #include "ace/Reactor.h"

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file Queued_Data.h

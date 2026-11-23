@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   BasicLogFactory_i.h

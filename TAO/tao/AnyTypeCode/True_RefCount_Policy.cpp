@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/AnyTypeCode/True_RefCount_Policy.h"
 
 #ifndef  __ACE_INLINE__

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 # include "tao/Cache_Entries_T.h"
 #include <memory>
 

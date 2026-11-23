@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    RT_Object_Adapter_Factory.h

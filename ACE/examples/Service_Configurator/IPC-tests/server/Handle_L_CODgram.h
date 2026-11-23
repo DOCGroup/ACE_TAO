@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // Handles UNIX datagram messages from local host.
 
 #ifndef _HANDLE_L_CODGRAM_H

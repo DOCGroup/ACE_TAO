@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file   DiffServ_Protocols_Hooks.h
  *

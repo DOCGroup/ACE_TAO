@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Time_Date_i.h

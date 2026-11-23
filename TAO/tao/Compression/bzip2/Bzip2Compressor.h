@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Bzip2Compressor.h

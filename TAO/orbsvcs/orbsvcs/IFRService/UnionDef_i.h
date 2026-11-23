@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    UnionDef_i.h

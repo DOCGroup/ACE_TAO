@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    ExtAttributeDef_i.h

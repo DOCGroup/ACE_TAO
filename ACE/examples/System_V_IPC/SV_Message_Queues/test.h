@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #include <cstring>
 #include "ace/SV_Message.h"
 

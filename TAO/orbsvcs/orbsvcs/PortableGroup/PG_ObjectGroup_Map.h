@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    PG_ObjectGroup_Map.h

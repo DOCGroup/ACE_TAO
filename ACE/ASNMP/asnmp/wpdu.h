@@ -1,4 +1,3 @@
-/* -*-C++-*- */
 #ifndef WPDU_H_
 #define WPDU_H_
 /**

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/DiffServPolicy/DiffServPolicy_Factory.h"
 #include "tao/DiffServPolicy/Client_Network_Priority_Policy.h"
 #include "tao/DiffServPolicy/Server_Network_Priority_Policy.h"

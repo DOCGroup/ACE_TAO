@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/SV_Message_Queue.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

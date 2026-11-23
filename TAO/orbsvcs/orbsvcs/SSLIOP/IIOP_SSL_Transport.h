@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   IIOP_SSL_Transport.h

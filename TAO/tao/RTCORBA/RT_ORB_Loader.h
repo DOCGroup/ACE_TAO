@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    RT_ORB_Loader.h

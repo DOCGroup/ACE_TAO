@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file FTRT_ClientORB_Interceptor.h

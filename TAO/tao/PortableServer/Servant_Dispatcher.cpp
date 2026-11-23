@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/PortableServer/Servant_Dispatcher.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

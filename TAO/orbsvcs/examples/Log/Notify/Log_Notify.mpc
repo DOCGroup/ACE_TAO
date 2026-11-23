@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Consumer) : orbsvcsexe, dsnotifylogadmin, notification_skel, naming {
   exename = Notify_Consumer
   source_files {

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Wait_On_Leader_Follower.h

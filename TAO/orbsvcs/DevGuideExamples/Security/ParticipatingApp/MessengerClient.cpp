@@ -1,4 +1,3 @@
-/* -*- C++ -*-  */
 
 #include "orbsvcs/SecurityC.h"
 #include "MessengerC.h"

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Remote_Object_Proxy_Broker.h"
 #include "tao/CORBA_String.h"
 #include "tao/UB_String_Arguments.h"

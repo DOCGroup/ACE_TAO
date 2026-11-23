@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Sock_Connect.h

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file    FT_FaultDetectorFactory_i.h
  *

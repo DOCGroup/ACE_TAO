@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef FACTORY_MAP_H
 #define FACTORY_MAP_H
 

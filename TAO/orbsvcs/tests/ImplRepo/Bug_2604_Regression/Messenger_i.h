@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef MESSENGERI_H_
 #define MESSENGERI_H_
 

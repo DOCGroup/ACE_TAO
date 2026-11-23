@@ -1,6 +1,5 @@
 #ifndef ACE_TIME_POLICY_H
 #define ACE_TIME_POLICY_H
-// -*- C++ -*-
 /**
  *  @file Time_Policy.h
  *

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file RT_Test_FilterFactory.h
  *

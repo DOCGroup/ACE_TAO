@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file   Stack_Trace.h
  *

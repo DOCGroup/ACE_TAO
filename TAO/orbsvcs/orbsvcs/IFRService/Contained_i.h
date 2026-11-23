@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Contained_i.h

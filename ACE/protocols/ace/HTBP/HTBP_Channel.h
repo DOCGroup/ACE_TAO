@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    HTBP_Channel.h

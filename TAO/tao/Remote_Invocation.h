@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Remote_Invocation.h

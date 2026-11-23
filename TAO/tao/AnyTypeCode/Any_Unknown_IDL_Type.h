@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Any_Unknown_IDL_Type.h

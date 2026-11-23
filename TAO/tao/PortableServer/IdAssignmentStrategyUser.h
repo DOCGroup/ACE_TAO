@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @fileIdAssignmentStrategyUser.h
  *

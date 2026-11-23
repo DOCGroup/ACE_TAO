@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    CSD_TP_Custom_Request_Operation.h
  *

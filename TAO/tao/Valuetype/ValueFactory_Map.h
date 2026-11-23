@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file     ValueFactory_Map.h

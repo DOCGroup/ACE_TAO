@@ -1,4 +1,3 @@
-//  -*- MPC -*- now wouldn't this be cool...
 project(ACE_Qt4Reactor_moc) : acedefaults, ace_qt4 {
   custom_only = 1
   MOC_Files {

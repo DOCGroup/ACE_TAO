@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file DiffServPolicy_ORBInitializer.h
  *

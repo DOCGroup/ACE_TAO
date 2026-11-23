@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file POA_Cached_Policies.h
  *

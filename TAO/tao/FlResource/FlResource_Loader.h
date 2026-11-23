@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   FlResource_Loader.h

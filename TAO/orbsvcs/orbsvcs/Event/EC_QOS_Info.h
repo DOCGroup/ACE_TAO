@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   EC_QOS_Info.h

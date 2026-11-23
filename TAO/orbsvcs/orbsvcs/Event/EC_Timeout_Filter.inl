@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE TAO_EC_QOS_Info const &

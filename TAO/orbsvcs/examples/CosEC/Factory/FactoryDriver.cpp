@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "FactoryDriver.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Service_Context.h"
 #include "tao/CDR.h"
 

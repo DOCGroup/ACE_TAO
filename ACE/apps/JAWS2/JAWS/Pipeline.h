@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_PIPELINE_H
 #define JAWS_PIPELINE_H
 

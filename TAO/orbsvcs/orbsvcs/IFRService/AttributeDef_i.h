@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    AttributeDef_i.h

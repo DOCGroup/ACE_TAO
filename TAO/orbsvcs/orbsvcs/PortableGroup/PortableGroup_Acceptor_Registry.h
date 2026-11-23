@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file     PortableGroup_Acceptor_Registry.h

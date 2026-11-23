@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Locator_Request_Reply.h

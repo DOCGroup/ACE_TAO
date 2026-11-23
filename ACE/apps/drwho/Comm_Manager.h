@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Comm_Manager.h

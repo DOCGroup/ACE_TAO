@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef REPLICATION_MANAGER_FAULT_CONSUMER_ADAPTER_H
 #define REPLICATION_MANAGER_FAULT_CONSUMER_ADAPTER_H
 #include /**/ <ace/pre.h>

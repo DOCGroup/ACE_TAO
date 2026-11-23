@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "test_i.h"
 
 test_i::test_i (PortableInterceptor::Current_ptr current,

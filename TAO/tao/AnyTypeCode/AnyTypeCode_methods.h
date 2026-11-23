@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    AnyTypeCode_methods.h

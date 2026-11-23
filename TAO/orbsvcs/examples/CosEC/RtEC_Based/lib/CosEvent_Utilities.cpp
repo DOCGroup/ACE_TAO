@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "CosEvent_Utilities.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event_Service_Constants.h"

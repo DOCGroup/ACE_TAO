@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "TX_Object_i.h"
 
 TX_Object_i::TX_Object_i (CORBA::ORB_ptr orb)

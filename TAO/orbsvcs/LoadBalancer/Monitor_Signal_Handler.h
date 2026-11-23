@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file   Monitor_Signal_Handler.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/config-all.h"
 #include "ace/Global_Macros.h"
 

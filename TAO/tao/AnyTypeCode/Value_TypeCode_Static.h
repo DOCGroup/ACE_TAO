@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Value_TypeCode_Static.h

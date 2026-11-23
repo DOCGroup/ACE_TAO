@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  * @file ECT_Supplier_Driver.h
  * @brief Driver for the remote Event Channel throughput supplier.

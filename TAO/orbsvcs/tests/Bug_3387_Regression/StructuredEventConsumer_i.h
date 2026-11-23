@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef _EVENTCONSUMER_I_H_
 #define _EVENTCONSUMER_I_H_
 

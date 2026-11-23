@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
 *  @file    Reconnect_Worker_T.h

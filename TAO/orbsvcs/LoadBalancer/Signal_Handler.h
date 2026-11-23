@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file   Signal_Handler.h

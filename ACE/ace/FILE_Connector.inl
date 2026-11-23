@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /// Creates a Local ACE_FILE.
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

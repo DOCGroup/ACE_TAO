@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Notify_Default_POA_Factory.h

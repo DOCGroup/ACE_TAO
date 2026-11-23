@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Special_Basic_Argument_T.h

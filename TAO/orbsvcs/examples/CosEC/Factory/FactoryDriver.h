@@ -1,5 +1,4 @@
 
-// -*- C++ -*-
 
 /**
  *  @file    FactoryDriver.h

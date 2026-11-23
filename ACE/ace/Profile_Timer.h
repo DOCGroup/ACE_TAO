@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Profile_Timer.h

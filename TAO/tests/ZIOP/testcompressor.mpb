@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : taolib, compression {
   libs    += TAO_TestCompressor
 }

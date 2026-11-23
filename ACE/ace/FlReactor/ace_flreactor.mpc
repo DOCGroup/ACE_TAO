@@ -1,4 +1,3 @@
-//  -*- MPC -*-
 project(ACE_FlReactor) : acedefaults, install, acelib, ace_output, ace_fl{
   sharedname   = ACE_FlReactor
   dynamicflags += ACE_FLREACTOR_BUILD_DLL

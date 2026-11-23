@@ -1,4 +1,3 @@
-// -*- IDL -*-
 /// @brief Typecode definitions originally in orb.idl.
 
 #ifndef TAO_TYPECODE_TYPES_IDL

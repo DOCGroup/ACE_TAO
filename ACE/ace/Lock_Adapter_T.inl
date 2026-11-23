@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_Memory.h"
 
 #include <memory>

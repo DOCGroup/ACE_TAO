@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file    Versioned_Namespace.h

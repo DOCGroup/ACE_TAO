@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Portable_Group_Map.h

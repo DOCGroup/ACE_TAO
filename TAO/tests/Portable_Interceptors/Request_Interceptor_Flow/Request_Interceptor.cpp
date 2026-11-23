@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "Request_Interceptor.h"
 
 Request_Interceptor::Request_Interceptor (char const *name)

@@ -1,4 +1,3 @@
-/* -*- C++ -*-  */
 
 #include "Messenger_i.h"
 #include "ace/Get_Opt.h"

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Wchar_IBM1047_ISO8859_Translator.h

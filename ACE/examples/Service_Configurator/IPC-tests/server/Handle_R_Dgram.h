@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /* Handles INET datagram messages from remote hosts. */
 
 #ifndef _HANDLE_R_DGRAM_H

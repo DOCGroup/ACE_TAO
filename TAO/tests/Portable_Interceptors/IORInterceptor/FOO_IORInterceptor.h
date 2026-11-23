@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file FOO_IORInterceptor.h

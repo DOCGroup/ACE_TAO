@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file ECG_Simple_Mcast_EH.h

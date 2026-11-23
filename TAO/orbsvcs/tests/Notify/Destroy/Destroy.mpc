@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project (Notify_Test_Destroy): notifytest, etcl, iortable, dynamicany, portableserver {
   exename  = Notify_Tests_Destroy
   Source_Files {

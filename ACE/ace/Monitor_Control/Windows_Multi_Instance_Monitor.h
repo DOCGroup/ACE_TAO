@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file Windows_Multi_Instance_Monitor.h

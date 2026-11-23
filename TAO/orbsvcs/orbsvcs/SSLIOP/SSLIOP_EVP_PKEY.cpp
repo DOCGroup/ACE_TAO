@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.h"
 
 #include <openssl/x509.h>

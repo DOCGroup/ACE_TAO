@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/AnyTypeCode/Union_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Case_Base_T.h"
 #include "tao/AnyTypeCode/Any.h"

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #ifndef NAME_BINDING_H
 #define NAME_BINDING_H
 

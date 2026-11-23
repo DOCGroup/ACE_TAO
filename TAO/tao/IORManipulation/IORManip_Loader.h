@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    IORManip_Loader.h

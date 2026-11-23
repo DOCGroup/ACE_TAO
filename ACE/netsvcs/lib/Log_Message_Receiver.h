@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Log_Message_Receiver.h

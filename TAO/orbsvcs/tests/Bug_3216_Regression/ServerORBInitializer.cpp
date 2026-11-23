@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ServerORBInitializer.h"
 #include "ServerRequest_Interceptor.h"
 #include "tao/ORB_Constants.h"

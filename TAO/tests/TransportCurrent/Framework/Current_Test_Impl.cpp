@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/TransportCurrent/TCC.h"
 
 #include "Current_Test_Impl.h"

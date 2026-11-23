@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file Asynch_Queued_Message.h

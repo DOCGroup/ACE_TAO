@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file Implicit_Deactivator.h

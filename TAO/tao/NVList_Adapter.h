@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    NVList_Adapter.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "Hello.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Table.h"

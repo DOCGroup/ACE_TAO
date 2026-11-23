@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project: ace_xt {
   requires += motif
   lit_libs += Xm

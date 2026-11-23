@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : orbsvcslib, dsnotifylogadmin_skel, dslogadmin_serv, notification_serv {
   after      += DsNotifyLogAdmin_Serv
   libs       += TAO_DsNotifyLogAdmin_Serv

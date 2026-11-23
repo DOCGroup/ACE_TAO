@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  * @file ECT_Throughput.h
  * @brief Driver for the collocated Event Channel throughput test.

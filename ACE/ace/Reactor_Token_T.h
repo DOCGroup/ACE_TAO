@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Reactor_Token_T.h

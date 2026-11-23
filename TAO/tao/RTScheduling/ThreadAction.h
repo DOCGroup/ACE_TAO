@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 #ifndef TAO_ThreadAction_H
 #define TAO_ThreadAction_H

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    On_Demand_Fragmentation_Strategy.h

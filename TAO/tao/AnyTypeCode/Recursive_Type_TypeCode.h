@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Recursive_Type_TypeCode.h

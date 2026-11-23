@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Service) : orbsvcsexe, rtevent_serv, naming {
 
   exename = Service

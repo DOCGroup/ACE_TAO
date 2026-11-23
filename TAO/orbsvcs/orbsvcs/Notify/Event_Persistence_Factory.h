@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Event_Persistence_Factory.h

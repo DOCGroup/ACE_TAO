@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Future_Set.h

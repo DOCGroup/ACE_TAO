@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef STUBFAULTCONSUMER_H
 #define STUBFAULTCONSUMER_H
 #include /**/ <ace/pre.h>

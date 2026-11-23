@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 ACEXML_INLINE int
 ACEXML_XMLFilterImpl::setupParser ()

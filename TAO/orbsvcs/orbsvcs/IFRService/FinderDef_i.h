@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    FinderDef_i.h

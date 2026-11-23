@@ -1,4 +1,3 @@
-/* -*- c+ -*- */
 #ifndef JAWS_TIMER_HELPERS_H
 #define JAWS_TIMER_HELPERS_H
 

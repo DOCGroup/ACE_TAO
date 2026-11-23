@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    HTBP_Filter_Factory.h
  *

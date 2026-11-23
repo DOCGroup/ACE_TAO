@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*idl) : orbsvcslib {
  
   IDL_Files { 

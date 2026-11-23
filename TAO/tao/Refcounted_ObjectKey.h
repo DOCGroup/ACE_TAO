@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file Refcounted_ObjectKey.h

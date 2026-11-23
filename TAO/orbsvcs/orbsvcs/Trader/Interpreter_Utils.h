@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file   Interpreter_Utils.h

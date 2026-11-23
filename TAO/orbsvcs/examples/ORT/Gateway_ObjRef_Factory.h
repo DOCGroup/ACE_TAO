@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef GATEWAY_OBJREF_FACTORY_H
 #define GATEWAY_OBJREF_FACTORY_H
 

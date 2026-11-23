@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    IRObject_i.h

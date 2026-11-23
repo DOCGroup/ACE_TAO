@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_FILECACHE_H
 #define JAWS_FILECACHE_H
 

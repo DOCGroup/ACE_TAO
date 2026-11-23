@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Profile_Transport_Resolver.h

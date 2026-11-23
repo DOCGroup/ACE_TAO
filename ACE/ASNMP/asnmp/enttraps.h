@@ -1,4 +1,3 @@
-/* -*-C++-*- */
 #ifndef ENTTRAPS_
 #define ENTTRAPS_
 /**

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "Test_Client_Module.h"
 #include "tao/TAO_Singleton_Manager.h"
 #include "tao/StringSeqC.h"

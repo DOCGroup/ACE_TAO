@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/debug.h"
 #include "orbsvcs/Notify/Peer.h"
 

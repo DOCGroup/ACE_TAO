@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    String_Manager_T.h

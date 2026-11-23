@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Trader_Interfaces.h

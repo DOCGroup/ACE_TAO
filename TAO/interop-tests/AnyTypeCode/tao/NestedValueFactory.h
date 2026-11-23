@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef NESTEDVALUEFACTORY_H
 #define NESTEDVALUEFACTORY_H
 

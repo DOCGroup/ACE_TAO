@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(MFC_Client): namingexe, portableserver {
   idlflags += -Wb,pch_include=StdAfx.h
 

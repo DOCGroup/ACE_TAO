@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    wchar_reference.cpp

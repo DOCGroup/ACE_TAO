@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Idl) : taoidldefaults {
   IDL_Files {
     test.idl

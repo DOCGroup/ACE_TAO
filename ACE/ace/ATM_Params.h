@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    ATM_Params.h

@@ -1,4 +1,3 @@
-/* -*-C++-*- */
 #ifndef OID_DEF
 #define OID_DEF
 /**

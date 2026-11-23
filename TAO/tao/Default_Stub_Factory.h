@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Default_Stub_Factory.h

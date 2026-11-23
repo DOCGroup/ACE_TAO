@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Codeset_IBM1047.h

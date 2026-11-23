@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*server): taoserver, tao_qtresource, ace_qt4  {
 
   MOC_Files {

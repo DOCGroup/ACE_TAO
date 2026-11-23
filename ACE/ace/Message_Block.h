@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Message_Block.h

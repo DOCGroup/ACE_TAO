@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Basic_Arguments.h

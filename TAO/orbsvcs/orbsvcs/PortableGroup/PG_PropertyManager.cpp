@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "orbsvcs/PortableGroup/PG_PropertyManager.h"
 #include "orbsvcs/PortableGroup/PG_ObjectGroupManager.h"
 #include "orbsvcs/PortableGroup/PG_Property_Utils.h"

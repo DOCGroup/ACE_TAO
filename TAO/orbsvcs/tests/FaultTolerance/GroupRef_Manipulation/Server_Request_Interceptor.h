@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file Server_Request_Interceptor.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 //
 #ifndef SERVER_IORINTERCEPTOR_H
 #define SERVER_IORINTERCEPTOR_H

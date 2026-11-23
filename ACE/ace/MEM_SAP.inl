@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/RW_Thread_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

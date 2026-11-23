@@ -1,4 +1,3 @@
-// -*- MPC -*-
 workspace {
   cmdline += -include $PWD
 }

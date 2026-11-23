@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Server_Logging_Handler_T.h

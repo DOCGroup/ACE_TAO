@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // Include ACE.h only if it hasn't already been included
 #ifndef ACE_ACE_H
 #  include "ace/ACE.h"

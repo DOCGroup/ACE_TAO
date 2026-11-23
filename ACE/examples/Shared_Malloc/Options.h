@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #ifndef _OPTIONS
 #define _OPTIONS
 

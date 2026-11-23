@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*idl): taoidldefaults, dynamicinterface, avoids_minimum_corba {
   IDL_Files {
     Test.idl

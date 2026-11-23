@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #include "orbsvcs/Log_Macros.h"
 #include "IFR_Service.h"
 #include "tao/Environment.h"

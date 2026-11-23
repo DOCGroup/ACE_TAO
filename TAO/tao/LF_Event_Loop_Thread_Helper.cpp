@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/LF_Event_Loop_Thread_Helper.h"
 
 #if !defined (__ACE_INLINE__)

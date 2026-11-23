@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "Manager_i.h"
 
 Manager_i::Manager_i (long retry_count)

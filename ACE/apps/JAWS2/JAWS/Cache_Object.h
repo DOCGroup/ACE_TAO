@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 #ifndef JAWS_CACHE_OBJECT_H
 #define JAWS_CACHE_OBJECT_H

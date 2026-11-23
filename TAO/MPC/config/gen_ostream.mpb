@@ -1,4 +1,3 @@
-// -*- MPC -*-
 feature(gen_ostream) : taobaseidldefaults {
   requires += gen_ostream
   macros += GEN_OSTREAM_OPS

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Replication_Strategy.h

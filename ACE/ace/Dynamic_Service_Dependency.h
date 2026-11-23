@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Dynamic_Service_Dependency.h

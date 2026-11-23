@@ -1,4 +1,3 @@
-//  -*- MPC -*-
 project(Transcoder_Test): aceexe, acexml {
   exename = Transcoder_Test
   Source_Files {

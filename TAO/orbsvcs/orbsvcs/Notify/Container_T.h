@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Container_T.h
  *

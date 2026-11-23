@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    analyzer.h

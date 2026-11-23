@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/Get_Opt.h"
 #include "test_i.h"
 #include "Server_ORBInitializer.h"

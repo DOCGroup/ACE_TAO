@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file   EC_Null_Scheduling.h
  *

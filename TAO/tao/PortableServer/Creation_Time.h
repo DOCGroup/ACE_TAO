@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    Creation_Time.h
  *

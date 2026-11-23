@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(gperf) : aceexe, install, crosscompile {
   install = $(ACE_ROOT)/bin
   exename = ace_gperf

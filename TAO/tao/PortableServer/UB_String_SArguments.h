@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    UB_String_SArguments.h
  *

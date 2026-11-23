@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "orbsvcs/LoadBalancing/LB_RoundRobin.h"
 
 #include "orbsvcs/PortableGroup/PG_conf.h"

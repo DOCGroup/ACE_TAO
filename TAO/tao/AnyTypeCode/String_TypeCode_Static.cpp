@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/AnyTypeCode/String_TypeCode_Static.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"

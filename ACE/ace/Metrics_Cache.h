@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Metrics_Cache.h

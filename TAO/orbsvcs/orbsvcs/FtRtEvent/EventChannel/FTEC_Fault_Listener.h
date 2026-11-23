@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   FTEC_Fault_Listener.h

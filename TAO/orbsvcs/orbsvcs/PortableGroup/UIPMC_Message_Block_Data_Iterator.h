@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file     UIPMC_Message_Block_Data_Iterator.h

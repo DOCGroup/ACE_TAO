@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*client) : taoclient, portableserver, tao_flresource {
   source_files {
     client.cpp

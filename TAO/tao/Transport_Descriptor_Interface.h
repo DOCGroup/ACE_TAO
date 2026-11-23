@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Transport_Descriptor_Interface.h

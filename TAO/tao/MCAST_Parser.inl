@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #if (TAO_HAS_MCAST_PARSER == 1)
 
 #include "tao/default_ports.h"

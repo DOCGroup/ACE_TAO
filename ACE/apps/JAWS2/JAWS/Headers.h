@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_HEADERS_H
 #define JAWS_HEADERS_H
 

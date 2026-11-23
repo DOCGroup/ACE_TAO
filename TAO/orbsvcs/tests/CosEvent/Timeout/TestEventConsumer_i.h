@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #ifndef TestEventConsumer_i_h_
 #define TestEventConsumer_i_h_
 

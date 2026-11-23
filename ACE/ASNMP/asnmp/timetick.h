@@ -1,4 +1,3 @@
-/* -*-C++-*- */
 #ifndef TIMETICKS_
 #define TIMETICKS_
 /**

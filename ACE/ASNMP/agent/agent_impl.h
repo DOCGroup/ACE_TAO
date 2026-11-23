@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    agent_impl.h

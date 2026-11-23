@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    CSD_TP_Collocated_Synch_Request.h
  *

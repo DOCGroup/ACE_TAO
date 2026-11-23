@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   TSS_Resources.h

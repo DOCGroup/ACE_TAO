@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file   INS_Locator.h
  *

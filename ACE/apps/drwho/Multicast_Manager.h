@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Multicast_Manager.h

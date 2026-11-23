@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "Server_Request_Interceptor.h"
 #include "tao/PI_Server/PI_Server.h"
 #include "tao/ORB_Constants.h"

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    DiffServ_Network_Priority_Hook.h
  *

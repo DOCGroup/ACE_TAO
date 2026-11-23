@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_TASK_TIMER_H
 #define JAWS_TASK_TIMER_H
 

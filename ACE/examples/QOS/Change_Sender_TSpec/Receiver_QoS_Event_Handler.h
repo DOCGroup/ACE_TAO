@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Receiver_QoS_Event_Handler.h

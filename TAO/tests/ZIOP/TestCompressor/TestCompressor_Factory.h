@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   TestCompressor_Factory.h

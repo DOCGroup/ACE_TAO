@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #include "ace/ace.h"
 #include "ace/os.h"
 #include "ace/Configuration.h"

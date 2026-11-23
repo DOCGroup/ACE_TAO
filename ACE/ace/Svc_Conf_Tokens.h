@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    Svc_Conf_Tokens.h
  *

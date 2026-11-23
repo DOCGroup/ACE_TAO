@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/TypeCode_Traits.h"
 #include "ace/Truncate.h"

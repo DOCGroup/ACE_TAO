@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Atomic_Op_T.h

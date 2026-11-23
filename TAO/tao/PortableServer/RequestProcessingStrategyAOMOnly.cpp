@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/ORB_Constants.h"
 #include "tao/PortableServer/RequestProcessingStrategyAOMOnly.h"
 #include "tao/PortableServer/ServantManagerC.h"

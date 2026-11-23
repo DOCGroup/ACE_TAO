@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    ICMP_Socket.h

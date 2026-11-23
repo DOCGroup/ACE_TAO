@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   LRU_Connection_Purging_Strategy.h

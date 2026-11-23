@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    EventDef_i.h

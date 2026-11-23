@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : taolib_with_idl, anytypecode {
   tagname     = TAO_ORBSVCS
   includes += $(TAO_ROOT)/orbsvcs

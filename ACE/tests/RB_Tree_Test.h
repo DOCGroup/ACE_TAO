@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    RB_Tree_Test.h

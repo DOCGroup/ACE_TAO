@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Ntf Perf RedGreen): notifytest {
   exename = RedGreen_Test
 }

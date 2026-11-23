@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file SL2_SecurityManager.h

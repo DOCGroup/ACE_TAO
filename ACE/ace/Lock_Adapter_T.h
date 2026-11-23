@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Lock_Adapter_T.h

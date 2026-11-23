@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/PortableServer/SUpcall_commands.h"
 
 #include "tao/AnyTypeCode/TypeCode.h"

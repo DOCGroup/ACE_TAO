@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Reactive_Flushing_Strategy.h"
 #include "tao/Transport.h"
 #include "tao/ORB_Core.h"

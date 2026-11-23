@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file Unbounded_Queue.h

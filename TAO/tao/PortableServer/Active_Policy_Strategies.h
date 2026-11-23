@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file Active_Policy_Strategies.h
  *

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   ORB_Core_Auto_Ptr.h

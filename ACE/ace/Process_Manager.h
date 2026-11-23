@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Process_Manager.h

@@ -1,4 +1,3 @@
-/* -*- C++ -*-  */
 
 #ifndef NOTIFY_VALIDATE_WORKER_CPP
 #define NOTIFY_VALIDATE_WORKER_CPP

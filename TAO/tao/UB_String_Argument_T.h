@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    UB_String_Argument_T.h

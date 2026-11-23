@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file CPU_Load_Monitor.h

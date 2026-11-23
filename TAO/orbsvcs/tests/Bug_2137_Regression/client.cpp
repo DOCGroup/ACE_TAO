@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/Get_Opt.h"
 #include "tao/corba.h"
 // Ensure that the PI library is linked in when building statically

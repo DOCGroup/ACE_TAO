@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file Client_ORBInitializer.h

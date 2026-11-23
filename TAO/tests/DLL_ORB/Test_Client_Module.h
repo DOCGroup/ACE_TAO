@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file Test_Client_Module.h

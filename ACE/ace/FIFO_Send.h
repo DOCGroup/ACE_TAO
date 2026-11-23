@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    FIFO_Send.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   ECG_Complex_Address_Server.h

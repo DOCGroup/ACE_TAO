@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   ESF_Delayed_Command.h

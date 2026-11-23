@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file LF_Connect_Strategy.h

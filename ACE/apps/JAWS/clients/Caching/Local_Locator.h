@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Local_Locator.h

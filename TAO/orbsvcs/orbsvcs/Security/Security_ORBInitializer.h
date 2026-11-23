@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file     Security_ORBInitializer.h

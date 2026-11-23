@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Messaging/AMH_Skeletons.h"
 
 #include "tao/AnyTypeCode/TypeCode.h"

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file   Server_Network_Priority_Policy.h
  */

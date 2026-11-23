@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    SV_Shared_Memory.h

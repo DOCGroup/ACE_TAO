@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*application): messaging, rteventexe, rtevent_serv, naming {
   after  += ECMcastTests_lib
   libs     += ECMcastTests

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Default_Endpoint_Selector_Factory.h

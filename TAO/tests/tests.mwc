@@ -1,4 +1,3 @@
-// -*- MPC -*-
 workspace {
   ../tao/Valuetype
   cmdline += -include $PWD

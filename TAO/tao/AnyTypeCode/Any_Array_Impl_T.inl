@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T_slice, typename T_forany>

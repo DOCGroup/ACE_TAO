@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file  FT_PG_Group_Factory.cpp

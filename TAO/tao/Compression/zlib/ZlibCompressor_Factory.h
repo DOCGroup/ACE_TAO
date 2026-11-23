@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   ZlibCompressor_Factory.h

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file ORB_Run_Task.h
  *

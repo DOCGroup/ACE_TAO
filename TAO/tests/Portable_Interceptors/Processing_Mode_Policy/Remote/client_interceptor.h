@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef TAO_CLIENT_INTERCEPTOR_H
 #define TAO_CLIENT_INTERCEPTOR_H
 #include /**/ "ace/pre.h"

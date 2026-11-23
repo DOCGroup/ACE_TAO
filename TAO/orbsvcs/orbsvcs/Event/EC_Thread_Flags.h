@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file   EC_Thread_Flags.h
  *

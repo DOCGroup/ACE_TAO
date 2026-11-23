@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #ifndef BASIC_TASK_H
 #define BASIC_TASK_H
 

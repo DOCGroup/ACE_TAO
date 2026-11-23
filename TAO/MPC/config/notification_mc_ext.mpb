@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project: notification_serv, notification_mc {
   after += CosNotification_MC_Ext
   libs  += TAO_CosNotification_MC_Ext

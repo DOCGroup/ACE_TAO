@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Factories_Define.h
  *

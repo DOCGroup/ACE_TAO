@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    DTD_Manager.h

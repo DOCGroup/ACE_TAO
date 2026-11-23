@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/ORB_Core.h"
 #include <memory>
 #include "tao/ORB.h"

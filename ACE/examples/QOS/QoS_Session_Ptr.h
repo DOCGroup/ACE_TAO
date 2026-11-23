@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 #ifndef ACE_EXAMPLES_QOS_SESSION_PTR_H
 #define ACE_EXAMPLES_QOS_SESSION_PTR_H

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/PI/RequestInfo_Util.h"
 
 #if TAO_HAS_INTERCEPTORS == 1

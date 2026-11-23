@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/Reactor.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

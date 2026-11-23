@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Messaging/Messaging_PolicyFactory.h"
 #include "tao/Messaging/Messaging_Policy_i.h"
 #include "tao/Messaging/Connection_Timeout_Policy_i.h"

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/GIOP_Message_Base.h"
 #include "tao/operation_details.h"
 #include "tao/debug.h"

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(Dynamic_TP_POA_Test_Static_idl): taoidldefaults, avoids_corba_e_compact, avoids_corba_e_micro {
   IDL_Files {
     Test.idl

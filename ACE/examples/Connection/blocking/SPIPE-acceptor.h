@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #ifndef SP_ACCEPTOR_H
 #define SP_ACCEPTOR_H
 

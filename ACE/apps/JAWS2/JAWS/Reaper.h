@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_REAPER_H
 #define JAWS_REAPER_H
 

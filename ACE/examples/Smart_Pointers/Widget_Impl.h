@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Widget_Impl.h

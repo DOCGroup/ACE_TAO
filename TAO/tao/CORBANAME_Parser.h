@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   CORBANAME_Parser.h

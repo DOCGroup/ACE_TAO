@@ -2,7 +2,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# -*- perl -*-
 
 # This is a Perl script that runs additional Naming Service tests.
 # It runs all the tests that will *not* run with min CORBA.

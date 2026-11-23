@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Time_Policy_T.h

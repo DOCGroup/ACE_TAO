@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /* Handles INET broadcast datagram messages from remote hosts on the local subnet. */
 
 #ifndef _HANDLE_BROADCAST_H

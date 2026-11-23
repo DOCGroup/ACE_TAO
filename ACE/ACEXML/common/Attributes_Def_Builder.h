@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Attributes_Def_Builder.h

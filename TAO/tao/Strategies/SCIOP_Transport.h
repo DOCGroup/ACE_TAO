@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   SCIOP_Transport.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/svc_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

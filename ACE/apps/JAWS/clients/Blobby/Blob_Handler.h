@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Blob_Handler.h

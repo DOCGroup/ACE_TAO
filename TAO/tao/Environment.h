@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Environment.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Caching_Strategies_T.h

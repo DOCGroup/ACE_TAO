@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 

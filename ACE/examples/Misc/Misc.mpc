@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*test_dump) : aceexe {
   exename = test_dump
   Source_Files {

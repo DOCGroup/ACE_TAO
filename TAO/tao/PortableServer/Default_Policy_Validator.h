@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    Default_Policy_Validator.h
  *

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Transport_Queueing_Strategies.h

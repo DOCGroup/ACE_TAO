@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file   FT_Naming_Replication_Manager.cpp

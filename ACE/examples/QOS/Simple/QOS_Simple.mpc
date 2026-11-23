@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*receiver) : aceexe, qos {
   exename = receiver
   requires += qos

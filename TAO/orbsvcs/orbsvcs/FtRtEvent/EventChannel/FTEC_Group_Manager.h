@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   FTEC_Group_Manager.h

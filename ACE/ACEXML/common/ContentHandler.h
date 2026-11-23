@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    ContentHandler.h

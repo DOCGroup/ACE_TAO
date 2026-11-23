@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file Monitor_Control_Action.h

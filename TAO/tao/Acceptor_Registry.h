@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file     Acceptor_Registry.h

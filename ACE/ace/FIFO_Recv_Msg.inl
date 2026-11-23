@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_stropts.h"
 #include "ace/Truncate.h"
 

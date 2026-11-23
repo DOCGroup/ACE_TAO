@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Refcounted_ObjectKey.h"
 #include "ace/Log_Msg.h"
 

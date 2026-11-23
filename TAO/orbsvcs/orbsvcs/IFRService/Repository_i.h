@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Repository_i.h

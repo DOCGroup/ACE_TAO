@@ -1,4 +1,3 @@
-/* -*- C++ -*-  */
 
 #include "MessengerShutdownTimer.h"
 

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // These are always inlined
 // FUZZ: disable check_for_inline
 

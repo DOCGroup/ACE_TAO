@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #ifndef __RB_TREE_FUNCTORS_H_
 #define __RB_TREE_FUNCTORS_H_
 

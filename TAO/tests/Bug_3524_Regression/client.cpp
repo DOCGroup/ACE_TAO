@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/Get_Opt.h"
 #include "ace/Synch.h"
 #include "testC.h"

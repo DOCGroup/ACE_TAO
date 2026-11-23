@@ -1,4 +1,3 @@
-/* -*-C++-*- */
 #ifndef COUNTER_
 #define COUNTER_
 /**

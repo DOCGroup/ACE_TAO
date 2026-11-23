@@ -1,3 +1,2 @@
-// -*- MPC -*-
 project : install_bin, install_lib, install_headers, install_data {
 }

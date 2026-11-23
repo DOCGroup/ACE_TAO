@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #if defined (ACE_HAS_INTRINSIC_BYTESWAP)
 // Take advantage of MSVC++ byte swapping compiler intrinsics (found
 // in <stdlib.h>).

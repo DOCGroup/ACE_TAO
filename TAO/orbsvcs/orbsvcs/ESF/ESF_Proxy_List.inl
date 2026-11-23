@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class PROXY> ACE_INLINE typename TAO_ESF_Proxy_List<PROXY>::Iterator

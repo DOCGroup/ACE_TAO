@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   SSLIOP_Current_Impl.h

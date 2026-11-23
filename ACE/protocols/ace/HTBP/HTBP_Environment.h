@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef ACE_HTBP_ENVIRONMENT_H
 #define ACE_HTBP_ENVIRONMENT_H
 #include /**/ "ace/pre.h"

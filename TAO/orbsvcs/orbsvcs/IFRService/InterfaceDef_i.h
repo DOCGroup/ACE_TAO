@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    InterfaceDef_i.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/AnyTypeCode/Fixed_TypeCode_Static.h"
 #include "tao/CDR.h"
 

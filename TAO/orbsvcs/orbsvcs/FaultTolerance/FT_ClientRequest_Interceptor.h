@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file     FT_ClientRequest_Interceptor.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    AliasDef_i.h

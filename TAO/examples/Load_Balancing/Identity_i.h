@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file   Identity_i.h
  *

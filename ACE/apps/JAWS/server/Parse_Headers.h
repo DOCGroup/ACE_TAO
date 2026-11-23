@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 
 /**
  *  @file    Parse_Headers.h

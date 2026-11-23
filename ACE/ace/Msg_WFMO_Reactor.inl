@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #if defined (ACE_WIN32)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

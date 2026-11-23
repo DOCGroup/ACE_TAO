@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    LocateRequest_Invocation_Adapter.h

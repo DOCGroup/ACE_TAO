@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*client) : taoexe, portableserver, rtevent, naming  {
   libs += Quoter_Idl_Lib
   after += Quoter_Idl_Lib

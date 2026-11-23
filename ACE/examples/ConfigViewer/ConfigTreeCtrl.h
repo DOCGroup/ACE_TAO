@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #ifndef _ConfigurationViewer_ConfigTreeCtrl_H
 #define _ConfigurationViewer_ConfigTreeCtrl_H
 

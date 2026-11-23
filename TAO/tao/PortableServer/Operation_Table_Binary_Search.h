@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    Operation_Table_Binary_Search.h
  *

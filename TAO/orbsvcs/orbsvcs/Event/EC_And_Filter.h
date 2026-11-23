@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   EC_And_Filter.h

@@ -1,4 +1,3 @@
-/* -*- C++ -*-  */
 
 #include "Filter.h"
 #include "ace/Get_Opt.h"

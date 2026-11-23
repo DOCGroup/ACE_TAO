@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file    Fault_Notifier_Main.cpp
  *

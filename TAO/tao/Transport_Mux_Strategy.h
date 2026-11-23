@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Transport_Mux_Strategy.h

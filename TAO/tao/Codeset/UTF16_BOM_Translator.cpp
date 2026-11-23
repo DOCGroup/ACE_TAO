@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /// Manages the transformation between native and transmitted UTF-16. It is
 /// required because transmitted UTF-16 may carry a byte order marker (BOM)
 /// that is not part of the data contents. If no BOM is present, then the

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file   activate_with_id.h
  *

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Wait_Strategy.h

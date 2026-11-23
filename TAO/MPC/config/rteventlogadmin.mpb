@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : orbsvcslib, dslogadmin, rtevent {
   after     += RTEventLogAdmin
   libs      += TAO_RTEventLogAdmin

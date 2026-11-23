@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file MC_Test_Utilities.h

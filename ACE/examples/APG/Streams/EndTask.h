@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #ifndef END_TASK_H
 #define END_TASK_H
 

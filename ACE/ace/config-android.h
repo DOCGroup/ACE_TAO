@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // Config Header file for Android NDK
 
 #ifndef ACE_CONFIG_ANDROID_H

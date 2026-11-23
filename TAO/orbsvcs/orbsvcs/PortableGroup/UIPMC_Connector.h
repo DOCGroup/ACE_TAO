@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file     UIPMC_Connector.h

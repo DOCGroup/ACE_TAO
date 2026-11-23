@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    ArrayDef_i.h

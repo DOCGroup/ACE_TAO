@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Static_Object_Lock.h

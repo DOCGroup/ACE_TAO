@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/DiffServPolicy/DiffServPolicy.h"
 #include "tao/DiffServPolicy/DiffServPolicy_ORBInitializer.h"
 #include "tao/DiffServPolicy/DiffServ_Protocols_Hooks.h"

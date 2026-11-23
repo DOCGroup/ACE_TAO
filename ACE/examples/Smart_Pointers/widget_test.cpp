@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file    widget_test.cpp
  *

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project {
   requires += vcl
   macros   += ACE_HAS_VCL=1

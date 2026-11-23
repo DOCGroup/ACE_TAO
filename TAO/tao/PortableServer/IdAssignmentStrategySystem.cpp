@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/PortableServer/IdAssignmentStrategySystem.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

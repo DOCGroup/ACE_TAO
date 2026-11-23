@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Options_Parser.h
  *

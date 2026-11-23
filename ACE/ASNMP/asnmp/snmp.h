@@ -1,4 +1,3 @@
-/* -*-C++-*- */
 #ifndef SNMP_CLS_
 #define SNMP_CLS_
 /**

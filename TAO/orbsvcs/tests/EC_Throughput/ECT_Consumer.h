@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  * @file ECT_Consumer.h
  * @brief Event Channel throughput test consumer.

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    ORT_Adapter_Factory.h
  *

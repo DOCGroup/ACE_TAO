@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Process_Strategy_Test.h

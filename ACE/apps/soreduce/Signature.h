@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // File: Signature.h
 
 // Author: Phil Mesnier

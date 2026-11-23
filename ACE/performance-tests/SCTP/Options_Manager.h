@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 // The types defined in ACE_CDR are more complete that those in Basic_Types.h
 

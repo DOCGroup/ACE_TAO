@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    InputSource.h

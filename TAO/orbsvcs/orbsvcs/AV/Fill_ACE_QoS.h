@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Fill_ACE_QoS.h

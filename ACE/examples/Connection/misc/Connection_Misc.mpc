@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project (*Handler) : aceexe {
   exename = handler
   Source_Files {

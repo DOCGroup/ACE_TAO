@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*send): avstreamsexe, strategies {
   exename  = sender
 

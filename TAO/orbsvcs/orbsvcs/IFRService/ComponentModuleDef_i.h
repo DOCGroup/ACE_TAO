@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    ComponentModuleDef_i.h

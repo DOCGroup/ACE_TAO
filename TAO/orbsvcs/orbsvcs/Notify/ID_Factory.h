@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file ID_Factory.h
  *

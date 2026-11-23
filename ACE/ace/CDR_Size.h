@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   CDR_Size.h
@@ -86,8 +85,7 @@ public:
 #endif
   /// @}
 
-  /// @note the portion written starts at <x> and ends
-  ///    at <x + length>.
+  /// @note The portion written starts at @a x and ends at @a x + @a length.
   /// The length is *NOT* stored into the CDR stream.
   /// @name Array write operations
   /// @{

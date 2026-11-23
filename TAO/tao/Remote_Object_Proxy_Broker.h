@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Remote_Object_Proxy_Broker.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   EventLog_i.h

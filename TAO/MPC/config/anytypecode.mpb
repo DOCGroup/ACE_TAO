@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : taolib, taoidldefaults {
   after   += AnyTypeCode
   libs    += TAO_AnyTypeCode

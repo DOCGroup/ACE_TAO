@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    XML_Saver.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
 *  @file    Name_Value_Pair.h

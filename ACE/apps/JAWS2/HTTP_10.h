@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_HTTP_10_H
 #define JAWS_HTTP_10_H
 

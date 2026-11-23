@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file  MT_AMH_Server.h

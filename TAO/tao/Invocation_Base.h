@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Invocation_Base.h

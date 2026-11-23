@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*SOCK_STREAM_clt) : aceexe {
   avoids += ace_for_tao
   exename = SOCK_STREAM_clt

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Malloc_Base.h

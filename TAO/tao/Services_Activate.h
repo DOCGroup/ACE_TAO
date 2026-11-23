@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Services_Activate.h

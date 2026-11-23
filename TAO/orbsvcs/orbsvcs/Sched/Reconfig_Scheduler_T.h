@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Reconfig_Scheduler_T.h

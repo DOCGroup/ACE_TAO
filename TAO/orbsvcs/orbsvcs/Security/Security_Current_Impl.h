@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Security_Current_Impl.h

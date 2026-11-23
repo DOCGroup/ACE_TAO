@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    Fixed_Array_SArgument_T.h
  *

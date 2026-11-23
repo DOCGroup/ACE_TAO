@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Single_Lookup.h

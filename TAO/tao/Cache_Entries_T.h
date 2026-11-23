@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Cache_Entries_T.h

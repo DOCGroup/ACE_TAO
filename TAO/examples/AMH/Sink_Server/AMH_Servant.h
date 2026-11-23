@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file  AMH_Servant.h

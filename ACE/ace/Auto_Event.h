@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Auto_Event.h

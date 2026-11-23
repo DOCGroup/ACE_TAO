@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    New_Leader_Generator.h

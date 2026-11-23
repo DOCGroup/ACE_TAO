@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    CosEventChannelFactory_i.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    WUCS4_UTF16.cpp

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /* Handle connections from local UNIX ACE_FIFO */
 /* Read from a well known ACE_FIFO and write to stdout. */
 

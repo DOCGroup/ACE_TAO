@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #if defined (ACE_HAS_WCHAR)
 #  include "ace/OS_NS_wchar.h"
 #endif /* ACE_HAS_WCHAR */

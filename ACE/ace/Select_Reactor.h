@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Select_Reactor.h

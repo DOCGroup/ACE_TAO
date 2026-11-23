@@ -1,4 +1,3 @@
-// -*- MPC -*-
 feature (nmake_avoid_Wp64) {
   specific(nmake) {
     add_compile -= /Wp64

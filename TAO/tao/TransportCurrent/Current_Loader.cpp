@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  * @file Current_Loader.cpp

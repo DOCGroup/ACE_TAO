@@ -1,5 +1,4 @@
 
-// -*- C++ -*-
 
 /**
  * @file  Storable_FlatFileStream.cpp

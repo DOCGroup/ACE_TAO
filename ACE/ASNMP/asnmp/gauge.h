@@ -1,4 +1,3 @@
-/* -*-C++-*- */
 #ifndef GAUGE_
 #define GAUGE_
 /**

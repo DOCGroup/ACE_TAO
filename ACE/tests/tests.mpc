@@ -1,4 +1,3 @@
-//  -*- MPC -*-
 project(Test_Output) : acelib, script {
   libout       = .
   sharedname = Test_Output

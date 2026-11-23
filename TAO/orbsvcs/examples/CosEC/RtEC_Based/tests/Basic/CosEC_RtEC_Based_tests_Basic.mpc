@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Client) : orbsvcsexe, event, event_skel, rtevent_serv, rtsched {
   after   += CosEC_RtEC_Based_lib
   exename  = Basic

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*send): avstreamsexe, qos {
   exename   = sender
   Source_Files {

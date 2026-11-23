@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file    FTAPP_FactoryRegistry_Main.cpp
  *

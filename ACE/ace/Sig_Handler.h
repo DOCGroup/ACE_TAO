@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Sig_Handler.h

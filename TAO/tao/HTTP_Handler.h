@@ -1,5 +1,4 @@
 
-/* -*- C++ -*- */
 
 /**
  *  @file    HTTP_Handler.h

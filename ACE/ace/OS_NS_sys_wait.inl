@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_errno.h"
 #include "ace/Global_Macros.h"
 

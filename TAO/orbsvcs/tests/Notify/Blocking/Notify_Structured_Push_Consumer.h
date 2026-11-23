@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file   Notify_Structured_Push_Consumer.h
  *

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file ior_corbaloc_client_i.h

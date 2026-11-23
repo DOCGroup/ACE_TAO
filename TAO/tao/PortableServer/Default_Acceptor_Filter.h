@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    Default_Acceptor_Filter.h
  *

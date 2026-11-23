@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_DATA_BLOCK_H
 #define JAWS_DATA_BLOCK_H
 

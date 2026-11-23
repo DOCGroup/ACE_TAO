@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/PI_Server/PI_Server_Loader.h"
 #include "tao/PI_Server/PortableServer_ORBInitializer.h"
 

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file Value_Ptr.h

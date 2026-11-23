@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file     UIPMC_Mcast_Transport.h

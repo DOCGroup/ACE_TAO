@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Persistent_Client.h

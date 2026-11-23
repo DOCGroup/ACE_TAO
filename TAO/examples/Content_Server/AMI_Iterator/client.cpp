@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // Ossama Othman <ossama@uci.edu>
 
 #include "ace/Process_Manager.h"

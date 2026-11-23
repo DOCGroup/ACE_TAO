@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   SSLIOP_EVP_PKEY.h

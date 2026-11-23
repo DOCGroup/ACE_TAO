@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/SystemException.h"
 
 #include <cstring>

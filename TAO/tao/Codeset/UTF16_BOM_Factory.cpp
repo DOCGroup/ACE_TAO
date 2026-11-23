@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    UTF16_BOM_Factory.cpp

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Notify ConnectDisconnect): notifytest {
   exename = ConnectDisconnect
   Source_Files {

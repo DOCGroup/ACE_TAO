@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    WFMO_Reactor.h

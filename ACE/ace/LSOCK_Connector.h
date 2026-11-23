@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    LSOCK_Connector.h

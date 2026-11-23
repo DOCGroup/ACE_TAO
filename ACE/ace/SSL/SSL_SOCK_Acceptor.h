@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    SSL_SOCK_Acceptor.h

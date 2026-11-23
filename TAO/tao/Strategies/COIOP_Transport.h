@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   COIOP_Transport.h

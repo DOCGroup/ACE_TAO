@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef AST_EMITS_H
 #define AST_EMITS_H
 

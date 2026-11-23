@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    LocalInterfaceDef_i.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Locate_ResponseHandler.h

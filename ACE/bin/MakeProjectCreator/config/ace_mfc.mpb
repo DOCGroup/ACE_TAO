@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project: mfc {
   macros += ACE_HAS_MFC=1
 }

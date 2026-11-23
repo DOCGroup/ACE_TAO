@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    ComponentDef_i.h

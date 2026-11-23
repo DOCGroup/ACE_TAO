@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Regular_POA.h

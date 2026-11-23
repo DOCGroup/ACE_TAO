@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class TYPE, class INTERFACE, class INTERFACE_PTR, class EXCEPTION> ACE_INLINE void

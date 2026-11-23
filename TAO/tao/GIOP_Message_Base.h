@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file GIOP_Message_Base.h

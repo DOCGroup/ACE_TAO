@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef TEST_SERVER_TASK_H
 #define TEST_SERVER_TASK_H
 

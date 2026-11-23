@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file Property_Boolean.h

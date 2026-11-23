@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Notify_Default_Collection_Factory.h

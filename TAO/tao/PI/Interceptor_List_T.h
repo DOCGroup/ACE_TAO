@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Interceptor_List_T.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

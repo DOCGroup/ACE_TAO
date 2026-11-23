@@ -1,4 +1,3 @@
-/* -*-C++-*- */
 #ifndef SMIDEF_
 #define SMIDEF_
 /**

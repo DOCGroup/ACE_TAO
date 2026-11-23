@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 
 /**
  *  @file    HTTP_Response.h

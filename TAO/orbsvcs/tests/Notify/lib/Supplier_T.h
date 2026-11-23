@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Supplier_T.h
  *

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file   Safe_InputCDR.h
  *

@@ -1,4 +1,3 @@
-//  -*- MPC -*-
 project(RMCast) : acelib, ace_output, install, threads {
   avoids = ace_for_tao
   sharedname   = ACE_RMCast

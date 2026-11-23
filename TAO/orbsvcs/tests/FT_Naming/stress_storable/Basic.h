@@ -1,4 +1,3 @@
-// -*- C++ -*-
 //
 
 #ifndef BASIC_H

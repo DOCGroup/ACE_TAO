@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*server): avstreamsexe, strategies {
   exename  = server
 

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   OS_NS_sys_resource.h

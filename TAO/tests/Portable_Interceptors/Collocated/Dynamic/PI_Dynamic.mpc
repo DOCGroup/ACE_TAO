@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Collocated): taoserver, pi, pi_server, interceptors {
   exename = Collocated_Test
   Source_Files {

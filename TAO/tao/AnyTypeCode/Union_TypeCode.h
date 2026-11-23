@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Union_TypeCode.h

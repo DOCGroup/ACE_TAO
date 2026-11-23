@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Transport_Selection_Guard.h"
 #include "tao/TSS_Resources.h"
 

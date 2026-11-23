@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ORB_DLL.h"
 #include "ace/Service_Config.h"
 

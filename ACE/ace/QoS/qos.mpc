@@ -1,4 +1,3 @@
-//  -*- MPC -*-
 project(QoS) : acelib, ace_output, install {
   requires    += qos
   sharedname   = ACE_QoS

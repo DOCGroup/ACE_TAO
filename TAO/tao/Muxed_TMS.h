@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Muxed_TMS.h

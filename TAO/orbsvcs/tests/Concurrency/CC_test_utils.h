@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file    CC_test_utils.h
  *

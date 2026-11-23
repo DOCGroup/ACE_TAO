@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    IFR_Service_Utils.h

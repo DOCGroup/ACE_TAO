@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    TAO_Time_Service_Clerk.h

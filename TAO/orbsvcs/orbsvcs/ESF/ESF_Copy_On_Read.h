@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   ESF_Copy_On_Read.h

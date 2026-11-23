@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // File: SO_Group.cpp
 
 #include "ace/OS_NS_unistd.h"

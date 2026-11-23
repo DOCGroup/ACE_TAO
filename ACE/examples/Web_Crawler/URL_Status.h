@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    URL_Status.h

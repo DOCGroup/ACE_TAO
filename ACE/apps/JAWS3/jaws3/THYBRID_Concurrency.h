@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_THYBRID_CONCURRENCY_H
 #define JAWS_THYBRID_CONCURRENCY_H
 

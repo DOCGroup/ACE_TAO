@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "Adapter_Activator.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)

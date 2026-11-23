@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file   Activator_NT_Service.h
  *

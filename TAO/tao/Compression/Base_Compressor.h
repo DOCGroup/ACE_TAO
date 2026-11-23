@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Base_Compressor.h

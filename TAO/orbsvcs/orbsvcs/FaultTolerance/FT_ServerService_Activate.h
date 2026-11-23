@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file FT_ServerService_Activate.h

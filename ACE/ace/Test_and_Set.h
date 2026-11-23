@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Test_and_Set.h

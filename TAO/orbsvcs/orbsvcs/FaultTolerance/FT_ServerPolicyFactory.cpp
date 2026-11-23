@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "orbsvcs/FaultTolerance/FT_ServerPolicyFactory.h"
 #include "orbsvcs/FaultTolerance/FT_ServerPolicy_i.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"

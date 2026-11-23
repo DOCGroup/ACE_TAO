@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file  PG_Property_Utils.h

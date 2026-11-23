@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    TypedefDef_i.h

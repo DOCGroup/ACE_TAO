@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Filter_Command.h
  *

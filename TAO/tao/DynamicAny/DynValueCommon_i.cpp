@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/DynamicAny/DynValueCommon_i.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 

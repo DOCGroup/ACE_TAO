@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #ifndef GRAPHABLE_ELEMENT_H
 #define GRAPHABLE_ELEMENT_H
 

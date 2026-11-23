@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Resource_Factory.h

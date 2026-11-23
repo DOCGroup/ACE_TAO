@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file   Adapter_Activator.cpp
  *

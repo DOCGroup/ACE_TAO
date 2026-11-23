@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Logging_Handler.h

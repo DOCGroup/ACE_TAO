@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file Reactive_Flushing_Strategy.h

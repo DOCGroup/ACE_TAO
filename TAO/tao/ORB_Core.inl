@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/ORB_Table.h"
 

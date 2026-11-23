@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    EventPortDef_i.h

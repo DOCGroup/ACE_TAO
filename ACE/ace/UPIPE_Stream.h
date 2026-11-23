@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    UPIPE_Stream.h

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*IDL): orbsvcsexe, portablegroup, diffservpolicy {
   IDL_Files {
     Hello.idl

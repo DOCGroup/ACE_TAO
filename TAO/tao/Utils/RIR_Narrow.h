@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file RIR_Narrow.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   FT_Persistent_Naming_Context_Factory.h

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file   ConsumerAdmin_i.h

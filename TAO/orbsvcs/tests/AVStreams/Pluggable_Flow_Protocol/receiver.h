@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 #ifndef TAO_AV_TIMESTAMP_RECEIVER_H
 #define TAO_AV_TIMESTAMP_RECEIVER_H

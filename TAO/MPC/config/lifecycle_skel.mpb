@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : orbsvcslib, lifecycle, portableserver {
   after     += CosLifeCycle_Skel
   libs      += TAO_CosLifeCycle_Skel

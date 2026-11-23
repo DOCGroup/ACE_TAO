@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    CSD_TP_Servant_State.h
  *

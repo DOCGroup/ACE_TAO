@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
 *  @file    Topology_Saver.h

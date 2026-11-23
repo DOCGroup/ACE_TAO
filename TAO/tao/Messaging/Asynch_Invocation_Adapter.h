@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Asynch_Invocation_Adapter.h

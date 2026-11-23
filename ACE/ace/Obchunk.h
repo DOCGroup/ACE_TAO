@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Obchunk.h

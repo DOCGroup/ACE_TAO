@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 #include "ACEXML/common/AttributesImpl.h"
 

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Bind_Dispatcher_Guard.h"
 
 #if !defined (__ACE_INLINE__)

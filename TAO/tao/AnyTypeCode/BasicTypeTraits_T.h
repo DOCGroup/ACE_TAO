@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    BasicTypeTraits_T.h

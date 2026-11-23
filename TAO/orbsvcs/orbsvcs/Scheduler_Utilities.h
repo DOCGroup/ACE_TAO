@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Scheduler_Utilities.h

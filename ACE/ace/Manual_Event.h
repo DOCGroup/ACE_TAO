@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Manual_Event.h

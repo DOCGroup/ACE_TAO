@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Any_Array_Impl_T.h

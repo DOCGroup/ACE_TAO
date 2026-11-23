@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Priority_Mapping.h
  *

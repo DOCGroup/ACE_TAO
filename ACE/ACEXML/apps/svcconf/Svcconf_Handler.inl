@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 ACE_INLINE int
 ACE_Parsed_Info::name (ACEXML_Char const *n)

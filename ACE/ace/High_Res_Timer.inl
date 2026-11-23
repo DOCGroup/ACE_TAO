@@ -1,4 +1,3 @@
-// -*- C++ -*- */
 #include "ace/Global_Macros.h"
 
 #if defined (ACE_WIN32)

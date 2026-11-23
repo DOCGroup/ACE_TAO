@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    WIN32_Asynch_IO.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file Encoding_Converter_Factory.h

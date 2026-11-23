@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    DLL_Manager.h

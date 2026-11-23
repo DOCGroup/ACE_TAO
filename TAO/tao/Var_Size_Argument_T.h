@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Var_Size_Argument_T.h

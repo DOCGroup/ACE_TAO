@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/ACE.h"
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"

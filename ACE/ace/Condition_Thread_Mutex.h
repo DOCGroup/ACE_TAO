@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Condition_Thread_Mutex.h

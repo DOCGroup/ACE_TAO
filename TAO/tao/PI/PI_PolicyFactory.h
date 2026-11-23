@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file PI_PolicyFactory.h

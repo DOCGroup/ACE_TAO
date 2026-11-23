@@ -1,4 +1,3 @@
-\input texinfo  @c -*-texinfo-*-
 
 @include version.texi
 

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    ior_corbaname_client_i.h

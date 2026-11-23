@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    TypeCode_Case_Enum_T.h

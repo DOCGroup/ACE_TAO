@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : orbsvcslib, svc_utils, notification_skel, etcl, dynamicany, messaging {
   after     += CosNotification_Serv
   libs      += TAO_CosNotification_Serv

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   GUIResource_Factory.h

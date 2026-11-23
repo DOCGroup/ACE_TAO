@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    ConsumesDef_i.h

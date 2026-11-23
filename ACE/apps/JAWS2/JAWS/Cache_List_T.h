@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_CACHE_LIST_T_H
 #define JAWS_CACHE_LIST_T_H
 

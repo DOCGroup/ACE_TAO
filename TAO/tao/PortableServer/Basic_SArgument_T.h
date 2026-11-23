@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    Basic_SArgument_T.h
  *

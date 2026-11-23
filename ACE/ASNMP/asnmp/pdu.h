@@ -1,4 +1,3 @@
-/* -*-C++-*- */
 #ifndef PDU_CLS_
 #define PDU_CLS_
 /**

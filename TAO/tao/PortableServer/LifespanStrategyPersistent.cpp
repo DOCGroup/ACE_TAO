@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/PortableServer/LifespanStrategyPersistent.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/POAManager.h"

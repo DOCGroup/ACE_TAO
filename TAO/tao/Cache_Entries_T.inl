@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/debug.h"
 #include <memory>
 #include "ace/Log_Msg.h"

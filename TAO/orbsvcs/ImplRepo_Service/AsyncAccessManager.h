@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /*
  * @file AsyncAccessManager.h
  *

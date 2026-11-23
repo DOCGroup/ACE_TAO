@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file ETCL_FilterFactory.h
  *

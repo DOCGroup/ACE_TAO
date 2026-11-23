@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // FUZZ: disable check_for_ace_log_categories
 
 /**

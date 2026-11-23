@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file CosNotify_Service.h
  *

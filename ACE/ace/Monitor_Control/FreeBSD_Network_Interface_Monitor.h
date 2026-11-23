@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file FreeBSD_Network_Interface_Monitor.h

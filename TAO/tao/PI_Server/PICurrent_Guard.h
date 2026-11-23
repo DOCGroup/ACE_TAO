@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   PICurrent_Guard.h

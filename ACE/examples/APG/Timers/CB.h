@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #if !defined(CB_H)
 #define CB_H
 

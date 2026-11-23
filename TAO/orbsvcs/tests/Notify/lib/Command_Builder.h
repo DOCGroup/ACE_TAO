@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Command_Builder.h
  *

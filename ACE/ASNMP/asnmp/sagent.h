@@ -1,4 +1,3 @@
-/* -*-C++-*- */
 #ifndef SAGENT_CLS_
 #define SAGENT_CLS_
 /**

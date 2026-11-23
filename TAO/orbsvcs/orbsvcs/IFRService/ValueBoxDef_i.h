@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    ValueBoxDef_i.h

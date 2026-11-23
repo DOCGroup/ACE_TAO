@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    DII_Arguments_Converter_Impl.h

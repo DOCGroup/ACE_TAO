@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/ACE.h"
 #include <memory>
 

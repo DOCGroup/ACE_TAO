@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : ftclientorb, ftrtevent {
   after     += FTRT_ClientORB
   libs      += TAO_FTRT_ClientORB

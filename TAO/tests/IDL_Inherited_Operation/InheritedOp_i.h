@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef INHERITED_OP_I_H
 #define INHERITED_OP_I_H
 

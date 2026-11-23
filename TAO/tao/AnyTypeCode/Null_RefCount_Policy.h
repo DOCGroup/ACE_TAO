@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Null_RefCount_Policy.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "orbsvcs/Naming/FaultTolerant/FT_Random.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"
 

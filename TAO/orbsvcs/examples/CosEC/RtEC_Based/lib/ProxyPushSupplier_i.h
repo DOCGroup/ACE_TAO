@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file   ProxyPushSupplier_i.h

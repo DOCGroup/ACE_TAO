@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    FT_PG_Object_Group_Storable.h

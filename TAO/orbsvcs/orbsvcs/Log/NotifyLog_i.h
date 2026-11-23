@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   NotifyLog_i.h

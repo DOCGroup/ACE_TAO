@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file EventChannel_Command.h
  *

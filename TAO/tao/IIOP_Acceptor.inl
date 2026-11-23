@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

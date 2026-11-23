@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 #include /**/ "NT_Naming_Service.h"
 

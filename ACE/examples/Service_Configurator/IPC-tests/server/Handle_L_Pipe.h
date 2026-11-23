@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // Handle connections from local UNIX domain sockets that are sending
 // end-points from a pipe!
 

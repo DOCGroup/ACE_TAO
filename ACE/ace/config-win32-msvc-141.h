@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file   config-win32-msvc-141.h
  *

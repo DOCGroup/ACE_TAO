@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project {
 
   after += DLL_Test_Parent_Lib

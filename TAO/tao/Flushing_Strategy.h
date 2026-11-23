@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file Flushing_Strategy.h

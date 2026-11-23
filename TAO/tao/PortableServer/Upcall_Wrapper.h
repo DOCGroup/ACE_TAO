@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    Upcall_Wrapper.h
  *

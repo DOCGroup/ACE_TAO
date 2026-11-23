@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file FT_Service_Callbacks.h

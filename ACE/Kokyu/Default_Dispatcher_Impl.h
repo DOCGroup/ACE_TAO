@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file   Default_Dispatcher_Impl.h
  *

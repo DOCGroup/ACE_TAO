@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file    Notifier_Input_Handler.h
  *

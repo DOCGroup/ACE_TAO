@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #ifndef THERMOMETER_H
 #define THERMOMETER_H
 

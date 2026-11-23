@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "testC.h"
 #include "ace/Get_Opt.h"
 #include "tao/Valuetype/ValueFactory.h"

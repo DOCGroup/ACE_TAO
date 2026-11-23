@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #include "ace/Service_Config.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"

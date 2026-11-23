@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    DynArray_i.h
  *

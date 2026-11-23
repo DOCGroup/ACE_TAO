@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    RefCount_Policy_Traits.h

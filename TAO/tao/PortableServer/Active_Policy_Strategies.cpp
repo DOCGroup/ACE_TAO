@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/PortableServer/Active_Policy_Strategies.h"
 #include "tao/PortableServer/POA_Cached_Policies.h"
 

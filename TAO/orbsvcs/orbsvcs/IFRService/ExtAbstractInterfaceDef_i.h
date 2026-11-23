@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    ExtAbstractInterfaceDef_i.h

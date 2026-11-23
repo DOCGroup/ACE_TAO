@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Codeset_Manager.h"
 #include "tao/Codeset_Descriptor_Base.h"
 

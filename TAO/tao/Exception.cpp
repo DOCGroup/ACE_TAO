@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Exception.h"
 #include <memory>
 #include "tao/SystemException.h"

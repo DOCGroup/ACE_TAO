@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 #ifndef TAO_INTERCEPTOR_TYPE_H
 #define TAO_INTERCEPTOR_TYPE_H

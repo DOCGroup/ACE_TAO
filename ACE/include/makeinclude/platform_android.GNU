@@ -1,4 +1,3 @@
-# -*- Makefile -*-
 
 # This file allows ACE and applications using ACE GNU Makefiles to be built for
 # Android by cross compiling on Linux.

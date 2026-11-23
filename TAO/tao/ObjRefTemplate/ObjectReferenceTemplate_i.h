@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file ObjectReferenceTemplate_i.h

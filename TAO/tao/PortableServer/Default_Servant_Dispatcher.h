@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    Default_Servant_Dispatcher.h
  *

@@ -1,4 +1,3 @@
-/* -*- C++ -*-  */
 
 #ifndef MESSENGERSERVER_H_
 #define MESSENGERSERVER_H_

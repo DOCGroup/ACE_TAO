@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    CORBA_methods.h
  *

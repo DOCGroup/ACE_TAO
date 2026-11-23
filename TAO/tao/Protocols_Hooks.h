@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Protocols_Hooks.h

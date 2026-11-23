@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file CosEC_ProxyPushConsumer.h
  *

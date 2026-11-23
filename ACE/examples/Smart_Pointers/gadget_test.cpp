@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file    gadget_test.cpp
  *

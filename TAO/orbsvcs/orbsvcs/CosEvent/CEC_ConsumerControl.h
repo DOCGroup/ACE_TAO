@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   CEC_ConsumerControl.h

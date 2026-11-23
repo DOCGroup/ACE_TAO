@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Periodic_Consumer_Command.h
  *

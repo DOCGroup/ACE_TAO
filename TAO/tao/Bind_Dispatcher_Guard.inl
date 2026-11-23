@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /// @file
 /// @author Carlos O'Ryan <coryan@uci.edu>
 /// @author Chad Elliott <elliott_c@ociweb.com>

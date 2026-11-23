@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   EC_TPC_ProxyConsumer.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 //
 #include "tao/Transport.h"
 

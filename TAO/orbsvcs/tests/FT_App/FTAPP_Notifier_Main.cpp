@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file    FTAPP_Notifier_Main.cpp
  *

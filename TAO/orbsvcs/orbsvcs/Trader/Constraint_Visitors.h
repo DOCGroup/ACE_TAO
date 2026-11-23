@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file Constraint_Visitors.h

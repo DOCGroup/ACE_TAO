@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file DiffServ_Service_Context_Handler.h
  *

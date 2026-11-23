@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file   Atomic_Reconnect.h
  *

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 #include "SAXPrint_Handler.h"
 #include "ace/Log_Msg.h"

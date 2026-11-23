@@ -1,4 +1,3 @@
-// -*- C++ -*-
 ACEXML_INLINE
 ACEXML_Parser_Context::ACEXML_Parser_Context (ACEXML_InputSource* instream,
                                               ACEXML_LocatorImpl* locator)

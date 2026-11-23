@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    If_Then_Else.h

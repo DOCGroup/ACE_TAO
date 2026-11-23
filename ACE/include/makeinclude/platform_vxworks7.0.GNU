@@ -1,4 +1,3 @@
-# -*- Makefile -*-
 # VxWorks 7
 
 # Building ACE for VxWorks 7

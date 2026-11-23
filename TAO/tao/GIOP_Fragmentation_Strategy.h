@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    GIOP_Fragmentation_Strategy.h

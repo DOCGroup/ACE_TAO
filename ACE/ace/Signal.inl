@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_signal.h"
 #include "ace/config-all.h"
 #include "ace/Trace.h"

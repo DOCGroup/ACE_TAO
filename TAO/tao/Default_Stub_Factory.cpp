@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Default_Stub_Factory.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Constants.h"

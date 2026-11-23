@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // Adapted by Jules Colding <colding@omesc.com>
 
 #include "tao/ORB.h"

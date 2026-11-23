@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file   Dispatcher_Impl.h
  *

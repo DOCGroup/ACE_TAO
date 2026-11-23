@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Stub_Factory.h

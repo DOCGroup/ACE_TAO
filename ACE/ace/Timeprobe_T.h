@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Timeprobe_T.h

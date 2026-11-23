@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Locator.h

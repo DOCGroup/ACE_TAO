@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Registry_Name_Space.h

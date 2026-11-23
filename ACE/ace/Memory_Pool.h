@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file     Memory_Pool.h

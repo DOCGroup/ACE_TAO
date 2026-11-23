@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file    RT_CORBA_Workers.h
  *

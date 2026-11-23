@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  * @file CodecFactory_impl.h
  *

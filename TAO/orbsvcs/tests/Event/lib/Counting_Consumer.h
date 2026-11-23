@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file   Counting_Consumer.h
  *

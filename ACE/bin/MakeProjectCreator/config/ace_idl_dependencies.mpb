@@ -1,4 +1,3 @@
-// -*- MPC -*-
 feature(ace_idl_dependencies) {
 	specific(gnuace) {
 		idlflags += -DGEN_IDL_MAKE_DEPS

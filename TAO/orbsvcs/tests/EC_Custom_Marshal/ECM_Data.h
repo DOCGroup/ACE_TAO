@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  * @file ECM_Data.h
  * @brief Data types used to demonstrate custom marshaling of non-IDL data.

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    DynStruct_i.h
  *

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    SSLIOP_Accept_Strategy.h

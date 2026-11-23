@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    XtAthenaReactor_Test.cpp

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #include "orbsvcs/IFRService/ComponentContainer_i.h"
 #include "orbsvcs/IFRService/Repository_i.h"
 #include "orbsvcs/IFRService/InterfaceDef_i.h"

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*test): taoserver, endpointpolicy, orbsvcslib, security, ssliop, pi_server, codecfactory, interceptors {
   exename = test
   Source_Files {

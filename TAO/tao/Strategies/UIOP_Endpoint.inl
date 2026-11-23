@@ -1,4 +1,3 @@
-// -*- C++ -*-
 # if TAO_HAS_UIOP == 1
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   NotifyLogFactory_i.h

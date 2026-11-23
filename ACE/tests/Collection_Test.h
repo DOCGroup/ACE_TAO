@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Collection_Test.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file rtcorba_typedefs.h

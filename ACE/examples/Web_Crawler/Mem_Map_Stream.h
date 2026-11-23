@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Mem_Map_Stream.h

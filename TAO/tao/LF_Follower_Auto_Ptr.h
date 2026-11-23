@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file LF_Follower_Auto_Ptr.h

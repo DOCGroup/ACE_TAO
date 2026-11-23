@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : taolib, codecfactory {
   after   += PI
   libs    += TAO_PI

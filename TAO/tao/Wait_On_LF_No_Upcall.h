@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Wait_On_LF_No_Upcall.h

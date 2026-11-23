@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   Naming_Context_Interface.h

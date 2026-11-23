@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_macros.h"
 #include <memory>
 // for timespec_t, perhaps move it to os_time.h

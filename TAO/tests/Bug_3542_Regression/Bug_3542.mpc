@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*server) : taoserver, threads {
   after += *lib
   Source_Files {

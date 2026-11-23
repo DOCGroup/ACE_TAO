@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef ACE_PERFORMANCE_TEST_H
 #define ACE_PERFORMANCE_TEST_H
 

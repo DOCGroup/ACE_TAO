@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    FixedDef_i.h

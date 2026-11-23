@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "CosEventChannelFactory_i.h"
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "tao/PortableServer/PortableServer.h"

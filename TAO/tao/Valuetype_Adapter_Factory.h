@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Valuetype_Adapter_Factory.h

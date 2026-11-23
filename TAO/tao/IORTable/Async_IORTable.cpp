@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  * @file Async_IORTable.cpp

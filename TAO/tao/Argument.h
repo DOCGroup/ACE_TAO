@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Argument.h

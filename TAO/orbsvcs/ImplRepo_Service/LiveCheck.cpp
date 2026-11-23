@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "LiveCheck.h"
 #include "ImR_Locator_i.h"
 

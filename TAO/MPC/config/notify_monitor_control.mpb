@@ -1,4 +1,3 @@
-// -*- MPC -*-
 feature(notify_monitor_control): svc_utils {
   after += TAO_Monitor CosNotification_MC CosNotification_MC_Ext
   libs  += TAO_CosNotification_MC_Ext TAO_CosNotification_MC TAO_Monitor

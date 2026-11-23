@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 #include "ACEXML/common/Encoding.h"
 

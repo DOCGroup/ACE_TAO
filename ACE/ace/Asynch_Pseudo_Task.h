@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Asynch_Pseudo_Task.h

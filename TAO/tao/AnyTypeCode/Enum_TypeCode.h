@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Enum_TypeCode.h

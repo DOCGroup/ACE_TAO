@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Alias_TypeCode.h

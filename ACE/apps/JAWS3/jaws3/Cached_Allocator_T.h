@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_CACHED_ALLOCATOR_T_H
 #define JAWS_CACHED_ALLOCATOR_T_H
 

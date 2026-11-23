@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file Windows_Monitor.h

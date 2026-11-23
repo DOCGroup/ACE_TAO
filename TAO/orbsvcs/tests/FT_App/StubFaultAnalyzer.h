@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef STUBFAULTANALYZER_H
 #define STUBFAULTANALYZER_H
 #include /**/ <ace/pre.h>

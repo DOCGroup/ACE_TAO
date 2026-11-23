@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/AnyTypeCode/SystemExceptionA.h"
 #include "tao/AnyTypeCode/Any_SystemException.h"
 #include "tao/AnyTypeCode/Any_Dual_Impl_T.h"

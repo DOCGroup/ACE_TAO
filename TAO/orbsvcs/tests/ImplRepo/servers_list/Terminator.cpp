@@ -1,4 +1,3 @@
-/* -*- C++ -*-  */
 
 #include "Terminator.h"
 #include "ace/Log_Msg.h"

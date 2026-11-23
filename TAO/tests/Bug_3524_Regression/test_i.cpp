@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "test_i.h"
 
 A_i::A_i (CORBA::ORB_ptr orb,

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file DTP_Thread_Pool.h

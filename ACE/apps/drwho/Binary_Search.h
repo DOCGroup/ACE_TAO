@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Binary_Search.h

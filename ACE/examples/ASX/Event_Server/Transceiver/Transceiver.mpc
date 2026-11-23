@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*) : aceexe {
   exename = Transceiver
   Source_Files {

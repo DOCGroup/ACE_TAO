@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file Leader_Follower_Flushing_Strategy.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    ub_struct_seq.cpp

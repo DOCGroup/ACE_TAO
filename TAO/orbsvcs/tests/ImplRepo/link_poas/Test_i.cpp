@@ -1,4 +1,3 @@
-/* -*- C++ -*-  */
 
 #include "ace/OS_NS_unistd.h"
 #include "Test_i.h"

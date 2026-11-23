@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/Malloc_Base.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"

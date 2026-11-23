@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Connection_Handler.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    Collocated_Object_Proxy_Broker.h
  *

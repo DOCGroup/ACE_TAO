@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 // Current program version number.
 

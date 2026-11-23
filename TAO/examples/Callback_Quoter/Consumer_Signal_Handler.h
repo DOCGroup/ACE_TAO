@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Consumer_Signal_Handler.h

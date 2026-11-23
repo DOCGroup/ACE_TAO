@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Abandoned): aceexe, wfmo {
   exename = abandoned
   Source_Files {

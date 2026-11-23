@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file    FTAPP_Analyzer_Main.cpp
  *

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Relay_Consumer.h
  *

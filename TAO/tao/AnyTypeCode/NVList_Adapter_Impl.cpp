@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/AnyTypeCode/NVList_Adapter_Impl.h"
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/SystemException.h"

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : pi, portableserver, rtcorba, avoids_corba_e_micro {
   after   += RTPortableServer
   libs    += TAO_RTPortableServer

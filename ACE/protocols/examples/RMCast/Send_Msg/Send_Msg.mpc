@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Sender) : aceexe, rmcast {
   avoids = ace_for_tao
   exename = sender

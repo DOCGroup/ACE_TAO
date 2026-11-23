@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   MCAST_Parser.h

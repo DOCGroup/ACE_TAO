@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // Ossama Othman <ossama@uci.edu>
 
 #include "ace/Log_Msg.h"

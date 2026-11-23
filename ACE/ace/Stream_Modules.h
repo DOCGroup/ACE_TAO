@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Stream_Modules.h

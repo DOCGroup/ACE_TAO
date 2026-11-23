@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #ifndef _ConfigurationViewer_MainFrame_H
 #define _ConfigurationViewer_MainFrame_H
 

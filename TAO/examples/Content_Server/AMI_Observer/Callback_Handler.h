@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file     Callback_Handler.h

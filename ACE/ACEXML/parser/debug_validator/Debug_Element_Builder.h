@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Debug_Element_Builder.h

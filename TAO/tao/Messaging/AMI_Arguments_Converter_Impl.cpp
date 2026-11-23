@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Messaging/AMI_Arguments_Converter_Impl.h"
 #include "tao/operation_details.h"
 #include "tao/SystemException.h"

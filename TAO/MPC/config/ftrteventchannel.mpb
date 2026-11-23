@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : ftrtevent, utils, corba_messaging, pi_server {
   after     += FTRT_EventChannel
   libs      += TAO_FTRT_EventChannel

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/LocateRequest_Invocation.h"
 
 #include <memory>

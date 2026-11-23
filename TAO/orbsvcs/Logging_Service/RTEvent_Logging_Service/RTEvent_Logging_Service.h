@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file   RTEvent_Logging_Service.h

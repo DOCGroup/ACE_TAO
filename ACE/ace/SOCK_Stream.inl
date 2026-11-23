@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/SOCK_Stream.h"
 #include "ace/OS_NS_sys_socket.h"
 

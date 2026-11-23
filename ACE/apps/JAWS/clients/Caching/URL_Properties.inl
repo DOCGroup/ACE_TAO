@@ -1,4 +1,3 @@
-// -*- C++ -*-
 ACE_INLINE size_t
 ACE_WString_Helper::size (const ACE_WString &wstr)
 {

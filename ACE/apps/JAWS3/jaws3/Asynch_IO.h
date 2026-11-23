@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_ASYNCH_IO_H
 #define JAWS_ASYNCH_IO_H
 

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Synch_Traits.h

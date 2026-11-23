@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 #ifndef ACE_TEST_UPIPE_H
 #define ACE_TEST_UPIPE_H

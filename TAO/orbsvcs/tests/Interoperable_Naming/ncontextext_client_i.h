@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    ncontextext_client_i.h

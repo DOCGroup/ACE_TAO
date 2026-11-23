@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/PortableServer/PortableServer_Functions.h"
 #include <cstring>
 

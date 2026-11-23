@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file    Widget_Part.cpp
  *

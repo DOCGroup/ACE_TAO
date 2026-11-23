@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   config-macros.h

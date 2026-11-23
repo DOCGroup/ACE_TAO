@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    UTF16_UCS2_Translator.h

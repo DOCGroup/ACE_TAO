@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /* Handle connections from remote INET connections. */
 
 #ifndef _HANDLE_R_STREAM_H

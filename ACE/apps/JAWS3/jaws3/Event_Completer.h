@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_EVENT_COMPLETER_H
 #define JAWS_EVENT_COMPLETER_H
 

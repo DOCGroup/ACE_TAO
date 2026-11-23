@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/Profile.h"
 #include "tao/Stub.h"

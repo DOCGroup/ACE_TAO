@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/RTPortableServer/RT_Policy_Validator.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    Protocol_Record.h

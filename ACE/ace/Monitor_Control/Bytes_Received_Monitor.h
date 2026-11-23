@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file Bytes_Received_Monitor.h

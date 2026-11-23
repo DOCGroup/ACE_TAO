@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file Server_ORBInitializer.h

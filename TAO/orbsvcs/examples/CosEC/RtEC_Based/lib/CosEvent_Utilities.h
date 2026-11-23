@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file     CosEvent_Utilities.h

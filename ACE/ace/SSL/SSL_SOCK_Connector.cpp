@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "SSL_SOCK_Connector.h"
 
 #include "ace/OS_NS_errno.h"

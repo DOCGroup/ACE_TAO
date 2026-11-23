@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "Echo_Collocated_ORBInitializer.h"
 #include "interceptors.h"
 #include "tao/PI/ORBInitInfo.h"

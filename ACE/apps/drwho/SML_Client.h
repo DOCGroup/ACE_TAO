@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    SML_Client.h

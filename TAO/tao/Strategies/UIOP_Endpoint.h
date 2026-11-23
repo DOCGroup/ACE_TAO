@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file UIOP_Endpoint.h

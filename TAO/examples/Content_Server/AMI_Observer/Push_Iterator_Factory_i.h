@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file     Push_Iterator_Factory_i.h

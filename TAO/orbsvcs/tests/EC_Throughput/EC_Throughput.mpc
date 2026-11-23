@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(ECT Supplier): rteventexe, rtevent, rtsched, naming, iortable, messaging {
   avoids += ace_for_tao
   exename = ECT_Supplier

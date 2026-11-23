@@ -1,4 +1,3 @@
-/* -*- C++ -*-  */
 /**
  *  @file   Invocation_Retry_State.h
  *

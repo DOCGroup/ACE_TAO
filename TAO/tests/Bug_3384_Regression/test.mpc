@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Bug_3384_Regression_idl): taoidldefaults {
   idlflags += -Sp
   IDL_Files {

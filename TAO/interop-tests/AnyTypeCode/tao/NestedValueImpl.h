@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef NESTEDVALUE_H
 #define NESTEDVALUE_H
 

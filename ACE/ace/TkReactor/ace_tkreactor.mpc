@@ -1,4 +1,3 @@
-//  -*- MPC -*-
 project(ACE_TkReactor) : acedefaults, install, acelib, ace_output, ace_tk {
   sharedname   = ACE_TkReactor
   dynamicflags += ACE_TKREACTOR_BUILD_DLL

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Element_Def_Builder.h

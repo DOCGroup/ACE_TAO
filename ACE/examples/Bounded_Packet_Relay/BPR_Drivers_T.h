@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    BPR_Drivers_T.h

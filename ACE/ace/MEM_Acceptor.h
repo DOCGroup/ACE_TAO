@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    MEM_Acceptor.h

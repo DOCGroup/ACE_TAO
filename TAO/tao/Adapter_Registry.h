@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Adapter_Registry.h

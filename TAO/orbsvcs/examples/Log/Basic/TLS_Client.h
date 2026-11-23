@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file   TLS_Client.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    ComponentContainer_i.h

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // SOCK_Dgram.i
 
 #include "ace/OS_NS_sys_socket.h"

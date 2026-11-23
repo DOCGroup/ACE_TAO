@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 #ifndef TAO_INTERPRETER_UTILS_T_H
 #define TAO_INTERPRETER_UTILS_T_H

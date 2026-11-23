@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file    Gadget_Part_Factory.cpp
  *

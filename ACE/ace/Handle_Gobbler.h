@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file    Handle_Gobbler.h

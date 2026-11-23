@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  *  @file   FTEC_Event_Channel_Impl.h

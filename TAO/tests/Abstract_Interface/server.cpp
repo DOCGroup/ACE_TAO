@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "test_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"

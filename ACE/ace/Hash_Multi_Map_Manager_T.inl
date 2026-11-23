@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/Guard_T.h"
 #include <memory>
 

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 
 /**
  * @file  Storable_Naming_Context_ReaderWriter.cpp
