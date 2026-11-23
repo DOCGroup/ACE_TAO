@@ -1134,7 +1134,8 @@ TAO_AV_UDP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
   TAO_AV_Callback *callback {};
   if (endpoint->get_callback (entry->flowname (), callback))
     {
-      ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%N,%l) Invalid callback\n"), nullptr);
+      ORBSVCS_ERROR ((LM_ERROR, "(%N,%l) Invalid callback\n"));
+      return nullptr;
     }
 
   TAO_AV_UDP_Object *object {};

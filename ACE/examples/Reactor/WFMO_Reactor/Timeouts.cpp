@@ -52,7 +52,7 @@ private:
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  Timeout_Handler const handler;
+  Timeout_Handler handler;
 
   // Register a 3 second timer.
   ACE_Time_Value bar_tv (3);

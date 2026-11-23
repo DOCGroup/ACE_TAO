@@ -740,7 +740,7 @@ int
 run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Conn_Test"));
-  int const status = 0;
+  int status = 0;
 
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("c:i:s:"));

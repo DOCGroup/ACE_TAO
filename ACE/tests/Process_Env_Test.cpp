@@ -49,7 +49,7 @@ void thisproc_setenv (const ACE_TCHAR *name, const ACE_TCHAR *value, void *)
 int
 run_main (int, ACE_TCHAR*[])
 {
-  int const test_status = 0;
+  int test_status = 0;
   ACE_START_TEST (ACE_TEXT ("Process_Env_Test"));
 
 #if defined (ACE_WIN32) && !defined (ACE_USES_WCHAR)

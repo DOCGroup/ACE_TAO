@@ -18,7 +18,7 @@ int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT("Compiler_Features_41_Test"));
-  int const result = 0;
+  int result = 0;
 
 #if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
   bool finally_executed = false;
