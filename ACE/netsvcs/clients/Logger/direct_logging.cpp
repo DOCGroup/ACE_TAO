@@ -22,7 +22,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_SOCK_Stream logger;
   ACE_SOCK_Connector connector;
-  ACE_INET_Addr addr (logger_port, logger_host);
+  ACE_INET_Addr const addr (logger_port, logger_host);
   ACE_Log_Record log_record (LM_DEBUG,
                              ACE_OS::time (nullptr),
                              ACE_OS::getpid ());
@@ -46,7 +46,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   payload << log_record;
 
   // Get the number of bytes used by the CDR stream.
-  ACE_CDR::ULong length = payload.total_length ();
+  ACE_CDR::ULong const length = payload.total_length ();
 
   // Send a header so the receiver can determine the byte order and
   // size of the incoming CDR stream.
