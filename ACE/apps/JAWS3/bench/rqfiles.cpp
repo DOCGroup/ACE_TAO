@@ -253,7 +253,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   {
     char buf[BUFSIZ] {};
-    std::unique_ptr<FILE, int (*) (FILE *)> fp (
+    std::unique_ptr<FILE, int (*) (FILE *)> const fp (
       std::fopen (request_options.filelist_name, "r"), std::fclose);
     if (!fp)
       {

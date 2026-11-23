@@ -23,7 +23,7 @@ JAWS_Pipeline_Handler::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
   // guarantee the handler remains for the duration of this call
   ioh->acquire ();
 
-  int status = this->handle_put (db, tv);
+  int const status = this->handle_put (db, tv);
 
   if (status != -1 && status != 2)
     {
@@ -72,7 +72,7 @@ JAWS_Pipeline_Accept_Task::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
   ioh->task (next);
   db->io_handler (ioh);
 
-  int result = this->handle_put (ioh->message_block (), tv);
+  int const result = this->handle_put (ioh->message_block (), tv);
 
   ioh->release ();
 

@@ -370,7 +370,7 @@ JAWS_Asynch_Handler::dispatch_handler ()
   ACE_thread_t thr_name;
   thr_name = ACE_OS::thr_self ();
 
-  JAWS_Thread_ID tid (thr_name);
+  JAWS_Thread_ID const tid (thr_name);
 #endif /* 0 */
 
   JAWS_IO_Handler **iohref = JAWS_Waiter_Singleton::instance ()->find (tid);

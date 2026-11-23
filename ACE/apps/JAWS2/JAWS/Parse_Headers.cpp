@@ -22,7 +22,7 @@ JAWS_Parse_Headers::parse_headers (JAWS_Header_Info *info,
       if (info->end_of_line ()
           && (*p != ' ' && *p != '\t'))
         {
-          int r = this->parse_header_name (info, mb);
+          int const r = this->parse_header_name (info, mb);
           if (r == 1)
           {
             return info->end_of_headers ();
@@ -31,7 +31,7 @@ JAWS_Parse_Headers::parse_headers (JAWS_Header_Info *info,
         }
       else
         {
-          int r = this->parse_header_value (info, mb);
+          int const r = this->parse_header_value (info, mb);
           if (r == 1)
             {
               if (info->end_of_headers ())

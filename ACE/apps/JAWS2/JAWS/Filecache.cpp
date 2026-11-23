@@ -45,7 +45,7 @@ JAWS_Cached_FILE::JAWS_Cached_FILE (const char *const &filename,
       JAWS_FILE *file = new JAWS_FILE;
       ACE_FILE_Connector file_connector;
 
-      int result = file_connector.connect (*file, ACE_FILE_Addr (filename));
+      int const result = file_connector.connect (*file, ACE_FILE_Addr (filename));
       if (result == -1 || file->get_handle () == ACE_INVALID_HANDLE)
         {
           // TODO: do something here!
@@ -57,7 +57,7 @@ JAWS_Cached_FILE::JAWS_Cached_FILE (const char *const &filename,
       handle = ACE_OS::dup (file->get_handle ());
 
       {
-        JAWS_Cached_FILE cf (filename, file, info.size_, cm);
+        JAWS_Cached_FILE const cf (filename, file, info.size_, cm);
         if (cf.data () != nullptr)
           {
             new (this) JAWS_Cached_FILE (filename, cm);

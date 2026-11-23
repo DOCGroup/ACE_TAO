@@ -65,7 +65,7 @@ JAWS_Synch_IO::read (JAWS_IO_Handler *ioh,
   ACE_SOCK_Stream stream;
 
   stream.set_handle (ioh->handle ());
-  int result = stream.recv (mb->wr_ptr (), size);
+  int const result = stream.recv (mb->wr_ptr (), size);
 
   if (result <= 0)
     {
@@ -86,8 +86,8 @@ JAWS_Synch_IO::receive_file (JAWS_IO_Handler *ioh,
                              unsigned int initial_data_length,
                              unsigned int entire_length)
 {
-  ACE_Filecache_Handle handle (filename,
-                               (int) entire_length);
+  ACE_Filecache_Handle const handle (filename,
+                                     (int) entire_length);
 
   int result = handle.error ();
 
@@ -99,11 +99,11 @@ JAWS_Synch_IO::receive_file (JAWS_IO_Handler *ioh,
       int const bytes_to_memcpy = (std::min) (entire_length, initial_data_length);
       std::memcpy (handle.address (), initial_data, bytes_to_memcpy);
 
-      int bytes_to_read = entire_length - bytes_to_memcpy;
+      int const bytes_to_read = entire_length - bytes_to_memcpy;
 
-      int bytes = stream.recv_n ((char *)
-                                 handle.address () + initial_data_length,
-                                 bytes_to_read);
+      int const bytes = stream.recv_n ((char *)
+                                       handle.address () + initial_data_length,
+                                       bytes_to_read);
       if (bytes == bytes_to_read)
         {
           ioh->receive_file_complete ();
@@ -339,7 +339,7 @@ JAWS_Asynch_IO::accept (JAWS_IO_Handler *ioh,
   //JAWS_Asynch_IO_Handler *aioh =
   //  dynamic_cast<JAWS_Asynch_IO_Handler *> (ioh);
 
-  size_t bytes_to_read = JAWS_Data_Block::JAWS_DATA_BLOCK_SIZE;
+  size_t const bytes_to_read = JAWS_Data_Block::JAWS_DATA_BLOCK_SIZE;
 
   if (db->policy ()->acceptor ()->accept (bytes_to_read, ioh) == -1)
   {
@@ -393,7 +393,7 @@ JAWS_Asynch_IO::receive_file (JAWS_IO_Handler *ioh,
     {
       std::memcpy (handle->address (), initial_data, initial_data_length);
 
-      int bytes_to_read = entire_length - initial_data_length;
+  int const bytes_to_read = entire_length - initial_data_length;
 
       ACE_NEW (mb, ACE_Message_Block ((char *)handle->address ()
                                       + initial_data_length, bytes_to_read));
@@ -444,8 +444,8 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
 
   if (handle != ACE_INVALID_HANDLE)
     {
-      ACE_Message_Block hdr_mb (header, header_size);
-      ACE_Message_Block trl_mb (trailer, trailer_size);
+      ACE_Message_Block const hdr_mb (header, header_size);
+      ACE_Message_Block const trl_mb (trailer, trailer_size);
 
       header_and_trailer =
         new ACE_Asynch_Transmit_File::Header_And_Trailer (hdr_mb.duplicate (),
@@ -499,8 +499,8 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
 
   if (cf->file ()->get_handle () != ACE_INVALID_HANDLE)
     {
-      ACE_Message_Block hdr_mb (header, header_size);
-      ACE_Message_Block trl_mb (trailer, trailer_size);
+      ACE_Message_Block const hdr_mb (header, header_size);
+      ACE_Message_Block const trl_mb (trailer, trailer_size);
 
       header_and_trailer = new ACE_Asynch_Transmit_File::Header_And_Trailer
         (hdr_mb.duplicate (), header_size, trl_mb.duplicate (), trailer_size);

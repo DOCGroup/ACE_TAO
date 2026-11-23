@@ -36,7 +36,7 @@ Parse_HTTP_Response::init (const char *response)
       return;
     }
 
-  int n = ::sscanf (this->response_, "HTTP/%d.%d %d %*s",
+  int const n = ::sscanf (this->response_, "HTTP/%d.%d %d %*s",
                     &(this->major_version_),
                     &(this->minor_version_),
                     &(this->code_));

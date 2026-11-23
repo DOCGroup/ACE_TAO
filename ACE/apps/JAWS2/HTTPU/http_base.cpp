@@ -30,7 +30,7 @@ HTTP_Base::receive (ACE_Message_Block &mb)
 
   // Parse headers
   JAWS_Parse_Headers *parser = JAWS_Parse_Headers_Singleton::instance ();
-  int ret = parser->parse_headers (&(this->info_), mb);
+  int const ret = parser->parse_headers (&(this->info_), mb);
 
   switch (this->info_.status ())
     {
@@ -170,7 +170,7 @@ HTTP_Base::receive_payload (ACE_Message_Block &mb, long length)
     }
   else
     {
-      size_t space = this->payload_.space ();
+      size_t const space = this->payload_.space ();
       this->payload_.copy (mb.rd_ptr (), space);
       mb.rd_ptr (space);
     }

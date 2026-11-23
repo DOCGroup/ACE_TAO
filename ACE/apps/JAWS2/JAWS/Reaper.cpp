@@ -33,7 +33,7 @@ int
 JAWS_Reaper::svc ()
 {
   ACE_TRACE ("JAWS_Reaper::svc");
-  int result = this->concurrency_->thr_mgr ()->wait ();
+  int const result = this->concurrency_->thr_mgr ()->wait ();
   JAWS_IO_Synch_Acceptor_Singleton::instance ()->close ();
   JAWS_IO_Asynch_Acceptor_Singleton::instance ()->close ();
   ACE_DEBUG ((LM_DEBUG, "(%t) Leaving REAPER\n"));

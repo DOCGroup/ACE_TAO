@@ -137,7 +137,7 @@ unsigned int
 JAWS_Referenced_Cache_Object::priority_i () const
 {
   unsigned int priority = ~(0U);
-  double delta
+  double const delta
     = ACE_OS::difftime (this->last_access (), this->first_access ());
 
   if (delta >= 0.0 && delta < ~(0U))
@@ -242,7 +242,7 @@ JAWS_Referenced_Cache_Object_Factory::create (const void *data, size_t size)
 {
   JAWS_Referenced_Cache_Object *obj;
 
-  size_t obj_size = sizeof (JAWS_Referenced_Cache_Object);
+  size_t const obj_size = sizeof (JAWS_Referenced_Cache_Object);
   ACE_NEW_MALLOC_RETURN (obj,
                          static_cast<JAWS_Referenced_Cache_Object *> (
                            this->allocator_->malloc (obj_size)),
@@ -274,7 +274,7 @@ JAWS_Counted_Cache_Object_Factory::create (const void *data, size_t size)
 {
   JAWS_Counted_Cache_Object *obj;
 
-  size_t obj_size = sizeof (JAWS_Counted_Cache_Object);
+  size_t const obj_size = sizeof (JAWS_Counted_Cache_Object);
   ACE_NEW_MALLOC_RETURN (obj,
                          static_cast<JAWS_Counted_Cache_Object *> (
                            this->allocator_->malloc (obj_size)),

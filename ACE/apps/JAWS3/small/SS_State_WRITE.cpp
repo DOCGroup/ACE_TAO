@@ -19,7 +19,7 @@ TeraSS_State_WRITE::service (JAWS_Event_Completer *ec, void *data)
   // Retrieve context
   TeraSS_Data * const tdata = static_cast<TeraSS_Data *> (data);
 
-  ACE_FILE_Addr file_addr (tdata->mb ().rd_ptr ());
+  ACE_FILE_Addr const file_addr (tdata->mb ().rd_ptr ());
   ACE_FILE_Connector file_connector;
 
   if (file_connector.connect (tdata->file_io (),

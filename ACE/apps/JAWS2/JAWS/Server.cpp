@@ -80,7 +80,7 @@ JAWS_Server::init (int argc, char *argv[])
     }
 
   //FUZZ: disable check_for_lack_ACE_OS
-  ACE_INET_Addr inet_addr (this->port_);
+  ACE_INET_Addr const inet_addr (this->port_);
   //FUZZ: enable check_for_lack_ACE_OS
 
   this->policy_.acceptor ()->open (inet_addr);

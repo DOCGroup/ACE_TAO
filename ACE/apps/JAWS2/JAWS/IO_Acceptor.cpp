@@ -53,7 +53,7 @@ JAWS_IO_Synch_Acceptor::open (const ACE_INET_Addr &local_sap, int backlog)
 int
 JAWS_IO_Synch_Acceptor::open (const ACE_HANDLE &socket)
 {
-  ACE_HANDLE handle = this->acceptor_.get_handle ();
+  ACE_HANDLE const handle = this->acceptor_.get_handle ();
   if (handle == socket)
   {
     return 0;
@@ -138,7 +138,7 @@ JAWS_IO_Asynch_Acceptor::open (const ACE_HANDLE &socket)
     this->acceptor_ = std::make_unique<ACE_Asynch_Acceptor<JAWS_Asynch_Handler>> ();
   }
 
-  ACE_HANDLE handle = this->handle_;
+  ACE_HANDLE const handle = this->handle_;
   if (handle == socket)
   {
     return 0;

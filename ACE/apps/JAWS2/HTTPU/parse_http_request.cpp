@@ -42,7 +42,7 @@ Parse_HTTP_Request::init (const char *request)
     }
 
   char buf[256];
-  int n = ::sscanf (this->request_, "%255s %*s HTTP/%d.%d",
+  int const n = ::sscanf (this->request_, "%255s %*s HTTP/%d.%d",
                     buf,
                     &(this->major_version_),
                     &(this->minor_version_));

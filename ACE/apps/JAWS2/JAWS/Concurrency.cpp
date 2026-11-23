@@ -272,7 +272,7 @@ JAWS_Thread_Pool_Task::make (long flags, int nthreads, int maxthreads)
 
   for (int i = 0; i < nthreads; ++i)
     {
-      JAWS_Thread_ID thr_id(thr_names[i]);
+      JAWS_Thread_ID const thr_id(thr_names[i]);
       JAWS_IO_Handler *dummy {};
 
       JAWS_Waiter_Singleton::instance ()->insert (thr_id, dummy);
@@ -335,7 +335,7 @@ JAWS_Thread_Per_Task::activate_hook ()
                         -1);
     }
 
-  JAWS_Thread_ID thr_id (thr_name);
+  JAWS_Thread_ID const thr_id (thr_name);
   JAWS_IO_Handler *dummy {};
 
   // In the thread-per-request strategy, need to take care of the

@@ -78,7 +78,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           || filename_length >= static_cast<int> (filename.size ()))
         ACE_ERROR_RETURN ((LM_ERROR, "Generated filename is too long\n"), 1);
 
-      std::unique_ptr<FILE, int (*) (FILE *)> fp (
+      std::unique_ptr<FILE, int (*) (FILE *)> const fp (
         std::fopen (filename.data (), "w+b"), std::fclose);
       if (!fp)
         {

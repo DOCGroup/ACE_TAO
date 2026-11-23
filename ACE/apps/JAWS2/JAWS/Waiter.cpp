@@ -29,7 +29,7 @@ JAWS_Waiter::index ()
   ACE_thread_t thr_name;
   thr_name = ACE_OS::thr_self ();
 
-  JAWS_Thread_ID tid (thr_name);
+  JAWS_Thread_ID const tid (thr_name);
 #endif /* 0 */
 
   return JAWS_Waiter_Base::index (tid);
