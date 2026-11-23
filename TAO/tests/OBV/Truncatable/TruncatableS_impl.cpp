@@ -130,7 +130,7 @@ Test_impl::op4 (
   ::OBV_TruncatableTest::BaseValue * ov =
       new ::OBV_OBV_TruncatableTest::BaseValue();
 
-  CORBA::ULong total =
+  CORBA::ULong const total =
     x * (iv1->basic_data () + iv2->basic_data () +
          iv3->basic_data () + iv4->basic_data ());
   ov->basic_data (total);

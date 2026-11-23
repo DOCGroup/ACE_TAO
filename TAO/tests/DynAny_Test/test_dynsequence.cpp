@@ -25,7 +25,7 @@ compare_string_sequence_elements(
 
     ACE_DEBUG ((LM_DEBUG, "elem[%d] = %C\n", i, lhs_string.in()));
 
-    CORBA::Boolean match =
+    CORBA::Boolean const match =
         lhs[i]->equal (rhs[i]);
 
     if (!match)
@@ -195,7 +195,7 @@ Test_DynSequence::run_test ()
           char replacement[] = "replacement";
           CORBA::Any tmp;
           tmp <<= CORBA::Any::from_string (replacement,20);
-          CORBA::ULong io_index = 0;
+          CORBA::ULong const io_index = 0;
           // Since we directly change an element in a sequence we give
           // ownership for the previous element to a local temporary object.
           DynamicAny::DynAny_var io_owner = out_elems[io_index].inout();
@@ -326,7 +326,7 @@ Test_DynSequence::run_test ()
       DynamicAny::AnySeq_var as_out =
         ftc1->get_elements ();
 
-      CORBA::ULong index = 2;
+      CORBA::ULong const index = 2;
       CORBA::Any out_any2 = as_out[index];
       char* out_str2 {};
       out_any2 >>= CORBA::Any::to_string (out_str2, 8);
