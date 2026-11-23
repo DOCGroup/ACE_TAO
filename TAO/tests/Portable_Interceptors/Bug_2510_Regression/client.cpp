@@ -61,7 +61,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       PortableInterceptor::ORBInitializer_ptr temp_initializer {};
-      Options options {};
+      Options options;
 
       ACE_NEW_RETURN (temp_initializer,
                       Client_ORBInitializer,

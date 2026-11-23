@@ -67,7 +67,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                                   argv,
                                                   "Client ORB");
 
-      Options options {};
+      Options options;
       if (::parse_args (argc, argv, options) != 0)
       {
         return -1;

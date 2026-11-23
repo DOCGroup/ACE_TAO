@@ -238,7 +238,7 @@ Driver::push_consumer (RtecEventComm::EventSet const& events)
       ECM_IDLData::Info info {};
       cdr >> info;
 
-      ECM_Data other {};
+      ECM_Data other;
       cdr >> other;
 
       if (!cdr.good_bit ())

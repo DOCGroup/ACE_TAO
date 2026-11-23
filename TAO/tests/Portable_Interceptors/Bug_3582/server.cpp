@@ -63,7 +63,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      Options options {};
+      Options options;
       if (::parse_args (argc, argv, options) != 0)
       {
         return -1;

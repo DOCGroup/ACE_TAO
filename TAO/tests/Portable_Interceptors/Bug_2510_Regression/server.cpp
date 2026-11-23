@@ -45,7 +45,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       // create initializer
       Server_ORBInitializer *temp_initializer {};
-      Options options {};
+      Options options;
 
       ACE_NEW_RETURN (temp_initializer,
                       Server_ORBInitializer,

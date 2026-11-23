@@ -193,7 +193,7 @@ ECMS_Driver::supplier_task (Test_Supplier& supplier)
       info.mobile_speed = 1;
       info.trajectory.length (n);
 
-      ECM_Data other {};
+      ECM_Data other;
       other.description = CORBA::string_dup ("some data");
 
       for (CORBA::ULong j = 0; j < n; ++j)
