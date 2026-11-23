@@ -31,13 +31,13 @@ run_destroy_case (int argc,
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, options.orb_name);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv, options.orb_name);
       CORBA::Object_var const obj = orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in ());
+      PortableServer::POA_var const root_poa = PortableServer::POA::_narrow (obj.in ());
 
       if (options.activate_poa_manager)
         {
-          PortableServer::POAManager_var poa_manager =
+          PortableServer::POAManager_var const poa_manager =
             root_poa->the_POAManager ();
           poa_manager->activate ();
         }
