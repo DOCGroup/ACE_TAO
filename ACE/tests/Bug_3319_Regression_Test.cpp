@@ -19,7 +19,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_Log_Msg *log_msg = ACE_LOG_MSG;
   ACE_ARGV args;
   args.add (ACE_TEXT("MyProgram"), true);
-  int ret = ACE_Service_Config::open(args.argc(), args.argv(),
+  int const ret = ACE_Service_Config::open(args.argc(), args.argv(),
                                      ACE_DEFAULT_LOGGER_KEY,
                                      true, true, true);
 

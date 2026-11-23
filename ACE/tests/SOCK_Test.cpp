@@ -32,7 +32,7 @@ client (void *arg)
   ACE_INET_Addr server_addr (remote_addr->get_port_number (), ACE_LOCALHOST);
   ACE_SOCK_Stream cli_stream;
   ACE_SOCK_Connector con;
-  ACE_Time_Value nonblocking_timeout (ACE_Time_Value::zero);
+  ACE_Time_Value const nonblocking_timeout (ACE_Time_Value::zero);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) starting non-blocking connect\n")));
   // Initiate timed, non-blocking connection with server.
@@ -74,7 +74,7 @@ client (void *arg)
   // Test Bug 3606
   const ACE_Time_Value def_timeout (ACE_DEFAULT_TIMEOUT);
   ACE_Time_Value tv (def_timeout);
-  int result = ACE::handle_ready (cli_stream.get_handle (), std::addressof (tv),
+  int const result = ACE::handle_ready (cli_stream.get_handle (), std::addressof (tv),
                                   true, // read_ready
                                   true, // write_ready
                                   false);

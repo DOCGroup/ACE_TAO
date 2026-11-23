@@ -82,7 +82,7 @@ run_main (int, ACE_TCHAR *[])
   {
     ObjectWithTSS *o {};
     ACE_NEW_RETURN (o, ObjectWithTSS, 1);
-    std::unique_ptr<ObjectWithTSS> owner (o);
+    std::unique_ptr<ObjectWithTSS> const owner (o);
 
     if (ACE_Thread_Manager::instance ()->spawn_n
         (threads,
