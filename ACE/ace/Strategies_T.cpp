@@ -145,7 +145,7 @@ ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
                       ACE_Service_Type (this->svc_name_,
                                         stp,
                                         handle,
-                                        1),
+                                        true),
                       -1);
       if (srp == nullptr)
         {
