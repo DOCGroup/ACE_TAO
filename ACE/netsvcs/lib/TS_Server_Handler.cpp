@@ -46,7 +46,7 @@ ACE_TS_Server_Acceptor::init (int argc, ACE_TCHAR *argv[])
   // Set the acceptor endpoint into listen mode (use the Singleton
   // global Reactor...).
   if (this->open (this->service_addr_, ACE_Reactor::instance (),
-                  0, 0, 0,
+                  nullptr, nullptr, nullptr,
                   std::addressof (this->scheduling_strategy_),
                   ACE_TEXT ("Time Server"),
                   ACE_TEXT ("ACE time service")) == -1)
@@ -117,7 +117,7 @@ ACE_TS_Server_Handler::open (void *)
               this->peer ().get_handle ()));
 
   // Call down to our parent to register ourselves with the Reactor.
-  if (ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::open (0) == -1)
+  if (ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::open (nullptr) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
@@ -192,7 +192,7 @@ ACE_TS_Server_Handler::dispatch ()
 {
   ACE_TRACE ("ACE_TS_Server_Handler::dispatch");
   // Get the system time and then create an ACE_Time_Request
-  time_t t = ACE_OS::time (0);
+  time_t t = ACE_OS::time (nullptr);
   ACE_Time_Request rq (ACE_Time_Request::TIME_UPDATE, t);
   return this->send_request (rq);
 }

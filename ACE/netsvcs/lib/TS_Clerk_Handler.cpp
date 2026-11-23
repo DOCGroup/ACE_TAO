@@ -172,7 +172,7 @@ ACE_TS_Clerk_Handler::reinitiate_connection ()
 
       // Reschedule ourselves to try and connect again.
       ACE_Time_Value const timeout (this->timeout ());
-      if (ACE_Reactor::instance ()->schedule_timer (this, 0,
+      if (ACE_Reactor::instance ()->schedule_timer (this, nullptr,
                                                     timeout) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
@@ -196,7 +196,7 @@ ACE_TS_Clerk_Handler::handle_input (ACE_HANDLE)
   else
     {
       // Get current local time
-      time_t local_time = ACE_OS::time (0);
+      time_t local_time = ACE_OS::time (nullptr);
 
       // Compure delta time (difference between current local time and
       // system time obtained from the server)
@@ -294,7 +294,7 @@ ACE_TS_Clerk_Handler::send_request (ACE_UINT32 sequence_num, ACE_Time_Info &time
   time_info.sequence_num_ = this->time_info_.sequence_num_;
 
   // Now prepare a new time update request
-  ACE_Time_Request request (ACE_Time_Request::TIME_UPDATE, 0, 0);
+  ACE_Time_Request request (ACE_Time_Request::TIME_UPDATE, 0, nullptr);
 
   if ((length = request.encode (buffer)) == -1)
     {
@@ -304,7 +304,7 @@ ACE_TS_Clerk_Handler::send_request (ACE_UINT32 sequence_num, ACE_Time_Info &time
 
   // Compute start time of sending request (needed to compute
   // roundtrip delay)
-  this->start_time_ = ACE_OS::time (0);
+  this->start_time_ = ACE_OS::time (nullptr);
 
   // Send the request
   if (this->peer ().send_n (buffer, length) != length)
@@ -368,7 +368,7 @@ ACE_TS_Clerk_Processor::alloc ()
 
   // Initialize
   *(this->system_time_.delta_time_) = 0;
-  *(this->system_time_.last_local_time_) = ACE_OS::time (0);
+  *(this->system_time_.last_local_time_) = ACE_OS::time (nullptr);
 }
 
 // Query the servers for the latest time
@@ -437,7 +437,7 @@ ACE_TS_Clerk_Processor::update_time ()
     *(this->system_time_.delta_time_) = 0;
   }
   // Update the last local time
-  *(this->system_time_.last_local_time_) = ACE_OS::time (0);
+  *(this->system_time_.last_local_time_) = ACE_OS::time (nullptr);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Average delta time: %d\n"),
               (int)(*(this->system_time_.delta_time_))));
@@ -518,7 +518,7 @@ ACE_TS_Clerk_Processor::init (int argc, ACE_TCHAR *argv[])
   // Now set up timer to receive updates from server
   // set the timer to go off after timeout value
   this->timer_id_ = ACE_Reactor::instance ()->schedule_timer (this,
-                                                              0,
+                                                              nullptr,
                                                               ACE_Time_Value (this->timeout_),
                                                               ACE_Time_Value (this->timeout_));
   return 0;
@@ -557,7 +557,7 @@ ACE_TS_Clerk_Processor::initiate_connection (ACE_TS_Clerk_Handler *handler,
             {
               ACE_Time_Value const handler_timeout (handler->timeout ());
               if (ACE_Reactor::instance ()->schedule_timer (handler,
-                                                            0,
+                                                            nullptr,
                                                             handler_timeout) == -1)
                 {
                   ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),

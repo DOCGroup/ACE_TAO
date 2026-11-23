@@ -426,7 +426,7 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
           ACE_DEBUG ((LM_DEBUG,
                       "Something about the sendv_n() failed, so switch to stderr\n"));
 
-          if (ACE_Log_Msg::instance ()->msg_ostream () == 0)
+          if (ACE_Log_Msg::instance ()->msg_ostream () == nullptr)
             {
               // Switch over to logging to stderr for now.  At some
               // point, we'll improve the implementation to queue up the
@@ -513,7 +513,7 @@ ACE_Client_Logging_Acceptor::fini ()
 {
   this->close ();
 
-  if (this->handler_ != 0)
+  if (this->handler_ != nullptr)
   {
     this->handler_->close (0);
   }
@@ -547,7 +547,7 @@ ACE_Client_Logging_Acceptor::info (ACE_TCHAR **strp, size_t length) const
                    this->server_addr_.get_port_number (), "tcp",
                    "# client logging daemon\n");
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
     {
       return -1;
     }
@@ -562,7 +562,7 @@ ACE_Client_Logging_Acceptor::ACE_Client_Logging_Acceptor ()
   : server_host_ (ACE_OS::strdup (ACE_DEFAULT_SERVER_HOST)),
     server_port_ (ACE_DEFAULT_LOGGING_SERVER_PORT),
     logger_key_ (ACE_OS::strdup (ACE_DEFAULT_LOGGER_KEY)),
-    handler_ (0)
+    handler_ (nullptr)
 {
 }
 
@@ -637,7 +637,7 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
 
   if (con.connect (stream,
                    this->server_addr_,
-                   0,
+                   nullptr,
                    this->local_addr_) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -647,7 +647,7 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
                   this->server_addr_.get_port_number (),
                   ACE_ERRNO_GET));
 
-      if (ACE_Log_Msg::instance ()->msg_ostream () == 0)
+      if (ACE_Log_Msg::instance ()->msg_ostream () == nullptr)
         {
           // If we can't connect to the server then we'll send the logging
           // messages to stderr.

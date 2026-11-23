@@ -60,7 +60,7 @@ ACE_Name_Acceptor::init (int argc, ACE_TCHAR *argv[])
   // global Reactor...).
   if (this->open (this->service_addr_,
                   ACE_Reactor::instance (),
-                  0, 0, 0,
+                  nullptr, nullptr, nullptr,
                   std::addressof (this->scheduling_strategy_),
                   ACE_TEXT ("Name Server"),
                   ACE_TEXT ("ACE naming service")) == -1)
@@ -148,7 +148,7 @@ ACE_Name_Handler::open (void * v)
   ACE_TRACE ("ACE_Name_Handler::open");
 
   // Call down to our parent to register ourselves with the Reactor.
-  if (ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::open (0) == -1)
+  if (ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::open (nullptr) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
@@ -438,7 +438,7 @@ ACE_Name_Handler::resolve ()
     {
       std::unique_ptr<ACE_WCHAR_T[]> avalue_urep (avalue.rep ());
       ACE_Name_Request nrq (ACE_Name_Request::RESOLVE,
-                            0,
+                            nullptr,
                             0,
                             avalue_urep.get (),
                             avalue.length () * sizeof (ACE_WCHAR_T),
@@ -447,7 +447,7 @@ ACE_Name_Handler::resolve ()
       return this->send_request (nrq);
     }
 
-  ACE_Name_Request nrq (ACE_Name_Request::BIND, 0, 0, 0, 0, 0, 0);
+  ACE_Name_Request nrq (ACE_Name_Request::BIND, nullptr, 0, nullptr, 0, nullptr, 0);
   this->send_request (nrq);
   return 0;
 }
@@ -480,8 +480,8 @@ ACE_Name_Handler::name_request (ACE_NS_WString *one_name)
   return ACE_Name_Request (ACE_Name_Request::LIST_NAMES,
                            one_name_urep.get (),
                            one_name->length () * sizeof (ACE_WCHAR_T),
-                           0, 0,
-                           0, 0);
+                           nullptr, 0,
+                           nullptr, 0);
 }
 
 ACE_Name_Request
@@ -490,10 +490,10 @@ ACE_Name_Handler::value_request (ACE_NS_WString *one_value)
   ACE_TRACE ("ACE_Name_Handler::value_request");
   std::unique_ptr<ACE_WCHAR_T[]> one_value_urep (one_value->rep ());
   return ACE_Name_Request (ACE_Name_Request::LIST_VALUES,
-                           0, 0,
+                           nullptr, 0,
                            one_value_urep.get (),
                            one_value->length () * sizeof (ACE_WCHAR_T),
-                           0, 0);
+                           nullptr, 0);
 }
 
 ACE_Name_Request
@@ -501,8 +501,8 @@ ACE_Name_Handler::type_request (ACE_NS_WString *one_type)
 {
   ACE_TRACE ("ACE_Name_Handler::type_request");
   return ACE_Name_Request (ACE_Name_Request::LIST_TYPES,
-                           0, 0,
-                           0, 0,
+                           nullptr, 0,
+                           nullptr, 0,
                            std::unique_ptr<char[]> (one_type->char_rep ()).get (),
                            one_type->length ());
 }
@@ -527,7 +527,7 @@ ACE_Name_Handler::lists ()
   if ((this->naming_context ()->*list_table_[index].operation_) (set, pattern) != 0)
     {
       // None found so send blank request back
-      ACE_Name_Request end_rq (ACE_Name_Request::MAX_ENUM, 0, 0, 0, 0, 0, 0);
+      ACE_Name_Request end_rq (ACE_Name_Request::MAX_ENUM, nullptr, 0, nullptr, 0, nullptr, 0);
 
       if (this->send_request (end_rq) == -1)
       {
@@ -554,9 +554,9 @@ ACE_Name_Handler::lists ()
 
       // Send last message indicator.
       ACE_Name_Request nrq (ACE_Name_Request::MAX_ENUM,
-                            0, 0,
-                            0, 0,
-                            0, 0);
+                            nullptr, 0,
+                            nullptr, 0,
+                            nullptr, 0);
       return this->send_request (nrq);
     }
   return 0;
@@ -636,7 +636,7 @@ ACE_Name_Handler::lists_entries ()
         }
 
       // send last message indicator
-      ACE_Name_Request nrq (ACE_Name_Request::MAX_ENUM, 0, 0, 0, 0, 0, 0);
+      ACE_Name_Request nrq (ACE_Name_Request::MAX_ENUM, nullptr, 0, nullptr, 0, nullptr, 0);
 
       if (this->send_request (nrq) == -1)
       {
@@ -646,7 +646,7 @@ ACE_Name_Handler::lists_entries ()
   else
     {
       // None found so send blank request back.
-      ACE_Name_Request end_rq (ACE_Name_Request::MAX_ENUM, 0, 0, 0, 0, 0, 0);
+      ACE_Name_Request end_rq (ACE_Name_Request::MAX_ENUM, nullptr, 0, nullptr, 0, nullptr, 0);
 
       if (this->send_request (end_rq) == -1)
       {
