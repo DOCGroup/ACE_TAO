@@ -305,7 +305,7 @@ Svc_Handler::send_data ()
              static_cast<unsigned long long>(1))) - 1);
       const unsigned int startShift = 4;
       unsigned int shift = startShift;
-      unsigned int trailingMask = 0xffff;
+      unsigned int const trailingMask = 0xffff;
       while (static_cast<ssize_t>(tryThreshold) < MAX)
         {
           IovecGuard all(1, 0, tryThreshold);
@@ -966,12 +966,12 @@ Svc_Handler::wait_for_completion(Direction direction)
   // Since we're in non-blocking mode we need to use <select> to
   // avoid busy waiting.
 #if defined (ACE_WIN64)
-  int select_width = 0;
+  int const select_width = 0;
 #else
-  int select_width = int (handle) + 1;
+  int const select_width = int (handle) + 1;
 #endif /* ACE_WIN64 */
 
-  int result =
+  int const result =
    (direction == READX) ?
     ACE_OS::select (select_width, handle_set, nullptr, nullptr, &DEFAULT_TIME_VALUE) :
     ACE_OS::select (select_width, nullptr, handle_set, nullptr, &DEFAULT_TIME_VALUE);
