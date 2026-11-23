@@ -75,8 +75,8 @@ HTTP_Header_Processing_Strategy::execute ()
           // Assuming that the status-no is a space away.
           int const status_index =
             ACE_Utils::truncate_cast<int> (line.find ("HTTP", 0));
-          ACE_CString status = line.substring (status_index + 9, //HTTP/1.1 200
-                                               3);
+          ACE_CString const status = line.substring (status_index + 9, //HTTP/1.1 200
+                                                     3);
 
           URL_Status *url_status {};
           ACE_NEW_RETURN (url_status,
@@ -95,7 +95,7 @@ HTTP_Header_Processing_Strategy::execute ()
         {
           if (line.find ("text/html") != ACE_CString::npos)
             {
-              ACE_CString url_content_type("text/html");
+              ACE_CString const url_content_type("text/html");
               this->url_.content_type (url_content_type);
             }
         }

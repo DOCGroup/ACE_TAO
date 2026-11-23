@@ -42,7 +42,7 @@ client (void *arg)
 
   ACE_SOCK_Stream cli_stream;
   ACE_SOCK_Connector con;
-  ACE_Time_Value nonblocking_timeout (ACE_Time_Value::zero);
+  ACE_Time_Value const nonblocking_timeout (ACE_Time_Value::zero);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) starting non-blocking connect\n")));
   // Initiate timed, non-blocking connection with server.
