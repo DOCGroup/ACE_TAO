@@ -300,7 +300,7 @@ ACEXML_Parser::parse_external_dtd ()
     }
   if (this->validate_)
     {
-      std::unique_ptr<ACEXML_Char[]> uri = this->normalize_systemid (systemId);
+      std::unique_ptr<ACEXML_Char[]> const uri = this->normalize_systemid (systemId);
       ACEXML_InputSource *ip {};
       if (this->entity_resolver_)
         {
@@ -616,7 +616,7 @@ ACEXML_Parser::parse_external_id (ACEXML_Char *&publicId,
                                   ACEXML_Char *&systemId)
 {
   publicId = systemId = nullptr;
-  ACEXML_Char nextch = this->get ();
+  ACEXML_Char const nextch = this->get ();
   ACEXML_Char fwd {};
   switch (nextch)
     {
@@ -1034,7 +1034,7 @@ ACEXML_Parser::parse_cdata ()
       // Anything goes except the sequence "]]>".
       if (ch == ']' && this->peek() == ']')
         {
-          ACEXML_Char temp = ch;
+          ACEXML_Char const temp = ch;
           ch = this->get();
           if (ch == ']' && this->peek() == '>')
             {
@@ -1309,7 +1309,7 @@ int
 ACEXML_Parser::parse_defaultdecl ()
 {
   // DefaultDecl ::=  '#REQUIRED' | '#IMPLIED' | (('#FIXED' S)? AttValue)
-  ACEXML_Char nextch = this->peek ();
+  ACEXML_Char const nextch = this->peek ();
   ACEXML_Char *fixed_attr {};
   switch (nextch)
     {
@@ -1368,7 +1368,7 @@ ACEXML_Parser::parse_defaultdecl ()
 int
 ACEXML_Parser::parse_tokenized_type ()
 {
-  ACEXML_Char ch = this->get();
+  ACEXML_Char const ch = this->get();
   switch (ch)
     {
       case 'I':
@@ -1408,7 +1408,7 @@ ACEXML_Parser::parse_tokenized_type ()
       case 'E':               // ENTITY or ENTITIES
         if (this->parse_token (ACE_TEXT ("NTIT")) == 0)
           {
-            ACEXML_Char nextch = this->get ();
+            ACEXML_Char const nextch = this->get ();
             if (nextch == 'Y')
               {
                 // We have successfully identified the type of
@@ -1607,7 +1607,7 @@ ACEXML_Parser::parse_notation_decl ()
   // Gross hack but otherwise we need to go around a lot of loops to parse,
   // When the ExternalID starts with 'PUBLIC' we cannot distinguish a
   // PublicId from a ExternalID by looking using a one character read-ahead
-  ACEXML_ParserInt::ReferenceState temp = this->ref_state_;
+  ACEXML_ParserInt::ReferenceState const temp = this->ref_state_;
   this->ref_state_ = ACEXML_ParserInt::IN_NOTATION;
 
   this->parse_external_id (publicid, systemid);
@@ -1665,7 +1665,7 @@ ACEXML_Parser::parse_element_decl ()
       this->fatal_error (ACE_TEXT ("Expecting a space between element name ")
                          ACE_TEXT ("and element definition"));
     }
-  ACEXML_Char nextch = this->peek();
+  ACEXML_Char const nextch = this->peek();
   switch (nextch)
     {
       case 'E':                   // EMPTY
@@ -1975,7 +1975,7 @@ ACEXML_Parser::parse_reference_name ()
 int
 ACEXML_Parser::parse_attvalue (ACEXML_Char *&str)
 {
-  ACEXML_Char quote = this->get ();
+  ACEXML_Char const quote = this->get ();
   if (quote != '\'' && quote != '"')  // Not a quoted string.
     {
       return -1;
@@ -2153,7 +2153,7 @@ ACEXML_Parser::parse_entity_reference ()
     }
   else
     {
-      std::unique_ptr<ACEXML_Char[]> uri = this->normalize_systemid (systemId);
+      std::unique_ptr<ACEXML_Char[]> const uri = this->normalize_systemid (systemId);
       ACEXML_InputSource *ip {};
       if (this->entity_resolver_)
         {
@@ -2249,7 +2249,7 @@ ACEXML_Parser::parse_PE_reference ()
     }
   else if (this->external_entity_ && this->validate_)
     {
-      std::unique_ptr<ACEXML_Char[]> uri = this->normalize_systemid (systemId);
+      std::unique_ptr<ACEXML_Char[]> const uri = this->normalize_systemid (systemId);
       ACEXML_InputSource *ip {};
       if (this->entity_resolver_)
         {
@@ -2308,8 +2308,8 @@ ACEXML_Parser::parse_PE_reference ()
 int
 ACEXML_Parser::parse_entity_value (ACEXML_Char *&str)
 {
-  ACEXML_ParserInt::ReferenceState temp = this->ref_state_;
-  ACEXML_Char quote = this->get ();
+  ACEXML_ParserInt::ReferenceState const temp = this->ref_state_;
+  ACEXML_Char const quote = this->get ();
   if (quote != '\'' && quote != '"')  // Not a quoted string.
     {
       return -1;
@@ -2417,7 +2417,7 @@ ACEXML_Parser::parse_nmtoken (ACEXML_Char ch)
 int
 ACEXML_Parser::parse_version_num (ACEXML_Char*& str)
 {
-  ACEXML_Char quote = this->get ();
+  ACEXML_Char const quote = this->get ();
   if (quote != '\'' && quote != '"')  // Not a quoted string.
     {
       return -1;
@@ -2425,7 +2425,7 @@ ACEXML_Parser::parse_version_num (ACEXML_Char*& str)
   int numchars {};
   while (true)
     {
-      ACEXML_Char ch = this->get ();
+      ACEXML_Char const ch = this->get ();
       if (ch == quote && !numchars)
         {
           return -1;
@@ -2461,7 +2461,7 @@ ACEXML_Parser::parse_system_literal (ACEXML_Char*& str)
     }
   while (true)
     {
-      ACEXML_Char ch = this->get ();
+      ACEXML_Char const ch = this->get ();
       if (ch == quote)
         {
           str = this->obstack_.freeze ();
@@ -2496,7 +2496,7 @@ ACEXML_Parser::parse_pubid_literal (ACEXML_Char*& str)
     }
   while (true)
     {
-      ACEXML_Char ch = this->get ();
+      ACEXML_Char const ch = this->get ();
       if (ch == quote)
         {
           str = this->obstack_.freeze ();
@@ -2524,7 +2524,7 @@ ACEXML_Parser::parse_encname (ACEXML_Char*& str)
   int numchars {};
   while (true)
     {
-      ACEXML_Char ch = this->get ();
+      ACEXML_Char const ch = this->get ();
       if (ch == quote && !numchars)
         {
           return -1;
@@ -2558,7 +2558,7 @@ ACEXML_Parser::parse_encname (ACEXML_Char*& str)
 int
 ACEXML_Parser::parse_sddecl (ACEXML_Char*& str)
 {
-  ACEXML_Char quote = this->get ();
+  ACEXML_Char const quote = this->get ();
   if (quote != '\'' && quote != '"')  // Not a quoted string.
     {
       return -1;
@@ -2566,7 +2566,7 @@ ACEXML_Parser::parse_sddecl (ACEXML_Char*& str)
   int numchars {};
   while (true)
     {
-      ACEXML_Char ch = this->get ();
+      ACEXML_Char const ch = this->get ();
       if (ch == quote && numchars < 2)
         {
           return -1;
@@ -2673,7 +2673,7 @@ ACEXML_Parser::pop_context (bool GE_ref)
 
   ACEXML_Parser_Context *context {};
   int const retval = this->ctx_stack_.pop (context);
-  std::unique_ptr<ACEXML_Parser_Context> context_owner (context);
+  std::unique_ptr<ACEXML_Parser_Context> const context_owner (context);
   if (retval != 0)
     {
       this->fatal_error (ACE_TEXT ("Unable to pop element of the input stack"));
@@ -2948,7 +2948,7 @@ ACEXML_Parser::parse_comment ()
     // according to the spec, '--->' is not a valid closing comment
     // sequence. But we'll let it pass anyway.
     {
-      ACEXML_Char fwd = this->get ();
+      ACEXML_Char const fwd = this->get ();
       if ((fwd == '-' && state < 2) ||
           (fwd == '>' && state == 2))
         {
@@ -3023,7 +3023,7 @@ ACEXML_Parser::reset ()
     }
   if (this->current_)
     {
-      std::unique_ptr<ACEXML_Parser_Context> context_owner (this->current_);
+      std::unique_ptr<ACEXML_Parser_Context> const context_owner (this->current_);
       this->current_->getInputSource()->getCharStream()->rewind();
       this->current_->setInputSource (nullptr);
       this->current_ = nullptr;
