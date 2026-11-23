@@ -46,7 +46,7 @@ public:
 
   ~TAO_DIOP_Connection_Handler ();
 
-  /// Called by the <Strategy_Acceptor> when the handler is completely
+  /// Called by the @c Strategy_Acceptor when the handler is completely
   /// connected.  Argument is unused.
   int open (void *) override;
 

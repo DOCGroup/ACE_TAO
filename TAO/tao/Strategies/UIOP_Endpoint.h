@@ -60,7 +60,7 @@ public:
 
   /// @name UIOP-specific methods
   /// @{
-  /// Return a reference to the <object_addr>.
+  /// Return a reference to the @c object_addr.
   ACE_UNIX_Addr const &object_addr () const;
 
   /// Return a pointer to the rendezvous point string.
@@ -74,7 +74,7 @@ private:
   TAO_UIOP_Endpoint (TAO_UIOP_Endpoint &&) = delete;
   TAO_UIOP_Endpoint &operator= (TAO_UIOP_Endpoint &&) = delete;
 
-  /// Cached instance of <ACE_UNIX_Addr> for use in making
+  /// Cached instance of @c ACE_UNIX_Addr for use in making
   /// invocations, etc.
   ACE_UNIX_Addr object_addr_;
 

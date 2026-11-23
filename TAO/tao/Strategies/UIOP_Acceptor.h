@@ -91,7 +91,7 @@ private:
   int parse_options (char const *options);
 
   /// Obtains uiop properties that must be used by this acceptor, i.e.,
-  /// initializes <uiop_properties_>.
+  /// initializes @c uiop_properties_.
   int init_uiop_properties ();
 
   /// Create a UIOP profile representing this acceptor.

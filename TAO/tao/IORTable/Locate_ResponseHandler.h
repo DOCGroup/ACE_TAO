@@ -1,7 +1,7 @@
 /**
  *  @file    Locate_ResponseHandler.h
  *
- *  @author Phil Mesnier <mesnier_p@ociweb>
+ *  @author Phil Mesnier
  */
 #ifndef TAO_LOCATE_RESPONSEHANDLER_H
 #define TAO_LOCATE_RESPONSEHANDLER_H

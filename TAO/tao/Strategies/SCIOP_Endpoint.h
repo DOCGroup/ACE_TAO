@@ -79,14 +79,14 @@ public:
 
   /// @name SCIOP-specific methods
   /// @{
-  /// Return a reference to the <object_addr>.
+  /// Return a reference to the @c object_addr.
   ACE_INET_Addr const &object_addr () const;
 
   /// Return a pointer to the host string.  This object maintains
   /// ownership of this string.
   char const *host () const;
 
-  /// Copy the string @a h into <host_> and return the resulting pointer.
+  /// Copy the string @a h into @c host_ and return the resulting pointer.
   /// This object maintains ownership of this string.
   char const *host (char const *h);
 
@@ -132,7 +132,7 @@ private:
   /// TCP port number.
   CORBA::UShort port_ {683};
 
-  /// Cached instance of <ACE_INET_Addr> for use in making
+  /// Cached instance of @c ACE_INET_Addr for use in making
   /// invocations, etc.
   mutable ACE_INET_Addr object_addr_;
 

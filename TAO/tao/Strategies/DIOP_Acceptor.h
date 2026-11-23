@@ -128,7 +128,7 @@ protected:
 
   /**
    * Probe the system for available network interfaces, and initialize
-   * the <addrs_> array with an ACE_INET_Addr for each network
+   * the @c addrs_ array with an ACE_INET_Addr for each network
    * interface.  The port for each initialized ACE_INET_Addr will be
    * set in the open_i() method.  This method only gets invoked when
    * no explicit hostname is provided in the specified endpoint.

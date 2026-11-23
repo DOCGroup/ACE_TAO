@@ -70,9 +70,9 @@ public:
   CORBA::ULong endpoint_count () const override;
   CORBA::ULong hash (CORBA::ULong max) override;
   /**
-   * Add <endp> to this profile's list of endpoints (it is inserted
+   * Add @c endp to this profile's list of endpoints (it is inserted
    * next to the head of the list).  This profiles takes ownership of
-   * <endp>.
+   * @c endp.
    */
   void add_endpoint (TAO_SCIOP_Endpoint *endp);
 
@@ -107,7 +107,7 @@ protected:
    * endpoints is used for #2. If the ORB is configured to use
    * preferred interfaces for invocation, TAO creates an endpoint per
    * preferred interface. To be clear, every tuple
-   * <destination:target> will have an endpoint. What TAO essentially
+   * @c destination:target will have an endpoint. What TAO essentially
    * does is that creates it multiple endpoints so that the invocation
    * code path can use existing iterating techniques to try one
    * preferred interface after another (if the first did not work). If
@@ -118,7 +118,7 @@ protected:
    * local address.
    * Addressing info of the default endpoint, i.e., head of the list,
    * is transmitted using standard SCIOP ProfileBody components.  See
-   * <encode_endpoints> method documentation above for how the rest of
+   * @c encode_endpoints method documentation above for how the rest of
    * the endpoint list is transmitted.
    */
   TAO_SCIOP_Endpoint endpoint_;

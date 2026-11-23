@@ -106,7 +106,7 @@ private:
    * feature.
    * Addressing info of the default endpoint, i.e., head of the list,
    * is transmitted using standard UIOP ProfileBody components.  See
-   * <encode_endpoints> method documentation above for how the rest of
+   * @c encode_endpoints method documentation above for how the rest of
    * the endpoint list is transmitted.
    */
   TAO_UIOP_Endpoint endpoint_;

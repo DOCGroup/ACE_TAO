@@ -1,7 +1,7 @@
 /**
  *  @file    Locate_ResponseHandler.cpp
  *
- *  @author Phil Mesnier <mesnier_p@ociweb>
+ *  @author Phil Mesnier
  */
 #include "Locate_ResponseHandler.h"
 
