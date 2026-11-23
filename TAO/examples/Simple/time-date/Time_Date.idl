@@ -1,4 +1,3 @@
-/// -*- C++ -*-
 /// IDL schema definition for the Time and Date interface.
 interface Time_Date
 {
