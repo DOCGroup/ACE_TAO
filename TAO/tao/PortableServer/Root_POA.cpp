@@ -454,10 +454,10 @@ TAO_Root_POA::create_POA_i (const char *adapter_name,
       }
 
       // Get the POAManagerFactory instance owned by RootPOA.
-      PortableServer::POAManagerFactory_var tao_poa_manager_factory
+      PortableServer::POAManagerFactory_var const tao_poa_manager_factory
         = root_poa->the_POAManagerFactory ();
 
-      CORBA::PolicyList empty_policies;
+      CORBA::PolicyList const empty_policies;
 
       // The POAManager name will be generated when the POAManager instance
       // is created.
@@ -915,7 +915,7 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
       // and is released in the complete_destruction_i method, we are
       // trying to keep the poa still around by doing a duplicate of
       // it. (a hack).
-      PortableServer::POA_var poa = PortableServer::POA::_duplicate (this);
+      PortableServer::POA_var const poa = PortableServer::POA::_duplicate (this);
 
       this->complete_destruction_i ();
 
@@ -1411,7 +1411,7 @@ bool
 TAO_Root_POA::is_poa_generated (CORBA::Object_ptr reference,
                                 PortableServer::ObjectId &system_id)
 {
-  TAO::ObjectKey_var key = reference->_key ();
+  TAO::ObjectKey_var const key = reference->_key ();
 
   TAO_Object_Adapter::poa_name poa_system_name;
   CORBA::Boolean is_root {};
@@ -1895,11 +1895,11 @@ TAO_Root_POA::object_adapter ()
 CORBA::Object_ptr
 TAO_Root_POA::invoke_key_to_object ()
 {
-  PortableServer::ObjectId_var &system_id =
+  PortableServer::ObjectId_var const &system_id =
     *this->key_to_object_params_.system_id_;
 
   // Create object key.
-  TAO::ObjectKey_var key =
+  TAO::ObjectKey_var const key =
     this->create_object_key (system_id.in ());
 
   return this->key_to_object (key.in (),
@@ -2008,7 +2008,7 @@ TAO_Root_POA::key_to_stub_i (const TAO::ObjectKey &key,
     }
 
   // Give ownership to the unique pointer.
-  std::unique_ptr<TAO_Acceptor_Filter> new_filter (filter);
+  std::unique_ptr<TAO_Acceptor_Filter> const new_filter (filter);
 
   TAO_Stub *data =
     this->create_stub_object (
