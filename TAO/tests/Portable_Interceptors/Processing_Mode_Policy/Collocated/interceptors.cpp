@@ -38,7 +38,7 @@ void
 Echo_Client_Request_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-  CORBA::String_var op =
+  CORBA::String_var const op =
     ri->operation ();
 
   // Do not count the _is_a calls
@@ -75,7 +75,7 @@ void
 Echo_Client_Request_Interceptor::receive_other (
   PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-  CORBA::String_var op = ri->operation ();
+  CORBA::String_var const op = ri->operation ();
 
   // Do not count the _is_a calls
   if (std::strcmp (op.in (), "_is_a") != 0)
@@ -92,7 +92,7 @@ void
 Echo_Client_Request_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-  CORBA::String_var op = ri->operation ();
+  CORBA::String_var const op = ri->operation ();
 
   // Do not count the _is_a calls
   if (std::strcmp (op.in (), "_is_a") != 0)
@@ -126,7 +126,7 @@ Echo_Client_Request_Interceptor::receive_reply (
       paramlist[i++].argument >>= param1;
       paramlist[i].argument >>= param2;
 
-      CORBA::Any_var result_any = ri->result ();
+      CORBA::Any_var const result_any = ri->result ();
 
       (result_any.in ()) >>= result;
 
@@ -142,7 +142,7 @@ void
 Echo_Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-  CORBA::String_var op = ri->operation ();
+  CORBA::String_var const op = ri->operation ();
 
   // Do not count the _is_a calls
   if (std::strcmp (op.in (), "_is_a") != 0)
@@ -150,7 +150,7 @@ Echo_Client_Request_Interceptor::receive_exception (
       ++client_interceptor_check_;
     }
 
-  CORBA::String_var exception_id =
+  CORBA::String_var const exception_id =
     ri->received_exception_id ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -189,7 +189,7 @@ void
 Echo_Server_Request_Interceptor::receive_request (
   PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-  CORBA::String_var op = ri->operation ();
+  CORBA::String_var const op = ri->operation ();
 
   // Do not count the _is_a calls
   if (std::strcmp (op.in (), "_is_a") != 0)
@@ -197,7 +197,7 @@ Echo_Server_Request_Interceptor::receive_request (
       ++server_interceptor_check_;
     }
 
-  PortableInterceptor::ObjectId_var test_oid =
+  PortableInterceptor::ObjectId_var const test_oid =
     ri->object_id ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -219,7 +219,7 @@ Echo_Server_Request_Interceptor::receive_request (
                   param));
      }
 
-  CORBA::String_var tmdi =
+  CORBA::String_var const tmdi =
     ri->target_most_derived_interface ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -231,7 +231,7 @@ void
 Echo_Server_Request_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-  CORBA::String_var op = ri->operation ();
+  CORBA::String_var const op = ri->operation ();
 
   // Do not count the _is_a calls
   if (std::strcmp (op.in (), "_is_a") != 0)
@@ -268,7 +268,7 @@ Echo_Server_Request_Interceptor::send_reply (
       paramlist[i++].argument >>= param1;
       paramlist[i].argument >>= param2;
 
-      CORBA::Any_var result_any = ri->result ();
+      CORBA::Any_var const result_any = ri->result ();
 
       (result_any.in ()) >>= result;
 
@@ -284,7 +284,7 @@ void
 Echo_Server_Request_Interceptor::send_exception (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-  CORBA::String_var op = ri->operation ();
+  CORBA::String_var const op = ri->operation ();
 
   // Do not count the _is_a calls
   if (std::strcmp (op.in (), "_is_a") != 0)
@@ -300,9 +300,9 @@ Echo_Server_Request_Interceptor::send_exception (
   CORBA::Any_var any =
     ri->sending_exception ();
 
-  CORBA::TypeCode_var type = any->type ();
+  CORBA::TypeCode_var const type = any->type ();
 
-  CORBA::String_var exception_id = type->id ();
+  CORBA::String_var const exception_id = type->id ();
 
   ACE_DEBUG ((LM_DEBUG,
               "Exception ID = %C\n",
