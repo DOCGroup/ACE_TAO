@@ -624,7 +624,7 @@ module AVStreams
       FlowEndPoint get_connected_fep()
         raises (notConnected,AVStreams::notSupported);
 
-      /// syntax of fp_name is <flowProtocol>
+      /// syntax of fp_name is @a flowProtocol
       boolean use_flow_protocol(in string fp_name,
                                 in any fp_settings)
         raises (AVStreams::FPError, AVStreams::notSupported);

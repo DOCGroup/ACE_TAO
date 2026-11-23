@@ -9,7 +9,7 @@
 
 interface client
 {
-  /// Decrements <time_to_live>.  If <time_to_live> becomes zero, it
+  /// Decrements @a time_to_live.  If @a time_to_live becomes zero, it
   /// stops. Otherwise, it pings the server.
   void ping (in unsigned short time_to_live);
 };
@@ -20,7 +20,7 @@ interface server
   void start (in client c,
               in unsigned short time_to_live);
 
-  /// Decrements <time_to_live>.  If <time_to_live> becomes zero, it
+  /// Decrements @a time_to_live.  If @a time_to_live becomes zero, it
   /// stops. Otherwise, it pings the client.
   void ping (in unsigned short time_to_live);
 

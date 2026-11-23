@@ -11,7 +11,7 @@ interface Pluggable_Test
   oneway void shutdown ();
 };
 
-/// Creates <Pluggable_Test> objects.
+/// Creates @c Pluggable_Test objects.
 interface Pluggable_Test_Factory
 {
   Pluggable_Test make_pluggable_test ();

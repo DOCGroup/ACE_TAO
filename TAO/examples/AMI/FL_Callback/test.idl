@@ -8,7 +8,7 @@ typedef sequence<Peer> PeerSet;
 /// the reported progress.
 interface Peer
 {
-  /// Sends back the number in <id>.
+  /// Sends back the number in @a id.
   long request (in long id);
   /// Starts the demo in one peer.
   oneway void start (in PeerSet the_peers,
@@ -18,7 +18,7 @@ interface Peer
 };
 
 /// Reports progress for multiple applications running in parallel.
-/// Each application is identified by an <id> and reports as asynchronous
+ /// Each application is identified by an @a id and reports as asynchronous
 /// requests are sent and received.
 interface Progress
 {

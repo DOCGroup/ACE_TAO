@@ -16,7 +16,7 @@ module A {
       typedef short myshort;
     };
     typedef A::myshort CORRECT;
-    /// Required to use ::A::mylong
+    /// A leading global scope is required to refer to the outer module's @c mylong.
     typedef A::mylong  INVALID;
     /// Recursive search is not allowable above as the module A
     /// being referenced is NOT the same as the local module A

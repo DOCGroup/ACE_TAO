@@ -5,15 +5,15 @@ module Web_Server
 
   interface Callback
     {
-      /// Called back by the server to pass the next <chunk> of the file.
-      /// If there are no more chunks, <last_chunk> is true.
+      /// Called back by the server to pass the next @a chunk of the file.
+      /// If there are no more chunks, @a last_chunk is true.
       void next_chunk (in Chunk_Type chunk,
                        in boolean last_chunk);
     };
 
   exception Error_Result
     {
-      /// Status of the <register_callback> operation. These values should map
+      /// Status of the @c register_callback operation. These values should map
       /// to normal HTTP status values, e.g., 200 means success and 404 means
       /// "file not found."
       short status;
@@ -30,9 +30,9 @@ module Web_Server
 
   interface Iterator_Factory
     {
-      /// Registers a <Callback> that the Web server uses to push data
-      /// associated with <pathname> one chunk at a time. <metadata> reports
-      /// information about <pathname>.
+      /// Registers a @c Callback that the Web server uses to push data
+      /// associated with @a pathname one chunk at a time. @a metadata reports
+      /// information about @a pathname.
       Metadata_Type register_callback (in string pathname,
                                        in Callback client_callback)
         raises (Error_Result);
