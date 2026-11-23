@@ -16,7 +16,7 @@ ACEXML_Base64::encode (const ACEXML_Char* input,
   }
   const size_t len = ACE_OS::strlen (input);
 
-  std::unique_ptr<ACE_Byte[]> buf {new (std::nothrow) ACE_Byte[len + 1]};
+  std::unique_ptr<ACE_Byte[]> const buf {new (std::nothrow) ACE_Byte[len + 1]};
   if (!buf)
     {
       errno = ENOMEM;
@@ -30,7 +30,7 @@ ACEXML_Base64::encode (const ACEXML_Char* input,
   buf[len] = 0;
 
   size_t encode_len = 0;
-  std::unique_ptr<ACE_Byte[]> encoded_buf (
+  std::unique_ptr<ACE_Byte[]> const encoded_buf (
     ACE_Base64::encode (buf.get (), len, &encode_len));
 
   if (encoded_buf == nullptr)
@@ -64,7 +64,7 @@ ACEXML_Base64::decode (const ACEXML_Char* input,
 
   const size_t len = ACE_OS::strlen (input);
 
-  std::unique_ptr<ACE_Byte[]> buf {new (std::nothrow) ACE_Byte[len + 1]};
+  std::unique_ptr<ACE_Byte[]> const buf {new (std::nothrow) ACE_Byte[len + 1]};
   if (!buf)
     {
       errno = ENOMEM;
@@ -80,7 +80,7 @@ ACEXML_Base64::decode (const ACEXML_Char* input,
 
   size_t decode_len = 0;
 
-  std::unique_ptr<ACE_Byte[]> decoded_buf (
+  std::unique_ptr<ACE_Byte[]> const decoded_buf (
     ACE_Base64::decode (buf.get (), &decode_len));
 
   if (decoded_buf == nullptr)

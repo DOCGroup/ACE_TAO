@@ -102,8 +102,8 @@ ACEXML_NamespaceSupport::init ()
     return -1;
   }
 
-  ACEXML_String prefix (ACEXML_TABOO_NS_PREFIX, nullptr, false);
-  ACEXML_String uri (ACEXML_XMLNS_URI_name, nullptr, false);
+  ACEXML_String const prefix (ACEXML_TABOO_NS_PREFIX, nullptr, false);
+  ACEXML_String const uri (ACEXML_XMLNS_URI_name, nullptr, false);
   return this->effective_context_->bind (prefix, uri);
 }
 
@@ -131,8 +131,8 @@ ACEXML_NamespaceSupport::declarePrefix (const ACEXML_Char *prefix,
     return -1;
   }
 
-  ACEXML_String ns_prefix (prefix, nullptr, false);
-  ACEXML_String ns_uri (uri, nullptr, false);
+  ACEXML_String const ns_prefix (prefix, nullptr, false);
+  ACEXML_String const ns_uri (uri, nullptr, false);
 
   return this->effective_context_->rebind (ns_prefix, ns_uri);
 }

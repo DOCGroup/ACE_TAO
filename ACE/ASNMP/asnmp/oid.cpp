@@ -213,7 +213,7 @@ Oid& Oid::operator+=( const char *a)
 
   if (valid()) {
     unsigned long const n = (smival.value.oid.len *SNMPCHARSIZE) + smival.value.oid.len + 1 + sz;
-    std::unique_ptr<char[]> ptr (new (std::nothrow) char[n]);
+    std::unique_ptr<char[]> const ptr (new (std::nothrow) char[n]);
     if (!ptr)
       {
         errno = ENOMEM;
@@ -560,7 +560,7 @@ int Oid::StrToOid( const char *string, SmiLPOID dstOid, size_t& how_many)
      return -1;
   }
 
-  std::unique_ptr<SmiUINT32[]> temp (new (std::nothrow) SmiUINT32[nz]);
+  std::unique_ptr<SmiUINT32[]> const temp (new (std::nothrow) SmiUINT32[nz]);
   if (!temp)
     {
       errno = ENOMEM;
