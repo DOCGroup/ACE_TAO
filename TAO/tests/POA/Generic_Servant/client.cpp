@@ -114,7 +114,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       // Initialize options based on command-line arguments.
-      int parse_args_result =
+      const int parse_args_result =
         parse_args (argc, argv);
       if (parse_args_result != 0)
       {
