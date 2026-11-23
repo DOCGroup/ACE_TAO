@@ -207,7 +207,7 @@ Scheduler::open (void *)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Scheduler open\n")));
   // Become an Active Object.
-  int num_threads = 3;
+  int const num_threads = 3;
   return this->activate (THR_BOUND | THR_JOINABLE, num_threads);
 }
 
@@ -314,7 +314,7 @@ static bool expect (const ACE_TCHAR *name,
     }
 
   // Note that count is zero based (0 means one reference, etc.)
-  bool fail = (expect_which != ptr->which_) || (expect_count != ptr.count ());
+  bool const fail = (expect_which != ptr->which_) || (expect_count != ptr.count ());
   ACE_DEBUG ((fail ? LM_ERROR : LM_DEBUG,
               ACE_TEXT ("Expecting: %s Printer: %u; Count %d:: ")
               ACE_TEXT ("Actual: Printer: %u; Count %d\n"),

@@ -142,7 +142,7 @@ get_if_index (const char*const interface,
                         -1);
     }
 
-  int result = ACE_OS::ioctl (s,
+  int const result = ACE_OS::ioctl (s,
                               SIOCGIFINDEX,
                               reinterpret_cast<char *> (std::addressof (if_req)));
 
@@ -673,7 +673,7 @@ Secondary_Ipaddr_Handler::fill_inet_prefix (
             *dot = '\0';
           }
         }
-      int num = ACE_OS::atoi (to_search);
+      int const num = ACE_OS::atoi (to_search);
       if (num < 0 || num > 255)
         {
           return -1;

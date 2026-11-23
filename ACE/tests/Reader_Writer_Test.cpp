@@ -98,7 +98,7 @@ reader (void *)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) reader starting\n")));
 
   // We use a random pause, around 2msec with 1msec jittering.
-  int usecs = 1000 + ACE_OS::rand() % 2000;
+  int const usecs = 1000 + ACE_OS::rand() % 2000;
   ACE_Time_Value pause(0, usecs);
 
   for (size_t iterations = 1; iterations <= n_iterations; ++iterations)
@@ -128,7 +128,7 @@ reader (void *)
             }
         }
 
-      int result = rw_mutex.tryacquire_write_upgrade ();
+      int const result = rw_mutex.tryacquire_write_upgrade ();
 
       if (result == 0)
         {
@@ -203,7 +203,7 @@ writer (void *)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) writer starting\n")));
 
   // We use a random pause, around 2msec with 1msec jittering.
-  int usecs = 1000 + ACE_OS::rand() % 2000;
+  int const usecs = 1000 + ACE_OS::rand() % 2000;
   ACE_Time_Value pause(0, usecs);
 
   for (size_t iterations = 1; iterations <= n_iterations; ++iterations)
