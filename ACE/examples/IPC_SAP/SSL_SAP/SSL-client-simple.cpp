@@ -176,7 +176,7 @@ char *
 Options::shared_client_test (u_short port,
                              ACE_SSL_SOCK_Stream &cli_stream)
 {
-  ACE_INET_Addr remote_addr (port, this->host_);
+  ACE_INET_Addr const remote_addr (port, this->host_);
 
   ACE_SSL_SOCK_Connector con;
 

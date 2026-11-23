@@ -178,7 +178,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   u_short port = ACE_DEFAULT_SERVER_PORT + 1;
 
   // Create a server end-point.
-  ACE_INET_Addr addr (port);
+  ACE_INET_Addr const addr (port);
   ACE_SSL_SOCK_Acceptor peer_acceptor (addr);
 
   ACE_HANDLE s_handle = peer_acceptor.get_handle ();
