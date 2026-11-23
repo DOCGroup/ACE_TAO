@@ -195,7 +195,7 @@ Foo_B_i::test_special_basic_arg(CORBA::Boolean value,
   //ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_B_i::test_special_basic_arg ")
   //                     ACE_TEXT(" got special basic arg: %d\n"), value));
 
-  CORBA::Boolean expected_special_value = client_id % 2;
+  CORBA::Boolean const expected_special_value = client_id % 2;
   if (expected_special_value != value)
     {
       ++error_count_;

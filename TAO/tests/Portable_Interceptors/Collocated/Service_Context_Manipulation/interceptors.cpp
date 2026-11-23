@@ -62,7 +62,7 @@ Echo_Client_Request_Interceptor::send_request (
   IOP::ServiceContext sc {};
   sc.context_id = ::service_id;
 
-  CORBA::ULong string_len = std::strlen (request_msg) + 1;
+  CORBA::ULong const string_len = std::strlen (request_msg) + 1;
   // The sequence takes ownership of this buffer in replace ().
   CORBA::Octet *buf = CORBA::OctetSeq::allocbuf (string_len);
   std::strcpy (reinterpret_cast<char *> (buf), request_msg);
@@ -287,7 +287,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
 
   scc.context_id = ::service_id;
 
-  CORBA::ULong string_len = std::strlen (reply_msg) + 1;
+  CORBA::ULong const string_len = std::strlen (reply_msg) + 1;
   // The sequence takes ownership of this buffer in replace ().
   CORBA::Octet *buff = CORBA::OctetSeq::allocbuf (string_len);
 

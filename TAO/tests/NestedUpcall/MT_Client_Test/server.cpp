@@ -128,7 +128,7 @@ MT_Object_Server::run ()
   CORBA::ORB_var orb = this->orb_manager_.orb ();
   TestShutdown killer (orb.in ());
 
-  int result = this->orb_manager_.run ();
+  int const result = this->orb_manager_.run ();
 
   if (result == -1)
     {

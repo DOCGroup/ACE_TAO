@@ -127,7 +127,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Call the client that will make remote calls to us again, but
       // not directly, but delayed for a second or so.
-      CORBA::Long r =
+      CORBA::Long const r =
         server->test_method (true);
 
       if (r != 0)
