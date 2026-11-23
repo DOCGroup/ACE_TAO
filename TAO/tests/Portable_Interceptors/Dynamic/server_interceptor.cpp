@@ -110,7 +110,7 @@ Echo_Server_Request_Interceptor::receive_request (
   bool catched_exception {};
   try
     {
-      PortableInterceptor::ReplyStatus rstatus = ri->reply_status ();
+      PortableInterceptor::ReplyStatus const rstatus = ri->reply_status ();
       ACE_UNUSED_ARG (rstatus);
     }
   catch (::CORBA::BAD_INV_ORDER const& ex)

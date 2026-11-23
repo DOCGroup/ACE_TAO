@@ -36,7 +36,7 @@ Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientReques
   bool catched_exception {};
   try
     {
-      PortableInterceptor::ReplyStatus rstatus = ri->reply_status ();
+      PortableInterceptor::ReplyStatus const rstatus = ri->reply_status ();
       ACE_UNUSED_ARG (rstatus);
     }
   catch (::CORBA::BAD_INV_ORDER const& ex)
