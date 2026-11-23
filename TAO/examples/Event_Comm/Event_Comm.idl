@@ -33,7 +33,7 @@ module Event_Comm
   /// Defines the interface for a @c Consumer of events.
   interface Consumer
   {
-    /// Inform the @c Consumer that @a event has occurred.
+    /// Inform the @c Consumer that @a event_instance has occurred.
     void push (in Event event_instance);
     /// Disconnect the @c Consumer from the @c Notifier,
     /// giving it the @a reason.

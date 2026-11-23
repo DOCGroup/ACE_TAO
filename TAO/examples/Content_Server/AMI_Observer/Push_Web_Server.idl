@@ -31,8 +31,8 @@ module Web_Server
   interface Iterator_Factory
     {
       /// Registers a @c Callback that the Web server uses to push data
-      /// associated with @a pathname one chunk at a time. @a metadata reports
-      /// information about @a pathname.
+      /// associated with @a pathname one chunk at a time. The returned
+      /// @c Metadata_Type reports information about @a pathname.
       Metadata_Type register_callback (in string pathname,
                                        in Callback client_callback)
         raises (Error_Result);

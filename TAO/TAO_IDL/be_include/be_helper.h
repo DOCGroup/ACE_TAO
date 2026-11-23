@@ -43,7 +43,7 @@ struct TAO_NL_2
  * Operates like a manipulator, increasing the indentation level.
  *
  * Increase the indentation level, if the "do_now" parameter is
- * true then the @a indent method is called on the stream.
+ * true then the @c indent() method is called on the stream.
  */
 struct TAO_INDENT
 {
@@ -56,7 +56,7 @@ struct TAO_INDENT
  * Operates like a manipulator, decreasing the indentation level.
  *
  * Decrease the indentation level, if the "do_now" parameter is
- * true then the @a indent method is called on the stream.
+ * true then the @c indent() method is called on the stream.
  */
 struct TAO_UNINDENT
 {
