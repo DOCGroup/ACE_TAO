@@ -130,7 +130,7 @@ Request_Handler::handle_input (ACE_HANDLE fd)
 {
   ACE_TCHAR buffer[BUFSIZ];
   ACE_TCHAR len = 0;
-  ssize_t result = this->peer ().recv (&len, sizeof (ACE_TCHAR));
+  ssize_t const result = this->peer ().recv (&len, sizeof (ACE_TCHAR));
 
   if (result > 0
       && this->peer ().recv_n (buffer, len * sizeof (ACE_TCHAR))
@@ -189,7 +189,7 @@ static ACE_THR_FUNC_RETURN
 svr_worker (void *)
 {
   // Server thread function.
-  int result =
+  int const result =
     ACE_Reactor::instance ()->run_reactor_event_loop (std::addressof (reactor_event_hook));
 
   if (result == -1)
@@ -209,11 +209,11 @@ static ACE_THR_FUNC_RETURN
 cli_worker (void *arg)
 {
   // Client thread function.
-  ACE_INET_Addr addr (rendezvous);
+  ACE_INET_Addr const addr (rendezvous);
   ACE_SOCK_Stream stream;
   ACE_SOCK_Connector connect;
-  ACE_Time_Value delay (0, req_delay);
-  size_t len = * reinterpret_cast<ACE_TCHAR *> (arg);
+  ACE_Time_Value const delay (0, req_delay);
+  size_t const len = * reinterpret_cast<ACE_TCHAR *> (arg);
 
   for (size_t i = 0 ; i < cli_conn_no; ++i)
     {
@@ -255,12 +255,12 @@ worker (void *)
   buf[0] = static_cast<ACE_TCHAR> ((ACE_OS::strlen (msg) + 1));
   ACE_OS::strcpy (&buf[1], msg);
 
-  ACE_INET_Addr addr (rendezvous);
+  ACE_INET_Addr const addr (rendezvous);
 
   ACE_DEBUG((LM_DEBUG,
              "(%t) Spawning %B client threads...\n",
              cli_thrno));
-  int grp = ACE_Thread_Manager::instance ()->spawn_n (cli_thrno,
+  int const grp = ACE_Thread_Manager::instance ()->spawn_n (cli_thrno,
                                                       &cli_worker,
                                                       buf);
   ACE_TEST_ASSERT (grp != -1);
@@ -307,7 +307,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_Reactor::instance (std::addressof (new_reactor));
 
   ACCEPTOR acceptor;
-  ACE_INET_Addr accept_addr (rendezvous);
+  ACE_INET_Addr const accept_addr (rendezvous);
 
   if (acceptor.open (accept_addr) == -1)
     {
