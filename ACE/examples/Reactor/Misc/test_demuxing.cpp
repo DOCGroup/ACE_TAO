@@ -63,7 +63,7 @@ Sig_Handler::Sig_Handler ()
   // internal demuxing table, but doesn't cause it to dispatch the
   // event handler directly.  Instead, we use the signal handler to do
   // this.
-  ACE_Reactor_Mask mask = ACE_Event_Handler::NULL_MASK;
+  ACE_Reactor_Mask const mask = ACE_Event_Handler::NULL_MASK;
   if (ACE_Reactor::instance ()->register_handler (this, mask) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -266,7 +266,7 @@ STDIN_Handler::handle_input (ACE_HANDLE handle)
       break;
     default:
       {
-        ssize_t result = ACE::write_n (ACE_STDOUT, buf, n);
+        ssize_t const result = ACE::write_n (ACE_STDOUT, buf, n);
 
         if (result != n)
           {

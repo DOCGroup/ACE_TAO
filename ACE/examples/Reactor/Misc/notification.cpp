@@ -250,7 +250,7 @@ Thread_Handler::handle_input (ACE_HANDLE handle)
 int
 Thread_Handler::svc ()
 {
-  ACE_Time_Value sleep_timeout (Thread_Handler::interval_.sec () / 2);
+  ACE_Time_Value const sleep_timeout (Thread_Handler::interval_.sec () / 2);
 
   for (int i = ACE_Utils::truncate_cast<int> (this->iterations_);
        i > 0;
@@ -386,10 +386,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_OS::exit (1);
     }
 
-  int delay = ACE_OS::atoi (argv[1]);
-  int interval = ACE_OS::atoi (argv[2]);
-  size_t n_threads = ACE_OS::atoi (argv[3]);
-  size_t max_iterations = argc > 4 ? ACE_OS::atoi (argv[4]) : MAX_ITERATIONS;
+  int const delay = ACE_OS::atoi (argv[1]);
+  int const interval = ACE_OS::atoi (argv[2]);
+  size_t const n_threads = ACE_OS::atoi (argv[3]);
+  size_t const max_iterations = argc > 4 ? ACE_OS::atoi (argv[4]) : MAX_ITERATIONS;
 
   Thread_Handler thr_handler (delay,
                               interval,
