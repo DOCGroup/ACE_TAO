@@ -177,7 +177,7 @@ project(switch_comp_inset): gperf_test {
 
     runtests: switch_comp_out$(EXEEXT)
     "	@echo Testing switch output -S1 -c"
-    "	./switch_comp_out -v < switch.in > switch_comp.out"
+    "	./switch_comp_out -v -switch-prefix < switch.in > switch_comp.out"
     "	diff -b switch_comp.exp switch_comp.out"
 
     endif # CROSS-COMPILE
@@ -188,8 +188,6 @@ project(switch_comp_inset): gperf_test {
     commandflags += -S1 -c
     switch.gperf
   }
-
-  macros += GPERF_SWITCH_TEST
 
   Source_Files {
     switch_comp_gen/switch.cpp
@@ -204,7 +202,7 @@ project(switch_ci_comp_inset): gperf_test {
 
     runtests: switch_ci_comp_out$(EXEEXT)
     "	@echo Testing switch output -S1 -I -c"
-    "	./switch_ci_comp_out -v < switch.in > switch_ci_comp.out"
+    "	./switch_ci_comp_out -v -switch-prefix < switch.in > switch_ci_comp.out"
     "	diff -b switch_ci_comp.exp switch_ci_comp.out"
 
     endif # CROSS-COMPILE
@@ -216,8 +214,6 @@ project(switch_ci_comp_inset): gperf_test {
     switch.gperf
   }
 
-  macros += GPERF_SWITCH_TEST
-
   Source_Files {
     switch_ci_comp_gen/switch.cpp
   }
@@ -226,14 +222,12 @@ project(switch_ci_comp_inset): gperf_test {
 project(hash_prefix_inset): gperf_test {
   exename = hash_prefix_out
 
-  macros += GPERF_SWITCH_TEST
-
   verbatim(gnuace, bottom) {
     all: runtests
 
     runtests: hash_prefix_out$(EXEEXT)
     "	@echo Testing hash prefix comparison -c"
-    "	./hash_prefix_out -v < switch.in > hash_prefix.out"
+    "	./hash_prefix_out -v -switch-prefix < switch.in > hash_prefix.out"
     "	diff -b hash_prefix.exp hash_prefix.out"
 
     endif # CROSS-COMPILE
@@ -253,14 +247,12 @@ project(hash_prefix_inset): gperf_test {
 project(hash_prefix_duplicate_inset): gperf_test {
   exename = hash_prefix_duplicate_out
 
-  macros += GPERF_DUPLICATE_PREFIX_TEST
-
   verbatim(gnuace, bottom) {
     all: runtests
 
     runtests: hash_prefix_duplicate_out$(EXEEXT)
     "	@echo Testing duplicate hash prefix comparisons -I -c -D"
-    "	./hash_prefix_duplicate_out -v < duplicates.in > duplicates.out"
+    "	./hash_prefix_duplicate_out -v -duplicate-prefix < duplicates.in > duplicates.out"
     "	diff -b duplicates.exp duplicates.out"
 
     endif # CROSS-COMPILE
@@ -305,14 +297,12 @@ project(allchars_duplicate_inset): gperf_test {
 project(switch_ci_comp_lentable_dup_inset): gperf_test {
   exename = switch_ci_comp_lentable_dup_out
 
-  macros += GPERF_SWITCH_TEST
-
   verbatim(gnuace, bottom) {
     all: runtests
 
     runtests: switch_ci_comp_lentable_dup_out$(EXEEXT)
     "	@echo Testing duplicate switch comparisons -S1 -I -c -l -D"
-    "	./switch_ci_comp_lentable_dup_out -v < switch.in > switch_ci_comp_lentable_dup.out"
+    "	./switch_ci_comp_lentable_dup_out -v -switch-prefix < switch.in > switch_ci_comp_lentable_dup.out"
     "	diff -b switch_ci_comp.exp switch_ci_comp_lentable_dup.out"
 
     endif # CROSS-COMPILE

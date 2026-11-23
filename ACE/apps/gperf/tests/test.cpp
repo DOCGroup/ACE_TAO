@@ -35,21 +35,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_OS::printf ("NOT in word set %s\n", buf);
     }
 
-#if defined (GPERF_SWITCH_TEST)
-  char const bounded_prefix[] = {'g', 'o', 't'};
-  if (Perfect_Hash::in_word_set (bounded_prefix, 2) != nullptr)
+  if (argc > 2 && ACE_OS::strcmp (argv[2], ACE_TEXT ("-switch-prefix")) == 0)
     {
-      return 1;
+      char const bounded_prefix[] = {'g', 'o', 't'};
+      if (Perfect_Hash::in_word_set (bounded_prefix, 2) != nullptr)
+        {
+          return 1;
+        }
     }
-#endif
 
-#if defined (GPERF_DUPLICATE_PREFIX_TEST)
-  char const duplicate_prefix[] = {'a', 'l'};
-  if (Perfect_Hash::in_word_set (duplicate_prefix, sizeof duplicate_prefix) != nullptr)
+  if (argc > 2 && ACE_OS::strcmp (argv[2], ACE_TEXT ("-duplicate-prefix")) == 0)
     {
-      return 1;
+      char const duplicate_prefix[] = {'a', 'l'};
+      if (Perfect_Hash::in_word_set (duplicate_prefix, sizeof duplicate_prefix) != nullptr)
+        {
+          return 1;
+        }
     }
-#endif
 
   return 0;
 }
