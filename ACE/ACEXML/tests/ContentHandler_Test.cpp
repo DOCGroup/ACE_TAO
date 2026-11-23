@@ -122,7 +122,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   attribute.qName (attribute.qName ());
   attribute.type (attribute.type ());
   attribute.value (attribute.value ());
-  ACEXML_Attribute attribute_copy (attribute);
+  ACEXML_Attribute const attribute_copy (attribute);
   ACEXML_Attribute assigned_attribute;
   assigned_attribute = attribute_copy;
   if (assigned_attribute.uri () == nullptr

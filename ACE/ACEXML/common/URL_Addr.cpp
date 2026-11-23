@@ -110,7 +110,7 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
   size_t host_len = url - s;
   host_len -= http_len;
 
-  std::unique_ptr<ACEXML_Char[]> host_name {
+  std::unique_ptr<ACEXML_Char[]> const host_name {
     new (std::nothrow) ACEXML_Char[host_len + 1]};
   if (!host_name)
     {

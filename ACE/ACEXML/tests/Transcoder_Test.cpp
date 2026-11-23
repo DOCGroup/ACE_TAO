@@ -66,7 +66,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG, "\n\n"));
 
   size_t encoded_len {};
-  std::unique_ptr<ACEXML_Char[]> encoded {
+  std::unique_ptr<ACEXML_Char[]> const encoded {
     ACEXML_Base64::encode (ACE_TEXT ("A"), &encoded_len)};
   if (!encoded || encoded_len != 5 ||
       ACE_OS::strcmp (encoded.get (), ACE_TEXT ("QQ==\n")) != 0)
@@ -75,7 +75,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     }
 
   size_t decoded_len {};
-  std::unique_ptr<ACEXML_Char[]> base64_decoded {
+  std::unique_ptr<ACEXML_Char[]> const base64_decoded {
     ACEXML_Base64::decode (encoded.get (), &decoded_len)};
   if (!base64_decoded || decoded_len != 1 ||
       base64_decoded[0] != static_cast<ACEXML_Char> ('A'))

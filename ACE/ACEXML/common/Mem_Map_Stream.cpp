@@ -180,7 +180,7 @@ ACEXML_Mem_Map_Stream::open (Connector *connector,
                         -1);
     }
   // Create a temporary filename.
-  ACE_FILE_Addr file (ACE_sap_any_cast (ACE_FILE_Addr &));
+  ACE_FILE_Addr const file (ACE_sap_any_cast (ACE_FILE_Addr &));
 
   // Create the temporary file via the <ACE_Mem_Map> class API.
   if (this->mem_map_.open (file.get_path_name (),
