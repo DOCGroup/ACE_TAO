@@ -317,7 +317,7 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub *stub, TA
 
   char *buf = const_cast <char*> (stream.buffer ());
 
-  CORBA::ULong bodylen = static_cast <CORBA::ULong>
+  CORBA::ULong const bodylen = static_cast <CORBA::ULong>
                            (total_len - TAO_GIOP_MESSAGE_HEADER_LEN);
 
 #if !defined (ACE_ENABLE_SWAP_ON_WRITE)
@@ -1565,7 +1565,7 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
 
     // Message name.
     const char *message_name = "UNKNOWN MESSAGE";
-    u_long slot = ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET];
+    u_long const slot = ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET];
     if (slot < sizeof (names) / sizeof (names[0]))
     {
       message_name = names[slot];

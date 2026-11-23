@@ -314,7 +314,7 @@ TAO_Root_POA::~TAO_Root_POA ()
 void
 TAO_Root_POA::complete_destruction_i ()
 {
-  bool doing_complete_destruction = this->waiting_destruction_;
+  bool const doing_complete_destruction = this->waiting_destruction_;
 
   // No longer awaiting destruction.
   this->waiting_destruction_ = false;
@@ -350,7 +350,7 @@ TAO_Root_POA::complete_destruction_i ()
   }
 
   // Remove POA from the Object Adapter.
-  int result = this->object_adapter ().unbind_poa (this,
+  int const result = this->object_adapter ().unbind_poa (this,
                                                    this->folded_name_,
                                                    this->system_name_.in ());
   if (result != 0)
@@ -966,7 +966,7 @@ PortableServer::POAList *
 TAO_Root_POA::the_children_i ()
 {
   PortableServer::POAList_var children;
-  CORBA::ULong child_current = static_cast <CORBA::ULong>
+  CORBA::ULong const child_current = static_cast <CORBA::ULong>
                                            (this->children_.current_size ());
   ACE_NEW_THROW_EX (children,
                     PortableServer::POAList (child_current),
@@ -1579,7 +1579,7 @@ TAO_Root_POA::parse_key (const TAO::ObjectKey &key,
   CORBA::ULong starting_at = TAO_OBJECTKEY_PREFIX_SIZE;
 
   // Check the root indicator.
-  char root_key_type = key_data[starting_at];
+  char const root_key_type = key_data[starting_at];
   if (root_key_type == TAO_Root_POA::root_key_char ())
     {
       is_root = true;
@@ -1598,7 +1598,7 @@ TAO_Root_POA::parse_key (const TAO::ObjectKey &key,
   starting_at += TAO_Root_POA::root_key_type_length ();
 
   // Check the system id indicator.
-  char system_id_key_type = key_data[starting_at];
+  char const system_id_key_type = key_data[starting_at];
   if (system_id_key_type == TAO_Root_POA::system_id_key_char ())
     {
       is_system_id = true;
@@ -1617,7 +1617,7 @@ TAO_Root_POA::parse_key (const TAO::ObjectKey &key,
   starting_at += TAO_Root_POA::system_id_key_type_length ();
 
   // Check the persistence indicator
-  char persistent_key_type = key_data[starting_at];
+  char const persistent_key_type = key_data[starting_at];
   if (persistent_key_type == TAO_Root_POA::persistent_key_char ())
     {
       is_persistent = true;
@@ -1684,7 +1684,7 @@ TAO_Root_POA::parse_key (const TAO::ObjectKey &key,
     }
 
   // The rest is the system id.
-  CORBA::ULong system_id_size = key.length () - starting_at;
+  CORBA::ULong const system_id_size = key.length () - starting_at;
 
   // Reset <system_id>.
   system_id.length (system_id_size);
@@ -1699,7 +1699,7 @@ TAO::ObjectKey *
 TAO_Root_POA::create_object_key (const PortableServer::ObjectId &id)
 {
   // Calculate the space required for the key.
-  CORBA::ULong buffer_size =
+  CORBA::ULong const buffer_size =
     this->id_.length () +
     id.length ();
 
