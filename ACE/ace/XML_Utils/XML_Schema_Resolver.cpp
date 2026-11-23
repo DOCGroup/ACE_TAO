@@ -36,7 +36,7 @@ namespace XML
 
   void Environment_Resolver::add_path (ACE_TCHAR const *variable, ACE_TCHAR const *relpath)
   {
-    ACE_Env_Value<ACE_TString> path_env (variable, ACE_TEXT (""));
+    ACE_Env_Value<ACE_TString> const path_env (variable, ACE_TEXT (""));
 
     XStr xpath (static_cast<ACE_TString> (path_env).c_str ());
     XStr const xrelpath (relpath);
