@@ -67,7 +67,7 @@ namespace ACE
       {
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, false);
 
-        ACE_CString name_str (name, nullptr, false);
+        ACE_CString const name_str (name, nullptr, false);
         status = this->map_.unbind (name_str, mp);
       }
 
