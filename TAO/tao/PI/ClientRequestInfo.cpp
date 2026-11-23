@@ -189,7 +189,7 @@ TAO_ClientRequestInfo::get_effective_component (IOP::ComponentId id)
 
   TAO_Tagged_Components &ecs = stub->profile_in_use ()->tagged_components ();
 
-  IOP::MultipleComponentProfile &components = ecs.components ();
+  IOP::MultipleComponentProfile const &components = ecs.components ();
 
   CORBA::ULong const len = components.length ();
   for (CORBA::ULong i {}; i < len; ++i)
@@ -231,7 +231,7 @@ TAO_ClientRequestInfo::get_effective_components (IOP::ComponentId id)
 
   TAO_Tagged_Components &ecs = stub->profile_in_use ()->tagged_components ();
 
-  IOP::MultipleComponentProfile &components = ecs.components ();
+  IOP::MultipleComponentProfile const &components = ecs.components ();
 
   IOP::TaggedComponentSeq *tagged_components {};
   IOP::TaggedComponentSeq_var safe_tagged_components;
