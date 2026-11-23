@@ -25,7 +25,7 @@ ServerApp::run_i(int argc, ACE_TCHAR *argv[])
   // * Returns -1 if problems are encountered.
   // * Returns 1 if the usage statement was explicitly requested.
   // * Returns 0 otherwise.
-  int result = this->parse_args (argc, argv);
+  const int result = this->parse_args (argc, argv);
   if (result != 0)
     {
       return result;
@@ -122,7 +122,7 @@ ServerApp::parse_args (int argc, ACE_TCHAR *argv[])
 
         case 'n':
           {
-            int tmp = ACE_OS::atoi (get_opts.opt_arg());
+            const int tmp = ACE_OS::atoi (get_opts.opt_arg());
             if (tmp < 1)
               {
                 ACE_ERROR((LM_ERROR,
