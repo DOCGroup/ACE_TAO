@@ -436,9 +436,9 @@ test_active_object (int n_iterations)
       // When the workers are active we will block here until the
       // results are available.
 
-      u_long resulta = fresulta;
-      u_long resultb = fresultb;
-      u_long resultc = fresultc;
+      u_long const resulta = fresulta;
+      u_long const resultb = fresultb;
+      u_long const resultc = fresultc;
 
       ACE_Future<std::string> fnamea = worker_a.name ();
       ACE_Future<std::string> fnameb = worker_b.name ();
@@ -519,7 +519,7 @@ test_timeout (int n_iterations)
   Scheduler worker_a ("worker A");
   worker_a.open ();
 
-  ACE_Future<u_long> fresulta = worker_a.work (9013, 2 * n_iterations);
+  ACE_Future<u_long> const fresulta = worker_a.work (9013, 2 * n_iterations);
 
   // Should immediately return... and we should see an error...
   ACE_Time_Value delay (1);
