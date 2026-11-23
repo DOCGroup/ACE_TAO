@@ -34,6 +34,14 @@
 
 namespace
 {
+  struct OpenSSL_Char_Deleter
+  {
+    void operator() (char *value) const
+    {
+      ::OPENSSL_free (value);
+    }
+  };
+
   /// Reference count of the number of times the ACE_SSL_Context was
   /// initialized.
   int ssl_library_init_count {};
@@ -406,12 +414,7 @@ ACE_SSL_Context::check_host (const ACE_INET_Addr &host, SSL *peerssl)
   size_t const len = std::strlen (name);
 
   int const result = ::X509_check_host (cert.get (), name, len, flags, peerarg);
-  std::unique_ptr<char, void (*) (char *)> const peer (
-    peer_raw,
-    [] (char *value)
-    {
-      ::OPENSSL_free (value);
-    });
+  std::unique_ptr<char, OpenSSL_Char_Deleter> const peer (peer_raw);
 
   if (ACE::debug ())
     {
