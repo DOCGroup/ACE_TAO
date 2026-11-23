@@ -260,7 +260,7 @@ ACE_DLL_Handle::symbol (const ACE_TCHAR *sym_name, bool ignore_errors, ACE_TStri
   ACE_TRACE ("ACE_DLL_Handle::symbol");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, nullptr));
 
-  std::unique_ptr <ACE_TCHAR[]> auto_name (ACE::ldname (sym_name));
+  std::unique_ptr <ACE_TCHAR[]> const auto_name (ACE::ldname (sym_name));
   // handle_ can be invalid especially when ACE_DLL_Handle resigned ownership
   // BTW. Handle lifecycle management is a little crazy in ACE
   if (this->handle_ != ACE_SHLIB_INVALID_HANDLE)
@@ -351,7 +351,7 @@ ACE_DLL_Handle::get_dll_names (const ACE_TCHAR *dll_name,
 {
   // Build the array of DLL names to try on this platform by applying the
   // proper prefixes and/or suffixes to the specified dll_name.
-  ACE_TString base (dll_name);
+  ACE_TString const base (dll_name);
   ACE_TString base_dir, base_file, base_suffix;
 
   // 1. Separate the dll_name into the dir part and the file part. We
@@ -398,8 +398,8 @@ ACE_DLL_Handle::get_dll_names (const ACE_TCHAR *dll_name,
 #if defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
   ACE_TString decorator (ACE_LD_DECORATOR_STR);
 #endif
-  ACE_TString suffix (ACE_DLL_SUFFIX);
-  ACE_TString prefix (ACE_DLL_PREFIX);
+  ACE_TString const suffix (ACE_DLL_SUFFIX);
+  ACE_TString const prefix (ACE_DLL_PREFIX);
 
   for (size_t i = 0; i < 5 && try_names.size () < try_names.max_size (); ++i)
     {
@@ -636,7 +636,7 @@ ACE_DLL_Manager::unload_policy (u_long unload_policy)
   ACE_TRACE ("ACE_DLL_Manager::unload_policy");
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, this->lock_));
 
-  u_long old_policy = this->unload_policy_;
+  u_long const old_policy = this->unload_policy_;
   this->unload_policy_ = unload_policy;
 
   // If going from LAZY to EAGER or from PER_DLL to PER_PROCESS|EAGER,
@@ -689,7 +689,7 @@ ACE_DLL_Manager::close ()
 {
   ACE_TRACE ("ACE_DLL_Manager::close");
 
-  int force_close = 1;
+  int const force_close = 1;
 
   if (this->handle_vector_ != nullptr)
     {

@@ -88,7 +88,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   // mmap through character device doens't care about it's size
   // So map with /dev/* is done with a special case.
   ACE_stat current_file_type;
-  int result = ACE_OS::fstat (this->handle_, &current_file_type);
+  int const result = ACE_OS::fstat (this->handle_, &current_file_type);
 
   if (result == -1)
     {
