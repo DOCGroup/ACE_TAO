@@ -36,7 +36,7 @@ JAWS_Cached_FILE::JAWS_Cached_FILE (const char *const &filename,
 {
   ACE_HANDLE handle = ACE_INVALID_HANDLE;
 
-  if (this->data () != 0)
+  if (this->data () != nullptr)
     {
       handle = ACE_OS::dup (this->data ()->get_handle ());
     }
@@ -58,7 +58,7 @@ JAWS_Cached_FILE::JAWS_Cached_FILE (const char *const &filename,
 
       {
         JAWS_Cached_FILE cf (filename, file, info.size_, cm);
-        if (cf.data () != 0)
+        if (cf.data () != nullptr)
           {
             new (this) JAWS_Cached_FILE (filename, cm);
             return;
@@ -91,6 +91,6 @@ JAWS_Cached_FILE::file ()
 ACE_Mem_Map *
 JAWS_Cached_FILE::mmap ()
 {
-  return (this->data () == 0 ? 0 : this->data ()->mem_map ());
+  return (this->data () == nullptr ? nullptr : this->data ()->mem_map ());
 }
 

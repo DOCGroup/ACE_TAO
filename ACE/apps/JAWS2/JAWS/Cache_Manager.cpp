@@ -31,14 +31,14 @@ JAWS_String_Equal_Functor::operator int () const
 }
 
 JAWS_Strdup_String::JAWS_Strdup_String ()
-  : c_ (0),
-    s_ (0)
+  : c_ (nullptr),
+    s_ (nullptr)
 {
 }
 
 JAWS_Strdup_String::JAWS_Strdup_String (const char *s)
-  : c_ (0),
-    s_ (0)
+  : c_ (nullptr),
+    s_ (nullptr)
 {
   this->c_ = new int (1);
   this->s_ = ACE_OS::strdup (s);
@@ -61,8 +61,8 @@ JAWS_Strdup_String::~JAWS_Strdup_String ()
       }
       delete this->c_;
     }
-  this->s_ = 0;
-  this->c_ = 0;
+  this->s_ = nullptr;
+  this->c_ = nullptr;
 }
 
 JAWS_Strdup_String::operator const char * () const

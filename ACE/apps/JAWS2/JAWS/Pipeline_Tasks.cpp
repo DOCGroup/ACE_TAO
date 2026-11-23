@@ -6,7 +6,7 @@
 #include "JAWS/Policy.h"
 
 JAWS_Pipeline_Handler::JAWS_Pipeline_Handler ()
-  : policy_ (0)
+  : policy_ (nullptr)
 {
 }
 
@@ -61,7 +61,7 @@ JAWS_Pipeline_Accept_Task::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
     = dynamic_cast<JAWS_Pipeline_Handler *> (task->next ());
 
   JAWS_IO_Handler *ioh = this->new_handler (db);
-  if (ioh == 0)
+  if (ioh == nullptr)
     {
       ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Pipeline_Accept_Task::put"));
       return -1;
@@ -89,7 +89,7 @@ JAWS_Pipeline_Accept_Task::handle_put (JAWS_Data_Block *data,
   JAWS_IO_Handler *handler = data->io_handler ();
   JAWS_Dispatch_Policy *policy = this->policy ();
 
-  if (policy == 0)
+  if (policy == nullptr)
   {
     policy = data->policy ();
   }
@@ -153,7 +153,7 @@ JAWS_Pipeline_Accept_Task::new_handler (JAWS_Data_Block *data)
     }
 
   JAWS_Dispatch_Policy *policy =
-    (this->policy () == 0) ? data->policy () : this->policy ();
+    (this->policy () == nullptr) ? data->policy () : this->policy ();
   JAWS_IO_Handler_Factory *ioh_factory = policy->ioh_factory ();
 
   JAWS_IO_Handler *nioh = ioh_factory->create_io_handler ();
@@ -179,8 +179,8 @@ JAWS_Pipeline_Done_Task::put (ACE_Message_Block *mb, ACE_Time_Value *)
 
   JAWS_IO_Handler *handler = data->io_handler ();
 
-  data->task (0);
-  data->io_handler (0);
+  data->task (nullptr);
+  data->io_handler (nullptr);
 
   if (handler)
   {

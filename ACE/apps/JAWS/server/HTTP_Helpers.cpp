@@ -313,7 +313,7 @@ HTTP_Helper::HTTP_decode_base64 (char *data)
         }
     }
   *outdata = '\0';
-  return errors ? 0 : data;
+  return errors ? nullptr : data;
 }
 
 char *
@@ -378,7 +378,7 @@ HTTP_Helper::HTTP_encode_base64 (char *data)
       std::strcpy (data, buf);
     }
 
-  return (error ? 0 : data);
+  return (error ? nullptr : data);
 }
 
 int
@@ -429,7 +429,7 @@ HTTP_Status_Code::instance ()
 {
   if (HTTP_Status_Code::instance_ == 0)
     {
-      ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g, lock_, 0));
+      ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g, lock_, nullptr));
 
       if (HTTP_Status_Code::instance_ == 0)
         {

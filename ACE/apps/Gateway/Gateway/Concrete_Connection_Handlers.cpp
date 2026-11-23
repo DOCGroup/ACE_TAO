@@ -343,9 +343,9 @@ Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
       ACE_NEW_RETURN (this->msg_frag_,
                       ACE_Message_Block (sizeof (Event),
                                          ACE_Message_Block::MB_DATA,
-                                         0,
-                                         0,
-                                         0,
+                                         nullptr,
+                                         nullptr,
+                                         nullptr,
                                          Options::instance ()->locking_strategy ()),
                       -1);
     }
@@ -459,8 +459,8 @@ Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
           forward_addr = new ACE_Message_Block (sizeof (Event_Key),
                                                 ACE_Message_Block::MB_PROTO,
                                                 this->msg_frag_,
-                                                0,
-                                                0,
+                                                nullptr,
+                                                nullptr,
                                                 Options::instance ()->locking_strategy ());
           if (forward_addr == nullptr)
             {

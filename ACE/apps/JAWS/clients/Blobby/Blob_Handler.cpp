@@ -321,7 +321,7 @@ ACE_Blob_Writer::receive_reply ()
 
   // Receive the reply from the server
   size_t num_recvd {};
-  ssize_t const len = peer ().recv_n (buf, sizeof buf - 1, 0, std::addressof (num_recvd)); // reserve one byte to store the \0
+  ssize_t const len = peer ().recv_n (buf, sizeof buf - 1, nullptr, std::addressof (num_recvd)); // reserve one byte to store the \0
   if (len == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Error reading header"), -1);

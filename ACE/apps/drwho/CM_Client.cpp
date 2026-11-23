@@ -44,8 +44,8 @@ CM_Client::receive (int timeout)
     {
       if (ACE_OS::select (Comm_Manager::sokfd_ + 1,
                           std::addressof (this->read_fd_),
-                          0,
-                          0,
+                          nullptr,
+                          nullptr,
                           this->top_) <= 0)
         {
           break;

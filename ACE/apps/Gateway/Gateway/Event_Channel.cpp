@@ -338,7 +338,7 @@ Event_Channel::reinitiate_connection_connection (Connection_Handler *connection_
       ACE_Time_Value const timeout (connection_handler->timeout ());
       if (ACE_Reactor::instance ()->schedule_timer
           (connection_handler,
-           0,
+           nullptr,
            timeout) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,

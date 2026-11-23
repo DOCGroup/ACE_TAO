@@ -187,7 +187,7 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
 {
   int result = 0;
 
-  if (filename == 0)
+  if (filename == nullptr)
     {
       ioh->transmit_file_error (-1);
       return;
@@ -196,7 +196,7 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
   JAWS_Cached_FILE cf (filename);
 
   if (cf.file ()->get_handle () != ACE_INVALID_HANDLE
-      && cf.mmap () != 0)
+      && cf.mmap () != nullptr)
     {
 #if defined (ACE_JAWS_BASELINE) || defined (ACE_WIN32)
       ACE_FILE_Info info;
@@ -262,7 +262,7 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
 #endif /* ACE_JAWS_BASELINE */
     }
   else if (cf.file ()->get_handle () != ACE_INVALID_HANDLE
-           && cf.mmap () == 0)
+           && cf.mmap () == nullptr)
     {
       this->transmit_file (ioh,
                            cf.file ()->get_handle (),
@@ -398,7 +398,7 @@ JAWS_Asynch_IO::receive_file (JAWS_IO_Handler *ioh,
       ACE_NEW (mb, ACE_Message_Block ((char *)handle->address ()
                                       + initial_data_length, bytes_to_read));
 
-      if (mb == 0)
+      if (mb == nullptr)
         {
           errno = ENOMEM;
           result = -1;
@@ -463,7 +463,7 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
                                0,  // offset_high
                                0,  // bytes_per_send
                                0,  // flags
-                               0 // act
+                               nullptr // act
                                ) == -1)
       {
         result = -1;
@@ -560,7 +560,7 @@ JAWS_Asynch_IO::send_message (JAWS_IO_Handler *ioh,
   ACE_Message_Block *mb {};
   ACE_NEW (mb, ACE_Message_Block (buffer, length));
 
-  if (mb == 0)
+  if (mb == nullptr)
     {
       this->handler_->error_message_complete ();
       return;

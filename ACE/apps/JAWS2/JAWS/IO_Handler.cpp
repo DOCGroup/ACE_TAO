@@ -34,7 +34,7 @@ void
 JAWS_IO_Handler_Factory::destroy_io_handler (JAWS_IO_Handler *handler)
 {
   JAWS_TRACE ("JAWS_IO_Handler_Factory::destroy");
-  if (handler != 0)
+  if (handler != nullptr)
     {
       delete handler->message_block ();
       delete handler;
@@ -43,19 +43,19 @@ JAWS_IO_Handler_Factory::destroy_io_handler (JAWS_IO_Handler *handler)
 
 JAWS_IO_Handler::JAWS_IO_Handler (JAWS_IO_Handler_Factory *factory)
   : status_ (0),
-    mb_ (0),
+    mb_ (nullptr),
     handle_ (ACE_INVALID_HANDLE),
-    task_ (0),
+    task_ (nullptr),
     factory_ (factory)
 {
 }
 
 JAWS_IO_Handler::~JAWS_IO_Handler ()
 {
-  this->mb_ = 0;
+  this->mb_ = nullptr;
   this->status_ = 0;
-  this->task_ = 0;
-  this->factory_ = 0;
+  this->task_ = nullptr;
+  this->factory_ = nullptr;
 
   ACE_OS::closesocket (this->handle_);
   this->handle_ = ACE_INVALID_HANDLE;
@@ -250,19 +250,19 @@ JAWS_Asynch_IO_Handler_Factory::destroy_io_handler (JAWS_IO_Handler *handler)
 {
   JAWS_TRACE ("JAWS_IO_Handler_Factory::destroy");
 
-  if (handler != 0)
+  if (handler != nullptr)
     {
       //cerr << "(" << thr_self () << ") locking for destruction: " << handler << endl;
       handler->lock ();
       delete handler->message_block ();
-      handler->message_block (0);
+      handler->message_block (nullptr);
       delete handler;
     }
 }
 
 JAWS_Asynch_IO_Handler::JAWS_Asynch_IO_Handler (JAWS_Asynch_IO_Handler_Factory *factory)
   : JAWS_IO_Handler (factory),
-    handler_ (0)
+    handler_ (nullptr)
 {
   this->status_ = 1;
 }
@@ -270,7 +270,7 @@ JAWS_Asynch_IO_Handler::JAWS_Asynch_IO_Handler (JAWS_Asynch_IO_Handler_Factory *
 JAWS_Asynch_IO_Handler::~JAWS_Asynch_IO_Handler ()
 {
   delete this->handler_;
-  this->handler_ = 0;
+  this->handler_ = nullptr;
 }
 
 ACE_Handler *
@@ -301,7 +301,7 @@ JAWS_Asynch_IO_Handler::release ()
 }
 
 JAWS_Asynch_Handler::JAWS_Asynch_Handler ()
-  : ioh_ (0)
+  : ioh_ (nullptr)
 {
   this->proactor (ACE_Proactor::instance ());
 }
@@ -339,7 +339,7 @@ JAWS_Asynch_Handler::open (ACE_HANDLE h,
 
   this->handler ()->handler_ = this;
 
-  fake_result->complete (0, 1, 0);
+  fake_result->complete (0, 1, nullptr);
 }
 
 void

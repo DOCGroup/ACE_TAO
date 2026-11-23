@@ -105,7 +105,7 @@ JAWS_Config_File_Impl::parse_file ()
 
   if (fconnector.connect ( fio
                          , this->faddr_
-                         , 0
+                         , nullptr
                          , ACE_Addr::sap_any
                          , 0
                          , O_RDONLY

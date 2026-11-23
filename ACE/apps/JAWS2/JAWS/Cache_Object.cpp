@@ -5,7 +5,7 @@
 #include "ace/OS_NS_time.h"
 
 JAWS_Cache_Object::JAWS_Cache_Object (const void *data, size_t size)
-  : internal_ (0),
+  : internal_ (nullptr),
     data_ (data),
     size_ (size)
 {
@@ -15,7 +15,7 @@ JAWS_Cache_Object::JAWS_Cache_Object (const void *data, size_t size)
 
 JAWS_Cache_Object::~JAWS_Cache_Object ()
 {
-  this->data_ = 0;
+  this->data_ = nullptr;
   this->size_ = 0;
 }
 
@@ -203,7 +203,7 @@ JAWS_Counted_Cache_Object::priority_i () const
 JAWS_Cache_Object_Factory::JAWS_Cache_Object_Factory (ACE_Allocator *alloc)
   : allocator_ (alloc)
 {
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
   {
     this->allocator_ = ACE_Allocator::instance ();
   }
@@ -218,7 +218,7 @@ JAWS_Cache_Object_Factory::open (ACE_Allocator *alloc)
 {
   this->allocator_ = alloc;
 
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
   {
     this->allocator_ = ACE_Allocator::instance ();
   }
@@ -246,7 +246,7 @@ JAWS_Referenced_Cache_Object_Factory::create (const void *data, size_t size)
   ACE_NEW_MALLOC_RETURN (obj,
                          static_cast<JAWS_Referenced_Cache_Object *> (
                            this->allocator_->malloc (obj_size)),
-                         JAWS_Referenced_Cache_Object (data, size), 0);
+                         JAWS_Referenced_Cache_Object (data, size), nullptr);
 
   return obj;
 }
@@ -278,7 +278,7 @@ JAWS_Counted_Cache_Object_Factory::create (const void *data, size_t size)
   ACE_NEW_MALLOC_RETURN (obj,
                          static_cast<JAWS_Counted_Cache_Object *> (
                            this->allocator_->malloc (obj_size)),
-                         JAWS_Counted_Cache_Object (data, size), 0);
+                         JAWS_Counted_Cache_Object (data, size), nullptr);
 
   return obj;
 }
