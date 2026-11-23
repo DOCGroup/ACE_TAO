@@ -2254,7 +2254,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
 
   // "timeout" should be an absolute time.
 
-  timespec_t ts = timeout;  // Calls ACE_Time_Value::operator timespec_t().
+  timespec_t const ts = timeout;  // Calls ACE_Time_Value::operator timespec_t().
 
   // Note that the mutex should not be a recursive one, i.e., it
   // should only be a standard mutex or an error checking mutex.
@@ -2815,7 +2815,7 @@ ACE_OS::event_init (ACE_event_t *event,
             }
         }
 
-      int result = 0;
+      int const result = 0;
 # if !ACE_EVENT_USE_COND_PSHARED
       char sem_name[128] {};
       format_name (sem_name, name, "._ACE_EVTSEM_");
@@ -3404,7 +3404,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
       ACE_UNUSED_ARG (id);
       ACE_NOTSUP_RETURN (-1);
 # else  /* !ACE_HAS_PTHREAD_SCHEDPARAM */
-      int result = ::sched_setscheduler (id == ACE_SELF ? 0 : id,
+      int const result = ::sched_setscheduler (id == ACE_SELF ? 0 : id,
                                          sched_params.policy (),
                                          &param) == -1 ? -1 : 0;
       return result;
@@ -3412,7 +3412,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
     }
   else if (sched_params.scope () == ACE_SCOPE_THREAD)
     {
-      ACE_thread_t thr_id = ACE_OS::thr_self ();
+      ACE_thread_t const thr_id = ACE_OS::thr_self ();
 
       int result;
       ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id,
@@ -4050,7 +4050,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         {
           // Increment the number of LWPs by one to emulate the
           // SunOS semantics.
-          int lwps = ACE_OS::thr_getconcurrency ();
+          int const lwps = ACE_OS::thr_getconcurrency ();
           if (lwps == -1)
             {
               if (errno == ENOTSUP)
