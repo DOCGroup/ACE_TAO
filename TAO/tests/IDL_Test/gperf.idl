@@ -16,7 +16,7 @@
 /// requests on some of the methods, for example
 
 /// TAO_Perfect_Hash_Table:find failed
-/// Bad operation <ackConfArchData>
+/// Bad operation @c ackConfArchData
 
 enum TestEnum
 {

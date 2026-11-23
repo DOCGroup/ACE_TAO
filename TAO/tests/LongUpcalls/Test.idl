@@ -9,8 +9,8 @@ module Test
   };
 
   interface Manager {
-    /// Start <worker_count> workers, each one runs for the pescribed
-    /// number of milliseconds, and report progress to <the_controller>
+    /// Start @a worker_count workers, each one runs for the prescribed
+    /// number of milliseconds, and report progress to @a the_controller
     void start_workers (in short worker_count,
                         in long milliseconds,
                         in Controller the_controller);

@@ -2,7 +2,7 @@
 interface Test
 {
   /// Print out the CORBA priority of the servant thread and check that
-  /// it is equal to the <priority> argument.
+  /// it is equal to the @a priority argument.
   void test_method (in short priority);
 
   /// Shut down the ORB.

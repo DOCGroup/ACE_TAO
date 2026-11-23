@@ -82,8 +82,8 @@ module DsLogAdmin
   /// `retrieve()`.
   interface Iterator
     {
-      /// Returns a maximum of <how_many> records, starting from
-      /// position <position>
+      /// Returns a maximum of @a how_many records, starting from
+      /// position @a position
       RecordList get(in unsigned long position,
                      in unsigned long how_many) raises(InvalidParam);
 
@@ -229,8 +229,8 @@ module DsLogAdmin
                        out Iterator i)
         raises(InvalidGrammar, InvalidConstraint);
 
-      /// Retrieve <how_many> records from time <from_time> using
-      /// iterator @a i. Negative <how_many> indicates backwards
+      /// Retrieve @a how_many records from time @a from_time using
+      /// iterator @a i. Negative @a how_many indicates backwards
       /// retrieval
       RecordList retrieve(in TimeT from_time,
                           in long how_many,
@@ -241,11 +241,12 @@ module DsLogAdmin
                           in Constraint c)
         raises(InvalidGrammar, InvalidConstraint);
 
-      /// Delete records matching constraint @a c or with ids in
-      /// <ids>. Both operations return the number of records deleted
+      /// Delete records matching constraint @a c.
       unsigned long delete_records(in string grammar,
                                    in Constraint c)
         raises(InvalidGrammar, InvalidConstraint);
+
+      /// Delete records with ids in @a ids.
       unsigned long delete_records_by_id(in RecordIdList ids);
 
       /// Write records to the log storage
@@ -269,7 +270,7 @@ module DsLogAdmin
                                           in NVList attr_list)
         raises(InvalidGrammar, InvalidConstraint, InvalidAttribute);
 
-      /// Get the attributes of the record with id <id>
+      /// Get the attributes of the record with id @a id
       NVList get_record_attribute(in RecordId id)
         raises(InvalidRecordId);
 

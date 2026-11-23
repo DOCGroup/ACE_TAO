@@ -257,25 +257,25 @@ public:
   /// Generate necessary code at end of client stub file.
   void end_client_stubs ();
 
-  /// Put a last #endif in the server header.
+  /// Put a last \#endif in the server header.
   int end_server_header ();
 
-  /// Put a last #endif in the server header.
+  /// Put a last \#endif in the server header.
   int end_implementation_header (const std::string &fname);
 
-  /// Put a last #endif in the server header.
+  /// Put a last \#endif in the server header.
   int end_implementation_skeleton (const char *fname);
 
-  /// Put a last #endif in the server template header.
+  /// Put a last \#endif in the server template header.
   int end_server_template_header ();
 
-  /// Put a last #endif in the server skeletons.
+  /// Put a last \#endif in the server skeletons.
   int end_server_template_skeletons ();
 
-  /// Put a last #endif in the server skeletons.
+  /// Put a last \#endif in the server skeletons.
   int end_server_skeletons ();
 
-  /// Put a last #endif in the anyop header.
+  /// Put a last \#endif in the anyop header.
   int end_anyop_header ();
 
   /// Make sure we end with a newline.
@@ -379,7 +379,7 @@ public:
   static std::string upcase (std::string const& str);
   static std::string downcase (std::string const& str);
 
-  /// Pass along the #ident string, if any, from the IDL file.
+  /// Pass along the \#ident string, if any, from the IDL file.
   void gen_ident_string (TAO_OutStream *stream) const;
 
   /// Generates the export files selected on the command line.

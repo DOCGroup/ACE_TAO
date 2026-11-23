@@ -5,7 +5,7 @@ module Web_Server
 
   interface Content_Iterator
   {
-    /// Returns the next <chunk> of the file starting at <offset>. If there
+    /// Returns the next @a chunk of the file starting at @a offset. If there
     /// are no more bindings, false is returned.
     boolean next_chunk (in unsigned long long offset,
                         out Chunk_Type chunk);
@@ -15,7 +15,7 @@ module Web_Server
   };
 
   exception Error_Result {
-    /// Status of the <get_iterator> operation. These values should map to
+    /// Status of the @c get_iterator operation. These values should map to
     /// normal HTTP status values, e.g., 200 means success and 404 means
     /// "file not found."
     short status;
@@ -32,9 +32,9 @@ module Web_Server
 
   interface Iterator_Factory
   {
-    /// Returns a <Content_Iterator> for reading the <contents> associated
-    /// with <pathname> one chunk at a time. <metadata> describes the
-    /// <contents>.
+    /// Returns a @c Content_Iterator for reading the @a contents associated
+    /// with @a pathname one chunk at a time. @a metadata describes the
+    /// @a contents.
     void get_iterator (in string pathname,
                        out Content_Iterator contents,
                        out Metadata_Type metadata)

@@ -125,7 +125,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 /**
  * This signals that TAO IDL APIs which transfer ownership use std::unique_ptr
  * instead of owning raw pointers. This currently includes
- * be_util::generator_init (), which returns std::unique_ptr<AST_Generator>.
+ * be_util::generator_init (), which returns @c std::unique_ptr<AST_Generator>.
  *
  * External backends that support older TAO IDL versions can use this to
  * select the matching ownership API independently of the string API.
@@ -165,7 +165,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 /**
  * This signals that TAO_IDL passes its source file list to BE_post_init () as
- * a std::vector<std::string> instead of a char pointer array and count.
+ * a @c std::vector<std::string> instead of a char pointer array and count.
  */
 #define TAO_IDL_HAS_STD_DRV_FILES
 

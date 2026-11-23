@@ -306,7 +306,7 @@ module RtecScheduler
     void replace_seq (in RT_Info_Set infos)
       raises (UNKNOWN_TASK, INTERNAL, SYNCHRONIZATION_FAILURE);
 
-    /// Adds <dependency> to <handle>.
+    /// Adds @a dependency to @a handle.
     /// Dependency_Type_t is only used with the Dynamic Scheduler.
     void add_dependency (in handle_t handle,
                          in handle_t dependency,
@@ -314,7 +314,7 @@ module RtecScheduler
                          in Dependency_Type_t dependency_type)
       raises (SYNCHRONIZATION_FAILURE, UNKNOWN_TASK);
 
-    /// Removes <dependency> from <handle>.  Raises UNKNOWN_TASK
+    /// Removes @a dependency from @a handle.  Raises UNKNOWN_TASK
     /// if no matching dependency is found.
     void remove_dependency (in handle_t handle,
                             in handle_t dependency,
@@ -322,7 +322,7 @@ module RtecScheduler
                             in Dependency_Type_t dependency_type)
       raises (SYNCHRONIZATION_FAILURE, UNKNOWN_TASK);
 
-    /// Enables or disables <dependency> on <handle>.  Raises UNKNOWN_TASK
+    /// Enables or disables @a dependency on @a handle.  Raises UNKNOWN_TASK
     /// if no matching dependency is found.
     void set_dependency_enable_state (in handle_t handle,
                                       in handle_t dependency,
@@ -348,9 +348,9 @@ module RtecScheduler
       raises (SYNCHRONIZATION_FAILURE, INTERNAL, UNKNOWN_TASK);
 
     /// TODO: Do we need the two interfaces or is it simply confusing?
-    /// If we should to keep only the <handle> version: Are the extra
+    /// If we should to keep only the @a handle version: Are the extra
     /// round-trips too expensive?
-    /// If we choose only the <entry_point> version: Are the copies for
+    /// If we choose only the @a entry_point version: Are the copies for
     /// the string affordable?
     /// Obtain the run time priorities.
     void priority (in handle_t handle,

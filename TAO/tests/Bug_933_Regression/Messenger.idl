@@ -3,7 +3,7 @@
 interface Messenger
 {
   /// OctetSeq is defined in $TAO_ROOT/tao/orb.idl inside the module CORBA
-  /// like this: typedef sequence<octet> OctetSeq;
+  /// like this: @c typedef sequence<octet> OctetSeq;
   void send_message(in CORBA::OctetSeq user_name);
 
   oneway void shutdown ();

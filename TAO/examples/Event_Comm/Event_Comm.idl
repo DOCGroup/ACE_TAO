@@ -14,15 +14,15 @@
 
 module Event_Comm
 {
-  /// Defines the interface for an event <Event>.
+  /// Defines the interface for an event @c Event.
   ///
   /// This is the type passed by the Notifier to the Consumer.
-  /// Since it contains an <any>, it can hold any type. Naturally,
+  /// Since it contains an @c any, it can hold any type. Naturally,
   /// the consumer must understand how to interpret it.
   struct Event
   {
-    /// Tag for the event. This is used by the <Notifier> to compare
-    /// with the <Consumer>s' filtering criteria.
+    /// Tag for the event. This is used by the @c Notifier to compare
+    /// with the @c Consumer filtering criteria.
     string tag_;
     /// An event can contain anything.
     any value_;
@@ -30,26 +30,26 @@ module Event_Comm
     Object object_ref_;
   };
 
-  /// Defines the interface for a <Consumer> of events.
+  /// Defines the interface for a @c Consumer of events.
   interface Consumer
   {
-    /// Inform the <Consumer> that <event> has occurred.
+    /// Inform the @c Consumer that @a event has occurred.
     void push (in Event event_instance);
-    /// Disconnect the <Consumer> from the <Notifier>,
-    /// giving it the <reason>.
+    /// Disconnect the @c Consumer from the @c Notifier,
+    /// giving it the @a reason.
     void disconnect (in string reason);
   };
 
-  /// Defines the interface for a <Notifier> of events.
+  /// Defines the interface for a @c Notifier of events.
   interface Notifier
   {
-    /// This exception is thrown when a <subscribe> fails.
+    /// This exception is thrown when a @c subscribe fails.
     exception CannotSubscribe
     {
       string reason_;
     };
 
-    /// This exception is thrown when an <unsubscribe> fails.
+    /// This exception is thrown when an @c unsubscribe fails.
     exception CannotUnsubscribe
     {
       string reason_;
@@ -57,23 +57,23 @@ module Event_Comm
 
     /// @name Operations for suppliers
     /// @{
-    /// Disconnect all the receivers, giving them the <reason>.
+    /// Disconnect all the receivers, giving them the @a reason.
     void disconnect (in string reason);
-    /// Send the <event> to all the consumers who have subscribed and
+    /// Send the @c Event to all the consumers who have subscribed and
     /// who match the filtering criteria.
     void push (in Event event_instance);
     /// @}
 
     /// @name Operations for consumers
     /// @{
-    /// Subscribe the <Consumer> to receive events that match the
-    /// regular expression <filtering_criteria> applied by the
-    /// <Notifier>. If <filtering_criteria> is "" then all events are
+    /// Subscribe the @c Consumer to receive events that match the
+    /// regular expression @a filtering_criteria applied by the
+    /// @c Notifier. If @a filtering_criteria is "" then all events are
     /// matched.
     void subscribe (in Consumer subscriber,
                     in string filtering_criteria) raises (CannotSubscribe);
-    /// Unsubscribe the <Consumer> that matches the filtering criteria.
-    /// If <filtering_criteria> is "" then all <Consumers> with the
+    /// Unsubscribe the @c Consumer that matches the filtering criteria.
+    /// If @a filtering_criteria is "" then all @c Consumer objects with the
     /// matching object reference are removed.
     void unsubscribe (in Consumer unsubscriber,
                       in string filtering_criteria) raises (CannotUnsubscribe);
