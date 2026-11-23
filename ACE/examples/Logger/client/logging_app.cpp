@@ -51,7 +51,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_SOCK_Stream logger;
   ACE_SOCK_Connector connector;
-  ACE_INET_Addr addr (options.port, options.host);
+  ACE_INET_Addr const addr (options.port, options.host);
 
   if (connector.connect (logger, addr) == -1)
   {
