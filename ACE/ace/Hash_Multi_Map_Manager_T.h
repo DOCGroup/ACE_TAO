@@ -578,9 +578,8 @@ private:
   /// Total size of the hash table.
   size_t total_size_ {};
 
-  /// Current number of entries in the table
-  /// @note That this can be larger than total_size_ due to the
-  /// bucket chaining).
+  /// Current number of entries; this can exceed @c total_size_ due to bucket
+  /// chaining.
   size_t cur_size_ {};
 };
 
