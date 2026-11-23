@@ -9,7 +9,7 @@ cases, we don't enable wchar support by default since it increases the
 footprint a bit.  If you run into any problems, please use the
 $ACE_ROOT/PROBLEM-REPORT-FORM to let us know.
 
-@subsection wchar_overview Overview
+@section wchar_overview Overview
 
 There are three different wchar configurations that ACE can use.  These are
 no support mode, regular support mode, and full support mode (well, those are

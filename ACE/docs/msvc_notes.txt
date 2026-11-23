@@ -7,7 +7,7 @@ Here are just some random information about ACE/TAO with Microsoft Visual
 C++.  This is more a collection of ideas right now, so it may not be as
 polished as other ACE documentation.
 
-@subsection msvc_configurations Configurations
+@section msvc_configurations Configurations
 
 MSVC workspace and solution files come with several configurations.  The
 main two are Debug and Release.  Debug produces libraries and

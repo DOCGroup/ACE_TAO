@@ -419,11 +419,8 @@ using ACE_Service_Object_Exterminator = void (*)(void *);
 /// linked service into the service configurator.
 /**
  * The macro should be used in the header file where the service is
- * declared, its only argument is usually the name of the class that
- * implements the service.
- *
- * @param SERVICE_CLASS The name of the class implementing the
- *   service.
+ * declared. Its sole argument, @c SERVICE_CLASS, is usually the name of
+ * the class that implements the service.
  */
 # define ACE_STATIC_SVC_DECLARE(SERVICE_CLASS) \
 extern ACE_Static_Svc_Descriptor ace_svc_desc_##SERVICE_CLASS ;
