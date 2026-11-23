@@ -163,7 +163,7 @@ Worker_Task<BARRIER>::svc ()
     {
       ACE_Message_Block *mb {};
 
-      int result = this->getq (mb);
+      int const result = this->getq (mb);
       ACE_Message_Block_Unique_Ptr message_block {mb};
 
       if (result == -1)
