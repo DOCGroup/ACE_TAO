@@ -121,6 +121,7 @@ namespace TAO
   public:
     /// @param directory Directory to contain file passed in
     /// create_stream (). The directory is assumed to already exist.
+    /// @param use_backup Whether to preserve a backup when updating the file.
     explicit Storable_FlatFileFactory (std::string const &directory,
                              bool use_backup = Storable_Base::use_backup_default);
     Storable_FlatFileFactory (std::string const &directory,

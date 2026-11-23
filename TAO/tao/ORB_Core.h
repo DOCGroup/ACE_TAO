@@ -456,6 +456,7 @@ public:
    * The timeout hook is used to determine if the timeout policy is
    * set and with what value.  If the ORB is compiled without support
    * for Messaging this feature does not take effect
+   * @param stub The object stub whose policies are checked.
    * \param has_timeout returns 0 if there is no timeout policy set.
    * \param time_value returns the timeout value in effect for the object,
    * thread and current ORB.
@@ -477,6 +478,7 @@ public:
    * The timeout hook is used to determine if the timeout policy is
    * set and with what value.  If the ORB is compiled without support
    * for Messaging this feature does not take effect
+   * @param stub The object stub whose policies are checked.
    * \param has_timeout returns 0 if there is no timeout policy set.
    * \param time_value returns the timeout value in effect for the object,
    * thread and current ORB.

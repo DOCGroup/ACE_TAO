@@ -469,6 +469,7 @@ public:
    * compress the stream.
    *
    * @param iov contains the data that must be sent.
+   * @param iovcnt The number of entries in @a iov.
    *
    * @param timeout is the maximum time that the application is
    * willing to wait for the data to be sent, useful in platforms that
@@ -520,6 +521,7 @@ public:
    * thread can execute it on the same instance concurrently.
    *
    * @param buffer ORB allocated buffer where the data should be
+   * @param len Number of bytes to read into @a buffer.
    * @param timeout The ACE_Time_Value *s is just a place holder for now. It is
    * not clear this this is the best place to specify this. The actual
    * timeout values will be kept in the Policies.
@@ -675,6 +677,8 @@ public:
    * the Messaging layer to invoke the right upcall (on the server) or
    * the TAO_Reply_Dispatcher (on the client side).
    *
+   * @param rh The handle used to resume the connection handler when
+   * processing is complete.
    * @param max_wait_time In some cases the I/O is synchronous, e.g. a
    * thread-per-connection server or when Wait_On_Read is enabled.  In
    * those cases a maximum read time can be specified.
@@ -763,6 +767,7 @@ protected:
                              ACE_Time_Value *max_wait_time);
 
   /// Queue a message for @a message_block
+  /// @param message_block The message block chain to queue.
   /// @param max_wait_time The maximum time that the operation can
   ///            block, used in the implementation of timeouts.
   /// @param back If true, the message will be pushed to the back of the queue.
@@ -787,8 +792,10 @@ protected:
 
 public:
   /// Format and queue a message for @a stream
+  /// @param stream The CDR stream containing the request.
   /// @param max_wait_time The maximum time that the operation can
   ///            block, used in the implementation of timeouts.
+  /// @param stub The object stub for the request.
   int format_queue_message (TAO_OutputCDR &stream,
                             ACE_Time_Value *max_wait_time,
                             TAO_Stub* stub);

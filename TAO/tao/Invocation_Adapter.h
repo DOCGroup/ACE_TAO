@@ -96,6 +96,7 @@ namespace TAO
      *
      * @param mode Invocation mode. This information is also available
      * in the IDL file and in the generated code.
+     * @param has_in_args Whether the operation has input arguments.
      */
     Invocation_Adapter (CORBA::Object_ptr target,
                         Argument **args,
@@ -186,6 +187,8 @@ namespace TAO
      *
      * @param details The operations details of the operation that is being
      * invoked.
+     * @param effective_target The effective object reference for the call.
+     * @param strat The strategy used for collocation.
      */
     virtual Invocation_Status invoke_collocated_i (
         TAO_Stub *stub,

@@ -1775,10 +1775,7 @@ TAO_Transport::queue_message_i (const ACE_Message_Block *message_block,
   return 0;
 }
 
-/**
- * All the methods relevant to the incoming data path of the ORB are
- * defined below
- */
+// The methods relevant to the incoming ORB data path are defined below.
 int
 TAO_Transport::handle_input (TAO_Resume_Handle &rh,
                              ACE_Time_Value * max_wait_time)

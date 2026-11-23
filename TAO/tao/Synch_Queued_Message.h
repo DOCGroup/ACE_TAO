@@ -44,8 +44,12 @@ public:
   /**
    * @param contents The message block chain that must be sent.
    *
+   * @param oc The ORB Core associated with this message.
+   *
    * @param alloc The allocator that is used to allocate objects of
    *        this type.
+   *
+   * @param is_heap_allocated Whether this object owns the message block chain.
    */
   TAO_Synch_Queued_Message (ACE_Message_Block const *contents,
                             TAO_ORB_Core *oc,

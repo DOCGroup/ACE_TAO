@@ -53,6 +53,7 @@ namespace TAO
      *        obtain the policies currently in effect for the request
      * @param msg_count The number of messages currently queued
      * @param total_bytes Number of bytes currently queued
+     * @param current_deadline The current deadline for the queued messages.
      * @param set_timer Returns true if a timer should be set to drain the
      *        queue
      * @param interval If set_timer returns 1, this parameter contains

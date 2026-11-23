@@ -36,10 +36,14 @@ public:
   /**
    * @param contents The message block chain that must be sent.
    *
+   * @param oc The ORB Core associated with this message.
+   *
    * @param alloc Allocator used for creating @c this object.
    *
    * @param timeout The relative timeout after which this
    * message should be expired.
+   *
+   * @param is_heap_allocated Whether this object was allocated from the heap.
    *
    * @todo I'm almost sure this class will require a callback
    *       interface for AMIs sent with SYNC_NONE policy.  Those guys
@@ -90,6 +94,8 @@ protected:
    * @param abs_timeout The time after which this  message should be expired.
    *
    * @param alloc Allocator used for creating @c this object.
+   *
+   * @param is_heap_allocated Whether this object was allocated from the heap.
    */
   TAO_Asynch_Queued_Message (std::unique_ptr<char[]> buffer,
                              TAO_ORB_Core *oc,

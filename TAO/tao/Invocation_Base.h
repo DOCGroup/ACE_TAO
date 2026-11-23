@@ -110,11 +110,13 @@ namespace TAO
      *
      * @param target the target on which this invocation is flowing
      * ie. the effective target
+     * @param stub The stub associated with the invocation.
      *
      * @param op operation details of the invocation on @a target
      *
      * @param response_expected flag to indicate whether the
      * operation encapsulated by @a op returns a response or not.
+     * @param request_is_remote Whether the invocation is remote.
      */
     Invocation_Base (CORBA::Object_ptr otarget,
                      CORBA::Object_ptr target,
