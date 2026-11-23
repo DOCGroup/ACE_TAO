@@ -86,7 +86,7 @@ Time_Handler::Time_Handler ()
 void
 Time_Handler::handle_time_out (const ACE_Time_Value &, const void *arg)
 {
-  size_t current_counter = *(reinterpret_cast<const size_t *> (arg));
+  const size_t current_counter = *(reinterpret_cast<const size_t *> (arg));
   if (current_counter != counter)
     {
       ACE_ERROR ((LM_ERROR,
@@ -153,7 +153,7 @@ Repeat_Timer_Handler::handle_time_out (const ACE_Time_Value &, const void *)
   if (this->expirations_ == 2)
     {
       ACE_OS::sleep (this->repeat_secs_ + 1);
-      int canceled = this->proactor ()->cancel_timer (*this);
+      const int canceled = this->proactor ()->cancel_timer (*this);
       if (canceled != 1)
         {
           ACE_ERROR ((LM_ERROR,
@@ -282,8 +282,8 @@ static void
 test_cancel_repeat_timer ()
 {
   Repeat_Timer_Handler *handler = new Repeat_Timer_Handler;
-  ACE_Time_Value timeout (Repeat_Timer_Handler::REPEAT_INTERVAL);
-  long t_id = ACE_Proactor::instance ()->schedule_repeating_timer
+  const ACE_Time_Value timeout (Repeat_Timer_Handler::REPEAT_INTERVAL);
+  const long t_id = ACE_Proactor::instance ()->schedule_repeating_timer
     (*handler, nullptr, timeout);
   if (t_id == -1)
     {

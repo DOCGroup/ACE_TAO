@@ -269,7 +269,7 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
           break;
         case 'n':
           {
-            int n = ACE_OS::atoi (getopt.opt_arg ());
+            const int n = ACE_OS::atoi (getopt.opt_arg ());
             // I'm assuming 0 means unlimited, so just use whatever the
             // user provides.
             if (IP_MAX_MEMBERSHIPS == 0)
@@ -670,7 +670,7 @@ MCT_Event_Handler::get_handle () const
 int
 MCT_Event_Handler::loopback (bool on_off)
 {
-  char loopback_on = on_off ? 1 : 0;
+  const char loopback_on = on_off ? 1 : 0;
   return this->mcast_.set_option (IP_MULTICAST_LOOP, loopback_on);
 }
 
