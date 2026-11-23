@@ -1166,7 +1166,7 @@ public:
 
   /**
    * Removes the current item (i.e., {next}) from the list.
-   * Note that DLList iterators do not support {advance_and_remove}
+   * @note that DLList iterators do not support {advance_and_remove}
    * directly (defined in its base class) and you will need to
    * release the element returned by it.
    */
@@ -1223,7 +1223,7 @@ public:
   T *next () const;
 
   /// Removes the current item (i.e., {next}) from the list.
-  /// Note that DLList iterators do not support {advance_and_remove}
+  /// @note that DLList iterators do not support {advance_and_remove}
   /// directly (defined in its base class) and you will need to
   /// release the element returned by it.
   int remove ();

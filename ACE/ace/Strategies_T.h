@@ -122,7 +122,7 @@ protected:
  * a SVC_HANDLER that always returns the same SVC_HANDLER (i.e.,
  * it's a Singleton).
  *
- * Note that this class takes over the ownership of the
+ * @note that this class takes over the ownership of the
  * SVC_HANDLER passed into it as a parameter and it becomes
  * responsible for deleting this object.
  */

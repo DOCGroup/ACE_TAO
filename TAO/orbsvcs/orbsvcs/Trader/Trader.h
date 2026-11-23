@@ -320,7 +320,7 @@ private:
  * @brief Set/get methods for references to various
  * interfaces of the trader.
  *
- * Note, this class is for use in local address space only and is NOT a
+ * @note this class is for use in local address space only and is NOT a
  * direct implementation of IDL methods. (Implementation of
  * IDL methods in CosTrading::Trader_Components would need
  * add a _duplicate call for each get method).

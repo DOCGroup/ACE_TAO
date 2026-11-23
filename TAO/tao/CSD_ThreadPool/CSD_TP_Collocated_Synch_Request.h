@@ -66,7 +66,7 @@ namespace TAO
       bool wait();
 
     protected:
-      /// Note that we do not override our base class implementation of
+      /// @note that we do not override our base class implementation of
       /// prepare_for_queue_i() (which does nothing), because we don't
       /// need to clone the Server Request object.
 

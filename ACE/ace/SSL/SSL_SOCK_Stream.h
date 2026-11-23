@@ -104,7 +104,7 @@ public:
 
   /// Send an iovec of size @a n to the ssl socket.
   /**
-   * Note that it is not possible to perform a "scattered" write with
+   * @note that it is not possible to perform a "scattered" write with
    * the underlying OpenSSL implementation.  As such, the expected
    * semantics are not fully reproduced with this implementation.
    */

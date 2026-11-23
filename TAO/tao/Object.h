@@ -236,7 +236,7 @@ namespace CORBA
     virtual TAO_Abstract_ServantBase *_servant () const;
 
     /// Is this object collocated with the servant?
-    /// Note this does not return this->is_collocated_ but will instead
+    /// @note this does not return this->is_collocated_ but will instead
     /// query the underlying stub for its collocation status
     virtual CORBA::Boolean _is_collocated () const;
 

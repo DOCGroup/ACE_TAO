@@ -1151,7 +1151,7 @@ protected:
 
   /// Track if connection was seen as closed during a read so that
   /// invocation can optionally be retried using a different profile.
-  /// Note that this could result in violate the "at most once" CORBA
+  /// @note that this could result in violate the "at most once" CORBA
   /// semantics.
   bool connection_closed_on_read_;
 

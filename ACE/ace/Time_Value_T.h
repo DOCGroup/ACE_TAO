@@ -135,7 +135,7 @@ public:
    *          time of day.
    *          The developer is responsible for making sure this is an absolute
    *          time value compatible with the active time policy.
-   *          Note that the returned time value has no notion of the time policy
+   *          @note that the returned time value has no notion of the time policy
    *          on which it is based anymore.
    */
   ACE_Time_Value to_relative_time () const override;
@@ -148,7 +148,7 @@ public:
    *          time of day.
    *          The developer is responsible for making sure this is a relative
    *          time value.
-   *          Note that the returned time value has no notion of the time policy
+   *          @note that the returned time value has no notion of the time policy
    *          on which it is based anymore.
    */
   ACE_Time_Value to_absolute_time () const override;

@@ -42,7 +42,7 @@ public:
  * - Constructor that accepts 0 in the constructor.
  * - Prefix increment.
  * - Assignment.
- * Note that a primitive types such as u_long, int, etc., are
+ * @note that a primitive types such as u_long, int, etc., are
  * suitable for this class.
  */
 template <class T>

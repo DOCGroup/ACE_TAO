@@ -32,7 +32,7 @@ class TAO_Endpoint;
  * on which the Transport Caching scheme is based on. Concrete
  * connection properties can be got by inheriting from this class and
  * implementing the virtual functions.
- * Note 1: Additional properties for connection like Qos,
+ * @note 1: Additional properties for connection like Qos,
  * Priority that the RT folks would need, can be added by
  * inheriting from this class and providing the following
  * methods.

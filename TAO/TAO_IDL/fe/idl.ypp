@@ -7025,7 +7025,7 @@ porttype_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeSqSeen);
         }
         /**
-         * NOTE: IDL4.2 spec has a different definition of what can go inside a
+         * @note IDL4.2 spec has a different definition of what can go inside a
          * portype.
          */
         at_least_one_port_export

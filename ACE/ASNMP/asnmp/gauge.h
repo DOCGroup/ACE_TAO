@@ -32,7 +32,7 @@
  * @class Gauge32:
  *
  * @brief Define RFC1902 Gauge datatype from RFC 1155 section 3.2.3.4
- * Note that this datatype does not behave exactly (acts like a long)
+ * @note that this datatype does not behave exactly (acts like a long)
  * It retains a distinct SMI type and can be used in Vb objects.
  */
 class ASNMP_Export Gauge32: public SnmpUInt32

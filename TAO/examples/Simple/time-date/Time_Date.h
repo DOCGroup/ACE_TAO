@@ -73,7 +73,7 @@ public:
  *
  * @brief Define a class that dynamically links the Time_Date service
  *        into a server process via the @c ACE_Service_Configurator.
- *        Note that this assumes the ORB has been linked previously.
+ *        @note that this assumes the ORB has been linked previously.
  */
 class ACE_Svc_Export Time_Date_Servant : public ACE_Service_Object
 {

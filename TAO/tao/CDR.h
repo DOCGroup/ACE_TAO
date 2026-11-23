@@ -8,7 +8,7 @@
  *   single/double for floats.  Also that characters are in ISO
  *   Latin/1.
  *
- *   Note that CDR itself makes no such assumptions, but this
+ *   @note that CDR itself makes no such assumptions, but this
  *   implementation makes such assumptions for reasons of
  *   efficiency.  Careful enhancements could preserve that
  *   efficiency where the assumptions are true, yet still allow the

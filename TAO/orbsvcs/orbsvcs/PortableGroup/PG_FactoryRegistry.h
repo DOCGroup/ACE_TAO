@@ -42,7 +42,7 @@ namespace TAO
 {
   /**
    * Implement the PortableGroup::FactoryRegistry interface
-   * Note FactoryRegistry is not part of the OMG standard.  It was added
+   * @note FactoryRegistry is not part of the OMG standard.  It was added
    * as part of the TAO implementation of Fault Tolerant CORBA
    */
   class TAO_PortableGroup_Export PG_FactoryRegistry

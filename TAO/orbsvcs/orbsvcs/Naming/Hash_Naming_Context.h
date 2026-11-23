@@ -254,7 +254,7 @@ protected:
 
   /**
    * ID with which we are registered with <poa_>.
-   * Note, if <poa_id_> is equivalent to TAO_ROOT_NAMING_CONTEXT, then this Naming Context
+   * @note if <poa_id_> is equivalent to TAO_ROOT_NAMING_CONTEXT, then this Naming Context
    * is the root Naming Context for the server, i.e., it is un<destroy>able.
    */
   ACE_CString poa_id_;

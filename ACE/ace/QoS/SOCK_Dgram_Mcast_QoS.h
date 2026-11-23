@@ -60,7 +60,7 @@ public:
    * else.  If @a net_if is @c nullptr, <subscribe> uses the default mcast
    * interface.  Returns: -1 if the call fails.
    *
-   * Note that some platforms, such as pSoS, support only number, not
+   * @note that some platforms, such as pSoS, support only number, not
    * names, for network interfaces.  For these platforms, just give
    * these numbers in alphanumeric form and <subscribe> will convert
    * them into numbers via <ACE_OS::atoi>.

@@ -41,7 +41,7 @@ module TAO
   typedef unsigned short BufferingConstraintMode;
   const BufferingConstraintMode BUFFER_FLUSH         = 0x00;
 
-  /// Note that timeout, message_count, and message_bytes can be ORed.
+  /// @note that timeout, message_count, and message_bytes can be ORed.
   const BufferingConstraintMode BUFFER_TIMEOUT       = 0x01;
   const BufferingConstraintMode BUFFER_MESSAGE_COUNT = 0x02;
   const BufferingConstraintMode BUFFER_MESSAGE_BYTES = 0x04;

@@ -59,7 +59,7 @@ namespace TAO
 
     /**
      * Create an empty object group using a specific ID.
-     * Note that this should not also be used with create_object_group ()
+     * @note that this should not also be used with create_object_group ()
      * as the next object group ID to use will not necessarily be unique.
      */
     PortableGroup::ObjectGroup_ptr create_object_group_using_id (

@@ -287,7 +287,7 @@ module AVStreams
                        in string format_name)
         raises (notSupported);
 
-      /// Note, some of these device params are standardised by OMG
+      /// @note some of these device params are standardised by OMG
       /// Multicasting operations are not supported yet.
       void set_dev_params (in string flowName,
                            in CosPropertyService::Properties new_params)
@@ -457,7 +457,7 @@ module AVStreams
                        in string format_name)
         raises (notSupported);
 
-      /// Note, some of these device params are standardised by OMG
+      /// @note some of these device params are standardised by OMG
       /// Used to set device parameters.
       void set_dev_params (in string flowName,
                            in CosPropertyService::Properties new_params)

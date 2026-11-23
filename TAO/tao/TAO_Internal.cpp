@@ -210,7 +210,7 @@ private:
 #endif // ACE_HAS_THREADS
 
 // ****************************************************************
-/// Note that the argument vector will be corrupted upon return
+/// @note that the argument vector will be corrupted upon return
 int
 TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
 {

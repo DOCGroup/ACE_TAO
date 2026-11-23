@@ -30,7 +30,7 @@ class ACE_Export ACE_FIFO_Send : public ACE_FIFO
 public:
   /// @name Initialization methods.
   ///
-  /// Note that @c O_WRONLY will be added to any @a flags value passed.
+  /// @note that @c O_WRONLY will be added to any @a flags value passed.
   /// Default behavior is to block until a receiver also opens the fifo.
   /// To use non-blocking behavior include ACE_NONBLOCK in @a flags.
   /// @{

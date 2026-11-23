@@ -186,12 +186,12 @@ public:
    *  as a sequence of certificates in @a ca_file or as a set of
    *  individual certificates in @a ca_dir (or both).
    *
-   *  Note this method is called by set_mode() to load the default
+   *  @note this method is called by set_mode() to load the default
    *  environment settings for @a ca_file and @a ca_dir, if any. This
    *  allows for automatic service configuration (and backward
    *  compatibility with previous versions).
    *
-   *  Note that the underlying SSL function will add valid file and
+   *  @note that the underlying SSL function will add valid file and
    *  directory names to the load location lists maintained as part of
    *  the SSL_CTX table.  It therefore doesn't make sense to keep a
    *  copy of the file and path name of the most recently added
@@ -278,7 +278,7 @@ public:
    *  The last parameter <depth> can be used to set the verification
    *  depth.
    *
-   *  Note for verification to work correctly there should be a valid
+   *  @note for verification to work correctly there should be a valid
    *  CA name list set using load_trusted_ca().
    *
    *  @see OpenSSL documentation of SSL_CTX_set_verify(3) for details of
@@ -286,7 +286,7 @@ public:
    *
    *  @see OpenSSL documentation ... set_verify_depth(3) ...
    *
-   *  Note that this method overrides the use of the
+   *  @note that this method overrides the use of the
    *  default_verify_mode() method.
    */
   void set_verify_peer (int strict = 0, int once = 1, int depth = 0);

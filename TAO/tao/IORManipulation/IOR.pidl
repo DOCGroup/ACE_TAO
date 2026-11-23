@@ -95,7 +95,7 @@ module TAO_IOP
    * used throughout.
    * Object references (Object) are used since they encapsulate the
    * notion of object references and IORs.
-   * Note, an IOR contains one or more profiles and a profile can be
+   * @note an IOR contains one or more profiles and a profile can be
    * considered to represent the location or route to a specific instance
    * of an object.
    * A profile may also contain supplementary information useful for
@@ -112,7 +112,7 @@ module TAO_IOP
         raises (EmptyProfileList,Duplicate,Invalid_IOR);
 
       /// copy the profile list from "ior2" to "ior1".
-      /// Note on ordering, while the current implementation will place
+      /// @note on ordering, while the current implementation will place
       /// the profiles from ior2 (which are not already in ior1) on the
       /// end of the profile list in ior1, there is no guarantee this ordering
       /// will be maintained.  For example, string_to_object or object_to_string

@@ -43,7 +43,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * specifications.  Constructor arguments determine per-instance optional
  * functionality.
  *
- * Note that multicast semantics and implementation details are very
+ * @note that multicast semantics and implementation details are very
  * environment-specific; this class is just a wrapper around the underlying
  * implementation and does not try to normalize the concept of multicast
  * communications.
@@ -260,7 +260,7 @@ public:
    * ACE_Sock_Connect::get_ip_interfaces() is not implemented in this
    * environment.
    *
-   * Note that the optional @a reuse_addr parameter does not apply to
+   * @note that the optional @a reuse_addr parameter does not apply to
    * subscriptions; it is only used if open() is implicitly invoked (see above).
    *
    * Uses the mcast_addr to determine protocol_family, and protocol which

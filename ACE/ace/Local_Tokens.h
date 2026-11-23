@@ -24,7 +24,7 @@
  *   12. ACE_RW_Token : public ACE_Tokens
  *   a. ACE_Token_Name
  *
- *  Note that the locking classes defined in this file are *not*
+ *  @note that the locking classes defined in this file are *not*
  *  intended to be used as general-purpose synchronization
  *  mechanisms, such as mutexes or semaphores.  Instead, you should
  *  use the ACE_Recursive_Thread_Mutex, ACE_Thread_Mutex,

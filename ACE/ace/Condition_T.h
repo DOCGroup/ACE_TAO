@@ -39,7 +39,7 @@ class ACE_Time_Value;
  * up waiting threads by signaling the associated condition
  * variable.  The waiting threads, upon awakening, reacquire the
  * mutex and re-evaluate the condition.
- * Note, you can only parameterize @c ACE_Condition with
+ * @note you can only parameterize @c ACE_Condition with
  * @a ACE_Thread_Mutex, @a ACE_Recursive_Thread_Mutex, or @a ACE_Null_Mutex.
  */
 template <class MUTEX>

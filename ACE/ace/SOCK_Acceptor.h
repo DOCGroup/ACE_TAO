@@ -103,7 +103,7 @@ public:
    * Accept a new ACE_SOCK_Stream connection.  A @a timeout of 0
    * means block forever, a @a timeout of {0, 0} means poll.  @a restart
    * == true means "restart if interrupted," i.e., if errno == EINTR.
-   * Note that @a new_stream inherits the "blocking mode" of @c this
+   * @note that @a new_stream inherits the "blocking mode" of @c this
    * ACE_SOCK_Acceptor, i.e., if @c this acceptor factory is in
    * non-blocking mode, the @a new_stream will be in non-blocking mode
    * and vice versa.

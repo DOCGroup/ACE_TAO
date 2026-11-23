@@ -128,7 +128,7 @@ ACE_QoS_Event_Handler::get_handle () const
   return this->qos_session_->rsvp_events_handle ();
 }
 
-/// Note, here the handle_input () calls the handle_qos () of the
+/// @note here the handle_input () calls the handle_qos () of the
 /// Decorator Base which then calls handle_qos () of the
 /// ACE_Event_Handler component within it. This helps to translate the
 /// normal read events into qos events in case of RAPI so the

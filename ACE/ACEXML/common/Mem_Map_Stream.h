@@ -137,7 +137,7 @@ public:
    *       of the stream plus <offset>.
    *
    *  If offset is greater than EOF, both <get> and <recv> are set to EOF.
-   *  Note special return value is returned to indicate this condition.
+   *  @note special return value is returned to indicate this condition.
    */
   virtual ACE_OFF_T seek (ACE_OFF_T offset, int whence = SEEK_CUR);
 

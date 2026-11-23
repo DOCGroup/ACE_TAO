@@ -216,13 +216,13 @@ public:
   /// @name Initialization
   /// @{
   /**
-   * Note that @a pool_name should be located in
+   * @note that @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so. */
   explicit ACE_Allocator_Adapter (const char *pool_name = nullptr);
 
   /**
-   * Note that @a pool_name should be located in
+   * @note that @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so.
    */
@@ -232,13 +232,13 @@ public:
 
 #if defined (ACE_HAS_WCHAR)
   /**
-   * Note that @a pool_name should be located in
+   * @note that @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so. */
   explicit ACE_Allocator_Adapter (const wchar_t *pool_name);
 
   /**
-   * Note that @a pool_name should be located in
+   * @note that @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so.
    */
@@ -424,7 +424,7 @@ class ACE_Malloc_FIFO_Iterator_T;
  *   - void *base_addr ()
  *   - seh_selector() (only needed on Windows)
  *
- * Note that the ACE_Allocator_Adapter class can be used to integrate allocator
+ * @note that the ACE_Allocator_Adapter class can be used to integrate allocator
  * classes which do not meet the interface requirements of ACE_Malloc_T.
  *
  * @note The bind() and find() methods use linear search, so
@@ -451,7 +451,7 @@ public:
    * automatically extract out the name used for the underlying lock
    * name (if necessary).
    *
-   * Note that @a pool_name should be located in
+   * @note that @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so.
    */
@@ -464,7 +464,7 @@ public:
    * necessary).  In addition, @a options is passed through to
    * initialize the underlying memory pool.
    *
-   * Note that @a pool_name should be located in
+   * @note that @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so.
    */
