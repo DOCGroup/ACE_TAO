@@ -80,7 +80,7 @@ TAO_ECG_UDP_Sender::new_connect (RtecEventChannelAdmin::ConsumerQOS const &sub)
 {
   // Activate with poa.
   RtecEventComm::PushConsumer_var consumer_ref;
-  PortableServer::POA_var poa = this->_default_POA ();
+  PortableServer::POA_var const poa = this->_default_POA ();
 
   TAO_EC_Object_Deactivator deactivator;
   activate (consumer_ref,
@@ -89,7 +89,7 @@ TAO_ECG_UDP_Sender::new_connect (RtecEventChannelAdmin::ConsumerQOS const &sub)
             deactivator);
 
   // Connect as a consumer to the local EC.
-  RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
+  RtecEventChannelAdmin::ConsumerAdmin_var const consumer_admin =
     this->lcl_ec_->for_consumers ();
 
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy =
@@ -110,9 +110,9 @@ TAO_ECG_UDP_Sender::reconnect (RtecEventChannelAdmin::ConsumerQOS const &sub)
 {
   // Obtain our object reference from the POA.
   RtecEventComm::PushConsumer_var consumer_ref;
-  PortableServer::POA_var poa = this->_default_POA ();
+  PortableServer::POA_var const poa = this->_default_POA ();
 
-  CORBA::Object_var obj = poa->servant_to_reference (this);
+  CORBA::Object_var const obj = poa->servant_to_reference (this);
   consumer_ref =
     RtecEventComm::PushConsumer::_narrow (obj.in ());
 
