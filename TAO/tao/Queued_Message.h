@@ -54,7 +54,7 @@ class TAO_ORB_Core;
  * can be required to wake up before its message completes.
  * Each message may contain a 'Sent_Notifier'
  *
- * <H4>NOTE:</H4> The contents of the ACE_Message_Block may have been
+ * @note The contents of the ACE_Message_Block may have been
  * allocated from TSS storage, in that case we cannot steal them.
  * However, we do not need to perform a deep copy all the time, for
  * example, in a twoway request the sending thread blocks until the

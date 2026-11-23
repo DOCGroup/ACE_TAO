@@ -839,7 +839,8 @@ public:
    * Checks to see if there is already a <SVC_HANDLER> in the cache
    * connected to the <remote_addr>.  If so, we return this pointer.
    * Otherwise we establish the connection, put it into the cache, and
-   * return the SVC_HANDLER pointer.  <[NOTE]>: the <{reuse_addr}>
+   * return the SVC_HANDLER pointer.
+   * @note The <{reuse_addr}>
    * argument does NOT control re-use of addresses in the cache.
    * Rather, if the underlying protocol requires a "dead time" prior
    * to re-use of its addresses (TCP is a classic example of this),

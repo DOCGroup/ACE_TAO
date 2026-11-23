@@ -25,7 +25,7 @@
  *   "quad precision" FP) and UNICODE-based characters and strings.
  *   Those types are not standard parts of OMG-IDL at this time.
  *
- *   THREADING NOTE: CDR data structures must be protected against
+ *   @note Threading: CDR data structures must be protected against
  *   concurrent access by their owning thread.
  *
  *  @author  Copyright 1994-1995 by Sun Microsystems Inc.

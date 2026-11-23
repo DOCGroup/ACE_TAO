@@ -74,9 +74,9 @@ namespace TAO
 
     /// Set the callback PICurrent_Impl object that will be notified
     /// of this object's impending destruction or change.
-    /// Set to nullptr to clear. (NOTE Only handles a SINGLE object at
-    /// at time, does NOT warn previous callback that this has
-    /// been changed.)
+    /// Set to nullptr to clear.
+    /// @note Only handles a SINGLE object at a time and does NOT warn
+    /// the previous callback that it has been changed.
     void set_callback_for_impending_change (PICurrent_Impl *p);
 
     /// Typedef for the underyling "slot table."

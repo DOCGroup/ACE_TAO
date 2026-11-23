@@ -71,7 +71,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * you query for your @c timer.stop() value might not be the one
  * you queried for @c timer.start().  Its not clear how much
  * divergence there would be, if any.
- * A RDTSC NOTE: RDTSC is the Intel Pentium read-time stamp counter
+ * @note RDTSC: RDTSC is the Intel Pentium read-time stamp counter
  * and is actualy a 64 bit clock cycle counter, which is increased
  * with every cycle.  It has a low overhead and can be read within
  * 16 (pentium) or 32 (pentium II,III,...) cycles, but it doesn't
@@ -84,7 +84,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * Another problem arises with multiprocessor computers, there
  * are reports that the different RDTSC's are not always kept
  * in sync.
- * A windows "timer chip" NOTE: (8254-compatible real-time clock)
+ * @note Windows "timer chip" (8254-compatible real-time clock):
  * When ::QueryPerformanceCounter() uses the 8254 it has a
  * frequency off about 1.193 Mhz (or sometimes 3.579 Mhz?) and
  * reading it requires some time (several thousand cycles).

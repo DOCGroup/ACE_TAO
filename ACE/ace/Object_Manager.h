@@ -166,7 +166,7 @@ template <class T> class ACE_Cleanup_Adapter;
  * cleaned up by the Object_Manager, they'll get cleaned up too
  * late.  The ACE tests do not violate this requirement.
  * However, applications may have trouble with it.
- * NOTE on the use of <::exit> -- <::exit> does not destroy
+ * @note On the use of <::exit>: <::exit> does not destroy
  * automatic objects.  Therefore, if
  * ACE_HAS_NONSTATIC_OBJECT_MANAGER is enabled, the
  * ACE_Object_Manager instance will *not* be destroyed if

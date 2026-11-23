@@ -146,7 +146,7 @@ public:
    * support a particular addressing mode, this method needs to
    * be overridden signal the appropriate error.
    *
-   * ** RACE CONDITION NOTE **
+   * @note Race condition:
    *
    * Currently, getting and setting the addressing mode is not
    * protected by a mutex.  Theoretically, this could cause a race

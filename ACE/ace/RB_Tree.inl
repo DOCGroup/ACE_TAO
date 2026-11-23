@@ -505,8 +505,8 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::unbind (ACE_RB_Tree_Node<EX
 /// possible to acquire the lock explicitly, which can be useful in
 /// some cases if you instantiate the <ACE_Atomic_Op> with an
 /// <ACE_Recursive_Mutex> or <ACE_Process_Mutex>, or if you need to
-/// guard the state of an iterator.  NOTE: the right name would be
-/// <lock>, but HP/C++ will choke on that!
+/// guard the state of an iterator.
+/// @note The right name would be <lock>, but HP/C++ will choke on that!
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE ACE_LOCK &
@@ -607,9 +607,9 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::find (const EXT_ID &k)
 /// both the key type EXT_ID and the item type INT_ID must have well
 /// defined semantics for copy construction and < comparison.
 /// This method returns a pointer to the inserted item copy,
-/// or 0 if an error occurred.  NOTE: if an identical key
-/// already exists in the tree, no new item is created, and
-/// the returned pointer addresses the existing item
+/// or 0 if an error occurred.
+/// @note If an identical key already exists in the tree, no new item is
+/// created, and the returned pointer addresses the existing item
 /// associated with the existing key.   DEPRECATED.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
