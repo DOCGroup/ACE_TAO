@@ -132,7 +132,7 @@ namespace ACE_TMCast
       try
       {
         sock_.join (addr_);
-        [[maybe_unused]] std::unique_ptr<LinkListener> link_listener =
+        [[maybe_unused]] std::unique_ptr<LinkListener> const link_listener =
           std::make_unique<LinkListener> (sock_, in_link_data_);
 
         {
@@ -181,7 +181,7 @@ namespace ACE_TMCast
               //
               if (!in_link_data_.empty ())
               {
-                MessagePtr m (in_link_data_.front ());
+                MessagePtr const m (in_link_data_.front ());
                 in_link_data_.pop ();
 
                 LinkData* data;
@@ -391,7 +391,7 @@ namespace ACE_TMCast
 
         if (!in_send_data_.empty ())
         {
-          MessagePtr m (in_send_data_.front ());
+          MessagePtr const m (in_send_data_.front ());
           in_send_data_.pop ();
 
           if (dynamic_cast<ACE_TMCast::Aborted*>(m.get()))
@@ -431,7 +431,7 @@ namespace ACE_TMCast
 
         if (!in_recv_data_.empty ())
         {
-          MessagePtr m (in_recv_data_.front ());
+          MessagePtr const m (in_recv_data_.front ());
           in_recv_data_.pop ();
 
           Recv* data = dynamic_cast<Recv*> (m.get ());
