@@ -64,8 +64,8 @@ public:
     CORBA::Long const number {5};
     state <<= number;
 
-    Object_var obj (orb_->resolve_initial_references ("PICurrent"));
-    PortableInterceptor::Current_var pic (
+    Object_var const obj (orb_->resolve_initial_references ("PICurrent"));
+    PortableInterceptor::Current_var const pic (
       PortableInterceptor::Current::_narrow (obj.in ()));
 
     pic->set_slot (slot_id, state);
@@ -127,7 +127,7 @@ public:
     state <<= number6;
     ri->set_slot (slot_id, state);
 
-    Any_var state_get (pi_current_->get_slot (slot_id));
+    Any_var const state_get (pi_current_->get_slot (slot_id));
     CORBA::Long n {};
     state_get >>= n;
 
@@ -143,14 +143,14 @@ public:
 
   void send_reply (ServerRequestInfo_ptr ri) override
   {
-    CORBA::String_var op = ri->operation ();
+    CORBA::String_var const op = ri->operation ();
 
     if (std::strcmp (op.in (), "number") != 0)
     {
       return; // Don't mess with PICurrent if not invoking test method.
     }
 
-    Any_var state (ri->get_slot (slot_id));
+    Any_var const state (ri->get_slot (slot_id));
     CORBA::Long n {};
     state >>= n;
 
@@ -188,10 +188,10 @@ public:
     slot_id = info->allocate_slot_id ();
     ACE_DEBUG ((LM_DEBUG, "Allocated slot with id %d.\n", slot_id));
 
-    CORBA::Object_var obj =
+    CORBA::Object_var const obj =
       info->resolve_initial_references ("PICurrent");
 
-    PortableInterceptor::Current_var pi_current =
+    PortableInterceptor::Current_var const pi_current =
       PortableInterceptor::Current::_narrow (obj.in ());
 
     if (CORBA::is_nil (pi_current.in ()))
@@ -202,7 +202,8 @@ public:
         throw CORBA::INTERNAL ();
       }
 
-    ServerRequestInterceptor_var interceptor (new ReplicaController (pi_current.in ()));
+    ServerRequestInterceptor_var const interceptor (
+      new ReplicaController (pi_current.in ()));
     info->add_server_request_interceptor (interceptor.in ());
   }
 };
@@ -212,38 +213,39 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      ORBInitializer_var orb_initializer (new ORB_Initializer ());
+      ORBInitializer_var const orb_initializer (new ORB_Initializer ());
       register_orb_initializer (orb_initializer.in ());
 
-      ORB_var orb (ORB_init (argc, argv));
+      ORB_var const orb (ORB_init (argc, argv));
 
       if (parse_args (argc, argv) != 0)
       {
         return 1;
       }
 
-      Object_var obj (orb->resolve_initial_references ("RootPOA"));
+      Object_var const obj (orb->resolve_initial_references ("RootPOA"));
 
-      POA_var root_poa (POA::_narrow (obj.in ()));
-      POAManager_var poa_manager (root_poa->the_POAManager ());
+      POA_var const root_poa (POA::_narrow (obj.in ()));
+      POAManager_var const poa_manager (root_poa->the_POAManager ());
 
       StateTransferImpl* impl = new StateTransferImpl (orb.in ());
-      ServantBase_var impl_var (impl);
+      ServantBase_var const impl_var (impl);
 
-      PortableServer::ObjectId_var id_act =
+      PortableServer::ObjectId_var const id_act =
         root_poa->activate_object (impl);
 
-      CORBA::Object_var object = root_poa->id_to_reference (id_act.in ());
+      CORBA::Object_var const object =
+        root_poa->id_to_reference (id_act.in ());
 
-      StateTransfer_var ref = StateTransfer::_narrow (object.in ());
-      String_var ior (orb->object_to_string (ref.in ()));
+      StateTransfer_var const ref = StateTransfer::_narrow (object.in ());
+      String_var const ior (orb->object_to_string (ref.in ()));
 
       poa_manager->activate ();
 
       // Dump the ior.
       //
       {
-        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+        std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
           ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
         if (!output_file)
           {
