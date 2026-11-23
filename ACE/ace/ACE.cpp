@@ -180,7 +180,7 @@ ACE::select (int width,
              ACE_Handle_Set *exceptfds,
              const ACE_Time_Value *timeout)
 {
-  int result = ACE_OS::select (width,
+  int const result = ACE_OS::select (width,
                                readfds ? readfds->fdset () : nullptr,
                                writefds ? writefds->fdset () : nullptr,
                                exceptfds ? exceptfds->fdset () : nullptr,
@@ -211,7 +211,7 @@ ACE::select (int width,
              ACE_Handle_Set &readfds,
              const ACE_Time_Value *timeout)
 {
-  int result = ACE_OS::select (width,
+  int const result = ACE_OS::select (width,
                                readfds.fdset (),
                                nullptr,
                                nullptr,
@@ -337,7 +337,7 @@ ACE::hash_pjw (const char *str, size_t len)
       const char temp = str[i];
       hash = (hash << 4) + (temp * 13);
 
-      u_long g = hash & 0xf0000000;
+      u_long const g = hash & 0xf0000000;
 
       if (g)
         {
@@ -368,7 +368,7 @@ ACE::hash_pjw (const wchar_t *str, size_t len)
       const wchar_t temp = str[i];
       hash = (hash << 4) + (temp * 13);
 
-      u_long g = hash & 0xf0000000;
+      u_long const g = hash & 0xf0000000;
 
       if (g)
         {
@@ -481,7 +481,7 @@ ACE::recv (ACE_HANDLE handle,
         }
       else
         {
-          ssize_t bytes_transferred =
+          ssize_t const bytes_transferred =
             ACE_OS::recv (handle, static_cast<char *> (buf), len, flags);
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
@@ -540,7 +540,7 @@ ACE::recv (ACE_HANDLE handle,
         }
       else
         {
-          ssize_t bytes_transferred = ACE::recv_i (handle, buf, n);
+          ssize_t const bytes_transferred = ACE::recv_i (handle, buf, n);
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
@@ -566,7 +566,7 @@ ACE::recvmsg (ACE_HANDLE handle,
         }
       else
         {
-          ssize_t bytes_transferred = ACE_OS::recvmsg (handle, msg, flags);
+          ssize_t const bytes_transferred = ACE_OS::recvmsg (handle, msg, flags);
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
@@ -595,7 +595,7 @@ ACE::recvfrom (ACE_HANDLE handle,
         }
       else
         {
-          ssize_t bytes_transferred =
+          ssize_t const bytes_transferred =
             ACE_OS::recvfrom (handle, buf, len, flags, addr, addrlen);
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
@@ -1035,7 +1035,7 @@ ACE::recvv (ACE_HANDLE handle,
         }
       else
         {
-          ssize_t bytes_transferred = ACE_OS::recvv (handle, iov, iovcnt);
+          ssize_t const bytes_transferred = ACE_OS::recvv (handle, iov, iovcnt);
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
@@ -1803,7 +1803,7 @@ ssize_t
 ACE::send (ACE_HANDLE handle, size_t n, ...)
 {
   va_list argp;
-  int total_tuples = static_cast<int> (n / 2);
+  int const total_tuples = static_cast<int> (n / 2);
   iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
   iovp = static_cast<iovec *> (alloca (total_tuples * sizeof (iovec)));
@@ -1828,7 +1828,7 @@ ACE::send (ACE_HANDLE handle, size_t n, ...)
       iovp[i].iov_len = va_arg (argp, int);
     }
 
-  ssize_t result = ACE_OS::sendv (handle, iovp, total_tuples);
+  ssize_t const result = ACE_OS::sendv (handle, iovp, total_tuples);
 #if !defined (ACE_HAS_ALLOCA)
 # ifdef ACE_HAS_ALLOC_HOOKS
   ACE_Allocator::instance ()->free (iovp);
@@ -1860,7 +1860,7 @@ ACE::sendv (ACE_HANDLE handle,
         }
       else
         {
-          ssize_t bytes_transferred = ACE_OS::sendv (handle, iov, iovcnt);
+          ssize_t const bytes_transferred = ACE_OS::sendv (handle, iov, iovcnt);
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
@@ -2562,10 +2562,10 @@ ACE::timestamp (const ACE_Time_Value& time_value,
       return nullptr;
     }
 
-  ACE_Time_Value cur_time =
+  ACE_Time_Value const cur_time =
     (time_value == ACE_Time_Value::zero) ?
         ACE_Time_Value (ACE_OS::gettimeofday ()) : time_value;
-  time_t secs = cur_time.sec ();
+  time_t const secs = cur_time.sec ();
   struct tm tms;
   ACE_OS::localtime_r (&secs, &tms);
   ACE_OS::snprintf (date_and_time,
@@ -2659,7 +2659,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
 #else
 # if defined (ACE_HAS_POLL)
 
-  int n = ACE_OS::poll (&fds, 1, timeout);
+  int const n = ACE_OS::poll (&fds, 1, timeout);
 
 # else
   int n = 0;
@@ -2744,7 +2744,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
 #if defined (SOL_SOCKET) && defined (SO_ERROR)
       int sock_err = 0;
       int sock_err_len = sizeof (sock_err);
-      int sockopt_ret = ACE_OS::getsockopt (h, SOL_SOCKET, SO_ERROR,
+      int const sockopt_ret = ACE_OS::getsockopt (h, SOL_SOCKET, SO_ERROR,
                                             reinterpret_cast<char *> (&sock_err),
                                             &sock_err_len);
       if (sockopt_ret < 0)
@@ -2830,7 +2830,7 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
     {
 #if defined (ACE_HAS_POLL)
 
-      int n = ACE_OS::poll (&fds, 1, timeout);
+      int const n = ACE_OS::poll (&fds, 1, timeout);
 
 #else
       int select_width = 0;
@@ -2926,7 +2926,7 @@ ACE::daemonize (const ACE_TCHAR pathname[],
           ACE_OS::close (i);
         }
 
-      int fd = ACE_OS::open ("/dev/null", O_RDWR, 0);
+      int const fd = ACE_OS::open ("/dev/null", O_RDWR, 0);
       if (fd != -1)
         {
           ACE_OS::dup2 (fd, ACE_STDIN);
@@ -2969,7 +2969,7 @@ ACE::fork (const ACE_TCHAR *program_name,
       // Another way to avoid zombies is to ignore or catch the
       // SIGCHLD signal; we don't use that approach here.
 
-      pid_t pid = ACE_OS::fork ();
+      pid_t const pid = ACE_OS::fork ();
       if (pid == 0)
         {
           // The child process forks again to create a grandchild.
@@ -3055,7 +3055,7 @@ ACE::set_handle_limit (int new_limit,
                        int increase_limit_only)
 {
   ACE_TRACE ("ACE::set_handle_limit");
-  int cur_limit = ACE::max_handles ();
+  int const cur_limit = ACE::max_handles ();
   int max_limit = cur_limit;
 
   if (cur_limit == -1)
@@ -3067,7 +3067,7 @@ ACE::set_handle_limit (int new_limit,
   struct rlimit rl;
 
   std::memset (&rl, 0, sizeof rl);
-  int r = ACE_OS::getrlimit (RLIMIT_NOFILE, &rl);
+  int const r = ACE_OS::getrlimit (RLIMIT_NOFILE, &rl);
   if (r == 0)
   {
     max_limit = rl.rlim_max;
@@ -3120,7 +3120,7 @@ ACE::gcd (u_long x, u_long y)
 {
   while (y != 0)
     {
-      u_long r = x % y;
+      u_long const r = x % y;
       x = y;
       y = r;
     }
@@ -3144,7 +3144,7 @@ ACE::minimum_frame_size (u_long period1, u_long period2)
     }
 
   // if neither is zero, find the greatest common divisor of the two periods
-  u_long greatest_common_divisor = ACE::gcd (period1, period2);
+  u_long const greatest_common_divisor = ACE::gcd (period1, period2);
 
   // explicitly consider cases to reduce risk of possible overflow errors
   if (greatest_common_divisor == 1)
