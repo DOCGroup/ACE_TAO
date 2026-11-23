@@ -72,7 +72,7 @@ Echo_Client_Request_Interceptor::send_request (
   IOP::ServiceContext sc;
   sc.context_id = ::service_id;
 
-  CORBA::ULong string_len = std::strlen (request_msg) + 1;
+  const CORBA::ULong string_len = std::strlen (request_msg) + 1;
   CORBA::Octet *buf = CORBA::OctetSeq::allocbuf (string_len);
   std::strcpy (reinterpret_cast<char *> (buf), request_msg);
 

@@ -56,7 +56,7 @@ ClientApp::client_setup()
 int
 ClientApp::run_engine()
 {
-  bool result = this->engine_->execute();
+  const bool result = this->engine_->execute();
   return result ? 0 : -1;
 }
 
@@ -158,7 +158,7 @@ ClientApp::set_arg(unsigned&   value,
                    const char* name,
                    int         min)
 {
-  int tmp = ACE_OS::atoi(arg);
+  const int tmp = ACE_OS::atoi(arg);
 
   if (tmp < min)
     {
